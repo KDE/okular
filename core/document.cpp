@@ -142,13 +142,17 @@ void KPDFDocument::closeDocument()
     // stop memory check timer
     d->memCheckTimer->stop();
 
+    // delete contents generator
+    delete generator;
+    generator = 0;
+
+    // send an empty list to observers (to free their data)
+    foreachObserver( pageSetup( QValueVector< KPDFPage * >(), true ) );
+
     // delete pages and clear 'pages_vector' container
     for ( uint i = 0; i < pages_vector.count() ; i++ )
         delete pages_vector[i];
     pages_vector.clear();
-
-    // send an empty list to observers (to free their data)
-    foreachObserver( pageSetup( pages_vector, true ) );
 
     // clear memory management data
     QMap< int, ObserverData * >::iterator oIt = d->observers.begin(), oEnd = d->observers.end();
@@ -158,10 +162,6 @@ void KPDFDocument::closeDocument()
         observerData->pageMemory.clear();
         observerData->totalMemory = 0;
     }
-
-    // delete contents generator
-    delete generator;
-    generator = 0;
 
     // reset internal variables
     d->currentPage = -1;

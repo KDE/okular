@@ -1,9 +1,10 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_shell" version="2">
+<kpartgui name="kpdf_shell" version="3">
 <MenuBar>
-  <Menu name="file"><text>&amp;File</text>
+  <Menu name="file">
     <DefineGroup name="file_save" append="save_merge"/>
     <DefineGroup name="file_print" append="print_merge"/>
   </Menu>
+  <Merge/>
 </MenuBar>
 </kpartgui>

@@ -60,14 +60,20 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                                WhitePixel(display, screen), false, 5);
 
   // create our actions
-  KStdAction::prior (this, SLOT(displayPreviousPage()), 
-                     actionCollection(), "previous_page");
-  KStdAction::next  (this, SLOT(displayNextPage()),
-                     actionCollection(), "next_page" );
+  KStdAction::find    (this, SLOT(find()), 
+                       actionCollection(), "find");
+  KStdAction::findNext(this, SLOT(findNext()), 
+                       actionCollection(), "find_next");
 
   m_fitWidth = new KToggleAction(i18n("Fit Width"), 0,
-                                 this, SLOT(fitWidthToggled()),
-                                 actionCollection(), "fit_width");
+                       this, SLOT(fitWidthToggled()),
+                       actionCollection(), "fit_width");
+
+  KStdAction::prior(this, SLOT(displayPreviousPage()), 
+                    actionCollection(), "previous_page");
+  KStdAction::next (this, SLOT(displayNextPage()),
+                    actionCollection(), "next_page" );
+
 
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");

@@ -419,6 +419,9 @@ void dviWindow::setFile( const QString & fname )
 
 void dviWindow::gotoPage(int new_page)
 {
+  if (dviFile == NULL)
+    return;
+
   if (new_page<1)
     new_page = 1;
   if (new_page > dviFile->total_pages)

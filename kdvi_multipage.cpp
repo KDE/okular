@@ -119,7 +119,7 @@ bool KDVIMultiPage::openFile()
   scrollView()->resizeContents(window->width(), window->height());
   emit previewChanged(true);
 
-  return true;
+  return true; //@@@ THIS IS WRONG!! Really, we should return something meaningful here.
 }
 
 

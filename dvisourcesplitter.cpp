@@ -7,10 +7,12 @@
 //
 
 #include <qdir.h>
-
 #include <kdebug.h>
 
 #include "dvisourcesplitter.h"
+
+//#define DEBUG_SOURCESPLITTER
+
 
 DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QString &dviFile)
 {
@@ -19,7 +21,10 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
                                     //then there could be a mix up, i.e. src:123file.tex 
                                     //line 123 and file.tex or line 12 and 3file.tex?
   
-  kdDebug() << "DVI_SourceSplitter: srclink " << srclink << endl;
+#ifdef DEBUG_SOURCESPLITTER
+  kdDebug(4300) << "DVI_SourceSplitter: srclink " << srclink << endl;
+#endif 
+
   //remove src: if necessary
   if ( filepart.left(4) == "src:" ) filepart = srclink.mid(4);
     
@@ -36,8 +41,10 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   filepart = filepart.stripWhiteSpace();
   linepart = linepart.stripWhiteSpace();
   
+#ifdef DEBUG_SOURCESPLITTER
   kdDebug() << "DVI_SourceSplitter: filepart " << filepart << " linepart " << linepart << endl;
- 
+#endif
+
   //test if the file exists
   m_fileInfo.setFile(QFileInfo(dviFile).dir(true), filepart);
   bool fiExists = m_fileInfo.exists();
@@ -58,10 +65,14 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
     for ( index = 1; index < maxindex; ++index)
     {
       tempInfo.setFile(linepart.right(index) + tempFileName);
+#ifdef DEBUG_SOURCESPLITTER
       kdDebug() << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
+#endif
       if ( tempInfo.exists() ) { found = true; break;}
       tempInfo.setFile(linepart.right(index) + tempFileName + ".tex");
+#ifdef DEBUG_SOURCESPLITTER
       kdDebug() << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
+#endif
       if ( tempInfo.exists() ) { found = true; break;}
     }
     
@@ -76,5 +87,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   m_line = linepart.toInt(&ok);
   if (!ok) m_line = 0;
   
+#ifdef DEBUG_SOURCESPLITTER
   kdDebug() << "DVI_SourceSplitter: result: file " << m_fileInfo.absFilePath() << " line " << m_line << endl;
+#endif
 }

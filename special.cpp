@@ -228,7 +228,6 @@ void parse_special_argument(QString strg, const char *argument_name, int *variab
 
 void dviRenderer::epsf_special(QString cp)
 {
-  kdError(4300) << "epsf-special: psfile=" << cp <<endl;
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
 #endif

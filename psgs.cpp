@@ -20,6 +20,7 @@
 
 extern const char psheader[];
 
+//#define DEBUG_PSGS
 
 
 pageInfo::pageInfo(QString _PostScriptString) {
@@ -55,8 +56,9 @@ ghostscript_interface::~ghostscript_interface() {
 
 
 void ghostscript_interface::setPostScript(PageNumber page, QString PostScript) {
-
-  kdError(4300) << "ghostscript_interface::setPostScript( " << page << ", ... )" << endl;
+#ifdef DEBUG_PSGS
+  kdDebug(4300) << "ghostscript_interface::setPostScript( " << page << ", ... )" << endl;
+#endif
 
   if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(PostScript);

@@ -165,14 +165,14 @@ void Part::slotGoToPage()
         int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), 1,
                                            1, m_doc->getNumPages(), 1, 10, &ok/*, _part->widget()*/);
         if (ok)
-            goToPage( num -1 );
+            goToPage( num );
     }
 }
 
 void Part::goToPage( int page )
 {
     m_currentPage = page;
-    pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+    pdfpartview->pagesListBox->setCurrentItem(m_currentPage-1);
     m_outputDev->setPage(m_currentPage);
     updateActionPage();
 }

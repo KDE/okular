@@ -12,7 +12,6 @@
 #include <qapplication.h>
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <kconfigbase.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <klineedit.h>
@@ -22,6 +21,7 @@
 // local includes
 #include "searchwidget.h"
 #include "document.h"
+#include "settings.h"
 
 //#include <qiconset.h>
 SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
@@ -54,19 +54,19 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
  //   search->setMinimumSize( QSize( sideLength, sideLength ) );
 }
 
-void SearchWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
+void SearchWidget::setupActions( KActionCollection * ac )
 {
     KToggleAction * ss = new KToggleAction( i18n( "Show Search Bar" ), 0, ac, "show_searchbar" );
     ss->setCheckedState(i18n("Hide Search Bar"));
     connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleSearchBar( bool ) ) );
 
-    ss->setChecked( config->readBoolEntry( "ShowSearchBar", true ) );
+    ss->setChecked( Settings::showSearchBar() );
     slotToggleSearchBar( ss->isChecked() );
 }
 
-void SearchWidget::saveSettings( KConfigGroup * config )
+void SearchWidget::saveSettings()
 {
-    config->writeEntry( "ShowSearchBar", isShown() );
+    Settings::setShowSearchBar( isShown() );
 }
 
 void SearchWidget::slotTextChanged( const QString & text )

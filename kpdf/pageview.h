@@ -26,7 +26,6 @@
 
 class KURL;
 class KActionCollection;
-class KConfigGroup;
 
 class PageWidget;
 class PageViewPrivate;
@@ -51,8 +50,8 @@ public:
     enum MouseMode { MouseNormal, MouseSelection, MouseEdit };
 
     // create actions that interact with this widget
-    void setupActions( KActionCollection * collection, KConfigGroup * config );
-    void saveSettings( KConfigGroup * config );
+    void setupActions( KActionCollection * collection );
+    void saveSettings();
 
     // inherited from KPDFDocumentObserver
     uint observerId() const { return PAGEVIEW_ID; }

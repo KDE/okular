@@ -9,7 +9,6 @@
 
 #include <qtimer.h>
 #include <klocale.h>
-#include <kconfigbase.h>
 #include <kurl.h>
 #include <kurldrag.h>
 #include <kaction.h>

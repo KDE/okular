@@ -28,7 +28,6 @@
 #include <kactioncollection.h>
 #include <kpopupmenu.h>
 #include <klocale.h>
-#include <kconfigbase.h>
 
 #include <math.h>
 #include <stdlib.h>
@@ -37,6 +36,7 @@
 #include "pageviewutils.h"
 #include "pixmapwidget.h"
 #include "page.h"
+#include "settings.h"
 
 
 // structure used internally by PageView for data storage
@@ -142,7 +142,7 @@ PageView::~PageView()
     delete d;
 }
 
-void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
+void PageView::setupActions( KActionCollection * ac )
 {
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, this, SLOT( slotZoom() ), ac, "zoom_to" );
@@ -168,12 +168,12 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
     // View-Layout actions
     d->aViewTwoPages = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, ac, "view_twopages" );
     connect( d->aViewTwoPages, SIGNAL( toggled( bool ) ), SLOT( slotTwoPagesToggled( bool ) ) );
-    d->aViewTwoPages->setChecked( config->readBoolEntry( "ViewTwoPages", false ) );
+    d->aViewTwoPages->setChecked( Settings::viewTwoPages() );
     slotTwoPagesToggled( d->aViewTwoPages->isChecked() );
 
     d->aViewContinous = new KToggleAction( i18n("Continous"), "view_text", 0, ac, "view_continous" );
     connect( d->aViewContinous, SIGNAL( toggled( bool ) ), SLOT( slotContinousToggled( bool ) ) );
-    d->aViewContinous->setChecked( config->readBoolEntry( "ViewContinous", true ) );
+    d->aViewContinous->setChecked( Settings::viewContinous() );
     slotContinousToggled( d->aViewContinous->isChecked() );
 
     // Mouse-Mode actions
@@ -200,15 +200,15 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
     ss->setCheckedState(i18n("Hide &Scrollbars"));
     connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
 
-    ss->setChecked( config->readBoolEntry( "ShowScrollBars", true ) );
+    ss->setChecked( Settings::showScrollBars() );
     slotToggleScrollBars( ss->isChecked() );
 }
 
-void PageView::saveSettings( KConfigGroup * config )
+void PageView::saveSettings()
 {
-    config->writeEntry( "ShowScrollBars", hScrollBarMode() == AlwaysOn );
-    config->writeEntry( "ViewTwoPages", d->aViewTwoPages->isChecked() );
-    config->writeEntry( "ViewContinous", d->aViewContinous->isChecked() );
+    Settings::setShowScrollBars( hScrollBarMode() == AlwaysOn );
+    Settings::setViewTwoPages( d->aViewTwoPages->isChecked() );
+    Settings::setViewContinous( d->aViewContinous->isChecked() );
 }
 
 

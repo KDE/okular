@@ -13,7 +13,6 @@
 #include <qhbox.h>
 
 class KActionCollection;
-class KConfigGroup;
 class KPopupMenu;
 class KLineEdit;
 
@@ -32,8 +31,8 @@ public:
 	SearchWidget( QWidget *parent, KPDFDocument *document );
 
 	// create actions that interact with this widget
-	void setupActions( KActionCollection * collection, KConfigGroup * config );
-	void saveSettings( KConfigGroup * config );
+	void setupActions( KActionCollection * collection );
+	void saveSettings();
 
 private slots:
 	void slotTextChanged( const QString & text );

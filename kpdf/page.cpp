@@ -31,6 +31,12 @@ KPDFPage::KPDFPage( int page, float w, float h, int r )
     m_hilighting( false ), m_bookmarking( false ), m_sLeft( 0 ),
     m_sTop( 0 ), m_sRight( 0 ), m_sBottom( 0 ), m_text( 0 )
 {
+    // if landscape swap width <-> height (rotate 90deg CCW)
+    if ( r == 90 || r == 270 )
+    {
+        m_width = h;
+        m_height = w;
+    }
 }
 
 KPDFPage::~KPDFPage()

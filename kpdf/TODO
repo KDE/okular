@@ -30,13 +30,13 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
--> FIX: sheet rotation (portrait / landscape / ...)
 -> ADD: viewport changes the right way when clicking links
 -> use a KConfigXT settings framework
 -> reading aids (accessibility): paper color: select, mode: normal, invert, contrast, recolor bg/text, enhance: links, ...
 -> pageview: fix keys/mouse in single/continous modes
 
 Done (newest feature comes firts):
+-> FIX: sheet rotation in landscape case
 -> ADD: Some dcop functions (goToPage, openDocument and give # of pages) (Albert)
 -> MRG: link following ('actionMovie' kind is missing)
 -> ADD: text selection (rectangular blocks) in selection mode

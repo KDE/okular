@@ -25,7 +25,7 @@
 #include <qpushbutton.h>
 #include "prefs.h"
 
-#include <ktopwidget.h>
+#include <ktmainwindow.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
 #include <kkeydialog.h>

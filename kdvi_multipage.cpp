@@ -25,46 +25,45 @@ extern "C"
     return new KDVIMultiPageFactory;
   }
 };
- 
+
 
 KInstance *KDVIMultiPageFactory::s_instance = 0L;
- 
+
 
 KDVIMultiPageFactory::KDVIMultiPageFactory()
 {
-  KGlobal::locale()->insertCatalogue( QString::fromLatin1("kdvi") );
 }
 
- 
+
 KDVIMultiPageFactory::~KDVIMultiPageFactory()
 {
   if (s_instance)
     delete s_instance;
- 
+
   s_instance = 0;
 }
 
 
-QObject *KDVIMultiPageFactory::create(QObject *parent, const char *name , const char*, const QStringList & )
+KParts::Part *KDVIMultiPageFactory::createPart( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & )
 {
-  QObject *obj = new KDVIMultiPage((QWidget *)parent, name);
+  KParts::Part *obj = new KDVIMultiPage(parentWidget, widgetName, parent, name);
   emit objectCreated(obj);
   return obj;
 }
- 
+
 
 KInstance *KDVIMultiPageFactory::instance()
 {
   if (!s_instance)
     s_instance = new KInstance("kdvi");
   return s_instance;
-} 
+}
 
 
-KDVIMultiPage::KDVIMultiPage(QWidget *parent, const char *name)
-  : KMultiPage(parent, name), window(0), options(0)
+KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name)
+  : KMultiPage(parentWidget, widgetName, parent, name), window(0), options(0)
 {
-  setInstance(KDVIMultiPageFactory::instance()); 
+  setInstance(KDVIMultiPageFactory::instance());
 
   window = new dviWindow(300, 1.0, "cx", 0, scrollView());
   preferencesChanged();
@@ -72,7 +71,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parent, const char *name)
   new KAction(i18n("&DVI Options"), 0, this,
 	      SLOT(doSettings()), actionCollection(),
 	      "settings_dvi");
-  
+
   setXMLFile("kdvi_part.rc");
 
   scrollView()->addChild(window);
@@ -148,7 +147,7 @@ double KDVIMultiPage::setZoom(double zoom)
 }
 
 
-extern unsigned int page_w, page_h; 
+extern unsigned int page_w, page_h;
 
 double KDVIMultiPage::zoomForHeight(int height)
 {
@@ -175,7 +174,7 @@ bool KDVIMultiPage::preview(QPainter *p, int w, int h)
   if (!map)
     return false;
 
-  
+
   // TODO: use higher quality preview if anti-aliasing?
   //p->drawImage(0, 0, window->pix()->convertToImage().smoothScale(w,h));
 
@@ -207,30 +206,30 @@ void KDVIMultiPage::preferencesChanged()
   KConfig *config = instance()->config();
 
   QString s;
-  
+
   config->reparseConfiguration();
   config->setGroup( "kdvi" );
- 
+
   s = config->readEntry( "FontPath" );
   if ( !s.isEmpty() && s != window->fontPath() )
     window->setFontPath( s );
- 
+
   int basedpi = config->readNumEntry( "BaseResolution" );
   if ( basedpi <= 0 )
     config->writeEntry( "BaseResolution", basedpi = 300 );
   if ( basedpi != window->resolution() )
     window->setResolution( basedpi );
- 
+
   QString mfmode =  config->readEntry( "MetafontMode" );
   if ( mfmode.isNull() )
     config->writeEntry( "MetafontMode", mfmode = "/" );
   if ( mfmode != window->metafontMode() )
     window->setMetafontMode( mfmode );
-  
+
   int makepk = config->readNumEntry( "MakePK" );
   if ( makepk != window->makePK() )
-    window->setMakePK( makepk );                                                  
- 
+    window->setMakePK( makepk );
+
   int showPS = config->readNumEntry( "ShowPS" );
   if (showPS != window->showPS())
     window->setShowPS(showPS);
@@ -244,13 +243,13 @@ void KDVIMultiPage::preferencesChanged()
 bool KDVIMultiPage::print(const QStrList &pages, int current)
 {
   Print * printdlg = new Print(window, "printdlg");
- 
+
   printdlg->setFile(m_file);
   printdlg->setCurrentPage(current+1, window->totalPages());
   printdlg->setMarkList(&pages);
   printdlg->exec();
-  
-  delete printdlg;       
+
+  delete printdlg;
 
   return true;
 }

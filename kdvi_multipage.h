@@ -7,7 +7,7 @@
 
 #include <kparts/part.h>
 #include <kparts/browserextension.h>
-#include <klibloader.h>
+#include <kparts/factory.h>
 
 
 class QLabel;
@@ -21,7 +21,7 @@ class OptionDialog;
 #include "dviwin.h"
 
 
-class KDVIMultiPageFactory : public KLibFactory
+class KDVIMultiPageFactory : public KParts::Factory
 {
   Q_OBJECT
 
@@ -29,13 +29,11 @@ public:
 
   KDVIMultiPageFactory();
   virtual ~KDVIMultiPageFactory();
- 
-  virtual QObject* create(QObject* parent = 0, const char* name = 0,
-                          const char* classname = "KDVIMultiPage",
-                          const QStringList &args = QStringList() );
-  
+
+  virtual KParts::Part *createPart( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & );
+
   static KInstance *instance();
- 
+
 private:
 
   static KInstance *s_instance;
@@ -49,7 +47,7 @@ class KDVIMultiPage : public KMultiPage
 
 public:
 
-  KDVIMultiPage(QWidget *parent=0, const char *name=0);
+  KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
   virtual ~KDVIMultiPage();
 
 
@@ -59,29 +57,29 @@ public:
   virtual QStringList fileFormats();
 
   /// opens a file
-  virtual bool openFile(); 
+  virtual bool openFile();
 
   /// close a file
   virtual bool closeURL();
 
   /// displays the given page
-  virtual bool gotoPage(int page); 
+  virtual bool gotoPage(int page);
 
   /// sets a zoom factor
-  virtual double setZoom(double z); 
+  virtual double setZoom(double z);
 
   /// calculates the zoom needed to fit into a given width
-  virtual double zoomForWidth(int width); 
-  
+  virtual double zoomForWidth(int width);
+
   /// calculates the zoom needed to fit into a given height
-  virtual double zoomForHeight(int height); 
+  virtual double zoomForHeight(int height);
 
   virtual void setPaperSize(double, double);
 
   virtual bool preview(QPainter *p, int w, int h);
 
   virtual bool print(const QStrList &pages, int current);
-  
+
   virtual void reload();
 
 signals:

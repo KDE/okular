@@ -52,6 +52,8 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <klocale.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "dviwin.h"
 
 #include "oconfig.h"

@@ -61,6 +61,7 @@
 #include <kmessagebox.h>
 #include <qbitmap.h> 
 #include <qfileinfo.h>
+#include <stdlib.h>
 
 
 extern "C" {

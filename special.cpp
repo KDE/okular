@@ -442,6 +442,54 @@ void dviWindow::applicationDoSpecial(char *cp)
     return;
   }
 
+  // Unfortunately, in some TeX distribution the hyperref package uses
+  // the dvips driver by default, rather than the hypertex driver. As
+  // a result, the DVI files produced are full of PostScript that
+  // specifies links and anchors, and KDVI would call the ghostscript
+  // interpreter for every page which makes it really slow. This is a
+  // major nuisance, so that we try to filter and interpret the
+  // hypertex generated PostScript here.
+  if (special_command.startsWith("ps:SDict begin")) {
+    // We suspect this may be hyperref generated nonsense. Let's check
+    // for some known code that hyperref generates.
+    if (special_command == "ps:SDict begin H.S end") { // start of hyperref rectangle
+      HTML_href = new QString("glopglyph");
+      return;
+    }
+    
+    if (special_command == "ps:SDict begin H.R end") {
+      if (HTML_href != NULL) {
+	delete HTML_href;
+	HTML_href = NULL;
+      }
+      return; // end of hyperref rectangle
+    }
+    
+    if (special_command.endsWith("H.A end")) {
+      if (HTML_href != NULL) {
+	delete HTML_href;
+	HTML_href = NULL;
+      }
+      if (!currentlyDrawnPage.hyperLinkList.isEmpty())
+	if (currentlyDrawnPage.hyperLinkList.last().linkText == "glopglyph")
+	  currentlyDrawnPage.hyperLinkList.pop_back();
+      return; // end of hyperref anchor
+    }
+    
+    if (special_command.startsWith("ps:SDict begin [") && special_command.endsWith(" pdfmark end")) {
+      if (!currentlyDrawnPage.hyperLinkList.isEmpty()) {
+	DVI_Hyperlink &lastLink = currentlyDrawnPage.hyperLinkList.last();
+	QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
+	if (lastLink.linkText == "glopglyph")
+	  lastLink.linkText = targetName;
+      }
+      return; // hyperref definition of link/anchor/bookmark/etc
+    }
+    
+
+  }
+  
+  
   // The following special commands are not used here; they are of
   // interest only during the prescan phase. We recognize them here
   // anyway, to make sure that KDVI doesn't complain about

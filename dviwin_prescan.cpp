@@ -293,6 +293,7 @@ void dviWindow::prescan_ParsePSQuoteSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
+
 #endif
   
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool->getMetafontMode()])-300;
@@ -307,8 +308,36 @@ void dviWindow::prescan_ParsePSQuoteSpecial(QString cp)
 void dviWindow::prescan_ParsePSSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdError(4300) << "PostScript-special, direct PostScript " << cp.latin1() << endl;
+  kdDebug(4300) << "PostScript-special, direct PostScript " << cp << endl;
 #endif
+
+  // Unfortunately, in some TeX distribution the hyperref package uses
+  // the dvips driver by default, rather than the hypertex driver. As
+  // a result, the DVI files produced are full of PostScript that
+  // specifies links and anchors, and KDVI would call the ghostscript
+  // interpreter for every page which makes it really slow. This is a
+  // major nuisance, so that we try to filter and interpret the
+  // hypertex generated PostScript here.
+  if (cp.startsWith("ps:SDict begin")) {
+    // We suspect this may be hyperref generated nonsense. Let's check
+    // for some known code that hyperref generates.
+    if (cp == "ps:SDict begin H.S end") 
+      return; // start of hyperref rectangle
+    if (cp == "ps:SDict begin H.R end") 
+      return; // end of hyperref rectangle
+    if (cp.endsWith("H.A end"))
+      return; // end of hyperref anchor
+    if (cp.startsWith("ps:SDict begin /product where{pop product(Distiller)"))
+      return; // hyperref tries to work around Distiller bug
+    if (cp.startsWith("ps:SDict begin [") && cp.endsWith(" pdfmark end")) {  // hyperref definition of link/anchor/bookmark/etc
+      if (cp.contains("/DEST")) { // The PostScript code defines an anchor
+	QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
+	anchorList[anchorName] = DVI_Anchor(current_page, currinf.data.dvi_v);
+      }
+      return;
+    }
+  }
+  
   
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool->getMetafontMode()])-300;
   double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool->getMetafontMode()] - 300;

@@ -88,111 +88,111 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     return;
 
   long dvi_h_sav = currinf.data.dvi_h;
-  if (PostScriptOutPutString == NULL) {
-    QPixmap pix = g->shrunkenCharacter;
-    int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))) - g->x2;
-    int y = currinf.data.pxl_v - g->y2;
 
-    // Draw the character.
-    foreGroundPaint.drawPixmap(x, y, pix);
-
-    // Are we drawing text for a hyperlink? And are hyperlinks
-    // enabled?
-    if (HTML_href != NULL && _showHyperLinks != 0) {
-      // Now set up a rectangle which is checked against every mouse
-      // event.
-      if (line_boundary_encountered == true) {
-	// Set up hyperlink
-	DVI_Hyperlink dhl;
-	dhl.baseline = currinf.data.pxl_v;
-	dhl.box.setRect(x, y, pix.width(), pix.height());
-	dhl.linkText = *HTML_href;
-	currentlyDrawnPage.hyperLinkList.push_back(dhl);
-      } else {
-       	QRect dshunion = currentlyDrawnPage.hyperLinkList[currentlyDrawnPage.hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-	currentlyDrawnPage.hyperLinkList[currentlyDrawnPage.hyperLinkList.size()-1].box = dshunion;
-      }
-    }
-
-    // Are we drawing text for a source hyperlink? And are source
-    // hyperlinks enabled?
-    if (source_href != 0) {
-      // Now set up a rectangle which is checked against every mouse
-      // event.
-      if (line_boundary_encountered == true) {
-	// Set up source hyperlinks
-	DVI_Hyperlink dhl;
-	dhl.baseline = currinf.data.pxl_v;
-	dhl.box.setRect(x, y, pix.width(), pix.height());
-	if (source_href != NULL) 
-	  dhl.linkText = *source_href;
-	else
-	  dhl.linkText = "";
-	currentlyDrawnPage.sourceHyperLinkList.push_back(dhl);
-      } else {
-	QRect dshunion = currentlyDrawnPage.sourceHyperLinkList[currentlyDrawnPage.sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-	currentlyDrawnPage.sourceHyperLinkList[currentlyDrawnPage.sourceHyperLinkList.size()-1].box = dshunion;
-      }
-    }
-
-    // Code for DVI -> text functions (e.g. marking of text, full text
-    // search, etc.). Set up the currentlyDrawnPage.textLinkList.
+  QPixmap pix = g->shrunkenCharacter;
+  int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))) - g->x2;
+  int y = currinf.data.pxl_v - g->y2;
+  
+  // Draw the character.
+  foreGroundPaint.drawPixmap(x, y, pix);
+  
+  // Are we drawing text for a hyperlink? And are hyperlinks
+  // enabled?
+  if (HTML_href != NULL && _showHyperLinks != 0) {
+    // Now set up a rectangle which is checked against every mouse
+    // event.
     if (line_boundary_encountered == true) {
-      // Set up source hyperlinks
-      DVI_Hyperlink link;
-      link.baseline = currinf.data.pxl_v;
-      link.box.setRect(x, y, pix.width(), pix.height());
-      link.linkText = "";
-
-      currentlyDrawnPage.textLinkList.push_back(link);
+      // Set up hyperlink
+      DVI_Hyperlink dhl;
+      dhl.baseline = currinf.data.pxl_v;
+      dhl.box.setRect(x, y, pix.width(), pix.height());
+      dhl.linkText = *HTML_href;
+      currentlyDrawnPage.hyperLinkList.push_back(dhl);
     } else {
-      // line boundary encountered
-      QRect dshunion = currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box = dshunion;
-    }
-
-    switch(ch) {
-    case 0x0b:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ff";
-      break;
-    case 0x0c:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "fi";
-      break;
-    case 0x0d:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "fl";
-      break;
-    case 0x0e:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ffi";
-      break;
-    case 0x0f:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ffl";
-      break;
-
-    case 0x7b:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "-";
-      break;
-    case 0x7c:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "---";
-      break;
-    case 0x7d:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "\"";
-      break;
-    case 0x7e:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "~";
-      break;
-    case 0x7f:
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "@@"; // @@@ check!
-      break;
-      
-    default:
-      if ((ch >= 0x21) && (ch <= 0x7a))
-	currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += QChar(ch);
-      else
-	currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "?";
-      break;
+      QRect dshunion = currentlyDrawnPage.hyperLinkList[currentlyDrawnPage.hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      currentlyDrawnPage.hyperLinkList[currentlyDrawnPage.hyperLinkList.size()-1].box = dshunion;
     }
   }
-
+  
+  // Are we drawing text for a source hyperlink? And are source
+  // hyperlinks enabled?
+  if (source_href != 0) {
+    // Now set up a rectangle which is checked against every mouse
+    // event.
+    if (line_boundary_encountered == true) {
+      // Set up source hyperlinks
+      DVI_Hyperlink dhl;
+      dhl.baseline = currinf.data.pxl_v;
+      dhl.box.setRect(x, y, pix.width(), pix.height());
+      if (source_href != NULL) 
+	dhl.linkText = *source_href;
+      else
+	dhl.linkText = "";
+      currentlyDrawnPage.sourceHyperLinkList.push_back(dhl);
+    } else {
+      QRect dshunion = currentlyDrawnPage.sourceHyperLinkList[currentlyDrawnPage.sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      currentlyDrawnPage.sourceHyperLinkList[currentlyDrawnPage.sourceHyperLinkList.size()-1].box = dshunion;
+    }
+  }
+  
+  // Code for DVI -> text functions (e.g. marking of text, full text
+  // search, etc.). Set up the currentlyDrawnPage.textLinkList.
+  if (line_boundary_encountered == true) {
+    // Set up source hyperlinks
+    DVI_Hyperlink link;
+    link.baseline = currinf.data.pxl_v;
+    link.box.setRect(x, y, pix.width(), pix.height());
+    link.linkText = "";
+    
+    currentlyDrawnPage.textLinkList.push_back(link);
+  } else {
+    // line boundary encountered
+    QRect dshunion = currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box = dshunion;
+  }
+  
+  switch(ch) {
+  case 0x0b:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ff";
+    break;
+  case 0x0c:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "fi";
+    break;
+  case 0x0d:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "fl";
+    break;
+  case 0x0e:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ffi";
+    break;
+  case 0x0f:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ffl";
+    break;
+    
+  case 0x7b:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "-";
+    break;
+  case 0x7c:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "---";
+    break;
+  case 0x7d:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "\"";
+    break;
+  case 0x7e:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "~";
+    break;
+  case 0x7f:
+    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "@@"; // @@@ check!
+    break;
+    
+  default:
+    if ((ch >= 0x21) && (ch <= 0x7a))
+      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += QChar(ch);
+    else
+      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "?";
+    break;
+  }
+  
+  
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
@@ -223,24 +223,24 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
   }
 
   long dvi_h_sav = currinf.data.dvi_h;
-  if (PostScriptOutPutString == NULL) {
-    struct drawinf oldinfo = currinf;
-    currinf.data.w         = 0;
-    currinf.data.x         = 0;
-    currinf.data.y         = 0;
-    currinf.data.z         = 0;
 
-    currinf.fonttable         = &(currinf.fontp->vf_table);
-    currinf._virtual          = currinf.fontp;
-    Q_UINT8 *command_ptr_sav  = command_pointer;
-    Q_UINT8 *end_ptr_sav      = end_pointer;
-    command_pointer           = m->pos;
-    end_pointer               = m->end;
-    draw_part(currinf.fontp->scaled_size_in_DVI_units*(dviFile->getCmPerDVIunit() * MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0, true);
-    command_pointer           = command_ptr_sav;
-    end_pointer               = end_ptr_sav;
-    currinf = oldinfo;
-  }
+  struct drawinf oldinfo = currinf;
+  currinf.data.w         = 0;
+  currinf.data.x         = 0;
+  currinf.data.y         = 0;
+  currinf.data.z         = 0;
+  
+  currinf.fonttable         = &(currinf.fontp->vf_table);
+  currinf._virtual          = currinf.fontp;
+  Q_UINT8 *command_ptr_sav  = command_pointer;
+  Q_UINT8 *end_ptr_sav      = end_pointer;
+  command_pointer           = m->pos;
+  end_pointer               = m->end;
+  draw_part(currinf.fontp->scaled_size_in_DVI_units*(dviFile->getCmPerDVIunit() * MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0, true);
+  command_pointer           = command_ptr_sav;
+  end_pointer               = end_ptr_sav;
+  currinf = oldinfo;
+  
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
@@ -312,7 +312,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  a = readUINT32();
 	  b = readUINT32();
 	  b = ((long) (b *  current_dimconv));
-	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL) {
+	  if (a > 0 && b > 0) {
 	    int h = ((int) ROUNDUP(((long) (a *  current_dimconv)), shrinkfactor * 65536));
 	    int w =  ((int) ROUNDUP(b, shrinkfactor * 65536));
 	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
@@ -330,7 +330,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  b = readUINT32();
 	  a = ((long) (a *  current_dimconv));
 	  b = ((long) (b *  current_dimconv));
-	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL) {
+	  if (a > 0 && b > 0) {
 	    int h = ((int) ROUNDUP(a, shrinkfactor * 65536));
 	    int w = ((int) ROUNDUP(b, shrinkfactor * 65536));
 	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),

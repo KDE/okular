@@ -390,9 +390,9 @@ void fontPool::start_kpsewhich(void)
 	    filename = fontp->fontname;
 	  else
 	    filename = *it;
-	  *proc << KShellProcess::quote(QString("%1.pfb").arg(filename));
+	  *proc << KShellProcess::quote(QString("%1").arg(filename));
 #ifdef DEBUG_FONTPOOL
-	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(filename)) + " ";
+	  shellProcessCmdLine += KShellProcess::quote(QString("%1").arg(filename)) + " ";
 #endif
 	}
 #endif

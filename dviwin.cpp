@@ -781,25 +781,46 @@ void dviWindow::all_fonts_loaded(fontPool *)
 			 i18n("Could Not Find Reference"));
       return;
     }
+
+
+    // Go through the list of source file anchors, and find the anchor
+    // whose line number is the biggest among those that are smaller
+    // than the refLineNumber. That way, the position in the DVI file
+    // which is highlighted is always a little further up than the
+    // position in the editor, e.g. if the DVI file contains
+    // positional information at the beginning of every paragraph,
+    // KDVI jumps to the beginning of the paragraph that the cursor is
+    // in, and never to the next paragraph. If source file anchors for
+    // the refFileName can be found, but none of their line numbers is
+    // smaller than the refLineNumber, the reason is most likely, that
+    // the cursor in the editor stands somewhere in the preamble of
+    // the LaTeX file. In that case, we jump to the beginning of the
+    // document.
+    bool anchorForRefFileFound = false; // Flag that is set if source file anchors for the refFileName could be found at all
     
-    Q_INT32 page = 0;
-    Q_INT32 y    = -1000;
+    QValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
     QValueVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it ) 
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
-	if (refLineNumber >= it->line) {
-	  page = it->page;
-	  y    = (Q_INT32)(it->vertical_coordinate/shrinkfactor+0.5);
-	}
+	anchorForRefFileFound = true;
+	
+	if ( (it->line <= refLineNumber) &&
+	     ( (bestMatch == sourceHyperLinkAnchors.end()) || (it->line > bestMatch->line) ) )
+	  bestMatch = it;
       }
     
     reference = QString::null;
-    if (y >= 0)
-      emit(request_goto_page(page, y));
-    if (y < 0)
-      KMessageBox::sorry(this, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
-				    "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
-			 i18n( "Could Not Find Reference" ));
+    
+    if (bestMatch != sourceHyperLinkAnchors.end()) 
+      emit(request_goto_page(bestMatch->page, (Q_INT32)(bestMatch->vertical_coordinate/shrinkfactor+0.5)));
+    else
+      if (anchorForRefFileFound == false)
+	KMessageBox::sorry(this, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
+				      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
+			   i18n( "Could Not Find Reference" ));
+      else
+	emit(request_goto_page(0, 0));
+    
     return;
   }
   reference = QString::null;
@@ -813,7 +834,7 @@ void dviWindow::gotoPage(unsigned int new_page)
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::gotoPage( new_page=" << new_page << " )" << endl;
 #endif
-
+  
   if (dviFile == NULL) {
 #ifdef DEBUG_DVIWIN
     kdDebug(4300) << "gotoPage fails because no DVI file loaded" << endl;

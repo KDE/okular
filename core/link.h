@@ -15,7 +15,7 @@
 
 /**
  * @short Encapsulates data that describes a link.
- * ### TODO: recomment
+ * TODO: comment
  */
 class KPDFLink
 {
@@ -32,7 +32,7 @@ class KPDFLink
 class KPDFLinkGoto : public KPDFLink
 {
     public:
-        // define a 'Viewport' TODO MERGE WITH PAGE DEFINED VIEWPORT
+        // define a 'Viewport' TODO MERGE WITH DOCUMENT VIEWPORT
         struct Viewport {
             int page;
             bool fitWidth, fitHeight;
@@ -104,7 +104,8 @@ class KPDFLinkAction : public KPDFLink
 };
 
 
-class KPDFLinkMovie : public KPDFLink //### REDO THIS ###
+class KPDFLinkMovie : public KPDFLink
+//TODO: this
 {
     public:
         KPDFLinkMovie() {};

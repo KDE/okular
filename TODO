@@ -7,12 +7,14 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress:
--> Enhance presentation mode. New preferences dialog. (by Tobias)
+-> FIX: Load performance. Big slowdowns on DocumentSynapsis generation.
+   pdfdoc->findDest( namedDest ) takes too long.
+-> Delay TOC (DocumentSynapsis) generation (and move it on thread)
+-> Make document functions as reentrant as possible!
 -> Fix threaded generation. (crash reports on 02 and 03 Jan 2005).
 -> FIX 1/2: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
 -> FIX 2/2: check for removing 'canUnloadPixmap' from observers in place of requesting
    a list of visible pixmaps
--> type ahead search in pageview (type '/' then the word to search..) (by JakobS)
 
 Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> New word highlighting for searches / other highlights (enrico)
@@ -28,6 +30,7 @@ Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> link thumbnails view with document [first, the 'Viewport' must be defined]
 
 More items (first items will enter 'In progress list' first):
+-> type ahead search in pageview (type '/' then the word to search..) (ready: patch by JakobS)
 -> move toolbar view actions in the PageView instead of the part. maybe.. or not...
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment. (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
@@ -65,12 +68,11 @@ More items (first items will enter 'In progress list' first):
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
--> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> text selection in wordprocessor style (very hard/impossible)
 -> implement history (mainly for actionNamed)
--> history as a toolbox child (collecting DOs's setPage calls)
+-> history as a toolbox child (collecting Doc's viewport changes notifications)
 -> zoom: fit text (with configurable margin)
 -> open gzipped (.pdf.gz?) files
 -> kttsd output with menu entries. speech{document/page/selection}. (patch available - enrico)
@@ -78,7 +80,7 @@ More items (first items will enter 'In progress list' first):
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> rotate the whole document / individual pages
--> presentation: implement transitions
+-> presentation: implement transitions (6/11 done)
 -> presentation: add some gfx tools (like a red pencil)
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
 -> presentation: link following (difficult due to pagerects related to pageview pixmap only)

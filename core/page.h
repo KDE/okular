@@ -22,14 +22,12 @@ class KPDFPageTransition;
 
 /**
  * @short Collector for all the data belonging to a page.
- * ### MERGE: definition and implementation must be moved to kpdfpage.h/.cpp
- * ### RECOMMENT
  *
- * The KPDFPage class contains pixmaps (referenced using obsedvers id as key),
- * a search page (a class used internally for searching data), link classes
- * (that describe links in the current page) plus graphics overlays and more.
+ * The KPDFPage class contains pixmaps (referenced using observers id as key),
+ * a search page (a class used internally for retrieving text), rect classes
+ * (that describe links or other active areas in the current page) and more.
  *
- * Note: All objects passed to this class will be destoryed on class deletion.
+ * Note: All objects are reparented to this class.
  */
 class KPDFPage
 {
@@ -107,7 +105,7 @@ class KPDFPageRect
 
         // query geometric properties
         bool contains( int x, int y ) const;
-        QRect geometry() const; //TODO add intersects( qrect )
+        QRect geometry() const;
 
         // set a pointer to data associated to this rect
         enum PointerType { NoPointer, Link, Image };
@@ -128,8 +126,7 @@ class KPDFPageRect
 
 /**
  * @short Paints a KPDFPage to an open painter using given flags.
- * ### MERGE: since this file will be empty, we might consider renaming
- * ###        definition and implementation to pagepainter.*
+ * TODO: move definition and implementation to pagepainter.* (..maybe..)
  */
 class PagePainter
 {

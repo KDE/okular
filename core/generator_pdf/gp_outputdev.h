@@ -31,7 +31,6 @@ class KPDFPageRect;
 
 /**
  * @short A SplashOutputDev renderer that grabs text and links.
- * ### MERGE: rename definition/impl to generator_pdf_outputdev.h/.cpp
  *
  * This output device:
  * - renders the page using SplashOutputDev (its parent)

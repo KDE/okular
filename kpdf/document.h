@@ -11,7 +11,6 @@
 #ifndef _KPDF_DOCUMENT_H_
 #define _KPDF_DOCUMENT_H_
 
-#include <qobject.h>
 #include <qvaluevector.h>
 
 class KPrinter;

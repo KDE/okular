@@ -767,5 +767,3 @@ void ThumbnailList::customEvent(QCustomEvent *e)
 	m_ignoreNext = false;
 }
 */
-
-#include "document.moc"

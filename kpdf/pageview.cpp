@@ -228,7 +228,7 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
             PageViewMessage::Info, 4000 );
 }
 
-void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
+void PageView::pageSetCurrent( int pageNumber, const QRect & viewport )
 {
     // select next page
     d->vectorIndex = 0;
@@ -251,9 +251,11 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
         slotRelayoutPages();
 
     // center the view to see the selected page
-    // FIXME take care of viewport
-    const QRect & r = d->activeItem->geometry();
-    center( r.left() + r.width() / 2, r.top() + visibleHeight() / 2 - 10 );
+    if ( viewport.isNull() || true ) // FIXME take care of viewport
+    {
+        const QRect & r = d->activeItem->geometry();
+        center( r.left() + r.width() / 2, r.top() + visibleHeight() / 2 - 10 );
+    }
     slotRequestVisiblePixmaps();
 
     // update zoom text if in a ZoomFit/* zoom mode
@@ -638,11 +640,18 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     case 1:
                         d->document->slotBookmarkPage( kpdfPage->number(), !kpdfPage->isBookmarked() );
                         break;
-                    case 2: // FiXME less hackish, please!
+                    case 2:
+                        // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
+                        d->zoomMode = ZoomFitWidth;
+                        Settings::setViewColumns( 1 );
                         d->aZoomFitWidth->setChecked( true );
-                        updateZoom( ZoomFitWidth );
+                        d->aZoomFitPage->setChecked( false );
+                        d->aZoomFitText->setChecked( false );
                         d->aViewTwoPages->setChecked( false );
-                        slotTwoPagesToggled( false );
+                        viewport()->setUpdatesEnabled( false );
+                        slotRelayoutPages();
+                        viewport()->setUpdatesEnabled( true );
+                        updateContents();
                         d->document->slotSetCurrentPage( kpdfPage->number() );
                         break;
                     case 3: // ToDO switch to edit mode
@@ -838,61 +847,108 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
     for ( ; iIt != iEnd; ++iIt )
     {
         // check if a piece of the page intersects the contents rect
-        if ( (*iIt)->geometry().intersects( checkRect ) )
+        if ( !(*iIt)->geometry().intersects( checkRect ) )
+            continue;
+
+        PageViewItem * item = *iIt;
+        QRect pixmapGeometry = item->geometry();
+
+        // translate the painter so we draw top-left pixmap corner in 0,0
+        p->save();
+        p->translate( pixmapGeometry.left(), pixmapGeometry.top() );
+
+        // item pixmap and outline geometry
+        QRect outlineGeometry = pixmapGeometry;
+        outlineGeometry.addCoords( -1, -1, 3, 3 );
+
+        // draw the page outline (little black border and 2px shadow)
+        if ( !pixmapGeometry.contains( contentsRect ) )
         {
-            PageViewItem * item = *iIt;
-            QRect pixmapGeometry = item->geometry();
-
-            // translate the painter so we draw top-left pixmap corner in 0,0
-            p->save();
-            p->translate( pixmapGeometry.left(), pixmapGeometry.top() );
-
-            // item pixmap and outline geometry
-            QRect outlineGeometry = pixmapGeometry;
-            outlineGeometry.addCoords( -1, -1, 3, 3 );
-
-            if ( !pixmapGeometry.contains( contentsRect ) )
+            int pixmapWidth = pixmapGeometry.width(),
+                pixmapHeight = pixmapGeometry.height();
+            // draw simple outline
+            p->setPen( Qt::black );
+            p->drawRect( -1, -1, pixmapWidth + 2, pixmapHeight + 2 );
+            // draw bottom/right gradient
+            int levels = 2;
+            int r = Qt::gray.red() / (levels + 2),
+                g = Qt::gray.green() / (levels + 2),
+                b = Qt::gray.blue() / (levels + 2);
+            for ( int i = 0; i < levels; i++ )
             {
-                int pixmapWidth = pixmapGeometry.width(),
-                    pixmapHeight = pixmapGeometry.height();
-                // draw simple outline
-                p->setPen( Qt::black );
-                p->drawRect( -1, -1, pixmapWidth + 2, pixmapHeight + 2 );
-                // draw bottom/right gradient
-                int levels = 2;
-                int r = Qt::gray.red() / (levels + 2),
-                    g = Qt::gray.green() / (levels + 2),
-                    b = Qt::gray.blue() / (levels + 2);
-                for ( int i = 0; i < levels; i++ )
-                {
-                    p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
-                    p->drawLine( i, i + pixmapHeight + 1, i + pixmapWidth + 1, i + pixmapHeight + 1 );
-                    p->drawLine( i + pixmapWidth + 1, i, i + pixmapWidth + 1, i + pixmapHeight );
-                    p->setPen( Qt::gray );
-                    p->drawLine( -1, i + pixmapHeight + 1, i - 1, i + pixmapHeight + 1 );
-                    p->drawLine( i + pixmapWidth + 1, -1, i + pixmapWidth + 1, i - 1 );
-                }
+                p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
+                p->drawLine( i, i + pixmapHeight + 1, i + pixmapWidth + 1, i + pixmapHeight + 1 );
+                p->drawLine( i + pixmapWidth + 1, i, i + pixmapWidth + 1, i + pixmapHeight );
+                p->setPen( Qt::gray );
+                p->drawLine( -1, i + pixmapHeight + 1, i - 1, i + pixmapHeight + 1 );
+                p->drawLine( i + pixmapWidth + 1, -1, i + pixmapWidth + 1, i - 1 );
             }
-
-            // draw the pixmap (note: this modifies the painter)
-            if ( contentsRect.intersects( pixmapGeometry ) )
-            {
-                QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
-                pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
-
-                // accessibility setting (TODO ADD COMPOSITING for PAGE RECOLORING)
-                if ( Settings::renderMode() == Settings::EnumRenderMode::Inverted )
-                    p->setRasterOp( Qt::NotCopyROP );
-
-                // draw the pixmap
-                item->page()->drawPixmap( PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
-            }
-
-            // remove painted area from 'remainingArea'
-            remainingArea -= outlineGeometry.intersect( contentsRect );
-
-            p->restore();
         }
+
+        // draw the pixmap (note: this modifies the painter (not saved for performance))
+        if ( contentsRect.intersects( pixmapGeometry ) )
+        {
+            QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
+            pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
+
+            // handle pixmap drawing in respect of accessibility settings
+            if ( Settings::renderMode() != Settings::EnumRenderMode::Normal )
+            {
+                // paint pixmapRect area in internal pixmap
+                QPixmap pagePix( pixmapRect.width(), pixmapRect.height() );
+                QPainter pixmapPainter( &pagePix );
+                pixmapPainter.translate( -pixmapRect.left(), -pixmapRect.top() );
+                item->page()->drawPixmap( PAGEVIEW_ID, &pixmapPainter, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
+                pixmapPainter.end();
+
+                // perform 'accessbility' enhancements on the (already painted) pixmap
+                QImage pageImage = pagePix.convertToImage();
+                switch ( Settings::renderMode() )
+                {
+                    case Settings::EnumRenderMode::Inverted:
+                        // Invert image pixels using QImage internal function
+                        pageImage.invertPixels(false);
+                        break;
+                    case Settings::EnumRenderMode::Recolor:
+                        // Recolor image using KImageEffect::flatten with dither:0
+                        KImageEffect::flatten( pageImage, Settings::recolorForeground(), Settings::recolorBackground() );
+                        break;
+                    case Settings::EnumRenderMode::BlackWhite:
+                        // Manual Gray and Contrast
+                        unsigned int * data = (unsigned int *)pageImage.bits();
+                        int val, pixels = pageImage.width() * pageImage.height(),
+                            con = Settings::bWContrast(), thr = 255 - Settings::bWThreshold();
+                        for( int i = 0; i < pixels; ++i )
+                        {
+                            val = qGray( data[i] );
+                            if ( val > thr )
+                                val = 128 + (127 * (val - thr)) / (255 - thr);
+                            else if ( val < thr )
+                                val = (128 * val) / thr;
+                            if ( con > 2 )
+                            {
+                                val = con * ( val - thr ) / 2 + thr;
+                                if ( val > 255 )
+                                    val = 255;
+                                else if ( val < 0 )
+                                    val = 0;
+                            }
+                            data[i] = qRgba( val, val, val, 255 );
+                        }
+                        break;
+                }
+                pagePix.convertFromImage( pageImage );
+
+                // copy internal pixmap to the page
+                p->drawPixmap( pixmapRect.left(), pixmapRect.top(), pagePix );
+            }
+            else // paint pixmapRect area (as it is) in external painter
+                item->page()->drawPixmap( PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
+        }
+
+        // remove painted area from 'remainingArea' and restore painter
+        remainingArea -= outlineGeometry.intersect( contentsRect );
+        p->restore();
     }
 
     // paint with background color the unpainted area

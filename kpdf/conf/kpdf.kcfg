@@ -25,15 +25,20 @@
    </choices>
   </entry>
   <entry key="RecolorForeground" type="Color" >
-   <default code="true" >Qt::black</default>
+   <default code="true" >0x600000</default>
   </entry>
   <entry key="RecolorBackground" type="Color" >
-   <default code="true" >Qt::white</default>
+   <default code="true" >0xF0F0F0</default>
   </entry>
-  <entry key="BWTreshold" type="UInt" >
-   <default>5</default>
-   <min>1</min>
-   <max>10</max>
+  <entry key="BWThreshold" type="UInt" >
+   <default>127</default>
+   <min>2</min>
+   <max>253</max>
+  </entry>
+  <entry key="BWContrast" type="UInt" >
+   <default>2</default>
+   <min>2</min>
+   <max>6</max>
   </entry>
  </group>
  <group name="General" >

@@ -38,7 +38,10 @@
                         <cstring>kcfg_UseCompositing</cstring>
                     </property>
                     <property name="text">
-                        <string>Enable transparency and other effects (default)</string>
+                        <string>Enable &amp;transparency and other effects (default)</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+T</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">
@@ -70,7 +73,10 @@
                         <cstring>lowRadio</cstring>
                     </property>
                     <property name="text">
-                        <string>Low</string>
+                        <string>&amp;Low</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+L</string>
                     </property>
                 </widget>
                 <widget class="QRadioButton">
@@ -78,7 +84,10 @@
                         <cstring>normalRadio</cstring>
                     </property>
                     <property name="text">
-                        <string>Normal (default)</string>
+                        <string>&amp;Normal (default)</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+N</string>
                     </property>
                 </widget>
                 <widget class="QRadioButton">
@@ -86,7 +95,10 @@
                         <cstring>aggressiveRadio</cstring>
                     </property>
                     <property name="text">
-                        <string>Aggressive</string>
+                        <string>&amp;Aggressive</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
                     </property>
                 </widget>
                 <widget class="QLabel">

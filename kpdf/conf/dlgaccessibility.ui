@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>320</width>
-            <height>332</height>
+            <height>362</height>
         </rect>
     </property>
     <property name="caption">
@@ -46,7 +46,10 @@
                         <cstring>radioNormal</cstring>
                     </property>
                     <property name="text">
-                        <string>Normal (default)</string>
+                        <string>&amp;Normal (default)</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+N</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -140,7 +143,10 @@
                         <cstring>radioInverted</cstring>
                     </property>
                     <property name="text">
-                        <string>Invert colors</string>
+                        <string>&amp;Invert colors</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+I</string>
                     </property>
                 </widget>
                 <widget class="QRadioButton">
@@ -148,7 +154,10 @@
                         <cstring>radioRecolor</cstring>
                     </property>
                     <property name="text">
-                        <string>Change foreground and background colors</string>
+                        <string>&amp;Change foreground and background colors</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -281,21 +290,66 @@
                         <cstring>radioContrast</cstring>
                     </property>
                     <property name="text">
-                        <string>Convert to Black and White</string>
+                        <string>Convert to &amp;Black and White</string>
                     </property>
                     <property name="accel">
-                        <string></string>
+                        <string>Alt+B</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout3</cstring>
+                        <cstring>layout5</cstring>
                     </property>
-                    <hbox>
+                    <grid>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <spacer>
+                        <widget class="QLabel" row="1" column="1">
+                            <property name="name">
+                                <cstring>textLabel2_2</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="text">
+                                <string>Contrast</string>
+                            </property>
+                        </widget>
+                        <spacer row="1" column="3">
+                            <property name="name">
+                                <cstring>spacer10_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>48</width>
+                                    <height>21</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <spacer row="1" column="0">
+                            <property name="name">
+                                <cstring>spacer11_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Fixed</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>16</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <spacer row="0" column="0">
                             <property name="name">
                                 <cstring>spacer11</cstring>
                             </property>
@@ -312,46 +366,7 @@
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>Contrast:</string>
-                            </property>
-                        </widget>
-                        <widget class="QSlider">
-                            <property name="name">
-                                <cstring>kcfg_BWTreshold</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>7</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="minValue">
-                                <number>1</number>
-                            </property>
-                            <property name="maxValue">
-                                <number>10</number>
-                            </property>
-                            <property name="value">
-                                <number>5</number>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                        </widget>
-                        <spacer>
+                        <spacer row="0" column="3">
                             <property name="name">
                                 <cstring>spacer10</cstring>
                             </property>
@@ -368,13 +383,71 @@
                                 </size>
                             </property>
                         </spacer>
-                    </hbox>
+                        <widget class="QSlider" row="1" column="2">
+                            <property name="name">
+                                <cstring>kcfg_BWContrast</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="pageStep">
+                                <number>1</number>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                        </widget>
+                        <widget class="QSlider" row="0" column="2">
+                            <property name="name">
+                                <cstring>kcfg_BWThreshold</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="pageStep">
+                                <number>16</number>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="0" column="1">
+                            <property name="name">
+                                <cstring>textLabel2</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="text">
+                                <string>Threshold:</string>
+                            </property>
+                        </widget>
+                    </grid>
                 </widget>
             </vbox>
         </widget>
         <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox1</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
@@ -451,7 +524,7 @@
     <connection>
         <sender>radioContrast</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_BWTreshold</receiver>
+        <receiver>kcfg_BWThreshold</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
@@ -470,6 +543,18 @@
         <sender>radioNormal</sender>
         <signal>toggled(bool)</signal>
         <receiver>textLabel1_2</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>radioContrast</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>textLabel2_2</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>radioContrast</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_BWContrast</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

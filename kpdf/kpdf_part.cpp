@@ -387,7 +387,7 @@ void Part::slotNewConfig()
     if ( m_searchWidget->isShown() != showSearch )
         m_searchWidget->setShown( showSearch );
 
-    // Main View
+    // Main View (pageView)
     QScrollView::ScrollBarMode scrollBarMode = Settings::showScrollBars() ?
         QScrollView::AlwaysOn : QScrollView::AlwaysOff;
     if ( m_pageView->hScrollBarMode() != scrollBarMode )
@@ -395,6 +395,8 @@ void Part::slotNewConfig()
         m_pageView->setHScrollBarMode( scrollBarMode );
         m_pageView->setVScrollBarMode( scrollBarMode );
     }
+    // update Main View contents (this should be done only if renderMode changed)
+    m_pageView->updateContents();
 }
 
 void Part::slotPrintPreview()

@@ -7,7 +7,6 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> ADD: reading aids (accessibility) [settings config done while now, 20% done]
 -> ADD: click over image allows "save image" (and display rect around image too) [50% done]
 -> ADD: viewport changes the right way when clicking links [30% done]
 
@@ -41,6 +40,7 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Done (newest feature comes firts):
+-> ADD: reading aids (inverted display, recolor, black/white, ...)
 -> FIX: zoom preserved when switching modes and flickerless
 -> ADD: Printing as PS instead of as image (Albert)
 -> ADD: Remember page on session logout and put the document in it on session restore (Albert)

@@ -1,0 +1,4 @@
+#include "../config.h"
+
+#define HAVE_FREETYPE_H HAVE_FREETYPE
+#define HAVE_FREETYPE_FREETYPE_H HAVE_FREETYPE

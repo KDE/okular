@@ -16,8 +16,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 // 02111-1307, USA.
 
-#ifndef KPDF_KPDF_QOUTPUTDEVKPRINTER_H
-#define KPDF_KPDF_QOUTPUTDEVKPRINTER_H
+#ifndef QOUTPUTDEVKPRINTER_H
+#define OUTPUTDEVKPRINTER_H
 
 #include "QOutputDev.h"
 
@@ -25,9 +25,8 @@ class KPrinter;
 
 class QOutputDevKPrinter : public QOutputDev
 {
-        Q_OBJECT
 public:
-        QOutputDevKPrinter( QPainter& painter, KPrinter& printer );
+        QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer);
         virtual ~QOutputDevKPrinter();
 
 	//----- initialization and control

@@ -34,15 +34,13 @@
 
 #include "QOutputDev.h"
 
-typedef double fp_t;
+class QPixmap;
 
 class QOutputDevPixmap : public QOutputDev {
-	Q_OBJECT
-
 public:
 
 	// Constructor.
-	QOutputDevPixmap( );
+	QOutputDevPixmap(SplashColor paperColor);
 
 	// Destructor.
 	virtual ~QOutputDevPixmap();

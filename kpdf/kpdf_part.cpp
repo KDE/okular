@@ -380,7 +380,11 @@ void Part::nextThumbnail()
   // Pixels per point when the zoomFactor is 1.
   const double basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
   const double ppp = basePpp * m_zoomFactor; // pixels per point
-  QOutputDevPixmap odev;
+  
+  SplashColor paperColor;
+  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+  QOutputDevPixmap odev(paperColor);
+  odev.startDoc(m_doc->getXRef());
   
   m_doc->displayPage(&odev, m_nextThumbnail, ppp * 72.0, ppp * 72.0, 0, true, true);
   pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
@@ -677,7 +681,10 @@ void Part::printPreview()
   KPrinter printer;
   printer.setPreviewOnly( true );
   QPainter painter( &printer );
-  QOutputDevKPrinter printdev( painter, printer );
+  SplashColor paperColor;
+  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+  QOutputDevKPrinter printdev( painter, paperColor, printer );
+  printdev.startDoc(m_doc->getXRef());
   int max = m_doc->getNumPages();
   for ( int i = 1; i <= max; ++i )
   {
@@ -690,7 +697,10 @@ void Part::printPreview()
 void Part::doPrint( KPrinter& printer )
 {
   QPainter painter( &printer );
-  QOutputDevKPrinter printdev( painter, printer );
+  SplashColor paperColor;
+  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+  QOutputDevKPrinter printdev( painter, paperColor, printer );
+  printdev.startDoc(m_doc->getXRef());
   QValueList<int> pages = printer.pageList();
   for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
   {

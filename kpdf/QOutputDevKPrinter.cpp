@@ -18,15 +18,13 @@
 // 02111-1307, USA.
 
 #include "QOutputDevKPrinter.h"
-#include "QOutputDevKPrinter.moc"
 
 #include <kprinter.h>
 #include <qpainter.h>
 
-QOutputDevKPrinter::QOutputDevKPrinter( QPainter& painter, KPrinter& printer )
-  : m_printer( printer )
+QOutputDevKPrinter::QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer )
+  : QOutputDev(&painter, paperColor), m_printer( printer )
 {
-  m_painter = &painter;
 }
 
 QOutputDevKPrinter::~QOutputDevKPrinter()

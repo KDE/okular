@@ -45,7 +45,6 @@
 #include <kdebug.h>
 
 #include "QOutputDevPixmap.h"
-#include "QOutputDevPixmap.moc"
 
 //------------------------------------------------------------------------
 // Constants and macros
@@ -63,11 +62,11 @@ static inline QColor q_col ( const GfxRGB &rgb )
 // QOutputDevPixmap
 //------------------------------------------------------------------------
 
-QOutputDevPixmap::QOutputDevPixmap () : QOutputDev(0), m_pixmap(0)
+QOutputDevPixmap::QOutputDevPixmap(SplashColor paperColor) : QOutputDev(0, paperColor), m_pixmap(0)
 {
 }
 
-QOutputDevPixmap::~QOutputDevPixmap ( )
+QOutputDevPixmap::~QOutputDevPixmap( )
 {
         delete m_pixmap;
 }

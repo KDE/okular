@@ -1,3 +1,6 @@
+2004-08-25  Albert Astals Cid <tsdgeos@terra.es>
+	* Completely use xpdf code for rendering that solves most font problems
+
 2004-08-23  Albert Astals Cid <tsdgeos@terra.es>
 	* Replace xpdf version with lastest one (3.00) that supports PDF 1.5
 

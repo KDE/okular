@@ -1,5 +1,5 @@
 # set the include path for X, qt and KDE
-INCLUDES = -I.. -I$(srcdir)/../goo -I$(srcdir)/../xpdf $(all_includes)
+INCLUDES = -I.. -I$(srcdir)/../splash -I$(srcdir)/../fofi -I$(srcdir)/../goo -I$(srcdir)/../xpdf $(all_includes) $(FREETYPE_CFLAGS)
 
 # these are the headers for your project
 noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_canvas.h kpdf_pagewidget.h QOutputDevPixmap.h QOutputDev.h
@@ -27,7 +27,7 @@ bin_PROGRAMS = kpdf
 kpdf_SOURCES = main.cpp kpdf_shell.cpp
 kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kpdf_LDADD   = $(LIB_KPARTS)
-kpdf_COMPILE_FIRST = ../aconf.h part.h
+kpdf_COMPILE_FIRST = part.h
 
 EXTRA_DIST = kpdf.desktop
 xdg_apps_DATA = kpdf.desktop

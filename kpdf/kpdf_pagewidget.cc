@@ -26,7 +26,9 @@ namespace KPDF
           m_currentPage( 1 ),
           m_pressedAction( 0 )
     {
-        m_outputdev = new QOutputDevPixmap();
+        SplashColor paperColor;
+        paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+        m_outputdev = new QOutputDevPixmap(paperColor);
         setFocusPolicy( QWidget::StrongFocus );
         viewport()->setFocusPolicy( QWidget::WheelFocus );
     }
@@ -38,6 +40,7 @@ namespace KPDF
     PageWidget::setPDFDocument(PDFDoc* doc)
     {
         m_doc = doc;
+        m_outputdev -> startDoc(doc->getXRef());
         m_currentPage = 1;
         updatePixmap();
     }

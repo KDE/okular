@@ -54,3 +54,9 @@ partdesktop_DATA = kpdf_part.desktop
 # this is where the part's XML-GUI resource file goes
 partrcdir   = $(kde_datadir)/kpdfpart
 partrc_DATA = kpdf_part.rc
+
+# This helps us with race conditions on local file dependencies
+# that may not exist during parallel make:
+
+.NOTPARALLEL:
+

@@ -68,6 +68,8 @@ install-data-local:
 	$(INSTALL_DATA) $(srcdir)/kdvi.kdelnk $(APPSDIR)
 	$(mkinstalldirs) $(kde_icondir)
 	$(INSTALL_DATA) $(srcdir)/pix/kdvi.xpm $(kde_icondir)
+	$(mkinstalldirs) $(kde_icondir)/large
+	$(INSTALL_DATA) $(srcdir)/pix/large-kdvi.xpm $(kde_icondir)/large/kdvi.xpm
 	$(mkinstalldirs) $(kde_minidir)
 	$(INSTALL_DATA) $(srcdir)/pix/mini-kdvi.xpm $(kde_minidir)/kdvi.xpm
 
@@ -75,6 +77,7 @@ install-data-local:
 uninstall-local:
 	-rm -f $(APPSDIR)/Kdvi.kdelnk
 	-rm -f $(kde_icondir)/kdvi.xpm
+	-rm -f $(kde_icondir)/large/kdvi.xpm
 	-rm -f $(kde_minidir)/kdvi.xpm
 
 clean-local:

@@ -40,7 +40,6 @@
 
 #include "dviwin.h"
 #include "fontprogress.h"
-#include "infodialog.h"
 #include "kdvi_multipage.h"
 
 extern QPainter foreGroundPaint; // QPainter used for text
@@ -64,7 +63,7 @@ void dviWindow::exportPDF(void)
   }
 
   // That sould also not happen.
-  if (_parentMPage->dviFile == NULL)
+  if (dviFile == NULL)
     return;
 
   // Is the dvipdfm-Programm available ??
@@ -90,15 +89,15 @@ void dviWindow::exportPDF(void)
   }
 
   // Generate a suggestion for a reasonable file name
-  QString suggestedName = _parentMPage->dviFile->filename;
+  QString suggestedName = dviFile->filename;
   suggestedName = suggestedName.left(suggestedName.find(".")) + ".pdf";
 
-  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.pdf|Portable Document Format (*.pdf)"), _parentMPage->scrollView(), i18n("Export File As"));
+  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.pdf|Portable Document Format (*.pdf)"), parentWidget, i18n("Export File As"));
   if (fileName.isEmpty())
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (_parentMPage->scrollView(), i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+    int r = KMessageBox::warningYesNo (parentWidget, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 				       i18n("Overwrite File"));
     if (r == KMessageBox::No)
       return;
@@ -113,10 +112,10 @@ void dviWindow::exportPDF(void)
 					  "a while because dvipdfm needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvipdfm to finish..."),
-				     _parentMPage->scrollView(), "dvipdfm progress dialog", false );
+				     parentWidget, "dvipdfm progress dialog", false );
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
-    progress->setTotalSteps( _parentMPage->dviFile->total_pages );
+    progress->setTotalSteps( dviFile->total_pages );
     qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortExternalProgramm(void)));
   }
 
@@ -134,16 +133,13 @@ void dviWindow::exportPDF(void)
   export_errorString = i18n("<qt>The external program 'dvipdf', which was used to export the file, reported an error. "
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
 			    "find in the File-Menu for a precise error report.</qt>") ;
-
-
-  if (_parentMPage->info)
-    _parentMPage->info->clear(i18n("Export: %1 to PDF").arg(KShellProcess::quote(_parentMPage->dviFile->filename)));
+  info.clear(i18n("Export: %1 to PDF").arg(KShellProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
-  finfo.setFile(_parentMPage->dviFile->filename);
+  finfo.setFile(dviFile->filename);
   *proc << QString("cd %1; dvipdfm").arg(KShellProcess::quote(finfo.dirPath(true)));
   *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
-  *proc << KShellProcess::quote(_parentMPage->dviFile->filename);
+  *proc << KShellProcess::quote(dviFile->filename);
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
     kdError(4300) << "dvipdfm failed to start" << endl;
@@ -156,7 +152,7 @@ void dviWindow::exportPDF(void)
 void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 {
   // Safety check.
-  if (_parentMPage->dviFile->page_offset == 0)
+  if (dviFile->page_offset == 0)
     return;
 
   // It could perhaps happen that a kShellProcess, which runs an
@@ -173,21 +169,21 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   }
 
   // That sould also not happen.
-  if (_parentMPage->dviFile == NULL)
+  if (dviFile == NULL)
     return;
 
   QString fileName;
   if (fname.isEmpty()) {
     // Generate a suggestion for a reasonable file name
-    QString suggestedName = _parentMPage->dviFile->filename;
+    QString suggestedName = dviFile->filename;
     suggestedName = suggestedName.left(suggestedName.find(".")) + ".ps";
 
-    fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.ps|PostScript (*.ps)"), _parentMPage->scrollView(), i18n("Export File As"));
+    fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.ps|PostScript (*.ps)"), parentWidget, i18n("Export File As"));
     if (fileName.isEmpty())
       return;
     QFileInfo finfo(fileName);
     if (finfo.exists()) {
-      int r = KMessageBox::warningYesNo (_parentMPage->scrollView(), i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+      int r = KMessageBox::warningYesNo (parentWidget, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 					 i18n("Overwrite File"));
       if (r == KMessageBox::No)
 	return;
@@ -206,10 +202,10 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 					  "a while because dvips needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvips to finish..."),
-				     _parentMPage->scrollView(), "dvips progress dialog", false );
+				     parentWidget, "dvips progress dialog", false );
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
-    progress->setTotalSteps( _parentMPage->dviFile->total_pages );
+    progress->setTotalSteps( dviFile->total_pages );
     qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortExternalProgramm(void)));
   }
 
@@ -228,7 +224,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 
   // Sourcefile is the name of the DVI which is used by dvips, either
   // the original file, or a temporary file with a new numbering.
-  QString sourceFileName = _parentMPage->dviFile->filename;
+  QString sourceFileName = dviFile->filename;
   if (options.isEmpty() == false) {
     // Get a name for a temporary file.
     KTempFile export_tmpFile;
@@ -236,14 +232,14 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     export_tmpFile.unlink();
 
     sourceFileName     = export_tmpFileName;
-    if (KIO::NetAccess::copy(KURL::fromPathOrURL( _parentMPage->dviFile->filename ), KURL::fromPathOrURL( sourceFileName ))) {
+    if (KIO::NetAccess::copy(KURL::fromPathOrURL( dviFile->filename ), KURL::fromPathOrURL( sourceFileName ))) {
       int wordSize;
       bool bigEndian;
       qSysInfo (&wordSize, &bigEndian);
       // Proper error handling? We don't care.
       FILE *f = fopen(QFile::encodeName(sourceFileName),"r+");
-      for(Q_UINT32 i=1; i<=_parentMPage->dviFile->total_pages; i++) {
-	fseek(f,_parentMPage->dviFile->page_offset[i-1]+1, SEEK_SET);
+      for(Q_UINT32 i=1; i<=dviFile->total_pages; i++) {
+	fseek(f,dviFile->page_offset[i-1]+1, SEEK_SET);
 	// Write the page number to the file, taking good care of byte
 	// orderings. Hopefully QT will implement random access QFiles
 	// soon.
@@ -267,8 +263,8 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       }
       fclose(f);
     } else {
-      KMessageBox::error(_parentMPage->scrollView(), i18n("<qt>Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
-				    "The export or print command is aborted.</qt>").arg(_parentMPage->dviFile->filename).arg(sourceFileName));
+      KMessageBox::error(parentWidget, i18n("<qt>Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
+				    "The export or print command is aborted.</qt>").arg(dviFile->filename).arg(sourceFileName));
       return;
     }
   }
@@ -286,11 +282,10 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   export_errorString = i18n("<qt>The external program 'dvips', which was used to export the file, reported an error. "
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
 			    "find in the File-Menu for a precise error report.</qt>") ;
-  if (_parentMPage->info)
-    _parentMPage->info->clear(i18n("Export: %1 to PostScript").arg(KShellProcess::quote(_parentMPage->dviFile->filename)));
+  info.clear(i18n("Export: %1 to PostScript").arg(KShellProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
-  QFileInfo finfo(_parentMPage->dviFile->filename);
+  QFileInfo finfo(dviFile->filename);
   *proc << QString("cd %1; dvips").arg(KShellProcess::quote(finfo.dirPath(true)));
   if (printer == 0)
     *proc << "-z"; // export Hyperlinks
@@ -313,8 +308,7 @@ void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
     return;
   QString op = QString::fromLocal8Bit(buffer, buflen);
 
-  if (_parentMPage->info != 0)
-    _parentMPage->info->outputReceiver(op);
+  info.outputReceiver(op);
   if (progress != 0)
     progress->show();
 }
@@ -327,7 +321,7 @@ void dviWindow::dvips_terminated(KProcess *sproc)
   // export_errorString, does not correspond to sproc. In that case,
   // we ingore the return status silently.
   if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0))
-    KMessageBox::error( _parentMPage->scrollView(), export_errorString );
+    KMessageBox::error( parentWidget, export_errorString );
 
   if (export_printer != 0)
     export_printer->printFiles( QStringList(export_fileName), true );
@@ -343,7 +337,7 @@ void dviWindow::editorCommand_terminated(KProcess *sproc)
   // export_errorString, does not correspond to sproc. In that case,
   // we ingore the return status silently.
   if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0))
-    KMessageBox::error( _parentMPage->scrollView(), export_errorString );
+    KMessageBox::error( parentWidget, export_errorString );
 
   // Let's hope that this is not all too nasty... killing a
   // KShellProcess from a slot that was called from the KShellProcess

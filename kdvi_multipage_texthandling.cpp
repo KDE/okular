@@ -46,9 +46,9 @@ void KDVIMultiPage::doExportText(void)
 #endif
 
   // Paranoid safety checks
-  if ((window == 0) || (dviFile == 0))
+  if ((window == 0) || (window->dviFile == 0))
     return;
-  if (dviFile->dvi_Data == 0 )
+  if (window->dviFile->dvi_Data == 0 )
     return;
   
   if (KMessageBox::warningContinueCancel( scrollView(),
@@ -62,7 +62,7 @@ void KDVIMultiPage::doExportText(void)
     return;
 
   // Generate a suggestion for a reasonable file name
-  QString suggestedName = dviFile->filename;
+  QString suggestedName = window->dviFile->filename;
   suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
 
   QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.txt|Plain Text (Latin 1) (*.txt)"), scrollView(), i18n("Export File As"));
@@ -80,12 +80,12 @@ void KDVIMultiPage::doExportText(void)
   textFile.open( IO_WriteOnly );
   QTextStream stream( &textFile );
 
-  QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), dviFile->total_pages, scrollView(), "export_text_progress", TRUE );
+  QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), window->dviFile->total_pages, scrollView(), "export_text_progress", TRUE );
   progress.setMinimumDuration(300);
 
   documentPage dummyPage;
 
-  for(int page=1; page <= dviFile->total_pages; page++) {
+  for(int page=1; page <= window->dviFile->total_pages; page++) {
     progress.setProgress( page );
     // Funny. The manual to QT tells us that we need to call
     // qApp->processEvents() regularly to keep the application from
@@ -107,7 +107,7 @@ void KDVIMultiPage::doExportText(void)
   }
 
   // Switch off the progress dialog, etc.
-  progress.setProgress( dviFile->total_pages );
+  progress.setProgress( window->dviFile->total_pages );
   return;
 }
 
@@ -192,7 +192,7 @@ void KDVIMultiPage::findNextText(void)
 
 
   QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"), 
-			    dviFile->total_pages, scrollView(), "searchForwardTextProgress", TRUE );
+			    window->dviFile->total_pages, scrollView(), "searchForwardTextProgress", TRUE );
   progress.setMinimumDuration ( 1000 );
 
   documentPage dummyPage; 
@@ -200,7 +200,7 @@ void KDVIMultiPage::findNextText(void)
 
     // If we reach the end of the last page, start from the beginning
     // of the document, but ask the user first.
-    if (pageNumber > dviFile->total_pages) {
+    if (pageNumber > window->dviFile->total_pages) {
       progress.hide();
       if (oneTimeRound == true)
 	break;
@@ -224,7 +224,7 @@ void KDVIMultiPage::findNextText(void)
     if (pageNumber > currentPage.getPageNumber())
       progress.setProgress( pageNumber - currentPage.getPageNumber() );
     else
-      progress.setProgress( pageNumber +  dviFile->total_pages - currentPage.getPageNumber() );
+      progress.setProgress( pageNumber +  window->dviFile->total_pages - currentPage.getPageNumber() );
 
     qApp->processEvents();
     if ( progress.wasCancelled() )
@@ -298,7 +298,7 @@ void KDVIMultiPage::findPrevText(void)
 
 
   QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"), 
-			    dviFile->total_pages, scrollView(), "searchForwardTextProgress", TRUE );
+			    window->dviFile->total_pages, scrollView(), "searchForwardTextProgress", TRUE );
   progress.setMinimumDuration ( 1000 );
 
   documentPage dummyPage; 
@@ -317,7 +317,7 @@ void KDVIMultiPage::findPrevText(void)
 							       "of the document?</qt>").arg(searchText), 
 					    i18n("Text Not Found"));
       if (answ == KMessageBox::Yes) 
-	pageNumber = dviFile->total_pages;
+	pageNumber = window->dviFile->total_pages;
       else
 	return;
     }
@@ -325,7 +325,7 @@ void KDVIMultiPage::findPrevText(void)
     if (pageNumber < currentPage.getPageNumber())
       progress.setProgress( currentPage.getPageNumber() - pageNumber );
     else
-      progress.setProgress( currentPage.getPageNumber() + dviFile->total_pages - pageNumber );
+      progress.setProgress( currentPage.getPageNumber() + window->dviFile->total_pages - pageNumber );
 
     qApp->processEvents();
     if ( progress.wasCancelled() )

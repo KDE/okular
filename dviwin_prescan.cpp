@@ -74,14 +74,14 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 
   
   // Now locate the Gfx file on the hard disk...
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, _parentMPage->dviFile);
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
-    Q_UINT32 currentOffset = beginningOfSpecialCommand - _parentMPage->dviFile->dvi_Data;
+    Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data;
     Q_UINT16 page;
-    for(page=0; page < _parentMPage->dviFile->total_pages; page++) 
-      if ((_parentMPage->dviFile->page_offset[page] <= currentOffset) && (currentOffset <= _parentMPage->dviFile->page_offset[page+1]))
+    for(page=0; page < dviFile->total_pages; page++) 
+      if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
 	break;
     errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>").arg(page+1).arg(originalFName);
     embedPS_progress->progressBar()->advance(1);
@@ -134,11 +134,11 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   PS = PS.simplifyWhiteSpace();
   
   
-  _parentMPage->dviFile->isModified = true;
+  dviFile->isModified = true;
   Q_UINT32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
   Q_UINT32 lengthOfNewSpecial = PS.length()+5;
   
-  Q_UINT8 *newDVI = new Q_UINT8[_parentMPage->dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial];
+  Q_UINT8 *newDVI = new Q_UINT8[dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial];
   if (newDVI == 0) {
     kdError(4300) << "Out of memory -- could not embed PS file" << endl;
     return;
@@ -146,61 +146,61 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   
   Q_UINT8 *commandPtrSav = command_pointer;
   Q_UINT8 *endPtrSav = end_pointer;
-  end_pointer = newDVI + _parentMPage->dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
-  memcpy(newDVI, _parentMPage->dviFile->dvi_Data, beginningOfSpecialCommand-_parentMPage->dviFile->dvi_Data);
-  command_pointer = newDVI+(beginningOfSpecialCommand-_parentMPage->dviFile->dvi_Data);
+  end_pointer = newDVI + dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
+  memcpy(newDVI, dviFile->dvi_Data, beginningOfSpecialCommand-dviFile->dvi_Data);
+  command_pointer = newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data);
   command_pointer[0] = XXX4;
   command_pointer++;
   writeUINT32(PS.length());
-  memcpy(newDVI+(beginningOfSpecialCommand-_parentMPage->dviFile->dvi_Data)+5, PS.latin1(), PS.length() );
-  memcpy(newDVI+(beginningOfSpecialCommand-_parentMPage->dviFile->dvi_Data)+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
-	 _parentMPage->dviFile->size_of_file-(beginningOfSpecialCommand-_parentMPage->dviFile->dvi_Data)-lengthOfOldSpecial );
+  memcpy(newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data)+5, PS.latin1(), PS.length() );
+  memcpy(newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data)+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
+	 dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data)-lengthOfOldSpecial );
   
   // Adjust page pointers in the DVI file
-  _parentMPage->dviFile->size_of_file = _parentMPage->dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
-  end_pointer = newDVI + _parentMPage->dviFile->size_of_file;
-  Q_UINT32 currentOffset = beginningOfSpecialCommand-_parentMPage->dviFile->dvi_Data;
-  for(Q_UINT16 i=0; i < _parentMPage->dviFile->total_pages; i++) {
-    if (_parentMPage->dviFile->page_offset[i] > currentOffset) {
-      _parentMPage->dviFile->page_offset[i] = _parentMPage->dviFile->page_offset[i] + lengthOfNewSpecial-lengthOfOldSpecial;
-      command_pointer = _parentMPage->dviFile->page_offset[i] + newDVI + 4*10 + 1;
+  dviFile->size_of_file = dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
+  end_pointer = newDVI + dviFile->size_of_file;
+  Q_UINT32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data;
+  for(Q_UINT16 i=0; i < dviFile->total_pages; i++) {
+    if (dviFile->page_offset[i] > currentOffset) {
+      dviFile->page_offset[i] = dviFile->page_offset[i] + lengthOfNewSpecial-lengthOfOldSpecial;
+      command_pointer = dviFile->page_offset[i] + newDVI + 4*10 + 1;
       Q_UINT32 a = readUINT32();
       if (a > currentOffset) {
 	a = a + lengthOfNewSpecial-lengthOfOldSpecial;
-	command_pointer = _parentMPage->dviFile->page_offset[i] + newDVI + 4*10 + 1;
+	command_pointer = dviFile->page_offset[i] + newDVI + 4*10 + 1;
 	writeUINT32(a);
       }
     }
   }
   
   
-  _parentMPage->dviFile->beginning_of_postamble            = _parentMPage->dviFile->beginning_of_postamble + lengthOfNewSpecial - lengthOfOldSpecial;
-  _parentMPage->dviFile->page_offset[_parentMPage->dviFile->total_pages] = _parentMPage->dviFile->beginning_of_postamble;
+  dviFile->beginning_of_postamble            = dviFile->beginning_of_postamble + lengthOfNewSpecial - lengthOfOldSpecial;
+  dviFile->page_offset[dviFile->total_pages] = dviFile->beginning_of_postamble;
   
-  command_pointer = newDVI + _parentMPage->dviFile->beginning_of_postamble + 1;
+  command_pointer = newDVI + dviFile->beginning_of_postamble + 1;
   Q_UINT32 a = readUINT32();
   if (a > currentOffset) {
     a = a + lengthOfNewSpecial - lengthOfOldSpecial;
-    command_pointer = newDVI + _parentMPage->dviFile->beginning_of_postamble + 1;
+    command_pointer = newDVI + dviFile->beginning_of_postamble + 1;
     writeUINT32(a);
   }
   
-  command_pointer = newDVI + _parentMPage->dviFile->size_of_file - 1;
+  command_pointer = newDVI + dviFile->size_of_file - 1;
   while((*command_pointer == TRAILER) && (command_pointer > newDVI))
     command_pointer--;
   command_pointer -= 4;
-  writeUINT32(_parentMPage->dviFile->beginning_of_postamble);
+  writeUINT32(dviFile->beginning_of_postamble);
   command_pointer -= 4;
   
   command_pointer = commandPtrSav;
   end_pointer     = endPtrSav;
   
   // Modify all pointers to point to the newly allocated memory
-  command_pointer = newDVI + (command_pointer - _parentMPage->dviFile->dvi_Data) + lengthOfNewSpecial-lengthOfOldSpecial;
-  end_pointer = newDVI + (end_pointer - _parentMPage->dviFile->dvi_Data)  + lengthOfNewSpecial-lengthOfOldSpecial;
+  command_pointer = newDVI + (command_pointer - dviFile->dvi_Data) + lengthOfNewSpecial-lengthOfOldSpecial;
+  end_pointer = newDVI + (end_pointer - dviFile->dvi_Data)  + lengthOfNewSpecial-lengthOfOldSpecial;
   
-  delete [] _parentMPage->dviFile->dvi_Data;
-  _parentMPage->dviFile->dvi_Data = newDVI;
+  delete [] dviFile->dvi_Data;
+  dviFile->dvi_Data = newDVI;
   
   embedPS_progress->progressBar()->advance(1);
   qApp->processEvents();
@@ -218,10 +218,10 @@ void dviWindow::prescan_ParsePapersizeSpecial(QString cp)
 
   if (cp[0] == '=') {
     cp = cp.mid(1);
-    _parentMPage->dviFile->suggestedPageSize = new pageSize;
-    _parentMPage->dviFile->suggestedPageSize->setPageSize(cp);
+    dviFile->suggestedPageSize = new pageSize;
+    dviFile->suggestedPageSize->setPageSize(cp);
 #ifdef DEBUG_SPECIAL
-    kdDebug(4300) << "Suggested paper size is " << _parentMPage->dviFile->suggestedPageSize.serialize() << "." << endl;
+    kdDebug(4300) << "Suggested paper size is " << dviFile->suggestedPageSize.serialize() << "." << endl;
 #endif
   } else 
     printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.").arg(cp));
@@ -234,7 +234,7 @@ void dviWindow::prescan_ParseBackgroundSpecial(QString cp)
 {
   QColor col = parseColorSpecification(cp.stripWhiteSpace());
   if (col.isValid())
-    for(Q_UINT16 page=current_page; page < _parentMPage->dviFile->total_pages; page++)
+    for(Q_UINT16 page=current_page; page < dviFile->total_pages; page++)
       PS_interface->setColor(page, col);
   return;
 }
@@ -281,8 +281,8 @@ void dviWindow::prescan_ParsePSQuoteSpecial(QString cp)
 
 #endif
   
-  double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[_parentMPage->font_pool->getMetafontMode()])-300;
-  double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[_parentMPage->font_pool->getMetafontMode()] - 300;
+  double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
+  double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
   PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
   PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
   PostScriptOutPutString->append( cp );
@@ -326,8 +326,8 @@ void dviWindow::prescan_ParsePSSpecial(QString cp)
   }
   
   
-  double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[_parentMPage->font_pool->getMetafontMode()])-300;
-  double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[_parentMPage->font_pool->getMetafontMode()] - 300;
+  double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
+  double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
   
   if (cp.find("ps::[begin]", 0, false) == 0) {
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
@@ -355,7 +355,7 @@ void dviWindow::prescan_ParsePSFileSpecial(QString cp)
 
   QString include_command = cp.simplifyWhiteSpace();
 
-  _parentMPage->dviFile->numberOfExternalPSFiles++;  
+  dviFile->numberOfExternalPSFiles++;  
 
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away. Of
@@ -374,7 +374,7 @@ void dviWindow::prescan_ParsePSFileSpecial(QString cp)
   }
 
   // Now locate the Gfx file on the hard disk...
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, _parentMPage->dviFile);
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
   // Now parse the arguments. 
   int  llx     = 0; 
@@ -397,8 +397,8 @@ void dviWindow::prescan_ParsePSFileSpecial(QString cp)
   parse_special_argument(include_command, "angle=", &angle);
 
   if (QFile::exists(EPSfilename)) {
-    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[_parentMPage->font_pool->getMetafontMode()])-300;
-    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[_parentMPage->font_pool->getMetafontMode()] - 300;
+    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
+    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( "@beginspecial " );
     PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
@@ -433,7 +433,7 @@ void dviWindow::prescan_ParseSourceSpecial(QString cp)
     if (!cp.at(j).isNumber())
       break;
   Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
-  QFileInfo fi1(_parentMPage->dviFile->filename);
+  QFileInfo fi1(dviFile->filename);
   QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).stripWhiteSpace()).absFilePath();
   DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page, currinf.data.dvi_v);
   sourceHyperLinkAnchors.push_back(sfa);
@@ -524,8 +524,8 @@ void dviWindow::prescan_setChar(unsigned int ch)
     glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
     if (g == NULL)
       return;
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * _parentMPage->dviFile->getCmPerDVIunit() * 
-				(MFResolutions[_parentMPage->font_pool->getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
+				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
     return;
   }
  
@@ -533,8 +533,8 @@ void dviWindow::prescan_setChar(unsigned int ch)
     macro *m = &currinf.fontp->macrotable[ch];
     if (m->pos == NULL) 
       return;
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * _parentMPage->dviFile->getCmPerDVIunit() * 
-				(MFResolutions[_parentMPage->font_pool->getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
+				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
     return;
   }
 }
@@ -548,8 +548,8 @@ void dviWindow::prescan(parseSpecials specialParser)
   
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   Q_UINT8 ch;
-  double fontPixelPerDVIunit = _parentMPage->dviFile->getCmPerDVIunit() * 
-    MFResolutions[_parentMPage->font_pool->getMetafontMode()]/2.54;
+  double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 
+    MFResolutions[font_pool.getMetafontMode()]/2.54;
 
   stack.clear();
 
@@ -602,8 +602,8 @@ void dviWindow::prescan(parseSpecials specialParser)
       
     case BOP:
       command_pointer += 11 * 4;
-      currinf.data.dvi_h = MFResolutions[_parentMPage->font_pool->getMetafontMode()] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-      currinf.data.dvi_v = MFResolutions[_parentMPage->font_pool->getMetafontMode()];
+      currinf.data.dvi_h = MFResolutions[font_pool.getMetafontMode()] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
+      currinf.data.dvi_v = MFResolutions[font_pool.getMetafontMode()];
       currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
       currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
       break;

@@ -197,8 +197,8 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * _parentMPage->dviFile->getCmPerDVIunit() * 
-				(MFResolutions[_parentMPage->font_pool->getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
+				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 
   word_boundary_encountered = false;
   line_boundary_encountered = false;
@@ -237,7 +237,7 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
   Q_UINT8 *end_ptr_sav      = end_pointer;
   command_pointer           = m->pos;
   end_pointer               = m->end;
-  draw_part(currinf.fontp->scaled_size_in_DVI_units*(_parentMPage->dviFile->getCmPerDVIunit() * MFResolutions[_parentMPage->font_pool->getMetafontMode()] / 2.54)/16.0, true);
+  draw_part(currinf.fontp->scaled_size_in_DVI_units*(dviFile->getCmPerDVIunit() * MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0, true);
   command_pointer           = command_ptr_sav;
   end_pointer               = end_ptr_sav;
   currinf = oldinfo;
@@ -245,8 +245,8 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * _parentMPage->dviFile->getCmPerDVIunit() * 
-				(MFResolutions[_parentMPage->font_pool->getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
+				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 }
 
 
@@ -357,8 +357,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    line_boundary_encountered = true;
 	  }
 	  command_pointer += 11 * 4;
-	  currinf.data.dvi_h = MFResolutions[_parentMPage->font_pool->getMetafontMode()] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-	  currinf.data.dvi_v = MFResolutions[_parentMPage->font_pool->getMetafontMode()];
+	  currinf.data.dvi_h = MFResolutions[font_pool.getMetafontMode()] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
+	  currinf.data.dvi_v = MFResolutions[font_pool.getMetafontMode()];
 	  currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
 	  currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
 	  break;
@@ -588,7 +588,7 @@ void dviWindow::draw_page(void)
   // return and do not draw anything. The font_pool will later emit
   // the signal "fonts_are_loaded" and thus trigger a redraw of the
   // page.
-  if (_parentMPage->font_pool->check_if_fonts_filenames_are_looked_up() == false)
+  if (font_pool.check_if_fonts_filenames_are_looked_up() == false)
     return;
 
 #ifdef PERFORMANCE_MEASUREMENT
@@ -618,20 +618,20 @@ void dviWindow::draw_page(void)
   }
 
   // Now really write the text
-  if (_parentMPage->dviFile->page_offset == 0)
+  if (dviFile->page_offset == 0)
     return;
-  if (current_page < _parentMPage->dviFile->total_pages) {
-    command_pointer = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page];
-    end_pointer     = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page+1];
+  if (current_page < dviFile->total_pages) {
+    command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
+    end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
   } else
     command_pointer = end_pointer = 0;
 
   memset((char *) &currinf.data, 0, sizeof(currinf.data));
-  currinf.fonttable      = &(_parentMPage->dviFile->tn_table);
+  currinf.fonttable      = &(dviFile->tn_table);
   currinf._virtual       = 0;
 
-  double fontPixelPerDVIunit = _parentMPage->dviFile->getCmPerDVIunit() * 
-    MFResolutions[_parentMPage->font_pool->getMetafontMode()]/2.54;
+  double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 
+    MFResolutions[font_pool.getMetafontMode()]/2.54;
   
   draw_part(65536.0*fontPixelPerDVIunit, false);
   if (HTML_href != 0) {
@@ -646,7 +646,7 @@ void dviWindow::draw_page(void)
   // Mark hyperlinks in blue. We draw a blue line under the
   // character whose width is equivalent to 0.5 mm, but at least
   // one pixel.
-  int h = (int)(MFResolutions[_parentMPage->font_pool->getMetafontMode()]*0.05/(2.54*shrinkfactor) + 0.5);
+  int h = (int)(MFResolutions[font_pool.getMetafontMode()]*0.05/(2.54*shrinkfactor) + 0.5);
   h = (h < 1) ? 1 : h;
   for(unsigned int i=0; i<currentlyDrawnPage->hyperLinkList.size(); i++) {
     int x = currentlyDrawnPage->hyperLinkList[i].box.left();

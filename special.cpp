@@ -27,10 +27,10 @@ extern QPainter foreGroundPaint;
 
 void dviWindow::printErrorMsgForSpecials(QString msg)
 {
-  if (_parentMPage->dviFile->errorCounter < 25) {
+  if (dviFile->errorCounter < 25) {
     kdError(4300) << msg << endl;
-    _parentMPage->dviFile->errorCounter++;
-    if (_parentMPage->dviFile->errorCounter == 25)
+    dviFile->errorCounter++;
+    if (dviFile->errorCounter == 25)
       kdError(4300) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
   }
 }
@@ -140,7 +140,7 @@ void dviWindow::color_special(QString cp)
     // Take color off the stack
     if (colorStack.isEmpty())
       printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Color pop command issued when the color stack is empty." ).
-				arg(_parentMPage->dviFile->filename).arg(current_page));
+				arg(dviFile->filename).arg(current_page));
     else
       colorStack.pop();
     return;
@@ -247,7 +247,7 @@ void dviWindow::epsf_special(QString cp)
   if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, _parentMPage->dviFile);
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
   // Now parse the arguments. 
   int  llx     = 0; 
@@ -284,8 +284,8 @@ void dviWindow::epsf_special(QString cp)
       bbox_height = rhi;
     }
 
-    double fontPixelPerDVIunit = _parentMPage->dviFile->getCmPerDVIunit() * 
-      MFResolutions[_parentMPage->font_pool->getMetafontMode()]/2.54;
+    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 
+      MFResolutions[font_pool.getMetafontMode()]/2.54;
     
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;

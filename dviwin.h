@@ -24,11 +24,13 @@
 #include "documentPage.h"
 #include "dviFile.h"
 #include "fontpool.h"
+#include "infodialog.h"
 #include "psgs.h"
 
 
 class dviWindow;
 class fontProgressDialog;
+class infoDialog;
 class KAction;
 class KDVIMultiPage;
 class KPrinter;
@@ -95,11 +97,15 @@ class dviWindow : public QObject, bigEndianByteReader
   Q_OBJECT
 
 public:
-  dviWindow( double zoom, KDVIMultiPage *par);
+  dviWindow(QWidget *parent);
   ~dviWindow();
 
-  KDVIMultiPage *_parentMPage;
   documentPage  *currentlyDrawnPage;
+
+  class dvifile *dviFile;
+
+  void          setPrefs(bool flag_showPS, bool flag_showHyperLinks, const QString &editorCommand, 
+			 unsigned int MetaFontMode, bool makePK, bool useType1Fonts, bool useFontHints );
 
   bool          supportsTextSearch(void) {return true;};
 
@@ -108,12 +114,9 @@ public:
 
   void          changePageSize(void);
   int		totalPages(void);
-  void		setShowPS( bool flag );
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
-  void		setShowHyperLinks( bool flag );
   bool		showHyperLinks(void) { return _showHyperLinks; };
-  void		setEditorCommand( const QString &command )  { editorCommand = command; };
   void		setPaper(double w, double h);
   static bool   correctDVI(const QString &filename);
   
@@ -146,6 +149,7 @@ public:
 
 
 public slots:
+  void          showInfo(void);
   void          handleLocalLink(const QString &linkText);
   void          handleSRCLink(const QString &linkText, QMouseEvent * e);
 
@@ -198,6 +202,12 @@ signals:
   void flash(int);
 
 private:
+  fontPool      font_pool;
+  infoDialog    info;
+
+  QWidget       *parentWidget;
+
+
   // @@@ explanation
   void          prescan(parseSpecials specialParser);
   void          prescan_embedPS(char *cp, Q_UINT8 *);
@@ -291,12 +301,7 @@ private:
   /** List of anchors in a document */
   QMap<QString, DVI_Anchor> anchorList;
   
-  int		   ChangesPossible;
   unsigned int	   current_page;
-  
-  /** Indicates if the current page is already drawn (=1) or not
-      (=0). */
-  char              is_current_page_drawn;
   
   // Zoom factor. 1.0 means "100%"
   double            _zoom;

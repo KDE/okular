@@ -9,7 +9,6 @@
 #include <kparts/browserextension.h>
 #include <kparts/factory.h>
 
-class infoDialog;
 class documentWidget;
 class KPrinter;
 class OptionDialog;
@@ -45,10 +44,6 @@ class KDVIMultiPage : public KMultiPage
   Q_OBJECT
 
 public:
-  fontPool      *font_pool;
-  class dvifile *dviFile;
-  infoDialog    *info;
-
   documentWidget *dviWidget;
   documentPage  currentPage;
 
@@ -155,7 +150,6 @@ signals:
 
 protected slots:
   void doSettings();
-  void doInfo();
   void doExportPS();
   void doExportPDF();
   void doExportText();

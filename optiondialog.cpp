@@ -71,8 +71,8 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   EditorDescriptions += i18n("NEdit perfectly supports inverse search.");
   
   EditorNames        += "VIM - Vi IMproved / GUI";
-  EditorCommands     += "gvim +%l %f";
-  EditorDescriptions += i18n("VIM always opens a new window.");
+  EditorCommands     += "gvim --servername kdvi --remote +%l %f";
+  EditorDescriptions += i18n("VIM version 6.0 or greater works just fine.");
 
   EditorNames        += "XEmacs / gnuclient";
   EditorCommands     += "gnuclient -q +%l %f || xemacs  +%l %f";
@@ -200,7 +200,7 @@ void OptionDialog::makeFontPage()
 
 void OptionDialog::makeRenderingPage()
 {
-  QVBox *page = addVBoxPage( i18n("Rendering") );
+  QVBox *page = addVBoxPage( i18n("DVI specials") );
 
   mRender.showSpecialCheck = new QCheckBox( i18n("Show PostScript specials"), page );
   QToolTip::add( mRender.showSpecialCheck, i18n("If in doubt, switch on!") );

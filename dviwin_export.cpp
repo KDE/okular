@@ -107,8 +107,8 @@ void dviWindow::exportText(void)
     draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
     foreGroundPaint.end();
 
-    for(unsigned int i=0; i<currentlyDrawnPage.textLinkList.size(); i++)
-      stream << currentlyDrawnPage.textLinkList[i].linkText << endl;
+    for(unsigned int i=0; i<currentlyDrawnPage->textLinkList.size(); i++)
+      stream << currentlyDrawnPage->textLinkList[i].linkText << endl;
   }
 
   // Switch off the progress dialog, etc.

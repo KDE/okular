@@ -317,7 +317,7 @@ QStringList KDVIMultiPage::fileFormats()
 bool KDVIMultiPage::gotoPage(int page)
 {
   document_history.add(page,0);
-  window->currentlyDrawnPage.setPageNumber(page+1);
+  window->currentlyDrawnPage->setPageNumber(page+1);
   return true;
 }
 
@@ -325,10 +325,10 @@ void KDVIMultiPage::goto_page(int page, int y)
 {
   document_history.add(page,y);
   if (y != 0) {
-    window->currentlyDrawnPage.setPageNumber(page+1);
+    window->currentlyDrawnPage->setPageNumber(page+1);
     dviWidget->flash(y);
   } else
-    window->currentlyDrawnPage.setPageNumber(page+1);
+    window->currentlyDrawnPage->setPageNumber(page+1);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
   emit pageInfo(window->totalPages(), page );
 }
@@ -663,7 +663,7 @@ void KDVIMultiPage::reload()
     enableActions(r);
 
     // Go to the old page and tell kviewshell where we are.
-    window->currentlyDrawnPage.setPageNumber(currsav);
+    window->currentlyDrawnPage->setPageNumber(currsav);
     // We don't use "currsav" here, because that page may no longer
     // exist. In that case, gotoPage already selected another page.
     emit pageInfo(window->totalPages(), window->curr_page()-1 );

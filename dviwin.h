@@ -100,7 +100,7 @@ public:
   ~dviWindow();
 
   KDVIMultiPage *_parentMPage;
-  documentPage  currentlyDrawnPage;
+  documentPage  *currentlyDrawnPage;
 
   void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
@@ -118,7 +118,7 @@ public:
   static bool   correctDVI(const QString &filename);
   
   // for the preview
-  QPixmap      *pix() { return currentlyDrawnPage.getPixmap();  };
+  QPixmap      *pix() { return currentlyDrawnPage->getPixmap();  };
 
   // These should not be public... only for the moment
   void          read_postamble(void);

@@ -108,10 +108,10 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       dhl.baseline = currinf.data.pxl_v;
       dhl.box.setRect(x, y, pix.width(), pix.height());
       dhl.linkText = *HTML_href;
-      currentlyDrawnPage.hyperLinkList.push_back(dhl);
+      currentlyDrawnPage->hyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentlyDrawnPage.hyperLinkList[currentlyDrawnPage.hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-      currentlyDrawnPage.hyperLinkList[currentlyDrawnPage.hyperLinkList.size()-1].box = dshunion;
+      QRect dshunion = currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box = dshunion;
     }
   }
   
@@ -129,15 +129,15 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
 	dhl.linkText = *source_href;
       else
 	dhl.linkText = "";
-      currentlyDrawnPage.sourceHyperLinkList.push_back(dhl);
+      currentlyDrawnPage->sourceHyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentlyDrawnPage.sourceHyperLinkList[currentlyDrawnPage.sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-      currentlyDrawnPage.sourceHyperLinkList[currentlyDrawnPage.sourceHyperLinkList.size()-1].box = dshunion;
+      QRect dshunion = currentlyDrawnPage->sourceHyperLinkList[currentlyDrawnPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      currentlyDrawnPage->sourceHyperLinkList[currentlyDrawnPage->sourceHyperLinkList.size()-1].box = dshunion;
     }
   }
   
   // Code for DVI -> text functions (e.g. marking of text, full text
-  // search, etc.). Set up the currentlyDrawnPage.textLinkList.
+  // search, etc.). Set up the currentlyDrawnPage->textLinkList.
   if (line_boundary_encountered == true) {
     // Set up source hyperlinks
     DVI_Hyperlink link;
@@ -145,51 +145,51 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     link.box.setRect(x, y, pix.width(), pix.height());
     link.linkText = "";
     
-    currentlyDrawnPage.textLinkList.push_back(link);
+    currentlyDrawnPage->textLinkList.push_back(link);
   } else {
     // line boundary encountered
-    QRect dshunion = currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box = dshunion;
+    QRect dshunion = currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].box = dshunion;
   }
   
   switch(ch) {
   case 0x0b:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ff";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "ff";
     break;
   case 0x0c:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "fi";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "fi";
     break;
   case 0x0d:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "fl";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "fl";
     break;
   case 0x0e:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ffi";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "ffi";
     break;
   case 0x0f:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "ffl";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "ffl";
     break;
     
   case 0x7b:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "-";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "-";
     break;
   case 0x7c:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "---";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "---";
     break;
   case 0x7d:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "\"";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "\"";
     break;
   case 0x7e:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "~";
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "~";
     break;
   case 0x7f:
-    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "@@"; // @@@ check!
+    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "@@"; // @@@ check!
     break;
     
   default:
     if ((ch >= 0x21) && (ch <= 0x7a))
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += QChar(ch);
+      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += QChar(ch);
     else
-      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += "?";
+      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "?";
     break;
   }
   
@@ -411,8 +411,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      ((RRtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (RRtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
-	      (currentlyDrawnPage.textLinkList.size() > 0))
-	    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += ' ';
+	      (currentlyDrawnPage->textLinkList.size() > 0))
+	    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += ' ';
 	  currinf.data.dvi_h += ((long) (RRtmp *  current_dimconv));
 	  break;
 	  
@@ -426,8 +426,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) && 
 	      (currinf.fontp != 0) &&
 	      ((WWtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (WWtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
-	      (currentlyDrawnPage.textLinkList.size() > 0) )
-	    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += ' ';
+	      (currentlyDrawnPage->textLinkList.size() > 0) )
+	    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += ' ';
 	  currinf.data.dvi_h += currinf.data.w;
 	  break;
 	  
@@ -441,8 +441,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false)  && 
 	      (currinf.fontp != 0) &&
 	      ((XXtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (XXtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
-	      (currentlyDrawnPage.textLinkList.size() > 0))
-	    currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += ' ';
+	      (currentlyDrawnPage->textLinkList.size() > 0))
+	    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += ' ';
 	  currinf.data.dvi_h += currinf.data.x;
 	  break;
 	  
@@ -455,11 +455,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    if ((is_vfmacro == false) &&
 		(currinf.fontp != 0) &&
 		(abs(DDtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
-		(currentlyDrawnPage.textLinkList.size() > 0)) {
+		(currentlyDrawnPage->textLinkList.size() > 0)) {
 	      word_boundary_encountered = true;
 	      line_boundary_encountered = true;
 	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
-		currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += '\n';
+		currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += '\n';
 	    }
 	    currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
 	    currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -476,11 +476,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      (abs(YYtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
-	      (currentlyDrawnPage.textLinkList.size() > 0)) {
+	      (currentlyDrawnPage->textLinkList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
 	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
-	      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += '\n';
+	      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.y/65536;
 	  currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
@@ -496,11 +496,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
-	      (currentlyDrawnPage.textLinkList.size() > 0)) {
+	      (currentlyDrawnPage->textLinkList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
 	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
-	      currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].linkText += '\n';
+	      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.z/65536;
 	  currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -575,14 +575,14 @@ void dviWindow::draw_page(void)
   HTML_href         = 0;
   source_href       = 0;
   penWidth_in_mInch = 0.0;
-  currentlyDrawnPage.hyperLinkList.clear();
+  currentlyDrawnPage->hyperLinkList.clear();
 
 
   // Calling resize() here rather than clear() means that the memory
   // taken up by the vector is not freed. This is faster than
   // constantly allocating/freeing memory.
-  currentlyDrawnPage.textLinkList.resize(0);
-  currentlyDrawnPage.sourceHyperLinkList.resize(0);
+  currentlyDrawnPage->textLinkList.resize(0);
+  currentlyDrawnPage->sourceHyperLinkList.resize(0);
 
   // Check if all the fonts are loaded. If that is not the case, we
   // return and do not draw anything. The font_pool will later emit
@@ -648,10 +648,10 @@ void dviWindow::draw_page(void)
   // one pixel.
   int h = (int)(MFResolutions[_parentMPage->font_pool->getMetafontMode()]*0.05/(2.54*shrinkfactor) + 0.5);
   h = (h < 1) ? 1 : h;
-  for(unsigned int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
-    int x = currentlyDrawnPage.hyperLinkList[i].box.left();
-    int w = currentlyDrawnPage.hyperLinkList[i].box.width();
-    int y = currentlyDrawnPage.hyperLinkList[i].baseline;
+  for(unsigned int i=0; i<currentlyDrawnPage->hyperLinkList.size(); i++) {
+    int x = currentlyDrawnPage->hyperLinkList[i].box.left();
+    int w = currentlyDrawnPage->hyperLinkList[i].box.width();
+    int y = currentlyDrawnPage->hyperLinkList[i].baseline;
     foreGroundPaint.fillRect(x, y, w, h, Qt::blue);
   }
 }

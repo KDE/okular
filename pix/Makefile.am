@@ -1,6 +1,6 @@
 
 # add here all files
-pics_DATA = forwpage.xpm largetext.xpm smalltext.xpm 
+pics_DATA = 
 
 # this is the directory, where all datas are installed
 # you have given the datas in data_DATA

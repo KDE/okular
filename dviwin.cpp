@@ -70,7 +70,8 @@ dviWindow::dviWindow(double zoom, KDVIMultiPage *par)
 
   connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
 
-  _parentMPage->dviWidget->setPage(&currentlyDrawnPage);
+  currentlyDrawnPage = new documentPage;
+  _parentMPage->dviWidget->setPage(currentlyDrawnPage);
 
   editorCommand         = "";
 
@@ -238,7 +239,7 @@ void dviWindow::drawPage(documentPage *page)
     // a button "Explain in more detail..." which opens the
     // Helpcenter. Thus, we practically re-implement the KMessagebox
     // here. Most of the code is stolen from there.
-    if ((_parentMPage->dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0)) {
+    if ((_parentMPage->dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
       _parentMPage->dviFile->sourceSpecialMarker = false;
       // Check if the 'Don't show again' feature was used
       KConfig *config = kapp->config();
@@ -310,11 +311,11 @@ void dviWindow::drawPage()
 
   // Stop if there is no dvi-file present
   if ( _parentMPage->dviFile == 0 ) {
-    currentlyDrawnPage.clear();
+    currentlyDrawnPage->clear();
     return;
   }
   if ( _parentMPage->dviFile->dvi_Data == 0 ) {
-    currentlyDrawnPage.clear();
+    currentlyDrawnPage->clear();
     return;
   }
 
@@ -348,7 +349,7 @@ void dviWindow::drawPage()
     // a button "Explain in more detail..." which opens the
     // Helpcenter. Thus, we practically re-implement the KMessagebox
     // here. Most of the code is stolen from there.
-    if ((_parentMPage->dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0)) {
+    if ((_parentMPage->dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
       _parentMPage->dviFile->sourceSpecialMarker = false;
       // Check if the 'Don't show again' feature was used
       KConfig *config = kapp->config();
@@ -415,7 +416,7 @@ void dviWindow::drawPage()
   }
 #endif
   
-  currentlyDrawnPage.setPixmap(currentlyDrawnPixmap);
+  currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
 }
 
 
@@ -570,7 +571,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
     _parentMPage->dviFile = 0;
 
     currentlyDrawnPixmap.resize(0,0);
-    currentlyDrawnPage.setPixmap(currentlyDrawnPixmap);
+    currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
     return true;
   }
 
@@ -910,7 +911,7 @@ void dviWindow::handleLocalLink(const QString &linkText)
   } else {
     if (linkText[0] != '#' ) {
 #ifdef DEBUG_SPECIAL
-      kdDebug(4300) << "hit: external link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
+      kdDebug(4300) << "hit: external link to " << currentlyDrawnPage->hyperLinkList[i].linkText << endl;
 #endif
       // We could in principle use KIO::Netaccess::run() here, but
       // it is perhaps not a very good idea to allow a DVI-file to
@@ -930,7 +931,7 @@ void dviWindow::handleLocalLink(const QString &linkText)
 void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent * e)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage.sourceHyperLinkList[i].linkText << endl;
+  kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;
 #endif
   
   QString cp = linkText;

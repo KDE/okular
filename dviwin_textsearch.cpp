@@ -112,16 +112,16 @@ void dviWindow::findNextText(void)
 
     // Go trough the text of the current page and search for the
     // string.
-    for(unsigned int i=_parentMPage->dviWidget->DVIselection.selectedTextStart+1; i<currentlyDrawnPage.textLinkList.size(); i++) 
-      if (currentlyDrawnPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
+    for(unsigned int i=_parentMPage->dviWidget->DVIselection.selectedTextStart+1; i<currentlyDrawnPage->textLinkList.size(); i++) 
+      if (currentlyDrawnPage->textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
 	// re-render the screen.
 	_postscript    = _postscript_sav;
 	int j = current_page;
 	current_page   = current_page_sav;
-	emit(request_goto_page(j, currentlyDrawnPage.textLinkList[i].box.bottom() ));
-	_parentMPage->dviWidget->DVIselection.set(i, i, currentlyDrawnPage.textLinkList[i].linkText);
+	emit(request_goto_page(j, currentlyDrawnPage->textLinkList[i].box.bottom() ));
+	_parentMPage->dviWidget->DVIselection.set(i, i, currentlyDrawnPage->textLinkList[i].linkText);
 	return;
       }
     _parentMPage->dviWidget->DVIselection.clear();
@@ -238,17 +238,17 @@ void dviWindow::findPrevText(void)
     // string.
     int i=_parentMPage->dviWidget->DVIselection.selectedTextStart-1;
     if (i < 0)
-      i = currentlyDrawnPage.textLinkList.size()-1;
+      i = currentlyDrawnPage->textLinkList.size()-1;
     while(i >= 0) {
-      if (currentlyDrawnPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
+      if (currentlyDrawnPage->textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
 	// re-render the screen.
 	_postscript    = _postscript_sav;
 	int j = current_page;
 	current_page   = current_page_sav;
-	emit(request_goto_page(j, currentlyDrawnPage.textLinkList[i].box.bottom() ));
-	_parentMPage->dviWidget->DVIselection.set(i, i, currentlyDrawnPage.textLinkList[i].linkText);
+	emit(request_goto_page(j, currentlyDrawnPage->textLinkList[i].box.bottom() ));
+	_parentMPage->dviWidget->DVIselection.set(i, i, currentlyDrawnPage->textLinkList[i].linkText);
 	return;
       }
       i--;

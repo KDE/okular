@@ -7,11 +7,13 @@ Legend:
     (*) - Some parts of this item are already done
 
 More items (first items will enter 'In progress list' first):
+-> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
--> implementing async document generator using Albert's thread as the generation thread
+-> implementing async document generator using Albert's thread as the generator thread
+-> memory manager with different profiles
 -> new icons (contest at kde-look that will end in 2004-Oct-XX)
--> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text (enhance links too)
 -> minimize PageView's reLayout and requestPixmaps on changes
+-> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
 -> extract(export?) images
 -> text selection in wordprocessor style (very hard/impossible)
@@ -19,20 +21,20 @@ More items (first items will enter 'In progress list' first):
 -> history as a toolbox child (collecting DOs's setPage calls)
 -> zoom: fit text (with configurable margin)
 -> automatic online dictionaries / translators (BR80338)
--> session support: restoring page location (BR82589)
+-> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> merge head copyright headers (by albert)
 -> merge head xpdf changes for --enable-final (by adrian de groot/albert)
 -> merge head support for show menubar in rmb (by albert)
--> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
--> document: complete Albert's link following (gotoDest/movies stuff missing)
--> pageview: fix keys/mouse in single/continous modes
+-> ADD: viewport changes the right way when clicking links
 -> use a KConfigXT settings framework
--> screen editing (annotations): framework (BR67300,BR62793)
+-> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text (enhance links too)
+-> pageview: fix keys/mouse in single/continous modes
 
 Done (newest feature comes firts):
+-> MRG: link following ('actionMovie' kind is missing)
 -> ADD: text selection (rectangular blocks) in selection mode
 -> ADD: autoscroll page with Shift+Up/Dn keys (exact konqueror's behavior)
 -> CHG: remake single page mode
@@ -40,7 +42,7 @@ Done (newest feature comes firts):
 -> ADD: continous mode
 -> ADD: multiple pages per view (gui selects 1 or 2 ppv)
 -> MRG: the option to open password protected files (from head)
--> MRG: the TOC from head (missing click and go functionality because it needs link following)
+-> MRG: the Table Of Contents (from head)
 -> ADD: a 'search bar' with prune-as-you-type feature
 -> MRG: Albert's search ported and implemented case sensitive
 -> CHG: smart handling of pixmap using an Observer ID (thumbnails are gone, only pixmaps now)

@@ -162,7 +162,7 @@ void Part::slotGoToPage()
     if ( m_doc )
     {
         bool ok = false;
-        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), 1,
+        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage,
                                            1, m_doc->getNumPages(), 1, 10, &ok/*, _part->widget()*/);
         if (ok)
             goToPage( num );

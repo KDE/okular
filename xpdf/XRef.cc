@@ -110,6 +110,11 @@ ObjectStream::ObjectStream(XRef *xref, int objStrNumA) {
     goto err1;
   }
 
+  if (nObjects*sizeof(int)/sizeof(int) != nObjects) {
+    error(-1, "Invalid 'nObjects'");
+    goto err1;
+  }
+ 
   objs = new Object[nObjects];
   objNums = (int *)gmalloc(nObjects * sizeof(int));
   offsets = (int *)gmalloc(nObjects * sizeof(int));
@@ -388,6 +393,11 @@ GBool XRef::readXRefTable(Parser *parser, Guint *pos) {
       if (newSize < 0) {
 	goto err1;
       }
+      if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+        error(-1, "Invalid 'obj' parameters'");
+        goto err1;
+      }
+ 
       entries = (XRefEntry *)grealloc(entries, newSize * sizeof(XRefEntry));
       for (i = size; i < newSize; ++i) {
 	entries[i].offset = 0xffffffff;
@@ -493,6 +503,10 @@ GBool XRef::readXRefStream(Stream *xrefStr, Guint *pos) {
     goto err1;
   }
   if (newSize > size) {
+    if (newSize * sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+      error(-1, "Invalid 'size' parameter.");
+      return gFalse;
+    }
     entries = (XRefEntry *)grealloc(entries, newSize * sizeof(XRefEntry));
     for (i = size; i < newSize; ++i) {
       entries[i].offset = 0xffffffff;
@@ -581,6 +595,10 @@ GBool XRef::readXRefStreamSection(Stream *xrefStr, int *w, int first, int n) {
 	 first + n > newSize && newSize > 0;
 	 newSize <<= 1) ;
     if (newSize < 0) {
+      return gFalse;
+    }
+    if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+      error(-1, "Invalid 'size' inside xref table.");
       return gFalse;
     }
     entries = (XRefEntry *)grealloc(entries, newSize * sizeof(XRefEntry));
@@ -718,6 +736,10 @@ GBool XRef::constructXRef() {
 		    error(-1, "Bad object number");
 		    return gFalse;
 		  }
+                  if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+                    error(-1, "Invalid 'obj' parameters.");
+                    return gFalse;
+                  }
 		  entries = (XRefEntry *)
 		      grealloc(entries, newSize * sizeof(XRefEntry));
 		  for (i = size; i < newSize; ++i) {
@@ -741,6 +763,10 @@ GBool XRef::constructXRef() {
     } else if (!strncmp(p, "endstream", 9)) {
       if (streamEndsLen == streamEndsSize) {
 	streamEndsSize += 64;
+        if (streamEndsSize*sizeof(int)/sizeof(int) != streamEndsSize) {
+          error(-1, "Invalid 'endstream' parameter.");
+          return gFalse;
+        }
 	streamEnds = (Guint *)grealloc(streamEnds,
 				       streamEndsSize * sizeof(int));
       }

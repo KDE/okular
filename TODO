@@ -5,42 +5,31 @@ Legend:
     FIX - FIXed (bug or regression)
     MRG - MeRGed (code from a branch or a patch)
 
-Status (last 3 updates):
--> 2005-02-12: HEAD for bugfixes only. created a branch for development.
--> 2005-02-03+: Fixing bugs until 3.4 release.. reports are welcome!!!
--> 2005-02-02: Features for 3.4 done. Ready for bugfixes.
--> 2005-01-27: Stable and leakchecked. Usability: needs testing.
-
 In progress:
-  -- Branch 'kpdf_annotations' opened on 2005-Feb-12 --
-  HEAD: fixing bugs as they come.
-  BRANCH: implementing Annotations (and maybe other stuff).
-  please foreport fixes to the branch too.
-
-More items (first items will enter 'In progress list' first):
-  -- THIS LIST IS FROZEN FOR 3.4 RELEASE --
--> good viewport support in presentation (dynamic obs notify) and viewport queuing for
-   hidden widgets
--> search: google search in the page
--> pageview: add scrollbar marks for bookmarks (like kate)
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300), yellow notes 'post-it' like
--> go to next/previous bookmark actions (showing in thumbnailslist rmb popup too)
+-> se: investigate popup disappearing
+-> se: display tooltip only the first time
+-> se: check tools not working after a certain time (pretty nice bug :-)
+
+More items (first items will enter 'In progress list' first):
+-> search: google search in the page
+-> pageview: add scrollbar marks for bookmarks (like kate)
+-> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc)
+-> bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
 -> viewport restoring: save the page width setting between runs (save/restore zoom factor)
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
--> cleanup code and update README.png
 -> search: use shortcut for 'find next' action (not the default one) in find-ahead
--> show Viewport in ThumbnailsList (blended/contour)
--> Delay TOC (DocumentSynapsis) generation (and move it on thread)
--> add a way to handle "named xpdf links" in KPDFLink instead of resolving all destinations
-   when displaying a page (speedups a lot generation of page with many links)
--> refactor ThumbnailsList to do internal rendering as pageview does (way faster
+-> core: Delay TOC (DocumentSynapsis) generation (and move it on thread)
+-> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
+   dests when displaying a page (speedups a lot generation of page with many links)
+-> thumbnailslist: show Viewport in(blended/contour)
+-> thumbnailslist: refactor to do internal rendering as pageview does (way faster
    than using QScrollView + inserted Widgets and saves 8% on document loading)
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment
--> usability: trigger redraw on 'filter text' on current page (need new highligh engine first)
--> abstract TextPage generation (the last xpdf dependant class!). then go dancing in the
-   streets.
+-> core: abstract TextPage generation (the last xpdf dependant class!). then go dancing
+   in the streets. make it new and easy to use for wp-style selections.
 -> Dom framework to cache document metadata. It should archive those types of data:
    (NOTE: already Dom'ed object is marked with 'X')
    - <X> Synopsis will go there after 1st generation (so we can edit it too)
@@ -56,15 +45,12 @@ More items (first items will enter 'In progress list' first):
    in a separated diagram or text file.
 -> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..
--> take care of TODOs in code
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]
--> export all text in plain_text/html
--> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
--> text selection in wordprocessor style (very hard)
+-> text selection in wordprocessor style (very hard, not impossible)
 -> zoom: fit text (with configurable margin)
 -> bookview: 3d opengl widget for viewing the document as a real book (turning pages, etc..)
 -> open gzipped (.pdf.gz?) files
--> kspeech TTS interface. speech {document / page / selection(done)}
+-> kspeech TTS interface. speech {document(missing) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
 -> core: pdf forms support
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
@@ -77,15 +63,22 @@ More items (first items will enter 'In progress list' first):
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 -> add search on the toc widget (a 'prune on type' lineedit like in thumbnails widget)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
--> use wallet for storing passwords of encrypted files
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 -> tools: ruler, measure: distance, perimeter, ?area?, color picker
--> export: export to other formats keeping formatting (a dream.. except for PNG :-) (PS is easy, we just have PSOutputDev that does it :-D)
+-> export: all text in plain_text(fast)/html(hard)
+-> export: export to other formats keeping formatting (PS is easy, we just have PSOutputDev that does it :-D. PNG is easy too)
+-> export: extract images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> history as a toolbox child (collecting Doc's viewport changes notifications)
+-> take care of TODOs in code
+-> cleanup code and update README.png
 
 Done (newest features come first):
+-> ADD: use kde wallet for storing passwords of protected files
+-> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]
+-> FIX: trigger redraw on 'filter text' on current page (need new highligh engine first)
+-> FIX: fixed viewport saving/restoring (+performance fix) on presentation mode
 -> FIX: leakfix when closing document while thread was running (no more leaks now)
 -> FIX: direct hi-performance pixels manipulation for highlighting (instead of the obsoleted setRasterOp)
 -> CHG: new search api. supports multiple searches at once, multiple highlighs per page

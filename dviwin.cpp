@@ -870,9 +870,10 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  QUrl DVI_Url(dviFile->filename);
 	  QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
 
-	  KShellProcess proc;
-	  proc << "kfmclient openURL " << Link_Url.toString();
-	  proc.start(KProcess::Block);
+          QStringList args;
+          args << "openURL";
+          args << Link_Url.toString();
+          kapp->kdeinitExec("kfmclient", args);
 	}
 	break;
       }

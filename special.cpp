@@ -143,23 +143,17 @@ void dviWindow::epsf_special(QString cp)
     if (fi2.exists())
       EPSfilename = fi2.absFilePath();
     else {
-      // Use kpsewhich to find the eps file. The code here is of
-      // course terrible, a weak programmer's failed attempt to work
-      // around the difficulties in Unix process control. All we want
-      // to do is to call kpsewhich, wait for it to terminate, and to
-      // store its output in a QString. Maybe you have a better
-      // solution?
-      KTempFile *answerFile = new KTempFile(QString::null,".tmp"); // get name of a temporary file
-      QString answerFileName = answerFile->name();
-      delete answerFile;
-
-      KShellProcess proc;
-      proc << "kpsewhich " << EPSfilename << " >" << answerFileName;
-      proc.start(KProcess::Block, KProcess::NoCommunication);
-      QFile resultfile(answerFileName);
-      resultfile.open(IO_ReadOnly);
-      resultfile.readLine(EPSfilename,500);
-      EPSfilename = EPSfilename.stripWhiteSpace();
+      // Use kpsewhich to find the eps file.
+      QString cmd = "kpsewhich ";
+      cmd += KShellProcess::quote(EPSfilename);
+      
+      FILE *fs = popen(QFile::encodeName(cmd).data(), "r");
+      if (fs)
+      {
+        QTextStream ts(fs, IO_ReadOnly);
+        EPSfilename = ts.read().stripWhiteSpace();
+        pclose(fs);
+      }
     }
   }
   

@@ -66,6 +66,8 @@ sauterdir = $(fontdir)/public/sauter
 # (e.g., XDVISIZES), and perhaps by a config file (e.g., in dvips).
 default_texsizes = 300:600
 
+CLEANFILES = paths.h texmf.cnf texmf.sed stamp-paths
+
 # End of paths.make.
 
 # makevars.make -- the directory names we pass.
@@ -111,7 +113,8 @@ xopendir.c xputenv.c xrealloc.c xstat.c xstrdup.c $(LTLIBOBJS)
 texmf.cnf: texmf.in texmf.sed
 	sed -f texmf.sed $(srcdir)/texmf.in >$@
 
-$(srcdir)/tex-file.c: $(CONFIG_HEADER)
+$(srcdir)/tex-file.c: paths.h
+$(srcdir)/cnf.c: paths.h
 
 # The idea is to turn each var=value into s%@var@%value%g. Seems simpler
 # to put the substitutions in a file than to play shell quoting games.

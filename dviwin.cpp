@@ -788,10 +788,13 @@ void dviWindow::gotoPage(unsigned int new_page)
     new_page = 1;
   if (new_page > dviFile->total_pages)
     new_page = dviFile->total_pages;
-  if ((new_page-1 == current_page) && (is_current_page_drawn != 0)) {
-    kdDebug(4300) << "gotoPage fails because page is already drawn, is_current_page_drawn=" << is_current_page_drawn << endl;
-    return;
-  }
+  //  if ((new_page-1 == current_page) && (is_current_page_drawn != 0)) {
+  if (new_page-1 == current_page)
+    if (is_current_page_drawn != 0) {
+      kdDebug(4300) << "gotoPage fails because page is already drawn, is_current_page_drawn=" << is_current_page_drawn << endl;
+      return;
+    }
+
   current_page           = new_page-1;
   is_current_page_drawn  = 0;
   animationCounter       = 0;

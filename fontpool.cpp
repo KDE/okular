@@ -52,7 +52,12 @@ fontPool::fontPool(void)
   makepk                   = true; // By default, fonts are generated
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
   MetafontMode             = DefaultMFMode;
+  useType1Fonts            = true;
+  useFontHints             = true;
+  CMperDVIunit             = 0;
   fontList.setAutoDelete(TRUE);
+
+
 
 #ifdef HAVE_FREETYPE
   // Initialize the Freetype Library

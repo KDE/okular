@@ -14,6 +14,7 @@
 
 #include <qcheckbox.h>
 #include <qclipboard.h>
+#include <qcursor.h>
 #include <qfileinfo.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -1055,8 +1056,9 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 }
 
 
-void dviWindow::mouseReleaseEvent ( QMouseEvent * )
+void dviWindow::mouseReleaseEvent ( QMouseEvent *e )
 {
+  unsetCursor();
   selectedRectangle.setRect(0,0,0,0);
 }
 
@@ -1068,46 +1070,49 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #endif
 
   // Check if the mouse is pressed on a regular hyperlink
-  if ((e->button() == LeftButton) && (currentlyDrawnPage.hyperLinkList.size() > 0))
-    for(int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
-      if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
-
+  if (e->button() == LeftButton) {
+    if (currentlyDrawnPage.hyperLinkList.size() > 0)
+      for(int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
+	if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
+	  
 #ifdef DEBUG_SPECIAL
-	kdDebug(4300) << "hit: local link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
+	  kdDebug(4300) << "hit: local link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
 #endif
-	QString locallink;
-	if (currentlyDrawnPage.hyperLinkList[i].linkText[0] == '#' )
-	  locallink = currentlyDrawnPage.hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
-	else
-	  locallink = currentlyDrawnPage.hyperLinkList[i].linkText;
-	QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
-	if (it != anchorList.end()) {
+	  QString locallink;
+	  if (currentlyDrawnPage.hyperLinkList[i].linkText[0] == '#' )
+	    locallink = currentlyDrawnPage.hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
+	  else
+	    locallink = currentlyDrawnPage.hyperLinkList[i].linkText;
+	  QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
+	  if (it != anchorList.end()) {
 #ifdef DEBUG_SPECIAL
-	  kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-	  kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
+	    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
+	    kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
 #endif
-	  emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/shrinkfactor)));
-	} else {
-	  if (currentlyDrawnPage.hyperLinkList[i].linkText[0] != '#' ) {
+	    emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/shrinkfactor)));
+	  } else {
+	    if (currentlyDrawnPage.hyperLinkList[i].linkText[0] != '#' ) {
 #ifdef DEBUG_SPECIAL
-	    kdDebug(4300) << "hit: external link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
+	      kdDebug(4300) << "hit: external link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
 #endif
-	    // We could in principle use KIO::Netaccess::run() here, but
-	    // it is perhaps not a very good idea to allow a DVI-file to
-	    // specify arbitrary commands, such as "rm -rvf /". Using
-	    // the kfmclient seems to be MUCH safer.
-	    QUrl DVI_Url(dviFile->filename);
-	    QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
-
-	    QStringList args;
-	    args << "openURL";
-	    args << Link_Url.toString();
-	    kapp->kdeinitExec("kfmclient", args);
+	      // We could in principle use KIO::Netaccess::run() here, but
+	      // it is perhaps not a very good idea to allow a DVI-file to
+	      // specify arbitrary commands, such as "rm -rvf /". Using
+	      // the kfmclient seems to be MUCH safer.
+	      QUrl DVI_Url(dviFile->filename);
+	      QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
+	      
+	      QStringList args;
+	      args << "openURL";
+	      args << Link_Url.toString();
+	      kapp->kdeinitExec("kfmclient", args);
+	    }
 	  }
+	  return;
 	}
-	break;
       }
-    }
+    setCursor(Qt::SizeAllCursor);
+  }
 
   // Check if the mouse is pressed on a source-hyperlink
   if ((e->button() == MidButton) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0))

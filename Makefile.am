@@ -6,7 +6,7 @@ appsdir = $(kde_appsdir)/Programs/Graphics
 # set the include path for X, qt and KDE
 INCLUDES= $(all_includes) -Ikpathsea
 # claim, which subdirectories you want to install
-SUBDIRS = pix
+SUBDIRS = kpathsea . pix
 
 # you can add here more. This one gets installed 
 bin_PROGRAMS = 	kdvi
@@ -52,18 +52,6 @@ apps_DATA = kdvi.desktop
 
 $(srcdir)/psheader.c: psheader.txt squeeze $(kpathsea)
 	./squeeze $(srcdir)/psheader.txt $@
-
-# this is somehow a dirty hack to force the automatic dependency checking
-# to create the stuff in the kpathsea directory first. vf.c is the last
-# source file in the list.
-vf.c: $(kpathsea)
-
-$(kpathsea):
-	test -d kpathsea || mkdir kpathsea
-	oldpath=`pwd`; \
-	cd $(srcdir) && newpath=`pwd`; \
-	cd $$oldpath/kpathsea && CC="$(CC)" CFLAGS="$(CFLAGS)" MAKE="$(MAKE)" $$newpath/kpathsea/configure 
-	cd kpathsea && $(MAKE)
 
 kbrowser.moc.cc: $(kde_includes)/kbrowser.h
 	$(MOC) $(kde_includes)/kbrowser.h -o $(top_builddir)/kdvi/kbrowser.moc.cc

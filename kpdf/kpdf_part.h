@@ -27,6 +27,7 @@ class QToolBox;
 
 class KURL;
 class KAction;
+class KConfig;
 class KToggleAction;
 class KSelectAction;
 class KAboutData;
@@ -96,6 +97,8 @@ protected slots:
 public slots:
 	// connected to Shell action (and browserExtension), not local one
 	void slotPrint();
+  void restoreDocument(const KURL &url, int page);
+  void saveDocumentRestoreInfo(KConfig* config);
 
 private:
 	void doPrint( KPrinter& printer );

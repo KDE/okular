@@ -79,6 +79,10 @@ namespace KPDF
   public slots:
       void openURL( const KURL & url );
 
+  signals:
+      void restoreDocument(const KURL &url, int page);
+      void saveDocumentRestoreInfo(KConfig* config);
+
   private:
     void setupAccel();
     void setupActions();

@@ -485,6 +485,17 @@ void Part::doPrint( KPrinter& /*printer*/ )
 */
 }
 
+void Part::restoreDocument(const KURL &url, int page)
+{
+  if (openURL(url)) goToPage(page);
+}
+
+void Part::saveDocumentRestoreInfo(KConfig* config)
+{
+  config->writePathEntry( "URL", url().url() );
+  if (document->pages() > 0) config->writeEntry( "Page", document->currentPage() + 1);
+}
+
 /*
 * BrowserExtension class
 */

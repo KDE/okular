@@ -74,6 +74,9 @@ Shell::Shell()
     return;
   }
   //FIXME READD: connect( m_part, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
+  connect( this, SIGNAL( restoreDocument(const KURL &, int) ),m_part, SLOT( restoreDocument(const KURL &, int)));
+  connect( this, SIGNAL( saveDocumentRestoreInfo(KConfig*) ), m_part, SLOT( saveDocumentRestoreInfo(KConfig*)));
+     
 
   readSettings();
 }
@@ -134,7 +137,7 @@ Shell::saveProperties(KConfig* config)
   // the 'config' object points to the session managed
   // config file.  anything you write here will be available
   // later when this app is restored
-    config->writePathEntry( "URL", m_part->url().url() );
+    emit saveDocumentRestoreInfo(config);
 }
 
 void Shell::slotShowMenubar()
@@ -155,8 +158,7 @@ void Shell::readProperties(KConfig* config)
   if(m_part)
   {
     KURL url ( config->readPathEntry( "URL" ) );
-    if ( url.isValid() )
-        openURL( url );
+    if ( url.isValid() ) emit restoreDocument(url, config->readNumEntry( "Page", 1 ));
   }
 }
 

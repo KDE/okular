@@ -10,6 +10,11 @@
   </Menu>
  </Menu>
 
+ <Menu name="view"><text>&amp;View</text>
+  <Separator/>
+  <Action name="viewmode"/>
+ </Menu>
+
  <Menu name="go_document"><text>Go</text>
   <Action name="go_back"/>
   <Action name="go_forward"/>

@@ -45,6 +45,8 @@ class KDVIMultiPage : public KMultiPage
   Q_OBJECT
 
 public:
+  enum viewModes {KVS_SinglePage = 0, KVS_Continuous = 1};
+
   documentWidget *dviWidget;
   documentPageCache  currentPage;
 
@@ -81,8 +83,6 @@ public:
 
   virtual void setPaperSize(double, double);
 
-  virtual bool preview(QPainter *p, int w, int h);
-
   virtual bool print(const QStringList &pages, int current);
 
   /// KDVI offers read- and write functionality must re-implement this
@@ -98,7 +98,7 @@ public:
       (e.g. because the current document is empty, or because no
       document has been loaded yet), the method returns "invalid
       page", i.e. 0. */
-  Q_UINT16 getPageNumber();
+  Q_UINT16 getCurrentPageNumber();
 
 
 public slots:
@@ -176,7 +176,6 @@ protected slots:
       beginSelection-endSelection, and draws the users attention to
       this place with an animated frame  */
   void gotoPage(int pageNr, int beginSelection, int endSelection );
-  void contents_of_dviwin_changed(void);
   void showTip(void);
   void showTipOnStart(void);
 
@@ -184,7 +183,6 @@ private:
   dviWindow    *window;
   OptionDialog *options;
   KPrinter     *printer;
-
 
   /*************************************************************
    * Methods and classes concerned with the find functionality *
@@ -211,6 +209,8 @@ private:
   KAction      *exportTextAction;
   KAction      *findNextAction;
   KAction      *exportPSAction;
+  KSelectAction *viewModeAction;
+
 
   /** Used to enable the export menu when a file is successfully
       loaded. */

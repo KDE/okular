@@ -567,10 +567,11 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
 #endif
       current_page = currPageSav;
     }
+    emit(needsRepainting());
     if (dviFile->suggestedPageSize != 0)
       emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
   }
-
+  
   QApplication::restoreOverrideCursor();
   reference              = ref;
   return true;
@@ -582,10 +583,10 @@ void dviWindow::all_fonts_loaded(fontPool *)
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::all_fonts_loaded(...) called" << endl;
 #endif
-
+  
   if (!dviFile)
     return;
-
+  
   if (dviFile->prescan_is_performed == false) {
     // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT

@@ -107,13 +107,18 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   connect(window, SIGNAL(needsRepainting()), &currentPage, SLOT(clear()));
   connect(window, SIGNAL(needsRepainting()), dviWidget, SLOT(update()));
 
-
-  preferencesChanged();
-
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   connect( dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   connect( window, SIGNAL( documentSpecifiedPageSize(const pageSize&)), this, SIGNAL( documentSpecifiedPageSize(const pageSize&)) );
   docInfoAction    = new KAction(i18n("Document &Info"), 0, window, SLOT(showInfo()), actionCollection(), "info_dvi");
+
+
+  QStringList viewModes;
+  viewModes.append(i18n("Single Page"));
+  viewModes.append(i18n("Continuous"));
+  viewModeAction = new KSelectAction (i18n("View Mode"), 0, 0, 0, actionCollection(), "viewmode");
+  viewModeAction->setItems(viewModes);
+  connect(viewModeAction, SIGNAL(activated (int)), this, SLOT(nonExistent(int)));
 
   backAction       = KStdAction::back(this, SLOT(doGoBack()), actionCollection(), "go_back");
   forwardAction    = KStdAction::forward(this, SLOT(doGoForward()), actionCollection(), "go_forward");
@@ -151,6 +156,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
 
   readSettings();
+  preferencesChanged();
+
   enableActions(false);
   // Show tip of the day, when the first main window is shown.
   QTimer::singleShot(0,this,SLOT(showTipOnStart()));
@@ -256,6 +263,14 @@ KDVIMultiPage::~KDVIMultiPage()
 }
 
 
+Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
+{
+  if (dviWidget == 0)
+    return 0;
+  return dviWidget->getPageNumber();
+}
+
+
 bool KDVIMultiPage::openFile()
 {
   document_history.clear();
@@ -284,12 +299,6 @@ void KDVIMultiPage::jumpToReference(QString reference)
     window->reference = reference;
     window->all_fonts_loaded(0); // In spite of its name, this method tries to parse the reference.
   }
-}
-
-
-void KDVIMultiPage::contents_of_dviwin_changed(void)
-{
-  emit previewChanged(true);
 }
 
 
@@ -393,20 +402,6 @@ void KDVIMultiPage::setPaperSize(double w, double h)
 }
 
 
-bool KDVIMultiPage::preview(QPainter *p, int w, int h)
-{
-  QPixmap *map = window->pix();
-
-  if ((map == 0) || (map->isNull()))
-    return false;
-  
-  p->scale((double)w/(double)map->width(), (double)h/(double)map->height());
-  p->drawPixmap(0, 0, *map);
-  
-  return true;
-}
-
-
 void KDVIMultiPage::doSelectAll(void)
 {
   dviWidget->selectAll();
@@ -478,6 +473,7 @@ void KDVIMultiPage::about()
   ab->show();
 }
 
+
 void KDVIMultiPage::bugform()
 {
   KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.1", 0, 0, 0, 0, 0);
@@ -512,6 +508,12 @@ void KDVIMultiPage::preferencesChanged()
   bool showHyperLinks = config->readBoolEntry( "ShowHyperLinks", true );
   bool useType1Fonts = config->readBoolEntry( "UseType1Fonts", true );
   bool useFontHints = config->readBoolEntry( "UseFontHints", false );
+
+  int viewMode = config->readNumEntry( "ViewMode", KVS_Continuous );
+  if ((viewMode < 0) || (viewMode > KVS_Continuous))
+    viewMode = KVS_Continuous;
+  if (viewModeAction != 0)
+    viewModeAction->setCurrentItem(viewMode);
 
   window->setPrefs( showPS, showHyperLinks, config->readPathEntry( "EditorCommand" ), mfmode, makepk, useType1Fonts, useFontHints);
 }

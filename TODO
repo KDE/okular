@@ -44,9 +44,10 @@ More items (first items will enter 'In progress list' first):
 -> abstract TextPage generation (the last xpdf dependant class!). then go dancing in the
    streets.
 -> Dom framework to cache document metadata. It should archive those types of data:
-   - Synopsis will go there after 1st generation (so we can edit it too)
-   - Document info (after the 1st gen)
-   - Bookmarked pages
+   (NOTE: already Dom'ed object is marked with 'X')
+   - <X> Synopsis will go there after 1st generation (so we can edit it too)
+   - <X - on progress> Document info (after the 1st gen)
+   - <X - Albert?> Bookmarked pages
    - Edited pages (rotated/with_data for example)
    - Overlay editing (hilighting/notations/etc..)
    - Presentation related overrides (FS mode, individual / global transitions)

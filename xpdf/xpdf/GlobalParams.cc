@@ -1092,7 +1092,7 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
 		FC_WIDTH, FcTypeInteger, width, FC_LANG, FcTypeString, "xx", (char*)0);
 	if (!p) goto fin;
 	m = XftFontMatch(qt_xdisplay(),qt_xscreen(),p,&res);
-	if (!m) goto fin; 
+	if (!m) goto fin;
 	res = FcPatternGetString (m, FC_FILE, 0, &s);
 	if (res != FcResultMatch || !s)  goto fin; 
 	ext = rindex((char*)s,'.');
@@ -1100,6 +1100,7 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
 	if (!strncasecmp(ext,".ttf",4) || !strncasecmp(ext,".ttc",4)) {
 	  dfp = new DisplayFontParam(fontName->copy(), displayFontTT);  
    	  dfp->tt.fileName = new GString((char*)s);
+   	  FcPatternGetInteger(m, FC_INDEX, 0, &(dfp->tt.faceIndex));
 	 }  else if (!strncasecmp(ext,".pfa",4) || !strncasecmp(ext,".pfb",4)) {
 	   dfp = new DisplayFontParam(fontName->copy(), displayFontT1);  
 	   dfp->t1.fileName = new GString((char*)s);

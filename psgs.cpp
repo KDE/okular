@@ -30,8 +30,10 @@
  *	palette resource and arguments
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "oconfig.h"
-#ifdef PS_GS /* whole file */
+extern	char	*xmalloc (unsigned, _Xconst char *);
 
 #include "kpathsea/c-pathmx.h"
 #include <X11/Xatom.h>
@@ -154,10 +156,7 @@ static	Atom	gs_colors_atom;
 
 extern	char	**environ;
 
-static	void
-_setenv(var, str)
-	_Xconst	char	*var;
-	_Xconst	char	*str;
+static	void _setenv(char *var, char *str)
 {
 	int		len1;
 	int		len2;
@@ -236,7 +235,7 @@ read_from_gs() {
 	    if (p == NULL) break;
 	    if (memcmp(p, ackstr, 3) == 0) {
 		--GS_pending;
-		if (debug & DBG_PS)
+		if (_debug & DBG_PS)
 		    Printf("Got GS ack; %d pending.\n", GS_pending);
 		if (p > line) {
 		    *p = '\0';
@@ -284,12 +283,7 @@ read_from_gs() {
 static	Boolean	sigpipe_error = False;
 
 /* ARGSUSED */
-static	void
-gs_sigpipe_handler(sig, code, scp, addr)
-	int	sig;
-	int	code;
-	struct sigcontext *scp;
-	char	*addr;
+static	void gs_sigpipe_handler(int sig, int code, sigcontext *scp, char *addr)
 {
 	sigpipe_error = True;
 }
@@ -303,10 +297,7 @@ static	struct sigaction sigpipe_handler_struct;
  *	This actually sends the bytes to ghostscript.
  */
 
-static	void
-send(cp, len)
-	_Xconst	char	*cp;
-	int		len;
+static	void send(char *cp, int len)
 {
 	int	bytes;
 #ifdef	_POSIX_SOURCE
@@ -415,9 +406,7 @@ send(cp, len)
  *	Wait for acknowledgement from gs.
  */
 
-static	void
-waitack(waittime)
-	int	waittime;
+static	void waitack(int waittime)
 {
 	struct timeval	tv;
 	struct timeval	tv2;
@@ -515,8 +504,7 @@ waitack(waittime)
  *	since in fact we disable showpage.
  */
 
-Boolean
-initGS()
+Boolean initGS()
 {
 	char	buf[100];
 		/*
@@ -640,7 +628,7 @@ stop\n%%xdvimark\n";
 	    fcntl(std_in[1], F_GETFL, 0) | O_NONBLOCK);
 
 #ifdef	_POSIX_SOURCE
-	sigpipe_handler_struct.sa_handler = gs_sigpipe_handler;
+	sigpipe_handler_struct.sa_handler = (void (*)(int))gs_sigpipe_handler;
 	sigemptyset(&sigpipe_handler_struct.sa_mask);
 #endif
 
@@ -684,7 +672,7 @@ stop\n%%xdvimark\n";
 static	void
 toggle_gs()
 {
-	if (debug & DBG_PS) Puts("Toggling GS on or off");
+	if (_debug & DBG_PS) Puts("Toggling GS on or off");
 	if (postscript) psp.drawbegin = drawbegin_gs;
 	else {
 	    interrupt_gs();
@@ -696,7 +684,7 @@ toggle_gs()
 static	void
 destroy_gs()
 {
-	if (debug & DBG_PS) Puts("Destroying GS process");
+	if (_debug & DBG_PS) Puts("Destroying GS process");
 	if (linepos > line) {
 	    *linepos = '\0';
 	    Printf("gs: %s\n", line);
@@ -718,7 +706,7 @@ interrupt_gs()
 {
 	static	_Xconst	char	str[]	= " stop\n%%xdvimark\n";
 
-	if (debug & DBG_PS) Puts("Running interrupt_gs()");
+	if (_debug & DBG_PS) Puts("Running interrupt_gs()");
 	if (GS_sending) GS_pending_int = True;
 	else {
 	    if (GS_active) {
@@ -741,7 +729,7 @@ endpage_gs()
 {
 	static	_Xconst	char	str[]	= "stop\n%%xdvimark\n";
 
-	if (debug & DBG_PS) Puts("Running endpage_gs()");
+	if (_debug & DBG_PS) Puts("Running endpage_gs()");
 	if (GS_active) {
 	    send(str, sizeof(str) - 1);
 	    GS_active = False;
@@ -749,10 +737,7 @@ endpage_gs()
 	}
 }
 
-static	void
-drawbegin_gs(xul, yul, cp)
-	int	xul, yul;
-	char	*cp;
+static	void drawbegin_gs(int xul, int yul, char *cp)
 {
 	char	buf[100];
 	static	_Xconst	char	str[]	= " TeXDict begin\n";
@@ -794,46 +779,39 @@ end stop\n%%%%xdvimark\n",
 
 	Sprintf(buf, "%d %d moveto\n", xul, yul);
 	send(buf, strlen(buf));
-	if (debug & DBG_PS)
+	if (_debug & DBG_PS)
 	    Printf("drawbegin at %d,%d:  sending `%s'\n", xul, yul, cp);
 	send(cp, strlen(cp));
 }
 
-static	void
-drawraw_gs(cp)
-	char	*cp;
+static	void drawraw_gs(char *cp)
 {
 	int	len	= strlen(cp);
 
 	if (!GS_active)
 	    return;
-	if (debug & DBG_PS) Printf("raw ps sent to context: %s\n", cp);
+	if (_debug & DBG_PS) Printf("raw ps sent to context: %s\n", cp);
 	cp[len] = '\n';
 	send(cp, len + 1);
 }
 
-static	void
-drawfile_gs(cp)
-	char	*cp;
+static	void drawfile_gs(char *cp)
 {
 	char	buf[PATH_MAX + 7];
 
 	if (!GS_active)
 	    return;
-	if (debug & DBG_PS) Printf("printing file %s\n", cp);
+	if (_debug & DBG_PS) Printf("printing file %s\n", cp);
 	Sprintf(buf, "(%s)run\n", cp);
 	send(buf, strlen(buf));
 }
 
-static	void
-drawend_gs(cp)
-	char	*cp;
+static	void drawend_gs(char *cp)
 {
 	if (!GS_active)
 	    return;
-	if (debug & DBG_PS) Printf("end ps: %s\n", cp);
+	if (_debug & DBG_PS) Printf("end ps: %s\n", cp);
 	send(cp, strlen(cp));
 	send("\n", 1);
 }
 
-#endif /* PS_GS */

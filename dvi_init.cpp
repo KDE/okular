@@ -49,12 +49,23 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-#include "oconfig.h"
+
+#include <qbitmap.h> 
+
+extern "C" {
+#include <kpathsea/config.h>
 #include <kpathsea/c-fopen.h>
 #include <kpathsea/c-stat.h>
 #include <kpathsea/magstep.h>
 #include <kpathsea/tex-glyph.h>
 #include "dvi.h"
+}
+
+#include "glyph.h"
+#include "oconfig.h"
+
+extern char *xmalloc (unsigned, _Xconst char *);
+extern FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, int dummy, char **filename_ret);
 
 #define	PK_PRE		247
 #define	PK_ID		89
@@ -71,6 +82,9 @@
 static	struct stat fstatbuf;
 
 static	Boolean	font_not_found;
+Boolean	_hush_spec;
+Boolean	_hush_chk;
+Boolean	_list_fonts;
 
 /*
  * DVI preamble and postamble information.
@@ -88,9 +102,7 @@ static	long	last_page_offset;
  *	free_vf_chain frees the vf_chain structure.
  */
 
-static	void
-free_vf_chain(tnp)
-	struct tn *tnp;
+static	void free_vf_chain(tn *tnp)
 {
 	while (tnp != NULL) {
 	    register struct tn *tnp1 = tnp->next;
@@ -104,26 +116,16 @@ free_vf_chain(tnp)
  *	Release all shrunken bitmaps for all fonts.
  */
 
-void
-reset_fonts()
+extern void reset_fonts(void)
 {
-	register struct font *f;
-	register struct glyph *g;
+  register struct font *f;
+  register struct glyph *g;
 
-	for (f = font_head; f != NULL; f = f->next)
-	    if ((f->flags & FONT_LOADED) && !(f->flags & FONT_VIRTUAL))
-		for (g = f->glyph; g <= f->glyph + f->maxchar; ++g) {
-		    if (g->bitmap2.bits) {
-			free(g->bitmap2.bits);
-			g->bitmap2.bits = NULL;
-		    }
-#ifdef	GREY
-		    if (g->pixmap2) {
-			XDestroyImage(g->image2);
-			g->pixmap2 = NULL;
-		    }
-#endif
-		}
+  for (f = font_head; f != NULL; f = f->next)
+    if ((f->flags & FONT_LOADED) && !(f->flags & FONT_VIRTUAL))
+      for (g = f->glyph; g <= f->glyph + f->maxchar; ++g) {
+	g->clearShrunkCharacter();
+      }
 }
 
 /*
@@ -131,10 +133,7 @@ reset_fonts()
  *	characters.
  */
 
-void
-realloc_font(fontp, newsize)
-	struct font	*fontp;
-	wide_ubyte	newsize;
+void realloc_font(font *fontp, wide_ubyte newsize)
 {
 	struct glyph *glyph;
 
@@ -152,10 +151,7 @@ realloc_font(fontp, newsize)
  *	realloc_virtual_font does the same thing for virtual fonts.
  */
 
-void
-realloc_virtual_font(fontp, newsize)
-	struct font	*fontp;
-	wide_ubyte	newsize;
+void realloc_virtual_font(font *fontp, wide_ubyte newsize)
 {
 	struct macro *macro;
 
@@ -174,9 +170,7 @@ realloc_virtual_font(fontp, newsize)
  *	plus whatever other preprocessing is done (depending on the format).
  */
 
-Boolean
-load_font(fontp)
-	struct font *fontp;
+Boolean load_font(font *fontp)
 {
 	double	fsize	= fontp->fsize;
 	int	dpi	= fsize + 0.5;
@@ -245,13 +239,11 @@ load_font(fontp)
 #define	NOMAGSTP (-29999)
 #define	NOBUILD	29999
 
-static	int
-magstepvalue(mag)
-	float	*mag;
+
+static	int magstepvalue(float *mag)
 {
   int m_ret;
-  unsigned dpi_ret =
-    kpse_magstep_fix ((unsigned) *mag, (unsigned) pixels_per_inch, &m_ret);
+  unsigned dpi_ret = kpse_magstep_fix ((unsigned) *mag, (unsigned) pixels_per_inch, &m_ret);
   *mag = (float) dpi_ret; /* MAG is actually a dpi.  */
   return m_ret ? m_ret : NOMAGSTP;
 }
@@ -260,9 +252,7 @@ magstepvalue(mag)
  *	reuse_font recursively sets the flags for font structures being reused.
  */
 
-static	void
-reuse_font(fontp)
-	struct font *fontp;
+static	void reuse_font(font *fontp)
 {
 	struct font **fp;
 	struct tn *tnp;
@@ -287,14 +277,13 @@ reuse_font(fontp)
  *      the specified pixel file, adding it to the global linked-list holding
  *      all of the fonts used in the job.
  */
-struct font *
-define_font(file, cmnd, vfparent, tntable, tn_table_len, tn_headpp)
-	FILE		*file;
-	wide_ubyte	cmnd;
-	struct font	*vfparent;	/* vf parent of this font, or NULL */
-	struct font	**tntable;	/* table for low TeXnumbers */
-	unsigned int	tn_table_len;	/* length of table for TeXnumbers */
-	struct tn	**tn_headpp;	/* addr of head of list of TeXnumbers */
+font *define_font(FILE *file, wide_ubyte cmnd, font *vfparent, font **tntable, unsigned int tn_table_len, tn **tn_headpp)
+  //	FILE		*file;
+  //	wide_ubyte	cmnd;
+  //	struct font	*vfparent;	/* vf parent of this font, or NULL */
+  //	struct font	**tntable;	/* table for low TeXnumbers */
+  //	unsigned int	tn_table_len;	/* length of table for TeXnumbers */
+  //	struct tn	**tn_headpp;	/* addr of head of list of TeXnumbers */
 {
 	int	TeXnumber;
 	struct font *fontp;
@@ -316,7 +305,7 @@ define_font(file, cmnd, vfparent, tntable, tn_table_len, tn_headpp)
 	fontname = xmalloc((unsigned) len + 1, "font name");
 	Fread(fontname, sizeof(char), len, file);
 	fontname[len] = '\0';
-	if(debug & DBG_PK)
+	if(_debug & DBG_PK)
 	    Printf("xdvi: Define font \"%s\" scale=%d design=%d\n",
 		fontname, scale, design);
 	if (vfparent == NULL) {
@@ -497,7 +486,7 @@ read_postamble()
 	    if (fontp->flags & FONT_IN_USE)
 		fontpp = &fontp->next;
 	    else {
-		if (debug & DBG_PK)
+		if (_debug & DBG_PK)
 		    Printf("xdvi: Discarding font \"%s\" at %d dpi\n",
 			fontp->fontname, (int) (fontp->fsize + 0.5));
 		*fontpp = fontp->next;		/* remove from list */
@@ -521,13 +510,8 @@ read_postamble()
 		    else {
 			register struct glyph *g;
 
-			for (g = fontp->glyph;
-				g <= fontp->glyph + fontp->maxchar; ++g) {
-			    if (g->bitmap.bits != NULL) free(g->bitmap.bits);
-			    if (g->bitmap2.bits != NULL) free(g->bitmap2.bits);
-#ifdef	GREY
-			    if (g->pixmap2 != NULL) XDestroyImage(g->image2);
-#endif
+			for (g = fontp->glyph; g <= fontp->glyph + fontp->maxchar; ++g) {
+			  delete g;
 			}
 			free((char *) fontp->glyph);
 		    }
@@ -556,8 +540,7 @@ prepare_pages()
 	}
 }
 
-void
-init_page()
+void init_page()
 {
 	page_w = ROUNDUP(unshrunk_page_w, mane.shrinkfactor) + 2;
 	page_h = ROUNDUP(unshrunk_page_h, mane.shrinkfactor) + 2;
@@ -589,95 +572,12 @@ init_dvi_file()
 	return True;
 }
 
-/**
- **	open_dvi_file opens the dvi file and calls init_dvi_file() to
- **	initialize it.
- **/
 
-#ifndef KDVI
-
-void
-open_dvi_file()
-{
-	int	n;
-	char	*file;
-
-	if (setjmp(dvi_env)) oops(dvi_oops_msg);
-
-	n = strlen(dvi_name);
-	file = dvi_name;
-
-        /* Try foo.dvi before foo, for the sake of an executable foo
-           with documentation foo.tex.  Unless we already have `.dvi'.  */
-	if (strcmp(dvi_name + n - sizeof(".dvi") + 1, ".dvi") != 0) {
-            dvi_name = xmalloc((unsigned) n + sizeof(".dvi"), "dvi file name");
-            Sprintf(dvi_name, "%s.dvi", file);
-            dvi_file = fopen(dvi_name, OPEN_MODE);
-            if (dvi_file != NULL && init_dvi_file())
-                return;
-            free (dvi_name);
-            dvi_name = file;
-	}
-
-        /* Then try `foo', in case the user likes DVI files without `.dvi'.  */
-	if ((dvi_file = fopen(dvi_name, OPEN_MODE)) == NULL
-		|| !init_dvi_file()) {
-	    perror(dvi_name);
-	    exit(1);
-	}
-}
-
-#ifdef SELFILE
-/* Allow the user to choose a new dvi file, by popping up a dialog box
-   which allows the graphical selection of the correct filename,
-   maybe we should only allow files ending in .dvi to be selected.  */
-
-FILE *
-select_filename(open, move_home)
-    int open, move_home ;
-{
-  extern FILE *XsraSelFile();
-  FILE *dummy_file ;
-  static char *dummy_name ;
-
-  dummy_file = XsraSelFile(top_level, "Select a dvi file: ",
-			   "Ok", "Cancel",
-			   "Can't open file: ", NULL,
-			   OPEN_MODE, NULL, &dummy_name) ;
-  if (dummy_file != NULL) {
-    extern void set_icon_and_title (); /* from xdvi.c */
-    extern void home (); /* from events.c */
-    
-    /* we may not want the file they returned... */
-    if (!open)
-      fclose (dummy_file) ;
-
-    /* The name is what we really want, so use it.  */
-    dvi_name = dummy_name ;
-    current_page = 0 ;  /* go to start of new dvi file */
-    if (move_home)
-      home(False);      /* Move to home position on new first page */
-    
-    /* We do this elsewhere if we don't open the file.  */
-    if (open)
-      set_icon_and_title (dvi_name);
-
-  } else if (open) { /* User cancelled, so open old file */
-    dummy_file = fopen(dvi_name, OPEN_MODE);
-    --dvi_time;
-  }
-
-  return dummy_file ;
-}
-#endif  /* SELFILE */
-#endif /* KDVI */
-
 /**
  **	Check for changes in dvi file.
  **/
 
-Boolean
-check_dvi_file()
+extern Boolean check_dvi_file(void)
 {
 	struct font *fontp;
 
@@ -688,33 +588,10 @@ check_dvi_file()
 		    dvi_file = NULL;
 		    if (list_fonts) Putchar('\n');
 		}
-#ifndef KDVI
-		if (page_offset) {
-		  /* With SELFILE, we are called once before the file
-		     selection, and then once recursively (below).  Thus
-		     we would free a freed pointer.  */
-                  free((char *) page_offset);
-                  page_offset = NULL;
-                  bzero((char *) tn_table, (int) sizeof(tn_table));
-                  free_vf_chain(tn_head);
-                  tn_head = NULL;
-                  for (fontp = font_head; fontp != NULL; fontp = fontp->next)
-                      fontp->flags &= ~FONT_IN_USE;
-		}
-#endif /* KDVI */
-#ifdef SELFILE
-		if (dvi_time > fstatbuf.st_mtime) /* choose a new file */
-		  dvi_file = select_filename(True, True) ;
-		else
-#endif  /* SELFILE */
 		dvi_file = fopen(dvi_name, OPEN_MODE);
 		if (dvi_file == NULL
 			|| !init_dvi_file())
 		    dvi_oops("Cannot reopen dvi file.");
-#ifndef KDVI
-		reconfig();
-		redraw_page();
-#endif /* KDVI */
 		return False;
 	}
 	return True;

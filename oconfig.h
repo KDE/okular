@@ -4,9 +4,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/* The stuff from the path searching library.  */
-#include <kpathsea/config.h>
-
 #include <setjmp.h>
 
 /* Some kdvi options we want by default.  */

@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <qpainter.h>
 #include <qbitmap.h> 
 #include <qkeycode.h>
 #include <qpaintdevice.h>
@@ -19,6 +20,7 @@
 
 #include "dviwin.h"
 #include "prefs.h"
+
 
 //------ some definitions from xdvi ----------
 
@@ -66,15 +68,14 @@ extern Screen  *	SCRN;
 Window mainwin;
 int			useAlpha;
 
-extern "C" void 	draw_page(void);
+void 	draw_page(void);
 extern "C" void 	kpse_set_progname(const char*);
-extern "C" Boolean 	check_dvi_file();
-extern "C" void 	reset_fonts();
-extern "C" void 	init_page();
-extern "C" void 	init_pix(Boolean warn);
-extern "C" void 	psp_destroy();
-extern "C" void 	psp_toggle();
-extern "C" void 	psp_interrupt();
+extern Boolean check_dvi_file(void);
+void 	reset_fonts();
+void 	init_page();
+void 	psp_destroy();
+void 	psp_toggle();
+void 	psp_interrupt();
 extern "C" {
 #undef PACKAGE // defined by both c-auto.h and config.h
 #undef VERSION
@@ -89,17 +90,7 @@ extern "C" {
 
 QPainter *dcp;
 
-extern "C" void qtPutRule(int x, int y, int w, int h)
-{
-	dcp->fillRect( x, y, w, h, Qt::black );
-}
-
-extern "C" void qtPutBorder(int x, int y, int w, int h)
-{
-	dcp->drawRect( x, y, w, h );
-}
-
-extern "C" void qt_processEvents()
+extern  void qt_processEvents(void)
 {
 	qApp->processEvents();
 }
@@ -141,7 +132,6 @@ dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr,
 	useGS = 1;
 	_postscript = 0;
 	pixmap = NULL;
-	init_pix(FALSE);
 }
 
 dviWindow::~dviWindow()
@@ -297,7 +287,6 @@ void dviWindow::setGamma( float gamma )
 		return;	// Qt will kill us otherwise ??
 	}
 	_gamma = gamma;
-	init_pix(FALSE);
 }
 
 float dviWindow::gamma()
@@ -499,6 +488,7 @@ void dviWindow::changePageSize()
 	if (pixmap)
 		delete pixmap;
 	pixmap = new QPixmap( (int)page_w, (int)page_h );
+	pixmap->fill( white );
 	emit pageSizeChanged( QSize( page_w, page_h ) );
         resizeContents( page_w, page_h );
         
@@ -548,7 +538,8 @@ void dviWindow::goForward()
 {
   if(contentsY() >= contentsHeight()-visibleHeight()) {
     nextPage();
-    setContentsPos(0, 0);
+    // Go to the top of the page, but keep the horizontal position
+    setContentsPos(contentsX(), 0);
   }
   else
     scrollBy(0, 2*visibleWidth()/3);
@@ -622,7 +613,6 @@ void dviWindow::setShrink(int s)
 		return;
 	mane.shrinkfactor = currwin.shrinkfactor = s;
 	init_page();
-	init_pix(FALSE);
 	reset_fonts();
 	changePageSize();
 	emit shrinkChanged( shrink() );
@@ -638,7 +628,7 @@ void   dviWindow::contentsMoving( int x, int y )
 {
   emit currentPosChanged( QPoint(x, y) );
 }
-  
+
 
 void   dviWindow::drawContents(QPainter *p, 
                                int clipx, int clipy, 

@@ -49,8 +49,11 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "glyph.h"
 #include "oconfig.h"
-
+extern	char	*xmalloc (unsigned, _Xconst char *);
 /***
  ***	PK font reading routines.
  ***	Public routines are read_PK_index and read_PK_char.
@@ -73,9 +76,7 @@ static	int	PK_bitpos;
 static	int	PK_dyn_f;
 static	int	PK_repeat_count;
 
-static	int
-PK_get_nyb(fp)
-	register FILE *fp;
+static	int PK_get_nyb(FILE *fp)
 {
 	unsigned temp;
 	if (PK_bitpos < 0) {
@@ -88,9 +89,7 @@ PK_get_nyb(fp)
 }
 
 
-static	int
-PK_packed_num(fp)
-	register FILE *fp;
+static	int PK_packed_num(FILE *fp)
 {
 	int	i,j;
 
@@ -118,9 +117,7 @@ PK_packed_num(fp)
 }
 
 
-static	void
-PK_skip_specials(fontp)
-	register struct font *fontp;
+static	void PK_skip_specials(font *fontp)
 {
 	int i,j;
 	register FILE *fp = fontp->file;
@@ -161,9 +158,7 @@ static	void
 #if	NeedFunctionPrototypes
 read_PK_char(register struct font *fontp, wide_ubyte ch)
 #else	/* !NeedFunctionPrototypes */
-read_PK_char(fontp, ch)
-	register struct font *fontp;
-	ubyte	ch;
+read_PK_char(font *fontp, ubyte ch)
 #endif	/* NeedFunctionPrototypes */
 {
 	int	i, j;
@@ -187,7 +182,7 @@ read_PK_char(fontp, ch)
 	else if (PK_flag_byte > 3) n = 2;
 	else n = 1;
 
-	if (debug & DBG_PK) Printf("loading pk char %d, char type %d ", ch, n);
+	if (_debug & DBG_PK) Printf("loading pk char %d, char type %d ", ch, n);
 
 	/*
 	 * now read rest of character preamble
@@ -213,7 +208,7 @@ read_PK_char(fontp, ch)
 
 	g->dvi_adv = fontp->dimconv * fpwidth;
 
-	if (debug & DBG_PK) {
+	if (_debug & DBG_PK) {
 	    if (g->bitmap.w != 0)
 		Printf(", size=%dx%d, dvi_adv=%ld", g->bitmap.w, g->bitmap.h,
 		    g->dvi_adv);
@@ -328,16 +323,13 @@ read_PK_char(fontp, ch)
 	}
 }
 
-void
-read_PK_index(fontp, hushcs)
-	register struct font	*fontp;
-	wide_bool		hushcs;
+void read_PK_index(font *fontp, wide_bool hushcs)
 {
 	int	hppp, vppp;
 	long	checksum;
 
 	fontp->read_char = read_PK_char;
-	if (debug & DBG_PK)
+	if (_debug & DBG_PK)
 	    Printf("Reading PK pixel file %s\n", fontp->filename);
 
 	Fseek(fontp->file, (long) one(fontp->file), 1);	/* skip comment */
@@ -351,7 +343,7 @@ read_PK_index(fontp, hushcs)
 		fontp->checksum, checksum, fontp->filename);
 	hppp = sfour(fontp->file);
 	vppp = sfour(fontp->file);
-	if (hppp != vppp && (debug & DBG_PK))
+	if (hppp != vppp && (_debug & DBG_PK))
 	    Printf("Font has non-square aspect ratio %d:%d\n", vppp, hppp);
 	/*
 	 * Prepare glyph array.
@@ -395,7 +387,7 @@ read_PK_index(fontp, hushcs)
             /* seek backward, or long forward */
 #endif /* linux */
 	    Fseek(fontp->file, (long) bytes_left, 1);
-	    if (debug & DBG_PK)
+	    if (_debug & DBG_PK)
 		Printf("Scanning pk char %u, at %ld.\n", ch,
 		    fontp->glyph[ch].addr);
 	}

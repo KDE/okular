@@ -18,8 +18,8 @@ METASOURCES = AUTO
 libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
 	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp \
-	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\
-	special.c util.c vf.c
+	psheader.c dviwin_draw.cpp dvi_init.cpp font-open.cpp gf.cpp new.cpp pk.cpp psgs.cpp\
+	special.cpp util.cpp vf.cpp glyph.cpp
 
 kdvi_SOURCES = main.cpp
 

@@ -11,7 +11,9 @@
 #define xfopen xdvi_xfopen
 
 /* For wchar_t et al., that the X files might want. */
+extern "C" {
 #include <kpathsea/systypes.h>
+}
 
 /* See kpathsea/INSTALL for the purpose of the FOIL...  */
 #ifdef FOIL_X_WCHAR_T
@@ -204,12 +206,15 @@ typedef	Boolean		wide_bool;
 
 extern	BMUNIT	bit_masks[BITS_PER_BMUNIT + 1];
 
+struct framedata {
+  long dvi_h, dvi_v, w, x, y, z;
+  int pxl_v;
+};
+
+
 struct frame {
-	struct framedata {
-		long dvi_h, dvi_v, w, x, y, z;
-		int pxl_v;
-	} data;
-	struct frame *next, *prev;
+  struct framedata data;
+  struct frame *next, *prev;
 };
 
 #if	NeedFunctionPrototypes
@@ -234,7 +239,7 @@ struct drawinf {	/* this information is saved when using virtual fonts */
 	struct font	**tn_table;
 	struct tn	*tn_head;
 	ubyte		*pos, *end;
-	struct font	*virtual;
+	struct font	*_virtual;
 #ifdef	TEXXET
 	int		dir;
 #endif
@@ -281,35 +286,6 @@ EXTERN	long	*page_offset;
  */
 EXTERN	Boolean	hush_spec_now;
 
-
-/*
- * Bitmap structure for raster ops.
- */
-struct bitmap {
-	unsigned short	w, h;		/* width and height in pixels */
-	short		bytes_wide;	/* scan-line width in bytes */
-	char		*bits;		/* pointer to the bits */
-};
-
-/*
- * Per-character information.
- * There is one of these for each character in a font (raster fonts only).
- * All fields are filled in at font definition time,
- * except for the bitmap, which is "faulted in"
- * when the character is first referenced.
- */
-struct glyph {
-	long addr;		/* address of bitmap in font file */
-	long dvi_adv;		/* DVI units to move reference point */
-	short x, y;		/* x and y offset in pixels */
-	struct bitmap bitmap;	/* bitmap for character */
-	short x2, y2;		/* x and y offset in pixels (shrunken bitmap) */
-#ifdef	GREY
-	XImage *image2;
-	char *pixmap2;
-#endif
-	struct bitmap bitmap2;	/* shrunken bitmap for character */
-};
 
 /*
  * Per character information for virtual fonts
@@ -391,48 +367,48 @@ EXTERN	unsigned short	current_timestamp INIT(0);
  *	Command line flags.
  */
 
-	char	*debug_arg;
+extern	char	*debug_arg;
 #ifdef	TOOLKIT
 	int	shrinkfactor;
 #endif
-	int	_density;
-#ifdef	GREY
-	float	_gamma;
-#endif
-	int	_pixels_per_inch;
-	char	*sidemargin;
-	char	*topmargin;
-	char	*xoffset;
-	char	*yoffset;
-	_Xconst char	*_paper;
-	Boolean	_list_fonts;
-	Boolean	reverse;
-	Boolean	_hush_spec;
-	Boolean	_hush_chars;
-	Boolean	_hush_chk;
-	char	*fore_color;
-	char	*back_color;
-	char	*brdr_color;
-	char	*high_color;
-	char	*curs_color;
-	Pixel	_fore_Pixel;
-	Pixel	_back_Pixel;
+extern	int	_density;
+
+extern	float	_gamma;
+
+extern	int	_pixels_per_inch;
+extern	char	*sidemargin;
+extern	char	*topmargin;
+extern	char	*xoffset;
+extern	char	*yoffset;
+extern	_Xconst char	*_paper;
+extern	Boolean	_list_fonts;
+extern	Boolean	reverse;
+extern	Boolean	_hush_spec;
+extern	Boolean	_hush_chars;
+extern	Boolean	_hush_chk;
+extern	char	*fore_color;
+extern	char	*back_color;
+extern	char	*brdr_color;
+extern	char	*high_color;
+extern	char	*curs_color;
+extern	Pixel	_fore_Pixel;
+extern	Pixel	_back_Pixel;
 #ifdef	TOOLKIT
 	Pixel	_brdr_Pixel;
 	Pixel	_hl_Pixel;
 	Pixel	_cr_Pixel;
 #endif
-	char	*icon_geometry;
-	Boolean	keep_flag;
+extern	char	*icon_geometry;
+extern	Boolean	keep_flag;
 #ifdef	TOOLKIT
 	char	*copy_arg;
 #endif
-	Boolean	copy;
-	Boolean	thorough;
+extern	Boolean	copy;
+extern	Boolean	thorough;
 #if	PS
 	/* default is to use DPS, then NEWS, then GhostScript;
 	 * we will figure out later on which one we will use */
-	Boolean	_postscript;
+extern	Boolean	_postscript;
 #ifdef	PS_DPS
 	Boolean	useDPS;
 #endif
@@ -440,14 +416,14 @@ EXTERN	unsigned short	current_timestamp INIT(0);
 	Boolean	useNeWS;
 #endif
 #ifdef	PS_GS
-	Boolean	useGS;
+extern	Boolean	useGS;
 #endif
 #endif	/* PS */
-	Boolean	version_flag;
+extern	Boolean	version_flag;
 #ifdef	BUTTONS
 	Boolean	expert;
 #endif
-	char	*mg_arg[5];
+extern	char	*mg_arg[5];
 
 /* As a convenience, we define the field names without leading underscores
  * to point to the field of the above record.  Here are the global ones;
@@ -471,7 +447,7 @@ extern	struct	mg_size_rec {
 }
 	mg_size[5];
 
-EXTERN	int	debug	INIT(0);
+EXTERN	int	_debug	INIT(0);
 
 #define	DBG_BITMAP	0x1
 #define	DBG_DVI		0x2
@@ -506,21 +482,10 @@ EXTERN	int	home_x, home_y;
 
 EXTERN	Display	*DISP;
 EXTERN	Screen	*SCRN;
-EXTERN	GC	ruleGC;
-EXTERN	GC	foreGC, highGC;
+EXTERN	GC	ruleGC; // @@@ needs to be removed.
+
 
 EXTERN	Cursor	redraw_cursor, ready_cursor;
-
-#ifdef	GREY
-EXTERN	unsigned long	palette[17];
-EXTERN	unsigned long	*pixeltbl;
-#endif	/* GREY */
-
-#ifndef KDVI
-EXTERN	Boolean	canit		INIT(False);
-EXTERN	jmp_buf	canit_env;
-EXTERN	VOLATILE short	event_counter	INIT(0);
-#endif
 
 #if	PS
 EXTERN	Boolean	allow_can	INIT(True);
@@ -580,9 +545,6 @@ _XFUNCPROTOBEGIN
 #ifdef	BUTTONS
 extern	void	create_buttons ARGS((XtArgVal));
 #endif
-#ifdef	GREY
-extern	void	init_pix ARGS((wide_bool));
-#endif
 extern	void	reconfig ARGS((void));
 #ifdef	TOOLKIT
 extern	void	handle_key ARGS((Widget, XtPointer, XEvent *, Boolean *));
@@ -595,42 +557,27 @@ extern	void	handle_exp ARGS((Widget, XtPointer, XEvent *, Boolean *));
 extern	void	read_events ARGS((wide_bool));
 extern	void	redraw_page ARGS((void));
 extern	void	do_pages ARGS((void));
-extern	void	reset_fonts ARGS((void));
 extern	void	realloc_font ARGS((struct font *, wide_ubyte));
 extern	void	realloc_virtual_font ARGS((struct font *, wide_ubyte));
 extern	Boolean	load_font ARGS((struct font *));
 extern	struct font	*define_font ARGS((FILE *, wide_ubyte,
 			struct font *, struct font **, unsigned int,
 			struct tn **));
-extern	void	init_page ARGS((void));
+//extern	void	init_page ARGS((void));
 extern	void	open_dvi_file ARGS((void));
-extern	Boolean	check_dvi_file ARGS((void));
-extern	void	put_border ARGS((int, int, unsigned int, unsigned int, GC));
-#ifndef	TEXXET
-extern	long	set_char ARGS((wide_ubyte));
-extern	long	load_n_set_char ARGS((wide_ubyte));
-extern	long	set_vf_char ARGS((wide_ubyte));
-#else
+//extern	Boolean	check_dvi_file (void);
+extern	void	put_border ARGS((int, int, unsigned int, unsigned int));
 extern	void	set_char ARGS((wide_ubyte, wide_ubyte));
 extern	void	load_n_set_char ARGS((wide_ubyte, wide_ubyte));
 extern	void	set_vf_char ARGS((wide_ubyte, wide_ubyte));
-#endif
-extern	void	draw_page ARGS((void));
+//extern	void	draw_page ARGS((void));
 extern	void	init_font_open ARGS((void));
-extern	FILE	*font_open ARGS((_Xconst char *, char **, double, int *, int,
-			char **));
+//extern	FILE	*font_open ARGS((_Xconst char *, char **, double, int *, int, char **));
 extern	void	applicationDoSpecial ARGS((char *));
-#if	NeedVarargsPrototypes
 extern	NORETURN void	oops(_Xconst char *, ...);
-#else
-extern	NORETURN void	oops();
-#endif
-extern	char	*xmalloc ARGS((unsigned, _Xconst char *));
 extern	void	alloc_bitmap ARGS((struct bitmap *));
-extern	FILE	*xfopen ARGS((_Xconst char *, OPEN_MODE_ARGS));
-#ifdef	PS_GS
+//extern	FILE	*xfopen ARGS((_Xconst char *, OPEN_MODE_ARGS));
 extern	int	xpipe ARGS((int *));
-#endif
 extern	unsigned long	num ARGS((FILE *, int));
 extern	long	snum ARGS((FILE *, int));
 extern	void	read_PK_index ARGS((struct font *, wide_bool));
@@ -647,9 +594,7 @@ extern	Boolean	initDPS ARGS((void));
 #ifdef	PS_NEWS
 extern	Boolean	initNeWS ARGS((void));
 #endif
-#ifdef	PS_GS
 extern	Boolean	initGS ARGS((void));
-#endif
 #endif	/* PS */
 
 _XFUNCPROTOEND

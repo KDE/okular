@@ -23,9 +23,10 @@
  * SUCH DAMAGE.
  */
 
+#include <stdio.h>
 #include "oconfig.h"
 #include "dvi.h"
-
+extern	char	*xmalloc (unsigned, _Xconst char *);
 
 /***
  ***	VF font reading routines.
@@ -53,10 +54,7 @@
  *	The main routine
  */
 
-void
-read_VF_index(fontp, hushcs)
-	register struct font	*fontp;
-	wide_bool		hushcs;
+void read_VF_index(font *fontp, wide_bool hushcs)
 {
 	FILE	*VF_file = fontp->file;
 	ubyte	cmnd;
@@ -66,7 +64,7 @@ read_VF_index(fontp, hushcs)
 	fontp->read_char = NULL;
 	fontp->flags |= FONT_VIRTUAL;
 	fontp->set_char_p = set_vf_char;
-	if (debug & DBG_PK)
+	if (_debug & DBG_PK)
 	    Printf("Reading VF pixel file %s\n", fontp->filename);
 /*
  *	Read preamble.
@@ -147,7 +145,7 @@ read_VF_index(fontp, hushcs)
 		Fread((char *) m->pos, 1, len, VF_file);
 		m->end = m->pos + len;
 	    }
-	    if (debug & DBG_PK)
+	    if (_debug & DBG_PK)
 		Printf("Read VF macro for character %lu; dy = %ld, length = %d\n",
 			cc, m->dvi_adv, len);
 	}

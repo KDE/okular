@@ -55,11 +55,35 @@
  * it's worth it.
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "oconfig.h"
-#include <kpathsea/c-fopen.h>
+extern	char	*xmalloc (unsigned, _Xconst char *);
+
+extern "C" {
+#define HAVE_PROTOTYPES
 #include <kpathsea/c-ctype.h>
-#include <kpathsea/line.h>
+#include <kpathsea/c-fopen.h>
+#include <kpathsea/c-proto.h>
+#include <kpathsea/types.h>
 #include <kpathsea/tex-file.h>
+#include <kpathsea/line.h>
+}
+
+/*
+extern "C" {
+#include <kpathsea/config.h>
+
+#include <kpathsea/c-stat.h>
+#include <kpathsea/magstep.h>
+#include <kpathsea/tex-glyph.h>
+
+
+
+#include "dvi.h"
+}
+*/
 
 #define	MAXPOINTS	300	/* Max points in a path */
 #define	TWOPI		(3.14159265359*2.0)
@@ -83,9 +107,7 @@ static	Boolean	blacken = False;
  *	Issue warning messages
  */
 
-static	void
-Warning(fmt, msg)
-	char	*fmt, *msg;
+static	void Warning(char *fmt, char *msg)
 {
 	Fprintf(stderr, fmt, msg);
 	(void) fputc('\n', stderr);
@@ -104,9 +126,7 @@ Warning(fmt, msg)
  *	Draw a line from (fx,fy) to (tx,ty).
  *	Right now, we ignore pen_size.
  */
-static	void
-line_btw(fx, fy, tx, ty)
-int fx, fy, tx, ty;
+static	void line_btw(int fx, int fy, int tx, int ty)
 {
 	register int	fcx = xconv(fx),
 			tcx = xconv(tx),
@@ -123,9 +143,7 @@ int fx, fy, tx, ty;
 /*
  *	Draw a dot at (x,y)
  */
-static	void
-dot_at(x, y)
-	int	x, y;
+static	void dot_at(int x, int y)
 {
 	register int	cx = xconv(x),
 			cy = yconv(y);
@@ -141,9 +159,7 @@ dot_at(x, y)
  *	(Not currently implemented.)
  */
 	/* ARGSUSED */
-static	void
-do_attribute_path(last_min_x, last_max_x, last_min_y, last_max_y)
-int last_min_x, last_max_x, last_min_y, last_max_y;
+static	void do_attribute_path(int last_min_x, int last_max_x, int last_min_y, int last_max_y)
 {
 }
 
@@ -152,9 +168,7 @@ int last_min_x, last_max_x, last_min_y, last_max_y;
  */
 
 /* ARGSUSED */
-static	void
-set_pen_size(cp)
-	char	*cp;
+static	void set_pen_size(char *cp)
 {
 	int	ps;
 
@@ -172,8 +186,7 @@ set_pen_size(cp)
  *	Print the line defined by previous path commands
  */
 
-static	void
-flush_path()
+static	void flush_path()
 {
 	register int i;
 	int	last_min_x, last_max_x, last_min_y, last_max_y;
@@ -203,10 +216,7 @@ flush_path()
  *	the dashes/inch defined.
  */
 
-static	void
-flush_dashed(cp, dotted)
-	char	*cp;
-	Boolean	dotted;
+static	void flush_dashed(char *cp, Boolean dotted)
 {
 	int	i;
 	int	numdots;
@@ -268,9 +278,7 @@ flush_dashed(cp, dotted)
  *	Add a point to the current path
  */
 
-static	void
-add_path(cp)
-	char	*cp;
+static	void add_path(char *cp)
 {
 	int	pathx, pathy;
 
@@ -286,9 +294,7 @@ add_path(cp)
  *	Draw to a floating point position
  */
 
-static void
-im_fdraw(x, y)
-	double	x,y;
+static void im_fdraw(double x, double y)
 {
 	if (++path_len >= MAXPOINTS) oops("Too many arc points");
 	xx[path_len] = x + 0.5;
@@ -300,9 +306,7 @@ im_fdraw(x, y)
  *	Draw an ellipse with the indicated center and radices.
  */
 
-static	void
-draw_ellipse(xc, yc, xr, yr)
-	int	xc, yc, xr, yr;
+static	void draw_ellipse(int xc, int yc, int xr, int yr)
 {
 	double	angle, theta;
 	int	n;
@@ -333,10 +337,7 @@ draw_ellipse(xc, yc, xr, yr)
  *	Draw an arc
  */
 
-static	void
-arc(cp, invis)
-	char	*cp;
-	Boolean	invis;
+static	void arc(char *cp, Boolean invis)
 {
 	int	xc, yc, xrad, yrad, n;
 	float	start_angle, end_angle, angle, theta, r;
@@ -393,8 +394,7 @@ arc(cp, invis)
  *	Draw a spline along the previously defined path
  */
 
-static	void
-flush_spline()
+static	void flush_spline()
 {
 	int	xp, yp;
 	int	N;
@@ -439,8 +439,7 @@ flush_spline()
  *	Shade the last box, circle, or ellipse
  */
 
-static	void
-shade_last()
+static	void shade_last()
 {
 	blacken = whiten = False;
 	shade = True;
@@ -451,8 +450,7 @@ shade_last()
  *	Make the last box, circle, or ellipse, white inside (shade with white)
  */
 
-static	void
-whiten_last()
+static	void whiten_last()
 {
 	whiten = True;
 	blacken = shade = False;
@@ -463,8 +461,7 @@ whiten_last()
  *	Make last box, etc, black inside
  */
 
-static	void
-blacken_last()
+static	void blacken_last()
 {
 	blacken = True;
 	whiten = shade = False;
@@ -515,7 +512,7 @@ draw_bbox()
 	if (bbox_valid) {
 	    put_border(PXL_H - currwin.base_x,
 		PXL_V - currwin.base_y - bbox_voffset,
-		bbox_width, bbox_height, ruleGC);
+		bbox_width, bbox_height);
 	    bbox_valid = False;
 	}
 }
@@ -554,10 +551,7 @@ actual_startup()
 	    psp = no_ps_procs;
 }
 
-static	void
-ps_startup(xul, yul, cp)
-	int	xul, yul;
-	char	*cp;
+static	void ps_startup(int xul, int yul, char *cp)
 {
 	if (!_postscript) {
 	    psp.toggle = actual_startup;
@@ -569,10 +563,9 @@ ps_startup(xul, yul, cp)
 }
 
 /* ARGSUSED */
-static	void
-NullProc2(cp)
-	char	*cp;
-{}
+static	void NullProc2(char *cp)
+{
+}
 
 /* ARGSUSED */
 void
@@ -594,10 +587,7 @@ drawbegin_none(xul, yul, cp)
    path for figure files, set *DECOMPRESS to 0, and return the result
    (NULL if can't find the file).  */
 
-static string
-find_fig_file (filename, decompress)
-    char *filename;
-    int *decompress;
+static string find_fig_file (char *filename, int *decompress)
 {
   char *name;
   
@@ -620,15 +610,11 @@ find_fig_file (filename, decompress)
    DECOMPRESS is nonzero, open a pipe to it and pass the resulting
    output to the drawraw proc (in chunks).  */
 
-static void
-draw_file (psp, name, decompress)
-    struct psprocs psp;
-    char *name;
-    int decompress;
+static void draw_file (psprocs psp, char *name, int decompress)
 {
   if (decompress) {
     FILE *pipe;
-    if (debug & DBG_PS)
+    if (_debug & DBG_PS)
       printf ("%s: piping to PostScript\n", name);
       
     pipe = popen (name, FOPEN_R_MODE);
@@ -637,14 +623,14 @@ draw_file (psp, name, decompress)
     else
       {
         char *line;
-        int save_debug = debug;
-        debug = 0; /* don't print every line we send */
+        int save_debug = _debug;
+        _debug = 0; /* don't print every line we send */
         while ((line = read_line (pipe)) != NULL) {
           psp.drawraw (line);
           free (line);
         }
         pclose (pipe); /* Linux gives a spurious error, so don't check. */
-        debug = save_debug;
+        _debug = save_debug;
       }
 
   } else { /* a regular file, not decompressing */
@@ -653,9 +639,7 @@ draw_file (psp, name, decompress)
 }
 #endif /* PS */
 
-static	void
-psfig_special(cp)
-	char	*cp;
+static	void psfig_special(char *cp)
 {
 	char	*filename;
 	int	raww, rawh;
@@ -741,9 +725,7 @@ static	char	*keytab[]	= {"clip",
 #define	NKEYS	(sizeof(keytab)/sizeof(*keytab))
 #define	N_ARGLESS_KEYS 1
 
-static	void
-epsf_special(cp)
-	char	*cp;
+static	void epsf_special(char *cp)
 {
 	char	*filename, *name;
 	int 	decompress;
@@ -844,9 +826,7 @@ epsf_special(cp)
 }
 
 
-static	void
-bang_special(cp)
-	char	*cp;
+static	void bang_special(char *cp)
 {
 	bbox_valid = False;
 
@@ -863,9 +843,7 @@ bang_special(cp)
 	/* nothing else to do--there's no bbox here */
 }
 
-static	void
-quote_special(cp)
-	char	*cp;
+static	void quote_special(char *cp)
 {
 	bbox_valid = False;
 
@@ -910,9 +888,7 @@ quote_special(cp)
 
 #define	COMLEN	3
 
-void
-applicationDoSpecial(cp)
-	char	*cp;
+void applicationDoSpecial(char *cp)
 {
 	char	command[COMLEN + 1];
 	char	*q;

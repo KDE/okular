@@ -23,7 +23,11 @@
  * SUCH DAMAGE.
  */
 
+#include <stdio.h>
+#include "glyph.h"
 #include "oconfig.h"
+
+extern	char	*xmalloc (unsigned, _Xconst char *);
 
 /***
  ***	GF font reading routines.
@@ -60,9 +64,7 @@
 
 static	FILE	*GF_file;
 
-static	void
-expect(ch)
-	ubyte ch;
+static	void expect(ubyte ch)
 {
 	ubyte ch1 = one(GF_file);
 
@@ -70,9 +72,7 @@ expect(ch)
 		oops("Bad GF file:  %d expected, %d received.", ch, ch1);
 }
 
-static	void
-too_many_bits(ch)
-	ubyte ch;
+static	void too_many_bits(ubyte ch)
 {
 	oops("Too many bits found when loading character %d", ch);
 }
@@ -86,9 +86,7 @@ static	void
 #if	NeedFunctionPrototypes
 read_GF_char(register struct font *fontp, wide_ubyte ch)
 #else	/* !NeedFunctionPrototypes */
-read_GF_char(fontp, ch)
-	register struct font *fontp;
-	ubyte	ch;
+read_GF_char(font *fontp, ubyte ch)
 #endif	/* NeedFunctionPrototypes */
 {
 	register struct glyph *g;
@@ -106,7 +104,7 @@ read_GF_char(fontp, ch)
 	g = &fontp->glyph[ch];
 	GF_file = fontp->file;
 
-	if(debug & DBG_PK)
+	if(_debug & DBG_PK)
 	    Printf("Loading gf char %d", ch);
 
 	for (;;) {
@@ -147,7 +145,7 @@ read_GF_char(fontp, ch)
 	}
 	paint_switch = White;
 
-	if (debug & DBG_PK)
+	if (_debug & DBG_PK)
 	    Printf(", size=%dx%d, dvi_adv=%ld\n", g->bitmap.w, g->bitmap.h,
 		g->dvi_adv);
 
@@ -244,10 +242,7 @@ read_GF_char(fontp, ch)
 }
 
 
-void
-read_GF_index(fontp, hushcs)
-	register struct font	*fontp;
-	wide_bool		hushcs;
+void read_GF_index(font *fontp, wide_bool hushcs)
 {
 	int	hppp, vppp;
 	ubyte	ch, cmnd;
@@ -256,7 +251,7 @@ read_GF_index(fontp, hushcs)
 
 	fontp->read_char = read_GF_char;
 	GF_file = fontp->file;
-	if (debug & DBG_PK)
+	if (_debug & DBG_PK)
 	    Printf("Reading GF pixel file %s\n", fontp->filename);
 /*
  *	Find postamble.
@@ -289,7 +284,7 @@ read_GF_index(fontp, hushcs)
 		fontp->checksum, checksum, fontp->filename);
 	hppp = sfour(GF_file);
 	vppp = sfour(GF_file);
-	if (hppp != vppp && (debug & DBG_PK))
+	if (hppp != vppp && (_debug & DBG_PK))
 	    Printf("Font has non-square aspect ratio %d:%d\n", vppp, hppp);
 	(void) four(GF_file);		/* skip min_m */
 	(void) four(GF_file);		/* skip max_m */
@@ -326,7 +321,7 @@ read_GF_index(fontp, hushcs)
 	    g->dvi_adv = fontp->dimconv * sfour(GF_file);
 	    addr = four(GF_file);
 	    if (addr != -1) g->addr = addr;
-	    if (debug & DBG_PK)
+	    if (_debug & DBG_PK)
 		Printf("Read GF glyph for character %d; dy = %ld, addr = %x\n",
 			ch, g->dvi_adv, addr);
 	}

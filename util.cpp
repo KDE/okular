@@ -49,9 +49,16 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-#include "oconfig.h"
+extern "C" {
+#include <kpathsea/config.h>
+#include <kpathsea/c-ctype.h>
 #include <kpathsea/c-fopen.h>
 #include <kpathsea/c-vararg.h>
+}
+#include "oconfig.h"
+#include "dvi.h"
+
+#include "glyph.h"
 
 #ifdef	Mips
 extern	int	errno;
@@ -102,10 +109,7 @@ oops(va_alist)
  *	Either allocate storage or fail with explanation.
  */
 
-char *
-xmalloc(size, why)
-	unsigned	size;
-	_Xconst char	*why;
+char * xmalloc(unsigned size, _Xconst char *why)
 {
 	/* Avoid malloc(0), though it's not clear if it ever actually
 	   happens any more.  */
@@ -120,9 +124,7 @@ xmalloc(size, why)
  *	Allocate bitmap for given font and character
  */
 
-void
-alloc_bitmap(bitmap)
-	register struct bitmap *bitmap;
+void alloc_bitmap(bitmap *bitmap)
 {
 	register unsigned int	size;
 
@@ -138,8 +140,7 @@ alloc_bitmap(bitmap)
  *	Close the pixel file for the least recently used font.
  */
 
-static	void
-close_a_file()
+static	void close_a_file()
 {
 	register struct font *fontp;
 	unsigned short oldest = ~0;
@@ -161,19 +162,8 @@ close_a_file()
  *	Open a file in the given mode.
  */
 
-FILE *
-#ifndef	VMS
-xfopen(filename, type)
-	_Xconst char	*filename;
-	_Xconst char	*type;
+FILE *xfopen(char *filename, char *type)
 #define	TYPE	type
-#else
-xfopen(filename, type, type2)
-	_Xconst char	*filename;
-	_Xconst char	*type;
-	_Xconst char	*type2;
-#define	TYPE	type, type2
-#endif	/* VMS */
 {
 	FILE	*f;
 
@@ -196,15 +186,12 @@ xfopen(filename, type, type2)
 #undef	TYPE
 
 
-#ifdef	PS_GS
 /*
  *	Create a pipe, closing a file if necessary.  This is (so far) used only
  *	in psgs.c.
  */
 
-int
-xpipe(fd)
-	int	*fd;
+int xpipe(int *fd)
 {
 	int	retval;
 
@@ -216,7 +203,7 @@ xpipe(fd)
 	}
 	return retval;
 }
-#endif	/* PS_GS */
+
 
 
 /*
@@ -226,10 +213,7 @@ xpipe(fd)
  *
  */
 
-unsigned long
-num(fp, size)
-	register FILE *fp;
-	register int size;
+unsigned long num(FILE *fp, int size)
 {
 	register long x = 0;
 
@@ -237,10 +221,7 @@ num(fp, size)
 	return x;
 }
 
-long
-snum(fp, size)
-	register FILE *fp;
-	register int size;
+long snum(FILE *fp, int size)
 {
 	register long x;
 

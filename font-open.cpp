@@ -1,23 +1,25 @@
 /* font-open.c: find font filenames.  This bears no relation (but the
    interface) to the original font_open.c, so I renamed it.  */
 
+
+extern "C" {
+#include <kpathsea/config.h>
+#include <kpathsea/c-fopen.h>
+#include <kpathsea/c-stat.h>
+#include <kpathsea/magstep.h>
+#include <kpathsea/tex-glyph.h>
+#include "dvi.h"
+}
+
+#include <stdio.h>
 #include "oconfig.h"
 
-#include <kpathsea/c-fopen.h>
-#include <kpathsea/tex-glyph.h>
-
+extern FILE *xfopen(char *filename, char *type);
 
 /* We try for a VF first because that's what dvips does.  Also, it's
    easier to avoid running MakeTeXPK if we have a VF this way.  */
 
-FILE *
-font_open (font, font_ret, dpi, dpi_ret, dummy, filename_ret)
-    _Xconst char *font;
-    char **font_ret;
-    double dpi;
-    int *dpi_ret;
-    int dummy;
-    char **filename_ret;
+FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, int dummy, char **filename_ret)
 {
   FILE *ret;
   char *name = kpse_find_vf (font);
@@ -32,8 +34,7 @@ font_open (font, font_ret, dpi, dpi_ret, dummy, filename_ret)
   else
     {
       kpse_glyph_file_type file_ret;
-      name = kpse_find_glyph (font, (unsigned) (dpi + .5),
-                              kpse_any_glyph_format, &file_ret);
+      name = kpse_find_glyph (font, (unsigned) (dpi + .5), kpse_any_glyph_format, &file_ret);
       if (name)
         {
           /* If we got it normally, from an alias, or from MakeTeXPK,

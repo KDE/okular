@@ -701,19 +701,9 @@ void Part::printPreview()
     return;
 
   KPrinter printer;
+  printer.setMinMax(1, m_doc->getNumPages());
   printer.setPreviewOnly( true );
-  QPainter painter( &printer );
-  SplashColor paperColor;
-  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-  QOutputDevKPrinter printdev( painter, paperColor, printer );
-  printdev.startDoc(m_doc->getXRef());
-  int max = m_doc->getNumPages();
-  for ( int i = 1; i <= max; ++i )
-  {
-    m_doc->displayPage(&printdev, i, printer.resolution(), printer.resolution(), 0, true, true);
-    if ( i != max )
-      printer.newPage();
-  }
+  doPrint(printer);
 }
 
 void Part::doPrint( KPrinter& printer )

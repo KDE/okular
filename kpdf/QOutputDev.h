@@ -42,12 +42,12 @@ class KPDFPageRect;
 class KPDFOutputDev : public SplashOutputDev
 {
     public:
-        KPDFOutputDev( SplashColor paperColor );
+        KPDFOutputDev( GeneratorPDF * parent, SplashColor paperColor );
         virtual ~KPDFOutputDev();
 
         // to be called before PDFDoc->displayPage( thisclass, .. )
         void setParams( int pixmapWidth, int pixmapHeight, bool generateTextpage,
-                        bool decodeLinks, bool decodeImages, GeneratorPDF * parent );
+                        bool decodeLinks, bool decodeImages );
 
         // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
         KPDFLink * generateLink( LinkAction * );

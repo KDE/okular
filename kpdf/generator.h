@@ -35,8 +35,9 @@ class Generator
         // load a document and fill up the pagesVector
         virtual bool loadDocument( const QString & fileName, QValueVector< KPDFPage* > & pagesVector ) = 0;
 
-        // Document description
-        virtual const DocumentInfo & documentInfo() = 0;
+        // Document description and Table of contents
+        virtual const DocumentInfo * documentInfo() { return 0L; }
+        virtual const DocumentSynopsis * documentSynopsis() { return 0L; }
 
         // DRM handling
         enum Permissions { Modify = 1, Copy = 2, Print = 4, AddNotes = 8 };
@@ -46,7 +47,6 @@ class Generator
         virtual bool print( KPrinter& printer ) = 0;
         virtual bool requestPixmap( int id, KPDFPage * page, int width, int height, bool syncronous = false ) = 0;
         virtual void requestTextPage( KPDFPage * page ) = 0;
-        virtual DocumentSynopsis& synopsis() = 0;
 
         // check configuration and return if something changed
         virtual bool reparseConfig() { return false; }

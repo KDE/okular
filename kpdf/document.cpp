@@ -45,7 +45,6 @@ class KPDFDocumentPrivate
 
         // cached stuff
         int currentPage;
-        DocumentInfo noDocumentInfo;
 
         // observers related (note: won't delete oservers)
         QMap< int, KPDFDocumentObserver* > observers;
@@ -61,7 +60,6 @@ KPDFDocument::KPDFDocument()
 {
     d->currentPage = -1;
     d->searchPage = -1;
-    d->noDocumentInfo.title = i18n( "No document opened!" );
 }
 
 KPDFDocument::~KPDFDocument()
@@ -145,11 +143,14 @@ void KPDFDocument::reparseConfig()
 }
 
 
-const DocumentInfo & KPDFDocument::documentInfo() const
+const DocumentInfo * KPDFDocument::documentInfo() const
 {
-    if ( generator )
-        return generator->documentInfo();
-    return d->noDocumentInfo;
+    return generator ? generator->documentInfo() : NULL;
+}
+
+const DocumentSynopsis * KPDFDocument::documentSynopsis() const
+{
+    return generator ? generator->documentSynopsis() : NULL;
 }
 
 const KPDFPage * KPDFDocument::page( uint n ) const
@@ -170,11 +171,6 @@ uint KPDFDocument::pages() const
 bool KPDFDocument::okToPrint() const
 {
     return generator ? generator->allowed( Generator::Print ) : false;
-}
-
-Outline * KPDFDocument::outline() const
-{
-    return generator ? generator->synopsis().outline : 0;
 }
 
 
@@ -308,7 +304,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             }
 
             // note: if external file is opened, 'link' doesn't exist anymore!
-            setCurrentPage( destVp.page );  //TODO implement and use viewport
+            setCurrentPage( destVp.page );  //TODO implement and use Viewport
             } break;
 
         case KPDFLink::Execute: {

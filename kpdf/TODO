@@ -7,9 +7,9 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> Abstract contents generation [70% missing TextPage, Outline]
--> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive}) [0%]
--> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [60% done]
+-> Abstract contents generation [70% missing TextPage only!]
+-> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive}) [20%]
+-> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [65% done]
 
 Things to do in order to merge in HEAD (first item has highest priority):
 -> take care of naming on merge, too differences (remove some kpdf_* prefixes
@@ -56,6 +56,7 @@ More items (first items will enter 'In progress list' first):
 -> rotate the whole document / individual pages
 -> fullscreen pdf view (presentations-like) with some gfx tools
 -> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
+-> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 
 Done (newest feature comes firts):
 -> FIX: Dynamic zoom repaints the page while rescaling.

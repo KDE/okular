@@ -22,6 +22,10 @@
 #include "xpdf/Link.h"
 #include "xpdf/ErrorCodes.h"
 #include "xpdf/UnicodeMap.h"
+#include "xpdf/Outline.h"
+#include "goo/GList.h"
+//#include "xpdf/PDFDoc.h"
+//#include "xpdf/GlobalParams.h"
 
 // local includes
 #include "generator_pdf.h"
@@ -32,11 +36,11 @@
 
 
 GeneratorPDF::GeneratorPDF()
-    : pdfdoc( 0 ), kpdfOutputDev( 0 ), docInfoDirty( true )
+    : pdfdoc( 0 ), kpdfOutputDev( 0 ),
+    docInfoDirty( true ), docSynopsisDirty( true )
 {
     // generate kpdfOutputDev and cache page color
     reparseConfig();
-    syn.outline = 0;
 }
 
 GeneratorPDF::~GeneratorPDF()
@@ -118,7 +122,7 @@ bool GeneratorPDF::loadDocument( const QString & fileName, QValueVector<KPDFPage
 }
 
 
-const DocumentInfo & GeneratorPDF::documentInfo()
+const DocumentInfo * GeneratorPDF::documentInfo()
 {
     if ( docInfoDirty )
     {
@@ -149,7 +153,70 @@ const DocumentInfo & GeneratorPDF::documentInfo()
         if ( pdfdoc )
             docInfoDirty = false;
     }
-    return docInfo;
+    return &docInfo;
+}
+
+const DocumentSynopsis * GeneratorPDF::documentSynopsis()
+{
+    if ( !docSynopsisDirty )
+        return &docSyn;
+
+    if ( !pdfdoc )
+        return NULL;
+
+    Outline * outline = pdfdoc->getOutline();
+    if ( !outline )
+        return NULL;
+
+    GList * items = outline->getItems();
+    if ( !items || items->getLength() < 1 )
+        return NULL;
+
+    docSyn = DocumentSynopsis();
+    if ( items->getLength() > 0 )
+        addDomChildren( &docSyn, items );
+
+    docSynopsisDirty = false;
+    return &docSyn;
+}
+
+void GeneratorPDF::addDomChildren( QDomNode * parent, GList * items )
+{
+    int numItems = items->getLength();
+    for ( int i = 0; i < numItems; ++i )
+    {
+        // iterate over every object in 'items'
+        OutlineItem * outlineItem = (OutlineItem *)items->get( i );
+
+        // create element using outlineItem's title as tagName
+        QString name;
+        Unicode * uniChar = outlineItem->getTitle();
+        for ( int i = 0; i < outlineItem->getTitleLength(); ++i )
+            name += uniChar[ i ];
+        if ( name.isEmpty() )
+            continue;
+        QDomElement item = docSyn.createElement( name );
+        parent->appendChild( item );
+
+        // set element's attributes
+        if ( kpdfOutputDev )
+        {
+            KPDFLink * link = kpdfOutputDev->generateLink( outlineItem->getAction() );
+            if ( link && link->linkType() == KPDFLink::Goto )
+            {
+                KPDFLinkGoto * linkGoto = static_cast< KPDFLinkGoto * >( link );
+                item.setAttribute( "Page", linkGoto->destViewport().page );
+                //TODO item.setAttribute( "Position", 0 );
+            }
+            delete link;
+        }
+
+        // recursively descend over children
+        outlineItem->open();
+        GList * children = outlineItem->getKids();
+        if ( children )
+            addDomChildren( &item, children );
+    }
 }
 
 
@@ -208,7 +275,7 @@ bool GeneratorPDF::requestPixmap( int id, KPDFPage * page, int width, int height
             bool genTextPage = !page->hasSearchPage() && (width == page->width()) && (height == page->height());
             // generate links and image rects if rendering pages on pageview
             bool genRects = id == PAGEVIEW_ID;
-            kpdfOutputDev->setParams( width, height, genTextPage, genRects, genRects, this );
+            kpdfOutputDev->setParams( width, height, genTextPage, genRects, genRects );
 
             docLock.lock();
             pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
@@ -245,12 +312,6 @@ void GeneratorPDF::requestTextPage( KPDFPage * page )
     page->setSearchPage( td.takeTextPage() );
 }
 
-DocumentSynopsis& GeneratorPDF::synopsis()
-{
-    syn.outline = pdfdoc->getOutline();
-    return syn;
-}
-
 bool GeneratorPDF::reparseConfig()
 {
     // load paper color from Settings or use the white default color
@@ -267,7 +328,7 @@ bool GeneratorPDF::reparseConfig()
         // rebuild the output device using the new paper color
         docLock.lock();
         delete kpdfOutputDev;
-        kpdfOutputDev = new KPDFOutputDev( splashCol );
+        kpdfOutputDev = new KPDFOutputDev( this, splashCol );
         if ( pdfdoc )
             kpdfOutputDev->startDoc( pdfdoc->getXRef() );
         docLock.unlock();

@@ -19,17 +19,22 @@ propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialog
 {
   properties *p = new properties(this);
   setMainWidget(p);
-  const DocumentInfo & info = doc->documentInfo();
-  p->pagesValue->setText(QString::number(doc->pages()));
-  p->authorValue->setText( info.author );
-  p->titleValue->setText( info.title );
-  p->subjectValue->setText( info.subject );
-  p->keywordsValue->setText( info.keywords );
-  p->producerValue->setText( info.producer );
-  p->creatorValue->setText( info.creator );
-  p->optimizedValue->setText( info.optimization );
-  p->securityValue->setText( info.encryption );
-  p->versionValue->setText( info.format + " v." + info.formatVersion );
-  p->createdValue->setText( info.creationDate );
-  p->modifiedValue->setText( info.modificationDate );
+  const DocumentInfo * info = doc->documentInfo();
+  if ( !info )
+  {
+    p->titleValue->setText( i18n( "No document opened!" ) );
+    return;
+  }
+  p->pagesValue->setText( QString::number( doc->pages() ) );
+  p->authorValue->setText( info->author );
+  p->titleValue->setText( info->title );
+  p->subjectValue->setText( info->subject );
+  p->keywordsValue->setText( info->keywords );
+  p->producerValue->setText( info->producer );
+  p->creatorValue->setText( info->creator );
+  p->optimizedValue->setText( info->optimization );
+  p->securityValue->setText( info->encryption );
+  p->versionValue->setText( info->format + " v." + info->formatVersion );
+  p->createdValue->setText( info->creationDate );
+  p->modifiedValue->setText( info->modificationDate );
 }

@@ -35,9 +35,9 @@
 //NOTE: XPDF/Splash *implementation dependant* code is marked with '###'
 
 //BEGIN KPDFOutputDev 
-KPDFOutputDev::KPDFOutputDev( SplashColor paperColor )
+KPDFOutputDev::KPDFOutputDev( GeneratorPDF * parent, SplashColor paperColor )
     : SplashOutputDev( splashModeRGB8, false, paperColor ), m_pixmap( 0 ),
-    m_generator( 0 ), m_text( 0 )
+    m_generator( parent ), m_text( 0 )
 {
 }
 
@@ -46,7 +46,7 @@ KPDFOutputDev::~KPDFOutputDev()
     clear();
 }
 
-void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool genI, GeneratorPDF * parent )
+void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool genI )
 {
     clear();
 
@@ -57,8 +57,6 @@ void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool
     m_generateLinks = genL;
     m_generateImages = genI;
 
-    m_generator = parent;
-
     if ( m_generateText )
         m_text = new TextPage( gFalse );
 }
@@ -66,8 +64,8 @@ void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool
 
 KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
 {
-    KPDFLink * link = 0;
-    switch ( a->getKind() )
+    KPDFLink * link = NULL;
+    if ( a ) switch ( a->getKind() )
     {
         case actionGoTo:
             {

@@ -14,31 +14,24 @@
 
 #include "document.h"
 
-class GList;
-
-class PDFDoc;
-class UnicodeMap;
-
 class TOC : public KListView, public KPDFDocumentObserver
 {
 Q_OBJECT
-	public:
-		TOC(QWidget *parent, KPDFDocument *document);
+    public:
+        TOC(QWidget *parent, KPDFDocument *document);
 
-		uint observerId() const ;
-		void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool documentChanged);
+        // inherited from KPDFDocumentObserver
+        uint observerId() const;
+        void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
 
-	signals:
-		void hasTOC(bool has);
+    signals:
+        void hasTOC(bool has);
 
-	private slots:
-		void slotExecuted(QListViewItem *i);
+    private slots:
+        void slotExecuted(QListViewItem *i);
 
-	private:
-		void addKids(KListViewItem *last, GList *items, UnicodeMap *uMap);
-		QString getTitle(Unicode *u, int length, UnicodeMap *uMap) const;
-
-		KPDFDocument *m_document;
+    private:
+        KPDFDocument *m_document;
 };
 
 #endif

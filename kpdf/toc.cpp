@@ -9,136 +9,65 @@
 
 #include <qheader.h>
 
-#include "goo/GList.h"
-
-#include "xpdf/GlobalParams.h"
-#include "xpdf/PDFDoc.h"
-#include "xpdf/Outline.h"
-#include "xpdf/UnicodeMap.h"
-
 #include "toc.h"
 #include "page.h"
+#include "document.h"
 
 class TOCItem : public KListViewItem
 {
 	public:
-		TOCItem(KListView *parent, TOCItem *after, QString name, LinkAction *action) :
-			KListViewItem(parent, after, name), m_action(action)
+		TOCItem(KListView *parent, TOCItem *after, QString name, const QDomElement & e) :
+			KListViewItem(parent, after, name), m_element(e)
 		{
 		}
 
-		TOCItem(KListViewItem *parent, TOCItem *after, QString name, LinkAction *action) :
-			KListViewItem(parent, after, name), m_action(action)
+		TOCItem(KListViewItem *parent, TOCItem *after, QString name, const QDomElement & e) :
+			KListViewItem(parent, after, name), m_element(e)
 		{
 		}
 
-		LinkAction *getAction() const
+		const QDomElement & element() const
 		{
-			return m_action;
+			return m_element;
 		}
 
 	private:
-		LinkAction *m_action;
+		QDomElement m_element;
 };
 
 TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_document(document)
 {
-	addColumn("");
-	header() -> hide();
-	setSorting(-1);
-	setRootIsDecorated(true);
-	setResizeMode(AllColumns);
-	connect(this, SIGNAL(executed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
+    addColumn("");
+    header() -> hide();
+    setSorting(-1);
+    setRootIsDecorated(true);
+    setResizeMode(AllColumns);
+    connect(this, SIGNAL(executed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
 }
 
 uint TOC::observerId() const
 {
-	return TOC_ID;
+    return TOC_ID;
 }
 
-void TOC::pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool documentChanged)
+void TOC::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged)
 {
-	if (documentChanged)
-	{
-		GList *items, *kids;
-		OutlineItem *item;
-		UnicodeMap *uMap;
-		GString *enc;
-		TOCItem *last;
+    if ( !documentChanged || pages.size() < 1 )
+        return;
 
-		clear();
-		last = 0;
-		Outline *out = m_document->outline();
-		if (out) items = out->getItems();
-		else items = 0;
-		if (items && items->getLength() > 0)
-		{
-			enc = new GString("Latin1");
-			uMap = globalParams->getUnicodeMap(enc);
-			delete enc;
+    clear();
+    const DocumentSynopsis * syn = m_document->documentSynopsis();
+    if ( syn )
+    {
+        
+    }
 
-			for (int i = 0; i < items->getLength(); ++i)
-			{
-				item = (OutlineItem *)items->get(i);
-
-				last = new TOCItem(this, last, getTitle(item->getTitle(), item->getTitleLength(), uMap), item->getAction());
-				item->open();
-				if ((kids = item->getKids()))
-				{
-					addKids(last, kids, uMap);
-				}
-			}
-			emit hasTOC(true);
-		}
-		else emit hasTOC(false);
-	}
-}
-
-
-void TOC::addKids(KListViewItem *parent, GList *items, UnicodeMap *uMap)
-{
-	GList *kids;
-	OutlineItem *item;
-	TOCItem *last;
-
-	last = 0;
-	if (items && items->getLength() > 0)
-	{
-		for (int i = 0; i < items->getLength(); ++i)
-		{
-			item = (OutlineItem *)items->get(i);
-
-			last = new TOCItem(parent, last, getTitle(item->getTitle(), item->getTitleLength(), uMap), item->getAction());
-			item->open();
-			if ((kids = item->getKids()))
-			{
-				addKids(last, kids, uMap);
-			}
-		}
-	}
-}
-
-QString TOC::getTitle(Unicode *u, int length, UnicodeMap *uMap) const
-{
-	GString *title;
-	QString s;
-	int n;
-	char buf[8];
-
-	title = new GString();
-	for (int j = 0; j < length; ++j)
-	{
-		n = uMap->mapUnicode(u[j], buf, sizeof(buf));
-		title->append(buf, n);
-	}
-	s = title->getCString();
-	delete title;
-	return s;
+    emit hasTOC( syn );
 }
 
 void TOC::slotExecuted(QListViewItem *i)
 {
-	TOCItem *ti = dynamic_cast<TOCItem*>(i);
+//	TOCItem *ti = dynamic_cast<TOCItem*>(i);
     //FIXME
 	//KPDFLink l( ti->getAction() );
 	//m_document->processLink( &l );

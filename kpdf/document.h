@@ -13,19 +13,20 @@
 
 #include <qvaluevector.h>
 #include <qstring.h>
+#include <qdom.h>
 
 class KPrinter;
 class KPDFPage;
 class KPDFLink;
 class Generator;
 class DocumentInfo;
-class Outline; // FIXME: ABSTRACT-REDO
+class DocumentSynopsis;
 
 /**
  * @short Base class for objects being notified when something changes.
  *
- * Inherit this class and call KPDFDocument->addObserver( obsClass ) to get notified
- * of asyncronous events (a new pixmap has arrived, changed, etc... ).
+ * Inherit this class and call KPDFDocument->addObserver( yourClass ) to get
+ * notified of asyncronous events (new pixmap generated, or changed, etc..).
  */
 class KPDFDocumentObserver
 {
@@ -48,9 +49,21 @@ class KPDFDocumentObserver
 #define TOC_ID 4
 
 /**
- * @short The Document. Actions (like open,find) take place here.
+ * @short The Document. Heart of everything. Actions take place here.
  *
- * ### MERGE: comment
+ * The Document is the main object in KPDF. All views query the Document to
+ * get data/properties or even for accessing pages (in a 'const' way).
+ *
+ * It is designed to keep it detached from the document type (pdf, ps, you
+ * name it..) so whenever you want to get some data, it asks its internals
+ * generator to do the job and return results in a format-indepedent way.
+ *
+ * Apart from the generator (the currently running one) the document stores
+ * all the Pages ('KPDFPage' class) of the current document in a vector and
+ * notifies all the registered DocumentObservers when some content changes.
+ *
+ * For a better understanding of hieracies @see README.internals.png
+ * @see KPDFDocumentObserver, KPDFPage
  */
 class KPDFDocument
 {
@@ -67,12 +80,12 @@ class KPDFDocument
         void reparseConfig();
 
         // query methods (const ones)
-        const DocumentInfo & documentInfo() const;
+        const DocumentInfo * documentInfo() const;
+        const DocumentSynopsis * documentSynopsis() const;
         const KPDFPage * page( uint page ) const;
         uint currentPage() const;
         uint pages() const;
         bool okToPrint() const;
-        Outline * outline() const;
 
         // perform actions on document / pages
         void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
@@ -96,9 +109,13 @@ class KPDFDocument
         class KPDFDocumentPrivate * d;
 };
 
-
 /**
- * ### MERGE: comment
+ * @short Metadata that describes the document.
+ *
+ * The Info structure can be filled in by generators to display metadata
+ * about the currently opened file.
+ * FUTURE: use a Dom tree so every generator can have different fields for
+ * its metadata and renew the display widget to use the dynamic format.
  */
 struct DocumentInfo
 {
@@ -117,13 +134,25 @@ struct DocumentInfo
 };
 
 /**
- * ### TEMP IMPLEMENTATION. ABSTRACT OutLine !!
- * ### NOTE: this IMPL is for PDF only. Need to better abstract this.
+ * @short A Dom tree that describes the Table of Contents.
+ *
+ * The Synopsis (TOC or Table Of Contents for friends) is represented via
+ * a dom tree where each nod has an internal name (displayed in the listview)
+ * and one or more attributes.
+ *
+ * To fill in a valid synopsis tree just add domElements where the tag name
+ * is the screen name of the entry.
+ *
+ * The following attributes are valid [more may be added in future]:
+ * - Page: The page to which the node refers.
+ * - Position: The position inside the page, where 0 means top and 100 is
+ *   the bottom.
  */
-class DocumentSynopsis
+class DocumentSynopsis : public QDomDocument
 {
     public:
-        Outline * outline;
+        // void implementation, only subclassed for naming!
+        DocumentSynopsis() : QDomDocument() {};
 };
 
 #endif

@@ -19,6 +19,7 @@
 #include "link.h"
 
 class PDFDoc;
+class GList;
 class KPDFOutputDev;
 
 /**
@@ -36,13 +37,13 @@ class GeneratorPDF : public Generator
         bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
 
         // [INHERITED] document informations
-        const DocumentInfo & documentInfo();
+        const DocumentInfo * documentInfo();
+        const DocumentSynopsis * documentSynopsis();
 
         // [INHERITED] perform actions on document / pages
         bool print( KPrinter& printer );
         bool requestPixmap( int id, KPDFPage * page, int width, int height, bool syncronous = false );
         void requestTextPage( KPDFPage * page );
-        DocumentSynopsis& synopsis();
 
         // [INHERITED] reparse configuration
         bool reparseConfig();
@@ -54,6 +55,8 @@ class GeneratorPDF : public Generator
         // private functions for accessing document informations via PDFDoc
         QString getDocumentInfo( const QString & data ) const;
         QString getDocumentDate( const QString & data ) const;
+        // private function for creating the document synopsis hieracy
+        void addDomChildren( QDomNode * parent, GList * items );
 
         // private classes
         QMutex docLock;
@@ -62,7 +65,8 @@ class GeneratorPDF : public Generator
         QColor paperColor;
         bool docInfoDirty;
         DocumentInfo docInfo;
-        DocumentSynopsis syn;
+        bool docSynopsisDirty;
+        DocumentSynopsis docSyn;
 };
 
 /*

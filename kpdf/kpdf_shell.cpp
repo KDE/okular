@@ -194,7 +194,7 @@ Shell::fileSaveAs()
   void
 Shell::optionsConfigureKeys()
 {
-  KKeyDialog::configureKeys(actionCollection(), "kpdf_shell.rc");
+  KKeyDialog::configure(actionCollection());
 }
 
   void

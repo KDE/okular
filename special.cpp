@@ -20,6 +20,7 @@
 #include "kdvi.h"
 #include "xdvi.h"
 
+//#define DEBUG_SPECIAL
 
 extern QPainter foreGroundPaint;
 
@@ -551,23 +552,6 @@ void dviWindow::applicationDoSpecial(char *cp)
       html_href_special(special_command.mid(14));
     return;
   }
-  
-  // TPIC specials
-  if (strncasecmp(cp, "pn", 2) == 0) {
-    if (PostScriptOutPutString == NULL)
-      TPIC_setPen_special(special_command.mid(2));
-    return;
-  }
-  if (strncasecmp(cp, "pa", 2) == 0) {
-    if (PostScriptOutPutString == NULL)
-      TPIC_addPath_special(special_command.mid(3));
-    return;
-  }
-  if (strncasecmp(cp, "fp", 2) == 0) {
-    if (PostScriptOutPutString == NULL)
-      TPIC_flushPath_special();
-    return;
-  }
 
 
   // Now to those specials which are only interpreted during the
@@ -612,6 +596,24 @@ void dviWindow::applicationDoSpecial(char *cp)
   if (cp[0] == '"') {
     if (PostScriptOutPutString != NULL)
       quote_special(special_command.mid(1));
+    return;
+  }
+
+  
+  // TPIC specials
+  if (strncasecmp(cp, "pn", 2) == 0) {
+    if (PostScriptOutPutString == NULL)
+      TPIC_setPen_special(special_command.mid(2));
+    return;
+  }
+  if (strncasecmp(cp, "pa", 2) == 0) {
+    if (PostScriptOutPutString == NULL)
+      TPIC_addPath_special(special_command.mid(3));
+    return;
+  }
+  if (strncasecmp(cp, "fp", 2) == 0) {
+    if (PostScriptOutPutString == NULL)
+      TPIC_flushPath_special();
     return;
   }
 

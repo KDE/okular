@@ -499,14 +499,8 @@ Works only for visiting one buffer at a time."
     <section id="editor-setup-kate">
       <title>&kate;</title> 
 
-      <para>Unfortunately, &kde;'s editor &kate; does not support the
-      inverse search very well.  A
-      <mousebutton>middle</mousebutton>-button mouseclick into the
-      &DVI; file will always open a new instance of the &kate; editor,
-      even if &kate; is already running and even if the TeX file is
-      already loaded. Worse, &kate; does not move the cursor to the
-      beginning of the paragraph.</para>
-    </section>
+      <para>&kde;'s editor &kate; supports inverse search very well.
+      No extra setup is required.</para> </section>
 
 
     <section id="editor-setup-kile">

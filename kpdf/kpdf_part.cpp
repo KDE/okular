@@ -100,6 +100,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
+    delete globalParams;
 }
 
 void Part::slotGotoEnd()
@@ -468,7 +469,6 @@ Part::redrawPage()
 void
 Part::pageClicked ( QListBoxItem * qbi )
 {
-    kdDebug()<<"Part::pageClicked ( QListBoxItem * qbi ) \n";
     m_currentPage = pdfpartview->pagesListBox->index(qbi)+1;
     m_outputDev->setPage(m_currentPage);
 }

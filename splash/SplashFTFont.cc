@@ -124,12 +124,12 @@ SplashFTFont::SplashFTFont(SplashFTFontFile *fontFileA, SplashCoord *matA):
 SplashFTFont::~SplashFTFont() {
 }
 
-GBool SplashFTFont::getGlyph(int c, int xFrac, int yFrac,
+GBool SplashFTFont::getGlyph(int c, int xFrac, int /*yFrac*/,
 			     SplashGlyphBitmap *bitmap) {
   return SplashFont::getGlyph(c, xFrac, 0, bitmap);
 }
 
-GBool SplashFTFont::makeGlyph(int c, int xFrac, int yFrac,
+GBool SplashFTFont::makeGlyph(int c, int xFrac, int /*yFrac*/,
 			      SplashGlyphBitmap *bitmap) {
   SplashFTFontFile *ff;
   FT_Vector offset;

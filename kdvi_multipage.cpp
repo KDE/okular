@@ -261,6 +261,7 @@ void KDVIMultiPage::setViewMode(int mode)
   else
     scrollView()->setNrColumns(1);
   generateDocumentWidgets();
+  emit viewModeChanged();
 }
 
 

@@ -975,10 +975,12 @@ void Part::find()
 {
   KFindDialog dlg(pdfpartview);
   dlg.setHasCursor(false);
+#if KDE_IS_VERSION(3, 3, 89)
   dlg.setSupportsBackwardsFind(false);
   dlg.setSupportsCaseSensitiveFind(false);
   dlg.setSupportsWholeWordsFind(false);
   dlg.setSupportsRegularExpressionFind(false);
+#endif
   if (dlg.exec() != QDialog::Accepted) return;
 
   doFind(dlg.pattern(), false);

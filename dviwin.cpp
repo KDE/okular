@@ -523,7 +523,6 @@ bool dviRenderer::setFile(const QString &fname)
  
   pageSizes.resize(0);
   if (dviFile->suggestedPageSize != 0) {
-    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
     // Fill the vector pageSizes with total_pages identical entries
     pageSizes.resize(dviFile->total_pages, *(dviFile->suggestedPageSize));
   }

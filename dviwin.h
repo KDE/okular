@@ -157,16 +157,8 @@ public slots:
   void          editorCommand_terminated(KProcess *);
 
 signals:
-  /** Emitted to indicate that a hyperlink has been clicked on, and
-      that the widget requests that the controlling program goes to the
-      page and the coordinates specified. */
-  void          request_goto_page(PageNumber page, int y);
-
   /** Passed through to the top-level kpart. */
   void setStatusBarText( const QString& );
-
-  /** To be passed through to the kmultipage */
-  void documentSpecifiedPageSize(const pageSize &size);
 
 private slots:
   /** This method shows a dialog that tells the user that source

@@ -382,7 +382,7 @@ void dviWindow::drawPage()
 }
 
 
-static bool dviWindow::correctDVI(const QString &filename)
+bool dviWindow::correctDVI(const QString &filename)
 {
   QFile f(filename);
   if (!f.open(IO_ReadOnly))

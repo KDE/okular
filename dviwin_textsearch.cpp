@@ -25,9 +25,9 @@
 // of kdvi.
 
 
-#include <qapplication.h> 
+#include <qapplication.h>
 #include <qpainter.h>
-#include <qprogressdialog.h> 
+#include <qprogressdialog.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <keditcl.h>
@@ -43,13 +43,13 @@ void dviWindow::showFindTextDialog(void)
   if (findDialog == 0) {
     // WARNING: This text appears several times in the code. Change
     // everywhere, or nowhere!
-    if (KMessageBox::warningContinueCancel( this, 
+    if (KMessageBox::warningContinueCancel( this,
 					    i18n("<qt>This function searches the DVI file for plain text. Unfortunately, this version of "
 						 "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
 						 "formulae, accented characters, and non-english text, such as Russian or Korean, will "
 						 "most likely be messed up completely. Continue anyway?</qt>"),
 					    i18n("Function May Not Work as Expected"),
-					    i18n("Continue"),
+					    KStdGuiItem::cont(),
 					    "warning_search_text_may_not_work") == KMessageBox::Cancel)
       return;
     findDialog = new KEdFind(this, "Text find dialog", true);
@@ -97,9 +97,9 @@ void dviWindow::findNextText(void)
   unsigned int lastPageOfSearch  = dviFile->total_pages-1;
 
   _postscript = FALSE; // Switch off postscript to speed up things...
-  QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter. 
+  QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter.
 
-  QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"), 
+  QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"),
 			    lastPageOfSearch - firstPageOfSearch, this, "searchForwardTextProgress", TRUE );
   progress.setMinimumDuration ( 1000 );
   while(current_page <= lastPageOfSearch) {
@@ -110,7 +110,7 @@ void dviWindow::findNextText(void)
 
     // Go trough the text of the current page and search for the
     // string.
-    for(unsigned int i=DVIselection.selectedTextStart+1; i<currentlyDrawnPage.textLinkList.size(); i++) 
+    for(unsigned int i=DVIselection.selectedTextStart+1; i<currentlyDrawnPage.textLinkList.size(); i++)
       if (currentlyDrawnPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
@@ -134,7 +134,7 @@ void dviWindow::findNextText(void)
       if (current_page_sav != 0) {
 	int answ = KMessageBox::questionYesNo(this, i18n("<qt>The search string <strong>%1</strong> could not be found till the "
 							 "end of the document. Should the search be restarted from the beginning "
-							 "of the document?</qt>").arg(searchText), 
+							 "of the document?</qt>").arg(searchText),
 					      i18n("Text Not Found"));
 	if (answ == KMessageBox::Yes) {
 	  firstPageOfSearch = 0;
@@ -149,12 +149,12 @@ void dviWindow::findNextText(void)
     draw_page(); // We don't really care for errors in draw_page(), no error handling here.
     foreGroundPaint.end();
   }// of while (all pages)
-  
+
   KMessageBox::sorry( this, i18n("<qt>The search string <strong>%1</strong> could not be found.</qt>").arg(searchText) );
 
-  // Restore the PostScript setting 
+  // Restore the PostScript setting
   _postscript = _postscript_sav;
-  
+
   // Restore the current page.
   current_page = current_page_sav;
   foreGroundPaint.begin( &pixie );
@@ -185,7 +185,7 @@ void dviWindow::findPrevText(void)
   unsigned int lastPageOfSearch  = current_page;
 
   _postscript = FALSE; // Switch off postscript to speed up things...
-  QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter. 
+  QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter.
 
   QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"),
 			    lastPageOfSearch - firstPageOfSearch, this, "searchForwardTextProgress", TRUE );
@@ -216,8 +216,8 @@ void dviWindow::findPrevText(void)
       if (current_page_sav != 0) {
 	int answ = KMessageBox::questionYesNo(this, i18n("<qt>The search string <strong>%1</strong> could not be found till the "
 							 "beginning of the document. Should the search be restarted from the end "
-							 "of the document?</qt>").arg(searchText), 
-					      i18n("Text Not Found")); 
+							 "of the document?</qt>").arg(searchText),
+					      i18n("Text Not Found"));
 	if (answ == KMessageBox::Yes) {
 	  firstPageOfSearch = current_page_sav;
 	  current_page      = dviFile->total_pages-1;
@@ -232,7 +232,7 @@ void dviWindow::findPrevText(void)
     qApp->processEvents();
     if ( progress.wasCancelled() )
       break;
-    
+
     // Go trough the text of the current page and search for the
     // string.
     int i=DVIselection.selectedTextStart-1;
@@ -259,12 +259,12 @@ void dviWindow::findPrevText(void)
     draw_page(); // We don't really care for errors in draw_page(), no error handling here.
     foreGroundPaint.end();
   } while( current_page < dviFile->total_pages ); // Note: current_page is unsigned. It will not become negative, but very big
-  
+
   KMessageBox::sorry( this, i18n("<qt>The search string <strong>%1</strong> could not be found.</qt>").arg(searchText) );
 
-  // Restore the PostScript setting 
+  // Restore the PostScript setting
   _postscript = _postscript_sav;
-  
+
   // Restore the current page.
   current_page = current_page_sav;
   foreGroundPaint.begin( &pixie );

@@ -559,7 +559,7 @@ EXTERN	Window	top_level;
 #endif	/* TOOLKIT */
 
 EXTERN	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-EXTERN	char	*dvi_oops_msg;	/* error message */
+EXTERN	const char *dvi_oops_msg;	/* error message */
 
 #if	PS
 extern	struct psprocs	{

@@ -97,12 +97,8 @@ char *s ;
    lastspecial = 0 ;
 }
 char buf[BUFLENGTH] ;
-#ifndef VMS
-void
-#endif
-main(argc, argv)
-int argc ;
-char *argv[] ;
+
+int main(int argc, char *argv[])
 {
    int c ;
    char *b ;

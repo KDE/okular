@@ -161,8 +161,21 @@ void PageWidget::paintEvent( QPaintEvent * e )
     // draw page (inside pageClip rectangle)
     p.translate( m_marginLeft, m_marginTop );
     pageClip.moveBy( -m_marginLeft, -m_marginTop );
-    // TODO: accessibility settings: p.setRasterOp( Qt::NotCopyROP );
+#if 0
+    // TODO: accessibility settings
+    p.setRasterOp( Qt::NotCopyROP );
+#endif
     m_page->drawPixmap( PAGEVIEW_ID, &p, pageClip, m_pixmapWidth, m_pixmapHeight );
+#if 0
+    // TODO: overlays <ONLY FOR FUN> :-)
+    #include <qpixmap.h>
+    #include <kstandarddirs.h>
+    if ( m_pixmapWidth > 64 && m_pixmapHeight > 64 )
+    {
+        QPixmap page( locate("data","kpdf/bookmark_corner.png") );
+        p.drawPixmap( m_pixmapWidth - page.width(), 0, page );
+    }
+#endif
     p.translate( -m_marginLeft, -m_marginTop );
 
     p.end();

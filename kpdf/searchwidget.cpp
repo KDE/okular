@@ -59,7 +59,7 @@ void SearchWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
     ss->setCheckedState(i18n("Hide Search Bar"));
     connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleSearchBar( bool ) ) );
 
-    ss->setChecked( config->readBoolEntry( "ShowSearchBar", false ) );
+    ss->setChecked( config->readBoolEntry( "ShowSearchBar", true ) );
     slotToggleSearchBar( ss->isChecked() );
 }
 

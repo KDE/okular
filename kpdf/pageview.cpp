@@ -25,6 +25,7 @@
 #include <kurldrag.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kpopupmenu.h>
 #include <klocale.h>
 #include <kconfigbase.h>
 
@@ -52,6 +53,7 @@ public:
     float zoomFactor;
     PageView::MouseMode mouseMode;
     QPoint mouseGrabPos;
+    QPoint mouseStartPos;
     bool mouseOnLink;
 
     // other stuff
@@ -260,6 +262,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
         if ( e->button() & LeftButton )
         {
             d->mouseGrabPos = e->globalPos();
+            d->mouseStartPos = d->mouseGrabPos;
             setCursor( sizeAllCursor );
         }
         else if ( e->button() & RightButton )
@@ -282,13 +285,47 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     }
 }
 
-void PageView::contentsMouseReleaseEvent( QMouseEvent * )
+void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
+    PageWidget * page = pickPageOnPoint( e->x(), e->y() );
     switch ( d->mouseMode )
     {
     case MouseNormal:    // end drag / follow link
-        setCursor( arrowCursor );
-
+        if ( e->button() & LeftButton )
+        {
+            setCursor( arrowCursor );
+            // check if it was a click, in that case select the page
+            if ( e->globalPos() == d->mouseStartPos && page )
+                d->document->slotSetCurrentPage( page->pageNumber() );
+        }
+        else if ( e->button() == Qt::RightButton && page )
+        {
+            // If over a page display a popup menu
+            //FIXME ADD BOOKMARKING STUFF IN DOCUMENT !!!!!!!!!
+            KPDFPage * kpdfPage = (KPDFPage *)d->document->page( page->pageNumber() );
+            KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
+            m_popup->insertTitle( i18n( "Page %1" ).arg( page->pageNumber() ) );
+            if ( kpdfPage->isBookmarked() )
+                m_popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
+            else
+                m_popup->insertItem( SmallIcon("bookmark"), i18n("Add Bookmark"), 1 );
+            m_popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Page"), 2 );
+            m_popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
+            switch ( m_popup->exec(QCursor::pos()) )
+            {
+            case 1:
+                kpdfPage->bookmark( !kpdfPage->isBookmarked() );
+                break;
+            case 2:
+                slotTwoPagesToggled( false );
+                slotFitToWidthToggled( true );
+                d->document->slotSetCurrentPage( page->pageNumber() );
+                break;
+            case 3:
+                //TODO switch to edit
+                break;
+            }
+        }
         /* TODO Albert
             PageLink * link = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
             if ( link == d->pressedLink )
@@ -489,28 +526,43 @@ void PageView::slotFitToWidthToggled( bool on )
 
 void PageView::slotFitToPageToggled( bool on )
 {
-    d->zoomMode = on ? ZoomFitPage : ZoomFixed;
-    slotUpdateView();
-    d->aZoomFitWidth->setChecked( false );
+    ZoomMode newZoomMode = on ? ZoomFitText : ZoomFixed;
+    if ( newZoomMode != d->zoomMode )
+    {
+        d->zoomMode = newZoomMode;
+        slotUpdateView();
+        d->aZoomFitWidth->setChecked( false );
+    }
 }
 
 void PageView::slotFitToTextToggled( bool on )
 {
-    d->zoomMode = on ? ZoomFitText : ZoomFixed;
-    slotUpdateView();
-    d->aZoomFitWidth->setChecked( false );
+    ZoomMode newZoomMode = on ? ZoomFitText : ZoomFixed;
+    if ( newZoomMode != d->zoomMode )
+    {
+        d->zoomMode = newZoomMode;
+        slotUpdateView();
+        d->aZoomFitWidth->setChecked( false );
+    }
 }
 
 void PageView::slotTwoPagesToggled( bool on )
 {
-    d->viewColumns = on ? 2 : 1;
-    reLayoutPages();
+    int newColumns = on ? 2 : 1;
+    if ( d->viewColumns != newColumns )
+    {
+        d->viewColumns = newColumns;
+        reLayoutPages();
+    }
 }
 
 void PageView::slotContinousToggled( bool on )
 {
-    d->viewContinous = on;
-    reLayoutPages();
+    if ( d->viewContinous != on )
+    {
+        d->viewContinous = on;
+        reLayoutPages();
+    }
 }
 
 void PageView::slotSetMouseNormal()
@@ -679,6 +731,28 @@ void PageView::reLayoutPages()
 
     // reset dirty state
     d->dirty = false;
+}
+
+PageWidget * PageView::pickPageOnPoint( int x, int y )
+{
+    PageWidget * page = 0;
+    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    for ( ; pIt != pEnd; ++pIt )
+    {
+        PageWidget * p = *pIt;
+        int pLeft = childX( p ),
+            pRight = pLeft + p->widthHint(),
+            pTop = childY( p ),
+            pBottom = pTop + p->heightHint();
+        // little optimized, stops if found or probably quits on the next row
+        if ( x > pLeft && x < pRight && y < pBottom )
+        {
+            if ( y > pTop )
+                page = p;
+            break;
+        }
+    }
+    return page;
 }
 
 bool PageView::atTop() const

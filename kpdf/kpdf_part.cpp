@@ -84,6 +84,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	document = new KPDFDocument();
 	connect( document, SIGNAL( pageChanged() ), this, SLOT( updateActions() ) );
 
+	// widgets: ^searchbar (toolbar containing label and SearchWidget)
+//	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
+//	m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
+//	QLabel * sLabel = new QLabel( i18n( "&Search:" ), m_searchToolBar, "kde toolbar widget" );
+//	m_searchWidget = new SearchWidget( m_searchToolBar, document );
+//	sLabel->setBuddy( m_searchWidget );
+//	m_searchToolBar->setStretchableWidget( m_searchWidget );
+
 	// widgets: [] splitter []
 	m_splitter = new QSplitter( parentWidget, widgetName );
 	m_splitter->setOpaqueResize( true );
@@ -99,6 +107,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	TOC * tocFrame = new TOC( m_toolBox, document );
 	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	connect(tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
+	enableTOC( false );
 
 	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	m_thumbnailList = new ThumbnailList( thumbsBox, document );
@@ -108,13 +117,16 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->setCurrentItem( thumbsBox );
 
 	QFrame * bookmarksFrame = new QFrame( m_toolBox );
-	m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
+	int iIdx = m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
+	m_toolBox->setItemEnabled( iIdx, false );
 
 	QFrame * editFrame = new QFrame( m_toolBox );
-	m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
+	iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
+	m_toolBox->setItemEnabled( iIdx, false );
 
 	QFrame * moreFrame = new QFrame( m_toolBox );
-	m_toolBox->addItem( moreFrame, QIconSet(SmallIcon("fork")), i18n("More stuff..") );
+	iIdx = m_toolBox->addItem( moreFrame, QIconSet(SmallIcon("fork")), i18n("More stuff..") );
+	m_toolBox->setItemEnabled( iIdx, false );
 
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, document );

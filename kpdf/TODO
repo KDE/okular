@@ -15,15 +15,15 @@ More items
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
--> restore single page mdoe (broke up)
+-> restore single page mode (broke up)
 -> zoom buttons in sync with text (BR69092)
 -> porting Albert's link following
 -> implementing async document generator using Albert's thread as the generation thread
 -> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text
 
 Done (sorted by inv.time)
--> continous mode
--> multiple pages per view
+-> added continous mode
+-> added multiple pages per view (gui selects 1 or 2 ppv)
 -> added the option to open password protected files (from head)
 -> added the TOC from head (missing click and go functionality because it needs link following)
 -> added a 'search bar' with prune-as-you-type feature

@@ -28,6 +28,7 @@ class KURL;
 class KActionCollection;
 class KConfigGroup;
 
+class PageWidget;
 class PageViewPrivate;
 
 /**
@@ -94,6 +95,7 @@ signals:
 
 private:
     void reLayoutPages();
+    PageWidget * pickPageOnPoint( int x, int y );
 
     // FIXME REMOVE ME what does atTop() means if I see 4 tiled pages on screen ?
     bool atTop()    const;

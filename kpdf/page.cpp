@@ -24,8 +24,8 @@
 
 KPDFPage::KPDFPage( int page, float w, float h, int r )
     : m_number( page ), m_rotation( r ), m_width( w ), m_height( h ),
-    m_hilighting( false ), m_sLeft( 0 ), m_sTop( 0 ), m_sRight( 0 ),
-    m_sBottom( 0 ), m_text( 0 )
+    m_hilighting( false ), m_bookmarking( false ), m_sLeft( 0 ),
+    m_sTop( 0 ), m_sRight( 0 ), m_sBottom( 0 ), m_text( 0 )
 {
 }
 
@@ -147,6 +147,11 @@ void KPDFPage::hilightLastSearch( bool on )
 {
     m_hilighting = on;
     //if ( !on ) -> invalidate search rect?
+}
+
+void KPDFPage::bookmark( bool on )
+{
+    m_bookmarking = on;
 }
 // END commands (paint / search)
 

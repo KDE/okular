@@ -1,7 +1,7 @@
 //
-// Class: dviWindow
+// Class: dviRenderer
 //
-// Widget for displaying TeX DVI files.
+// Class for rendering TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
 // (C) 2001-2004 Stefan Kebekus. Distributed under the GPL.
@@ -31,7 +31,7 @@
 
 
 class DocumentWidget;
-class dviWindow;
+class dviRenderer;
 class fontProgressDialog;
 class infoDialog;
 class KAction;
@@ -73,8 +73,8 @@ struct framedata {
 
 /* this information is saved when using virtual fonts */
 
-typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
-typedef void    (dviWindow::*parseSpecials)(char *, Q_UINT8 *);
+typedef	void	(dviRenderer::*set_char_proc)(unsigned int, unsigned int);
+typedef void    (dviRenderer::*parseSpecials)(char *, Q_UINT8 *);
 
 struct drawinf {
   struct framedata            data;
@@ -87,13 +87,13 @@ struct drawinf {
 
 
 
-class dviWindow : public DocumentRenderer, bigEndianByteReader
+class dviRenderer : public DocumentRenderer, bigEndianByteReader
 {
   Q_OBJECT
 
 public:
-  dviWindow(QWidget *parent);
-  ~dviWindow();
+  dviRenderer(QWidget *parent);
+  ~dviRenderer();
 
   virtual bool	setFile(const QString &fname);
 
@@ -115,12 +115,11 @@ public:
   static bool   correctDVI(const QString &filename);
 
 
-  /** This slot is usually called by the fontpool if all fonts are
-      loaded. The method will try to parse the reference part of the
-      DVI file's URL, e.g. src:<line><filename> and see if a
-      corresponding section of the DVI file can be found. If so, it
-      will emit a "requestGotoPage", otherwise it will just call
-      drawpage */
+  /** This method will try to parse the reference part of the DVI
+      file's URL, (either a number, which is supposed to be a page
+      number, or src:<line><filename>) and see if a corresponding
+      section of the DVI file can be found. If so, it returns an
+      anchor to that section. If not, it returns an invalid anchor. */
   anchor        parseReference(const QString &reference);
   
   // These should not be public... only for the moment
@@ -139,7 +138,6 @@ public:
   void          html_anchor_end(void);
   void          draw_page(void);
 
-  double        xres;         // horizontal resolution of the display device in dots per inch.
   double        paper_width_in_cm;  // paper width in centimeters
   double        paper_height_in_cm; // paper height in centimeters
 
@@ -153,11 +151,11 @@ public slots:
   void          abortExternalProgramm(void);
 
   /** simply emits "setStatusBarText( QString::null )". This is used
-      in dviWindow::mouseMoveEvent(), see the explanation there. */
+      in dviRenderer::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar(void);
 
-  double	setZoom(double zoom);
-  double        zoom() { return _zoom; };
+  virtual void  setResolution(double resolution_in_DPI);
+
   void		drawPage(DocumentPage *page);
  
   /** Slots used in conjunction with external programs */
@@ -276,14 +274,8 @@ private:
   bool              line_boundary_encountered;
   bool              word_boundary_encountered;
   
-  /** List of anchors in a document */
-  QMap<QString, anchor> anchorList;
-  
   unsigned int	   current_page;
   
-  // Zoom factor. 1.0 means "100%"
-  double            _zoom;
-
   /** Used to run and to show the progress of dvips and friends. */
   fontProgressDialog *progress;
   KShellProcess      *proc;
@@ -298,6 +290,8 @@ private:
   Q_UINT16    number_of_elements_in_path;
   
   struct drawinf	currinf;
+  DocumentPage* currentlyDrawnPage;
+
 };
 
 

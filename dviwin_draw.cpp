@@ -74,7 +74,7 @@ extern QPainter foreGroundPaint;
 
 /** Routine to print characters.  */
 
-void dviWindow::set_char(unsigned int cmd, unsigned int ch)
+void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
   kdDebug(4300) << "set_char #" << ch << endl;
@@ -204,15 +204,15 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   line_boundary_encountered = false;
 }
 
-void dviWindow::set_empty_char(unsigned int, unsigned int)
+void dviRenderer::set_empty_char(unsigned int, unsigned int)
 {
   return;
 }
 
-void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
+void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug(4300) << "dviWindow::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )" << endl;
+  kdDebug(4300) << "dviRenderer::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )" << endl;
 #endif
 
   static unsigned char   c;
@@ -250,10 +250,10 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
 }
 
 
-void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
+void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug(4300) << "dviWindow::set_no_char( cmd=" << cmd << ", ch =" << ch << " )"  << endl;
+  kdDebug(4300) << "dviRenderer::set_no_char( cmd=" << cmd << ", ch =" << ch << " )"  << endl;
 #endif
   
   if (currinf._virtual) {
@@ -270,7 +270,7 @@ void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
 }
 
 
-void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
+void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 {
 #ifdef DEBUG_RENDER
   kdDebug(4300) << "draw_part" << endl;
@@ -280,7 +280,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
   Q_UINT8 ch;
 
   currinf.fontp        = NULL;
-  currinf.set_char_p   = &dviWindow::set_no_char;
+  currinf.set_char_p   = &dviRenderer::set_no_char;
 
   for (;;) {
     ch = readUINT8();
@@ -569,7 +569,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 }
 
 
-void dviWindow::draw_page(void)
+void dviRenderer::draw_page(void)
 {
   // Reset a couple of variables
   HTML_href         = 0;

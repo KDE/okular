@@ -2,7 +2,7 @@
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
 //
-// (C) 2003 Stefan Kebekus
+// (C) 2003--2004 Stefan Kebekus
 // Distributed under the GPL
 
 #include "dviwin.h"
@@ -37,10 +37,10 @@ extern void parse_special_argument(QString strg, const char *argument_name, int 
 
 
 
-void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
+void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 {
 #ifdef  DEBUG_PRESCAN
-  kdDebug(4300) << "dviWindow::prescan_embedPS( cp = " << cp << " ) " << endl;
+  kdDebug(4300) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
 #endif
 
   // Encapsulated Postscript File
@@ -204,10 +204,10 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 }
 
 
-void dviWindow::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpecialCommand)
+void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 {
 #ifdef  DEBUG_PRESCAN
-  kdDebug(4300) << "dviWindow::prescan_embedPS( cp = " << cp << " ) " << endl;
+  kdDebug(4300) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
 #endif
   
   // Encapsulated Postscript File
@@ -219,7 +219,7 @@ void dviWindow::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpecial
 }
 
 
-void dviWindow::prescan_ParsePapersizeSpecial(QString cp)
+void dviRenderer::prescan_ParsePapersizeSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Papersize-Special : papersize" << cp << endl;
@@ -241,7 +241,7 @@ void dviWindow::prescan_ParsePapersizeSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_ParseBackgroundSpecial(QString cp)
+void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
 {
   QColor col = parseColorSpecification(cp.stripWhiteSpace());
   if (col.isValid())
@@ -251,18 +251,18 @@ void dviWindow::prescan_ParseBackgroundSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_ParseHTMLAnchorSpecial(QString cp)
+void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
 {
   cp.truncate(cp.find('"'));
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "HTML-special, anchor " << cp.latin1() << endl;
   kdDebug(4300) << "page " << current_page << endl;
 #endif
-  anchorList[cp] = anchor(current_page, currinf.data.dvi_v/(xres*_zoom*shrinkfactor));
+  anchorList[cp] = anchor(current_page, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
 }
 
 
-void dviWindow::prescan_ParsePSHeaderSpecial(QString cp)
+void dviRenderer::prescan_ParsePSHeaderSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "PostScript-special, header " << cp.latin1() << endl;
@@ -273,7 +273,7 @@ void dviWindow::prescan_ParsePSHeaderSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_ParsePSBangSpecial(QString cp)
+void dviRenderer::prescan_ParsePSBangSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "PostScript-special, literal header " << cp.latin1() << endl;
@@ -285,7 +285,7 @@ void dviWindow::prescan_ParsePSBangSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_ParsePSQuoteSpecial(QString cp)
+void dviRenderer::prescan_ParsePSQuoteSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
@@ -301,7 +301,7 @@ void dviWindow::prescan_ParsePSQuoteSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_ParsePSSpecial(QString cp)
+void dviRenderer::prescan_ParsePSSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "PostScript-special, direct PostScript " << cp << endl;
@@ -330,7 +330,7 @@ void dviWindow::prescan_ParsePSSpecial(QString cp)
     if (cp.startsWith("ps:SDict begin [") && cp.endsWith(" pdfmark end")) {  // hyperref definition of link/anchor/bookmark/etc
       if (cp.contains("/DEST")) { // The PostScript code defines an anchor
 	QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
-	anchorList[anchorName] = anchor(current_page, currinf.data.dvi_v/(xres*_zoom*shrinkfactor));
+	anchorList[anchorName] = anchor(current_page, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
       }
       return;
     }
@@ -358,7 +358,7 @@ void dviWindow::prescan_ParsePSSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_ParsePSFileSpecial(QString cp)
+void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
@@ -431,7 +431,7 @@ void dviWindow::prescan_ParsePSFileSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_ParseSourceSpecial(QString cp)
+void dviRenderer::prescan_ParseSourceSpecial(QString cp)
 {
   // if no rendering takes place, i.e. when the DVI file is first
   // loaded, generate a DVI_SourceFileAnchor. These anchors are used
@@ -446,12 +446,12 @@ void dviWindow::prescan_ParseSourceSpecial(QString cp)
   Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
   QFileInfo fi1(dviFile->filename);
   QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).stripWhiteSpace()).absFilePath();
-  DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page+1, currinf.data.dvi_v/(xres*_zoom*shrinkfactor));
+  DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
   sourceHyperLinkAnchors.push_back(sfa);
 }
 
 
-void dviWindow::prescan_parseSpecials(char *cp, Q_UINT8 *)
+void dviRenderer::prescan_parseSpecials(char *cp, Q_UINT8 *)
 {
   QString special_command(cp);
 
@@ -525,13 +525,13 @@ void dviWindow::prescan_parseSpecials(char *cp, Q_UINT8 *)
 }
 
 
-void dviWindow::prescan_setChar(unsigned int ch)
+void dviRenderer::prescan_setChar(unsigned int ch)
 {
   TeXFontDefinition *fontp = currinf.fontp;
   if (fontp == NULL)
     return;
 
-  if (currinf.set_char_p == &dviWindow::set_char) {
+  if (currinf.set_char_p == &dviRenderer::set_char) {
     glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
     if (g == NULL)
       return;
@@ -540,7 +540,7 @@ void dviWindow::prescan_setChar(unsigned int ch)
     return;
   }
  
-  if (currinf.set_char_p == &dviWindow::set_vf_char) {
+  if (currinf.set_char_p == &dviRenderer::set_vf_char) {
     macro *m = &currinf.fontp->macrotable[ch];
     if (m->pos == NULL) 
       return;
@@ -551,10 +551,10 @@ void dviWindow::prescan_setChar(unsigned int ch)
 }
 
 
-void dviWindow::prescan(parseSpecials specialParser)
+void dviRenderer::prescan(parseSpecials specialParser)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "dviWindow::prescan( ... )" << endl;
+  kdDebug(4300) << "dviRenderer::prescan( ... )" << endl;
 #endif
   
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
@@ -565,7 +565,7 @@ void dviWindow::prescan(parseSpecials specialParser)
   stack.clear();
 
   currinf.fontp        = NULL;
-  currinf.set_char_p   = &dviWindow::set_no_char;
+  currinf.set_char_p   = &dviRenderer::set_no_char;
 
   for (;;) {
     ch = readUINT8();

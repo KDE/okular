@@ -73,7 +73,7 @@ void TeXFontDefinition::read_VF_index(void)
   unsigned char	*avail, *availend;	/* available space for macros */
 
   flags      |= FONT_VIRTUAL;
-  set_char_p  = &dviWindow::set_vf_char;
+  set_char_p  = &dviRenderer::set_vf_char;
 #ifdef DEBUG_FONTS
   kdDebug(4300) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename << endl;
 #endif

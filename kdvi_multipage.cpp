@@ -97,7 +97,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   findPrevAction         = 0;
   lastCurrentPage = 0;
 
-  window = new dviWindow(scrollView());
+  window = new dviRenderer(scrollView());
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.
   renderer = window;
@@ -258,6 +258,7 @@ bool KDVIMultiPage::openFile()
   if (!r)
     emit setStatusBarText(QString::null);
 
+  generateDocumentWidgets();
   window->changePageSize();
   emit numberOfPages(window->totalPages());
   enableActions(r);
@@ -266,6 +267,8 @@ bool KDVIMultiPage::openFile()
   QString reference = url().ref();
   if (!reference.isEmpty())
     gotoPage(window->parseReference(reference));
+
+  kdError() << "A" << endl;
   
   return r;
 }
@@ -304,7 +307,9 @@ void KDVIMultiPage::gotoPage(const anchor &a)
   if (a.page.isInvalid() || (window == 0))
     return;
 
-  goto_page(a.page-1, a.distance_from_top_in_inch * window->xres * window->zoom() + 0.5);
+
+
+  goto_page(a.page-1, a.distance_from_top_in_inch * window->getResolution() + 0.5);
 }
 
 void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
@@ -352,20 +357,20 @@ double KDVIMultiPage::setZoom(double zoom)
   if (zoom > ZoomLimits::MaxZoom/1000.0)
     zoom = ZoomLimits::MaxZoom/1000.0;
 
-  double z = window->setZoom(zoom);
-  return z;
+  window->setResolution(QPaintDevice::x11AppDpiX()*zoom);
+  return zoom;
 }
 
 
 double KDVIMultiPage::zoomForHeight(int height)
 {
-  return (double)(height)/(window->xres*(window->paper_height_in_cm/2.54));
+  return (double)(height)/(QPaintDevice::x11AppDpiX()*(window->paper_height_in_cm/2.54));
 }
 
 
 double KDVIMultiPage::zoomForWidth(int width)
 {
-  return (double)(width)/(window->xres*(window->paper_width_in_cm/2.54));
+  return (double)(width)/(QPaintDevice::x11AppDpiX()*(window->paper_width_in_cm/2.54));
 }
 
 
@@ -805,6 +810,7 @@ void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )
   if (event->activated() && url().isEmpty())
     emit setWindowCaption( i18n("KDVI") );
 }
+
 
 DocumentWidget* KDVIMultiPage::createDocumentWidget()
 {

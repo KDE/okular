@@ -4,7 +4,7 @@
 // Methods for dviwin which deal with "\special" commands found in the
 // DVI file
 
-// Copyright 2000--2003, Stefan Kebekus (kebekus@kde.org).
+// Copyright 2000--2004, Stefan Kebekus (kebekus@kde.org).
 
 
 #include <kdebug.h>
@@ -25,7 +25,7 @@
 
 extern QPainter foreGroundPaint;
 
-void dviWindow::printErrorMsgForSpecials(QString msg)
+void dviRenderer::printErrorMsgForSpecials(QString msg)
 {
   if (dviFile->errorCounter < 25) {
     kdError(4300) << msg << endl;
@@ -130,7 +130,7 @@ QColor parseColorSpecification(QString colorSpec)
 
 
 
-void dviWindow::color_special(QString cp)
+void dviRenderer::color_special(QString cp)
 {
   cp = cp.stripWhiteSpace();
   
@@ -169,7 +169,7 @@ void dviWindow::color_special(QString cp)
 }
 
 
-void dviWindow::html_href_special(QString cp)
+void dviRenderer::html_href_special(QString cp)
 {
   cp.truncate(cp.find('"'));
   
@@ -180,7 +180,7 @@ void dviWindow::html_href_special(QString cp)
 }
 
 
-void dviWindow::html_anchor_end(void)
+void dviRenderer::html_anchor_end(void)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "HTML-special, anchor-end" << endl;
@@ -193,7 +193,7 @@ void dviWindow::html_anchor_end(void)
 }
 
 
-void dviWindow::source_special(QString cp)
+void dviRenderer::source_special(QString cp)
 {
   // only when rendering really takes place: set source_href to the
   // current special string. When characters are rendered, the
@@ -224,7 +224,7 @@ void parse_special_argument(QString strg, const char *argument_name, int *variab
   }
 }
 
-void dviWindow::epsf_special(QString cp)
+void dviRenderer::epsf_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
@@ -311,7 +311,7 @@ void dviWindow::epsf_special(QString cp)
 }
 
 
-void dviWindow::TPIC_flushPath_special(void)
+void dviRenderer::TPIC_flushPath_special(void)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "TPIC special flushPath" << endl;
@@ -322,14 +322,14 @@ void dviWindow::TPIC_flushPath_special(void)
     return;
   }
 
-  QPen pen(Qt::black, (int)(penWidth_in_mInch*xres*_zoom/1000.0 + 0.5));  // Sets the pen size in milli-inches
+  QPen pen(Qt::black, (int)(penWidth_in_mInch*resolutionInDPI/1000.0 + 0.5));  // Sets the pen size in milli-inches
   foreGroundPaint.setPen(pen);
   foreGroundPaint.drawPolyline(TPIC_path, 0, number_of_elements_in_path);
   number_of_elements_in_path = 0;
 }
 
 
-void dviWindow::TPIC_addPath_special(QString cp)
+void dviRenderer::TPIC_addPath_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "TPIC special addPath: " << cp << endl;
@@ -349,8 +349,8 @@ void dviWindow::TPIC_addPath_special(QString cp)
     return;
   }
   
-  int x = (int)( currinf.data.dvi_h/(shrinkfactor*65536.0) + xKoord*xres*_zoom/1000.0 + 0.5 );
-  int y = (int)( currinf.data.pxl_v + yKoord*xres*_zoom/1000.0 + 0.5 );
+  int x = (int)( currinf.data.dvi_h/(shrinkfactor*65536.0) + xKoord*resolutionInDPI/1000.0 + 0.5 );
+  int y = (int)( currinf.data.pxl_v + yKoord*resolutionInDPI/1000.0 + 0.5 );
   
   // Initialize the point array used to store the path
   if (TPIC_path.size() == 0) 
@@ -361,7 +361,7 @@ void dviWindow::TPIC_addPath_special(QString cp)
 }
 
 
-void dviWindow::TPIC_setPen_special(QString cp)
+void dviRenderer::TPIC_setPen_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "TPIC special setPen: " << cp << endl;
@@ -378,7 +378,7 @@ void dviWindow::TPIC_setPen_special(QString cp)
 }
 
 
-void dviWindow::applicationDoSpecial(char *cp)
+void dviRenderer::applicationDoSpecial(char *cp)
 {
   QString special_command(cp);
 

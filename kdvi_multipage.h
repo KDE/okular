@@ -157,7 +157,7 @@ protected slots:
 private:
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.
-  dviWindow       *window;
+  dviRenderer       *window;
   KPrinter        *printer;
 
   /*************************************************************

@@ -1,7 +1,7 @@
 //
-// Class: dviWindow
+// Class: dviRenderer
 //
-// Widget for displaying TeX DVI files.
+// Class for rendering TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
 // (C) 2001-2004 Stefan Kebekus
@@ -54,13 +54,13 @@
 
 QPainter foreGroundPaint; // QPainter used for text
 
-//------ now comes the dviWindow class implementation ----------
+//------ now comes the dviRenderer class implementation ----------
 
-dviWindow::dviWindow(QWidget *par)
+dviRenderer::dviRenderer(QWidget *par)
   : DocumentRenderer(par), info(new infoDialog(par))
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow( parent=" << par << " )" << endl;
+  kdDebug(4300) << "dviRenderer( parent=" << par << " )" << endl;
 #endif
 
   // initialize the dvi machinery
@@ -77,15 +77,6 @@ dviWindow::dviWindow(QWidget *par)
   currentlyDrawnPage = 0;
   editorCommand         = "";
 
-  // Calculate the horizontal resolution of the display device.  @@@
-  // We assume implicitly that the horizontal and vertical resolutions
-  // agree. This is probably not a safe assumption.
-  xres                   = QPaintDevice::x11AppDpiX ();
-  // Just to make sure that we are never dividing by zero.
-  if ((xres < 10)||(xres > 1000))
-    xres = 75.0;
-
-  _zoom                  = 1.0;
   paper_width_in_cm           = 21.0; // set A4 paper as default
   paper_height_in_cm          = 29.7;
 
@@ -107,10 +98,10 @@ dviWindow::dviWindow(QWidget *par)
 }
 
 
-dviWindow::~dviWindow()
+dviRenderer::~dviRenderer()
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "~dviWindow" << endl;
+  kdDebug(4300) << "~dviRenderer" << endl;
 #endif
 
   delete PS_interface;
@@ -122,7 +113,7 @@ dviWindow::~dviWindow()
 }
 
 
-void dviWindow::setPrefs(bool flag_showPS, const QString &str_editorCommand, 
+void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, 
 			 unsigned int MetaFontMode, bool useFontHints )
 {
   _postscript = flag_showPS;
@@ -132,17 +123,17 @@ void dviWindow::setPrefs(bool flag_showPS, const QString &str_editorCommand,
 }
 
 
-void dviWindow::showInfo(void)
+void dviRenderer::showInfo(void)
 {
   info->setDVIData(dviFile);
   info->show();
 }
 
 
-void dviWindow::setPaper(double width_in_cm, double height_in_cm)
+void dviRenderer::setPaper(double width_in_cm, double height_in_cm)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::setPaper( width_in_cm=" << width_in_cm << ", height_in_cm=" << height_in_cm << " )" << endl;
+  kdDebug(4300) << "dviRenderer::setPaper( width_in_cm=" << width_in_cm << ", height_in_cm=" << height_in_cm << " )" << endl;
 #endif
 
   paper_width_in_cm      = width_in_cm;
@@ -154,39 +145,39 @@ void dviWindow::setPaper(double width_in_cm, double height_in_cm)
 //------ this function calls the dvi interpreter ----------
 
 
-void dviWindow::drawPage(DocumentPage *page)
+void dviRenderer::drawPage(DocumentPage *page)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::drawPage(DocumentPage *) called, page number " << page->getPageNumber() << endl;
+  kdDebug(4300) << "dviRenderer::drawPage(DocumentPage *) called, page number " << page->getPageNumber() << endl;
 #endif
   
   // Paranoid safety checks
   if (page == 0) {
-    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called with argument == 0" << endl; 
+    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called with argument == 0" << endl; 
     return;
   }
   if (page->getPageNumber() == 0) {
-    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called for a DocumentPage with page number 0" << endl;
+    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called for a DocumentPage with page number 0" << endl;
     return;
   }
   if ( dviFile == 0 ) {
-    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called, but no dviFile class allocated." << endl;
+    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
     return;
   }
   if (page->getPageNumber() > dviFile->total_pages) {
-    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called for a DocumentPage with page number " << page->getPageNumber() 
+    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called for a DocumentPage with page number " << page->getPageNumber() 
 		  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
   if ( dviFile->dvi_Data() == 0 ) {
-    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called, but no dviFile is loaded yet." << endl;
+    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
   }
   
-  currentlyDrawnPage     = page;;
-  shrinkfactor           = MFResolutions[font_pool.getMetafontMode()]/(xres*_zoom);
+  currentlyDrawnPage     = page;
+  shrinkfactor           = MFResolutions[font_pool.getMetafontMode()]/resolutionInDPI;
   current_page           = page->getPageNumber()-1;
   
   if ( currentlyDrawnPixmap.isNull() ) {
@@ -233,7 +224,7 @@ void dviWindow::drawPage(DocumentPage *page)
 }
 
 
-void dviWindow::showThatSourceInformationIsPresent(void)
+void dviRenderer::showThatSourceInformationIsPresent(void)
 {
   // In principle, we should use a KMessagebox here, but we want to
   // add a button "Explain in more detail..." which opens the
@@ -289,10 +280,10 @@ void dviWindow::showThatSourceInformationIsPresent(void)
 }
 
 
-void dviWindow::embedPostScript(void)
+void dviRenderer::embedPostScript(void)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::embedPostScript()" << endl;
+  kdDebug(4300) << "dviRenderer::embedPostScript()" << endl;
 #endif
 
   if (!dviFile)
@@ -323,7 +314,7 @@ void dviWindow::embedPostScript(void)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
-    prescan(&dviWindow::prescan_embedPS);
+    prescan(&dviRenderer::prescan_embedPS);
   }
 
   delete embedPS_progress;
@@ -356,7 +347,7 @@ void dviWindow::embedPostScript(void)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
-    prescan(&dviWindow::prescan_parseSpecials);
+    prescan(&dviRenderer::prescan_parseSpecials);
 
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
@@ -372,7 +363,7 @@ void dviWindow::embedPostScript(void)
 
 
 
-bool dviWindow::correctDVI(const QString &filename)
+bool dviRenderer::correctDVI(const QString &filename)
 {
   QFile f(filename);
   if (!f.open(IO_ReadOnly))
@@ -396,30 +387,30 @@ bool dviWindow::correctDVI(const QString &filename)
 }
 
 
-void dviWindow::changePageSize()
+void dviRenderer::changePageSize()
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::changePageSize()" << endl;
+  kdDebug(4300) << "dviRenderer::changePageSize()" << endl;
 #endif
 
   if ( currentlyDrawnPixmap.paintingActive() )
     return;
 
-  unsigned int page_width_in_pixel = (unsigned int)(_zoom*paper_width_in_cm/2.54 * xres + 0.5);
-  unsigned int page_height_in_pixel = (unsigned int)(_zoom*paper_height_in_cm/2.54 * xres + 0.5);
+  unsigned int page_width_in_pixel = (unsigned int)(resolutionInDPI*paper_width_in_cm/2.54 + 0.5);
+  unsigned int page_height_in_pixel = (unsigned int)(resolutionInDPI*paper_height_in_cm/2.54 + 0.5);
 
   currentlyDrawnPixmap.resize( page_width_in_pixel, page_height_in_pixel );
   currentlyDrawnPixmap.fill( white );
 
-  PS_interface->setSize( xres*_zoom, page_width_in_pixel, page_height_in_pixel );
+  PS_interface->setSize( resolutionInDPI, page_width_in_pixel, page_height_in_pixel );
   emit(needsRepainting());
 }
 
 
-bool dviWindow::setFile(const QString &fname)
+bool dviRenderer::setFile(const QString &fname)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
+  kdDebug(4300) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
 
   QFileInfo fi(fname);
@@ -557,7 +548,7 @@ bool dviWindow::setFile(const QString &fname)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
-    prescan(&dviWindow::prescan_parseSpecials);
+    prescan(&dviRenderer::prescan_parseSpecials);
     
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
@@ -582,10 +573,10 @@ bool dviWindow::setFile(const QString &fname)
 }
 
 
-anchor dviWindow::parseReference(const QString &reference)
+anchor dviRenderer::parseReference(const QString &reference)
 {
   //#ifdef DEBUG_DVIWIN
-  kdError(4300) << "dviWindow::parseReference( " << reference << " ) called" << endl;
+  kdError(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
   //#endif
   
   if (dviFile == 0)
@@ -672,7 +663,7 @@ anchor dviWindow::parseReference(const QString &reference)
 }
 
 
-pageNumber dviWindow::totalPages() const
+pageNumber dviRenderer::totalPages() const
 {
   if (dviFile != NULL)
     return dviFile->total_pages;
@@ -681,40 +672,33 @@ pageNumber dviWindow::totalPages() const
 }
 
 
-double dviWindow::setZoom(double zoom)
+void dviRenderer::setResolution(double resolution_in_DPI)
 {
-  // In principle, this method should never be called with illegal
-  // values. In principle. We better be careful here.
-  if (zoom < ZoomLimits::MinZoom/1000.0)
-    zoom = ZoomLimits::MinZoom/1000.0;
-  if (zoom > ZoomLimits::MaxZoom/1000.0)
-    zoom = ZoomLimits::MaxZoom/1000.0;
+  // Ignore minute changes. The difference to the current value would
+  // hardly be visible anyway. That saves a lot of re-painting,
+  // e.g. when the user resizes the window, and a flickery mouse
+  // changes the window size by 1 pixel all the time.
+  if (fabs(resolutionInDPI-resolution_in_DPI) < 1)
+    return;
+
+  resolutionInDPI = resolution_in_DPI;
   
   // Pass the information on to the font pool. 
-  font_pool.setDisplayResolution( xres*zoom );
-  
-  // Ignore minute changes by less than 1%. The difference to the
-  // current zoom value would hardly be visible anyway. That saves a
-  // lot of re-painting, e.g. when the user resizes the window, and a
-  // flickery mouse changes the window size by 1 pixel all the time.
-  if (fabs(zoom-_zoom) < 0.01)
-    return zoom;
-  
-  shrinkfactor = MFResolutions[font_pool.getMetafontMode()]/(xres*zoom);
-  _zoom        = zoom;
-  
+  font_pool.setDisplayResolution( resolutionInDPI );
+  shrinkfactor = MFResolutions[font_pool.getMetafontMode()]/(resolutionInDPI);
   changePageSize();
-  return _zoom;
+
+  return;
 }
 
 
-void dviWindow::clearStatusBar(void)
+void dviRenderer::clearStatusBar(void)
 {
   emit setStatusBarText( QString::null );
 }
 
 
-void dviWindow::handleLocalLink(const QString &linkText)
+void dviRenderer::handleLocalLink(const QString &linkText)
 {	  
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "hit: local link to " << linkText << endl;
@@ -730,7 +714,7 @@ void dviWindow::handleLocalLink(const QString &linkText)
     kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
     kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
 #endif
-    emit(request_goto_page(it.data().page, (int)(it.data().distance_from_top_in_inch*xres*_zoom + 0.5)));
+    emit(request_goto_page(it.data().page, (int)(it.data().distance_from_top_in_inch*resolutionInDPI + 0.5)));
   } else {
     if (linkText[0] != '#' ) {
 #ifdef DEBUG_SPECIAL
@@ -752,7 +736,7 @@ void dviWindow::handleLocalLink(const QString &linkText)
 }
 
 
-void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *win)
+void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;

@@ -54,7 +54,7 @@ TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolutio
   // By default, this font contains only empty characters. After the
   // font has been loaded, this function pointer will be replaced by
   // another one.
-  set_char_p  = &dviWindow::set_empty_char;
+  set_char_p  = &dviRenderer::set_empty_char;
 }
 
 
@@ -111,7 +111,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
       filename = filename_test;
   }
   
-  set_char_p = &dviWindow::set_char;
+  set_char_p = &dviRenderer::set_char;
   int magic      = two(file);
   
   if (fname.endsWith("pk"))
@@ -119,7 +119,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
       fclose(file);
       file = 0;
       font = new TeXFont_PK(this);
-      set_char_p = &dviWindow::set_char;
+      set_char_p = &dviRenderer::set_char;
       if ((checksum != 0) && (checksum != font->checksum)) 
 	kdWarning(4300) << i18n("Checksum mismatch for font file %1").arg(filename) << endl;
       fontTypeName = "TeX PK";
@@ -129,7 +129,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
   if (fname.endsWith(".vf"))  
     if (magic == VF_MAGIC) {
       read_VF_index();
-      set_char_p = &dviWindow::set_vf_char;
+      set_char_p = &dviRenderer::set_vf_char;
       fontTypeName = i18n("TeX virtual");
       return;
     }
@@ -138,7 +138,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
       fclose(file);
       file = 0;
       font = new TeXFont_TFM(this);
-      set_char_p = &dviWindow::set_char;
+      set_char_p = &dviRenderer::set_char;
       fontTypeName = i18n("TeX Font Metric");
       return;
   }
@@ -163,7 +163,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
     font = new TeXFont_PFB(this);
   }
 
-  set_char_p = &dviWindow::set_char;
+  set_char_p = &dviRenderer::set_char;
   fontTypeName = i18n("FreeType");
   return;
 #else
@@ -197,7 +197,7 @@ void TeXFontDefinition::reset(void)
   
   filename   = QString::null;
   flags      = TeXFontDefinition::FONT_IN_USE;
-  set_char_p = &dviWindow::set_empty_char;
+  set_char_p = &dviRenderer::set_empty_char;
 }
 
 

@@ -15,8 +15,8 @@
 #ifndef _FONT_H
 #define _FONT_H
 
-class dviWindow;
-typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
+class dviRenderer;
+typedef	void	(dviRenderer::*set_char_proc)(unsigned int, unsigned int);
 
 #include <kprocess.h>
 #include <qintdict.h>

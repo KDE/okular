@@ -1,5 +1,5 @@
 //
-// Class: dviWindow
+// Class: dviRenderer
 // Author: Stefan Kebekus
 //
 // (C) 2001-2004, Stefan Kebekus.
@@ -46,7 +46,7 @@ extern QPainter foreGroundPaint; // QPainter used for text
 
 
 
-void dviWindow::exportPDF(void)
+void dviRenderer::exportPDF(void)
 {
   // It could perhaps happen that a kShellProcess, which runs an
   // editor for inverse search, is still running. In that case, we
@@ -149,7 +149,7 @@ void dviWindow::exportPDF(void)
 }
 
 
-void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
+void dviRenderer::exportPS(QString fname, QString options, KPrinter *printer)
 {
   // Safety check.
   if (dviFile->page_offset.isEmpty() == true)
@@ -262,7 +262,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       memset((char *) &currinf.data, 0, sizeof(currinf.data));
       currinf.fonttable = &(dviFile->tn_table);
       currinf._virtual  = NULL;
-      prescan(&dviWindow::prescan_removePageSizeInfo);
+      prescan(&dviRenderer::prescan_removePageSizeInfo);
     }
     
     current_page = currPageSav;
@@ -303,7 +303,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 }
 
 
-void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
+void dviRenderer::dvips_output_receiver(KProcess *, char *buffer, int buflen)
 {
   // Paranoia.
   if (buflen < 0)
@@ -316,7 +316,7 @@ void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
 }
 
 
-void dviWindow::dvips_terminated(KProcess *sproc)
+void dviRenderer::dvips_terminated(KProcess *sproc)
 {
   // Give an error message from the message string. However, if the
   // sproc is not the "current external process of interest", i.e. not
@@ -333,7 +333,7 @@ void dviWindow::dvips_terminated(KProcess *sproc)
 }
 
 
-void dviWindow::editorCommand_terminated(KProcess *sproc)
+void dviRenderer::editorCommand_terminated(KProcess *sproc)
 {
   // Give an error message from the message string. However, if the
   // sproc is not the "current external process of interest", i.e. not
@@ -352,7 +352,7 @@ void dviWindow::editorCommand_terminated(KProcess *sproc)
 }
 
 
-void dviWindow::abortExternalProgramm(void)
+void dviRenderer::abortExternalProgramm(void)
 {
   delete proc; // Deleting the KProcess kills the child.
   proc = 0;

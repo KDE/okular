@@ -28,7 +28,7 @@
 
 /** class KPDFPage **/
 
-KPDFPage::KPDFPage( uint page, float w, float h, int r )
+KPDFPage::KPDFPage( uint page, double w, double h, int r )
     : m_number( page ), m_rotation( r ), m_width( w ), m_height( h ),
     m_bookmarked( false ), m_text( 0 ), m_transition( 0 )
 {
@@ -460,12 +460,12 @@ bool NormalizedRect::contains( double x, double y ) const
 
 bool NormalizedRect::intersects( const NormalizedRect & r ) const
 {
-    return (r.left < right) && (r.right > left) && (r.top < bottom) && (r.bottom > top);
+    return (r.left <= right) && (r.right >= left) && (r.top <= bottom) && (r.bottom >= top);
 }
 
 bool NormalizedRect::intersects( double l, double t, double r, double b ) const
 {
-    return (l < right) && (r > left) && (t < bottom) && (b > top);
+    return (l <= right) && (r >= left) && (t <= bottom) && (b >= top);
 }
 
 QRect NormalizedRect::geometry( int xScale, int yScale ) const

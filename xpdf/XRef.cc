@@ -274,7 +274,7 @@ GBool XRef::readXRef(Guint *pos) {
     // table size
     if (first + n > size) {
       newSize = size + 256;
-      if ((unsigned) newSize >= INT_MAX / (signed) sizeof(XRefEntry)) {
+      if ((unsigned) newSize >= INT_MAX / sizeof(XRefEntry)) {
         error(-1, "Invalid 'newSize'");
         goto err2;
       }
@@ -426,7 +426,7 @@ GBool XRef::constructXRef() {
 	    if (!strncmp(p, "obj", 3)) {
 	      if (num >= size) {
 		newSize = (num + 1 + 255) & ~255;
-	        if ((unsigned) newSize >= INT_MAX / (signed) sizeof(XRefEntry)) {
+	        if ((unsigned) newSize >= INT_MAX / sizeof(XRefEntry)) {
 	          error(-1, "Invalid 'obj' parameters.");
 	          return gFalse;
 	        }
@@ -451,7 +451,7 @@ GBool XRef::constructXRef() {
     } else if (!strncmp(p, "endstream", 9)) {
       if (streamEndsLen == streamEndsSize) {
 	streamEndsSize += 64;
-        if ((unsigned) streamEndsSize >= INT_MAX / (signed) sizeof(int)) {
+        if ((unsigned) streamEndsSize >= INT_MAX / sizeof(int)) {
           error(-1, "Invalid 'endstream' parameter.");
           return gFalse;
         }

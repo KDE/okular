@@ -88,6 +88,8 @@ More items (first items will enter 'In progress list' first):
 -> set a marker on the pdf file to immediately start presentation when opening it (by Tobias Koenig)
 
 Done (newest feature comes firts):
+-> ADD: Make kpdf aware of Find and GoToPage actions
+-> FIX: Update cursor correctly when a link moves to a page and the cursor is over a link on that page
 -> ADD: Asyncronous PDF Generator implementation (for the user: faster UI, preloading, etc..)
 -> FIX: Memory manager (free cache if needed, avoid disk swap and oom)
 -> ADD: Presentation View (only the 'glitter' transition implemented for now)

@@ -110,6 +110,10 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
                 link = new KPDFLinkAction( KPDFLinkAction::HistoryForward );
             else if ( !strcmp( name, "Quit" ) )
                 link = new KPDFLinkAction( KPDFLinkAction::Quit );
+            else if ( !strcmp( name, "GoToPage" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::GoToPage );
+            else if ( !strcmp( name, "Find" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::Find );
             else
                 kdDebug() << "Unknown named action: '" << name << "'" << endl;
             }

@@ -16,6 +16,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <qcursor.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
@@ -282,6 +283,11 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & viewport )
     // update zoom text if in a ZoomFit/* zoom mode
     if ( d->zoomMode != ZoomFixed )
         updateZoomText();
+
+    // that is here because of that
+    // you clicked on a link that brought you to another page
+    // the page was on the cache and you have to update the cursor
+    updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
 }
 
 bool PageView::canUnloadPixmap( int pageNumber )
@@ -305,6 +311,10 @@ void PageView::notifyPixmapChanged( int pageNumber )
             QRect expandedRect = (*iIt)->geometry();
             expandedRect.addCoords( -1, -1, 3, 3 );
             updateContents( expandedRect );
+            // that is here because of that
+            // you clicked on a link that brought you to another page
+            // the page was not on the cache so the updateCursor from pageSetCurrent does not work
+            updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
             break;
         }
 }
@@ -612,7 +622,6 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     switch ( d->mouseMode )
     {
         case MouseNormal:{  // do Follow Link or Display RMB
-            setCursor( arrowCursor );
             PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
             if ( leftButton && pageItem )
             {

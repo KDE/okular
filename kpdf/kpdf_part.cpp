@@ -89,6 +89,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// build the document
 	m_document = new KPDFDocument();
+	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
+	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 
 	// widgets: ^searchbar (toolbar containing label and SearchWidget)
 //	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );

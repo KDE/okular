@@ -481,6 +481,12 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 case KPDFLinkAction::Quit:
                     kapp->quit();
                     break;
+                case KPDFLinkAction::Find:
+                    emit linkFind();
+                    break;
+                case KPDFLinkAction::GoToPage:
+                    emit linkGoToPage();
+                    break;
             }
             } break;
 

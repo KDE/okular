@@ -105,6 +105,10 @@ class KPDFDocument : public QObject // only for a private slot..
         void processLink( const KPDFLink * link );
         bool print( KPrinter &printer );
 
+    signals:
+        void linkFind();
+        void linkGoToPage();
+
     private:
         // memory management related functions
         void mCleanupMemory( int observerId );

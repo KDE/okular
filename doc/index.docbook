@@ -239,8 +239,8 @@
 	<para>Let &kdvi; know which editor you would like to
 	use. Choose an editor in the <guilabel>Preferences</guilabel>
 	dialog (this dialog can be reached by choosing
-	<guimenu>DVI Options</guimenu> in the menu <guimenuitem>DVI
-	options</guimenuitem>). The next section of this
+	<guimenuitem>DVI Options</guimenuitem> in the
+	<guimenu>Settings</guimenu> menu). The next section of this
 	documentation, <link linkend="opt-rendering">Rendering
 	Options</link>, explains this dialog in more detail.</para>
       </step>

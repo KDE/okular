@@ -573,7 +573,8 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 			popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
 		else
 			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
-		popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
+		if ( m_pageView->canFitPageWidth() )
+			popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
 		reallyShow = true;

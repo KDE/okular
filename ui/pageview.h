@@ -52,6 +52,7 @@ class PageView : public QScrollView, public DocumentObserver
         void setupActions( KActionCollection * collection );
 
         // used from RMB menu
+        bool canFitPageWidth();
         void fitPageWidth( int page );
 
         // inherited from DocumentObserver

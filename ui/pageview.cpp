@@ -197,6 +197,11 @@ void PageView::setupActions( KActionCollection * ac )
     sd->setShortcut( "Shift+Down" );
 }
 
+bool PageView::canFitPageWidth()
+{
+    return Settings::viewColumns() != 1 || d->zoomMode != ZoomFitWidth;
+}
+
 void PageView::fitPageWidth( int page )
 {
     // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
@@ -209,9 +214,8 @@ void PageView::fitPageWidth( int page )
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
     viewport()->setUpdatesEnabled( true );
-    updateContents();
-    // updateZoomText(); active?
     d->document->setViewportPage( page );
+    updateZoomText();
 }
 
 
@@ -307,7 +311,7 @@ void PageView::notifyViewportChanged()
     updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
 }
 
-void PageView::notifyPageChanged( int pageNumber, int changedFlags )
+void PageView::notifyPageChanged( int pageNumber, int /*changedFlags*/ )
 {
     // only handle pixmap changed notifies (the only defined for now)
     //if ( !(changedFlags & DocumentObserver::Pixmap) )
@@ -694,7 +698,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 else
                 {
                     // mouse not moved since press, so we have a click. select the page.
-                    d->document->setViewportPage( pageItem->pageNumber() );
+                    d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
                 }
             }
             else if ( rightButton )
@@ -1347,30 +1351,35 @@ void PageView::slotRelayoutPages()
     d->dirtyLayout = false;
 
     // 4) update scrollview's contents size and recenter view
+    bool wasUpdatesEnabled = viewport()->isUpdatesEnabled();
     if ( fullWidth != contentsWidth() || fullHeight != contentsHeight() )
     {
         // disable updates and resize the viewportContents
-        bool prevUpdatesState = viewport()->isUpdatesEnabled();
-        viewport()->setUpdatesEnabled( false );
+        if ( wasUpdatesEnabled )
+            viewport()->setUpdatesEnabled( false );
         resizeContents( fullWidth, fullHeight );
-        // restore previous viewport if defined
-        const DocumentViewport & vp = d->document->viewport();
-        if ( vp.pageNumber >= 0 )
+        // restore previous viewport if defined and updates enabled
+        if ( wasUpdatesEnabled )
         {
-            const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
-            double nX = vp.reCenter.enabled ? vp.reCenter.normalizedCenterX : 0.5,
-                   nY = vp.reCenter.enabled ? vp.reCenter.normalizedCenterY : 0.0;
-            center( geometry.left() + ROUND( nX * (double)geometry.width() ),
-                    geometry.top() + ROUND( nY * (double)geometry.height() ) );
+            const DocumentViewport & vp = d->document->viewport();
+            if ( vp.pageNumber >= 0 )
+            {
+                const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
+                double nX = vp.reCenter.enabled ? vp.reCenter.normalizedCenterX : 0.5,
+                    nY = vp.reCenter.enabled ? vp.reCenter.normalizedCenterY : 0.0;
+                center( geometry.left() + ROUND( nX * (double)geometry.width() ),
+                        geometry.top() + ROUND( nY * (double)geometry.height() ) );
+            }
+            // or else go to center page
+            else
+                center( fullWidth / 2, 0 );
+            viewport()->setUpdatesEnabled( true );
         }
-        // or else go to center page
-        else
-            center( fullWidth / 2, 0 );
-        viewport()->setUpdatesEnabled( prevUpdatesState );
     }
 
-    // 5) update the whole viewport
-    updateContents();
+    // 5) update the whole viewport if updated enabled
+    if ( wasUpdatesEnabled )
+        updateContents();
 }
 
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
@@ -1383,10 +1392,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // some variables used to determine the viewport
     int nearPageNumber = -1,
-        viewportWidth = visibleWidth(),
-        viewportHeight = visibleHeight(),
-        viewportCenterX = contentsX() + viewportWidth / 2,
-        viewportCenterY = contentsY() + viewportHeight / 2;
+        viewportCenterX = (viewportRect.left() + viewportRect.right()) / 2,
+        viewportCenterY = (viewportRect.top() + viewportRect.bottom()) / 2;
     double focusedX = 0.5,
            focusedY = 0.0,
            minDistance = -1.0;
@@ -1416,8 +1423,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         {
             const QRect & geometry = i->geometry();
             // compute distance between item center and viewport center
-            double distance = hypot( geometry.left() + geometry.width() / 2 - viewportCenterX,
-                                     geometry.top() + geometry.height() / 2 - viewportCenterY );
+            double distance = hypot( (geometry.left() + geometry.right()) / 2 - viewportCenterX,
+                                     (geometry.top() + geometry.bottom()) / 2 - viewportCenterY );
             if ( distance >= minDistance && nearPageNumber != -1 )
                 continue;
             nearPageNumber = i->pageNumber();
@@ -1443,10 +1450,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         newViewport.reCenter.normalizedCenterX = focusedX;
         newViewport.reCenter.normalizedCenterY = focusedY;
         // set the viewport to other observers
-        bool prevState = d->blockViewport;
-        d->blockViewport = true;
-        d->document->setViewport( newViewport );
-        d->blockViewport = prevState;
+        d->document->setViewport( newViewport , PAGEVIEW_ID);
     }
 }
 

@@ -70,8 +70,8 @@ class KPDFDocument : public QObject // only for a private slot..
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
 
         // perform actions on document / pages
-        void setViewportPage( int page );
-        void setViewport( const DocumentViewport & viewport );
+        void setViewportPage( int page, int id = -1 );
+        void setViewport( const DocumentViewport & viewport, int id = -1 );
         void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool asyncronous );
         void requestTextPage( uint page );
         void findText( const QString & text = "", bool caseSensitive = false );

@@ -16,7 +16,10 @@
 
 /**
  * @short Encapsulates data that describes a link.
- * TODO: comment
+ *
+ * This is the base class for links. It makes mandatory for inherited
+ * widgets to reimplement the 'linkType' method and return the type of
+ * the link described by the reimplemented class.
  */
 class KPDFLink
 {
@@ -30,6 +33,7 @@ class KPDFLink
 };
 
 
+/** Goto: a viewport and maybe a reference to an external filename **/
 class KPDFLinkGoto : public KPDFLink
 {
     public:
@@ -47,7 +51,7 @@ class KPDFLinkGoto : public KPDFLink
         DocumentViewport m_vp;
 };
 
-
+/** Execute: filename and parameters to execute **/
 class KPDFLinkExecute : public KPDFLink
 {
     public:
@@ -64,7 +68,7 @@ class KPDFLinkExecute : public KPDFLink
         QString m_parameters;
 };
 
-
+/** Browse: an URL to open, ranging from 'http://' to 'mailto:' etc.. **/
 class KPDFLinkBrowse : public KPDFLink
 {
     public:
@@ -79,7 +83,7 @@ class KPDFLinkBrowse : public KPDFLink
         QString m_url;
 };
 
-
+/** Action: contains an action to perform on document / kpdf **/
 class KPDFLinkAction : public KPDFLink
 {
     public:
@@ -97,7 +101,7 @@ class KPDFLinkAction : public KPDFLink
         ActionType m_type;
 };
 
-
+/** Movie: Not yet defined -> think renaming to 'Media' link **/
 class KPDFLinkMovie : public KPDFLink
 //TODO: this
 {

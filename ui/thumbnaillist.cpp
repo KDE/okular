@@ -157,7 +157,7 @@ void ThumbnailList::notifyViewportChanged()
 	}
 }
 
-void ThumbnailList::notifyPageChanged( int pageNumber, int changedFlags )
+void ThumbnailList::notifyPageChanged( int pageNumber, int /*changedFlags*/ )
 {
     // only handle pixmap changed notifies (the only defined for now)
     //if ( !(changedFlags & DocumentObserver::Pixmap) )
@@ -270,7 +270,8 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 		int childTop = childY(t);
 		if ( clickY > childTop && clickY < (childTop + t->height()) )
 		{
-			m_document->setViewportPage( t->pageNumber() );
+			if ( m_document->viewport().pageNumber != t->pageNumber() )
+				m_document->setViewportPage( t->pageNumber() );
 			break;
 		}
 	}

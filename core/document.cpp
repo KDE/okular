@@ -118,9 +118,11 @@ bool KPDFDocument::openDocument( const QString & docFile )
     connect( generator, SIGNAL( contentsChanged( int, int ) ),
              this, SLOT( slotGeneratedContents( int, int ) ) );
 
-    // 1. load Document
+    // 1. load Document (and set busy cursor while loading)
     documentFileName = docFile;
+    QApplication::setOverrideCursor( waitCursor );
     bool openOk = generator->loadDocument( docFile, pages_vector );
+    QApplication::restoreOverrideCursor();
     if ( !openOk || pages_vector.size() <= 0 )
         return openOk;
 
@@ -320,7 +322,7 @@ void KPDFDocument::setPrevPage()
         setViewport( DocumentViewport( d->viewport.pageNumber - 1 ) );
 }
 */
-void KPDFDocument::setViewportPage( int page )
+void KPDFDocument::setViewportPage( int page, int id )
 {
     // clamp page in range [0 ... numPages-1]
     if ( page < 0 )
@@ -329,21 +331,23 @@ void KPDFDocument::setViewportPage( int page )
         page = pages_vector.count() - 1;
 
     // make a viewport from the page and broadcast it
-    setViewport( DocumentViewport( page ) );
+    setViewport( DocumentViewport( page ), id );
 }
 
-void KPDFDocument::setViewport( const DocumentViewport & viewport )
+void KPDFDocument::setViewport( const DocumentViewport & viewport, int id )
 {
     // if already broadcasted, don't redo it
     if ( viewport == d->viewport )
-    {
         kdDebug() << "setViewport with the same viewport." << endl;
-        return;
-    }
 
-    // save viewport and notify the change to all observers
+    // set internal viewport
     d->viewport = viewport;
-    foreachObserver( notifyViewportChanged() );
+
+    // notify change to all other (different from id) viewports
+    QMap< int, ObserverData * >::iterator it = d->observers.begin(), end = d->observers.end();
+    for ( ; it != end ; ++ it )
+        if ( it.key() != id )
+            (*it)->instance->notifyViewportChanged();
 }
 
 void KPDFDocument::findText( const QString & string, bool keepCase )
@@ -401,7 +405,14 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
         int pageNumber = foundPage->number();
         d->searchPage = pageNumber;
         foundPage->setAttribute( KPDFPage::Highlight );
-        setViewportPage( pageNumber ); // TODO set viewport to show the found rectangle centered
+        // move the viewport to show the searched word centered
+        DocumentViewport searchViewport( pageNumber );
+        const QPoint & center = foundPage->getLastSearchCenter();
+        searchViewport.reCenter.enabled = true;
+        searchViewport.reCenter.normalizedCenterX = (double)center.x() / foundPage->width();
+        searchViewport.reCenter.normalizedCenterY = (double)center.y() / foundPage->height();
+        setViewport( searchViewport );
+        // notify all observers about hilighting chages
         foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
     }
     else
@@ -414,10 +425,15 @@ void KPDFDocument::findTextAll( const QString & pattern, bool keepCase )
     if ( pattern.isEmpty() )
         unHilightPages();
 
-    // cache search pattern and perform a linear search/mark
+    // cache search pattern
     d->filterText = pattern;
     d->filterCase = keepCase;
+    // set the busy cursor globally on the application
+    QApplication::setOverrideCursor( waitCursor );
+    // perform a linear search/mark
     processPageList( false );
+    // reset cursor to previous shape
+    QApplication::restoreOverrideCursor();
 }
 
 void KPDFDocument::toggleBookmark( int n )
@@ -548,6 +564,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             } break;
 
         case KPDFLink::Movie:
+            //const KPDFLinkMovie * browse = static_cast< const KPDFLinkMovie * >( link );
             // TODO this
             break;
     }

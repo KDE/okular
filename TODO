@@ -19,15 +19,12 @@ Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> mem: check for running request in thread too
 -> mem: iterate from older pages to newest ones when freeing memory (not rand)
 -> generator: add preloading
--> viewport: definition. note, Acroread has a simple implementation that shares
-   the same bug we'll have if defining a page+rect+props viewport.
--> viewport: observers sync. broadcasts a setviewport() by one observer to all
-   other observers.
--> viewport: use it in Links and Synopsis (requires a QString constructor?)
 -> new word highlighting for searches / other highlights (on paper - enrico)
 -> cleanup code and update README.png
 
+
 More items (first items will enter 'In progress list' first):
+-> show Viewport in ThumbnailsList (blended/contour)
 -> Delay TOC (DocumentSynapsis) generation (and move it on thread)
 -> refactor ThumbnailsList to do internal rendering as pageview does (way
    faster than using QScrollView + inserted Widgets and saves 8% on document
@@ -36,7 +33,6 @@ More items (first items will enter 'In progress list' first):
 -> move toolbar view actions in the PageView instead of the part. maybe.. or not...
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment. (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
--> watch out for FIXMEs in code
 -> fix: requestPixmaps not triggered when exiting fullscreen mode (to verify..I can't reproduce-enrico)
 -> fix: On continous view mode, if you click to a link that moves you to another
    page, then scroll up and click again on the same link it does not work. (by Albert)
@@ -54,7 +50,7 @@ More items (first items will enter 'In progress list' first):
    - <X> Synopsis will go there after 1st generation (so we can edit it too)
    - <X> Document info (after the 1st gen)
    - <X> Bookmarked pages
-   - <X - only for pagenumber> General info (like viewport state)
+   - <X - only for viewport> General info (like viewport state)
    - Edited pages (rotated/with_data for example)
    - Overlay editing (hilighting/notations/etc..)
    - Presentation related overrides (FS mode, individual / global transitions)
@@ -66,7 +62,6 @@ More items (first items will enter 'In progress list' first):
 -> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..
 -> take care of TODOs in code
--> find: scroll page if the the searched string is not visible [after 'viewport changes']
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
@@ -95,6 +90,8 @@ More items (first items will enter 'In progress list' first):
 -> move some document related features from part to the document (see find, goto dialog, ...)
 
 Done (newest features come first):
+-> FIX: scroll page if the the searched string is not visible
+-> FIX: use a global Viewport over the document (linked views, real link following, location restoring, etc)
 -> FIX: wrong zoom buttons order (BR74248) (check consistancy with kdvi/kviewshell/kghostview/.. (not konq))
 -> ADD: presentation: cursor modes: hidden, visible, hidden with delay (Tobias)
 -> ADD: presentation: default transition which is used when no transition is defined in document (Tobias)

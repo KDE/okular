@@ -51,7 +51,8 @@ class KPDFPage
         bool hasLink( int mouseX, int mouseY ) const;
         const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
         const KPDFPageTransition * getTransition() const;
-        const QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
+        const QPoint getLastSearchCenter() const;
+        const QString getTextInRect( const QRect & rect, double zoom /*= 1.0*/ ) const;
 
         // operations (by KPDFDocument)
         inline void setAttribute( int att ) { m_attributes |= att; }

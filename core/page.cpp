@@ -98,6 +98,13 @@ const KPDFPageTransition * KPDFPage::getTransition() const
     return m_transition;
 }
 
+const QPoint KPDFPage::getLastSearchCenter() const
+{
+    int centerX = (int)((m_sRight + m_sLeft) / 2),
+        centerY = (int)((m_sTop + m_sBottom) / 2);
+    return QPoint( centerX, centerY );
+}
+
 const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
 {
     if ( !m_text )
@@ -122,11 +129,20 @@ bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
     for (int i = 0; i < len; ++i)
         u[i] = str[i].unicode();
 
-    bool found = m_text->findText( u, len, fromTop ? gTrue : gFalse, gTrue, fromTop ? gFalse : gTrue, gFalse, &m_sLeft, &m_sTop, &m_sRight, &m_sBottom );
-    if( found && strictCase )
+    bool found = false;
+    while ( !found )
     {
-        GString * orig = m_text->getText( m_sLeft, m_sTop, m_sRight, m_sBottom );
-	found = QString::fromUtf8( orig->getCString() ) == text;
+        found = m_text->findText( u, len, fromTop ? gTrue : gFalse, gTrue, fromTop ? gFalse : gTrue, gFalse, &m_sLeft, &m_sTop, &m_sRight, &m_sBottom );
+        if ( !found )
+            break;
+        if( strictCase )
+        {
+            // since we're in 'Case sensitive' mode, check if words are identical
+            GString * orig = m_text->getText( m_sLeft, m_sTop, m_sRight, m_sBottom );
+            found = QString::fromUtf8( orig->getCString() ) == text;
+            if ( !found && fromTop )
+                fromTop = false;
+        }
     }
     gfree(u);
     return found;

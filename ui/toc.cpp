@@ -122,7 +122,7 @@ void TOC::slotExecuted( QListViewItem *i )
     if ( e.hasAttribute( "PageViewport" ) )
     {
         // if the node has a viewport, set it
-        m_document->setViewport( DocumentViewport( e.attribute( "PageViewport" ) ) );
+        m_document->setViewport( DocumentViewport( e.attribute( "PageViewport" ) ), TOC_ID );
     }
     else if ( e.hasAttribute( "ViewportName" ) )
     {
@@ -130,7 +130,7 @@ void TOC::slotExecuted( QListViewItem *i )
         const QString & page = e.attribute( "ViewportName" );
         const QString & viewport = m_document->getMetaData( "NamedViewport", page );
         if ( !viewport.isNull() )
-            m_document->setViewport( DocumentViewport( viewport ) );
+            m_document->setViewport( DocumentViewport( viewport ), TOC_ID );
     }
 }
 

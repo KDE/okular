@@ -38,10 +38,6 @@ noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 	prefs.h print.h printData.h printSetup.h printSetupData.h pushbutton.h\
 	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h konq_progressproxy.h
 
-# if you "make distclean", this files get removed. If you want to remove
-# them while "make clean", use CLEANFILES
-CLEANFILES = $(BUILT_SOURCES)
-
 messages:
 	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po ../po/kdvi.pot
 

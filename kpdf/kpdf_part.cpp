@@ -21,14 +21,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "kpdf_part.moc"
-
-#include <math.h>
-
 #include <qsplitter.h>
 #include <qpainter.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <qvbox.h>
 
 #include <kaction.h>
 #include <kinstance.h>
@@ -39,19 +36,19 @@
 #include <kurldrag.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <kio/netaccess.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
+#include <kio/netaccess.h>
 
 #include "kpdf_error.h"
-
-#include "GString.h"
 
 #include "GlobalParams.h"
 #include "QOutputDevKPrinter.h"
 
-#include "thumbnaillist.h"
+#include "kpdf_part.h"
 #include "kpdf_pagewidget.h"
+#include "searchwidget.h"
+#include "thumbnaillist.h"
 #include "document.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
@@ -93,7 +90,11 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_thumbnailList->setMinimumWidth( 50 );
 	document->addObserver( m_thumbnailList );
 
-	m_pageWidget = new PageWidget( m_splitter, document );
+	QVBox * rightVBox = new QVBox( m_splitter );
+
+	m_searchWidget = new SearchWidget( rightVBox, document );
+
+	m_pageWidget = new PageWidget( rightVBox, document );
 	connect( m_pageWidget, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	//connect(m _pageWidget, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
 	document->addObserver( m_pageWidget );
@@ -131,6 +132,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
     // attach the actions of the 2 children widgets too
 	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
 	m_pageWidget->setupActions( ac, &settings );
+	m_searchWidget->setupActions( ac, &settings );
 	m_thumbnailList->setupActions( ac, &settings );
 
 	// local settings
@@ -145,6 +147,7 @@ Part::~Part()
 {
 	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
 	m_pageWidget->saveSettings( &settings );
+	m_searchWidget->saveSettings( &settings );
 	m_thumbnailList->saveSettings( &settings );
 	settings.writeEntry( "SplitterSizes", m_splitter->sizes() );
 	settings.sync();
@@ -279,8 +282,7 @@ void Part::slotSaveFileAs()
 					 QString::null,
 					 widget(),
 					 QString::null );
-  if( !KIO::NetAccess::upload( url().path(),
-			       saveURL, static_cast<QWidget*>( 0 ) ) )
+	if( !KIO::NetAccess::upload( url().path(), saveURL, static_cast<QWidget*>( 0 ) ) )
 	; // TODO: Proper error dialog
 }
 
@@ -527,4 +529,4 @@ void BrowserExtension::print()
 	static_cast<Part*>(parent())->slotPrint();
 }
 
-// vim:ts=2:sw=2:tw=78:et
+#include "kpdf_part.moc"

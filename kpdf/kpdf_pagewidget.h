@@ -17,6 +17,7 @@
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
+#include <qhbox.h>
 
 #include "CharTypes.h"
 #include "document.h"
@@ -28,7 +29,7 @@ class KConfigGroup;
 
 class PageWidget : public QScrollView, public KPDFDocumentObserver
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	PageWidget( QWidget *parent, KPDFDocument *document );

@@ -34,6 +34,7 @@ class LinkDest;
 
 class ThumbnailList;
 class PageWidget;
+class SearchWidget;
 class KPDFDocument;
 
 namespace KPDF
@@ -104,6 +105,7 @@ namespace KPDF
 	QSplitter *m_splitter;
 	ThumbnailList *m_thumbnailList;
 	PageWidget *m_pageWidget;
+	SearchWidget *m_searchWidget;
 
 	// static instances counter
 	static unsigned int m_count;

@@ -13,11 +13,12 @@ More items
 
 Porting / In progress on the branch (first item comes first):
 -> porting Albert's link following
--> porting Albert's search
 -> implementing async document generator using Albert's thread as the generation thread
 -> better zoom handling
 
 Done (sorted by inv.time)
+-> added a 'search bar' with prune-as-you-type feature
+-> ported Albert's search
 -> smart handling of pixmap using an Observer ID (thumbnails are gone, only pixmaps now)
 -> some toolbar/menu changes
 -> outline bottom and right edges (of pages)

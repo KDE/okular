@@ -50,6 +50,8 @@ public:
 
     // filtering related
     QString filterString;
+    bool filterCaseSensitive;
+    int filterLastCount;
 
     // observers related (note: won't delete oservers)
     QMap< int, KPDFDocumentObserver* > observers;
@@ -70,6 +72,7 @@ KPDFDocument::KPDFDocument()
     d->currentPage = -1;
     d->currentPosition = 0;
     d->lastSearchPage = 0;
+    d->filterLastCount = 0;
     SplashColor paperColor;
     paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
     d->kpdfOutputDev = new KPDFOutputDev( paperColor );
@@ -216,11 +219,11 @@ void KPDFDocument::slotSetCurrentPagePosition( int page, float position )
     pageChanged();
 }
 
-void KPDFDocument::slotSetFilter( const QString & pattern )
+void KPDFDocument::slotSetFilter( const QString & pattern, bool caseSensitive )
 {
+    d->filterCaseSensitive = caseSensitive;
     d->filterString = pattern;
-    if ( pattern.length() > 3 )
-        sendFilteredPageList();
+    sendFilteredPageList();
 }
 
 void KPDFDocument::slotFind( const QString & t, long opt )
@@ -301,10 +304,37 @@ void KPDFDocument::sendFilteredPageList( bool forceEmpty )
 {
     // make up a value list of the pages [1,2,3..]
     uint pageCount = d->pages.count();
+    //d->filterLastCount
     QValueList<int> pagesList;
     if ( !forceEmpty )
+    {
         for ( uint i = 0; i < pageCount ; i++ )
-            pagesList.push_back( i );
+        {
+            KPDFPage * page = d->pages[ i ];
+            if ( d->filterString.length() < 3 )
+            {
+                pagesList.push_back( i );
+                page->hilightLastSearch( false );
+            }
+            else
+            {
+                if ( !page->hasSearchPage() )
+                {
+                    // build a TextPage using the lightweight KPDFTextDev generator..
+                    KPDFTextDev td;
+                    d->docLock.lock();
+                    d->pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+                    d->docLock.unlock();
+                    // ..and attach it to the page
+                    page->setSearchPage( td.takeTextPage() );
+                }
+                bool ok = page->hasText( d->filterString, d->filterCaseSensitive, true );
+                if ( ok )
+                    pagesList.push_back( i );
+                page->hilightLastSearch( ok );
+            }
+        }
+    }
 
     // send the list to observers
     foreachObserver( pageSetup( pagesList ) );
@@ -324,6 +354,7 @@ void KPDFDocument::deletePages()
     d->pages.clear();
     d->currentPage = -1;
     d->lastSearchPage = 0;
+    d->filterLastCount = 0;
 }
 
 /** TO BE IMPORTED:

@@ -71,7 +71,7 @@ public slots:
     // document commands via slots
     void slotSetCurrentPage( int page );
     void slotSetCurrentPagePosition( int page, float position );
-    void slotSetFilter( const QString & pattern );
+    void slotSetFilter( const QString & pattern, bool caseSensitive );
     void slotFind( const QString & text = "", long options = 0 );
     void slotGoToLink( /* QString anchor */ );
 

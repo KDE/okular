@@ -29,8 +29,9 @@
 #include "kpdf_pagewidget.h"
 #include "page.h"
 
+
 PageWidget::PageWidget( QWidget *parent, KPDFDocument *document )
-	: QScrollView( parent, "KPDF::pageWidget", WRepaintNoErase ),
+	: QScrollView( parent, "KPDF::pageWidget", WRepaintNoErase | WStaticContents ),
 	m_document( document ), m_page( 0 ),
 	m_mouseMode( MouseNormal ), m_mouseOnLink( false ),
 	m_zoomMode( FixedFactor ), m_zoomFactor( 1.0 ),

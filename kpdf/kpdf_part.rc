@@ -28,6 +28,7 @@
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_scrollbars" group="show_merge"/>
     <Action name="show_thumbnails" group="show_merge"/>
+    <Action name="show_searchbar" group="show_merge"/>
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>

@@ -508,6 +508,7 @@ void SplashOutputDev::updateFont(GfxState *state) {
   font = NULL;
   tmpFileName = NULL;
   substIdx = -1;
+  dfp =  NULL;
 
   if (!(gfxFont = state->getFont())) {
     goto err1;

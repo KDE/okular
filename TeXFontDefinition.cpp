@@ -99,7 +99,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
 
   file = fopen(QFile::encodeName(filename), "r");
   if (file == NULL) {
-    kdError(4300) << i18n("Can't find font ") << fontname << "." << endl;
+    kdError(4300) << i18n("Cannot find font ") << fontname << "." << endl;
     return;
   }
   set_char_p = &dviWindow::set_char;

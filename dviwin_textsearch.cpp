@@ -28,7 +28,7 @@ void dviWindow::showFindTextDialog(void)
 						 "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
 						 "formulae, accented characters, and non-english text, such as Russian or Korean, will "
 						 "most likely be messed up completely. Continue anyway?</qt>"),
-					    i18n("Function may not work as expected"),
+					    i18n("Function May Not Work as Expected"),
 					    i18n("Continue"),
 					    "warning_search_text_may_not_work") == KMessageBox::Cancel)
       return;

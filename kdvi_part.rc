@@ -3,7 +3,7 @@
 <MenuBar>
  <Menu name="file"><text>File</text>
   <Action name="info_dvi" group="file_print" append="options_show_merge"/>
-  <Menu name="export" group="file_save" ><text>Export as...</text>
+  <Menu name="export" group="file_save" ><text>Export As...</text>
    <Action name="export_postscript" append="options_show_merge"/>
    <Action name="export_pdf" append="options_show_merge"/>
    <Action name="export_text" append="options_show_merge"/>

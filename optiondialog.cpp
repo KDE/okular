@@ -206,11 +206,11 @@ void OptionDialog::makeRenderingPage()
   QToolTip::add( mRender.showSpecialCheck, i18n("If in doubt, switch on!") );
   QWhatsThis::add( mRender.showSpecialCheck, i18n("Some DVI files contain PostScript graphics. If switched on, KDVI will use the ghostview PostScript interpreter to display these. You probably want to switch this option on, unless you have a DVI-file whose PostScript part is broken, or too large for your machine.") );
 
-  mRender.showHyperLinksCheck =  new QCheckBox( i18n("Show Hyperlinks"), page );  
+  mRender.showHyperLinksCheck =  new QCheckBox( i18n("Show hyperlinks"), page );
   QToolTip::add( mRender.showHyperLinksCheck, i18n("If in doubt, switch on!") );
   QWhatsThis::add( mRender.showHyperLinksCheck, i18n("For your convenience, some DVI files contain hyperlinks which are corss-references or point to external documents. You probably want to switch this option on, unless you are annoyed by the blue underlines which KDVI uses to mark the hyperlinks.") );
 
-  QGroupBox *editorBox = new QGroupBox( 2, Horizontal, i18n("Editor for inverse search"), page ); 
+  QGroupBox *editorBox = new QGroupBox( 2, Horizontal, i18n("Editor for Inverse Search"), page ); 
 
   new QLabel( "", editorBox );
   KURLLabel *urll = new KURLLabel("inv-search", i18n("What is 'inverse search'?"), editorBox, "inverse search help");

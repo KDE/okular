@@ -152,6 +152,8 @@ private:
  QString	   paper_type;
  int		   ChangesPossible;
  int		   current_page;
+ // Indicates if the current page is already drawn (=1) or not (=0).
+ char              is_current_page_drawn;
  double            _zoom;
 };
 

@@ -147,7 +147,7 @@ dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget 
   mane.shrinkfactor      = currwin.shrinkfactor = (double)basedpi/(xres*zoom);
   _zoom                  = zoom;
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
-  
+  is_current_page_drawn  = 0;  
   prog = const_cast<char*>("kdvi");
   n_files_left = OPEN_MAX;
   kpse_set_progname ("kdvi");
@@ -377,8 +377,6 @@ void dviWindow::setFile( const char *fname )
   
   page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
-  if (current_page >= dviFile->total_pages)
-    current_page = dviFile->total_pages - 1;
 
   // Extract PostScript from the DVI file, and store the PostScript
   // specials in PostScriptDirectory, and the headers in the
@@ -389,7 +387,6 @@ void dviWindow::setFile( const char *fname )
   // document. So declare the existing list empty.
   numAnchors = 0;
   
-  int save_current_page = current_page;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
     
@@ -406,7 +403,7 @@ void dviWindow::setFile( const char *fname )
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
-  current_page           = save_current_page;
+  is_current_page_drawn  = 0;
 
   QApplication::restoreOverrideCursor();
   return;
@@ -423,9 +420,10 @@ void dviWindow::gotoPage(int new_page)
     new_page = 1;
   if (new_page > dviFile->total_pages)
     new_page = dviFile->total_pages;
-  if (new_page-1==current_page)
+  if ((new_page-1==current_page) &&  !is_current_page_drawn)
     return;
-  current_page = new_page-1;
+  current_page           = new_page-1;
+  is_current_page_drawn  = 0;  
   drawPage();
 }
 

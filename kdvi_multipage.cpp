@@ -370,8 +370,12 @@ void KDVIMultiPage::reload()
     timer_id = -1;
     int currsav = window->curr_page();
     window->setFile(m_file);
+
     window->gotoPage(currsav);
 
+    // @@@ Problem here. When kviewshell received this signal, it
+    // automatically moves to page one. This is very unfortunate
+    // indeed, I must say.
     emit numberOfPages(window->totalPages());
     scrollView()->resizeContents(window->width(), window->height());
     emit previewChanged(true);

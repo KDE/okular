@@ -1,6 +1,6 @@
 
 # just set the variable
-appsdir = $(kde_appsdir)/Programs/Graphics
+appsdir = $(kde_appsdir)/Graphics
 # set the include path for X, qt and KDE
 INCLUDES= $(all_includes) -Ikpathsea
 # claim, which subdirectories you want to install

@@ -11,17 +11,17 @@ More items
 -> zoom: fit text (with configurable margin)
 -> automatic online dictionaries / translators (BR80338)
 -> session support: restoring page location (BR82589)
--> nice label box to the top to display messages to user (for example session restoring,etc..)
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
--> restore single page mode (broke up)
+-> fix keys/mouse in single/continous modes
 -> porting Albert's link following
 -> minimize PageView's reLayout and requestPixmaps on changes
 -> implementing async document generator using Albert's thread as the generation thread
 -> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text
 
 Done (sorted by inv.time)
+-> remake single page mode
 -> zoom buttons in sync with text
 -> added continous mode
 -> added multiple pages per view (gui selects 1 or 2 ppv)

@@ -38,6 +38,7 @@ public:
 
     // other queries
     int pageNumber() const;
+    const KPDFPage * page() const;
 
 protected:
     void setPixmapMargins( int left, int top, int right, int bottom );

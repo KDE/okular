@@ -292,6 +292,16 @@ void KPDFDocument::slotSetFilter( const QString & pattern, bool keepCase )
     processPageList( false );
 }
 
+void KPDFDocument::slotBookmarkPage( int page, bool on )
+{
+    KPDFPage * p = ( page < d->pages.count() ) ? d->pages[page] : 0;
+    if ( p )
+    {
+        p->bookmark( on );
+        foreachObserver( notifyPixmapChanged( page ) );
+    }
+}
+
 void KPDFDocument::slotFind( const QString & string, bool keepCase )
 {
     // turn selection drawing off on filtered pages

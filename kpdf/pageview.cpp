@@ -70,8 +70,15 @@ public:
 };
 
 
-/*
- * PageView class
+/* PageView. What's in this file? -> quick overview.
+ * Code weight (in rows) and meaning:
+ *  160 - constructor and creating actions plus their connected slots (empty stuff)
+ *  70  - DocumentObserver inherited methodes (important)
+ *  200 - events: mouse, keyboard, drag/drop
+ *  170 - slotRelayoutPages: set contents of the scrollview on continous/single modes
+ *  100 - zoom: zooming pages in different ways, keeping update the toolbar actions, etc..
+ *  other misc functions: only slotRequestVisiblePixmaps and pickPageOnPoint noticeable,
+ * and many insignificant stuff like this comment :-)
  */
 PageView::PageView( QWidget *parent, KPDFDocument *document )
     : QScrollView( parent, "KPDF::pageView", WNoAutoErase | WStaticContents )
@@ -98,6 +105,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     viewport()->setPaletteBackgroundColor( Qt::gray );
     setResizePolicy( Manual );
     setAcceptDrops( true );
+    setDragAutoScroll( false );
     viewport()->setMouseTracking( true );
 
     // conntect the padding of the viewport to pixmaps requests
@@ -119,8 +127,7 @@ PageView::~PageView()
 void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
 {
     // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, ac, "zoom_to" );
-    connect( d->aZoom, SIGNAL( activated( const QString & ) ), this, SLOT( slotZoom( const QString& ) ) );
+    d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, this, SLOT( slotZoom() ), ac, "zoom_to" );
     d->aZoom->setEditable( true );
     updateZoomText();
 
@@ -134,7 +141,7 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
     d->aZoomFitPage = new KToggleAction( i18n("Fit to &Page"), "viewmagfit", 0, ac, "zoom_fit_page" );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
-    d->aZoomFitText = new KToggleAction( i18n("Fit Text"), "viewmagfit", 0, ac, "zoom_fit_text" );
+    d->aZoomFitText = new KToggleAction( i18n("Fit to &Text"), "viewmagfit", 0, ac, "zoom_fit_text" );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions
@@ -149,17 +156,17 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
     slotContinousToggled( d->aViewContinous->isChecked() );
 
     // Mouse-Mode actions
-    KToggleAction * mn = new KToggleAction( i18n("Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+    KToggleAction * mn = new KRadioAction( i18n("Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
     mn->setExclusiveGroup("MouseType");
     mn->setChecked( true );
 
-    KToggleAction * ms = new KToggleAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    KToggleAction * ms = new KRadioAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     ms->setExclusiveGroup("MouseType");
-    ms->setEnabled( false ); // implement feature before removing this line
+    //ms->setEnabled( false ); // implement feature before removing this line
 
-    KToggleAction * md = new KToggleAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
+    KToggleAction * md = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
     md->setExclusiveGroup("MouseType");
-    md->setEnabled( false ); // implement feature before removing this line
+    //md->setEnabled( false ); // implement feature before removing this line
 
     // Other actions
     KToggleAction * ss = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
@@ -194,6 +201,7 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool /*docume
     {
         PageWidget * p = new PageWidget( viewport(), *setIt );
         p->setFocusProxy( this );
+        p->setMouseTracking( true );
         d->pages.push_back( p );
     }
 
@@ -209,7 +217,6 @@ void PageView::pageSetCurrent( int pageNumber, float position )
     // select next page
     d->vectorIndex = 0;
     d->page = 0;
-
     QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
     for ( ; pIt != pEnd; ++pIt )
     {
@@ -220,16 +227,22 @@ void PageView::pageSetCurrent( int pageNumber, float position )
         }
         d->vectorIndex ++;
     }
+    if ( !d->page )
+        return;
 
-    if ( d->page )
-    {
-        int xPos = childX( d->page ) + d->page->widthHint() / 2,
-            yPos = childY( d->page ) + (int)((float)d->page->heightHint() * position);
-        center( xPos, yPos + visibleHeight() / 2 - 10 );
-        slotRequestVisiblePixmaps();
-        if ( d->zoomMode != ZoomFixed )
-            updateZoomText();
-    }
+    // relayout only in "Single Pages" mode
+    if ( !d->viewContinous )
+        slotRelayoutPages();
+
+    // center the view to see the selected page
+    int xPos = childX( d->page ) + d->page->widthHint() / 2,
+        yPos = childY( d->page ) + (int)((float)d->page->heightHint() * position);
+    center( xPos, yPos + visibleHeight() / 2 - 10 );
+    slotRequestVisiblePixmaps();
+
+    // update zoom text if in a ZoomFit/* zoom mode
+    if ( d->zoomMode != ZoomFixed )
+        updateZoomText();
 }
 
 void PageView::notifyPixmapChanged( int pageNumber )
@@ -252,24 +265,31 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     case MouseNormal:    // drag / click start
         if ( e->button() & LeftButton )
         {
-            d->mouseGrabPos = e->globalPos();
-            d->mouseStartPos = d->mouseGrabPos;
-            setCursor( sizeAllCursor );
+            d->mouseStartPos = e->globalPos();
+            if ( false /*over a link*/ )
+            {
+                d->mouseGrabPos = QPoint();
+                /* TODO Albert
+                note: 'Page' is an 'information container' and has to deal with clean
+                data (such as the '(int)page & (float)position' where link refers to,
+                not a LinkAction struct.. better an own struct). 'Document' is the place
+                to put xpdf/Splash dependant stuff and fill up pages with interpreted
+                data. I think is a *clean* way to handle everything.
+                d->pressedLink = *PAGE* or *DOCUMENT* ->findLink( normalizedX, normY ); */
+            }
+            else
+            {
+                d->mouseGrabPos = d->mouseStartPos;
+                setCursor( sizeAllCursor );
+            }
         }
         else if ( e->button() & RightButton )
             emit rightClick();
-
-        /* TODO Albert
-            note: 'Page' is an 'information container' and has to deal with clean
-            data (such as the '(int)page & (float)position' where link refers to,
-            not a LinkAction struct.. better an own struct). 'Document' is the place
-            to put xpdf/Splash dependant stuff and fill up pages with interpreted
-            data. I think is a *clean* way to handle everything.
-            d->pressedLink = *PAGE* or *DOCUMENT* ->findLink( normalizedX, normY );
-        */
         break;
 
     case MouseSelection: // ? set 1st corner of the selection rect ?
+        //d->
+        break;
 
     case MouseEdit:      // ? place the beginning of [tool] ?
         break;
@@ -285,15 +305,25 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
         if ( e->button() & LeftButton )
         {
             setCursor( arrowCursor );
+
             // check if it was a click, in that case select the page
             if ( e->globalPos() == d->mouseStartPos && page )
                 d->document->slotSetCurrentPage( page->pageNumber() );
+
+            // check if we release the mouse over the same link if so play it
+            /* TODO Albert
+                PageLink * link = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
+                if ( link == d->pressedLink )
+                    //go to link, use:
+                    document->slotSetCurrentPagePosition( (int)link->page(), (float)link->position() );
+                    //and all the views will update and display the right page at the right position
+                d->pressedLink = 0;
+            */
         }
         else if ( e->button() == Qt::RightButton && page )
         {
             // If over a page display a popup menu
-            //FIXME ADD BOOKMARKING STUFF IN DOCUMENT !!!!!!!!!
-            KPDFPage * kpdfPage = (KPDFPage *)d->document->page( page->pageNumber() );
+            const KPDFPage * kpdfPage = page->page();
             KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
             m_popup->insertTitle( i18n( "Page %1" ).arg( page->pageNumber() ) );
             if ( kpdfPage->isBookmarked() )
@@ -305,26 +335,20 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             switch ( m_popup->exec(QCursor::pos()) )
             {
             case 1:
-                kpdfPage->bookmark( !kpdfPage->isBookmarked() );
+                d->document->slotBookmarkPage( page->pageNumber(), !kpdfPage->isBookmarked() );
                 break;
-            case 2:
+            case 2: // FIXME less hackish, please!
+                d->aZoomFitWidth->setChecked( true );
+                updateZoom( ZoomFitWidth );
+                d->aViewTwoPages->setChecked( false );
                 slotTwoPagesToggled( false );
-                slotFitToWidthToggled( true );
                 d->document->slotSetCurrentPage( page->pageNumber() );
                 break;
-            case 3:
-                //TODO switch to edit
+            case 3: // TODO switch to edit mode
+                slotSetMouseDraw();
                 break;
             }
         }
-        /* TODO Albert
-            PageLink * link = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
-            if ( link == d->pressedLink )
-                //go to link, use:
-                document->slotSetCurrentPagePosition( (int)link->page(), (float)link->position() );
-                //and all the views will update and display the right page at the right position
-            d->pressedLink = 0;
-        */
         break;
 
     case MouseSelection: // ? d->page->setPixmapOverlaySelection( QRect ) ?
@@ -336,33 +360,31 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
+    bool leftButton = e->state() & LeftButton;
     switch ( d->mouseMode )
     {
     case MouseNormal:    // move page / change mouse cursor if over links
-        if ( e->state() & LeftButton )
+        if ( leftButton && !d->mouseGrabPos.isNull() )
         {
             QPoint delta = d->mouseGrabPos - e->globalPos();
             scrollBy( delta.x(), delta.y() );
             d->mouseGrabPos = e->globalPos();
         }
-        /* TODO Albert
-            LinkAction* action = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
-            setCursor(action != 0 ? );
-            experimental version using Page->hasLink( int pageX, int pageY )
-            and haslink has a fake true response on
-        */
-        // EROS FIXME find right page for query
-        /*if ( d->page && e->state() == NoButton &&  )
+        if ( !leftButton )
         {
-            bool onLink = d->page->hasLink( e->x() - d->pageRect.left(), e->y() - d->pageRect.top() );
             // set cursor only when entering / leaving (setCursor has not an internal cache)
-            if ( onLink != d->mouseOnLink )
+            PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
+            if ( pageWidget )
             {
-                d->mouseOnLink = onLink;
-                setCursor( onLink ? pointingHandCursor : arrowCursor );
+                const KPDFPage * page = pageWidget->page();
+                bool onLink = page->hasLink( e->x() - childX( pageWidget ), e->y() - childY( pageWidget ) );
+                if ( onLink != d->mouseOnLink )
+                {
+                    d->mouseOnLink = onLink;
+                    setCursor( onLink ? pointingHandCursor : arrowCursor );
+                }
             }
         }
-        */
         break;
 
     case MouseSelection: // ? update selection contour ?
@@ -370,17 +392,6 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
     case MouseEdit:      // ? update graphics ?
         break;
     }
-}
-
-void PageView::viewportResizeEvent( QResizeEvent * )
-{
-    // start a timer that will refresh the pixmap after 0.5s
-    if ( !d->delayTimer )
-    {
-        d->delayTimer = new QTimer( this );
-        connect( d->delayTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
-    }
-    d->delayTimer->start( 400, true );
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -436,6 +447,17 @@ void PageView::wheelEvent( QWheelEvent *e )
         QScrollView::wheelEvent( e );
 }
 
+void PageView::viewportResizeEvent( QResizeEvent * )
+{
+    // start a timer that will refresh the pixmap after 0.5s
+    if ( !d->delayTimer )
+    {
+        d->delayTimer = new QTimer( this );
+        connect( d->delayTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
+    }
+    d->delayTimer->start( 400, true );
+}
+
 void PageView::dragEnterEvent( QDragEnterEvent * ev )
 {
     ev->accept();
@@ -450,7 +472,7 @@ void PageView::dropEvent( QDropEvent * ev )
 //END widget events
 
 //BEGIN internal SLOTS
-void PageView::slotZoom( const QString & /*nz*/ )
+void PageView::slotZoom()
 {
     updateZoom( ZoomFixed );
 }
@@ -520,33 +542,6 @@ void PageView::slotToggleScrollBars( bool on )
     setVScrollBarMode( on ? AlwaysOn : AlwaysOff );
 }
 
-void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
-{
-//    // if an update is already scheduled or the widget is hidden, don't proceed
-//     if ( (m_delayTimer && m_delayTimer->isActive()) || !isShown() )
-//         return;
-
-    // precalc view limits for intersecting with page coords inside the lOOp
-    int vLeft = (newLeft == -1) ? contentsX() : newLeft,
-        vRight = vLeft + visibleWidth(),
-        vTop = (newTop == -1) ? contentsY() : newTop,
-        vBottom = vTop + visibleHeight();
-
-    // scroll from the top to the last visible thumbnail
-    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
-    for ( ; pIt != pEnd; ++pIt )
-    {
-        PageWidget * p = *pIt;
-        int pLeft = childX( p ),
-            pRight = pLeft + p->widthHint(),
-            pTop = childY( p ),
-            pBottom = pTop + p->heightHint();
-        if ( p->isShown() && pRight > vLeft && pLeft < vRight && pBottom > vTop && pTop < vBottom )
-            d->document->requestPixmap( PAGEVIEW_ID, p->pageNumber(), p->pixmapWidth(), p->pixmapHeight(), true );
-    }
-}
-//END internal SLOTS
-
 void PageView::slotRelayoutPages()
 // called by: pageSetup, viewportResizeEvent, slotTwoPagesToggled, slotContinousToggled, updateZoom
 {
@@ -559,7 +554,9 @@ void PageView::slotRelayoutPages()
     }
 
     int viewportWidth = clipper()->width(),
-        viewportHeight = clipper()->height();
+        viewportHeight = clipper()->height(),
+        fullWidth = 0,
+        fullHeight = 0;
 
     if ( d->viewContinous == TRUE )
     {
@@ -606,7 +603,7 @@ void PageView::slotRelayoutPages()
 
         // 2) arrange widgets inside cells
         int insertX = 0,
-            insertY = (int)(5.0 + 10.0 * d->zoomFactor);
+            insertY = (int)(2.0 + 4.0 * d->zoomFactor);
         cIdx = 0;
         rIdx = 0;
         for ( pIt = d->pages.begin(); pIt != pEnd; ++pIt )
@@ -619,7 +616,7 @@ void PageView::slotRelayoutPages()
             // show, resize and center widget inside 'cells'
             p->resize( pWidth, pHeight );
             moveChild( p, insertX + (cWidth - pWidth) / 2,
-                          insertY + (rHeight - pHeight) / 2 );
+                       insertY + (rHeight - pHeight) / 2 );
             p->show();
             // advance col/row index
             insertX += cWidth;
@@ -632,44 +629,122 @@ void PageView::slotRelayoutPages()
             }
         }
 
-        // 3) update scrollview's contents size and recenter view
-        int fullWidth = 0,
-            fullHeight = cIdx ? (insertY + rowHeight[ rIdx ] + 10) : insertY,
-            oldWidth = contentsWidth(),
-            oldHeight = contentsHeight();
+        fullHeight = cIdx ? (insertY + rowHeight[ rIdx ] + 10) : insertY;
         for ( int i = 0; i < nCols; i++ )
             fullWidth += colWidth[ i ];
-        resizeContents( fullWidth, fullHeight );
-        if ( oldWidth > 0 && oldHeight > 0 )
-            center( fullWidth * (contentsX() + visibleWidth() / 2) / oldWidth,
-                    fullHeight * (contentsY() + visibleHeight() / 2) / oldHeight );
-        else
-            center( fullWidth / 2, 0 );
 
         delete [] colWidth;
         delete [] rowHeight;
     }
     else // viewContinous is FALSE
     {
-        // hide all widgets except the displayable ones
-        QValueVector< PageWidget * >::iterator dIt = d->pages.begin(), dEnd = d->pages.end();
-        for ( ; dIt != dEnd; ++dIt )
-            (*dIt)->hide();
-        //
-        resizeContents( viewportWidth, viewportHeight );
+        PageWidget * currentPage = d->page ? d->page : d->pages[0];
+
+        // setup varialbles for a 1(row) x N(columns) grid
+        int nCols = d->viewColumns,
+            * colWidth = new int[ nCols ],
+            cIdx = 0;
+        fullHeight = viewportHeight;
+        for ( int i = 0; i < nCols; i++ )
+            colWidth[ i ] = viewportWidth / nCols;
+
+        // 1) find out maximum area extension for the pages
+        QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+        for ( ; pIt != pEnd; ++pIt )
+        {
+            PageWidget * p = *pIt;
+            if ( p == currentPage || (cIdx > 0 && cIdx < nCols) )
+            {
+                if ( d->zoomMode == ZoomFixed )
+                    p->setZoomFixed( d->zoomFactor );
+                else if ( d->zoomMode == ZoomFitWidth )
+                    p->setZoomFitWidth( colWidth[ cIdx ] - 10 );
+                else
+                    p->setZoomFitRect( colWidth[ cIdx ] - 10, viewportHeight - 10 );
+                if ( p->widthHint() > colWidth[ cIdx ] )
+                    colWidth[ cIdx ] = p->widthHint();
+                fullHeight = QMAX( fullHeight, p->heightHint() );
+                cIdx++;
+            }
+        }
+
+        // 2) hide all widgets except the displayable ones and dispose those
+        int insertX = 0,
+            insertY = (int)(2.0 + 4.0 * d->zoomFactor);
+        cIdx = 0;
+        for ( pIt = d->pages.begin(); pIt != pEnd; ++pIt )
+        {
+            PageWidget * p = *pIt;
+            if ( p == currentPage || (cIdx > 0 && cIdx < nCols) )
+            {
+                int pWidth = p->widthHint(),
+                    pHeight = p->heightHint();
+                // show, resize and center widget inside 'cells'
+                p->resize( pWidth, pHeight );
+                moveChild( p, insertX + (colWidth[ cIdx ] - pWidth) / 2,
+                           insertY + (fullHeight - pHeight) / 2 );
+                p->show();
+                // advance col/row index
+                insertX += colWidth[ cIdx ];
+                cIdx++;
+            }
+            else
+                p->hide();
+        }
+
+        for ( int i = 0; i < nCols; i++ )
+            fullWidth += colWidth[ i ];
+
+        delete [] colWidth;
+    }
+
+    // 3) update scrollview's contents size and recenter view
+    int oldWidth = contentsWidth(),
+        oldHeight = contentsHeight();
+    if ( oldWidth != fullWidth || oldHeight != fullHeight )
+    {
+        resizeContents( fullWidth, fullHeight );
+        if ( oldWidth > 0 && oldHeight > 0 )
+            center( fullWidth * (contentsX() + visibleWidth() / 2) / oldWidth,
+                    fullHeight * (contentsY() + visibleHeight() / 2) / oldHeight );
+        else
+            center( fullWidth / 2, 0 );
     }
 
     // reset dirty state
     d->dirtyLayout = false;
 }
 
+void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
+{
+    // precalc view limits for intersecting with page coords inside the lOOp
+    int vLeft = (newLeft == -1) ? contentsX() : newLeft,
+        vRight = vLeft + visibleWidth(),
+        vTop = (newTop == -1) ? contentsY() : newTop,
+        vBottom = vTop + visibleHeight();
+
+    // scroll from the top to the last visible thumbnail
+    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    for ( ; pIt != pEnd; ++pIt )
+    {
+        PageWidget * p = *pIt;
+        int pLeft = childX( p ),
+            pRight = pLeft + p->widthHint(),
+            pTop = childY( p ),
+            pBottom = pTop + p->heightHint();
+        if ( p->isShown() && pRight > vLeft && pLeft < vRight && pBottom > vTop && pTop < vBottom )
+            d->document->requestPixmap( PAGEVIEW_ID, p->pageNumber(), p->pixmapWidth(), p->pixmapHeight(), true );
+    }
+}
+//END internal SLOTS
+
 void PageView::updateZoom( ZoomMode newZoomMode )
 {
     if ( newZoomMode == ZoomFixed )
     {
-        if ( d->aZoom->currentText() == i18n("Fit Width") )
+        if ( d->aZoom->currentItem() == 0 )
             newZoomMode = ZoomFitWidth;
-        else if ( d->aZoom->currentText() == i18n("Fit Page") )
+        else if ( d->aZoom->currentItem() == 1 )
             newZoomMode = ZoomFitPage;
     }
 
@@ -713,7 +788,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         d->zoomFactor = newFactor;
         slotRelayoutPages();
         updateZoomText();
-        // update actions state
+        // update actions checked state
         d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
         d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
@@ -779,7 +854,7 @@ PageWidget * PageView::pickPageOnPoint( int x, int y )
             pTop = childY( p ),
             pBottom = pTop + p->heightHint();
         // little optimized, stops if found or probably quits on the next row
-        if ( x > pLeft && x < pRight && y < pBottom )
+        if ( x > pLeft && x < pRight && y < pBottom && p->isShown() )
         {
             if ( y > pTop )
                 page = p;

@@ -36,6 +36,7 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 	viewport()->setPaletteBackgroundColor( Qt::gray );
 	setResizePolicy( Manual );
 	setAcceptDrops( true );
+	setDragAutoScroll( false );
 
 	// set contents background to the 'base' color
 	viewport()->setPaletteBackgroundColor( palette().active().base() );
@@ -183,6 +184,8 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 {
+	if ( e->button() != Qt::LeftButton )
+		return;
 	int clickY = e->y();
 	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
 	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();

@@ -77,6 +77,7 @@ public slots:
     void slotSetCurrentPage( int page );
     void slotSetCurrentPagePosition( int page, float position );
     void slotSetFilter( const QString & pattern, bool caseSensitive );
+    void slotBookmarkPage( int page, bool enabled );
     void slotFind( const QString & text = "", bool caseSensitive = false );
     void slotGoToLink( /* UnknownType unknown */ );
 

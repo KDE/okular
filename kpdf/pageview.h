@@ -62,9 +62,9 @@ protected:
     void contentsMouseReleaseEvent( QMouseEvent* );
     void contentsMouseMoveEvent( QMouseEvent* );
 
-    void viewportResizeEvent( QResizeEvent* );
     void keyPressEvent( QKeyEvent* );
     void wheelEvent( QWheelEvent* );
+    void viewportResizeEvent( QResizeEvent* );
 
     void dragEnterEvent( QDragEnterEvent* );
     void dropEvent( QDropEvent* );
@@ -75,7 +75,7 @@ signals:
 
 private slots:
     // connected to local actions
-    void slotZoom( const QString& );
+    void slotZoom();
     void slotZoomIn();
     void slotZoomOut();
     void slotFitToWidthToggled( bool );
@@ -94,8 +94,11 @@ private slots:
     void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
 
 private:
+    // update internal zoom values and end in a slotRelayoutPages();
     void updateZoom( ZoomMode newZm );
+    // update the text on the label using global zoom value or current page's one
     void updateZoomText();
+    // return the widget placed on a certain point or 0 if clicking on empty space
     PageWidget * pickPageOnPoint( int x, int y );
 
     // FIXME REMOVE ME what does atTop() means if I see 4 tiled pages on screen ?

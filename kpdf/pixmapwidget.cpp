@@ -64,6 +64,11 @@ int PixmapWidget::pageNumber() const
     return m_page->number();
 }
 
+const KPDFPage * PixmapWidget::page() const
+{
+    return m_page;
+}
+
 void PixmapWidget::setPixmapMargins( int left, int top, int right, int bottom )
 {
     m_marginLeft = left;

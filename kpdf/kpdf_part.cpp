@@ -323,6 +323,10 @@ void Part::slotGotoLast()
 void Part::slotFind()
 {
 	KFindDialog dlg( widget() );
+	dlg.setHasCursor(false);
+	dlg.setSupportsBackwardsFind(false);
+	dlg.setSupportsWholeWordsFind(false);
+	dlg.setSupportsRegularExpressionFind(false);
 	if (dlg.exec() == QDialog::Accepted)
 	{
 		m_findNext->setEnabled( true );

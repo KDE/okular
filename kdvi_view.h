@@ -38,7 +38,7 @@ class KDVIKonqView: public BrowserView
 {
   Q_OBJECT
 public:
-  KDVIKonqView();
+  KDVIKonqView( QWidget *parent, const char *name );
   virtual ~KDVIKonqView();
 
   virtual void openURL(const QString &url, bool reload = false,

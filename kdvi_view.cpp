@@ -40,10 +40,10 @@ KDVIFactory::~KDVIFactory()
     s_instance = 0;
 }
 
-QObject* KDVIFactory::create(QObject* , const char* , const char*,
+QObject* KDVIFactory::create(QObject *parent , const char *name , const char*,
                             const QStringList & )
 {
-    QObject *obj = new KDVIKonqView;
+    QObject *obj = new KDVIKonqView( (QWidget *)parent, name );
     emit objectCreated( obj );
     return obj;
 }
@@ -55,7 +55,8 @@ KInstance *KDVIFactory::instance()
     return s_instance;
 }
 
-KDVIKonqView::KDVIKonqView()
+KDVIKonqView::KDVIKonqView( QWidget *parent, const char *name )
+ : BrowserView( parent, name )
 {
     urlStr = "";
     w = new KDVIMiniWidget(NULL, this );

@@ -102,6 +102,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	m_thumbnailList = new ThumbnailList( thumbsBox, document );
+	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	m_searchWidget = new SearchWidget( thumbsBox, document );
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
@@ -134,14 +135,16 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
+	m_prevPage->setShortcut( "Backspace" );
 
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
+	m_nextPage->setShortcut( "Space" );
 
 	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
 
-	m_lastPage  = KStdAction::lastPage( this, SLOT( slotGotoLast() ), ac, "last_page" );
+	m_lastPage = KStdAction::lastPage( this, SLOT( slotGotoLast() ), ac, "last_page" );
 	m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
 	// Find and other actions
@@ -155,6 +158,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 
+	KToggleAction * sLp = new KToggleAction( i18n( "Show &Left Panel" ), 0, ac, "show_leftpanel" );
+	sLp->setCheckedState(i18n("Hide &Left Panel"));
+	connect( sLp, SIGNAL( toggled( bool ) ), SLOT( slotToggleLeftPanel( bool ) ) );
+
     // attach the actions of the 2 children widgets too
 	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
 	m_pageView->setupActions( ac, &settings );
@@ -163,6 +170,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// local settings
 	m_splitter->setSizes( settings.readIntListEntry( "SplitterSizes" ) );
+	sLp->setChecked( settings.readBoolEntry( "ShowLeftPanel", true ) );
+	slotToggleLeftPanel( sLp->isChecked() );
 
 	// set our XML-UI resource file
 	setXMLFile("kpdf_part.rc");
@@ -176,6 +185,8 @@ Part::~Part()
 	m_searchWidget->saveSettings( &settings );
 	m_thumbnailList->saveSettings( &settings );
 	settings.writeEntry( "SplitterSizes", m_splitter->sizes() );
+	settings.writeEntry( "ShowLeftPanel", m_toolBox->isShown() );
+
 	settings.sync();
 	delete document;
 	if ( --m_count == 0 )
@@ -552,6 +563,13 @@ void Part::doPrint( KPrinter& /*printer*/ )
 */
 }
 
+void Part::slotToggleLeftPanel( bool on )
+{
+	// show/hide left qtoolbox
+	m_toolBox->setShown( on );
+	// this needs to be hidden explicitly to disable thumbnails gen
+	m_thumbnailList->setShown( on );
+}
 
 /*
 * BrowserExtension class

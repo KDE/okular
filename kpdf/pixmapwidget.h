@@ -31,10 +31,8 @@ public:
     float zoomFactor() const { return m_zoomFactor; }
 
     // full size (for resizing) and inner pixmap size
-    QSize sizeHint() const;
     int widthHint() const;
     int heightHint() const;
-    QSize pixmapSize() const;
     int pixmapWidth() const { return m_pixmapWidth; }
     int pixmapHeight() const { return m_pixmapHeight; }
 

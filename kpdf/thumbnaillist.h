@@ -33,8 +33,8 @@ Q_OBJECT
 
 		// create actions that interact with this widget and load/save settings
 		uint observerId() { return THUMBNAILS_ID; }
-		void setupActions( KActionCollection * collection, KConfigGroup * config );
-		void saveSettings( KConfigGroup * config );
+		void setupActions( KActionCollection * collection, KConfigGroup * config ) {};
+		void saveSettings( KConfigGroup * config ) {};
 
 		// create thumbnails ( inherited as a DocumentObserver )
 		void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
@@ -55,6 +55,13 @@ Q_OBJECT
 		// resize thumbnails to fit the width
 		void viewportResizeEvent( QResizeEvent * );
 
+		// file drop related events (an url may be dropped even here)
+		void dragEnterEvent( QDragEnterEvent* );
+		void dropEvent( QDropEvent* );
+
+	signals:
+		void urlDropped( const KURL& );
+
 	public slots:
 		// make requests for generating pixmaps for visible thumbnails
 		void slotRequestPixmaps( int newContentsX = -1, int newContentsY = -1 );
@@ -69,13 +76,13 @@ Q_OBJECT
 };
 
 /**
- * @short A vertical boxed container with zero size hint (for left toolbox)
+ * @short A vertical boxed container with zero size hint (for insertion on left toolbox)
  */
 class ThumbnailsBox : public QVBox
 {
 	public:
-		ThumbnailsBox( QWidget * parent );
-		QSize sizeHint() const;
+		ThumbnailsBox( QWidget * parent ) : QVBox( parent ) {};
+		QSize sizeHint() const { return QSize(); }
 };
 
 #endif

@@ -10,6 +10,7 @@
 
 #include <qpainter.h>
 #include <qsize.h>
+#include <kglobalsettings.h>
 
 #include "pixmapwidget.h"
 #include "document.h"
@@ -29,10 +30,6 @@ void PixmapWidget::setZoomFixed( double magFactor )
     m_pixmapWidth = (int)( magFactor * m_page->width() );
     m_pixmapHeight = (int)( magFactor * m_page->height() );
     m_zoomFactor = magFactor;
-
-    // resize the widget FIXME REMOVE THIS; TEMPORARY, resize from the outside
-    resize( m_marginLeft + m_pixmapWidth + m_marginRight,
-            m_marginTop + m_pixmapHeight + m_marginBottom );
 }
 
 void PixmapWidget::setZoomFitWidth( int width )
@@ -41,9 +38,6 @@ void PixmapWidget::setZoomFitWidth( int width )
     m_pixmapHeight = (int)(m_page->ratio() * m_pixmapWidth);
     // compute equivalent zoom factor
     m_zoomFactor = m_page->width() / (float)m_pixmapWidth;
-
-    // resize the widget FIXME REMOVE THIS; TEMPORARY, resize from the outside
-    resize( width, m_marginTop + m_pixmapHeight + m_marginBottom );
 }
 
 void PixmapWidget::setZoomFitRect( int rectWidth, int rectHeight )
@@ -55,12 +49,6 @@ void PixmapWidget::setZoomFitRect( int rectWidth, int rectHeight )
     setZoomFixed( scaleW < scaleH ? scaleW : scaleH );
 }
 
-QSize PixmapWidget::sizeHint() const
-{
-    return QSize( m_marginLeft + m_pixmapWidth + m_marginRight,
-                  m_marginTop + m_pixmapHeight + m_marginBottom );
-}
-
 int PixmapWidget::widthHint() const
 {
     return m_marginLeft + m_pixmapWidth + m_marginRight;
@@ -69,11 +57,6 @@ int PixmapWidget::widthHint() const
 int PixmapWidget::heightHint() const
 {
     return m_marginTop + m_pixmapHeight + m_marginBottom;
-}
-
-QSize PixmapWidget::pixmapSize() const
-{
-    return QSize( m_pixmapWidth, m_pixmapHeight );
 }
 
 int PixmapWidget::pageNumber() const
@@ -98,7 +81,6 @@ ThumbnailWidget::ThumbnailWidget( QWidget *parent, const KPDFPage *page )
     m_labelNumber = page->number() + 1;
     m_labelHeight = QFontMetrics( font() ).height();
     setPixmapMargins( 2, 1, 2, m_labelHeight + 2 );
-    setPaletteBackgroundColor( palette().active().base() );
 }
 
 void ThumbnailWidget::setSelected( bool selected )
@@ -146,44 +128,40 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
 PageWidget::PageWidget( QWidget *parent, const KPDFPage *page )
     : PixmapWidget( parent, page )
 {
-    //
-    //
-    setPixmapMargins( 1,1,3,3 );
+    // keep bottom equal to right margin
+    setPixmapMargins( 1, 1, 4, 4 );
 }
 
 void PageWidget::paintEvent( QPaintEvent * e )
 {
-    QColor bc( paletteBackgroundColor() /*KGlobalSettings::calculateAlternateBackgroundColor( KGlobalSettings::baseColor() )*/ );
-
     QRect clip = e->rect();
     QRect pageClip = clip.intersect( QRect( m_marginLeft, m_marginTop, m_pixmapWidth, m_pixmapHeight ) );
-
     QPainter p( this );
 
     // if drawn region includes an edge of the page
-    if ( pageClip != clip )
+    if ( pageClip != clip && m_pixmapWidth > 10 && m_pixmapWidth > 10 )
     {
-        // draw the outline and adapt pageClip
-        p.setPen( Qt::black );
+        // draw the black outline
         p.drawRect( QRect( 0,0, m_pixmapWidth + 2, m_pixmapHeight + 2 ) );
-        p.setPen( Qt::gray );
-        /*
-        p.drawLine( pageClip.left(), pageClip.bottom() + 1,  pageClip.right() + 1, pageClip.bottom() + 1 );
-        p.drawLine( pageClip.right() + 1, pageClip.top(), pageClip.right() + 1, pageClip.bottom() + 1 );
-        p.setPen( Qt::lightGray );
-        p.drawLine( pageClip.left(), pageClip.bottom() + 2,  pageClip.right() + 2, pageClip.bottom() + 2 );
-        p.drawLine( pageClip.right() + 2, pageClip.top(), pageClip.right() + 2, pageClip.bottom() + 2 );
-        p.setPen( bc );
-        p.drawPoint( pageClip.left(), pageClip.bottom() + 2 );
-        p.drawPoint( pageClip.right() + 2, pageClip.top() );
-        pageClip.setWidth( pageClip.width() + 2 );
-        pageClip.setHeight( pageClip.height() + 2 );
-        */
+        // draws shadow on left and bottom edges
+        int levels = m_marginBottom - 1;
+        p.fillRect( 0, 2 + m_pixmapHeight, levels, levels, Qt::gray );
+        p.fillRect( 2 + m_pixmapWidth, 0, levels, levels, Qt::gray );
+        int r = Qt::gray.red() / (levels + 2),
+            g = Qt::gray.green() / (levels + 2),
+            b = Qt::gray.blue() / (levels + 2);
+        for ( int i = 0; i < levels; i++ )
+        {
+            p.setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
+            p.drawLine( 1 + i, m_pixmapHeight+2 + i,  m_pixmapWidth+2 + i, m_pixmapHeight+2 + i );
+            p.drawLine( m_pixmapWidth+2 + i, 1 + i,  m_pixmapWidth+2 + i, m_pixmapHeight+2 + i );
+        }
     }
 
     // draw page (inside pageClip rectangle)
     p.translate( m_marginLeft, m_marginTop );
     pageClip.moveBy( -m_marginLeft, -m_marginTop );
+    // TODO: accessibility settings: p.setRasterOp( Qt::NotCopyROP );
     m_page->drawPixmap( PAGEVIEW_ID, &p, pageClip, m_pixmapWidth, m_pixmapHeight );
     p.translate( -m_marginLeft, -m_marginTop );
 

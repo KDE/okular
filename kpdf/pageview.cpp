@@ -1,11 +1,14 @@
 /***************************************************************************
- *   Copyright (C) 2002 by Wilco Greven <greven@kde.org>                   *
- *   Copyright (C) 2003 by Christophe Devriese                             *
- *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
- *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
- *   Copyright (C) 2003 by Dirk Mueller <mueller@kde.org>                  *
+ *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
- *   Copyright (C) 2004 by James Ots <kde@jamesots.com>                    *
+ *                                                                         *
+ *   With portions of code from kpdf_pagewidget.cc by:                     *
+ *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *
+ *     Copyright (C) 2003 by Christophe Devriese                           *
+ *                           <Christophe.Devriese@student.kuleuven.ac.be>  *
+ *     Copyright (C) 2003 by Laurent Montel <montel@kde.org>               *
+ *     Copyright (C) 2003 by Dirk Mueller <mueller@kde.org>                *
+ *     Copyright (C) 2004 by James Ots <kde@jamesots.com>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,7 +21,6 @@
 #include <qtimer.h>
 #include <qpushbutton.h>
 
-#include <kglobalsettings.h> 
 #include <kiconloader.h>
 #include <kurldrag.h>
 #include <kaction.h>
@@ -39,56 +41,69 @@ class PageViewPrivate
 public:
     // the document, current page and pages indices vector
     KPDFDocument * document;
-    const KPDFPage * page; //equal to pages[vectorIndex]
+    PageWidget * page; //equal to pages[vectorIndex]
     QValueVector< PageWidget * > pages;
     int vectorIndex;
 
     // view layout, zoom and mouse
-    PageView::ViewMode viewMode;
+    int viewColumns;
+    bool viewContinous;
     PageView::ZoomMode zoomMode;
     float zoomFactor;
     PageView::MouseMode mouseMode;
     QPoint mouseGrabPos;
     bool mouseOnLink;
+
+    // other stuff
     QTimer *delayTimer;
+    bool dirty;
 
     // actions
     KSelectAction *aZoom;
     KToggleAction *aZoomFitWidth;
     KToggleAction *aZoomFitPage;
     KToggleAction *aZoomFitText;
-
-    //TODO ADD  bool dirty;
+    KToggleAction *aViewTwoPages;
+    KToggleAction *aViewContinous;
 };
-
 
 
 /*
  * PageView class
  */
 PageView::PageView( QWidget *parent, KPDFDocument *document )
-    : QScrollView( parent, "KPDF::pageView", WRepaintNoErase | WStaticContents )
+    : QScrollView( parent, "KPDF::pageView", WNoAutoErase | WStaticContents )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate();
     d->document = document;
     d->page = 0;
+    d->viewColumns = 1;
+    d->viewContinous = false;
+    d->zoomMode = ZoomFitWidth;
+    d->zoomFactor = 0.999;
     d->mouseMode = MouseNormal;
     d->mouseOnLink = false;
-    d->zoomMode = ZoomFixed;
-    d->zoomFactor = 0.1; //FIXME REDEFAULT!!
     d->delayTimer = 0;
+    d->dirty = false;
 
-    // widget setup
-    setAcceptDrops( true );
-    setFocusPolicy( QWidget::StrongFocus );
-    viewport()->setFocusPolicy( QWidget::WheelFocus );
-    viewport()->setMouseTracking( true );
+    // dealing with (very) large areas so enable clipper
     enableClipper( true );
+
+    // widget setup: setup focus, accept drops and track mouse
+    viewport()->setFocusProxy( this );
+    viewport()->setFocusPolicy( StrongFocus );
+    viewport()->setPaletteBackgroundColor( Qt::gray );
+    setResizePolicy( Manual );
+    setAcceptDrops( true );
+    viewport()->setMouseTracking( true );
+
+    // conntect the padding of the viewport to pixmaps requests
+    connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
 
     // set a corner button to resize the view to the page size
     QPushButton * resizeButton = new QPushButton( viewport() );
-    resizeButton->setPixmap( SmallIcon("crop" /*"top"*/) );
+    resizeButton->setPixmap( SmallIcon("crop") );
     setCornerWidget( resizeButton );
     resizeButton->setEnabled( false );
     // connect(...);
@@ -119,7 +134,7 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
         translated << QString( "%1%" ).arg( localValue );
     }
     d->aZoom->setItems( translated );
-    d->aZoom->setCurrentItem( 8 );
+    d->aZoom->setCurrentItem( 0 ); // 8 for 100%
 
     KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
 
@@ -132,17 +147,15 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
     // View-Layout actions
-    KToggleAction * vs = new KToggleAction( i18n("Single Page"), "view_remove", 0, this, SLOT( slotSetViewSingle() ), ac, "view_single" );
-    vs->setExclusiveGroup("ViewLayout");
-    vs->setChecked( true );
+    d->aViewTwoPages = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, ac, "view_twopages" );
+    connect( d->aViewTwoPages, SIGNAL( toggled( bool ) ), SLOT( slotTwoPagesToggled( bool ) ) );
+    d->aViewTwoPages->setChecked( config->readBoolEntry( "ViewTwoPages", false ) );
+    slotTwoPagesToggled( d->aViewTwoPages->isChecked() );
 
-    KToggleAction * vd = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, this, SLOT( slotSetViewDouble() ), ac, "view_double" );
-    vd->setExclusiveGroup("ViewLayout");
-    vd->setEnabled( false ); // implement feature before removing this line
-
-    KToggleAction * vc = new KToggleAction( i18n("Continous"), "view_text", 0, this, SLOT( slotSetViewContinous() ), ac, "view_continous" );
-    vc->setExclusiveGroup("ViewLayout"); //TODO toggable with others or.. alone?
-    vc->setEnabled( false ); // implement feature before removing this line
+    d->aViewContinous = new KToggleAction( i18n("Continous"), "view_text", 0, ac, "view_continous" );
+    connect( d->aViewContinous, SIGNAL( toggled( bool ) ), SLOT( slotContinousToggled( bool ) ) );
+    d->aViewContinous->setChecked( config->readBoolEntry( "ViewContinous", true ) );
+    slotContinousToggled( d->aViewContinous->isChecked() );
 
     // Mouse-Mode actions
     KToggleAction * mn = new KToggleAction( i18n("Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
@@ -169,6 +182,8 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
 void PageView::saveSettings( KConfigGroup * config )
 {
     config->writeEntry( "ShowScrollBars", hScrollBarMode() == AlwaysOn );
+    config->writeEntry( "ViewTwoPages", d->aViewTwoPages->isChecked() );
+    config->writeEntry( "ViewContinous", d->aViewContinous->isChecked() );
 }
 
 
@@ -186,169 +201,53 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool /*docume
     QValueVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
     {
-        PageWidget * p = new PageWidget( this, *setIt );
-        // add to the internal queue
+        PageWidget * p = new PageWidget( viewport(), *setIt );
+        p->setFocusProxy( this );
         d->pages.push_back( p );
-        // add to the scrollview
-        addChild( p, 0, 0 );
     }
 
-    // FIXME TEMP relayout
-    reLayoutPages();
+    // invalidate layout
+    d->dirty = true;
 }
 
-#define FIXME_COLS 3
-void PageView::reLayoutPages()
+void PageView::pageSetCurrent( int pageNumber, float position )
 {
-    int pageCount = d->pages.count();
-    if ( pageCount < 1 )
-    {
-        resizeContents( 0,0 );
-        return;
-    }
+    if ( d->dirty )
+        reLayoutPages();
 
-    // 1) preprocess array (compute 'virtual grid' values)
-    // Here we find out column's width and row's height to compute a table
-    // so we can place widgets 'centered in virtual cells'.
-    int nCols = FIXME_COLS,
-        nRows = (int)ceilf( (float)pageCount / (float)nCols ),
-        cIdx = 0,
-        rIdx = 0,
-        vWidth = clipper()->width() / nCols,
-        vHeight = clipper()->height();
-    int * cSize = new int[ nCols ],
-        * rSize = new int[ nRows ];
-
-    for ( int i = 0; i < nCols; i++ )
-        cSize[ i ] = vWidth;
-    for ( int i = 0; i < nRows; i++ )
-        rSize[ i ] = 0;
-
-    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
-    for ( ; pIt != pEnd; ++pIt )
-    {
-        PageWidget * p = *pIt;
-        // update internal page geometry
-        switch ( d->zoomMode )
-        {
-        case ZoomFitWidth:
-            p->setZoomFitWidth( vWidth - 5 );
-            break;
-        case ZoomFitPage:
-            p->setZoomFitRect( vWidth - 5, vHeight - 5 );
-            break;
-        default:
-            p->setZoomFixed( d->zoomFactor );
-        }
-        // find maximum for 'col' / 'row'
-        int pWidth = p->widthHint(),
-            pHeight = p->heightHint();
-        if ( pWidth > cSize[ cIdx ] )
-            cSize[ cIdx ] = pWidth;
-        if ( pHeight > rSize[ rIdx ] )
-            rSize[ rIdx ] = pHeight;
-        // update col/row indices
-        if ( ++cIdx == nCols )
-        {
-            cIdx = 0;
-            rIdx++;
-        }
-    }
-
-    // 2) dispose widgets inside cells
-    int currentHeight = 0,
-        currentWidth = 0;
-    cIdx = 0;
-    rIdx = 0;
-    for ( pIt = d->pages.begin(); pIt != pEnd; ++pIt )
-    {
-        PageWidget * p = *pIt;
-        int pWidth = p->widthHint(),
-            pHeight = p->heightHint(),
-            cWidth = cSize[ cIdx ],
-            rHeight = rSize[ rIdx ];
-        // center widget inside 'cells'
-        moveChild( p, currentWidth + (cWidth - pWidth) / 2,
-                      currentHeight + (rHeight - pHeight) / 2 );
-        // display the widget
-        p->show();
-        // advance col/row index
-        currentWidth += cWidth;
-        if ( ++cIdx == nCols )
-        {
-            cIdx = 0;
-            rIdx++;
-            currentWidth = 0;
-            currentHeight += rHeight + 10;
-        }
-    }
-
-    // update scrollview's contents size (sets scrollbars limits)
-    currentWidth = 0;
-    for ( int i = 0; i < nCols; i++ )
-        currentWidth += cSize[ i ];
-    if ( cIdx != 0 )
-        currentHeight += rSize[ rIdx ] + 10;
-    resizeContents( currentWidth, currentHeight );
-
-    delete [] cSize;
-    delete [] rSize;
-
-/*
-    // request for thumbnail generation
-    // an update is already scheduled, so don't proceed
-    if ( m_delayTimer && m_delayTimer->isActive() )
-        return;
-
-    int vHeight = visibleHeight(),
-        vOffset = newContentsY == -1 ? contentsY() : newContentsY;
-
-    // scroll from the top to the last visible thumbnail
-    QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
-    QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
-    for ( ; thumbIt != thumbEnd; ++thumbIt )
-    {
-        ThumbnailWidget * t = *thumbIt;
-        int top = childY( t ) - vOffset;
-        if ( top > vHeight )
-            break;
-        else if ( top + t->height() > 0 )
-            m_document->requestPixmap( THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), true );
-    }
-*/
-}
-
-void PageView::pageSetCurrent( int /*pageNumber*/, float /*position*/ )
-{
     // select next page
     d->vectorIndex = 0;
     d->page = 0;
 
-    /*
-    QValueVector<int>::iterator pagesIt = d->pages.begin();
-    QValueVector<int>::iterator pagesEnd = d->pages.end();
-    for ( ; pagesIt != pagesEnd; ++pagesIt )
+    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    for ( ; pIt != pEnd; ++pIt )
     {
-        if ( *pagesIt == pageNumber )
+        if ( (*pIt)->pageNumber() == pageNumber )
         {
-            d->page = d->document->page( pageNumber );
+            d->page = *pIt;
             break;
         }
-        d->vectorIndex++;
+        d->vectorIndex ++;
     }
-    */
-    //if ( !d->page || d->page->width() < 1 || d->page->height() < 1 )
-    //    return;
 
-    //slotUpdateView();
-    //verticalScrollBar()->setValue( (int)(position * verticalScrollBar()->maxValue()) );
+    if ( d->page )
+    {
+        int xPos = childX( d->page ) + d->page->widthHint() / 2,
+            yPos = childY( d->page ) + (int)((float)d->page->heightHint() * position);
+        center( xPos, yPos + visibleHeight() / 2 - 10 );
+        slotRequestVisiblePixmaps();
+    }
 }
 
 void PageView::notifyPixmapChanged( int pageNumber )
 {
-    // check if it's the preview we're waiting for and update it
-    if ( d->page && (int)d->page->number() == pageNumber )
-        slotUpdateView();
+    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    for ( ; pIt != pEnd; ++pIt )
+        if ( (*pIt)->pageNumber() == pageNumber )
+        {
+            (*pIt)->update();
+            break;
+        }
 }
 //END KPDFDocumentObserver inherited methods
 
@@ -454,8 +353,6 @@ void PageView::viewportResizeEvent( QResizeEvent * )
         connect( d->delayTimer, SIGNAL( timeout() ), this, SLOT( slotUpdateView() ) );
     }
     d->delayTimer->start( 400, true );
-    // recalc coordinates
-    //slotUpdateView( false );
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -480,9 +377,11 @@ void PageView::keyPressEvent( QKeyEvent * e )
     case Key_Right:
         horizontalScrollBar()->addLine();
         break;
-    case Key_Space:
-        if( e->state() != ShiftButton )
-            scrollDown();
+    case Key_PageUp:
+        verticalScrollBar()->subtractPage();
+        break;
+    case Key_PageDown:
+        verticalScrollBar()->addPage();
         break;
     default:
         e->ignore();
@@ -501,9 +400,9 @@ void PageView::wheelEvent( QWheelEvent *e )
         else
             slotZoomIn();
     }
-    else if ( delta <= -120 && atBottom() )
+    else if ( delta <= -120 && atBottom() && !d->viewContinous )
         scrollDown();
-    else if ( delta >= 120 && atTop() )
+    else if ( delta >= 120 && atTop() && !d->viewContinous )
         scrollUp();
     else
         QScrollView::wheelEvent( e );
@@ -602,16 +501,16 @@ void PageView::slotFitToTextToggled( bool on )
     d->aZoomFitWidth->setChecked( false );
 }
 
-void PageView::slotSetViewSingle()
-{    //TODO this
+void PageView::slotTwoPagesToggled( bool on )
+{
+    d->viewColumns = on ? 2 : 1;
+    reLayoutPages();
 }
 
-void PageView::slotSetViewDouble()
-{    //TODO this
-}
-
-void PageView::slotSetViewContinous()
-{    //TODO this
+void PageView::slotContinousToggled( bool on )
+{
+    d->viewContinous = on;
+    reLayoutPages();
 }
 
 void PageView::slotSetMouseNormal()
@@ -636,40 +535,151 @@ void PageView::slotToggleScrollBars( bool on )
 }
 
 void PageView::slotUpdateView( bool /*repaint*/ )
-{    //TODO ASYNC autogeneration!
-   reLayoutPages();
-/*    if ( !d->page )
+{   //TODO ASYNC autogeneration!
+    reLayoutPages();
+}
+
+void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
+{
+//    // if an update is already scheduled or the widget is hidden, don't proceed
+//     if ( (m_delayTimer && m_delayTimer->isActive()) || !isShown() )
+//         return;
+
+    // precalc view limits for intersecting with page coords inside the lOOp
+    int vLeft = (newLeft == -1) ? contentsX() : newLeft,
+        vRight = vLeft + visibleWidth(),
+        vTop = (newTop == -1) ? contentsY() : newTop,
+        vBottom = vTop + visibleHeight();
+
+    // scroll from the top to the last visible thumbnail
+    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    for ( ; pIt != pEnd; ++pIt )
     {
-        d->pageRect.setRect( 0, 0, 0, 0 );
-        resizeContents( 0, 0 );
+        PageWidget * p = *pIt;
+        int pLeft = childX( p ),
+            pRight = pLeft + p->widthHint(),
+            pTop = childY( p ),
+            pBottom = pTop + p->heightHint();
+        if ( p->isShown() && pRight > vLeft && pLeft < vRight && pBottom > vTop && pTop < vBottom )
+            d->document->requestPixmap( PAGEVIEW_ID, p->pageNumber(), p->pixmapWidth(), p->pixmapHeight(), true );
     }
-    else
-    {
-        // Zoom / AutoFit-Width / AutoFit-Page
-        double scale = d->zoomFactor;
-        if ( d->zoomMode == ZoomFitWidth || d->zoomMode == ZoomFitPage )
-        {
-            scale = (double)viewport()->width() / (double)d->page->width();
-            if ( d->zoomMode == ZoomFitPage )
-            {
-                double scaleH = (double)viewport()->height() / (double)d->page->height();
-                if ( scaleH < scale )
-                    scale = scaleH;
-            }
-        }
-        int pageW = (int)( scale * d->page->width() ),
-            pageH = (int)( scale * d->page->height() ),
-            viewW = QMAX( viewport()->width(), pageW ),
-            viewH = QMAX( viewport()->height(), pageH );
-        d->pageRect.setRect( (viewW - pageW) / 2, (viewH - pageH) / 2, pageW, pageH );
-        resizeContents( viewW, viewH );
-        d->document->requestPixmap( PAGEVIEW_ID, d->page->number(), pageW, pageH, true );
-    }
-    if ( repaint )
-        viewport()->update();
-*/
 }
 //END internal SLOTS
+
+void PageView::reLayoutPages()
+{
+    // set an empty container if we have no pages
+    int pageCount = d->pages.count();
+    if ( pageCount < 1 )
+    {
+        resizeContents( 0,0 );
+        return;
+    }
+
+    int viewportWidth = clipper()->width(),
+        viewportHeight = clipper()->height();
+
+    if ( d->viewContinous == TRUE )
+    {
+        // Here we find out column's width and row's height to compute a table
+        // so we can place widgets 'centered in virtual cells'.
+        int nCols = d->viewColumns,
+            nRows = (int)ceilf( (float)pageCount / (float)nCols ),
+            * colWidth = new int[ nCols ],
+            * rowHeight = new int[ nRows ],
+            cIdx = 0,
+            rIdx = 0;
+        for ( int i = 0; i < nCols; i++ )
+            colWidth[ i ] = viewportWidth / nCols;
+        for ( int i = 0; i < nRows; i++ )
+            rowHeight[ i ] = 0;
+
+        // 1) find the maximum columns width and rows height for a grid in
+        // which each page must well-fit inside a cell
+        QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+        for ( ; pIt != pEnd; ++pIt )
+        {
+            PageWidget * p = *pIt;
+            // update internal page geometry
+            if ( d->zoomMode == ZoomFixed )
+                p->setZoomFixed( d->zoomFactor );
+            else if ( d->zoomMode == ZoomFitWidth )
+                p->setZoomFitWidth( colWidth[ cIdx ] - 10 );
+            else
+                p->setZoomFitRect( colWidth[ cIdx ] - 10, viewportHeight - 10 );
+            // find row's maximum height and column's max width
+            int pWidth = p->widthHint(),
+                pHeight = p->heightHint();
+            if ( pWidth > colWidth[ cIdx ] )
+                colWidth[ cIdx ] = pWidth;
+            if ( pHeight > rowHeight[ rIdx ] )
+                rowHeight[ rIdx ] = pHeight;
+            // update col/row indices
+            if ( ++cIdx == nCols )
+            {
+                cIdx = 0;
+                rIdx++;
+            }
+        }
+
+        // 2) arrange widgets inside cells
+        int insertX = 0,
+            insertY = (int)(5.0 + 10.0 * d->zoomFactor);
+        cIdx = 0;
+        rIdx = 0;
+        for ( pIt = d->pages.begin(); pIt != pEnd; ++pIt )
+        {
+            PageWidget * p = *pIt;
+            int pWidth = p->widthHint(),
+                pHeight = p->heightHint(),
+                cWidth = colWidth[ cIdx ],
+                rHeight = rowHeight[ rIdx ];
+            // show, resize and center widget inside 'cells'
+            p->resize( pWidth, pHeight );
+            moveChild( p, insertX + (cWidth - pWidth) / 2,
+                          insertY + (rHeight - pHeight) / 2 );
+            p->show();
+            // advance col/row index
+            insertX += cWidth;
+            if ( ++cIdx == nCols )
+            {
+                cIdx = 0;
+                rIdx++;
+                insertX = 0;
+                insertY += rHeight + (int)(5.0 + 15.0 * d->zoomFactor);
+            }
+        }
+
+        // 3) update scrollview's contents size and recenter view
+        int fullWidth = 0,
+            fullHeight = cIdx ? (insertY + rowHeight[ rIdx ] + 10) : insertY,
+            oldWidth = contentsWidth(),
+            oldHeight = contentsHeight();
+        for ( int i = 0; i < nCols; i++ )
+            fullWidth += colWidth[ i ];
+        resizeContents( fullWidth, fullHeight );
+        if ( oldWidth > 0 && oldHeight > 0 )
+            center( fullWidth * (contentsX() + visibleWidth() / 2) / oldWidth,
+                    fullHeight * (contentsY() + visibleHeight() / 2) / oldHeight );
+        else
+            center( fullWidth / 2, 0 );
+
+        delete [] colWidth;
+        delete [] rowHeight;
+    }
+    else // viewContinous is FALSE
+    {
+        // hide all widgets except the displayable ones
+        QValueVector< PageWidget * >::iterator dIt = d->pages.begin(), dEnd = d->pages.end();
+        for ( ; dIt != dEnd; ++dIt )
+            (*dIt)->hide();
+        //
+        resizeContents( viewportWidth, viewportHeight );
+    }
+
+    // reset dirty state
+    d->dirty = false;
+}
 
 bool PageView::atTop() const
 {

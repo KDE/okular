@@ -10,6 +10,8 @@
 #include <qtimer.h>
 #include <klocale.h>
 #include <kconfigbase.h>
+#include <kurl.h>
+#include <kurldrag.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 
@@ -17,9 +19,9 @@
 #include "pixmapwidget.h"
 #include "page.h"
 
-ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
-	: QScrollView(parent, "KPDF::Thumbnails", WNoAutoErase),
-	m_document(document), m_selected(0), m_delayTimer(0)
+ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
+	: QScrollView( parent, "KPDF::Thumbnails", WNoAutoErase | WStaticContents ),
+	m_document( document ), m_selected( 0 ), m_delayTimer( 0 )
 {
 	// set scrollbars
 	setHScrollBarMode( QScrollView::AlwaysOff );
@@ -28,10 +30,12 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 	// dealing with large areas so enable clipper
 	enableClipper( true );
 
-	// can be focused by tab and mouse click and grabs key events
+	// widget setup: can be focused by tab and mouse click (not wheel)
+	viewport()->setFocusProxy( this );
 	viewport()->setFocusPolicy( StrongFocus );
-	setFocusPolicy( NoFocus );
-	setInputMethodEnabled( true );
+	viewport()->setPaletteBackgroundColor( Qt::gray );
+	setResizePolicy( Manual );
+	setAcceptDrops( true );
 
 	// set contents background to the 'base' color
 	viewport()->setPaletteBackgroundColor( palette().active().base() );
@@ -40,20 +44,10 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestPixmaps(int, int)) );
 }
 
-void ThumbnailList::setupActions( KActionCollection * /*ac*/, KConfigGroup * /*config*/ )
-{
-}
-
-void ThumbnailList::saveSettings( KConfigGroup * /*config*/ )
-{
-}
 
 //BEGIN KPDFDocumentObserver inherited methods 
-void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged )
+void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*documentChanged*/ )
 {
-//TODO
-documentChanged = false;
-//TODO
 	// delete all the Thumbnails
 	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
 	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
@@ -83,12 +77,14 @@ documentChanged = false;
 	for (; pageIt != pageEnd ; ++pageIt)
 		if ( skipCheck || (*pageIt)->isHilighted() ) {
 			t = new ThumbnailWidget( viewport(), *pageIt );
+			t->setFocusProxy( this );
 			// add to the scrollview
 			addChild( t, 0, totalHeight );
 			// add to the internal queue
 			m_thumbnails.push_back( t );
 			// update total height (asking widget its own height)
-            t->setZoomFitWidth( width );
+			t->setZoomFitWidth( width );
+			t->resize( t->widthHint(), t->heightHint() );
 			totalHeight += t->heightHint() + 4;
 			t->show();
 		}
@@ -127,14 +123,25 @@ void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 
 void ThumbnailList::notifyPixmapChanged( int pageNumber )
 {
-	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
+	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin(), thumbEnd = m_thumbnails.end();
 	for (; thumbIt != thumbEnd; ++thumbIt)
 		if ( (*thumbIt)->pageNumber() == pageNumber )
 		{
 			(*thumbIt)->update();
 			break;
 		}
+}
+
+void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
+{
+	ev->accept();
+}
+
+void ThumbnailList::dropEvent( QDropEvent * ev )
+{
+	KURL::List lst;
+	if (  KURLDrag::decode(  ev, lst ) )
+		emit urlDropped( lst.first() );
 }
 //END KPDFDocumentObserver inherited methods 
 
@@ -191,9 +198,9 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 	}
 }
 
-void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
+void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 {
-	if ( m_thumbnails.count() < 1 || width() < 1 || !isShown() )
+	if ( m_thumbnails.count() < 1 || width() < 1 )
 		return;
 	// if width changed resize all the Thumbnails, reposition them to the
 	// right place and recalculate the contents area
@@ -211,10 +218,10 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 		{
 			ThumbnailWidget *t = *thumbIt;
 			moveChild( t, 0, totalHeight );
-            t->setZoomFitWidth( newWidth );
-            totalHeight += t->heightHint() + 4;
-            t->show();
-    	}
+			t->setZoomFitWidth( newWidth );
+			t->resize( t->widthHint(), t->heightHint() );
+			totalHeight += t->heightHint() + 4;
+		}
 
 		// update scrollview's contents size (sets scrollbars limits)
 		resizeContents( newWidth, totalHeight );
@@ -228,13 +235,13 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 	// update Thumbnails since width has changed or height has increased
 	requestPixmaps( 500 );
 }
-//END widget events 
+//END widget events
 
 //BEGIN internal SLOTS 
 void ThumbnailList::slotRequestPixmaps( int /*newContentsX*/, int newContentsY )
 {
-	// an update is already scheduled, so don't proceed
-	if ( m_delayTimer && m_delayTimer->isActive() )
+	// if an update is already scheduled or the widget is hidden, don't proceed
+	if ( (m_delayTimer && m_delayTimer->isActive()) || !isShown() )
 		return;
 
 	int vHeight = visibleHeight(),
@@ -263,18 +270,6 @@ void ThumbnailList::requestPixmaps( int delayMs )
 		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestPixmaps() ) );
 	}
 	m_delayTimer->start( delayMs, true );
-}
-
-
-/** class ThumbnailsBox **/
-
-ThumbnailsBox::ThumbnailsBox( QWidget * parent ) : QVBox( parent )
-{
-}
-
-QSize ThumbnailsBox::sizeHint() const
-{
-	return QSize();
 }
 
 #include "thumbnaillist.moc"

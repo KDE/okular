@@ -93,6 +93,7 @@ namespace KPDF
 	void slotFindNext();
 	void slotSaveFileAs();
 	void slotPrintPreview();
+	void slotToggleLeftPanel( bool );
 	// can be connected to widget elements
 	void updateActions();
 	void enableTOC(bool enable);
@@ -107,14 +108,13 @@ namespace KPDF
 
 	// main widgets
 	QSplitter *m_splitter;
+	QToolBox *m_toolBox;
 	ThumbnailList *m_thumbnailList;
 	PageView *m_pageView;
 	SearchWidget *m_searchWidget;
 
 	// static instances counter
 	static unsigned int m_count;
-
-	QToolBox *m_toolBox;
 
 	// actions
 	KAction *m_gotoPage;

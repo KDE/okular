@@ -27,7 +27,7 @@
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_scrollbars" group="show_merge"/>
-    <Action name="show_thumbnails" group="show_merge"/>
+    <Action name="show_leftpanel" group="show_merge"/>
     <Action name="show_searchbar" group="show_merge"/>
   </Menu>
 </MenuBar>
@@ -42,8 +42,7 @@
   <!--Action name="zoom_fit_width"/-->
   <!--Action name="zoom_fit_page"/-->
   <Separator/>
-  <Action name="view_single"/>
-  <Action name="view_double"/>
+  <Action name="view_twopages"/>
   <Action name="view_continous"/>
   <Separator/>
   <Action name="mouse_drag"/>

@@ -728,10 +728,18 @@ void dviWindow::all_fonts_loaded(fontPool *)
     current_page = currPageSav;
   }
 
+  // If the document specifies a paper size, we emit
+  // 'documentSpecifiedPageSize' here. Note that emitting
+  // 'documentSpecifiedPageSize' may or may not lead to a call of
+  // 'drawPage'; that depends on the question if the widget size
+  // really changes or not. To be on the safe side, we call drawPage()
+  // independently. For documents that have a specified paper format
+  // which is NOT the default format, that means that the document
+  // will be drawn twice.
   if (dviFile->suggestedPageSize != 0)
-    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
-  else
-    drawPage();
+    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
+  drawPage();
+
 
   // case 1: The reference is a number, which we'll interpret as a
   // page number.

@@ -9,7 +9,6 @@
  *   Copyright (C) 2003 by Luboš Luňák <l.lunak@kde.org>                   *
  *   Copyright (C) 2003 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
- *   Copyright (C) 2004 by Stephan Binner <binner@kde.org>                 *
  *   Copyright (C) 2004 by Dirk Mueller <mueller@kde.org>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -84,7 +83,7 @@ Shell::Shell()
   }
   PDFPartView * partView = static_cast<PDFPartView *>(m_part->widget());
   connect( partView->outputdev, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
-  
+
   readSettings();
 }
 
@@ -125,7 +124,7 @@ Shell::setupActions()
   KStdAction::print(m_part, SLOT(print()), actionCollection());
   KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
 
-  
+
   setStandardToolBarMenuEnabled(true);
 
   m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );

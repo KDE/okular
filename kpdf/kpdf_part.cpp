@@ -13,7 +13,6 @@
  *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
  *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
- *   Copyright (C) 2004 by Stephan Binner <binner@kde.org>                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -108,7 +107,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                        actionCollection(), "find");
   m_find->setEnabled(false);
   m_findNext = KStdAction::findNext(this, SLOT(findNext()),
-                       actionCollection(), "find_next"); 
+                       actionCollection(), "find_next");
   m_findNext->setEnabled(false);
   m_fitToWidth = new KToggleAction(i18n("Fit to Page &Width"), 0,
                        this, SLOT(slotFitToWidthToggled()),
@@ -377,21 +376,21 @@ Part::openFile()
 
   m_find->setEnabled(true);
   m_findNext->setEnabled(true);
-  
+
   errors::clear();
   m_currentPage = 0; //so that the if in goToPage is true
   if (m_doc->getNumPages() > 0)
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?
-    pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1)); 
+    pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
 
     m_outputDev->setPDFDocument(m_doc);
     goToPage(1);
-  
+
     m_nextThumbnail=1;
     QTimer::singleShot(10, this, SLOT(nextThumbnail()));
   }
-  
+
   return true;
 }
 
@@ -403,12 +402,12 @@ void Part::nextThumbnail()
   // Pixels per point when the zoomFactor is 1.
   const double basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
   const double ppp = basePpp * m_zoomFactor; // pixels per point
-  
+
   SplashColor paperColor;
   paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
   QOutputDevPixmap odev(paperColor);
   odev.startDoc(m_doc->getXRef());
-  
+
   m_doc->displayPage(&odev, m_nextThumbnail, ppp * 72.0, ppp * 72.0, 0, true, true);
   pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
 
@@ -612,7 +611,7 @@ Part::executeAction(LinkAction* action)
       else if ((namedDest = ((LinkGoTo*)action)->getNamedDest()))
         namedDest = namedDest->copy();
     }
-    
+
     else
     {
       if ((dest = ((LinkGoToR*)action)->getDest()))
@@ -628,7 +627,7 @@ Part::executeAction(LinkAction* action)
         return;
       }
     }
-    
+
 
     if (namedDest != 0)
     {
@@ -726,13 +725,13 @@ void Part::find()
 {
   KFindDialog dlg(pdfpartview);
   if (dlg.exec() != QDialog::Accepted) return;
-  
+
   doFind(dlg.pattern(), false);
 }
 
 void Part::findNext()
 {
-  if (!m_findText.isEmpty()) doFind(m_findText, true);  
+  if (!m_findText.isEmpty()) doFind(m_findText, true);
 }
 
 void Part::doFind(QString s, bool next)
@@ -747,10 +746,10 @@ void Part::doFind(QString s, bool next)
   len = s.length();
   u = (Unicode *)gmalloc(len * sizeof(Unicode));
   for (int i = 0; i < len; ++i) u[i] = (Unicode)(s.latin1()[i] & 0xff);
-  
+
   // search current
   found = m_outputDev->find(u, len, next);
-  
+
   if (!found)
   {
     // search following pages
@@ -761,7 +760,7 @@ void Part::doFind(QString s, bool next)
       delete textOut;
       return;
     }
-    
+
     pg = m_currentPage + 1;
     while(!found && pg <= m_doc->getNumPages())
     {
@@ -799,10 +798,10 @@ void Part::doFind(QString s, bool next)
         else KMessageBox::information(widget(), i18n("No matches found for '%1'.").arg(s));
     }
   }
-  
+
   if (found) m_findText = s;
   else m_findText = QString::null;
-  
+
   gfree(u);
 }
 

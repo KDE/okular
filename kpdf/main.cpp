@@ -5,7 +5,6 @@
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
  *   Copyright (C) 2003-2004 by Albert Astals Cid <tsdgeos@terra.es>       *
  *   Copyright (C) 2004 by Andy Goossens <andygoossens@telenet.be>         *
- *   Copyright (C) 2004 by Stephan Binner <binner@kde.org>                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

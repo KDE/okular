@@ -75,11 +75,14 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parent, const char *name)
   setXMLFile("kdvi_part.rc");
 
   scrollView()->addChild(window);
+
+  readSettings();
 }
 
 
 KDVIMultiPage::~KDVIMultiPage()
 {
+  writeSettings();
 }
 
 
@@ -189,7 +192,7 @@ void KDVIMultiPage::doSettings()
 
 void KDVIMultiPage::preferencesChanged()
 {
-  KConfig *config = KGlobal::config();
+  KConfig *config = instance()->config();
 
   QString s;
   

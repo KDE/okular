@@ -26,6 +26,7 @@ class QComboBox;
 class QLabel;
 class QLineEdit;
 class QSpinBox;
+class KInstance;
 
 #include <kdialogbase.h>
 
@@ -74,6 +75,9 @@ class OptionDialog : public KDialogBase
   private:
     FontItems   mFont;
     RenderItems mRender;
+
+    KInstance   *_instance;
+
 };
 
 

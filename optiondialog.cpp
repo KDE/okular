@@ -32,6 +32,8 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kinstance.h>
+
 
 #include "optiondialog.h"
 
@@ -40,6 +42,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   :KDialogBase( Tabbed, i18n("Preferences"), Help|Ok|Apply|Cancel, Ok,
 		parent, name, modal )
 {
+  _instance = new KInstance("kdvi");
   makeFontPage();
   makeRenderingPage();
 }
@@ -64,7 +67,7 @@ void OptionDialog::slotOk()
 
 void OptionDialog::slotApply()
 {
-  KConfig *config = KGlobal::config();
+  KConfig *config = _instance->config();
   config->setGroup("kdvi");
 
   config->writeEntry( "BaseResolution", mFont.resolutionEdit->text() );
@@ -83,18 +86,18 @@ void OptionDialog::slotApply()
 
 void OptionDialog::setup()
 {
-  KConfig *config = KGlobal::config();
+  KConfig *config = _instance->config();
   config->setGroup("kdvi");
 
   // Font page
-  mFont.resolutionEdit->setText( config->readEntry( "BaseResolution" ) );
-  mFont.metafontEdit->setText( config->readEntry( "MetafontMode" ) );
+  mFont.resolutionEdit->setText( config->readEntry( "BaseResolution", "300" ) );
+  mFont.metafontEdit->setText( config->readEntry( "MetafontMode", "/" ) );
   mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
   mFont.fontPathEdit->setText( config->readEntry( "FontPath" ) );
   fontPathCheckChanged( mFont.fontPathCheck->isChecked() );
 
   // Rendering page
-  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS" ) );
+  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 0 ) );
   mRender.antialiasCheck->setChecked(config->readNumEntry("PS Anti Alias", 1)); 
 }
 

@@ -10,6 +10,7 @@
 #include <kparts/factory.h>
 
 class infoDialog;
+class documentWidget;
 class KPrinter;
 class OptionDialog;
 class QLabel;
@@ -48,6 +49,7 @@ public:
   class dvifile *dviFile;
   infoDialog    *info;
 
+  documentWidget *dviWidget;
 
 
   KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);

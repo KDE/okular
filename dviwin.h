@@ -21,10 +21,11 @@
 #include <kviewpart.h>
 
 #include "bigEndianByteReader.h"
+#include "documentPage.h"
 #include "dviFile.h"
 #include "fontpool.h"
 #include "psgs.h"
-#include "selection.h"
+
 
 class dviWindow;
 class fontProgressDialog;
@@ -38,16 +39,6 @@ class KShellProcess;
 class TeXFontDefinition;
 
 extern const int MFResolutions[];
-
-class DVI_Hyperlink {
- public:
-  DVI_Hyperlink() {}
-  DVI_Hyperlink(Q_UINT32 bl, QRect re, QString lT): baseline(bl), box(re), linkText(lT) {}
-
-  Q_UINT32 baseline;
-  QRect    box;
-  QString  linkText;
-};
 
 class DVI_Anchor {
  public:
@@ -99,34 +90,17 @@ struct drawinf {
 };
 
 
-// This class contains everything one needs dviwin needs to know about
-// a certain page. 
 
-class pageData
-{
- public:
-  Q_UINT16   pageNumber;
-  
-  QPixmap    *pixmap;
-  
-  // List of source-hyperlinks in the current page. This vector is
-  // generated when the current page is drawn.
-  QValueVector<DVI_Hyperlink> sourceHyperLinkList;
-
-  QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
-  QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
-};
-
-
-class dviWindow : public QWidget, bigEndianByteReader
+class dviWindow : public QObject, bigEndianByteReader
 {
   Q_OBJECT
 
 public:
-  dviWindow( double zoom, KDVIMultiPage *par, QWidget *parent=0, const char *name=0 );
+  dviWindow( double zoom, KDVIMultiPage *par);
   ~dviWindow();
 
   KDVIMultiPage *_parentMPage;
+  documentPage  currentlyDrawnPage;
 
   void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
@@ -144,12 +118,9 @@ public:
   static bool   correctDVI(const QString &filename);
   
   // for the preview
-  QPixmap      *pix() { return currentlyDrawnPage.pixmap; };
+  QPixmap      *pix() { return currentlyDrawnPage.getPixmap();  };
 
   // These should not be public... only for the moment
-  void          mousePressEvent ( QMouseEvent * e );
-  void          mouseMoveEvent ( QMouseEvent * e );
-  void          mouseReleaseEvent ( QMouseEvent * e );
   void          read_postamble(void);
   void          draw_part(double current_dimconv, bool is_vfmacro);
   void          set_vf_char(unsigned int cmd, unsigned int ch);
@@ -166,11 +137,10 @@ public:
   void          draw_page(void);
 
 
-  double       xres;         // horizontal resolution of the display device in dots per inch.
-  double       paper_width_in_cm;  // paper width in centimeters
-  double       paper_height_in_cm; // paper height in centimeters
+  double        xres;         // horizontal resolution of the display device in dots per inch.
+  double        paper_width_in_cm;  // paper width in centimeters
+  double        paper_height_in_cm; // paper height in centimeters
 
-  selection    DVIselection;
 
  /** Reference part of the URL which describes the filename. */
  QString        reference;
@@ -180,10 +150,11 @@ public:
  KAction        *findPrevAction;
 
 public slots:
+  void          handleLocalLink(const QString &linkText);
+  void          handleSRCLink(const QString &linkText, QMouseEvent * e);
+
   void          embedPostScript(void);
 
-  void          selectAll(void);
-  void          copyText(void);
   void          showFindTextDialog(void);
   void          findText(void);
   void          findNextText(void);
@@ -196,17 +167,10 @@ public slots:
       in dviWindow::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar(void);
 
-  /** Displays the page of the first argument */
-  void		gotoPage(unsigned int page);
-
-  /** Displays the page of the first argument, and blinks the display
-      at the vertical offset vflashOffset. This is used when the user
-      clicks on a hyperlink: the target of the jump flashes so that
-      the user can locate it more easily. */
-  void		gotoPage(int page, int vflashOffset);
   double	setZoom(double zoom);
   double        zoom() { return _zoom; };
   void		drawPage();
+  void		drawPage(documentPage *page);
  
   /** Slots used in conjunction with external programs */
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
@@ -241,8 +205,7 @@ signals:
   /** To be passed through to the kmultipage */
   void documentSpecifiedPageSize(const pageSize &size);
 
-protected:
- void          paintEvent(QPaintEvent *ev);
+  void flash(int);
 
 private:
   // @@@ explanation
@@ -286,8 +249,7 @@ private:
      *this. */
   QTimer        clearStatusBarTimer;
   
-  pageData      currentlyDrawnPage;
-  
+  QPixmap       currentlyDrawnPixmap;
   
   // List of source-hyperlinks on all pages. This vector is generated
   // when the DVI-file is first loaded, i.e. when draw_part is called
@@ -315,19 +277,9 @@ private:
   
   /** The global color is to be used when the color stack is empty */
   QColor              globalColor;
-  
-  /** Methods and counters used for the animation to mark the target of
-      an hyperlink. */
-  int               timerIdent;
-  void              timerEvent( QTimerEvent *e );
-  int               animationCounter;
-  int               flashOffset;
-  
-  /** Methods and classes concerned with the find functionality and
-      with selecting text */
+    
+  /** Methods and classes concerned with the find functionality */
   class KEdFind    *findDialog;
-  QPoint            firstSelectedPoint;
-  QRect             selectedRectangle;
   
   /** If PostScriptOutPutFile is non-zero, then no rendering takes
       place. Instead, the PostScript code which is generated by the

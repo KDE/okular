@@ -51,10 +51,10 @@ void dviWindow::exportText(void)
     return;
   if (_parentMPage->dviFile->dvi_Data == 0 )
     return;
-  if (currentlyDrawnPage.pixmap->paintingActive())
+  if (currentlyDrawnPixmap.paintingActive())
     return;
-
-  if (KMessageBox::warningContinueCancel( this,
+  
+  if (KMessageBox::warningContinueCancel( _parentMPage->scrollView(),
 					  i18n("<qt>This function exports the DVI file to a plain text. Unfortunately, this version of "
 					       "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
 					       "formulae, accented characters, and non-english text, such as Russian or Korean, will "
@@ -68,12 +68,12 @@ void dviWindow::exportText(void)
   QString suggestedName = _parentMPage->dviFile->filename;
   suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
 
-  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.txt|Plain Text (Latin 1) (*.txt)"), this, i18n("Export File As"));
+  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.txt|Plain Text (Latin 1) (*.txt)"), _parentMPage->scrollView(), i18n("Export File As"));
   if (fileName.isEmpty())
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+    int r = KMessageBox::warningYesNo (_parentMPage->scrollView(), i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 				       i18n("Overwrite File"));
     if (r == KMessageBox::No)
       return;
@@ -86,7 +86,7 @@ void dviWindow::exportText(void)
   bool _postscript_sav = _postscript;
   int current_page_sav = current_page;
   _postscript = FALSE; // Switch off postscript to speed up things...
-  QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), _parentMPage->dviFile->total_pages, this, "export_text_progress", TRUE );
+  QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), _parentMPage->dviFile->total_pages, _parentMPage->scrollView(), "export_text_progress", TRUE );
   progress.setMinimumDuration(300);
   QPixmap pixie(1,1);
   for(current_page=0; current_page < _parentMPage->dviFile->total_pages; current_page++) {
@@ -172,12 +172,12 @@ void dviWindow::exportPDF(void)
   QString suggestedName = _parentMPage->dviFile->filename;
   suggestedName = suggestedName.left(suggestedName.find(".")) + ".pdf";
 
-  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.pdf|Portable Document Format (*.pdf)"), this, i18n("Export File As"));
+  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.pdf|Portable Document Format (*.pdf)"), _parentMPage->scrollView(), i18n("Export File As"));
   if (fileName.isEmpty())
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+    int r = KMessageBox::warningYesNo (_parentMPage->scrollView(), i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 				       i18n("Overwrite File"));
     if (r == KMessageBox::No)
       return;
@@ -192,7 +192,7 @@ void dviWindow::exportPDF(void)
 					  "a while because dvipdfm needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvipdfm to finish..."),
-				     this, "dvipdfm progress dialog", false );
+				     _parentMPage->scrollView(), "dvipdfm progress dialog", false );
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
     progress->setTotalSteps( _parentMPage->dviFile->total_pages );
@@ -261,12 +261,12 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     QString suggestedName = _parentMPage->dviFile->filename;
     suggestedName = suggestedName.left(suggestedName.find(".")) + ".ps";
 
-    fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.ps|PostScript (*.ps)"), this, i18n("Export File As"));
+    fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.ps|PostScript (*.ps)"), _parentMPage->scrollView(), i18n("Export File As"));
     if (fileName.isEmpty())
       return;
     QFileInfo finfo(fileName);
     if (finfo.exists()) {
-      int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+      int r = KMessageBox::warningYesNo (_parentMPage->scrollView(), i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 					 i18n("Overwrite File"));
       if (r == KMessageBox::No)
 	return;
@@ -285,7 +285,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 					  "a while because dvips needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvips to finish..."),
-				     this, "dvips progress dialog", false );
+				     _parentMPage->scrollView(), "dvips progress dialog", false );
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
     progress->setTotalSteps( _parentMPage->dviFile->total_pages );
@@ -346,7 +346,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       }
       fclose(f);
     } else {
-      KMessageBox::error(this, i18n("<qt>Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
+      KMessageBox::error(_parentMPage->scrollView(), i18n("<qt>Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
 				    "The export or print command is aborted.</qt>").arg(_parentMPage->dviFile->filename).arg(sourceFileName));
       return;
     }
@@ -406,7 +406,7 @@ void dviWindow::dvips_terminated(KProcess *sproc)
   // export_errorString, does not correspond to sproc. In that case,
   // we ingore the return status silently.
   if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0))
-    KMessageBox::error( this, export_errorString );
+    KMessageBox::error( _parentMPage->scrollView(), export_errorString );
 
   if (export_printer != 0)
     export_printer->printFiles( QStringList(export_fileName), true );
@@ -422,7 +422,7 @@ void dviWindow::editorCommand_terminated(KProcess *sproc)
   // export_errorString, does not correspond to sproc. In that case,
   // we ingore the return status silently.
   if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0))
-    KMessageBox::error( this, export_errorString );
+    KMessageBox::error( _parentMPage->scrollView(), export_errorString );
 
   // Let's hope that this is not all too nasty... killing a
   // KShellProcess from a slot that was called from the KShellProcess

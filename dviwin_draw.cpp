@@ -606,7 +606,7 @@ void dviWindow::draw_page(void)
   kdDebug(4300) <<"draw_page" << endl;
 #endif
 
-  foreGroundPaint.fillRect(currentlyDrawnPage.pixmap->rect(), PS_interface->getBackgroundColor(current_page) );
+  foreGroundPaint.fillRect(currentlyDrawnPixmap.rect(), PS_interface->getBackgroundColor(current_page) );
 
   // Render the PostScript background, if there is one.
   if (_postscript) {

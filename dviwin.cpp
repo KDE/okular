@@ -41,6 +41,7 @@
 #include <kstringhandler.h>
 #include <kstdguiitem.h>
 
+#include "documentWidget.h"
 #include "dviwin.h"
 #include "fontpool.h"
 #include "fontprogress.h"
@@ -57,8 +58,7 @@ QPainter foreGroundPaint; // QPainter used for text
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow(double zoom, KDVIMultiPage *par, QWidget *parent, const char *name )
-  : QWidget( parent, name )
+dviWindow::dviWindow(double zoom, KDVIMultiPage *par)
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow( zoom=" << zoom << ", parent=" << parent << ", name=" << name << " )" << endl;
@@ -68,15 +68,9 @@ dviWindow::dviWindow(double zoom, KDVIMultiPage *par, QWidget *parent, const cha
   shrinkfactor = 3;
   current_page = 0;
 
-  setBackgroundMode(NoBackground);
-  setFocusPolicy(QWidget::StrongFocus);
-  setFocus();
-
   connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
 
-  currentlyDrawnPage.sourceHyperLinkList.reserve(200);
-  currentlyDrawnPage.textLinkList.reserve(250);
-
+  _parentMPage->dviWidget->setPage(&currentlyDrawnPage);
 
   editorCommand         = "";
 
@@ -103,11 +97,9 @@ dviWindow::dviWindow(double zoom, KDVIMultiPage *par, QWidget *parent, const cha
   HTML_href              = NULL;
   _postscript            = 0;
   _showHyperLinks        = true;
-  currentlyDrawnPage.pixmap                 = 0;
   findDialog             = 0;
   findNextAction         = 0;
   findPrevAction         = 0;
-  DVIselection.clear();
   reference              = QString::null;
   searchText             = QString::null;
 
@@ -124,11 +116,6 @@ dviWindow::dviWindow(double zoom, KDVIMultiPage *par, QWidget *parent, const cha
   connect(PS_interface, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   is_current_page_drawn  = 0;
 
-  // Variables used in animation.
-  animationCounter = 0;
-  timerIdent       = 0;
-
-  resize(0,0);
 }
 
 
@@ -138,31 +125,11 @@ dviWindow::~dviWindow()
   kdDebug(4300) << "~dviWindow" << endl;
 #endif
 
-  delete currentlyDrawnPage.pixmap;
   delete PS_interface;
   delete proc;
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
   export_printer = 0;
-}
-
-
-void dviWindow::selectAll(void)
-{
-  QString selectedText("");
-  for(unsigned int i = 0; i < currentlyDrawnPage.textLinkList.size(); i++) {
-    selectedText += currentlyDrawnPage.textLinkList[i].linkText;
-    selectedText += "\n";
-  }
-  DVIselection.set(0, currentlyDrawnPage.textLinkList.size()-1, selectedText);
-  update();
-}
-
-
-void dviWindow::copyText(void)
-{
-  QApplication::clipboard()->setSelectionMode(false);
-  QApplication::clipboard()->setText(DVIselection.selectedText);
 }
 
 
@@ -203,6 +170,132 @@ void dviWindow::setPaper(double width_in_cm, double height_in_cm)
 
 //------ this function calls the dvi interpreter ----------
 
+
+void dviWindow::drawPage(documentPage *page)
+{
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::drawPage(documentPage *) called" << endl;
+#endif
+
+  // Paranoid safety checks
+  if (page == 0) {
+    kdError(4300) << "dviWindow::drawPage(documentPage *) called with argument == 0" << endl; 
+    return;
+  }
+  if (page->getPageNumber() == 0) {
+    kdError(4300) << "dviWindow::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
+    return;
+  }
+  if ( _parentMPage->dviFile == 0 ) {
+    kdError(4300) << "dviWindow::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
+    page->clear();
+    return;
+  }
+  if (page->getPageNumber() > _parentMPage->dviFile->total_pages) {
+    kdError(4300) << "dviWindow::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber() 
+		  << " but the current dviFile has only " << _parentMPage->dviFile->total_pages << " pages." << endl;
+    return;
+  }
+  if ( _parentMPage->dviFile->dvi_Data == 0 ) {
+    kdError(4300) << "dviWindow::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
+    page->clear();
+    return;
+  }
+
+
+  shrinkfactor           = MFResolutions[_parentMPage->font_pool->getMetafontMode()]/(xres*_zoom);
+  current_page           = page->getPageNumber()-1;
+  is_current_page_drawn  = 0;
+
+  if ( currentlyDrawnPixmap.isNull() )
+    return;
+
+
+  if ( !currentlyDrawnPixmap.paintingActive() ) {
+    // Reset colors
+    colorStack.clear();
+    globalColor = Qt::black;
+
+    foreGroundPaint.begin( &(currentlyDrawnPixmap) );
+    QApplication::setOverrideCursor( waitCursor );
+    errorMsg = QString::null;
+    draw_page();
+    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
+    foreGroundPaint.end();
+    QApplication::restoreOverrideCursor();
+    if (errorMsg.isEmpty() != true) {
+      KMessageBox::detailedError(_parentMPage->scrollView(),
+				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
+				      "likely this means that the DVI file is broken.</qt>"),
+				 errorMsg, i18n("DVI File Error"));
+      errorMsg = QString::null;
+      return;
+    }
+    
+    // Tell the user (once) if the DVI file contains source specials
+    // ... wo don't want our great feature to go unnoticed. In
+    // principle, we should use a KMessagebox here, but we want to add
+    // a button "Explain in more detail..." which opens the
+    // Helpcenter. Thus, we practically re-implement the KMessagebox
+    // here. Most of the code is stolen from there.
+    if ((_parentMPage->dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0)) {
+      _parentMPage->dviFile->sourceSpecialMarker = false;
+      // Check if the 'Don't show again' feature was used
+      KConfig *config = kapp->config();
+      KConfigGroupSaver saver( config, "Notification Messages" );
+      bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
+      
+      if (showMsg) {
+	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
+					     _parentMPage->scrollView(), "information", true, true,KStdGuiItem::ok() );
+	
+	QVBox *topcontents = new QVBox (dialog);
+	topcontents->setSpacing(KDialog::spacingHint()*2);
+	topcontents->setMargin(KDialog::marginHint()*2);
+	
+	QWidget *contents = new QWidget(topcontents);
+	QHBoxLayout * lay = new QHBoxLayout(contents);
+	lay->setSpacing(KDialog::spacingHint()*2);
+	
+	lay->addStretch(1);
+	QLabel *label1 = new QLabel( contents);
+	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
+	lay->add( label1 );
+	QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
+					  "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
+				     contents);
+	label2->setMinimumSize(label2->sizeHint());
+	lay->add( label2 );
+	lay->addStretch(1);
+	QSize extraSize = QSize(50,30);
+	QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
+	extraSize = QSize(50,0);
+	dialog->setHelpLinkText(i18n("Explain in more detail..."));
+	dialog->setHelp("inverse-search", "kdvi");
+	dialog->enableLinkedHelp(true);
+	dialog->setMainWidget(topcontents);
+	dialog->enableButtonSeparator(false);
+	dialog->incInitialSize( extraSize );
+	dialog->exec();
+	delete dialog;
+	
+	showMsg = !checkbox->isChecked();
+	if (!showMsg) {
+	  KConfigGroupSaver saver( config, "Notification Messages" );
+	  config->writeEntry( "KDVI-info_on_source_specials", showMsg);
+	}
+	config->sync();
+      }
+    }
+  }
+  
+  emit contents_changed();
+  page->setPixmap(currentlyDrawnPixmap);
+}
+
+
+
+
 void dviWindow::drawPage()
 {
 #ifdef DEBUG_DVIWIN
@@ -214,44 +307,34 @@ void dviWindow::drawPage()
 #endif
 
   shrinkfactor = MFResolutions[_parentMPage->font_pool->getMetafontMode()]/(xres*_zoom);
-  setCursor(arrowCursor);
-
-  // Stop any animation which may be in progress
-  if (timerIdent != 0) {
-    killTimer(timerIdent);
-    timerIdent       = 0;
-    animationCounter = 0;
-  }
-
-  // Remove the mouse selection
-  DVIselection.clear();
 
   // Stop if there is no dvi-file present
   if ( _parentMPage->dviFile == 0 ) {
-    resize(0, 0);
+    currentlyDrawnPage.clear();
     return;
   }
   if ( _parentMPage->dviFile->dvi_Data == 0 ) {
-    resize(0, 0);
+    currentlyDrawnPage.clear();
     return;
   }
-  if ( !currentlyDrawnPage.pixmap )
+
+  if ( currentlyDrawnPixmap.isNull() )
     return;
 
-  if ( !currentlyDrawnPage.pixmap->paintingActive() ) {
+  if ( !currentlyDrawnPixmap.paintingActive() ) {
     // Reset colors
     colorStack.clear();
     globalColor = Qt::black;
 
-    foreGroundPaint.begin( currentlyDrawnPage.pixmap );
+    foreGroundPaint.begin( &(currentlyDrawnPixmap) );
     QApplication::setOverrideCursor( waitCursor );
     errorMsg = QString::null;
     draw_page();
-    foreGroundPaint.drawRect(0, 0, currentlyDrawnPage.pixmap->width(), currentlyDrawnPage.pixmap->height());
+    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
     foreGroundPaint.end();
     QApplication::restoreOverrideCursor();
     if (errorMsg.isEmpty() != true) {
-      KMessageBox::detailedError(this,
+      KMessageBox::detailedError(_parentMPage->scrollView(),
 				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
 				      "likely this means that the DVI file is broken.</qt>"),
 				 errorMsg, i18n("DVI File Error"));
@@ -274,7 +357,7 @@ void dviWindow::drawPage()
 
       if (showMsg) {
 	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-					     this, "information", true, true,KStdGuiItem::ok() );
+					     _parentMPage->scrollView(), "information", true, true,KStdGuiItem::ok().text() );
 
 	QVBox *topcontents = new QVBox (dialog);
 	topcontents->setSpacing(KDialog::spacingHint()*2);
@@ -315,20 +398,9 @@ void dviWindow::drawPage()
       }
     }
   }
-
-  // WORK IN PROGRESS
-
-  /*  repaint();
-  unsigned int  current_page_sav = current_page;
-  qApp->processEvents();
-  if (current_page_sav == current_page)
-    emit contents_changed();
-  */
-
-  repaint();
-  //  update();
+  
   emit contents_changed();
-
+  
 #ifdef PERFORMANCE_MEASUREMENT
   if (performanceFlag == 1) {
     qApp->processEvents(30);
@@ -342,6 +414,8 @@ void dviWindow::drawPage()
     }
   }
 #endif
+  
+  currentlyDrawnPage.setPixmap(currentlyDrawnPixmap);
 }
 
 
@@ -354,7 +428,7 @@ void dviWindow::embedPostScript(void)
   if (!_parentMPage->dviFile)
     return;
 
-  embedPS_progress = new KProgressDialog(this, "embedPSProgressDialog",
+  embedPS_progress = new KProgressDialog(_parentMPage->scrollView(), "embedPSProgressDialog",
 					 i18n("Embedding PostScript Files"), QString::null, true);
   if (!embedPS_progress)
     return;
@@ -386,10 +460,10 @@ void dviWindow::embedPostScript(void)
 
   if (!errorMsg.isEmpty()) {
     errorMsg = "<qt>" + errorMsg + "</qt>";
-    KMessageBox::detailedError(this, "<qt>" + i18n("Not all PostScript files could be embedded into your document.") + "</qt>", errorMsg);
+    KMessageBox::detailedError(_parentMPage->scrollView(), "<qt>" + i18n("Not all PostScript files could be embedded into your document.") + "</qt>", errorMsg);
     errorMsg = QString::null;
   } else
-    KMessageBox::information(this, "<qt>" + i18n("All external PostScript files were embedded into your document. You "
+    KMessageBox::information(_parentMPage->scrollView(), "<qt>" + i18n("All external PostScript files were embedded into your document. You "
 						 "will probably want to save the DVI file now.") + "</qt>",
 			     QString::null, "embeddingDone");
 
@@ -460,23 +534,14 @@ void dviWindow::changePageSize()
   kdDebug(4300) << "dviWindow::changePageSize()" << endl;
 #endif
 
-  if ( currentlyDrawnPage.pixmap && currentlyDrawnPage.pixmap->paintingActive() )
+  if ( currentlyDrawnPixmap.paintingActive() )
     return;
-
-  if (currentlyDrawnPage.pixmap)
-    delete currentlyDrawnPage.pixmap;
 
   unsigned int page_width_in_pixel = (unsigned int)(_zoom*paper_width_in_cm/2.54 * xres + 0.5);
   unsigned int page_height_in_pixel = (unsigned int)(_zoom*paper_height_in_cm/2.54 * xres + 0.5);
 
-  currentlyDrawnPage.pixmap = new QPixmap( page_width_in_pixel, page_height_in_pixel );
-  if (currentlyDrawnPage.pixmap == 0) {
-    kdError(4300) << "dviWindow::changePageSize(), no memory for pixmap, width=" << page_width_in_pixel << ", height=" << page_height_in_pixel << endl;
-    exit(0);
-  }
-  currentlyDrawnPage.pixmap->fill( white );
-
-  resize( page_width_in_pixel, page_height_in_pixel );
+  currentlyDrawnPixmap.resize( page_width_in_pixel, page_height_in_pixel );
+  currentlyDrawnPixmap.fill( white );
 
   PS_interface->setSize( xres*_zoom, page_width_in_pixel, page_height_in_pixel );
   drawPage();
@@ -490,9 +555,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   kdDebug(4300) << "dviWindow::setFile( fname=" << fname << ", ref=" << ref << ", sourceMarker=" << sourceMarker << ")" << endl;
 #endif
 
-  DVIselection.clear();
   reference              = QString::null;
-  setMouseTracking(true);
 
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
@@ -506,16 +569,15 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
     delete _parentMPage->dviFile;
     _parentMPage->dviFile = 0;
 
-    if (currentlyDrawnPage.pixmap)
-      delete currentlyDrawnPage.pixmap;
-    currentlyDrawnPage.pixmap = 0;
-    resize(0, 0);
+    currentlyDrawnPixmap.resize(0,0);
+    currentlyDrawnPage.setPixmap(currentlyDrawnPixmap);
     return true;
   }
 
+
   // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
-    KMessageBox::error( this,
+    KMessageBox::error( _parentMPage->scrollView(),
 			i18n("<qt><strong>File error!</strong> The specified file '%1' does not exist. "
 			     "KDVI already tried to add the ending '.dvi'</qt>").arg(filename),
 			i18n("File Error!"));
@@ -528,7 +590,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   // the multipage.
   QString mimetype( KMimeMagic::self()->findFileType( fname )->mimeType() );
   if (mimetype != "application/x-dvi") {
-    KMessageBox::sorry( this,
+    KMessageBox::sorry( _parentMPage->scrollView(),
 			i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has "
 			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
 			.arg( fname )
@@ -541,7 +603,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   if ((dviFile_new->dvi_Data == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
-      KMessageBox::detailedError(this,
+      KMessageBox::detailedError(_parentMPage->scrollView(),
 				 i18n("<qt>File corruption! KDVI had trouble interpreting your DVI file. Most "
 				      "likely this means that the DVI file is broken.</qt>"),
 				 dviFile_new->errorMsg, i18n("DVI File Error"));
@@ -738,7 +800,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
     QString  refFileName   = QFileInfo(fi1.dir(), ref.mid(i).stripWhiteSpace()).absFilePath();
 
     if (sourceHyperLinkAnchors.isEmpty()) {
-      KMessageBox::sorry(this, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
+      KMessageBox::sorry(_parentMPage->scrollView(), i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
 				    "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
@@ -780,7 +842,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
       emit(request_goto_page(bestMatch->page, (Q_INT32)(bestMatch->vertical_coordinate/shrinkfactor+0.5)));
     else
       if (anchorForRefFileFound == false)
-	KMessageBox::sorry(this, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
+	KMessageBox::sorry(_parentMPage->scrollView(), i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
 				      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
 			   i18n( "Could Not Find Reference" ));
       else
@@ -791,61 +853,6 @@ void dviWindow::all_fonts_loaded(fontPool *)
   reference = QString::null;
 }
 
-//------ handling pages ----------
-
-
-void dviWindow::gotoPage(unsigned int new_page)
-{
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::gotoPage( new_page=" << new_page << " )" << endl;
-#endif
-
-  if (_parentMPage->dviFile == NULL) {
-#ifdef DEBUG_DVIWIN
-    kdDebug(4300) << "gotoPage fails because no DVI file loaded" << endl;
-#endif
-    return;
-  }
-
-  if (new_page<1)
-    new_page = 1;
-  if (new_page > _parentMPage->dviFile->total_pages)
-    new_page = _parentMPage->dviFile->total_pages;
-  //  if ((new_page-1 == current_page) && (is_current_page_drawn != 0)) {
-  if (new_page-1 == current_page)
-    if (is_current_page_drawn != 0) {
-      kdDebug(4300) << "gotoPage fails because page is already drawn, is_current_page_drawn=" << is_current_page_drawn << endl;
-      return;
-    }
-
-  current_page           = new_page-1;
-  is_current_page_drawn  = 0;
-  animationCounter       = 0;
-  drawPage();
-}
-
-
-void dviWindow::gotoPage(int new_page, int vflashOffset)
-{
-  gotoPage(new_page);
-  animationCounter = 0;
-  if (timerIdent != 0)
-    killTimer(timerIdent);
-  flashOffset      = vflashOffset - currentlyDrawnPage.pixmap->height()/100; // Heuristic correction. Looks better.
-  timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
-}
-
-
-void dviWindow::timerEvent( QTimerEvent *e )
-{
-  animationCounter++;
-  if (animationCounter >= 10) {
-    killTimer(e->timerId());
-    timerIdent       = 0;
-    animationCounter = 0;
-  }
-  repaint(0, flashOffset, currentlyDrawnPage.pixmap->width(), currentlyDrawnPage.pixmap->height()/19, false);
-}
 
 
 int dviWindow::totalPages()
@@ -875,30 +882,6 @@ double dviWindow::setZoom(double zoom)
 }
 
 
-void dviWindow::paintEvent(QPaintEvent *e)
-{
-  if (currentlyDrawnPage.pixmap) {
-    bitBlt ( this, e->rect().topLeft(), currentlyDrawnPage.pixmap, e->rect(), CopyROP);
-    QPainter p(this);
-    p.setClipRect(e->rect());
-    if (animationCounter > 0 && animationCounter < 10) {
-      int wdt = currentlyDrawnPage.pixmap->width()/(10-animationCounter);
-      int hgt = currentlyDrawnPage.pixmap->height()/((10-animationCounter)*20);
-      p.setPen(QPen(QColor(150,0,0), 3, DashLine));
-      p.drawRect((currentlyDrawnPage.pixmap->width()-wdt)/2, flashOffset, wdt, hgt);
-    }
-
-    // Mark selected text.
-    if (DVIselection.selectedTextStart != -1)
-      for(unsigned int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < currentlyDrawnPage.textLinkList.size()); i++) {
-	p.setPen( NoPen );
-	p.setBrush( white );
-	p.setRasterOp( Qt::XorROP );
-	p.drawRect(currentlyDrawnPage.textLinkList[i].box);
-      }
-  }
-}
-
 
 void dviWindow::clearStatusBar(void)
 {
@@ -906,277 +889,142 @@ void dviWindow::clearStatusBar(void)
 }
 
 
-void dviWindow::mouseMoveEvent ( QMouseEvent * e )
+
+void dviWindow::handleLocalLink(const QString &linkText)
+{	  
+#ifdef DEBUG_SPECIAL
+  kdDebug(4300) << "hit: local link to " << linkText << endl;
+#endif
+  QString locallink;
+  if (linkText[0] == '#' )
+    locallink = linkText.mid(1); // Drop the '#' at the beginning
+  else
+    locallink = linkText;
+  QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
+  if (it != anchorList.end()) {
+#ifdef DEBUG_SPECIAL
+    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
+    kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
+#endif
+    emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/shrinkfactor)));
+  } else {
+    if (linkText[0] != '#' ) {
+#ifdef DEBUG_SPECIAL
+      kdDebug(4300) << "hit: external link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
+#endif
+      // We could in principle use KIO::Netaccess::run() here, but
+      // it is perhaps not a very good idea to allow a DVI-file to
+      // specify arbitrary commands, such as "rm -rvf /". Using
+      // the kfmclient seems to be MUCH safer.
+      QUrl DVI_Url(_parentMPage->dviFile->filename);
+      QUrl Link_Url(DVI_Url, linkText, TRUE );
+      
+      QStringList args;
+      args << "openURL";
+      args << Link_Url.toString();
+      kapp->kdeinitExec("kfmclient", args);
+    }
+  }
+}
+
+void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent * e)
 {
-  // If no mouse button pressed
-  if ( e->state() == 0 ) {
-    // go through hyperlinks
-    for(unsigned int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
-      if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
-	clearStatusBarTimer.stop();
-	setCursor(pointingHandCursor);
-	QString link = currentlyDrawnPage.hyperLinkList[i].linkText;
-	if ( link.startsWith("#") )
-	  link = link.remove(0,1);
-	emit setStatusBarText( i18n("Link to %1").arg(link) );
-	return;
-      }
+#ifdef DEBUG_SPECIAL
+  kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage.sourceHyperLinkList[i].linkText << endl;
+#endif
+  
+  QString cp = linkText;
+  int max = cp.length();
+  int i;
+  for(i=0; i<max; i++)
+    if (cp[i].isDigit() == false)
+      break;
+  
+  // The macro-package srcltx gives a special like "src:99 test.tex"
+  // while MikTeX gives "src:99test.tex". KDVI tries
+  // to understand both.
+  QFileInfo fi1(_parentMPage->dviFile->filename);
+  QFileInfo fi2(fi1.dir(),cp.mid(i+1));
+  QString TeXfile;
+  if ( fi2.exists() )
+    TeXfile = fi2.absFilePath();
+  else {
+    QFileInfo fi3(fi1.dir(),cp.mid(i));
+    TeXfile = fi3.absFilePath();
+    if ( !fi3.exists() ) {
+      KMessageBox::sorry(_parentMPage->scrollView(), QString("<qt>") +
+			 i18n("The DVI-file refers to the TeX-file "
+			      "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
+			 QString("</qt>"),
+			 i18n( "Could Not Find File" ));
+      return;
     }
-
-    // Cursor not over hyperlink? Then let the cursor be the usual arrow
-    setCursor(arrowCursor);
-
-    // But maybe the cursor hovers over a sourceHyperlink?
-    for(unsigned int i=0; i<currentlyDrawnPage.sourceHyperLinkList.size(); i++) {
-      if (currentlyDrawnPage.sourceHyperLinkList[i].box.contains(e->pos())) {
-	clearStatusBarTimer.stop();
-
-	// The macro-package srcltx gives a special like "src:99 test.tex"
-	// while MikTeX gives "src:99test.tex". KDVI tries
-	// to understand both.
-	QString cp = currentlyDrawnPage.sourceHyperLinkList[i].linkText;
-	int max = cp.length();
-	int i;
-	for(i=0; i<max; i++)
-	  if (cp[i].isDigit() == false)
-	    break;
-
-	emit setStatusBarText( i18n("line %1 of %2").arg(cp.left(i)).arg(cp.mid(i).simplifyWhiteSpace()) );
-	return;
-      }
-    }
-    if (!clearStatusBarTimer.isActive())
-      clearStatusBarTimer.start( 200, TRUE ); // clear the statusbar after 200 msec.
+  }
+  
+  QString command = editorCommand;
+  if (command.isEmpty() == true) {
+    int r = KMessageBox::warningContinueCancel(_parentMPage->scrollView(), QString("<qt>") +
+					       i18n("You have not yet specified an editor for inverse search. "
+						    "Please choose your favorite editor in the "
+						    "<strong>DVI options dialog</strong> "
+						    "which you will find in the <strong>Settings</strong>-menu.") +
+					       QString("</qt>"),
+					       i18n("Need to Specify Editor"),
+					       i18n("Use KDE's Editor Kate for Now"));
+    if (r == KMessageBox::Continue)
+      command = "kate %f";
+    else
+      return;
+  }
+  command = command.replace( QRegExp("%l"), cp.left(i) ).replace( QRegExp("%f"), KShellProcess::quote(TeXfile) );
+  
+#ifdef DEBUG_SPECIAL
+  kdDebug(4300) << "Calling program: " << command << endl;
+#endif
+  
+  // There may still be another program running. Since we don't
+  // want to mix the output of several programs, we will
+  // henceforth dimiss the output of the older programm. "If it
+  // hasn't failed until now, we don't care."
+  if (proc != 0) {
+    qApp->disconnect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
+    qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
+    proc = 0;
+  }
+  
+  // Set up a shell process with the editor command.
+  proc = new KShellProcess();
+  if (proc == 0) {
+    kdError(4300) << "Could not allocate ShellProcess for the editor command." << endl;
     return;
   }
+  qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+  qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+  qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(editorCommand_terminated(KProcess *)));
+  // Merge the editor-specific editor message here.
+  export_errorString = i18n("<qt>The external program<br><br><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
+			    "for inverse search, reported an error. You might wish to look at the <strong>document info "
+			    "dialog</strong> which you will find in the File-Menu for a precise error report. The "
+			    "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
+			    "and a list of common problems.</qt>").arg(command);
+  
+  if (_parentMPage->info)
+    _parentMPage->info->clear(i18n("Starting the editor..."));
+  
 
-  // Right mouse button pressed -> Text copy function
-  if ((e->state() & RightButton) != 0) {
-    if (selectedRectangle.isEmpty()) {
-      firstSelectedPoint = e->pos();
-      selectedRectangle.setRect(e->pos().x(),e->pos().y(),1,1);
-    } else {
-      int lx = e->pos().x() < firstSelectedPoint.x() ? e->pos().x() : firstSelectedPoint.x();
-      int rx = e->pos().x() > firstSelectedPoint.x() ? e->pos().x() : firstSelectedPoint.x();
-      int ty = e->pos().y() < firstSelectedPoint.y() ? e->pos().y() : firstSelectedPoint.y();
-      int by = e->pos().y() > firstSelectedPoint.y() ? e->pos().y() : firstSelectedPoint.y();
-      selectedRectangle.setCoords(lx,ty,rx,by);
-    }
+  int flashOffset      = e->y(); // Heuristic correction. Looks better.
+  emit(flash(flashOffset));
 
-    // Now that we know the rectangle, we have to find out which words
-    // intersect it!
-    Q_INT32 selectedTextStart = -1;
-    Q_INT32 selectedTextEnd   = -1;
-
-    for(unsigned int i=0; i<currentlyDrawnPage.textLinkList.size(); i++)
-      if ( selectedRectangle.intersects(currentlyDrawnPage.textLinkList[i].box) ) {
-	if (selectedTextStart == -1)
-	  selectedTextStart = i;
-	selectedTextEnd = i;
-      }
-
-    QString selectedText("");
-
-
-    if (selectedTextStart != -1)
-      for(unsigned int i = selectedTextStart; (i <= selectedTextEnd)&&(i < currentlyDrawnPage.textLinkList.size()); i++) {
-	selectedText += currentlyDrawnPage.textLinkList[i].linkText;
-	selectedText += "\n";
-      }
-
-    if ((selectedTextStart != DVIselection.selectedTextStart) || (selectedTextEnd != DVIselection.selectedTextEnd)) {
-      if (selectedTextEnd == -1) {
-	DVIselection.clear();
-	update();
-      } else {
-	// Find the rectangle that needs to be updated (reduces
-	// flicker)
-	int a = DVIselection.selectedTextStart;
-	int b = DVIselection.selectedTextEnd+1;
-	int c = selectedTextStart;
-	int d = selectedTextEnd+1;
-
-	int i1 = kMin(a,c);
-	int i2 = kMin(kMax(a,c),kMin(b,d));
-	int i3 = kMax(kMax(a,c),kMin(b,d));
-	int i4 = kMax(b,d);
-
-	QRect box;
-	int i=i1;
-	while(i<i2) {
-	  if (i != -1)
-	    box = box.unite(currentlyDrawnPage.textLinkList[i].box);
-	  i++;
-	}
-
-	for(int i=i3; i<i4; i++)
-	  if (i != -1)
-	    box = box.unite(currentlyDrawnPage.textLinkList[i].box);
-	DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
-	update(box);
-      }
-    }
+  
+  proc->clearArguments();
+  *proc << command;
+  proc->closeStdin();
+  if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
+    kdError(4300) << "Editor failed to start" << endl;
+    return;
   }
 }
 
 
-void dviWindow::mouseReleaseEvent ( QMouseEvent * )
-{
-  unsetCursor();
-  selectedRectangle.setRect(0,0,0,0);
-}
-
-
-void dviWindow::mousePressEvent ( QMouseEvent * e )
-{
-#ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "mouse event" << endl;
-#endif
-
-  // Check if the mouse is pressed on a regular hyperlink
-  if (e->button() == LeftButton) {
-    if (currentlyDrawnPage.hyperLinkList.size() > 0)
-      for(int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
-	if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
-
-#ifdef DEBUG_SPECIAL
-	  kdDebug(4300) << "hit: local link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
-#endif
-	  QString locallink;
-	  if (currentlyDrawnPage.hyperLinkList[i].linkText[0] == '#' )
-	    locallink = currentlyDrawnPage.hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
-	  else
-	    locallink = currentlyDrawnPage.hyperLinkList[i].linkText;
-	  QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
-	  if (it != anchorList.end()) {
-#ifdef DEBUG_SPECIAL
-	    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-	    kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
-#endif
-	    emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/shrinkfactor)));
-	  } else {
-	    if (currentlyDrawnPage.hyperLinkList[i].linkText[0] != '#' ) {
-#ifdef DEBUG_SPECIAL
-	      kdDebug(4300) << "hit: external link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
-#endif
-	      // We could in principle use KIO::Netaccess::run() here, but
-	      // it is perhaps not a very good idea to allow a DVI-file to
-	      // specify arbitrary commands, such as "rm -rvf /". Using
-	      // the kfmclient seems to be MUCH safer.
-	      QUrl DVI_Url(_parentMPage->dviFile->filename);
-	      QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
-
-	      QStringList args;
-	      args << "openURL";
-	      args << Link_Url.toString();
-	      kapp->kdeinitExec("kfmclient", args);
-	    }
-	  }
-	  return;
-	}
-      }
-    setCursor(Qt::SizeAllCursor);
-  }
-
-  // Check if the mouse is pressed on a source-hyperlink
-  if ((e->button() == MidButton) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0))
-    for(unsigned int i=0; i<currentlyDrawnPage.sourceHyperLinkList.size(); i++)
-      if (currentlyDrawnPage.sourceHyperLinkList[i].box.contains(e->pos())) {
-#ifdef DEBUG_SPECIAL
-	kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage.sourceHyperLinkList[i].linkText << endl;
-#endif
-
-	QString cp = currentlyDrawnPage.sourceHyperLinkList[i].linkText;
-	int max = cp.length();
-	int i;
-	for(i=0; i<max; i++)
-	  if (cp[i].isDigit() == false)
-	    break;
-
-	// The macro-package srcltx gives a special like "src:99 test.tex"
-	// while MikTeX gives "src:99test.tex". KDVI tries
-	// to understand both.
-	QFileInfo fi1(_parentMPage->dviFile->filename);
-	QFileInfo fi2(fi1.dir(),cp.mid(i+1));
-	QString TeXfile;
-	if ( fi2.exists() )
-	  TeXfile = fi2.absFilePath();
-	else {
-	  QFileInfo fi3(fi1.dir(),cp.mid(i));
-	  TeXfile = fi3.absFilePath();
-	  if ( !fi3.exists() ) {
-	    KMessageBox::sorry(this, QString("<qt>") +
-			       i18n("The DVI-file refers to the TeX-file "
-				    "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
-			       QString("</qt>"),
-			       i18n( "Could Not Find File" ));
-	    return;
-	  }
-	}
-
-	QString command = editorCommand;
-	if (command.isEmpty() == true) {
-	  int r = KMessageBox::warningContinueCancel(this, QString("<qt>") +
-						     i18n("You have not yet specified an editor for inverse search. "
-							  "Please choose your favorite editor in the "
-							  "<strong>DVI options dialog</strong> "
-							  "which you will find in the <strong>Settings</strong>-menu.") +
-							  QString("</qt>"),
-						     i18n("Need to Specify Editor"),
-		                                     i18n("Use KDE's Editor Kate for Now"));
-	  if (r == KMessageBox::Continue)
-	    command = "kate %f";
-	  else
-	    return;
-	}
-	command = command.replace( QRegExp("%l"), cp.left(i) ).replace( QRegExp("%f"), KShellProcess::quote(TeXfile) );
-
-#ifdef DEBUG_SPECIAL
-	kdDebug(4300) << "Calling program: " << command << endl;
-#endif
-
-	// There may still be another program running. Since we don't
-	// want to mix the output of several programs, we will
-	// henceforth dimiss the output of the older programm. "If it
-	// hasn't failed until now, we don't care."
-	if (proc != 0) {
-	  qApp->disconnect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
-	  qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
-	  proc = 0;
-	}
-
-	// Set up a shell process with the editor command.
-	proc = new KShellProcess();
-	if (proc == 0) {
-	  kdError(4300) << "Could not allocate ShellProcess for the editor command." << endl;
-	  return;
-	}
-	qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
-	qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
-	qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(editorCommand_terminated(KProcess *)));
-	// Merge the editor-specific editor message here.
-	export_errorString = i18n("<qt>The external program<br><br><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
-				  "for inverse search, reported an error. You might wish to look at the <strong>document info "
-				  "dialog</strong> which you will find in the File-Menu for a precise error report. The "
-				  "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
-				  "and a list of common problems.</qt>").arg(command);
-
-	if (_parentMPage->info)
-	  _parentMPage->info->clear(i18n("Starting the editor..."));
-
-	animationCounter = 0;
-	flashOffset      = e->y(); // Heuristic correction. Looks better.
-	timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
-
-
-	proc->clearArguments();
-	*proc << command;
-	proc->closeStdin();
-	if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
-	  kdError(4300) << "Editor failed to start" << endl;
-	  return;
-	}
-      }
-}
 
 #include "dviwin.moc"

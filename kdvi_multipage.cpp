@@ -16,6 +16,7 @@
 #include <qtimer.h>
 
 #include "../config.h"
+#include "documentWidget.h"
 #include "fontpool.h"
 #include "infodialog.h"
 #include "kdvi_multipage.h"
@@ -108,11 +109,20 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   }
 
 
-  window = new dviWindow( 1.0, this, scrollView());
+  dviWidget = new documentWidget(scrollView(), "singlePageWidget" );
+  window = new dviWindow( 1.0, this);
+
+  connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
+  connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *)), window, SLOT(handleSRCLink(const QString &,QMouseEvent *)));
+  connect(dviWidget, SIGNAL(needPixmap(documentPage *)), window, SLOT(drawPage(documentPage *)));
+  connect(window, SIGNAL(flash(int)), dviWidget, SLOT(flash(int)));
+
+
   connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), window, SLOT(all_fonts_loaded(fontPool *)));
   preferencesChanged();
 
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+  connect( dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   connect( window, SIGNAL( documentSpecifiedPageSize(const pageSize&)), this, SIGNAL( documentSpecifiedPageSize(const pageSize&)) );
   docInfoAction    = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
 
@@ -128,8 +138,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window->findNextAction->setEnabled(false);
   window->findPrevAction = KStdAction::findPrev(window, SLOT(findPrevText()), actionCollection(), "findprev");
   window->findPrevAction->setEnabled(false);
-  copyTextAction     = KStdAction::copy(window, SLOT(copyText()), actionCollection(), "copy_text");
-  window->DVIselection.setAction(copyTextAction);
+  copyTextAction     = KStdAction::copy(dviWidget, SLOT(copyText()), actionCollection(), "copy_text");
+  dviWidget->DVIselection.setAction(copyTextAction);
   selectAllAction    = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
   new KAction(i18n("Enable All Warnings && Messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
   exportPSAction     = new KAction(i18n("PostScript..."), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
@@ -144,7 +154,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   setXMLFile("kdvi_part.rc");
 
-  scrollView()->addChild(window);
+  //  scrollView()->addChild(window);
+  scrollView()->addChild(dviWidget);
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
   connect(window, SIGNAL(contents_changed(void)), this, SLOT(contents_of_dviwin_changed(void)) );
 
@@ -247,6 +258,7 @@ KDVIMultiPage::~KDVIMultiPage()
   delete info;
   delete dviFile;
   delete font_pool;
+  delete dviWidget;
 
   if (timer_id != -1)
     killTimer(timer_id);
@@ -305,17 +317,18 @@ QStringList KDVIMultiPage::fileFormats()
 bool KDVIMultiPage::gotoPage(int page)
 {
   document_history.add(page,0);
-  window->gotoPage(page+1);
+  window->currentlyDrawnPage.setPageNumber(page+1);
   return true;
 }
 
 void KDVIMultiPage::goto_page(int page, int y)
 {
   document_history.add(page,y);
-  if (y != 0)
-    window->gotoPage(page+1, y);
-  else
-    window->gotoPage(page+1);
+  if (y != 0) {
+    window->currentlyDrawnPage.setPageNumber(page+1);
+    dviWidget->flash(y);
+  } else
+    window->currentlyDrawnPage.setPageNumber(page+1);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
   emit pageInfo(window->totalPages(), page );
 }
@@ -329,7 +342,7 @@ double KDVIMultiPage::setZoom(double zoom)
     zoom = ZoomLimits::MaxZoom/1000.0;
 
   double z = window->setZoom(zoom);
-  scrollView()->resizeContents(window->width(), window->height());
+  scrollView()->resizeContents(dviWidget->width(), dviWidget->height());
 
   return z;
 }
@@ -357,12 +370,12 @@ bool KDVIMultiPage::preview(QPainter *p, int w, int h)
 {
   QPixmap *map = window->pix();
 
-  if (!map)
+  if ((map == 0) || (map->isNull()))
     return false;
-
+  
   p->scale((double)w/(double)map->width(), (double)h/(double)map->height());
   p->drawPixmap(0, 0, *map);
-
+  
   return true;
 }
 
@@ -383,7 +396,7 @@ void KDVIMultiPage::doInfo(void)
 
 void KDVIMultiPage::doSelectAll(void)
 {
-  window->selectAll();
+  dviWidget->selectAll();
 }
 
 void KDVIMultiPage::doExportPS(void)
@@ -404,7 +417,7 @@ void KDVIMultiPage::doExportText(void)
 void KDVIMultiPage::doSettings()
 {
   if (!options) {
-    options = new OptionDialog(window);
+    options = new OptionDialog(dviWidget);
     connect(options, SIGNAL(preferencesChanged()), this, SLOT(preferencesChanged()));
   }
   options->show();
@@ -552,10 +565,10 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   }
 
   // Show the printer options requestor
-  if (!printer->setup(window, i18n("Print %1").arg(m_file.section('/', -1))))
+  if (!printer->setup(dviWidget, i18n("Print %1").arg(m_file.section('/', -1))))
     return false;
   if (printer->pageList().isEmpty()) {
-    KMessageBox::error( window,
+    KMessageBox::error( dviWidget,
 			i18n("The list of pages you selected was empty.\n"
 			     "Maybe you made an error in selecting the pages, "
 			     "e.g. by giving an invalid range like '7-2'.") );
@@ -650,7 +663,7 @@ void KDVIMultiPage::reload()
     enableActions(r);
 
     // Go to the old page and tell kviewshell where we are.
-    window->gotoPage(currsav);
+    window->currentlyDrawnPage.setPageNumber(currsav);
     // We don't use "currsav" here, because that page may no longer
     // exist. In that case, gotoPage already selected another page.
     emit pageInfo(window->totalPages(), window->curr_page()-1 );
@@ -693,7 +706,7 @@ void KDVIMultiPage::doGoForward(void)
 
 void KDVIMultiPage::doEnableWarnings(void)
 {
-  KMessageBox::information (window, i18n("All messages and warnings will now be shown."));
+  KMessageBox::information (dviWidget, i18n("All messages and warnings will now be shown."));
   KMessageBox::enableAllMessages();
   kapp->config()->reparseConfiguration();
   KTipDialog::setShowOnStart(true);
@@ -701,12 +714,12 @@ void KDVIMultiPage::doEnableWarnings(void)
 
 void KDVIMultiPage::showTip(void)
 {
-    KTipDialog::showTip(window, "kdvi/tips", true);
+    KTipDialog::showTip(dviWidget, "kdvi/tips", true);
 }
 
 void KDVIMultiPage::showTipOnStart(void)
 {
-    KTipDialog::showTip(window, "kdvi/tips");
+    KTipDialog::showTip(dviWidget, "kdvi/tips");
 }
 
 void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )

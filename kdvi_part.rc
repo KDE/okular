@@ -1,7 +1,7 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="KDVI">
 <MenuBar>
- <Menu name="view">
+ <Menu name="view"><text>&amp;View</text>
   <Action name="firstPage"/>
   <Action name="prevPage"/>
   <Action name="goForward"/>

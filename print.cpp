@@ -77,7 +77,7 @@ void Print::setCurrentPage( int _page, int _totalpages )
 
 void Print::setMarkList( const QStrList *_marklist )
 {
-	marklist = _marklist;
+	marklist = (QStrList *)_marklist;
 	if ( !marklist || marklist->isEmpty() )
 		return;
 	printMarked->setEnabled( TRUE );

@@ -9,6 +9,7 @@
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <selection.h>
+#include <selection.moc>
 
 selection::selection(void)
 {

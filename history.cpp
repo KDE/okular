@@ -7,6 +7,7 @@
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <history.h>
+#include <history.moc>
 
 history::history(void)
 {

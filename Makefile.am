@@ -43,11 +43,11 @@ messages: rc.cpp
 
 apps_DATA = kdvi.desktop
 
-partdir = $(kde_datadir)/kdvi
-part_DATA = kdvi_part.rc
+#partdir = $(kde_datadir)/kdvi
+#part_DATA = kdvi_part.rc
 
-rcdir = $(kde_datadir)/kdvi
-rc_DATA = kdvi.rc
+#rcdir = $(kde_datadir)/kdvi
+#rc_DATA = kdvi.rc
 
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@

@@ -25,7 +25,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   // get document info, if not present display blank data and a warning
   const DocumentInfo * info = doc->documentInfo();
   if ( !info ) {
-    layout->addWidget( new QLabel( i18n( "No document opened!" ), page ), 0, 0 );
+    layout->addWidget( new QLabel( i18n( "No document opened." ), page ), 0, 0 );
     return;
   }
 

@@ -262,8 +262,8 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
     // OSD to display pages
     if ( documentChanged && pageSet.count() > 0 && Settings::showOSD() )
         d->messageWindow->display(
-            i18n(" Loaded a one page document.",
-                 " Loaded a %n pages document.",
+            i18n(" Loaded a one-page document.",
+                 " Loaded a %n-page document.",
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
 }
@@ -870,10 +870,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             KPopupMenu menu( this );
             if ( !selectedText.isEmpty() )
             {
-                menu.insertTitle( i18n( "Text ( %n character )", "Text ( %n characters )", selectedText.length() ) );
+                menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
             }
-            menu.insertTitle( i18n( "Image ( %1 by %2 pixels )" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+            menu.insertTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
             menu.insertItem( SmallIcon("image"), i18n( "Copy to Clipboard" ), 2 );
             menu.insertItem( SmallIcon("filesave"), i18n( "Save to File..." ), 3 );
             int choice = menu.exec( e->globalPos() );
@@ -1628,13 +1628,13 @@ void PageView::slotSetMouseNormal()
 void PageView::slotSetMouseZoom()
 {
     d->mouseMode = MouseZoom;
-    d->messageWindow->display( i18n( "Select Zooming Area. Right-Click to zoom out." ), PageViewMessage::Info, -1 );
+    d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), PageViewMessage::Info, -1 );
 }
 
 void PageView::slotSetMouseSelect()
 {
     d->mouseMode = MouseSelect;
-    d->messageWindow->display( i18n( "Draw a rectangle around the text/gfx to copy." ), PageViewMessage::Info, -1 );
+    d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), PageViewMessage::Info, -1 );
 }
 
 void PageView::slotSetMouseDraw()

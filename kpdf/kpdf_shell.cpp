@@ -70,9 +70,7 @@ Shell::Shell()
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
     KMessageBox::error(this, i18n("Unable to find kpdf part."));
-    kapp->quit();
-    // we return here, cause kapp->quit() only means "exit the
-    // next time we enter the event loop...
+    m_part = 0;
     return;
   }
   //FIXME READD: connect( m_part, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
@@ -82,7 +80,7 @@ Shell::Shell()
 
 Shell::~Shell()
 {
-    writeSettings();
+    if(m_part) writeSettings();
 }
 
 void Shell::openURL( const KURL & url )
@@ -154,9 +152,12 @@ void Shell::readProperties(KConfig* config)
   // config file.  this function is automatically called whenever
   // the app is being restored.  read in here whatever you wrote
   // in 'saveProperties'
+  if(m_part)
+  {
     KURL url ( config->readPathEntry( "URL" ) );
     if ( url.isValid() )
         openURL( url );
+  }
 }
 
   void

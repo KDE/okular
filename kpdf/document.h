@@ -45,7 +45,7 @@ public:
 class KPDFDocument : public QObject
 {
     Q_OBJECT
-    
+
 public:
     KPDFDocument();
     ~KPDFDocument();

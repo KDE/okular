@@ -33,12 +33,12 @@ class LinkAction;
 class LinkDest;
 
 class ThumbnailList;
+class PageWidget;
 class KPDFDocument;
 
 namespace KPDF
 {
   class BrowserExtension;
-  class PageWidget;
 
   /**
    * This is a "Part".  It that does all the real work in a KPart

@@ -222,7 +222,27 @@ void KPDFDocument::slotFind( bool /*nextMatch*/, const QString & /*text*/ )
        kdDebug() << "found at " << pg << endl;
        goToPage(pg);
        // xpdf says: can happen that we do not find the text if coalescing is bad OUCH
-       m_outputDev->find(u, len, false);
+       //FIXME Enrico: expanded "m_outputDev(the widget)->find(u, len, false);" above:
+    bool PageWidget::find( Unicode * u, int len, bool next )
+    {return false;  TODO !!restore!! Enrico
+        bool b;
+        if (!next)
+        {
+            // ensure we are searching the whole page
+            m_xMin = 0;
+            m_yMin = 0;
+        }
+
+        b = m_outputdev(a QOut..) -> find(u, len, !next, true, next, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
+        m_xMin = m_xMin / m_zoomFactor;
+        m_yMin = m_yMin / m_zoomFactor;
+        m_xMax = m_xMax / m_zoomFactor;
+        m_yMax = m_yMax / m_zoomFactor;
+        m_selection = b;
+        updateContents();
+        return b;
+    }
+        // expanded ends here
     }
     else
     {

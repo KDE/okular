@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="13">
+<kpartgui name="kpdf_part" version="14">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="save" group="file_save"/>
@@ -31,9 +31,11 @@
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar">
+  <Separator/>
   <Action name="zoom_in"/>
   <Action name="zoomTo" />
   <Action name="zoom_out"/>
+  <Action name="fit_to_width"/>
   <Separator/>
   <Action name="previous_page"/>
   <Action name="next_page"/>

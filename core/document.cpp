@@ -260,7 +260,10 @@ void KPDFDocument::addObserver( DocumentObserver * pObserver )
 
     // if the observer is added while a document is already opened, tell it
     if ( !pages_vector.isEmpty() )
+    {
         pObserver->notifySetup( pages_vector, true );
+        pObserver->notifyViewportChanged( false /*disables smoothMove*/ );
+    }
 }
 
 void KPDFDocument::removeObserver( DocumentObserver * pObserver )

@@ -78,19 +78,11 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
     connect( m_transitionTimer, SIGNAL( timeout() ), this, SLOT( slotTransitionStep() ) );
     m_overlayHideTimer = new QTimer( this );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
-    m_advanceTimer = new QTimer( this );
-    connect( m_advanceTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) );
-
-    // register this observer in document
-    m_document->addObserver( this );
 
     // show widget and take control
     showFullScreen();
-    if ( Settings::slidesShowSummary() )
-        generatePage();
-    else
-        slotNextPage();
 
+    // handle cursor appearance as specified in configuration
     if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::HiddenDelay )
     {
         KCursor::setAutoHideCursor( this, true );
@@ -100,12 +92,23 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
     {
         setCursor( KCursor::blankCursor() );
     }
+
+    // register this observer in document. events will come immediately
+    m_document->addObserver( this );
+
+    // show summary if requested
+    if ( Settings::slidesShowSummary() )
+        generatePage();
 }
 
 PresentationWidget::~PresentationWidget()
 {
     // remove this widget from document observer
     m_document->removeObserver( this );
+
+    // set a new viewport in document if page number differs
+    if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
+        m_document->setViewportPage( m_frameIndex/*, PRESENTATION_ID*/ );
 
     // delete frames
     QValueVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
@@ -162,7 +165,16 @@ void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet
 
 void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 {
-  changePage( m_document->viewport().pageNumber );
+    // discard notifications if displaying the summary
+    if ( m_frameIndex == -1 && Settings::slidesShowSummary() )
+        return;
+
+    // display the current page
+    changePage( m_document->viewport().pageNumber );
+
+    // auto advance to the next page if set
+    if ( Settings::slidesAdvance() )
+        QTimer::singleShot( Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
@@ -326,8 +338,6 @@ void PresentationWidget::changePage( int newPage )
     }
     else
         generatePage();
-
-    m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
 }
 
 void PresentationWidget::generatePage()
@@ -527,9 +537,6 @@ void PresentationWidget::generateOverlay()
 
 void PresentationWidget::slotNextPage()
 {
-    if ( m_advanceTimer->isActive() )
-        m_advanceTimer->stop();
-
     // loop when configured
     if ( m_frameIndex == (int)m_frames.count() - 1 && Settings::slidesLoop() )
         m_frameIndex = -1;
@@ -548,8 +555,9 @@ void PresentationWidget::slotNextPage()
     // we need the setFocus() call here to let KCursor::autoHide() work correctly
     setFocus();
 
+    // auto advance to the next page if set
     if ( Settings::slidesAdvance() )
-        m_advanceTimer->start( Settings::slidesAdvanceTime() * 1000 );
+        QTimer::singleShot( Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::slotPrevPage()

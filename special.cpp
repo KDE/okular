@@ -41,7 +41,7 @@ static QColor parseColorSpecification(QString colorSpec)
 {
   QString specType = KStringHandler::word(colorSpec, (unsigned int)0);
 
-  if (specType.find("rgb") == 0) {
+  if (specType.find("rgb", false) == 0) {
     bool ok;
 
     double r = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
@@ -59,10 +59,70 @@ static QColor parseColorSpecification(QString colorSpec)
     return QColor((int)(r*255.0+0.5), (int)(g*255.0+0.5), (int)(b*255.0+0.5));
   }
 
-  kdDebug() << "Spec not implemented : " << colorSpec << endl;
+  if (specType.find("hsb", false) == 0) {
+    bool ok;
 
-  return Qt::green;
+    double h = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    if ((ok == false) || (h < 0.0) || (h > 1.0))
+      return QColor();
+    
+    double s = KStringHandler::word(colorSpec, (unsigned int)2).toDouble(&ok);
+    if ((ok == false) || (s < 0.0) || (s > 1.0))
+      return QColor();
+    
+    double b = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    if ((ok == false) || (b < 0.0) || (b > 1.0))
+      return QColor();
+
+    return QColor((int)(h*359.0+0.5), (int)(s*255.0+0.5), (int)(b*255.0+0.5), QColor::Hsv);
+  }
+
+  if (specType.find("cmyk", false) == 0) {
+    bool ok;
+
+    double c = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    if ((ok == false) || (c < 0.0) || (c > 1.0))
+      return QColor();
+    
+    double m = KStringHandler::word(colorSpec, (unsigned int)2).toDouble(&ok);
+    if ((ok == false) || (m < 0.0) || (m > 1.0))
+      return QColor();
+    
+    double y = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    if ((ok == false) || (y < 0.0) || (y > 1.0))
+      return QColor();
+    
+    double k = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    if ((ok == false) || (k < 0.0) || (k > 1.0))
+      return QColor();
+
+    // Convert cmyk coordinates to rgb.
+    double r = 1.0 - c - k;
+    if (r < 0.0)
+      r = 0.0;
+    double g = 1.0 - m - k;
+    if (g < 0.0)
+      g = 0.0;
+    double b = 1.0 - y - k;
+    if (b < 0.0)
+      b = 0.0;
+
+    return QColor((int)(r*255.0+0.5), (int)(g*255.0+0.5), (int)(b*255.0+0.5));
+  }
+
+  if (specType.find("gray", false) == 0) {
+    bool ok;
+
+    double g = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    if ((ok == false) || (g < 0.0) || (g > 1.0))
+      return QColor();
+    
+    return QColor((int)(g*255.0+0.5), (int)(g*255.0+0.5), (int)(g*255.0+0.5));
+  }
+
+  return QColor(specType);
 }
+
 
 void dviWindow::color_special(QString cp)
 {
@@ -106,6 +166,21 @@ void dviWindow::color_special(QString cp)
     return;
   }
 }
+
+
+void dviWindow::background_special(QString cp)
+{
+  // The color specials are ignored during rendering, and used only in
+  // the pre-scan phase
+  if (PostScriptOutPutString == NULL) {
+    QColor col = parseColorSpecification(cp.stripWhiteSpace());
+
+    //@@@@ do something with the color!
+
+    return;
+  }
+}
+
 
 void dviWindow::html_anchor_special(QString cp)
 {
@@ -442,6 +517,12 @@ void dviWindow::applicationDoSpecial(char *cp)
   // color specials
   if (special_command.find("color", 0, false) == 0) {
     color_special(special_command.mid(5));
+    return;
+  }
+
+  // color special for background color
+  if (special_command.find("background", 0, false) == 0) {
+    background_special(special_command.mid(10));
     return;
   }
 

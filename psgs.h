@@ -15,6 +15,7 @@ public:
   pageInfo(QString _PostScriptString);
   ~pageInfo();
 
+  QColor    background;
   QString   *PostScriptString;
   KTempFile *Gfx;
 };
@@ -39,13 +40,20 @@ public:
 
   void clear();
 
-  // 
+  // sets the PostScript which is used on a certain page
   void setPostScript(int page, QString PostScript);
+
+  // sets the background color for a certain page
+  void setColor(int page, QColor background_color);
 
   // Returns the graphics of the page, if possible. The functions
   // returns a pointer to a QPixmap, or null. The referred QPixmap
   // should be deleted after use.
   QPixmap  *graphics(int page);
+
+  // Returns the background color for a certain page. If no color was
+  // set, Qt::white is returned.
+  QColor   getBackgroundColor(int page);
 
   QString  *PostScriptHeaderString;
 
@@ -61,7 +69,7 @@ private:
   // slow to render.
   QIntCache<KTempFile> *DiskCache;
 
-  double                resolution;    // in dots per inch
+  double                resolution;   // in dots per inch
   int                   pixel_page_w; // in pixels
   int                   pixel_page_h; // in pixels
 

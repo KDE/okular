@@ -50,6 +50,7 @@ ghostscript_interface::~ghostscript_interface() {
     delete PostScriptHeaderString;
 }
 
+
 void ghostscript_interface::setSize(double dpi, int pxlw, int pxlh) {
   resolution   = dpi;
   pixel_page_w = pxlw;
@@ -61,12 +62,35 @@ void ghostscript_interface::setSize(double dpi, int pxlw, int pxlh) {
 
 
 void ghostscript_interface::setPostScript(int page, QString PostScript) {
-  pageInfo *info = new pageInfo(PostScript);
+  if (pageList->find(page) == 0) {
+    pageInfo *info = new pageInfo(PostScript);
+    // Check if dict is big enough
+    if (pageList->count() > pageList->size() -2)
+      pageList->resize(pageList->size()*2);
+    pageList->insert(page, info);
+  } else 
+    *(pageList->find(page)->PostScriptString) = PostScript;
+}
 
-  // Check if dict is big enough
-  if (pageList->count() > pageList->size() -2)
-    pageList->resize(pageList->size()*2);
-  pageList->insert(page, info);
+
+void ghostscript_interface::setColor(int page, QColor background_color) {
+  if (pageList->find(page) == 0) {
+    pageInfo *info = new pageInfo(QString::null);
+    info->background = background_color;
+    // Check if dict is big enough
+    if (pageList->count() > pageList->size() -2)
+      pageList->resize(pageList->size()*2);
+    pageList->insert(page, info);
+  } else 
+    pageList->find(page)->background = background_color;
+}
+
+
+QColor ghostscript_interface::getBackgroundColor(int page) {
+  if (pageList->find(page) == 0) 
+    return Qt::white;
+  else 
+    return pageList->find(page)->background;
 }
 
 

@@ -1,6 +1,7 @@
-\documentclass[11pt]{article}
+\documentclass{article}
 
 \usepackage{amstext}
+\usepackage{colordvi}
 \usepackage{graphicx}
 \usepackage{times} 
 \usepackage[arrow,matrix,curve,ps]{xy}
@@ -17,13 +18,6 @@
 \title{Support for \TeX\ extensions in \KDVI}
 
 \author{Stefan Kebekus}
-%\address{Stefan Kebekus, Institut für Mathematik, Universität
-%Bayreuth, 95440 Bayreuth, Germany}
-%\curraddr{Research Institute for Mathematical Studies, Kyoto
-%University, Oiwake-cho, Kitashirakawa, Sakyo-ku, Kyoto 606-8502,
-%Japan}
-%\email{kebekus@kde.org}
-%\urladdr{http://btm8x5.mat.uni-bayreuth.de/\~{}kebekus}
 
 \maketitle
 \begin{abstract}
@@ -303,6 +297,31 @@ Here is an external link which points to the \href{http://www.kde.org}{main
 \href{http://www.kde.org}{main
   website of the KDE project}
 \end{verbatim}
+
+\section{Colored text}
+
+The DVI specials for colored text are supported as they are described
+in \cite{dvips}. The following code was used to generate the text below:
+
+\paragraph*{Example} In this document, the following code was used
+\begin{verbatim}
+\usepackage{colordvi}
+
+...
+
+\textGreen This text is green but here we are
+\Red{switching to red, \Blue{nesting blue}, 
+recovering the red} and back to original green.
+\textCyan The text from here on will be cyan 
+unless \Yellow{locally changed to yellow}. Now
+we are back to cyan. \textBlack
+\end{verbatim}
+
+This gave the following output: \textGreen This text is green but here
+we are \Red{switching to red, \Blue{nesting blue}, recovering the red}
+and back to original green.  \textCyan The text from here on will be
+cyan unless \Yellow{locally changed to yellow}. Now we are back to
+cyan.  \textBlack
 
 
 \section{Source text specials}

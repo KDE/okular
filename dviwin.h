@@ -141,6 +141,7 @@ public:
 
   void          special(long nbytes);
   void          printErrorMsgForSpecials(QString msg);
+  void          background_special(QString cp);
   void          color_special(QString cp);
   void          html_href_special(QString cp);
   void          html_anchor_end(void);

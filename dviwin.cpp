@@ -834,7 +834,7 @@ bool dviWindow::setFile( const QString & fname )
   numAnchors = 0;
 
   if (dviFile->page_offset == 0)
-    return;
+    return false;  // let's hope this was correct (Werner)
 
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();

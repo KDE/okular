@@ -1,42 +1,20 @@
 #ifndef __KDVIMULTIPAGE_H
 #define __KDVIMULTIPAGE_H
 
-
 #include <qstringlist.h>
-#include <kparts/part.h>
-#include <kparts/browserextension.h>
-#include <kparts/factory.h>
 
 class KPrinter;
 
 #include "../kviewshell/kmultipage.h"
 #include "dviwin.h"
 
-
-class KDVIMultiPageFactory : public KParts::Factory
-{
-  Q_OBJECT
-
-public:
-  KDVIMultiPageFactory();
-  virtual ~KDVIMultiPageFactory();
-
-  virtual KParts::Part *createPartObject( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & );
-
-  static KInstance *instance();
-
-private:
-
-  static KInstance *s_instance;
-};
-
-
 class KDVIMultiPage : public KMultiPage
 {
   Q_OBJECT
 
 public:
-  KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
+  KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent,
+                const char *name, const QStringList& args = QStringList());
   virtual ~KDVIMultiPage();
 
 // Interface definition start ------------------------------------------------
@@ -56,9 +34,11 @@ public:
   /// multipage implementations that offer read- and write
   /// functionality should re-implement this method.
   virtual bool isModified();
-  
+
   virtual void addConfigDialogs(KConfigDialog* configDialog);
-  
+
+  static KAboutData* createAboutData();
+
 private:
   virtual documentWidget* createDocumentWidget();
   

@@ -14,6 +14,9 @@
 #include <ktip.h>
 #include <qtimer.h>
 
+#include <kparts/part.h>
+#include <kparts/genericfactory.h>
+
 #include "../config.h"
 #include "documentPagePixmap.h"
 #include "documentWidget.h"
@@ -38,49 +41,11 @@ QTime performanceTimer;
 int  performanceFlag = 0;
 #endif
 
+typedef KParts::GenericFactory<KDVIMultiPage> KDVIMultiPageFactory;
+K_EXPORT_COMPONENT_FACTORY(kdvipart, KDVIMultiPageFactory);
 
-extern "C"
-{
-  void *init_kdvipart()
-  {
-    KGlobal::locale()->insertCatalogue("kviewshell");
-    return new KDVIMultiPageFactory;
-  }
-}
-
-
-KInstance *KDVIMultiPageFactory::s_instance = 0L;
-
-
-KDVIMultiPageFactory::KDVIMultiPageFactory()
-{
-}
-
-
-KDVIMultiPageFactory::~KDVIMultiPageFactory()
-{
-    delete s_instance;
-
-    s_instance = 0;
-}
-
-
-KParts::Part *KDVIMultiPageFactory::createPartObject( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & )
-{
-  KParts::Part *obj = new KDVIMultiPage(parentWidget, widgetName, parent, name);
-  return obj;
-}
-
-
-KInstance *KDVIMultiPageFactory::instance()
-{
-  if (!s_instance)
-    s_instance = new KInstance("kdvi");
-  return s_instance;
-}
-
-
-KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name)
+KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent,
+                             const char *name, const QStringList& args)
   : KMultiPage(parentWidget, widgetName, parent, name), DVIRenderer(parentWidget)
 {
 #ifdef PERFORMANCE_MEASUREMENT
@@ -118,6 +83,36 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   QTimer::singleShot(0,this,SLOT(showTipOnStart()));
 }
 
+KAboutData* KDVIMultiPage::createAboutData()
+{
+  KAboutData* about = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.2",
+                      I18N_NOOP("A previewer for Device Independent files (DVI files) produced by the TeX typesetting system."),
+                     KAboutData::License_GPL,
+                     "Markku Hinhala, Stephan Kebekus",
+                     I18N_NOOP("Displays Device Independent (DVI) files."
+                         "Based on original code from kdvi version 0.43 and xdvik."));
+
+  about->addAuthor ("Stefan Kebekus",
+                    I18N_NOOP("Current Maintainer.\n"
+                              "Major rewrite of version 0.4.3.\n"
+                              "Implementation of hyperlinks. "),
+                    "kebekus@kde.org",
+                    "http://www.mi.uni-koeln.de/~kebekus");
+
+  about->addAuthor ("Markku Hinhala",
+                    I18N_NOOP("Author of kdvi 0.4.3"));
+
+  about->addAuthor ("Nicolai Langfeldt",
+                    I18N_NOOP("Maintainer of xdvik"));
+
+  about->addAuthor ("Paul Vojta",
+                    I18N_NOOP("Author of xdvi"));
+
+  about->addCredit ("Philipp Lehmann",
+                    I18N_NOOP("testing and bug reporting."));
+
+  return about;
+}
 
 void KDVIMultiPage::slotEmbedPostScript(void)
 {

@@ -16,6 +16,7 @@
 #include "pixmapwidget.h"
 #include "document.h"
 #include "page.h"
+#include "settings.h"
 
 // TODO : REMOVE "#ifndef NDEBUG" stuff before merging to HEAD! (added 20041024)
 
@@ -227,7 +228,7 @@ void PageWidget::paintEvent( QPaintEvent * e )
     if ( !pageClip.isValid() || pageClip.width() < 1 || pageClip.height() < 1 )
         return;
 
-    // kdDebug() << "repaint on page " << pageNumber() << " on rect: " << pageClip << endl;
+    // kdDebug() << "repaint on page " << pageNumber() << " on rect: " << clip << endl;
 
     QPainter p( this );
 
@@ -254,10 +255,12 @@ void PageWidget::paintEvent( QPaintEvent * e )
     // draw page (inside pageClip rectangle)
     p.translate( m_marginLeft, m_marginTop );
     pageClip.moveBy( -m_marginLeft, -m_marginTop );
-#if 0
-    // TODO: accessibility settings
-    p.setRasterOp( Qt::NotCopyROP );
-#endif
+
+    // accessibility setting
+    if ( Settings::renderMode() == Settings::EnumRenderMode::Inverted )
+        p.setRasterOp( Qt::NotCopyROP );
+
+    // draw the pixmap
     m_page->drawPixmap( PAGEVIEW_ID, &p, pageClip, m_pixmapWidth, m_pixmapHeight );
 #if 0
     // TODO: overlays <ONLY FOR FUN> :-)

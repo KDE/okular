@@ -233,10 +233,16 @@ namespace KPDF
     {
         switch ( e->key() ) {
         case Key_Up:
-            scrollUp();
+	    if ( atTop() )
+		emit ReadUp();
+	    else
+                scrollUp();
             break;
         case Key_Down:
-            scrollDown();
+	    if ( atBottom() )
+		emit ReadDown();
+	    else
+                scrollDown();
             break;
         case Key_Left:
             scrollLeft();

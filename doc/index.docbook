@@ -65,7 +65,7 @@
 		</para>
 		<para>
 			You can go to the first page of the document using 
-			<keycombo action="simul">&Ctrl;<keycap>Space</keycap></keycombo> or
+			<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
 			using 
 			<menuchoice>
 				<guimenu>Go</guimenu>
@@ -426,7 +426,7 @@
 					<term>
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;	<keycap>End</keycap></keycombo></shortcut>
-							<guimenu>View</guimenu>
+							<guimenu>Go</guimenu>
 							<guimenuitem>Last Page</guimenuitem>
 						</menuchoice>
 					</term>

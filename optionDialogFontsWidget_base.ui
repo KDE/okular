@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>259</width>
-            <height>241</height>
+            <height>299</height>
         </rect>
     </property>
     <property name="caption">
@@ -119,14 +119,6 @@
                     </property>
                 </widget>
             </vbox>
-        </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>fontEnlargementCheckBox</cstring>
-            </property>
-            <property name="text">
-                <string>Enlarge fonts for better readability</string>
-            </property>
         </widget>
         <spacer>
             <property name="name">

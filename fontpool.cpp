@@ -45,7 +45,6 @@ fontPool::fontPool(void)
 
   proc                     = 0;
   makepk                   = true; // By default, fonts are generated
-  enlargeFonts             = true; // By default, fonts are enlarged
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
   MetafontMode             = DefaultMFMode;
   fontList.setAutoDelete(TRUE);
@@ -124,7 +123,7 @@ fontPool::~fontPool(void)
 }
 
 
-void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _enlargeFonts, bool _useType1Fonts, bool _useFontHints )
+void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _useType1Fonts, bool _useFontHints )
 {
   if (_metafontMode >= NumberOfMFModes) {
     kdError(4300) << "fontPool::setMetafontMode called with argument " << _metafontMode 
@@ -160,10 +159,8 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _en
   }
   
   // Check if glyphs need to be cleared
-  if ((_enlargeFonts != enlargeFonts) || (_useFontHints != useFontHints)) {
+  if (_useFontHints != useFontHints) {
     double displayResolution = displayResolution_in_dpi;
-    if (_enlargeFonts == true)
-      displayResolution *= 1.1;
     TeXFontDefinition *fontp = fontList.first();
     while(fontp != 0 ) {
       fontp->setDisplayResolution(displayResolution * fontp->enlargement);
@@ -173,7 +170,6 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _en
 
   MetafontMode = _metafontMode;
   makepk = _makePK;
-  enlargeFonts = _enlargeFonts;
   useType1Fonts = _useType1Fonts;
   useFontHints = _useFontHints;
   
@@ -204,8 +200,6 @@ class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, 
   // If font doesn't exist yet, we have to generate a new font.
   
   double displayResolution = displayResolution_in_dpi;
-  if (enlargeFonts == true)
-    displayResolution *= 1.1;
 
   fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
   if (fontp == 0) {
@@ -597,7 +591,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	    config->setGroup("kdvi");
 	    config->writeEntry( "MakePK", true );
 	    config->sync();
-	    setParameters( MetafontMode, true, enlargeFonts, useType1Fonts, useFontHints ); // That will start kpsewhich again.
+	    setParameters( MetafontMode, true, useType1Fonts, useFontHints ); // That will start kpsewhich again.
 	    return;
 	  } 
 	} else
@@ -618,8 +612,6 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 #endif
   displayResolution_in_dpi = _displayResolution_in_dpi;
   double displayResolution = displayResolution_in_dpi;
-  if (enlargeFonts == true)
-    displayResolution *= 1.1;
 
   TeXFontDefinition *fontp = fontList.first();
   while(fontp != 0 ) {

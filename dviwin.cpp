@@ -553,7 +553,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
       command_pointer = end_pointer = 0;
     
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
-    currinf.fonttable = dviFile->tn_table;
+    currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
     draw_part(65536.0*fontPixelPerDVIunit(), false);
     

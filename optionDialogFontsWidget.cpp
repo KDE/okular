@@ -57,7 +57,6 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
 #endif
 
   fontGenerationCheckBox->setChecked( config->readBoolEntry( "MakePK", true ) );
-  fontEnlargementCheckBox->setChecked( config->readBoolEntry( "enlarge_for_readability", true ) );
 }
 
 optionDialogFontsWidget::~optionDialogFontsWidget()
@@ -75,7 +74,6 @@ void optionDialogFontsWidget::apply(void)
 #endif
   config->writeEntry( "MetafontMode", metafontMode->currentItem() );
   config->writeEntry( "MakePK", fontGenerationCheckBox->isChecked() );
-  config->writeEntry( "enlarge_for_readability", fontEnlargementCheckBox->isChecked() );
   config->sync();
 }
 

@@ -96,7 +96,7 @@ struct drawinf {
   TeXFontDefinition          *fontp;
   set_char_proc	              set_char_p;
 
-  QIntDict<TeXFontDefinition> fonttable;
+  QIntDict<TeXFontDefinition> *fonttable;
   TeXFontDefinition	      *_virtual;
 };
 

@@ -350,8 +350,6 @@ void KDVIMultiPage::preferencesChanged()
     config->writeEntry( "MetafontMode", mfmode = DefaultMFMode );
 
   bool makepk = config->readBoolEntry( "MakePK", true );
-  bool enlargeFonts = config->readBoolEntry( "enlarge_for_readability", true );
-
   bool showPS = config->readBoolEntry( "ShowPS", true );
   if (showPS != window->showPS())
     window->setShowPS(showPS);
@@ -363,7 +361,7 @@ void KDVIMultiPage::preferencesChanged()
   bool useType1Fonts = config->readBoolEntry( "UseType1Fonts", true );
   bool useFontHints = config->readBoolEntry( "UseFontHints", true );
 
-  window->font_pool->setParameters(mfmode, makepk, enlargeFonts, useType1Fonts, useFontHints);
+  window->font_pool->setParameters(mfmode, makepk, useType1Fonts, useFontHints);
 
   window->setEditorCommand( config->readEntry( "EditorCommand", "" ));
 }

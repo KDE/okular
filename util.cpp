@@ -71,7 +71,7 @@ void oops(QString message)
   kdError() << i18n("Fatal Error! ") << message << endl;
 
   KMessageBox::error( NULL,
-		      i18n("Fatal error!\n\n") +
+		      i18n("Fatal error.\n\n") +
 		      message +
 		      i18n("\n\n\
 This probably means that either you found a bug in KDVI,\n\

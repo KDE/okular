@@ -4,10 +4,9 @@ INCLUDES = -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo -I$(top_builddir)/kpdf $(all_in
 
 METASOURCES = AUTO
 
-messages: 
-	$(EXTRACTRC) `find . -name "*.rc" -o -name "*.ui"` > rc.cpp
+messages: rc.cpp
+	$(EXTRACTRC) `find . -name "*.rc" -o -name "*.ui"` >> rc.cpp
 	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.cc" -o -name "*.h"` -o $(podir)/kpdf.pot
-	rm -f rc.cpp
 
 KDE_ICON = kpdf
 

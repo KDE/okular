@@ -1,4 +1,4 @@
-#include "kpdf.h"
+#include "kpdf_shell.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 
   // see if we are starting with session management
   if (app.isRestored())
-    RESTORE(KPDF)
+    RESTORE(KPDF::Shell)
   else
   {
     // no session.. just start up normally
@@ -33,14 +33,14 @@ int main(int argc, char** argv)
 
     if (args->count() == 0)
     {
-      KPDF* widget = new KPDF;
+      KPDF::Shell* widget = new KPDF::Shell;
       widget->show();
     }
     else
     {
       for (int i = 0; i < args->count(); ++i)
       {
-        KPDF* widget = new KPDF;
+        KPDF::Shell* widget = new KPDF::Shell;
         widget->show();
         widget->load(args->url(i));
       }

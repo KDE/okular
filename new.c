@@ -28,7 +28,7 @@ init_pix(warn)
 		/* allocate 4 color planes for 16 colors (for GXor drawing) */
 		if (!XAllocColorCells(DISP, DefaultColormapOfScreen(SCRN),
 					  False, plane_masks, 4, &pixel, 1))
-		    _copy = warn = True;
+                   _copy = True;
 
 	    /* get foreground and background RGB values for interpolating */
 	    fc.pixel = _fore_Pixel;
@@ -72,24 +72,15 @@ init_pix(warn)
 	    if (mane.win != (Window) 0)
 		XSetWindowBackground(DISP, mane.win, palette[0]);
 
-#define	MakeGC(fcn, fg, bg)	(values.function = fcn, values.foreground=fg,\
-		values.background=bg,\
-		XCreateGC(DISP, RootWindowOfScreen(SCRN),\
-			GCFunction|GCForeground|GCBackground, &values))
-
-	    foreGC = ruleGC = MakeGC(_copy ? GXcopy : GXor,
-		_fore_Pixel, _back_Pixel);
-	    foreGC2 = NULL;
-
+           /* set the GC for inserting characters into the main bitmap
+            * so that already drawn characters will not be overdrawn        */
+           values.function = GXand; 
+           values.foreground = _fore_Pixel;
+           values.background = _back_Pixel;
+           foreGC = ruleGC =
+             XCreateGC(DISP, RootWindowOfScreen(SCRN),GCFunction|GCForeground|GCBackground, &values);
 	    colors_allocated = True;
-#define CopyByDefault() (_copy == 2)
-	    /* warn only if copy was not explicitly requested */
-	    if (CopyByDefault() && warn)
-		Puts("Note:  overstrike characters may be incorrect.");
 	}
-#undef	MakeGC
-
-	if (mane.shrinkfactor == 1) return;
 
 	if (shrink_allocated_for < mane.shrinkfactor) {
 	    if (pixeltbl != NULL) free((char *) pixeltbl);

@@ -448,9 +448,6 @@ EXTERN	unsigned short	current_timestamp INIT(0);
 	Boolean	expert;
 #endif
 	char	*mg_arg[5];
-#ifdef	GREY
-	Boolean	_use_grey;
-#endif
 
 /* As a convenience, we define the field names without leading underscores
  * to point to the field of the above record.  Here are the global ones;
@@ -511,7 +508,6 @@ EXTERN	Display	*DISP;
 EXTERN	Screen	*SCRN;
 EXTERN	GC	ruleGC;
 EXTERN	GC	foreGC, highGC;
-EXTERN	GC	foreGC2;
 
 EXTERN	Cursor	redraw_cursor, ready_cursor;
 

@@ -128,7 +128,6 @@ static	void	draw_part();
 #ifdef KDVI
 void qtPutRule(int x, int y, int w, int h);
 void qtPutBorder(int x, int y, int w, int h);
-void qtPutBitmap( int x, int y, int w, int h, unsigned char *bits );
 void qt_processEvents();
 #endif
 
@@ -160,39 +159,7 @@ put_rule(x, y, w, h)
 	}
 }
 
-static	void
-put_bitmap(bitmap, x, y)
-	register struct bitmap *bitmap;
-	register int x, y;
-{
 
-	if (debug & DBG_BITMAP)
-		Printf("X(%d,%d)\n", x - currwin.base_x, y - currwin.base_y);
-	if (x < max_x && x + (int) bitmap->w >= min_x &&
-	    y < max_y && y + (int) bitmap->h >= min_y) {
-#ifndef KDVI
-		if (--event_counter == 0) read_events(False);
-		image->width = bitmap->w;
-		image->height = bitmap->h;
-		image->data = bitmap->bits;
-		image->bytes_per_line = bitmap->bytes_wide;
-		XPutImage(DISP, currwin.win, foreGC, image,
-			0, 0,
-			x - currwin.base_x, y - currwin.base_y,
-			bitmap->w, bitmap->h);
-		if (foreGC2)
-		    XPutImage(DISP, currwin.win, foreGC2, image,
-			0, 0,
-			x - currwin.base_x, y - currwin.base_y,
-			bitmap->w, bitmap->h);
-#else
-	qtPutBitmap( x - currwin.base_x, y - currwin.base_y,
-		bitmap->bytes_wide*8, bitmap->h, bitmap->bits );
-#endif /* KDVI */
-	}
-}
-
-#ifdef	GREY
 static	void
 put_image(img, x, y)
 	register XImage *img;
@@ -211,7 +178,7 @@ put_image(img, x, y)
 		    (unsigned int) img->width, (unsigned int) img->height);
 	}
 }
-#endif	/* GREY */
+
 
 void
 put_border(x, y, width, height, ourGC)
@@ -469,84 +436,6 @@ sample(bits, bytes_wide, bit_skip, w, h)
 }
 
 static	void
-shrink_glyph(g)
-	register struct glyph *g;
-{
-	int		shrunk_bytes_wide, shrunk_height;
-	int		rows_left, rows, init_cols;
-	int		cols_left;
-	register int	cols;
-	BMUNIT		*old_ptr, *new_ptr;
-	register BMUNIT	m, *cp;
-	int	min_sample = shrink_factor * shrink_factor * density / 100;
-
-	/* These machinations ensure that the character is shrunk according to
-	   its hot point, rather than its upper left-hand corner. */
-	g->x2 = g->x / shrink_factor;
-	init_cols = g->x - g->x2 * shrink_factor;
-	if (init_cols <= 0) init_cols += shrink_factor;
-	else ++g->x2;
-	g->bitmap2.w = g->x2 + ROUNDUP((int) g->bitmap.w - g->x, shrink_factor);
-	/* include row zero with the positively numbered rows */
-	cols = g->y + 1; /* spare register variable */
-	g->y2 = cols / shrink_factor;
-	rows = cols - g->y2 * shrink_factor;
-	if (rows <= 0) {
-	    rows += shrink_factor;
-	    --g->y2;
-	}
-	g->bitmap2.h = shrunk_height = g->y2 +
-	    ROUNDUP((int) g->bitmap.h - cols, shrink_factor) + 1;
-	alloc_bitmap(&g->bitmap2);
-	old_ptr = (BMUNIT *) g->bitmap.bits;
-	new_ptr = (BMUNIT *) g->bitmap2.bits;
-	shrunk_bytes_wide = g->bitmap2.bytes_wide;
-	rows_left = g->bitmap.h;
-	bzero((char *) new_ptr, shrunk_bytes_wide * shrunk_height);
-	while (rows_left) {
-	    if (rows > rows_left) rows = rows_left;
-	    cols_left = g->bitmap.w;
-#ifndef	MSBITFIRST
-	    m = (1 << 0);
-#else
-	    m = ((BMUNIT) 1 << (BITS_PER_BMUNIT-1));
-#endif
-	    cp = new_ptr;
-	    cols = init_cols;
-	    while (cols_left) {
-		if (cols > cols_left) cols = cols_left;
-		if (sample(old_ptr, g->bitmap.bytes_wide,
-			(int) g->bitmap.w - cols_left, cols, rows)
-			>= min_sample)
-		    *cp |= m;
-#ifndef	MSBITFIRST
-		if (m == ((BMUNIT)1 << (BITS_PER_BMUNIT-1))) {
-		    m = (1 << 0);
-		    ++cp;
-		}
-		else m <<= 1;
-#else
-		if (m == (1 << 0)) {
-		    m = ((BMUNIT) 1 << (BITS_PER_BMUNIT-1));
-		    ++cp;
-		}
-		else m >>= 1;
-#endif
-		cols_left -= cols;
-		cols = shrink_factor;
-	    }
-	    *((char **) &new_ptr) += shrunk_bytes_wide;
-	    *((char **) &old_ptr) += rows * g->bitmap.bytes_wide;
-	    rows_left -= rows;
-	    rows = shrink_factor;
-	}
-	g->y2 = g->y / shrink_factor;
-	if (debug & DBG_BITMAP)
-	    print_bitmap(&g->bitmap2);
-}
-
-#ifdef	GREY
-static	void
 shrink_glyph_grey(g)
 	register struct glyph *g;
 {
@@ -618,7 +507,7 @@ shrink_glyph_grey(g)
 
 	g->y2 = g->y / shrink_factor;
 }
-#endif	/* GREY */
+
 
 /*
  *	Find font #n.
@@ -709,28 +598,9 @@ set_char(cmd, ch)
 	if (currinf.dir < 0) DVI_H -= g->dvi_adv;
 	if (scan_frame == NULL) {
 #endif
-	    if (shrink_factor == 1)
-		put_bitmap(&g->bitmap, PXL_H - g->x, PXL_V - g->y);
-	    else {
-#ifdef	GREY
-		if (_use_grey) {
-		    if (g->pixmap2 == NULL) {
-			shrink_glyph_grey(g);
-		    }
-		    put_image(g->image2, PXL_H - g->x2, PXL_V - g->y2);
-		} else {
-		    if (g->bitmap2.bits == NULL) {
-			shrink_glyph(g);
-		    }
-		    put_bitmap(&g->bitmap2, PXL_H - g->x2, PXL_V - g->y2);
-		}
-#else
-		if (g->bitmap2.bits == NULL) {
-		    shrink_glyph(g);
-		}
-		put_bitmap(&g->bitmap2, PXL_H - g->x2, PXL_V - g->y2);
-#endif
-	    }
+         if (g->pixmap2 == NULL)
+           shrink_glyph_grey(g);
+         put_image(g->image2, PXL_H - g->x2, PXL_V - g->y2);
 #ifndef	TEXXET
 	return g->dvi_adv;
 #else

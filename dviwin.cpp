@@ -45,7 +45,7 @@ extern	struct WindowRec mane, alt, currwin;
 	Pixel	_back_Pixel;
 	Boolean	_postscript;
 	Boolean	useGS;
-	Boolean	_use_grey;
+
 
 extern char *           prog;
 extern char *	        dvi_name;
@@ -99,12 +99,6 @@ extern "C" void qtPutBorder(int x, int y, int w, int h)
 	dcp->drawRect( x, y, w, h );
 }
 
-extern "C" void qtPutBitmap( int x, int y, int w, int h, uchar *bits )
-{
-	QBitmap bm( w, h, bits, TRUE );
-	dcp->drawPixmap( x, y, bm );
-}
-
 extern "C" void qt_processEvents()
 {
 	qApp->processEvents();
@@ -146,7 +140,6 @@ dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr,
 	_back_Pixel = WhitePixelOfScreen(SCRN);
 	useGS = 1;
 	_postscript = 0;
-	_use_grey = 1;
 	pixmap = NULL;
 	init_pix(FALSE);
 }

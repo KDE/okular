@@ -22,9 +22,8 @@ public:
   /// returns the list of supported file formats
   virtual QStringList fileFormats();
   
-  /// opens a file
-  virtual bool openFile();
-  
+  virtual void setFile(bool r);
+
   virtual bool print(const QStringList &pages, int current);
   
   /// KDVI offers read- and write functionality must re-implement this

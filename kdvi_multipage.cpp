@@ -192,24 +192,10 @@ KDVIMultiPage::~KDVIMultiPage()
 }
 
 
-bool KDVIMultiPage::openFile()
+void KDVIMultiPage::setFile(bool r)
 {
-  document_history.clear();
-  emit setStatusBarText(i18n("Loading file %1").arg(m_file));
-
-  bool r = DVIRenderer.setFile(m_file);
   setEmbedPostScriptAction();
-  if (!r)
-    emit setStatusBarText(QString::null);
-
-  generateDocumentWidgets();
-  emit numberOfPages(DVIRenderer.totalPages());
   enableActions(r);
-
-  QString reference = url().ref();
-  if (!reference.isEmpty())
-    gotoPage(DVIRenderer.parseReference(reference));
-  return r;
 }
 
 

@@ -9,10 +9,10 @@
 #include <kparts/browserextension.h>
 #include <kparts/factory.h>
 
-
+class KPrinter;
+class OptionDialog;
 class QLabel;
 class QPainter;
-class OptionDialog;
 
 
 #include <kmultipage.h>
@@ -118,6 +118,7 @@ private:
 
   dviWindow    *window;
   OptionDialog *options;
+  KPrinter     *printer;
 
   /** Pointers to several actions which are disabled if no file is
       loaded. */

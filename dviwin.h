@@ -23,9 +23,11 @@
 #include "psgs.h"
 #include "dvi_init.h"
 
-class infoDialog;
-class KShellProcess;
 class fontProgressDialog;
+class infoDialog;
+class KPrinter;
+class KShellProcess;
+
 
 // max. number of hyperlinks per page. This should later be replaced by
 // a dynamic allocation scheme.
@@ -53,7 +55,7 @@ public:
   class dvifile *dviFile;
 
   void          showInfo();
-  void          exportPS();
+  void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
   void          changePageSize();
   int		totalPages();
@@ -133,9 +135,6 @@ private:
  int               animationCounter;
  int               flashOffset;
 
- // Used to run commands like "dvips" or "dvipdfm"
- KShellProcess     *proc;
-
  // These fields contain information about the geometry of the page.
  unsigned int	   unshrunk_paper_w; // basedpi * width(in inch)
  unsigned int	   unshrunk_paper_h; // basedpi * height(in inch)
@@ -182,8 +181,11 @@ private:
  char              is_current_page_drawn;
  double            _zoom;
 
- // Used to show the progress of dvips and friends.
+ // Used to run and to show the progress of dvips and friends.
  fontProgressDialog *progress;
+ KShellProcess      *proc;
+ KPrinter           *export_printer;
+ QString             export_fileName;
 };
 
 

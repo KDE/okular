@@ -26,6 +26,7 @@
 #include <kfiledialog.h>
 #include <kio/job.h>
 #include <klocale.h>
+#include <kprinter.h>
 #include <kprocess.h>
 
 #include "dviwin.h"
@@ -134,6 +135,8 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   // Storage used for dvips and friends.
   proc                   = 0;
   progress               = 0;
+  export_printer         = 0;
+  export_fileName        = "";
 
   // Calculate the horizontal resolution of the display device.  @@@
   // We assume implicitly that the horizontal and vertical resolutions
@@ -178,6 +181,10 @@ dviWindow::~dviWindow()
 
   if (dviFile)
     delete dviFile;
+
+  // Don't delete the export printer. This is owned by the
+  // kdvi_multipage.
+  export_printer = 0;
 }
 
 void dviWindow::showInfo(void)
@@ -261,7 +268,7 @@ void dviWindow::exportPDF(void)
 }
 
 
-void dviWindow::exportPS(void)
+void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 {
   // Should not happen since the progressDialog is modal... but who
   // knows?
@@ -274,17 +281,23 @@ void dviWindow::exportPS(void)
   if (dviFile == NULL)
     return;
 
-  QString fileName = KFileDialog::getSaveFileName(QString::null, "*.ps|PostScript (*.ps)", this, i18n("Export File As"));
-  if (fileName.isEmpty())
-    return;
-  QFileInfo finfo(fileName);
-  if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
-				       i18n("Overwrite file"));
-    if (r == KMessageBox::No)
+  QString fileName;
+  if (fname.isEmpty()) {
+    fileName = KFileDialog::getSaveFileName(QString::null, "*.ps|PostScript (*.ps)", this, i18n("Export File As"));
+    if (fileName.isEmpty())
       return;
-  }
-  
+    QFileInfo finfo(fileName);
+    if (finfo.exists()) {
+      int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
+					 i18n("Overwrite file"));
+      if (r == KMessageBox::No)
+	return;
+    }
+  } else
+    fileName = fname;
+  export_fileName = fileName;
+  export_printer  = printer;
+
   // Initialize the progress dialog
   progress = new fontProgressDialog( QString::null, 
 				     i18n("Using dvips to export the file to PostScript"), 
@@ -316,8 +329,10 @@ void dviWindow::exportPS(void)
     info->clear(QString(i18n("Export: %1 to PostScript")).arg(KShellProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
-  finfo.setFile(dviFile->filename);
+  QFileInfo finfo(dviFile->filename);
   *proc << QString("cd %1; dvips").arg(KShellProcess::quote(finfo.dirPath(true)));
+  if (options.isEmpty() == false)
+    *proc << options;
   *proc << QString("%1").arg(KShellProcess::quote(dviFile->filename));
   *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
   proc->closeStdin();
@@ -341,6 +356,9 @@ void dviWindow::abortExternalProgramm(void)
     delete progress;
     progress = 0;
   }
+
+  export_printer  = 0;
+  export_fileName = "";
 }
 
 void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
@@ -363,7 +381,13 @@ void dviWindow::dvips_terminated(KProcess *)
 			i18n("The external program used to export the DVI-file\n"
 			     "reported an error. You might wish to look at the\n"
 			     "document info dialog for a precise error report.") );
-   abortExternalProgramm();
+
+  // If a printer is defined, print and delete the output file.
+  if (export_printer != 0)
+    export_printer->printFiles( QStringList(export_fileName), true );
+
+  // Kill and delete the remaining process, reset the printer, etc.
+  abortExternalProgramm();
 }
 
 

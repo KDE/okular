@@ -6,11 +6,12 @@
 #include <kbugreport.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
 #include <kglobal.h>
+#include <klocale.h>
 #include <kimageeffect.h>
 #include <kinstance.h>
 #include <kmessagebox.h>
+#include <kprinter.h>
 #include <qobject.h>
 #include <qlabel.h>
 #include <qstring.h>
@@ -22,7 +23,6 @@
 #include "kdvi_multipage.moc"
 #include "kviewpart.h"
 #include "optiondialog.h"
-#include "print.h"
 
 
 extern "C"
@@ -73,8 +73,10 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   timer_id = -1;
   setInstance(KDVIMultiPageFactory::instance()); 
 
+  printer = 0;
   window = new dviWindow( 1.0, true, scrollView());
   preferencesChanged();
+
 
   docInfoAction   = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
   exportPSAction  = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
@@ -101,6 +103,8 @@ KDVIMultiPage::~KDVIMultiPage()
     killTimer(timer_id);
   timer_id = -1;
   writeSettings();
+  if (printer != 0)
+    delete printer;
 }
 
 
@@ -315,15 +319,108 @@ void KDVIMultiPage::preferencesChanged()
 
 bool KDVIMultiPage::print(const QStringList &pages, int current)
 {
-  Print * printdlg = new Print(window, "printdlg");
+  // Make sure the KPrinter is available
+  if (printer == 0) {
+    printer = new KPrinter();
+    if (printer == 0)
+      return false;
+  }
 
-  printdlg->setFile(m_file);
-  printdlg->setCurrentPage(current+1, window->totalPages());
-  printdlg->setMarkList(pages);
-  printdlg->exec();
+  // Feed the printer with useful defaults and information.
+  printer->setPageSelection( KPrinter::ApplicationSide );
+  printer->setCurrentPage( current+1 ); 
+  printer->setMinMax( 1, window->totalPages() );
 
-  delete printdlg;
+  // If pages are marked, give a list of marked pages to the
+  // printer. We try to be smart and optimize the list by using ranges
+  // ("5-11") wherever possible. The user will be tankful for
+  // that. Complicated? Yeah, but that's life.
+  if (pages.isEmpty() == true)
+    printer->setOption( "kde-range", "" );
+  else {
+    int commaflag = 0;
+    QString range;
+    QStringList::ConstIterator it = pages.begin();
+    do{
+      int val = (*it).toUInt()+1;
+      if (commaflag == 1) 
+	range +=  QString(", ");
+      else
+	commaflag = 1;
+      int endval = val;
+      if (it != pages.end()) {
+	QStringList::ConstIterator jt = it;
+	jt++;
+	do{
+	  int val2 = (*jt).toUInt()+1;
+	  if (val2 == endval+1)
+	    endval++;
+	  else
+	    break;
+	  jt++;
+	} while( jt != pages.end() );
+	it = jt;
+      } else
+	it++;
+      if (endval == val)
+	range +=  QString("%1").arg(val);
+      else
+	range +=  QString("%1-%2").arg(val).arg(endval);
+    } while (it != pages.end() );
+    printer->setOption( "kde-range", range );
+  }
 
+  // Show the printer options requestor
+  if (printer->setup(window) == false) 
+    return false;
+
+  // Turn the results of the options requestor into a list arguments
+  // which are used by dvips.
+  QString dvips_options;
+  // Number of copies and collated copies.
+  int copies = printer->numCopies();
+  if (copies > 1)
+    if (printer->collate() == KPrinter::Collate)
+      dvips_options += QString("-C %1 ").arg(copies);
+    else
+      dvips_options += QString("-c %1 ").arg(copies);
+  // Print in reverse order.
+  if ( printer->pageOrder() == KPrinter::LastPageFirst )
+    dvips_options += "-r ";
+  // Print only odd pages.
+  if ( printer->pageSet() == KPrinter::OddPages )
+    dvips_options += "-A ";
+  // Print only even pages.
+  if ( printer->pageSet() == KPrinter::EvenPages )
+    dvips_options += "-B ";
+  // Orientation
+  if ( printer->orientation() == KPrinter::Landscape )
+    dvips_options += "-t landscape ";
+  // List of pages to print.
+  QValueList<int> pageList = printer->pageList();
+  dvips_options += "-pp ";
+  int commaflag = 0;
+  for( QValueList<int>::ConstIterator it = pageList.begin(); it != pageList.end(); ++it ) {
+    if (commaflag == 1) 
+      dvips_options +=  QString(",");
+    else
+      commaflag = 1;
+    dvips_options += QString("%1").arg(*it);
+  }
+  kdDebug() << "dvips_options " << dvips_options << "\n";
+
+  // Now print. For that, export the DVI-File to PostScript. Note that
+  // dvips will run concurrently to keep the GUI responsive, keep log
+  // of dvips and allow abort. Giving a non-zero printer argument
+  // means that the dvi-widget will print the file when dvips
+  // terminates, and then delete the output file.
+  KTempFile tf;
+  kdDebug() << "TMP " << tf.name() << "\n";
+  window->exportPS(tf.name(), dvips_options, printer);
+
+  // "True" may be a bit euphemistic. However, since dvips runs
+  // concurrently, there is no way of telling the result of the
+  // printing command now.
   return true;
 }
 

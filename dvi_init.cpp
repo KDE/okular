@@ -228,6 +228,7 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
 #endif
 
   errorMsg    = QString::null;
+  errorCounter = 0;
   dvi_Data    = 0;
   page_offset = 0;
   font_pool   = pool;

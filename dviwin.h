@@ -132,6 +132,7 @@ public:
 
 
   void          special(long nbytes);
+  void          printErrorMsgForSpecials(QString msg);
   void          html_href_special(QString cp);
   void          html_anchor_end(void);
   void          html_anchor_special(QString cp);

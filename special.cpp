@@ -25,6 +25,16 @@
 
 extern QPainter foreGroundPaint;
 
+void dviWindow::printErrorMsgForSpecials(QString msg)
+{
+  if (dviFile->errorCounter < 25) {
+    kdError(4300) << msg << endl;
+    dviFile->errorCounter++;
+    if (dviFile->errorCounter == 25)
+      kdError(4300) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
+  }
+}
+
 void dviWindow::html_anchor_special(QString cp)
 {
   if (PostScriptOutPutString != NULL) { // only during scanning, not during rendering
@@ -368,6 +378,6 @@ void dviWindow::applicationDoSpecial(char *cp)
     return;
   }
 
-  kdError(4300) << i18n("The special command \"") << special_command << i18n("\" is not implemented.") << endl;
+  printErrorMsgForSpecials(i18n("The special command \"") + special_command + i18n("\" is not implemented."));
   return;
 }

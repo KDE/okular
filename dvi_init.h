@@ -27,6 +27,12 @@ class dvifile : public bigEndianByteReader
   QIODevice::Offset size_of_file;
   QString        errorMsg;
 
+  /** This member is set to zero on construction and can be used by
+      other software to count error messages that were printed when
+      the DVI-file was processed. Suggested application: limit the
+      number of error messages to, say, 25. */
+  Q_UINT8        errorCounter;
+
   /** This flag is set to "true" during the construction of the
       dvifile, and is never changed afterwards by the dvifile
       class. It is used in kdvi in conjuction with source-specials:

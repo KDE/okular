@@ -32,6 +32,7 @@ KInstance *KDVIMultiPageFactory::s_instance = 0L;
 
 KDVIMultiPageFactory::KDVIMultiPageFactory()
 {
+  KGlobal::locale()->insertCatalogue( QString::fromLatin1("kdvi") );
 }
 
  

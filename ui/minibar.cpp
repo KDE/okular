@@ -154,9 +154,9 @@ void MiniBar::notifySetup( const QValueVector< KPDFPage * > & pageVector, bool c
     m_pagesButton->setMaximumWidth( 2 * numberWidth );
 
     // resize height of widgets
-    int fixedHeight = fontMetrics().height() + 2;
-    if ( fixedHeight < 18 )
-        fixedHeight = 18;
+    int fixedHeight = fontMetrics().height() + 4;
+    if ( fixedHeight < 20 )
+        fixedHeight = 20;
     m_pagesEdit->setFixedHeight( fixedHeight );
     m_pagesButton->setFixedHeight( fixedHeight );
     m_prevButton->setFixedHeight( fixedHeight );
@@ -301,11 +301,15 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
         l = (int)( (float)w * m_progressPercentage );
     QRect cRect = QRect( l, 0, w - l, h ).intersect( e->rect() );
     QRect fRect = QRect( 0, 0, l, h ).intersect( e->rect() );
-
-    // paint rects and a separator line
     QPainter p( this );
+
+    // paint clear rect
     if ( cRect.isValid() )
         p.fillRect( cRect, palette().active().highlightedText() );
+    // draw a frame-like outline
+    //p.setPen( palette().active().mid() );
+    //p.drawRect( 0,0, w, h );
+    // paint fill rect
     if ( fRect.isValid() )
         p.fillRect( fRect, palette().active().highlight() );
     if ( l && l != w  )
@@ -313,9 +317,6 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
         p.setPen( palette().active().highlight().dark( 120 ) );
         p.drawLine( l, 0, l, h );
     }
-    // draw a frame-like outline
-    //p.setPen( palette().active().mid() );
-    //p.drawRect( 0,0, w, h );
 }
 
 

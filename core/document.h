@@ -76,6 +76,7 @@ class KPDFDocument : public QObject
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
+        bool supportsSearching() const;
         bool hasFonts() const;
         void putFontInfo(KListView *list);
 

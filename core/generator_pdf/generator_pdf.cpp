@@ -342,6 +342,11 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
     docLock.unlock();
 }
 
+bool PDFGenerator::supportsSearching() const
+{
+    return true;
+}
+
 bool PDFGenerator::hasFonts() const
 {
     return true;

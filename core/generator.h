@@ -59,8 +59,11 @@ class Generator : public QObject
         virtual void generatePixmap( PixmapRequest * request ) = 0;
         virtual void generateSyncTextPage( KPDFPage * page ) = 0;
 
-        // font related
+        // capability querying
+        virtual bool supportsSearching() const = 0;
         virtual bool hasFonts() const = 0;
+
+        // font related
         virtual void putFontInfo(KListView *list) = 0;
 
         // print document using already configured kprinter

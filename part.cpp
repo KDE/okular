@@ -320,8 +320,8 @@ bool Part::openFile()
     bool ok = m_document->openDocument( m_file, url() );
 
     // update one-time actions
-    m_find->setEnabled( ok );
-    m_findNext->setEnabled( ok );
+    m_find->setEnabled( ok && m_document-> supportsSearching());
+    m_findNext->setEnabled( ok && m_document-> supportsSearching());
     m_saveAs->setEnabled( ok );
     m_printPreview->setEnabled( ok );
     m_showProperties->setEnabled( ok );

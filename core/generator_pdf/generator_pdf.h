@@ -65,8 +65,11 @@ class PDFGenerator : public Generator
         void generatePixmap( PixmapRequest * request );
         void generateSyncTextPage( KPDFPage * page );
 
-        // font related
+        // [INHERITED] capability querying
+        bool supportsSearching() const;
         bool hasFonts() const;
+
+        // [INHERITED] font related
         void putFontInfo(KListView *list);
 
         // [INHERITED] print page using an already configured kprinter

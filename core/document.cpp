@@ -32,6 +32,7 @@
 #include "page.h"
 #include "link.h"
 #include "generator_pdf/generator_pdf.h"  // PDF generator
+#include "generator_png/generator_png.h"  // PDF generator
 #include "conf/settings.h"
 
 // structures used internally by KPDFDocument for local variables storage
@@ -142,6 +143,10 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
         generator = new PDFGenerator( this );
 //    else if ( mimeName == "application/postscript" )
 //        kdError() << "PS generator not available" << endl;
+    else if ( mimeName == "image/png" )
+    {
+        generator = new PNGGenerator( this );
+    }
     else
     {
         kdWarning() << "Unknown mimetype '" << mimeName << "'." << endl;
@@ -379,6 +384,11 @@ bool KPDFDocument::historyAtEnd() const
 QString KPDFDocument::getMetaData( const QString & key, const QString & option ) const
 {
     return generator ? generator->getMetaData( key, option ) : QString();
+}
+
+bool KPDFDocument::supportsSearching() const
+{
+    return generator ? generator->supportsSearching() : false;
 }
 
 bool KPDFDocument::hasFonts() const

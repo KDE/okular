@@ -294,6 +294,17 @@ void KPDFPage::deleteAnnotations()
 }
 
 
+/** class NormalizedPoint **/
+NormalizedPoint::NormalizedPoint()
+    : x( 0.0 ), y( 0.0 ) {}
+
+NormalizedPoint::NormalizedPoint( double dX, double dY )
+    : x( dX ), y( dY ) {}
+
+NormalizedPoint::NormalizedPoint( int iX, int iY, int xScale, int yScale )
+    : x( (double)iX / (double)xScale ), y( (double)iY / (double)yScale ) {}
+
+
 /** class NormalizedRect **/
 
 NormalizedRect::NormalizedRect()

@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>320</width>
-            <height>169</height>
+            <height>253</height>
         </rect>
     </property>
     <vbox>
@@ -157,6 +157,35 @@
                     </vbox>
                 </widget>
             </hbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox2_2</cstring>
+            </property>
+            <property name="title">
+                <string>Temporary DEBUG Options</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_DebugDrawBoundaries</cstring>
+                    </property>
+                    <property name="text">
+                        <string>DebugDrawBoundaries</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_DebugDrawAnnotationRect</cstring>
+                    </property>
+                    <property name="text">
+                        <string>DebugDrawAnnotationRect</string>
+                    </property>
+                </widget>
+            </vbox>
         </widget>
         <spacer>
             <property name="name">

@@ -17,6 +17,7 @@
 #include <kiconloader.h>
 #include <kimageeffect.h>
 #include <kaccelmanager.h>
+#include <kdeversion.h>
 #include <klocale.h>
 
 // system includes
@@ -236,9 +237,20 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const 
     setToggleButton( true );
     resize( buttonSize, buttonSize );
     setPixmap( DesktopIcon( item.pixmap, iconSize ) );
-    QToolTip::add( this, item.text );
     setWFlags( Qt::WNoAutoErase );
-    KAcceleratorManager::setNoAccel( this );
+    // set shortcut if defined
+    if ( !item.shortcut.isEmpty() )
+        setAccel( item.shortcut );
+#if KDE_IS_VERSION(3,3,90)
+    else
+        KAcceleratorManager::setNoAccel( this );
+#endif
+    // if accel is set display it along name
+    QString accelString = (QString)accel();
+    if ( !accelString.isEmpty() )
+        QToolTip::add( this, QString("%1 [%2]").arg( item.text ).arg( item.shortcut ) );
+    else
+        QToolTip::add( this, item.text );
 }
 
 void ToolBarButton::mouseMoveEvent( QMouseEvent * e )
@@ -402,15 +414,13 @@ void PageViewToolBar::mouseMoveEvent( QMouseEvent * e )
     bool LB = nX < (nY);
     Side side = LT ? ( LB ? Left : Top ) : ( LB ? Bottom : Right );
 
-    // if side changed, update stuff
-    if ( side != d->anchorSide )
-    {
-        // inform subclasses about orientation change
-        orientationChanged( d->anchorSide = side );
+    // check if side changed
+    if ( side == d->anchorSide )
+        return;
 
-        // rebuild and display the widget
-        reposition();
-    }
+    d->anchorSide = side;
+    reposition();
+    emit orientationChanged( (int)side );
 }
 
 void PageViewToolBar::mouseReleaseEvent( QMouseEvent * e )
@@ -609,27 +619,6 @@ void PageViewToolBar::slotButtonClicked()
         // emit signal (-1 if button has been unselected)
         emit toolSelected( button->isOn() ? button->buttonID() : -1 );
     }
-}
-
-/* PageViewEditTools */
-
-PageViewEditTools::PageViewEditTools( QWidget * parent, QWidget * anchorWidget )
-    : PageViewToolBar( parent, anchorWidget )
-{
-    // create the ToolBarItems and show it on last place
-    QValueList<ToolBarItem> items;
-    items.push_back( ToolBarItem( 1, i18n("Text Tool"), "pinnote" ) );
-    items.push_back( ToolBarItem( 2, i18n("Highlighter"), "highlight_pink" ) );
-    items.push_back( ToolBarItem( 3, i18n("Pencil Tool"), "pencil" ) );
-    items.push_back( ToolBarItem( 4, i18n("Line Tool"), "color_line" ) );
-    //items.push_back( ToolBarItem( 5, i18n("sbiancante"), "coprex-white" ) );
-    showItems( (Side)Settings::editToolBarPlacement(), items );
-}
-
-void PageViewEditTools::orientationChanged( Side side )
-{
-    // save position to the conficuration file
-    Settings::setEditToolBarPlacement( (int)side );
 }
 
 #include "pageviewutils.moc"

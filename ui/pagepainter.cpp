@@ -201,27 +201,25 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
                 }
             }
         }
-        backPixmap->convertFromImage( backImage );
-    }
-
-    // 2.3. annotations OVERLAY FIXME MOD in page
-    if ( paintAnnotations )
-    {
-        // draw annotations that are inside the 'limits' paint region
-        QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
-        for ( ; aIt != aEnd; ++aIt )
+        // 2.3. annotations overlay
+        if ( paintAnnotations )
         {
-            Annotation * a = *aIt;
-            QRect annotRect = a->geometry( width, height );
-            if ( annotRect.isValid() && annotRect.intersects( limits ) )
+            // draw annotations that are inside the 'limits' paint region
+            QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+            for ( ; aIt != aEnd; ++aIt )
             {
-                // find out the annotation rect on pixmap
-                annotRect = annotRect.intersect( limits );
-                a->paintOverlay( p, width, height, limits );
+                Annotation * a = *aIt;
+                QRect annotRect = a->geometry( width, height );
+                if ( annotRect.isValid() && annotRect.intersects( limits ) )
+                {
+                    // find out the annotation rect on pixmap
+                    annotRect = annotRect.intersect( limits );
+                    //a->paintOverlay( p, width, height, limits );
+                }
             }
         }
+        backPixmap->convertFromImage( backImage );
     }
-
 
     // 3. visually enchance links and images if requested
     if ( enhanceLinks || enhanceImages )

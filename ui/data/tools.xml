@@ -1,0 +1,47 @@
+<!DOCTYPE simpleToolsDefinition>
+<!-- Annotation types:
+  Text Line[srcArrow(true);dstArrow(true);width] Geom Path
+  Highlight Stamp[icon] Media *[color] -->
+<!-- Engine Types:
+  SmoothLine PickPoint[hoverIcon] TwoPoints[block(true)] -->
+<annotationTools>
+  <tool id="1" name="Yellow Highlighter" pixmap="highlight_yellow">
+    <tooltip>this ..</tooltip>
+    <engine type="SmoothLine" />
+    <annotation type="Highlight" color="#FFFF00" />
+    <shortcut>1</shortcut>
+  </tool>
+  <tool id="2" name="Pink Highlighter" pixmap="highlight_pink">
+    <tooltip>.. is ..</tooltip>
+    <engine type="SmoothLine" />
+    <annotation type="Highlight" color="#FF0080" />
+    <shortcut>2</shortcut>
+  </tool>
+  <tool id="3" name="Yellow Highlighter" pixmap="highlight_yellow">
+    <tooltip>.. a ..</tooltip>
+    <engine type="TwoPoints" block="true" />
+    <annotation type="Highlight" color="#F8FF00" />
+    <shortcut>3</shortcut>
+  </tool>
+  <tool id="4" name="note" pixmap="pinnote">
+    <tooltip>.. tooltip ..</tooltip>
+    <engine type="PickPoint" hoverIcon="pinnote" />
+    <annotation type="Text" color="#FF00FF" />
+  </tool>
+  <tool id="5" name="Straight Yellow Line" pixmap="color_line">
+    <tooltip>.. test</tooltip>
+    <engine type="TwoPoints" />
+    <annotation type="Line" width="4" color="#FFE000" />
+    <shortcut>5</shortcut>
+  </tool>
+  <tool id="6" name="Arrowed Black Line" pixmap="color_line">
+    <engine type="TwoPoints" />
+    <annotation type="Line" dstArrow="true" color="#000000" />
+    <shortcut>6</shortcut>
+  </tool>
+  <tool id="7" name="Warning Stamp" pixmap="messagebox_warning">
+    <engine type="PickPoint" hoverIcon="messagebox_warning" />
+    <annotation type="Stamp" icon="messagebox_warning" />
+    <shortcut>7</shortcut>
+  </tool>
+</annotationTools>

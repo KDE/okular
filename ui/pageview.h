@@ -51,9 +51,10 @@ class PageView : public QScrollView, public DocumentObserver
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
 
-        // used from RMB menu
+        // misc methods (from RMB menu/children)
         bool canFitPageWidth();
         void fitPageWidth( int page );
+        void displayMessage( const QString & message );
 
         // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
@@ -94,9 +95,6 @@ class PageView : public QScrollView, public DocumentObserver
         void selectionStart( int x, int y, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( int x, int y );
         void selectionClear();
-        // annotation related stuff
-        void updateAnnotation( QMouseEvent * e );
-        void deleteAnnotation();
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
@@ -118,8 +116,6 @@ class PageView : public QScrollView, public DocumentObserver
         void slotAutoScoll();
         // type-ahead find timeout
         void slotStopFindAhead();
-        // activated when a tool is selected in the edit toolbar
-        void slotSetAnnotationTool( int toolID );
 
         // connected to local actions (toolbar, menu, ..)
         void slotZoom();
@@ -133,7 +129,7 @@ class PageView : public QScrollView, public DocumentObserver
         void slotSetMouseNormal();
         void slotSetMouseZoom();
         void slotSetMouseSelect();
-        void slotToggleEditTools( bool );
+        void slotToggleAnnotator( bool );
         void slotScrollUp();
         void slotScrollDown();
 };

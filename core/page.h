@@ -89,6 +89,19 @@ class KPDFPage
 
 
 /**
+ * @short A point in [0,1] coordinates (only used in annotations atm)
+ */
+class NormalizedPoint
+{
+    public:
+        double x, y;
+
+        NormalizedPoint();
+        NormalizedPoint( double dX, double dY );
+        NormalizedPoint( int ix, int iy, int xScale, int yScale );
+};
+
+/**
  * @short A rect in normalized [0,1] coordinates.
  */
 class NormalizedRect

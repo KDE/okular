@@ -84,10 +84,7 @@ struct ToolBarItem // FIXME TEMP: MOVE OUT OF HERE!
     int id;
     QString text;
     QString pixmap;
-
-    ToolBarItem() {};
-    ToolBarItem( int _id, const QString & _text, const QString & _pixmap )
-        : id( _id ), text( _text ), pixmap( _pixmap ) {};
+    QString shortcut;
 };
 
 class PageViewToolBar : public QWidget
@@ -102,9 +99,13 @@ class PageViewToolBar : public QWidget
         void showItems( Side side, const QValueList<ToolBarItem> & items );
         void hideAndDestroy();
 
+        // query properties
+
     signals:
         // the tool 'toolID' has been selected
         void toolSelected( int toolID );
+        // orientation has been changed
+        void orientationChanged( int side );
 
     protected:
         // handle widget events { anchor_resize, paint, animation, drag }
@@ -113,8 +114,6 @@ class PageViewToolBar : public QWidget
         void mousePressEvent( QMouseEvent * e );
         void mouseMoveEvent( QMouseEvent * e );
         void mouseReleaseEvent( QMouseEvent * e );
-        // used by subclasses to save configuration
-        virtual void orientationChanged( Side /*side*/ ) {};
 
     private:
         // rebuild contents and reposition then widget
@@ -130,15 +129,6 @@ class PageViewToolBar : public QWidget
     private slots:
         void slotAnimate();
         void slotButtonClicked();
-};
-
-class PageViewEditTools : public PageViewToolBar
-{
-    public:
-        // constructs a toolbox filled up with edit tools
-        PageViewEditTools( QWidget * parent, QWidget * anchorWidget );
-        // hook call to save widget placement
-        void orientationChanged( Side side );
 };
 
 #endif

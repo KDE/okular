@@ -164,5 +164,8 @@
   <entry key="DebugDrawBoundaries" type="Bool" >
    <default>false</default>
   </entry>
+  <entry key="DebugDrawAnnotationRect" type="Bool" >
+   <default>false</default>
+  </entry>
  </group>
 </kcfg>

@@ -45,10 +45,10 @@
 #include "pageview.h"
 #include "pageviewutils.h"
 #include "pagepainter.h"
+#include "pageviewannotator.h"
 #include "core/document.h"
 #include "core/page.h"
 #include "core/link.h"
-#include "core/annotations.h"
 #include "core/generator.h"
 #include "conf/settings.h"
 
@@ -90,10 +90,7 @@ public:
     int scrollIncrement;
     QTimer * autoScrollTimer;
     // annotations
-    Annotation * localAnnotation;
-    QRect localAnnotationRect;
-    PageViewItem * localAnnotationItem;
-    PageViewEditTools * editToolsWindow;// in pageviewtoolbox.h
+    PageViewAnnotator * annotator;
     // other stuff
     QTimer * delayResizeTimer;
     bool dirtyLayout;
@@ -104,7 +101,7 @@ public:
     // actions
     KToggleAction * aMouseNormal;
     KToggleAction * aMouseSelect;
-    KToggleAction * aToggleEditTools;
+    KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
@@ -143,9 +140,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->viewportMoveTimer = 0;
     d->scrollIncrement = 0;
     d->autoScrollTimer = 0;
-    d->localAnnotation = 0;
-    d->localAnnotationItem = 0;
-    d->editToolsWindow = 0;
+    d->annotator = 0;
     d->delayResizeTimer = 0;
     d->dirtyLayout = false;
     d->blockViewport = false;
@@ -179,8 +174,6 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 
 PageView::~PageView()
 {
-    // every object except annotation is deleted as qobject child
-    delete d->localAnnotation;
     // delete the local storage structure
     delete d;
 }
@@ -225,8 +218,9 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect = new KRadioAction( i18n("&Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     d->aMouseSelect->setExclusiveGroup( "MouseType" );
 
-    d->aToggleEditTools = new KToggleAction( i18n("&Review"), "pencil", 0, ac, "mouse_toggle_annotate" );
-    connect( d->aToggleEditTools, SIGNAL( toggled( bool ) ), SLOT( slotToggleEditTools( bool ) ) );
+    d->aToggleAnnotator = new KToggleAction( i18n("&Review"), "pencil", 0, ac, "mouse_toggle_annotate" );
+    connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
+    d->aToggleAnnotator->setShortcut( "F6" );
 
     // Other actions
     KAction * su = new KAction( i18n("Scroll Up"), 0, this, SLOT( slotScrollUp() ), ac, "view_scroll_up" );
@@ -255,6 +249,20 @@ void PageView::fitPageWidth( int page )
     viewport()->setUpdatesEnabled( true );
     d->document->setViewportPage( page );
     updateZoomText();
+}
+
+void PageView::displayMessage( const QString & message )
+{
+    if ( !Settings::showOSD() )
+        return;
+
+    // hide messageWindow if string is empty
+    if ( message.isEmpty() )
+        return d->messageWindow->hide();
+
+    // display message (duration is length dependant)
+    int duration = 500 + 100 * message.length();
+    d->messageWindow->display( message, PageViewMessage::Info, duration );
 }
 
 
@@ -736,22 +744,16 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         d->mouseMidStartY = e->globalPos().y();
         d->zoomFactor *= ( 1.0 + ( (double)deltaY / 500.0 ) );
         updateZoom( ZoomRefreshCurrent );
-        // rescale annotation (if editing one)
-        if ( d->localAnnotation && d->localAnnotationItem )
-        {
-            PageViewItem * i = d->localAnnotationItem;
-            d->localAnnotationRect = d->localAnnotation->geometry( i->width(), i->height() );
-            d->localAnnotationRect.moveBy( i->geometry().left(), i->geometry().top() );
-        }
         // uncomment following line to force a complete redraw
         viewport()->repaint( false );
         return;
     }
 
     // if we're editing an annotation, dispatch event to it
-    if ( d->localAnnotation )
+    if ( d->annotator && d->annotator->routeEvents() )
     {
-        updateAnnotation( e );
+        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+        d->annotator->routeEvent( e, pageItem );
         return;
     }
 
@@ -829,9 +831,10 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     }
 
     // if we're editing an annotation, dispatch event to it
-    if ( d->localAnnotation )
+    if ( d->annotator && d->annotator->routeEvents() )
     {
-        updateAnnotation( e );
+        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+        d->annotator->routeEvent( e, pageItem );
         return;
     }
 
@@ -895,9 +898,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     }
 
     // if we're editing an annotation, dispatch event to it
-    if ( d->localAnnotation )
+    if ( d->annotator && d->annotator->routeEvents() )
     {
-        updateAnnotation( e );
+        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+        d->annotator->routeEvent( e, pageItem );
         return;
     }
 
@@ -1191,7 +1195,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
     // create a region from wich we'll subtract painted rects
     QRegion remainingArea( contentsRect );
 
-    //QValueVector< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
+    //CHECK: QValueVector< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
@@ -1246,14 +1250,6 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
                                              pixmapGeometry.width(), pixmapGeometry.height() );
         }
 
-        // draw the unapplied (contructing) annotation if present
-        if ( d->localAnnotationItem == item && contentsRect.intersects( d->localAnnotationRect ) )
-        {
-            QRect annotRect = contentsRect.intersect( d->localAnnotationRect );
-            annotRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
-            d->localAnnotation->paintOverlay( p, item->width(), item->height(), annotRect );
-        }
-
         // remove painted area from 'remainingArea' and restore painter
         remainingArea -= outlineGeometry.intersect( contentsRect );
         p->restore();
@@ -1264,6 +1260,10 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
     uint backRectsNumber = backRects.count();
     for ( uint jr = 0; jr < backRectsNumber; jr++ )
         p->fillRect( backRects[ jr ], Qt::gray );
+
+    // paint annotation being created by the annotator
+    if ( d->annotator && d->annotator->routePaints( contentsRect ) )
+      d->annotator->routePaint( p, contentsRect );
 }
 
 void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight )
@@ -1361,72 +1361,6 @@ void PageView::selectionClear()
 {
     updateContents( d->mouseSelectionRect.normalize() );
     d->mouseSelectionRect.setCoords( 0, 0, -1, -1 );
-}
-
-void PageView::updateAnnotation( QMouseEvent * e )
-{
-    // find out the underlying pageItem, if none return
-    PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-    if ( !pageItem )
-        return;
-
-    // restrict placement to a single pageItem while being created
-    if ( d->localAnnotation->state() != Annotation::NewBorn )
-    {
-        if ( !d->localAnnotationItem )
-            d->localAnnotationItem = pageItem;
-        else if ( d->localAnnotationItem != pageItem )
-            return;
-    }
-
-    // find out Annotation::MouseEvent type
-    Annotation::MouseEvent event = Annotation::MousePress;
-    if ( e->type() == QEvent::MouseMove )
-        event = Annotation::MouseMove;
-    else if ( e->type() == QEvent::MouseButtonRelease )
-        event = Annotation::MouseRelease;
-
-    // find out the pressed button
-    Qt::ButtonState button;
-    if ( event == Annotation::MouseMove )
-        button = e->state();
-    else
-        button = e->button();
-
-    // find out normalized mouse coords
-    const QRect & itemRect = pageItem->geometry();
-    double nX = (double)(e->x() - itemRect.left()) / (double)itemRect.width();
-    double nY = (double)(e->y() - itemRect.top()) / (double)itemRect.height();
-
-    // send event to the annotation and exit if nothing changed
-    bool changed = d->localAnnotation->mouseEvent( event, nX, nY, button );
-
-    // get new absolute annotation rect and send paint event(s)
-    if ( changed )
-    {
-        QRegion compoundRegion( d->localAnnotationRect );
-        d->localAnnotationRect = d->localAnnotation->geometry( itemRect.width(), itemRect.height() );
-        d->localAnnotationRect.moveBy( itemRect.left(), itemRect.top() );
-        QMemArray<QRect> rects = compoundRegion.unite( d->localAnnotationRect ).rects();
-        for ( uint i = 0; i < rects.count(); i++ )
-            updateContents( rects[i] );
-    }
-
-    // if the annotation has ended, set it to the page
-    if ( d->localAnnotation->state() == Annotation::Opened )
-    {
-        d->document->addPageAnnotation( d->localAnnotationItem->pageNumber(), d->localAnnotation );
-        d->localAnnotation = 0;
-        deleteAnnotation();
-    }
-}
-
-void PageView::deleteAnnotation()
-{
-    delete d->localAnnotation;
-    d->localAnnotation = 0;
-    d->localAnnotationItem = 0;
-    d->localAnnotationRect = QRect();
 }
 
 void PageView::updateZoom( ZoomMode newZoomMode )
@@ -1919,48 +1853,6 @@ void PageView::slotStopFindAhead()
     releaseKeyboard();
 }
 
-void PageView::slotSetAnnotationTool( int toolID )
-{
-    // only create annotations in 'normal' mode (unneeded safety check)
-    if ( d->mouseMode != MouseNormal )
-        return;
-
-    // remove a previous annotation if doing that
-    if ( d->localAnnotation )
-        deleteAnnotation();
-
-    // if toolID is -1, tool has been deselected
-    if ( toolID == -1 )
-    {
-        // hide the messageWindow
-        d->messageWindow->hide();
-        return;
-    }
-
-    // [take a look at pageviewtoolbox.cpp for toolIDs]
-    if ( toolID == 1 )
-        d->localAnnotation = new TextAnnotation( TextAnnotation::InPlace );
-    else if ( toolID == 2 )
-        d->localAnnotation = new HighlightAnnotation( HighlightAnnotation::Highlight );
-    else if ( toolID == 3 )
-        d->localAnnotation = new PathAnnotation( PathAnnotation::Ink );
-    else
-        d->localAnnotation = new LineAnnotation( LineAnnotation::Line );
-/*
-    d->localAnnotation = new HighlightAnnotation( HighlightAnnotation::Highlight );
-    if ( toolID == 2 )
-        d->localAnnotation->setBaseColor( Qt::yellow );
-    else if ( toolID == 3 )
-        d->localAnnotation->setBaseColor( 0xFF8000 );
-    else if ( toolID == 4 )
-        d->localAnnotation->setBaseColor( Qt::green );
-    else
-        d->localAnnotation->setBaseColor( Qt::black );
-*/
-    // display usage tip of the tool
-    d->messageWindow->display( d->localAnnotation->usageTip(), PageViewMessage::Annotation );
-}
-
 void PageView::slotZoom()
 {
     setFocus();
@@ -2018,9 +1910,9 @@ void PageView::slotSetMouseNormal()
     d->mouseMode = MouseNormal;
     // hide the messageWindow
     d->messageWindow->hide();
-    // reshow editToolsWindow if hidden by force
-    if ( d->aToggleEditTools->isChecked() && !d->editToolsWindow )
-        slotToggleEditTools( true );
+    // reshow the annotator toolbar if hiding was forced
+    if ( d->aToggleAnnotator->isChecked() )
+        slotToggleAnnotator( true );
 }
 
 void PageView::slotSetMouseZoom()
@@ -2028,8 +1920,9 @@ void PageView::slotSetMouseZoom()
     d->mouseMode = MouseZoom;
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), PageViewMessage::Info, -1 );
-    // force hiding of editToolsWindow
-    slotToggleEditTools( false );
+    // force hiding of annotator toolbar
+    if ( d->annotator )
+        d->annotator->setEnabled( false );
 }
 
 void PageView::slotSetMouseSelect()
@@ -2037,34 +1930,23 @@ void PageView::slotSetMouseSelect()
     d->mouseMode = MouseSelect;
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), PageViewMessage::Info, -1 );
-    // force hiding of editToolsWindow
-    slotToggleEditTools( false );
+    // force hiding of annotator toolbar
+    if ( d->annotator )
+        d->annotator->setEnabled( false );
 }
 
-void PageView::slotToggleEditTools( bool on )
+void PageView::slotToggleAnnotator( bool on )
 {
-    // remove the localAnnotation if present
-    if ( d->localAnnotation )
-        deleteAnnotation();
+    // only use annotator in normal mouse mode
+    if ( on && d->mouseMode != MouseNormal )
+        return;
 
-    // handle displaying or removal of the editToolsWindow
-    if ( on && d->mouseMode == MouseNormal )
-    {
-        // reuse a previous instance if present or create a new one
-        if ( d->editToolsWindow )
-            d->editToolsWindow->show();
-        else
-        {
-            d->editToolsWindow = new PageViewEditTools( this, viewport() );
-            connect( d->editToolsWindow, SIGNAL( toolSelected( int ) ), this, SLOT( slotSetAnnotationTool( int ) ) );
-        }
-    }
-    else if ( !on && d->editToolsWindow )
-    {
-        // hide the editToolsWindow
-        d->editToolsWindow->hideAndDestroy();
-        d->editToolsWindow = 0;
-    }
+    // create the annotator object if not present
+    if ( !d->annotator )
+        d->annotator = new PageViewAnnotator( this, d->document );
+
+    // initialize/reset annotator (and show/hide toolbar)
+    d->annotator->setEnabled( on );
 }
 
 void PageView::slotScrollUp()

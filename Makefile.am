@@ -19,7 +19,7 @@ libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
 	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp kbrowser.moc.cc\
 	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\
-	special.c util.c vf.c # konq_progressproxy.cc
+	special.c util.c vf.c
 
 kdvi_SOURCES = main.cpp
 
@@ -36,7 +36,7 @@ kdvi_LDADD = libkdvi.la
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 	prefs.h print.h printData.h printSetup.h printSetupData.h pushbutton.h\
-	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h # konq_progressproxy.h
+	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h
 
 messages:
 	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po $(podir)/kdvi.pot

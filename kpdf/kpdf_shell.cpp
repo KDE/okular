@@ -6,6 +6,8 @@
 #include "kpdf_shell.h"
 #include "kpdf_shell.moc"
 #include "kpdf_part.h"
+#include "part.h"
+#include "kpdf_pagewidget.h"
 
 #include <kaction.h>
 #include <kconfig.h>
@@ -65,8 +67,8 @@ Shell::Shell()
     // next time we enter the event loop...
     return;
   }
-  //FIXME m_part is not a KPART::readon... it's a kdpf_part...
-  //connect( m_part->pageWidget(), SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
+  PDFPartView * partView = static_cast<PDFPartView *>(m_part->widget());
+  connect( partView->outputdev, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
 
   readSettings();
 }

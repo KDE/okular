@@ -15,6 +15,7 @@
 #include <kconfig.h>
 #include <kparts/genericfactory.h>
 #include <kdebug.h>
+#include <kurldrag.h>
 
 #include "part.h"
 
@@ -56,6 +57,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
           this, SLOT( pageClicked ( QListBoxItem * ) ));
 
   m_outputDev = pdfpartview->outputdev;
+  m_outputDev->setAcceptDrops( true );
 
 
   setWidget(pdfpartview);
@@ -109,6 +111,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   connect( m_outputDev, SIGNAL( ZoomOut() ), SLOT( zoomOut() ));
   connect( m_outputDev, SIGNAL( ReadUp() ), SLOT( slotReadUp() ));
   connect( m_outputDev, SIGNAL( ReadDown() ), SLOT( slotReadDown() ));
+  connect( m_outputDev, SIGNAL( urlDropped( const KURL& ) ), SLOT( slotOpenUrlDropped( const KURL & )));
+
   readSettings();
   updateActionPage();
 }
@@ -117,6 +121,11 @@ Part::~Part()
 {
     delete globalParams;
     writeSettings();
+}
+
+void Part::slotOpenUrlDropped( const KURL &url )
+{
+    openURL(url );
 }
 
 void Part::setFullScreen( bool fs )

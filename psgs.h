@@ -43,6 +43,9 @@ public:
   // sets the PostScript which is used on a certain page
   void setPostScript(int page, QString PostScript);
 
+  // sets path from additional postscript files may be read
+  void setIncludePath(const QString &_includePath);
+
   // sets the background color for a certain page
   void setColor(int page, QColor background_color);
 
@@ -72,6 +75,8 @@ private:
   double                resolution;   // in dots per inch
   int                   pixel_page_w; // in pixels
   int                   pixel_page_h; // in pixels
+
+  QString               includePath;
 
 signals:
   /** Passed through to the top-level kpart. */

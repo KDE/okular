@@ -60,6 +60,12 @@ void ghostscript_interface::setPostScript(int page, QString PostScript) {
     *(pageList.find(page)->PostScriptString) = PostScript;
 }
 
+void ghostscript_interface::setIncludePath(const QString &_includePath) {
+  if (_includePath.isEmpty())
+     includePath = "*"; // Allow all files
+  else
+     includePath = _includePath+"/*";
+}
 
 void ghostscript_interface::setColor(int page, QColor background_color) {
   if (pageList.find(page) == 0) {
@@ -140,11 +146,13 @@ void ghostscript_interface::gs_generate_graphics_file(int page, QString filename
   // Step 2: Call GS with the File
   KProcess proc;
   proc << "gs";
-  proc << "-dNOPAUSE" << "-dBATCH" << "-sDEVICE=png256";
+  proc << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH" << "-sDEVICE=png256";
   proc << QString("-sOutputFile=%1").arg(filename);
+  proc << QString("-sExtraIncludePath=%1").arg(includePath);
   proc << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
   proc << QString("-r%1").arg(resolution);                       // resolution in dpi
-  proc << PSfile.name();
+  proc << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
+  proc << "-f" << PSfile.name();
   proc.start(KProcess::Block);
   PSfile.unlink();
   emit(setStatusBarText(QString::null));

@@ -90,29 +90,30 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	setWidget( m_splitter );
 
 	// widgets: [left toolbox] | []
-	QToolBox * toolBox = new QToolBox( m_splitter );
-	toolBox->setMinimumWidth( 60 );
-	toolBox->setMaximumWidth( 200 );
+	m_toolBox = new QToolBox( m_splitter );
+	m_toolBox->setMinimumWidth( 60 );
+	m_toolBox->setMaximumWidth( 200 );
 
 	// TODO when links following is done connect the execute(LinkAction *action) signal from
 	// tocFrame to the same slot
-	TOC * tocFrame = new TOC( toolBox, document );
-	toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	TOC * tocFrame = new TOC( m_toolBox, document );
+	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	connect(tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
 
-	QVBox * thumbsBox = new ThumbnailsBox( toolBox );
+	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	m_thumbnailList = new ThumbnailList( thumbsBox, document );
 	m_searchWidget = new SearchWidget( thumbsBox, document );
-	toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
-	toolBox->setCurrentItem( thumbsBox );
+	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+	m_toolBox->setCurrentItem( thumbsBox );
 
-	QFrame * bookmarksFrame = new QFrame( toolBox );
-	toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
+	QFrame * bookmarksFrame = new QFrame( m_toolBox );
+	m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
 
-	QFrame * editFrame = new QFrame( toolBox );
-	toolBox->addItem( editFrame, QIconSet(SmallIcon("favorites")), i18n("Edited Chunks") );
+	QFrame * editFrame = new QFrame( m_toolBox );
+	m_toolBox->addItem( editFrame, QIconSet(SmallIcon("favorites")), i18n("Edited Chunks") );
 
-	QFrame * moreFrame = new QFrame( toolBox );
-	toolBox->addItem( moreFrame, QIconSet(SmallIcon("fork")), i18n("More stuff..") );
+	QFrame * moreFrame = new QFrame( m_toolBox );
+	m_toolBox->addItem( moreFrame, QIconSet(SmallIcon("fork")), i18n("More stuff..") );
 
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, document );
@@ -230,6 +231,11 @@ void Part::updateActions()
 		m_prevPage->setEnabled(false);
 		m_nextPage->setEnabled(false);
 	}
+}
+
+void Part::enableTOC(bool enable)
+{
+	m_toolBox->setItemEnabled(0, enable);
 }
 
 //BEGIN go to page dialog

@@ -30,6 +30,7 @@ Q_OBJECT
 
 	signals:
 		void execute(LinkAction *action);
+		void hasTOC(bool has);
 
 	private slots:
 		void slotExecuted(QListViewItem *i);

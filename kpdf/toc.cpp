@@ -87,9 +87,9 @@ void TOC::pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool documentCha
 					addKids(last, kids, uMap);
 				}
 			}
-// 			inform we have TOC
+			emit hasTOC(true);
 		}
-// 			inform we DO NOT have TOC
+		else emit hasTOC(false);
 	}
 }
 

@@ -21,6 +21,7 @@
 
 class QWidget;
 class QSplitter;
+class QToolBox;
 
 class KURL;
 class KAction;
@@ -94,6 +95,7 @@ namespace KPDF
 	void slotPrintPreview();
 	// can be connected to widget elements
 	void updateActions();
+	void enableTOC(bool enable);
 
   public slots:
 	// connected to Shell action (and browserExtension), not local one
@@ -111,6 +113,8 @@ namespace KPDF
 
 	// static instances counter
 	static unsigned int m_count;
+
+	QToolBox *m_toolBox;
 
 	// actions
 	KAction *m_gotoPage;

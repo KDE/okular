@@ -916,7 +916,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	export_errorString = i18n("<qt>The external program<br/><br/><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
 				  "for inverse search, reported an error. You might wish to look at the <strong>document info "
 				  "dialog</strong> which you will find in the File-Menu for a precise error report. The "
-				  "manual of KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
+				  "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
 				  "and a list of common problems.</qt>").arg(command);
 
 	if (info)

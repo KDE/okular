@@ -179,8 +179,10 @@ namespace KPDF
 
     void PageWidget::setPage(int page)
     {
+        // any idea why this mutex is necessary?
         static QMutex mutex;
-
+        
+        m_selection = false;
         Q_ASSERT(mutex.locked() == false);
         mutex.lock();
         if (m_doc)

@@ -56,6 +56,7 @@ namespace KPDF
 
     void optionsConfigureKeys();
     void optionsConfigureToolbars();
+    void slotQuit();
 
     void applyNewToolbarConfig();
   public slots:

@@ -12,7 +12,7 @@ static const char* version = "v0.3";
 static KCmdLineOptions options[] =
 {
     { "+[URL]", I18N_NOOP("Document to open."), 0 },
-    { 0, 0, 0 }
+    KCmdLineLastOption
 };
 
 int main(int argc, char** argv)
@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
-
+    about.addAuthor("Laurent Montel", 0, "montel@kde.org");
 
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );

@@ -16,6 +16,7 @@
 #include <kstatusbar.h>
 #include <kstdaction.h>
 #include <kurl.h>
+#include <kdebug.h>
 
 using namespace KPDF;
 
@@ -92,7 +93,7 @@ Shell::setupActions()
   recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
 				    actionCollection() );
   KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
-  KStdAction::quit(kapp, SLOT(quit()), actionCollection());
+  KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
 
   //createStandardStatusBarAction();
   setStandardToolBarMenuEnabled(true);
@@ -102,20 +103,23 @@ Shell::setupActions()
 }
 
   void
-Shell::saveProperties(KConfig* /*config*/)
+Shell::saveProperties(KConfig* config)
 {
   // the 'config' object points to the session managed
   // config file.  anything you write here will be available
   // later when this app is restored
+    config->writePathEntry( "URL", m_part->url().prettyURL() );
 }
 
-  void
-Shell::readProperties(KConfig* /*config*/)
+void Shell::readProperties(KConfig* config)
 {
   // the 'config' object points to the session managed
   // config file.  this function is automatically called whenever
   // the app is being restored.  read in here whatever you wrote
   // in 'saveProperties'
+    KURL url = config->readPathEntry( "URL" );
+    if ( url.isValid() )
+        openURL( url );
 }
 
   void
@@ -165,4 +169,8 @@ Shell::applyNewToolbarConfig()
   applyMainWindowSettings(KGlobal::config(), "MainWindow");
 }
 
+void Shell::slotQuit()
+{
+    kapp->closeAllWindows();
+}
 // vim:ts=2:sw=2:tw=78:et

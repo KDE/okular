@@ -230,7 +230,7 @@ void kdvi::makeButtons()
 {
 	QPixmap pm;
 
-#define I(f,o,s,h) toolBar()->insertButton( KGlobal::iconLoader()->loadIcon(f),\
+#define I(f,o,s,h) toolBar()->insertButton( BarIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
 	I( "fileopen",	this,	fileOpen,	i18n("Open document ...") )

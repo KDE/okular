@@ -13,4 +13,4 @@ while test $# -gt 0; do
   esac
   shift
 done
-kviewshell dvi "$params"
+kviewshell dvi $params

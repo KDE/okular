@@ -232,20 +232,9 @@ bool PageView::canFitPageWidth()
 
 void PageView::fitPageWidth( int page )
 {
-    // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
-    d->zoomMode = ZoomFitWidth;
-    Settings::setViewColumns( 1 );
-    d->aZoomFitWidth->setChecked( true );
-    d->aZoomFitPage->setChecked( false );
-    d->aZoomFitText->setChecked( false );
-    d->aViewTwoPages->setChecked( false );
-    viewport()->setUpdatesEnabled( false );
-    slotRelayoutPages();
-    viewport()->setUpdatesEnabled( true );
-    d->document->setViewportPage( page );
-    updateZoomText();
+    d->aZoom->setCurrentItem(0);
+    slotZoom();
 }
-
 
 //BEGIN DocumentObserver inherited methods
 void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool documentChanged )

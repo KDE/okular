@@ -43,22 +43,22 @@ public:
   ~PDFDoc();
 
   // Was PDF document successfully opened?
-  GBool isOk() { return ok; }
+  GBool isOk() const { return ok; }
 
   // Get the error code (if isOk() returns false).
-  int getErrorCode() { return errCode; }
+  int getErrorCode() const { return errCode; }
 
   // Get file name.
-  GString *getFileName() { return fileName; }
+  GString *getFileName() const { return fileName; }
 
   // Get the xref table.
-  XRef *getXRef() { return xref; }
+  XRef *getXRef() const { return xref; }
 
   // Get catalog.
-  Catalog *getCatalog() { return catalog; }
+  Catalog *getCatalog() const{ return catalog; }
 
   // Get base stream.
-  BaseStream *getBaseStream() { return str; }
+  BaseStream *getBaseStream() const { return str; }
 
   // Get page parameters.
   double getPageWidth(int page)
@@ -84,14 +84,14 @@ public:
     }
 
   // Get number of pages.
-  int getNumPages() { return catalog->getNumPages(); }
+  int getNumPages() const { return catalog->getNumPages(); }
 
   // Return the contents of the metadata stream, or NULL if there is
   // no metadata.
-  GString *readMetadata() { return catalog->readMetadata(); }
+  GString *readMetadata() const { return catalog->readMetadata(); }
 
   // Return the structure tree root object.
-  Object *getStructTreeRoot() { return catalog->getStructTreeRoot(); }
+  Object *getStructTreeRoot() const { return catalog->getStructTreeRoot(); }
 
   // Display a page.
   void displayPage(OutputDev *out, int page, double zoom,
@@ -130,11 +130,11 @@ public:
 
 #ifndef DISABLE_OUTLINE
   // Return the outline object.
-  Outline *getOutline() { return outline; }
+  Outline *getOutline() const { return outline; }
 #endif
 
   // Is the file encrypted?
-  GBool isEncrypted() { return xref->isEncrypted(); }
+  GBool isEncrypted() const { return xref->isEncrypted(); }
 
   // Check various permissions.
   GBool okToPrint(GBool ignoreOwnerPW = gFalse)
@@ -150,11 +150,11 @@ public:
   GBool isLinearized();
 
   // Return the document's Info dictionary (if any).
-  Object *getDocInfo(Object *obj) { return xref->getDocInfo(obj); }
-  Object *getDocInfoNF(Object *obj) { return xref->getDocInfoNF(obj); }
+  Object *getDocInfo(Object *obj) const { return xref->getDocInfo(obj); }
+  Object *getDocInfoNF(Object *obj) const { return xref->getDocInfoNF(obj); }
 
   // Return the PDF version specified by the file.
-  double getPDFVersion() { return pdfVersion; }
+  double getPDFVersion() const { return pdfVersion; }
 
   // Save this file with another name.
   GBool saveAs(GString *name);

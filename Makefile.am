@@ -23,7 +23,7 @@ kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 	optionDialogFontsWidget.cpp optionDialogFontsWidget_base.ui \
 	optionDialogSpecialWidget.cpp optionDialogSpecialWidget_base.ui \
 	TeXFont.cpp TeXFont_PK.cpp TeXFont_PFB.cpp TeXFont_TFM.cpp \
-	TeXFontDefinition.cpp dviWidget.cpp \
+	TeXFontDefinition.cpp dviWidget.cpp dvisourcesplitter.cpp \
 	prefs.kcfgc
 
 kde_kcfg_DATA = kdvi.kcfg
@@ -42,7 +42,7 @@ kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kdvi_LDADD = ../kviewshell/libifaces.la -lkparts
 
 ## this option you can leave out. Just, if you use "make dist", you need it
-noinst_HEADERS = dvi.h dviwin.h xdvi.h 
+noinst_HEADERS = dvi.h dviwin.h xdvi.h
 
 messages: rc.cpp
 	$(PREPARETIPS) > tips.cpp

@@ -15,8 +15,8 @@
 #include <qcheckbox.h>
 #include <qclipboard.h>
 #include <qcursor.h>
-#include <qfileinfo.h>
 #include <qlabel.h>
+#include <qfileinfo.h>
 #include <qlayout.h>
 #include <qmessagebox.h>
 #include <qpaintdevice.h>
@@ -49,10 +49,12 @@
 #include "performanceMeasurement.h"
 #include "xdvi.h"
 #include "zoomlimits.h"
+#include "dvisourcesplitter.h"
 
 //#define DEBUG_DVIWIN
 
 QPainter foreGroundPaint; // QPainter used for text
+
 
 //------ now comes the dviRenderer class implementation ----------
 
@@ -541,8 +543,7 @@ anchor dviRenderer::parseReference(const QString &reference)
   
   if (dviFile == 0)
     return anchor();
-  
-  
+    
   // case 1: The reference is a number, which we'll interpret as a
   // page number.
   bool ok;
@@ -561,23 +562,18 @@ anchor dviRenderer::parseReference(const QString &reference)
   // looks for source specials of the form "src:xxxxFilename", and
   // tries to find the special with the biggest xxxx
   if (reference.find("src:",0,false) == 0) {
-    QString ref = reference.mid(4);
+  
     // Extract the file name and the numeral part from the reference string
-    Q_UINT32 i;
-    for(i=0;i<ref.length();i++)
-      if (!ref.at(i).isNumber())
-	break;
-    Q_UINT32 refLineNumber = ref.left(i).toUInt();
-
-    QFileInfo fi1(dviFile->filename);
-    QString  refFileName   = QFileInfo(fi1.dir(), ref.mid(i).stripWhiteSpace()).absFilePath();
-
+    DVI_SourceFileSplitter splitter(reference, dviFile->filename);
+    Q_UINT32 refLineNumber = splitter.line();
+    QString  refFileName   = splitter.filePath();
+    
     if (sourceHyperLinkAnchors.isEmpty()) {
       KMessageBox::sorry(parentWidget, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
 				    "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
-				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(refFileName),
+				    "information. Press the F1 key to open the manual.</qt>").arg(refLineNumber).arg(refFileName),
 			 i18n("Could Not Find Reference"));
       return anchor();
     }
@@ -600,7 +596,9 @@ anchor dviRenderer::parseReference(const QString &reference)
     QValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
     QValueVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
-      if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
+      if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()
+      || refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace() + ".tex"
+      ) {
 	anchorForRefFileFound = true;
 	
 	if ( (it->line <= refLineNumber) &&
@@ -613,7 +611,7 @@ anchor dviRenderer::parseReference(const QString &reference)
     else
       if (anchorForRefFileFound == false)
 	KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
-					      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
+					      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(refLineNumber).arg(refFileName),
 			   i18n( "Could Not Find Reference" ));
       else
 	return anchor();
@@ -691,38 +689,34 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, documen
   kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;
 #endif
   
-  QString cp = linkText;
-  int max = cp.length();
-  int i;
-  for(i=0; i<max; i++)
-    if (cp[i].isDigit() == false)
-      break;
-  
-  // The macro-package srcltx gives a special like "src:99 test.tex"
-  // while MikTeX gives "src:99test.tex". KDVI tries
-  // to understand both.
-  QFileInfo fi1(dviFile->filename);
-  QFileInfo fi2(fi1.dir(),cp.mid(i+1));
+//   QString cp = linkText;
+//   int max = cp.length();
+//   int i;
+//   for(i=0; i<max; i++)
+//     if (cp[i].isDigit() == false)
+//       break;
+//   
+//   // The macro-package srcltx gives a special like "src:99 test.tex"
+//   // while MikTeX gives "src:99test.tex". KDVI tries
+//   // to understand both.
+//   QFileInfo fi1(dviFile->filename);
+//   QFileInfo fi2(fi1.dir(),cp.mid(i+1));
+// 
+//   //Sometimes the filename is passed without the .tex extension,
+//   //better add it when necessary.
+//   if ( !fi2.exists() )
+//     fi2.setFile(fi2.absFilePath() + ".tex");
 
-  //Sometimes the filename is passed without the .tex extension,
-  //better add it when necessary.
-  if ( !fi2.exists() )
-    fi2.setFile(fi2.absFilePath() + ".tex");
-
-  QString TeXfile;
-  if ( fi2.exists() )
-    TeXfile = fi2.absFilePath();
-  else {
-    QFileInfo fi3(fi1.dir(),cp.mid(i));
-    TeXfile = fi3.absFilePath();
-    if ( !fi3.exists() ) {
+  DVI_SourceFileSplitter splitter(linkText, dviFile->filename);
+  QString TeXfile = splitter.filePath();
+  if ( ! splitter.fileExists() )
+  {
       KMessageBox::sorry(parentWidget, QString("<qt>") +
 			 i18n("The DVI-file refers to the TeX-file "
 			      "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
 			 QString("</qt>"),
 			 i18n( "Could Not Find File" ));
       return;
-    }
   }
   
   QString command = editorCommand;
@@ -740,7 +734,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, documen
     else
       return;
   }
-  command = command.replace( QRegExp("%l"), cp.left(i) ).replace( QRegExp("%f"), KShellProcess::quote(TeXfile) );
+  command = command.replace( "%l", QString::number(splitter.line()) ).replace( "%f", KShellProcess::quote(TeXfile) );
   
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Calling program: " << command << endl;

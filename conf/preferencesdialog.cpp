@@ -30,5 +30,5 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     addPage( m_accessibility, i18n("Accessibility"), "access", i18n("Reading Aids") );
     addPage( m_performance, i18n("Performance"), "launch", i18n("Performance Tuning") );
     addPage( m_presentation, i18n("Presentation"), "kpresenter_kpr",
-             i18n("Options For Presentation Mode") );
+             i18n("Options for Presentation Mode") );
 }

@@ -94,8 +94,8 @@ extern ALLOC_RETURN_TYPE *calloc (), *malloc (), *realloc ();
 #ifndef WIN32
 /* `popen' and `pclose' are part of POSIX.2, not POSIX.1.  So
    STDC_HEADERS isn't enough.  */
-extern FILE *popen ();
-extern int pclose ();
+extern FILE *popen (const char *, const char *);
+extern int pclose (FILE *);
 #endif /* not WIN32 */
 #endif /* not VMS */
 

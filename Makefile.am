@@ -1,6 +1,4 @@
 
-AUTOMAKE_OPTIONS = no-dependencies
-
 kpathsea = kpathsea/kpathsea.a
 
 # this 10 paths are KDE specific. Use them:
@@ -44,7 +42,7 @@ kdvi_SOURCES	= dviwin.cpp kdvi.cpp marklist.cpp prefs.cpp print.cpp\
 squeeze_SOURCES	= squeeze.c
 
 # the library search path
-kdvi_LDFLAGS = @all_libraries@
+kdvi_LDFLAGS = @all_libraries@ $(KDE_RPATH)
 
 # the libraries to link against. Be aware of the order. First the libraries,
 # that depend on the following ones.

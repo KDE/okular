@@ -20,6 +20,7 @@ In progress [working on]:
 More items (first items will enter 'In progress list' first):
 -> annotations: add the annot pane
 -> annots toolbar: display tooltip only the first time
+-> annotations: provide nice wizards. Make it easy to deliver/copy/move the xml files (by Uga)
 -> popup context menu when using right button in selection mode (BR99315)
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)

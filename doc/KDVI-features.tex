@@ -7,9 +7,8 @@
 \usepackage[arrow,matrix,curve,ps]{xy}
 \xyoption{dvips}
 \usepackage[active]{srcltx}
-
 \usepackage{hyperref}
-
+\sloppy
 
 \newcommand{\KDVI}{{\sf KDVI 1.0}}
 
@@ -298,12 +297,13 @@ Here is an external link which points to the \href{http://www.kde.org}{main
   website of the KDE project}
 \end{verbatim}
 
-\section{Colored text}
+\section{Colored \Red{text} \Green{and} \Blue{background}}
 
 The DVI specials for colored text are supported as they are described
-in \cite{dvips}. The following code was used to generate the text below:
+in \cite{dvips}. 
 
-\paragraph*{Example} In this document, the following code was used
+\paragraph*{Example} In this document, the following code was used to
+generate the text below.
 \begin{verbatim}
 \usepackage{colordvi}
 
@@ -317,11 +317,21 @@ unless \Yellow{locally changed to yellow}. Now
 we are back to cyan. \textBlack
 \end{verbatim}
 
-This gave the following output: \textGreen This text is green but here
+This gave the following output:
+\begin{verse}
+ \textGreen This text is green but here
 we are \Red{switching to red, \Blue{nesting blue}, recovering the red}
 and back to original green.  \textCyan The text from here on will be
 cyan unless \Yellow{locally changed to yellow}. Now we are back to
 cyan.  \textBlack
+\end{verse}
+
+To set the background color of the page, the command
+\background{Lavender}
+\begin{verbatim}
+\background{Lavender}
+\end{verbatim}
+was used.
 
 
 \section{Source text specials}
@@ -385,34 +395,33 @@ into the document preamble. Everything else is automatic.
 
 \begin{thebibliography}{CM97}
 
-\bibitem[Rok00]{dvips}
-T.~Rokicki
-\newblock {\em DVIPS: A \TeX\ Driver}
-\newblock included in the tetex distribution. A copy can be found on KDVI's 
-home page at \hfill \linebreak
-\href{http://devel-home.kde.org/~kdvi/DVI/dvips.dvi}{\tt http://devel-home.kde.org/$\sim$kdvi/DVI/dvips.dvi}
-
-\bibitem[TUG0]{Level0Std}
-The TUG DVI Driver Standards Committee
-\newblock {\em The DVI Driver Standard, Level 0}
-\newblock included in the tetex distribution. A copy can be found on KDVI's 
-home page at \hfill \linebreak
-\href{http://devel-home.kde.org/~kdvi/DVI/dvips.dvi}{\tt http://devel-home.kde.org/$\sim$kdvi/DVI/dvips.dvi}
-
 \bibitem[Bha99]{HFAQ99}
 T.~Bhattacharya et al.
 \newblock {\em Hyper\TeX\ FAQ}
 \newblock available on the internet site of the preprint server of the
  Los Alamos National Labatories at 
-\href{http://arXiv.org/hypertex}{\tt http://arXiv.org/hypertex}
+\href{http://arXiv.org/hypertex}{\small \tt http://arXiv.org/hypertex}
 
 \bibitem[Rah98]{Rah98}
 S.~Rahts
 \newblock {\em Hypertext marks in \LaTeX: the {\sf hyperref} package}
 \newblock included in the tetex distribution. A copy can be found on KDVI's 
 home page at \hfill \linebreak
-\href{http://devel-home.kde.org/~kdvi/DVI/hyperref-manual.pdf}{\tt http://devel-home.kde.org/$\sim$kdvi/DVI/hyperref-manual.pdf}
+\href{http://devel-home.kde.org/~kdvi/DVI/hyperref-manual.pdf}{\small \tt http://devel-home.kde.org/$\sim$kdvi/DVI/hyperref-manual.pdf}
 
+\bibitem[Rok00]{dvips}
+T.~Rokicki
+\newblock {\em DVIPS: A \TeX\ Driver}
+\newblock included in the tetex distribution. A copy can be found on KDVI's 
+home page at \hfill \linebreak
+\href{http://devel-home.kde.org/~kdvi/DVI/dvips.dvi}{\small \tt http://devel-home.kde.org/$\sim$kdvi/DVI/dvips.dvi}
+
+\bibitem[TUG0]{Level0Std}
+The TUG DVI Driver Standards Committee
+\newblock {\em The DVI Driver Standard, Level 0}
+\newblock included in the tetex distribution. A copy can be found on KDVI's 
+home page at \hfill \linebreak
+\href{http://devel-home.kde.org/~kdvi/DVI/dvistd0.dvi}{\small \tt http://devel-home.kde.org/$\sim$kdvi/DVI/dvistd0.dvi}
 
 
 \end{thebibliography}

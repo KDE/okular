@@ -161,6 +161,25 @@ void ThumbnailList::notifyPixmapChanged( int pageNumber )
 		}
 }
 
+void ThumbnailList::updateWidgets()
+{
+    // find all widgets that intersects the viewport and update them
+    QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
+    QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    for ( ; tIt != tEnd; ++tIt )
+    {
+        ThumbnailWidget * t = *tIt;
+        QRect widgetRect( childX( t ), childY( t ), t->width(), t->height() );
+        if ( viewportRect.intersects( widgetRect ) )
+        {
+            // update only the exposed area of the widget (saves pixels..)
+            QRect relativeRect = viewportRect.intersect( widgetRect );
+            relativeRect.moveBy( -widgetRect.left(), -widgetRect.top() );
+            t->update( relativeRect );
+        }
+    }
+}
+
 void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
 {
 	ev->accept();

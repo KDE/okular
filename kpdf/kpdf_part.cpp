@@ -399,7 +399,7 @@ void Part::slotNewConfig()
     // TODO do this only when changing Settings::renderMode()
     m_pageView->updateContents();
     if ( showLeft && m_thumbnailList->isShown() )
-        m_thumbnailList->updateContents();
+        m_thumbnailList->updateWidgets();
 }
 
 void Part::slotPrintPreview()

@@ -42,6 +42,9 @@ Q_OBJECT
 		// redraw thumbnail ( inherited as DocumentObserver )
 		void notifyPixmapChanged( int pageNumber );
 
+        // redraw visible widgets (useful for refreshing contents...)
+        void updateWidgets();
+
 	protected:
 		// scroll up/down the view
 		void keyPressEvent( QKeyEvent * e );

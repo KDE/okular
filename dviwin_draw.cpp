@@ -70,7 +70,6 @@
 
 extern char *xmalloc (unsigned, const char *);
 extern FILE *xfopen(const char *filename, char *type);
-extern fontPool font_pool;
 
 struct frame	frame0;	/* dummy head of list */
 
@@ -504,7 +503,15 @@ void dviWindow::draw_part(struct frame *minframe, double current_dimconv)
 
 void dviWindow::draw_page(void)
 {
-  font_pool.status();
+  // Check if all the fonts are loaded. If that is not the case, we
+  // return and do not draw anything. The font_pool will later emit
+  // the signal "fonts_are_loaded" and thus trigger a redraw of the
+  // page.
+  if (font_pool->check_if_fonts_are_loaded() == -1)
+    return;
+
+  // Print debugging information @@@ - remove later
+  font_pool->status();
 
 #ifdef DEBUG_RENDER
   kdDebug() <<"draw_page" << endl;

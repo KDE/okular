@@ -26,6 +26,7 @@ struct bitmap {
 
 class glyph {
  public:
+  glyph();
   ~glyph();
 
   void clearShrunkCharacter();

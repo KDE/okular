@@ -27,6 +27,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "dviwin.h"
@@ -34,7 +35,7 @@
 #include "dvi.h"
 
 extern	char	*xmalloc (unsigned, const char *);
-extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable);
+extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable, class fontPool *pool);
 extern void oops(QString message);
 
 /***
@@ -89,14 +90,17 @@ void font::read_VF_index(void)
   // Read the fonts.
   first_font = NULL;
   while ((cmnd = one(VF_file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
-    struct font *newfontp = define_font(VF_file, cmnd, this, &(vf_table));
+    struct font *newfontp = define_font(VF_file, cmnd, this, &(vf_table), font_pool);
     if (first_font == NULL)
       first_font = newfontp;
   }
 
   // Prepare macro array.
-  macrotable = (macro *)xmalloc(max_num_of_chars_in_font*sizeof(macro),"macro table");
-  memset((char *) macrotable, 0, max_num_of_chars_in_font*sizeof(macro));
+  macrotable = new macro[max_num_of_chars_in_font];
+  if (macrotable == 0) {
+    kdError() << i18n("Could not allocate memory for a macro table.") << endl;
+    exit(0);
+  }
 
   // Read macros.
   avail = availend = NULL;
@@ -111,8 +115,8 @@ void font::read_VF_index(void)
       cc = four(VF_file);
       width = four(VF_file);
       if (cc >= 256) {
-	kdError() << i18n("Virtual character ") << cc << i18n(" in font ") << 
-	  fontname << i18n(" ignored.") << endl;
+	kdError() << i18n("Virtual character ") << cc << i18n(" in font ") 
+		  << fontname << i18n(" ignored.") << endl;
 	Fseek(VF_file, (long) len, 1);
 	continue;
       }

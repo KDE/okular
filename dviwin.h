@@ -19,6 +19,7 @@
 
 #include <kviewpart.h>
 
+#include "fontpool.h"
 #include "psgs.h"
 #include "dvi_init.h"
 
@@ -46,7 +47,7 @@ public:
   dviWindow( double zoom, int makepk, QWidget *parent=0, const char *name=0 );
   ~dviWindow();
 
-  dvifile       *dviFile;
+  class dvifile *dviFile;
 
   void          changePageSize();
   int		totalPages();
@@ -72,7 +73,6 @@ public:
   void          mousePressEvent ( QMouseEvent * e );
   void          read_postamble(void);
   void          draw_part(struct frame *minframe, double current_dimconv);
-  void          draw_page(void);
   void          set_vf_char(unsigned int cmd, unsigned int ch);
   void          set_char(unsigned int cmd, unsigned int ch);
   void          set_empty_char(unsigned int cmd, unsigned int ch);
@@ -86,14 +86,17 @@ public:
   void          html_href_special(QString cp);
   void          html_anchor_end(void);
   void          html_anchor_special(QString cp);
-  void		drawPage();
+  void          draw_page(void);
 
+  class fontPool  *font_pool;
 
 public slots:
   void		setFile(const QString & fname);
   void		gotoPage(int page);
   double	setZoom(double zoom);
   double        zoom() { return _zoom; };
+  void		drawPage();
+
 
 signals:
   /// Emitted to indicate that a hyperlink has been clicked on, and

@@ -43,7 +43,7 @@ struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
 extern unsigned char       dvi_buffer[DVI_BUFFER_LEN];  
 struct drawinf	currinf;
-fontPool font_pool;
+
 
 const char *dvi_oops_msg;	/* error message */
 double	dimconv;
@@ -76,7 +76,6 @@ Window                  mainwin;
 
 void 	draw_page(void);
 
-void 	reset_fonts();
 #include <setjmp.h>
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 double xres;
@@ -100,6 +99,15 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   // initialize the dvi machinery
 
   dviFile                = NULL;
+  font_pool              = new fontPool();
+  if (font_pool == NULL) {
+    kdError() << "Could not allocate memory for the font pool." << endl;
+    exit(-1);
+  }
+  qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded()),
+		this, SLOT(drawPage()));
+
+
   setMakePK( mkpk );
   setMetafontMode( DefaultMFMode ); // that also sets the basedpi
   unshrunk_paper_w       = int( 21.0 * basedpi/2.54 + 0.5 ); // set A4 paper as default
@@ -170,7 +178,7 @@ void dviWindow::setShowHyperLinks( int flag )
 void dviWindow::setMakePK( int flag )
 {
   makepk = flag;
-  font_pool.setMakePK(makepk);
+  font_pool->setMakePK(makepk);
 }
 
 void dviWindow::setMetafontMode( unsigned int mode )
@@ -180,7 +188,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
 			i18n("The change in Metafont mode will be effective\n"
 			     "only after you start kdvi again!") );
 
-  MetafontMode     = font_pool.setMetafontMode(mode);
+  MetafontMode     = font_pool->setMetafontMode(mode);
   basedpi          = MFResolutions[MetafontMode];
   _pixels_per_inch = MFResolutions[MetafontMode];
   kdDebug() << "basedpi " << basedpi << endl;
@@ -199,7 +207,7 @@ void dviWindow::setPaper(double w, double h)
   unshrunk_page_h  = unshrunk_paper_h;
   page_w           = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h           = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
-  reset_fonts();
+  font_pool->reset_fonts();
   changePageSize();
 }
 
@@ -329,7 +337,7 @@ void dviWindow::setFile( const QString & fname )
     return;
   }
 
-  dvifile *dviFile_new = new dvifile(filename);
+  dvifile *dviFile_new = new dvifile(filename,font_pool);
   if (dviFile_new->file == NULL) {
     delete dviFile_new;
     return;
@@ -419,7 +427,7 @@ double dviWindow::setZoom(double zoom)
   page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
 
-  reset_fonts();
+  font_pool->reset_fonts();
   changePageSize();
   return _zoom;
 }

@@ -11,11 +11,6 @@
     <Action name="find"/>
     <Action name="find_next"/>
   </Menu>
-  <Menu name="mouseMode"><text>&amp;Mouse Mode</text>
-    <Action name="mouse_drag"/>
-    <Action name="mouse_zoom"/>
-    <Action name="mouse_select"/>
-  </Menu>
   <Menu name="view"><text>&amp;View</text>
     <Action name="presentation"/>
     <Separator/>
@@ -38,6 +33,11 @@
     <Action name="history_forward" />
     <Separator/>
     <Action name="goto_page"/>
+  </Menu>
+  <Menu name="mouseMode"><text>&amp;Mouse Mode</text>
+    <Action name="mouse_drag"/>
+    <Action name="mouse_zoom"/>
+    <Action name="mouse_select"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="watch_file" group="show_merge"/>

@@ -191,7 +191,7 @@ void dviWindow::drawPage(documentPage *page)
 		  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
-  if ( dviFile->dvi_Data == 0 ) {
+  if ( dviFile->dvi_Data() == 0 ) {
     kdError(4300) << "dviWindow::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
@@ -329,8 +329,8 @@ void dviWindow::embedPostScript(void)
   errorMsg = QString::null;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
+      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
 
@@ -362,8 +362,8 @@ void dviWindow::embedPostScript(void)
     PostScriptOutPutString = new QString();
 
     if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
+      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
 
@@ -484,7 +484,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
 
   QApplication::setOverrideCursor( waitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool, sourceMarker);
-  if ((dviFile_new->dvi_Data == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
+  if ((dviFile_new->dvi_Data() == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
       KMessageBox::detailedError(parentWidget,
@@ -532,7 +532,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
 
-  if (dviFile->page_offset == 0)
+  if (dviFile->page_offset.isEmpty() == true)
     return false;
 
   // If we are re-loading a document, e.g. because the user TeXed his
@@ -557,8 +557,8 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
 	PostScriptOutPutString = new QString();
 
 	if (current_page < dviFile->total_pages) {
-	  command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-	  end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+	  command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
+	  end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
 	} else
 	  command_pointer = end_pointer = 0;
 
@@ -614,8 +614,8 @@ void dviWindow::all_fonts_loaded(fontPool *)
       PostScriptOutPutString = new QString();
 
       if (current_page < dviFile->total_pages) {
-	command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-	end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+	command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
+	end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
       } else
 	command_pointer = end_pointer = 0;
 

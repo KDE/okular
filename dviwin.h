@@ -213,6 +213,7 @@ private:
   // @@@ explanation
   void          prescan(parseSpecials specialParser);
   void          prescan_embedPS(char *cp, Q_UINT8 *);
+  void          prescan_removePageSizeInfo(char *cp, Q_UINT8 *);
   void          prescan_parseSpecials(char *cp, Q_UINT8 *);
   void          prescan_ParsePapersizeSpecial(QString cp);
   void          prescan_ParseBackgroundSpecial(QString cp);

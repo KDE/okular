@@ -43,7 +43,7 @@ enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
 enum {ID_OPT_PK = 3, ID_OPT_PS, ID_OPT_MB, ID_OPT_BB, ID_OPT_TB, ID_OPT_SB, ID_OPT_SC };
 
 kdvi::kdvi( char *fname, QWidget *, const char *name )
-	: KTopLevelWidget( name )
+	: KTMainWindow( name )
 {
 	msg = NULL;
 	ssmenu = NULL;
@@ -135,7 +135,7 @@ kdvi::~kdvi()
 
 void kdvi::closeEvent( QCloseEvent *e )
 {
-  KTopLevelWidget::closeEvent(e);
+  KTMainWindow::closeEvent(e);
   e->accept();
 }
 
@@ -394,7 +394,7 @@ void kdvi::configKeys()
 
 void kdvi::resizeEvent( QResizeEvent* e )
 {
-	KTopLevelWidget::resizeEvent( e );
+	KTMainWindow::resizeEvent( e );
 	
 	config->setGroup( "kdvi" );
 	config->writeEntry( "Width", width() );
@@ -1026,7 +1026,7 @@ int main( int argc, char **argv )
 
 	getOptions( argc, argv );
 	
-	if ( a.isRestored() && KTopLevelWidget::canBeRestored( 1 ) )
+	if ( a.isRestored() && KTMainWindow::canBeRestored( 1 ) )
 	{
 		k = new kdvi();
 		k->restore( 1 );

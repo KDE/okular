@@ -34,7 +34,7 @@
 class QSplitter;
 class QToolTipGroup;
 
-class kdvi : public KTopLevelWidget
+class kdvi : public KTMainWindow
 {
 	Q_OBJECT
 

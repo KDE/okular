@@ -21,6 +21,7 @@
 #include "print.h"
 #include "optiondialog.h"
 #include "kdvi_multipage.moc"
+#include "kviewpart.h"
 #include <config.h>
 
 extern "C"
@@ -74,7 +75,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window = new dviWindow(300, 1.0, "cx", true, scrollView());
   preferencesChanged();
 
-  new KAction(i18n("&DVI Options..."), 0, this,
+  new KAction(i18n("&DVI Options"), 0, this,
 	      SLOT(doSettings()), actionCollection(),
 	      "settings_dvi");
 
@@ -159,10 +160,15 @@ void KDVIMultiPage::goto_page(int page, int y)
 
 double KDVIMultiPage::setZoom(double zoom)
 {
-  window->setZoom(zoom);
+  if (zoom < KViewPart::minZoom/1000.0)
+    zoom = KViewPart::minZoom/1000.0;
+  if (zoom > KViewPart::maxZoom/1000.0)
+    zoom = KViewPart::maxZoom/1000.0;
+
+  double z = window->setZoom(zoom);
   scrollView()->resizeContents(window->width(), window->height());
 
-  return zoom;
+  return z;
 }
 
 

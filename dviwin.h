@@ -17,6 +17,8 @@
 #include <qintdict.h>
 #include <qvector.h>
 
+#include <kviewpart.h>
+
 #include "psgs.h"
 #include "dvi_init.h"
 
@@ -97,7 +99,7 @@ public:
 public slots:
   void		setFile(const QString & fname);
   void		gotoPage(int page);
-  void		setZoom(double zoom);
+  double	setZoom(double zoom);
   double        zoom() { return _zoom; };
 
 signals:

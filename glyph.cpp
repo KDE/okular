@@ -12,9 +12,11 @@
 
 #include <stdlib.h>
 
-#include <qpainter.h>
 #include <qbitmap.h> 
 #include <qimage.h> 
+#include <qpainter.h>
+
+#include <kdebug.h> 
 
 glyph::~glyph()
 {
@@ -94,16 +96,22 @@ QPixmap glyph::shrunkCharacter()
     // Now shrinking may begin. Produce a QBitmap with the unshrunk
     // character.
     QBitmap bm(bitmap.bytes_wide*8, (int)bitmap.h, (const uchar *)(bitmap.bits) ,TRUE);
-
     // ... turn it into a Pixmap (highly inefficient, please improve)
     SmallChar = new QPixmap(bitmap.w+pre_cols+post_cols, bitmap.h+pre_rows+post_rows);
+    if (SmallChar == 0)
+      return 0;
+    if (SmallChar->isNull()) {
+      delete SmallChar;
+      SmallChar = 0;
+      return 0;
+    }
+
     QPainter paint(SmallChar);
     paint.setBackgroundColor(Qt::white);
     paint.setPen( Qt::black );
     paint.fillRect(0,0,bitmap.w+pre_cols+post_cols, bitmap.h+pre_rows+post_rows, Qt::white);
     paint.drawPixmap(pre_cols, pre_rows, bm);
     paint.end();
-    
     // Generate an Image and shrink it to the proper size. By the
     // documentation of smoothScale, the resulting Image will be
     // 8-bit.

@@ -470,12 +470,12 @@ void QOutputDev::doClip ( GfxState *state, bool winding )
 	// transform points
 	int n = convertPath ( state, points, lengths );
 
-	kdDebug() << k_funcinfo << endl;
-	for (unsigned int j = 0; j < points.count(); j++) {
-		int x = points[j].x();
-		int y = points[j].y();
-		kdDebug() << '(' << x << ',' << y << ')' << endl;
-	}
+// 	kdDebug() << k_funcinfo << endl;
+// 	for (unsigned int j = 0; j < points.count(); j++) {
+// 		int x = points[j].x();
+// 		int y = points[j].y();
+// 		kdDebug() << '(' << x << ',' << y << ')' << endl;
+// 	}
 
 	QRegion region;
 
@@ -494,12 +494,12 @@ void QOutputDev::doClip ( GfxState *state, bool winding )
 			for ( int ii = 0; ii < len; ii++ ) printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( ));
 			printf ( "\n" );
 
-			kdDebug() << k_funcinfo << endl;
-			for (unsigned int j = 0; j < dummy.count(); j++) {
-				int x = dummy[j].x();
-				int y = dummy[j].y();
-				kdDebug() << '(' << x << ',' << y << ')' << endl;
-			}
+// 			kdDebug() << k_funcinfo << endl;
+// 			for (unsigned int j = 0; j < dummy.count(); j++) {
+// 				int x = dummy[j].x();
+// 				int y = dummy[j].y();
+// 				kdDebug() << '(' << x << ',' << y << ')' << endl;
+// 			}
 
 			region |= QRegion ( dummy, winding );
 
@@ -540,12 +540,12 @@ int QOutputDev::convertPath ( GfxState *state, QPointArray &points, QMemArray<in
 		lengths [i] = convertSubpath ( state, path-> getSubpath ( i ), points );
 	}
 
-	kdDebug() << k_funcinfo << endl;
-	for (unsigned int j = 0; j < points.count(); j++) {
-		int x = points[j].x();
-		int y = points[j].y();
-		kdDebug() << '(' << x << ',' << y << ')' << endl;
-	}
+// 	kdDebug() << k_funcinfo << endl;
+// 	for (unsigned int j = 0; j < points.count(); j++) {
+// 		int x = points[j].x();
+// 		int y = points[j].y();
+// 		kdDebug() << '(' << x << ',' << y << ')' << endl;
+// 	}
 
 	return n;
 }
@@ -570,18 +570,18 @@ int QOutputDev::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArr
 			state-> transform ( subpath-> getX ( i + 1 ), subpath-> getY ( i + 1 ), &x2, &y2 );
 			state-> transform ( subpath-> getX ( i + 2 ), subpath-> getY ( i + 2 ), &x3, &y3 );
 
-			kdDebug() << "Points : " << "(" << x0 << "," << y0 << "),(" << x1 << "," << y1 << "),("
-					<< x2 << "," << y2 << "),(" << x3 << "," << y3 << ")" << endl;
+// 			kdDebug() << "Points : " << "(" << x0 << "," << y0 << "),(" << x1 << "," << y1 << "),("
+// 					<< x2 << "," << y2 << "),(" << x3 << "," << y3 << ")" << endl;
 
 			QPointArray tmp;
 			tmp. setPoints ( 4, qRound ( x0 ), qRound ( y0 ), qRound ( x1 ), qRound ( y1 ),
 			                    qRound ( x2 ), qRound ( y2 ), qRound ( x3 ), qRound ( y3 ));
 
-			for (unsigned int j = 0; j < tmp.count(); j++) {
-				int x = tmp[j].x();
-				int y = tmp[j].y();
-				kdDebug() << '(' << x << ',' << y << ')' << endl;
-			}
+// 			for (unsigned int j = 0; j < tmp.count(); j++) {
+// 				int x = tmp[j].x();
+// 				int y = tmp[j].y();
+// 				kdDebug() << '(' << x << ',' << y << ')' << endl;
+// 			}
 
 			tmp = tmp. cubicBezier ( );
 			points. putPoints ( points. count ( ), tmp. count ( ), tmp );
@@ -697,7 +697,7 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 			m_painter-> setWorldMatrix ( oldmat );
 #endif
 
-		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), qRound ( x1 ), qRound ( y1 )));
+//		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), qRound ( x1 ), qRound ( y1 )));
 	}
 	else if ( code != 0 ) {
 		// some PDF files use CID 0, which is .notdef, so just ignore it
@@ -769,8 +769,8 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 #ifndef QT_NO_TRANSFORMATIONS
 	QWMatrix mat ( ctm [0] / width, ctm [1] / height, ctm [2] / width, ctm [3] / height, ctm [4], ctm [5] );
 
-	kdDebug() << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << endl
-	         << " - M=" << mat. m11 ( ) << "/" << mat. m12 ( ) << "/" << mat. m21 ( ) << "/" << mat. m22 ( ) << endl;
+// 	kdDebug() << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << endl
+// 	         << " - M=" << mat. m11 ( ) << "/" << mat. m12 ( ) << "/" << mat. m21 ( ) << "/" << mat. m22 ( ) << endl;
 
 	QWMatrix oldmat = m_painter-> worldMatrix ( );
 	m_painter-> setWorldMatrix ( mat, true );

@@ -39,6 +39,10 @@ class TeXFontDefinition;
 
 extern const int MFResolutions[];
 
+
+// If this is defined, KDVI will emitt debugging messages to tell how
+// long certain tasks take
+
 class DVI_Hyperlink {
  public:
   DVI_Hyperlink() {}
@@ -202,7 +206,7 @@ public slots:
       corresponding section of the DVI file can be found. If so, it
       will emit a "requestGotoPage", otherwise it will just call
       drawpage */
-  void          all_fonts_loaded();
+  void          all_fonts_loaded(fontPool *);
 
 signals:
   /** Emitted to indicate that a hyperlink has been clicked on, and

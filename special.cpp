@@ -172,11 +172,10 @@ void dviWindow::background_special(QString cp)
 {
   // The color specials are ignored during rendering, and used only in
   // the pre-scan phase
-  if (PostScriptOutPutString == NULL) {
+  if (PostScriptOutPutString != NULL) {
     QColor col = parseColorSpecification(cp.stripWhiteSpace());
-
-    //@@@@ do something with the color!
-
+    if (col.isValid())
+      PS_interface->setColor(current_page, col);
     return;
   }
 }

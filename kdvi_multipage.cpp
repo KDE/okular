@@ -19,7 +19,15 @@
 #include "kdvi_multipage.h"
 #include "kviewpart.h"
 #include "optiondialog.h"
+#include "performanceMeasurement.h"
 #include "zoomlimits.h"
+
+#ifdef PERFORMANCE_MEASUREMENT
+// These objects are explained in the file "performanceMeasurement.h"
+QTime performanceTimer;
+int  performanceFlag = 0;
+#endif
+
 
 extern "C"
 {
@@ -66,6 +74,10 @@ KInstance *KDVIMultiPageFactory::instance()
 KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name)
   : KMultiPage(parentWidget, widgetName, parent, name), window(0), options(0)
 {
+#ifdef PERFORMANCE_MEASUREMENT
+  performanceTimer.start();
+#endif
+
   timer_id = -1;
   setInstance(KDVIMultiPageFactory::instance());
 
@@ -145,7 +157,7 @@ void KDVIMultiPage::jumpToReference(QString reference)
 {
   if (window != 0) {
     window->reference = reference;
-    window->all_fonts_loaded(); // In spite of its name, this method tries to parse the reference.
+    window->all_fonts_loaded(0); // In spite of its name, this method tries to parse the reference.
   }
 }
 

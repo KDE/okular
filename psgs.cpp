@@ -23,15 +23,9 @@ pageInfo::~pageInfo() {
 // ======================================================
 
 ghostscript_interface::ghostscript_interface(double dpi, int pxlw, int pxlh) {
-  //@@@ Error checking !
-  pageList     = new QIntDict<pageInfo>(256);
-  pageList->setAutoDelete(TRUE);
-
-  MemoryCache  = new QIntCache<QPixmap>(PAGES_IN_MEMORY_CACHE, PAGES_IN_MEMORY_CACHE);
-  MemoryCache->setAutoDelete(TRUE);
-
-  DiskCache    = new QIntCache<KTempFile>(PAGES_IN_DISK_CACHE, PAGES_IN_DISK_CACHE);
-  DiskCache->setAutoDelete(TRUE);
+  pageList.setAutoDelete(TRUE);
+  MemoryCache.setAutoDelete(TRUE);
+  DiskCache.setAutoDelete(TRUE);
 
   PostScriptHeaderString = new QString();
   resolution   = dpi;
@@ -40,12 +34,6 @@ ghostscript_interface::ghostscript_interface(double dpi, int pxlw, int pxlh) {
 }
 
 ghostscript_interface::~ghostscript_interface() {
-  if (pageList != 0L)
-    delete pageList;
-  if (MemoryCache != 0L)
-    delete MemoryCache;
-  if (DiskCache != 0L)
-    delete DiskCache;
   if (PostScriptHeaderString != 0L)
     delete PostScriptHeaderString;
 }
@@ -56,58 +44,61 @@ void ghostscript_interface::setSize(double dpi, int pxlw, int pxlh) {
   pixel_page_w = pxlw;
   pixel_page_h = pxlh;
 
-  MemoryCache->clear();
-  DiskCache->clear();
+  MemoryCache.clear();
+  DiskCache.clear();
 }
 
 
 void ghostscript_interface::setPostScript(int page, QString PostScript) {
-  if (pageList->find(page) == 0) {
+  if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(PostScript);
     // Check if dict is big enough
-    if (pageList->count() > pageList->size() -2)
-      pageList->resize(pageList->size()*2);
-    pageList->insert(page, info);
+    if (pageList.count() > pageList.size() -2)
+      pageList.resize(pageList.size()*2);
+    pageList.insert(page, info);
   } else 
-    *(pageList->find(page)->PostScriptString) = PostScript;
+    *(pageList.find(page)->PostScriptString) = PostScript;
 }
 
 
 void ghostscript_interface::setColor(int page, QColor background_color) {
-  if (pageList->find(page) == 0) {
+  if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(QString::null);
     info->background = background_color;
     // Check if dict is big enough
-    if (pageList->count() > pageList->size() -2)
-      pageList->resize(pageList->size()*2);
-    pageList->insert(page, info);
-  } else 
-    pageList->find(page)->background = background_color;
+    if (pageList.count() > pageList.size() -2)
+      pageList.resize(pageList.size()*2);
+    pageList.insert(page, info);
+  } else
+    pageList.find(page)->background = background_color;
 }
 
 
+// Returns the background color for a certain page. This color is
+// always guaranteed to be valid
+
 QColor ghostscript_interface::getBackgroundColor(int page) {
-  if (pageList->find(page) == 0) 
+  if (pageList.find(page) == 0) 
     return Qt::white;
   else 
-    return pageList->find(page)->background;
+    return pageList.find(page)->background;
 }
 
 
 void ghostscript_interface::clear(void) {
   PostScriptHeaderString->truncate(0);
 
-  MemoryCache->clear();
-  DiskCache->clear();
+  MemoryCache.clear();
+  DiskCache.clear();
 
   // Deletes all items, removes temporary files, etc.
-  pageList->clear();
+  pageList.clear();
 }
 
 void ghostscript_interface::gs_generate_graphics_file(int page, QString filename) {
   emit(setStatusBarText(i18n("Generating PostScript graphics...")));
 
-  pageInfo *info = pageList->find(page);
+  pageInfo *info = pageList.find(page);
 
   // Generate a PNG-file
   // Step 1: Write the PostScriptString to a File
@@ -162,23 +153,23 @@ void ghostscript_interface::gs_generate_graphics_file(int page, QString filename
 
 QPixmap *ghostscript_interface::graphics(int page) {
 
-  pageInfo *info = pageList->find(page);
+  pageInfo *info = pageList.find(page);
 
   // No PostScript? Then return immediately.
-  if (info == NULL)
-    return NULL;
+  if ((info == 0) || (info->PostScriptString->isEmpty()))
+    return 0;
 
   // Gfx exists in the MemoryCache?
-  QPixmap *CachedCopy = MemoryCache->find(page);
+  QPixmap *CachedCopy = MemoryCache.find(page);
   if (CachedCopy != NULL) 
     return new QPixmap(*CachedCopy);
 
   // Gfx exists in the DiskCache?
-  KTempFile *CachedCopyFile = DiskCache->find(page);
+  KTempFile *CachedCopyFile = DiskCache.find(page);
   if (CachedCopyFile != NULL) {
     QPixmap *MemoryCopy = new QPixmap(CachedCopyFile->name());
     QPixmap *ReturnCopy = new QPixmap(*MemoryCopy);
-    MemoryCache->insert(page, MemoryCopy);
+    MemoryCache.insert(page, MemoryCopy);
     return ReturnCopy;
   }
 
@@ -192,8 +183,8 @@ QPixmap *ghostscript_interface::graphics(int page) {
 
   QPixmap *MemoryCopy = new QPixmap(GfxFile->name());
   QPixmap *ReturnCopy = new QPixmap(*MemoryCopy);
-  MemoryCache->insert(page, MemoryCopy);
-  DiskCache->insert(page, GfxFile);
+  MemoryCache.insert(page, MemoryCopy);
+  DiskCache.insert(page, GfxFile);
   return ReturnCopy;
 }
 #include "psgs.moc"

@@ -213,8 +213,8 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     // character.
     QBitmap bm(characterBitmaps[ch]->bytes_wide*8, (int)characterBitmaps[ch]->h, (const uchar *)(characterBitmaps[ch]->bits), TRUE);
     // ... turn it into a Pixmap (highly inefficient, please improve)
-    g->shrunkenCharacter.resize(characterBitmaps[ch]->w + pre_cols+post_cols, characterBitmaps[ch]->h + pre_rows+post_rows);
-    QPainter paint(&g->shrunkenCharacter);
+    QPixmap intpm(characterBitmaps[ch]->w + pre_cols+post_cols, characterBitmaps[ch]->h + pre_rows+post_rows);
+    QPainter paint(&intpm);
     paint.setBackgroundColor(Qt::white);
     paint.setPen( Qt::black );
     paint.fillRect(0,0,characterBitmaps[ch]->w + pre_cols+post_cols, characterBitmaps[ch]->h + pre_rows+post_rows, Qt::white);
@@ -224,7 +224,7 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     // Generate an Image and shrink it to the proper size. By the
     // documentation of smoothScale, the resulting Image will be
     // 8-bit.
-    QImage EightBitImage = g->shrunkenCharacter.convertToImage().smoothScale(shrunk_width, shrunk_height).convertDepth(32);
+    QImage EightBitImage = intpm.convertToImage().smoothScale(shrunk_width, shrunk_height).convertDepth(32);
 
     // Generate the alpha-channel. This again is highly inefficient.
     // Would anybody please produce a faster routine?

@@ -44,12 +44,12 @@
 #include "fontprogress.h"
 #include "infodialog.h"
 #include "optiondialog.h"
+#include "performanceMeasurement.h"
 #include "xdvi.h"
 #include "zoomlimits.h"
 
 
 QPainter foreGroundPaint; // QPainter used for text
-
 
 //------ now comes the dviWindow class implementation ----------
 
@@ -77,7 +77,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
     exit(-1);
   }
   connect(font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-  connect(font_pool, SIGNAL(fonts_have_been_loaded()), this, SLOT(all_fonts_loaded()));
+  connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), this, SLOT(all_fonts_loaded(fontPool *)));
 
   info                   = new infoDialog(this);
   if (info == 0) {
@@ -86,7 +86,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
     kdError(4300) << "Could not allocate memory for the info dialog." << endl;
   } else {
     qApp->connect(font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
-    qApp->connect(font_pool, SIGNAL(fonts_info(fontPool *)), info, SLOT(setFontInfo(fontPool *)));
+    qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), info, SLOT(setFontInfo(fontPool *)));
     qApp->connect(font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
   }
 
@@ -254,19 +254,20 @@ void dviWindow::drawPage()
   kdDebug(4300) << "dviWindow::drawPage()" << endl;
 #endif
 
+ start:
   shrinkfactor = MFResolutions[font_pool->getMetafontMode()]/(xres*_zoom);
   setCursor(arrowCursor);
-
+  
   // Stop any animation which may be in progress
   if (timerIdent != 0) {
     killTimer(timerIdent);
     timerIdent       = 0;
     animationCounter = 0;
   }
-
+  
   // Remove the mouse selection
   DVIselection.clear();
-
+  
   // Stop if there is no dvi-file present
   if ( dviFile == 0 ) {
     resize(0, 0);
@@ -357,6 +358,19 @@ void dviWindow::drawPage()
   }
   update();
   emit contents_changed();
+
+#ifdef PERFORMANCE_MEASUREMENT
+  if (performanceFlag == 1) {
+    qApp->processEvents(30);
+    current_page++;
+    if (current_page < dviFile->total_pages)
+      goto start;
+    else {
+      kdDebug(4300) << "Time required to draw all pages: " << performanceTimer.restart() << "ms" << endl;
+      performanceFlag = 2;
+    }
+  }
+#endif
 }
 
 
@@ -494,6 +508,13 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
 
   if (dviFile->page_offset == 0)
     return false;
+
+  // Prescan phase starts here
+#ifdef PERFORMANCE_MEASUREMENT
+  kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+  QTime preScanTimer;
+  preScanTimer.start();
+#endif
   
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
@@ -515,13 +536,17 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   }
   PostScriptOutPutString = NULL;
   is_current_page_drawn  = 0;
+  
+#ifdef PERFORMANCE_MEASUREMENT
+  kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+#endif
 
   QApplication::restoreOverrideCursor();
   reference              = ref;
   return true;
 }
 
-void dviWindow::all_fonts_loaded(void)
+void dviWindow::all_fonts_loaded(fontPool *)
 {
   if (dviFile == 0)
     return;

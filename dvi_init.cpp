@@ -189,6 +189,7 @@ void dvifile::read_postamble(void)
   font_pool->release_fonts();
 }
 
+
 void dvifile::prepare_pages()
 {
 #ifdef DEBUG_DVIFILE
@@ -196,6 +197,9 @@ void dvifile::prepare_pages()
 #endif
 
   page_offset              = new Q_UINT32[total_pages+1];
+  for(int i=0; i<=total_pages; i++)
+    page_offset[i] = 0;
+
   if (page_offset == 0) {
     kdError(4300) << "No memory for page list!" << endl;
     return;
@@ -207,8 +211,7 @@ void dvifile::prepare_pages()
 
   // Follow back pointers through pages in the DVI file, storing the
   // offsets in the page_offset table.
-  // @@@@ ADD CHECK FOR CONSISTENCY !!! NEVER LET THE COMMAND PTR POINT OUTSIDE THE ALLOCATED MEM !!!!
-  while (i > 0) {
+   while (i > 0) {
     command_pointer  = dvi_Data + page_offset[i--];
     if (readUINT8() != BOP) {
       errorMsg = i18n("The page %1 does not start with the BOP command.").arg(i+1);
@@ -217,7 +220,7 @@ void dvifile::prepare_pages()
     command_pointer += 10 * 4;
     page_offset[i] = readUINT32();
     if ((dvi_Data+page_offset[i] < dvi_Data)||(dvi_Data+page_offset[i] > dvi_Data+size_of_file))
-      page_offset[i] = 0;
+      break;
   }
 }
 

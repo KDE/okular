@@ -19,6 +19,7 @@
 
 #include "fontpool.h"
 #include "fontprogress.h"
+#include "performanceMeasurement.h"
 #include "TeXFont.h"
 
 // List of permissible MetaFontModes which are supported by kdvi.
@@ -26,6 +27,11 @@
 const char *MFModes[]       = { "cx", "ljfour", "lexmarks" };
 const char *MFModenames[]   = { "Canon CX", "LaserJet 4", "Lexmark S" };
 const int   MFResolutions[] = { 300, 600, 1200 };
+
+#ifdef PERFORMANCE_MEASUREMENT
+QTime fontPoolTimer;
+bool fontPoolTimerFlag;
+#endif
 
 //#define DEBUG_FONTPOOL
 
@@ -176,7 +182,7 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _en
   if (kpsewhichNeeded == true)
     check_if_fonts_filenames_are_looked_up();
   else
-    emit fonts_have_been_loaded();
+    emit fonts_have_been_loaded(this);
 }
 
 
@@ -207,7 +213,12 @@ class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, 
     exit(0);
   }
   fontList.append(fontp);
-  
+ 
+#ifdef PERFORMANCE_MEASUREMENT
+  fontPoolTimer.start();
+  fontPoolTimerFlag = false;
+#endif
+ 
   // Now start kpsewhich/MetaFont, etc. if necessary
   return fontp;
 }
@@ -215,6 +226,10 @@ class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, 
 
 QString fontPool::status(void)
 {
+#ifdef DEBUG_FONTPOOL
+  kdDebug(4300) << "fontPool::status() called" << endl;
+#endif
+
   QString       text;
   QStringList   tmp;
 
@@ -261,10 +276,9 @@ bool fontPool::check_if_fonts_filenames_are_looked_up(void)
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "... no, kpsewhich is still running." << endl;
 #endif
-    emit fonts_info(this);
     return false;
   }
-  
+
   // Is there a font whose name we did not try to find out yet?
   TeXFontDefinition *fontp = fontList.first();
   while( fontp != 0 ) {
@@ -277,7 +291,6 @@ bool fontPool::check_if_fonts_filenames_are_looked_up(void)
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "... yes, all fonts are there, or could not be found." << endl;
 #endif
-    emit fonts_info(this);
     return true; // That says that all fonts are loaded.
   }
 
@@ -293,13 +306,12 @@ void fontPool::start_kpsewhich(void)
   kdDebug(4300) << "fontPool::start_kpsewhich(void) called" << endl;
 #endif
 
-  // Check if kpsewhich is still running. In that case certainly not
-  // all fonts have been properly looked up.
+  // Check if kpsewhich is still running. In that case we certainly do
+  // not want to run another kpsewhich process
   if (proc != 0) {
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "kpsewhich is still running." << endl;
 #endif
-    emit fonts_info(this);
     return;
   }
    
@@ -398,7 +410,7 @@ void fontPool::start_kpsewhich(void)
 #endif
 	break;
       case 1:
-	// In the second pass, we generate PK fonts, but be also look
+	// In the second pass, we generate PK fonts, but we also look
 	// for PFB fonts, as they might be used by virtual fonts.
 #ifdef HAVE_FREETYPE
 	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
@@ -452,8 +464,6 @@ void fontPool::start_kpsewhich(void)
   if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
     kdError(4300) << "kpsewhich failed to start" << endl;
   }
-
-  emit fonts_info(this);
 }
 
 
@@ -502,7 +512,6 @@ void fontPool::kpsewhich_terminated(KProcess *)
 #endif
 	fontp->fontNameReceiver(matchingFiles.first());
 	fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
-	emit fonts_info(this);
 	// Constructing a virtual font will most likely insert other
 	// fonts into the fontList. After that, fontList.next() will
 	// no longer work. It is therefore safer to start over.
@@ -514,7 +523,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
   }
 
   // Check if some font filenames are still missing. If not, or if we
-  // have just finished the lass pass, we quit here.
+  // have just finished the last pass, we quit here.
   bool all_fonts_are_found = true;
   
   fontp = fontList.first();
@@ -527,10 +536,13 @@ void fontPool::kpsewhich_terminated(KProcess *)
   }
   if ((all_fonts_are_found) || (pass >= 2)) {
 #ifdef DEBUG_FONTPOOL
-    kdDebug(4300) << "Emitting fonts_have_been_loaded()" << endl;
+    kdDebug(4300) << "Emitting fonts_have_been_loaded(this)" << endl;
+#endif
+#ifdef PERFORMANCE_MEASUREMENT
+    kdDebug(4300) << "Time required to look up fonts: " << fontPoolTimer.elapsed() << "ms" << endl;
 #endif
     emit setStatusBarText(QString::null);
-    emit fonts_have_been_loaded();
+    emit fonts_have_been_loaded(this);
     return;
   }
   
@@ -614,7 +626,7 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
   }
   
   // Do something that causes re-rendering of the dvi-window
-  emit fonts_have_been_loaded();
+  emit fonts_have_been_loaded(this);
 }
 
 

@@ -59,15 +59,15 @@ public:
 
 private:
   void                  gs_generate_graphics_file(int page, QString filename);
-  QIntDict<pageInfo>  *pageList;
+  QIntDict<pageInfo>    pageList;
 
   // Chache to store pages which contain PostScript and are therefore
   // slow to render.
-  QIntCache<QPixmap>   *MemoryCache;
+  QIntCache<QPixmap>    MemoryCache;
 
   // Chache to store pages which contain PostScript and are therefore
   // slow to render.
-  QIntCache<KTempFile> *DiskCache;
+  QIntCache<KTempFile>  DiskCache;
 
   double                resolution;   // in dots per inch
   int                   pixel_page_w; // in pixels

@@ -2,6 +2,11 @@ ToDo-List for kdvi
 
 URGENT / URGENT BUGFIXING
 
+o Checksum mismatches in all PK files
+o Bad display of virtual font ligatures
+o implement background according to DVIPS specifications, make it work is there is PS on the page
+o improve performance and perceived performance (see also under 'highly desirable')
+
 o add "papersize" which does not display the margin
 o get rid of useless README.kdvi
 o Proper handling of the base-url
@@ -11,8 +16,6 @@ o If one presses PgDn for a while, kdvi spends minutes browsing through pages...
 HIGHLY DESIRABLE
 
 o Speedup, in particular for ghostscript and glyph enlarging.
-
-o Support for colored font specials
 
 o Support papersize information given by the dvi-file on a page-by-page
   basis.

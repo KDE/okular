@@ -158,7 +158,7 @@ signals:
 
   /** Emitted to indicate that all the fonts have now been loaded so
       that the first page can be rendered. */
-  void fonts_have_been_loaded(void);
+  void fonts_have_been_loaded(fontPool *);
 
   /** The title says it all... */
   void hide_progress_dialog(void);
@@ -178,12 +178,6 @@ signals:
   /** Emitted when a kpsewhich run is started in order to clear the
       info dialog window. */
   void new_kpsewhich_run(QString);
-
-  /** Emitted when the font-pool has changed. The class receiving the
-      signal might whish to call status() in order to receive the
-      data. We don't send the data here directly as the compilation of
-      the string is quite costy. */
-  void fonts_info(fontPool *);
 
   /** Passed through to the top-level kpart. */
   void setStatusBarText( const QString& );

@@ -100,27 +100,17 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
   set_char_p = &dviWindow::set_char;
   int magic      = two(file);
 
-#ifdef HAVE_FREETYPE
-  if (fname.endsWith(".pfb")) {
-      fclose(file);
-      file = 0;
-      font = new TeXFont_PFB(this);
-      set_char_p = &dviWindow::set_char;
-      return;
-    }
-#endif
-
   if (fname.endsWith("pk"))
     if (magic == PK_MAGIC) {
       fclose(file);
       file = 0;
       font = new TeXFont_PK(this);
       set_char_p = &dviWindow::set_char;
-      if ((font->checksum != 0) && (checksum != font->checksum))
+      if ((checksum != 0) && (checksum != font->checksum)) 
 	kdWarning(4300) << i18n("Checksum mismatch for font file %1").arg(filename) << endl;
       return;
     }
-    
+  
   if (fname.endsWith(".vf"))  
     if (magic == VF_MAGIC) {
       read_VF_index();
@@ -135,8 +125,20 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
       set_char_p = &dviWindow::set_char;
       return;
   }
-  
-  kdError(4300) << i18n("Cannot recognize format for font file %1").arg(filename) << endl; // @@@ Do sth smarter here
+
+  // None of these known types? Then it should be Type1 or TrueType,
+  // supported by the FreeType library
+  fclose(file);
+  file = 0;
+#ifdef HAVE_FREETYPE
+  font = new TeXFont_PFB(this);
+  set_char_p = &dviWindow::set_char;
+  return;
+#else
+  // If we don't have the FreeType library, we should never have
+  // reached this point. Complain, and leave this font blank
+  kdError(4300) << i18n("Cannot recognize format for font file %1").arg(filename) << endl;
+#endif
 }
 
 

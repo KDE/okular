@@ -54,6 +54,7 @@
 #include "dviwin.h"
 #include "dvi.h"
 #include "fontpool.h"
+#include "performanceMeasurement.h"
 #include "TeXFont.h"
 #include "xdvi.h"
 
@@ -68,7 +69,6 @@
 #include <qfileinfo.h>
 
 extern QPainter foreGroundPaint;
-
 
 
 /** Routine to print characters.  */
@@ -571,12 +571,25 @@ void dviWindow::draw_page(void)
   if (font_pool->check_if_fonts_filenames_are_looked_up() == false)
     return;
 
+#ifdef PERFORMANCE_MEASUREMENT
+  // If this is the first time a page is drawn, take the time that is
+  // elapsed till the kdvi_multipage was constructed, and print
+  // it. Set the flag so that is message will not be printed again.
+  if (performanceFlag == 0) {
+    kdDebug(4300) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms" << endl;
+    exit(0);
+    performanceFlag = 1;
+  }
+#endif
+
+
 #ifdef DEBUG_RENDER
   kdDebug() <<"draw_page" << endl;
 #endif
 
+  foreGroundPaint.fillRect(pixmap->rect(), PS_interface->getBackgroundColor(current_page) );
+
   // Render the PostScript background, if there is one.
-  foreGroundPaint.fillRect(pixmap->rect(), Qt::white );
   if (_postscript) {
     QPixmap *pxm = PS_interface->graphics(current_page);
     if (pxm != NULL) {

@@ -60,9 +60,9 @@ unsigned int	page_w, page_h;
 unsigned char		maxchar;
 int		offset_x, offset_y;
 long	*page_offset;
-struct tn	*tn_head = NULL;
-#define	TNTABLELEN	30	/* length of TeXnumber array (dvi file) */
-struct font	*tn_table[TNTABLELEN];
+
+QIntDict<struct font> tn_table;
+
 unsigned short	current_timestamp = 0;
 Screen	*SCRN;
 
@@ -241,7 +241,7 @@ void dviWindow::setMetafontMode( const char *mfm )
 
 const char * dviWindow::metafontMode()
 {
-	return MetafontMode;
+  return MetafontMode;
 }
 
 
@@ -249,8 +249,8 @@ void dviWindow::setPaper(double w, double h)
 {
   unshrunk_paper_w = int( w * basedpi/2.54 + 0.5 );
   unshrunk_paper_h = int( h * basedpi/2.54 + 0.5 ); 
-  unshrunk_page_w = unshrunk_paper_w;
-  unshrunk_page_h = unshrunk_paper_h;
+  unshrunk_page_w  = unshrunk_paper_w;
+  unshrunk_page_h  = unshrunk_paper_h;
   init_page();
   reset_fonts();
   changePageSize();
@@ -259,13 +259,14 @@ void dviWindow::setPaper(double w, double h)
 
 void dviWindow::setResolution( int bdpi )
 {
-	if (!ChangesPossible)
-		KMessageBox::sorry( this,
+  if (!ChangesPossible)
+    KMessageBox::sorry( this,
 			i18n("The change in resolution will be effective\n"
-			"only after you start kdvi again!") );
-	basedpi = bdpi;
-	_pixels_per_inch = bdpi;
-	offset_x = offset_y = bdpi;
+			     "only after you start kdvi again!") );
+  basedpi          = bdpi;
+  _pixels_per_inch = bdpi;
+  offset_x         = bdpi;
+  offset_y         = bdpi;
 }
 
 int dviWindow::resolution()

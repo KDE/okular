@@ -49,6 +49,7 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#define DEBUG 0
 
 /* The stuff from the path searching library.  */
 #include "dviwin.h"
@@ -61,6 +62,7 @@
 #include "oconfig.h"
 #include "dvi.h"
 
+#include <kdebug.h>
 #include <qpainter.h>
 #include <qbitmap.h> 
 #include <qimage.h> 
@@ -161,14 +163,14 @@ static void put_border(int x, int y, unsigned int width, unsigned int height)
 
 static unsigned char xxone()
 {
-	if (currinf._virtual) {
-	    ++currinf.pos;
-	    return EOP;
-	}
-	currinf.end = dvi_buffer +
-	    read(fileno(dvi_file), (char *) (currinf.pos = dvi_buffer),
-		DVI_BUFFER_LEN);
-	return currinf.end > dvi_buffer ? *(currinf.pos)++ : EOF;
+  if (currinf._virtual) {
+    ++currinf.pos;
+    return EOP;
+  }
+  currinf.end = dvi_buffer +
+    read(fileno(dvi_file), (char *) (currinf.pos = dvi_buffer),
+	 DVI_BUFFER_LEN);
+  return currinf.end > dvi_buffer ? *(currinf.pos)++ : EOF;
 }
 
 #define	xone()  (currinf.pos < currinf.end ? *(currinf.pos)++ : xxone())
@@ -199,19 +201,16 @@ static long xsnum(unsigned char size)
 
 static	void xskip(long offset)
 {
-	currinf.pos += offset;
-	if (!currinf._virtual && currinf.pos > currinf.end)
-	    (void) lseek(fileno(dvi_file), (long) (currinf.pos - currinf.end),
-		SEEK_CUR);
+  currinf.pos += offset;
+  if (!currinf._virtual && currinf.pos > currinf.end)
+    (void) lseek(fileno(dvi_file), (long) (currinf.pos - currinf.end), SEEK_CUR);
 }
 
 #if	NeedVarargsPrototypes
-static	NORETURN void
-tell_oops(_Xconst char *message, ...)
+static	NORETURN void tell_oops(_Xconst char *message, ...)
 #else
 /* VARARGS */
-static	NORETURN void
-tell_oops(va_alist)
+static	NORETURN void tell_oops(va_alist)
 	va_dcl
 #endif
 {
@@ -220,7 +219,7 @@ tell_oops(va_alist)
 #endif
 	va_list	args;
 
-	Fprintf(stderr, "%s: ", prog);
+	kDebugError("%s: ", prog);
 #if	NeedVarargsPrototypes
 	va_start(args, message);
 #else
@@ -230,9 +229,9 @@ tell_oops(va_alist)
 	(void) vfprintf(stderr, message, args);
 	va_end(args);
 	if (currinf._virtual)
-	    Fprintf(stderr, " in virtual font %s\n", currinf._virtual->fontname);
+	    kDebugError(" in virtual font %s", currinf._virtual->fontname);
 	else
-	    Fprintf(stderr, ", offset %ld\n", xtell(currinf.pos - 1));
+	    kDebugError(", offset %ld", xtell(currinf.pos - 1));
 	dvi_oops_msg = (message), longjmp(dvi_env, 1); /* dvi_oops */
 	exit(1);
 }
@@ -259,21 +258,10 @@ static	_Xconst	char	*dvi_table2[] = {
 
 static void change_font(unsigned long n)
 {
-  register struct tn *tnp;
-
-  if (n < (unsigned long)currinf.tn_table_len)
-    currinf.fontp = currinf.tn_table[n];
-  else {
-    currinf.fontp = NULL;
-    for (tnp = currinf.tn_head; tnp != NULL; tnp = tnp->next)
-      if ((unsigned long)tnp->TeXnumber == n) {
-	currinf.fontp = tnp->fontp;
-	break;
-      }
-  }
+  currinf.fontp = currinf.fonttable[n];
   if (currinf.fontp == NULL)
     tell_oops("non-existent font #%d", n);
-  maxchar = currinf.fontp->maxchar;
+  maxchar = currinf.fontp->fmaxchar;
   currinf.set_char_p = currinf.fontp->set_char_p;
 }
 
@@ -300,6 +288,8 @@ static	void open_font_file(struct font *fontp)
 
 void set_char(unsigned int cmd, unsigned int ch)
 {
+  kDebugInfo(DEBUG, 4300, "set_char");
+
   register struct glyph *g;
   long	dvi_h_sav;
 
@@ -308,8 +298,7 @@ void set_char(unsigned int cmd, unsigned int ch)
   if ((g = &currinf.fontp->glyph[ch])->bitmap.bits == NULL) {
     if (g->addr == 0) {
       if (!hush_chars)
-	Fprintf(stderr, "Character %d not defined in font %s\n", ch,
-		currinf.fontp->fontname);
+	kDebugError(1,4300,"Character %d not defined in font %s", ch, currinf.fontp->fontname);
       g->addr = -1;
       return ERRVAL;
     }
@@ -342,12 +331,14 @@ static	void set_empty_char(unsigned int cmd, unsigned int ch)
 
 void load_n_set_char(unsigned int cmd, unsigned int ch)
 {
-  if (load_font(currinf.fontp)) {	/* if not found */
-    Fputs("Character(s) will be left blank.\n", stderr);
+  kDebugInfo(DEBUG, 4300, "load_n_set_char");
+
+  if ( currinf.fontp->load_font() ) {	/* if not found */
+    kDebugError("Character(s) will be left blank.");
     currinf.set_char_p = currinf.fontp->set_char_p = set_empty_char;
     return;
   }
-  maxchar = currinf.fontp->maxchar;
+  maxchar = currinf.fontp->fmaxchar;
   currinf.set_char_p = currinf.fontp->set_char_p;
   (*currinf.set_char_p)(cmd, ch);
   return;
@@ -356,19 +347,19 @@ void load_n_set_char(unsigned int cmd, unsigned int ch)
 
 void set_vf_char(unsigned int cmd, unsigned int ch)
 {
-  register struct macro *m;
-  struct drawinf	oldinfo;
-  unsigned char	oldmaxchar;
-  static	unsigned char	c;
-  long	dvi_h_sav;
+  kDebugInfo(DEBUG, 4300, "set_vf_char");
 
+  register struct macro *m;
+  struct drawinf	 oldinfo;
+  unsigned char	         oldmaxchar;
+  static unsigned char   c;
+  long	                 dvi_h_sav;
 
   if (ch > maxchar)
     currinf.fontp->realloc_font(ch);
   if ((m = &currinf.fontp->macro[ch])->pos == NULL) {
     if (!hush_chars)
-      Fprintf(stderr, "Character %d not defined in font %s\n", ch,
-	      currinf.fontp->fontname);
+      kDebugError(1, 4300, "Character %d not defined in font %s\n", ch, currinf.fontp->fontname);
     m->pos = m->end = &c;
     return ERRVAL;
   }
@@ -377,15 +368,17 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
   if (currinf.dir < 0)
     DVI_H -= m->dvi_adv;
   if (scan_frame == NULL) {
-    oldinfo = currinf;
+    oldinfo    = currinf;
     oldmaxchar = maxchar;
-    WW = XX = YY = ZZ = 0;
-    currinf.tn_table_len = VFTABLELEN;
-    currinf.tn_table = currinf.fontp->vf_table;
-    currinf.tn_head = currinf.fontp->vf_chain;
-    currinf.pos = m->pos;
-    currinf.end = m->end;
-    currinf._virtual = currinf.fontp;
+    WW         = 0;
+    XX         = 0;
+    YY         = 0;
+    ZZ         = 0;
+
+    currinf.fonttable = currinf.fontp->vf_table;
+    currinf.pos       = m->pos;
+    currinf.end       = m->end;
+    currinf._virtual  = currinf.fontp;
     draw_part(current_frame, currinf.fontp->dimconv);
     if (currinf.pos != currinf.end + 1)
       tell_oops("virtual character macro does not end correctly");
@@ -402,10 +395,12 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
 
 static	void set_no_char(unsigned int cmd, unsigned int ch)
 {
+  kDebugInfo(DEBUG, 4300, "set_no_char");
+
   if (currinf._virtual) {
     currinf.fontp = currinf._virtual->first_font;
     if (currinf.fontp != NULL) {
-      maxchar = currinf.fontp->maxchar;
+      maxchar = currinf.fontp->fmaxchar;
       currinf.set_char_p = currinf.fontp->set_char_p;
       (*currinf.set_char_p)(cmd, ch);
       return;
@@ -416,9 +411,7 @@ static	void set_no_char(unsigned int cmd, unsigned int ch)
 }
 
 
-/*
- *	Set rule.  Arguments are coordinates of lower left corner.
- */
+/** Set rule. Arguments are coordinates of lower left corner.  */
 
 static	void set_rule(int h, int w)
 {
@@ -461,18 +454,18 @@ static	void special(long nbytes)
 
 static	void draw_part(struct frame *minframe, double current_dimconv)
 {
-  unsigned char ch;
-  struct drawinf	oldinfo;
-  unsigned char	oldmaxchar;
-  off_t	file_pos;
-  int	refl_count;
+  kDebugInfo(DEBUG, 4300, "draw_part");
 
+  unsigned char  ch;
+  struct drawinf oldinfo;
+  unsigned char	 oldmaxchar;
+  off_t	         file_pos;
+  int	         refl_count;
 
-  currinf.fontp = NULL;
+  currinf.fontp      = NULL;
   currinf.set_char_p = set_no_char;
-
-  currinf.dir = 1;
-  scan_frame = NULL;	/* indicates we're not scanning */
+  currinf.dir        = 1;
+  scan_frame         = NULL;	/* indicates we're not scanning */
 
   for (;;) {
     ch = xone();
@@ -528,8 +521,7 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 
 	case PUSH:
 	  if (current_frame->next == NULL) {
-	    struct frame *newp = (struct frame *)
-	      xmalloc(sizeof(struct frame), "stack frame");
+	    struct frame *newp = (struct frame *)xmalloc(sizeof(struct frame), "stack frame");
 	    current_frame->next = newp;
 	    newp->prev = current_frame;
 	    newp->next = NULL;
@@ -557,15 +549,16 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 	    break;
 	  }
 	  /* we are scanning */
-	  if (current_frame == scan_frame) ++refl_count;
+	  if (current_frame == scan_frame) 
+	    ++refl_count;
 	  break;
 
 	case EREFL:
 	  if (scan_frame != NULL) {	/* if we're scanning */
 	    if (current_frame == scan_frame && --refl_count < 0) {
-				/* we've hit the end of our scan */
+	      /* we've hit the end of our scan */
 	      scan_frame = NULL;
-				/* first:  push */
+	      /* first:  push */
 	      if (current_frame->next == NULL) {
 		struct frame *newp = (struct frame *)xmalloc(sizeof(struct frame),"stack frame");
 		current_frame->next = newp;
@@ -574,7 +567,7 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 	      }
 	      current_frame = current_frame->next;
 	      current_frame->data = currinf.data;
-				/* next:  restore old file position, XX, etc. */
+	      /* next:  restore old file position, XX, etc. */
 	      if (!currinf._virtual) {
 		off_t bgn_pos = xtell(dvi_buffer);
 		
@@ -588,19 +581,19 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 	      }
 	      currinf = oldinfo;
 	      maxchar = oldmaxchar;
-				/* and then:  recover position info. */
+	      /* and then:  recover position info. */
 	      DVI_H = current_frame->data.dvi_h;
 	      DVI_V = current_frame->data.dvi_v;
 	      PXL_V = current_frame->data.pxl_v;
-				/* and finally, reverse direction */
+	      /* and finally, reverse direction */
 	      currinf.dir = -currinf.dir;
 	    }
 	    break;
 	  }
 	  /* we're not scanning, */
 	  /* so just reverse direction and then pop */
-	  currinf.dir = -currinf.dir;
-	  currinf.data = current_frame->data;
+	  currinf.dir   = -currinf.dir;
+	  currinf.data  = current_frame->data;
 	  current_frame = current_frame->prev;
 	  break;
 
@@ -684,8 +677,7 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 	case PRE:
 	case POST:
 	case POSTPOST:
-	  tell_oops("shouldn't happen: %s encountered",
-		    dvi_table2[ch - (FNTNUM0 + 64)]);
+	  tell_oops("shouldn't happen: %s encountered", dvi_table2[ch - (FNTNUM0 + 64)]);
 	  break;
 	  
 	default:
@@ -716,6 +708,8 @@ int need_to_redraw;
 
 void draw_page()
 {
+  kDebugInfo(DEBUG, 4300, "draw_page");
+
   need_to_redraw = 0;
 
   /* Check for changes in dvi file. */
@@ -729,11 +723,11 @@ void draw_page()
   (void) lseek(fileno(dvi_file), page_offset[current_page], SEEK_SET);
 
   bzero((char *) &currinf.data, sizeof(currinf.data));
-  currinf.tn_table_len = TNTABLELEN;
-  currinf.tn_table = tn_table;
-  currinf.tn_head = tn_head;
-  currinf.pos = currinf.end = dvi_buffer;
-  currinf._virtual = NULL;
+
+  currinf.fonttable = tn_table;
+  currinf.end       = dvi_buffer;
+  currinf.pos       = dvi_buffer;
+  currinf._virtual  = NULL;
   draw_part(current_frame = &frame0, dimconv);
 
   if (need_to_redraw != 0)

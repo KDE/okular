@@ -12,62 +12,62 @@
 #include <qpainter.h> 
 #include <qevent.h>
 #include <qwidget.h> 
-
+#include <qintdict.h>
 
 class dviWindow : public QWidget
 {
-	Q_OBJECT
+  Q_OBJECT
 
 public:
-	dviWindow( int basedpi, double zoom, const char *mfmode, int makepk,
-	QWidget *parent=0, const char *name=0 );
-	~dviWindow();
+  dviWindow( int basedpi, double zoom, const char *mfmode, int makepk,
+	     QWidget *parent=0, const char *name=0 );
+  ~dviWindow();
 
-	int		totalPages();
+  int		totalPages();
 
-	void		setShowPS( int flag );
-	int		showPS();
-	void		setAntiAlias( int flag );
-	int		antiAlias();
-	void		setMakePK( int flag );
-	int		makePK();
-	void		setResolution( int basedpi );
-	int		resolution();
-	void		setMetafontMode( const char * );
-	const char *	metafontMode();
-	void		setPaper(double w, double h);
-	void		setFontPath( const char * );
-	const char *	fontPath();
-
-	// for the preview
- 	QPixmap		*pix() { return pixmap; };
+  void		setShowPS( int flag );
+  int		showPS();
+  void		setAntiAlias( int flag );
+  int		antiAlias();
+  void		setMakePK( int flag );
+  int		makePK();
+  void		setResolution( int basedpi );
+  int		resolution();
+  void		setMetafontMode( const char * );
+  const char *	metafontMode();
+  void		setPaper(double w, double h);
+  void		setFontPath( const char * );
+  const char *	fontPath();
+  
+  // for the preview
+  QPixmap		*pix() { return pixmap; };
         
 public slots:
-	void		setFile(const char *fname);
-	void		gotoPage(int page);
-	//	void		setZoom(int zoom);
+    void		setFile(const char *fname);
+ void		gotoPage(int page);
+ //	void		setZoom(int zoom);
 
-	void		setZoom(double zoom);
-	double          zoom() { return _zoom; };
+ void		setZoom(double zoom);
+ double          zoom() { return _zoom; };
 
-	void		drawPage();
+ void		drawPage();
 
 protected:
-	void paintEvent(QPaintEvent *ev);
+ void paintEvent(QPaintEvent *ev);
 
 
 private:
-	bool		correctDVI();
-	void		initDVI();
-	void		changePageSize();
-	QString		filename;
-	int		basedpi, makepk;
-	QPixmap	*	pixmap;
-	QString		MetafontMode;
-	QString		FontPath;
-	QString		paper_type;
-	int		ChangesPossible;
-	double          _zoom;
+ bool		correctDVI();
+ void		initDVI();
+ void		changePageSize();
+ QString		filename;
+ int		basedpi, makepk;
+ QPixmap	*	pixmap;
+ QString		MetafontMode;
+ QString		FontPath;
+ QString		paper_type;
+ int		ChangesPossible;
+ double          _zoom;
 
 };
 
@@ -111,16 +111,17 @@ typedef	void	(*set_char_proc)(unsigned int, unsigned int);
 
 #include "font.h"
 
-struct drawinf {	/* this information is saved when using virtual fonts */
-  struct framedata data;
-  struct font	*fontp;
-  set_char_proc	set_char_p;
-  int		tn_table_len;
-  struct font	**tn_table;
-  struct tn	*tn_head;
-  unsigned char		*pos, *end;
-  struct font	*_virtual;
-  int		dir;
+/* this information is saved when using virtual fonts */
+struct drawinf {	
+  struct framedata      data;
+  struct font          *fontp;
+  set_char_proc	        set_char_p;
+
+  QIntDict<struct font> fonttable;
+  unsigned char	       *pos;
+  unsigned char	       *end;
+  struct font	       *_virtual;
+  int                   dir;
 };
 
 #endif

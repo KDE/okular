@@ -229,12 +229,14 @@ extern	Boolean	hush_spec_now;
 #define	FONT_LOADED	2	/* if font file has been read */
 #define	FONT_VIRTUAL	4	/* if font is virtual */
 
-#define	TNTABLELEN	30	/* length of TeXnumber array (dvi file) */
-#define	VFTABLELEN	5	/* length of TeXnumber array (virtual fonts) */
+//#define	TNTABLELEN	30	/* length of TeXnumber array (dvi file) */
+//#define	VFTABLELEN	5	/* length of TeXnumber array (virtual fonts) */
 
-extern	struct font	*tn_table[TNTABLELEN];
+extern QIntDict<struct font> tn_table;
+//@@@extern	struct font	*tn_table[TNTABLELEN];
+//extern	struct tn	*tn_head	INIT(NULL);
 extern	struct font	*font_head	INIT(NULL);
-extern	struct tn	*tn_head	INIT(NULL);
+
 extern	unsigned char		maxchar;
 extern	unsigned short	current_timestamp INIT(0);
 
@@ -251,7 +253,6 @@ extern	char	*topmargin;
 extern	char	*xoffset;
 extern	char	*yoffset;
 extern	_Xconst char	*_paper;
-extern	Boolean	_list_fonts;
 extern	Boolean	reverse;
 extern	Boolean	_hush_spec;
 extern	Boolean	_hush_chars;
@@ -277,7 +278,6 @@ extern	char	*mg_arg[5];
 
 #define	density		_density
 #define	pixels_per_inch	_pixels_per_inch
-#define	list_fonts	_list_fonts
 #define	hush_spec	_hush_spec
 #define	hush_chars	_hush_chars
 #define	hush_chk	_hush_chk
@@ -362,19 +362,10 @@ extern	struct psprocs	{
  *******************************/
 
 _XFUNCPROTOBEGIN
-#ifdef	BUTTONS
-extern	void	create_buttons ARGS((XtArgVal));
-#endif
 extern	void	reconfig ARGS((void));
 extern	void	read_events ARGS((wide_bool));
 extern	void	redraw_page ARGS((void));
 extern	void	do_pages ARGS((void));
-extern	void	realloc_font ARGS((struct font *, unsigned int));
-extern	void	realloc_virtual_font ARGS((struct font *, unsigned int));
-extern	Boolean	load_font ARGS((struct font *));
-extern	struct font	*define_font ARGS((FILE *, unsigned int,
-					   struct font *, struct font **, unsigned int,
-					   struct tn **));
 extern	void	open_dvi_file ARGS((void));
 extern	void	put_border ARGS((int, int, unsigned int, unsigned int));
 extern	void	set_char ARGS((unsigned int, unsigned int));

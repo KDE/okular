@@ -49,7 +49,10 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#define DEBUG 0
+
 #include "dviwin.h"
+#include <kdebug.h>
 
 #include <qbitmap.h> 
 #include <qfileinfo.h>
@@ -84,7 +87,6 @@ extern FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, i
 static	Boolean	font_not_found;
 Boolean	_hush_spec;
 Boolean	_hush_chk;
-Boolean	_list_fonts;
 QDateTime dvi_time;
 
 /*
@@ -104,76 +106,18 @@ static	long	last_page_offset;
 
 extern void reset_fonts(void)
 {
+  kDebugInfo(DEBUG, 4300, "Reset Fonts");
+
   register struct font *f;
   register struct glyph *g;
 
   for (f = font_head; f != NULL; f = f->next)
     if ((f->flags & FONT_LOADED) && !(f->flags & FONT_VIRTUAL))
-      for (g = f->glyph; g <= f->glyph + f->maxchar; ++g) {
+      for (g = f->glyph; g <= f->glyph + f->fmaxchar; ++g) {
 	g->clearShrunkCharacter();
       }
 }
 
-
-/** load_font locates the raster file and reads the index of
- *	characters, plus whatever other preprocessing is done
- *	(depending on the format).  */
-
-Boolean load_font(font *fontp)
-{
-	double	fsize	= fontp->fsize;
-	int	dpi	= fsize + 0.5;
-	char	*font_found;
-	int	size_found;
-	int	magic;
-	Boolean	hushcs	= hush_chk;
-
-	fontp->flags |= FONT_LOADED;
-	fontp->file = font_open(fontp->fontname, &font_found,
-	    fsize, &size_found, fontp->magstepval, &fontp->filename);
-	if (fontp->file == NULL) {
-	    Fprintf(stderr, "xdvi: Can't find font %s.\n", fontp->fontname);
-	    return True;
-	}
-	--n_files_left;
-	if (font_found != NULL) {
-	    Fprintf(stderr,
-		    "xdvi: Can't find font %s; using %s instead at %d dpi.\n",
-		    fontp->fontname, font_found, dpi);
-	    free(fontp->fontname);
-	    fontp->fontname = font_found;
-	    hushcs = True;
-	}
-	else if (!kpse_bitmap_tolerance ((double) size_found, fsize))
-	    Fprintf(stderr,
-		"xdvi: Can't find font %s at %d dpi; using %d dpi instead.\n",
-		fontp->fontname, dpi, size_found);
-	fontp->fsize = size_found;
-	fontp->timestamp = ++current_timestamp;
-	fontp->maxchar = maxchar = 255;
-	fontp->set_char_p = set_char;
-	magic = two(fontp->file);
-
-	if (magic == PK_MAGIC) read_PK_index(fontp, WIDENINT hushcs);
-	else
-	    if (magic == GF_MAGIC) read_GF_index(fontp, WIDENINT hushcs);
-	else
-	    if (magic == VF_MAGIC) read_VF_index(fontp, WIDENINT hushcs);
-	else
-	    oops("Cannot recognize format for font file %s", fontp->filename);
-
-	if (fontp->flags & FONT_VIRTUAL) {
-	    while (maxchar > 0 && fontp->macro[maxchar].pos == NULL) --maxchar;
-	    if (maxchar < 255)
-		fontp->realloc_font(WIDENINT maxchar);
-	}
-	else {
-	    while (maxchar > 0 && fontp->glyph[maxchar].addr == 0) --maxchar;
-	    if (maxchar < 255)
-	      fontp->realloc_font(WIDENINT maxchar);
-	}
-	return False;
-}
 
 
 /*
@@ -195,12 +139,11 @@ static	int magstepvalue(float *mag)
 }
 
 
-/*
- *      define_font reads the rest of the fntdef command and then reads in
- *      the specified pixel file, adding it to the global linked-list holding
- *      all of the fonts used in the job.
- */
-font *define_font(FILE *file, unsigned int cmnd, font *vfparent, font **tntable, unsigned int tn_table_len, tn **tn_headpp)
+/** define_font reads the rest of the fntdef command and then reads in
+ *  the specified pixel file, adding it to the global linked-list
+ *  holding all of the fonts used in the job.  */
+
+font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable)
   //	FILE		*file;
   //	unsigned int	cmnd;
   //	struct font	*vfparent;	/* vf parent of this font, or NULL */
@@ -208,94 +151,77 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, font **tntable,
   //	unsigned int	tn_table_len;	/* length of table for TeXnumbers */
   //	struct tn	**tn_headpp;	/* addr of head of list of TeXnumbers */
 {
-	int	TeXnumber;
-	struct font *fontp;
-	float	fsize;
-	double	scale_dimconv;
-	long	checksum;
-	int	scale;
-	int	design;
-	int	magstepval;
-	int	len;
-	char	*fontname;
-	int	size;
+  struct font *fontp;
+  int	magstepval;
+  int	size;
 
-	TeXnumber = num(file, (int) cmnd - FNTDEF1 + 1);
-	checksum = four(file);
-	scale = four(file);
-	design = four(file);
-	len = one(file); len += one(file); /* sequence point in the middle */
-	fontname = xmalloc((unsigned) len + 1, "font name");
-	Fread(fontname, sizeof(char), len, file);
-	fontname[len] = '\0';
-	if(_debug & DBG_PK)
-	    Printf("xdvi: Define font \"%s\" scale=%d design=%d\n",
-		fontname, scale, design);
-	if (vfparent == NULL) {
-	    fsize = 0.001 * scale / design * magnification * pixels_per_inch;
-	    scale_dimconv = dimconv;
-	}
-	else {
-	    /*
-	     *	The scaled size is given in units of vfparent->scale * 2 ** -20
-	     *	SPELL units, so we convert it into SPELL units by multiplying by
-	     *		vfparent->dimconv.
-	     *	The design size is given in units of 2 ** -20 pt, so we convert
-	     *	into SPELL units by multiplying by
-	     *		(pixels_per_inch * 2**16) / (72.27 * 2**20).
-	     */
-	    fsize = (72.27 * (1<<4)) * vfparent->dimconv * scale / design;
-	    scale_dimconv = vfparent->dimconv;
-	}
-	magstepval = magstepvalue(&fsize);
-	size = fsize + 0.5;
-	/*
-	 * reuse font if possible
-	 */
-	for (fontp = font_head;; fontp = fontp->next) {
-	    if (fontp == NULL) {		/* if font doesn't exist yet */
-		if (list_fonts)
-		    Printf("xdvi: %s at %d dpi\n", fontname, (int) (fsize + 0.5));
-		fontp = (struct font *) xmalloc((unsigned) sizeof(struct font),
-		    "font structure");
-		fontp->fontname = fontname;
-		fontp->fsize = fsize;
-		fontp->checksum = checksum;
-		fontp->magstepval = magstepval;
-		fontp->flags = FONT_IN_USE;
-		fontp->dimconv = scale * scale_dimconv / (1<<20);
-		fontp->set_char_p = load_n_set_char;
-		/* With virtual fonts, we might be opening another font
-		   (pncb.vf), instead of what we just allocated for
-		   (rpncb), thus leaving garbage in the structure for
-		   when close_a_file comes along looking for something.  */
-		fontp->file = NULL; 
-		fontp->filename = NULL;
-		if (vfparent == NULL) font_not_found |= load_font(fontp);
-		fontp->next = font_head;
-		font_head = fontp;
-		break;
-	    }
-	    if (strcmp(fontname, fontp->fontname) == 0
-		    && size == (int) (fontp->fsize + 0.5)) {
-			/* if font already in use */
-		fontp->reuse_font();
-		free(fontname);
-		break;
-	    }
-	}
-	if (TeXnumber < tn_table_len)
-	    tntable[TeXnumber] = fontp;
-	else {
-	    register struct tn *tnp;
-	    tnp = (struct tn *) xmalloc((unsigned) sizeof(struct tn),
-		"TeXnumber structure");
-	    tnp->next = *tn_headpp;
-	    *tn_headpp = tnp;
-	    tnp->TeXnumber = TeXnumber;
-	    tnp->fontp = fontp;
-	}
-	return fontp;
+  int   TeXnumber = num(file, (int) cmnd - FNTDEF1 + 1);
+  long  checksum  = four(file);
+  int   scale     = four(file);
+  int   design    = four(file);
+  int   len       = one(file) + one(file); /* sequence point in the middle */
+  char *fontname  = xmalloc((unsigned) len + 1, "font name");
+  Fread(fontname, sizeof(char), len, file);
+  fontname[len] = '\0';
+
+
+  kDebugInfo(DEBUG, 4300, "Define font \"%s\" scale=%d design=%d", fontname, scale, design);
+
+
+  float  fsize;
+  double scale_dimconv;
+
+  if (vfparent == NULL) {
+    fsize = 0.001 * scale / design * magnification * pixels_per_inch;
+    scale_dimconv = dimconv;
+  } else {
+    /*
+     *	The scaled size is given in units of vfparent->scale * 2 ** -20
+     *	SPELL units, so we convert it into SPELL units by multiplying by
+     *		vfparent->dimconv.
+     *	The design size is given in units of 2 ** -20 pt, so we convert
+     *	into SPELL units by multiplying by
+     *		(pixels_per_inch * 2**16) / (72.27 * 2**20).
+     */
+    fsize = (72.27 * (1<<4)) * vfparent->dimconv * scale / design;
+    scale_dimconv = vfparent->dimconv;
+  }
+  magstepval = magstepvalue(&fsize);
+  size       = (int)(fsize + 0.5);
+
+  // reuse font if possible
+  for (fontp = font_head;; fontp = fontp->next) {
+    if (fontp == NULL) {		/* if font doesn't exist yet */
+      fontp = new font(fontname, fsize, checksum, magstepval, scale * scale_dimconv / (1<<20));
+
+      fontp->set_char_p = load_n_set_char;
+      /* With virtual fonts, we might be opening another font
+	 (pncb.vf), instead of what we just allocated for
+	 (rpncb), thus leaving garbage in the structure for
+	 when close_a_file comes along looking for something.  */
+      if (vfparent == NULL)
+	font_not_found |= fontp->load_font();
+      fontp->next = font_head;
+      font_head   = fontp;
+      break;
+    }
+
+    if (strcmp(fontname, fontp->fontname) == 0 && size == (int)(fontp->fsize + 0.5)) {
+      /* if font already in use */
+      fontp->mark_as_used();
+      free(fontname);
+      break;
+    }
+  }
+
+  // Insert font in dictionary and make sure the dictionary is big
+  // enough
+  if (TeXNumberTable->size() >= TeXNumberTable->count()-2)
+    // Not quite optimal. The size of the dict. should be a prime. I
+    // don't care
+    TeXNumberTable->resize(TeXNumberTable->size()*2); 
+  TeXNumberTable->insert(TeXnumber, fontp);
+  return fontp;
 }
 
 
@@ -303,25 +229,24 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, font **tntable,
  *      process_preamble reads the information in the preamble and stores
  *      it into global variables for later use.
  */
-static	void
-process_preamble()
+static void process_preamble()
 {
-	unsigned char   k;
+  unsigned char   k;
 
-	if (one(dvi_file) != PRE)
-		dvi_oops("DVI file doesn't start with preamble");
-	if (one(dvi_file) != 2)
-		dvi_oops("Wrong version of DVI output for this program");
-	numerator     = four(dvi_file);
-	denominator   = four(dvi_file);
-	magnification = four(dvi_file);
-	dimconv = (((double) numerator * magnification)
-		/ ((double) denominator * 1000.));
-	dimconv = dimconv * (((long) pixels_per_inch)<<16) / 254000;
-	tpic_conv = pixels_per_inch * magnification / 1000000.0;
-	k = one(dvi_file);
-	Fread(job_id, sizeof(char), (int) k, dvi_file);
-	job_id[k] = '\0';
+  if (one(dvi_file) != PRE)
+    dvi_oops("DVI file doesn't start with preamble");
+  if (one(dvi_file) != 2)
+    dvi_oops("Wrong version of DVI output for this program");
+
+  numerator     = four(dvi_file);
+  denominator   = four(dvi_file);
+  magnification = four(dvi_file);
+  dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.));
+  dimconv       = dimconv * (((long) pixels_per_inch)<<16) / 254000;
+  tpic_conv     = pixels_per_inch * magnification / 1000000.0;
+  k             = one(dvi_file);
+  Fread(job_id, sizeof(char), (int) k, dvi_file);
+  job_id[k] = '\0';
 }
 
 /*
@@ -329,38 +254,42 @@ process_preamble()
  *	and leaves the file ready to start reading at that location.
  */
 #define	TMPSIZ	516	/* 4 trailer bytes + 512 junk bytes allowed */
-static	void
-find_postamble()
+static	void find_postamble()
 {
-	long	pos;
-	unsigned char	temp[TMPSIZ];
-	unsigned char	*p;
-	unsigned char	*p1;
-	unsigned char	byte;
+  long	pos;
+  unsigned char	temp[TMPSIZ];
+  unsigned char	*p;
+  unsigned char	*p1;
+  unsigned char	byte;
 
-	Fseek(dvi_file, (long) 0, 2);
-	pos = ftell(dvi_file) - TMPSIZ;
-	if (pos < 0) pos = 0;
-	Fseek(dvi_file, pos, 0);
-	p = temp + fread((char *) temp, sizeof(char), TMPSIZ, dvi_file);
-	for (;;) {
-	    p1 = p;
-	    while (p1 > temp && *(--p1) != TRAILER) ;
-	    p = p1;
-	    while (p > temp && *(--p) == TRAILER) ;
-	    if (p <= p1 - 4) break;	/* found 4 TRAILER bytes */
-	    if (p <= temp) dvi_oops("DVI file corrupted");
-	}
-	pos += p - temp;
-	byte = *p;
-	while (byte == TRAILER) {
-	    Fseek(dvi_file, --pos, 0);
-	    byte = one(dvi_file);
-	}
-	if (byte != 2)
-	    dvi_oops("Wrong version of DVI output for this program");
-	Fseek(dvi_file, pos - 4, 0);
-	Fseek(dvi_file, sfour(dvi_file), 0);
+  Fseek(dvi_file, (long) 0, 2);
+  pos = ftell(dvi_file) - TMPSIZ;
+  if (pos < 0)
+    pos = 0;
+  Fseek(dvi_file, pos, 0);
+  p = temp + fread((char *) temp, sizeof(char), TMPSIZ, dvi_file);
+  for (;;) {
+    p1 = p;
+    while (p1 > temp && *(--p1) != TRAILER)
+      ;
+    p = p1;
+    while (p > temp && *(--p) == TRAILER)
+      ;
+    if (p <= p1 - 4)
+      break;	/* found 4 TRAILER bytes */
+    if (p <= temp)
+      dvi_oops("DVI file corrupted");
+  }
+  pos += p - temp;
+  byte = *p;
+  while (byte == TRAILER) {
+    Fseek(dvi_file, --pos, 0);
+    byte = one(dvi_file);
+  }
+  if (byte != 2)
+    dvi_oops("Wrong version of DVI output for this program");
+  Fseek(dvi_file, pos - 4, 0);
+  Fseek(dvi_file, sfour(dvi_file), 0);
 }
 
 
@@ -372,51 +301,44 @@ find_postamble()
  */
 static	void read_postamble()
 {
-	unsigned char   cmnd;
-	struct font	*fontp;
-	struct font	**fontpp;
+  unsigned char   cmnd;
+  struct font	*fontp;
+  struct font	**fontpp;
 
-	if (one(dvi_file) != POST)
-	    dvi_oops("Postamble doesn't begin with POST");
-	last_page_offset = four(dvi_file);
-	if (numerator != four(dvi_file)
-		|| denominator != four(dvi_file)
-		|| magnification != four(dvi_file))
-	    dvi_oops("Postamble doesn't match preamble");
-		/* read largest box height and width */
-	unshrunk_page_h = (spell_conv(sfour(dvi_file)) >> 16) + offset_y;
-	if (unshrunk_page_h < unshrunk_paper_h)
-	    unshrunk_page_h = unshrunk_paper_h;
-	unshrunk_page_w = (spell_conv(sfour(dvi_file)) >> 16) + offset_x;
-	if (unshrunk_page_w < unshrunk_paper_w)
-	    unshrunk_page_w = unshrunk_paper_w;
-	(void) two(dvi_file);	/* max stack size */
-	total_pages = two(dvi_file);
-	font_not_found = False;
-	while ((cmnd = one(dvi_file)) >= FNTDEF1 && cmnd <= FNTDEF4)
-	    (void) define_font(dvi_file, cmnd, (struct font *) NULL,
-		tn_table, TNTABLELEN, &tn_head);
-	if (cmnd != POSTPOST)
-	    dvi_oops("Non-fntdef command found in postamble");
-	if (font_not_found)
-	    dvi_oops("Not all pixel files were found");
-	/*
-	 * free up fonts no longer in use
-	 */
-	fontpp = &font_head;
-	while ((fontp = *fontpp) != NULL)
-	    if (fontp->flags & FONT_IN_USE)
-		fontpp = &fontp->next;
-	    else {
-	      
-	      delete fontp;
-	      
+  if (one(dvi_file) != POST)
+    dvi_oops("Postamble doesn't begin with POST");
+  last_page_offset = four(dvi_file);
+  if (numerator != four(dvi_file)
+      || denominator != four(dvi_file)
+      || magnification != four(dvi_file))
+    dvi_oops("Postamble doesn't match preamble");
+  /* read largest box height and width */
+  unshrunk_page_h = (spell_conv(sfour(dvi_file)) >> 16) + offset_y;
+  if (unshrunk_page_h < unshrunk_paper_h)
+    unshrunk_page_h = unshrunk_paper_h;
+  unshrunk_page_w = (spell_conv(sfour(dvi_file)) >> 16) + offset_x;
+  if (unshrunk_page_w < unshrunk_paper_w)
+    unshrunk_page_w = unshrunk_paper_w;
+  (void) two(dvi_file);	/* max stack size */
+  total_pages = two(dvi_file);
+  font_not_found = False;
+  while ((cmnd = one(dvi_file)) >= FNTDEF1 && cmnd <= FNTDEF4)
+    (void) define_font(dvi_file, cmnd, (struct font *) NULL, &tn_table);
+  if (cmnd != POSTPOST)
+    dvi_oops("Non-fntdef command found in postamble");
+  if (font_not_found)
+    dvi_oops("Not all pixel files were found");
 
-
-	    }
+  // free up fonts no longer in use
+  fontpp = &font_head;
+  while ((fontp = *fontpp) != NULL)
+    if (fontp->flags & FONT_IN_USE)  // Question: Is this ever false?
+      fontpp = &fontp->next;
+    else
+      delete fontp;
 }
 
-static	void prepare_pages()
+static void prepare_pages()
 {
 	int i;
 
@@ -437,19 +359,20 @@ static	void prepare_pages()
 
 void init_page()
 {
-	page_w = ROUNDUP(unshrunk_page_w, mane.shrinkfactor) + 2;
-	page_h = ROUNDUP(unshrunk_page_h, mane.shrinkfactor) + 2;
+  page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
+  page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
 }
 
-/*
- *	init_dvi_file is the main subroutine for reading the startup
- *	information from the dvi file.  Returns True on success.
- */
+/** init_dvi_file is the main subroutine for reading the startup
+ *  information from the dvi file.  Returns True on success.  */
 
 static Boolean init_dvi_file()
 {
   if (QFileInfo(dvi_name).isDir())
     return False;
+
+  tn_table.clear();
+  
   dvi_time = QFileInfo(dvi_name).lastModified();
   process_preamble();
   find_postamble();
@@ -473,8 +396,6 @@ extern Boolean check_dvi_file(void)
     if (dvi_file) {
       Fclose(dvi_file);
       dvi_file = NULL;
-      if (list_fonts) 
-	Putchar('\n');
     }
     dvi_file = fopen(dvi_name, OPEN_MODE);
     if (dvi_file == NULL || !init_dvi_file())

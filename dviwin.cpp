@@ -971,7 +971,7 @@ void dviWindow::all_fonts_loaded(void)
       if (!ref.at(i).isNumber())
 	break;
     Q_UINT32 lineNumber = ref.left(i).toUInt();
-    QString  fileName   = ref.mid(i);
+    QString  fileName   = QFileInfo(ref.mid(i)).absFilePath();
 
     bool _postscript_sav = _postscript;
     int current_page_sav = current_page;
@@ -988,7 +988,7 @@ void dviWindow::all_fonts_loaded(void)
       // freezing. However, the application crashes immediately if we
       // uncomment the following line and works just fine as it is. Wild
       // guess: Could that be related to the fact that we are linking
-      // agains qt-mt?
+      // against qt-mt?
       
       // qApp->processEvents();
       
@@ -1008,11 +1008,10 @@ void dviWindow::all_fonts_loaded(void)
 	  if (!sourceLink.at(j).isNumber())
 	    break;
 	Q_UINT32 sourceLineNumber = sourceLink.left(j).toUInt();
-	QString  sourceFileName   = sourceLink.mid(j);
+	QString  sourceFileName   = QFileInfo(sourceLink.mid(j)).absFilePath();
 	if ((fileName.stripWhiteSpace() == sourceFileName.stripWhiteSpace())&&(lineNumber >= sourceLineNumber)) {
 	  page = current_page;
 	  y    = sourceHyperLinkList[i].box.top();
-	  kdDebug() << sourceLink << endl;
 	}
       }
     }

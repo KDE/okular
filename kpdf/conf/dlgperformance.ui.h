@@ -34,5 +34,5 @@ void DlgPerformance::normalRadio_toggled( bool on )
 void DlgPerformance::aggressiveRadio_toggled( bool on )
 {
     if ( on )
-        descLabel->setText( i18n("Keeps everything in mempory. Preload next pages. Boost searches. (for systems with more than 512MB of memory)") );
+        descLabel->setText( i18n("Keeps everything in memory. Preload next pages. Boost searches. (for systems with more than 512MB of memory)") );
 }

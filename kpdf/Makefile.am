@@ -1,5 +1,5 @@
 # set the include path for X, qt and KDE
-INCLUDES = -I.. -I$(top_srcdir)/kpdf/goo -I$(top_srcdir)/kpdf/splash -I$(top_srcdir)/kpdf/xpdf $(all_includes)
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../goo -I$(srcdir)/../splash -I$(srcdir)/../xpdf $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_canvas.h kpdf_pagewidget.h QOutputDevPixmap.h QOutputDev.h
@@ -27,7 +27,7 @@ bin_PROGRAMS = kpdf
 kpdf_SOURCES = main.cpp kpdf_shell.cpp
 kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kpdf_LDADD   = $(LIB_KPARTS)
-kpdf_COMPILE_FIRST = ../aconf.h part.h
+kpdf_COMPILE_FIRST = part.h
 
 EXTRA_DIST = kpdf.desktop
 xdg_apps_DATA = kpdf.desktop
@@ -45,7 +45,6 @@ kde_module_LTLIBRARIES = libkpdfpart.la
 libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevPixmap.cpp QOutputDevKPrinter.cpp kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc part.cpp thumbnail.cpp thumbnaillist.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT)
-libkpdfpart_la_COMPILE_FIRST = ../aconf.h
 
 # this is where the desktop file will go 
 partdesktopdir   = $(kde_servicesdir)

@@ -15,11 +15,13 @@
 #include <qpaintdevice.h>
 #include <qfileinfo.h>
 #include <qimage.h>
+#include <qurl.h>
 
 #include <kapp.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kprocess.h>
 
 #include "dviwin.h"
 #include "optiondialog.h"
@@ -38,11 +40,10 @@ struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
 
 struct drawinf	currinf;
-int	_debug;
+//int	_debug;
 char	*prog;
 Display	*DISP;
-int		min_x, max_x, min_y, max_y;
-double	tpic_conv;
+//int		min_x, max_x, min_y, max_y;
 struct font	*font_head = NULL;
 char	*dvi_name = NULL;
 int	total_pages;
@@ -52,9 +53,6 @@ const char *dvi_oops_msg;	/* error message */
 double	dimconv;
 int	n_files_left;	/* for LRU closing of fonts */
 jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-long	magnification;
-
-unsigned int	page_w, page_h;
 long	*page_offset;
 
 QIntDict<struct font> tn_table;
@@ -68,20 +66,28 @@ Screen	*SCRN;
 int	_pixels_per_inch;
 _Xconst char	*_paper;
 
+
+
+// The following are really used
+long	        magnification;
+unsigned int	page_w;
+unsigned int	page_h;
+// end of "really used"
+
 extern char *           prog;
 extern char *	        dvi_name;
 extern FILE *		dvi_file;
 extern int 		n_files_left;
-extern int 		min_x;
-extern int 		min_y;
-extern int 		max_x;
-extern int 		max_y;
+//extern int 		min_x;
+//extern int 		min_y;
+//extern int 		max_x;
+//extern int 		max_y;
 extern unsigned int	page_w, page_h;
 extern int 		current_page;
 extern int 		total_pages;
 extern Display *	DISP;
 extern Screen  *	SCRN;
-Window mainwin;
+Window                  mainwin;
 int			useAlpha;
 
 void 	draw_page(void);
@@ -200,25 +206,25 @@ int dviWindow::makePK()
 	
 void dviWindow::setFontPath( const char *s )
 {
-	if (!ChangesPossible)
-		KMessageBox::sorry( this,
+  if (!ChangesPossible)
+    KMessageBox::sorry( this,
 			i18n("The change in font path will be effective\n"
-			"only after you start kdvi again!"));
-	FontPath = s;
+			     "only after you start kdvi again!"));
+  FontPath = s;
 }
 
 const char * dviWindow::fontPath()
 {
-	return FontPath;
+  return FontPath;
 }
 
 void dviWindow::setMetafontMode( const char *mfm )
 {
-	if (!ChangesPossible)
-		KMessageBox::sorry( this,
+  if (!ChangesPossible)
+    KMessageBox::sorry( this,
 			i18n("The change in Metafont mode will be effective\n"
-			"only after you start kdvi again!") );
-	MetafontMode = mfm;
+			     "only after you start kdvi again!") );
+  MetafontMode = mfm;
 }
 
 const char * dviWindow::metafontMode()
@@ -252,7 +258,7 @@ void dviWindow::setResolution( int bdpi )
 
 int dviWindow::resolution()
 {
-	return basedpi;
+  return basedpi;
 }
 
 
@@ -302,10 +308,12 @@ void dviWindow::drawPage()
     return;
   }
 
+  /*@@@
   min_x = 0;
   min_y = 0;
   max_x = page_w;
   max_y = page_h;
+  */
 
   if ( !pixmap )
     return;
@@ -343,8 +351,10 @@ bool dviWindow::correctDVI()
   if ( n < 134 )	// Too short for a dvi file
     return FALSE;
   f.at( n-4 );
+
   char test[4];
   unsigned char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
+
   if ( f.readBlock( test, 4 )<4 || strncmp( test, (char *) trailer, 4 ) )
     return FALSE;
   // We suppose now that the dvi file is complete	and OK
@@ -374,12 +384,12 @@ void dviWindow::changePageSize()
 
 void dviWindow::setFile( const char *fname )
 {
-        if (ChangesPossible){
-            initDVI();
-        }
-        filename = fname;
-        dvi_name = 0;
-        drawPage();
+  if (ChangesPossible){
+    initDVI();
+  }
+  filename = fname;
+  dvi_name = 0;
+  drawPage();
 }
 
 
@@ -429,10 +439,36 @@ void dviWindow::paintEvent(QPaintEvent *ev)
 
 void dviWindow::mousePressEvent ( QMouseEvent * e )
 {
+#ifdef DEBUG_SPECIAL
   kdDebug() << "mouse event" << endl;
+#endif
   for(int i=0; i<num_of_used_hyperlinks; i++) {
     if (hyperLinkList[i].box.contains(e->pos())) {
-      kdDebug() << "hit:" << hyperLinkList[i].linkText << endl;
+      if (hyperLinkList[i].linkText[0] == '#' ) {
+#ifdef DEBUG_SPECIAL
+	kdDebug() << "hit: local link to " << hyperLinkList[i].linkText << endl;
+#endif
+	QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
+	for(int j=0; j<numAnchors; j++) {
+	  if (locallink.compare(AnchorList_String[j]) == 0) {
+	    // @@@Currently there is no-one listening. Make sure
+	    // kviewshell has a slot for this.
+	    emit(request_goto_page(AnchorList_Page[j], AnchorList_Vert[j]));
+	    break;
+	  }
+	}
+      } else {
+#ifdef DEBUG_SPECIAL
+	kdDebug() << "hit: external link to " << hyperLinkList[i].linkText << endl;
+#endif
+	QUrl DVI_Url(filename);
+	QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
+
+	KShellProcess proc;
+	proc << "kfmclient openURL " << Link_Url.toString();
+	proc.start(KProcess::Block);
+	//@@@ Set up a warning requester if the command failed?
+      }
       break;
     }
   }

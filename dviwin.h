@@ -20,6 +20,9 @@
 // max. number of hyperlinks per page. This should late be replaced by
 // a dynamic allocation scheme.
 #define MAX_HYPERLINKS 200 
+// max. number of anchors per document. This should late be replaced by
+// a dynamic allocation scheme.
+#define MAX_ANCHORS    300
 
 class DVI_Hyperlink {
  public:
@@ -77,18 +80,21 @@ public:
   void          header_special(QString cp);
   void          html_href_special(QString cp);
   void          html_anchor_end(void);
+  void          html_anchor_special(QString cp);
+  void		drawPage();
+  bool          correctDVI();
 
 public slots:
   void		setFile(const char *fname);
   void		gotoPage(int page);
- //	void		setZoom(int zoom);
+  void		setZoom(double zoom);
+  double        zoom() { return _zoom; };
 
- void		setZoom(double zoom);
- double         zoom() { return _zoom; };
-
- void		drawPage();
-
- bool correctDVI();
+signals:
+  /// Emitted to indicate that a hyperlink has been clicked on, and
+  //that the widget requests that the controlling program goes to the
+  //page and the coordinates specified.
+  void          request_goto_page(int page, int y);
 
 protected:
  void paintEvent(QPaintEvent *ev);
@@ -126,6 +132,12 @@ private:
 
  DVI_Hyperlink     hyperLinkList[MAX_HYPERLINKS];
  int               num_of_used_hyperlinks;
+
+ // List of anchors in a document
+ QString           AnchorList_String[MAX_ANCHORS];
+ unsigned int      AnchorList_Page[MAX_ANCHORS];
+ double            AnchorList_Vert[MAX_ANCHORS];
+ int               numAnchors;
 
  void	  	   initDVI();
  void		   changePageSize();

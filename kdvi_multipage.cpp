@@ -69,12 +69,13 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parent, const char *name)
   preferencesChanged();
 
   new KAction(i18n("&DVI Options"), 0, this,
-                       SLOT(doSettings()), actionCollection(),
-                       "settings_dvi");
-
+	      SLOT(doSettings()), actionCollection(),
+	      "settings_dvi");
+  
   setXMLFile("kdvi_part.rc");
 
   scrollView()->addChild(window);
+  connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
 
   readSettings();
 }
@@ -125,6 +126,15 @@ bool KDVIMultiPage::gotoPage(int page)
   emit previewChanged(true);
 
   return true;
+}
+
+void KDVIMultiPage::goto_page(int page, int y)
+{
+  window->gotoPage(page+1);
+  scrollView()->ensureVisible(scrollView()->width()/2, (int)(y/window->zoom()) );
+
+  emit previewChanged(true);
+  emit moved_to_page(page);
 }
 
 

@@ -23,7 +23,6 @@
  * SUCH DAMAGE.
  */
 
-#define DEBUG 0
 
 #include <kdebug.h>
 #include <stdio.h>
@@ -64,16 +63,18 @@ extern void oops(const char *message, ...);
 
 void font::read_VF_index(void)
 {
+#ifdef DEBUG_FONTS
   kdDebug() << "read_VF_index" << endl;
-
+#endif
   FILE *VF_file = file;
   unsigned char	cmnd;
   unsigned char	*avail, *availend;	/* available space for macros */
 
   flags      |= FONT_VIRTUAL;
   set_char_p  = &dviWindow::set_vf_char;
+#ifdef DEBUG_FONTS
   kdDebug() << "Reading VF pixel file " << filename << endl;
-
+#endif
   // Read preamble.
   Fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
   long file_checksum = four(VF_file);

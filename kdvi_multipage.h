@@ -84,18 +84,22 @@ public:
   
   virtual void reload();
 
-
 signals:
 
   /// emitted to indicate the number of pages in the file
   void numberOfPages(int nr);
+
+  /// emitted to indicate that KDVIMultiPage has jumped to a different
+  //page without being asked to by the kviewshell, i.e. because the
+  //user clicked on a hyperlink.
+  void moved_to_page(int nr);
 
 
 protected slots:
 
   void doSettings();
   void preferencesChanged();
-
+  void goto_page(int page, int y);
 
 private:
 

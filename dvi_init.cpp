@@ -249,7 +249,6 @@ static void process_preamble()
   magnification = four(dvi_file);
   dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.));
   dimconv       = dimconv * (((long) pixels_per_inch)<<16) / 254000;
-  tpic_conv     = pixels_per_inch * magnification / 1000000.0;
   k             = one(dvi_file);
   Fread(job_id, sizeof(char), (int) k, dvi_file);
   job_id[k] = '\0';
@@ -393,21 +392,27 @@ Boolean dviWindow::init_dvi_file()
   PostScriptDirectory = new QVector<QString>(total_pages+1);
   PostScriptDirectory->setAutoDelete(TRUE);
   PostScriptHeaderString.truncate(0);
-  for(int i=0; i<total_pages; i++) {
+
+  // We will also generate a list of hyperlink-anchors in the
+  // document. So declare the existing list empty.
+  numAnchors = 0;
+
+  int save_current_page = current_page;
+  for(current_page=0; current_page<total_pages; current_page++) {
     PostScriptOutPutString = new QString();
 
-    (void) lseek(fileno(dvi_file), page_offset[i], SEEK_SET);
+    (void) lseek(fileno(dvi_file), page_offset[current_page], SEEK_SET);
     bzero((char *) &currinf.data, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf.end       = dvi_buffer;
     currinf.pos       = dvi_buffer;
     currinf._virtual  = NULL;
     draw_part(current_frame = &frame0, dimconv);
-    
-    PostScriptDirectory->insert(i,PostScriptOutPutString);
+
+    PostScriptDirectory->insert(current_page,PostScriptOutPutString);
   }
   PostScriptOutPutString = NULL;	
-
+  current_page           = save_current_page;
   return True;
 }
 

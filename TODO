@@ -3,12 +3,13 @@ ToDo-List for kdvi
 
 URGENT
 
+o implement SaveAs
+
 o Fonts should be free when file is reloaded and the fonts are no longer needed
 
 o Optionrequester: changes (e.g. PostScript on/off) are not applied until restart of the program.
 
-o Re-Implement PostScript specials, including proper handling of header (="bang")
-  specials.
+o Optionrequester: Hypertext on/off, Warnings on/off
 
 o Proper Error handling with throw/catch
 
@@ -18,12 +19,9 @@ o Document the technical specs.
 
 o Bugfixing
 
-o psgs should remove tmp-files
+o psgs should use and remove tmp-files
 
-o epsf specials should forward keywords to the postscript file.
-
-o Support for Hyperlatex specials (xxx.lanl.gov, probably the world's largest
-  collection of dvi-files, uses Hyperlatex for every file!)
+o kvieshell should change pageno when clicking on internal hyperlinks
 
 
 HIGHLY DESIRABLE
@@ -51,3 +49,4 @@ o Two page view
 o Support for even more TeX specials
 o Popup-Window to inform the user when Fonts are generated
 o Search option
+o dynamical storage allocation for hyperlinks (see dviwin.h)

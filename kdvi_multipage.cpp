@@ -49,10 +49,9 @@ KDVIMultiPageFactory::~KDVIMultiPageFactory()
 }
 
 
-KParts::Part *KDVIMultiPageFactory::createPart( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & )
+KParts::Part *KDVIMultiPageFactory::createPartObject( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & )
 {
   KParts::Part *obj = new KDVIMultiPage(parentWidget, widgetName, parent, name);
-  emit objectCreated(obj);
   return obj;
 }
 

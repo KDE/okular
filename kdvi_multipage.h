@@ -28,7 +28,7 @@ public:
   KDVIMultiPageFactory();
   virtual ~KDVIMultiPageFactory();
 
-  virtual KParts::Part *createPart( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & );
+  virtual KParts::Part *createPartObject( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *, const QStringList & );
 
   static KInstance *instance();
 

@@ -17,6 +17,7 @@
 #include <qbuttongroup.h>
 #include <qlabel.h>
 #include <kapp.h>
+#include <klocale.h>
 
 printData::printData
 (

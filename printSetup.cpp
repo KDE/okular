@@ -10,6 +10,7 @@
 #include "printSetup.h"
 #include <kapp.h>
 #include <kconfig.h>
+#include <klocale.h>
 #define Inherited printSetupData
 
 printSetup::printSetup

@@ -18,6 +18,7 @@
 #include <qgroupbox.h>
 #include <qpushbutton.h>
 #include <kapp.h>
+#include <klocale.h>
 
 printSetupData::printSetupData
 (

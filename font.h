@@ -72,6 +72,7 @@ struct font {
   ~font();
 
   void realloc_font(unsigned int newsize);
+  void reuse_font(void);
 };
 
 

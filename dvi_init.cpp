@@ -100,9 +100,7 @@ static	long	last_page_offset;
 
 
 
-/*
- *	Release all shrunken bitmaps for all fonts.
- */
+/** Release all shrunken bitmaps for all fonts.  */
 
 extern void reset_fonts(void)
 {
@@ -117,10 +115,9 @@ extern void reset_fonts(void)
 }
 
 
-/*
- *	load_font locates the raster file and reads the index of characters,
- *	plus whatever other preprocessing is done (depending on the format).
- */
+/** load_font locates the raster file and reads the index of
+ *	characters, plus whatever other preprocessing is done
+ *	(depending on the format).  */
 
 Boolean load_font(font *fontp)
 {
@@ -156,14 +153,11 @@ Boolean load_font(font *fontp)
 	fontp->maxchar = maxchar = 255;
 	fontp->set_char_p = set_char;
 	magic = two(fontp->file);
-#ifdef	USE_PK
+
 	if (magic == PK_MAGIC) read_PK_index(fontp, WIDENINT hushcs);
 	else
-#endif
-#ifdef	USE_GF
 	    if (magic == GF_MAGIC) read_GF_index(fontp, WIDENINT hushcs);
 	else
-#endif
 	    if (magic == VF_MAGIC) read_VF_index(fontp, WIDENINT hushcs);
 	else
 	    oops("Cannot recognize format for font file %s", fontp->filename);
@@ -198,29 +192,6 @@ static	int magstepvalue(float *mag)
   unsigned dpi_ret = kpse_magstep_fix ((unsigned) *mag, (unsigned) pixels_per_inch, &m_ret);
   *mag = (float) dpi_ret; /* MAG is actually a dpi.  */
   return m_ret ? m_ret : NOMAGSTP;
-}
-
-/*
- *	reuse_font recursively sets the flags for font structures being reused.
- */
-
-static	void reuse_font(font *fontp)
-{
-	struct font **fp;
-	struct tn *tnp;
-
-	if (fontp->flags & FONT_IN_USE) return;
-
-	fontp->flags |= FONT_IN_USE;
-	if (list_fonts)
-	    Printf("xdvi: (reusing) %s at %d dpi\n", fontp->fontname,
-		(int) (fontp->fsize + 0.5));
-	if (fontp->flags & FONT_VIRTUAL) {
-	    for (fp = fontp->vf_table; fp < fontp->vf_table + VFTABLELEN; ++fp)
-		if (*fp != NULL) reuse_font(*fp);
-	    for (tnp = fontp->vf_chain; tnp != NULL; tnp = tnp->next)
-		reuse_font(tnp->fontp);
-	}
 }
 
 
@@ -308,7 +279,7 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, font **tntable,
 	    if (strcmp(fontname, fontp->fontname) == 0
 		    && size == (int) (fontp->fsize + 0.5)) {
 			/* if font already in use */
-		reuse_font(fontp);
+		fontp->reuse_font();
 		free(fontname);
 		break;
 	    }

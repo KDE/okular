@@ -135,3 +135,27 @@ void font::realloc_font(unsigned int newsize)
   }
   maxchar = newsize;
 }
+
+
+/** reuse_font recursively sets the flags for font structures being
+ *    reused.  */
+
+void font::reuse_font(void)
+{
+  struct font **fp;
+  struct tn *tnp;
+
+  if (flags & FONT_IN_USE) 
+    return;
+
+  flags |= FONT_IN_USE;
+  if (list_fonts)
+    Printf("xdvi: (reusing) %s at %d dpi\n", fontname, (int) (fsize + 0.5));
+  if (flags & FONT_VIRTUAL) {
+    for (fp = vf_table; fp < vf_table + VFTABLELEN; ++fp)
+      if (*fp != NULL)
+	(*fp)->reuse_font();
+    for (tnp = vf_chain; tnp != NULL; tnp = tnp->next)
+      tnp->fontp->reuse_font();
+  }
+}

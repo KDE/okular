@@ -119,10 +119,10 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
 void TOC::slotExecuted( QListViewItem *i )
 {
     const QDomElement & e = static_cast< TOCItem* >( i )->element();
-    if ( e.hasAttribute( "PageViewport" ) )
+    if ( e.hasAttribute( "Viewport" ) )
     {
         // if the node has a viewport, set it
-        m_document->setViewport( DocumentViewport( e.attribute( "PageViewport" ) ), TOC_ID );
+        m_document->setViewport( DocumentViewport( e.attribute( "Viewport" ) ), TOC_ID );
     }
     else if ( e.hasAttribute( "ViewportName" ) )
     {

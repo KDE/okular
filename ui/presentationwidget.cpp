@@ -41,8 +41,6 @@ struct PresentationFrame
 {
     const KPDFPage * page;
     QRect geometry;
-    PresentationWidget::TransitionType transType;
-    PresentationWidget::TransitionDirection transDir;
 };
 
 
@@ -122,9 +120,6 @@ void PresentationWidget::pageSetup( const QValueVector<KPDFPage*> & pageSet, boo
     {
         PresentationFrame * frame = new PresentationFrame();
         frame->page = *setIt;
-        //TODO get transition from the document
-        frame->transType = Settings::slidesGlitterTrans() ? Glitter : NoTrans;
-        frame->transDir = Left;
         // calculate frame geometry keeping constant aspect ratio
         float pageRatio = frame->page->ratio();
         int pageWidth = m_width,
@@ -287,8 +282,7 @@ void PresentationWidget::generatePage()
 #endif
 
     // start transition or immediately update viewport
-    TransitionType type = m_frameIndex != -1 ? m_frames[ m_frameIndex ]->transType : NoTrans;
-    initTransition( type );
+    initTransition( m_frames[ m_frameIndex ]->page->getTransition() );
 }
 
 void PresentationWidget::generateIntroPage( QPainter & p )
@@ -554,14 +548,33 @@ void PresentationWidget::slotTransitionStep()
 
 
 /** ONLY the TRANSITIONS GENERATION function from here on **/
-void PresentationWidget::initTransition( TransitionType type )
+void PresentationWidget::initTransition( const KPDFPageTransition *transition )
 {
     m_transitionRects.clear();
     const int gridXstep = 50;
     const int gridYstep = 38;
-    switch( type )
+    switch( transition->type() )
     {
-        case Glitter: {
+         // TODO: implement missing transitions
+        case KPDFPageTransition::Replace:
+            update();
+            return;
+        case KPDFPageTransition::Split:
+            update();
+            return;
+        case KPDFPageTransition::Blinds:
+            update();
+            return;
+        case KPDFPageTransition::Box:
+            update();
+            return;
+        case KPDFPageTransition::Wipe:
+            update();
+            return;
+        case KPDFPageTransition::Dissolve:
+            update();
+            return;
+        case KPDFPageTransition::Glitter: {
             int oldX = 0,
                 oldY = 0;
             // create a grid of gridXstep by gridYstep QRects
@@ -595,15 +608,19 @@ void PresentationWidget::initTransition( TransitionType type )
             m_transitionMul = 40;
             m_transitionDelay = (m_transitionMul * 500) / steps;
             } break;
-
-            // TODO: implement missing transitions
-        case NoTrans:
-        case BoxIn:
-        case BoxOut:
-        case GlitterDir:
-        case FuseDir:
-        case SplitDir:
-        case WipeDir:
+        case KPDFPageTransition::Fly:
+            update();
+            return;
+        case KPDFPageTransition::Push:
+            update();
+            return;
+        case KPDFPageTransition::Cover:
+            update();
+            return;
+        case KPDFPageTransition::Uncover:
+            update();
+            return;
+        case KPDFPageTransition::Fade:
             update();
             return;
     }

@@ -32,7 +32,7 @@
 KPDFPage::KPDFPage( uint page, float w, float h, int r )
     : m_number( page ), m_rotation( r ), m_attributes( 0 ),
     m_width( w ), m_height( h ), m_sLeft( 0 ), m_sTop( 0 ),
-    m_sRight( 0 ), m_sBottom( 0 ), m_text( 0 )
+    m_sRight( 0 ), m_sBottom( 0 ), m_text( 0 ), m_transition( 0 )
 {
     // if landscape swap width <-> height (rotate 90deg CCW)
     if ( r == 90 || r == 270 )
@@ -91,6 +91,11 @@ const KPDFPageRect * KPDFPage::getRect( int mouseX, int mouseY ) const
     return 0;
 }
 
+const KPDFPageTransition * KPDFPage::getTransition() const
+{
+    return m_transition;
+}
+
 const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
 {
     if ( !m_text )
@@ -144,6 +149,11 @@ void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
+}
+
+void KPDFPage::setTransition( const KPDFPageTransition * transition )
+{
+    m_transition = transition;
 }
 
 void KPDFPage::deletePixmap( int id )

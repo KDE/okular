@@ -15,6 +15,7 @@
 #include <qstringlist.h>
 #include <qvaluevector.h>
 #include "core/observer.h"
+#include "core/pagetransition.h"
 
 class KToolBar;
 class QTimer;
@@ -35,11 +36,6 @@ class PresentationWidget : public QWidget, public KPDFDocumentObserver
         PresentationWidget( KPDFDocument * doc );
         ~PresentationWidget();
 
-        // define type of transitions used by presentation frames
-        enum TransitionType { NoTrans, BoxIn, BoxOut, Glitter, GlitterDir,
-                              FuseDir, SplitDir, WipeDir };
-        enum TransitionDirection { Left, Top, Right, Bottom };
-
         // inherited from KPDFDocumentObserver
         uint observerId() const { return PRESENTATION_ID; }
         void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
@@ -59,7 +55,7 @@ class PresentationWidget : public QWidget, public KPDFDocumentObserver
         void generateIntroPage( QPainter & p );
         void generateContentsPage( int page, QPainter & p );
         void generateOverlay();
-        void initTransition( TransitionType type );
+        void initTransition( const KPDFPageTransition *transition );
 
         // cache stuff
         int m_width;

@@ -33,6 +33,7 @@
 #include "gp_outputdev.h"
 #include "core/observer.h" //for PAGEVIEW_ID
 #include "core/page.h"
+#include "core/pagetransition.h"
 #include "conf/settings.h"
 
 // id for DATA_READY ThreadedGenerator Event
@@ -118,8 +119,13 @@ bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage
     // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = pdfdoc->getNumPages();
     pagesVector.resize( pageCount );
-    for ( uint i = 0; i < pageCount ; i++ )
-        pagesVector[i] = new KPDFPage( i, pdfdoc->getPageWidth(i+1), pdfdoc->getPageHeight(i+1), pdfdoc->getPageRotate(i+1) );
+    for ( uint i = 0; i < pageCount ; i++ ) {
+        KPDFPage * page = new KPDFPage( i, pdfdoc->getPageWidth(i+1),
+                                        pdfdoc->getPageHeight(i+1),
+                                        pdfdoc->getPageRotate(i+1) );
+        addTransition( i, page );
+        pagesVector[i] = page;
+    }
 
     // the file has been loaded correctly
     return true;
@@ -226,6 +232,80 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
     }
 }
 
+void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
+{
+    KPDFPageTransition *transition = new KPDFPageTransition();
+
+    Page *pdfPage = pdfdoc->getCatalog()->getPage( pageNumber + 1 );
+    if ( pdfPage && pdfPage->getTransition() ) {
+        PageTransition *pdfTransition = pdfPage->getTransition();
+
+        switch ( pdfTransition->getType() ) {
+            case PageTransition::Replace:
+                transition->setType( KPDFPageTransition::Replace );
+                break;
+            case PageTransition::Split:
+                transition->setType( KPDFPageTransition::Split );
+                break;
+            case PageTransition::Blinds:
+                transition->setType( KPDFPageTransition::Blinds );
+                break;
+            case PageTransition::Box:
+                transition->setType( KPDFPageTransition::Box );
+                break;
+            case PageTransition::Wipe:
+                transition->setType( KPDFPageTransition::Wipe );
+                break;
+            case PageTransition::Dissolve:
+                transition->setType( KPDFPageTransition::Dissolve );
+                break;
+            case PageTransition::Glitter:
+                transition->setType( KPDFPageTransition::Glitter );
+                break;
+            case PageTransition::Fly:
+                transition->setType( KPDFPageTransition::Fly );
+                break;
+            case PageTransition::Push:
+                transition->setType( KPDFPageTransition::Push );
+                break;
+            case PageTransition::Cover:
+                transition->setType( KPDFPageTransition::Cover );
+                break;
+            case PageTransition::Uncover:
+                transition->setType( KPDFPageTransition::Uncover );
+                break;
+            case PageTransition::Fade:
+                transition->setType( KPDFPageTransition::Fade );
+                break;
+        }
+
+        transition->setDuration( pdfTransition->getDuration() );
+
+        switch ( pdfTransition->getAlignment() ) {
+            case PageTransition::Horizontal:
+                transition->setAlignment( KPDFPageTransition::Horizontal );
+                break;
+            case PageTransition::Vertical:
+                transition->setAlignment( KPDFPageTransition::Vertical );
+                break;
+        }
+
+        switch ( pdfTransition->getDirection() ) {
+            case PageTransition::Inward:
+                transition->setDirection( KPDFPageTransition::Inward );
+                break;
+            case PageTransition::Outward:
+                transition->setDirection( KPDFPageTransition::Outward );
+                break;
+        }
+
+        transition->setAngle( pdfTransition->getAngle() );
+        transition->setScale( pdfTransition->getScale() );
+        transition->setIsRectangular( pdfTransition->isRectangular() == gTrue );
+    }
+
+    page->setTransition( transition );
+}
 
 bool PDFGenerator::print( KPrinter& printer )
 {

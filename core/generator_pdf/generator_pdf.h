@@ -75,6 +75,8 @@ class PDFGenerator : public Generator
         QString getDocumentDate( const QString & data ) const;
         // private function for creating the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parent, GList * items );
+        // private function for creating the transition information
+        void addTransition( int pageNumber, KPDFPage * page );
         // (GT) take the first queued item from the stack and feed it to the thread
         void startNewThreadedGeneration();
         // (GT) receive data from the generator thread

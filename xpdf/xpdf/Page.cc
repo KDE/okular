@@ -173,6 +173,105 @@ GBool PageAttrs::readBox(Dict *dict, const char *key, PDFRectangle *box) {
 }
 
 //------------------------------------------------------------------------
+// PageTransition
+//------------------------------------------------------------------------
+
+PageTransition::PageTransition(Dict *dict)
+  : type(Replace),
+    duration(1),
+    alignment(Horizontal),
+    direction(Inward),
+    angle(0),
+    scale(1.0),
+    rectangular(false)
+{
+  Object dictObj;
+  Object obj;
+
+  dict->lookup("Trans", &dictObj);
+  if (dictObj.isDict()) {
+    Dict *transDict = dictObj.getDict();
+
+    if (transDict->lookup("S", &obj)->isName()) {
+      const char *s = obj.getName();
+      if (strcmp("R", s) == 0)
+        type = Replace;
+      else if (strcmp("Split", s) == 0)
+        type = Split;
+      else if (strcmp("Blinds", s) == 0)
+        type = Blinds;
+      else if (strcmp("Box", s) == 0)
+        type = Box;
+      else if (strcmp("Wipe", s) == 0)
+        type = Wipe;
+      else if (strcmp("Dissolve", s) == 0)
+        type = Dissolve;
+      else if (strcmp("Glitter", s) == 0)
+        type = Glitter;
+      else if (strcmp("Fly", s) == 0)
+        type = Fly;
+      else if (strcmp("Push", s) == 0)
+        type = Push;
+      else if (strcmp("Cover", s) == 0)
+        type = Cover;
+      else if (strcmp("Uncover", s) == 0)
+        type = Push;
+      else if (strcmp("Fade", s) == 0)
+        type = Cover;
+    }
+    obj.free();
+
+    if (transDict->lookup("D", &obj)->isInt()) {
+      duration = obj.getInt();
+    }
+    obj.free();
+
+    if (transDict->lookup("Dm", &obj)->isName()) {
+      const char *dm = obj.getName();
+      if ( strcmp( "H", dm ) == 0 )
+        alignment = Horizontal;
+      else if ( strcmp( "V", dm ) == 0 )
+        alignment = Vertical;
+    }
+    obj.free();
+
+    if (transDict->lookup("M", &obj)->isName()) {
+      const char *m = obj.getName();
+      if ( strcmp( "I", m ) == 0 )
+        direction = Inward;
+      else if ( strcmp( "O", m ) == 0 )
+        direction = Outward;
+    }
+    obj.free();
+
+    if (transDict->lookup("Di", &obj)->isInt()) {
+      angle = obj.getInt();
+    }
+    obj.free();
+
+    if (transDict->lookup("Di", &obj)->isName()) {
+      if ( strcmp( "None", obj.getName() ) == 0 )
+        angle = 0;
+    }
+    obj.free();
+
+    if (transDict->lookup("SS", &obj)->isReal()) {
+      scale = obj.getReal();
+    }
+    obj.free();
+
+    if (transDict->lookup("B", &obj)->isBool()) {
+      rectangular = obj.getBool();
+    }
+    obj.free();
+  }
+  dictObj.free();
+}
+
+PageTransition::~PageTransition() {
+}
+
+//------------------------------------------------------------------------
 // Page
 //------------------------------------------------------------------------
 
@@ -183,6 +282,9 @@ Page::Page(XRef *xrefA, int numA, Dict *pageDict, PageAttrs *attrsA) {
 
   // get attributes
   attrs = attrsA;
+
+  // get transition
+  transition = new PageTransition( pageDict );
 
   // annotations
   pageDict->lookupNF("Annots", &annots);
@@ -214,6 +316,7 @@ Page::Page(XRef *xrefA, int numA, Dict *pageDict, PageAttrs *attrsA) {
 
 Page::~Page() {
   delete attrs;
+  delete transition;
   annots.free();
   contents.free();
 }

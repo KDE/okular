@@ -15,8 +15,10 @@
 
 class QPainter;
 class QPixmap;
+class QRect;
 class TextPage;
 class KPDFPageRect;
+class KPDFPageTransition;
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -50,6 +52,7 @@ class KPDFPage
         bool hasRect( int mouseX, int mouseY ) const;
         bool hasLink( int mouseX, int mouseY ) const;
         const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
+        const KPDFPageTransition * getTransition() const;
         const QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
 
         // operations (by KPDFDocument)
@@ -62,6 +65,7 @@ class KPDFPage
         void setPixmap( int id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
         void setRects( const QValueList< KPDFPageRect * > rects );
+        void setTransition( const KPDFPageTransition * transition );
         void deletePixmap( int id );
         void deletePixmapsAndRects();
 
@@ -74,6 +78,7 @@ class KPDFPage
         QMap< int, QPixmap * > m_pixmaps;
         TextPage * m_text;
         QValueList< KPDFPageRect * > m_rects;
+        const KPDFPageTransition * m_transition;
 };
 
 

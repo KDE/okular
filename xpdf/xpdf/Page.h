@@ -98,6 +98,74 @@ private:
 };
 
 //------------------------------------------------------------------------
+// PageTransition
+//------------------------------------------------------------------------
+class PageTransition {
+public:
+  enum Type {
+    Replace,
+    Split,
+    Blinds,
+    Box,
+    Wipe,
+    Dissolve,
+    Glitter,
+    Fly,
+    Push,
+    Cover,
+    Uncover,
+    Fade
+  };
+
+  enum Alignment {
+    Horizontal,
+    Vertical
+  };
+
+  enum Direction {
+    Inward,
+    Outward
+  };
+
+  // Construct a new PageTransition object from a page dictionary.
+  PageTransition( Dict *dict );
+
+  // Destructor
+  ~PageTransition();
+
+  // Get type of the transition.
+  Type getType() const { return type; }
+
+  // Get duration of the transition in seconds.
+  int getDuration() const { return duration; }
+
+  // Get dimension in which the transition effect
+  // occurs.
+  Alignment getAlignment() const { return alignment; }
+
+  // Get direction of motion of the transition effect.
+  Direction getDirection() const { return direction; }
+
+  // Get direction in which the transition effect moves.
+  int getAngle() const { return angle; }
+
+  // Get starting or ending scale.
+  double getScale() const { return scale; }
+
+  // Returns true if the area to be flown is rectangular and
+  // opaque.
+  GBool isRectangular() const { return rectangular; }
+private:
+  Type type;
+  int duration;
+  Alignment alignment;
+  Direction direction;
+  int angle;
+  double scale;
+  GBool rectangular;
+};
+
+//------------------------------------------------------------------------
 // Page
 //------------------------------------------------------------------------
 
@@ -140,6 +208,9 @@ public:
   // Get contents.
   Object *getContents(Object *obj) { return contents.fetch(xref, obj); }
 
+  // Get transition information.
+  PageTransition *getTransition() const { return transition; }
+
   // Display a page.
   void display(OutputDev *out, double hDPI, double vDPI,
 	       int rotate, GBool crop,
@@ -160,6 +231,7 @@ private:
   XRef *xref;			// the xref table for this PDF file
   int num;			// page number
   PageAttrs *attrs;		// page attributes
+  PageTransition *transition; // page transition
   Object annots;		// annotations array
   Object contents;		// page contents
   GBool ok;			// true if page is valid

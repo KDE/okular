@@ -296,18 +296,33 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     QColor selBlendColor = (selectionRect.width() > 20 || selectionRect.height() > 20) ?
                            palette().active().highlight() : Qt::red;
 
-    // Iterate over the regions. This optimizes a lot the cases in which
-    // SUMj( Region[j].area ) is less than Region.boundingRect.area )
+    // subdivide region into rects
     QMemArray<QRect> allRects = pe->region().rects();
     uint numRects = allRects.count();
-    // TODO: add a check to see wether to use area subdivision or not.
+
+    // preprocess rects area to see if it worths or not using subdivision
+    uint summedArea = 0;
     for ( uint i = 0; i < numRects; i++ )
     {
-        // set 'contentsRect' to a part of the sub-divided region
-        contentsRect = allRects[i].normalize().intersect( viewportRect );
-        contentsRect.moveBy( contentsX(), contentsY() );
-        if ( !contentsRect.isValid() )
-            continue;
+        const QRect & r = allRects[i];
+        summedArea += r.width() * r.height();
+    }
+    // very elementary check: SUMj(Region[j].area) is less than boundingRect.area
+    bool useSubdivision = summedArea < (0.7 * contentsRect.width() * contentsRect.height());
+
+    // iterate over the rects (only one loop if not using subdivision)
+    if ( !useSubdivision )
+        numRects = 1;
+    for ( uint i = 0; i < numRects; i++ )
+    {
+        if ( useSubdivision )
+        {
+            // set 'contentsRect' to a part of the sub-divided region
+            contentsRect = allRects[i].normalize().intersect( viewportRect );
+            contentsRect.moveBy( contentsX(), contentsY() );
+            if ( !contentsRect.isValid() )
+                continue;
+        }
 
         if ( Settings::tempUseComposting() )
         {

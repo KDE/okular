@@ -126,7 +126,7 @@ bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
     if( found && strictCase )
     {
         GString * orig = m_text->getText( m_sLeft, m_sTop, m_sRight, m_sBottom );
-        found = !strcmp( text.latin1(), orig->getCString() );
+	found = QString::fromUtf8( orig->getCString() ) == text;
     }
     gfree(u);
     return found;

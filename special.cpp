@@ -223,8 +223,8 @@ void dviWindow::epsf_special(QString cp)
 	bbox_height = rhi;
       }
 
-      bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrink_factor;
-      bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrink_factor;
+      bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit() / currwin.shrinkfactor;
+      bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit() / currwin.shrinkfactor;
 
       QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y - (int)bbox_height, (int)bbox_width, (int)bbox_height);
       foreGroundPaint.save();

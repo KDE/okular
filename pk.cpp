@@ -62,8 +62,33 @@
 #include "glyph.h"
 #include "xdvi.h"
 
+
+
+
+#define BMUNIT                  Q_UINT32
+#define	BITS_PER_BMUNIT		32
+#define	BYTES_PER_BMUNIT	4
+
+#define	ADD(a, b)	((BMUNIT *) (((char *) a) + b))
+#define	SUB(a, b)	((BMUNIT *) (((char *) a) - b))
+
+
 extern void oops(QString message);
-extern void alloc_bitmap(bitmap *bitmap);
+
+/*
+ *	Allocate bitmap for given font and character
+ */
+
+void alloc_bitmap(bitmap *bitmap)
+{
+  register unsigned int	size;
+
+  /* width must be multiple of 16 bits for raster_op */
+  bitmap->bytes_wide = ROUNDUP((int) bitmap->w, BITS_PER_BMUNIT) * BYTES_PER_BMUNIT;
+  size = bitmap->bytes_wide * bitmap->h;
+  bitmap->bits = new char[size != 0 ? size : 1];
+}
+
 
 
 // This table is used for changing the bit order in a byte. The

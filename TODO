@@ -2,7 +2,7 @@ ToDo-List for kdvi
 
 URGENT / URGENT BUGFIXING
 
-o add tip: kdvi can load compressed files!
+o add "papersize" which does not display the margin
 o get rid of useless README.kdvi
 o Proper handling of the base-url
 o add "tt.dvi.gz" to the list of recent files, not "/tmp/kviews....."

@@ -84,20 +84,6 @@ please report the problem."));
 }
 
 /*
- *	Allocate bitmap for given font and character
- */
-
-void alloc_bitmap(bitmap *bitmap)
-{
-  register unsigned int	size;
-
-  /* width must be multiple of 16 bits for raster_op */
-  bitmap->bytes_wide = ROUNDUP((int) bitmap->w, BITS_PER_BMUNIT) * BYTES_PER_BMUNIT;
-  size = bitmap->bytes_wide * bitmap->h;
-  bitmap->bits = new char[size != 0 ? size : 1];
-}
-
-/*
  *
  *      Read size bytes from the FILE fp, constructing them into a
  *      signed/unsigned integer.

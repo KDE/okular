@@ -316,7 +316,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  b = readUINT32();
 	  b = xspell_conv(b); 
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
-	    set_rule( ((int) ROUNDUP(xspell_conv(a), shrink_factor * 65536)), ((int) ROUNDUP(b, shrink_factor * 65536)) );
+	    set_rule( ((int) ROUNDUP(xspell_conv(a), currwin.shrinkfactor * 65536)), ((int) ROUNDUP(b, currwin.shrinkfactor * 65536)) );
 	  DVI_H += b;
 	  break;
 
@@ -330,7 +330,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  a = xspell_conv(a);
 	  b = xspell_conv(b);
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
-	    set_rule(((int) ROUNDUP(a, shrink_factor * 65536)), ((int) ROUNDUP(b, shrink_factor * 65536)));
+	    set_rule(((int) ROUNDUP(a, currwin.shrinkfactor * 65536)), ((int) ROUNDUP(b, currwin.shrinkfactor * 65536)));
 	  break;
 
 	case NOP:
@@ -344,7 +344,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  command_pointer += 11 * 4;
 	  DVI_H = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
 	  DVI_V = basedpi;
-	  PXL_V = int(DVI_V/shrink_factor);
+	  PXL_V = int(DVI_V/currwin.shrinkfactor);
 	  WW = XX = YY = ZZ = 0;
 	  break;
 
@@ -446,7 +446,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 		textLinkList[textLinkList.size()-1].linkText += '\n';
 	    }
 	    DVI_V += xspell_conv(DDtmp)/65536;
-	    PXL_V = int(DVI_V/shrink_factor);
+	    PXL_V = int(DVI_V/currwin.shrinkfactor);
 	  }
 	  break;
 	  
@@ -467,7 +467,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  DVI_V += YY/65536;
-	  PXL_V = int(DVI_V/shrink_factor);
+	  PXL_V = int(DVI_V/currwin.shrinkfactor);
 	  break;
 	  
 	case Z1:
@@ -487,7 +487,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  DVI_V += ZZ/65536;
-	  PXL_V = int(DVI_V/shrink_factor);
+	  PXL_V = int(DVI_V/currwin.shrinkfactor);
 	  break;
 	  
 	case FNT1:
@@ -609,7 +609,7 @@ void dviWindow::draw_page(void)
   // Mark hyperlinks in blue. We draw a blue line under the
   // character whose width is equivalent to 0.5 mm, but at least
   // one pixel.
-  int h = (int)(basedpi*0.05/(2.54*shrink_factor) + 0.5);
+  int h = (int)(basedpi*0.05/(2.54*currwin.shrinkfactor) + 0.5);
   h = (h < 1) ? 1 : h;
   for(unsigned int i=0; i<hyperLinkList.size(); i++) {
     int x = hyperLinkList[i].box.left();

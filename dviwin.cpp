@@ -262,6 +262,8 @@ void dviWindow::drawPage()
   kdDebug(4300) << "drawPage" << endl;
 #endif
 
+  setCursor(arrowCursor);
+
   if (dviFile == NULL) {
     resize(0, 0);
     return;
@@ -294,7 +296,6 @@ void dviWindow::drawPage()
   }
   resize(pixmap->width(), pixmap->height());
   repaint();
-
 }
 
 
@@ -342,6 +343,8 @@ void dviWindow::changePageSize()
 
 void dviWindow::setFile( const QString & fname )
 {
+  setMouseTracking(true);
+
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
 
@@ -491,18 +494,15 @@ void dviWindow::paintEvent(QPaintEvent *)
 
 void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 {
-  /*
-  //@@@  setMouseTracking(true);
-  //@@@  kdDebug(4300) << "mouse event" << endl;
-
-  for(int i=0; i<num_of_used_hyperlinks; i++) {
-    if (hyperLinkList[i].box.contains(e->pos())) {
-      setCursor(pointingHandCursor);
-      return;
+  if ( e->state() == 0 ) {
+    for(int i=0; i<num_of_used_hyperlinks; i++) {
+      if (hyperLinkList[i].box.contains(e->pos())) {
+	setCursor(pointingHandCursor);
+	return;
+      }
     }
+    setCursor(arrowCursor);
   }
-  setCursor(arrowCursor);
-  */
 }
 
 

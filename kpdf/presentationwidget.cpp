@@ -13,6 +13,7 @@
 #include <qpainter.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
+#include <kcursor.h>
 #include <ktoolbar.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -87,6 +88,9 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
         generatePage();
     else
         slotNextPage();
+
+    KCursor::setAutoHideCursor( this, true );
+    KCursor::setHideCursorDelay( 3000 );
 }
 
 PresentationWidget::~PresentationWidget()
@@ -495,6 +499,8 @@ void PresentationWidget::slotNextPage()
         m_transitionTimer->stop();
         update();
     }
+
+    setFocus();
 }
 
 void PresentationWidget::slotPrevPage()

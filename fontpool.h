@@ -75,6 +75,17 @@ Q_OBJECT
   /** Sets the resolution of the output device and determines if font hinting should be used. */
   void setParameters( unsigned int MetaFontMode, bool makePK, bool useType1Fonts, bool useFontHints );
 
+  /** Sets the DVI file's path. This information is used to set the
+     current working directory for the kpsewhich command, so that
+     kpsewhich will find fonts that are stored in the DVI file's
+     directory. */ 
+  void setExtraSearchPath( const QString &path ) {extraSearchPath = path;};
+
+  /** Returs the path that is set as the current working directory for
+     the kpsewhich command, so that kpsewhich will find fonts that are
+     stored in the DVI file's directory. */ 
+  QString getExtraSearchPath( ) const {return extraSearchPath;};
+
   /** Returns the currently set MetafontMode */
   unsigned int getMetafontMode(void) {return MetafontMode;};
 
@@ -264,6 +275,12 @@ public slots:
  QString        MetafontOutput;
  
  QString        kpsewhichOutput;
+
+ /** This string is set to the DVI file's path. It is used to set the
+     current working directory for the kpsewhich command, so that
+     kpsewhich will find fonts that are stored in the DVI file's
+     directory. */
+ QString        extraSearchPath;
 
  /** This is the ShellProcess which is used to run the kpsewhich
      command which locates the font-files for us. */

@@ -55,6 +55,7 @@ fontPool::fontPool(void)
   useType1Fonts            = true;
   useFontHints             = true;
   CMperDVIunit             = 0;
+  extraSearchPath          = QString::null;
   fontList.setAutoDelete(TRUE);
 
 
@@ -371,6 +372,13 @@ void fontPool::start_kpsewhich(void)
 
   proc->clearArguments();
   *proc << "kpsewhich";
+  
+  /* Set the current working directory for the kpsewhich command to
+     the DVI file's path, so that kpsewhich will find fonts that are
+     stored in the DVI file's directory. */
+  if (!extraSearchPath.isNull())
+    proc->setWorkingDirectory( extraSearchPath );
+  
 #ifdef DEBUG_FONTPOOL
   shellProcessCmdLine += "kpsewhich ";
 #endif
@@ -382,7 +390,7 @@ void fontPool::start_kpsewhich(void)
 #ifdef DEBUG_FONTPOOL
   shellProcessCmdLine += QString("--mode %1").arg(KShellProcess::quote(MFModes[MetafontMode])) + " ";
 #endif
-
+  
   // Enable automatic pk-font generation only in the second pass. (If
   // automatic font generation is switched off, this method will never
   // be called with pass==1)
@@ -765,11 +773,13 @@ void fontPool::kpsewhich_output_receiver(KProcess *, char *buffer, int buflen)
 
 void fontPool::abortGeneration(void)
 {
+#ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "Font generation is aborted." << endl;
+#endif
+
   if (proc != 0)
-    if (proc->isRunning()) {
+    if (proc->isRunning()) 
       proc->kill();
-    }
 }
 
 #include "fontpool.moc"

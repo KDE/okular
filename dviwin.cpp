@@ -591,6 +591,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   if (info != 0)
     info->setDVIData(dviFile);
 
+  font_pool->setExtraSearchPath( fi.dirPath(true) );
   font_pool->setCMperDVIunit( dviFile->getCmPerDVIunit() );
 
   // Extract PostScript from the DVI file, and store the PostScript

@@ -215,7 +215,7 @@
     <anchor id="inv-search"></anchor>
 
     <para>Inverse search is a very useful feature when you are writing
-    a TeX-document yourself. If everything is properly set up, you can
+    a TeX document yourself. If everything is properly set up, you can
     click into &kdvi;'s window with the
     <mousebutton>middle</mousebutton> mouse button (on some systems,
     when you don't have a three-button mouse, you can simultaneously
@@ -261,10 +261,10 @@
 
 
     <section id="inverse-search-tex">
-      <title>Producing TeX-files for inverse search</title>
+      <title>Producing TeX files for inverse search</title>
       <para>There are essentially two ways to produce &DVI; files
       which contain inverse search information: you can either use a
-      TeX/LaTeX-binary which generates and includes the necessary
+      TeX/LaTeX binary which generates and includes the necessary
       information automatically, or you can include an extra package
       which is written in TeX/LaTeX.</para>
       <itemizedlist>
@@ -284,7 +284,7 @@
 	  search information natively, copy the files
 	  <filename>srcltx.sty</filename> and
 	  <filename>srctex.sty</filename> to the directory where your
-	  TeX-file resides (you can do that by pressing the &Shift; key
+	  TeX file resides (you can do that by pressing the &Shift; key
 	  and &LMB; while the mouse pointer is on a hyperlink.)
 	  If you use LaTeX, add the line
 <programlisting>
@@ -476,7 +476,7 @@
 
       <para><application>NEdit</application> generally works very well
       indeed. Clicking into the &DVI; file should open a new
-      window. If the TeX-file is already used in another window of
+      window. If the TeX file is already used in another window of
       <application>NEdit</application>, the newly opened window
       displays another view of the buffer. Otherwise, the TeX file is
       loaded. After opening the window,
@@ -494,7 +494,7 @@
 	  remote control <application>NEdit</application>. Make sure
 	  that <command>ncl</command> is available on the command line
 	  by trying the command <userinput><command>ncl</command>
-	  <parameter>-noask</parameter></userinput>. This which should
+	  <parameter>-noask</parameter></userinput>. This should
 	  open an instance of the <application>NEdit</application>
 	  editor. If <command>ncl</command> is not available, you
 	  might be using an older version of
@@ -617,7 +617,7 @@
       mouseclick into the &DVI; file will always open a new instance
       of the <command>vim</command> editor, even if
       <command>vim</command> is already running and even if the
-      TeX-file is already loaded.</para>
+      TeX file is already loaded.</para>
       <tip>
       <itemizedlist>
 	<listitem>
@@ -656,7 +656,7 @@
 	search</link>.</para>
       </listitem>
       <listitem>
-	<para>Go! If you use <application>Emacs</application> and
+	<para>If you use <application>Emacs</application> and
 	everything is properly set up, you just press
 	<userinput><keycombo
 	action="simul">&Ctrl;<keycap>X</keycap></keycombo> <keycombo
@@ -680,11 +680,11 @@
 	  <listitem>
 		<para>Download the following
 		<application>Emacs</application> script,
-		<filename>kdvi-search.el</filename> (press shift and
-		click the filename to download) and store it in a
+		<filename>kdvi-search.el</filename> (press &Shift; and
+		&LMB; the filename to download) and store it in a
 		place where <application>Emacs</application> can
 		access it &mdash; we recommend a directory
-		<filename>emacs-scripts</filename>.</para>
+		<filename class="directory">emacs-scripts</filename>.</para>
 	  </listitem>
 	  <listitem>
 	    <para>Add the lines 
@@ -701,7 +701,7 @@
 	  </listitem>
 
 	  <listitem>
-	    <para>Enjoy. Open <application>Emacs</application>, load a
+	    <para>Open <application>Emacs</application>, load a
 	    TeX file, produce the corresponding &DVI; file, and either
 	    enter the command <userinput><keycombo
 	    action="simul"><keycap>M</keycap><keycap>x</keycap>
@@ -718,8 +718,8 @@
 	    others. <application>Emacs</application> will perhaps also
 	    ask to save the name of the master file <quote>as a local
 	    variable</quote>, &ie; as a comment at the very end of the
-	    file. Say either <userinput>yes</userinput> or
-	    <userinput>no</userinput>, and enjoy!</para> 
+	    file. Type either <userinput>yes</userinput> or
+	    <userinput>no</userinput> to continue.</para> 
 	    </listitem>
 	</itemizedlist>
 
@@ -743,7 +743,7 @@
 	<title><application>XEmacs</application></title>
 	
 	<para>To set up <application>XEmacs</application>, follow the
-	steps for <application>Emacs</application> above, but modify
+	steps for <application>Emacs</application> <link linkend="forw-editor-setup-emacs">above</link>, but modify
 	your <filename>.xemacs</filename> rather than your
 	<filename>.emacs</filename> file. If you use a very recent
 	version of <application>XEmacs</application>, <filename
@@ -839,7 +839,7 @@
 	<varlistentry>
 	  <term><guilabel>Show PostScript specials</guilabel></term>
 	  <listitem>
-	    <para>If this options is checked, &kdvi; will display
+	    <para>If this option is checked, &kdvi; will display
 	    &PostScript; graphics which are embedded into the &DVI;
 	    file. You probably want to set this option.</para>
 
@@ -891,7 +891,7 @@
 	    the pre-configured editors from the
 	    <guilabel>Editor</guilabel> combobox, then you don't have
 	    to do anything else. If you whish to use a different
-	    editor, chose <guilabel>User defined Editor</guilabel>
+	    editor, chose <guilabel>User-defined editor</guilabel>
 	    from the <guilabel>Editor</guilabel> combobox and enter
 	    the command line which will be used to start your
 	    editor. Use the placeholders <token>%f</token> and

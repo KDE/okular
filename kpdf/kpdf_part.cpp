@@ -93,6 +93,9 @@ Part::~Part()
 void Part::slotNextPage()
 {
     m_currentPage = pdfpartview->pagesListBox->currentItem() + 1;
+    if ( m_doc && m_currentPage >= m_doc->getNumPages())
+        return;
+
     pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
     m_outputDev->nextPage();
 }
@@ -100,6 +103,9 @@ void Part::slotNextPage()
 void Part::slotPreviousPage()
 {
     m_currentPage = pdfpartview->pagesListBox->currentItem() - 1;
+    if ( m_currentPage  < 0)
+        return;
+
     pdfpartview->pagesListBox->setCurrentItem(m_currentPage );
     m_outputDev->previousPage();
 }

@@ -32,7 +32,7 @@ infoDialog::infoDialog( QWidget* parent )
   QFrame *page2 = addPage( i18n("Fonts") );
   QVBoxLayout *topLayout2 = new QVBoxLayout( page2, 0, 6 );
   TextLabel2 = new QTextView( page2, "TextLabel1" );
-  TextLabel2->setMinimumWidth(fontMetrics().maxWidth()*50);
+  TextLabel2->setMinimumWidth(fontMetrics().maxWidth()*40);
   TextLabel2->setMinimumHeight(fontMetrics().height()*10);
   QToolTip::add( TextLabel2, i18n("Information on currently loaded fonts.") );
   QWhatsThis::add( TextLabel2, i18n("This text field shows detailed information about the currently loaded fonts. "

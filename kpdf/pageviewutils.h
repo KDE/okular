@@ -12,9 +12,52 @@
 
 #include <qwidget.h>
 #include <qpixmap.h>
+#include <qpainter.h>
 #include <qrect.h>
 
 class QTimer;
+
+class PageView;
+#include "page.h"
+
+class PageViewItem
+{
+    public:
+        PageViewItem( const KPDFPage * page )
+            : m_page( page ), m_zoomFactor( 1.0 )
+        {
+            // do something
+        }
+
+        void setWHZ( int w, int h, double z )
+        {
+            m_geometry.setWidth( w );
+            m_geometry.setHeight( h );
+            m_zoomFactor = z;
+        }
+        float zoomFactor() { return m_zoomFactor; }
+
+        int pageNumber() const { return m_page->number(); }
+        const KPDFPage * page() const { return m_page; }
+
+        const QRect& geometry() const { return m_geometry; }
+        int width() const { return m_geometry.width(); }
+        int height() const { return m_geometry.height(); }
+        void setGeometry( int x, int y, int width, int height )
+        {
+            m_geometry.setRect( x, y, width, height );
+        }
+        void moveTo( int x, int y )
+        {
+            m_geometry.moveLeft( x );
+            m_geometry.moveTop( y );
+        }
+
+    private:
+        const KPDFPage * m_page;
+        double m_zoomFactor;
+        QRect m_geometry;
+};
 
 
 /**

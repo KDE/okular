@@ -27,7 +27,7 @@
 class KURL;
 class KActionCollection;
 
-class PageWidget;
+class PageViewItem;
 class PageViewPrivate;
 
 /**
@@ -78,12 +78,16 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         void dropEvent( QDropEvent* );
 
     private:
+        // draw items on the opened qpainter
+        void paintItems( QPainter * p, const QRect & clipRect );
+        // update item width and height using current zoom parameters
+        void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
+        // return the widget placed on a certain point or 0 if clicking on empty space
+        PageViewItem * pickItemOnPoint( int x, int y );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
-        // return the widget placed on a certain point or 0 if clicking on empty space
-        PageWidget * pickPageOnPoint( int x, int y );
 
         // don't want to expose classes in here
         class PageViewPrivate * d;

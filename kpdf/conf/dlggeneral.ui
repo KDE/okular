@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>266</width>
-            <height>109</height>
+            <height>135</height>
         </rect>
     </property>
     <property name="caption">
@@ -94,6 +94,17 @@
             </property>
             <property name="accel">
                 <string>Alt+H</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_TempUseComposite</cstring>
+            </property>
+            <property name="text">
+                <string>USE COMPOSITE</string>
+            </property>
+            <property name="accel">
+                <string></string>
             </property>
         </widget>
         <spacer>

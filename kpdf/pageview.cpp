@@ -45,8 +45,8 @@ class PageViewPrivate
 public:
     // the document, current page and pages indices vector
     KPDFDocument * document;
-    PageWidget * page; //equal to pages[vectorIndex]
-    QValueVector< PageWidget * > pages;
+    PageViewItem * activeItem; //equal to pages[vectorIndex]
+    QValueVector< PageViewItem * > pages;
     int vectorIndex;
 
     // view layout (columns and continous in Settings), zoom and mouse
@@ -57,7 +57,7 @@ public:
     QPoint mouseStartPos;
     bool mouseOnLink;
     bool mouseOnActiveRect;
-    PageWidget * mouseSelectionWidget;
+    QRect mouseSelectionRect;
 
     // other stuff
     QTimer * delayTimer;
@@ -87,7 +87,7 @@ public:
  *  200 - events: mouse, keyboard, drag/drop
  *  170 - slotRelayoutPages: set contents of the scrollview on continous/single modes
  *  100 - zoom: zooming pages in different ways, keeping update the toolbar actions, etc..
- *  other misc functions: only slotRequestVisiblePixmaps and pickPageOnPoint noticeable,
+ *  other misc functions: only slotRequestVisiblePixmaps and pickItemOnPoint noticeable,
  * and many insignificant stuff like this comment :-)
  */
 PageView::PageView( QWidget *parent, KPDFDocument *document )
@@ -96,23 +96,19 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // create and initialize private storage structure
     d = new PageViewPrivate();
     d->document = document;
-    d->page = 0;
+    d->activeItem = 0;
     d->vectorIndex = -1;
     d->zoomMode = ZoomFixed;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseOnLink = false;
     d->mouseOnActiveRect = false;
-    d->mouseSelectionWidget = 0;
     d->delayTimer = 0;
     d->scrollTimer = 0;
     d->scrollIncrement = 0;
     d->dirtyLayout = false;
     d->overlayWindow = 0;
     d->messageWindow = new PageViewMessage(this);
-
-    // dealing with (very) large areas so enable clipper
-    enableClipper( true );
 
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );
@@ -207,21 +203,16 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
     }
 
     // delete all widgets (one for each page in pageSet)
-    QValueVector< PageWidget * >::iterator dIt = d->pages.begin(), dEnd = d->pages.end();
+    QValueVector< PageViewItem * >::iterator dIt = d->pages.begin(), dEnd = d->pages.end();
     for ( ; dIt != dEnd; ++dIt )
         delete *dIt;
     d->pages.clear();
-    d->page = 0;
+    d->activeItem = 0;
 
     // create children widgets
     QValueVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
-    {
-        PageWidget * p = new PageWidget( viewport(), *setIt );
-        p->setFocusProxy( this );
-        p->setMouseTracking( true );
-        d->pages.push_back( p );
-    }
+        d->pages.push_back( new PageViewItem( *setIt ) );
 
     // invalidate layout
     d->dirtyLayout = true;
@@ -237,18 +228,18 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 {
     // select next page
     d->vectorIndex = 0;
-    d->page = 0;
-    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    d->activeItem = 0;
+    QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
     for ( ; pIt != pEnd; ++pIt )
     {
         if ( (*pIt)->pageNumber() == pageNumber )
         {
-            d->page = *pIt;
+            d->activeItem = *pIt;
             break;
         }
         d->vectorIndex ++;
     }
-    if ( !d->page )
+    if ( !d->activeItem )
         return;
 
     // relayout in "Single Pages" mode or if a relayout is pending
@@ -257,9 +248,8 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 
     // center the view to see the selected page
     // FIXME take care of viewport
-    int xPos = childX( d->page ) + d->page->widthHint() / 2,
-        yPos = childY( d->page );
-    center( xPos, yPos + visibleHeight() / 2 - 10 );
+    const QRect & r = d->activeItem->geometry();
+    center( r.left() + r.width() / 2, r.top() + visibleHeight() / 2 - 10 );
     slotRequestVisiblePixmaps();
 
     // update zoom text if in a ZoomFit/* zoom mode
@@ -269,20 +259,73 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 
 void PageView::notifyPixmapChanged( int pageNumber )
 {
-    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
     for ( ; pIt != pEnd; ++pIt )
         if ( (*pIt)->pageNumber() == pageNumber )
         {
-            (*pIt)->update();
+            updateContents( (*pIt)->geometry() );
             break;
         }
 }
 //END KPDFDocumentObserver inherited methods
 
 //BEGIN widget events
-
-void PageView::drawContents( QPainter *, int, int, int, int )
+#include <kdebug.h>
+void PageView::drawContents( QPainter * p, int cx, int cy, int cw, int ch )
 {
+    QRect r = QRect( cx, cy, cw, ch );
+    //QRegion remaining( r );
+
+    //kdDebug() << "repaint: " << r << endl;
+
+    if ( !Settings::tempUseComposite() )
+    {
+        // 1) clear bg
+        p->fillRect( r, Qt::gray );
+        // 2) paint items
+        paintItems( p, r );
+        // 5) paint opaque overlays
+        if ( !d->mouseSelectionRect.isNull() )
+        {
+            //p->save();
+            p->setPen( palette().active().highlight().dark(110) );
+            //p->setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
+            p->drawRect( d->mouseSelectionRect.normalize() );
+            //p->restore();
+        }
+        p->setPen( Qt::red );
+        p->drawRect( r );
+    }
+    else
+    {
+        // create pixmap and open a painter over it
+        QPixmap doubleBuffer( r.size() );
+        QPainter pixmapPainter( &doubleBuffer );
+        pixmapPainter.translate( -r.left(), -r.top() );
+
+        // gfx operations on pixmap (rect {left,top} is pixmap {0,0})
+        // 1) clear bg
+        pixmapPainter.fillRect( r, Qt::gray );
+        // 2) paint items
+        paintItems( &pixmapPainter, r );
+        // 3) pixmap manipulate
+        // 4) paint selections
+        if ( !d->mouseSelectionRect.isNull() )
+        {
+            //pixmapPainter.save();
+            pixmapPainter.setPen( palette().active().highlight().dark(110) );
+            //pixmapPainter.setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
+            pixmapPainter.drawRect( d->mouseSelectionRect.normalize() );
+            //pixmapPainter.restore();
+        }
+        // 5) paint overlays
+        pixmapPainter.setPen( Qt::blue );
+        pixmapPainter.drawRect( r );
+
+        // finish painting and draw contents
+        pixmapPainter.end();
+        p->drawPixmap( r.left(), r.top(), doubleBuffer );
+    }
 }
 
 void PageView::viewportResizeEvent( QResizeEvent * )
@@ -360,7 +403,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         // create zooming a window (overlay mode)
         if ( !d->overlayWindow )
         {
-            d->overlayWindow = new PageViewOverlay( clipper(), PageViewOverlay::Zoom );
+            d->overlayWindow = new PageViewOverlay( viewport(), PageViewOverlay::Zoom );
             d->overlayWindow->setBeginCorner( d->mouseStartPos.x() - contentsX(), d->mouseStartPos.y() - contentsY() );
         }
 
@@ -391,15 +434,15 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
             }
             else
             {
-                // detect the underlaying page (if present)
-                PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
-                if ( pageWidget )
+/*                // detect the underlaying page (if present)
+                PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+                if ( PageViewItem )
                 {
-                    int pageX = e->x() - childX( pageWidget ),
-                        pageY = e->y() - childY( pageWidget );
+                    int pageX = e->x() - childX( pageItem ),
+                        pageY = e->y() - childY( pageItem );
 
                     // check if over a KPDFActiveRect
-                    bool onActiveRect = pageWidget->page()->hasActiveRect( pageX, pageY );
+                    bool onActiveRect = pageItem->page()->hasActiveRect( pageX, pageY );
                     if ( onActiveRect != d->mouseOnActiveRect )
                     {
                         d->mouseOnActiveRect = onActiveRect;
@@ -407,21 +450,33 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                     }
 
                     // check if over a KPDFLink
-                    bool onLink = pageWidget->page()->hasLink( pageX, pageY );
+                    bool onLink = pageItem->page()->hasLink( pageX, pageY );
                     if ( onLink != d->mouseOnLink )
                     {
                         d->mouseOnLink = onLink;
                         setCursor( onLink ? pointingHandCursor : arrowCursor );
                     }
                 }
-            }
+*/            }
             break;
 
         case MouseSelection:
-            // set second corner of selection in selection pagewidget
-            if ( leftButton && d->mouseSelectionWidget )
-                d->mouseSelectionWidget->setEndCorner( e->x() - childX( d->mouseSelectionWidget ),
-                                                       e->y() - childY( d->mouseSelectionWidget ) );
+            // set second corner of selection in selection pageItem
+            if ( leftButton && d->activeItem && !d->mouseSelectionRect.isNull() )
+            {
+                const QRect & itemRect = d->activeItem->geometry();
+                // clip selection inside the page
+                int x = QMAX( QMIN( e->x(), itemRect.right() ), itemRect.left() ),
+                    y = QMAX( QMIN( e->y(), itemRect.bottom() ), itemRect.top() );
+                // update rect if selection changed
+                if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
+                {
+                    updateContents( d->mouseSelectionRect.normalize() );
+                    d->mouseSelectionRect.setRight( x );
+                    d->mouseSelectionRect.setBottom( y );
+                    updateContents( d->mouseSelectionRect.normalize() );
+                }
+            }
             break;
 
         case MouseEdit:      // ? update graphics ?
@@ -459,14 +514,18 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
         case MouseSelection: // set first corner of the selection rect
             if ( leftButton )
             {
-                if ( d->mouseSelectionWidget )
-                    d->mouseSelectionWidget->clearSelection();
-                d->mouseSelectionWidget = 0;
-                PageWidget * page = pickPageOnPoint( e->x(), e->y() );
-                if ( page )
+                PageViewItem * item = pickItemOnPoint( e->x(), e->y() );
+                if ( item )
                 {
-                    page->setBeginCorner( e->x() - childX( page ), e->y() - childY( page ) );
-                    d->mouseSelectionWidget = page;
+                    // pick current page as the active one
+                    d->activeItem = item;
+                    d->mouseSelectionRect.setRect( e->x(), e->y(), 1, 1 );
+                    // ensures page doesn't scroll
+                    if ( d->scrollTimer )
+                    {
+                        d->scrollIncrement = 0;
+                        d->scrollTimer->stop();
+                    }
                 }
             }
             break;
@@ -486,8 +545,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     {
         // find out new zoom ratio
         QRect selRect = d->overlayWindow->selectedRect();
-        float zoom = QMIN( (float)clipper()->width() / (float)selRect.width(),
-                           (float)clipper()->height() / (float)selRect.height() );
+        float zoom = QMIN( (float)visibleWidth() / (float)selRect.width(),
+                            (float)visibleHeight() / (float)selRect.height() );
 
         // get normalized view center (relative to the contentsRect)
         // coeffs (1.0 and 1.5) are for correcting the asymmetic page border
@@ -524,31 +583,31 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
         return;
     }
 
-    PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
+    PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
     switch ( d->mouseMode )
     {
         case MouseNormal:
             setCursor( arrowCursor );
-            if ( leftButton && pageWidget )
+            if ( leftButton && pageItem )
             {
                 if ( d->mouseOnLink )
                 {
                     // activate link
-                    int linkX = e->x() - childX( pageWidget ),
-                        linkY = e->y() - childY( pageWidget );
-                    d->document->slotProcessLink( pageWidget->page()->getLink( linkX, linkY ) );
+                    int linkX = e->x() - pageItem->geometry().left(),
+                        linkY = e->y() - pageItem->geometry().top();
+                    d->document->slotProcessLink( pageItem->page()->getLink( linkX, linkY ) );
                 }
                 else
                 {
                     // mouse not moved since press, so we have a click. select the page.
                     if ( e->globalPos() == d->mouseStartPos )
-                        d->document->slotSetCurrentPage( pageWidget->pageNumber() );
+                        d->document->slotSetCurrentPage( pageItem->pageNumber() );
                 }
             }
-            else if ( rightButton && pageWidget )
+            else if ( rightButton && pageItem )
             {
                 // if over a page display a popup menu
-                const KPDFPage * kpdfPage = pageWidget->page();
+                const KPDFPage * kpdfPage = pageItem->page();
                 KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
                 m_popup->insertTitle( i18n( "Page %1" ).arg( kpdfPage->number() + 1 ) );
                 if ( kpdfPage->isBookmarked() )
@@ -580,23 +639,27 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             break;
 
         case MouseSelection:
-            if ( leftButton && d->mouseSelectionWidget )
+            if ( leftButton && d->activeItem && !d->mouseSelectionRect.isNull() )
             {
                 // request the textpage if there isn't one
-                const KPDFPage * kpdfPage = d->mouseSelectionWidget->page();
+                const KPDFPage * kpdfPage = d->activeItem->page();
                 if ( !kpdfPage->hasSearchPage() )
                     d->document->requestTextPage( kpdfPage->number() );
 
                 // copy text into the clipboard
                 QClipboard *cb = QApplication::clipboard();
-                const QString & selection = d->mouseSelectionWidget->selectedText();
+                QRect relativeRect = d->mouseSelectionRect;
+                relativeRect.moveBy( -d->activeItem->geometry().left(), -d->activeItem->geometry().top() );
+                const QString & selection = kpdfPage->getTextInRect( relativeRect );
+
                 cb->setText( selection, QClipboard::Clipboard );
                 if ( cb->supportsSelection() )
                     cb->setText( selection, QClipboard::Selection );
 
-                // clear widget selection
-                d->mouseSelectionWidget->clearSelection();
-                d->mouseSelectionWidget = 0;
+                // clear widget selection and invalidate rect
+                if ( !d->mouseSelectionRect.isNull() )
+                    updateContents( d->mouseSelectionRect.normalize() );
+                d->mouseSelectionRect = QRect();
             }
             break;
 
@@ -644,6 +707,122 @@ void PageView::dropEvent( QDropEvent * ev )
         emit urlDropped( lst.first() );
 }
 //END widget events
+
+void PageView::paintItems( QPainter * p, const QRect & contentsRect )
+{
+    // when checking if an Item is contained in contentsRect, instead of
+    // growing PageViewItems rects (for keeping outline into account), we
+    // grow the contentsRect
+    QRect checkRect = contentsRect;
+    checkRect.addCoords( -3, -3, 1, 1 );
+
+    QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    for ( ; pIt != pEnd; ++pIt )
+    {
+        // check if a piece of the page intersects the contents rect
+        if ( (*pIt)->geometry().intersects( checkRect ) )
+        {
+            PageViewItem * item = *pIt;
+            QRect pixmapGeometry = item->geometry();
+
+            // translate the painter so we draw top-left pixmap corner in 0,0
+            p->save();
+            p->translate( pixmapGeometry.left(), pixmapGeometry.top() );
+
+            // item pixmap and outline geometry
+            QRect outlineGeometry = pixmapGeometry;
+            outlineGeometry.addCoords( -1, -1, 3, 3 );
+
+            if ( !pixmapGeometry.contains( contentsRect ) )
+            {
+                int pixmapWidth = pixmapGeometry.width(),
+                    pixmapHeight = pixmapGeometry.height();
+                // draw simple outline
+                p->setPen( Qt::black );
+                p->drawRect( -1, -1, pixmapWidth + 2, pixmapHeight + 2 );
+                // draw bottom/right gradient
+                int levels = 2;
+                int r = Qt::gray.red() / (levels + 2),
+                    g = Qt::gray.green() / (levels + 2),
+                    b = Qt::gray.blue() / (levels + 2);
+                for ( int i = 0; i < levels; i++ )
+                {
+                    p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
+                    p->drawLine( i, i + pixmapHeight + 1, i + pixmapWidth + 1, i + pixmapHeight + 1 );
+                    p->drawLine( i + pixmapWidth + 1, i, i + pixmapWidth + 1, i + pixmapHeight );
+                    p->setPen( Qt::gray );
+                    p->drawLine( -1, i + pixmapHeight + 1, i - 1, i + pixmapHeight + 1 );
+                    p->drawLine( i + pixmapWidth + 1, -1, i + pixmapWidth + 1, i - 1 );
+                }
+            }
+
+            // draw the pixmap (note: this modifies the painter)
+            if ( contentsRect.intersects( pixmapGeometry ) )
+            {
+                QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
+                pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
+
+                // accessibility setting (TODO ADD COMPOSTING for PAGE RECOLORING)
+                if ( Settings::renderMode() == Settings::EnumRenderMode::Inverted )
+                    p->setRasterOp( Qt::NotCopyROP );
+
+                // draw the pixmap
+                item->page()->drawPixmap( PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
+            }
+
+            p->restore();
+        }
+    }
+}
+
+void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight )
+{
+    const KPDFPage * kpdfPage = item->page();
+    double width = kpdfPage->width(),
+           height = kpdfPage->height(),
+           zoom = d->zoomFactor;
+
+    if ( d->zoomMode == ZoomFixed )
+    {
+        width *= zoom;
+        height *= zoom;
+        item->setWHZ( (int)width, (int)height, d->zoomFactor );
+    }
+    else if ( d->zoomMode == ZoomFitWidth )
+    {
+        height = kpdfPage->ratio() * colWidth;
+        item->setWHZ( colWidth, (int)height, (double)colWidth / width );
+    }
+    else if ( d->zoomMode == ZoomFitPage )
+    {
+        double scaleW = (double)colWidth / (double)width;
+        double scaleH = (double)rowHeight / (double)height;
+        zoom = QMIN( scaleW, scaleH );
+        item->setWHZ( (int)(zoom * width), (int)(zoom * height), zoom );
+    }
+#ifndef NDEBUG
+    else
+        kdDebug() << "calling updateItemSize with unrecognized d->zoomMode!" << endl;
+#endif
+}
+
+PageViewItem * PageView::pickItemOnPoint( int x, int y )
+{
+    PageViewItem * item = 0;
+    QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    for ( ; pIt != pEnd; ++pIt )
+    {
+        PageViewItem * i = *pIt;
+        const QRect & r = i->geometry();
+        if ( x < r.right() && x > r.left() && y < r.bottom() )
+        {
+            if ( y > r.top() )
+                item = i;
+            break;
+        }
+    }
+    return item;
+}
 
 void PageView::updateZoom( ZoomMode newZoomMode )
 {
@@ -728,7 +907,7 @@ void PageView::updateZoomText()
 {
     // use current page zoom as zoomFactor if in ZoomFit/* mode
     if ( d->zoomMode != ZoomFixed && d->pages.count() > 0 )
-        d->zoomFactor = d->page ? d->page->zoomFactor() : d->pages[0]->zoomFactor();
+        d->zoomFactor = d->activeItem ? d->activeItem->zoomFactor() : d->pages[0]->zoomFactor();
     float newFactor = d->zoomFactor;
     d->aZoom->clear();
 
@@ -769,28 +948,6 @@ void PageView::updateZoomText()
     d->aZoom->setCurrentItem( selIdx );
 }
 
-PageWidget * PageView::pickPageOnPoint( int x, int y )
-{
-    PageWidget * page = 0;
-    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
-    for ( ; pIt != pEnd; ++pIt )
-    {
-        PageWidget * p = *pIt;
-        int pLeft = childX( p ),
-            pRight = pLeft + p->widthHint(),
-            pTop = childY( p ),
-            pBottom = pTop + p->heightHint();
-        // little optimized, stops if found or probably quits on the next row
-        if ( x > pLeft && x < pRight && y < pBottom && p->isShown() )
-        {
-            if ( y > pTop )
-                page = p;
-            break;
-        }
-    }
-    return page;
-}
-
 //BEGIN private SLOTS
 void PageView::slotRelayoutPages()
 // called by: pageSetup, viewportResizeEvent, slotTwoPagesToggled, slotContinousToggled, updateZoom
@@ -803,8 +960,8 @@ void PageView::slotRelayoutPages()
         return;
     }
 
-    int viewportWidth = clipper()->width(),
-        viewportHeight = clipper()->height(),
+    int viewportWidth = visibleWidth(),
+        viewportHeight = visibleHeight(),
         fullWidth = 0,
         fullHeight = 0;
 
@@ -825,24 +982,17 @@ void PageView::slotRelayoutPages()
 
         // 1) find the maximum columns width and rows height for a grid in
         // which each page must well-fit inside a cell
-        QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+        QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
         for ( ; pIt != pEnd; ++pIt )
         {
-            PageWidget * p = *pIt;
-            // update internal page geometry
-            if ( d->zoomMode == ZoomFixed )
-                p->setZoomFixed( d->zoomFactor );
-            else if ( d->zoomMode == ZoomFitWidth )
-                p->setZoomFitWidth( colWidth[ cIdx ] - 10 );
-            else
-                p->setZoomFitRect( colWidth[ cIdx ] - 10, viewportHeight - 10 );
+            PageViewItem * item = *pIt;
+            // update internal page size (leaving a little margin in case of Fit* modes)
+            updateItemSize( item, colWidth[ cIdx ] - 10, viewportHeight - 10 );
             // find row's maximum height and column's max width
-            int pWidth = p->widthHint(),
-                pHeight = p->heightHint();
-            if ( pWidth > colWidth[ cIdx ] )
-                colWidth[ cIdx ] = pWidth;
-            if ( pHeight > rowHeight[ rIdx ] )
-                rowHeight[ rIdx ] = pHeight;
+            if ( item->width() > colWidth[ cIdx ] )
+                colWidth[ cIdx ] = item->width();
+            if ( item->height() > rowHeight[ rIdx ] )
+                rowHeight[ rIdx ] = item->height();
             // update col/row indices
             if ( ++cIdx == nCols )
             {
@@ -853,21 +1003,17 @@ void PageView::slotRelayoutPages()
 
         // 2) arrange widgets inside cells
         int insertX = 0,
-            insertY = (int)(2.0 + 4.0 * d->zoomFactor);
-            cIdx = 0;
-            rIdx = 0;
+            insertY = 10; //TODO take d->zoomFactor into account (2+4*x)
+        cIdx = 0;
+        rIdx = 0;
         for ( pIt = d->pages.begin(); pIt != pEnd; ++pIt )
         {
-            PageWidget * p = *pIt;
-            int pWidth = p->widthHint(),
-                pHeight = p->heightHint(),
-                cWidth = colWidth[ cIdx ],
+            PageViewItem * item = *pIt;
+            int cWidth = colWidth[ cIdx ],
                 rHeight = rowHeight[ rIdx ];
-            // show, resize and center widget inside 'cells'
-            p->resize( pWidth, pHeight );
-            moveChild( p, insertX + (cWidth - pWidth) / 2,
-                       insertY + (rHeight - pHeight) / 2 );
-            p->show();
+            // center widget inside 'cells'
+            item->moveTo( insertX + (cWidth - item->width()) / 2,
+                          insertY + (rHeight - item->height()) / 2 );
             // advance col/row index
             insertX += cWidth;
             if ( ++cIdx == nCols )
@@ -888,58 +1034,52 @@ void PageView::slotRelayoutPages()
     }
     else // viewContinous is FALSE
     {
-        PageWidget * currentPage = d->page ? d->page : d->pages[0];
+        PageViewItem * currentItem = d->activeItem ? d->activeItem : d->pages[0];
 
         // setup varialbles for a 1(row) x N(columns) grid
         int nCols = Settings::viewColumns(),
             * colWidth = new int[ nCols ],
             cIdx = 0;
-            fullHeight = viewportHeight;
+        fullHeight = viewportHeight;
         for ( int i = 0; i < nCols; i++ )
             colWidth[ i ] = viewportWidth / nCols;
 
         // 1) find out maximum area extension for the pages
-        QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+        QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
         for ( ; pIt != pEnd; ++pIt )
         {
-            PageWidget * p = *pIt;
-            if ( p == currentPage || (cIdx > 0 && cIdx < nCols) )
+            PageViewItem * item = *pIt;
+            if ( item == currentItem || (cIdx > 0 && cIdx < nCols) )
             {
-                if ( d->zoomMode == ZoomFixed )
-                    p->setZoomFixed( d->zoomFactor );
-                else if ( d->zoomMode == ZoomFitWidth )
-                    p->setZoomFitWidth( colWidth[ cIdx ] - 10 );
-                else
-                    p->setZoomFitRect( colWidth[ cIdx ] - 10, viewportHeight - 10 );
-                if ( p->widthHint() > colWidth[ cIdx ] )
-                    colWidth[ cIdx ] = p->widthHint();
-                fullHeight = QMAX( fullHeight, p->heightHint() );
+                // update internal page size (leaving a little margin in case of Fit* modes)
+                updateItemSize( item, colWidth[ cIdx ] - 10, viewportHeight - 10 );
+                // find row's maximum height and column's max width
+                if ( item->width() > colWidth[ cIdx ] )
+                    colWidth[ cIdx ] = item->width();
+                if ( item->height() > fullHeight )
+                    fullHeight = item->height();
                 cIdx++;
             }
+            else
+                item->setGeometry( 0,0, -1,-1 );
         }
 
         // 2) hide all widgets except the displayable ones and dispose those
         int insertX = 0,
-            insertY = (int)(2.0 + 4.0 * d->zoomFactor);
-            cIdx = 0;
+            insertY = 10;   //TODO(int)(2.0 + 4.0 * d->zoomFactor);
+        cIdx = 0;
         for ( pIt = d->pages.begin(); pIt != pEnd; ++pIt )
         {
-            PageWidget * p = *pIt;
-            if ( p == currentPage || (cIdx > 0 && cIdx < nCols) )
+            PageViewItem * item = *pIt;
+            if ( item == currentItem || (cIdx > 0 && cIdx < nCols) )
             {
-                int pWidth = p->widthHint(),
-                    pHeight = p->heightHint();
-                // show, resize and center widget inside 'cells'
-                p->resize( pWidth, pHeight );
-                moveChild( p, insertX + (colWidth[ cIdx ] - pWidth) / 2,
-                           insertY + (fullHeight - pHeight) / 2 );
-                p->show();
-                // advance col/row index
+                // center widget inside 'cells'
+                item->moveTo( insertX + (colWidth[ cIdx ] - item->width()) / 2,
+                              insertY + (fullHeight - item->height()) / 2 );
+                // advance col index
                 insertX += colWidth[ cIdx ];
                 cIdx++;
             }
-            else
-                p->hide();
         }
 
         for ( int i = 0; i < nCols; i++ )
@@ -968,22 +1108,21 @@ void PageView::slotRelayoutPages()
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 {
     // precalc view limits for intersecting with page coords inside the lOOp
-    int vLeft = (newLeft == -1) ? contentsX() : newLeft,
-        vRight = vLeft + visibleWidth(),
-        vTop = (newTop == -1) ? contentsY() : newTop,
-        vBottom = vTop + visibleHeight();
+    QRect viewportRect( newLeft == -1 ? contentsX() : newLeft,
+                        newTop == -1 ? contentsY() : newTop,
+                        visibleWidth(), visibleHeight() );
 
     // scroll from the top to the last visible thumbnail
-    QValueVector< PageWidget * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+    QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
     for ( ; pIt != pEnd; ++pIt )
     {
-        PageWidget * p = *pIt;
-        int pLeft = childX( p ),
-            pRight = pLeft + p->widthHint(),
-            pTop = childY( p ),
-            pBottom = pTop + p->heightHint();
-        if ( p->isShown() && pRight > vLeft && pLeft < vRight && pBottom > vTop && pTop < vBottom )
-            d->document->requestPixmap( PAGEVIEW_ID, p->pageNumber(), p->pixmapWidth(), p->pixmapHeight(), true );
+        PageViewItem * item = *pIt;
+        const QRect & itemRect = item->geometry();
+        if ( viewportRect.intersects( itemRect ) )
+        {
+            d->document->requestPixmap( PAGEVIEW_ID, item->pageNumber(),
+                                        itemRect.width(), itemRect.height(), true );
+        }
     }
 }
 
@@ -1090,6 +1229,7 @@ void PageView::slotScrollUp()
         return;
     d->scrollIncrement--;
     slotAutoScoll();
+    setFocus();
 }
 
 void PageView::slotScrollDown()
@@ -1098,6 +1238,7 @@ void PageView::slotScrollDown()
         return;
     d->scrollIncrement++;
     slotAutoScoll();
+    setFocus();
 }
 //END private SLOTS
 

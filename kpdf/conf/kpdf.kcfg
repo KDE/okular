@@ -68,4 +68,9 @@
    </values>
   </entry>
  </group>
+ <group name="Temp" >
+  <entry key="TempUseComposite" type="Bool" >
+   <default>false</default>
+  </entry>
+ </group>
 </kcfg>

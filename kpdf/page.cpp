@@ -142,11 +142,12 @@ void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width
         else
         {
             p->save();
+            // TODO paint only the needed part
             p->scale( width / (double)pixmap->width(), height / (double)pixmap->height() );
             p->drawPixmap( 0,0, *pixmap, 0,0, pixmap->width(), pixmap->height() );
             p->restore();
-            // draw a red cross (to hilight that the pixmap has not the right size)
-            p->setPen( Qt::red );
+            // draw a cross (to  that the pixmap has not the right size)
+            p->setPen( Qt::gray );
             p->drawLine( 0, 0, width-1, height-1 );
             p->drawLine( 0, height-1, width-1, 0 );
         }

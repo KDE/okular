@@ -99,14 +99,9 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window = new dviRenderer(scrollView());
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.
-  renderer = window;
   window->setName("DVI renderer");
-  currentPage.setRenderer(window);
+  setRenderer(window);
 
-  widgetList.resize(0);
-  connect(window, SIGNAL(setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-  connect(window, SIGNAL(documentSpecifiedPageSize(const pageSize&)), this, SIGNAL( documentSpecifiedPageSize(const pageSize&)) );
-  connect(window, SIGNAL(needsRepainting()), this, SLOT(repaintAllVisibleWidgets()));
   docInfoAction    = new KAction(i18n("Document &Info"), 0, window, SLOT(showInfo()), actionCollection(), "info_dvi");
 
   embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
@@ -268,7 +263,7 @@ bool KDVIMultiPage::openFile()
     gotoPage(window->parseReference(reference));
 
   kdError() << "A" << endl;
-  
+
   return r;
 }
 
@@ -794,11 +789,11 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget()
 {
   // TODO: handle different sizes per page.
   DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(),
-      renderer->sizeOfPage(/*page+*/1), &currentPage, 
+      getRenderer()->sizeOfPage(/*page+*/1), &currentPage, 
       &userSelection, "singlePageWidget" );
 
   // Handle source links
-  connect(documentWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, DocumentWidget *)), renderer,
+  connect(documentWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, DocumentWidget *)), getRenderer(),
           SLOT(handleSRCLink(const QString &,QMouseEvent *, DocumentWidget *)));
 
   return documentWidget;

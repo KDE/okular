@@ -162,7 +162,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aZoomFitText = new KToggleAction( i18n("Fit to &Text"), "viewmagfit", 0, ac, "zoom_fit_text" );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
-    d->aZoomFitRect = new KToggleAction( i18n("Zoom to rect"), "viewmag", 0, ac, "zoom_fit_rect" );
+    d->aZoomFitRect = new KToggleAction( i18n("Zoom to Rect"), "viewmag", 0, ac, "zoom_fit_rect" );
     connect( d->aZoomFitRect, SIGNAL( toggled( bool ) ), SLOT( slotFitToRectToggled( bool ) ) );
 
     // View-Layout actions

@@ -392,6 +392,9 @@ void KDVIMultiPage::about()
 			"Current maintainer of kdvi. Major rewrite of version 0.4.3."
 			"Implementation of hyperlinks.<br>"
 			"<hr>"
+			"Philipp Lehmann<br>"
+			"testing and bug reporting"
+			"<hr>"
 			"Markku Hinhala<br>"
 			"Author of kdvi 0.4.3"
 			"<hr>"
@@ -405,6 +408,7 @@ void KDVIMultiPage::about()
 			"xdvi. I apologize to those who I did not mention here. Please send me an "
 			"email if you think your name belongs here."),
 		   true);
+  
   ab->setMinimumWidth(500);
   ab->show();
 }

@@ -98,7 +98,7 @@ static XOutFontSubst xOutSubstFonts[16] = {
 
 //------------------------------------------------------------------------
 
-static void outputToFile(void *stream, char *data, int len) {
+static void XOutputFontoutputToFile(void *stream, char *data, int len) {
   fwrite(data, 1, len, (FILE *)stream);
 }
 
@@ -1096,7 +1096,7 @@ XOutputFont *XOutputFontCache::tryGetT1Font(XRef *xref,
 	gfree(fontBuf);
 	return NULL;
       }
-      ff->convertToType1(outputToFile, f);
+      ff->convertToType1(XOutputFontoutputToFile, f);
       delete ff;
       gfree(fontBuf);
     } else { // fontType1

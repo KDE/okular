@@ -2063,7 +2063,7 @@ void TextPage::clear() {
 // TextOutputDev
 //------------------------------------------------------------------------
 
-static void outputToFile(void *stream, char *text, int len) {
+static void TextoutputToFile(void *stream, char *text, int len) {
   fwrite(text, 1, len, (FILE *)stream);
 }
 
@@ -2090,7 +2090,7 @@ TextOutputDev::TextOutputDev(char *fileName, GBool physLayoutA,
       ok = gFalse;
       return;
     }
-    outputFunc = &outputToFile;
+    outputFunc = &TextoutputToFile;
   } else {
     outputStream = NULL;
   }

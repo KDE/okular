@@ -157,7 +157,7 @@ void KPDFPage::setActiveRects( const QValueList<KPDFActiveRect *> rects )
 }
 
 
-void PagePainter::paintPageOnPainter( const KPDFPage * page, int id,
+void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     QPainter * destPainter, const QRect & limits, int width, int height )
 {
     QPixmap * pixmap = 0;
@@ -189,8 +189,10 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id,
         return;
     }
 
-    // we have a pixmap to paint, now let's paint it handling accessibility settings
+    // we have a pixmap to paint, now let's paint it using a direct or buffered painter
     bool backBuffer = Settings::renderMode() != Settings::EnumRenderMode::Normal;
+    // if PagePainter::Accessibility is not in 'flags', disable backBuffer
+    backBuffer = backBuffer && (flags & Accessibility);
     QPixmap * backPixmap = 0;
     QPainter * p = destPainter;
     if ( backBuffer )
@@ -218,7 +220,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id,
     }
 
     // modify pixmap following accessibility settings
-    if ( backBuffer )
+    if ( (flags & Accessibility) && backBuffer )
     {
         QImage backImage = backPixmap->convertToImage();
         switch ( Settings::renderMode() )
@@ -258,8 +260,56 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id,
         backPixmap->convertFromImage( backImage );
     }
 
+    // visually enchance links active area if requested
+    if ( ( flags & EnhanceLinks ) && Settings::highlightLinks() )
+    {
+        QColor normalColor = QApplication::palette().active().highlight();
+        QColor lightColor = normalColor.light( 140 );
+        // draw links that are inside the 'limits' paint region as opaque rects
+        QValueList< KPDFLink * >::const_iterator lIt = page->m_links.begin(), lEnd = page->m_links.end();
+        for ( ; lIt != lEnd; ++lIt )
+        {
+            QRect linkGeometry = (*lIt)->geometry();
+            if ( linkGeometry.intersects( limits ) )
+            {
+                // expand rect and draw inner border
+                linkGeometry.addCoords( -1,-1,1,1 );
+                p->setPen( lightColor );
+                p->drawRect( linkGeometry );
+                // expand rect to draw outer border
+                linkGeometry.addCoords( -1,-1,1,1 );
+                p->setPen( normalColor );
+                p->drawRect( linkGeometry );
+            }
+        }
+    }
+
+    // visually enchance image borders if requested
+    if ( ( flags & EnhanceRects ) && Settings::highlightImages() )
+    {
+        QColor normalColor = QApplication::palette().active().highlight();
+        QColor lightColor = normalColor.light( 140 );
+        // draw links that are inside the 'limits' paint region as opaque rects
+        QValueList< KPDFActiveRect * >::const_iterator rIt = page->m_rects.begin(), rEnd = page->m_rects.end();
+        for ( ; rIt != rEnd; ++rIt )
+        {
+            QRect rectGeometry = (*rIt)->geometry();
+            if ( rectGeometry.intersects( limits ) )
+            {
+                // expand rect and draw inner border
+                rectGeometry.addCoords( -1,-1,1,1 );
+                p->setPen( lightColor );
+                p->drawRect( rectGeometry );
+                // expand rect to draw outer border
+                rectGeometry.addCoords( -1,-1,1,1 );
+                p->setPen( normalColor );
+                p->drawRect( rectGeometry );
+            }
+        }
+    }
+
     // draw selection (note: it is rescaled since the text page is at 100% scale)
-    if ( page->attributes() & KPDFPage::Highlight )
+    if ( ( flags & Highlight ) && ( page->attributes() & KPDFPage::Highlight ) )
     {
         int x = (int)( page->m_sLeft * width / page->m_width ),
             y = (int)( page->m_sTop * height / page->m_height ),
@@ -385,6 +435,11 @@ void KPDFLink::copyString( char * &dest, const char * src ) const
     }
 }
 
+QRect KPDFLink::geometry() const
+{
+    return QRect( x_min, y_min, x_max - x_min, y_max - y_min );
+}
+
 
 KPDFLink::LinkType KPDFLink::type() const
 {
@@ -430,4 +485,9 @@ KPDFActiveRect::KPDFActiveRect(int left, int top, int width, int height)
 bool KPDFActiveRect::contains(int x, int y)
 {
     return (x > m_left) && (x < m_right) && (y > m_top) && (y < m_bottom);
+}
+
+QRect KPDFActiveRect::geometry() const
+{
+    return QRect( m_left, m_top, m_right - m_left, m_bottom - m_top );
 }

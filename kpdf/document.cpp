@@ -267,9 +267,9 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
             // setup kpdf output device: text page is generated only if we are at 72dpi.
             // since we can pre-generate the TextPage at the right res.. why not?
             bool genTextPage = !kp->hasSearchPage() && (width == kp->width()) && (height == kp->height());
-            // generate links if rendering pages on pageview
+            // generate links and activeRects if rendering pages on pageview
             bool genLinks = id == PAGEVIEW_ID;
-            d->kpdfOutputDev->setParams( width, height, genTextPage, genLinks );
+            d->kpdfOutputDev->setParams( width, height, genTextPage, genLinks, genLinks );
 
             d->docLock.lock();
             d->pdfdoc->displayPage( d->kpdfOutputDev, page + 1, fakeDpiX, fakeDpiY, 0, true, genLinks );
@@ -279,8 +279,10 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
             if ( genTextPage )
                 kp->setSearchPage( d->kpdfOutputDev->takeTextPage() );
             if ( genLinks )
+            {
                 kp->setLinks( d->kpdfOutputDev->takeLinks() );
-            kp->setActiveRects( d->kpdfOutputDev->takeActiveRects() );
+                kp->setActiveRects( d->kpdfOutputDev->takeActiveRects() );
+            }
 
             d->observers[id]->notifyPixmapChanged( page );
         }

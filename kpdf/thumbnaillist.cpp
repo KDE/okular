@@ -379,7 +379,11 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         clipRect.moveBy( -2, -2 );
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
         if ( clipRect.isValid() )
-            PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, &p, clipRect, m_pixmapWidth, m_pixmapHeight );
+        {
+            int flags = PagePainter::Accessibility | PagePainter::Highlight;
+            PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, flags, &p,
+                                             clipRect, m_pixmapWidth, m_pixmapHeight );
+        }
     }
 }
 

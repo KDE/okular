@@ -446,9 +446,6 @@
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
             <property name="sizePolicy">
                 <sizepolicy>
                     <hsizetype>5</hsizetype>
@@ -458,7 +455,7 @@
                 </sizepolicy>
             </property>
             <property name="title">
-                <string>Enhance &amp;Visibility</string>
+                <string>&amp;Visual Enhance</string>
             </property>
             <vbox>
                 <property name="name">

@@ -890,7 +890,10 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
         {
             QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
             pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
-            PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
+            int flags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
+                        PagePainter::EnhanceRects | PagePainter::Highlight;
+            PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, flags, p, pixmapRect,
+                                             pixmapGeometry.width(), pixmapGeometry.height() );
         }
 
         // remove painted area from 'remainingArea' and restore painter

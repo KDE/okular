@@ -25,6 +25,7 @@ class QWidget;
 
 class KAboutData;
 class KAction;
+class KConfig;
 class KURL;
 class KToggleAction;
 class KSelectAction;
@@ -82,6 +83,8 @@ namespace KPDF
 
   public slots:
     void print();
+    void restoreDocument(const KURL &url, int page);
+    void saveDocumentRestoreInfo(KConfig* config);
 
 
   protected:

@@ -23,9 +23,9 @@ KDE_ICON = kpdf
 bin_PROGRAMS = kpdf
 
 # the application source, library search path, and link libraries
-kpdf_SOURCES = main.cpp kpdf_shell.cpp
+kpdf_SOURCES = main.cpp kpdf_shell.cpp 
 kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-kpdf_LDADD   = $(LIB_KPARTS)
+kpdf_LDADD   = $(LIB_KPARTS) 
 kpdf_COMPILE_FIRST = part.h
 
 EXTRA_DIST = kpdf.desktop

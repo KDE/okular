@@ -607,6 +607,17 @@ Part::print()
   }
 }
 
+void Part::restoreDocument(const KURL &url, int page)
+{
+  if (openURL(url)) goToPage(page);
+}
+
+void Part::saveDocumentRestoreInfo(KConfig* config)
+{
+  config->writePathEntry( "URL", url().url() );
+  if (m_doc) config->writeEntry( "Page", m_currentPage );
+}
+
 /*
   void
 Part::setFixedZoomFactor(float zoomFactor)

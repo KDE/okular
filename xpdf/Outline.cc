@@ -2,7 +2,7 @@
 //
 // Outline.cc
 //
-// Copyright 2002 Glyph & Cog, LLC
+// Copyright 2002-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -96,7 +96,7 @@ OutlineItem::OutlineItem(Dict *dict, XRef *xrefA) {
 OutlineItem::~OutlineItem() {
   close();
   if (title) {
-    delete title;
+    gfree(title);
   }
   if (action) {
     delete action;

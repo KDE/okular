@@ -2,13 +2,13 @@
 //
 // NameToUnicodeTable.h
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
 static struct {
   Unicode u;
-  const char *name;
+  char *name;
 } nameToUnicodeTab[] = {
   {0x0021, "!"},
   {0x0023, "#"},
@@ -684,8 +684,8 @@ static struct {
   {0xf6e2, "commasuperior"},
   {0x2245, "congruent"},
   {0x00a9, "copyright"},
-  {0xf8e9, "copyrightsans"},
-  {0xf6d9, "copyrightserif"},
+  {0x00a9, "copyrightsans"},
+  {0x00a9, "copyrightserif"},
   {0x00a4, "currency"},
   {0xf6d1, "cyrBreve"},
   {0xf6d2, "cyrFlex"},
@@ -972,8 +972,8 @@ static struct {
   {0x2286, "reflexsubset"},
   {0x2287, "reflexsuperset"},
   {0x00ae, "registered"},
-  {0xf8e8, "registersans"},
-  {0xf6da, "registerserif"},
+  {0x00ae, "registersans"},
+  {0x00ae, "registerserif"},
   {0x2310, "revlogicalnot"},
   {0x03c1, "rho"},
   {0x02da, "ring"},
@@ -1031,8 +1031,8 @@ static struct {
   {0x0303, "tildecomb"},
   {0x0384, "tonos"},
   {0x2122, "trademark"},
-  {0xf8ea, "trademarksans"},
-  {0xf6db, "trademarkserif"},
+  {0x2122, "trademarksans"},
+  {0x2122, "trademarkserif"},
   {0x25bc, "triagdn"},
   {0x25c4, "triaglf"},
   {0x25ba, "triagrt"},

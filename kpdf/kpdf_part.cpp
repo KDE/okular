@@ -192,7 +192,7 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 			break;
 	}
 
-  const float ppp = basePpp * m_zoomFactor; // pixels per point
+//const float ppp = basePpp * m_zoomFactor; // pixels per point
 
 //  m_doc->displayPage(m_outputDev, pageNumber, int(m_zoomFactor * ppp * 72.0), 0, true);
 

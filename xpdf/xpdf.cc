@@ -2,7 +2,7 @@
 //
 // xpdf.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -34,6 +34,7 @@ static char ownerPassword[33] = "";
 static char userPassword[33] = "";
 static GBool fullScreen = gFalse;
 static char remoteName[100] = "xpdf_";
+static GBool doRemoteReload = gFalse;
 static GBool doRemoteRaise = gFalse;
 static GBool doRemoteQuit = gFalse;
 static GBool printCommands = gFalse;
@@ -59,12 +60,18 @@ static ArgDesc argDesc[] = {
    "color of paper background"},
   {"-z",          argStringDummy, NULL,           0,
    "initial zoom level (-5..5, page, width)"},
+#if HAVE_T1LIB_H
+  {"-t1lib",      argString,      t1libControlStr, sizeof(t1libControlStr),
+   "t1lib font rasterizer control: none, plain, low, high"},
+#endif
+#if HAVE_FREETYPE_FREETYPE_H | HAVE_FREETYPE_H
   {"-freetype",   argString,      freetypeControlStr, sizeof(freetypeControlStr),
    "FreeType font rasterizer control: none, plain, low, high"},
+#endif
   {"-ps",         argString,      psFileArg,      sizeof(psFileArg),
    "default PostScript file name or command"},
   {"-paper",      argString,      paperSize,      sizeof(paperSize),
-   "paper size (letter, legal, A4, A3)"},
+   "paper size (letter, legal, A4, A3, match)"},
   {"-paperw",     argInt,         &paperWidth,    0,
    "paper width, in points"},
   {"-paperh",     argInt,         &paperHeight,   0,
@@ -83,6 +90,8 @@ static ArgDesc argDesc[] = {
    "run in full-screen (presentation) mode"},
   {"-remote",     argString,      remoteName + 5, sizeof(remoteName) - 5,
    "start/contact xpdf remote server with specified name"},
+  {"-reload",     argFlag,        &doRemoteReload, 0,
+   "reload xpdf remove server window (with -remote only)"},
   {"-raise",      argFlag,        &doRemoteRaise, 0,
    "raise xpdf remote server window (with -remote only)"},
   {"-quit",       argFlag,        &doRemoteQuit,  0,
@@ -178,12 +187,15 @@ int main(int argc, char *argv[]) {
   }
 
   // check command line
+  ok = ok && argc >= 1 && argc <= 3;
+  if (doRemoteReload) {
+    ok = ok && remoteName[5] && !doRemoteQuit && argc == 1;
+  }
   if (doRemoteRaise) {
-    ok = ok && remoteName[5] && !doRemoteQuit && argc >= 1 && argc <= 3;
-  } else if (doRemoteQuit) {
+    ok = ok && remoteName[5] && !doRemoteQuit;
+  }
+  if (doRemoteQuit) {
     ok = ok && remoteName[5] && argc == 1;
-  } else {
-    ok = ok && argc >= 1 && argc <= 3;
   }
   if (!ok || printVersion || printHelp) {
     fprintf(stderr, "xpdf version %s\n", xpdfVersion);
@@ -219,6 +231,8 @@ int main(int argc, char *argv[]) {
 	} else {
 	  app->remoteOpen(fileName, pg, doRemoteRaise);
 	}
+      } else if (doRemoteReload) {
+	app->remoteReload(doRemoteRaise);
       } else if (doRemoteRaise) {
 	app->remoteRaise();
       } else if (doRemoteQuit) {

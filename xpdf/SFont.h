@@ -4,7 +4,7 @@
 //
 // Base class for font rasterizers.
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 

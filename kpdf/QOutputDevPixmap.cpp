@@ -201,7 +201,7 @@ void QOutputDevPixmap::startPage ( int /*pageNum*/, GfxState *state )
 
 void QOutputDevPixmap::endPage ( )
 {
-	m_text-> coalesce ( );
+	m_text-> coalesce ( true );
 
 	delete m_painter;
 	m_painter = 0;
@@ -590,12 +590,12 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 
 void QOutputDevPixmap::beginString ( GfxState *state, GString */*s*/ )
 {
-	m_text-> beginString ( state, state->getCurX(), state->getCurY() );
+	m_text-> beginWord ( state, state->getCurX(), state->getCurY() );
 }
 
 void QOutputDevPixmap::endString ( GfxState */*state*/ )
 {
-	m_text-> endString ( );
+	m_text-> endWord ( );
 }
 
 void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
@@ -605,7 +605,7 @@ void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
 	fp_t x1, y1, dx1, dy1;
 
 	if ( uLen > 0 )
-		m_text-> addChar ( state, x, y, dx, dy, u, uLen );
+		m_text-> addChar ( state, x, y, dx, dy, code, u, uLen );
 
 	// check for invisible text -- this is used by Acrobat Capture
 	if (( state-> getRender ( ) & 3 ) == 3 ) {

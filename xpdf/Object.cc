@@ -2,7 +2,7 @@
 //
 // Object.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -24,7 +24,7 @@
 // Object
 //------------------------------------------------------------------------
 
-const char *objTypeNames[numObjTypes] = {
+char *objTypeNames[numObjTypes] = {
   "boolean",
   "integer",
   "real",
@@ -134,7 +134,7 @@ void Object::free() {
   type = objNone;
 }
 
-const char *Object::getTypeName() {
+char *Object::getTypeName() {
   return objTypeNames[type];
 }
 

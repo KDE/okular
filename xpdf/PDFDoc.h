@@ -2,7 +2,7 @@
 //
 // PDFDoc.h
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -43,61 +43,40 @@ public:
   ~PDFDoc();
 
   // Was PDF document successfully opened?
-  GBool isOk() const { return ok; }
+  GBool isOk() { return ok; }
 
   // Get the error code (if isOk() returns false).
-  int getErrorCode() const { return errCode; }
+  int getErrorCode() { return errCode; }
 
   // Get file name.
-  GString *getFileName() const { return fileName; }
+  GString *getFileName() { return fileName; }
 
   // Get the xref table.
-  XRef *getXRef() const { return xref; }
+  XRef *getXRef() { return xref; }
 
   // Get catalog.
-  Catalog *getCatalog() const{ return catalog; }
+  Catalog *getCatalog() { return catalog; }
 
   // Get base stream.
-  BaseStream *getBaseStream() const { return str; }
+  BaseStream *getBaseStream() { return str; }
 
   // Get page parameters.
   double getPageWidth(int page)
-    {
-        if ( catalog && catalog->getPage(page))
-            return catalog->getPage(page)->getWidth();
-        else
-            return 0.0;
-    }
+    { return catalog->getPage(page)->getWidth(); }
   double getPageHeight(int page)
-    {
-        if ( catalog && catalog->getPage(page))
-            return catalog->getPage(page)->getHeight();
-        else
-            return 0.0;
-    }
+    { return catalog->getPage(page)->getHeight(); }
   int getPageRotate(int page)
-    {
-        if ( catalog && catalog->getPage(page) )
-            return catalog->getPage(page)->getRotate();
-        else
-            return 0;
-    }
+    { return catalog->getPage(page)->getRotate(); }
 
   // Get number of pages.
-  int getNumPages() const
-        {
-            if ( catalog )
-                return catalog->getNumPages();
-            else
-                return 0;
-        }
+  int getNumPages() { return catalog->getNumPages(); }
 
   // Return the contents of the metadata stream, or NULL if there is
   // no metadata.
-  GString *readMetadata() const { return catalog->readMetadata(); }
+  GString *readMetadata() { return catalog->readMetadata(); }
 
   // Return the structure tree root object.
-  Object *getStructTreeRoot() const { return catalog->getStructTreeRoot(); }
+  Object *getStructTreeRoot() { return catalog->getStructTreeRoot(); }
 
   // Display a page.
   void displayPage(OutputDev *out, int page, double zoom,
@@ -136,11 +115,11 @@ public:
 
 #ifndef DISABLE_OUTLINE
   // Return the outline object.
-  Outline *getOutline() const { return outline; }
+  Outline *getOutline() { return outline; }
 #endif
 
   // Is the file encrypted?
-  GBool isEncrypted() const { return xref->isEncrypted(); }
+  GBool isEncrypted() { return xref->isEncrypted(); }
 
   // Check various permissions.
   GBool okToPrint(GBool ignoreOwnerPW = gFalse)
@@ -156,11 +135,11 @@ public:
   GBool isLinearized();
 
   // Return the document's Info dictionary (if any).
-  Object *getDocInfo(Object *obj) const { return xref->getDocInfo(obj); }
-  Object *getDocInfoNF(Object *obj) const { return xref->getDocInfoNF(obj); }
+  Object *getDocInfo(Object *obj) { return xref->getDocInfo(obj); }
+  Object *getDocInfoNF(Object *obj) { return xref->getDocInfoNF(obj); }
 
   // Return the PDF version specified by the file.
-  double getPDFVersion() const { return pdfVersion; }
+  double getPDFVersion() { return pdfVersion; }
 
   // Save this file with another name.
   GBool saveAs(GString *name);

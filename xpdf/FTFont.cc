@@ -2,11 +2,13 @@
 //
 // FTFont.cc
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
 #include <aconf.h>
+
+#if FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
 
 #ifdef USE_GCC_PRAGMAS
 #pragma implementation
@@ -46,7 +48,8 @@ FTFontEngine::~FTFontEngine() {
 //------------------------------------------------------------------------
 
 FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
-		       char **fontEnc, GBool pdfFontHasEncoding) {
+		       char **fontEnc, GBool pdfFontHasEncoding,
+		       GBool pdfFontIsSymbolic) {
   char *name;
   int unicodeCmap, macRomanCmap, msSymbolCmap;
   int i, j;
@@ -54,6 +57,9 @@ FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
   ok = gFalse;
   engine = engineA;
   codeMap = NULL;
+  cidToGID = NULL;
+  cidToGIDLen = 0;
+
   if (FT_New_Face(engine->lib, fontFileName, 0, &face)) {
     return;
   }
@@ -77,7 +83,9 @@ FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
     // 1. If the PDF font has an encoding:
     //    1a. If the TrueType font has a Microsoft Unicode cmap, use it,
     //        and use the Unicode indexes, not the char codes.
-    //    1b. If the TrueType font has a Macintosh Roman cmap, use it,
+    //    1b. If the PDF font is symbolic and the TrueType font has a
+    //        Microsoft Symbol cmap, use it, and use (0xf000 + char code).
+    //    1c. If the TrueType font has a Macintosh Roman cmap, use it,
     //        and reverse map the char names through MacRomanEncoding to
     //        get char codes.
     // 2. If the PDF font does not have an encoding:
@@ -89,8 +97,9 @@ FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
     //    the best (this shouldn't happen).
     unicodeCmap = macRomanCmap = msSymbolCmap = 0xffff;
     for (i = 0; i < face->num_charmaps; ++i) {
-      if (face->charmaps[i]->platform_id == 3 &&
-	  face->charmaps[i]->encoding_id == 1) {
+      if ((face->charmaps[i]->platform_id == 3 &&
+	   face->charmaps[i]->encoding_id == 1) ||
+	  face->charmaps[i]->platform_id == 0) {
 	unicodeCmap = i;
       } else if (face->charmaps[i]->platform_id == 1 &&
 		 face->charmaps[i]->encoding_id == 0) {
@@ -107,6 +116,10 @@ FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
       if (unicodeCmap != 0xffff) {
 	i = unicodeCmap;
 	mode = ftFontModeUnicode;
+      } else if (pdfFontIsSymbolic && msSymbolCmap != 0xffff) {
+	i = msSymbolCmap;
+	mode = ftFontModeCharCodeOffset;
+	charMapOffset = 0xf000;
       } else if (macRomanCmap != 0xffff) {
 	i = macRomanCmap;
 	mode = ftFontModeCodeMap;
@@ -138,29 +151,75 @@ FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
 }
 
 FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
-		       Gushort *cidToGIDA, int cidToGIDLenA) {
+		       Gushort *cidToGIDA, int cidToGIDLenA, GBool embedded) {
+  int i;
+
   ok = gFalse;
   engine = engineA;
   codeMap = NULL;
+  cidToGID = NULL;
+  cidToGIDLen = 0;
+
   if (FT_New_Face(engine->lib, fontFileName, 0, &face)) {
     return;
   }
-  cidToGID = cidToGIDA;
   cidToGIDLen = cidToGIDLenA;
-  mode = ftFontModeCIDToGIDMap;
+  cidToGID = (Gushort *)gmalloc(cidToGIDLen * sizeof(Gushort));
+  memcpy(cidToGID, cidToGIDA, cidToGIDLen * sizeof(Gushort));
+  if (!strcmp(face->driver->root.clazz->module_name, "t1cid")) {
+    mode = ftFontModeCID;
+  } else if (!strcmp(face->driver->root.clazz->module_name, "cff")) {
+    mode = ftFontModeCFFCharset;
+  } else if (embedded) {
+    mode = ftFontModeCIDToGIDMap;
+  } else {
+    mode = ftFontModeUnicode;
+    for (i = 0; i < face->num_charmaps; ++i) {
+      if ((face->charmaps[i]->platform_id == 3 &&
+	   face->charmaps[i]->encoding_id == 1) ||
+	  face->charmaps[i]->platform_id == 0) {
+	break;
+      }
+    }
+    if (i == face->num_charmaps) {
+      i = 0;
+    }
+    FT_Set_Charmap(face, face->charmaps[i]);
+  }
   ok = gTrue;
 }
 
-FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName) {
+FTFontFile::FTFontFile(FTFontEngine *engineA, char *fontFileName,
+		       GBool embedded) {
+  int i;
+
   ok = gFalse;
   engine = engineA;
   codeMap = NULL;
+  cidToGID = NULL;
+  cidToGIDLen = 0;
+
   if (FT_New_Face(engine->lib, fontFileName, 0, &face)) {
     return;
   }
-  cidToGID = NULL;
-  cidToGIDLen = 0;
-  mode = ftFontModeCFFCharset;
+  if (!strcmp(face->driver->root.clazz->module_name, "t1cid")) {
+    mode = ftFontModeCID;
+  } else if (embedded) {
+    mode = ftFontModeCFFCharset;
+  } else {
+    mode = ftFontModeUnicode;
+    for (i = 0; i < face->num_charmaps; ++i) {
+      if ((face->charmaps[i]->platform_id == 3 &&
+	   face->charmaps[i]->encoding_id == 1) ||
+	  face->charmaps[i]->platform_id == 0) {
+	break;
+      }
+    }
+    if (i == face->num_charmaps) {
+      i = 0;
+    }
+    FT_Set_Charmap(face, face->charmaps[i]);
+  }
   ok = gTrue;
 }
 
@@ -170,6 +229,9 @@ FTFontFile::~FTFontFile() {
   }
   if (codeMap) {
     gfree(codeMap);
+  }
+  if (cidToGID) {
+    gfree(cidToGID);
   }
 }
 
@@ -319,7 +381,9 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
   XColor xcolor;
   int bgR, bgG, bgB;
   Gulong colors[5];
-  Guchar *p;
+  Guchar *bitmap, *p;
+  GBool tempBitmap;
+  XImage *img;
   int pix;
   int xOffset, yOffset, x0, y0, x1, y1, gw, gh, w0, h0;
   int xx, yy, xx1;
@@ -332,7 +396,8 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
   }
 
   // generate the glyph pixmap
-  if (!(p = getGlyphPixmap(c, u, &xOffset, &yOffset, &gw, &gh))) {
+  if (!(bitmap = getGlyphPixmap(c, u, &xOffset, &yOffset, &gw, &gh,
+				&tempBitmap))) {
     return gFalse;
   }
 
@@ -354,7 +419,7 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
     w0 = w - x0;
   }
   if (w0 < 0) {
-    return gTrue;
+    goto done;
   }
   if (y0 < 0) {
     y1 = -y0;
@@ -365,17 +430,29 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
     h0 = h - y0;
   }
   if (h0 < 0) {
-    return gTrue;
+    goto done;
+  }
+
+  // getGlyphPixmap may have returned a larger-than-cache-entry
+  // bitmap, in which case we need to allocate a temporary XImage here
+  if (tempBitmap) {
+    if (!(img = XCreateImage(engine->display, engine->visual, engine->depth,
+			     ZPixmap, 0, NULL, gw, gh, 8, 0))) {
+      goto done;
+    }
+    img->data = (char *)gmalloc(gh * img->bytes_per_line);
+  } else {
+    img = image;
   }
 
   // read the X image
   XGetSubImage(engine->display, d, x0, y0, w0, h0, (1 << engine->depth) - 1,
-	       ZPixmap, image, x1, y1);
+	       ZPixmap, img, x1, y1);
 
   if (engine->aa) {
 
     // compute the colors
-    xcolor.pixel = XGetPixel(image, x1 + w0/2, y1 + h0/2);
+    xcolor.pixel = XGetPixel(img, x1 + w0/2, y1 + h0/2);
     XQueryColor(engine->display, engine->colormap, &xcolor);
     bgR = xcolor.red;
     bgG = xcolor.green;
@@ -392,6 +469,7 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
     colors[4] = engine->findColor(r, g, b);
 
     // stuff the glyph pixmap into the X image
+    p = bitmap;
     for (yy = 0; yy < gh; ++yy) {
       for (xx = 0; xx < gw; ++xx) {
 	pix = *p++ & 0xff;
@@ -403,7 +481,7 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
 	  pix = 4;
 	}
 	if (pix > 0) {
-	  XPutPixel(image, xx, yy, colors[pix]);
+	  XPutPixel(img, xx, yy, colors[pix]);
 	}
       }
     }
@@ -414,12 +492,13 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
     colors[1] = engine->findColor(r, g, b);
 
     // stuff the glyph bitmap into the X image
+    p = bitmap;
     for (yy = 0; yy < gh; ++yy) {
       for (xx = 0; xx < gw; xx += 8) {
 	pix = *p++;
 	for (xx1 = xx; xx1 < xx + 8 && xx1 < gw; ++xx1) {
 	  if (pix & 0x80) {
-	    XPutPixel(image, xx1, yy, colors[1]);
+	    XPutPixel(img, xx1, yy, colors[1]);
 	  }
 	  pix <<= 1;
 	}
@@ -429,13 +508,23 @@ GBool FTFont::drawChar(Drawable d, int w, int h, GC gc,
   }
 
   // draw the X image
-  XPutImage(engine->display, d, gc, image, x1, y1, x0, y0, w0, h0);
+  XPutImage(engine->display, d, gc, img, x1, y1, x0, y0, w0, h0);
 
+  if (tempBitmap) {
+    gfree(img->data);
+    img->data = NULL;
+    XDestroyImage(img);
+  }
+ done:
+  if (tempBitmap) {
+    gfree(bitmap);
+  }
   return gTrue;
 }
 
 Guchar *FTFont::getGlyphPixmap(CharCode c, Unicode u,
-			       int *x, int *y, int *w, int *h) {
+			       int *x, int *y, int *w, int *h,
+			       GBool *tempBitmap) {
   FT_GlyphSlot slot;
   FT_UInt idx;
   int rowSize;
@@ -457,6 +546,7 @@ Guchar *FTFont::getGlyphPixmap(CharCode c, Unicode u,
 	}
       }
       cacheTags[i+j].mru = 0x8000;
+      *tempBitmap = gFalse;
       return cache + (i+j) * glyphSize;
     }
   }
@@ -487,42 +577,45 @@ Guchar *FTFont::getGlyphPixmap(CharCode c, Unicode u,
 		                             ft_render_mode_mono)) {
     return gFalse;
   }
+
+  // copy the glyph into the cache or a temporary bitmap
   *x = -slot->bitmap_left;
   *y = slot->bitmap_top;
   *w = slot->bitmap.width;
   *h = slot->bitmap.rows;
-  if (*w > glyphW || *h > glyphH) {
-#if 1 //~ debug
-    fprintf(stderr, "Weird FreeType glyph size: %d > %d or %d > %d\n",
-	    *w, glyphW, *h, glyphH);
-#endif
-    return NULL;
+  if (fontFile->engine->aa) {
+    rowSize = *w;
+  } else {
+    rowSize = (*w + 7) >> 3;
   }
-
-  // store glyph pixmap in cache
-  ret = NULL;
-  for (j = 0; j < cacheAssoc; ++j) {
-    if ((cacheTags[i+j].mru & 0x7fff) == cacheAssoc - 1) {
-      cacheTags[i+j].mru = 0x8000;
-      cacheTags[i+j].code = c;
-      cacheTags[i+j].x = *x;
-      cacheTags[i+j].y = *y;
-      cacheTags[i+j].w = *w;
-      cacheTags[i+j].h = *h;
-      if (fontFile->engine->aa) {
-	rowSize = *w;
+  if (*w > glyphW || *h > glyphH) {
+    // the glyph doesn't fit in the bounding box -- return a
+    // temporary, uncached bitmap (this shouldn't happen but some
+    // fonts have incorrect bboxes)
+    ret = (Guchar *)gmalloc(*h * rowSize);
+    *tempBitmap = gTrue;
+  } else {
+    // store glyph pixmap in cache
+    ret = NULL; // make gcc happy
+    for (j = 0; j < cacheAssoc; ++j) {
+      if ((cacheTags[i+j].mru & 0x7fff) == cacheAssoc - 1) {
+	cacheTags[i+j].mru = 0x8000;
+	cacheTags[i+j].code = c;
+	cacheTags[i+j].x = *x;
+	cacheTags[i+j].y = *y;
+	cacheTags[i+j].w = *w;
+	cacheTags[i+j].h = *h;
+	ret = cache + (i+j) * glyphSize;
       } else {
-	rowSize = (*w + 7) >> 3;
+	++cacheTags[i+j].mru;
       }
-      ret = cache + (i+j) * glyphSize;
-      for (k = 0, p = ret, q = slot->bitmap.buffer;
-	   k < slot->bitmap.rows;
-	   ++k, p += rowSize, q += slot->bitmap.pitch) {
-	memcpy(p, q, rowSize);
-      }
-    } else {
-      ++cacheTags[i+j].mru;
     }
+    *tempBitmap = gFalse;
+  }
+  for (k = 0, p = ret, q = slot->bitmap.buffer;
+       k < slot->bitmap.rows;
+       ++k, p += rowSize, q += slot->bitmap.pitch) {
+    memcpy(p, q, rowSize);
   }
   return ret;
 }
@@ -632,8 +725,10 @@ FT_UInt FTFont::getGlyphIndex(CharCode c, Unicode u) {
     idx = FT_Get_Char_Index(fontFile->face, (FT_ULong)c);
     break;
   case ftFontModeCharCodeOffset:
-    idx = FT_Get_Char_Index(fontFile->face,
-			    (FT_ULong)(c + fontFile->charMapOffset));
+    if ((idx = FT_Get_Char_Index(fontFile->face, (FT_ULong)c)) == 0) {
+      idx = FT_Get_Char_Index(fontFile->face,
+			      (FT_ULong)(c + fontFile->charMapOffset));
+    }
     break;
   case ftFontModeCodeMap:
     if (c <= 0xff) {
@@ -662,21 +757,27 @@ FT_UInt FTFont::getGlyphIndex(CharCode c, Unicode u) {
     break;
   case ftFontModeCFFCharset:
 #if 1 //~ cff cid->gid map
+    {
 #if FREETYPE_MAJOR == 2 && FREETYPE_MINOR == 0
-    CFF_Font *cff = (CFF_Font *)((TT_Face)fontFile->face)->extra.data;
+      CFF_Font *cff = (CFF_Font *)((TT_Face)fontFile->face)->extra.data;
 #else
-    CFF_Font cff = (CFF_Font)((TT_Face)fontFile->face)->extra.data;
+      CFF_Font cff = (CFF_Font)((TT_Face)fontFile->face)->extra.data;
 #endif
-    idx = 0;
-    for (j = 0; j < (int)cff->num_glyphs; ++j) {
-      if (cff->charset.sids[j] == c) {
-	idx = j;
-	break;
+      idx = 0;
+      for (j = 0; j < (int)cff->num_glyphs; ++j) {
+	if (cff->charset.sids[j] == c) {
+	  idx = j;
+	  break;
+	}
       }
     }
 #endif
+    break;
+  case ftFontModeCID:
+    idx = c;
     break;
   }
   return idx;
 }
 
+#endif // FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)

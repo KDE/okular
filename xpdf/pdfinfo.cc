@@ -2,7 +2,7 @@
 //
 // pdfinfo.cc
 //
-// Copyright 1998-2002 Glyph & Cog, LLC
+// Copyright 1998-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -72,11 +72,12 @@ int main(int argc, char *argv[]) {
   GString *ownerPW, *userPW;
   UnicodeMap *uMap;
   Object info;
-  double w, h;
+  double w, h, wISO, hISO;
   FILE *f;
   GString *metadata;
   GBool ok;
   int exitCode;
+  int i;
 
   exitCode = 99;
 
@@ -169,9 +170,18 @@ int main(int argc, char *argv[]) {
     if ((fabs(w - 612) < 0.1 && fabs(h - 792) < 0.1) ||
 	(fabs(w - 792) < 0.1 && fabs(h - 612) < 0.1)) {
       printf(" (letter)");
-    } else if ((fabs(w - 595) < 0.1 && fabs(h - 842) < 0.1) ||
-	       (fabs(w - 842) < 0.1 && fabs(h - 595) < 0.1)) {
-      printf(" (A4)");
+    } else {
+      hISO = sqrt(sqrt(2)) * 7200 / 2.54;
+      wISO = hISO / sqrt(2);
+      for (i = 0; i <= 6; ++i) {
+	if ((fabs(w - wISO) < 1 && fabs(h - hISO) < 1) ||
+	    (fabs(w - hISO) < 1 && fabs(h - wISO) < 1)) {
+	  printf(" (A%d)", i);
+	  break;
+	}
+	hISO = wISO;
+	wISO /= sqrt(2);
+      }
     }
     printf("\n");
   } 

@@ -2,7 +2,7 @@
 //
 // Error.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -18,7 +18,7 @@
 #include "GlobalParams.h"
 #include "Error.h"
 
-void CDECL error(int pos, const char *msg, ...) {
+void CDECL error(int pos, char *msg, ...) {
   va_list args;
 
   // NB: this can be called before the globalParams object is created

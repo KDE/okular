@@ -2,7 +2,7 @@
 //
 // NameToCharCode.cc
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -19,7 +19,7 @@
 //------------------------------------------------------------------------
 
 struct NameToCharCodeEntry {
-  const char *name;
+  char *name;
   CharCode c;
 };
 
@@ -41,13 +41,13 @@ NameToCharCode::~NameToCharCode() {
 
   for (i = 0; i < size; ++i) {
     if (tab[i].name) {
-      gfree((void *) (tab[i].name));
+      gfree(tab[i].name);
     }
   }
   gfree(tab);
 }
 
-void NameToCharCode::add(const char *name, CharCode c) {
+void NameToCharCode::add(char *name, CharCode c) {
   NameToCharCodeEntry *oldTab;
   int h, i, oldSize;
 
@@ -89,7 +89,7 @@ void NameToCharCode::add(const char *name, CharCode c) {
   ++len;
 }
 
-CharCode NameToCharCode::lookup(const char *name) {
+CharCode NameToCharCode::lookup(char *name) {
   int h;
 
   h = hash(name);
@@ -104,8 +104,8 @@ CharCode NameToCharCode::lookup(const char *name) {
   return 0;
 }
 
-int NameToCharCode::hash(const char *name) {
-  const char *p;
+int NameToCharCode::hash(char *name) {
+  char *p;
   unsigned int h;
 
   h = 0;

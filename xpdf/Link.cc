@@ -2,7 +2,7 @@
 //
 // Link.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -148,7 +148,7 @@ LinkDest::LinkDest(Array *a) {
 
   // get page
   if (a->getLength() < 2) {
-    error(-1, "Annotation destination array has wrong length");
+    error(-1, "Annotation destination array is too short");
     return;
   }
   a->getNF(0, &obj1);
@@ -170,57 +170,65 @@ LinkDest::LinkDest(Array *a) {
 
   // XYZ link
   if (obj1.isName("XYZ")) {
-    if (a->getLength() != 5) {
-      error(-1, "Annotation destination array has wrong length");
-      goto err2;
-    }
     kind = destXYZ;
-    a->get(2, &obj2);
-    if (obj2.isNull()) {
+    if (a->getLength() < 3) {
       changeLeft = gFalse;
-    } else if (obj2.isNum()) {
-      changeLeft = gTrue;
-      left = obj2.getNum();
     } else {
-      error(-1, "Bad annotation destination position");
-      goto err1;
+      a->get(2, &obj2);
+      if (obj2.isNull()) {
+	changeLeft = gFalse;
+      } else if (obj2.isNum()) {
+	changeLeft = gTrue;
+	left = obj2.getNum();
+      } else {
+	error(-1, "Bad annotation destination position");
+	goto err1;
+      }
+      obj2.free();
     }
-    obj2.free();
-    a->get(3, &obj2);
-    if (obj2.isNull()) {
+    if (a->getLength() < 4) {
       changeTop = gFalse;
-    } else if (obj2.isNum()) {
-      changeTop = gTrue;
-      top = obj2.getNum();
     } else {
-      error(-1, "Bad annotation destination position");
-      goto err1;
+      a->get(3, &obj2);
+      if (obj2.isNull()) {
+	changeTop = gFalse;
+      } else if (obj2.isNum()) {
+	changeTop = gTrue;
+	top = obj2.getNum();
+      } else {
+	error(-1, "Bad annotation destination position");
+	goto err1;
+      }
+      obj2.free();
     }
-    obj2.free();
-    a->get(4, &obj2);
-    if (obj2.isNull()) {
+    if (a->getLength() < 5) {
       changeZoom = gFalse;
-    } else if (obj2.isNum()) {
-      changeZoom = gTrue;
-      zoom = obj2.getNum();
     } else {
-      error(-1, "Bad annotation destination position");
-      goto err1;
+      a->get(4, &obj2);
+      if (obj2.isNull()) {
+	changeZoom = gFalse;
+      } else if (obj2.isNum()) {
+	changeZoom = gTrue;
+	zoom = obj2.getNum();
+      } else {
+	error(-1, "Bad annotation destination position");
+	goto err1;
+      }
+      obj2.free();
     }
-    obj2.free();
 
   // Fit link
   } else if (obj1.isName("Fit")) {
-    if (a->getLength() != 2) {
-      error(-1, "Annotation destination array has wrong length");
+    if (a->getLength() < 2) {
+      error(-1, "Annotation destination array is too short");
       goto err2;
     }
     kind = destFit;
 
   // FitH link
   } else if (obj1.isName("FitH")) {
-    if (a->getLength() != 3) {
-      error(-1, "Annotation destination array has wrong length");
+    if (a->getLength() < 3) {
+      error(-1, "Annotation destination array is too short");
       goto err2;
     }
     kind = destFitH;
@@ -233,8 +241,8 @@ LinkDest::LinkDest(Array *a) {
 
   // FitV link
   } else if (obj1.isName("FitV")) {
-    if (a->getLength() != 3) {
-      error(-1, "Annotation destination array has wrong length");
+    if (a->getLength() < 3) {
+      error(-1, "Annotation destination array is too short");
       goto err2;
     }
     kind = destFitV;
@@ -247,8 +255,8 @@ LinkDest::LinkDest(Array *a) {
 
   // FitR link
   } else if (obj1.isName("FitR")) {
-    if (a->getLength() != 6) {
-      error(-1, "Annotation destination array has wrong length");
+    if (a->getLength() < 6) {
+      error(-1, "Annotation destination array is too short");
       goto err2;
     }
     kind = destFitR;
@@ -279,16 +287,16 @@ LinkDest::LinkDest(Array *a) {
 
   // FitB link
   } else if (obj1.isName("FitB")) {
-    if (a->getLength() != 2) {
-      error(-1, "Annotation destination array has wrong length");
+    if (a->getLength() < 2) {
+      error(-1, "Annotation destination array is too short");
       goto err2;
     }
     kind = destFitB;
 
   // FitBH link
   } else if (obj1.isName("FitBH")) {
-    if (a->getLength() != 3) {
-      error(-1, "Annotation destination array has wrong length");
+    if (a->getLength() < 3) {
+      error(-1, "Annotation destination array is too short");
       goto err2;
     }
     kind = destFitBH;
@@ -301,8 +309,8 @@ LinkDest::LinkDest(Array *a) {
 
   // FitBV link
   } else if (obj1.isName("FitBV")) {
-    if (a->getLength() != 3) {
-      error(-1, "Annotation destination array has wrong length");
+    if (a->getLength() < 3) {
+      error(-1, "Annotation destination array is too short");
       goto err2;
     }
     kind = destFitBV;

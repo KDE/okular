@@ -2,7 +2,7 @@
 //
 // Object.h
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -134,11 +134,11 @@ public:
   GBool isNone() { return type == objNone; }
 
   // Special type checking.
-  GBool isName(const char *nameA)
+  GBool isName(char *nameA)
     { return type == objName && !strcmp(name, nameA); }
-  GBool isDict(const char *dictType);
-  GBool isStream(const char *dictType);
-  GBool isCmd(const char *cmdA)
+  GBool isDict(char *dictType);
+  GBool isStream(char *dictType);
+  GBool isCmd(char *cmdA)
     { return type == objCmd && !strcmp(cmd, cmdA); }
 
   // Accessors.  NB: these assume object is of correct type.
@@ -165,15 +165,15 @@ public:
   // Dict accessors.
   int dictGetLength();
   void dictAdd(char *key, Object *val);
-  GBool dictIs(const char *dictType);
-  Object *dictLookup(const char *key, Object *obj);
-  Object *dictLookupNF(const char *key, Object *obj);
+  GBool dictIs(char *dictType);
+  Object *dictLookup(char *key, Object *obj);
+  Object *dictLookupNF(char *key, Object *obj);
   char *dictGetKey(int i);
   Object *dictGetVal(int i, Object *obj);
   Object *dictGetValNF(int i, Object *obj);
 
   // Stream accessors.
-  GBool streamIs(const char *dictType);
+  GBool streamIs(char *dictType);
   void streamReset();
   void streamClose();
   int streamGetChar();
@@ -184,7 +184,7 @@ public:
   Dict *streamGetDict();
 
   // Output.
-  const char *getTypeName();
+  char *getTypeName();
   void print(FILE *f = stdout);
 
   // Memory testing.
@@ -242,16 +242,16 @@ inline int Object::dictGetLength()
 inline void Object::dictAdd(char *key, Object *val)
   { dict->add(key, val); }
 
-inline GBool Object::dictIs(const char *dictType)
+inline GBool Object::dictIs(char *dictType)
   { return dict->is(dictType); }
 
-inline GBool Object::isDict(const char *dictType)
+inline GBool Object::isDict(char *dictType)
   { return type == objDict && dictIs(dictType); }
 
-inline Object *Object::dictLookup(const char *key, Object *obj)
+inline Object *Object::dictLookup(char *key, Object *obj)
   { return dict->lookup(key, obj); }
 
-inline Object *Object::dictLookupNF(const char *key, Object *obj)
+inline Object *Object::dictLookupNF(char *key, Object *obj)
   { return dict->lookupNF(key, obj); }
 
 inline char *Object::dictGetKey(int i)
@@ -269,10 +269,10 @@ inline Object *Object::dictGetValNF(int i, Object *obj)
 
 #include "Stream.h"
 
-inline GBool Object::streamIs(const char *dictType)
+inline GBool Object::streamIs(char *dictType)
   { return stream->getDict()->is(dictType); }
 
-inline GBool Object::isStream(const char *dictType)
+inline GBool Object::isStream(char *dictType)
   { return type == objStream && streamIs(dictType); }
 
 inline void Object::streamReset()

@@ -2,7 +2,7 @@
 //
 // pdftops.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -89,7 +89,7 @@ static ArgDesc argDesc[] = {
   {"-noembcidtt", argFlag, &noEmbedCIDTTFonts, 0,
    "don't embed CID TrueType fonts"},
   {"-paper",  argString,   paperSize,       sizeof(paperSize),
-   "paper size (letter, legal, A4, A3)"},
+   "paper size (letter, legal, A4, A3, match)"},
   {"-paperw", argInt,      &paperWidth,     0,
    "paper width, in points"},
   {"-paperh", argInt,      &paperHeight,    0,
@@ -181,6 +181,7 @@ int main(int argc, char *argv[]) {
   if (paperSize[0]) {
     if (!globalParams->setPSPaperSize(paperSize)) {
       fprintf(stderr, "Invalid paper size\n");
+      delete fileName;
       goto err0;
     }
   } else {
@@ -241,14 +242,12 @@ int main(int argc, char *argv[]) {
     goto err1;
   }
 
-#ifdef ENFORCE_PERMISSIONS
   // check for print permission
   if (!doc->okToPrint()) {
     error(-1, "Printing this document is not allowed.");
     exitCode = 3;
     goto err1;
   }
-#endif
 
   // construct PostScript file name
   if (argc == 3) {
@@ -297,8 +296,8 @@ int main(int argc, char *argv[]) {
   delete psFileName;
  err1:
   delete doc;
-  delete globalParams;
  err0:
+  delete globalParams;
 
   // check for memory leaks
   Object::memCheck(stderr);

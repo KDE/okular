@@ -2,7 +2,7 @@
 //
 // PSOutputDev.h
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -45,7 +45,7 @@ enum PSFileType {
   psGeneric			// write to a generic stream
 };
 
-typedef void (*PSOutputFunc)(void *stream, const char *data, int len);
+typedef void (*PSOutputFunc)(void *stream, char *data, int len);
 
 class PSOutputDev: public OutputDev {
 public:
@@ -187,10 +187,10 @@ private:
   GBool getFileSpec(Object *fileSpec, Object *fileName);
 #endif
   void writePSChar(char c);
-  void writePS(const char *s);
+  void writePS(char *s);
   void writePSFmt(const char *fmt, ...);
   void writePSString(GString *s);
-  void writePSName(const char *s);
+  void writePSName(char *s);
   GString *filterPSName(GString *name);
 
   PSLevel level;		// PostScript level (1, 2, separation)
@@ -217,6 +217,8 @@ private:
   PSFont16Enc *font16Enc;	// encodings for substitute 16-bit fonts
   int font16EncLen;		// number of entries in font16Enc array
   int font16EncSize;		// size of font16Enc array
+  GList *xobjStack;		// stack of XObject dicts currently being
+				//   processed
 
   double tx, ty;		// global translation
   double xScale, yScale;	// global scaling

@@ -4,7 +4,7 @@
 //
 // Miscellaneous file and directory name manipulation.
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -60,7 +60,7 @@ extern GString *getCurrentDir();
 
 // Append a file name to a path string.  <path> may be an empty
 // string, denoting the current directory).  Returns <path>.
-extern GString *appendToPath(GString *path, const char *fileName);
+extern GString *appendToPath(GString *path, char *fileName);
 
 // Grab the path from the front of the file name.  If there is no
 // directory component in <fileName>, returns an empty string.
@@ -83,8 +83,7 @@ extern time_t getModTime(char *fileName);
 // should be done to the returned file pointer; the file may be
 // reopened later for reading, but not for writing.  The <mode> string
 // should be "w" or "wb".  Returns true on success.
-extern GBool openTempFile(GString **name, FILE **f, 
-			  const char *mode, const char *ext);
+extern GBool openTempFile(GString **name, FILE **f, char *mode, char *ext);
 
 // Execute <command>.  Returns true on success.
 extern GBool executeCommand(char *cmd);

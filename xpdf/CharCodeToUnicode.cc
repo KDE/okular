@@ -2,7 +2,7 @@
 //
 // CharCodeToUnicode.cc
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -224,7 +224,7 @@ void CharCodeToUnicode::parseCMap1(int (*getCharFunc)(void *), void *data,
 	    map[i] = 0;
 	  }
 	}
-	if (n3 == 6) {
+	if (n3 <= 6) {
 	  if (sscanf(tok3 + 1, "%x", &u) != 1) {
 	    error(-1, "Illegal entry in bfrange block in ToUnicode CMap");
 	    continue;

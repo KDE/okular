@@ -2,7 +2,7 @@
 //
 // Page.h
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -78,7 +78,7 @@ public:
 
 private:
 
-  GBool readBox(Dict *dict, const char *key, PDFRectangle *box);
+  GBool readBox(Dict *dict, char *key, PDFRectangle *box);
 
   PDFRectangle mediaBox;
   PDFRectangle cropBox;

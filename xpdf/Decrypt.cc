@@ -2,7 +2,7 @@
 //
 // Decrypt.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -21,8 +21,8 @@ static void md5(Guchar *msg, int msgLen, Guchar *digest);
 
 static Guchar passwordPad[32] = {
   0x28, 0xbf, 0x4e, 0x5e, 0x4e, 0x75, 0x8a, 0x41,
-  0x64, 0x00, 0x4e, 0x56, 0xff, 0xfa, 0x01, 0x08,
-  0x2e, 0x2e, 0x00, 0xb6, 0xd0, 0x68, 0x3e, 0x80,
+  0x64, 0x00, 0x4e, 0x56, 0xff, 0xfa, 0x01, 0x08, 
+  0x2e, 0x2e, 0x00, 0xb6, 0xd0, 0x68, 0x3e, 0x80, 
   0x2f, 0x0c, 0xa9, 0xfe, 0x64, 0x53, 0x69, 0x7a
 };
 
@@ -92,9 +92,9 @@ GBool Decrypt::makeFileKey(int encVersion, int encRevision, int keyLength,
     }
   }
   if (encRevision == 2) {
-  rc4InitKey(test, keyLength, fState);
-  fx = fy = 0;
-  for (i = 0; i < 32; ++i) {
+    rc4InitKey(test, keyLength, fState);
+    fx = fy = 0;
+    for (i = 0; i < 32; ++i) {
       test2[i] = rc4DecryptByte(fState, &fx, &fy, ownerKey->getChar(i));
     }
   } else {
@@ -125,7 +125,7 @@ GBool Decrypt::makeFileKey(int encVersion, int encRevision, int keyLength,
 		      permissions, fileID, userPassword, fileKey);
 }
 
-GBool Decrypt::makeFileKey2(int /* encVersion */, int encRevision, int keyLength,
+GBool Decrypt::makeFileKey2(int encVersion, int encRevision, int keyLength,
 			    GString *ownerKey, GString *userKey,
 			    int permissions, GString *fileID,
 			    GString *userPassword, Guchar *fileKey) {
@@ -382,20 +382,20 @@ static void md5(Guchar *msg, int msgLen, Guchar *digest) {
   }
 
   // break digest into bytes
-  digest[0] = a & 0xff;
-  digest[1] = (a >>= 8) & 0xff;
-  digest[2] = (a >>= 8) & 0xff;
-  digest[3] = (a >>= 8) & 0xff;
-  digest[4] = b & 0xff;
-  digest[5] = (b >>= 8) & 0xff;
-  digest[6] = (b >>= 8) & 0xff;
-  digest[7] = (b >>= 8) & 0xff;
-  digest[8] = c & 0xff;
-  digest[9] = (c >>= 8) & 0xff;
-  digest[10] = (c >>= 8) & 0xff;
-  digest[11] = (c >>= 8) & 0xff;
-  digest[12] = d & 0xff;
-  digest[13] = (d >>= 8) & 0xff;
-  digest[14] = (d >>= 8) & 0xff;
-  digest[15] = (d >>= 8) & 0xff;
+  digest[0] = (Guchar)(a & 0xff);
+  digest[1] = (Guchar)((a >>= 8) & 0xff);
+  digest[2] = (Guchar)((a >>= 8) & 0xff);
+  digest[3] = (Guchar)((a >>= 8) & 0xff);
+  digest[4] = (Guchar)(b & 0xff);
+  digest[5] = (Guchar)((b >>= 8) & 0xff);
+  digest[6] = (Guchar)((b >>= 8) & 0xff);
+  digest[7] = (Guchar)((b >>= 8) & 0xff);
+  digest[8] = (Guchar)(c & 0xff);
+  digest[9] = (Guchar)((c >>= 8) & 0xff);
+  digest[10] = (Guchar)((c >>= 8) & 0xff);
+  digest[11] = (Guchar)((c >>= 8) & 0xff);
+  digest[12] = (Guchar)(d & 0xff);
+  digest[13] = (Guchar)((d >>= 8) & 0xff);
+  digest[14] = (Guchar)((d >>= 8) & 0xff);
+  digest[15] = (Guchar)((d >>= 8) & 0xff);
 }

@@ -2,7 +2,7 @@
 //
 // Parser.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -204,7 +204,7 @@ Stream *Parser::makeStream(Object *dict) {
 void Parser::shift() {
   if (inlineImg > 0) {
     if (inlineImg < 2) {
-    ++inlineImg;
+      ++inlineImg;
     } else {
       // in a damaged content stream, if 'ID' shows up in the middle
       // of a dictionary, we need to reset

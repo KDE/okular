@@ -2,7 +2,7 @@
 //
 // Gfx.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -1825,7 +1825,7 @@ void Gfx::doRadialShFill(GfxRadialShading *shading) {
 }
 
 void Gfx::doEndPath() {
-  if (state->isPath() && clip != clipNone) {
+  if (state->isCurPt() && clip != clipNone) {
     state->clip();
     if (clip == clipNormal) {
       out->clip(state);
@@ -2038,7 +2038,7 @@ void Gfx::doShowText(GString *s) {
   double riseX, riseY;
   CharCode code;
   Unicode u[8];
-  double x, y, dx, dy, dx2, dy2, curX, curY, tdx, tdy;
+  double x, y, dx, dy, dx2, dy2, curX, curY, tdx, tdy, lineX, lineY;
   double originX, originY, tOriginX, tOriginY;
   double oldCTM[6], newCTM[6];
   double *mat;
@@ -2082,6 +2082,8 @@ void Gfx::doShowText(GString *s) {
     state->textTransformDelta(0, state->getRise(), &riseX, &riseY);
     curX = state->getCurX();
     curY = state->getCurY();
+    lineX = state->getLineX();
+    lineY = state->getLineY();
     oldParser = parser;
     p = s->getCString();
     len = s->getLength();
@@ -2120,10 +2122,11 @@ void Gfx::doShowText(GString *s) {
       state = state->restore();
       out->restoreState(state);
       // GfxState::restore() does *not* restore the current position,
-      // so we track it here with (curX, curY)
+      // so we deal with it here using (curX, curY) and (lineX, lineY)
       curX += tdx;
       curY += tdy;
       state->moveTo(curX, curY);
+      state->textSetPos(lineX, lineY);
       p += n;
       len -= n;
     }

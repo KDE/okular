@@ -2,7 +2,7 @@
 //
 // GfxState.h
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -53,6 +53,8 @@ struct GfxCMYK {
 // GfxColorSpace
 //------------------------------------------------------------------------
 
+// NB: The nGfxColorSpaceModes constant and the gfxColorSpaceModeNames
+// array defined in GfxState.cc must match this enum.
 enum GfxColorSpaceMode {
   csDeviceGray,
   csCalGray,
@@ -90,6 +92,12 @@ public:
   // with a max pixel value of <maxImgPixel>.
   virtual void getDefaultRanges(double *decodeLow, double *decodeRange,
 				int maxImgPixel);
+
+  // Return the number of color space modes
+  static int getNumColorSpaceModes();
+
+  // Return the name of the <idx>th color space mode.
+  static char *getColorSpaceModeName(int idx);
 
 private:
 };
@@ -344,6 +352,7 @@ public:
   GfxColorSpace *getBase() { return base; }
   int getIndexHigh() { return indexHigh; }
   Guchar *getLookup() { return lookup; }
+  GfxColor *mapColorToBase(GfxColor *color, GfxColor *baseColor);
 
 private:
 
@@ -636,6 +645,7 @@ public:
   void getGray(Guchar *x, double *gray);
   void getRGB(Guchar *x, GfxRGB *rgb);
   void getCMYK(Guchar *x, GfxCMYK *cmyk);
+  void getColor(Guchar *x, GfxColor *color);
 
 private:
 
@@ -902,6 +912,7 @@ public:
   void clip();
 
   // Text position.
+  void textSetPos(double tx, double ty) { lineX = tx; lineY = ty; }
   void textMoveTo(double tx, double ty)
     { lineX = tx; lineY = ty; textTransform(tx, ty, &curX, &curY); }
   void textShift(double tx, double ty);

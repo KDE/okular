@@ -2,7 +2,7 @@
 //
 // pdftotext.cc
 //
-// Copyright 1997-2002 Glyph & Cog, LLC
+// Copyright 1997-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -35,6 +35,7 @@ static void printInfoDate(FILE *f, Dict *infoDict, char *key, char *fmt);
 
 static int firstPage = 1;
 static int lastPage = 0;
+static GBool physLayout = gFalse;
 static GBool rawOrder = gFalse;
 static GBool htmlMeta = gFalse;
 static char textEncName[128] = "";
@@ -51,6 +52,8 @@ static ArgDesc argDesc[] = {
    "first page to convert"},
   {"-l",      argInt,      &lastPage,      0,
    "last page to convert"},
+  {"-layout", argFlag,     &physLayout,    0,
+   "maintain original physical layout"},
   {"-raw",    argFlag,     &rawOrder,      0,
    "keep strings in content stream order"},
   {"-htmlmeta", argFlag,   &htmlMeta,      0,
@@ -151,14 +154,12 @@ int main(int argc, char *argv[]) {
     goto err2;
   }
 
-#ifdef ENFORCE_PERMISSIONS
   // check for copy permission
   if (!doc->okToCopy()) {
     error(-1, "Copying of text from this document is not allowed.");
     exitCode = 3;
     goto err2;
   }
-#endif
 
   // construct text file name
   if (argc == 3) {
@@ -224,7 +225,8 @@ int main(int argc, char *argv[]) {
   }
 
   // write text file
-  textOut = new TextOutputDev(textFileName->getCString(), rawOrder, htmlMeta);
+  textOut = new TextOutputDev(textFileName->getCString(),
+			      physLayout, rawOrder, htmlMeta);
   if (textOut->isOk()) {
     doc->displayPages(textOut, firstPage, lastPage, 72, 0, gFalse);
   } else {

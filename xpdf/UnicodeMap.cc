@@ -2,7 +2,7 @@
 //
 // UnicodeMap.cc
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -118,7 +118,7 @@ UnicodeMap::UnicodeMap(GString *encodingNameA) {
   refCnt = 1;
 }
 
-UnicodeMap::UnicodeMap(const char *encodingNameA, GBool unicodeOutA,
+UnicodeMap::UnicodeMap(char *encodingNameA, GBool unicodeOutA,
 		       UnicodeMapRange *rangesA, int lenA) {
   encodingName = new GString(encodingNameA);
   unicodeOut = unicodeOutA;
@@ -130,7 +130,7 @@ UnicodeMap::UnicodeMap(const char *encodingNameA, GBool unicodeOutA,
   refCnt = 1;
 }
 
-UnicodeMap::UnicodeMap(const char *encodingNameA, GBool unicodeOutA,
+UnicodeMap::UnicodeMap(char *encodingNameA, GBool unicodeOutA,
 		       UnicodeMapFunc funcA) {
   encodingName = new GString(encodingNameA);
   unicodeOut = unicodeOutA;

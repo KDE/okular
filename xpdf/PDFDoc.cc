@@ -2,7 +2,7 @@
 //
 // PDFDoc.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -201,18 +201,13 @@ void PDFDoc::checkHeader() {
 void PDFDoc::displayPage(OutputDev *out, int page, double zoom,
 			 int rotate, GBool doLinks,
 			 GBool (*abortCheckCbk)(void *data),
-                         void *abortCheckCbkData) {
-
-  if ( page < 0 || page >= catalog->getNumPages() ) return; // obviously invalid page
-
+			 void *abortCheckCbkData) {
   Page *p;
 
   if (globalParams->getPrintCommands()) {
     printf("***** page %d *****\n", page);
   }
-
   p = catalog->getPage(page);
-
   if (doLinks) {
     if (links) {
       delete links;

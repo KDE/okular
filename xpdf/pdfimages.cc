@@ -2,7 +2,7 @@
 //
 // pdfimages.cc
 //
-// Copyright 1998-2002 Glyph & Cog, LLC
+// Copyright 1998-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -118,14 +118,12 @@ int main(int argc, char *argv[]) {
     goto err1;
   }
 
-#ifdef ENFORCE_PERMISSIONS
   // check for copy permission
   if (!doc->okToCopy()) {
     error(-1, "Copying of images from this document is not allowed.");
     exitCode = 3;
     goto err1;
   }
-#endif
 
   // get page range
   if (firstPage < 1)

@@ -2,7 +2,7 @@
 //
 // FontEncodingTables.cc
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "FontEncodingTables.h"
 
-const char *macRomanEncoding[256] = {
+char *macRomanEncoding[256] = {
   NULL,
   NULL,
   NULL,
@@ -184,32 +184,32 @@ const char *macRomanEncoding[256] = {
   "trademark",
   "acute",
   "dieresis",
-  NULL,
+  "notequal",
   "AE",
   "Oslash",
-  NULL,
+  "infinity",
   "plusminus",
-  NULL,
-  NULL,
+  "lessequal",
+  "greaterequal",
   "yen",
   "mu",
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
+  "partialdiff",
+  "summation",
+  "product",
+  "pi",
+  "integral",
   "ordfeminine",
   "ordmasculine",
-  NULL,
+  "Omega",
   "ae",
   "oslash",
   "questiondown",
   "exclamdown",
   "logicalnot",
-  NULL,
+  "radical",
   "florin",
-  NULL,
-  NULL,
+  "approxequal",
+  "Delta",
   "guillemotleft",
   "guillemotright",
   "ellipsis",
@@ -226,7 +226,7 @@ const char *macRomanEncoding[256] = {
   "quoteleft",
   "quoteright",
   "divide",
-  NULL,
+  "lozenge",
   "ydieresis",
   "Ydieresis",
   "fraction",
@@ -251,7 +251,7 @@ const char *macRomanEncoding[256] = {
   "Igrave",
   "Oacute",
   "Ocircumflex",
-  NULL,
+  "apple",
   "Ograve",
   "Uacute",
   "Ucircumflex",
@@ -269,7 +269,7 @@ const char *macRomanEncoding[256] = {
   "caron"
 };
 
-const char *macExpertEncoding[256] = {
+char *macExpertEncoding[256] = {
   NULL,
   NULL,
   NULL,
@@ -528,7 +528,7 @@ const char *macExpertEncoding[256] = {
   NULL
 };
 
-const char *winAnsiEncoding[256] = {
+char *winAnsiEncoding[256] = {
   NULL,
   NULL,
   NULL,
@@ -787,7 +787,7 @@ const char *winAnsiEncoding[256] = {
   "ydieresis"
 };
 
-const char *standardEncoding[256] = {
+char *standardEncoding[256] = {
   NULL,
   NULL,
   NULL,
@@ -1046,7 +1046,7 @@ const char *standardEncoding[256] = {
   NULL
 };
 
-const char *expertEncoding[256] = {
+char *expertEncoding[256] = {
   NULL,
   NULL,
   NULL,
@@ -1305,7 +1305,7 @@ const char *expertEncoding[256] = {
   "Ydieresissmall"
 };
 
-const char *symbolEncoding[256] = {
+char *symbolEncoding[256] = {
   NULL,
   NULL,
   NULL,
@@ -1564,7 +1564,7 @@ const char *symbolEncoding[256] = {
   NULL
 };
 
-const char *zapfDingbatsEncoding[256] = {
+char *zapfDingbatsEncoding[256] = {
   NULL,
   NULL,
   NULL,

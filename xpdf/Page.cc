@@ -2,7 +2,7 @@
 //
 // Page.cc
 //
-// Copyright 1996-2002 Glyph & Cog, LLC
+// Copyright 1996-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -122,7 +122,7 @@ PageAttrs::~PageAttrs() {
   resources.free();
 }
 
-GBool PageAttrs::readBox(Dict *dict, const char *key, PDFRectangle *box) {
+GBool PageAttrs::readBox(Dict *dict, char *key, PDFRectangle *box) {
   PDFRectangle tmp;
   Object obj1, obj2;
   GBool ok;

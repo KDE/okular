@@ -2,7 +2,7 @@
 //
 // BuiltinFont.cc
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -53,8 +53,8 @@ GBool BuiltinFontWidths::getWidth(char *name, Gushort *width) {
   return gFalse;
 }
 
-int BuiltinFontWidths::hash(const char *name) {
-  const char *p;
+int BuiltinFontWidths::hash(char *name) {
+  char *p;
   unsigned int h;
 
   h = 0;

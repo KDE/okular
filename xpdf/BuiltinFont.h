@@ -2,7 +2,7 @@
 //
 // BuiltinFont.h
 //
-// Copyright 2001-2002 Glyph & Cog, LLC
+// Copyright 2001-2003 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -23,8 +23,8 @@ class BuiltinFontWidths;
 //------------------------------------------------------------------------
 
 struct BuiltinFont {
-  const char *name;
-  const char **defaultBaseEnc;
+  char *name;
+  char **defaultBaseEnc;
   short ascent;
   short descent;
   short bbox[4];
@@ -34,7 +34,7 @@ struct BuiltinFont {
 //------------------------------------------------------------------------
 
 struct BuiltinFontWidth {
-  const char *name;
+  char *name;
   Gushort width;
   BuiltinFontWidth *next;
 };
@@ -48,7 +48,7 @@ public:
 
 private:
 
-  int hash(const char *name);
+  int hash(char *name);
 
   BuiltinFontWidth **tab;
   int size;

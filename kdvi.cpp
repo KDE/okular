@@ -232,20 +232,20 @@ void kdvi::makeButtons()
 #define I(f,o,s,h) toolBar()->insertButton( KGlobal::iconLoader()->loadIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
-	I( "fileopen.xpm",	this,	fileOpen,	i18n("Open document ...") )
-	I( "reload.xpm",	dviwin,	drawPage,	i18n("Reload document") )
-	I( "fileprint.xpm",	this,	filePrint,	i18n("Print ...") )
+	I( "fileopen",	this,	fileOpen,	i18n("Open document ...") )
+	I( "reload",	dviwin,	drawPage,	i18n("Reload document") )
+	I( "fileprint",	this,	filePrint,	i18n("Print ...") )
 	toolBar()->insertSeparator();
-	I( "start.xpm",		dviwin,	firstPage, 	i18n("Go to first page") )
-	I( "back.xpm",		dviwin,	prevPage,	i18n("Go to previous page") )
-	I( "forwpage.xpm",	dviwin,	goForward,	i18n("Go down then top of next page") )
-	I( "forward.xpm",	dviwin,	nextPage,	i18n("Go to next page") )
-	I( "finish.xpm",	dviwin,	lastPage,	i18n("Go to last page") )
+	I( "start",		dviwin,	firstPage, 	i18n("Go to first page") )
+	I( "back",		dviwin,	prevPage,	i18n("Go to previous page") )
+	I( "forwpage",	dviwin,	goForward,	i18n("Go down then top of next page") )
+	I( "forward",	dviwin,	nextPage,	i18n("Go to next page") )
+	I( "finish",	dviwin,	lastPage,	i18n("Go to last page") )
 	toolBar()->insertSeparator();
-	I( "viewmag-.xpm",	dviwin,	nextShrink,	i18n("Decrease magnification") )
-	I( "smalltext.xpm",	this,	selectSmall,	i18n("Small text") )
-	I( "largetext.xpm",	this,	selectLarge,	i18n("Large text") )
-	I( "viewmag+.xpm",	dviwin,	prevShrink,	i18n("Increase magnification") )
+	I( "viewmag-",	dviwin,	nextShrink,	i18n("Decrease magnification") )
+	I( "smalltext",	this,	selectSmall,	i18n("Small text") )
+	I( "largetext",	this,	selectLarge,	i18n("Large text") )
+	I( "viewmag+",	dviwin,	prevShrink,	i18n("Increase magnification") )
 #undef	I
 
 }

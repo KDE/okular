@@ -30,25 +30,25 @@
     
     <legalnotice>&FDLNotice;</legalnotice>
     
-    <date>2002-04-27</date>
-    <releaseinfo>1.00.00</releaseinfo>
-    
+    <date>2003-09-07</date>
+    <releaseinfo>1.10.00</releaseinfo>
+
     <abstract>
       <para>This document describes &kdvi; version 1.0</para>
     </abstract>
-    
+
     <keywordset>
       <keyword>KDE</keyword>
       <keyword>linux</keyword>
       <keyword>TeX</keyword>
       <keyword>DVI</keyword>
     </keywordset>
-    
+
   </bookinfo>
-  
+
   <chapter id="introduction">
     <title>Introduction</title>
-    
+
     <para>&kdvi; is a plugin for the &kviewshell; program which allows
     &kviewshell; to display &DVI;-files (<literal
     role="extension">.dvi</literal>) which are produced by the TeX
@@ -57,13 +57,13 @@
     hyperlinks. More details, examples and all the technical
     specifications can be found in the file
     <filename>KDVI-features.dvi</filename> (or see
-    <filename>KDVI-features.tex</filename> 
+    <filename>KDVI-features.tex</filename>
     for the TeX source of that file).</para>
-    
+
     <para>For up-to-date information, consult <ulink
     url="http://devel-home.kde.org/~kdvi">&kdvi;'s home page</ulink>.
     </para>
-    
+
     <para>TeX is a high-end typesetting system geared towards
     scientific, and in particular mathematical typesetting. More
     information about TeX and &DVI; can be found on the <ulink
@@ -72,11 +72,11 @@
     e.V.</ulink>.
     </para>
   </chapter>
-  
-  
+
+
   <chapter id="starting">
     <title>Starting &kdvi;</title>
-    
+
     <para>Most of the time, &kdvi; will be started by just clicking
     onto a <literal role="extension">.dvi</literal> file in the file
     manager. For convenience there exists a command
@@ -207,6 +207,43 @@
       seems to be to avoid bitmap fonts.</para>
       </warning>
     </section>
+  </chapter>
+  
+
+  <chapter id="embed">
+    <title>Embedding PostScript files into the &DVI;</title>
+
+    <para>The traditional way of using graphics with
+    <application>TeX</application> does not include the graphics data
+    directly in the &DVI; file. Instead, the &DVI; file contains only
+    a link to a graphics file which resides on the hard disk. The
+    advantage of this procedure is that the &DVI; file stays small,
+    and that the graphics file can be modified indepent of the
+    document's <application>TeX</application> source. The method,
+    however, becomes fairly inconvenient if you intend to archive the
+    &DVI; file, or if you wish to send it to someone else: rather than
+    handling a single file, you have to deal with a multitude of
+    files, which need to be kept in exactly the place specified in the
+    &DVI; file for everything to work.</para>
+
+    <para>For that reason, &kdvi; allows you to embed external
+    &PostScript; files into your &DVI; file. To embed all &PostScript;
+    files into a &DVI; file, use the menu entry <guimenu>Edit/Embed
+    external PostScript files</guimenu> </para>
+    
+    <warning> <para>&DVI; files with embedded &PostScript; work fine
+    with most other &DVI; handling software,
+    e.g. <application>xdvi</application>,
+    <application>dvips</application> or
+    <application>dvipdf</application>. One notable exception is the
+    <application>dvipdfm</application> program, which currently
+    ignores the embedded &PostScript;. Since
+    <application>dvipdfm</application> is used internally by the
+    "Export to <acronym>PDF</acronym>" function of &kdvi;, expect
+    problems when you use that function. The same issue shows with
+    other software that uses embedded PostScript, e.g. the
+    <application>TeX</application> <application>xy</application> macro
+    package.</para> </warning>
   </chapter>
   
 

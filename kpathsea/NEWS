@@ -1,5 +1,78 @@
 This file records noteworthy changes.
-
+3.2 (15 March 1998)
+* Brace expansion will accept the path separator as well as the comma,
+  e.g., {foo:bar}.
+* For TeX, we only recognize one suffix, because there is no such thing
+  as a canonical list of TeX suffixes.
+* We distinguish between two kinds of suffixes in the code: the standard
+  suffixes which may be appended to filenames when searching; and the
+  alternative suffixes which are never appended, but when found this
+  prevents a search with one of the standard suffixes. 
+* kpse_reset_program_name: change assumed program name, resets the search
+  paths, so that searches will work as expected for the new name.
+* kpse_set_program_name: new function, replaces kpse_set_progname.
+* The MakeTeX* scripts have been renamed to mktex* forms.
+
+3.1 (10 November 1997)
+* The support for multiple texmf trees is much improved.
+* New MakeTeX* scripts, based on teTeX's.  These scripts now use
+  heuristics to decide where generated files are placed and which
+  permissions they should have.
+* The varfonts feature is enabled by default.
+* Some MSDOS/Win32 support added to the sources.
+* Change in searching algorithm: if a name doesn't have the default suffix
+  we append it for the first search.  Then we search for the bare name.
+  Thus if you have foo.bar and foo.bar.tex, the latter will now be found
+  first.  Under the old system, you had to specify boo.bar.tex.tex to get
+  foo.bar.tex instead of foo.bar.
+* Prepend the value of KPSE_DOT to relative paths from texmf.cnf if it
+  defined in the environment.  This means we can use . instead of
+  $KPSE_DOT in paths.
+* Define brace expansion so that {a,b}{1,2} expands to a1:b1:a2:b2.  This
+  is different from how shells do it, and exploited in texmf.in.
+* Renamed texmf.cnf.in to texmf.in.
+* New value for debugging: DEBUG_VARS, equal to 64.
+* If a file format has no suffix, allow its long name as the argument to
+  kpsewhich --format.
+
+3.0 (7 February 1997)
+* Distribution terms changed to the GNU Library General Public License.
+* Default directory structure matches the TDS standard. The most
+  important change is in the fonts/ directory: the file type (tfm, pk)
+  is now directly underneath fonts/.  Also, mft/ is now at the top level.
+  `modeless' is used for gsftopk/ps2pk/etc.-generated fonts.
+* Change in searching algorithm: if the name already has a suffix
+  (foo.sty), search for it by itself first, before appending the default
+  suffix (foo.sty.tex).  This loses if you have an executable named
+  foo.bar, with documentation in foo.bar.tex (foo.bar will be found
+  first).  But this is unusual, and the other case is common.
+* Environment variables PATH_program (e.g., TEXINPUTS_latex) checked
+  for, as with configuration file values (TEXINPUTS.latex).
+* Multiple TEXMF trees supported, via the following new facility:
+* Shell brace expansion {foo,bar} implemented, thanks to Bash.
+* Multiple ls-R files supported via the TEXMFDBS path.
+* An ``alias'' database for files in ls-R supported, to handle 8.3 problems.
+* Directories in the ls-R file can be relative (./) as well as absolute (/).
+* New MakeTeX{PK,TFM,MF} scripts with more features, based on teTeX's.
+* DVIPSMAKEPK (etc.) actually overrides the name `MakeTeXPK', as documented.
+* MakeTeX* can be globally disabled via configure options.
+* Support for building as a shared library with configure --enable-shared.
+* Directories whose names begin with `.' are ignored.
+* Some warnings can be suppressed by TEX_HUSH cnf value or envvar.
+* kpsewhich has many new capabilities, documented via --help and in the manual.
+* texfonts.map parsing has an include directive, and @c is a comment.
+* Input lines in texmf.cnf can be continued with \.
+* TEXMFLOG can be set in texmf.cnf, as previously documented.
+* SELFAUTODIR and SELFAUTOPARENT are defined according to the location
+  of the binary, and used to search for texmf.cnf.
+* /// (or more) is equivalent to //.
+* If $HOME = / (as with root on some systems), avoid creating // in paths.
+* Support for AFM, PostScript Type 1 font, source, documentation, Omega,
+  and MetaPost-related file formats.
+* New header kpathsea.h with all #include files.
+* Under DOS, ls-R lines need not start with . or / or \ (e.g., c:).
+* Amiga support.
+
 2.6 (9 January 1995)
 * MakeTeXPK installed from kpathsea, instead of each driver.
 * MakeTeXPK.site looked for in texmf/web2c, instead of texmf/dvips.

@@ -1,24 +1,26 @@
 /* c-pathch.h: define the characters which separate components of
    filenames and environment variable paths.
 
-Copyright (C) 1992, 93 Free Software Foundation, Inc.
+Copyright (C) 1992, 93, 95, 97 Free Software Foundation, Inc.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #ifndef C_PATHCH_H
 #define C_PATHCH_H
+
+#include <kpathsea/c-ctype.h>
 
 /* What separates filename components?  */
 #ifndef DIR_SEP
@@ -26,11 +28,26 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define DIR_SEP ':'
 #define DIR_SEP_STRING ":"
 #else
-#ifdef DOS
-#define DIR_SEP '\\'
-#define DIR_SEP_STRING "\\"
+#ifdef DOSISH
+/* Either \'s or 's work.  Wayne Sullivan's web2pc prefers /, so we'll
+   go with that.  */
+#define DIR_SEP '/'
+#define DIR_SEP_STRING "/"
+#define IS_DEVICE_SEP(ch) ((ch) == ':')
+#define NAME_BEGINS_WITH_DEVICE(name) (*(name) && IS_DEVICE_SEP((name)[1]))
 /* On DOS, it's good to allow both \ and / between directories.  */
-#define IS_DIR_SEP(ch) ((ch) == DIR_SEP || (ch) == '/')
+#define IS_DIR_SEP(ch) ((ch) == '/' || (ch) == '\\')
+/* On win32, UNC names are authorized */
+#ifdef WIN32
+#define IS_UNC_NAME(name) (strlen(name)>=3 && IS_DIR_SEP(*name)  \
+                            && IS_DIR_SEP(*(name+1)) && isalpha(*(name+2)))
+#endif
+#else
+#ifdef AMIGA
+#define DIR_SEP '/'
+#define DIR_SEP_STRING "/"
+#define IS_DIR_SEP(ch) ((ch) == '/' || (ch) == ':')
+#define IS_DEVICE_SEP(ch) ((ch) == ':')
 #else
 #ifdef VMCMS
 #define DIR_SEP ' '
@@ -39,12 +56,19 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define DIR_SEP '/'
 #define DIR_SEP_STRING "/"
 #endif /* not VM/CMS */
-#endif /* not DOS */
+#endif /* not AMIGA */
+#endif /* not DOSISH */
 #endif /* not VMS */
-#endif /* not PATH_SEP */
+#endif /* not DIR_SEP */
 
 #ifndef IS_DIR_SEP
 #define IS_DIR_SEP(ch) ((ch) == DIR_SEP)
+#endif
+#ifndef IS_DEVICE_SEP /* No `devices' on, e.g., Unix.  */
+#define IS_DEVICE_SEP(ch) 0 
+#endif
+#ifndef NAME_BEGINS_WITH_DEVICE
+#define NAME_BEGINS_WITH_DEVICE(name) 0 
 #endif
 
 
@@ -54,7 +78,11 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define ENV_SEP ','
 #define ENV_SEP_STRING ","
 #else
-#ifdef DOS
+#ifdef DOSISH
+#define ENV_SEP ';'
+#define ENV_SEP_STRING ";"
+#else
+#ifdef AMIGA
 #define ENV_SEP ';'
 #define ENV_SEP_STRING ";"
 #else
@@ -65,6 +93,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define ENV_SEP ':'
 #define ENV_SEP_STRING ":"
 #endif /* not VM/CMS */
+#endif /* not AMIGA */
 #endif /* not DOS */
 #endif /* not VMS */
 #endif /* not ENV_SEP */

@@ -1,0 +1,96 @@
+dnl withenable.ac: --with and --enable options.
+
+dnl --enable-maintainer-mode as implemented in automake.
+AM_MAINTAINER_MODE
+
+dnl These are standard among *NIX systems, but not when cross-compiling
+AC_DEFUN([CF_SUBST],
+[AC_MSG_CHECKING(for $1 (symbol $2))
+AC_CACHE_VAL(cf_cv_subst_$2,[
+test -z "[$]$2" && $2=$3
+cf_cv_subst_$2=[$]$2])
+$2=${cf_cv_subst_$2}
+AC_MSG_RESULT([$]$2)
+AC_SUBST($2)
+])dnl
+CF_SUBST(loader,LD,ld)
+CF_SUBST(archiver,AR,ar)
+CF_SUBST(archiver options,ARFLAGS,rc)
+
+AC_ARG_WITH(mktexmf-default,
+[  --without-mktexmf-default    do not run mktexmf if MF source missing],
+  , with_mktexmf_default=yes)
+AC_ARG_WITH(mktexpk-default,
+[  --without-mktexpk-default    do not run mktexpk if PK font missing],
+  , with_mktexpk_default=yes)
+AC_ARG_WITH(mktextfm-default,
+[  --without-mktextfm-default   do not run mktextfm if TFM file missing],
+   , with_mktextfm_default=yes)
+AC_ARG_WITH(mkocp-default,
+[  --without-mkocp-default      do not run mkocp if OCP file missing],
+   , with_mkocp_default=yes)
+AC_ARG_WITH(mkofm-default,
+[  --without-mkofm-default      do not run mkofm if OFM file missing],
+   , with_mkofm_default=yes)
+AC_ARG_WITH(mktextex-default,
+[  --with-mktextex-default      run mktextex if TeX source missing],
+  with_mktextex_default=yes, with_mktextex_default=no)
+
+dnl The --enable-multiplatform option.
+AC_CANONICAL_HOST
+AC_ARG_ENABLE(multiplatform,
+[  --enable-multiplatform     put executables in bin/PLATFORM],
+if test "x$enable_multiplatform" = xyes &&
+    test "x$bindir" = 'x${exec_prefix}/bin'
+then
+  bindir="$bindir/$host"
+fi)
+
+dnl Check whether we can find a texmf tree.  Look at the most common spots.
+dnl Not a switch, but something that must be included everywhere, even at
+dnl at the top level, so putting it in common.ac is not enough.
+AC_MSG_CHECKING(where the main texmf tree is located)
+texmfmain=
+if test "x$datadir" != 'x${prefix}/share'; then
+  # First case, datadir is defined...
+  eval p=\"$datadir\"
+  # Unconditionally set the directory, but...
+  texmfmain=`echo "$p/texmf" | sed 's,//*,/,g'`
+  # ... do complain if it wasn't found.
+  if test -d "$texmfmain"; then
+    AC_MSG_RESULT("$texmfmain")
+  else
+    AC_MSG_RESULT([not found])
+    AC_MSG_WARN([No texmf tree found at $texmfmain.
+  If you do not have the files, you can retrieve a minimal set from
+  ftp://ftp.tug.org/tex/texklib.tar.gz, which is mirrored on CTAN hosts
+  in systems/web2c.  Winging it.])
+  fi
+else
+  # Second case, datadir is default...
+  if test "x$prefix" = "xNONE"; then
+    p="$ac_default_prefix"
+  else
+    eval p=\"$prefix\"
+  fi
+  for e in share/texmf lib/texmf texmf; do
+    if test -d "$p/$e"; then
+      texmfmain="$p/$e"
+      break
+    fi
+  done
+  texmfmain=`echo "$texmfmain" | sed 's,//*,/,g'`
+  if test -n "$texmfmain"; then
+    AC_MSG_RESULT("$texmfmain")
+  else
+    eval texmfmain="$datadir/texmf"
+    AC_MSG_RESULT([not found])
+    AC_MSG_WARN([The main texmf tree was not found.
+  Specify the location of its parent directory with the --datadir option.
+  If you do not have the files, you can retrieve a minimal set from
+  ftp://ftp.tug.org/tex/texklib.tar.gz, which is mirrored on CTAN hosts
+  in systems/web2c.  Winging it by using the default location
+  $texmfmain.])
+  fi
+fi
+AC_SUBST(texmfmain)

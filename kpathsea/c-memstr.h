@@ -1,20 +1,20 @@
 /* c-memstr.h: memcpy, strchr, etc.
 
-Copyright (C) 1992, 93, 94 Free Software Foundation, Inc.
+Copyright (C) 1992, 93, 94, 95, 97 Free Software Foundation, Inc.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #ifndef KPATHSEA_C_MEMSTR_H
 #define KPATHSEA_C_MEMSTR_H
@@ -22,67 +22,62 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 /* <X11/Xfuncs.h> tries to declare bcopy etc., which can only conflict.  */
 #define _XFUNCS_H_
 
-/* Just to be complete, we make both the system V/ANSI and the BSD
-   versions of the string functions available.  */
-
-#if (defined (STDC_HEADERS) || defined (HAVE_STRING_H))
-#if 0
-#define SYSV /* so <X11/Xos.h> knows not to include <strings.h> */
-#endif
-
+#ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#include <strings.h>
+#endif
 
 /* An ANSI string.h and pre-ANSI memory.h might conflict.  */
 #if !defined (STDC_HEADERS) && defined (HAVE_MEMORY_H)
 #include <memory.h>
 #endif /* not STDC_HEADERS and HAVE_MEMORY_H */
 
-/* Do not define these if we are not STDC_HEADERS, because in that
-   case X11/Xos.h defines `strchr' to be `index'. */
-#ifdef STDC_HEADERS
-/* Let's hope that if index/rindex are defined, they're defined to the
-   right thing.  */
-#ifndef index
+/* Just to be complete, we make both the system V/ANSI and the BSD
+   versions of the string functions available.  */
+/* FIXME: we'll move to providing the ANSI stuff, if necessary defined
+   in terms of the BSD functions. */
+#if !defined(HAVE_INDEX) && !defined(index)
 #define index strchr
 #endif
-#ifndef rindex
+
+#if !defined(HAVE_RINDEX) && !defined(rindex)
 #define rindex strrchr
 #endif
-#endif /* STDC_HEADERS */
 
-#ifndef HAVE_BCOPY
-#ifndef bcmp
+#if !defined(HAVE_BCMP) && !defined(bcmp)
 #define bcmp(s1, s2, len) memcmp ((s1), (s2), (len))
 #endif
-#ifndef bcopy
+
+#if !defined(HAVE_BCOPY) && !defined(bcopy)
 #define bcopy(from, to, len) memcpy ((to), (from), (len))
 #endif
-#ifndef bzero
+
+#if !defined(HAVE_BZERO) && !defined(bzero)
 #define bzero(s, len) memset ((s), 0, (len))
 #endif
-#endif /* not HAVE_BCOPY */
 
-#else /* not (STDC_HEADERS or HAVE_STRING_H) */
-
-#include <strings.h>
-
-#ifndef strchr
+#if !defined(HAVE_STRCHR) && !defined(strchr)
 #define strchr index
 #endif
-#ifndef strrchr
+
+#if !defined(HAVE_STRRCHR) && !defined(strrchr)
 #define strrchr rindex
 #endif
 
-#ifndef memcmp
+#if !defined(HAVE_MEMCMP) && !defined(memcmp)
 #define memcmp(s1, s2, n) bcmp ((s1), (s2), (n))
 #endif
-#ifndef memcpy
+
+#if !defined(HAVE_MEMCPY) && !defined(memcpy)
 #define memcpy(to, from, len) bcopy ((from), (to), (len))
 #endif
 
+#if !defined(HAVE_STRING_H)
 extern char *strtok ();
+#ifndef strstr
 extern char *strstr ();
-
-#endif /* not (STDC_HEADERS or HAVE_STRING_H) */
+#endif
+#endif
 
 #endif /* not KPATHSEA_C_MEMSTR_H */

@@ -1,22 +1,21 @@
 /* tilde.c: Expand user's home directories.
 
-Copyright (C) 1993 Karl Berry.
+Copyright (C) 1993, 95, 96, 97 Karl Berry.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#include <stdio.h>
 #include <kpathsea/config.h>
 
 #include <kpathsea/c-pathch.h>
@@ -34,57 +33,77 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 string
 kpse_tilde_expand P1C(const_string, name)
 {
-#ifdef HAVE_PWD_H
   const_string expansion;
   const_string home;
   
   assert (name);
   
   /* If no leading tilde, do nothing.  */
-  if (*name != '~')
+  if (*name != '~') {
     expansion = name;
   
-  /* If `~' or `~/', use $HOME if it exists, or `.' if it doesn't.  */
-  else if (IS_DIR_SEP (name[1]) || name[1] == 0)
-    {
-      home = getenv ("HOME");
-      if (!home)
-        home = ".";
-        
-      expansion = name[1] == 0
-                  ? xstrdup (home) : concat3 (home, DIR_SEP_STRING, name + 2);
+  /* If a bare tilde, return the home directory or `.'.  (Very unlikely
+     that the directory name will do anyone any good, but ...  */
+  } else if (name[1] == 0) {
+    home = getenv ("HOME");
+    if (!home) {
+      home = ".";
     }
+    expansion = xstrdup (home);
   
-  /* If `~user' or `~user/', look up user in the passwd database.  */
-  else
+  /* If `~/', remove any trailing / or replace leading // in $HOME.
+     Should really check for doubled intermediate slashes, too.  */
+  } else if (IS_DIR_SEP (name[1])) {
+    unsigned c = 1;
+    home = getenv ("HOME");
+    if (!home) {
+      home = ".";
+    }
+    if (IS_DIR_SEP (*home) && IS_DIR_SEP (home[1])) {  /* handle leading // */
+      home++;
+    }
+    if (IS_DIR_SEP (home[strlen (home) - 1])) {        /* omit / after ~ */
+      c++;
+    }
+    expansion = concat (home, name + c);
+  
+  /* If `~user' or `~user/', look up user in the passwd database (but
+     OS/2 doesn't have this concept.  */
+  } else
+#ifdef HAVE_PWD_H
     {
       struct passwd *p;
       string user;
       unsigned c = 2;
-      while (!IS_DIR_SEP (name[c]) && name[c] != 0)
+      while (!IS_DIR_SEP (name[c]) && name[c] != 0) /* find user name */
         c++;
       
       user = (string) xmalloc (c);
       strncpy (user, name + 1, c - 1);
       user[c - 1] = 0;
       
-      /* We only need the cast here for those (deficient) systems
+      /* We only need the cast here for (deficient) systems
          which do not declare `getpwnam' in <pwd.h>.  */
       p = (struct passwd *) getpwnam (user);
       free (user);
 
       /* If no such user, just use `.'.  */
-      home = p == NULL ? "." : p->pw_dir;
-      
+      home = p ? p->pw_dir : ".";
+      if (IS_DIR_SEP (*home) && IS_DIR_SEP (home[1])) { /* handle leading // */
+        home++;
+      }
+      if (IS_DIR_SEP (home[strlen (home) - 1]) && name[c] != 0)
+        c++; /* If HOME ends in /, omit the / after ~user. */
+
       expansion = name[c] == 0 ? xstrdup (home) : concat (home, name + c);
     }
-  
-  /* We may return the same thing as the original, and then we might not
-     be returning a malloc-ed string.  */
-  return (string) expansion;
-#else
-  return name;
+#else /* not HAVE_PWD_H */
+    expansion = name;
 #endif /* not HAVE_PWD_H */
+
+  /* We may return the same thing as the original, and then we might not
+     be returning a malloc-ed string.  Callers beware.  Sorry.  */
+  return (string) expansion;
 }
 
 #ifdef TEST
@@ -94,8 +113,8 @@ test_expand_tilde (const_string filename)
 {
   string answer;
   
-  printf ("Tilde expansion of `%s':\t", filename ? filename : "(null)");
-  answer = kpse_expand_tilde (filename);
+  printf ("Tilde expansion of `%s':\t", filename ? filename : "(nil)");
+  answer = kpse_tilde_expand (filename);
   puts (answer);
 }
 

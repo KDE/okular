@@ -1,6 +1,6 @@
-/* itoa.c: convert an int to a string.
+/* tex-hush.h: suppressing warnings?
 
-Copyright (C) 1993 Karl Berry.
+Copyright (C) 1996 Karl Berry.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,16 +14,16 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#include <kpathsea/config.h>
+#ifndef KPATHSEA_TEX_HUSH_H
+#define KPATHSEA_TEX_HUSH_H
 
+#include <kpathsea/c-proto.h>
+#include <kpathsea/types.h>
 
-string
-itoa P1C(int, i)
-{
-  char a[MAX_INT_LENGTH];
-  
-  sprintf (a, "%d", i);
-  return xstrdup (a);
-}
+/* Return true if WHAT is included in the TEX_HUSH environment
+   variable/config value.  */
+extern KPSEDLL boolean kpse_tex_hush P1H(const_string what);
+
+#endif /* not KPATHSEA_TEX_HUSH_H */

@@ -1,33 +1,26 @@
 /* line.c: return the next line from a file, or NULL.
 
-Copyright (C) 1992, 93 Free Software Foundation, Inc.
+Copyright (C) 1992, 93, 95, 96 Free Software Foundation, Inc.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-/* Don't include config.h or all our other usual includes, since
-   it's useful to just throw this file into other programs.  */
-
-#include <stdio.h>
-extern void free ();
-
-/* From xmalloc.c and xrealloc.c.  This saves having to include config.h.  */
-extern void *xmalloc (), *xrealloc ();
-
+#include <kpathsea/config.h>
+#include <kpathsea/line.h>
 
 /* Allocate in increments of this size.  */
-#define BLOCK_SIZE 40
+#define BLOCK_SIZE 75
 
 char *
 read_line (f)
@@ -38,7 +31,7 @@ read_line (f)
   unsigned loc = 0;
   char *line = xmalloc (limit);
   
-  while ((c = getc (f)) != EOF && c != '\n')
+  while ((c = getc (f)) != EOF && c != '\n' && c != '\r')
     {
       line[loc] = c;
       loc++;
@@ -60,6 +53,12 @@ read_line (f)
       /* Terminate the string.  We can't represent nulls in the file,
          either.  Again, it doesn't matter.  */
       line[loc] = 0;
+      /* Absorb LF of a CRLF pair. */
+      if (c == '\r') {
+          c = getc (f);
+          if (c != '\n')
+              ungetc (c, f);
+      }
     }
   else /* At end of file.  */
     {
@@ -69,3 +68,4 @@ read_line (f)
 
   return line;
 }
+

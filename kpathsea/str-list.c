@@ -2,19 +2,19 @@
 
 Copyright (C) 1993 Karl Berry.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #include <kpathsea/config.h>
 
@@ -59,6 +59,47 @@ str_list_concat P2C(str_list_type *, target,  str_list_type, more)
   
   for (e = 0; e < STR_LIST_LENGTH (more); e++)
     STR_LIST_ELT (*target, prev_len + e) = STR_LIST_ELT (more, e);
+}
+
+
+/* Concatenate the elements of more to each element of target.  This
+   _must_ be done with the first index varying fastest. */
+/* Note that we free the old elements of target as well. */
+
+void
+str_list_concat_elements P2C(str_list_type *, target,  str_list_type, more)
+{
+    if (STR_LIST_LENGTH(more) == 0) {
+        return;
+    } else if (STR_LIST_LENGTH(*target) == 0) {
+        unsigned int i;
+        STR_LIST_LENGTH(*target) = STR_LIST_LENGTH(more);
+        STR_LIST(*target) = xmalloc(STR_LIST_LENGTH(more)*sizeof(char*));
+        for (i=0;i!=STR_LIST_LENGTH(more);++i) {
+            STR_LIST_ELT(*target,i)=xstrdup(STR_LIST_ELT(more,i));
+        }
+        return;
+    } else {
+        unsigned new_len;
+        char ** new_list;
+        unsigned int i,j;
+        new_list = xmalloc(STR_LIST_LENGTH (*target)
+                           * STR_LIST_LENGTH (more) * sizeof(char*));
+
+        new_len = 0;
+        for (j = 0; j != STR_LIST_LENGTH(more); ++j) {
+            for (i = 0; i != STR_LIST_LENGTH(*target); ++i) {
+                new_list[new_len] = concat(STR_LIST_ELT(*target,i),
+                                           STR_LIST_ELT(more,j));
+                ++new_len;
+            }
+        }
+        for (i = 0; i != STR_LIST_LENGTH(*target); ++i)
+            free(STR_LIST_ELT(*target, i));
+        free(STR_LIST(*target));
+        STR_LIST_LENGTH(*target) = new_len;
+        STR_LIST(*target) = new_list;
+    }
 }
 
 

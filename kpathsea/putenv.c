@@ -6,13 +6,7 @@
 /*								*/
 /****************************************************************/
 /*   origination        1987-Oct-7               T. Holm	*/
-/* (slightly modified by karl@cs.umb.edu for kpathsea.)         */
 /****************************************************************/
-
-/* for HAVE_PUTENV and const -- need nothing else.  */
-#include <kpathsea/c-auto.h>
-
-#ifndef HAVE_PUTENV /* whole file */
 
 /*
 Path: hoptoad!pacbell!ames!ll-xn!mit-eddie!uw-beaver!ssc-vax!uvicctr!tholm
@@ -105,7 +99,7 @@ putenv( entry )
   if ( new_environ == (char **) NULL )
     return( -1 );
 
-  memcpy ((char *) new_environ, (const char *) environ, size*PSIZE );
+  memcpy ((char *) new_environ, (char *) environ, size*PSIZE );
 
   new_environ[size]   = entry;
   new_environ[size+1] = NULL;
@@ -114,6 +108,3 @@ putenv( entry )
 
   return(0);
 }
-
-#endif /* not HAVE_PUTENV */
-

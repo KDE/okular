@@ -1,0 +1,53 @@
+.TH KPSESTAT 1 "4 January 1998" "Kpathsea @VERSION@"
+.\"=====================================================================
+.if n .ds MP MetaPost
+.if t .ds MP MetaPost
+.if n .ds MF Metafont
+.if t .ds MF M\s-2ETAFONT\s0
+.if t .ds TX \fRT\\h'-0.1667m'\\v'0.20v'E\\v'-0.20v'\\h'-0.125m'X\fP
+.if n .ds TX TeX
+.ie t .ds OX \fIT\v'+0.25m'E\v'-0.25m'X\fP\" for troff
+.el .ds OX TeX\" for nroff
+.\" the same but obliqued
+.\" BX definition must follow TX so BX can use TX
+.if t .ds BX \fRB\s-2IB\s0\fP\*(TX
+.if n .ds BX BibTeX
+.\" LX definition must follow TX so LX can use TX
+.if t .ds LX \fRL\\h'-0.36m'\\v'-0.15v'\s-2A\s0\\h'-0.15m'\\v'0.15v'\fP\*(TX
+.if n .ds LX LaTeX
+.\"=====================================================================
+.SH NAME
+kpsestat \- compute octal mode from mode of existing file
+.SH SYNOPSIS
+.B kpsestat
+.I mode
+.I file
+.\"=====================================================================
+.SH DESCRIPTION
+.B kpsestat
+prints the octal permission of
+.I file
+modified according to
+.I mode
+on standard output.  The
+.I mode
+parameter accepts a subset of the symbolic permissions accepted by
+.BR chmod (1).
+Use
+.I =
+as the mode to obtain the unchanged permissions.
+.\"=====================================================================
+.SH OPTIONS
+.B kpsestat
+accepts the following additional options:
+.TP
+.B --help
+.rb
+Print help message and exit.
+.TP
+.B --version
+.rb
+Print version information and exit.
+.\"=====================================================================
+.SH "SEE ALSO"
+.BR chmod (1).

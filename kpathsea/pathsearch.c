@@ -1,23 +1,23 @@
 /* pathsearch.c: look up a filename in a path.
 
-Copyright (C) 1993, 94 Karl Berry.
+Copyright (C) 1993, 94, 95, 97 Karl Berry.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #include <kpathsea/config.h>
-
+#include <kpathsea/c-pathch.h>
 #include <kpathsea/c-fopen.h>
 #include <kpathsea/absolute.h>
 #include <kpathsea/expand.h>
@@ -30,51 +30,64 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include <time.h> /* for `time' */
 
-/* This function is called after every search to record the filename(s)
-   found in $TEXMFLOG or if debugging.  */
+#ifdef __DJGPP__
+#include <sys/stat.h>	/* for stat bits */
+#endif
+
+/* The very first search is for texmf.cnf, called when someone tries to
+   initialize the TFM path or whatever.  init_path calls kpse_cnf_get
+   which calls kpse_all_path_search to find all the texmf.cnf's.  We
+   need to do various special things in this case, since we obviously
+   don't yet have the configuration files when we're searching for the
+   configuration files.  */
+static boolean first_search = true;
+
+
+
+/* This function is called after every search (except the first, since
+   we definitely want to allow enabling the logging in texmf.cnf) to
+   record the filename(s) found in $TEXMFLOG.  */
 
 static void
 log_search P1C(str_list_type, filenames)
 {
   static FILE *log_file = NULL;
-  static boolean first_time = true;
+  static boolean first_time = true; /* Need to open the log file?  */
   
-  if (first_time)
-    {
-      string log_name = kpse_var_expand ("$TEXMFLOG");
-      first_time = false;
-      /* Get name from either envvar or config file.  */
-      if (log_name && *log_name)
-        {
-          log_file = fopen (log_name, FOPEN_A_MODE);
-          if (!log_file)
-            perror (log_name);
-          free (log_name);
-        }
+  if (first_time) {
+    /* Get name from either envvar or config file.  */
+    string log_name = kpse_var_value ("TEXMFLOG");
+    first_time = false;
+    if (log_name) {
+      log_file = fopen (log_name, FOPEN_A_MODE);
+      if (!log_file)
+        perror (log_name);
+      free (log_name);
     }
+  }
 
-  if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH) || log_file)
-    {
-      unsigned e;
-      
-      /* FILENAMES should never be null, but safety doesn't hurt.  */
-      for (e = 0;
-           e < STR_LIST_LENGTH (filenames) && STR_LIST_ELT (filenames, e);
-           e++)
-        {
-          string filename = STR_LIST_ELT (filenames, e);
-          
-          /* Only record absolute filenames, for privacy.  */
-          if (log_file && kpse_absolute_p (filename, false))
-            fprintf (log_file, "%u %s\n", time (NULL), filename);
+  if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH) || log_file) {
+    unsigned e;
 
-          /* And show them online, if debugging.  We've already started
-             the debugging line in `search', where this is called, so
-             just print the filename here, don't use DEBUGF.  */
-          if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH))
-            fputs (filename, stderr);
-        }
+    /* FILENAMES should never be null, but safety doesn't hurt.  */
+    for (e = 0; e < STR_LIST_LENGTH (filenames) && STR_LIST_ELT (filenames, e);
+         e++) {
+      string filename = STR_LIST_ELT (filenames, e);
+
+      /* Only record absolute filenames, for privacy.  */
+      if (log_file && kpse_absolute_p (filename, false))
+        fprintf (log_file, "%lu %s\n", (long unsigned) time (NULL),
+                 filename);
+
+      /* And show them online, if debugging.  We've already started
+         the debugging line in `search', where this is called, so
+         just print the filename here, don't use DEBUGF.  */
+      if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH)) {
+        putc (' ', stderr);
+        fputs (filename, stderr);
+      }
     }
+  }
 }
 
 /* Concatenate each element in DIRS with NAME (assume each ends with a
@@ -164,50 +177,8 @@ absolute_search P1C(string, name)
   return ret_list;
 }
 
-/* If DB_DIR is a prefix of PATH_ELT, return true; otherwise false.
-   That is, the question is whether to try the db for a file looked up
-   in PATH_ELT.  If PATH_ELT == ".", for example, the answer is no. If
-   PATH_ELT == "/usr/local/lib/texmf/fonts//tfm", the answer is yes.
-   
-   In practice, ls-R is only needed for lengthy subdirectory
-   comparisons, but there's no gain to checking PATH_ELT to see if it is
-   a subdir match, since the only way to do that is to do a string
-   search in it, which is all we do anyway.
-   
-   In fact, we do a simple string compare, ignoring // complications,
-   since in practice I believe //'s will always be after `kpse_db_dir',
-   i.e., we would never want to find ls-R in /usr//texmf.  */
-   
-static boolean
-elt_in_db P1C(const_string, path_elt)
-{
-  boolean found = false;
-  
-  /* If `kpse_db_dir' is not set, we're being called from `read_files'
-     for the very first time -- for cnf file initialization.  We can't
-     use ls-R for that.  */
-  if (kpse_db_dir)
-    {
-      string db_temp = kpse_db_dir;
-
-      while (!found && *db_temp++ == *path_elt++)
-        { /* If we've matched the entire db directory, it's good.  */
-          if (*db_temp == 0)
-            found = true;
-          /* If we've reached the end of PATH_ELT, but not the end of the db
-             directory, it's no good.  */
-          else if (*path_elt == 0)
-            break;
-        }
-    }
-
-  return found;
-}
-
-
-/* This is the hard case -- look for NAME in PATH.  If
-   ALL is false, just return the first file found.  Otherwise,
-   search all elements of PATH.  */
+/* This is the hard case -- look for NAME in PATH.  If ALL is false,
+   return the first file found.  Otherwise, search all elements of PATH.  */
 
 static str_list_type
 path_search P4C(const_string, path,  string, name,
@@ -219,57 +190,67 @@ path_search P4C(const_string, path,  string, name,
   ret_list = str_list_init (); /* some compilers lack struct initialization */
 
   for (elt = kpse_path_element (path); !done && elt;
-       elt = kpse_path_element (NULL))
-    {
-      boolean try_db;
-      boolean allow_disk_search = true;
-      str_list_type *found = NULL;
-      
-      if (*elt == '!' && *(elt + 1) == '!')
-        { /* Magic leading chars in a path element means don't search the
-             disk regardless.  And move past the magic to get to the name.  */
-          allow_disk_search = false;
-          elt += 2;
-        }
-      
-      /* Try the prebuilt db only if it's relevant to this path element. */
-      try_db = elt_in_db (elt);
-      found = try_db ? kpse_db_search (name, elt, all) : NULL;
-      
-      /* Search the filesystem if (1) the path spec allows it, and either
-         (2a) the db was irrelevant to ELT (try_db == false); or
-         (2b) no db exists (kpse_db_search returns NULL); or
-         (3) NAME was not in the db (kpse_db_search returns an empty list)
-             and MUST_EXIST.
-         In (2a) and (2b), `found' will be NULL.  */
-      if (allow_disk_search && (!found || (!STR_LIST (*found) && must_exist)))
-        {
-          str_llist_type *dirs = kpse_element_dirs (elt);
-          if (dirs && *dirs)
-            {
-              if (!found)
-                found = XTALLOC1 (str_list_type);
-              *found = dir_list_search (dirs, name, all);
-            }
-        }
+       elt = kpse_path_element (NULL)) {
+    str_list_type *found;
+    boolean allow_disk_search = true;
 
-      /* Did we find anything anywhere?  */
-      if (found && STR_LIST (*found))
-        if (all)
-          str_list_concat (&ret_list, *found);
-        else
-          {
-            str_list_add (&ret_list, STR_LIST_ELT (*found, 0));
-            done = true;
-          }
-      
-      /* Free the list space, if any (but not the elements).  */
-      if (found)
-      {
-        str_list_free (found);
-        free (found);
+    if (*elt == '!' && *(elt + 1) == '!') {
+      /* Those magic leading chars in a path element means don't search the
+         disk for this elt.  And move past the magic to get to the name.  */
+      allow_disk_search = false;
+      elt += 2;
+    }
+
+#if 0 /* We strip devices in the caller. */
+    /* Do not touch the device if present */
+    if (NAME_BEGINS_WITH_DEVICE (elt)) {
+      while (IS_DIR_SEP (*(elt + 2)) && IS_DIR_SEP (*(elt + 3))) {
+	*(elt + 2) = *(elt + 1);
+	*(elt + 1) = *elt;
+	elt++;
+      }
+    } else {
+      /* We never want to search the whole disk.  */
+      while (IS_DIR_SEP (*elt) && IS_DIR_SEP (*(elt + 1)))
+        elt++;
+    }
+#endif
+    
+    /* Try ls-R, unless we're searching for texmf.cnf.  Our caller
+       (search), also tests first_search, and does the resetting.  */
+    found = first_search ? NULL : kpse_db_search (name, elt, all);
+
+    /* Search the filesystem if (1) the path spec allows it, and either
+         (2a) we are searching for texmf.cnf ; or
+         (2b) no db exists; or 
+         (2c) no db's are relevant to this elt; or
+         (3) MUST_EXIST && NAME was not in the db.
+       In (2*), `found' will be NULL.
+       In (3),  `found' will be an empty list. */
+    if (allow_disk_search && (!found || (must_exist && !STR_LIST (*found)))) {
+      str_llist_type *dirs = kpse_element_dirs (elt);
+      if (dirs && *dirs) {
+        if (!found)
+          found = XTALLOC1 (str_list_type);
+        *found = dir_list_search (dirs, name, all);
       }
     }
+
+    /* Did we find anything anywhere?  */
+    if (found && STR_LIST (*found))
+      if (all)
+        str_list_concat (&ret_list, *found);
+      else {
+        str_list_add (&ret_list, STR_LIST_ELT (*found, 0));
+        done = true;
+      }
+
+    /* Free the list space, if any (but not the elements).  */
+    if (found) {
+      str_list_free (found);
+      free (found);
+    }
+  }
 
   /* Free the expanded name we were passed.  It can't be in the return
      list, since the path directories got unconditionally prepended.  */
@@ -291,16 +272,41 @@ search P4C(const_string, path,  const_string, original_name,
            boolean, must_exist,  boolean, all)
 {
   str_list_type ret_list;
+  string name;
+  boolean absolute_p;
+
+#ifdef __DJGPP__
+  /* We will use `stat' heavily, so let's request for
+     the fastest possible version of `stat', by telling
+     it what members of struct stat do we really need.
+
+     We need to set this on each call because this is a
+     library function; the caller might need other options
+     from `stat'.  Thus save the flags and restore them
+     before exit.
+
+     This call tells `stat' that we do NOT need to recognize
+     executable files (neither by an extension nor by a magic
+     signature); that we do NOT need time stamp of root directories;
+     and that we do NOT need the write access bit in st_mode.
+
+     Note that `kpse_set_progname' needs the EXEC bits,
+     but it was already called by the time we get here.  */
+  unsigned short save_djgpp_flags  = _djstat_flags;
+
+  _djstat_flags = _STAT_EXEC_MAGIC | _STAT_EXEC_EXT
+		  | _STAT_ROOT_TIME | _STAT_WRITEBIT;
+#endif
 
   /* Make a leading ~ count as an absolute filename, and expand $FOO's.  */
-  string name = kpse_expand (original_name);
+  name = kpse_expand (original_name);
   
   /* If the first name is absolute or explicitly relative, no need to
      consider PATH at all.  */
-  boolean absolute_p = kpse_absolute_p (name, true);
+  absolute_p = kpse_absolute_p (name, true);
   
   if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH))
-    DEBUGF4 ("search(file=%s, must_exist=%d, find_all=%d, path=%s).\n",
+    DEBUGF4 ("start search(file=%s, must_exist=%d, find_all=%d, path=%s).\n",
              name, must_exist, all, path);
 
   /* Find the file(s). */
@@ -313,14 +319,25 @@ search P4C(const_string, path,  const_string, original_name,
       || (all && STR_LIST_LAST_ELT (ret_list) != NULL))
     str_list_add (&ret_list, NULL);
 
-  /* Record the filenames we found, if desired.  And wrap them in a
-     debugging line if we're doing that.  */
-  if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH))
-    DEBUGF1 ("search(%s) =>", original_name);
-  log_search (ret_list);
-  if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH))
-    putc ('\n', stderr);
-  
+  /* The very first search is for texmf.cnf.  We can't log that, since
+     we want to allow setting TEXMFLOG in texmf.cnf.  */
+  if (first_search) {
+    first_search = false;
+  } else {
+    /* Record the filenames we found, if desired.  And wrap them in a
+       debugging line if we're doing that.  */
+    if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH))
+      DEBUGF1 ("search(%s) =>", original_name);
+    log_search (ret_list);
+    if (KPSE_DEBUG_P (KPSE_DEBUG_SEARCH))
+      putc ('\n', stderr);
+  }  
+
+#ifdef __DJGPP__
+  /* Undo any side effects.  */
+  _djstat_flags = save_djgpp_flags;
+#endif
+
   return STR_LIST (ret_list);
 }
 
@@ -330,17 +347,10 @@ string
 kpse_path_search P3C(const_string, path,  const_string, name,
                      boolean, must_exist)
 {
-  static string *ret_list = 0;
-
-  if (ret_list)
-    {
-      free (ret_list);
-      ret_list = 0;  /* Don't let an interrupt in search() cause trouble */
-    }
-
-  ret_list = search (path, name, must_exist, false);
-
-  return *ret_list;  /* Freeing this is caller's responsibility */
+  string *ret_list = search (path, name, must_exist, false);
+  string ret = *ret_list;
+  free (ret_list);
+  return ret;
 }
 
 
@@ -364,7 +374,7 @@ test_path_search (const_string path, const_string file)
   
   printf ("\nSearch %s for %s:\t", path, file);
   answer = kpse_path_search (path, file);
-  puts (answer ? answer : "(null)");
+  puts (answer ? answer : "(nil)");
 
   printf ("Search %s for all %s:\t", path, file);
   answer_list = kpse_all_path_search (path, file);
@@ -385,12 +395,13 @@ main ()
   /* All lists end with NULL.  */
   test_path_search (".", "nonexistent");
   test_path_search (".", "/nonexistent");
-  test_path_search ("/k:.", "kpathsea.texi");
-  test_path_search ("/k:.", "/etc/fstab");
-  test_path_search (".:" TEXFONTS "//", "cmr10.tfm");
-  test_path_search (".:" TEXFONTS "//", "logo10.tfm");
-  test_path_search (TEXFONTS "//times:.::", "ptmr.vf");
-  test_path_search (TEXFONTS "/adobe//:"
+  test_path_search ("/k" ENV_SEP_STRING ".", "kpathsea.texi");
+  test_path_search ("/k" ENV_SEP_STRING ".", "/etc/fstab");
+  test_path_search ("." ENV_SEP_STRING TEXFONTS "//", "cmr10.tfm");
+  test_path_search ("." ENV_SEP_STRING TEXFONTS "//", "logo10.tfm");
+  test_path_search (TEXFONTS "//times" ENV_SEP_STRING "."
+                    ENV_SEP_STRING ENV_SEP_STRING, "ptmr.vf");
+  test_path_search (TEXFONTS "/adobe//" ENV_SEP_STRING
                     "/usr/local/src/TeX+MF/typefaces//", "plcr.pfa");
   
   test_path_search ("~karl", ".bashrc");
@@ -399,10 +410,10 @@ main ()
   xputenv ("NONEXIST", "nonexistent");
   test_path_search (".", "$NONEXISTENT");
   xputenv ("KPATHSEA", "kpathsea");
-  test_path_search ("/k:.", "$KPATHSEA.texi");  
-  test_path_search ("/k:.", "${KPATHSEA}.texi");  
-  test_path_search ("$KPATHSEA:.", "README");  
-  test_path_search (".:$KPATHSEA", "README");  
+  test_path_search ("/k" ENV_SEP_STRING ".", "$KPATHSEA.texi");  
+  test_path_search ("/k" ENV_SEP_STRING ".", "${KPATHSEA}.texi");  
+  test_path_search ("$KPATHSEA" ENV_SEP_STRING ".", "README");  
+  test_path_search ("." ENV_SEP_STRING "$KPATHSEA", "README");  
   
   return 0;
 }

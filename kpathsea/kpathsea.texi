@@ -2,8 +2,8 @@
 @setfilename kpathsea.info
 @settitle Kpathsea: A library for path searching
 
-@set version 2.6
-@set month-year January 1995
+@set version 3.3.1
+@set month-year May 1999
 
 @c Define new indices for commands, filenames, and options.
 @defcodeindex cm
@@ -20,16 +20,21 @@
 @syncodeindex tp cp
 @syncodeindex vr cp
 
-@ifinfo
-@format
-START-INFO-DIR-ENTRY
-* Kpathsea: (kpathsea).		File lookup along search paths.
-END-INFO-DIR-ENTRY
-@end format
+@dircategory TeX
+@direntry
+* Kpathsea: (kpathsea).                       File lookup along search paths.
+* kpsewhich: (kpathsea)Invoking kpsewhich.    TeX file searching.
+* mktexmf: (kpathsea)mktex scripts.           MF source generation.
+* mktexpk: (kpathsea)mktex scripts.           PK bitmap generation.
+* mktextex: (kpathsea)mktex scripts.          TeX source generation.
+* mktextfm: (kpathsea)mktex scripts.          TeX font metric generation.
+* mktexlsr: (kpathsea)Filename database.      Update ls-R.
+@end direntry
 
+@ifinfo
 This file documents the Kpathsea library for path searching.
 
-Copyright (C) 1993, 94, 95 Karl Berry.
+Copyright (C) 1993, 94, 95, 96, 97 K. Berry & O. Weber.
 
 Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -43,17 +48,14 @@ notice identical to this one except for the removal of this paragraph
 @end ignore
 
 Permission is granted to copy and distribute modified versions of this
-manual under the conditions for verbatim copying, provided also that the
-sections entitled ``Freedom'' and ``GNU General Public License'' are
-included exactly as in the original, and provided that the entire
-resulting derived work is distributed under the terms of a permission
-notice identical to this one.
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
 
 Permission is granted to copy and distribute translations of this manual
 into another language, under the above conditions for modified versions,
-except that the sections entitled ``Freedom'' and ``GNU General Public
-License'' may be included in a translation approved by the Free Software
-Foundation instead of in the original English.
+except that this permission notice may be stated in a translation
+approved by the Free Software Foundation.
 @end ifinfo
 
 
@@ -62,30 +64,27 @@ Foundation instead of in the original English.
 @title Kpathsea library
 @subtitle for version @value{version}
 @subtitle @value{month-year}
-@author Karl Berry
+@author K. Berry (@email{kb@@mail.tug.org})
+@author O. Weber (@email{infovore@@xs4all.nl})
 
 @page
 
 @vskip 0pt plus 1filll
-Copyright @copyright{} 1993, 94 Karl Berry.
+Copyright @copyright{} 1993, 94, 95, 96, 97 K. Berry & O. Weber.
 
 Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
 preserved on all copies.
 
 Permission is granted to copy and distribute modified versions of this
-manual under the conditions for verbatim copying, provided also that the
-sections entitled ``Regain your programming freedom'' and ``GNU General
-Public License'' are included exactly as in the original, and provided
-that the entire resulting derived work is distributed under the terms of
-a permission notice identical to this one.
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
 
 Permission is granted to copy and distribute translations of this manual
 into another language, under the above conditions for modified versions,
-except that the sections entitled ``Regain your programming freedom''
-and ``GNU General Public License'' may be included in a translation
-approved by the Free Software Foundation instead of in the original English.
-
+except that this permission notice may be stated in a translation
+approved by the Free Software Foundation.
 @end titlepage
 
 
@@ -94,23 +93,18 @@ approved by the Free Software Foundation instead of in the original English.
 @top Kpathsea library
 
 This manual documents how to install and use the Kpathsea library for
-filename lookup.  It corresponds to version @value{version}
-(released in @value{month-year}).
+filename lookup.  It corresponds to version @value{version},
+released in @value{month-year}.
 
 @menu
 * Introduction::                Overview.
 * Installation::                Compilation, installation, and bug reporting.
-* Debugging::			Analyzing runtime problems.
 
-* Path searching::		How filename lookups work.
-* TeX searching::		Special support for TeX lookups.
+* Path searching::              How filename lookups work.
+* TeX support::                 Special support for TeX-related file lookups.
 
-* TeX directory structure::	Ways to manage the many input files.
+* Programming::                 How to use Kpathsea features in your program.
 
-* Programming::			How to use the library in your program.
-
-* Copying::                     Conditions for copying, modifying and sharing.
-* Freedom::                     Regain your programming freedom.
 * Index::                       General index.
 @end menu
 @end ifinfo
@@ -120,79 +114,71 @@ filename lookup.  It corresponds to version @value{version}
 @chapter Introduction
 
 @cindex introduction
-@cindex fundamental purpose
+@cindex fundamental purpose of Kpathsea
 
 This manual corresponds to version @value{version} of the Kpathsea
 library, released in @value{month-year}.
 
-The library's fundamental purpose is to look up a file in a list of
+The library's fundamental purpose is to return a filename from a list of
 directories specified by the user, similar to what shells do when
 looking up program names to execute.
 
 @cindex programs using the library
-The following software, all of which I maintain, uses this library:
+The following software, all of which we maintain, uses this library:
 
 @itemize @bullet
-@item Dviljk
-@item Dvipsk (@pxref{Top, , Introduction, dvipsk, Dvips: A DVI driver})
+@item Dviljk (see the @samp{dvilj} man page)
+@item Dvipsk (@pxref{Top, , Introduction, dvips, Dvips: A DVI driver})
 @item GNU font utilities (@pxref{Top, , Introduction, fontu, GNU font
 utilities})
 @item Web2c (@pxref{Top, , Introduction, web2c, Web2c: A @TeX{}
 implementation})
-@item Xdvik
+@item Xdvik (see the @samp{xdvi} man page)
 @end itemize
 
+@noindent Other software that we do not maintain also uses it.
+
 @cindex interface, not frozen
-The library is still under development (and probably always will be,
-despite my hopes). I do not promise to keep the interface unchanged.  If
-you have comments or suggestions, please send them to me
-(@pxref{Reporting bugs}).
+@cindex comments, making
+@cindex suggestions, making
+We are still actively maintaining the library (and probably always will
+be, despite our hopes).  If you have comments or suggestions, please send
+them to us (@pxref{Reporting bugs}).
 
 @cindex conditions for use
 @cindex license for using the library
 @cindex GNU General Public License
-Currently, I distribute the library under the GNU General Public License
-(@pxref{Copying}).  In short, this means if you write a program using
-the library, you must (offer to) distribute the source, and allow anyone
-to modify the source and distribute their modifications.
-
-@cindex GNU Library General Public License
-If you have a problem with this, contact me. I would consider putting
-the library under the GNU Library General Public License, which would
-permit you to distribute the source only to the library, not to your
-program using it.  But I will only do this if someone actually says they
-will not use the library under the GPL conditions, and would use it
-under the LGPL.
+We distribute the library under the GNU Library General Public License
+(LGPL).  In short, this means if you write a program using the library,
+you must (offer to) distribute the source to the library, along with any
+changes you have made, and allow anyone to modify the library source and
+distribute their modifications.  It does not mean you have to distribute
+the source to your program, although we hope you will.  See the files
+@file{COPYING} and @file{COPYING.LIB} for the text of the GNU licenses.
 
 @cindex @TeX{} Users Group
 If you know enough about @TeX{} to be reading this manual, then you (or
-perhaps your institution) should consider joining the @TeX{} Users Group
-(if you're already a member, great!).  TUG produces a periodical called
-@cite{TUGboat}, sponsors an annual meeting (the proceedings of which are
-published in @cite{TUGboat}), and arranges courses on @TeX{} for all levels
-of users.  Given sufficient funding (which your joining will help) TUG
-could sponsor more projects that will benefit the @TeX{} community, such as
-a successor to @TeX{}
-@iftex
-$\pi$
-@end iftex
-@ifinfo
-pi
-@end ifinfo
-.  Anyway, here is the address:
+your institution) should consider joining the @TeX{} Users Group (if
+you're already a member, great!).  TUG produces the periodical
+@cite{TUGboat}, sponsors an annual meeting and publishes the
+proceedings, and arranges courses on @TeX{} for all levels of users
+throughout the world.  Anyway, here is the address:
 
 @flindex tug@@tug.org
 @display
 @TeX{} Users Group
-P.O. Box 869
-Santa Barbara, CA 93102 USA
-phone: (805) 899-4673
-email: @samp{tug@@tug.org}
+P.O. Box 2311
+Portland OR 97208-2311
+USA
+phone: +1 503 223-9994
+fax:   +1 503 223-3960
+email: @email{tug@@tug.org}
 @end display
 
 @menu
 * History::
 @end menu
+
 
 @node History
 @section History
@@ -200,678 +186,96 @@ email: @samp{tug@@tug.org}
 @cindex history of Kpathsea
 
 @cindex Knuth, Donald E.
-(This section is for those people who are curious about how this came about.)
-(If you like to read historical accounts of software, I urge you to seek
-out the GNU Autoconf manual and, even more fun, the ``Errors of
-@TeX{}'' paper that Don Knuth published in @cite{Software---Practice and
-Experience}.)
+(This section is for those people who are curious about how the library
+came about.)  (If you like to read historical accounts of software, we
+urge you to seek out the GNU Autoconf manual and the ``Errors of
+@TeX{}'' paper by Don Knuth, published in @cite{Software---Practice and
+Experience} 19(7), July 1989.)
 
 @cindex Morgan, Tim
 @cindex Rokicki, Tom
-My first ChangeLog entry for Web2c seems to be February 1990, but I may
-have done some stuff before then.  In any case, Tim Morgan and I were
-sort of jointly maintaining it for a time.  (I should say that Tim had
-made Web2c into a real distribution long before I had ever used it or
-even heard of it, and Tom Rokicki did the original implementation.)
+@cindex Berry, Karl
+@cindex VAX 11/750
+@cindex Sun 2
+@pindex pxp @r{Pascal preprocessor}
+@pindex pc @r{Pascal compiler}
+[Karl writes.]  My first ChangeLog entry for Web2c seems to be February
+1990, but I may have done some work before then.  In any case, Tim
+Morgan and I were jointly maintaining it for a time.  (I should mention
+here that Tim had made Web2c into a real distribution long before I had
+ever used it or even heard of it, and Tom Rokicki did the original
+implementation.  I was using @code{pxp} and @code{pc} on VAX 11/750's
+and the hot new Sun 2 machines.)
 
 It must have been later in 1990 and 1991 that I started working on
-@cite{TeX for the Impatient} and Dvips, Xdvi, Web2c, and the GNU
-fontutils (which I was also writing at the time) using different
-environment variables, and, even more importantly, having different bugs
-in their path searching became extremely painful.  I also desperately
-wanted to implement subdirectory searching, since I couldn't stand
-putting everything in one big directory, and also couldn't stand having
-to explicitly specify @file{pandora}, @file{cm} in a path.
+@cite{@TeX{} for the Impatient}. Dvips, Xdvi, Web2c, and the GNU
+fontutils (which I was also writing at the time) all used different
+environment variables, and, more importantly, had different bugs in
+their path searching. This became extremely painful, as I was stressing
+everything to the limit working on the book.  I also desperately wanted
+to implement subdirectory searching, since I couldn't stand putting
+everything in one big directory, and also couldn't stand having to
+explicitly specify @file{cm}, @file{pandora}, @dots{} in a path.
 
 @cindex Vojta, Paul
-In the first incarnation, I just hacked separately on each program---
-that was the original subdirectory searching code in both Xdvi and
-Dvips, though I think Paul Vojta has completely rewritten Xdvi's support
-by now.  That is, I tried to go with the flow in each program, rather
-than changing the program's calling sequences to conform to common
-routines.
+In the first incarnation, I just hacked separately on each
+program---that was the original subdirectory searching code in both Xdvi
+and Dvips, though I think Paul Vojta has completely rewritten Xdvi's
+support by now.  That is, I tried to go with the flow in each program,
+rather than changing the program's calling sequences to conform to
+common routines.
 
 Then, as bugs inevitably appeared, I found I was fixing the same thing
-in each of three (Web2c and fontutils were always sharing code, since I
+three times (Web2c and fontutils were always sharing code, since I
 maintained those---there was no Dvipsk or Xdvik or Dviljk at this
 point).  After a while, I finally started sharing source files.  They
-weren't a library, though.  I just kept things up to date with shell
+weren't yet a library, though.  I just kept things up to date with shell
 scripts.  (I was developing on a 386 running ISC 2.2 at the time, and so
 didn't have symbolic links.  An awful experience.)
 
-Things kept on like this for quite a while.  The @file{ChangeLog}s for
-Xdvik and Dvipsk record initial releases of those distributions in May
-and June 1992.  I think it was because I was tired of the different
-configuration strategies of each program, not so much because of the
-path searching.  (Autoconf was being developed by David MacKenzie and
-others, and I was adapting it to @TeX{} and friends.)
+@cindex MacKenzie, David
+The ChangeLogs for Xdvik and Dvipsk record initial releases of those
+distributions in May and June 1992.  I think it was because I was tired
+of the different configuration strategies of each program, not so much
+because of the path searching.  (Autoconf was being developed by David
+MacKenzie and others, and I was adapting it to @TeX{} and friends.)
 
 @cindex zuhn, david
-I starting to make it a separate library that other programs could link
-with on my birthday in April 1993, according to the ChangeLog.  I don't
+I started to make a separate library that other programs could link with
+on my birthday in April 1993, according to the ChangeLog.  I don't
 remember exactly why I finally took the time to make it a separate
-library; I think it was a conversation with david zuhn that led to doing
-it.  Just seemed like it was time.
+library; a conversation with david zuhn that initiated it.  Just seemed
+like it was time.
 
 @cindex Walsh, Norman
 @cindex Neumann, Gustaf
 Dviljk got started in March 1994 after I bought a Laserjet 4.  (Kpathsea
 work got suspended while Norm Walsh and I, with Gustaf Neumann's help,
 implemented a way for @TeX{} to get at all those neat builtin LJ4 fonts
-... such a treat to have something to typeset in besides Palatino!)
+@dots{} such a treat to have something to typeset in besides Palatino!)
 
-At this point (October 1994), I've implemented just about all the
-path-searching features in Kpathsea that I ever intended to (and some I
-didn't intend @dots{}). After the next stable release of Web2c, I figure
-I'll be able to stop development, and turn most of my attention back to
-making fonts for GNU.  (Always assuming Microsoft hasn't completely
-obliterated Unix by then, or that software patents haven't stopped
-software development by anybody smaller than a company with a
-million-dollar-a-year legal budget.  Which is actually what I think is
-likely to happen, but that's another story@dots{})
+By spring of 1995, I had implemented just about all the path-searching
+features in Kpathsea that I plan to, driven beyond my initial goals by
+Thomas Esser and others.  I then started to integrate Web2c with
+Kpathsea. After the release of a stable Web2c, I hope to be able to stop
+development, and turn most of my attention back to making fonts for GNU.
+(Always assuming Micros**t hasn't completely obliterated Unix by then,
+or that software patents haven't stopped software development by anybody
+smaller than a company with a million-dollar-a-year legal budget.  Which
+is actually what I think is likely to happen, but that's another
+story@dots{})
 
+@cindex Weber, Olaf
+[Olaf writes.]  At the end of 1997, UNIX is still alive and kicking,
+individuals still develop software, and Web2c development still
+continues.  Karl had been looking for some time for someone to take up
+part of the burden, and I volunteered.
 
-@node Installation
-@chapter Installation
-
-@cindex installation
-@cindex configuration
-@cindex compilation
-
-Here are the basic steps for configuration and installation:
-
-@enumerate
 
 @include install.texi
-
-@item
-@code{make install}. This installs the library, header files, and
-documentation. Or @code{make install-data} to just install the
-architecture-independent files. Or @code{make install-exec} to just
-install the (binary) archive library file.
-
-Since I only distribute Kpathsea as part of another package, you will
-probably be doing the above in a top-level directory that contains a
-@samp{Makefile}, @samp{kpathsea}, and the other package.  But you can do
-the installation in @samp{kpathsea} itself, if you only want to install
-the library, not the other package.
-
-@item
-The first time you install any manual in Info, you have to add a line
-(you choose where) to the @file{dir} file in your @samp{$(infodir)}
-directory.  A sample line to add is given near the top of the Texinfo
-source files (@file{kpathsea/kpathsea.texi} and
-@file{dvipsk/dvips.texi}).
-
-@item
-@code{make distclean}.  This removes all files created by the build.
-
-@end enumerate
-
-@xref{Filename database}, for a description of an externally-generated
-database that can help speed searches.
-
-@xref{Debugging}, for runtime debugging support that may help track down
-problems.
-
-Do not attempt to use any version of Kpathsea with any program except
-the version that the program came with, unless you are a glutton for
-punishment.
-
-@menu
-* Default paths::	Changing default installation directories and paths.
-* Common problems::	When things go wrong.
-* Shared library::	Making Kpathsea a shared library.
-* Reporting bugs::	Where and how to report bugs.
-@end menu
-
-
-@node Default paths
-@section Default paths 
-
-@cindex default paths, changing
-@cindex paths, changing default
-@cindex installation directories, changing default
-@cindex directories, changing default installation
-
-@cindex default paths, how they're made
-To summarize the chain of events that go into defining the default paths:
-
-@enumerate
-
-@item
-@samp{configure} creates a @file{Makefile} from each @file{Makefile.in}.
-
-@item
-@flindex texmf.sed
-When Make runs in the @file{kpathsea} directory, it creates
-a file @file{texmf.sed} that substitutes the Make value of @code{$(var)}
-for a string @code{@@var@@}. The variables in question are the one that
-define the installation directories.
-
-@item
-@flindex texmf.cnf.in
-@flindex texmf.cnf@r{, generated}
-@file{texmf.sed} (and a little extra magic---see
-@file{kpathsea/Makefile}) is applied to @file{texmf.cnf.in} to generate
-@file{texmf.cnf}. This is the file that will eventually be installed and
-used by the programs to look up programs.
-
-@item
-@flindex paths.h
-The definitions in @file{texmf.cnf} are changed into the form of C
-@samp{#define}'s, producing @file{paths.h}. These values will be the
-compile-time defaults; they are not used unless no @file{texmf.cnf} file
-can be found at runtime.
-
-(That's a partial lie: the compile-time defaults are what extra
-@samp{:}'s in @file{texmf.cnf} expand into; but the paths as distributed
-have no extra @samp{:}'s, and there's no particular reason for them to.)
-
-@end enumerate
-
-The purpose of this elaborate sequence is to avoid having the same
-information in more than one place. If you change the installation
-directories or top-level prefix before running @samp{configure}, those
-changes will propagate through the whole sequence. If you change the
-default paths in @file{texmf.cnf.in}, those changes are propagated to
-the compile-time defaults.
-
-Alternatively, you can ignore the whole mess and edit @file{texmf.cnf}
-after it is installed. Maybe even copying it into place beforehand so
-you can complete the installation, if @TeX{} or Metafont is having
-trouble finding their input files.
-
-@vindex prefix@r{, changing}
-@vindex exec_prefix@r{, changing}
-Unfortunately, editing @file{Makefile.in} @emph{does not work} in one
-common case---changing the @code{prefix} or @code{exec_prefix}
-variables. For these, you must use the @samp{-prefix} or
-@samp{-exec-prefix} options to @code{configure}.  @xref{Running
-configure Scripts, , Running @code{configure} scripts, autoconf,
-Autoconf}.  (That's another partial lie: editing does work, as long as a
-program named @code{tex} is not in your @code{PATH}.)
-
-@flindex HIER
-@flindex kpathsea/HIER
-@xref{TeX directory structure, @TeX{} directory structure}, for a
-description of some ways to arrange the @TeX{} library files, and some
-features of the distributed paths that may not be obvious.  The file
-@file{kpathsea/HIER} is a copy of that section.
-
-The Make definitions are all repeated in several @file{Makefile}'s; but
-changing the top-level @file{Makefile} should suffice, as it passes down
-all the variable definitions, thus overriding the submakes. (The
-definitions are repeated so you can potentially run Make in the
-subdirectories.)
-
-
-@node Common problems
-@section Common problems
-
-Some common problems with compilation, linking, or execution are
-described below.
-
-@menu
-* Unable to find files:: If your program can't find fonts or anything else.
-* Slow path searching::  If it takes forever to find anything.
-
-* XtInherit::		For XtInherit link problems on OSF/1 1.x.
-* wchar_t::		For wchar_t difficulties.
-* ShellWidgetClass::	For dynamic linking with Sun's openwin libraries.
-* Pointer combination warnings:: For old compilers that don't grok char *.
-@end menu
-
-
-@node Unable to find files
-@subsection Unable to find files
-
-@cindex unable to find files
-@cindex files, unable to find
-
-If a program complains it cannot find fonts (or other input files),
-any of several things might be wrong:
-
-@itemize @bullet
-
-@item
-You don't have the fonts (or whatever) installed. Nothing will
-automatically generate TFM files or @TeX{} and Metafont sources for you
-(by default). @xref{Obtaining Web2c, , , web2c, Web2c}.
-
-You can, however, configure @TeX{} and Metafont to run a script to
-generate these input files, if you have (or write) such
-scripts. @xref{MakeTeX... invocation, , @samp{MakeTeX}@dots{}
-invocation, web2c, Web2c}.
-
-@item
-You have (perhaps unknowingly) told Kpathsea to use search paths that
-don't reflect where the files actually are. One common cause is having
-environment variables set, thus overriding what you carefully set in
-@file{texmf.cnf}. @xref{TeX environment variables, @TeX{} environment
-variables}.
-
-@item
-@cindex symbolic links not found
-@cindex leaf directories wrongly guessed
-Your files reside in a directory that is only pointed to via a symbolic
-link, in a leaf directory.
-
-Unfortunately, Kpathsea's subdirectory searching has a (congenital)
-deficiency: If a directory @var{d} being searched for subdirectories
-contains plain files and symbolic links to other directories, but no
-true subdirectories, @var{d} will be considered a leaf directory, i.e.,
-the symbolic links will not be followed.  @xref{Subdirectory expansion},
-for an explanation of why this happens.
-
-You can work around this problem by creating an empty dummy subdirectory
-in @var{d}. Then @var{d} will no longer be a leaf, and the symlinks will
-be followed.
-
-The directory immediately followed by the @samp{//} in the path
-specification, however, is always searched for subdirectories, even if
-it is a leaf.  This is since presumably you would not have asked for the
-directory to be searched for subdirectories if you didn't want it to be.
-
-@item
-There is a bug in the library. @xref{Reporting bugs}.
-
-@end itemize
-
-In any case, you may find the debugging options helpful in determining
-precisely where the fonts (or whatever) are being looked for. See the
-program's documentation for its debugging options, and also
-@pxref{Debugging}.
-
-
-@node Slow path searching
-@subsection Slow path searching
-
-@cindex excessive startup time
-@cindex slow startup time
-@cindex startup time, excessive
-
-If your program takes an excessively long time to find fonts or other
-input files, but does eventually succeed, here are some possible culprits:
-
-@itemize @bullet
-
-@item
-Most likely, you just have a lot of directories to search, and that
-takes a noticeable time. The solution is to create and maintain a
-separate @file{ls-R} file that lists all the files in your main @TeX{}
-hierarchy. @xref{Filename database}.  (Kpathsea always uses @file{ls-R}
-if it's present; there's no need to recompile or reinstall any of the
-programs.) 
-
-@item
-Your recursively-searched directories (e.g.,
-@file{/usr/local/lib/tex/fonts//}), contain a mixture of files and
-directories. This prevents Kpathsea from using a useful optimization
-(@pxref{Subdirectory expansion}).
-
-It is best to have only directories (and perhaps a @file{README}) in the
-upper levels of the directory structure, and it's very important to have
-@emph{only} files, and no subdirectories, in the directories where the
-dozens of TFM, PK, or whatever files reside.
-
-@item
-@cindex recursion from @file{/}
-@cindex @samp{~} searching caveat
-@cindex @samp{$HOME} searching caveat
-@cindex @samp{root} searching peculiarities
-Finally, one simple-to-fix (but unlikely) cause: If you recursively
-search @samp{$HOME} or @samp{~}, and you are running as @samp{root}, you
-will search every directory on the system.  This typically takes quite
-some time!
-
-@end itemize
-
-In any case, you may find the debugging options helpful in determining
-precisely when the disk or network is being pounded. @xref{Debugging},
-and also see the program's documentation.
-
-
-@node XtInherit
-@subsection @code{XtInherit}
-
-@findex XtInherit @r{bug on OSF/1}
-@cindex OSF/1 loader bug and @code{XtInherit}
-@cindex Alpha OSF/1 loader bug and @code{XtInherit}
-
-On DEC OSF/1 1.x systems, the loader has a bug that manifests itself in
-the following error (all on one line, but for the sake of the paper
-width it's broken here):
-
-@example
-xdvik/xdvi: /sbin/loader: Fatal Error: search_for_undefineds: 
-     symbol _XtInherit should not have any relocation entry
-@end example
-
-@noindent According to Michael Rickabaugh @samp{<mjr@@quarry.enet.dec.com>}:
-
-@display
-This is a bug fixed in DEC OSF/1 2.0.
-
-If you know how, installing @file{/sbin/loader} from a 2.0 system onto a
-1.3 system will work.  Make sure that @file{/usr} is @emph{not} mounted
-when you do this.  (If you forget about umounting @code{/usr}, it is
-possible most of your filesystems will become corrupted.)
-
-Otherwise, I suggest getting a hold of a 2.0 CD and running
-@file{/usr/sbin/installupdate}.
-@end display
-
-Alternatively, you may be able to use the freely available X11 libraries
-that come with the MIT distribution (on @file{ftp.x.org}, for example).
-
-Linking statically, perhaps only with some of the X libraries, may also
-work.  (if you find the definitive workaround, please let me know.)
-
-
-@node wchar_t
-@subsection @code{wchar_t}
-
-@vindex FOIL_X_WCHAR_T
-@tindex wchar_t
-
-The upshot of all the following is that if you get error messages
-regarding @code{wchar_t}, try defining @code{NO_FOIL_X_WCHAR_T} (for
-Web2c) or @code{FOIL_X_WCHAR_T} (for everything else).
-
-@code{wchar_t} has caused infinite trouble. None of my code ever uses
-@code{wchar_t}; all I want to do is include X header files and various
-system header files, possibly compiling with GCC. This seems an
-impossible task!
-
-@flindex Xlib.h
-The X11 header @file{<Xlib.h>} and GCC's @file{<stddef.h>} have
-conflicting definitions for wchar_t.
-
-The particulars: @file{<X11/Xlib.h>} from MIT X11R5 defines
-@code{wchar_t} if @code{X_WCHAR} is defined, which is defined if
-@code{X_NOT_STDC_ENV} is defined, and we define @emph{that} if
-@code{STDC_HEADERS} is not defined (@samp{configure} decides if
-STDC_HEADERS gets defined).  But when compiling with gcc on SunOS 4.1.x,
-@code{STDC_HEADERS} is not defined (@file{string.h} doesn't declare the
-@samp{mem}* functions), so we do get X's @code{wchar_t}---and we also
-get gcc's @code{wchar_t} from its @file{<stddef.h>}.  Conflict.
-
-On the other hand, SunOS 4.1.1 with some other X configurations actually
-needs GCC to define @code{wchar_t}, and fails otherwise.
-
-My current theory is to define @code{wchar_t} to a nonsense symbol
-before the X include files are read; that way its definition (if any)
-will be ignored by other system include files.  Going along with that,
-define @code{X_WCHAR} to tell X not to use @file{<stddef.h>}, that we've
-already included, but instead to make its own definition.
-
-But this is not the end of the story. The X11 include files distributed
-with DG/UX 5.4.2 for the Aviion have been modified to include
-@file{<_int_wchar_t.h>} if @code{X_WCHAR}, so our @code{#define} will
-not have any typedef to change---but the uses of @code{wchar_t} in the X
-include files will be changed to reference this undefined symbol. So
-there's nothing to foil in this case. I don't know how to detect this
-automatically, so it's up to you to define @code{NO_FOIL_X_WCHAR_T}
-yourself.
-
-
-@node ShellWidgetClass
-@subsection @code{ShellWidgetClass}
-
-@cindex dynamic linking problems with openwin libraries
-@cindex openwin libraries, dynamic linking problems
-@findex get_wmShellWidgetClass
-@findex get_applicationShellWidgetClass
-
-@flindex comp.sys.sun.admin @r{FAQ}
-@cindex FAQ, @samp{comp.sys.sun.admin}
-This section is adapted from question 47 from the
-@samp{comp.sys.sun.admin} FAQ.
-
-If you are linking with Sun's OpenWindows libraries in SunOS 4.1.x, you
-may get undefined symbols @code{_get_wmShellWidgetClass} and
-@code{_get_applicationShellWidgetClass}. This problem does not arise
-with the standard MIT libraries under SunOS.
-
-@findex Xmu @r{library problems}
-The cause is bugs in the @code{Xmu} shared library as shipped from Sun.
-There are several fixes:
-
-@itemize @bullet
-
-@item Get the Openwindows patches that apply to this problem.
-
-@item Statically link the @code{Xmu} library into the executable.
-
-@item Avoid using @code{Xmu} at all. For this last, if you are compiling
-Metafont, @pxref{Online Metafont graphics, , , Web2c, web2c}. If you are
-compiling Xdvi, see the @code{-DNOTOOL} option in @file{xdvik/INSTALL}.
-
-@item Ignore the errors. The binary runs fine regardless.
-
-@end itemize
-
-@cindex Sun openwin patches
-Here is the information for getting the two patches:
-
-@display
-Patch ID: 100512-02
-Bug ID's: 1086793, 1086912, 1074766
-Description: 4.1.x OpenWindows 3.0 @code{libXt} jumbo patch
-
-Patch ID: 100573-03
-Bug ID: 1087332
-Description: 4.1.x OpenWindows 3.0 undefined symbols when using shared
-@code{libXmu}.
-@end display
-
-@cindex static linking
-The way to statically link with @code{libXmu} depends on whether you are
-using a Sun compiler (e.g., @code{cc}) or @code{gcc}. If the format,
-alter the @code{x_libs} make variable to include
-
-@example
--Bstatic -lXmu -Bdynamic
-@end example
-
-@opindex -static
-If you are using @code{gcc}, include @samp{-static} in @samp{LDFLAGS};
-this will link all libraries statically. If you want to link only
-@code{Xmu} statically and everything else dynamically, you have to do it
-by hand: run @code{gcc -v}, grab the @code{ld} line, and add the
-@samp{-B}'s given above around @code{-lXmu}.
-
-The reason is that gcc moves all linker options to the front of the
-@code{ld} command line.  So you can't specify different options for
-different libraries.  When I reported this to the GCC maintainers, the
-reply was that they would happily merge in the changes, but they didn't
-want to take the time to do it themselves.
-
-
-@node Pointer combination warnings
-@subsection Pointer combination warnings
-
-@cindex warnings, pointer combinations
-@cindex pointer combination warnings
-@cindex illegal pointer combination warnings
-@pindex cc @r{warnings}
-When compiling with old C compilers, you may get some warnings about
-``illegal pointer combinations''.  These are spurious; just ignore them.
-I decline to clutter up the source with casts to get rid of them.
-
-In general, if you have trouble with a system C compiler, I advise
-trying the GNU C compiler. (And vice versa, unfortunately; but in that
-case I also recommend reporting a bug to the GCC bug list.)
-
-
-@node Shared library
-@section Shared library
-
-@cindex shared library, making
-You can compile Kpathsea as a shared library.  The advantage in doing
-this is that the different executables can then share the code,
-decreasing memory usage.  (The other advantage in general of shared
-libraries is that it's possible to update the library and programs
-independently.  But since the Kpathsea interface is not and can not be
-frozen, that doesn't apply here.)
-
-Under Solaris, use @samp{-K pic -xstrconst} if you compile with a Sun
-compiler, @samp{-fpic} if you use GCC.  Also add @samp{-L@var{$(libdir)}
--R@var{$(libdir)}} to @samp{LDFLAGS} when you link the binaries, so that
-the library can be found, and users do not have set @samp{LD_LIBRARY_PATH}.
-
-(If you know how to make Kpathsea shared on other systems, please send a
-message to the bug address in the next section.)
-
-
-@node Reporting bugs
-@section Reporting bugs
-
-@cindex reporting bugs
-@cindex bugs, reporting
-
-@flindex tex-k@@cs.umb.edu @r{(bug address)}
-@cindex bug address
-If you encounter problems, please report them to @samp{tex-k@@cs.umb.edu}.
-Include the version number of the library, the system you are using, and
-enough information to reproduce the bug in your report.  To get on this
-mailing list yourself, email @samp{tex-k-request@@cs.umb.edu} with a
-message whose body contains a line
-@example
-subscribe @var{you}@@@var{your.preferred.address}
-@end example
-
-To avoid wasted effort and time (both mine and yours), I strongly advise
-applying the principles given in the GNU C manual (@pxref{Bugs, ,
-Reporting Bugs, gcc, The GNU CC manual}) to your bug reports.
-
-Please also report bugs in this documentation---not only factual errors,
-but unclear explanations, typos, wrong fonts, @dots{}
-
-
-@node Debugging
-@chapter Debugging
-
-@cindex debugging
-@cindex runtime debugging
-@cindex options for debugging
-
-@vindex kpathsea_debug
-@flindex debug.h
-Kpathsea provides a number of runtime debugging options, detailed below
-by their names (and corresponding numeric values).  You can set these
-with some runtime argument (e.g., @samp{-d}) to the program; in that
-case, you should use the numeric values described in the program's
-documentation (which, except for Dviljk, are different from those
-below).
-
-@vindex KPATHSEA_DEBUG
-You can also set the environment variable @code{KPATHSEA_DEBUG}.  In
-this case, you should use the numbers below.  Also use the numbers below
-if you run the program under a debugger and set the the variable
-@samp{kpathsea_debug} yourself.
-
-In any case, you can @emph{not} use the @emph{names} below; you must
-always use somebody's numbers. (Sorry.)  And to set more than option,
-just sum the corresponding numbers.
-
-@vtable @code
-
-@item KPSE_DEBUG_STAT
-(1). Reports @samp{stat}(2) calls. This is useful for verifying that
-your directory structure is not forcing Kpathsea to do many additional
-file tests (@pxref{Slow path searching} and @pxref{Subdirectory
-expansion}). If you are using an up-to-date @file{ls-R} database
-(@pxref{Filename database}), this should produce no output unless a
-nonexistent file is searched for.
-
-@item KPSE_DEBUG_HASH
-(2). Reports lookups in all hash tables, including @file{ls-R}
-(@pxref{Filename database}), font aliases (@pxref{Fontmap}), and config
-file values (@pxref{Config files}).  Useful when expected values are not
-being found, e.g.., file searches are looking at the disk instead of
-using @file{ls-R}.
-
-@item KPSE_DEBUG_FOPEN
-(4). Reports file openings and closings. Especially useful when your
-system's file table is full, for seeing if some files have been opened
-but never closed. In case you want to set breakpoints: this works by
-redefining @samp{fopen} (@samp{fclose}) to be @samp{kpse_fopen_trace}
-(@samp{kpse_fclose_trace}).
-
-@item KPSE_DEBUG_PATHS
-(8). Reports general path information for each file type Kpathsea is
-asked to search. This is useful when you are trying to track down how a
-particular path got defined---from @file{texmf.cnf}, @file{config.ps},
-the compile-time default, an environment variable, etc.  This is the
-contents of a structure defined in @file{tex-file.h}.
-
-@item KPSE_DEBUG_EXPAND
-(16). Reports the directory list corresponding to each path element
-Kpathsea searches in. This is only relevant when Kpathsea is searching
-the disk, since @file{ls-R} searches don't look through directory lists
-in this way (they go straight to the file using the hash table).
-
-@item KPSE_DEBUG_SEARCH
-(32). Reports on each file search Kpathsea attempts: the name of the
-file searched for, the path searched in, whether or not the file must
-exist (when drivers search for @file{cmr10.vf}, it need not exist), and
-whether or not we are collecting all occurrences of the file in the
-path (as with, e.g., @file{texmf.cnf} and @file{texfonts.map}), or just
-the first (as with most lookups).  This can help you correlate what
-Kpathsea is doing with what is in your input file.
-
-@end vtable
-
-@cindex @samp{kdebug:}
-Debugging output from Kpathsea is always written to standard error, and
-begins with @samp{kdebug:}. (Except for hash table buckets, which just
-start with the number.)
-
-@menu
-* Logging::			Recording successful searches.
-@end menu
-
-
-@node Logging
-@section Logging
-
-@cindex log file
-
-@cindex recording successful searches
-Kpathsea can record the time and filename found for each successful
-search. This may be useful in finding good candidates for deletion when
-your disk is full.
-
-@vindex TEXMFLOG
-To do this, define the environment or config file variable
-@code{TEXMFLOG}. The value is the name of the file to append the
-information to. The file is created if it doesn't exist.
-
-@cindex epoch
-@findex time
-Each successful search turns into one line in the log file, with two
-words separated by a space. The first word is the time of the search, as
-the integer number of seconds since ``the epoch'', i.e., UTC midnight 1
-January 1970 (more precisely, the result of the @code{time} system
-call). The second word is the filename.
-
-For example, after @code{setenv TEXMFLOG /tmp/log}, running Dvips on
-@file{story.dvi} appends the following lines:
-
-@example
-774455887 /usr/local/lib/texmf/dvips/config.ps
-774455887 /usr/local/lib/texmf/dvips/psfonts.map
-774455888 /usr/local/lib/texmf/dvips/texc.pro
-774455888 /usr/local/lib/texmf/fonts/public/cm/pk/ljfour/cmbx10.600pk
-774455889 /usr/local/lib/texmf/fonts/public/cm/pk/ljfour/cmsl10.600pk
-774455889 /usr/local/lib/texmf/fonts/public/cm/pk/ljfour/cmr10.600pk
-774455889 /usr/local/lib/texmf/dvips/texc.pro
-@end example
-
-@noindent Only filenames that are absolute are recorded, to preserve
-some semblance of privacy.
+@include hier.texi
+@include unixtex.texi
+@include bugs.texi
 
 
 @node Path searching
@@ -880,85 +284,111 @@ some semblance of privacy.
 @cindex path searching
 
 This chapter describes the generic path searching mechanism Kpathsea
-provides. For information about searching for particular file types
+provides.  For information about searching for particular file types
 (e.g., @TeX{} fonts), see the next chapter.
 
 @menu
-* Searching overview::		Basic scheme for searching.
-* Path sources::		Constructing the search path.
-
-* Default expansion::           a: or :a or a::b expands to a default.
-* Variable expansion::          $foo and $@{foo@} expand to environment values.
-* Tilde expansion::             ~ and ~user expand to home directories.
-* Subdirectory expansion::	a// and a//b recursively expand to subdirs.
-
-* Filename database::		Using an externally-built list to search.
+* Searching overview::          Basic scheme for searching.
+* Path sources::                Where search paths can be defined.
+* Path expansion::              Special constructs in search paths.
+* Filename database::           Using an externally-built list to search.
+* Invoking kpsewhich::          Standalone path lookup.
 @end menu
 
 
 @node Searching overview
 @section Searching overview
 
-@cindex path searching, overview
 @cindex searching overview
+@cindex path searching, overview
 @cindex overview of path searching
 
 @cindex search path, defined
-A @dfn{search path} is a colon-separated list of path elements, which
-are directory names with some extra frills. A search path can come from
-(a combination of) many sources; see below.  To look up a file
+A @dfn{search path} is a colon-separated list of @dfn{path elements},
+which are directory names with a few extra frills.  A search path can
+come from (a combination of) many sources; see below.  To look up a file
 @samp{foo} along a path @samp{.:/dir}, Kpathsea checks each element of
-the path in turn: first @file{./foo}, then @file{/dir/foo}, (typically)
-returning the first one that exists.
+the path in turn: first @file{./foo}, then @file{/dir/foo}, returning
+the first match (or possibly all matches).
 
 @cindex magic characters
 @kindex : @r{may not be :}
 @kindex / @r{may not be /}
 The ``colon'' and ``slash'' mentioned here aren't necessarily @samp{:}
-and @samp{/} on non-Unix systems. Kpathsea tries to adapt to other
+and @samp{/} on non-Unix systems.  Kpathsea tries to adapt to other
 operating systems' conventions.
 
 @cindex database search
 @cindex searching the database
-To check a path element @var{e}, Kpathsea first sees if a prebuilt
-database (see below) applies to @var{e}, i.e., if the database is in a
-directory that is a prefix of @var{e}. If so, the path specification is
-matched against the contents of the database.
+To check a particular path element @var{e}, Kpathsea first sees if a
+prebuilt database (@pxref{Filename database}) applies to @var{e}, i.e.,
+if the database is in a directory that is a prefix of @var{e}.  If so,
+the path specification is matched against the contents of the database.
 
 @cindex floating directories
 @cindex filesystem search
 @cindex disk search
 @cindex searching the disk
 If the database does not exist, or does not apply to this path element,
-contains no matches, the filesystem is searched. Kpathsea constructs the
-list of directories that correspond to this path element, and then
-checks in them for the file being searched for. (To help speed future
-lookups of files in the same directory, the directory in which a file is
-found is floated to the top of the directory list.)
+or contains no matches, the filesystem is searched (if this was not
+forbidden by the specification with @samp{!!} and if the file being
+searched for must exist).  Kpathsea constructs the list of directories
+that correspond to this path element, and then checks in each for the
+file being searched for.  (To help speed future lookups of files in the
+same directory, the directory in which a file is found is floated to the
+top of the directory list.)
 
-Each path element is checked in turn: first the database, then the
-disk. Once a match is found, the searching stops and the result is
-returned. This avoids possibly-expensive processing of path
-specifications that are never needed on a particular run.
+@cindex must exist
+@cindex VF files, not found
+@flindex cmr10.vf
+@findex \openin
+The ``file must exist'' condition comes into play with VF files and
+input files read by the @TeX{} @samp{\openin} command.  These files may
+not exist (consider @file{cmr10.vf}), and so it would be wrong to search
+the disk for them.  Therefore, if you fail to update @file{ls-R} when
+you install a new VF file, it will never be found.
 
-@cindex expansion of path elements
+Each path element is checked in turn: first the database, then the disk.
+If a match is found, the search stops and the result is returned.  This
+avoids possibly-expensive processing of path specifications that are
+never needed on a particular run.  (Unless the search explicitly
+requested all matches.)
+
+@cindex expansion, path element
 Although the simplest and most common path element is a directory name,
-Kpathsea supports additional features in search paths: layers of default
+Kpathsea supports additional features in search paths: layered default
 values, environment variable names, config file values, users' home
-directories, and recursive subdirectory searching. Thus, we say that
-Kpathsea @dfn{expands} a path element, meaning getting rid of all the
-magic specifications and getting down to the basic directory name or
-names. This process is described in the sections below. It happens in
-the same order as the sections.
+directories, and recursive subdirectory searching.  Thus, we say that
+Kpathsea @dfn{expands} a path element, meaning transforming all the
+magic specifications into the basic directory name or names.  This
+process is described in the sections below.  It happens in the same
+order as the sections.
 
 @cindex absolute filenames
 @cindex relative filenames
 @cindex explicitly relative filenames
 @cindex filenames, absolute or explicitly relative
-Exception to the above: If the filename being searched for is absolute
-or explicitly relative, i.e., starts with @samp{/} or @samp{./} or
-@samp{../}, Kpathsea simply checks if that file exists; it is not looked
-for along any paths.
+Exception to all of the above: If the filename being searched for is
+absolute or explicitly relative, i.e., starts with @samp{/} or @samp{./}
+or @samp{../}, Kpathsea simply checks if that file exists.
+
+@cindex permission denied
+@cindex unreadable files
+@cindex access warnings
+@cindex warnings, file access
+@flindex lost+found @r{directory}
+@vindex TEX_HUSH
+Ordinarily, if Kpathsea tries to access a file or directory that cannot
+be read, it gives a warning.  This is so you will be alerted to
+directories or files that accidentally lack read permission (for
+example, a @file{lost+found}).  If you prefer not to see these warnings,
+include the value @samp{readable} in the @code{TEX_HUSH} environment
+variable or config file value.
+
+This generic path searching algorithm is implemented in
+@file{kpathsea/pathsearch.c}.  It is employed by a higher-level
+algorithm when searching for a file of a particular type (@pxref{File
+lookup}, and @ref{Glyph lookup}).
 
 
 @node Path sources
@@ -967,41 +397,41 @@ for along any paths.
 @cindex path sources
 @cindex sources for search paths
 
-A search path can come from many sources.  In priority order (meaning
-Kpathsea will use whichever it finds first):
+A search path can come from many sources.  In the order in which
+Kpathsea uses them:
 
 @enumerate
-
 @item
 @cindex environment variable, source for path
-A user-set environment variable, e.g., @samp{TEXINPUTS}.
+A user-set environment variable, e.g., @code{TEXINPUTS}.
+Environment variables with an underscore and the program name appended
+override; for example, @code{TEXINPUTS_latex} overrides @code{TEXINPUTS}
+if the program being run is named @samp{latex}.
 
 @item
 A program-specific configuration file, e.g., an @samp{S /a:/b} line in
-Dvips' @file{config.ps}.
+Dvips' @file{config.ps} (@pxref{Config files,,, dvips, Dvips}).
 
 @item
 @cindex configuration file, source for path
 @cindex Kpathsea config file, source for path
 @flindex texmf.cnf@r{, source for path}
 A line in a Kpathsea configuration file @file{texmf.cnf}, e.g.,
-@samp{TEXINPUTS=/c:/d}. See section below.
+@samp{TEXINPUTS=/c:/d} (see below).
 
 @item
 @cindex compilation value, source for path
 The compile-time default (specified in @file{kpathsea/paths.h}).
-
 @end enumerate
 
-@noindent In any case, once the path specification to use is determined, its
-evaluation is independent of its source.  These sources may also be
-combined via default expansion. See the next section.
-
 You can see each of these values for a given search path by using the
-debugging options of Kpathsea or your program. @xref{Debugging}.
+debugging options (@pxref{Debugging}).
+
+These sources may be combined via default expansion (@pxref{Default
+expansion}).
 
 @menu
-* Config files::		Kpathsea's runtime config files (texmf.cnf).
+* Config files::        Kpathsea's runtime config files (texmf.cnf).
 @end menu
 
 
@@ -1009,35 +439,46 @@ debugging options of Kpathsea or your program. @xref{Debugging}.
 @subsection Config files
 
 @cindex config files
-@flindex texmf.cnf @r{definition}
+@flindex texmf.cnf@r{, definition for}
 
 @cindex runtime configuration files
-As mentioned above, Kpathsea reads @dfn{runtime configuration files}
-named @file{texmf.cnf} for search path definitions. The path used to
-search for them is constructed in the usual way, as described above
-(except that configuration files cannot be used to define the path,
-naturally; also, an @file{ls-R} database is not used to search for them,
-for technical reasons).
-
 @vindex TEXMFCNF
-The environment variable used is @samp{TEXMFCNF}.
+As mentioned above, Kpathsea reads @dfn{runtime configuration files}
+named @file{texmf.cnf} for search path and other definitions.  The
+search path used to look for these configuration files is named
+@code{TEXMFCNF}, and is constructed in the usual way, as described
+above, except that configuration files cannot be used to define the
+path, naturally; also, an @file{ls-R} database is not used to search for
+them.
 
 Kpathsea reads @emph{all} @file{texmf.cnf} files in the search path, not
-just the first one found; it uses the first definition of each variable
-encountered. Thus, with the (default) search path of @samp{.:$TEXMF},
-values from @file{./texmf.cnf} override those from
-@file{$TEXMF/texmf.cnf}.
+just the first one found; definitions in earlier files override those in
+later files.  Thus, if the search path is @samp{.:$TEXMF}, values from
+@file{./texmf.cnf} override those from @file{$TEXMF/texmf.cnf}.
 
-Here is the format for @file{texmf.cnf} files:
+While (or instead of) reading this description, you may find it helpful
+to look at the distributed @file{texmf.cnf}, which uses or at least
+mentions most features.  The format of @file{texmf.cnf} files follows:
 
 @itemize @bullet
-
+@item
 @cindex comments, in @file{texmf.cnf}
-@item Anything after a @samp{%} or @samp{#} is ignored; this is for comments.
+Comments start with @samp{%} and continue to the end of the line.
 
-@item Blank lines are ignored.
+@item
+@cindex blank lines, in @file{texmf.cnf}
+Blank lines are ignored.
 
-@item Each remaining nonblank line must look like
+@item
+@cindex backslash-newline
+@cindex continuation character
+@cindex whitespace, not ignored on continuation lines
+@kindex \@r{, line continuation in @file{texmf.cnf}}
+A @samp{\} at the end of a line acts as a continuation character, i.e.,
+the next line is appended.  Whitespace at the beginning of continuation
+lines is not ignored.
+
+@item Each remaining line must look like
 
 @example
 @var{variable} @r{[}. @var{progname}@r{]} @r{[}=@r{]} @var{value}
@@ -1045,33 +486,42 @@ Here is the format for @file{texmf.cnf} files:
 
 @noindent where the @samp{=} and surrounding whitespace is optional.
 
-@item The @var{variable} name may contain any characters except
-whitespace, @samp{=}, or @samp{.} characters, but sticking to
-@samp{A-Za-z_} is safest.
+@item 
+@cindex identifiers, characters valid in
+The @var{variable} name may contain any character other than whitespace,
+@samp{=}, or @samp{.}, but sticking to @samp{A-Za-z_} is safest.
 
-@item If the @samp{.@var{progname}} is present, the definition only
+@item If @samp{.@var{progname}} is present, the definition only
 applies if the program that is running is named (i.e., the last
-component of @code{argv[0]}) @var{progname}.  This allows (for example)
-different flavors of @TeX{} to have different search paths.
+component of @code{argv[0]} is) @var{progname} or
+@file{@var{progname}.exe}.  This allows different flavors of @TeX{} to
+have different search paths, for example.
 
-@item The @var{value} may contain any characters except whitespace,
-@samp{%}, and @samp{@@}.  (These restrictions are necessary because of
-the various @code{sed} and other processing done on @file{texmf.cnf} at
-build time.)
+@item 
+@cindex right-hand side of variable assignments
+@var{value} may contain any characters except @samp{%} and @samp{@@}.
+(These restrictions are only necessary because of the processing done on
+@file{texmf.cnf} at build time, so you can stick those characters in
+after installation if you have to.)  The @samp{$@var{var}.@var{prog}}
+feature is not available on the right-hand side; instead, you must use
+an additional variable (see below for example).  A @samp{;} in
+@var{value} is translated to @samp{:} if running under Unix; this is
+useful to write a single @file{texmf.cnf} which can be used under both
+Unix and NT.  (If you really want @samp{;}'s in your filenames, add
+@samp{-DALLOW_SEMICOLON_IN_FILENAMES} to @code{CFLAGS}.)
 
 @item All definitions are read before anything is expanded, so you can
-use variables before they are defined (like @code{make}, unlike most
-everything else).
-
+use variables before they are defined (like Make, unlike most other
+programs).
 @end itemize
 
-@noindent Here is the fragment from the distributed file illustrating
-most of these points:
+@noindent Here is a configuration file fragment illustrating most of
+these points:
 
 @example
-% TeX input files -- i.e., anything to be found by \input or \openin [...]
+% TeX input files -- i.e., anything to be found by \input or \openin ...
 latex209_inputs = .:$TEXMF/tex/latex209//:$TEXMF/tex//
-latex2e_inputs = .:$TEXMF/tex/latex2e//:$TEXMF/tex//
+latex2e_inputs = .:$TEXMF/tex/latex//:$TEXMF/tex//
 TEXINPUTS = .:$TEXMF/tex//
 TEXINPUTS.latex209 = $latex209_inputs
 TEXINPUTS.latex2e = $latex2e_inputs
@@ -1082,21 +532,43 @@ TEXINPUTS.latex = $latex2e_inputs
 @cindex configuration files as shell scripts.
 Although this format has obvious similarities to Bourne shell
 scripts---change the comment character to @code{#}, disallow spaces
-around the @code{=}, and get rid of the @code{.@var{program}}
-convention, and it could be run through the shell. But there seemed
-little advantage to doing this, since all the information would have to
-passed back (with @code{echo}'s, presumably) to Kpathsea and parsed
-there anyway, since the @code{sh} process couldn't affect its parent's
-environment.
+around the @code{=}, and get rid of the @code{.@var{name}} convention,
+and it could be run through the shell.  But there seemed little
+advantage to doing this, since all the information would have to passed
+back to Kpathsea and parsed there anyway, since the @code{sh} process
+couldn't affect its parent's environment.
 
 @flindex cnf.c
 The implementation of all this is in @file{kpathsea/cnf.c}.
 
 
-@node Default expansion
-@section Default expansion
+@node Path expansion
+@section Path expansion
 
-@kindex ::
+@cindex path expansion
+@cindex expansion, search path
+
+Kpathsea recognizes certain special characters and constructions in
+search paths, similar to that in shells.  As a general example:
+@samp{~$USER/@{foo,bar@}//baz} expands to all subdirectories under
+directories @file{foo} and @file{bar} in @t{$USER}'s home directory that
+contain a directory or file @file{baz}.  These expansions are explained
+in the sections below.
+
+@menu
+* Default expansion::           a: or :a or a::b expands to a default.
+* Variable expansion::          $foo and $@{foo@} expand to environment values.
+* Tilde expansion::             ~ and ~user expand to home directories.
+* Brace expansion::             a@{foo,bar@}b expands to afoob abarb.
+* KPSE_DOT expansion::          . is replaced with $KPSE_DOT if it is defined.
+* Subdirectory expansion::      a// and a//b recursively expand to subdirs.
+@end menu
+
+
+@node Default expansion
+@subsection Default expansion
+
+@kindex :: @r{expansion}
 @cindex doubled colons
 @cindex leading colons
 @cindex trailing colons
@@ -1104,21 +576,20 @@ The implementation of all this is in @file{kpathsea/cnf.c}.
 @cindex default expansion
 @cindex expansion, default
 
-If the highest-priority search path (in the list in the previous
-section) contains an @dfn{extra colon} (i.e., leading, trailing, or
-doubled), Kpathsea inserts the next-highest-priority search path that is
-set at that point. If that search path has an extra colon, the same
-happens with the next-highest. (An extra colon in the compile-time
-default value has unpredictable results, and may cause the program to
-crash, so installers beware.)
+If the highest-priority search path (@pxref{Path sources}) contains an
+@dfn{extra colon} (i.e., leading, trailing, or doubled), Kpathsea
+inserts at that point the next-highest-priority search path that is
+defined.  If that inserted path has an extra colon, the same happens
+with the next-highest.  (An extra colon in the compile-time default
+value has unpredictable results, so installers beware.)
 
-For example, given
+For example, given an environment variable setting
 
 @example
 setenv TEXINPUTS /home/karl:
 @end example
 
-@noindent and a @samp{TEXINPUTS} value from @file{texmf.cnf} of
+@noindent and a @code{TEXINPUTS} value from @file{texmf.cnf} of
 
 @example
 .:$TEXMF//tex
@@ -1130,75 +601,91 @@ setenv TEXINPUTS /home/karl:
 /home/karl:.:$TEXMF//tex
 @end example
 
-@noindent You can trace this by debugging ``paths'' (@pxref{Debugging}).
+Since Kpathsea looks for multiple configuration files, it would be
+natural to expect that (for example) an extra colon in
+@file{./texmf.cnf} would expand to the path in @file{$TEXMF/texmf.cnf}.
+Or, with Dvips' configuration files, that an extra colon in
+@file{config.$PRINTER} would expand to the path in @file{config.ps}.
+This doesn't happen.  It's not clear this would be desirable in all
+cases, and trying to devise a way to specify the path to which the extra
+colon should expand seemed truly baroque.
+@cindex Bach, Johann Sebastian
 
-Minor technical point: Since it would be useless to insert the default
-value in more than one place, Kpathsea changes only one extra @samp{:}
-and leaves any others in place (where they will eventually be
-effectively equivalent to @samp{.}, i.e., the current directory). It
-checks first for a leading @samp{:}, then a trailing @samp{:}, then a
-doubled @samp{:}.
+Technicality: Since it would be useless to insert the default value in
+more than one place, Kpathsea changes only one extra @samp{:} and leaves
+any others in place (they will eventually be ignored).  Kpathsea checks
+first for a leading @samp{:}, then a trailing @samp{:}, then a doubled
+@samp{:}.
+
+@flindex kdefault.c
+You can trace this by debugging ``paths'' (@pxref{Debugging}).
+Default expansion is implemented in the source file
+@file{kpathsea/kdefault.c}.
 
 
 @node Variable expansion
-@section Variable expansion
+@subsection Variable expansion
 
-@kindex $
+@kindex $ @r{expansion}
 @cindex environment variables in paths
 @cindex variable expansion
 @cindex expansion, variable
 @flindex texmf.cnf@r{, and variable expansion}
 
 @samp{$foo} or @samp{$@{foo@}} in a path element is replaced by (1) the
-value of an environment variable @samp{foo} (if it is set); (2) the
-value of @samp{foo} from @file{texmf.cnf} (if any such exists); (3) the
-empty string.
+value of an environment variable @samp{foo} (if defined); (2) the value
+of @samp{foo} from @file{texmf.cnf} (if defined); (3) the empty string.
 
 If the character after the @samp{$} is alphanumeric or @samp{_}, the
 variable name consists of all consecutive such characters. If the
 character after the @samp{$} is a @samp{@{}, the variable name consists
-of everything up to the next @samp{@}} (braces are not balanced!).
-Otherwise, Kpathsea gives a warning and ignores the @samp{$} and its
-following character.
+of everything up to the next @samp{@}} (braces may not be nested around
+variable names).  Otherwise, Kpathsea gives a warning and ignores the
+@samp{$} and its following character.
 
 @cindex quoting variable values
-Remember to quote the @samp{$}'s and braces as necessary for your shell.
-
 @cindex shell variables
-@emph{Shell} variable values cannot be seen by Kpathsea.
+You must quote the @t{$}'s and braces as necessary for your shell.
+@emph{Shell} variable values cannot be seen by Kpathsea, i.e., ones
+defined by @code{set} in C shells and without @code{export} in Bourne
+shells.
 
 For example, given
-
 @example
-setenv TEXMF /home/tex
-setenv TEXINPUTS .:$TEXMF:$@{TEXMF@}new
+setenv tex /home/texmf
+setenv TEXINPUTS .:$tex:$@{tex@}prev
+@end example
+@noindent the final @code{TEXINPUTS} path is the three directories:
+@example
+.:/home/texmf:/home/texmfprev
 @end example
 
-@noindent the final @samp{TEXINPUTS} path is the three directories:
+The @samp{.@var{progname}} suffix on variables and
+@samp{_@var{progname}} on environment variable names are not implemented
+for general variable expansions.  These are only recognized when search
+paths are initialized (@pxref{Path sources}).
 
-@example
-.:/home/tex:/home/texnew
-@end example
-
-@noindent You can trace this by debugging ``paths'' (@pxref{Debugging}).
+@flindex variable.c
+Variable expansion is implemented in the source file
+@file{kpathsea/variable.c}.
 
 
 @node Tilde expansion
-@section Tilde expansion
+@subsection Tilde expansion
 
-@kindex ~
+@kindex ~ @r{expansion}
 @cindex home directories in paths
 @cindex tilde expansion
 @cindex expansion, tilde
 
-A leading @samp{~} or @samp{~@var{user}} in a path element is replaced
-by the current or @var{user}'s home directory, respectively.
+@vindex HOME@r{, as ~ expansion}
+A leading @samp{~} in a path element is replaced by the value of the
+environment variable @code{HOME}, or @file{.} if @code{HOME} is not set.
 
-If @var{user} is invalid, or the home directory cannot be determined,
-Kpathsea uses @file{.} instead.
+A leading @samp{~@var{user}} in a path element is replaced by
+@var{user}'s home directory from the system @file{passwd} database.
 
 For example,
-
 @example
 setenv TEXINPUTS ~/mymacros:
 @end example
@@ -1206,32 +693,101 @@ setenv TEXINPUTS ~/mymacros:
 @noindent will prepend a directory @file{mymacros} in your home
 directory to the default path.
 
+@cindex @t{root} user
+@cindex trailing @samp{/} in home directory
+@kindex /@r{, trailing in home directory}
+As a special case, if a home directory ends in @samp{/}, the trailing
+slash is dropped, to avoid inadvertently creating a @samp{//} construct
+in the path.  For example, if the home directory of the user @samp{root}
+is @samp{/}, the path element @samp{~root/mymacros} expands to just
+@samp{/mymacros}, not @samp{//mymacros}.
+
+@flindex tilde.c
+Tilde expansion is implemented in the source file @file{kpathsea/tilde.c}.
+
+
+@node Brace expansion
+@subsection Brace expansion
+
+@kindex @{ @r{expansion}
+@cindex brace expansion
+
+@samp{x@{@var{a},@var{b}@}y} expands to @samp{x@var{a}y:x@var{b}y}.
+For example:
+
+@example
+foo/@{1,2@}/baz
+@end example
+
+@noindent expands to @samp{foo/1/baz:foo/2/baz}.  @samp{:} is the path
+separator on the current system; e.g., on a DOS system, it's @samp{;}.
+
+Braces can be nested; for example, @samp{x@{A,B@{1,2@}@}y} expands to
+@samp{xAy:xB1y:xB2y}.
+
+Multiple non-nested braces are expanded from right to left; for example,
+@samp{x@{A,B@}@{1,2@}y} expands to @samp{x@{A,B@}1y:x@{A,B@}2y}, which
+expands to @samp{xA1y:xB1y:xA2y:xB2:y}.
+
+@cindex multiple @TeX{} hierarchies
+This feature can be used to implement multiple @TeX{} hierarchies, by
+assigning a brace list to @code{$TEXMF}, as mentioned in
+@file{texmf.in}.
+
+You can also use the path separator in stead of the comma.  The last
+example could have been written @samp{x@{A:B@}@{1:2@}y}.
+
+
+@flindex expand.c
+Brace expansion is implemented in the source file
+@file{kpathsea/expand.c}.  It is a modification of the Bash sources, and
+is thus covered by the GNU General Public License, rather than the
+Library General Public License that covers the rest of Kpathsea.
+
+
+@node KPSE_DOT expansion
+@subsection @code{KPSE_DOT} expansion
+
+@kindex KPSE_DOT @r{expansion}
+
+When @code{KPSE_DOT} is defined in the environment, it names a directory
+that should be considered the current directory for the purpose of
+looking up files in the search paths.  This feature is needed by the
+@samp{mktex@dots{}} scripts @ref{mktex scripts}, because these
+change the working directory.  You should not ever define it yourself.
+
 
 @node Subdirectory expansion
-@section Subdirectory expansion
+@subsection Subdirectory expansion
 
 @kindex //
 @cindex subdirectory searching
 @cindex expansion, subdirectory
 
-A @samp{//} in a path element following a directory @var{d} is replaced
-by all subdirectories of @var{d}: first those subdirectories directly
-under @var{d}, then the subsubdirectories under those, and so on.  At
-each level, the order in which the directories are searched is
-unspecified. (It's ``directory order'', and definitely not
+@cindex alphabetical order, not
+Two or more consecutive slashes in a path element following a directory
+@var{d} is replaced by all subdirectories of @var{d}: first those
+subdirectories directly under @var{d}, then the subsubdirectories under
+those, and so on.  At each level, the order in which the directories are
+searched is unspecified.  (It's ``directory order'', and definitely not
 alphabetical.)
 
 If you specify any filename components after the @samp{//}, only
-subdirectories which contain those components are included.  For example,
+subdirectories which match those components are included.  For example,
 @samp{/a//b} would expand into directories @file{/a/1/b}, @file{/a/2/b},
 @file{/a/1/1/b}, and so on, but not @file{/a/b/c} or @file{/a/1}.
 
+You can include multiple @samp{//} constructs in the path.
+
+@samp{//} at the beginning of a path is ignored; you didn't really want
+to search every directory on the system, did you?
+
 @cindex trick for detecting leaf directories
 @cindex leaf directory trick
-I should mention one related implementation trick, which I stole from
-GNU find.  Matthew Farwell @samp{<dylan@@ibmpcug.co.uk>} suggested it,
-and David MacKenzie @samp{<djm@@gnu.ai.mit.edu>} implemented it (as far
-as I know).
+@cindex Farwell, Matthew
+@cindex MacKenzie, David
+I should mention one related implementation trick, which I took from GNU
+find.  Matthew Farwell suggested it, and David MacKenzie implemented it.
 
 @vindex st_nlink
 The trick is that in every real Unix implementation (as opposed to the
@@ -1242,9 +798,9 @@ will be two.  Thus, we don't have to stat everything in the bottom-level
 (leaf) directories---we can just check @code{st_nlink}, notice it's two,
 and do no more work.
 
-But if you have a directory that contains @emph{one} subdirectory and
-five hundred files, @code{st_nlink} will be 3, and Kpathsea has to stat
-every one of those 501 entries.  Therein lies slowness.
+But if you have a directory that contains a single subdirectory and 500
+regular files, @code{st_nlink} will be 3, and Kpathsea has to stat every
+one of those 501 entries.  Therein lies slowness.
 
 @vindex UNIX_ST_LINK
 You can disable the trick by undefining @code{UNIX_ST_LINK} in
@@ -1257,75 +813,163 @@ Unfortunately, in some cases files in leaf directories are
 @samp{@dots{}/pk}, even if it is a leaf, are checked. The reason cannot
 be explained without reference to the implementation, so read
 @file{kpathsea/elt-dirs.c} (search for @samp{may descend}) if you are
-curious. (And if you can find a way to @emph{solve} the problem, please
-let me know.)
+curious.  And if you can find a way to @emph{solve} the problem, please
+let me know.
+
+@flindex elt-dirs.c
+Subdirectory expansion is implemented in the source file
+@file{kpathsea/elt-dirs.c}.
 
 
 @node Filename database
 @section Filename database (@code{ls-R})
 
 @cindex filename database
-@cindex database for filename searches
+@cindex database, for filenames
 @cindex externally-built filename database
 
 Kpathsea goes to some lengths to minimize disk accesses for searches
 (@pxref{Subdirectory expansion}).  Nevertheless, at installations with
-enough directories, doing a linear search of each possible directory for
-a given file can take an excessively long time (``excessive'' depending
-on the speed of the disk, whether it's NFS-mounted, how patient you are,
-etc.). In practice, the union of font directories from the Dvips(k) and
-Dviljk distributions is large enough for searching to be noticeably slow
-on typical machines these days.
+enough directories, searching each possible directory for a given file
+can take an excessively long time (depending on the speed of the disk,
+whether it's NFS-mounted, how patient you are, etc.).
+
+In practice, a font tree containing the standard PostScript and PCL
+fonts is large enough for searching to be noticeably slow on typical
+systems these days.  Therefore, Kpathsea can use an externally-built
+``database'' file named @file{ls-R} that maps files to directories, thus
+avoiding the need to exhaustively search the disk.
+
+A second database file @file{aliases} allows you to give additional
+names to the files listed in @file{ls-R}.  This can be helpful to adapt
+to ``8.3'' filename conventions in source files.
+
+The @file{ls-R} and @file{aliases} features are implemented in the
+source file @file{kpathsea/db.c}.
+
+@menu
+* ls-R::                        The main filename database.
+* Filename aliases::            Aliases for those names.
+* Database format::             Syntax details of the database file.
+@end menu
+
+
+@node ls-R
+@subsection @file{ls-R}
 
 @flindex ls-R @r{database file}
-Therefore, Kpathsea can use an externally-built ``database'' that maps
-files to directories, thus avoiding the need to exhaustively search the
-disk.  By fiat, you must name the file @file{ls-R}, and put it at the
-root of the @TeX{} installation hierarchy (@samp{$TEXMF} by
-default).  Kpathsea does variable expansion on the @samp{$TEXMF},
-naturally, so you can use different @file{ls-R}'s for different trees,
-if you are testing new ones.  However, one and only one @file{ls-R} is
-read; it is not searched for along any paths.
+@vindex TEXMFDBS
 
-@pindex cron @r{and @file{ls-R}}
-You can build @file{ls-R} with the command
+As mentioned above, you must name the main filename database
+@file{ls-R}.  You can put one at the root of each @TeX{} installation
+hierarchy you wish to search (@code{$TEXMF} by default); most sites have
+only one hierarchy.  Kpathsea looks for @file{ls-R} files along the
+@code{TEXMFDBS} path, so that should presumably match the list of
+hierarchies.
+
+The recommended way to create and maintain @samp{ls-R} is to run the
+@code{mktexlsr} script, which is installed in @samp{$(bindir)}
+(@file{/usr/local/bin} by default).  That script goes to some trouble to
+follow symbolic links as necessary, etc.  It's also invoked by the
+distributed @samp{mktex@dots{}} scripts.
+
+@flindex ls-R@r{, simplest build}
+At its simplest, though, you can build @file{ls-R} with the command
 @example
-ls -R @var{/your/root/dir} >ls-R
+cd @var{/your/texmf/root} && ls -LAR ./ >ls-R
 @end example
-@noindent if your @code{ls} produces the right output
-format (see the section below). GNU @code{ls}, for example, outputs in
-this format.  It is probably best to do this via @code{cron}, so changes
-in the installed files will be automatically reflected (albeit with some
-delay) in the database.
+
+@noindent
+@opindex --color=tty
+@flindex /etc/profile @r{and aliases}
+presuming your @code{ls} produces the right output format (see the
+section below).  GNU @code{ls}, for example, outputs in this format.
+Also presuming your @code{ls} hasn't been aliased in a system file
+(e.g., @file{/etc/profile}) to something problematic, e.g., @samp{ls
+--color=tty}.  In that case, you will have to disable the alias before
+generating @file{ls-R}.  For the precise definition of the file format,
+see @ref{Database format}.
+
+Regardless of whether you use the supplied script or your own, you will
+almost certainly want to invoke it via @code{cron}, so when you make
+changes in the installed files (say if you install a new La@TeX{}
+package), @file{ls-R} will be automatically updated.
+
+@opindex -A @r{option to @code{ls}}
+@cindex dot files
+@flindex . @r{files}
+@flindex . @r{directories, ignored}
+@flindex .tex @r{file, included in @file{ls-R}}
+The @samp{-A} option to @code{ls} includes files beginning with @samp{.}
+(except for @file{.} and @file{..}), such as the file @file{.tex}
+included with the La@TeX{} tools package.  (On the other hand,
+@emph{directories} whose names begin with @samp{.} are always ignored.)
 
 @cindex symbolic links, and @file{ls-R}
 @opindex -L @r{option to @code{ls}}
-If your system uses symbolic links, the command @code{ls -LR} will be
-more reliable than plain @code{ls -R}.  The former follows the symbolic
-links to the real files, which is what Kpathsea needs.
+If your system does not support symbolic links, omit the @samp{-L}.
+
+@cindex automounter, and @file{ls-R}
+@cindex NFS and @file{ls-R}
+@code{ls -LAR @var{/your/texmf/root}} will also work.  But using
+@samp{./} avoids embedding absolute pathnames, so the hierarchy can be
+easily transported.  It also avoids possible trouble with automounters
+or other network filesystem conventions.
 
 @cindex warning about unusable @file{ls-R}
+@cindex unusable @file{ls-R} warning
 Kpathsea warns you if it finds an @file{ls-R} file, but the file does
-not contain any usable entries. The usual culprit is using just @code{ls
--R} to generate the @file{ls-R} file instead of @code{ls -R
-@var{/your/dir}}.  Kpathsea looks for lines starting with @samp{/}, to
-improve reliability with unusual filenames (specifically, those ending
-with a @samp{:}).
+not contain any usable entries.  The usual culprit is running plain
+@samp{ls -R} instead of @samp{ls -LR ./} or @samp{ls -R
+@var{/your/texmf/root}}.  Another possibility is some system directory
+name starting with a @samp{.} (perhaps if you are using AFS); Kpathsea
+ignores everything under such directories.
 
 @kindex !! @r{in path specifications}
-Because the database may be out-of-date for a particular run (e.g., if a
-font was just built with @code{MakeTeXPK}), if a file is not found in
-the database, by default Kpathsea goes ahead and searches the disk. If a
-particular path element begins with @samp{!!}, however, @emph{only} the
-database will be searched for that element, never the disk. If the
-database does not exist, nothing will be searched. Because this can
-greatly surprise users (``I see the font @file{foo.tfm} when I do an
-@code{ls}; why can't Dvips find it?''), I do not recommend using this
-feature.
+@cindex disk searching, avoiding
+Because the database may be out-of-date for a particular run, if a file
+is not found in the database, by default Kpathsea goes ahead and
+searches the disk. If a particular path element begins with @samp{!!},
+however, @emph{only} the database will be searched for that element,
+never the disk.  If the database does not exist, nothing will be
+searched.  Because this can surprise users (``I see the font
+@file{foo.tfm} when I do an @code{ls}; why can't Dvips find it?''), it
+is not in any of the default search paths.
 
-@menu
-* Database format::		Syntax details of the database file.
-@end menu
+
+@node Filename aliases
+@subsection Filename aliases
+
+@cindex filename aliases
+@cindex aliases, for filenames
+
+In some circumstances, you may wish to find a file under several names.
+For example, suppose a @TeX{} document was created using a DOS system
+and tries to read @file{longtabl.sty}.  But now it's being run on a Unix
+system, and the file has its original name, @file{longtable.sty}.  The
+file won't be found.  You need to give the actual file
+@file{longtable.sty} an alias @samp{longtabl.sty}.
+
+@c As another example, suppose you are creating a @TeX{} distribution on a
+@c CD-ROM or a DOS system; then the file @file{mf.base} gets stored as
+@c @file{mf.bas}.  But Metafont on Unix wants to find @file{mf.base}.  Here
+@c you need to give the actual file @file{mf.bas} an alias @samp{mf.base}.
+
+You can handle this by creating a file @file{aliases} as a companion to
+the @file{ls-R} for the hierarchy containing the file in question.  (You
+must have an @file{ls-R} for the alias feature to work.)
+
+The format of @file{aliases} is simple: two whitespace-separated words
+per line; the first is the real name @file{longtable.sty}, and second is
+the alias (@file{longtabl.sty}).  These must be base filenames, with no
+directory components.  @file{longtable.sty} must be in the sibling
+@file{ls-R}.
+
+Also, blank lines and lines starting with @samp{%} or @samp{#} are
+ignored in @file{aliases}, to allow for comments.
+
+If a real file @file{longtabl.sty} exists, it is used regardless of any
+aliases.
 
 
 @node Database format
@@ -1335,57 +979,273 @@ feature.
 @cindex database, format of
 
 The ``database'' read by Kpathsea is a line-oriented file of plain
-text. The format is that generated by GNU (and perhaps other) @code{ls}
+text. The format is that generated by GNU (and most other) @code{ls}
 programs given the @samp{-R} option, as follows.
 
 @itemize @bullet
-
 @item
 Blank lines are ignored.
 
 @item
-If a line begins with @samp{/} and ends with a colon, it's the name of a
-directory.
+If a line begins with @samp{/} or @samp{./} or @samp{../} and ends with
+a colon, it's the name of a directory.  (@samp{../} lines aren't useful,
+however, and should not be generated.)
 
 @item
-All other lines name entries in the most recently seen directory.
-@samp{/}'s in such lines will produce possibly-strange results.
+All other lines define entries in the most recently seen directory.
+@t{/}'s in such lines will produce possibly-strange results.
 
 @item
 Files with no preceding directory line are ignored.
-
 @end itemize
 
-
-For example, here's the first few lines of @file{ls-R} on my system:
+For example, here's the first few lines of @file{ls-R} (which totals
+about 30K bytes) on my system:
 
 @example
 bibtex
 dvips
 fonts
-ini
 ls-R
-mf
+metafont
+metapost
 tex
+web2c
 
-/usr/local/lib/texmf/bibtex:
+./bibtex:
 bib
 bst
 doc
 
-/usr/local/lib/texmf/bibtex/bib:
+./bibtex/bib:
 asi.bib
-bibshare
 btxdoc.bib
+@dots{}
 @end example
 
-@noindent On my system, @file{ls-R} is about 30K bytes.
+
+@node Invoking kpsewhich
+@section @code{kpsewhich}: Standalone path searching
+
+@pindex kpsewhich
+@cindex path searching, standalone
+@cindex standalone path searching
+
+The Kpsewhich program exercises the path searching functionality
+independent of any particular application.  This can also be useful as a
+sort of @code{find} program to locate files in your @TeX{} hierarchies,
+perhaps in administrative scripts.  It is used heavily in the
+distributed @samp{mktex@dots{}} scripts.
+
+Synopsis:
+@example
+kpsewhich @var{option}@dots{} @var{filename}@dots{}
+@end example
+
+The options and filename(s) to look up can be intermixed.
+Options can start with either @samp{-} or @samp{--}, and any unambiguous
+abbreviation is accepted.
+
+@menu
+* Path searching options::      Changing the mode, resolution, etc.
+* Auxiliary tasks::             Path and variable expansion.
+* Standard options::            --help and --version.
+@end menu
 
 
-@node TeX searching
-@chapter @TeX{} searching
+@node Path searching options
+@subsection Path searching options
 
-@cindex @TeX{} searching
+@cindex path searching options
+
+Kpsewhich looks up each non-option argument on the command line as a
+filename, and returns the first file found.  There is no option to
+return all the files with a particular name (you can run the Unix
+@samp{find} utility for that, @pxref{Invoking find,,, findutils, GNU
+find utilities}).
+
+Various options alter the path searching behavior:
+
+@table @samp
+@item --dpi=@var{num}
+@opindex --dpi=@var{num}
+@opindex -D @var{num}
+@cindex resolution, setting
+Set the resolution to @var{num}; this only affects @samp{gf} and
+@samp{pk} lookups.  @samp{-D} is a synonym, for compatibility with
+Dvips.  Default is 600.
+
+@item --format=@var{name}
+@opindex --format=@var{name}
+Set the format for lookup to @var{name}.  By default, the format is
+guessed from the filename, with @samp{tex} being used if nothing else
+fits.  The recognized filename extensions (including any leading
+@samp{.}) are also allowable @var{name}s.
+
+All formats also have a name, which is the only way to specify formats
+with no associated suffix.  For example, for Dvips configuration files
+you can use @samp{--format="dvips config"}.  (The quotes are for the
+sake of the shell.)
+
+Here's the current list of recognized names and the associated suffixes.
+@xref{Supported file formats}, for more information on each of these.
+@example
+gf: gf
+pk: pk
+bitmap font
+afm: .afm
+base: .base
+bib: .bib
+bst: .bst
+cnf: .cnf
+ls-R: ls-R
+fmt: .fmt
+map: .map
+mem: .mem
+mf: .mf
+mfpool: .pool
+mft: .mft
+mp: .mp
+mppool: .pool
+MetaPost support
+ocp: .ocp
+ofm: .ofm .tfm
+opl: .opl
+otp: .otp
+ovf: .ovf
+ovp: .ovp
+graphic/figure: .eps .epsi
+tex: .tex
+TeX system documentation
+texpool: .pool
+TeX system sources
+PostScript header/font: .pro
+Troff fonts
+tfm: .tfm
+type1 fonts: .pfa .pfb
+vf: .vf
+dvips config
+ist: .ist
+truetype fonts: .ttf .ttc
+type42 fonts
+web2c files
+other text files
+other binary files
+@end example
+
+This option and @samp{--path} are mutually exclusive.
+
+@item --interactive
+@opindex --interactive
+@cindex interactive query
+After processing the command line, read additional filenames to look up
+from standard input.
+
+@item -mktex=@var{filetype}
+@itemx -no-mktex=@var{filetype}
+@opindex -mktex=@var{filetype}
+@opindex -no-mktex=@var{filetype}
+Turn on or off the @samp{mktex} script associated with @var{filetype}.
+The only values that make sense for @var{filetype} are @samp{pk},
+@samp{mf}, @samp{tex}, and @samp{tfm}. By default, all are off in
+Kpsewhich.  @xref{mktex scripts}.
+
+@item --mode=@var{string}
+@opindex --mode=@var{string}
+Set the mode name to @var{string}; this also only affects @samp{gf} and
+@samp{pk} lookups.  No default: any mode will be found.  @xref{mktex
+script arguments}.
+
+@item --must-exist
+@opindex --must-exist
+Do everything possible to find the files, notably including searching
+the disk.  By default, only the @file{ls-R} database is checked, in the
+interest of efficiency.
+
+@item --path=@var{string}
+@opindex --path=@var{string}
+Search along the path @var{string} (colon-separated as usual), instead
+of guessing the search path from the filename.  @samp{//} and all the
+usual expansions are supported (@pxref{Path expansion}).  This option
+and @samp{--format} are mutually exclusive.  To output the complete
+directory expansion of a path, instead of doing a one-shot lookup, see
+@samp{--expand-path} in the following section.
+
+@item --progname=@var{name}
+@opindex --progname=@var{name}
+Set the program name to @var{name}; default is @samp{kpsewhich}.  This
+can affect the search paths via the @samp{.@var{prognam}} feature in
+configuration files (@pxref{Config files}).
+@end table
+
+
+@node Auxiliary tasks
+@subsection Auxiliary tasks
+
+@cindex auxiliary tasks
+
+Kpsewhich provides some additional features not strictly related to path
+lookup:
+
+@itemize @bullet
+@item
+@opindex --debug=@var{num}
+@samp{--debug=@var{num}} sets the debugging options to @var{num}.
+@xref{Debugging}.
+
+@item
+@opindex --expand-braces=@var{string}
+@samp{--expand-braces=@var{string}} outputs the variable and brace
+expansion of @var{string}.  @xref{Path expansion}.
+
+@item
+@opindex --expand-var=@var{string}
+@samp{--expand-var=@var{string}} outputs the variable expansion of
+@var{string}.  For example, the @samp{mktex@dots{}} scripts run
+@samp{kpsewhich --expand-var='$TEXMF'} to find the root of the @TeX{} system
+hierarchy.  @xref{Path expansion}.
+
+@item
+@opindex --expand-path=@var{string}
+@samp{--expand-path=@var{string}} outputs the complete expansion of
+@var{string} as a colon-separated path.  This is useful to construct a
+search path for a program that doesn't accept recursive subdirectory
+specifications.
+
+For one-shot uses of an arbitrary (not built in to Kpathsea) path, see
+@samp{--path} in the previous section.
+
+@item
+@opindex --show-path=@var{name}
+@samp{--show-path=@var{name}} shows the path that would be used for file
+lookups of file type @var{name}.  Either a filename extension
+(@samp{pk}, @samp{.vf}, etc.) or an integer can be used, just as with
+@samp{--format}, described in the previous section.
+@end itemize
+
+
+@node Standard options
+@subsection Standard options
+
+@cindex standard options
+
+Kpsewhich accepts the standard GNU options:
+
+@itemize @bullet
+@item
+@opindex --help
+@samp{--help} prints a help message on standard output and exits.
+
+@item
+@opindex --version
+@samp{--version} prints the Kpathsea version number and exits.
+@end itemize
+
+
+@node TeX support
+@chapter @TeX{} support
+
+@cindex @TeX{} support
 
 Although the basic features in Kpathsea can be used for any type of path
 searching, it came about (like all libraries) with a specific
@@ -1394,96 +1254,231 @@ programs.  I had been struggling with the programs I was using (Dvips,
 Xdvi, and @TeX{} itself) having slightly different notions of how to
 specify paths; and debugging was painful, since no code was shared.
 
-Therefore, Kpathsea provides some @TeX{}-specific features.  Indeed,
-many of the supposedly generic path searching features were provided
-because they seemed useful in that con@TeX{}t (font lookup, particularly).
+Therefore, Kpathsea provides some @TeX{}-specific formats and features.
+Indeed, many of the supposedly generic path searching features were
+provided because they seemed useful in that con@TeX{}t (font lookup,
+particularly).
+
+Kpathsea provides a standard way to search for files of any of the
+supported file types; glyph fonts are a bit different than all the rest.
+Searches are based solely on filenames, not file contents---if a GF
+file is named @file{cmr10.600pk}, it will be found as a PK file.
 
 @menu
-* Envvars: TeX environment variables.	Overriding compiled-in paths.
-* Glyph lookup::			Searching for bitmap fonts.
+* Supported file formats::      File types Kpathsea knows about.
+* File lookup::                 Searching for most kinds of files.
+* Glyph lookup::                Searching for bitmap fonts.
+* Suppressing warnings::        Avoiding warnings via TEX_HUSH.
 @end menu
 
 
-@node TeX environment variables
-@section @TeX{} environment variables
+@node Supported file formats
+@section Supported file formats
+
+@cindex supported file formats
+@cindex file formats, supported
 
 @cindex environment variables for @TeX{}
 @cindex @TeX{} environment variables
 
-Kpathsea defines a sequence of environment variables to search for each
-file type it supports.  This makes it easy for different programs to
-check the same environment variables, in the same order.
+Kpathsea has support for a number of file types.  Each file type has a
+list of environment and config file variables that are checked to define
+the search path, and most have a default suffix that plays a role in
+finding files (see the next section).  Some also define additional
+suffixes, and/or a program to be run to create missing files on the fly.
 
-The following table lists the environment variables searched for each
-file type in the order they are searched (and a brief description of the
-file type).  That is, only if the first variable is unset is the second
-variable checked, and so on.  If none are set, various other things are
-checked; @pxref{Path sources}.
+@cindex program-varying paths
+Since environment variables containing periods, such as
+@samp{TEXINPUTS.latex}, are not allowed on some systems, Kpathsea looks
+for environment variables with an underscore, e.g.,
+@samp{TEXINPUTS_latex} (@pxref{Config files}).
+
+The following table lists the above information.
 
 @table @samp
+@item afm
+@flindex .afm
+@vindex AFMFONTS
+(Adobe font metrics, @pxref{Metric files,,, dvips, Dvips})
+@code{AFMFONTS};
+suffix @samp{.afm}.
 
-@item .base
+@item base
 @flindex .base
 @vindex MFBASES
-(Metafont memory dump)
-@samp{MFBASES}
+@vindex TEXMFINI
+(Metafont memory dump, @pxref{Memory dumps,,, web2c, Web2c})
+@code{MFBASES}, @code{TEXMFINI};
+suffix @samp{.base}.
 
-@item .bib
+@item bib
 @flindex .bib
 @vindex BIBINPUTS
-(Bib@TeX{} bibliography source)
-@samp{BIBINPUTS}
+@vindex TEXBIB
+(Bib@TeX{} bibliography source, @pxref{bibtex invocation,,, web2c, Web2c})
+@code{BIBINPUTS}, @code{TEXBIB};
+suffix @samp{.bib}.
 
-@item .bst
+@item bst
 @flindex .bst
 @vindex BSTINPUTS
-@vindex TEXINPUTS
-(Bib@TeX{} style file)
-@samp{BSTINPUTS}, @samp{TEXINPUTS}
+(Bib@TeX{} style file, @pxref{Basic BibTeX style files,, Basic Bib@TeX{}
+style files, web2c, Web2c})
+@code{BSTINPUTS};
+suffix @samp{.bst}.
 
-@item .cnf
+@item cnf
 @flindex .cnf
 @vindex TEXMFCNF
-(Kpathsea runtime configuration files)
-@samp{TEXMFCNF}
+(Runtime configuration files, @pxref{Config files})
+@code{TEXMFCNF};
+suffix @samp{.cnf}.
 
-@item .eps
-@flindex .eps
-@vindex TEXPICTS
-@vindex TEXINPUTS
-(Encapsulated PostScript figures)
-@samp{TEXPICTS}, @samp{TEXINPUTS}
+@item dvips config
+@vindex TEXCONFIG
+@flindex config.ps@r{, search path for}
+(Dvips @samp{config.*} files, such as @file{config.ps}, @pxref{Config
+files,,, dvips, Dvips})
+@code{TEXCONFIG}.
 
-@item .fmt
+@item fmt
 @flindex .fmt
 @vindex TEXFORMATS
-(@TeX{} memory dump)
-@samp{TEXFORMATS}
+@vindex TEXMFINI
+(@TeX{} memory dump, @pxref{Memory dumps,,, web2c, Web2c})
+@code{TEXFORMATS}, @code{TEXMFINI};
+suffix @samp{.fmt}.
 
 @item gf
-@flindex .gf
+@flindex gf
 @vindex GFFONTS
 @vindex GLYPHFONTS
 @vindex TEXFONTS
-(generic font bitmap)
-@samp{@var{program}FONTS}, @samp{GFFONTS}, @samp{GLYPHFONTS}, @samp{TEXFONTS}
+(generic font bitmap, @pxref{Glyph files,,, dvips, Dvips})
+@code{@var{program}FONTS}, @code{GFFONTS}, @code{GLYPHFONTS}, @code{TEXFONTS};
+suffix @samp{gf}.
 
-@item .mf
+@item graphic/figure
+@flindex .eps
+@flindex .epsi
+@vindex TEXPICTS
+@vindex TEXINPUTS
+(Encapsulated PostScript figures, @pxref{PostScript figures,,, dvips, Dvips})
+@code{TEXPICTS}, @code{TEXINPUTS};
+additional suffixes: @samp{.eps}, @samp{.epsi}.
+
+@item ist
+@flindex .ist
+@vindex TEXINDEXSTYLE
+@vindex INDEXSTYLE
+(makeindex style files)
+@code{TEXINDEXSTYLE}, @code{INDEXSTYLE};
+suffix @samp{.ist}.
+
+@item ls-R
+@flindex ls-R
+@vindex TEXMFDBS
+(Filename databases, @pxref{Filename database})
+@code{TEXMFDBS}.
+
+@item map
+@flindex .map
+@vindex TEXFONTMAPS
+(Fontmaps, @pxref{Fontmap})
+@code{TEXFONTMAPS};
+suffix @samp{.map}.
+
+@item mem
+@flindex .mem
+@vindex MPMEMS
+@vindex TEXMFINI
+(MetaPost memory dump, @pxref{Memory dumps,,, web2c, Web2c})
+@code{MPMEMS}, @code{TEXMFINI};
+suffix @samp{.mem}.
+
+@item @r{MetaPost support}
+@vindex MPSUPPORT
+(MetaPost support files, used by DMP; @pxref{dmp invocation,,, web2c, Web2c}) 
+@code{MPSUPPORT}.
+
+@item mf
 @flindex .mf
 @vindex MFINPUTS
-(Metafont source)
-@samp{MFINPUTS}
+(Metafont source, @pxref{mf invocation,,, web2c, Web2c})
+@code{MFINPUTS};
+suffix @samp{.mf};
+dynamic creation program: @code{mktexmf}.
 
-@item mf.pool
+@item mfpool
 @flindex .pool
 @vindex MFPOOL
-(Metafont program strings)
-@samp{MFPOOL}
+(Metafont program strings, @pxref{pooltype invocation,,, web2c, Web2c})
+@code{MFPOOL}, @code{TEXMFINI};
+suffix @samp{.pool}.
 
-@item .pict
-@flindex .pict
-(Other kinds of figures)
-Same as @file{.eps}.
+@item mft
+@flindex .mft
+@vindex MFTINPUTS
+(@code{MFT} style file, @pxref{mft invocation,,, web2c, Web2c})
+@code{MFTINPUTS};
+suffix @samp{.mft}.
+
+@item mp
+@flindex .mp
+@vindex MPINPUTS
+(MetaPost source, @pxref{mpost invocation,,, web2c, Web2c})
+@code{MPINPUTS};
+suffix @samp{.mp}.
+
+@item mppool
+@flindex .pool
+@vindex MPPOOL
+(MetaPost program strings, @pxref{pooltype invocation,,, web2c, Web2c})
+@code{MPPOOL}, @code{TEXMFINI};
+suffix @samp{.pool}.
+
+@item ocp
+@flindex .ocp
+@vindex OCPINPUTS
+(Omega compiled process files)
+@code{OCPINPUTS}; @*
+suffix @samp{.ocp};
+dynamic creation program: @code{MakeOmegaOCP}.
+
+@item ofm
+@flindex .ofm
+@vindex OFMFONTS
+(Omega font metrics)
+@code{OFMFONTS}, @code{TEXFONTS}; @*
+suffixes @samp{.ofm}, @samp{.tfm};
+dynamic creation program: @code{MakeOmegaOFM}.
+
+@item opl
+@flindex .opl
+(Omega property lists)
+@code{OPLFONTS}, @code{TEXFONTS};
+suffix @samp{.opl}.
+
+@item otp
+@flindex .otp
+@vindex OTPINPUTS
+(Omega translation process files)
+@code{OTPINPUTS};
+suffix @samp{.otp}.
+
+@item ovf
+@flindex .ovf
+@vindex OVFFONTS
+(Omega virtual fonts)
+@code{OVFFONTS}, @code{TEXFONTS};
+suffix @samp{.ovf}.
+
+@item ovp
+@flindex .ovp
+@vindex OVPFONTS
+(Omega virtual property lists)
+@code{OVPFONTS}, @code{TEXFONTS};
+suffix @samp{.ovp}.
 
 @item pk
 @flindex .pk
@@ -1491,63 +1486,174 @@ Same as @file{.eps}.
 @vindex TEXPKS
 @vindex GLYPHFONTS
 @vindex TEXFONTS
-(packed bitmap font)
-@samp{@var{program}FONTS}, @samp{PKFONTS}, @samp{TEXPKS},
-@samp{GLYPHFONTS}, @samp{TEXFONTS}
+(packed bitmap fonts, @pxref{Glyph files,,, dvips, Dvips})
+@code{@var{PROGRAM}FONTS} (@var{program} being @samp{XDVI}, etc.),
+@code{PKFONTS}, @code{TEXPKS}, @code{GLYPHFONTS}, @code{TEXFONTS};
+suffix @samp{pk};
+dynamic creation program: @code{mktexpk}.
 
-@item .tex
+@item PostScript header
+@flindex .pro
+@vindex TEXPSHEADERS
+@vindex PSHEADERS
+(downloadable PostScript, @pxref{Header files,,, dvips, Dvips})
+@code{TEXPSHEADERS}, @code{PSHEADERS};
+additional suffix @samp{.pro}.
+
+@item tex
 @flindex .tex
 @vindex TEXINPUTS
-(@TeX{} source)
-@samp{TEXINPUTS}
+(@TeX{} source, @pxref{tex invocation,,, web2c, Web2c})
+@code{TEXINPUTS};
+suffix @samp{.tex};
+additional suffixes: none, because such a list cannot be complete;
+dynamic creation program: @code{mktextex}.
 
-@item tex.pool
+@item TeX system documentation
+@flindex doc files
+@vindex TEXDOCS
+(Documentation files for the @TeX{} system)
+@code{TEXDOCS}.
+
+@item TeX system sources
+@flindex source files
+@vindex TEXSOURCES
+(Source files for the @TeX{} system)
+@code{TEXSOURCES}.
+
+@item texpool
 @flindex .pool
 @vindex TEXPOOL
-(@TeX{} program strings)
-@samp{TEXPOOL}
+(@TeX{} program strings, @pxref{pooltype invocation,,, web2c, Web2c})
+@code{TEXPOOL}, @code{TEXMFINI};
+suffix @samp{.pool}.
 
-@item .tfm
+@item tfm
 @flindex .tfm
 @vindex TFMFONTS
 @vindex TEXFONTS
-(@TeX{} font metrics)
-@samp{TFMFONTS}, @samp{TEXFONTS}
+(@TeX{} font metrics, @pxref{Metric files,,, dvips, Dvips})
+@code{TFMFONTS}, @code{TEXFONTS};
+suffix @samp{.tfm};
+dynamic creation program: @code{mktextfm}.
 
-@item .vf
+@item Troff fonts
+@vindex TRFONTS
+(Troff fonts, used by DMP; @pxref{DMP invocation,,, web2c, Web2c}) 
+@code{TRFONTS}.
+
+@item truetype fonts
+@flindex .ttf
+@flindex .ttc
+@vindex TTFONTS
+(TrueType outline fonts) @code{TTFONTS}; suffixes @samp{.ttf},
+@samp{.ttc}.
+
+@item type1 fonts
+@flindex .pfa
+@flindex .pfb
+@vindex T1FONTS
+@vindex T1INPUTS
+@vindex TEXPSHEADERS
+@vindex DVIPSHEADERS
+(Type 1 PostScript outline fonts, @pxref{Glyph files,,, dvips, Dvips})
+@code{T1FONTS}, @code{T1INPUTS}, @code{TEXPSHEADERS}, @code{DVIPSHEADERS};
+suffixes @samp{.pfa}, @samp{.pfb}.
+
+@item type42 fonts
+@vindex T42FONTS
+(Type 42 PostScript outline fonts) @code{T42FONTS}.
+
+@item vf
 @flindex .vf
 @vindex VFFONTS
 @vindex TEXFONTS
-(virtual font)
-@samp{VFFONTS}, @samp{TEXFONTS}
-
+(virtual fonts, @pxref{Virtual fonts,,, dvips, Dvips})
+@code{VFFONTS}, @code{TEXFONTS};
+suffix @samp{.vf}.
 @end table
 
+There are two special cases, because the paths and environment variables
+always depend on the name of the program: the variable name is
+constructed by converting the program name to upper case, and then
+appending @samp{INPUTS}.  Assuming the program is called @samp{foo},
+this gives us the following table.
+
+@table @samp
+@item other text files
+@vindex FOOINPUTS
+(text files used by @samp{foo})
+@code{FOOINPUTS}.
+
+@item other binary files
+@vindex FOOINPUTS
+(binary files used by @samp{foo})
+@code{FOOINPUTS}.
+@end table
+
+If an environment variable by these names are set, the corresponding
+@file{texmf.cnf} definition won't be looked at (unless, as usual, the
+environment variable value has an extra @samp{:}).  @xref{Default
+expansion}.
+
 For the font variables, the intent is that:
-
-@enumerate
+@itemize @bullet
+@item
+@code{TEXFONTS} is the default for everything.
 
 @item
-@samp{TEXFONTS} is the default for everything.
-
-@item
-@samp{GLYPHFONTS} is the default for bitmap (or, more precisely,
+@code{GLYPHFONTS} is the default for bitmap (or, more precisely,
 non-metric) files.
 
 @item
-Each format has its own variable.
+Each font format has a variable of its own.
 
 @item
 @vindex XDVIFONTS
 @vindex DVIPSFONTS
-Each program can and should have its own font override path as well;
-e.g., @samp{DVIPSFONTS} for Dvipsk. Again, this is for bitmaps, not metrics.
+Each program has its own font override path as well; e.g.,
+@code{DVIPSFONTS} for Dvipsk.  Again, this is for bitmaps, not metrics.
 
+@end itemize
+
+
+@node File lookup
+@section File lookup
+
+@cindex file lookup
+@cindex searching for files
+@cindex @TeX{} file lookup
+
+This section describes how Kpathsea searches for most files (bitmap font
+searches are the exception, as described in the next section).
+
+Here is the search strategy for a file @var{name}:
+@enumerate
+@item
+If the file format defines default suffixes, and the suffix of
+@var{name} name is not already a known suffix for that format, try the
+name with each default appended, and use alternative names found in the
+fontmaps if necessary.  We postpone searching the disk as long as
+possible.  Example: given @samp{foo.sty}, look for @samp{foo.sty.tex}
+before @samp{foo.sty}.  This is unfortunate, but allows us to find
+@samp{foo.bar.tex} before @samp{foo.bar} if both exist and we were given
+@samp{foo.bar}.
+
+@item
+Search for @var{name}, and if necssary for alternative names found in
+the fontmaps.  Again we avoid searching the disk if possible.  Example:
+given @samp{foo}, we look for @samp{foo}.
+
+@item
+If the file format defines a program to invoke to create missing files,
+run it (@pxref{mktex scripts}).
 @end enumerate
 
-If these environment variables are set, the corresponding
-@file{texmf.cnf} definition won't be looked at (unless, as usual, the
-environment variable has an extra @samp{:}). @xref{Default expansion}.
+@flindex tex-file.c
+@findex kpse_find_file
+This is implemented in the routine @code{kpse_find_file} in
+@file{kpathsea/tex-file.c}.  You can watch it in action with the
+debugging options (@pxref{Debugging}).
 
 
 @node Glyph lookup
@@ -1557,41 +1663,38 @@ environment variable has an extra @samp{:}). @xref{Default expansion}.
 @cindex searching for glyphs
 @cindex @TeX{} glyph lookup
 
-@flindex tex-glyph.c
-@findex kpse_find_glyph_format
-Kpathsea provides a routine (@code{kpse_find_glyph_format} in
-@file{kpathsea/tex-glyph.c}) which searches for a bitmap font in GF or
+This section describes how Kpathsea searches for a bitmap font in GF or
 PK format (or either) given a font name (e.g., @samp{cmr10}) and a
-resolution (e.g., 300).
-
-The search is based solely on filenames, not file contents---if a PK
-file is named @file{cmr10.300gf}, it will be found as a GF file.
+resolution (e.g., 600).
 
 Here is an outline of the search strategy (details in the sections
 below) for a file @var{name} at resolution @var{dpi}.  The search stops
 at the first successful lookup.
 
 @enumerate
-
-@item Look for an existing file @var{name}.@var{dpi} in the specified
-format(s).
+@item
+Look for an existing file @var{name}.@var{dpi}@var{format} in the
+specified format(s).
 
 @item If @var{name} is an alias for a file @var{f} in the fontmap
 file @file{texfonts.map}, look for @var{f}.@var{dpi}.
 
-@item Run an external script (typically named @code{MakeTeXPK}) to
-generate the font.
+@item Run an external program (typically named @samp{mktexpk}) to
+generate the font (@pxref{mktex scripts})
 
 @item Look for @var{fallback}.@var{dpi}, where @var{fallback} is some
 last-resort font (typically @samp{cmr10}).
-
 @end enumerate
 
+@flindex tex-glyph.c
+@findex kpse_find_glyph_format
+This is implemented in @code{kpse_find_glyph_format} in
+@file{kpathsea/tex-glyph.c}.
+
 @menu
-* Basic glyph lookup::		Features common to all glyph lookups.
-* Fontmap::			Aliases for fonts.
-* MakeTeX... scripts::		Creating files on the fly.
-* Fallback font::		Resolutions and fonts of last resort.
+* Basic glyph lookup::          Features common to all glyph lookups.
+* Fontmap::                     Aliases for fonts.
+* Fallback font::               Resolutions and fonts of last resort.
 @end menu
 
 
@@ -1604,20 +1707,21 @@ last-resort font (typically @samp{cmr10}).
 When Kpathsea looks for a bitmap font @var{name} at resolution @var{dpi}
 in a format @var{format}, it first checks each directory in the search
 path for a file @samp{@var{name}.@var{dpi}@var{format}}; for example,
-@samp{cmr10.300pk}.  Kpathsea looks for a PK file first, then a GF file.
+@samp{cmr10.600pk}.  Kpathsea looks for a PK file first, then a GF file.
 
 If that fails, Kpathsea looks for
 @samp{dpi@var{dpi}/@var{name}.@var{format}}; for example,
-@samp{dpi300/cmr10.pk}. This is how fonts are typically stored on
-filesystems (like DOS's) that permit only three-character extensions.
+@samp{dpi600/cmr10.pk}. This is how fonts are typically stored on
+filesystems (such as DOS) that permit only three-character extensions.
 
 @cindex tolerance for glyph lookup
 @cindex glyph lookup bitmap tolerance
 @findex KPSE_BITMAP_TOLERANCE
 If that fails, Kpathsea looks for a font with a close-enough @var{dpi}.
-``Close enough'' is defined (by the macro @code{KPSE_BITMAP_TOLERANCE}
-in @file{kpathsea/tex-glyph.h}) to be @code{@var{dpi} / 500 + 1}, which
-is slightly more than the 0.2% allowed by the DVI standard.
+``Close enough'' is defined by the macro @code{KPSE_BITMAP_TOLERANCE} in
+@file{kpathsea/tex-glyph.h} to be @code{@var{dpi} / 500 + 1}.  This is
+slightly more than the 0.2% minimum allowed by the DVI standard
+(@url{@var{CTAN:}/dviware/driv-standard/level-0}).
 
 
 @node Fontmap
@@ -1626,23 +1730,24 @@ is slightly more than the 0.2% allowed by the DVI standard.
 @cindex fontmap files
 @cindex font alias files
 @cindex aliases for fonts
-@flindex texfonts.map
 
-If a bitmap font is not found with the original name (see the previous
-section), Kpathsea looks through any @dfn{fontmap} files for an
-@dfn{alias} for the original font name.  These files are named
-@file{texfonts.map} and are searched for along the usual glyph path.
+@flindex texfonts.map
+If a bitmap font or metric file is not found with the original name (see
+the previous section), Kpathsea looks through any @dfn{fontmap} files
+for an @dfn{alias} for the original font name.  These files are named
+@file{texfonts.map} and searched for along the @code{TEXFONTMAPS}
+environment/config file variable.  All @file{texfonts.map} files that
+are found are read; earlier definitions override later ones.
 
 This feature is intended to help in two respects:
 
 @enumerate
 
 @item
-@cindex fontnames, unlimited length
+@cindex fontnames, arbitrary length
 An alias name is limited in length only by available memory, not by your
-filesystem.  Therefore, if you want to ask for
-@file{Adobe-Lucida-Bold-Sans=Typewriter} instead of @file{plcbst}, you
-can.
+filesystem.  Therefore, if you want to ask for @samp{Times-Roman}
+instead of @file{ptmr}, you can (you get @samp{ptmr8r}).
 
 @item
 @cindex circle fonts
@@ -1655,173 +1760,51 @@ file is; @TeX{} documents will find their favorite name.
 
 @end enumerate
 
-The format of fontmap files is straightforward: the first word on each
-line is the true filename; the second word is the alias; subsequent
-words are ignored.  A @dfn{word} is a sequence of non-whitespace
-characters.  Blank lines are ignored;
-comments start with @samp{%} and continue to end-of-line.
+The format of fontmap files is straightforward:
 
-If an alias has an extension, it matches only those files with
-that extension; otherwise, it matches anything with the same root,
-regardless of extension.  For example, an alias @samp{foo.tfm} matches only
-when exactly @file{foo.tfm} is being searched for; but an alias
-@samp{foo} matches @file{foo.vf}, @file{foo.300pk}, etc.
+@itemize @bullet
+@cindex comments, in fontmap files
+@item Comments start with @samp{%} and continue to the end of the line.
+@cindex whitespace, in fontmap files
+@item Blank lines are ignored.
+@item Each nonblank line is broken up into a series of @dfn{words}:
+  a sequence of non-whitespace characters.
+@findex include @r{fontmap directive}
+@item If the first word is @samp{include}, the second word is used as
+  a filename, and it is searched for and read.
+@item Otherwise, the first word on each line is the true filename;
+@item the second word is the alias;
+@item subsequent words are ignored.
+@end itemize
 
-As an example, here are the fontmap entries that make the circle fonts
-equivalent. These are in the distributed @file{texfonts.map} in the
-Web2C distribution.
+If an alias has an extension, it matches only those files with that
+extension; otherwise, it matches anything with the same root, regardless
+of extension.  For example, an alias @samp{foo.tfm} matches only when
+@file{foo.tfm} is being searched for; but an alias @samp{foo} matches
+@file{foo.vf}, @file{foo.600pk}, etc.
 
-@example
-circle10	lcircle10
-circle10	lcirc10
-lcircle10	circle10
-lcircle10	lcirc10
-lcirc10		circle10
-lcirc10		lcircle10
-@end example
-
-
-@node MakeTeX... scripts
-@subsection @file{MakeTeX}@dots{} scripts
-
-@cindex @file{MakeTeX}@dots{} scripts
-@cindex scripts for file creation
-
-If Kpathsea cannot find a bitmap font, by either its original name or a
-fontmap alias, it can be configured to invoke an external program to
-create it.  The same mechanism can be used for other nonexistent files.
-
-The script is passed the name of the file to create and possibly other
-arguments, as explained below.  It must echo the full pathname of the
-file it created (and nothing else) to standard output; it can write
-diagnostics to standard error.
-
-@menu
-* MakeTeX... script names::
-* MakeTeX... script arguments::
-@end menu
-
-
-@node MakeTeX... script names
-@subsubsection @file{MakeTeX}@dots{} script names
-
-@cindex @file{MakeTeX}@dots{} script names
-@cindex names for @file{MakeTeX}@dots{} scripts
-
-@flindex tex-make.c
-@vindex kpse_make_specs
-The following table shows the default name of the script for each
-possible file types.  (The source is the variable @code{kpse_make_specs}
-in @file{kpathsea/tex-make.c}.)
-
-@table @file
-
-@item MakeTeXPK
-@pindex MakeTeXPK
-Glyph fonts.
-
-@item MakeTeXTeX
-@pindex MakeTeXTeX
-@TeX{} input files.
-
-@item MakeTeXMF
-@pindex MakeTeXMF
-Metafont input files.
-
-@item MakeTeXTFM
-@pindex MakeTeXTFM
-TFM files.
-
-@end table
-
-@vindex DVIPSMAKEPK
-@vindex XDVIMAKEPK
-@vindex DVILJMAKEPK
-@noindent These names are overridden by an environment variable specific
-to the program---for example, @samp{DVIPSMAKEPK} for Dvipsk.
-
-@flindex missfont.log
-@cindex failed @code{MakeTeX@dots{}}
-@vindex TEXMFOUTPUT
-If a @code{MakeTeX@dots{}} script fails, the invocation is appended to a
-file @file{missfont.log} in the current directory. If the current
-directory is not writable and the environment variable
-@samp{TEXMFOUTPUT} is set, its value is used. Otherwise, nothing is
-written.
-
-
-@node MakeTeX... script arguments
-@subsubsection @file{MakeTeX}@dots{} script arguments
-
-@cindex arguments to @file{MakeTeX}@dots{}
-
-The first argument to a @file{MakeTeX}@dots{} script is always the name
-of the file to be created.
-
-For @file{MakeTeXPK}, three or four additional arguments are also
-passed, via corresponding environment variables:
-
-@enumerate
-
-@item
-@vindex KPATHSEA_DPI
-The dpi to make the font at (@samp{KPATHSEA_DPI}).
-
-@item
-@vindex MAKETEX_BASE_DPI
-@cindex base dpi
-The ``base dpi'' the program is operating at (@samp{MAKETEX_BASE_DPI}),
-i.e., the assumed resolution of the output device.
-
-@item
-@vindex MAKETEX_MAG
-@vindex mag @r{Metafont variable}
-@cindex magstep for @code{MakeTeXPK}
-A ``magstep'' string suitable for the Metafont @code{mag} variable
-(@samp{MAKETEX_MAG}).
-
-@item
-@vindex MAKETEX_MODE
-@vindex mode @r{Metafont variable}
-@cindex Metafont mode name for @code{MakeTeXPK}
-Optionally, a Metafont mode name to assign to the Metafont @code{mode}
-variable (@samp{MAKETEX_MODE}).  Otherwise, (the default)
-@code{MakeTeXPK} guesses the mode from the resolution.  @xref{TeX
-directory structure, @TeX{} directory structure}.
-
-@item
-@vindex mtp_destdir
-@cindex destination directory for @code{MakeTeXPK}
-Optionally, a directory name. If the directory is absolute, it is used
-as-is. Otherwise, it is appended to the root destination directory set
-in the script (from environment variables @code{DESTDIR} or
-@code{MTP_DESTDIR} or a compile-time default). If this argument is not
-supplied, the mode name is appended to the root destination directory.
-
-@end enumerate
-
-@noindent Kpathsea sets @samp{KPATHSEA_DPI} appropriately for each
-attempt at building a font.  It's up to the program using Kpathsea to
-set the others. (@xref{Calling sequence}.)
-
-@vindex MAKETEXPK @r{environment variable}
-@cindex specification for @code{MakeTeXPK}
-You can change the specification for the arguments passed to the
-external script by setting the environment variable named as the script
-name, but all capitals---@samp{MAKETEXPK}, for example.  If you've
-changed the script name by setting (say) @samp{DVIPSMAKEPK} to
-@samp{foo}, then the spec is taken from the environment variable @samp{FOO}.
-
-The spec can contain any variable references, to the above variables or
-any others you might have set.  As an example, the default spec for
-@code{MakeTeXPK} is:
+As an example, here is an excerpt from the @file{texfonts.map} in the
+Web2c distribution.  It makes the circle fonts equivalent and includes
+automatically generated maps for most PostScript fonts available from
+various font suppliers.
 
 @example
-$KPATHSEA_DPI $MAKETEX_BASE_DPI $MAKETEX_MAG $MAKETEX_MODE
+circle10        lcircle10
+circle10        lcirc10
+lcircle10       circle10
+lcircle10       lcirc10
+lcirc10         circle10
+lcirc10         lcircle10
+@dots{}
+include adobe.map
+include apple.map
+include bitstrea.map
+@dots{}
 @end example
 
-@noindent The convention of passing the name of the file to be created
-as the first argument cannot be changed.
+Fontmaps are implemented in the file @file{kpathsea/fontmap.c}.
+The Fontname distribution has much more information on font naming
+(@pxref{Introduction,,, fontname, Filenames for @TeX{} fonts}).
 
 
 @node Fallback font
@@ -1843,66 +1826,74 @@ Kpathsea looks for the font at a set of @dfn{fallback resolutions}.  You
 specify these resolutions as a colon-separated list (like search paths).
 Kpathsea looks first for a program-specific environment variable (e.g.,
 @code{DVIPSSIZES} for Dvipsk), then the environment variable
-@samp{TEXSIZES}, then a default specified at compilation time (the Make
+@code{TEXSIZES}, then a default specified at compilation time (the Make
 variable @code{default_texsizes}).  You can set this list to be empty if
 you prefer to find fonts at their stated size or not at all.
 
-@flindex cmr10
+@flindex cmr10@r{, as fallback font}
 @vindex kpse_fallback_font
 Finally, if the font cannot be found even at the fallback resolutions,
 Kpathsea looks for a fallback font, typically @file{cmr10}.  Programs
 must enable this feature by assigning to the global variable
 @code{kpse_fallback_font} or calling @code{kpse_init_prog}
-(@pxref{Calling sequence}); the default is no such fallback font.
+(@pxref{Calling sequence}); the default is no fallback font.
 
 
-@node TeX directory structure
-@chapter @TeX{} directory structure
+@node Suppressing warnings
+@section Suppressing warnings
 
-(This section obviously not really written yet; sorry.  See
-@file{kpathsea/HIER}.)
+@cindex warnings, suppressing
+@cindex suppressing warnings
 
-@vindex TEXMF
+@vindex TEX_HUSH
+Kpathsea provides a way to suppress selected usually-harmless warnings;
+this is useful at large sites where most users are not administrators,
+and thus the warnings are merely a source of confusion, not a help.  To
+do this, you set the environment variable or configuration file value
+@code{TEX_HUSH} to a colon-separated list of values.  Here are the
+possibilities:
 
-@vindex MAKETEX_MODE
-@cindex paths, device name included in
-By default, the bitmap font paths end with @code{$MAKETEX_MODE}, thus
-including the device name (i.e., the Metafont mode) in the path.  This
-is to make it possible to distinguish two different devices with the
-same resolution---write/white and write/black 300dpi printers, for
-example.
+@vtable @samp
+@item all
+Suppress everything possible.
 
-@findex kpse_init_prog
-@flindex proginit.c
-@flindex kpathsea/proginit.c
-However, since most sites don't have this complication, Kpathsea
-(specifically, @code{kpse_init_prog} in @file{kpathsea/proginit.c}) has
-a special case: if the mode has not been explicitly set by the user (or
-in a configuration file), it sets @samp{MAKETEX_MODE} to @code{/}.  This
-makes the default PK path, for example, expand into @code{@dots{}/pk//},
-so fonts will be found even if there is no subdirectory for the mode.
-(If your site has only one printer, for example.)
+@item checksum
+@cindex mismatched checksum warnings
+Suppress mismatched font checksum warnings.
 
-To make the paths independent of the mode, simply edit
-@file{texmf.cnf.in} before installation, or the installed
-@file{texmf.cnf}.  @xref{Default paths}.
+@item lostchar
+@cindex missing character warnings
+Suppress warnings when a character is missing from a font that a DVI or
+VF file tries to typeset.
 
-@xref{MakeTeX...  script arguments, @file{MakeTeX}@dots{} script
-arguments}, for how this interacts with @code{MakeTeXPK}.
+@item readable
+@cindex unreadable file warnings
+Suppress warnings about attempts to access a file whose permissions
+render it unreadable.
+
+@item special
+@cindex unknown special warnings
+@findex \special@r{, suppressing warnings about}
+Suppresses warnings about an unimplemented or unparsable
+@samp{\special} command.
+@end vtable
+
+@noindent @file{tex-hush.c} defines the function that checks the
+variable value.  Each driver implements its own checks where
+appropriate.
 
 
 @node Programming
 @chapter Programming
 
-This chapter is for programmers who wish to use
-Kpathsea. @xref{Introduction}, for the conditions under which you may do
-so. (If you do this, I'd appreciate a note, just to satisfy my
-curiousity.)
+This chapter is for programmers who wish to use Kpathsea.
+@xref{Introduction}, for the conditions under which you may do so.
 
 @menu
-* Overview: Programming overview:	 Introduction.
-* Calling sequence::			 Specifics of what to call.
-* Config: Programming with config files:	Getting info from texmf.cnf.
+* Overview: Programming overview.         Introduction.
+* Calling sequence::                      Specifics of what to call.
+* Program-specific files::                How to handle these.
+* Config: Programming with config files.  Getting info from texmf.cnf.
 @end menu
 
 
@@ -1913,33 +1904,41 @@ curiousity.)
 @cindex overview of programming with Kpathsea
 
 Aside from this manual, your best source of information is the source to
-the programs I've modified to use Kpathsea (also listed in the
-introduction). Of those, Dviljk is probably the simplest, and hence a
-good place to start. Xdvik adds VF support and the complication of X
-resources. Dvipsk adds the complication of its own config files.
+the programs I've modified to use Kpathsea (@pxref{Introduction}).  Of
+those, Dviljk is probably the simplest, and hence a good place to start.
+Xdvik adds VF support and the complication of X resources.  Dvipsk adds
+the complication of its own config files.  Web2c is source code I also
+maintain, so it uses Kpathsea rather straightforwardly, but is of course
+complicated by the Web to C translation.  Finally, Kpsewhich is a small
+utility program whose sole purpose is to exercise the main
+path-searching functionality.
 
 @flindex pathsearch.h
 @flindex tex-file.h
 @flindex tex-glyph.h
-Beyond these of examples of use, the @file{.h} files in the Kpathsea
-source describe the interfaces and functionality (and of course the
-@file{.c} files define the actual routines, which are the ultimate
-documentation).  @file{pathsearch.h} declares the basic searching
-routine. @file{tex-file.h} and @file{tex-glyph.h} define the interfaces
-for looking up particular kinds of files.
+@flindex kpathsea.h
+Beyond these examples, the @file{.h} files in the Kpathsea source
+describe the interfaces and functionality (and of course the @file{.c}
+files define the actual routines, which are the ultimate documentation).
+@file{pathsearch.h} declares the basic searching routine.
+@file{tex-file.h} and @file{tex-glyph.h} define the interfaces for
+looking up particular kinds of files.  You may wish to use
+@code{#include <kpathsea/kpathsea.h>}, which includes every Kpathsea header.
 
+@cindex file types, registering new
 The library provides no way for an external program to register new file
 types: @file{tex-file.[ch]} must be modified to do this. For example,
-Kpathsea has support for looking up Dvips config files, even though
-obviously no program other than Dvips will ever want to do so. I felt
-this was acceptable, since along with new file types should also come
-new defaults in @file{texmf.cnf} (and its descendant @file{paths.h}),
-since it's best for users if they can modify one configuration file for
+Kpathsea has support for looking up Dvips config files, even though no
+program other than Dvips will likely ever want to do so.  I felt this
+was acceptable, since along with new file types should also come new
+defaults in @file{texmf.cnf} (and its descendant @file{paths.h}), since
+it's simplest for users if they can modify one configuration file for
 all kinds of paths.
 
-Kpathsea does not open any files or parse any formats itself. Its
-purpose is only to return filenames. The GNU font utilities source does
-contain libraries to read TFM, GF, and PK files.
+Kpathsea does not parse any formats itself; it barely opens any files.
+Its primary purpose is to return filenames.  The GNU font utilities does
+contain libraries to read TFM, GF, and PK files, as do the programs
+above, of course.
 
 
 @node Calling sequence
@@ -1953,47 +1952,70 @@ The typical way to use Kpathsea in your program goes something like this:
 @enumerate
 
 @item
-@findex kpse_set_progname
+@findex kpse_set_program_name
 @vindex argv[0]
-Call @code{kpse_set_progname} with @code{argv[0]}; This is the only
-initialization that is mandatory to take full advantage of
-Kpathsea---specifically, for the @code{.@var{program}} feature of config
-files (@pxref{Config files}).
+Call @code{kpse_set_program_name} with @code{argv[0]} as the first
+argument; the second argument is a string or @code{NULL}.  The second
+argument is used by Kpathsea as the program name for the
+@code{.@var{program}} feature of config files (@pxref{Config files}).
+If the second argument is @code{NULL}, the value of the first argument
+is used.  This function must be called before any other use of the
+Kpathsea library.
 
 @vindex program_invocation_name
 @vindex program_invocation_short_name
+@vindex kpse_program_name
 @vindex KPATHSEA_DEBUG
-@code{kpse_set_progname} sets the global variables
+@cindex SELFAUTOLOC
+@cindex SELFAUTODIR
+@cindex SELFAUTOPARENT
+@cindex error message macros
+@cindex symlinks, resolving
+@cindex expanding symlinks
+If necessary, @code{kpse_set_program_name} sets the global variables
 @code{program_invocation_name} and @code{program_invocation_short_name}.
-It also initializes debugging flags based on the environment variable
-@code{KPATHSEA_DEBUG}, if that is set.  set.
-
-@cindex GNU C library
-The GNU C library provides these two global variables itself; in this
-case, the call to @code{kpse_set_program} does nothing. But you (as a
-software author) most likely do not want to force people installing your
-program to have glibc.
+These variables are used in the error message macros defined in
+@file{kpathsea/lib.h}.  It sets the global variable
+@code{kpse_program_name} to the program name it uses.  It also
+initializes debugging options based on the environment variable
+@code{KPATHSEA_DEBUG} (if that is set).  Finally, it sets the variables
+@code{SELFAUTOLOC}, @code{SELFAUTODIR} and @code{SELFAUTOPARENT} to the
+location, parent and grandparent directory of the executable, removing
+@file{.} and @file{..} path elements and resolving symbolic links.
+These are used in the default configuration file to allow people to
+invoke TeX from anywhere, specifically from a mounted CD-ROM.  (You can
+use @samp{--expand-var=\$SELFAUTOLOC}, etc., to see the values finds.)
 
 @item
-@vindex kpathsea_debug
-@cindex debugging flags, in kpathsea-using program
-Set debugging options. @xref{Debugging}. If your program doesn't have a
-debugging flag already, you can define one and set @samp{kpathsea_debug}
-to the number that the user supplies (see Dviljk), or you can just omit
-this altogether (people can always set @samp{KPATHSEA_DEBUG}).  If you
-do have runtime debugging already, you need to merge Kpathsea's options
-with yours (see Dvipsk and Xdvik).
+@findex kpse_set_progname
+@vindex argv[0]
+The @code{kpse_set_progname} is deprecated.  A call to
+@code{kpse_set_progname} with @code{argv[0]} is equivalent to a call of
+@code{kpse_set_program_name} with first argument @code{argv[0]} and
+second argument @code{NULL}.  The function is deprecated because it
+cannot ensure that the @code{.@var{program}} feature of config files
+will always work (@pxref{Config files}).
+
+@item
+@vindex kpathsea_debug @r{variable}
+@cindex debugging options, in Kpathsea-using program
+Set debugging options. @xref{Debugging}.  If your program doesn't have a
+debugging option already, you can define one and set
+@code{kpathsea_debug} to the number that the user supplies (as in Dviljk
+and Web2c), or you can just omit this altogether (people can always set
+@code{KPATHSEA_DEBUG}).  If you do have runtime debugging already, you
+need to merge Kpathsea's options with yours (as in Dvipsk and Xdvik).
 
 @item
 @vindex client_path @r{in @code{kpse_format_info}}
 @vindex kpse_format_info
 @flindex resident.c
-@cindex config files, for kpathsea-using program
+@cindex config files, for Kpathsea-using programs
 If your program has its own configuration files that can define search
 paths, you should assign those paths to the @code{client_path} member in
-the appropriate element of the @file{kpse_format_info} array. (This array
-is indexed by file type; see @file{tex-file.h}.)  See @file{resident.c}
-in Dvipsk for an example.
+the appropriate element of the @code{kpse_format_info} array.  (This
+array is indexed by file type; see @file{tex-file.h}.)  See
+@file{resident.c} in Dvipsk for an example.
 
 @item
 @findex kpse_init_prog
@@ -2008,43 +2030,77 @@ work, e.g., initializing the Bib@TeX{} search paths in a DVI driver.)
 
 @item
 @findex kpse_find_*
+@findex kpse_find_file
 The routine to actually find a file of type @var{format} is
 @code{kpse_find_@var{format}}, defined in @file{tex-file.h}. These are
 macros that expand to a call to @file{kpse_find_file}.  You can call,
 say, @code{kpse_find_tfm} after doing only the first of the
-initialization steps above---Kpathsea will read the generic config file
-@file{texmf.cmf}, look for environment variables, and do the expansions
-at the first lookup.
+initialization steps above---Kpathsea automatically reads the
+@file{texmf.cnf} generic config files, looks for environment variables,
+and does expansions at the first lookup.
 
 @item
-To find PK and/or GF bitmap fonts, the routines are @file{kpse_find_pk},
-@file{kpse_find_gf} and @file{kpse_find_glyph}, defined in
+To find PK and/or GF bitmap fonts, the routines are @code{kpse_find_pk},
+@code{kpse_find_gf} and @code{kpse_find_glyph}, defined in
 @file{tex-glyph.h}. These return a structure in addition to the
 resultant filename, because fonts can be found in so many ways. See the
 documentation in the source.
+
+@item
+@findex kpse_open_file
+To actually open a file, not just return a filename, call
+@code{kpse_open_file}.  This function takes the name to look up and a
+Kpathsea file format as arguments, and returns the usual @code{FILE *}.
+It always assumes the file must exist, and thus will search the disk if
+necessary (unless the search path specified @samp{!!}, etc.).  In other
+words, if you are looking up a VF or some other file that need not
+exist, don't use this.
 
 @end enumerate
 
 @cindex hash table routines
 @cindex memory allocation routines
 @cindex string routines
-@cindex reading unlimited-length lines
+@cindex reading arbitrary-length lines
 @cindex input lines, reading
-@cindex lines, reading unlimited-length
+@cindex lines, reading arbitrary-length
 Kpathsea also provides many utility routines. Some are generic: hash
 tables, memory allocation, string concatenation and copying, string
-lists, reading input lines of unlimited length, etc. Others are
+lists, reading input lines of arbitrary length, etc. Others are
 filename-related: default path, tilde, and variable expansion,
 @code{stat} calls, etc. (Perhaps someday I'll move the former to a
 separate library.)
 
 @flindex c-*.h
+@pindex autoconf@r{, recommended}
 The @file{c-*.h} header files can also help your program adapt to many
 different systems.  You will almost certainly want to use Autoconf for
 configuring your software if you use Kpathsea; I strongly recommend
-using Autoconf regardless.  You can get it by ftp from
-@samp{prep.ai.mit.edu} in @file{pub/gnu/autoconf-*.tar.gz}, or from any
-of its mirrors.
+using Autoconf regardless.  It is available from
+@url{ftp://prep.ai.mit.edu/pub/gnu/}.
+
+
+@node Program-specific files
+@section Program-specific files
+
+Many programs will need to find some configuration files.  Kpathsea
+contains some support to make it easy to place them in their own
+directories.  The Standard @TeX{} directory structure (@pxref{Top,,
+Introduction, tds, A Directory Structure for @TeX{} files}), specifies
+that such files should go into a subdirectory named after the program,
+like @samp{texmf/ttf2pk}.
+
+Two special formats, @samp{kpse_program_text_format} and
+@samp{kpse_program_binary_format} exist, which use
+@code{.:$TEXMF/@var{program}//} as their compiled-in search path.  To
+override this default, you can use the variable
+@code{@var{PROGRAM}INPUTS} in the environment and/or @samp{texmf.cnf}.
+That is to say, the name of the variable is constructed by converting
+the name of the program to upper case, and appending @code{INPUTS}.
+
+The only difference between these two formats is whether
+@code{kpse_open_file} will open the files it finds in text or binary
+mode.
 
 
 @node Programming with config files
@@ -2053,16 +2109,25 @@ of its mirrors.
 @cindex programming with config files
 @cindex config files, programming with
 
-You can use the same @code{texmf.cnf} configuration file as Kpathsea for
-your program. This will help installers do all configuration in one place.
+You can (and probably should) use the same @code{texmf.cnf}
+configuration file that Kpathsea uses for your program.  This helps
+installers by keeping all configuration in one place.
 
-@findex kpse_var_expand
+@findex kpse_var_value
 @flindex variable.h
-To retrieve a value @var{var}, the best way is to call
-@code{kpse_var_expand} on the string @code{$@var{var}}. This will look
-first for an environment variable @var{var}, then a config file
-value. The result will be the value found, or the empty string. This
-function is declared in @file{kpathsea/variable.h}.
+@vindex shell_escape@r{, example for code}
+To retrieve a value @var{var} from config files, the best way is to call
+@code{kpse_var_value} on the string @code{@var{var}}.  This will look
+first for an environment variable @var{var}, then a config file value.
+The result will be the value found or @samp{NULL}.  This function is
+declared in @file{kpathsea/variable.h}.  For an example, see the
+@code{shell_escape} code in @file{web2c/lib/texmfmp.c}.
+
+The routine to do variable expansion in the context of a search path (as
+opposed to simply retrieving a value) is @code{kpse_var_expand}, also
+declared in @file{kpathsea/variable.h}.  It's generally only necessary
+to set the search path structure components as explained in the previous
+section, rather than using this yourself.
 
 @findex kpse_cnf_get
 @flindex cnf.h
@@ -2072,10 +2137,6 @@ variable, call @code{kpse_cnf_get} (declared in @file{kpathsea/cnf.h})
 with the string @var{var}.
 
 No initialization calls are needed.
-
-
-@include copying.texi
-@include freedom.texi
 
 
 @node Index

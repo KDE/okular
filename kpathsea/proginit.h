@@ -1,20 +1,20 @@
 /* proginit.h: declarations for DVI driver initializations.
 
-Copyright (C) 1994, 95 Karl Berry.
+Copyright (C) 1994, 95, 96 Karl Berry.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #ifndef KPATHSEA_PROGINIT_H
 #define KPATHSEA_PROGINIT_H
@@ -27,8 +27,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
    `PREFIX'FONTS environment variables, setenv MAKETEX_MODE to MODE,
    etc., etc.  See the source.  */
 
-extern void
-kpse_init_prog P5H(const_string prefix,  unsigned dpi,  const_string mode,
-                   boolean make_tex_pk,  const_string fallback);
+extern KPSEDLL void
+kpse_init_prog P4H(const_string prefix,  unsigned dpi,  const_string mode,
+                   const_string fallback);
 
 #endif /* not KPATHSEA_PROGINIT_H */

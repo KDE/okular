@@ -1,20 +1,20 @@
 /* magstep.c: fix up fixed-point vs. floating-point.
 
-Copyright (C) 1994 Karl Berry.
+Copyright (C) 1994, 95 Karl Berry.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #include <kpathsea/config.h>
 
@@ -57,7 +57,8 @@ magstep P2C(int, n,  int, bdpi)
        t = t * 1.2;
      }
 
-   step = 0.5 + (neg ? bdpi / t : bdpi * t);
+   /* Unnecessary casts to shut up stupid compilers. */
+   step = (int)(0.5 + (neg ? bdpi / t : bdpi * t));
    return step;
 }
 
@@ -92,8 +93,9 @@ kpse_magstep_fix P3C(unsigned, dpi,  unsigned, bdpi,  int *, m_ret)
     }
   
   /* If requested, return the encoded magstep (the loop went one too far).  */
+  /* More unnecessary casts. */
   if (m_ret)
-    *m_ret = real_dpi == mdpi ? (m - 1) * sign : 0;
+    *m_ret = real_dpi == (unsigned)(mdpi ? (m - 1) * sign : 0);
 
   /* Always return the true dpi found.  */
   return real_dpi ? real_dpi : dpi;

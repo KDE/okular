@@ -1,0 +1,120 @@
+#!/bin/sh
+# original mktexlsr -- create or rebuild ls-R.
+# 
+# (If you change or delete the word `original' on the previous line,
+# installation won't write this script over yours.)
+#
+# Suitable for calling from cron, as in:
+# 0 * * * * cd /your/texmf/root && /usr/local/bin/mktexlsr
+# unless the scripts live in a different directory than the 'access',
+# 'kpsestat', 'readlink', and 'kpsewhich' binaries.
+# 
+# Originally written as `texhash' by Thomas Esser
+# <te@informatik.uni-hannover.de>, Okt., 1994.
+# Public domain.
+
+version='$Id$'
+progname=`echo $0 | sed 's%.*/%%'`
+usage="Usage: $progname [DIRS ...]
+
+Rebuild all necessary ls-R filename databases completely. If one or
+more arguments DIRS are given, these are used as texmf directories to
+build ls-R for. Else all directories in the search path for ls-R files
+(\$TEXMFDBS) are used."
+
+# MS-DOS and MS-Windows define $COMSPEC or $ComSpec and use `;' to separate
+# directories in path lists whereas Unix uses `:'.
+# Create a variable that holds the right character to be used by the scripts.
+if test -z "$COMSPEC" && test -z "$ComSpec"; then SEP=':'; else SEP=';'; fi
+
+# Add the location of the script to the PATH if necessary.  This must
+# be done before kpsewhich can be called, and thus cannot be put into
+# mktex.opt.
+dirname=`echo $0 | sed 's%/*[^/][^/]*$%%'`
+case $dirname in
+  "") # Do nothing
+      ;;
+  /* | [A-z]:/*) # Absolute name
+      PATH="$dirname$SEP$PATH" ;;
+   *)  # Relative name
+      PATH="`pwd`/$dirname$SEP$PATH" ;;
+esac
+
+# A copy of some stuff from mktex.opt, so we can run in the presence of
+# terminally damaged ls-R files.
+if test "x$1" = x--help || test "x$1" = x-help; then
+  echo "$usage"
+  exit 0
+elif test "x$1" = x--version || test "x$1" = x-version; then
+  echo "`basename $0` $version"
+  kpsewhich --version
+  exit 0
+fi
+
+# mktexupd and mktexlsr make sure they're coordinated via this.  A copy
+# is found mktex.opt.
+ls_R_magic='% ls-R -- filename database for kpathsea; do not change this line.'
+# The old string, which should continue to work.
+old_ls_R_magic='% ls-R -- maintained by MakeTeXls-R; do not change this line.'
+
+trap 'cd / ; rm -f "$db_file_tmp"; exit' 0 1 2 3 7 13 15
+
+test $# = 0 && {
+  OIFS=$IFS; IFS=$SEP; set x `kpsewhich --show-path=ls-R 2>/dev/null`; shift; IFS=$OIFS
+}
+for TEXMFLS_R in "$@"; do
+  # Prepend cwd if the directory was relative.
+  case "$TEXMFLS_R" in
+  "") continue ;;  # Strictly speaking, it is an error if this case is taken.
+  /* | [A-z]:/*) ;;
+  *)  TEXMFLS_R="`pwd`/$TEXMFLS_R"
+  esac
+  # Follow a possible symlink to get the right filesystem. 
+  # The '|| true' construct prevents an sh -e aborting.
+  db_file=`readlink "$TEXMFLS_R/ls-R" 2>/dev/null` || true
+  case "$db_file" in
+  "") db_file="$TEXMFLS_R/ls-R" ;;
+  /* | [A-z]:/*) ;;
+  *)  db_file="$TEXMFLS_R/$db_file"
+  esac
+  db_dir=`echo "$db_file" | sed 's%/[^/][^/]*$%%'` # can't rely on dirname
+  db_file_tmp="$db_dir/lsR$$.tmp"
+
+  test -d "$db_dir" || continue
+  test -w "$db_dir" || { echo "$progname: $db_dir: directory not writable. Skipping..." >&2; continue; }
+
+  if test ! -f "$db_file"; then
+    cp /dev/null "$db_file"
+    # Use same permissions as parent directory, minus x,s, or t bits.
+    chmod `kpsestat -xst "$db_dir"` "$db_file"
+  elif test "x`sed 1q \"$db_file\"`" != "x$ls_R_magic" \
+       && test "x`sed 1q \"$db_file\"`" != "x$old_ls_R_magic"; then
+    echo "$progname: $db_file lacks magic string. Skipping..." >&2
+    continue
+  fi
+
+  # Skip if we cannot write the file:
+  access -w "$db_file" || { echo "$progname: $db_file: no write permission. Skipping..." >&2; continue; }
+
+  rm -f "$db_file_tmp"
+
+  tty -s && echo "$progname: Updating $db_file... "
+  echo "$ls_R_magic" >"$db_file_tmp"
+
+  # The main task. We put ./: in the output, so top-level files can be
+  # found via ls-R. Probably irrelevant in practice.
+  # The sed command inserts the leading ./ for directory names, and
+  # removes . and .. from the list.  Note that using colons in directory
+  # names results in nothing but grief.
+  echo "./:" >>"$db_file_tmp"
+  (cd "$TEXMFLS_R" && \ls -LRa 2>/dev/null) |
+    sed 's%^[^.].*:$%./&%; /^\.$/d; /^\.\.$/d; /^lsR[0-9]*\.tmp$/d' >>"$db_file_tmp"
+
+  # To be really safe, a loop.
+  until PERMS=`kpsestat = "$db_file"`; do sleep 1; done
+  chmod $PERMS "$db_file_tmp"
+  rm -f "$db_file"
+  mv "$db_file_tmp" "$db_file"
+done
+tty -s && echo "$progname: Done."
+exit 0

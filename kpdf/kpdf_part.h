@@ -31,7 +31,6 @@ class KPrinter;
 namespace KPDF
 {
   class BrowserExtension;
-  class Canvas;
   class PageWidget;
 
   /**

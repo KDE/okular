@@ -43,8 +43,8 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorDescriptionString += i18n("Click 'Help' to learn how to set up Emacs.");
   
   editorNameString        += "Kate";
-  editorCommandString     += "kate %f";
-  editorDescriptionString += i18n("Kate does not jump to line");
+  editorCommandString     += "kate --line %l %f";
+  editorDescriptionString += "";
   
   editorNameString        += "Kile";
   editorCommandString     += "kile %f --line %l";

@@ -8,8 +8,6 @@
 #include <kapplication.h>
 #include <kparts/mainwindow.h>
  
-class KToggleAction;
-
 namespace KPDF
 {
 
@@ -59,8 +57,6 @@ namespace KPDF
     void fileOpen();
     void fileSaveAs();
 
-    void optionsShowToolbar();
-    void optionsShowStatusbar();
     void optionsConfigureKeys();
     void optionsConfigureToolbars();
 
@@ -73,8 +69,6 @@ namespace KPDF
   private:
     KParts::ReadOnlyPart* m_part;
 
-    KToggleAction* m_toolbarAction;
-    KToggleAction* m_statusbarAction;
   };
 
 }

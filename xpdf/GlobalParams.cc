@@ -778,7 +778,7 @@ void GlobalParams::parseYesNo(char *cmdName, GBool *flag,
 
 GlobalParams::~GlobalParams() {
   GHashIter *iter;
-  GString *key;
+  const GString *key;
   GList *list;
 
   freeBuiltinFontTables();

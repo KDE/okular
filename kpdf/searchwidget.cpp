@@ -10,6 +10,7 @@
 // qt/kde includes
 #include <qtooltip.h>
 #include <qapplication.h>
+#include <qtimer.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <klocale.h>
@@ -38,10 +39,15 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     setIconSize( 16 );
     setMovingEnabled( false );
 
+    // a timer to ensure that we don't flood the document with requests to search
+    m_inputDelayTimer = new QTimer(this);
+    connect( m_inputDelayTimer, SIGNAL( timeout() ),
+             this, SLOT( startSearch() ) );
+
     // line edit
-    insertLined( QString::null, LEDIT_ID, SIGNAL( textChanged(const QString &) ),
-        this, SLOT( slotTextChanged(const QString &) ), true,
-        i18n( "Enter at least 3 letters to filter pages" ), 0/*size*/, 1 );
+    m_linedId = insertLined( QString::null, LEDIT_ID, SIGNAL( textChanged(const QString &) ),
+                             this, SLOT( slotTextChanged(const QString &) ), true,
+                             i18n( "Enter at least 3 letters to filter pages" ), 0/*size*/, 1 );
 
     // clear button (uses a lineEdit slot, so it must be created after)
     insertButton( "editclear", CLEAR_ID, SIGNAL( clicked() ),
@@ -70,6 +76,13 @@ void SearchWidget::slotTextChanged( const QString & text )
     // if length<3 set 'red' text and send a blank string to document
     QColor color = text.length() < 3 ? Qt::red : palette().active().text();
     getLined( LEDIT_ID )->setPaletteForegroundColor( color );
+    m_inputDelayTimer->stop();
+    m_inputDelayTimer->start(333, true);
+}
+
+void SearchWidget::startSearch()
+{
+    QString text = getLinedText(m_linedId);
     m_document->findTextAll( text.length() < 3 ? QString::null : text, m_caseSensitive );
 }
 

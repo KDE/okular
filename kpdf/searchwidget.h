@@ -14,6 +14,7 @@
 
 class KPopupMenu;
 class KPDFDocument;
+class m_inputDelayTimer;
 
 /**
  * @short A widget for find-as-you-type search. Outputs to the Document.
@@ -32,11 +33,14 @@ class SearchWidget : public KToolBar
     private:
         KPDFDocument * m_document;
         KPopupMenu * m_caseMenu;
+        QTimer* m_inputDelayTimer;
+        int m_linedId;
         bool m_caseSensitive;
 
     private slots:
         void slotTextChanged( const QString & text );
         void slotCaseChanged( int index );
+        void startSearch();
 };
 
 #endif

@@ -611,8 +611,20 @@ void dviRenderer::draw_page(void)
 
   // Render the PostScript background, if there is one.
   if (_postscript)
+  {
+    // In accessiblity mode use the custom background color
+    if (accessibilityBackground)
+    {
+      // Flag permanent is set to false because otherwise we would not be able to restore
+      // the original background color.
+      PS_interface->setBackgroundColor(current_page, accessibilityBackgroundColor, false);
+    }
+    else
+      PS_interface->restoreBackgroundColor(current_page);
+
     PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPaint);
-  
+  }
+
   // Now really write the text
   if (dviFile->page_offset.isEmpty() == true)
     return;

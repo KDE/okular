@@ -25,7 +25,8 @@ extern const char psheader[];
 
 pageInfo::pageInfo(QString _PostScriptString) {
   PostScriptString = new QString(_PostScriptString);
-  background       = Qt::white;
+  background  = Qt::white;
+  permanentBackground = Qt::white;
 }
 
 
@@ -79,22 +80,38 @@ void ghostscript_interface::setIncludePath(const QString &_includePath) {
 }
 
 
-void ghostscript_interface::setColor(PageNumber page, QColor background_color) {
+void ghostscript_interface::setBackgroundColor(PageNumber page, QColor background_color, bool permanent) {
 #ifdef DEBUG_PSGS
-  kdDebug(4300) << "ghostscript_interface::setColor( " << page << ", " << background_color << " )" << endl;
+  kdDebug(4300) << "ghostscript_interface::setBackgroundColor( " << page << ", " << background_color << " )" << endl;
 #endif
 
   if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(QString::null);
     info->background = background_color;
+    if (permanent)
+      info->permanentBackground = background_color;
     // Check if dict is big enough
     if (pageList.count() > pageList.size() -2)
       pageList.resize(pageList.size()*2);
     pageList.insert(page, info);
-  } else
+  } else {
     pageList.find(page)->background = background_color;
+    if (permanent)
+      pageList.find(page)->permanentBackground = background_color;
+  }
 }
 
+void ghostscript_interface::restoreBackgroundColor(PageNumber page)
+{
+#ifdef DEBUG_PSGS
+  kdDebug(4300) << "ghostscript_interface::restoreBackgroundColor( " << page << " )" << endl;
+#endif
+  if (pageList.find(page) == 0)
+    return;
+
+  pageInfo *info = pageList.find(page);
+  info->background = info->permanentBackground;
+}
 
 // Returns the background color for a certain page. This color is
 // always guaranteed to be valid
@@ -166,9 +183,9 @@ void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QSt
 
   if (info->background != Qt::white) {
     QString colorCommand = QString("gsave %1 %2 %3 setrgbcolor clippath fill grestore\n").
-      arg(info->background.red()).
-      arg(info->background.green()).
-      arg(info->background.blue());
+      arg(info->background.red()/255.0).
+      arg(info->background.green()/255.0).
+      arg(info->background.blue()/255.0);
     fputs(colorCommand.latin1(),f);
   }
 

@@ -26,6 +26,7 @@ public:
   ~pageInfo();
 
   QColor    background;
+  QColor    permanentBackground;
   QString   *PostScriptString;
 };
 
@@ -46,8 +47,15 @@ public:
   // sets path from additional postscript files may be read
   void setIncludePath(const QString &_includePath);
 
-  // sets the background color for a certain page
-  void setColor(PageNumber page, QColor background_color);
+  // Sets the background color for a certain page. If permanent is false then the original 
+  // background color can be restored by calling restoreBackground(page).
+  // The Option permanent = false is used when we want to display a different paper 
+  // color as the one specified in the dvi file.
+  void setBackgroundColor(PageNumber page, QColor background_color, bool permanent = true);
+
+  // Restore the background to the color which was specified by the last call to setBackgroundColor()
+  // With option permanent = true.
+  void restoreBackgroundColor(PageNumber page);
 
   // Draws the graphics of the page into the painter, if possible. If
   // the page does not contain any graphics, nothing happens

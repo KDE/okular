@@ -39,6 +39,8 @@
 // transition effect to the next frame
 struct PresentationFrame
 {
+    PresentationFrame() : page( 0 ) {}
+
     const KPDFPage * page;
     QRect geometry;
 };
@@ -282,7 +284,8 @@ void PresentationWidget::generatePage()
 #endif
 
     // start transition or immediately update viewport
-    initTransition( m_frames[ m_frameIndex ]->page->getTransition() );
+    if ( m_frameIndex >= 0 && m_frames[ m_frameIndex ]->page )
+      initTransition( m_frames[ m_frameIndex ]->page->getTransition() );
 }
 
 void PresentationWidget::generateIntroPage( QPainter & p )

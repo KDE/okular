@@ -78,7 +78,7 @@ void ThumbnailList::pageSetup( const QValueList<int> & pages )
 
 void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 {
-	// deselect previous page
+	// deselect previous thumbnail
 	if ( m_selected )
 		m_selected->setSelected( false );
 	m_selected = 0;
@@ -119,31 +119,35 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
 	if ( thumbnails.count() < 1 )
 		return keyEvent->ignore();
+
+	int nextPage = -1;
 	if ( keyEvent->key() == Key_Up )
 	{
 		if ( !m_selected )
-			m_document->slotSetCurrentPage( 0 );
+			nextPage = 0;
 		else if ( vectorIndex > 0 )
-			m_document->slotSetCurrentPage( thumbnails[ vectorIndex - 1 ]->pageNumber() );
-		else
-			return keyEvent->ignore();
+			nextPage = thumbnails[ vectorIndex - 1 ]->pageNumber();
 	}
 	else if ( keyEvent->key() == Key_Down )
 	{
 		if ( !m_selected )
-			m_document->slotSetCurrentPage( 0 );
+			nextPage = 0;
 		else if ( vectorIndex < (int)thumbnails.count() - 1 )
-			m_document->slotSetCurrentPage( thumbnails[ vectorIndex + 1 ]->pageNumber() );
-		else
-			return keyEvent->ignore();
+			nextPage = thumbnails[ vectorIndex + 1 ]->pageNumber();
 	}
 	else if ( keyEvent->key() == Key_Home )
-		m_document->slotSetCurrentPage( thumbnails[ 0 ]->pageNumber() );
+		nextPage = thumbnails[ 0 ]->pageNumber();
 	else if ( keyEvent->key() == Key_End )
-		m_document->slotSetCurrentPage( thumbnails[ thumbnails.count() - 1 ]->pageNumber() );
-	else
+		nextPage = thumbnails[ thumbnails.count() - 1 ]->pageNumber();
+
+	if ( nextPage == -1 )
 		return keyEvent->ignore();
+
 	keyEvent->accept();
+	if ( m_selected )
+		m_selected->setSelected( false );
+	m_selected = 0;
+	m_document->slotSetCurrentPage( nextPage );
 }
 
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
@@ -171,6 +175,9 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 	// right place and recalculate the contents area
 	if ( e->size().width() != e->oldSize().width() )
 	{
+		// runs the timer avoiding a thumbnail regeneration by 'contentsMoving'
+		requestThumbnails( 2000 );
+
 		// resize and reposition items
 		int totalHeight = 0,
 		    newWidth = e->size().width();
@@ -190,7 +197,7 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 		if ( m_selected )
 			ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, visibleHeight()/2 );
 	}
-	else if ( e->size().height() > e->oldSize().height() )
+	else if ( e->size().height() <= e->oldSize().height() )
 		return;
 	// update thumbnails since width has changed or height has increased
 	requestThumbnails( 500 );
@@ -217,7 +224,7 @@ void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContents
 		if ( top > vHeight )
 			break;
 		else if ( top + t->height() > 0 )
-			m_document->makeThumbnail( t->pageNumber(), t->width(), t->height() );
+			m_document->requestThumbnail( t->pageNumber(), t->previewWidth(), t->previewHeight() );
 	}
 }
 //END internal SLOTS

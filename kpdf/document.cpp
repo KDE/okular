@@ -14,6 +14,7 @@
 
 // local includes
 #include "PDFDoc.h"
+#include "QOutputDev.h"
 //#include "TextOutputDev.h"
 
 #include "kpdf_error.h"
@@ -71,8 +72,8 @@ bool KPDFDocument::openFile( const QString & docFile )
 
     GString *filename = new GString( QFile::encodeName( docFile ) );
     delete d->pdfdoc;
-    d->pdfdoc = new PDFDoc( filename, 0, 0 );
     deletePages();
+    d->pdfdoc = new PDFDoc( filename, 0, 0 );
     
     if ( !d->pdfdoc->isOk() || d->pdfdoc->getNumPages() < 1 )
     {
@@ -89,7 +90,7 @@ bool KPDFDocument::openFile( const QString & docFile )
     uint pageCount = d->pdfdoc->getNumPages();
     d->pages.resize( pageCount );
     for ( uint i = 0; i < pageCount ; i++ )
-        d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1) );
+        d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1), d->pdfdoc->getPageRotate(i+1) );
 
     //filter = NONE; TODO
     sendFilteredPageList();
@@ -237,10 +238,51 @@ void KPDFDocument::slotChangeZoom( float /*offset*/ )
 {
 }
 
+
 void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 {
     d->observers.push_back( pObserver );
 }
+
+void KPDFDocument::requestPixmap( uint /*page*/, int /*width*/, int /*height*/ )
+{
+    //think at this.. Syncronous or Asyncronous that's the problem! (shakespeare)
+}
+
+void KPDFDocument::requestThumbnail( uint page, int width, int height )
+{
+// TODO FIXME BEGIN :: TEMP CODE. ONLY A TEST. quick in-place thumbnail gen
+    KPDFPage * kp = d->pages[page];
+    if ( !kp )
+        return;
+    if ( !kp->hasThumbnail( width, height ) && d->pdfdoc && kp->width() > 0 && kp->height() > 0 )
+    {
+        // make thumbnail pixmap
+        SplashColor paperColor;
+        paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
+        QOutputDev odev( paperColor );
+        odev.startDoc( d->pdfdoc->getXRef() );
+        double fakeDpiX = width * 72.0 / kp->width(),
+               fakeDpiY = height * 72.0 / kp->height();
+        d->docLock.lock();
+        d->pdfdoc->displayPage( &odev, page + 1, fakeDpiX, fakeDpiY, 0, true, false );
+        d->docLock.unlock();
+
+        // It can happen (but with zero+ probability :-) that the output
+        // image doesn't have the right size. In that case scale it.
+        if ( odev.getImage().size() != QSize( width, height ) )
+        {
+            QImage scaled( odev.getImage().smoothScale( width, height ) );
+            kp->setThumbnail( scaled );
+        }
+        else
+            kp->setThumbnail( odev.getImage() );
+
+        foreachObserver( notifyThumbnailChanged( page ) );
+    }
+// TODO FIXME END :: TEMP CODE. ONLY A TEST.
+}
+
 
 void KPDFDocument::sendFilteredPageList()
 {

@@ -75,6 +75,7 @@ void QOutputDev::endPage()
 	bw = getBitmap()->getWidth();
 	dataPtr = getBitmap()->getDataPtr();
 	m_image = QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian);
+	m_image.setAlphaBuffer( false );
 }
 
 void QOutputDev::updateFont(GfxState *state)

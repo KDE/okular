@@ -50,9 +50,6 @@ public:
     KPDFDocument();
     ~KPDFDocument();
 
-    // observers related methods
-    void addObserver( KPDFDocumentObserver * pObserver );
-
     // document handling
     bool openFile( const QString & docFile );
     void close();
@@ -64,9 +61,10 @@ public:
     bool atEnd() const;
     const KPDFPage * page( uint page ) const;
 
-	//FIXME TEMP, REMOVE THIS!!!!! (for experiments only..)
-	void makeThumbnail( uint page, int width, int height ) const {};
-	void makePixmap( uint page ) const {};
+    // observers related methods
+    void addObserver( KPDFDocumentObserver * pObserver );
+    void requestPixmap( uint page, int width, int height );
+    void requestThumbnail( uint page, int width, int height );
 
 public slots:
     // document commands via slots

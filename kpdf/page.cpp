@@ -17,9 +17,11 @@
 #include "TextOutputDev.h"
 #include "page.h"
 
+class PageOverlay { /*fake temp class*/ };
+
 #include <qimage.h>
-KPDFPage::KPDFPage( uint page, float w, float h )
-    : m_number( page ), m_width( w ), m_height( h ), m_zoom( 1 ),
+KPDFPage::KPDFPage( uint page, float w, float h, int r )
+    : m_number( page ), m_width( w ), m_height( h ), m_rotate( r ),
     m_pixmap( 0 ), m_thumbnail( 0 ), m_text( 0 ), m_overlay( 0 )
 {
 /*    m_thumbnail = new QPixmap( "/a.png", "PNG" );
@@ -38,22 +40,17 @@ KPDFPage::~KPDFPage()
     delete m_overlay;
 }
 
-/** DRAWING **/
-void KPDFPage::drawPixmap( QPainter * p, const QRect & limits ) const  // MUTEXED
-{
-    //threadLock.lock();
-    
+//BEGIN drawing functions
+void KPDFPage::drawPixmap( QPainter * p, const QRect & limits, int /*width*/, int /*height*/ ) const
+{// ###
     if ( m_pixmap )
         p->drawPixmap( limits.topLeft(), *m_pixmap, limits );
     else
         p->fillRect( limits, Qt::blue );
-    
-    //threadLock.unlock();
 }
 
 void KPDFPage::drawThumbnail( QPainter * p, const QRect & limits, int width, int height ) const // OK
 {
-    //threadLock.lock();
     if ( m_thumbnail )
     {
         if ( m_thumbnail->width() == width && m_thumbnail->height() == height )
@@ -66,68 +63,54 @@ void KPDFPage::drawThumbnail( QPainter * p, const QRect & limits, int width, int
     }
     else
         p->fillRect( limits, QApplication::palette().active().base() );
-    //threadLock.unlock();
+}
+//END drawing functions
+
+//BEGIN contents set methods
+bool KPDFPage::hasPixmap( int width, int height ) const
+{
+    return m_pixmap ? ( m_pixmap->width() == width && m_pixmap->height() == height ) : false;
 }
 
-
-/** FIND **/
-bool KPDFPage::hasText( QString & text )
+bool KPDFPage::hasThumbnail( int width, int height ) const
 {
-    //FIXME
+    return m_thumbnail ? ( m_thumbnail->width() == width && m_thumbnail->height() == height ) : false;
+}
+
+void KPDFPage::setPixmap( const QImage & image )
+{
+    delete m_pixmap;
+    m_pixmap = new QPixmap( image );
+}
+
+void KPDFPage::setPixmapOverlay( /*someClass*/ )
+{    //TODO this
+}
+
+void KPDFPage::setThumbnail( const QImage & image )
+{
+    delete m_thumbnail;
+    m_thumbnail = new QPixmap( image );
+}
+
+void KPDFPage::setTextPage( TextOutputDev * textPage )
+{
+    delete m_text;
+    m_text = 0;
+    if ( m_text )
+        m_text = textPage;
+}
+//END contents set methods
+
+//BEGIN [FIND]
+/*bool KPDFPage::hasText( QString & text )
+{   //TODO this
     return text.isNull();
 }
-/*
+
 const QRect & KPDFPage::textPosition()
-{
-    //FIXME
+{   //TODO this
     return QRect();
-}
-*/
+}*/
+//END [FIND]
 
-
-/** SLOTS **/
-void KPDFPage::slotSetZoom( float /*scale*/ )
-{
-    
-}
-
-void KPDFPage::slotSetContents( QPixmap * pix )   // MUTEXED
-{
-    if ( !pix )
-        return;
-        
-    threadLock.lock();
-    
-    delete m_pixmap;
-    m_pixmap = new QPixmap( pix->width() + 6, pix->height() + 6 );
-    bitBlt( m_pixmap, 1,1, pix, 0,0, pix->width(),pix->height() );
-    QPainter paint( m_pixmap );
-    paint.drawRect( 0,0, pix->width()+1, pix->height()+1 );
-    paint.end();
-    //update page size (in pixels)
-    m_size = m_pixmap->size();
-    
-    threadLock.unlock();
-}
-
-void KPDFPage::slotSetThumbnail( QPixmap * thumb )  // MUTEXED
-{
-    if ( !thumb )
-        return;
-        
-    threadLock.lock();
-
-    delete m_thumbnail;
-    m_thumbnail = new QPixmap( *thumb );
-
-    threadLock.unlock();
-}
-
-void KPDFPage::slotSetOverlay()   // MUTEXED
-{
-    threadLock.lock();
-    //TODO this
-    threadLock.unlock();
-}
-
-#include "page.moc"

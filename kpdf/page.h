@@ -10,16 +10,14 @@
 #ifndef _KPDF_PAGE_H_
 #define _KPDF_PAGE_H_
 
-#include <qobject.h>
-#include <qsize.h>
-#include <qmutex.h>
-
 class QPixmap;
-class QString;
-class QRect;
+class QPainter;
+class QImage;
+//class QString;
+//class QRect;
 
 class TextOutputDev;
-class PageOverlay{ /*fake temp*/ };
+class PageOverlay;
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -33,46 +31,37 @@ class PageOverlay{ /*fake temp*/ };
  * class is destroyed.
  */
 
-class KPDFPage : public QObject
+class KPDFPage
 {
-    Q_OBJECT
-    
 public:
-    KPDFPage( uint number, float width, float height );
+    KPDFPage( uint number, float width, float height, int rotation );
     ~KPDFPage();
 
-    // page properties
+    // query properties (const read-only methods)
     uint number() const { return m_number; }
     float width() const { return m_width; }
     float height() const { return m_height; }
     float ratio() const { return m_height / m_width; }
-
-    // rendering
-    void drawPixmap( QPainter * p, const QRect & rect ) const;
+    float rotation() const { return m_rotate; }
+    bool hasPixmap( int width, int height ) const;
+    bool hasThumbnail( int width, int height ) const;
+    void drawPixmap( QPainter * p, const QRect & rect, int width, int height ) const;
     void drawThumbnail( QPainter * p, const QRect & rect, int width, int height ) const;
-    float currentZoom() const { return m_zoom; }
-    const QSize & currentSize() const { return m_size; }
 
-    // find related methods
-    bool hasText( QString & text );
+    // page contents setup
+    void setPixmap( const QImage & image );
+    void setPixmapOverlay( /*..DOMdescription..*/ );
+    void setThumbnail( const QImage & image );
+    void setTextPage( TextOutputDev * );
+
+    // FIND command
+    //bool hasText( QString & text );
     //const QRect & textPosition();
 
-signals:
-    void changed( KPDFPage * thisPage );
-
-private slots:
-    void slotSetZoom( float scale );
-    void slotSetContents( QPixmap * );
-    void slotSetThumbnail( QPixmap * );
-    void slotSetOverlay( /*..DOMdescription..*/ );
-
 private:
-    QMutex threadLock;
-
     uint m_number;
     float m_width, m_height;
-    float m_zoom;
-    QSize m_size;
+    int m_rotate;
     QPixmap * m_pixmap;
     QPixmap * m_thumbnail;
     TextOutputDev * m_text;

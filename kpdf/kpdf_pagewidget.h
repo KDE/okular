@@ -15,15 +15,14 @@
 #ifndef _KPDF_PAGEWIDGET_H_
 #define _KPDF_PAGEWIDGET_H_
 
-#include <qpixmap.h>
-#include <qwidget.h>
 #include <qscrollview.h>
-
-#include <kurl.h>
 
 #include "CharTypes.h"
 
+class KURL;
+
 class QMutex;
+class QWidget;
 
 class LinkAction;
 class PDFDoc;

@@ -20,10 +20,8 @@
 #include <config.h>
 #endif
 
-#include <kapplication.h>
 #include <kparts/mainwindow.h>
 class KPopupMenu;
-class KAction;
 
 namespace KPDF
 {

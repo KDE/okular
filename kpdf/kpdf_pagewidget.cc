@@ -13,21 +13,18 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "QOutputDevPixmap.h"
-
-#include <kglobal.h>
 #include <qcursor.h>
 #include <qpainter.h>
 #include <qmutex.h>
 
-#include <kdebug.h>
-#include <kurldrag.h>
 #include <kglobalsettings.h> 
+#include <kurldrag.h>
 
 #include "PDFDoc.h"
 
 #include "kpdf_pagewidget.h"
 #include "kpdf_pagewidget.moc"
+#include "QOutputDevPixmap.h"
 
 namespace KPDF
 {

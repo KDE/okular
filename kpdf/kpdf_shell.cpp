@@ -24,17 +24,15 @@
 #include "kpdf_pagewidget.h"
 
 #include <kaction.h>
+#include <kapplication.h>
 #include <kconfig.h>
-#include <kedittoolbar.h>
 #include <kfiledialog.h>
-#include <kkeydialog.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
 #include <kstdaction.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kmainwindow.h>
 #include <kmenubar.h>
 #include <kpopupmenu.h>
 #include <kparts/componentfactory.h>

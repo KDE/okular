@@ -12,7 +12,7 @@ all virtuals from the interface and draws text/image into an inner pixmap.
 the rendering of a page is finished (and some other features such as collection
 of per-page text that permits to implement search). 
 
-- Kpdf's QOutputDevPixmap returns a pixmap containing a single redered page.
+- Kpdf's QOutputDevPixmap returns a image containing a single redered page.
 
 
 *** Architecture:
@@ -44,12 +44,14 @@ keys, scrolling and scrollbars as well. This widget is a qscrollview.
 
 Architecture::Part:CentralWidget:ThumbnailList (kpdf_pagewidget.cc/.h)
 
-Note: This may change.
 This widget is a vertical single column table where cells are thumbnails. This
 supports thumbnail scaling and emits a signal when a page is selected between
-the list of thumbnails.
+the list of thumbnails. That widget also generates the thumbnails of the
+document using the ThumbnailCreator class.
 
 
 *** Last Revisions to this document:
+2004-10-04 : 0.2 - Albert Astals Cid <tsdgeos@terra.es>
+    - ThumbnailList creates the thumbnails itself
 2004-10-04 : 0.1 - Enrico Ros <eros.kde@email.it>
     - just read the code and created this file

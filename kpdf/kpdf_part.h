@@ -22,8 +22,6 @@
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
 
-#include "QOutputDev.h"
-
 class QWidget;
 
 class KAboutData;

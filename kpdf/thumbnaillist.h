@@ -13,8 +13,6 @@
 
 #include <qtable.h>
 
-#include "GString.h"
-
 class QImage;
 
 class PDFDoc;

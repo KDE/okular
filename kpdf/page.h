@@ -61,7 +61,8 @@ public:
     /*void setPixmapOverlayNotations( ..DOMdescription.. );*/
     void setThumbnail( const QImage & image );
     /*void setTextPage( TextOutputDev * );*/
-    /*void setLinks( ..SomeStruct.. );*/
+    /*void setLinks( ..SomeStruct.. );    or (better): */
+    /*void addLink( QFloatRect( normalizedRect ), int destPage, int destPos ); */
 
     // FIND command
     //bool hasText( QString & text );

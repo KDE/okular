@@ -76,6 +76,9 @@ void QOutputDev::endPage()
 	dataPtr = getBitmap()->getDataPtr();
 	m_image = QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian);
 	m_image.setAlphaBuffer( false );
+
+	// TODO HACK: unload memory used by bitmap
+	//SplashOutputDev::startPage(pageNum, state (with pix size={0,0}) );
 }
 
 void QOutputDev::updateFont(GfxState *state)

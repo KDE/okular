@@ -103,7 +103,7 @@ bool KPDFPage::hasLink( int mouseX, int mouseY ) const
 {
     //TODO this.
     //Sample implementation using a small rect as 'active' link zone
-    return QRect( 50,50, 100,100 ).contains( mouseX, mouseY );
+    return QRect( 20,20, 100,50 ).contains( mouseX, mouseY );
 }
 
 void KPDFPage::setPixmap( const QImage & image )

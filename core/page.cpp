@@ -49,22 +49,6 @@ KPDFPage::~KPDFPage()
 }
 
 
-bool KPDFPage::hasHighlights( int id ) const
-{
-    // simple case: have no highlights
-    if ( m_highlights.isEmpty() )
-        return false;
-    // simple case: we have highlights and no id to match
-    if ( id == -1 )
-        return true;
-    // iterate on the highlights list to find an entry by id
-    QValueList< HighlightRect * >::const_iterator it = m_highlights.begin(), end = m_highlights.end();
-    for ( ; it != end; ++it )
-        if ( (*it)->id == id )
-            return true;
-    return false;
-}
-
 bool KPDFPage::hasPixmap( int id, int width, int height ) const
 {
     if ( !m_pixmaps.contains( id ) )
@@ -80,54 +64,45 @@ bool KPDFPage::hasSearchPage() const
     return m_text != 0;
 }
 
-bool KPDFPage::hasRect( int mouseX, int mouseY ) const
+bool KPDFPage::hasBookmark() const
+{
+    return m_bookmarked;
+}
+
+bool KPDFPage::hasRect( double x, double y ) const
 {
     if ( m_rects.count() < 1 )
         return false;
     QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
-        if ( (*it)->contains( mouseX, mouseY ) )
+        if ( (*it)->contains( x, y ) )
             return true;
     return false;
 }
 
-bool KPDFPage::hasLink( int mouseX, int mouseY ) const
+bool KPDFPage::hasHighlights( int s_id ) const
 {
-    const KPDFPageRect *r;
-    r = getRect( mouseX, mouseY);
-    return r && r->pointerType() == KPDFPageRect::Link;
-}
-
-const KPDFPageRect * KPDFPage::getRect( int mouseX, int mouseY ) const
-{
-    QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    // simple case: have no highlights
+    if ( m_highlights.isEmpty() )
+        return false;
+    // simple case: we have highlights and no id to match
+    if ( s_id == -1 )
+        return true;
+    // iterate on the highlights list to find an entry by id
+    QValueList< HighlightRect * >::const_iterator it = m_highlights.begin(), end = m_highlights.end();
     for ( ; it != end; ++it )
-        if ( (*it)->contains( mouseX, mouseY ) )
-            return *it;
-    return 0;
+        if ( (*it)->s_id == s_id )
+            return true;
+    return false;
 }
 
-const KPDFPageTransition * KPDFPage::getTransition() const
+bool KPDFPage::hasTransition() const
 {
-    return m_transition;
-}
-
-const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
-{
-    if ( !m_text )
-        return QString::null;
-    int left = (int)((double)rect.left() / zoom),
-        top = (int)((double)rect.top() / zoom),
-        right = (int)((double)rect.right() / zoom),
-        bottom = (int)((double)rect.bottom() / zoom);
-    GString * text = m_text->getText( left, top, right, bottom );
-    QString result = QString::fromUtf8( text->getCString() );
-    delete text;
-    return result; 
+    return m_transition != 0;
 }
 
 
-HighlightRect * KPDFPage::searchText( const QString & text, bool strictCase, HighlightRect * lastRect )
+NormalizedRect * KPDFPage::findText( const QString & text, bool strictCase, NormalizedRect * lastRect ) const
 {
     if ( text.isEmpty() )
         return 0;
@@ -178,11 +153,40 @@ HighlightRect * KPDFPage::searchText( const QString & text, bool strictCase, Hig
         }
     }
 
-    // if the page was found, return a new normalized HighlightRect
+    // if the page was found, return a new normalizedRect
     if ( found )
-        return new HighlightRect( sLeft / m_width, sTop / m_height, sRight / m_width, sBottom / m_height );
+        return new NormalizedRect( sLeft / m_width, sTop / m_height, sRight / m_width, sBottom / m_height );
     return 0;
 }
+
+const QString KPDFPage::getText( const NormalizedRect & rect ) const
+{
+    if ( !m_text )
+        return QString::null;
+    int left = (int)( rect.left * m_width ),
+        top = (int)( rect.top * m_height ),
+        right = (int)( rect.right * m_width ),
+        bottom = (int)( rect.bottom * m_height );
+    GString * text = m_text->getText( left, top, right, bottom );
+    QString result = QString::fromUtf8( text->getCString() );
+    delete text;
+    return result; 
+}
+
+const KPDFPageRect * KPDFPage::getRect( double x, double y ) const
+{
+    QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    for ( ; it != end; ++it )
+        if ( (*it)->contains( x, y ) )
+            return *it;
+    return 0;
+}
+
+const KPDFPageTransition * KPDFPage::getTransition() const
+{
+    return m_transition;
+}
+
 
 void KPDFPage::setPixmap( int id, QPixmap * pixmap )
 {
@@ -197,6 +201,11 @@ void KPDFPage::setSearchPage( TextPage * tp )
     m_text = tp;
 }
 
+void KPDFPage::setBookmark( bool state )
+{
+    m_bookmarked = state;
+}
+
 void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
 {
     QValueList< KPDFPageRect * >::iterator it = m_rects.begin(), end = m_rects.end();
@@ -205,11 +214,21 @@ void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
     m_rects = rects;
 }
 
-void KPDFPage::setHighlight( HighlightRect * hr, bool add )
+void KPDFPage::setHighlight( int s_id, NormalizedRect * &rect, const QColor & color )
 {
-    if ( !add )
-        deleteHighlights( hr->id );
+    // create a HighlightRect descriptor taking values from params
+    HighlightRect * hr = new HighlightRect();
+    hr->s_id = s_id;
+    hr->color = color;
+    hr->left = rect->left;
+    hr->top = rect->top;
+    hr->right = rect->right;
+    hr->bottom = rect->bottom;
+    // append the HighlightRect to the list
     m_highlights.append( hr );
+    // delete old object and change reference
+    delete rect;
+    rect = hr;
 }
 
 void KPDFPage::setTransition( const KPDFPageTransition * transition )
@@ -241,14 +260,14 @@ void KPDFPage::deletePixmapsAndRects()
     m_rects.clear();
 }
 
-void KPDFPage::deleteHighlights( int id )
+void KPDFPage::deleteHighlights( int s_id )
 {
     // delete highlights by ID
     QValueList< HighlightRect * >::iterator it = m_highlights.begin(), end = m_highlights.end();
     while ( it != end )
     {
         HighlightRect * highlight = *it;
-        if ( id == -1 || highlight->id == id )
+        if ( s_id == -1 || highlight->s_id == s_id )
         {
             it = m_highlights.remove( it );
             delete highlight;
@@ -259,16 +278,42 @@ void KPDFPage::deleteHighlights( int id )
 }
 
 
+/** class NormalizedRect **/
+
+NormalizedRect::NormalizedRect()
+    : left( 0.0 ), top( 0.0 ), right( 0.0 ), bottom( 0.0 ) {}
+
+NormalizedRect::NormalizedRect( double l, double t, double r, double b )
+    // note: check for swapping coords?
+    : left( l ), top( t ), right( r ), bottom( b ) {}
+
+NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale )
+    : left( (double)r.left() / xScale ), top( (double)r.top() / yScale ),
+    right( (double)r.right() / xScale ), bottom( (double)r.bottom() / yScale ) {}
+
+bool NormalizedRect::contains( double x, double y ) const
+{
+    return x >= left && x <= right && y >= top && y <= bottom;
+}
+
+bool NormalizedRect::intersects( const NormalizedRect & r ) const
+{
+    return (r.left < right) && (r.right > left) && (r.top < bottom) && (r.bottom > top);
+}
+
+bool NormalizedRect::intersects( double l, double t, double r, double b ) const
+{
+    return (l < right) && (r > left) && (t < bottom) && (b > top);
+}
+
+
 /** class KPDFPageRect **/
 
-KPDFPageRect::KPDFPageRect( int l, int t, int r, int b )
-    : m_pointerType( NoPointer ), m_pointer( 0 )
-{
+KPDFPageRect::KPDFPageRect( double l, double t, double r, double b )
     // assign coordinates swapping them if negative width or height
-    m_xMin = r > l ? l : r;
-    m_xMax = r > l ? r : l;
-    m_yMin = b > t ? t : b;
-    m_yMax = b > t ? b : t;
+    : NormalizedRect( r > l ? l : r, b > t ? t : b, r > l ? r : l, b > t ? b : t ),
+    m_pointerType( NoPointer ), m_pointer( 0 )
+{
 }
 
 KPDFPageRect::~KPDFPageRect()
@@ -276,14 +321,13 @@ KPDFPageRect::~KPDFPageRect()
     deletePointer();
 }
 
-bool KPDFPageRect::contains( int x, int y ) const
+QRect KPDFPageRect::geometry( int width, int height ) const
 {
-    return (x > m_xMin) && (x < m_xMax) && (y > m_yMin) && (y < m_yMax);
-}
-
-QRect KPDFPageRect::geometry() const
-{
-    return QRect( m_xMin, m_yMin, m_xMax - m_xMin, m_yMax - m_yMin );
+    int l = (int)( left * width ),
+        t = (int)( top * height ),
+        r = (int)( right * width ),
+        b = (int)( bottom * height );
+    return QRect( l, t, r - l, b - t );
 }
 
 void KPDFPageRect::setPointer( void * object, enum PointerType pType )
@@ -313,17 +357,4 @@ void KPDFPageRect::deletePointer()
     else
         kdDebug() << "Object deletion not implemented for type '"
                   << m_pointerType << "' ." << endl;
-}
-
-
-/** class HighlightRect **/
-
-HighlightRect::HighlightRect()
-    : id( -1 ), left( 0.0 ), top( 0.0 ), right( 0.0 ), bottom( 0.0 )
-{
-}
-
-HighlightRect::HighlightRect( double l, double t, double r, double b )
-    : id( -1 ), left( l ), top( t ), right( r ), bottom( b )
-{
 }

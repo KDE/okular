@@ -18,6 +18,7 @@ class QRect;
 class TextPage;
 class KPDFPageRect;
 class KPDFPageTransition;
+class NormalizedRect;
 class HighlightRect;
 
 /**
@@ -27,7 +28,10 @@ class HighlightRect;
  * a search page (a class used internally for retrieving text), rect classes
  * (that describe links or other active areas in the current page) and more.
  *
- * Note: All objects are reparented to this class.
+ * All coordinates are normalized to the page, so {x,y} are valid in [0,1]
+ * range as long as NormalizedRect components.
+ *
+ * Note: The class takes ownership of all objects.
  */
 class KPDFPage
 {
@@ -35,38 +39,34 @@ class KPDFPage
         KPDFPage( uint number, float width, float height, int rotation );
         ~KPDFPage();
 
-        enum KPDFPageAttributes { Bookmark = 1, Highlights = 2 };
-
         // query properties (const read-only methods)
         inline int number() const { return m_number; }
         inline int rotation() const { return m_rotation; }
         inline float width() const { return m_width; }
         inline float height() const { return m_height; }
         inline float ratio() const { return m_height / m_width; }
-        inline bool hasBookmark() const { return m_bookmarked; }
-        bool hasHighlights( int id = -1 ) const;
-        bool hasPixmap( int id, int width = -1, int height = -1 ) const;
+        bool hasPixmap( int p_id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
-        bool hasRect( int mouseX, int mouseY ) const;
-        bool hasLink( int mouseX, int mouseY ) const;
-        const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
-        const KPDFPageTransition * getTransition() const;
-        const QString getTextInRect( const QRect & rect, double zoom /*= 1.0*/ ) const;
+        bool hasBookmark() const;
+        bool hasRect( double x, double y ) const;
+        bool hasHighlights( int s_id = -1 ) const;
+        bool hasTransition() const;
 
-        // operations (by KPDFDocument)
-        inline void setBookmark( bool state ) { m_bookmarked = state; }
-        HighlightRect * searchText( const QString & text,
-                bool strictCase, HighlightRect * lastPosition = 0 );
+        NormalizedRect * findText( const QString & text, bool keepCase, NormalizedRect * last = 0 ) const;
+        const QString getText( const NormalizedRect & rect ) const;
+        const KPDFPageRect * getRect( double x, double y ) const;
+        const KPDFPageTransition * getTransition() const;
 
         // oprations: set/delete contents (by KPDFDocument)
-        void setPixmap( int id, QPixmap * pixmap );
+        void setPixmap( int p_id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
+        void setBookmark( bool state );
         void setRects( const QValueList< KPDFPageRect * > rects );
-        void setHighlight( HighlightRect * hr, bool add = true );
+        void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
         void setTransition( const KPDFPageTransition * transition );
-        void deletePixmap( int id );
+        void deletePixmap( int p_id );
         void deletePixmapsAndRects();
-        void deleteHighlights( int id = -1 );
+        void deleteHighlights( int s_id = -1 );
 
     private:
         friend class PagePainter;
@@ -83,6 +83,23 @@ class KPDFPage
 
 
 /**
+ * @short A rect in normalized [0,1] coordinates.
+ */
+class NormalizedRect
+{
+    public:
+        double left, top, right, bottom;
+
+        NormalizedRect();
+        NormalizedRect( double l, double t, double r, double b );
+        NormalizedRect( const QRect & r, double xScale, double yScale );
+
+        bool contains( double x, double y ) const;
+        bool intersects( const NormalizedRect & normRect ) const;
+        bool intersects( double l, double t, double r, double b ) const;
+};
+
+/**
  * @short A rect on the page that may contain an object.
  *
  * This class describes a rect (geometrical coordinates) and may hold a
@@ -97,17 +114,15 @@ class KPDFPage
  *  - NoPointer : ''              : no object is stored
  *  - Link      : class KPDFLink  : description of a link
  *  - Image     : class KPDFImage : description of an image
- *
  */
-class KPDFPageRect
+class KPDFPageRect : public NormalizedRect
 {
     public:
-        KPDFPageRect( int left, int top, int right, int bottom );
+        KPDFPageRect( double left, double top, double right, double bottom );
         ~KPDFPageRect();
 
-        // query geometric properties
-        bool contains( int x, int y ) const;
-        QRect geometry() const;
+        // expand NormalizedRect to given width and height
+        QRect geometry( int width, int height ) const;
 
         // set a pointer to data associated to this rect
         enum PointerType { NoPointer, Link, Image };
@@ -119,24 +134,18 @@ class KPDFPageRect
 
     private:
         void deletePointer();
-        int m_xMin, m_xMax, m_yMin, m_yMax;
         PointerType m_pointerType;
         void * m_pointer;
 };
 
 /**
- * @short A normalized and colored highlight on the page.
+ * Internal Storage: normalized colored highlight owned by id
  */
-struct HighlightRect
+struct HighlightRect : public NormalizedRect
 {
-    // publicly accessed fields
-    int id;
-    double left, top, right, bottom;
+    // more publicly accessed fields
+    int s_id;
     QColor color;
-
-    // initialize default values
-    HighlightRect();
-    HighlightRect( double l, double t, double r, double b );
 };
 
 #endif

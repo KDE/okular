@@ -82,9 +82,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
         for ( ; hIt != hEnd; ++hIt )
         {
-            HighlightRect * r = *hIt;
-            // intersection: A) highlightRect, B) normalized limits
-            if ( (r->left < nXMax) && (r->right > nXMin) && (r->top < nYMax) && (r->bottom > nYMin) )
+            if ( (*hIt)->intersects( nXMin, nYMin, nXMax, nYMax ) )
             {
                 paintHighlights = true;
                 break;
@@ -216,7 +214,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             if ( (enhanceLinks && rect->pointerType() == KPDFPageRect::Link) ||
                  (enhanceImages && rect->pointerType() == KPDFPageRect::Image) )
             {
-                QRect rectGeometry = rect->geometry();
+                QRect rectGeometry = rect->geometry( width, height );
                 if ( rectGeometry.intersects( limitsEnlarged ) )
                 {
                     // expand rect and draw inner border

@@ -164,7 +164,12 @@ void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )
             int left, top, right, bottom;
             cvtUserToDev( x1, y1, &left, &top );
             cvtUserToDev( x2, y2, &right, &bottom );
-            KPDFPageRect * rect = new KPDFPageRect( left, top, right, bottom );
+            double nl = (double)left / (double)m_pixmapWidth,
+                   nt = (double)top / (double)m_pixmapHeight,
+                   nr = (double)right / (double)m_pixmapWidth,
+                   nb = (double)bottom / (double)m_pixmapHeight;
+            // create the rect using normalized coords
+            KPDFPageRect * rect = new KPDFPageRect( nl, nt, nr, nb );
             // attach the link  object to the rect and add it to the vector container
             rect->setPointer( l, KPDFPageRect::Link );
             m_rects.push_back( rect );
@@ -220,7 +225,12 @@ void KPDFOutputDev::drawImage( GfxState *state, Object *ref, Stream *str,
         if ( width > 10 && height > 10 )
         {
             // build a descriptor for the image rect
-            KPDFPageRect * r = new KPDFPageRect( left, top, left + width, top + height );
+            double nl = (double)left / (double)m_pixmapWidth,
+                   nt = (double)top / (double)m_pixmapHeight,
+                   nr = (double)(left + width) / (double)m_pixmapWidth,
+                   nb = (double)(top + height) / (double)m_pixmapHeight;
+            // create the rect using normalized coords
+            KPDFPageRect * r = new KPDFPageRect( nl, nt, nr, nb );
             r->setPointer( 0, KPDFPageRect::Image );
             // add the rect to the vector container
             m_rects.push_back( r );

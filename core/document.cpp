@@ -81,7 +81,7 @@ struct RunningSearch
 {
     // store search properties
     int continueOnPage;
-    HighlightRect continueOnMatch;
+    NormalizedRect continueOnMatch;
     QValueList< int > highlightedPages;
 
     // fields related to previous searches (used for 'continueSearch')
@@ -619,21 +619,19 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
 
             // loop on a page adding highlights for all found items
             bool addedHighlights = false;
-            HighlightRect * lastMatch = 0;
+            NormalizedRect * lastMatch = 0;
             while ( 1 )
             {
                 if ( lastMatch )
-                    lastMatch = page->searchText( text, caseSensitive, lastMatch );
+                    lastMatch = page->findText( text, caseSensitive, lastMatch );
                 else
-                    lastMatch = page->searchText( text, caseSensitive );
+                    lastMatch = page->findText( text, caseSensitive );
 
                 if ( !lastMatch )
                     break;
 
                 // add highligh rect to the page
-                lastMatch->id = searchID;
-                lastMatch->color = color;
-                page->setHighlight( lastMatch );
+                page->setHighlight( searchID, lastMatch, color );
                 addedHighlights = true;
             }
 
@@ -663,45 +661,38 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
         KPDFPage * lastPage = fromStart ? 0 : pages_vector[ currentPage ];
 
         // continue checking last SearchPage first (if it is the current page)
-        HighlightRect * r = 0;
+        NormalizedRect * match = 0;
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
             if ( newText )
-                r = lastPage->searchText( text, caseSensitive );
+                match = lastPage->findText( text, caseSensitive );
             else
-                r = lastPage->searchText( text, caseSensitive, &s->continueOnMatch );
-            if ( r )
-            {
-                s->continueOnMatch = *r;
-                s->highlightedPages.append( currentPage );
-            }
-            else
+                match = lastPage->findText( text, caseSensitive, &s->continueOnMatch );
+            if ( !match )
                 currentPage++;
         }
 
         // if no match found, loop through the whole doc, starting from currentPage
-        if ( !r )
+        if ( !match )
         {
             const int pageCount = pages_vector.count();
             for ( int i = 0; i < pageCount; i++ )
             {
                 if ( currentPage >= pageCount )
                 {
-                    if ( !noDialogs && KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
+                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
                         currentPage = 0;
                     else
                         break;
                 }
+                // get page
                 KPDFPage * page = pages_vector[ currentPage ];
+                // request search page if needed
                 if ( !page->hasSearchPage() )
                     requestTextPage( page->number() );
-                if ( (r = page->searchText( text, caseSensitive )) )
-                {
-                    s->continueOnPage = currentPage;
-                    s->continueOnMatch = *r;
-                    s->highlightedPages.append( currentPage );
+                // if found a match on the current page, end the loop
+                if ( (match = page->findText( text, caseSensitive )) )
                     break;
-                }
                 currentPage++;
             }
         }
@@ -710,27 +701,27 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
         QApplication::restoreOverrideCursor();
 
         // if a match has been found..
-        if ( r )
+        if ( match )
         {
+            // update the RunningSearch structure adding this match..
             foundAMatch = true;
+            s->continueOnPage = currentPage;
+            s->continueOnMatch = *match;
+            s->highlightedPages.append( currentPage );
             // ..add highlight to the page..
-            int pageNumber = currentPage;
-            KPDFPage * foundPage = pages_vector[ currentPage ];
-            r->id = searchID;
-            r->color = color;
-            foundPage->setHighlight( r );
+            pages_vector[ currentPage ]->setHighlight( searchID, match, color );
 
             // ..queue page for notifying changes..
-            if ( !pagesToNotify.contains( pageNumber ) )
-                pagesToNotify.append( pageNumber );
+            if ( !pagesToNotify.contains( currentPage ) )
+                pagesToNotify.append( currentPage );
 
             // ..move the viewport to show the searched word centered
             if ( moveViewport )
             {
-                DocumentViewport searchViewport( pageNumber );
+                DocumentViewport searchViewport( currentPage );
                 searchViewport.reCenter.enabled = true;
-                searchViewport.reCenter.normalizedCenterX = (r->left + r->right) / 2.0;
-                searchViewport.reCenter.normalizedCenterY = (r->top + r->bottom) / 2.0;
+                searchViewport.reCenter.normalizedCenterX = (match->left + match->right) / 2.0;
+                searchViewport.reCenter.normalizedCenterY = (match->top + match->bottom) / 2.0;
                 setViewport( searchViewport, -1, true );
             }
         }
@@ -830,6 +821,11 @@ void KPDFDocument::processLink( const KPDFLink * link )
             {
                 kdWarning() << "Link: Error opening '" << go->fileName() << "'." << endl;
                 return;
+            }
+            else
+            {
+                setViewport( d->nextDocumentViewport );
+                d->nextDocumentViewport = DocumentViewport();
             }
 
             } break;

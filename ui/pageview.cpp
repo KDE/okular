@@ -874,10 +874,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             // if the mouse has not moved since the press, that's a -click-
             if ( leftButton && pageItem && d->mousePressPos == e->globalPos())
             {
-                const KPDFPageRect * rect = pageItem->page()->getRect(
-                    e->x() - pageItem->geometry().left(),
-                    e->y() - pageItem->geometry().top()
-                );
+                double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
+                       nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
+                const KPDFPageRect * rect = pageItem->page()->getRect( nX, nY );
                 if ( rect )
                 {
                     // handle click over a link
@@ -970,10 +969,11 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     const KPDFPage * kpdfPage = item->page();
                     if ( !kpdfPage->hasSearchPage() )
                         d->document->requestTextPage( kpdfPage->number() );
-                    // grab text
+                    // grab text in the rect that intersects itemRect
                     QRect relativeRect = selectionRect.intersect( itemRect );
                     relativeRect.moveBy( -itemRect.left(), -itemRect.top() );
-                    selectedText += kpdfPage->getTextInRect( relativeRect, item->zoomFactor() );
+                    NormalizedRect normRect( relativeRect, item->width(), item->height() );
+                    selectedText += kpdfPage->getText( normRect );
                 }
             }
 
@@ -1433,11 +1433,12 @@ void PageView::updateCursor( const QPoint &p )
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
     if ( pageItem )
     {
-        int pageX = p.x() - pageItem->geometry().left(),
-            pageY = p.y() - pageItem->geometry().top();
+        double nX = (double)(p.x() - pageItem->geometry().left()) / (double)pageItem->width(),
+               nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
 
         // check if over a KPDFPageRect
-        bool onLink = pageItem->page()->hasLink( pageX, pageY );
+        const KPDFPageRect * r = pageItem->page()->getRect( nX, nY );
+        bool onLink = r && r->pointerType() == KPDFPageRect::Link;
         d->mouseOnRect = onLink;
         if ( onLink )
             setCursor( pointingHandCursor );

@@ -37,7 +37,7 @@
 #include <klocale.h>
 #include <kprinter.h>
 #include <kprocess.h>
-
+#include <kstringhandler.h>
 
 #include "dviwin.h"
 #include "fontpool.h"
@@ -751,15 +751,33 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 {
   // If no mouse button pressed
   if ( e->state() == 0 ) {
-    for(int i=0; i<hyperLinkList.size(); i++) {
+    QString statusbarMessage;
+
+    // go through hyperlinks
+    for(unsigned int i=0; i<hyperLinkList.size(); i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
-	emit setStatusBarText( hyperLinkList[i].linkText );
-	setCursor(pointingHandCursor);
-	return;
+	statusbarMessage = hyperLinkList[i].linkText;
+	break;
       }
     }
-    emit setStatusBarText( QString::null );
-    setCursor(arrowCursor);
+    if ( statusbarMessage == QString::null)
+      setCursor(arrowCursor);
+    else
+      setCursor(pointingHandCursor);
+
+    // go through sourceHyperlinks
+    for(unsigned int i=0; i<sourceHyperLinkList.size(); i++) {
+      if (sourceHyperLinkList[i].box.contains(e->pos())) {
+	if ( statusbarMessage != QString::null)
+	  statusbarMessage += " | ";
+	KStringHandler kstr;
+	statusbarMessage += i18n("Line %1 of %2").arg(kstr.word(sourceHyperLinkList[i].linkText, "0")).arg(kstr.word(sourceHyperLinkList[i].linkText, "1:"));
+	break;
+      }
+    }
+
+    emit setStatusBarText( statusbarMessage );
+    return;
   }
 
   // Right mouse button pressed -> Text copy function
@@ -865,7 +883,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #endif
 	  // We could in principle use KIO::Netaccess::run() here, but
 	  // it is perhaps not a very good idea to allow a DVI-file to
-	  // specify arbitrary commands, such as "rm -rvf /*". Using
+	  // specify arbitrary commands, such as "rm -rvf /". Using
 	  // the kfmclient seems to be MUCH safer.
 	  QUrl DVI_Url(dviFile->filename);
 	  QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
@@ -881,7 +899,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 
   // Check if the mouse is pressed on a source-hyperlink
   if ((e->button() == MidButton) && (sourceHyperLinkList.size() > 0))
-    for(int i=0; i<sourceHyperLinkList.size(); i++)
+    for(unsigned int i=0; i<sourceHyperLinkList.size(); i++)
       if (sourceHyperLinkList[i].box.contains(e->pos())) {
 #ifdef DEBUG_SPECIAL
 	kdDebug(4300) << "Source hyperlink to " << sourceHyperLinkList[i].linkText << endl;

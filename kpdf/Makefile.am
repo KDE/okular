@@ -30,7 +30,7 @@ kpdf_LDADD   = $(LIB_KPARTS)
 kpdf_COMPILE_FIRST = ../aconf.h
 
 EXTRA_DIST = kpdf.desktop
-#xdg_apps_DATA = kpdf.desktop
+xdg_apps_DATA = kpdf.desktop
 
 # this is where the shell's XML-GUI resource file goes
 shellrcdir   = $(kde_datadir)/kpdf

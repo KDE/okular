@@ -184,7 +184,7 @@ Shell::fileSaveAs()
 					 m_part->widget(),
 					 QString::null );
   if( !KIO::NetAccess::upload( m_part->url().path(),
-			       saveURL ) )
+			       saveURL, static_cast<QWidget*>( 0 ) ) )
 	; // TODO: Proper error dialog
 
 }

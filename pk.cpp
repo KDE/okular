@@ -371,7 +371,7 @@ void font::read_PK_char(unsigned int ch)
     // The data in the bitmap is now in the processor's bit order,
     // that is, big endian. Since XWindows needs little endian, we
     // need to change the bit order now.
-    register unsigned char* bitmapData = g->bitmap.bits;
+    register unsigned char* bitmapData = (unsigned char*) g->bitmap.bits;
     register unsigned char* endOfData  = bitmapData + g->bitmap.bytes_wide*g->bitmap.h;
     while(bitmapData < endOfData) {
       *bitmapData = bitflip[*bitmapData];

@@ -18,6 +18,7 @@ kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 	special.cpp util.cpp vf.cpp glyph.cpp selection.cpp history.cpp \
 	optionDialogFontsWidget.cpp optionDialogFontsWidget_base.ui \
 	optionDialogSpecialWidget.cpp optionDialogSpecialWidget_base.ui \
+	optionDialogGUIWidget_base.ui \
 	TeXFont.cpp TeXFont_PK.cpp TeXFont_PFB.cpp TeXFont_TFM.cpp \
 	TeXFontDefinition.cpp \
 	documentPage.cpp documentWidget.cpp documentPageCache.cpp \

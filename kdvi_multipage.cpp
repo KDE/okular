@@ -25,6 +25,7 @@
 #include "kprinterwrapper.h"
 
 #include "optionDialogFontsWidget.h"
+#include "optionDialogGUIWidget_base.h"
 #include "optionDialogSpecialWidget.h"
 
 #include <qlabel.h>
@@ -80,7 +81,7 @@ KInstance *KDVIMultiPageFactory::instance()
 
 
 KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name)
-  : KMultiPage(parentWidget, widgetName, parent, name), window(0), options(0)
+  : KMultiPage(parentWidget, widgetName, parent, name), window(0)
 {
 #ifdef PERFORMANCE_MEASUREMENT
   performanceTimer.start();
@@ -112,6 +113,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   viewModes.append(i18n("Single Page"));
   viewModes.append(i18n("Continuous"));
   viewModes.append(i18n("Continuous - Facing"));
+  viewModes.append(i18n("Overview"));
   viewModeAction = new KSelectAction (i18n("View Mode"), 0, 0, 0, actionCollection(), "viewmode");
   viewModeAction->setItems(viewModes);
   connect(viewModeAction, SIGNAL(activated (int)), this, SLOT(setViewMode(int)));
@@ -211,17 +213,32 @@ void KDVIMultiPage::repaintAllVisibleWidgets(void)
 }
 
 
-void KDVIMultiPage::generateDocumentWidgets(void)
+void KDVIMultiPage::generateDocumentWidgets(int startPage)
 {
 #ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) called" << endl;
 #endif
   
   widgetList.setAutoDelete(true);
-  if (viewModeAction->currentItem() == KVS_SinglePage)
+  switch (viewModeAction->currentItem())
+  {
+    case KVS_SinglePage:
     widgetList.resize(1);
-  else
+      break;
+    case KVS_Overview:
+    {
+      int visiblePages = Prefs::overviewModeColumns() * Prefs::overviewModeRows();
+      // In two column mode the first row contains only one page.
+      if (Prefs::overviewModeColumns() == 2)
+        visiblePages--;
+      // We cannot have more widgets then pages in the document
+      visiblePages = QMIN(visiblePages, window->totalPages() - startPage + 1);
+      widgetList.resize(visiblePages);
+      break;
+    }
+    default:
     widgetList.resize(window->totalPages());
+  }
   widgetList.setAutoDelete(false);
 
   documentWidget *dviWidget;
@@ -230,7 +247,7 @@ void KDVIMultiPage::generateDocumentWidgets(void)
     if (dviWidget == 0) {
       dviWidget = new documentWidget(scrollView()->viewport(), scrollView(), window->sizeOfPage(i+1), &currentPage, &userSelection, "singlePageWidget" );
       widgetList.insert(i, dviWidget);
-      dviWidget->setPageNumber(i+1);
+      dviWidget->setPageNumber(i+startPage);
       dviWidget->show();
       
       connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
@@ -238,7 +255,7 @@ void KDVIMultiPage::generateDocumentWidgets(void)
 	      SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
       connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
     } else
-      dviWidget->setPageNumber(i+1);
+      dviWidget->setPageNumber(i+startPage);
   }
 
   scrollView()->addChild(&widgetList);
@@ -251,16 +268,37 @@ void KDVIMultiPage::generateDocumentWidgets(void)
 void KDVIMultiPage::setViewMode(int mode)
 {
   // Save viewMode for future uses of KDVI
-  Prefs::setViewMode(mode);
 
-  if (mode == KVS_ContinuousFacing)
+  switch (mode) 
+  {
+    case KVS_SinglePage:
+      Prefs::setViewMode(KVS_SinglePage);
+      scrollView()->setNrColumns(1);
+      scrollView()->setNrRows(1);
+      scrollView()->setContinuousViewMode(false);
+      break;
+    case KVS_ContinuousFacing:
+      Prefs::setViewMode(KVS_ContinuousFacing);
     scrollView()->setNrColumns(2);
-  else
+      scrollView()->setNrRows(1);
+      scrollView()->setContinuousViewMode(true);
+      break;
+    case KVS_Overview:
+      Prefs::setViewMode(KVS_Overview);
+      scrollView()->setNrColumns(Prefs::overviewModeColumns());
+      scrollView()->setNrRows(Prefs::overviewModeRows());
+      scrollView()->setContinuousViewMode(false);
+      break;
+    default:  //KVS_Continuous
+      Prefs::setViewMode(KVS_Continuous);
     scrollView()->setNrColumns(1);
+      scrollView()->setNrRows(1);
+      scrollView()->setContinuousViewMode(true);
+  }
+  
   generateDocumentWidgets();
   emit viewModeChanged();
 }
-
 
 void KDVIMultiPage::slotEmbedPostScript(void)
 {
@@ -462,6 +500,47 @@ bool KDVIMultiPage::gotoPage(int page)
 
   document_history.add(page,0);
 
+  // If we are in overview viewmode
+  if (Prefs::viewMode() == KVS_Overview)
+  {
+    int visiblePages = Prefs::overviewModeRows() * Prefs::overviewModeColumns();
+    // Pagenumber of the first visibile Page
+    int firstPage = ((documentWidget*)widgetList[0])->getPageNumber();
+    int newFirstPage = page + 1 - (page % visiblePages);
+    if (firstPage != newFirstPage) // widgets need to be updated
+    {
+      if ( (window->totalPages() - newFirstPage + 1 < visiblePages) ||
+           (widgetList.size() < visiblePages) ) 
+      {
+        // resize widgetList
+        // the pages are also set correctly be "generateDocumentWidgets"
+        generateDocumentWidgets(newFirstPage);
+      }
+      else
+      {
+        // "page" is not shown in the scrollview, so we have to switch widgets.
+        // Here we don't need to resize the widgetList.
+        for (int i = 0; i < widgetList.size(); i++)
+        {
+          documentWidget* ptr = (documentWidget*)(widgetList[i]);
+          if (ptr != 0)
+          {
+            ptr->setPageNumber(newFirstPage + i);
+          }
+        }
+      }
+    }
+    // move scrollview to "page".
+    
+    // Make the widget &ptr visible in the scrollview. Somehow this
+    // doesn't seem to trigger the signal contentsMoved in the
+    // QScrollview, so that we better set lastCurrentPage ourselves.
+    documentWidget* ptr = (documentWidget*)(widgetList[page % visiblePages]);
+    scrollView()->moveViewportToWidget(ptr);
+    lastCurrentPage = page+1;
+    return true;
+  }
+  
   if (widgetList.size() == 1) {
     // If the widget list contains only a single element, then either
     // the document contains only one page, or we are in "single page"
@@ -495,7 +574,7 @@ bool KDVIMultiPage::gotoPage(int page)
     // Make the widget &ptr visible in the scrollview. Somehow this
     // doesn't seem to trigger the signal contentsMoved in the
     // QScrollview, so that we better set lastCurrentPage ourselves.
-    scrollView()->setContentsPos(scrollView()->contentsX(), scrollView()->childY(ptr)-5);
+    scrollView()->moveViewportToWidget(ptr);
     lastCurrentPage = page+1;
   }
   return true;
@@ -619,20 +698,13 @@ double KDVIMultiPage::setZoom(double zoom)
 
 double KDVIMultiPage::zoomForHeight(int height)
 {
-  // To take page decoration into account substract 18 pixels from viewport height
-  return (double)(height-1-18)/(window->xres*(window->paper_height_in_cm/2.54));
+  return (double)(height)/(window->xres*(window->paper_height_in_cm/2.54));
 }
 
 
 double KDVIMultiPage::zoomForWidth(int width)
 {
-  if( viewModeAction->currentItem() == KVS_ContinuousFacing)
-  {
-    // To take page decorations into account substract 29 pixels from viewport width
-    return (double)(width-1-29)/(window->xres*(2*window->paper_width_in_cm/2.54));
-  }
-  // To take page decoration into account substract 18 pixels from viewport width
-  return (double)(width-1-18)/(window->xres*(window->paper_width_in_cm/2.54));
+  return (double)(width)/(window->xres*(window->paper_width_in_cm/2.54));
 }
 
 
@@ -682,9 +754,11 @@ void KDVIMultiPage::doSettings()
   
   fontConfigWidget = new optionDialogFontsWidget(scrollView());
   optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(scrollView());
+  optionDialogGUIWidget_base* guiWidget = new optionDialogGUIWidget_base(scrollView());
   
   configDialog->addPage(fontConfigWidget, i18n("Tex Fonts"), "fonts");
   configDialog->addPage(specialConfigWidget, i18n("DVI Specials"), "dvi");
+  configDialog->addPage(guiWidget, i18n("Interface"), "view_icon");
   configDialog->setHelp("preferences", "kdvi");
   
   connect(configDialog, SIGNAL(settingsChanged()), this, SLOT(preferencesChanged()));
@@ -765,16 +839,8 @@ void KDVIMultiPage::preferencesChanged()
   bool useType1Fonts = Prefs::useType1Fonts();
   bool useFontHints = Prefs::useFontHints();
 
-  int viewMode = Prefs::viewMode();
-  if ((viewMode < 0) || (viewMode > KVS_ContinuousFacing))
-    Prefs::setViewMode(KVS_Continuous);
-  if (viewModeAction != 0)
-    viewModeAction->setCurrentItem(viewMode);
-  if (viewMode == KVS_ContinuousFacing)
-    scrollView()->setNrColumns(2);
-  else
-    scrollView()->setNrColumns(1);
-
+  viewModeAction->setCurrentItem(Prefs::viewMode());
+  setViewMode(Prefs::viewMode());
   window->setPrefs( showPS, showHyperLinks, Prefs::editorCommand(), mfmode, makepk, useType1Fonts, useFontHints);
 }
 

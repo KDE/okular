@@ -9,7 +9,6 @@
 
 class documentWidget;
 class KPrinter;
-class OptionDialog;
 class QLabel;
 class QPainter;
 
@@ -44,7 +43,8 @@ class KDVIMultiPage : public KMultiPage
   Q_OBJECT
 
 public:
-  enum viewModes {KVS_SinglePage = 0, KVS_Continuous = 1, KVS_ContinuousFacing = 2};
+  enum viewModes {KVS_SinglePage = 0, KVS_Continuous = 1, 
+                  KVS_ContinuousFacing = 2, KVS_Overview = 3};
 
   documentPageCache  currentPage;
 
@@ -177,7 +177,7 @@ protected slots:
   void preferencesChanged();
   void goto_page(int page, int y, bool isLink = true);
 
-  void generateDocumentWidgets(void);
+  void generateDocumentWidgets(int startPage = 1);
 
   void contentsMovingInScrollView(int x, int y);
 
@@ -190,7 +190,6 @@ protected slots:
 
 private:
   dviWindow       *window;
-  OptionDialog    *options;
   KPrinter        *printer;
 
   QPtrVector<QWidget> widgetList; 

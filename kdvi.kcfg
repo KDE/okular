@@ -45,7 +45,14 @@
     <choice name="KVS_SingePage" />
     <choice name="KVS_Continuous" />
     <choice name="KVS_ContinuousFacing" />
+    <choice name="KVS_Overview" />
    </choices>
+  </entry>
+  <entry key="OverviewModeColumns" type="Int">
+    <default>4</default>
+  </entry>
+  <entry key="OverviewModeRows" type="Int">
+    <default>2</default>
   </entry>
   <entry key="EditorCommand" type="Path" />
  </group>

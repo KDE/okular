@@ -94,13 +94,11 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         bufferPainter.drawPixmap( 5, 4, symbol, 0, 0, symbol.width(), symbol.height() );
 
     // draw shadow and text
-    int yText = ( geometry.height() - textRect.height() ) / 2;
+    int yText = geometry.height() - height / 2;
     bufferPainter.setPen( backgroundColor().dark( 115 ) );
-    bufferPainter.drawText( 5 + textXOffset + shadowOffset, yText + 1,
-                            textRect.width(), textRect.height(), AlignCenter, message );
+    bufferPainter.drawText( 5 + textXOffset + shadowOffset, yText + 1, message );
     bufferPainter.setPen( foregroundColor() );
-    bufferPainter.drawText( 5 + textXOffset, yText,
-                            textRect.width(), textRect.height(), AlignCenter, message );
+    bufferPainter.drawText( 5 + textXOffset, yText, message );
 
     // show widget and schedule a repaint
     show();

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 GenericName=DVI Viewer
-GenericName[af]=dvi aansig
+GenericName[af]=Dvi Aansig
 GenericName[ar]=عرض ملفات DVI
 GenericName[az]=DVI Nümayişçisi
 GenericName[bg]=Преглед на DVI документи
@@ -56,7 +56,7 @@ GenericName[zh_TW]=DVI 檢視器
 GenericName[zu]=Umboniseli we DVI
 BinaryPattern=kdvi;
 Name=KDVI
-Name[af]=kdvi
+Name[af]=Kdvi
 Name[eo]=DVI-rigardilo
 Name[xx]=xx
 MimeType=application/x-dvi;

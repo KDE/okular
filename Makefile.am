@@ -42,11 +42,11 @@ kdvi_SOURCES	= dviwin.cpp kdvi.cpp marklist.cpp prefs.cpp print.cpp\
 squeeze_SOURCES	= squeeze.c
 
 # the library search path
-kdvi_LDFLAGS = @all_libraries@ $(KDE_RPATH)
+kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 
 # the libraries to link against. Be aware of the order. First the libraries,
 # that depend on the following ones.
-kdvi_LDADD   = $(kpathsea) -lkfile -lkfm -lkdeui -lkdecore  -lqt -lXext -lX11 @LIBSOCKET@
+kdvi_LDADD   = $(kpathsea) $(LIB_KFILE)
 
 
 ## this option you can leave out. Just, if you use "make dist", you need it
@@ -60,7 +60,7 @@ DISTCLEANFILES = $(BUILTSOURCES)
 CLEANFILES = $(BUILTSOURCES) squeeze kdvi 
 
 messages:
-	$(XGETTEXT) -C -ktranslate -ki18n -x $(includedir)/kde.pot $(kdvi_SOURCES) && mv messages.po ../po/kdvi.pot
+	$(XGETTEXT) -C -ktranslate -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po ../po/kdvi.pot
 
 # just install datas here. Use install-exec-data for scripts and etc.
 # the binary itself is already installed from automake

@@ -55,84 +55,93 @@ int main(int argc, char** argv)
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions(options);
   KApplication app;
-  KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
-  if (args->isSet("unique"))
+  // see if we are starting with session management
+  if (app.isRestored())
   {
-    // With --unique, we need 2 arguments.
-    if (args->count() < 1) 
+    RESTORE(KViewShell);
+  }
+  else
+  {
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+
+    if (args->isSet("unique"))
     {
-      args->usage();
-      exit(-1);
-    }
-
-    // Find the fully qualified file name of the file we are
-    // loading. Complain, if we are given a URL which does not point
-    // to a local file.
-    KURL url(args->url(0));
-
-    if (!args->url(0).isValid()) 
-    {
-      kdError(4300) << QString(I18N_NOOP("The URL %1 is not well-formed.")).arg(args->arg(0)) << endl;
-      return -1;
-    }
-
-    if (!args->url(0).isLocalFile()) 
-    {
-      kdError(4300) << QString(I18N_NOOP("The URL %1 does not point to a local file. You can only specify local "
-           "files if you are using the '--unique' option.")).arg(args->arg(0)) << endl;
-      return -1;
-    }
-
-
-    QString qualPath = QFileInfo(args->url(1).path()).absFilePath();
-
-    app.dcopClient()->attach();
-    // We need to register as "kviewshell" to stay compatible with existing DCOP-skripts.
-    QCString id = app.dcopClient()->registerAs("unique-kviewshell");
-    if (id.isNull())
-      kdError(4300) << "There was an error using dcopClient()->registerAs()." << endl;
-    QCStringList apps = app.dcopClient()->registeredApplications();
-    for ( QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it ) 
-    {
-      if ((*it).find("kdvi") == 0) 
+      // With --unique, we need 2 arguments.
+      if (args->count() < 1) 
       {
-        QByteArray data, replyData;
-        QCString replyType;
-        QDataStream arg(data, IO_WriteOnly);
-        bool result;
-        arg << qualPath.stripWhiteSpace();
-        if (!app.dcopClient()->call( *it, "kmultipage", "is_file_loaded(QString)", data, replyType, replyData))
-          kdError(4300) << "There was an error using DCOP." << endl;
-        else 
+        args->usage();
+        exit(-1);
+      }
+
+      // Find the fully qualified file name of the file we are
+      // loading. Complain, if we are given a URL which does not point
+      // to a local file.
+      KURL url(args->url(0));
+
+      if (!args->url(0).isValid()) 
+      {
+        kdError(4300) << QString(I18N_NOOP("The URL %1 is not well-formed.")).arg(args->arg(0)) << endl;
+        return -1;
+      }
+
+      if (!args->url(0).isLocalFile()) 
+      {
+        kdError(4300) << QString(I18N_NOOP("The URL %1 does not point to a local file. You can only specify local "
+             "files if you are using the '--unique' option.")).arg(args->arg(0)) << endl;
+        return -1;
+      }
+
+      QString qualPath = QFileInfo(args->url(1).path()).absFilePath();
+
+      app.dcopClient()->attach();
+      // We need to register as "kviewshell" to stay compatible with existing DCOP-skripts.
+      QCString id = app.dcopClient()->registerAs("unique-kviewshell");
+      if (id.isNull())
+        kdError(4300) << "There was an error using dcopClient()->registerAs()." << endl;
+      QCStringList apps = app.dcopClient()->registeredApplications();
+      for ( QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it ) 
+      {
+        if ((*it).find("kdvi") == 0) 
         {
-          QDataStream reply(replyData, IO_ReadOnly);
-          if (replyType == "bool") 
+          QByteArray data, replyData;
+          QCString replyType;
+          QDataStream arg(data, IO_WriteOnly);
+          bool result;
+          arg << qualPath.stripWhiteSpace();
+          if (!app.dcopClient()->call( *it, "kmultipage", "is_file_loaded(QString)", data, replyType, replyData))
+            kdError(4300) << "There was an error using DCOP." << endl;
+          else 
           {
-            reply >> result;
-            if (result == true) 
+            QDataStream reply(replyData, IO_ReadOnly);
+            if (replyType == "bool") 
             {
-              if (app.dcopClient()->send( *it, "kmultipage", "jumpToReference(QString)", args->url(0).ref()) == true)
+              reply >> result;
+              if (result == true) 
               {
-                app.dcopClient()->detach();
-                return 0;
+                if (app.dcopClient()->send( *it, "kmultipage", "jumpToReference(QString)", args->url(0).ref()) == true)
+                {
+                  app.dcopClient()->detach();
+                  return 0;
+                }
               }
             }
+            else
+              kdError(4300) << "The DCOP function 'doIt' returned an unexpected type of reply!";
           }
-          else
-            kdError(4300) << "The DCOP function 'doIt' returned an unexpected type of reply!";
         }
       }
     }
+
+    // We need to register as "kviewshell" to stay compatible with existing DCOP-skripts.
+    app.dcopClient()->registerAs("kviewshell");
+    KViewShell* shell = new KViewShell("application/x-dvi");
+
+    if (args->count() > 0)
+      shell->openURL(args->url(0));
+
+    shell->show();
   }
 
-  // We need to register as "kviewshell" to stay compatible with existing DCOP-skripts.
-  app.dcopClient()->registerAs("kviewshell");
-  KViewShell* shell = new KViewShell("application/x-dvi");
-
-  if (args->count() > 0)
-    shell->openURL(args->url(0));
-
-  shell->show();
   return app.exec();
 }

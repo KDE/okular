@@ -15,6 +15,7 @@
 #pragma interface
 #endif
 
+#include <list>
 #include <stdio.h>
 #include "XRef.h"
 #include "Link.h"
@@ -28,6 +29,8 @@ class Links;
 class LinkAction;
 class LinkDest;
 class Outline;
+
+using namespace std;
 
 //------------------------------------------------------------------------
 // PDFDoc
@@ -90,6 +93,15 @@ public:
 		    GBool crop, GBool doLinks,
 		    GBool (*abortCheckCbk)(void *data) = NULL,
 		    void *abortCheckCbkData = NULL);
+
+  // Added by kpdf authors
+  // Display some pages
+  void displayPages(OutputDev *out, list<int> &pages,
+		    double hDPI, double vDPI, int rotate,
+		    GBool crop, GBool doLinks,
+		    GBool (*abortCheckCbk)(void *data) = NULL,
+		    void *abortCheckCbkData = NULL);
+
 
   // Display part of a page.
   void displayPageSlice(OutputDev *out, int page,

@@ -1191,7 +1191,7 @@ int JBIG2Stream::lookChar() {
   return EOF;
 }
 
-GString *JBIG2Stream::getPSFilter(int /*psLevel*/, char */*indent*/) {
+GString *JBIG2Stream::getPSFilter(int /*psLevel*/, const char */*indent*/) {
   return NULL;
 }
 

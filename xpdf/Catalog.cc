@@ -12,6 +12,7 @@
 #pragma implementation
 #endif
 
+#include <limits.h>
 #include <stddef.h>
 #include "gmem.h"
 #include "Object.h"
@@ -64,10 +65,9 @@ Catalog::Catalog(XRef *xrefA) {
   }
   pagesSize = numPages0 = (int)obj.getNum();
   obj.free();
-  // The gcc doesnt optimize this away, so this check is ok,
-  // even if it looks like a pagesSize != pagesSize check
-  if (pagesSize*sizeof(Page *)/sizeof(Page *) != (unsigned int)pagesSize ||
-      pagesSize*sizeof(Ref)/sizeof(Ref) != (unsigned int)pagesSize) {
+  if (((unsigned) pagesSize >= INT_MAX / sizeof(Page *)) ||
+      ((unsigned) pagesSize >= INT_MAX / sizeof(Ref)))
+  {
     error(-1, "Invalid 'pagesSize'");
     ok = gFalse;
     return;
@@ -200,8 +200,8 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
       }
       if (start >= pagesSize) {
 	pagesSize += 32;
-        if (pagesSize*sizeof(Page *)/sizeof(Page *) != (unsigned int)pagesSize ||
-            pagesSize*sizeof(Ref)/sizeof(Ref) != (unsigned int)pagesSize) {
+        if ((unsigned) pagesSize >= INT_MAX / sizeof(Page*) ||
+            (unsigned) pagesSize >= INT_MAX / sizeof(Ref)) {
           error(-1, "Invalid 'pagesSize' parameter.");
           goto err3;
         }

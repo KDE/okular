@@ -114,7 +114,7 @@ PresentationWidget::~PresentationWidget()
 }
 
 
-void PresentationWidget::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool /*changed*/ )
+void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )
 {
     // delete previous frames (if any (shouldn't be))
     QValueVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
@@ -160,17 +160,17 @@ void PresentationWidget::pageSetup( const QValueVector<KPDFPage*> & pageSet, boo
     m_metaStrings += i18n( "Click to begin" );
 }
 
+void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
+{
+    // check if it's the last requested pixmap. if so update the widget.
+    if ( (changedFlags & DocumentObserver::Pixmap) && pageNumber == m_frameIndex )
+        generatePage();
+}
+
 bool PresentationWidget::canUnloadPixmap( int pageNumber )
 {
     // can unload all pixmaps except for the currently visible one
     return pageNumber != m_frameIndex;
-}
-
-void PresentationWidget::notifyPixmapChanged( int pageNumber )
-{
-    // check if it's the last requested pixmap. if so update the widget.
-    if ( pageNumber == m_frameIndex )
-        generatePage();
 }
 
 

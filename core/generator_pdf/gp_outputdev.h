@@ -22,11 +22,12 @@
 #include <qvaluelist.h>
 #include "xpdf/PDFDoc.h" // for 'Object'
 #include "xpdf/SplashOutputDev.h"
-#include "core/link.h"
 
 class QPixmap;
 class TextPage;
 class KPDFPageRect;
+class KPDFLink;
+class DocumentViewport;
 
 /**
  * @short A SplashOutputDev renderer that grabs text and links.
@@ -79,7 +80,7 @@ class KPDFOutputDev : public SplashOutputDev
         // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
         KPDFLink * generateLink( LinkAction * a );
         // fills up a Viewport structure out of a given LinkGoto link
-        KPDFLinkGoto::Viewport decodeViewport( GString *, class LinkDest * );
+        DocumentViewport decodeViewport( GString *, class LinkDest * );
 
         // generator switches and parameters
         bool m_qtThreadSafety;

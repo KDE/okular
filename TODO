@@ -86,6 +86,7 @@ More items (first items will enter 'In progress list' first):
 -> presentation: add some gfx tools (like a red pencil)
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
 -> presentation: link following (difficult due to pagerects related to pageview pixmap only)
+-> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 -> add search on the toc widget (a prune on type lineedit like in thumbnails widget)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)

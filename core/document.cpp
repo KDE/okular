@@ -47,7 +47,7 @@ class KPDFDocumentPrivate
         bool filterCase;
 
         // cached stuff
-        int currentPage;
+        DocumentViewport viewport;
 
         // memory check/free timer
         QTimer * memCheckTimer;
@@ -62,22 +62,21 @@ class KPDFDocumentPrivate
 struct ObserverData
 {
     // public data fields
-    KPDFDocumentObserver * observer;
+    DocumentObserver * instance;
     QMap< int, int > pageMemory;
     int totalMemory;
     // public constructor: initialize data
-    ObserverData( KPDFDocumentObserver * obs ) : observer( obs ), totalMemory( 0 ) {};
+    ObserverData( DocumentObserver * obs ) : instance( obs ), totalMemory( 0 ) {};
 };
 
 #define foreachObserver( cmd ) {\
     QMap< int, ObserverData * >::iterator it = d->observers.begin(), end = d->observers.end();\
-    for ( ; it != end ; ++ it ) { (*it)->observer-> cmd ; } }
+    for ( ; it != end ; ++ it ) { (*it)->instance-> cmd ; } }
 
 
 KPDFDocument::KPDFDocument()
     : generator( 0 ), d( new KPDFDocumentPrivate )
 {
-    d->currentPage = -1;
     d->searchPage = -1;
     d->memCheckTimer = new QTimer( this );
     connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotCheckMemory() ) );
@@ -132,9 +131,12 @@ bool KPDFDocument::openDocument( const QString & docFile )
     processPageList( true );
 
     // 4. set initial page (restoring previous page saved in xml)
-    int displayedPage = ( d->currentPage >= 0 ) ? d->currentPage : 0;
-    d->currentPage = -1;
-    setCurrentPage( displayedPage );
+    DocumentViewport loadedViewport = d->viewport;
+    if ( loadedViewport.pageNumber < 0 )
+        loadedViewport.pageNumber = 0;
+    else
+        d->viewport = DocumentViewport();
+    setViewport( loadedViewport );
 
     // start bookmark saver timer
     d->saveBookmarksTimer->start( 5 * 60 * 1000 );
@@ -159,7 +161,7 @@ void KPDFDocument::closeDocument()
     generator = 0;
 
     // send an empty list to observers (to free their data)
-    foreachObserver( pageSetup( QValueVector< KPDFPage * >(), true ) );
+    foreachObserver( notifySetup( QValueVector< KPDFPage * >(), true ) );
 
     // delete pages and clear 'pages_vector' container
     for ( uint i = 0; i < pages_vector.count() ; i++ )
@@ -176,22 +178,22 @@ void KPDFDocument::closeDocument()
     }
 
     // reset internal variables
-    d->currentPage = -1;
+    d->viewport = DocumentViewport();
     d->searchPage = -1;
 }
 
 
-void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
+void KPDFDocument::addObserver( DocumentObserver * pObserver )
 {
     // keep the pointer to the observer in a map
     d->observers[ pObserver->observerId() ] = new ObserverData( pObserver );
 
     // if the observer is added while a document is already opened, tell it
     if ( !pages_vector.isEmpty() )
-        pObserver->pageSetup( pages_vector, true );
+        pObserver->notifySetup( pages_vector, true );
 }
 
-void KPDFDocument::removeObserver( KPDFDocumentObserver * pObserver )
+void KPDFDocument::removeObserver( DocumentObserver * pObserver )
 {
     // remove observer from the map. it won't receive notifications anymore
     if ( d->observers.contains( pObserver->observerId() ) )
@@ -217,7 +219,7 @@ void KPDFDocument::reparseConfig()
         QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
             (*it)->deletePixmapsAndRects();
-        foreachObserver( notifyPixmapsCleared() );
+        foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap) );
     }
 }
 
@@ -237,9 +239,14 @@ const KPDFPage * KPDFDocument::page( uint n ) const
     return ( n < pages_vector.count() ) ? pages_vector[n] : 0;
 }
 
+const DocumentViewport & KPDFDocument::viewport() const
+{
+    return d->viewport;
+}
+
 uint KPDFDocument::currentPage() const
 {
-    return d->currentPage;
+    return d->viewport.pageNumber;
 }
 
 uint KPDFDocument::pages() const
@@ -298,17 +305,45 @@ void KPDFDocument::requestTextPage( uint page )
 
     generator->requestTextPage( kp );
 }
-
-void KPDFDocument::setCurrentPage( int page, const QRect & viewport )
+/* REFERENCE IMPLEMENTATION: better calling setViewport from other code
+void KPDFDocument::setNextPage()
 {
+    // advance page and set viewport on observers
+    if ( d->viewport.pageNumber < (int)pages_vector.count() - 1 )
+        setViewport( DocumentViewport( d->viewport.pageNumber + 1 ) );
+}
+
+void KPDFDocument::setPrevPage()
+{
+    // go to previous page and set viewport on observers
+    if ( d->viewport.pageNumber > 0 )
+        setViewport( DocumentViewport( d->viewport.pageNumber - 1 ) );
+}
+*/
+void KPDFDocument::setViewportPage( int page )
+{
+    // clamp page in range [0 ... numPages-1]
     if ( page < 0 )
         page = 0;
     else if ( page > (int)pages_vector.count() )
         page = pages_vector.count() - 1;
-    if ( page == d->currentPage )
+
+    // make a viewport from the page and broadcast it
+    setViewport( DocumentViewport( page ) );
+}
+
+void KPDFDocument::setViewport( const DocumentViewport & viewport )
+{
+    // if already broadcasted, don't redo it
+    if ( viewport == d->viewport )
+    {
+        kdDebug() << "setViewport with the same viewport." << endl;
         return;
-    d->currentPage = page;
-    foreachObserver( pageSetCurrent( page, viewport ) );
+    }
+
+    // save viewport and notify the change to all observers
+    d->viewport = viewport;
+    foreachObserver( notifyViewportChanged() );
 }
 
 void KPDFDocument::findText( const QString & string, bool keepCase )
@@ -325,7 +360,7 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
     }
 
     // continue checking last SearchPage first (if it is the current page)
-    int currentPage = d->currentPage;
+    int currentPage = d->viewport.pageNumber;
     int pageCount = pages_vector.count();
     KPDFPage * foundPage = 0,
              * lastPage = (d->searchPage > -1) ? pages_vector[ d->searchPage ] : 0;
@@ -366,8 +401,8 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
         int pageNumber = foundPage->number();
         d->searchPage = pageNumber;
         foundPage->setAttribute( KPDFPage::Highlight );
-        setCurrentPage( pageNumber );
-        foreachObserver( notifyPixmapChanged( pageNumber ) );
+        setViewportPage( pageNumber ); // TODO set viewport to show the found rectangle centered
+        foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
     }
     else
         KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(d->searchText) );
@@ -391,7 +426,7 @@ void KPDFDocument::toggleBookmark( int n )
     if ( page )
     {
         page->toggleAttribute( KPDFPage::Bookmark );
-        foreachObserver( notifyPixmapChanged( n ) );
+        foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
     }
 }
 
@@ -404,7 +439,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
     {
         case KPDFLink::Goto: {
             const KPDFLinkGoto * go = static_cast< const KPDFLinkGoto * >( link );
-            KPDFLinkGoto::Viewport destVp = go->destViewport();
+            DocumentViewport destVp = go->destViewport();
 
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !openRelativeFile( go->fileName() ) )
@@ -414,7 +449,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             }
 
             // note: if external file is opened, 'link' doesn't exist anymore!
-            setCurrentPage( destVp.page );  //TODO implement and use Viewport
+            setViewport( destVp );
             } break;
 
         case KPDFLink::Execute: {
@@ -471,18 +506,18 @@ void KPDFDocument::processLink( const KPDFLink * link )
             switch( action->actionType() )
             {
                 case KPDFLinkAction::PageFirst:
-                    setCurrentPage( 0 );
+                    setViewportPage( 0 );
                     break;
                 case KPDFLinkAction::PagePrev:
-                    if ( d->currentPage > 0 )
-                        setCurrentPage( d->currentPage - 1 );
+                    if ( d->viewport.pageNumber > 0 )
+                        setViewportPage( d->viewport.pageNumber - 1 );
                     break;
                 case KPDFLinkAction::PageNext:
-                    if ( d->currentPage < (int)pages_vector.count() - 1 )
-                        setCurrentPage( d->currentPage + 1 );
+                    if ( d->viewport.pageNumber < (int)pages_vector.count() - 1 )
+                        setViewportPage( d->viewport.pageNumber + 1 );
                     break;
                 case KPDFLinkAction::PageLast:
-                    setCurrentPage( pages_vector.count() - 1 );
+                    setViewportPage( pages_vector.count() - 1 );
                     break;
                 case KPDFLinkAction::HistoryBack:
                     {} //TODO
@@ -563,7 +598,7 @@ void KPDFDocument::mCleanupMemory( int observerId  )
     while ( (it != end) && (memoryToFree > 0) )
     {
         int pageNumber = it.key();
-        if ( obs->observer->canUnloadPixmap( pageNumber ) )
+        if ( obs->instance->canUnloadPixmap( pageNumber ) )
         {
             // copy iterator to avoid invalidation on map->remove( it )
             QMap< int, int >::iterator i( it );
@@ -699,9 +734,8 @@ void KPDFDocument::loadDocumentInfo()
                     QDomElement infoElement = infoNode.toElement();
                     if ( infoElement.tagName() == "activePage" )
                     {
-                        uint page = infoElement.attribute( "number" ).toInt();
-                        if ( page < pages_vector.size() )
-                            d->currentPage = page;
+                        if ( infoElement.hasAttribute( "viewport" ) )
+                            d->viewport = DocumentViewport( infoElement.attribute( "viewport" ) );
                     }
                     infoNode = infoNode.nextSibling();
                 }
@@ -757,7 +791,7 @@ void KPDFDocument::processPageList( bool documentChanged )
     }
 
     // send the list to observers
-    foreachObserver( pageSetup( pages_vector, documentChanged ) );
+    foreachObserver( notifySetup( pages_vector, documentChanged ) );
 }
 
 void KPDFDocument::unHilightPages()
@@ -773,7 +807,7 @@ void KPDFDocument::unHilightPages()
         if ( page->attributes() & KPDFPage::Highlight )
         {
             page->clearAttribute( KPDFPage::Highlight );
-            foreachObserver( notifyPixmapChanged( page->number() ) );
+            foreachObserver( notifyPageChanged( page->number(), DocumentObserver::Highlights ) );
         }
     }
 }
@@ -819,8 +853,7 @@ void KPDFDocument::saveDocumentInfo() const
         root.appendChild( generalInfo );
 
         QDomElement activePage = doc.createElement( "activePage" );
-        // FIXME: use viewport (when ready)
-        activePage.setAttribute( "number", d->currentPage );
+        activePage.setAttribute( "viewport", d->viewport.toString() );
         generalInfo.appendChild( activePage );
 
         // Save DOM to XML file
@@ -848,8 +881,103 @@ void KPDFDocument::slotGeneratedContents( int id, int pageNumber )
 {
     // notify an observer that its pixmap changed
     if ( d->observers.contains( id ) )
-        d->observers[ id ]->observer->notifyPixmapChanged( pageNumber );
+        d->observers[ id ]->instance->notifyPageChanged( pageNumber, DocumentObserver::Pixmap );
 }
+
+
+/** DocumentViewport **/
+
+DocumentViewport::DocumentViewport( int n )
+    : pageNumber( n )
+{
+    // default settings
+    reCenter.enabled = false;
+    reCenter.normalizedCenterX = 0.5;
+    reCenter.normalizedCenterY = 0.0;
+    autoFit.enabled = false;
+    autoFit.width = false;
+    autoFit.height = false;
+}
+
+DocumentViewport::DocumentViewport( const QString & xmlDesc )
+    : pageNumber( -1 )
+{
+    // default settings (maybe overridden below)
+    reCenter.enabled = false;
+    reCenter.normalizedCenterX = 0.5;
+    reCenter.normalizedCenterY = 0.0;
+    autoFit.enabled = false;
+    autoFit.width = false;
+    autoFit.height = false;
+
+    // check for string presence
+    if ( xmlDesc.isEmpty() )
+        return;
+
+    // decode the string
+    bool ok;
+    int field = 0;
+    QString token = xmlDesc.section( ';', field, field );
+    while ( !token.isEmpty() )
+    {
+        // decode the current token
+        if ( field == 0 )
+        {
+            pageNumber = token.toInt( &ok );
+            if ( !ok )
+                return;
+        }
+        else if ( token.startsWith( "C1" ) )
+        {
+            reCenter.enabled = true;
+            reCenter.normalizedCenterX = token.section( ':', 1, 1 ).toDouble();
+            reCenter.normalizedCenterY = token.section( ':', 2, 2 ).toDouble();
+        }
+        else if ( token.startsWith( "AF1" ) )
+        {
+            autoFit.enabled = true;
+            autoFit.width = token.section( ':', 1, 1 ) == "T";
+            autoFit.height = token.section( ':', 2, 2 ) == "T";
+        }
+        // proceed tokenizing string
+        field++;
+        token = xmlDesc.section( ';', field, field );
+    }
+}
+
+QString DocumentViewport::toString() const
+{
+    // start string with page number
+    QString s = QString::number( pageNumber );
+    // if has center coordinates, save them on string
+    if ( reCenter.enabled )
+        s += QString( ";C1:" ) + QString::number( reCenter.normalizedCenterX ) +
+             ':' + QString::number( reCenter.normalizedCenterY );
+    // if has autofit enabled, save its state on string
+    if ( autoFit.enabled )
+        s += QString( ";AF1:" ) + (autoFit.width ? "T" : "F") +
+             ':' + (autoFit.height ? "T" : "F");
+    return s;
+}
+
+bool DocumentViewport::operator==( const DocumentViewport & vp ) const
+{
+    bool equal = ( pageNumber == vp.pageNumber ) &&
+                 ( reCenter.enabled == vp.reCenter.enabled ) &&
+                 ( autoFit.enabled == vp.autoFit.enabled );
+    if ( !equal )
+        return false;
+    if ( reCenter.enabled &&
+         (( reCenter.normalizedCenterX != vp.reCenter.normalizedCenterX ) ||
+         ( reCenter.normalizedCenterY != vp.reCenter.normalizedCenterY )) )
+        return false;
+    if ( autoFit.enabled &&
+         (( autoFit.width != vp.autoFit.width ) ||
+         ( autoFit.height != vp.autoFit.height )) )
+        return false;
+    return true;
+}
+
 
 /** DocumentInfo **/
 
@@ -892,6 +1020,7 @@ QString DocumentInfo::get( const QString &key ) const
     else
         return QString();
 }
+
 
 /** DocumentSynopsis **/
 

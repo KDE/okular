@@ -27,7 +27,7 @@ class ThumbnailWidget;
  *
  * ...
  */
-class ThumbnailList : public QScrollView, public KPDFDocumentObserver
+class ThumbnailList : public QScrollView, public DocumentObserver
 {
 Q_OBJECT
 	public:
@@ -36,15 +36,15 @@ Q_OBJECT
         // inherited: return thumbnails observer id
         uint observerId() const { return THUMBNAILS_ID; }
         // inherited: create thumbnails ( inherited as a DocumentObserver )
-        void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
+        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
-        void pageSetCurrent( int pageNumber, const QRect & viewport );
+        void notifyViewportChanged();
+        // inherited: redraw thumbnail ( inherited as DocumentObserver )
+        void notifyPageChanged( int pageNumber, int changedFlags );
+        // inherited: request all visible pixmap (due to a global shange or so..)
+        void notifyContentsCleared( int changedFlags );
         // inherited: tell if pixmap is hidden and can be unloaded
         bool canUnloadPixmap( int pageNumber );
-        // inherited: redraw thumbnail ( inherited as DocumentObserver )
-        void notifyPixmapChanged( int pageNumber );
-        // inherited: request all visible pixmap (due to a global shange or so..)
-        void notifyPixmapsCleared();
 
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
@@ -81,7 +81,7 @@ Q_OBJECT
 
 	private slots:
 		// make requests for generating pixmaps for visible thumbnails
-		void slotRequestPixmaps( int newContentsX = -1, int newContentsY = -1 );
+		void slotRequestVisiblePixmaps( int newContentsX = -1, int newContentsY = -1 );
 };
 
 /**

@@ -11,13 +11,15 @@
 #ifndef _KPDF_DOCUMENT_H_
 #define _KPDF_DOCUMENT_H_
 
+#include <qobject.h>
 #include <qvaluevector.h>
 #include <qstring.h>
 #include <qdom.h>
 
 class KPDFPage;
 class KPDFLink;
-class KPDFDocumentObserver;
+class DocumentObserver;
+class DocumentViewport;
 class DocumentInfo;
 class DocumentSynopsis;
 class Generator;
@@ -39,7 +41,7 @@ class KPrinter;
  * notifies all the registered DocumentObservers when some content changes.
  *
  * For a better understanding of hieracies @see README.internals.png
- * @see KPDFDocumentObserver, KPDFPage
+ * @see DocumentObserver, KPDFPage
  */
 class KPDFDocument : public QObject // only for a private slot..
 {
@@ -53,23 +55,25 @@ class KPDFDocument : public QObject // only for a private slot..
         void closeDocument();
 
         // misc methods
-        void addObserver( KPDFDocumentObserver * pObserver );
-        void removeObserver( KPDFDocumentObserver * pObserver );
+        void addObserver( DocumentObserver * pObserver );
+        void removeObserver( DocumentObserver * pObserver );
         void reparseConfig();
 
         // query methods (const ones)
         const DocumentInfo * documentInfo() const;
         const DocumentSynopsis * documentSynopsis() const;
         const KPDFPage * page( uint page ) const;
+        const DocumentViewport & viewport() const;
         uint currentPage() const;
         uint pages() const;
         bool okToPrint() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
 
         // perform actions on document / pages
+        void setViewportPage( int page );
+        void setViewport( const DocumentViewport & viewport );
         void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool asyncronous );
         void requestTextPage( uint page );
-        void setCurrentPage( int page, const QRect & viewport = QRect() );
         void findText( const QString & text = "", bool caseSensitive = false );
         void findTextAll( const QString & pattern, bool caseSensitive );
         void toggleBookmark( int page );
@@ -105,13 +109,39 @@ class KPDFDocument : public QObject // only for a private slot..
 
 
 /**
- * @short A window on the document.
+ * @short A view on the document.
  *
- * TODO HACK OVER ME AND FIXME WITH A CHAINSAW
+ * The Viewport structure is the 'current view' over the document. Contained
+ * data is broadcasted between observers to syncronize their viewports to get
+ * the 'I scroll one view and others scroll too' views.
  */
-struct DocumentViewport
+class DocumentViewport
 {
-    int lastPage;
+    public:
+        /** data fields **/
+        // the page nearest the center of the viewport
+        int pageNumber;
+
+        // if reCenter.enabled, this contains the viewport center
+        struct {
+            bool enabled;
+            double normalizedCenterX;
+            double normalizedCenterY;
+        } reCenter;
+
+        // if autoFit.enabled, page must be autofitted in the viewport
+        struct {
+            bool enabled;
+            bool width;
+            bool height;
+        } autoFit;
+
+        /** class methods **/
+        // allowed constructors, don't use others
+        DocumentViewport( int pageNumber = -1 );
+        DocumentViewport( const QString & xmlDesc );
+        QString toString() const;
+        bool operator==( const DocumentViewport & vp ) const;
 };
 
 /**
@@ -148,9 +178,9 @@ class DocumentInfo : public QDomDocument
  *
  * In the tree the tag name is the 'screen' name of the entry. A tag can have
  * attributes. Here follows the list of tag attributes with meaning:
- * - PageNumber: The internal number of referred page.
- * - PageName: A 'named reference' to the page that must be converted using
- *      getMetaData( "NamedLink", page_name_attribute )
+ * - Viewport: A string description of the referred viewport
+ * - ViewportName: A 'named reference' to the viewport that must be converted
+ *      using getMetaData( "NamedViewport", *viewport_name* )
  */
 class DocumentSynopsis : public QDomDocument
 {

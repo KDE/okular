@@ -29,18 +29,18 @@ class PresentationFrame;
  *
  * This is a fullscreen widget that displays 
  */
-class PresentationWidget : public QWidget, public KPDFDocumentObserver
+class PresentationWidget : public QWidget, public DocumentObserver
 {
     Q_OBJECT
     public:
         PresentationWidget( KPDFDocument * doc );
         ~PresentationWidget();
 
-        // inherited from KPDFDocumentObserver
+        // inherited from DocumentObserver
         uint observerId() const { return PRESENTATION_ID; }
-        void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
+        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber );
-        void notifyPixmapChanged( int pageNumber );
 
     protected:
         // widget events

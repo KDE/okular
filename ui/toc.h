@@ -16,15 +16,15 @@
 
 class KPDFDocument;
 
-class TOC : public KListView, public KPDFDocumentObserver
+class TOC : public KListView, public DocumentObserver
 {
 Q_OBJECT
     public:
         TOC(QWidget *parent, KPDFDocument *document);
 
-        // inherited from KPDFDocumentObserver
+        // inherited from DocumentObserver
         uint observerId() const;
-        void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
+        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
 
     signals:
         void hasTOC(bool has);

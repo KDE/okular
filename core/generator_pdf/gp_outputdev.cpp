@@ -25,6 +25,7 @@
 
 #include "gp_outputdev.h"
 #include "generator_pdf.h"
+#include "core/document.h" // for DocumentViewport
 #include "core/page.h"
 #include "core/link.h"
 #include "xpdf/Link.h"
@@ -343,11 +344,10 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
     return link;
 }
 
-KPDFLinkGoto::Viewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkDest * dest )
+DocumentViewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkDest * dest )
 // note: this function is called when processing a page, when the MUTEX is already LOCKED
 {
-    KPDFLinkGoto::Viewport vp;
-    vp.page = -1;
+    DocumentViewport vp( -1 );
 
     if ( namedDest && !dest )
         dest = m_doc->findDest( namedDest );
@@ -357,11 +357,11 @@ KPDFLinkGoto::Viewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkD
 
     // get destination page number
     if ( !dest->isPageRef() )
-        vp.page = dest->getPageNum() - 1;
+        vp.pageNumber = dest->getPageNum() - 1;
     else
     {
         Ref ref = dest->getPageRef();
-        vp.page = m_doc->findPage( ref.num, ref.gen ) - 1;
+        vp.pageNumber = m_doc->findPage( ref.num, ref.gen ) - 1;
     }
 
     // get destination position (fill remaining Viewport fields)
@@ -379,20 +379,20 @@ KPDFLinkGoto::Viewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkD
 
         case destFit:
         case destFitB:
-            vp.fitWidth = true;
-            vp.fitHeight = true;
+            //vp.fitWidth = true;
+            //vp.fitHeight = true;
             break;
 
         case destFitH:
         case destFitBH:
 //            read top, fit Width
-            vp.fitWidth = true;
+            //vp.fitWidth = true;
             break;
 
         case destFitV:
         case destFitBV:
 //            read left, fit Height
-            vp.fitHeight = true;
+            //vp.fitHeight = true;
             break;
 
         case destFitR:

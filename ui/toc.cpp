@@ -16,8 +16,9 @@
 #include "core/document.h"
 #include "core/page.h"
 
-// uncomment following to enable a 2nd column showing the page referred by
-// each tree entry
+// uncomment following to enable a 2nd column showing the page referred
+// by each tree entry note: PDF uses often references to viewports and
+// they're slow when converted to page number. drop the 2nd column idea.
 //#define TOC_ENABLE_PAGE_COLUMN
 
 class TOCItem : public KListViewItem
@@ -69,7 +70,7 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged )
+void TOC::notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged )
 {
     if ( !documentChanged || pages.size() < 1 )
         return;
@@ -118,20 +119,18 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
 void TOC::slotExecuted( QListViewItem *i )
 {
     const QDomElement & e = static_cast< TOCItem* >( i )->element();
-    if ( e.hasAttribute( "PageNumber" ) )
+    if ( e.hasAttribute( "PageViewport" ) )
     {
-        // if the node has a page number, follow it
-        m_document->setCurrentPage( e.attribute( "Page" ).toUInt() );
+        // if the node has a viewport, set it
+        m_document->setViewport( DocumentViewport( e.attribute( "PageViewport" ) ) );
     }
-    else if ( e.hasAttribute( "PageName" ) )
+    else if ( e.hasAttribute( "ViewportName" ) )
     {
-        // if the node has a named reference, ask for conversion
-        const QString & page = e.attribute( "PageName" );
-        const QString & pageNumber = m_document->getMetaData( "NamedLink", page );
-        bool ok;
-        int n = pageNumber.toUInt( &ok );
-        if ( ok )
-            m_document->setCurrentPage( n );
+        // if the node references a viewport, get the reference and set it
+        const QString & page = e.attribute( "ViewportName" );
+        const QString & viewport = m_document->getMetaData( "NamedViewport", page );
+        if ( !viewport.isNull() )
+            m_document->setViewport( DocumentViewport( viewport ) );
     }
 }
 

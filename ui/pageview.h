@@ -35,7 +35,7 @@ class PageViewPrivate;
  * @short display of course :-)
  * ...
  */
-class PageView : public QScrollView, public KPDFDocumentObserver
+class PageView : public QScrollView, public DocumentObserver
 {
     Q_OBJECT
 
@@ -52,15 +52,15 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         void setupActions( KActionCollection * collection );
 
         // used from RMB menu
-        void setZoomFitWidth();
+        void fitPageWidth( int page );
 
-        // inherited from KPDFDocumentObserver
+        // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
-        void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
-        void pageSetCurrent( int pageNumber, const QRect & viewport );
+        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifyViewportChanged();
+        void notifyPageChanged( int pageNumber, int changedFlags );
+        void notifyContentsCleared( int changedFlags );
         bool canUnloadPixmap( int pageNum );
-        void notifyPixmapChanged( int pageNumber );
-        void notifyPixmapsCleared();
 
     public slots:
         void slotSetMouseDraw();

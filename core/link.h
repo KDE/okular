@@ -12,6 +12,7 @@
 
 #include <qstring.h>
 #include <qrect.h>
+#include "core/document.h" // for DocumentViewport
 
 /**
  * @short Encapsulates data that describes a link.
@@ -32,25 +33,18 @@ class KPDFLink
 class KPDFLinkGoto : public KPDFLink
 {
     public:
-        // define a 'Viewport' TODO MERGE WITH DOCUMENT VIEWPORT
-        struct Viewport {
-            int page;
-            bool fitWidth, fitHeight;
-            QRect rectPercent;
-        };
-
         // query for goto parameters
         bool isExternal() const { return !m_extFileName.isEmpty(); }
         const QString & fileName() const { return m_extFileName; }
-        const Viewport & destViewport() const { return m_vp; }
+        const DocumentViewport & destViewport() const { return m_vp; }
 
         // create a KPDFLink_Goto
-        KPDFLinkGoto( QString extFileName, Viewport vp ) { m_extFileName = extFileName; m_vp = vp; }
+        KPDFLinkGoto( QString extFileName, const DocumentViewport & vp ) { m_extFileName = extFileName; m_vp = vp; }
         LinkType linkType() const { return Goto; }
 
     private:
         QString m_extFileName;
-        Viewport m_vp;
+        DocumentViewport m_vp;
 };
 
 

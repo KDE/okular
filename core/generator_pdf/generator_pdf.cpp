@@ -229,9 +229,9 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
             {
                 // no 'destination' but an internal 'named reference'. we could
                 // get the destination for the page now, but it's VERY time consuming,
-                // so better storing the reference and provide page number as metadata
+                // so better storing the reference and provide the viewport as metadata
                 // on demand
-                item.setAttribute( "PageName", g->getNamedDest()->getCString() );
+                item.setAttribute( "ViewportName", g->getNamedDest()->getCString() );
             }
             else if ( destination->isOk() )
             {
@@ -242,8 +242,9 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                     Ref ref = destination->getPageRef();
                     pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
                 }
-                // set page as attribute to node (note: the viewport should be set too)
-                item.setAttribute( "PageNumber", pageNumber );
+                // set page as attribute to node
+                // TODO add other attributes to the viewport
+                item.setAttribute( "Viewport", DocumentViewport( pageNumber ).toString() );
             }
         }
 
@@ -487,28 +488,28 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         if ( pdfdoc->getCatalog()->getPageMode() == Catalog::FullScreen )
             return "yes";
     }
-    else if ( key == "NamedLink" && !option.isEmpty() )
+    else if ( key == "NamedViewport" && !option.isEmpty() )
     {
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
-        int pageNumber = -1;
+        DocumentViewport viewport;
         GString * namedDest = new GString( option.latin1() );
         docLock.lock();
         LinkDest * destination = pdfdoc->findDest( namedDest );
         if ( destination )
         {
             if ( !destination->isPageRef() )
-                pageNumber = destination->getPageNum() - 1;
+                viewport.pageNumber = destination->getPageNum() - 1;
             else
             {
                 Ref ref = destination->getPageRef();
-                pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
+                viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
             }
         }
         docLock.unlock();
         delete namedDest;
-        if ( pageNumber >= 0 )
-            return QString::number( pageNumber );
+        if ( viewport.pageNumber >= 0 )
+            return viewport.toString();
     }
     return QString();
 }

@@ -53,11 +53,9 @@
 class PageViewPrivate
 {
 public:
-    // the document, current page and pages indices vector
+    // the document, pageviewItems and the 'visible cache'
     KPDFDocument * document;
-    PageViewItem * activeItem; //equal to items[vectorIndex]
     QValueVector< PageViewItem * > items;
-    int vectorIndex;
     QValueList< PageViewItem * > visibleItems;
 
     // view layout (columns and continous in Settings), zoom and mouse
@@ -75,6 +73,7 @@ public:
     QTimer * scrollTimer;
     int scrollIncrement;
     bool dirtyLayout;
+    bool blockViewport;
     PageViewMessage * messageWindow;    //in pageviewutils.h
 
     // actions
@@ -93,7 +92,7 @@ public:
  * Code weight (in rows) and meaning:
  *  160 - constructor and creating actions plus their connected slots (empty stuff)
  *  70  - DocumentObserver inherited methodes (important)
- *  200 - events: mouse, keyboard, drag/drop
+ *  550 - events: mouse, keyboard, drag/drop
  *  170 - slotRelayoutPages: set contents of the scrollview on continous/single modes
  *  100 - zoom: zooming pages in different ways, keeping update the toolbar actions, etc..
  *  other misc functions: only slotRequestVisiblePixmaps and pickItemOnPoint noticeable,
@@ -105,8 +104,6 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // create and initialize private storage structure
     d = new PageViewPrivate();
     d->document = document;
-    d->activeItem = 0;
-    d->vectorIndex = -1;
     d->zoomMode = ZoomFixed;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
@@ -116,6 +113,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->scrollTimer = 0;
     d->scrollIncrement = 0;
     d->dirtyLayout = false;
+    d->blockViewport = false;
     d->messageWindow = new PageViewMessage(this);
 
     // widget setup: setup focus, accept drops and track mouse
@@ -199,8 +197,9 @@ void PageView::setupActions( KActionCollection * ac )
     sd->setShortcut( "Shift+Down" );
 }
 
-void PageView::setZoomFitWidth()
+void PageView::fitPageWidth( int page )
 {
+    // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
     d->zoomMode = ZoomFitWidth;
     Settings::setViewColumns( 1 );
     d->aZoomFitWidth->setChecked( true );
@@ -211,12 +210,13 @@ void PageView::setZoomFitWidth()
     slotRelayoutPages();
     viewport()->setUpdatesEnabled( true );
     updateContents();
-    updateZoomText();
+    // updateZoomText(); active?
+    d->document->setViewportPage( page );
 }
 
 
-//BEGIN KPDFDocumentObserver inherited methods
-void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool documentChanged )
+//BEGIN DocumentObserver inherited methods
+void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool documentChanged )
 {
     // reuse current pages if nothing new
     if ( ( pageSet.count() == d->items.count() ) && !documentChanged )
@@ -235,14 +235,13 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
         delete *dIt;
     d->items.clear();
     d->visibleItems.clear();
-    d->activeItem = 0;
 
     // create children widgets
     QValueVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
         d->items.push_back( new PageViewItem( *setIt ) );
 
-    // invalidate layout
+    // invalidate layout so relayout/repaint will happen on next viewport change
     d->dirtyLayout = true;
 
     // OSD to display pages
@@ -254,44 +253,91 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
             PageViewMessage::Info, 4000 );
 }
 
-void PageView::pageSetCurrent( int pageNumber, const QRect & viewport )
+void PageView::notifyViewportChanged()
 {
-    // select next page
-    d->vectorIndex = 0;
-    d->activeItem = 0;
+    // if we are the one changing viewport, skip this nofity
+    if ( d->blockViewport )
+        return;
+
+    // block setViewport outgoing calls
+    d->blockViewport = true;
+
+    // find PageViewItem matching the viewport description
+    const DocumentViewport & viewport = d->document->viewport();
+    PageViewItem * item = 0;
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
-    {
-        if ( (*iIt)->pageNumber() == pageNumber )
+        if ( (*iIt)->pageNumber() == viewport.pageNumber )
         {
-            d->activeItem = *iIt;
+            item = *iIt;
             break;
         }
-        d->vectorIndex ++;
-    }
-    if ( !d->activeItem )
+    if ( !item )
+    {
+        kdDebug() << "viewport has no matching item!" << endl;
         return;
+    }
 
     // relayout in "Single Pages" mode or if a relayout is pending
     if ( !Settings::viewContinous() || d->dirtyLayout )
         slotRelayoutPages();
 
-    // center the view to see the selected page
-    if ( viewport.isNull() || true ) // FIXME take care of viewport
+    // restore viewport or use default x-center, v-top alignment
+    const QRect & r = item->geometry();
+    if ( viewport.reCenter.enabled )
     {
-        const QRect & r = d->activeItem->geometry();
-        center( r.left() + r.width() / 2, r.top() + visibleHeight() / 2 - 10 );
+        int xCenter = (int)( viewport.reCenter.normalizedCenterX * (float)r.width() );
+        int yCenter = (int)( viewport.reCenter.normalizedCenterY * (float)r.height() );
+        center( r.left() + xCenter, r.top() + yCenter );
     }
+    else
+        center( r.left() + r.width() / 2, r.top() + visibleHeight() / 2 - 10 );
+
+    // request visible pixmaps in the current viewport and recompute it
     slotRequestVisiblePixmaps();
+
+    // enable setViewport calls
+    d->blockViewport = false;
 
     // update zoom text if in a ZoomFit/* zoom mode
     if ( d->zoomMode != ZoomFixed )
         updateZoomText();
 
-    // that is here because of that
-    // you clicked on a link that brought you to another page
-    // the page was on the cache and you have to update the cursor
+    // since the page has moved below cursor, update it
     updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+}
+
+void PageView::notifyPageChanged( int pageNumber, int changedFlags )
+{
+    // only handle pixmap changed notifies (the only defined for now)
+    //if ( !(changedFlags & DocumentObserver::Pixmap) )
+    //    return;
+
+    // iterate over visible items: if page(pageNumber) is one of them, repaint it
+    QValueList< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
+    for ( ; iIt != iEnd; ++iIt )
+        if ( (*iIt)->pageNumber() == pageNumber )
+        {
+            // update item's rectangle plus the little outline
+            QRect expandedRect = (*iIt)->geometry();
+            expandedRect.addCoords( -1, -1, 3, 3 );
+            updateContents( expandedRect );
+
+            // if we were "zoom-dragging" do not overwrite the "zoom-drag" cursor
+            if ( cursor().shape() != Qt::SizeVerCursor )
+            {
+                // since the page has been regenerated below cursor, update it
+                updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+            }
+            break;
+        }
+}
+
+void PageView::notifyContentsCleared( int changedFlags )
+{
+    // if pixmaps were cleared, re-ask them
+    if ( changedFlags & DocumentObserver::Pixmap )
+        slotRequestVisiblePixmaps();
 }
 
 bool PageView::canUnloadPixmap( int pageNumber )
@@ -304,37 +350,7 @@ bool PageView::canUnloadPixmap( int pageNumber )
     // if hidden premit unloading
     return true;
 }
-
-void PageView::notifyPixmapChanged( int pageNumber )
-{
-    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
-    for ( ; iIt != iEnd; ++iIt )
-        if ( (*iIt)->pageNumber() == pageNumber )
-        {
-            // update item's rectangle plus the little outline
-            QRect expandedRect = (*iIt)->geometry();
-            expandedRect.addCoords( -1, -1, 3, 3 );
-            updateContents( expandedRect );
-
-            // if we were "zoom-dragging" do not overwrite the "zoom-drag" cursor
-            if (cursor().shape() != Qt::SizeVerCursor)
-            {
-                // that is here because of that
-                // you clicked on a link that brought you to another page
-                // the page was not on the cache so the updateCursor from pageSetCurrent does not work
-                updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
-            }
-
-
-            break;
-        }
-}
-
-void PageView::notifyPixmapsCleared()
-{
-    slotRequestVisiblePixmaps();
-}
-//END KPDFDocumentObserver inherited methods
+//END DocumentObserver inherited methods
 
 //BEGIN widget events
 void PageView::viewportPaintEvent( QPaintEvent * pe )
@@ -467,7 +483,7 @@ void PageView::viewportResizeEvent( QResizeEvent * )
         d->delayTimer = new QTimer( this );
         connect( d->delayTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
     }
-    d->delayTimer->start( 400, true );
+    d->delayTimer->start( 333, true );
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -486,11 +502,15 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 else
                     verticalScrollBar()->subtractPage();
             }
-            else if ( d->vectorIndex > 0 )
-	    {
-                d->document->setCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
-                verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
-	    }
+            else if ( d->document->currentPage() > 0 )
+            {
+                // more optimized than document->setPrevPage and then move view to bottom
+                DocumentViewport newViewport = d->document->viewport();
+                newViewport.pageNumber -= 1;
+                newViewport.reCenter.enabled = true;
+                newViewport.reCenter.normalizedCenterY = 1.0;
+                d->document->setViewport( newViewport );
+            }
             break;
         case Key_Down:
         case Key_PageDown:
@@ -502,8 +522,15 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 else
                     verticalScrollBar()->addPage();
             }
-            else if ( d->vectorIndex < (int)d->items.count() - 1 )
-                d->document->setCurrentPage( d->items[ d->vectorIndex + 1 ]->pageNumber() );
+            else if ( d->document->currentPage() < d->items.count() - 1 )
+            {
+                // more optmized than document->setNextPage and then move view to top
+                DocumentViewport newViewport = d->document->viewport();
+                newViewport.pageNumber += 1;
+                newViewport.reCenter.enabled = true;
+                newViewport.reCenter.normalizedCenterY = 0.0;
+                d->document->setViewport( newViewport );
+            }
             break;
         case Key_Left:
             horizontalScrollBar()->subtractLine();
@@ -667,7 +694,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 else
                 {
                     // mouse not moved since press, so we have a click. select the page.
-                    d->document->setCurrentPage( pageItem->pageNumber() );
+                    d->document->setViewportPage( pageItem->pageNumber() );
                 }
             }
             else if ( rightButton )
@@ -824,16 +851,27 @@ void PageView::wheelEvent( QWheelEvent *e )
     else if ( delta <= -120 && !Settings::viewContinous() && vScroll == verticalScrollBar()->maxValue() )
     {
         // go to next page
-        if ( d->vectorIndex < (int)d->items.count() - 1 )
-            d->document->setCurrentPage( d->items[ d->vectorIndex + 1 ]->pageNumber() );
+        if ( d->document->currentPage() < d->items.count() - 1 )
+        {
+            // more optmized than document->setNextPage and then move view to top
+            DocumentViewport newViewport = d->document->viewport();
+            newViewport.pageNumber += 1;
+            newViewport.reCenter.enabled = true;
+            newViewport.reCenter.normalizedCenterY = 0.0;
+            d->document->setViewport( newViewport );
+        }
     }
     else if ( delta >= 120 && !Settings::viewContinous() && vScroll == verticalScrollBar()->minValue() )
     {
         // go to prev page
-        if ( d->vectorIndex > 0 )
+        if ( d->document->currentPage() > 0 )
         {
-            d->document->setCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
-            verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
+            // more optmized than document->setPrevPage and then move view to bottom
+            DocumentViewport newViewport = d->document->viewport();
+            newViewport.pageNumber -= 1;
+            newViewport.reCenter.enabled = true;
+            newViewport.reCenter.normalizedCenterY = 1.0;
+            d->document->setViewport( newViewport );
         }
     }
     else
@@ -966,7 +1004,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
 PageViewItem * PageView::pickItemOnPoint( int x, int y )
 {
     PageViewItem * item = 0;
-    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+    QValueList< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;
@@ -996,7 +1034,7 @@ void PageView::selectionEndPoint( int x, int y )
 {
     // clip selection to the viewport
     QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
-    x = QMAX( QMIN( x, viewportRect.right() ), viewportRect.left() ),
+    x = QMAX( QMIN( x, viewportRect.right() ), viewportRect.left() );
     y = QMAX( QMIN( y, viewportRect.bottom() ), viewportRect.top() );
     // if selection changed update rect
     if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
@@ -1078,7 +1116,11 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         // rebuild layout and update the whole viewport
         d->zoomMode = newZoomMode;
         d->zoomFactor = newFactor;
+        // be sure to block updates to document's viewport
+        bool prevState = d->blockViewport;
+        d->blockViewport = true;
         slotRelayoutPages();
+        d->blockViewport = prevState;
         // request pixmaps
         slotRequestVisiblePixmaps();
         // update zoom text
@@ -1094,7 +1136,7 @@ void PageView::updateZoomText()
 {
     // use current page zoom as zoomFactor if in ZoomFit/* mode
     if ( d->zoomMode != ZoomFixed && d->items.count() > 0 )
-        d->zoomFactor = d->activeItem ? d->activeItem->zoomFactor() : d->items[0]->zoomFactor();
+        d->zoomFactor = d->items[ QMAX( 0, (int)d->document->currentPage() ) ]->zoomFactor();
     float newFactor = d->zoomFactor;
     d->aZoom->clear();
 
@@ -1163,7 +1205,7 @@ void PageView::updateCursor( const QPoint &p )
 
 //BEGIN private SLOTS
 void PageView::slotRelayoutPages()
-// called by: pageSetup, viewportResizeEvent, slotTwoPagesToggled, slotContinousToggled, updateZoom
+// called by: notifySetup, viewportResizeEvent, slotTwoPagesToggled, slotContinousToggled, updateZoom
 {
     // set an empty container if we have no pages
     int pageCount = d->items.count();
@@ -1177,38 +1219,9 @@ void PageView::slotRelayoutPages()
     QValueVector< PageViewItem * >::iterator iIt, iEnd = d->items.end();
     int viewportWidth = visibleWidth(),
         viewportHeight = visibleHeight(),
-        viewportCenterX = contentsX() + viewportWidth / 2,
-        viewportCenterY = contentsY() + viewportHeight / 2,
         fullWidth = 0,
         fullHeight = 0;
     QRect viewportRect( contentsX(), contentsY(), viewportWidth, viewportHeight );
-
-    // look for the item closest to viewport center and the relative position
-    // between the item and the viewport center (for viewport restoring at end)
-    PageViewItem * focusedPage = 0;
-    double focusedX = 0.5,
-           focusedY = 0.0,
-           minDistance = -1.0;
-    // find the page nearest to viewport center
-    for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
-    {
-        const QRect & geometry = (*iIt)->geometry();
-        if ( geometry.intersects( viewportRect ) )
-        {
-            // compute distance between item center and viewport center
-            double distance = hypot( geometry.left() + geometry.width() / 2 - viewportCenterX,
-                                     geometry.top() + geometry.height() / 2 - viewportCenterY );
-            if ( distance >= minDistance && minDistance != -1.0 )
-                continue;
-            focusedPage = *iIt;
-            minDistance = distance;
-            if ( geometry.height() > 0 && geometry.width() > 0 )
-            {
-                focusedX = (double)( viewportCenterX - geometry.left() ) / (double)geometry.width();
-                focusedY = (double)( viewportCenterY - geometry.top() ) / (double)geometry.height();
-            }
-        }
-    }
 
     // set all items geometry and resize contents. handle 'continous' and 'single' modes separately
     if ( Settings::viewContinous() )
@@ -1279,7 +1292,7 @@ void PageView::slotRelayoutPages()
     }
     else // viewContinous is FALSE
     {
-        PageViewItem * currentItem = d->activeItem ? d->activeItem : d->items[0];
+        PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
 
         // setup varialbles for a 1(row) x N(columns) grid
         int nCols = Settings::viewColumns(),
@@ -1336,15 +1349,21 @@ void PageView::slotRelayoutPages()
     // 4) update scrollview's contents size and recenter view
     if ( fullWidth != contentsWidth() || fullHeight != contentsHeight() )
     {
+        // disable updates and resize the viewportContents
         bool prevUpdatesState = viewport()->isUpdatesEnabled();
         viewport()->setUpdatesEnabled( false );
         resizeContents( fullWidth, fullHeight );
-        if ( focusedPage )
+        // restore previous viewport if defined
+        const DocumentViewport & vp = d->document->viewport();
+        if ( vp.pageNumber >= 0 )
         {
-            const QRect & geometry = focusedPage->geometry();
-            center( geometry.left() + ROUND( focusedX * (double)geometry.width() ),
-                    geometry.top() + ROUND( focusedY * (double)geometry.height() ) );
+            const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
+            double nX = vp.reCenter.enabled ? vp.reCenter.normalizedCenterX : 0.5,
+                   nY = vp.reCenter.enabled ? vp.reCenter.normalizedCenterY : 0.0;
+            center( geometry.left() + ROUND( nX * (double)geometry.width() ),
+                    geometry.top() + ROUND( nY * (double)geometry.height() ) );
         }
+        // or else go to center page
         else
             center( fullWidth / 2, 0 );
         viewport()->setUpdatesEnabled( prevUpdatesState );
@@ -1357,28 +1376,78 @@ void PageView::slotRelayoutPages()
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 {
     // precalc view limits for intersecting with page coords inside the lOOp
-    QRect viewportRect( newLeft == -1 ? contentsX() : newLeft,
-                        newTop == -1 ? contentsY() : newTop,
+    bool isEvent = newLeft != -1 && newTop != -1 && !d->blockViewport;
+    QRect viewportRect( isEvent ? newLeft : contentsX(),
+                        isEvent ? newTop : contentsY(),
                         visibleWidth(), visibleHeight() );
 
-    // for each item, check if it intersects the viewport
+    // some variables used to determine the viewport
+    int nearPageNumber = -1,
+        viewportWidth = visibleWidth(),
+        viewportHeight = visibleHeight(),
+        viewportCenterX = contentsX() + viewportWidth / 2,
+        viewportCenterY = contentsY() + viewportHeight / 2;
+    double focusedX = 0.5,
+           focusedY = 0.0,
+           minDistance = -1.0;
+
+    // iterate over all items
     d->visibleItems.clear();
     QValueList< PixmapRequest * > requestedPixmaps;
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;
+
+        // if the item doesn't intersect the viewport, skip it
         if ( !viewportRect.intersects( i->geometry() ) )
             continue;
 
+        // add the item to the 'visible list'
         d->visibleItems.push_back( i );
+
+        // if the item has not the right pixmap, add a request for it
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
             requestedPixmaps.push_back( new PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->width(), i->height() ) );
+
+        // look for the item closest to viewport center and the relative
+        // position between the item and the viewport center
+        if ( isEvent )
+        {
+            const QRect & geometry = i->geometry();
+            // compute distance between item center and viewport center
+            double distance = hypot( geometry.left() + geometry.width() / 2 - viewportCenterX,
+                                     geometry.top() + geometry.height() / 2 - viewportCenterY );
+            if ( distance >= minDistance && nearPageNumber != -1 )
+                continue;
+            nearPageNumber = i->pageNumber();
+            minDistance = distance;
+            if ( geometry.height() > 0 && geometry.width() > 0 )
+            {
+                focusedX = (double)( viewportCenterX - geometry.left() ) / (double)geometry.width();
+                focusedY = (double)( viewportCenterY - geometry.top() ) / (double)geometry.height();
+            }
+        }
     }
 
-    // actually request pixmaps
+    // request pixmaps in 'requests list'
     if ( !requestedPixmaps.isEmpty() )
-        d->document->requestPixmaps( requestedPixmaps, true /*ASYNC*/  );
+        d->document->requestPixmaps( requestedPixmaps, true /*ASYNC*/ );
+
+    // if this functions was invoked by viewport events
+    if ( isEvent && nearPageNumber != -1 )
+    {
+        // determine the document viewport
+        DocumentViewport newViewport( nearPageNumber );
+        newViewport.reCenter.enabled = true;
+        newViewport.reCenter.normalizedCenterX = focusedX;
+        newViewport.reCenter.normalizedCenterY = focusedY;
+        // set the viewport to other observers
+        bool prevState = d->blockViewport;
+        d->blockViewport = true;
+        d->document->setViewport( newViewport );
+        d->blockViewport = prevState;
+    }
 }
 
 void PageView::slotAutoScoll()

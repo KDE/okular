@@ -100,7 +100,6 @@ class PDFGenerator : public Generator
 /**
  * @short A thread that builds contents for PDFGenerator in the background.
  *
- * 
  */
 class PDFPixmapGeneratorThread : public QThread
 {

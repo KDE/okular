@@ -223,16 +223,22 @@ Part::~Part()
         delete globalParams;
 }
 
-void Part::pageSetCurrent( int, const QRect & )
+void Part::notifyViewportChanged()
 {
-    // document tells that page has changed, so update actions
-    updateActions();
+    // update actions if the page is changed
+    static int lastPage = -1;
+    int viewportPage = m_document->viewport().pageNumber;
+    if ( viewportPage != lastPage )
+    {
+        updateActions();
+        lastPage = viewportPage;
+    }
 }
 
 void Part::goToPage(uint i)
 {
     if ( i <= m_document->pages() )
-        m_document->setCurrentPage( i - 1 );
+        m_document->setViewportPage( i - 1 );
 }
 
 void Part::openDocument(KURL doc)
@@ -260,9 +266,7 @@ bool Part::openFile()
 {
     bool ok = m_document->openDocument( m_file );
     if ( ok && !m_watcher->contains(m_file)) m_watcher->addFile(m_file);
-    m_find->setEnabled( ok );
-    m_showProperties->setEnabled( ok );
-    m_showPresentation->setEnabled( ok );
+    updateActions();
 
     if ( ok && m_document->getMetaData( "StartFullScreen" ) == "yes" )
         slotShowPresentation();
@@ -330,7 +334,8 @@ bool Part::closeURL()
 
 void Part::updateActions()
 {
-    if ( m_document->pages() > 0 )
+    bool ok = m_document->pages() > 0;
+    if ( ok )
     {
         bool atBegin = m_document->currentPage() < 1;
         bool atEnd = m_document->currentPage() >= (m_document->pages() - 1);
@@ -348,6 +353,9 @@ void Part::updateActions()
         m_prevPage->setEnabled( false );
         m_nextPage->setEnabled( false );
     }
+    m_find->setEnabled( ok );
+    m_showProperties->setEnabled( ok );
+    m_showPresentation->setEnabled( ok );
 }
 
 void Part::enableTOC(bool enable)
@@ -389,29 +397,29 @@ void Part::slotGoToPage()
 {
     KPDFGotoPageDialog pageDialog( m_pageView, m_document->currentPage() + 1, m_document->pages() );
     if ( pageDialog.exec() == QDialog::Accepted )
-        m_document->setCurrentPage( pageDialog.getPage() - 1 );
+        m_document->setViewportPage( pageDialog.getPage() - 1 );
 }
 
 void Part::slotPreviousPage()
 {
     if ( !m_document->currentPage() < 1 )
-        m_document->setCurrentPage( m_document->currentPage() - 1 );
+        m_document->setViewportPage( m_document->currentPage() - 1 );
 }
 
 void Part::slotNextPage()
 {
     if ( m_document->currentPage() < (m_document->pages() - 1) )
-        m_document->setCurrentPage( m_document->currentPage() + 1 );
+        m_document->setViewportPage( m_document->currentPage() + 1 );
 }
 
 void Part::slotGotoFirst()
 {
-    m_document->setCurrentPage( 0 );
+    m_document->setViewportPage( 0 );
 }
 
 void Part::slotGotoLast()
 {
-    m_document->setCurrentPage( m_document->pages() - 1 );
+    m_document->setViewportPage( m_document->pages() - 1 );
 }
 
 void Part::slotFind()
@@ -594,10 +602,8 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 			case 1:
 				m_document->toggleBookmark( page->number() );
 				break;
-			case 2: // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
-				// (FIXME restore faster behavior and txt change as in old pageview implementation)
-				m_pageView->setZoomFitWidth();
-				m_document->setCurrentPage( page->number() );
+			case 2:
+				m_pageView->fitPageWidth( page->number() );
 				break;
 	//		case 3: // ToDO switch to edit mode
 	//			m_pageView->slotSetMouseDraw();

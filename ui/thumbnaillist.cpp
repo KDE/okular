@@ -76,12 +76,12 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 	viewport()->setPaletteBackgroundColor( palette().active().base() );
 
 	setFrameStyle( StyledPanel | Raised );
-	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestPixmaps(int, int)) );
+	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
 }
 
 
-//BEGIN KPDFDocumentObserver inherited methods 
-void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*documentChanged*/ )
+//BEGIN DocumentObserver inherited methods 
+void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool /*documentChanged*/ )
 {
 	// delete all the Thumbnails
 	QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
@@ -132,14 +132,15 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 	requestPixmaps( 200 );
 }
 
-void ThumbnailList::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
+void ThumbnailList::notifyViewportChanged()
 {
 	// deselect previous thumbnail
 	if ( m_selected )
 		m_selected->setSelected( false );
 	m_selected = 0;
 
-	// select next page
+	// select the page with viewport and ensure it's centered in the view
+	int pageNumber = m_document->viewport().pageNumber;
 	m_vectorIndex = 0;
 	QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 	for ( ; tIt != tEnd; ++tIt )
@@ -156,6 +157,29 @@ void ThumbnailList::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 	}
 }
 
+void ThumbnailList::notifyPageChanged( int pageNumber, int changedFlags )
+{
+    // only handle pixmap changed notifies (the only defined for now)
+    //if ( !(changedFlags & DocumentObserver::Pixmap) )
+    //    return;
+
+    // iterate over visible items: if page(pageNumber) is one of them, repaint it
+    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    for ( ; vIt != vEnd; ++vIt )
+        if ( (*vIt)->pageNumber() == pageNumber )
+        {
+            (*vIt)->update();
+            break;
+        }
+}
+
+void ThumbnailList::notifyContentsCleared( int changedFlags )
+{
+    // if pixmaps were cleared, re-ask them
+    if ( changedFlags & DocumentObserver::Pixmap )
+        slotRequestVisiblePixmaps();
+}
+
 bool ThumbnailList::canUnloadPixmap( int pageNumber )
 {
     // if the thubnail 'pageNumber' is one of the visible ones, forbid unloading
@@ -166,23 +190,7 @@ bool ThumbnailList::canUnloadPixmap( int pageNumber )
     // if hidden permit unloading
     return true;
 }
-
-void ThumbnailList::notifyPixmapChanged( int pageNumber )
-{
-    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
-    for ( ; vIt != vEnd; ++vIt )
-        if ( (*vIt)->pageNumber() == pageNumber )
-        {
-            (*vIt)->update();
-            break;
-        }
-}
-
-void ThumbnailList::notifyPixmapsCleared()
-{
-    slotRequestPixmaps();
-}
-//END KPDFDocumentObserver inherited methods 
+//END DocumentObserver inherited methods 
 
 
 void ThumbnailList::updateWidgets()
@@ -207,7 +215,7 @@ void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
     // save state
     Settings::setFilterBookmarks( filterOn );
-    // ask for the 'pageSetup' with a little trick (on reinsertion the
+    // ask for the 'notifySetup' with a little trick (on reinsertion the
     // document sends the list again)
     m_document->removeObserver( this );
     m_document->addObserver( this );
@@ -247,7 +255,7 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 	if ( m_selected )
 		m_selected->setSelected( false );
 	m_selected = 0;
-	m_document->setCurrentPage( nextPage );
+	m_document->setViewportPage( nextPage );
 }
 
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
@@ -262,7 +270,7 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 		int childTop = childY(t);
 		if ( clickY > childTop && clickY < (childTop + t->height()) )
 		{
-			m_document->setCurrentPage( t->pageNumber() );
+			m_document->setViewportPage( t->pageNumber() );
 			break;
 		}
 	}
@@ -318,7 +326,7 @@ void ThumbnailList::dropEvent( QDropEvent * ev )
 //END widget events
 
 //BEGIN internal SLOTS 
-void ThumbnailList::slotRequestPixmaps( int /*newContentsX*/, int newContentsY )
+void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsX*/, int newContentsY )
 {
 	// if an update is already scheduled or the widget is hidden, don't proceed
 	if ( (m_delayTimer && m_delayTimer->isActive()) || !isShown() )
@@ -357,7 +365,7 @@ void ThumbnailList::requestPixmaps( int delayMs )
 	if ( !m_delayTimer )
 	{
 		m_delayTimer = new QTimer( this );
-		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestPixmaps() ) );
+		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestVisiblePixmaps() ) );
 	}
 	m_delayTimer->start( delayMs, true );
 }

@@ -12,6 +12,7 @@
 #include <kinstance.h>
 #include <kprinter.h>
 #include <kstdaction.h>
+#include <kconfig.h>
 #include <kparts/genericfactory.h>
 #include <kdebug.h>
 
@@ -104,11 +105,32 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");
+  readSettings();
 }
 
 Part::~Part()
 {
     delete globalParams;
+    writeSettings();
+}
+
+
+
+void Part::writeSettings()
+{
+    KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
+    general.writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
+    general.writeEntry( "ShowPageList", m_showPageList->isChecked() );
+    general.sync();
+}
+
+void Part::readSettings()
+{
+    KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
+    m_showScrollBars->setChecked( general.readBoolEntry( "ShowScrollBars", true ) );
+    showScrollBars( m_showScrollBars->isChecked() );
+    m_showPageList->setChecked( general.readBoolEntry( "ShowPageList", true ) );
+    showMarkList( m_showPageList->isChecked() );
 }
 
 void Part::showScrollBars( bool show )
@@ -118,11 +140,10 @@ void Part::showScrollBars( bool show )
 
 void Part::showMarkList( bool show )
 {
-#if 0
-    _markList->setShown( show );
-    _scrollBox->setShown( show );
-    _divider->setShown( show );
-#endif
+    if ( show )
+        pdfpartview->pagesListBox->show();
+    else
+        pdfpartview->pagesListBox->hide();
 }
 
 void Part::slotGotoEnd()

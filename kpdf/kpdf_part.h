@@ -76,8 +76,9 @@ namespace KPDF
      */
     virtual bool openFile();
 
-		void update();
-
+      void update();
+      void readSettings();
+      void writeSettings();
   protected slots:
     void find()     { /* stub */ };
     void findNext() { /* stub */ };

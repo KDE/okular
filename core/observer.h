@@ -21,6 +21,7 @@
 #define THUMBNAILS_ID 4
 #define TOC_ID 5
 #define MINIBAR_ID 6
+#define REVIEWS_ID 7
 
 /** PRIORITIES for requests. Globally defined here. **/
 #define PAGEVIEW_PRIO 1

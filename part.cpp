@@ -32,6 +32,7 @@
 #include <dcopobject.h>
 #include <dcopclient.h>
 #include <kapplication.h>
+#include <klistviewsearchline.h>
 #include <kaction.h>
 #include <kdirwatch.h>
 #include <kinstance.h>
@@ -55,9 +56,10 @@
 #include "xpdf/GlobalParams.h"
 #include "part.h"
 #include "ui/pageview.h"
-#include "ui/thumbnaillist.h"
-#include "ui/searchwidget.h"
 #include "ui/toc.h"
+#include "ui/searchwidget.h"
+#include "ui/thumbnaillist.h"
+#include "ui/side_reviews.h"
 #include "ui/minibar.h"
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
@@ -104,14 +106,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
 
-	// widgets: ^searchbar (toolbar containing label and SearchWidget)
-//	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
-//	m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
-//	QLabel * sLabel = new QLabel( i18n( "&Search:" ), m_searchToolBar, "kde toolbar widget" );
-//	m_searchWidget = new SearchWidget( m_searchToolBar, m_document );
-//	sLabel->setBuddy( m_searchWidget );
-//	m_searchToolBar->setStretchableWidget( m_searchWidget );
-
 	// widgets: [] splitter []
 	m_splitter = new QSplitter( parentWidget, widgetName );
 	m_splitter->setOpaqueResize( true );
@@ -128,13 +122,19 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	leftPanelLayout->addWidget( m_toolBox );
 
 	// [left toolbox: Table of Contents] | []
-	TOC * tocFrame = new TOC( m_toolBox, m_document );
-	connect(tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
-	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	//QFrame * tocFrame = new QFrame( m_toolBox );
+	//QVBoxLayout * tocFrameLayout = new QVBoxLayout( tocFrame );
+	TOC * toc = new TOC( m_toolBox/*tocFrame*/, m_document );
+	connect( toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
+	//KListViewSearchLine * tocSearchLine = new KListViewSearchLine( tocFrame, toc );
+	//tocFrameLayout->addWidget( tocSearchLine );
+	//tocFrameLayout->addWidget( toc );
+	m_toolBox->addItem( toc/*tocFrame*/, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	enableTOC( false );
 
 	// [left toolbox: Thumbnails and Bookmarks] | []
 	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
+	thumbsBox->setSpacing( 4 );
 	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
@@ -147,10 +147,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
 
-/*	// [left toolbox: Annotations] | []
-	QFrame * editFrame = new QFrame( m_toolBox );
-	int iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
-	m_toolBox->setItemEnabled( iIdx, false );*/
+	// [left toolbox: Reviews] | []
+	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
+	m_toolBox->addItem( reviewsWidget, QIconSet(SmallIcon("pencil")), i18n("Reviews") );
 
 	// widgets: [../miniBarContainer] | []
 	QWidget * miniBarContainer = new QWidget( m_leftPanel );
@@ -165,17 +164,23 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	miniBarLayout->addWidget( miniBar );
 
 	// widgets: [] | [right 'pageView']
+//	QWidget * rightContainer = new QWidget( m_splitter );
+//	QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
+//	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
+//	rightLayout->addWidget( rtb );
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
+//	rightLayout->addWidget( m_pageView );
 
 	// add document observers
 	m_document->addObserver( this );
 	m_document->addObserver( m_thumbnailList );
 	m_document->addObserver( m_pageView );
-	m_document->addObserver( tocFrame );
+	m_document->addObserver( toc );
 	m_document->addObserver( miniBar );
+	m_document->addObserver( reviewsWidget );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();

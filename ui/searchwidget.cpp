@@ -33,8 +33,6 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     m_searchType( 0 ), m_caseSensitive( false )
 {
     // change toolbar appearance
-    setMargin( 3 );
-    setFlat( true );
     setIconSize( 16 );
     setMovingEnabled( false );
 

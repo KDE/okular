@@ -39,15 +39,15 @@ class Annotation;
 class KPDFPage
 {
     public:
-        KPDFPage( uint number, float width, float height, int rotation );
+        KPDFPage( uint number, double width, double height, int rotation );
         ~KPDFPage();
 
         // query properties (const read-only methods)
         inline int number() const { return m_number; }
         inline int rotation() const { return m_rotation; }
-        inline float width() const { return m_width; }
-        inline float height() const { return m_height; }
-        inline float ratio() const { return m_height / m_width; }
+        inline double width() const { return m_width; }
+        inline double height() const { return m_height; }
+        inline double ratio() const { return m_height / m_width; }
         bool hasPixmap( int p_id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
         bool hasBookmark() const;
@@ -61,8 +61,11 @@ class KPDFPage
         const ObjectRect * getObjectRect( double x, double y ) const;
         //const Annotation * getAnnotation( double x, double y ) const;
         const KPDFPageTransition * getTransition() const;
+        //FIXME TEMP:
+        bool hasAnnotations() const { return !m_annotations.isEmpty(); }
+        const QValueList< Annotation * > getAnnotations() const { return m_annotations; }
 
-        // operations: set/delete contents (by KPDFDocument)
+        // operations: set contents (by KPDFDocument)
         void setPixmap( int p_id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
         void setBookmark( bool state );
@@ -70,6 +73,7 @@ class KPDFPage
         void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
         void addAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
+        // operations: delete contents (by KPDFDocument)
         void deletePixmap( int p_id );
         void deletePixmapsAndRects();
         void deleteHighlights( int s_id = -1 );
@@ -81,8 +85,9 @@ class KPDFPage
 
     private:
         friend class PagePainter;
-        int m_number, m_rotation;
-        float m_width, m_height;
+        int m_number;
+        int m_rotation;
+        double m_width, m_height;
         bool m_bookmarked;
 
         QMap< int, QPixmap * > m_pixmaps;

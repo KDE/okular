@@ -18,7 +18,6 @@
 #include <qimage.h>
 #include <qpixmap.h>
 
-// #include "../kviewshell/centeringScrollView.h"
 #include "fontpool.h"
 #include "kviewpart.h"
 #include "optiondialog.h"
@@ -223,13 +222,10 @@ void KDVIMultiPage::doExportPDF(void)
 
 void KDVIMultiPage::doSettings()
 {
-  if (options) {
-    options->show();
-    return;
+  if (!options) {
+    options = new OptionDialog(window);
+    connect(options, SIGNAL(preferencesChanged()), this, SLOT(preferencesChanged()));
   }
-
-  options = new OptionDialog(window);
-  connect(options, SIGNAL(preferencesChanged()), this, SLOT(preferencesChanged()));
   options->show();
 }
 

@@ -288,9 +288,9 @@ void dviWindow::exportPDF(void)
   qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
 
-  export_errorString = i18n("The external program 'dvipdf', which was used to export the file, reported an error. "
+  export_errorString = i18n("<qt>The external program 'dvipdf', which was used to export the file, reported an error. "
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
-			    "find in the File-Menu for a precise error report.") ;
+			    "find in the File-Menu for a precise error report.</qt>") ;
 
 
   if (info)
@@ -952,7 +952,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 
 	QString cp = sourceHyperLinkList[i].linkText;
 	int max = cp.length();
-	for(int i=0; i<max; i++)
+	int i;
+	for(i=0; i<max; i++)
 	  if (cp[i].isDigit() == false)
 	    break;
 	
@@ -1014,12 +1015,14 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
 	qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(editorCommand_terminated(KProcess *)));
 	// Merge the editor-specific editor message here.
-	export_errorString = i18n("The external program, which was used to call the editor for inverse search, reported an error. "
-				  "You might wish to look at the <strong>document info dialog</strong> which you will "
-				  "find in the File-Menu for a precise error report.") ;
+	export_errorString = i18n("<qt>The external program<br/><br/><nobr><tt>%1</strong></tt><br/></br>which was used to call the editor "
+				  "for inverse search, reported an error. You might wish to look at the <strong>document info "
+				  "dialog</strong> which you will find in the File-Menu for a precise error report. The "
+				  "manual of KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
+				  "and a list of common problems.</qt>").arg(command);
 
 	if (info)
-	  info->clear(i18n("Starting the editor... <i>%1</i>").arg(command));
+	  info->clear(i18n("Starting the editor..."));
 	
 	proc->clearArguments();
 	*proc << command;

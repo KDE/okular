@@ -84,12 +84,20 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
   for(unsigned int i=0; i<EditorNames.count(); i++)
     mRender.editorChoice->insertItem(EditorNames[i]);
-  mRender.editorCallingCommand->setText(EditorCommands[0]);
-  // Missing: Read Entry from config file.
-  int item = 1;
-  slotComboBox(item);
-  //    mFont.metafontMode->setCurrentItem( config->readNumEntry( "MetafontMode" , DefaultMFMode ));
-}		       
+  // Set the proper editor on the "Rendering-Page", try to recognize
+  // the editor command from the config-file. If the editor command is
+  // not recognized, switch to "User defined editor". That way, kdvi
+  // stays compatible even if the EditorCommands[] change between
+  // different versions of kdvi.
+  QString currentEditorCommand = config->readEntry( "EditorCommand", "" );
+  int i;
+  for(i = EditorCommands.count()-1; i>0; i--)
+    if (EditorCommands[i] == currentEditorCommand)
+      break;
+  if (i == 0)
+    usersEditorCommand = currentEditorCommand;
+  slotComboBox(i);
+}
 
 
 void OptionDialog::show()
@@ -214,6 +222,7 @@ void OptionDialog::makeRenderingPage()
 
   label = new QLabel( i18n("Editor description:"), page );
   glay->addWidget( label, 3, 0 );
+
   // Find the longest description string available, to make sure that
   // the page is always large enough. Of course, we are making a
   // mistake here, since we use variable-width fonts. Let's hope that
@@ -230,6 +239,7 @@ void OptionDialog::makeRenderingPage()
   }
   kdError() << longest << endl;
   mRender.editorDescription = new QLabel( longest, page );
+  // Do something about minimum size here!
   QToolTip::add( mRender.editorDescription, i18n("Explains about the editor's capabilities in conjunction with inverse search.") );
   QWhatsThis::add( mRender.editorDescription, i18n("Not all editors are well-suited for inverse search. For instance, many editors have no command like 'If the file is not yet loaded, load it. Otherwise, bring the window with the file to the front'. If you are using an editor like this, clicking into the DVI file will always open a new editor, even if the TeX-file is already open. Likewise, many editors have no command line argument that would allow KDVI to specify the exact line which you wish to edit.\nIf you feel that KDVI's support for a certain editor is not well-done, please write to kebekus@kde.org.") );
   glay->addWidget( mRender.editorDescription, 3, 1 );

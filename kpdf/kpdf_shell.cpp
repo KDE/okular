@@ -151,7 +151,7 @@ Shell::saveProperties(KConfig* config)
   // the 'config' object points to the session managed
   // config file.  anything you write here will be available
   // later when this app is restored
-    config->writePathEntry( "URL", m_part->url().prettyURL() );
+    config->writePathEntry( "URL", m_part->url().url() );
 }
 
 void Shell::slotShowMenubar()
@@ -169,7 +169,7 @@ void Shell::readProperties(KConfig* config)
   // config file.  this function is automatically called whenever
   // the app is being restored.  read in here whatever you wrote
   // in 'saveProperties'
-    KURL url = config->readPathEntry( "URL" );
+    KURL url ( config->readPathEntry( "URL" ) );
     if ( url.isValid() )
         openURL( url );
 }

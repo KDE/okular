@@ -1270,6 +1270,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     {
         height = kpdfPage->ratio() * colWidth;
         item->setWHZ( colWidth, (int)height, (double)colWidth / width );
+        d->zoomFactor = (double)colWidth / width;
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
@@ -1277,6 +1278,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         double scaleH = (double)rowHeight / (double)height;
         zoom = QMIN( scaleW, scaleH );
         item->setWHZ( (int)(zoom * width), (int)(zoom * height), zoom );
+        d->zoomFactor = zoom;
     }
 #ifndef NDEBUG
     else

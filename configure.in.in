@@ -3,7 +3,34 @@ dnl the following is just to fool the toplevel configure.in
 LTLIBOBJS=
 AC_SUBST(LTLIBOBJS)
 
+compile_kdvi=yes
+for j in $DO_NOT_COMPILE; do
+   if test "kdvi" = $j; then
+       compile_kdvi=no
+        echo "CCCCCC"
+   fi
+done    
+
 dnl AC_CONFIG_SUBDIRS has to be done before KDE_CREATE_SUBDIRSLIST
-if test -f kdvi/kpathsea/configure; then
-  AC_CONFIG_SUBDIRS([kdvi/kpathsea])
+if test "$compile_kdvi" = "yes" && test -f $srcdir/kdvi/kpathsea/configure; then
+   kde_texdirs="/usr/lib /var/lib /usr/share /usr/share/teTeX /opt/local/teTeX/share /opt/teTeX/share /var /usr/local/share"
+   kde_texdir=NO
+   for dir in $kde_texdirs; do
+      if test -f $dir/texmf/web2c/texmf.cnf; then
+         kde_texdir=$dir
+         break 2
+      fi
+   done
+   if test ! "x$kde_texdir" = "xNO"; then
+     ac_configure_args="$ac_configure_args --with-tex-datadir=$kde_texdir"
+     AC_CONFIG_SUBDIRS([kdvi/kpathsea])
+  else
+		echo "ASDSDASD"
+   fi
+else 
+  if test $compile_kdvi = "yes"; then
+        echo "BBBB"
+    DO_NOT_COMPILE="$DO_NOT_COMPILE kdvi"
+  fi
 fi
+

@@ -30,12 +30,16 @@ AC_CHECK_HEADERS(assert.h float.h limits.h memory.h pwd.h stdlib.h \
 
 # Unfortunately, kpathsea needs to be told at compile time where 
 # the TeX directory tree resides 
+AC_ARG_WITH(tex-datadir,
+    [  --with-tex-datadir=DIR       where the root of texmf/web2c/texmf.cnf is installed ],
+    [  datadir=$withval
+    ], datadir=NO)     
 
 echo "checking for $datadir/texmf/web2c/texmf.cnf"
 if test ! -r $datadir/texmf/web2c/texmf.cnf; then
   { 
-  echo "configure: error. Please use the --datadir option to point to the main" 1>&2
-  echo "directory of your TeX installation, where the file web2c/texmf.cnf" 1>&2
+  echo "configure: error. Please use the --with-tex-datadir option to point to the main" 1>&2
+  echo "directory of your TeX installation, where the file texmf/web2c/texmf.cnf" 1>&2
   echo "is found." 1>&2
   exit -1
   }

@@ -62,7 +62,6 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 	// widget setup: can be focused by tab and mouse click (not wheel)
 	viewport()->setFocusProxy( this );
 	viewport()->setFocusPolicy( StrongFocus );
-	viewport()->setPaletteBackgroundColor( Qt::gray );
 	setResizePolicy( Manual );
 	setAcceptDrops( true );
 	setDragAutoScroll( false );

@@ -79,7 +79,7 @@ public:
     bool okToPrint() const;
     bool print(KPrinter &printer);
 
-//public slots:
+//public slots: TODO remove me
     // document commands via slots
     void slotSetCurrentPage( int page, const QRect & viewport = QRect() );
     void slotSetFilter( const QString & pattern, bool caseSensitive );

@@ -7,6 +7,8 @@ o Add menu-item for re-enabeling warnings (should be done in kviewshell, item sh
   if at least some items are switched off)
 o Proper handling of the base-url
 o give source-information in the status line
+o "File not found" is not centered
+o search backwards, etc...
 
 HIGHLY DESIRABLE
 
@@ -26,6 +28,5 @@ o Internal printing using QPrinter
 o Magnifier window
 o Two page view
 o Support for even more TeX specials
-o Search option
 o dynamical storage allocation for hyperlinks (see dviwin.h)
 o more robust Error handling with throw/catch; no need to abort just because a PK-file is bad.

@@ -599,8 +599,6 @@ void dviWindow::findText(void)
     connect(findDialog, SIGNAL(search()), this, SLOT(do_findText()));
   }
   findDialog->show();
-
-  // @@@@ KMessageBox::sorry( this, "<qt>The search functionality is not really implemented...</qt>" );
 }
 
 void dviWindow::do_findText(void)
@@ -612,17 +610,19 @@ void dviWindow::do_findText(void)
   bool case_sensitive = findDialog->case_sensitive();
 
   bool _postscript_sav = _postscript;
+  bool oneTimeRound    = false;
   int current_page_sav = current_page;
   _postscript = FALSE; // Switch off postscript to speed up things...
-  QPixmap pixie(1,1);
-  for(; current_page < dviFile->total_pages; current_page++) {
+  QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter. 
 
+
+  while(current_page < dviFile->total_pages) {
     foreGroundPaint.begin( &pixie );
-    draw_page(); // We don't really care for errors in draw_page()
+    draw_page(); // We don't really care for errors in draw_page(), no error handling here
     foreGroundPaint.end();
 
     for(int i=numOfFoundLink+1; i<num_of_used_textlinks; i++) 
-      if (textLinkList[i].linkText .find(searchText,case_sensitive) >= 0) {
+      if (textLinkList[i].linkText .find(searchText, 0, case_sensitive) >= 0) {
 	numOfFoundLink = i;
 	markedBox      = &textLinkList[i].box;
 	// Restore the previous settings, including the current
@@ -634,9 +634,26 @@ void dviWindow::do_findText(void)
 	emit(request_goto_page(j, textLinkList[i].box.bottom() ));
 	return;
       }
-    
     numOfFoundLink = -1;
-  }
+    current_page++;
+
+    if ((current_page == dviFile->total_pages)) {
+      if (oneTimeRound == true)
+	break;
+      oneTimeRound = true;
+      if (dviFile->total_pages>2) {
+	int answ = KMessageBox::questionYesNo(this, i18n("<qt>The search string <strong>%1</strong> could not be found till the "
+							 "end of the document. Should the search be restarted from the beginning "
+							 "of the document?</qt>").arg(searchText), 
+					      i18n("Text not found")); 
+	if (answ == KMessageBox::Yes)
+	  current_page = 0;
+      }
+    }
+  }// of while
+
+  
+  KMessageBox::sorry( this, i18n("<qt>The search string <strong>%1</strong> could not be found.</qt>").arg(searchText) );
 
   // Restore the PostScript setting 
   _postscript = _postscript_sav;

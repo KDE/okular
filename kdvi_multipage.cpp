@@ -77,7 +77,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window = new dviWindow( 1.0, true, scrollView());
   preferencesChanged();
 
-
+  connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   docInfoAction   = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
   exportPSAction  = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
   exportPDFAction = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
@@ -111,13 +111,13 @@ KDVIMultiPage::~KDVIMultiPage()
 
 bool KDVIMultiPage::openFile()
 {
+  emit setStatusBarText(QString(i18n("Loading file %1")).arg(m_file));
+
   bool r = window->setFile(m_file);
   window->gotoPage(1);
   window->changePageSize(); //  This also calles drawPage();
   
   emit numberOfPages(window->totalPages());
-  //  scrollView()->resizeContents(window->width(), window->height());
-  // @@@emit previewChanged(true);
   enableActions(r);
 
   return r;
@@ -133,7 +133,6 @@ void KDVIMultiPage::contents_of_dviwin_changed(void)
 bool KDVIMultiPage::closeURL()
 {
   window->setFile(""); // That means: close the file. Resize the widget to 0x0.
-  //@@@  emit previewChanged(false);
   enableActions(false);
   return true;
 }
@@ -150,9 +149,6 @@ QStringList KDVIMultiPage::fileFormats()
 bool KDVIMultiPage::gotoPage(int page)
 {
   window->gotoPage(page+1);
-
-  //@@@  emit previewChanged(true);
-
   return true;
 }
 
@@ -160,8 +156,6 @@ void KDVIMultiPage::goto_page(int page, int y)
 {
   window->gotoPage(page+1, y);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
-
-  //@@@  emit previewChanged(true);
   emit pageInfo(window->totalPages(), page );
 }
 
@@ -380,6 +374,13 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // Show the printer options requestor
   if (printer->setup(window) == false) 
     return false;
+  if (printer->pageList().isEmpty() == true) {
+    KMessageBox::error( window,
+			i18n("The list of pages you selected was empty.\n"
+			     "Maybe you made an error in selecting the pages, \n"
+			     "e.g. by giving in invalid range like '7-2'.") );
+    return false;
+  }
 
   // Turn the results of the options requestor into a list arguments
   // which are used by dvips.
@@ -482,9 +483,6 @@ void KDVIMultiPage::reload()
     // We don't use "currsav" here, because that page may no longer
     // exist. In that case, gotoPage already selected another page.
     emit pageInfo(window->totalPages(), window->curr_page()-1 ); 
-
-    //@@@    scrollView()->resizeContents(window->width(), window->height());
-    //@@@    emit previewChanged(true);
   } else {
     if (timer_id == -1)
       timer_id = startTimer(1000);

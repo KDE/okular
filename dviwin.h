@@ -128,6 +128,9 @@ signals:
       and that the tumbnail image should be updated. */
   void          contents_changed(void);
 
+  /** Passed through to the top-level kpart. */
+  void setStatusBarText( const QString& );
+
 protected:
  void paintEvent(QPaintEvent *ev);
 

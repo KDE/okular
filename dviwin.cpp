@@ -107,7 +107,8 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
     kdError(4300) << "Could not allocate memory for the font pool." << endl;
     exit(-1);
   }
-  qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded()), this, SLOT(drawPage()));
+  connect(font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+  connect(font_pool, SIGNAL(fonts_have_been_loaded()), this, SLOT(drawPage()));
 
   info                   = new infoDialog(this);
   if (info == 0) {
@@ -158,14 +159,15 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   _zoom                  = zoom;
 
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
+  // pass status bar messages through 
+  connect(PS_interface, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   is_current_page_drawn  = 0;  
 
   // Variables used in animation.
   animationCounter = 0;
   timerIdent       = 0;
-
+  
   resize(0,0);
-  //@@@  setMouseTracking(true);
 }
 
 dviWindow::~dviWindow()
@@ -523,7 +525,7 @@ void dviWindow::drawPage()
   }
   resize(pixmap->width(), pixmap->height());
   repaint();
-  emit(contents_changed());
+  emit contents_changed();
 }
 
 

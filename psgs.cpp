@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include <kdebug.h>
+#include <klocale.h>
 #include <kprocess.h>
 
 
@@ -74,7 +75,9 @@ void ghostscript_interface::clear(void) {
   pageList->clear();
 }
 
-void ghostscript_interface::gs_generate_graphics_file(int page, QString filename){
+void ghostscript_interface::gs_generate_graphics_file(int page, QString filename) {
+  emit(setStatusBarText(i18n("Generating PostScript graphics...")));
+
   pageInfo *info = pageList->find(page);
 
   // Generate a PNG-file

@@ -149,6 +149,9 @@ signals:
       the string is quite costy. */
   void fonts_info(class fontPool *);
 
+  /** Passed through to the top-level kpart. */
+  void setStatusBarText( const QString& );
+
 public slots:
   /** Aborts the font generation. Nasty. */
   void abortGeneration(void);

@@ -217,6 +217,7 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
   // disable automatic font generation as vf-fonts can't be
   // generated. If pass != 0, ennable font generation, if it was
   // enabled globally.
+  emit setStatusBarText(i18n("Locating fonts..."));
   proc = new KShellProcess();
   if (proc == 0) {
     kdError(4300) << "Could not allocate ShellProcess for the kpsewhich command." << endl;

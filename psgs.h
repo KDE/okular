@@ -1,11 +1,12 @@
 #ifndef _PSGS_H_
 #define _PSGS_H_
 
+#include <ktempfile.h>
 #include <qstring.h>
 #include <qintdict.h>
 #include <qintcache.h>
 #include <qpixmap.h>
-#include <ktempfile.h>
+#include <qobject.h>
 
 
 class pageInfo
@@ -25,10 +26,9 @@ public:
 #define PAGES_IN_DISK_CACHE   101
 
 
-class ghostscript_interface 
+class ghostscript_interface  : public QObject 
 {
-
-
+ Q_OBJECT
 
 public:
   ghostscript_interface(double dpi, int pxlw, int pxlh);
@@ -63,6 +63,10 @@ private:
   double                resolution;    // in dots per inch
   int                   pixel_page_w; // in pixels
   int                   pixel_page_h; // in pixels
+
+signals:
+  /** Passed through to the top-level kpart. */
+  void setStatusBarText( const QString& );
 };
 
 #endif

@@ -2,9 +2,11 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN"
  "dtd/kdex.dtd" [
   <!ENTITY kappname "&kdvi;">
+  <!ENTITY package "kdegraphics">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"><!-- change language only here -->
 ]>
+
 <book lang="&language;">
   <bookinfo>
     <title>The &kdvi; Handbook</title>
@@ -53,13 +55,12 @@
     typesetting system.  &kdvi; supports many extensions of the DVI
     standard, for instance the inclusion of &PostScript; graphics or
     hyperlinks. More details, examples and all the technical
-    specifications can be found in the file <ulink
-    url="KDVI-features.dvi"><filename>KDVI-features.dvi</filename></ulink>
-    (click <ulink url="KDVI-features.tex">here</ulink> for the
-    TeX-source of that file).</para>
+    specifications can be found in the file
+    <filename>KDVI-features.dvi</filename> (or see KDVI-features.tex
+    for the TeX-source of that file).</para>
     
     <para>For up-to-date information, consult <ulink
-    url="http://devel-home.kde.org/~kdvi">kdvi's home page</ulink>.
+    url="http://devel-home.kde.org/~kdvi">&kdvi;'s home page</ulink>.
     </para>
     
     <para>TeX is a high-end typesetting system geared towards
@@ -87,22 +88,22 @@
     <userinput><command>kdvi</command>
     <parameter>somepath/paper.</parameter></userinput> will also
     work. If you are connected to the internet, you can access files
-    which reside on other computers by giving a URL as a parameter,
+    which reside on other computers by giving a &URL; as a parameter,
     like this: <userinput><command>kdvi</command>
     <parameter>http://somepath/paper.dvi</parameter></userinput>
     </para>
 
-    <para>If you give a URL as a parameter, you can tell &kdvi; to
-    jump directly to certain place of the DVI file. For example,
+    <para>If you give a &URL; as a parameter, you can tell &kdvi; to
+    jump directly to certain place of the &DVI; file. For example,
     <userinput><command>kdvi</command>
     <parameter>file:paper.dvi#43</parameter></userinput> will make
     &kdvi; to open page 43. If you have included source file
     information, a command like <userinput><command>kdvi</command>
     <parameter>file:paper.dvi#src:143paper.tex</parameter></userinput>
-    will make &kdvi; search for the place in the DVI file which
+    will make &kdvi; search for the place in the &DVI; file which
     corresponds to line 43 in the TeX file
     <parameter>paper.tex</parameter>. You will hardly use this option
-    yourself ---read the section on <ulink
+    yourself &mdash; read the section on <ulink
     url="forward-search.html">forward search</ulink> to learn how to
     set up your editor to start &kdvi; automatically.
     </para>
@@ -132,17 +133,17 @@
     <option>-style</option> <parameter>windows</parameter>
     <option>-display</option> <parameter>:0</parameter>
     <option>-geometry</option> <parameter>400x400+0+0</parameter>
-    <option>-caption</option> <parameter>"DVI"</parameter></userinput>
+    <option>-caption</option> <parameter>&quot;DVI&quot;</parameter></userinput>
     </para>
   </chapter>
   
   
   <chapter id="print">
-    <title>Printing DVI-Files</title>
+    <title>Printing &DVI; Files</title>
     
-    <para>&kdvi; can print your DVI-files using the standard KDE
+    <para>&kdvi; can print your &DVI; files using the standard &kde;
     printing interface. Internally, &kdvi; uses the programm
-    <command>dvips</command> to generate PostScript, which is then
+    <command>dvips</command> to generate &PostScript;, which is then
     passed on to the printer. In particular, <command>dvips</command>
     must be installed if you want to print with &kdvi;. The programm
     <command>dvips</command> uses its own configuration files and its
@@ -157,24 +158,24 @@
   </chapter>
 
   <chapter id="export">
-    <title>Exporting the DVI file to other formats</title>
+    <title>Exporting the &DVI; file to other formats</title>
 
-    <para>If you want to save your file as in PostScript or
+    <para>If you want to save your file as in &PostScript; or
     PDF-format, it is not recommended that you use the printing
     function and redirect the printer output to a file. Instead, you
     can use the export functions which produce better-quality output
     that retains many of the special features of the dvi format and
-    looks better in many of the viewing applications, such as Adobe's
-    Acrobat Reader. You will find the export functions in the
-    <guimenu>File</guimenu> menu.</para>
+    looks better in many of the viewing applications, such as
+    Adobe's <application>Acrobat Reader</application>. You will find
+    the export functions in the <guimenu>File</guimenu> menu.</para>
 
     <section id="export-ps">
-      <title>Exporting to PostScript</title> 
+      <title>Exporting to &PostScript;</title> 
 
       <para>As in printing, the external program
-      <command>dvips</command> is used to generate the PostScript
-      file. If the DVI-file contains hyperlinks, these will also be
-      included in the PostScript file. If you are an export, and if
+      <command>dvips</command> is used to generate the &PostScript;
+      file. If the &DVI; file contains hyperlinks, these will also be
+      included in the &PostScript; file. If you are an export, and if
       you would like to generate output which is optimized for a
       specific printer, you should probably start
       <command>dvips</command> manually and choose the proper MetaFont
@@ -182,24 +183,25 @@
     </section>
 
     <section id="export-pdf">
-      <title>Exporting to PDF</title> 
+      <title>Exporting to <acronym>PDF</acronym></title> 
 
-      <para>In order to produce PDF files of high quality, &kdvi;
-      converts DVI to PDF using the external program
+      <para>In order to produce <acronym>PDF</acronym> files of high quality, &kdvi;
+      converts &DVI; to <acronym>PDF</acronym> using the external program
       <command>dvipdfm</command>. If you are working on a machine
       where an older distribution of the TeX typesetting system is
       installed, it may be that the programm
       <command>dvipdfm</command> is not installed. In that case, you
-      need to use the printing function to generate PDF
+      need to use the printing function to generate <acronym>PDF</acronym>
       output.</para>
 
       <warning> <para>If you are viewing the generated file in Adobe's
-      Acrobat reader, you may well find that some of the fonts look
-      extremely poor although a printout is fine, and although the
-      document looks ok in ghostview. This is a known issue with the
-      Acrobat Reader and bitmap fonts. At the time of writing, the
-      only practicable workaround seems to be to avoid bitmap
-      fonts.</para>
+      <application>Acrobat reader</application>, you may well find
+      that some of the fonts look extremely poor although a printout
+      is fine, and although the document looks ok in
+      <application>ghostview</application>. This is a known issue with
+      the <application>Acrobat Reader</application> and bitmap
+      fonts. At the time of writing, the only practicable workaround
+      seems to be to avoid bitmap fonts.</para>
       </warning>
     </section>
   </chapter>
@@ -211,52 +213,55 @@
 
     <para>Inverse search is a very useful feature when you are writing
     a TeX-document yourself. If everything is properly set up, you can
-    click into KDVI's window with the middle mouse button (on some
-    systems, when you don't have a three-button mouse, you can
-    simultaneously use the left and the right button). After that,
-    your favourite editor will open, load the TeX-sourcefile and jump
-    to the proper paragraph. To use inverse search, do the
+    click into &kdvi;'s window with the
+    <mousebutton>middle</mousebutton> mouse button (on some systems,
+    when you don't have a three-button mouse, you can simultaneously
+    use the <mousebutton>left</mousebutton> and the
+    <mousebutton>right</mousebutton> button). After that, your
+    favourite editor will open, load the TeX-sourcefile and jump to
+    the proper paragraph. To use inverse search, do the
     following:</para>
 
 
-    <orderedlist>
-      <listitem>
-	<para>Produce a DVI file that contains inverse search
-	information. This is explained in the section "Producing
-	TeX-files for inverse search" below. If you just want to test
-	the inverse search feature, you can also use the example file
-	<ulink
-	url="KDVI-features.dvi"><filename>KDVI-features.dvi</filename></ulink></para>
-      </listitem>
-      <listitem>
+    <procedure>
+      <step>
+	<para>Produce a &DVI; file that contains inverse search
+	information. This is explained in the section <link
+	linkend="inverse-search-tex">Producing TeX-files for inverse
+	search</link> below. If you just want to test the inverse
+	search feature, you can also use the example file
+	<filename>KDVI-features.dvi</filename></para>
+      </step>
+      <step>
 	<para>Let &kdvi; know which editor you would like to
 	use. Choose an editor in the <guilabel>Preferences</guilabel>
 	dialog (this dialog can be reached by choosing
 	<guimenu>Settings</guimenu> in the menu <guimenuitem>DVI
 	options</guimenuitem>). The next chapter of this
-	documentation, <ulink url="opt-rendering.html">"The
-	preferences dialog/Rendering Options"</ulink>, explains this
+	documentation, <link linkend="opt-rendering">The
+	preferences dialog/Rendering Options</link>, explains this
 	dialog in more detail.</para>
-      </listitem>
-      <listitem>
+      </step>
+      <step>
 	<para>Some editors need to be started manually, or need
 	additional configuration. You will find a description of all
 	supported editors in the, <ulink
-	url="inverse-search-editor.html">"Setting up your
-	editor"</ulink> below.</para>
-      </listitem>
-      <listitem>
-	<para>Test your setup. Open your DVI file in &kdvi; and use
-	the middle mouse button to click into &kdvi;. The editor
-	should pop up and display the TeX file.</para>
-      </listitem>
-    </orderedlist>
+	url="inverse-search-editor.html">Setting up your
+	editor</ulink> below.</para>
+      </step>
+      <step>
+	<para>Test your setup. Open your &DVI; file in &kdvi; and use
+	the <mousebutton>middle</mousebutton> mouse button to click
+	into &kdvi;. The editor should pop up and display the TeX
+	file.</para>
+      </step>
+    </procedure>
 
 
     <section id="inverse-search-tex">
       <title>Producing TeX-files for inverse search</title>
-      <para>There are essentially two ways to produce DVI-files which
-      contain inverse search information: you can either use a
+      <para>There are essentially two ways to produce &DVI; files
+      which contain inverse search information: you can either use a
       TeX/LaTeX-binary which generates and includes the necessary
       information automatically, or you can include an extra package
       which is written in TeX/LaTeX.</para>
@@ -274,22 +279,19 @@
 	</listitem>
 	<listitem>
 	  <para>If you do not have a TeX-binary which includes inverse
-	  search information natively, copy the files <ulink
-	  url="srcltx.sty"><filename>srcltx.sty</filename></ulink> and
-	  <ulink
-	  url="srctex.sty"><filename>srctex.sty</filename></ulink> to
-	  the directory where your TeX-file resides (you can do that
-	  by shift-clicking the hyperlinks). If you use LaTeX, add the
-	  line
+	  search information natively, copy the files
+	  <filename>srcltx.sty</filename> and
+	  <filename>srctex.sty</filename> to the directory where your
+	  TeX-file resides (you can do that by <keycombo
+	  action="simul">&Shift;<mousebutton>Left</mousebutton></keycombo>
+	  the hyperlinks). If you use LaTeX, add the line
 <programlisting>
-
 
     \usepackage[active]{srcltx}
 
 </programlisting>
 	   to the preamble of your TeX-file. If you use plain TeX, the line 
 <programlisting>
-
 
     \include{srctex}
 
@@ -301,7 +303,7 @@
       <tip>
 	<para>While inverse search is extremely useful when you are
 	typing a document yourself, it might be a good idea to remove
-	the inverse search information before sending the DVI file to
+	the inverse search information before sending the &DVI; file to
 	someone else.</para>
       </tip>
 
@@ -316,87 +318,105 @@
     explains how to configure your editor.</para>
 
     <section id="editor-setup-emacs">
-      <title>Emacs</title>
+      <title><application>Emacs</application></title>
 
-      <para>Emacs works well with &kdvi;. The actual behaviour of
-      Emacs depends largely on the configuration. As usual, you can
-      customize Emacs completely, if you are willing to fight your way
-      through Lisp code.</para>
+      <para><application>Emacs</application> works well with
+      &kdvi;. The actual behaviour of <application>Emacs</application>
+      depends largely on the configuration. As usual, you can
+      customize <application>Emacs</application> completely, if you
+      are willing to fight your way through Lisp code.</para>
 
       <para>&kdvi; uses the program <command>emacsclient</command> to
-      remote control Emacs.</para>
+      remote control <application>Emacs</application>.</para>
       <important>
 	<para>The program <command>emacsclient</command> requires that
-	Emacs is running, and that the program emacs-server is started
-	inside Emacs. Inverse search will not work optimally unless
-	you have started both Emacs and the emacs-server.</para>
+	<application>Emacs</application> is running, and that the
+	program <command>emacs-server</command> is started inside
+	<application>Emacs</application>. Inverse search will not work
+	optimally unless you have started both
+	<application>Emacs</application> and the
+	<command>emacs-server</command>.</para>
       </important>
 
-      <para>To start the emacs-server, you can do one of the
-      following:</para>
-      <itemizedlist>
-	<listitem>
-	  <para>In Emacs, start the emacs-server by typing <userinput>M-x
-	  server-start</userinput></para>
-	</listitem>
-	<listitem>
+      <para>To start the <command>emacs-server</command>, you can do
+      one of the following:</para>
+      <procedure>
+	<step>
+	  <para>In <application>Emacs</application>, start the
+<command>emacs-server</command> by typing <userinput><keycombo
+action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+<command>server-start</command></userinput></para> 
+	</step>
+	<step>
 	  <para>Add the line 
 <programlisting>
-
 
     (server-start)
 
 </programlisting>
 	   to your or <filename>.emacs</filename> file. Restart
-	   Emacs</para>
-	</listitem>
-      </itemizedlist>
+	   <application>Emacs</application></para>
+	</step>
+      </procedure>
 
       
       <tip>
 	<itemizedlist>
 	  <listitem>
-	      <para>Make sure that Emacs is installed. Try to start
-	      <command>emacs</command> from the command line.</para>
+	      <para>Make sure that <application>Emacs</application> is
+	      installed. Try to start <command>emacs</command> from
+	      the command line.</para>
 	  </listitem>
 	<listitem>
 	      <para>&kdvi; uses the command
 	      <command>emacsclient</command> to remote control
-	      Emacs. Make sure that <command>emacsclient</command> is
-	      available on the command line by trying the command
-	      <userinput><command>emacsclient</command> <parameter>'Name
-	      of a text file'</parameter></userinput>. This should
-	      open a new text in the Emacs editor.</para>
+	      <application>Emacs</application>. Make sure that
+	      <command>emacsclient</command> is available on the
+	      command line by trying the command
+	      <userinput><command>emacsclient</command>
+	      <parameter>Name of a text
+	      file</parameter></userinput>. This should open a new
+	      text in the <application>Emacs</application>
+	      editor.</para>
 	</listitem>
 	<listitem>
 	      <para>If <command>emacsclient</command> fails with an
 	      error message like <computeroutput>unable to connect to
-	      local</computeroutput>, make sure that XEmacs is
-	      running. Furthermore, make sure that the emacs-server is
-	      started by typing <userinput>M-x
-	      server-start</userinput>.</para>
+	      local</computeroutput>, make sure that
+	      <application>Emacs</application> is
+	      running. Furthermore, make sure that the
+	      <command>emacs-server</command> is started by typing
+	      <userinput><keycombo
+	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      <command>server-start</command></userinput>.</para>
 	</listitem>
 	<listitem>
 	      <para>If you want the frame to be auto-raised, add the
-	      "raise-frame" function to "server-switch-hook" (do
-	      <userinput>M-x customize-variable RET
-	      server-switch-hook</userinput> and enter the function
-	      name into the text field.</para> 
+	      <function>raise-frame</function> function to
+	      <quote>server-switch-hook</quote> (do
+	      <userinput><keycombo
+	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      <command>customize-variable</command>
+	      <keycap>RET</keycap>
+	      <command>server-switch-hook</command></userinput> and
+	      enter the function name into the text field.</para>
 	</listitem>
 	<listitem>
 	      <para>If you have changed the buffer since your last
-	      save, Emacs will ask you: <computeroutput>Revert buffer
-	      from file ...? (yes or no)</computeroutput>. You will
-	      probably always want to say *no* here, since reverting
-	      means that the file is reread from disk, CAUSING ALL
-	      YOUR CHANGES SINCE THE LAST SAVE TO BE LOST!</para>
+	      save, <application>Emacs</application> will ask you:
+	      <computeroutput>Revert buffer from file ...? (yes or
+	      no)</computeroutput>. You will probably always want to
+	      say <emphasis>no</emphasis> here, since reverting means
+	      that the file is reread from disk, <emphasis>causing all
+	      your changes since the last save to be
+	      lost!</emphasis></para>
 
 	      <para>IMHO gnuclient's behaviour of silently reloading
-	      the changed buffer is preferable ---add the following
-	      lines to your <filename>.emacs</filename> file to
-	      emulate gnuclient's behaviour with emacsclient:
+	      the changed buffer is preferable &mdash; add the
+	      following lines to your <filename>.emacs</filename> file
+	      to emulate gnuclient's behaviour with
+	      <command>emacsclient</command>:
 <programlisting>
-
 
 	(defadvice server-visit-files (around save-buffers last activate)
 	  "Try to emulate gnuclient behaviour with emacsclient.
@@ -435,139 +455,170 @@
     </section>
 
     <section id="editor-setup-kate">
-      <title>Kate</title> 
+      <title>&kate;</title> 
 
-      <para>Unfortunately, KDE's editor kate does not support the
-      inverse search very well.  A middle-button mouseclick into the
-      DVI file will always open a new instance of the kate editor,
-      even if kate is already running and even if the TeX-file is
-      already loaded. Worse, kate does not move the cursor to the
+      <para>Unfortunately, &kde;'s editor &kate; does not support the
+      inverse search very well.  A
+      <mousebutton>middle</mousebutton>-button mouseclick into the
+      &DVI; file will always open a new instance of the &kate; editor,
+      even if &kate; is already running and even if the TeX-file is
+      already loaded. Worse, &kate; does not move the cursor to the
       beginning of the paragraph.</para>
     </section>
 
     <section id="editor-setup-nedit">
-      <title>NEdit</title>
+      <title><application>NEdit</application></title>
 
-      <para>NEdit generally works very well indeed. Clicking into the
-      DVI file should open a new window. If the TeX-file is already
-      used in another window of NEdit, the newly opened window
+      <para><application>NEdit</application> generally works very well
+      indeed. Clicking into the &DVI; file should open a new
+      window. If the TeX-file is already used in another window of
+      <application>NEdit</application>, the newly opened window
       displays another view of the buffer. Otherwise, the TeX-file is
-      loaded. After opening the window, NEdit highlights the first
-      line of the appropriate paragraph.</para>
+      loaded. After opening the window,
+      <application>NEdit</application> highlights the first line of
+      the appropriate paragraph.</para>
       <tip>
-      <itemizedlist>
-	<listitem>
-	  <para>Make sure that NEdit is installed. Try to start
-	  <command>nedit</command> from the command line.</para>
-	</listitem>
-	<listitem>
+      <procedure>
+	<step>
+	  <para>Make sure that <application>NEdit</application> is
+	  installed. Try to start <command>nedit</command> from the
+	  command line.</para>
+	</step>
+	<step>
 	  <para>&kdvi; uses the command <command>ncl</command> to
-	  remote control NEdit. Make sure that <command>ncl</command>
-	  is available on the command line by trying the command
-	  <userinput><command>ncl</command>
+	  remote control <application>NEdit</application>. Make sure
+	  that <command>ncl</command> is available on the command line
+	  by trying the command <userinput><command>ncl</command>
 	  <parameter>-noask</parameter></userinput>. This which should
-	  open an instance of the NEdit editor. If
-	  <command>ncl</command> is not available, you might be using
-	  an older version of NEdit. In that case, you should either
-	  upgrade to a more recent version, or you have to use the
-	  option "User defined editor" from the Options dialog.</para>
-	</listitem>
-      </itemizedlist>
+	  open an instance of the <application>NEdit</application>
+	  editor. If <command>ncl</command> is not available, you
+	  might be using an older version of
+	  <application>NEdit</application>. In that case, you should
+	  either upgrade to a more recent version, or you have to use
+	  the option <guilabel>User defined editor</guilabel> from the
+	  <guilabel>Options</guilabel> dialog.</para>
+	</step>
+      </procedure>
       </tip>
     </section>
 
     <section id="editor-setup-xemacs">
-      <title>XEmacs</title>
+      <title><application>XEmacs</application></title>
 
-      <para>XEmacs works well with &kdvi;. The actual behaviour of
-      XEmacs depends largely on the configuration. As usual, you can
-      customize XEmacs completely, if you are willing to fight your
-      way through Lisp code.</para>
+      <para><application>XEmacs</application> works well with
+      &kdvi;. The actual behaviour of
+      <application>XEmacs</application> depends largely on the
+      configuration. As usual, you can customize
+      <application>XEmacs</application> completely, if you are willing
+      to fight your way through Lisp code.</para>
 
       <para>&kdvi; uses the program <command>gnuclient</command> to
-      remote control XEmacs.</para>
+      remote control <application>XEmacs</application>.</para>
       <important>
 	<para>The program <command>gnuclient</command> requires that
-	XEmacs is running, and that the program gnuserv is started
-	inside XEmacs. Inverse search will not work unless you have
-	started both XEmacs and gnuserv.</para>
+	<application>XEmacs</application> is running, and that the
+	program gnuserv is started inside
+	<application>XEmacs</application>. Inverse search will not
+	work unless you have started both
+	<application>XEmacs</application> and
+	<command>gnuserv</command>.</para>
       </important>
 
-      <para>To start the gnuserv program, you can do one of the following:</para>
+      <para>To start the <command>gnuserv</command> program, you can
+      do one of the following:</para>
       <itemizedlist>
 	<listitem>
-	  <para>In XEmacs, start gnuserv by typing <userinput>M-x
-	  gnuserv-start</userinput></para>
+	  <para>In <application>XEmacs</application>, start
+	  <command>gnuserv</command> by typing <userinput><keycombo
+	  action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	  <command>gnuserv-start</command></userinput></para>
 	</listitem>
 	<listitem>
 	  <para>Add the line 
 <programlisting>
 
-
     (gnuserv-start)
 
 </programlisting>
 	   to your or <filename>.xemacs</filename> file. If you use a
-	   more recent version of XEmacs, <filename>.xemacs</filename>
-	   will be a directory. In that case, you should append the
-	   line to the file
-	   <filename>.xemacs/init.el</filename>. Restart XEmacs</para>
+	   more recent version of <application>XEmacs</application>,
+	   <filename class="directory">>.xemacs</filename> will be a
+	   directory. In that case, you should append the line to the
+	   file <filename>.xemacs/init.el</filename>. Restart
+	   <application>XEmacs</application></para>
 	</listitem>
       </itemizedlist>
 
       <para>If you don't want to open a new frame for each editor
-      call, and want the frame to be auto-raised, set "Gnuserv Frame"
-      to "Use selected frame", and add the "raise-frame" function to
-      "Visit Hook". Do <userinput>M-x customize-group RET
-      gnuserv</userinput> to make these settings.</para>
+      call, and want the frame to be auto-raised, set <quote>Gnuserv
+      Frame</quote> to <quote>Use selected frame</quote>, and add the
+      <function>raise-frame</function> function to <quote>Visit
+      Hook</quote>. Do <userinput><keycombo
+      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+      <command>customize-group</command> <keycap>RET</keycap>
+      <command>gnuserv</command></userinput> to make these
+      settings.</para>
 
       <tip>
 	<itemizedlist>
 	  <listitem>
-	      <para>Make sure that XEmacs is installed. Try to start
-	      <command>xemacs</command> from the command line.</para>
+	      <para>Make sure that <application>XEmacs</application>
+	      is installed. Try to start <command>xemacs</command>
+	      from the command line.</para>
 	  </listitem>
 	<listitem>
 	      <para>&kdvi; uses the command <command>gnuserv</command>
-	      to remote control XEmacs. Make sure that
+	      to remote control
+	      <application>XEmacs</application>. Make sure that
 	      <command>gnuclient</command> is available on the command
 	      line by trying the command
-	      <userinput><command>gnuclient</command> <parameter>'Name
-	      of a text file'</parameter></userinput>. This should
-	      open a new frame in the XEmacs editor.</para>
+	      <userinput><command>gnuclient</command> <parameter>Name
+	      of a text file</parameter></userinput>. This should open
+	      a new frame in the <application>XEmacs</application>
+	      editor.</para>
 	</listitem>
 	<listitem>
 	      <para>If <command>gnuserv</command> fails with an error
 	      message like <computeroutput>unable to connect to
-	      local</computeroutput>, make sure that XEmacs is
-	      running. Furthermore, make sure that gnuserv is started
-	      by typing <userinput>M-x
-	      gnuserv-start</userinput>.</para>
+	      local</computeroutput>, make sure that
+	      <application>XEmacs</application> is
+	      running. Furthermore, make sure that
+	      <command>gnuserv</command> is started by typing
+	      <userinput><keycombo
+	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      <command>gnuserv-start</command></userinput>.</para>
 	</listitem>
 	<listitem>
 	      <para>If you don't want to open a new frame for each
 	      editor call, and want the frame to be auto-raised, set
-	      "Gnuserv Frame" to "Use selected frame", and add the
-	      "raise-frame" function to "Visit Hook". Do
-	      <userinput>M-x customize-group RET gnuserv</userinput>
-	      to make these settings.</para>
+	      <quote>Gnuserv Frame</quote> to <quote>Use selected
+	      frame</quote>, and add the <quote>raise-frame</quote>
+	      function to <quote>Visit Hook</quote>. Do
+	      <userinput><keycombo
+	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      <command>customize-group</command> <keycap>RET</keycap>
+	      <command>gnuserv</command></userinput> to make these
+	      settings.</para>
 	</listitem>
       </itemizedlist>
       </tip>
     </section>
 
     <section id="editor-setup-gvim">
-      <title>VI iMproved / GUI</title>
+      <title><application>VI iMproved</application> / &GUI;</title>
 
-      <para>&kdvi; supports vim, but the result is not thrilling. A
-      middle-button mouseclick into the DVI file will always open a
-      new instance of the vim editor, even if vim is already running
-      and even if the TeX-file is already loaded.</para>
+      <para>&kdvi; supports <command>vim</command>, but the result is
+      not thrilling. A <mousebutton>middle</mousebutton> button
+      mouseclick into the &DVI; file will always open a new instance
+      of the <command>vim</command> editor, even if
+      <command>vim</command> is already running and even if the
+      TeX-file is already loaded.</para>
       <tip>
       <itemizedlist>
 	<listitem>
-	  <para>Make sure that VIM/GUI is installed. Try to start
-	  <command>gvim</command> from the command line.</para>
+	  <para>Make sure that <application>VIM/GUI</application> is
+	  installed. Try to start <command>gvim</command> from the
+	  command line.</para>
 	</listitem>
       </itemizedlist>
       </tip>
@@ -581,28 +632,33 @@
     <title>Forward search</title>
 
     <para>The forward search functions allow you to jump from your
-    editor directly into the associated position of the DVI
+    editor directly into the associated position of the &DVI;
     file. Since forward search must be supported by your editor, only
-    Emacs and XEmacs are currently supported. Other editors will
-    hopefully join in soon.</para>
+    <application>Emacs</application> and
+    <application>XEmacs</application> are currently supported. Other
+    editors will hopefully join in soon.</para>
 
     <para>To use forward search, you have to do the following:</para>
     <itemizedlist>
       <listitem>
-	<para>Set up your editor ---this is described below.</para>
+	<para>Set up your editor &mdash; this is described below.</para>
       </listitem>
       <listitem>
-	<para>Add source file information to your DVI file, e.g. by
-	using the package <command>srcltx</command> ---this has been
-	described in the section <ulink
-	url="inverse-search.html#inverse-search-tex">"Producing
-	TeX-files for inverse search"</ulink>.</para>
+	<para>Add source file information to your &DVI; file, &eg; by
+	using the package <command>srcltx</command>.  This has been
+	described in the section <link
+	linkend="inverse-search-tex">"Producing TeX-files for inverse
+	search"</link>.</para>
       </listitem>
       <listitem>
-	<para>Go! If you use Emacs and everything is properly set up,
-	you just press <userinput>Ctrl-x Ctrl-j</userinput>, and
-	&kdvi; pops up and jumps to the place which corresponds to the
-	place of the TeX file which you are currently editing.</para>
+	<para>Go! If you use <application>Emacs</application> and
+	everything is properly set up, you just press
+	<userinput><keycombo
+	action="simul">&Ctrl;<keycap>x</keycap></keycombo> <keycombo
+	action="simul">&Ctrl;<keycap>j</keycap>
+	</keycombo></userinput>, and &kdvi; pops up and jumps to the
+	place which corresponds to the place of the TeX file which you
+	are currently editing.</para>
       </listitem>
     </itemizedlist>
 
@@ -610,23 +666,24 @@
       <title>Setting up your editor for forward search</title>
       
       <section id="forw-editor-setup-emacs">
-	<title>Emacs</title>
+	<title><application>Emacs</application></title>
 	
-	<para>In order to use forward search in Emacs, follow these
-	steps:</para>
+	<para>In order to use forward search in
+	<application>Emacs</application>, follow these steps:</para>
 
 	<itemizedlist>
 	  <listitem>
-		<para>Download the following Emacs script, <ulink url="kdvi-search.el">
-		<filename>kdvi-search.el</filename></ulink>
-	    (press shift and click the filename to download) and store
-	    it in a place where Emacs can access it ---we recommend a
-	    directory <filename>emacs-scripts</filename>.</para>
+		<para>Download the following
+		<application>Emacs</application> script,
+		<filename>kdvi-search.el</filename> (press shift and
+		click the filename to download) and store it in a
+		place where <application>Emacs</application> can
+		access it &mdash; we recommend a directory
+		<filename>emacs-scripts</filename>.</para>
 	  </listitem>
 	  <listitem>
 	    <para>Add the lines 
 <programlisting>
-
 
 (add-to-list 'load-path (expand-file-name "~/emacs-scripts/"))
 (require 'kdvi-search)
@@ -634,51 +691,58 @@
 (add-hook 'tex-mode-hook (lambda () (local-set-key "\C-x\C-j" 'kdvi-jump-to-line)))
 
 </programlisting>
-	    to your <filename>.emacs</filename> file. Restart Emacs.</para>
+	    to your <filename>.emacs</filename> file. Restart
+	    <application>Emacs</application>.</para>
 	  </listitem>
 
 	  <listitem>
-	    <para>Enjoy. Open Emacs, load a TeX-file, produce the
-	    corresponding DVI file, and either enter the command
-	    <userinput>M-x kdvi-jump-to-line</userinput> or press
-	    <userinput>Ctrl-x Ctrl-j</userinput>. It may happen that
-	    Emacs asks you for the name of a "master file". This is
-	    useful if you use a TeX file which includes other files:
-	    the master file is the top-level file which includes the
-	    others. Emacs will perhaps also ask to save the name of
-	    the master-file "as a local variable", i.e. as a comment
-	    at the very end of the file. Say either yes or no, and
-	    enjoy!</para>
+	    <para>Enjoy. Open <application>Emacs</application>, load a
+	    TeX-file, produce the corresponding &DVI; file, and either
+	    enter the command <userinput><keycombo
+	    action="simul"><keycap>M</keycap><keycap>x</keycap>
+	    </keycombo><command>kdvi-jump-to-line</command></userinput>
+	    or press <userinput>Ctrl-x Ctrl-j</userinput>. It may
+	    happen that <application>Emacs</application> asks you for
+	    the name of a <quote>master file</quote>. This is useful
+	    if you use a TeX file which includes other files: the
+	    master file is the top-level file which includes the
+	    others. <application>Emacs</application> will perhaps also
+	    ask to save the name of the master-file <quote>as a local
+	    variable</quote>, &ie; as a comment at the very end of the
+	    file. Say either yes or no, and enjoy!</para>
 	    </listitem>
 	</itemizedlist>
 
 	<tip>
 	  <itemizedlist>
 	    <listitem>
-	      <para>Make sure that Emacs is installed. Try to start
-	      <command>emacs</command> from the command line.</para>
+	      <para>Make sure that <application>Emacs</application> is
+	      installed. Try to start <command>emacs</command> from
+	      the command line.</para>
 	    </listitem>
 	    <listitem>
-	      <para>If Emacs fails to start &kdvi;, you can find its
-	      output in the Buffer "kdvi-output".</para>
+	      <para>If <application>Emacs</application> fails to start
+	      &kdvi;, you can find its output in the Buffer
+	      <guilabel>kdvi-output</guilabel>.</para>
 	    </listitem>
 	  </itemizedlist>
 	</tip>
       </section>
 
       <section id="forw-editor-setup-xemacs">
-	<title>XEmacs</title>
+	<title><application>XEmacs</application></title>
 	
-	<para>To set up XEmacs, follow the steps for Emacs above, but
-	modify your <filename>.xemacs</filename> rather than your
+	<para>To set up <application>XEmacs</application>, follow the
+	steps for <application>Emacs</application> above, but modify
+	your <filename>.xemacs</filename> rather than your
 	<filename>.emacs</filename> file. If you use a very recent
-	version of XEmacs, <filename>.xemacs</filename> may be a
-	directory. In that case, append the lines to
+	version of <application>XEmacs</application>, <filename
+	class="directory">.xemacs</filename> may be a directory. In
+	that case, append the lines to
 	<filename>.xemacs/init.el</filename>.
 	</para>
       </section>
     </section>
-
 
   </chapter>
 
@@ -721,9 +785,9 @@
 	    here it is possible to improve on the display. However,
 	    unless you are an expert in <command>MetaFont</command>
 	    and know what you are doing, it is not a good idea to
-	    change these options. You may want to look at the <ulink
-	    url="faq.html#MFModes">Frequently asked questions</ulink>
-	    section of this manual.</para>
+	    change these options. You may want to look at the <link
+	    linkend="MFModes">Frequently asked questions</link> section of
+	    this manual.</para>
 
 	    <para>Safe values are <guilabel>1200 dpi /
 	    Lexmark</guilabel> for good quality, or <guilabel>600 dpi
@@ -737,9 +801,9 @@
 	  <listitem>
 	    <para>Check this if you want &kdvi; to call the
 	    <command>MetaFont</command> program in the likely case
-	    that kdvi wants to display documents which use fonts which
-	    are not yet readily made. You most certainly want to set
-	    this option.</para>
+	    that &kdvi; wants to display documents which use fonts
+	    which are not yet readily made. You most certainly want to
+	    set this option.</para>
 	  </listitem>
 	</varlistentry>
       </variablelist>
@@ -780,7 +844,7 @@
 
             <note>
 	      <para>There is no standard way to embed &PostScript;
-	      graphics into a dvi file. It may therefore happen that
+	      graphics into a &DVI; file. It may therefore happen that
 	      &kdvi; cannot properly display a graphic which works
 	      fine with other programs. Older versions of
 	      <command>xdvi</command> and <command>dvips</command>
@@ -788,8 +852,8 @@
 	      bad security risk and therefore deliberately not
 	      implemented in &kdvi;. Technical information about
 	      supported ways to include &PostScript; can be found in
-	      the document <ulink
-	      url="KDVI-features.dvi"><filename>KDVI-features.dvi</filename></ulink>.</para>
+	      the document
+	      <filename>KDVI-features.dvi</filename>.</para>
 	    </note>
 
 	  </listitem>
@@ -813,20 +877,21 @@
 	    useful feature if you write TeX documents yourself, you
 	    have to specify which editor you are going to use, and how
 	    this editor can be started by &kdvi;. In the example
-	    shown, the user has opted for the NEdit editor. If you use
-	    one of the pre-configured editors from the
+	    shown, the user has opted for the
+	    <application>NEdit</application> editor. If you use one of
+	    the pre-configured editors from the
 	    <guilabel>Editor</guilabel> combobox, then you don't have
 	    to do anything else. If you whish to use a different
 	    editor, chose <guilabel>User defined Editor</guilabel>
 	    from the <guilabel>Editor</guilabel> combobox and enter
 	    the command line which will be used to start your
-	    editor. Use the placeholders "%f" and "%l" which will be
-	    replaced with the name of the TeX file, and the line of
-	    the TeX file, respectively.</para>
+	    editor. Use the placeholders <token>%f</token> and
+	    <token>%l</token> which will be replaced with the name of
+	    the TeX file, and the line of the TeX file,
+	    respectively.</para>
 
 	    <para>If you use an editor which is not supported, please
-	    send us an <ulink
-	    url="mailto:kebekus@kde.org">email</ulink> and tell us
+	    send us an email at <email>kebekus@kde.org</email> and tell us
 	    about the command line you use and how you have configured
 	    your editor.</para>
 	  </listitem>
@@ -836,7 +901,6 @@
     </sect1>
   </chapter>
 
-
   <chapter id="faq">
     <title>Frequently asked questions</title>
 
@@ -844,8 +908,8 @@
       <qandaentry>
 	<question id="fontgen">
 	  <para>What happens when &kdvi; displays the message
-	  "Generating bitmap fonts", and why does the procedure take
-	  so long?</para>
+	  <errorcode>Generating bitmap fonts</errorcode>, and why does
+	  the procedure take so long?</para>
 	</question>
 	<answer>
 	  <para>Many of the fonts which are typically used in a TeX
@@ -884,11 +948,12 @@
 	  Metafont comes with a database of printing engines --look
 	  for a file called <filename>modes.mf</filename>. A Metafont
 	  Mode is just the name of a database entry. For example, the
-	  name "ljfour" refers to the entry in the database that
-	  describes a Hewlett Packard LaserJet 4 printer. A MetaFont
-	  Mode is usually followed by a number, the resolution. The
-	  LaserJet, for instance canprint in both 300 and 600 dots per
-	  inch. Thus, "ljfour/600" would be a full description.</para>
+	  name <quote>ljfour</quote> refers to the entry in the
+	  database that describes a &Hewlett-Packard; LaserJet 4
+	  printer. A MetaFont Mode is usually followed by a number,
+	  the resolution. The LaserJet, for instance canprint in both
+	  300 and 600 dots per inch. Thus, <quote>ljfour/600</quote>
+	  would be a full description.</para>
 	</answer>
       </qandaentry>
 
@@ -915,9 +980,7 @@
 &underFDL;
 
   </chapter>
-
     
-
 &documentation.index;
 
 </book>

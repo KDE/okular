@@ -12,15 +12,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <qcheckbox.h> 
-#include <qclipboard.h> 
+#include <qcheckbox.h>
+#include <qclipboard.h>
 #include <qfileinfo.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qmessagebox.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
-#include <qprogressdialog.h> 
+#include <qprogressdialog.h>
 #include <qregexp.h>
 #include <qurl.h>
 #include <qvbox.h>
@@ -70,7 +70,7 @@ QPainter foreGroundPaint; // QPainter used for text
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name ) 
+dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   : QWidget( parent, name )
 {
 #ifdef DEBUG_DVIWIN
@@ -81,7 +81,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
   setFocusPolicy(QWidget::StrongFocus);
   setFocus();
-  
+
   // initialize the dvi machinery
   dviFile                = 0;
 
@@ -100,7 +100,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
     kdError(4300) << "Could not allocate memory for the info dialog." << endl;
   } else {
     qApp->connect(font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
-    qApp->connect(font_pool, SIGNAL(fonts_info(class fontPool *)), info, SLOT(setFontInfo(class fontPool *)));
+    qApp->connect(font_pool, SIGNAL(fonts_info(fontPool *)), info, SLOT(setFontInfo(fontPool *)));
     qApp->connect(font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
   }
 
@@ -111,7 +111,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   paper_width           = 21.0; // set A4 paper as default
   paper_height          = 27.9;
   unshrunk_page_w       = int( 21.0 * basedpi/2.54 + 0.5 );
-  unshrunk_page_h       = int( 27.9 * basedpi/2.54 + 0.5 ); 
+  unshrunk_page_h       = int( 27.9 * basedpi/2.54 + 0.5 );
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
   mane                   = currwin;
@@ -152,14 +152,14 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   _zoom                  = zoom;
 
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
-  // pass status bar messages through 
+  // pass status bar messages through
   connect(PS_interface, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-  is_current_page_drawn  = 0;  
+  is_current_page_drawn  = 0;
 
   // Variables used in animation.
   animationCounter = 0;
   timerIdent       = 0;
-  
+
   resize(0,0);
 }
 
@@ -176,7 +176,7 @@ dviWindow::~dviWindow()
   delete PS_interface;
   if (dviFile)
     delete dviFile;
-  
+
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
   export_printer = 0;
@@ -185,7 +185,7 @@ dviWindow::~dviWindow()
 
 void dviWindow::showInfo(void)
 {
-  if (info == 0) 
+  if (info == 0)
     return;
 
   info->setDVIData(dviFile);
@@ -247,7 +247,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
     KMessageBox::sorry( this,
 			i18n("The change in Metafont mode will be effective "
 			     "only after you start kdvi again!") );
-  
+
   MetafontMode     = font_pool->setMetafontMode(mode);
   basedpi          = MFResolutions[MetafontMode];
   _pixels_per_inch = MFResolutions[MetafontMode];  //@@@
@@ -266,7 +266,7 @@ void dviWindow::setPaper(double w, double h)
   paper_width      = w;
   paper_height     = h;
   unshrunk_page_w  = int( w * basedpi/2.54 + 0.5 );
-  unshrunk_page_h  = int( h * basedpi/2.54 + 0.5 ); 
+  unshrunk_page_h  = int( h * basedpi/2.54 + 0.5 );
   page_w           = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h           = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
   font_pool->reset_fonts();
@@ -334,19 +334,19 @@ void dviWindow::drawPage()
       KConfig *config = kapp->config();
       KConfigGroupSaver saver( config, "Notification Messages" );
       bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
-      
+
       if (showMsg) {
 	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
 					     this, "information", true, true, i18n("&OK"));
-	
+
 	QVBox *topcontents = new QVBox (dialog);
 	topcontents->setSpacing(KDialog::spacingHint()*2);
 	topcontents->setMargin(KDialog::marginHint()*2);
-	
+
 	QWidget *contents = new QWidget(topcontents);
 	QHBoxLayout * lay = new QHBoxLayout(contents);
 	lay->setSpacing(KDialog::spacingHint()*2);
-	
+
 	lay->addStretch(1);
 	QLabel *label1 = new QLabel( contents);
 	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
@@ -368,7 +368,7 @@ void dviWindow::drawPage()
 	dialog->incInitialSize( extraSize );
 	dialog->exec();
 	delete dialog;
-	
+
 	showMsg = !checkbox->isChecked();
 	if (!showMsg) {
 	  KConfigGroupSaver saver( config, "Notification Messages" );
@@ -469,7 +469,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   QString mimetype( KMimeMagic::self()->findFileType( fname )->mimeType() );
   if (mimetype != "application/x-dvi") {
     KMessageBox::sorry( this,
-			i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has " 
+			i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has "
 			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
 			.arg( fname )
 			.arg( mimetype ) );
@@ -488,8 +488,8 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
     delete dviFile_new;
     return false;
   }
-    
-  
+
+
   if (dviFile)
     delete dviFile;
   dviFile = dviFile_new;
@@ -503,7 +503,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   // specials in PostScriptDirectory, and the headers in the
   // PostScriptHeaderString.
   PS_interface->clear();
-  
+
   // We will also generate a list of hyperlink-anchors in the
   // document. So declare the existing list empty.
   numAnchors = 0;
@@ -513,13 +513,13 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
 
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
-    
+
     if (current_page < dviFile->total_pages) {
       command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
       end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
-    
+
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf._virtual  = NULL;
@@ -568,7 +568,7 @@ void dviWindow::all_fonts_loaded(void)
     Q_INT32 y    = -1000;
     bool    sourceSpecialsFlag = false;
     QString ref = reference.mid(4);
-    
+
     // Extract the file name and the numeral part from the string
     unsigned int i;
     for(i=0;i<ref.length();i++)
@@ -580,7 +580,7 @@ void dviWindow::all_fonts_loaded(void)
     bool _postscript_sav = _postscript;
     int current_page_sav = current_page;
     _postscript = FALSE; // Switch off postscript to speed up things...
-    QProgressDialog progress( i18n("Searching for position corresponding to line %1 in %2.").arg(ref.left(i)).arg(fileName), 
+    QProgressDialog progress( i18n("Searching for position corresponding to line %1 in %2.").arg(ref.left(i)).arg(fileName),
 			      i18n("Abort"), dviFile->total_pages, this, "search_reference_progress", TRUE );
     progress.setMinimumDuration(300);
     QPixmap pixie(1,1);
@@ -593,12 +593,12 @@ void dviWindow::all_fonts_loaded(void)
       // uncomment the following line and works just fine as it is. Wild
       // guess: Could that be related to the fact that we are linking
       // against qt-mt?
-      
+
       // qApp->processEvents();
-      
+
       if ( progress.wasCancelled() )
 	break;
-      
+
       foreGroundPaint.begin( &pixie );
       draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
       foreGroundPaint.end();
@@ -623,14 +623,14 @@ void dviWindow::all_fonts_loaded(void)
       }
     }
     progress.setProgress( dviFile->total_pages ); // Switch off the progress dialog, etc.
-    _postscript = _postscript_sav; // Restore the PostScript setting 
-    
+    _postscript = _postscript_sav; // Restore the PostScript setting
+
     // Restore the current page.
     current_page = current_page_sav;
     foreGroundPaint.begin( &pixie );
     draw_page();  // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
     foreGroundPaint.end();
-    
+
     reference = QString::null;
     if (sourceSpecialsFlag == false) {
       KMessageBox::sorry(this, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
@@ -667,7 +667,7 @@ void dviWindow::gotoPage(unsigned int new_page)
   if ((new_page-1==current_page) &&  !is_current_page_drawn)
     return;
   current_page           = new_page-1;
-  is_current_page_drawn  = 0;  
+  is_current_page_drawn  = 0;
   animationCounter       = 0;
   drawPage();
 }
@@ -683,7 +683,7 @@ void dviWindow::gotoPage(int new_page, int vflashOffset)
   timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
 }
 
-void dviWindow::timerEvent( QTimerEvent *e ) 
+void dviWindow::timerEvent( QTimerEvent *e )
 {
   animationCounter++;
   if (animationCounter >= 10) {
@@ -761,7 +761,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     emit setStatusBarText( QString::null );
     setCursor(arrowCursor);
   }
-  
+
   // Right mouse button pressed -> Text copy function
   if ((e->state() & RightButton) != 0) {
     if (selectedRectangle.isEmpty()) {
@@ -774,13 +774,13 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
       int by = e->pos().y() > firstSelectedPoint.y() ? e->pos().y() : firstSelectedPoint.y();
       selectedRectangle.setCoords(lx,ty,rx,by);
     }
-    
+
     // Now that we know the rectangle, we have to find out which words
     // intersect it!
     Q_INT32 selectedTextStart = -1;
     Q_INT32 selectedTextEnd   = -1;
 
-    for(unsigned int i=0; i<textLinkList.size(); i++) 
+    for(unsigned int i=0; i<textLinkList.size(); i++)
       if ( selectedRectangle.intersects(textLinkList[i].box) ) {
 	if (selectedTextStart == -1)
 	  selectedTextStart = i;
@@ -819,7 +819,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	  i++;
 	}
 
-	for(int i=i3; i<i4; i++) 
+	for(int i=i3; i<i4; i++)
 	  if (i != -1)
 	    box = box.unite(textLinkList[i].box);
 	DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
@@ -869,7 +869,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  // the kfmclient seems to be MUCH safer.
 	  QUrl DVI_Url(dviFile->filename);
 	  QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
-	
+
 	  KShellProcess proc;
 	  proc << "kfmclient openURL " << Link_Url.toString();
 	  proc.start(KProcess::Block);
@@ -880,7 +880,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 
   // Check if the mouse is pressed on a source-hyperlink
   if ((e->button() == MidButton) && (num_of_used_source_hyperlinks > 0))
-    for(int i=0; i<num_of_used_source_hyperlinks; i++) 
+    for(int i=0; i<num_of_used_source_hyperlinks; i++)
       if (sourceHyperLinkList[i].box.contains(e->pos())) {
 #ifdef DEBUG_SPECIAL
 	kdDebug(4300) << "Source hyperlink to " << sourceHyperLinkList[i].linkText << endl;
@@ -892,7 +892,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	for(i=0; i<max; i++)
 	  if (cp[i].isDigit() == false)
 	    break;
-	
+
 	// The macro-package srcltx gives a special like "src:99 test.tex"
 	// while MikTeX gives "src:99test.tex". KDVI tries
 	// to understand both.
@@ -925,12 +925,12 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  else
 	    return;
 	}
-	command = command.replace( QRegExp("%l"), cp.left(i) ).replace( QRegExp("%f"), KShellProcess::quote(TeXfile) ); 
-	
+	command = command.replace( QRegExp("%l"), cp.left(i) ).replace( QRegExp("%f"), KShellProcess::quote(TeXfile) );
+
 #ifdef DEBUG_SPECIAL
 	kdDebug(4300) << "Calling program: " << command << endl;
 #endif
-	
+
 	// There may still be another program running. Since we don't
 	// want to mix the output of several programs, we will
 	// henceforth dimiss the output of the older programm. "If it
@@ -940,7 +940,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
 	  proc = 0;
 	}
-	
+
 	// Set up a shell process with the editor command.
 	proc = new KShellProcess();
 	if (proc == 0) {
@@ -964,7 +964,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	flashOffset      = e->y(); // Heuristic correction. Looks better.
 	timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
 
-	
+
 	proc->clearArguments();
 	*proc << command;
 	proc->closeStdin();

@@ -39,10 +39,10 @@ class fontPool : public QObject {
 Q_OBJECT
 
  public:
-  /** Default constructor. */ 
+  /** Default constructor. */
   fontPool( void );
 
-  /** Default destructor. */ 
+  /** Default destructor. */
   ~fontPool( void );
 
   /** Method used to set the MetafontMode for the PK font files. This
@@ -66,7 +66,7 @@ Q_OBJECT
       similar programm. If (flag == 0), fonts will not be generated,
       otherwise they will. */
   void setMakePK( int flag );
-  
+
   /** This method adds a font to the list. If the font is not
       currently loaded, it's file will be located and font::load_font
       will be called. Since this is done using a concurrently running
@@ -76,7 +76,7 @@ Q_OBJECT
 
   /** Prints very basic debugging information about the fonts in the
       pool to the kdDebug output stream. */
-  QString status(); 
+  QString status();
 
   /** Releases all the shrunken bitmaps in all fonts. */
   void reset_fonts(void);
@@ -99,7 +99,7 @@ Q_OBJECT
 
   /** This is the list which actually enumerates the fonts in the
       fontPool */
-  QPtrList<class font> fontList; 
+  QPtrList<class font> fontList;
 
   /** This method marks all fonts in the fontpool as "not in use". The
       fonts are, however, not removed from memory until the method
@@ -146,7 +146,7 @@ signals:
       signal might whish to call status() in order to receive the
       data. We don't send the data here directly as the compilation of
       the string is quite costy. */
-  void fonts_info(class fontPool *);
+  void fonts_info(fontPool *);
 
   /** Passed through to the top-level kpart. */
   void setStatusBarText( const QString& );

@@ -17,7 +17,7 @@
 
 
 OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
-  :KDialogBase( Tabbed, i18n("Preferences"), Help|Ok|Apply|Cancel, Ok,
+  :KDialogBase( Tabbed, i18n("Configure"), Help|Ok|Apply|Cancel, Ok,
 		parent, name, modal )
 {
   setHelp("opts", "kdvi");

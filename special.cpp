@@ -98,9 +98,9 @@ static void parse_special_argument(QString strg, const char *argument_name, int 
   if (index >= 0) {
     QString tmp     = strg.mid(index + strlen(argument_name));
     tmp.truncate(tmp.find(' '));
-    int tmp_int = tmp.toInt(&OK);
+    float tmp_float = tmp.toFloat(&OK);
     if (OK)
-      *variable = tmp_int;
+      *variable = (int)(tmp_float+0.5);
     else
       // Maybe we should open a dialog here.
       kdError(4300) << i18n("Malformed parameter in the epsf special command.") << endl;

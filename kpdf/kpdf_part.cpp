@@ -783,15 +783,17 @@ void Part::doFind(QString s, bool next)
        goToPage(pg);
        // xpdf says: can happen that we do not find the text if coalescing is bad OUCH
        m_outputDev->find(u, len, false);
-       m_findText = s;
     }
     else
     {
-        m_findText = QString::null;
         if (next) KMessageBox::information(widget(), i18n("No more matches found for '%1'.").arg(s));
         else KMessageBox::information(widget(), i18n("No matches found for '%1'.").arg(s));
     }
   }
+  
+  if (found) m_findText = s;
+  else m_findText = QString::null;
+  
   gfree(u);
 }
 

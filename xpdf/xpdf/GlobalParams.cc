@@ -13,6 +13,7 @@
 #endif
 
 #include <string.h>
+#include <strings.h>
 // KPDF: additional includes for Qt and Xft
 #include <qstring.h>
 #include <qregexp.h>

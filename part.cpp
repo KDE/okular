@@ -49,6 +49,7 @@
 #include <kpopupmenu.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
+#include <ktrader.h>
 
 // local includes
 #include "xpdf/GlobalParams.h"
@@ -251,10 +252,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
 
 	// [SPEECH] check for KTTSD presence and usability
-	Settings::setUseKTTSD( true );
-	if ( !kapp->dcopClient()->isApplicationRegistered("kttsd") )
-		if ( KApplication::startServiceByDesktopName( "kttsd" ) )
-			Settings::setUseKTTSD( false );
+	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
+	Settings::setUseKTTSD( (offers.count() > 0) );
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");

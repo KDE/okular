@@ -24,17 +24,17 @@
     </authorgroup>
     
     <copyright>
-      <year>2001</year>
+      <year>2001-2004</year>
       <holder>Stefan Kebekus</holder>
     </copyright>
     
     <legalnotice>&FDLNotice;</legalnotice>
     
-    <date>2003-09-07</date>
-    <releaseinfo>1.10.00</releaseinfo>
+    <date>2004-02-27</date>
+    <releaseinfo>1.11.00</releaseinfo>
 
     <abstract>
-      <para>This document describes &kdvi; version 1.0</para>
+      <para>This document describes &kdvi; version 1.1</para>
     </abstract>
 
     <keywordset>
@@ -57,8 +57,8 @@
     hyperlinks. More details, examples and all the technical
     specifications can be found in the file
     <filename>KDVI-features.dvi</filename> (or see
-    <filename>KDVI-features.tex</filename>
-    for the TeX source of that file).</para>
+    <filename>KDVI-features.tex</filename> for the TeX source of that
+    file).</para>
 
     <para>For up-to-date information, consult <ulink
     url="http://devel-home.kde.org/~kdvi">&kdvi;'s home page</ulink>.
@@ -76,7 +76,7 @@
 
   <chapter id="starting">
     <title>Starting &kdvi;</title>
-
+    
     <para>Most of the time, &kdvi; will be started by just clicking
     onto a <literal role="extension">.dvi</literal> file in the file
     manager. For convenience there exists a command
@@ -93,7 +93,7 @@
     like this: <userinput><command>kdvi</command>
     <parameter>http://somepath/paper.dvi</parameter></userinput>
     </para>
-
+    
     <para>If you give a &URL; as a parameter, you can tell &kdvi; to
     jump directly to certain place of the &DVI; file.
     For example, <userinput><command>kdvi</command>
@@ -163,14 +163,14 @@
   <chapter id="export">
     <title>Exporting the &DVI; file to other formats</title>
 
-    <para>If you want to save your file as in &PostScript; or
-    PDF format, it is not recommended that you use the printing
-    function and redirect the printer output to a file. Instead, you
-    can use the export functions which produce better-quality output
-    that retains many of the special features of the dvi format and
-    looks better in many of the viewing applications, such as
-    Adobe's <application>Acrobat Reader</application>. You will find
-    the export functions in the <guimenu>File</guimenu> menu.</para>
+    <para>If you want to save your file as in &PostScript; or PDF
+    format, it is not recommended that you use the printing function
+    and redirect the printer output to a file. Instead, you can use
+    the export functions which produce better-quality output that
+    retains many of the special features of the dvi format and looks
+    better in many of the viewing applications, such as Adobe's
+    <application>Acrobat Reader</application>. You will find the
+    export functions in the <guimenu>File</guimenu> menu.</para>
 
     <section id="export-ps">
       <title>Exporting to &PostScript;</title> 
@@ -188,23 +188,66 @@
     <section id="export-pdf">
       <title>Exporting to <acronym>PDF</acronym></title> 
 
-      <para>In order to produce <acronym>PDF</acronym> files of high quality, &kdvi;
-      converts &DVI; to <acronym>PDF</acronym> using the external program
-      <command>dvipdfm</command>. If you are working on a machine
-      where an older distribution of the TeX typesetting system is
-      installed, it may be that the program
+      <para>In order to produce <acronym>PDF</acronym> files of high
+      quality, &kdvi; converts &DVI; to <acronym>PDF</acronym> using
+      the external program <command>dvipdfm</command>. If you are
+      working on a machine where an older distribution of the TeX
+      typesetting system is installed, it may be that the program
       <command>dvipdfm</command> is not installed. In that case, you
-      need to use the printing function to generate <acronym>PDF</acronym>
-      output.</para>
+      need to use the printing function to generate
+      <acronym>PDF</acronym> output.</para>
 
-      <warning> <para>If you are viewing the generated file in Adobe's
-      <application>Acrobat reader</application>, you may well find
-      that some of the fonts look extremely poor although a printout
-      is fine, and although the document looks ok in
-      <application>ghostview</application>. This is a known issue with
-      the <application>Acrobat Reader</application> and bitmap
-      fonts. At the time of writing, the only practicable workaround
-      seems to be to avoid bitmap fonts.</para>
+      <warning>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+             If you use an older TeX installation, and if are viewing
+             the generated file in Adobe's <application>Acrobat
+             reader</application>, you may well find that some of the
+             fonts look extremely poor although a printout is fine,
+             and although the document looks ok in
+             <command>kghostview</command>. This is a known issue with
+             the <application>Acrobat Reader</application> and bitmap
+             fonts. At the time of writing, the only practicable
+             workaround seems to be to avoid bitmap fonts, or to
+             upgrade to a more recent TeX installation.
+            </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+             While <command>dvipdfm</command> produces high-quality
+             <acronym>PDF</acronym> files, <command>dvipdfm</command>
+             currently currently ignores the &PostScript; that is
+             embedded into the &DVI; file. Embedded PostScript is
+             generated e.g. by the <application>xy</application> macro
+             package, or by the "Embed PostScript files" function
+             &kdvi; described <link linkend="embed">below</link>.
+            </para>
+            <para>
+             If you find that the generated <acronym>PDF</acronym>
+             file misses graphical data, use the print function of
+             &kdvi; instead.
+            </para>
+	  </listitem>
+	</itemizedlist>
+      </warning>
+    </section>
+
+
+    <section id="export-text">
+      <title>Exporting to text files</title> 
+
+      <para>&kdvi; can also save your &DVI; files in text format.</para>
+
+      <warning>
+       <para>
+         The &DVI; file standard was not designed with this kind of
+         functionality in mind. This function therefore only works
+         well with standard ASCII characters. It will not work with
+         non-European languages. Depending on the fonts used in the
+         files, there may also be problems with accented characters or
+         umlauts, and sometimes with ligatures.
+       </para>
       </warning>
     </section>
   </chapter>
@@ -286,7 +329,7 @@
 	additional configuration. You will find a description of all
 	supported editors in the section <link
 	linkend="inverse-search-editor">Setting up your
-	editor</link> below.</para>
+	editor for inverse search</link> below.</para>
       </step>
       <step>
 	<para>Test your setup. Open your &DVI; file in &kdvi; and use
@@ -308,12 +351,18 @@
 	<listitem>
 	  <para>A TeX binary which generates and includes the
 	  necessary information automatically is certainly the
-	  preferred method of including inverse search information. By
-	  the time of writing, a binary was not yet available for
-	  &UNIX;. However, it is said that the next version of the
-	  <ulink url="http://www.tug.org/teTex/">TeTeX
-	  TeX distribution</ulink> will support inverse search
-	  natively.
+	  preferred method of including inverse search information. 
+	  If you use version 2 or greater of the <ulink
+	  url="http://www.tug.org/teTeX/">TeTeX TeX
+	  distribution</ulink>, you can use the 'src-specials' command
+	  line option of the tex or latex command, as follows.
+<programlisting>
+tex --src-specials myfile.tex
+</programlisting>
+or
+<programlisting>
+latex --src-specials myfile.tex
+</programlisting>
 	  </para>
 	</listitem>
 	<listitem>
@@ -327,15 +376,11 @@
 	  mouse pointer is on a hyperlink.)  If you use LaTeX, add the
 	  line
 <programlisting>
-
-    \usepackage[active]{srcltx}
-
+\usepackage[active]{srcltx}
 </programlisting>
 	   to the preamble of your LaTeX file. If you use plain TeX, the line 
 <programlisting>
-
-    \include{srctex}
-
+\include{srctex}
 </programlisting>
           will do the trick.</para>
 	</listitem>
@@ -352,7 +397,7 @@
 
     <section id="inverse-search-editor">
 
-    <title>Setting up your editor</title>
+    <title>Setting up your editor for inverse search</title>
     
     <para>While inverse search works generally very well with most
     editors, some of them require a bit of extra care. This section
@@ -381,23 +426,22 @@
 
       <para>To start the <application>Emacs Server</application>, you can do
       one of the following:</para>
-      <procedure>
-	<step>
+	<itemizedlist>
+	<listitem>
 	  <para>In <application>Emacs</application>, start the
  <application>Emacs Server</application> by typing
- <userinput><keycombo
- action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
+ <userinput><keycombo action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
  <command>server-start</command></userinput></para>
-	</step>
-	<step>
+	</listitem>
+	<listitem>
 	  <para>Add the line 
 <programlisting>
-    (server-start)
+(server-start)
 </programlisting>
 	   to your <filename>.emacs</filename> file. Restart
 	   <application>Emacs</application></para>
-	</step>
-      </procedure>
+	</listitem>
+      </itemizedlist>
 
       
       <tip>
@@ -426,16 +470,14 @@
 	      <application>Emacs</application> is
 	      running. Furthermore, make sure that the
 	      <application>Emacs Server</application> is started by typing
-	      <userinput><keycombo
-	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      <userinput><keycombo action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      <command>server-start</command></userinput>.</para>
 	</listitem>
 	<listitem>
 	      <para>If you want the frame to be auto-raised, add the
 	      <function>raise-frame</function> function to
 	      <quote>server-switch-hook</quote> (do
-	      <userinput><keycombo
-	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      <userinput><keycombo action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      <command>customize-variable</command>
 	      <keycap>RET</keycap>
 	      <command>server-switch-hook</command></userinput> and
@@ -487,9 +529,7 @@ Works only for visiting one buffer at a time."
     (set-buffer-modified-p nil)
     ad-do-it
     (set-buffer-modified-p this-buf-modified-p)))
-
 </programlisting>
-
         </listitem>
       </itemizedlist>
       </tip>
@@ -509,8 +549,7 @@ Works only for visiting one buffer at a time."
       <para>The LaTeX-editor system <application>Kile</application>,
           supports KDVI very well. No extra setup is
           necessary. Further information about Kile can be found at
-          <ulink
-          url="http://perso.club-internet.fr/pascal.brachet/kile">Kile's
+          <ulink url="http://kile.sourceforge.net">Kile's
           homepage</ulink>.
           </para>
     </section>
@@ -528,13 +567,6 @@ Works only for visiting one buffer at a time."
       <application>NEdit</application> highlights the first line of
       the appropriate paragraph.</para>
       <tip>
-      <procedure>
-        <step>
-          <para>Make sure that <application>NEdit</application> is
-          installed. Try to start <command>nedit</command> from the
-          command line.</para>
-        </step>
-        <step>
           <para>&kdvi; uses the command <command>ncl</command> to
           remote control <application>NEdit</application>. Make sure
           that <command>ncl</command> is available on the command line
@@ -547,8 +579,6 @@ Works only for visiting one buffer at a time."
           either upgrade to a more recent version, or you have to use
           the option <guilabel>User defined editor</guilabel> from the
           <guilabel>Options</guilabel> dialog.</para>
-        </step>
-      </procedure>
       </tip>
     </section>
 
@@ -579,16 +609,14 @@ Works only for visiting one buffer at a time."
       <itemizedlist>
         <listitem>
           <para>In <application>XEmacs</application>, start
-          <application>gnuserv</application> by typing <userinput><keycombo
-          action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
+          <application>gnuserv</application> by typing
+<userinput>userinput><keycombo action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
           <command>gnuserv-start</command></userinput></para>
         </listitem>
         <listitem>
           <para>Add the line 
 <programlisting>
-
-    (gnuserv-start)
-
+(gnuserv-start)
 </programlisting>
            to your <filename>.xemacs</filename> file. If you use a
            more recent version of <application>XEmacs</application>,
@@ -603,8 +631,7 @@ Works only for visiting one buffer at a time."
       call, and want the frame to be auto-raised, set <quote>Gnuserv
       Frame</quote> to <quote>Use selected frame</quote>, and add the
       <function>raise-frame</function> function to <quote>Visit
-      Hook</quote>. Do <userinput><keycombo
-      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+      Hook</quote>. Do <userinput><keycombo action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
       <command>customize-group</command> <keycap>RET</keycap>
       <command>gnuserv</command></userinput> to make these
       settings.</para>
@@ -634,8 +661,7 @@ Works only for visiting one buffer at a time."
               <application>XEmacs</application> is
               running. Furthermore, make sure that
               <application>gnuserv</application> is started by typing
-              <userinput><keycombo
-              action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
+              <userinput><keycombo action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
               <command>gnuserv-start</command></userinput>.</para>
         </listitem>
         <listitem>
@@ -644,8 +670,7 @@ Works only for visiting one buffer at a time."
               <quote>Gnuserv Frame</quote> to <quote>Use selected
               frame</quote>, and add the <quote>raise-frame</quote>
               function to <quote>Visit Hook</quote>. Do
-              <userinput><keycombo
-              action="simul"><keycap>M</keycap><keycap>X</keycap></keycombo>
+              <userinput><keycombo action="simul"><keycap>M</keycap><keycap>X</keycap></keycombo>
               <command>customize-group</command> <keycap>RET</keycap>
               <command>gnuserv</command></userinput> to make these
               settings.</para>
@@ -657,24 +682,11 @@ Works only for visiting one buffer at a time."
     <section id="editor-setup-gvim">
       <title><application>VI iMproved</application> / &GUI;</title>
 
-      <para>&kdvi; supports <command>vim</command>, but the result is
-      not thrilling. A <mousebutton>middle</mousebutton> button
-      mouseclick into the &DVI; file will always open a new instance
-      of the <command>vim</command> editor, even if
-      <command>vim</command> is already running and even if the
-      TeX file is already loaded.</para>
-      <tip>
-      <itemizedlist>
-        <listitem>
-          <para>Make sure that <application>VIM/GUI</application> is
-          installed. Try to start <command>gvim</command> from the
-          command line.</para>
-        </listitem>
-      </itemizedlist>
-      </tip>
+      <para>The <application>gvim</application> variant of the
+      <application>vi</application> editor supports inverse search very well.
+      No extra setup is required.</para>
     </section>
     </section>
-
   </chapter>
 
 
@@ -696,15 +708,13 @@ Works only for visiting one buffer at a time."
       <listitem>
         <para>Add source file information to your &DVI; file, &eg; by
         using the package <command>srcltx</command>.  This has been
-        described in the section <link
-        linkend="inverse-search-tex">Producing TeX files for inverse
+        described in the section <link linkend="inverse-search-tex">Producing TeX files for inverse
         search</link>.</para>
       </listitem>
       <listitem>
         <para>If you use <application>Emacs</application> and
         everything is properly set up, you just press
-        <userinput><keycombo
-        action="simul">&Ctrl;<keycap>X</keycap></keycombo> <keycombo
+        <userinput><keycombo action="simul">&Ctrl;<keycap>X</keycap></keycombo> <keycombo
         action="simul">&Ctrl;<keycap>J</keycap>
         </keycombo></userinput>, and &kdvi; pops up and jumps to the
         place which corresponds to the place of the TeX file which you
@@ -747,13 +757,11 @@ Works only for visiting one buffer at a time."
           <listitem>
             <para>Open <application>Emacs</application>, load a
             TeX file, produce the corresponding &DVI; file, and either
-            enter the command <userinput><keycombo
-            action="simul"><keycap>M</keycap><keycap>x</keycap>
+            enter the command <userinput><keycombo action="simul"><keycap>M</keycap><keycap>x</keycap>
             </keycombo><command>kdvi-jump-to-line</command></userinput>
             or press <userinput><keycombo action="seq"><keycombo
             action="simul">&Ctrl;<keycap>X</keycap></keycombo>
-            <keycombo
-            action="simul">&Ctrl;<keycap>J</keycap></keycombo>
+            <keycombo action="simul">&Ctrl;<keycap>J</keycap></keycombo>
             </keycombo></userinput>.
             It may happen that <application>Emacs</application> asks
             you for the name of a <quote>master file</quote>. This is
@@ -793,7 +801,8 @@ Works only for visiting one buffer at a time."
         <title><application>XEmacs</application></title>
         
         <para>To set up <application>XEmacs</application>, follow the
-        steps for <application>Emacs</application> <link linkend="forw-editor-setup-emacs">above</link>, but modify
+        steps for <application>Emacs</application> <link
+        linkend="forw-editor-setup-emacs">above</link>, but modify
         your <filename>.xemacs</filename> rather than your
         <filename>.emacs</filename> file. If you use a very recent
         version of <application>XEmacs</application>, <filename
@@ -821,15 +830,37 @@ Works only for visiting one buffer at a time."
     <sect1 id="opt-fonts">
       <title><guilabel>Fonts</guilabel> Options</title>
 
-      <para>The following picture shows the options dialog of
-      &kdvi;.</para>
+      <para>
+       Traditionally, the TeX typsetter uses fonts that are generated
+       by the <command>MetaFont</command> program. These fonts are
+       stored in the PK format. While a carefully configured
+       <command>MetaFont</command> system produces printouts of
+       highest quality, its configuration requires serious expertise,
+       <command>MetaFont</command> is not very good at producing fonts
+       suitable for computer displays, and there are only few
+       <command>MetaFont</command> fonts available for Asian
+       languages.
+      </para>
+      
+      <para>
+       To overcome these problems, newer TeX installations therefore
+       include fonts that are stored in the "PostScript Type 1"
+       format, which is a widely used font format in electronic
+       publishing. &kdvi; is able to use both font formats. 
+      </para>
+
+      <para>
+       The following picture shows the font options dialog of &kdvi;
+       that can be used to control &kdvi;'s use of the various font
+       formats.
+      </para>
 
       <screenshot>
         <screeninfo>The <guilabel>Fonts</guilabel> tab</screeninfo>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="optionrequester1.png" format="PNG"/>
-          </imageobject>
+	    <imagedata fileref="optionrequester1.png" format="PNG"></imagedata>
+	  </imageobject>
           <textobject>
             <phrase>The <guilabel>Fonts</guilabel> tab</phrase>
           </textobject>
@@ -838,48 +869,107 @@ Works only for visiting one buffer at a time."
 
       <variablelist>
         <varlistentry>
-          <term><guilabel>Metafont mode</guilabel> </term>
+          <term><guilabel>PostScript Type 1 fonts</guilabel> </term>
           <listitem>
-            <para>These options specify the fonts which &kdvi; will
-            use for rendering.  By carefully optimizing the settings
-            here it is possible to improve on the display. However,
-            unless you are an expert in <command>MetaFont</command>
-            and know what you are doing, it is not a good idea to
-            change these options. You may want to look at the <link
-            linkend="mfmodes">Frequently asked questions</link> section of
-            this manual.</para>
+	    <variablelist>
+	      <varlistentry>
+		<term><guilabel>Use Type 1 fonts if available</guilabel> </term>
+		<listitem>
+		  <para>
+                   Using these fonts makes &kdvi; faster, and
+                   generally produces higher quality output. You
+                   almost certainly want to enable this option, unless
+                   you exerience problems with the configuration of
+                   your TeX installation, or with buggy fonts.
+                 </para>
+		</listitem>
+	      </varlistentry>
 
-            <para>Safe values are <guilabel>1200 dpi /
-            Lexmark</guilabel> for good quality, or <guilabel>600 dpi
-            / LaserJet 4</guilabel> for medium quality and faster
-            display.</para>
+	      <varlistentry>
+		<term><guilabel>Use font hinting</guilabel> </term>
+		<listitem>
+		  <para>
+                   "PostScript Type 1" often contain "font hints",
+                   i.e. additional information that is supposed to
+                   help software producing better quality output on
+                   computer screens. The quality of the font hints
+                   varies from font to font, and you should experiment
+                   to see if enabling this option gives better results.
+                 </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
           </listitem>
         </varlistentry>
 
         <varlistentry>
-          <term><guilabel>Generate missing fonts</guilabel></term>
+          <term><guilabel>PK fonts</guilabel> </term>
           <listitem>
-            <para>Check this if you want &kdvi; to call the
-            <command>MetaFont</command> program in the likely case
-            that &kdvi; wants to display documents which use fonts
-            which are not yet readily made. You most certainly want to
-            set this option.</para>
+	    <variablelist>
+	      <varlistentry>
+		<term><guilabel>Metafont mode</guilabel> </term>
+		<listitem>
+		  <para>
+                   These options specify the fonts which &kdvi; will
+                   use for rendering.  By carefully optimizing the
+                   settings here it is possible to improve on the
+                   display. However, unless you are an expert in
+                   <command>MetaFont</command> and know what you are
+                   doing, it is not a good idea to change these
+                   options. You may want to look at the <link
+                   linkend="mfmodes">Frequently asked questions</link>
+                   section of this manual.
+                  </para>
+                  <para>
+                   Safe values are <guilabel>1200 dpi /
+                   Lexmark</guilabel> for good quality, or
+                   <guilabel>600 dpi / LaserJet 4</guilabel> for
+                   medium quality and faster display.
+                  </para>
+		</listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+		<term><guilabel>Generate missing fonts</guilabel> </term>
+		<listitem>
+		  <para>
+                   Check this if you want &kdvi; to call the
+                   <command>MetaFont</command> program in the likely
+                   case that &kdvi; wants to display documents which
+                   use fonts which are not yet readily made. You most
+                   certainly want to set this option.
+                 </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
           </listitem>
         </varlistentry>
       </variablelist>
     </sect1>
 
     <sect1 id="opt-rendering">
-      <title><guilabel>Rendering</guilabel> Options</title>
+      <title><guilabel>&DVI; specials</guilabel> Options</title>
 
-      <para>The following picture shows the second options dialog of
-      &kdvi;.</para>
+      <para>
+       &kdvi; supports a large number of extensions to the original
+       &DVI; format, e.g. hyperlinks, graphic file inclusion or
+       embedded source file information. These extensions are known as
+       "&DVI; specials". A full account of specials supported by
+       &kdvi; can be found in <ulink url="KDVI-features.dvi">this
+       document</ulink>.
+      </para>
+
+      <para>
+       The &DVI; specials dialog configure support for some specials.
+      </para>
 
       <screenshot>
         <screeninfo>The <guilabel>Rendering</guilabel> tab</screeninfo>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="optionrequester2.png" format="PNG"/></imageobject>
+            <imagedata fileref="optionrequester2.png"
+            format="PNG"></imagedata>
+	  </imageobject>
           <textobject>
             <phrase>The <guilabel>Rendering</guilabel> tab</phrase>
           </textobject>
@@ -932,8 +1022,7 @@ Works only for visiting one buffer at a time."
         <varlistentry>
           <term><guilabel>Editor for inverse search</guilabel></term>
           <listitem>
-            <para>If you intend to use <link
-            linkend="inverse-search">inverse search</link>, a
+            <para>If you intend to use <link linkend="inverse-search">inverse search</link>, a
             very useful feature if you write TeX documents yourself,
             you have to specify which editor you are going to use, and
             how this editor can be started by &kdvi;. In the example
@@ -1032,7 +1121,7 @@ Works only for visiting one buffer at a time."
     <application>xdvi</application> version 18f which has many
     authors.</para>
 
-    <para>Documentation is copyright 2001, Stefan Kebekus
+    <para>Documentation is copyright 2001-2004, Stefan Kebekus
     <email>kebekus@kde.org</email></para>
 
     <!-- TRANS:CREDIT_FOR_TRANSLATORS -->

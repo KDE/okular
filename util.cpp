@@ -113,7 +113,7 @@ char * xmalloc(unsigned size, _Xconst char *why)
 {
 	/* Avoid malloc(0), though it's not clear if it ever actually
 	   happens any more.  */
-	char *mem = malloc(size ? size : 1);
+	char *mem = (char *)malloc(size ? size : 1);
 
 	if (mem == NULL)
 	    oops("! Cannot allocate %u bytes for %s.\n", size, why);

@@ -500,9 +500,11 @@ void fontPool::kpsewhich_terminated(KProcess *)
   while ( fontp != 0 ) { 
     if (fontp->filename.isEmpty() == true) {
       QStringList matchingFiles;
+#ifdef HAVE_FREETYPE
       QMap<QString,QString>::Iterator it = fontFilenames.find(fontp->fontname);
       if (it != fontFilenames.end())
 	matchingFiles =fileNameList.grep(*it);
+#endif
       if (matchingFiles.isEmpty() == true) 
 	matchingFiles += fileNameList.grep(fontp->fontname);
       

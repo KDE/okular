@@ -93,6 +93,8 @@ vf.c: $(kpathsea)
 
 $(kpathsea):
 	test -d kpathsea || mkdir kpathsea
-	cd kpathsea && CC="$(CC)" CFLAGS="$(CFLAGS)" MAKE="$(MAKE)" $(srcdir)/kpathsea/configure 
+	oldpath=`pwd`; \
+	cd $(srcdir) && newpath=`pwd`; \
+	cd $$oldpath/kpathsea && CC="$(CC)" CFLAGS="$(CFLAGS)" MAKE="$(MAKE)" $$newpath/kpathsea/configure 
 	cd kpathsea && $(MAKE)
 

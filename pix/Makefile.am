@@ -1,8 +1,6 @@
 
 # add here all files
-data_DATA = fileopen.xpm back.xpm fileprint.xpm finish.xpm forward.xpm\
-	forwpage.xpm largetext.xpm reload.xpm smalltext.xpm start.xpm\
-	viewmag+.xpm viewmag-.xpm
+data_DATA = forwpage.xpm largetext.xpm  smalltext.xpm 
 
 
 # this is the directory, where all datas are installed

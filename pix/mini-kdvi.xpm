@@ -1,32 +1,27 @@
 /* XPM */
-/* Drawn  by Mark Donohoe for the K Desktop Environment */
+/* Drawn for the K Desktop Environment */
 /* See http://www.kde.org */
-static char*kdvi[]={
-"16 16 10 1",
+static char*kghostview[]={
+"16 16 5 1",
 "# c #000000",
 "b c #c0c0c0",
 "a c #ffffff",
-"g c #c05800",
-"h c #ffa858",
-"c c #0000c0",
-"f c #c0c0ff",
-"e c #303030",
-"d c #c0c0ff",
+"c c #c0c0c0",
 ". c None",
 ".###########....",
 "#aaaaaaaaaaa#...",
+"#abbbbabbbaa#...",
 "#aaaaaaaaaaa#...",
 "#abaab###baa#...",
 "#aaab#aaa#ba#...",
-"#aba#abbaa#a#...",
+"#aba#aabaa#a#...",
+"#aaa#aabba#a#...",
 "#aaa#aaaaa#a#...",
-"#aba#ccaba#a#...",
-"#aacdddcc#e##...",
-"#aacfddfc#gh#...",
-"#aacdccaca#gh#..",
-"#aacdfdfcaa#gh#.",
-"#acddfadcaaa#gh#",
-"#acacdcddaaa##g#",
-"#aacddcaaaaa#.##",
-".###########...."};
+"#aaab#aaa##a#...",
+"#ccacb####a##...",
+"#cacccaaaa#a#...",
+"#ccaacaaaaa#a#..",
+"#caccaaaaaaa#a#.",
+".###########.#a#",
+"..............#."};
 

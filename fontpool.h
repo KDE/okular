@@ -7,10 +7,7 @@
 #define _FONTPOOL_H
 
 #include <../config.h>
-#ifdef HAVE_FREETYPE
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#endif
+
 #include <qmap.h>
 #include <qptrlist.h>
 #include <qstringlist.h>
@@ -19,6 +16,15 @@
 #include "fontEncodingPool.h"
 #include "fontMap.h"
 #include "TeXFontDefinition.h"
+
+#ifdef HAVE_FREETYPE
+#ifdef FT_FREETYPE_H
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#else
+#undef HAVE_FREETYPE
+#endif
+#endif
 
 class KProcess;
 class KShellProcess;
@@ -29,7 +35,6 @@ class KShellProcess;
 extern const char *MFModes[];
 extern const char *MFModenames[];
 extern const int   MFResolutions[];
-
 
 /**
  *  A list of fonts and a compilation of utility functions

@@ -8,10 +8,6 @@
 // This file is compiled only if the FreeType library is present on
 // the system
 
-#include "../config.h"
-#ifdef HAVE_FREETYPE
-
-
 // Add header files alphabetically
 
 #include <kdebug.h>
@@ -19,6 +15,9 @@
 #include <qimage.h>
 
 #include "fontpool.h"
+
+#ifdef HAVE_FREETYPE
+
 #include "glyph.h"
 #include "TeXFont_PFB.h"
 

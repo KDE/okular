@@ -173,9 +173,13 @@ void dvifile::read_postamble(void)
   last_page_offset = four(file);
   if (numerator != four(file) || denominator != four(file) || magnification != four(file))
     dvi_oops(i18n("Postamble doesn't match preamble"));
-  /* read largest box height and width */
-  int unshrunk_page_h = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
-  int unshrunk_page_w = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
+  /* Read largest box height and width. Not used at the moment. */
+  //int unshrunk_page_h = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
+  //int unshrunk_page_w = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
+
+  sfour(file);//@@@ + basedpi;
+  sfour(file);//@@@ + basedpi;
+
   (void) two(file);	/* max stack size */
   total_pages = two(file);
   Boolean font_not_found = False;
@@ -244,6 +248,7 @@ dvifile::dvifile(QString fname, fontPool *pool)
   file        = NULL;
   page_offset = NULL;
   font_pool   = pool;
+  sourceSpecialMarker = true;
 
   file = fopen(fname.ascii(), "r");
   if (file == NULL) {

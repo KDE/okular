@@ -53,25 +53,25 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   EditorNames        += "User-defined editor";
   EditorCommands     += "";
   EditorDescriptions += i18n("Enter the command line below.");
-
+  
   EditorNames        += "Kate";
   EditorCommands     += "kate %f";
   EditorDescriptions += i18n("Kate does not jump to line");
-
+  
   EditorNames        += "NEdit";
   EditorCommands     += "ncl -noask -line %l %f";
   EditorDescriptions += i18n("NEdit perfectly supports inverse search.");
-
+  
   EditorNames        += "XEmacs";
-  EditorCommands     += "xemacs %f";
-  EditorDescriptions += i18n("XEmacs always opens a new window, does not jump to line");
-
+  EditorCommands     += "gnuclient -q +%l %f";
+  EditorDescriptions += i18n("Click 'Help' to learn how to set up XEmacs.");
+  
   makeFontPage();
   makeRenderingPage();
-
+  
   KConfig *config = _instance->config();
   config->setGroup("kdvi");
-
+  
   // Font page
   // Important! The default values here must be the same as in kdvi_multipage.cpp
   for(int i=0; i<NumberOfMFModes; i++)

@@ -142,6 +142,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   export_printer         = 0;
   export_fileName        = "";
   export_tmpFileName     = "";
+  export_errorString     = "";
 
   // Calculate the horizontal resolution of the display device.  @@@
   // We assume implicitly that the horizontal and vertical resolutions
@@ -209,11 +210,18 @@ void dviWindow::showInfo(void)
 
 void dviWindow::exportPDF(void)
 {
-  // Should not happen since the progressDialog is modal... but who
-  // knows?
+  // It could perhaps happen that a kShellProcess, which runs an
+  // editor for inverse search, is still running. In that case, we
+  // ingore any further output of the editor by detaching the
+  // appropriate slots. The sigal "processExited", however, remains
+  // attached to the slow "exportCommand_terminated", which is smart
+  // enough to ignore the exit status of the editor if another command
+  // has been called meanwhile. See also the exportPS method.
   if (proc != 0) {
-    KMessageBox::sorry(0, i18n("Another export command is currently running"));
-    return;
+    // Make sure all further output of the programm is ignored
+    qApp->disconnect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
+    qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
+    proc = 0;
   }
 
   // That sould also not happen.
@@ -274,10 +282,16 @@ void dviWindow::exportPDF(void)
     kdError(4300) << "Could not allocate ShellProcess for the dvipdfm command." << endl;
     return;
   }
-  
+  qApp->disconnect( this, SIGNAL(mySignal()), 0, 0 );
+
   qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
+
+  export_errorString = i18n("The external program 'dvipdf', which was used to export the file, reported an error. "
+			    "You might wish to look at the <strong>document info dialog</strong> which you will "
+			    "find in the File-Menu for a precise error report.") ;
+
 
   if (info)
     info->clear(QString(i18n("Export: %1 to PDF")).arg(KShellProcess::quote(dviFile->filename)));
@@ -298,11 +312,17 @@ void dviWindow::exportPDF(void)
 
 void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 {
-  // Should not happen since the progressDialog is modal... but who
-  // knows?
+  // It could perhaps happen that a kShellProcess, which runs an
+  // editor for inverse search, is still running. In that case, we
+  // ingore any further output of the editor by detaching the
+  // appropriate slots. The sigal "processExited", however, remains
+  // attached to the slow "exportCommand_terminated", which is smart
+  // enough to ignore the exit status of the editor if another command
+  // has been called meanwhile. See also the exportPDF method.
   if (proc != 0) {
-    KMessageBox::sorry(this, i18n("Another export command is currently running"));
-    return;
+    qApp->disconnect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
+    qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
+    proc = 0;
   }
 
   // That sould also not happen.
@@ -409,11 +429,12 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     return;
   }
   
-  qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)),
-		this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
-  qApp->connect(proc, SIGNAL(processExited(KProcess *)),
-		this, SLOT(dvips_terminated(KProcess *)));
-
+  qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+  qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+  qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
+  export_errorString = i18n("The external program 'dvips', which was used to export the file, reported an error. "
+			    "You might wish to look at the <strong>document info dialog</strong> which you will "
+			    "find in the File-Menu for a precise error report.") ;
   if (info)
     info->clear(QString(i18n("Export: %1 to PostScript")).arg(KShellProcess::quote(dviFile->filename)));
 
@@ -434,6 +455,54 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   return;
 }
 
+void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
+{
+  // Paranoia.
+  if (buflen < 0)
+    return;
+  QString op = QString::fromLocal8Bit(buffer, buflen);
+
+  if (info != 0)
+    info->outputReceiver(op);
+  if (progress != 0)
+    progress->show();
+}
+
+void dviWindow::dvips_terminated(KProcess *sproc)
+{
+  // Give an error message from the message string. However, if the
+  // sproc is not the "current external process of interest", i.e. not
+  // the LAST external program that was started by the user, then the
+  // export_errorString, does not correspond to sproc. In that case,
+  // we ingore the return status silently.
+  if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0)) 
+    KMessageBox::error( this, export_errorString );
+  
+  if (export_printer != 0)
+    export_printer->printFiles( QStringList(export_fileName), true );
+  // Kill and delete the remaining process, reset the printer, etc.
+  abortExternalProgramm();
+}
+
+void dviWindow::editorCommand_terminated(KProcess *sproc)
+{
+  // Give an error message from the message string. However, if the
+  // sproc is not the "current external process of interest", i.e. not
+  // the LAST external program that was started by the user, then the
+  // export_errorString, does not correspond to sproc. In that case,
+  // we ingore the return status silently.
+  if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0)) 
+    KMessageBox::error( this, export_errorString );
+  
+  // Let's hope that this is not all too nasty... killing a
+  // KShellProcess from a slot that was called from the KShellProcess
+  // itself. Until now, there weren't any problems.
+
+  // Perhaps it was a bad idea, after all.
+  //@@@@  delete sproc;
+}
+
+
 
 void dviWindow::abortExternalProgramm(void)
 {
@@ -452,40 +521,11 @@ void dviWindow::abortExternalProgramm(void)
     delete progress;
     progress = 0;
   }
-
+  
   export_printer  = 0;
   export_fileName = "";
 }
 
-void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
-{
-  // Paranoia.
-  if (buflen < 0)
-    return;
-  QString op = QString::fromLocal8Bit(buffer, buflen);
-
-  if (info != 0)
-    info->outputReceiver(op);
-  if (progress != 0)
-    progress->show();
-}
-
-void dviWindow::dvips_terminated(KProcess *)
-{
-  if ((proc->normalExit() == true) && (proc->exitStatus() != 0)) 
-    KMessageBox::error( this,
-			i18n("An external program (e.g. an editor used for inverse search, or a program like "
-			     "dvips or dvipdfm which is used by the export functions) reported an error. You "
-			     "might wish to look at the <strong>document info dialog</strong> which you will "
-			     "find in the File-Menu for a precise error report.") );
-
-  // If a printer is defined, print and delete the output file.
-  if (export_printer != 0)
-    export_printer->printFiles( QStringList(export_fileName), true );
-
-  // Kill and delete the remaining process, reset the printer, etc.
-  abortExternalProgramm();
-}
 
 
 void dviWindow::setShowPS( int flag )
@@ -566,11 +606,11 @@ void dviWindow::drawPage()
   }
 
   // Stop if there is no dvi-file present
-  if (dviFile == NULL) {
+  if ( dviFile == 0 ) {
     resize(0, 0);
     return;
   }
-  if ( dviFile->file == NULL) {
+  if ( dviFile->file == 0 ) {
     resize(0, 0);
     return;
   }
@@ -594,6 +634,16 @@ void dviWindow::drawPage()
     foreGroundPaint.drawRect(0,0,pixmap->width(),pixmap->height());
     QApplication::restoreOverrideCursor();
     foreGroundPaint.end();
+
+    // @@@ Problem here: KMessageBox doesn't support hyperlinks.
+    if ((dviFile->sourceSpecialMarker == true) && (num_of_used_source_hyperlinks > 0)) {
+      dviFile->sourceSpecialMarker = false;
+      KMessageBox::information(this, i18n("This DVI file contains source file information. You may click into the text with the "
+					  "middle mouse button, and an editor will open the TeX-source file immediately. See the "
+					  "<a href=\"http://devel-home.kde.org/~kdvi\">KDVI documentation</a> for a more "
+					  "detailed explanation of this."), 
+			       QString::null, "KDVI-SourceFileInfoFound", true);
+    }
   }
   repaint();
   emit contents_changed();
@@ -855,7 +905,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #endif
 
   // Check if the mouse is pressed on a regular hyperlink
-  if (e->button() == LeftButton)
+  if ((e->button() == LeftButton) && (num_of_used_hyperlinks > 0))
     for(int i=0; i<num_of_used_hyperlinks; i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
 	if (hyperLinkList[i].linkText[0] == '#' ) {
@@ -877,20 +927,23 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #ifdef DEBUG_SPECIAL
 	  kdDebug(4300) << "hit: external link to " << hyperLinkList[i].linkText << endl;
 #endif
+	  // We could in principle use KIO::Netaccess::run() here, but
+	  // it is perhaps not a very good idea to allow a DVI-file to
+	  // specify arbitrary commands, such as "rm -rvf /*". Using
+	  // the kfmclient seems to be MUCH safer.
 	  QUrl DVI_Url(dviFile->filename);
 	  QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
 	
 	  KShellProcess proc;
 	  proc << "kfmclient openURL " << Link_Url.toString();
 	  proc.start(KProcess::Block);
-	  //@@@ Set up a warning requester if the command failed?
 	}
 	break;
       }
     }
 
   // Check if the mouse is pressed on a source-hyperlink
-  if (e->button() == MidButton)
+  if ((e->button() == MidButton) && (num_of_used_source_hyperlinks > 0))
     for(int i=0; i<num_of_used_source_hyperlinks; i++) 
       if (sourceHyperLinkList[i].box.contains(e->pos())) {
 #ifdef DEBUG_SPECIAL
@@ -899,28 +952,28 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 
 	QString cp = sourceHyperLinkList[i].linkText;
 	int max = cp.length();
-	int i;
-
-	for(i=0; i<max; i++)
+	for(int i=0; i<max; i++)
 	  if (cp[i].isDigit() == false)
 	    break;
-
+	
 	// The macro-package srcltx gives a special like "src:99 test.tex"
 	// while MikTeX gives "src:99test.tex". KDVI tries
 	// to understand both.
-	QString TeXfile = cp.mid(i);
-	if (QFile::exists(cp.mid(i+1)))
-	  TeXfile = cp.mid(i+1);
+	QFileInfo fi1(dviFile->filename);
+	QFileInfo fi2(fi1.dir(),cp.mid(i+1));
+	QString TeXfile;
+	if ( fi2.exists() )
+	  TeXfile = fi2.absFilePath();
 	else {
-	  TeXfile = cp.mid(i);
-	  if (!QFile::exists(TeXfile)) {
+	  QFileInfo fi3(fi1.dir(),cp.mid(i));
+	  TeXfile = fi3.absFilePath();
+	  if ( !fi3.exists() ) {
 	    KMessageBox::sorry(this, i18n("The DVI-file refers to the TeX-file "
 					  "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)),
 			       i18n( "Could not find file" ));
 	    return;
 	  }
 	}
-
 
 	QString command = editorCommand;
 	if (command.isEmpty() == true) {
@@ -940,28 +993,38 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #ifdef DEBUG_SPECIAL
 	kdDebug(4300) << "Calling program: " << command << endl;
 #endif
-
-	// Problem... soll ich proc benutzen oder nicht? Ohne proc
-	// kann ich wahrscheinlich nicht feststellen, wenn das
-	// Kommando mit fehler zurückkehrt... andererseits benötige ich @@@@
-
+	
+	// There may still be another program running. Since we don't
+	// want to mix the output of several programs, we will
+	// henceforth dimiss the output of the older programm. "If it
+	// hasn't failed until now, we don't care."
+	if (proc != 0) {
+	  qApp->disconnect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
+	  qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
+	  proc = 0;
+	}
+	
+	// Set up a shell process with the editor command.
 	proc = new KShellProcess();
 	if (proc == 0) {
 	  kdError(4300) << "Could not allocate ShellProcess for the editor command." << endl;
 	  return;
 	}
-  
 	qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
 	qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
-	qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
+	qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(editorCommand_terminated(KProcess *)));
+	// Merge the editor-specific editor message here.
+	export_errorString = i18n("The external program, which was used to call the editor for inverse search, reported an error. "
+				  "You might wish to look at the <strong>document info dialog</strong> which you will "
+				  "find in the File-Menu for a precise error report.") ;
 
 	if (info)
-	  info->clear(i18n("Starting the editor..."));
-
+	  info->clear(i18n("Starting the editor... <i>%1</i>").arg(command));
+	
 	proc->clearArguments();
 	*proc << command;
 	proc->closeStdin();
-	if (proc->start(KProcess::DontCare, KProcess::AllOutput) == false) {
+	if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
 	  kdError(4300) << "Editor failed to start" << endl;
 	  return;
 	}

@@ -61,6 +61,8 @@
 #include "fontpool.h"
 
 #include <kdebug.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 #include <kprocess.h>
 #include <qpainter.h>
 #include <qbitmap.h> 
@@ -554,6 +556,12 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 
 void dviWindow::draw_page(void)
 {
+  // Reset a couple of variables
+  HTML_href              = 0;
+  source_href            = 0;
+  num_of_used_hyperlinks = 0;
+  num_of_used_source_hyperlinks = 0;
+
   // Check if all the fonts are loaded. If that is not the case, we
   // return and do not draw anything. The font_pool will later emit
   // the signal "fonts_are_loaded" and thus trigger a redraw of the
@@ -581,14 +589,15 @@ void dviWindow::draw_page(void)
   currinf.fonttable      = tn_table;
   currinf.end            = dvi_buffer;
   currinf.pos            = dvi_buffer;
-  currinf._virtual       = NULL;
-  HTML_href              = NULL;
-  num_of_used_hyperlinks = 0;
-  num_of_used_source_hyperlinks = 0;
+  currinf._virtual       = 0;
   draw_part(dviFile->dimconv, false);
-  if (HTML_href != NULL) {
+  if (HTML_href != 0) {
     delete HTML_href;
-    HTML_href = NULL;
+    HTML_href = 0;
+  }
+  if (source_href != 0) {
+    delete source_href;
+    source_href = 0;
   }
 
   // Mark hyperlinks in blue. We draw a blue line under the

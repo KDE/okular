@@ -19,6 +19,14 @@ class dvifile {
   unsigned int   total_pages;
   long         * page_offset;
 
+  /** This flag is set to "true" during the construction of the
+      dvifile, and is never changed afterwards by the dvifile
+      class. It is used in kdvi in conjuction with source-specials:
+      the first time a page with source specials is rendered, KDVI
+      shows an info dialog, and the flag is set to false. That way
+      KDVI ensures that the user is only informed once. */
+  bool           sourceSpecialMarker;
+
   /** Numerator and denominator of the TeX units, as explained in
       section A.3 of the DVI driver standard, Level 0, published by
       the TUG DVI driver standards committee. */

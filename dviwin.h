@@ -136,8 +136,11 @@ public slots:
   double	setZoom(double zoom);
   double        zoom() { return _zoom; };
   void		drawPage();
+ 
+  /** Slots used in conjunction with external programs */
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
   void          dvips_terminated(KProcess *);
+  void          editorCommand_terminated(KProcess *);
 
 signals:
   /** Emitted to indicate that a hyperlink has been clicked on, and
@@ -206,21 +209,19 @@ private:
 
  ghostscript_interface *PS_interface;
 
- // TRUE, if gs should be used, otherwise, only bounding boxes are
- // drawn.
+ /** TRUE, if gs should be used, otherwise, only bounding boxes are
+     drawn. */
  unsigned char	   _postscript;
 
- // TRUE, if Hyperlinks should be shown.
+ /** TRUE, if Hyperlinks should be shown. */
  unsigned char	   _showHyperLinks;
 
-
-
- // This flag is used when rendering a dvi-page. It is set to "true"
- // when any dvi-command other than "set" or "put" series of commands
- // is encountered. This is considered to mark the end of a word.
+ /** This flag is used when rendering a dvi-page. It is set to "true"
+     when any dvi-command other than "set" or "put" series of commands
+     is encountered. This is considered to mark the end of a word. */
  bool              word_boundary_encountered;
 
- // List of anchors in a document
+ /** List of anchors in a document */
  QString           AnchorList_String[MAX_ANCHORS];
  unsigned int      AnchorList_Page[MAX_ANCHORS];
  double            AnchorList_Vert[MAX_ANCHORS];
@@ -233,16 +234,19 @@ private:
  QString	   paper_type;
  int		   ChangesPossible;
  unsigned int	   current_page;
- // Indicates if the current page is already drawn (=1) or not (=0).
+
+ /** Indicates if the current page is already drawn (=1) or not
+     (=0). */
  char              is_current_page_drawn;
  double            _zoom;
 
- // Used to run and to show the progress of dvips and friends.
+ /** Used to run and to show the progress of dvips and friends. */
  fontProgressDialog *progress;
  KShellProcess      *proc;
  KPrinter           *export_printer;
  QString             export_fileName;
  QString             export_tmpFileName;
+ QString             export_errorString;
 };
 
 

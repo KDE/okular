@@ -117,13 +117,11 @@ void PageViewMessage::paintEvent( QPaintEvent * e )
     p.drawPixmap( e->rect().topLeft(), m_pixmap, e->rect() );
 }
 
-void PageViewMessage::mouseMoveEvent( QMouseEvent * /*e*/ )
+void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
 {
-/* Disabled. Not useful. To enable, 'setMouseTracking' too.
     if ( m_timer )
         m_timer->stop();
     hide();
-*/
 }
 
 

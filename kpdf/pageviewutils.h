@@ -73,7 +73,7 @@ class PageViewMessage : public QWidget
 
     protected:
         void paintEvent( QPaintEvent * e );
-        void mouseMoveEvent( QMouseEvent * e );
+        void mousePressEvent( QMouseEvent * e );
 
     private:
         QPixmap m_pixmap;

@@ -28,6 +28,7 @@
 #include <kactioncollection.h>
 #include <kpopupmenu.h>
 #include <klocale.h>
+#include <kimageeffect.h>
 
 #include <math.h>
 #include <stdlib.h>
@@ -271,7 +272,7 @@ void PageView::notifyPixmapChanged( int pageNumber )
 //BEGIN widget events
 #include <kdebug.h>
 void PageView::viewportPaintEvent( QPaintEvent * pe )
-{
+{//TODO add blanking on the 'remaining' area only.
     // create the rect into contents from the clipped screen rect
     QRect viewportRect = viewport()->rect();
     QRect contentsRect = pe->rect().intersect( viewportRect );
@@ -284,39 +285,64 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     QPainter screenPainter( viewport(), true );
     screenPainter.translate( -contentsX(), -contentsY() );
 
+    // selectionRect is the normalized mouse selection rect
+    QRect selectionRect = d->mouseSelectionRect;
+    if ( !selectionRect.isNull() )
+        selectionRect = selectionRect.normalize();
+    // selectionRectInternal without the border
+    QRect selectionRectInternal = selectionRect;
+    selectionRectInternal.addCoords( 1, 1, -1, -1 );
+    // color for blending
+    QColor selBlendColor = (selectionRect.width() > 20 || selectionRect.height() > 20) ?
+                           palette().active().highlight() : Qt::red;
+
     // Iterate over the regions. This optimizes a lot the cases in which
     // SUMj( Region[j].area ) is less than Region.boundingRect.area )
     QMemArray<QRect> allRects = pe->region().rects();
-    int numRects = allRects.count();
+    uint numRects = allRects.count();
     // TODO: add a check to see wether to use area subdivision or not.
-    //kdDebug() << "painting " << numRects << " rects" << endl;
     for ( uint i = 0; i < numRects; i++ )
     {
-        //QRegion remaining( r );
-        contentsRect = allRects[i].intersect( viewportRect );
+        // set 'contentsRect' to a part of the sub-divided region
+        contentsRect = allRects[i].normalize().intersect( viewportRect );
         contentsRect.moveBy( contentsX(), contentsY() );
+        if ( !contentsRect.isValid() )
+            continue;
 
         if ( Settings::tempUseComposting() )
         {
             // create pixmap and open a painter over it
             QPixmap doubleBuffer( contentsRect.size() );
             QPainter pixmapPainter( &doubleBuffer );
+            // gfx operations on pixmap (contents {left,top} is pixmap {0,0})
             pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
-            // gfx operations on pixmap (rect {left,top} is pixmap {0,0})
             // 1) clear bg
             pixmapPainter.fillRect( contentsRect, Qt::gray );
             // 2) paint items
             paintItems( &pixmapPainter, contentsRect );
             // 3) pixmap manipulated areas
-            // 4) paint transparent selections
-            if ( !d->mouseSelectionRect.isNull() )
+            // 4) paint (blend) transparent selection
+            if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) )
             {
-                pixmapPainter.save();
-                pixmapPainter.setPen( palette().active().highlight().dark(110) );
-                pixmapPainter.setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
-                pixmapPainter.drawRect( d->mouseSelectionRect.normalize() );
-                pixmapPainter.restore();
+                QRect blendRect = selectionRectInternal.intersect( contentsRect );
+                // skip rectangles covered by the selection's border
+                if ( blendRect.isValid() )
+                {
+                    // grab current pixmap into a new one to colorize contents
+                    QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                    copyBlt( &blendedPixmap, 0,0, &doubleBuffer,
+                                blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
+                                blendRect.width(), blendRect.height() );
+                    // blend selBlendColor into the background pixmap
+                    QImage blendedImage = blendedPixmap.convertToImage();
+                    KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
+                    // copy the blended pixmap back to its place
+                    pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedImage );
+                }
+                // draw border (red if the selection is too small)
+                pixmapPainter.setPen( selBlendColor );
+                pixmapPainter.drawRect( selectionRect );
             }
             // 5) paint overlays
             if ( Settings::tempDrawBoundaries() )
@@ -335,7 +361,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
             screenPainter.fillRect( contentsRect, Qt::gray );
             // 2) paint items
             paintItems( &screenPainter, contentsRect );
-            // 4) paint opaque selections
+            // 4) paint opaque selection
             if ( !d->mouseSelectionRect.isNull() )
             {
                 screenPainter.setPen( palette().active().highlight().dark(110) );
@@ -494,20 +520,24 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                 // if selection changed update rect
                 if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
                 {
-                    // Send only incremental paint events!
+                    // send incremental paint events
                     QRect oldRect = d->mouseSelectionRect.normalize();
                     d->mouseSelectionRect.setRight( x );
                     d->mouseSelectionRect.setBottom( y );
                     QRect newRect = d->mouseSelectionRect.normalize();
-                    // (enqueue rects 1) areas to clear with bg color
-                    QMemArray<QRect> transparentRects = QRegion( oldRect ).subtract( newRect ).rects();
-                    for ( uint i = 0; i < transparentRects.count(); i++ )
-                        updateContents( transparentRects[i] );
-                    // (enqueue rects 2) new opaque areas 
-                    oldRect.addCoords( 1, 1, -1, -1 );
-                    QMemArray<QRect> opaqueRects = QRegion( newRect ).subtract( oldRect ).rects();
-                    for ( uint i = 0; i < opaqueRects.count(); i++ )
-                        updateContents( opaqueRects[i] );
+                    // generate diff region: [ OLD.unite(NEW) - OLD.intersect(NEW) ]
+                    QRegion compoundRegion = QRegion( oldRect ).unite( newRect );
+                    if ( oldRect.intersects( newRect ) )
+                    {
+                        QRect intersection = oldRect.intersect( newRect );
+                        intersection.addCoords( 1, 1, -1, -1 );
+                        if ( intersection.width() > 20 && intersection.height() > 20 )
+                            compoundRegion -= intersection;
+                    }
+                    // tassellate region with rects and enqueue paint events
+                    QMemArray<QRect> rects = compoundRegion.rects();
+                    for ( uint i = 0; i < rects.count(); i++ )
+                        updateContents( rects[i] );
                 }
             }
             break;

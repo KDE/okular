@@ -513,13 +513,14 @@ void Part::slotFind()
     if ( dlg.exec() == QDialog::Accepted )
     {
         m_findNext->setEnabled( true );
-        m_document->findText( dlg.pattern(), dlg.options() & KFindDialog::CaseSensitive );
+        m_document->searchText( 10, dlg.pattern(), false, dlg.options() & KFindDialog::CaseSensitive,
+                                KPDFDocument::NextMatch, true, Qt::red );
     }
 }
 
 void Part::slotFindNext()
 {
-    m_document->findText();
+    m_document->continueSearch( 10 );
 }
 
 void Part::slotSaveFileAs()
@@ -648,7 +649,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	if (page)
 	{
 		popup->insertTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
-		if ( page->attributes() & KPDFPage::Bookmark )
+        if ( page->hasBookmark() )
 			popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
 		else
 			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );

@@ -171,19 +171,24 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     }
 
     // draw selection (note: it is rescaled since the text page is at 100% scale)
-    if ( ( flags & Highlight ) && ( page->attributes() & KPDFPage::Highlight ) )
+    if ( ( flags & Highlights ) && !page->m_highlights.isEmpty() )
     {
-        int x = (int)( page->m_sLeft * width / page->m_width ),
-            y = (int)( page->m_sTop * height / page->m_height ),
-            w = (int)( page->m_sRight * width / page->m_width ) - x,
-            h = (int)( page->m_sBottom * height / page->m_height ) - y;
-        if ( w > 0 && h > 0 )
+        QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+        for ( ; hIt != hEnd; ++hIt )
         {
-            // TODO setRasterOp is no more on Qt4 find an alternative way of doing this
-            p->setBrush( Qt::SolidPattern );
-            p->setPen( QPen( Qt::black, 1 ) ); // should not be necessary bug a Qt bug makes it necessary
-            p->setRasterOp( Qt::NotROP );
-            p->drawRect( x, y, w, h );
+            HighlightRect * r = *hIt;
+            int x = (int)( r->left * width ),
+                y = (int)( r->top * height ),
+                w = (int)( r->right * width ) - x,
+                h = (int)( r->bottom * height ) - y;
+            if ( w > 0 && h > 0 )
+            {
+                // TODO setRasterOp is no more on Qt4 find an alternative way of doing this
+                p->setBrush( Qt::SolidPattern );
+                p->setPen( QPen( Qt::black, 1 ) ); // should not be necessary bug a Qt bug makes it necessary
+                p->setRasterOp( Qt::NotROP );
+                p->drawRect( x, y, w, h );
+            }
         }
     }
 

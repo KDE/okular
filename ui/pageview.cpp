@@ -556,45 +556,53 @@ void PageView::keyPressEvent( QKeyEvent * e )
     // handle 'find as you type' (based on khtml/khtmlview.cpp)
     if( d->typeAheadActive )
     {
+        // backspace: remove a char and search or terminates search
         if( e->key() == Key_BackSpace )
         {
-            d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
-            if( !d->typeAheadString.isEmpty() )
+            if( d->typeAheadString.length() > 1 )
             {
-                findAhead( false );
+                d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
+                bool found = d->document->searchText( 69, d->typeAheadString, true, false,
+                        KPDFDocument::NextMatch, true, Qt::yellow );
+                QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
+                d->messageWindow->display( status.arg(d->typeAheadString.lower()),
+                                           found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
                 d->findTimeoutTimer->start( 3000, true );
             }
             else
             {
-                findTimeout();
-                d->document->unHilightPages( false );
+                findAheadStop();
+                d->document->resetSearch( 69 );
             }
-            return;
         }
+        // F3: go to next occurrency
         else if( e->key() == KStdAccel::findNext() )
         {
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
             releaseKeyboard();
-            if ( d->document->findText() )
+            if ( d->document->continueSearch( 69 ) )
                 d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
             grabKeyboard();
-            return;
         }
+        // esc and return: end search
         else if( e->key() == Key_Escape || e->key() == Key_Return )
         {
-            findTimeout();
-            return;
+            findAheadStop();
         }
-        else if( e->text().isEmpty() == false )
+        else if( !e->text().isEmpty() )
         {
             d->typeAheadString += e->text();
-            findAhead( true );
+            bool found = d->document->searchText( 69, d->typeAheadString, false, false,
+                    KPDFDocument::NextMatch, true, Qt::yellow );
+            QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
+            d->messageWindow->display( status.arg(d->typeAheadString.lower()),
+                                       found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
             d->findTimeoutTimer->start( 3000, true );
-            return;
         }
+        return;
     }
     else if( e->key() == '/' && d->document->isOpened() )
     {
@@ -606,13 +614,13 @@ void PageView::keyPressEvent( QKeyEvent * e )
         }
         // start type-adeas search
         d->typeAheadString = QString();
-        d->messageWindow->display(i18n("Starting -- find text as you type"), PageViewMessage::Find, 3000);
+        d->messageWindow->display( i18n("Starting -- find text as you type"), PageViewMessage::Find, 3000 );
         d->typeAheadActive = true;
         if ( !d->findTimeoutTimer )
         {
             // create the timer on demand
             d->findTimeoutTimer = new QTimer( this );
-            connect( d->findTimeoutTimer, SIGNAL(timeout()), this, SLOT(findTimeout()) );
+            connect( d->findTimeoutTimer, SIGNAL( timeout() ), this, SLOT( findAheadStop() ) );
         }
         d->findTimeoutTimer->start( 3000, true );
         grabKeyboard();
@@ -689,30 +697,6 @@ void PageView::keyPressEvent( QKeyEvent * e )
         d->autoScrollTimer->stop();
     }
 }
-
-void PageView::findTimeout()
-{
-    d->typeAheadActive = false;
-    d->typeAheadString = "";
-    d->messageWindow->display(i18n("Find stopped."),PageViewMessage::Find,1000);
-    releaseKeyboard();
-}
-
-void PageView::findAhead(bool increase)
-{
-    if (!increase) 
-        d->document->setViewportPage(0);
-    QString status;
-    d->document->unHilightPages(false);
-    bool found = d->document->findText(d->typeAheadString, false, true);
-    if(found)
-        status = i18n("Text found: \"%1\".");
-    else 
-        status = i18n("Text not found: \"%1\".");
-    d->messageWindow->display(status.arg(d->typeAheadString.lower()),
-        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000);
-}
-
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
@@ -1209,7 +1193,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
             QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
             pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
             int flags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
-                        PagePainter::EnhanceImages | PagePainter::Highlight;
+                        PagePainter::EnhanceImages | PagePainter::Highlights;
             PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, flags, p, pixmapRect,
                                              pixmapGeometry.width(), pixmapGeometry.height() );
         }
@@ -1803,6 +1787,14 @@ void PageView::slotAutoScoll()
     const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
     d->autoScrollTimer->changeInterval( scrollDelay[ index ] );
     scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
+}
+
+void PageView::findAheadStop()
+{
+    d->typeAheadActive = false;
+    d->typeAheadString = "";
+    d->messageWindow->display( i18n("Find stopped."), PageViewMessage::Find, 1000 );
+    releaseKeyboard();
 }
 
 void PageView::slotZoom()

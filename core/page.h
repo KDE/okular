@@ -18,6 +18,7 @@ class QRect;
 class TextPage;
 class KPDFPageRect;
 class KPDFPageTransition;
+class HighlightRect;
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -34,48 +35,53 @@ class KPDFPage
         KPDFPage( uint number, float width, float height, int rotation );
         ~KPDFPage();
 
-        enum KPDFPageAttributes { Highlight = 1, Bookmark = 2 };
+        enum KPDFPageAttributes { Bookmark = 1, Highlights = 2 };
 
         // query properties (const read-only methods)
         inline int number() const { return m_number; }
         inline int rotation() const { return m_rotation; }
-        inline int attributes() const { return m_attributes; }
         inline float width() const { return m_width; }
         inline float height() const { return m_height; }
         inline float ratio() const { return m_height / m_width; }
+        inline bool hasBookmark() const { return m_bookmarked; }
+        inline bool hasHighlights() const { return !m_highlights.isEmpty(); }
 
         bool hasPixmap( int id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
         bool hasRect( int mouseX, int mouseY ) const;
         bool hasLink( int mouseX, int mouseY ) const;
+
         const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
+        // - HL? .. -
         const KPDFPageTransition * getTransition() const;
-        const QPoint getLastSearchCenter() const;
+
         const QString getTextInRect( const QRect & rect, double zoom /*= 1.0*/ ) const;
 
         // operations (by KPDFDocument)
-        inline void setAttribute( int att ) { m_attributes |= att; }
-        inline void clearAttribute( int att ) { m_attributes &= ~att; }
-        inline void toggleAttribute( int att ) { m_attributes ^= att; }
-        bool hasText( const QString & text, bool strictCase, bool fromTop );
+        inline void setBookmark( bool state ) { m_bookmarked = state; }
+        HighlightRect * searchText( const QString & text,
+                bool strictCase, HighlightRect * lastPosition = 0 );
 
-        // set/delete contents (by KPDFDocument)
+        // oprations: set/delete contents (by KPDFDocument)
         void setPixmap( int id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
         void setRects( const QValueList< KPDFPageRect * > rects );
+        void setHighlight( HighlightRect * hr, bool add = true );
         void setTransition( const KPDFPageTransition * transition );
         void deletePixmap( int id );
         void deletePixmapsAndRects();
+        void deleteHighlights( int id = -1 );
 
     private:
         friend class PagePainter;
-        int m_number, m_rotation, m_attributes;
+        int m_number, m_rotation;
         float m_width, m_height;
-        double m_sLeft, m_sTop, m_sRight, m_sBottom;
+        bool m_bookmarked;
 
         QMap< int, QPixmap * > m_pixmaps;
         TextPage * m_text;
         QValueList< KPDFPageRect * > m_rects;
+        QValueList< HighlightRect * > m_highlights;
         const KPDFPageTransition * m_transition;
 };
 
@@ -120,6 +126,19 @@ class KPDFPageRect
         int m_xMin, m_xMax, m_yMin, m_yMax;
         PointerType m_pointerType;
         void * m_pointer;
+};
+
+// TODO: comment this
+struct HighlightRect
+{
+    // publicly accessed fields
+    int id;
+    double left, top, right, bottom;
+    QColor color;
+
+    // initialize default values
+    HighlightRect();
+    HighlightRect( double l, double t, double r, double b );
 };
 
 #endif

@@ -107,20 +107,22 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
 	}
 
     // show pages containing hilighted text or bookmarked ones
-    int flags = Settings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
+    //RESTORE THIS int flags = Settings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
 
     // if no page matches filter rule, then display all pages
     QValueVector< KPDFPage * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
     bool skipCheck = true;
     for ( ; pIt != pEnd ; ++pIt )
-        if ( (*pIt)->attributes() & flags )
+        //if ( (*pIt)->attributes() & flags )
+        if ( (*pIt)->hasHighlights() )
             skipCheck = false;
 
     // generate Thumbnails for the given set of pages
     int width = clipper()->width(),
         totalHeight = 0;
     for ( pIt = pages.begin(); pIt != pEnd ; ++pIt )
-        if ( skipCheck || (*pIt)->attributes() & flags )
+        //if ( skipCheck || (*pIt)->attributes() & flags )
+        if ( skipCheck || (*pIt)->hasHighlights() )
         {
             ThumbnailWidget * t = new ThumbnailWidget( viewport(), *pIt, this );
             t->setFocusProxy( this );
@@ -484,7 +486,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     if ( clipRect.top() < m_pixmapHeight + 4 )
     {
         // if page is bookmarked draw a colored border
-        bool isBookmarked = m_page->attributes() & KPDFPage::Bookmark;
+        bool isBookmarked = m_page->hasBookmark();
         // draw the inner rect
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
         p.drawRect( 1, 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );
@@ -505,7 +507,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
         if ( clipRect.isValid() )
         {
-            int flags = PagePainter::Accessibility | PagePainter::Highlight;
+            int flags = PagePainter::Accessibility | PagePainter::Highlights;
             PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, flags, &p,
                                              clipRect, m_pixmapWidth, m_pixmapHeight );
         }

@@ -79,12 +79,16 @@ class KPDFDocument : public QObject
         void setNextViewport();
         void requestPixmaps( const QValueList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
-        bool findText( const QString & text = "", bool caseSensitive = false, bool findAhead = false );
-        void findTextAll( const QString & pattern, bool caseSensitive );
+
+        enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleLike };
+        bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
+                         SearchType type, bool moveViewport, const QColor & color );
+        bool continueSearch( int searchID );
+        void resetSearch( int searchID );
+        
         void toggleBookmark( int page );
         void processLink( const KPDFLink * link );
         bool print( KPrinter &printer );
-        void unHilightPages(bool filteredOnly = true);
 
         // notifications sent by generator
         void requestDone( PixmapRequest * request );

@@ -24,9 +24,8 @@
 /** class KPDFPage **/
 
 KPDFPage::KPDFPage( uint page, float w, float h, int r )
-    : m_number( page ), m_rotation( r ), m_attributes( 0 ),
-    m_width( w ), m_height( h ), m_sLeft( 0 ), m_sTop( 0 ),
-    m_sRight( 0 ), m_sBottom( 0 ), m_text( 0 ), m_transition( 0 )
+    : m_number( page ), m_rotation( r ), m_width( w ), m_height( h ),
+    m_bookmarked( false ), m_text( 0 ), m_transition( 0 )
 {
     // if landscape swap width <-> height (rotate 90deg CCW)
     if ( r == 90 || r == 270 )
@@ -44,6 +43,7 @@ KPDFPage::KPDFPage( uint page, float w, float h, int r )
 KPDFPage::~KPDFPage()
 {
     deletePixmapsAndRects();
+    deleteHighlights();
     delete m_text;
     delete m_transition;
 }
@@ -96,13 +96,6 @@ const KPDFPageTransition * KPDFPage::getTransition() const
     return m_transition;
 }
 
-const QPoint KPDFPage::getLastSearchCenter() const
-{
-    int centerX = (int)((m_sRight + m_sLeft) / 2),
-        centerY = (int)((m_sTop + m_sBottom) / 2);
-    return QPoint( centerX, centerY );
-}
-
 const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
 {
     if ( !m_text )
@@ -118,34 +111,61 @@ const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
 }
 
 
-bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
+HighlightRect * KPDFPage::searchText( const QString & text, bool strictCase, HighlightRect * lastRect )
 {
-    if ( !m_text )
-        return false;
+    if ( text.isEmpty() )
+        return 0;
 
-    const QChar* str = text.unicode();
+    // create a xpf's Unicode (unsigned int) array for the given text
+    const QChar * str = text.unicode();
     int len = text.length();
-    Unicode *u = (Unicode *)gmalloc(len * sizeof(Unicode));
+    Unicode u[ len ];
     for (int i = 0; i < len; ++i)
         u[i] = str[i].unicode();
 
+    // find out the direction of search
+    enum SearchDir { FromTop, NextMatch, PrevMatch } dir = lastRect ? NextMatch : FromTop;
+    double sLeft, sTop, sRight, sBottom;
+    if ( dir == NextMatch )
+    {
+        sLeft = lastRect->left * m_width;
+        sTop = lastRect->top * m_height;
+        sRight = lastRect->right * m_width;
+        sBottom = lastRect->bottom * m_height;
+    }
+
+    // this loop is only for 'bad case' matches
     bool found = false;
     while ( !found )
     {
-        found = m_text->findText( u, len, fromTop ? gTrue : gFalse, gTrue, fromTop ? gFalse : gTrue, gFalse, &m_sLeft, &m_sTop, &m_sRight, &m_sBottom );
+        if ( dir == FromTop )
+            found = m_text->findText( u, len, gTrue, gTrue, gFalse, gFalse, &sLeft, &sTop, &sRight, &sBottom );
+        else if ( dir == NextMatch )
+            found = m_text->findText( u, len, gFalse, gTrue, gTrue, gFalse, &sLeft, &sTop, &sRight, &sBottom );
+        else if ( dir == PrevMatch )
+            // FIXME: this doesn't work as expected
+            found = m_text->findText( u, len, gTrue, gFalse, gFalse, gTrue, &sLeft, &sTop, &sRight, &sBottom );
+
+        // if not found (even in case unsensitive search), terminate
         if ( !found )
             break;
-        if( strictCase )
+
+        // check for case sensitivity
+        if ( strictCase )
         {
             // since we're in 'Case sensitive' mode, check if words are identical
-            GString * orig = m_text->getText( m_sLeft, m_sTop, m_sRight, m_sBottom );
-            found = QString::fromUtf8( orig->getCString() ) == text;
-            if ( !found && fromTop )
-                fromTop = false;
+            GString * realText = m_text->getText( sLeft, sTop, sRight, sBottom );
+            found = QString::fromUtf8( realText->getCString() ) == text;
+            if ( !found && dir == FromTop )
+                dir = NextMatch;
+            delete realText;
         }
     }
-    gfree(u);
-    return found;
+
+    // if the page was found, return a new normalized HighlightRect
+    if ( found )
+        return new HighlightRect( sLeft / m_width, sTop / m_height, sRight / m_width, sBottom / m_height );
+    return 0;
 }
 
 void KPDFPage::setPixmap( int id, QPixmap * pixmap )
@@ -167,6 +187,13 @@ void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
+}
+
+void KPDFPage::setHighlight( HighlightRect * hr, bool add )
+{
+    if ( !add )
+        deleteHighlights( hr->id );
+    m_highlights.append( hr );
 }
 
 void KPDFPage::setTransition( const KPDFPageTransition * transition )
@@ -196,6 +223,23 @@ void KPDFPage::deletePixmapsAndRects()
     for ( ; rIt != rEnd; ++rIt )
         delete *rIt;
     m_rects.clear();
+}
+
+void KPDFPage::deleteHighlights( int id )
+{
+    // delete highlights by ID
+    QValueList< HighlightRect * >::iterator it = m_highlights.begin(), end = m_highlights.end();
+    while ( it != end )
+    {
+        HighlightRect * highlight = *it;
+        if ( id == -1 || highlight->id == id )
+        {
+            it = m_highlights.remove( it );
+            delete highlight;
+        }
+        else
+            ++it;
+    }
 }
 
 
@@ -253,4 +297,17 @@ void KPDFPageRect::deletePointer()
     else
         kdDebug() << "Object deletion not implemented for type '"
                   << m_pointerType << "' ." << endl;
+}
+
+
+/** class HighlightRect **/
+
+HighlightRect::HighlightRect()
+    : id( -1 ), left( 0.0 ), top( 0.0 ), right( 0.0 ), bottom( 0.0 )
+{
+}
+
+HighlightRect::HighlightRect( double l, double t, double r, double b )
+    : id( -1 ), left( l ), top( t ), right( r ), bottom( b )
+{
 }

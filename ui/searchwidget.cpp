@@ -84,7 +84,10 @@ void SearchWidget::slotTextChanged( const QString & text )
 void SearchWidget::startSearch()
 {
     QString text = getLined( LEDIT_ID )->text();
-    m_document->findTextAll( text.length() < 3 ? QString::null : text, m_caseSensitive );
+    if ( text.length() >= 3 )
+        m_document->searchText( 9, text, true, m_caseSensitive, KPDFDocument::AllDoc, false, Qt::green );
+    else
+        m_document->resetSearch( 9 );
 }
 
 void SearchWidget::slotCaseChanged( int index )

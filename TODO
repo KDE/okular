@@ -77,7 +77,6 @@ More items (first items will enter 'In progress list' first):
 -> kttsd alternative (1): autodetect "/dev/speech" (speechd/festival) and provide reading
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
--> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kviewshell/kghostview/.. (not konq))
 -> rotate the whole document / individual pages
 -> presentation: implement transitions
 -> presentation: add some gfx tools (like a red pencil)
@@ -91,6 +90,7 @@ More items (first items will enter 'In progress list' first):
 -> move some document related features from part to the document (see find, goto dialog, ...)
 
 Done (newest features come first):
+-> FIX: wrong zoom buttons order (BR74248) (check consistancy with kdvi/kviewshell/kghostview/.. (not konq))
 -> ADD: presentation: cursor modes: hidden, visible, hidden with delay (Tobias)
 -> ADD: presentation: default transition which is used when no transition is defined in document (Tobias)
 -> ADD: presentation: support for automatic advance and loop on last page (Tobias)

@@ -54,7 +54,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   setHelp("opts", "kdvi");
 
   // Set up the list of known and supported editors
-  EditorNames        += i18n("User-defined editor");
+  EditorNames        += i18n("User-Defined Editor");
   EditorCommands     += "";
   EditorDescriptions += i18n("Enter the command line below.");
   
@@ -200,7 +200,7 @@ void OptionDialog::makeFontPage()
 
 void OptionDialog::makeRenderingPage()
 {
-  QVBox *page = addVBoxPage( i18n("DVI specials") );
+  QVBox *page = addVBoxPage( i18n("DVI Specials") );
 
   mRender.showSpecialCheck = new QCheckBox( i18n("Show PostScript specials"), page );
   QToolTip::add( mRender.showSpecialCheck, i18n("If in doubt, switch on!") );

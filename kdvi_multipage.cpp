@@ -89,11 +89,11 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window->DVIselection.setAction(copyTextAction);
   selectAllAction    = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
   new KAction(i18n("Enable All Warnings and Messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
-  exportPSAction     = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
-  exportPDFAction    = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
-  exportTextAction   = new KAction(i18n("Text"), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
+  exportPSAction     = new KAction(i18n("PostScript..."), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
+  exportPDFAction    = new KAction(i18n("PDF..."), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
+  exportTextAction   = new KAction(i18n("Text..."), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
-  new KAction(i18n("&DVI Options"), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
+  new KAction(i18n("&DVI Options..."), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
   new KAction(i18n("&Tip of the Day..."), 0, this, SLOT(showTip()), actionCollection(), "help_tipofday");
   new KAction(i18n("About the KDVI plugin..."), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
   new KAction(i18n("Help on the KDVI plugin..."), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");

@@ -21,7 +21,8 @@ namespace KPDF
           m_pressedAction( 0 )
     {
         m_outputdev = new QOutputDevPixmap();
-        setMouseTracking(true);
+        setFocusPolicy( QWidget::StrongFocus );
+        viewport()->setFocusPolicy( QWidget::WheelFocus );
     }
     PageWidget::~PageWidget()
     {
@@ -129,6 +130,57 @@ namespace KPDF
         setVScrollBarMode( b ? Auto : AlwaysOff );
     }
 
+    void PageWidget::scrollRight()
+    {
+        horizontalScrollBar()->addLine();
+    }
+
+    void PageWidget::scrollLeft()
+    {
+        horizontalScrollBar()->subtractLine();
+    }
+
+    void PageWidget::scrollDown()
+    {
+        verticalScrollBar()->addLine();
+    }
+
+    void PageWidget::scrollUp()
+    {
+        verticalScrollBar()->subtractLine();
+    }
+
+    void PageWidget::scrollBottom()
+    {
+        verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
+    }
+
+    void PageWidget::scrollTop()
+    {
+        verticalScrollBar()->setValue( verticalScrollBar()->minValue() );
+    }
+
+    void PageWidget::keyPressEvent( QKeyEvent* e )
+    {
+        switch ( e->key() ) {
+        case Key_Up:
+            scrollUp();
+            break;
+        case Key_Down:
+            scrollDown();
+            break;
+        case Key_Left:
+            scrollLeft();
+            break;
+        case Key_Right:
+            scrollRight();
+            break;
+        default:
+            e->ignore();
+            return;
+        }
+        e->accept();
+    }
     void PageWidget::updatePixmap()
     {
         if ( m_doc )

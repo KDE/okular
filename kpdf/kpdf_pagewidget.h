@@ -38,11 +38,17 @@ namespace KPDF
         void zoomOut();
 
         void updatePixmap();
-
+        void scrollUp();
+        void scrollDown();
+        void scrollRight();
+        void scrollLeft();
+        void scrollBottom();
+        void scrollTop();
     signals:
         void linkClicked(LinkAction*);
 
     protected:
+        virtual void keyPressEvent( QKeyEvent* );
         void contentsMousePressEvent(QMouseEvent*);
         void contentsMouseReleaseEvent(QMouseEvent*);
         void contentsMouseMoveEvent(QMouseEvent*);

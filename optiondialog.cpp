@@ -54,7 +54,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   for(int i=0; i<NumberOfMFModes; i++)
     mFont.metafontMode->insertItem(QString("%1 dpi / %2").arg(MFResolutions[i]).arg(MFModenames[i]));
   mFont.metafontMode->setCurrentItem( config->readNumEntry( "MetafontMode" , DefaultMFMode ));
-  mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
+  mFont.fontPathCheck->setChecked( config->readBoolEntry( "MakePK", true ) );
 
   // Rendering page
   mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );

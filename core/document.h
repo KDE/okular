@@ -25,6 +25,7 @@ class DocumentSynopsis;
 class Generator;
 class PixmapRequest;
 class KPrinter;
+class KURL;
 
 /**
  * @short The Document. Heart of everything. Actions take place here.
@@ -51,7 +52,7 @@ class KPDFDocument : public QObject
         ~KPDFDocument();
 
         // document handling
-        bool openDocument( const QString & docFile );
+        bool openDocument( const QString & docFile, const KURL & url );
         void closeDocument();
 
         // misc methods
@@ -96,6 +97,7 @@ class KPDFDocument : public QObject
     signals:
         void linkFind();
         void linkGoToPage();
+        void openURL(const KURL &url);
 
     private:
         void sendGeneratorRequest();

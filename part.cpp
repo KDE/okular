@@ -101,6 +101,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document = new KPDFDocument();
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
+	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
 
 	// widgets: ^searchbar (toolbar containing label and SearchWidget)
 //	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
@@ -252,7 +253,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// [SPEECH] check for KTTSD presence and usability
 	Settings::setUseKTTSD( true );
 	DCOPClient * client = DCOPClient::mainClient();
-	client->attach();
+	// Albert says is this ever necessary?
+	// we already attached on Part constructor
+	if ( !client->isAttached() )
+		client->attach();
 	if ( !client->isApplicationRegistered("kttsd") )
 		if ( KApplication::startServiceByName( "KTTSD" ) )
 			Settings::setUseKTTSD( false );
@@ -316,7 +320,7 @@ KAboutData* Part::createAboutData()
 
 bool Part::openFile()
 {
-    bool ok = m_document->openDocument( m_file );
+    bool ok = m_document->openDocument( m_file, url() );
 
     // update one-time actions
     m_find->setEnabled( ok );

@@ -43,6 +43,10 @@ class KPDFDocumentPrivate
         // find descriptors, mapped by ID (we handle multiple searches)
         QMap< int, RunningSearch * > searches;
 
+        // needed because for remote documents docFileName is a local file and
+        // we want the remote url when the document refers to relativeNames
+        KURL url;
+
         // cached stuff
         QString docFileName;
         QString xmlFileName;
@@ -50,6 +54,7 @@ class KPDFDocumentPrivate
         // viewport stuff
         QValueList< DocumentViewport > viewportHistory;
         QValueList< DocumentViewport >::iterator viewportIterator;
+        DocumentViewport nextDocumentViewport; // see KPDFLink::Goto for an explanation
 
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > observers;
@@ -113,7 +118,7 @@ KPDFDocument::~KPDFDocument()
 }
 
 
-bool KPDFDocument::openDocument( const QString & docFile )
+bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
 {
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
@@ -123,6 +128,7 @@ bool KPDFDocument::openDocument( const QString & docFile )
         return false;
     }
     // determine the related "xml document-info" filename
+    d->url = url;
     d->docFileName = docFile;
     QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
     fn = "kpdf/" + QString::number(fileReadTest.size()) + "." + fn + ".xml";
@@ -182,6 +188,12 @@ bool KPDFDocument::openDocument( const QString & docFile )
         connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotTimedMemoryCheck() ) );
     }
     d->memCheckTimer->start( 2000 );
+
+    if (d->nextDocumentViewport.pageNumber != -1)
+    {
+        setViewport(d->nextDocumentViewport);
+        d->nextDocumentViewport = DocumentViewport();
+    }
 
     return true;
 }
@@ -803,7 +815,15 @@ void KPDFDocument::processLink( const KPDFLink * link )
     {
         case KPDFLink::Goto: {
             const KPDFLinkGoto * go = static_cast< const KPDFLinkGoto * >( link );
-            DocumentViewport destVp = go->destViewport();
+            d->nextDocumentViewport = go->destViewport();
+
+            // Explanation of why d->nextDocumentViewport is needed
+            // all openRelativeFile does is launch a signal telling we
+            // want to open another URL, the problem is that when the file is 
+            // non local, the loading is done assynchronously so you can't
+            // do a setViewport after the if as it was because you are doing the setViewport
+            // on the old file and when the new arrives there is no setViewport for it and
+            // it does not show anything
 
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !openRelativeFile( go->fileName() ) )
@@ -812,8 +832,6 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 return;
             }
 
-            // note: if external file is opened, 'link' doesn't exist anymore!
-            setViewport( destVp );
             } break;
 
         case KPDFLink::Execute: {
@@ -1197,12 +1215,10 @@ void KPDFDocument::loadDocumentInfo()
 
 QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 {
-    if ( d->docFileName.isEmpty() )
+    if ( !d->url.isValid() )
         return QString::null;
-
-    // convert the pdf fileName to absolute using current pdf path
-    QFileInfo currentInfo( d->docFileName );
-    return currentInfo.dir().absFilePath( fileName );
+    
+    return d->url.upURL().url() + fileName;
 }
 
 bool KPDFDocument::openRelativeFile( const QString & fileName )
@@ -1213,8 +1229,8 @@ bool KPDFDocument::openRelativeFile( const QString & fileName )
 
     kdDebug() << "openDocument: '" << absFileName << "'" << endl;
 
-    // open the absolute filename
-    return openDocument( absFileName );
+    emit openURL( absFileName );
+    return true;
 }
 
 

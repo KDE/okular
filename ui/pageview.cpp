@@ -1039,6 +1039,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     // [2] speech selection using KTTSD
                     DCOPClient * client = DCOPClient::mainClient();
+                    // Albert says is this ever necessary?
+                    // we already attached on Part constructor
                     if ( !client->isAttached() )
                         client->attach();
                     // serialize the text to speech (selectedText) and the

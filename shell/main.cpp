@@ -37,7 +37,7 @@ int main(int argc, char** argv)
         version,
         description,
         KAboutData::License_GPL,
-        "(C) 2002 Wilco Greven, Christophe Devriese");
+        "(C) 2002 Wilco Greven, Christophe Devriese\n(C) 2004-2005 Albert Astals Cid, Enrico Ros");
 
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");

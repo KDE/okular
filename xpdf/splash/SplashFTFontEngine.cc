@@ -74,19 +74,20 @@ SplashFontFile *SplashFTFontEngine::loadType1CFont(SplashFontFileID *idA,
 SplashFontFile *SplashFTFontEngine::loadCIDFont(SplashFontFileID *idA,
 						char *fileName,
 						GBool deleteFile) {
-  FoFiType1C *ff;
+  //FoFiType1C *ff;
   Gushort *cidToGIDMap;
   int nCIDs;
   SplashFontFile *ret;
 
   // check for a CFF font
-  if ((ff = FoFiType1C::load(fileName))) {
+  /*if ((ff = FoFiType1C::load(fileName))) {
     cidToGIDMap = ff->getCIDToGIDMap(&nCIDs);
     delete ff;
-  } else {
+  } else {*/
+  // No need to check for CFF Font, freetype treats all CID fonts the same way
     cidToGIDMap = NULL;
     nCIDs = 0;
-  }
+  //}
   ret = SplashFTFontFile::loadCIDFont(this, idA, fileName, deleteFile,
 				      cidToGIDMap, nCIDs);
   if (!ret) {

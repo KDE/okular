@@ -58,7 +58,7 @@ extern "C" {
 #include "dvi.h"
 }
 
-#include "dvi_init.h"
+#include "dviFile.h"
 #include "fontpool.h"
 #include "xdvi.h"
 

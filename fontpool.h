@@ -16,6 +16,8 @@
 #include <qstringlist.h>
 #include <qobject.h>
 
+#include "fontEncodingPool.h"
+#include "fontMap.h"
 #include "TeXFontDefinition.h"
 
 class KProcess;
@@ -131,12 +133,14 @@ Q_OBJECT
       successfully */
   bool FreeType_could_be_loaded;
 
-  /** This maps TeX font names to actual filenames that we can look up
-      with kpsewhich. Unfortunately, this is necessary for a number of
-      Type1 fonts, such as URWBookmanL-DemiBold whose TeX name is
-      'rpbkd' but which is contained in the file 'ubkd8a.pfb'. The
-      contents of 'ps2pk.map' is parsed to set up this map. */
-  QMap<QString, QString> fontFilenames;
+  /** This maps TeX font names to font file names, full font names and
+      encodings. See the file 'fontMap.h' for a detailed
+      description. */
+  fontMap          fontsByTeXName;
+
+  /** This is a list of known font encodings which can be conveniently
+      acessed by name. */
+  fontEncodingPool encodingPool;
 #endif
 
 

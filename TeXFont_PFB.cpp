@@ -22,14 +22,17 @@
 #include "glyph.h"
 #include "TeXFont_PFB.h"
 
-//#define DEBUG_PFB
+//#define DEBUG_PFB 1
 
 
-TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent) 
+TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc) 
   : TeXFont(parent)
 {
 #ifdef DEBUG_PFB
-  kdDebug(4300) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ")" << endl;
+  if (enc != 0)
+    kdDebug(4300) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=" << enc->encodingFullName << " )" << endl;
+  else
+    kdDebug(4300) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=0 )" << endl;
 #endif
 
   fatalErrorInFontLoading = false;
@@ -49,16 +52,54 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent)
       return;
     }
 
-  //  kdDebug() << "Encodings of " <<  parent->filename << endl;
-  FT_CharMap  charmap;
-  int         n;
-  for ( n = 0; n < face->num_charmaps; n++ ) {
-    charmap = face->charmaps[n];
-    //    kdDebug() << " Platform " << charmap->platform_id << endl;
-    //    kdDebug() << " Encoding " << charmap->encoding_id << endl;
+  // Finally, we need to set up the charMap array, which maps TeX
+  // character codes to glyph indices in the font. (Remark: the
+  // charMap, and the font encoding procedure is necessary, because
+  // TeX is only able to address character codes 0-255 while
+  // e.g. Type1 fonts may contain several thousands of characters)
+  if (enc != 0) {
+    // An encoding vector is given for this font, i.e. an array of
+    // character names (such as: 'parenleft' or 'dotlessj'). We use
+    // the FreeType library function 'FT_Get_Name_Index()' to
+    // associate glyph indices to those names.
+#ifdef DEBUG_PFB
+    kdDebug() << "Trying to associate glyph indices to names from the encoding vector." << endl;
+#endif
+    for(int i=0; i<256; i++) {
+      charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].ascii()) );
+#ifdef DEBUG_PFB
+      kdDebug() << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i] << endl;
+#endif
+    }
+  } else {
+    // If there is no encoding vector available, we check if the font
+    // itself contains a charmap that could be used. An admissible
+    // charMap will be stored under platform_id=7 and encoding_id=2.
+    FT_CharMap  found = 0;
+    for (int n = 0; n<face->num_charmaps; n++ ) {
+      FT_CharMap charmap = face->charmaps[n];
+      if ( charmap->platform_id == 7 && charmap->encoding_id == 2 ) {
+	found = charmap;
+	break;
+      }
+    }
     
-    if ((charmap->platform_id == 7)|| (charmap->encoding_id == 2))
-      FT_Set_Charmap( face, charmap );
+    if ((found != 0) && (FT_Set_Charmap( face, found ) == 0)) {
+      // Feed the charMap array with the charmap data found in the
+      // previous step.
+#ifdef DEBUG_PFB
+      kdDebug() << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font." << endl;
+#endif
+      for(int i=0; i<256; i++) 
+	charMap[i] = FT_Get_Char_Index( face, i );
+    } else {
+      // As a last resort, we use the identity map.
+#ifdef DEBUG_PFB
+      kdDebug() << "No encoding: using identity charmap." << endl;
+#endif
+      for(int i=0; i<256; i++) 
+	charMap[i] = i;
+    }
   }
 }
 
@@ -109,9 +150,10 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
     
     // load glyph image into the slot and erase the previous one
     if (parent->font_pool->getUseFontHints() == true)
-      error = FT_Load_Glyph(face, FT_Get_Char_Index( face, ch ), FT_LOAD_DEFAULT ); 
+      error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_DEFAULT ); 
     else
-      error = FT_Load_Glyph(face, FT_Get_Char_Index( face, ch ), FT_LOAD_NO_HINTING );
+      error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_NO_HINTING );
+
     if (error) {
       QString msg = i18n("FreeType is unable to load glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())
@@ -137,10 +179,9 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
     FT_GlyphSlot slot = face->glyph;
 
     if ((slot->bitmap.width == 0) || (slot->bitmap.rows == 0)) {
-      QString msg = i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())
-	errorMessage = msg;
-      kdError(4300) << msg << endl;
+	errorMessage = i18n("Glyph #%1 is empty.").arg(ch);
+      kdError(4300) << i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename) << endl;
       g->shrunkenCharacter.resize( 15, 15 );
       g->shrunkenCharacter.fill(QColor(255, 0, 0));
       g->x2 = 0;
@@ -159,7 +200,7 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
 	}
 	srcScanLine += slot->bitmap.pitch;
       }
-      g->shrunkenCharacter.convertFromImage ( imgi, 0);
+      g->shrunkenCharacter.convertFromImage (imgi, 0);
       g->x2 = -slot->bitmap_left;
       g->y2 = slot->bitmap_top;
     }
@@ -167,7 +208,7 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
   
   // Load glyph width, if that hasn't been done yet.
   if (g->dvi_advance_in_units_of_design_size_by_2e20 == 0) {
-    int error = FT_Load_Glyph(face, FT_Get_Char_Index( face, ch ), FT_LOAD_NO_SCALE );
+    int error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_NO_SCALE);
     if (error) {
       QString msg = i18n("FreeType is unable to load metric for glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())

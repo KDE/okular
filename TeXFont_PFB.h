@@ -27,14 +27,15 @@ class glyph;
 
 class TeXFont_PFB : public TeXFont {
  public:
-  TeXFont_PFB(TeXFontDefinition *parent);
+  TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc=0);
   ~TeXFont_PFB();
   
   glyph *getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, QColor color=Qt::black);
 
  private:
-  FT_Face     face;
-  bool        fatalErrorInFontLoading;
+  FT_Face       face;
+  bool          fatalErrorInFontLoading;
+  Q_UINT16      charMap[256];
 };
 
 #endif

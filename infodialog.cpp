@@ -1,6 +1,6 @@
 // infodialog.cpp
 //
-// (C) 2001 Stefan Kebekus
+// (C) 2001-2003 Stefan Kebekus
 // Distributed under the GPL
 
 #include <kdebug.h>
@@ -16,7 +16,7 @@
 #include <qvariant.h>
 #include <qwhatsthis.h>
 
-#include "dvi_init.h"
+#include "dviFile.h"
 #include "fontpool.h"
 #include "infodialog.h"
 

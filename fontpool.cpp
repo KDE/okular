@@ -49,43 +49,14 @@ fontPool::fontPool(void)
   MetafontMode             = DefaultMFMode;
   fontList.setAutoDelete(TRUE);
 
+
 #ifdef HAVE_FREETYPE
   // Initialize the Freetype Library
   if ( FT_Init_FreeType( &FreeType_library ) != 0 ) {
     kdError(4300) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
     FreeType_could_be_loaded = false;
-  } else {
+  } else 
     FreeType_could_be_loaded = true;
-
-    // Read the map file of ps2pk which will provide us with a
-    // dictionary "TeX Font names for Type1 fonts" <-> "Name of font
-    // files" (example: the font "Times-Roman" is called "ptmr8y" in
-    // the DVI file, but the Type1 font file name is "utmr8a.pfb". We
-    // use the map file of "ps2pk" because that progam has, like kdvi
-    // (and unlike dvips), no built-in fonts.
-    KProcIO proc;
-    proc << "kpsewhich" << "--format=dvips config" << "ps2pk.map";
-    proc.start(KProcess::Block);
-    QString map_fileName;
-    proc.readln(map_fileName);
-    map_fileName = map_fileName.stripWhiteSpace();
-
-    QFile file( map_fileName );
-    if ( file.open( IO_ReadOnly ) ) {
-      QTextStream stream( &file );
-      QString line;
-      while ( !stream.atEnd() ) {
-	line = stream.readLine().stripWhiteSpace();
-	if (line.at(0) == '%')
-	  continue;
-	QString TeXName  = KStringHandler::word(line, (unsigned int)0);
-	QString fontFileName = line.section('<', -1);
-	
-	fontFilenames[TeXName] = fontFileName;
-      }
-      file.close();
-    }
-  }
 #endif
 
   progress = new fontProgressDialog( "fontgen",  // Chapter in the documentation for help.
@@ -384,12 +355,7 @@ void fontPool::start_kpsewhich(void)
 	// In the first pass, we look for PK fonts, and also for virtual fonts.
 #ifdef HAVE_FREETYPE
 	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
-	  QString filename;
-	  QMap<QString,QString>::Iterator it = fontFilenames.find(fontp->fontname);
-	  if (it == fontFilenames.end())
-	    filename = fontp->fontname;
-	  else
-	    filename = *it;
+	  const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
 	  *proc << KShellProcess::quote(QString("%1").arg(filename));
 #ifdef DEBUG_FONTPOOL
 	  shellProcessCmdLine += KShellProcess::quote(QString("%1").arg(filename)) + " ";
@@ -408,15 +374,10 @@ void fontPool::start_kpsewhich(void)
 	// for PFB fonts, as they might be used by virtual fonts.
 #ifdef HAVE_FREETYPE
 	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
-	  QString filename;
-	  QMap<QString,QString>::Iterator it = fontFilenames.find(fontp->fontname);
-	  if (it == fontFilenames.end())
-	    filename = fontp->fontname;
-	  else
-	    filename = *it;
-	  *proc << KShellProcess::quote(QString("%1.pfb").arg(filename));
+	  const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
+	  *proc << KShellProcess::quote(QString("%1").arg(filename));
 #ifdef DEBUG_FONTPOOL
-	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(filename)) + " ";
+	  shellProcessCmdLine += KShellProcess::quote(QString("%1").arg(filename)) + " ";
 #endif
 	}
 #endif
@@ -495,9 +456,9 @@ void fontPool::kpsewhich_terminated(KProcess *)
     if (fontp->filename.isEmpty() == true) {
       QStringList matchingFiles;
 #ifdef HAVE_FREETYPE
-      QMap<QString,QString>::Iterator it = fontFilenames.find(fontp->fontname);
-      if (it != fontFilenames.end())
-	matchingFiles =fileNameList.grep(*it);
+      const QString &fn = fontsByTeXName.findFileName(fontp->fontname);
+      if (!fn.isEmpty())
+	matchingFiles = fileNameList.grep(fn);
 #endif
       if (matchingFiles.isEmpty() == true) 
 	matchingFiles += fileNameList.grep(fontp->fontname);

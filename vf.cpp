@@ -108,7 +108,7 @@ void TeXFontDefinition::read_VF_index(void)
     // number which describes extra enlargement that the virtual font
     // imposes. One obtains the enlargement by dividing 2^20. 
     double enlargement_factor = double(scale)/(1<<20) * enlargement;
-    TeXFontDefinition *newfontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
+    TeXFontDefinition *newfontp = font_pool->appendx(fontname, checksum, scaled_size_in_DVI_units, enlargement_factor);
 
     // Insert font in dictionary and make sure the dictionary is big
     // enough.

@@ -28,6 +28,7 @@ extern const int MFResolutions[];
 #define	VF_ID_BYTE	202
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
+// #define DEBUG_FONT
 
 
 TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
@@ -131,7 +132,21 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
   fclose(file);
   file = 0;
 #ifdef HAVE_FREETYPE
-  font = new TeXFont_PFB(this);
+  // Find the encoding for that font
+  const QString &enc = font_pool->fontsByTeXName.findEncoding(fontname);
+
+  if (enc.isEmpty() == false) {
+#ifdef DEBUG_FONT
+    kdDebug() << "Font " << fontname << " uses encoding " << enc << endl;
+#endif
+    font = new TeXFont_PFB(this, font_pool->encodingPool.findByName(enc) );
+  } else {
+#ifdef DEBUG_FONT
+    kdDebug() << "Font " << fontname << " does not have an encoding." << endl;
+#endif
+    font = new TeXFont_PFB(this);
+  }
+
   set_char_p = &dviWindow::set_char;
   return;
 #else

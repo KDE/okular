@@ -609,7 +609,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
       if (!ref.at(i).isNumber())
 	break;
     Q_UINT32 refLineNumber = ref.left(i).toUInt();
-    QString  refFileName   = QFileInfo(ref.mid(i)).absFilePath();
+    QString  refFileName   = QFileInfo(ref.mid(i).stripWhiteSpace()).absFilePath();
     
     if (sourceHyperLinkAnchors.isEmpty()) {
       KMessageBox::sorry(this, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "

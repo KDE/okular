@@ -21,7 +21,7 @@
 #include <kviewpart.h>
 
 #include "bigEndianByteReader.h"
-#include "dvi_init.h"
+#include "dviFile.h"
 #include "fontpool.h"
 #include "psgs.h"
 #include "selection.h"

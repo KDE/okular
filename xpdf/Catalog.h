@@ -29,6 +29,14 @@ class LinkDest;
 class Catalog {
 public:
 
+  enum PageMode {
+    UseNone,
+    UseOutlines,
+    UseThumbs,
+    FullScreen,
+    UseOC
+  };
+
   // Constructor.
   Catalog(XRef *xrefA);
 
@@ -49,6 +57,9 @@ public:
 
   // Return base URI, or NULL if none.
   GString *getBaseURI() { return baseURI; }
+
+  // Returns the page mode.
+  PageMode getPageMode() { return pageMode; }
 
   // Return the contents of the metadata stream, or NULL if there is
   // no metadata.
@@ -77,6 +88,7 @@ private:
   Object dests;			// named destination dictionary
   Object nameTree;		// name tree
   GString *baseURI;		// base URI for URI-type links
+  PageMode pageMode;  // page mode
   Object metadata;		// metadata stream
   Object structTreeRoot;	// structure tree root dictionary
   Object outline;		// outline dictionary

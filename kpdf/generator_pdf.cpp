@@ -374,6 +374,16 @@ bool PDFGenerator::reparseConfig()
     return false;
 }
 
+QString PDFGenerator::getMetaData( const QString &key ) const
+{
+  if ( key == "StartFullScreen" ) {
+    if ( pdfdoc->getCatalog()->getPageMode() == Catalog::FullScreen )
+      return "yes";
+  }
+
+  return QString();
+}
+
 KPDFLinkGoto::Viewport PDFGenerator::decodeLinkViewport( GString * namedDest, LinkDest * dest )
 // note: this function is called when processing a page, when the MUTEX is already LOCKED
 {

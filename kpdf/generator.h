@@ -65,6 +65,9 @@ class Generator : public QObject
         // check configuration and return true if something changed
         virtual bool reparseConfig() { return false; }
 
+        // Access meta data of the generator
+        virtual QString getMetaData( const QString &key ) const { return QString(); }
+
     signals:
         void contentsChanged( int id, int pageNumber );
 };

@@ -93,6 +93,7 @@ class KPDFDocument : public QObject // only for a private slot..
         uint currentPage() const;
         uint pages() const;
         bool okToPrint() const;
+        QString getMetaData( const QString &key ) const;
 
         // perform actions on document / pages
         void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool asyncronous );

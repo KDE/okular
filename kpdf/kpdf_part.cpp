@@ -253,12 +253,16 @@ KAboutData* Part::createAboutData()
 
 bool Part::openFile()
 {
-	bool ok = m_document->openDocument( m_file );
-	if ( ok && !m_watcher->contains(m_file)) m_watcher->addFile(m_file);
-	m_find->setEnabled( ok );
-	m_showProperties->setEnabled( ok );
+    bool ok = m_document->openDocument( m_file );
+    if ( ok && !m_watcher->contains(m_file)) m_watcher->addFile(m_file);
+    m_find->setEnabled( ok );
+    m_showProperties->setEnabled( ok );
     m_showPresentation->setEnabled( ok );
-	return ok;
+
+    if ( ok && m_document->getMetaData( "StartFullScreen" ) == "yes" )
+        slotShowPresentation();
+
+    return ok;
 }
 
 bool Part::openURL(const KURL &url)

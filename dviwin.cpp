@@ -257,7 +257,7 @@ void dviWindow::setPaper( const char *paper )
 	float w, h;
 	if (!kdviprefs::paperSizes( paper, w, h ))
 	{
-		kdebug(KDEBUG_WARN, 4300, "Unknown paper type!");
+		kDebugWarning( 4300, "Unknown paper type!");
 		// A4 paper is used as default, if paper is unknown
 		w = 21.0/2.54;
 		h = 29.7/2.54;

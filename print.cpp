@@ -270,7 +270,7 @@ void print::okPressed()
 
 	cmd += " &";
 
-	kdebug(KDEBUG_INFO, 4300,"About to run: %s", cmd.data());
+	kDebugInfo( 4300,"About to run: %s", cmd.data());
 	system( cmd );
 	accept();
 }

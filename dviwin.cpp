@@ -506,9 +506,10 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   // PostScriptHeaderString.
   PS_interface->clear();
 
-  // We will also generate a list of hyperlink-anchors in the
-  // document. So declare the existing list empty.
+  // We will also generate a list of hyperlink-anchors and source-file
+  // anchors in the document. So declare the existing lists empty.
   anchorList.clear();
+  sourceHyperLinkAnchors.clear();
 
   if (dviFile->page_offset == 0)
     return false;
@@ -566,88 +567,42 @@ void dviWindow::all_fonts_loaded(void)
   // looks for source specials of the form "src:xxxxFilename", and
   // tries to find the special with the biggest xxxx
   if (reference.find("src:",0,false) == 0) {
-    Q_INT32 page = 0;
-    Q_INT32 y    = -1000;
-    bool    sourceSpecialsFlag = false;
     QString ref = reference.mid(4);
-
-    // Extract the file name and the numeral part from the string
-    unsigned int i;
+    // Extract the file name and the numeral part from the reference string
+    Q_UINT32 i;
     for(i=0;i<ref.length();i++)
       if (!ref.at(i).isNumber())
 	break;
     Q_UINT32 refLineNumber = ref.left(i).toUInt();
-    QString  fileName   = QFileInfo(ref.mid(i)).absFilePath();
-
-    bool _postscript_sav = _postscript;
-    int current_page_sav = current_page;
-    _postscript = FALSE; // Switch off postscript to speed up things...
-    QProgressDialog progress( i18n("Searching for position corresponding to line %1 in %2.").arg(ref.left(i)).arg(fileName),
-			      i18n("Abort"), dviFile->total_pages, this, "search_reference_progress", TRUE );
-    progress.setMinimumDuration(300);
-    QPixmap pixie(1,1);
-
-    for(current_page=0; current_page < dviFile->total_pages; current_page++) {
-      progress.setProgress( current_page );
-      // Funny. The manual to QT tells us that we need to call
-      // qApp->processEvents() regularly to keep the application from
-      // freezing. However, the application crashes immediately if we
-      // uncomment the following line and works just fine as it is. Wild
-      // guess: Could that be related to the fact that we are linking
-      // against qt-mt?
-
-      // qApp->processEvents();
-
-      if ( progress.wasCancelled() )
-	break;
-
-      foreGroundPaint.begin( &pixie );
-      draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
-      foreGroundPaint.end();
-      if (sourceHyperLinkList.size() > 0)
-	sourceSpecialsFlag = true;
-      for(Q_UINT32 i=0; i<sourceHyperLinkList.size(); i++) {
-	QString sourceLink = sourceHyperLinkList[i].linkText;
-	// Extract the file name and the numeral part from the string
-	unsigned int j;
-	for(j=0;j<sourceLink.length();j++)
-	  if (!sourceLink.at(j).isNumber())
-	    break;
-	Q_UINT32 sourceLineNumber = sourceLink.left(j).toUInt();
-	QString  sourceFileName   = QFileInfo(sourceLink.mid(j).stripWhiteSpace()).absFilePath();
-	if (fileName.stripWhiteSpace() == sourceFileName.stripWhiteSpace()) {
-	  if (refLineNumber >= sourceLineNumber) {
-	    page = current_page;
-	    y    = sourceHyperLinkList[i].box.top();
-	  } else
-	    break;
-	}
-      }
-    }
-    progress.setProgress( dviFile->total_pages ); // Switch off the progress dialog, etc.
-    _postscript = _postscript_sav; // Restore the PostScript setting
-
-    // Restore the current page.
-    current_page = current_page_sav;
-    foreGroundPaint.begin( &pixie );
-    draw_page();  // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
-    foreGroundPaint.end();
-
-    reference = QString::null;
-    if (sourceSpecialsFlag == false) {
+    QString  refFileName   = QFileInfo(ref.mid(i)).absFilePath();
+    
+    if (sourceHyperLinkAnchors.isEmpty()) {
       KMessageBox::sorry(this, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
 				    "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
-				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(fileName),
+				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(refFileName),
 			 i18n( "Could not Find Reference" ));
       return;
     }
+    
+    Q_INT32 page = 0;
+    Q_INT32 y    = -1000;
+    QValueVector<DVI_SourceFileAnchor>::iterator it;
+    for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
+      if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
+	if (refLineNumber >= it->line) {
+	  page = it->page;
+	  y    = (Q_INT32)(it->vertical_coordinate/mane.shrinkfactor+0.5);
+	} 
+      }
+    
+    reference = QString::null;
     if (y >= 0)
       emit(request_goto_page(page, y));
     if (y < 0)
       KMessageBox::sorry(this, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
-				    "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(fileName),
+				    "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
 			 i18n( "Could not Find Reference" ));
     return;
   }

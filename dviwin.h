@@ -51,8 +51,19 @@ class DVI_Hyperlink {
 class DVI_Anchor {
  public:
   DVI_Anchor() {}
-  DVI_Anchor(Q_INT32 pg, double vc): page(pg), vertical_coordinate(vc) {}
+  DVI_Anchor(Q_UINT32 pg, double vc): page(pg), vertical_coordinate(vc) {}
 
+  Q_UINT32   page;
+  double     vertical_coordinate;
+};
+
+class DVI_SourceFileAnchor {
+ public:
+  DVI_SourceFileAnchor() {}
+  DVI_SourceFileAnchor(QString &name, Q_UINT32 ln, Q_UINT32 pg, double vc): fileName(name), line(ln), page(pg), vertical_coordinate(vc) {}
+
+  QString    fileName;
+  Q_UINT32   line;
   Q_UINT32   page;
   double     vertical_coordinate;
 };
@@ -213,21 +224,28 @@ private:
     *this. */
  QTimer        clearStatusBarTimer;
 
- QValueVector<DVI_Hyperlink> sourceHyperLinkList; // List of source-hyperlinks, for source-specials
- QString          *source_href; // If not NULL, the text currently
-				// drawn represents a source hyperlink
-				// to the (relative) URL given in the
-				// string;
+ // List of source-hyperlinks in the current page. This vector is
+ // generated when the current page is drawn.
+ QValueVector<DVI_Hyperlink> sourceHyperLinkList;
+
+ // List of source-hyperlinks on all pages. This vector is generated
+ // when the DVI-file is first loaded, i.e. when draw_part is called
+ // with PostScriptOutPutString != NULL
+ QValueVector<DVI_SourceFileAnchor>  sourceHyperLinkAnchors;
+
+ // If not NULL, the text currently drawn represents a source
+ // hyperlink to the (relative) URL given in the string;
+ QString          *source_href;
+
  QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
  QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
 
-
- QString          *HTML_href; // If not NULL, the text currently drawn
-			      // represents a hyperlink to the
-			      // (relative) URL given in the string;
-
+ // If not NULL, the text currently drawn represents a hyperlink to
+ // the (relative) URL given in the string;
+ QString          *HTML_href;
+ 
  QString           editorCommand;
-
+ 
  /** Stack for register compounds, used for the DVI-commands PUSH/POP
      as explained in section 2.5 and 2.6.2 of the DVI driver standard,
      Level 0, published by the TUG DVI driver standards committee. */

@@ -166,3 +166,4 @@ QPixmap *ghostscript_interface::graphics(int page) {
   DiskCache->insert(page, GfxFile);
   return ReturnCopy;
 }
+#include "psgs.moc"

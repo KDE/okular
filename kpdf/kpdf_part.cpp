@@ -33,6 +33,7 @@
 #include <kinstance.h>
 #include <kprinter.h>
 #include <kstdaction.h>
+#include <kdeversion.h>
 #include <kconfig.h>
 #include <kparts/genericfactory.h>
 #include <kurldrag.h>
@@ -322,9 +323,11 @@ void Part::slotFind()
 {
 	KFindDialog dlg( widget() );
 	dlg.setHasCursor(false);
+#if KDE_IS_VERSION(3,3,90)
 	dlg.setSupportsBackwardsFind(false);
 	dlg.setSupportsWholeWordsFind(false);
 	dlg.setSupportsRegularExpressionFind(false);
+#endif
 	if (dlg.exec() == QDialog::Accepted)
 	{
 		m_findNext->setEnabled( true );

@@ -34,7 +34,9 @@ LIBPAPER_LIBS=
 KDE_CHECK_HEADER(paper.h, [
   LIBPAPER_LIBS='-lpaper'
   AC_DEFINE_UNQUOTED(HAVE_PAPER_H, 1, [Define to 1 if you have the <paper.h>  header file.])
-])
+],
+  AC_DEFINE_UNQUOTED(HAVE_PAPER_H, 0, [Define to 1 if you have the <paper.h>  header file.])
+)
 AC_SUBST(LIBPAPER_LIBS)
 
 AC_CHECK_FUNCS(fseek64 mkstemp mkstemps popen)

@@ -659,7 +659,15 @@ void Part::printPreview()
 {
   KPrinter printer;
   printer.setPreviewOnly( true );
-  doPrint( printer );
+  QPainter painter( &printer );
+  QOutputDevKPrinter printdev( painter, printer );
+  int max = m_doc->getNumPages();
+  for ( int i = 1; i <= max; ++i )
+  {
+    m_doc->displayPage( &printdev, i, printer.resolution(), 0, true );
+    if ( i != max )
+      printer.newPage();
+  }
 }
 
 void Part::doPrint( KPrinter& printer )

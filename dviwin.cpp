@@ -1113,8 +1113,10 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  QFileInfo fi3(fi1.dir(),cp.mid(i));
 	  TeXfile = fi3.absFilePath();
 	  if ( !fi3.exists() ) {
-	    KMessageBox::sorry(this, i18n("The DVI-file refers to the TeX-file "
-					  "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)),
+	    KMessageBox::sorry(this, QString("<qt>") + 
+			       i18n("The DVI-file refers to the TeX-file "
+				    "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
+			       QString("</qt>"),
 			       i18n( "Could Not Find File" ));
 	    return;
 	  }
@@ -1122,10 +1124,12 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 
 	QString command = editorCommand;
 	if (command.isEmpty() == true) {
-	  int r = KMessageBox::warningContinueCancel(this, i18n("You have not yet specified an editor for inverse search. "
-								"Please choose your favorite editor in the "
-								"<strong>DVI options dialog</strong> "
-								"which you will find in the <strong>Settings</strong>-menu."),
+	  int r = KMessageBox::warningContinueCancel(this, QString("<qt>") +
+						     i18n("You have not yet specified an editor for inverse search. "
+							  "Please choose your favorite editor in the "
+							  "<strong>DVI options dialog</strong> "
+							  "which you will find in the <strong>Settings</strong>-menu.") + 
+							  QString("</qt>"),
 						     i18n("Need to Specify Editor"),
 		                                     i18n("Use KDE's Editor Kate for Now"));
 	  if (r == KMessageBox::Continue)

@@ -137,12 +137,6 @@ public:
 			 int width, int height, GfxImageColorMap *colorMap,
 			 int *maskColors, GBool inlineImg);
 
-#if OPI_SUPPORT
-  //----- OPI functions
-  virtual void opiBegin(GfxState *state, Dict *opiDict);
-  virtual void opiEnd(GfxState *state, Dict *opiDict);
-#endif
-
   //----- Type 3 font operators
   virtual void type3D0(GfxState *state, double wx, double wy) {}
   virtual void type3D1(GfxState *state, double wx, double wy,

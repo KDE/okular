@@ -410,7 +410,7 @@ void SampledFunction::transform(double *in, double *out) {
 // ExponentialFunction
 //------------------------------------------------------------------------
 
-ExponentialFunction::ExponentialFunction(Object *funcObj, Dict *dict) {
+ExponentialFunction::ExponentialFunction(Object * /* funcObj */, Dict *dict) {
   Object obj1, obj2;
   GBool hasN;
   int i;
@@ -536,7 +536,7 @@ void ExponentialFunction::transform(double *in, double *out) {
 // StitchingFunction
 //------------------------------------------------------------------------
 
-StitchingFunction::StitchingFunction(Object *funcObj, Dict *dict) {
+StitchingFunction::StitchingFunction(Object * /* funcObj */, Dict *dict) {
   Object obj1, obj2;
   int i;
 

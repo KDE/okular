@@ -86,19 +86,19 @@ static QOutFontSubst qStdFonts [] = {
 
 	{ "Symbol",                0,           false, false, QFont::AnyStyle },
 	{ "Zapf-Dingbats",         0,           false, false, QFont::AnyStyle },
-  
+
 	{ 0,                       0,           false, false, QFont::AnyStyle }
 };
 
-QFont QOutputDevPixmap::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m21, fp_t m22 ) 
+QFont QOutputDevPixmap::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m21, fp_t m22 )
 {
 	static QDict<QOutFontSubst> stdfonts;
-	
-	// build dict for std. fonts on first invocation	
+
+	// build dict for std. fonts on first invocation
 	if ( stdfonts. isEmpty ( )) {
 		for ( QOutFontSubst *ptr = qStdFonts; ptr-> m_name; ptr++ ) {
 			stdfonts. insert ( QString ( ptr-> m_name ), ptr );
-		}	
+		}
 	}
 
 	// compute size and normalized transform matrix
@@ -124,32 +124,32 @@ QFont QOutputDevPixmap::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m
 
 	// fast lookup for std. fonts
 	QOutFontSubst *subst = stdfonts [fname];
-	
+
 	if ( subst ) {
 		if ( subst-> m_sname )
 			f. setFamily ( subst-> m_sname );
-		f. setStyleHint ( subst-> m_hint, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));	
+		f. setStyleHint ( subst-> m_hint, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));
 		f. setBold ( subst-> m_bold );
 		f. setItalic ( subst-> m_italic );
 	}
 	else {
 		QFont::StyleHint sty;
-	
+
 		if ( gfxFont-> isSerif ( ))
 			sty = QFont::Serif;
 		else if ( gfxFont-> isFixedWidth ( ))
 			sty = QFont::TypeWriter;
 		else
 			sty = QFont::Helvetica;
-	
-		f. setStyleHint ( sty, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));	
+
+		f. setStyleHint ( sty, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));
 		f. setBold ( gfxFont-> isBold ( ) > 0 );
 		f. setItalic ( gfxFont-> isItalic ( ) > 0 );
 		f. setFixedPitch ( gfxFont-> isFixedWidth ( ) > 0 );
-	
-		// common specifiers in font names 
+
+		// common specifiers in font names
 		if ( fname. contains ( "Oblique" ) || fname. contains ( "Italic" ))
-			f. setItalic ( true ); 
+			f. setItalic ( true );
 		if ( fname. contains ( "Bold" ))
 			f. setWeight ( QFont::Bold );
 		if ( fname. contains ( "Demi" ))
@@ -158,11 +158,11 @@ QFont QOutputDevPixmap::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m
 			f. setWeight ( QFont::Light );
 		if ( fname. contains ( "Black" ))
 			f. setWeight ( QFont::Black );
-	}		
+	}
 	// Treat x-sheared fonts as italic
 	if (( m12 > -0.1 ) && ( m12 < 0.1 ) && ((( m21 > -5.0 ) && ( m21 < -0.1 )) || (( m21 > 0.1 ) && ( m21 < 5.0 )))) {
-		f. setItalic ( true ); 
-	}	
+		f. setItalic ( true );
+	}
 	return f;
 }
 
@@ -176,49 +176,49 @@ QOutputDevPixmap::QOutputDevPixmap () : m_pixmap(0), m_painter(0)
 	m_text = new TextPage ( gFalse );
 }
 
-QOutputDevPixmap::~QOutputDevPixmap ( ) 
+QOutputDevPixmap::~QOutputDevPixmap ( )
 {
 	// could be NULL
 	if (m_pixmap) delete m_pixmap;
-	
+
 	delete m_text;
 }
 
 
-void QOutputDevPixmap::startPage ( int /*pageNum*/, GfxState *state ) 
+void QOutputDevPixmap::startPage ( int /*pageNum*/, GfxState *state )
 {
 	if (m_painter) delete m_painter;
 	if (m_pixmap) delete m_pixmap;
-	
+
 	m_pixmap = new QPixmap ( lrint ( state-> getPageWidth ( )), lrint ( state-> getPageHeight ( )));
 	m_painter = new QPainter ( m_pixmap );
 
 	QPDFDBG( printf ( "NEW PIXMAP (%ld x %ld)\n", lrint ( state-> getPageWidth ( )),  lrint ( state-> getPageHeight ( ))));
-	
+
 	m_pixmap-> fill ( Qt::white ); // clear window
-	m_text-> clear ( ); // cleat text object	
+	m_text-> clear ( ); // cleat text object
 }
 
-void QOutputDevPixmap::endPage ( ) 
+void QOutputDevPixmap::endPage ( )
 {
 	m_text-> coalesce ( );
-	
+
 	delete m_painter;
 	m_painter = 0;
 }
 
-void QOutputDevPixmap::drawLink ( Link *link, Catalog /* *catalog */ ) 
+void QOutputDevPixmap::drawLink ( Link *link, Catalog /* *catalog */ )
 {
 	fp_t x1, y1, x2, y2, w;
 
 	link-> getBorder ( &x1, &y1, &x2, &y2, &w );
-	
+
 	if ( w > 0 ) {
 		int x, y, dx, dy;
-	
+
 		cvtUserToDev ( x1, y1, &x,  &y );
 		cvtUserToDev ( x2, y2, &dx, &dy );
-		
+
 		QPen oldpen = m_painter-> pen ( );
 		m_painter-> setPen ( Qt::blue );
 		m_painter-> drawRect ( x, y, dx, dy );
@@ -226,23 +226,24 @@ void QOutputDevPixmap::drawLink ( Link *link, Catalog /* *catalog */ )
 	}
 }
 
-void QOutputDevPixmap::saveState ( GfxState */*state*/ ) 
+void QOutputDevPixmap::saveState ( GfxState */*state*/ )
 {
 	QPDFDBG( printf ( "SAVE (CLIP=%d/%d)\n",  m_painter-> hasClipping ( ), !m_painter-> clipRegion ( ). isEmpty ( )));
 
-	m_painter-> save ( );	
+	m_painter-> save ( );
 }
 
-void QOutputDevPixmap::restoreState ( GfxState */*state*/ ) 
+void QOutputDevPixmap::restoreState ( GfxState */*state*/ )
 {
+    if (! m_painter) return;
 	m_painter-> restore ( );
-	
+
 //	m_painter-> setClipRegion ( QRect ( 0, 0, m_pixmap-> width ( ), m_pixmap-> height ( )));
 //	m_painter-> setClipping ( false );
 	QPDFDBG ( printf ( "RESTORE (CLIP=%d/%d)\n", m_painter-> hasClipping ( ), !m_painter-> clipRegion ( ). isEmpty ( )));
 }
 
-void QOutputDevPixmap::updateAll ( GfxState *state ) 
+void QOutputDevPixmap::updateAll ( GfxState *state )
 {
 	updateLineAttrs ( state, gTrue );
 //	updateFlatness ( state );
@@ -252,44 +253,44 @@ void QOutputDevPixmap::updateAll ( GfxState *state )
 	updateFont ( state );
 }
 
-void QOutputDevPixmap::updateCTM ( GfxState *state, fp_t /*m11*/, fp_t /*m12*/, fp_t /*m21*/, fp_t /*m22*/, fp_t /*m31*/, fp_t /*m32*/ ) 
+void QOutputDevPixmap::updateCTM ( GfxState *state, fp_t /*m11*/, fp_t /*m12*/, fp_t /*m21*/, fp_t /*m22*/, fp_t /*m31*/, fp_t /*m32*/ )
 {
 	updateLineAttrs ( state, gTrue );
 }
 
-void QOutputDevPixmap::updateLineDash ( GfxState *state ) 
+void QOutputDevPixmap::updateLineDash ( GfxState *state )
 {
 	updateLineAttrs ( state, gTrue );
 }
 
-void QOutputDevPixmap::updateFlatness ( GfxState */*state*/ ) 
+void QOutputDevPixmap::updateFlatness ( GfxState */*state*/ )
 {
 	// not supported
 	QPDFDBG( printf ( "updateFlatness not supported !\n" ));
 }
 
-void QOutputDevPixmap::updateLineJoin ( GfxState *state ) 
+void QOutputDevPixmap::updateLineJoin ( GfxState *state )
 {
 	updateLineAttrs ( state, gFalse );
 }
 
-void QOutputDevPixmap::updateLineCap ( GfxState *state ) 
+void QOutputDevPixmap::updateLineCap ( GfxState *state )
 {
 	updateLineAttrs ( state, gFalse );
 }
 
 // unimplemented
-void QOutputDevPixmap::updateMiterLimit ( GfxState */*state*/ ) 
+void QOutputDevPixmap::updateMiterLimit ( GfxState */*state*/ )
 {
 	QPDFDBG( printf ( "updateMiterLimit not supported !\n" ));
 }
 
-void QOutputDevPixmap::updateLineWidth ( GfxState *state ) 
+void QOutputDevPixmap::updateLineWidth ( GfxState *state )
 {
 	updateLineAttrs ( state, gFalse );
 }
 
-void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash ) 
+void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 {
 	fp_t *dashPattern;
 	int dashLength;
@@ -300,7 +301,7 @@ void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 	int width;
 
 	width = lrint ( state-> getTransformedLineWidth ( ));
-	
+
 	switch ( state-> getLineCap ( )) {
 		case 0: cap = Qt::FlatCap; break;
 		case 1: cap = Qt::RoundCap; break;
@@ -310,7 +311,7 @@ void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 			cap = Qt::FlatCap;
 			break;
 	}
-		
+
 	switch (state->getLineJoin()) {
 		case 0: join = Qt::MiterJoin; break;
 		case 1: join = Qt::RoundJoin; break;
@@ -320,7 +321,7 @@ void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 			join = Qt::MiterJoin;
 			break;
 	}
-	
+
 	state-> getLineDash ( &dashPattern, &dashLength, &dashStart );
 
 	QColor oldcol = m_painter-> pen ( ). color ( );
@@ -333,7 +334,7 @@ void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 
 	if ( updateDash && ( dashLength > 0 )) {
 		// Not supported by QT
-/*	
+/*
 		char dashList[20];
 		if (dashLength > 20)
 			dashLength = 20;
@@ -347,7 +348,7 @@ void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 	}
 }
 
-void QOutputDevPixmap::updateFillColor ( GfxState *state ) 
+void QOutputDevPixmap::updateFillColor ( GfxState *state )
 {
 	GfxRGB rgb;
 	state-> getFillRGB ( &rgb );
@@ -355,35 +356,35 @@ void QOutputDevPixmap::updateFillColor ( GfxState *state )
 	m_painter-> setBrush ( q_col ( rgb ));
 }
 
-void QOutputDevPixmap::updateStrokeColor ( GfxState *state ) 
+void QOutputDevPixmap::updateStrokeColor ( GfxState *state )
 {
 	GfxRGB rgb;
 	state-> getStrokeRGB ( &rgb );
-	
+
 	QPen pen = m_painter-> pen ( );
 	pen. setColor ( q_col ( rgb ));
 	m_painter-> setPen ( pen );
 }
 
-void QOutputDevPixmap::updateFont ( GfxState *state ) 
+void QOutputDevPixmap::updateFont ( GfxState *state )
 {
 	fp_t m11, m12, m21, m22;
 	GfxFont *gfxFont = state-> getFont ( );
-	 
+
 	if ( !gfxFont )
 		return;
-	
+
 	state-> getFontTransMat ( &m11, &m12, &m21, &m22 );
 	m11 *= state-> getHorizScaling ( );
 	m12 *= state-> getHorizScaling ( );
-  
+
 	QFont font = matchFont ( gfxFont, m11, m12, m21, m22 );
-	
+
 	m_painter-> setFont ( font );
 	m_text-> updateFont ( state );
 }
 
-void QOutputDevPixmap::stroke ( GfxState *state ) 
+void QOutputDevPixmap::stroke ( GfxState *state )
 {
 	QPointArray points;
 	QMemArray<int> lengths;
@@ -392,31 +393,30 @@ void QOutputDevPixmap::stroke ( GfxState *state )
 	int n = convertPath ( state, points, lengths );
 
 	QPDFDBG( printf ( "DRAWING: %d POLYS\n", n ));
-	
+
 	// draw each subpath
 	int j = 0;
 	for ( int i = 0; i < n; i++ ) {
 		int len = lengths [i];
-	
+
 		if ( len >= 2 ) {
 			QPDFDBG( printf ( " - POLY %d: ", i ));
 			QPDFDBG( for ( int ii = 0; ii < len; ii++ ))
 				QPDFDBG( printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( )));
 			QPDFDBG( printf ( "\n" ));
-			
+
 			m_painter-> drawPolyline ( points, j, len );
-		}	
+		}
 		j += len;
 	}
-	qApp-> processEvents ( );
 }
 
-void QOutputDevPixmap::fill ( GfxState *state ) 
+void QOutputDevPixmap::fill ( GfxState *state )
 {
 	doFill ( state, true );
 }
 
-void QOutputDevPixmap::eoFill ( GfxState *state ) 
+void QOutputDevPixmap::eoFill ( GfxState *state )
 {
 	doFill ( state, false );
 }
@@ -430,7 +430,7 @@ void QOutputDevPixmap::eoFill ( GfxState *state )
 //  only for single-component polygons, since it's not very
 //  compatible with the compound polygon kludge (see convertPath()).
 //
-void QOutputDevPixmap::doFill ( GfxState *state, bool winding ) 
+void QOutputDevPixmap::doFill ( GfxState *state, bool winding )
 {
 	QPointArray points;
 	QMemArray<int> lengths;
@@ -439,41 +439,40 @@ void QOutputDevPixmap::doFill ( GfxState *state, bool winding )
 	int n = convertPath ( state, points, lengths );
 
 	QPDFDBG( printf ( "FILLING: %d POLYS\n", n ));
-	
+
 	QPen oldpen = m_painter-> pen ( );
 	m_painter-> setPen ( QPen ( Qt::NoPen ));
-	
+
 	// draw each subpath
 	int j = 0;
 	for ( int i = 0; i < n; i++ ) {
 		int len = lengths [i];
-	
+
 		if ( len >= 3 ) {
 			QPDFDBG( printf ( " - POLY %d: ", i ));
 			QPDFDBG( for ( int ii = 0; ii < len; ii++ ))
 				QPDFDBG( printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( )));
 			QPDFDBG( printf ( "\n" ));
-		
+
 			m_painter-> drawPolygon ( points, winding, j, len );
-		}	
+		}
 		j += len;
 	}
 	m_painter-> setPen ( oldpen );
 
-	qApp-> processEvents ( );
 }
 
-void QOutputDevPixmap::clip ( GfxState *state ) 
+void QOutputDevPixmap::clip ( GfxState *state )
 {
 	doClip ( state, true );
 }
 
-void QOutputDevPixmap::eoClip ( GfxState *state ) 
+void QOutputDevPixmap::eoClip ( GfxState *state )
 {
 	doClip ( state, false );
 }
 
-void QOutputDevPixmap::doClip ( GfxState *state, bool winding ) 
+void QOutputDevPixmap::doClip ( GfxState *state, bool winding )
 {
 	QPointArray points;
 	QMemArray<int> lengths;
@@ -482,38 +481,37 @@ void QOutputDevPixmap::doClip ( GfxState *state, bool winding )
 	int n = convertPath ( state, points, lengths );
 
 	QRegion region;
-	
+
 	QPDFDBG( printf ( "CLIPPING: %d POLYS\n", n ));
-	
+
 	// draw each subpath
 	int j = 0;
 	for ( int i = 0; i < n; i++ ) {
 		int len = lengths [i];
-		
-		if ( len >= 3 ) {		
+
+		if ( len >= 3 ) {
 			QPointArray dummy;
 			dummy. setRawData ( points. data ( ) + j, len );
-		
+
 			QPDFDBG( printf ( " - POLY %d: ", i ));
 			QPDFDBG( for ( int ii = 0; ii < len; ii++ ) printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( )));
 			QPDFDBG( printf ( "\n" ));
-		
+
 			region |= QRegion ( dummy, winding );
-		
+
 			dummy. resetRawData ( points. data ( ) + j, len );
-		}		
+		}
 		j += len;
 	}
-	
+
 	if ( m_painter-> hasClipping ( ))
 		region &= m_painter-> clipRegion ( );
 
 //	m_painter-> setClipRegion ( region );
 //	m_painter-> setClipping ( true );
-	
+
 //	m_painter-> fillRect ( 0, 0, m_pixmap-> width ( ), m_pixmap-> height ( ), red );
 //	m_painter-> drawText ( points [0]. x ( ) + 10, points [0]. y ( ) + 10, "Bla bla" );
-	qApp-> processEvents ( );
 }
 
 //
@@ -553,36 +551,36 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 
 	int m = subpath-> getNumPoints ( );
 	int i = 0;
-	
+
 	while ( i < m ) {
 		if ( i >= 1 && subpath-> getCurve ( i )) {
 			state-> transform ( subpath-> getX ( i - 1 ), subpath-> getY ( i - 1 ), &x0, &y0 );
 			state-> transform ( subpath-> getX ( i ),     subpath-> getY ( i ),     &x1, &y1 );
 			state-> transform ( subpath-> getX ( i + 1 ), subpath-> getY ( i + 1 ), &x2, &y2 );
 			state-> transform ( subpath-> getX ( i + 2 ), subpath-> getY ( i + 2 ), &x3, &y3 );
-			
+
 			QPointArray tmp;
 			tmp. setPoints ( 4, lrint ( x0 ), lrint ( y0 ), lrint ( x1 ), lrint ( y1 ),
 			                    lrint ( x2 ), lrint ( y2 ), lrint ( x3 ), lrint ( y3 ));
 
 #if QT_VERSION < 300
 			tmp = tmp. quadBezier ( );
-			
+
 			for ( uint loop = 0; loop < tmp. count ( ); loop++ ) {
 				QPoint p = tmp. point ( loop );
 				points. putPoints ( points. count ( ), 1, p. x ( ), p. y ( ));
 			}
 #else
 			tmp = tmp. cubicBezier ( );
-			points. putPoints ( points. count ( ), tmp. count ( ), tmp );			
+			points. putPoints ( points. count ( ), tmp. count ( ), tmp );
 #endif
 
 			i += 3;
-		} 
+		}
 		else {
 			state-> transform ( subpath-> getX ( i ), subpath-> getY ( i ), &x1, &y1 );
-			
-			points. putPoints ( points. count ( ), 1, lrint ( x1 ), lrint ( y1 ));			
+
+			points. putPoints ( points. count ( ), 1, lrint ( x1 ), lrint ( y1 ));
 			++i;
 		}
 	}
@@ -590,22 +588,22 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 }
 
 
-void QOutputDevPixmap::beginString ( GfxState *state, GString */*s*/ ) 
+void QOutputDevPixmap::beginString ( GfxState *state, GString */*s*/ )
 {
 	m_text-> beginString ( state, state->getCurX(), state->getCurY() );
 }
 
-void QOutputDevPixmap::endString ( GfxState */*state*/ ) 
+void QOutputDevPixmap::endString ( GfxState */*state*/ )
 {
 	m_text-> endString ( );
 }
 
 void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
                            fp_t dx, fp_t dy, fp_t originX, fp_t originY,
-                           CharCode code, Unicode *u, int uLen ) 
+                           CharCode code, Unicode *u, int uLen )
 {
 	fp_t x1, y1, dx1, dy1;
-	
+
 	if ( uLen > 0 )
 		m_text-> addChar ( state, x, y, dx, dy, u, uLen );
 
@@ -623,10 +621,10 @@ void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
 	if ( uLen > 0 ) {
 		QString str;
 		QFontMetrics fm = m_painter-> fontMetrics ( );
-		
+
 		for ( int i = 0; i < uLen; i++ ) {
 			QChar c = QChar ( u [i] );
-			
+
 			if ( fm. inFont ( c )) {
 				str [i] = QChar ( u [i] );
 			}
@@ -635,78 +633,77 @@ void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
 				QPDFDBG( printf ( "CHARACTER NOT IN FONT: %hx\n", c. unicode ( )));
 			}
 		}
-		
+
 		if (( uLen == 1 ) && ( str [0] == ' ' ))
 			return;
-	
-	
+
+
 		fp_t m11, m12, m21, m22;
-	
+
 		state-> getFontTransMat ( &m11, &m12, &m21, &m22 );
 		m11 *= state-> getHorizScaling ( );
 		m12 *= state-> getHorizScaling ( );
-		
+
 		fp_t fsize = m_painter-> font ( ). pixelSize ( );
 
 #ifndef QT_NO_TRANSFORMATIONS
 		QWMatrix oldmat;
-		
-		bool dorot = (( m12 < -0.1 ) || ( m12 > 0.1 )) && (( m21 < -0.1 ) || ( m21 > 0.1 ));		
 
-		if ( dorot ) {	
+		bool dorot = (( m12 < -0.1 ) || ( m12 > 0.1 )) && (( m21 < -0.1 ) || ( m21 > 0.1 ));
+
+		if ( dorot ) {
 			oldmat = m_painter-> worldMatrix ( );
 
 			// std::cerr << std::endl << "ROTATED: " << m11 << ", " << m12 << ", " << m21 << ", " << m22 << " / SIZE: " << fsize << " / TEXT: " << str. local8Bit ( ) << endl << endl;
-						
+
 			QWMatrix mat ( lrint ( m11 / fsize ), lrint ( m12 / fsize ), -lrint ( m21 / fsize ), -lrint ( m22 / fsize ), lrint ( x1 ), lrint ( y1 ));
-			
+
 			m_painter-> setWorldMatrix ( mat );
 
 			x1 = 0;
-			y1 = 0;			
+			y1 = 0;
 		}
 #endif
-		
+
 		QPen oldpen = m_painter-> pen ( );
-	
+
 		if (!( state-> getRender ( ) & 1 )) {
 			QPen fillpen = oldpen;
-		
+
 			fillpen. setColor ( m_painter-> brush ( ). color ( ));
 			m_painter-> setPen ( fillpen );
-		}	
+		}
 
 		if ( fsize > 5 )
 			m_painter-> drawText ( lrint ( x1 ), lrint ( y1 ), str );
 		else
 			m_painter-> fillRect ( lrint ( x1 ), lrint ( y1 ), lrint ( QMAX( fp_t(1), dx1 )), lrint ( QMAX( fsize, dy1 )), m_painter-> pen ( ). color ( ));
-		
+
 		m_painter-> setPen ( oldpen );
-		
+
 #ifndef QT_NO_TRANSFORMATIONS
 		if ( dorot )
 			m_painter-> setWorldMatrix ( oldmat );
-#endif	
-		
+#endif
+
 		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), lrint ( x1 ), lrint ( y1 )));
-	} 
+	}
 	else if ( code != 0 ) {
 		// some PDF files use CID 0, which is .notdef, so just ignore it
 		qWarning ( "Unknown character (CID=%d Unicode=%hx)\n", code, (unsigned short) ( uLen > 0 ? u [0] : (Unicode) 0 ));
 	}
-	qApp-> processEvents ( );
 }
 
 
 
-void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, int width, int height, GBool invert, GBool inlineImg ) 
+void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, int width, int height, GBool invert, GBool inlineImg )
 {
 	// get CTM, check for singular matrix
 	fp_t *ctm = state-> getCTM ( );
-	
+
 	if ( fabs ( ctm [0] * ctm [3] - ctm [1] * ctm [2] ) < 0.000001 ) {
 		qWarning ( "Singular CTM in drawImage\n" );
-		
+
 		if ( inlineImg ) {
 			str-> reset ( );
 			int j = height * (( width + 7 ) / 8 );
@@ -717,13 +714,13 @@ void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream 
 		}
 		return;
 	}
-	
-	GfxRGB rgb;	
+
+	GfxRGB rgb;
 	state-> getFillRGB ( &rgb );
 	uint val = ( lrint ( rgb. r * 255 ) & 0xff ) << 16 | ( lrint ( rgb. g * 255 ) & 0xff ) << 8 | ( lrint ( rgb. b * 255 ) & 0xff );
-	
-	
-	QImage img ( width, height, 32 );	
+
+
+	QImage img ( width, height, 32 );
 	img. setAlphaBuffer ( true );
 
 	QPDFDBG( printf ( "IMAGE MASK (%dx%d)\n", width, height ));
@@ -733,39 +730,37 @@ void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream 
 	imgStr-> reset ( );
 
 	uchar **scanlines = img. jumpTable ( );
-	
+
 	if ( ctm [3] > 0 )
 		scanlines += ( height - 1 );
-	
+
 	for ( int y = 0; y < height; y++ ) {
 		QRgb *scanline = (QRgb *) *scanlines;
-	
+
 		if ( ctm [0] < 0 )
 			scanline += ( width - 1 );
-	
+
 		for ( int x = 0; x < width; x++ ) {
 			Guchar alpha;
-		
+
 			imgStr-> getPixel ( &alpha );
-			
+
 			if ( invert )
 				alpha ^= 1;
-				
+
 			*scanline = ( alpha == 0 ) ? 0xff000000 | val : val;
-			
+
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
 		ctm [3] > 0 ? scanlines-- : scanlines++;
-
-		qApp-> processEvents ( );
 	}
-			
-#ifndef QT_NO_TRANSFORMATIONS			
+
+#ifndef QT_NO_TRANSFORMATIONS
 	QWMatrix mat ( ctm [0] / width, ctm [1], ctm [2], ctm [3] / height, ctm [4], ctm [5] );
-	
-	//std::cerr << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << std::endl 
+
+	//std::cerr << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << std::endl
 	//         << " - M=" << mat. m11 ( ) << "/" << mat. m12 ( ) << "/" << mat. m21 ( ) << "/" << mat. m22 ( ) << std::endl;
-	         
+
 	QWMatrix oldmat = m_painter-> worldMatrix ( );
 	m_painter-> setWorldMatrix ( mat, true );
 
@@ -786,10 +781,10 @@ void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream 
 	else {
 		int x = lrint ( ctm [4] );
 		int y = lrint ( ctm [5] );
-		
+
 		int w = lrint ( ctm [0] );
 		int h = lrint ( ctm [3] );
-		
+
 		if ( w < 0 ) {
 			x += w;
 			w = -w;
@@ -798,25 +793,23 @@ void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream 
 			y += h;
 			h = -h;
 		}
-	
+
 		QPDFDBG( printf ( "DRAWING IMAGE MASKED: %d/%d - %dx%d\n", x, y, w, h ));
 
 		img = img. smoothScale ( w, h );
-		qApp-> processEvents ( );		
 		m_painter-> drawImage ( x, y, img );
 	}
 
 #endif
-	    	
-	delete imgStr;			       
-	qApp-> processEvents ( );
+
+	delete imgStr;
 }
 
 
-void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, int width, int height, GfxImageColorMap *colorMap, int *maskColors, GBool inlineImg ) 
+void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, int width, int height, GfxImageColorMap *colorMap, int *maskColors, GBool inlineImg )
 {
 	int nComps, nVals, nBits;
-	
+
 	// image parameters
 	nComps = colorMap->getNumPixelComps ( );
 	nVals = width * nComps;
@@ -824,10 +817,10 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 
 	// get CTM, check for singular matrix
 	fp_t *ctm = state-> getCTM ( );
-	
+
 	if ( fabs ( ctm [0] * ctm [3] - ctm [1] * ctm [2] ) < 0.000001 ) {
 		qWarning ( "Singular CTM in drawImage\n" );
-		
+
 		if ( inlineImg ) {
 			str-> reset ( );
 			int j = height * (( nVals * nBits + 7 ) / 8 );
@@ -840,7 +833,7 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 	}
 
 	QImage img ( width, height, 32 );
-	
+
 	if ( maskColors )
 		img. setAlphaBuffer ( true );
 
@@ -852,47 +845,46 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 
 	Guchar pixBuf [gfxColorMaxComps];
 	GfxRGB rgb;
-	
+
 
 	uchar **scanlines = img. jumpTable ( );
-	
+
 	if ( ctm [3] > 0 )
 		scanlines += ( height - 1 );
-	
+
 	for ( int y = 0; y < height; y++ ) {
 		QRgb *scanline = (QRgb *) *scanlines;
-	
+
 		if ( ctm [0] < 0 )
 			scanline += ( width - 1 );
-	
+
 		for ( int x = 0; x < width; x++ ) {
 			imgStr-> getPixel ( pixBuf );
 			colorMap-> getRGB ( pixBuf, &rgb );
-			
+
 			uint val = ( lrint ( rgb. r * 255 ) & 0xff ) << 16 | ( lrint ( rgb. g * 255 ) & 0xff ) << 8 | ( lrint ( rgb. b * 255 ) & 0xff );
-			
+
 			if ( maskColors ) {
 				for ( int k = 0; k < nComps; ++k ) {
-					if (( pixBuf [k] < maskColors [2 * k] ) || ( pixBuf [k] > maskColors [2 * k] )) { 
+					if (( pixBuf [k] < maskColors [2 * k] ) || ( pixBuf [k] > maskColors [2 * k] )) {
 						val |= 0xff000000;
 						break;
 					}
 				}
 			}
 			*scanline = val;
-			
+
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
 		ctm [3] > 0 ? scanlines-- : scanlines++;
-		
-		qApp-> processEvents ( );
+
 	}
 
 
-#ifndef QT_NO_TRANSFORMATIONS			
+#ifndef QT_NO_TRANSFORMATIONS
 	QWMatrix mat ( ctm [0] / width, ctm [1], ctm [2], ctm [3] / height, ctm [4], ctm [5] );
 
-	// std::cerr << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << std::endl 
+	// std::cerr << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << std::endl
 	//          << " - M=" << mat. m11 ( ) << "/" << mat. m12 ( ) << "/" << mat. m21 ( ) << "/" << mat. m22 ( ) << std::endl;
 
 	QWMatrix oldmat = m_painter-> worldMatrix ( );
@@ -902,8 +894,8 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 	QPixmap pm;
 	pm. convertFromImage ( img );
 	m_painter-> drawPixmap ( 0, 0, pm );
-#else	
-	m_painter-> drawImage ( QPoint ( 0, 0 ), img );	
+#else
+	m_painter-> drawImage ( QPoint ( 0, 0 ), img );
 #endif
 
 	m_painter-> setWorldMatrix ( oldmat );
@@ -916,10 +908,10 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 	else {
 		int x = lrint ( ctm [4] );
 		int y = lrint ( ctm [5] );
-		
+
 		int w = lrint ( ctm [0] );
 		int h = lrint ( ctm [3] );
-		
+
 		if ( w < 0 ) {
 			x += w;
 			w = -w;
@@ -928,19 +920,17 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 			y += h;
 			h = -h;
 		}
-	
+
 		QPDFDBG( printf ( "DRAWING IMAGE: %d/%d - %dx%d\n", x, y, w, h ));
 
-		img = img. smoothScale ( w, h );		
-		qApp-> processEvents ( );		
+		img = img. smoothScale ( w, h );
 		m_painter-> drawImage ( x, y, img );
 	}
-	
+
 #endif
 
 
 	delete imgStr;
-	qApp-> processEvents ( );
 }
 
 
@@ -961,7 +951,7 @@ bool QOutputDevPixmap::findText ( const QString &str, int &l, int &t, int &w, in
 	bool found = false;
 	uint len = str. length ( );
 	Unicode *s = new Unicode [len];
-	
+
 	for ( uint i = 0; i < len; i++ )
 		s [i] = str [i]. unicode ( );
 
@@ -970,7 +960,7 @@ bool QOutputDevPixmap::findText ( const QString &str, int &l, int &t, int &w, in
 	fp_t x2 = (fp_t) l + w - 1;
 	fp_t y2 = (fp_t) t + h - 1;
 
-	if ( m_text-> findText ( s, len, top, bottom, &x1, &y1, &x2, &y2 )) {		
+	if ( m_text-> findText ( s, len, top, bottom, &x1, &y1, &x2, &y2 )) {
 		l = lrint ( x1 );
 		t = lrint ( y1 );
 		w = lrint ( x2 ) - l + 1;
@@ -978,7 +968,7 @@ bool QOutputDevPixmap::findText ( const QString &str, int &l, int &t, int &w, in
 		found = true;
 	}
 	delete [] s;
-	
+
 	return found;
 }
 
@@ -989,7 +979,7 @@ GBool QOutputDevPixmap::findText ( Unicode *s, int len, GBool top, GBool bottom,
 	fp_t yMin1 = (double) *yMin;
 	fp_t xMax1 = (double) *xMax;
 	fp_t yMax1 = (double) *yMax;
-	
+
 	if ( m_text-> findText ( s, len, top, bottom, &xMin1, &yMin1, &xMax1, &yMax1 )) {
 		*xMin = lrint ( xMin1 );
 		*xMax = lrint ( xMax1 );
@@ -1005,10 +995,10 @@ QString QOutputDevPixmap::getText ( int l, int t, int w, int h )
 	GString *gstr = m_text-> getText ( l, t, l + w - 1, t + h - 1 );
 	QString str = gstr-> getCString ( );
 	delete gstr;
-	return str;	
+	return str;
 }
 
-QString QOutputDevPixmap::getText ( const QRect &r ) 
+QString QOutputDevPixmap::getText ( const QRect &r )
 {
 	return getText ( r. left ( ), r. top ( ), r. width ( ), r. height ( ));
 }

@@ -252,6 +252,8 @@ void TextPage::beginString(GfxState *state, double x0, double y0) {
 
 void TextPage::addChar(GfxState *state, double x, double y,
 		       double dx, double dy, Unicode *u, int uLen) {
+    if (! curStr) return;
+
   double x1, y1, w1, h1, dx2, dy2;
   int n, i;
 
@@ -305,6 +307,8 @@ void TextPage::endString() {
 }
 
 void TextPage::addString(TextString *str) {
+    if (! str) return;
+
   TextString *p1, *p2;
 
   // throw away zero-length strings -- they don't have valid xMin/xMax

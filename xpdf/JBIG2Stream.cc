@@ -1452,11 +1452,11 @@ int JBIG2Stream::lookChar() {
   return EOF;
 }
 
-GString *JBIG2Stream::getPSFilter(char *indent) {
+GString *JBIG2Stream::getPSFilter(char * /* indent */) {
   return NULL;
 }
 
-GBool JBIG2Stream::isBinary(GBool last) {
+GBool JBIG2Stream::isBinary(GBool /* last */) {
   return str->isBinary(gTrue);
 }
 
@@ -1924,7 +1924,7 @@ void JBIG2Stream::readSymbolDictSeg(Guint segNum, Guint length,
     }
     ex = !ex;
   }
-  
+
   for (i = 0; i < numNewSyms; ++i) {
     delete bitmaps[numInputSyms + i];
   }

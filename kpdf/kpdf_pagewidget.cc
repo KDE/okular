@@ -2,6 +2,7 @@
 
 #include <qcursor.h>
 #include <qpainter.h>
+#include <qmutex.h>
 
 #include "PDFDoc.h"
 
@@ -103,13 +104,17 @@ namespace KPDF
 
 	void PageWidget::setPage(int page)
 	{
-		if (m_doc)
-		{
-			m_currentPage = max(0, min( page, m_doc->getNumPages()));
-		} else {
-			m_currentPage = 0;
-		}
-		updatePixmap();
+            static QMutex mutex;
+
+            mutex.lock();
+            if (m_doc)
+            {
+                m_currentPage = max(0, min( page, m_doc->getNumPages()));
+            } else {
+                m_currentPage = 0;
+            }
+            updatePixmap();
+            mutex.unlock();
 	};
 
 	void PageWidget::updatePixmap()

@@ -241,7 +241,8 @@ void kdvi::makeMenuBar()
 					     + i18n("\n\nby Markku Hihnala")
 					     + " (mah@ee.oulu.fi)");
 
-	m_h = p;
+	m_h = help;
+	m_hc = help->idAt(0);
 	menuBar->insertItem( i18n("&Help"), help );
 	if ( hideMenubar )	menuBar->hide();
 	setMenu( menuBar );

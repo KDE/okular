@@ -745,13 +745,6 @@ int dviWindow::totalPages()
 
 double dviWindow::setZoom(double zoom)
 {
-  // Ignore minute changes by less than 1%. The difference to the
-  // current zoom value would hardly be visible anyway. That saves a
-  // lot of re-painting, e.g. when the user resizes the window, and a
-  // flickery mouse changes the window size by 1 pixel all the time.
-  if (fabs(zoom-_zoom) < 0.01)
-    return zoom;
-
   // In principle, this method should never be called with illegal
   // values. In principle. We better be careful here.
   if (zoom < ZoomLimits::MinZoom/1000.0)
@@ -759,10 +752,19 @@ double dviWindow::setZoom(double zoom)
   if (zoom > ZoomLimits::MaxZoom/1000.0)
     zoom = ZoomLimits::MaxZoom/1000.0;
 
+  // Pass the information on to the font pool. 
+  font_pool.setDisplayResolution( xres*zoom );
+
+  // Ignore minute changes by less than 1%. The difference to the
+  // current zoom value would hardly be visible anyway. That saves a
+  // lot of re-painting, e.g. when the user resizes the window, and a
+  // flickery mouse changes the window size by 1 pixel all the time.
+  if (fabs(zoom-_zoom) < 0.01)
+    return zoom;
+
   shrinkfactor = MFResolutions[font_pool.getMetafontMode()]/(xres*zoom);
   _zoom        = zoom;
 
-  font_pool.setDisplayResolution( xres*zoom );
   changePageSize();
   return _zoom;
 }

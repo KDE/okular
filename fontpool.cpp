@@ -10,7 +10,7 @@
 #include <kprocess.h>
 #include <kprocio.h>
 #include <kstringhandler.h>
-
+#include <math.h>
 #include <qapplication.h>
 #include <qfile.h>
 #include <qimage.h>
@@ -655,6 +655,14 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called" << endl;
 #endif
+
+  // Ignore minute changes by less than 2 DPI. The difference would
+  // hardly be visible anyway. That saves a lot of re-painting,
+  // e.g. when the user resizes the window, and a flickery mouse
+  // changes the window size by 1 pixel all the time.
+  if ( fabs(displayResolution_in_dpi = _displayResolution_in_dpi) <= 2.0 )
+    return;
+
   displayResolution_in_dpi = _displayResolution_in_dpi;
   double displayResolution = displayResolution_in_dpi;
 

@@ -64,7 +64,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                        actionCollection(), "find");
   KStdAction::findNext(this, SLOT(findNext()),
                        actionCollection(), "find_next");
-
   m_fitToWidth = new KToggleAction(i18n("Fit to Page &Width"), 0,
                        this, SLOT(slotFitToWidthToggled()),
                        actionCollection(), "fit_to_width");

@@ -58,22 +58,39 @@ Shell::Shell()
     // next time we enter the event loop...
     return;
   }
+  readSettings();
 }
 
 Shell::~Shell()
 {
+    writeSettings();
 }
 
-  void
-Shell::load(const KURL& url)
+void Shell::openURL( const KURL & url )
 {
-  m_part->openURL( url );
+    m_part->openURL( url );
+    recent->addURL (url);
 }
+
+
+void Shell::readSettings()
+{
+    recent->loadEntries( KGlobal::config() );
+}
+
+void Shell::writeSettings()
+{
+    saveMainWindowSettings(KGlobal::config(), "MainWindow");
+    recent->saveEntries( KGlobal::config() );
+}
+
 
   void
 Shell::setupActions()
 {
   KStdAction::open(this, SLOT(fileOpen()), actionCollection());
+  recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
+				    actionCollection() );
   KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
   KStdAction::quit(kapp, SLOT(quit()), actionCollection());
 
@@ -107,10 +124,10 @@ Shell::fileOpen()
   // this slot is called whenever the File->Open menu is selected,
   // the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
   // button is clicked
-  QString file_name = KFileDialog::getOpenFileName();
+    KURL url = KFileDialog::getOpenURL();//getOpenFileName();
 
-  if (file_name.isEmpty() == false)
-    load(file_name);
+  if (!url.isEmpty())
+    openURL(url);
 }
 
   void

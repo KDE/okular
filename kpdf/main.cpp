@@ -55,7 +55,7 @@ int main(int argc, char** argv)
             {
                 KPDF::Shell* widget = new KPDF::Shell;
                 widget->show();
-                widget->load(args->url(i));
+                widget->openURL(args->url(i));
             }
         }
         args->clear();

@@ -3,11 +3,11 @@
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif 
+#endif
 
 #include <kapplication.h>
 #include <kparts/mainwindow.h>
- 
+
 namespace KPDF
 {
 
@@ -34,11 +34,6 @@ namespace KPDF
      */
     virtual ~Shell();
 
-    /**
-     * Use this method to load whatever file/URL you have
-     */
-    void load(const KURL& url);
-
   protected:
     /**
      * This method is called when it is time for the app to save its
@@ -52,6 +47,8 @@ namespace KPDF
      * with @ref saveProperties
      */
     void readProperties(KConfig*);
+    void readSettings();
+    void writeSettings();
 
   private slots:
     void fileOpen();
@@ -61,6 +58,8 @@ namespace KPDF
     void optionsConfigureToolbars();
 
     void applyNewToolbarConfig();
+  public slots:
+      void openURL( const KURL & url );
 
   private:
     void setupAccel();
@@ -68,7 +67,7 @@ namespace KPDF
 
   private:
     KParts::ReadOnlyPart* m_part;
-
+      KRecentFilesAction* recent;
   };
 
 }

@@ -400,7 +400,7 @@ progname.o: progname.c $(kpathsea_srcdir)/config.h ./c-auto.h $(kpathsea_srcdir)
   $(kpathsea_srcdir)/c-proto.h \
   $(kpathsea_srcdir)/lib.h $(kpathsea_srcdir)/types.h $(kpathsea_srcdir)/debug.h \
   $(kpathsea_srcdir)/progname.h
-putenv.o: putenv.c $(kpathsea_srcdir)/c-auto.h
+putenv.o: putenv.c ./c-auto.h
 readable.o: readable.c $(kpathsea_srcdir)/config.h ./c-auto.h $(kpathsea_srcdir)/c-std.h \
   $(kpathsea_srcdir)/c-unistd.h $(kpathsea_srcdir)/systypes.h \
   $(kpathsea_srcdir)/c-memstr.h \

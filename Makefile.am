@@ -26,15 +26,13 @@ bin_PROGRAMS = 	kdvi
 noinst_PROGRAMS = squeeze
 
 # just to make sure, automake makes them 
-BUILTSOURCES =	mdviwin.cpp mkdvi.cpp mmarklist.cpp mprefs.cpp mprint.cpp\
-	mprintData.cpp mprintSetup.cpp mprintSetupData.cpp mpushbutton.cpp\
-	mscrbox.cpp psheader.c
+kdvi_METASOURCES = USE_AUTOMOC
+BUILT_SOURCES = psheader.c
 
 # Which sources should be compiled for kdvi.
 kdvi_SOURCES	= dviwin.cpp kdvi.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
-	scrbox.cpp mdviwin.cpp mkdvi.cpp mmarklist.cpp mprefs.cpp mprint.cpp mprintData.cpp\
-	mprintSetup.cpp mprintSetupData.cpp mpushbutton.cpp mscrbox.cpp\
+	scrbox.cpp \
 	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\
 	special.c util.c vf.c
 
@@ -48,7 +46,6 @@ kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 # that depend on the following ones.
 kdvi_LDADD   = $(kpathsea) $(LIB_KFILE)
 
-
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 	prefs.h print.h printData.h printSetup.h printSetupData.h pushbutton.h\
@@ -56,8 +53,7 @@ noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 
 # if you "make distclean", this files get removed. If you want to remove
 # them while "make clean", use CLEANFILES
-DISTCLEANFILES = $(BUILTSOURCES)
-CLEANFILES = $(BUILTSOURCES) squeeze kdvi 
+CLEANFILES = $(BUILT_SOURCES)
 
 messages:
 	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po ../po/kdvi.pot
@@ -69,11 +65,11 @@ messages:
 # if you have more of them, create a subdirectory with an extra Makefile 
 install-data-local: 
 	$(mkinstalldirs) $(APPSDIR)
-	$(INSTALL_DATA) kdvi.kdelnk $(APPSDIR)
+	$(INSTALL_DATA) $(srcdir)/kdvi.kdelnk $(APPSDIR)
 	$(mkinstalldirs) $(kde_icondir)
-	$(INSTALL_DATA) pix/kdvi.xpm $(kde_icondir)
+	$(INSTALL_DATA) $(srcdir)/pix/kdvi.xpm $(kde_icondir)
 	$(mkinstalldirs) $(kde_minidir)
-	$(INSTALL_DATA) pix/mini-kdvi.xpm $(kde_minidir)/kdvi.xpm
+	$(INSTALL_DATA) $(srcdir)/pix/mini-kdvi.xpm $(kde_minidir)/kdvi.xpm
 
 # remove ALL you have installed in install-data-local or install-exec-local
 uninstall-local:
@@ -87,41 +83,8 @@ clean-local:
 distclean-local:
 	(cd kpathsea && test -r config.status && $(MAKE) distclean)
 
-# add a dependency for every moc file to be full portable
-
-mdviwin.cpp: dviwin.h
-	$(MOC) dviwin.h -o mdviwin.cpp
-
-mkdvi.cpp: kdvi.h
-	$(MOC) kdvi.h -o mkdvi.cpp
-
-mmarklist.cpp: marklist.h
-	$(MOC) marklist.h -o mmarklist.cpp
-
-mprefs.cpp: prefs.h
-	$(MOC) prefs.h -o mprefs.cpp
-
-mprint.cpp: print.h
-	$(MOC) print.h -o mprint.cpp
-
-mprintData.cpp: printData.h
-	$(MOC) printData.h -o mprintData.cpp
-
-mprintSetup.cpp: printSetup.h
-	$(MOC) printSetup.h -o mprintSetup.cpp
-
-mprintSetupData.cpp: printSetupData.h
-	$(MOC) printSetupData.h -o mprintSetupData.cpp
-
-mpushbutton.cpp: pushbutton.h
-	$(MOC) pushbutton.h -o mpushbutton.cpp
-
-mscrbox.cpp : scrbox.h
-	$(MOC) scrbox.h -o mscrbox.cpp
-
-
-psheader.c: psheader.txt squeeze $(kpathsea)
-	./squeeze psheader.txt $@
+$(srcdir)/psheader.c: psheader.txt squeeze $(kpathsea)
+	./squeeze $(srcdir)/psheader.txt $@
 
 # this is somehow a dirty hack to force the automatic dependency checking
 # to create the stuff in the kpathsea directory first. vf.c is the last
@@ -129,4 +92,7 @@ psheader.c: psheader.txt squeeze $(kpathsea)
 vf.c: $(kpathsea)
 
 $(kpathsea):
-	cd kpathsea && CC="$(CC)" CFLAGS="$(CFLAGS)" MAKE="$(MAKE)" ./configure && $(MAKE)
+	test -d kpathsea || mkdir kpathsea
+	cd kpathsea && CC="$(CC)" CFLAGS="$(CFLAGS)" MAKE="$(MAKE)" $(srcdir)/kpathsea/configure 
+	cd kpathsea && $(MAKE)
+

@@ -911,8 +911,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 								"Please choose your favourite editor in the "
 								"<strong>DVI options dialog</strong> "
 								"which you will find in the <strong>Settings</strong>-menu."),
-						     "Need to specify editor",
-						     "Use KDE's editor kate for now");
+						     i18n("Need to specify editor"),
+		                                     i18n("Use KDE's editor kate for now"));
 	  if (r == KMessageBox::Continue)
 	    command = "kate %f";
 	  else

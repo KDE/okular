@@ -105,13 +105,13 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 
 	rmbmenu = new QPopupMenu;
 	rmbmenu->setMouseTracking( TRUE );
-	rmbmenu->connectItem( rmbmenu->insertItem("Toggle Menubar"),
+	rmbmenu->connectItem( rmbmenu->insertItem(translate("Toggle Menubar")),
 		      this, SLOT(toggleShowMenubar()) );
-	rmbmenu->connectItem( rmbmenu->insertItem("Mark page"),
+	rmbmenu->connectItem( rmbmenu->insertItem(translate("Mark page")),
 			marklist, SLOT(markSelected()) );
-	rmbmenu->connectItem( rmbmenu->insertItem("Redraw"),
+	rmbmenu->connectItem( rmbmenu->insertItem(translate("Redraw")),
 			dviwin, SLOT(drawPage()) );
-	rmbmenu->connectItem( rmbmenu->insertItem("Preferences ..."),
+	rmbmenu->connectItem( rmbmenu->insertItem(translate("Preferences ...")),
 			this, SLOT(optionsPreferences()) );
 
   // Bind keys
@@ -235,10 +235,10 @@ void kdvi::makeMenuBar()
 
 	menuBar->insertSeparator();
 
-	QPopupMenu *help = kapp->getHelpMenu(true, QString("DVI Viewer")
-                                         + " " + KDVI_VERSION
-                                         + "\n\nby Markku Hihnala"
-                                         + " (mah@ee.oulu.fi)");
+	QPopupMenu *help = kapp->getHelpMenu(true, QString(translate("DVI Viewer"))
+					     + " " + KDVI_VERSION
+					     + translate("\n\nby Markku Hihnala")
+					     + " (mah@ee.oulu.fi)");
 
 	m_h = p;
 	menuBar->insertItem( translate("&Help"), help );

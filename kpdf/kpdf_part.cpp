@@ -485,80 +485,27 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 
 //  m_currentPage = pageNumber;
 }
-/*
+
   void
 Part::displayDestination(LinkDest* dest)
 {
-  int pageNumber;
-  // int dx, dy;
+  Ref pageRef;
+  int pg;
 
   if (dest->isPageRef())
   {
-    Ref pageRef = dest->getPageRef();
-    pageNumber = m_doc->findPage(pageRef.num, pageRef.gen);
+    pageRef = dest->getPageRef();
+    pg = m_doc->findPage(pageRef.num, pageRef.gen);
   }
   else
   {
-    pageNumber = dest->getPageNum();
+    pg = dest->getPageNum();
   }
+  if (pg <= 0 || pg > m_doc->getNumPages()) pg = 1;
+  if (pg != m_currentPage) goToPage(pg);
 
-  if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
-  {
-    pageNumber = 1;
-  }
-
-  displayPage(pageNumber);
-  return;
-
-  if (fullScreen) {
-    return;
-  }
-  switch (dest->getKind()) {
-  case destXYZ:
-    out->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
-    if (dest->getChangeLeft() || dest->getChangeTop()) {
-      if (dest->getChangeLeft()) {
-	hScrollbar->setPos(dx, canvas->getWidth());
-      }
-      if (dest->getChangeTop()) {
-	vScrollbar->setPos(dy, canvas->getHeight());
-      }
-      canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    }
-    //~ what is the zoom parameter?
-    break;
-  case destFit:
-  case destFitB:
-    //~ do fit
-    hScrollbar->setPos(0, canvas->getWidth());
-    vScrollbar->setPos(0, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  case destFitH:
-  case destFitBH:
-    //~ do fit
-    out->cvtUserToDev(0, dest->getTop(), &dx, &dy);
-    hScrollbar->setPos(0, canvas->getWidth());
-    vScrollbar->setPos(dy, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  case destFitV:
-  case destFitBV:
-    //~ do fit
-    out->cvtUserToDev(dest->getLeft(), 0, &dx, &dy);
-    hScrollbar->setPos(dx, canvas->getWidth());
-    vScrollbar->setPos(0, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  case destFitR:
-    //~ do fit
-    out->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
-    hScrollbar->setPos(dx, canvas->getWidth());
-    vScrollbar->setPos(dy, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  }
-}*/
+  m_outputDev->position(dest);
+}
 
   void
 Part::print()
@@ -682,8 +629,7 @@ Part::executeAction(LinkAction* action)
 			}
 			if (dest)
 			{
-				// TODO implement
-				//displayDest(dest, zoom, rotate, gTrue);
+				displayDestination(dest);
 				delete dest;
 			}
 			else

@@ -76,7 +76,7 @@ namespace KPDF
     bool closeURL();
 
       void displayPage(int pageNumber, float zoomFactor = 1.0);
-    /*void displayDestination(LinkDest*);*/
+      void displayDestination(LinkDest*);
       void updateActionPage();
       void setFullScreen( bool fs );
       PageWidget* pageWidget() const {return m_outputDev;}

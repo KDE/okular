@@ -386,6 +386,52 @@ namespace KPDF
         return b;
     }
 
+    void PageWidget::position(LinkDest* dest)
+    {
+        int dx, dy;
+        switch (dest->getKind())
+        {
+            case destXYZ:
+                m_outputdev->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
+                if (dest->getChangeLeft())
+                {
+                    horizontalScrollBar()->setValue( dx );
+                }
+                if (dest->getChangeTop())
+                {
+                    verticalScrollBar()->setValue( dy );
+                }
+                //~ what is the zoom parameter?
+            break;
+            case destFit:
+            case destFitB:
+                //~ do fit
+                verticalScrollBar()->setValue( 0 );
+                horizontalScrollBar()->setValue( 0 );
+            break;
+            case destFitH:
+            case destFitBH:
+                //~ do fit
+                m_outputdev->cvtUserToDev(0, dest->getTop(), &dx, &dy);
+                verticalScrollBar()->setValue( dy );
+                horizontalScrollBar()->setValue( 0 );
+            break;
+            case destFitV:
+            case destFitBV:
+                //~ do fit
+                m_outputdev->cvtUserToDev(dest->getLeft(), 0, &dx, &dy);
+                verticalScrollBar()->setValue( 0 );
+                horizontalScrollBar()->setValue( dx );
+            break;
+            case destFitR:
+                //~ do fit
+                m_outputdev->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
+                verticalScrollBar()->setValue( dy );
+                horizontalScrollBar()->setValue( dx );
+            break;
+        }
+    }
+
 }
 
 // vim:ts=2:sw=2:tw=78:et

@@ -25,6 +25,7 @@ class QMutex;
 class QWidget;
 
 class LinkAction;
+class LinkDest;
 class PDFDoc;
 
 class QOutputDevPixmap;
@@ -57,6 +58,7 @@ namespace KPDF
         void zoomTo( double _value );
 
         bool find(Unicode *u, int len, bool next);
+        void position(LinkDest* dest);
 
     public slots:
         void zoomIn();

@@ -37,7 +37,7 @@ squeeze_SOURCES	= squeeze.c
 
 KDE_OPTIONS = nofinal
 
-kdvi_SOURCES = main.cpp ../kviewshell/kviewshell.cpp
+kdvi_SOURCES = main.cpp 
 kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kdvi_LDADD = ../kviewshell/libifaces.la ../kviewshell/libkviewshell.la -lkparts
 

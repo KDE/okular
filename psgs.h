@@ -33,10 +33,8 @@ class ghostscript_interface  : public QObject
  Q_OBJECT
 
 public:
-  ghostscript_interface(double dpi, int pxlw, int pxlh);
+  ghostscript_interface();
   ~ghostscript_interface();
-
-  void setSize(double dpi, int pxlw, int pxlh);
 
   void clear();
 
@@ -52,7 +50,7 @@ public:
   // Returns the graphics of the page, if possible. The functions
   // returns a pointer to a QPixmap, or null. The referred QPixmap
   // should be deleted after use.
-  QPixmap  *graphics(int page);
+  QPixmap  *graphics(int page, double dpi, int pxlw=600, int pxlh=600 );
 
   // Returns the background color for a certain page. If no color was
   // set, Qt::white is returned.
@@ -72,14 +70,6 @@ public:
 private:
   void                  gs_generate_graphics_file(int page, const QString &filename);
   QIntDict<pageInfo>    pageList;
-
-  // Chache to store pages which contain PostScript and are therefore
-  // slow to render.
-  QIntCache<QPixmap>    MemoryCache;
-
-  // Chache to store pages which contain PostScript and are therefore
-  // slow to render.
-  QIntCache<KTempFile>  DiskCache;
 
   double                resolution;   // in dots per inch
   int                   pixel_page_w; // in pixels

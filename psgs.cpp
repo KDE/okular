@@ -31,15 +31,10 @@ pageInfo::~pageInfo() {
 
 // ======================================================
 
-ghostscript_interface::ghostscript_interface(double dpi, int pxlw, int pxlh) {
+ghostscript_interface::ghostscript_interface() {
   pageList.setAutoDelete(TRUE);
-  MemoryCache.setAutoDelete(TRUE);
-  DiskCache.setAutoDelete(TRUE);
 
   PostScriptHeaderString = new QString();
-  resolution   = dpi;
-  pixel_page_w = pxlw;
-  pixel_page_h = pxlh;
 
   knownDevices.append("png256");
   knownDevices.append("jpeg");
@@ -51,16 +46,6 @@ ghostscript_interface::ghostscript_interface(double dpi, int pxlw, int pxlh) {
 ghostscript_interface::~ghostscript_interface() {
   if (PostScriptHeaderString != 0L)
     delete PostScriptHeaderString;
-}
-
-
-void ghostscript_interface::setSize(double dpi, int pxlw, int pxlh) {
-  resolution   = dpi;
-  pixel_page_w = pxlw;
-  pixel_page_h = pxlh;
-
-  MemoryCache.clear();
-  DiskCache.clear();
 }
 
 
@@ -118,8 +103,6 @@ QColor ghostscript_interface::getBackgroundColor(int page) {
 
 void ghostscript_interface::clear(void) {
   PostScriptHeaderString->truncate(0);
-  MemoryCache.clear();
-  DiskCache.clear();
   
   // Deletes all items, removes temporary files, etc.
   pageList.clear();
@@ -127,8 +110,12 @@ void ghostscript_interface::clear(void) {
 
 
 void ghostscript_interface::gs_generate_graphics_file(int page, const QString &filename) {
-  if (knownDevices.isEmpty())
+  kdError() << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
+
+  if (knownDevices.isEmpty()) {
+    kdError() << "No known devices found" << endl;
     return;
+  }
 
   emit(setStatusBarText(i18n("Generating PostScript graphics...")));
   
@@ -183,15 +170,20 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
   // Step 2: Call GS with the File
   QFile::remove(filename.ascii());
   KProcIO proc;
-  proc << "gs";
-  proc << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
-  proc << QString("-sDEVICE=%1").arg(*gsDevice);
-  proc << QString("-sOutputFile=%1").arg(filename);
-  proc << QString("-sExtraIncludePath=%1").arg(includePath);
-  proc << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
-  proc << QString("-r%1").arg(resolution);                       // resolution in dpi
-  proc << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
-  proc << "-f" << PSfile.name();
+  QStringList argus;
+  argus << "gs";
+  argus << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
+  argus << QString("-sDEVICE=%1").arg(*gsDevice);
+  argus << QString("-sOutputFile=%1").arg(filename);
+  argus << QString("-sExtraIncludePath=%1").arg(includePath);
+  argus << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
+  argus << QString("-r%1").arg(resolution);                       // resolution in dpi
+  argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
+  argus << "-f" << PSfile.name();
+  
+  kdError() << argus.join(" ") << endl;
+
+  proc << argus;
   if (proc.start(KProcess::Block) == false) {
     // Starting ghostscript did not work. 
     // TODO: Issue error message, switch PS support off.
@@ -201,10 +193,14 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
 
   // Check if gs has indeed produced a file.
   if (QFile::exists(filename) == false) {
+    kdError() << "GS did not produce output." << endl;
+
     // No. Check is the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
     QString GSoutput;
     while(proc.readln(GSoutput) != -1) {
+      kdError() << GSoutput << endl;
+
 
       if (GSoutput.contains("Unknown device")) {
 	kdDebug(4300) << QString("The version of ghostview installed on this computer does not support "
@@ -246,29 +242,20 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
 }
 
 
-QPixmap *ghostscript_interface::graphics(int page) {
+QPixmap *ghostscript_interface::graphics(int page, double dpi, int pxlw, int pxlh) {
+  kdError() << "ghostscript_interface::graphics( " << page << ", " << dpi << ", " << pxlw << ", " << pxlh <<" ) called." << endl;
+
+  resolution   = dpi;
+  pixel_page_w = pxlw;
+  pixel_page_h = pxlh;
   pageInfo *info = pageList.find(page);
 
   // No PostScript? Then return immediately.
-  if ((info == 0) || (info->PostScriptString->isEmpty()))
+  if ((info == 0) || (info->PostScriptString->isEmpty())) {
+    kdError() << "No PS found." << endl;
     return 0;
-
-  // Gfx exists in the MemoryCache?
-  QPixmap *CachedCopy = MemoryCache.find(page);
-  if (CachedCopy != NULL) 
-    return new QPixmap(*CachedCopy);
-
-  // Gfx exists in the DiskCache?
-  KTempFile *CachedCopyFile = DiskCache.find(page);
-  if (CachedCopyFile != NULL) {
-    QPixmap *MemoryCopy = new QPixmap(CachedCopyFile->name());
-    QPixmap *ReturnCopy = new QPixmap(*MemoryCopy);
-    MemoryCache.insert(page, MemoryCopy);
-    return ReturnCopy;
   }
 
-  // Gfx exists neither in Disk- nor in Memorycache. We have to build
-  // it ourselfes.
   KTempFile *GfxFile = new KTempFile(QString::null,".png");
   GfxFile->setAutoDelete(1);
   GfxFile->close(); // we are want the filename, not the file
@@ -276,9 +263,8 @@ QPixmap *ghostscript_interface::graphics(int page) {
   gs_generate_graphics_file(page, GfxFile->name());
 
   QPixmap *MemoryCopy = new QPixmap(GfxFile->name());
+  kdError() << "MemoryCopy->isEmtpy() = " << MemoryCopy->isNull() << endl;
   QPixmap *ReturnCopy = new QPixmap(*MemoryCopy);
-  MemoryCache.insert(page, MemoryCopy);
-  DiskCache.insert(page, GfxFile);
   return ReturnCopy;
 }
 

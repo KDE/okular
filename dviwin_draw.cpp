@@ -603,12 +603,14 @@ void dviRenderer::draw_page(void)
 
   // Render the PostScript background, if there is one.
   if (_postscript) {
-    QPixmap *pxm = PS_interface->graphics(current_page);
+    kdError() << "Trying to render PS: TODO" << endl;
+    QPixmap *pxm = PS_interface->graphics(current_page, resolutionInDPI, foreGroundPaint.viewport().width(), foreGroundPaint.viewport().height() );
     if (pxm != NULL) {
       foreGroundPaint.drawPixmap(0, 0, *pxm);
       delete pxm;
     }
-  }
+  } else
+    kdError() << "Trying to not render PS" << endl;
 
   // Now really write the text
   if (dviFile->page_offset.isEmpty() == true)

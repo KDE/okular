@@ -92,7 +92,7 @@ dviRenderer::dviRenderer(QWidget *par)
   export_tmpFileName     = "";
   export_errorString     = "";
 
-  PS_interface           = new ghostscript_interface(0.0, 0, 0);
+  PS_interface           = new ghostscript_interface();
   // pass status bar messages through
   connect(PS_interface, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
 }
@@ -195,7 +195,7 @@ void dviRenderer::drawPage(double resolution, documentPage *page)
   }
   
   // Tell the user (once) if the DVI file contains source specials
-  // ... wo don't want our great feature to go unnoticed.
+  // ... we don't want our great feature to go unnoticed.
   if ((dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
     dviFile->sourceSpecialMarker = false;
     // Show the dialog as soon as event processing is finished, and

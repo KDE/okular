@@ -7,7 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
- // qt includes
+// qt includes
+#include <qapplication.h>
 #include <qpixmap.h>
 #include <qstring.h>
 #include <qpainter.h>
@@ -16,18 +17,21 @@
 #include "TextOutputDev.h"
 #include "page.h"
 
-
-KPDFPage::KPDFPage( uint i, float w, float h )
-    : m_number( i ), m_width( w ), m_height( h ), m_zoom( 1 ),
+#include <qimage.h>
+KPDFPage::KPDFPage( uint page, float w, float h )
+    : m_number( page ), m_width( w ), m_height( h ), m_zoom( 1 ),
     m_pixmap( 0 ), m_thumbnail( 0 ), m_text( 0 ), m_overlay( 0 )
 {
-    printf( "hello %d ", i );
-    m_thumbnail = new QPixmap( "/a.png", "PNG" );
+/*    m_thumbnail = new QPixmap( "/a.png", "PNG" );
+	QImage im = m_thumbnail->convertToImage();
+	im = im.smoothScale(100,100);
+	im.setAlphaBuffer( false );
+	m_thumbnail->convertFromImage(im);
+*/
 }
 
 KPDFPage::~KPDFPage()
 {
-    printf( "bye[%d] ", m_number );
     delete m_pixmap;
     delete m_thumbnail;
     delete m_text;
@@ -47,15 +51,21 @@ void KPDFPage::drawPixmap( QPainter * p, const QRect & limits ) const  // MUTEXE
     //threadLock.unlock();
 }
 
-void KPDFPage::drawThumbnail( QPainter * p, const QRect & limits ) const  // MUTEXED
+void KPDFPage::drawThumbnail( QPainter * p, const QRect & limits, int width, int height ) const // OK
 {
     //threadLock.lock();
-
     if ( m_thumbnail )
-        p->drawPixmap( limits.topLeft(), *m_thumbnail, limits );
+    {
+        if ( m_thumbnail->width() == width && m_thumbnail->height() == height )
+            p->drawPixmap( limits.topLeft(), *m_thumbnail, limits );
+        else
+        {
+            p->scale( width / (double)m_thumbnail->width(), height / (double)m_thumbnail->height() );
+            p->drawPixmap( 0,0, *m_thumbnail, 0,0, m_thumbnail->width(), m_thumbnail->height() );
+        }
+    }
     else
-        p->fillRect( limits, Qt::red );
-
+        p->fillRect( limits, QApplication::palette().active().base() );
     //threadLock.unlock();
 }
 

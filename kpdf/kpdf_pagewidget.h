@@ -44,21 +44,15 @@ namespace KPDF
     public:
         PageWidget(QWidget *parent, KPDFDocument *document);
         ~PageWidget();
-        void setPDFDocument(PDFDoc*);
+
         void setPixelsPerPoint(float);
         /* void setLinks(); */
 
 		// inherited from KPDFDocumentObserver
-		void pageSetup( const QValueList<int> & /*pages*/ )
-		{/*
-			m_outputDev->setPDFDocument(d->pdfdoc);
-		*/}
-		void pageSetCurrent( int /*pageNumber*/, float /*position*/ )
-		{
-			//m_pageWidget->setPage(m_currentPage);
-		}
+		void pageSetup( const QValueList<int> & pages );
+		void pageSetCurrent( int pageNumber, float position );
 
-        void setPage(int pagenum);
+
         void enableScrollBars( bool b );
         /**
          * Return true if the top resp. bottom of the page is visible.
@@ -74,10 +68,6 @@ namespace KPDF
         void zoomOut();
 
         void updatePixmap();
-        void scrollUp();
-        void scrollDown();
-        void scrollRight();
-        void scrollLeft();
         void scrollBottom();
         void scrollTop();
         bool readUp();

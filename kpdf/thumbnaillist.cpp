@@ -30,6 +30,7 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 	// set contents background to the 'base' color
 	viewport()->setPaletteBackgroundColor( palette().active().base() );
 
+	setFrameStyle( StyledPanel | Raised );
 	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestThumbnails(int, int)) );
 }
 
@@ -58,7 +59,7 @@ void ThumbnailList::pageSetup( const QValueList<int> & pages )
 	QValueList<int>::const_iterator pageEnd = pages.end();
 	for (; pageIt != pageEnd ; ++pageIt)
 	{
-		t = new Thumbnail( viewport(), viewport()->paletteBackgroundColor(), m_document->page(*pageIt) );
+		t = new Thumbnail( viewport(), m_document->page(*pageIt) );
 		// add to the scrollview
 		addChild( t, 0, totalHeight );
 		// add to the internal queue
@@ -117,21 +118,32 @@ void ThumbnailList::notifyThumbnailChanged( int pageNumber )
 void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
 	if ( thumbnails.count() < 1 )
-		return;
+		return keyEvent->ignore();
 	if ( keyEvent->key() == Key_Up )
 	{
 		if ( !m_selected )
 			m_document->slotSetCurrentPage( 0 );
 		else if ( vectorIndex > 0 )
-			m_document->slotSetCurrentPage( thumbnails[ --vectorIndex ]->pageNumber() );
+			m_document->slotSetCurrentPage( thumbnails[ vectorIndex - 1 ]->pageNumber() );
+		else
+			return keyEvent->ignore();
 	}
 	else if ( keyEvent->key() == Key_Down )
 	{
 		if ( !m_selected )
 			m_document->slotSetCurrentPage( 0 );
 		else if ( vectorIndex < (int)thumbnails.count() - 1 )
-			m_document->slotSetCurrentPage( thumbnails[ ++vectorIndex ]->pageNumber() );
+			m_document->slotSetCurrentPage( thumbnails[ vectorIndex + 1 ]->pageNumber() );
+		else
+			return keyEvent->ignore();
 	}
+	else if ( keyEvent->key() == Key_Home )
+		m_document->slotSetCurrentPage( thumbnails[ 0 ]->pageNumber() );
+	else if ( keyEvent->key() == Key_End )
+		m_document->slotSetCurrentPage( thumbnails[ thumbnails.count() - 1 ]->pageNumber() );
+	else
+		return keyEvent->ignore();
+	keyEvent->accept();
 }
 
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
@@ -159,6 +171,7 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 	// right place and recalculate the contents area
 	if ( e->size().width() != e->oldSize().width() )
 	{
+		// resize and reposition items
 		int totalHeight = 0,
 		    newWidth = e->size().width();
 		QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
@@ -187,6 +200,10 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 //BEGIN internal SLOTS 
 void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContentsY )
 {
+	// an update is already scheduled, so don't proceed
+	if ( m_delayTimer && m_delayTimer->isActive() )
+		return;
+
 	int vHeight = visibleHeight(),
 	    vOffset = newContentsY == -1 ? contentsY() : newContentsY;
 

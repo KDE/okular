@@ -13,7 +13,6 @@
 #include <qobject.h>
 #include <qsize.h>
 #include <qmutex.h>
-#include "document.h"
 
 class QPixmap;
 class QString;
@@ -34,7 +33,7 @@ class PageOverlay{ /*fake temp*/ };
  * class is destroyed.
  */
 
-class KPDFPage : public QObject, public KPDFDocumentObserver
+class KPDFPage : public QObject
 {
     Q_OBJECT
     
@@ -50,7 +49,7 @@ public:
 
     // rendering
     void drawPixmap( QPainter * p, const QRect & rect ) const;
-    void drawThumbnail( QPainter * p, const QRect & rect ) const;
+    void drawThumbnail( QPainter * p, const QRect & rect, int width, int height ) const;
     float currentZoom() const { return m_zoom; }
     const QSize & currentSize() const { return m_size; }
 

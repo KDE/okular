@@ -1,13 +1,18 @@
 Personal Albert's list
 -> make links functional
--> improve thumbnail generation to make it non-gui blocking
 
 More items
--> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
--> previews sorted by visible areas (prioritize items where the scrollbar is)
--> maybe: use local instead of X memory for thumbnails (..)
 -> screen editing: framework
 -> screen editing: tools
+
+Porting / In progress
+-> implementing Document / Page using AACid's thread as the generation thread
+-> improve thumbnail generation to make it non-gui blocking
 -> multiple pages per view
 -> centering pages in the view
 -> outline bottom and right edges (of pages)
+
+Done
+-> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
+-> maybe: use local instead of X memory for thumbnails (..)
+-> previews sorted by visible areas (prioritize items where the scrollbar is)

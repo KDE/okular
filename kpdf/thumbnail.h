@@ -10,30 +10,33 @@
 #ifndef THUMBNAIL_H
 #define THUMBNAIL_H
  
-#include <qcolor.h>
-#include <qimage.h>
-#include <qvbox.h>
+#include <qwidget.h>
 
 class QLabel;
 class KPDFPage;
 
-class Thumbnail : public QVBox
+class Thumbnail : public QWidget
 {
-    Q_OBJECT
 public:
-    Thumbnail(QWidget *parent, const QColor &color, const KPDFPage *page);
+    Thumbnail(QWidget *parent, const KPDFPage *page);
 
-    int pageNumber();
-    void setImage(const QImage *thumbnail);
-    int setThumbnailWidth( int w );
+    // resize / select commands
+    int setThumbnailWidth(int width);
     void setSelected(bool selected);
 
+    // query methods
+    int pageNumber() const;
+    int previewWidth() const;
+    int previewHeight() const;
+    
+protected:
+    void paintEvent(QPaintEvent *);
+
 private:
-    QWidget *m_thumbnailW;
     QLabel *m_label;
     const KPDFPage *m_page;
-    QColor m_backgroundColor;
-    QImage m_original;
+    uint m_previewWidth;
+    uint m_previewHeight;
 };
 
 #endif

@@ -7,50 +7,83 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qapplication.h>
-#include <qimage.h>
 #include <qlabel.h>
-#include <qpixmap.h>
+#include <qpainter.h>
 
 #include "thumbnail.h"
 #include "page.h"
 
-Thumbnail::Thumbnail(QWidget *parent, const QColor &color, const KPDFPage *page) : QVBox(parent), m_page(page), m_backgroundColor(color)
+Thumbnail::Thumbnail( QWidget *parent, const KPDFPage *page )
+    : QWidget( parent ), m_page( page ), m_previewWidth( 0 ), m_previewHeight( 0 )
 {
-    m_thumbnailW = new QWidget(this);
-    m_thumbnailW->setEraseColor(Qt::gray);
-    m_label = new QLabel(QString::number(page->number()+1), this);
-    m_label->setAlignment(AlignCenter);
-    setPaletteBackgroundColor(m_backgroundColor);
+    m_label = new QLabel( QString::number( page->number() + 1 ), this );
+    m_label->setAlignment( AlignCenter );
+    setPaletteBackgroundColor( palette().active().base() );
 }
 
-int Thumbnail::pageNumber()
+//BEGIN commands 
+int Thumbnail::setThumbnailWidth( int width )
+{
+    // compute and update drawable area dimensions
+    // note: 3 pixels are left (in each dimension) for page decorations 
+    m_previewWidth = width - 3;
+    //TODO albert: check page rotation for aspect ratio
+    m_previewHeight = (int)(m_page->ratio() * width);
+
+    // reposition label at bottom
+    int labelHeight = m_label->sizeHint().height();
+    m_label->setGeometry( 0, m_previewHeight + 3, width, labelHeight );
+
+    // resize the widget
+    int totalHeight = m_previewHeight + 3 + labelHeight;
+    resize( width, totalHeight );
+
+    // return this->height plus a little (4px) margin to the next page
+    return totalHeight + 4;
+}
+
+void Thumbnail::setSelected( bool selected )
+{
+    // alternate 'base' or 'hilight' colors to represent selection
+    if (selected) m_label->setPaletteBackgroundColor( palette().active().highlight() );
+    else m_label->setPaletteBackgroundColor( palette().active().base() );
+}
+//END commands 
+
+//BEGIN query methods 
+int Thumbnail::pageNumber() const
 {
     return m_page->number();
 }
 
-void Thumbnail::setImage(const QImage *thumbnail)
+int Thumbnail::previewWidth() const
 {
-    // TODO i am almost sure this can be done inside the thumbnailgenerator thread
-    m_original = thumbnail->smoothScale(m_thumbnailW->size());
-    m_thumbnailW->setPaletteBackgroundPixmap(m_original);
+    return m_previewWidth;
 }
 
-int Thumbnail::setThumbnailWidth(int width)
+int Thumbnail::previewHeight() const
 {
-    int height = (int)(m_page->ratio() * width);
-    m_thumbnailW->setFixedHeight(height);
-    m_thumbnailW->setFixedWidth(width);
-    height += m_label->sizeHint().height();
-    resize( width, height );
-    return height;
+    return m_previewHeight;
 }
+//END query methods 
 
-void Thumbnail::setSelected(bool selected)
+void Thumbnail::paintEvent( QPaintEvent * e )
 {
-    if (selected) setPaletteBackgroundColor(QApplication::palette().active().highlight());
-    else setPaletteBackgroundColor(m_backgroundColor);
+    QRect clipRect = e->rect();
+    QPainter p( this );
+
+    // draw page outline
+    p.setPen( Qt::black );
+    p.drawRect( 0, 0, m_previewWidth + 2, m_previewHeight + 2 );
+    p.setPen( Qt::gray );
+    p.drawLine( 4, m_previewHeight + 2, m_previewWidth + 2, m_previewHeight + 2 );
+    p.drawLine( m_previewWidth + 2, 4, m_previewWidth + 2, m_previewHeight + 2 );
+
+    // draw the pixmap
+    p.translate( 1, 1 );
+    clipRect.moveBy( -1, -1 );
+    clipRect = clipRect.intersect( QRect( 0, 0, m_previewWidth, m_previewHeight ) );
+    m_page->drawThumbnail( &p, clipRect, m_previewWidth, m_previewHeight );
+
+    p.end();
 }
-
-
-#include "thumbnail.moc"

@@ -69,7 +69,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// create browser extension (for printing when embedded into browser)
 	new BrowserExtension(this);
 
-	// xpdf 'extern' global class (m_count is a static instance counter) TODO check for wasted creation
+	// xpdf 'extern' global class (m_count is a static instance counter) 
+	//if ( m_count ) TODO check if we need to insert these lines..
+	//	delete globalParams;
 	globalParams = new GlobalParams("");
 	globalParams->setupBaseFonts(NULL);
 	m_count++;

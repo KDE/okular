@@ -50,18 +50,41 @@ namespace KPDF
         w->setPixmap( SmallIcon("up") );
         setCornerWidget( w );
     }
+
     PageWidget::~PageWidget()
     {
         delete m_outputdev;
     }
-    void
-    PageWidget::setPDFDocument(PDFDoc* doc)
-    {
-        m_doc = doc;
-        m_outputdev -> startDoc(doc->getXRef());
-        m_currentPage = 1;
-        updatePixmap();
-    }
+
+void PageWidget::pageSetup( const QValueList<int> & /*pages*/ )
+{
+/*
+	m_doc = doc;
+	m_outputdev -> startDoc(doc->getXRef());
+	m_currentPage = 1;
+	updatePixmap();
+*/
+}
+
+void PageWidget::pageSetCurrent( int /*pageNumber*/, float /*position*/ )
+{
+/*
+	// any idea why this mutex is necessary?
+	static QMutex mutex;
+	
+	m_selection = false;
+	Q_ASSERT(mutex.locked() == false);
+	mutex.lock();
+	if (m_doc)
+	{
+		m_currentPage = pageNumber;
+	} else {
+		m_currentPage = 0;
+	}
+	updatePixmap();
+	mutex.unlock();
+*/
+}
 
     void
     PageWidget::setPixelsPerPoint(float ppp)
@@ -126,7 +149,7 @@ namespace KPDF
     }
 
     void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
-    {
+    {return;
         QImage im;
         QColor bc(KGlobalSettings::calculateAlternateBackgroundColor(KGlobalSettings::baseColor()));
         if (m_outputdev)
@@ -181,48 +204,10 @@ namespace KPDF
         updatePixmap();
     }
 
-    void PageWidget::setPage(int page)
-    {
-        // any idea why this mutex is necessary?
-        static QMutex mutex;
-        
-        m_selection = false;
-        Q_ASSERT(mutex.locked() == false);
-        mutex.lock();
-        if (m_doc)
-        {
-            m_currentPage = page;
-        } else {
-            m_currentPage = 0;
-        }
-        updatePixmap();
-        mutex.unlock();
-    }
-
     void PageWidget::enableScrollBars( bool b )
     {
         setHScrollBarMode( b ? Auto : AlwaysOff );
         setVScrollBarMode( b ? Auto : AlwaysOff );
-    }
-
-    void PageWidget::scrollRight()
-    {
-        horizontalScrollBar()->addLine();
-    }
-
-    void PageWidget::scrollLeft()
-    {
-        horizontalScrollBar()->subtractLine();
-    }
-
-    void PageWidget::scrollDown()
-    {
-        verticalScrollBar()->addLine();
-    }
-
-    void PageWidget::scrollUp()
-    {
-        verticalScrollBar()->subtractLine();
     }
 
     void PageWidget::scrollBottom()
@@ -235,39 +220,36 @@ namespace KPDF
         verticalScrollBar()->setValue( verticalScrollBar()->minValue() );
     }
 
-    void PageWidget::keyPressEvent( QKeyEvent* e )
-    {
-        switch ( e->key() ) {
-        case Key_Up:
-	    if ( atTop() )
-		emit ReadUp();
-	    else
-                scrollUp();
-            break;
-        case Key_Down:
-	    if ( atBottom() )
-		emit ReadDown();
-	    else
-                scrollDown();
-            break;
-        case Key_Left:
-            scrollLeft();
-            break;
-        case Key_Right:
-            scrollRight();
-            break;
-        case Key_Space:
-        {
-            if( e->state() != ShiftButton ) {
-                emit spacePressed();
-            }
-        }
-        default:
-            e->ignore();
-            return;
-        }
-        e->accept();
-    }
+void PageWidget::keyPressEvent( QKeyEvent* e )
+{
+	switch ( e->key() ) {
+	case Key_Up:
+		if ( atTop() )
+			emit ReadUp();
+		else
+			verticalScrollBar()->subtractLine();
+		break;
+	case Key_Down:
+		if ( atBottom() )
+			emit ReadDown();
+		else
+			verticalScrollBar()->addLine();
+		break;
+	case Key_Left:
+		horizontalScrollBar()->subtractLine();
+		break;
+	case Key_Right:
+		horizontalScrollBar()->addLine();
+		break;
+	case Key_Space:
+		if( e->state() != ShiftButton )
+			emit spacePressed();
+	default:
+		e->ignore();
+		return;
+	}
+	e->accept();
+}
 
     bool PageWidget::atTop() const
     {

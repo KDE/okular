@@ -66,8 +66,8 @@ Catalog::Catalog(XRef *xrefA) {
   obj.free();
   // The gcc doesnt optimize this away, so this check is ok,
   // even if it looks like a pagesSize != pagesSize check
-  if (pagesSize*sizeof(Page *)/sizeof(Page *) != pagesSize ||
-      pagesSize*sizeof(Ref)/sizeof(Ref) != pagesSize) {
+  if (pagesSize*sizeof(Page *)/sizeof(Page *) != (unsigned int)pagesSize ||
+      pagesSize*sizeof(Ref)/sizeof(Ref) != (unsigned int)pagesSize) {
     error(-1, "Invalid 'pagesSize'");
     ok = gFalse;
     return;
@@ -200,8 +200,8 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
       }
       if (start >= pagesSize) {
 	pagesSize += 32;
-        if (pagesSize*sizeof(Page *)/sizeof(Page *) != pagesSize ||
-            pagesSize*sizeof(Ref)/sizeof(Ref) != pagesSize) {
+        if (pagesSize*sizeof(Page *)/sizeof(Page *) != (unsigned int)pagesSize ||
+            pagesSize*sizeof(Ref)/sizeof(Ref) != (unsigned int)pagesSize) {
           error(-1, "Invalid 'pagesSize' parameter.");
           goto err3;
         }

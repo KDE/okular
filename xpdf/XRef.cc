@@ -110,7 +110,7 @@ ObjectStream::ObjectStream(XRef *xref, int objStrNumA) {
     goto err1;
   }
 
-  if (nObjects*sizeof(int)/sizeof(int) != nObjects) {
+  if (nObjects*sizeof(int)/sizeof(int) != (uint)nObjects) {
     error(-1, "Invalid 'nObjects'");
     goto err1;
   }
@@ -393,7 +393,7 @@ GBool XRef::readXRefTable(Parser *parser, Guint *pos) {
       if (newSize < 0) {
 	goto err1;
       }
-      if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+      if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != (uint)newSize) {
         error(-1, "Invalid 'obj' parameters'");
         goto err1;
       }
@@ -503,7 +503,7 @@ GBool XRef::readXRefStream(Stream *xrefStr, Guint *pos) {
     goto err1;
   }
   if (newSize > size) {
-    if (newSize * sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+    if (newSize * sizeof(XRefEntry)/sizeof(XRefEntry) != (uint)newSize) {
       error(-1, "Invalid 'size' parameter.");
       return gFalse;
     }
@@ -597,7 +597,7 @@ GBool XRef::readXRefStreamSection(Stream *xrefStr, int *w, int first, int n) {
     if (newSize < 0) {
       return gFalse;
     }
-    if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+    if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != (uint)newSize) {
       error(-1, "Invalid 'size' inside xref table.");
       return gFalse;
     }
@@ -736,7 +736,7 @@ GBool XRef::constructXRef() {
 		    error(-1, "Bad object number");
 		    return gFalse;
 		  }
-                  if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != newSize) {
+                  if (newSize*sizeof(XRefEntry)/sizeof(XRefEntry) != (uint)newSize) {
                     error(-1, "Invalid 'obj' parameters.");
                     return gFalse;
                   }
@@ -763,7 +763,7 @@ GBool XRef::constructXRef() {
     } else if (!strncmp(p, "endstream", 9)) {
       if (streamEndsLen == streamEndsSize) {
 	streamEndsSize += 64;
-        if (streamEndsSize*sizeof(int)/sizeof(int) != streamEndsSize) {
+        if (streamEndsSize*sizeof(int)/sizeof(int) != (uint)streamEndsSize) {
           error(-1, "Invalid 'endstream' parameter.");
           return gFalse;
         }

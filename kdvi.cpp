@@ -474,6 +474,11 @@ void kdvi::openFile( QString name)
 {
 	if ( name.isEmpty() )
 		return;
+
+        // if name is just a relative filename, make it an absolute one
+        if( ( name.at(0) != '/') && ( name.find( ':' ) == -1 ) )
+            name = QDir().absPath() + "/" + name;
+
 	QString oname( name );
 	//name.detach();
 	if ( ! QFileInfo( name ).isReadable() )

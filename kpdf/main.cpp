@@ -7,7 +7,7 @@
 static const char description[] =
 I18N_NOOP("kpdf, a kde pdf viewer based on xpdf");
 
-static const char version[] = "v0.3";
+static const char version[] = "0.3.1";
 
 static KCmdLineOptions options[] =
 {

@@ -43,25 +43,29 @@ class PDFPixmapGeneratorThread;
 class PDFGenerator : public Generator
 {
     public:
-        PDFGenerator();
+        PDFGenerator( KPDFDocument * document );
         virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
 
         // [INHERITED] document informations
-        const DocumentInfo * documentInfo();
-        const DocumentSynopsis * documentSynopsis();
+        const DocumentInfo * generateDocumentInfo();
+        const DocumentSynopsis * generateDocumentSynopsis();
 
         // [INHERITED] perform actions on document / pages
+        bool canGeneratePixmap();
+        void generatePixmap( PixmapRequest * request );
+        void generateSyncTextPage( KPDFPage * page );
+
+        // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
-        void requestPixmap( PixmapRequest * request, bool asyncronous );
-        void requestTextPage( KPDFPage * page );
+
+        // [INHERITED] reply to some metadata requests
+        QString getMetaData( const QString & key, const QString & option );
 
         // [INHERITED] reparse configuration
         bool reparseConfig();
-
-        QString getMetaData( const QString & key, const QString & option );
 
     private:
         // friend class to access private document related variables
@@ -74,9 +78,7 @@ class PDFGenerator : public Generator
         void addSynopsisChildren( QDomNode * parent, GList * items );
         // private function for creating the transition information
         void addTransition( int pageNumber, KPDFPage * page );
-        // (GT) take the first queued item from the stack and feed it to the thread
-        void startNewThreadedGeneration();
-        // (GT) receive data from the generator thread
+        // (async related) receive data from the generator thread
         void customEvent( QCustomEvent * );
 
         // xpdf dependant stuff
@@ -85,11 +87,12 @@ class PDFGenerator : public Generator
         KPDFOutputDev * kpdfOutputDev;
         QColor paperColor;
 
-        // asyncronous generation related things
+        // asyncronous generation related stuff
         PDFPixmapGeneratorThread * generatorThread;
-        QValueList< PixmapRequest * > requestsQueue;
 
         // misc variables for document info and synopsis caching
+        bool ready;
+        PixmapRequest * pixmapRequest;
         bool docInfoDirty;
         DocumentInfo docInfo;
         bool docSynopsisDirty;
@@ -109,10 +112,6 @@ class PDFPixmapGeneratorThread : public QThread
 
         // set the request to the thread (it will be reparented)
         void startGeneration( PixmapRequest * request );
-        // get a const reference to the currently processed pixmap
-        const PixmapRequest * currentRequest() const;
-        // return wether we can add a new request or not
-        bool isReady() const;
         // end generation
         void endGeneration();
 

@@ -125,11 +125,11 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
             t->show();
         }
 
-	// update scrollview's contents size (sets scrollbars limits)
-	resizeContents( width, totalHeight );
+    // update scrollview's contents size (sets scrollbars limits)
+    resizeContents( width, totalHeight );
 
-	// request for thumbnail generation
-	requestPixmaps( 200 );
+    // request for thumbnail generation
+    delayedRequestVisiblePixmaps( 200 );
 }
 
 void ThumbnailList::notifyViewportChanged()
@@ -293,7 +293,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 	if ( e->size().width() != e->oldSize().width() )
 	{
 		// runs the timer avoiding a thumbnail regeneration by 'contentsMoving'
-		requestPixmaps( 2000 );
+		delayedRequestVisiblePixmaps( 2000 );
 
 		// resize and reposition items
 		int totalHeight = 0,
@@ -317,7 +317,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 	else if ( e->size().height() <= e->oldSize().height() )
 		return;
 	// update Thumbnails since width has changed or height has increased
-	requestPixmaps( 500 );
+	delayedRequestVisiblePixmaps( 500 );
 }
 
 void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
@@ -359,16 +359,20 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsX*/, int newCont
         m_visibleThumbnails.push_back( t );
         // if pixmap not present add it to requests
         if ( !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
-            requestedPixmaps.push_back( new PixmapRequest( THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight() ) );
+        {
+            PixmapRequest * p = new PixmapRequest(
+                    THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, true );
+            requestedPixmaps.push_back( p );
+        }
     }
 
     // actually request pixmaps
     if ( !requestedPixmaps.isEmpty() )
-        m_document->requestPixmaps( requestedPixmaps, true /*ASYNC*/ );
+        m_document->requestPixmaps( requestedPixmaps );
 }
 //END internal SLOTS
 
-void ThumbnailList::requestPixmaps( int delayMs )
+void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 {
 	if ( !m_delayTimer )
 	{

@@ -6,24 +6,13 @@ Legend:
     MRG - MeRGed from head
     (*) - Some parts of this item are already done
 
+
 In progress:
--> gen / mem: priorities for requests (pageview, thumbnails, pv preloading, th preloading)
--> mem: iterate from older pages to newest ones when freeing memory (not rand)
--> gen / mem: sync Memory Management (in Document) with the Generator, so
-   generators can be notified when cancelling jobs (use the notification signal
-   from generator) -> real cleaning
--> gen / mem: check for removing 'canUnloadPixmap' from observers in place of requesting a
-   list of visible pixmaps. Think at adding visible list to ObserverData and
-   passing the visible list from observers (to remove visi lists)
--> generator: add preloading
-
-Urgent fixes and items to get ready before 3.4 (special high-priority list):
--> fix: find-as-you-type (start kpdf, /, aaa, backspace, open doc)
 -> new word highlighting for searches / other highlights (on paper - enrico)
--> cleanup code and update README.png
-
+-> mem: iterate from older pages to newest ones when freeing memory (not rand)
 
 More items (first items will enter 'In progress list' first):
+-> cleanup code and update README.png
 -> find-as-you-type: use shortcut for 'find next' action (not the default one)
 -> show Viewport in ThumbnailsList (blended/contour)
 -> Delay TOC (DocumentSynapsis) generation (and move it on thread)
@@ -88,7 +77,9 @@ More items (first items will enter 'In progress list' first):
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 
 Done (newest features come first):
--> type ahead search in pageview (type '/' then the word to search..)
+-> ADD: page preloading
+-> FIX: smarter memory management / prioritize queries
+-> ADD: type ahead search in pageview (type '/' then the word to search..) (JakubS)
 -> FIX: scroll page if the the searched string is not visible
 -> FIX: use a global Viewport over the document (linked views, real link following, location restoring, etc)
 -> FIX: wrong zoom buttons order (BR74248) (check consistancy with kdvi/kviewshell/kghostview/.. (not konq))

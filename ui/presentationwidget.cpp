@@ -316,8 +316,8 @@ void PresentationWidget::changePage( int newPage )
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
         QValueList< PixmapRequest * > request;
-        request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
-        m_document->requestPixmaps( request, false );
+        request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO ) );
+        m_document->requestPixmaps( request );
     }
     else
         generatePage();

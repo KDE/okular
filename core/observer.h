@@ -21,6 +21,13 @@
 #define THUMBNAILS_ID 4
 #define TOC_ID 5
 
+/** PRIORITIES for requests. Globally defined here. **/
+#define PAGEVIEW_PRIO 1
+#define PAGEVIEW_PRELOAD_PRIO 3
+#define THUMBNAILS_PRIO 2
+#define THUMBNAILS_PRELOAD_PRIO 4
+#define PRESENTATION_PRIO 0
+
 class KPDFPage;
 
 /**

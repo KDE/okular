@@ -53,7 +53,7 @@ class KPDFDocumentPrivate
 
         // observers / requests stuff
         QMap< int, class ObserverData* > observers;
-        //QValueList< PixmapRequest * > asyncRequestsQueue;
+        QValueList< PixmapRequest * > pixmapRequestsStack;
 
         // timers (memory checking / info saver)
         QTimer * memCheckTimer;
@@ -122,7 +122,7 @@ bool KPDFDocument::openDocument( const QString & docFile )
     KMimeType::Ptr mime = KMimeType::findByPath( docFile );
     QString mimeName = mime->name();
     if ( mimeName == "application/pdf" )
-        generator = new PDFGenerator();
+        generator = new PDFGenerator( this );
     else if ( mimeName == "application/postscript" )
         kdError() << "PS generator not available" << endl;
     else
@@ -130,9 +130,6 @@ bool KPDFDocument::openDocument( const QString & docFile )
         kdWarning() << "Unknown mimetype '" << mimeName << "'." << endl;
         return false;
     }
-    // get notification of completed jobs
-    connect( generator, SIGNAL( contentsChanged( int, int ) ),
-             this, SLOT( slotGeneratedContents( int, int ) ) );
 
     // 1. load Document (and set busy cursor while loading)
     QApplication::setOverrideCursor( waitCursor );
@@ -180,6 +177,13 @@ void KPDFDocument::closeDocument()
     // delete contents generator
     delete generator;
     generator = 0;
+
+    // remove requests left in queue
+    QValueList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
+    QValueList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
+    for ( ; sIt != sEnd; ++sIt )
+        delete *sIt;
+    d->pixmapRequestsStack.clear();
 
     // send an empty list to observers (to free their data)
     foreachObserver( notifySetup( QValueVector< KPDFPage * >(), true ) );
@@ -252,12 +256,12 @@ bool KPDFDocument::isOpened() const
 
 const DocumentInfo * KPDFDocument::documentInfo() const
 {
-    return generator ? generator->documentInfo() : NULL;
+    return generator ? generator->generateDocumentInfo() : NULL;
 }
 
 const DocumentSynopsis * KPDFDocument::documentSynopsis() const
 {
-    return generator ? generator->documentSynopsis() : NULL;
+    return generator ? generator->generateDocumentSynopsis() : NULL;
 }
 
 const KPDFPage * KPDFDocument::page( uint n ) const
@@ -282,7 +286,7 @@ uint KPDFDocument::pages() const
 
 bool KPDFDocument::okToPrint() const
 {
-    return generator ? generator->allowed( Generator::Print ) : false;
+    return generator ? generator->isAllowed( Generator::Print ) : false;
 }
 
 QString KPDFDocument::getMetaData( const QString & key, const QString & option ) const
@@ -290,35 +294,66 @@ QString KPDFDocument::getMetaData( const QString & key, const QString & option )
     return generator ? generator->getMetaData( key, option ) : QString();
 }
 
-void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests, bool async )
+void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests )
 {
-    if ( !generator )
+    if ( !generator || requests.isEmpty() )
         return;
 
+#ifndef NDEBUG
+    //TODO REMOVE THIS
+    if ( !d->pixmapRequestsStack.isEmpty() && (*d->pixmapRequestsStack.begin())->priority == 0 )
+        kdDebug() << "calling requestPixmaps when SYNC generation has not yet finished." << endl;
+#endif
+
+    // 1. [CLEAN STACK] remove previous requests of requesterID
+    int requesterID = requests.first()->id;
+    QValueList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin(), sEnd = d->pixmapRequestsStack.end();
+    while ( sIt != sEnd )
+    {
+        if ( (*sIt)->id == requesterID )
+            sIt = d->pixmapRequestsStack.remove( sIt );
+        else
+            ++sIt;
+    }
+
+    // 2. [ADD TO STACK] add requests to stack
+    bool threadingDisabled = !Settings::enableThreading();
+    bool preloadDisabled = threadingDisabled ||
+                           Settings::memoryLevel() == Settings::EnumMemoryLevel::Low;
     QValueList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
     for ( ; rIt != rEnd; ++rIt )
     {
-        // set the 'page field' (see PixmapRequest) and check if request is valid
+        // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        request->page = pages_vector[ request->pageNumber ];
-        if ( !request->page || request->page->width() < 1 || request->page->height() < 1 )
+        if ( !(request->page = pages_vector[ request->pageNumber ]) )
             continue;
 
-        // 1. Update statistics (pageMemory / totalMemory) adding this pixmap
-        ObserverData * obs = d->observers[ request->id ];
-        int pageNumber = request->pageNumber;
-        if ( obs->pageMemory.contains( pageNumber ) )
-            obs->totalMemory -= obs->pageMemory[ pageNumber ];
-        int pixmapMemory = 4 * request->width * request->height / 1024;
-        obs->pageMemory[ pageNumber ] = pixmapMemory;
-        obs->totalMemory += pixmapMemory;
+        if ( !request->async )
+            request->priority = 0;
 
-        // 2. Perform pre-cleaning if needed
-        mCleanupMemory( request->id );
+        if ( request->async && threadingDisabled )
+            request->async = false;
 
-        // 3. Enqueue to Generator (that takes ownership of request)
-        generator->requestPixmap( request, Settings::enableThreading() ? async : false );
+        // add request to the 'stack' at the right place
+        if ( !request->priority )
+            // add priority zero requests to the top of the stack
+            d->pixmapRequestsStack.push_back( request );
+        else
+        {
+            // insert in stack sorted by priority
+            sIt = d->pixmapRequestsStack.begin();
+            sEnd = d->pixmapRequestsStack.end();
+            while ( sIt != sEnd && (*sIt)->priority >= request->priority )
+                ++sIt;
+            d->pixmapRequestsStack.insert( sIt, request );
+        }
     }
+
+    // 3. [START FIRST GENERATION] if generator is ready, start a new generation,
+    // or else (if gen is running) it will be started when the new contents will
+    //come from generator (in requestDone())
+    if ( generator->canGeneratePixmap() )
+        sendGeneratorRequest();
 }
 
 void KPDFDocument::requestTextPage( uint page )
@@ -329,7 +364,7 @@ void KPDFDocument::requestTextPage( uint page )
 
     // Memory management for TextPages
 
-    generator->requestTextPage( kp );
+    generator->generateSyncTextPage( kp );
 }
 /* REFERENCE IMPLEMENTATION: better calling setViewport from other code
 void KPDFDocument::setNextPage()
@@ -600,6 +635,58 @@ bool KPDFDocument::print( KPrinter &printer )
     return generator ? generator->print( printer ) : false;
 }
 
+void KPDFDocument::requestDone( PixmapRequest * req ) //FIXME
+{
+    // notify an observer that its pixmap changed
+    if ( d->observers.contains( req->id ) )
+        d->observers[ req->id ]->instance->notifyPageChanged( req->pageNumber, DocumentObserver::Pixmap );
+
+    // delete request
+    delete req;
+
+    // start a new generation
+#ifndef NDEBUG
+    if ( !generator->canGeneratePixmap() )
+        kdDebug() << "requestDone with generator not in READY state." << endl;
+#endif
+    sendGeneratorRequest();
+}
+
+void KPDFDocument::sendGeneratorRequest()
+{
+    // find a request
+    PixmapRequest * request = 0;
+    while ( !d->pixmapRequestsStack.isEmpty() && !request )
+    {
+        PixmapRequest * r = d->pixmapRequestsStack.last();
+        d->pixmapRequestsStack.pop_back();
+        // request only if page isn't already present
+        if ( !r->page->hasPixmap( r->id, r->width, r->height ) )
+            request = r;
+        else
+            delete r;
+    }
+
+    // if no request found (or already generated), return
+    if ( !request )
+        return;
+
+    // FIXME CHECK PREALLOC
+    // MEM: calc memory that should be freed to allow the new generation
+    int pixmapMemory = 4 * request->width * request->height / 1024;
+    // MEM: update statistics counting this pixmap
+    ObserverData * obs = d->observers[ request->id ];
+    int pageNumber = request->pageNumber;
+    if ( obs->pageMemory.contains( pageNumber ) )
+        obs->totalMemory -= obs->pageMemory[ pageNumber ];
+    obs->pageMemory[ pageNumber ] = pixmapMemory;
+    obs->totalMemory += pixmapMemory;
+    // MEM: cleanup
+    mCleanupMemory( request->id );
+
+    // submit the request to the generator
+    generator->generatePixmap( request );
+}
 
 void KPDFDocument::mCleanupMemory( int observerId  )
 {
@@ -906,13 +993,6 @@ void KPDFDocument::slotCheckMemory()
             mCleanupMemory( it.key() /*observerId*/ );
 }
 
-void KPDFDocument::slotGeneratedContents( int id, int pageNumber )
-{
-    // notify an observer that its pixmap changed
-    if ( d->observers.contains( id ) )
-        d->observers[ id ]->instance->notifyPageChanged( pageNumber, DocumentObserver::Pixmap );
-}
-
 
 /** DocumentViewport **/
 
@@ -1060,4 +1140,3 @@ DocumentSynopsis::DocumentSynopsis()
 }
 
 #include "document.moc"
-#include "generator.moc"

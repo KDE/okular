@@ -36,12 +36,12 @@
 #include "core/pagetransition.h"
 #include "conf/settings.h"
 
-// id for DATA_READY ThreadedGenerator Event
+// id for DATA_READY PDFPixmapGeneratorThread Event
 #define TGE_DATAREADY_ID 6969
 
-PDFGenerator::PDFGenerator()
-    : pdfdoc( 0 ), kpdfOutputDev( 0 ),
-    docInfoDirty( true ), docSynopsisDirty( true )
+PDFGenerator::PDFGenerator( KPDFDocument * doc )
+    : Generator( doc ), pdfdoc( 0 ), kpdfOutputDev( 0 ), ready( true ),
+    pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true )
 {
     // generate kpdfOutputDev and cache page color
     reparseConfig();
@@ -55,15 +55,8 @@ PDFGenerator::~PDFGenerator()
     if ( generatorThread )
     {
         generatorThread->wait();
-        if ( !generatorThread->isReady() )
-            generatorThread->endGeneration();
         delete generatorThread;
     }
-    // remove requests in queue
-    QValueList< PixmapRequest * >::iterator rIt = requestsQueue.begin(), rEnd = requestsQueue.end();
-    for ( ; rIt != rEnd; rIt++ )
-        delete *rIt;
-    requestsQueue.clear();
     // remove other internal objects
     docLock.lock();
     delete kpdfOutputDev;
@@ -72,6 +65,7 @@ PDFGenerator::~PDFGenerator()
 }
 
 
+//BEGIN Generator inherited functions
 bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
 {
 #ifndef NDEBUG
@@ -133,7 +127,7 @@ bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage
 }
 
 
-const DocumentInfo * PDFGenerator::documentInfo()
+const DocumentInfo * PDFGenerator::generateDocumentInfo()
 {
     if ( docInfoDirty )
     {
@@ -173,7 +167,7 @@ const DocumentInfo * PDFGenerator::documentInfo()
     return &docInfo;
 }
 
-const DocumentSynopsis * PDFGenerator::documentSynopsis()
+const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 {
     if ( !docSynopsisDirty )
         return &docSyn;
@@ -197,6 +191,286 @@ const DocumentSynopsis * PDFGenerator::documentSynopsis()
 
     docSynopsisDirty = false;
     return &docSyn;
+}
+
+bool PDFGenerator::canGeneratePixmap()
+{
+    return ready;
+}
+
+void PDFGenerator::generatePixmap( PixmapRequest * request )
+{
+#ifndef NDEBUG
+    if ( !ready )
+        kdDebug() << "calling generatePixmap() when not in READY state!" << endl;
+#endif
+    // update busy state (not really needed here, because the flag needs to
+    // be set only to prevent asking a pixmap while the thread is running)
+    ready = false;
+
+    // debug message
+    kdDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
+
+    /** asyncronous requests (generation in PDFPixmapGeneratorThread::run() **/
+    if ( request->async )
+    {
+        // start the generation into the thread
+        generatorThread->startGeneration( request );
+        return;
+    }
+
+    /** syncronous request: in-place generation **/
+    // compute dpi used to get an image with desired width and height
+    KPDFPage * page = request->page;
+    double fakeDpiX = request->width * 72.0 / page->width(),
+           fakeDpiY = request->height * 72.0 / page->height();
+
+    // setup kpdf output device: text page is generated only if we are at 72dpi.
+    // since we can pre-generate the TextPage at the right res.. why not?
+    bool genTextPage = !page->hasSearchPage() && (request->width == page->width()) &&
+                       (request->height == page->height());
+    // generate links and image rects if rendering pages on pageview
+    bool genRects = request->id == PAGEVIEW_ID;
+
+    // 0. LOCK [waits for the thread end]
+    docLock.lock();
+
+    // 1. Set OutputDev parameters and Generate contents
+    // note: thread safety is set on 'false' for the GUI (this) thread
+    kpdfOutputDev->setParams( request->width, request->height, genTextPage, genRects, genRects, false );
+    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
+
+    // 2. Take data from outputdev and attach it to the Page
+    page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
+    if ( genTextPage )
+        page->setSearchPage( kpdfOutputDev->takeTextPage() );
+    if ( genRects )
+        page->setRects( kpdfOutputDev->takeRects() );
+
+    // 3. UNLOCK [re-enables shared access]
+    docLock.unlock();
+
+    // update ready state
+    ready = true;
+
+    // notify the new generation
+    signalRequestDone( request );
+}
+
+void PDFGenerator::generateSyncTextPage( KPDFPage * page )
+{
+    // build a TextPage using the lightweight KPDFTextDev generator..
+    KPDFTextDev td;
+    docLock.lock();
+    pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+    // ..and attach it to the page
+    page->setSearchPage( td.takeTextPage() );
+    docLock.unlock();
+}
+
+bool PDFGenerator::print( KPrinter& printer )
+{
+    //FIXME (if needed) TAKE CARE OF THREADING, READY STATE AND SIMILAR STUFF
+    KTempFile tf( QString::null, ".ps" );
+    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
+
+    if (psOut->isOk())
+    {
+        std::list<int> pages;
+
+        if (!printer.previewOnly())
+        {
+            QValueList<int> pageList = printer.pageList();
+            QValueList<int>::const_iterator it;
+
+            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
+        }
+        else
+        {
+            for(int i = 1; i <= pdfdoc->getNumPages(); i++) pages.push_back(i);
+        }
+
+        docLock.lock();
+        pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
+        docLock.unlock();
+
+        // needs to be here so that the file is flushed, do not merge with the one
+        // in the else
+        delete psOut;
+        printer.printFiles(tf.name(), true);
+        return true;
+    }
+    else
+    {
+        delete psOut;
+        return false;
+    }
+}
+
+QString PDFGenerator::getMetaData( const QString & key, const QString & option )
+{
+    if ( key == "StartFullScreen" )
+    {
+        // asking for the 'start in fullscreen mode' (pdf property)
+        if ( pdfdoc->getCatalog()->getPageMode() == Catalog::FullScreen )
+            return "yes";
+    }
+    else if ( key == "NamedViewport" && !option.isEmpty() )
+    {
+        // asking for the page related to a 'named link destination'. the
+        // option is the link name. @see addSynopsisChildren.
+        DocumentViewport viewport;
+        GString * namedDest = new GString( option.latin1() );
+        docLock.lock();
+        LinkDest * destination = pdfdoc->findDest( namedDest );
+        if ( destination )
+        {
+            if ( !destination->isPageRef() )
+                viewport.pageNumber = destination->getPageNum() - 1;
+            else
+            {
+                Ref ref = destination->getPageRef();
+                viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
+            }
+        }
+        docLock.unlock();
+        delete namedDest;
+        if ( viewport.pageNumber >= 0 )
+            return viewport.toString();
+    }
+    return QString();
+}
+
+bool PDFGenerator::reparseConfig()
+{
+    // load paper color from Settings or use the white default color
+    QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
+                     Settings::changeColors() ) ? Settings::paperColor() : Qt::white;
+    // if paper color is changed we have to rebuild every visible pixmap in addition
+    // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
+    // over the page rendered on 'standard' white background.
+    if ( color != paperColor || !kpdfOutputDev )
+    {
+        paperColor = color;
+        SplashColor splashCol;
+        splashCol.rgb8 = splashMakeRGB8( paperColor.red(), paperColor.green(), paperColor.blue() );
+        // rebuild the output device using the new paper color and initialize it
+        docLock.lock();
+        delete kpdfOutputDev;
+        kpdfOutputDev = new KPDFOutputDev( splashCol );
+        if ( pdfdoc )
+            kpdfOutputDev->initDevice( pdfdoc );
+        docLock.unlock();
+        return true;
+    }
+    return false;
+}
+//END Generator inherited functions
+
+
+QString PDFGenerator::getDocumentInfo( const QString & data ) const
+// note: MUTEX is LOCKED while calling this
+{
+    // [Albert] Code adapted from pdfinfo.cc on xpdf
+    Object info;
+    if ( !pdfdoc )
+        return i18n( "Unknown" );
+
+    pdfdoc->getDocInfo( &info );
+    if ( !info.isDict() )
+        return i18n( "Unknown" );
+
+    QCString result;
+    Object obj;
+    GString *s1;
+    GBool isUnicode;
+    Unicode u;
+    char buf[8];
+    int i, n;
+    Dict *infoDict = info.getDict();
+    UnicodeMap *uMap = globalParams->getTextEncoding();
+
+    if ( !uMap )
+        return i18n( "Unknown" );
+
+    if ( infoDict->lookup( data.latin1(), &obj )->isString() )
+    {
+        s1 = obj.getString();
+        if ( ( s1->getChar(0) & 0xff ) == 0xfe && ( s1->getChar(1) & 0xff ) == 0xff )
+        {
+            isUnicode = gTrue;
+            i = 2;
+        }
+        else
+        {
+            isUnicode = gFalse;
+            i = 0;
+        }
+        while ( i < obj.getString()->getLength() )
+        {
+            if ( isUnicode )
+            {
+                u = ( ( s1->getChar(i) & 0xff ) << 8 ) | ( s1->getChar(i+1) & 0xff );
+                i += 2;
+            }
+            else
+            {
+                u = s1->getChar(i) & 0xff;
+                ++i;
+            }
+            n = uMap->mapUnicode( u, buf, sizeof( buf ) );
+            result += QCString( buf, n + 1 );
+        }
+        obj.free();
+        return result;
+    }
+    obj.free();
+    return i18n( "Unknown" );
+}
+
+QString PDFGenerator::getDocumentDate( const QString & data ) const
+// note: MUTEX is LOCKED while calling this
+{
+    // [Albert] Code adapted from pdfinfo.cc on xpdf
+    if ( !pdfdoc )
+        return i18n( "Unknown Date" );
+
+    Object info;
+    pdfdoc->getDocInfo( &info );
+    if ( !info.isDict() )
+        return i18n( "Unknown Date" );
+
+    Object obj;
+    char *s;
+    int year, mon, day, hour, min, sec;
+    Dict *infoDict = info.getDict();
+    UnicodeMap *uMap = globalParams->getTextEncoding();
+
+    if ( !uMap )
+        return i18n( "Unknown Date" );
+
+    if ( infoDict->lookup( data.latin1(), &obj )->isString() )
+    {
+        s = obj.getString()->getCString();
+        if ( s[0] == 'D' && s[1] == ':' )
+            s += 2;
+        if ( sscanf( s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
+        {
+            QDate d( year, mon, day );  //CHECK: it was mon-1, Jan->0 (??)
+            QTime t( hour, min, sec );
+            if ( d.isValid() && t.isValid() )
+                return KGlobal::locale()->formatDateTime( QDateTime(d, t), false, true );
+            else
+                return s;
+        }
+        else
+            return s;
+        fputc( '\n', stdout );
+        obj.free();
+        //return result;
+    }
+    obj.free();
+    return i18n( "Unknown Date" );
 }
 
 void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
@@ -333,311 +607,7 @@ void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
     page->setTransition( transition );
 }
 
-bool PDFGenerator::print( KPrinter& printer )
-{
-    KTempFile tf( QString::null, ".ps" );
-    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
 
-    if (psOut->isOk())
-    {
-        std::list<int> pages;
-
-        if (!printer.previewOnly())
-        {
-            QValueList<int> pageList = printer.pageList();
-            QValueList<int>::const_iterator it;
-
-            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
-        }
-        else
-        {
-            for(int i = 1; i <= pdfdoc->getNumPages(); i++) pages.push_back(i);
-        }
-
-        docLock.lock();
-        pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
-        docLock.unlock();
-
-        // needs to be here so that the file is flushed, do not merge with the one
-        // in the else
-        delete psOut;
-        printer.printFiles(tf.name(), true);
-        return true;
-    }
-    else
-    {
-        delete psOut;
-        return false;
-    }
-}
-
-void PDFGenerator::requestPixmap( PixmapRequest * request, bool asyncronous )
-{
-    //kdDebug() << "id: " << request->id << " is requesting pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
-
-    // check if request has already been satisfied
-    KPDFPage * page = request->page;
-    if ( page->hasPixmap( request->id, request->width, request->height ) )
-        return;
-
-    if ( !asyncronous )
-    {
-        // compute dpi used to get an image with desired width and height
-        double fakeDpiX = request->width * 72.0 / page->width(),
-                fakeDpiY = request->height * 72.0 / page->height();
-
-        // setup kpdf output device: text page is generated only if we are at 72dpi.
-        // since we can pre-generate the TextPage at the right res.. why not?
-        bool genTextPage = !page->hasSearchPage() && (request->width == page->width()) &&
-                            (request->height == page->height());
-        // generate links and image rects if rendering pages on pageview
-        bool genRects = request->id == PAGEVIEW_ID;
-
-        // 0. LOCK [prevents thread from concurrent access]
-        docLock.lock();
-
-        // 1. Set OutputDev parameters and Generate contents
-        kpdfOutputDev->setParams( request->width, request->height, genTextPage, genRects, genRects );
-        pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
-
-        // 2. Take data from outputdev and attach it to the Page
-        page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
-        if ( genTextPage )
-            page->setSearchPage( kpdfOutputDev->takeTextPage() );
-        if ( genRects )
-            page->setRects( kpdfOutputDev->takeRects() );
-
-        // 3. UNLOCK [re-enables shared access]
-        docLock.unlock();
-
-        // notify the new generation
-        contentsChanged( request->id, request->pageNumber );
-
-        // free memory (since we took ownership of the request)
-        delete request;
-    }
-    else
-    {
-        // check if an overlapping request is already stacked. if so remove
-        // the duplicated requests from the stack.
-        QValueList< PixmapRequest * >::iterator rIt = requestsQueue.begin();
-        QValueList< PixmapRequest * >::iterator rEnd = requestsQueue.end();
-        while ( rIt != rEnd )
-        {
-            const PixmapRequest * stackedRequest = *rIt;
-            if ( stackedRequest->id == request->id && stackedRequest->page == request->page )
-            {
-                delete stackedRequest;
-                rIt = requestsQueue.remove( rIt );
-            }
-            else
-                ++rIt;
-        }
-
-        // queue the pixmap request at the top of the stack
-        requestsQueue.push_back( request );
-
-        // try to pop an item out of the stack and start generation. if
-        // a generation is already being done, the item just added will
-        // be processed in the 'event handler' calling this function.
-        startNewThreadedGeneration();
-    }
-}
-
-void PDFGenerator::requestTextPage( KPDFPage * page )
-{
-    // build a TextPage using the lightweight KPDFTextDev generator..
-    KPDFTextDev td;
-    docLock.lock();
-    pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
-    // ..and attach it to the page
-    page->setSearchPage( td.takeTextPage() );
-    docLock.unlock();
-}
-
-bool PDFGenerator::reparseConfig()
-{
-    // load paper color from Settings or use the white default color
-    QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
-                     Settings::changeColors() ) ? Settings::paperColor() : Qt::white;
-    // if paper color is changed we have to rebuild every visible pixmap in addition
-    // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
-    // over the page rendered on 'standard' white background.
-    if ( color != paperColor || !kpdfOutputDev )
-    {
-        paperColor = color;
-        SplashColor splashCol;
-        splashCol.rgb8 = splashMakeRGB8( paperColor.red(), paperColor.green(), paperColor.blue() );
-        // rebuild the output device using the new paper color and initialize it
-        docLock.lock();
-        delete kpdfOutputDev;
-        kpdfOutputDev = new KPDFOutputDev( splashCol );
-        if ( pdfdoc )
-            kpdfOutputDev->initDevice( pdfdoc );
-        docLock.unlock();
-        return true;
-    }
-    return false;
-}
-
-QString PDFGenerator::getMetaData( const QString & key, const QString & option )
-{
-    if ( key == "StartFullScreen" )
-    {
-        // asking for the 'start in fullscreen mode' (pdf property)
-        if ( pdfdoc->getCatalog()->getPageMode() == Catalog::FullScreen )
-            return "yes";
-    }
-    else if ( key == "NamedViewport" && !option.isEmpty() )
-    {
-        // asking for the page related to a 'named link destination'. the
-        // option is the link name. @see addSynopsisChildren.
-        DocumentViewport viewport;
-        GString * namedDest = new GString( option.latin1() );
-        docLock.lock();
-        LinkDest * destination = pdfdoc->findDest( namedDest );
-        if ( destination )
-        {
-            if ( !destination->isPageRef() )
-                viewport.pageNumber = destination->getPageNum() - 1;
-            else
-            {
-                Ref ref = destination->getPageRef();
-                viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
-            }
-        }
-        docLock.unlock();
-        delete namedDest;
-        if ( viewport.pageNumber >= 0 )
-            return viewport.toString();
-    }
-    return QString();
-}
-
-QString PDFGenerator::getDocumentInfo( const QString & data ) const
-// note: MUTEX is LOCKED while calling this
-{
-    // [Albert] Code adapted from pdfinfo.cc on xpdf
-    Object info;
-    if ( !pdfdoc )
-        return i18n( "Unknown" );
-
-    pdfdoc->getDocInfo( &info );
-    if ( !info.isDict() )
-        return i18n( "Unknown" );
-
-    QCString result;
-    Object obj;
-    GString *s1;
-    GBool isUnicode;
-    Unicode u;
-    char buf[8];
-    int i, n;
-    Dict *infoDict = info.getDict();
-    UnicodeMap *uMap = globalParams->getTextEncoding();
-
-    if ( !uMap )
-        return i18n( "Unknown" );
-
-    if ( infoDict->lookup( data.latin1(), &obj )->isString() )
-    {
-        s1 = obj.getString();
-        if ( ( s1->getChar(0) & 0xff ) == 0xfe && ( s1->getChar(1) & 0xff ) == 0xff )
-        {
-            isUnicode = gTrue;
-            i = 2;
-        }
-        else
-        {
-            isUnicode = gFalse;
-            i = 0;
-        }
-        while ( i < obj.getString()->getLength() )
-        {
-            if ( isUnicode )
-            {
-                u = ( ( s1->getChar(i) & 0xff ) << 8 ) | ( s1->getChar(i+1) & 0xff );
-                i += 2;
-            }
-            else
-            {
-                u = s1->getChar(i) & 0xff;
-                ++i;
-            }
-            n = uMap->mapUnicode( u, buf, sizeof( buf ) );
-            result += QCString( buf, n + 1 );
-        }
-        obj.free();
-        return result;
-    }
-    obj.free();
-    return i18n( "Unknown" );
-}
-
-QString PDFGenerator::getDocumentDate( const QString & data ) const
-// note: MUTEX is LOCKED while calling this
-{
-    // [Albert] Code adapted from pdfinfo.cc on xpdf
-    if ( !pdfdoc )
-        return i18n( "Unknown Date" );
-
-    Object info;
-    pdfdoc->getDocInfo( &info );
-    if ( !info.isDict() )
-        return i18n( "Unknown Date" );
-
-    Object obj;
-    char *s;
-    int year, mon, day, hour, min, sec;
-    Dict *infoDict = info.getDict();
-    UnicodeMap *uMap = globalParams->getTextEncoding();
-
-    if ( !uMap )
-        return i18n( "Unknown Date" );
-
-    if ( infoDict->lookup( data.latin1(), &obj )->isString() )
-    {
-        s = obj.getString()->getCString();
-        if ( s[0] == 'D' && s[1] == ':' )
-            s += 2;
-        if ( sscanf( s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
-        {
-            QDate d( year, mon, day );  //CHECK: it was mon-1, Jan->0 (??)
-            QTime t( hour, min, sec );
-            if ( d.isValid() && t.isValid() )
-                return KGlobal::locale()->formatDateTime( QDateTime(d, t), false, true );
-            else
-                return s;
-        }
-        else
-            return s;
-        fputc( '\n', stdout );
-        obj.free();
-        //return result;
-    }
-    obj.free();
-    return i18n( "Unknown Date" );
-}
-
-void PDFGenerator::startNewThreadedGeneration()
-{
-    // exit if already processing a request or queue is empty
-    if ( !generatorThread->isReady() || requestsQueue.isEmpty() )
-        return;
-
-    // if any requests are already accomplished, pop them from the stack
-    PixmapRequest * req = requestsQueue.last();
-    requestsQueue.pop_back();
-    if ( req->page->hasPixmap( req->id, req->width, req->height ) )
-    {
-        delete req;
-        startNewThreadedGeneration();
-        return;
-    }
-
-    // start generator thread with given PixmapRequest
-    generatorThread->startGeneration( req );
-}
 
 void PDFGenerator::customEvent( QCustomEvent * event )
 {
@@ -659,7 +629,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
 }
 #endif
 
-    // the mutex must be unlocked now
+    // 1. the mutex must be unlocked now
     if ( docLock.locked() )
     {
         kdWarning() << "PDFGenerator: 'data available' but mutex still "
@@ -669,17 +639,12 @@ void PDFGenerator::customEvent( QCustomEvent * event )
         docLock.unlock();
     }
 
-    // put thread's generated data into the KPDFPage
-    const PixmapRequest * request = generatorThread->currentRequest();
-    int reqId = request->id,
-        reqPage = request->pageNumber;
-
+    // 2. put thread's generated data into the KPDFPage
+    PixmapRequest * request = static_cast< PixmapRequest * >( event->data() );
     QImage * outImage = generatorThread->takeImage();
     TextPage * outTextPage = generatorThread->takeTextPage();
     QValueList< KPDFPageRect * > outRects = generatorThread->takeRects();
 
-    // QImage -> QPixmap
-    // attach data to the Page
     request->page->setPixmap( request->id, new QPixmap( *outImage ) );
     delete outImage;
     if ( outTextPage )
@@ -687,15 +652,13 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     if ( !outRects.isEmpty() )
         request->page->setRects( outRects );
 
-    // tell generator that generation is ended and to free its data
-    // note: request will be deleted so we can't access it from here on
+    // 3. tell generator that data has been taken
     generatorThread->endGeneration();
 
-    // notify the observer about changes in the page
-    contentsChanged( reqId, reqPage );
-
-    // proceed with generation
-    startNewThreadedGeneration();
+    // update ready state
+    ready = true;
+    // notify the new generation
+    signalRequestDone( request );
 }
 
 
@@ -749,19 +712,9 @@ void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
 #endif
     // set generation parameters and run thread
     d->currentRequest = request;
-    // TODO: use a different priority for different types of requests
-    // TODO: embed priority in requests
-    start( request->id == PAGEVIEW_ID ? QThread::InheritPriority : QThread::LowPriority );
-}
-
-const PixmapRequest * PDFPixmapGeneratorThread::currentRequest() const
-{
-    return d->currentRequest;
-}
-
-bool PDFPixmapGeneratorThread::isReady() const
-{
-    return !d->currentRequest;
+    // TODO map priorities embedded in request
+    QThread::Priority prio = QThread::InheritPriority;
+    start( prio );
 }
 
 void PDFPixmapGeneratorThread::endGeneration()
@@ -776,7 +729,6 @@ void PDFPixmapGeneratorThread::endGeneration()
     }
 #endif
     // reset internal members preparing for a new generation
-    delete d->currentRequest;
     d->currentRequest = 0;
 }
 
@@ -797,7 +749,7 @@ QValueList< KPDFPageRect * > PDFPixmapGeneratorThread::takeRects() const
 
 void PDFPixmapGeneratorThread::run()
 // perform contents generation, when the MUTEX is already LOCKED
-// @see PDFGenerator::requestPixmap( .. ) (and be aware to sync the code)
+// @see PDFGenerator::generatePixmap( .. ) (and be aware to sync the code)
 {
     // compute dpi used to get an image with desired width and height
     KPDFPage * page = d->currentRequest->page;
@@ -824,7 +776,7 @@ void PDFPixmapGeneratorThread::run()
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
                                       fakeDpiX, fakeDpiY, 0, true, genPageRects );
 
-    // 2. grab data from the OutputDev and store it locally
+    // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
     d->m_image = d->generator->kpdfOutputDev->takeImage();
     d->m_textPage = d->generator->kpdfOutputDev->takeTextPage();
     d->m_rects = d->generator->kpdfOutputDev->takeRects();
@@ -833,5 +785,7 @@ void PDFPixmapGeneratorThread::run()
     d->generator->docLock.unlock();
 
     // notify the GUI thread that data is pending and can be read
-    QApplication::postEvent( d->generator, new QCustomEvent( TGE_DATAREADY_ID ) );
+    QCustomEvent * readyEvent = new QCustomEvent( TGE_DATAREADY_ID );
+    readyEvent->setData( d->currentRequest );
+    QApplication::postEvent( d->generator, readyEvent );
 }

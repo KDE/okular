@@ -13,18 +13,15 @@
 #include <qobject.h>
 #include <qvaluevector.h>
 #include <qstring.h>
+#include "core/document.h"
 class KPrinter;
 class KPDFPage;
 class KPDFLink;
-class KPDFDocument;
-class DocumentSynopsis;
-class DocumentInfo;
 class PixmapRequest;
 
 /* Note: on contents generation and asyncronous queries.
  * Many observers may want to request data syncronously or asyncronously.
- * - Sync requests. These should be done in-place. Syncronous events in the
- *   queue have precedence on all the asyncronous ones.
+ * - Sync requests. These should be done in-place.
  * - Async request must be done in real background. That usually means a
  *   thread, such as QThread derived classes.
  * Once contents are available, they must be immediately stored in the
@@ -44,32 +41,41 @@ class PixmapRequest;
  */
 class Generator : public QObject
 {
-    Q_OBJECT
     public:
+        /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
-        virtual bool loadDocument( const QString & fileName, QValueVector< KPDFPage* > & pagesVector ) = 0;
+        virtual bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector ) = 0;
 
         // Document description and Table of contents
-        virtual const DocumentInfo * documentInfo() { return 0L; }
-        virtual const DocumentSynopsis * documentSynopsis() { return 0L; }
+        virtual const DocumentInfo * generateDocumentInfo() { return 0L; }
+        virtual const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
 
         // DRM handling
         enum Permissions { Modify = 1, Copy = 2, Print = 4, AddNotes = 8 };
-        virtual bool allowed( int /*permisisons*/ ) { return true; }
+        virtual bool isAllowed( int /*permisisons*/ ) { return true; }
 
-        // generator core
+        // page contents generation
+        virtual bool canGeneratePixmap() = 0;
+        virtual void generatePixmap( PixmapRequest * request ) = 0;
+        virtual void generateSyncTextPage( KPDFPage * page ) = 0;
+
+        // print document using already configured kprinter
         virtual bool print( KPrinter& /*printer*/ ) { return false; }
-        virtual void requestPixmap( PixmapRequest * request, bool asyncronous ) = 0;
-        virtual void requestTextPage( KPDFPage * page ) = 0;
-
-        // check configuration and return true if something changed
+        // access meta data of the generator
+        virtual QString getMetaData( const QString &/*key*/, const QString &/*option*/ ) { return QString(); }
+        // tell generator to re-parse configuration and return true if something changed
         virtual bool reparseConfig() { return false; }
 
-        // Access meta data of the generator
-        virtual QString getMetaData( const QString &/*key*/, const QString &/*option*/ ) { return QString(); }
+        /** 'signals' to send events the KPDFDocument **/
+        // tell the document that the job has been completed
+        void signalRequestDone( PixmapRequest * request ) { m_document->requestDone( request ); }
 
-    signals:
-        void contentsChanged( int id, int pageNumber );
+        /** constructor: takes the Document as a parameter **/
+        Generator( KPDFDocument * doc ) : m_document( doc ) {};
+
+    private:
+        Generator();
+        KPDFDocument * m_document;
 };
 
 /**
@@ -77,18 +83,24 @@ class Generator : public QObject
  */
 struct PixmapRequest
 {
-    // public data fields
+    PixmapRequest( int rId, int n, int w, int h, int p, bool a = false )
+        : id( rId ), pageNumber( n ), width( w ), height( h ),
+        priority( p ), async( a ), page( 0 )  {};
+
+    // observer id
     int id;
+    // page number and size
     int pageNumber;
     int width;
     int height;
-    // this field is set by the document before passing the
+    // asyncronous request priority (less is better, 0 is max)
+    int priority;
+    // generate the pixmap in a thread and notify observer when done
+    bool async;
+
+    // this field is set by the Docuemnt prior passing the
     // request to the generator
     KPDFPage * page;
-
-    // public constructor: initialize data
-    PixmapRequest( int rId, int n, int w, int h )
-        : id( rId ), pageNumber( n ), width( w ), height( h ), page( 0 )  {};
 };
 
 #endif

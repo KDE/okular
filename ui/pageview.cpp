@@ -115,8 +115,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseOnRect = false;
     d->delayTimer = 0;
     d->scrollTimer = 0;
+    d->findTimer = 0;
     d->typeAheadActivated = false;
-    d->findTimer = new QTimer(this);
     d->scrollIncrement = 0;
     d->dirtyLayout = false;
     d->blockViewport = false;
@@ -144,11 +144,6 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 //    setCornerWidget( resizeButton );
 //    resizeButton->setEnabled( false );
     // connect(...);
-    
-    // find ahead timeout timer
-    connect(d->findTimer, SIGNAL(timeout()), this, SLOT(findTimeout()));
-
-    
 }
 
 PageView::~PageView()
@@ -504,61 +499,66 @@ void PageView::viewportResizeEvent( QResizeEvent * )
 void PageView::keyPressEvent( QKeyEvent * e )
 {
     e->accept();
-    
-    // based on khtml/khtmlview.cpp
-    if(d->typeAheadActivated)
+
+    // handle 'find as you type' (based on khtml/khtmlview.cpp)
+    if( d->typeAheadActivated )
     {
-    // type-ahead find aka find-as-you-type
-        if(e->key() == Key_BackSpace)
+        if( e->key() == Key_BackSpace )
         {
-            d->findString = d->findString.left(d->findString.length() - 1);
-            if(!d->findString.isEmpty())
+            d->findString = d->findString.left( d->findString.length() - 1 );
+            if( !d->findString.isEmpty() )
             {
-                findAhead(false);
-                d->findTimer->start(3000, true);
+                findAhead( false );
+                d->findTimer->start( 3000, true );
             }
             else
             {
                 findTimeout();
-                d->document->unHilightPages(false);
+                d->document->unHilightPages( false );
             }
             return;
         }
-        else if(e->key() == KStdAccel::findNext())
-        { // part doesn't get this key event because of the keyboard grab
+        else if( e->key() == KStdAccel::findNext() )
+        {
+            // part doesn't get this key event because of the keyboard grab
             d->findTimer->stop(); // restore normal operation during possible messagebox is displayed
-	    releaseKeyboard();    
-            if (d->document->findText())
-                d->messageWindow->display(i18n("Text found: \"%1\".").arg(d->findString.lower()),
-                PageViewMessage::Info, 3000);
-            d->findTimer->start(3000, true);
-	    grabKeyboard();
+            releaseKeyboard();
+            if ( d->document->findText() )
+                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->findString.lower()),
+                                           PageViewMessage::Info, 3000 );
+            d->findTimer->start( 3000, true );
+            grabKeyboard();
             return;
         }
-        else if(e->key() == Key_Escape || e->key() == Key_Return)
+        else if( e->key() == Key_Escape || e->key() == Key_Return )
         {
             findTimeout();
             return;
         }
-        else if(e->text().isEmpty() == false)
+        else if( e->text().isEmpty() == false )
         {
             d->findString += e->text();
-            findAhead(true);
-            d->findTimer->start(3000, true);
+            findAhead( true );
+            d->findTimer->start( 3000, true );
             return;
         }
     }
-    else if(e->key() == '/' && d->document->isOpened())
+    else if( e->key() == '/' && d->document->isOpened() )
     {
-        d->findString="";
+        d->findString = QString();
         d->messageWindow->display(i18n("Starting -- find text as you type"), PageViewMessage::Info, 3000);
         d->typeAheadActivated = true;
-        d->findTimer->start(3000, true);
+        if ( !d->findTimer )
+        {
+            // create the timer on demand
+            d->findTimer = new QTimer( this );
+            connect( d->findTimer, SIGNAL(timeout()), this, SLOT(findTimeout()) );
+        }
+        d->findTimer->start( 3000, true );
         grabKeyboard();
         return;
     }
 
-    
     // move/scroll page by using keys
     switch ( e->key() )
     {
@@ -1504,7 +1504,11 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
         // if the item has not the right pixmap, add a request for it
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
-            requestedPixmaps.push_back( new PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->width(), i->height() ) );
+        {
+            PixmapRequest * p = new PixmapRequest(
+                    PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRIO, true );
+            requestedPixmaps.push_back( p );
+        }
 
         // look for the item closest to viewport center and the relative
         // position between the item and the viewport center
@@ -1528,7 +1532,33 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // request pixmaps in 'requests list'
     if ( !requestedPixmaps.isEmpty() )
-        d->document->requestPixmaps( requestedPixmaps, true /*ASYNC*/ );
+    {
+        // if preloading is enabled, add the pages before and after in preloading
+        if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+             Settings::enableThreading() )
+        {
+            int headRequest = requestedPixmaps.first()->pageNumber - 1;
+            int tailRequest = requestedPixmaps.last()->pageNumber + 1;
+            // add the page before in preload
+            if ( headRequest >= 0 )
+            {
+                PageViewItem * i = d->items[ headRequest ];
+                PixmapRequest * p = new PixmapRequest(
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true );
+                requestedPixmaps.push_back( p );
+            }
+            // add the page before in preload
+            if ( tailRequest < d->items.count() )
+            {
+                PageViewItem * i = d->items[ tailRequest ];
+                PixmapRequest * p = new PixmapRequest(
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true );
+                requestedPixmaps.push_back( p );
+            }
+        }
+        // send requests to the document
+        d->document->requestPixmaps( requestedPixmaps );
+    }
 
     // if this functions was invoked by viewport events
     if ( isEvent && nearPageNumber != -1 )

@@ -41,6 +41,11 @@ KPDFPage::KPDFPage( uint page, float w, float h, int r )
         m_width = h;
         m_height = w;
     }
+    // avoid Division-By-Zero problems in the program
+    if ( m_width <= 0 )
+        m_width = 1;
+    if ( m_height <= 0 )
+        m_height = 1;
 }
 
 KPDFPage::~KPDFPage()

@@ -71,7 +71,7 @@ Q_OBJECT
 		void urlDropped( const KURL& );
 
 	private:
-		void requestPixmaps( int delayMs = 0 );
+		void delayedRequestVisiblePixmaps( int delayMs = 0 );
 		KPDFDocument *m_document;
 		ThumbnailWidget *m_selected;
 		QTimer *m_delayTimer;

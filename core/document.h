@@ -73,7 +73,7 @@ class KPDFDocument : public QObject // only for a private slot..
         // perform actions on document / pages
         void setViewportPage( int page, int id = -1 );
         void setViewport( const DocumentViewport & viewport, int id = -1 );
-        void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool asyncronous );
+        void requestPixmaps( const QValueList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
         bool findText( const QString & text = "", bool caseSensitive = false, bool findAhead = false );
         void findTextAll( const QString & pattern, bool caseSensitive );
@@ -82,11 +82,15 @@ class KPDFDocument : public QObject // only for a private slot..
         bool print( KPrinter &printer );
         void unHilightPages(bool filteredOnly = true);
 
+        // notifications sent by generator
+        void requestDone( PixmapRequest * request );
+
     signals:
         void linkFind();
         void linkGoToPage();
 
     private:
+        void sendGeneratorRequest();
         // memory management related functions
         void mCleanupMemory( int observerId );
         int mTotalMemory();
@@ -98,14 +102,12 @@ class KPDFDocument : public QObject // only for a private slot..
         void processPageList( bool documentChanged );
 
         Generator * generator;
-        QString documentFileName;
         QValueVector< KPDFPage * > pages_vector;
         class KPDFDocumentPrivate * d;
 
     private slots:
         void saveDocumentInfo() const;
         void slotCheckMemory();
-        void slotGeneratedContents( int id, int pageNumber );
 };
 
 

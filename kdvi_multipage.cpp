@@ -223,9 +223,11 @@ bool KDVIMultiPage::print(const QStrList &pages, int current)
   Print * printdlg = new Print(window, "printdlg");
  
   printdlg->setFile(m_file);
-  printdlg->setCurrentPage(current, window->totalPages());
+  printdlg->setCurrentPage(current+1, window->totalPages());
   printdlg->setMarkList(&pages);
   printdlg->exec();
   
-  delete printdlg;                                                                 
+  delete printdlg;       
+
+  return true;
 }

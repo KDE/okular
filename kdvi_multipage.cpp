@@ -500,7 +500,7 @@ void KDVIMultiPage::reload()
 #endif
   
   if (DVIRenderer.isValidFile(m_file)) {
-
+    userSelection.clear();
     Q_INT32 pg = currentPageNumber();
 
     killTimer(timer_id);
@@ -510,13 +510,9 @@ void KDVIMultiPage::reload()
     generateDocumentWidgets();
     emit numberOfPages(DVIRenderer.totalPages());
     enableActions(r);
-
     emit setStatusBarText(QString::null);
-
-    //    emit pageInfo(DVIRenderer.totalPages(), DVIRenderer.curr_page()-1 );
     markList()->setCurrentPageNumber(pg);
     emit pageInfo(DVIRenderer.totalPages(), pg );
-
   } else {
     if (timer_id == -1)
       timer_id = startTimer(1000);

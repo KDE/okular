@@ -37,6 +37,7 @@
 #include <signal.h>
 #include <kglobal.h>
 #include <qdragobject.h>
+#include <kconfig.h>
 
 enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
 enum {ID_OPT_PK = 3, ID_OPT_PS, ID_OPT_MB, ID_OPT_BB, ID_OPT_TB, ID_OPT_SB, ID_OPT_SC };

@@ -220,7 +220,7 @@
     when you don't have a three-button mouse, you can simultaneously
     use the <mousebutton>left</mousebutton> and the
     <mousebutton>right</mousebutton> button). After that, your
-    favourite editor will open, load the TeX sourcefile and jump to
+    favourite editor will open, load the TeX source file and jump to
     the proper paragraph. To use inverse search, do the
     following:</para>
 
@@ -238,11 +238,10 @@
 	<para>Let &kdvi; know which editor you would like to
 	use. Choose an editor in the <guilabel>Preferences</guilabel>
 	dialog (this dialog can be reached by choosing
-	<guimenu>Settings</guimenu> in the menu <guimenuitem>DVI
-	options</guimenuitem>). The next chapter of this
-	documentation, <link linkend="opt-rendering">The
-	preferences dialog/Rendering Options</link>, explains this
-	dialog in more detail.</para>
+	<guimenu>DVI Options</guimenu> in the menu <guimenuitem>DVI
+	options</guimenuitem>). The next section of this
+	documentation, <link linkend="opt-rendering">Rendering
+	Options</link>, explains this dialog in more detail.</para>
       </step>
       <step>
 	<para>Some editors need to be started manually, or need
@@ -761,8 +760,7 @@
     <anchor id="opts"></anchor>
 
     <para>The <guilabel>Preferences</guilabel> dialog can be reached
-    by choosing <menuchoice><guimenu>Settings</guimenu>
-    <guimenuitem>DVI Options</guimenuitem></menuchoice> in the
+    by choosing <guimenuitem>DVI Options</guimenuitem> in the
     <guimenu>Settings</guimenu> menu.</para>
 
     <para>The dialog consists of two tabs, <guilabel>Fonts</guilabel>
@@ -775,13 +773,13 @@
       &kdvi;.</para>
 
       <screenshot>
-	<screeninfo>The <guilabel>Fonts</guilabel> dialog</screeninfo>
+	<screeninfo>The <guilabel>Fonts</guilabel> tab</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="optionrequester1.png" format="PNG"/>
 	  </imageobject>
 	  <textobject>
-	    <phrase>The <guilabel>Fonts</guilabel> dialog</phrase>
+	    <phrase>The <guilabel>Fonts</guilabel> tab</phrase>
 	  </textobject>
 	</mediaobject>	
       </screenshot>
@@ -826,12 +824,12 @@
       &kdvi;.</para>
 
       <screenshot>
-	<screeninfo>The <guilabel>Rendering</guilabel> dialog</screeninfo>
+	<screeninfo>The <guilabel>Rendering</guilabel> tab</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="optionrequester2.png" format="PNG"/></imageobject>
 	  <textobject>
-	    <phrase>The <guilabel>Rendering</guilabel> dialog</phrase>
+	    <phrase>The <guilabel>Rendering</guilabel> tab</phrase>
 	  </textobject>
 	</mediaobject>
       </screenshot>

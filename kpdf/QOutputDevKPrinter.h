@@ -30,20 +30,6 @@ public:
         QOutputDevKPrinter( QPainter& painter, KPrinter& printer );
         virtual ~QOutputDevKPrinter();
 
-	// Does this device use upside-down coordinates?
-	// (Upside-down means (0,0) is the top left corner of the page.)
-	virtual GBool upsideDown() { return gTrue; }
-
-	// Does this device use drawChar() or drawString()?
-	virtual GBool useDrawChar() { return gTrue; }
-
-	// Does this device use beginType3Char/endType3Char?  Otherwise,
-	// text in Type 3 fonts will be drawn with drawChar/drawString.
-	virtual GBool interpretType3Chars() { return gFalse; }
-
-	// Does this device need non-text content?
-	virtual GBool needNonText() { return gFalse; }
-
 	//----- initialization and control
 
 	// Start a page.

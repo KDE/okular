@@ -49,6 +49,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
                              const char *name, const QStringList& args)
   : KMultiPage(parentWidget, widgetName, parent, name), DVIRenderer(parentWidget)
 {
+  Q_UNUSED(args);
 #ifdef PERFORMANCE_MEASUREMENT
   performanceTimer.start();
 #endif
@@ -230,13 +231,13 @@ void KDVIMultiPage::addConfigDialogs(KConfigDialog* configDialog)
   configDialog->addPage(fontConfigWidget, Prefs::self(), i18n("TeX Fonts"), "fonts");
   configDialog->addPage(specialConfigWidget, Prefs::self(), i18n("DVI Specials"), "dvi");
   configDialog->setHelp("preferences", "kdvi");
-  
-  connect(configDialog, SIGNAL(settingsChanged()), this, SLOT(preferencesChanged()));
 }
 
 
 void KDVIMultiPage::preferencesChanged()
 {
+  // Call method from parent class
+  KMultiPage::preferencesChanged();
 #ifdef  KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "preferencesChanged" << endl;
 #endif

@@ -9,18 +9,18 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>335</width>
-            <height>24</height>
+            <width>325</width>
+            <height>54</height>
         </rect>
     </property>
-    <grid>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="QCheckBox">
             <property name="name">
                 <cstring>kcfg_UseFontHints</cstring>
             </property>
@@ -34,10 +34,25 @@
                 <string>Many modern fonts contain "font hinting" information which can be used to improve the appearance of a font on low-resolution displays, such as a computer monitor, or a notebook screen. However, many people find the "improved" fonts quite ugly and prefer to have this option disabled.</string>
             </property>
         </widget>
-    </grid>
+        <spacer>
+            <property name="name">
+                <cstring>spacer11</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>31</width>
+                    <height>121</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
 </widget>
-<tabstops>
-</tabstops>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>

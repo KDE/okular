@@ -58,6 +58,8 @@ public slots:
 
   void slotEmbedPostScript(void);
 
+  virtual void preferencesChanged();
+
 protected:
   /// For internal use only. See the comments in kdvi_multipage.cpp, right
   //before the timerEvent function.
@@ -71,7 +73,6 @@ protected:
 protected slots:
   void doExportText();
   void doEnableWarnings();
-  void preferencesChanged();
 
   void showTip(void);
   void showTipOnStart(void);

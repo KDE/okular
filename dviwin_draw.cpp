@@ -599,7 +599,15 @@ void dviRenderer::draw_page(void)
   kdDebug(4300) <<"draw_page" << endl;
 #endif
 
-  foreGroundPaint.fillRect( foreGroundPaint.viewport(), PS_interface->getBackgroundColor(current_page) );
+  if (!accessibilityBackground)
+  {
+    foreGroundPaint.fillRect( foreGroundPaint.viewport(), PS_interface->getBackgroundColor(current_page) );
+  }
+  else
+  {
+    // In accessiblity mode use the custom background color
+    foreGroundPaint.fillRect( foreGroundPaint.viewport(), accessibilityBackgroundColor );
+  }
 
   // Render the PostScript background, if there is one.
   if (_postscript)

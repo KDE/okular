@@ -179,7 +179,6 @@ void dviRenderer::drawPage(double resolution, documentPage *page)
   QApplication::setOverrideCursor( waitCursor );
   errorMsg = QString::null;
   draw_page();
-  foreGroundPaint.drawRect( foreGroundPaint.viewport() );
   foreGroundPaint.end();
   QApplication::restoreOverrideCursor();
   page->isEmpty = false;

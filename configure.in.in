@@ -3,17 +3,6 @@ dnl the following is just to fool the toplevel configure.in
 LTLIBOBJS=
 AC_SUBST(LTLIBOBJS)
 
-AC_ARG_WITH(system-kpathsea,
-    [  --with-system-kpathsea  use system kpathsea library],
-    [  use_system_kpathsea=$withval
-    ], use_system_kpathsea=no)
-
-# the following is repeated here, so it shows up in the top level configure --help
-AC_ARG_WITH(tex-datadir,
-    [  --with-tex-datadir=DIR  where the root of texmf/web2c/texmf.cnf is installed ],
-    [],
-    [])
-
 compile_kdvi=yes
 for j in $DO_NOT_COMPILE; do
    if test "kdvi" = $j; then
@@ -30,77 +19,7 @@ if test "$compile_kdvi" = "yes"; then
    test_kpsewhich="`${KPSEWHICH-kpsewhich} -show-path cnf 2>/dev/null`"
    test -n "${test_kpsewhich}" && have_kpsewhich=yes
 
-   texmf_dir=
-   texmf_font_path=
-   if test x"${have_kpsewhich}" = xyes
-   then
-      texmf_cnf_path="`${KPSEWHICH} -show-path cnf 2>/dev/null`"
-      texmf_font_path="`${KPSEWHICH} -show-path pk`"
-   else
-      texmf_cnf_path="/var/lib/texmf/web2c:/usr/share/texmf/web2c:/opt/teTeX/share/texmf/web2c"
-      # whatever the default should be
-      texmf_font_path="/var/lib/texmf/fonts/pk//"
-  fi
-
-  AC_DEFINE_UNQUOTED(KDVI_DEFAULT_FONTPATH, "$texmf_font_path", [Where kdvi should look for fonts])
-
-  texmf_cnf_path="$texmf_cnf_path:/usr/lib/texmf/web2c:/var/lib/texmf/web2c:/usr/share/texmf/web2c:/usr/share/teTeX/texmf/web2c:/opt/local/teTeX/share/texmf/web2c:/opt/teTeX/share/texmf/web2c:/var/texmf/web2c:/usr/local/share/texmf/web2c:/opt/local/share/texmf/web2c:/etc/texmf"
-
-   # this gets the LAST directory in the path, which is assumed to be the
-   # base installation directory. This also allows us to overwrite it with
-   # some standard paths. So it rather finds the /etc version than the
-   # /var/share one
-   AC_MSG_CHECKING([for texmf.cnf])
-   kde_safe_IFS=$IFS
-   IFS=:
-   texmf_dir=
-   for d in ${texmf_cnf_path}
-   do
-      if test -r "${d}/texmf.cnf" && test -r "$d/../../texmf/web2c/texmf.cnf"
-      then
-          texmf_dir="${d}"
-      fi
-   done
-   IFS=$kde_safe_IFS
-
-   if test -n "${texmf_dir}"
-   then
-    # texmf_dir="`echo "${texmf_dir}" | sed 's,/web2c,,'`"
-     AC_MSG_RESULT([$texmf_dir])
-   else
-     AC_MSG_RESULT("not found")
-   fi
-
-   if test ! x"$use_system_kpathsea" = xno; then
-      	KDVI_KPATHSEA_DIR=
-	if test -f "$use_system_kpathsea"; then
-	   KDVI_KPATHSEA_LIB=$use_system_kpathsea
-	else
-           KDVI_KPATHSEA_LIB=-lkpathsea
- 	fi
-        KDVI_KPATHSEA_INC=
-   else
-        KDVI_KPATHSEA_DIR=kpathsea
-        KDVI_KPATHSEA_INC=-Ikpathsea
-        KDVI_KPATHSEA_LIB=kpathsea/libkpathsea.la
-
-        if test -f $srcdir/kdvi/kpathsea/configure; then
-           if test -n "$texmf_dir"; then
-             ac_configure_args="$ac_configure_args --with-tex-datadir=$texmf_dir/../.."
-             AC_CONFIG_SUBDIRS([kdvi/kpathsea])
-           else
-              if test $compile_kdvi = "yes"; then
-                 DO_NOT_COMPILE="$DO_NOT_COMPILE kdvi"
-		 ac_configure_args="$ac_configure_args --with-system-kpathsea=yes" 
-              fi
-  	   fi
-        fi
-    fi
 fi
-
-AC_SUBST(KDVI_KPATHSEA_DIR)
-AC_SUBST(KDVI_KPATHSEA_INC)
-AC_SUBST(KDVI_KPATHSEA_LIB)
 
 AC_CHECK_HEADERS(sys/types.h sys/params.h limits.h)
 

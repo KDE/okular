@@ -29,6 +29,7 @@
 #include <kinstance.h>
 #include <klineedit.h>
 #include <klocale.h>
+#include <kurllabel.h>
 #include <qcheckbox.h>
 #include <qfontmetrics.h>
 #include <qgrid.h>
@@ -201,6 +202,11 @@ void OptionDialog::makeRenderingPage()
 
   QGroupBox *editorBox = new QGroupBox( 2, Horizontal, i18n("Editor for inverse search"), page ); 
 
+  new QLabel( "", editorBox );
+  KURLLabel *urll = new KURLLabel("inv-search", i18n("What is 'inverse search'?"), editorBox, "inverse search help");
+  urll->setAlignment(Qt::AlignRight);
+  connect(urll, SIGNAL(leftClickedURL(const QString&)),  SLOT(helpClickedSlot(const QString&)));
+
   new QLabel( i18n("Editor:"), editorBox );
   mRender.editorChoice =  new KComboBox( editorBox );
   connect(mRender.editorChoice, SIGNAL( activated( int ) ), this, SLOT( slotComboBox( int ) ) );
@@ -208,7 +214,7 @@ void OptionDialog::makeRenderingPage()
   QWhatsThis::add( mRender.editorChoice, i18n("Some DVI-files contain 'inverse search' information. If such a DVI-file is loaded, you can click with the right mouse into KDVI, an editor opens, loads the TeX-file and jumps to the proper position. You can select you favourite editor here. If in doubt, 'nedit' is usually a good choice.\nCheck the KDVI manual to see how to prepare DVI-files which support the inverse search.") );
 
   // Editor description strings (and their translations) vary in
-  // size. Find the longest description string available, to make sure
+  // size. Find the longest description string available to make sure
   // that the page is always large enough.
   new QLabel( i18n("Description:"), editorBox );
   mRender.editorDescription = new QLabel( editorBox );

@@ -111,9 +111,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	enableTOC( false );
 
 	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
-	m_thumbnailList = new ThumbnailList( thumbsBox, document );
+    m_searchWidget = new SearchWidget( thumbsBox, document );
+    m_thumbnailList = new ThumbnailList( thumbsBox, document );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
-	m_searchWidget = new SearchWidget( thumbsBox, document );
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
 
@@ -177,8 +177,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
     // attach the actions of the 2 children widgets too
 	m_pageView->setupActions( ac );
-	m_searchWidget->setupActions( ac );
-	m_thumbnailList->setupActions( ac );
 
 	// local settings
     m_splitter->setSizes( Settings::splitterSizes() );
@@ -197,8 +195,6 @@ Part::~Part()
     Settings::setShowLeftPanel( m_toolBox->isShown() );
     // save settings of internal widgets
     m_pageView->saveSettings();
-    m_searchWidget->saveSettings();
-    m_thumbnailList->saveSettings();
     // save config file
     Settings::writeConfig();
 
@@ -388,6 +384,8 @@ void Part::slotPreferences()
 void Part::slotNewConfig()
 {
     // apply runtime changes TODO apply changes here
+    if ( Settings::showSearchBar() != m_searchWidget->isShown() )
+        m_searchWidget->setShown( Settings::showSearchBar() );
 }
 
 void Part::slotPrintPreview()

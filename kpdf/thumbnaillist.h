@@ -30,10 +30,8 @@ Q_OBJECT
 	public:
 		ThumbnailList(QWidget *parent, KPDFDocument *document);
 
-		// create actions that interact with this widget and load/save settings
+		// return thumbnails observer id
 		uint observerId() const { return THUMBNAILS_ID; }
-		void setupActions( KActionCollection * /*collection*/ ) {};
-		void saveSettings() {};
 
 		// create thumbnails ( inherited as a DocumentObserver )
 		void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );

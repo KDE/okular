@@ -9,6 +9,7 @@
 
 // qt/kde includes
 #include <qtooltip.h>
+//#include <qiconset.h>
 #include <qapplication.h>
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -23,7 +24,6 @@
 #include "document.h"
 #include "settings.h"
 
-//#include <qiconset.h>
 SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     : QHBox( parent ), m_document( document ), m_caseSensitive( false )
 {
@@ -52,21 +52,14 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     int sideLength = m_lineEdit->sizeHint().height();
     m_clearButton->setMinimumSize( QSize( sideLength, sideLength ) );
  //   search->setMinimumSize( QSize( sideLength, sideLength ) );
+
+    // handle initial visiblity
+    setShown( Settings::showSearchBar() );
 }
 
-void SearchWidget::setupActions( KActionCollection * ac )
+void SearchWidget::hideEvent( QHideEvent * )
 {
-    KToggleAction * ss = new KToggleAction( i18n( "Show Search Bar" ), 0, ac, "show_searchbar" );
-    ss->setCheckedState(i18n("Hide Search Bar"));
-    connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleSearchBar( bool ) ) );
-
-    ss->setChecked( Settings::showSearchBar() );
-    slotToggleSearchBar( ss->isChecked() );
-}
-
-void SearchWidget::saveSettings()
-{
-    Settings::setShowSearchBar( isShown() );
+    m_document->slotSetFilter( QString::null, m_caseSensitive );
 }
 
 void SearchWidget::slotTextChanged( const QString & text )
@@ -93,13 +86,6 @@ void SearchWidget::slotChangeCase( int index )
         m_caseMenu->setItemChecked( 2, m_caseSensitive );
         slotTextChanged( m_lineEdit->text() );
     }
-}
-
-void SearchWidget::slotToggleSearchBar( bool visible )
-{
-    setShown( visible );
-    if ( !visible )
-        m_document->slotSetFilter( QString::null, m_caseSensitive );
 }
 
 #include "searchwidget.moc"

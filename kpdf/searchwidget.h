@@ -12,7 +12,6 @@
 
 #include <qhbox.h>
 
-class KActionCollection;
 class KPopupMenu;
 class KLineEdit;
 
@@ -25,25 +24,23 @@ class KPDFDocument;
  */
 class SearchWidget : public QHBox
 {
-Q_OBJECT
+    Q_OBJECT
 
-public:
-	SearchWidget( QWidget *parent, KPDFDocument *document );
+    public:
+        SearchWidget( QWidget *parent, KPDFDocument *document );
 
-	// create actions that interact with this widget
-	void setupActions( KActionCollection * collection );
-	void saveSettings();
+    protected:
+        void hideEvent( QHideEvent * );
 
-private slots:
-	void slotTextChanged( const QString & text );
-	void slotChangeCase( int index );
-	void slotToggleSearchBar( bool visible );
+    private:
+        KPDFDocument * m_document;
+        KLineEdit * m_lineEdit;
+        KPopupMenu * m_caseMenu;
+        bool m_caseSensitive;
 
-private:
-	KPDFDocument * m_document;
-	KLineEdit * m_lineEdit;
-	KPopupMenu * m_caseMenu;
-	bool m_caseSensitive;
+    private slots:
+        void slotTextChanged( const QString & text );
+        void slotChangeCase( int index );
 };
 
 #endif

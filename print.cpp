@@ -315,7 +315,7 @@ void print::cancelPressed()
 
 void print::readConfig()
 {
-	KConfig *config = kapp->getConfig();
+	KConfig *config = kapp->config();
 
 	printer->clear();
 	printer->insertItem( i18n( "Default Printer" ) );

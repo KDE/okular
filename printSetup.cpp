@@ -48,7 +48,7 @@ void printSetup::removePrinter()
 
 void printSetup::okPressed()
 {
-	KConfig *config = kapp->getConfig();
+	KConfig *config = kapp->config();
 
 	config->setGroup( "Printing" );
 	for ( int i = printers->count(); i > 2; i-- )
@@ -68,7 +68,7 @@ void printSetup::okPressed()
 
 void printSetup::readConfig()
 {
-	KConfig *config = kapp->getConfig();
+	KConfig *config = kapp->config();
 
 	printers->clear();
 	printers->insertItem( i18n( "Default Printer" ) );

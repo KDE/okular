@@ -218,7 +218,7 @@ void kdviprefs::insertPages()
 	scrollb	= new QCheckBox( i18n("Scroll Bars"), bg );
 	recent	= new QLineEdit( bg );
 
-	KConfig *config = kapp->getConfig();
+	KConfig *config = kapp->config();
 	config->setGroup("kdvi");
 
 	menu->setChecked( !config->readNumEntry( "HideMenubar" ) );
@@ -391,7 +391,7 @@ void kdviprefs::insertPages()
 
 void kdviprefs::applyChanges()
 {
-	KConfig *config = kapp->getConfig();
+	KConfig *config = kapp->config();
 
 	config->setGroup("kdvi");
 

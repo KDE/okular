@@ -54,7 +54,7 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 
 	readConfig();
 	setMinimumSize( 400, 60 );
-	setCaption( kapp->getCaption() );
+	setCaption( kapp->caption() );
 	tipgroup = new QToolTipGroup( this, "TipGroup" );
 	connect( tipgroup, SIGNAL(showTip(const QString &)), 
 		 SLOT(showTip(const QString &)) );
@@ -214,7 +214,7 @@ void kdvi::makeMenuBar()
 
 	menuBar()->insertSeparator();
 
-	QPopupMenu *help = kapp->getHelpMenu(true, i18n("DVI Viewer")
+	QPopupMenu *help = kapp->helpMenu(true, i18n("DVI Viewer")
 					     + " " + KDVI_VERSION
 					     + i18n("\n\nby Markku Hihnala")
 					     + " (mah@ee.oulu.fi)");
@@ -494,7 +494,7 @@ void kdvi::openFile( QString name)
 	applyShowStatusbar();
 	dviwin->setFile( name );
 	dviwin->repaint();
-	setCaption( QString()+kapp->getCaption()+": "+name );
+	setCaption( QString()+kapp->caption()+": "+name );
 	setPage();
 	shrinkChanged( dviwin->shrink() );
 	if (-1==recent.find(name))
@@ -929,7 +929,7 @@ void kdvi::showPoint( QPoint p )
 void kdvi::readConfig()
 {
 	QString s;
-	config = KApplication::getKApplication()->getConfig();
+	config = KApplication::kApplication()->config();
 	config->setGroup( "kdvi" );
 
 	pannerValue = config->readNumEntry( "Separator" );
@@ -1037,7 +1037,7 @@ int main( int argc, char **argv )
 	a.setMainWidget( k );
 	k->show();
 	
-	kapp->getConfig()->setGroup("kdvi");
+	kapp->config()->setGroup("kdvi");
 
 	return a.exec();
 }

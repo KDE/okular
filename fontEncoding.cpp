@@ -55,7 +55,7 @@ fontEncoding::fontEncoding(const QString &encName)
     fileContent = fileContent.stripWhiteSpace();
     
     // Find the name of the encoding
-    encodingFullName = fileContent.section(' ', 0, 0).mid(1);
+    encodingFullName = fileContent.section('[', 0, 0).simplifyWhiteSpace().mid(1);
 #ifdef DEBUG_FONTENC
     kdDebug(4700) << "encodingFullName: " << encodingFullName << endl;
 #endif

@@ -20,6 +20,11 @@
 #include <kglobalsettings.h> 
 #include <kurldrag.h>
 
+#include <kaction.h>
+#include <kactioncollection.h>
+#include <klocale.h>
+#include <kconfigbase.h>
+
 #include "PDFDoc.h"
 
 #include "kpdf_pagewidget.h"
@@ -289,7 +294,7 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
         if ( m_doc )
         {
             // Pixels per point when the zoomFactor is 1.
-            const float ppp = (float)QPaintDevice::x11AppDpiX() * m_zoomFactor; // pixels per point
+            //const float ppp = (float)QPaintDevice::x11AppDpiX() * m_zoomFactor; // pixels per point
 
             //m_docMutex->lock();
             //m_doc->displayPage(m_outputdev, m_currentPage, ppp, ppp, 0, true, true);
@@ -377,6 +382,96 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
         updateContents();
         return b;
     }
+
+void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
+{
+	// Zoom actions
+	const double zoomValue[14] = {0.125,0.25,0.3333,0.5,0.6667,0.75,1,1.25,1.50,2,3,4,6,8 };
+
+	m_zoomTo = new KSelectAction(  i18n( "Zoom" ), "zoomTo", 0, ac, "zoomTo" );
+	connect( m_zoomTo, SIGNAL(  activated(  const QString & ) ), this, SLOT(  slotZoom( const QString& ) ) );
+	m_zoomTo->setEditable(  true );
+	m_zoomTo->clear();
+
+	QStringList translated;
+	QString localValue;
+	QString double_oh("00");
+	int idx = 0;
+	int cur = 0;
+	for ( int i = 0; i < 10;i++)
+	{
+		localValue = KGlobal::locale()->formatNumber( zoomValue[i] * 100.0, 2 );
+		localValue.remove( KGlobal::locale()->decimalSymbol()+double_oh );
+	
+		translated << QString( "%1%" ).arg( localValue );
+		if ( zoomValue[i] == 1.0 )
+			idx = cur;
+		++cur;
+	}
+	m_zoomTo->setItems( translated );
+	m_zoomTo->setCurrentItem( idx );
+
+	KStdAction::zoomIn( this, SLOT(slotZoomIn()), ac, "zoom_in" );
+
+	KStdAction::zoomOut( this, SLOT(slotZoomOut()), ac, "zoom_out" );
+
+	m_fitToWidth = new KToggleAction( i18n("Fit to Page &Width"), 0, ac, "fit_to_width" );
+	connect( m_fitToWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
+
+	m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
+	m_showScrollBars->setCheckedState(i18n("Hide &Scrollbars"));
+	connect( m_showScrollBars, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
+
+	m_showScrollBars->setChecked( config->readBoolEntry( "ShowScrollBars", true ) );
+	slotToggleScrollBars( m_showScrollBars->isChecked() );
+}
+
+void PageWidget::saveSettings( KConfigGroup * config )
+{
+	config->writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
+}
+
+void PageWidget::slotZoom( const QString & nz )
+{
+	QString z = nz;
+	z.remove( z.find( '%' ), 1 );
+	bool isNumber = true;
+	double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
+zoom = 0;//CUT WARNINGS (but remove me:-)
+/*	if ( isNumber )
+		document->slotSetZoom( zoom );*/
+}
+
+void PageWidget::slotZoomIn()
+{
+// 	document->slotChangeZoom( 0.1 );
+}
+
+void PageWidget::slotZoomOut()
+{
+// 	document->slotChangeZoom( -0.1 );
+}
+
+void PageWidget::slotFitToWidthToggled( bool /*fit*/ )
+{
+/*
+	m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
+	displayPage(m_currentPage);
+*/
+}
+
+void PageWidget::slotToggleScrollBars( bool show )
+{
+	enableScrollBars( show );
+}
+
+void PageWidget::slotSetZoom( float /*zoom*/ )
+{
+}
+
+void PageWidget::slotChangeZoom( float /*offset*/ )
+{
+}
 
 }
 

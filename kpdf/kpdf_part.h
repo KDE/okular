@@ -20,21 +20,19 @@
 #include <kparts/part.h>
 
 class QWidget;
+class QSplitter;
 
-class KAboutData;
-class KAction;
-class KPrinter;
 class KURL;
+class KAction;
 class KToggleAction;
 class KSelectAction;
+class KAboutData;
+class KPrinter;
 
 class LinkAction;
 class LinkDest;
-class XOutputDev;
 
 class ThumbnailList;
-class PDFPartView;
-
 class KPDFDocument;
 
 namespace KPDF
@@ -77,8 +75,6 @@ namespace KPDF
 	// reimplemented from KParts::ReadOnlyPart
 	virtual bool openFile();
 
-	void readSettings();
-	void writeSettings();
 	void updateAction();
 	void doPrint( KPrinter& printer );
 
@@ -87,19 +83,13 @@ namespace KPDF
 	void slotGoToPage();
 	void slotPreviousPage();
 	void slotNextPage();
-	void slotGotoStart();
-	void slotGotoEnd();
+	void slotGotoFirst();
+	void slotGotoLast();
 	void slotFind();
 	void slotFindNext();
-	void slotZoom( const QString& );
-	void slotZoomIn();
-	void slotZoomOut();
-	void slotFitToWidthToggled( bool );
-	void slotPrintPreview();
-	void slotToggleScrollBars( bool );
-	void slotToggleThumbnails( bool );
 	void slotSaveFileAs();
-	// can be connected do widget elements
+	void slotPrintPreview();
+	// can be connected to widget elements
 	void updateActions();
 
   public slots:
@@ -111,6 +101,7 @@ namespace KPDF
 	KPDFDocument * document;
 
 	// main widgets
+	QSplitter *m_splitter;
 	ThumbnailList *m_thumbnailList;
 	PageWidget *m_pageWidget;
 
@@ -123,10 +114,6 @@ namespace KPDF
 	KAction *m_nextPage;
 	KAction *m_firstPage;
 	KAction *m_lastPage;
-	KToggleAction *m_showScrollBars;
-	KToggleAction *m_showPageList;
-	KSelectAction *m_zoomTo;
-	KToggleAction *m_fitToWidth;
 	KAction *m_find;
 	KAction *m_findNext;
   };

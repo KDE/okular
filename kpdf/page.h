@@ -31,6 +31,12 @@ class PageOverlay;
  * class is destroyed.
  */
 
+/*
+[19:52] *TSDgeos* is, for links to work i need to enable setMouseTracking in the widget
+[19:53] *TSDgeos* that generates a mousemoveevent even if the user does not click the mouse so i can change the cursor when the user is over a link
+[19:53] *TSDgeos* do you think page could have a "cache" of places where the link exists so i don't have to query xpdf every time?
+[19:57] *eros* I'll add a cache.
+*/
 class KPDFPage
 {
 public:
@@ -45,14 +51,17 @@ public:
     float rotation() const { return m_rotate; }
     bool hasPixmap( int width, int height ) const;
     bool hasThumbnail( int width, int height ) const;
+    bool hasLink( int mouseX, int mouseY ) const;
     void drawPixmap( QPainter * p, const QRect & rect, int width, int height ) const;
     void drawThumbnail( QPainter * p, const QRect & rect, int width, int height ) const;
 
     // page contents setup
     void setPixmap( const QImage & image );
-    void setPixmapOverlay( /*..DOMdescription..*/ );
+    /*void setPixmapOverlaySelection( const QRect & normalizedRect );*/
+    /*void setPixmapOverlayNotations( ..DOMdescription.. );*/
     void setThumbnail( const QImage & image );
-    void setTextPage( TextOutputDev * );
+    /*void setTextPage( TextOutputDev * );*/
+    /*void setLinks( ..SomeStruct.. );*/
 
     // FIND command
     //bool hasText( QString & text );

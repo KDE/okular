@@ -84,21 +84,19 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( document, SIGNAL( pageChanged() ), this, SLOT( updateActions() ) );
 
 	// build widgets
-	QSplitter *split = new QSplitter( parentWidget, widgetName );
-	split->setOpaqueResize( true );
+	m_splitter = new QSplitter( parentWidget, widgetName );
+	m_splitter->setOpaqueResize( true );
+	setWidget( m_splitter );
 
-	m_thumbnailList = new ThumbnailList( split, document );
+	m_thumbnailList = new ThumbnailList( m_splitter, document );
 	m_thumbnailList->setMaximumWidth( 125 );
 	m_thumbnailList->setMinimumWidth( 50 );
 	document->addObserver( m_thumbnailList );
 
-	m_pageWidget = new KPDF::PageWidget( split, document );
+	m_pageWidget = new KPDF::PageWidget( m_splitter, document );
 	connect( m_pageWidget, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	//connect(m _pageWidget, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
 	document->addObserver( m_pageWidget );
-
-	//TODO split->setSizes( QValueList<int> list ); loaded from config file (last setup)
-	setWidget(split);
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -112,75 +110,44 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 
-	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoStart() ), ac, "goToStart" );
+	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "goToStart" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
 
-	m_lastPage  = KStdAction::lastPage( this, SLOT( slotGotoEnd() ), ac, "goToEnd" );
+	m_lastPage  = KStdAction::lastPage( this, SLOT( slotGotoLast() ), ac, "goToEnd" );
 	m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
-	// Find actions
-	m_find = KStdAction::find(this, SLOT(slotFind()), ac, "find");
+	// Find and other actions
+	m_find = KStdAction::find( this, SLOT( slotFind() ), ac, "find" );
 	m_find->setEnabled(false);
 
-	m_findNext = KStdAction::findNext(this, SLOT(slotFindNext()), ac, "find_next");
+	m_findNext = KStdAction::findNext( this, SLOT( slotFindNext() ), ac, "find_next" );
 	m_findNext->setEnabled(false);
 
-	// Zoom actions
-	const double zoomValue[14] = {0.125,0.25,0.3333,0.5,0.6667,0.75,1,1.25,1.50,2,3,4,6,8 };
+	KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
 
-	m_zoomTo = new KSelectAction(  i18n( "Zoom" ), "zoomTo", 0, ac, "zoomTo" );
-	connect( m_zoomTo, SIGNAL(  activated(  const QString & ) ), this, SLOT(  slotZoom( const QString& ) ) );
-	m_zoomTo->setEditable(  true );
-	m_zoomTo->clear();
-
-	QStringList translated;
-	QString localValue;
-	QString double_oh("00");
-	int idx = 0;
-	int cur = 0;
-	for ( int i = 0; i < 10;i++)
-	{
-		localValue = KGlobal::locale()->formatNumber( zoomValue[i] * 100.0, 2 );
-		localValue.remove( KGlobal::locale()->decimalSymbol()+double_oh );
-	
-		translated << QString( "%1%" ).arg( localValue );
-		if ( zoomValue[i] == 1.0 )
-			idx = cur;
-		++cur;
-	}
-	m_zoomTo->setItems( translated );
-	m_zoomTo->setCurrentItem( idx );
-
-	KStdAction::zoomIn( m_pageWidget, SLOT(zoomIn()), ac, "zoom_in" );
-
-	KStdAction::zoomOut( m_pageWidget, SLOT(zoomOut()), ac, "zoom_out" );
-
-	m_fitToWidth = new KToggleAction( i18n("Fit to Page &Width"), 0, ac, "fit_to_width" );
-	connect( m_fitToWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
-
-	// other actions (printing, show/hide stuff, saving)
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 
-	m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
-	m_showScrollBars->setCheckedState(i18n("Hide &Scrollbars"));
-	connect( m_showScrollBars, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
+    // attach the actions of the 2 children widgets too
+	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
+	m_pageWidget->setupActions( ac, &settings );
+	m_thumbnailList->setupActions( ac, &settings );
 
-	m_showPageList   = new KToggleAction( i18n( "Show &Page List" ), 0, ac, "show_page_list" );
-	m_showPageList->setCheckedState(i18n("Hide &Page List"));
-	connect( m_showPageList, SIGNAL( toggled( bool ) ), SLOT( slotToggleThumbnails( bool ) ) );
-
-	KStdAction::saveAs(this, SLOT(slotSaveFileAs()), ac, "save");
+	// local settings
+	m_splitter->setSizes( settings.readIntListEntry( "SplitterSizes" ) );
 
 	// set our XML-UI resource file
 	setXMLFile("kpdf_part.rc");
-	readSettings();
 	updateActions();
 }
 
 Part::~Part()
 {
+	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
+	m_pageWidget->saveSettings( &settings );
+	m_thumbnailList->saveSettings( &settings );
+	settings.writeEntry( "SplitterSizes", m_splitter->sizes() );
+	settings.sync();
 	delete document;
-	writeSettings();
 	if ( --m_count == 0 )
 		delete globalParams;
 }
@@ -198,8 +165,8 @@ KAboutData* Part::createAboutData()
 bool Part::openFile()
 {
 	bool ok = document->openFile( m_file );
-	m_find->setEnabled(ok);
-	m_findNext->setEnabled(ok);
+	m_find->setEnabled( ok );
+	m_findNext->setEnabled( ok );
 	return ok;
 }
 
@@ -227,23 +194,6 @@ void Part::updateActions()
 		m_prevPage->setEnabled(false);
 		m_nextPage->setEnabled(false);
 	}
-}
-
-void Part::readSettings()
-{
-	KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
-	m_showScrollBars->setChecked( general.readBoolEntry( "ShowScrollBars", true ) );
-	slotToggleScrollBars( m_showScrollBars->isChecked() );
-	m_showPageList->setChecked( general.readBoolEntry( "ShowPageList", true ) );
-	slotToggleThumbnails( m_showPageList->isChecked() );
-}
-
-void Part::writeSettings()
-{
-	KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
-	general.writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
-	general.writeEntry( "ShowPageList", m_showPageList->isChecked() );
-	general.sync();
 }
 
 //BEGIN go to page dialog 
@@ -295,12 +245,12 @@ void Part::slotNextPage()
 		document->slotSetCurrentPage( document->currentPage() + 1 );
 }
 
-void Part::slotGotoStart()
+void Part::slotGotoFirst()
 {
 	document->slotSetCurrentPage( 0 );
 }
 
-void Part::slotGotoEnd()
+void Part::slotGotoLast()
 {
 	document->slotSetCurrentPage( document->pages() - 1 );
 }
@@ -315,45 +265,6 @@ void Part::slotFind()
 void Part::slotFindNext()
 {
 	document->slotFind( true );
-}
-
-void Part::slotZoom( const QString & nz )
-{
-	QString z = nz;
-	z.remove( z.find( '%' ), 1 );
-	bool isNumber = true;
-	double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
-
-	if ( isNumber )
-		document->slotSetZoom( zoom );
-}
-
-void Part::slotZoomIn()
-{
-	document->slotChangeZoom( 0.1 );
-}
-
-void Part::slotZoomOut()
-{
-	document->slotChangeZoom( -0.1 );
-}
-
-void Part::slotFitToWidthToggled( bool /*fit*/ )
-{
-/*
-	m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
-	displayPage(m_currentPage);
-*/
-}
-
-void Part::slotToggleScrollBars( bool show )
-{
-	m_pageWidget->enableScrollBars( show );
-}
-
-void Part::slotToggleThumbnails( bool show )
-{
-	m_thumbnailList->setShown( show );
 }
 
 void Part::slotSaveFileAs()

@@ -77,15 +77,27 @@ bool KPDFPage::hasThumbnail( int width, int height ) const
     return m_thumbnail ? ( m_thumbnail->width() == width && m_thumbnail->height() == height ) : false;
 }
 
+bool KPDFPage::hasLink( int mouseX, int mouseY ) const
+{
+    //TODO this.
+    //Sample implementation using a small rect as 'active' link zone
+    return QRect( 50,50, 100,100 ).contains( mouseX, mouseY );
+}
+
 void KPDFPage::setPixmap( const QImage & image )
 {
     delete m_pixmap;
     m_pixmap = new QPixmap( image );
 }
 
-void KPDFPage::setPixmapOverlay( /*someClass*/ )
-{    //TODO this
+/*
+void KPDFPage::setPixmapOverlaySelection( const QRect & normalizedRect );
+{   //TODO this
 }
+void KPDFPage::setPixmapOverlayNotations( ..DOMdescription.. )
+{   //TODO this
+}
+*/
 
 void KPDFPage::setThumbnail( const QImage & image )
 {
@@ -93,6 +105,7 @@ void KPDFPage::setThumbnail( const QImage & image )
     m_thumbnail = new QPixmap( image );
 }
 
+/*
 void KPDFPage::setTextPage( TextOutputDev * textPage )
 {
     delete m_text;
@@ -100,6 +113,11 @@ void KPDFPage::setTextPage( TextOutputDev * textPage )
     if ( m_text )
         m_text = textPage;
 }
+
+void KPDFPage::setLinks( ..SomeStruct.. )
+{
+}
+*/
 //END contents set methods
 
 //BEGIN [FIND]

@@ -14,8 +14,10 @@
 #include <qvaluevector.h>
 #include "document.h"
 
-class Thumbnail;
 class QTimer;
+class KActionCollection;
+class KConfigGroup;
+class Thumbnail;
 
 class ThumbnailList : public QScrollView, public KPDFDocumentObserver
 {
@@ -23,13 +25,17 @@ Q_OBJECT
 	public:
 		ThumbnailList(QWidget *parent, KPDFDocument *document);
 
-		// create thumbnails
+		// create actions that interact with this widget and load/save settings
+		void setupActions( KActionCollection * collection, KConfigGroup * config );
+		void saveSettings( KConfigGroup * config );
+
+		// create thumbnails ( inherited as a DocumentObserver )
 		void pageSetup( const QValueList<int> & pages );
 
-		// hilihght current thumbnail
+		// hilihght current thumbnail ( inherited as DocumentObserver )
 		void pageSetCurrent( int pageNumber, float position );
 
-		// redraw thumbnail
+		// redraw thumbnail ( inherited as DocumentObserver )
 		void notifyThumbnailChanged( int pageNumber );
 
 	protected:
@@ -51,8 +57,8 @@ Q_OBJECT
 		KPDFDocument *m_document;
 		Thumbnail *m_selected;
 		QTimer *m_delayTimer;
-		QValueVector<Thumbnail *> thumbnails;
-		int vectorIndex;
+		QValueVector<Thumbnail *> m_thumbnails;
+		int m_vectorIndex;
 };
 
 #endif

@@ -34,7 +34,9 @@ public:
     // document related
     QMutex docLock;
     PDFDoc * pdfdoc;
+    QOutputDev * splashOutputDevice;
     int currentPage;
+    float currentPosition;
     QValueVector< KPDFPage* > pages;
     
     // observers related (note: won't delete oservers)
@@ -54,11 +56,16 @@ KPDFDocument::KPDFDocument()
     d = new KPDFDocumentPrivate;
     d->pdfdoc = 0;
     d->currentPage = -1;
+    d->currentPosition = 0;
+    SplashColor paperColor;
+    paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
+    d->splashOutputDevice = new QOutputDev( paperColor );
 }
     
 KPDFDocument::~KPDFDocument()
 {
     close();
+    delete d->splashOutputDevice;
     delete d;
 }
 
@@ -72,10 +79,10 @@ bool KPDFDocument::openFile( const QString & docFile )
 
     GString *filename = new GString( QFile::encodeName( docFile ) );
     delete d->pdfdoc;
-    deletePages();
     d->pdfdoc = new PDFDoc( filename, 0, 0 );
-    
-    if ( !d->pdfdoc->isOk() || d->pdfdoc->getNumPages() < 1 )
+    deletePages();
+
+    if ( !d->pdfdoc->isOk() )
     {
         delete d->pdfdoc;
         d->pdfdoc = 0;
@@ -85,17 +92,20 @@ bool KPDFDocument::openFile( const QString & docFile )
     // clear xpdf errors
     errors::clear();
 
-    // build Pages
-    d->currentPage = -1;
+    // initialize output device for rendering current pdf
+    d->splashOutputDevice->startDoc( d->pdfdoc->getXRef() );
+
+    // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = d->pdfdoc->getNumPages();
     d->pages.resize( pageCount );
-    for ( uint i = 0; i < pageCount ; i++ )
-        d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1), d->pdfdoc->getPageRotate(i+1) );
-
-    //filter = NONE; TODO
-    sendFilteredPageList();
-
-    slotSetCurrentPage( 0 );
+    if ( pageCount > 0 )
+    {
+        for ( uint i = 0; i < pageCount ; i++ )
+            d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1), d->pdfdoc->getPageRotate(i+1) );
+        // filter pages, setup observers and set the first page as current
+        sendFilteredPageList();
+        slotSetCurrentPage( 0 );
+    }
     
     return true;
 }
@@ -142,9 +152,10 @@ void KPDFDocument::slotSetCurrentPage( int page )
 
 void KPDFDocument::slotSetCurrentPagePosition( int page, float position )
 {
-    if ( page == d->currentPage )   //TODO check position
+    if ( page == d->currentPage && position == d->currentPosition )
         return;
     d->currentPage = page;
+    d->currentPosition = position;
     foreachObserver( pageSetCurrent( page, position ) );
     pageChanged();
 }
@@ -230,57 +241,76 @@ void KPDFDocument::slotGoToLink( /* QString anchor */ )
 {
 }
 
-void KPDFDocument::slotSetZoom( float /*zoom*/ )
-{
-}
-
-void KPDFDocument::slotChangeZoom( float /*offset*/ )
-{
-}
-
 
 void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 {
     d->observers.push_back( pObserver );
 }
 
-void KPDFDocument::requestPixmap( uint /*page*/, int /*width*/, int /*height*/ )
+void KPDFDocument::requestPixmap( uint page, int width, int height, bool syn )
 {
-    //think at this.. Syncronous or Asyncronous that's the problem! (shakespeare)
+    KPDFPage * kp = d->pages[page];
+    if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
+        return;
+
+    if ( syn )
+    {
+        // in-place Pixmap generation for syncronous requests
+        if ( !kp->hasPixmap( width, height ) )
+        {
+            // compute dpi used to get an image with desired width and height
+            double fakeDpiX = width * 72.0 / kp->width(),
+                   fakeDpiY = height * 72.0 / kp->height();
+            d->docLock.lock();
+            d->pdfdoc->displayPage( d->splashOutputDevice, page + 1, fakeDpiX, fakeDpiY, 0, true, false );
+            d->docLock.unlock();
+
+            // it may happen (in fact it doesn't) that we need rescaling
+            if ( d->splashOutputDevice->getImage().size() != QSize( width, height ) )
+                kp->setPixmap( d->splashOutputDevice->getImage().smoothScale( width, height ) );
+            else
+                kp->setPixmap( d->splashOutputDevice->getImage() );
+
+            foreachObserver( notifyPixmapChanged( page ) );
+        }
+    }
+    else
+    {
+        //TODO asyncronous events queuing
+    }
 }
 
-void KPDFDocument::requestThumbnail( uint page, int width, int height )
+void KPDFDocument::requestThumbnail( uint page, int width, int height, bool syn )
 {
-// TODO FIXME BEGIN :: TEMP CODE. ONLY A TEST. quick in-place thumbnail gen
     KPDFPage * kp = d->pages[page];
-    if ( !kp )
+    if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
         return;
-    if ( !kp->hasThumbnail( width, height ) && d->pdfdoc && kp->width() > 0 && kp->height() > 0 )
+
+    if ( /*syn*/ TRUE )
     {
-        // make thumbnail pixmap
-        SplashColor paperColor;
-        paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
-        QOutputDev odev( paperColor );
-        odev.startDoc( d->pdfdoc->getXRef() );
-        double fakeDpiX = width * 72.0 / kp->width(),
-               fakeDpiY = height * 72.0 / kp->height();
-        d->docLock.lock();
-        d->pdfdoc->displayPage( &odev, page + 1, fakeDpiX, fakeDpiY, 0, true, false );
-        d->docLock.unlock();
-
-        // It can happen (but with zero+ probability :-) that the output
-        // image doesn't have the right size. In that case scale it.
-        if ( odev.getImage().size() != QSize( width, height ) )
+        // in-place Thumbnail generation for syncronous requests
+        if ( !kp->hasThumbnail( width, height ) )
         {
-            QImage scaled( odev.getImage().smoothScale( width, height ) );
-            kp->setThumbnail( scaled );
-        }
-        else
-            kp->setThumbnail( odev.getImage() );
+            // compute dpi used to get an image with desired width and height
+            double fakeDpiX = width * 72.0 / kp->width(),
+                   fakeDpiY = height * 72.0 / kp->height();
+            d->docLock.lock();
+            d->pdfdoc->displayPage( d->splashOutputDevice, page + 1, fakeDpiX, fakeDpiY, 0, true, false );
+            d->docLock.unlock();
 
-        foreachObserver( notifyThumbnailChanged( page ) );
+            // it may happen (in fact it doesn't) that we need rescaling
+            if ( d->splashOutputDevice->getImage().size() != QSize( width, height ) )
+                kp->setThumbnail( d->splashOutputDevice->getImage().smoothScale( width, height ) );
+            else
+                kp->setThumbnail( d->splashOutputDevice->getImage() );
+
+            foreachObserver( notifyThumbnailChanged( page ) );
+        }
     }
-// TODO FIXME END :: TEMP CODE. ONLY A TEST.
+    else
+    {
+        //TODO asyncronous events queuing
+    }
 }
 
 

@@ -63,8 +63,8 @@ public:
 
     // observers related methods
     void addObserver( KPDFDocumentObserver * pObserver );
-    void requestPixmap( uint page, int width, int height );
-    void requestThumbnail( uint page, int width, int height );
+    void requestPixmap( uint page, int width, int height, bool syncronous = false );
+    void requestThumbnail( uint page, int width, int height, bool syncronous = false );
 
 public slots:
     // document commands via slots
@@ -72,13 +72,10 @@ public slots:
     void slotSetCurrentPagePosition( int page, float position );
     void slotFind( bool nextMatch, const QString & text = "" );
     void slotGoToLink( /* QString anchor */ );
-    void slotSetZoom( float zoom );
-    void slotChangeZoom( float offset );
 
 signals:
     // notify changes via signals
     void pageChanged();
-    void zoomChanged( float newZoom );
 
 private:
     void sendFilteredPageList();

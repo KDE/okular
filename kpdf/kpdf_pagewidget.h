@@ -21,8 +21,8 @@
 #include "CharTypes.h"
 
 class KURL;
-
-class QWidget;
+class KActionCollection;
+class KConfigGroup;
 
 class LinkAction;
 class PDFDoc;
@@ -45,13 +45,16 @@ namespace KPDF
         PageWidget(QWidget *parent, KPDFDocument *document);
         ~PageWidget();
 
-        void setPixelsPerPoint(float);
-        /* void setLinks(); */
+		// create actions that interact with this widget
+		void setupActions( KActionCollection * collection, KConfigGroup * config );
+		void saveSettings( KConfigGroup * config );
 
 		// inherited from KPDFDocumentObserver
 		void pageSetup( const QValueList<int> & pages );
 		void pageSetCurrent( int pageNumber, float position );
 
+        void setPixelsPerPoint(float);
+        /* void setLinks(); */
 
         void enableScrollBars( bool b );
         /**
@@ -72,7 +75,23 @@ namespace KPDF
         void scrollTop();
         bool readUp();
         bool readDown();
-    signals:
+
+	void slotZoom( const QString& );
+	void slotZoomIn();
+	void slotZoomOut();
+	void slotFitToWidthToggled( bool );
+	void slotToggleScrollBars( bool );
+
+    void slotSetZoom( float zoom );
+    void slotChangeZoom( float offset );
+private:
+	KToggleAction *m_showScrollBars;
+	KSelectAction *m_zoomTo;
+	KToggleAction *m_fitToWidth;
+
+signals:
+    void zoomChanged( float newZoom );
+
         void linkClicked(LinkAction*);
         void ReadUp();
         void ReadDown();

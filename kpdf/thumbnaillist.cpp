@@ -8,6 +8,10 @@
  ***************************************************************************/
 
 #include <qtimer.h>
+#include <klocale.h>
+#include <kconfigbase.h>
+#include <kaction.h>
+#include <kactioncollection.h>
 
 #include "thumbnaillist.h"
 #include "thumbnail.h"
@@ -34,15 +38,30 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestThumbnails(int, int)) );
 }
 
+void ThumbnailList::setupActions( KActionCollection * ac, KConfigGroup * config )
+{
+	KToggleAction * show = new KToggleAction( i18n( "Show &Page List" ), 0, ac, "show_page_list" );
+	show->setCheckedState(i18n("Hide &Page List"));
+	connect( show, SIGNAL( toggled( bool ) ), SLOT( setShown( bool ) ) );
+
+	show->setChecked( config->readBoolEntry( "ShowPageList", true ) );
+	setShown( show->isChecked() );
+}
+
+void ThumbnailList::saveSettings( KConfigGroup * config )
+{
+	config->writeEntry( "ShowPageList", isShown() );
+}
+
 //BEGIN KPDFDocumentObserver inherited methods 
 void ThumbnailList::pageSetup( const QValueList<int> & pages )
 {
 	// delete all the Thumbnails
-	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
 	for ( ; thumbIt != thumbEnd; ++thumbIt )
 		delete *thumbIt;
-	thumbnails.clear();
+	m_thumbnails.clear();
 	m_selected = 0;
 
 	if ( pages.count() < 1 )
@@ -63,7 +82,7 @@ void ThumbnailList::pageSetup( const QValueList<int> & pages )
 		// add to the scrollview
 		addChild( t, 0, totalHeight );
 		// add to the internal queue
-		thumbnails.push_back( t );
+		m_thumbnails.push_back( t );
 		// update total height (asking widget its own height)
 		totalHeight += t->setThumbnailWidth( width );
 		t->show();
@@ -84,9 +103,9 @@ void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 	m_selected = 0;
 
 	// select next page
-	vectorIndex = 0;
-	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+	m_vectorIndex = 0;
+	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
 	for (; thumbIt != thumbEnd; ++thumbIt)
 	{
 		if ( (*thumbIt)->pageNumber() == pageNumber )
@@ -97,14 +116,14 @@ void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 			//non-centered version: ensureVisible( 0, itemTop + itemHeight/2, 0, itemHeight/2 );
 			break;
 		}
-		vectorIndex++;
+		m_vectorIndex++;
 	}
 }
 
 void ThumbnailList::notifyThumbnailChanged( int pageNumber )
 {
-	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
 	for (; thumbIt != thumbEnd; ++thumbIt)
 		if ( (*thumbIt)->pageNumber() == pageNumber )
 		{
@@ -117,7 +136,7 @@ void ThumbnailList::notifyThumbnailChanged( int pageNumber )
 //BEGIN widget events 
 void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
-	if ( thumbnails.count() < 1 )
+	if ( m_thumbnails.count() < 1 )
 		return keyEvent->ignore();
 
 	int nextPage = -1;
@@ -125,20 +144,20 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 	{
 		if ( !m_selected )
 			nextPage = 0;
-		else if ( vectorIndex > 0 )
-			nextPage = thumbnails[ vectorIndex - 1 ]->pageNumber();
+		else if ( m_vectorIndex > 0 )
+			nextPage = m_thumbnails[ m_vectorIndex - 1 ]->pageNumber();
 	}
 	else if ( keyEvent->key() == Key_Down )
 	{
 		if ( !m_selected )
 			nextPage = 0;
-		else if ( vectorIndex < (int)thumbnails.count() - 1 )
-			nextPage = thumbnails[ vectorIndex + 1 ]->pageNumber();
+		else if ( m_vectorIndex < (int)m_thumbnails.count() - 1 )
+			nextPage = m_thumbnails[ m_vectorIndex + 1 ]->pageNumber();
 	}
 	else if ( keyEvent->key() == Key_Home )
-		nextPage = thumbnails[ 0 ]->pageNumber();
+		nextPage = m_thumbnails[ 0 ]->pageNumber();
 	else if ( keyEvent->key() == Key_End )
-		nextPage = thumbnails[ thumbnails.count() - 1 ]->pageNumber();
+		nextPage = m_thumbnails[ m_thumbnails.count() - 1 ]->pageNumber();
 
 	if ( nextPage == -1 )
 		return keyEvent->ignore();
@@ -153,8 +172,8 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 {
 	int clickY = e->y();
-	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
 	for ( ; thumbIt != thumbEnd; ++thumbIt )
 	{
 		Thumbnail * t = *thumbIt;
@@ -169,7 +188,7 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 
 void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 {
-	if ( thumbnails.count() < 1 )
+	if ( m_thumbnails.count() < 1 )
 		return;
 	// if width changed resize all the Thumbnails, reposition them to the
 	// right place and recalculate the contents area
@@ -181,8 +200,8 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 		// resize and reposition items
 		int totalHeight = 0,
 		    newWidth = e->size().width();
-		QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-		QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+		QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
+		QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
 		for ( ; thumbIt != thumbEnd; ++thumbIt )
 		{
 			Thumbnail *t = *thumbIt;
@@ -199,7 +218,7 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 	}
 	else if ( e->size().height() <= e->oldSize().height() )
 		return;
-	// update thumbnails since width has changed or height has increased
+	// update Thumbnails since width has changed or height has increased
 	requestThumbnails( 500 );
 }
 //END widget events 
@@ -215,8 +234,8 @@ void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContents
 	    vOffset = newContentsY == -1 ? contentsY() : newContentsY;
 
 	// scroll from the top to the last visible thumbnail
-	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
 	for ( ; thumbIt != thumbEnd; ++thumbIt )
 	{
 		Thumbnail * t = *thumbIt;

@@ -25,7 +25,7 @@ Q_OBJECT
 		ThumbnailList(QWidget *parent, QMutex *docMutex);
 		~ThumbnailList();
 		
-		void setCurrentItem(int i);
+		void setCurrentThumbnail(int i);
 		void setPages(int i, double ar);
 		
 		void generateThumbnails(PDFDoc *doc);

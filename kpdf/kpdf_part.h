@@ -25,6 +25,7 @@ class QWidget;
 
 class KAboutData;
 class KAction;
+class KPrinter;
 class KURL;
 class KToggleAction;
 class KSelectAction;
@@ -34,8 +35,8 @@ class LinkDest;
 class PDFDoc;
 class XOutputDev;
 
+class ThumbnailList;
 class PDFPartView;
-class KPrinter;
 
 namespace KPDF
 {
@@ -77,11 +78,13 @@ namespace KPDF
       void displayPage(int pageNumber, float zoomFactor = 1.0);
     /*void displayDestination(LinkDest*);*/
       void updateActionPage();
-      void setFullScreen( bool fs );
       PageWidget* pageWidget() const {return m_outputDev;}
 
   public slots:
     void print();
+
+  signals:
+    void rightClick();
 
 
   protected:
@@ -124,10 +127,13 @@ namespace KPDF
 
   private:
       void doFind(QString s, bool next);
-     
-      PDFDoc*     m_doc;
+
+      ThumbnailList *m_thumbnailList;
+	  // TODO rename to something else
       PageWidget* m_outputDev;
-      PDFPartView * pdfpartview;
+   
+      PDFDoc*     m_doc;
+           
       KAction* m_firstPage;
       KAction* m_lastPage;
       KAction* m_prevPage;

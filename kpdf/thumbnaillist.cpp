@@ -37,7 +37,7 @@ ThumbnailList::~ThumbnailList()
 	}
 }
 
-void ThumbnailList::setCurrentItem(int i)
+void ThumbnailList::setCurrentThumbnail(int i)
 {
 	setCurrentCell(i-1, 0); 
 	changeSelected(i-1);

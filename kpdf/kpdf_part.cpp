@@ -25,9 +25,9 @@
 
 #include <math.h>
 
-#include <qwidget.h>
 #include <qlistbox.h>
 #include <qfile.h>
+#include <qhbox.h>
 #include <qpainter.h>
 #include <qtimer.h>
 
@@ -46,7 +46,6 @@
 #include <kio/netaccess.h>
 
 #include "kpdf_error.h"
-#include "part.h"
 
 #include "GString.h"
 
@@ -55,6 +54,7 @@
 #include "TextOutputDev.h"
 #include "QOutputDevKPrinter.h"
 
+#include "thumbnaillist.h"
 #include "kpdf_pagewidget.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
@@ -80,14 +80,25 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // we need an instance
   setInstance(KPDFPartFactory::instance());
 
-  pdfpartview = new PDFPartView(parentWidget, widgetName, &m_docMutex);
-
-  connect(pdfpartview, SIGNAL( clicked ( int ) ), this, SLOT( pageClicked ( int ) ));
-
-  m_outputDev = pdfpartview->outputdev;
+  QHBox *widget = new QHBox(parentWidget, widgetName);
+  widget->setSpacing(3);
+  widget->setMargin(3);
+  
+  m_thumbnailList = new ThumbnailList(widget, &m_docMutex);
+  m_thumbnailList->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)7, 0, 0, m_thumbnailList->sizePolicy().hasHeightForWidth() ) );
+  m_thumbnailList->setMaximumSize( QSize( 75, 32767 ) );
+  m_thumbnailList->setColumnWidth(0, 75);
+  
+  m_outputDev = new KPDF::PageWidget( widget, "outputdev", &m_docMutex );
+  // is this really necessaty??
+  widget->resize( QSize(623, 381).expandedTo(widget->minimumSizeHint()) );
+    
+  connect(m_thumbnailList, SIGNAL(clicked(int)), this, SLOT(pageClicked(int)));
+  connect(m_outputDev, SIGNAL(rightClick()), this, SIGNAL(rightClick()));
+  
   m_outputDev->setAcceptDrops( true );
 
-  setWidget(pdfpartview);
+  setWidget(widget);
 
   m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0,
                                        actionCollection(), "show_scrollbars" );
@@ -185,7 +196,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 Part::~Part()
 {
     m_count--;
-    pdfpartview->stopThumbnailGeneration();
+    m_thumbnailList->stopThumbnailGeneration();
     writeSettings();
     if (m_count == 0) delete globalParams;
     delete m_doc;
@@ -223,7 +234,7 @@ void Part::goToPage( int page )
     if (page != m_currentPage)
     {
         m_currentPage = page;
-        pdfpartview->setCurrentThumbnail(m_currentPage);
+        m_thumbnailList->setCurrentThumbnail(m_currentPage);
         m_outputDev->setPage(m_currentPage);
         updateActionPage();
     }
@@ -233,12 +244,6 @@ void Part::slotOpenUrlDropped( const KURL &url )
 {
     openURL(url);
 }
-
-void Part::setFullScreen( bool fs )
-{
-    pdfpartview->showPageList(!fs);
-}
-
 
 void Part::updateActionPage()
 {
@@ -304,7 +309,8 @@ void Part::showScrollBars( bool show )
 
 void Part::showMarkList( bool show )
 {
-    pdfpartview->showPageList(show);
+    if (show) m_thumbnailList->show();
+    else m_thumbnailList->hide();
 }
 
 void Part::slotGotoEnd()
@@ -364,7 +370,7 @@ Part::createAboutData()
   bool
 Part::closeURL()
 {
-  pdfpartview->stopThumbnailGeneration();
+  m_thumbnailList->stopThumbnailGeneration();
   delete m_doc;
   m_doc = 0;
 
@@ -394,9 +400,9 @@ Part::openFile()
   if (m_doc->getNumPages() > 0)
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?
-    // TODO move it to inside pdfpartview or even the thumbnail list itself?
-    pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
-    pdfpartview->generateThumbnails(m_doc);
+    // TODO move it the thumbnail list?
+    m_thumbnailList->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
+    m_thumbnailList->generateThumbnails(m_doc);
 
     m_outputDev->setPDFDocument(m_doc);
     goToPage(1);
@@ -751,7 +757,7 @@ void Part::doPrint( KPrinter& printer )
 
 void Part::find()
 {
-  KFindDialog dlg(pdfpartview);
+  KFindDialog dlg(widget());
   if (dlg.exec() != QDialog::Accepted) return;
 
   doFind(dlg.pattern(), false);

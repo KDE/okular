@@ -19,9 +19,6 @@
 
 #include "kpdf_shell.h"
 #include "kpdf_shell.moc"
-#include "kpdf_part.h"
-#include "part.h"
-#include "kpdf_pagewidget.h"
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -79,8 +76,7 @@ Shell::Shell()
     // next time we enter the event loop...
     return;
   }
-  PDFPartView * partView = static_cast<PDFPartView *>(m_part->widget());
-  connect( partView->outputdev, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
+  connect( m_part, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
 
   readSettings();
 }
@@ -201,7 +197,6 @@ void Shell::slotUpdateFullScreen()
 	menuBar()->hide();
 	toolBar()->hide();
         //todo fixme
-	//m_pdfpart->setFullScreen( true );
 	showFullScreen();
 #if 0
 	kapp->installEventFilter( m_fsFilter );
@@ -212,7 +207,6 @@ void Shell::slotUpdateFullScreen()
     else
     {
 	//kapp->removeEventFilter( m_fsFilter );
-        //m_pdfpart->setFullScreen( false );
 	menuBar()->show();
 	toolBar()->show();
 	showNormal();

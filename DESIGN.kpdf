@@ -29,7 +29,7 @@ all virtuals from the interface and draws text/image into an inner pixmap.
 the rendering of a page is finished (and some other features such as collection
 of per-page text that permits to implement search). 
 
-- Kpdf's QOutputDevPixmap returns a image containing a single redered page.
+- Kpdf's QOutputDev returns a image containing a single redered page.
 
 
 *** Architecture:
@@ -47,13 +47,6 @@ area on the right), some XMLgui functionalities (zoom actions, search actions,
 more...) and some background logic (thumbnail generation, page changes,
 loading/saving settings and more).
 
-Architecture::Part:CentralWidget: (part.cpp/.h)
-
-The centralWidget (namely PDFPartView) holds a 'ThumbnailList' (a QTable
-composed of 'Thumbnails') and a 'PageWidget'. The central widget has few
-accessors to the list of thumbnails, whereas the page widget is accessed
-publicly by the core of the Part (this may change soon!).
-
 Architecture::Part:CentralWidget:PageWidget (kpdf_pagewidget.cc/.h)
 
 Displays current page pixmap (holds a QOutputDevPixmap inside). Handles mouse,
@@ -68,6 +61,8 @@ document using the ThumbnailCreator class.
 
 
 *** Last Revisions to this document:
+2004-09-08 : 0.3 - Albert Astals Cid <tsdgeos@terra.es>
+    - Bye bye part.cpp/.h
 2004-09-04 : 0.2 - Albert Astals Cid <tsdgeos@terra.es>
     - ThumbnailList creates the thumbnails itself
 2004-09-04 : 0.1 - Enrico Ros <eros.kde@email.it>

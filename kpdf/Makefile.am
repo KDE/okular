@@ -1,5 +1,6 @@
 # set the include path for X, qt and KDE
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../splash -I$(srcdir)/../goo -I$(srcdir)/../xpdf -I$(srcdir)/conf $(all_includes) $(FREETYPE_CFLAGS)
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../splash -I$(srcdir)/../goo -I$(srcdir)/../xpdf \
+	-I$(top_builddir)/kpdf/kpdf/conf -I$(srcdir)/conf $(all_includes) $(FREETYPE_CFLAGS)
 
 # compile sources in subdirectories
 SUBDIRS = conf .

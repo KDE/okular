@@ -1,4 +1,5 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook V3.1-Based Variant V1.0//EN">
+
 <book lang="en">
 <bookinfo>
 <title>kdvi TeX DVI viewer - User Manual</title>
@@ -7,20 +8,17 @@
 <firstname>Markku</firstname>
 <surname>Hihnala</surname>
 <affiliation>
-<address><email><ulink url="mailto:mah@ee.oulu.fi">mah@ee.oulu.fi</ulink></email></address>
+<address><email>mah@ee.oulu.fi</email></address>
 </affiliation>
 </author>
 </authorgroup>
-<date>??/??/??</date>
-<releaseinfo>Version ??.??.??</releaseinfo>
+<date>25/05/2000</date>
+<releaseinfo>Version 1.00.00</releaseinfo>
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>dvi</keyword>
 <keyword>DVI</keyword>
 <keyword>TeX</keyword>
-<keyword>tex</keyword>
 <keyword>LaTeX</keyword>
-<keyword>latex</keyword>
 <keyword>device-independent</keyword>
 <keyword>viewer</keyword>
 <keyword>dvi viewer</keyword>
@@ -29,8 +27,8 @@
 </keywordset>
 </bookinfo>
 
-<chapter id="USAGE">
-<title>USAGE</title>
+<chapter id="usage">
+<title>usage</title>
 
 <note>
 <para>kdvi is a DVI viewer based on xdvik version 18f by many authors (see file AUTHORS).  My additions to the earlier work are distributed under the GPL (see file COPYING).</para>

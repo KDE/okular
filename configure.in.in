@@ -23,3 +23,34 @@ fi
 
 AC_CHECK_HEADERS(sys/types.h sys/params.h limits.h)
 
+# Check for freetype2
+KDE_FIND_PATH(freetype-config, FREETYPE_CONFIG, [${prefix}/bin ${exec_prefix}/bin /usr/local/bin /opt/local/bin],)
+
+if test -n "$FREETYPE_CONFIG"; then
+  vers=`$FREETYPE_CONFIG --version 2>/dev/null | awk 'BEGIN { FS = "."; } { printf "%d", ($1 * 1000 + $2) * 1000 + $3;}'`
+  if test -n "$vers" && test "$vers" -ge 8000002
+  then
+     LIBFREETYPE_LIBS="`$FREETYPE_CONFIG --libs`"
+     FREETYPE_RPATH=
+     for args in $LIBFREETYPE_LIBS; do
+	  case $args in
+	    -L*)
+  	       FREETYPE_RPATH="$FREETYPE_RPATH $args"
+ 	       ;;
+          esac
+     done
+     FREETYPE_RPATH=`echo $FREETYPE_RPATH | sed -e "s/-L/-R/g"`
+     LIBFREETYPE_CFLAGS="`$FREETYPE_CONFIG --cflags`"
+
+     AC_DEFINE_UNQUOTED(HAVE_FREETYPE, 1, [Defines if your system has the freetype library])
+  fi
+fi
+
+AC_SUBST(LIBFREETYPE_LIBS)
+AC_SUBST(LIBFREETYPE_CFLAGS)
+AC_SUBST(FREETYPE_RPATH)
+
+if test -z "$LIBFREETYPE_LIBS"; then
+	DO_NOT_COMPILE="$DO_NOT_COMPILE kdvi"
+fi
+

@@ -364,11 +364,13 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
       if (locateTFMonly == true)
 	shellProcessCmdLine += KShellProcess::quote(QString("%1.tfm").arg(fontp->fontname));
       else {
+#ifdef HAVE_FREETYPE
 	if (FreeType_could_be_loaded == true) {
 	  const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
 	  if (!filename.isEmpty())
 	    shellProcessCmdLine += KShellProcess::quote(QString("%1").arg(filename));
 	}
+#endif
 	shellProcessCmdLine += KShellProcess::quote(QString("%1.vf").arg(fontp->fontname));
 	shellProcessCmdLine += KShellProcess::quote(QString("%2.%1pk").arg(MFResolutions[MetafontMode]).arg(fontp->fontname));
       }

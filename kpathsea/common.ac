@@ -22,7 +22,7 @@ AC_CHECK_HEADERS(assert.h float.h limits.h memory.h pwd.h stdlib.h \
 AC_CHECK_FUNCS(basename bcopy memmove putenv getcwd)
 
 AC_C_CONST
-
+AC_PROG_LIBTOOL
 
 # This is a GNU libc invention.
 AC_MSG_CHECKING(whether program_invocation_name is predefined)

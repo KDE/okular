@@ -224,9 +224,7 @@ int dviWindow::makePK()
 	return makepk;	
 }
 	
-extern "C"{
-    char * kpse_font_override_path;
-}
+extern char * kpse_font_override_path;
 
 void dviWindow::setFontPath( const char *s )
 {

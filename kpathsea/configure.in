@@ -1,6 +1,108 @@
+
+
+
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(pathsearch.c)
 
-sinclude(common.ac)
+AM_INIT_AUTOMAKE(kpathsea, 1.0)
+
+dnl Common Autoconf sinclude file for kpathsea-using programs.  (Have to
+dnl use the m4 `sinclude' builtin instead of `include', since Autoconf
+dnl disables `include'.)
+
+dnl Write output here, instead of putting a zillion -D's on the command line.
+AM_CONFIG_HEADER(c-auto.h)
+
+AC_PROG_MAKE_SET
+
+AC_PROG_CC
+AC_PROG_INSTALL
+
+AC_ISC_POSIX
+
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_FUNC_CLOSEDIR_VOID
+AC_CHECK_HEADERS(assert.h float.h limits.h memory.h pwd.h stdlib.h \
+                 string.h unistd.h)
+
+AC_CHECK_FUNCS(basename bcopy memmove putenv getcwd)
+
+AC_C_CONST
+AC_ENABLE_STATIC(no)
+AM_PROG_LIBTOOL
+
+# This is a GNU libc invention.
+AC_MSG_CHECKING(whether program_invocation_name is predefined)
+AC_CACHE_VAL(kb_cv_var_program_inv_name,
+[AC_TRY_LINK(, [main() { program_invocation_name = "love"; }],
+  kb_cv_var_program_inv_name=yes, kb_cv_var_program_inv_name=no)])dnl
+AC_MSG_RESULT($kb_cv_var_program_inv_name)
+if test $kb_cv_var_program_inv_name = yes; then
+  AC_DEFINE(HAVE_PROGRAM_INVOCATION_NAME)
+fi
+
+
+# Some BSD putenv's, e.g., FreeBSD, do malloc/free's on the environment.
+# This test program is due to Mike Hibler <mike@cs.utah.edu>.
+# We don't actually need to run this if we don't have putenv, but it
+# doesn't hurt.
+AC_MSG_CHECKING(whether putenv uses malloc)
+AC_CACHE_VAL(kb_cv_func_putenv_malloc,
+[AC_TRY_RUN([
+#define VAR	"YOW_VAR"
+#define STRING1 "GabbaGabbaHey"
+#define STRING2 "Yow!!"		/* should be shorter than STRING1 */
+extern char *getenv (); /* in case char* and int don't mix gracefully */
+main ()
+{
+  char *str1, *rstr1, *str2, *rstr2;
+  str1 = getenv (VAR);
+  if (str1)
+    exit (1);
+  str1 = malloc (strlen (VAR) + 1 + strlen (STRING1) + 1);
+  if (str1 == 0)
+    exit (2);
+  strcpy (str1, VAR);
+  strcat (str1, "=");
+  strcat (str1, STRING1);
+  if (putenv (str1) < 0)
+    exit (3);
+  rstr1 = getenv (VAR);
+  if (rstr1 == 0)
+    exit (4);
+  rstr1 -= strlen (VAR) + 1;
+  if (strncmp (rstr1, VAR, strlen (VAR)))
+    exit (5);
+  str2 = malloc (strlen (VAR) + 1 + strlen (STRING2) + 1);
+  if (str2 == 0 || str1 == str2)
+    exit (6);
+  strcpy (str2, VAR);
+  strcat (str2, "=");
+  strcat (str2, STRING2);
+  if (putenv (str2) < 0)
+    exit (7);
+  rstr2 = getenv (VAR);
+  if (rstr2 == 0)
+    exit (8);
+  rstr2 -= strlen (VAR) + 1;
+#if 0
+  printf ("rstr1=0x%x, rstr2=0x%x\n", rstr1, rstr2);
+  /*
+   * If string from first call was reused for the second call,
+   * you had better not do a free on the first string!
+   */
+  if (rstr1 == rstr2)
+          printf ("#define SMART_PUTENV\n");
+  else
+          printf ("#undef SMART_PUTENV\n");
+#endif
+  exit (rstr1 == rstr2 ? 0 : 1);
+}], kb_cv_func_putenv_malloc=yes, kb_cv_func_putenv_malloc=no,
+    kb_cv_func_putenv_malloc=no)])dnl
+AC_MSG_RESULT($kb_cv_func_putenv_malloc)
+if test $kb_cv_func_putenv_malloc = yes; then
+  AC_DEFINE(SMART_PUTENV)
+fi
 
 AC_OUTPUT(Makefile)

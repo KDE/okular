@@ -1,5 +1,5 @@
 
-kpathsea = kpathsea/kpathsea.a
+kpathsea = kpathsea/libkpathsea.la
 
 # just set the variable
 appsdir = $(kde_appsdir)/Graphics
@@ -30,8 +30,8 @@ kdvi_SOURCES = main.cpp
 squeeze_SOURCES	= squeeze.c
 
 # the library search path
-libkdvi_la_LDFLAGS = -L./kpathsea $(all_libraries) -version-info 1:0:0 -module 
-libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts -lkpathsea
+libkdvi_la_LDFLAGS = $(all_libraries) -avoid-version -module 
+libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts kpathsea/libkpathsea.la
 
 kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kdvi_LDADD = libkdvi.la

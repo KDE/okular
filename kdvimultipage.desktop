@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+Comment=DVI
+Name=KDVIMultiPage
+ServiceTypes=KViewShell/MultiPage
+X-KDE-Library=kdvipart
+X-KDE-MultiPageFileType=dvi
+X-KDE-MultiPageVersion=1

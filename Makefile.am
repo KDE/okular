@@ -57,6 +57,8 @@ tipdir = $(kde_datadir)/kdvi
 partdir = $(kde_datadir)/kdvi
 part_DATA = ../kviewshell/kviewshell.rc kdvi_part.rc
 
+kde_services_DATA = kdvimultipage.desktop
+
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@
 

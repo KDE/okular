@@ -133,11 +133,9 @@ glyph *TeXFont_PFB::getGlyph(unsigned int ch, bool generateCharacterPixmap)
     g->y2 = slot->bitmap_top;
 
     // load glyph image into the slot and erase the previous one
-    /*
     error = FT_Load_Glyph(face, ch, FT_LOAD_NO_SCALE );
     if (error)
       kdError(4300) << "E" << endl;
-    */
     
     g->dvi_advance_in_units_of_design_size_by_2e20 =  ((Q_INT32)(1<<20) * (Q_INT32)face->glyph->metrics.horiAdvance) / (Q_INT32)face->units_per_EM;
   }

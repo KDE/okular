@@ -118,5 +118,10 @@ mscrbox.cpp : scrbox.h
 psheader.c: psheader.txt squeeze $(kpathsea)
 	./squeeze psheader.txt $@
 
+# this is somehow a dirty hack to force the automatic dependency checking
+# to create the stuff in the kpathsea directory first. vf.c is the last
+# source file in the list.
+vf.c: $(kpathsea)
+
 $(kpathsea):
 	cd kpathsea && ./configure && $(MAKE)

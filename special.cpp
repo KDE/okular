@@ -463,6 +463,74 @@ void dviWindow::ps_special(QString cp)
   }
 }
 
+
+void dviWindow::TPIC_flushPath_special(void)
+{
+#ifdef DEBUG_SPECIAL
+  kdDebug(4300) << "TPIC special flushPath" << endl;
+#endif
+
+  if (number_of_elements_in_path == 0) {
+    printErrorMsgForSpecials("TPIC special flushPath called when path was empty.");
+    return;
+  }
+
+  QPen pen(Qt::black, (int)(penWidth_in_mInch*xres*_zoom/1000.0 + 0.5));  // Sets the pen size in milli-inches
+  foreGroundPaint.setPen(pen);
+  foreGroundPaint.drawPolyline(TPIC_path, 0, number_of_elements_in_path);
+  number_of_elements_in_path = 0;
+}
+
+
+void dviWindow::TPIC_addPath_special(QString cp)
+{
+#ifdef DEBUG_SPECIAL
+  kdDebug(4300) << "TPIC special addPath: " << cp << endl;
+#endif
+
+  // Adds a point to the path list
+  QString cp_noWhiteSpace = cp.stripWhiteSpace();
+  bool ok;
+  float xKoord = KStringHandler::word(cp_noWhiteSpace, (uint)0).toFloat(&ok);
+  if (ok == false) {
+    printErrorMsgForSpecials( QString("TPIC special; cannot parse first argument in 'pn %1'.").arg(cp) );
+    return;
+  }
+  float yKoord = KStringHandler::word(cp_noWhiteSpace, (uint)1).toFloat(&ok);
+  if (ok == false) {
+    printErrorMsgForSpecials( QString("TPIC special; cannot parse second argument in 'pn %1'.").arg(cp) );
+    return;
+  }
+  
+  int x = (int)( currinf.data.dvi_h/(shrinkfactor*65536.0) + xKoord*xres*_zoom/1000.0 + 0.5 );
+  int y = (int)( currinf.data.pxl_v + yKoord*xres*_zoom/1000.0 + 0.5 );
+  
+  // Initialize the point array used to store the path
+  if (TPIC_path.size() == 0) 
+    number_of_elements_in_path = 0;
+  if (TPIC_path.size() == number_of_elements_in_path) 
+    TPIC_path.resize(number_of_elements_in_path+100);
+  TPIC_path.setPoint(number_of_elements_in_path++, x, y);
+}
+
+
+void dviWindow::TPIC_setPen_special(QString cp)
+{
+#ifdef DEBUG_SPECIAL
+  kdDebug(4300) << "TPIC special setPen: " << cp << endl;
+#endif
+  
+  // Sets the pen size in milli-inches
+  bool ok;
+  penWidth_in_mInch = cp.stripWhiteSpace().toFloat(&ok);
+  if (ok == false) {
+    printErrorMsgForSpecials( QString("TPIC special; cannot parse argument in 'pn %1'.").arg(cp) );
+    penWidth_in_mInch = 0.0;
+    return;
+  }
+}
+
+
 void dviWindow::applicationDoSpecial(char *cp)
 {
   QString special_command(cp);
@@ -481,6 +549,23 @@ void dviWindow::applicationDoSpecial(char *cp)
   if (strncasecmp(cp, "html:<A href=", 13) == 0) {
     if (PostScriptOutPutString == NULL)
       html_href_special(special_command.mid(14));
+    return;
+  }
+  
+  // TPIC specials
+  if (strncasecmp(cp, "pn", 2) == 0) {
+    if (PostScriptOutPutString == NULL)
+      TPIC_setPen_special(special_command.mid(2));
+    return;
+  }
+  if (strncasecmp(cp, "pa", 2) == 0) {
+    if (PostScriptOutPutString == NULL)
+      TPIC_addPath_special(special_command.mid(3));
+    return;
+  }
+  if (strncasecmp(cp, "fp", 2) == 0) {
+    if (PostScriptOutPutString == NULL)
+      TPIC_flushPath_special();
     return;
   }
 

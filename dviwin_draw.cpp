@@ -558,8 +558,9 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 void dviWindow::draw_page(void)
 {
   // Reset a couple of variables
-  HTML_href              = 0;
-  source_href            = 0;
+  HTML_href         = 0;
+  source_href       = 0;
+  penWidth_in_mInch = 0.0;
   currentlyDrawnPage.hyperLinkList.clear();
 
 

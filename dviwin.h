@@ -250,12 +250,17 @@ private:
  QString       errorMsg;
 
  /** Methods which handle certain special commands. */
- void          bang_special(QString cp);
- void          quote_special(QString cp);
- void          ps_special(QString cp);
- void          epsf_special(QString cp);
- void          header_special(QString cp);
- void          source_special(QString cp);
+ void bang_special(QString cp);
+ void quote_special(QString cp);
+ void ps_special(QString cp);
+ void epsf_special(QString cp);
+ void header_special(QString cp);
+ void source_special(QString cp);
+
+ /** TPIC specials */
+ void TPIC_setPen_special(QString cp);
+ void TPIC_addPath_special(QString cp);
+ void TPIC_flushPath_special(void);
 
  /* This timer is used to delay clearing of the statusbar. Clearing
     the statusbar is delayed to avoid awful flickering when the mouse
@@ -351,6 +356,11 @@ private:
  QString             export_fileName;
  QString             export_tmpFileName;
  QString             export_errorString;
+
+ /** Data required for handling TPIC specials */ 
+ float       penWidth_in_mInch;
+ QPointArray TPIC_path;
+ Q_UINT16    number_of_elements_in_path;
 
  struct drawinf	currinf;
 };

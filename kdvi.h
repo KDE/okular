@@ -39,7 +39,7 @@ class kdvi : public KTMainWindow
 	Q_OBJECT
 
 public:
-	kdvi(char *fname=0, QWidget *parent=0,const char *name=0 );
+	kdvi(const QString &fname=QString::null, QWidget *parent=0,const char *name=0 );
 	~kdvi();
 
 public slots:

@@ -48,7 +48,7 @@ static int getCharFromString(void *data) {
   return c;
 }
 
-static int getCharFromFile(void *data) {
+static int charCodeToUnicode_getCharFromFile(void *data) {
   return fgetc((FILE *)data);
 }
 
@@ -222,7 +222,7 @@ void CharCodeToUnicode::parseCMap1(int (*getCharFunc)(void *), void *data,
       if (tok1[0] == '/') {
 	name = new GString(tok1 + 1);
 	if ((f = globalParams->findToUnicodeFile(name))) {
-	  parseCMap1(&getCharFromFile, f, nBits);
+	  parseCMap1(&charCodeToUnicode_getCharFromFile, f, nBits);
 	  fclose(f);
 	} else {
 	  error(-1, "Couldn't find ToUnicode CMap file for '%s'",

@@ -36,7 +36,7 @@ struct CMapVectorEntry {
 
 //------------------------------------------------------------------------
 
-static int getCharFromFile(void *data) {
+static int cMap_getCharFromFile(void *data) {
   return fgetc((FILE *)data);
 }
 
@@ -68,7 +68,7 @@ CMap *CMap::parse(CMapCache *cache, GString *collectionA,
 
   cmap = new CMap(collectionA->copy(), cMapNameA->copy());
 
-  pst = new PSTokenizer(&getCharFromFile, f);
+  pst = new PSTokenizer(&cMap_getCharFromFile, f);
   pst->getToken(tok1, sizeof(tok1), &n1);
   while (pst->getToken(tok2, sizeof(tok2), &n2)) {
     if (!strcmp(tok2, "usecmap")) {

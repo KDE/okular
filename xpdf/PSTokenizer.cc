@@ -20,7 +20,7 @@
 
 // A '1' in this array means the character is white space.  A '1' or
 // '2' means the character ends a name or command.
-static char specialChars[256] = {
+static char psTokenizer_specialChars[256] = {
   1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0,   // 0x
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   // 1x
   1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2,   // 2x
@@ -69,7 +69,7 @@ GBool PSTokenizer::getToken(char *buf, int size, int *length) {
       }
     } else if (c == '%') {
       comment = gTrue;
-    } else if (specialChars[c] != 1) {
+    } else if (psTokenizer_specialChars[c] != 1) {
       break;
     }
   }
@@ -103,7 +103,7 @@ GBool PSTokenizer::getToken(char *buf, int size, int *length) {
       }
     }
   } else if (c != '[' && c != ']') {
-    while ((c = lookChar()) != EOF && !specialChars[c]) {
+    while ((c = lookChar()) != EOF && !psTokenizer_specialChars[c]) {
       getChar();
       if (i < size - 1) {
 	buf[i++] = c;

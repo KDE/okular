@@ -450,7 +450,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   if (!fi.exists() || fi.isDir()) {
     KMessageBox::error( parentWidget,
 			i18n("<qt><strong>File error!</strong> The specified file '%1' does not exist. "
-			     "KDVI already tried to add the ending '.dvi'</qt>").arg(filename),
+			     "KDVI already tried to add the ending '.dvi'.</qt>").arg(filename),
 			i18n("File Error!"));
     return false;
   }

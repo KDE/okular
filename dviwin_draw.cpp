@@ -265,7 +265,7 @@ void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
     }
   }
 
-  errorMsg = i18n("The DVI code set a character of an unknown font");
+  errorMsg = i18n("The DVI code set a character of an unknown font.");
   return;
 }
 

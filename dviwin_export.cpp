@@ -72,7 +72,7 @@ void dviWindow::exportText(void)
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Shall I overwrite that file?").arg(fileName),
+    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 				       i18n("Overwrite file"));
     if (r == KMessageBox::No)
       return;
@@ -176,7 +176,7 @@ void dviWindow::exportPDF(void)
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Shall I overwrite that file?").arg(fileName),
+    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 				       i18n("Overwrite file"));
     if (r == KMessageBox::No)
       return;
@@ -265,7 +265,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       return;
     QFileInfo finfo(fileName);
     if (finfo.exists()) {
-      int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Shall I overwrite that file?").arg(fileName),
+      int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
 					 i18n("Overwrite File"));
       if (r == KMessageBox::No)
 	return;

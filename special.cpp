@@ -421,7 +421,7 @@ void dviWindow::applicationDoSpecial(char *cp)
     TPIC_setPen_special(special_command.mid(2));
     return;
   }
-  if (strncasecmp(cp, "pa", 2) == 0) {
+  if (strncasecmp(cp, "pa ", 3) == 0) {
     TPIC_addPath_special(special_command.mid(3));
     return;
   }
@@ -450,6 +450,7 @@ void dviWindow::applicationDoSpecial(char *cp)
       (cp[0] == '"') || 
       (strncasecmp(cp, "html:<A name=", 13) == 0) ||
       (strncasecmp(cp, "ps:", 3) == 0) ||
+      (strncasecmp(cp, "papersize", 9) == 0) ||
       (strncasecmp(cp, "background", 10) == 0) )
     return;
   

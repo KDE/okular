@@ -16,6 +16,8 @@
  </Menu>
 
  <Menu name="edit"><text>Edit</text>
+  <Action name="embed_postscript"/>
+  <Separator/>
   <Action name="copy_text"/>
   <Action name="edit_select_all"/>
   <Separator/>

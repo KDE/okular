@@ -1,14 +1,30 @@
-// Copyright notice missing.
+// bigEndianByteReader.cpp
+//
+// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+//
+// (C) 2003 Stefan Kebekus
+// Distributed under the GPL
+
+
+#include <kdebug.h>
 
 #include "bigEndianByteReader.h"
 #include "dvi.h"
+
+#define DEBUG_ENDIANREADER
 
 Q_UINT8 bigEndianByteReader::readUINT8(void)
 {
   // This check saveguards us against segmentation fault. It is also
   // necessary for virtual fonts, which do not end whith EOP.
-  if (command_pointer >= end_pointer)
+  if (command_pointer >= end_pointer) {
+#ifdef DEBUG_ENDIANREADER
+    kdError(4300) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
+    kdError(4300) << "end_pointer     = " << end_pointer << endl;
+    kdError(4300) << "command_pointer = " << command_pointer << endl;
+#endif
     return EOP;
+  }
 
   return *(command_pointer++);
 }
@@ -39,6 +55,25 @@ Q_UINT32 bigEndianByteReader::readUINT32(void)
   a = (a << 8) | *(command_pointer++);
   a = (a << 8) | *(command_pointer++);
   return a;
+}
+
+void bigEndianByteReader::writeUINT32(Q_UINT32 a)
+{
+  // This check saveguards us against segmentation fault. It is also
+  // necessary for virtual fonts, which do not end whith EOP.
+  if (command_pointer >= end_pointer)
+    return;
+
+  command_pointer[3] = (Q_UINT8)(a & 0xFF);
+  a = a >> 8;
+  command_pointer[2] = (Q_UINT8)(a & 0xFF);
+  a = a >> 8;
+  command_pointer[1] = (Q_UINT8)(a & 0xFF);
+  a = a >> 8;
+  command_pointer[0] = (Q_UINT8)(a & 0xFF);
+
+  command_pointer += 4;
+  return;
 }
 
 Q_UINT32 bigEndianByteReader::readUINT(Q_UINT8 size)

@@ -293,6 +293,7 @@ void dviWindow::drawPage()
 				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
 				      "likely this means that the DVI file is broken.</qt>"),
 				 errorMsg, i18n("DVI File error"));
+      errorMsg = QString::null;
       return;
     }
 
@@ -380,6 +381,65 @@ void dviWindow::drawPage()
   }
 #endif
 }
+
+
+void dviWindow::embedPostScript(void)
+{
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::embedPostScript()" << endl;
+#endif
+
+  Q_UINT16 currPageSav = current_page;
+  
+  for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+    if (current_page < dviFile->total_pages) {
+      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
+      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+    } else
+      command_pointer = end_pointer = 0;
+    
+    memset((char *) &currinf.data, 0, sizeof(currinf.data));
+    currinf.fonttable = &(dviFile->tn_table);
+    currinf._virtual  = NULL;
+    prescan(&dviWindow::prescan_embedPS);
+  }
+
+
+  // Prescan phase starts here
+  // @@@@ In this implementation, a prescan is performed any time the
+  // user changes the zoom factor. This must be changed at all cost.
+#ifdef PERFORMANCE_MEASUREMENT
+  kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+  QTime preScanTimer;
+  preScanTimer.start();
+#endif
+  
+  for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+    PostScriptOutPutString = new QString();
+    
+    if (current_page < dviFile->total_pages) {
+      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
+      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+    } else
+      command_pointer = end_pointer = 0;
+    
+    memset((char *) &currinf.data, 0, sizeof(currinf.data));
+    currinf.fonttable = &(dviFile->tn_table);
+    currinf._virtual  = NULL;
+    prescan(&dviWindow::prescan_parseSpecials);
+    
+    if (!PostScriptOutPutString->isEmpty())
+      PS_interface->setPostScript(current_page, *PostScriptOutPutString);
+    delete PostScriptOutPutString;
+  }
+  PostScriptOutPutString = NULL;
+  
+#ifdef PERFORMANCE_MEASUREMENT
+  kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+#endif
+  current_page = currPageSav;
+}
+
 
 
 bool dviWindow::correctDVI(const QString &filename)
@@ -574,7 +634,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
       memset((char *) &currinf.data, 0, sizeof(currinf.data));
       currinf.fonttable = &(dviFile->tn_table);
       currinf._virtual  = NULL;
-      prescan(65536.0*fontPixelPerDVIunit());
+      prescan(&dviWindow::prescan_parseSpecials);
       
       if (!PostScriptOutPutString->isEmpty())
 	PS_interface->setPostScript(current_page, *PostScriptOutPutString);
@@ -586,6 +646,9 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
     kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
     current_page = currPageSav;
+    if (dviFile->suggestedPageSize != 0)
+      emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
+
   }
   
   QApplication::restoreOverrideCursor();
@@ -625,7 +688,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
-    prescan(65536.0*fontPixelPerDVIunit());
+    prescan(&dviWindow::prescan_parseSpecials);
     
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
@@ -638,8 +701,10 @@ void dviWindow::all_fonts_loaded(fontPool *)
 #endif
   current_page = currPageSav;
 
-
-  drawPage();
+  if (dviFile->suggestedPageSize != 0)
+    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
+  else
+    drawPage();
 
   // case 1: The reference is a number, which we'll interpret as a
   // page number.

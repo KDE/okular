@@ -264,7 +264,7 @@ void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
     }
   }
 
-  errorMsg = i18n("The DVI code set a character of unknown font");
+  errorMsg = i18n("The DVI code set a character of an unknown font");
   return;
 }
 
@@ -364,6 +364,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    // that at the end of a page, the stack should always be
 	    // empty.
 	    if (!stack.isEmpty()) {
+	      kdDebug(4300) << "DRAW: The stack was not empty when the EOP command was encountered." << endl;
 	      errorMsg = i18n("The stack was not empty when the EOP command was encountered.");
 	      return;
 	    }

@@ -14,19 +14,199 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <qbitmap.h> 
 #include <qdir.h> 
+#include <qfileinfo.h>
 #include <qimage.h> 
 #include <qpainter.h>
 #include <qpaintdevice.h>
-#include <qfileinfo.h>
+
 
 extern QPainter foreGroundPaint;
 extern QColor parseColorSpecification(QString colorSpec);
 extern void parse_special_argument(QString strg, const char *argument_name, int *variable);
+
+
+//#define DEBUG_PRESCAN
+
+
+
+
+void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
+{
+#ifdef  DEBUG_PRESCAN
+  kdDebug(4300) << "dviWindow::prescan_embedPS( cp = " << cp << " ) " << endl;
+#endif
+
+  // Encapsulated Postscript File
+  if (strncasecmp(cp, "PSfile=", 7) != 0) 
+    return;
+
+  QString command(cp+7);
+  
+  QString include_command = command.simplifyWhiteSpace();
+  
+  // The line is supposed to start with "..ile=", and then comes the
+  // filename. Figure out what the filename is and stow it away. Of
+  // course, this does not work if the filename contains spaces
+  // (already the simplifyWhiteSpace() above is wrong). If you have
+  // files like this, go away.
+  QString EPSfilename = include_command;
+  EPSfilename.truncate(EPSfilename.find(' '));
+
+  // Strip enclosing quotation marks which are included by some LaTeX
+  // macro packages (but not by others). This probably means that
+  // graphic files are no longer found if the filename really does
+  // contain quotes, but we don't really care that much.
+  if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
+    EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
+  }
+
+  QString originalFName = EPSfilename;
+  
+  // Now see if the Gfx file exists... try to find it in the current
+  // directory, in the DVI file's directory, and finally, if all else
+  // fails, use kpsewhich to find the file. Later on, we should
+  // probably use the DVI file's baseURL, once this is implemented.
+  if (! QFile::exists(EPSfilename)) {
+    QFileInfo fi1(dviFile->filename);
+    QFileInfo fi2(fi1.dir(),EPSfilename);
+    if (fi2.exists())
+      EPSfilename = fi2.absFilePath();
+    else {
+      // Use kpsewhich to find the eps file.
+      KProcIO proc;
+      proc << "kpsewhich" << EPSfilename;
+      proc.start(KProcess::Block);
+      proc.readln(EPSfilename);
+      EPSfilename = EPSfilename.stripWhiteSpace();
+    }
+  }
+  
+  if (!QFile::exists(EPSfilename)) {
+    kdWarning(4300) << "Could not locate file '" << originalFName << "'" << endl;
+    return;
+  }
+  
+
+  // Now parse the arguments. 
+  int  llx     = 0; 
+  int  lly     = 0;
+  int  urx     = 0;
+  int  ury     = 0;
+  int  rwi     = 0;
+  int  rhi     = 0;
+  int  angle   = 0;
+
+  // just to avoid ambiguities; the filename could contain keywords
+  include_command = include_command.mid(include_command.find(' '));
+  
+  parse_special_argument(include_command, "llx=", &llx);
+  parse_special_argument(include_command, "lly=", &lly);
+  parse_special_argument(include_command, "urx=", &urx);
+  parse_special_argument(include_command, "ury=", &ury);
+  parse_special_argument(include_command, "rwi=", &rwi);
+  parse_special_argument(include_command, "rhi=", &rhi);
+  parse_special_argument(include_command, "angle=", &angle);
+
+
+  // Generate the PostScript commands to be included
+  QString PS = QString("ps: @beginspecial %1 @llx %2 @lly %3 @urx %4 @ury").arg(llx).arg(lly).arg(urx).arg(ury);
+  if (rwi != 0)
+    PS.append( QString(" %1 @rwi").arg(rwi) );
+  if (rhi != 0)
+    PS.append( QString(" %1 @rhi").arg(rhi) );
+  if (angle != 0)
+    PS.append( QString(" %1 @angle").arg(angle) );
+  PS.append( " @setspecial\n" );
+  
+  QFile file( EPSfilename );
+  if ( file.open( IO_ReadOnly ) ) {
+    QTextStream stream( &file );
+    while ( !stream.atEnd() ) {
+      PS += stream.readLine().section( '%', 0, 0);
+      PS += "\n";
+    }
+    file.close();
+  }
+  PS.append( "@endspecial" );
+  PS = PS.simplifyWhiteSpace();
+  
+
+  // Warm-up: just remove the PS inclusion
+  Q_UINT32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
+  Q_UINT32 lengthOfNewSpecial = PS.length()+5;
+
+  Q_UINT8 *newDVI = new Q_UINT8[dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial];
+  if (newDVI == 0) {
+    kdError(4300) << "Out of memory -- could not embed PS file" << endl;
+    return;
+  }
+
+  Q_UINT8 *commandPtrSav = command_pointer;
+  Q_UINT8 *endPtrSav = end_pointer;
+  end_pointer = newDVI + dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
+  memcpy(newDVI, dviFile->dvi_Data, beginningOfSpecialCommand-dviFile->dvi_Data);
+  command_pointer = newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data);
+  command_pointer[0] = XXX4;
+  command_pointer++;
+  writeUINT32(PS.length());
+  memcpy(newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data)+5, PS.latin1(), PS.length() );
+
+  memcpy(newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data)+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
+	 dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data)-lengthOfOldSpecial );
+
+  // Adjust page pointers in the DVI file
+  dviFile->size_of_file = dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
+  end_pointer = newDVI + dviFile->size_of_file;
+  Q_UINT32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data;
+  for(Q_UINT16 i=0; i < dviFile->total_pages; i++) {
+    if (dviFile->page_offset[i] > currentOffset) {
+      dviFile->page_offset[i] = dviFile->page_offset[i] + lengthOfNewSpecial-lengthOfOldSpecial;
+      command_pointer = dviFile->page_offset[i] + newDVI + 4*10 + 1;
+      Q_UINT32 a = readUINT32();
+      if (a > currentOffset) {
+	a = a + lengthOfNewSpecial-lengthOfOldSpecial;
+	command_pointer = dviFile->page_offset[i] + newDVI + 4*10 + 1;
+	writeUINT32(a);
+      }
+    }
+  }
+
+
+  dviFile->beginning_of_postamble            = dviFile->beginning_of_postamble + lengthOfNewSpecial - lengthOfOldSpecial;
+  dviFile->page_offset[dviFile->total_pages] = dviFile->beginning_of_postamble;
+
+  command_pointer = newDVI + dviFile->beginning_of_postamble + 1;
+  Q_UINT32 a = readUINT32();
+  if (a > currentOffset) {
+    a = a + lengthOfNewSpecial - lengthOfOldSpecial;
+    command_pointer = newDVI + dviFile->beginning_of_postamble + 1;
+    writeUINT32(a);
+  }
+
+  command_pointer = newDVI + dviFile->size_of_file - 1;
+  while((*command_pointer == TRAILER) && (command_pointer > newDVI))
+    command_pointer--;
+  command_pointer -= 4;
+  writeUINT32(dviFile->beginning_of_postamble);
+  command_pointer -= 4;
+
+  command_pointer = commandPtrSav;
+  end_pointer     = endPtrSav;
+  
+  // Modify all pointers to point to the newly allocated memory
+  command_pointer = newDVI + (command_pointer - dviFile->dvi_Data) + lengthOfNewSpecial-lengthOfOldSpecial;
+  end_pointer = newDVI + (end_pointer - dviFile->dvi_Data)  + lengthOfNewSpecial-lengthOfOldSpecial;
+
+  delete [] dviFile->dvi_Data;
+  dviFile->dvi_Data = newDVI;
+
+  return;
+}
+
 
 void dviWindow::prescan_ParsePapersizeSpecial(QString cp)
 {
@@ -38,11 +218,11 @@ void dviWindow::prescan_ParsePapersizeSpecial(QString cp)
 
   if (cp[0] == '=') {
     cp = cp.mid(1);
-    dviFile->suggestedPageSize.setPageSize(cp);
+    dviFile->suggestedPageSize = new pageSize;
+    dviFile->suggestedPageSize->setPageSize(cp);
 #ifdef DEBUG_SPECIAL
     kdDebug(4300) << "Suggested paper size is " << dviFile->suggestedPageSize.serialize() << "." << endl;
 #endif
-    emit( documentSpecifiedPageSize(dviFile->suggestedPageSize) );    
   } else 
     printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.").arg(cp));
 
@@ -241,7 +421,7 @@ void dviWindow::prescan_ParseSourceSpecial(QString cp)
 }
 
 
-void dviWindow::prescan_parseSpecials(char *cp)
+void dviWindow::prescan_parseSpecials(char *cp, Q_UINT8 *)
 {
   QString special_command(cp);
 
@@ -341,14 +521,16 @@ void dviWindow::prescan_setChar(unsigned int ch)
 }
 
 
-void dviWindow::prescan(double current_dimconv)
+void dviWindow::prescan(parseSpecials specialParser)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "dviWindow::prescan( current_dimconv=" << current_dimconv << " )" << endl;
+  kdDebug(4300) << "dviWindow::prescan( ... )" << endl;
 #endif
-
+  
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   Q_UINT8 ch;
+
+  stack.clear();
 
   currinf.fontp        = NULL;
   currinf.set_char_p   = &dviWindow::set_no_char;
@@ -384,7 +566,7 @@ void dviWindow::prescan(double current_dimconv)
 	 0x80000000. We don't want any SIGFPE here. */
       a = readUINT32();
       b = readUINT32();
-      b = ((long) (b *  current_dimconv));
+      b = ((long) (b *  65536.0*fontPixelPerDVIunit()));
       currinf.data.dvi_h += b;
       break;
       
@@ -408,8 +590,10 @@ void dviWindow::prescan(double current_dimconv)
     case EOP:
       // Sanity check for the dvi-file: The DVI-standard asserts that
       // at the end of a page, the stack should always be empty.
-      if (!stack.isEmpty())
+      if (!stack.isEmpty()) {
+	kdDebug(4300) << "Prescan: The stack was not empty when the EOP command was encountered." << endl;
 	errorMsg = i18n("The stack was not empty when the EOP command was encountered.");
+      }
       return;
       
     case PUSH:
@@ -429,7 +613,7 @@ void dviWindow::prescan(double current_dimconv)
     case RIGHT3:
     case RIGHT4:
       RRtmp = readINT(ch - RIGHT1 + 1);
-      currinf.data.dvi_h += ((long) (RRtmp *  current_dimconv));
+      currinf.data.dvi_h += ((long) (RRtmp *  65536.0*fontPixelPerDVIunit()));
       break;
       
     case W1:
@@ -437,7 +621,7 @@ void dviWindow::prescan(double current_dimconv)
     case W3:
     case W4:
       WWtmp = readINT(ch - W0);
-      currinf.data.w = ((long) (WWtmp *  current_dimconv));
+      currinf.data.w = ((long) (WWtmp *  65536.0*fontPixelPerDVIunit()));
     case W0:
       currinf.data.dvi_h += currinf.data.w;
       break;
@@ -447,7 +631,7 @@ void dviWindow::prescan(double current_dimconv)
     case X3:
     case X4:
       XXtmp = readINT(ch - X0);
-      currinf.data.x = ((long) (XXtmp *  current_dimconv));
+      currinf.data.x = ((long) (XXtmp *  65536.0*fontPixelPerDVIunit()));
     case X0:
       currinf.data.dvi_h += currinf.data.x;
       break;
@@ -458,7 +642,7 @@ void dviWindow::prescan(double current_dimconv)
     case DOWN4:
       {
 	Q_INT32 DDtmp = readINT(ch - DOWN1 + 1);
-	currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
+	currinf.data.dvi_v += ((long) (DDtmp *  65536.0*fontPixelPerDVIunit()))/65536;
 	currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
       }
       break;
@@ -468,7 +652,7 @@ void dviWindow::prescan(double current_dimconv)
     case Y3:
     case Y4:
       YYtmp = readINT(ch - Y0);
-      currinf.data.y    = ((long) (YYtmp *  current_dimconv));
+      currinf.data.y    = ((long) (YYtmp *  65536.0*fontPixelPerDVIunit()));
     case Y0:
       currinf.data.dvi_v += currinf.data.y/65536;
       currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
@@ -479,7 +663,7 @@ void dviWindow::prescan(double current_dimconv)
     case Z3:
     case Z4:
       ZZtmp = readINT(ch - Z0);
-      currinf.data.z    = ((long) (ZZtmp *  current_dimconv));
+      currinf.data.z    = ((long) (ZZtmp *  65536.0*fontPixelPerDVIunit()));
     case Z0:
       currinf.data.dvi_v += currinf.data.z/65536;
       currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -501,14 +685,17 @@ void dviWindow::prescan(double current_dimconv)
     case XXX2:
     case XXX3:
     case XXX4:
-      a = readUINT(ch - XXX1 + 1);
-      if (a > 0) {
-	char	*cmd	= new char[a+1];
-	strncpy(cmd, (char *)command_pointer, a);
-	command_pointer += a;
-	cmd[a] = '\0';
-	prescan_parseSpecials(cmd);
-	delete [] cmd;
+      {
+	Q_UINT8 *beginningOfSpecialCommand = command_pointer-1;
+	a = readUINT(ch - XXX1 + 1);
+	if (a > 0) {
+	  char	*cmd	= new char[a+1];
+	  strncpy(cmd, (char *)command_pointer, a);
+	  command_pointer += a;
+	  cmd[a] = '\0';
+	  (this->*specialParser)(cmd, beginningOfSpecialCommand);
+	  delete [] cmd;
+	}
       }
       break;
       

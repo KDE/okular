@@ -81,6 +81,12 @@ public:
 
   virtual bool print(const QStringList &pages, int current);
 
+public slots:
+  /** Opens a file requestor and starts a basic copy KIO-Job. A
+      multipage implementation that wishes to offer saving in various
+      formats must re-implement this slot. */
+  virtual void slotSave();
+
 protected:
   history document_history;
 
@@ -131,6 +137,7 @@ private:
   KAction      *docInfoAction;
   KAction      *backAction;
   KAction      *forwardAction;
+  KAction      *embedPSAction;
   KAction      *copyTextAction;
   KAction      *selectAllAction;
   KAction      *findTextAction;

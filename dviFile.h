@@ -8,11 +8,11 @@
 #include <qintdict.h>
 #include <qstring.h>
 
-#include "../kviewshell/pageSize.h"
 #include "bigEndianByteReader.h"
 
 
 class fontPool;
+class pageSize;
 class TeXFontDefinition;
 
 class dvifile : public bigEndianByteReader
@@ -30,6 +30,8 @@ class dvifile : public bigEndianByteReader
   Q_UINT8      * dvi_Data;
   QIODevice::Offset size_of_file;
   QString        errorMsg;
+
+  Q_UINT32       beginning_of_postamble;
   
   /** This flag is set to "true" during the construction of the
       dvifile, and is never changed afterwards by the dvifile
@@ -52,7 +54,7 @@ class dvifile : public bigEndianByteReader
   Q_UINT8        errorCounter;
 
   /** Papersize information read from the dvi-File */
-  pageSize       suggestedPageSize;
+  pageSize       *suggestedPageSize;
 
 
  private:
@@ -69,7 +71,6 @@ class dvifile : public bigEndianByteReader
 
   /** Offset in DVI file of last page, set in read_postamble(). */
   Q_UINT32       last_page_offset;
-  Q_UINT32       beginning_of_postamble;
   Q_UINT32       magnification;
 
   double         cmPerDVIunit;

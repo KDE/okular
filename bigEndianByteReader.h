@@ -45,6 +45,8 @@ class bigEndianByteReader {
       endian 4-byte word and increases the pointer by four. */
   Q_UINT32       readUINT32(void);
 
+  void writeUINT32(Q_UINT32 a);
+
   /** Similar to the method above, only that the method reads a big
       endian number of length size, where 1 <= size <= 4. Note that
       the value 3 is allowed (and is acually used in DVI files)!!!  */

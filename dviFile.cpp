@@ -60,6 +60,7 @@ extern "C" {
 #include "dvi.h"
 }
 
+#include "../kviewshell/pageSize.h"
 #include "dviFile.h"
 #include "fontpool.h"
 #include "xdvi.h"
@@ -239,6 +240,7 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
   errorCounter = 0;
   dvi_Data     = 0;
   page_offset  = 0;
+  suggestedPageSize = 0;
   font_pool    = pool;
   sourceSpecialMarker = sourceSpecialMark;
 
@@ -277,6 +279,8 @@ dvifile::~dvifile()
   kdDebug() << "destroy dvi-file" << endl;
 #endif
 
+  if (suggestedPageSize != 0)
+    delete suggestedPageSize;
   if (dvi_Data != 0)
     delete [] dvi_Data;
   if (font_pool != 0)

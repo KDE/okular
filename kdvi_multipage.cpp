@@ -6,6 +6,7 @@
 #include <kbugreport.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kfiledialog.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -94,6 +95,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   document_history.setAction(backAction, forwardAction);
   document_history.clear();
 
+  embedPSAction      = new KAction(i18n("Embed external PostScript files..."), 0, window, SLOT(embedPostScript()), actionCollection(), "embed_postscript");
   findTextAction         = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
   window->findNextAction = KStdAction::findNext(window, SLOT(findNextText()), actionCollection(), "findnext");
   window->findNextAction->setEnabled(false);
@@ -123,6 +125,50 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   enableActions(false);
   // Show tip of the day, when the first main window is shown.
   QTimer::singleShot(0,this,SLOT(showTipOnStart()));
+}
+
+
+void KDVIMultiPage::slotSave()
+{
+  kdDebug(4300) << "KDVIMultiPage::slotSave()" << endl;
+
+
+  // Try to guess the proper ending...
+  QString formats;
+  QString ending;
+  int rindex = m_file.findRev(".");
+  if (rindex == -1) {
+    ending = QString::null;
+    formats = QString::null;
+  } else {
+    ending = m_file.mid(rindex); // e.g. ".dvi"
+    formats = fileFormats().grep(ending).join("\n");
+  }
+
+  QString fileName = KFileDialog::getSaveFileName(QString::null, formats, 0, i18n("Save File As"));
+
+  if (fileName.isEmpty())
+    return;
+
+  // Add the ending to the filename. I hope the user likes it that
+  // way.
+  if (!ending.isEmpty() && fileName.find(ending) == -1)
+    fileName = fileName+ending;
+
+  if (QFile(fileName).exists()) {
+    int r = KMessageBox::warningYesNo (0, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+				       i18n("Overwrite file"));
+    if (r == KMessageBox::No)
+      return;
+  }
+
+  // TODO: error handling...
+  QFile out(fileName);
+  out.open( IO_Raw|IO_WriteOnly );
+  out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
+  out.close();
+
+  return;
 }
 
 

@@ -20,15 +20,23 @@
 
 class Dict;
 class Stream;
+class Parser;
+class ObjectStream;
 
 //------------------------------------------------------------------------
 // XRef
 //------------------------------------------------------------------------
 
+enum XRefEntryType {
+  xrefEntryFree,
+  xrefEntryUncompressed,
+  xrefEntryCompressed
+};
+
 struct XRefEntry {
   Guint offset;
   int gen;
-  GBool used;
+  XRefEntryType type;
 };
 
 class XRef {
@@ -103,6 +111,7 @@ private:
   Guint *streamEnds;		// 'endstream' positions - only used in
 				//   damaged files
   int streamEndsLen;		// number of valid entries in streamEnds
+  ObjectStream *objStr;		// cached object stream
 #ifndef NO_DECRYPTION
   GBool encrypted;		// true if file is encrypted
   int encVersion;		// encryption algorithm
@@ -113,8 +122,11 @@ private:
   GBool ownerPasswordOk;	// true if owner password is correct
 #endif
 
-  Guint readTrailer();
+  Guint getStartXref();
   GBool readXRef(Guint *pos);
+  GBool readXRefTable(Parser *parser, Guint *pos);
+  GBool readXRefStreamSection(Stream *xrefStr, int *w, int first, int n);
+  GBool readXRefStream(Stream *xrefStr, Guint *pos);
   GBool constructXRef();
   GBool checkEncrypted(GString *ownerPassword, GString *userPassword);
   Guint strToUnsigned(char *s);

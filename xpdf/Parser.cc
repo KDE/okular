@@ -176,8 +176,14 @@ Stream *Parser::makeStream(Object *dict) {
   }
 
   // check for length in damaged file
-  if (xref->getStreamEnd(pos, &endPos)) {
+  if (xref && xref->getStreamEnd(pos, &endPos)) {
     length = endPos - pos;
+  }
+
+  // in badly damaged PDF files, we can run off the end of the input
+  // stream immediately after the "stream" token
+  if (!lexer->getStream()) {
+    return NULL;
   }
 
   // make base stream
@@ -193,10 +199,12 @@ Stream *Parser::makeStream(Object *dict) {
   // refill token buffers and check for 'endstream'
   shift();  // kill '>>'
   shift();  // kill 'stream'
-  if (buf1.isCmd("endstream"))
+  if (buf1.isCmd("endstream")) {
     shift();
-  else
+  } else {
     error(getPos(), "Missing 'endstream'");
+    str->ignoreLength();
+  }
 
   return str;
 }

@@ -278,7 +278,7 @@ namespace KPDF
 
             const float ppp = basePpp * m_zoomFactor; // pixels per point
 
-            m_doc->displayPage(m_outputdev, m_currentPage, int(ppp * 72.0), 0, true);
+            m_doc->displayPage(m_outputdev, m_currentPage, ppp * 72.0, ppp * 72.0, 0, true, true);
 
             resizeContents ( m_outputdev->getPixmap()->width ( ), m_outputdev->getPixmap()->height ( ));
 

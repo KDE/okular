@@ -157,12 +157,12 @@ public:
 	// stops looking at <l+w-1>,<t+h-1>; otherwise stops looking at bottom
 	// of page.  If found, sets the text bounding rectange and returns
 	// true; otherwise returns false.
-	GBool findText ( Unicode *s, int len, GBool top, GBool bottom, int *xMin, int *yMin, int *xMax, int *yMax );
+//	GBool findText ( Unicode *s, int len, GBool top, GBool bottom, int *xMin, int *yMin, int *xMax, int *yMax );
 
 	//----- special QT access
 
-	bool findText ( const QString &str, int &l, int &t, int &w, int &h, bool top = 0, bool bottom = 0 );
-	bool findText ( const QString &str, QRect &r, bool top = 0, bool bottom = 0 );
+//	bool findText ( const QString &str, int &l, int &t, int &w, int &h, bool top = 0, bool bottom = 0 );
+// 	bool findText ( const QString &str, QRect &r, bool top = 0, bool bottom = 0 );
 
 	// Get the text which is inside the specified rectangle.
 	QString getText ( int left, int top, int width, int height );

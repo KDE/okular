@@ -40,7 +40,6 @@
 #include <GfxFont.h>
 #include <UnicodeMap.h>
 #include <CharCodeToUnicode.h>
-#include <FontFile.h>
 #include <Error.h>
 #include <TextOutputDev.h>
 #include <Catalog.h>
@@ -186,7 +185,7 @@ QOutputDev::~QOutputDev ( )
 
 void QOutputDev::startPage ( int /*pageNum*/, GfxState *state )
 {
-	m_text->clear();
+	m_text->startPage(state);
 }
 
 void QOutputDev::endPage ( )
@@ -196,19 +195,59 @@ void QOutputDev::endPage ( )
 
 void QOutputDev::drawLink ( Link *link, Catalog * /* catalog */ )
 {
-	fp_t x1, y1, x2, y2, w;
-
-	link-> getBorder ( &x1, &y1, &x2, &y2, &w );
-
-	if ( w > 0 ) {
-		int x, y, dx, dy;
-
-		cvtUserToDev ( x1, y1, &x,  &y );
-		cvtUserToDev ( x2, y2, &dx, &dy );
-
-		QPen oldpen = m_painter-> pen ( );
-		m_painter-> setPen ( Qt::blue );
-		m_painter-> drawRect ( x, y, dx, dy );
+	double x1, y1, x2, y2;
+	LinkBorderStyle *borderStyle;
+	GfxRGB rgb;
+	double *dash;
+	int dashLength;
+	double dashList[20];
+	QPointArray path;
+	int x, y, i;
+	QPen oldpen, newpen;
+	 
+	link->getRect(&x1, &y1, &x2, &y2);
+	borderStyle = link->getBorderStyle();
+	if (borderStyle->getWidth() > 0)
+	{
+		oldpen = m_painter->pen();
+		borderStyle->getColor(&rgb.r, &rgb.g, &rgb.b);
+		
+		newpen.setColor(q_col(rgb));
+		newpen.setWidth(qRound(borderStyle->getWidth()));
+		m_painter-> setPen ( newpen );
+		/* as said below on updateLineAttrs we don't support dashes right now
+		borderStyle->getDash(&dash, &dashLength);
+		if (borderStyle->getType() == linkBorderDashed && dashLength > 0)
+		{
+			if (dashLength > 20) dashLength = 20;
+			for (i = 0; i < dashLength; ++i)
+			{
+				dashList[i] = dash[i];
+			}
+			// ORIGINAL XPDF HAS THIS LINE, we must remove it and 
+			// create something on variable path using that variables
+			// splash->setLineDash(dashList, dashLength, 0);
+		}
+		*/
+		if (borderStyle->getType() == linkBorderUnderlined)
+		{
+			cvtUserToDev(x1, y1, &x, &y);
+			path.setPoint(0, x, y);
+			cvtUserToDev(x2, y1, &x, &y);
+			path.setPoint(1, x, y);
+		}
+		else
+		{
+			cvtUserToDev(x1, y1, &x, &y);
+			path.setPoint(0, x, y);
+			cvtUserToDev(x2, y1, &x, &y);
+			path.setPoint(1, x, y);
+			cvtUserToDev(x2, y2, &x, &y);
+			path.setPoint(2, x, y);
+			cvtUserToDev(x1, y2, &x, &y);
+			path.setPoint(3, x, y);
+		}
+		m_painter-> drawPolygon( path );
 		m_painter-> setPen ( oldpen );
 	}
 }
@@ -876,7 +915,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 
 
 
-bool QOutputDev::findText ( const QString &str, QRect &r, bool top, bool bottom )
+/*bool QOutputDev::findText ( const QString &str, QRect &r, bool top, bool bottom )
 {
 	int l, t, w, h;
 	r. rect ( &l, &t, &w, &h );
@@ -929,7 +968,7 @@ GBool QOutputDev::findText ( Unicode *s, int len, GBool top, GBool bottom, int *
 		found = true;
 	}
 	return found;
-}
+}*/
 
 QString QOutputDev::getText ( int l, int t, int w, int h )
 {

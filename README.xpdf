@@ -1,17 +1,17 @@
 Xpdf
 ====
 
-version 2.00
-2002-nov-04
+version 3.00
+2004-jan-22
 
 The Xpdf software and documentation are
-copyright 1996-2002 Glyph & Cog, LLC.
+copyright 1996-2004 Glyph & Cog, LLC.
 
 Email: derekn@foolabs.com
 WWW: http://www.foolabs.com/xpdf/
 
 The PDF data structures, operators, and specification are
-copyright 1985-2001 Adobe Systems Inc.
+copyright 1985-2003 Adobe Systems Inc.
 
 
 What is Xpdf?
@@ -27,8 +27,8 @@ Xpdf runs under the X Window System on UNIX, VMS, and OS/2.  The non-X
 components (pdftops, pdftotext, etc.) also run on Win32 systems and
 should run on pretty much any system with a decent C++ compiler.
 
-Xpdf is designed to be small and efficient.  It can use Type 1,
-TrueType, or standard X fonts.
+Xpdf is designed to be small and efficient.  It can use Type 1 or
+TrueType fonts.
 
 
 Distribution
@@ -63,17 +63,17 @@ Cog web site:
 Compatibility
 -------------
 
-Xpdf is developed and tested on a Linux 2.2 x86 system.
+Xpdf is developed and tested on a Linux 2.4 x86 system.
 
 In addition, it has been compiled by others on Solaris, AIX, HP-UX,
-SCO UnixWare, Digital Unix, Irix, and numerous other Unix
-implementations, as well as VMS and OS/2.  It should work on pretty
-much any system which runs X11 and has Unix-like libraries.  You'll
-need ANSI C++ and C compilers to compile it.
+Digital Unix, Irix, and numerous other Unix implementations, as well
+as VMS and OS/2.  It should work on pretty much any system which runs
+X11 and has Unix-like libraries.  You'll need ANSI C++ and C compilers
+to compile it.
 
 The non-X components of Xpdf (pdftops, pdftotext, pdfinfo, pdffonts,
-pdfimages) can also be compiled on Win32 systems.  See the Xpdf web
-page for details.
+pdftoppm, and pdfimages) can also be compiled on Win32 systems.  See
+the Xpdf web page for details.
 
 If you compile Xpdf for a system not listed on the web page, please
 let me know.  If you're willing to make your binary available by ftp
@@ -130,95 +130,23 @@ their man pages):
              useful information)
   pdffonts -- lists the fonts used in a PDF file along with various
               information for each font
-  pdftopbm -- converts a PDF file to a series of PBM-format bitmaps
+  pdftoppm -- converts a PDF file to a series of PPM/PGM/PBM-format
+              bitmaps
   pdfimages -- extracts the images from a PDF file
 
 Command line options and many other details are described in the man
 pages (xpdf.1, etc.) and the VMS help files (xpdf.hlp, etc.).
 
 
-Upgrading from Xpdf 0.9x
+Upgrading from Xpdf 2.xx
 ------------------------
 
-WARNING: Xpdf 1.x switched to a completely different config file setup
-than Xpdf 0.9x.
-
-Many of the configuration options that used to be X resources have
-been moved into the Xpdf config file.  There are also lots of new and
-improved options.  If you're upgrading from Xpdf 0.9x, please read
-through the sample config file (doc/sample-xpdfrc) and the xpdfrc(5)
-man page.
-
-The Asian language support has been pulled out into separate packages,
-loaded at run time.  This is much cleaner than the 0.9x approach -- it
-makes the base distribution smaller, allows the language support
-packages to be upgraded separately, and lets users customize Xpdf for
-other text encodings without modifying the source.  See the web site
-(http://www.foolabs.com/xpdf) for info on downloading the language
-support packages.
-
-All of the Xpdf tools, including the X viewer and the command line
-programs, read the same config file.  They first attempt to read the
-user's personal config file:
-
-    $HOME/.xpdfrc
-
-If it is not found, the Xpdf tools read a system-wide config file,
-typically something like:
-
-    /usr/local/etc/xpdfrc
-
-(this location can be customized when building Xpdf).
-
-The Win32 command line tools look in the directory containing the
-executable, e.g.:
-
-    C:/Program Files/Xpdf/xpdfrc
-
-Xpdf comes with a "sample-xpdfrc" file in the doc directory.  This is
-a good starting point for constructing your own config file.
-
-For full details, please see the xpdfrc(5) man page.
-
-
-Fonts
------
-
-By default, Xpdf will use X server fonts.  It requires the following
-fonts:
-
-* Courier: medium-r, bold-r, medium-o, and bold-o
-* Helvetica: medium-r, bold-r, medium-o, and bold-o
-* Times: medium-r, bold-r, medium-i, and bold-i
-* Symbol: medium-r
-* Zapf Dingbats: medium-r
-
-Most X installations should already have all of these fonts (except
-maybe Zapf Dingbats).
-
-If Xpdf is built with support for t1lib (or FreeType 2), you can get
-much higher quality text by using Type 1 fonts instead of X server
-fonts.  For example, you can use the Type 1 fonts that come with
-ghostscript.  To do this, add the following lines to the xpdfrc file
-(e.g., /usr/local/etc/xpdfrc or $HOME/.xpdfrc):
-
-displayFontT1 Times-Roman		/usr/local/share/ghostscript/fonts/n021003l.pfb
-displayFontT1 Times-Italic		/usr/local/share/ghostscript/fonts/n021023l.pfb
-displayFontT1 Times-Bold		/usr/local/share/ghostscript/fonts/n021004l.pfb
-displayFontT1 Times-BoldItalic		/usr/local/share/ghostscript/fonts/n021024l.pfb
-displayFontT1 Helvetica			/usr/local/share/ghostscript/fonts/n019003l.pfb
-displayFontT1 Helvetica-Oblique		/usr/local/share/ghostscript/fonts/n019023l.pfb
-displayFontT1 Helvetica-Bold		/usr/local/share/ghostscript/fonts/n019004l.pfb
-displayFontT1 Helvetica-BoldOblique	/usr/local/share/ghostscript/fonts/n019024l.pfb
-displayFontT1 Courier			/usr/local/share/ghostscript/fonts/n022003l.pfb
-displayFontT1 Courier-Oblique		/usr/local/share/ghostscript/fonts/n022023l.pfb
-displayFontT1 Courier-Bold		/usr/local/share/ghostscript/fonts/n022004l.pfb
-displayFontT1 Courier-BoldOblique	/usr/local/share/ghostscript/fonts/n022024l.pfb
-displayFontT1 Symbol			/usr/local/share/ghostscript/fonts/s050000l.pfb
-displayFontT1 ZapfDingbats		/usr/local/share/ghostscript/fonts/d050000l.pfb
-
-You will need to replace '/usr/local/share/ghostscript/fonts' with the
-appropriate path on your system.
+WARNING: Xpdf 3.00 switched to a new PDF rasterizer, which no longer
+uses X fonts.  You'll need a set of Base-14 fonts -- the URW fonts
+distributed with ghostscript can be used for this.  Xpdf will search
+for the URW fonts, but if you have them installed in a non-standard
+directory, you'll need to set up an xpdfrc config file to point to
+them.  For full details, please see the xpdfrc(5) man page.
 
 
 Compiling Xpdf
@@ -248,7 +176,8 @@ Thanks to:
 * Brendan Miller for the icon idea.
 * Olly Betts for help testing pdftotext.
 * Peter Ganten for the OS/2 port.
-* Michael Richmond for the Win32 port of pdftops and pdftotext.
+* Michael Richmond for the Win32 port of pdftops and pdftotext and the
+  xpdf/cygwin/XFree86 build instructions.
 * Frank M. Siegert for improvements in the PostScript code.
 * Leo Smiers for the decryption patches.
 * Rainer Menzner for creating t1lib, and for helping me adapt it to
@@ -275,16 +204,9 @@ References
 ----------
 
 Adobe Systems Inc., _PDF Reference: Adobe Portable Document Format
-version 1.4_, 3nd ed.
-Addison-Wesley, 2001, ISBN 0-201-75839-3.
-http://partners.adobe.com/asn/developer/acrosdk/docs/filefmtspecs/PDFReference.pdf
-[The printed manual for PDF version 1.4.]
-
-Adobe Systems Inc., _Portable Document Format: Changes from Version
-1.3 to 1.4_, Adobe Developer Support Technical Note #5409.
-June 11, 2001.
-http://partners.adobe.com/asn/developer/acrosdk/docs/filefmtspecs/PDF14Deltas.pdf
-[Updates for PDF 1.4.]
+Version 1.5_.
+http://partners.adobe.com/asn/tech/pdf/specifications.jsp
+[The manual for PDF version 1.5.]
 
 Adobe Systems Inc., _PostScript Language Reference_, 3rd ed.
 Addison-Wesley, 1999, ISBN 0-201-37922-8.
@@ -387,9 +309,20 @@ Robert L. Hummel, _Programmer's Technical Reference: Data and Fax
 Communications_.  Ziff-Davis Press, 1993, ISBN 1-56276-077-7.
 [CCITT Group 3 and 4 fax decoding.]
 
-ISO, _Coding of Still Pictures_, IS 14492 Final Committee Draft.
-http://www.jpeg.org/fcd14492.pdf
-[The final draft of the JBIG2 spec.]
+ISO/IEC, _Information technology -- Lossy/lossless coding of bi-level
+images_.  ISO/IEC 14492, First edition (2001-12-15).
+http://webstore.ansi.org/
+[The official JBIG2 standard.  The final draft of this spec is
+available from http://www.jpeg.org/jbighomepage.html.]
+
+ISO/IEC, _Information technology -- JPEG 2000 image coding system --
+Part 1: Core coding system_.  ISO/IEC 15444-1, First edition
+(2000-12-15).
+http://webstore.ansi.org/
+[The official JPEG 2000 standard.  The final committee draft of this
+spec is available from http://www.jpeg.org/JPEG2000.html, but there
+were changes made to the bitstream format between that draft and the
+published spec.]
 
 ITU, "Standardization of Group 3 facsimile terminals for document
 transmission", ITU-T Recommendation T.4, 1999.

@@ -24,7 +24,6 @@
 
 #include "GlobalParams.h"
 #include "PDFDoc.h"
-#include "XOutputDev.h"
 #include "QOutputDevKPrinter.h"
 #include "QOutputDevPixmap.h"
 
@@ -379,11 +378,11 @@ void Part::nextThumbnail()
   // does not exist
   if (m_nextThumbnail > m_doc->getNumPages()) return;
   // Pixels per point when the zoomFactor is 1.
-  const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
-  const float ppp = basePpp * m_zoomFactor; // pixels per point
+  const double basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
+  const double ppp = basePpp * m_zoomFactor; // pixels per point
   QOutputDevPixmap odev;
-
-  m_doc->displayPage(&odev, m_nextThumbnail, int(ppp * 72.0), 0, true);
+  
+  m_doc->displayPage(&odev, m_nextThumbnail, ppp * 72.0, ppp * 72.0, 0, true, true);
   pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
 
   m_nextThumbnail++;
@@ -682,7 +681,7 @@ void Part::printPreview()
   int max = m_doc->getNumPages();
   for ( int i = 1; i <= max; ++i )
   {
-    m_doc->displayPage( &printdev, i, printer.resolution(), 0, true );
+    m_doc->displayPage(&printdev, i, printer.resolution(), printer.resolution(), 0, true, true);
     if ( i != max )
       printer.newPage();
   }
@@ -695,7 +694,7 @@ void Part::doPrint( KPrinter& printer )
   QValueList<int> pages = printer.pageList();
   for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
   {
-    m_doc->displayPage( &printdev, *i, printer.resolution(), 0, true );
+    m_doc->displayPage(&printdev, *i, printer.resolution(), printer.resolution(), 0, true, true);
     if ( ++i != pages.end() )
       printer.newPage();
   }

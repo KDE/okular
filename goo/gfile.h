@@ -60,7 +60,7 @@ extern GString *getCurrentDir();
 
 // Append a file name to a path string.  <path> may be an empty
 // string, denoting the current directory).  Returns <path>.
-extern GString *appendToPath(GString *path, const char *fileName);
+extern GString *appendToPath(GString *path, char *fileName);
 
 // Grab the path from the front of the file name.  If there is no
 // directory component in <fileName>, returns an empty string.

@@ -7,7 +7,7 @@
 static const char description[] =
 I18N_NOOP("kpdf, a kde pdf viewer based on xpdf");
 
-static const char version[] = "v0.3";
+static const char version[] = "v0.4";
 
 static KCmdLineOptions options[] =
 {
@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
     about.addAuthor("Laurent Montel", 0, "montel@kde.org");
-    about.addAuthor("Albert Astals Cid", I18N_NOOP("Added thumbnails"), "astals11@terra.es");
+    about.addAuthor("Albert Astals Cid", I18N_NOOP("xpdf 3.0 integration, thumbnails"), "astals11@terra.es");
 
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );

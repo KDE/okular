@@ -47,12 +47,148 @@
 #endif
 
 //------------------------------------------------------------------------
+// ObjectStream
+//------------------------------------------------------------------------
+
+class ObjectStream {
+public:
+
+  // Create an object stream, using object number <objStrNum>,
+  // generation 0.
+  ObjectStream(XRef *xref, int objStrNumA);
+
+  ~ObjectStream();
+
+  // Return the object number of this object stream.
+  int getObjStrNum() { return objStrNum; }
+
+  // Get the <objIdx>th object from this stream, which should be
+  // object number <objNum>, generation 0.
+  Object *getObject(int objIdx, int objNum, Object *obj);
+
+private:
+
+  int objStrNum;		// object number of the object stream
+  int nObjects;			// number of objects in the stream
+  Object *objs;			// the objects (length = nObjects)
+  int *objNums;			// the object numbers (length = nObjects)
+};
+
+ObjectStream::ObjectStream(XRef *xref, int objStrNumA) {
+  Stream *str;
+  Parser *parser;
+  int *offsets;
+  Object objStr, obj1, obj2;
+  int first, i;
+
+  objStrNum = objStrNumA;
+  nObjects = 0;
+  objs = NULL;
+  objNums = NULL;
+
+  if (!xref->fetch(objStrNum, 0, &objStr)->isStream()) {
+    goto err1;
+  }
+
+  if (!objStr.streamGetDict()->lookup("N", &obj1)->isInt()) {
+    obj1.free();
+    goto err1;
+  }
+  nObjects = obj1.getInt();
+  obj1.free();
+  if (nObjects == 0) {
+    goto err1;
+  }
+
+  if (!objStr.streamGetDict()->lookup("First", &obj1)->isInt()) {
+    obj1.free();
+    goto err1;
+  }
+  first = obj1.getInt();
+  obj1.free();
+
+  objs = new Object[nObjects];
+  objNums = (int *)gmalloc(nObjects * sizeof(int));
+  offsets = (int *)gmalloc(nObjects * sizeof(int));
+
+  // parse the header: object numbers and offsets
+  objStr.streamReset();
+  obj1.initNull();
+  str = new EmbedStream(objStr.getStream(), &obj1, gTrue, first);
+  parser = new Parser(xref, new Lexer(xref, str));
+  for (i = 0; i < nObjects; ++i) {
+    parser->getObj(&obj1);
+    parser->getObj(&obj2);
+    if (!obj1.isInt() || !obj2.isInt()) {
+      obj1.free();
+      obj2.free();
+      delete parser;
+      gfree(offsets);
+      goto err1;
+    }
+    objNums[i] = obj1.getInt();
+    offsets[i] = obj2.getInt();
+    obj1.free();
+    obj2.free();
+  }
+  while (str->getChar() != EOF) ;
+  delete parser;
+
+  // skip to the first object - this shouldn't be necessary because
+  // the First key is supposed to be equal to offsets[0], but just in
+  // case...
+  for (i = first; i < offsets[0]; ++i) {
+    objStr.getStream()->getChar();
+  }
+
+  // parse the objects
+  for (i = 0; i < nObjects; ++i) {
+    obj1.initNull();
+    if (i == nObjects - 1) {
+      str = new EmbedStream(objStr.getStream(), &obj1, gFalse, 0);
+    } else {
+      str = new EmbedStream(objStr.getStream(), &obj1, gTrue,
+			    offsets[i+1] - offsets[i]);
+    }
+    parser = new Parser(xref, new Lexer(xref, str));
+    parser->getObj(&objs[i]);
+    while (str->getChar() != EOF) ;
+    delete parser;
+  }
+
+  gfree(offsets);
+
+ err1:
+  objStr.free();
+  return;
+}
+
+ObjectStream::~ObjectStream() {
+  int i;
+
+  if (objs) {
+    for (i = 0; i < nObjects; ++i) {
+      objs[i].free();
+    }
+    delete[] objs;
+  }
+  gfree(objNums);
+}
+
+Object *ObjectStream::getObject(int objIdx, int objNum, Object *obj) {
+  if (objIdx < 0 || objIdx >= nObjects || objNum != objNums[objIdx]) {
+    return obj->initNull();
+  }
+  return objs[objIdx].copy(obj);
+}
+
+//------------------------------------------------------------------------
 // XRef
 //------------------------------------------------------------------------
 
 XRef::XRef(BaseStream *strA, GString *ownerPassword, GString *userPassword) {
   Guint pos;
-  int i;
+  Object obj;
 
   ok = gTrue;
   errCode = errNone;
@@ -60,39 +196,46 @@ XRef::XRef(BaseStream *strA, GString *ownerPassword, GString *userPassword) {
   entries = NULL;
   streamEnds = NULL;
   streamEndsLen = 0;
+  objStr = NULL;
 
   // read the trailer
   str = strA;
   start = str->getStart();
-  pos = readTrailer();
+  pos = getStartXref();
 
-  // if there was a problem with the trailer,
-  // try to reconstruct the xref table
+  // if there was a problem with the 'startxref' position, try to
+  // reconstruct the xref table
   if (pos == 0) {
     if (!(ok = constructXRef())) {
       errCode = errDamaged;
       return;
     }
 
-  // trailer is ok - read the xref table
+  // read the xref table
   } else {
-    entries = (XRefEntry *)gmalloc(size * sizeof(XRefEntry));
-    for (i = 0; i < size; ++i) {
-      entries[i].offset = 0xffffffff;
-      entries[i].used = gFalse;
-    }
     while (readXRef(&pos)) ;
 
     // if there was a problem with the xref table,
     // try to reconstruct it
     if (!ok) {
-      gfree(entries);
-      size = 0;
-      entries = NULL;
       if (!(ok = constructXRef())) {
 	errCode = errDamaged;
 	return;
       }
+    }
+  }
+
+  // get the root dictionary (catalog) object
+  trailerDict.dictLookupNF("Root", &obj);
+  if (obj.isRef()) {
+    rootNum = obj.getRefNum();
+    rootGen = obj.getRefGen();
+    obj.free();
+  } else {
+    obj.free();
+    if (!(ok = constructXRef())) {
+      errCode = errDamaged;
+      return;
     }
   }
 
@@ -117,188 +260,154 @@ XRef::~XRef() {
   if (streamEnds) {
     gfree(streamEnds);
   }
+  if (objStr) {
+    delete objStr;
+  }
 }
 
-// Read startxref position, xref table size, and root.  Returns
-// first xref position.
-Guint XRef::readTrailer() {
-  Parser *parser;
-  Object obj;
+// Read the 'startxref' position.
+Guint XRef::getStartXref() {
   char buf[xrefSearchSize+1];
-  int n;
-  Guint pos, pos1;
   char *p;
-  int c;
-  int i;
+  int c, n, i;
 
   // read last xrefSearchSize bytes
   str->setPos(xrefSearchSize, -1);
   for (n = 0; n < xrefSearchSize; ++n) {
-    if ((c = str->getChar()) == EOF)
+    if ((c = str->getChar()) == EOF) {
       break;
+    }
     buf[n] = c;
   }
   buf[n] = '\0';
 
   // find startxref
   for (i = n - 9; i >= 0; --i) {
-    if (!strncmp(&buf[i], "startxref", 9))
+    if (!strncmp(&buf[i], "startxref", 9)) {
       break;
-  }
-  if (i < 0)
-    return 0;
-  for (p = &buf[i+9]; isspace(*p); ++p) ;
-  pos = lastXRefPos = strToUnsigned(p);
-
-  // find trailer dict by looking after first xref table
-  // (NB: we can't just use the trailer dict at the end of the file --
-  // this won't work for linearized files.)
-  str->setPos(start + pos);
-  for (i = 0; i < 4; ++i)
-    buf[i] = str->getChar();
-  if (strncmp(buf, "xref", 4))
-    return 0;
-  pos1 = pos + 4;
-  while (1) {
-    str->setPos(start + pos1);
-    for (i = 0; i < 35; ++i) {
-      if ((c = str->getChar()) == EOF)
-	return 0;
-      buf[i] = c;
     }
-    if (!strncmp(buf, "trailer", 7))
-      break;
-    p = buf;
-    while (isspace(*p)) ++p;
-    while ('0' <= *p && *p <= '9') ++p;
-    while (isspace(*p)) ++p;
-    n = atoi(p);
-    while ('0' <= *p && *p <= '9') ++p;
-    while (isspace(*p)) ++p;
-    if (p == buf)
-      return 0;
-    pos1 += (p - buf) + n * 20;
   }
-  pos1 += 7;
+  if (i < 0) {
+    return 0;
+  }
+  for (p = &buf[i+9]; isspace(*p); ++p) ;
+  lastXRefPos = strToUnsigned(p);
 
-  // read trailer dict
+  return lastXRefPos;
+}
+
+// Read one xref table section.  Also reads the associated trailer
+// dictionary, and returns the prev pointer (if any).
+GBool XRef::readXRef(Guint *pos) {
+  Parser *parser;
+  Object obj;
+  GBool more;
+
+  // start up a parser, parse one token
   obj.initNull();
   parser = new Parser(NULL,
 	     new Lexer(NULL,
-	       str->makeSubStream(start + pos1, gFalse, 0, &obj)));
-  parser->getObj(&trailerDict);
-  if (trailerDict.isDict()) {
-    trailerDict.dictLookupNF("Size", &obj);
-    if (obj.isInt())
-      size = obj.getInt();
-    else
-      pos = 0;
+	       str->makeSubStream(start + *pos, gFalse, 0, &obj)));
+  parser->getObj(&obj);
+
+  // parse an old-style xref table
+  if (obj.isCmd("xref")) {
     obj.free();
-    trailerDict.dictLookupNF("Root", &obj);
-    if (obj.isRef()) {
-      rootNum = obj.getRefNum();
-      rootGen = obj.getRefGen();
-    } else {
-      pos = 0;
+    more = readXRefTable(parser, pos);
+
+  // parse an xref stream
+  } else if (obj.isInt()) {
+    obj.free();
+    if (!parser->getObj(&obj)->isInt()) {
+      goto err1;
     }
     obj.free();
-  } else {
-    pos = 0;
-  }
-  delete parser;
+    if (!parser->getObj(&obj)->isCmd("obj")) {
+      goto err1;
+    }
+    obj.free();
+    if (!parser->getObj(&obj)->isStream()) {
+      goto err1;
+    }
+    more = readXRefStream(obj.getStream(), pos);
+    obj.free();
 
-  // return first xref position
-  return pos;
+  } else {
+    goto err1;
+  }
+
+  delete parser;
+  return more;
+
+ err1:
+  obj.free();
+  delete parser;
+  ok = gFalse;
+  return gFalse;
 }
 
-// Read an xref table and the prev pointer from the trailer.
-GBool XRef::readXRef(Guint *pos) {
-  Parser *parser;
-  Object obj, obj2;
-  char s[20];
+GBool XRef::readXRefTable(Parser *parser, Guint *pos) {
+  XRefEntry entry;
   GBool more;
-  int first, newSize, n, i, j;
-  int c;
+  Object obj, obj2;
+  Guint pos2;
+  int first, n, newSize, i;
 
-  // seek to xref in stream
-  str->setPos(start + *pos);
-
-  // make sure it's an xref table
-  while ((c = str->getChar()) != EOF && isspace(c)) ;
-  s[0] = (char)c;
-  s[1] = (char)str->getChar();
-  s[2] = (char)str->getChar();
-  s[3] = (char)str->getChar();
-  if (!(s[0] == 'x' && s[1] == 'r' && s[2] == 'e' && s[3] == 'f')) {
-    goto err2;
-  }
-
-  // read xref
   while (1) {
-    while ((c = str->lookChar()) != EOF && isspace(c)) {
-      str->getChar();
-    }
-    if (c == 't') {
+    parser->getObj(&obj);
+    if (obj.isCmd("trailer")) {
+      obj.free();
       break;
     }
-    for (i = 0; (c = str->getChar()) != EOF && isdigit(c) && i < 20; ++i) {
-      s[i] = (char)c;
+    if (!obj.isInt()) {
+      goto err1;
     }
-    if (i == 0) {
-      goto err2;
+    first = obj.getInt();
+    obj.free();
+    if (!parser->getObj(&obj)->isInt()) {
+      goto err1;
     }
-    s[i] = '\0';
-    first = atoi(s);
-    while ((c = str->lookChar()) != EOF && isspace(c)) {
-      str->getChar();
-    }
-    for (i = 0; (c = str->getChar()) != EOF && isdigit(c) && i < 20; ++i) {
-      s[i] = (char)c;
-    }
-    if (i == 0) {
-      goto err2;
-    }
-    s[i] = '\0';
-    n = atoi(s);
-    while ((c = str->lookChar()) != EOF && isspace(c)) {
-      str->getChar();
-    }
-    // check for buggy PDF files with an incorrect (too small) xref
-    // table size
+    n = obj.getInt();
+    obj.free();
     if (first + n > size) {
-      newSize = size + 256;
+      for (newSize = size ? 2 * size : 1024;
+	   first + n > newSize;
+	   newSize <<= 1) ;
       entries = (XRefEntry *)grealloc(entries, newSize * sizeof(XRefEntry));
       for (i = size; i < newSize; ++i) {
 	entries[i].offset = 0xffffffff;
-	entries[i].used = gFalse;
+	entries[i].type = xrefEntryFree;
       }
       size = newSize;
     }
     for (i = first; i < first + n; ++i) {
-      for (j = 0; j < 20; ++j) {
-	if ((c = str->getChar()) == EOF) {
-	  goto err2;
-	}
-	s[j] = (char)c;
+      if (!parser->getObj(&obj)->isInt()) {
+	goto err1;
       }
+      entry.offset = (Guint)obj.getInt();
+      obj.free();
+      if (!parser->getObj(&obj)->isInt()) {
+	goto err1;
+      }
+      entry.gen = obj.getInt();
+      obj.free();
+      parser->getObj(&obj);
+      if (obj.isCmd("n")) {
+	entry.type = xrefEntryUncompressed;
+      } else if (obj.isCmd("f")) {
+	entry.type = xrefEntryFree;
+      } else {
+	goto err1;
+      }
+      obj.free();
       if (entries[i].offset == 0xffffffff) {
-	s[10] = '\0';
-	entries[i].offset = strToUnsigned(s);
-	s[16] = '\0';
-	entries[i].gen = atoi(&s[11]);
-	if (s[17] == 'n') {
-	  entries[i].used = gTrue;
-	} else if (s[17] == 'f') {
-	  entries[i].used = gFalse;
-	} else {
-	  goto err2;
-	}
+	entries[i] = entry;
 	// PDF files of patents from the IBM Intellectual Property
 	// Network have a bug: the xref table claims to start at 1
 	// instead of 0.
 	if (i == 1 && first == 1 &&
 	    entries[1].offset == 0 && entries[1].gen == 65535 &&
-	    !entries[1].used) {
+	    entries[1].type == xrefEntryFree) {
 	  i = first = 0;
 	  entries[0] = entries[1];
 	  entries[1].offset = 0xffffffff;
@@ -307,20 +416,12 @@ GBool XRef::readXRef(Guint *pos) {
     }
   }
 
-  // read prev pointer from trailer dictionary
-  obj.initNull();
-  parser = new Parser(NULL,
-	     new Lexer(NULL,
-	       str->makeSubStream(str->getPos(), gFalse, 0, &obj)));
-  parser->getObj(&obj);
-  if (!obj.isCmd("trailer")) {
+  // read the trailer dictionary
+  if (!parser->getObj(&obj)->isDict()) {
     goto err1;
   }
-  obj.free();
-  parser->getObj(&obj);
-  if (!obj.isDict()) {
-    goto err1;
-  }
+
+  // get the 'Prev' pointer
   obj.getDict()->lookupNF("Prev", &obj2);
   if (obj2.isInt()) {
     *pos = (Guint)obj2.getInt();
@@ -333,23 +434,185 @@ GBool XRef::readXRef(Guint *pos) {
   } else {
     more = gFalse;
   }
-  obj.free();
   obj2.free();
 
-  delete parser;
+  // save the first trailer dictionary
+  if (trailerDict.isNone()) {
+    obj.copy(&trailerDict);
+  }
+
+  // check for an 'XRefStm' key
+  if (obj.getDict()->lookup("XRefStm", &obj2)->isInt()) {
+    pos2 = obj2.getInt();
+    readXRef(&pos2);
+    if (!ok) {
+      goto err1;
+    }
+  }
+  obj2.free();
+
+  obj.free();
   return more;
 
  err1:
   obj.free();
- err2:
   ok = gFalse;
   return gFalse;
+}
+
+GBool XRef::readXRefStream(Stream *xrefStr, Guint *pos) {
+  Dict *dict;
+  int w[3];
+  GBool more;
+  Object obj, obj2, idx;
+  int newSize, first, n, i;
+
+  dict = xrefStr->getDict();
+
+  if (!dict->lookupNF("Size", &obj)->isInt()) {
+    goto err1;
+  }
+  newSize = obj.getInt();
+  obj.free();
+  if (newSize > size) {
+    entries = (XRefEntry *)grealloc(entries, newSize * sizeof(XRefEntry));
+    for (i = size; i < newSize; ++i) {
+      entries[i].offset = 0xffffffff;
+      entries[i].type = xrefEntryFree;
+    }
+    size = newSize;
+  }
+
+  if (!dict->lookupNF("W", &obj)->isArray() ||
+      obj.arrayGetLength() < 3) {
+    goto err1;
+  }
+  for (i = 0; i < 3; ++i) {
+    if (!obj.arrayGet(i, &obj2)->isInt()) {
+      obj2.free();
+      goto err1;
+    }
+    w[i] = obj2.getInt();
+    obj2.free();
+  }
+  obj.free();
+
+  xrefStr->reset();
+  dict->lookupNF("Index", &idx);
+  if (idx.isArray()) {
+    for (i = 0; i+1 < idx.arrayGetLength(); i += 2) {
+      if (!idx.arrayGet(i, &obj)->isInt()) {
+	idx.free();
+	goto err1;
+      }
+      first = obj.getInt();
+      obj.free();
+      if (!idx.arrayGet(i+1, &obj)->isInt()) {
+	idx.free();
+	goto err1;
+      }
+      n = obj.getInt();
+      obj.free();
+      if (!readXRefStreamSection(xrefStr, w, first, n)) {
+	idx.free();
+	goto err0;
+      }
+    }
+  } else {
+    if (!readXRefStreamSection(xrefStr, w, 0, size)) {
+      idx.free();
+      goto err0;
+    }
+  }
+  idx.free();
+
+  dict->lookupNF("Prev", &obj);
+  if (obj.isInt()) {
+    *pos = (Guint)obj.getInt();
+    more = gTrue;
+  } else {
+    more = gFalse;
+  }
+  obj.free();
+  if (trailerDict.isNone()) {
+    trailerDict.initDict(dict);
+  }
+
+  return more;
+
+ err1:
+  obj.free();
+ err0:
+  ok = gFalse;
+  return gFalse;
+}
+
+GBool XRef::readXRefStreamSection(Stream *xrefStr, int *w, int first, int n) {
+  Guint offset;
+  int type, gen, c, newSize, i, j;
+
+  if (first + n > size) {
+    for (newSize = size ? 2 * size : 1024;
+	 first + n > newSize;
+	 newSize <<= 1) ;
+    entries = (XRefEntry *)grealloc(entries, newSize * sizeof(XRefEntry));
+    for (i = size; i < newSize; ++i) {
+      entries[i].offset = 0xffffffff;
+      entries[i].type = xrefEntryFree;
+    }
+    size = newSize;
+  }
+  for (i = first; i < first + n; ++i) {
+    if (w[0] == 0) {
+      type = 1;
+    } else {
+      for (type = 0, j = 0; j < w[0]; ++j) {
+	if ((c = xrefStr->getChar()) == EOF) {
+	  return gFalse;
+	}
+	type = (type << 8) + c;
+      }
+    }
+    for (offset = 0, j = 0; j < w[1]; ++j) {
+      if ((c = xrefStr->getChar()) == EOF) {
+	return gFalse;
+      }
+      offset = (offset << 8) + c;
+    }
+    for (gen = 0, j = 0; j < w[2]; ++j) {
+      if ((c = xrefStr->getChar()) == EOF) {
+	return gFalse;
+      }
+      gen = (gen << 8) + c;
+    }
+    switch (type) {
+    case 0:
+      entries[i].offset = offset;
+      entries[i].gen = gen;
+      entries[i].type = xrefEntryFree;
+      break;
+    case 1:
+      entries[i].offset = offset;
+      entries[i].gen = gen;
+      entries[i].type = xrefEntryUncompressed;
+      break;
+    case 2:
+      entries[i].offset = offset;
+      entries[i].gen = gen;
+      entries[i].type = xrefEntryCompressed;
+      break;
+    default:
+      return gFalse;
+    }
+  }
+
+  return gTrue;
 }
 
 // Attempt to construct an xref table for a damaged file.
 GBool XRef::constructXRef() {
   Parser *parser;
-  Object obj;
+  Object newTrailerDict, obj;
   char buf[256];
   Guint pos;
   int num, gen;
@@ -358,6 +621,10 @@ GBool XRef::constructXRef() {
   char *p;
   int i;
   GBool gotRoot;
+
+  gfree(entries);
+  size = 0;
+  entries = NULL;
 
   error(0, "PDF file is damaged - attempting to reconstruct xref table...");
   gotRoot = gFalse;
@@ -377,20 +644,21 @@ GBool XRef::constructXRef() {
       parser = new Parser(NULL,
 		 new Lexer(NULL,
 		   str->makeSubStream(start + pos + 7, gFalse, 0, &obj)));
-      if (!trailerDict.isNone())
-	trailerDict.free();
-      parser->getObj(&trailerDict);
-      if (trailerDict.isDict()) {
-	trailerDict.dictLookupNF("Root", &obj);
+      parser->getObj(&newTrailerDict);
+      if (newTrailerDict.isDict()) {
+	newTrailerDict.dictLookupNF("Root", &obj);
 	if (obj.isRef()) {
 	  rootNum = obj.getRefNum();
 	  rootGen = obj.getRefGen();
+	  if (!trailerDict.isNone()) {
+	    trailerDict.free();
+	  }
+	  newTrailerDict.copy(&trailerDict);
 	  gotRoot = gTrue;
 	}
 	obj.free();
-      } else {
-	pos = 0;
       }
+      newTrailerDict.free();
       delete parser;
 
     // look for object
@@ -419,14 +687,15 @@ GBool XRef::constructXRef() {
 		            grealloc(entries, newSize * sizeof(XRefEntry));
 		for (i = size; i < newSize; ++i) {
 		  entries[i].offset = 0xffffffff;
-		  entries[i].used = gFalse;
+		  entries[i].type = xrefEntryFree;
 		}
 		size = newSize;
 	      }
-	      if (!entries[num].used || gen >= entries[num].gen) {
+	      if (entries[num].type == xrefEntryFree ||
+		  gen >= entries[num].gen) {
 		entries[num].offset = pos - start;
 		entries[num].gen = gen;
-		entries[num].used = gTrue;
+		entries[num].type = xrefEntryUncompressed;
 	      }
 	    }
 	  }
@@ -457,6 +726,8 @@ GBool XRef::checkEncrypted(GString *ownerPassword, GString *userPassword) {
   GBool encrypted1;
   GBool ret;
 
+  keyLength = 0;
+  encVersion = encRevision = 0;
   ret = gFalse;
 
   permFlags = defPermFlags;
@@ -551,38 +822,34 @@ GBool XRef::checkEncrypted(GString *ownerPassword, GString *userPassword) {
 
 GBool XRef::okToPrint(GBool ignoreOwnerPW) {
 #ifndef NO_DECRYPTION
-  if ((ignoreOwnerPW || !ownerPasswordOk) && !(permFlags & permPrint)) {
-    return gFalse;
-  }
-#endif
+  return (!ignoreOwnerPW && ownerPasswordOk) || (permFlags & permPrint);
+#else
   return gTrue;
+#endif
 }
 
 GBool XRef::okToChange(GBool ignoreOwnerPW) {
 #ifndef NO_DECRYPTION
-  if ((ignoreOwnerPW || !ownerPasswordOk) && !(permFlags & permChange)) {
-    return gFalse;
-  }
-#endif
+  return (!ignoreOwnerPW && ownerPasswordOk) || (permFlags & permChange);
+#else
   return gTrue;
+#endif
 }
 
 GBool XRef::okToCopy(GBool ignoreOwnerPW) {
 #ifndef NO_DECRYPTION
-  if ((ignoreOwnerPW || !ownerPasswordOk) && !(permFlags & permCopy)) {
-    return gFalse;
-  }
-#endif
+  return (!ignoreOwnerPW && ownerPasswordOk) || (permFlags & permCopy);
+#else
   return gTrue;
+#endif
 }
 
 GBool XRef::okToAddNotes(GBool ignoreOwnerPW) {
 #ifndef NO_DECRYPTION
-  if ((ignoreOwnerPW || !ownerPasswordOk) && !(permFlags & permNotes)) {
-    return gFalse;
-  }
-#endif
+  return (!ignoreOwnerPW && ownerPasswordOk) || (permFlags & permNotes);
+#else
   return gTrue;
+#endif
 }
 
 Object *XRef::fetch(int num, int gen, Object *obj) {
@@ -592,12 +859,16 @@ Object *XRef::fetch(int num, int gen, Object *obj) {
 
   // check for bogus ref - this can happen in corrupted PDF files
   if (num < 0 || num >= size) {
-    obj->initNull();
-    return obj;
+    goto err;
   }
 
   e = &entries[num];
-  if (e->gen == gen && e->offset != 0xffffffff) {
+  switch (e->type) {
+
+  case xrefEntryUncompressed:
+    if (e->gen != gen) {
+      goto err;
+    }
     obj1.initNull();
     parser = new Parser(this,
 	       new Lexer(this,
@@ -605,26 +876,44 @@ Object *XRef::fetch(int num, int gen, Object *obj) {
     parser->getObj(&obj1);
     parser->getObj(&obj2);
     parser->getObj(&obj3);
-    if (obj1.isInt() && obj1.getInt() == num &&
-	obj2.isInt() && obj2.getInt() == gen &&
-	obj3.isCmd("obj")) {
-#ifndef NO_DECRYPTION
-      parser->getObj(obj, encrypted ? fileKey : (Guchar *)NULL, keyLength,
-		     num, gen);
-#else
-      parser->getObj(obj);
-#endif
-    } else {
-      obj->initNull();
+    if (!obj1.isInt() || obj1.getInt() != num ||
+	!obj2.isInt() || obj2.getInt() != gen ||
+	!obj3.isCmd("obj")) {
+      goto err;
     }
+#ifndef NO_DECRYPTION
+    parser->getObj(obj, encrypted ? fileKey : (Guchar *)NULL, keyLength,
+		   num, gen);
+#else
+    parser->getObj(obj);
+#endif
     obj1.free();
     obj2.free();
     obj3.free();
     delete parser;
-  } else {
-    obj->initNull();
+    break;
+
+  case xrefEntryCompressed:
+    if (gen != 0) {
+      goto err;
+    }
+    if (!objStr || objStr->getObjStrNum() != (int)e->offset) {
+      if (objStr) {
+	delete objStr;
+      }
+      objStr = new ObjectStream(this, e->offset);
+    }
+    objStr->getObject(e->gen, num, obj);
+    break;
+
+  default:
+    goto err;
   }
+
   return obj;
+
+ err:
+  return obj->initNull();
 }
 
 Object *XRef::getDocInfo(Object *obj) {

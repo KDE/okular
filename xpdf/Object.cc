@@ -24,7 +24,7 @@
 // Object
 //------------------------------------------------------------------------
 
-const char *objTypeNames[numObjTypes] = {
+char *objTypeNames[numObjTypes] = {
   "boolean",
   "integer",
   "real",
@@ -55,6 +55,13 @@ Object *Object::initArray(XRef *xref) {
 Object *Object::initDict(XRef *xref) {
   initObj(objDict);
   dict = new Dict(xref);
+  return this;
+}
+
+Object *Object::initDict(Dict *dictA) {
+  initObj(objDict);
+  dict = dictA;
+  dict->incRef();
   return this;
 }
 
@@ -134,7 +141,7 @@ void Object::free() {
   type = objNone;
 }
 
-const char *Object::getTypeName() const {
+char *Object::getTypeName() {
   return objTypeNames[type];
 }
 
@@ -205,7 +212,7 @@ void Object::print(FILE *f) {
   }
 }
 
-void Object::memCheck(FILE * f) {
+void Object::memCheck(FILE *f) {
 #ifdef DEBUG_MEM
   int i;
   int t;

@@ -113,6 +113,8 @@ PDFDoc::PDFDoc(BaseStream *strA, GString *ownerPassword,
 }
 
 GBool PDFDoc::setup(GString *ownerPassword, GString *userPassword) {
+  str->reset();
+
   // check header
   checkHeader();
 
@@ -198,8 +200,8 @@ void PDFDoc::checkHeader() {
   }
 }
 
-void PDFDoc::displayPage(OutputDev *out, int page, double zoom,
-			 int rotate, GBool doLinks,
+void PDFDoc::displayPage(OutputDev *out, int page, double hDPI, double vDPI,
+			 int rotate, GBool crop, GBool doLinks,
 			 GBool (*abortCheckCbk)(void *data),
 			 void *abortCheckCbkData) {
   Page *p;
@@ -213,35 +215,38 @@ void PDFDoc::displayPage(OutputDev *out, int page, double zoom,
       delete links;
     }
     getLinks(p);
-    p->display(out, zoom, rotate, links, catalog,
+    p->display(out, hDPI, vDPI, rotate, crop, links, catalog,
 	       abortCheckCbk, abortCheckCbkData);
   } else {
-    p->display(out, zoom, rotate, NULL, catalog,
+    p->display(out, hDPI, vDPI, rotate, crop, NULL, catalog,
 	       abortCheckCbk, abortCheckCbkData);
   }
 }
 
 void PDFDoc::displayPages(OutputDev *out, int firstPage, int lastPage,
-			  int zoom, int rotate, GBool doLinks,
+			  double hDPI, double vDPI, int rotate,
+			  GBool crop, GBool doLinks,
 			  GBool (*abortCheckCbk)(void *data),
 			  void *abortCheckCbkData) {
   int page;
 
   for (page = firstPage; page <= lastPage; ++page) {
-    displayPage(out, page, zoom, rotate, doLinks,
+    displayPage(out, page, hDPI, vDPI, rotate, crop, doLinks,
 		abortCheckCbk, abortCheckCbkData);
   }
 }
 
-void PDFDoc::displayPageSlice(OutputDev *out, int page, double zoom,
-			      int rotate, int sliceX, int sliceY,
-			      int sliceW, int sliceH,
+void PDFDoc::displayPageSlice(OutputDev *out, int page,
+			      double hDPI, double vDPI,
+			      int rotate, GBool crop,
+			      int sliceX, int sliceY, int sliceW, int sliceH,
 			      GBool (*abortCheckCbk)(void *data),
 			      void *abortCheckCbkData) {
   Page *p;
 
   p = catalog->getPage(page);
-  p->displaySlice(out, zoom, rotate, sliceX, sliceY, sliceW, sliceH,
+  p->displaySlice(out, hDPI, vDPI, rotate, crop,
+		  sliceX, sliceY, sliceW, sliceH,
 		  NULL, catalog, abortCheckCbk, abortCheckCbkData);
 }
 

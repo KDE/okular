@@ -23,6 +23,7 @@
 class Dict;
 class CMap;
 class CharCodeToUnicode;
+class FoFiTrueType;
 struct GfxFontCIDWidths;
 
 //------------------------------------------------------------------------
@@ -84,9 +85,9 @@ class GfxFont {
 public:
 
   // Build a GfxFont object.
-  static GfxFont *makeFont(XRef *xref, const char *tagA, Ref idA, Dict *fontDict);
+  static GfxFont *makeFont(XRef *xref, char *tagA, Ref idA, Dict *fontDict);
 
-  GfxFont(const char *tagA, Ref idA, GString *nameA);
+  GfxFont(char *tagA, Ref idA, GString *nameA);
 
   virtual ~GfxFont();
 
@@ -103,6 +104,10 @@ public:
 
   // Get base font name.
   GString *getName() { return name; }
+
+  // Get the original font name (ignornig any munging that might have
+  // been done to map to a canonical Base-14 font name).
+  GString *getOrigName() { return origName; }
 
   // Get font type.
   GfxFontType getType() { return type; }
@@ -158,12 +163,14 @@ public:
 protected:
 
   void readFontDescriptor(XRef *xref, Dict *fontDict);
-  CharCodeToUnicode *readToUnicodeCMap(Dict *fontDict, int nBits);
+  CharCodeToUnicode *readToUnicodeCMap(Dict *fontDict, int nBits,
+				       CharCodeToUnicode *ctu);
   void findExtFontFile();
 
   GString *tag;			// PDF font tag
   Ref id;			// reference (used as unique ID)
   GString *name;		// font name
+  GString *origName;		// original font name
   GfxFontType type;		// type of font
   int flags;			// font descriptor flags
   GString *embFontName;		// name of embedded font
@@ -184,7 +191,7 @@ protected:
 class Gfx8BitFont: public GfxFont {
 public:
 
-  Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
+  Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
 	      GfxFontType typeA, Dict *fontDict);
 
   virtual ~Gfx8BitFont();
@@ -205,8 +212,15 @@ public:
   // Returns true if the PDF font specified an encoding.
   GBool getHasEncoding() { return hasEncoding; }
 
-  // Get width of a character or string.
+  // Returns true if the PDF font specified MacRomanEncoding.
+  GBool getUsesMacRomanEnc() { return usesMacRomanEnc; }
+
+  // Get width of a character.
   double getWidth(Guchar c) { return widths[c]; }
+
+  // Return a char code-to-GID mapping for the provided font file.
+  // (This is only useful for TrueType fonts.)
+  Gushort *getCodeToGIDMap(FoFiTrueType *ff);
 
   // Return the Type 3 CharProc dictionary, or NULL if none.
   Dict *getCharProcs();
@@ -224,6 +238,7 @@ private:
 				//   the string is malloc'ed
   CharCodeToUnicode *ctu;	// char code --> Unicode
   GBool hasEncoding;
+  GBool usesMacRomanEnc;
   double widths[256];		// character widths
   Object charProcs;		// Type 3 CharProcs dictionary
   Object resources;		// Type 3 Resources dictionary
@@ -236,7 +251,7 @@ private:
 class GfxCIDFont: public GfxFont {
 public:
 
-  GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
+  GfxCIDFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
 	     Dict *fontDict);
 
   virtual ~GfxCIDFont();
@@ -279,7 +294,7 @@ class GfxFontDict {
 public:
 
   // Build the font dictionary, given the PDF font dictionary.
-  GfxFontDict(XRef *xref, Dict *fontDict);
+  GfxFontDict(XRef *xref, Ref *fontDictRef, Dict *fontDict);
 
   // Destructor.
   ~GfxFontDict();

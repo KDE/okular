@@ -29,7 +29,6 @@
 #include <GfxFont.h>
 #include <UnicodeMap.h>
 #include <CharCodeToUnicode.h>
-#include <FontFile.h>
 #include <Error.h>
 #include <TextOutputDev.h>
 #include <Catalog.h>

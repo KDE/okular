@@ -1,4 +1,4 @@
-SUBDIRS = . goo xpdf kpdf
+SUBDIRS = . fofi goo xpdf kpdf
 
 noinst_HEADERS = aconf.h
 

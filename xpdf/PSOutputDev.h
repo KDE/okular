@@ -25,6 +25,7 @@ class GfxPath;
 class GfxFont;
 class GfxColorSpace;
 class GfxSeparationColorSpace;
+class PDFRectangle;
 struct PSFont16Enc;
 class PSOutCustomColor;
 
@@ -45,19 +46,25 @@ enum PSFileType {
   psGeneric			// write to a generic stream
 };
 
-typedef void (*PSOutputFunc)(void *stream, const char *data, int len);
+typedef void (*PSOutputFunc)(void *stream, char *data, int len);
 
 class PSOutputDev: public OutputDev {
 public:
 
   // Open a PostScript output file, and write the prolog.
   PSOutputDev(char *fileName, XRef *xrefA, Catalog *catalog,
-	      int firstPage, int lastPage, PSOutMode modeA);
+	      int firstPage, int lastPage, PSOutMode modeA,
+	      int imgLLXA = 0, int imgLLYA = 0,
+	      int imgURXA = 0, int imgURYA = 0,
+	      GBool manualCtrlA = gFalse);
 
   // Open a PSOutputDev that will write to a generic stream.
   PSOutputDev(PSOutputFunc outputFuncA, void *outputStreamA,
 	      XRef *xrefA, Catalog *catalog,
-	      int firstPage, int lastPage, PSOutMode modeA);
+	      int firstPage, int lastPage, PSOutMode modeA,
+	      int imgLLXA = 0, int imgLLYA = 0,
+	      int imgURXA = 0, int imgURYA = 0,
+	      GBool manualCtrlA = gFalse);
 
   // Destructor -- writes the trailer and closes the file.
   virtual ~PSOutputDev();
@@ -77,6 +84,27 @@ public:
   // Does this device use beginType3Char/endType3Char?  Otherwise,
   // text in Type 3 fonts will be drawn with drawChar/drawString.
   virtual GBool interpretType3Chars() { return gFalse; }
+
+  //----- header/trailer (used only if manualCtrl is true)
+
+  // Write the document-level header.
+  void writeHeader(int firstPage, int lastPage,
+		   PDFRectangle *mediaBox, PDFRectangle *cropBox);
+
+  // Write the Xpdf procset.
+  void writeXpdfProcset();
+
+  // Write the document-level setup.
+  void writeDocSetup(Catalog *catalog, int firstPage, int lastPage);
+
+  // Write the setup for the current page.
+  void writePageSetup();
+
+  // Write the trailer for the current page.
+  void writePageTrailer();
+
+  // Write the document trailer.
+  void writeTrailer();
 
   //----- initialization and control
 
@@ -124,6 +152,7 @@ public:
 
   //----- text drawing
   virtual void drawString(GfxState *state, GString *s);
+  virtual void endTextObject(GfxState *state);
 
   //----- image drawing
   virtual void drawImageMask(GfxState *state, Object *ref, Stream *str,
@@ -133,7 +162,7 @@ public:
 			 int width, int height, GfxImageColorMap *colorMap,
 			 int *maskColors, GBool inlineImg);
 
-#ifdef OPI_SUPPORT
+#if OPI_SUPPORT
   //----- OPI functions
   virtual void opiBegin(GfxState *state, Dict *opiDict);
   virtual void opiEnd(GfxState *state, Dict *opiDict);
@@ -147,29 +176,46 @@ public:
   //----- PostScript XObjects
   virtual void psXObject(Stream *psStream, Stream *level1Stream);
 
+  //----- miscellaneous
+  void setOffset(double x, double y)
+    { tx0 = x; ty0 = y; }
+  void setScale(double x, double y)
+    { xScale0 = x; yScale0 = y; }
+  void setRotate(int rotateA)
+    { rotate0 = rotateA; }
+  void setClip(double llx, double lly, double urx, double ury)
+    { clipLLX0 = llx; clipLLY0 = lly; clipURX0 = urx; clipURY0 = ury; }
+  void setUnderlayCbk(void (*cbk)(PSOutputDev *psOut, void *data),
+		      void *data)
+    { underlayCbk = cbk; underlayCbkData = data; }
+  void setOverlayCbk(void (*cbk)(PSOutputDev *psOut, void *data),
+		     void *data)
+    { overlayCbk = cbk; overlayCbkData = data; }
 
 private:
 
   void init(PSOutputFunc outputFuncA, void *outputStreamA,
 	    PSFileType fileTypeA, XRef *xrefA, Catalog *catalog,
-	    int firstPage, int lastPage, PSOutMode modeA);
+	    int firstPage, int lastPage, PSOutMode modeA,
+	    int imgLLXA, int imgLLYA, int imgURXA, int imgURYA,
+	    GBool manualCtrlA);
   void setupResources(Dict *resDict);
   void setupFonts(Dict *resDict);
   void setupFont(GfxFont *font, Dict *parentResDict);
-  void setupEmbeddedType1Font(Ref *id, const char *psName);
-  void setupExternalType1Font(GString *fileName, const char *psName);
-  void setupEmbeddedType1CFont(GfxFont *font, Ref *id, const char *psName);
-  void setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id, const char *psName);
-  void setupExternalTrueTypeFont(GfxFont *font, const char *psName);
-  void setupEmbeddedCIDType0Font(GfxFont *font, Ref *id, const char *psName);
-  void setupEmbeddedCIDTrueTypeFont(GfxFont *font, Ref *id, const char *psName);
-  void setupType3Font(GfxFont *font, const char *psName, Dict *parentResDict);
+  void setupEmbeddedType1Font(Ref *id, GString *psName);
+  void setupExternalType1Font(GString *fileName, GString *psName);
+  void setupEmbeddedType1CFont(GfxFont *font, Ref *id, GString *psName);
+  void setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id, GString *psName);
+  void setupExternalTrueTypeFont(GfxFont *font, GString *psName);
+  void setupEmbeddedCIDType0Font(GfxFont *font, Ref *id, GString *psName);
+  void setupEmbeddedCIDTrueTypeFont(GfxFont *font, Ref *id, GString *psName);
+  void setupType3Font(GfxFont *font, GString *psName, Dict *parentResDict);
   void setupImages(Dict *resDict);
   void setupImage(Ref id, Stream *str);
   void addProcessColor(double c, double m, double y, double k);
   void addCustomColor(GfxSeparationColorSpace *sepCS);
   void doPath(GfxPath *path);
-  void doImageL1(GfxImageColorMap *colorMap,
+  void doImageL1(Object *ref, GfxImageColorMap *colorMap,
 		 GBool invert, GBool inlineImg,
 		 Stream *str, int width, int height, int len);
   void doImageL1Sep(GfxImageColorMap *colorMap,
@@ -179,7 +225,7 @@ private:
 		 GBool invert, GBool inlineImg,
 		 Stream *str, int width, int height, int len);
   void dumpColorSpaceL2(GfxColorSpace *colorSpace);
-#ifdef OPI_SUPPORT
+#if OPI_SUPPORT
   void opiBegin20(GfxState *state, Dict *dict);
   void opiBegin13(GfxState *state, Dict *dict);
   void opiTransform(GfxState *state, double x0, double y0,
@@ -190,18 +236,25 @@ private:
   void writePS(char *s);
   void writePSFmt(const char *fmt, ...);
   void writePSString(GString *s);
-  void writePSName(const char *s);
+  void writePSName(char *s);
   GString *filterPSName(GString *name);
 
   PSLevel level;		// PostScript level (1, 2, separation)
   PSOutMode mode;		// PostScript mode (PS, EPS, form)
   int paperWidth;		// width of paper, in pts
   int paperHeight;		// height of paper, in pts
+  int imgLLX, imgLLY,		// imageable area, in pts
+      imgURX, imgURY;
 
   PSOutputFunc outputFunc;
   void *outputStream;
   PSFileType fileType;		// file / pipe / stdout
+  GBool manualCtrl;
   int seqPage;			// current sequential page number
+  void (*underlayCbk)(PSOutputDev *psOut, void *data);
+  void *underlayCbkData;
+  void (*overlayCbk)(PSOutputDev *psOut, void *data);
+  void *overlayCbkData;
 
   XRef *xref;			// the xref table for this PDF file
 
@@ -214,15 +267,23 @@ private:
   GString **fontFileNames;	// list of names of all embedded external fonts
   int fontFileNameLen;		// number of entries in fontFileNames array
   int fontFileNameSize;		// size of fontFileNames array
+  int nextTrueTypeNum;		// next unique number to append to a TrueType
+				//   font name
   PSFont16Enc *font16Enc;	// encodings for substitute 16-bit fonts
   int font16EncLen;		// number of entries in font16Enc array
   int font16EncSize;		// size of font16Enc array
   GList *xobjStack;		// stack of XObject dicts currently being
 				//   processed
+  int numSaves;			// current number of gsaves
 
-  double tx, ty;		// global translation
-  double xScale, yScale;	// global scaling
-  GBool landscape;		// true for landscape, false for portrait
+  double tx0, ty0;		// global translation
+  double xScale0, yScale0;	// global scaling
+  int rotate0;			// rotation angle (0, 90, 180, 270)
+  double clipLLX0, clipLLY0,
+         clipURX0, clipURY0;
+  double tx, ty;		// global translation for current page
+  double xScale, yScale;	// global scaling for current page
+  int rotate;			// rotation angle for current page
 
   GString *embFontList;		// resource comments for embedded fonts
 
@@ -230,19 +291,24 @@ private:
   PSOutCustomColor		// used custom colors
     *customColors;
 
+  GBool haveTextClip;		// set if text has been drawn with a
+				//   clipping render mode
+
   GBool inType3Char;		// inside a Type 3 CharProc
   GString *t3String;		// Type 3 content string
   double t3WX, t3WY,		// Type 3 character parameters
          t3LLX, t3LLY, t3URX, t3URY;
   GBool t3Cacheable;		// cleared if char is not cacheable
 
-#ifdef OPI_SUPPORT
+#if OPI_SUPPORT
   int opi13Nest;		// nesting level of OPI 1.3 objects
   int opi20Nest;		// nesting level of OPI 2.0 objects
 #endif
 
   GBool ok;			// set up ok?
 
+
+  friend class WinPDFPrinter;
 };
 
 #endif

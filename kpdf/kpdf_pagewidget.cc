@@ -113,10 +113,18 @@ namespace KPDF
         if ( m_pixmap != NULL && ! m_pixmap->isNull() )
         {
             p->drawPixmap ( clipx, clipy, *m_pixmap, clipx, clipy, clipw, cliph );
-            if (clipw > m_pixmap->width()) 
-                p->fillRect ( m_pixmap->width(), clipy, clipw, cliph, bc );
-            if (cliph > m_pixmap->height())
-                p->fillRect ( clipx, m_pixmap->height() - clipy, clipw, cliph, bc );
+            if ((clipw + clipx) > m_pixmap->width()) 
+                p->fillRect ( m_pixmap->width(), 
+                        clipy, 
+                        clipw - (m_pixmap->width() - clipx), 
+                        m_pixmap->height() - clipy, 
+                        bc );
+            if ((cliph + clipy) > m_pixmap->height())
+                p->fillRect ( clipx, 
+                        m_pixmap->height(), 
+                        clipw, 
+                        cliph - (m_pixmap->height() - clipy), 
+                        bc );
         }
         else
             p->fillRect ( clipx, clipy, clipw, cliph, bc );

@@ -74,13 +74,13 @@ SplashFontFile *SplashFTFontEngine::loadType1CFont(SplashFontFileID *idA,
 SplashFontFile *SplashFTFontEngine::loadCIDFont(SplashFontFileID *idA,
 						char *fileName,
 						GBool deleteFile) {
-  //FoFiType1C *ff;
   Gushort *cidToGIDMap;
   int nCIDs;
   SplashFontFile *ret;
 
   // check for a CFF font
 #if HAVE_FREETYPE_217_OR_OLDER
+  FoFiType1C *ff;
   if ((ff = FoFiType1C::load(fileName))) {
     cidToGIDMap = ff->getCIDToGIDMap(&nCIDs);
     delete ff;

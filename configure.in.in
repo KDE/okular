@@ -13,7 +13,7 @@ done
 dnl AC_CONFIG_SUBDIRS has to be done before KDE_CREATE_SUBDIRSLIST
 if test "$compile_kdvi" = "yes"; then
 
-   KDE_FIND_PATH(kpsewhich, KPSEWHICH, [/usr/bin /bin /usr/sbin /opt/teTeX/bin /opt/local/bin /opt/bin], [ ])
+   KDE_FIND_PATH(kpsewhich, KPSEWHICH, [/usr/bin /bin /usr/sbin /opt/teTeX/bin /opt/local/bin /opt/bin /usr/local/bin], [ ])
 
    have_kpsewhich=no
    test_kpsewhich="`${KPSEWHICH-kpsewhich} -show-path cnf 2>/dev/null`"

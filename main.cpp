@@ -20,7 +20,7 @@ static KCmdLineOptions options[] =
 int main( int argc, char **argv )
 {
 	KAboutData aboutData( "kdvi", I18N_NOOP("KDVI"), 
-		KDVI_VERSION, description, KAboutData::GPL, 
+		KDVI_VERSION, description, KAboutData::License_GPL, 
 		"(c) 1999-2000, The Various KDVI and KDE Developers");
 	aboutData.addAuthor("Markku Hihnala",0, "mah@ee.oulu.fi");
 	aboutData.addAuthor("Bernd Johannes Wuebben",0, "wuebben@math.cornell.edu");

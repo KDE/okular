@@ -1,7 +1,7 @@
 #ifndef __KDVI_VIEW_H
 #define __KDVI_VIEW_H
 
-#include <kbrowser.h>
+#include <kparts/browserextension.h>
 #include <klibloader.h>
 
 class KAction;

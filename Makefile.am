@@ -17,7 +17,7 @@ METASOURCES = AUTO
 # Which sources should be compiled for kdvi.
 libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
-	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp kbrowser.moc.cc\
+	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp \
 	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\
 	special.c util.c vf.c
 
@@ -48,7 +48,4 @@ part_DATA = kdvi_part.rc
 
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@
-
-kbrowser.moc.cc: $(kde_includes)/kbrowser.h
-	$(MOC) $(kde_includes)/kbrowser.h -o $(top_builddir)/kdvi/kbrowser.moc.cc
 

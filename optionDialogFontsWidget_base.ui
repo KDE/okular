@@ -1,5 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>optionDialogFontsWidget_base</class>
+<author>Stefan Kebekus</author>
 <widget class="QWidget">
     <property name="name">
         <cstring>optionDialogFontsWidget_base</cstring>
@@ -14,12 +15,6 @@
     </property>
     <property name="caption">
         <string>TeX Fonts</string>
-    </property>
-    <property name="toolTip" stdset="0">
-        <string>On low-resolution displays, such as a laptop screen, you probably want to switch this on</string>
-    </property>
-    <property name="whatsThis" stdset="0">
-        <string>If this option is set, KDVI will enlarge all characters by 10%. The text will then usually be easier to read, but it may happen that some characters overlap a little.</string>
     </property>
     <vbox>
         <property name="name">
@@ -43,6 +38,12 @@
                     <property name="text">
                         <string>Use Type 1 fonts if available</string>
                     </property>
+                    <property name="toolTip" stdset="0">
+                        <string>If in doubt, switch on.</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>On many modern TeX installations, the typical fonts used in a TeX document are included both in the traditional MetaFont- and in the PostScript Type 1 format. If this box is checked, Type 1 fonts will be used if they are found. This will usually save some time and disk space because it is then no longer necessary to run MetaFont and turn the MetaFont fonts into bitmap files. You probably want to switch this option on, unless you experience difficulties with the PostScript fonts, such as missing or wrong characters, etc.</string>
+                    </property>
                 </widget>
                 <widget class="QCheckBox">
                     <property name="name">
@@ -51,8 +52,11 @@
                     <property name="text">
                         <string>Use font hinting</string>
                     </property>
+                    <property name="toolTip" stdset="0">
+                        <string>You should try if the use of font hinting improves readability on your machine.</string>
+                    </property>
                     <property name="whatsThis" stdset="0">
-                        <string></string>
+                        <string>Many modern fonts contain "font hinting" information which can be used to improve the looks of a font on low-resolution displays, such as a computer monitor, or a notebook screen. However, many people find the "improved" fonts quite ugly and prefer to have this option switched off.</string>
                     </property>
                 </widget>
             </vbox>

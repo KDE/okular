@@ -214,7 +214,7 @@ QString fontPool::status(void)
       type = i18n("regular");
     
     if (fontp->font == 0)
-      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td> <td>%5</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename).arg("");
+      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td> <td>%5</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename).arg(i18n("Font file not found"));
     else
       tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td> <td>%5</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename).arg(fontp->font->errorMessage);
     fontp=fontList.next(); 
@@ -522,6 +522,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
     fontp = fontList.first();
     while ( fontp != 0 ) {
       if (fontp->filename.isEmpty() == true) {
+	
 	all_fonts_are_found = false;
 	break;
       }
@@ -537,7 +538,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
       QString body  = i18n("KDVI was not able to locate all the font files "
 			   "which are necessary to display the current DVI file. "
 			   "Your document might be unreadable.");
-      QString metaf = i18n("\nExperts will find helpful information in the 'MetaFont'-"
+      QString metaf = i18n("\nExperts will find helpful information in the 'Fonts'-"
 			   "section of the document info dialog");
       
       if (fatal_error_in_kpsewhich == true)

@@ -61,7 +61,7 @@ class PDFGenerator : public Generator
         // [INHERITED] reparse configuration
         bool reparseConfig();
 
-        QString getMetaData( const QString &key ) const;
+        QString getMetaData( const QString & key, const QString & option );
 
         // used by the KPDFOutputDev child
         KPDFLinkGoto::Viewport decodeLinkViewport( class GString * namedDest, class LinkDest * dest );

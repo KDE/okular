@@ -64,7 +64,7 @@ class KPDFDocument : public QObject // only for a private slot..
         uint currentPage() const;
         uint pages() const;
         bool okToPrint() const;
-        QString getMetaData( const QString &key ) const;
+        QString getMetaData( const QString & key, const QString & option = QString() ) const;
 
         // perform actions on document / pages
         void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool asyncronous );
@@ -103,6 +103,7 @@ class KPDFDocument : public QObject // only for a private slot..
         void slotGeneratedContents( int id, int pageNumber );
 };
 
+
 /**
  * @short A window on the document.
  *
@@ -113,9 +114,8 @@ struct DocumentViewport
     int lastPage;
 };
 
-
 /**
- * @short Metadata that describes the document.
+ * @short A dom tree containing informations about the document.
  *
  * The Info structure can be filled in by generators to display metadata
  * about the currently opened file.
@@ -146,13 +146,11 @@ class DocumentInfo : public QDomDocument
  * a dom tree where each nod has an internal name (displayed in the listview)
  * and one or more attributes.
  *
- * To fill in a valid synopsis tree just add domElements where the tag name
- * is the screen name of the entry.
- *
- * The following attributes are valid [more may be added in future]:
- * - Page: The page to which the node refers.
- * - Position: The position inside the page, where 0 means top and 100 is
- *   the bottom.
+ * In the tree the tag name is the 'screen' name of the entry. A tag can have
+ * attributes. Here follows the list of tag attributes with meaning:
+ * - PageNumber: The internal number of referred page.
+ * - PageName: A 'named reference' to the page that must be converted using
+ *      getMetaData( "NamedLink", page_name_attribute )
  */
 class DocumentSynopsis : public QDomDocument
 {

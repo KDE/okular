@@ -252,9 +252,9 @@ bool KPDFDocument::okToPrint() const
     return generator ? generator->allowed( Generator::Print ) : false;
 }
 
-QString KPDFDocument::getMetaData( const QString &key ) const
+QString KPDFDocument::getMetaData( const QString & key, const QString & option ) const
 {
-    return generator ? generator->getMetaData( key ) : QString();
+    return generator ? generator->getMetaData( key, option ) : QString();
 }
 
 void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests, bool async )

@@ -118,11 +118,21 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
 void TOC::slotExecuted( QListViewItem *i )
 {
     const QDomElement & e = static_cast< TOCItem* >( i )->element();
-    // if the node has a referred page, jump to it
-    if ( e.hasAttribute( "Page" ) )
+    if ( e.hasAttribute( "PageNumber" ) )
+    {
+        // if the node has a page number, follow it
         m_document->setCurrentPage( e.attribute( "Page" ).toUInt() );
-    // may check for other properties here
-    // ...
+    }
+    else if ( e.hasAttribute( "PageName" ) )
+    {
+        // if the node has a named reference, ask for conversion
+        const QString & page = e.attribute( "PageName" );
+        const QString & pageNumber = m_document->getMetaData( "NamedLink", page );
+        bool ok;
+        int n = pageNumber.toUInt( &ok );
+        if ( ok )
+            m_document->setCurrentPage( n );
+    }
 }
 
 #include "toc.moc"

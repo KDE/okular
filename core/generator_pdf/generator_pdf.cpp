@@ -188,9 +188,11 @@ const DocumentSynopsis * PDFGenerator::documentSynopsis()
     if ( !items || items->getLength() < 1 )
         return NULL;
 
+    docLock.lock();
     docSyn = DocumentSynopsis();
     if ( items->getLength() > 0 )
         addSynopsisChildren( &docSyn, items );
+    docLock.unlock();
 
     docSynopsisDirty = false;
     return &docSyn;
@@ -204,30 +206,47 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
         // iterate over every object in 'items'
         OutlineItem * outlineItem = (OutlineItem *)items->get( i );
 
-        // create element using outlineItem's title as tagName
+        // 1. create element using outlineItem's title as tagName
         QString name;
         Unicode * uniChar = outlineItem->getTitle();
-        for ( int i = 0; i < outlineItem->getTitleLength(); ++i )
-            name += uniChar[ i ];
+        int titleLength = outlineItem->getTitleLength();
+        for ( int j = 0; j < titleLength; ++j )
+            name += uniChar[ j ];
         if ( name.isEmpty() )
             continue;
         QDomElement item = docSyn.createElement( name );
         parent->appendChild( item );
 
-        // set element's attributes
-        if ( kpdfOutputDev )
+        // 2. find the page the link refers to
+        LinkAction * a = outlineItem->getAction();
+        if ( a && a->getKind() == actionGoTo )
         {
-            KPDFLink * link = kpdfOutputDev->generateLink( outlineItem->getAction() );
-            if ( link && link->linkType() == KPDFLink::Goto )
+            // page number is contained/referenced in a LinkGoTo
+            LinkGoTo * g = static_cast< LinkGoTo * >( a );
+            LinkDest * destination = g->getDest();
+            if ( !destination && g->getNamedDest() )
             {
-                KPDFLinkGoto * linkGoto = static_cast< KPDFLinkGoto * >( link );
-                item.setAttribute( "Page", linkGoto->destViewport().page );
-                //TODO item.setAttribute( "Position", 0 );
+                // no 'destination' but an internal 'named reference'. we could
+                // get the destination for the page now, but it's VERY time consuming,
+                // so better storing the reference and provide page number as metadata
+                // on demand
+                item.setAttribute( "PageName", g->getNamedDest()->getCString() );
             }
-            delete link;
+            else if ( destination->isOk() )
+            {
+                // we have valid 'destination' -> get page number
+                int pageNumber = destination->getPageNum() - 1;
+                if ( destination->isPageRef() )
+                {
+                    Ref ref = destination->getPageRef();
+                    pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
+                }
+                // set page as attribute to node (note: the viewport should be set too)
+                item.setAttribute( "PageNumber", pageNumber );
+            }
         }
 
-        // recursively descend over children
+        // 3. recursively descend over children
         outlineItem->open();
         GList * children = outlineItem->getKids();
         if ( children )
@@ -459,14 +478,38 @@ bool PDFGenerator::reparseConfig()
     return false;
 }
 
-QString PDFGenerator::getMetaData( const QString &key ) const
+QString PDFGenerator::getMetaData( const QString & key, const QString & option )
 {
-  if ( key == "StartFullScreen" ) {
-    if ( pdfdoc->getCatalog()->getPageMode() == Catalog::FullScreen )
-      return "yes";
-  }
-
-  return QString();
+    if ( key == "StartFullScreen" )
+    {
+        // asking for the 'start in fullscreen mode' (pdf property)
+        if ( pdfdoc->getCatalog()->getPageMode() == Catalog::FullScreen )
+            return "yes";
+    }
+    else if ( key == "NamedLink" && !option.isEmpty() )
+    {
+        // asking for the page related to a 'named link destination'. the
+        // option is the link name. @see addSynopsisChildren.
+        int pageNumber = -1;
+        GString * namedDest = new GString( option.latin1() );
+        docLock.lock();
+        LinkDest * destination = pdfdoc->findDest( namedDest );
+        if ( destination )
+        {
+            if ( !destination->isPageRef() )
+                pageNumber = destination->getPageNum() - 1;
+            else
+            {
+                Ref ref = destination->getPageRef();
+                pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
+            }
+        }
+        docLock.unlock();
+        delete namedDest;
+        if ( pageNumber >= 0 )
+            return QString::number( pageNumber );
+    }
+    return QString();
 }
 
 KPDFLinkGoto::Viewport PDFGenerator::decodeLinkViewport( GString * namedDest, LinkDest * dest )

@@ -6,6 +6,9 @@
 
 //#define KDVI_VERSION "0.4.1"
 
+#ifndef _kdvi_h_
+#define _kdvi_h_
+
 #include <qframe.h>
 #include <qlabel.h>
 #include <qcombobox.h>
@@ -162,3 +165,5 @@ private:
 	QLineEdit ed;
 	QPushButton ok, cancel;
 };
+
+#endif

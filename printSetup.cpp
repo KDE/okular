@@ -92,3 +92,5 @@ void printSetup::readConfig()
 	
 	config->setGroup( "kdvi" );
 }
+
+#undef Inherited

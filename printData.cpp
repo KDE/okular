@@ -190,3 +190,5 @@ void printData::setupPressed()
 void printData::cancelPressed()
 {
 }
+
+#undef Inherited

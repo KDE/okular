@@ -30,7 +30,7 @@ kdvi_METASOURCES = USE_AUTOMOC
 BUILT_SOURCES = psheader.c
 
 # Which sources should be compiled for kdvi.
-kdvi_SOURCES	= dviwin.cpp kdvi.cpp marklist.cpp prefs.cpp print.cpp\
+kdvi_SOURCES	= kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
 	scrbox.cpp \
 	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\

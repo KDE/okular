@@ -4,6 +4,9 @@
 // Widget for displaying TeX DVI files.
 //
 
+#ifndef _dviwin_h_
+#define _dviwin_h_
+
 #include "../config.h"
 #include <qwidget.h>
 #include <qpainter.h> 
@@ -110,3 +113,5 @@ private:
 	int		checkinterval;
 	QDateTime	changetime;
 };
+
+#endif

@@ -1,0 +1,200 @@
+DlgEdit:v1.2:Dialog:
+Dialog {
+	ClassHeader {print.h}
+	ClassSource {print.cpp}
+	ClassName {print}
+	DataHeader {printData.h}
+	DataSource {printData.cpp}
+	DataName {printData}
+	WindowBaseClass {QDialog}
+	IsModal {TRUE}
+	WindowCaption {Print}
+}
+WidgetLayout {
+		Rect {5 102 400 350}
+		Grid {10}
+
+ButtonGroup {
+		Title {Page order}
+		Alignment {Left}
+		Style {49}
+		Rect {10 220 380 60}
+		Name {ButtonGroup_3}
+}
+ButtonGroup {
+		Exclusive {1}
+		Title {Pages}
+		Alignment {Left}
+		Style {49}
+		Rect {10 120 380 90}
+		Name {ButtonGroup_2}
+}
+ButtonGroup {
+		Title {Print to}
+		Alignment {Left}
+		Style {49}
+		Rect {10 10 380 100}
+		Name {printToGroup}
+}
+Label {
+		Text {&File Name:}
+		Alignment {290}
+		AutoResize {FALSE}
+		Margin {8}
+		Rect {18 70 91 30}
+		Name {Label_1}
+		Variable {fileNameLabel}
+}
+Label {
+		Text {-}
+		Alignment {292}
+		AutoResize {FALSE}
+		Margin {-1}
+		Rect {300 170 20 30}
+		Name {Label_2}
+}
+ComboBox {
+		Style {ReadWrite}
+		SizeLimit {20}
+		Policy {AtBottom}
+		AutoResize {FALSE}
+		Item {Default Printer}
+		Item {File}
+		Rect {110 30 270 30}
+		Name {ComboBox_1}
+		Variable {printer}
+		Signal {[Protected]  activated --> printDestinationChanged  (int)}
+}
+LineEdit {
+		Text {}
+		EchoMode {Normal}
+		MaxLength {32767}
+		FrameShown {TRUE}
+		Rect {110 70 270 30}
+		Name {printFileName}
+		Variable {printFileName}
+}
+RadioButton {
+		Checked {TRUE}
+		Text {&All}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 140 100 30}
+		Name {RadioButton_1}
+		Variable {printAll}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {&Current}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {150 140 100 30}
+		Name {RadioButton_2}
+		Variable {printCurrent}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {&Marked}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 170 100 30}
+		Name {RadioButton_3}
+		Variable {printMarked}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {&Range}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {150 170 100 30}
+		Name {RadioButton_4}
+		Variable {printRange}
+		Signal {[Protected]  toggled --> rangeToggled  (bool)}
+}
+LineEdit {
+		Text {}
+		EchoMode {Normal}
+		MaxLength {32767}
+		FrameShown {TRUE}
+		Rect {250 170 50 30}
+		Name {LineEdit_2}
+		Variable {rangeFrom}
+}
+LineEdit {
+		Text {}
+		EchoMode {Normal}
+		MaxLength {32767}
+		FrameShown {TRUE}
+		Rect {320 170 50 30}
+		Name {LineEdit_3}
+		Variable {rangeTo}
+}
+CheckBox {
+		Checked {FALSE}
+		Text {Re&verse}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 240 90 30}
+		Name {CheckBox_1}
+		Variable {printReverse}
+}
+ComboBox {
+		Style {ReadOnly}
+		SizeLimit {10}
+		Policy {AtBottom}
+		AutoResize {FALSE}
+		Item {1 page on sheet}
+		Item {2 pages on sheet}
+		Item {4 pages on sheet}
+		Rect {120 240 140 30}
+		Name {ComboBox_2}
+		Variable {nupCombo}
+		Signal {[Protected]  activated --> nupPressed  (int)}
+}
+ComboBox {
+		Style {ReadOnly}
+		SizeLimit {10}
+		Policy {AtBottom}
+		AutoResize {FALSE}
+		Item {Fill rows}
+		Item {Fill columns}
+		Rect {270 240 110 30}
+		Name {ComboBox_3}
+		Variable {colOrder}
+}
+PushButton {
+		ToggleButton {FALSE}
+		Default {FALSE}
+		AutoDefault {FALSE}
+		Text {OK}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 300 100 30}
+		Name {PushButton_1}
+		Variable {okButton}
+		Signal {[Protected]  clicked --> okPressed  ()}
+}
+PushButton {
+		ToggleButton {FALSE}
+		Default {FALSE}
+		AutoDefault {FALSE}
+		Text {&Setup}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {150 300 100 30}
+		Name {PushButton_2}
+		Variable {setupButton}
+		Signal {[Protected]  clicked --> setupPressed  ()}
+}
+PushButton {
+		ToggleButton {FALSE}
+		Default {FALSE}
+		AutoDefault {FALSE}
+		Text {Cancel}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {270 300 100 30}
+		Name {PushButton_3}
+		Variable {cancelButton}
+		Signal {[Protected]  clicked --> cancelPressed  ()}
+}}

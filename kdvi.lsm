@@ -1,0 +1,14 @@
+Begin3
+Title:          kdvi
+Version:        0.4
+Entered-date:   October 15, 1997
+Description:    TeX DVI previewer for the K Desktop Environment
+Keywords:       KDE, TeX, DVI, X11, Qt
+Author:         Markku Hihnala <mah@ee.oulu.fi>
+Maintained-by:  Markku Hihnala <mah@ee.oulu.fi>
+Primary-site:   ftp://ftp.kde.org/pub/kde/
+Alternate-site: 
+Original-site:  ftp://ftp.kde.org/pub/kde/
+Platforms:      Linux, but should work on other Unices, needs Qt by Troll Tech
+Copying-policy: GPL
+End

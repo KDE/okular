@@ -1,0 +1,356 @@
+%% These are from tex.lpro
+/TeXDict 250 dict def   % define a working dictionary ( IBM: color - 200->250 )
+TeXDict begin           % start using it.
+/N {def} def
+/B {bind def} N
+/S {exch} N
+/X { S N } B
+/TR {translate} N
+end % TeXDict
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%     header for the \special command
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   The structure of the PostScript produced by dvips for \special is:
+%         @beginspecial
+%           - any number of @hsize, @hoffset, @hscale, etc., commands
+%         @setspecial
+%           - the user's file of PostScript commands
+%         @endspecial
+
+TeXDict begin
+/SDict 200 dict N
+SDict begin
+
+/@SpecialDefaults
+  { /hs 612 N
+    /vs 792 N
+    /ho 0 N
+    /vo 0 N
+    /hsc 1 N
+    /vsc 1 N
+    /ang 0 N
+    /CLIP 0 N
+    /rwiSeen false N
+    /rhiSeen false N
+    /letter {} N /note {} N /a4 {} N /legal {} N
+  } B
+
+%
+%   The following definition sets up the units that hscale/vscale are in.
+%   For certain sites this might require change, but it is
+%   recommended instead that any macro packages that require
+%   hscale/vscale set the units appropriately via
+%
+%   \special{! /@scaleunit 1 def }
+%
+%   if global, or
+%
+%   \special{" /@scaleunit 1 def }
+%
+%   before each instance if multiple macro packages with
+%   different requirements are being used.
+%
+/@scaleunit 100 N
+%       s @hscale  -    set scale factor
+/@hscale {@scaleunit div /hsc X} B
+/@vscale {@scaleunit div /vsc X} B
+
+%       d @hsize   -    specify a horizontal clipping dimension
+/@hsize {/hs X /CLIP 1 N} B
+/@vsize {/vs X /CLIP 1 N} B
+
+/@clip {/CLIP 2 N} B
+
+%       d @hoffset -    specify a shift for the figure
+/@hoffset {/ho X} B
+/@voffset {/vo X} B
+
+%       a @angle   -    set rotation angle
+/@angle {/ang X} B
+
+%
+%   Here we handle bounding box calculations, if necessary.
+%
+/@rwi { 10 div /rwi X /rwiSeen true N } B % rwi will be real width after scaling
+/@rhi { 10 div /rhi X /rhiSeen true N } B % rhi will be real height after scaling
+/@llx { /llx X } B
+/@lly { /lly X } B
+/@urx { /urx X } B
+/@ury { /ury X } B
+
+/magscale true def
+
+end % of SDict
+
+/@MacSetUp
+  { userdict /md known  % if md is defined
+      { userdict /md get type /dicttype eq      % and if it is a dictionary
+	{
+        userdict begin                       % expand it if necessary
+           md length 10 add md maxlength ge
+           {/md md dup length 20 add dict copy def}if
+        end
+	md begin                             % then redefine some stuff
+	/letter {} N
+	/note {} N
+	/legal {} N
+	/od{txpose
+	    1 0 mtx defaultmatrix dtransform S atan/pa X
+	    newpath clippath mark
+	    {transform{itransform moveto}}
+	    {transform{itransform lineto}}
+	    { 6 -2 roll transform
+	      6 -2 roll transform
+	      6 -2 roll transform
+	      { itransform 6 2 roll
+		itransform 6 2 roll
+		itransform 6 2 roll
+		curveto
+	      }
+	    }
+	    {{closepath}}
+	    pathforall newpath counttomark array astore /gc xdf
+	    pop ct 39 0 put
+	    10 fz 0 fs 2 F/|______Courier fnt invertflag{PaintBlack}if
+	}N
+	/txpose{
+	    pxs pys scale ppr aload pop
+	    por {
+		noflips {
+		    pop S neg S TR pop 1 -1 scale
+		}if
+		xflip yflip and {
+		    pop S neg S TR 180 rotate 1 -1 scale
+		    ppr 3 get ppr 1 get neg sub neg ppr 2 get
+		    ppr 0 get neg sub neg TR
+		}if
+		xflip yflip not and {
+		    pop S neg S TR pop 180 rotate
+		    ppr 3 get ppr 1 get neg sub neg 0 TR
+		}if
+		yflip xflip not and {
+		    ppr 1 get neg ppr 0 get neg TR
+		}if
+	    }
+	    {
+		noflips {
+		    TR pop pop 270 rotate 1 -1 scale
+		}if
+		xflip yflip and {
+		    TR pop pop 90 rotate 1 -1 scale
+		    ppr 3 get ppr 1 get neg sub neg ppr 2 get
+		    ppr 0 get neg sub neg TR
+		}if
+		xflip yflip not and {
+		    TR pop pop 90 rotate ppr 3 get
+		    ppr 1 get neg sub neg 0 TR
+		}if
+		yflip xflip not and {
+		    TR pop pop 270 rotate ppr 2 get
+		    ppr 0 get neg sub neg 0 S TR
+		}if
+	    }ifelse
+	    scaleby96 {
+		ppr aload pop 4 -1 roll add 2 div 3 1 roll add 2 div 2 copy
+		TR .96 dup scale neg S neg S TR
+	    }if
+	}N
+	/cp {pop pop showpage pm restore}N
+        end
+      }if
+    } if
+  } N
+
+%
+%   The following procedure brings us back to PostScript size.  It takes
+%   into account the current global dvi magnification, so graphics
+%   scale with the document.
+%
+/normalscale {
+    Resolution 72 div VResolution 72 div neg scale
+    magscale { DVImag dup scale } if
+    0 setgray
+} N
+%
+%   We need the psfig macros.
+%
+% All software, documentation, and related files in this distribution of
+% psfig/tex are Copyright (c) 1987 Trevor J. Darrell
+%
+% Permission is granted for use and non-profit distribution of psfig/tex
+% providing that this notice be clearly maintained, but the right to
+% distribute any portion of psfig/tex for profit or as part of any commercial
+% product is specifically reserved for the author.
+%
+%
+% psfigTeX PostScript Prolog
+% $Header$
+%
+/psfts { S 65781.76 div N } N
+
+%  x y bb-llx bb-lly bb-urx bb-ury startTexFig -
+/startTexFig {
+	/psf$SavedState save N
+	userdict maxlength dict begin
+
+	/magscale false def
+	normalscale
+        currentpoint TR    %set the current point as the user's origin
+
+	/psf$ury psfts
+	/psf$urx psfts
+	/psf$lly psfts
+	/psf$llx psfts
+	/psf$y psfts
+	/psf$x psfts
+
+	/psf$sx psf$x psf$urx psf$llx sub div N	% scaling for x
+	/psf$sy psf$y psf$ury psf$lly sub div N	% scaling for y
+
+	psf$sx psf$sy scale			% scale by (sx,sy)
+
+	psf$llx neg psf$ury neg TR
+
+	/showpage {
+	} N
+	/erasepage {
+	} N
+	/copypage {
+	} N
+        /p 3 def % necessary to get around a bug in Adobe Illustrator
+	@MacSetUp
+} N
+
+% llx lly urx ury doclip -	(args in figure coordinates)
+/doclip {
+        psf$llx psf$lly psf$urx psf$ury
+	currentpoint 6 2 roll
+	newpath 4 copy
+	4 2 roll moveto
+	6 -1 roll S lineto
+	S lineto
+	S lineto
+	closepath clip
+	newpath
+	moveto
+} N
+% - endTexFig -
+/endTexFig { end psf$SavedState restore } N
+
+% this will be invoked as the result of a \special command (for the
+% inclusion of PostScript graphics).  The basic idea is to change all
+% scaling and graphics back to defaults, but to shift the origin
+% to the current position on the page.
+
+/@beginspecial          % - @beginspecial -     -- enter special mode
+  { 
+    /SpecialSave save N
+    SDict begin
+    gsave
+    normalscale
+    currentpoint TR    %set the current point as the user's origin
+    @SpecialDefaults    % setup default offsets, scales, sizes, and angle
+    count /ocount X /dcount countdictstack N
+  } N
+
+/@setspecial    % to setup user specified offsets, scales, sizes (for clipping)
+  {
+    CLIP 1 eq
+      { newpath 0 0 moveto hs 0 rlineto 0 vs rlineto hs neg 0 rlineto
+        closepath clip }
+    if
+    ho vo TR
+    hsc vsc scale
+    ang rotate
+    rwiSeen {
+       rwi urx llx sub div
+       rhiSeen { rhi ury lly sub div } { dup } ifelse
+       scale llx neg lly neg TR
+    } {
+       rhiSeen { rhi ury lly sub div dup scale llx neg lly neg TR } if
+    } ifelse
+    CLIP 2 eq
+    { newpath llx lly moveto urx lly lineto urx ury lineto llx ury lineto
+      closepath clip }
+    if
+    /showpage {} N
+    /erasepage {} N
+    /copypage {} N
+    newpath
+  } N
+
+/@endspecial            % - @endspecial -       -- leave special mode
+  { count ocount sub {pop} repeat
+    countdictstack dcount sub {end} repeat
+    grestore SpecialSave restore
+    end
+  } N
+
+% xdvik special treatment for saving definitions made in SDict (while using
+% the bang special; try to guarantee that the dictionary stack is ok!
+%   xdvik should not systematically bracket code within save/restore pairs,
+% anyway: such bracketing breaks a lot of code (many packages do change
+% TeXDict from with ps: specials for instance) and we should only guarantee
+% that bracketing is done within @beginspecial and @endspecial.  -- YA
+
+/@xdvisavestate
+  {
+    userdict /xdvi$sav save put
+  } N
+
+/@defspecial
+  {
+    SDict begin
+  } N
+
+/@fedspecial
+  {
+    end
+    @xdvisavestate
+  } B
+
+%%% macros for tpic
+/li             % x y li -              -- draw line to
+  { lineto
+  } B
+
+/rl             % dx dy rl -            -- draw relative line
+  { rlineto
+  } B
+
+/rc             % x0 y0 x1 y1 y2 y2 rc  -- draw bezier curve
+  { rcurveto
+  } B
+
+/np		% np -			-- start a new path and save currentpoint
+  { /SaveX currentpoint /SaveY X N   % remember current point
+    1 setlinecap
+    newpath
+  } N
+
+/st             % st -                  -- draw the last path and restore currentpoint
+  { stroke
+    SaveX SaveY moveto                  % restore the current point
+  } N
+
+/fil             % fil                    -- fill the last path and restore currentpoint
+  { fill
+    SaveX SaveY moveto                  % restore the current point
+  } N
+
+/ellipse        % xc yc xrad yrad startAngle endAngle ellipse
+    {
+        /endangle X
+        /startangle X
+        /yrad X
+        /xrad X
+
+        /savematrix matrix currentmatrix N
+
+        TR xrad yrad scale
+        0 0 1 startangle endangle arc
+        savematrix setmatrix
+    } N
+%%% end of macros for tpic
+end                     % revert to previous dictionary

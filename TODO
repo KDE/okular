@@ -1,0 +1,20 @@
+TODO:
+~~~~~
+
+- Document info dialog
+- More paper types, currently only those from xdvi are available
+- Better online help
+- Internal printing using QPrinter
+- Redirect error messages to a window (partly done)
+- Better PostScript handling (currently not very robust)
+	- antialiasing
+- More background processing to keep the UI responsive
+- Magnifier window
+- Two page view
+- Support for more TeX specials
+- Network URL support
+
+Anything else? Feel free to make suggestions and report any problems you have.
+
+Markku Hihnala
+mah@ee.oulu.fi

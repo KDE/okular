@@ -1,0 +1,198 @@
+
+
+kdvi 0.4 - Alpha release
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is a port of xdvik version 18f by many authors (see files AUTHORS)
+to the K Desktop Environment. kdvi is used to view TeX DVI files. It is
+a replacement of xdvi from tetex-distribution and uses the kpathsea
+library to find the needed pk-font files. If you have tetex you should be
+able to run kdvi. It requires also Ghostcript to render any postscript
+specials in dvi files. kdvi uses the Qt toolkit.
+
+This version is quite useable.
+
+
+INSTALL
+~~~~~~~
+1. Set QTDIR and KDEDIR environment variables
+
+	Eg. in bash shell type
+
+	export QTDIR=/usr/lib/qt KDEDIR=/usr/local/kde
+
+2. Go to the top kdvi directory and type 
+
+	./configure
+	make
+
+3. If kdvi seems to build correctly you can install it by
+
+	make install
+	
+
+Note.	The make step currently runs configure in the kpathsea subdirectory.
+	I may eliminate this in a later version.
+
+If xdvi from tetex works for you then so should kdvi.
+However, it has only been tested on Linux. The support for handling the xdvi
+command line arguments and X application defaults is missing (partly replaced
+by KConfig, see below and online help).
+Postscript special handling only supported with Ghostscript.
+
+
+CONFIGURATION
+~~~~~~~~~~~~~
+
+Version 0.4 can be configured through dialogs.
+
+Before giving kdvi a file to open you should set the following entries in Fonts
+page of Preferences:
+
+o Resolution	Set this to the base resolution of your printer if you
+		have already PK-fonts for printer available.
+
+o MetafontMode  This you can set to match the definition of your printer or
+		use the default mode '/'.
+
+It is necessary to set the Resolution as required by your TeX installation.
+(tetex stores this usually in /usr/lib/texmf/texmf/xdvi/XDvi). MetafontMode is
+needed when you want to enable automatic pk-font generation (menu option).
+See online help for more info.
+
+These variables should preferably be set in the system wide configuration file.
+The system administrator can set the proper values ( and other settings as
+desired ) with kdvi and copy the config file ~/.kde/share/config/kdvirc
+to $KDEDIR/share/config/kdvirc. 
+
+You can also specify the paths where your pk-fonts are located, if
+kdvi does not find them automatically, by setting entry 'PK Font Path' to
+the list of directories to be searched:
+
+/var/lib/texmf/fonts/pk/ljfour/:/some/other/place
+
+You can make kdvi search recursively by adding an extra / at the end of
+directory name:
+
+/var/lib/texmf/fonts//
+
+This works like xdvi's XDVIFONTS environment variable.
+There is also good (gnu info) documentation available for the kpathsea library
+that kdvi uses for font searching.
+
+USAGE:
+~~~~~~
+
+The dvi viewer may be started using a file name to display a file, e.g:
+
+	kdvi somepath/paper.dvi
+
+or without a file name as
+
+	kdvi
+
+kdvi will then allow a file to be opened from a dialog or when dropped from
+file manager (kfm).
+
+The usual parameters handled by Qt should also work:
+
+	kdvi -style windows -display :0 -geometry 400x400+0+0
+
+
+CHANGES:
+~~~~~~~~
+
+Version 0.4
+~~~~~~~~~~~
+
+-	Antialiased PostScript specials
+
+-	Support session management
+
+-	Changes menu accelerators according to KKeyConfig settings.
+	Shortcuts should follow KDE standard.
+	
+-	Statusbar shows the coordinates of a clicked point in millimeters.
+
+-	Changed build to use automake (not for kpathsea yet)
+
+-	Better print dialog + print setup dialog. Support for dvilj4 and dvips.
+
+-	Automatic reload when dvi file is updated
+
+-	Uses KToolbar, KStatusbar and KTopLevelWidget
+
+-	Command line option '-caption'
+
+-	Uses KIconLoader and KDebugDialog
+
+-	Partial support for translations
+
+-	Many bug fixes
+
+-	Internal changes
+
+-	Miscellanous other changes
+
+
+Version 0.3
+~~~~~~~~~~~
+
+-	Preferences dialog
+
+-	Paper type selectable
+
+-	Configurable key bindings with kkeyconfig (first cut)
+
+-	Works with kdisplay
+
+-	Uses KMsgBox dialogs
+
+-	Sticky popup menus
+
+-	Needs Qt 1.2 ( check marks in menus )
+
+-	Many bug fixes
+
+-	More KDE conforming
+
+
+Version 0.2	
+~~~~~~~~~~~
+
+-	Configuration file uses different variables
+
+-	Status bar and vertical toolbar
+
+-	Added a page list for selecting the current page and marking pages
+	for printing.
+
+-	Initial print dialog. Does not support printing of marked pages that
+	have page numbers different from the sequence number (pages are not
+	numbered as 1,2,3...). Requires dvips for converting dvi to PostScript,
+	gv for previewing PS and mpage for printing multiple pages per sheet.
+	(These should be replaced by kprogs.)
+
+-	A scroller widget that can also select the next or previous page.
+
+-	Support for new TeX config file format of tetex 4
+
+-	File drops accepted (local files only)
+
+-	Many bug fixes
+
+-	Builds using configure
+
+-	Screen updating reduced and scrolling made smoother.
+	This results in kdvi allocating huge amounts of memory when using large
+	magnifications.
+
+Version 0.1
+~~~~~~~~~~~
+
+First release. Should be quite usable, with some problems on error handling
+(bad dvi etc.) and postscript special handling. All enabled menu entries and
+toolbar buttons are operational, many keybindings are available (see help)
+allthough probably not KDE-conformant (expect changes).
+
+

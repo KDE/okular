@@ -1,0 +1,203 @@
+<html>
+<head><title>kdvi User Manual</title></head>
+<body>
+<h1>kdvi - TeX DVI viewer</h1>
+
+
+kdvi is a DVI viewer based on xdvik version 18f by many authors
+(see file AUTHORS).
+My additions to the earlier work are distributed under the GPL
+(see file COPYING).
+<p>
+<p>
+This is an alpha release of kdvi. See file README.kdvi for release notes.
+<p>
+<h2>Contents</h2>
+<ul>
+ <li><a href=#usage>USAGE</a></li>
+ <li><a href=#keyboard>Using keyboard</a></li>
+ <li><a href=#pages>Moving around</a></li>
+ <li><a href=#magnifications>Changing magnification</a></li>
+ <li><a href=#marking>Marking pages</a></li>
+ <li><a href=#printing>Printing</a></li>
+ <li><a href=#faq>Q & A</a></li>
+ <li><a href=#bugs>BUGS</a></li>
+ <li><a href=#todo>To do</a></li>
+</ul>
+
+
+<h2><a name="usage">USAGE:</a></h2>
+
+The dvi viewer may be started using a file name to display a file, e.g:
+<ul><li>
+	kdvi somepath/paper.dvi
+</li></ul>
+or without a file name as
+<ul><li>
+	kdvi
+</li></ul>
+kdvi will then allow a file to be opened from a dialog or a menu of recently used files. This menu can also be popped up by clicking the File button with the right mouse button.
+<p>
+The usual parameters handled by Qt and KDE applications also work:
+<p>
+	kdvi -style windows -display :0 -geometry 400x400+0+0 -caption "DVI"
+<p>
+For integration with TeX the opened DVI file is automatically reloaded when
+changed.
+<p>
+
+<h2><a name="keyboard">Using keyboard</a></li></h2>
+
+Most keyboard commands are displayed in the menus as accelerator keys.
+The defaults follow KDE standard when applicable.
+You can define your prefered key bindings using the KDE standard key
+configuration dialog available from the menu Options/Keys.<p>
+
+Note also that you can reach most menu commands with a couple of key presses,
+e.g. to show the Help/About is done by Alt-h a. You can also use
+cursor keys to move around in menus.
+Here is a list of invisible bindings (these are not configurable):
+<ul>
+<li>SPACE moves down then to top of next page similar to Advance button.
+<li>Cursor keys scroll in obvious way. With Control-modifier they use a very
+small step size for accurate control.</li>
+<li>Home scrolls to top of page.</li>
+<li>End  scrolls to bottom of page.</li>
+</ul>
+<p>
+<h2><a name="pages">Moving around</a></li></h2>
+
+You can scroll the page with various ways: Using <a href=#keyboard>keyboard</a>,
+using the scrollbars, using the scroller widget located above the page list or by dragging the display with left mouse button.
+<p>
+The Page menu provides commands for changing the displayed page. A primitive
+dialog is available to enter a page number. The scroller widget allows you to
+move to the next or the previous page by clicking the right or middle mouse 
+button. The page list can be 
+clicked with the left mouse button to select a page.
+<p>
+The button bar provides buttons to change pages: First, Previous, Advance, Next and Last.
+In the middle of these is the Advance button which can be used to easily read through
+many partly displayed pages: it scrolls down until at the bottom of page and
+then to the top of the next page.
+
+
+<h2><a name="magnifications">Changing magnification</a></li></h2>
+
+The View menu offers entries to step through available magnifications: Zoom in
+and Zoom out. The available magnifications corresponds to the base resolution
+of the used pk-font and its reductions by integer factors.<p>
+
+The button bar presents these same commands plus two fixed magnifications for
+quick selection. You can use these to switch between a readable text size and a
+magnified view (there is no separate magnifier window) or between a readable
+size and a full page view. You can configure these fixed sizes with preferences
+dialog.<p>
+
+One non-obvious feature is the selection of scaling center. You can select with
+left mouse button the point on the page that does not move (if possible) when
+changing the magnification. Use this by clicking with left mouse button at the
+detail you want to see magnified and then push the magnified view button. 
+
+<h2><a name="marking">Marking pages</a></li></h2>
+
+You can mark pages for printing. The marks are visible in the page list.
+<p>
+The current page can be marked by selecting the
+entry 'Mark page' from the RMB popup menu of the viewing area. The page list
+gives more options for marking: you can mark all, even, odd or current page and
+unmark current or all pages and toggle marks using the RMB popup menu of page
+list. Clicking or dragging the middle mouse button also toggles the marks.
+
+<h2><a name="printing">Printing</a></li></h2>
+
+This version has a print setup dialog ( available from the print dialog ) that
+lets you configure the printing method, n-up program, printer names and spooler
+command. Printing method selects the external program to use for printing.
+Available choices are dvips and dvilj4. If you use dvips, you can also have an
+n-up program called to make 2 or 4 pages per sheet. Select psnup (preferred) or
+mpage (may work) if you have that installed in your system. 
+<p>
+You may add printer names that will be available in the print dialog.
+<p>
+And last you can change the spooler command (defaults to lpr) that is supposed
+to read standard input. Option -P is appended when printing to nondefault
+printer.
+<p>
+Having setup printing you can use the print dialog where you can select the
+pages to be printed, which printer or file to use for output and more.
+
+<h2><a name="faq">Q & A</a></h2>
+
+Q: Why is kdvi not displaying anything but a busy cursor?<br>
+A: It is possible, that kdvi is searching for the pk-fonts from wrong places, and this can be very time consuming if these include network mounted filesystems. You can check for this with strace and see below for a cure.
+<p>
+
+Q: What can I do when kdvi does not find my PK-fonts?<br>
+A: You must have correct settings for resolution and Metafont mode.<br> 
+If this does not help, you may set the field
+'PK Font Path' in Preferences/Fonts to point to the  list of directories
+to be searched for pk-fonts:
+<br>
+/var/lib/texmf/fonts/pk/ljfour/:/some/other/place
+<br>
+You can make kdvi search recursively by adding an extra / at the end of
+directory name:
+<br>
+/var/lib/texmf/fonts//
+<br>
+(This works like xdvi's XDVIFONTS environment variable.
+There is also good (gnu info) documentation available for the kpathsea library
+that kdvi uses for font searching.)<br>
+This makes kdvi usable when you have some other tex system than tetex and don't
+have the texmf.cnf file.
+<p>
+Q: How do I get the font generation to work?<br>
+A: If you like to enable automatic font generation using MakeTeXPK,
+you must also supply correct Metafont mode in preferences dialog.
+When automatic pk-font generation is disabled (menu option)
+the missing fonts will be logged to file missfont.log in the current directory.
+It is a good idea to check that the font generation commands in
+missfont.log are correct before enabling font generation.
+<p>
+
+<h2><a name="bugs">BUGS</a></h2>
+
+Known bugs:
+<ul>
+<li> Changes in paper size only get applied correctly after restart.</li>
+<li> When showing PS the gs process seems to hang sometimes. Killing gs helps.</li>
+<li> When showing PS the rendered image is not always updated. Scrolling the
+view helps.</li>
+<li> You need to have xdvi installed and accessible via the program search path.
+You can replace the actual file with an empty executable though.</li>
+</ul>
+
+Unknown bugs:
+<ul><li>Probably many</li></ul>
+
+<h2><a name="todo">TO DO:</a></h2>
+<ul>
+<li> Document info dialog
+</li>
+<li> More paper types, currently only those from xdvi are available
+</li><li> Better online help
+</li><li> Internal printing using QPrinter
+</li><li> Redirect error messages to a window (partly done)
+</li><li> Better Postscript handling (currently not very robust)
+<ul><li> anti-aliasing</li></ul>
+</li><li> More background processing to keep the UI responsive
+</li><li> Magnifier window
+</li><li> Two page view
+</li><li> Support for more TeX specials
+</li><li> Network URL support</li>
+</ul>
+<p>
+Anything else?  Feel free to make suggestions and report any problems you have.
+<p>
+Markku Hihnala<br>
+mah@ee.oulu.fi
+
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+DlgEdit:v1.2:Dialog:
+Dialog {
+	ClassHeader {printSetup.h}
+	ClassSource {printSetup.cpp}
+	ClassName {printSetup}
+	DataHeader {printSetupData.h}
+	DataSource {printSetupData.cpp}
+	DataName {printSetupData}
+	WindowBaseClass {QDialog}
+	IsModal {TRUE}
+	WindowCaption {Print setup}
+}
+WidgetLayout {
+		Rect {5 102 410 340}
+		Grid {10}
+
+PushButton {
+		ToggleButton {FALSE}
+		Default {FALSE}
+		AutoDefault {FALSE}
+		Text {Cancel}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {290 300 100 30}
+		Name {PushButton_4}
+		Signal {[Protected]  clicked --> reject  ()}
+}
+GroupBox {
+		Title {Printers}
+		Alignment {Left}
+		Style {49}
+		Rect {150 10 250 240}
+		Name {GroupBox_1}
+}
+ButtonGroup {
+		Title {n-up}
+		Alignment {Left}
+		Style {49}
+		Rect {10 140 130 110}
+		Name {ButtonGroup_5}
+}
+ButtonGroup {
+		Title {Printing method}
+		Alignment {Left}
+		Style {49}
+		Rect {10 10 130 120}
+		Name {ButtonGroup_4}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {&Internal}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 30 100 30}
+		Name {RadioButton_5}
+		Variable {internal}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {dvi&ps}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 60 100 30}
+		Name {RadioButton_6}
+		Variable {dvips}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {dvi&lj4}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 90 100 30}
+		Name {RadioButton_7}
+		Variable {dvilj4}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {Use ps&nup}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 170 100 30}
+		Name {RadioButton_8}
+		Variable {psnup}
+}
+RadioButton {
+		Checked {FALSE}
+		Text {Use &mpage}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {30 200 100 30}
+		Name {RadioButton_9}
+		Variable {mpage}
+}
+ListBox {
+		DragSelect {TRUE}
+		AutoScroll {TRUE}
+		ScrollBar {FALSE}
+		AutoScrollBar {TRUE}
+		BottomScrollBar {FALSE}
+		AutoBottomScrollBar {TRUE}
+		SmoothScrolling {TRUE}
+		Style {51}
+		LineWidth {2}
+		Rect {170 30 210 120}
+		Name {ListBox_1}
+		Variable {printers}
+}
+LineEdit {
+		Text {}
+		EchoMode {Normal}
+		MaxLength {32767}
+		FrameShown {TRUE}
+		Rect {170 160 210 30}
+		Name {LineEdit_4}
+		Variable {newPrinter}
+		Signal {[Protected]  returnPressed --> addPrinter  ()}
+}
+PushButton {
+		ToggleButton {FALSE}
+		Default {FALSE}
+		AutoDefault {FALSE}
+		Text {&Add}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {170 200 100 30}
+		Name {PushButton_5}
+		Signal {[Protected]  clicked --> addPrinter  ()}
+}
+PushButton {
+		ToggleButton {FALSE}
+		Default {FALSE}
+		AutoDefault {FALSE}
+		Text {&Remove}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {280 200 100 30}
+		Name {PushButton_6}
+		Signal {[Protected]  clicked --> removePrinter  ()}
+}
+PushButton {
+		ToggleButton {FALSE}
+		Default {FALSE}
+		AutoDefault {FALSE}
+		Text {OK}
+		AutoRepeat {FALSE}
+		AutoResize {FALSE}
+		Rect {170 300 100 30}
+		Name {PushButton_7}
+		Variable {okButton}
+		Signal {[Protected]  clicked --> okPressed  ()}
+}
+LineEdit {
+		Text {}
+		EchoMode {Normal}
+		MaxLength {32767}
+		FrameShown {TRUE}
+		Rect {150 260 250 30}
+		Name {LineEdit_2}
+		Variable {spoolerCommand}
+}
+Label {
+		Text {&Spooler command:}
+		Alignment {290}
+		AutoResize {FALSE}
+		Margin {4}
+		Style {50}
+		Rect {10 260 130 30}
+		Name {Label_1}
+		Variable {spoolerLabel}
+}}

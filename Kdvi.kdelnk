@@ -1,0 +1,15 @@
+# KDE Config File
+[KDE Desktop Entry]
+Comment[C]=TeX DVI File Viewer
+BinaryPattern=kdvi;
+Name=DVI Viewer
+Name[C]=DVI Viewer
+MimeType=application/x-dvi;
+Comment=TeX DVI File Viewer
+Exec=kdvi -c %c %f
+TerminalOptions=
+Icon=kdvi.xpm
+MiniIcon=mini-windows.xpm
+Path=
+Type=Application
+Terminal=0

@@ -1,0 +1,7 @@
+Karl Berry wrote all files not otherwise marked, with help from Kathryn
+Hargreaves on some of the original versions.
+
+The implementation of the link trick in pathsrch.c is taken from GNU
+find, implemented by David MacKenzie from Matthew Farwell's suggestion.
+
+Mike Haertel wrote the GNU malloc source.

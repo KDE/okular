@@ -1,0 +1,28 @@
+/* XPM */
+static char * printpage_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"16 16 6 1",
+/* colors */
+" 	c None",
+".	c black",
+"X	c white",
+"o	c #828282",
+"O	c #baa2a6",
+"+	c gray",
+/* pixels */
+"   .........    ",
+"   .XXXXXXX.    ",
+"   .Xo oXXX.    ",
+"   .XXXXXXX.    ",
+"   .Xo o oX.    ",
+"   .XXXXXXX.    ",
+"   .Xooo oX.    ",
+"   .XXXXXXX.    ",
+"............... ",
+".XXXXXXXXXXXXX.O",
+".X++++++++++++.o",
+".X++++++++++++.o",
+".X++++++++++++.o",
+"...............o",
+" .+o+o+o+o+o+.oo",
+" .............oO"};

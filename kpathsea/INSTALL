@@ -1,0 +1,410 @@
+Contents:
+
+Installation
+  Default paths
+  Common problems
+    Unable to find files
+    Slow path searching
+    `XtInherit'
+    `wchar_t'
+    `ShellWidgetClass'
+    Pointer combination warnings
+  Shared library
+  Reporting bugs
+
+
+Installation
+************
+
+  Here are the basic steps for configuration and installation:
+
+  1. Edit the file `make/paths.make' if you want to make changes to the
+     installation directories or paths that will have effect across
+     different runs of `configure'.  Alternatively, override the Make
+     variables on the command line when you run Make.
+
+     Exception: to reliably change the top-level `prefix', you must give
+     `configure' the option `-prefix=PREFIX', instead of changing the
+     value in `paths.make'.
+
+  2. Edit `kpathsea/texmf.cnf.in' to change the local paths to match
+     your local setup.  *Note Default paths: (kpathsea)Default paths,
+     for more details on changing the paths. A copy is in
+     `kpathsea/INSTALL'.  See `kpathsea/HIER' for an explanation of the
+     default setup.
+
+     If the paths do not match where the files actually are, the
+     programs will probably start up Very, Very, Slowly, and/or not be
+     able to find the fonts or other input files.
+
+  3. `sh configure' (in the top-level directory).  This makes
+     system-dependent `#define's' in `*/c-auto.h' (from the
+     corresponding `c-auto.h.in') and creates a `Makefile' (from the
+     corresponding `Makefile.in', by doing `@VAR@' and `ac_include'
+     substitutions).
+
+     Perhaps the most common desire is to compile with optimization
+     instead of or as well as debugging.  You can change the options
+     passed to the compiler by changing `CFLAGS', either for
+     `configure' or `make'.  For example:
+
+          prompt$ env CFLAGS="-g -O" configure
+          prompt$ make
+     or
+          prompt$ configure
+          prompt$ make CFLAGS="-g -O"
+
+     *Note Running `configure' scripts: (autoconf)Invoking configure,
+     for detailed `configure' options.  (A copy is in
+     `kpathsea/CONFIGURE'.)
+
+  4. `make' (still in the top-level directory). Barring configuration
+     and compiler bugs, this will compile all the programs.  *Note
+     Common problems: (kpathsea)Common problems, for system-dependent
+     problems (this section is also in `kpathsea/INSTALL').
+
+     This also creates the `texmf.cnf' and `paths.h' files that define
+     the default search paths.
+
+  5. `make install'. This installs the library, header files, and
+     documentation. Or `make install-data' to just install the
+     architecture-independent files. Or `make install-exec' to just
+     install the (binary) archive library file.
+
+     Since I only distribute Kpathsea as part of another package, you
+     will probably be doing the above in a top-level directory that
+     contains a `Makefile', `kpathsea', and the other package.  But you
+     can do the installation in `kpathsea' itself, if you only want to
+     install the library, not the other package.
+
+  6. The first time you install any manual in Info, you have to add a
+     line (you choose where) to the `dir' file in your `$(infodir)'
+     directory.  A sample line to add is given near the top of the
+     Texinfo source files (`kpathsea/kpathsea.texi' and
+     `dvipsk/dvips.texi').
+
+  7. `make distclean'.  This removes all files created by the build.
+
+
+  *Note Filename database::, for a description of an
+externally-generated database that can help speed searches.
+
+  *Note Debugging::, for runtime debugging support that may help track
+down problems.
+
+  Do not attempt to use any version of Kpathsea with any program except
+the version that the program came with, unless you are a glutton for
+punishment.
+
+Default paths
+=============
+
+  To summarize the chain of events that go into defining the default
+paths:
+
+  1. `configure' creates a `Makefile' from each `Makefile.in'.
+
+  2. When Make runs in the `kpathsea' directory, it creates a file
+     `texmf.sed' that substitutes the Make value of `$(var)' for a
+     string `@var@'. The variables in question are the one that define
+     the installation directories.
+
+  3. `texmf.sed' (and a little extra magic--see `kpathsea/Makefile') is
+     applied to `texmf.cnf.in' to generate `texmf.cnf'. This is the
+     file that will eventually be installed and used by the programs to
+     look up programs.
+
+  4. The definitions in `texmf.cnf' are changed into the form of C
+     `#define''s, producing `paths.h'. These values will be the
+     compile-time defaults; they are not used unless no `texmf.cnf' file
+     can be found at runtime.
+
+     (That's a partial lie: the compile-time defaults are what extra
+     `:''s in `texmf.cnf' expand into; but the paths as distributed
+     have no extra `:''s, and there's no particular reason for them to.)
+
+
+  The purpose of this elaborate sequence is to avoid having the same
+information in more than one place. If you change the installation
+directories or top-level prefix before running `configure', those
+changes will propagate through the whole sequence. If you change the
+default paths in `texmf.cnf.in', those changes are propagated to the
+compile-time defaults.
+
+  Alternatively, you can ignore the whole mess and edit `texmf.cnf'
+after it is installed. Maybe even copying it into place beforehand so
+you can complete the installation, if TeX or Metafont is having trouble
+finding their input files.
+
+  Unfortunately, editing `Makefile.in' *does not work* in one common
+case--changing the `prefix' or `exec_prefix' variables. For these, you
+must use the `-prefix' or `-exec-prefix' options to `configure'.  *Note
+Running `configure' scripts: (autoconf)Running configure Scripts.
+(That's another partial lie: editing does work, as long as a program
+named `tex' is not in your `PATH'.)
+
+  *Note TeX directory structure: TeX directory structure, for a
+description of some ways to arrange the TeX library files, and some
+features of the distributed paths that may not be obvious.  The file
+`kpathsea/HIER' is a copy of that section.
+
+  The Make definitions are all repeated in several `Makefile''s; but
+changing the top-level `Makefile' should suffice, as it passes down all
+the variable definitions, thus overriding the submakes. (The
+definitions are repeated so you can potentially run Make in the
+subdirectories.)
+
+Common problems
+===============
+
+  Some common problems with compilation, linking, or execution are
+described below.
+
+Unable to find files
+--------------------
+
+  If a program complains it cannot find fonts (or other input files),
+any of several things might be wrong:
+
+   * You don't have the fonts (or whatever) installed. Nothing will
+     automatically generate TFM files or TeX and Metafont sources for
+     you (by default). *Note Obtaining Web2c: (web2c)Obtaining Web2c.
+
+     You can, however, configure TeX and Metafont to run a script to
+     generate these input files, if you have (or write) such scripts.
+     *Note `MakeTeX'... invocation: (web2c)MakeTeX... invocation.
+
+   * You have (perhaps unknowingly) told Kpathsea to use search paths
+     that don't reflect where the files actually are. One common cause
+     is having environment variables set, thus overriding what you
+     carefully set in `texmf.cnf'. *Note TeX environment variables: TeX
+     environment variables.
+
+   * Your files reside in a directory that is only pointed to via a
+     symbolic link, in a leaf directory.
+
+     Unfortunately, Kpathsea's subdirectory searching has a (congenital)
+     deficiency: If a directory D being searched for subdirectories
+     contains plain files and symbolic links to other directories, but
+     no true subdirectories, D will be considered a leaf directory,
+     i.e., the symbolic links will not be followed.  *Note Subdirectory
+     expansion::, for an explanation of why this happens.
+
+     You can work around this problem by creating an empty dummy
+     subdirectory in D. Then D will no longer be a leaf, and the
+     symlinks will be followed.
+
+     The directory immediately followed by the `//' in the path
+     specification, however, is always searched for subdirectories,
+     even if it is a leaf.  This is since presumably you would not have
+     asked for the directory to be searched for subdirectories if you
+     didn't want it to be.
+
+   * There is a bug in the library. *Note Reporting bugs::.
+
+  In any case, you may find the debugging options helpful in determining
+precisely where the fonts (or whatever) are being looked for. See the
+program's documentation for its debugging options, and also *note
+Debugging::..
+
+Slow path searching
+-------------------
+
+  If your program takes an excessively long time to find fonts or other
+input files, but does eventually succeed, here are some possible
+culprits:
+
+   * Most likely, you just have a lot of directories to search, and that
+     takes a noticeable time. The solution is to create and maintain a
+     separate `ls-R' file that lists all the files in your main TeX
+     hierarchy. *Note Filename database::.  (Kpathsea always uses `ls-R'
+     if it's present; there's no need to recompile or reinstall any of
+     the programs.)
+
+   * Your recursively-searched directories (e.g.,
+     `/usr/local/lib/tex/fonts//'), contain a mixture of files and
+     directories. This prevents Kpathsea from using a useful
+     optimization (*note Subdirectory expansion::.).
+
+     It is best to have only directories (and perhaps a `README') in the
+     upper levels of the directory structure, and it's very important
+     to have *only* files, and no subdirectories, in the directories
+     where the dozens of TFM, PK, or whatever files reside.
+
+   * Finally, one simple-to-fix (but unlikely) cause: If you recursively
+     search `$HOME' or `~', and you are running as `root', you will
+     search every directory on the system.  This typically takes quite
+     some time!
+
+  In any case, you may find the debugging options helpful in determining
+precisely when the disk or network is being pounded. *Note Debugging::,
+and also see the program's documentation.
+
+`XtInherit'
+-----------
+
+  On DEC OSF/1 1.x systems, the loader has a bug that manifests itself
+in the following error (all on one line, but for the sake of the paper
+width it's broken here):
+
+     xdvik/xdvi: /sbin/loader: Fatal Error: search_for_undefineds:
+          symbol _XtInherit should not have any relocation entry
+
+According to Michael Rickabaugh `<mjr@quarry.enet.dec.com>':
+
+     This is a bug fixed in DEC OSF/1 2.0.
+     
+     If you know how, installing `/sbin/loader' from a 2.0 system onto a
+     1.3 system will work.  Make sure that `/usr' is *not* mounted
+     when you do this.  (If you forget about umounting `/usr', it is
+     possible most of your filesystems will become corrupted.)
+     
+     Otherwise, I suggest getting a hold of a 2.0 CD and running
+     `/usr/sbin/installupdate'.
+
+  Alternatively, you may be able to use the freely available X11
+libraries that come with the MIT distribution (on `ftp.x.org', for
+example).
+
+  Linking statically, perhaps only with some of the X libraries, may
+also work.  (if you find the definitive workaround, please let me know.)
+
+`wchar_t'
+---------
+
+  The upshot of all the following is that if you get error messages
+regarding `wchar_t', try defining `NO_FOIL_X_WCHAR_T' (for Web2c) or
+`FOIL_X_WCHAR_T' (for everything else).
+
+  `wchar_t' has caused infinite trouble. None of my code ever uses
+`wchar_t'; all I want to do is include X header files and various
+system header files, possibly compiling with GCC. This seems an
+impossible task!
+
+  The X11 header `<Xlib.h>' and GCC's `<stddef.h>' have conflicting
+definitions for wchar_t.
+
+  The particulars: `<X11/Xlib.h>' from MIT X11R5 defines `wchar_t' if
+`X_WCHAR' is defined, which is defined if `X_NOT_STDC_ENV' is defined,
+and we define *that* if `STDC_HEADERS' is not defined (`configure'
+decides if STDC_HEADERS gets defined).  But when compiling with gcc on
+SunOS 4.1.x, `STDC_HEADERS' is not defined (`string.h' doesn't declare
+the `mem'* functions), so we do get X's `wchar_t'--and we also get
+gcc's `wchar_t' from its `<stddef.h>'.  Conflict.
+
+  On the other hand, SunOS 4.1.1 with some other X configurations
+actually needs GCC to define `wchar_t', and fails otherwise.
+
+  My current theory is to define `wchar_t' to a nonsense symbol before
+the X include files are read; that way its definition (if any) will be
+ignored by other system include files.  Going along with that, define
+`X_WCHAR' to tell X not to use `<stddef.h>', that we've already
+included, but instead to make its own definition.
+
+  But this is not the end of the story. The X11 include files
+distributed with DG/UX 5.4.2 for the Aviion have been modified to
+include `<_int_wchar_t.h>' if `X_WCHAR', so our `#define' will not have
+any typedef to change--but the uses of `wchar_t' in the X include files
+will be changed to reference this undefined symbol. So there's nothing
+to foil in this case. I don't know how to detect this automatically, so
+it's up to you to define `NO_FOIL_X_WCHAR_T' yourself.
+
+`ShellWidgetClass'
+------------------
+
+  This section is adapted from question 47 from the
+`comp.sys.sun.admin' FAQ.
+
+  If you are linking with Sun's OpenWindows libraries in SunOS 4.1.x,
+you may get undefined symbols `_get_wmShellWidgetClass' and
+`_get_applicationShellWidgetClass'. This problem does not arise with
+the standard MIT libraries under SunOS.
+
+  The cause is bugs in the `Xmu' shared library as shipped from Sun.
+There are several fixes:
+
+   * Get the Openwindows patches that apply to this problem.
+
+   * Statically link the `Xmu' library into the executable.
+
+   * Avoid using `Xmu' at all. For this last, if you are compiling
+     Metafont, *note Online Metafont graphics: (Web2c)Online Metafont
+     graphics.. If you are compiling Xdvi, see the `-DNOTOOL' option in
+     `xdvik/INSTALL'.
+
+   * Ignore the errors. The binary runs fine regardless.
+
+  Here is the information for getting the two patches:
+
+     Patch ID: 100512-02
+     Bug ID's: 1086793, 1086912, 1074766
+     Description: 4.1.x OpenWindows 3.0 `libXt' jumbo patch
+     
+     Patch ID: 100573-03
+     Bug ID: 1087332
+     Description: 4.1.x OpenWindows 3.0 undefined symbols when using shared
+     `libXmu'.
+
+  The way to statically link with `libXmu' depends on whether you are
+using a Sun compiler (e.g., `cc') or `gcc'. If the format, alter the
+`x_libs' make variable to include
+
+     -Bstatic -lXmu -Bdynamic
+
+  If you are using `gcc', include `-static' in `LDFLAGS'; this will
+link all libraries statically. If you want to link only `Xmu'
+statically and everything else dynamically, you have to do it by hand:
+run `gcc -v', grab the `ld' line, and add the `-B''s given above around
+`-lXmu'.
+
+  The reason is that gcc moves all linker options to the front of the
+`ld' command line.  So you can't specify different options for
+different libraries.  When I reported this to the GCC maintainers, the
+reply was that they would happily merge in the changes, but they didn't
+want to take the time to do it themselves.
+
+Pointer combination warnings
+----------------------------
+
+  When compiling with old C compilers, you may get some warnings about
+"illegal pointer combinations".  These are spurious; just ignore them.
+I decline to clutter up the source with casts to get rid of them.
+
+  In general, if you have trouble with a system C compiler, I advise
+trying the GNU C compiler. (And vice versa, unfortunately; but in that
+case I also recommend reporting a bug to the GCC bug list.)
+
+Shared library
+==============
+
+  You can compile Kpathsea as a shared library.  The advantage in doing
+this is that the different executables can then share the code,
+decreasing memory usage.  (The other advantage in general of shared
+libraries is that it's possible to update the library and programs
+independently.  But since the Kpathsea interface is not and can not be
+frozen, that doesn't apply here.)
+
+  Under Solaris, use `-K pic -xstrconst' if you compile with a Sun
+compiler, `-fpic' if you use GCC.  Also add `-L$(LIBDIR) -R$(LIBDIR)'
+to `LDFLAGS' when you link the binaries, so that the library can be
+found, and users do not have set `LD_LIBRARY_PATH'.
+
+  (If you know how to make Kpathsea shared on other systems, please
+send a message to the bug address in the next section.)
+
+Reporting bugs
+==============
+
+  If you encounter problems, please report them to `tex-k@cs.umb.edu'.
+Include the version number of the library, the system you are using, and
+enough information to reproduce the bug in your report.  To get on this
+mailing list yourself, email `tex-k-request@cs.umb.edu' with a message
+whose body contains a line
+     subscribe YOU@YOUR.PREFERRED.ADDRESS
+
+  To avoid wasted effort and time (both mine and yours), I strongly
+advise applying the principles given in the GNU C manual (*note
+Reporting Bugs: (gcc)Bugs.) to your bug reports.
+
+  Please also report bugs in this documentation--not only factual
+errors, but unclear explanations, typos, wrong fonts, ...

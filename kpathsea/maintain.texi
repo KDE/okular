@@ -1,0 +1,500 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@setfilename maintain.info
+@settitle Information For Maintainers of GNU Software
+@c For double-sided printing, uncomment:
+@c @setchapternewpage odd
+@c UPDATE THIS DATE WHENEVER YOU MAKE CHANGES!
+@set lastupdate 08 November 1994
+@c %**end of header
+
+@ifinfo
+@format
+START-INFO-DIR-ENTRY
+* Maintaining: (maintain).        Maintaining GNU software.
+END-INFO-DIR-ENTRY
+@end format
+@end ifinfo
+
+@setchapternewpage off
+
+@ifinfo
+Information for maintainers of GNU software.
+Copyright (C) 1992, 1993, 1994 Free Software Foundation, Inc.
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+@ignore
+Permission is granted to process this file through TeX and print the
+results, provided the printed document carries copying permission
+notice identical to this one except for the removal of this paragraph
+(this paragraph not being relevant to the printed manual).
+@end ignore
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation approved
+by the Free Software Foundation.
+@end ifinfo
+
+@titlepage
+@title Information For Maintainers of GNU Software
+@author Richard Stallman
+@author last updated @value{lastupdate}
+@page
+
+@vskip 0pt plus 1filll
+Copyright @copyright{} 1992, 1993, 1994 Free Software Foundation, Inc.
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation approved
+by the Free Software Foundation.
+@end titlepage
+
+@ifinfo
+@node Top, Preface, (dir), (dir)
+@top Version
+
+Last updated @value{lastupdate}.
+@end ifinfo
+
+@menu
+* Preface::
+* Legal Matters::
+* Clean Ups::
+* Mail::
+* Old Versions::
+* Archives::
+* Distributions::
+@end menu
+
+@node Preface
+@chapter About This Document
+
+This file contains guidelines and advice for someone who is the
+maintainer of a GNU program on behalf of the GNU project.  Anyone
+can change GNU software, but there's no need to pay attention to
+these guidelines unless you are maintaining a version for
+widespread distribution.
+
+Corrections or suggestions regarding this document should be sent to
+@code{gnu@@prep.ai.mit.edu}.  If you make a suggestion, please include a
+suggested new wording for it; our time is limited.  We prefer a context
+diff to the @file{maintain.texi} file, but if you don't have that file,
+please mail your suggestion anyway.
+
+This release of the GNU Maintenance Instructions was last updated
+@value{lastupdate}.
+
+@node Legal Matters
+@chapter Legal Matters
+
+When incorporating changes from other people, make sure to follow the
+correct procedures.  Doing this ensures that the FSF has the legal right
+to distribute and defend GNU software.
+
+@menu
+* Copyrights::
+* Recording Changes::
+@end menu
+
+@node Copyrights
+@section Copyrights
+
+For the sake of registering the copyright on later versions of the
+software, you need to keep track of each person who makes significant
+changes.  A change of ten lines or so, or a few such changes, in a 
+large program is not significant.
+
+@strong{Before} incorporating significant changes, make sure that the
+person has signed copyright papers and that the Foundation has
+received and signed them.
+
+You can tell the person what papers to sign by email.  For large
+changes, ask for an assignment.  Send the person a copy of
+@file{/gd/gnuorg/assign.changes}, but first, go to the second page
+and insert the person's name and the name of the program involved in
+place of @samp{NAME OF PERSON} and @samp{NAME OF PROGRAM}.  Do this
+before sending, because otherwise the person might sign without
+noticing them.  Then the papers would be useless.
+
+For medium to small changes, ask for a disclaimer.  Use the file
+@file{/gd/gnuorg/disclaim.changes}.
+
+To check whether papers have been received, look in
+@file{/gd/gnuorg/copyright.list}.  If you can't look there directly,
+@code{fsf-records@@prep.ai.mit.edu} can check for you, and can also
+check for papers that are waiting to be entered and inform you
+when expected papers arrive.
+
+You can also send the person @file{/gd/gnuorg/conditions.text}, which
+explains his options (assign vs. disclaim) and their consequences.
+
+@node Recording Changes
+@section Recording Changes
+
+@strong{Keep records of which portions were written by whom.}
+
+These records don't need to be as detailed as a change log.  They don't
+need to distinguish work done at different times, only different people.
+
+They should say which files or functions were written by each person,
+and which files or functions were revised by each person.  They don't
+need to say what the purpose of the change was.  The Register of
+Copyrights doesn't care what the program does.
+
+For example, this would describe an early version of GAS:
+
+@display
+Dean Elsner   first version of all files except gdb-lines.c and m68k.c.
+Jay Fenlason  entire files gdb-lines.c and m68k.c, most of app.c,
+  extensive changes in messages.c, input-file.c, write.c,
+  revisions elsewhere.
+@end display
+
+Please keep these records in a file named @file{AUTHORS} in the source
+directory for the program itself.
+
+@node Clean Ups
+@chapter Cleaning Up Changes
+
+If someone sends you changes which are ugly and will make the program
+harder to understand and maintain in the future, such as a port to
+another operating system containing ad hoc conditionals, don't
+hesitate to ask the person to clean up his changes before you merge
+them.
+
+Since the amount of work we do is constant in any case, the more work
+we get other people to do, the faster GNU will advance.
+
+If the person will not or can not make the changes clean enough, then
+say that you can't afford to merge them.  Invite him to distribute
+his changes himself, or to find other people who can make them clean
+enough for us to maintain.
+
+The only reason to do these cleanups yourself is if (1) it is easy
+enough that it is less work than telling the author what to clean up,
+or (2) users will greatly appreciate the improvement, and you would
+almost write it yourself if you had time.
+
+The GNU Coding Standards are a good thing to send people who have to
+clean up C programs (@pxref{Top, , Contents, standards, GNU Coding
+Standards}).  The Emacs Lisp manual contains an appendix that gives
+coding standards for Emacs Lisp programs; it is good to urge authors to
+read it (@pxref{Tips, , Tips and Standards, elisp, The GNU Emacs Lisp
+Reference Manual}).
+
+@node Mail
+@chapter Dealing With Mail
+
+Once a program is in use, you will start getting bug reports.  Some
+GNU programs have their own special lists for sending bug reports.
+For miscellaneous programs that don't have their own lists, we use a
+catch-all list, @code{bug-gnu-utils@@prep.ai.mit.edu}.  Talk with
+@code{gnu@@prep.ai.mit.edu} to arrange to be added to the proper list
+for your program.
+
+When you receive bug reports, keep in mind that the main purpose of
+the bug reports is to enable you to improve the next version of the
+program.  Helping individuals is only secondary.  So you don't
+need to give a substantial response unless you have a reason to
+(for example, to ask for more information, or to ask the user to
+test a fix).  But it is good to respond to the rest of the bug
+reports with just ``Thanks.''  That is quick and tells the user that
+the bug report was useful.
+
+As a practical matter, any time you spend helping individuals beyond
+what is necessary for you, takes time away from maintaining the program.
+While this may seem ``friendly'' and ``helpful,'' actually it is
+counterproductive.  If you help one person when you could instead have
+helped thousands, the world is worse off.
+
+@node Old Versions
+@chapter Recording Old Versions
+
+It is very important to keep backup files of all source files of GNU.
+You can do this using RCS if you like.  The easiest way to use RCS is
+via the Version Control library in Emacs; @ref{Concepts of VC, ,
+Concepts of Version Control, emacs, The GNU Emacs Manual}.
+
+Alternatively, you can keep backup files.
+
+@menu
+* Backup Files::
+* Deleting Backup Files::
+@end menu
+
+@node Backup Files
+@section Backup Files
+
+Emacs makes a backup file by renaming the old source file to a new
+name.  This means that if the file is also pointed to by a
+distribution directory, the distribution directory continues to point
+to the same version it always did---the right thing.
+
+We want to keep more than one backup for all GNU sources.  So, if you
+are going to edit GNU sources, @emph{make certain} to put
+@example
+(setq version-control t)
+@end example
+@noindent
+into your @file{.emacs} file, so that Emacs always creates numbered
+backup files.
+
+Using Emacs backup files works as long as people always make changes
+with Emacs.  If you change the file in some other way, and use
+@code{cp}, @code{ftp}, or @code{tar} to install it, you will
+@emph{overwrite} the old version and fail to make a backup.  Don't do
+that!
+
+If you want to make a change to a source file with something other
+than Emacs, you can write the changed file to another name, and use
+@kbd{C-x C-w} in Emacs to write it under the real name.  This makes the
+backup file properly.
+
+You can use GNU @code{cp} or @code{mv} to install changed files if you
+give them the @samp{--backup} (or, equivalently, @samp{-b}) option; then
+they make backup copies the same way that Emacs does.  You should also
+use the @samp{--version-control=t} option, or, alternately, first
+@example
+export VERSION_CONTROL=t
+@end example
+@noindent
+(or the @code{csh} equivalent); this makes GNU @code{cp} and @code{mv}
+create numbered backup files instead of a single backup file with a
+@samp{~} appended to the filename.  For installing many changed files,
+you can use shell wildcards and also give GNU @code{cp} or @code{mv} the
+@samp{--update} (@samp{-u}) option, which only copies (or moves) files
+that have been modified more recently than the existing destination
+files, and the @samp{--verbose} (@samp{-v}) option, which prints the
+names of the files that are actually copied (or moved).
+
+Before you use @code{mv} or @code{cp} in this way, @emph{make sure it is
+the GNU version}.  Do @samp{which mv} (in @code{csh}) or @samp{type mv}
+(in @code{bash}) to verify you are not getting @file{/bin/mv} (or
+likewise for @code{cp}).  Or just type @samp{cp} or @samp{mv} and look
+at the usage message.
+
+@node Deleting Backup Files
+@section Deleting Backup Files
+
+Always answer no when Emacs offers to delete backup files automatically.
+The way to delete them is by hand, using @kbd{M-x dired}.
+
+When you decide which backup files to delete, it is good to keep one
+every couple of weeks or so, going back about 2 months.
+
+If there is a long gap between versions, because that file did not change
+during a long period of time, then keep the version before the gap
+even if it is 2 months old.  Pretend it is just 2 weeks older than the
+next kept version, so delete it when the next version is >= 6 weeks old.
+
+If the changes in a program have been simple, then you don't need to
+keep as many backup files.  Just one a month for 2 months is enough.
+
+If you have made big changes, keep the versions before and after the
+big change, until they are old enough.
+
+If you made several changes the same day, usually the last version written
+that day is best to keep.
+
+It is almost always right to keep the most recent backup version.
+
+@node Archives
+@chapter Archives
+
+For each program, you should keep a special magtape or cartridge as an
+archive.  Each time you release a new version, @code{dd} the tar file onto
+the end of the tape.  Keep a list of versions on the tape's paper
+label, and add to it each time you add to the tape.
+
+For cartridges, you can type
+@example
+mt -f /dev/nrst8 eom
+@end example
+@noindent
+to go straight to the end of the data on the tape.
+
+For reel-to-reel tapes, there is no automated way to go to the end of
+the data on the tape.  You have to count the number of files (based
+on the written label), and space forward over them with @samp{mt fsf}.
+
+To be safe, it is important to check your count.  If the count is @var{n},
+then do:
+@example
+mt -f /dev/nrmt8 fsf @var{n}-1
+@end example
+@noindent
+This puts you at the beginning of the last existing tar file.
+
+Then do
+@example
+tar tf /dev/nrmt8
+@end example
+@noindent
+to list that tar file.  If the version number appears in a directory
+name, which is a good idea, you can use this to verify that you have
+reached the tar file you wanted to reach.
+
+@kbd{C-c} the @code{tar} before it finishes; then do
+@example
+mt -f /dev/nrmt8 fsf
+@end example
+@noindent
+to skip past it and its end-of-file marker.
+
+To copy the new distribution file onto cartridge tape, do:
+@example
+dd if=@var{tar-file-name} of=/dev/nrst8 bs=102400
+@end example
+@noindent
+(This specifies a blocking factor of 200.)
+
+For reel-to-reel tape, do:
+@example
+dd if=@var{tar-file-name} of=/dev/nrmt8 bs=10240
+@end example
+@noindent
+(This specifies a blocking factor of 20.)
+
+When the tape gets full, put it aside permanently and start writing
+another.
+
+@node Distributions
+@chapter Distributions
+
+It is important to follow the GNU conventions when making GNU software
+distributions.
+
+@menu
+* Distribution tar Files::
+* Distribution Patches::
+* Distribution on prep::
+* Test Releases::
+@end menu
+
+@node Distribution tar Files
+@section Distribution tar Files
+
+The tar file for version @var{m}.@var{n} of program @code{foo} should be
+named @file{foo-@var{m}.@var{n}.tar}.  It should unpack into a
+subdirectory named @file{foo-@var{m}.@var{n}}.  Tar files should not
+unpack into files in the current directory, because this is inconvenient
+if the user happens to unpack into a directory with other files in it.
+
+Here is how the @file{Makefile} for Bison creates the tar file.
+This method is good for other programs.
+
+@example
+dist: bison.info
+        echo bison-`sed -e '/version_string/!d' \
+          -e 's/[^0-9.]*\([0-9.]*\).*/\1/' -e q version.c` > .fname
+        -rm -rf `cat .fname`
+        mkdir `cat .fname`
+        dst=`cat .fname`; for f in $(DISTFILES); do \
+           ln $(srcdir)/$$f $$dst/$$f || @{ echo copying $$f; \
+             cp -p $(srcdir)/$$f $$dst/$$f ; @} \
+        done
+        tar --gzip -chf `cat .fname`.tar.gz `cat .fname`
+        -rm -rf `cat .fname` .fname
+@end example
+
+Source files that are symbolic links to other file systems cannot be
+installed in the temporary directory using @code{ln}, so use @code{cp}
+if @code{ln} fails.
+
+@node Distribution Patches
+@section Distribution Patches
+
+If the program is large, it is useful to make a set of diffs for each
+release, against the previous important release.
+
+At the front of the set of diffs, put a short explanation of which
+version this is for and which previous version it is relative to.
+Also explain what else people need to do to update the sources
+properly (for example, delete or rename certain files before
+installing the diffs).
+
+The purpose of having diffs is that they are small.  To keep them
+small, exclude files that the user can easily update.  For example,
+exclude info files, DVI files, tags tables, output files of Bison or
+Flex.  In Emacs diffs, we exclude compiled Lisp files, leaving it up
+to the installer to recompile the patched sources.
+
+When you make the diffs, each version should be in a directory suitably
+named---for example, @file{gcc-2.3.2} and @file{gcc-2.3.3}.  This way,
+it will be very clear from the diffs themselves which version is which.
+
+If you use GNU @code{diff} to make the patch, use the options
+@samp{-rc2P}.  That will put any new files into the output as ``entirely
+different.''
+
+If the distribution has subdirectories in it, then the diffs probably
+include some files in the subdirectories.  To help users install such
+patches reliably, give them precise directions for how to run patch.
+For example, say this:
+
+@display
+To apply these patches, cd to the main directory of the program
+and then use `patch -p1'.   `-p1' avoids guesswork in choosing
+which subdirectory to find each file in.
+@end display
+
+It's wise to test your patch by applying it to a copy of the old
+version, and checking that the result exactly matches the new version.
+
+@node Distribution on prep
+@section Distribution on @code{prep}
+
+Only the latest version of any program needs to be on @code{prep}.  Being an
+archive of old versions is not the function of @code{prep}.
+
+Diffs are another matter.  Since they are much smaller than
+distribution files, it is good to keep the diffs around for quite a
+while.
+
+@node Test Releases
+@section Test Releases
+
+When you release a greatly changed new major version of a program,
+you might want to do so as a beta test release.
+
+Once a program gets to be widely used and people expect it to work
+solidly, it is a good idea to do pretest releases before each ``real''
+release.  This means that you make a tar file, but send it only to a
+group of volunteers that you have recruited.  (Use a suitable GNU
+mailing list/newsgroup to recruit them.)
+
+One thing that you should never do is to release a distribution which
+is considered a pretest or beta test but which contains the version
+number for the planned real release.  Many people will look only at
+the version number (in the tar file name, in the directory name that
+it unpacks into, or wherever they can find it) to determine whether a
+tar file is the latest version.  People might look at the test release
+in this way and mistake it for the real release.  Therefore, always
+change the number when you make a new tar file.
+
+If you are about to release version 4.6 but you want to do a pretest
+or beta test first, call it 4.5.90.  If you need a second pretest,
+call it 4.5.91, and so on.
+
+@contents
+
+@bye

@@ -1,0 +1,26 @@
+This program, xdvik, was modified by kb@cs.umb.edu from Paul
+Vojta's xdvi distribution for common path searching, GNU-style
+configuration, etc.  Send bug reports to tex-k@cs.umb.edu, not to Paul.
+See the README for more info.
+
+Here are the credits for the original xdvi program:
+
+	This program is the combined work of many people, including but not
+restricted to:
+	Eric Cooper, CMU
+	Bob Scheifler, MIT LCS
+	Paal Kvamme, Norwegian Institute of Technology
+	H\aa vard Eidnes, Norwegian Institute of Technology
+	Mark Eichin, MIT SIPB
+	Paul Vojta, UC Berkeley
+	Jeffrey Lee, U of Toronto
+	Donald Richardson, Clarkson Univ.
+
+In addition to the various comp.sources.x archives, current versions of this
+program (the original xdvi, not xdvik) can also be obtained via
+anonymous ftp from the following location:
+	export.lcs.mit.edu	[18.30.0.212]	file contrib/xdvi.tar.Z
+To ease the load on expo, you may also check other X archives, for example:
+	gatekeeper.dec.com	[16.1.0.2]	file pub/X11/contrib/xdvi.shar.Z
+
+Paul Vojta is now the primary maintainer.

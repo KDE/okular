@@ -270,45 +270,42 @@ void PageView::notifyPixmapChanged( int pageNumber )
 
 //BEGIN widget events
 #include <kdebug.h>
-void PageView::drawContents( QPainter * p, int cx, int cy, int cw, int ch )
+void PageView::viewportPaintEvent( QPaintEvent * pe )
 {
-    QRect r = QRect( cx, cy, cw, ch );
-    if ( !r.isValid() )
+    // create the rect into contents from the clipped screen rect
+    QRect contentsRect = pe->rect().intersect( viewport()->rect() );
+    contentsRect.moveBy( contentsX(), contentsY() );
+    if ( !contentsRect.isValid() )
         return;
+
+    // create the screen painter. a pixel painted ar contentsX,contentsY
+    // appears to the top-left corner of the scrollview.
+    QPainter screenPainter( viewport(), true );
+    screenPainter.translate( -contentsX(), -contentsY() );
+
+    /*
+    const QRegion & re = pe->region();
+    QMemArray<QRect> transparentRects = re.rects();
+    for ( uint i = 0; i < transparentRects.count(); i++ )
+    {
+        QRect r1 = transparentRects[i];
+        kdDebug() << r1 << endl;
+    }
+    */
     //QRegion remaining( r );
 
-    //kdDebug() << "repaint: " << r << endl;
-
-    if ( !Settings::tempUseComposite() )
-    {
-        // 1) clear bg
-        p->fillRect( r, Qt::gray );
-        // 2) paint items
-        paintItems( p, r );
-        // 5) paint opaque overlays
-        if ( !d->mouseSelectionRect.isNull() )
-        {
-            //p->save();
-            p->setPen( palette().active().highlight().dark(110) );
-            //p->setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
-            p->drawRect( d->mouseSelectionRect.normalize() );
-            //p->restore();
-        }
-        p->setPen( Qt::red );
-        p->drawRect( r );
-    }
-    else
+    if ( Settings::tempUseComposting() )
     {
         // create pixmap and open a painter over it
-        QPixmap doubleBuffer( r.size() );
+        QPixmap doubleBuffer( contentsRect.size() );
         QPainter pixmapPainter( &doubleBuffer );
-        pixmapPainter.translate( -r.left(), -r.top() );
+        pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
         // gfx operations on pixmap (rect {left,top} is pixmap {0,0})
         // 1) clear bg
-        pixmapPainter.fillRect( r, Qt::gray );
+        pixmapPainter.fillRect( contentsRect, Qt::gray );
         // 2) paint items
-        paintItems( &pixmapPainter, r );
+        paintItems( &pixmapPainter, contentsRect );
         // 3) pixmap manipulate
         // 4) paint selections
         if ( !d->mouseSelectionRect.isNull() )
@@ -321,11 +318,29 @@ void PageView::drawContents( QPainter * p, int cx, int cy, int cw, int ch )
         }
         // 5) paint overlays
         pixmapPainter.setPen( Qt::blue );
-        pixmapPainter.drawRect( r );
+        pixmapPainter.drawRect( contentsRect );
 
         // finish painting and draw contents
         pixmapPainter.end();
-        p->drawPixmap( r.left(), r.top(), doubleBuffer );
+        screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
+    }
+    else    // not using COMPOSTING
+    {
+        // 1) clear bg
+        screenPainter.fillRect( contentsRect, Qt::gray );
+        // 2) paint items
+        paintItems( &screenPainter, contentsRect );
+        // 5) paint opaque overlays
+        if ( !d->mouseSelectionRect.isNull() )
+        {
+            //screenPainter.save();
+            screenPainter.setPen( palette().active().highlight().dark(110) );
+            //screenPainter.setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
+            screenPainter.drawRect( d->mouseSelectionRect.normalize() );
+            //screenPainter.restore();
+        }
+        screenPainter.setPen( Qt::red );
+        screenPainter.drawRect( contentsRect );
     }
 }
 

@@ -3,9 +3,14 @@ INCLUDES= -I$(top_srcdir)/kviewshell $(all_includes) $(LIBFREETYPE_CFLAGS)
 # claim, which subdirectories you want to install
 SUBDIRS = . pix
 
+bin_PROGRAMS = kdvi
+
 # you can add here more. This one gets installed
 kde_module_LTLIBRARIES= kdvipart.la
 noinst_PROGRAMS = squeeze
+noinst_LTLIBRARIES = ../kviewshell/libifaces.la
+
+libifaces_la_SOURCES = ../kviewshell/kviewpart_iface.cpp
 
 # just to make sure, automake makes them
 METASOURCES = AUTO
@@ -33,6 +38,10 @@ squeeze_SOURCES	= squeeze.c
 
 KDE_OPTIONS = nofinal
 
+kdvi_SOURCES = main.cpp ../kviewshell/kviewshell.cpp
+kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kdvi_LDADD = ../kviewshell/libifaces.la -lkparts
+
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = dvi.h dviwin.h xdvi.h 
 
@@ -46,10 +55,8 @@ xdg_apps_DATA = kdvi.desktop
 tip_DATA = tips
 tipdir = $(kde_datadir)/kdvi
 
-bin_SCRIPTS = kdvi
-
 partdir = $(kde_datadir)/kdvi
-part_DATA = kdvi_part.rc
+part_DATA = ../kviewshell/kviewshell.rc kdvi_part.rc
 
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@

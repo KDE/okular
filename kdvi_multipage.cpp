@@ -129,9 +129,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   exportTextAction   = new KAction(i18n("Text..."), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
-  new KAction(i18n("About KDVI"), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
-  new KAction(i18n("KDVI Handbook"), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
-  new KAction(i18n("Report Bug in KDVI..."), 0, this, SLOT(bugform()), actionCollection(), "bug_dvi");
 
   setXMLFile("kdvi_part.rc");
 
@@ -383,64 +380,6 @@ void KDVIMultiPage::addConfigDialogs(KConfigDialog* configDialog)
   configDialog->setHelp("preferences", "kdvi");
   
   connect(configDialog, SIGNAL(settingsChanged()), this, SLOT(preferencesChanged()));
-}
-
-
-void KDVIMultiPage::about()
-{
-  KAboutDialog *ab = new KAboutDialog(KAboutDialog::AbtAppStandard,
-                      i18n("the KDVI plugin"),
-                      KAboutDialog::Close, KAboutDialog::Close);
-
-  ab->setProduct("kdvi", "1.2", QString::null, QString::null);
-  ab->addTextPage (i18n("About"),
-           i18n("A previewer for Device Independent files (DVI files) produced "
-            "by the TeX typesetting system.<br>"
-            "Based on kdvi 0.4.3 and on xdvik, version 18f.<br><hr>"
-            "For latest information, visit "
-            "<a href=\"http://devel-home.kde.org/~kdvi\">KDVI's Homepage</a>."),
-           true);
-  ab->addTextPage (i18n("Authors"),
-           i18n("Stefan Kebekus<br>"
-            "<a href=\"http://www.mi.uni-koeln.de/~kebekus\">"
-            "http://www.mi.uni-koeln.de/~kebekus</a><br>"
-            "<a href=\"mailto:kebekus@kde.org\">kebekus@kde.org</a><br>"
-            "Current maintainer of kdvi. Major rewrite of version 0.4.3."
-            "Implementation of hyperlinks.<br>"
-            "<hr>"
-            "Philipp Lehmann<br>"
-            "testing and bug reporting"
-            "<hr>"
-            "Markku Hinhala<br>"
-            "Author of kdvi 0.4.3"
-            "<hr>"
-            "Nicolai Langfeldt<br>"
-            "Maintainer of xdvik"
-            "<hr>"
-            "Paul Vojta<br>"
-            " Author of xdvi<br>"
-            "<hr>"
-            "Many others. Really, lots of people who were involved in kdvi, xdvik and "
-            "xdvi. I apologize to those who I did not mention here. Please send me an "
-            "email if you think your name belongs here."),
-           true);
-
-  ab->setMinimumWidth(500);
-  ab->show();
-}
-
-
-void KDVIMultiPage::bugform()
-{
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.1", 0, 0, 0, 0, 0);
-  KBugReport *kbr = new KBugReport(0, true, kab );
-  kbr->show();
-}
-
-
-void KDVIMultiPage::helpme()
-{
-  kapp->invokeHelp( "", "kdvi" );
 }
 
 
@@ -763,13 +702,6 @@ void KDVIMultiPage::showTip(void)
 void KDVIMultiPage::showTipOnStart(void)
 {
   KTipDialog::showTip(scrollView(), "kdvi/tips");
-}
-
-
-void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )
-{
-  if (event->activated() && url().isEmpty())
-    emit setWindowCaption( i18n("KDVI") );
 }
 
 

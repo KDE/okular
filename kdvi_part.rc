@@ -27,11 +27,7 @@
  </Menu>
 
  <Menu name="help"><text>Help</text>
-  <Action name="help_tipofday"/>
-  <Separator/>
-  <Action name="help_dvi"/>
-  <Action name="about_kdvi"/>
-  <Action name="bug_dvi"/>
+  <Action name="help_tipofday" group="help_top"/>
  </Menu>
 </MenuBar>
 

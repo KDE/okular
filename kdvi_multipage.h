@@ -115,9 +115,6 @@ protected:
   //before the timerEvent function.
   void timerEvent( QTimerEvent *e );
 
-  // Set initial window caption
-  void guiActivateEvent( KParts::GUIActivateEvent * event );
-
   virtual void reload();
 
 protected slots:
@@ -126,11 +123,8 @@ protected slots:
   void doExportText();
   void doSelectAll();
   void doEnableWarnings();
-  void about();
-  void helpme();
-  void bugform();
   void preferencesChanged();
-  
+
   void contentsMovingInScrollView(int x, int y);
 
   /** Makes page # pageNr visible, selects the text Elements

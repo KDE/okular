@@ -122,6 +122,7 @@ void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width
                 h = (int)( m_sBottom * height / m_height ) - y;
             if ( w > 0 && h > 0 )
             {
+                // setRasterOp is no more on Qt4 find an alternative way of doing this
                 p->setBrush( Qt::SolidPattern );
                 p->setPen( QPen( Qt::black, 1 ) ); // should not be necessary bug a Qt bug makes it necessary
                 p->setRasterOp( Qt::NotROP );

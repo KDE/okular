@@ -31,7 +31,7 @@
 // local includes
 #include "generator_pdf.h"
 #include "gp_outputdev.h"
-#include "core/document.h" //for PAGEVIEW_ID
+#include "core/observer.h" //for PAGEVIEW_ID
 #include "core/page.h"
 #include "conf/settings.h"
 

@@ -15,6 +15,7 @@
 
 #include "marklist.h"
 #include <qfile.h>
+#include <qfileinfo.h>
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -93,8 +94,9 @@ void Print::rangeToggled( bool on )
 void Print::okPressed()
 {
   QString cmd;
-	
-  cmd = "dvips -q -f";
+  QFileInfo finfo(ifile);
+
+  cmd = QString("cd %1; dvips -q -f").arg(KShellProcess::quote(finfo.dirPath(true)));
 
   if ( printReverse->isOn() )
     cmd += " -r";
@@ -148,7 +150,7 @@ void Print::okPressed()
   }
   
   if ( printdest == 1 )
-    cmd += QString(" > ") + printFileName->text();
+    cmd += QString(" > ") + KShellProcess::quote(printFileName->text());
   else {
     cmd += QString(" | ") + spooler;
     if ( printdest > 1 )

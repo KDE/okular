@@ -40,7 +40,7 @@ class SearchWidget : public QHBox
 
     private slots:
         void slotTextChanged( const QString & text );
-        void slotChangeCase( int index );
+        void slotCaseChanged( int index );
 };
 
 #endif

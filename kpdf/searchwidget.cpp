@@ -9,7 +9,6 @@
 
 // qt/kde includes
 #include <qtooltip.h>
-//#include <qiconset.h>
 #include <qapplication.h>
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -40,18 +39,22 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     connect( m_clearButton, SIGNAL(clicked()), m_lineEdit, SLOT(clear()) );
     QToolTip::add( m_lineEdit, i18n( "Enter at least 3 letters to filter pages" ) );
 
-    // change case button and menu
-/*    KToolBarButton * search = new KToolBarButton( SmallIcon("find"), 2, this );
+    // change case button and menu (commented because there isn't enough space)
+#if 0
+    KToolBarButton * search = new KToolBarButton( SmallIcon("find"), 2, this );
     m_caseMenu = new KPopupMenu( search );
     m_caseMenu->insertItem( i18n("Case Insensitive"), 1 );
     m_caseMenu->insertItem( i18n("Case Sensitive"), 2 );
     m_caseMenu->setItemChecked( 1, true );
     connect( m_caseMenu, SIGNAL( activated(int) ), SLOT( slotChangeCase(int) ) );
     search->setPopup( m_caseMenu );
-*/
+#endif
+
     int sideLength = m_lineEdit->sizeHint().height();
     m_clearButton->setMinimumSize( QSize( sideLength, sideLength ) );
- //   search->setMinimumSize( QSize( sideLength, sideLength ) );
+#if 0
+    search->setMinimumSize( QSize( sideLength, sideLength ) );
+#endif
 }
 
 void SearchWidget::hideEvent( QHideEvent * )
@@ -73,7 +76,7 @@ void SearchWidget::slotTextChanged( const QString & text )
     }
 }
 
-void SearchWidget::slotChangeCase( int index )
+void SearchWidget::slotCaseChanged( int index )
 {
     bool newState = (index == 2);
     if ( newState != m_caseSensitive )

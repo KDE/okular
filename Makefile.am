@@ -24,7 +24,7 @@ libkdvi_la_SOURCES = kdvi_multipage.cpp \
 
 libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts kpathsea/libkpathsea.la \
-			$(top_srcdir)/kviewshell/libkmultipage.la
+			$(top_builddir)/kviewshell/libkmultipage.la
 
 
 

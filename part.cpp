@@ -129,9 +129,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	int iIdx = m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
 //	m_toolBox->setItemEnabled( iIdx, false );
 
-	QFrame * editFrame = new QFrame( m_toolBox );
+/*	QFrame * editFrame = new QFrame( m_toolBox );
 	int iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
-	m_toolBox->setItemEnabled( iIdx, false );
+	m_toolBox->setItemEnabled( iIdx, false );*/
 
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, m_document );

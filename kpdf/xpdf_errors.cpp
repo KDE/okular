@@ -353,4 +353,4 @@ QString XPDFErrorTranslator::translateError(const QString & originalError) {
 	}
 	
 	return (translationmap[originalError]);	
-};
+}

@@ -28,16 +28,11 @@ extern int n_files_left;
 #define	VF_ID_BYTE	202
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
-#define DEBUG_FONT 1
-
-void font::font_name_receiver(KProcess *, char *buffer, int buflen)
+void font::fontNameReceiver(QString fname)
 {
-  if (buflen < 3)
-    return;
-
   flags |= font::FONT_LOADED;
 
-  filename = QString::fromLocal8Bit(buffer, buflen-1);
+  filename = fname;
 
 #ifdef DEBUG_FONT
   kdDebug() << "FONT NAME RECEIVED:" << filename << endl;

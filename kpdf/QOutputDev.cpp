@@ -15,10 +15,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifdef __GNUC__
-#pragma implementation
-#endif
-
 #include "TextOutputDev.h"
 
 #include "QOutputDev.h"
@@ -79,3 +75,6 @@ bool QOutputDev::find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom,
 {
 	return m_text -> findText(s, len, startAtTop, stopAtBottom, startAtLast, stopAtLast, xMin, yMin, xMax, yMax);
 }
+
+
+

@@ -11,7 +11,6 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kpdf.pot
 
 # TODO: fix the code!
-KDE_OPTIONS = nofinal
 
 KDE_ICON = kpdf
 

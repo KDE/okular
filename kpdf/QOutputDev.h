@@ -15,9 +15,6 @@
 #ifndef QOUTPUTDEV_H
 #define QOUTPUTDEV_H
 
-#ifdef __GNUC__
-#pragma interface
-#endif
 
 #include "XRef.h"
 #include "SplashOutputDev.h"

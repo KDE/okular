@@ -15,10 +15,6 @@
 #ifndef QOUTPUTDEVPIXMAP_H
 #define QOUTPUTDEVPIXMAP_H
 
-#ifdef __GNUC__
-#pragma interface
-#endif
-
 #include "QOutputDev.h"
 
 #include <qimage.h>

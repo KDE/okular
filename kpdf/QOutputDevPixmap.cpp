@@ -16,10 +16,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifdef __GNUC__
-#pragma implementation
-#endif
-
 #include <GfxState.h>
 
 #include <kdebug.h>

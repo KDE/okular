@@ -128,7 +128,6 @@ Shell::setupActions()
   m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );
   m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
   m_popup = new KPopupMenu( this, "rmb popup" );
-  m_popup->insertTitle( i18n( "Full Screen Options" ) );
   m_fullScreenAction->plug( m_popup );
 }
 
@@ -144,9 +143,15 @@ Shell::saveProperties(KConfig* config)
 void Shell::slotShowMenubar()
 {
     if ( m_showMenuBarAction->isChecked() )
+    {
         menuBar()->show();
+        m_showMenuBarAction->unplug( m_popup );
+    }
     else
+    {
         menuBar()->hide();
+        m_showMenuBarAction->plug( m_popup );
+    }
 }
 
 
@@ -196,6 +201,7 @@ void Shell::slotUpdateFullScreen()
 {
     if( m_fullScreenAction->isChecked())
     {
+    	m_showMenuBarAction->unplug( m_popup );
 	menuBar()->hide();
 	toolBar()->hide();
         //todo fixme
@@ -211,7 +217,7 @@ void Shell::slotUpdateFullScreen()
     {
 	//kapp->removeEventFilter( m_fsFilter );
         //m_pdfpart->setFullScreen( false );
-	menuBar()->show();
+	slotShowMenubar();
 	toolBar()->show();
 	showNormal();
     }

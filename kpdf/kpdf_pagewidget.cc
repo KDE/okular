@@ -67,16 +67,16 @@ namespace KPDF
     PageWidget::contentsMousePressEvent(QMouseEvent* e)
     {
         double x, y;
+
+        if ( e->button() & RightButton )
+            emit rightClick();
+
         if (m_doc == 0)
             return;
         if ( e->button() & LeftButton )
         {
             m_dragGrabPos = e -> globalPos();
             setCursor( sizeAllCursor );
-        }
-        else if ( e->button() & RightButton )
-        {
-            emit rightClick();
         }
 
         m_outputdev->cvtDevToUser(e->x(), e->y(), &x, &y);

@@ -288,14 +288,19 @@ read_from_gs() {
 static	Boolean	sigpipe_error = False;
 
 /* ARGSUSED */
+#ifdef _POSIX_SOURCE
 static	void gs_sigpipe_handler(int sig, int code, sigcontext *scp, char *addr)
 {
 	sigpipe_error = True;
 }
 
-#ifdef	_POSIX_SOURCE
 static	struct sigaction sigpipe_handler_struct;
 	/* initialized to {gs_sigpipe_handler, (sigset_t) 0, 0} in initGS */
+#else
+static void gs_sigpipe_handler2(int sig)
+{
+  sigpipe_error = true;
+}
 #endif
 
 /*
@@ -308,7 +313,7 @@ static	void send(char *cp, int len)
 #ifdef	_POSIX_SOURCE
 	struct sigaction orig;
 #else
-	void		(*orig)();
+	void		(*orig)(int);
 #endif
 #ifdef	STREAMSCONN
 	int	retval;
@@ -318,7 +323,7 @@ static	void send(char *cp, int len)
 #ifdef	_POSIX_SOURCE
 	(void) sigaction(SIGPIPE, &sigpipe_handler_struct, &orig);
 #else
-	orig = signal(SIGPIPE, gs_sigpipe_handler);
+	orig = signal(SIGPIPE, gs_sigpipe_handler2);
 #endif
 	sigpipe_error = False;
 	GS_sending = True;

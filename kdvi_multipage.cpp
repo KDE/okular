@@ -343,11 +343,11 @@ void KDVIMultiPage::preferencesChanged()
   if ( makepk != window->makePK() )
     window->setMakePK( makepk );
 
-  int showPS = config->readNumEntry( "ShowPS", 1 );
+  int showPS = config->readBoolEntry( "ShowPS", true );
   if (showPS != window->showPS())
     window->setShowPS(showPS);
 
-  int showHyperLinks = config->readNumEntry( "ShowHyperLinks", 1 );
+  int showHyperLinks = config->readBoolEntry( "ShowHyperLinks", true );
   if (showHyperLinks != window->showHyperLinks())
     window->setShowHyperLinks(showHyperLinks);
 

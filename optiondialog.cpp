@@ -93,8 +93,8 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   mFont.fontPathCheck->setChecked( config->readBoolEntry( "MakePK", true ) );
   
   // Rendering page
-  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
-  mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
+  mRender.showSpecialCheck->setChecked(config->readBoolEntry("ShowPS", true));
+  mRender.showHyperLinksCheck->setChecked(config->readBoolEntry("ShowHyperLinks", true)); 
   for(unsigned int i=0; i<EditorNames.count(); i++)
     mRender.editorChoice->insertItem(EditorNames[i]);
   // Set the proper editor on the "Rendering-Page", try to recognize
@@ -123,8 +123,8 @@ void OptionDialog::show()
   mFont.fontPathCheck->setChecked( config->readBoolEntry( "MakePK", true ) );
 
   // Rendering page
-  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
-  mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
+  mRender.showSpecialCheck->setChecked( config->readBoolEntry( "ShowPS", true));
+  mRender.showHyperLinksCheck->setChecked(config->readBoolEntry("ShowHyperLinks", true)); 
 
   if( isVisible() == false ) 
     showPage(0);

@@ -124,8 +124,8 @@ void Part::slotReadUp()
 	return;
 
     if( !m_outputDev->readUp() ) {
-        slotPreviousPage();
-        m_outputDev->scrollBottom();
+        if ( previousPage() )
+            m_outputDev->scrollBottom();
     }
 }
 
@@ -135,9 +135,8 @@ void Part::slotReadDown()
 	return;
 
     if( !m_outputDev->readDown() ) {
-        //todo fix if we can "next page" as in kghostview
-        slotNextPage();
-        m_outputDev->scrollTop();
+        if ( nextPage() )
+            m_outputDev->scrollTop();
     }
 }
 
@@ -192,24 +191,36 @@ void Part::slotGotoStart()
      }
 }
 
-void Part::slotNextPage()
+bool Part::nextPage()
 {
     m_currentPage = pdfpartview->pagesListBox->currentItem() + 1;
     if ( m_doc && m_currentPage >= m_doc->getNumPages())
-        return;
+        return false;
 
     pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
     m_outputDev->nextPage();
+    return true;
+}
+
+void Part::slotNextPage()
+{
+    nextPage();
 }
 
 void Part::slotPreviousPage()
 {
+    previousPage();
+}
+
+bool Part::previousPage()
+{
     m_currentPage = pdfpartview->pagesListBox->currentItem() - 1;
     if ( m_currentPage  < 0)
-        return;
+        return false;
 
     pdfpartview->pagesListBox->setCurrentItem(m_currentPage );
     m_outputDev->previousPage();
+    return true;
 }
 
   KAboutData*

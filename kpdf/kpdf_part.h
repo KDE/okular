@@ -79,6 +79,8 @@ namespace KPDF
       void update();
       void readSettings();
       void writeSettings();
+      bool nextPage();
+      bool previousPage();
   protected slots:
     void find()     { /* stub */ };
     void findNext() { /* stub */ };

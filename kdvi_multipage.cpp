@@ -114,8 +114,11 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   viewModeAction->setItems(viewModes);
   connect(viewModeAction, SIGNAL(activated (int)), this, SLOT(setViewMode(int)));
 
-  backAction       = KStdAction::back(this, SLOT(doGoBack()), actionCollection(), "go_back");
-  forwardAction    = KStdAction::forward(this, SLOT(doGoForward()), actionCollection(), "go_forward");
+  backAction = new KAction(i18n("&Back"), "1leftarrow", 0, 
+                   this, SLOT(doGoBack()), actionCollection(), "go_back");
+  forwardAction = new KAction(i18n("&Forward"), "1rightarrow", 0, 
+                      this, SLOT(doGoForward()), actionCollection(), "go_forward");
+  
   document_history.setAction(backAction, forwardAction);
   document_history.clear();
 

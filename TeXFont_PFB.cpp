@@ -24,7 +24,7 @@
 //#define DEBUG_PFB 1
 
 
-TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc) 
+TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double slant)
   : TeXFont(parent)
 {
 #ifdef DEBUG_PFB
@@ -51,6 +51,18 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc)
       return;
     }
 
+  // Take care of slanting, and transform all characters in the font, if necessary.
+  if (slant != 0.0) {
+    // Construct a transformation matrix for vertical shear which will
+    // be used to transform the characters.
+    transformationMatrix.xx = 0x10000;
+    transformationMatrix.xy = (FT_Fixed)(slant * 0x10000);
+    transformationMatrix.yx = 0;
+    transformationMatrix.yy = 0x10000;
+    
+    FT_Set_Transform( face, &transformationMatrix, 0);
+  }
+  
   if (face->family_name != 0)
     parent->fullFontName = face->family_name;
 

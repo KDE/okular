@@ -1,4 +1,5 @@
-
+#ifndef _xdvi_h
+#define _xdvi_h
 // Define the following flags to generate more debugging output
   
 
@@ -221,3 +222,5 @@ extern	const char *dvi_oops_msg;	/* error message */
 #define stwo(fp)	snum(fp, 2)
 #define four(fp)	num (fp, 4)
 #define sfour(fp)	snum(fp, 4)
+
+#endif /* _xdvi_h */

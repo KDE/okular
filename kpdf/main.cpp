@@ -28,6 +28,7 @@ int main(int argc, char** argv)
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
     about.addAuthor("Laurent Montel", 0, "montel@kde.org");
+    about.addAuthor("Albert Astals Cid", I18N_NOOP("Added thumbnails"), "astals11@terra.es");
 
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );

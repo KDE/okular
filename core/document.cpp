@@ -307,7 +307,7 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
         mCleanupMemory( request->id );
 
         // 3. Enqueue to Generator (that takes ownership of request)
-        generator->requestPixmap( request, Settings::disableThreading() ? false : async );
+        generator->requestPixmap( request, Settings::enableThreading() ? async : false );
     }
 }
 

@@ -424,7 +424,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
         // note: this check will take care of all things requiring alpha blending (not only selection)
         bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
 
-        if ( wantCompositing && !Settings::disableCompositing() )
+        if ( wantCompositing && Settings::enableCompositing() )
         {
             // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
             QPixmap doubleBuffer( contentsRect.size() );

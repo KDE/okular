@@ -48,18 +48,18 @@
                         </property>
                         <widget class="QCheckBox">
                             <property name="name">
-                                <cstring>kcfg_DisableCompositing</cstring>
+                                <cstring>kcfg_EnableCompositing</cstring>
                             </property>
                             <property name="text">
-                                <string>Disable &amp;transparency effects</string>
+                                <string>Enabled &amp;transparency effects</string>
                             </property>
                         </widget>
                         <widget class="QCheckBox">
                             <property name="name">
-                                <cstring>kcfg_DisableThreading</cstring>
+                                <cstring>kcfg_EnableThreading</cstring>
                             </property>
                             <property name="text">
-                                <string>Disable &amp;background generation</string>
+                                <string>Enable &amp;background generation</string>
                             </property>
                         </widget>
                     </vbox>

@@ -90,11 +90,11 @@
     <choice name="pad_description" />
    </choices>
   </entry>
-  <entry key="DisableCompositing" type="Bool" >
-   <default>false</default>
+  <entry key="EnableCompositing" type="Bool" >
+   <default>true</default>
   </entry>
-  <entry key="DisableThreading" type="Bool" >
-   <default>false</default>
+  <entry key="EnableThreading" type="Bool" >
+   <default>true</default>
   </entry>
  </group>
  <group name="Presentation" >

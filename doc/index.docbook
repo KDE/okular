@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY kdpf "<application>KPdf</application>">
+  <!ENTITY kpdf "<application>KPdf</application>">
   <!ENTITY kappname "&kpdf;">
   <!ENTITY package "kdetoys">
   <!ENTITY % English "INCLUDE">

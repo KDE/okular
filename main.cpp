@@ -71,20 +71,20 @@ int main(int argc, char** argv)
       // to a local file.
       KURL url(args->url(0));
 
-      if (!args->url(0).isValid()) 
+      if (!url.isValid()) 
       {
         kdError(4300) << QString(I18N_NOOP("The URL %1 is not well-formed.")).arg(args->arg(0)) << endl;
         return -1;
       }
 
-      if (!args->url(0).isLocalFile()) 
+      if (!url.isLocalFile()) 
       {
         kdError(4300) << QString(I18N_NOOP("The URL %1 does not point to a local file. You can only specify local "
              "files if you are using the '--unique' option.")).arg(args->arg(0)) << endl;
         return -1;
       }
 
-      QString qualPath = QFileInfo(args->url(1).path()).absFilePath();
+      QString qualPath = QFileInfo(url.path()).absFilePath();
 
       app.dcopClient()->attach();
       // We need to register as "kviewshell" to stay compatible with existing DCOP-skripts.
@@ -94,7 +94,7 @@ int main(int argc, char** argv)
       QCStringList apps = app.dcopClient()->registeredApplications();
       for ( QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it ) 
       {
-        if ((*it).find("kdvi") == 0) 
+        if ((*it).find("kviewshell") == 0) 
         {
           QByteArray data, replyData;
           QCString replyType;
@@ -111,7 +111,7 @@ int main(int argc, char** argv)
               reply >> result;
               if (result == true) 
               {
-                if (app.dcopClient()->send( *it, "kmultipage", "jumpToReference(QString)", args->url(0).ref()) == true)
+                if (app.dcopClient()->send( *it, "kmultipage", "jumpToReference(QString)", url.ref()) == true)
                 {
                   app.dcopClient()->detach();
                   return 0;

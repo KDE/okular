@@ -10,6 +10,7 @@
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kinstance.h>
+#include <kprinter.h>
 #include <kstdaction.h>
 #include <kparts/genericfactory.h>
 
@@ -31,8 +32,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
            const QStringList & /*args*/ )
   : KParts::ReadOnlyPart(parent, name),
     m_pagePixmap(1, 1),
+    m_doc(0),
     m_currentPage(0),
-    m_zoomMode(FitWidth),
+    m_zoomMode(FixedFactor),
     m_zoomFactor(1.0)
 {
   globalParams = new GlobalParams("");
@@ -60,6 +62,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // create our actions
   KStdAction::open  (this, SLOT(fileOpen()), actionCollection());
   KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
+  KStdAction::print (this, SLOT(filePrint()), actionCollection());
   KStdAction::prior (this, SLOT(displayPreviousPage()), 
                      actionCollection(), "previous_page");
   KStdAction::next  (this, SLOT(displayNextPage()),
@@ -88,6 +91,15 @@ Part::createAboutData()
                                          "0.1");
   aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
   return aboutData;
+}
+
+  bool
+Part::closeURL()
+{
+  delete m_doc;
+  m_doc = 0;
+  
+  return KParts::ReadOnlyPart::closeURL();
 }
 
   bool
@@ -277,6 +289,36 @@ Part::fileSaveAs()
     */
 }
 
+  void
+Part::filePrint()
+{
+  if (m_doc == 0)
+    return;
+
+  KPrinter printer;
+
+  printer.setPageSelection(KPrinter::ApplicationSide);
+  printer.setCurrentPage(m_currentPage);
+  printer.setMinMax(1, m_doc->getNumPages());
+
+  if (printer.setup(widget())) 
+  {
+    /*
+    KTempFile tf(QString::null, ".ps");
+    if (tf.status() == 0) 
+    {
+      savePages(tf.name(), printer.pageList());
+      printer.printFiles(QStringList( tf.name() ), true);
+    }
+    else 
+    {
+       // TODO: Proper error handling
+      ;
+    }
+    */
+  }
+}
+
   void 
 Part::displayNextPage()
 {
@@ -301,7 +343,7 @@ Part::setFixedZoomFactor(float zoomFactor)
 Part::executeAction(LinkAction* action)
 {
   if (action == 0)
-      return;
+    return;
 
   LinkActionKind kind = action->getKind();
 

@@ -5,6 +5,8 @@
     <Action name="file_open"/>
     <Separator/>
     <Action name="file_save_as"/>
+    <Separator/>
+    <Action name="file_print"/>
   </Menu>
   <Menu name="view">
     <Action name="fit_width"/>

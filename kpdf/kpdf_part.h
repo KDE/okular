@@ -79,6 +79,8 @@ namespace KPDF
 
     static KAboutData* createAboutData();
 
+    bool closeURL();
+
     void displayPage(int pageNumber, float zoomFactor = 1.0);
     void displayDestination(LinkDest*);
 
@@ -91,6 +93,7 @@ namespace KPDF
   protected slots:
     void fileOpen();
     void fileSaveAs();
+    void filePrint();
 
     void displayNextPage();
     void displayPreviousPage();
@@ -108,7 +111,6 @@ namespace KPDF
 
     int   m_currentPage;
 
-    // Zoom settings
     ZoomMode m_zoomMode;
     float    m_zoomFactor;
 

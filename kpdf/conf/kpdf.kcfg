@@ -1,0 +1,52 @@
+<!DOCTYPE kcfg SYSTEM "http://www.kde.org/standards/kcfg/1.0/kcfg.dtd">
+<kcfg>
+ <kcfgfile name="kpdfpartrc" />
+ <group name="Accessibility" >
+  <entry key="PaperColor" type="Color" >
+   <default code="true" >Qt::white</default>
+  </entry>
+  <entry key="HilightLinks" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="RenderMode" type="Enum" >
+   <values>
+    <value>Normal</value>
+    <value>Inverted</value>
+    <value>Recolor</value>
+    <value>Contrast</value>
+   </values>
+  </entry>
+ </group>
+ <group name="General" />
+ <group name="MainView" >
+  <entry key="SplitterSizes" type="IntList" />
+  <entry key="ShowLeftPanel" type="Bool" >
+   <default>true</default>
+  </entry>
+ </group>
+ <group name="PageView" >
+  <entry key="ShowScrollBars" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="ViewTwoPages" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="ViewContinous" type="Bool" >
+   <default>true</default>
+  </entry>
+ </group>
+ <group name="SearchBar" >
+  <entry key="ShowSearchBar" type="Bool" >
+   <default>true</default>
+  </entry>
+ </group>
+ <group name="Performance" >
+  <entry key="MemoryLevel" type="Enum" >
+   <values>
+    <value>Low</value>
+    <value>Normal</value>
+    <value>Aggressive</value>
+   </values>
+  </entry>
+ </group>
+</kcfg>

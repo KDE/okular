@@ -1,0 +1,4 @@
+ClassName=Settings
+File=kpdf.kcfg
+Mutators=true
+Singleton=true

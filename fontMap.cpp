@@ -25,8 +25,14 @@ fontMap::fontMap()
   // "utmr8a.pfb". We use the map file of "ps2pk" because that progam
   // has, like kdvi (and unlike dvips), no built-in fonts.
   
+  // Finding ps2pk.map is not easy. In teTeX < 3.0, the kpsewhich
+  // program REQUIRES the option "--format=dvips config". In teTeX =
+  // 3.0, the option "--format=map" MUST be used. Since there is no
+  // way to give both options at the same time, there is seemingly no
+  // other way than to try both options one after another. We use the
+  // teTeX 3.0 format first.
   KProcIO proc;
-  proc << "kpsewhich" << "--format=dvips config" << "ps2pk.map";
+  proc << "kpsewhich" << "--format=map" << "ps2pk.map";
   if (proc.start(KProcess::Block) == false) {
     kdError(4700) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
     return;
@@ -36,8 +42,21 @@ fontMap::fontMap()
   proc.readln(map_fileName);
   map_fileName = map_fileName.stripWhiteSpace();
   if (map_fileName.isEmpty()) {
-    kdError(4700) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
-    return;
+    // Map file not found? Then we try the teTeX < 3.0 way of finding
+    // the file.
+    proc << "kpsewhich" << "--format=dvips config" << "ps2pk.map";
+    if (proc.start(KProcess::Block) == false) {
+      kdError(4700) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+      return;
+    }
+    proc.readln(map_fileName);
+    map_fileName = map_fileName.stripWhiteSpace();
+    
+    // If both versions fail, then there is nothing left to do.
+    if (map_fileName.isEmpty()) {
+      kdError(4700) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
+      return;
+    }
   }
   
   QFile file( map_fileName );

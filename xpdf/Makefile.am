@@ -1,7 +1,8 @@
-INCLUDES = $(all_includes) -I$(top_srcdir)/kpdf/goo -I/usr/include/freetype2 -I..
+INCLUDES = $(all_includes) -I$(top_srcdir)/kpdf/goo $(freetype2_CFLAGS) \
+           $(t1_CFLAGS) $(libpaper_CFLAGS) -I..
 
 libxpdf_la_LDFLAGS = $(all_libraries) -no-undefined
-libxpdf_la_LIBADD  = $(LIB_X11) $(freetype2_LIBS) $(t1_LIBS) $(libpaper_LIBS) ../goo/libgoo.la
+libxpdf_la_LIBADD = $(LIB_X11) $(freetype2_LIBS) $(t1_LIBS) $(libpaper_LIBS) ../goo/libgoo.la
 libxpdf_la_SOURCES = Annot.cc Array.cc BuiltinFont.cc BuiltinFontTables.cc \
      CMap.cc Catalog.cc CharCodeToUnicode.cc Decrypt.cc Dict.cc Error.cc \
      FTFont.cc FontEncodingTables.cc FontFile.cc Function.cc Gfx.cc \
@@ -22,4 +23,3 @@ noinst_HEADERS     = Annot.h Array.h BuiltinFont.h BuiltinFontTables.h \
     SFont.h Stream-CCITT.h Stream.h T1Font.h TTFont.h TextOutputDev.h UTF8.h \
     UnicodeMap.h UnicodeMapTables.h XOutputDev.h XRef.h config.h xpdf-ltk.h
 
-METASOURCES = AUTO

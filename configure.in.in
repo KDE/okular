@@ -319,51 +319,49 @@ AC_DEFUN(smr_CHECK_LIB,
 
 
 dnl ##### Check for t1lib.
-if test -z "$no_x"; then
-  smr_CHECK_LIB(t1, t1, [Type 1 font rasterizer], 
-                T1_InitLib, t1lib.h, HAVE_T1LIB_H,
-                $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
-  if test x"$smr_have_t1_header"=x"yes"; then
-   AC_DEFINE_UNQUOTED( HAVE_T1LIB_H, 1, [define if T1LIB headers are present] )
-  fi
-  AC_SUBST(t1_LIBS)
-  AC_SUBST(t1_CFLAGS)
+smr_CHECK_LIB(t1, t1, [Type 1 font rasterizer], 
+	T1_InitLib, t1lib.h, HAVE_T1LIB_H,
+	$X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
+if test x"$smr_have_t1_header"=x"yes"; then
+AC_DEFINE_UNQUOTED( HAVE_T1LIB_H, 1, [define if T1LIB headers are present] )
 fi
+AC_SUBST(t1_LIBS)
+AC_SUBST(t1_CFLAGS)
+
 
 dnl ##### Check for FreeType.
 dnl ##### Look for FreeType 2.0.5+ first, and then FreeType 1.x.
 dnl ##### (Note: FT_Get_Name_Index was added in FT 2.0.5, and is
 dnl ##### the reason that Xpdf requires 2.0.5+.)
-if test -z "$no_x"; then
-  smr_CHECK_LIB(freetype2, freetype, [FreeType2 font rasterizer - version 2.0.5+],
-                FT_Get_Name_Index, freetype/freetype.h, HAVE_FREETYPE_H,
-                $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
-  if test x"$freetype2_LIBS" = x; then
-    smr_CHECK_LIB(freetype2, freetype, [FreeType2 font rasterizer - version 2.0.5+],
-                  FT_Get_Name_Index, freetype.h, HAVE_FREETYPE_H,
-                  $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
-  fi
-  if test x"$freetype2_LIBS" != x; then
-    AC_DEFINE_UNQUOTED(FREETYPE2,1,[define if freetype2 is available])
-  fi
-  if test x"$smr_have_freetype2_header"=x"yes"; then
-   AC_DEFINE_UNQUOTED( HAVE_FREETYPE_H, 1, [define if FREETYPE headers are present] )
-  fi
-  AC_SUBST(freetype2_LIBS)
-  AC_SUBST(freetype2_CFLAGS)
-  if test x"$freetype2_LIBS" = x; then
-    smr_CHECK_LIB(freetype, ttf, [FreeType font rasterizer],
-                  TT_Init_FreeType, freetype/freetype.h,HAVE_FREETYPE_H,
-                  $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
-    if test x"$freetype_LIBS" = x; then
-      smr_CHECK_LIB(freetype, ttf, [FreeType font rasterizer],
-                    TT_Init_FreeType, freetype.h, HAVE_FREETYPE_H,
-                    $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
-    fi
-    AC_SUBST(freetype_LIBS)
-    AC_SUBST(freetype_CFLAGS)
-  fi
+smr_CHECK_LIB(freetype2, freetype, [FreeType2 font rasterizer - version 2.0.5+],
+	FT_Get_Name_Index, freetype/freetype.h, HAVE_FREETYPE_H,
+	$X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
+if test x"$freetype2_LIBS" = x; then
+smr_CHECK_LIB(freetype2, freetype, [FreeType2 font rasterizer - version 2.0.5+],
+	  FT_Get_Name_Index, freetype.h, HAVE_FREETYPE_H,
+	  $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
 fi
+if test x"$freetype2_LIBS" != x; then
+AC_DEFINE_UNQUOTED(FREETYPE2,1,[define if freetype2 is available])
+fi
+if test x"$smr_have_freetype2_header"=x"yes"; then
+AC_DEFINE_UNQUOTED( HAVE_FREETYPE_H, 1, [define if FREETYPE headers are present] )
+fi
+AC_SUBST(freetype2_LIBS)
+AC_SUBST(freetype2_CFLAGS)
+if test x"$freetype2_LIBS" = x; then
+smr_CHECK_LIB(freetype, ttf, [FreeType font rasterizer],
+	  TT_Init_FreeType, freetype/freetype.h,HAVE_FREETYPE_H,
+	  $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
+if test x"$freetype_LIBS" = x; then
+smr_CHECK_LIB(freetype, ttf, [FreeType font rasterizer],
+	    TT_Init_FreeType, freetype.h, HAVE_FREETYPE_H,
+	    $X_LIBS $X_PRE_LIBS $X_LDFLAGS -lX11 $X_EXTRA_LIBS -lm, $X_CFLAGS)
+fi
+AC_SUBST(freetype_LIBS)
+AC_SUBST(freetype_CFLAGS)
+fi
+
 
 dnl ##### Check for libpaper (Debian).
 smr_CHECK_LIB(libpaper, paper, [Debian libpaper], paperinit, paper.h, HAVE_PAPER_H)
@@ -371,17 +369,8 @@ AC_SUBST(libpaper_LIBS)
 AC_SUBST(libpaper_CFLAGS)
 if test x"$smr_have_paper_header"=x"yes"; then
    AC_DEFINE_UNQUOTED( HAVE_PAPER_H, 1, [define if PAPER headers are present] )
-  fi
-dnl ##### Disable X-specific stuff in top-level Makefile.
-if test -n "$no_x"; then
-  X="#"
-  XPDF_TARGET="all-no-x"
-else
-  X=""
-  XPDF_TARGET="all"
 fi
-AC_SUBST(X)
-AC_SUBST(XPDF_TARGET)
+
 
 dnl ## AC_DEFINE_UNQUOTED(HAVE_FREETYPE_H,1,[])
 dnl ## AC_DEFINE_UNQUOTED(HAVE_T1LIB_H,1,[])

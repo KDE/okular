@@ -355,9 +355,7 @@
 	<step>
 	  <para>Add the line 
 <programlisting>
-
     (server-start)
-
 </programlisting>
 	   to your <filename>.emacs</filename> file. Restart
 	   <application>Emacs</application></para>
@@ -424,7 +422,6 @@
 	      <command>emacsclient</command>:</para>
 
 <programlisting>
-
 	(defadvice server-visit-files (around save-buffers last activate)
 	  "Try to emulate gnuclient behaviour with emacsclient.
 	Works only for visiting one buffer at a time."
@@ -461,6 +458,7 @@
       </tip>
     </section>
 
+
     <section id="editor-setup-kate">
       <title>&kate;</title> 
 
@@ -472,6 +470,20 @@
       already loaded. Worse, &kate; does not move the cursor to the
       beginning of the paragraph.</para>
     </section>
+
+
+    <section id="editor-setup-kile">
+      <title><application>Kile</application></title> 
+
+      <para>The LaTeX-editor system <application>Kile</application>,
+	  supports KDVI very well. No extra setup is
+	  necessary. Further information about Kile can be found at
+          <ulink
+          url="http://perso.club-internet.fr/pascal.brachet/kile">Kile's
+          homepage</ulink>.
+	  </para>
+    </section>
+
 
     <section id="editor-setup-nedit">
       <title><application>NEdit</application></title>
@@ -692,12 +704,10 @@
 	  <listitem>
 	    <para>Add the lines 
 <programlisting>
-
 (add-to-list 'load-path (expand-file-name "~/emacs-scripts/"))
 (require 'kdvi-search)
 (add-hook 'LaTeX-mode-hook (lambda () (local-set-key "\C-x\C-j" 'kdvi-jump-to-line)))
 (add-hook 'tex-mode-hook (lambda () (local-set-key "\C-x\C-j" 'kdvi-jump-to-line)))
-
 </programlisting>
 	    to your <filename>.emacs</filename> file. Restart
 	    <application>Emacs</application>.</para>
@@ -742,6 +752,12 @@
 	</tip>
       </section>
 
+      <section id="forw-editor-setup-kile">
+	<title><application>Kile</application></title>
+		<para>If you use Kile, no further setup is necessary.
+		</para>
+      </section>
+
       <section id="forw-editor-setup-xemacs">
 	<title><application>XEmacs</application></title>
 	
@@ -755,6 +771,7 @@
 	<filename>.xemacs/init.el</filename>.
 	</para>
       </section>
+
     </section>
 
   </chapter>

@@ -14,9 +14,10 @@
 #include <ktip.h>
 #include <qtimer.h>
 
+#include "fontpool.h"
+#include "kdvi_multipage.h"
 #include "kviewpart.h"
 #include "optiondialog.h"
-#include "kdvi_multipage.h"
 #include "zoomlimits.h"
 
 extern "C"

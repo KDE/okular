@@ -2,17 +2,15 @@
 #ifndef _GLYPH_H
 #define _GLYPH_H
 
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qpainter.h>
+#include <qpixmap.h>
 
 
 /*
  * Bitmap structure for raster ops.
  */
 struct bitmap {
-  unsigned short	w, h;		/* width and height in pixels */
-  short		bytes_wide;	/* scan-line width in bytes */
+  Q_UINT16	w, h;	/* width and height in pixels */
+  Q_UINT16	bytes_wide;	/* scan-line width in bytes */
   char		*bits;		/* pointer to the bits */
 };
 
@@ -29,12 +27,12 @@ class glyph {
   glyph();
   ~glyph();
 
-  long addr;		/* address of bitmap in font file */
+  long    addr;		/* address of bitmap in font file */
   Q_INT32 dvi_advance_in_DVI_units;	/* DVI units to move reference point */
-  short x, y;		/* x and y offset in pixels */
-  // TODO: replace the bitmap by a Qbitmap
-  struct bitmap bitmap;	/* bitmap for character */
-  short x2, y2;		/* x and y offset in pixels (shrunken bitmap) */
+  short   x, y;		/* x and y offset in pixels */
+
+  QPixmap shrunkenCharacter;
+  short   x2, y2;		/* x and y offset in pixels (shrunken bitmap) */
 };
 
 #endif //ifndef _GLYPH_H

@@ -26,6 +26,9 @@ typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 #include "dviwin.h"
 #include "glyph.h"
 
+class TeXFont;
+
+
 
 // Per character information for virtual fonts
 
@@ -41,10 +44,8 @@ class macro {
 };
 
 
-class font : public QObject {
-  Q_OBJECT
-
-public:
+class TeXFontDefinition : public QObject {
+ public:
   // Currently, kdvi supports fonts with at most 256 characters to
   // comply with "The DVI Driver Standard, Level 0". If you change
   // this value here, make sure to go through all the source and
@@ -59,16 +60,16 @@ public:
   };
   
 
-  font(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
+  TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
        class fontPool *pool, double _enlargement);
-  ~font();
+  ~TeXFontDefinition();
 
   void reset(void);
 
 
+  void fontNameReceiver(QString);
+
   // Members for character fonts
-  glyph         *glyphptr(unsigned int ch);
-  QPixmap        characterPixmap(unsigned int ch);
   void           setDisplayResolution(double _displayResolution_in_dpi);
 
   void           mark_as_used(void);
@@ -78,37 +79,26 @@ public:
   double         enlargement;
   Q_INT32        scaled_size_in_DVI_units;   // Scaled size from the font definition command; in DVI units
   set_char_proc  set_char_p;	// proc used to set char
-
+  
   // Resolution of the display device (resolution will usually be
   // scaled, according to the zoom)
   double         displayResolution_in_dpi;
-
+  
   FILE          *file;		// open font file or NULL
   QString        filename;	// name of font file
-
-  glyph         *glyphtable;    // used by (loaded) raster fonts
+  
+  TeXFont       *font;
   macro         *macrotable;    // used by (loaded) virtual fonts
-  QIntDict<font> vf_table;      // used by (loaded) virtual fonts, list of fonts used by this vf, 
-                                // acessible by number
-  font          *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
-
-private:
-  QPixmap        nullPixmap;
-  QPixmap       *characterPixmaps[max_num_of_chars_in_font];
+  QIntDict<TeXFontDefinition> vf_table;      // used by (loaded) virtual fonts, list of fonts used by this vf, 
+  // acessible by number
+  TeXFontDefinition  *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
+  
+ private:
   Q_UINT32       checksum;
-
+  
   // Functions related to virtual fonts
   void          read_VF_index(void );
-
-  // Functions for pk fonts
-  int           PK_get_nyb(FILE *fp);
-  int           PK_packed_num(FILE *fp);
-  void          PK_skip_specials(void);
-  void          read_PK_char(unsigned int ch);
-  void          read_PK_index(void);
-
-public slots:
-  void fontNameReceiver(QString);
+  
 };
 
 #endif

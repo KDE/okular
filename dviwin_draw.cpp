@@ -54,6 +54,7 @@
 #include "dviwin.h"
 #include "dvi.h"
 #include "fontpool.h"
+#include "TeXFont.h"
 #include "xdvi.h"
 
 #include <kdebug.h>
@@ -75,18 +76,18 @@ extern QPainter foreGroundPaint;
 void dviWindow::set_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug() << "set_char #" << ch << endl;
+  kdDebug(4300) << "set_char #" << ch << endl;
 #endif
 
-  glyph *g = currinf.fontp->glyphptr(ch);
+  glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true);
   if (g == NULL)
     return;
 
   long dvi_h_sav = currinf.data.dvi_h;
   if (PostScriptOutPutString == NULL) {
-    QPixmap pix = currinf.fontp->characterPixmap(ch);
-    int x = ((int) ((currinf.data.dvi_h) / (currwin.shrinkfactor * 65536))) - g->x2 - currwin.base_x;
-    int y = currinf.data.pxl_v - g->y2 - currwin.base_y;
+    QPixmap pix = g->shrunkenCharacter;
+    int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))) - g->x2;
+    int y = currinf.data.pxl_v - g->y2;
 
     // Draw the character.
     foreGroundPaint.drawPixmap(x, y, pix);
@@ -305,10 +306,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  b = readUINT32();
 	  b = ((long) (b *  current_dimconv));
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL) {
-	    int h = ((int) ROUNDUP(((long) (a *  current_dimconv)), currwin.shrinkfactor * 65536));
-	    int w =  ((int) ROUNDUP(b, currwin.shrinkfactor * 65536));
-	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (currwin.shrinkfactor * 65536))) - -currwin.base_x,
-				      currinf.data.pxl_v - h + 1 -currwin.base_y, w?w:1, h?h:1, Qt::black );
+	    int h = ((int) ROUNDUP(((long) (a *  current_dimconv)), shrinkfactor * 65536));
+	    int w =  ((int) ROUNDUP(b, shrinkfactor * 65536));
+	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+				      currinf.data.pxl_v - h + 1, w?w:1, h?h:1, Qt::black );
 	  }
 	  currinf.data.dvi_h += b;
 	  break;
@@ -323,10 +324,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  a = ((long) (a *  current_dimconv));
 	  b = ((long) (b *  current_dimconv));
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL) {
-	    int h = ((int) ROUNDUP(a, currwin.shrinkfactor * 65536));
-	    int w = ((int) ROUNDUP(b, currwin.shrinkfactor * 65536));
-	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (currwin.shrinkfactor * 65536))) - -currwin.base_x,
-				      currinf.data.pxl_v - h + 1 -currwin.base_y, w?w:1, h?h:1, Qt::black );
+	    int h = ((int) ROUNDUP(a, shrinkfactor * 65536));
+	    int w = ((int) ROUNDUP(b, shrinkfactor * 65536));
+	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+				      currinf.data.pxl_v - h + 1, w?w:1, h?h:1, Qt::black );
 	  }
 	  break;
 
@@ -339,9 +340,9 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    line_boundary_encountered = true;
 	  }
 	  command_pointer += 11 * 4;
-	  currinf.data.dvi_h = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-	  currinf.data.dvi_v = basedpi;
-	  currinf.data.pxl_v = int(currinf.data.dvi_v/currwin.shrinkfactor);
+	  currinf.data.dvi_h = MFResolutions[MetafontMode] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
+	  currinf.data.dvi_v = MFResolutions[MetafontMode];
+	  currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
 	  currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
 	  break;
 
@@ -443,7 +444,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 		textLinkList[textLinkList.size()-1].linkText += '\n';
 	    }
 	    currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
-	    currinf.data.pxl_v  = int(currinf.data.dvi_v/currwin.shrinkfactor);
+	    currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
 	  }
 	  break;
 	  
@@ -464,7 +465,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.y/65536;
-	  currinf.data.pxl_v = int(currinf.data.dvi_v/currwin.shrinkfactor);
+	  currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
 	  break;
 	  
 	case Z1:
@@ -484,7 +485,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.z/65536;
-	  currinf.data.pxl_v  = int(currinf.data.dvi_v/currwin.shrinkfactor);
+	  currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
 	  break;
 	  
 	case FNT1:
@@ -605,7 +606,7 @@ void dviWindow::draw_page(void)
   // Mark hyperlinks in blue. We draw a blue line under the
   // character whose width is equivalent to 0.5 mm, but at least
   // one pixel.
-  int h = (int)(basedpi*0.05/(2.54*currwin.shrinkfactor) + 0.5);
+  int h = (int)(MFResolutions[MetafontMode]*0.05/(2.54*shrinkfactor) + 0.5);
   h = (h < 1) ? 1 : h;
   for(unsigned int i=0; i<hyperLinkList.size(); i++) {
     int x = hyperLinkList[i].box.left();

@@ -84,7 +84,7 @@ unsigned int fontPool::setMetafontMode( unsigned int mode )
   }
   MetafontMode = mode;
 
-  struct font *fontp = fontp=fontList.first();
+  TeXFontDefinition *fontp = fontList.first();
   while(fontp != 0 ) {
     fontp->reset();
     fontp = fontList.next();
@@ -106,10 +106,10 @@ void fontPool::setMakePK(bool flag)
   // If we enable font generation, we look for fonts which have not
   // yet been loaded, mark them as "not yet looked up" and try once
   // more.
-  struct font *fontp = fontp=fontList.first();
+  TeXFontDefinition *fontp =fontList.first();
   while(fontp != 0 ) {
     if (fontp->filename.isEmpty() )
-      fontp->flags &= ~font::FONT_KPSE_NAME;
+      fontp->flags &= ~TeXFontDefinition::FONT_KPSE_NAME;
     fontp=fontList.next();
   }
   check_if_fonts_are_loaded();
@@ -124,7 +124,7 @@ void fontPool::setEnlargeFonts( bool flag )
   if (enlargeFonts == true)
     displayResolution *= 1.1;
 
-  struct font *fontp = fontp=fontList.first();
+  TeXFontDefinition *fontp = fontList.first();
   while(fontp != 0 ) {
     fontp->setDisplayResolution(displayResolution);
     fontp=fontList.next();
@@ -135,12 +135,12 @@ void fontPool::setEnlargeFonts( bool flag )
 }
 
 
-class font *fontPool::appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement)
+class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement)
 {
   // Reuse font if possible: check if a font with that name and
   // natural resolution is already in the fontpool, and use that, if
   // possible.
-  class font *fontp = fontList.first();
+  TeXFontDefinition *fontp = fontList.first();
   while( fontp != 0 ) {
     if ((fontname == fontp->fontname) && ( (int)(enlargement*1000.0+0.5)) == (int)(fontp->enlargement*1000.0+0.5)) {
       // if font is already in the list
@@ -156,7 +156,7 @@ class font *fontPool::appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scal
   if (enlargeFonts == true)
     displayResolution *= 1.1;
 
-  fontp = new font(fontname, displayResolution, checksum, scale, this, enlargement);
+  fontp = new TeXFontDefinition(fontname, displayResolution, checksum, scale, this, enlargement);
   if (fontp == 0) {
     kdError(4300) << i18n("Could not allocate memory for a font structure!") << endl;
     exit(0);
@@ -179,11 +179,11 @@ QString fontPool::status(void)
   text.append("<table WIDTH=\"100%\" NOSAVE >");
   text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b></td></tr>").arg(i18n("Name")).arg(i18n("Enlargement")).arg(i18n("Type")).arg(i18n("Filename")) );
   
-  struct font  *fontp = fontList.first();
+ TeXFontDefinition *fontp = fontList.first();
   while ( fontp != 0 ) {
     QString type;
     
-    if (fontp->flags & font::FONT_VIRTUAL)
+    if (fontp->flags & TeXFontDefinition::FONT_VIRTUAL)
       type = i18n("virtual");
     else
       type = i18n("regular");
@@ -218,9 +218,9 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
   }
 
   // Is there a font whose name we did not try to find out yet?
-  struct font *fontp = fontList.first();
+  TeXFontDefinition *fontp = fontList.first();
   while( fontp != 0 ) {
-    if ((fontp->flags & font::FONT_KPSE_NAME) == 0)
+    if ((fontp->flags & TeXFontDefinition::FONT_KPSE_NAME) == 0)
       break;
     fontp=fontList.next();
   }
@@ -297,7 +297,7 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
 
   fontp = fontList.first();;
   while ( fontp != 0 ) {
-    if ((fontp->flags & font::FONT_KPSE_NAME) == 0) {
+    if ((fontp->flags & TeXFontDefinition::FONT_KPSE_NAME) == 0) {
       numFontsInJob++;
       *proc << KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->enlargement * MFResolutions[MetafontMode] + 0.5)).
 				    arg(fontp->fontname));
@@ -317,7 +317,7 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
       // ensure that if the filename is still not found now, we won't
       // look any further.
       if (pass != 0)
-	fontp->flags |= font::FONT_KPSE_NAME;
+	fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
     }
     fontp=fontList.next();
   }
@@ -359,9 +359,9 @@ void fontPool::kpsewhich_terminated(KProcess *)
   if (fatal_error_in_kpsewhich) {
     // Mark all fonts as done so kpsewhich will not be called again
     // soon.
-    class font *fontp=fontList.first();
+    TeXFontDefinition *fontp=fontList.first();
     while ( fontp != 0 ) { 
-      fontp->flags |= font::FONT_KPSE_NAME;
+      fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
       fontp = fontList.next();
     }
   }
@@ -371,7 +371,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 
   QStringList fileNameList = QStringList::split('\n', kpsewhichOutput);
 
-  class font *fontp=fontList.first();
+  TeXFontDefinition *fontp=fontList.first();
   while ( fontp != 0 ) { 
     if (fontp->filename.isEmpty() == true) {
       QString fontname = QString("%1.%2pk").arg(fontp->fontname).arg((int)(fontp->enlargement * MFResolutions[MetafontMode] + 0.5));
@@ -381,7 +381,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	kdDebug(4300) << "Associated " << fontname << " to " << matchingFiles.first() << endl;
 #endif
 	fontp->fontNameReceiver(matchingFiles.first());
-	fontp->flags |= font::FONT_KPSE_NAME;
+	fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
 	fontp=fontList.first();
 	continue;
       }
@@ -393,7 +393,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	kdDebug(4300) << "Associated " << fontname << "to " << matchingFiles.first() << endl;
 #endif
 	fontp->fontNameReceiver(matchingFiles.first());
-	fontp->flags |= font::FONT_KPSE_NAME;
+	fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
 	emit fonts_info(this);
 	// Constructing a virtual font will most likely insert other
 	// fonts into the fontList. After that, fontList.next() will
@@ -478,9 +478,9 @@ void fontPool::mark_fonts_as_unused(void)
   kdDebug(4300) << "fontPool::mark_fonts_as_unused(void) called" << endl;
 #endif
 
-  struct font  *fontp = fontList.first();
+  TeXFontDefinition  *fontp = fontList.first();
   while ( fontp != 0 ) {
-    fontp->flags &= ~font::FONT_IN_USE; 
+    fontp->flags &= ~TeXFontDefinition::FONT_IN_USE; 
     fontp=fontList.next();
   }
 }
@@ -492,9 +492,9 @@ void fontPool::release_fonts(void)
   kdDebug(4300) << "Release_fonts" << endl;
 #endif
   
-  struct font  *fontp = fontList.first();
+  TeXFontDefinition  *fontp = fontList.first();
   while(fontp != 0) {
-    if ((fontp->flags & font::FONT_IN_USE) != font::FONT_IN_USE) {
+    if ((fontp->flags & TeXFontDefinition::FONT_IN_USE) != TeXFontDefinition::FONT_IN_USE) {
       fontList.removeRef(fontp);
       fontp = fontList.first();
     } else 

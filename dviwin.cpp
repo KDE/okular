@@ -60,16 +60,9 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   kdDebug(4300) << "dviWindow( zoom=" << zoom << ", mkpk=" << mkpk << ", parent=" << parent << ", name=" << name << " )" << endl;
 #endif
 
-  mane.shrinkfactor = 3;
-  mane.base_x = 0;
-  mane.base_y = 0;
-  //  mane.width = 0;
-  //  mane.height = 0;
-  
-  currwin = mane;
+  shrinkfactor = 3;
 
   setBackgroundMode(NoBackground);
-
   setFocusPolicy(QWidget::StrongFocus);
   setFocus();
 
@@ -121,7 +114,6 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
-  mane                   = currwin;
   _postscript            = 0;
   _showHyperLinks        = true;
   pixmap                 = 0;
@@ -149,7 +141,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   animationCounter = 0;
   timerIdent       = 0;
 
-  setMetafontMode( DefaultMFMode ); // that also sets the basedpi
+  setMetafontMode( DefaultMFMode );
   resize(0,0);
 }
 
@@ -246,8 +238,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
   kdDebug(4300) << "dviWindow::setMetafontMode, new MetafontMode is at " << MFResolutions[MetafontMode] << " dpi" << endl;
 #endif
 
-  basedpi          = MFResolutions[MetafontMode];
-  mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*_zoom);
+  shrinkfactor = MFResolutions[MetafontMode]/(xres*_zoom);
   font_pool->setDisplayResolution( xres*_zoom );
 }
 
@@ -420,7 +411,7 @@ void dviWindow::changePageSize()
 
   resize( page_width_in_pixel, page_height_in_pixel );
 
-  PS_interface->setSize( basedpi/mane.shrinkfactor, page_width_in_pixel, page_height_in_pixel );
+  PS_interface->setSize( xres*_zoom, page_width_in_pixel, page_height_in_pixel );
   drawPage();
 }
 
@@ -587,7 +578,7 @@ void dviWindow::all_fonts_loaded(void)
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
 	if (refLineNumber >= it->line) {
 	  page = it->page;
-	  y    = (Q_INT32)(it->vertical_coordinate/mane.shrinkfactor+0.5);
+	  y    = (Q_INT32)(it->vertical_coordinate/shrinkfactor+0.5);
 	} 
       }
     
@@ -663,8 +654,8 @@ double dviWindow::setZoom(double zoom)
   if (zoom > ZoomLimits::MaxZoom/1000.0)
     zoom = ZoomLimits::MaxZoom/1000.0;
 
-  mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*zoom);
-  _zoom             = zoom;
+  shrinkfactor = MFResolutions[MetafontMode]/(xres*zoom);
+  _zoom        = zoom;
 
   font_pool->setDisplayResolution( xres*zoom );
   changePageSize();
@@ -827,9 +818,9 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  if (it != anchorList.end()) {
 #ifdef DEBUG_SPECIAL
 	    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-	    kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
+	    kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
 #endif
-	    emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/mane.shrinkfactor)));
+	    emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/shrinkfactor)));
 	  }
 	} else {
 #ifdef DEBUG_SPECIAL

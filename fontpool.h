@@ -83,7 +83,7 @@ Q_OBJECT
       will be called. Since this is done using a concurrently running
       process, there is no guarantee that the loading is already
       performed when the method returns. */
-  class font *appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement);
+  TeXFontDefinition *appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement);
 
   /** Prints very basic debugging information about the fonts in the
       pool to the kdDebug output stream. */
@@ -107,7 +107,7 @@ Q_OBJECT
 
   /** This is the list which actually holds pointers to the fonts in
       the fontPool */
-  QPtrList<class font> fontList;
+  QPtrList<TeXFontDefinition> fontList;
 
   /** This method marks all fonts in the fontpool as "not in use". The
       fonts are, however, not removed from memory until the method

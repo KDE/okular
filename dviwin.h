@@ -12,9 +12,6 @@
 #define _dviwin_h_
 
 
-#include <stdio.h>
-
-#include "../config.h"
 #include <qevent.h>
 #include <qintdict.h>
 #include <qpainter.h> 
@@ -25,24 +22,20 @@
 #include <kviewpart.h>
 
 #include "bigEndianByteReader.h"
-#include "fontpool.h"
-#include "psgs.h"
 #include "dvi_init.h"
+#include "psgs.h"
 #include "selection.h"
 
-struct	WindowRec {
-  double	shrinkfactor;
-  int		base_x;
-  int           base_y;
-};
-
-
+class dviWindow;
 class fontProgressDialog;
 class infoDialog;
 class KAction;
 class KEdFind;
 class KPrinter;
+class KProcess;
 class KShellProcess;
+class TeXFontDefinition;
+
 extern const int MFResolutions[];
 
 class DVI_Hyperlink {
@@ -94,12 +87,12 @@ struct framedata {
 
 typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 struct drawinf {
-  struct framedata      data;
-  struct font          *fontp;
-  set_char_proc	        set_char_p;
+  struct framedata            data;
+  TeXFontDefinition          *fontp;
+  set_char_proc	              set_char_p;
 
-  QIntDict<struct font> fonttable;
-  struct font	       *_virtual;
+  QIntDict<TeXFontDefinition> fonttable;
+  TeXFontDefinition	      *_virtual;
 };
 
 
@@ -227,9 +220,8 @@ protected:
  void          paintEvent(QPaintEvent *ev);
 
 private:
-
- struct WindowRec mane;
- struct WindowRec currwin;
+ /** Shrink factor. Units are not quite clear */
+ double	shrinkfactor;
 
  QString       errorMsg;
 
@@ -313,7 +305,6 @@ private:
  /** List of anchors in a document */
  QMap<QString, DVI_Anchor> anchorList;
 
- unsigned int	   basedpi;
  double            fontPixelPerDVIunit() {return dviFile->cmPerDVIunit * MFResolutions[MetafontMode]/2.54;};
 
  int		   makepk;

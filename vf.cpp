@@ -30,8 +30,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dviwin.h"
 #include "dvi.h"
+#include "fontpool.h"
 #include "xdvi.h"
 
 extern void oops(QString message);
@@ -62,7 +62,7 @@ extern void oops(QString message);
  *	The main routine
  */
 
-void font::read_VF_index(void)
+void TeXFontDefinition::read_VF_index(void)
 {
 #ifdef DEBUG_FONTS
   kdDebug(4300) << "font::read_VF_index(void)" << endl;
@@ -74,7 +74,7 @@ void font::read_VF_index(void)
   flags      |= FONT_VIRTUAL;
   set_char_p  = &dviWindow::set_vf_char;
 #ifdef DEBUG_FONTS
-  kdDebug(4300) << "font::read_VF_index: reading VF pixel file " << filename << endl;
+  kdDebug(4300) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename << endl;
 #endif
   // Read preamble.
   fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
@@ -107,7 +107,7 @@ void font::read_VF_index(void)
     // number which describes extra enlargement that the virtual font
     // imposes. One obtains the enlargement by dividing 2^20. 
     double enlargement_factor = double(scale)/(1<<20) * enlargement;
-    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
+    TeXFontDefinition *newfontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
 
     // Insert font in dictionary and make sure the dictionary is big
     // enough.

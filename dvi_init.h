@@ -11,6 +11,7 @@
 #include "bigEndianByteReader.h"
 
 class fontPool;
+class TeXFontDefinition;
 
 class dvifile : public bigEndianByteReader
 {
@@ -36,7 +37,7 @@ class dvifile : public bigEndianByteReader
       KDVI ensures that the user is only informed once. */
   bool           sourceSpecialMarker;
   
-  QIntDict<struct font> tn_table;
+  QIntDict<TeXFontDefinition> tn_table;
 
   double         cmPerDVIunit;
 

@@ -7,12 +7,13 @@
 // Copyright 2000--2001, Stefan Kebekus (stefan.kebekus@uni-bayreuth.de).
 
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qstringlist.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kprocess.h>
+#include <qdir.h>
+#include <qfile.h>
+#include <qfileinfo.h>
+#include <qstringlist.h>
 
 #include "dviwin.h"
 #include "kdvi.h"
@@ -189,8 +190,8 @@ void dviWindow::epsf_special(QString cp)
 
   if (PostScriptOutPutString) {
     if (QFile::exists(EPSfilename)) {
-      double PS_H = (currinf.data.dvi_h*300.0)/(65536*basedpi)-300;
-      double PS_V = (currinf.data.dvi_v*300.0)/basedpi - 300;
+      double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[MetafontMode])-300;
+      double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[MetafontMode] - 300;
       PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
       PostScriptOutPutString->append( "@beginspecial " );
       PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
@@ -223,10 +224,10 @@ void dviWindow::epsf_special(QString cp)
 	bbox_height = rhi;
       }
 
-      bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit() / currwin.shrinkfactor;
-      bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit() / currwin.shrinkfactor;
+      bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrinkfactor;
+      bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrinkfactor;
 
-      QRect bbox(((int) ((currinf.data.dvi_h) / (currwin.shrinkfactor * 65536))) - currwin.base_x, currinf.data.pxl_v - currwin.base_y - (int)bbox_height, (int)bbox_width, (int)bbox_height);
+      QRect bbox(((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, (int)bbox_width, (int)bbox_height);
       foreGroundPaint.save();
       if (QFile::exists(EPSfilename))
 	foreGroundPaint.setBrush(Qt::lightGray);
@@ -265,8 +266,8 @@ void dviWindow::quote_special(QString cp)
 #endif
   
   if (PostScriptOutPutString) {
-    double PS_H = (currinf.data.dvi_h*300.0)/(65536*basedpi)-300;
-    double PS_V = (currinf.data.dvi_v*300.0)/basedpi - 300;
+    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[MetafontMode])-300;
+    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[MetafontMode] - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
     PostScriptOutPutString->append( cp );
@@ -281,8 +282,8 @@ void dviWindow::ps_special(QString cp)
 #endif
   
   if (PostScriptOutPutString) {
-    double PS_H = (currinf.data.dvi_h*300.0)/(65536*basedpi)-300;
-    double PS_V = (currinf.data.dvi_v*300.0)/basedpi - 300;
+    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[MetafontMode])-300;
+    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[MetafontMode] - 300;
     
     if (cp.find("ps::[begin]", 0, false) == 0) {
       PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );

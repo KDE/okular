@@ -165,7 +165,7 @@ void dvifile::read_postamble(void)
     // shall be enlarged by the following factor before it is used.
     double enlargement_factor = (double(scale) * double(magnification))/(double(design) * 1000.0);
     
-    struct font *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
+    TeXFontDefinition *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
     
     // Insert font in dictionary and make sure the dictionary is big
     // enough.

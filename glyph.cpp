@@ -10,11 +10,10 @@
 
 glyph::glyph() 
 {
-  bitmap.bits = 0;
+  ;
 }
 
 glyph::~glyph()
 {
-  if (bitmap.bits != 0L)
-    delete [] bitmap.bits;
+  ;
 }

@@ -208,7 +208,7 @@ void OptionDialog::makeRenderingPage()
 
   mRender.showHyperLinksCheck =  new QCheckBox( i18n("Show hyperlinks"), page );
   QToolTip::add( mRender.showHyperLinksCheck, i18n("If in doubt, switch on!") );
-  QWhatsThis::add( mRender.showHyperLinksCheck, i18n("For your convenience, some DVI files contain hyperlinks which are corss-references or point to external documents. You probably want to switch this option on, unless you are annoyed by the blue underlines which KDVI uses to mark the hyperlinks.") );
+  QWhatsThis::add( mRender.showHyperLinksCheck, i18n("For your convenience, some DVI files contain hyperlinks which are cross-references or point to external documents. You probably want to switch this option on, unless you don't want the blue underlines which KDVI uses to mark the hyperlinks.") );
 
   QGroupBox *editorBox = new QGroupBox( 2, Horizontal, i18n("Editor for Inverse Search"), page ); 
 

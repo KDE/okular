@@ -386,7 +386,7 @@ void QOutputDevPixmap::updateFont ( GfxState *state )
 void QOutputDevPixmap::stroke ( GfxState *state ) 
 {
 	QPointArray points;
-	QArray<int> lengths;
+	QMemArray<int> lengths;
 
 	// transform points
 	int n = convertPath ( state, points, lengths );
@@ -433,7 +433,7 @@ void QOutputDevPixmap::eoFill ( GfxState *state )
 void QOutputDevPixmap::doFill ( GfxState *state, bool winding ) 
 {
 	QPointArray points;
-	QArray<int> lengths;
+	QMemArray<int> lengths;
 
 	// transform points
 	int n = convertPath ( state, points, lengths );
@@ -476,7 +476,7 @@ void QOutputDevPixmap::eoClip ( GfxState *state )
 void QOutputDevPixmap::doClip ( GfxState *state, bool winding ) 
 {
 	QPointArray points;
-	QArray<int> lengths;
+	QMemArray<int> lengths;
 
 	// transform points
 	int n = convertPath ( state, points, lengths );
@@ -525,7 +525,7 @@ void QOutputDevPixmap::doClip ( GfxState *state, bool winding )
 // Then it connects subaths within a single compound polygon to a single
 // point so that X can fill the polygon (sort of).
 //
-int QOutputDevPixmap::convertPath ( GfxState *state, QPointArray &points, QArray<int> &lengths ) 
+int QOutputDevPixmap::convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths ) 
 {
 	GfxPath *path = state-> getPath ( );
 	int n = path-> getNumSubpaths ( );

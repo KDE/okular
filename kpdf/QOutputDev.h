@@ -18,6 +18,7 @@
 #include <stddef.h>
 
 #include <qscrollview.h>
+#include <qmemarray.h>
 
 class Object;
 
@@ -174,7 +175,7 @@ private:
 	void updateLineAttrs ( GfxState *state, GBool updateDash );
 	void doFill ( GfxState *state, bool winding );
 	void doClip ( GfxState *state, bool winding );
-	int convertPath ( GfxState *state, QPointArray &points, QArray<int> &lengths );
+	int convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths );
 	int convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArray &points );
 };
 

@@ -360,7 +360,7 @@ void KDVIMultiPage::preferencesChanged()
 
   window->font_pool->setParameters(mfmode, makepk, useType1Fonts, useFontHints);
 
-  window->setEditorCommand( config->readEntry( "EditorCommand", "" ));
+  window->setEditorCommand( config->readPathEntry( "EditorCommand" ));
 }
 
 

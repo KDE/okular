@@ -72,7 +72,7 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   // not recognized, switch to "User defined editor". That way, kdvi
   // stays compatible even if the EditorCommands[] change between
   // different versions of kdvi.
-  QString currentEditorCommand = config->readEntry( "EditorCommand", "" );
+  QString currentEditorCommand = config->readPathEntry( "EditorCommand" );
   int i;
   for(i = editorCommandString.count()-1; i>0; i--)
     if (editorCommandString[i] == currentEditorCommand)
@@ -142,7 +142,7 @@ void optionDialogSpecialWidget::apply(void)
   config->setGroup("kdvi");
   config->writeEntry( "ShowPS", showSpecialCheck->isChecked() );
   config->writeEntry( "ShowHyperLinks", showHyperLinksCheck->isChecked() );
-  config->writeEntry( "EditorCommand", EditorCommand );
+  config->writePathEntry( "EditorCommand", EditorCommand );
   config->sync();
 }
 

@@ -58,7 +58,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parent, const char *name)
 {
   setInstance(KDVIMultiPageFactory::instance()); 
 
-  window = new dviWindow(300, 1.0, "cx", "a4", 0, scrollView());
+  window = new dviWindow(300, 1.0, "cx", 0, scrollView());
 
   scrollView()->addChild(window);
 }
@@ -114,4 +114,10 @@ double KDVIMultiPage::zoomForHeight(int height)
 double KDVIMultiPage::zoomForWidth(int width)
 {
   return (window->zoom() * (double)width)/(double)page_w;
+}
+
+
+void KDVIMultiPage::setPaperSize(double w, double h)
+{
+  window->setPaper(w, h);
 }

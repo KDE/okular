@@ -19,7 +19,7 @@ class dviWindow : public QWidget
 	Q_OBJECT
 
 public:
-	dviWindow( int basedpi, double zoom, const char *mfmode, const char *paper, int makepk,
+	dviWindow( int basedpi, double zoom, const char *mfmode, int makepk,
 	QWidget *parent=0, const char *name=0 );
 	~dviWindow();
 
@@ -35,8 +35,7 @@ public:
 	int		resolution();
 	void		setMetafontMode( const char * );
 	const char *	metafontMode();
-	void		setPaper( const char * );
-	const char *	paper();
+	void		setPaper(double w, double h);
 	void		setGamma( float );
 	float		gamma();
 	void		setFontPath( const char * );

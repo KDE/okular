@@ -71,6 +71,8 @@ public:
   /// calculates the zoom needed to fit into a given height
   virtual double zoomForHeight(int height); 
 
+  void setPaperSize(double, double);
+
 
 signals:
 

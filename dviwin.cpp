@@ -85,6 +85,14 @@ extern "C" {
 #include <kpathsea/tex-file.h>
 #include <kpathsea/tex-glyph.h>
 }
+#include <setjmp.h>
+extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
+extern	char *dvi_oops_msg;
+extern	QDateTime dvi_time;
+
+
+
+double xres;
 
 //------ next the drawing functions called from C-code (dvi_draw.c) ----
 
@@ -98,7 +106,7 @@ extern  void qt_processEvents(void)
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) 
+dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget *parent, const char *name ) 
   : QWidget( parent, name )
 {
   setBackgroundMode(NoBackground);
@@ -113,7 +121,8 @@ dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, const char *ppr, i
 	setResolution( bdpi );
 	setMakePK( mkpk );
 	setMetafontMode( mfm );
-	setPaper( ppr );
+	unshrunk_paper_w = int( 21.0 * basedpi/2.54 + 0.5 );
+	unshrunk_paper_h = int( 27.9 * basedpi/2.54 + 0.5 ); 
 
 	DISP = x11Display();
 	mainwin = handle();
@@ -125,7 +134,7 @@ dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, const char *ppr, i
 	_postscript = 0;
 	pixmap = NULL;
 
-	double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) ); //@@@
+	xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
 	double s    = basedpi/(xres*zoom);
 	mane.shrinkfactor = currwin.shrinkfactor = s;
 	_zoom = zoom;
@@ -208,28 +217,18 @@ const char * dviWindow::metafontMode()
 	return MetafontMode;
 }
 
-void dviWindow::setPaper( const char *paper )
+
+void dviWindow::setPaper(double w, double h)
 {
-	if ( !paper )
-		return;
-	paper_type = paper;
-	_paper = paper_type;
-	float w, h;
-	if (!OptionDialog::paperSizes( paper, w, h ))
-	{
-		kDebugWarning( 4300, "Unknown paper type!");
-		// A4 paper is used as default, if paper is unknown
-		w = 21.0/2.54;
-		h = 29.7/2.54;
-	}
-	unshrunk_paper_w = int( w * basedpi + 0.5 );
-	unshrunk_paper_h = int( h * basedpi + 0.5 ); 
+  unshrunk_paper_w = int( w * basedpi/2.54 + 0.5 );
+  unshrunk_paper_h = int( h * basedpi/2.54 + 0.5 ); 
+  unshrunk_page_w = unshrunk_paper_w;
+  unshrunk_page_h = unshrunk_paper_h;
+  init_page();
+  reset_fonts();
+  changePageSize();
 }
 
-const char * dviWindow::paper()
-{
-	return paper_type;
-}
 
 void dviWindow::setResolution( int bdpi )
 {
@@ -280,11 +279,6 @@ void dviWindow::initDVI()
 		= FontPath.ascii();
 	ChangesPossible = 0;
 }
-
-#include <setjmp.h>
-extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-extern	char *dvi_oops_msg;
-extern	QDateTime dvi_time;
 
 
 //------ this function calls the dvi interpreter ----------
@@ -382,8 +376,6 @@ void dviWindow::changePageSize()
   resize( page_w, page_h );
   currwin.win = mane.win = pixmap->handle();
   drawPage();
-
-  kdDebug() << "New Pixmap size = " << page_w << "x" << page_h << endl;
 }
 
 //------ setup the dvi interpreter (should do more here ?) ----------
@@ -423,10 +415,6 @@ int dviWindow::totalPages()
 
 void dviWindow::setZoom(double zoom)
 {
-  //  if ((zoom < 0.05) || (zoom > 5.0))
-  //    zoom = 1.0;
-
-  double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) ); //@@@
   double s    = basedpi/(xres*zoom);
   mane.shrinkfactor = currwin.shrinkfactor = s;
   _zoom = zoom;

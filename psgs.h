@@ -13,6 +13,7 @@ class pageInfo
 {
 public:
   pageInfo(QString _PostScriptString);
+  ~pageInfo();
 
   QString   *PostScriptString;
   KTempFile *Gfx;

@@ -89,23 +89,6 @@ please report the problem."));
   exit(1);
 }
 
-/** Either allocate storage or fail with explanation.  */
-
-char * xmalloc(unsigned size, const char *why)
-{
-#ifdef DEBUG_UTIL
-  kdDebug() << "Allocating " << size << " bytes for " << why << endl;
-#endif
-
-  /* Avoid malloc(0), though it's not clear if it ever actually
-     happens any more.  */
-  char *mem = (char *)malloc(size ? size : 1);
-  
-  if (mem == NULL)
-    oops(QString(i18n("Cannot allocate %1 bytes for %2.")).arg(size).arg(why) );
-  return mem;
-}
-
 /*
  *	Allocate bitmap for given font and character
  */
@@ -117,7 +100,7 @@ void alloc_bitmap(bitmap *bitmap)
   /* width must be multiple of 16 bits for raster_op */
   bitmap->bytes_wide = ROUNDUP((int) bitmap->w, BITS_PER_BMUNIT) * BYTES_PER_BMUNIT;
   size = bitmap->bytes_wide * bitmap->h;
-  bitmap->bits = xmalloc(size != 0 ? size : 1, "character bitmap");
+  bitmap->bits = new char[size != 0 ? size : 1];
 }
 
 /*

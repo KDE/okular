@@ -34,7 +34,6 @@
 #include "oconfig.h"
 #include "dvi.h"
 
-extern	char	*xmalloc (unsigned, const char *);
 extern void oops(QString message);
 
 /***
@@ -94,7 +93,7 @@ void font::read_VF_index(void)
     int   scale     = four(VF_file);
     int   design    = four(VF_file);
     int   len       = one(VF_file) + one(VF_file); /* sequence point in the middle */
-    char *fontname  = xmalloc((unsigned) len + 1, "font name");
+    char *fontname  = new char[(unsigned) len + 1];
     fread(fontname, sizeof(char), len, VF_file);
     fontname[len] = '\0';
 	
@@ -161,11 +160,11 @@ void font::read_VF_index(void)
       } else {
 	m->free_me = True;
 	if (len <= VF_PARM_1) {
-	  m->pos = avail = (unsigned char *)xmalloc(VF_PARM_2*sizeof(unsigned char ),"unknown");
+	  m->pos = avail = new unsigned char [VF_PARM_2];
 	  availend = avail + VF_PARM_2;
 	  avail += len;
 	} else 
-	  m->pos = (unsigned char *)xmalloc(len*sizeof(unsigned char),"unknown");
+	  m->pos = new unsigned char[len];
       }
       fread((char *) m->pos, 1, len, VF_file);
       m->end = m->pos + len;

@@ -97,16 +97,17 @@ font::~font()
 #endif
 
   if (fontname != 0)
-    free(fontname);
+    delete [] fontname;
+  if (glyphtable != 0)
+    delete [] glyphtable;
+  if (macrotable != 0)
+    delete [] macrotable;
 
   if (flags & FONT_LOADED) {
     if (file != NULL) 
       fclose(file);
-    if (flags & FONT_VIRTUAL) {
-      delete [] macrotable;
+    if (flags & FONT_VIRTUAL)
       vf_table.clear();
-    } else
-      delete [] glyphtable;
   }
 }
 

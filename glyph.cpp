@@ -26,14 +26,14 @@ glyph::glyph()
 
 glyph::~glyph()
 {
-  if (bitmap.bits != NULL)
-    free(bitmap.bits);
+  if (bitmap.bits != 0L)
+    delete [] bitmap.bits;
   clearShrunkCharacter();
 }
 
 void glyph::clearShrunkCharacter()
 {
-  if (SmallChar != NULL) {
+  if (SmallChar != 0L) {
     delete SmallChar;
     SmallChar = NULL;
   }

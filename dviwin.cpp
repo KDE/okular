@@ -116,6 +116,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   HTML_href              = NULL;
   mane                   = currwin;
   _postscript            = 0;
+  _showHyperLinks        = true;
   pixmap                 = 0;
   findDialog             = 0;
   findNextAction         = 0;
@@ -170,12 +171,12 @@ dviWindow::~dviWindow()
 
   if (info)
     delete info;
-
+  if (pixmap)
+    delete pixmap;
   delete PS_interface;
-
   if (dviFile)
     delete dviFile;
-
+  
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
   export_printer = 0;
@@ -522,6 +523,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf._virtual  = NULL;
+    num_of_used_textlinks = 0;
     draw_part(dviFile->dimconv, false);
 
     if (!PostScriptOutPutString->isEmpty())

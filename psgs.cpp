@@ -14,6 +14,11 @@ pageInfo::pageInfo(QString _PostScriptString) {
   Gfx              = NULL;
 }
 
+pageInfo::~pageInfo() {
+  if (PostScriptString != 0L)
+    delete PostScriptString;
+}
+
 
 // ======================================================
 
@@ -35,14 +40,14 @@ ghostscript_interface::ghostscript_interface(double dpi, int pxlw, int pxlh) {
 }
 
 ghostscript_interface::~ghostscript_interface() {
-  if (pageList != NULL)
+  if (pageList != 0L)
     delete pageList;
-
-  if (MemoryCache != NULL)
+  if (MemoryCache != 0L)
     delete MemoryCache;
-
-  if (DiskCache != NULL)
+  if (DiskCache != 0L)
     delete DiskCache;
+  if (PostScriptHeaderString != 0L)
+    delete PostScriptHeaderString;
 }
 
 void ghostscript_interface::setSize(double dpi, int pxlw, int pxlh) {

@@ -100,7 +100,7 @@ class font *fontPool::appendx(char *fontname, long checksum, Q_INT32 scale, int 
     if (strcmp(fontname, fontp->fontname) == 0 && (int (fsize+0.5)) == (int)(fontp->fsize + 0.5)) {
       // if font is already in the list
       fontp->mark_as_used();
-      free(fontname);
+      delete [] fontname;
       return fontp;
     }
     fontp=fontList.next();

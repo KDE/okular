@@ -247,7 +247,7 @@
       <step>
 	<para>Some editors need to be started manually, or need
 	additional configuration. You will find a description of all
-	supported editors in the, <link
+	supported editors in the section <link
 	linkend="inverse-search-editor">Setting up your
 	editor</link> below.</para>
       </step>
@@ -340,7 +340,7 @@
 	Server</application>.</para>
       </important>
 
-      <para>To start the , you can do
+      <para>To start the <application>Emacs Server</application>, you can do
       one of the following:</para>
       <procedure>
 	<step>
@@ -414,7 +414,7 @@
 	      your changes since the last save to be
 	      lost!</emphasis></para>
 
-	      <para><application>gnuclient</application>'s behaviour
+	      <para><command>gnuclient</command>'s behaviour
 	      of silently reloading the changed buffer is probably
 	      preferable &mdash; add the following lines to your
 	      <filename>.emacs</filename> file to emulate

@@ -10,11 +10,6 @@
 #include "font.h"
 #include "kdvi.h"
 
-extern "C" {
-#include <kpathsea/c-fopen.h>
-}
-
-
 #include "oconfig.h"
 
 extern FILE *xfopen(const char *filename, const char *type);
@@ -31,8 +26,9 @@ extern int n_files_left;
 #define	VF_ID_BYTE	202
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
+#define DEBUG_FONT 1
 
-void font::font_name_receiver(KProcess *proc, char *buffer, int buflen)
+void font::font_name_receiver(KProcess *, char *buffer, int buflen)
 {
   if (buflen < 3)
     return;
@@ -43,10 +39,10 @@ void font::font_name_receiver(KProcess *proc, char *buffer, int buflen)
 
   kdDebug() << "FONT NAME RECEIVED:" << filename << endl;
 
-  file = xfopen(filename.latin1(), FOPEN_R_MODE);
+  file = xfopen(filename.latin1(), "r");
   if (file == NULL) {
     kdError() << i18n("Can't find font ") << fontname << "." << endl;
-    return True;
+    return;
   }
 
   --n_files_left;
@@ -201,7 +197,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
       return NULL;	/* previously flagged missing char */
 
     if (file == NULL) {
-      file = xfopen(filename.latin1(), OPEN_MODE);
+      file = xfopen(filename.latin1(), "r");
       if (file == NULL) {
 	oops(QString(i18n("Font file disappeared: %1")).arg(filename) );
 	return NULL;

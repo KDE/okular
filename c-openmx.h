@@ -20,7 +20,26 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #ifndef C_OPENMX_H
 #define C_OPENMX_H
 
-#include <kpathsea/c-limits.h>
+#include <config.h>
+
+#ifdef HAVE_LIMITS_H
+#include <limits.h>
+#else
+#include <sys/types.h>
+ 
+/* This is the symbol that X uses to determine if <sys/types.h> has been
+ *    read, so we define it.  */
+#define __TYPES__       
+
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
+#endif /* not HAVE_LIMITS_H */
+ 
+/* Some systems may have the floating-point limits in the above.  */
+#if defined (HAVE_FLOAT_H) && !defined (FLT_MAX)
+#include <float.h>
+#endif  
 
 #ifndef OPEN_MAX
 #ifdef _SC_OPEN_MAX
@@ -35,3 +54,4 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #endif /* no OPEN_MAX */
 
 #endif /* not C_OPENMX_H */
+

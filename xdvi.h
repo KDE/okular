@@ -18,7 +18,7 @@
 
 /* For wchar_t et al., that the X files might want. */
 extern "C" {
-#include <kpathsea/systypes.h>
+#include <sys/types.h>
 }
 
 /* See kpathsea/INSTALL for the purpose of the FOIL...  */
@@ -40,12 +40,6 @@ typedef	char		Boolean;
 
 #define	True	1
 #define	False	0
-
-
-
-#ifndef	OPEN_MODE
-#define OPEN_MODE FOPEN_R_MODE
-#endif	/* OPEN_MODE */
 
 #define	OPEN_MODE_ARGS	_Xconst char *
 

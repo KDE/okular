@@ -66,6 +66,8 @@ extern	char  *xmalloc (unsigned, const char *);
 extern void oops(QString message);
 extern void alloc_bitmap(bitmap *bitmap);
 
+#define DEBUG_PK 1
+
 BMUNIT	bit_masks[33] = {
 	0x0,		0x1,		0x3,		0x7,
 	0xf,		0x1f,		0x3f,		0x7f,
@@ -361,7 +363,7 @@ void font::read_PK_index(void)
   kdDebug() << "Reading PK pixel file " << filename << endl;
 #endif
 
-  Fseek(file, (long) one(file), 1);	/* skip comment */
+  Fseek(file, (long) one(file), SEEK_CUR);	/* skip comment */
 
   (void) four(file);		/* skip design size */
   long file_checksum = four(file);
@@ -402,7 +404,7 @@ void font::read_PK_index(void)
       }
     glyphtable[ch].addr = ftell(file);
     glyphtable[ch].x2 = PK_flag_byte;
-    Fseek(file, (long) bytes_left, 1);
+    Fseek(file, (long) bytes_left, SEEK_CUR);
 #ifdef DEBUG_PK
     kdDebug() << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
 #endif

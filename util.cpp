@@ -130,7 +130,7 @@ static	void close_a_file()
   return; //@@@
 
   register struct font *fontp;
-  unsigned short oldest = ~0;
+  unsigned short oldest = (unsigned short)~0;
   struct font *f = NULL;
 
   for ( fontp = font_pool.first(); fontp != 0; fontp=font_pool.next() )

@@ -17,7 +17,6 @@
 #include <qbttngrp.h>
 #include <qlabel.h>
 #include <kapp.h>
-#define translate klocale->translate
 
 printData::printData
 (
@@ -29,7 +28,7 @@ printData::printData
 {
 	fileNameLabel = new QLabel( this, "Label_1" );
 	fileNameLabel->setGeometry( 18, 70, 91, 30 );
-	fileNameLabel->setText( translate( "&File Name:" ) );
+	fileNameLabel->setText( i18n( "&File Name:" ) );
 	fileNameLabel->setAlignment( 290 );
 	fileNameLabel->setMargin( 8 );
 
@@ -56,27 +55,27 @@ printData::printData
 
 	printAll = new QRadioButton( this, "RadioButton_1" );
 	printAll->setGeometry( 30, 140, 100, 30 );
-	printAll->setText( translate( "&All" ) );
+	printAll->setText( i18n( "&All" ) );
 	printAll->setAutoRepeat( FALSE );
 	printAll->setAutoResize( FALSE );
 	printAll->setChecked( TRUE );
 
 	printCurrent = new QRadioButton( this, "RadioButton_2" );
 	printCurrent->setGeometry( 150, 140, 100, 30 );
-	printCurrent->setText( translate( "&Current" ) );
+	printCurrent->setText( i18n( "&Current" ) );
 	printCurrent->setAutoRepeat( FALSE );
 	printCurrent->setAutoResize( FALSE );
 
 	printMarked = new QRadioButton( this, "RadioButton_3" );
 	printMarked->setGeometry( 30, 170, 100, 30 );
-	printMarked->setText( translate( "&Marked" ) );
+	printMarked->setText( i18n( "&Marked" ) );
 	printMarked->setAutoRepeat( FALSE );
 	printMarked->setAutoResize( FALSE );
 
 	printRange = new QRadioButton( this, "RadioButton_4" );
 	printRange->setGeometry( 150, 170, 100, 30 );
 	connect( printRange, SIGNAL(toggled(bool)), SLOT(rangeToggled(bool)) );
-	printRange->setText( translate( "&Range" ) );
+	printRange->setText( i18n( "&Range" ) );
 	printRange->setAutoRepeat( FALSE );
 	printRange->setAutoResize( FALSE );
 
@@ -96,7 +95,7 @@ printData::printData
 
 	printReverse = new QCheckBox( this, "CheckBox_1" );
 	printReverse->setGeometry( 30, 240, 90, 30 );
-	printReverse->setText( translate( "Re&verse" ) );
+	printReverse->setText( i18n( "Re&verse" ) );
 	printReverse->setAutoRepeat( FALSE );
 	printReverse->setAutoResize( FALSE );
 
@@ -105,35 +104,35 @@ printData::printData
 	connect( nupCombo, SIGNAL(activated(int)), SLOT(nupPressed(int)) );
 	nupCombo->setSizeLimit( 10 );
 	nupCombo->setAutoResize( FALSE );
-	nupCombo->insertItem( translate( "1 page on sheet" ) );
-	nupCombo->insertItem( translate( "2 pages on sheet" ) );
-	nupCombo->insertItem( translate( "4 pages on sheet" ) );
+	nupCombo->insertItem( i18n( "1 page on sheet" ) );
+	nupCombo->insertItem( i18n( "2 pages on sheet" ) );
+	nupCombo->insertItem( i18n( "4 pages on sheet" ) );
 
 	colOrder = new QComboBox( FALSE, this, "ComboBox_3" );
 	colOrder->setGeometry( 270, 240, 110, 30 );
 	colOrder->setSizeLimit( 10 );
 	colOrder->setAutoResize( FALSE );
-	colOrder->insertItem( translate( "Fill rows" ) );
-	colOrder->insertItem( translate( "Fill columns" ) );
+	colOrder->insertItem( i18n( "Fill rows" ) );
+	colOrder->insertItem( i18n( "Fill columns" ) );
 
 	okButton = new QPushButton( this, "PushButton_1" );
 	okButton->setGeometry( 30, 300, 100, 30 );
 	connect( okButton, SIGNAL(clicked()), SLOT(okPressed()) );
-	okButton->setText( translate( "OK" ) );
+	okButton->setText( i18n( "OK" ) );
 	okButton->setAutoRepeat( FALSE );
 	okButton->setAutoResize( FALSE );
 
 	setupButton = new QPushButton( this, "PushButton_2" );
 	setupButton->setGeometry( 150, 300, 100, 30 );
 	connect( setupButton, SIGNAL(clicked()), SLOT(setupPressed()) );
-	setupButton->setText( translate( "&Setup" ) );
+	setupButton->setText( i18n( "&Setup" ) );
 	setupButton->setAutoRepeat( FALSE );
 	setupButton->setAutoResize( FALSE );
 
 	cancelButton = new QPushButton( this, "PushButton_3" );
 	cancelButton->setGeometry( 270, 300, 100, 30 );
 	connect( cancelButton, SIGNAL(clicked()), SLOT(cancelPressed()) );
-	cancelButton->setText( translate( "Cancel" ) );
+	cancelButton->setText( i18n( "Cancel" ) );
 	cancelButton->setAutoRepeat( FALSE );
 	cancelButton->setAutoResize( FALSE );
 
@@ -141,7 +140,7 @@ printData::printData
 	tmpQButtonGroup = new QButtonGroup( this, "ButtonGroup_3" );
 	tmpQButtonGroup->setGeometry( 10, 220, 380, 60 );
 	tmpQButtonGroup->setFrameStyle( 49 );
-	tmpQButtonGroup->setTitle( translate( "Page order" ) );
+	tmpQButtonGroup->setTitle( i18n( "Page order" ) );
 	tmpQButtonGroup->setAlignment( 1 );
 	tmpQButtonGroup->insert( printReverse );
 	tmpQButtonGroup->lower();
@@ -149,7 +148,7 @@ printData::printData
 	tmpQButtonGroup = new QButtonGroup( this, "ButtonGroup_2" );
 	tmpQButtonGroup->setGeometry( 10, 120, 380, 90 );
 	tmpQButtonGroup->setFrameStyle( 49 );
-	tmpQButtonGroup->setTitle( translate( "Pages" ) );
+	tmpQButtonGroup->setTitle( i18n( "Pages" ) );
 	tmpQButtonGroup->setAlignment( 1 );
 	tmpQButtonGroup->insert( printAll );
 	tmpQButtonGroup->insert( printCurrent );
@@ -161,7 +160,7 @@ printData::printData
 	tmpQButtonGroup = new QButtonGroup( this, "printToGroup" );
 	tmpQButtonGroup->setGeometry( 10, 10, 380, 100 );
 	tmpQButtonGroup->setFrameStyle( 49 );
-	tmpQButtonGroup->setTitle( translate( "Print to" ) );
+	tmpQButtonGroup->setTitle( i18n( "Print to" ) );
 	tmpQButtonGroup->setAlignment( 1 );
 	tmpQButtonGroup->lower();
 

@@ -60,7 +60,7 @@ DISTCLEANFILES = $(BUILTSOURCES)
 CLEANFILES = $(BUILTSOURCES) squeeze kdvi 
 
 messages:
-	$(XGETTEXT) -C -ktranslate -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po ../po/kdvi.pot
+	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po ../po/kdvi.pot
 
 # just install datas here. Use install-exec-data for scripts and etc.
 # the binary itself is already installed from automake

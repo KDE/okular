@@ -15,7 +15,6 @@
 #include <kdebug.h>
 
 #include <klocale.h>
-#define translate klocale->translate
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -213,9 +212,9 @@ int dviWindow::antiAlias()
 void dviWindow::setMakePK( int flag )
 {
 	if (!ChangesPossible)
-		QMessageBox::warning( this, translate("Notice"),
-			translate("The change in font generation will be effective\n"
-			"only after you start kdvi again!"), translate( "OK" ) );
+		QMessageBox::warning( this, i18n("Notice"),
+			i18n("The change in font generation will be effective\n"
+			"only after you start kdvi again!"), i18n( "OK" ) );
 	makepk = flag;
 }
 
@@ -229,9 +228,9 @@ extern char * kpse_font_override_path;
 void dviWindow::setFontPath( const char *s )
 {
 	if (!ChangesPossible)
-		QMessageBox::warning( this, translate("Notice"),
-			translate("The change in font path will be effective\n"
-			"only after you start kdvi again!"), translate( "OK" ) );
+		QMessageBox::warning( this, i18n("Notice"),
+			i18n("The change in font path will be effective\n"
+			"only after you start kdvi again!"), i18n( "OK" ) );
 	FontPath = s;
 }
 
@@ -243,9 +242,9 @@ const char * dviWindow::fontPath()
 void dviWindow::setMetafontMode( const char *mfm )
 {
 	if (!ChangesPossible)
-		QMessageBox::warning( this, translate("Notice"),
-			translate("The change in Metafont mode will be effective\n"
-			"only after you start kdvi again!"), translate( "OK" ) );
+		QMessageBox::warning( this, i18n("Notice"),
+			i18n("The change in Metafont mode will be effective\n"
+			"only after you start kdvi again!"), i18n( "OK" ) );
 	MetafontMode = mfm;
 }
 
@@ -280,9 +279,9 @@ const char * dviWindow::paper()
 void dviWindow::setResolution( int bdpi )
 {
 	if (!ChangesPossible)
-		QMessageBox::warning( this, translate("Notice"),
-			translate("The change in resolution will be effective\n"
-			"only after you start kdvi again!"), translate( "OK" ) );
+		QMessageBox::warning( this, i18n("Notice"),
+			i18n("The change in resolution will be effective\n"
+			"only after you start kdvi again!"), i18n( "OK" ) );
 	basedpi = bdpi;
 	_pixels_per_inch = bdpi;
 	offset_x = offset_y = bdpi;
@@ -297,9 +296,9 @@ void dviWindow::setGamma( float gamma )
 {
 	if (!ChangesPossible)
 	{
-		QMessageBox::warning( this, translate("Notice"),
-			translate("The change in gamma will be effective\n"
-			"only after you start kdvi again!"), translate( "OK" ) );
+		QMessageBox::warning( this, i18n("Notice"),
+			i18n("The change in gamma will be effective\n"
+			"only after you start kdvi again!"), i18n( "OK" ) );
 		return;	// Qt will kill us otherwise ??
 	}
 	_gamma = gamma;
@@ -421,10 +420,10 @@ void dviWindow::drawDVI()
 		{	// dvi_oops called
 			dvi_time = 0; // force init_dvi_file
 			QApplication::restoreOverrideCursor();
-			QMessageBox::critical( this, translate("HEY"),
-				QString(translate("What's this? DVI problem!\n"))
+			QMessageBox::critical( this, i18n("HEY"),
+				QString(i18n("What's this? DVI problem!\n"))
 					+ dvi_oops_msg,
-				translate("OK"));
+				i18n("OK"));
 			return;
 		}
 		if ( !check_dvi_file() )
@@ -455,10 +454,10 @@ void dviWindow::drawDVI()
 			dvi_time = 0; // force init_dvi_file
 			QApplication::restoreOverrideCursor();
 			paint.end();
-			QMessageBox::critical( this, translate("HEY"),
-				QString(translate("What's this? DVI problem!\n"))
+			QMessageBox::critical( this, i18n("HEY"),
+				QString(i18n("What's this? DVI problem!\n"))
 					+ dvi_oops_msg,
-				translate("OK"));
+				i18n("OK"));
 			return;
 		}
 		else
@@ -506,12 +505,12 @@ void dviWindow::timerEvent()
 	if ( !changedDVI() )
 		return;
 	if ( !changing )
-		emit statusChange( "File status changed." );
+		emit statusChange( i18n("File status changed.") );
 	changing = 1;
 	if ( !correctDVI() )
 		return;
 	changing = 0;
-	emit statusChange( "File reloaded." );
+	emit statusChange( i18n("File reloaded.") );
 	changetime = QFileInfo(filename).lastModified();
 	drawPage();
 	emit fileChanged();

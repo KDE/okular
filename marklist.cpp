@@ -22,7 +22,6 @@
 #include <kapp.h>
 #include <qpopmenu.h>
 #include <klocale.h>
-#define translate klocale->translate
  
 MarkList::MarkList( QWidget * parent , const char * name )
 	: QTableView( parent, name ), sel(-1), drag(-1), items()
@@ -35,13 +34,13 @@ MarkList::MarkList( QWidget * parent , const char * name )
    	setNumCols( 2 );
 	pup = new QPopupMenu;
 	pup->setMouseTracking(TRUE);
-	pup->insertItem( translate("Mark current"), this, SLOT(markSelected()) );
-	pup->insertItem( translate("Unmark current"), this, SLOT(unmarkSelected()) );
-	pup->insertItem( translate("Mark all"), this, SLOT(markAll()) );
-	pup->insertItem( translate("Mark even"), this, SLOT(markEven()) );
-	pup->insertItem( translate("Mark odd"), this, SLOT(markOdd()) );
-	pup->insertItem( translate("Toggle marks"), this, SLOT(toggleMarks()) );
-	pup->insertItem( translate("Remove marks"), this, SLOT(removeMarks()) );
+	pup->insertItem( i18n("Mark current"), this, SLOT(markSelected()) );
+	pup->insertItem( i18n("Unmark current"), this, SLOT(unmarkSelected()) );
+	pup->insertItem( i18n("Mark all"), this, SLOT(markAll()) );
+	pup->insertItem( i18n("Mark even"), this, SLOT(markEven()) );
+	pup->insertItem( i18n("Mark odd"), this, SLOT(markOdd()) );
+	pup->insertItem( i18n("Toggle marks"), this, SLOT(toggleMarks()) );
+	pup->insertItem( i18n("Remove marks"), this, SLOT(removeMarks()) );
 }
 
 void	MarkList::insertItem ( const char *text, int index)

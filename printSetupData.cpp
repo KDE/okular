@@ -18,7 +18,6 @@
 #include <qgrpbox.h>
 #include <qpushbt.h>
 #include <kapp.h>
-#define translate klocale->translate
 
 printSetupData::printSetupData
 (
@@ -32,7 +31,7 @@ printSetupData::printSetupData
 	tmpQPushButton = new QPushButton( this, "PushButton_4" );
 	tmpQPushButton->setGeometry( 290, 300, 100, 30 );
 	connect( tmpQPushButton, SIGNAL(clicked()), SLOT(reject()) );
-	tmpQPushButton->setText( translate( "Cancel" ) );
+	tmpQPushButton->setText( i18n( "Cancel" ) );
 	tmpQPushButton->setAutoRepeat( FALSE );
 	tmpQPushButton->setAutoResize( FALSE );
 
@@ -40,12 +39,12 @@ printSetupData::printSetupData
 	tmpQGroupBox = new QGroupBox( this, "GroupBox_1" );
 	tmpQGroupBox->setGeometry( 150, 10, 250, 240 );
 	tmpQGroupBox->setFrameStyle( 49 );
-	tmpQGroupBox->setTitle( translate( "Printers" ) );
+	tmpQGroupBox->setTitle( i18n( "Printers" ) );
 	tmpQGroupBox->setAlignment( 1 );
 
 	internal = new QRadioButton( this, "RadioButton_5" );
 	internal->setGeometry( 30, 30, 100, 30 );
-	internal->setText( translate( "&Internal" ) );
+	internal->setText( i18n( "&Internal" ) );
 	internal->setAutoRepeat( FALSE );
 	internal->setAutoResize( FALSE );
 
@@ -63,13 +62,13 @@ printSetupData::printSetupData
 
 	psnup = new QRadioButton( this, "RadioButton_8" );
 	psnup->setGeometry( 30, 170, 100, 30 );
-	psnup->setText( translate( "Use ps&nup" ) );
+	psnup->setText( i18n( "Use ps&nup" ) );
 	psnup->setAutoRepeat( FALSE );
 	psnup->setAutoResize( FALSE );
 
 	mpage = new QRadioButton( this, "RadioButton_9" );
 	mpage->setGeometry( 30, 200, 100, 30 );
-	mpage->setText( translate( "Use &mpage" ) );
+	mpage->setText( i18n( "Use &mpage" ) );
 	mpage->setAutoRepeat( FALSE );
 	mpage->setAutoResize( FALSE );
 
@@ -89,21 +88,21 @@ printSetupData::printSetupData
 	tmpQPushButton = new QPushButton( this, "PushButton_5" );
 	tmpQPushButton->setGeometry( 170, 200, 100, 30 );
 	connect( tmpQPushButton, SIGNAL(clicked()), SLOT(addPrinter()) );
-	tmpQPushButton->setText( translate( "&Add" ) );
+	tmpQPushButton->setText( i18n( "&Add" ) );
 	tmpQPushButton->setAutoRepeat( FALSE );
 	tmpQPushButton->setAutoResize( FALSE );
 
 	tmpQPushButton = new QPushButton( this, "PushButton_6" );
 	tmpQPushButton->setGeometry( 280, 200, 100, 30 );
 	connect( tmpQPushButton, SIGNAL(clicked()), SLOT(removePrinter()) );
-	tmpQPushButton->setText( translate( "&Remove" ) );
+	tmpQPushButton->setText( i18n( "&Remove" ) );
 	tmpQPushButton->setAutoRepeat( FALSE );
 	tmpQPushButton->setAutoResize( FALSE );
 
 	okButton = new QPushButton( this, "PushButton_7" );
 	okButton->setGeometry( 170, 300, 100, 30 );
 	connect( okButton, SIGNAL(clicked()), SLOT(okPressed()) );
-	okButton->setText( translate( "OK" ) );
+	okButton->setText( i18n( "OK" ) );
 	okButton->setAutoRepeat( FALSE );
 	okButton->setAutoResize( FALSE );
 
@@ -117,7 +116,7 @@ printSetupData::printSetupData
 	spoolerLabel = new QLabel( this, "Label_1" );
 	spoolerLabel->setGeometry( 10, 260, 130, 30 );
 	spoolerLabel->setFrameStyle( 50 );
-	spoolerLabel->setText( translate( "&Spooler command:" ) );
+	spoolerLabel->setText( i18n( "&Spooler command:" ) );
 	spoolerLabel->setAlignment( 290 );
 	spoolerLabel->setMargin( 4 );
 
@@ -125,7 +124,7 @@ printSetupData::printSetupData
 	tmpQButtonGroup = new QButtonGroup( this, "ButtonGroup_5" );
 	tmpQButtonGroup->setGeometry( 10, 140, 130, 110 );
 	tmpQButtonGroup->setFrameStyle( 49 );
-	tmpQButtonGroup->setTitle( translate( "n-up" ) );
+	tmpQButtonGroup->setTitle( i18n( "n-up" ) );
 	tmpQButtonGroup->setAlignment( 1 );
 	tmpQButtonGroup->insert( psnup );
 	tmpQButtonGroup->insert( mpage );
@@ -134,7 +133,7 @@ printSetupData::printSetupData
 	tmpQButtonGroup = new QButtonGroup( this, "ButtonGroup_4" );
 	tmpQButtonGroup->setGeometry( 10, 10, 130, 120 );
 	tmpQButtonGroup->setFrameStyle( 49 );
-	tmpQButtonGroup->setTitle( translate( "Printing method" ) );
+	tmpQButtonGroup->setTitle( i18n( "Printing method" ) );
 	tmpQButtonGroup->setAlignment( 1 );
 	tmpQButtonGroup->insert( internal );
 	tmpQButtonGroup->insert( dvips );

@@ -36,8 +36,6 @@
 #include <unistd.h>
 #include <signal.h>
 
-#define translate klocale->translate
-
 enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
 enum {ID_OPT_PK = 3, ID_OPT_PS, ID_OPT_MB, ID_OPT_BB, ID_OPT_TB, ID_OPT_SB, ID_OPT_SC };
 
@@ -92,7 +90,7 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
   // Create a statusbar
 
 	statusBar = NULL;
-	makeStatusBar( translate("No document") );
+	makeStatusBar( i18n("No document") );
 
   // Lay out widgets
 
@@ -108,13 +106,13 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 
 	rmbmenu = new QPopupMenu;
 	rmbmenu->setMouseTracking( TRUE );
-	rmbmenu->connectItem( rmbmenu->insertItem(translate("Toggle Menubar")),
+	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Toggle Menubar")),
 		      this, SLOT(toggleShowMenubar()) );
-	rmbmenu->connectItem( rmbmenu->insertItem(translate("Mark page")),
+	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Mark page")),
 			marklist, SLOT(markSelected()) );
-	rmbmenu->connectItem( rmbmenu->insertItem(translate("Redraw")),
+	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Redraw")),
 			dviwin, SLOT(drawPage()) );
-	rmbmenu->connectItem( rmbmenu->insertItem(translate("Preferences ...")),
+	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Preferences ...")),
 			this, SLOT(optionsPreferences()) );
 
   // Bind keys
@@ -172,79 +170,79 @@ void kdvi::makeMenuBar()
 	QPopupMenu *p = new QPopupMenu;
 	CHECK_PTR( p );
 
-	m_fn = p->insertItem( translate("&New"),	this, SLOT(fileNew()) );
-	m_fo = p->insertItem( translate("&Open ..."),	this, SLOT(fileOpen()) );
+	m_fn = p->insertItem( i18n("&New"),	this, SLOT(fileNew()) );
+	m_fo = p->insertItem( i18n("&Open ..."),	this, SLOT(fileOpen()) );
 
 	recentmenu = new QPopupMenu;
 	CHECK_PTR( recentmenu );
 
 	connect( recentmenu, SIGNAL(activated(int)), SLOT(openRecent(int)) );
 
-	m_fr = p->insertItem( translate("Open &recent"),	recentmenu );
+	m_fr = p->insertItem( i18n("Open &recent"),	recentmenu );
 	
-	m_fp = p->insertItem( translate("&Print ..."),	this, SLOT(filePrint()));
-	m_fx = p->insertItem( translate("E&xit"), this, SLOT(fileExit()));
+	m_fp = p->insertItem( i18n("&Print ..."),	this, SLOT(filePrint()));
+	m_fx = p->insertItem( i18n("E&xit"), this, SLOT(fileExit()));
 
 	m_f = p;
-	menuBar->insertItem( translate("&File"), p, -2 );
+	menuBar->insertItem( i18n("&File"), p, -2 );
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
-	m_vi = p->insertItem( translate("Zoom &in"),	dviwin, SLOT(prevShrink()) );
-	m_vo = p->insertItem( translate("Zoom &out"),	dviwin, SLOT(nextShrink()) );
-	m_vf = p->insertItem( translate("&Fit to page"),	this, SLOT(viewFitPage()) );
-	m_vw = p->insertItem( translate("Fit to page &width"),	this, SLOT(viewFitPageWidth()));
+	m_vi = p->insertItem( i18n("Zoom &in"),	dviwin, SLOT(prevShrink()) );
+	m_vo = p->insertItem( i18n("Zoom &out"),	dviwin, SLOT(nextShrink()) );
+	m_vf = p->insertItem( i18n("&Fit to page"),	this, SLOT(viewFitPage()) );
+	m_vw = p->insertItem( i18n("Fit to page &width"),	this, SLOT(viewFitPageWidth()));
 	p->insertSeparator();
-	m_vr = p->insertItem( translate("&Redraw page"),	dviwin, SLOT(drawPage()) );
+	m_vr = p->insertItem( i18n("&Redraw page"),	dviwin, SLOT(drawPage()) );
 
 	m_v = p;
-	menuBar->insertItem( translate("&View"), p, -2 );
+	menuBar->insertItem( i18n("&View"), p, -2 );
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
-	m_pp = p->insertItem( translate("&Previous"),	dviwin, SLOT(prevPage()) );
-	m_pn = p->insertItem( translate("&Next"),		dviwin, SLOT(nextPage()) );
-	m_pf = p->insertItem( translate("&First"),	dviwin, SLOT(firstPage()) );
-	m_pl = p->insertItem( translate("&Last"),		dviwin, SLOT(lastPage()) );
-	m_pg = p->insertItem( translate("&Go to ..."),	this,   SLOT(pageGoto()) );
+	m_pp = p->insertItem( i18n("&Previous"),	dviwin, SLOT(prevPage()) );
+	m_pn = p->insertItem( i18n("&Next"),		dviwin, SLOT(nextPage()) );
+	m_pf = p->insertItem( i18n("&First"),	dviwin, SLOT(firstPage()) );
+	m_pl = p->insertItem( i18n("&Last"),		dviwin, SLOT(lastPage()) );
+	m_pg = p->insertItem( i18n("&Go to ..."),	this,   SLOT(pageGoto()) );
 
 	m_p = p;
-	menuBar->insertItem( translate("&Page"), p, -2 );
+	menuBar->insertItem( i18n("&Page"), p, -2 );
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
 	p->setCheckable( TRUE );
-	m_op = p->insertItem( translate("&Preferences ..."), this, SLOT(optionsPreferences()));
-	m_ok = p->insertItem( translate("&Keys ..."), this, SLOT(configKeys()));
+	m_op = p->insertItem( i18n("&Preferences ..."), this, SLOT(optionsPreferences()));
+	m_ok = p->insertItem( i18n("&Keys ..."), this, SLOT(configKeys()));
 	p->insertSeparator();
-	m_of = p->insertItem( translate("Make PK-&fonts"), this, SLOT(toggleMakePK()) );
+	m_of = p->insertItem( i18n("Make PK-&fonts"), this, SLOT(toggleMakePK()) );
 	p->setItemChecked( m_of, makepk );
-	m_o0 = p->insertItem( translate("Show PS"), this, SLOT(toggleShowPS()));
+	m_o0 = p->insertItem( i18n("Show PS"), this, SLOT(toggleShowPS()));
 	p->setItemChecked( m_o0, showPS );
-	m_om = p->insertItem( translate("Show &Menubar"), this, SLOT(toggleShowMenubar()) );
+	m_om = p->insertItem( i18n("Show &Menubar"), this, SLOT(toggleShowMenubar()) );
 	p->setItemChecked( m_om, !hideMenubar );
-	m_ob = p->insertItem( translate("Show &Buttons"), this, SLOT(toggleShowButtons()) );
+	m_ob = p->insertItem( i18n("Show &Buttons"), this, SLOT(toggleShowButtons()) );
 	p->setItemChecked( m_ob, !hideButtons );
-	m_ot = p->insertItem( translate("Show Page Lis&t"), this, SLOT(toggleVertToolbar()) );
+	m_ot = p->insertItem( i18n("Show Page Lis&t"), this, SLOT(toggleVertToolbar()) );
 	p->setItemChecked( m_ol, vertToolbar );
-	m_os = p->insertItem( translate("Show &Statusbar"), this, SLOT(toggleShowStatusbar()) );
+	m_os = p->insertItem( i18n("Show &Statusbar"), this, SLOT(toggleShowStatusbar()) );
 	p->setItemChecked( m_os, !hideStatusbar );
-	m_ol = p->insertItem( translate("Show Scro&llbars"), this, SLOT(toggleShowScrollbars()) );
+	m_ol = p->insertItem( i18n("Show Scro&llbars"), this, SLOT(toggleShowScrollbars()) );
 	p->setItemChecked( m_ol, !hideScrollbars );
 
 	m_o = p;
-	menuBar->insertItem( translate("&Options"), p, -2 );
+	menuBar->insertItem( i18n("&Options"), p, -2 );
 	optionsmenu = p;
 
 	menuBar->insertSeparator();
 
-	QPopupMenu *help = kapp->getHelpMenu(true, QString(translate("DVI Viewer"))
+	QPopupMenu *help = kapp->getHelpMenu(true, QString(i18n("DVI Viewer"))
 					     + " " + KDVI_VERSION
-					     + translate("\n\nby Markku Hihnala")
+					     + i18n("\n\nby Markku Hihnala")
 					     + " (mah@ee.oulu.fi)");
 
 	m_h = p;
-	menuBar->insertItem( translate("&Help"), help );
+	menuBar->insertItem( i18n("&Help"), help );
 	if ( hideMenubar )	menuBar->hide();
 	setMenu( menuBar );
 }
@@ -260,20 +258,20 @@ void kdvi::makeButtons()
 #define I(f,o,s,h) toolBar->insertButton( kapp->getIconLoader()->loadIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
-	I( "fileopen.xpm",	this,	fileOpen,	translate("Open document ...") )
-	I( "reload.xpm",	dviwin,	drawPage,	translate("Reload document") )
-	I( "fileprint.xpm",	this,	filePrint,	translate("Print ...") )
+	I( "fileopen.xpm",	this,	fileOpen,	i18n("Open document ...") )
+	I( "reload.xpm",	dviwin,	drawPage,	i18n("Reload document") )
+	I( "fileprint.xpm",	this,	filePrint,	i18n("Print ...") )
 	toolBar->insertSeparator();
-	I( "start.xpm",		dviwin,	firstPage, 	translate("Go to first page") )
-	I( "back.xpm",		dviwin,	prevPage,	translate("Go to previous page") )
-	I( "forwpage.xpm",	dviwin,	goForward,	translate("Go down then top of next page") )
-	I( "forward.xpm",	dviwin,	nextPage,	translate("Go to next page") )
-	I( "finish.xpm",	dviwin,	lastPage,	translate("Go to last page") )
+	I( "start.xpm",		dviwin,	firstPage, 	i18n("Go to first page") )
+	I( "back.xpm",		dviwin,	prevPage,	i18n("Go to previous page") )
+	I( "forwpage.xpm",	dviwin,	goForward,	i18n("Go down then top of next page") )
+	I( "forward.xpm",	dviwin,	nextPage,	i18n("Go to next page") )
+	I( "finish.xpm",	dviwin,	lastPage,	i18n("Go to last page") )
 	toolBar->insertSeparator();
-	I( "viewmag-.xpm",	dviwin,	nextShrink,	translate("Decrease magnification") )
-	I( "smalltext.xpm",	this,	selectSmall,	translate("Small text") )
-	I( "largetext.xpm",	this,	selectLarge,	translate("Large text") )
-	I( "viewmag+.xpm",	dviwin,	prevShrink,	translate("Increase magnification") )
+	I( "viewmag-.xpm",	dviwin,	nextShrink,	i18n("Decrease magnification") )
+	I( "smalltext.xpm",	this,	selectSmall,	i18n("Small text") )
+	I( "largetext.xpm",	this,	selectLarge,	i18n("Large text") )
+	I( "viewmag+.xpm",	dviwin,	prevShrink,	i18n("Increase magnification") )
 #undef	I
 
 	addToolBar( toolBar );
@@ -298,7 +296,7 @@ void kdvi::makeToolBar2(QWidget *parent)
 		 sbox, SLOT(setViewSize( QSize )) );
 	connect( dviwin, SIGNAL(currentPosChanged( QPoint )),
 		 sbox, SLOT(setViewPos( QPoint )) );
-	QToolTip::add( sbox, 0, tipgroup, translate("Scroll window and switch the page") );
+	QToolTip::add( sbox, 0, tipgroup, i18n("Scroll window and switch the page") );
 	sbox->setFixedSize(70,80);
 	gl->addWidget( sbox );
 
@@ -307,7 +305,7 @@ void kdvi::makeToolBar2(QWidget *parent)
 	marklist = new MarkList( toolBar2 );
 	connect( marklist, SIGNAL(selected(const char *)),
 		SLOT(pageActivated(const char *)) );
-	QToolTip::add( marklist, 0, tipgroup, translate("Select page and mark pages for printing") );
+	QToolTip::add( marklist, 0, tipgroup, i18n("Select page and mark pages for printing") );
 
 	gl->addWidget( marklist );
 	gl->activate();
@@ -322,11 +320,11 @@ void kdvi::makeStatusBar( QString )
 	if ( statusBar ) delete statusBar;
 	statusBar = new KStatusBar( this );
 	statusBar->setInsertOrder( KStatusBar::RightToLeft );
-	statusBar->insertItem((char*)translate("X:0000, Y:0000 "), ID_STAT_XY);
+	statusBar->insertItem(i18n("X:0000, Y:0000 "), ID_STAT_XY);
 	statusBar->changeItem("", ID_STAT_XY);
-	statusBar->insertItem((char*)translate("Shrink: xx"), ID_STAT_SHRINK);
+	statusBar->insertItem(i18n("Shrink: xx"), ID_STAT_SHRINK);
 	statusBar->changeItem("", ID_STAT_SHRINK);
-	statusBar->insertItem((char*)translate("Page: xxxx / xxxx"), ID_STAT_PAGE);
+	statusBar->insertItem(i18n("Page: xxxx / xxxx"), ID_STAT_PAGE);
 	statusBar->changeItem("", ID_STAT_PAGE);
 	statusBar->insertItem("", ID_STAT_MSG);
 
@@ -341,28 +339,28 @@ void kdvi::bindKeys()
 #define AKCF(f,k,o,s)	keys->insertItem(f, f, k);\
 			keys->connectItem( f, o, SLOT(s()));
 
-	AKCF(translate("New window"),	"CTRL+N",	this,	fileNew		)
-	AKCF(translate("Open file"),	"CTRL+O",	this,	fileOpen	)
-	AKCF(translate("Print dialog"),	"CTRL+P",	this,	filePrint	)
-	AKCF(translate("Quit"),		"CTRL+Q",	qApp,	quit		)
-	AKCF(translate("Zoom in"),	"Plus",		dviwin,	prevShrink	)
-	AKCF(translate("Zoom out"),	"Minus",	dviwin,	nextShrink	)
-	AKCF(translate("Fit window"),	"Asterisk",	this,	viewFitPage	)
-	AKCF(translate("Fit width"),	"Slash",	this,	viewFitPageWidth)
-	AKCF(translate("Redraw page"),	"CTRL+R",	dviwin,	drawPage	)
-	AKCF(translate("Next page"),	"Next",		dviwin,	nextPage	)
-	AKCF(translate("Previous page"),"Prior",	dviwin,	prevPage	)
-	AKCF(translate("Last page"),	"CTRL+Next",	dviwin,	lastPage	)
-	AKCF(translate("First page"),	"CTRL+Prior",	dviwin,	firstPage	)
-	AKCF(translate("Goto page"),	"CTRL+G",	this,	pageGoto	)
-	AKCF(translate("Configure keys"),"CTRL+K",	this,	configKeys	)
-	AKCF(translate("Toggle show PS"),"CTRL+V",	this,	toggleShowPS	)
-	AKCF(translate("Toggle menu bar"),"CTRL+M",	this,	toggleShowMenubar)
-	AKCF(translate("Toggle button bar"),"CTRL+B",	this,	toggleShowButtons)
-	AKCF(translate("Toggle page list"),"CTRL+T",	this,	toggleVertToolbar)
-	AKCF(translate("Toggle status bar"),"CTRL+S",	this,	toggleShowStatusbar)
-	AKCF(translate("Toggle scroll bars"),"CTRL+L",	this,	toggleShowScrollbars)
-	AKCF(translate("Help"),		"F1",		this,	helpContents	)
+	AKCF(i18n("New window"),	"CTRL+N",	this,	fileNew		)
+	AKCF(i18n("Open file"),	"CTRL+O",	this,	fileOpen	)
+	AKCF(i18n("Print dialog"),	"CTRL+P",	this,	filePrint	)
+	AKCF(i18n("Quit"),		"CTRL+Q",	qApp,	quit		)
+	AKCF(i18n("Zoom in"),	"Plus",		dviwin,	prevShrink	)
+	AKCF(i18n("Zoom out"),	"Minus",	dviwin,	nextShrink	)
+	AKCF(i18n("Fit window"),	"Asterisk",	this,	viewFitPage	)
+	AKCF(i18n("Fit width"),	"Slash",	this,	viewFitPageWidth)
+	AKCF(i18n("Redraw page"),	"CTRL+R",	dviwin,	drawPage	)
+	AKCF(i18n("Next page"),	"Next",		dviwin,	nextPage	)
+	AKCF(i18n("Previous page"),"Prior",	dviwin,	prevPage	)
+	AKCF(i18n("Last page"),	"CTRL+Next",	dviwin,	lastPage	)
+	AKCF(i18n("First page"),	"CTRL+Prior",	dviwin,	firstPage	)
+	AKCF(i18n("Goto page"),	"CTRL+G",	this,	pageGoto	)
+	AKCF(i18n("Configure keys"),"CTRL+K",	this,	configKeys	)
+	AKCF(i18n("Toggle show PS"),"CTRL+V",	this,	toggleShowPS	)
+	AKCF(i18n("Toggle menu bar"),"CTRL+M",	this,	toggleShowMenubar)
+	AKCF(i18n("Toggle button bar"),"CTRL+B",	this,	toggleShowButtons)
+	AKCF(i18n("Toggle page list"),"CTRL+T",	this,	toggleVertToolbar)
+	AKCF(i18n("Toggle status bar"),"CTRL+S",	this,	toggleShowStatusbar)
+	AKCF(i18n("Toggle scroll bars"),"CTRL+L",	this,	toggleShowScrollbars)
+	AKCF(i18n("Help"),		"F1",		this,	helpContents	)
 
 #undef AKCF
 
@@ -394,27 +392,27 @@ static void changeMenuAccel ( QPopupMenu *menu, int id,
 
 void kdvi::updateMenuAccel()
 {
-	keys->changeMenuAccel( m_f, m_fn, translate("New window") );
-	keys->changeMenuAccel( m_f, m_fo, translate("Open file") );
-	keys->changeMenuAccel( m_f, m_fp, translate("Print dialog") );
-	keys->changeMenuAccel( m_f, m_fx, translate("Quit") );
-	keys->changeMenuAccel( m_v, m_vi, translate("Zoom in") );
-	keys->changeMenuAccel( m_v, m_vo, translate("Zoom out") );
-	keys->changeMenuAccel( m_v, m_vf, translate("Fit window") );
-	keys->changeMenuAccel( m_v, m_vw, translate("Fit width") );
-	keys->changeMenuAccel( m_v, m_vr, translate("Redraw page") );
-	keys->changeMenuAccel( m_p, m_pp, translate("Previous page") );
-	keys->changeMenuAccel( m_p, m_pn, translate("Next page") );
-	keys->changeMenuAccel( m_p, m_pf, translate("First page") );
-	keys->changeMenuAccel( m_p, m_pl, translate("Last page") );
-	keys->changeMenuAccel( m_p, m_pg, translate("Goto page") );
-	keys->changeMenuAccel( m_o, m_o0, translate("Toggle show PS") );
-	keys->changeMenuAccel( m_o, m_om, translate("Toggle menu bar") );
-	keys->changeMenuAccel( m_o, m_ob, translate("Toggle button bar") );
-	keys->changeMenuAccel( m_o, m_ot, translate("Toggle page list") );
-	keys->changeMenuAccel( m_o, m_os, translate("Toggle status bar") );
-	keys->changeMenuAccel( m_o, m_ol, translate("Toggle scroll bars") );
-	keys->changeMenuAccel( m_h, m_hc, translate("Help") );
+	keys->changeMenuAccel( m_f, m_fn, i18n("New window") );
+	keys->changeMenuAccel( m_f, m_fo, i18n("Open file") );
+	keys->changeMenuAccel( m_f, m_fp, i18n("Print dialog") );
+	keys->changeMenuAccel( m_f, m_fx, i18n("Quit") );
+	keys->changeMenuAccel( m_v, m_vi, i18n("Zoom in") );
+	keys->changeMenuAccel( m_v, m_vo, i18n("Zoom out") );
+	keys->changeMenuAccel( m_v, m_vf, i18n("Fit window") );
+	keys->changeMenuAccel( m_v, m_vw, i18n("Fit width") );
+	keys->changeMenuAccel( m_v, m_vr, i18n("Redraw page") );
+	keys->changeMenuAccel( m_p, m_pp, i18n("Previous page") );
+	keys->changeMenuAccel( m_p, m_pn, i18n("Next page") );
+	keys->changeMenuAccel( m_p, m_pf, i18n("First page") );
+	keys->changeMenuAccel( m_p, m_pl, i18n("Last page") );
+	keys->changeMenuAccel( m_p, m_pg, i18n("Goto page") );
+	keys->changeMenuAccel( m_o, m_o0, i18n("Toggle show PS") );
+	keys->changeMenuAccel( m_o, m_om, i18n("Toggle menu bar") );
+	keys->changeMenuAccel( m_o, m_ob, i18n("Toggle button bar") );
+	keys->changeMenuAccel( m_o, m_ot, i18n("Toggle page list") );
+	keys->changeMenuAccel( m_o, m_os, i18n("Toggle status bar") );
+	keys->changeMenuAccel( m_o, m_ol, i18n("Toggle scroll bars") );
+	keys->changeMenuAccel( m_h, m_hc, i18n("Help") );
 }
 
 void kdvi::configKeys()
@@ -465,7 +463,7 @@ void kdvi::fileOpen()
 	if ( dviName )
 		dir = QFileInfo( dviName ).dirPath();	
 
-	message( translate("File open dialog is open") );
+	message( i18n("File open dialog is open") );
 	QString f = KFileDialog::getOpenFileName( dir, "*.dvi");
 	message( "" );
 
@@ -513,14 +511,14 @@ void kdvi::openFile( QString name)
 		name.append( ".dvi" );
 	if ( ! QFileInfo( name ).isReadable() )
 	{
-		QMessageBox::information( this, translate("Notice"),
-				QString(translate("Can't read file:\n")) +
-				oname, translate("OK"));
+		QMessageBox::information( this, i18n("Notice"),
+				QString(i18n("Can't read file:\n")) +
+				oname, i18n("OK"));
 		return;
 	}
 	QDir::setCurrent( QFileInfo( name ).dirPath() );
 	dviName = name.copy();
-	message( translate("Opening ") + name + " ...");
+	message( i18n("Opening ") + name + " ...");
 
 	makeStatusBar( dviName );
 	applyShowStatusbar();
@@ -545,7 +543,7 @@ void kdvi::openFile( QString name)
 			recentmenu->insertItem( recent.at(n), n, 0 );
 	}
 	updateMarklist();
-	message( translate("Opened ") + name );
+	message( i18n("Opened ") + name );
 }
 
 void kdvi::filePrint()
@@ -555,7 +553,7 @@ void kdvi::filePrint()
 
 	print * printdlg = new print( this, "printdlg" );
 
-	message( translate("Print dialog is open") );
+	message( i18n("Print dialog is open") );
 	printdlg->setFile( dviName );
 	printdlg->setCurrentPage( dviwin->page(), dviwin->totalPages() );
 	printdlg->setMarkList( marklist->markList() );
@@ -570,7 +568,7 @@ void kdvi::viewFitPage()
 	resize( rect().size() + dviwin->pageSize() - dviwin->viewSize()	);
 	resize( rect().size() + dviwin->pageSize() - dviwin->viewSize()	);
 
-	message( translate("View size fits page") );
+	message( i18n("View size fits page") );
 }
 
 void kdvi::viewFitPageWidth()
@@ -579,7 +577,7 @@ void kdvi::viewFitPageWidth()
 	resize( s.width() + dviwin->pageSize().width() - dviwin->viewSize().width(),
 		s.height() );
 
-	message( translate("View width fits page") );
+	message( i18n("View width fits page") );
 }
 
 void kdvi::optionsPreferences()
@@ -671,13 +669,13 @@ void kdvi::applyPreferences()
 		recentmenu->insertItem( recent.at(n), n, 0 );
 	config->setGroup( "kdvi" );
 
-	message(translate("Preferences applied"));
+	message(i18n("Preferences applied"));
 }
 
 PageDialog::PageDialog() : QDialog( 0, 0, 1 ),
-	gb(translate(" Page "),this), ed(&gb), ok(&gb), cancel(&gb)
+	gb(i18n(" Page "),this), ed(&gb), ok(&gb), cancel(&gb)
 {
-	setCaption( translate("Go to page") );
+	setCaption( i18n("Go to page") );
 	gb.setFrameStyle( QFrame::Box | QFrame::Sunken );
 	gb.setLineWidth( 1 );
 	QBoxLayout l1( this, QBoxLayout::LeftToRight, 15 );
@@ -691,9 +689,9 @@ PageDialog::PageDialog() : QDialog( 0, 0, 1 ),
 	l2.addLayout( &l3 );
 	l3.addWidget( &ok );
 	l3.addWidget( &cancel );
-	ok.setText( translate("Go to") );
+	ok.setText( i18n("Go to") );
 	connect( &ok, SIGNAL(clicked()), SLOT(go()) );
-	cancel.setText( translate("Cancel") );
+	cancel.setText( i18n("Cancel") );
 	resize( 300, 150 );
 	l1.activate();
 	l2.activate();
@@ -712,8 +710,8 @@ void kdvi::toggleMakePK()
 {
 	makepk = !makepk;
 	applyMakePK();
-	message( makepk ? translate("Missing PK-fonts will be generated"):
-		translate("Missing PK-fonts will be logged to 'missfont.log'") );
+	message( makepk ? i18n("Missing PK-fonts will be generated"):
+		i18n("Missing PK-fonts will be logged to 'missfont.log'") );
 }
 
 void kdvi::applyMakePK()
@@ -729,8 +727,8 @@ void kdvi::toggleShowPS()
 {
 	showPS = !showPS;
 	applyShowPS();
-	message( showPS ? translate("Postcsript specials are rendered") :
-		translate("Postscript specials are not rendered") );
+	message( showPS ? i18n("Postcsript specials are rendered") :
+		i18n("Postscript specials are not rendered") );
 }
 
 void kdvi::applyShowPS()
@@ -746,7 +744,7 @@ void kdvi::toggleShowMenubar()
 {
 	hideMenubar = !hideMenubar;
 	applyShowMenubar();
-	message( hideMenubar ? translate("No menu bar") : translate("Menu bar is shown") );
+	message( hideMenubar ? i18n("No menu bar") : i18n("Menu bar is shown") );
 }
 
 void kdvi::applyShowMenubar()
@@ -764,7 +762,7 @@ void kdvi::toggleShowButtons()
 {
 	hideButtons = !hideButtons;
 	applyShowButtons();
-	message( hideButtons ? translate("No button bar") : translate("Button bar is shown") );
+	message( hideButtons ? i18n("No button bar") : i18n("Button bar is shown") );
 }
 
 void kdvi::applyShowButtons()
@@ -778,7 +776,7 @@ void kdvi::toggleVertToolbar()
 {
 	vertToolbar = !vertToolbar;
 	applyVertToolbar();
-	message( vertToolbar ? translate("Tool bar is shown") : translate("No tool bar") );
+	message( vertToolbar ? i18n("Tool bar is shown") : i18n("No tool bar") );
 }
 
 void kdvi::applyVertToolbar()
@@ -802,7 +800,7 @@ void kdvi::toggleShowStatusbar()
 {
 	hideStatusbar = !hideStatusbar;
 	applyShowStatusbar();
-	message( hideStatusbar ? translate("No status bar") : translate("Status bar is shown") );
+	message( hideStatusbar ? i18n("No status bar") : i18n("Status bar is shown") );
 }
 
 void kdvi::applyShowStatusbar()
@@ -816,7 +814,7 @@ void kdvi::toggleShowScrollbars()
 {
 	hideScrollbars = !hideScrollbars;
 	applyShowScrollbars();
-	message( !hideScrollbars ? translate("Scroll bars are shown") : translate("No scroll bars"));
+	message( !hideScrollbars ? i18n("Scroll bars are shown") : i18n("No scroll bars"));
 }
 
 void kdvi::applyShowScrollbars()
@@ -833,11 +831,11 @@ void kdvi::helpContents()
 /*
 void kdvi::helpAbout()
 {
-	QMessageBox::information( this, translate("About Kdvi"),
-		translate("kdvi - TeX DVI viewer\nVersion ")
+	QMessageBox::information( this, i18n("About Kdvi"),
+		i18n("kdvi - TeX DVI viewer\nVersion ")
 			+ QString( KDVI_VERSION )
-			+ translate("\n\nMarkku Hihnala <mah@ee.oulu.fi>"),
-		translate("OK") );
+			+ i18n("\n\nMarkku Hihnala <mah@ee.oulu.fi>"),
+		i18n("OK") );
 }
 
 void kdvi::helpAboutQt()
@@ -873,7 +871,7 @@ void kdvi::setPage( int pg )
 	if (!pg) pg = dviwin->page();
 	if (!pg) return;
 	str.setNum( pg );
-	str = translate("Page: ") + str + translate(" / ") + QString().setNum(dviwin->totalPages());
+	str = i18n("Page: ") + str + i18n(" / ") + QString().setNum(dviwin->totalPages());
 	statusBar->changeItem( str, ID_STAT_PAGE );
 
 	if ( marklist )
@@ -904,7 +902,7 @@ void kdvi::selectShrink( int id )
 		dviwin->setShrink( id + 1 );
 		largeShrink = dviwin->shrink();
 		config->writeEntry( "LargeShrink", largeShrink );
-		message(translate("Large text button set to shrink factor ") +
+		message(i18n("Large text button set to shrink factor ") +
 					QString().setNum(largeShrink) );
 	}
 	else
@@ -912,7 +910,7 @@ void kdvi::selectShrink( int id )
 		dviwin->setShrink( id + 1 );
 		smallShrink = dviwin->shrink();
 		config->writeEntry( "SmallShrink", smallShrink );
-		message(translate("Small text button set to shrink factor ") +
+		message(i18n("Small text button set to shrink factor ") +
 					QString().setNum(smallShrink) );
 	}
 }
@@ -930,13 +928,13 @@ void kdvi::selectSmall()
 void kdvi::shrinkChanged(int s)
 {
 	QString t;
-	t = "Shrink: " + t.setNum( s );
+	t.sprintf(i18n("Shrink: %d"), s );
 	statusBar->changeItem( t, ID_STAT_SHRINK);
 }
 
 void kdvi::fileChanged()
 {
-	message( translate("File reloaded") );
+	message( i18n("File reloaded.") );
 	if ( dviwin->totalPages() != marklist->count() )
 		updateMarklist();
 	setPage();

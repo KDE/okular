@@ -18,8 +18,6 @@
 #include <kapp.h>
 #include <kdebug.h>
 #include <klocale.h>
-#define translate klocale->translate
-
 
 class DVIFile 
 {
@@ -41,7 +39,7 @@ print::print
 	Inherited( parent, name )
 {
 	okButton->setDefault( TRUE );
-	setCaption( translate("Print") );
+	setCaption( i18n("Print") );
 	readConfig();
 	printDestinationChanged( 0 );
 	printMarked->setEnabled( FALSE );
@@ -60,7 +58,7 @@ print::~print()
 void print::setFile( QString _file )
 {
 	ifile = ofile = _file.copy();
-	setCaption( QString(translate(translate("Print "))) + ifile );
+	setCaption( QString(i18n(i18n("Print "))) + ifile );
 	QString of( _file );
 	if ( of.right(4) == ".dvi" )
 		of = of.left( of.length()-4 );
@@ -118,13 +116,13 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 		texfont[i] = fontdeflen[i] = fontseen[i] = 0;
 */
 	if (!in.open(IO_ReadOnly))
-		QMessageBox::message( translate("Warning"),
-			translate("Cannot open dvi file!"),
-			translate("OK") );
+		QMessageBox::message( i18n("Warning"),
+			i18n("Cannot open dvi file!"),
+			i18n("OK") );
 	if (!out.open(IO_WriteOnly))
-		QMessageBox::message( translate("Warning"),
-			translate("Cannot open output dvi file!"),
-			translate("OK") );;
+		QMessageBox::message( i18n("Warning"),
+			i18n("Cannot open output dvi file!"),
+			i18n("OK") );;
 	in.readBlock( buf, 14 );
 	out.writeBlock( buf, 14 );
 	out.writeBlock( "\013kdvi output", 12 );
@@ -134,9 +132,9 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 	while ( ( c = in.getch() ) == 223 ) // trailer
 		in.at( --p );
 	if ( c != 2 )
-		QMessageBox::message( translate("Warning"),
-			translate("Cannot handle this dvi version!"),
-			translate("OK") );;
+		QMessageBox::message( i18n("Warning"),
+			i18n("Cannot handle this dvi version!"),
+			i18n("OK") );;
 	int post_post = p - 5;
 	in.at( post_post + 1 );
 	int post =  get4( in );
@@ -239,9 +237,9 @@ void print::okPressed()
 			    t = QString(rangeTo->text()).toInt();
 			if ( f < 1 || f > totalpages || t < f || t > totalpages )
 			{
-				QMessageBox::message( translate("Warning"),
-					translate("Invalid page range!"),
-					translate("OK") );
+				QMessageBox::message( i18n("Warning"),
+					i18n("Invalid page range!"),
+					i18n("OK") );
 				return;
 			}
 			dvi.dviCopy( ifile, ofile, NULL, f, t );
@@ -317,8 +315,8 @@ void print::readConfig()
 	KConfig *config = kapp->getConfig();
 
 	printer->clear();
-	printer->insertItem( translate( "Default Printer" ) );
-	printer->insertItem( translate( "File" ) );
+	printer->insertItem( i18n( "Default Printer" ) );
+	printer->insertItem( i18n( "File" ) );
 	config->setGroup( "Printing" );
 	int n = config->readNumEntry( "PrinterCount" );
 	if ( n > 0 )

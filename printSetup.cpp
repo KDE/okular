@@ -11,7 +11,6 @@
 #include <kapp.h>
 #include <kconfig.h>
 #define Inherited printSetupData
-#define translate klocale->translate
 
 printSetup::printSetup
 (
@@ -21,7 +20,7 @@ printSetup::printSetup
 	:
 	Inherited( parent, name )
 {
-	setCaption( translate( "Print Setup" ) );
+	setCaption( i18n( "Print Setup" ) );
 	internal->setEnabled( FALSE );
 	okButton->setDefault( TRUE );
 	spoolerLabel->setBuddy( spoolerCommand );
@@ -71,8 +70,8 @@ void printSetup::readConfig()
 	KConfig *config = kapp->getConfig();
 
 	printers->clear();
-	printers->insertItem( translate( "Default Printer" ) );
-	printers->insertItem( translate( "File" ) );
+	printers->insertItem( i18n( "Default Printer" ) );
+	printers->insertItem( i18n( "File" ) );
 	config->setGroup( "Printing" );
 	int n = config->readNumEntry( "PrinterCount" );
 	if ( n > 0 )

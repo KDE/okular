@@ -31,7 +31,6 @@
 #include <string.h>
 
 #include <klocale.h>
-#define translate klocale->translate
 
 #include "prefs.h"
 
@@ -41,9 +40,9 @@ kdviprefs::kdviprefs( QWidget *, const char * )
 	resize(400,330);
 	insertPages();
 
-	setApplyButton(translate("Apply"));
-	setCancelButton(translate("Cancel"));
-	setCaption(translate("Preferences"));
+	setApplyButton(i18n("Apply"));
+	setCancelButton(i18n("Cancel"));
+	setCaption(i18n("Preferences"));
 
 	this->setMinimumSize(400,330);
 	this->setMaximumSize(400,330);
@@ -211,11 +210,11 @@ void kdviprefs::insertPages()
 	pages[0]= new QWidget( this, "page1" );
 
 	QButtonGroup *bg	= new QButtonGroup( "", pages[0] );
-	menu	= new QCheckBox( translate("Menu Bar"), bg );
-	button	= new QCheckBox( translate("Button Bar"), bg );
-	status	= new QCheckBox( translate("Status Bar"), bg );
-	pagelist= new QCheckBox( translate("Page List"), bg );
-	scrollb	= new QCheckBox( translate("Scroll Bars"), bg );
+	menu	= new QCheckBox( i18n("Menu Bar"), bg );
+	button	= new QCheckBox( i18n("Button Bar"), bg );
+	status	= new QCheckBox( i18n("Status Bar"), bg );
+	pagelist= new QCheckBox( i18n("Page List"), bg );
+	scrollb	= new QCheckBox( i18n("Scroll Bars"), bg );
 	recent	= new QLineEdit( bg );
 
 	KConfig *config = kapp->getConfig();
@@ -237,7 +236,7 @@ void kdviprefs::insertPages()
 	status->setMinimumSize( status->sizeHint() );	l10->addWidget( status, row++, 0 );
 	pagelist->setMinimumSize( pagelist->sizeHint() );l10->addWidget( pagelist, row++, 0 );
 	scrollb->setMinimumSize( scrollb->sizeHint() );	l10->addWidget( scrollb, row++, 0 );
-	l = new QLabel( translate("Number of recent files"), bg );
+	l = new QLabel( i18n("Number of recent files"), bg );
 	l->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	l->setMinimumSize( sz );	l10->addWidget( l, row, 0 );
 	recent->setMinimumSize( sz );	l10->addWidget( recent, row++, 1 );
@@ -249,7 +248,7 @@ void kdviprefs::insertPages()
 	l11->addWidget( bg );
 	l11->activate();
 
-	addTab(pages[0],translate("Appearance"));
+	addTab(pages[0],i18n("Appearance"));
 
     // Second page of tab preferences dialog
 
@@ -258,7 +257,7 @@ void kdviprefs::insertPages()
  	bg	= new QButtonGroup( "", pages[1] );
 
 
-	pk	= new QCheckBox( translate("Generate missing fonts"), bg );
+	pk	= new QCheckBox( i18n("Generate missing fonts"), bg );
 	dpi	= new QLineEdit( bg );
 	mode	= new QLineEdit( bg );
 	fontdir	= new QLineEdit( bg );
@@ -275,12 +274,12 @@ void kdviprefs::insertPages()
 	l20 = new QGridLayout( bg, 9, 2, 25, 5 );
 	row = 0;
 
-	l = new QLabel( translate("Resolution"), bg );
+	l = new QLabel( i18n("Resolution"), bg );
 	l->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	l->setMinimumSize( sz );		l20->addWidget( l, row, 0 );
 	dpi->setMinimumSize( sz );		l20->addWidget( dpi, row++, 1 );
 
-	l = new QLabel( translate("Metafont mode"), bg );
+	l = new QLabel( i18n("Metafont mode"), bg );
 	l->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	l->setMinimumSize( sz );		l20->addWidget( l, row, 0 );
 	mode->setMinimumSize( sz );		l20->addWidget( mode, row++, 1 );
@@ -289,7 +288,7 @@ void kdviprefs::insertPages()
 	l20->setRowStretch ( row, 6 );
 	l20->addWidget( pk, row, 0 ); row++;
 
-	l = new QLabel( translate("PK Font Path"), bg );
+	l = new QLabel( i18n("PK Font Path"), bg );
 	l->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	l->setMinimumSize( sz );		l20->addWidget( l, row, 0 );
 	fontdir->setMinimumSize( sz );		l20->addWidget( fontdir, row++, 1 );
@@ -298,12 +297,12 @@ void kdviprefs::insertPages()
 	f->setMinimumSize( 10, 4 );
 	l20->addMultiCellWidget( f, row, row, 0, 1 ); row++;
 
-	l = new QLabel( translate("Shrink factor for small text"), bg );
+	l = new QLabel( i18n("Shrink factor for small text"), bg );
 	l->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	l->setMinimumSize( sz );		l20->addWidget( l, row, 0 );
 	small->setMinimumSize( sz );		l20->addWidget( small, row++, 1 );
 
-	l = new QLabel( translate("Shrink factor for large text"), bg );
+	l = new QLabel( i18n("Shrink factor for large text"), bg );
 	l->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	l->setMinimumSize( sz );		l20->addWidget( l, row, 0 );
 	large->setMinimumSize( sz );		l20->addWidget( large, row++, 1 );
@@ -316,15 +315,15 @@ void kdviprefs::insertPages()
 	l21->addWidget( bg );
 	l21->activate();
 
-	addTab( pages[1], translate("Fonts") );
+	addTab( pages[1], i18n("Fonts") );
 
     // Third page of tab preferences dialog
 
 	pages[2]= new QWidget( this, "page3");
 
  	bg	= new QButtonGroup( "", pages[2] );
-	ps	= new QCheckBox( translate("Show postscript specials"), bg );
-	psaa	= new QCheckBox( translate("Antialiased postcript"), bg );
+	ps	= new QCheckBox( i18n("Show postscript specials"), bg );
+	psaa	= new QCheckBox( i18n("Antialiased postcript"), bg );
 	gamma	= new QLineEdit( bg );
 
 	ps->setChecked( config->readNumEntry( "ShowPS" ) );
@@ -342,7 +341,7 @@ void kdviprefs::insertPages()
 	l30->addWidget( ps, row++, 0 );
 	l30->addWidget( psaa, row++, 0 );
 	
-	l = new QLabel( translate("Gamma"), bg );
+	l = new QLabel( i18n("Gamma"), bg );
 	l->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	l->setMinimumSize( sz );		l30->addWidget( l, row, 0 );
 
@@ -355,7 +354,7 @@ void kdviprefs::insertPages()
 	l31->addWidget( bg );
 	l31->activate();
 
-	addTab( pages[2], translate("Rendering") );
+	addTab( pages[2], i18n("Rendering") );
 
     // Fourth page of tab preferences dialog
 
@@ -385,7 +384,7 @@ void kdviprefs::insertPages()
 	l41->addWidget( bg );
 	l41->activate();
 
-	addTab( pages[3], translate("Paper") );
+	addTab( pages[3], i18n("Paper") );
 
 }
 

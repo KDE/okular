@@ -969,7 +969,6 @@ void kdvi::showPoint( QPoint p )
 void kdvi::readConfig()
 {
 	QString s;
-	kdedir = KApplication::kdedir();
 	config = KApplication::getKApplication()->getConfig();
 	config->setGroup( "kdvi" );
 

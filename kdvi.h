@@ -120,7 +120,7 @@ private:
 	int		largeShrink;
 	int		smallShrink;
 	int		basedpi;
-	QString		mfmode, paper, kdedir;
+	QString		mfmode, paper;
 	int		makepk;
 	QPopupMenu *	optionsmenu;
 	KConfig *	config;

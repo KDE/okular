@@ -11,6 +11,12 @@
 <address><email>mah@ee.oulu.fi</email></address>
 </affiliation>
 </author>
+<author>
+<firstname>Stefan</firstname>
+<surname>Kebekus</surname>
+<affiliation>
+<address><email>mah@ee.oulu.fi</email></address>
+</affiliation>
 </authorgroup>
 <date>25/05/2000</date>
 <releaseinfo>1.00.00</releaseinfo>
@@ -30,45 +36,119 @@
 <chapter id="usage">
 <title>usage</title>
 
-<note>
-<para>kdvi is a DVI viewer based on xdvik version 18f by many authors (see file AUTHORS).  My additions to the earlier work are distributed under the GPL (see file COPYING).</para>
+<para>kdvi is a plugin for the kviewshell program which allows kviewshell to
+display dvi-files which are produced by the TeX typesetting system. More
+information about TeX and DVI can be found on the homepage of the TeX user
+group. kdvi 0.9 supports the inclusion of PostScript graphics and it supports
+hyperlinks. More details and the technical specifications can be found
+in a separate document.</para>
 
-<para>This is an alpha release of kdvi. See file README.kdvi for release notes.</para>
-</note>
+<para>kdvi 0.9 is based on based on the stand-alone-program kdvi 0.4.3 by
+Markku Hihnala. That program in turn base based on xdvik version 18f which
+has many authors.</para>
 
-<para>The dvi viewer may be started using a file name to display a file, e.g: <literal remap="verb">kdvi somepath/paper.dvi</literal>or without a file name as <literal remap="verb">kdvi</literal>  kdvi will then allow a file to be opened from a dialog or a menu of recently used files. This menu can also be popped up by clicking the File button with the right mouse button.</para>
+<para>For convenience there exists a command kdvi which calls kviewshell
+with the kdvi-plugin preloaded. The viewer may thus be started using
+the command 
+<literal remap="verb">
+kdvi somepath/paper.dvi
+</literal>
+or without a file name as kviewshell will then allow a file to be
+opened from a dialog or a menu of recently used files. This menu can
+also be popped up by clicking the File button with the right mouse
+button.</para>
 
-<para>The usual parameters handled by Qt and KDE applications also work: <literal remap="verb">kdvi -style windows -display :0 -geometry 400x400+0+0 -caption "DVI"</literal>  For integration with TeX the opened DVI file is automatically reloaded when changed.</para>
+<para>The usual parameters handled by Qt and KDE applications also work:
+<literal remap="verb">
+kdvi -style windows -display :0 -geometry 400x400+0+0 -caption "DVI"
+</literal>
+For integration with TeX the opened DVI file is automatically reloaded
+when changed.</para>
+
+
 </chapter>
-
 <chapter id="keyboard">
-<title>Using keyboard</title>
+<title>The option dialog</title>
 
-<para>Most keyboard commands are displayed in the menus as accelerator keys.
-The defaults follow KDE standard when applicable.
-You can define your prefered key bindings using the KDE standard key
-configuration dialog available from the menu Options/Keys.</para>
+<h2>first page</h2>
+The following picture shows the options dialog of kdvi.
+<center>
+<p><graphic fileref="optionrequester1.png"></graphic></center>
 
-<para>Note also that you can reach most menu commands with a couple of key presses,
-e.g. to show the Help/About is done by Alt-h a. You can also use
-cursor keys to move around in menus.
-Here is a list of invisible bindings (these are not configurable):
-<itemizedlist>
-<listitem>
-<para>SPACE moves down then to top of next page similar to Advance button.</para>
-</listitem>
-<listitem>
-<para>Cursor keys scroll in obvious way. With Control-modifier they use a very
-small step size for accurate control.</para>
-</listitem>
-<listitem>
-<para>Home scrolls to top of page.</para>
-</listitem>
-<listitem>
-<para>End scrolls to bottom of page.</para>
-</listitem>
-</itemizedlist>
-</para>
+
+<table WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td VALIGN=TOP NOSAVE><b>Resolution/</b>
+<br><b>Metafont mode</b></td>
+
+<td>These options specify the fonts which kdvi will use for rendering.
+By carefully optimizing the settings here it is possible to improve on
+the display. However, unless you are an expert in MetaFont and know what
+you are doing, it is absolutely no good idea to change these options. Save
+values are "600" and "ljfour" for good quality or "300" and "cx" for medium
+quality and faster display.</td>
+</tr>
+
+<tr NOSAVE>
+<td VALIGN=TOP NOSAVE><b>Generate fonts</b></td>
+
+<td>Check this if you want kdvi to call the MetaFont program in the likely
+case that kdvi wants to display documents which use fonts which are not
+yet readily made. You most certainly want to set this option.</td>
+</tr>
+
+<tr NOSAVE>
+<td VALIGN=TOP NOSAVE><b>PK font path</b></td>
+
+<td>If this is not empty, it point to a list of directories to be searched
+for pk-fonts, e.g.&nbsp;
+<pre><font face="Courier New,Courier">/var/lib/texmf/fonts/pk/ljfour/:/some/other/place</font></pre>
+You can make kdvi search recursively by adding an extra / at the end of
+directory name:&nbsp;
+<pre>/var/lib/texmf/fonts//&nbsp;</pre>
+This works like xdvi's XDVIFONTS environment variable. There is also good
+(gnu info) documentation available for the kpathsea library that kdvi uses
+for font searching. This makes kdvi usable when you have some other tex
+system than <font face="Courier New,Courier">tetex</font> and don't have
+the <font face="Courier New,Courier">texmf.cnf</font> file. Again this
+option is strikly for the experts only.</td>
+</tr>
+</table>
+
+<h2>
+second page</h2>
+The following picture shows the second options dialog of kdvi.
+<center>
+<p><img SRC="optionrequester2.png" height=234 width=358></center>
+
+<table WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td VALIGN=TOP NOSAVE><b>PostScript</b></td>
+
+<td>If this options is checked, kdvi will display PostScript graphics which
+are embedded into the dvi file. If an external PostScript file could not
+be found, kdvi will draw a red warning box in its place. Unfortunately,
+rendering PostScript graphics is very slow in the current version of kdvi.
+We will improve on the speed in later versions. If this option is off,
+kdvi will either draw a grey box as a placeholder for the graphics, or
+it will leave the space blank.
+<br><b>Note:</b> there is no standard way to embed PostScript graphics
+into a dvi file. It may therefore happen that kdvi cannot properly display
+a graphic which works fine with other programs. Older versions of xdvi
+and dvips support the execution of external commands. This is a hight security
+risk and therefore deliberately not implemented in kdvi. Technical information
+about supported ways to include PostScript can be found in an external
+document.</td>
+</tr>
+
+<tr NOSAVE>
+<td VALIGN=TOP NOSAVE><b>Hyperlinks</b></td>
+
+<td>Check this if you want kdvi to display hyperlinks. The appropriate
+parts of the text will be underlined in blue.</td>
+</tr>
+</table>
+
 </chapter>
 
 <chapter id="Movingaround">

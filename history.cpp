@@ -1,99 +1,89 @@
-// selection.cpp
+// history.cpp
 //
 // (C) 2001 Stefan Kebekus
 // Distributed under the GPL
 
 #include <kdebug.h>
-#include <qapplication.h>
-#include <qclipboard.h>
+
 #include "history.h"
-#include "history.moc"
 
-history::history(void)
-{
-  backAct = forwardAct = 0;
-  clear();
-}
-
-history::~history(void)
+HistoryItem::HistoryItem(Q_UINT32 p, Q_UINT32 y)
+  : page(p), ypos(y)
 {
 }
 
-void history::add(Q_UINT32 page, Q_UINT32 ypos)
+bool HistoryItem::operator == (const HistoryItem& item)
 {
-  if (numItems == 0) {
-    historyList[0].page = page;
-    historyList[0].ypos = ypos;
-    numItems = 1;
-    return;
-  } else {
-    if (historyList[currentItem].page == page)
+  return page == item.page && ypos == item.ypos;
+}
+
+History::History()
+{
+}
+
+void History::add(Q_UINT32 page, Q_UINT32 ypos)
+{
+  HistoryItem item(page, ypos);
+
+  if (historyList.empty())
+  {
+    currentItem = historyList.append(item);
+  }
+  else
+  {
+    // Don't add the same item several times in a row
+    if (item == *currentItem)
       return;
 
-    if (currentItem == HISTORYLENGTH-1) {
-      // Move all items forward one step, add item at the end
-      for (int i=0; i<HISTORYLENGTH-1; i++)
-	historyList[i] = historyList[i+1];
-      historyList[HISTORYLENGTH-1].page = page;
-      historyList[HISTORYLENGTH-1].ypos = ypos;
-    } else {
       currentItem++;
-      historyList[currentItem].page = page;
-      historyList[currentItem].ypos = ypos;
-      numItems = currentItem+1;
+    if (currentItem == historyList.end())
+    {
+      currentItem = historyList.append(item);
     }
+    else
+    {
+      currentItem = historyList.insert(currentItem, item);
+    }
+    // Delete items starting after currentItem to the end of the list.
+    QValueList<HistoryItem>::iterator deleteItemsStart = currentItem;
+    deleteItemsStart++;
+    historyList.erase(deleteItemsStart, historyList.end()); 
+
+    if (historyList.size() > HISTORYLENGTH)
+      historyList.pop_front();
   }
-
-  if (backAct != 0)
-    backAct->setEnabled((currentItem > 0)&&(numItems > 0));
-  if (forwardAct != 0)
-    forwardAct->setEnabled(false);
+  emit backItem(currentItem != historyList.begin());
+  emit forwardItem(false);
 }
 
-void history::setAction(KAction *back, KAction *forward)
+HistoryItem* History::forward()
 {
-  backAct    = back;
-  forwardAct = forward;
-
-  if (backAct != 0)
-    backAct->setEnabled((currentItem > 0)&&(numItems > 0));
-  if (forwardAct != 0)
-    forwardAct->setEnabled(currentItem < numItems-1);
-}
-
-historyItem *history::forward()
-{
-  if (currentItem == numItems)
+  if (historyList.empty() || currentItem == historyList.fromLast())
     return 0;
-  else {
+    
     currentItem++;
-    if (backAct != 0)
-      backAct->setEnabled(true);
-    if (forwardAct != 0)
-      forwardAct->setEnabled(currentItem < numItems-1);
-    return historyList+currentItem;
-  }
+  emit backItem(true);
+  emit forwardItem(currentItem != historyList.fromLast());
+  return &(*currentItem);
 }
 
-historyItem *history::back()
+HistoryItem* History::back()
 {
-  if (currentItem == 0)
+  if (historyList.empty() || currentItem == historyList.begin())
     return 0;
-  else {
+  
     currentItem--;
-    if (backAct != 0)
-      backAct->setEnabled((currentItem > 0)&&(numItems > 0));
-    if (forwardAct != 0)
-      forwardAct->setEnabled(true);
-    return historyList+currentItem;
-  }
+  emit backItem(currentItem != historyList.begin());
+  emit forwardItem(true);
+  return &(*currentItem);
 }
 
-void history::clear(void)
+void History::clear(void)
 {
-  currentItem = numItems = 0;
-  if (backAct != 0)
-    backAct->setEnabled(false);
-  if (forwardAct != 0)
-    forwardAct->setEnabled(false);
+  historyList.clear();
+  currentItem = historyList.begin();
+  emit backItem(false);
+  emit forwardItem(false);
 }
+
+#include "history.moc"

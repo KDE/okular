@@ -90,7 +90,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   setInstance(KDVIMultiPageFactory::instance());
 
   printer = 0;
-  document_history.clear();
 
   findDialog = 0;
   findNextAction         = 0;
@@ -121,8 +120,9 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
                    this, SLOT(doGoBack()), actionCollection(), "go_back");
   forwardAction = new KAction(i18n("&Forward"), "1rightarrow", 0, 
                       this, SLOT(doGoForward()), actionCollection(), "go_forward");
-  
-  document_history.setAction(backAction, forwardAction);
+
+  connect(&document_history, SIGNAL(backItem(bool)), backAction, SLOT(setEnabled(bool)));
+  connect(&document_history, SIGNAL(forwardItem(bool)), forwardAction, SLOT(setEnabled(bool)));
   document_history.clear();
 
   embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
@@ -502,7 +502,7 @@ bool KDVIMultiPage::gotoPage(int page)
 }
 
 
-void KDVIMultiPage::goto_page(int page, int y)
+void KDVIMultiPage::goto_page(int page, int y, bool isLink)
 {
 #ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "KDVIMultiPage::gotoPage( pageNr=" << page << ", y=" << y <<" )" << endl;
@@ -513,7 +513,8 @@ void KDVIMultiPage::goto_page(int page, int y)
     return;
   }
 
-  document_history.add(page, y);
+  if (isLink)
+    document_history.add(page, y);
 
   documentWidget *ptr;
   if (widgetList.size() == 1) {
@@ -560,7 +561,8 @@ void KDVIMultiPage::goto_page(int page, int y)
     lastCurrentPage = page+1;
     ptr->update();
   }
-  ptr->flash(y);
+  if (isLink)
+    ptr->flash(y);
   emit(pageInfo(window->dviFile->total_pages, page));
 }
 
@@ -1066,9 +1068,9 @@ void KDVIMultiPage::enableActions(bool b)
 
 void KDVIMultiPage::doGoBack(void)
 {
-  historyItem *it = document_history.back();
+  HistoryItem *it = document_history.back();
   if (it != 0)
-    goto_page(it->page, it->ypos);
+    goto_page(it->page, it->ypos, false); // Do not add a history item.
   else
     kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
   return;
@@ -1077,9 +1079,9 @@ void KDVIMultiPage::doGoBack(void)
 
 void KDVIMultiPage::doGoForward(void)
 {
-  historyItem *it = document_history.forward();
+  HistoryItem *it = document_history.forward();
   if (it != 0)
-    goto_page(it->page, it->ypos);
+    goto_page(it->page, it->ypos, false); // Do not add a history item.
   else
     kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
   return;

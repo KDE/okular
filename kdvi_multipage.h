@@ -142,7 +142,7 @@ public slots:
 protected:
   selection     userSelection;
 
-  history document_history;
+  History document_history;
 
   /// For internal use only. See the comments in kdvi_multipage.cpp, right
   //before the timerEvent function.
@@ -175,7 +175,7 @@ protected slots:
   void helpme();
   void bugform();
   void preferencesChanged();
-  void goto_page(int page, int y);
+  void goto_page(int page, int y, bool isLink = true);
 
   void generateDocumentWidgets(void);
 

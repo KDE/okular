@@ -3,6 +3,7 @@
 Comment[C]=TeX DVI File Viewer
 Comment[fr]=Visualiseur TeX-DVI
 Comment[de]=TeX-DVI-Dateibetrachter
+Comment[no]=TeX-DVI-filviser
 Comment[pl]=Podgl±darka plików TeX DVI
 Comment[fi]=TeX DVI tiedostonäyttäjä
 Comment[hu]=TeX DVI file nézõ
@@ -15,6 +16,7 @@ Name=DVI Viewer
 Name[C]=DVI Viewer
 Name[fr]=Visualiseur DVI
 Name[de]=DVI-Betrachter
+Name[no]=DVI-fremviser
 Name[pl]=DVI Viewer
 Name[fi]=DVI Näyttäjä
 Name[hu]=DVI nézõ

@@ -36,7 +36,7 @@ public:
 
     // commands from the Document to all observers
     virtual void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool /*documentChanged*/ ) {};
-    virtual void pageSetCurrent( int /*pageNumber*/, float /*position*/ ) {};
+    virtual void pageSetCurrent( int /*pageNumber*/, const QRect & /*viewport*/ = QRect() ) {};
 };
 
 #define PAGEVIEW_ID 1
@@ -77,7 +77,7 @@ public:
 public slots:
     // document commands via slots
     void slotSetCurrentPage( int page );
-    void slotSetCurrentPagePosition( int page, float position );
+    void slotSetCurrentPageViewport( int page, const QRect & viewport );
     void slotSetFilter( const QString & pattern, bool caseSensitive );
     void slotBookmarkPage( int page, bool enabled );
     void slotFind( const QString & text = "", bool caseSensitive = false );

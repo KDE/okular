@@ -54,7 +54,7 @@ public:
     // inherited from KPDFDocumentObserver
     uint observerId() { return PAGEVIEW_ID; }
     void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
-    void pageSetCurrent( int pageNumber, float position );
+    void pageSetCurrent( int pageNumber, const QRect & viewport );
     void notifyPixmapChanged( int pageNumber );
 
 protected:

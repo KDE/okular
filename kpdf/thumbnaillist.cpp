@@ -97,7 +97,7 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 	requestPixmaps( 200 );
 }
 
-void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
+void ThumbnailList::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 {
 	// deselect previous thumbnail
 	if ( m_selected )

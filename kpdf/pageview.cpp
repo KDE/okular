@@ -199,9 +199,20 @@ void PageView::saveSettings( KConfigGroup * config )
 
 
 //BEGIN KPDFDocumentObserver inherited methods
-void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool /*documentChanged*/ )
-{ /* TODO: preserve (reuse) existing pages if !documentChanged */
-    // delete all pages
+void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool documentChanged )
+{
+    // reuse current pages if nothing new
+    if ( ( pageSet.count() == d->pages.count() ) && !documentChanged )
+    {
+        int count = pageSet.count();
+        for ( int i = 0; (i < count) && !documentChanged; i++ )
+            if ( (int)pageSet[i]->number() != d->pages[i]->pageNumber() )
+                documentChanged = true;
+        if ( !documentChanged )
+            return;
+    }
+
+    // delete all widgets (one for each page in pageSet)
     QValueVector< PageWidget * >::iterator dIt = d->pages.begin(), dEnd = d->pages.end();
     for ( ; dIt != dEnd; ++dIt )
         delete *dIt;
@@ -222,11 +233,8 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool /*docume
     d->dirtyLayout = true;
 }
 
-void PageView::pageSetCurrent( int pageNumber, float position )
+void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 {
-    if ( d->dirtyLayout )
-        slotRelayoutPages();
-
     // select next page
     d->vectorIndex = 0;
     d->page = 0;
@@ -243,13 +251,14 @@ void PageView::pageSetCurrent( int pageNumber, float position )
     if ( !d->page )
         return;
 
-    // relayout only in "Single Pages" mode
-    if ( !d->viewContinous )
+    // relayout in "Single Pages" mode or if a relayout is pending
+    if ( !d->viewContinous || d->dirtyLayout )
         slotRelayoutPages();
 
     // center the view to see the selected page
+    // FIXME take care of viewport
     int xPos = childX( d->page ) + d->page->widthHint() / 2,
-        yPos = childY( d->page ) + (int)((float)d->page->heightHint() * position);
+        yPos = childY( d->page );
     center( xPos, yPos + visibleHeight() / 2 - 10 );
     slotRequestVisiblePixmaps();
 
@@ -968,7 +977,7 @@ void PageView::scrollUp()
 {
     if( atTop() && d->vectorIndex > 0 )
         // go to the bottom of previous page
-        d->document->slotSetCurrentPagePosition( d->pages[ d->vectorIndex - 1 ]->pageNumber(), 1.0 );
+        d->document->slotSetCurrentPage( d->pages[ d->vectorIndex - 1 ]->pageNumber() ); //TODO add position
     else
     {   // go towards the top of current page
         int newValue = QMAX( verticalScrollBar()->value() - height() + 50,
@@ -981,7 +990,7 @@ void PageView::scrollDown()
 {
     if( atBottom() && d->vectorIndex < (int)d->pages.count() - 1 )
         // go to the top of previous page
-        d->document->slotSetCurrentPagePosition( d->pages[ d->vectorIndex + 1 ]->pageNumber(), 0.0 );
+        d->document->slotSetCurrentPage( d->pages[ d->vectorIndex + 1 ]->pageNumber() ); // TODO add position
     else
     {    // go towards the bottom of current page
         int newValue = QMIN( verticalScrollBar()->value() + height() - 50,

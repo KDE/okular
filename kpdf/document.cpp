@@ -50,7 +50,7 @@ public:
     PDFDoc * pdfdoc;
     KPDFOutputDev * kpdfOutputDev;
     int currentPage;
-    float currentPosition;
+    QRect currentViewport;
     QValueVector< KPDFPage* > pages;
 
     // find related
@@ -78,7 +78,6 @@ KPDFDocument::KPDFDocument()
     d = new KPDFDocumentPrivate;
     d->pdfdoc = 0;
     d->currentPage = -1;
-    d->currentPosition = 0;
     d->searchPage = -1;
     SplashColor paperColor;
     paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
@@ -295,18 +294,20 @@ void KPDFDocument::requestTextPage( uint n )
 // BEGIN slots
 void KPDFDocument::slotSetCurrentPage( int page )
 {
-    slotSetCurrentPagePosition( page, 0.0 );
+    slotSetCurrentPageViewport( page, QRect() );
 }
 
-void KPDFDocument::slotSetCurrentPagePosition( int page, float position )
+void KPDFDocument::slotSetCurrentPageViewport( int page, const QRect & viewport )
 {
-    if ( page < 0 || page > (int)d->pages.count() )
+    if ( page < 0 )
         page = 0;
-    if ( page == d->currentPage && position == d->currentPosition )
+    else if ( page > (int)d->pages.count() )
+        page = d->pages.count() - 1;
+    if ( page == d->currentPage && viewport == d->currentViewport )
         return;
     d->currentPage = page;
-    d->currentPosition = position;
-    foreachObserver( pageSetCurrent( page, position ) );
+    d->currentViewport = viewport;
+    foreachObserver( pageSetCurrent( page, viewport ) );
     pageChanged();
 }
 
@@ -423,21 +424,24 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
         }
         if ( dest && dest->isOk() )
         {
-            // get destination page
-            int page = dest->getPageNum() - 1;
+            // get destination page number
+            int pageNum = dest->getPageNum() - 1;
             if ( dest->isPageRef() )
             {
                 Ref ref = dest->getPageRef();
                 d->docLock.lock();
-                page = d->pdfdoc->findPage( ref.num, ref.gen ) - 1;
+                pageNum = d->pdfdoc->findPage( ref.num, ref.gen ) - 1;
                 d->docLock.unlock();
             }
             // get destination position
+            QRect r;
+            KPDFPage * page = (pageNum >= 0 && pageNum < (int)d->pages.count()) ? d->pages[ pageNum ] : 0;
+            //if ( page )
             /* TODO
             switch ( dest->getKind() )
             {
             case destXYZ
-                OD -> cvtUserToDev( dest->getLeft(), dest->getTop(), &X, &Y );
+                OD -> cvtUserToDev( dest->getLeft(), dest->getTop(), &X, &Y );ù
                 if ( dest->getChangeLeft() )
                     make hor change
                 if ( dest->getChangeTop() )
@@ -456,7 +460,7 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
             destFitR
                 read and fit left,bottom,right,top
             }*/
-            slotSetCurrentPage( page );
+            slotSetCurrentPageViewport( pageNum, r );
         }
         delete namedDest;
         delete dest;

@@ -40,7 +40,7 @@ Q_OBJECT
 		void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
 
 		// hilihght current thumbnail ( inherited as DocumentObserver )
-		void pageSetCurrent( int pageNumber, float position );
+		void pageSetCurrent( int pageNumber, const QRect & viewport );
 
 		// redraw thumbnail ( inherited as DocumentObserver )
 		void notifyPixmapChanged( int pageNumber );

@@ -5,8 +5,11 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <kprocio.h>
+#include <qdir.h>
+#include <qfile.h>
 #include <qfileinfo.h>
 
+#include "dviFile.h"
 #include "psgs.h"
 
 extern const char psheader[];
@@ -178,7 +181,7 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
   PSfile.close();
 
   // Step 2: Call GS with the File
-  unlink(filename.ascii());
+  QFile::remove(filename.ascii());
   KProcIO proc;
   proc << "gs";
   proc << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
@@ -197,9 +200,7 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
   PSfile.unlink();
 
   // Check if gs has indeed produced a file.
-  QFileInfo fi(filename);
-  if (fi.exists() == false) {
-
+  if (QFile::exists(filename) == false) {
     // No. Check is the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
     QString GSoutput;
@@ -280,4 +281,31 @@ QPixmap *ghostscript_interface::graphics(int page) {
   DiskCache.insert(page, GfxFile);
   return ReturnCopy;
 }
+
+
+QString ghostscript_interface::locateEPSfile(const QString &filename, class dvifile *dvi)
+{
+  QString EPSfilename(filename);
+
+  if (dvi == 0) {
+    kdError(4300) << "ghostscript_interface::locateEPSfile called with second argument == 0" << endl;
+    return EPSfilename;
+  }
+
+  QFileInfo fi1(dvi->filename);
+  QFileInfo fi2(fi1.dir(),EPSfilename);
+  if (fi2.exists())
+    EPSfilename = fi2.absFilePath();
+  else {
+    // Use kpsewhich to find the eps file.
+    KProcIO proc;
+    proc << "kpsewhich" << EPSfilename;
+    proc.start(KProcess::Block);
+    proc.readln(EPSfilename);
+    EPSfilename = EPSfilename.stripWhiteSpace();
+  }
+
+  return EPSfilename;
+}
+
 #include "psgs.moc"

@@ -246,25 +246,7 @@ void dviWindow::epsf_special(QString cp)
   if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
-
-  // Now see if the Gfx file exists... try to find it in the current
-  // directory, in the DVI file's directory, and finally, if all else
-  // fails, use kpsewhich to find the file. Later on, we should
-  // probably use the DVI file's baseURL, once this is implemented.
-  if (! QFile::exists(EPSfilename)) {
-    QFileInfo fi1(dviFile->filename);
-    QFileInfo fi2(fi1.dir(),EPSfilename);
-    if (fi2.exists())
-      EPSfilename = fi2.absFilePath();
-    else {
-      // Use kpsewhich to find the eps file.
-      KProcIO proc;
-      proc << "kpsewhich" << EPSfilename;
-      proc.start(KProcess::Block);
-      proc.readln(EPSfilename);
-      EPSfilename = EPSfilename.stripWhiteSpace();
-    }
-  }
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
   // Now parse the arguments. 
   int  llx     = 0; 
@@ -304,7 +286,8 @@ void dviWindow::epsf_special(QString cp)
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrinkfactor;
     
-    QRect bbox(((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, (int)bbox_width, (int)bbox_height);
+    QRect bbox(((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height,
+	       (int)bbox_width, (int)bbox_height);
     foreGroundPaint.save();
     if (QFile::exists(EPSfilename))
       foreGroundPaint.setBrush(Qt::lightGray);

@@ -48,16 +48,28 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent)
       fatalErrorInFontLoading = true;
       return;
     }
+
+  //  kdDebug() << "Encodings of " <<  parent->filename << endl;
+  FT_CharMap  charmap;
+  int         n;
+  for ( n = 0; n < face->num_charmaps; n++ ) {
+    charmap = face->charmaps[n];
+    //    kdDebug() << " Platform " << charmap->platform_id << endl;
+    //    kdDebug() << " Encoding " << charmap->encoding_id << endl;
+    
+    if ((charmap->platform_id == 7)|| (charmap->encoding_id == 2))
+      FT_Set_Charmap( face, charmap );
+  }
 }
 
 
 TeXFont_PFB::~TeXFont_PFB()
 {
-  // @@@@ Missing: Free resources!
+  FT_Done_Face( face );
 }
 
 
-glyph *TeXFont_PFB::getGlyph(unsigned int ch, bool generateCharacterPixmap)
+glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor color)
 {
 #ifdef DEBUG_PFB
   kdDebug(4300) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
@@ -71,7 +83,8 @@ glyph *TeXFont_PFB::getGlyph(unsigned int ch, bool generateCharacterPixmap)
 
   // This is the address of the glyph that will be returned.
   struct glyph *g = glyphtable+ch;
-  
+
+
   if (fatalErrorInFontLoading == true)
     return g;
   
@@ -94,9 +107,9 @@ glyph *TeXFont_PFB::getGlyph(unsigned int ch, bool generateCharacterPixmap)
     
     // load glyph image into the slot and erase the previous one
     if (parent->font_pool->getUseFontHints() == true)
-      error = FT_Load_Glyph(face, ch, FT_LOAD_DEFAULT ); 
+      error = FT_Load_Glyph(face, FT_Get_Char_Index( face, ch ), FT_LOAD_DEFAULT ); 
     else
-      error = FT_Load_Glyph(face, ch, FT_LOAD_NO_HINTING );
+      error = FT_Load_Glyph(face, FT_Get_Char_Index( face, ch ), FT_LOAD_NO_HINTING );
     if (error) {
       QString msg = i18n("FreeType is unable to load glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())
@@ -152,7 +165,7 @@ glyph *TeXFont_PFB::getGlyph(unsigned int ch, bool generateCharacterPixmap)
   
   // Load glyph width, if that hasn't been done yet.
   if (g->dvi_advance_in_units_of_design_size_by_2e20 == 0) {
-    int error = FT_Load_Glyph(face, ch, FT_LOAD_NO_SCALE );
+    int error = FT_Load_Glyph(face, FT_Get_Char_Index( face, ch ), FT_LOAD_NO_SCALE );
     if (error) {
       QString msg = i18n("FreeType is unable to load metric for glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())

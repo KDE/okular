@@ -31,7 +31,7 @@ class TeXFont {
 	glyphtable[i].shrunkenCharacter.resize(0, 0);
     };
   
-  virtual glyph *getGlyph(unsigned int character, bool generateCharacterPixmap=false) =0;
+  virtual glyph *getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, QColor color=Qt::black) =0;
   
 
   // Checksum of the font. Used e.g. by PK fonts. This field is filled

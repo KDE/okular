@@ -79,7 +79,11 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   kdDebug(4300) << "set_char #" << ch << endl;
 #endif
 
-  glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true);
+  glyph *g;
+  if (colorStack.isEmpty())
+    g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
+  else
+    g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, colorStack.top());
   if (g == NULL)
     return;
 

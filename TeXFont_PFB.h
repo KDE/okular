@@ -30,7 +30,7 @@ class TeXFont_PFB : public TeXFont {
   TeXFont_PFB(TeXFontDefinition *parent);
   ~TeXFont_PFB();
   
-  glyph *getGlyph(unsigned int character, bool generateCharacterPixmap=false);
+  glyph *getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, QColor color=Qt::black);
 
  private:
   FT_Face     face;

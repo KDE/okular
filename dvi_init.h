@@ -41,6 +41,12 @@ class dvifile : public bigEndianByteReader
 
   double         cmPerDVIunit;
 
+  /** This member is set to zero on construction and can be used by
+      other software to count error messages that were printed when
+      the DVI-file was processed. Suggested application: limit the
+      number of error messages to, say, 25. */
+  Q_UINT8        errorCounter;
+
  private:
   /** process_preamble reads the information in the preamble and
       stores it into global variables for later use. */

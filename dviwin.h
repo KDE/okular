@@ -140,6 +140,7 @@ public:
 
 
   void          special(long nbytes);
+  void          color_special(QString cp);
   void          html_href_special(QString cp);
   void          html_anchor_end(void);
   void          html_anchor_special(QString cp);
@@ -264,6 +265,13 @@ private:
      as explained in section 2.5 and 2.6.2 of the DVI driver standard,
      Level 0, published by the TUG DVI driver standards committee. */
  QValueStack<struct framedata> stack;
+
+ /** A stack where color are stored, according to the documentation of
+     DVIPS */
+ QValueStack<QColor> colorStack;
+
+ /** The global color is to be used when the color stack is empty */
+ QColor              globalColor;
 
  /** Methods and counters used for the animation to mark the target of
      an hyperlink. */

@@ -2,6 +2,7 @@
 #ifndef _GLYPH_H
 #define _GLYPH_H
 
+#include <qcolor.h>
 #include <qpixmap.h>
 
 
@@ -17,7 +18,9 @@ class glyph {
   ~glyph();
 
   // address of bitmap in font file
-  long    addr;		
+  long    addr;
+
+  QColor color;
 
   // DVI units to move reference point
   Q_INT32 dvi_advance_in_units_of_design_size_by_2e20;

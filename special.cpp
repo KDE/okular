@@ -10,6 +10,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocio.h>
+#include <kstringhandler.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
@@ -21,6 +22,35 @@
 
 
 extern QPainter foreGroundPaint;
+
+void dviWindow::color_special(QString cp)
+{
+  kdDebug(4300) << "Color special: " << cp << endl;
+  
+  // The color specials are ignore during the pre-scan phase, we use
+  // them only during rendering
+  if (PostScriptOutPutString == NULL) {
+    
+    cp = cp.stripWhiteSpace();
+    
+    QString command = KStringHandler::word(cp, (unsigned int)0);
+    
+    if (command == "pop") {
+      // Take color off the stack
+      return;
+    }
+    
+    if (command == "push") {
+      // Get color specification
+      // Set color
+      return;
+    }
+    
+    // Get color specification
+    // Set color for the rest of this page
+    return;
+  }
+}
 
 void dviWindow::html_anchor_special(QString cp)
 {
@@ -354,6 +384,18 @@ void dviWindow::applicationDoSpecial(char *cp)
     return;
   }
 
-  kdError(4300) << i18n("The special command \"") << special_command << i18n("\" is not implemented.") << endl;
+  // color specials
+  if (special_command.find("color", 0, false) == 0) {
+    color_special(special_command.mid(5));
+    return;
+  }
+
+  if (dviFile->errorCounter < 25) {
+    kdError(4300) << i18n("The special command \"") << special_command << i18n("\" is not implemented.") << endl;
+    dviFile->errorCounter++;
+    if (dviFile->errorCounter == 25)
+      kdError(4300) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
+  }
+
   return;
 }

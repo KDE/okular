@@ -113,7 +113,7 @@ TeXFont_PK::~TeXFont_PK()
 }
 
 
-glyph *TeXFont_PK::getGlyph(unsigned int ch, bool generateCharacterPixmap)
+glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor color)
 {
 #ifdef DEBUG_PK
   kdDebug(4300) << "TeXFont_PK::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
@@ -221,20 +221,29 @@ glyph *TeXFont_PK::getGlyph(unsigned int ch, bool generateCharacterPixmap)
     // Generate an Image and shrink it to the proper size. By the
     // documentation of smoothScale, the resulting Image will be
     // 8-bit.
-    QImage im = g->shrunkenCharacter.convertToImage().smoothScale(shrunk_width, shrunk_height);
+    QImage EightBitImage = g->shrunkenCharacter.convertToImage().smoothScale(shrunk_width, shrunk_height).convertDepth(32);
+
+    /*
+    QImage bm((uchar *)(characterBitmaps[ch]->bits), 
+	      characterBitmaps[ch]->bytes_wide*8, (int)characterBitmaps[ch]->h, 
+	      1, (QRgb *)0, 2, QImage::IgnoreEndian);
+    bm.setColor(0, qRgb(0x00,0x00,0x00));
+    bm.setColor(1, qRgb(0xFF,0xFF,0xFF));
+    QImage EightBitImage = bm.smoothScale(shrunk_width, shrunk_height).convertDepth(32);
+    */
+
     // Generate the alpha-channel. This again is highly inefficient.
     // Would anybody please produce a faster routine?
-    QImage im32 = im.convertDepth(32);
+    QImage im32(shrunk_width, shrunk_height, 32);
     im32.setAlphaBuffer(TRUE);
-    for(int y=0; y<im.height(); y++) {
-      QRgb *imag_scanline = (QRgb *)im32.scanLine(y);
-      for(int x=0; x<im.width(); x++) {
-	// Make White => Transparent
-	if ((0x00ffffff & *imag_scanline) == 0x00ffffff)
-	  *imag_scanline &= 0x00ffffff;
-	else
-	  *imag_scanline |= 0xff000000;
-	imag_scanline++; // Disgusting pointer arithmetic. Should be forbidden.
+    for(Q_UINT16 y=0; y<shrunk_height; y++) {
+      Q_UINT8 *srcScanLine  = (Q_UINT8 *)EightBitImage.scanLine(y);
+      Q_UINT8 *destScanLine = (Q_UINT8 *)im32.scanLine(y);
+      for(Q_UINT16 col=0; col<shrunk_width; col++) {
+	destScanLine[4*col+0] = 0x00;
+	destScanLine[4*col+1] = 0x00;
+	destScanLine[4*col+2] = 0x00;
+	destScanLine[4*col+3] = 0xFF-srcScanLine[4*col];
       }
     }
     g->shrunkenCharacter.convertFromImage(im32,0);

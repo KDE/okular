@@ -120,7 +120,7 @@ TeXFont_TFM::~TeXFont_TFM()
 }
 
 
-glyph *TeXFont_TFM::getGlyph(unsigned int characterCode, bool generateCharacterPixmap)
+glyph *TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixmap, QColor color)
 {
 #ifdef DEBUG_TFM
   kdDebug(4300) << "TeXFont_TFM::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;

@@ -11,6 +11,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #endif
+#include <qmap.h>
 #include <qptrlist.h>
 #include <qstringlist.h>
 #include <qobject.h>
@@ -137,6 +138,17 @@ Q_OBJECT
   /** A handle to the FreeType library, which is used by TeXFont_PFM
       font objects, if KDVI is compiled with FreeType support.  */
   FT_Library FreeType_library;
+  
+  /** Simple marker. Set to 'true', if the FreeType library was loaded
+      successfully */
+  bool FreeType_could_be_loaded;
+
+  /** This maps TeX font names to actual filenames that we can look up
+      with kpsewhich. Unfortunately, this is necessary for a number of
+      Type1 fonts, such as URWBookmanL-DemiBold whose TeX name is
+      'rpbkd' but which is contained in the file 'ubkd8a.pfb'. The
+      contents of 'ps2pk.map' is parsed to set up this map. */
+  QMap<QString, QString> fontFilenames;
 #endif
 
 

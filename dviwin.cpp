@@ -280,6 +280,10 @@ void dviWindow::drawPage()
     return;
 
   if ( !pixmap->paintingActive() ) {
+    // Reset colors
+    colorStack.clear();
+    globalColor = Qt::black;
+
     foreGroundPaint.begin( pixmap );
     QApplication::setOverrideCursor( waitCursor );
     errorMsg = QString::null;

@@ -9,7 +9,12 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
+#include <kprocio.h>
+#include <kstringhandler.h>
+
 #include <qapplication.h>
+#include <qfile.h>
+
 #include <stdlib.h>
 
 #include "fontpool.h"
@@ -40,8 +45,41 @@ fontPool::fontPool(void)
   fontList.setAutoDelete(TRUE);
 
 #ifdef HAVE_FREETYPE
+  // Initialize the Freetype Library
   if ( FT_Init_FreeType( &FreeType_library ) != 0 ) {
     kdError(4300) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
+    FreeType_could_be_loaded = false;
+  } else {
+    FreeType_could_be_loaded = true;
+
+    // Read the map file of ps2pk which will provide us with a
+    // dictionary "TeX Font names for Type1 fonts" <-> "Name of font
+    // files" (example: the font "Times-Roman" is called "ptmr8y" in
+    // the DVI file, but the Type1 font file name is "utmr8a.pfb". We
+    // use the map file of "ps2pk" because that progam has, like kdvi
+    // (and unlike dvips), no built-in fonts.
+    KProcIO proc;
+    proc << "kpsewhich" << "--format=dvips config" << "ps2pk.map";
+    proc.start(KProcess::Block);
+    QString map_fileName;
+    proc.readln(map_fileName);
+    map_fileName = map_fileName.stripWhiteSpace();
+
+    QFile file( map_fileName );
+    if ( file.open( IO_ReadOnly ) ) {
+      QTextStream stream( &file );
+      QString line;
+      while ( !stream.atEnd() ) {
+	line = stream.readLine().stripWhiteSpace();
+	if (line.at(0) == '%')
+	  continue;
+	QString TeXName  = KStringHandler::word(line, (unsigned int)0);
+	QString fontFileName = line.section('<', -1);
+	
+	fontFilenames[TeXName] = fontFileName;
+      }
+      file.close();
+    }
   }
 #endif
 
@@ -68,6 +106,11 @@ fontPool::~fontPool(void)
 {
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "fontPool::~fontPool(void) called" << endl;
+#endif
+
+#ifdef HAVE_FREETYPE
+  if (FreeType_could_be_loaded == true)
+    FT_Done_FreeType( FreeType_library );
 #endif
 
   if (progress)
@@ -334,10 +377,16 @@ void fontPool::start_kpsewhich(void)
       case 0:
 	// In the first pass, we look for PK fonts, and also for virtual fonts.
 #ifdef HAVE_FREETYPE
-	if (useType1Fonts == true) {
-	  *proc << KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname));
+	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
+	  QString filename;
+	  QMap<QString,QString>::Iterator it = fontFilenames.find(fontp->fontname);
+	  if (it == fontFilenames.end())
+	    filename = fontp->fontname;
+	  else
+	    filename = *it;
+	  *proc << KShellProcess::quote(QString("%1.pfb").arg(filename));
 #ifdef DEBUG_FONTPOOL
-	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname)) + " ";
+	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(filename)) + " ";
 #endif
 	}
 #endif
@@ -352,10 +401,16 @@ void fontPool::start_kpsewhich(void)
 	// In the second pass, we generate PK fonts, but be also look
 	// for PFB fonts, as they might be used by virtual fonts.
 #ifdef HAVE_FREETYPE
-	if (useType1Fonts == true) {
-	  *proc << KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname));
+	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
+	  QString filename;
+	  QMap<QString,QString>::Iterator it = fontFilenames.find(fontp->fontname);
+	  if (it == fontFilenames.end())
+	    filename = fontp->fontname;
+	  else
+	    filename = *it;
+	  *proc << KShellProcess::quote(QString("%1.pfb").arg(filename));
 #ifdef DEBUG_FONTPOOL
-	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname)) + " ";
+	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(filename)) + " ";
 #endif
 	}
 #endif
@@ -434,7 +489,13 @@ void fontPool::kpsewhich_terminated(KProcess *)
   TeXFontDefinition *fontp=fontList.first();
   while ( fontp != 0 ) { 
     if (fontp->filename.isEmpty() == true) {
-      QStringList matchingFiles = fileNameList.grep(fontp->fontname);
+      QStringList matchingFiles;
+      QMap<QString,QString>::Iterator it = fontFilenames.find(fontp->fontname);
+      if (it != fontFilenames.end())
+	matchingFiles =fileNameList.grep(*it);
+      if (matchingFiles.isEmpty() == true) 
+	matchingFiles += fileNameList.grep(fontp->fontname);
+      
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
 	kdDebug(4300) << "Associated " << fontp->fontname << " to " << matchingFiles.first() << endl;
@@ -472,8 +533,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
     emit fonts_have_been_loaded();
     return;
   }
-    
-
+  
   if (pass == 0) {
     pass = 1;
     // If automatic pk-font generation is enabled, we call

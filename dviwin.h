@@ -4,9 +4,8 @@
 // Widget for displaying TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2001 Stefan Kebekus
-// Distributed under the GPL
-//
+// (C) 2001-2003 Stefan Kebekus. Distributed under the GPL.
+
 
 #ifndef _dviwin_h_
 #define _dviwin_h_
@@ -38,10 +37,6 @@ class KShellProcess;
 class TeXFontDefinition;
 
 extern const int MFResolutions[];
-
-
-// If this is defined, KDVI will emitt debugging messages to tell how
-// long certain tasks take
 
 class DVI_Hyperlink {
  public:
@@ -101,6 +96,26 @@ struct drawinf {
 };
 
 
+// This class contains everything one needs dviwin needs to know about
+// a certain page. 
+
+class pageData
+{
+ public:
+  Q_UINT16   pageNumber;
+  
+  QPixmap    *pixmap;
+  
+  // List of source-hyperlinks in the current page. This vector is
+  // generated when the current page is drawn.
+  QValueVector<DVI_Hyperlink> sourceHyperLinkList;
+
+  QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
+  QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
+    
+};
+
+
 class dviWindow : public QWidget, bigEndianByteReader
 {
   Q_OBJECT
@@ -128,7 +143,7 @@ public:
   bool          correctDVI(QString filename);
   
   // for the preview
-  QPixmap      *pix() { return pixmap; };
+  QPixmap      *pix() { return currentlyDrawnPage.pixmap; };
 
   // These should not be public... only for the moment
   void          mousePressEvent ( QMouseEvent * e );
@@ -161,7 +176,7 @@ public:
   selection    DVIselection;
 
  /** Reference part of the URL which describes the filename. */
- QString             reference;
+ QString        reference;
 
  QString        searchText;
  KAction        *findNextAction;
@@ -245,9 +260,8 @@ private:
     *this. */
  QTimer        clearStatusBarTimer;
 
- // List of source-hyperlinks in the current page. This vector is
- // generated when the current page is drawn.
- QValueVector<DVI_Hyperlink> sourceHyperLinkList;
+ pageData      currentlyDrawnPage;
+
 
  // List of source-hyperlinks on all pages. This vector is generated
  // when the DVI-file is first loaded, i.e. when draw_part is called
@@ -257,9 +271,6 @@ private:
  // If not NULL, the text currently drawn represents a source
  // hyperlink to the (relative) URL given in the string;
  QString          *source_href;
-
- QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
- QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
 
  // If not NULL, the text currently drawn represents a hyperlink to
  // the (relative) URL given in the string;
@@ -319,7 +330,6 @@ private:
 
  double            fontPixelPerDVIunit() {return dviFile->cmPerDVIunit * MFResolutions[font_pool->getMetafontMode()]/2.54;};
 
- QPixmap          *pixmap;
  int		   ChangesPossible;
  unsigned int	   current_page;
 

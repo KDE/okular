@@ -1,9 +1,29 @@
-
 //
 // Class: dviWindow
+// Author: Stefan Kebekus
+//
+// (C) 2001-2003, Stefan Kebekus.
 //
 // Previewer for TeX DVI files.
 //
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License as
+// published by the Free Software Foundation; either version 2 of the
+// License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+// 02111-1307, USA.
+//
+// Please report bugs or improvements, etc. via the "Report bug"-Menu
+// of kdvi.
+
 
 #include <qapplication.h> 
 #include <qpainter.h>
@@ -90,16 +110,16 @@ void dviWindow::findNextText(void)
 
     // Go trough the text of the current page and search for the
     // string.
-    for(unsigned int i=DVIselection.selectedTextStart+1; i<textLinkList.size(); i++) 
-      if (textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
+    for(unsigned int i=DVIselection.selectedTextStart+1; i<currentlyDrawnPage.textLinkList.size(); i++) 
+      if (currentlyDrawnPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
 	// re-render the screen.
 	_postscript    = _postscript_sav;
 	int j = current_page;
 	current_page   = current_page_sav;
-	emit(request_goto_page(j, textLinkList[i].box.bottom() ));
-	DVIselection.set(i, i, textLinkList[i].linkText);
+	emit(request_goto_page(j, currentlyDrawnPage.textLinkList[i].box.bottom() ));
+	DVIselection.set(i, i, currentlyDrawnPage.textLinkList[i].linkText);
 	repaint();
 	return;
       }
@@ -217,17 +237,17 @@ void dviWindow::findPrevText(void)
     // string.
     int i=DVIselection.selectedTextStart-1;
     if (i < 0)
-      i = textLinkList.size()-1;
+      i = currentlyDrawnPage.textLinkList.size()-1;
     while(i >= 0) {
-      if (textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
+      if (currentlyDrawnPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
 	// re-render the screen.
 	_postscript    = _postscript_sav;
 	int j = current_page;
 	current_page   = current_page_sav;
-	emit(request_goto_page(j, textLinkList[i].box.bottom() ));
-	DVIselection.set(i, i, textLinkList[i].linkText);
+	emit(request_goto_page(j, currentlyDrawnPage.textLinkList[i].box.bottom() ));
+	DVIselection.set(i, i, currentlyDrawnPage.textLinkList[i].linkText);
 	repaint();
 	return;
       }

@@ -69,8 +69,8 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
 
   connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
 
-  sourceHyperLinkList.reserve(200);
-  textLinkList.reserve(250);
+  currentlyDrawnPage.sourceHyperLinkList.reserve(200);
+  currentlyDrawnPage.textLinkList.reserve(250);
  
   // initialize the dvi machinery
   dviFile                = 0;
@@ -119,7 +119,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
   HTML_href              = NULL;
   _postscript            = 0;
   _showHyperLinks        = true;
-  pixmap                 = 0;
+  currentlyDrawnPage.pixmap                 = 0;
   findDialog             = 0;
   findNextAction         = 0;
   findPrevAction         = 0;
@@ -147,6 +147,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
   resize(0,0);
 }
 
+
 dviWindow::~dviWindow()
 {
 #ifdef DEBUG_DVIWIN
@@ -155,8 +156,8 @@ dviWindow::~dviWindow()
 
   if (info)
     delete info;
-  if (pixmap)
-    delete pixmap;
+  if (currentlyDrawnPage.pixmap)
+    delete currentlyDrawnPage.pixmap;
   delete PS_interface;
   if (dviFile)
     delete dviFile;
@@ -186,19 +187,21 @@ void dviWindow::showInfo(void)
 void dviWindow::selectAll(void)
 {
   QString selectedText("");
-  for(unsigned int i = 0; i < textLinkList.size(); i++) {
-    selectedText += textLinkList[i].linkText;
+  for(unsigned int i = 0; i < currentlyDrawnPage.textLinkList.size(); i++) {
+    selectedText += currentlyDrawnPage.textLinkList[i].linkText;
     selectedText += "\n";
   }
-  DVIselection.set(0, textLinkList.size()-1, selectedText);
+  DVIselection.set(0, currentlyDrawnPage.textLinkList.size()-1, selectedText);
   update();
 }
+
 
 void dviWindow::copyText(void)
 {
   QApplication::clipboard()->setSelectionMode(false);
   QApplication::clipboard()->setText(DVIselection.selectedText);
 }
+
 
 void dviWindow::setShowPS( bool flag )
 {
@@ -222,21 +225,6 @@ void dviWindow::setShowHyperLinks( bool flag )
   drawPage();
 }
 
-#ifdef doof
-void dviWindow::setMetafontMode( unsigned int mode )
-{
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::setMetafontMode( mode=" << mode << " )" << endl;
-#endif
-  MetafontMode     = font_pool->setMetafontMode(mode);
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::setMetafontMode, new MetafontMode is at " << MFResolutions[MetafontMode] << " dpi" << endl;
-#endif
-
-  shrinkfactor = MFResolutions[MetafontMode]/(xres*_zoom);
-  font_pool->setDisplayResolution( xres*_zoom );
-}
-#endif
 
 void dviWindow::setPaper(double width_in_cm, double height_in_cm)
 {
@@ -258,7 +246,10 @@ void dviWindow::drawPage()
   kdDebug(4300) << "dviWindow::drawPage()" << endl;
 #endif
 
+#ifdef PERFORMANCE_MEASUREMENT
  start:
+#endif
+
   shrinkfactor = MFResolutions[font_pool->getMetafontMode()]/(xres*_zoom);
   setCursor(arrowCursor);
   
@@ -281,19 +272,19 @@ void dviWindow::drawPage()
     resize(0, 0);
     return;
   }
-  if ( !pixmap )
+  if ( !currentlyDrawnPage.pixmap )
     return;
 
-  if ( !pixmap->paintingActive() ) {
+  if ( !currentlyDrawnPage.pixmap->paintingActive() ) {
     // Reset colors
     colorStack.clear();
     globalColor = Qt::black;
 
-    foreGroundPaint.begin( pixmap );
+    foreGroundPaint.begin( currentlyDrawnPage.pixmap );
     QApplication::setOverrideCursor( waitCursor );
     errorMsg = QString::null;
     draw_page();
-    foreGroundPaint.drawRect(0,0,pixmap->width(),pixmap->height());
+    foreGroundPaint.drawRect(0, 0, currentlyDrawnPage.pixmap->width(), currentlyDrawnPage.pixmap->height());
     foreGroundPaint.end();
     QApplication::restoreOverrideCursor();
     if (errorMsg.isEmpty() != true) {
@@ -310,7 +301,7 @@ void dviWindow::drawPage()
     // a button "Explain in more detail..." which opens the
     // Helpcenter. Thus, we practically re-implement the KMessagebox
     // here. Most of the code is stolen from there.
-    if ((dviFile->sourceSpecialMarker == true) && (sourceHyperLinkList.size() > 0)) {
+    if ((dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0)) {
       dviFile->sourceSpecialMarker = false;
       // Check if the 'Don't show again' feature was used
       KConfig *config = kapp->config();
@@ -360,7 +351,18 @@ void dviWindow::drawPage()
       }
     }
   }
-  update();
+
+  // WORK IN PROGRESS
+
+  /*  repaint();
+  unsigned int  current_page_sav = current_page;
+  qApp->processEvents();
+  if (current_page_sav == current_page)
+    emit contents_changed();
+  */
+
+  repaint();
+  //  update();
   emit contents_changed();
 
 #ifdef PERFORMANCE_MEASUREMENT
@@ -408,21 +410,21 @@ void dviWindow::changePageSize()
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::changePageSize()" << endl;
 #endif
-  if ( pixmap && pixmap->paintingActive() )
+  if ( currentlyDrawnPage.pixmap && currentlyDrawnPage.pixmap->paintingActive() )
     return;
 
-  if (pixmap)
-    delete pixmap;
+  if (currentlyDrawnPage.pixmap)
+    delete currentlyDrawnPage.pixmap;
 
   unsigned int page_width_in_pixel = (unsigned int)(_zoom*paper_width_in_cm/2.54 * xres + 0.5);
   unsigned int page_height_in_pixel = (unsigned int)(_zoom*paper_height_in_cm/2.54 * xres + 0.5);
 
-  pixmap = new QPixmap( page_width_in_pixel, page_height_in_pixel );
-  if (pixmap == 0) {
+  currentlyDrawnPage.pixmap = new QPixmap( page_width_in_pixel, page_height_in_pixel );
+  if (currentlyDrawnPage.pixmap == 0) {
     kdError(4300) << "dviWindow::changePageSize(), no memory for pixmap, width=" << page_width_in_pixel << ", height=" << page_height_in_pixel << endl;
     exit(0);
   }
-  pixmap->fill( white );
+  currentlyDrawnPage.pixmap->fill( white );
 
   resize( page_width_in_pixel, page_height_in_pixel );
 
@@ -451,9 +453,9 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
       delete dviFile;
     dviFile = 0;
 
-    if (pixmap)
-      delete pixmap;
-    pixmap = 0;
+    if (currentlyDrawnPage.pixmap)
+      delete currentlyDrawnPage.pixmap;
+    currentlyDrawnPage.pixmap = 0;
     resize(0, 0);
     return true;
   }
@@ -669,7 +671,7 @@ void dviWindow::gotoPage(int new_page, int vflashOffset)
   animationCounter = 0;
   if (timerIdent != 0)
     killTimer(timerIdent);
-  flashOffset      = vflashOffset - pixmap->height()/100; // Heuristic correction. Looks better.
+  flashOffset      = vflashOffset - currentlyDrawnPage.pixmap->height()/100; // Heuristic correction. Looks better.
   timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
 }
 
@@ -681,7 +683,7 @@ void dviWindow::timerEvent( QTimerEvent *e )
     timerIdent       = 0;
     animationCounter = 0;
   }
-  repaint(0, flashOffset, pixmap->width(), pixmap->height()/19, false);
+  repaint(0, flashOffset, currentlyDrawnPage.pixmap->width(), currentlyDrawnPage.pixmap->height()/19, false);
 }
 
 int dviWindow::totalPages()
@@ -712,24 +714,24 @@ double dviWindow::setZoom(double zoom)
 
 void dviWindow::paintEvent(QPaintEvent *e)
 {
-  if (pixmap) {
-    bitBlt ( this, e->rect().topLeft(), pixmap, e->rect(), CopyROP);
+  if (currentlyDrawnPage.pixmap) {
+    bitBlt ( this, e->rect().topLeft(), currentlyDrawnPage.pixmap, e->rect(), CopyROP);
     QPainter p(this);
     p.setClipRect(e->rect());
     if (animationCounter > 0 && animationCounter < 10) {
-      int wdt = pixmap->width()/(10-animationCounter);
-      int hgt = pixmap->height()/((10-animationCounter)*20);
+      int wdt = currentlyDrawnPage.pixmap->width()/(10-animationCounter);
+      int hgt = currentlyDrawnPage.pixmap->height()/((10-animationCounter)*20);
       p.setPen(QPen(QColor(150,0,0), 3, DashLine));
-      p.drawRect((pixmap->width()-wdt)/2, flashOffset, wdt, hgt);
+      p.drawRect((currentlyDrawnPage.pixmap->width()-wdt)/2, flashOffset, wdt, hgt);
     }
 
     // Mark selected text.
     if (DVIselection.selectedTextStart != -1)
-      for(unsigned int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < textLinkList.size()); i++) {
+      for(unsigned int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < currentlyDrawnPage.textLinkList.size()); i++) {
 	p.setPen( NoPen );
 	p.setBrush( white );
 	p.setRasterOp( Qt::XorROP );
-	p.drawRect(textLinkList[i].box);
+	p.drawRect(currentlyDrawnPage.textLinkList[i].box);
       }
   }
 }
@@ -744,11 +746,11 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
   // If no mouse button pressed
   if ( e->state() == 0 ) {
     // go through hyperlinks
-    for(unsigned int i=0; i<hyperLinkList.size(); i++) {
-      if (hyperLinkList[i].box.contains(e->pos())) {
+    for(unsigned int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
+      if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
 	clearStatusBarTimer.stop();
 	setCursor(pointingHandCursor);
-	QString link = hyperLinkList[i].linkText;
+	QString link = currentlyDrawnPage.hyperLinkList[i].linkText;
 	if ( link.startsWith("#") )
 	  link = link.remove(0,1);
 	emit setStatusBarText( i18n("Link to %1").arg(link) );
@@ -760,12 +762,12 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     setCursor(arrowCursor);
 
     // But maybe the cursor hovers over a sourceHyperlink?
-    for(unsigned int i=0; i<sourceHyperLinkList.size(); i++) {
-      if (sourceHyperLinkList[i].box.contains(e->pos())) {
+    for(unsigned int i=0; i<currentlyDrawnPage.sourceHyperLinkList.size(); i++) {
+      if (currentlyDrawnPage.sourceHyperLinkList[i].box.contains(e->pos())) {
 	clearStatusBarTimer.stop();
 	KStringHandler kstr;
-	QString line = kstr.word(sourceHyperLinkList[i].linkText, "0");
-	QString file = kstr.word(sourceHyperLinkList[i].linkText, "1:");
+	QString line = kstr.word(currentlyDrawnPage.sourceHyperLinkList[i].linkText, "0");
+	QString file = kstr.word(currentlyDrawnPage.sourceHyperLinkList[i].linkText, "1:");
 	emit setStatusBarText( i18n("Link to line %1 of %2").arg(line).arg(file) );
 	return;
       }
@@ -793,8 +795,8 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     Q_INT32 selectedTextStart = -1;
     Q_INT32 selectedTextEnd   = -1;
 
-    for(unsigned int i=0; i<textLinkList.size(); i++)
-      if ( selectedRectangle.intersects(textLinkList[i].box) ) {
+    for(unsigned int i=0; i<currentlyDrawnPage.textLinkList.size(); i++)
+      if ( selectedRectangle.intersects(currentlyDrawnPage.textLinkList[i].box) ) {
 	if (selectedTextStart == -1)
 	  selectedTextStart = i;
 	selectedTextEnd = i;
@@ -802,8 +804,8 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 
     QString selectedText("");
     if (selectedTextStart != -1)
-      for(unsigned int i = selectedTextStart; (i <= selectedTextEnd)&&(i < textLinkList.size()); i++) {
-	selectedText += textLinkList[i].linkText;
+      for(unsigned int i = selectedTextStart; (i <= selectedTextEnd)&&(i < currentlyDrawnPage.textLinkList.size()); i++) {
+	selectedText += currentlyDrawnPage.textLinkList[i].linkText;
 	selectedText += "\n";
       }
 
@@ -828,13 +830,13 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	int i=i1;
 	while(i<i2) {
 	  if (i != -1)
-	    box = box.unite(textLinkList[i].box);
+	    box = box.unite(currentlyDrawnPage.textLinkList[i].box);
 	  i++;
 	}
 
 	for(int i=i3; i<i4; i++)
 	  if (i != -1)
-	    box = box.unite(textLinkList[i].box);
+	    box = box.unite(currentlyDrawnPage.textLinkList[i].box);
 	DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
 	update(box);
       }
@@ -842,10 +844,12 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
   }
 }
 
+
 void dviWindow::mouseReleaseEvent ( QMouseEvent * )
 {
   selectedRectangle.setRect(0,0,0,0);
 }
+
 
 void dviWindow::mousePressEvent ( QMouseEvent * e )
 {
@@ -854,14 +858,14 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #endif
 
   // Check if the mouse is pressed on a regular hyperlink
-  if ((e->button() == LeftButton) && (hyperLinkList.size() > 0))
-    for(int i=0; i<hyperLinkList.size(); i++) {
-      if (hyperLinkList[i].box.contains(e->pos())) {
-	if (hyperLinkList[i].linkText[0] == '#' ) {
+  if ((e->button() == LeftButton) && (currentlyDrawnPage.hyperLinkList.size() > 0))
+    for(int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
+      if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
+	if (currentlyDrawnPage.hyperLinkList[i].linkText[0] == '#' ) {
 #ifdef DEBUG_SPECIAL
-	  kdDebug(4300) << "hit: local link to " << hyperLinkList[i].linkText << endl;
+	  kdDebug(4300) << "hit: local link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
 #endif
-	  QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
+	  QString locallink = currentlyDrawnPage.hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
 	  QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
 	  if (it != anchorList.end()) {
 #ifdef DEBUG_SPECIAL
@@ -872,14 +876,14 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  }
 	} else {
 #ifdef DEBUG_SPECIAL
-	  kdDebug(4300) << "hit: external link to " << hyperLinkList[i].linkText << endl;
+	  kdDebug(4300) << "hit: external link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
 #endif
 	  // We could in principle use KIO::Netaccess::run() here, but
 	  // it is perhaps not a very good idea to allow a DVI-file to
 	  // specify arbitrary commands, such as "rm -rvf /". Using
 	  // the kfmclient seems to be MUCH safer.
 	  QUrl DVI_Url(dviFile->filename);
-	  QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
+	  QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
 
           QStringList args;
           args << "openURL";
@@ -891,14 +895,14 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
     }
 
   // Check if the mouse is pressed on a source-hyperlink
-  if ((e->button() == MidButton) && (sourceHyperLinkList.size() > 0))
-    for(unsigned int i=0; i<sourceHyperLinkList.size(); i++)
-      if (sourceHyperLinkList[i].box.contains(e->pos())) {
+  if ((e->button() == MidButton) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0))
+    for(unsigned int i=0; i<currentlyDrawnPage.sourceHyperLinkList.size(); i++)
+      if (currentlyDrawnPage.sourceHyperLinkList[i].box.contains(e->pos())) {
 #ifdef DEBUG_SPECIAL
-	kdDebug(4300) << "Source hyperlink to " << sourceHyperLinkList[i].linkText << endl;
+	kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage.sourceHyperLinkList[i].linkText << endl;
 #endif
 
-	QString cp = sourceHyperLinkList[i].linkText;
+	QString cp = currentlyDrawnPage.sourceHyperLinkList[i].linkText;
 	int max = cp.length();
 	int i;
 	for(i=0; i<max; i++)

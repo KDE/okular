@@ -16,7 +16,7 @@ class dvifile {
   QString        filename;
   QString        generatorString;
   FILE         * file;
-  int	         total_pages;
+  unsigned int   total_pages;
   long         * page_offset;
 
   /** Numerator and denominator of the TeX units, as explained in

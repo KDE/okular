@@ -125,6 +125,7 @@ void OptionDialog::slotApply()
   config->writeEntry( "MakePK", mFont.fontPathCheck->isChecked() );
   config->writeEntry( "ShowPS", mRender.showSpecialCheck->isChecked() );
   config->writeEntry( "ShowHyperLinks", mRender.showHyperLinksCheck->isChecked() );
+  config->writeEntry( "EditorCommand", EditorCommand );
 
   config->sync();
 

@@ -415,7 +415,6 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
       commaflag = 1;
     dvips_options += QString("%1").arg(*it);
   }
-  kdDebug() << "dvips_options " << dvips_options << "\n";
 
   // Now print. For that, export the DVI-File to PostScript. Note that
   // dvips will run concurrently to keep the GUI responsive, keep log
@@ -423,12 +422,11 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // means that the dvi-widget will print the file when dvips
   // terminates, and then delete the output file.
   KTempFile tf;
-  kdDebug() << "TMP " << tf.name() << "\n";
   window->exportPS(tf.name(), dvips_options, printer);
 
   // "True" may be a bit euphemistic. However, since dvips runs
   // concurrently, there is no way of telling the result of the
-  // printing command now.
+  // printing command at this stage.
   return true;
 }
 

@@ -126,7 +126,7 @@ public slots:
   bool		setFile(const QString & fname);
 
   /** Displays the page of the first argument */
-  void		gotoPage(int page);
+  void		gotoPage(unsigned int page);
 
   /** Displays the page of the first argument, and blinks the display
       at the vertical offset vflashOffset. This is used when the user
@@ -232,7 +232,7 @@ private:
  unsigned int	   MetafontMode;
  QString	   paper_type;
  int		   ChangesPossible;
- int		   current_page;
+ unsigned int	   current_page;
  // Indicates if the current page is already drawn (=1) or not (=0).
  char              is_current_page_drawn;
  double            _zoom;
@@ -242,6 +242,7 @@ private:
  KShellProcess      *proc;
  KPrinter           *export_printer;
  QString             export_fileName;
+ QString             export_tmpFileName;
 };
 
 

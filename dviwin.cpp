@@ -26,9 +26,12 @@
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/job.h>
+#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kprinter.h>
 #include <kprocess.h>
+
+
 
 #include "dviwin.h"
 #include "fontpool.h"
@@ -137,6 +140,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   progress               = 0;
   export_printer         = 0;
   export_fileName        = "";
+  export_tmpFileName     = "";
 
   // Calculate the horizontal resolution of the display device.  @@@
   // We assume implicitly that the horizontal and vertical resolutions
@@ -296,14 +300,14 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   // Should not happen since the progressDialog is modal... but who
   // knows?
   if (proc != 0) {
-    KMessageBox::sorry(0, i18n("Another export command is currently running"));
+    KMessageBox::sorry(this, i18n("Another export command is currently running"));
     return;
   }
 
   // That sould also not happen.
   if (dviFile == NULL)
     return;
-
+  
   QString fileName;
   if (fname.isEmpty()) {
     fileName = KFileDialog::getSaveFileName(QString::null, "*.ps|PostScript (*.ps)", this, i18n("Export File As"));
@@ -337,6 +341,67 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortExternalProgramm(void)));
   }
 
+  // There is a major problem with dvips, at least 5.86 and lower: the
+  // arguments of the option "-pp" refer to TeX-pages, not to
+  // sequentially numbered pages. For instance "-pp 7" may refer to 3
+  // or more pages: one page "VII" in the table of contents, a page
+  // "7" in the text body, and any number of pages "7" in various
+  // appendices, indices, bibliographies, and so forth. KDVI currently
+  // uses the following disgusting workaround: if the "options"
+  // variable is used, the DVI-file is copied to a temporary file, and
+  // all the page numbers are changed into a sequential ordering
+  // (using UNIX files, and taking manually care of CPU byte
+  // ordering). Finally, dvips is then called with the new file, and
+  // the file is afterwards deleted. Isn't that great?
+
+  // Sourcefile is the name of the DVI which is used by dvips, either
+  // the original file, or a temporary file with a new numbering.
+  QString sourceFileName = dviFile->filename;
+  if (options.isEmpty() == false) {
+    // Get a name for a temporary file.
+    KTempFile export_tmpFile;
+    export_tmpFileName = export_tmpFile.name();
+    export_tmpFile.unlink();
+    
+    sourceFileName     = export_tmpFileName;
+    if (KIO::NetAccess::copy(dviFile->filename, sourceFileName)) {
+      int wordSize;
+      bool bigEndian;
+      qSysInfo (&wordSize, &bigEndian);
+      // Proper error handling? We don't care.
+      FILE *f = fopen(sourceFileName.latin1(),"r+");
+      for(Q_UINT32 i=0; i<=dviFile->total_pages; i++) {
+	fseek(f,dviFile->page_offset[i-1]+1, SEEK_SET);
+	// Write the page number to the file, taking good care of byte
+	// orderings. Hopefully QT will implement random access QFiles
+	// soon.
+	if (bigEndian) {
+	  fwrite(&i, sizeof(Q_INT32), 1, f);
+	  fwrite(&i, sizeof(Q_INT32), 1, f);
+	  fwrite(&i, sizeof(Q_INT32), 1, f);
+	  fwrite(&i, sizeof(Q_INT32), 1, f);
+	} else {
+	  Q_UINT8  anum[4];
+	  Q_UINT8 *bnum = (Q_UINT8 *)&i;
+	  anum[0] = bnum[3];
+	  anum[1] = bnum[2];
+	  anum[2] = bnum[1];
+	  anum[3] = bnum[0];
+	  fwrite(anum, sizeof(Q_INT32), 1, f);
+	  fwrite(anum, sizeof(Q_INT32), 1, f);
+	  fwrite(anum, sizeof(Q_INT32), 1, f);
+	  fwrite(anum, sizeof(Q_INT32), 1, f);
+	}
+      }
+      fclose(f);
+    } else {
+      KMessageBox::error(this, i18n("Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
+				    "The export or print command is aborted.").arg(dviFile->filename).arg(sourceFileName));
+      return;
+    }
+  }
+
+  // Allocate and initialize the shell process.
   proc = new KShellProcess();
   if (proc == 0) {
     kdError(4300) << "Could not allocate ShellProcess for the dvips command." << endl;
@@ -358,7 +423,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     *proc << "-z"; // export Hyperlinks
   if (options.isEmpty() == false)
     *proc << options;
-  *proc << QString("%1").arg(KShellProcess::quote(dviFile->filename));
+  *proc << QString("%1").arg(KShellProcess::quote(sourceFileName));
   *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::Stderr) == false) {
@@ -374,6 +439,11 @@ void dviWindow::abortExternalProgramm(void)
   if (proc != 0) {
     delete proc; // Deleting the KProcess kills the child.
     proc = 0;
+  }
+
+  if (export_tmpFileName.isEmpty() != true) {
+    unlink(export_tmpFileName.latin1()); // That should delete the file.
+    export_tmpFileName = "";
   }
 
   if (progress != 0) {
@@ -681,7 +751,7 @@ bool dviWindow::setFile( const QString & fname )
 //------ handling pages ----------
 
 
-void dviWindow::gotoPage(int new_page)
+void dviWindow::gotoPage(unsigned int new_page)
 {
   if (dviFile == NULL)
     return;
@@ -834,12 +904,20 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  if (cp[i].isDigit() == false)
 	    break;
 
+	// The macro-package srcltx gives a special like "src:99 test.tex"
+	// while MikTeX gives "src:99test.tex". KDVI tries
+	// to understand both.
 	QString TeXfile = cp.mid(i);
-	if (!QFile::exists(TeXfile)) {
-	  KMessageBox::sorry(this, i18n("The DVI-file refers to the TeX-file "
-					"<strong>%1</strong> which could not be found.").arg(TeXfile),
-			     i18n( "Could not find file" ));
-	  return;
+	if (QFile::exists(cp.mid(i+1)))
+	  TeXfile = cp.mid(i+1);
+	else {
+	  TeXfile = cp.mid(i);
+	  if (!QFile::exists(TeXfile)) {
+	    KMessageBox::sorry(this, i18n("The DVI-file refers to the TeX-file "
+					  "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)),
+			       i18n( "Could not find file" ));
+	    return;
+	  }
 	}
 
 
@@ -852,7 +930,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 						     "Need to specify editor",
 						     "Use KDE's editor kate for now");
 	  if (r == KMessageBox::Continue)
-	    command = "xkate %f";
+	    command = "kate %f";
 	  else
 	    return;
 	}

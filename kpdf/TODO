@@ -68,6 +68,7 @@ More items (first items will enter 'In progress list' first):
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 
 Done (newest feature comes firts):
+-> FIX: When in non continous mode and scrolling up a page, set the viewport at the bottom of the page (Albert)
 -> FIX: Dynamic zoom repaints the page while rescaling.
 -> ADD: Show the window maximized when the user opens the program for the very first time (Albert)
 -> ADD: Use 'Generators' as providers for contents generation.

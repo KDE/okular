@@ -795,7 +795,10 @@ void PageView::wheelEvent( QWheelEvent *e )
     {
         // go to prev page
         if ( d->vectorIndex > 0 )
+        {
             d->document->setCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
+            verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
+        }
     }
     else
         QScrollView::wheelEvent( e );

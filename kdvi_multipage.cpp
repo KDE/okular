@@ -1,3 +1,5 @@
+//i18n and Debug ok.
+
 #include <qobject.h>
 #include <qlabel.h>
 #include <qstring.h>
@@ -6,14 +8,16 @@
 #include <qpixmap.h>
 
 
-#include <kinstance.h>
+#include <kaboutdata.h>
+#include <kaboutdialog.h>
+#include <kapp.h>
+#include <kbugreport.h>
+#include <kconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kapp.h>
-#include <kaboutdialog.h>
-#include <kimageeffect.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <kimageeffect.h>
+#include <kinstance.h>
 
 
 #include "print.h"
@@ -76,13 +80,17 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 	      SLOT(doSettings()), actionCollection(),
 	      "settings_dvi");
 
-  new KAction(i18n("About KDVI..."), 0, this,
+  new KAction(i18n("About the KDVI plugin..."), 0, this,
 	      SLOT(about()), actionCollection(),
 	      "about_kdvi");
   
-  new KAction(i18n("Help on KDVI"), 0, this,
+  new KAction(i18n("Help on the KDVI plugin..."), 0, this,
 	      SLOT(helpme()), actionCollection(),
 	      "help_dvi");
+
+  new KAction(i18n("Report Bug in the KDVI plugin..."), 0, this,
+	      SLOT(bugform()), actionCollection(),
+	      "bug_dvi");
 
   setXMLFile("kdvi_part.rc");
 
@@ -214,12 +222,47 @@ void KDVIMultiPage::doSettings()
 
 void KDVIMultiPage::about()
 {
-  KAboutDialog *ab = new KAboutDialog();
-  ab->setMaintainer("Stefan Kebekus","stefan.kebekus@uni-bayreuth.de", 
-		    "http://btm8x5.mat.uni-bayreuth.de/~kebekus", "University of Bayreuth");
-  ab->setAuthor("Markku Hihnala","mah@ee.oulu.fi", QString::null, QString::null);
-  ab->setVersion("KDVI 0.9 beta");
+  KAboutDialog *ab = new KAboutDialog(KAboutDialog::AbtAppStandard, 
+				      i18n("the KDVI plugin"), 
+				      KAboutDialog::Close, KAboutDialog::Close);
+
+  ab->setProduct("kdvi", "0.9beta", QString::null, QString::null);
+  ab->addTextPage (i18n("About"), 
+		   i18n("A previewer for Device Independent files (DVI files) produced "
+			"by the TeX typesetting system.<br>"
+			"Based on kdvi 0.4.3 and on xdvik, version 18f.<br><hr>"
+			"For latest information, visit "
+			"<a href=\"http://devel-home.kde.org/~kdvi\">KDVI's Homepage</a>."),
+		   true);
+  ab->addTextPage (i18n("Authors"), 
+		   i18n("Markku Hinhala<br>"
+			"Author of kdvi 0.4.3"
+			"<hr>"
+			"Stefan Kebekus<br>"
+			"<a href=\"http://btm8x5.mat.uni-bayreuth.de/~kebekus\">"
+			"http://btm8x5.mat.uni-bayreuth.de/~kebekus</a><br>"
+			"<a href=\"mailto:kebekus@kde.org\">kebekus@kde.org</a><br>"
+			"Current maintainer of kdvi. Major rewrite of version 0.4.3."
+			"Implementation of hyperlinks.<br>"
+			"<hr>"
+			"Nicolai Langfeldt<br>"
+			" Maintainer of xdvik"
+			"<hr>"
+			"Paul Vojta<br>"
+			" Author of xdvi<br>"
+			"<hr>"
+			"Many others. Really, lots of people who were involved in kdvi, xdvik and "
+			"xdvi. I apologize to those who I did not mention here. Please send me an "
+			"email if you think your name belongs here."),
+		   true);
   ab->show();
+}
+
+void KDVIMultiPage::bugform()
+{
+  KAboutData *kab = new KAboutData("kdvi", i18n("KDVI"), "0.9 beta", 0, 0, 0, 0, 0);
+  KBugReport *kbr = new KBugReport(0, true, kab );
+  kbr->show();
 }
 
 void KDVIMultiPage::helpme()
@@ -230,7 +273,7 @@ void KDVIMultiPage::helpme()
 void KDVIMultiPage::preferencesChanged()
 {
 #ifdef DEBUG
-  kdDebug() << "preferencesChanged" << endl;
+  kdDebug(4300) << "preferencesChanged" << endl;
 #endif
 
   KConfig *config = instance()->config();
@@ -310,13 +353,17 @@ bool KDVIMultiPage::print(const QStrList &pages, int current)
 
 void KDVIMultiPage::timerEvent( QTimerEvent *e )
 {
-  kdDebug() << "Timer Event " << endl;
+#ifdef DEBUG
+  kdDebug(4300) << "Timer Event " << endl;
+#endif
   reload();
 }
 
 void KDVIMultiPage::reload()
 {
-  kdDebug() << "Reload file " << m_file << endl;
+#ifdef DEBUG
+  kdDebug(4300) << "Reload file " << m_file << endl;
+#endif
 
   if (window->correctDVI(m_file)) {
     killTimer(timer_id);

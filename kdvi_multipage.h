@@ -107,6 +107,7 @@ protected slots:
   void doSettings();
   void about();
   void helpme();
+  void bugform();
   void preferencesChanged();
   void goto_page(int page, int y);
 

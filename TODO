@@ -5,9 +5,8 @@ URGENT
 
 o implement SaveAs
 
-o PS-Gfx is not updated upon reloading
-
-o kviewshell should change pageno when clicking on internal hyperlinks
+o kviewshell should change pageno when clicking on internal
+  hyperlinks, same on reloading
 
 
 HIGHLY DESIRABLE
@@ -24,7 +23,6 @@ o Support for click-on-dvi => editor (klyx!) jumps to proper position. This is
 o Support papersize information given by the dvi-file on a page-by-page
   basis.
 
-o HelpMenu and AboutDialog - beautification
 
 NOT SO URGENT
 

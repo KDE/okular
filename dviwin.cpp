@@ -255,7 +255,7 @@ void dviWindow::setResolution( int bdpi )
 void dviWindow::drawPage()
 {
 #ifdef DEBUG
-  kdDebug() << "drawPage" << endl;
+  kdDebug(4300) << "drawPage" << endl;
 #endif
 
   if (dviFile == NULL) {

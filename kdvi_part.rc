@@ -11,5 +11,8 @@
  <Menu name="help"><text>Help</text>
   <Action name="about_kdvi" append="options_show_merge"/>
  </Menu>
+ <Menu name="help"><text>Help</text>
+  <Action name="bug_dvi" append="options_show_merge"/>
+ </Menu>
 </MenuBar>
 </kpartgui>

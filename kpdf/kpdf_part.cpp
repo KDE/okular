@@ -39,6 +39,7 @@
 #include <kparts/genericfactory.h>
 #include <kurldrag.h>
 #include <kinputdialog.h>
+#include <kfinddialog.h>
 
 #include "kpdf_error.h"
 #include "part.h"
@@ -739,6 +740,13 @@ void Part::doPrint( KPrinter& printer )
     if ( ++i != pages.end() )
       printer.newPage();
   }
+}
+
+void Part::find()
+{
+  KFindDialog dlg(pdfpartview);
+  if (dlg.exec() != QDialog::Accepted) return;
+  kdDebug() << m_outputDev->find(dlg.pattern()) << endl;
 }
 
 // vim:ts=2:sw=2:tw=78:et

@@ -54,6 +54,8 @@ namespace KPDF
         bool atBottom() const;
         void zoomTo( double _value );
 
+        bool find(QString s);
+
     public slots:
         void zoomIn();
         void zoomOut();
@@ -97,6 +99,9 @@ namespace KPDF
         int m_currentPage;
         QPoint   m_dragGrabPos;
         LinkAction* m_pressedAction;
+
+        bool m_selection;
+        double m_xMin, m_yMin, m_xMax, m_yMax;
     };
 }
 

@@ -25,6 +25,7 @@
 class TextPage;
 
 class QPainter;
+class QString;
 
 //------------------------------------------------------------------------
 // QOutputDev
@@ -54,6 +55,8 @@ class QOutputDev : public SplashOutputDev
 		
 		// Clear out the document (used when displaying an empty window).
 		void clear();
+		
+		bool find(QString s, double *xMin, double *yMin, double *xMax, double *yMax);
 	
 	protected:
 		QPainter *m_painter;

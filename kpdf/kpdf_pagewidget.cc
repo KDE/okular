@@ -13,9 +13,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-// include xpdf config file
-#include "config.h"
-
 #include "QOutputDevPixmap.h"
 
 #include <kglobal.h>
@@ -39,7 +36,8 @@ namespace KPDF
           m_doc(0),
           m_zoomFactor( 1.0 ),
           m_currentPage( 1 ),
-          m_pressedAction( 0 )
+          m_pressedAction( 0 ),
+          m_selection( false )
     {
         SplashColor paperColor;
         paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
@@ -143,6 +141,13 @@ namespace KPDF
                         clipw, 
                         cliph - (m_pixmap->height() - clipy), 
                         bc );
+            if (m_selection)
+            {
+                kdDebug() << "selection over " << qRound(m_xMin) << " " << qRound(m_yMin) << " " << qRound(m_xMax- m_xMin) << " " << qRound(m_yMax- m_yMin) << endl;
+                p->setBrush(Qt::SolidPattern);
+                p->setRasterOp(Qt::NotROP);
+                p->drawRect(qRound(m_xMin), qRound(m_yMin), qRound(m_xMax- m_xMin), qRound(m_yMax- m_yMin));
+            }
         }
         else
             p->fillRect ( clipx, clipy, clipw, cliph, bc );
@@ -356,6 +361,16 @@ namespace KPDF
             verticalScrollBar()->setValue( newValue );
             return true;
         }
+    }
+
+    bool PageWidget::find(QString s)
+    {
+        bool b;
+        
+        b = m_outputdev -> find(s, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
+        m_selection = b;
+        if (b) updateContents();
+        return b;
     }
 }
 

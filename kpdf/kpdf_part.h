@@ -106,7 +106,7 @@ namespace KPDF
       void doPrint( KPrinter& printer );
 
   protected slots:
-    void find()     { /* stub */ };
+    void find();
     void findNext() { /* stub */ };
     void zoomIn()   { m_zoomFactor += 0.1; update(); };
     void zoomOut()  { m_zoomFactor -= 0.1; update(); };

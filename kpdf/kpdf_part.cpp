@@ -380,8 +380,11 @@ Part::openFile()
   pdfpartview->pagesListBox->setUpdatesEnabled(true);
   pdfpartview->pagesListBox->update();
 
-  displayPage(1);
-  m_outputDev->setPDFDocument(m_doc);
+  if (m_doc->getNumPages() > 0)
+  {
+    displayPage(1);
+    m_outputDev->setPDFDocument(m_doc);
+  }
   return true;
 }
 

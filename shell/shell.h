@@ -21,7 +21,6 @@
 #endif
 
 #include <kparts/mainwindow.h>
-class KPopupMenu;
 
 namespace KPDF
 {

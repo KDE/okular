@@ -102,7 +102,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	KActionCollection * ac = actionCollection();
 
 	// Page Traversal actions
-	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goToPage" );
+	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
@@ -110,10 +110,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 
-	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "goToStart" );
+	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
 
-	m_lastPage  = KStdAction::lastPage( this, SLOT( slotGotoLast() ), ac, "goToEnd" );
+	m_lastPage  = KStdAction::lastPage( this, SLOT( slotGotoLast() ), ac, "last_page" );
 	m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
 	// Find and other actions

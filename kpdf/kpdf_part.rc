@@ -11,35 +11,38 @@
     <Action name="find_next"/>
   </Menu>
   <Menu name="view"><text>&amp;View</text>
-    <Action name="fit_to_width"/>
     <Separator/>
     <Action name="zoom_in"/>
     <Action name="zoom_out"/>
+    <Action name="zoom_fit_width"/>
+    <Action name="zoom_fit_page"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
-    <Action name="back"/>
-    <Action name="forward"/>
-    <Separator/>
+    <Action name="first_page"/>
     <Action name="previous_page"/>
     <Action name="next_page"/>
+    <Action name="last_page"/>
     <Separator/>
-    <Action name="goToPage"/>
+    <Action name="goto_page"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_scrollbars" group="show_merge"/>
-    <Action name="show_page_list" group="show_merge"/>
+    <Action name="show_thumbnails" group="show_merge"/>
   </Menu>
 </MenuBar>
-<ToolBar name="mainToolBar">
-  <Separator/>
-  <Action name="zoom_in"/>
-  <Action name="zoomTo" />
-  <Action name="zoom_out"/>
-  <Action name="fit_to_width"/>
+<ToolBar name="mainToolBar"><text>Main Toolbar</text>
   <Separator/>
   <Action name="previous_page"/>
   <Action name="next_page"/>
-  <Action name="goToStart"/>
-  <Action name="goToEnd"/>
+  <Separator/>
+  <Action name="zoom_in"/>
+  <Action name="zoom_to" />
+  <Action name="zoom_out"/>
+  <!--Action name="zoom_fit_width"/-->
+  <!--Action name="zoom_fit_page"/-->
+  <Separator/>
+  <Action name="mouse_drag"/>
+  <Action name="mouse_select"/>
+  <Action name="mouse_draw"/>
 </ToolBar>
 </kpartgui>

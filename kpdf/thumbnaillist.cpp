@@ -40,7 +40,7 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 
 void ThumbnailList::setupActions( KActionCollection * ac, KConfigGroup * config )
 {
-	KToggleAction * show = new KToggleAction( i18n( "Show &Page List" ), 0, ac, "show_page_list" );
+	KToggleAction * show = new KToggleAction( i18n( "Show &Page List" ), 0, ac, "show_thumbnails" );
 	show->setCheckedState(i18n("Hide &Page List"));
 	connect( show, SIGNAL( toggled( bool ) ), SLOT( setShown( bool ) ) );
 
@@ -188,7 +188,7 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 
 void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 {
-	if ( m_thumbnails.count() < 1 )
+	if ( m_thumbnails.count() < 1 || width() < 1 || !isShown() )
 		return;
 	// if width changed resize all the Thumbnails, reposition them to the
 	// right place and recalculate the contents area

@@ -411,15 +411,12 @@ void dviWindow::gotoPage(int new_page)
   drawPage();
 }
 
-int dviWindow::page()
-{
-	return current_page+1;
-}
 
 int dviWindow::totalPages()
 {
 	return total_pages;
 }
+
 
 void dviWindow::setZoom(int zoom)
 {

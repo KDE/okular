@@ -22,8 +22,9 @@ public:
 	dviWindow( int basedpi, int zoom, const char *mfmode, const char *paper, int makepk,
 	QWidget *parent=0, const char *name=0 );
 	~dviWindow();
-	int		page();
+
 	int		totalPages();
+
 	void		setShowPS( int flag );
 	int		showPS();
 	void		setAntiAlias( int flag );
@@ -41,11 +42,6 @@ public:
 	void		setFontPath( const char * );
 	const char *	fontPath();
         
-signals:
-	void		setPoint( QPoint p );
-	void		statusChange( const QString & );
-
-
 public slots:
 	void		setFile(const char *fname);
 	void		gotoPage(int page);

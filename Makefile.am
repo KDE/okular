@@ -17,7 +17,7 @@ METASOURCES = AUTO
 libkdvi_la_SOURCES = kdvi_multipage.cpp \
 	dviwin.cpp marklist.cpp print.cpp \
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
-	optiondialog.cpp gotodialog.cpp scrbox.cpp \
+	optiondialog.cpp scrbox.cpp \
 	psheader.c dviwin_draw.cpp dvi_init.cpp\
 	font-open.cpp gf.cpp new.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
@@ -36,7 +36,7 @@ squeeze_SOURCES	= squeeze.c
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h marklist.h oconfig.h\
 	print.h printData.h printSetup.h printSetupData.h\
-	pushbutton.h optiondialog.h gotodialog.h scrbox.h xdvi.h 
+	pushbutton.h optiondialog.h scrbox.h xdvi.h 
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot

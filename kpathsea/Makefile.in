@@ -1,0 +1,270 @@
+# Makefile for kpathsea --kb@mail.tug.org.  Public domain.
+version = @KPSEVERSION@
+
+# Add -DNO_DEBUG to disable debugging, for vanishingly better performance.
+
+ac_include ../make/paths.mk
+ac_include ../make/makevars.mk
+ac_include ../make/common.mk
+ac_include ../make/library.mk
+ac_include ../make/programs.mk
+ac_include ../make/texi.mk
+
+@MAINT@warn_more = -Wmissing-prototypes -Wwrite-strings -Wshadow
+@MAINT@MAKEINFO_FLAGS := $(MAKEINFO_FLAGS) --no-split
+
+# Install these header files (except acconfig.h).
+install_headers = *.h $(srcdir)/*.h
+
+# Put tex-file.o first, because it's what depends on the paths, and may
+# reduce frustration if the paths are wrong by doing it first.
+
+objects = tex-file.lo absolute.lo atou.lo cnf.lo concat.lo concat3.lo \
+concatn.lo db.lo debug.lo dir.lo elt-dirs.lo expand.lo extend-fname.lo \
+file-p.lo find-suffix.lo fn.lo fontmap.lo getopt.lo getopt1.lo hash.lo \
+kdefault.lo line.lo magstep.lo make-suffix.lo path-elt.lo \
+pathsearch.lo proginit.lo progname.lo readable.lo rm-suffix.lo \
+str-list.lo str-llist.lo tex-glyph.lo tex-hush.lo tex-make.lo \
+tilde.lo truncate.lo uppercasify.lo variable.lo version.lo xbasename.lo \
+xcalloc.lo xdirname.lo xfopen.lo xfseek.lo xftell.lo xgetcwd.lo xmalloc.lo \
+xopendir.lo xputenv.lo xrealloc.lo xstat.lo xstrdup.lo $(liblobjs) $(malloc)
+liblobjs = @LTLIBOBJS@
+
+library = kpathsea
+
+# We want to compile almost everything with libtool ...
+KPATHSEA_CC = $(LIBTOOL) compile "$(CC)"
+.SUFFIXES: .lo
+.c.lo:
+	$(KPATHSEA_CC) $< $(ALL_CFLAGS)
+
+default all: kpsewhich kpsestat access readlink $(library).info manfiles
+
+kpsewhich: $(kpathsea) kpsewhich.o
+	$(kpathsea_link) kpsewhich.o $(LOADLIBES)
+
+kpsestat: kpsestat.o
+	$(link_command) kpsestat.o
+
+access: access.o
+	$(link_command) access.o
+
+readlink: readlink.o
+	$(link_command) readlink.o
+
+$(kpathsea): $(objects) klibtool.version
+	$(LIBTOOL) archive $(AR) $(ARFLAGS) $@ $(objects)
+
+# All the objects depend on the klibtool configuration file.
+$(objects): ../klibtool.config
+
+# Create klibtool.version in the build tree
+klibtool.version:
+	$(LN) $(srcdir)/kpathsea.version $@
+
+# Make variable substitutions for paths.h.
+texmf.cnf: texmf.in texmf.sed
+	sed -f texmf.sed $(srcdir)/texmf.in >$@
+
+# The idea is to turn each var=value into s%@var@%value%g. Seems simpler
+# to put the substitutions in a file than to play shell quoting games.
+texmf.sed: Makefile
+	rm -f texmf.sed
+	echo $(makevars) \
+	| tr ' ' '\012' \
+	| sed -e 's/^/s%@/' -e 's/=/@%/' -e 's/$$/%g/' \
+	>$@
+# Insert $TEXMF in as many of the hardwired paths as possible.  We could
+# use the slightly different rule 's%$(texmf)/%\$$TEXMF/%g' and avoid
+# the need for the corrections below.  But if texmf.in is edited
+# the heuristic may no longer work.
+	echo 's%$(texmf)%\$$TEXMF%g' >>$@
+# Now we repair the damage this may have caused.  Don't replace the rhs of
+# the TEXMFMAIN assignment itself, then we'd end up with TEXMFMAIN = $TEXMF
+# and TEXMF = $TEXMFMAIN.  The (commented) assignment of TEXMFLOCAL is
+# likely to have been mangled as well.
+	echo '/^ *TEXMFMAIN[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+	echo '/^[% ]*TEXMFLOCAL[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+	echo '/^[% ]*VARTEXMF[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+	echo '/^[% ]*TEXMFCNF[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+# And fill in the last clause of TEXMFCNF with an absolute path.
+	echo '/^ *TEXMFCNF[ =]/s%@web2c@%$(web2cdir)%' >>$@
+
+# First null out comments and leading/trailing whitespace, then remove
+# lines that define invalid C identifiers, then remove blank lines and
+# lines that define lowercase values (those are never path values). Each
+# line remaining looks like
+# <name> = <value>
+# (but = and surrounding spaces are optional, hence can't remove all spaces).
+# Change this to #ifndef DEFAULT_name@#define DEFAULT_name "value"@#endif,
+# then change the @'s to newlines (sed isn't good at multiline replacements).
+# 
+# No backslash-newline escapes in the long sed replacement because that
+# will turn into a space in the output.
+# 
+# Without the $TEXMF/prefix/etc. substitutions, if the cnf file was
+# not found, the compile-time paths would be of little use, since TEXMF
+# (etc.) wouldn't be defined. Alternatively, we could have a way to
+# specify compile-time default values for variables in general, but I
+# think it's better to keep the last-resort paths as simple as possible.
+# 
+# The definition of DEFAULT_TEXMF (and other variables)
+# that winds up in the final paths.h will not be used.
+#
+# We don't want to rewrite paths.h when we have only changed comments
+# in texmf.in that have no effect on paths.h, since that would cause
+# almost everything to be rebuilt.
+#
+# We also replace all semicolons with colons in the paths.  Ultimately
+# the path-splitting code should be changed to understand both.
+$(kpathsea_dir)/paths.h: stamp-paths
+stamp-paths: texmf.cnf
+	echo "/* paths.h: Generated from texmf.cnf. */" >paths.tmp
+	sed -e 's/%.*//' -e 's/^[ 	]*//' -e 's/[ 	]*$$//' texmf.cnf \
+	| grep '^[ 	]*[A-Z0-9_]*[ 	=]' \
+	| sed '/^$$/d' \
+	| sed 's/^\([^ 	=]*\)[ 	]*=*[ 	]*\(.*\)/#ifndef DEFAULT_\1@#define DEFAULT_\1 "\2"@#endif/' \
+	| tr '@' '\012' \
+	| sed -e 's%\$$TEXMFMAIN%$(texmf)%g' \
+	      -e 's%\$$TEXMF%$(texmf)%g' \
+	      -e 's%\$$VARTEXFONTS%$(vartexfonts)%g' \
+	      -e 's%\$$web2cdir%$(web2cdir)%g' \
+	      -e 's%\$$prefix%$(prefix)%g' \
+	| sed -e 's%;%:%g' \
+	>>paths.tmp
+	@if cmp -s paths.h paths.tmp 2>/dev/null; then \
+	  echo "paths.h is unchanged"; \
+	else \
+	  echo "cp paths.tmp paths.h"; \
+	  cp paths.tmp paths.h; \
+	fi
+	rm -f paths.tmp
+	date >stamp-paths
+
+# Need an extra definition for this. Dependencies included below.
+tex-file.o:
+	$(KPATHSEA_CC) -DDEFAULT_FONT_SIZES='\"$(default_texsizes)\"' $(srcdir)/tex-file.c
+
+check: kpsewhich
+	./kpsewhich -expand-var '$$TEXMF'
+
+install: install-exec install-data
+uninstall: uninstall-exec uninstall-data
+
+install-exec: kpsewhich
+	$(SHELL) $(top_srcdir)/../mkinstalldirs $(bindir) $(scriptdir) \
+	  $(libdir) $(web2cdir)
+	if grep 'original mktexpk --' $(scriptdir)/mktexpk >/dev/null 2>&1\
+	   || test ! -r $(scriptdir)/mktexpk; then \
+	  $(INSTALL_SCRIPT) $(srcdir)/mktexpk $(scriptdir)/mktexpk; \
+	else true; fi
+	if grep 'original mktexmf --' $(scriptdir)/mktexmf >/dev/null 2>&1\
+	   || test ! -r $(scriptdir)/mktexmf; then \
+	  $(INSTALL_SCRIPT) $(srcdir)/mktexmf $(scriptdir)/mktexmf; \
+	else true; fi
+	if grep 'original mktextfm --' $(scriptdir)/mktextfm >/dev/null 2>&1\
+	   || test ! -r $(scriptdir)/mktextfm; then \
+	  $(INSTALL_SCRIPT) $(srcdir)/mktextfm $(scriptdir)/mktextfm; \
+	else true; fi
+	if grep 'original mktexlsr --' $(scriptdir)/mktexlsr >/dev/null 2>&1\
+	   || test ! -r $(scriptdir)/mktexlsr; then \
+	  $(INSTALL_SCRIPT) $(srcdir)/mktexlsr $(scriptdir)/mktexlsr; \
+	else true; fi
+	$(INSTALL_LIBTOOL_LIBS) $(libdir) lib$(library).la
+	$(INSTALL_LIBTOOL_PROG) $(bindir) kpsewhich
+	$(INSTALL_PROGRAM) kpsestat $(bindir)
+	$(INSTALL_PROGRAM) access $(bindir)
+	$(INSTALL_PROGRAM) readlink $(bindir)
+# Should we install the headers?  They are not just system-dependent,
+# which is bad enough, but even compiler-dependent.
+	$(SHELL) $(top_srcdir)/../mkinstalldirs $(includedir)/kpathsea
+	for f in $(install_headers); do \
+	  $(INSTALL_DATA) $$f $(includedir)/kpathsea/; done
+	rm -f $(includedir)/kpathsea/acconfig.h
+	$(POSTINSTALL)
+uninstall-exec:
+	rm -f $(bindir)/kpsewhich
+
+install-data: texmf.cnf kpathsea.info install-man
+	$(SHELL) $(top_srcdir)/../mkinstalldirs $(texmf) $(infodir) $(web2cdir)
+	if grep 'original texmf.cnf --' $(web2cdir)/texmf.cnf >/dev/null 2>&1 \
+	   || test ! -r $(web2cdir)/texmf.cnf; then \
+	  $(INSTALL_DATA) texmf.cnf $(web2cdir)/texmf.cnf; \
+	else true; fi
+	test -r kpathsea.info || cd $(srcdir) && for i in kpathsea.i*; do \
+	  $(INSTALL_DATA) $$i $(infodir)/$$i; done
+	test -r $(infodir)/dir || $(INSTALL_DATA) $(top_srcdir)/../dir $(infodir)
+	if $(SHELL) -c 'install-info --version' >/dev/null 2>&1; then \
+	  install-info --info-dir=$(infodir) $(infodir)/kpathsea.info; \
+	else true; fi
+	$(INSTALL_DATA) $(srcdir)/mktex.opt $(web2cdir)/mktex.opt
+	$(INSTALL_SCRIPT) $(srcdir)/mktexdir $(web2cdir)/mktexdir
+	$(INSTALL_DATA) $(srcdir)/mktexdir.opt $(web2cdir)/mktexdir.opt
+	$(INSTALL_SCRIPT) $(srcdir)/mktexnam $(web2cdir)/mktexnam
+	$(INSTALL_DATA) $(srcdir)/mktexnam.opt $(web2cdir)/mktexnam.opt
+	$(INSTALL_SCRIPT) $(srcdir)/mktexupd $(web2cdir)/mktexupd
+
+uninstall-data:
+	rm -f $(infodir)/kpathsea.i*
+#	for f in $(install_headers); do rm -f $(includedir)/`basename $$f`; done
+
+# distdir is used by other distributions; they define $(distdir).
+distdir: doc $(library).dvi $(library).h
+	rm -rf $(distdir)
+	mkdir -p $(distdir)
+	ln $(ln_files) kpathsea.version $(distdir)
+	touch *.info*
+	ln mktex* *.info* *.texi $(library).aux $(library).cps $(distdir)
+	rm -f $(distdir)/*.1 $(distdir)/*.man
+	ln *.man $(distdir)
+	ln BUGS README.CONFIGURE HIER PROJECTS *.ac $(distdir)
+	touch kpathsea.h # to avoid .cps.h rule on Solaris
+	cd $(distdir) && rm -f paths.h
+
+# I don't use this, but other programmers want it.  acconfig.h is an
+# autoheader input file, not an includable C header. Bad name.
+$(library).h: always
+	rm -f $@
+	echo '#include <kpathsea/config.h>' >$@
+	ls -1 *.h \
+	  | grep -v '\(acconfig\|config\|kpathsea\|win32lib\)\.h' \
+	  | sed -e 's,^,#include <kpathsea/,' -e s',$$,>,' >>$@
+	touch -r `ls -1t *.h | tail +2 | head -1` $@ 
+always:
+.PHONY: always
+
+ac_include ../make/config.mk
+
+info: $(library).info
+dvi: $(library).dvi
+
+$(library).info: bugs.texi hier.texi install.texi unixtex.texi
+
+@MAINT@INSTALL: install.texi
+@MAINT@	$(MAKEINFO) $(one_info) $(MAKEINFO_FLAGS) $< -o $@
+@MAINT@	$(top_srcdir)/../add-info-toc $@
+@MAINT@BUGS: bugs.texi
+@MAINT@	$(MAKEINFO) $(one_info) $(MAKEINFO_FLAGS) $< -o $@
+@MAINT@	$(top_srcdir)/../add-info-toc $@
+@MAINT@HIER: hier.texi
+@MAINT@	$(MAKEINFO) $(one_info) $(MAKEINFO_FLAGS) $< -o $@
+@MAINT@unixtex.ftp: unixtex.texi
+@MAINT@	$(MAKEINFO) $(one_info) $(MAKEINFO_FLAGS) $< -o $@
+@MAINT@doc: info HIER BUGS INSTALL unixtex.ftp
+
+ac_include ../make/clean.mk
+
+mostlyclean::
+	rm -f kpsewhich kpsestat access readlink *.lo klibtool.version
+	rm -rf PROF PROF_SHARED SHARED STATIC
+distclean::
+	rm -f paths.h texmf.cnf texmf.sed stamp-paths
+
+# The manual pages
+manfiles = access.1 kpsestat.1 kpsewhich.1 readlink.1 \
+           mktexlsr.1 mktexmf.1 mktextfm.1 mktexpk.1
+
+ac_include ../make/man.mk
+
+ac_include ../make/rdepend.mk
+ac_include depend.mk

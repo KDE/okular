@@ -1,0 +1,52 @@
+#!/bin/sh
+# mkinstalldirs --- make directory hierarchy (now mktexdir).
+# Author: Noah Friedman <friedman@prep.ai.mit.edu>, created: 1993-05-16.
+# Public domain.
+# 
+# Modified for sticky directory creation, --help, --version.
+# te@informatik.uni-hannover.de and kb@mail.tug.org.
+
+version='$Id$'
+usage="Usage: $0 DIRS...
+  Create each DIR, including any missing leading directories."
+mt_max_args=$#
+
+# Common code for all scripts.
+: ${MT_TEXMFMAIN=`kpsewhich --expand-path='$TEXMFMAIN'`}
+: ${MT_MKTEX_OPT=`kpsewhich --format='web2c files' mktex.opt`}
+test -n "$MT_MKTEX_OPT" || MT_MKTEX_OPT="$MT_TEXMFMAIN/web2c/mktex.opt"
+if test ! -f "$MT_MKTEX_OPT"; then
+  echo "$0: Cannot find mktex.opt; check your installation." >&2
+  exit 1
+fi
+
+. "$MT_MKTEX_OPT"
+
+test -n "$MT_MKTEXDIR_OPT" && . "$MT_MKTEXDIR_OPT"
+
+test -z "$MT_APPEND_MASK" && MT_APPEND_MASK="="
+
+errstatus=0
+
+cd $KPSE_DOT
+for file
+do
+   cd $KPSE_DOT
+   set fnord `echo ":$file" | \
+     sed -ne 's/^:\//#/;s/^:-/.\/-/;s/^://;s/\// /g;s/^#/\//;p'`
+   shift
+
+   pathcomp=
+   for d in ${1+"$@"} ; do
+     pathcomp="$pathcomp$d"
+
+     if test ! -d "$pathcomp"; then
+        mkdir "$pathcomp" || errstatus=$?
+        chmod `kpsestat ${MT_APPEND_MASK} "$pathcomp"/..` "$pathcomp"
+     fi
+
+     pathcomp="$pathcomp/"
+   done
+done
+
+exit $errstatus

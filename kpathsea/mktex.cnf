@@ -1,0 +1,15 @@
+# The mktex.cnf file, if it exists, can be used to tailor a setup to
+# local conditions.  If you use the mktex scripts, this file can contain
+# generic bourne shell code.  However, the C emulations of the scripts
+# do not handle anything beyond simple assignment of variables, and doing
+# more is not exactly recommended.
+#
+# To assign variables, use constructs like the examples below, which only
+# set unassigned variables.  The scripts may malfunction if you do
+# otherwise.
+#
+# Some examples of what you can the mktex.cnf file for:
+# : ${MT_FEATURES=appendonlydir:varfonts}
+# : ${MODE=ljfour}
+# : ${BDPI=600}
+# : ${ps_to_pk=gsftopk}

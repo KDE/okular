@@ -1,0 +1,88 @@
+TeX directory structure
+=======================
+
+  This section describes the default installation hierarchy of the
+distribution.  It conforms to both the GNU coding standards and the TeX
+directory structure (TDS) standard.  For rationale and further
+explanation, please see those documents.  The GNU standard is available
+as `ftp://prep.ai.mit.edu/pub/gnu/standards/standards.texi' and
+mirrors.  The TDS document is available from `CTAN:/tex-archive/tds'
+(*note unixtex.ftp::.).
+
+  You can change the default paths in many ways (*note Changing search
+paths::.).  One common desire is to put everything (binaries and all)
+under a single top-level directory such as `/usr/local/texmf' or
+`/opt/texmf'--in the terms used below, make PREFIX and TEXMF the same.
+For specific instructions on doing that, see *Note configure
+scenarios::.
+
+  Here is a skeleton of the default directory structure, extracted from
+the TDS document:
+
+     PREFIX/      installation root (`/usr/local' by default)
+      bin/         executables
+      man/         man pages
+      include/     C header files
+      info/        GNU info files
+      lib/         libraries (`libkpathsea.*')
+      share/       architecture-independent files
+       texmf/      TDS root
+        bibtex/     BibTeX input files
+         bib/        BibTeX databases
+          base/       base distribution (e.g., `xampl.bib')
+          misc/       single-file databases
+          PKG/       name of a package
+         bst/        BibTeX style files
+          base/       base distribution (e.g., `plain.bst', `acm.bst')
+          misc/       single-file styles
+          PKG/       name of a package
+        doc/         additional documentation
+        dvips/       `.pro', `.ps', `psfonts.map'
+        fonts/       font-related files
+         TYPE/         file type (e.g., `tfm', `pk')
+          MODE/          type of output device (types `pk' and `gf' only)
+           SUPPLIER/       name of a font supplier (e.g., `public')
+            TYPEFACE/        name of a typeface (e.g., `cm')
+             dpiNNN/           font resolution (types `pk' and `gf' only)
+        metafont/    Metafont (non-font) input files
+         base/        base distribution (e.g., `plain.mf')
+         misc/        single-file packages (e.g., `modes.mf')
+         PKG/           name of a package (e.g., `mfpic')
+        metapost/    MetaPost input files
+         base/        base distribution (e.g., `plain.mp')
+         misc/        single-file packages
+         PKG/           name of a package
+         support/     support files for MetaPost-related utilities (e.g., `trfonts.map')
+        mft/         `MFT' inputs (e.g., `plain.mft')
+        tex/         TeX input files
+         FORMAT/         name of a format (e.g., `plain')
+          base/        base distribution for FORMAT (e.g., `plain.tex')
+          misc/        single-file packages (e.g., `webmac.tex')
+          local/       local additions to or local configuration files for FORMAT
+          PKG/           name of a package (e.g., `graphics', `mfnfss')
+         generic/     format-independent packages
+          hyphen/      hyphenation patterns (e.g., `hyphen.tex')
+          images/      image input files (e.g., Encapsulated PostScript)
+          misc/        single-file format-independent packages (e.g., `null.tex').
+          PKG/           name of a package (e.g., `babel')
+        web2c/        implementation-dependent files (`.pool', `.fmt', `texmf.cnf', etc.)
+
+  Some concrete examples for most file types:
+
+     /usr/local/bin/tex
+     /usr/local/man/man1/xdvi.1
+     /usr/local/info/kpathsea.info
+     /usr/local/lib/libkpathsea.a
+     /usr/local/share/texmf/bibtex/bst/base/plain.bst
+     /usr/local/share/texmf/fonts/pk/ljfour/public/cm/cmr10.600pk
+     /usr/local/share/texmf/fonts/source/public/pandora/pnr10.mf
+     /usr/local/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+     /usr/local/share/texmf/fonts/type1/adobe/utopia/putr.pfa
+     /usr/local/share/texmf/metafont/base/plain.mf
+     /usr/local/share/texmf/metapost/base/plain.mp
+     /usr/local/share/texmf/tex/plain/base/plain.tex
+     /usr/local/share/texmf/tex/generic/hyphen/hyphen.tex
+     /usr/local/share/texmf/web2c/tex.pool
+     /usr/local/share/texmf/web2c/tex.fmt
+     /usr/local/share/texmf/web2c/texmf.cnf
+

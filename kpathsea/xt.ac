@@ -1,0 +1,22 @@
+dnl Included by web2c and xdvik to handle --with-x-toolkit.
+
+# This defines --with-x implicitly (which is why we use that package
+# name below), so put it here, so it comes first in the --help output.
+# This reads best.
+
+# Remember to add AC_PATH_XTRA when actually using X.
+
+AC_ARG_WITH(x-toolkit,
+  [  --with-x-toolkit=KIT    use a toolkit (KIT=no/yes/xt/athena)],
+[	  case "${withval}" in
+	    y | ye | yes )	val=yes ;;
+	    x | xt )		val=xt  ;;
+	    n | no )		val=no  ;;
+	    a | at | ath | athe | athena ) val=athena ;;
+	    * )
+AC_MSG_WARN([unknown --with-x-toolkit argument \`$withval'; using yes.])
+              val=yes;;
+	  esac
+	  with_x_toolkit=$val
+])
+

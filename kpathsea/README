@@ -1,0 +1,19 @@
+This directory contains the Kpathsea[rch] library, which implements
+generic path searching, configuration, and TeX-specific file searching.
+
+See `NEWS' for changes by release, `ChangeLog` for all changes.
+See `INSTALL' for installation instructions.
+See `BUGS' for bug reporting details.
+See `README.CONFIGURE' for details on running the configure scripts.
+See `PROJECTS' for future improvements you might like to work on.
+
+Suggestions for improvements in either the library or the documentation,
+no matter how small, are welcome. But please read ./BUGS before sending
+a bug report.
+
+This is free software.  See the files COPYING* for copying permissions.
+The top-level headers are `pathsearch.h' for the generic path searching
+support, and `tex-{file,glyph}.h' for the TeX-specific support.
+
+kb@mail.tug.org
+Member of the League for Programming Freedom -- write lpf@uunet.uu.net.

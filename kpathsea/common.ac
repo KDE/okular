@@ -1,0 +1,163 @@
+dnl Common Autoconf sinclude file for kpathsea-using programs.  (Have to
+dnl use the m4 `sinclude' builtin instead of `include', since Autoconf
+dnl disables `include'.)
+
+dnl These configure scripts won't work with anything else.
+AC_PREREQ(2.12.1)
+
+dnl Write output here, instead of putting a zillion -D's on the command line.
+AC_CONFIG_HEADER(c-auto.h:c-auto.in)
+
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_FUNC_CLOSEDIR_VOID
+AC_CHECK_HEADERS(assert.h float.h limits.h memory.h pwd.h stdlib.h \
+                 string.h sys/param.h unistd.h)
+
+
+dnl We would to do the klibtool stuff only in kpathsea (i.e., in
+dnl kpathsea/configure.in instead of here in common.ac), but then
+dnl HAVE_PUTENV etc. are not defined when compiling the programs,
+dnl because <kpathsea/config.h> includes <c-auto.h> (the programs'),
+dnl not <kpathsea/c-auto.h>.  Should it include both?  But then we will
+dnl have many benign redefinitions that some compilers may not consider
+dnl benign.  And it's a big change.
+sinclude(../../texk/acklibtool.m4)
+kb_AC_PROG_LIBTOOL
+dnl If the list of functions here changes, also change acconfig.h.  */
+kb_AC_KLIBTOOL_REPLACE_FUNCS(putenv strcasecmp strtol strstr)
+
+AC_CHECK_FUNCS(bcmp bcopy bzero getcwd getwd index memcmp memcpy rindex strchr strrchr)
+
+AC_C_CONST
+
+# Check whether prototypes work.
+AC_MSG_CHECKING(whether the compiler accepts prototypes)
+AC_CACHE_VAL(kb_cv_c_prototypes,
+[AC_TRY_COMPILE([#include <stdarg.h>], [extern void foo(int i,...);],
+  kb_cv_c_prototypes=yes, kb_cv_c_prototypes=no)])dnl
+AC_MSG_RESULT($kb_cv_c_prototypes)
+if test "$kb_cv_c_prototypes" = yes; then
+  AC_DEFINE(HAVE_PROTOTYPES)
+fi
+
+# This is a GNU libc invention.
+AC_MSG_CHECKING(whether program_invocation_name is predefined)
+AC_CACHE_VAL(kb_cv_var_program_inv_name,
+[AC_TRY_LINK(,
+  [extern char *program_invocation_name; program_invocation_name = "love";],
+  kb_cv_var_program_inv_name=yes, kb_cv_var_program_inv_name=no)])dnl
+AC_MSG_RESULT($kb_cv_var_program_inv_name)
+if test "$kb_cv_var_program_inv_name" = yes; then
+  AC_DEFINE(HAVE_PROGRAM_INVOCATION_NAME)
+fi
+
+# Some BSD putenv's, e.g., FreeBSD, do malloc/free's on the environment.
+# This test program is due to Mike Hibler <mike@cs.utah.edu>.
+# We don't actually need to run this if we don't have putenv, but it
+# doesn't hurt.
+AC_MSG_CHECKING(whether putenv uses malloc)
+AC_CACHE_VAL(kb_cv_func_putenv_malloc,
+[AC_TRY_RUN([
+#define VAR	"YOW_VAR"
+#define STRING1 "GabbaGabbaHey"
+#define STRING2 "Yow!!"		/* should be shorter than STRING1 */
+extern char *getenv (); /* in case char* and int don't mix gracefully */
+main ()
+{
+  char *str1, *rstr1, *str2, *rstr2;
+  str1 = getenv (VAR);
+  if (str1)
+    exit (1);
+  str1 = malloc (strlen (VAR) + 1 + strlen (STRING1) + 1);
+  if (str1 == 0)
+    exit (2);
+  strcpy (str1, VAR);
+  strcat (str1, "=");
+  strcat (str1, STRING1);
+  if (putenv (str1) < 0)
+    exit (3);
+  rstr1 = getenv (VAR);
+  if (rstr1 == 0)
+    exit (4);
+  rstr1 -= strlen (VAR) + 1;
+  if (strncmp (rstr1, VAR, strlen (VAR)))
+    exit (5);
+  str2 = malloc (strlen (VAR) + 1 + strlen (STRING2) + 1);
+  if (str2 == 0 || str1 == str2)
+    exit (6);
+  strcpy (str2, VAR);
+  strcat (str2, "=");
+  strcat (str2, STRING2);
+  if (putenv (str2) < 0)
+    exit (7);
+  rstr2 = getenv (VAR);
+  if (rstr2 == 0)
+    exit (8);
+  rstr2 -= strlen (VAR) + 1;
+#if 0
+  printf ("rstr1=0x%x, rstr2=0x%x\n", rstr1, rstr2);
+  /*
+   * If string from first call was reused for the second call,
+   * you had better not do a free on the first string!
+   */
+  if (rstr1 == rstr2)
+          printf ("#define SMART_PUTENV\n");
+  else
+          printf ("#undef SMART_PUTENV\n");
+#endif
+  exit (rstr1 == rstr2 ? 0 : 1);
+}], kb_cv_func_putenv_malloc=yes, kb_cv_func_putenv_malloc=no,
+    kb_cv_func_putenv_malloc=no)])dnl
+AC_MSG_RESULT($kb_cv_func_putenv_malloc)
+if test $kb_cv_func_putenv_malloc = yes; then
+  AC_DEFINE(SMART_PUTENV)
+fi
+
+if test $ac_cv_func_getcwd = yes; then
+# We only need to run this if we have getcwd.
+AC_MSG_CHECKING(whether getcwd uses fork or vfork)
+AC_CACHE_VAL(kb_cv_func_getcwd_forks,
+[AC_TRY_RUN([
+int fork() { exit(1); }
+int vfork() { exit(1); }
+extern char *getcwd();
+char path[100];
+int main() {
+getcwd(path,100);
+return 0;
+}], kb_cv_func_getcwd_forks=no, kb_cv_func_getcwd_forks=yes,
+    kb_cv_func_getcwd_forks=no)])dnl
+AC_MSG_RESULT($kb_cv_func_getcwd_forks)
+if test $kb_cv_func_getcwd_forks = yes; then
+  AC_DEFINE(GETCWD_FORKS)
+fi
+fi
+
+# Common --with and --enable options.
+sinclude(../../texk/kpathsea/withenable.ac)
+
+# Implementation of those options.
+if test "x$with_mktexmf_default" = xyes; then
+  AC_DEFINE(MAKE_TEX_MF_BY_DEFAULT)
+fi
+if test "x$with_mktexpk_default" = xyes; then
+  AC_DEFINE(MAKE_TEX_PK_BY_DEFAULT)
+fi
+if test "x$with_mktextex_default" = xyes; then
+  AC_DEFINE(MAKE_TEX_TEX_BY_DEFAULT)
+fi
+if test "x$with_mktextfm_default" = xyes; then
+  AC_DEFINE(MAKE_TEX_TFM_BY_DEFAULT)
+fi
+if test "x$with_mkocp_default" = xyes; then
+  AC_DEFINE(MAKE_OMEGA_OCP_BY_DEFAULT)
+fi
+if test "x$with_mkofm_default" = xyes; then
+  AC_DEFINE(MAKE_OMEGA_OFM_BY_DEFAULT)
+fi

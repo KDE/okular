@@ -1,0 +1,11 @@
+Karl Berry wrote all files not otherwise marked, with help from Kathryn
+Hargreaves on some of the original versions.
+
+Thomas Esser originated most of the MakeTeX... scripts.  Subsequent changes
+were made by Olaf Weber and Thomas Esser.
+
+The brace expansion code in expand.c was written by Olaf Weber, replacing
+the original code borrowed from bash.
+
+The implementation of the link trick in pathsearch.c is taken from GNU
+find, implemented by David MacKenzie from Matthew Farwell's suggestion.

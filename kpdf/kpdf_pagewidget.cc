@@ -4,6 +4,7 @@
 #include <qcursor.h>
 #include <qpainter.h>
 #include <qmutex.h>
+#include <kdebug.h>
 
 #include "PDFDoc.h"
 
@@ -100,6 +101,8 @@ namespace KPDF
 
     void PageWidget::zoomOut()
     {
+        if ( (m_zoomFactor-0.1)<0.1 )
+            return;
         m_zoomFactor -= 0.1;
         updatePixmap();
     }

@@ -46,7 +46,7 @@ public:
     bool isBookmarked() const { return m_bookmarking; }
     bool hasPixmap( int id, int width, int height ) const;
     bool hasSearchPage() const;
-    QString getTextInRect( const QRect & rect ) const;
+    QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
     bool hasLink( int mouseX, int mouseY ) const;
     const KPDFLink * getLink( int mouseX, int mouseY ) const;
     bool hasActiveRect( int mouseX, int mouseY ) const;

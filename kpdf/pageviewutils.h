@@ -35,7 +35,7 @@ class PageViewItem
             m_geometry.setHeight( h );
             m_zoomFactor = z;
         }
-        float zoomFactor() { return m_zoomFactor; }
+        double zoomFactor() { return m_zoomFactor; }
 
         int pageNumber() const { return m_page->number(); }
         const KPDFPage * page() const { return m_page; }

@@ -67,11 +67,15 @@ bool KPDFPage::hasSearchPage() const
     return ( m_text != 0 );
 }
 
-QString KPDFPage::getTextInRect( const QRect & rect ) const
+QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
 {
     if ( !m_text )
         return QString();
-    GString * text = m_text->getText( rect.left(), rect.top(), rect.right(), rect.bottom() );
+    int left = (int)((double)rect.left() / zoom),
+        top = (int)((double)rect.top() / zoom),
+        right = (int)((double)rect.right() / zoom),
+        bottom = (int)((double)rect.bottom() / zoom);
+    GString * text = m_text->getText( left, top, right, bottom );
     return QString( text->getCString() );
 }
 
@@ -151,7 +155,7 @@ void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width
             p->drawLine( 0, 0, width-1, height-1 );
             p->drawLine( 0, height-1, width-1, 0 );
         }
-        // draw selection
+        // draw selection (note: it is rescaled since the text page is at 100% scale)
         if ( m_hilighting )
         {
             int x = (int)( m_sLeft * width / m_width ),

@@ -649,7 +649,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 QClipboard *cb = QApplication::clipboard();
                 QRect relativeRect = d->mouseSelectionRect;
                 relativeRect.moveBy( -d->activeItem->geometry().left(), -d->activeItem->geometry().top() );
-                const QString & selection = kpdfPage->getTextInRect( relativeRect );
+                const QString & selection = kpdfPage->getTextInRect( relativeRect, d->activeItem->zoomFactor() );
 
                 cb->setText( selection, QClipboard::Clipboard );
                 if ( cb->supportsSelection() )

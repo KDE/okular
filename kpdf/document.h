@@ -40,7 +40,7 @@ public:
 
 #define PAGEWIDGET_ID 1
 #define THUMBNAILS_ID 2
-#define TOC_ID 2
+#define TOC_ID 3
 
 /**
  * @short The information container. Actions (like open,find) take place here.

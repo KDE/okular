@@ -25,6 +25,7 @@ High priority 3.4 features (deadline is 2k5-Feb-2):
    is already in, but disabled)
 
 More items (first items will enter 'In progress list' first):
+-> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> add scrollbar marks for bookmarks (like kate)
 -> google search in the page

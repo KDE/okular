@@ -72,10 +72,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
              SLOT( showMarkList( bool ) ) );
 
   // create our actions
+#if 0
   KStdAction::find    (this, SLOT(find()),
                        actionCollection(), "find");
   KStdAction::findNext(this, SLOT(findNext()),
                        actionCollection(), "find_next");
+#endif
   m_fitToWidth = new KToggleAction(i18n("Fit to Page &Width"), 0,
                        this, SLOT(slotFitToWidthToggled()),
                        actionCollection(), "fit_to_width");
@@ -84,10 +86,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   KStdAction::zoomOut (m_outputDev, SLOT(zoomOut()),
                        actionCollection(), "zoom_out");
 
+#if 0
   KStdAction::back    (this, SLOT(back()),
                        actionCollection(), "back");
   KStdAction::forward (this, SLOT(forward()),
                        actionCollection(), "forward");
+#endif
 
   KStdAction::print( this, SLOT( print() ), actionCollection() );
   KStdAction::printPreview( this, SLOT( printPreview() ), actionCollection() );

@@ -17,9 +17,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "kpdf_shell.h"
-#include "kpdf_shell.moc"
-
+// qt/kde includes
+#include <qcursor.h>
 #include <kaction.h>
 #include <kapplication.h>
 #include <kedittoolbar.h>
@@ -36,7 +35,8 @@
 #include <kio/netaccess.h>
 #include <kmainwindowiface.h> 
 
-#include <qcursor.h>
+// local includes
+#include "shell.h"
 
 using namespace KPDF;
 
@@ -44,7 +44,7 @@ Shell::Shell()
   : KParts::MainWindow(0, "KPDF::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   // set the shell's ui resource file
-  setXMLFile("kpdf_shell.rc");
+  setXMLFile("shell.rc");
 
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
@@ -259,4 +259,4 @@ void Shell::slotUpdateFullScreen()
     }
 }
 
-// vim:ts=2:sw=2:tw=78:et
+#include "shell.moc"

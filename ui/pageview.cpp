@@ -2,7 +2,7 @@
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
  *                                                                         *
- *   With portions of code from kpdf_pagewidget.cc by:                     *
+ *   With portions of code from kpdf/kpdf_pagewidget.cc by:                *
  *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *
  *     Copyright (C) 2003 by Christophe Devriese                           *
  *                           <Christophe.Devriese@student.kuleuven.ac.be>  *
@@ -128,8 +128,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // conntect the padding of the viewport to pixmaps requests
     connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
 
-    // ### [RELEASE: REMOVE] show initial warning for dev_version > 2004-Dec-04
-    d->messageWindow->display( "kpdf_experiments is taking its way to HEAD! ;-)", PageViewMessage::Warning, 8000 );
+    // show initial welcome text
+    d->messageWindow->display( i18n( "Welcome" ), PageViewMessage::Info, 2000 );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );

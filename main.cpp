@@ -12,7 +12,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "kpdf_shell.h"
+#include "shell.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>

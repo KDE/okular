@@ -19,8 +19,8 @@
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
 
-#include "kpdf_dcop.h"
-#include "document.h"
+#include "dcop.h"
+#include "core/document.h"
 
 class QWidget;
 class QSplitter;

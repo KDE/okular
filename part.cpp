@@ -50,17 +50,17 @@
 
 #include "xpdf/GlobalParams.h"
 
-#include "kpdf_part.h"
-#include "pageview.h"
-#include "thumbnaillist.h"
-#include "searchwidget.h"
-#include "document.h"
-#include "page.h"
-#include "toc.h"
-#include "preferencesdialog.h"
-#include "propertiesdialog.h"
-#include "presentationwidget.h"
-#include "settings.h"
+#include "part.h"
+#include "ui/pageview.h"
+#include "ui/thumbnaillist.h"
+#include "ui/searchwidget.h"
+#include "ui/toc.h"
+#include "ui/propertiesdialog.h"
+#include "ui/presentationwidget.h"
+#include "conf/preferencesdialog.h"
+#include "conf/settings.h"
+#include "core/document.h"
+#include "core/page.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
@@ -203,7 +203,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
 
 	// set our XML-UI resource file
-	setXMLFile("kpdf_part.rc");
+	setXMLFile("part.rc");
 	updateActions();
 	slotWatchFile();
 }
@@ -688,4 +688,4 @@ void BrowserExtension::print()
 	static_cast<Part*>(parent())->slotPrint();
 }
 
-#include "kpdf_part.moc"
+#include "part.moc"

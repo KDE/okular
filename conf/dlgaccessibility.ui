@@ -362,7 +362,7 @@
                                         <bool>false</bool>
                                     </property>
                                     <property name="text">
-                                        <string>Contrast</string>
+                                        <string>Contrast:</string>
                                     </property>
                                 </widget>
                                 <spacer row="1" column="3">

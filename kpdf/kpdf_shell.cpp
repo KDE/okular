@@ -32,8 +32,7 @@
 using namespace KPDF;
 
 Shell::Shell()
-  : KParts::MainWindow(0, "KPDF::Shell"),
-    m_isFullScreen( false )
+  : KParts::MainWindow(0, "KPDF::Shell")
 {
   // set the shell's ui resource file
   setXMLFile("kpdf_shell.rc");
@@ -92,7 +91,6 @@ void Shell::readSettings()
     recent->loadEntries( KGlobal::config() );
     KGlobal::config()->setDesktopGroup();
     bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
-    m_fullScreenAction->setChecked( fullScreen );
     setFullScreen( fullScreen );
 }
 
@@ -101,15 +99,9 @@ void Shell::writeSettings()
     saveMainWindowSettings(KGlobal::config(), "MainWindow");
     recent->saveEntries( KGlobal::config() );
     KGlobal::config()->setDesktopGroup();
-    KGlobal::config()->writeEntry( "FullScreen", m_isFullScreen );
+    KGlobal::config()->writeEntry( "FullScreen", m_fullScreenAction->isChecked());
     KGlobal::config()->sync();
 }
-
-void Shell::slotToggleFullScreen()
-{
-    setFullScreen(m_fullScreenAction->isChecked());
-}
-
 
   void
 Shell::setupActions()
@@ -132,9 +124,9 @@ Shell::setupActions()
     setAutoSaveSettings();
     setStandardToolBarMenuEnabled(true);
 #if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
-    m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotToggleFullScreen() ), actionCollection(), this );
+    m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
 #else
-    m_fullScreenAction = new KToggleAction( this, SLOT( slotToggleFullScreen() ) );
+    m_fullScreenAction = new KToggleAction( this, SLOT( slotUpdateFullScreen() ) );
 #endif
     m_popup = new KPopupMenu( this, "rmb popup" );
     m_popup->insertTitle( i18n( "Full Screen Options" ) );
@@ -230,8 +222,15 @@ void Shell::slotQuit()
 
 void Shell::setFullScreen( bool useFullScreen )
 {
-    m_isFullScreen = useFullScreen;
-    if( m_isFullScreen )
+    if( useFullScreen )
+        showFullScreen();
+    else
+        showNormal();
+}
+
+void Shell::slotUpdateFullScreen()
+{
+    if( m_fullScreenAction->isChecked())
     {
 	menuBar()->hide();
 	statusBar()->hide();

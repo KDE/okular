@@ -62,7 +62,7 @@ namespace KPDF
     void slotQuit();
 
     void applyNewToolbarConfig();
-      void slotToggleFullScreen();
+      void slotUpdateFullScreen();
       void slotRMBClick();
       void slotShowMenubar();
 

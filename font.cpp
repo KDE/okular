@@ -123,7 +123,7 @@ font::~font()
 
   for(unsigned int i=0; i<max_num_of_chars_in_font; i++)
     if (characterPixmaps[i])
-      delete characterPixmaps;
+      delete characterPixmaps[i];
 
   if (flags & FONT_LOADED) {
     if (file != NULL) 

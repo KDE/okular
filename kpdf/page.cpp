@@ -158,7 +158,7 @@ void KPDFPage::bookmark( bool on )
 
 void KPDFPage::setPixmap( int id, QPixmap * pixmap )
 {
-    if ( !m_pixmaps.contains( id ) )
+    if ( m_pixmaps.contains( id ) )
         delete m_pixmaps[id];
     m_pixmaps[id] = pixmap;
 }

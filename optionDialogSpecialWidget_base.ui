@@ -108,7 +108,7 @@
                         <string>Choose an editor which is used in inverse search.</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>&lt;p&gt;Some DVI-files contain 'inverse search' information. If such a DVI-file is loaded, you can click with the right mouse into KDVI, an editor opens, loads the TeX-file and jumps to the proper position. You can select you favourite editor here. If in doubt, 'nedit' is usually a good choice.&lt;/p&gt;
+                        <string>&lt;p&gt;Some DVI-files contain 'inverse search' information. If such a DVI-file is loaded, you can click with the right mouse into KDVI, an editor opens, loads the TeX-file and jumps to the proper position. You can select you favorite editor here. If in doubt, 'nedit' is usually a good choice.&lt;/p&gt;
 &lt;p&gt;Check the KDVI manual to see how to prepare DVI-files which support the inverse search.&lt;/p&gt;</string>
                     </property>
                 </widget>

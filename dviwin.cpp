@@ -927,7 +927,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	QString command = editorCommand;
 	if (command.isEmpty() == true) {
 	  int r = KMessageBox::warningContinueCancel(this, i18n("You have not yet specified an editor for inverse search. "
-								"Please choose your favourite editor in the "
+								"Please choose your favorite editor in the "
 								"<strong>DVI options dialog</strong> "
 								"which you will find in the <strong>Settings</strong>-menu."),
 						     i18n("Need to Specify Editor"),

@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 {
   KAboutData about ("kdvi", I18N_NOOP("KDVI"), "1.2",
                     description, KAboutData::License_GPL,
-                    "Markku Hinhala, Stephan Kebekus",
+                    "Markku Hinhala, Stefan Kebekus",
                     I18N_NOOP("Displays Device Independent (DVI) files."
                     "Based on original code from kdvi version 0.43 and xdvik."));
 

@@ -85,31 +85,23 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
 KAboutData* KDVIMultiPage::createAboutData()
 {
-  KAboutData* about = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.2",
+  KAboutData* about = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.3",
                       I18N_NOOP("A previewer for Device Independent files (DVI files) produced by the TeX typesetting system."),
                      KAboutData::License_GPL,
                      "Markku Hinhala, Stephan Kebekus",
-                     I18N_NOOP("Displays Device Independent (DVI) files."
-                         "Based on original code from kdvi version 0.43 and xdvik."));
+                     I18N_NOOP("This program displays Device Independent (DVI) files which are produced by the TeX typesetting system. "
+                         "KDVI 1.2 is based on original code from KDVI version 0.43 and xdvik."));
 
   about->addAuthor ("Stefan Kebekus",
-                    I18N_NOOP("Current Maintainer.\n"
-                              "Major rewrite of version 0.4.3.\n"
-                              "Implementation of hyperlinks. "),
+                    I18N_NOOP("Current Maintainer."),
                     "kebekus@kde.org",
                     "http://www.mi.uni-koeln.de/~kebekus");
 
-  about->addAuthor ("Markku Hinhala",
-                    I18N_NOOP("Author of kdvi 0.4.3"));
-
-  about->addAuthor ("Nicolai Langfeldt",
-                    I18N_NOOP("Maintainer of xdvik"));
-
-  about->addAuthor ("Paul Vojta",
-                    I18N_NOOP("Author of xdvi"));
-
-  about->addCredit ("Philipp Lehmann",
-                    I18N_NOOP("testing and bug reporting."));
+  about->addAuthor ("Markku Hinhala", I18N_NOOP("Author of kdvi 0.4.3"));
+  about->addAuthor ("Nicolai Langfeldt", I18N_NOOP("Maintainer of xdvik"));
+  about->addAuthor ("Paul Vojta", I18N_NOOP("Author of xdvi"));
+  about->addCredit ("Philipp Lehmann", I18N_NOOP("Testing and bug reporting."));
+  about->addCredit ("Wilfried Huss", I18N_NOOP("Re-organisation of source code."));
 
   return about;
 }

@@ -13,6 +13,7 @@
 #include <qpainter.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
+#include <kapplication.h>
 #include <kcursor.h>
 #include <ktoolbar.h>
 #include <kdebug.h>
@@ -579,41 +580,132 @@ void PresentationWidget::slotTransitionStep()
 
 const KPDFPageTransition PresentationWidget::defaultTransition() const
 {
-    switch ( Settings::slidesTransition() )
+    return defaultTransition( Settings::slidesTransition() );
+}
+
+const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
+{
+    switch ( type )
     {
-        case Settings::EnumSlidesTransition::Split:
-            return KPDFPageTransition( KPDFPageTransition::Split );
+        case Settings::EnumSlidesTransition::BlindsHorizontal:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Blinds );
+            transition.setAlignment( KPDFPageTransition::Horizontal );
+            return transition;
             break;
-        case Settings::EnumSlidesTransition::Blinds:
-            return KPDFPageTransition( KPDFPageTransition::Blinds );
+        }
+        case Settings::EnumSlidesTransition::BlindsVertical:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Blinds );
+            transition.setAlignment( KPDFPageTransition::Vertical );
+            return transition;
             break;
-        case Settings::EnumSlidesTransition::Box:
-            return KPDFPageTransition( KPDFPageTransition::Box );
+        }
+        case Settings::EnumSlidesTransition::BoxIn:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Box );
+            transition.setDirection( KPDFPageTransition::Inward );
+            return transition;
             break;
-        case Settings::EnumSlidesTransition::Wipe:
-            return KPDFPageTransition( KPDFPageTransition::Wipe );
+        }
+        case Settings::EnumSlidesTransition::BoxOut:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Box );
+            transition.setDirection( KPDFPageTransition::Outward );
+            return transition;
             break;
+        }
         case Settings::EnumSlidesTransition::Dissolve:
+        {
             return KPDFPageTransition( KPDFPageTransition::Dissolve );
             break;
-        case Settings::EnumSlidesTransition::Glitter:
-            return KPDFPageTransition( KPDFPageTransition::Glitter );
+        }
+        case Settings::EnumSlidesTransition::GlitterDown:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Glitter );
+            transition.setAngle( 270 );
+            return transition;
             break;
-        case Settings::EnumSlidesTransition::Fly:
-            return KPDFPageTransition( KPDFPageTransition::Fly );
+        }
+        case Settings::EnumSlidesTransition::GlitterRight:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Glitter );
+            transition.setAngle( 0 );
+            return transition;
             break;
-        case Settings::EnumSlidesTransition::Push:
-            return KPDFPageTransition( KPDFPageTransition::Push );
+        }
+        case Settings::EnumSlidesTransition::GlitterRightDown:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Glitter );
+            transition.setAngle( 315 );
+            return transition;
             break;
-        case Settings::EnumSlidesTransition::Cover:
-            return KPDFPageTransition( KPDFPageTransition::Cover );
+        }
+        case Settings::EnumSlidesTransition::Random:
+        {
+            return defaultTransition( KApplication::random() % 18 );
             break;
-        case Settings::EnumSlidesTransition::Uncover:
-            return KPDFPageTransition( KPDFPageTransition::Uncover );
+        }
+        case Settings::EnumSlidesTransition::SplitHorizontalIn:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Split );
+            transition.setAlignment( KPDFPageTransition::Horizontal );
+            transition.setDirection( KPDFPageTransition::Inward );
+            return transition;
             break;
-        case Settings::EnumSlidesTransition::Fade:
-            return KPDFPageTransition( KPDFPageTransition::Fade );
+        }
+        case Settings::EnumSlidesTransition::SplitHorizontalOut:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Split );
+            transition.setAlignment( KPDFPageTransition::Horizontal );
+            transition.setDirection( KPDFPageTransition::Outward );
+            return transition;
             break;
+        }
+        case Settings::EnumSlidesTransition::SplitVerticalIn:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Split );
+            transition.setAlignment( KPDFPageTransition::Vertical );
+            transition.setDirection( KPDFPageTransition::Inward );
+            return transition;
+            break;
+        }
+        case Settings::EnumSlidesTransition::SplitVerticalOut:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Split );
+            transition.setAlignment( KPDFPageTransition::Vertical );
+            transition.setDirection( KPDFPageTransition::Outward );
+            return transition;
+            break;
+        }
+        case Settings::EnumSlidesTransition::WipeDown:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            transition.setAngle( 270 );
+            return transition;
+            break;
+        }
+        case Settings::EnumSlidesTransition::WipeRight:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            transition.setAngle( 0 );
+            return transition;
+            break;
+        }
+        case Settings::EnumSlidesTransition::WipeLeft:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            transition.setAngle( 180 );
+            return transition;
+            break;
+        }
+        case Settings::EnumSlidesTransition::WipeUp:
+        {
+            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            transition.setAngle( 90 );
+            return transition;
+            break;
+        }
         case Settings::EnumSlidesTransition::Replace:
         default:
             return KPDFPageTransition( KPDFPageTransition::Replace );

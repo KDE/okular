@@ -12,6 +12,9 @@
             <height>261</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>DlgPresentation</string>
+    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -86,27 +89,22 @@
                 <widget class="QComboBox" row="1" column="1">
                     <item>
                         <property name="text">
-                            <string>Replace</string>
+                            <string>Blinds Vertical</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Split</string>
+                            <string>Blinds Horizontal</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Blinds</string>
+                            <string>Box In</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Box</string>
-                        </property>
-                    </item>
-                    <item>
-                        <property name="text">
-                            <string>Wipe</string>
+                            <string>Box Out</string>
                         </property>
                     </item>
                     <item>
@@ -116,32 +114,67 @@
                     </item>
                     <item>
                         <property name="text">
-                            <string>Glitter</string>
+                            <string>Glitter Down</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Fly</string>
+                            <string>Glitter Right</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Push</string>
+                            <string>Glitter Right-Down</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Cover</string>
+                            <string>Random Transition</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Uncover</string>
+                            <string>Replace</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Fade</string>
+                            <string>Split Horizontal In</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Split Horizontal Out</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Split Vertical In</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Split Vertical Out</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Wipe Down</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Wipe Right</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Wipe Left</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Wipe Up</string>
                         </property>
                     </item>
                     <property name="name">

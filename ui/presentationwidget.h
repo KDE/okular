@@ -59,6 +59,7 @@ class PresentationWidget : public QWidget, public KPDFDocumentObserver
         void generateOverlay();
         void initTransition( const KPDFPageTransition *transition );
         const KPDFPageTransition defaultTransition() const;
+        const KPDFPageTransition defaultTransition( int ) const;
 
         // cache stuff
         int m_width;

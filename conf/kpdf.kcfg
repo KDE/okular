@@ -110,18 +110,24 @@
   <entry key="SlidesTransition" type="Enum" >
    <default>Replace</default>
    <choices>
-    <choice name="Replace" />
-    <choice name="Split" />
-    <choice name="Blinds" />
-    <choice name="Box" />
-    <choice name="Wipe" />
+    <choice name="BlindsHorizontal" />
+    <choice name="BlindsVertical" />
+    <choice name="BoxIn" />
+    <choice name="BoxOut" />
     <choice name="Dissolve" />
-    <choice name="Glitter" />
-    <choice name="Fly" />
-    <choice name="Push" />
-    <choice name="Cover" />
-    <choice name="Uncover" />
-    <choice name="Fade" />
+    <choice name="GlitterDown" />
+    <choice name="GlitterRight" />
+    <choice name="GlitterRightDown" />
+    <choice name="Random" />
+    <choice name="Replace" />
+    <choice name="SplitHorizontalIn" />
+    <choice name="SplitHorizontalOut" />
+    <choice name="SplitVerticalIn" />
+    <choice name="SplitVerticalOut" />
+    <choice name="WipeDown" />
+    <choice name="WipeRight" />
+    <choice name="WipeLeft" />
+    <choice name="WipeUp" />
    </choices>
   </entry>
   <entry key="SlidesCursor" type="Enum" >

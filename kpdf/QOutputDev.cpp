@@ -1,11 +1,22 @@
-///========================================================================
-//
-// QOutputDev.cc
-//
-// Copyright 1996 Derek B. Noonburg
-// CopyRight 2002 Robert Griebl
-//
-//========================================================================
+/* This file is part of the KDE libraries
+   Copyright (C) 2001, 2003 Christophe Devriese <oelewapperke@kde.org>
+   Copyright 1996 Derek B. Noonburg
+   CopyRight 2002 Robert Griebl
+
+   This library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Library General Public
+   License version 2 as published by the Free Software Foundation.
+
+   This library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Library General Public License for more details.
+
+   You should have received a copy of the GNU Library General Public License
+   along with this library; see the file COPYING.LIB.  If not, write to
+   the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+   Boston, MA 02111-1307, USA.
+*/
 
 #ifdef __GNUC__
 #pragma implementation
@@ -146,10 +157,10 @@ QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m21, fp
 		else
 			sty = QFont::Helvetica;
 
-		f. setStyleHint ( sty, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));
-		f. setBold ( gfxFont-> isBold ( ) > 0 );
-		f. setItalic ( gfxFont-> isItalic ( ) > 0 );
-		f. setFixedPitch ( gfxFont-> isFixedWidth ( ) > 0 );
+		f.setStyleHint ( sty, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));
+		f.setBold ( gfxFont-> isBold ( ) > 0 );
+		f.setItalic ( gfxFont-> isItalic ( ) > 0 );
+		f.setFixedPitch ( gfxFont-> isFixedWidth ( ) > 0 );
 
 		// common specifiers in font names
 		if ( fname. contains ( "Oblique" ) || fname. contains ( "Italic" ))
@@ -614,6 +625,7 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
                            CharCode code, Unicode *u, int uLen )
 {
 	fp_t x1, y1, dx1, dy1;
+
 
 	if ( uLen > 0 )
 		m_text-> addChar ( state, x, y, dx, dy, code, u, uLen );

@@ -25,6 +25,9 @@ More items (first items will enter 'In progress list' first):
 -> display current page / total pages (with analog indicator too (progressbar/...))
    maybe this can be done on a small widget at the top of the toolbox, displaying
    'document' informations (pages, current pg, some metadata, etc..)
+-> right click and drag while in 'scroll' mode changes to 'selection' mode and selects
+-> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
+   this visually explains basic usage, mouse buttons functions & more..
 -> take care of TODOs in code
 -> find: scroll page if the the searched string is not visible [after 'viewport changes']
 -> ADD: click over image allows "save image" [60% done]
@@ -46,6 +49,7 @@ More items (first items will enter 'In progress list' first):
 -> merge head support for show menubar in rmb (by albert)
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 -> rotate the whole document / individual pages
+-> fullscreen pdf view (presentations-like) with some gfx tools
 
 Done (newest feature comes firts):
 -> ADD: import Marco Martin's "another kpdf icon" (kde-look: 16146) (Albert)

@@ -74,7 +74,6 @@ void OptionDialog::slotApply()
 
   config->writeEntry( "ShowPS", mRender.showSpecialCheck->isChecked() );
   config->writeEntry( "PS Anti Alias", mRender.antialiasCheck->isChecked() );
-  config->writeEntry( "Gamma", mRender.gammaEdit->text() );
 
   config->sync();
 
@@ -97,7 +96,6 @@ void OptionDialog::setup()
   // Rendering page
   mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS" ) );
   mRender.antialiasCheck->setChecked(config->readNumEntry("PS Anti Alias", 1)); 
-  mRender.gammaEdit->setText( config->readEntry( "Gamma" ) );
 }
 
 
@@ -147,12 +145,6 @@ void OptionDialog::makeRenderingPage()
     new QCheckBox( i18n("Antialiased PostScript"), page );  
   topLayout->addWidget( mRender.showSpecialCheck );
   topLayout->addWidget( mRender.antialiasCheck );
-
-  QHBoxLayout *hlay = new QHBoxLayout( topLayout );
-  QLabel *label = new QLabel( i18n("Gamma value:"), page );
-  mRender.gammaEdit = new QLineEdit( page );
-  hlay->addWidget( label );
-  hlay->addWidget( mRender.gammaEdit, 1 );
 
   topLayout->addStretch(1);
 }

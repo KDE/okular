@@ -49,7 +49,6 @@ class OptionDialog : public KDialogBase
     int pageIndex;
     QCheckBox *showSpecialCheck;
     QCheckBox *antialiasCheck;
-    QLineEdit *gammaEdit;
   };
 
   public:

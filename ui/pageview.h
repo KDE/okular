@@ -68,7 +68,7 @@ class PageView : public QScrollView, public DocumentObserver
         void rightClick( const KPDFPage *, const QPoint & );
 
     protected:
-        // viewport events
+        // main draw loop, draws pageViews on viewport
         void viewportPaintEvent( QPaintEvent * pe );
         void viewportResizeEvent( QResizeEvent* );
 

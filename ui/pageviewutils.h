@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
+ *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -7,14 +7,17 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _PAGEVIEW_UTILS_H_
-#define _PAGEVIEW_UTILS_H_
+#ifndef _PAGEVIEW_UTILS_H
+#define _PAGEVIEW_UTILS_H
 
 #include <qwidget.h>
 #include <qpixmap.h>
+#include <qpainter.h>
 #include <qrect.h>
 
 class QTimer;
+
+class PageView;
 class KPDFPage;
 
 /**
@@ -48,10 +51,6 @@ class PageViewItem
 
 /**
  * @short A widget that displays messages in the top-left corner.
- *
- * This is a widget with thin border and rounded corners that displays a given
- * text along as an icon. It's meant to be used for displaying messages to the
- * user by placing this above other widgets.
  */
 class PageViewMessage : public QWidget
 {

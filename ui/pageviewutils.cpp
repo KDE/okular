@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
+ *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,72 +10,15 @@
 // qt/kde includes
 #include <qbitmap.h>
 #include <qpainter.h>
+#include <qimage.h>
 #include <qtimer.h>
+#include <kimageeffect.h>
 #include <kiconloader.h>
 
 // local includes
 #include "pageviewutils.h"
 #include "core/page.h"
 #include "conf/settings.h"
-
-
-/** PageViewItem **/
-
-PageViewItem::PageViewItem( const KPDFPage * page )
-    : m_page( page ), m_zoomFactor( 1.0 )
-{
-}
-
-const KPDFPage * PageViewItem::page() const
-{
-    return m_page;
-}
-
-int PageViewItem::pageNumber() const
-{
-    return m_page->number();
-}
-
-const QRect& PageViewItem::geometry() const
-{
-    return m_geometry;
-}
-
-int PageViewItem::width() const
-{
-    return m_geometry.width();
-}
-
-int PageViewItem::height() const
-{
-    return m_geometry.height();
-}
-
-double PageViewItem::zoomFactor() const
-{
-    return m_zoomFactor;
-}
-
-void PageViewItem::setGeometry( int x, int y, int width, int height )
-{
-    m_geometry.setRect( x, y, width, height );
-}
-
-void PageViewItem::setWHZ( int w, int h, double z )
-{
-    m_geometry.setWidth( w );
-    m_geometry.setHeight( h );
-    m_zoomFactor = z;
-}
-
-void PageViewItem::moveTo( int x, int y )
-{
-    m_geometry.moveLeft( x );
-    m_geometry.moveTop( y );
-}
-
-
-/** PageViewMessage **/
 
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent, "pageViewMessage" ), m_timer( 0 )
@@ -179,8 +122,8 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
 void PageViewMessage::paintEvent( QPaintEvent * e )
 {
-    // paint the internal pixmap over the widget
-    bitBlt( this, e->rect().topLeft(), &m_pixmap, e->rect() );
+    QPainter p( this );
+    p.drawPixmap( e->rect().topLeft(), m_pixmap, e->rect() );
 }
 
 void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
@@ -188,4 +131,59 @@ void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
     if ( m_timer )
         m_timer->stop();
     hide();
+}
+
+
+
+PageViewItem::PageViewItem( const KPDFPage * page )
+    : m_page( page ), m_zoomFactor( 1.0 )
+{
+}
+
+const KPDFPage * PageViewItem::page() const
+{
+    return m_page;
+}
+
+int PageViewItem::pageNumber() const
+{
+    return m_page->number();
+}
+
+const QRect& PageViewItem::geometry() const
+{
+    return m_geometry;
+}
+
+int PageViewItem::width() const
+{
+    return m_geometry.width();
+}
+
+int PageViewItem::height() const
+{
+    return m_geometry.height();
+}
+
+double PageViewItem::zoomFactor() const
+{
+    return m_zoomFactor;
+}
+
+void PageViewItem::setGeometry( int x, int y, int width, int height )
+{
+    m_geometry.setRect( x, y, width, height );
+}
+
+void PageViewItem::setWHZ( int w, int h, double z )
+{
+    m_geometry.setWidth( w );
+    m_geometry.setHeight( h );
+    m_zoomFactor = z;
+}
+
+void PageViewItem::moveTo( int x, int y )
+{
+    m_geometry.moveLeft( x );
+    m_geometry.moveTop( y );
 }

@@ -5,8 +5,7 @@ INCLUDES = -I$(srcdir)/generator_pdf -I$(srcdir)/.. -I$(srcdir)/../xpdf -I$(srcd
 METASOURCES = AUTO
 
 libkpdfcore_la_LIBADD = ./generator_pdf/libgeneratorpdf.la
-libkpdfcore_la_SOURCES = page.cpp document.cpp link.cpp annotations.cpp \
-                         pagetransition.cpp
+libkpdfcore_la_SOURCES = document.cpp link.cpp page.cpp pagetransition.cpp
 
 noinst_LTLIBRARIES = libkpdfcore.la
 

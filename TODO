@@ -7,6 +7,8 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress:
+-> Dom for bookmarks and saving/loading document settings.
+-> Fix threaded generation. It's.. crashy..
 
 Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> FIX 1/2: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
@@ -155,18 +157,3 @@ Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 a
  Annotations: yellow notes 'post-it' like
  Export: export to other formats keeping formatting (a dream.. except for PNG :-)
  PDF: <theICEBear> pdf forms support.... :D if at all possible
-
-Bugs to close after merging to HEAD
-BR88661: (thumbnail prev. is blocking) Not only it's threaded, but it generates
-         thumbnails only for the few visible items inside the thumbnaillist.
-BR72347: (search doesn't work) Closeable NOW. The feature is already on HEAD.
-BR72165: (showing a "scanned document PDF" is very slow). By running many tests
-         on xpdf and kpdf_experiments, I measured 5-15% speed loss (due to
-         internal pixmap conversions). No noticeable difference.
-BR89835: (PDF pages to be aligned centrally). Done in branch.
-BR90026: (crash). Can't reproduce on branch.
-BR74435: (smooth transition/continous mode) It's in from sept-27.
-BR80164: (2-up view of pdf pages)  It's in from sept-26.
-BR69092: Zoom displayed/internal values synced with fixed value or displayed page.
-         It is editable and the list gets cleaned and rebuilt on changes.
-BR94385: PDF doesn't show PDF properties

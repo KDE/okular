@@ -1135,7 +1135,14 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	// to understand both.
 	QFileInfo fi1(dviFile->filename);
 	QFileInfo fi2(fi1.dir(),cp.mid(i+1));
+
+	//Sometimes the filename is passed without the .tex extension,
+	//better add it when necessary.
+	if ( !fi2.exists() )
+		fi2.setFile(fi2.absFilePath() + ".tex");
+
 	QString TeXfile;
+
 	if ( fi2.exists() )
 	  TeXfile = fi2.absFilePath();
 	else {

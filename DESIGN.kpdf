@@ -1,0 +1,55 @@
+Here are some notes about the inner structure of kpdf for who wants to take
+a look at the project.
+
+
+*** Rendering:
+
+- The rendering is done by xpdf/splash. xpdf defines 'OutputDev' class that has
+been implemented by renderers. Kpdf imported Splash sources; Splash implements
+all virtuals from the interface and draws text/image into an inner pixmap.
+
+- Kpdf reimplements the 'SplashOutputDev' iface to basically get notified when
+the rendering of a page is finished (and some other features such as collection
+of per-page text that permits to implement search). 
+
+- Kpdf's QOutputDevPixmap returns a pixmap containing a single redered page.
+
+
+*** Architecture:
+
+Almost all of the whole kpdf is a KParts::ReadOnlyPart. Plus there is a main
+window that embeds the part when used stand alone (see kpdf_shell.cpp/.h and
+main.cpp).
+The 'Shell' only adds fullscreen capability to the part, a standard
+open dialog, a quit button and minor bits of code.
+
+Architecture::Part: (kpdf_part.cpp/.h)
+
+The part owns a centralWidget (with thumbnails in a left column and the view
+area on the right), some XMLgui functionalities (zoom actions, search actions,
+more...) and some background logic (thumbnail generation, page changes,
+loading/saving settings and more).
+
+Architecture::Part:CentralWidget: (part.cpp/.h)
+
+The centralWidget (namely PDFPartView) holds a 'ThumbnailList' (a QTable
+composed of 'Thumbnails') and a 'PageWidget'. The central widget has few
+accessors to the list of thumbnails, whereas the page widget is accessed
+publicly by the core of the Part (this may change soon!).
+
+Architecture::Part:CentralWidget:PageWidget (kpdf_pagewidget.cc/.h)
+
+Displays current page pixmap (holds a QOutputDevPixmap inside). Handles mouse,
+keys, scrolling and scrollbars as well. This widget is a qscrollview.
+
+Architecture::Part:CentralWidget:ThumbnailList (kpdf_pagewidget.cc/.h)
+
+Note: This may change.
+This widget is a vertical single column table where cells are thumbnails. This
+supports thumbnail scaling and emits a signal when a page is selected between
+the list of thumbnails.
+
+
+*** Last Revisions to this document:
+2004-10-04 : 0.1 - Enrico Ros <eros.kde@email.it>
+    - just read the code and created this file

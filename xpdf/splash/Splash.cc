@@ -1314,6 +1314,7 @@ SplashError Splash::fillImageMask(SplashImageMaskSource src, void *srcData,
 				       (1 - alpha) * splashRGB8G(bg.rgb8)),
 			   splashRound(alpha * splashRGB8B(fg.rgb8) +
 				       (1 - alpha) * splashRGB8B(bg.rgb8)));
+	    break;
 	  case splashModeBGR8Packed:
 	    pix.bgr8 = splashMakeBGR8(
 			   splashRound(alpha * splashBGR8R(fg.bgr8) +

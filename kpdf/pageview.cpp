@@ -701,7 +701,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
             QRect selectionRect = d->mouseSelectionRect.normalize();
             if ( selectionRect.width() < 5 || selectionRect.height() < 5 )
+            {
+                selectionClear();
                 break;
+            }
 
             // grab text in selection by extracting it from all intersected pages
             QString selectedText;

@@ -219,6 +219,12 @@ void documentWidget::mousePressEvent ( QMouseEvent * e )
 	e->accept();
 	return;
       }
+  
+  if (e->button() == RightButton)
+  {
+    setCursor(Qt::IbeamCursor);
+    DVIselection->clear();
+  }
 }
 
 

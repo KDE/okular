@@ -67,35 +67,28 @@ QPixmap glyph::shrunkCharacter()
     // the hot point will fall exactly onto the coordinates which we
     // calculated previously.
 
-    // Here the cheating starts ... on the screen many fonts look very
-    // light. We improve on the looks by lowering the shrink factor
-    // just when shrinking the characters. The position of the chars
-    // on the screen will not be affected, the chars are just slightly
-    // larger.
-    float sf = shrink_factor * 0.9;
-
     // Calculate the coordinates of the hot point in the shrunken
     // bitmap
-    x2 = (int)(x/sf);
-    y2 = (int)(y/sf);
+    x2 = (int)(x/shrink_factor);
+    y2 = (int)(y/shrink_factor);
 
     // Calculate the size of the target bitmap for the
-    int shrunk_width  = x2 + (int)((bitmap.w-x) / sf + 0.5) + 1;
-    int shrunk_height = y2 + (int)((bitmap.h-y) / sf + 0.5) + 1;
+    int shrunk_width  = x2 + (int)((bitmap.w-x) / shrink_factor + 0.5) + 1;
+    int shrunk_height = y2 + (int)((bitmap.h-y) / shrink_factor + 0.5) + 1;
 
     // Now calculate the size of the white border. This is some sort
     // of black magic. Don't modify unless you know what you are doing.
-    int pre_rows = (int)((1.0 + y2)*sf + 0.5) - y - 1;
+    int pre_rows = (int)((1.0 + y2)*shrink_factor + 0.5) - y - 1;
     if (pre_rows < 0)
       pre_rows = 0;
-    int post_rows = (int)(shrunk_height*sf + 0.5) - bitmap.h;
+    int post_rows = (int)(shrunk_height*shrink_factor + 0.5) - bitmap.h;
     if (post_rows < 0)
       post_rows = 0;
 
-    int pre_cols = (int)((1.0 + x2)*sf + 0.5) - x - 1;
+    int pre_cols = (int)((1.0 + x2)*shrink_factor + 0.5) - x - 1;
     if (pre_cols < 0)
       pre_cols = 0;
-    int post_cols = (int)(shrunk_width*sf + 0.5) - bitmap.w;
+    int post_cols = (int)(shrunk_width*shrink_factor + 0.5) - bitmap.w;
     if (post_cols < 0)
       post_cols = 0;
 
@@ -133,12 +126,8 @@ QPixmap glyph::shrunkCharacter()
     for(int y=0; y<im.height(); y++) {
       QRgb *imag_scanline = (QRgb *)im32.scanLine(y);
       for(int x=0; x<im.width(); x++) {
-	// Make White => Transparent
-	if ((0x00ffffff & *imag_scanline) == 0x00ffffff)
-	  *imag_scanline &= 0x00ffffff;
-	else
-	  *imag_scanline |= 0xff000000;
-	imag_scanline++; // Disgusting pointer arithmetic. Should be forbidden.
+	*imag_scanline = qRgba(0, 0, 0, 0xFF-qRed(*imag_scanline));
+	imag_scanline++;
       }
     }
     SmallChar->convertFromImage(im32,0);

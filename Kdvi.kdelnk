@@ -1,9 +1,11 @@
 # KDE Config File
 [KDE Desktop Entry]
 Comment[C]=TeX DVI File Viewer
+Comment[pl]=Podgl±darka plików TeX DVI
 BinaryPattern=kdvi;
 Name=DVI Viewer
 Name[C]=DVI Viewer
+Name[pl=DVI Viewer
 MimeType=application/x-dvi;
 Comment=TeX DVI File Viewer
 Exec=kdvi %f

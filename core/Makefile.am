@@ -8,3 +8,6 @@ libkpdfcore_la_LIBADD = ./generator_pdf/libgeneratorpdf.la
 libkpdfcore_la_SOURCES = document.cpp link.cpp page.cpp pagetransition.cpp
 
 noinst_LTLIBRARIES = libkpdfcore.la
+
+document.lo: ../conf/settings.h
+page.lo: ../conf/settings.h

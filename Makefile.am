@@ -27,3 +27,5 @@ partdesktop_DATA = kpdf_part.desktop
 
 partrcdir   = $(kde_datadir)/kpdfpart
 partrc_DATA = part.rc
+
+part.lo: conf/settings.h

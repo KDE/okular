@@ -9,3 +9,5 @@ libkpdfconf_la_SOURCES = dlggeneral.ui dlgperformance.ui dlgaccessibility.ui \
 noinst_LTLIBRARIES = libkpdfconf.la
 
 kde_kcfg_DATA = kpdf.kcfg
+
+preferencesdialog.lo: settings.h

@@ -7,3 +7,10 @@ libkpdfui_la_SOURCES = pageview.cpp pageviewutils.cpp thumbnaillist.cpp \
                        propertiesdialog.cpp presentationwidget.cpp 
 
 noinst_LTLIBRARIES = libkpdfui.la
+
+pageview.lo: ../conf/settings.h
+pageviewutils.lo: ../conf/settings.h
+presentationwidget.lo: ../conf/settings.h
+searchwidget.lo: ../conf/settings.h
+thumbnaillist.lo: ../conf/settings.h
+

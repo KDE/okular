@@ -6,3 +6,5 @@ libgeneratorpdf_la_SOURCES = generator_pdf.cpp gp_outputdev.cpp
 noinst_LTLIBRARIES = libgeneratorpdf.la
 
 KDE_OPTIONS = nofinal
+
+generator_pdf.lo: ../../conf/settings.h

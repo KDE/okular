@@ -258,7 +258,7 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
     if ( documentChanged && !Settings::hideOSD() )
         d->messageWindow->display(
             i18n(" Loaded a 1 page document.",
-                 " Loaded a %1 page document.",
+                 " Loaded a %n page document.",
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
 }

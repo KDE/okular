@@ -4,7 +4,7 @@
 // Widget for displaying TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2004 Wilfried Huss
+// (C) 2004 Wilfried Huss, Stefan Kebekus
 // Distributed under the GPL
 //
 
@@ -24,6 +24,7 @@ DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, Docum
   : DocumentWidget(parent, sv, size, cache, documentSelection, name)
 {
 }
+
 
 void DVIWidget::mousePressEvent(QMouseEvent* e)
 {
@@ -56,6 +57,7 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
     }
   }
 }
+
 
 void DVIWidget::mouseMoveEvent(QMouseEvent* e)
 {
@@ -98,5 +100,6 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
   if (!clearStatusBarTimer.isActive())
     clearStatusBarTimer.start( 200, TRUE ); // clear the statusbar after 200 msec.
 }
+
 
 #include "dviWidget.moc"

@@ -264,7 +264,7 @@ void dvifile::prepare_pages()
 }
 
 
-dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
+dvifile::dvifile(QString fname, fontPool *pool)
 {
 #ifdef DEBUG_DVIFILE
   kdDebug(4300) << "init_dvi_file: " << fname << endl;
@@ -276,7 +276,7 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
   font_pool    = pool;
-  sourceSpecialMarker = sourceSpecialMark;
+  sourceSpecialMarker = true;
   
   QFile file(fname);
   filename = file.name();

@@ -149,6 +149,8 @@ protected slots:
       beginSelection-endSelection, and draws the users attention to
       this place with an animated frame  */
   void gotoPage(int pageNr, int beginSelection, int endSelection );
+  void gotoPage(const anchor &a);
+
   void showTip(void);
   void showTipOnStart(void);
 

@@ -314,8 +314,6 @@ void fontPool::locateFonts(void)
 
 void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound)
 {
-  kdError(4300) << "fontPool::locateFonts(void) called" << endl;
-
   // Just make sure that MetafontMode is in the permissible range, so
   // as to avoid segfaults.
   if (MetafontMode >= NumberOfMFModes) {

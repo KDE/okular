@@ -4,7 +4,7 @@
 // Widget for displaying TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2001-2003 Stefan Kebekus. Distributed under the GPL.
+// (C) 2001-2004 Stefan Kebekus. Distributed under the GPL.
 
 
 #ifndef _dviwin_h_
@@ -20,13 +20,14 @@
 #include <qwidget.h> 
 #include <kviewpart.h>
 
+#include "anchor.h"
 #include "bigEndianByteReader.h"
 #include "documentPage.h"
+#include "documentRenderer.h"
 #include "dviFile.h"
 #include "fontpool.h"
 #include "infodialog.h"
 #include "psgs.h"
-#include "documentRenderer.h"
 
 
 class DocumentWidget;
@@ -43,24 +44,16 @@ class TeXFontDefinition;
 
 extern const int MFResolutions[];
 
-class DVI_Anchor {
- public:
-  DVI_Anchor() {}
-  DVI_Anchor(Q_UINT32 pg, double vc): page(pg), vertical_coordinate(vc) {}
-
-  Q_UINT32   page;
-  double     vertical_coordinate;
-};
-
 class DVI_SourceFileAnchor {
  public:
   DVI_SourceFileAnchor() {}
-  DVI_SourceFileAnchor(QString &name, Q_UINT32 ln, Q_UINT32 pg, double vc): fileName(name), line(ln), page(pg), vertical_coordinate(vc) {}
+  DVI_SourceFileAnchor(QString &name, Q_UINT32 ln, Q_UINT32 pg, double _distance_from_top_in_inch): fileName(name), line(ln), page(pg), 
+    distance_from_top_in_inch(_distance_from_top_in_inch) {}
 
   QString    fileName;
   Q_UINT32   line;
   Q_UINT32   page;
-  double     vertical_coordinate;
+  double     distance_from_top_in_inch;
 };
 
 /** Compound of registers, as defined in section 2.6.2 of the DVI
@@ -102,6 +95,8 @@ public:
   dviWindow(QWidget *parent);
   ~dviWindow();
 
+  virtual bool	setFile(const QString &fname);
+
   class dvifile *dviFile;
 
   void          setPrefs(bool flag_showPS, const QString &editorCommand, 
@@ -113,7 +108,7 @@ public:
   void          exportPDF();
 
   void          changePageSize(void);
-  virtual int   totalPages() const;
+  virtual pageNumber totalPages() const;
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
   void		setPaper(double w, double h);
@@ -126,7 +121,7 @@ public:
       corresponding section of the DVI file can be found. If so, it
       will emit a "requestGotoPage", otherwise it will just call
       drawpage */
-  void          parseReference(const QString &reference);
+  anchor        parseReference(const QString &reference);
   
   // These should not be public... only for the moment
   void          read_postamble(void);
@@ -156,7 +151,6 @@ public slots:
 
   void          embedPostScript(void);
   void          abortExternalProgramm(void);
-  bool		setFile(const QString &fname, bool sourceMarker=true);
 
   /** simply emits "setStatusBarText( QString::null )". This is used
       in dviWindow::mouseMoveEvent(), see the explanation there. */
@@ -172,9 +166,6 @@ public slots:
   void          editorCommand_terminated(KProcess *);
 
 signals:
-  /** Emitted to indicate that the prescan phase has ended. */
-  void          prescanDone();
-
   /** Emitted to indicate that a hyperlink has been clicked on, and
       that the widget requests that the controlling program goes to the
       page and the coordinates specified. */
@@ -186,6 +177,11 @@ signals:
   /** To be passed through to the kmultipage */
   void documentSpecifiedPageSize(const pageSize &size);
 
+private slots:
+  /** This method shows a dialog that tells the user that source
+      information is present, and gives the opportunity to open the
+      manual and learn more about forward and inverse search */
+  void          showThatSourceInformationIsPresent(void);
 
 private:
   fontPool      font_pool;
@@ -281,7 +277,7 @@ private:
   bool              word_boundary_encountered;
   
   /** List of anchors in a document */
-  QMap<QString, DVI_Anchor> anchorList;
+  QMap<QString, anchor> anchorList;
   
   unsigned int	   current_page;
   

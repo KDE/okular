@@ -105,14 +105,12 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   currentPage.setRenderer(window);
 
   widgetList.resize(0);
-  connect(window, SIGNAL(prescanDone()), this, SLOT(generateDocumentWidgets()));
   connect(window, SIGNAL(setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   connect(window, SIGNAL(documentSpecifiedPageSize(const pageSize&)), this, SIGNAL( documentSpecifiedPageSize(const pageSize&)) );
   connect(window, SIGNAL(needsRepainting()), this, SLOT(repaintAllVisibleWidgets()));
   docInfoAction    = new KAction(i18n("Document &Info"), 0, window, SLOT(showInfo()), actionCollection(), "info_dvi");
 
   embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
-  connect(window, SIGNAL(prescanDone()), this, SLOT(setEmbedPostScriptAction()));
 
   if (window->supportsTextSearch()) {
     findTextAction = KStdAction::find(this, SLOT(showFindTextDialog()), actionCollection(), "find");
@@ -256,29 +254,36 @@ bool KDVIMultiPage::openFile()
   emit setStatusBarText(i18n("Loading file %1").arg(m_file));
 
   bool r = window->setFile(m_file);
+  setEmbedPostScriptAction();
   if (!r)
     emit setStatusBarText(QString::null);
 
   window->changePageSize();
   emit numberOfPages(window->totalPages());
   enableActions(r);
-  window->parseReference(url().ref());
 
+
+  QString reference = url().ref();
+  if (!reference.isEmpty())
+    gotoPage(window->parseReference(reference));
+  
   return r;
 }
 
 
 void KDVIMultiPage::jumpToReference(QString reference)
 {
-  if (window) 
-    window->parseReference(reference);
+  if (window == 0)
+    return;
+  
+  gotoPage(window->parseReference(reference));
 }
 
 
 bool KDVIMultiPage::closeURL()
 {
   document_history.clear();
-  window->setFile(""); // That means: close the file. Resize the widget to 0x0.
+  window->setFile(QString::null); // That means: close the file. Resize the widget to 0x0.
   enableActions(false);
   return true;
 }
@@ -291,6 +296,16 @@ QStringList KDVIMultiPage::fileFormats()
   return r;
 }
 
+
+void KDVIMultiPage::gotoPage(const anchor &a)
+{
+  kdError() << "GOTOPAGE pg=" << a.page << ", dist=" << a.distance_from_top_in_inch << endl;
+
+  if (a.page.isInvalid() || (window == 0))
+    return;
+
+  goto_page(a.page-1, a.distance_from_top_in_inch * window->xres * window->zoom() + 0.5);
+}
 
 void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
 {
@@ -742,7 +757,7 @@ void KDVIMultiPage::reload()
   if (window->correctDVI(m_file)) {
     killTimer(timer_id);
     timer_id = -1;
-    bool r = window->setFile(m_file, false);
+    bool r = window->setFile(m_file);
     enableActions(r);
 
     emit pageInfo(window->totalPages(), window->curr_page()-1 );

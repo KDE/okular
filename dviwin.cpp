@@ -219,64 +219,73 @@ void dviWindow::drawPage(DocumentPage *page)
     }
     
     // Tell the user (once) if the DVI file contains source specials
-    // ... wo don't want our great feature to go unnoticed. In
-    // principle, we should use a KMessagebox here, but we want to add
-    // a button "Explain in more detail..." which opens the
-    // Helpcenter. Thus, we practically re-implement the KMessagebox
-    // here. Most of the code is stolen from there.
+    // ... wo don't want our great feature to go unnoticed.
     if ((dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
       dviFile->sourceSpecialMarker = false;
-      // Check if the 'Don't show again' feature was used
-      KConfig *config = kapp->config();
-      KConfigGroupSaver saver( config, "Notification Messages" );
-      bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
-      
-      if (showMsg) {
-	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-					     parentWidget, "information", true, true,KStdGuiItem::ok() );
-	
-	QVBox *topcontents = new QVBox (dialog);
-	topcontents->setSpacing(KDialog::spacingHint()*2);
-	topcontents->setMargin(KDialog::marginHint()*2);
-	
-	QWidget *contents = new QWidget(topcontents);
-	QHBoxLayout * lay = new QHBoxLayout(contents);
-	lay->setSpacing(KDialog::spacingHint()*2);
-	
-	lay->addStretch(1);
-	QLabel *label1 = new QLabel( contents);
-	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
-	lay->add( label1 );
-	QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
-					  "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
-				     contents);
-	label2->setMinimumSize(label2->sizeHint());
-	lay->add( label2 );
-	lay->addStretch(1);
-	QSize extraSize = QSize(50,30);
-	QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
-	extraSize = QSize(50,0);
-	dialog->setHelpLinkText(i18n("Explain in more detail..."));
-	dialog->setHelp("inverse-search", "kdvi");
-	dialog->enableLinkedHelp(true);
-	dialog->setMainWidget(topcontents);
-	dialog->enableButtonSeparator(false);
-	dialog->incInitialSize( extraSize );
-	dialog->exec();
-	delete dialog;
-	
-	showMsg = !checkbox->isChecked();
-	if (!showMsg) {
-	  KConfigGroupSaver saver( config, "Notification Messages" );
-	  config->writeEntry( "KDVI-info_on_source_specials", showMsg);
-	}
-	config->sync();
-      }
+      // Show the dialog as soon as event processing is finished, and
+      // the program is idle
+      QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
     }
   }
   
   page->setPixmap(currentlyDrawnPixmap);
   currentlyDrawnPage = 0;
+}
+
+
+void dviWindow::showThatSourceInformationIsPresent(void)
+{
+  // In principle, we should use a KMessagebox here, but we want to
+  // add a button "Explain in more detail..." which opens the
+  // Helpcenter. Thus, we practically re-implement the KMessagebox
+  // here. Most of the code is stolen from there.
+  
+  // Check if the 'Don't show again' feature was used
+  KConfig *config = kapp->config();
+  KConfigGroupSaver saver( config, "Notification Messages" );
+  bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
+  
+  if (showMsg) {
+    KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
+					 parentWidget, "information", true, true,KStdGuiItem::ok() );
+    
+    QVBox *topcontents = new QVBox (dialog);
+    topcontents->setSpacing(KDialog::spacingHint()*2);
+    topcontents->setMargin(KDialog::marginHint()*2);
+    
+    QWidget *contents = new QWidget(topcontents);
+    QHBoxLayout * lay = new QHBoxLayout(contents);
+    lay->setSpacing(KDialog::spacingHint()*2);
+    
+    lay->addStretch(1);
+    QLabel *label1 = new QLabel( contents);
+    label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
+    lay->add( label1 );
+    QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
+				      "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
+				 contents);
+    label2->setMinimumSize(label2->sizeHint());
+    lay->add( label2 );
+    lay->addStretch(1);
+    QSize extraSize = QSize(50,30);
+    QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
+    extraSize = QSize(50,0);
+    dialog->setHelpLinkText(i18n("Explain in more detail..."));
+    dialog->setHelp("inverse-search", "kdvi");
+    dialog->enableLinkedHelp(true);
+    dialog->setMainWidget(topcontents);
+    dialog->enableButtonSeparator(false);
+    dialog->incInitialSize( extraSize );
+    dialog->exec();
+    delete dialog;
+    
+    showMsg = !checkbox->isChecked();
+    if (!showMsg) {
+      KConfigGroupSaver saver( config, "Notification Messages" );
+      config->writeEntry( "KDVI-info_on_source_specials", showMsg);
+    }
+    config->sync();
+  }
 }
 
 
@@ -354,7 +363,6 @@ void dviWindow::embedPostScript(void)
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
-  emit(prescanDone());
 
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
@@ -408,7 +416,7 @@ void dviWindow::changePageSize()
 }
 
 
-bool dviWindow::setFile(const QString &fname, bool sourceMarker)
+bool dviWindow::setFile(const QString &fname)
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
@@ -428,7 +436,6 @@ bool dviWindow::setFile(const QString &fname, bool sourceMarker)
     currentlyDrawnPixmap.resize(0,0);
     if (currentlyDrawnPage != 0)
       currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
-    emit(prescanDone()); // ####
     return true;
   }
 
@@ -457,7 +464,16 @@ bool dviWindow::setFile(const QString &fname, bool sourceMarker)
   }
 
   QApplication::setOverrideCursor( waitCursor );
-  dvifile *dviFile_new = new dvifile(filename, &font_pool, sourceMarker);
+  dvifile *dviFile_new = new dvifile(filename, &font_pool);
+
+  //@@@  dviFile_new->sourceSpecialMarker = sourceMarker;
+
+  if ((dviFile == 0) || (dviFile->filename != filename))
+    dviFile_new->sourceSpecialMarker = true;
+  else
+    dviFile_new->sourceSpecialMarker = false;
+
+
   if ((dviFile_new->dvi_Data() == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
@@ -510,7 +526,7 @@ bool dviWindow::setFile(const QString &fname, bool sourceMarker)
     return false;
 
   // Locate fonts.
-    font_pool.locateFonts();
+  font_pool.locateFonts();
   
   // Update the list of fonts in the info window
   if (info != 0)
@@ -519,7 +535,7 @@ bool dviWindow::setFile(const QString &fname, bool sourceMarker)
 
   // We should pre-scan the document now (to extract embedded,
   // PostScript, Hyperlinks, ets).
-
+  
   // PRESCAN STARTS HERE
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
@@ -548,7 +564,6 @@ bool dviWindow::setFile(const QString &fname, bool sourceMarker)
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
-  emit(prescanDone());
   
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
@@ -567,14 +582,14 @@ bool dviWindow::setFile(const QString &fname, bool sourceMarker)
 }
 
 
-void dviWindow::parseReference(const QString &reference)
+anchor dviWindow::parseReference(const QString &reference)
 {
   //#ifdef DEBUG_DVIWIN
   kdError(4300) << "dviWindow::parseReference( " << reference << " ) called" << endl;
   //#endif
   
   if (dviFile == 0)
-    return;
+    return anchor();
   
   
   // case 1: The reference is a number, which we'll interpret as a
@@ -582,15 +597,12 @@ void dviWindow::parseReference(const QString &reference)
   bool ok;
   int page = reference.toInt ( &ok );
   if (ok == true) {
-    page--;
     if (page < 0)
       page = 0;
-    if (page >= dviFile->total_pages)
-      page = dviFile->total_pages-1;
-
-    kdError(4300) << "EMIT: gotoPage " << page << endl;
-    emit(request_goto_page(page, -1000));
-    return;
+    if (page > dviFile->total_pages)
+      page = dviFile->total_pages;
+    
+    return anchor(page, 0.0);
   }
   
   // case 2: The reference is of form "src:1111Filename", where "1111"
@@ -616,7 +628,7 @@ void dviWindow::parseReference(const QString &reference)
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
 				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(refFileName),
 			 i18n("Could Not Find Reference"));
-      return;
+      return anchor();
     }
 
     // Go through the list of source file anchors, and find the anchor
@@ -646,21 +658,21 @@ void dviWindow::parseReference(const QString &reference)
       }
     
     if (bestMatch != sourceHyperLinkAnchors.end())
-      emit(request_goto_page(bestMatch->page, (Q_INT32)(bestMatch->vertical_coordinate/shrinkfactor+0.5)));
+      return anchor(bestMatch->page, bestMatch->distance_from_top_in_inch);
     else
       if (anchorForRefFileFound == false)
 	KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
 					      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
 			   i18n( "Could Not Find Reference" ));
       else
-	emit(request_goto_page(0, 0));
-    
-    return;
+	return anchor();
+    return anchor();
   }
+  return anchor();
 }
 
 
-int dviWindow::totalPages() const
+pageNumber dviWindow::totalPages() const
 {
   if (dviFile != NULL)
     return dviFile->total_pages;
@@ -712,13 +724,13 @@ void dviWindow::handleLocalLink(const QString &linkText)
     locallink = linkText.mid(1); // Drop the '#' at the beginning
   else
     locallink = linkText;
-  QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
+  QMap<QString,anchor>::Iterator it = anchorList.find(locallink);
   if (it != anchorList.end()) {
 #ifdef DEBUG_SPECIAL
     kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
     kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
 #endif
-    emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/shrinkfactor)));
+    emit(request_goto_page(it.data().page, (int)(it.data().distance_from_top_in_inch*xres*_zoom + 0.5)));
   } else {
     if (linkText[0] != '#' ) {
 #ifdef DEBUG_SPECIAL

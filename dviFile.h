@@ -20,8 +20,8 @@ class dvifile : public bigEndianByteReader
  public:
   /** Makes a deep copy of the old DVI file. */
   dvifile(const dvifile *old, fontPool *fp );
+  dvifile(QString fname, class fontPool *pool);
 
-  dvifile(QString fname, class fontPool *pool, bool sourceSpecialMark=true);
   ~dvifile();
 
   bool           isModified;

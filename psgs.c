@@ -99,6 +99,8 @@ extern	int		psheaderlen;
 #define	fore_Pixel	_fore_Pixel
 #define	back_Pixel	_back_Pixel
 
+extern void qt_processEvents();
+
 /* global procedures (besides initGS) */
 
 static	void	toggle_gs ARGS((void));

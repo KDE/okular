@@ -68,7 +68,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// create browser extension (for printing when embedded into browser)
 	new BrowserExtension(this);
 
-	// xpdf 'extern' global class (m_count is a static instance counter) 
+	// xpdf 'extern' global class (m_count is a static instance counter)
 	//if ( m_count ) TODO check if we need to insert these lines..
 	//	delete globalParams;
 	globalParams = new GlobalParams("");
@@ -179,6 +179,13 @@ bool Part::openFile()
 	return ok;
 }
 
+bool Part::openURL(const KURL &url)
+{
+	bool b = KParts::ReadOnlyPart::openURL(url);
+	if (!b) KMessageBox::error(widget(), i18n("Could not open %1").arg(url.prettyURL()));
+	return b;
+}
+
 bool Part::closeURL()
 {
 	document->closeDocument();
@@ -205,19 +212,19 @@ void Part::updateActions()
 	}
 }
 
-//BEGIN go to page dialog 
+//BEGIN go to page dialog
 class KPDFGotoPageDialog : public KDialogBase
 {
 public:
 	KPDFGotoPageDialog(QWidget *p, int current, int max) : KDialogBase(p, 0L, true, i18n("Go to Page"), Ok | Cancel, Ok) {
 		QWidget *w = new QWidget(this);
 		setMainWidget(w);
-		
+
 		QVBoxLayout *topLayout = new QVBoxLayout( w, 0, spacingHint() );
 		e1 = new KIntNumInput(current, w);
 		e1->setRange(1, max);
 		e1->setEditFocus(true);
-		
+
 		QLabel *label = new QLabel( e1,i18n("&Page:"), w );
 		topLayout->addWidget(label);
 		topLayout->addWidget(e1);
@@ -233,7 +240,7 @@ public:
   protected:
     KIntNumInput *e1;
 };
-//END go to page dialog 
+//END go to page dialog
 
 void Part::slotGoToPage()
 {
@@ -439,12 +446,12 @@ void Part::slotPrint()
   double width, height;
   int landscape, portrait;
   KPrinter printer;
-  
+
   printer.setPageSelection(KPrinter::ApplicationSide);
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setCurrentPage(m_currentPage);
   printer.setMargins(0, 0, 0, 0);
-  
+
   // if some pages are landscape and others are not the most common win as kprinter does
   // not accept a per page setting
   landscape = 0;
@@ -458,7 +465,7 @@ void Part::slotPrint()
     else portrait++;
   }
   if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
-  
+
   if (printer.setup(widget()))
   {
     doPrint( printer );
@@ -475,11 +482,11 @@ void Part::slotPrintPreview()
   double width, height;
   int landscape, portrait;
   KPrinter printer;
-  
+
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setPreviewOnly( true );
   printer.setMargins(0, 0, 0, 0);
-  
+
   // if some pages are landscape and others are not the most common win as kprinter does
   // not accept a per page setting
   landscape = 0;
@@ -493,7 +500,7 @@ void Part::slotPrintPreview()
     else portrait++;
   }
   if (landscape > portrait) printer.setOption("orientation-requested", "4");
-  
+
   doPrint(printer);
 */
 }
@@ -507,7 +514,7 @@ void Part::doPrint( KPrinter& /*printer*/ )
   QOutputDevKPrinter printdev( painter, paperColor, printer );
   printdev.startDoc(m_doc->getXRef());
   QValueList<int> pages = printer.pageList();
-  
+
   for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
   {
     m_docMutex.lock();
@@ -520,7 +527,7 @@ void Part::doPrint( KPrinter& /*printer*/ )
 }
 
 
-/* 
+/*
 * BrowserExtension class
 */
 BrowserExtension::BrowserExtension(Part* parent)

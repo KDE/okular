@@ -85,7 +85,7 @@ namespace KPDF
 
   private:
       KParts::ReadOnlyPart* m_part;
-      KRecentFilesAction* recent;
+      KRecentFilesAction* m_recent;
       KToggleAction* m_fullScreenAction;
       bool m_isFullScreen;
       KPopupMenu* m_popup;

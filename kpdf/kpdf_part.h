@@ -75,6 +75,8 @@ namespace KPDF
   protected:
 	// reimplemented from KParts::ReadOnlyPart
 	virtual bool openFile();
+	// reimplemented from KParts::ReadOnlyPart
+	virtual bool openURL(const KURL &url);
 
 	void updateAction();
 	void doPrint( KPrinter& printer );
@@ -95,7 +97,7 @@ namespace KPDF
 
   public slots:
 	// connected to Shell action (and browserExtension), not local one
-	void slotPrint(); 
+	void slotPrint();
 
   private:
 	// the document

@@ -38,7 +38,7 @@ AC_SUBST(LIBPAPER_LIBS)
 
 AC_CHECK_FUNCS(fseek64 mkstemp mkstemps popen)
 
-AC_FIND_FILE(xpdfrc, [/etc /usr/local/etc], xpdfrc)
+AC_FIND_FILE(xpdfrc, [/etc /usr/local/etc /etc/xpdf], xpdfrc)
 if test "$xpdfrc" != NO; then
   AC_DEFINE_UNQUOTED(SYSTEM_XPDFRC, "$xpdfrc/xpdfrc", [Define the location your xpdfrc])
 fi

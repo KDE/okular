@@ -166,23 +166,23 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions
-    d->aViewTwoPages = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, ac, "view_twopages" );
+    d->aViewTwoPages = new KToggleAction( i18n("&Two Pages"), "view_left_right", 0, ac, "view_twopages" );
     connect( d->aViewTwoPages, SIGNAL( toggled( bool ) ), SLOT( slotTwoPagesToggled( bool ) ) );
     d->aViewTwoPages->setChecked( Settings::viewColumns() > 1 );
 
-    d->aViewContinous = new KToggleAction( i18n("Continous"), "view_text", 0, ac, "view_continous" );
+    d->aViewContinous = new KToggleAction( i18n("&Continous"), "view_text", 0, ac, "view_continous" );
     connect( d->aViewContinous, SIGNAL( toggled( bool ) ), SLOT( slotContinousToggled( bool ) ) );
     d->aViewContinous->setChecked( Settings::viewContinous() );
 
     // Mouse-Mode actions
-    KToggleAction * mn = new KRadioAction( i18n("Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+    KToggleAction * mn = new KRadioAction( i18n("&Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
     mn->setExclusiveGroup( "MouseType" );
     mn->setChecked( true );
 
-    KToggleAction * mz = new KRadioAction( i18n("Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
+    KToggleAction * mz = new KRadioAction( i18n("&Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
     mz->setExclusiveGroup( "MouseType" );
 
-    KToggleAction * mst = new KRadioAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    KToggleAction * mst = new KRadioAction( i18n("&Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     mst->setExclusiveGroup( "MouseType" );
 
     d->aMouseEdit = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
@@ -1345,6 +1345,7 @@ void PageView::slotRelayoutPages()
             fullWidth += colWidth[ i ];
 
         delete [] colWidth;
+	slotRequestVisiblePixmaps();
     }
 
     // 3) reset dirty state

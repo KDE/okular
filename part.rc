@@ -11,6 +11,11 @@
     <Action name="find"/>
     <Action name="find_next"/>
   </Menu>
+  <Menu name="mouseMode"><text>&amp;Mouse mode</text>
+    <Action name="mouse_drag"/>
+    <Action name="mouse_zoom"/>
+    <Action name="mouse_select"/>
+  </Menu>
   <Menu name="view"><text>&amp;View</text>
     <Action name="presentation"/>
     <Separator/>

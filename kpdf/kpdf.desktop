@@ -65,7 +65,7 @@ GenericName[zu]=Umboniseli we PDF
 Exec=kpdf %i %m -caption "%c"
 Icon=kpdf
 Type=Application
-DocPath=kpdf/kpdf.html
+DocPath=kpdf/index.html
 InitialPreference=4
 Categories=Qt;KDE;Graphics;PDFViewer
 

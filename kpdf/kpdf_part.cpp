@@ -162,7 +162,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   const double zoomValue[14] = {0.125,0.25,0.3333,0.5,0.6667,0.75,1,1.25,1.50,2,3,4,6,8 };
 
-  m_zoomTo = new KSelectAction(  i18n( "Zoom" ), "zoomTo", 0, actionCollection(), "zoomTo" );
+  m_zoomTo = new KSelectAction(  i18n( "Zoom" ), "viewmag", 0, actionCollection(), "zoomTo" );
   connect(  m_zoomTo, SIGNAL(  activated(  const QString & ) ), this, SLOT(  slotZoom( const QString& ) ) );
   m_zoomTo->setEditable(  true );
   m_zoomTo->clear();

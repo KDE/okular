@@ -31,6 +31,8 @@ More items (first items will enter 'In progress list' first):
 -> implement history (mainly for actionNamed)
 -> history as a toolbox child (collecting DOs's setPage calls)
 -> zoom: fit text (with configurable margin)
+-> find: scroll page if the the searched string is not visible
+-> open gzipped (.pdf.gz?) files
 -> autodetect "/dev/speech" and provide {document/page/selection} -> reading
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages

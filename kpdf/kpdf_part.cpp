@@ -345,11 +345,12 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
-	KURL saveURL = KFileDialog::getSaveURL(
-		url().isLocalFile() ? url().url() : url().fileName(),
-		QString::null, widget(), QString::null );
-	if( !KIO::NetAccess::upload( url().path(), saveURL, static_cast<QWidget*>( 0 ) ) )
-		KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( url().path() ) );
+    KURL saveURL = KFileDialog::getSaveURL( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
+    if ( saveURL.isValid() && !saveURL.isEmpty() )
+    {
+        if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
+            KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( saveURL.prettyURL() ) );
+    }
 }
 
 void Part::slotPreferences()

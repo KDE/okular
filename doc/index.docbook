@@ -610,7 +610,7 @@ Works only for visiting one buffer at a time."
         <listitem>
           <para>In <application>XEmacs</application>, start
           <application>gnuserv</application> by typing
-<userinput>userinput><keycombo action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
+<userinput><keycombo action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
           <command>gnuserv-start</command></userinput></para>
         </listitem>
         <listitem>

@@ -52,6 +52,7 @@
 //#define DEBUG 0
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "dviwin.h"
 #include "glyph.h"
@@ -536,7 +537,7 @@ void dviWindow::draw_page(void)
   
   // Step 4: Now really write the text
   (void) lseek(fileno(dviFile->file), dviFile->page_offset[current_page], SEEK_SET);
-  bzero((char *) &currinf.data, sizeof(currinf.data));
+  memset((char *) &currinf.data, 0, sizeof(currinf.data));
   currinf.fonttable      = tn_table;
   currinf.end            = dvi_buffer;
   currinf.pos            = dvi_buffer;

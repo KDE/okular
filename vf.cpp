@@ -27,6 +27,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "dviwin.h"
 #include "oconfig.h"
@@ -95,7 +96,7 @@ void font::read_VF_index(void)
 
   // Prepare macro array.
   macrotable = (macro *)xmalloc(max_num_of_chars_in_font*sizeof(macro),"macro table");
-  bzero((char *) macrotable, max_num_of_chars_in_font*sizeof(macro));
+  memset((char *) macrotable, 0, max_num_of_chars_in_font*sizeof(macro));
 
   // Read macros.
   avail = availend = NULL;

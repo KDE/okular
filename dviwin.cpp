@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <setjmp.h>
 
@@ -391,7 +392,7 @@ void dviWindow::setFile( const char *fname )
     PostScriptOutPutString = new QString();
     
     (void) lseek(fileno(dviFile->file), dviFile->page_offset[current_page], SEEK_SET);
-    bzero((char *) &currinf.data, sizeof(currinf.data));
+    memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf.end       = dvi_buffer;
     currinf.pos       = dvi_buffer;

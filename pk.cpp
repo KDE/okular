@@ -59,6 +59,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "glyph.h"
 #include "oconfig.h"
 extern	char  *xmalloc (unsigned, const char *);
@@ -259,7 +260,7 @@ void font::read_PK_char(unsigned int ch)
     * BYTES_PER_BMUNIT;
   PK_bitpos = -1;
   if (PK_dyn_f == 14) {	/* get raster by bits */
-    bzero(g->bitmap.bits, (int) g->bitmap.h * bytes_wide);
+    memset(g->bitmap.bits, 0, (int) g->bitmap.h * bytes_wide);
     for (i = 0; i < (int) g->bitmap.h; i++) {	/* get all rows */
       cp = ADD(g->bitmap.bits, i * bytes_wide);
 #ifndef	MSBITFIRST
@@ -376,7 +377,7 @@ void font::read_PK_index(void)
    * Prepare glyph array.
    */
   glyphtable = (struct glyph *) xmalloc(max_num_of_chars_in_font * sizeof(struct glyph), "glyph array");
-  bzero((char *) glyphtable, max_num_of_chars_in_font * sizeof(struct glyph));
+  memset((char *) glyphtable, 0, max_num_of_chars_in_font * sizeof(struct glyph));
   /*
    * Read glyph directory (really a whole pass over the file).
    */

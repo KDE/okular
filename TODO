@@ -5,22 +5,22 @@ Legend:
     FIX - FIXed (bug or regression)
     MRG - MeRGed (code from a branch or a patch)
 
-In progress:
-[14:56] *eros* - implement all PDF 1.6 annotations data structures
-[14:56] *eros* - implement all renderers for each annotation (~20) in PagePainter
-[14:57] *eros* - implement parser in PDFGenerator to grab annotations from pages :-)
-[14:57] *eros* - implement Annotation handlers in PageView
-[14:57] *eros* - implement [MISSING] Annotation creators in PageViewAnnotator
+In progress [nearly done]:
 [15:00] *eros* - implement unified LOAD/SAVE of annotations in the Document class
--> screen editing (annotations): framework (BR67300,BR62793)
--> screen editing (annotations): tools (BR67300,BR91251), yellow notes 'post-it' like
--> se: investigate popup disappearing
--> se: display tooltip only the first time
--> se: check tools not working after a certain time (pretty nice bug :-)
+-> annotations: framework (BR67300,BR62793)
+[14:57] *eros* - implement Annotation handlers in PageView
+-> annotations: load and display pdf annotations as in pdf specification (BR93416)
+-> annotations: move/dupe markup's T up to Annot (used as a classifier)
+
+In progress [working on]:
+[14:56] *eros* - implement all renderers for each annotation (~20) in PagePainter
+-> annotations: tools (BR67300,BR91251), yellow notes 'post-it' like
+[14:57] *eros* - implement [MISSING] Annotation creators in PageViewAnnotator
 
 More items (first items will enter 'In progress list' first):
+-> annotations: add the annot pane
+-> annots toolbar: display tooltip only the first time
 -> popup context menu when using right button in selection mode (BR99315)
--> annotations: load and display pdf annotations as in pdf specification (BR93416)
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR
@@ -88,6 +88,8 @@ More items (first items will enter 'In progress list' first):
 -> cleanup code and update README.png
 
 Done (newest features come first):
+-> ADD: PDF1.6 annotations parser (PDF's annotations -> our data structures).
+-> ADD: Internal data structures for annotations handling.
 -> FIX: rmb when no doc displayed to restore menu
 -> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files

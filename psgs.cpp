@@ -149,6 +149,15 @@ void ghostscript_interface::gs_generate_graphics_file(int page, QString filename
   fputs("1 0 bop 0 0 a \n",f);                // Start page
   if (PostScriptHeaderString->latin1() != NULL)
     fputs(PostScriptHeaderString->latin1(),f);
+
+  if (info->background != Qt::white) {
+    QString colorCommand = QString("gsave %1 %2 %3 setrgbcolor clippath fill grestore\n").
+      arg(info->background.red()).
+      arg(info->background.green()).
+      arg(info->background.blue());
+    fputs(colorCommand.latin1(),f);
+  }
+
   if (info->PostScriptString->latin1() != NULL)
     fputs(info->PostScriptString->latin1(),f);
   fputs("end\n",f);

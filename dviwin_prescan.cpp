@@ -249,7 +249,8 @@ void dviWindow::prescan_ParseBackgroundSpecial(QString cp)
 {
   QColor col = parseColorSpecification(cp.stripWhiteSpace());
   if (col.isValid())
-    PS_interface->setColor(current_page, col);
+    for(Q_UINT16 page=current_page; page < dviFile->total_pages; page++)
+      PS_interface->setColor(page, col);
   return;
 }
 

@@ -7,7 +7,7 @@ into any application?
 
 <tip category="KDVI|General">
 <html>
-<p>...that KDVI now supports inverse search? You can click into you DVI file 
+<p>...that KDVI now supports inverse search? You can click into your DVI file 
 with the middle mouse button and your editor opens, loads the TeX file, and
 jumps to the proper line! <a href="help:/kdvi/inverse-search.html">The 
 manual explains how to set up your editor for this.</a> 

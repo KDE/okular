@@ -7,23 +7,27 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> Abstract contents generation [60% missing TextPage, Outline]
--> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [60% done]
+-> Abstract contents generation [70% missing TextPage, Outline]
 -> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive}) [0%]
--> async document generator using Albert's generator thread [0%]
+-> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [60% done]
 
 Things to do in order to merge in HEAD (first item has highest priority):
+-> take care of naming on merge, too differences (remove some kpdf_* prefixes
+   and rename internals too document->kpdfdocument, page->kpdfpage, etc..)
+
+Higher priority after merge:
 -> link thumbnails view with document
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignemnt. (by Mikolaj)
 -> usability: clear search must restore the full thumbs list (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
+-> async document generator using Albert's generator thread [0%]
 -> watch out for FIXMEs in code
--> small fix: requestPixmaps not triggered when exiting fullscreen mode
--> take care of naming on merge, too differences (remove some kpdf_* prefixes
-   and rename internals too document->kpdfdocument, page->kpdfpage, etc..)
+-> fix: requestPixmaps not triggered when exiting fullscreen mode (to verify..I can't reproduce)
 
 More items (first items will enter 'In progress list' first):
 *THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
+-> fix: On continous view mode, if you click to a link that moves you to another
+   page, then scroll up and click again on the same link it does not work. (by Albert)
 -> display current page / total pages (with analog indicator too (progressbar/...))
    maybe this can be done on a small widget at the top of the toolbox, displaying
    'document' informations (pages, current pg, some metadata, etc..)
@@ -54,6 +58,7 @@ More items (first items will enter 'In progress list' first):
 -> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
 
 Done (newest feature comes firts):
+-> FIX: Dynamic zoom repaints the page while rescaling.
 -> ADD: Show the window maximized when the user opens the program for the very first time (Albert)
 -> ADD: Use 'Generators' as providers for contents generation.
 -> ADD: Add properties dialog (Albert)

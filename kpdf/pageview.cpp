@@ -483,12 +483,12 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
             }
             else
             {
-/*                // detect the underlaying page (if present)
+                // detect the underlaying page (if present)
                 PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-                if ( PageViewItem )
+                if ( pageItem )
                 {
-                    int pageX = e->x() - childX( pageItem ),
-                        pageY = e->y() - childY( pageItem );
+                    int pageX = e->x() - pageItem->geometry().left(),
+                        pageY = e->y() - pageItem->geometry().top();
 
                     // check if over a KPDFActiveRect
                     bool onActiveRect = pageItem->page()->hasActiveRect( pageX, pageY );
@@ -506,7 +506,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                         setCursor( onLink ? pointingHandCursor : arrowCursor );
                     }
                 }
-*/            }
+            }
             break;
 
         case MouseSelection:

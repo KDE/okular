@@ -1497,7 +1497,7 @@ void PageView::slotRelayoutPages()
         // Here we find out column's width and row's height to compute a table
         // so we can place widgets 'centered in virtual cells'.
         int nCols = Settings::viewColumns(),
-            nRows = (int)ceilf( (float)pageCount / (float)nCols ),
+            nRows = (int)ceil( (float)pageCount / (float)nCols ),
             * colWidth = new int[ nCols ],
             * rowHeight = new int[ nRows ],
             cIdx = 0,

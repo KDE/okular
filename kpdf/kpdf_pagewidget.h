@@ -79,7 +79,7 @@ namespace KPDF
         ZoomMode m_zoomMode;
 
         int m_currentPage;
-
+        QPoint   m_dragGrabPos;
         LinkAction* m_pressedAction;
     };
 }

@@ -46,7 +46,12 @@ namespace KPDF
     {
         if (m_doc == 0)
             return;
-        if ( e->button() & RightButton )
+        if ( e->button() & LeftButton )
+        {
+            m_dragGrabPos = e -> globalPos();
+            setCursor( sizeAllCursor );
+        }
+        else if ( e->button() & RightButton )
         {
             emit rightClick();
         }
@@ -60,11 +65,18 @@ namespace KPDF
         if (m_doc == 0)
             return;
 
-        LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
-        if (action == m_pressedAction)
-            emit linkClicked(action);
+        if ( e -> button() & LeftButton )
+        {
+            setCursor( arrowCursor );
+        }
+        else
+        {
+            LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
+            if (action == m_pressedAction)
+                emit linkClicked(action);
 
-        m_pressedAction = 0;
+            m_pressedAction = 0;
+        }
     }
 
     void
@@ -72,9 +84,17 @@ namespace KPDF
     {
         if (m_doc == 0)
             return;
-
-        LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
-        setCursor(action != 0 ? Qt::PointingHandCursor : Qt::ArrowCursor);
+        if ( e->state() & LeftButton )
+        {
+            QPoint delta = m_dragGrabPos - e->globalPos();
+            scrollBy( delta.x(), delta.y() );
+            m_dragGrabPos = e->globalPos();
+        }
+        else
+        {
+            LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
+            setCursor(action != 0 ? Qt::PointingHandCursor : Qt::ArrowCursor);
+        }
     }
 
     void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )

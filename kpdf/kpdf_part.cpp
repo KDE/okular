@@ -549,6 +549,7 @@ Part::print()
   printer.setPageSelection(KPrinter::ApplicationSide);
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setCurrentPage(m_currentPage+1);
+  printer.setMargins(0, 0, 0, 0);
 
   if (printer.setup(widget()))
   {
@@ -692,6 +693,7 @@ void Part::printPreview()
     return;
 
   KPrinter printer;
+  printer.setMargins(0, 0, 0, 0);
   printer.setPreviewOnly( true );
   QPainter painter( &printer );
   SplashColor paperColor;

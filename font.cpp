@@ -20,6 +20,7 @@ extern "C" {
 #include "oconfig.h"
 
 extern FILE *xfopen(const char *filename, const char *type);
+extern void oops(const char *message, ...);
 
 /** We try for a VF first because that's what dvips does.  Also, it's
  *  easier to avoid running MakeTeXPK if we have a VF this way.  */
@@ -61,7 +62,9 @@ extern int n_files_left;
 
 font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
 {
+#ifdef DEBUG_FONT
   kdDebug() << "constructing font " << nfontname << " at " << (int) (nfsize + 0.5) << " dpi" << endl;
+#endif
 
   fontname   = nfontname;
   fsize      = nfsize;
@@ -75,7 +78,9 @@ font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
 
 font::~font()
 {
+#ifdef DEBUG_FONT
   kdDebug() << "discarding font " << fontname << " at " << (int)(fsize + 0.5) << " dpi" << endl;
+#endif
 
   free(fontname);
 
@@ -117,7 +122,9 @@ font::~font()
 
 unsigned char font::load_font(void)
 {
+#ifdef DEBUG_FONT
   kdDebug() << "loading font " <<  fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
+#endif
 
   int	 dpi      = (int)(fsize + 0.5);
   char	*font_found;
@@ -138,10 +145,11 @@ unsigned char font::load_font(void)
   }
   else
     if (!kpse_bitmap_tolerance ((double) size_found, fsize))
-      kdError() << "Can't find font " << fontname << " at " << dpi << " dpi; using " << size_found << " dpi instead." << endl;
+      kdError() << "Can't find font " << fontname << " at " << dpi << " dpi; using " 
+		<< size_found << " dpi instead." << endl;
   fsize      = size_found;
   timestamp  = ++current_timestamp;
-  set_char_p = set_char;
+  set_char_p = &dviWindow::set_char;
   magic      = two(file);
 
   if (magic == PK_MAGIC)
@@ -165,10 +173,12 @@ unsigned char font::load_font(void)
 
 void font::mark_as_used(void)
 {
+#ifdef DEBUG_FONT
+  kdDebug() << "marking font " << fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
+#endif
+
   if (flags & font::FONT_IN_USE) 
     return;
-
-  kdDebug() << "marking font " << fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
 
   flags |= font::FONT_IN_USE;
 

@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <qintdict.h>
 
+#include "dviwin.h"
 #include "glyph.h"
 
 #define	NOMAGSTP (-29999)
@@ -36,7 +37,7 @@ struct macro {
 
 
 
-typedef	void (*set_char_proc)(unsigned int, unsigned int);
+typedef	void (dviWindow::*set_char_proc)(unsigned int, unsigned int);
 
 struct font {
   // Currently, kdvi supports fonts with at most 256 characters to

@@ -53,10 +53,8 @@ double	dimconv;
 int	n_files_left;	/* for LRU closing of fonts */
 jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 long	magnification;
-unsigned int	unshrunk_paper_w, unshrunk_paper_h;
-unsigned int	unshrunk_page_w, unshrunk_page_h;
+
 unsigned int	page_w, page_h;
-unsigned char		maxchar;
 long	*page_offset;
 
 QIntDict<struct font> tn_table;
@@ -67,13 +65,8 @@ Screen	*SCRN;
 
 #include "c-openmx.h" // for OPEN_MAX
 
-	int	_pixels_per_inch;
-	_Xconst char	*_paper;
-	Pixel	_fore_Pixel;
-	Pixel	_back_Pixel;
-	Boolean	_postscript;
-	Boolean	useGS;
-
+int	_pixels_per_inch;
+_Xconst char	*_paper;
 
 extern char *           prog;
 extern char *	        dvi_name;
@@ -83,8 +76,6 @@ extern int 		min_x;
 extern int 		min_y;
 extern int 		max_x;
 extern int 		max_y;
-extern unsigned int	unshrunk_paper_w, unshrunk_paper_h;
-extern unsigned int	unshrunk_page_w, unshrunk_page_h;
 extern unsigned int	page_w, page_h;
 extern int 		current_page;
 extern int 		total_pages;
@@ -97,10 +88,6 @@ void 	draw_page(void);
 extern "C" void 	kpse_set_progname(const char*);
 extern Boolean check_dvi_file(void);
 void 	reset_fonts();
-void 	init_page();
-void 	psp_destroy();
-void 	psp_toggle();
-void 	psp_interrupt();
 extern "C" {
 #undef PACKAGE // defined by both c-auto.h and config.h
 #undef VERSION
@@ -136,68 +123,65 @@ dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget 
 {
   setBackgroundMode(NoBackground);
 
-	ChangesPossible = 1;
-	FontPath = QString::null;
-	setFocusPolicy(QWidget::StrongFocus);
-	setFocus();
+  ChangesPossible = 1;
+  FontPath = QString::null;
+  setFocusPolicy(QWidget::StrongFocus);
+  setFocus();
+  
+  // initialize the dvi machinery
 
-	// initialize the dvi machinery
+  setResolution( bdpi );
+  setMakePK( mkpk );
+  setMetafontMode( mfm );
+  unshrunk_paper_w       = int( 21.0 * basedpi/2.54 + 0.5 ); // set A4 paper as default
+  unshrunk_paper_h       = int( 27.9 * basedpi/2.54 + 0.5 ); 
+  PostScriptDirectory    = NULL;
+  PostScriptOutPutString = NULL;
+  HTML_href              = NULL;
+  DISP                   = x11Display();
+  SCRN                   = DefaultScreenOfDisplay(DISP);
+  mainwin                = handle();
+  mane                   = currwin;
+  _postscript            = 0;
+  pixmap                 = NULL;
+  xres                   = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4) /
+			    DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
+  mane.shrinkfactor      = currwin.shrinkfactor = (double)basedpi/(xres*zoom);
+  _zoom                  = zoom;
 
-	setResolution( bdpi );
-	setMakePK( mkpk );
-	setMetafontMode( mfm );
-	unshrunk_paper_w = int( 21.0 * basedpi/2.54 + 0.5 );
-	unshrunk_paper_h = int( 27.9 * basedpi/2.54 + 0.5 ); 
-
-	DISP = x11Display();
-	mainwin = handle();
-	mane = currwin;
-	SCRN = DefaultScreenOfDisplay(DISP);
-	_fore_Pixel = BlackPixelOfScreen(SCRN);
-	_back_Pixel = WhitePixelOfScreen(SCRN);
-	useGS = 1;
-	_postscript = 0;
-	pixmap = NULL;
-
-	xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
-	double s    = basedpi/(xres*zoom);
-	mane.shrinkfactor = currwin.shrinkfactor = s;
-	_zoom = zoom;
-
-	resize(0,0);
+  resize(0,0);
 }
 
 dviWindow::~dviWindow()
 {
-	psp_destroy();
+  ;
 }
 
 void dviWindow::setShowPS( int flag )
 {
-	if ( _postscript == flag )
-		return;
-	_postscript = flag;
-	psp_toggle();
-	drawPage();
+  if ( _postscript == flag )
+    return;
+  _postscript = flag;
+  drawPage();
 }
 
 int dviWindow::showPS()
 {
-	return _postscript;
+  return _postscript;
 }
 
 void dviWindow::setAntiAlias( int flag )
 {
-	if ( !useAlpha == !flag )
-		return;
-	useAlpha = flag;
-	psp_destroy();
-	drawPage();
+  if ( !useAlpha == !flag )
+    return;
+  useAlpha = flag;
+  //@@@	psp_destroy();
+  drawPage();
 }
 
 int dviWindow::antiAlias()
 {
-	return useAlpha;
+  return useAlpha;
 }
 
 void dviWindow::setMakePK( int flag )
@@ -249,7 +233,8 @@ void dviWindow::setPaper(double w, double h)
   unshrunk_paper_h = int( h * basedpi/2.54 + 0.5 ); 
   unshrunk_page_w  = unshrunk_paper_w;
   unshrunk_page_h  = unshrunk_paper_h;
-  init_page();
+  page_w           = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
+  page_h           = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
   reset_fonts();
   changePageSize();
 }
@@ -292,12 +277,11 @@ void dviWindow::initDVI()
 
 void dviWindow::drawPage()
 {
-  psp_interrupt();
-  if (filename.isEmpty())	// must call setFile first
-    {
-      resize(0, 0);
-      return;
-    }
+  //@@@  psp_interrupt();
+  if (filename.isEmpty()) {	// must call setFile first
+    resize(0, 0);
+    return;
+  }
   if (!dvi_name) {			//  dvi file not initialized yet
     QApplication::setOverrideCursor( waitCursor );
     dvi_name = const_cast<char*>(filename.ascii());
@@ -340,7 +324,6 @@ void dviWindow::drawPage()
       return;
     } else {
       check_dvi_file();
-      pixmap->fill( white );
       draw_page();
     }
     QApplication::restoreOverrideCursor();
@@ -373,7 +356,7 @@ void dviWindow::changePageSize()
 {
   if ( pixmap && pixmap->paintingActive() )
     return;
-  psp_destroy();
+
   int old_width = 0;
   if (pixmap) {
     old_width = pixmap->width();
@@ -426,9 +409,11 @@ void dviWindow::setZoom(double zoom)
 {
   double s    = basedpi/(xres*zoom);
   mane.shrinkfactor = currwin.shrinkfactor = s;
-  _zoom = zoom;
+  _zoom             = zoom;
 
-  init_page();
+  page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
+  page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
+
   reset_fonts();
   changePageSize();
 }
@@ -439,5 +424,16 @@ void dviWindow::paintEvent(QPaintEvent *ev)
   if (pixmap) {
     QPainter p(this);
     p.drawPixmap(QPoint(0, 0), *pixmap);
+  }
+}
+
+void dviWindow::mousePressEvent ( QMouseEvent * e )
+{
+  kdDebug() << "mouse event" << endl;
+  for(int i=0; i<num_of_used_hyperlinks; i++) {
+    if (hyperLinkList[i].box.contains(e->pos())) {
+      kdDebug() << "hit:" << hyperLinkList[i].linkText << endl;
+      break;
+    }
   }
 }

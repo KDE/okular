@@ -3,6 +3,10 @@ ToDo-List for kdvi
 
 URGENT
 
+o Fonts should be free when file is reloaded and the fonts are no longer needed
+
+o Optionrequester: changes (e.g. PostScript on/off) are not applied until restart of the program.
+
 o Re-Implement PostScript specials, including proper handling of header (="bang")
   specials.
 
@@ -14,18 +18,24 @@ o Document the technical specs.
 
 o Bugfixing
 
+o psgs should remove tmp-files
 
-HIGHLY DESIRABLE
+o epsf specials should forward keywords to the postscript file.
 
 o Support for Hyperlatex specials (xxx.lanl.gov, probably the world's largest
   collection of dvi-files, uses Hyperlatex for every file!)
+
+
+HIGHLY DESIRABLE
+
+o Speedup, in particular for ghostscript.
 
 o Support for TPic and colored font specials
 
 o Support for click-on-dvi => editor (klyx!) jumps to proper position. This is
   included in the windows distribution of TeX. We should really catch up!
 
-o Support papersize informational given by the dvi-file on a page-by-page
+o Support papersize information given by the dvi-file on a page-by-page
   basis.
 
 

@@ -59,8 +59,9 @@
 #include <stdlib.h>
 #include "glyph.h"
 #include "oconfig.h"
-extern	char	*xmalloc (unsigned, _Xconst char *);
-
+extern	char  *xmalloc (unsigned, const char *);
+extern void oops(const char *message, ...);
+extern void alloc_bitmap(bitmap *bitmap);
 
 BMUNIT	bit_masks[33] = {
 	0x0,		0x1,		0x3,		0x7,
@@ -99,8 +100,9 @@ static	int	PK_repeat_count;
 
 int font::PK_get_nyb(FILE *fp)
 {
+#ifdef DEBUG_PK
   kdDebug() << "PK_get_nyb" << endl;
-
+#endif
 	unsigned temp;
 	if (PK_bitpos < 0) {
 	    PK_input_byte = one(fp);
@@ -114,7 +116,9 @@ int font::PK_get_nyb(FILE *fp)
 
 int font::PK_packed_num(FILE *fp)
 {
+#ifdef DEBUG_PK
   kdDebug() << "PK_packed_num" << endl;
+#endif
 
 	int	i,j;
 
@@ -144,7 +148,9 @@ int font::PK_packed_num(FILE *fp)
 
 void font::PK_skip_specials(void)
 {
+#ifdef DEBUG_PK
   kdDebug() << "PK_skip_specials" << endl;
+#endif
 
   int i,j;
   register FILE *fp = file;
@@ -183,7 +189,9 @@ void font::PK_skip_specials(void)
 
 void font::read_PK_char(unsigned int ch)
 {
+#ifdef DEBUG_PK
   kdDebug() << "read_PK_char" << endl;
+#endif
 
   int	i, j;
   int	n;
@@ -210,7 +218,9 @@ void font::read_PK_char(unsigned int ch)
     else
       n = 1;
   
+#ifdef DEBUG_PK
   kdDebug() << "loading pk char " << ch << ", char type " << n << endl;
+#endif
 
   /*
    * now read rest of character preamble
@@ -344,8 +354,10 @@ void font::read_PK_char(unsigned int ch)
 
 void font::read_PK_index(void)
 {
+#ifdef DEBUG_PK
   kdDebug() << "Reading PK pixel file " << filename << endl;
-  
+#endif
+
   Fseek(file, (long) one(file), 1);	/* skip comment */
 
   (void) four(file);		/* skip design size */
@@ -388,6 +400,8 @@ void font::read_PK_index(void)
     glyphtable[ch].addr = ftell(file);
     glyphtable[ch].x2 = PK_flag_byte;
     Fseek(file, (long) bytes_left, 1);
+#ifdef DEBUG_PK
     kdDebug() << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
+#endif
   }
 }

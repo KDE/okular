@@ -69,8 +69,15 @@ extern "C" {
 #include "glyph.h"
 #include "oconfig.h"
 
-extern char *xmalloc (unsigned, _Xconst char *);
+extern char *xmalloc (unsigned, const char *);
 
+#ifndef	DVI_BUFFER_LEN
+#define	DVI_BUFFER_LEN	512
+#endif
+
+extern unsigned char	dvi_buffer[DVI_BUFFER_LEN];
+extern struct frame	*current_frame;
+extern struct frame	frame0;	/* dummy head of list */
 
 #define	PK_PRE		247
 #define	PK_ID		89
@@ -104,7 +111,9 @@ static	long	last_page_offset;
 
 extern void reset_fonts(void)
 {
+#ifdef DEBUG_FONTS
   kdDebug() << "Reset Fonts" << endl;
+#endif
 
   struct font *f;
   struct glyph *g;
@@ -161,9 +170,9 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
   Fread(fontname, sizeof(char), len, file);
   fontname[len] = '\0';
 
-
+#ifdef DEBUG_FONTS
   kdDebug() << "Define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
-
+#endif
 
   float  fsize;
   double scale_dimconv;
@@ -191,7 +200,7 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
     if (fontp == NULL) {		/* if font doesn't exist yet */
       fontp = new font(fontname, fsize, checksum, magstepval, scale * scale_dimconv / (1<<20));
 
-      fontp->set_char_p = load_n_set_char;
+      fontp->set_char_p = &dviWindow::load_n_set_char;
       /* With virtual fonts, we might be opening another font
 	 (pncb.vf), instead of what we just allocated for
 	 (rpncb), thus leaving garbage in the structure for
@@ -351,12 +360,6 @@ static void prepare_pages()
   }
 }
 
-void init_page()
-{
-  page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
-  page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
-}
-
 /** init_dvi_file is the main subroutine for reading the startup
  *  information from the dvi file.  Returns True on success.  */
 
@@ -372,9 +375,39 @@ Boolean dviWindow::init_dvi_file()
   find_postamble();
   read_postamble();
   prepare_pages();
-  init_page();
+  page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
+  page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
   if (current_page >= total_pages)
     current_page = total_pages - 1;
+
+  // Extract PostScript from the DVI file, and store the PostScript
+  // specials in PostScriptDirectory, and the headers in the
+  // PostScriptHeaderString.
+
+  // First, delete the old vector, if there is any
+  if (PostScriptDirectory) {
+    PostScriptDirectory->clear();
+    delete PostScriptDirectory;
+  }    
+  
+  PostScriptDirectory = new QVector<QString>(total_pages+1);
+  PostScriptDirectory->setAutoDelete(TRUE);
+  PostScriptHeaderString.truncate(0);
+  for(int i=0; i<total_pages; i++) {
+    PostScriptOutPutString = new QString();
+
+    (void) lseek(fileno(dvi_file), page_offset[i], SEEK_SET);
+    bzero((char *) &currinf.data, sizeof(currinf.data));
+    currinf.fonttable = tn_table;
+    currinf.end       = dvi_buffer;
+    currinf.pos       = dvi_buffer;
+    currinf._virtual  = NULL;
+    draw_part(current_frame = &frame0, dimconv);
+    
+    PostScriptDirectory->insert(i,PostScriptOutPutString);
+  }
+  PostScriptOutPutString = NULL;	
+
   return True;
 }
 

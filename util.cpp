@@ -49,8 +49,6 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-#define DEBUG 0
-
 #include <kdebug.h>
 #include "dviwin.h"
 
@@ -83,27 +81,19 @@ extern	int	errno;
  *	Print error message and quit.
  */
 
-#if	NeedVarargsPrototypes
-NORETURN void
-oops(_Xconst char *message, ...)
-#else
-/* VARARGS */
-NORETURN void
-oops(va_alist)
-	va_dcl
-#endif
+void oops(const char *message, ...)
 {
 #if	!NeedVarargsPrototypes
-	_Xconst char *message;
+	const char *message;
 #endif
 	va_list	args;
 
-	Fprintf(stderr, "%s: ", prog);
+	//@@@	Fprintf(stderr, "%s: ", prog);
 #if	NeedVarargsPrototypes
 	va_start(args, message);
 #else
 	va_start(args);
-	message = va_arg(args, _Xconst char *);
+	message = va_arg(args, const char *);
 #endif
 	(void) vfprintf(stderr, message, args);
 	va_end(args);
@@ -113,14 +103,16 @@ oops(va_alist)
 
 /** Either allocate storage or fail with explanation.  */
 
-char * xmalloc(unsigned size, _Xconst char *why)
+char * xmalloc(unsigned size, const char *why)
 {
+#ifdef DEBUG_UTIL
   kdDebug() << "Allocating " << size << " bytes for " << why << endl;
+#endif
 
   /* Avoid malloc(0), though it's not clear if it ever actually
      happens any more.  */
   char *mem = (char *)malloc(size ? size : 1);
-
+  
   if (mem == NULL)
     oops("! Cannot allocate %u bytes for %s.\n", size, why);
   return mem;

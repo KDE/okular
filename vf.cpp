@@ -32,8 +32,9 @@
 #include "oconfig.h"
 #include "dvi.h"
 
-extern	char	*xmalloc (unsigned, _Xconst char *);
+extern	char	*xmalloc (unsigned, const char *);
 extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable);
+extern void oops(const char *message, ...);
 
 /***
  ***	VF font reading routines.
@@ -70,7 +71,7 @@ void font::read_VF_index(void)
   unsigned char	*avail, *availend;	/* available space for macros */
 
   flags      |= FONT_VIRTUAL;
-  set_char_p  = set_vf_char;
+  set_char_p  = &dviWindow::set_vf_char;
   kdDebug() << "Reading VF pixel file " << filename << endl;
 
   // Read preamble.

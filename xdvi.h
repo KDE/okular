@@ -26,13 +26,6 @@ extern "C" {
 #include <X11/Xos.h>
 #undef wchar_t
 
-#ifndef	XlibSpecificationRelease
-#define	XlibSpecificationRelease 0
-#endif
-
-#if	XlibSpecificationRelease >= 5
-#include <X11/Xfuncs.h>
-#endif
 
 #define	XtNumber(arr)	(sizeof(arr)/sizeof(arr[0]))
 typedef	unsigned long	Pixel;
@@ -43,23 +36,7 @@ typedef	unsigned int	Dimension;
 #define	True	1
 #define	False	0
 
-#if	defined(_SVR4) || defined(_SVR4_SOURCE) || defined(_SYSTYPE_SVR4)
-#undef	SVR4
-#define	SVR4
-#endif
 
-#if	defined(SVR3) || defined(SVR4)
-#undef	SYSV
-#define	SYSV
-#endif
-
-#ifndef	BSD
-#if	defined(SYSV) || defined(VMS) || defined(linux)
-#define	BSD	0
-#else
-#define	BSD	1
-#endif
-#endif
 
 #ifndef	OPEN_MODE
 #define OPEN_MODE FOPEN_R_MODE
@@ -91,29 +68,6 @@ typedef	unsigned int	Dimension;
 #define	_XFUNCPROTOEND
 #endif
 
-#ifndef	_Xconst
-#ifdef	__STDC__
-#define	_Xconst	const
-#else	/* STDC */
-#define	_Xconst
-#endif	/* STDC */
-#endif	/* _Xconst */
-
-#ifndef	VOLATILE
-#if	defined(__STDC__) || (defined(__stdc__) && defined(__convex__))
-#define	VOLATILE	volatile
-#else
-#define	VOLATILE	/* nothing */
-#endif
-#endif
-
-#ifndef	NORETURN
-#ifdef	__GNUC__
-#define	NORETURN	volatile
-#else
-#define	NORETURN	/* nothing */
-#endif
-#endif
 
 #define	Printf	(void) printf
 #define	Puts	(void) puts
@@ -134,13 +88,6 @@ typedef	unsigned int	Dimension;
 
 #define	INIT(x)
 
-#if	NeedWidePrototypes
-typedef	int		wide_bool;
-#define	WIDENINT	(int)
-#else
-typedef	Boolean		wide_bool;
-#define	WIDENINT
-#endif
 
 /*
  *	pixel_conv is currently used only for converting absolute positions
@@ -149,9 +96,7 @@ typedef	Boolean		wide_bool;
  *	the rounding is achieved instead by moving the constant 1 << 15 to
  *	PAGE_OFFSET in dvi_draw.c.
  */
-//@@@
-//#define	pixel_conv(x)		((int) ((x) / (int)shrink_factor >> 16))
-//#define	pixel_round(x)		((int) ROUNDUP(x, (int)shrink_factor << 16))
+
 #define	pixel_conv(x)		((int) ((x) / (shrink_factor * 65536)))
 #define	pixel_round(x)		((int) ROUNDUP(x, shrink_factor * 65536))
 #define	spell_conv0(n, f)	((long) (n * f))
@@ -182,9 +127,6 @@ typedef	Boolean		wide_bool;
 #define	SUB(a, b)	((BMUNIT *) (((char *) a) - b))
 
 extern	BMUNIT	bit_masks[BITS_PER_BMUNIT + 1];
-
-
-typedef	void	(*set_char_proc)(unsigned int, unsigned int);
 
 
 extern	struct drawinf	currinf;
@@ -231,38 +173,21 @@ extern	unsigned short	current_timestamp INIT(0);
  */
 
 extern	char	*debug_arg;
-extern	int	_density;
-
 extern	int	_pixels_per_inch;
 extern	char	*sidemargin;
 extern	char	*topmargin;
-extern	char	*xoffset;
-extern	char	*yoffset;
+//extern	char	*xoffset;
+//extern	char	*yoffset;
 extern	_Xconst char	*_paper;
-extern	Boolean	reverse;
-extern	char	*fore_color;
-extern	char	*back_color;
-extern	char	*brdr_color;
-extern	char	*high_color;
-extern	char	*curs_color;
-extern	Pixel	_fore_Pixel;
-extern	Pixel	_back_Pixel;
-extern	char	*icon_geometry;
-extern	Boolean	keep_flag;
-extern	Boolean	_postscript;
-extern	Boolean	useGS;
-extern	Boolean	version_flag;
 extern	char	*mg_arg[5];
 
-/* As a convenience, we define the field names without leading underscores
- * to point to the field of the above record.  Here are the global ones;
- * the local ones are defined in each module.  */
+extern  unsigned long   num ARGS((FILE *, int));     
+extern  long    snum ARGS((FILE *, int));
 
 
-#define	density		_density
 #define	pixels_per_inch	_pixels_per_inch
 
-extern	Pixel		brdr_Pixel;
+
 
 extern	struct	mg_size_rec {
 	int	w;
@@ -286,86 +211,28 @@ extern	int	_debug	INIT(0);
 #define	DBG_SEARCH	0x800	/* 2048 */
 #define	DBG_ALL		(0xffff & ~DBG_BATCH)
 
-#ifndef	BDPI
-#define	BDPI	300
-#endif
-
-extern	int		offset_x, offset_y;
-extern	unsigned int	unshrunk_paper_w, unshrunk_paper_h;
-extern	unsigned int	unshrunk_page_w, unshrunk_page_h;
+//#ifndef	BDPI
+//#define	BDPI	300
+//#endif
 
 extern	char	*dvi_name	INIT(NULL);
 extern	FILE	*dvi_file;			/* user's file */
-extern	char	*prog;
-extern	double	bak_shrink;			/* last shrink factor != 1 */
-extern	Dimension	window_w, window_h;
-extern	XImage	*image;
-extern	int	backing_store;
-extern	int	home_x, home_y;
+//extern	char	*prog;
 extern	Display	*DISP;
 extern	Screen	*SCRN;
-
-
-
-extern	Cursor	redraw_cursor, ready_cursor;
-
-
-extern	Boolean	allow_can	INIT(True);
-
+//extern	Boolean	allow_can	INIT(True);
 extern	struct WindowRec mane, alt, currwin;
-extern	int		min_x, max_x, min_y, max_y;
+//extern	int		min_x, max_x, min_y, max_y;
 
 #define	shrink_factor	currwin.shrinkfactor
 
-extern	Window	top_level;
+//extern	Window	top_level;
 
-#define	BAR_WID		12	/* width of darkened area */
-#define	BAR_THICK	15	/* gross amount removed */
 
 
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 extern	const char *dvi_oops_msg;	/* error message */
 
-extern	struct psprocs	{
-	void	(*toggle) ARGS((void));
-	void	(*destroy) ARGS((void));
-	void	(*interrupt) ARGS((void));
-	void	(*endpage) ARGS((void));
-	void	(*drawbegin) ARGS((int, int, char *));
-	void	(*drawraw) ARGS((char *));
-	void	(*drawfile) ARGS((char *));
-	void	(*drawend) ARGS((char *));
-}	psp, no_ps_procs;
-
-/********************************
- *	   Procedures		*
- *******************************/
-
-_XFUNCPROTOBEGIN
-extern	void	reconfig ARGS((void));
-extern	void	read_events ARGS((wide_bool));
-extern	void	redraw_page ARGS((void));
-extern	void	do_pages ARGS((void));
-extern	void	open_dvi_file ARGS((void));
-extern	void	put_border ARGS((int, int, unsigned int, unsigned int));
-extern	void	set_char ARGS((unsigned int, unsigned int));
-extern	void	load_n_set_char ARGS((unsigned int, unsigned int));
-extern	void	set_vf_char ARGS((unsigned int, unsigned int));
-extern	void	applicationDoSpecial ARGS((char *));
-extern	NORETURN void	oops(_Xconst char *, ...);
-extern	void	alloc_bitmap ARGS((struct bitmap *));
-extern	int	xpipe ARGS((int *));
-extern	unsigned long	num ARGS((FILE *, int));
-extern	long	snum ARGS((FILE *, int));
-
-
-extern	void	drawbegin_none ARGS((int, int, char *));
-extern	void	draw_bbox ARGS((void));
-extern	void	NullProc ARGS((void));
-extern	Boolean	initGS ARGS((void));
-
-
-_XFUNCPROTOEND
 
 #define one(fp)		((unsigned char) getc(fp))
 #define sone(fp)	((long) one(fp))

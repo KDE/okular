@@ -1,4 +1,5 @@
-<?xml version="1.0" ?><!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN" "dtd/kdex.dtd" [
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN" "dtd/kdex.dtd" [
  <!ENTITY kappname "&kdvi;">
  <!ENTITY % English "INCLUDE">
  <!ENTITY % addindex "IGNORE">
@@ -26,7 +27,7 @@
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date>30/06/2000</date>
+<date>2000-06-30</date>
 <releaseinfo>0.09.02</releaseinfo>
 
 <abstract>

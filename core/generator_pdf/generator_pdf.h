@@ -19,6 +19,9 @@
 #include "core/document.h"
 #include "core/link.h"
 
+class Dict;
+class GfxFont;
+class Ref;
 class PDFDoc;
 class GList;
 class TextPage;
@@ -62,6 +65,10 @@ class PDFGenerator : public Generator
         void generatePixmap( PixmapRequest * request );
         void generateSyncTextPage( KPDFPage * page );
 
+        // font related
+        bool hasFonts() const;
+        void putFontInfo(KListView *list);
+
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 
@@ -74,6 +81,9 @@ class PDFGenerator : public Generator
     private:
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
+
+        void scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
+        void scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
 
         // private functions for accessing document informations via PDFDoc
         QString getDocumentInfo( const QString & data ) const;

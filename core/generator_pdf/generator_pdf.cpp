@@ -16,6 +16,7 @@
 #include <qpaintdevicemetrics.h>
 #include <qregexp.h>
 #include <kapplication.h>
+#include <klistview.h>
 #include <klocale.h>
 #include <kpassdlg.h>
 #include <kwallet.h>
@@ -25,6 +26,9 @@
 #include <kdebug.h>
 
 // xpdf includes
+#include "xpdf/Object.h"
+#include "xpdf/Dict.h"
+#include "xpdf/Annot.h"
 #include "xpdf/PSOutputDev.h"
 #include "xpdf/TextOutputDev.h"
 #include "xpdf/Link.h"
@@ -338,6 +342,61 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
     docLock.unlock();
 }
 
+bool PDFGenerator::hasFonts() const
+{
+    return true;
+}
+
+void PDFGenerator::putFontInfo(KListView *list)
+{
+    Page *page;
+    Dict *resDict;
+    Annots *annots;
+    Object obj1, obj2;
+    int pg, i;
+
+    Ref *fonts;
+    int fontsLen;
+    int fontsSize;
+
+    list->addColumn(i18n("Name"));
+    list->addColumn(i18n("Type"));
+    list->addColumn(i18n("Embedded"));
+    list->addColumn(i18n("File"));
+
+    docLock.lock();
+
+    fonts = NULL;
+    fontsLen = fontsSize = 0;
+    for (pg = 1; pg <= pdfdoc->getNumPages(); ++pg)
+    {
+        page = pdfdoc->getCatalog()->getPage(pg);
+        if ((resDict = page->getResourceDict()))
+        {
+            scanFonts(resDict, list, &fonts, fontsLen, fontsSize);
+        }
+        annots = new Annots(pdfdoc->getXRef(), page->getAnnots(&obj1));
+        obj1.free();
+        for (i = 0; i < annots->getNumAnnots(); ++i)
+        {
+            if (annots->getAnnot(i)->getAppearance(&obj1)->isStream())
+            {
+                obj1.streamGetDict()->lookup("Resources", &obj2);
+                if (obj2.isDict())
+                {
+                    scanFonts(obj2.getDict(), list, &fonts, fontsLen, fontsSize);
+                }
+                obj2.free();
+            }
+            obj1.free();
+        }
+        delete annots;
+    }
+    gfree(fonts);
+
+    docLock.unlock();
+}
+
 bool PDFGenerator::print( KPrinter& printer )
 {
     QString ps = printer.option("PageSize");
@@ -465,6 +524,131 @@ static QString unicodeToQString(Unicode* u, int len) {
     for (;len;--len)
       *qch++ = (QChar) *u++;
     return ret;
+}
+
+void PDFGenerator::scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
+{
+    Object obj1, obj2, xObjDict, xObj, resObj;
+    Ref r;
+    GfxFontDict *gfxFontDict;
+    GfxFont *font;
+    int i;
+
+    // scan the fonts in this resource dictionary
+    gfxFontDict = NULL;
+    resDict->lookupNF("Font", &obj1);
+    if (obj1.isRef())
+    {
+        obj1.fetch(pdfdoc->getXRef(), &obj2);
+        if (obj2.isDict())
+        {
+            r = obj1.getRef();
+            gfxFontDict = new GfxFontDict(pdfdoc->getXRef(), &r, obj2.getDict());
+        }
+        obj2.free();
+    }
+    else if (obj1.isDict())
+    {
+        gfxFontDict = new GfxFontDict(pdfdoc->getXRef(), NULL, obj1.getDict());
+    }
+    if (gfxFontDict)
+    {
+        for (i = 0; i < gfxFontDict->getNumFonts(); ++i)
+        {
+            if ((font = gfxFontDict->getFont(i))) scanFont(font, list, fonts, fontsLen, fontsSize);
+        }
+        delete gfxFontDict;
+    }
+    obj1.free();
+
+    // recursively scan any resource dictionaries in objects in this
+    // resource dictionary
+    resDict->lookup("XObject", &xObjDict);
+    if (xObjDict.isDict())
+    {
+        for (i = 0; i < xObjDict.dictGetLength(); ++i)
+        {
+            xObjDict.dictGetVal(i, &xObj);
+            if (xObj.isStream())
+            {
+                xObj.streamGetDict()->lookup("Resources", &resObj);
+                if (resObj.isDict()) scanFonts(resObj.getDict(), list, fonts, fontsLen, fontsSize);
+                resObj.free();
+            }
+            xObj.free();
+        }
+    }
+    xObjDict.free();
+}
+
+void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
+{
+    Ref fontRef, embRef;
+    Object fontObj, toUnicodeObj;
+    GString *name;
+    GBool emb;
+    int i;
+
+    QString fontTypeNames[8] = {
+        i18n("unknown"),
+        i18n("Type 1"),
+        i18n("Type 1C"),
+        i18n("Type 3"),
+        i18n("TrueType"),
+        i18n("CID Type 0"),
+        i18n("CID Type 0C"),
+        i18n("CID TrueType")
+    };
+
+    fontRef = *font->getID();
+
+    // check for an already-seen font
+    for (i = 0; i < fontsLen; ++i)
+    {
+        if (fontRef.num == (*fonts)[i].num && fontRef.gen == (*fonts)[i].gen)
+        {
+            return;
+        }
+    }
+
+    // font name
+    name = font->getOrigName();
+
+    // check for an embedded font
+    if (font->getType() == fontType3) emb = gTrue;
+    else emb = font->getEmbeddedFontID(&embRef);
+
+    QString sName, sEmb, sPath;
+    if (name)
+    {
+        sName = name->getCString();
+        if (!emb)
+        {
+            DisplayFontParam *dfp = globalParams->getDisplayFont(name);
+            if (dfp)
+            {
+                if (dfp -> kind == displayFontT1) sPath = dfp->t1.fileName->getCString();
+                else sPath = dfp->tt.fileName->getCString();
+            }
+            else sPath = i18n("-");
+        }
+        else sPath = i18n("-");
+    }
+    else
+    {
+        sName = i18n("[none]");
+        sPath = i18n("-");
+    }
+    sEmb = emb ? i18n("Yes") : i18n("No");
+    new KListViewItem(list, sName, fontTypeNames[font->getType()], sEmb, sPath);
+
+    // add this font to the list
+    if (fontsLen == fontsSize)
+    {
+        fontsSize += 32;
+        *fonts = (Ref *)grealloc(*fonts, fontsSize * sizeof(Ref));
+    }
+    (*fonts)[fontsLen++] = *font->getID();
 }
 
 QString PDFGenerator::getDocumentInfo( const QString & data ) const

@@ -381,6 +381,16 @@ QString KPDFDocument::getMetaData( const QString & key, const QString & option )
     return generator ? generator->getMetaData( key, option ) : QString();
 }
 
+bool KPDFDocument::hasFonts() const
+{
+    return generator ? generator->hasFonts() : false;
+}
+
+void KPDFDocument::putFontInfo(KListView *list)
+{
+    if (generator) generator->putFontInfo(list);
+}
+
 void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests )
 {
     if ( !generator )

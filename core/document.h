@@ -24,6 +24,7 @@ class DocumentInfo;
 class DocumentSynopsis;
 class Generator;
 class PixmapRequest;
+class KListView;
 class KPrinter;
 class KURL;
 
@@ -75,6 +76,8 @@ class KPDFDocument : public QObject
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
+        bool hasFonts() const;
+        void putFontInfo(KListView *list);
 
         // perform actions on document / pages
         void setViewportPage( int page, int excludeId = -1, bool smoothMove = false );

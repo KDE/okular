@@ -14,6 +14,7 @@
 #include <qvaluevector.h>
 #include <qstring.h>
 #include "core/document.h"
+class KListView;
 class KPrinter;
 class KPDFPage;
 class KPDFLink;
@@ -57,6 +58,10 @@ class Generator : public QObject
         virtual bool canGeneratePixmap() = 0;
         virtual void generatePixmap( PixmapRequest * request ) = 0;
         virtual void generateSyncTextPage( KPDFPage * page ) = 0;
+
+        // font related
+        virtual bool hasFonts() const = 0;
+        virtual void putFontInfo(KListView *list) = 0;
 
         // print document using already configured kprinter
         virtual bool print( KPrinter& /*printer*/ ) { return false; }

@@ -9,6 +9,7 @@
 
 // qt/kde includes
 #include <klocale.h>
+#include <klistview.h>
 #include <qlayout.h>
 #include <qlabel.h>
 
@@ -17,9 +18,10 @@
 #include "core/document.h"
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
-  : KDialogBase( Plain, i18n( "Unknown File" ), Ok, Ok, parent, 0, true, true )
+  : KDialogBase( Tabbed, i18n( "Unknown File" ), Ok, Ok, parent, 0, true, true )
 {
-  QWidget *page = plainPage();
+  // Properties
+  QFrame *page = addPage(i18n("Properties"));
   QGridLayout *layout = new QGridLayout( page, 2, 2, marginHint(), spacingHint() );
 
   // get document info, if not present display blank data and a warning
@@ -58,5 +60,15 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
 
     layout->addWidget( key, row, 0 );
     layout->addWidget( value, row, 1 );
+  }
+
+  if (doc->hasFonts())
+  {
+    // Properties
+    page = addPage(i18n("Fonts"));
+    QVBoxLayout *topLayout = new QVBoxLayout(page, 0, KDialog::spacingHint());
+    KListView *lv = new KListView(page);
+    topLayout->add(lv);
+    doc->putFontInfo(lv);
   }
 }

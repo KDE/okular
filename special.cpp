@@ -274,7 +274,7 @@ static	const char	*keytab[]	= {
 #define	NKEYS	(sizeof(keytab)/sizeof(*keytab))
 #define	N_ARGLESS_KEYS 1
 
-static parse_special_argument(QString strg, char *argument_name, int *variable)
+static void parse_special_argument(QString strg, char *argument_name, int *variable)
 {
   bool    OK;
   

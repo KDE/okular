@@ -90,7 +90,6 @@ private:
 	bool		changedDVI();
 	bool		correctDVI();
 	void		initDVI();
-	void		drawDVI();
 	void		changePageSize();
 	QPoint		mouse;
 	QString		filename;

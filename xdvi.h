@@ -266,7 +266,6 @@ EXTERN	long	magnification;
 EXTERN	double	dimconv;
 EXTERN	double	tpic_conv;
 EXTERN	int	n_files_left;	/* for LRU closing of fonts */
-EXTERN	time_t	dvi_time;		/* last mod. time for dvi file */
 EXTERN	unsigned int	page_w, page_h;
 
 #if	defined(PS_DPS) || defined(PS_NEWS) || defined(PS_GS)

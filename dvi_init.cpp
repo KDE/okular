@@ -51,6 +51,7 @@
 
 
 #include <qbitmap.h> 
+#include <qfileinfo.h>
 
 extern "C" {
 #include <kpathsea/config.h>
@@ -79,12 +80,11 @@ extern FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, i
 
 #define	dvi_oops(str)	(dvi_oops_msg = (str), longjmp(dvi_env, 1))
 
-static	struct stat fstatbuf;
-
 static	Boolean	font_not_found;
 Boolean	_hush_spec;
 Boolean	_hush_chk;
 Boolean	_list_fonts;
+QDateTime dvi_time;
 
 /*
  * DVI preamble and postamble information.
@@ -447,8 +447,7 @@ find_postamble()
  *      It also takes care of reading in all of the pixel files for the fonts
  *      used in the job.
  */
-static	void
-read_postamble()
+static	void read_postamble()
 {
 	ubyte   cmnd;
 	struct font	*fontp;
@@ -520,8 +519,7 @@ read_postamble()
 	    }
 }
 
-static	void
-prepare_pages()
+static	void prepare_pages()
 {
 	int i;
 
@@ -546,30 +544,25 @@ void init_page()
 	page_h = ROUNDUP(unshrunk_page_h, mane.shrinkfactor) + 2;
 }
 
-#ifndef	S_ISDIR
-#define	S_ISDIR(m)	(((m) & S_IFMT) == S_IFDIR)
-#endif
-
 /*
  *	init_dvi_file is the main subroutine for reading the startup
  *	information from the dvi file.  Returns True on success.
  */
 
-static	Boolean
-init_dvi_file()
+static Boolean init_dvi_file()
 {
-	(void) fstat(fileno(dvi_file), &fstatbuf);
-	if (S_ISDIR(fstatbuf.st_mode))
-	    return False;
-	dvi_time = fstatbuf.st_mtime;
-	process_preamble();
-	find_postamble();
-	read_postamble();
-	prepare_pages();
-	init_page();
-	if (current_page >= total_pages) current_page = total_pages - 1;
-	hush_spec_now = hush_spec;
-	return True;
+  if (QFileInfo(dvi_name).isDir())
+    return False;
+  dvi_time = QFileInfo(dvi_name).lastModified();
+  process_preamble();
+  find_postamble();
+  read_postamble();
+  prepare_pages();
+  init_page();
+  if (current_page >= total_pages)
+    current_page = total_pages - 1;
+  hush_spec_now = hush_spec;
+  return True;
 }
 
 
@@ -579,20 +572,17 @@ init_dvi_file()
 
 extern Boolean check_dvi_file(void)
 {
-	struct font *fontp;
-
-	if (dvi_file == NULL || fstat(fileno(dvi_file), &fstatbuf) != 0
-	    || fstatbuf.st_mtime != dvi_time) {
-		if (dvi_file) {
-		    Fclose(dvi_file);
-		    dvi_file = NULL;
-		    if (list_fonts) Putchar('\n');
-		}
-		dvi_file = fopen(dvi_name, OPEN_MODE);
-		if (dvi_file == NULL
-			|| !init_dvi_file())
-		    dvi_oops("Cannot reopen dvi file.");
-		return False;
-	}
-	return True;
+  if (dvi_file == NULL || (dvi_time != QFileInfo(dvi_name).lastModified())) {
+    if (dvi_file) {
+      Fclose(dvi_file);
+      dvi_file = NULL;
+      if (list_fonts) 
+	Putchar('\n');
+    }
+    dvi_file = fopen(dvi_name, OPEN_MODE);
+    if (dvi_file == NULL || !init_dvi_file())
+      dvi_oops("Cannot reopen dvi file.");
+    return False;
+  }
+  return True;
 }

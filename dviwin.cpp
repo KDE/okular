@@ -97,9 +97,7 @@ extern  void qt_processEvents(void)
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr,
-                      int mkpk, QWidget *parent, const char *name )
-	: QScrollView( parent, name )
+dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) : QScrollView( parent, name )
 {
 	ChangesPossible = 1;
 	FontPath = QString::null;
@@ -366,79 +364,68 @@ void dviWindow::initDVI()
 #include <setjmp.h>
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 extern	char *dvi_oops_msg;
-extern	time_t dvi_time;
+extern	QDateTime dvi_time;
 
 //------ this function calls the dvi interpreter ----------
 
-void dviWindow::drawDVI()
-{
-	psp_interrupt();
-	if (filename.isEmpty())	// must call setFile first
-		return;
-	if (!dvi_name)
-	{			//  dvi file not initialized yet
-		QApplication::setOverrideCursor( waitCursor );
-		dvi_name = const_cast<char*>(filename.ascii());
-
-		dvi_file = NULL;
-		if (setjmp(dvi_env))
-		{	// dvi_oops called
-			dvi_time = 0; // force init_dvi_file
-			QApplication::restoreOverrideCursor();
-			KMessageBox::error( this,
-				i18n("What's this? DVI problem!\n")
-					+ dvi_oops_msg);
-			return;
-		}
-		if ( !check_dvi_file() )
-			emit fileChanged();
-
-		QApplication::restoreOverrideCursor();
-		gotoPage(1);
-		changePageSize();
-                emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
-		timer->start( 1000 );
-		return;
-	}
-	min_x = 0;
-	min_y = 0;
-	max_x = page_w;
-	max_y = page_h;
-
-	if ( !pixmap )	return;
-	if ( !pixmap->paintingActive() )
-	{
-		QPainter paint;
-		paint.begin( pixmap );
-		QApplication::setOverrideCursor( waitCursor );
-		dcp = &paint;
-		if (setjmp(dvi_env))
-		{	// dvi_oops called
-			dvi_time = 0; // force init_dvi_file
-			QApplication::restoreOverrideCursor();
-			paint.end();
-			KMessageBox::error( this,
-				i18n("What's this? DVI problem!\n") 
-					+ dvi_oops_msg);
-			return;
-		}
-		else
-		{
-			if ( !check_dvi_file() )
-				emit fileChanged();
-			pixmap->fill( white );
-			draw_page();
-		}
-		QApplication::restoreOverrideCursor();
-		paint.end();
-	}
-}
 
 void dviWindow::drawPage()
 {
-  drawDVI();
-  repaintContents(contentsX(), contentsY(), 
-                  visibleWidth(), visibleHeight(), FALSE);
+  psp_interrupt();
+  if (filename.isEmpty())	// must call setFile first
+    return;
+  if (!dvi_name) {			//  dvi file not initialized yet
+    QApplication::setOverrideCursor( waitCursor );
+    dvi_name = const_cast<char*>(filename.ascii());
+
+    dvi_file = NULL;
+    if (setjmp(dvi_env)) {	// dvi_oops called
+      dvi_time.setTime_t(0); // force init_dvi_file
+      QApplication::restoreOverrideCursor();
+      KMessageBox::error( this,
+			  i18n("What's this? DVI problem!\n")
+			  + dvi_oops_msg);
+      return;
+    }
+    if ( !check_dvi_file() )
+      emit fileChanged();
+    QApplication::restoreOverrideCursor();
+    gotoPage(1);
+    changePageSize();
+    emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
+    timer->start( 1000 );
+    return;
+  }
+  min_x = 0;
+  min_y = 0;
+  max_x = page_w;
+  max_y = page_h;
+
+  if ( !pixmap )
+    return;
+  if ( !pixmap->paintingActive() ) {
+    QPainter paint;
+    paint.begin( pixmap );
+    QApplication::setOverrideCursor( waitCursor );
+    dcp = &paint;
+    if (setjmp(dvi_env)) {	// dvi_oops called
+      dvi_time.setTime_t(0); // force init_dvi_file
+      QApplication::restoreOverrideCursor();
+      paint.end();
+      KMessageBox::error( this,
+			  i18n("What's this? DVI problem!\n") 
+			  + dvi_oops_msg);
+      return;
+    } else {
+      if ( !check_dvi_file() )
+	emit fileChanged();
+      pixmap->fill( white );
+      draw_page();
+    }
+    QApplication::restoreOverrideCursor();
+    paint.end();
+  }
+  repaintContents(contentsX(), contentsY(), visibleWidth(), visibleHeight(), FALSE);
 }
 
 bool dviWindow::changedDVI()
@@ -448,36 +435,38 @@ bool dviWindow::changedDVI()
 
 bool dviWindow::correctDVI()
 {
-	QFile f(filename);
-	if (!f.open(IO_ReadOnly))
-		return FALSE;
-	int n = f.size();
-	if ( n < 134 )	// Too short for a dvi file
-		return FALSE;
-	f.at( n-4 );
-	char test[4];
-	unsigned char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
-	if ( f.readBlock( test, 4 )<4 || strncmp( test, (char *) trailer, 4 ) )
-		return FALSE;
-	// We suppose now that the dvi file is complete	and OK
-	return TRUE;
+  QFile f(filename);
+  if (!f.open(IO_ReadOnly))
+    return FALSE;
+  int n = f.size();
+  if ( n < 134 )	// Too short for a dvi file
+    return FALSE;
+  f.at( n-4 );
+  char test[4];
+  unsigned char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
+  if ( f.readBlock( test, 4 )<4 || strncmp( test, (char *) trailer, 4 ) )
+    return FALSE;
+  // We suppose now that the dvi file is complete	and OK
+  return TRUE;
 }
+
 void dviWindow::timerEvent()
 {
-	static int changing = 0;
+  static int changing = 0;
 
-	if ( !changedDVI() )
-		return;
-	if ( !changing )
-		emit statusChange( i18n("File status changed.") );
-	changing = 1;
-	if ( !correctDVI() )
-		return;
-	changing = 0;
-	emit statusChange( i18n("File reloaded.") );
-	changetime = QFileInfo(filename).lastModified();
-	drawPage();
-	emit fileChanged();
+  if ( !changedDVI() )
+    return;
+  if ( !changing )
+    emit statusChange( i18n("File status changed.") );
+  changing = 1;
+  if ( !correctDVI() )
+    return;
+  changing = 0;
+  emit statusChange( i18n("File reloaded.") );
+  changetime = QFileInfo(filename).lastModified();
+
+  drawPage();
+  emit fileChanged();
 }
 
 void dviWindow::changePageSize()
@@ -557,15 +546,15 @@ void dviWindow::nextPage()
 
 void dviWindow::gotoPage(int new_page)
 {
-	if (new_page<1)
-		new_page = 1;
-	if (new_page>total_pages)
-		new_page = total_pages;
-	if (new_page-1==current_page)
-		return;
-	current_page = new_page-1;
-	emit currentPage(new_page);
-	drawPage();
+  if (new_page<1)
+    new_page = 1;
+  if (new_page>total_pages)
+    new_page = total_pages;
+  if (new_page-1==current_page)
+    return;
+  current_page = new_page-1;
+  emit currentPage(new_page);
+  drawPage();
 }
 
 void dviWindow::firstPage()
@@ -618,21 +607,19 @@ void dviWindow::setShrink(int s)
 	emit shrinkChanged( shrink() );
 }
 
-void   dviWindow::resizeEvent(QResizeEvent *e)
+void dviWindow::resizeEvent(QResizeEvent *e)
 {
-       QScrollView::resizeEvent(e);
-       emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
+  QScrollView::resizeEvent(e);
+  emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
 }	
 
-void   dviWindow::contentsMoving( int x, int y ) 
+void dviWindow::contentsMoving( int x, int y ) 
 {
   emit currentPosChanged( QPoint(x, y) );
 }
 
 
-void   dviWindow::drawContents(QPainter *p, 
-                               int clipx, int clipy, 
-                               int clipw, int cliph ) 
+void   dviWindow::drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph ) 
 {
   if ( pixmap )
     p->drawPixmap(clipx, clipy, *pixmap, clipx, clipy, clipw, cliph);

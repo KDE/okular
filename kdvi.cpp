@@ -473,7 +473,7 @@ void kdvi::updateMarklist()
 		s.sprintf( "%4d", i );
 		marklist->insertItem( s, 0 );
 	}
-	marklist->select(0);
+	//	marklist->select(0); //@@@
 	marklist->setAutoUpdate( TRUE );
 	marklist->update();
 }
@@ -822,16 +822,18 @@ void kdvi::pageActivated( const QString & text)
 
 void kdvi::setPage( int pg )
 {
-	QString str;
+  QString str;
 
-	if (!pg) pg = dviwin->page();
-	if (!pg) return;
-	str.setNum( pg );
-	str = i18n("Page: ") + str + i18n(" / ") + QString().setNum(dviwin->totalPages());
-	statusBar()->changeItem( str, ID_STAT_PAGE );
+  if (!pg)
+    pg = dviwin->page();
+  if (!pg) 
+    return;
+  str.setNum( pg );
+  str = i18n("Page: ") + str + i18n(" / ") + QString().setNum(dviwin->totalPages());
+  statusBar()->changeItem( str, ID_STAT_PAGE );
 
-	if ( marklist )
-		marklist->select( pg - 1 );
+  if ( marklist )
+    marklist->select( pg - 1 );
 }
 
 void kdvi::selectShrink( QPoint p )
@@ -886,6 +888,9 @@ void kdvi::shrinkChanged(int s)
 	QString t = i18n("Shrink: %1").arg( s );
 	statusBar()->changeItem( t, ID_STAT_SHRINK);
 }
+
+
+// This slot is called after the dvi-file has been reloaded.
 
 void kdvi::fileChanged()
 {

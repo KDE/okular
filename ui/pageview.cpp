@@ -73,7 +73,8 @@ public:
     PageView::MouseMode mouseMode;
     QPoint mouseGrabPos;
     QPoint mousePressPos;
-    int mouseMidStartY;
+    bool mouseMidZooming;
+    int mouseMidLastY;
     bool mouseOnRect;
     QRect mouseSelectionRect;
     QColor selectionRectColor;
@@ -133,7 +134,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->zoomMode = ZoomFixed;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
-    d->mouseMidStartY = -1;
+    d->mouseMidZooming = false;
     d->mouseOnRect = false;
     d->typeAheadActive = false;
     d->findTimeoutTimer = 0;
@@ -443,7 +444,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     if ( !contentsRect.isValid() )
         return;
 
-    // create the screen painter. a pixel painted ar contentsX,contentsY
+    // create the screen painter. a pixel painted at contentsX,contentsY
     // appears to the top-left corner of the scrollview.
     QPainter screenPainter( viewport(), true );
     screenPainter.translate( -contentsX(), -contentsY() );
@@ -561,13 +562,13 @@ void PageView::viewportResizeEvent( QResizeEvent * )
     if ( d->items.isEmpty() )
         return;
 
-    // start a timer that will refresh the pixmap after 0.5s
+    // start a timer that will refresh the pixmap after 0.2s
     if ( !d->delayResizeTimer )
     {
         d->delayResizeTimer = new QTimer( this );
         connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
     }
-    d->delayResizeTimer->start( 333, true );
+    d->delayResizeTimer->start( 200, true );
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -575,7 +576,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
     e->accept();
 
     // if performing a selection or dyn zooming, disable keys handling
-    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 )
+    if ( !d->mouseSelectionRect.isNull() || d->mouseMidZooming )
         return;
 
     // handle 'find as you type' (based on khtml/khtmlview.cpp)
@@ -739,14 +740,36 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         return;
 
     // if holding mouse mid button, perform zoom
-    if ( (e->state() & MidButton) && d->mouseMidStartY > 0 )
+    if ( d->mouseMidZooming && (e->state() & MidButton) )
     {
-        int deltaY = d->mouseMidStartY - e->globalPos().y();
-        d->mouseMidStartY = e->globalPos().y();
-        d->zoomFactor *= ( 1.0 + ( (double)deltaY / 500.0 ) );
-        updateZoom( ZoomRefreshCurrent );
-        // uncomment following line to force a complete redraw
-        viewport()->repaint( false );
+        int mouseY = e->globalPos().y();
+        int deltaY = d->mouseMidLastY - mouseY;
+
+        // wrap mouse from top to bottom
+        QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+        if ( mouseY <= mouseContainer.top() + 4 &&
+             d->zoomFactor < 3.99 )
+        {
+            mouseY = mouseContainer.bottom() - 5;
+            QCursor::setPos( e->globalPos().x(), mouseY );
+        }
+        // wrap mouse from bottom to top
+        else if ( mouseY >= mouseContainer.bottom() - 4 &&
+                  d->zoomFactor > 0.11 )
+        {
+            mouseY = mouseContainer.top() + 5;
+            QCursor::setPos( e->globalPos().x(), mouseY );
+        }
+        // remember last position
+        d->mouseMidLastY = mouseY;
+
+        // update zoom level, perform zoom and redraw
+        if ( deltaY )
+        {
+            d->zoomFactor *= ( 1.0 + ( (double)deltaY / 500.0 ) );
+            updateZoom( ZoomRefreshCurrent );
+            viewport()->repaint( false );
+        }
         return;
     }
 
@@ -768,10 +791,29 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                 // drag page
                 if ( !d->mouseGrabPos.isNull() )
                 {
+                    QPoint mousePos = e->globalPos();
+                    QPoint delta = d->mouseGrabPos - mousePos;
+
+                    // wrap mouse from top to bottom
+                    QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+                    if ( mousePos.y() <= mouseContainer.top() + 4 &&
+                         verticalScrollBar()->value() < verticalScrollBar()->maxValue() - 10 )
+                    {
+                        mousePos.setY( mouseContainer.bottom() - 5 );
+                        QCursor::setPos( mousePos );
+                    }
+                    // wrap mouse from bottom to top
+                    else if ( mousePos.y() >= mouseContainer.bottom() - 4 &&
+                              verticalScrollBar()->value() > 10 )
+                    {
+                        mousePos.setY( mouseContainer.top() + 5 );
+                        QCursor::setPos( mousePos );
+                    }
+                    // remember last position
+                    d->mouseGrabPos = mousePos;
+
                     // scroll page by position increment
-                    QPoint delta = d->mouseGrabPos - e->globalPos();
                     scrollBy( delta.x(), delta.y() );
-                    d->mouseGrabPos = e->globalPos();
                 }
             }
             else if ( rightButton && !d->mousePressPos.isNull() )
@@ -812,7 +854,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
         return;
 
     // if performing a selection or dyn zooming, disable mouse press
-    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 ||
+    if ( !d->mouseSelectionRect.isNull() || d->mouseMidZooming ||
          d->viewportMoveActive )
         return;
 
@@ -823,10 +865,11 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
         d->autoScrollTimer->stop();
     }
 
-    // if pressing mid mouse button while not doing other things, begin 'comtinous zoom' mode
+    // if pressing mid mouse button while not doing other things, begin 'continuous zoom' mode
     if ( e->button() & MidButton )
     {
-        d->mouseMidStartY = e->globalPos().y();
+        d->mouseMidZooming = true;
+        d->mouseMidLastY = e->globalPos().y();
         setCursor( sizeVerCursor );
         return;
     }
@@ -889,11 +932,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
         return;
 
     // handle mode indepent mid buttom zoom
-    bool midButton = e->button() & MidButton;
-    if ( midButton && d->mouseMidStartY > 0 )
+    if ( d->mouseMidZooming && (e->state() & MidButton) )
     {
-        d->mouseMidStartY = -1;
-        // while drag-zooming we could have gone over a link
+        d->mouseMidZooming = false;
+        // request pixmaps since it was disabled during drag
+        slotRequestVisiblePixmaps();
+        // the cursor may now be over a link.. update it
         updateCursor( e->pos() );
         return;
     }
@@ -991,7 +1035,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
             }
             // if a selection is defined, display a popup
-            if ( (!leftButton && !d->aPrevAction) || (leftButton && d->aPrevAction) ||
+            if ( (!leftButton && !d->aPrevAction) || (!rightButton && d->aPrevAction) ||
                  d->mouseSelectionRect.isNull() )
                 break;
 
@@ -1267,8 +1311,9 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
             int flags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                         PagePainter::EnhanceImages | PagePainter::Highlights |
                         PagePainter::Annotations;
-            PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, flags, p, pixmapRect,
-                                             pixmapGeometry.width(), pixmapGeometry.height() );
+            PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, flags, p,
+                                             pixmapGeometry.width(), pixmapGeometry.height(),
+                                             pixmapRect );
         }
 
         // remove painted area from 'remainingArea' and restore painter
@@ -1279,8 +1324,9 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
     // paint with background color the unpainted area
     QMemArray<QRect> backRects = remainingArea.rects();
     uint backRectsNumber = backRects.count();
+    QColor backColor = /*d->items.isEmpty() ? Qt::lightGray :*/ Qt::gray;
     for ( uint jr = 0; jr < backRectsNumber; jr++ )
-        p->fillRect( backRects[ jr ], Qt::gray );
+        p->fillRect( backRects[ jr ], backColor );
 
     // paint annotation being created by the annotator
     if ( d->annotator && d->annotator->routePaints( contentsRect ) )
@@ -1670,6 +1716,9 @@ void PageView::slotRelayoutPages()
         delete [] colWidth;
 
         // this can cause a little overhead
+        // FIXME A FIX FOR THAT HAS ALREADY BEEN COMMITTED! WHY IS THAT LINE HERE??? TODO
+        // Note: the fix was a slotRequestVisiblePixmaps if center() calls don't call it
+        // ~20 lines below
         slotRequestVisiblePixmaps();
     }
 
@@ -1692,7 +1741,7 @@ void PageView::slotRelayoutPages()
             {
                 const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
                 double nX = vp.reCenter.enabled ? vp.reCenter.normalizedCenterX : 0.5,
-                    nY = vp.reCenter.enabled ? vp.reCenter.normalizedCenterY : 0.0;
+                       nY = vp.reCenter.enabled ? vp.reCenter.normalizedCenterY : 0.0;
                 center( geometry.left() + ROUND( nX * (double)geometry.width() ),
                         geometry.top() + ROUND( nY * (double)geometry.height() ) );
             }
@@ -1711,7 +1760,8 @@ void PageView::slotRelayoutPages()
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 {
     // if requests are blocked (because raised by an unwanted event), exit
-    if ( d->blockPixmapsRequest || d->viewportMoveActive )
+    if ( d->blockPixmapsRequest || d->viewportMoveActive ||
+         d->mouseMidZooming )
         return;
 
     // precalc view limits for intersecting with page coords inside the lOOp

@@ -291,7 +291,7 @@ void kdvi::makeStatusBar( QString )
 {
 	QPixmap pm;
 
-	statusBar()->setInsertOrder( KStatusBar::RightToLeft );
+	//statusBar()->setInsertOrder( KStatusBar::RightToLeft );
 	statusBar()->insertItem(i18n("X:0000, Y:0000 "), ID_STAT_XY);
 	statusBar()->changeItem("", ID_STAT_XY);
 	statusBar()->insertItem(i18n("Shrink: xx"), ID_STAT_SHRINK);

@@ -36,7 +36,7 @@
 
 
 #include "optiondialog.h"
-
+#include <config.h>
 
 OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   :KDialogBase( Tabbed, i18n("Preferences"), Help|Ok|Apply|Cancel, Ok,

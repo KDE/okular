@@ -21,6 +21,7 @@
 #include "print.h"
 #include "optiondialog.h"
 #include "kdvi_multipage.moc"
+#include <config.h>
 
 extern "C"
 {
@@ -277,7 +278,7 @@ void KDVIMultiPage::preferencesChanged()
   config->reparseConfiguration();
   config->setGroup( "kdvi" );
 
-  s = config->readEntry( "FontPath" );
+  s = config->readEntry( "FontPath", KDVI_DEFAULT_FONTPATH );
   if ( !s.isEmpty() && s != window->fontPath() )
     window->setFontPath( s );
 

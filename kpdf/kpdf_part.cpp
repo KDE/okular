@@ -952,7 +952,7 @@ void Part::findNext()
   if (!m_findText.isEmpty()) doFind(m_findText, true);
 }
 
-void Part::doFind(QString s, bool next)
+void Part::doFind(const QString &s, bool next)
 {
   TextOutputDev *textOut;
   Unicode *u;

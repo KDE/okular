@@ -127,7 +127,7 @@ namespace KPDF
       void slotZoom( const QString& );
 
   private:
-      void doFind(QString s, bool next);
+      void doFind(const QString &s, bool next);
 
       PDFDoc*     m_doc;
       PageWidget* m_outputDev;

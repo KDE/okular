@@ -124,4 +124,4 @@ psheader.c: psheader.txt squeeze $(kpathsea)
 vf.c: $(kpathsea)
 
 $(kpathsea):
-	cd kpathsea && ./configure && $(MAKE)
+	cd kpathsea && CC="$(CC)" && export CC && CFLAGS="$(CFLAGS)" && export CFLAGS && ./configure && $(MAKE)

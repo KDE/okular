@@ -18,6 +18,7 @@
 #define translate klocale->translate
 
 #include <stdlib.h>
+#include <unistd.h>
 
 //------ some definitions from xdvi ----------
 
@@ -66,12 +67,12 @@ Window mainwin;
 int			useAlpha;
 
 extern "C" void 	draw_page(void);
-extern "C" void 	kpse_set_progname();
-extern "C" void 	kpse_init_prog();
+extern "C" void 	kpse_set_progname(const char*);
+extern "C" void 	kpse_init_prog(const char*, unsigned, const char*, bool, const char*);
 extern "C" Boolean 	check_dvi_file();
 extern "C" void 	reset_fonts();
 extern "C" void 	init_page();
-extern "C" void 	init_pix();
+extern "C" void 	init_pix(Boolean warn);
 extern "C" void 	psp_destroy();
 extern "C" void 	psp_toggle();
 extern "C" void 	psp_interrupt();

@@ -107,7 +107,7 @@ void print::rangeToggled( bool on )
 #define put4(f,i) (put2(f,i>>16), put2(f,(i)))
 
 void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
-	int first = 0, int last = 999999 )
+	int first, int last)
 {
 	QFile in(ifile);
 	QFile out(ofile);

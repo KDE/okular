@@ -4,6 +4,7 @@
 // Widget for displaying TeX DVI files.
 //
 
+#include "../config.h"
 #include <qwidget.h>
 #include <qpainter.h> 
 #include <qevent.h>
@@ -89,8 +90,8 @@ private:
 	void		drawDVI();
 	void		changePageSize();
 	void		setChildrenGeometries(int doupdate=TRUE);
-	void		scrollRelative(QPoint r, int doupdate=TRUE);
-	void		scrollAbsolute(QPoint r);
+	void		scrollRelative(const QPoint r, int doupdate=TRUE);
+	void		scrollAbsolute(const QPoint r);
 	QScrollBar *	hsb;
 	QScrollBar *	vsb;
 	QWidget		block;

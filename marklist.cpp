@@ -44,7 +44,7 @@ MarkList::MarkList( QWidget * parent , const char * name )
 	pup->insertItem( translate("Remove marks"), this, SLOT(removeMarks()) );
 }
 
-void	MarkList::insertItem ( const char *text, int index=-1)
+void	MarkList::insertItem ( const char *text, int index)
 {
 	MarkListItem *mli = new MarkListItem( text );
 	items.insert( index, mli );
@@ -88,7 +88,7 @@ void MarkList::paintCell( QPainter *p, int row, int col)
 		{
 			QColorGroup cg = QApplication::palette()->normal();
 			qDrawShadePanel( p, 0, 0, cellWidth( 1 ) - 1, cellHeight(),
-				cg, FALSE, 1, &QBrush(colorGroup().light()));
+				cg, FALSE, 1, new QBrush(colorGroup().light()));
 		}
 
 		QFontMetrics fm = p->fontMetrics();

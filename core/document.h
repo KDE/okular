@@ -86,6 +86,7 @@ class KPDFDocument : public QObject // only for a private slot..
         int mTotalMemory();
         int mFreeMemory();
         // more private functions
+        void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
         void processPageList( bool documentChanged );
@@ -97,6 +98,7 @@ class KPDFDocument : public QObject // only for a private slot..
         class KPDFDocumentPrivate * d;
 
     private slots:
+        void saveDocumentInfo() const;
         void slotCheckMemory();
         void slotGeneratedContents( int id, int pageNumber );
 };

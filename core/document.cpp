@@ -12,6 +12,7 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qtextstream.h>
 #include <qvaluevector.h>
 #include <qtimer.h>
 #include <qmap.h>
@@ -23,6 +24,7 @@
 #include <kuserprofile.h>
 #include <kmimetype.h>
 #include <krun.h>
+#include <kstandarddirs.h>
 
 // local includes
 #include "document.h"
@@ -50,6 +52,9 @@ class KPDFDocumentPrivate
         // memory check/free timer
         QTimer * memCheckTimer;
 
+        // bookmark saver timer
+        QTimer * saveBookmarksTimer;
+
         // observers related (note: won't delete oservers)
         QMap< int, class ObserverData* > observers;
 };
@@ -76,6 +81,8 @@ KPDFDocument::KPDFDocument()
     d->searchPage = -1;
     d->memCheckTimer = new QTimer( this );
     connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotCheckMemory() ) );
+    d->saveBookmarksTimer = new QTimer( this );
+    connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( saveDocumentInfo() ) );
 }
 
 KPDFDocument::~KPDFDocument()
@@ -90,11 +97,11 @@ bool KPDFDocument::openDocument( const QString & docFile )
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
     if ( !fileReadTest.open( IO_ReadOnly ) )
+    {
+        documentFileName = QString::null;
         return false;
+    }
     fileReadTest.close();
-
-    // reset internal status and frees memory
-    closeDocument();
 
     // create the generator based on the file's mimetype
     KMimeType::Ptr mime = KMimeType::findByPath( docFile );
@@ -121,12 +128,10 @@ bool KPDFDocument::openDocument( const QString & docFile )
     // start memory check timer
     d->memCheckTimer->start( 1000 );
 
-    // check local directory for an overlay xml
-    // TODO import overlay layers from XML
-//  QString fileName = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
-//  fileName = "kpdf/" + QString::number(fileSize) + "." + fileName + ".xml";
-//  QString localFN = locateLocal( "data", fileName );
-//  kdDebug() << "Using '" << localFN << "' as overlay descriptor." << endl;
+    // start bookmark saver timer
+    d->memCheckTimer->start( 5 * 60 * 1000 );
+
+    loadDocumentInfo();
 
     // filter pages, setup observers and set the first page as current
     if ( pages_vector.size() > 0 )
@@ -139,6 +144,8 @@ bool KPDFDocument::openDocument( const QString & docFile )
 
 void KPDFDocument::closeDocument()
 {
+    saveDocumentInfo();
+
     // stop memory check timer
     d->memCheckTimer->stop();
 
@@ -623,6 +630,54 @@ int KPDFDocument::mFreeMemory()
 #endif
 }
 
+void KPDFDocument::loadDocumentInfo()
+{
+    QFile fileReadTest( documentFileName );
+    fileReadTest.open( IO_ReadOnly );
+
+    QString fileName = documentFileName.contains('/') ? documentFileName.section('/', -1, -1) : documentFileName;
+    fileName = "kpdf/" + QString::number(fileReadTest.size()) + "." + fileName + ".xml";
+    fileReadTest.close();
+    QString localFN = locateLocal( "data", fileName );
+    kdDebug() << "Using '" << localFN << "' as document info file." << endl;
+    QFile infoFile( localFN );
+    if (infoFile.exists() && infoFile.open( IO_ReadOnly ) )
+    {
+        QDomDocument doc( "documentInfo" );
+        if ( !doc.setContent( &infoFile ) )
+        {
+            kdDebug() << "Could not set content" << endl;
+            infoFile.close();
+            return;
+        }
+
+        QDomElement root = doc.documentElement();
+        if (root.tagName() != "documentInfo") return;
+
+        QDomNode bookMarkList = root.firstChild();
+        if (bookMarkList.isElement() && bookMarkList.toElement().tagName() != "bookmarkList") return;
+
+        QDomNode n = bookMarkList.firstChild();
+
+        QDomElement e;
+        int pageNumber;
+        bool ok;
+        while ( !n.isNull() )
+        {
+            if ( n.isElement() )
+            {
+                e = n.toElement();
+                if (e.tagName() != "page") return;
+
+                pageNumber = e.text().toInt(&ok);
+                if (ok) toggleBookmark( pageNumber );
+            }
+            n = n.nextSibling();
+       }
+    }
+    infoFile.close();
+}
+
 QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 {
     if ( documentFileName.isEmpty() )
@@ -688,6 +743,46 @@ void KPDFDocument::unHilightPages()
     }
 }
 
+
+void KPDFDocument::saveDocumentInfo() const
+{
+    if (documentFileName.isNull()) return;
+
+    QFile fileReadTest( documentFileName );
+    fileReadTest.open( IO_ReadOnly );
+
+    QString fileName = documentFileName.contains('/') ? documentFileName.section('/', -1, -1) : documentFileName;
+    fileName = "kpdf/" + QString::number(fileReadTest.size()) + "." + fileName + ".xml";
+    fileReadTest.close();
+    QString localFN = locateLocal( "data", fileName );
+    kdDebug() << "Using '" << localFN << "' as document info file for saving." << endl;
+    QFile infoFile( localFN );
+    if (infoFile.open( IO_WriteOnly | IO_Truncate) )
+    {
+        QDomDocument doc( "documentInfo" );
+        QDomElement root = doc.createElement( "documentInfo" );
+        doc.appendChild( root );
+
+        QDomElement bookmarkList = doc.createElement( "bookmarkList" );
+        root.appendChild( bookmarkList );
+
+        for ( uint i = 0; i < pages_vector.count() ; i++ )
+        {
+            if (pages_vector[i]->attributes() & KPDFPage::Bookmark)
+            {
+                QDomElement page = doc.createElement( "page" );
+                page.appendChild( doc.createTextNode( QString::number(i) ) );
+
+                bookmarkList.appendChild( page );
+            }
+        }
+
+        QString xml = doc.toString();
+        QTextStream os( &infoFile );
+        os << xml;
+    }
+    infoFile.close();
+}
 
 void KPDFDocument::slotCheckMemory()
 {

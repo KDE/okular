@@ -7,7 +7,6 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress:
--> Dom for bookmarks and saving/loading document settings.
 -> Fix threaded generation. It's.. crashy..
 
 Urgent fixes and items to get ready before 3.4 (special high-priority list):
@@ -91,6 +90,7 @@ More items (first items will enter 'In progress list' first):
 -> FIX: single page mode: add a little margin on pageview (top-bottom edges)
 
 Done (newest features come first):
+-> ADD: Save bookmarks into a file so you they get recovered when opening the same file again (Albert)
 -> FIX: searchline back to work
 -> CHG: DocumentInfo is now a DomTree and the properties dialog is dynamically generated (Tobias)
 -> ADD: Presentation transitions are loaded from the pdf files as well as fullscreen state (Tobias)

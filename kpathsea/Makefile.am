@@ -31,6 +31,8 @@ texpooldir = $(texmf)/web2c
 mfpooldir = $(texmf)/web2c
 mppooldir = $(texmf)/web2c
 
+vartexfonts = /var/tmp/texfonts
+
 # If install_fonts=true, the PostScript/LaserJet TFM and VF files for
 # the builtin fonts get installed in subdirectories of this directory,
 # named for the typeface families of these directories. If you don't
@@ -81,6 +83,7 @@ makevars = prefix=$(prefix) exec_prefix=$(exec_prefix) \
   mppooldir=$(mppooldir) \
   install_fonts=$(install_fonts) \
   dvipsdir=$(dvipsdir) psheaderdir=$(psheaderdir) \
+  vartexfonts=$(vartexfonts) \
   default_texsizes='$(default_texsizes)'
 # End of makevars.make.
 

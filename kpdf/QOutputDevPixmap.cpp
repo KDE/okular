@@ -64,7 +64,7 @@ static inline QColor q_col ( const GfxRGB &rgb )
 // QOutputDevPixmap
 //------------------------------------------------------------------------
 
-QOutputDevPixmap::QOutputDevPixmap () : m_pixmap(0), QOutputDev(0)
+QOutputDevPixmap::QOutputDevPixmap () : QOutputDev(0), m_pixmap(0)
 {
 }
 

@@ -90,6 +90,7 @@ void ThumbnailList::customEvent(QCustomEvent *e)
         QImage *i =  (QImage*)(e -> data());
 
         setThumbnail(m_nextThumbnail, i);
+        delete i;
         m_nextThumbnail++;
         if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();
         else

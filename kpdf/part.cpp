@@ -21,7 +21,7 @@
  */
 PDFPartView::PDFPartView(QWidget* parent, const char* name, QMutex *docMutex) : QWidget(parent, name)
 {
-    PDFPartViewLayout = new QHBoxLayout( this, 11, 6, "PDFPartViewLayout"); 
+    PDFPartViewLayout = new QHBoxLayout( this, 3, 3, "PDFPartViewLayout"); 
 
     pagesList = new ThumbnailList(this, docMutex);
     pagesList->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)7, 0, 0, pagesList->sizePolicy().hasHeightForWidth() ) );

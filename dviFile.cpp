@@ -276,6 +276,7 @@ dvifile::dvifile(QString fname, fontPool *pool)
   page_offset  = 0;
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
+  numberOfExternalNONPSFiles = 0;
   font_pool    = pool;
   sourceSpecialMarker = true;
   

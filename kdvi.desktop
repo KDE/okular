@@ -2,7 +2,7 @@
 Encoding=UTF-8
 GenericName=DVI Viewer
 GenericName[af]=Dvi Aansig
-GenericName[ar]=عرض ملفات DVI
+GenericName[ar]=عارض ملفات DVI
 GenericName[az]=DVI Nümayişçisi
 GenericName[bg]=Преглед на документи DVI
 GenericName[bs]=Preglednik DVI dokumenata
@@ -65,6 +65,7 @@ GenericName[zu]=Umboniseli we DVI
 BinaryPattern=kdvi;
 Name=KDVI
 Name[af]=Kdvi
+Name[ar]=برنامج KDVI
 Name[eo]=DVI-rigardilo
 Name[hi]=के-डीवीआई
 Name[xx]=xxKDVIxx

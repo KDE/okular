@@ -56,6 +56,7 @@ public:
     QPoint mouseGrabPos;
     QPoint mouseStartPos;
     bool mouseOnLink;
+    PageWidget * mouseSelectionWidget;
 
     // other stuff
     QTimer *delayTimer;
@@ -97,6 +98,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseOnLink = false;
+    d->mouseSelectionWidget = 0;
     d->delayTimer = 0;
     d->scrollTimer = 0;
     d->scrollIncrement = 0;
@@ -292,7 +294,19 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             emit rightClick();
         break;
 
-    case MouseSelection: // ? set 1st corner of the selection rect ?
+    case MouseSelection: // set first corner of the selection rect
+        if ( leftButton )
+        {
+            if ( d->mouseSelectionWidget )
+                d->mouseSelectionWidget->clearSelection();
+            d->mouseSelectionWidget = 0;
+            PageWidget * page = pickPageOnPoint( e->x(), e->y() );
+            if ( page )
+            {
+                page->setBeginCorner( e->x() - childX( page ), e->y() - childY( page ) );
+                d->mouseSelectionWidget = page;
+            }
+        }
         break;
 
     case MouseEdit:      // ? place the beginning of [tool] ?
@@ -300,6 +314,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     }
 }
 
+#include <kdebug.h>
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
     bool leftButton = e->button() & LeftButton,
@@ -356,7 +371,14 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
         }
         break;
 
-    case MouseSelection: // ? d->page->setPixmapOverlaySelection( QRect ) ?
+    case MouseSelection: // get text from the page
+        if ( leftButton && d->mouseSelectionWidget )
+        {
+            kdWarning() << d->mouseSelectionWidget->selectedText() << endl;
+            d->mouseSelectionWidget->clearSelection();
+            d->mouseSelectionWidget = 0;
+        }
+        break;
 
     case MouseEdit:      // ? apply [tool] ?
         break;
@@ -390,7 +412,13 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         }
         break;
 
-    case MouseSelection: // ? update selection contour ?
+    case MouseSelection: // set selection's second corner
+        if ( leftButton && d->mouseSelectionWidget )
+            // continue selecting on current page
+            d->mouseSelectionWidget->setEndCorner(
+                e->x() - childX( d->mouseSelectionWidget ),
+                e->y() - childY( d->mouseSelectionWidget ) );
+        break;
 
     case MouseEdit:      // ? update graphics ?
         break;

@@ -44,6 +44,7 @@ public:
     bool isBookmarked() const { return m_bookmarking; }
     bool hasPixmap( int id, int width, int height ) const;
     bool hasSearchPage() const;
+    QString getTextInRect( const QRect & rect ) const;
     bool hasLink( int mouseX, int mouseY ) const;
     const KPDFLink * getLink( int mouseX, int mouseY ) const;
     void drawPixmap( int id, QPainter * p, const QRect & rect, int width, int height ) const;

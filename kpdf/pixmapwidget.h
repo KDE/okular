@@ -12,6 +12,7 @@
 #define _PIXMAPWIDGET_H_
 
 #include <qwidget.h>
+#include <qrect.h>
 
 class KPDFPage;
 
@@ -73,7 +74,7 @@ private:
 
 
 /**
- * @short PageView's editable page. Renders page, outline and overlay GFX.
+ * @short PageView's editable page. Renders page, selection and overlay GFX.
  * ...
  */
 class PageWidget : public PixmapWidget
@@ -81,8 +82,18 @@ class PageWidget : public PixmapWidget
 public:
     PageWidget( QWidget * parent, const KPDFPage * page );
 
+    void clearSelection();
+    void setBeginCorner( int x, int y );
+    void setEndCorner( int x, int y );
+    QString selectedText() const;
+
 protected:
     void paintEvent(QPaintEvent *);
+
+private:
+    int m_selBeginX;
+    int m_selBeginY;
+    QRect m_selectionRect;
 };
 
 #endif

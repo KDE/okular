@@ -131,10 +131,47 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
 /** PageWidget **/
 
 PageWidget::PageWidget( QWidget *parent, const KPDFPage *page )
-    : PixmapWidget( parent, page )
+    : PixmapWidget( parent, page ), m_selBeginX( -1 ), m_selBeginY( -1 )
 {
     // keep bottom equal to right margin
     setPixmapMargins( 1, 1, 4, 4 );
+}
+
+void PageWidget::clearSelection()
+{
+    if ( !m_selectionRect.isNull() )
+        update( m_selectionRect );
+    m_selBeginX = -1;
+    m_selBeginY = -1;
+    m_selectionRect = QRect();
+}
+
+void PageWidget::setBeginCorner( int x, int y )
+{
+    if ( !m_selectionRect.isNull() )
+        update( m_selectionRect );
+    m_selBeginX = x;
+    m_selBeginY = y;
+    m_selectionRect.setCoords( x, y, 1, 1 );
+    update( m_selectionRect );
+}
+
+void PageWidget::setEndCorner( int x, int y )
+{
+    QRect newRect( m_selBeginX, m_selBeginY, x - m_selBeginX, y - m_selBeginY );
+    newRect = newRect.normalize().intersect( QRect( m_marginLeft, m_marginTop, m_pixmapWidth, m_pixmapHeight ) );
+    if ( newRect != m_selectionRect )
+    {
+        if ( !m_selectionRect.isNull() )
+            update( m_selectionRect );
+        m_selectionRect = newRect;
+        update( m_selectionRect );
+    }
+}
+
+QString PageWidget::selectedText() const
+{
+    return m_page->getTextInRect( m_selectionRect );
 }
 
 void PageWidget::paintEvent( QPaintEvent * e )
@@ -182,6 +219,14 @@ void PageWidget::paintEvent( QPaintEvent * e )
     }
 #endif
     p.translate( -m_marginLeft, -m_marginTop );
+
+    // draw selection rect (uses opaque selection)
+    if ( !m_selectionRect.isNull() )
+    {
+        p.setPen( palette().active().highlight().dark(110) );
+        //COOL p.setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
+        p.drawRect( m_selectionRect );
+    }
 
     p.end();
 }

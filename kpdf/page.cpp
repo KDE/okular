@@ -55,7 +55,15 @@ bool KPDFPage::hasPixmap( int id, int width, int height ) const
 
 bool KPDFPage::hasSearchPage() const
 {
-    return (m_text != 0);
+    return ( m_text != 0 );
+}
+
+QString KPDFPage::getTextInRect( const QRect & rect ) const
+{
+    if ( !m_text )
+        return QString();
+    GString * text = m_text->getText( rect.left(), rect.top(), rect.right(), rect.bottom() );
+    return QString( text->getCString() );
 }
 
 bool KPDFPage::hasLink( int mouseX, int mouseY ) const

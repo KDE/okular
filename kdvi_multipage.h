@@ -51,9 +51,6 @@ public:
   /// opens a file
   virtual bool openFile();
 
-  /// sets a zoom factor
-  virtual double setZoom(double z);
-
   /// calculates the zoom needed to fit into a given width
   virtual double zoomForWidth(int width);
 

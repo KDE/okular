@@ -21,7 +21,6 @@
 #include "kviewpart.h"
 #include "performanceMeasurement.h"
 #include "prefs.h"
-#include "zoomlimits.h"
 #include "kprinterwrapper.h"
 #include "dviWidget.h"
 
@@ -338,18 +337,6 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     scrollView()->ensureVisible(scrollView()->width()/2, y );
     emit pageInfo(window->totalPages(), pageNr );
   */
-}
-
-
-double KDVIMultiPage::setZoom(double zoom)
-{
-  if (zoom < ZoomLimits::MinZoom/1000.0)
-    zoom = ZoomLimits::MinZoom/1000.0;
-  if (zoom > ZoomLimits::MaxZoom/1000.0)
-    zoom = ZoomLimits::MaxZoom/1000.0;
-
-  window->setResolution(QPaintDevice::x11AppDpiX()*zoom);
-  return zoom;
 }
 
 

@@ -337,7 +337,7 @@ private:
  /** List of anchors in a document */
  QMap<QString, DVI_Anchor> anchorList;
 
- double            fontPixelPerDVIunit() {return dviFile->cmPerDVIunit * MFResolutions[font_pool->getMetafontMode()]/2.54;};
+ double            fontPixelPerDVIunit() {return dviFile->getCmPerDVIunit() * MFResolutions[font_pool->getMetafontMode()]/2.54;};
 
  int		   ChangesPossible;
  unsigned int	   current_page;

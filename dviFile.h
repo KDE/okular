@@ -41,7 +41,9 @@ class dvifile : public bigEndianByteReader
   
   QIntDict<TeXFontDefinition> tn_table;
 
-  double         cmPerDVIunit;
+  /** Returns the number of centimeters per DVI unit in this DVI
+      file. */
+  double         getCmPerDVIunit(void) {return cmPerDVIunit;};
 
   /** This member is set to zero on construction and can be used by
       other software to count error messages that were printed when
@@ -52,7 +54,6 @@ class dvifile : public bigEndianByteReader
   /** Papersize information read from the dvi-File */
   pageSize       suggestedPageSize;
 
-  float          getMagnification(void) {return (float)magnification / 1000.0;};
 
  private:
   /** process_preamble reads the information in the preamble and
@@ -70,6 +71,8 @@ class dvifile : public bigEndianByteReader
   Q_UINT32       last_page_offset;
   Q_UINT32       beginning_of_postamble;
   Q_UINT32       magnification;
+
+  double         cmPerDVIunit;
 };
 
 #endif //ifndef _DVIFILE_H

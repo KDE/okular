@@ -23,7 +23,7 @@ typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 #include <qstring.h>
 #include <stdio.h>
 
-//#include "dviwin.h"
+#include <../config.h>
 #include "glyph.h"
 
 class TeXFont;
@@ -65,8 +65,6 @@ class TeXFontDefinition {
   ~TeXFontDefinition();
 
   void reset(void);
-
-
   void fontNameReceiver(QString);
 
   // Members for character fonts
@@ -92,13 +90,38 @@ class TeXFontDefinition {
   QIntDict<TeXFontDefinition> vf_table;      // used by (loaded) virtual fonts, list of fonts used by this vf, 
   // acessible by number
   TeXFontDefinition  *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
-  
+
+#ifdef HAVE_FREETYPE
+  const QString &getFullFontName(void) const {return fullFontName;};
+  const QString &getFullEncodingName(void) const {return fullEncodingName;};
+#endif
+  const QString &getFontTypeName(void) const {return fontTypeName;};
+
+#ifdef HAVE_FREETYPE
+  /** For FREETYPE fonts, which use a map file, this field will
+      contain the full name of the font (e.g. 'Computer Modern'). If
+      the name does not exist, or cannot be found, this field will be
+      QString::null. Only subclasses of TeXFont should write into this
+      field. */
+  QString        fullFontName;
+
+  /** For FREETYPE fonts, which use a map file, this field will
+      contain the full name of the font encoding (e.g. 'TexBase1'). If
+      the encoding name does not exist, or cannot be found, this field
+      will be QString::null. Only subclasses of TeXFont should write
+      into this field. */
+  QString        fullEncodingName;
+#endif
+
  private:
   Q_UINT32       checksum;
+
+  /** This will be set to a human-readable description of the font,
+      e.g. "virtual" or "TeX PK", or "Type 1" */
+  QString        fontTypeName;
   
   // Functions related to virtual fonts
   void          read_VF_index(void );
-  
 };
 
 #endif

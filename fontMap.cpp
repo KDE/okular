@@ -49,14 +49,18 @@ fontMap::fontMap()
 	continue;
       
       QString TeXName  = KStringHandler::word(line, (unsigned int)0);
+      QString FullName  = KStringHandler::word(line, (unsigned int)1);
       QString fontFileName = line.section('<', -1);
       QString encodingName = line.section('<', -2, -2).stripWhiteSpace();
       
       fontMapEntry &entry = fontMapEntries[TeXName];
 
       entry.fontFileName = fontFileName;
+      entry.fullFontName = FullName;
       if (encodingName.endsWith(".enc"))
 	entry.fontEncoding = encodingName;
+      else
+	entry.fontEncoding = QString::null;
     }
     file.close();
   } else {
@@ -72,6 +76,17 @@ const QString &fontMap::findFileName(const QString &TeXName)
 
   if (it != fontMapEntries.end())
     return it.data().fontFileName;
+  else
+    return QString::null;
+}
+
+
+const QString &fontMap::findFontName(const QString &TeXName)
+{
+  QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
+
+  if (it != fontMapEntries.end())
+    return it.data().fullFontName;
   else
     return QString::null;
 }

@@ -52,12 +52,17 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc)
       return;
     }
 
+  if (face->family_name != 0)
+    parent->fullFontName = face->family_name;
+
   // Finally, we need to set up the charMap array, which maps TeX
   // character codes to glyph indices in the font. (Remark: the
   // charMap, and the font encoding procedure is necessary, because
   // TeX is only able to address character codes 0-255 while
   // e.g. Type1 fonts may contain several thousands of characters)
   if (enc != 0) {
+    parent->fullEncodingName = enc->encodingFullName.remove("encoding", false);
+
     // An encoding vector is given for this font, i.e. an array of
     // character names (such as: 'parenleft' or 'dotlessj'). We use
     // the FreeType library function 'FT_Get_Name_Index()' to
@@ -136,7 +141,8 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
 
     // Character height in 1/64th of points (reminder: 1 pt = 1/72 inch)
     // Only approximate, may vary from file to file!!!! @@@@@
-    long int characterSize_in_printers_points_by_64 = (long int)(parent->scaled_size_in_DVI_units * 64.0 / (1<<16) + 0.5); 
+
+    long int characterSize_in_printers_points_by_64 = (long int)((64.0*72.0*parent->scaled_size_in_DVI_units*parent->font_pool->getCMperDVIunit())/2.54 + 0.5 ); 
     error = FT_Set_Char_Size(face, 0, characterSize_in_printers_points_by_64, res, res );
     if (error) {
       QString msg = i18n("FreeType reported an error when setting the character size for font file %1.").arg(parent->filename);

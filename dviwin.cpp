@@ -504,6 +504,8 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   if (info != 0)
     info->setDVIData(dviFile);
 
+  font_pool->setCMperDVIunit( dviFile->getCmPerDVIunit() );
+
   // Extract PostScript from the DVI file, and store the PostScript
   // specials in PostScriptDirectory, and the headers in the
   // PostScriptHeaderString.
@@ -575,6 +577,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   reference              = ref;
   return true;
 }
+
 
 void dviWindow::all_fonts_loaded(fontPool *)
 {

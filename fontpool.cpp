@@ -202,29 +202,43 @@ QString fontPool::status(void)
     return i18n("The fontlist is currently empty.");
 
   text.append("<table WIDTH=\"100%\" NOSAVE >");
-  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b></td></tr>").arg(i18n("Name")).arg(i18n("Enlargement")).arg(i18n("Type")).arg(i18n("Comment")) );
+  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b> <td><b>%5</b></td> <td><b>%6</b></td></tr>")
+	       .arg(i18n("TeX Name"))
+	       .arg(i18n("Family"))
+	       .arg(i18n("Zoom"))
+	       .arg(i18n("Type"))
+	       .arg(i18n("Encoding"))
+	       .arg(i18n("Comment")) );
   
  TeXFontDefinition *fontp = fontList.first();
   while ( fontp != 0 ) {
-    QString type;
+    QString errMsg, encoding;
+
+    if (!(fontp->flags & TeXFontDefinition::FONT_VIRTUAL)) {
+#ifdef HAVE_FREETYPE
+      encoding = fontp->getFullEncodingName();
+#endif
+      if (fontp->font != 0) 
+	errMsg = fontp->font->errorMessage;
+      else
+	errMsg = i18n("Font file not found");
+    }
     
-    if (fontp->flags & TeXFontDefinition::FONT_VIRTUAL)
-      type = i18n("virtual");
-    else
-      type = i18n("regular");
+    tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3%</td> <td>%4</td> <td>%5</td> <td>%6</td></tr>")
+      .arg(fontp->fontname)
+      .arg(fontp->getFullFontName())
+      .arg((int)(fontp->enlargement*100 + 0.5))
+      .arg(fontp->getFontTypeName())
+      .arg(encoding)
+      .arg(errMsg);
     
-    if (fontp->font == 0)
-      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(i18n("Font file not found"));
-    else
-      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->font->errorMessage);
     fontp=fontList.next(); 
   }
-
+  
   tmp.sort();
   text.append(tmp.join("\n"));
-
   text.append("</table>");
-
+  
   return text;
 }
 
@@ -279,7 +293,7 @@ void fontPool::start_kpsewhich(void)
 #endif
     return;
   }
-   
+
   // Just make sure that MetafontMode is in the permissible range, so
   // as to avoid segfaults.
   if (MetafontMode >= NumberOfMFModes) {
@@ -289,7 +303,7 @@ void fontPool::start_kpsewhich(void)
 		  << MFResolutions[DefaultMFMode] << "dpi" << endl;
     MetafontMode = DefaultMFMode;
   }
-  
+
   // Set up the kpsewhich process. If pass == 0, look for vf-fonts and
   // disable automatic font generation as vf-fonts can't be
   // generated. If pass == 0, ennable font generation, if it was
@@ -313,7 +327,7 @@ void fontPool::start_kpsewhich(void)
   qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)),
 		this, SLOT(mf_output_receiver(KProcess *, char *, int)));
   emit(new_kpsewhich_run(i18n("Font Generation")));
-
+  
   proc->clearArguments();
   *proc << "kpsewhich";
 #ifdef DEBUG_FONTPOOL
@@ -327,7 +341,7 @@ void fontPool::start_kpsewhich(void)
 #ifdef DEBUG_FONTPOOL
   shellProcessCmdLine += QString("--mode %1").arg(KShellProcess::quote(MFModes[MetafontMode])) + " ";
 #endif
-
+  
   // Enable automatic pk-font generation only in the second pass. (If
   // automatic font generation is switched off, this method will never
   // be called with pass==1)
@@ -563,6 +577,25 @@ void fontPool::kpsewhich_terminated(KProcess *)
     pass = 2;
     start_kpsewhich();
     return;
+  }
+}
+
+
+void fontPool::setCMperDVIunit( double _CMperDVI )
+{
+#ifdef DEBUG_FONTPOOL
+  kdDebug(4300) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )" << endl;
+#endif
+
+  if (CMperDVIunit == _CMperDVI) 
+    return;
+
+  CMperDVIunit = _CMperDVI;
+  
+  TeXFontDefinition *fontp = fontList.first();
+  while(fontp != 0 ) {
+    fontp->setDisplayResolution(displayResolution_in_dpi * fontp->enlargement);
+    fontp=fontList.next();
   }
 }
 

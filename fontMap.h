@@ -92,6 +92,11 @@ class fontMap {
       QString::null if the font could not be found. */
   const QString &findFileName(const QString &TeXName);
   
+  /** find the name of a font (e.g. 'URWBookmanL-DemiBold') from a TeX
+      font name (e.g. 'rpbkd'). This method return a reference to
+      QString::null if the font could not be found. */
+  const QString &findFontName(const QString &TeXName);
+  
   /** find the name of an encoding file for a font (e.g. '8r') from a
       TeX font name (e.g. 'rpbkd'). This method return a reference to
       QString::null if the font could not be found. */

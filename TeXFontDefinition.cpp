@@ -92,6 +92,8 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
 
   flags |= TeXFontDefinition::FONT_LOADED;
   filename = fname;
+  fullFontName = QString::null;
+  fullEncodingName = QString::null;
 
   file = fopen(QFile::encodeName(filename), "r");
   if (file == NULL) {
@@ -109,6 +111,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
       set_char_p = &dviWindow::set_char;
       if ((checksum != 0) && (checksum != font->checksum)) 
 	kdWarning(4300) << i18n("Checksum mismatch for font file %1").arg(filename) << endl;
+      fontTypeName = "TeX PK";
       return;
     }
   
@@ -116,6 +119,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
     if (magic == VF_MAGIC) {
       read_VF_index();
       set_char_p = &dviWindow::set_vf_char;
+      fontTypeName = i18n("TeX virtual");
       return;
     }
 
@@ -124,6 +128,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
       file = 0;
       font = new TeXFont_TFM(this);
       set_char_p = &dviWindow::set_char;
+      fontTypeName = i18n("TeX Font Metric");
       return;
   }
 
@@ -134,7 +139,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
 #ifdef HAVE_FREETYPE
   // Find the encoding for that font
   const QString &enc = font_pool->fontsByTeXName.findEncoding(fontname);
-
+  
   if (enc.isEmpty() == false) {
 #ifdef DEBUG_FONT
     kdDebug() << "Font " << fontname << " uses encoding " << enc << endl;
@@ -148,6 +153,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
   }
 
   set_char_p = &dviWindow::set_char;
+  fontTypeName = i18n("FreeType");
   return;
 #else
   // If we don't have the FreeType library, we should never have

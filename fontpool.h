@@ -72,15 +72,17 @@ Q_OBJECT
   /** Determines if Adobe Type 1 (*.pfb) fonts should be used or not */
 
   /** Sets the resolution of the output device and determines if font hinting should be used. */
-
   void setParameters( unsigned int MetaFontMode, bool makePK, bool useType1Fonts, bool useFontHints );
 
   /** Returns the currently set MetafontMode */
-
   unsigned int getMetafontMode(void) {return MetafontMode;};
 
   /** Sets the resolution of the output device. */
   void setDisplayResolution( double _displayResolution_in_dpi );
+  
+  /** Sets the number of centimeters per DVI unit. */
+  void setCMperDVIunit( double CMperDVI );
+  double getCMperDVIunit(void) {return CMperDVIunit;};
 
   /** If return value is true, font hinting should be used if
       possible */
@@ -243,7 +245,10 @@ public slots:
  
  /** Resolution of the output device. */
  double         displayResolution_in_dpi;
- 
+
+ /** Number of centimeters per DVI unit */
+ double         CMperDVIunit; 
+
  /** This QString is used to collect the output of the MetaFont
      programm while we are waiting for a full screen line */
  QString        MetafontOutput;

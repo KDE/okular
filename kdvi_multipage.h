@@ -3,8 +3,6 @@
 
 
 #include <qstringlist.h>
-
-
 #include <kparts/part.h>
 #include <kparts/browserextension.h>
 #include <kparts/factory.h>
@@ -20,6 +18,7 @@ class QPainter;
 #include "documentPageCache.h"
 #include "dviwin.h"
 #include "history.h"
+#include "selection.h"
 
 
 class KDVIMultiPageFactory : public KParts::Factory
@@ -137,6 +136,8 @@ public slots:
   void setViewMode(int);
 
 protected:
+  selection     userSelection;
+
   history document_history;
 
   /// For internal use only. See the comments in kdvi_multipage.cpp, right
@@ -220,6 +221,10 @@ private:
   /** Used to enable the export menu when a file is successfully
       loaded. */
   void enableActions(bool);
+
+  /** Variable which is used internally by the method
+      getCurrentPageNumber() to provide 'lazy' page numbers. */
+  Q_UINT16 lastCurrentPage;
 };
 
 

@@ -15,21 +15,23 @@
 #include <qcursor.h>
 #include <qpainter.h>
 
+#include "documentPage.h"
 #include "documentPageCache.h"
 #include "documentWidget.h"
+#include "selection.h"
 
 //#define DEBUG_DOCUMENTWIDGET
 
 
-documentWidget::documentWidget(QWidget *parent, documentPageCache *cache, const char *name )
+documentWidget::documentWidget(QWidget *parent, documentPageCache *cache, selection *documentSelection, const char *name )
   : QWidget( parent, name )
 {
   // Variables used in animation.
   animationCounter = 0;
   timerIdent       = 0;
   documentCache    = cache;
+  DVIselection     = documentSelection;
 
-  DVIselection.clear();
   setMouseTracking(true);
   resize(100,100);
 
@@ -39,7 +41,6 @@ documentWidget::documentWidget(QWidget *parent, documentPageCache *cache, const 
 
 void documentWidget::setPageNumber(Q_UINT16 nr)
 {
-  DVIselection.clear();
   pageNr = nr;
   update();
 }
@@ -111,20 +112,17 @@ void documentWidget::paintEvent(QPaintEvent *e)
   }
   
   // Mark selected text.
-  if (DVIselection.selectedTextStart != -1)
-    for(unsigned int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < pageData->textLinkList.size()); i++) {
-      p.setPen( NoPen );
-      p.setBrush( white );
-      p.setRasterOp( Qt::XorROP );
-      p.drawRect(pageData->textLinkList[i].box);
-    }
-}
-
-
-void documentWidget::copyText(void)
-{
-  QApplication::clipboard()->setSelectionMode(false);
-  QApplication::clipboard()->setText(DVIselection.selectedText);
+  
+  if ((DVIselection->page != 0)&&(DVIselection->page == pageNr)) {
+    // @@@ Add paranoid safety check about beginning and end 
+    if (DVIselection->selectedTextStart != -1)
+      for(unsigned int i = DVIselection->selectedTextStart; (i <= DVIselection->selectedTextEnd)&&(i < pageData->textLinkList.size()); i++) {
+	p.setPen( NoPen );
+	p.setBrush( white );
+	p.setRasterOp( Qt::XorROP );
+	p.drawRect(pageData->textLinkList[i].box);
+      }
+  }
 }
 
 
@@ -150,7 +148,10 @@ void documentWidget::selectAll(void)
     selectedText += pageData->textLinkList[i].linkText;
     selectedText += "\n";
   }
-  DVIselection.set(0, pageData->textLinkList.size()-1, selectedText);
+  Q_UINT16 oldPageNr = DVIselection->page;
+  DVIselection->set(pageNr, 0, pageData->textLinkList.size()-1, selectedText);
+  if (oldPageNr != pageNr)
+    connect(DVIselection, SIGNAL(pageChanged(void)), this, SLOT(selectionPageChanged(void)));
 
   // Re-paint
   update();
@@ -317,15 +318,15 @@ void documentWidget::mouseMoveEvent ( QMouseEvent * e )
 	selectedText += "\n";
       }
 
-    if ((selectedTextStart != DVIselection.selectedTextStart) || (selectedTextEnd != DVIselection.selectedTextEnd)) {
+    if ((selectedTextStart != DVIselection->selectedTextStart) || (selectedTextEnd != DVIselection->selectedTextEnd)) {
       if (selectedTextEnd == -1) {
-	DVIselection.clear();
+	DVIselection->clear();
 	update();
       } else {
 	// Find the rectangle that needs to be updated (reduces
 	// flicker)
-	int a = DVIselection.selectedTextStart;
-	int b = DVIselection.selectedTextEnd+1;
+	int a = DVIselection->selectedTextStart;
+	int b = DVIselection->selectedTextEnd+1;
 	int c = selectedTextStart;
 	int d = selectedTextEnd+1;
 
@@ -341,16 +342,27 @@ void documentWidget::mouseMoveEvent ( QMouseEvent * e )
 	    box = box.unite(pageData->textLinkList[i].box);
 	  i++;
 	}
-
+	
 	for(int i=i3; i<i4; i++)
 	  if (i != -1)
 	    box = box.unite(pageData->textLinkList[i].box);
-	DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
+	
+	Q_UINT16 oldPageNr = DVIselection->page;
+	DVIselection->set(pageNr, selectedTextStart, selectedTextEnd, selectedText);
+	if (oldPageNr != pageNr)
+	  connect(DVIselection, SIGNAL(pageChanged(void)), this, SLOT(selectionPageChanged(void)));
+	
 	update(box);
       }
     }
   }
 }
 
+
+void  documentWidget::selectionPageChanged(void)
+{
+  update();
+  disconnect(DVIselection);
+}
 
 #include "documentWidget.moc"

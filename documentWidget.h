@@ -13,32 +13,30 @@
 #include <qtimer.h> 
 #include <qwidget.h> 
 
-#include "documentPage.h"
-#include "selection.h"
-
 class documentPageCache;
 class QPaintEvent;
 class QMouseEvent;
-
+class selection;
 
 class documentWidget : public QWidget
 {
   Q_OBJECT
 
 public:
-  documentWidget(QWidget *parent, documentPageCache *cache, const char *name);
+  documentWidget(QWidget *parent, documentPageCache *cache, selection *documentSelection, const char *name);
 
 
   void          setPageNumber(Q_UINT16 pageNr);
   Q_UINT16      getPageNumber() {return pageNr;};
 
-  selection     DVIselection;
-
 
 public slots:
   void          selectAll(void);
-  void          copyText(void);
   void          flash(int);
+
+  /** This slot is called by the 'selection', when text in a different
+      page is selected */
+  void          selectionPageChanged(void);
 
 
 signals:
@@ -79,6 +77,7 @@ private:
   QRect        selectedRectangle;
 
   documentPageCache *documentCache;
+  selection *DVIselection;
 };
 
 

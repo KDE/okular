@@ -93,7 +93,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   findDialog = 0;
   findNextAction         = 0;
   findPrevAction         = 0;
-  
+  lastCurrentPage = 0;  
+
   window = new dviWindow(scrollView());
   window->setName("DVI renderer");
   currentPage.setRenderer(window);
@@ -129,8 +130,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
     findPrevAction->setEnabled(false);
   }
 
-  //####  copyTextAction     = KStdAction::copy(dviWidget, SLOT(copyText()), actionCollection(), "copy_text");
-  //####  dviWidget->DVIselection.setAction(copyTextAction);
+  copyTextAction     = KStdAction::copy(&userSelection, SLOT(copyText()), actionCollection(), "copy_text");
+  userSelection.setAction(copyTextAction);
   selectAllAction    = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
   new KAction(i18n("Enable All Warnings && Messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
   exportPSAction     = new KAction(i18n("PostScript..."), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
@@ -173,7 +174,7 @@ void KDVIMultiPage::generateDocumentWidgets(void)
   for(Q_UINT16 i=0; i<widgetList.size(); i++) {
     dviWidget = (documentWidget *)(widgetList[i]);
     if (dviWidget == 0) {
-      dviWidget = new documentWidget(scrollView()->viewport(), &currentPage, "singlePageWidget" );
+      dviWidget = new documentWidget(scrollView()->viewport(), &currentPage, &userSelection, "singlePageWidget" );
       widgetList.insert(i, dviWidget);
     }
     dviWidget->setPageNumber(i+1);
@@ -302,16 +303,56 @@ KDVIMultiPage::~KDVIMultiPage()
 
 Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
 {
-  for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-    documentWidget *dviWidget = (documentWidget *)(widgetList[i]);
-    if (dviWidget == 0) 
-      continue;
-    
-    int Y = scrollView()->childY(dviWidget) + dviWidget->height();
-    if (Y > scrollView()->contentsY())
-      return dviWidget->getPageNumber();
+  documentWidget *dviWidget;
+  switch(widgetList.size()) {
+  case 0:
+    lastCurrentPage = 0;
+    return 0;
+  case 1:
+    // If there is only one widget, the matter is easy: just return
+    // the pageNumber of that widget (or 0 if the ptr to the widget is
+    // 0)
+    dviWidget= (documentWidget *)(widgetList[0]);
+    if (dviWidget == 0) {
+      lastCurrentPage = 0;
+      return 0;
+    }
+    lastCurrentPage = dviWidget->getPageNumber();
+    return lastCurrentPage;
+  default:
+    // Check if the page 'lastCurrentPage' is still visible. If yes,
+    // return that. We call that 'lazy page number display': the
+    // displayed page number remains unchanged as long as the
+    // appropriate widget is still visible.
+    if ((widgetList.size() > lastCurrentPage)&&(lastCurrentPage != 0)) {
+      dviWidget = (documentWidget *)(widgetList[lastCurrentPage-1]);
+      if (dviWidget != 0) {
+	if (dviWidget->getPageNumber() == lastCurrentPage) {
+	  // Found the widget. Now check if it is visible
+	  if ((scrollView()->childY(dviWidget) < (scrollView()->contentsY() + scrollView()->visibleHeight())) &&
+	      ((scrollView()->childY(dviWidget)+dviWidget->height()) > scrollView()->contentsY())) {
+	    return lastCurrentPage;
+	  }
+	}
+      }
+    }
+
+    // Otherwise, find the first widget that is visible, and return
+    // the page number of that.
+    for(Q_UINT16 i=0; i<widgetList.size(); i++) {
+      dviWidget = (documentWidget *)(widgetList[i]);
+      if (dviWidget == 0) 
+	continue;
+      
+      int Y = scrollView()->childY(dviWidget) + dviWidget->height();
+      if (Y > scrollView()->contentsY()) {
+	lastCurrentPage = dviWidget->getPageNumber();
+	return lastCurrentPage;
+      }
+    }
   }
-  return 0;
+  lastCurrentPage = 0;
+  return lastCurrentPage;
 }
 
 
@@ -403,8 +444,11 @@ bool KDVIMultiPage::gotoPage(int page)
       return false;
     }
 
-    // Make the widget &ptr visible in the scrollview.
+    // Make the widget &ptr visible in the scrollview. Somehow this
+    // doesn't seem to trigger the signal contentsMoved in the
+    // QScrollview, so that we better set lastCurrentPage ourselves.
     scrollView()->setContentsPos(0, scrollView()->childY(ptr)-5);
+    lastCurrentPage = page+1;
   }
   return true;
 }
@@ -412,6 +456,10 @@ bool KDVIMultiPage::gotoPage(int page)
 
 void KDVIMultiPage::goto_page(int page, int y)
 {
+#ifdef KDVI_MULTIPAGE_DEBUG
+  kdDebug(4300) << "KDVIMultiPage::gotoPage( pageNr=" << page << ", y=" << y <<" )" << endl;
+#endif
+
   if (widgetList.size() == 0) {
     kdError(4300) << "KDVIMultiPage::goto_Page(" << page << ", y) called, but widgetList is empty" << endl;
     return;
@@ -461,8 +509,11 @@ void KDVIMultiPage::goto_page(int page, int y)
       scrollView()->setContentsPos(0, scrollView()->childY(ptr) - (scrollView()->visibleHeight()-ptr->height())/2);
     } else
       scrollView()->ensureVisible(0, scrollView()->childY(ptr)+y);
+    lastCurrentPage = page+1;
+    ptr->update();
   }
   ptr->flash(y);
+  emit(pageInfo(window->dviFile->total_pages, page));
 }
 
 
@@ -485,11 +536,22 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     return;
   }
 
+  QString selectedText("");
+  for(unsigned int i = beginSelection; i < endSelection; i++) {
+    selectedText += pageData->textLinkList[i].linkText;
+    selectedText += "\n";
+  }
+  userSelection.set(pageNr, beginSelection, endSelection, selectedText);
+
+
   Q_UINT16 y = pageData->textLinkList[beginSelection].box.bottom();
-  document_history.add(pageNr,y);
-  
-  scrollView()->ensureVisible(scrollView()->width()/2, y );
-  emit pageInfo(window->totalPages(), pageNr );
+  goto_page(pageNr-1, y);
+  /*
+    document_history.add(pageNr,y);
+    
+    scrollView()->ensureVisible(scrollView()->width()/2, y );
+    emit pageInfo(window->totalPages(), pageNr );
+  */
 }
 
 
@@ -525,7 +587,19 @@ void KDVIMultiPage::setPaperSize(double w, double h)
 
 void KDVIMultiPage::doSelectAll(void)
 {
-  //###  dviWidget->selectAll();
+  switch( widgetList.size() ) {
+  case 0:
+    kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList is empty" << endl;
+    break;
+  case 1:
+    ((documentWidget *)widgetList[0])->selectAll();
+    break;
+  default:
+    if (widgetList.size() < getCurrentPageNumber())
+      kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList.size()=" << widgetList.size() << "and getCurrentPageNumber()=" << getCurrentPageNumber() << endl;
+    else 
+      ((documentWidget *)widgetList[getCurrentPageNumber()-1])->selectAll();
+  }
 }
 
 
@@ -786,15 +860,9 @@ void KDVIMultiPage::reload()
   if (window->correctDVI(m_file)) {
     killTimer(timer_id);
     timer_id = -1;
-    int currsav = window->curr_page();
-
     bool r = window->setFile(m_file, QString::null, false);
     enableActions(r);
 
-    // Go to the old page and tell kviewshell where we are.
-    //###    dviWidget->setPageNumber(currsav);
-    // We don't use "currsav" here, because that page may no longer
-    // exist. In that case, gotoPage already selected another page.
     emit pageInfo(window->totalPages(), window->curr_page()-1 );
   } else {
     if (timer_id == -1)

@@ -487,7 +487,10 @@ void PageView::keyPressEvent( QKeyEvent * e )
                     verticalScrollBar()->subtractPage();
             }
             else if ( d->vectorIndex > 0 )
+	    {
                 d->document->setCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
+                verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
+	    }
             break;
         case Key_Down:
         case Key_PageDown:

@@ -22,10 +22,11 @@ ThumbnailList::ThumbnailList(QWidget *parent, QMutex *docMutex) : QTable(parent)
     setTopMargin(0);
     setHScrollBarMode(QScrollView::AlwaysOff);
     m_selected = 0;
-    
+
     connect(this, SIGNAL(pressed(int, int, int, const QPoint&)), this, SIGNAL(clicked(int)));
     connect(this, SIGNAL(currentChanged(int, int)), this, SIGNAL(clicked(int)));
     connect(this, SIGNAL(currentChanged(int, int)), this, SLOT(changeSelected(int)));
+    m_ignoreNext = false;
 }
 
 ThumbnailList::~ThumbnailList()
@@ -39,7 +40,7 @@ ThumbnailList::~ThumbnailList()
 
 void ThumbnailList::setCurrentItem(int i)
 {
-    setCurrentCell(i, 0); 
+    setCurrentCell(i, 0);
     changeSelected(i);
 }
 
@@ -87,7 +88,7 @@ void ThumbnailList::customEvent(QCustomEvent *e)
     if (e->type() == 65432 && !m_ignoreNext)
     {
         QImage *i =  (QImage*)(e -> data());
-    
+
         setThumbnail(m_nextThumbnail, i);
         m_nextThumbnail++;
         if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();
@@ -127,14 +128,14 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *)
     // that if are here to avoid recursive resizing of death
     // where the user makes the window smaller, that makes appear
     // the vertical scrollbar, that makes thumbnails smaller, and
-    // while they get smaller the vertical scrollbar is not needed 
+    // while they get smaller the vertical scrollbar is not needed
     // and ...
     // ... it also works for when the user makes the window larger
     // and then the scrollbar disappears but that makes thumbnails
     // larger and then scrollbar reappears and ...
     Thumbnail *t;
     if (numRows() == 0) return;
-    
+
     t = dynamic_cast<Thumbnail *>(cellWidget(0, 0));
     if (size().height() <= m_heightLimit)
     {

@@ -107,7 +107,7 @@ namespace KPDF
       void showMarkList( bool );
       void slotReadUp();
       void slotReadDown();
-
+      void slotOpenUrlDropped( const KURL & );
   private:
     PDFDoc*     m_doc;
     PageWidget* m_outputDev;

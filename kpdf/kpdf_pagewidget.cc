@@ -5,7 +5,7 @@
 #include <qpainter.h>
 #include <qmutex.h>
 #include <kdebug.h>
-
+#include <kurldrag.h>
 #include "PDFDoc.h"
 
 #include "kpdf_pagewidget.h"
@@ -259,6 +259,19 @@ namespace KPDF
             verticalScrollBar()->setValue( newValue );
             return true;
         }
+    }
+
+    void PageWidget::dropEvent( QDropEvent* ev )
+    {
+        KURL::List lst;
+        if (  KURLDrag::decode(  ev, lst ) ) {
+            emit urlDropped( lst.first() );
+        }
+    }
+
+    void PageWidget::dragEnterEvent( QDragEnterEvent * ev )
+    {
+        ev->accept();
     }
 
     bool PageWidget::readDown()

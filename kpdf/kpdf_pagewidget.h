@@ -58,6 +58,7 @@ namespace KPDF
         void ZoomOut();
         void ZoomIn();
         void rightClick();
+        void urlDropped( const KURL& );
 
     protected:
         virtual void keyPressEvent( QKeyEvent* );
@@ -66,7 +67,8 @@ namespace KPDF
         void contentsMouseMoveEvent(QMouseEvent*);
         virtual void wheelEvent( QWheelEvent * );
         virtual void drawContents ( QPainter *p, int, int, int, int );
-
+        virtual void dragEnterEvent( QDragEnterEvent* );
+        virtual void dropEvent( QDropEvent* );
     private:
 
         QOutputDevPixmap * m_outputdev;

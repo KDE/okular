@@ -42,7 +42,8 @@ int main(int argc, char** argv)
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
     about.addAuthor("Laurent Montel", 0, "montel@kde.org");
-    about.addAuthor("Albert Astals Cid", I18N_NOOP("xpdf 3.0 integration, thumbnails"), "astals11@terra.es");
+    about.addAuthor("Albert Astals Cid", I18N_NOOP("Current mantainer"), "astals11@terra.es");
+    about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
 
     about.addCredit("Derek Noonburg", I18N_NOOP("Xpdf author"), 0, "http://www.foolabs.com/xpdf/");
     about.addCredit("Marco Martin", I18N_NOOP("Icon"), 0, "m4rt@libero.it");

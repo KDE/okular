@@ -51,7 +51,7 @@ void dviWindow::showFindTextDialog(void)
 						 "formulae, accented characters, and non-english text, such as Russian or Korean, will "
 						 "most likely be messed up completely. Continue anyway?</qt>"),
 					    i18n("Function May Not Work as Expected"),
-					    i18n("Continue"),
+					    KStdGuiItem::cont(),
 					    "warning_search_text_may_not_work") == KMessageBox::Cancel)
       return;
     findDialog = new KEdFind( _parentMPage->scrollView(), "Text find dialog", true);

@@ -13,7 +13,6 @@ In progress on the branch (first item comes first):
 
 Things to do in order to merge in HEAD (first item has highest priority):
 -> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive})
--> fix viewport restoring after zoom (not, fix zoom globally)
 -> link thumbnails view with document
 -> this may be postponed after merge: implementing async document generator using Albert's generator thread
 -> new icons (contest at kde-look has ended and we know the winner. good choice :-)
@@ -40,6 +39,7 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Done (newest feature comes firts):
+-> FIX: zoom preserved when switching modes and flickerless
 -> ADD: Printing as PS instead of as image (Albert)
 -> ADD: Remember page on session logout and put the document in it on session restore (Albert)
 -> ADD: gfx capturing tool

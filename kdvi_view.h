@@ -4,9 +4,10 @@
 #include <kbrowser.h>
 #include <klibloader.h>
 
+class KAction;
 class KInstance;
 class KDVIMiniWidget;
-class KDVIKonqView;
+class KDVIBrowserExtension;
 
 class KDVIFactory : public KLibFactory
 {
@@ -25,50 +26,47 @@ private:
   static KInstance *s_instance;
 };
 
-class KDVIPrintingExtension : public PrintingExtension
+class KDVIPart: public KParts::ReadOnlyPart
 {
   Q_OBJECT
 public:
-    KDVIPrintingExtension( QObject *parent ) :
-        PrintingExtension( parent, "KDVIPrintingExtension" ) {}
-    virtual void print();
-};
-
-class KDVIKonqView: public BrowserView
-{
-  Q_OBJECT
-public:
-  KDVIKonqView( QWidget *parent, const char *name );
-  virtual ~KDVIKonqView();
-
-  virtual void openURL(const QString &url, bool reload = false,
-                       int xOffset = 0, int yOffset = 0);
-
-  virtual QString url();
-  virtual int xOffset();
-  virtual int yOffset();
-  virtual void stop();
+  KDVIPart( QWidget *parent = 0, const char *name = 0 );
+  virtual ~KDVIPart();
 
   KDVIMiniWidget *miniWidget() const { return w; }
+protected:
+  // reimplemented from ReadOnlyPart
+  virtual bool openFile();
 
 protected slots:
-    void slotMessage(const QString &s);
-    void slotFinished(int);
-    void slotRedirection(int, const char *);
-    void slotError(int, int, const char *);
-protected:
-  virtual void resizeEvent(QResizeEvent *);
 
 private:
-  int xOff, yOff;
-  QString urlStr, destStr;
   KDVIMiniWidget *w;
-  int jobId;
+  KDVIBrowserExtension * m_extension;
 
   KAction *startAct, *backAct, *forPageAct, *forwardAct,
       *finishAct, *zoomOutAct, *smallAct, *largeAct, *zoomInAct;
 };
 
+
+class KDVIBrowserExtension : public KParts::BrowserExtension
+{
+  Q_OBJECT
+  friend class KDVIPart; // emits our signals
+public:
+  KDVIBrowserExtension( KDVIPart *parent );
+  virtual ~KDVIBrowserExtension() {}
+
+  /*
+  virtual void setXYOffset( int x, int y );
+  virtual int xOffset();
+  virtual int yOffset();
+  */
+
+public slots:
+  // Automatically detected by konqueror
+  void print();
+};
 
 
 #endif

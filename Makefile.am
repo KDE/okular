@@ -6,20 +6,20 @@ INCLUDES= $(all_includes) -Ikpathsea
 # claim, which subdirectories you want to install
 SUBDIRS = kpathsea . pix
 
-# you can add here more. This one gets installed 
+# you can add here more. This one gets installed
 bin_PROGRAMS = 	kdvi
 lib_LTLIBRARIES=libkdvi.la
 noinst_PROGRAMS = squeeze
 
-# just to make sure, automake makes them 
-METASOURCES = USE_AUTOMOC
+# just to make sure, automake makes them
+METASOURCES = AUTO
 
 # Which sources should be compiled for kdvi.
 libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
 	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp kbrowser.moc.cc\
 	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\
-	special.c util.c vf.c konq_progressproxy.cc
+	special.c util.c vf.c # konq_progressproxy.cc
 
 kdvi_SOURCES = main.cpp
 
@@ -27,7 +27,7 @@ kdvi_SOURCES = main.cpp
 squeeze_SOURCES	= squeeze.c
 
 # the library search path
-libkdvi_la_LDFLAGS = $(all_libraries) -avoid-version -module 
+libkdvi_la_LDFLAGS = $(all_libraries) -avoid-version -module
 libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts kpathsea/libkpathsea.la
 
 kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
@@ -36,14 +36,17 @@ kdvi_LDADD = libkdvi.la
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 	prefs.h print.h printData.h printSetup.h printSetupData.h pushbutton.h\
-	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h konq_progressproxy.h
+	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h # konq_progressproxy.h
 
 messages:
 	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po $(podir)/kdvi.pot
 
 apps_DATA = kdvi.desktop
 
-psheader.c: psheader.txt squeeze 
+partdir = $(kde_datadir)/kdvi
+part_DATA = kdvi_part.rc
+
+psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@
 
 kbrowser.moc.cc: $(kde_includes)/kbrowser.h

@@ -30,8 +30,8 @@ squeeze_SOURCES	= squeeze.c
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h oconfig.h\
 	optiondialog.h xdvi.h 
 
-messages:
-	preparetips > tips.cpp
+messages: rc.cpp
+	$(PREPARETIPS) > tips.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
 	rm -f tips.cpp
 

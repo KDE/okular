@@ -13,7 +13,6 @@
 class QPainter;
 class QPixmap;
 class QWidget;
-class QListBoxItem;
 
 class KAboutData;
 class KAction;
@@ -135,11 +134,13 @@ namespace KPDF
 
     ZoomMode m_zoomMode;
     float    m_zoomFactor;
+    int m_nextThumbnail;
 
   private slots:
     void slotFitToWidthToggled();
 		void redrawPage();
-		void pageClicked ( QListBoxItem * );
+		void pageClicked ( int );
+    void nextThumbnail();
   };
 
   class BrowserExtension : public KParts::BrowserExtension

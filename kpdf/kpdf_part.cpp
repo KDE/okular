@@ -26,6 +26,7 @@
 #include "PDFDoc.h"
 #include "XOutputDev.h"
 #include "QOutputDevKPrinter.h"
+#include "QOutputDevPixmap.h"
 
 // #include "kpdf_canvas.h"
 #include "kpdf_pagewidget.h"
@@ -53,8 +54,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   pdfpartview = new PDFPartView(parentWidget, widgetName);
 
-  connect(pdfpartview->pagesListBox, SIGNAL( clicked ( QListBoxItem * ) ),
-          this, SLOT( pageClicked ( QListBoxItem * ) ));
+  connect(pdfpartview, SIGNAL( clicked ( int ) ), this, SLOT( pageClicked ( int ) ));
 
   m_outputDev = pdfpartview->outputdev;
   m_outputDev->setAcceptDrops( true );
@@ -166,7 +166,7 @@ void Part::slotGoToPage()
     if ( m_doc )
     {
         bool ok = false;
-        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage,
+        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage+1,
                                            1, m_doc->getNumPages(), 1, 10, &ok/*, _part->widget()*/);
         if (ok)
             goToPage( num );
@@ -175,9 +175,9 @@ void Part::slotGoToPage()
 
 void Part::goToPage( int page )
 {
-    m_currentPage = page;
-    pdfpartview->pagesListBox->setCurrentItem(m_currentPage-1);
-    m_outputDev->setPage(m_currentPage);
+    m_currentPage = page-1;
+    pdfpartview->setCurrentItem(m_currentPage);
+    m_outputDev->setPage(m_currentPage+1);
     updateActionPage();
 }
 
@@ -188,10 +188,7 @@ void Part::slotOpenUrlDropped( const KURL &url )
 
 void Part::setFullScreen( bool fs )
 {
-    if ( !fs )
-        pdfpartview->pagesListBox->show();
-    else
-        pdfpartview->pagesListBox->hide();
+    pdfpartview->showPageList(!fs);
 }
 
 
@@ -200,9 +197,9 @@ void Part::updateActionPage()
     if ( m_doc )
     {
         m_firstPage->setEnabled(m_currentPage!=0);
-        m_lastPage->setEnabled(m_currentPage<m_doc->getNumPages());
+        m_lastPage->setEnabled(m_currentPage<m_doc->getNumPages()-1);
         m_prevPage->setEnabled(m_currentPage!=0);
-        m_nextPage->setEnabled(m_currentPage<m_doc->getNumPages());
+        m_nextPage->setEnabled(m_currentPage<m_doc->getNumPages()-1);
     }
     else
     {
@@ -259,19 +256,16 @@ void Part::showScrollBars( bool show )
 
 void Part::showMarkList( bool show )
 {
-    if ( show )
-        pdfpartview->pagesListBox->show();
-    else
-        pdfpartview->pagesListBox->hide();
+    pdfpartview->showPageList(show);
 }
 
 void Part::slotGotoEnd()
 {
     if ( m_doc && m_doc->getNumPages() > 0 );
     {
-        m_currentPage = m_doc->getNumPages();
-        m_outputDev->setPage(m_currentPage);
-        pdfpartview->pagesListBox->setCurrentItem(m_currentPage-1);
+        m_currentPage = m_doc->getNumPages()-1;
+        m_outputDev->setPage(m_currentPage+1);
+        pdfpartview->setCurrentItem(m_currentPage);
         updateActionPage();
     }
 }
@@ -283,18 +277,18 @@ void Part::slotGotoStart()
         m_currentPage = 0;
 
         m_outputDev->setPage(m_currentPage+1);
-        pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+        pdfpartview->setCurrentItem(m_currentPage);
         updateActionPage();
      }
 }
 
 bool Part::nextPage()
 {
-    m_currentPage = pdfpartview->pagesListBox->currentItem() + 1;
+    m_currentPage = pdfpartview->getCurrentItem() + 1;
     if ( m_doc && m_currentPage >= m_doc->getNumPages())
         return false;
 
-    pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+    pdfpartview->setCurrentItem(m_currentPage);
     m_outputDev->nextPage();
     updateActionPage();
     return true;
@@ -312,11 +306,11 @@ void Part::slotPreviousPage()
 
 bool Part::previousPage()
 {
-    m_currentPage = pdfpartview->pagesListBox->currentItem() - 1;
-    if ( m_currentPage  < 0)
+    m_currentPage = pdfpartview->getCurrentItem() - 1;
+    if (m_currentPage < 0)
         return false;
 
-    pdfpartview->pagesListBox->setCurrentItem(m_currentPage );
+    pdfpartview->setCurrentItem(m_currentPage);
     m_outputDev->previousPage();
     updateActionPage();
     return true;
@@ -359,19 +353,35 @@ Part::openFile()
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
-  // fill the listbox with entries for every page
-  pdfpartview->pagesListBox->setUpdatesEnabled(false);
-  pdfpartview->pagesListBox->clear();
-  for (int i = 1; i <= m_doc->getNumPages(); i++)
-  {
-    pdfpartview->pagesListBox->insertItem(QString::number(i));
-  }
-  pdfpartview->pagesListBox->setUpdatesEnabled(true);
-  pdfpartview->pagesListBox->update();
+  // TODO use a qvaluelist<int> to pass aspect ratio?
+  pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
 
   displayPage(1);
+  pdfpartview->setCurrentItem(0);
   m_outputDev->setPDFDocument(m_doc);
+  
+  m_nextThumbnail=1;
+  QTimer::singleShot(10, this, SLOT(nextThumbnail()));
+  
   return true;
+}
+
+void Part::nextThumbnail()
+{
+  // check the user did not change the document and we are trying to render somethiung that
+  // does not exist
+  if (m_nextThumbnail > m_doc->getNumPages()) return;
+  // Pixels per point when the zoomFactor is 1.
+  const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
+  const float ppp = basePpp * m_zoomFactor; // pixels per point
+  QOutputDevPixmap odev;
+  
+  m_doc->displayPage(&odev, m_nextThumbnail, int(ppp * 72.0), 0, true);
+  pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
+    
+  m_nextThumbnail++;
+  if (m_nextThumbnail <= m_doc->getNumPages())
+    QTimer::singleShot(10, this, SLOT(nextThumbnail()));
 }
 
   void
@@ -633,12 +643,10 @@ Part::redrawPage()
 	displayPage(m_currentPage);
 }
 
-void Part::pageClicked ( QListBoxItem * qbi )
+void Part::pageClicked ( int i )
 {
-    if ( !qbi )
-        return;
-    m_currentPage = pdfpartview->pagesListBox->index(qbi)+1;
-    m_outputDev->setPage(m_currentPage);
+    m_currentPage = i;
+    m_outputDev->setPage(m_currentPage+1);
     updateActionPage();
 }
 

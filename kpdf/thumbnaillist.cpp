@@ -8,6 +8,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "thumbnaillist.h"
 #include "thumbnail.h"
 
@@ -67,12 +69,16 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *)
     // where the user makes the window smaller, that makes appear
     // the vertical scrollbar, that makes thumbnails smaller, and
     // while they get smaller the vertical scrollbar is not needed 
-    // and....
+    // and ...
+    // ... it also works for when the user makes the window larger
+    // and then the scrollbar disappears but that makes thumbnails
+    // larger and then scrollbar reappears and ...
     Thumbnail *t;
     if (numRows() == 0) return;
+    
+    t = dynamic_cast<Thumbnail *>(cellWidget(0, 0));
     if (size().height() <= m_heightLimit)
     {
-        t = dynamic_cast<Thumbnail *>(cellWidget(0, 0));
         if (t->getPixmapHeight() > (int)(visibleWidth()*m_ar))
         {
             setColumnWidth(0, visibleWidth());
@@ -85,8 +91,8 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *)
         {
             setColumnWidth(0, visibleWidth());
             resizeThumbnails();
-            if (m_heightLimit == 0 && verticalScrollBar() -> isVisible())
-                m_heightLimit = size().height();
+            if (size().height() > m_heightLimit && verticalScrollBar() -> isVisible())
+                m_heightLimit = (int) ceil(numRows() * ((visibleWidth() + verticalScrollBar() -> width()) * m_ar + t -> labelSizeHintHeight()));
         }
     }
 }

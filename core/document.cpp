@@ -244,6 +244,21 @@ void KPDFDocument::removeObserver( DocumentObserver * pObserver )
         for ( ; it != end; ++it )
             (*it)->deletePixmap( observerId );
 
+        // [MEM] free observer's allocation descriptors
+        QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        while ( aIt != aEnd )
+        {
+            AllocatedPixmap * p = *aIt;
+            if ( p->id == observerId )
+            {
+                aIt = d->allocatedPixmapsFifo.remove( aIt );
+                delete p;
+            }
+            else
+                ++aIt;
+        }
+
         // delete observer entry from the map
         d->observers.remove( observerId );
     }

@@ -234,23 +234,19 @@ bool KDVIMultiPage::openFile()
 {
   document_history.clear();
   emit setStatusBarText(i18n("Loading file %1").arg(m_file));
-
+  
   bool r = window->setFile(m_file);
   setEmbedPostScriptAction();
   if (!r)
     emit setStatusBarText(QString::null);
-
+  
   generateDocumentWidgets();
   emit numberOfPages(window->totalPages());
   enableActions(r);
-
-
+  
   QString reference = url().ref();
   if (!reference.isEmpty())
     gotoPage(window->parseReference(reference));
-
-  kdError() << "A" << endl;
-
   return r;
 }
 
@@ -281,6 +277,7 @@ void KDVIMultiPage::gotoPage(const anchor &a)
 
   goto_page(a.page-1, a.distance_from_top_in_inch * pageCache.getResolution() + 0.5);
 }
+
 
 void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
 {
@@ -512,8 +509,8 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
     dvips_options += "-t a2 ";
     break;
   case KPrinter::A3:
-      dvips_options += "-t a3 ";
-      break;
+    dvips_options += "-t a3 ";
+    break;
   case KPrinter::A5:
     dvips_options += "-t a5 ";
     break;
@@ -641,21 +638,22 @@ void KDVIMultiPage::timerEvent( QTimerEvent * )
   reload();
 }
 
+
 void KDVIMultiPage::reload()
 {
 #ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "Reload file " << m_file << endl;
 #endif
-
-  if (window->correctDVI(m_file)) {
+  
+  if (window->isValidFile(m_file)) {
     killTimer(timer_id);
     timer_id = -1;
     bool r = window->setFile(m_file);
-
+    
     generateDocumentWidgets();
-  emit numberOfPages(window->totalPages());
+    emit numberOfPages(window->totalPages());
     enableActions(r);
-
+    
     emit pageInfo(window->totalPages(), window->curr_page()-1 );
   } else {
     if (timer_id == -1)

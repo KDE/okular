@@ -110,7 +110,7 @@ public:
 
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
-  static bool   correctDVI(const QString &filename);
+  virtual bool  isValidFile(const QString fileName);
 
 
   /** This method will try to parse the reference part of the DVI

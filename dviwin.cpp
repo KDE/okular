@@ -345,8 +345,7 @@ void dviRenderer::embedPostScript(void)
 }
 
 
-
-bool dviRenderer::correctDVI(const QString &filename)
+bool dviRenderer::isValidFile(const QString filename)
 {
   QFile f(filename);
   if (!f.open(IO_ReadOnly))

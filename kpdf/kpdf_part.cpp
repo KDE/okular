@@ -30,7 +30,6 @@
 // #include "kpdf_canvas.h"
 #include "kpdf_pagewidget.h"
 
-
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
 
@@ -108,6 +107,29 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ),
                                     actionCollection(), "goToPage" );
+
+  const double zoomValue[14] = {0.125,0.25,0.3333,0.5,0.6667,0.75,1,1.25,1.50,2,3,4,6,8 };
+
+  m_zoomTo = new KSelectAction(  i18n( "Zoom" ), "zoomTo", 0, actionCollection(), "zoomTo" );
+  connect(  m_zoomTo, SIGNAL(  activated(  const QString & ) ), this, SLOT(  slotZoom( const QString& ) ) );
+  m_zoomTo->setEditable(  true );
+  m_zoomTo->clear();
+
+  QStringList translated;
+  int idx = 0;
+  int cur = 0;
+  for ( int i = 0; i < 14;i++)
+  {
+      translated << QString( "%1%" ).arg( zoomValue[i] * 100.0 );
+      if ( zoomValue[i] == 1.0 )
+          idx = cur;
+      ++cur;
+  }
+
+  m_zoomTo->setItems( translated );
+  m_zoomTo->setCurrentItem( idx );
+
+
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");
   connect( m_outputDev, SIGNAL( ZoomIn() ), SLOT( zoomIn() ));
@@ -124,6 +146,17 @@ Part::~Part()
 {
     delete globalParams;
     writeSettings();
+}
+
+void Part::slotZoom( const QString&nz )
+{
+    QString z = nz;
+    double zoom;
+    z.remove(  z.find(  '%' ), 1 );
+    zoom = KGlobal::locale()->readNumber(  z ) / 100;
+    kdDebug() << "ZOOM = "  << nz << ", setting zoom = " << zoom << endl;
+    m_zoomFactor +=zoom;
+    update();
 }
 
 void Part::slotGoToPage()

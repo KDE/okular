@@ -19,6 +19,7 @@ class KAboutData;
 class KAction;
 class KURL;
 class KToggleAction;
+class KSelectAction;
 
 class LinkAction;
 class LinkDest;
@@ -109,6 +110,8 @@ namespace KPDF
       void slotReadUp();
       void slotReadDown();
       void slotOpenUrlDropped( const KURL & );
+      void slotZoom( const QString& );
+
   private:
     PDFDoc*     m_doc;
     PageWidget* m_outputDev;
@@ -120,7 +123,7 @@ namespace KPDF
       KAction *m_gotoPage;
     KToggleAction* m_showScrollBars;
     KToggleAction* m_showPageList;
-
+      KSelectAction *m_zoomTo;
       KToggleAction* m_fitToWidth;
 
     int   m_currentPage;

@@ -209,6 +209,16 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
     return &docSyn;
 }
 
+bool PDFGenerator::isAllowed( int permissions )
+{
+    bool b = true;
+    if (permissions & Modify) b = b && pdfdoc->okToChange();
+    if (permissions & Copy) b = b && pdfdoc->okToCopy();
+    if (permissions & Print) b = b && pdfdoc->okToPrint();
+    if (permissions & AddNotes) b = b && pdfdoc->okToAddNotes();
+    return b;
+}
+
 bool PDFGenerator::canGeneratePixmap()
 {
     return ready;

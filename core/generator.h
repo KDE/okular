@@ -52,7 +52,7 @@ class Generator : public QObject
 
         // DRM handling
         enum Permissions { Modify = 1, Copy = 2, Print = 4, AddNotes = 8 };
-        virtual bool isAllowed( int /*permisisons*/ ) { return true; }
+        virtual bool isAllowed( int /*permissions*/ ) { return true; }
 
         // page contents generation
         virtual bool canGeneratePixmap() = 0;

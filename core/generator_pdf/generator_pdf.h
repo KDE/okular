@@ -54,6 +54,9 @@ class PDFGenerator : public Generator
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
 
+        // [INHERITED] document informations
+        bool isAllowed( int permissions );
+
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap();
         void generatePixmap( PixmapRequest * request );

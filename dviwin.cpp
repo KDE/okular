@@ -114,8 +114,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   _postscript            = 0;
   pixmap                 = 0;
   findDialog             = 0;
-  selectedTextStart      = -1;
-  selectedTextEnd        = -1;
+  DVIselection.clear();
   reference              = QString::null;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
@@ -589,8 +588,24 @@ void dviWindow::abortExternalProgramm(void)
   export_fileName = "";
 }
 
+void dviWindow::selectAll(void)
+{
+  QString selectedText("");
+  for(int i = 0; i < num_of_used_textlinks; i++) {
+    selectedText += textLinkList[i].linkText;
+    selectedText += "\n";
+  }
+  DVIselection.set(0, num_of_used_textlinks-1, selectedText);
+  repaint();
+}
 
-void dviWindow::findText(void)
+void dviWindow::copyText(void)
+{
+  QApplication::clipboard()->setSelectionMode(false);
+  QApplication::clipboard()->setText(DVIselection.selectedText);
+}
+
+void dviWindow::showFindTextDialog(void)
 {
   if (findDialog == 0) {
     findDialog = new KEdFind(this, "Text find dialog", FALSE);
@@ -613,15 +628,14 @@ void dviWindow::do_findText(void)
   _postscript = FALSE; // Switch off postscript to speed up things...
   QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter. 
 
-
   while(current_page < dviFile->total_pages) {
     foreGroundPaint.begin( &pixie );
     draw_page(); // We don't really care for errors in draw_page(), no error handling here
     foreGroundPaint.end();
 
-    for(int i=selectedTextStart+1; i<num_of_used_textlinks; i++) 
+    for(int i=DVIselection.selectedTextStart+1; i<num_of_used_textlinks; i++) 
       if (textLinkList[i].linkText .find(searchText, 0, case_sensitive) >= 0) {
-	selectedTextStart = selectedTextEnd = i;
+	DVIselection.selectedTextStart = DVIselection.selectedTextEnd = i;
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
 	// re-render the screen.
@@ -631,7 +645,7 @@ void dviWindow::do_findText(void)
 	emit(request_goto_page(j, textLinkList[i].box.bottom() ));
 	return;
       }
-    selectedTextStart = -1;
+    DVIselection.selectedTextStart = -1;
     current_page++;
 
     if ((current_page == dviFile->total_pages)) {
@@ -740,7 +754,7 @@ void dviWindow::drawPage()
   }
 
   // Remove the mouse selection
-  selectedTextStart = selectedTextEnd = -1;
+  DVIselection.clear();
 
   // Stop if there is no dvi-file present
   if ( dviFile == 0 ) {
@@ -879,6 +893,7 @@ void dviWindow::changePageSize()
 
 bool dviWindow::setFile(QString fname, QString ref)
 {
+  DVIselection.clear();
   reference              = QString::null;
   setMouseTracking(true);
 
@@ -1136,7 +1151,6 @@ void dviWindow::timerEvent( QTimerEvent * )
     timerIdent       = 0;
     animationCounter = 0;
   }
-
   repaint();
 }
 
@@ -1182,8 +1196,8 @@ void dviWindow::paintEvent(QPaintEvent *)
     }
 
     // Mark selected text.
-    if (selectedTextStart != -1)
-      for(int i = selectedTextStart; (i <= selectedTextEnd)&&(i < num_of_used_textlinks); i++) {
+    if (DVIselection.selectedTextStart != -1)
+      for(int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < num_of_used_textlinks); i++) {
 	p.setPen( NoPen );
 	p.setBrush( white );
 	p.setRasterOp( Qt::XorROP );
@@ -1215,7 +1229,9 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     
     // Now that we know the rectangle, we have to find out which words
     // intersect it!
-    selectedTextStart = selectedTextEnd = -1;
+    DVIselection.clear();
+    Q_INT32 selectedTextStart, selectedTextEnd;
+
     for(int i=0; i<num_of_used_textlinks; i++) 
       if ( selectedRectangle.intersects(textLinkList[i].box) ) {
 	if (selectedTextStart == -1)
@@ -1230,8 +1246,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	selectedText += "\n";
       }
 
-    QApplication::clipboard()->setSelectionMode(true);
-    QApplication::clipboard()->setText(selectedText);
+    DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
     repaint();
   }
 }

@@ -109,7 +109,7 @@ protected slots:
   void doExportPS();
   void doExportPDF();
   void doExportText();
-  void doFindText();
+  void doSelectAll();
   void about();
   void helpme();
   void bugform();
@@ -126,6 +126,8 @@ private:
   /** Pointers to several actions which are disabled if no file is
       loaded. */
   KAction      *docInfoAction;
+  KAction      *copyTextAction;
+  KAction      *selectAllAction;
   KAction      *findTextAction;
   KAction      *exportPSAction;
   KAction      *exportPDFAction;
@@ -138,5 +140,3 @@ private:
 
 
 #endif
-
-

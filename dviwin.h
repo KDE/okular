@@ -24,6 +24,7 @@
 #include "fontpool.h"
 #include "psgs.h"
 #include "dvi_init.h"
+#include "selection.h"
 
 class fontProgressDialog;
 class infoDialog;
@@ -78,17 +79,16 @@ public:
   void          exportPDF();
   void          exportText();
 
-  void          findText();
-  void          changePageSize();
-  int		totalPages();
+  void          changePageSize(void);
+  int		totalPages(void);
   void		setShowPS( int flag );
-  int		showPS() { return _postscript; };
-  int		curr_page() { return current_page+1; };
+  int		showPS(void) { return _postscript; };
+  int		curr_page(void) { return current_page+1; };
   void		setShowHyperLinks( int flag );
-  int		showHyperLinks() { return _showHyperLinks; };
+  int		showHyperLinks(void) { return _showHyperLinks; };
   void		setEditorCommand( QString command )  { editorCommand = command; };
   void		setMakePK( int flag );
-  int		makePK() { return makepk; };
+  int		makePK(void) { return makepk; };
   void		setMetafontMode( unsigned int );
   void		setPaper(double w, double h);
   bool          correctDVI(QString filename);
@@ -121,11 +121,17 @@ public:
   double       paper_width;  // paper width in centimeters
   double       paper_height; // paper height in centimeters
 
+  selection    DVIselection;
+
  /** Reference part of the URL which describes the filename. */
  QString             reference;
 
 
 public slots:
+  void          selectAll(void);
+  void          copyText(void);
+  void          showFindTextDialog(void);
+
   void          abortExternalProgramm(void);
   bool		setFile(QString fname, QString ref = QString::null);
 
@@ -218,7 +224,6 @@ private:
  /** Methods and classes concerned with the find functionality and
      with selecting text */
  class KEdFind    *findDialog;
- Q_INT32           selectedTextStart, selectedTextEnd;
  QRect             selectedRectangle;
 
  

@@ -77,10 +77,13 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   preferencesChanged();
 
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-  docInfoAction   = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
-  findTextAction = KStdAction::find(this, SLOT(doFindText()), actionCollection(), "find");
-  exportPSAction  = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
-  exportPDFAction = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
+  docInfoAction    = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
+  findTextAction   = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
+  copyTextAction   = KStdAction::copy(window, SLOT(copyText()), actionCollection(), "copy_text");
+  window->DVIselection.setAction(copyTextAction);
+  selectAllAction  = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
+  exportPSAction   = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
+  exportPDFAction  = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
   exportTextAction = new KAction(i18n("Text"), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
   new KAction(i18n("&DVI Options"), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
@@ -219,6 +222,11 @@ void KDVIMultiPage::doInfo(void)
   window->showInfo();
 }
 
+void KDVIMultiPage::doSelectAll(void)
+{
+  window->selectAll();
+}
+
 void KDVIMultiPage::doExportPS(void)
 {
   window->exportPS();
@@ -232,11 +240,6 @@ void KDVIMultiPage::doExportPDF(void)
 void KDVIMultiPage::doExportText(void)
 {
   window->exportText();
-}
-
-void KDVIMultiPage::doFindText(void)
-{
-  window->findText();
 }
 
 void KDVIMultiPage::doSettings()
@@ -498,6 +501,7 @@ void KDVIMultiPage::reload()
 void KDVIMultiPage::enableActions(bool b)
 {
   docInfoAction->setEnabled(b);
+  selectAllAction->setEnabled(b);
   findTextAction->setEnabled(b);
   exportPSAction->setEnabled(b);
   exportPDFAction->setEnabled(b);

@@ -6,8 +6,8 @@
 #include <kdebug.h>
 #include <qapplication.h>
 #include <qclipboard.h>
-#include <history.h>
-#include <history.moc>
+#include "history.h"
+#include "history.moc"
 
 history::history(void)
 {
@@ -27,7 +27,7 @@ void history::add(Q_UINT32 page, Q_UINT32 ypos)
     numItems = 1;
     return;
   } else {
-    if (historyList[currentItem].page == page) 
+    if (historyList[currentItem].page == page)
       return;
 
     if (currentItem == HISTORYLENGTH-1) {

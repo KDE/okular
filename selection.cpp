@@ -8,8 +8,8 @@
 #include <kdebug.h>
 #include <qapplication.h>
 #include <qclipboard.h>
-#include <selection.h>
-#include <selection.moc>
+#include "selection.h"
+#include "selection.moc"
 
 selection::selection(void)
 {

@@ -36,6 +36,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <drag.h>
+#include <kglobal.h>
 
 enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
 enum {ID_OPT_PK = 3, ID_OPT_PS, ID_OPT_MB, ID_OPT_BB, ID_OPT_TB, ID_OPT_SB, ID_OPT_SC };
@@ -257,7 +258,7 @@ void kdvi::makeButtons()
 
 	toolBar = new KToolBar( this );
   
-#define I(f,o,s,h) toolBar->insertButton( kapp->getIconLoader()->loadIcon(f),\
+#define I(f,o,s,h) toolBar->insertButton( KGlobal::iconLoader()->loadIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
 	I( "fileopen.xpm",	this,	fileOpen,	i18n("Open document ...") )

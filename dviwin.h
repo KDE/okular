@@ -176,11 +176,6 @@ public slots:
   void          all_fonts_loaded(fontPool *);
 
 signals:
-  /** Emitted if the status of this class changed internally so that
-      all associated widgets should be repainted, e.g. if a lengthy
-      network download finished. */
-  void          needsRepainting();
-
   /** Emitted to indicate that the prescan phase has ended. */
   void          prescanDone();
 

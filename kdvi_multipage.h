@@ -85,10 +85,6 @@ private:
   virtual DocumentWidget* createDocumentWidget();
    
 public slots:
-  /** Calling this slot will empty the page cache and --as the name
-      suggests-- repaint all visible widgets */
-  void repaintAllVisibleWidgets();
-
   /** Opens a file requestor and saves. This really saves the content
       of the DVI-file, and does not just start a copy job */
   virtual void slotSave();

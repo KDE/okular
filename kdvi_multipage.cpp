@@ -156,52 +156,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 }
 
 
-void KDVIMultiPage::repaintAllVisibleWidgets(void)
-{
-#ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "KDVIMultiPage::repaintAllVisibleWidgets(void) called" << endl;
-#endif
-
-  // Clear the page cache
-  currentPage.clear();
-
-  // Go through the list of widgets and resize them, if necessary
-  bool everResized = false;
-  for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-    DocumentWidget *dviWidget = (DocumentWidget *)(widgetList[i]);
-    if (dviWidget == 0)
-      continue;
-   
-    // Resize, if necessary
-    QSize sop = window->sizeOfPage(i+1);
-    if (sop != dviWidget->size()) {
-      dviWidget->resize( window->sizeOfPage(i+1) );
-      everResized = true;
-    }
-  }
-
-  // If at least one widget was resized, all widgets should be
-  // re-aligned. This will automatically update all necessary
-  // widget. If no widgets were resized, go through the list of
-  // widgets again, and update those that are visible
-  if (everResized == true)
-    scrollView()->centerContents();
-  else {
-    QRect visiblRect(scrollView()->contentsX(), scrollView()->contentsY(), scrollView()->visibleWidth(), scrollView()->visibleHeight());
-    for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-      DocumentWidget *dviWidget = (DocumentWidget *)(widgetList[i]);
-      if (dviWidget == 0)
-    continue;
-    
-      // Check visibility, and update
-      QRect widgetRect(scrollView()->childX(dviWidget), scrollView()->childY(dviWidget), dviWidget->width(), dviWidget->height() );
-      if (widgetRect.intersects(visiblRect))
-    dviWidget->update();
-    }
-  }
-}
-
-
 void KDVIMultiPage::slotEmbedPostScript(void)
 {
   if (window) {

@@ -18,7 +18,6 @@
 #include "../config.h"
 #include "documentWidget.h"
 #include "fontpool.h"
-#include "infodialog.h"
 #include "kdvi_multipage.h"
 #include "kviewpart.h"
 #include "optiondialog.h"
@@ -161,11 +160,13 @@ void KDVIMultiPage::generateDocumentWidgets(void)
 {
   kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) called" << endl;
 
+  widgetList.setAutoDelete(true);
   if (viewModeAction->currentItem() == KVS_SinglePage)
     widgetList.resize(1);
   else
     widgetList.resize(window->totalPages());
-  
+  widgetList.setAutoDelete(false);  
+
   documentWidget *dviWidget;
   for(Q_UINT16 i=0; i<widgetList.size(); i++) {
     dviWidget = (documentWidget *)(widgetList[i]);
@@ -462,16 +463,6 @@ void KDVIMultiPage::goto_page(int page, int y)
       scrollView()->ensureVisible(0, scrollView()->childY(ptr)+y);
   }
   ptr->flash(y);
-
-  //  document_history.add(page,y);
-  /*###  if (y != 0) {
-    //###    dviWidget->setPageNumber(page+1);
-    //###    dviWidget->flash(y);
-  } else
-    dviWidget->setPageNumber(page+1);
-  */
-  //  scrollView()->ensureVisible(scrollView()->width()/2, y );
-  //  emit pageInfo(window->totalPages(), page );
 }
 
 

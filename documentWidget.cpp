@@ -163,6 +163,10 @@ void documentWidget::mousePressEvent ( QMouseEvent * e )
   kdDebug(4300) << "documentWidget::mousePressEvent(...) called" << endl;
 #endif
   
+  // Make sure the event is passed on to the higher-level widget;
+  // otherwise QT gets the coordinated in the mouse move events wrong
+  e->ignore();
+
   // pageNr == 0 indicated an invalid page (e.g. page number not yet
   // set)
   if (pageNr == 0)
@@ -181,6 +185,7 @@ void documentWidget::mousePressEvent ( QMouseEvent * e )
       for(int i=0; i<pageData->hyperLinkList.size(); i++) {
 	if (pageData->hyperLinkList[i].box.contains(e->pos())) {
 	  emit(localLink(pageData->hyperLinkList[i].linkText));
+	  e->accept();
 	  return;
 	}
       }
@@ -192,13 +197,18 @@ void documentWidget::mousePressEvent ( QMouseEvent * e )
     for(unsigned int i=0; i<pageData->sourceHyperLinkList.size(); i++)
       if (pageData->sourceHyperLinkList[i].box.contains(e->pos())) {
 	emit(SRCLink(pageData->sourceHyperLinkList[i].linkText, e));
+	e->accept();
 	return;
       }
 }
 
 
-void documentWidget::mouseReleaseEvent ( QMouseEvent * )
+void documentWidget::mouseReleaseEvent ( QMouseEvent *e )
 {
+  // Make sure the event is passed on to the higher-level widget;
+  // otherwise the mouse cursor in the centeringScrollview is wrong
+  e->ignore();
+
   unsetCursor();
   selectedRectangle.setRect(0,0,0,0);
 }
@@ -263,6 +273,14 @@ void documentWidget::mouseMoveEvent ( QMouseEvent * e )
     if (!clearStatusBarTimer.isActive())
       clearStatusBarTimer.start( 200, TRUE ); // clear the statusbar after 200 msec.
     return;
+  }
+
+  // Left mouse button pressed -> Text copy function
+  if ((e->state() & LeftButton) != 0) {
+    // Pass the mouse event on to the owner of this widget ---under
+    // normal circumstances that is the centeringScrollView which will
+    // then scroll the scrollview contents
+    e->ignore();
   }
 
   // Right mouse button pressed -> Text copy function

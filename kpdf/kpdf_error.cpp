@@ -22,6 +22,7 @@
 
 #include <qstring.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -67,6 +68,7 @@ void CDECL error(int pos, const char *msg, ...) {
   {
   // TODO think a way to avoid threads can popup that
   //  KMessageBox::error(0, emsg);
+    kdDebug() << emsg << endl;
     errors::add(emsg);
   }
 }

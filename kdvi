@@ -1,16 +1,2 @@
 #!/bin/sh
-# Strips -paper option which kviewshell currently does not understand;
-# that way it can be used from LyX: Just edit ~/.lyx/lyxrc and change
-# \view_dvi_command "xdvi"
-#  to
-# \view_dvi_command "kdvi"
-
-params=""
-while test $# -gt 0; do
-  case "$1" in
-    -paper) shift;; # strip -paper option
-    *)   params="$params $1";;
-  esac
-  shift
-done
-kviewshell dvi $params
+kviewshell dvi "$@"

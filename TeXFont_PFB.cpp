@@ -88,9 +88,11 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
   if (fatalErrorInFontLoading == true)
     return g;
   
-  if ((generateCharacterPixmap == true) && (g->shrunkenCharacter.isNull())) {
+  if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter.isNull()) || (color != g->color)) ) {
     int error;
     unsigned int res =  (unsigned int)(parent->displayResolution_in_dpi/parent->enlargement +0.5);
+    g->color = color;
+
     // Character height in 1/64th of points (reminder: 1 pt = 1/72 inch)
     // Only approximate, may vary from file to file!!!! @@@@@
     long int characterSize_in_printers_points_by_64 = (long int)(parent->scaled_size_in_DVI_units * 64.0 / (1<<16) + 0.5); 
@@ -150,9 +152,9 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
       for(int row=0; row<slot->bitmap.rows; row++) {
 	uchar *destScanLine = imgi.scanLine(row);
 	for(int col=0; col<slot->bitmap.width; col++) {
-	  destScanLine[4*col+0] = 0;
-	  destScanLine[4*col+1] = 0;
-	  destScanLine[4*col+2] = 0;
+	  destScanLine[4*col+0] = color.blue();
+	  destScanLine[4*col+1] = color.green();
+	  destScanLine[4*col+2] = color.red();
 	  destScanLine[4*col+3] = srcScanLine[col];
 	}
 	srcScanLine += slot->bitmap.pitch;

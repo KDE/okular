@@ -4,7 +4,7 @@
 // Methods for dviwin which deal with "\special" commands found in the
 // DVI file
 
-// Copyright 2000--2001, Stefan Kebekus (stefan.kebekus@uni-bayreuth.de).
+// Copyright 2000--2003, Stefan Kebekus (kebekus@kde.org).
 
 
 #include <kdebug.h>
@@ -23,11 +23,50 @@
 
 extern QPainter foreGroundPaint;
 
+void dviWindow::printErrorMsgForSpecials(QString msg)
+{
+  if (dviFile->errorCounter < 25) {
+    kdError(4300) << msg << endl;
+    dviFile->errorCounter++;
+    if (dviFile->errorCounter == 25)
+      kdError(4300) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
+  }
+}
+
+// Parses a color specification, as explained in the manual to
+// dvips. If the spec could not be parsed, an invalid color will be
+// returned.
+
+static QColor parseColorSpecification(QString colorSpec)
+{
+  QString specType = KStringHandler::word(colorSpec, (unsigned int)0);
+
+  if (specType.find("rgb") == 0) {
+    bool ok;
+
+    double r = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    if ((ok == false) || (r < 0.0) || (r > 1.0))
+      return QColor();
+    
+    double g = KStringHandler::word(colorSpec, (unsigned int)2).toDouble(&ok);
+    if ((ok == false) || (g < 0.0) || (g > 1.0))
+      return QColor();
+    
+    double b = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    if ((ok == false) || (b < 0.0) || (b > 1.0))
+      return QColor();
+
+    return QColor((int)(r*255.0+0.5), (int)(g*255.0+0.5), (int)(b*255.0+0.5));
+  }
+
+  kdDebug() << "Spec not implemented : " << colorSpec << endl;
+
+  return Qt::green;
+}
+
 void dviWindow::color_special(QString cp)
 {
-  kdDebug(4300) << "Color special: " << cp << endl;
-  
-  // The color specials are ignore during the pre-scan phase, we use
+  // The color specials are ignored during the pre-scan phase, we use
   // them only during rendering
   if (PostScriptOutPutString == NULL) {
     
@@ -37,17 +76,33 @@ void dviWindow::color_special(QString cp)
     
     if (command == "pop") {
       // Take color off the stack
+      if (colorStack.isEmpty())
+	printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Color pop command issued when the color stack is empty." ).
+				  arg(dviFile->filename).arg(current_page));
+      else
+	colorStack.pop();
       return;
     }
     
     if (command == "push") {
       // Get color specification
+      QColor col = parseColorSpecification(KStringHandler::word(cp, "1:"));
       // Set color
+      if (col.isValid()) 
+	colorStack.push(col); 
+      else
+	colorStack.push(Qt::black); 
       return;
     }
     
-    // Get color specification
-    // Set color for the rest of this page
+    // Get color specification and set the color for the rest of this
+    // page
+    QColor col = parseColorSpecification(cp);
+    // Set color
+    if (col.isValid()) 
+      globalColor = col;
+    else
+      globalColor = Qt::black;
     return;
   }
 }
@@ -390,12 +445,6 @@ void dviWindow::applicationDoSpecial(char *cp)
     return;
   }
 
-  if (dviFile->errorCounter < 25) {
-    kdError(4300) << i18n("The special command \"") << special_command << i18n("\" is not implemented.") << endl;
-    dviFile->errorCounter++;
-    if (dviFile->errorCounter == 25)
-      kdError(4300) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
-  }
-
+  printErrorMsgForSpecials(i18n("The special command '%1' is not implemented.").arg(special_command));
   return;
 }

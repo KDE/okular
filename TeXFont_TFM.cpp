@@ -135,7 +135,8 @@ glyph *TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixma
   // This is the address of the glyph that will be returned.
   struct glyph *g = glyphtable+characterCode;
   
-  if ((generateCharacterPixmap) && (g->shrunkenCharacter.isNull())) {
+  if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter.isNull()) || (color != g->color)) ) {
+    g->color = color;
     Q_UINT16 pixelWidth = (Q_UINT16)(parent->displayResolution_in_dpi *
 				     design_size_in_TeX_points.toDouble() *
 				     characterWidth_in_units_of_design_size[characterCode].toDouble() * 100.0/7227.0 + 0.5);
@@ -151,7 +152,7 @@ glyph *TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixma
       pixelHeight = 50;
     
     g->shrunkenCharacter.resize( pixelWidth, pixelHeight );
-    g->shrunkenCharacter.fill(QColor(100, 100, 100));
+    g->shrunkenCharacter.fill(color);
     g->x2 = 0;
     g->y2 = pixelHeight;
   }

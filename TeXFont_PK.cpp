@@ -156,7 +156,10 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
 
   // At this point, g points to a properly loaded character. Generate
   // a smoothly scaled QPixmap if the user asks for it.
-  if ((generateCharacterPixmap == true) && (g->shrunkenCharacter.isNull()) && (characterBitmaps[ch]->w != 0)) {
+  if ((generateCharacterPixmap == true) && 
+      ((g->shrunkenCharacter.isNull()) || (color != g->color)) &&
+      (characterBitmaps[ch]->w != 0)) {
+    g->color = color;
     double shrinkFactor = MFResolutions[parent->font_pool->getMetafontMode()] / parent->displayResolution_in_dpi;
     
     // All is fine? Then we rescale the bitmap in order to produce the
@@ -223,15 +226,6 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     // 8-bit.
     QImage EightBitImage = g->shrunkenCharacter.convertToImage().smoothScale(shrunk_width, shrunk_height).convertDepth(32);
 
-    /*
-    QImage bm((uchar *)(characterBitmaps[ch]->bits), 
-	      characterBitmaps[ch]->bytes_wide*8, (int)characterBitmaps[ch]->h, 
-	      1, (QRgb *)0, 2, QImage::IgnoreEndian);
-    bm.setColor(0, qRgb(0x00,0x00,0x00));
-    bm.setColor(1, qRgb(0xFF,0xFF,0xFF));
-    QImage EightBitImage = bm.smoothScale(shrunk_width, shrunk_height).convertDepth(32);
-    */
-
     // Generate the alpha-channel. This again is highly inefficient.
     // Would anybody please produce a faster routine?
     QImage im32(shrunk_width, shrunk_height, 32);
@@ -240,9 +234,9 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
       Q_UINT8 *srcScanLine  = (Q_UINT8 *)EightBitImage.scanLine(y);
       Q_UINT8 *destScanLine = (Q_UINT8 *)im32.scanLine(y);
       for(Q_UINT16 col=0; col<shrunk_width; col++) {
-	destScanLine[4*col+0] = 0x00;
-	destScanLine[4*col+1] = 0x00;
-	destScanLine[4*col+2] = 0x00;
+	destScanLine[4*col+0] = color.blue();
+	destScanLine[4*col+1] = color.green();
+	destScanLine[4*col+2] = color.red();
 	destScanLine[4*col+3] = 0xFF-srcScanLine[4*col];
       }
     }

@@ -1,0 +1,184 @@
+
+% ------------------------------------------------------------------------
+% File: srcltx.sty
+%       ==========
+%
+% Version 1.002 1999 Sep 3  (modified to change \everypar)
+%               by David Carlisle
+%
+% Version 1.001 1998 Dec 23 (modified to change \output)
+%               by Berthold Horn
+%
+% This package was originally written by Aleksander Simonic (the
+% author of WinEdt Shell) to implement a source file tracking and
+% DVI "SRC" specials for LaTeX.
+%
+% This package comes with no guarantees and no reserved rights.
+% You can use or modify this file at your own risk.
+% ************************************************************************
+% NOTE: TeX commands are case sensitive. You have to use uppercase
+% \Input to take advantage of this package
+%
+% This package supports nested \Input commands...
+% File extension should be specified in \Input!
+%
+% This file should be placed in a directory where your LaTeX is
+% looking for inputs (eg. ...\localtexmf\tex for MiKTeX).
+%
+% If you are writing a book with WinEdt and LaTeX simply
+% include this file and use \include{mychapter} command...
+% This way all the necessary specials for DVI Search and
+% Inverse Search are inserted in your DVI File.
+%
+% WinEdt will be able to track Errors from your LOG file.
+%
+% ************************************************************************
+%
+% Some TeX implementations (eg. MiKTeX 1.20 [or later]) can insert
+% the SRC specials much better than any macro package. Consult your
+% TeX documentation to see if it is better to leave the task to your
+% TeX. You can still use the [inactive] version of this package to
+% take advantage of the re-defined Input commands and thus allowing
+% WinEdt to keep track of errors in included source files.
+%
+% MiKTeX inserts the SRC specials in the DVI file if you start
+% [La]TeX with --src qualifier (see MiKTeX's Manual:
+% ...\texmf\Doc\MiKTeX\MiKTeX.pdf for more info).
+%
+% ************************************************************************
+%
+% * NOTE: Some TeX implementations add the file type to the "\jobname".
+% In that case the definition of the "\MainFile" should be modified to:
+%
+%     \def\MainFile{\jobname} instead of \def\MainFile{\jobname.tex}.
+%
+% ************************************************************************
+%
+% *** Example - Your LaTeX thesis document may look like this:
+%
+%\documentclass[12pt]{report}
+%\usepackage[centertags]{amstex}
+%\usepackage{thesis,newlfont,amsthm}
+%\usepackage[active]{srcltx}
+%%No src specials are written when loading the package by
+%%\usepackage[inactive]{srcltx}
+%
+% .... Preamble ....
+%
+%\begin{document}
+%
+% .... Title, Author etc. ....
+%
+%\WinEdt{?0000} % Do not process any Errors (Overful/Underful Boxes)
+%\beforepreface
+%\WinEdt{?1111} % Process All Types of Errors from here on
+%\include{ABS}
+%\include{ACK}
+%\afterpreface
+%\include{chapter0}
+%\include{chapter1}
+%\include{chapter2}
+%\include{chapter3}
+%\bibliographystyle{amsplain}
+%\bibliography{xbib}
+%\end{document}
+%
+% ------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{srcltx}[1999/10/11 v1.002 DVI Search]
+\newif\ifSRCOK \SRCOKtrue
+\DeclareOption{active}{\SRCOKtrue}
+\DeclareOption{inactive}{\SRCOKfalse}
+\ExecuteOptions{inactive}
+\ProcessOptions
+% ------------------------------------------------------------------------
+\newcount\PAGETOP
+\newcount\LASTLINE
+\global\PAGETOP=1
+\global\LASTLINE=-1
+\gdef\MainFile{\jobname.tex}% ".tex" needed for MiKTeX
+\gdef\CurrentInput{\MainFile}
+\newcount\INPSP
+\global\INPSP=0
+\def\EJECT{\SRC\eject}
+\def\WinEdt#1{\typeout{:#1}}% WinEdt LOG MODE and INPUT
+% ------------------------------------------------------------------------
+%If your are using DVIWIN remove the \space from the definitions below...
+\def\SRC{\ifSRCOK%
+  \ifnum\inputlineno>\LASTLINE%
+    \ifnum\LASTLINE<0%
+      \global\PAGETOP=\inputlineno%
+    \fi%
+    \global\LASTLINE=\inputlineno%
+    \ifnum\INPSP=0%
+      \ifnum\inputlineno>\PAGETOP%
+        \special{src:\the\inputlineno\space\CurrentInput}%
+      \fi%
+    \else%
+      \special{src:\the\inputlineno\space\CurrentInput}%
+    \fi%
+  \fi%
+\fi}
+% ------------------------------------------------------------------------
+\def\PUSH#1{%
+\SRC%
+\ifnum\INPSP=0 \global\let\INPSTACKA=\CurrentInput \else%
+\ifnum\INPSP=1 \global\let\INPSTACKB=\CurrentInput \else%
+\ifnum\INPSP=2 \global\let\INPSTACKC=\CurrentInput \else%
+\ifnum\INPSP=3 \global\let\INPSTACKD=\CurrentInput \else%
+\ifnum\INPSP=4 \global\let\INPSTACKE=\CurrentInput \else%
+\ifnum\INPSP=5 \global\let\INPSTACKF=\CurrentInput \else%
+               \global\let\INPSTACKX=\CurrentInput \fi\fi\fi\fi\fi\fi%
+\gdef\CurrentInput{#1}%
+\WinEdt{<+ \CurrentInput}%
+\global\LASTLINE=0%
+\ifSRCOK\special{src:1\CurrentInput}\fi%
+\global\advance\INPSP by 1}
+%
+\def\POP{%
+\ifnum\INPSP>0 \global\advance\INPSP by -1  \fi%
+\ifnum\INPSP=0 \global\let\CurrentInput=\INPSTACKA \else%
+\ifnum\INPSP=1 \global\let\CurrentInput=\INPSTACKB \else%
+\ifnum\INPSP=2 \global\let\CurrentInput=\INPSTACKC \else%
+\ifnum\INPSP=3 \global\let\CurrentInput=\INPSTACKD \else%
+\ifnum\INPSP=4 \global\let\CurrentInput=\INPSTACKE \else%
+\ifnum\INPSP=5 \global\let\CurrentInput=\INPSTACKF \else%
+               \global\let\CurrentInput=\INPSTACKX \fi\fi\fi\fi\fi\fi%
+\WinEdt{<-}%
+\global\LASTLINE=\inputlineno%
+\global\advance\LASTLINE by -1%
+\SRC}
+% ------------------------------------------------------------------------
+% Dummy Input: can be used as \INPUT{<file>.bbl} to collect \bibitems
+\def\INPUT#1{\relax}
+% ------------------------------------------------------------------------
+% Redefine the original \include command
+\let\OldINCLUDE=\include
+\def\include#1{%Always ".tex" file type!
+\EJECT%
+\PUSH{#1.tex}%
+\OldINCLUDE{#1}%
+\POP}
+% ------------------------------------------------------------------------
+\def\Input#1{%Specify File Extension!
+\PUSH{#1}%
+\input #1%
+\POP}
+% ------------------------------------------------------------------------
+% Note that these have been defined to concatenate the \SRC with
+% whatever those token lists did before, just in case they were not
+% empty token lists.  Of course, later definitions may undo all this...
+\let\originalxxxeverypar\everypar
+\newtoks\everypar
+\originalxxxeverypar{\the\everypar\expandafter\SRC}
+%\everypar\expandafter{\the\everypar\expandafter\SRC}
+% ??? Remove the following line if you encounter problems:
+\everymath\expandafter{\the\everymath\expandafter\SRC}
+% ------------------------------------------------------------------------
+% Redefine the \bibliography command:
+\let\zzzxxxbibliography=\bibliography
+\def\bibliography#1{\PUSH{\jobname.bbl}\zzzxxxbibliography{#1}\POP}
+%------------------------------------------------------------------------
+% Modification to output routine to turn off \SRC while \output is active
+\output\expandafter{\expandafter\SRCOKfalse\the\output}
+%------------------------------------------------------------------------

@@ -5,6 +5,7 @@
 #include <klocale.h>
 #include <malloc.h>
 #include <qapplication.h>
+#include <qfile.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -38,7 +39,7 @@ void font::fontNameReceiver(QString fname)
   kdDebug() << "FONT NAME RECEIVED:" << filename << endl;
 #endif
 
-  file = xdvi_xfopen(filename.latin1(), "r");
+  file = xdvi_xfopen(QFile::encodeName(filename), "r");
   if (file == NULL) {
     kdError() << i18n("Can't find font ") << fontname << "." << endl;
     return;
@@ -153,7 +154,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
       return NULL;	/* previously flagged missing char */
 
     if (file == NULL) {
-      file = xdvi_xfopen(filename.latin1(), "r");
+      file = xdvi_xfopen(QFile::encodeName(filename), "r");
       if (file == NULL) {
 	oops(QString(i18n("Font file disappeared: %1")).arg(filename) );
 	return NULL;

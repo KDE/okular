@@ -455,7 +455,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       bool bigEndian;
       qSysInfo (&wordSize, &bigEndian);
       // Proper error handling? We don't care.
-      FILE *f = fopen(sourceFileName.latin1(),"r+");
+      FILE *f = fopen(QFile::encodeName(sourceFileName),"r+");
       for(Q_UINT32 i=0; i<=dviFile->total_pages; i++) {
 	fseek(f,dviFile->page_offset[i]+1, SEEK_SET);
 	// Write the page number to the file, taking good care of byte
@@ -577,7 +577,7 @@ void dviWindow::abortExternalProgramm(void)
   }
 
   if (export_tmpFileName.isEmpty() != true) {
-    unlink(export_tmpFileName.latin1()); // That should delete the file.
+    unlink(QFile::encodeName(export_tmpFileName)); // That should delete the file.
     export_tmpFileName = "";
   }
 

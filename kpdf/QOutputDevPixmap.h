@@ -19,9 +19,9 @@
 #pragma interface
 #endif
 
-#include "QOutputDev.h"
+#include <qimage.h>
 
-class QPixmap;
+#include "QOutputDev.h"
 
 class QOutputDevPixmap : public QOutputDev {
 public:
@@ -34,16 +34,13 @@ public:
 
 	//----- initialization and control
 
-	// Start a page.
-	virtual void startPage(int pageNum, GfxState *state);
-
 	// End a page
 	virtual void endPage();
 
-	QPixmap * getPixmap() const { return m_pixmap; };
+	QImage getImage() const { return m_image; };
 
 private:
-	QPixmap * m_pixmap;   		// pixmap to draw into
+	QImage m_image;
 };
 
 #endif // QOUTPUTDEVPIXMAP

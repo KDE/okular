@@ -24,7 +24,7 @@ namespace KPDF
         enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
 
     public:
-        PageWidget(QWidget* parent = 0, const char* name = 0);
+        PageWidget(QWidget* parent, const char* name, QMutex *docMutex);
         ~PageWidget();
         void setPDFDocument(PDFDoc*);
         void setPixelsPerPoint(float);
@@ -75,6 +75,7 @@ namespace KPDF
 
         QOutputDevPixmap * m_outputdev;
         PDFDoc* m_doc;
+        QMutex* m_docMutex;
 
         float   m_ppp; // Pixels per point
         float		m_zoomFactor;

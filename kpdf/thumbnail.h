@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid                               *
- *   tsdgeos@terra.es                                                      *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,6 +11,7 @@
 #define THUMBNAIL_H
  
 #include <qcolor.h>
+#include <qimage.h>
 #include <qvbox.h>
 
 class QLabel;
@@ -23,9 +23,9 @@ public:
     Thumbnail(QWidget *parent, const QString &text, const QColor &color, int height, int width);
 
 public slots:
-    void setPixmap(const QPixmap *thumbnail);
-    void setPixmapSize(int height, int width);
-    int getPixmapHeight() const;
+    void setImage(const QImage *thumbnail);
+    void setImageSize(int height, int width);
+    int getImageHeight() const;
     void setSelected(bool selected);
     int labelSizeHintHeight();
 

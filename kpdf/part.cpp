@@ -10,17 +10,17 @@
  *  Constructs a PDFPartView as a child of 'parent', with the
  *  name 'name' 
  */
-PDFPartView::PDFPartView(QWidget* parent, const char* name) : QWidget(parent, name)
+PDFPartView::PDFPartView(QWidget* parent, const char* name, QMutex *docMutex) : QWidget(parent, name)
 {
     PDFPartViewLayout = new QHBoxLayout( this, 11, 6, "PDFPartViewLayout"); 
 
-    pagesList = new ThumbnailList(this);
+    pagesList = new ThumbnailList(this, docMutex);
     pagesList->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)7, 0, 0, pagesList->sizePolicy().hasHeightForWidth() ) );
     pagesList->setMaximumSize( QSize( 75, 32767 ) );
     pagesList->setColumnWidth(0, 75);
     PDFPartViewLayout->addWidget( pagesList );
 
-    outputdev = new KPDF::PageWidget( this, "outputdev" );
+    outputdev = new KPDF::PageWidget( this, "outputdev", docMutex );
     PDFPartViewLayout->addWidget( outputdev );
     resize( QSize(623, 381).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
@@ -46,9 +46,14 @@ void PDFPartView::setPages(int i, double ar)
     pagesList->setPages(i, ar);
 }
 
-void PDFPartView::setThumbnail(int i, const QPixmap *thumbnail)
+void PDFPartView::generateThumbnails(PDFDoc *doc)
 {
-    pagesList->setThumbnail(i, thumbnail);
+    pagesList->generateThumbnails(doc);
+}
+
+void PDFPartView::stopThumbnailGeneration()
+{
+    pagesList->stopThumbnailGeneration();
 }
 
 void PDFPartView::showPageList(bool show)

@@ -1,6 +1,7 @@
 #ifndef _KPDF_PART_H_
 #define _KPDF_PART_H_
 
+#include <qmutex.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qwidget.h>
@@ -131,10 +132,10 @@ namespace KPDF
       KToggleAction* m_fitToWidth;
 
     int   m_currentPage;
+    QMutex m_docMutex;
 
     ZoomMode m_zoomMode;
     float    m_zoomFactor;
-    int m_nextThumbnail;
     
     static unsigned int m_count;
 
@@ -142,7 +143,6 @@ namespace KPDF
     void slotFitToWidthToggled();
 		void redrawPage();
 		void pageClicked ( int );
-    void nextThumbnail();
   };
 
   class BrowserExtension : public KParts::BrowserExtension

@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid                               *
- *   tsdgeos@terra.es                                                      *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,19 +24,21 @@ Thumbnail::Thumbnail(QWidget *parent, const QString &text, const QColor &color, 
     setPaletteBackgroundColor(m_backgroundColor);
 }
 
-void Thumbnail::setPixmap(const QPixmap *thumbnail)
+void Thumbnail::setImage(const QImage *thumbnail)
 {
-    m_original = thumbnail->convertToImage().smoothScale(m_thumbnailW->size());
+    // Happens for the very first thumbnail on scrollbar appear
+    if (thumbnail->size() != m_thumbnailW->size()) m_original = thumbnail->smoothScale(m_thumbnailW->size());
+    else m_original = *thumbnail;
     m_thumbnailW->setPaletteBackgroundPixmap(m_original);
 }
 
-void Thumbnail::setPixmapSize(int height, int width)
+void Thumbnail::setImageSize(int height, int width)
 {
     m_thumbnailW->setFixedHeight(height);
     m_thumbnailW->setFixedWidth(width);
 }
 
-int Thumbnail::getPixmapHeight() const
+int Thumbnail::getImageHeight() const
 {
     return m_thumbnailW->size().height();
 }

@@ -6,25 +6,28 @@
 
 class QHBoxLayout;
 class QPixmap;
+class QMutex;
 
 namespace KPDF {
 class PageWidget;
 }
 
 class ThumbnailList;
+class PDFDoc;
 
 class PDFPartView : public QWidget
 {
     Q_OBJECT
 
 public:
-    PDFPartView(QWidget* parent, const char* name);
+    PDFPartView(QWidget* parent, const char* name, QMutex *docMutex);
     ~PDFPartView();
     
     void setCurrentItem(int i);
     
     void setPages(int i, double ar);
-    void setThumbnail(int i, const QPixmap *thumbnail);
+    void generateThumbnails(PDFDoc *doc);
+    void stopThumbnailGeneration();
     
     void showPageList(bool show);
 

@@ -54,7 +54,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // we need an instance
   setInstance(KPDFPartFactory::instance());
 
-  pdfpartview = new PDFPartView(parentWidget, widgetName);
+  pdfpartview = new PDFPartView(parentWidget, widgetName, &m_docMutex);
 
   connect(pdfpartview, SIGNAL( clicked ( int ) ), this, SLOT( pageClicked ( int ) ));
 
@@ -157,6 +157,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 Part::~Part()
 {
     m_count--; 
+    pdfpartview->stopThumbnailGeneration();
     if (m_count == 0) delete globalParams; 
     writeSettings();
 }
@@ -352,6 +353,7 @@ Part::createAboutData()
   bool
 Part::closeURL()
 {
+  pdfpartview->stopThumbnailGeneration();
   delete m_doc;
   m_doc = 0;
 
@@ -378,34 +380,14 @@ Part::openFile()
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?
     pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
+    pdfpartview->generateThumbnails(m_doc);
 
     displayPage(1);
     pdfpartview->setCurrentItem(0);
     m_outputDev->setPDFDocument(m_doc);
-
-    m_nextThumbnail=1;
-    QTimer::singleShot(10, this, SLOT(nextThumbnail()));
   }
 
   return true;
-}
-
-void Part::nextThumbnail()
-{
-  // check the user did not change the document and we are trying to render somethiung that
-  // does not exist
-  if (m_nextThumbnail > m_doc->getNumPages()) return;
-  SplashColor paperColor;
-  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-  QOutputDevPixmap odev(paperColor);
-  odev.startDoc(m_doc->getXRef());
-
-  m_doc->displayPage(&odev, m_nextThumbnail, QPaintDevice::x11AppDpiX(), QPaintDevice::x11AppDpiY(), 0, true, true);
-  pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
-
-  m_nextThumbnail++;
-  if (m_nextThumbnail <= m_doc->getNumPages())
-    QTimer::singleShot(10, this, SLOT(nextThumbnail()));
 }
 
   void
@@ -704,9 +686,11 @@ void Part::printPreview()
   int max = m_doc->getNumPages();
   for ( int i = 1; i <= max; ++i )
   {
+    m_docMutex.lock();
     m_doc->displayPage( &printdev, i, printer.resolution(), printer.resolution(), 0, true, true );
     if ( i != max )
       printer.newPage();
+    m_docMutex.unlock();
   }
 }
 
@@ -720,9 +704,11 @@ void Part::doPrint( KPrinter& printer )
   QValueList<int> pages = printer.pageList();
   for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
   {
+    m_docMutex.lock();
     m_doc->displayPage( &printdev, *i, printer.resolution(), printer.resolution(), 0, true, true );
     if ( ++i != pages.end() )
       printer.newPage();
+    m_docMutex.unlock();
   }
 }
 

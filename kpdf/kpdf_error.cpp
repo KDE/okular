@@ -52,7 +52,7 @@ void CDECL error(int pos, const char *msg, ...) {
     return;
   }
   if (pos >= 0) {
-    emsg = i18n("Error (%d): ").arg(pos);
+    emsg = i18n("Error (%1): ").arg(pos);
   } else {
     emsg = i18n("Error: ");
   }

@@ -80,7 +80,6 @@
   </entry>
   <entry key="ZoomMode" type="UInt" >
     <default>0</default>
-    <min>0</min>
     <max>2</max>
   </entry>
   <entry key="ZoomFactor" type="Double" >

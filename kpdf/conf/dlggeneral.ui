@@ -12,9 +12,6 @@
             <height>139</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>DlgGeneral</string>
-    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -28,9 +25,6 @@
             </property>
             <property name="text">
                 <string>Show &amp;left panel</string>
-            </property>
-            <property name="accel">
-                <string>Alt+L</string>
             </property>
         </widget>
         <widget class="QLayoutWidget">
@@ -68,9 +62,6 @@
                     <property name="text">
                         <string>Show &amp;search bar in thumbnails list</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+S</string>
-                    </property>
                 </widget>
             </hbox>
         </widget>
@@ -81,9 +72,6 @@
             <property name="text">
                 <string>Show scroll&amp;bars</string>
             </property>
-            <property name="accel">
-                <string>Alt+B</string>
-            </property>
         </widget>
         <widget class="QCheckBox">
             <property name="name">
@@ -91,9 +79,6 @@
             </property>
             <property name="text">
                 <string>Hide &amp;hints and info messages</string>
-            </property>
-            <property name="accel">
-                <string>Alt+H</string>
             </property>
         </widget>
         <widget class="QLayoutWidget">

@@ -12,9 +12,6 @@
             <height>192</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>DlgPerformance</string>
-    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -48,9 +45,6 @@
                     <property name="text">
                         <string>&amp;Low</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+L</string>
-                    </property>
                 </widget>
                 <widget class="QRadioButton">
                     <property name="name">
@@ -59,9 +53,6 @@
                     <property name="text">
                         <string>&amp;Normal (default)</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
-                    </property>
                 </widget>
                 <widget class="QRadioButton">
                     <property name="name">
@@ -69,9 +60,6 @@
                     </property>
                     <property name="text">
                         <string>&amp;Aggressive</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
                     </property>
                 </widget>
                 <widget class="QLabel">
@@ -115,9 +103,6 @@
                     </property>
                     <property name="text">
                         <string>Disable &amp;transparency (see help)</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+T</string>
                     </property>
                 </widget>
             </vbox>

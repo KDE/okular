@@ -173,7 +173,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
     KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 
-	m_showProperties = new KAction(i18n("Properties"), 0, this, SLOT(slotShowProperties()), ac, "properties");
+	m_showProperties = new KAction(i18n("Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
 
     // attach the actions of the 2 children widgets too

@@ -6,20 +6,20 @@ INCLUDES= -I$(top_srcdir)/kviewshell $(all_includes)
 SUBDIRS = . pix
 
 # you can add here more. This one gets installed
-kde_module_LTLIBRARIES= kdvipart.la
+kde_module_LTLIBRARIES= kparts_kdvi.la
 noinst_PROGRAMS = squeeze
 
 # just to make sure, automake makes them
 METASOURCES = AUTO
 
-kdvipart_la_SOURCES = kdvi_multipage.cpp \
+kparts_kdvi_la_SOURCES = kdvi_multipage.cpp \
 	dviwin.cpp bigEndianByteReader.cpp optiondialog.cpp infodialog.cpp\
 	psheader.c dviwin_draw.cpp dviwin_export.cpp dviwin_textsearch.cpp dvi_init.cpp\
 	font.cpp fontpool.cpp fontprogress.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp selection.cpp history.cpp
 
-kdvipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-kdvipart_la_LIBADD = -lkdeprint -lkparts \
+kparts_kdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+kparts_kdvi_la_LIBADD = -lkdeprint -lkparts \
 			$(top_builddir)/kviewshell/libkmultipage.la
 
 # Which sources should be compiled for squeeze.

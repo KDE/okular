@@ -131,22 +131,22 @@ bool KDVIMultiPage::openFile()
   bool r = window->setFile(m_file,url().ref());
   if (!r)
     emit setStatusBarText(QString::null);
-  window->changePageSize(); //  This also calles drawPage();
+  window->changePageSize(); //  This also calles drawPage(); @@@
+
   emit numberOfPages(window->totalPages());
   enableActions(r);
-
   return r;
 }
 
 
 void KDVIMultiPage::jumpToReference(QString reference)
 {
-  kdError() << "Reference: " << reference << endl;
   if (window != 0) {
     window->reference = reference;
     window->all_fonts_loaded(); // In spite of its name, this method tries to parse the reference.
   }
 }
+
 
 void KDVIMultiPage::contents_of_dviwin_changed(void)
 {
@@ -186,6 +186,7 @@ void KDVIMultiPage::goto_page(int page, int y)
   else
     window->gotoPage(page+1);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
+
   emit pageInfo(window->totalPages(), page );
 }
 

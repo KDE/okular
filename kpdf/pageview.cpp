@@ -546,28 +546,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
             }
             else // only hovering the page
             {
-                // detect the underlaying page (if present)
-                PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-                if ( pageItem )
-                {
-                    int pageX = e->x() - pageItem->geometry().left(),
-                        pageY = e->y() - pageItem->geometry().top();
-
-                    // check if over a KPDFPageRect
-                    bool onRect = pageItem->page()->hasRect( pageX, pageY );
-                    if ( onRect != d->mouseOnRect )
-                        setCursor( (d->mouseOnRect = onRect) ? pointingHandCursor : arrowCursor );
-                }
-                else
-                {
-                  // if there's no page over the cursor and we were showing the pointingHandCursor
-                  // go back to the normal one
-                  if ( d->mouseOnRect )
-                  {
-                    d->mouseOnRect = false;
-                    setCursor( arrowCursor );
-                  }
-                }
+                updateCursor( e->pos() );
             }
             break;
 
@@ -826,6 +805,9 @@ void PageView::wheelEvent( QWheelEvent *e )
     }
     else
         QScrollView::wheelEvent( e );
+    
+    QPoint cp = viewportToContents(e->pos());
+    updateCursor(cp);
 }
 
 void PageView::dragEnterEvent( QDragEnterEvent * ev )
@@ -1118,6 +1100,32 @@ void PageView::updateZoomText()
     else if ( d->zoomMode == ZoomFitText )
         selIdx = 2;
     d->aZoom->setCurrentItem( selIdx );
+}
+
+void PageView::updateCursor( const QPoint &p )
+{
+    // detect the underlaying page (if present)
+    PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
+    if ( pageItem )
+    {
+        int pageX = p.x() - pageItem->geometry().left(),
+            pageY = p.y() - pageItem->geometry().top();
+
+        // check if over a KPDFPageRect
+        bool onRect = pageItem->page()->hasLink( pageX, pageY );
+        if ( onRect != d->mouseOnRect )
+            setCursor( (d->mouseOnRect = onRect) ? pointingHandCursor : arrowCursor );
+    }
+    else
+    {
+        // if there's no page over the cursor and we were showing the pointingHandCursor
+        // go back to the normal one
+        if ( d->mouseOnRect )
+        {
+            d->mouseOnRect = false;
+            setCursor( arrowCursor );
+        }
+    }
 }
 
 //BEGIN private SLOTS

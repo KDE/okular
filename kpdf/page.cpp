@@ -75,6 +75,13 @@ bool KPDFPage::hasRect( int mouseX, int mouseY ) const
     return false;
 }
 
+bool KPDFPage::hasLink( int mouseX, int mouseY ) const
+{
+    const KPDFPageRect *r;
+    r = getRect( mouseX, mouseY);
+    return r && r->pointerType() == KPDFPageRect::Link;
+}
+
 const KPDFPageRect * KPDFPage::getRect( int mouseX, int mouseY ) const
 {
     QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();

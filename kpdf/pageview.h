@@ -100,6 +100,8 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
+        // updates cursor
+        void updateCursor( const QPoint &p );
 
         // don't want to expose classes in here
         class PageViewPrivate * d;

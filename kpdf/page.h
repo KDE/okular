@@ -48,6 +48,7 @@ class KPDFPage
         bool hasPixmap( int id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
         bool hasRect( int mouseX, int mouseY ) const;
+        bool hasLink( int mouseX, int mouseY ) const;
         const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
         const QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
 

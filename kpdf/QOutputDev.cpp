@@ -736,7 +736,7 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 
 	GfxRGB rgb;
 	state-> getFillRGB ( &rgb );
-	uint val = ( round ( rgb. r * 255 ) & 0xff ) << 16 | ( round ( rgb. g * 255 ) & 0xff ) << 8 | ( round ( rgb. b * 255 ) & 0xff );
+	uint val = ( int( round ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( round ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( round ( rgb. b * 255 ) ) & 0xff );
 
 
 	QImage img ( width, height, 32 );
@@ -882,7 +882,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 			imgStr-> getPixel ( pixBuf );
 			colorMap-> getRGB ( pixBuf, &rgb );
 
-			uint val = ( round ( rgb. r * 255 ) & 0xff ) << 16 | ( round ( rgb. g * 255 ) & 0xff ) << 8 | ( round ( rgb. b * 255 ) & 0xff );
+			uint val = ( int( round ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( round ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( round ( rgb. b * 255 ) ) & 0xff );
 
 			if ( maskColors ) {
 				for ( int k = 0; k < nComps; ++k ) {

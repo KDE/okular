@@ -77,6 +77,7 @@ More items (first items will enter 'In progress list' first):
 -> fullscreen pdf view (presentations-like) with some gfx tools
 -> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
+-> add search on the toc widget (a prune on type lineedit like in thumbnails widget)
 
 Done (newest feature comes firts):
 -> FIX: FixPack1 [dyn_zoom repaints, initial panel width, zoom_lineedit focus proxy, searchwidget refactor{thumbs restoring on clear, buttons size, less code}, hilight bookmarked thumbnails]

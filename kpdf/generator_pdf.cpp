@@ -484,7 +484,6 @@ QString GeneratorPDF::getDocumentDate( const QString & data ) const
             s += 2;
         if ( sscanf( s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
         {
-            kdDebug() << s << endl;
             QDate d( year, mon, day );  //CHECK: it was mon-1, Jan->0 (??)
             QTime t( hour, min, sec );
             if ( d.isValid() && t.isValid() )

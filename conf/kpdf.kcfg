@@ -67,7 +67,7 @@
   <entry key="ShowScrollBars" type="Bool" >
    <default>true</default>
   </entry>
-  <entry key="ViewContinous" type="Bool" >
+  <entry key="ViewContinuous" type="Bool" >
    <default>true</default>
   </entry>
   <entry key="ViewColumns" type="UInt" >

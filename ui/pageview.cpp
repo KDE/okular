@@ -65,7 +65,7 @@ public:
     QValueVector< PageViewItem * > items;
     QValueList< PageViewItem * > visibleItems;
 
-    // view layout (columns and continous in Settings), zoom and mouse
+    // view layout (columns and continuous in Settings), zoom and mouse
     PageView::ZoomMode zoomMode;
     float zoomFactor;
     PageView::MouseMode mouseMode;
@@ -104,7 +104,7 @@ public:
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomFitText;
     KToggleAction * aViewTwoPages;
-    KToggleAction * aViewContinous;
+    KToggleAction * aViewContinuous;
     KAction * aPrevAction;
 };
 
@@ -115,7 +115,7 @@ public:
  *  160 - constructor and creating actions plus their connected slots (empty stuff)
  *  70  - DocumentObserver inherited methodes (important)
  *  550 - events: mouse, keyboard, drag/drop
- *  170 - slotRelayoutPages: set contents of the scrollview on continous/single modes
+ *  170 - slotRelayoutPages: set contents of the scrollview on continuous/single modes
  *  100 - zoom: zooming pages in different ways, keeping update the toolbar actions, etc..
  *  other misc functions: only slotRequestVisiblePixmaps and pickItemOnPoint noticeable,
  * and many insignificant stuff like this comment :-)
@@ -198,9 +198,9 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aViewTwoPages, SIGNAL( toggled( bool ) ), SLOT( slotTwoPagesToggled( bool ) ) );
     d->aViewTwoPages->setChecked( Settings::viewColumns() > 1 );
 
-    d->aViewContinous = new KToggleAction( i18n("&Continous"), "view_text", 0, ac, "view_continous" );
-    connect( d->aViewContinous, SIGNAL( toggled( bool ) ), SLOT( slotContinousToggled( bool ) ) );
-    d->aViewContinous->setChecked( Settings::viewContinous() );
+    d->aViewContinuous = new KToggleAction( i18n("&Continuous"), "view_text", 0, ac, "view_continuous" );
+    connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
+    d->aViewContinuous->setChecked( Settings::viewContinuous() );
 
     // Mouse-Mode actions
     d->aMouseNormal = new KRadioAction( i18n("&Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
@@ -304,7 +304,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
 
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
-    if ( !Settings::viewContinous() || d->dirtyLayout )
+    if ( !Settings::viewContinuous() || d->dirtyLayout )
         slotRelayoutPages();
 
     // restore viewport center or use default {x-center,v-top} alignment
@@ -629,7 +629,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
         case Key_Up:
         case Key_PageUp:
             // if in single page mode and at the top of the screen, go to previous page
-            if ( Settings::viewContinous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
+            if ( Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
             {
                 if ( e->key() == Key_Up )
                     verticalScrollBar()->subtractLine();
@@ -649,7 +649,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
         case Key_Down:
         case Key_PageDown:
             // if in single page mode and at the bottom of the screen, go to next page
-            if ( Settings::viewContinous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
+            if ( Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
             {
                 if ( e->key() == Key_Down )
                     verticalScrollBar()->addLine();
@@ -1087,7 +1087,7 @@ void PageView::wheelEvent( QWheelEvent *e )
         else
             slotZoomIn();
     }
-    else if ( delta <= -120 && !Settings::viewContinous() && vScroll == verticalScrollBar()->maxValue() )
+    else if ( delta <= -120 && !Settings::viewContinuous() && vScroll == verticalScrollBar()->maxValue() )
     {
         // go to next page
         if ( d->document->currentPage() < d->items.count() - 1 )
@@ -1100,7 +1100,7 @@ void PageView::wheelEvent( QWheelEvent *e )
             d->document->setViewport( newViewport );
         }
     }
-    else if ( delta >= 120 && !Settings::viewContinous() && vScroll == verticalScrollBar()->minValue() )
+    else if ( delta >= 120 && !Settings::viewContinuous() && vScroll == verticalScrollBar()->minValue() )
     {
         // go to prev page
         if ( d->document->currentPage() > 0 )
@@ -1446,7 +1446,7 @@ void PageView::updateCursor( const QPoint &p )
 
 //BEGIN private SLOTS
 void PageView::slotRelayoutPages()
-// called by: notifySetup, viewportResizeEvent, slotTwoPagesToggled, slotContinousToggled, updateZoom
+// called by: notifySetup, viewportResizeEvent, slotTwoPagesToggled, slotContinuousToggled, updateZoom
 {
     // set an empty container if we have no pages
     int pageCount = d->items.count();
@@ -1473,8 +1473,8 @@ void PageView::slotRelayoutPages()
         fullHeight = 0;
     QRect viewportRect( contentsX(), contentsY(), viewportWidth, viewportHeight );
 
-    // set all items geometry and resize contents. handle 'continous' and 'single' modes separately
-    if ( Settings::viewContinous() )
+    // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
+    if ( Settings::viewContinuous() )
     {
         // Here we find out column's width and row's height to compute a table
         // so we can place widgets 'centered in virtual cells'.
@@ -1540,7 +1540,7 @@ void PageView::slotRelayoutPages()
         delete [] colWidth;
         delete [] rowHeight;
     }
-    else // viewContinous is FALSE
+    else // viewContinuous is FALSE
     {
         PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
 
@@ -1842,11 +1842,11 @@ void PageView::slotTwoPagesToggled( bool on )
     }
 }
 
-void PageView::slotContinousToggled( bool on )
+void PageView::slotContinuousToggled( bool on )
 {
-    if ( Settings::viewContinous() != on )
+    if ( Settings::viewContinuous() != on )
     {
-        Settings::setViewContinous( on );
+        Settings::setViewContinuous( on );
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }

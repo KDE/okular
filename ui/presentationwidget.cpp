@@ -483,7 +483,7 @@ void PresentationWidget::generateOverlay()
     // draw PIE SLICES in blue levels (the levels will then be the alpha component)
     int pages = m_document->pages();
     if ( pages > 36 )
-    {   // draw continous slices
+    {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
         pixmapPainter.setPen( 0x20 );
         pixmapPainter.setBrush( 0x10 );

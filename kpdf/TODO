@@ -2,21 +2,24 @@ Personal Albert's list
 -> make links functional (done in HEAD)
 
 More items
--> multiple pages per view
--> continous mode
--> screen editing: framework
--> screen editing: tools
+-> screen editing (annotations): framework (BR67300)
+-> screen editing (annotations): tools (BR67300)
 -> export all text in plain_text/html
 -> extract(export?) images
 -> implement history (mainly for actionNamed)
 -> zoom: fit text (with configurable margin)
+-> automatic online dictionaries / translators (BR80338)
+-> session support: restoring page location (BR82589)
+-> nice label box to the top to display messages to user (for example session restoring,etc..)
+-> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 -> new icons (contest at kde-look that will end in 2004-Oct-01)
 
 Porting / In progress on the branch (first item comes first):
+-> continous mode (BR74435)
+-> multiple pages per view (BR80164)
+-> zoom buttons in sync with text (BR69092)
 -> porting Albert's link following
 -> implementing async document generator using Albert's thread as the generation thread
--> better zoom handling
--> (store observers data into pages?)
 
 Done (sorted by inv.time)
 -> added the option to open password protected files (from head)
@@ -36,7 +39,7 @@ Done (sorted by inv.time)
 -> use local instead of X memory for thumbnails (..)
 -> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
 
-Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317:
+Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 and IRC:
  copy text from rectangular blocks
  text copy/selection in wordprocessor-style
  ruler
@@ -46,4 +49,15 @@ Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317:
  hyperlinks (albert's work needs to be forward ported)
  integration with a voice synthesizer
  export in other formats keeping formatting (a dream.. expect for PNG :-)
+ <theICEBear> pdf forms support.... :D if at all possible
+
+Bugs to close after merging to HEAD
+BR88661: (thumbnail prev. is blocking) Not only it's threaded, but it generates
+         thumbnails only for the few visible items inside the thumbnaillist.
+BR72347: (search doesn't work) Closeable NOW. The feature is already on HEAD.
+BR72165: (showing a "scanned document PDF" is very slow). By running many tests
+         on xpdf and kpdf_experiments, I measured 5-15% speed loss (due to
+	 internal pixmap conversions). No noticeable difference.
+BR89835: (PDF pages to be aligned centrally). Done in branch.
+BR90026: (crash). Can't reproduce on branch.
 

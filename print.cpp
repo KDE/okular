@@ -272,7 +272,7 @@ void print::okPressed()
 
 	cmd += " &";
 
-	KDEBUG( KDEBUG_INFO, 0, QString( "About to run: " + cmd ) );
+	kdebug(KDEBUG_INFO, 4300,"About to run: %s", cmd);
 	system( cmd );
 	accept();
 }

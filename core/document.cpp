@@ -929,65 +929,90 @@ void KPDFDocument::loadDocumentInfo()
 {
     //kdDebug() << "Using '" << d->xmlFileName << "' as document info file." << endl;
     QFile infoFile( d->xmlFileName );
-    if (infoFile.exists() && infoFile.open( IO_ReadOnly ) )
+    if ( !infoFile.exists() || !infoFile.open( IO_ReadOnly ) )
+        return;
+
+    // Load DOM from XML file
+    QDomDocument doc( "documentInfo" );
+    if ( !doc.setContent( &infoFile ) )
     {
-        // Load DOM from XML file
-        QDomDocument doc( "documentInfo" );
-        if ( !doc.setContent( &infoFile ) )
-        {
-            kdDebug() << "Could not set content" << endl;
-            infoFile.close();
-            return;
-        }
-
-        QDomElement root = doc.documentElement();
-        if (root.tagName() != "documentInfo") return;
-
-        // Parse the DOM tree
-        QDomNode topLevelNode = root.firstChild();
-        while ( topLevelNode.isElement() )
-        {
-            QString catName = topLevelNode.toElement().tagName();
-
-            // Get bookmarks list from DOM
-            if ( catName == "bookmarkList" )
-            {
-                QDomNode n = topLevelNode.firstChild();
-                QDomElement e;
-                int pageNumber;
-                bool ok;
-                while ( n.isElement() )
-                {
-                    e = n.toElement();
-                    if (e.tagName() == "page")
-                    {
-                        pageNumber = e.text().toInt(&ok);
-                        if ( ok && pageNumber >= 0 && pageNumber < (int)pages_vector.count() )
-                            pages_vector[ pageNumber ]->setAttribute( KPDFPage::Bookmark );
-                    }
-                    n = n.nextSibling();
-                }
-            }
-            // Get 'general info' from the DOM
-            else if ( catName == "generalInfo" )
-            {
-                QDomNode infoNode = topLevelNode.firstChild();
-                while ( infoNode.isElement() )
-                {
-                    QDomElement infoElement = infoNode.toElement();
-                    if ( infoElement.tagName() == "activePage" )
-                    {
-                        if ( infoElement.hasAttribute( "viewport" ) )
-                            *d->viewportIterator = DocumentViewport( infoElement.attribute( "viewport" ) );
-                    }
-                    infoNode = infoNode.nextSibling();
-                }
-            }
-
-            topLevelNode = topLevelNode.nextSibling();
-        }
+        kdDebug() << "Could not set content" << endl;
+        infoFile.close();
+        return;
     }
     infoFile.close();
+
+    QDomElement root = doc.documentElement();
+    if ( root.tagName() != "documentInfo" )
+        return;
+
+    // Parse the DOM tree
+    QDomNode topLevelNode = root.firstChild();
+    while ( topLevelNode.isElement() )
+    {
+        QString catName = topLevelNode.toElement().tagName();
+
+        // Get bookmarks list from DOM
+        if ( catName == "bookmarkList" )
+        {
+            QDomNode n = topLevelNode.firstChild();
+            QDomElement e;
+            int pageNumber;
+            bool ok;
+            while ( n.isElement() )
+            {
+                e = n.toElement();
+                if (e.tagName() == "page")
+                {
+                    pageNumber = e.text().toInt(&ok);
+                    if ( ok && pageNumber >= 0 && pageNumber < (int)pages_vector.count() )
+                        pages_vector[ pageNumber ]->setAttribute( KPDFPage::Bookmark );
+                }
+                n = n.nextSibling();
+            }
+        } // </bookmarkList>
+        // Get 'general info' from the DOM
+        else if ( catName == "generalInfo" )
+        {
+            QDomNode infoNode = topLevelNode.firstChild();
+            while ( infoNode.isElement() )
+            {
+                QDomElement infoElement = infoNode.toElement();
+
+                // compatibility: [pre-3.4 viewport storage] @remove after 3.4 relase
+                if ( infoElement.tagName() == "activePage" )
+                {
+                    if ( infoElement.hasAttribute( "viewport" ) )
+                        *d->viewportIterator = DocumentViewport( infoElement.attribute( "viewport" ) );
+                }
+
+                // restore viewports history
+                if ( infoElement.tagName() == "history" )
+                {
+                    // clear history
+                    d->viewportHistory.clear();
+                    // append old viewports
+                    QDomNode historyNode = infoNode.firstChild();
+                    while ( historyNode.isElement() )
+                    {
+                        QDomElement historyElement = historyNode.toElement();
+                        if ( historyElement.hasAttribute( "viewport" ) )
+                        {
+                            QString vpString = historyElement.attribute( "viewport" );
+                            d->viewportIterator = d->viewportHistory.append(
+                                    DocumentViewport( vpString ) );
+                        }
+                        historyNode = historyNode.nextSibling();
+                    }
+                    // consistancy check
+                    if ( d->viewportHistory.isEmpty() )
+                        d->viewportIterator = d->viewportHistory.append( DocumentViewport() );
+                }
+                infoNode = infoNode.nextSibling();
+            }
+        } // </generalInfo>
+        topLevelNode = topLevelNode.nextSibling();
+    } // </documentInfo>
 }
 
 QString KPDFDocument::giveAbsolutePath( const QString & fileName )
@@ -1088,21 +1113,32 @@ void KPDFDocument::saveDocumentInfo() const
         QDomElement generalInfo = doc.createElement( "generalInfo" );
         root.appendChild( generalInfo );
 
-        // <general info><activePage />
-        QDomElement activePage = doc.createElement( "activePage" );
-        activePage.setAttribute( "viewport", (*d->viewportIterator).toString() );
-        generalInfo.appendChild( activePage );
-/*
-        // <general info><history> ... </history>
-        QDomElement historyNode = doc.createElement( "history" );
-        generalInfo.appendChild( historyNode );
-        for ( uint i = 0; i < 6 ; i++ )
+        // <general info><history> ... </history> saves history up to 10 viewports
+        QValueList< DocumentViewport >::iterator backIterator = d->viewportIterator;
+        if ( backIterator != d->viewportHistory.end() )
         {
-            QDomElement historyEntry = doc.createElement( "entry" );
-            historyEntry.setAttribute( "viewport", DocumentViewport().toString() );
-            historyNode.appendChild( historyEntry );
+            // go back up to 10 steps from the current viewportIterator
+            int backSteps = 10;
+            while ( backSteps-- && backIterator != d->viewportHistory.begin() )
+                --backIterator;
+
+            // create history root node
+            QDomElement historyNode = doc.createElement( "history" );
+            generalInfo.appendChild( historyNode );
+
+            // add old[backIterator] and present[viewportIterator] items
+            QValueList< DocumentViewport >::iterator endIt = d->viewportIterator;
+            ++endIt;
+            while ( backIterator != endIt )
+            {
+                QString name = (backIterator == d->viewportIterator) ? "current" : "oldPage";
+                QDomElement historyEntry = doc.createElement( name );
+                historyEntry.setAttribute( "viewport", (*backIterator).toString() );
+                historyNode.appendChild( historyEntry );
+                ++backIterator;
+            }
         }
-*/
+
         // Save DOM to XML file
         QString xml = doc.toString();
         QTextStream os( &infoFile );

@@ -154,8 +154,7 @@ void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
 
 void KPDFPage::setTransition( const KPDFPageTransition * transition )
 {
-    if ( m_transition )
-	delete m_transition;
+    delete m_transition;
     m_transition = transition;
 }
 

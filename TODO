@@ -6,15 +6,19 @@ Legend:
     MRG - MeRGed from head
     (*) - Some parts of this item are already done
 
-Urgent fixes:
--> REGRESSION: find-as-you-type somewhat broken here (enrico)
+In progress:
+-> REGRESSION: find-as-you-type somewhat broken here
+-> convert DocumentInfo to a DomTree containing a few common fields (see the current
+   implmentation) and being extensible for letting generator developers adding their
+   custom fields. convert the Properties dialog into a dynamic generated one.
+-> FIX: PageTransitions can be 0L.
+
+Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> FIX 1/2: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
 -> FIX 2/2: check for removing 'canUnloadPixmap' from observers in place of requesting
    a list of visible pixmaps
 -> FIX: priorities for requests (pageview regular over thumbnails regular over pv preloading ...)
 -> FIX: linearize memory pages map iterators in respect to time
-
-Items to do before 3.4 freezes:
 -> ADD: preloading (very easy, but change request a little)
 -> FIX: viewport changes the right way when clicking links and TOC items (also
    suggested by Mikolaj Machowski). Create a great viewport definition and merge
@@ -32,9 +36,6 @@ More items (first items will enter 'In progress list' first):
 -> fix: iterate from older pages to newest ones when freeing memory (not randomly)
 -> fix: On continous view mode, if you click to a link that moves you to another
    page, then scroll up and click again on the same link it does not work. (by Albert)
--> JJ: convert DocumentInfo to a DomTree containing a few common fields (see the current
-   implmentation) and being extensible for letting generator developers adding their
-   custom fields.
 -> display current page / total pages (with analog indicator too (progressbar/...))
    maybe this can be done on a small widget at the top of the toolbox, displaying
    'document' informations (pages, current pg, some metadata, etc..).

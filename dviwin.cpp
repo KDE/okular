@@ -274,7 +274,7 @@ void dviWindow::drawPage()
 
       if (showMsg) {
 	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-					     this, "information", true, true,KStdGuiItem::ok().text() );
+					     this, "information", true, true,KStdGuiItem::ok() );
 
 	QVBox *topcontents = new QVBox (dialog);
 	topcontents->setSpacing(KDialog::spacingHint()*2);
@@ -1038,7 +1038,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
     if (currentlyDrawnPage.hyperLinkList.size() > 0)
       for(int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
 	if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
-	  
+
 #ifdef DEBUG_SPECIAL
 	  kdDebug(4300) << "hit: local link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
 #endif
@@ -1065,7 +1065,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	      // the kfmclient seems to be MUCH safer.
 	      QUrl DVI_Url(_parentMPage->dviFile->filename);
 	      QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
-	      
+
 	      QStringList args;
 	      args << "openURL";
 	      args << Link_Url.toString();
@@ -1077,7 +1077,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
       }
     setCursor(Qt::SizeAllCursor);
   }
-  
+
   // Check if the mouse is pressed on a source-hyperlink
   if ((e->button() == MidButton) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0))
     for(unsigned int i=0; i<currentlyDrawnPage.sourceHyperLinkList.size(); i++)

@@ -7,13 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-// qt includes
+// qt/kde includes
 #include <qapplication.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qstring.h>
 #include <qpainter.h>
 #include <qmap.h>
+#include <kimageeffect.h>
 
 // system includes
 #include <string.h>
@@ -21,10 +22,9 @@
 // local includes
 #include "Link.h"
 #include "TextOutputDev.h"
+#include "settings.h"
 #include "page.h"
 
-// TODO add painting effects (plus selection rectangle)
-// TODO think about moving rendering ...
 
 KPDFPage::KPDFPage( uint page, float w, float h, int r )
     : m_number( page ), m_rotation( r ), m_attributes( 0 ),
@@ -157,7 +157,8 @@ void KPDFPage::setActiveRects( const QValueList<KPDFActiveRect *> rects )
 }
 
 
-void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, QPainter * p, const QRect & limits, int width, int height )
+void PagePainter::paintPageOnPainter( const KPDFPage * page, int id,
+    QPainter * destPainter, const QRect & limits, int width, int height )
 {
     QPixmap * pixmap = 0;
 
@@ -184,8 +185,19 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, QPainter * 
 
     if ( !pixmap )
     {
-        p->fillRect( limits, Qt::white );
+        destPainter->fillRect( limits, Settings::paperColor() );
         return;
+    }
+
+    // we have a pixmap to paint, now let's paint it handling accessibility settings
+    bool backBuffer = Settings::renderMode() != Settings::EnumRenderMode::Normal;
+    QPixmap * backPixmap = 0;
+    QPainter * p = destPainter;
+    if ( backBuffer )
+    {
+        backPixmap = new QPixmap( limits.width(), limits.height() );
+        p = new QPainter( backPixmap );
+        p->translate( -limits.left(), -limits.top() );
     }
 
     // fast blit the pixmap if it has the right size..
@@ -204,13 +216,55 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, QPainter * 
         p->drawLine( 0, 0, width-1, height-1 );
         p->drawLine( 0, height-1, width-1, 0 );
     }
+
+    // modify pixmap following accessibility settings
+    if ( backBuffer )
+    {
+        QImage backImage = backPixmap->convertToImage();
+        switch ( Settings::renderMode() )
+        {
+            case Settings::EnumRenderMode::Inverted:
+                // Invert image pixels using QImage internal function
+                backImage.invertPixels(false);
+                break;
+            case Settings::EnumRenderMode::Recolor:
+                // Recolor image using KImageEffect::flatten with dither:0
+                KImageEffect::flatten( backImage, Settings::recolorForeground(), Settings::recolorBackground() );
+                break;
+            case Settings::EnumRenderMode::BlackWhite:
+                // Manual Gray and Contrast
+                unsigned int * data = (unsigned int *)backImage.bits();
+                int val, pixels = backImage.width() * backImage.height(),
+                    con = Settings::bWContrast(), thr = 255 - Settings::bWThreshold();
+                for( int i = 0; i < pixels; ++i )
+                {
+                    val = qGray( data[i] );
+                    if ( val > thr )
+                        val = 128 + (127 * (val - thr)) / (255 - thr);
+                    else if ( val < thr )
+                        val = (128 * val) / thr;
+                    if ( con > 2 )
+                    {
+                        val = con * ( val - thr ) / 2 + thr;
+                        if ( val > 255 )
+                            val = 255;
+                        else if ( val < 0 )
+                            val = 0;
+                    }
+                    data[i] = qRgba( val, val, val, 255 );
+                }
+                break;
+        }
+        backPixmap->convertFromImage( backImage );
+    }
+
     // draw selection (note: it is rescaled since the text page is at 100% scale)
     if ( page->attributes() & KPDFPage::Highlight )
     {
         int x = (int)( page->m_sLeft * width / page->m_width ),
-        y = (int)( page->m_sTop * height / page->m_height ),
-        w = (int)( page->m_sRight * width / page->m_width ) - x,
-        h = (int)( page->m_sBottom * height / page->m_height ) - y;
+            y = (int)( page->m_sTop * height / page->m_height ),
+            w = (int)( page->m_sRight * width / page->m_width ) - x,
+            h = (int)( page->m_sBottom * height / page->m_height ) - y;
         if ( w > 0 && h > 0 )
         {
             // setRasterOp is no more on Qt4 find an alternative way of doing this
@@ -220,8 +274,15 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, QPainter * 
             p->drawRect( x, y, w, h );
         }
     }
-}
 
+    // if was backbuffering, copy the backPixmap to destination
+    if ( backBuffer )
+    {
+        delete p;
+        destPainter->drawPixmap( limits.left(), limits.top(), *backPixmap );
+        delete backPixmap;
+    }
+}
 
 
 KPDFLink::KPDFLink( LinkAction * a )

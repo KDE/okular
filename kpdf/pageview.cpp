@@ -890,60 +890,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
         {
             QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
             pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
-
-            // handle pixmap drawing in respect of accessibility settings
-            if ( Settings::renderMode() != Settings::EnumRenderMode::Normal )
-            {
-                // paint pixmapRect area in internal pixmap
-                QPixmap pagePix( pixmapRect.width(), pixmapRect.height() );
-                QPainter pixmapPainter( &pagePix );
-                pixmapPainter.translate( -pixmapRect.left(), -pixmapRect.top() );
-                PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, &pixmapPainter, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
-                pixmapPainter.end();
-
-                // perform 'accessbility' enhancements on the (already painted) pixmap
-                QImage pageImage = pagePix.convertToImage();
-                switch ( Settings::renderMode() )
-                {
-                    case Settings::EnumRenderMode::Inverted:
-                        // Invert image pixels using QImage internal function
-                        pageImage.invertPixels(false);
-                        break;
-                    case Settings::EnumRenderMode::Recolor:
-                        // Recolor image using KImageEffect::flatten with dither:0
-                        KImageEffect::flatten( pageImage, Settings::recolorForeground(), Settings::recolorBackground() );
-                        break;
-                    case Settings::EnumRenderMode::BlackWhite:
-                        // Manual Gray and Contrast
-                        unsigned int * data = (unsigned int *)pageImage.bits();
-                        int val, pixels = pageImage.width() * pageImage.height(),
-                            con = Settings::bWContrast(), thr = 255 - Settings::bWThreshold();
-                        for( int i = 0; i < pixels; ++i )
-                        {
-                            val = qGray( data[i] );
-                            if ( val > thr )
-                                val = 128 + (127 * (val - thr)) / (255 - thr);
-                            else if ( val < thr )
-                                val = (128 * val) / thr;
-                            if ( con > 2 )
-                            {
-                                val = con * ( val - thr ) / 2 + thr;
-                                if ( val > 255 )
-                                    val = 255;
-                                else if ( val < 0 )
-                                    val = 0;
-                            }
-                            data[i] = qRgba( val, val, val, 255 );
-                        }
-                        break;
-                }
-                pagePix.convertFromImage( pageImage );
-
-                // copy internal pixmap to the page
-                p->drawPixmap( pixmapRect.left(), pixmapRect.top(), pagePix );
-            }
-            else // paint pixmapRect area (as it is) in external painter
-                PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
+            PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
         }
 
         // remove painted area from 'remainingArea' and restore painter

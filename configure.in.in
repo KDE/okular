@@ -91,6 +91,7 @@ if test "$compile_kdvi" = "yes"; then
            else
               if test $compile_kdvi = "yes"; then
                  DO_NOT_COMPILE="$DO_NOT_COMPILE kdvi"
+		 ac_configure_args="$ac_configure_args --with-system-kpathsea=yes" 
               fi
   	   fi
         fi

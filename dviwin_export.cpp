@@ -152,7 +152,7 @@ void dviWindow::exportPDF(void)
 void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 {
   // Safety check.
-  if (dviFile->page_offset == 0)
+  if (dviFile->page_offset.isEmpty() == true)
     return;
 
   // It could perhaps happen that a kShellProcess, which runs an
@@ -222,60 +222,61 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   // ordering). Finally, dvips is then called with the new file, and
   // the file is afterwards deleted. Isn't that great?
 
+  // A similar problem occurs with DVI files that contain page size
+  // information. On these files, dvips pointblank refuses to change
+  // the page orientation or set another page size. Thus, if the
+  // DVI-file does contain page size information, we remove that
+  // information first.
+
   // Sourcefile is the name of the DVI which is used by dvips, either
   // the original file, or a temporary file with a new numbering.
   QString sourceFileName = dviFile->filename;
-  if (options.isEmpty() == false) {
+  if ((options.isEmpty() == false) || (dviFile->suggestedPageSize != 0) ) {
     // Get a name for a temporary file.
     KTempFile export_tmpFile;
     export_tmpFileName = export_tmpFile.name();
     export_tmpFile.unlink();
-
+    
     sourceFileName     = export_tmpFileName;
-    if (KIO::NetAccess::copy(KURL::fromPathOrURL( dviFile->filename ), KURL::fromPathOrURL( sourceFileName ))) {
-      int wordSize;
-      bool bigEndian;
-      qSysInfo (&wordSize, &bigEndian);
-      // Proper error handling? We don't care.
-      FILE *f = fopen(QFile::encodeName(sourceFileName),"r+");
-      for(Q_UINT32 i=1; i<=dviFile->total_pages; i++) {
-	fseek(f,dviFile->page_offset[i-1]+1, SEEK_SET);
-	// Write the page number to the file, taking good care of byte
-	// orderings. Hopefully QT will implement random access QFiles
-	// soon.
-	if (bigEndian) {
-	  fwrite(&i, sizeof(Q_INT32), 1, f);
-	  fwrite(&i, sizeof(Q_INT32), 1, f);
-	  fwrite(&i, sizeof(Q_INT32), 1, f);
-	  fwrite(&i, sizeof(Q_INT32), 1, f);
-	} else {
-	  Q_UINT8  anum[4];
-	  Q_UINT8 *bnum = (Q_UINT8 *)&i;
-	  anum[0] = bnum[3];
-	  anum[1] = bnum[2];
-	  anum[2] = bnum[1];
-	  anum[3] = bnum[0];
-	  fwrite(anum, sizeof(Q_INT32), 1, f);
-	  fwrite(anum, sizeof(Q_INT32), 1, f);
-	  fwrite(anum, sizeof(Q_INT32), 1, f);
-	  fwrite(anum, sizeof(Q_INT32), 1, f);
-	}
-      }
-      fclose(f);
-    } else {
-      KMessageBox::error(parentWidget, i18n("<qt>Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
-				    "The export or print command is aborted.</qt>").arg(dviFile->filename).arg(sourceFileName));
-      return;
-    }
-  }
+    
+    fontPool fp;
+    dvifile newFile(dviFile, &fp);
 
+    // Renumber pages
+    newFile.renumber();
+
+    // Remove any page size information from the file
+    Q_UINT16 currPageSav = current_page;
+    dvifile *dvsav =  dviFile;
+    dviFile = &newFile;
+    errorMsg = QString::null;
+
+    
+    for(current_page=0; current_page < newFile.total_pages; current_page++) {
+      if (current_page < newFile.total_pages) {
+	command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
+	end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
+      } else
+	command_pointer = end_pointer = 0;
+      
+      memset((char *) &currinf.data, 0, sizeof(currinf.data));
+      currinf.fonttable = &(dviFile->tn_table);
+      currinf._virtual  = NULL;
+      prescan(&dviWindow::prescan_removePageSizeInfo);
+    }
+    
+    current_page = currPageSav;
+    dviFile = dvsav;
+    newFile.saveAs(sourceFileName);
+  }
+  
   // Allocate and initialize the shell process.
   proc = new KShellProcess();
   if (proc == 0) {
     kdError(4300) << "Could not allocate ShellProcess for the dvips command." << endl;
     return;
   }
-
+  
   qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
@@ -283,7 +284,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
 			    "find in the File-Menu for a precise error report.</qt>") ;
   info->clear(i18n("Export: %1 to PostScript").arg(KShellProcess::quote(dviFile->filename)));
-
+  
   proc->clearArguments();
   QFileInfo finfo(dviFile->filename);
   *proc << QString("cd %1; dvips").arg(KShellProcess::quote(finfo.dirPath(true)));
@@ -301,6 +302,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   return;
 }
 
+
 void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
 {
   // Paranoia.
@@ -312,6 +314,7 @@ void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
   if (progress != 0)
     progress->show();
 }
+
 
 void dviWindow::dvips_terminated(KProcess *sproc)
 {
@@ -328,6 +331,7 @@ void dviWindow::dvips_terminated(KProcess *sproc)
   // Kill and delete the remaining process, reset the printer, etc.
   abortExternalProgramm();
 }
+
 
 void dviWindow::editorCommand_terminated(KProcess *sproc)
 {
@@ -348,23 +352,22 @@ void dviWindow::editorCommand_terminated(KProcess *sproc)
 }
 
 
-
 void dviWindow::abortExternalProgramm(void)
 {
-    delete proc; // Deleting the KProcess kills the child.
-    proc = 0;
-
+  delete proc; // Deleting the KProcess kills the child.
+  proc = 0;
+  
   if (export_tmpFileName.isEmpty() != true) {
     unlink(QFile::encodeName(export_tmpFileName)); // That should delete the file.
     export_tmpFileName = "";
   }
-
+  
   if (progress != 0) {
     progress->hideDialog();
     delete progress;
     progress = 0;
   }
-
+  
   export_printer  = 0;
   export_fileName = "";
 }

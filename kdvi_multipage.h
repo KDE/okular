@@ -189,9 +189,9 @@ protected slots:
   void showTipOnStart(void);
 
 private:
-  dviWindow    *window;
-  OptionDialog *options;
-  KPrinter     *printer;
+  dviWindow       *window;
+  OptionDialog    *options;
+  KPrinter        *printer;
 
   QPtrVector<QWidget> widgetList; 
   /*************************************************************

@@ -78,7 +78,7 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
-    Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data;
+    Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
     Q_UINT16 page;
     for(page=0; page < dviFile->total_pages; page++) 
       if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
@@ -138,36 +138,32 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   Q_UINT32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
   Q_UINT32 lengthOfNewSpecial = PS.length()+5;
   
-  Q_UINT8 *newDVI = new Q_UINT8[dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial];
-  if (newDVI == 0) {
-    kdError(4300) << "Out of memory -- could not embed PS file" << endl;
-    return;
-  }
+  QMemArray<Q_UINT8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
   
   Q_UINT8 *commandPtrSav = command_pointer;
   Q_UINT8 *endPtrSav = end_pointer;
-  end_pointer = newDVI + dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
-  memcpy(newDVI, dviFile->dvi_Data, beginningOfSpecialCommand-dviFile->dvi_Data);
-  command_pointer = newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data);
+  end_pointer = newDVI.data() + dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
+  memcpy(newDVI.data(), dviFile->dvi_Data(), beginningOfSpecialCommand-dviFile->dvi_Data());
+  command_pointer = newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data());
   command_pointer[0] = XXX4;
   command_pointer++;
   writeUINT32(PS.length());
-  memcpy(newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data)+5, PS.latin1(), PS.length() );
-  memcpy(newDVI+(beginningOfSpecialCommand-dviFile->dvi_Data)+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
-	 dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data)-lengthOfOldSpecial );
+  memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+5, PS.latin1(), PS.length() );
+  memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
+	 dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data())-lengthOfOldSpecial );
   
   // Adjust page pointers in the DVI file
   dviFile->size_of_file = dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
-  end_pointer = newDVI + dviFile->size_of_file;
-  Q_UINT32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data;
+  end_pointer = newDVI.data() + dviFile->size_of_file;
+  Q_UINT32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data();
   for(Q_UINT16 i=0; i < dviFile->total_pages; i++) {
     if (dviFile->page_offset[i] > currentOffset) {
       dviFile->page_offset[i] = dviFile->page_offset[i] + lengthOfNewSpecial-lengthOfOldSpecial;
-      command_pointer = dviFile->page_offset[i] + newDVI + 4*10 + 1;
+      command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
       Q_UINT32 a = readUINT32();
       if (a > currentOffset) {
 	a = a + lengthOfNewSpecial-lengthOfOldSpecial;
-	command_pointer = dviFile->page_offset[i] + newDVI + 4*10 + 1;
+	command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
 	writeUINT32(a);
       }
     }
@@ -177,16 +173,16 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   dviFile->beginning_of_postamble            = dviFile->beginning_of_postamble + lengthOfNewSpecial - lengthOfOldSpecial;
   dviFile->page_offset[dviFile->total_pages] = dviFile->beginning_of_postamble;
   
-  command_pointer = newDVI + dviFile->beginning_of_postamble + 1;
+  command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
   Q_UINT32 a = readUINT32();
   if (a > currentOffset) {
     a = a + lengthOfNewSpecial - lengthOfOldSpecial;
-    command_pointer = newDVI + dviFile->beginning_of_postamble + 1;
+    command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
     writeUINT32(a);
   }
   
-  command_pointer = newDVI + dviFile->size_of_file - 1;
-  while((*command_pointer == TRAILER) && (command_pointer > newDVI))
+  command_pointer = newDVI.data() + dviFile->size_of_file - 1;
+  while((*command_pointer == TRAILER) && (command_pointer > newDVI.data()))
     command_pointer--;
   command_pointer -= 4;
   writeUINT32(dviFile->beginning_of_postamble);
@@ -196,15 +192,30 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   end_pointer     = endPtrSav;
   
   // Modify all pointers to point to the newly allocated memory
-  command_pointer = newDVI + (command_pointer - dviFile->dvi_Data) + lengthOfNewSpecial-lengthOfOldSpecial;
-  end_pointer = newDVI + (end_pointer - dviFile->dvi_Data)  + lengthOfNewSpecial-lengthOfOldSpecial;
+  command_pointer = newDVI.data() + (command_pointer - dviFile->dvi_Data()) + lengthOfNewSpecial-lengthOfOldSpecial;
+  end_pointer = newDVI.data() + (end_pointer - dviFile->dvi_Data())  + lengthOfNewSpecial-lengthOfOldSpecial;
   
-  delete [] dviFile->dvi_Data;
-  dviFile->dvi_Data = newDVI;
+  
+  dviFile->setNewData(newDVI);
   
   embedPS_progress->progressBar()->advance(1);
   qApp->processEvents();
   return;
+}
+
+
+void dviWindow::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpecialCommand)
+{
+#ifdef  DEBUG_PRESCAN
+  kdDebug(4300) << "dviWindow::prescan_embedPS( cp = " << cp << " ) " << endl;
+#endif
+  
+  // Encapsulated Postscript File
+  if (strncasecmp(cp, "papersize=", 10) != 0) 
+    return;
+  
+  for (Q_UINT8 *ptr=beginningOfSpecialCommand; ptr<command_pointer; ptr++) 
+    *ptr = NOP;
 }
 
 

@@ -66,11 +66,44 @@ extern "C" {
 #include "xdvi.h"
 
 
+dvifile::dvifile(const dvifile *old, fontPool *fp) 
+{
+  errorMsg     = QString::null;
+  errorCounter = 0;
+  page_offset  = 0;
+  suggestedPageSize = 0;
+  numberOfExternalPSFiles = 0;
+  prescan_is_performed = false;
+  sourceSpecialMarker = old->sourceSpecialMarker;
+
+  dviData = old->dviData.copy();
+
+  filename = old->filename;
+  size_of_file = old->size_of_file;
+  end_pointer = dvi_Data()+size_of_file; 
+  if (dvi_Data() == 0) {
+    kdError(4300) << "Not enough memory to copy the DVI-file." << endl;
+    return;
+  }
+
+  font_pool = fp;
+  filename = old->filename;
+  generatorString = old->generatorString;
+  total_pages = old->total_pages;
+
+
+  tn_table.clear();
+  process_preamble();
+  find_postamble();
+  read_postamble();
+  prepare_pages();
+  isModified = false;
+}
 
 
 void dvifile::process_preamble(void)
 {
-  command_pointer = dvi_Data;
+  command_pointer = dvi_Data();
   
   Q_UINT8 magic_number = readUINT8();
   if (magic_number != PRE) {
@@ -113,10 +146,10 @@ void dvifile::process_preamble(void)
 void dvifile::find_postamble(void)
 {
   // Move backwards through the TRAILER bytes
-  command_pointer = dvi_Data + size_of_file - 1;
-  while((*command_pointer == TRAILER) && (command_pointer > dvi_Data))
+  command_pointer = dvi_Data() + size_of_file - 1;
+  while((*command_pointer == TRAILER) && (command_pointer > dvi_Data()))
     command_pointer--;
-  if (command_pointer == dvi_Data) {
+  if (command_pointer == dvi_Data()) {
     errorMsg = i18n("The DVI file is badly corrupted. KDVI was not able to find the postamble.");
     return;
   }
@@ -124,7 +157,7 @@ void dvifile::find_postamble(void)
   // And this is finally the pointer to the beginning of the postamble
   command_pointer -= 4;
   beginning_of_postamble = readUINT32();
-  command_pointer  = dvi_Data + beginning_of_postamble;
+  command_pointer  = dvi_Data() + beginning_of_postamble;
 }
 
 
@@ -170,15 +203,17 @@ void dvifile::read_postamble(void)
     // shall be enlarged by the following factor before it is used.
     double enlargement_factor = (double(scale) * double(magnification))/(double(design) * 1000.0);
     
-    TeXFontDefinition *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
-    
-    // Insert font in dictionary and make sure the dictionary is big
-    // enough.
-    if (tn_table.size()-2 <= tn_table.count())
-      // Not quite optimal. The size of the dictionary should be a
-      // prime for optimal performance. I don't care.
-      tn_table.resize(tn_table.size()*2); 
-    tn_table.insert(TeXnumber, fontp);
+    if (font_pool != 0) {
+      TeXFontDefinition *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
+      
+      // Insert font in dictionary and make sure the dictionary is big
+      // enough.
+      if (tn_table.size()-2 <= tn_table.count())
+	// Not quite optimal. The size of the dictionary should be a
+	// prime for optimal performance. I don't care.
+	tn_table.resize(tn_table.size()*2); 
+      tn_table.insert(TeXnumber, fontp);
+    }
     
     // Read the next command
     cmnd = readUINT8();
@@ -191,7 +226,8 @@ void dvifile::read_postamble(void)
 
   // Now we remove all those fonts from the memory which are no longer
   // in use.
-  font_pool->release_fonts();
+  if (font_pool != 0)
+    font_pool->release_fonts();
 }
 
 
@@ -201,14 +237,13 @@ void dvifile::prepare_pages()
   kdDebug(4300) << "prepare_pages" << endl;
 #endif
 
-  page_offset              = new Q_UINT32[total_pages+1];
-  for(int i=0; i<=total_pages; i++)
-    page_offset[i] = 0;
-
-  if (page_offset == 0) {
+  if (page_offset.resize(total_pages+1) == false) {
     kdError(4300) << "No memory for page list!" << endl;
     return;
   }
+  for(int i=0; i<=total_pages; i++)
+    page_offset[i] = 0;
+  
 
   page_offset[total_pages] = beginning_of_postamble;
   Q_UINT16 i               = total_pages-1;
@@ -217,14 +252,14 @@ void dvifile::prepare_pages()
   // Follow back pointers through pages in the DVI file, storing the
   // offsets in the page_offset table.
    while (i > 0) {
-    command_pointer  = dvi_Data + page_offset[i--];
+    command_pointer  = dvi_Data() + page_offset[i--];
     if (readUINT8() != BOP) {
       errorMsg = i18n("The page %1 does not start with the BOP command.").arg(i+1);
       return;
     }
     command_pointer += 10 * 4;
     page_offset[i] = readUINT32();
-    if ((dvi_Data+page_offset[i] < dvi_Data)||(dvi_Data+page_offset[i] > dvi_Data+size_of_file))
+    if ((dvi_Data()+page_offset[i] < dvi_Data())||(dvi_Data()+page_offset[i] > dvi_Data()+size_of_file))
       break;
   }
 }
@@ -238,7 +273,6 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
 
   errorMsg     = QString::null;
   errorCounter = 0;
-  dvi_Data     = 0;
   page_offset  = 0;
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
@@ -250,15 +284,15 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
   filename = file.name();
   file.open( IO_ReadOnly );
   size_of_file = file.size();
-  dvi_Data = new Q_UINT8[size_of_file];
+  dviData.resize(size_of_file);
   // Sets the end pointer for the bigEndianByteReader so that the
   // whole memory buffer is readable
-  end_pointer = dvi_Data+size_of_file; 
-  if (dvi_Data == 0) {
+  end_pointer = dvi_Data()+size_of_file; 
+  if (dvi_Data() == 0) {
     kdError() << i18n("Not enough memory to load the DVI-file.");
     return;
   }
-  file.readBlock((char *)dvi_Data, size_of_file);
+  file.readBlock((char *)dvi_Data(), size_of_file);
   file.close();
   if (file.status() != IO_Ok) {
     kdError() << i18n("Could not load the DVI-file.");
@@ -276,6 +310,7 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
   return;
 }
 
+
 dvifile::~dvifile()
 {
 #ifdef DEBUG_DVIFILE
@@ -284,10 +319,51 @@ dvifile::~dvifile()
 
   if (suggestedPageSize != 0)
     delete suggestedPageSize;
-  if (dvi_Data != 0)
-    delete [] dvi_Data;
   if (font_pool != 0)
     font_pool->mark_fonts_as_unused();
-  if (page_offset != NULL)
-    delete [] page_offset;
+}
+
+
+void dvifile::renumber()
+{
+  dviData.detach();
+
+  // Write the page number to the file, taking good care of byte
+  // orderings.
+  int wordSize;
+  bool bigEndian;
+  qSysInfo (&wordSize, &bigEndian);
+
+  for(Q_UINT32 i=1; i<=total_pages; i++) {
+    Q_UINT8 *ptr = dviData.data() + page_offset[i-1]+1;
+    Q_UINT8 *num = (Q_UINT8 *)&i;
+    for(Q_UINT8 j=0; j<4; j++)
+      if (bigEndian) {
+	*(ptr++) = num[0];
+	*(ptr++) = num[1];
+	*(ptr++) = num[2];
+	*(ptr++) = num[3];
+      } else {
+	*(ptr++) = num[3];
+	*(ptr++) = num[2];
+	*(ptr++) = num[1];
+	*(ptr++) = num[0];
+      }
+  }
+}
+
+
+bool dvifile::saveAs(const QString &filename)
+{
+  if (dvi_Data() == 0)
+    return false;
+
+  QFile out(filename);
+  if (out.open( IO_Raw|IO_WriteOnly ) == false)
+    return false;
+  if (out.writeBlock ( (char *)(dvi_Data()), size_of_file ) == -1)
+    return false;
+  out.close();
+  isModified = false;
+  return true;
 }

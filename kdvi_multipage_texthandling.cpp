@@ -48,7 +48,7 @@ void KDVIMultiPage::doExportText(void)
   // Paranoid safety checks
   if ((window == 0) || (window->dviFile == 0))
     return;
-  if (window->dviFile->dvi_Data == 0 )
+  if (window->dviFile->dvi_Data() == 0 )
     return;
   
   if (KMessageBox::warningContinueCancel( scrollView(),

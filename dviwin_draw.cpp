@@ -611,11 +611,11 @@ void dviWindow::draw_page(void)
   }
 
   // Now really write the text
-  if (dviFile->page_offset == 0)
+  if (dviFile->page_offset.isEmpty() == true)
     return;
   if (current_page < dviFile->total_pages) {
-    command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-    end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+    command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
+    end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
   } else
     command_pointer = end_pointer = 0;
 

@@ -10,7 +10,6 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprinter.h>
 #include <kstdaction.h>
 #include <ktip.h>
 #include <qtimer.h>
@@ -23,9 +22,11 @@
 #include "optiondialog.h"
 #include "performanceMeasurement.h"
 #include "zoomlimits.h"
+#include "kprinterwrapper.h"
 
 #include <qlabel.h>
 
+//#define KDVI_MULTIPAGE_DEBUG
 
 #ifdef PERFORMANCE_MEASUREMENT
 // These objects are explained in the file "performanceMeasurement.h"
@@ -33,8 +34,6 @@ QTime performanceTimer;
 int  performanceFlag = 0;
 #endif
 
-
-//#define KDVI_MULTIPAGE_DEBUG
 
 extern "C"
 {
@@ -312,13 +311,9 @@ void KDVIMultiPage::slotSave()
   }
 
   // TODO: error handling...
-  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data != 0)) {
-    QFile out(fileName);
-    out.open( IO_Raw|IO_WriteOnly );
-    out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
-    out.close();
-    window->dviFile->isModified = false;
-  }
+  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data() != 0))
+    window->dviFile->saveAs(fileName);
+  
   return;
 }
 
@@ -326,20 +321,15 @@ void KDVIMultiPage::slotSave()
 void KDVIMultiPage::slotSave_defaultFilename()
 {
   // TODO: error handling...
-  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data != 0)) {
-    QFile out(m_file);
-    out.open( IO_Raw|IO_WriteOnly );
-    out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
-    out.close();
-    window->dviFile->isModified = false;
-  }
+  if ((window != 0) && (window->dviFile != 0))
+    window->dviFile->saveAs(m_file);
   return;
 }
 
 
 bool KDVIMultiPage::isModified()
 {
-  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->dvi_Data == 0))
+  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->dvi_Data() == 0))
     return false;
   else
     return window->dviFile->isModified;
@@ -786,14 +776,29 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // Make sure the KPrinter is available
   if (printer == 0) {
     printer = new KPrinter();
-    if (printer == 0)
+    if (printer == 0) {
+      kdError(4300) << "Could not allocate printer structure" << endl;
       return false;
+    }
   }
-
+  
   // Feed the printer with useful defaults and information.
   printer->setPageSelection( KPrinter::ApplicationSide );
   printer->setCurrentPage( current+1 );
   printer->setMinMax( 1, window->totalPages() );
+  printer->setFullPage( true );
+
+  // Give a suggestion for the paper orientation. Unfortunately, as of
+  // now, KPrinter then automatically disables the orientation widget,
+  // so that the user cannot change our suggestion here. Thus, we
+  // comment this out for now.
+  /*
+  if (window != 0)
+    if (window->paper_height_in_cm >= window->paper_width_in_cm)
+      printer->setOrientation( KPrinter::Portrait );
+    else
+      printer->setOrientation( KPrinter::Landscape );
+  */
 
   // If pages are marked, give a list of marked pages to the
   // printer. We try to be smart and optimize the list by using ranges
@@ -837,6 +842,10 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // Show the printer options requestor
   if (!printer->setup(scrollView(), i18n("Print %1").arg(m_file.section('/', -1))))
     return false;
+  // This funny method call is necessary for the KPrinter to return
+  // proper results in printer->orientation() below. It seems that
+  // KPrinter does some options parsing in that method.
+  ((KPrinterWrapper *)printer)->doPreparePrinting();
   if (printer->pageList().isEmpty()) {
     KMessageBox::error( scrollView(),
 			i18n("The list of pages you selected was empty.\n"
@@ -857,9 +866,108 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // Print only even pages.
   if ( printer->pageSet() == KPrinter::EvenPages )
     dvips_options += "-B ";
+  // We use the printer->pageSize() method to find the printer page
+  // size, and pass that information on to dvips. Unfortunately, dvips
+  // does not understand all of these; what exactly dvips understands,
+  // depends on its configuration files. Consequence: expect problems
+  // with unusual paper sizes.
+  switch( printer->pageSize() ) {
+  case KPrinter::A4:
+    dvips_options += "-t a4 ";
+    break;
+  case KPrinter::B5:
+    dvips_options += "-t b5 ";
+    break;
+    case KPrinter::Letter:
+      dvips_options += "-t letter ";
+      break;
+  case KPrinter::Legal:
+    dvips_options += "-t legal ";
+    break;
+    case KPrinter::Executive:
+      dvips_options += "-t executive ";
+      break;
+  case KPrinter::A0:
+    dvips_options += "-t a0 ";
+    break;
+  case KPrinter::A1:
+    dvips_options += "-t a1 ";
+    break;
+  case KPrinter::A2:
+    dvips_options += "-t a2 ";
+    break;
+  case KPrinter::A3:
+      dvips_options += "-t a3 ";
+      break;
+  case KPrinter::A5:
+    dvips_options += "-t a5 ";
+    break;
+  case KPrinter::A6:
+    dvips_options += "-t a6 ";
+    break;
+  case KPrinter::A7:
+    dvips_options += "-t a7 ";
+    break;
+  case KPrinter::A8:
+    dvips_options += "-t a8 ";
+      break;
+  case KPrinter::A9:
+    dvips_options += "-t a9 ";
+    break;
+  case KPrinter::B0:
+    dvips_options += "-t b0 ";
+    break;
+  case KPrinter::B1:
+    dvips_options += "-t b1 ";
+    break;
+  case KPrinter::B10:
+    dvips_options += "-t b10 ";
+    break;
+  case KPrinter::B2:
+    dvips_options += "-t b2 ";
+    break;
+  case KPrinter::B3:
+    dvips_options += "-t b3 ";
+    break;
+  case KPrinter::B4:
+    dvips_options += "-t b4 ";
+    break;
+  case KPrinter::B6:
+    dvips_options += "-t b6 ";
+    break;
+  case KPrinter::B7:
+    dvips_options += "-t b7 ";
+    break;
+  case KPrinter::B8:
+    dvips_options += "-t b8 ";
+    break;
+  case KPrinter::B9:
+    dvips_options += "-t b9 ";
+    break;
+  case KPrinter::C5E:
+    dvips_options += "-t c5e ";
+    break;
+  case KPrinter::Comm10E:
+    dvips_options += "-t comm10e ";
+    break;
+  case KPrinter::DLE:
+    dvips_options += "-t dle ";
+    break;
+  case KPrinter::Folio:
+    dvips_options += "-t folio ";
+    break;
+  case KPrinter::Ledger:
+    dvips_options += "-t ledger ";
+    break;
+  case KPrinter::Tabloid:
+    dvips_options += "-t tabloid ";
+    break;
+  }
   // Orientation
   if ( printer->orientation() == KPrinter::Landscape )
     dvips_options += "-t landscape ";
+
+
   // List of pages to print.
   QValueList<int> pageList = printer->pageList();
   dvips_options += "-pp ";
@@ -998,7 +1106,6 @@ void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )
   if (event->activated() && url().isEmpty())
     emit setWindowCaption( i18n("KDVI") );
 }
-
 
 
 #include "kdvi_multipage.moc"

@@ -18,6 +18,9 @@ class TeXFontDefinition;
 class dvifile : public bigEndianByteReader
 {
  public:
+  /** Makes a deep copy of the old DVI file. */
+  dvifile(const dvifile *old, fontPool *fp );
+
   dvifile(QString fname, class fontPool *pool, bool sourceSpecialMark=true);
   ~dvifile();
 
@@ -26,9 +29,15 @@ class dvifile : public bigEndianByteReader
   QString        filename;
   QString        generatorString;
   Q_UINT16       total_pages;
-  Q_UINT32     * page_offset;
+  QMemArray<Q_UINT32> page_offset;
 
-  Q_UINT8      * dvi_Data;
+  /** Saves the DVI file. Returns true on success. */
+  bool           saveAs(const QString &filename);
+
+  // Returns a pointer to the DVI file's data, or 0 if no data has yet
+  // been allocated.
+  Q_UINT8      * dvi_Data() {return dviData.data();};
+
   QIODevice::Offset size_of_file;
   QString        errorMsg;
 
@@ -66,7 +75,15 @@ class dvifile : public bigEndianByteReader
 
   /** Papersize information read from the dvi-File */
   pageSize       *suggestedPageSize;
+  
+  /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
+      with care. */
+  void           setNewData(QMemArray<Q_UINT8> newData) {dviData = newData; isModified=true;};
 
+  /** Page numbers that appear in a DVI document need not be
+      ordered. Worse, page numbers need not be unique. This method
+      renumbers the pages. */
+  void           renumber();
 
  private:
   /** process_preamble reads the information in the preamble and
@@ -85,6 +102,8 @@ class dvifile : public bigEndianByteReader
   Q_UINT32       magnification;
 
   double         cmPerDVIunit;
+
+  QMemArray<Q_UINT8>  dviData;
 };
 
 #endif //ifndef _DVIFILE_H

@@ -40,6 +40,9 @@ public:
 	float		gamma();
 	void		setFontPath( const char * );
 	const char *	fontPath();
+
+	// for the preview
+ 	QPixmap		*pix() { return pixmap; };
         
 public slots:
 	void		setFile(const char *fname);

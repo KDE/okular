@@ -11,6 +11,7 @@
 
 
 class QLabel;
+class QPainter;
 
 
 #include <kmultipage.h>
@@ -71,7 +72,9 @@ public:
   /// calculates the zoom needed to fit into a given height
   virtual double zoomForHeight(int height); 
 
-  void setPaperSize(double, double);
+  virtual void setPaperSize(double, double);
+
+  virtual bool preview(QPainter *p, int w, int h);
 
 
 signals:

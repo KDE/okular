@@ -12,6 +12,7 @@
 #include <qkeycode.h>
 #include <qpaintdevice.h>
 #include <qfileinfo.h>
+#include <qimage.h>
 
 #include <kapp.h>
 #include <kmessagebox.h>
@@ -430,6 +431,7 @@ void dviWindow::paintEvent(QPaintEvent *ev)
   if (pixmap)
     {
       QPainter p(this);
+
       p.drawPixmap(QPoint(0, 0), *pixmap);
     }
 }

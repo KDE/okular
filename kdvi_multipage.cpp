@@ -1,11 +1,14 @@
 #include <qobject.h>
 #include <qlabel.h>
 #include <qscrollview.h>
+#include <qimage.h>
+#include <qpixmap.h>
 
 
 #include <kinstance.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kimageeffect.h>
 
 
 #include "kdvi_multipage.moc"
@@ -120,4 +123,15 @@ double KDVIMultiPage::zoomForWidth(int width)
 void KDVIMultiPage::setPaperSize(double w, double h)
 {
   window->setPaper(w, h);
+}
+
+
+bool KDVIMultiPage::preview(QPainter *p, int w, int h)
+{
+  if (!window->pix())
+    return false;
+
+  p->drawImage(0, 0, window->pix()->convertToImage().smoothScale(w,h));
+
+  return true;
 }

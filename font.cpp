@@ -6,6 +6,7 @@
 #include <malloc.h>
 #include <qapplication.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "dviwin.h"
 #include "font.h"

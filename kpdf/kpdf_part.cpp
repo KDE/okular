@@ -16,6 +16,7 @@
 #include <kparts/genericfactory.h>
 #include <kurldrag.h>
 #include <kinputdialog.h>
+#include <ktempfile.h>
 
 #include "part.h"
 
@@ -24,7 +25,7 @@
 
 #include "GlobalParams.h"
 #include "PDFDoc.h"
-#include "QOutputDevKPrinter.h"
+#include "PSOutputDev.h"
 #include "QOutputDevPixmap.h"
 
 // #include "kpdf_canvas.h"
@@ -678,37 +679,49 @@ void Part::printPreview()
   KPrinter printer;
   printer.setMargins(0, 0, 0, 0);
   printer.setPreviewOnly( true );
-  QPainter painter( &printer );
-  SplashColor paperColor;
-  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-  QOutputDevKPrinter printdev( painter, paperColor, printer );
-  printdev.startDoc(m_doc->getXRef());
-  int max = m_doc->getNumPages();
-  for ( int i = 1; i <= max; ++i )
+  KTempFile tf( QString::null, ".ps" );
+  PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), m_doc->getXRef(), m_doc->getCatalog(), 1, m_doc->getNumPages(), psModePS);
+
+  if (psOut->isOk())
   {
     m_docMutex.lock();
-    m_doc->displayPage( &printdev, i, printer.resolution(), printer.resolution(), 0, true, true );
-    if ( i != max )
-      printer.newPage();
+    m_doc->displayPages(psOut, 1, m_doc->getNumPages(), 72, 72, 0, globalParams->getPSCrop(), gFalse);
     m_docMutex.unlock();
+
+    delete psOut;
+
+    printer.printFiles(tf.name(), true);
   }
+  else delete psOut;
 }
 
 void Part::doPrint( KPrinter& printer )
 {
-  QPainter painter( &printer );
-  SplashColor paperColor;
-  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-  QOutputDevKPrinter printdev( painter, paperColor, printer );
-  printdev.startDoc(m_doc->getXRef());
-  QValueList<int> pages = printer.pageList();
-  for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
+  if (!m_doc->okToPrint())
   {
+    // No new messages allowed on branch
+    // KMessageBox::error(widget(), i18n("Printing this document is not allowed."));
+    return;
+  }
+  
+  KTempFile tf( QString::null, ".ps" );
+  PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), m_doc->getXRef(), m_doc->getCatalog(), 1, m_doc->getNumPages(), psModePS);
+  if (psOut->isOk())
+  {
+    std::list<int> pages;
+
+    QValueList<int> pageList = printer.pageList();
+    QValueList<int>::const_iterator it;
+
+    for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
+    
     m_docMutex.lock();
-    m_doc->displayPage( &printdev, *i, printer.resolution(), printer.resolution(), 0, true, true );
-    if ( ++i != pages.end() )
-      printer.newPage();
+    m_doc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
     m_docMutex.unlock();
+    
+    delete psOut;
+    
+    printer.printFiles(tf.name(), true);
   }
 }
 

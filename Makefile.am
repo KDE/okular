@@ -1,5 +1,3 @@
-# just set the variable
-appsdir = $(kde_appsdir)/Graphics
 # set the include path for X, qt and KDE
 INCLUDES= -I$(top_srcdir)/kviewshell $(all_includes)
 # claim, which subdirectories you want to install
@@ -36,7 +34,7 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
 	rm -f tips.cpp
 
-apps_DATA = kdvi.desktop
+xdg_apps_DATA = kdvi.desktop
 
 tip_DATA = tips
 tipdir = $(kde_datadir)/kdvi

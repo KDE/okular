@@ -5,19 +5,18 @@ Legend:
     FIX - FIXed (bug or regression)
     MRG - MeRGed (code from a branch or a patch)
 
-Doing Now [working on]:
--> annotations: DS refactor
--> annotations: pdf parser adaptation
--> annotations: xml storage adaptation
+In progress [working on]:
+-> annotations: DS refactor (95%)
+-> annotations: pdf parser adaptation (90%)
+-> annotations: xml storage adaptation (5%)
 
-In progress [temporary suspended]:
--> check mouse wrapping not screH / 2
--> check unscaledwidth/height.. necessary ?
 -> annotations: renderers in PagePainter (for the 6 markup annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
--> annotations: creators in PageViewAnnotator (80% done)
+-> annotations: creators in PageViewAnnotator (60% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
+-> check mouse wrapping not screH / 2
+-> check unscaledwidth/height.. necessary ?
 -> check if fix was applied in head only (pageview.cpp 1676)
 
 More items (first items will enter 'In progress list' first):

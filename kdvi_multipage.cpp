@@ -205,13 +205,13 @@ double KDVIMultiPage::setZoom(double zoom)
 
 double KDVIMultiPage::zoomForHeight(int height)
 {
-  return (double)(height-1)/(window->xres*(window->paper_height/2.54));
+  return (double)(height-1)/(window->xres*(window->paper_height_in_cm/2.54));
 }
 
 
 double KDVIMultiPage::zoomForWidth(int width)
 {
-  return (double)(width-1)/(window->xres*(window->paper_width/2.54));
+  return (double)(width-1)/(window->xres*(window->paper_width_in_cm/2.54));
 }
 
 

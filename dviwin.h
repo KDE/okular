@@ -83,6 +83,19 @@ struct framedata {
 };
 
 
+/* this information is saved when using virtual fonts */
+
+typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
+struct drawinf {
+  struct framedata      data;
+  struct font          *fontp;
+  set_char_proc	        set_char_p;
+
+  QIntDict<struct font> fonttable;
+  struct font	       *_virtual;
+};
+
+
 class dviWindow : public QWidget, bigEndianByteReader
 {
   Q_OBJECT
@@ -137,8 +150,8 @@ public:
   class fontPool  *font_pool;
 
   double       xres;         // horizontal resolution of the display device in dots per inch.
-  double       paper_width;  // paper width in centimeters
-  double       paper_height; // paper height in centimeters
+  double       paper_width_in_cm;  // paper width in centimeters
+  double       paper_height_in_cm; // paper height in centimeters
 
   selection    DVIselection;
 
@@ -264,11 +277,6 @@ private:
  QPoint            firstSelectedPoint;
  QRect             selectedRectangle;
 
- /** These fields contain information about the geometry of the
-     page. */
- unsigned int	   unshrunk_page_w; // basedpi * width(in inch)
- unsigned int	   unshrunk_page_h; // basedpi * height(in inch)
-
  infoDialog       *info;
 
  /** If PostScriptOutPutFile is non-zero, then no rendering takes
@@ -307,6 +315,8 @@ private:
  /** Indicates if the current page is already drawn (=1) or not
      (=0). */
  char              is_current_page_drawn;
+
+ // Zoom factor. 1.0 means "100%"
  double            _zoom;
 
  /** Used to run and to show the progress of dvips and friends. */
@@ -316,6 +326,8 @@ private:
  QString             export_fileName;
  QString             export_tmpFileName;
  QString             export_errorString;
+
+ struct drawinf	currinf;
 };
 
 
@@ -339,20 +351,7 @@ struct	WindowRec {
 
 
 
-typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 
-#include "font.h"
 
-/* this information is saved when using virtual fonts */
-struct drawinf {	
-  struct framedata      data;
-  struct font          *fontp;
-  set_char_proc	        set_char_p;
-
-  QIntDict<struct font> fonttable;
-  struct font	       *_virtual;
-};
-
-#undef Unsorted
 
 #endif

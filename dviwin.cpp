@@ -57,12 +57,7 @@
 struct WindowRec mane	= {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
-struct drawinf	currinf;
 
-// The following are really used
-unsigned int	page_w;
-unsigned int	page_h;
-// end of "really used"
 
 QPainter foreGroundPaint; // QPainter used for text
 
@@ -124,8 +119,8 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
     zoom = ZoomLimits::MaxZoom/1000.0;
   _zoom                  = zoom;
 
-  paper_width           = 21.0; // set A4 paper as default
-  paper_height          = 27.9;
+  paper_width_in_cm           = 21.0; // set A4 paper as default
+  paper_height_in_cm          = 27.9;
 
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
@@ -257,22 +252,17 @@ void dviWindow::setMetafontMode( unsigned int mode )
   basedpi          = MFResolutions[MetafontMode];
   mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*_zoom);
   font_pool->setShrinkFactor(currwin.shrinkfactor);
-  setPaper( paper_width, paper_height);
 }
 
 
-void dviWindow::setPaper(double w, double h)
+void dviWindow::setPaper(double width_in_cm, double height_in_cm)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::setPaper( w=" << w << ", h=" << h << " )" << endl;
+  kdDebug(4300) << "dviWindow::setPaper( width_in_cm=" << width_in_cm << ", height_in_cm=" << height_in_cm << " )" << endl;
 #endif
 
-  paper_width      = w;
-  paper_height     = h;
-  unshrunk_page_w  = int( w * basedpi/2.54 + 0.5 );
-  unshrunk_page_h  = int( h * basedpi/2.54 + 0.5 );
-  page_w           = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
-  page_h           = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
+  paper_width_in_cm      = width_in_cm;
+  paper_height_in_cm     = height_in_cm;
   changePageSize();
 }
 
@@ -421,17 +411,20 @@ void dviWindow::changePageSize()
   if (pixmap)
     delete pixmap;
 
-  pixmap = new QPixmap( (int)page_w, (int)page_h );
+  unsigned int page_width_in_pixel = (unsigned int)(_zoom*paper_width_in_cm/2.54 * xres + 0.5);
+  unsigned int page_height_in_pixel = (unsigned int)(_zoom*paper_height_in_cm/2.54 * xres + 0.5);
+
+  pixmap = new QPixmap( page_width_in_pixel, page_height_in_pixel );
   if (pixmap == 0) {
-    kdError(4300) << "dviWindow::changePageSize(), no memory for pixmap, page_w=" << (int)page_w << ", page_h =" << (int)page_h << endl;
+    kdError(4300) << "dviWindow::changePageSize(), no memory for pixmap, width=" << page_width_in_pixel << ", height=" << page_height_in_pixel << endl;
     exit(0);
   }
   pixmap->fill( white );
 
-  resize( page_w, page_h );
+  resize( page_width_in_pixel, page_height_in_pixel );
   currwin.win = mane.win = pixmap->handle();
 
-  PS_interface->setSize( basedpi/mane.shrinkfactor, page_w, page_h );
+  PS_interface->setSize( basedpi/mane.shrinkfactor, page_width_in_pixel, page_height_in_pixel );
   drawPage();
 }
 
@@ -505,9 +498,6 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   dviFile = dviFile_new;
   if (info != 0)
     info->setDVIData(dviFile);
-
-  page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
-  page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
 
   // Extract PostScript from the DVI file, and store the PostScript
   // specials in PostScriptDirectory, and the headers in the
@@ -679,9 +669,6 @@ double dviWindow::setZoom(double zoom)
 
   mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*zoom);
   _zoom             = zoom;
-
-  page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
-  page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
 
   font_pool->setShrinkFactor(currwin.shrinkfactor);
   changePageSize();

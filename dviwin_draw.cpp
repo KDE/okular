@@ -82,11 +82,11 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   if (g == NULL)
     return;
 
-  long dvi_h_sav = DVI_H;
+  long dvi_h_sav = currinf.data.dvi_h;
   if (PostScriptOutPutString == NULL) {
     QPixmap pix = currinf.fontp->characterPixmap(ch);
-    int x = PXL_H - g->x2 - currwin.base_x;
-    int y = PXL_V - g->y2 - currwin.base_y;
+    int x = ((int) ((currinf.data.dvi_h) / (currwin.shrinkfactor * 65536))) - g->x2 - currwin.base_x;
+    int y = currinf.data.pxl_v - g->y2 - currwin.base_y;
 
     // Draw the character.
     foreGroundPaint.drawPixmap(x, y, pix);
@@ -99,7 +99,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       if (line_boundary_encountered == true) {
 	// Set up hyperlink
 	DVI_Hyperlink dhl;
-	dhl.baseline = PXL_V;
+	dhl.baseline = currinf.data.pxl_v;
 	dhl.box.setRect(x, y, pix.width(), pix.height());
 	dhl.linkText = *HTML_href;
 	hyperLinkList.push_back(dhl);
@@ -117,7 +117,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       if (line_boundary_encountered == true) {
 	// Set up source hyperlinks
 	DVI_Hyperlink dhl;
-	dhl.baseline = PXL_V;
+	dhl.baseline = currinf.data.pxl_v;
 	dhl.box.setRect(x, y, pix.width(), pix.height());
 	if (source_href != NULL) 
 	  dhl.linkText = *source_href;
@@ -135,7 +135,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     if (line_boundary_encountered == true) {
       // Set up source hyperlinks
       DVI_Hyperlink link;
-      link.baseline = PXL_V;
+      link.baseline = currinf.data.pxl_v;
       link.box.setRect(x, y, pix.width(), pix.height());
       link.linkText = "";
 
@@ -188,9 +188,9 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   }
 
   if (cmd == PUT1)
-    DVI_H = dvi_h_sav;
+    currinf.data.dvi_h = dvi_h_sav;
   else
-    DVI_H += g->dvi_adv;
+    currinf.data.dvi_h += g->dvi_adv;
 
   word_boundary_encountered = false;
   line_boundary_encountered = false;
@@ -215,13 +215,13 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
     return;
   }
 
-  long dvi_h_sav = DVI_H;
+  long dvi_h_sav = currinf.data.dvi_h;
   if (PostScriptOutPutString == NULL) {
     struct drawinf oldinfo = currinf;
-    WW         = 0;
-    XX         = 0;
-    YY         = 0;
-    ZZ         = 0;
+    currinf.data.w         = 0;
+    currinf.data.x         = 0;
+    currinf.data.y         = 0;
+    currinf.data.z         = 0;
 
     currinf.fonttable         = currinf.fontp->vf_table;
     currinf._virtual          = currinf.fontp;
@@ -235,9 +235,9 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
     currinf = oldinfo;
   }
   if (cmd == PUT1)
-    DVI_H = dvi_h_sav;
+    currinf.data.dvi_h = dvi_h_sav;
   else
-    DVI_H += m->dvi_adv;
+    currinf.data.dvi_h += m->dvi_adv;
 }
 
 
@@ -258,24 +258,13 @@ void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
 
   errorMsg = i18n("The DVI code set a character of unknown font");
   return;
-  /* NOTREACHED */
 }
 
-
-/** Set rule. Arguments are coordinates of lower left corner.  */
-
-static	void set_rule(int h, int w)
-{
-  foreGroundPaint.fillRect( PXL_H - -currwin.base_x, PXL_V - h + 1 -currwin.base_y, w?w:1, h?h:1, Qt::black );
-}
-
-
-#define	xspell_conv(n)	((long) (n *  current_dimconv))
 
 void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 {
 #ifdef DEBUG_RENDER
-  kdDebug() << "draw_part" << endl;
+  kdDebug(4300) << "draw_part" << endl;
 #endif
 
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
@@ -314,10 +303,14 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	     0x80000000. We don't want any SIGFPE here. */
 	  a = readUINT32();
 	  b = readUINT32();
-	  b = xspell_conv(b); 
-	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
-	    set_rule( ((int) ROUNDUP(xspell_conv(a), currwin.shrinkfactor * 65536)), ((int) ROUNDUP(b, currwin.shrinkfactor * 65536)) );
-	  DVI_H += b;
+	  b = ((long) (b *  current_dimconv));
+	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL) {
+	    int h = ((int) ROUNDUP(((long) (a *  current_dimconv)), currwin.shrinkfactor * 65536));
+	    int w =  ((int) ROUNDUP(b, currwin.shrinkfactor * 65536));
+	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (currwin.shrinkfactor * 65536))) - -currwin.base_x,
+				      currinf.data.pxl_v - h + 1 -currwin.base_y, w?w:1, h?h:1, Qt::black );
+	  }
+	  currinf.data.dvi_h += b;
 	  break;
 
 	case PUTRULE:
@@ -327,10 +320,14 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  }
 	  a = readUINT32();
 	  b = readUINT32();
-	  a = xspell_conv(a);
-	  b = xspell_conv(b);
-	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
-	    set_rule(((int) ROUNDUP(a, currwin.shrinkfactor * 65536)), ((int) ROUNDUP(b, currwin.shrinkfactor * 65536)));
+	  a = ((long) (a *  current_dimconv));
+	  b = ((long) (b *  current_dimconv));
+	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL) {
+	    int h = ((int) ROUNDUP(a, currwin.shrinkfactor * 65536));
+	    int w = ((int) ROUNDUP(b, currwin.shrinkfactor * 65536));
+	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (currwin.shrinkfactor * 65536))) - -currwin.base_x,
+				      currinf.data.pxl_v - h + 1 -currwin.base_y, w?w:1, h?h:1, Qt::black );
+	  }
 	  break;
 
 	case NOP:
@@ -342,10 +339,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    line_boundary_encountered = true;
 	  }
 	  command_pointer += 11 * 4;
-	  DVI_H = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-	  DVI_V = basedpi;
-	  PXL_V = int(DVI_V/currwin.shrinkfactor);
-	  WW = XX = YY = ZZ = 0;
+	  currinf.data.dvi_h = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
+	  currinf.data.dvi_v = basedpi;
+	  currinf.data.pxl_v = int(currinf.data.dvi_v/currwin.shrinkfactor);
+	  currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
 	  break;
 
 	case EOP:
@@ -397,7 +394,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	      ((RRtmp >= currinf.fontp->scaled_size/6) || (RRtmp <= -4*(currinf.fontp->scaled_size/6))) && 
 	      (textLinkList.size() > 0))
 	    textLinkList[textLinkList.size()-1].linkText += ' ';
-	  DVI_H += xspell_conv(RRtmp);
+	  currinf.data.dvi_h += ((long) (RRtmp *  current_dimconv));
 	  break;
 	  
 	case W1:
@@ -405,14 +402,14 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case W3:
 	case W4:
 	  WWtmp = readINT(ch - W0);
-	  WW = xspell_conv(WWtmp);
+	  currinf.data.w = ((long) (WWtmp *  current_dimconv));
 	case W0:
 	  if ((is_vfmacro == false) && 
 	      (currinf.fontp != 0) &&
 	      ((WWtmp >= currinf.fontp->scaled_size/6) || (WWtmp <= -4*(currinf.fontp->scaled_size/6))) && 
 	      (textLinkList.size() > 0) )
 	    textLinkList[textLinkList.size()-1].linkText += ' ';
-	  DVI_H += WW;
+	  currinf.data.dvi_h += currinf.data.w;
 	  break;
 	  
 	case X1:
@@ -420,14 +417,14 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case X3:
 	case X4:
 	  XXtmp = readINT(ch - X0);
-	  XX = xspell_conv(XXtmp);
+	  currinf.data.x = ((long) (XXtmp *  current_dimconv));
 	case X0:
 	  if ((is_vfmacro == false)  && 
 	      (currinf.fontp != 0) &&
 	      ((XXtmp >= currinf.fontp->scaled_size/6) || (XXtmp <= -4*(currinf.fontp->scaled_size/6))) && 
 	      (textLinkList.size() > 0))
 	    textLinkList[textLinkList.size()-1].linkText += ' ';
-	  DVI_H += XX;
+	  currinf.data.dvi_h += currinf.data.x;
 	  break;
 	  
 	case DOWN1:
@@ -445,8 +442,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size/6)) 
 		textLinkList[textLinkList.size()-1].linkText += '\n';
 	    }
-	    DVI_V += xspell_conv(DDtmp)/65536;
-	    PXL_V = int(DVI_V/currwin.shrinkfactor);
+	    currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
+	    currinf.data.pxl_v  = int(currinf.data.dvi_v/currwin.shrinkfactor);
 	  }
 	  break;
 	  
@@ -455,7 +452,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case Y3:
 	case Y4:
 	  YYtmp = readINT(ch - Y0);
-	  YY    = xspell_conv(YYtmp);
+	  currinf.data.y    = ((long) (YYtmp *  current_dimconv));
 	case Y0:
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
@@ -466,8 +463,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size/6)) 
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
-	  DVI_V += YY/65536;
-	  PXL_V = int(DVI_V/currwin.shrinkfactor);
+	  currinf.data.dvi_v += currinf.data.y/65536;
+	  currinf.data.pxl_v = int(currinf.data.dvi_v/currwin.shrinkfactor);
 	  break;
 	  
 	case Z1:
@@ -475,7 +472,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case Z3:
 	case Z4:
 	  ZZtmp = readINT(ch - Z0);
-	  ZZ    = xspell_conv(ZZtmp);
+	  currinf.data.z    = ((long) (ZZtmp *  current_dimconv));
 	case Z0:
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
@@ -486,8 +483,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size/6)) 
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
-	  DVI_V += ZZ/65536;
-	  PXL_V = int(DVI_V/currwin.shrinkfactor);
+	  currinf.data.dvi_v += currinf.data.z/65536;
+	  currinf.data.pxl_v  = int(currinf.data.dvi_v/currwin.shrinkfactor);
 	  break;
 	  
 	case FNT1:
@@ -552,7 +549,6 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
   } /* end for */
 }
 
-#undef	xspell_conv
 
 void dviWindow::draw_page(void)
 {

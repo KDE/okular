@@ -625,13 +625,20 @@ double KDVIMultiPage::setZoom(double zoom)
 
 double KDVIMultiPage::zoomForHeight(int height)
 {
-  return (double)(height-1)/(window->xres*(window->paper_height_in_cm/2.54));
+  // To take page decoration into account substract 18 pixels from viewport height
+  return (double)(height-1-18)/(window->xres*(window->paper_height_in_cm/2.54));
 }
 
 
 double KDVIMultiPage::zoomForWidth(int width)
 {
-  return (double)(width-1)/(window->xres*(window->paper_width_in_cm/2.54));
+  if( viewModeAction->currentItem() == KVS_ContinuousFacing)
+  {
+    // To take page decorations into account substract 29 pixels from viewport width
+    return (double)(width-1-29)/(window->xres*(2*window->paper_width_in_cm/2.54));
+  }
+  // To take page decoration into account substract 18 pixels from viewport width
+  return (double)(width-1-18)/(window->xres*(window->paper_width_in_cm/2.54));
 }
 
 

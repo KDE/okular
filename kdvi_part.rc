@@ -30,6 +30,7 @@
  </Menu>
 
  <Menu name="help"><text>Help</text>
+  <Action name="help_tipofday"/>
   <Separator/>
   <Action name="help_dvi" append="options_show_merge"/>
   <Action name="about_kdvi" append="options_show_merge"/>

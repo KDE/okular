@@ -122,9 +122,10 @@ protected slots:
   void preferencesChanged();
   void goto_page(int page, int y);
   void contents_of_dviwin_changed(void);
+  void showTip(void);
+  void showTipOnStart(void);
 
 private:
-
   dviWindow    *window;
   OptionDialog *options;
   KPrinter     *printer;

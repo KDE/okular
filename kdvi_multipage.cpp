@@ -11,6 +11,8 @@
 #include <kmessagebox.h>
 #include <kprinter.h>
 #include <kstdaction.h>
+#include <ktip.h>
+#include <qtimer.h>
 
 #include "kviewpart.h"
 #include "optiondialog.h"
@@ -91,6 +93,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   exportTextAction   = new KAction(i18n("Text"), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
   new KAction(i18n("&DVI Options"), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
+  new KAction(i18n("&Tip of the Day..."), 0, this, SLOT(showTip()), actionCollection(), "help_tipofday");
   new KAction(i18n("About the KDVI plugin..."), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
   new KAction(i18n("Help on the KDVI plugin..."), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
   new KAction(i18n("Report Bug in the KDVI plugin..."), 0, this, SLOT(bugform()), actionCollection(), "bug_dvi");
@@ -103,6 +106,9 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   readSettings();
   enableActions(false);
+
+  // Show tip of the day, when the first main window is shown.
+  QTimer::singleShot(0,this,SLOT(showTipOnStart()));
 }
 
 
@@ -270,7 +276,7 @@ void KDVIMultiPage::about()
 				      i18n("the KDVI plugin"), 
 				      KAboutDialog::Close, KAboutDialog::Close);
 
-  ab->setProduct("kdvi", "1.0beta", QString::null, QString::null);
+  ab->setProduct("kdvi", "1.0", QString::null, QString::null);
   ab->addTextPage (i18n("About"), 
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"
@@ -305,7 +311,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.0beta", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.0", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }
@@ -546,6 +552,18 @@ void KDVIMultiPage::doEnableWarnings(void)
   KMessageBox::information (window, i18n("All messages and warnings will now be shown."));
   KMessageBox::enableAllMessages();
   kapp->config()->reparseConfiguration();
+  KTipDialog::setShowOnStart(true);
 }
+
+void KDVIMultiPage::showTip(void)
+{
+  KTipDialog::showTip(window, "kdvi/tips", true);
+}
+
+void KDVIMultiPage::showTipOnStart(void)
+{
+  KTipDialog::showTip(window, "kdvi/tips");
+}
+
 
 #include "kdvi_multipage.moc"

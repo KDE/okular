@@ -30,11 +30,15 @@ squeeze_SOURCES	= squeeze.c
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h oconfig.h\
 	optiondialog.h xdvi.h 
 
-messages: rc.cpp
+messages:
+	preparetips > tips.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
+	rm -f tips.cpp
 
 apps_DATA = kdvi.desktop
 
+tip_DATA = tips
+tipdir = $(kde_datadir)/kdvi
 
 bin_SCRIPTS = kdvi
 

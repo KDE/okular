@@ -365,17 +365,14 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     export_tmpFile.unlink();
     
     sourceFileName     = export_tmpFileName;
-
-    KShellProcess proc;
-    proc << "cp" << KShellProcess::quote(dviFile->filename) << KShellProcess::quote(sourceFileName);
-    if (proc.start(KProcess::Block) == true) {
+    if (KIO::NetAccess::copy(dviFile->filename, sourceFileName)) {
       int wordSize;
       bool bigEndian;
       qSysInfo (&wordSize, &bigEndian);
       // Proper error handling? We don't care.
-      FILE *f = fopen(sourceFileName.latin1(),"r+");
+      FILE *f = fopen(QFile::encodeName(sourceFileName),"r+");
       for(Q_UINT32 i=0; i<=dviFile->total_pages; i++) {
-	fseek(f,dviFile->page_offset[i-1]+1, SEEK_SET);
+	fseek(f,dviFile->page_offset[i]+1, SEEK_SET);
 	// Write the page number to the file, taking good care of byte
 	// orderings. Hopefully QT will implement random access QFiles
 	// soon.
@@ -445,7 +442,7 @@ void dviWindow::abortExternalProgramm(void)
   }
 
   if (export_tmpFileName.isEmpty() != true) {
-    unlink(export_tmpFileName.latin1()); // That should delete the file.
+    unlink(QFile::encodeName(export_tmpFileName)); // That should delete the file.
     export_tmpFileName = "";
   }
 

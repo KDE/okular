@@ -55,7 +55,7 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorDescriptionString += i18n("NEdit perfectly supports inverse search.");
   
   editorNameString        += "VIM - Vi IMproved / GUI";
-  editorCommandString     += "gvim --servername kdvi --remote +%l %f";
+  editorCommandString     += "gvim --servername KDVI --remote-silent +%l %f";
   editorDescriptionString += i18n("VIM version 6.0 or greater works just fine.");
 
   editorNameString        += "XEmacs / gnuclient";

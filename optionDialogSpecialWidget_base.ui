@@ -126,7 +126,7 @@
                         <string>Shell-command line used to start the editor.</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>If you are using inverse search, KDVI uses this command line to start the editor. The field '%f' is replaced with the file name, and '%l' is replaced with the line number.</string>
+                        <string>If you are using inverse search, KDVI uses this command line to start the editor. The field '%f' is replaced with the filename, and '%l' is replaced with the line number.</string>
                     </property>
                 </widget>
                 <spacer row="0" column="0">

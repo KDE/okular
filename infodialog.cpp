@@ -63,7 +63,7 @@ void infoDialog::setDVIData(dvifile *dviFile)
     text = i18n("There is no DVI file loaded at the moment.");
   else {
     text.append("<table WIDTH=\"100%\" NOSAVE >");
-    text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("File name")).arg(dviFile->filename));
+    text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("Filename")).arg(dviFile->filename));
 
     QFile file(dviFile->filename);
     if (file.exists())

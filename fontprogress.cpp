@@ -21,20 +21,17 @@
 /* 
  *  Constructs a fontProgressDialog which is a child of 'parent', with the 
  *  name 'name' and widget flags set to 'f' 
- *
- *  The dialog will by default be modeless, unless you set 'modal' to
- *  TRUE to construct a modal dialog.
  */
 fontProgressDialog::fontProgressDialog( QWidget* parent,  const QString &name )
-  : KDialogBase( parent, "AAA", true, name, Cancel, Cancel, true )
+  : KDialogBase( parent, "Font Generation Progress Dialog", true, name, Cancel, Cancel, true )
 {
   setCursor( QCursor( 3 ) );
   //  setCaption( i18n( "Please wait..." ) );
 
   setButtonCancelText( i18n("Abort"), i18n("Aborts the font generation. Don't do this."));
 
-  setHelp("", "kdvi"); //@@@
-  setHelpLinkText( i18n( "What's going on?") ); 
+  setHelp("fontgen", "kdvi");
+  setHelpLinkText( i18n( "What's going on here?") ); 
   enableLinkedHelp(true);
 
   QVBox *page = makeVBoxMainWidget();
@@ -68,10 +65,8 @@ fontProgressDialog::~fontProgressDialog()
 }
 
 
-void fontProgressDialog::outputReceiver(QString op)
+void fontProgressDialog::outputReceiver(const QString op)
 {
-  show();
-
   // If the Output of the kpsewhich program contains a line starting
   // with "kpathsea:", this means that a new MetaFont-run has been
   // started. We filter these lines out and print them in boldface.
@@ -81,7 +76,6 @@ void fontProgressDialog::outputReceiver(QString op)
 
     int endstartline  = op.find("\n",startlineindex);
     QString startLine = op.mid(startlineindex,endstartline-startlineindex);
-    op = op.mid(endstartline);
 
     // The last word in the startline is the name of the font which we
     // are generating. The second-to-last word is the resolution in
@@ -107,7 +101,8 @@ void fontProgressDialog::setTotalSteps(int steps)
   progress = 0;
 }
 
-void fontProgressDialog::helpButtonPressed(void)
+void fontProgressDialog::show(void)
 {
-  ;
+  KDialogBase::show();
 }
+

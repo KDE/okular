@@ -8,9 +8,12 @@
 
 #include <qlist.h>
 #include <qstringlist.h>
+#include <qobject.h>
 
 #include "font.h"
 
+class KProcess;
+class KShellProcess;
 
 #define NumberOfMFModes 3
 #define DefaultMFMode 1
@@ -67,7 +70,7 @@ Q_OBJECT
       will be called. Since this is done using a concurrently running
       process, there is no guarantee that the loading is already
       performed when the method returns.  */
-  class font *appendx(char *fontname, float fsize, long checksum, int magstepval, double dconv);
+  class font *appendx(char *fontname, long checksum, int scale, int design, class font *vfparent);
 
   /** Prints very basic debugging information about the fonts in the
       pool to the kdDebug output stream. */
@@ -111,9 +114,15 @@ Q_OBJECT
   void release_fonts(void);
 
 signals:
+  /** Emitted to indicate that the progress dialog should show up now. */
+  void show_progress(void);
+
   /** Emitted to indicate that all the fonts have now been loaded so
       that the first page can be rendered. */
   void fonts_have_been_loaded(void);
+
+  /** The title says it all... */
+  void hide_progress_dialog(void);
 
   /** Emitted at the start of a kpsewhich job to indicate how many
       fonts there are to be looked up/generated. */
@@ -125,7 +134,7 @@ signals:
 
   /** Emitted to pass output of MetaFont and friends on to the user
       interface. */
-  void MFOutput(QString);
+  void MFOutput(const QString);
 
   /** Emitted when the font-pool has changed. The class receiving the
       signal might whish to call status() in order to receive the

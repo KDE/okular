@@ -58,7 +58,7 @@ public:
                          };
 
 
-                 font(char *nfontname, float nfsize, long chk, int mag, double dconv, class fontPool *pool);
+                 font(char *nfontname, float nfsize, long chk, double dconv, class fontPool *pool);
                 ~font();
   glyph         *glyphptr(unsigned int ch);
   void           mark_as_used(void);
@@ -80,7 +80,6 @@ public:
   font          *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
 
 private:
-  int            magstepval;	// magstep number * two, or NOMAGSTP
   long           checksum;	// checksum
 
   // Functions related to virtual fonts
@@ -94,7 +93,7 @@ private:
   void          read_PK_index(void);
 
 public slots:
-    void fontNameReceiver(QString);
+  void fontNameReceiver(QString);
 };
 
 #endif

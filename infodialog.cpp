@@ -3,8 +3,10 @@
 // (C) 2001 Stefan Kebekus
 // Distributed under the GPL
 
+#include <kdebug.h>
 #include <klocale.h>
 #include <kpushbutton.h>
+#include <qfile.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtextview.h>
@@ -83,8 +85,11 @@ void infoDialog::setFontInfo(class fontPool *fp)
   TextLabel2->setText(fp->status()); 
 }
 
-void infoDialog::outputReceiver(QString op)
+void infoDialog::outputReceiver(const QString op)
 {
+  if (MFOutputReceived == false)
+    TextLabel3->setText("");
+
   // If the Output of the kpsewhich program contains a line starting
   // with "kpathsea:", this means that a new MetaFont-run has been
   // started. We filter these lines out and print them in boldface.
@@ -92,14 +97,13 @@ void infoDialog::outputReceiver(QString op)
   if (startlineindex != -1) {
     int endstartline  = op.find("\n",startlineindex);
     QString startLine = op.mid(startlineindex,endstartline-startlineindex);
-    op = op.mid(endstartline);
     if (MFOutputReceived)
       TextLabel3->append("<hr>\n<b>"+startLine+"</b>");
-    else {
-      TextLabel3->setText("<b>"+startLine+"</b>");
-      MFOutputReceived = true;
-    }
-  }
+    else 
+      TextLabel3->append("<b>"+startLine+"</b>");
+    TextLabel3->append(op.mid(endstartline));
+  } else
+    TextLabel3->append(op);
 
-  TextLabel3->append(op);
+  MFOutputReceived = true;
 }

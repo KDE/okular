@@ -63,7 +63,7 @@ void font::fontNameReceiver(QString fname)
 }
 
 
-font::font(char *nfontname, float nfsize, long chk, int mag, double dconv, class fontPool *pool)
+font::font(char *nfontname, float nfsize, long chk, double dconv, class fontPool *pool)
 {
 #ifdef DEBUG_FONT
   kdDebug() << "constructing font " << nfontname << " at " << (int) (nfsize + 0.5) << " dpi" << endl;
@@ -73,7 +73,6 @@ font::font(char *nfontname, float nfsize, long chk, int mag, double dconv, class
   fontname   = nfontname;
   fsize      = nfsize;
   checksum   = chk;
-  magstepval = mag;
   flags      = font::FONT_IN_USE;
   file       = NULL; 
   filename   = "";

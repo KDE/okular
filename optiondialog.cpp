@@ -24,6 +24,7 @@
 #include <kapp.h>
 #include <kcombobox.h>
 #include <kconfig.h>
+#include <kdebug.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kinstance.h>
@@ -43,6 +44,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
 {
   _instance = new KInstance("kdvi");
   setHelp("opts", "kdvi");
+
   makeFontPage();
   makeRenderingPage();
 
@@ -64,6 +66,17 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
 
 void OptionDialog::show()
 {
+  KConfig *config = _instance->config();
+  config->reparseConfiguration();
+  config->setGroup("kdvi");
+  
+  mFont.metafontMode->setCurrentItem( config->readNumEntry( "MetafontMode" , DefaultMFMode ));
+  mFont.fontPathCheck->setChecked( config->readBoolEntry( "MakePK", true ) );
+
+  // Rendering page
+  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
+  mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
+
   if( isVisible() == false ) 
     showPage(0);
   KDialogBase::show();

@@ -2,7 +2,7 @@
 // Define the following flags to generate more debugging output
   
 
-// #define DEBUG_FONT 0
+#include <setjmp.h>
 
 /*
  *	Written by Eric C. Cooper, CMU

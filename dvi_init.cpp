@@ -110,79 +110,6 @@ static	long	last_page_offset;
 
 
 
-/** MAGSTEPVALUE - If the given magnification is close to a \magstep
-    or a \magstephalf, then return twice the number of
-    \magsteps. Otherwise return NOMAGSTP. */
-
-#define	NOMAGSTP (-29999)
-#define	NOBUILD	29999
-#define MAGSTEP_MAX 40
-
-static int magstep(int n, int bdpi)
-{
-  double t;
-  int step;
-  int neg = 0;
-
-  if (n < 0) {
-    neg = 1;
-    n = -n;
-  }
-  
-  if (n & 1) {
-    n &= ~1;
-    t = 1.095445115;
-  }
-  else
-    t = 1.0;
-  
-  while (n > 8) {
-    n -= 8;
-    t = t * 2.0736;
-  }
-
-  while (n > 0) {
-    n -= 2;
-    t = t * 1.2;
-  }
-
-  /* Unnecessary casts to shut up stupid compilers. */
-  step = (int)(0.5 + (neg ? bdpi / t : bdpi * t));
-  return step;
-}
-
-static unsigned kpse_magstep_fix(unsigned dpi,  unsigned bdpi,  int *m_ret)
-{
-  int m;
-  int mdpi = -1;
-  unsigned real_dpi = 0;
-  int sign = dpi < bdpi ? -1 : 1; /* negative or positive magsteps? */
-  
-  for (m = 0; !real_dpi && m < MAGSTEP_MAX; m++) { /* don't go forever */
-    mdpi = magstep (m * sign, bdpi);
-    if (abs(mdpi - (int) dpi) <= 1) /* if this magstep matches, quit */
-      real_dpi = mdpi;
-    else 
-      if ((mdpi - (int) dpi) * sign > 0) /* if gone too far, quit */
-	real_dpi = dpi;
-  }
-  
-  // If requested, return the encoded magstep (the loop went one too
-  // far). More unnecessary casts.
-  if (m_ret)
-    *m_ret = real_dpi == (unsigned)(mdpi ? (m - 1) * sign : 0);
-
-  // Always return the true dpi found.
-  return real_dpi ? real_dpi : dpi;
-}
-
-static	int magstepvalue(float *mag)
-{
-  int m_ret;
-  unsigned dpi_ret = kpse_magstep_fix ((unsigned) *mag, (unsigned) pixels_per_inch, &m_ret);
-  *mag = (float) dpi_ret; /* MAG is actually a dpi.  */
-  return m_ret ? m_ret : NOMAGSTP;
-}
 
 
 /** define_font reads the rest of the fntdef command and then reads in
@@ -191,10 +118,6 @@ static	int magstepvalue(float *mag)
 
 font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable, class fontPool *font_pool)
 {
-  struct font *fontp;
-  int	magstepval;
-  int	size;
-
   int   TeXnumber = num(file, (int) cmnd - FNTDEF1 + 1);
   long  checksum  = four(file);
   int   scale     = four(file);
@@ -204,40 +127,18 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
   Fread(fontname, sizeof(char), len, file);
   fontname[len] = '\0';
 
-
-
 #ifdef DEBUG_FONTS
   kdDebug() << "Define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
 
-  // The calculation here is some sort of black magic which I do not
-  // understand. Anyone with time, could you figure out what's going
-  // on here? -- Stefan Kebekus
-  float  fsize;
-  double scale_dimconv;
-  if (vfparent == NULL) {
-    fsize = 0.001 * scale / design * magnification * pixels_per_inch;
-    scale_dimconv = dimconv;
-  } else {
-    /* The scaled size is given in units of vfparent->scale * 2 ** -20
-       SPELL units, so we convert it into SPELL units by multiplying
-       by vfparent->dimconv. The design size is given in units of 2 **
-       -20 pt, so we convert into SPELL units by multiplying by
-       (pixels_per_inch * 2**16) / (72.27 * 2**20).  */
-
-    fsize = (72.27 * (1<<4)) * vfparent->dimconv * scale / design;
-    scale_dimconv = vfparent->dimconv;
-  }
-  magstepval = magstepvalue(&fsize);
-  size       = (int)(fsize + 0.5);
-
-  fontp = font_pool->appendx(fontname, fsize, checksum, magstepval, scale * scale_dimconv / (1<<20));
+  //  struct font *fontp = font_pool->appendx(fontname, fsize, checksum, scale * scale_dimconv / (1<<20));
+  struct font *fontp = font_pool->appendx(fontname, checksum, scale, design, vfparent);
 
   // Insert font in dictionary and make sure the dictionary is big
   // enough.
   if (TeXNumberTable->size()-2 <= TeXNumberTable->count())
-    // Not quite optimal. The size of the dict. should be a prime. I
-    // don't care
+    // Not quite optimal. The size of the dictionary should be a
+    // prime. I don't care
     TeXNumberTable->resize(TeXNumberTable->size()*2); 
   TeXNumberTable->insert(TeXnumber, fontp);
   return fontp;
@@ -341,7 +242,7 @@ void dvifile::read_postamble(void)
 
 void dvifile::prepare_pages()
 {
-#ifdef DEBUG
+#ifdef DEBUG_DVIFILE
   kdDebug() << "prepare_pages" << endl;
 #endif
 
@@ -360,7 +261,7 @@ void dvifile::prepare_pages()
 
 dvifile::dvifile(QString fname, fontPool *pool)
 {
-#ifdef DEBUG
+#ifdef DEBUG_DVIFILE
   kdDebug() << "init_dvi_file: " << fname << endl;
 #endif
 
@@ -391,7 +292,7 @@ dvifile::dvifile(QString fname, fontPool *pool)
 
 dvifile::~dvifile()
 {
-#ifdef DEBUG
+#ifdef DEBUG_DVIFILE
   kdDebug() << "destroy dvi-file" << endl;
 #endif
 

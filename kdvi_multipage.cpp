@@ -203,9 +203,6 @@ bool KDVIMultiPage::preview(QPainter *p, int w, int h)
   if (!map)
     return false;
 
-  // TODO: use higher quality preview if anti-aliasing?
-  //p->drawImage(0, 0, window->pix()->convertToImage().smoothScale(w,h));
-
   p->scale((double)w/(double)map->width(), (double)h/(double)map->height());
   p->drawPixmap(0, 0, *map);
 
@@ -283,7 +280,7 @@ void KDVIMultiPage::helpme()
 
 void KDVIMultiPage::preferencesChanged()
 {
-#ifdef DEBUG
+#ifdef DEBUG_MULTIPAGE
   kdDebug(4300) << "preferencesChanged" << endl;
 #endif
 
@@ -353,7 +350,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
 
 void KDVIMultiPage::timerEvent( QTimerEvent * )
 {
-#ifdef DEBUG
+#ifdef DEBUG_MULTIPAGE
   kdDebug(4300) << "Timer Event " << endl;
 #endif
   reload();
@@ -361,7 +358,7 @@ void KDVIMultiPage::timerEvent( QTimerEvent * )
 
 void KDVIMultiPage::reload()
 {
-#ifdef DEBUG
+#ifdef DEBUG_MULTIPAGE
   kdDebug(4300) << "Reload file " << m_file << endl;
 #endif
 
@@ -371,9 +368,14 @@ void KDVIMultiPage::reload()
     int currsav = window->curr_page();
 
     window->setFile(m_file);
+
+    // Go to the old page and tell kviewshell where we are.
     window->gotoPage(currsav);
-    emit pageInfo(window->totalPages(), window->curr_page()-1 ); // We don't use "currsav" here, because that page may no longer exist. In that case, gotoPage already selected another page.
-    scrollView()->resizeContents(window->width(), window->height());
+    // We don't use "currsav" here, because that page may no longer
+    // exist. In that case, gotoPage already selected another page.
+    emit pageInfo(window->totalPages(), window->curr_page()-1 ); 
+
+    //    scrollView()->resizeContents(window->width(), window->height());
     emit previewChanged(true);
   } else {
     if (timer_id == -1)

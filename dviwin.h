@@ -26,10 +26,10 @@
 class infoDialog;
 class fontProgressDialog;
 
-// max. number of hyperlinks per page. This should late be replaced by
+// max. number of hyperlinks per page. This should later be replaced by
 // a dynamic allocation scheme.
 #define MAX_HYPERLINKS 200 
-// max. number of anchors per document. This should late be replaced by
+// max. number of anchors per document. This should later be replaced by
 // a dynamic allocation scheme.
 #define MAX_ANCHORS    300
 
@@ -74,6 +74,7 @@ public:
 
   // These should not be public... only for the moment
   void          mousePressEvent ( QMouseEvent * e );
+  void          mouseMoveEvent ( QMouseEvent * e );
   void          read_postamble(void);
   void          draw_part(struct frame *minframe, double current_dimconv);
   void          set_vf_char(unsigned int cmd, unsigned int ch);

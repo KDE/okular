@@ -48,7 +48,7 @@ public:
 public slots:
   /** Used to receive text from the external program. The text
       received here is analyzed and presented to the user. */
-  void outputReceiver(QString);
+  void outputReceiver(const QString);
 
   /** Used to initialize the progress bar. */
   void setTotalSteps(int);
@@ -56,8 +56,8 @@ public slots:
   /** Called when font generation is finished. */
   void hideDialog(void);
 
-  /** Called when the "Help"-Button is pressed. */
-  void helpButtonPressed(void);
+  /** Called to show the dialog. */
+  void show(void);
 
 protected:
     int progress;

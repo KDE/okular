@@ -62,57 +62,35 @@ PDFGenerator::~PDFGenerator()
 bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
 {
     // create PDFDoc for the given file
-    GString *filename = new GString( QFile::encodeName( fileName ) );
-    delete pdfdoc;
-    pdfdoc = new PDFDoc( filename, 0, 0 );
+    pdfdoc = new PDFDoc( new GString( QFile::encodeName( fileName ) ), 0, 0 );
 
     // if the file didn't open correctly it might be encrypted, so ask for a pass
-    if ( !pdfdoc->isOk() )
+    bool firstTry = true;
+    while ( !pdfdoc->isOk() && pdfdoc->getErrorCode() == errEncrypted )
     {
-        if ( pdfdoc->getErrorCode() == errEncrypted )
-        {
-            bool first, correct;
-            QString prompt;
-            QCString pwd;
+        QString prompt;
+        if ( firstTry )
+            prompt = i18n( "Please insert the password to read the document:" );
+        else
+            prompt = i18n( "Incorrect password. Try again:" );
+        firstTry = false;
 
-            first = true;
-            correct = false;
-            while( !correct )
-            {
-                if ( first )
-                {
-                    prompt = i18n( "Please insert the password to read the document:" );
-                    first = false;
-                }
-                else prompt = i18n( "Incorrect password. Try again:" );
-                if ( KPasswordDialog::getPassword( pwd, prompt ) == KPasswordDialog::Accepted )
-                {
-                    GString *pwd2;
-                    pwd2 = new GString( pwd.data() );
-                    pdfdoc = new PDFDoc( filename, pwd2, pwd2 );
-                    delete pwd2;
-                    correct = pdfdoc->isOk();
-                    if ( !correct && pdfdoc->getErrorCode() != errEncrypted )
-                    {
-                        delete pdfdoc;
-                        pdfdoc = 0;
-                        return false;
-                    }
-                }
-                else
-                {
-                    delete pdfdoc;
-                    pdfdoc = 0;
-                    return false;
-                }
-            }
-        }
+        QCString pwd;
+        if ( KPasswordDialog::getPassword( pwd, prompt ) != KPasswordDialog::Accepted )
+            break;
         else
         {
+            GString * pwd2 = new GString( pwd.data() );
             delete pdfdoc;
-            pdfdoc = 0;
-            return false;
+            pdfdoc = new PDFDoc( new GString( QFile::encodeName( fileName ) ), pwd2, pwd2 );
+            delete pwd2;
         }
+    }
+    if ( !pdfdoc->isOk() )
+    {
+        delete pdfdoc;
+        pdfdoc = 0;
+        return false;
     }
 
     // initialize output device for rendering current pdf

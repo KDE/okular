@@ -81,6 +81,7 @@ More items (first items will enter 'In progress list' first):
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 -> add search on the toc widget (a prune on type lineedit like in thumbnails widget)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
+-> use wallet for storing passwords of encrypted files
 
 Done (newest feature comes firts):
 -> FIX: Memory manager (free cache if needed, avoid disk swap and oom)

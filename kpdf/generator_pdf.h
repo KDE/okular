@@ -22,6 +22,7 @@
 class PDFDoc;
 class GList;
 class KPDFOutputDev;
+class PDFGeneratorThread;
 
 /**
  * @short A generator that builds contents from a PDF document.
@@ -68,13 +69,18 @@ class PDFGenerator : public Generator
         // private function for creating the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parent, GList * items );
 
-        // private classes
+        // xpdf dependant stuff
         QMutex docLock;
         PDFDoc * pdfdoc;
         KPDFOutputDev * kpdfOutputDev;
         QColor paperColor;
+
+        // asyncronous generation related things
+        PDFGeneratorThread * generatorThread;
         PixmapRequest * requestOnThread;
         QValueList< PixmapRequest * > requestsQueue;
+
+        // misc variables for document info and synopsis caching
         bool docInfoDirty;
         DocumentInfo docInfo;
         bool docSynopsisDirty;

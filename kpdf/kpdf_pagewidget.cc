@@ -13,7 +13,7 @@
 namespace KPDF
 {
 	PageWidget::PageWidget(QWidget* parent, const char* name)
-		: QScrollView(parent, name, WRepaintNoErase), 
+		: QScrollView(parent, name, WRepaintNoErase),
 	m_doc(0),
 	m_zoomFactor( 1.0 ),
 	m_currentPage( 1 ),
@@ -23,20 +23,20 @@ namespace KPDF
 		setMouseTracking(true);
 	}
 
-	void 
+	void
 		PageWidget::setPDFDocument(PDFDoc* doc)
 		{
 			m_doc = doc;
 			updatePixmap();
 		}
 
-	void 
+	void
 		PageWidget::setPixelsPerPoint(float ppp)
 		{
 			m_ppp = ppp;
 		}
 
-	void 
+	void
 		PageWidget::contentsMousePressEvent(QMouseEvent* e)
 		{
 			if (m_doc == 0)
@@ -45,7 +45,7 @@ namespace KPDF
 			m_pressedAction = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
 		}
 
-	void 
+	void
 		PageWidget::contentsMouseReleaseEvent(QMouseEvent* e)
 		{
 			if (m_doc == 0)
@@ -75,7 +75,7 @@ namespace KPDF
 			m_pixmap = m_outputdev->getPixmap();
 		if ( m_pixmap != NULL && ! m_pixmap->isNull() )
 			p->drawPixmap ( clipx, clipy, *m_pixmap, clipx, clipy, clipw, cliph );
-		else 
+		else
 			p->fillRect ( clipx, clipy, clipw, cliph, white );
 	}
 
@@ -114,6 +114,8 @@ namespace KPDF
 
 	void PageWidget::updatePixmap()
 	{
+            if ( m_doc )
+            {
 		const double pageWidth  = m_doc->getPageWidth (m_currentPage) * m_zoomFactor;
 		const double pageHeight = m_doc->getPageHeight(m_currentPage) * m_zoomFactor;
 
@@ -125,8 +127,9 @@ namespace KPDF
 		m_doc->displayPage(m_outputdev, m_currentPage, int(ppp * 72.0), 0, true);
 
 		resizeContents ( m_outputdev->getPixmap()->width ( ), m_outputdev->getPixmap()->height ( ));
-		
+
 		viewport()->update();
+            }
 	}
 }
 

@@ -82,7 +82,7 @@ KPDFDocument::KPDFDocument()
     d->memCheckTimer = new QTimer( this );
     connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotCheckMemory() ) );
     d->saveBookmarksTimer = new QTimer( this );
-    connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( saveDocumentInfo() ) );
+    connect( d->saveBookmarksTimer, SIGNAL( timeout() ), this, SLOT( saveDocumentInfo() ) );
 }
 
 KPDFDocument::~KPDFDocument()
@@ -125,20 +125,21 @@ bool KPDFDocument::openDocument( const QString & docFile )
     if ( !openOk )
         return false;
 
-    // start memory check timer
-    d->memCheckTimer->start( 1000 );
-
-    // start bookmark saver timer
-    d->memCheckTimer->start( 5 * 60 * 1000 );
-
-    loadDocumentInfo();
-
     // filter pages, setup observers and set the first page as current
     if ( pages_vector.size() > 0 )
     {
         processPageList( true );
         setCurrentPage( 0 );
     }
+
+    loadDocumentInfo();
+
+    // start bookmark saver timer
+    d->saveBookmarksTimer->start( 5 * 60 * 1000 );
+
+    // start memory check timer
+    d->memCheckTimer->start( 2000 );
+
     return true;
 }
 

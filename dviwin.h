@@ -15,13 +15,13 @@
 #include <stdio.h>
 
 #include "../config.h"
-#include <qpainter.h> 
 #include <qevent.h>
-#include <qwidget.h> 
 #include <qintdict.h>
-#include <qvaluestack.h>
+#include <qpainter.h> 
 #include <qptrvector.h>
-
+#include <qvaluestack.h>
+#include <qvaluevector.h>
+#include <qwidget.h> 
 #include <kviewpart.h>
 
 #include "bigEndianByteReader.h"
@@ -216,9 +216,7 @@ private:
 			      // (relative) URL given in the string;
 
  /** List of text in the window */
- DVI_Hyperlink     textLinkList[MAX_HYPERLINKS];
- int               num_of_used_textlinks;
-
+ QValueVector<DVI_Hyperlink> textLinkList;
 
  /** Stack for register compounds, used for the DVI-commands PUSH/POP
      as explained in section 2.5 and 2.6.2 of the DVI driver standard,

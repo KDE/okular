@@ -200,11 +200,11 @@ void dviWindow::showInfo(void)
 void dviWindow::selectAll(void)
 {
   QString selectedText("");
-  for(int i = 0; i < num_of_used_textlinks; i++) {
+  for(unsigned int i = 0; i < textLinkList.size(); i++) {
     selectedText += textLinkList[i].linkText;
     selectedText += "\n";
   }
-  DVIselection.set(0, num_of_used_textlinks-1, selectedText);
+  DVIselection.set(0, textLinkList.size()-1, selectedText);
   update();
 }
 
@@ -523,7 +523,6 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf._virtual  = NULL;
-    num_of_used_textlinks = 0;
     draw_part(dviFile->dimconv, false);
 
     if (!PostScriptOutPutString->isEmpty())
@@ -739,7 +738,7 @@ void dviWindow::paintEvent(QPaintEvent *e)
 
     // Mark selected text.
     if (DVIselection.selectedTextStart != -1)
-      for(int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < num_of_used_textlinks); i++) {
+      for(unsigned int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < textLinkList.size()); i++) {
 	p.setPen( NoPen );
 	p.setBrush( white );
 	p.setRasterOp( Qt::XorROP );
@@ -781,7 +780,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     Q_INT32 selectedTextStart = -1;
     Q_INT32 selectedTextEnd   = -1;
 
-    for(int i=0; i<num_of_used_textlinks; i++) 
+    for(unsigned int i=0; i<textLinkList.size(); i++) 
       if ( selectedRectangle.intersects(textLinkList[i].box) ) {
 	if (selectedTextStart == -1)
 	  selectedTextStart = i;
@@ -790,7 +789,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 
     QString selectedText("");
     if (selectedTextStart != -1)
-      for(int i = selectedTextStart; (i <= selectedTextEnd)&&(i < num_of_used_textlinks); i++) {
+      for(unsigned int i = selectedTextStart; (i <= selectedTextEnd)&&(i < textLinkList.size()); i++) {
 	selectedText += textLinkList[i].linkText;
 	selectedText += "\n";
       }

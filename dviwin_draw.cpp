@@ -142,56 +142,55 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     // search, etc.). Set up the textLinkList.
     if (line_boundary_encountered == true) {
       // Set up source hyperlinks
-      textLinkList[num_of_used_textlinks].baseline = PXL_V;
-      textLinkList[num_of_used_textlinks].box.setRect(x, y, pix.width(), pix.height());
-      textLinkList[num_of_used_textlinks].linkText = "";
-      if (num_of_used_textlinks < MAX_HYPERLINKS-1)
-	num_of_used_textlinks++;
-      else
-	kdError(4300) << "Used more than " << MAX_HYPERLINKS << " textlinks on a page. This is currently not supported." << endl;
+      DVI_Hyperlink link;
+      link.baseline = PXL_V;
+      link.box.setRect(x, y, pix.width(), pix.height());
+      link.linkText = "";
+
+      textLinkList.push_back(link);
     } else { // line boundary encountered
-      QRect dshunion = textLinkList[num_of_used_textlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-      textLinkList[num_of_used_textlinks-1].box = dshunion;
+      QRect dshunion = textLinkList[textLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      textLinkList[textLinkList.size()-1].box = dshunion;
     }
 
     switch(ch) {
     case 0x0b:
-      textLinkList[num_of_used_textlinks-1].linkText += "ff";
+      textLinkList[textLinkList.size()-1].linkText += "ff";
       break;
     case 0x0c:
-      textLinkList[num_of_used_textlinks-1].linkText += "fi";
+      textLinkList[textLinkList.size()-1].linkText += "fi";
       break;
     case 0x0d:
-      textLinkList[num_of_used_textlinks-1].linkText += "fl";
+      textLinkList[textLinkList.size()-1].linkText += "fl";
       break;
     case 0x0e:
-      textLinkList[num_of_used_textlinks-1].linkText += "ffi";
+      textLinkList[textLinkList.size()-1].linkText += "ffi";
       break;
     case 0x0f:
-      textLinkList[num_of_used_textlinks-1].linkText += "ffl";
+      textLinkList[textLinkList.size()-1].linkText += "ffl";
       break;
 
     case 0x7b:
-      textLinkList[num_of_used_textlinks-1].linkText += "-";
+      textLinkList[textLinkList.size()-1].linkText += "-";
       break;
     case 0x7c:
-      textLinkList[num_of_used_textlinks-1].linkText += "---";
+      textLinkList[textLinkList.size()-1].linkText += "---";
       break;
     case 0x7d:
-      textLinkList[num_of_used_textlinks-1].linkText += "\"";
+      textLinkList[textLinkList.size()-1].linkText += "\"";
       break;
     case 0x7e:
-      textLinkList[num_of_used_textlinks-1].linkText += "~";
+      textLinkList[textLinkList.size()-1].linkText += "~";
       break;
     case 0x7f:
-      textLinkList[num_of_used_textlinks-1].linkText += "@@"; // @@@ check!
+      textLinkList[textLinkList.size()-1].linkText += "@@"; // @@@ check!
       break;
       
     default:
       if ((ch >= 0x21) && (ch <= 0x7a))
-	textLinkList[num_of_used_textlinks-1].linkText += QChar(ch);
+	textLinkList[textLinkList.size()-1].linkText += QChar(ch);
       else
-	textLinkList[num_of_used_textlinks-1].linkText += "?";
+	textLinkList[textLinkList.size()-1].linkText += "?";
       break;
     }
   }
@@ -404,8 +403,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      ((RRtmp >= currinf.fontp->scaled_size/6) || (RRtmp <= -4*(currinf.fontp->scaled_size/6))) && 
-	      (num_of_used_textlinks > 0))
-	    textLinkList[num_of_used_textlinks-1].linkText += ' ';
+	      (textLinkList.size() > 0))
+	    textLinkList[textLinkList.size()-1].linkText += ' ';
 	  DVI_H += xspell_conv(RRtmp);
 	  break;
 	  
@@ -419,8 +418,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) && 
 	      (currinf.fontp != 0) &&
 	      ((WWtmp >= currinf.fontp->scaled_size/6) || (WWtmp <= -4*(currinf.fontp->scaled_size/6))) && 
-	      (num_of_used_textlinks > 0) )
-	    textLinkList[num_of_used_textlinks-1].linkText += ' ';
+	      (textLinkList.size() > 0) )
+	    textLinkList[textLinkList.size()-1].linkText += ' ';
 	  DVI_H += WW;
 	  break;
 	  
@@ -434,8 +433,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false)  && 
 	      (currinf.fontp != 0) &&
 	      ((XXtmp >= currinf.fontp->scaled_size/6) || (XXtmp <= -4*(currinf.fontp->scaled_size/6))) && 
-	      (num_of_used_textlinks > 0))
-	    textLinkList[num_of_used_textlinks-1].linkText += ' ';
+	      (textLinkList.size() > 0))
+	    textLinkList[textLinkList.size()-1].linkText += ' ';
 	  DVI_H += XX;
 	  break;
 	  
@@ -448,11 +447,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    if ((is_vfmacro == false) &&
 		(currinf.fontp != 0) &&
 		(abs(DDtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
-		(num_of_used_textlinks > 0)) {
+		(textLinkList.size() > 0)) {
 	      word_boundary_encountered = true;
 	      line_boundary_encountered = true;
 	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size/6)) 
-		textLinkList[num_of_used_textlinks-1].linkText += '\n';
+		textLinkList[textLinkList.size()-1].linkText += '\n';
 	    }
 	    DVI_V += xspell_conv(DDtmp);
 	    PXL_V = pixel_conv(DVI_V);
@@ -469,11 +468,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      (abs(YYtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
-	      (num_of_used_textlinks > 0)) {
+	      (textLinkList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
 	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size/6)) 
-	      textLinkList[num_of_used_textlinks-1].linkText += '\n';
+	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  DVI_V += YY;
 	  PXL_V = pixel_conv(DVI_V);
@@ -489,11 +488,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
-	      (num_of_used_textlinks > 0)) {
+	      (textLinkList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
 	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size/6)) 
-	      textLinkList[num_of_used_textlinks-1].linkText += '\n';
+	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  DVI_V += ZZ;
 	  PXL_V = pixel_conv(DVI_V);
@@ -569,7 +568,7 @@ void dviWindow::draw_page(void)
   HTML_href              = 0;
   source_href            = 0;
   num_of_used_hyperlinks = 0;
-  num_of_used_textlinks  = 0;
+  textLinkList.clear();
   num_of_used_source_hyperlinks = 0;
 
   // Check if all the fonts are loaded. If that is not the case, we

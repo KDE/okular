@@ -106,7 +106,7 @@ void dviWindow::exportText(void)
     draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
     foreGroundPaint.end();
     
-    for(int i=0; i<num_of_used_textlinks; i++) 
+    for(unsigned int i=0; i<textLinkList.size(); i++) 
       stream << textLinkList[i].linkText << endl;
   }
 

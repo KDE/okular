@@ -90,7 +90,7 @@ void dviWindow::findNextText(void)
 
     // Go trough the text of the current page and search for the
     // string.
-    for(int i=DVIselection.selectedTextStart+1; i<num_of_used_textlinks; i++) 
+    for(int i=DVIselection.selectedTextStart+1; i<textLinkList.size(); i++) 
       if (textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
@@ -218,7 +218,7 @@ void dviWindow::findPrevText(void)
     // string.
     int i=DVIselection.selectedTextStart-1;
     if (i < 0)
-      i = num_of_used_textlinks;
+      i = textLinkList.size();
     do{
       if (textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current

@@ -16,7 +16,7 @@
 #include <qwidget.h> 
 #include <qintdict.h>
 #include <qvaluestack.h>
-#include <qvector.h>
+#include <qptrvector.h>
 
 #include <kviewpart.h>
 

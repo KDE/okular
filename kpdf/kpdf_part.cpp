@@ -395,12 +395,9 @@ void Part::nextThumbnail()
   // check the user did not change the document and we are trying to render somethiung that
   // does not exist
   if (m_nextThumbnail > m_doc->getNumPages()) return;
-  // Pixels per point when the zoomFactor is 1.
-  const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
-  const float ppp = basePpp * m_zoomFactor; // pixels per point
   QOutputDevPixmap odev;
 
-  m_doc->displayPage(&odev, m_nextThumbnail, int(ppp * 72.0), 0, true);
+  m_doc->displayPage(&odev, m_nextThumbnail, QPaintDevice::x11AppDpiX(), 0, true);
   pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
 
   m_nextThumbnail++;

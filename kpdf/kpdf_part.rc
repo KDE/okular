@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="8">
+<kpartgui name="kpdf_part" version="9">
 <MenuBar>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>
@@ -17,6 +17,8 @@
     <Separator/>
     <Action name="previous_page"/>
     <Action name="next_page"/>
+    <Separator/>
+    <Action name="goToPage"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_scrollbars"/>

@@ -85,6 +85,7 @@ namespace KPDF
       bool nextPage();
       bool previousPage();
       void updateAction();
+      void goToPage( int page );
 
   protected slots:
     void find()     { /* stub */ };
@@ -97,7 +98,7 @@ namespace KPDF
       void slotPreviousPage();
       void slotGotoEnd();
       void slotGotoStart();
-
+      void slotGoToPage();
     void displayNextPage();
     void displayPreviousPage();
 
@@ -116,6 +117,7 @@ namespace KPDF
     KAction* m_lastPage;
     KAction* m_prevPage;
     KAction* m_nextPage;
+      KAction *m_gotoPage;
     KToggleAction* m_showScrollBars;
     KToggleAction* m_showPageList;
 

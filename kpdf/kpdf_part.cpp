@@ -16,6 +16,7 @@
 #include <kparts/genericfactory.h>
 #include <kdebug.h>
 #include <kurldrag.h>
+#include <kinputdialog.h>
 
 #include "part.h"
 
@@ -105,6 +106,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                                      actionCollection(), "goToEnd" );
   m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
+  m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ),
+                                    actionCollection(), "goToPage" );
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");
   connect( m_outputDev, SIGNAL( ZoomIn() ), SLOT( zoomIn() ));
@@ -121,6 +124,26 @@ Part::~Part()
 {
     delete globalParams;
     writeSettings();
+}
+
+void Part::slotGoToPage()
+{
+    if ( m_doc )
+    {
+        bool ok = false;
+        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), 1,
+                                           1, m_doc->getNumPages(), 1, 10, &ok/*, _part->widget()*/);
+        if (ok)
+            goToPage( num -1 );
+    }
+}
+
+void Part::goToPage( int page )
+{
+    m_currentPage = page;
+    pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+    m_outputDev->setPage(m_currentPage);
+    updateActionPage();
 }
 
 void Part::slotOpenUrlDropped( const KURL &url )

@@ -644,44 +644,6 @@ void dviRenderer::clearStatusBar(void)
 }
 
 
-void dviRenderer::handleLocalLink(const QString &linkText)
-{	  
-#ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "hit: local link to " << linkText << endl;
-#endif
-  QString locallink;
-  if (linkText[0] == '#' )
-    locallink = linkText.mid(1); // Drop the '#' at the beginning
-  else
-    locallink = linkText;
-  QMap<QString,anchor>::Iterator it = anchorList.find(locallink);
-  if (it != anchorList.end()) {
-#ifdef DEBUG_SPECIAL
-    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-    kdDebug(4300) << "hit: local link to sf=" << shrinkfactor << endl;
-#endif
-    emit(request_goto_page(it.data().page, (int)(it.data().distance_from_top_in_inch*resolutionInDPI + 0.5)));
-  } else {
-    if (linkText[0] != '#' ) {
-#ifdef DEBUG_SPECIAL
-      kdDebug(4300) << "hit: external link to " << currentlyDrawnPage->hyperLinkList[i].linkText << endl;
-#endif
-      // We could in principle use KIO::Netaccess::run() here, but
-      // it is perhaps not a very good idea to allow a DVI-file to
-      // specify arbitrary commands, such as "rm -rvf /". Using
-      // the kfmclient seems to be MUCH safer.
-      QUrl DVI_Url(dviFile->filename);
-      QUrl Link_Url(DVI_Url, linkText, TRUE );
-      
-      QStringList args;
-      args << "openURL";
-      args << Link_Url.toString();
-      kapp->kdeinitExec("kfmclient", args);
-    }
-  }
-}
-
-
 void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *win)
 {
 #ifdef DEBUG_SPECIAL

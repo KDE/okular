@@ -12,8 +12,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_PAGEWIDGET_H_
-#define _KPDF_PAGEWIDGET_H_
+#ifndef _KPDF_PAGEVIEW_H_
+#define _KPDF_PAGEVIEW_H_
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
@@ -26,13 +26,40 @@ class KURL;
 class KActionCollection;
 class KConfigGroup;
 
+class PageWidget : public QWidget
+{
+public:
+    PageWidget(QWidget *parent, const KPDFPage *page);
 
-class PageWidget : public QScrollView, public KPDFDocumentObserver
+    // resize / select commands
+    int setThumbnailWidth(int width);
+    void setSelected(bool selected);
+
+    // query methods
+    int pageNumber() const;
+    int previewWidth() const;
+    int previewHeight() const;
+
+protected:
+    void paintEvent(QPaintEvent *);
+
+private:
+    const KPDFPage *m_page;
+    uint m_previewWidth;
+    uint m_previewHeight;
+    bool m_selected;
+    uint m_labelNumber;
+    uint m_labelHeight;
+    uint m_labelWidth;
+};
+
+
+class PageView : public QScrollView, public KPDFDocumentObserver
 {
 Q_OBJECT
 
 public:
-	PageWidget( QWidget *parent, KPDFDocument *document );
+	PageView( QWidget *parent, KPDFDocument *document );
 
 	// create actions that interact with this widget
 	uint observerId() { return PAGEWIDGET_ID; }
@@ -62,6 +89,9 @@ private slots:
 	void slotZoomOut();
 	void slotFitToWidthToggled( bool );
 	void slotFitToPageToggled( bool );
+	void slotSetViewSingle();
+	void slotSetViewDouble();
+	void slotSetViewContinous();
 	void slotSetMouseNormal();
 	void slotSetMouseSelect();
 	void slotSetMouseDraw();

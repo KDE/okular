@@ -30,8 +30,8 @@
 #include "page.h"
 
 
-PageWidget::PageWidget( QWidget *parent, KPDFDocument *document )
-	: QScrollView( parent, "KPDF::pageWidget", WRepaintNoErase | WStaticContents ),
+PageView::PageView( QWidget *parent, KPDFDocument *document )
+	: QScrollView( parent, "KPDF::pageView", WRepaintNoErase | WStaticContents ),
 	m_document( document ), m_page( 0 ),
 	m_mouseMode( MouseNormal ), m_mouseOnLink( false ),
 	m_zoomMode( FixedFactor ), m_zoomFactor( 1.0 ),
@@ -51,7 +51,7 @@ PageWidget::PageWidget( QWidget *parent, KPDFDocument *document )
 	// connect(...);
 }
 
-void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
+void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
 {
 	// Zoom actions ( higher scales consumes lots of memory! )
 	const double zoomValue[10] = { 0.125, 0.25, 0.333, 0.5, 0.667, 0.75, 1, 1.25, 1.50, 2 };
@@ -83,6 +83,19 @@ void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 	m_aZoomFitPage = new KToggleAction( i18n("Fit to &Page"), "viewmagfit", 0, ac, "zoom_fit_page" );
 	connect( m_aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
+	// View-Layout actions
+	KToggleAction * vs = new KToggleAction( i18n("Single Page"), "view_remove", 0, this, SLOT( slotSetViewSingle() ), ac, "view_single" );
+	vs->setExclusiveGroup("ViewLayout");
+	vs->setChecked( true );
+
+	KToggleAction * vd = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, this, SLOT( slotSetViewDouble() ), ac, "view_double" );
+	vd->setExclusiveGroup("ViewLayout");
+	vd->setEnabled( false ); // implement feature before removing this line
+
+	KToggleAction * vc = new KToggleAction( i18n("Continous"), "view_text", 0, this, SLOT( slotSetViewContinous() ), ac, "view_continous" );
+	vc->setExclusiveGroup("ViewLayout");
+	vc->setEnabled( false ); // implement feature before removing this line
+
 	// Mouse-Mode actions
 	KToggleAction * mn = new KToggleAction( i18n("Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
 	mn->setExclusiveGroup("MouseType");
@@ -90,9 +103,11 @@ void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 
 	KToggleAction * ms = new KToggleAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
 	ms->setExclusiveGroup("MouseType");
+	ms->setEnabled( false ); // implement feature before removing this line
 
 	KToggleAction * md = new KToggleAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
 	md->setExclusiveGroup("MouseType");
+	md->setEnabled( false ); // implement feature before removing this line
 
 	// Other actions
 	KToggleAction * ss = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
@@ -103,14 +118,14 @@ void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 	slotToggleScrollBars( ss->isChecked() );
 }
 
-void PageWidget::saveSettings( KConfigGroup * config )
+void PageView::saveSettings( KConfigGroup * config )
 {
 	config->writeEntry( "ShowScrollBars", hScrollBarMode() == AlwaysOn );
 }
 
 
 //BEGIN KPDFDocumentObserver inherited methods 
-void PageWidget::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged )
+void PageView::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged )
 {
 //TODO
 documentChanged = false;
@@ -128,7 +143,7 @@ documentChanged = false;
 		m_pages.push_back( (*pageIt)->number() );
 }
 
-void PageWidget::pageSetCurrent( int pageNumber, float position )
+void PageView::pageSetCurrent( int pageNumber, float position )
 {
 	// select next page
 	m_vectorIndex = 0;
@@ -153,7 +168,7 @@ void PageWidget::pageSetCurrent( int pageNumber, float position )
 	verticalScrollBar()->setValue( (int)(position * verticalScrollBar()->maxValue()) );
 }
 
-void PageWidget::notifyPixmapChanged( int pageNumber )
+void PageView::notifyPixmapChanged( int pageNumber )
 {
 	// check if it's the preview we're waiting for and update it
 	if ( m_page && (int)m_page->number() == pageNumber )
@@ -162,7 +177,7 @@ void PageWidget::notifyPixmapChanged( int pageNumber )
 //END KPDFDocumentObserver inherited methods
 
 //BEGIN widget events 
-void PageWidget::contentsMousePressEvent( QMouseEvent * e )
+void PageView::contentsMousePressEvent( QMouseEvent * e )
 {
 	switch ( m_mouseMode )
 	{
@@ -192,7 +207,7 @@ void PageWidget::contentsMousePressEvent( QMouseEvent * e )
 	}
 }
 
-void PageWidget::contentsMouseReleaseEvent( QMouseEvent * )
+void PageView::contentsMouseReleaseEvent( QMouseEvent * )
 {
 	switch ( m_mouseMode )
 	{
@@ -216,7 +231,7 @@ void PageWidget::contentsMouseReleaseEvent( QMouseEvent * )
 	}
 }
 
-void PageWidget::contentsMouseMoveEvent( QMouseEvent * e )
+void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
 	switch ( m_mouseMode )
 	{
@@ -252,7 +267,7 @@ void PageWidget::contentsMouseMoveEvent( QMouseEvent * e )
 	}
 }
 
-void PageWidget::viewportResizeEvent( QResizeEvent * )
+void PageView::viewportResizeEvent( QResizeEvent * )
 {
 	// start a timer that will refresh the pixmap after 0.5s
 	if ( !m_delayTimer )
@@ -265,7 +280,7 @@ void PageWidget::viewportResizeEvent( QResizeEvent * )
 	//slotUpdateView( false );
 }
 
-void PageWidget::keyPressEvent( QKeyEvent * e )
+void PageView::keyPressEvent( QKeyEvent * e )
 {
 	switch ( e->key() )
 	{
@@ -298,7 +313,7 @@ void PageWidget::keyPressEvent( QKeyEvent * e )
 	e->accept();
 }
 
-void PageWidget::wheelEvent( QWheelEvent *e )
+void PageView::wheelEvent( QWheelEvent *e )
 {
 	int delta = e->delta();
 	e->accept();
@@ -316,19 +331,19 @@ void PageWidget::wheelEvent( QWheelEvent *e )
 		QScrollView::wheelEvent( e );
 }
 
-void PageWidget::dragEnterEvent( QDragEnterEvent * ev )
+void PageView::dragEnterEvent( QDragEnterEvent * ev )
 {
 	ev->accept();
 }
 
-void PageWidget::dropEvent( QDropEvent * ev )
+void PageView::dropEvent( QDropEvent * ev )
 {
 	KURL::List lst;
 	if (  KURLDrag::decode(  ev, lst ) )
 		emit urlDropped( lst.first() );
 }
 
-void PageWidget::drawContents( QPainter *p, int clipx, int clipy, int clipw, int cliph )
+void PageView::drawContents( QPainter *p, int clipx, int clipy, int clipw, int cliph )
 {
 	QColor bc( paletteBackgroundColor() /*KGlobalSettings::calculateAlternateBackgroundColor( KGlobalSettings::baseColor() )*/ );
 	if ( m_page )
@@ -385,7 +400,7 @@ void PageWidget::drawContents( QPainter *p, int clipx, int clipy, int clipw, int
 //END widget events
 
 //BEGIN internal SLOTS
-void PageWidget::slotZoom( const QString & nz )
+void PageView::slotZoom( const QString & nz )
 {
 	if ( nz == i18n("Fit Width") )
 	{
@@ -413,7 +428,7 @@ void PageWidget::slotZoom( const QString & nz )
 	}
 }
 
-void PageWidget::slotZoomIn()
+void PageView::slotZoomIn()
 {
 	if ( m_zoomFactor >= 4.0 )
 		return;
@@ -427,7 +442,7 @@ void PageWidget::slotZoomIn()
 	m_aZoomFitPage->setChecked( false );
 }
 
-void PageWidget::slotZoomOut()
+void PageView::slotZoomOut()
 {
 	if ( m_zoomFactor <= 0.125 )
 		return;
@@ -441,42 +456,54 @@ void PageWidget::slotZoomOut()
 	m_aZoomFitPage->setChecked( false );
 }
 
-void PageWidget::slotFitToWidthToggled( bool on )
+void PageView::slotFitToWidthToggled( bool on )
 {
 	m_zoomMode = on ? FitWidth : FixedFactor;
 	slotUpdateView();
 	m_aZoomFitPage->setChecked( false );
 }
 
-void PageWidget::slotFitToPageToggled( bool on )
+void PageView::slotFitToPageToggled( bool on )
 {
 	m_zoomMode = on ? FitPage : FixedFactor;
 	slotUpdateView();
 	m_aZoomFitWidth->setChecked( false );
 }
 
-void PageWidget::slotSetMouseNormal()
+void PageView::slotSetViewSingle()
+{	//TODO this
+}
+
+void PageView::slotSetViewDouble()
+{	//TODO this
+}
+
+void PageView::slotSetViewContinous()
+{	//TODO this
+}
+
+void PageView::slotSetMouseNormal()
 {
 	m_mouseMode = MouseNormal;
 }
 
-void PageWidget::slotSetMouseSelect()
+void PageView::slotSetMouseSelect()
 {
 	m_mouseMode = MouseSelection;
 }
 
-void PageWidget::slotSetMouseDraw()
+void PageView::slotSetMouseDraw()
 {
 	m_mouseMode = MouseEdit;
 }
 
-void PageWidget::slotToggleScrollBars( bool on )
+void PageView::slotToggleScrollBars( bool on )
 {
 	setHScrollBarMode( on ? AlwaysOn : AlwaysOff );
 	setVScrollBarMode( on ? AlwaysOn : AlwaysOff );
 }
 
-void PageWidget::slotUpdateView( bool repaint )
+void PageView::slotUpdateView( bool repaint )
 {	//TODO ASYNC autogeneration!
 	if ( !m_page )
 	{
@@ -510,17 +537,17 @@ void PageWidget::slotUpdateView( bool repaint )
 }
 //END internal SLOTS
 
-bool PageWidget::atTop() const
+bool PageView::atTop() const
 {
 	return verticalScrollBar()->value() == verticalScrollBar()->minValue();
 }
 
-bool PageWidget::atBottom() const
+bool PageView::atBottom() const
 {
 	return verticalScrollBar()->value() == verticalScrollBar()->maxValue();
 }
 
-void PageWidget::scrollUp()
+void PageView::scrollUp()
 {
 	if( atTop() && m_vectorIndex > 0 )
 		// go to the bottom of previous page
@@ -533,7 +560,7 @@ void PageWidget::scrollUp()
 	}
 }
 
-void PageWidget::scrollDown()
+void PageView::scrollDown()
 {
 	if( atBottom() && m_vectorIndex < (int)m_pages.count() - 1 )
 		// go to the top of previous page

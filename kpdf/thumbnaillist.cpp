@@ -40,19 +40,12 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestPixmaps(int, int)) );
 }
 
-void ThumbnailList::setupActions( KActionCollection * ac, KConfigGroup * config )
+void ThumbnailList::setupActions( KActionCollection * /*ac*/, KConfigGroup * /*config*/ )
 {
-	KToggleAction * show = new KToggleAction( i18n( "Show &Page List" ), 0, ac, "show_thumbnails" );
-	show->setCheckedState(i18n("Hide &Page List"));
-	connect( show, SIGNAL( toggled( bool ) ), SLOT( setShown( bool ) ) );
-
-	show->setChecked( config->readBoolEntry( "ShowPageList", true ) );
-	setShown( show->isChecked() );
 }
 
-void ThumbnailList::saveSettings( KConfigGroup * config )
+void ThumbnailList::saveSettings( KConfigGroup * /*config*/ )
 {
-	config->writeEntry( "ShowPageList", isShown() );
 }
 
 //BEGIN KPDFDocumentObserver inherited methods 
@@ -75,6 +68,12 @@ documentChanged = false;
 		return;
 	}
 
+	//FIXME change this quick fix (lines that follows). Check if filtering:
+	bool skipCheck = true;
+	for ( uint i = 0; i < pages.count(); i++ )
+		if ( pages[i]->isHilighted() )
+			skipCheck = false;
+
 	// generate Thumbnails for the given set of pages
 	Thumbnail *t;
 	int width = clipper()->width(),
@@ -82,7 +81,7 @@ documentChanged = false;
 	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin();
 	QValueVector<KPDFPage*>::const_iterator pageEnd = pages.end();
 	for (; pageIt != pageEnd ; ++pageIt)
-		if ( (*pageIt)->isHilighted() ) {
+		if ( skipCheck || (*pageIt)->isHilighted() ) {
 			t = new Thumbnail( viewport(), *pageIt );
 			// add to the scrollview
 			addChild( t, 0, totalHeight );
@@ -261,6 +260,18 @@ void ThumbnailList::requestPixmaps( int delayMs )
 		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestPixmaps() ) );
 	}
 	m_delayTimer->start( delayMs, true );
+}
+
+
+/** class ThumbnailsBox **/
+
+ThumbnailsBox::ThumbnailsBox( QWidget * parent ) : QVBox( parent )
+{
+}
+
+QSize ThumbnailsBox::sizeHint() const
+{
+	return QSize();
 }
 
 #include "thumbnaillist.moc"

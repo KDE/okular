@@ -42,6 +42,10 @@
   <!--Action name="zoom_fit_width"/-->
   <!--Action name="zoom_fit_page"/-->
   <Separator/>
+  <Action name="view_single"/>
+  <Action name="view_double"/>
+  <Action name="view_continous"/>
+  <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_select"/>
   <Action name="mouse_draw"/>

@@ -26,6 +26,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qvbox.h>
+#include <qtoolbox.h>
 #include <qpushbutton.h>
 
 #include <kaction.h>
@@ -82,28 +83,42 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	document = new KPDFDocument();
 	connect( document, SIGNAL( pageChanged() ), this, SLOT( updateActions() ) );
 
-	// build widgets
+	// widgets: [] splitter []
 	m_splitter = new QSplitter( parentWidget, widgetName );
 	m_splitter->setOpaqueResize( true );
 	setWidget( m_splitter );
 
-	QVBox * leftVBox = new QVBox( m_splitter );
-	leftVBox->setMaximumWidth( 150 );
-	leftVBox->setMinimumWidth( 50 );
+	// widgets: [left toolbox] | []
+	QToolBox * toolBox = new QToolBox( m_splitter );
+	toolBox->setMinimumWidth( 60 );
+	toolBox->setMaximumWidth( 200 );
 
-	new QPushButton( QIconSet(SmallIcon("thumbnail")), "only a", leftVBox );
-	new QPushButton( QIconSet(SmallIcon("bookmark")), "layout", leftVBox );
-	new QPushButton( QIconSet(SmallIcon("filter")), "test", leftVBox );
+	QFrame * tocFrame = new QFrame( toolBox );
+	toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 
-	m_searchWidget = new SearchWidget( leftVBox, document );
+	QVBox * thumbsBox = new ThumbnailsBox( toolBox );
+	m_thumbnailList = new ThumbnailList( thumbsBox, document );
+	m_searchWidget = new SearchWidget( thumbsBox, document );
+	toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+	toolBox->setCurrentItem( thumbsBox );
 
-	m_thumbnailList = new ThumbnailList( leftVBox, document );
+	QFrame * bookmarksFrame = new QFrame( toolBox );
+	toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
+
+	QFrame * editFrame = new QFrame( toolBox );
+	toolBox->addItem( editFrame, QIconSet(SmallIcon("favorites")), i18n("Edited Chunks") );
+
+	QFrame * moreFrame = new QFrame( toolBox );
+	toolBox->addItem( moreFrame, QIconSet(SmallIcon("fork")), i18n("More stuff..") );
+
+	// widgets: [] | [right 'pageView']
+	m_pageView = new PageView( m_splitter, document );
+	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
+	//connect(m_pageView, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
+
+	// add document observers
 	document->addObserver( m_thumbnailList );
-
-	m_pageWidget = new PageWidget( m_splitter, document );
-	connect( m_pageWidget, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
-	//connect(m _pageWidget, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
-	document->addObserver( m_pageWidget );
+	document->addObserver( m_pageView );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -137,7 +152,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
     // attach the actions of the 2 children widgets too
 	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
-	m_pageWidget->setupActions( ac, &settings );
+	m_pageView->setupActions( ac, &settings );
 	m_searchWidget->setupActions( ac, &settings );
 	m_thumbnailList->setupActions( ac, &settings );
 
@@ -152,7 +167,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 Part::~Part()
 {
 	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
-	m_pageWidget->saveSettings( &settings );
+	m_pageView->saveSettings( &settings );
 	m_searchWidget->saveSettings( &settings );
 	m_thumbnailList->saveSettings( &settings );
 	settings.writeEntry( "SplitterSizes", m_splitter->sizes() );
@@ -244,7 +259,7 @@ public:
 
 void Part::slotGoToPage()
 {
-	KPDFGotoPageDialog pageDialog( m_pageWidget, document->currentPage() + 1, document->pages() );
+	KPDFGotoPageDialog pageDialog( m_pageView, document->currentPage() + 1, document->pages() );
 	if ( pageDialog.exec() == QDialog::Accepted )
 		document->slotSetCurrentPage( pageDialog.getPage() - 1 );
 }

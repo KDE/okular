@@ -29,14 +29,14 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     setMargin( 4 );
 
     // clear button
-    KToolBarButton * clear = new KToolBarButton( SmallIcon("locationbar_erase"), 1, this );
-    QToolTip::add( clear, i18n( "Clear filter" ) );
+    KToolBarButton * m_clearButton = new KToolBarButton( SmallIcon("locationbar_erase"), 1, this );
+    QToolTip::add( m_clearButton, i18n( "Clear filter" ) );
 
     // line edit
     m_lineEdit = new KLineEdit( this );
     m_lineEdit->setFrame( QFrame::Sunken );
     connect( m_lineEdit, SIGNAL(textChanged(const QString &)), SLOT(slotTextChanged(const QString &)) );
-    connect( clear, SIGNAL(clicked()), m_lineEdit, SLOT(clear()) );
+    connect( m_clearButton, SIGNAL(clicked()), m_lineEdit, SLOT(clear()) );
     QToolTip::add( m_lineEdit, i18n( "Enter at least 3 letters to filter pages" ) );
 
     // change case button and menu
@@ -49,7 +49,7 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     search->setPopup( m_caseMenu );
 */
     int sideLength = m_lineEdit->sizeHint().height();
-    clear->setMinimumSize( QSize( sideLength, sideLength ) );
+    m_clearButton->setMinimumSize( QSize( sideLength, sideLength ) );
  //   search->setMinimumSize( QSize( sideLength, sideLength ) );
 }
 

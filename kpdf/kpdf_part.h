@@ -33,7 +33,7 @@ class LinkAction;
 class LinkDest;
 
 class ThumbnailList;
-class PageWidget;
+class PageView;
 class SearchWidget;
 class KPDFDocument;
 
@@ -106,7 +106,7 @@ namespace KPDF
 	// main widgets
 	QSplitter *m_splitter;
 	ThumbnailList *m_thumbnailList;
-	PageWidget *m_pageWidget;
+	PageView *m_pageView;
 	SearchWidget *m_searchWidget;
 
 	// static instances counter

@@ -12,6 +12,7 @@
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
+#include <qvbox.h>
 #include "document.h"
 
 class QTimer;
@@ -19,6 +20,11 @@ class KActionCollection;
 class KConfigGroup;
 class Thumbnail;
 
+/**
+ * @short A scrollview that displays pages pixmaps previews (aka thumbnails).
+ *
+ * ...
+ */
 class ThumbnailList : public QScrollView, public KPDFDocumentObserver
 {
 Q_OBJECT
@@ -60,6 +66,16 @@ Q_OBJECT
 		QTimer *m_delayTimer;
 		QValueVector<Thumbnail *> m_thumbnails;
 		int m_vectorIndex;
+};
+
+/**
+ * @short A vertical boxed container with zero size hint (for left toolbox)
+ */
+class ThumbnailsBox : public QVBox
+{
+	public:
+		ThumbnailsBox( QWidget * parent );
+		QSize sizeHint() const;
 };
 
 #endif

@@ -1,1 +1,2 @@
 -> make links functional
+-> improve thumbnail generation to make it non-gui blocking

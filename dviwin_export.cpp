@@ -157,9 +157,9 @@ void dviWindow::exportPDF(void)
   }
   if (found == false) {
     KMessageBox::sorry(0, i18n("KDVI could not locate the program 'dvipdfm' on your computer. That program is "
-			       "absolutely needed by the export function. You can, however, convert "
+			       "essential for the export function to work. You can, however, convert "
 			       "the DVI-file to PDF using the print function of KDVI, but that will often "
-			       "produce files which print ok, but are of inferior quality if viewed in the "
+			       "produce documents which print ok, but are of inferior quality if viewed in the "
 			       "Acrobat Reader. It may be wise to upgrade to a more recent version of your "
 			       "TeX distribution which includes the 'dvipdfm' program.\n"
 			       "Hint to the perplexed system administrator: KDVI uses the shell's PATH variable "

@@ -90,6 +90,8 @@ bool KDVIMultiPage::openFile()
   emit numberOfPages(window->totalPages());
   scrollView()->resizeContents(window->width(), window->height());
 
+  emit previewChanged(true);
+
   return true;
 }
 
@@ -98,6 +100,8 @@ bool KDVIMultiPage::closeURL()
 {
   window->setFile("");
   scrollView()->resizeContents(0, 0);
+
+  emit previewChanged(false);
 
   return true;
 }
@@ -115,6 +119,9 @@ QStringList KDVIMultiPage::fileFormats()
 bool KDVIMultiPage::gotoPage(int page)
 {
   window->gotoPage(page+1);
+
+  emit previewChanged(true);
+
   return true;
 }
 

@@ -2,7 +2,7 @@
 <kpartgui name="kdvi_part">
 <MenuBar>
  <Menu name="settings"><text>&amp;Settings</text>
-  <Action name="settings_dvi"/>
+  <Action name="settings_dvi"i append="options_show_merge"/>
  </Menu>
 </MenuBar>
 </kpartgui>

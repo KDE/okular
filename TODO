@@ -7,26 +7,29 @@ Legend:
 
 In progress:
 -> screen editing (annotations): framework (BR67300,BR62793)
--> screen editing (annotations): tools (BR67300), yellow notes 'post-it' like
+-> screen editing (annotations): tools (BR67300,BR91251), yellow notes 'post-it' like
 -> se: investigate popup disappearing
 -> se: display tooltip only the first time
 -> se: check tools not working after a certain time (pretty nice bug :-)
 
 More items (first items will enter 'In progress list' first):
+-> popup context menu when using right button in selection mode (BR99315)
+-> annotations: load and display pdf annotations as in pdf specification (BR93416)
 -> pageview: add scrollbar marks for bookmarks (like kate)
--> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc)
+-> toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
+-> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR
 -> bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
--> viewport restoring: save the page width setting between runs (save/restore zoom factor)
--> presentation: provide a pageX/totalPages indicator in addition to the circle one
+-> viewport restoring: save the zoom/viewCols/continous setting between runs (BR97307+patch)
 -> search: use shortcut for 'find next' action (not the default one) in find-ahead
 -> core: Delay TOC (DocumentSynapsis) generation (and move it on thread)
 -> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
 -> thumbnailslist: show Viewport in(blended/contour)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
+-> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)
    than using QScrollView + inserted Widgets and saves 8% on document loading)
--> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment
+-> pageview: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add ebook-friendly alignment option (BR100341)
 -> core: abstract TextPage generation (the last xpdf dependant class!). then go dancing
    in the streets. make it new and easy to use for wp-style selections.
 -> Dom framework to cache document metadata. It should archive those types of data:
@@ -50,24 +53,28 @@ More items (first items will enter 'In progress list' first):
 -> bookview: 3d opengl widget for viewing the document as a real book (turning pages, etc..)
 -> wallet: use asynchronous interface (to prevent ui-blocking)
 -> open gzipped (.pdf.gz?) files
+-> restore a location from a given url (like http:/someurl?stringForViewport) (BR99240)
 -> kspeech TTS interface. speech {document(missing) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
--> core: pdf forms support
+-> core: pdf forms support (BR91809)
+-> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)
+-> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
+-> sidebar: add shortcut for showing/hiding it (BR99316)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
--> rotate the whole document / individual pages
+-> rotate the whole document / individual pages (on screen/print?) (BR99352)
+-> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> presentation: implement missing transitions (6/11 done)
--> presentation: add some gfx tools (like a red pencil)
+-> presentation: add some gfx tools (like a red pencil / merge with annotations ??)
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
--> presentation: link following (difficult due to pagerects related to pageview pixmap only)
+-> presentation: link following (now possible with uniform links) (BR98388)
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
--> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
--> add search on the toc widget (a 'prune on type' lineedit like in thumbnails widget)
+-> splash(xpdf): check lack of smoothness at low resolutions and antialiasing (BR94231)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 -> tools: ruler, measure: distance, perimeter, ?area?, color picker
--> export: all text in plain_text(fast)/html(hard)
+-> export: all text in plain_text(fast)/html(hard) (BR91146)
 -> export: export to other formats keeping formatting (PS is easy, we just have PSOutputDev that does it :-D. PNG is easy too)
 -> export: extract images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> history as a toolbox child (collecting Doc's viewport changes notifications)

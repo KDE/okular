@@ -558,6 +558,16 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                     if ( onRect != d->mouseOnRect )
                         setCursor( (d->mouseOnRect = onRect) ? pointingHandCursor : arrowCursor );
                 }
+                else
+                {
+                  // if there's no page over the cursor and we were showing the pointingHandCursor
+                  // go back to the normal one
+                  if ( d->mouseOnRect )
+                  {
+                    d->mouseOnRect = false;
+                    setCursor( arrowCursor );
+                  }
+                }
             }
             break;
 

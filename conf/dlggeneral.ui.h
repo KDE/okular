@@ -12,8 +12,15 @@
 
 #include <kapplication.h>
 
+#include <config.h>
+
 void DlgGeneral::showEvent( QShowEvent * )
 {
+#if KPDF_FORCE_DRM
+    kcfg_ObeyDRM->hide();
+#else
     if (kapp->authorize("skip_drm")) kcfg_ObeyDRM->show();
     else kcfg_ObeyDRM->hide();
+#endif
 }
+

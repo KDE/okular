@@ -10,7 +10,6 @@
 #ifndef _KPDF_GENERATOR_H_
 #define _KPDF_GENERATOR_H_
 
-#include <config.h>
 #include <qobject.h>
 #include <qvaluevector.h>
 #include <qstring.h>
@@ -52,11 +51,7 @@ class Generator : public QObject
         virtual const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
 
         // DRM handling
-#if KPDF_HAVE_DRM
         virtual bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
-#else
-        bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
-#endif
 
         // page contents generation
         virtual bool canGeneratePixmap() = 0;

@@ -40,6 +40,8 @@
 #include "core/pagetransition.h"
 #include "conf/settings.h"
 
+#include <config.h>
+
 // id for DATA_READY PDFPixmapGeneratorThread Event
 #define TGE_DATAREADY_ID 6969
 
@@ -214,7 +216,9 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 
 bool PDFGenerator::isAllowed( int permissions )
 {
+#if !KPDF_FORCE_DRM
     if (kapp->authorize("skip_drm") && !Settings::obeyDRM()) return true;
+#endif
 
     bool b = true;
     if (permissions & KPDFDocument::AllowModify) b = b && pdfdoc->okToChange();

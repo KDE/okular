@@ -24,16 +24,6 @@
    <whatsthis>Some DVI files contain PostScript graphics. If enabled, KDVI will use the Ghostview PostScript interpreter to display these. You probably want to enable this option, unless you have a DVI-file whose PostScript part is broken, or too large for your machine.</whatsthis>
    <default>true</default>
   </entry>
-  <entry key="ShowHyperLinks" type="Bool" >
-   <label>Show hyperlinks. If in doubt, enable this option</label>
-   <whatsthis>For your convenience, some DVI files contain hyperlinks which are cross-references or point to external documents. You probably want to enable this option, unless you don't want the blue underlines which KDVI uses to mark the hyperlinks.</whatsthis>
-   <default>true</default>
-  </entry>
-  <entry key="UseType1Fonts" type="Bool" >
-   <label>Use Type 1 fonts if available. If in doubt, enable this option.</label>
-   <whatsthis>On many modern TeX installations, the typical fonts used in a TeX document are included both in the traditional MetaFont- and in the PostScript Type 1 format. If this box is checked, Type 1 fonts will be used if they are found. This will usually save some time and disk space because it is then no longer necessary to run MetaFont and turn the MetaFont fonts into bitmap files. You probably want to enable this option, unless you experience difficulties with the PostScript fonts, such as missing or wrong characters, etc.</whatsthis>
-   <default>true</default>
-  </entry>
   <entry key="UseFontHints" type="Bool" >
    <label>Use font hinting. You should enable this, if the use of font hinting improves readability on your machine.</label>
    <whatsthis>Many modern fonts contain &quot;font hinting&quot; information which can be used to improve the appearance of a font on low-resolution displays, such as a computer monitor, or a notebook screen. However, many people find the &quot;improved&quot; fonts quite ugly and prefer to have this option disabled.</whatsthis>

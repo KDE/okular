@@ -52,12 +52,10 @@ fontPool::fontPool(void)
   makepk                   = true; // By default, fonts are generated
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
   MetafontMode             = DefaultMFMode;
-  useType1Fonts            = true;
   useFontHints             = true;
   CMperDVIunit             = 0;
   extraSearchPath          = QString::null;
   fontList.setAutoDelete(TRUE);
-
 
 
 #ifdef HAVE_FREETYPE
@@ -134,7 +132,7 @@ fontPool::~fontPool(void)
 }
 
 
-void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _useType1Fonts, bool _useFontHints )
+void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _useFontHints )
 {
   if (_metafontMode >= NumberOfMFModes) {
     kdError(4300) << "fontPool::setMetafontMode called with argument " << _metafontMode
@@ -147,7 +145,7 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _us
   bool kpsewhichNeeded = false;
 
   // Check if a new run of kpsewhich is required
-  if ( (_metafontMode != MetafontMode) || (_useType1Fonts != useType1Fonts) ) {
+  if (_metafontMode != MetafontMode) {
     TeXFontDefinition *fontp = fontList.first();
     while(fontp != 0 ) {
       fontp->reset();
@@ -181,7 +179,6 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _us
 
   MetafontMode = _metafontMode;
   makepk = _makePK;
-  useType1Fonts = _useType1Fonts;
   useFontHints = _useFontHints;
 
   // Initiate a new concurrently running process of kpsewhich, if
@@ -418,7 +415,7 @@ void fontPool::start_kpsewhich(void)
 	// In the first pass, we look for PK fonts, for FreeType
 	// fonts, and also for virtual fonts.
 #ifdef HAVE_FREETYPE
-	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
+	if (FreeType_could_be_loaded == true) {
 	  const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
 	  if (!filename.isEmpty()) {
 	    *proc << KShellProcess::quote(QString("%1").arg(filename));
@@ -620,7 +617,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 						     "You might want to switch it on now and generate the missing fonts."), title,
 					i18n("Generate Fonts Now"), i18n("Continue Without"), "WarnForMissingFonts" ) == KMessageBox::Yes) {
         Prefs::setMakePK(true);
-	    setParameters( MetafontMode, true, useType1Fonts, useFontHints ); // That will start kpsewhich again.
+	    setParameters( MetafontMode, true, useFontHints ); // That will start kpsewhich again.
 	    return;
 	  }
 	} else

@@ -107,8 +107,8 @@ public:
 
   class dvifile *dviFile;
 
-  void          setPrefs(bool flag_showPS, bool flag_showHyperLinks, const QString &editorCommand, 
-			 unsigned int MetaFontMode, bool makePK, bool useType1Fonts, bool useFontHints );
+  void          setPrefs(bool flag_showPS, const QString &editorCommand, 
+			 unsigned int MetaFontMode, bool makePK, bool useFontHints );
 
   bool          supportsTextSearch(void) {return true;};
 
@@ -119,7 +119,6 @@ public:
   int		totalPages(void);
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
-  bool		showHyperLinks(void) { return _showHyperLinks; };
   void		setPaper(double w, double h);
   static bool   correctDVI(const QString &filename);
   
@@ -291,9 +290,6 @@ private:
   /** TRUE, if gs should be used, otherwise, only bounding boxes are
       drawn. */
   bool    	   _postscript;
-  
-  /** TRUE, if Hyperlinks should be shown. */
-  bool     	   _showHyperLinks;
   
   /** This flag is used when rendering a dvi-page. It is set to "true"
       when any dvi-command other than "set" or "put" series of commands

@@ -99,7 +99,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?
-  if (HTML_href != NULL && _showHyperLinks != 0) {
+  if (HTML_href != NULL) {
     // Now set up a rectangle which is checked against every mouse
     // event.
     if (line_boundary_encountered == true) {

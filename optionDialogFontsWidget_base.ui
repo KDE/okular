@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>optionDialogFontsWidget_base</class>
 <author>Stefan Kebekus</author>
 <widget class="QWidget">
@@ -9,9 +9,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>239</width>
-            <height>176</height>
+            <width>335</width>
+            <height>116</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>optionDialogFontsWidget_base</string>
     </property>
     <vbox>
         <property name="name">
@@ -20,46 +23,19 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="QCheckBox">
             <property name="name">
-                <cstring>PFB_ButtonGroup</cstring>
+                <cstring>kcfg_UseFontHints</cstring>
             </property>
-            <property name="title">
-                <string>PostScript Type1 Fonts</string>
+            <property name="text">
+                <string>Use font hinting for Type 1 fonts, if available</string>
             </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_UseType1Fonts</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use Type 1 fonts if available</string>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>If in doubt, enable this option.</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>On many modern TeX installations, the typical fonts used in a TeX document are included both in the traditional MetaFont- and in the PostScript Type 1 format. If this box is checked, Type 1 fonts will be used if they are found. This will usually save some time and disk space because it is then no longer necessary to run MetaFont and turn the MetaFont fonts into bitmap files. You probably want to enable this option, unless you experience difficulties with the PostScript fonts, such as missing or wrong characters, etc.</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_UseFontHints</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use font hinting</string>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>You should enable this, if the use of font hinting improves readability on your machine.</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Many modern fonts contain "font hinting" information which can be used to improve the appearance of a font on low-resolution displays, such as a computer monitor, or a notebook screen. However, many people find the "improved" fonts quite ugly and prefer to have this option disabled.</string>
-                    </property>
-                </widget>
-            </vbox>
+            <property name="toolTip" stdset="0">
+                <string>You should enable this, if the use of font hinting improves readability on your machine.</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>Many modern fonts contain "font hinting" information which can be used to improve the appearance of a font on low-resolution displays, such as a computer monitor, or a notebook screen. However, many people find the "improved" fonts quite ugly and prefer to have this option disabled.</string>
+            </property>
         </widget>
         <widget class="QGroupBox">
             <property name="name">
@@ -110,17 +86,7 @@
         </widget>
     </vbox>
 </widget>
-<connections>
-    <connection>
-        <sender>kcfg_UseType1Fonts</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_UseFontHints</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
 <tabstops>
-    <tabstop>kcfg_UseType1Fonts</tabstop>
-    <tabstop>kcfg_UseFontHints</tabstop>
     <tabstop>kcfg_MetafontMode</tabstop>
     <tabstop>kcfg_MakePK</tabstop>
 </tabstops>

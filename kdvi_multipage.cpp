@@ -878,13 +878,11 @@ void KDVIMultiPage::preferencesChanged()
 
   bool makepk = Prefs::makePK();
   bool showPS = Prefs::showPS();
-  bool showHyperLinks = Prefs::showHyperLinks();
-  bool useType1Fonts = Prefs::useType1Fonts();
   bool useFontHints = Prefs::useFontHints();
 
   viewModeAction->setCurrentItem(Prefs::viewMode());
   setViewMode(Prefs::viewMode());
-  window->setPrefs( showPS, showHyperLinks, Prefs::editorCommand(), mfmode, makepk, useType1Fonts, useFontHints);
+  window->setPrefs( showPS, Prefs::editorCommand(), mfmode, makepk, useFontHints);
 }
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>optionDialogSpecialWidget_base</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>317</width>
-            <height>194</height>
+            <width>324</width>
+            <height>167</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>optionDialogSpecialWidget_base</string>
     </property>
     <vbox>
         <property name="name">
@@ -31,23 +34,6 @@
             </property>
             <property name="whatsThis" stdset="0">
                 <string>Some DVI files contain PostScript graphics. If enabled, KDVI will use the Ghostview PostScript interpreter to display these. You probably want to enable this option, unless you have a DVI-file whose PostScript part is broken, or too large for your machine.</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>kcfg_ShowHyperLinks</cstring>
-            </property>
-            <property name="text">
-                <string>Show hyperlinks</string>
-            </property>
-            <property name="autoRepeat">
-                <bool>false</bool>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>If in doubt, enable this option.</string>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>For your convenience, some DVI files contain hyperlinks which are cross-references or point to external documents. You probably want to enable this option, unless you don't want the blue underlines which KDVI uses to mark the hyperlinks.</string>
             </property>
         </widget>
         <widget class="QButtonGroup">
@@ -158,5 +144,11 @@
         </widget>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kurllabel.h</includehint>
+    <includehint>klineedit.h</includehint>
+</includehints>
 </UI>

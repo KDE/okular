@@ -96,7 +96,6 @@ dviWindow::dviWindow(QWidget *par)
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
   _postscript            = 0;
-  _showHyperLinks        = true;
   reference              = QString::null;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
@@ -128,13 +127,12 @@ dviWindow::~dviWindow()
 }
 
 
-void dviWindow::setPrefs(bool flag_showPS, bool flag_showHyperLinks, const QString &str_editorCommand, 
-			 unsigned int MetaFontMode, bool makePK, bool useType1Fonts, bool useFontHints )
+void dviWindow::setPrefs(bool flag_showPS, const QString &str_editorCommand, 
+			 unsigned int MetaFontMode, bool makePK, bool useFontHints )
 {
   _postscript = flag_showPS;
-  _showHyperLinks = flag_showHyperLinks;
   editorCommand = str_editorCommand;
-  font_pool.setParameters(MetaFontMode, makePK, useType1Fonts, useFontHints );
+  font_pool.setParameters(MetaFontMode, makePK, useFontHints );
   emit(needsRepainting());
 }
 

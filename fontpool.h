@@ -73,7 +73,7 @@ Q_OBJECT
   /** Determines if Adobe Type 1 (*.pfb) fonts should be used or not */
 
   /** Sets the resolution of the output device and determines if font hinting should be used. */
-  void setParameters( unsigned int MetaFontMode, bool makePK, bool useType1Fonts, bool useFontHints );
+  void setParameters( unsigned int MetaFontMode, bool makePK, bool useFontHints );
 
   /** Sets the DVI file's path. This information is used to set the
      current working directory for the kpsewhich command, so that
@@ -87,7 +87,7 @@ Q_OBJECT
   QString getExtraSearchPath( ) const {return extraSearchPath;};
 
   /** Returns the currently set MetafontMode */
-  unsigned int getMetafontMode(void) {return MetafontMode;};
+  unsigned int getMetafontMode(void) const {return MetafontMode;};
 
   /** Sets the resolution of the output device. */
   void setDisplayResolution( double _displayResolution_in_dpi );
@@ -98,10 +98,7 @@ Q_OBJECT
 
   /** If return value is true, font hinting should be used if
       possible */
-  bool getUseFontHints(void) {return useFontHints;};
-
-  /** If return value is true, Type 1 fonts will be used, if available */
-  bool getUseType1Fonts(void) {return useType1Fonts;};
+  bool getUseFontHints(void) const {return useFontHints;};
 
   /** This method adds a font to the list. If the font is not
       currently loaded, it's file will be located and font::load_font
@@ -252,10 +249,6 @@ public slots:
  /** This flag is used by PFB fonts to determine if the FREETYPE
      engine should use hinted fonts or not */
  bool           useFontHints; 
-
- /** This flag is used to determine Type1 fonts should be loaded at
-     all or not */
- bool           useType1Fonts; 
 
  /** This integer determines the Metafont-Mode which is used in
      generating bitmaps. The value must satisfy 0 <= MetafontMode <

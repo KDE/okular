@@ -1,6 +1,6 @@
 //========================================================================
 //
-// XOutputDev.cc
+// Xoutputdevgrep.cc
 //
 // Copyright 1996-2002 Glyph & Cog, LLC
 //
@@ -171,7 +171,7 @@ void XOutputT1Font::drawChar(GfxState *state, Pixmap pixmap, int w, int h,
 		 (int)(rgb->b * 65535), c, u[0]);
 }
 
-void XOutputT1Font::getCharPath(GfxState *state
+void XOutputT1Font::getCharPath(GfxState *state,
 				CharCode c, Unicode *u, int uLen) {
   font->getCharPath(c, u[0], state);
 }

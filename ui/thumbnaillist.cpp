@@ -87,6 +87,7 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 	for ( ; tIt != tEnd; ++tIt )
 		delete *tIt;
 	m_thumbnails.clear();
+	m_visibleThumbnails.clear();
 	m_selected = 0;
 
 	if ( pages.count() < 1 )

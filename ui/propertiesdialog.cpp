@@ -8,9 +8,11 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <klocale.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <klocale.h>
+#include <ksqueezedtextlabel.h>
+#include <kglobalsettings.h>
 
 // local includes
 #include "propertiesdialog.h"
@@ -36,18 +38,24 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   QDomElement docElement = info->documentElement();
 
   int row = 0;
+  int valMaxWidth = 100;
   for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() ) {
     QDomElement element = node.toElement();
 
-    if ( !element.attribute( "title" ).isEmpty() ) {
-      QLabel *key = new QLabel( i18n( "%1:" ).arg( element.attribute( "title" ) ), page );
-      QLabel *value = new QLabel( element.attribute( "value" ), page );
+    QString titleString = element.attribute( "title" );
+    QString valueString = element.attribute( "value" );
+    if ( titleString.isEmpty() || valueString.isEmpty() )
+        continue;
 
-      layout->addWidget( key, row, 0, AlignRight );
-      layout->addWidget( value, row, 1 );
+    // create labels and layout them
+    QLabel *key = new QLabel( i18n( "%1:" ).arg( titleString ), page );
+    QLabel *value = new KSqueezedTextLabel( valueString, page );
+    layout->addWidget( key, row, 0, AlignRight );
+    layout->addWidget( value, row, 1 );
+    row++;
 
-      row++;
-    }
+    // refine maximum width of 'value' labels
+    valMaxWidth = QMAX( valMaxWidth, fontMetrics().width( valueString ) );
   }
 
   // add the number of pages if the generator hasn't done it already
@@ -59,4 +67,11 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     layout->addWidget( key, row, 0 );
     layout->addWidget( value, row, 1 );
   }
+
+  // current width: left columnt + right column + dialog borders
+  int width = layout->minimumSize().width() + valMaxWidth + 30;
+  // stay inside the 2/3 of the screen width
+  QRect screenContainer = KGlobalSettings::desktopGeometry( this );
+  width = QMIN( width, 2*screenContainer.width()/3 );
+  resize( width, 1 );
 }

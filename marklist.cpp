@@ -85,7 +85,7 @@ void MarkList::paintCell( QPainter *p, int row, int col)
 	{
 		if ( items.at( row )->select() )
 		{
-			QColorGroup cg = QApplication::palette()->normal();
+			QColorGroup cg = QApplication::palette().normal();
                         QBrush tmpB(colorGroup().light());
 			qDrawShadePanel( p, 0, 0, cellWidth( 1 ) - 1, cellHeight(),
 				cg, FALSE, 1, &tmpB);

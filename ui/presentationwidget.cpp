@@ -505,7 +505,6 @@ void PresentationWidget::generateOverlay()
     int red = color.red(), green = color.green(), blue = color.blue(),
         pixels = image.width() * image.height();
     unsigned int * data = (unsigned int *)image.bits();
-    unsigned char alpha;
     for( int i = 0; i < pixels; ++i )
         data[i] = qRgba( red, green, blue, data[i] & 0xFF );
     m_lastRenderedOverlay.convertFromImage( image );
@@ -803,7 +802,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
             const int steps = m_width / (4 * blinds);
             if ( isHorizontal )
             {
-                int xPosition[ blinds ];
+                int xPosition[ 8 ];
                 for ( int b = 0; b < blinds; b++ )
                     xPosition[ b ] = (b * m_width) / blinds;
 
@@ -819,7 +818,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
             }
             else
             {
-                int yPosition[ blinds ];
+                int yPosition[ 6 ];
                 for ( int b = 0; b < blinds; b++ )
                     yPosition[ b ] = (b * m_height) / blinds;
 

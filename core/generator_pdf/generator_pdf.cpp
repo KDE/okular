@@ -383,7 +383,6 @@ bool PDFGenerator::reparseConfig()
 //END Generator inherited functions
 
 static QString unicodeToQString(Unicode* u, int len) {
-    unsigned short int ucs2char[2];
     QString ret;
     ret.setLength(len);
     QChar* qch = (QChar*) ret.unicode();

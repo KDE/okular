@@ -554,7 +554,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
 	embFontName = new GString(fontFile->getName());
       }
       if (!baseEnc) {
-	baseEnc = fontFile->getEncoding();
+	baseEnc = (const char**) fontFile->getEncoding();
 	baseEncFromFontFile = gTrue;
       }
       gfree(buf);
@@ -575,7 +575,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
 
   // copy the base encoding
   for (i = 0; i < 256; ++i) {
-    enc[i] = baseEnc[i];
+    enc[i] = (char *) baseEnc[i];
     if ((encFree[i] = baseEncFromFontFile) && enc[i]) {
       enc[i] = copyString(baseEnc[i]);
     }

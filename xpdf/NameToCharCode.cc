@@ -41,7 +41,7 @@ NameToCharCode::~NameToCharCode() {
 
   for (i = 0; i < size; ++i) {
     if (tab[i].name) {
-      gfree(tab[i].name);
+      gfree((void *) (tab[i].name));
     }
   }
   gfree(tab);

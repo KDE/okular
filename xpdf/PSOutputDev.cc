@@ -678,12 +678,12 @@ void PSOutputDev::init(PSOutputFunc outputFuncA, void *outputStreamA,
     writePS("%%BeginProlog\n");
   }
   writePSFmt("%%%%BeginResource: procset xpdf %s 0\n", xpdfVersion);
-  for (p = prolog; *p; ++p) {
+  for (p = (char **) prolog; *p; ++p) {
     writePSFmt("%s\n", *p);
   }
   writePS("%%EndResource\n");
   if (level >= psLevel3) {
-    for (p = cmapProlog; *p; ++p) {
+    for (p = (char **) cmapProlog; *p; ++p) {
       writePSFmt("%s\n", *p);
     }
   }
@@ -969,7 +969,7 @@ void PSOutputDev::setupFont(GfxFont *font, Dict *parentResDict) {
     if (name) {
       for (i = 0; psFonts[i]; ++i) {
 	if (name->cmp(psFonts[i]) == 0) {
-	  psName = psFonts[i];
+	  psName = (char *) psFonts[i];
 	  break;
 	}
       }
@@ -988,7 +988,7 @@ void PSOutputDev::setupFont(GfxFont *font, Dict *parentResDict) {
       if (font->isItalic()) {
 	i += 1;
       }
-      psName = psSubstFonts[i].psName;
+      psName = (char *) psSubstFonts[i].psName;
       for (code = 0; code < 256; ++code) {
 	if ((charName = ((Gfx8BitFont *)font)->getCharName(code)) &&
 	    charName[0] == 'm' && charName[1] == '\0') {
@@ -3289,7 +3289,7 @@ void PSOutputDev::writePSName(const char *s) {
   char *p;
   char c;
 
-  p = s;
+  p = (char *) s;
   while ((c = *p++)) {
     if (c <= (char)0x20 || c >= (char)0x7f ||
 	c == '(' || c == ')' || c == '<' || c == '>' ||

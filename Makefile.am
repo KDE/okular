@@ -19,7 +19,7 @@ APPSDIR = $(kde_appsdir)/Graphics
 # set the include path for X, qt and KDE
 INCLUDES= $(all_includes) -Ikpathsea
 # claim, which subdirectories you want to install
-SUBDIRS = doc pix
+SUBDIRS = pix
 
 # you can add here more. This one gets installed 
 bin_PROGRAMS = 	kdvi

@@ -255,23 +255,23 @@ bool KDVIMultiPage::openFile()
   document_history.clear();
   emit setStatusBarText(i18n("Loading file %1").arg(m_file));
 
-  bool r = window->setFile(m_file,url().ref());
+  bool r = window->setFile(m_file);
   if (!r)
     emit setStatusBarText(QString::null);
 
   window->changePageSize();
   emit numberOfPages(window->totalPages());
   enableActions(r);
+  window->parseReference(url().ref());
+
   return r;
 }
 
 
 void KDVIMultiPage::jumpToReference(QString reference)
 {
-  if (window) {
-    window->reference = reference;
-    window->all_fonts_loaded(0); // In spite of its name, this method tries to parse the reference.
-  }
+  if (window) 
+    window->parseReference(reference);
 }
 
 
@@ -397,7 +397,7 @@ void KDVIMultiPage::addConfigDialogs(KConfigDialog* configDialog)
   fontConfigWidget = new optionDialogFontsWidget(scrollView());
   optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(scrollView());
   
-  configDialog->addPage(fontConfigWidget, Prefs::self(), i18n("Tex Fonts"), "fonts");
+  configDialog->addPage(fontConfigWidget, Prefs::self(), i18n("TeX Fonts"), "fonts");
   configDialog->addPage(specialConfigWidget, Prefs::self(), i18n("DVI Specials"), "dvi");
   configDialog->setHelp("preferences", "kdvi");
   
@@ -471,11 +471,10 @@ void KDVIMultiPage::preferencesChanged()
 
   int mfmode = Prefs::metafontMode();
 
-  bool makepk = Prefs::makePK();
   bool showPS = Prefs::showPS();
   bool useFontHints = Prefs::useFontHints();
 
-  window->setPrefs( showPS, Prefs::editorCommand(), mfmode, makepk, useFontHints);
+  window->setPrefs( showPS, Prefs::editorCommand(), mfmode, useFontHints);
 }
 
 
@@ -743,7 +742,7 @@ void KDVIMultiPage::reload()
   if (window->correctDVI(m_file)) {
     killTimer(timer_id);
     timer_id = -1;
-    bool r = window->setFile(m_file, QString::null, false);
+    bool r = window->setFile(m_file, false);
     enableActions(r);
 
     emit pageInfo(window->totalPages(), window->curr_page()-1 );

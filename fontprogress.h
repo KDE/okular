@@ -1,21 +1,23 @@
+//
 // fontprogress.h
 //
-// (C) 2001 Stefan Kebekus
+// (C) 2001-2004 Stefan Kebekus
 // Distributed under the GPL
 
 #ifndef FONT_GENERATION_H
 #define FONT_GENERATION_H
 
 #include <kdialogbase.h>
-//#include <qvariant.h>
+#include <qguardedptr.h>
 
+class KProcIO;
+class KProgress;
+class KPushButton;
 class QVBoxLayout; 
 class QHBoxLayout; 
 class QGridLayout; 
 class QFrame;
 class QLabel;
-class KProgress;
-class KPushButton;
 
 
 /**
@@ -38,29 +40,32 @@ class fontProgressDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    fontProgressDialog( QString helpIndex, QString label, QString abortTip, QString whatsThis, QString ttip, QWidget* parent = 0, const QString &name = 0, bool progressbar=true );
+    fontProgressDialog( QString helpIndex, QString label, QString abortTip, QString whatsThis, QString ttip,
+			QWidget* parent = 0, const QString &name = 0, bool progressbar=true );
     ~fontProgressDialog();
+    
+    /** The number of steps already done is increased, the text received
+	here is analyzed and presented to the user. */
+    void increaseNumSteps( const QString explanation );
+    
+    /** Used to initialize the progress bar. If the argument proc is
+	non-zero, the associated process will be killed when the "abort"
+	button is pressed. The FontProgress uses a QGuarderPtr
+	internally, so it is save to delete the KProcIO anytime. */
+    void setTotalSteps(int, KProcIO *proc=0);
+    
+   QLabel* TextLabel2;
 
-    QLabel* TextLabel1;
-    KProgress* ProgressBar1;
-    QLabel* TextLabel2;
+private slots:
+    /** Calling this slot does nothing than to kill the process that is
+	pointed to be procIO, if procIO is not zero.*/
+  void killProcIO(void);
 
-public slots:
-  /** The number of steps already done is increased, the text received
-      here is analyzed and presented to the user. */
-  void increaseNumSteps( const QString explanation );
-
-  /** Used to initialize the progress bar. */
-  void setTotalSteps(int);
-
-  /** Called when font generation is finished. */
-  void hideDialog(void);
-
-  /** Called to show the dialog. */
-  void show(void);
-
-protected:
-    int progress;
+private:
+   QLabel* TextLabel1;
+   KProgress* ProgressBar1;
+   int progress;
+   QGuardedPtr<KProcIO> procIO;
 };
 
 #endif // FONT_GENERATION_H

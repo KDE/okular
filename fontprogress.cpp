@@ -1,14 +1,16 @@
 // fontprogress.cpp
 //
-// (C) 2001 Stefan Kebekus
+// (C) 2001--2004 Stefan Kebekus
 // Distributed under the GPL
 
 #include "fontprogress.h"
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kprocio.h>
 #include <kprogress.h>
 #include <kpushbutton.h>
+#include <qapplication.h>
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -57,6 +59,8 @@ fontProgressDialog::fontProgressDialog( QString helpIndex, QString label, QStrin
   QToolTip::add( TextLabel2, ttip );
 
   progress = 0;
+  procIO = 0;
+  qApp->connect(this, SIGNAL(finished(void)), this, SLOT(killProcIO(void)));
 }
 
 
@@ -69,6 +73,7 @@ fontProgressDialog::~fontProgressDialog()
     // no need to delete child widgets, Qt does it all for us
 }
 
+
 void fontProgressDialog::increaseNumSteps( const QString explanation)
 {
   if (ProgressBar1 != 0)
@@ -77,13 +82,9 @@ void fontProgressDialog::increaseNumSteps( const QString explanation)
 }
 
 
-void fontProgressDialog::hideDialog(void)
+void fontProgressDialog::setTotalSteps(int steps, KProcIO *proc)
 {
-  hide();
-}
-
-void fontProgressDialog::setTotalSteps(int steps)
-{
+  procIO = proc;
   if (ProgressBar1 != 0) {
     ProgressBar1->setTotalSteps(steps);
     ProgressBar1->setProgress(0);
@@ -91,9 +92,12 @@ void fontProgressDialog::setTotalSteps(int steps)
   progress = 0;
 }
 
-void fontProgressDialog::show(void)
+
+void fontProgressDialog::killProcIO(void)
 {
-  KDialogBase::show();
+  if (!procIO.isNull())
+    procIO->kill();
 }
+
 
 #include "fontprogress.moc"

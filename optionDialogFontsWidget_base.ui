@@ -9,21 +9,21 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>335</width>
-            <height>116</height>
+            <width>349</width>
+            <height>54</height>
         </rect>
     </property>
     <property name="caption">
         <string>optionDialogFontsWidget_base</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_UseFontHints</cstring>
             </property>
@@ -37,58 +37,36 @@
                 <string>Many modern fonts contain "font hinting" information which can be used to improve the appearance of a font on low-resolution displays, such as a computer monitor, or a notebook screen. However, many people find the "improved" fonts quite ugly and prefer to have this option disabled.</string>
             </property>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="QLabel" row="1" column="0">
             <property name="name">
-                <cstring>groupBox1</cstring>
+                <cstring>textLabel1</cstring>
             </property>
-            <property name="title">
-                <string>PK Fonts</string>
+            <property name="text">
+                <string>MetaFont mode used for PK fonts:</string>
             </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_MakePK</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Generate missing fonts</string>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>If in doubt, enable this option.</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to enable this option.</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Metafont mode:</string>
-                    </property>
-                </widget>
-                <widget class="KComboBox" row="0" column="1">
-                    <property name="name">
-                        <cstring>kcfg_MetafontMode</cstring>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>LaserJet 4 is usually a good choice.</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;p&gt;Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p&gt;
-&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid generating several bitmap versions of the same font.&lt;/p&gt;</string>
-                    </property>
-                </widget>
-            </grid>
         </widget>
-    </vbox>
+        <widget class="KComboBox" row="1" column="1">
+            <property name="name">
+                <cstring>kcfg_MetafontMode</cstring>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>LaserJet 4 is usually a good choice.</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>&lt;p&gt;With this option you choose the type of bitmap fonts used for 
+the display. As a general rule, the higher the dpi value, the better 
+quality of the output. On the other hand, large dpi fonts use more 
+resources and make KDVI slower.&lt;/p&gt;
+&lt;p&gt;If you are low on hard disk space, or have a slow machine, you 
+may want to choose the same setting that is also used by dvips. 
+That way you avoid generating several bitmap versions of the same 
+font.&lt;/p&gt;</string>
+            </property>
+        </widget>
+    </grid>
 </widget>
 <tabstops>
     <tabstop>kcfg_MetafontMode</tabstop>
-    <tabstop>kcfg_MakePK</tabstop>
 </tabstops>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>

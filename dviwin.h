@@ -105,7 +105,7 @@ public:
   class dvifile *dviFile;
 
   void          setPrefs(bool flag_showPS, const QString &editorCommand, 
-			 unsigned int MetaFontMode, bool makePK, bool useFontHints );
+			 unsigned int MetaFontMode, bool useFontHints );
 
   bool          supportsTextSearch(void) {return true;};
 
@@ -118,6 +118,15 @@ public:
   int		curr_page(void) { return current_page+1; };
   void		setPaper(double w, double h);
   static bool   correctDVI(const QString &filename);
+
+
+  /** This slot is usually called by the fontpool if all fonts are
+      loaded. The method will try to parse the reference part of the
+      DVI file's URL, e.g. src:<line><filename> and see if a
+      corresponding section of the DVI file can be found. If so, it
+      will emit a "requestGotoPage", otherwise it will just call
+      drawpage */
+  void          parseReference(const QString &reference);
   
   // These should not be public... only for the moment
   void          read_postamble(void);
@@ -140,10 +149,6 @@ public:
   double        paper_height_in_cm; // paper height in centimeters
 
 
- /** Reference part of the URL which describes the filename. */
- QString        reference;
-
-
 public slots:
   void          showInfo(void);
   void          handleLocalLink(const QString &linkText);
@@ -151,7 +156,7 @@ public slots:
 
   void          embedPostScript(void);
   void          abortExternalProgramm(void);
-  bool		setFile(const QString &fname, const QString &ref = QString::null, bool sourceMarker=true);
+  bool		setFile(const QString &fname, bool sourceMarker=true);
 
   /** simply emits "setStatusBarText( QString::null )". This is used
       in dviWindow::mouseMoveEvent(), see the explanation there. */
@@ -165,15 +170,6 @@ public slots:
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
   void          dvips_terminated(KProcess *);
   void          editorCommand_terminated(KProcess *);
-
-
-  /** This slot is usually called by the fontpool if all fonts are
-      loaded. The method will try to parse the reference part of the
-      DVI file's URL, e.g. src:<line><filename> and see if a
-      corresponding section of the DVI file can be found. If so, it
-      will emit a "requestGotoPage", otherwise it will just call
-      drawpage */
-  void          all_fonts_loaded(fontPool *);
 
 signals:
   /** Emitted to indicate that the prescan phase has ended. */

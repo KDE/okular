@@ -363,7 +363,7 @@ void dviWindow::abortExternalProgramm(void)
   }
   
   if (progress != 0) {
-    progress->hideDialog();
+    progress->hide();
     delete progress;
     progress = 0;
   }

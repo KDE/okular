@@ -46,11 +46,6 @@ class dvifile : public bigEndianByteReader
       prescan code still resides in the dviwin class) */
   Q_UINT16       numberOfExternalPSFiles;
 
-  /** This field is set to 'false' when the DVI file is constructed,
-      and is set to 'true' after the prescan phase (at this time the
-      prescan code still resides in the dviwin class) */
-  bool           prescan_is_performed;
-
   Q_UINT32       beginning_of_postamble;
   
   /** This flag is set to "true" during the construction of the

@@ -70,6 +70,9 @@ class TeXFontDefinition {
   // Members for character fonts
   void           setDisplayResolution(double _displayResolution_in_dpi);
 
+  bool           isLocated(void) const {return ((flags & FONT_KPSE_NAME) != 0);}
+  void           markAsLocated(void) {flags |= FONT_KPSE_NAME;}
+
   void           mark_as_used(void);
   class fontPool *font_pool;    // Pointer to the pool that contains this font.
   QString        fontname;	// name of font, such as "cmr10"

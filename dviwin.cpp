@@ -4,7 +4,7 @@
 // Widget for displaying TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2001 Stefan Kebekus
+// (C) 2001-2004 Stefan Kebekus
 // Distributed under the GPL
 //
 
@@ -67,10 +67,6 @@ dviWindow::dviWindow(QWidget *par)
   dviFile                = 0;
 
   connect(&font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-  connect(&font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), this, SLOT(all_fonts_loaded(fontPool *)));
-  connect(&font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
-  connect(&font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), info, SLOT(setFontInfo(fontPool *)));
-  connect(&font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
 
   parentWidget = par;
   shrinkfactor = 3;
@@ -96,7 +92,6 @@ dviWindow::dviWindow(QWidget *par)
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
   _postscript            = 0;
-  reference              = QString::null;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
@@ -128,11 +123,11 @@ dviWindow::~dviWindow()
 
 
 void dviWindow::setPrefs(bool flag_showPS, const QString &str_editorCommand, 
-			 unsigned int MetaFontMode, bool makePK, bool useFontHints )
+			 unsigned int MetaFontMode, bool useFontHints )
 {
   _postscript = flag_showPS;
   editorCommand = str_editorCommand;
-  font_pool.setParameters(MetaFontMode, makePK, useFontHints );
+  font_pool.setParameters(MetaFontMode, useFontHints );
   emit(needsRepainting());
 }
 
@@ -140,10 +135,6 @@ void dviWindow::setPrefs(bool flag_showPS, const QString &str_editorCommand,
 void dviWindow::showInfo(void)
 {
   info->setDVIData(dviFile);
-  // Call check_if_fonts_filenames_are_looked_up() to make sure that
-  // the fonts_info is emitted. That way, the infoDialog will know
-  // about the fonts and their status.
-  font_pool.check_if_fonts_filenames_are_looked_up();
   info->show();
 }
 
@@ -209,33 +200,22 @@ void dviWindow::drawPage(DocumentPage *page)
     colorStack.clear();
     globalColor = Qt::black;
     
-    // Check if all the fonts are loaded. If that is not the case, we
-    // return and do not draw anything. The font_pool will later emit
-    // the signal "fonts_are_loaded" and thus trigger a redraw of the
-    // page.
-    if (font_pool.check_if_fonts_filenames_are_looked_up() == true) {
-      foreGroundPaint.begin( &(currentlyDrawnPixmap) );
-      QApplication::setOverrideCursor( waitCursor );
+    foreGroundPaint.begin( &(currentlyDrawnPixmap) );
+    QApplication::setOverrideCursor( waitCursor );
+    errorMsg = QString::null;
+    draw_page();
+    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
+    foreGroundPaint.end();
+    QApplication::restoreOverrideCursor();
+    page->isEmpty = false;
+    if (errorMsg.isEmpty() != true) {
+      KMessageBox::detailedError(parentWidget,
+				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
+				      "likely this means that the DVI file is broken.</qt>"),
+				 errorMsg, i18n("DVI File Error"));
       errorMsg = QString::null;
-      draw_page();
-      foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
-      foreGroundPaint.end();
-      QApplication::restoreOverrideCursor();
-      page->isEmpty = false;
-      if (errorMsg.isEmpty() != true) {
-	KMessageBox::detailedError(parentWidget,
-				   i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
-					"likely this means that the DVI file is broken.</qt>"),
-				   errorMsg, i18n("DVI File Error"));
-	errorMsg = QString::null;
-	currentlyDrawnPage = 0;
-	return;
-      }
-    } else {
-      foreGroundPaint.begin( &(currentlyDrawnPixmap) );
-      errorMsg = QString::null;
-      foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
-      foreGroundPaint.end();
+      currentlyDrawnPage = 0;
+      return;
     }
     
     // Tell the user (once) if the DVI file contains source specials
@@ -375,7 +355,6 @@ void dviWindow::embedPostScript(void)
   }
   PostScriptOutPutString = NULL;
   emit(prescanDone());
-  dviFile->prescan_is_performed = true;
 
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
@@ -429,13 +408,11 @@ void dviWindow::changePageSize()
 }
 
 
-bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMarker)
+bool dviWindow::setFile(const QString &fname, bool sourceMarker)
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
-
-  reference              = QString::null;
 
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
@@ -532,122 +509,74 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   if (dviFile->page_offset.isEmpty() == true)
     return false;
 
-  // If we are re-loading a document, e.g. because the user TeXed his
-  // document anew, then all fonts required for this document are
-  // probably already there, and we should pre-scan the document now
-  // (to extract embedded, PostScript, Hyperlinks, ets). Otherwise,
-  // the pre-scan will be carried out in the method 'all_fonts_loaded'
-  // after fonts have been loaded, and the fontPool emits the signal
-  // fonts_have_been_loaded().
-  if (font_pool.check_if_fonts_filenames_are_looked_up() == true) {
-    if (dviFile->prescan_is_performed == false) {
-      // Prescan phase starts here
+  // Locate fonts.
+    font_pool.locateFonts();
+  
+  // Update the list of fonts in the info window
+  if (info != 0)
+    info->setFontInfo(&font_pool);
+
+
+  // We should pre-scan the document now (to extract embedded,
+  // PostScript, Hyperlinks, ets).
+
+  // PRESCAN STARTS HERE
 #ifdef PERFORMANCE_MEASUREMENT
-      kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
-      QTime preScanTimer;
-      preScanTimer.start();
+  kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+  QTime preScanTimer;
+  preScanTimer.start();
 #endif
-      dviFile->numberOfExternalPSFiles = 0;
-      Q_UINT16 currPageSav = current_page;
-
-      for(current_page=0; current_page < dviFile->total_pages; current_page++) {
-	PostScriptOutPutString = new QString();
-
-	if (current_page < dviFile->total_pages) {
-	  command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
-	  end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
-	} else
-	  command_pointer = end_pointer = 0;
-
-	memset((char *) &currinf.data, 0, sizeof(currinf.data));
-	currinf.fonttable = &(dviFile->tn_table);
-	currinf._virtual  = NULL;
-	prescan(&dviWindow::prescan_parseSpecials);
-
-	if (!PostScriptOutPutString->isEmpty())
-	  PS_interface->setPostScript(current_page, *PostScriptOutPutString);
-	delete PostScriptOutPutString;
-      }
-      PostScriptOutPutString = NULL;
-      emit(prescanDone());
-      dviFile->prescan_is_performed = true;
-
-#ifdef PERFORMANCE_MEASUREMENT
-      kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
-#endif
-      current_page = currPageSav;
-    }
-    emit(needsRepainting());
-    if (dviFile->suggestedPageSize != 0)
-      emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
+  dviFile->numberOfExternalPSFiles = 0;
+  Q_UINT16 currPageSav = current_page;
+  
+  for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+    PostScriptOutPutString = new QString();
+    
+    if (current_page < dviFile->total_pages) {
+      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
+      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
+    } else
+      command_pointer = end_pointer = 0;
+    
+    memset((char *) &currinf.data, 0, sizeof(currinf.data));
+    currinf.fonttable = &(dviFile->tn_table);
+    currinf._virtual  = NULL;
+    prescan(&dviWindow::prescan_parseSpecials);
+    
+    if (!PostScriptOutPutString->isEmpty())
+      PS_interface->setPostScript(current_page, *PostScriptOutPutString);
+    delete PostScriptOutPutString;
   }
+  PostScriptOutPutString = NULL;
+  emit(prescanDone());
+  
+#ifdef PERFORMANCE_MEASUREMENT
+  kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+#endif
+  current_page = currPageSav;
+  // PRESCAN ENDS HERE
+  
+  
+  emit(needsRepainting());
+  if (dviFile->suggestedPageSize != 0)
+    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
+  
   
   QApplication::restoreOverrideCursor();
-  reference              = ref;
   return true;
 }
 
 
-void dviWindow::all_fonts_loaded(fontPool *)
+void dviWindow::parseReference(const QString &reference)
 {
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::all_fonts_loaded(...) called" << endl;
-#endif
+  //#ifdef DEBUG_DVIWIN
+  kdError(4300) << "dviWindow::parseReference( " << reference << " ) called" << endl;
+  //#endif
   
-  if (!dviFile)
+  if (dviFile == 0)
     return;
   
-  if (dviFile->prescan_is_performed == false) {
-    // Prescan phase starts here
-#ifdef PERFORMANCE_MEASUREMENT
-    kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
-    QTime preScanTimer;
-    preScanTimer.start();
-#endif
-    dviFile->numberOfExternalPSFiles = 0;
-    Q_UINT16 currPageSav = current_page;
-
-    for(current_page=0; current_page < dviFile->total_pages; current_page++) {
-      PostScriptOutPutString = new QString();
-
-      if (current_page < dviFile->total_pages) {
-	command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
-	end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
-      } else
-	command_pointer = end_pointer = 0;
-
-      memset((char *) &currinf.data, 0, sizeof(currinf.data));
-      currinf.fonttable = &(dviFile->tn_table);
-      currinf._virtual  = NULL;
-      prescan(&dviWindow::prescan_parseSpecials);
-
-      if (!PostScriptOutPutString->isEmpty())
-	PS_interface->setPostScript(current_page, *PostScriptOutPutString);
-      delete PostScriptOutPutString;
-    }
-    PostScriptOutPutString = NULL;
-    emit(prescanDone());
-    dviFile->prescan_is_performed = true;
-
-#ifdef PERFORMANCE_MEASUREMENT
-    kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
-#endif
-    current_page = currPageSav;
-  }
-
-  // If the document specifies a paper size, we emit
-  // 'documentSpecifiedPageSize' here. Note that emitting
-  // 'documentSpecifiedPageSize' may or may not lead to a call of
-  // 'drawPage'; that depends on the question if the widget size
-  // really changes or not. To be on the safe side, we emit
-  // emit(needsRepainting()) independently. For documents that have a
-  // specified paper format which is NOT the default format, that
-  // means that the document will be drawn twice.
-  if (dviFile->suggestedPageSize != 0)
-    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
-  //@@@@  emit(needsRepainting());
-
-
+  
   // case 1: The reference is a number, which we'll interpret as a
   // page number.
   bool ok;
@@ -658,11 +587,12 @@ void dviWindow::all_fonts_loaded(fontPool *)
       page = 0;
     if (page >= dviFile->total_pages)
       page = dviFile->total_pages-1;
+
+    kdError(4300) << "EMIT: gotoPage " << page << endl;
     emit(request_goto_page(page, -1000));
-    reference = QString::null;
     return;
   }
-
+  
   // case 2: The reference is of form "src:1111Filename", where "1111"
   // points to line number 1111 in the file "Filename". KDVI then
   // looks for source specials of the form "src:xxxxFilename", and
@@ -689,7 +619,6 @@ void dviWindow::all_fonts_loaded(fontPool *)
       return;
     }
 
-
     // Go through the list of source file anchors, and find the anchor
     // whose line number is the biggest among those that are smaller
     // than the refLineNumber. That way, the position in the DVI file
@@ -704,33 +633,30 @@ void dviWindow::all_fonts_loaded(fontPool *)
     // the LaTeX file. In that case, we jump to the beginning of the
     // document.
     bool anchorForRefFileFound = false; // Flag that is set if source file anchors for the refFileName could be found at all
-
+    
     QValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
     QValueVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
 	anchorForRefFileFound = true;
-
+	
 	if ( (it->line <= refLineNumber) &&
 	     ( (bestMatch == sourceHyperLinkAnchors.end()) || (it->line > bestMatch->line) ) )
 	  bestMatch = it;
       }
-
-    reference = QString::null;
-
+    
     if (bestMatch != sourceHyperLinkAnchors.end())
       emit(request_goto_page(bestMatch->page, (Q_INT32)(bestMatch->vertical_coordinate/shrinkfactor+0.5)));
     else
       if (anchorForRefFileFound == false)
 	KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
-				      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
+					      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
 			   i18n( "Could Not Find Reference" ));
       else
 	emit(request_goto_page(0, 0));
-
+    
     return;
   }
-  reference = QString::null;
 }
 
 

@@ -73,7 +73,6 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   page_offset  = 0;
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
-  prescan_is_performed = false;
   sourceSpecialMarker = old->sourceSpecialMarker;
 
   dviData = old->dviData.copy();
@@ -276,7 +275,6 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
   page_offset  = 0;
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
-  prescan_is_performed = false;
   font_pool    = pool;
   sourceSpecialMarker = sourceSpecialMark;
   

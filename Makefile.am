@@ -1,5 +1,5 @@
 
-kpathsea = kpathsea/kpathsea.a
+kpathsea = kpathsea/STATIC/libkpathsea.a
 
 # this 10 paths are KDE specific. Use them:
 # kde_htmldir       Where your docs should go to. (contains lang subdirs)

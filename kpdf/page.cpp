@@ -250,7 +250,8 @@ KPDFLink::KPDFLink( LinkAction * a )
         LinkLaunch * e = (LinkLaunch *)a;
         // copy name and parameters of the file to open(in case of PDF)/launch
         copyString( m_fileName, e->getFileName()->getCString() );
-        copyString( m_parameters, e->getParams()->getCString() );
+        GString * par = e->getParams();
+        copyString( m_parameters, par ? par->getCString() : 0 );
         } break;
 
     case actionURI:

@@ -63,28 +63,34 @@ public:
   // Get page parameters.
   double getPageWidth(int page)
     {
-        if ( catalog->getPage(page))
+        if ( catalog && catalog->getPage(page))
             return catalog->getPage(page)->getWidth();
         else
             return 0.0;
     }
   double getPageHeight(int page)
     {
-        if ( catalog->getPage(page))
+        if ( catalog && catalog->getPage(page))
             return catalog->getPage(page)->getHeight();
         else
             return 0.0;
     }
   int getPageRotate(int page)
     {
-        if ( catalog->getPage(page) )
+        if ( catalog && catalog->getPage(page) )
             return catalog->getPage(page)->getRotate();
         else
             return 0;
     }
 
   // Get number of pages.
-  int getNumPages() const { return catalog->getNumPages(); }
+  int getNumPages() const
+        {
+            if ( catalog )
+                return catalog->getNumPages();
+            else
+                return 0;
+        }
 
   // Return the contents of the metadata stream, or NULL if there is
   // no metadata.

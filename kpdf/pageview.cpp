@@ -605,7 +605,7 @@ void PageView::wheelEvent( QWheelEvent *e )
     int delta = e->delta();
     e->accept();
     if ( (e->state() & ControlButton) == ControlButton ) {
-        if ( e->delta() > 0 )
+        if ( e->delta() < 0 )
             slotZoomOut();
         else
             slotZoomIn();

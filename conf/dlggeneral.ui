@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>320</width>
-            <height>253</height>
+            <width>328</width>
+            <height>305</height>
         </rect>
     </property>
     <vbox>
@@ -40,60 +40,25 @@
                         </property>
                         <widget class="QCheckBox">
                             <property name="name">
-                                <cstring>kcfg_ShowLeftPanel</cstring>
+                                <cstring>kcfg_ShowSearchBar</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>true</bool>
                             </property>
                             <property name="text">
-                                <string>Show &amp;left panel</string>
+                                <string>Show &amp;search bar in thumbnails list</string>
                             </property>
                         </widget>
-                        <widget class="QLayoutWidget">
+                        <widget class="QCheckBox">
                             <property name="name">
-                                <cstring>layout5</cstring>
+                                <cstring>kcfg_SyncThumbnailsViewport</cstring>
                             </property>
-                            <grid>
-                                <property name="name">
-                                    <cstring>unnamed</cstring>
-                                </property>
-                                <widget class="QCheckBox" row="0" column="1">
-                                    <property name="name">
-                                        <cstring>kcfg_ShowSearchBar</cstring>
-                                    </property>
-                                    <property name="enabled">
-                                        <bool>false</bool>
-                                    </property>
-                                    <property name="text">
-                                        <string>Show &amp;search bar in thumbnails list</string>
-                                    </property>
-                                </widget>
-                                <spacer row="0" column="0" rowspan="2" colspan="1">
-                                    <property name="name">
-                                        <cstring>spacer2</cstring>
-                                    </property>
-                                    <property name="orientation">
-                                        <enum>Horizontal</enum>
-                                    </property>
-                                    <property name="sizeType">
-                                        <enum>Fixed</enum>
-                                    </property>
-                                    <property name="sizeHint">
-                                        <size>
-                                            <width>16</width>
-                                            <height>30</height>
-                                        </size>
-                                    </property>
-                                </spacer>
-                                <widget class="QCheckBox" row="1" column="1">
-                                    <property name="name">
-                                        <cstring>kcfg_SyncThumbnailsViewport</cstring>
-                                    </property>
-                                    <property name="enabled">
-                                        <bool>false</bool>
-                                    </property>
-                                    <property name="text">
-                                        <string>Link the &amp;thumbnails with the page</string>
-                                    </property>
-                                </widget>
-                            </grid>
+                            <property name="enabled">
+                                <bool>true</bool>
+                            </property>
+                            <property name="text">
+                                <string>Link the &amp;thumbnails with the page</string>
+                            </property>
                         </widget>
                         <widget class="QCheckBox">
                             <property name="name">
@@ -117,6 +82,14 @@
                             </property>
                             <property name="text">
                                 <string>&amp;Obey DRM limitations</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_WatchFile</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Watch File</string>
                             </property>
                         </widget>
                     </vbox>
@@ -214,20 +187,6 @@
         </spacer>
     </vbox>
 </widget>
-<connections>
-    <connection>
-        <sender>kcfg_ShowLeftPanel</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_ShowSearchBar</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_ShowLeftPanel</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_SyncThumbnailsViewport</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
     <include location="global" impldecl="in implementation">kiconloader.h</include>

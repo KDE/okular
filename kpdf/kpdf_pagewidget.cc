@@ -7,8 +7,11 @@
 #include <qcursor.h>
 #include <qpainter.h>
 #include <qmutex.h>
+
 #include <kdebug.h>
 #include <kurldrag.h>
+#include <kglobalsettings.h> 
+
 #include "PDFDoc.h"
 
 #include "kpdf_pagewidget.h"
@@ -103,18 +106,19 @@ namespace KPDF
     void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
     {
         QPixmap * m_pixmap = NULL;
+				QColor bc(KGlobalSettings::calculateAlternateBackgroundColor(KGlobalSettings::baseColor()));
         if (m_outputdev)
             m_pixmap = m_outputdev->getPixmap();
         if ( m_pixmap != NULL && ! m_pixmap->isNull() )
 				{
             p->drawPixmap ( clipx, clipy, *m_pixmap, clipx, clipy, clipw, cliph );
             if (clipw > m_pixmap->width()) 
-							p->fillRect ( m_pixmap->width(), clipy, clipw, cliph, black );
+							p->fillRect ( m_pixmap->width(), clipy, clipw, cliph, bc );
 						if (cliph > m_pixmap->height())
-							p->fillRect ( clipx, m_pixmap->height() - clipy, clipw, cliph, black );
+							p->fillRect ( clipx, m_pixmap->height() - clipy, clipw, cliph, bc );
 				}
         else
-            p->fillRect ( clipx, clipy, clipw, cliph, black );
+            p->fillRect ( clipx, clipy, clipw, cliph, bc );
     }
 
     void PageWidget::nextPage()

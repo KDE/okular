@@ -8,7 +8,6 @@ Name[ro]=Componentă KPDF
 Name[sv]=KPDF-del
 Name[ta]=KPDFபகுதி
 Name[uk]=Складова KPDF
-Name[xx]=xxKPDFPartxx
 MimeType=application/pdf
 InitialPreference=4
 ServiceTypes=KParts/ReadOnlyPart

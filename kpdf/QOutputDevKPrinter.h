@@ -1,0 +1,59 @@
+// QOutputDevKPrinter.h
+// Copyright (C)  2004  Dominique Devriese <devriese@kde.org>
+
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+// 02111-1307, USA.
+
+#ifndef KPDF_KPDF_QOUTPUTDEVKPRINTER_H
+#define KPDF_KPDF_QOUTPUTDEVKPRINTER_H
+
+#include "QOutputDev.h"
+
+class KPrinter;
+
+class QOutputDevKPrinter : public QOutputDev
+{
+        Q_OBJECT
+public:
+        QOutputDevKPrinter( QPainter& painter, KPrinter& printer );
+        virtual ~QOutputDevKPrinter();
+
+	// Does this device use upside-down coordinates?
+	// (Upside-down means (0,0) is the top left corner of the page.)
+	virtual GBool upsideDown() { return gTrue; }
+
+	// Does this device use drawChar() or drawString()?
+	virtual GBool useDrawChar() { return gTrue; }
+
+	// Does this device use beginType3Char/endType3Char?  Otherwise,
+	// text in Type 3 fonts will be drawn with drawChar/drawString.
+	virtual GBool interpretType3Chars() { return gFalse; }
+
+	// Does this device need non-text content?
+	virtual GBool needNonText() { return gFalse; }
+
+	//----- initialization and control
+
+	// Start a page.
+	virtual void startPage(int pageNum, GfxState *state);
+
+	// End a page
+	virtual void endPage();
+
+private:
+        KPrinter& m_printer;            // the printer that we're drawing to
+};
+
+#endif

@@ -56,7 +56,8 @@
     standard, for instance the inclusion of &PostScript; graphics or
     hyperlinks. More details, examples and all the technical
     specifications can be found in the file
-    <filename>KDVI-features.dvi</filename> (or see KDVI-features.tex
+    <filename>KDVI-features.dvi</filename> (or see
+    <filename>KDVI-features.tex</filename> 
     for the TeX-source of that file).</para>
     
     <para>For up-to-date information, consult <ulink
@@ -99,21 +100,21 @@
     <parameter>file:paper.dvi#43</parameter></userinput> will make
     &kdvi; to open page 43. If you have included source file
     information, a command like <userinput><command>kdvi</command>
-    <parameter>file:paper.dvi#src:143paper.tex</parameter></userinput>
+    <parameter>file:paper.dvi#src:43paper.tex</parameter></userinput>
     will make &kdvi; search for the place in the &DVI; file which
     corresponds to line 43 in the TeX file
     <parameter>paper.tex</parameter>. You will hardly use this option
-    yourself &mdash; read the section on <ulink
-    url="forward-search.html">forward search</ulink> to learn how to
+    yourself &mdash; read the section on <link
+    linkend="forward-search">forward search</link> to learn how to
     set up your editor to start &kdvi; automatically.
     </para>
 
     <warning><para>The command <userinput><command>kdvi</command>
     <parameter>file:paper.dvi#43</parameter></userinput> will open
-    page 43 of the file <parameter>paper.tex</parameter>. The command
+    page 43 of the file <filename>paper.dvi</filename>. The command
     <userinput><command>kdvi</command>
     <parameter>paper.dvi#43</parameter></userinput> will try to open
-    the file <parameter>paper.dvi#43</parameter>.</para>
+    the file <filename>paper.dvi#43</filename>.</para>
     </warning>
 
     <para>There is another option which you will most likely not need
@@ -245,9 +246,9 @@
       <step>
 	<para>Some editors need to be started manually, or need
 	additional configuration. You will find a description of all
-	supported editors in the, <ulink
-	url="inverse-search-editor.html">Setting up your
-	editor</ulink> below.</para>
+	supported editors in the, <link
+	linkend="inverse-search-editor">Setting up your
+	editor</link> below.</para>
       </step>
       <step>
 	<para>Test your setup. Open your &DVI; file in &kdvi; and use

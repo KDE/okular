@@ -205,10 +205,13 @@ void Part::slotGoToPage()
 
 void Part::goToPage( int page )
 {
-    m_currentPage = page;
-    pdfpartview->setCurrentThumbnail(m_currentPage);
-    m_outputDev->setPage(m_currentPage);
-    updateActionPage();
+    if (page != m_currentPage)
+    {
+        m_currentPage = page;
+        pdfpartview->setCurrentThumbnail(m_currentPage);
+        m_outputDev->setPage(m_currentPage);
+        updateActionPage();
+    }
 }
 
 void Part::slotOpenUrlDropped( const KURL &url )
@@ -307,14 +310,9 @@ void Part::slotGotoStart()
 
 bool Part::nextPage()
 {
-    m_currentPage++;
-    if ( m_doc && m_currentPage > m_doc->getNumPages())
-    {
-        m_currentPage--;
-        return false;
-    }
+    if ( m_doc && m_currentPage + 1 > m_doc->getNumPages()) return false;
 
-    goToPage(m_currentPage);
+    goToPage(m_currentPage+1);
     return true;
 }
 
@@ -330,14 +328,9 @@ void Part::slotPreviousPage()
 
 bool Part::previousPage()
 {
-    m_currentPage--;
-    if (m_currentPage < 1)
-    {
-        m_currentPage++;
-        return false;
-    }
+    if (m_currentPage - 1 < 1) return false;
 
-    goToPage(m_currentPage);
+    goToPage(m_currentPage-1);
     return true;
 }
 
@@ -766,7 +759,6 @@ void Part::find()
     if (found)
     {
        kdDebug() << "found at " << pg << endl;
-       kdDebug() << xMin1 << " " << yMin1 << " " << xMax1 << " " << yMax1 << endl;
        goToPage(pg);
        // xpdf says: can happen that we do not find the text if coalescing is bad OUCH
        m_outputDev->find(u, len);

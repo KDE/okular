@@ -636,13 +636,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             // return the cursor to its normal state after dragging
             if (cursor().shape() == Qt::SizeAllCursor) updateCursor( e->pos() );
 
+            PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+
             // avoid the situation in where you click on a "row" that has a link but you are not over it
             // drag a bit and move the mouse left to place it over the link while dragging
             // release the button and BOOM you get the link followed
-            if (d->mouseStartPos != e->globalPos()) return;
-
-            PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-            if ( leftButton && pageItem )
+            if ( leftButton && pageItem && d->mouseStartPos == e->globalPos())
             {
                 const KPDFPageRect * rect = pageItem->page()->getRect(
                     e->x() - pageItem->geometry().left(),

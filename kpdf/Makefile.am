@@ -29,6 +29,8 @@ kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kpdf_LDADD   = $(LIB_KPARTS)
 kpdf_COMPILE_FIRST = ../aconf.h
 
+kpdf_shell.o: part.h
+
 EXTRA_DIST = kpdf.desktop
 xdg_apps_DATA = kpdf.desktop
 
@@ -54,9 +56,4 @@ partdesktop_DATA = kpdf_part.desktop
 # this is where the part's XML-GUI resource file goes
 partrcdir   = $(kde_datadir)/kpdfpart
 partrc_DATA = kpdf_part.rc
-
-# This helps us with race conditions on local file dependencies
-# that may not exist during parallel make:
-
-.NOTPARALLEL:
 

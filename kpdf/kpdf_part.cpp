@@ -359,16 +359,19 @@ Part::openFile()
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
-  // TODO use a qvaluelist<int> to pass aspect ratio?
-  pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
-
-  displayPage(1);
-  pdfpartview->setCurrentItem(0);
-  m_outputDev->setPDFDocument(m_doc);
-
-  m_nextThumbnail=1;
-  QTimer::singleShot(10, this, SLOT(nextThumbnail()));
-
+  if (m_doc->getNumPages() > 0)
+  {
+    // TODO use a qvaluelist<int> to pass aspect ratio?
+    pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1)); 
+    
+    displayPage(1);
+    pdfpartview->setCurrentItem(0);
+    m_outputDev->setPDFDocument(m_doc);
+  
+    m_nextThumbnail=1;
+    QTimer::singleShot(10, this, SLOT(nextThumbnail()));
+  }
+  
   return true;
 }
 

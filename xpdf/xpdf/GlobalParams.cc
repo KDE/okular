@@ -23,6 +23,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 // -- ---------------------------------------------------------- --
+#include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 #include <X11/Xft/XftCompat.h>
 #include <stdio.h>

@@ -9,6 +9,7 @@ More items
 -> export all text in plain_text/html
 -> extract(export?) images
 -> implement history (mainly for actionNamed)
+-> zoom: fit text (with configurable margin)
 -> new icons (contest at kde-look that will end in 2004-Oct-01)
 
 Porting / In progress on the branch (first item comes first):

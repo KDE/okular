@@ -33,11 +33,13 @@
 
 #include <kio/netaccess.h>
 
+
+#include "gotodialog.h"
 #include "kdvi.h"
-#include "scrbox.h"
+#include "optiondialog.h"
 #include "print.h"
 #include "pushbutton.h"
-#include "prefs.h"
+#include "scrbox.h"
 #include "version.h"
 
 enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
@@ -49,7 +51,8 @@ kdvi::kdvi( const QString &fname, QWidget *, const char *name )
 	msg = NULL;
 	ssmenu = NULL;
 	hbl = NULL;
-	prefs = NULL;
+	optionDialog = 0;
+	gotoDialog = 0;
 
 	keys = new KAccel(this);
 
@@ -150,7 +153,7 @@ void kdvi::makeMenuBar()
 	CHECK_PTR( p );
 
 	m_fn = p->insertItem( i18n("&New"),	this, SLOT(fileNew()) );
-	m_fo = p->insertItem( i18n("&Open ..."),	this, SLOT(fileOpen()) );
+	m_fo = p->insertItem( i18n("&Open..."),	this, SLOT(fileOpen()) );
 
 	recentmenu = new QPopupMenu;
 	CHECK_PTR( recentmenu );
@@ -159,7 +162,11 @@ void kdvi::makeMenuBar()
 
 	m_fr = p->insertItem( i18n("Open &recent"),	recentmenu );
 	
-	m_fp = p->insertItem( i18n("&Print ..."),	this, SLOT(filePrint()));
+	p->insertSeparator();
+
+	m_fp = p->insertItem( i18n("&Print..."),	this, SLOT(filePrint()));
+	p->insertSeparator();
+
 	m_fx = p->insertItem( i18n("&Quit"), this, SLOT(fileExit()));
 
 	m_f = p;
@@ -183,11 +190,14 @@ void kdvi::makeMenuBar()
 	m_pn = p->insertItem( i18n("&Next"),		dviwin, SLOT(nextPage()) );
 	m_pf = p->insertItem( i18n("&First"),	dviwin, SLOT(firstPage()) );
 	m_pl = p->insertItem( i18n("&Last"),		dviwin, SLOT(lastPage()) );
-	m_pg = p->insertItem( i18n("&Go to ..."),	this,   SLOT(pageGoto()) );
+	m_pg = p->insertItem( i18n("&Go to..."),	this,   SLOT(pageGoto()) );
 
 	m_p = p;
 	menuBar()->insertItem( i18n("&Page"), p, -2 );
 
+
+
+	/*
 	p = new QPopupMenu;
 	CHECK_PTR( p );
 	p->setCheckable( TRUE );
@@ -211,6 +221,53 @@ void kdvi::makeMenuBar()
 
 	m_o = p;
 	menuBar()->insertItem( i18n("&Options"), p, -2 );
+	optionsmenu = p;
+	*/
+
+
+	p = new QPopupMenu;
+	CHECK_PTR( p );
+	p->setCheckable( TRUE );
+
+	m_om = p->insertItem( i18n("Show &Menubar"), 
+			      this, SLOT(toggleShowMenubar()) );
+	p->setItemChecked( m_om, !hideMenubar );
+
+	m_ob = p->insertItem( i18n("Show &Toolbar"), 
+			      this, SLOT(toggleShowButtons()) );
+	p->setItemChecked( m_ob, !hideButtons );
+
+	m_os = p->insertItem( i18n("Show St&atusbar"), 
+			      this, SLOT(toggleShowStatusbar()) );
+	p->setItemChecked( m_os, !hideStatusbar );
+
+	p->insertSeparator();
+
+	m_ot = p->insertItem( i18n("Show &Page List"), 
+			      this, SLOT(toggleVertToolbar()) );
+	p->setItemChecked( m_ot, vertToolbar );
+
+	m_ol = p->insertItem( i18n("Show Scro&llbars"), 
+			      this, SLOT(toggleShowScrollbars()) );
+	p->setItemChecked( m_ol, !hideScrollbars );
+
+	m_of = p->insertItem( i18n("Make PK-&fonts"), 
+			      this, SLOT(toggleMakePK()) );
+	p->setItemChecked( m_of, makepk );
+
+	m_o0 = p->insertItem( i18n("Show PostSc&ript"), 
+			      this, SLOT(toggleShowPS()));
+	p->setItemChecked( m_o0, showPS );
+
+	p->insertSeparator();
+
+	m_op = p->insertItem( i18n("&Preferences..."), 
+			      this, SLOT(optionsPreferences()));
+	m_ok = p->insertItem( i18n("&Keys..."), 
+			      this, SLOT(configKeys()));
+
+	m_o = p;
+	menuBar()->insertItem( i18n("&Settings"), p, -2 );
 	optionsmenu = p;
 
 	menuBar()->insertSeparator();
@@ -292,17 +349,17 @@ void kdvi::makeToolBar2(QWidget *parent)
 
 void kdvi::makeStatusBar( QString )
 {
-	QPixmap pm;
-
-	//statusBar()->setInsertOrder( KStatusBar::RightToLeft );
-	statusBar()->insertItem(i18n("X:0000, Y:0000 "), ID_STAT_XY);
-	statusBar()->changeItem("", ID_STAT_XY);
-	statusBar()->insertItem(i18n("Shrink: xx"), ID_STAT_SHRINK);
-	statusBar()->changeItem("", ID_STAT_SHRINK);
-	statusBar()->insertItem(i18n("Page: xxxx / xxxx"), ID_STAT_PAGE);
+	statusBar()->insertItem("", ID_STAT_MSG, 10 );
+	statusBar()->insertFixedItem(i18n("Page: xxxx / xxxx"), ID_STAT_PAGE); 
+	statusBar()->insertFixedItem(i18n("Shrink: xx"), ID_STAT_SHRINK);
+	statusBar()->insertFixedItem(i18n("X:0000, Y:0000 "), ID_STAT_XY);
 	statusBar()->changeItem("", ID_STAT_PAGE);
-	statusBar()->insertItem("", ID_STAT_MSG);
-
+	statusBar()->changeItem("", ID_STAT_SHRINK);
+	statusBar()->changeItem("", ID_STAT_XY);
+	statusBar()->setItemAlignment( ID_STAT_MSG, AlignLeft|AlignVCenter );
+	statusBar()->setItemAlignment( ID_STAT_PAGE, AlignLeft|AlignVCenter );
+	statusBar()->setItemAlignment( ID_STAT_SHRINK, AlignLeft|AlignVCenter);
+	statusBar()->setItemAlignment( ID_STAT_XY, AlignLeft|AlignVCenter );
 }
 
 
@@ -563,14 +620,16 @@ void kdvi::viewFitPageWidth()
 	message( i18n("View width fits page") );
 }
 
+
 void kdvi::optionsPreferences()
 {
-	if ( !prefs )
-	{	prefs = new kdviprefs;
-		connect( prefs, SIGNAL(preferencesChanged()),
-			SLOT(applyPreferences()));
+	if( optionDialog == 0 )
+	{
+	  optionDialog = new OptionDialog( topLevelWidget(), "option", false );
+	  connect( optionDialog, SIGNAL(preferencesChanged()),
+		   SLOT(applyPreferences()));
 	}
-	prefs->show();
+	optionDialog->show();
 }
 
 void kdvi::applyPreferences()
@@ -655,39 +714,18 @@ void kdvi::applyPreferences()
 	message(i18n("Preferences applied"));
 }
 
-PageDialog::PageDialog() : QDialog( 0, 0, 1 ),
-	gb(i18n(" Page "),this), ed(&gb), ok(&gb), cancel(&gb)
-{
-	setCaption( i18n("Go to page") );
-	gb.setFrameStyle( QFrame::Box | QFrame::Sunken );
-	gb.setLineWidth( 1 );
-	QBoxLayout l1( this, QBoxLayout::LeftToRight, 15 );
-	l1.addWidget( &gb );
-	QBoxLayout l2( &gb, QBoxLayout::Down, 15, 10 );
-	l2.addSpacing(fontMetrics().height());
-	l2.addWidget( &ed );
-	ed.setFocus();
-	connect( &ed, SIGNAL(returnPressed()), SLOT(go()) );
-	QBoxLayout l3( QBoxLayout::LeftToRight, 15 );
-	l2.addLayout( &l3 );
-	l3.addWidget( &ok );
-	l3.addWidget( &cancel );
-	ok.setText( i18n("Go to") );
-	connect( &ok, SIGNAL(clicked()), SLOT(go()) );
-	cancel.setText( i18n("Cancel") );
-	resize( 300, 150 );
-	l1.activate();
-	l2.activate();
-	setFixedSize(size());
-	connect( &cancel, SIGNAL(clicked()), SLOT(reject()) );
-}
 
 void kdvi::pageGoto()
 {
-	PageDialog dlg;
-	connect( &dlg, SIGNAL(textEntered(const QString &)), SLOT(pageActivated(const QString &)) );
-	dlg.show();
+  if( gotoDialog == 0 )
+  {
+    gotoDialog = new GotoDialog( topLevelWidget(), "goto", false );
+    connect( gotoDialog, SIGNAL(gotoPage( const QString & )),
+	     this, SLOT(pageActivated(const QString &)) );
+  }
+  gotoDialog->show();
 }
+
 
 void kdvi::toggleMakePK()
 {
@@ -702,7 +740,7 @@ void kdvi::applyMakePK()
 	if ( makepk == dviwin->makePK() )
 		return;
 	dviwin->setMakePK( makepk );
-	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_PK), makepk );
+	optionsmenu->setItemChecked( m_of, makepk );
 	config->writeEntry( "MakePK", makepk );
 }
 
@@ -719,7 +757,7 @@ void kdvi::applyShowPS()
 	if ( showPS == dviwin->showPS() )
 		return;
 	dviwin->setShowPS( showPS );
-	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_PS), showPS );
+	optionsmenu->setItemChecked( m_o0, showPS );
 	config->writeEntry( "ShowPS", showPS );
 }
 
@@ -736,7 +774,8 @@ void kdvi::applyShowMenubar()
 	  menuBar()->hide();
 	else			
 	  menuBar()->show();
-	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_MB), !hideMenubar );
+
+	optionsmenu->setItemChecked( m_om, !hideMenubar );
 	config->writeEntry( "HideMenubar", hideMenubar );
 
 	// calling this will update the child geometries
@@ -753,7 +792,7 @@ void kdvi::toggleShowButtons()
 void kdvi::applyShowButtons()
 {
 	enableToolBar( hideButtons ? KToolBar::Hide : KToolBar::Show );
-	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_BB), !hideButtons );
+	optionsmenu->setItemChecked( m_ob, !hideButtons );
 	config->writeEntry( "HideButtons", hideButtons );
 }
 
@@ -775,7 +814,7 @@ void kdvi::applyVertToolbar()
                 toolBar2->hide();
 	}
         
-	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_TB), vertToolbar );
+	optionsmenu->setItemChecked( m_ot, vertToolbar );
 	config->writeEntry( "VertToolbar", vertToolbar );
 }
 
@@ -789,7 +828,7 @@ void kdvi::toggleShowStatusbar()
 void kdvi::applyShowStatusbar()
 {
 	enableStatusBar( hideStatusbar ? KStatusBar::Hide : KStatusBar::Show );
-	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_SB), !hideStatusbar );
+	optionsmenu->setItemChecked( m_os, !hideStatusbar );
 	config->writeEntry( "HideStatusbar", hideStatusbar );
 }
 
@@ -803,7 +842,7 @@ void kdvi::toggleShowScrollbars()
 void kdvi::applyShowScrollbars()
 {
 	dviwin->setShowScrollbars( !hideScrollbars );
-	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_SC), !hideScrollbars );
+	optionsmenu->setItemChecked( m_ol, !hideScrollbars );
 	config->writeEntry( "HideScrollbars", hideScrollbars );
 }
 

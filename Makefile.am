@@ -15,10 +15,11 @@ noinst_PROGRAMS = squeeze
 METASOURCES = AUTO
 
 # Which sources should be compiled for kdvi.
-libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
+libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
-	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp \
-	psheader.c dviwin_draw.cpp dvi_init.cpp font-open.cpp gf.cpp new.cpp pk.cpp psgs.cpp\
+	optiondialog.cpp gotodialog.cpp scrbox.cpp kdvi_miniwidget.cpp\
+	kdvi_view.cpp psheader.c dviwin_draw.cpp dvi_init.cpp\
+	font-open.cpp gf.cpp new.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
 
 kdvi_SOURCES = main.cpp
@@ -35,8 +36,9 @@ kdvi_LDADD = libkdvi.la
 
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
-	prefs.h print.h printData.h printSetup.h printSetupData.h pushbutton.h\
-	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h
+	print.h printData.h printSetup.h printSetupData.h\
+	pushbutton.h optiondialog.h gotodialog.h scrbox.h xdvi.h\
+	 kdvi_miniwidget.h kdvi_view.h
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot

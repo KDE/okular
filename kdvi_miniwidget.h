@@ -24,7 +24,6 @@
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qsplitter.h>
-#include "prefs.h"
 
 
 class QSplitter;

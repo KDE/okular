@@ -25,13 +25,13 @@
 #include <kprocess.h>
 #include <kfiledialog.h>
 
+#include "gotodialog.h"
 #include "kdvi_miniwidget.h"
 #include "kdvi.h"
 #include "kdvi_view.h" // KDVIFactory
 #include "scrbox.h"
 #include "print.h"
 #include "pushbutton.h"
-#include "prefs.h"
 #include "version.h"
 #include <qsplitter.h>
 
@@ -214,9 +214,10 @@ void KDVIMiniWidget::viewFitPageWidth()
 
 void KDVIMiniWidget::pageGoto()
 {
-	PageDialog dlg;
-	connect( &dlg, SIGNAL(textEntered(const QString &)), SLOT(pageActivated(const QString &)) );
-	dlg.show();
+  GotoDialog gotoDialog( topLevelWidget(), "goto" );
+  connect( &gotoDialog, SIGNAL(gotoPage(const QString &)), 
+	   this, SLOT(pageActivated(const QString &)) );
+  gotoDialog.show();
 }
 
 void KDVIMiniWidget::toggleMakePK()

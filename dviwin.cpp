@@ -19,7 +19,7 @@
 #include <klocale.h>
 
 #include "dviwin.h"
-#include "prefs.h"
+#include "optiondialog.h"
 
 
 //------ some definitions from xdvi ----------
@@ -243,7 +243,7 @@ void dviWindow::setPaper( const char *paper )
 	paper_type = paper;
 	_paper = paper_type;
 	float w, h;
-	if (!kdviprefs::paperSizes( paper, w, h ))
+	if (!OptionDialog::paperSizes( paper, w, h ))
 	{
 		kDebugWarning( 4300, "Unknown paper type!");
 		// A4 paper is used as default, if paper is unknown

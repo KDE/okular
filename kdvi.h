@@ -23,7 +23,6 @@
 #include <qdialog.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
-#include "prefs.h"
 
 #include <ktmainwindow.h>
 #include <kmenubar.h>
@@ -33,6 +32,8 @@
 
 class QSplitter;
 class QToolTipGroup;
+class GotoDialog;
+class OptionDialog;
 
 class kdvi : public KTMainWindow
 {
@@ -141,25 +142,11 @@ private:
 	const char *	sndr;
 	int		pannerValue;
 	QToolTipGroup *	tipgroup;
-	kdviprefs* 	prefs;
+	OptionDialog *  optionDialog;
+	GotoDialog *    gotoDialog;
 	KAccel *	keys;
 };
 
-#include <qgroupbox.h>
-
-class PageDialog : public QDialog
-{
-	Q_OBJECT
-public:
-	PageDialog();
-signals:
-	void textEntered(const QString &);
-private slots:
-	void go() { emit textEntered(ed.text()); accept();}
-private:
-	QGroupBox gb;
-	QLineEdit ed;
-	QPushButton ok, cancel;
-};
-
 #endif
+
+

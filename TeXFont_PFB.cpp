@@ -262,7 +262,7 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
       kdError(4300) << msg << endl;
       g->dvi_advance_in_units_of_design_size_by_2e20 =  1;
     }
-    g->dvi_advance_in_units_of_design_size_by_2e20 =  ((Q_INT32)(1<<20) * (Q_INT32)face->glyph->metrics.horiAdvance) / (Q_INT32)face->units_per_EM;
+    g->dvi_advance_in_units_of_design_size_by_2e20 =  (Q_INT32)(((Q_INT64)(1<<20) * (Q_INT64)face->glyph->metrics.horiAdvance) / (Q_INT64)face->units_per_EM);
   }
   
   return g;

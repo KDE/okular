@@ -21,6 +21,8 @@
 
 #include <kurl.h>
 
+#include "CharTypes.h"
+
 class LinkAction;
 class PDFDoc;
 
@@ -45,7 +47,6 @@ namespace KPDF
         /* void setLinks(); */
 
         void setPage(int pagenum);
-        int getPage() const { return m_currentPage; };
         void enableScrollBars( bool b );
         /**
          * Return true if the top resp. bottom of the page is visible.
@@ -54,7 +55,7 @@ namespace KPDF
         bool atBottom() const;
         void zoomTo( double _value );
 
-        bool find(QString s);
+        bool find(Unicode *u, int len);
 
     public slots:
         void zoomIn();
@@ -96,6 +97,7 @@ namespace KPDF
         float		m_zoomFactor;
         ZoomMode m_zoomMode;
 
+        // first page is page 1
         int m_currentPage;
         QPoint   m_dragGrabPos;
         LinkAction* m_pressedAction;

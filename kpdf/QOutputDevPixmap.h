@@ -40,7 +40,6 @@ public:
 	// End a page
 	virtual void endPage();
 
-public:
 	QPixmap * getPixmap() const { return m_pixmap; };
 
 private:

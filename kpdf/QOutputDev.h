@@ -25,7 +25,6 @@
 class TextPage;
 
 class QPainter;
-class QString;
 
 //------------------------------------------------------------------------
 // QOutputDev
@@ -35,7 +34,7 @@ class QOutputDev : public SplashOutputDev
 {
 	public:
 		// Constructor
-		QOutputDev(QPainter *p, SplashColor paperColor);
+		QOutputDev(SplashColor paperColor);
 		
 		// Destructor.
 		virtual ~QOutputDev();
@@ -56,13 +55,9 @@ class QOutputDev : public SplashOutputDev
 		// Clear out the document (used when displaying an empty window).
 		void clear();
 		
-		bool find(QString s, double *xMin, double *yMin, double *xMax, double *yMax);
-	
-	protected:
-		QPainter *m_painter;
+		bool find(Unicode *u, int len, double *xMin, double *yMin, double *xMax, double *yMax);
 	
 	private:
-		void draw();
 		
 		TextPage *m_text;		// text from the current page
 };

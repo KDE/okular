@@ -20,74 +20,37 @@
 #pragma implementation
 #endif
 
-#include <aconf.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <unistd.h>
-#include <string.h>
-#include <ctype.h>
-#include <math.h>
-#include <iostream>
-
-#include <GString.h>
-#include <Object.h>
-#include <Stream.h>
-#include <Link.h>
 #include <GfxState.h>
-#include <GfxFont.h>
-#include <UnicodeMap.h>
-#include <CharCodeToUnicode.h>
-#include <Error.h>
-#include <TextOutputDev.h>
-#include <Catalog.h>
 
 #include <qpixmap.h>
-#include <qcolor.h>
 #include <qimage.h>
-#include <qpainter.h>
-#include <qdict.h>
-#include <qtimer.h>
-#include <qapplication.h>
-#include <qclipboard.h>
 
 #include <kdebug.h>
 
+#include "SplashBitmap.h"
+#include "SplashTypes.h"
+
 #include "QOutputDevPixmap.h"
-
-//------------------------------------------------------------------------
-// Constants and macros
-//------------------------------------------------------------------------
-
-#ifndef KDE_USE_FINAL
-static inline QColor q_col ( const GfxRGB &rgb )
-{
-	return QColor ( qRound ( rgb. r * 255 ), qRound ( rgb. g * 255 ), qRound ( rgb. b * 255 ));
-}
-#endif
-
 
 //------------------------------------------------------------------------
 // QOutputDevPixmap
 //------------------------------------------------------------------------
 
-QOutputDevPixmap::QOutputDevPixmap(SplashColor paperColor) : QOutputDev(0, paperColor), m_pixmap(0)
+QOutputDevPixmap::QOutputDevPixmap(SplashColor paperColor) : QOutputDev(paperColor), m_pixmap(0)
 {
 }
 
 QOutputDevPixmap::~QOutputDevPixmap( )
 {
-        delete m_pixmap;
+	delete m_pixmap;
 }
 
 void QOutputDevPixmap::startPage ( int pageNum, GfxState *state )
 {
-	QOutputDev::startPage( pageNum, state);
-	delete m_painter;
+	QOutputDev::startPage(pageNum, state);
 	delete m_pixmap;
 
 	m_pixmap = new QPixmap ( qRound ( state->getPageWidth ( )), qRound ( state->getPageHeight ( )));
-	m_painter = new QPainter ( m_pixmap );
 
 	//printf ( "NEW PIXMAP (%ld x %ld)\n", qRound ( state-> getPageWidth ( )),  qRound ( state-> getPageHeight ( )));
 
@@ -96,7 +59,12 @@ void QOutputDevPixmap::startPage ( int pageNum, GfxState *state )
 
 void QOutputDevPixmap::endPage ( )
 {
+	SplashColorPtr dataPtr;
+	int bh, bw;
+	
 	QOutputDev::endPage();
-	delete m_painter;
-	m_painter = 0;
+	bh = getBitmap()->getHeight();
+	bw = getBitmap()->getWidth();
+	dataPtr = getBitmap()->getDataPtr();
+	m_pixmap->convertFromImage(QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian));
 }

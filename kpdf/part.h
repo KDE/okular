@@ -30,7 +30,8 @@ public:
     PDFPartView(QWidget* parent, const char* name);
     ~PDFPartView();
     
-    void setCurrentItem(int i);
+    // first page is page 1
+    void setCurrentThumbnail(int i);
     
     void setPages(int i, double ar);
     void setThumbnail(int i, const QPixmap *thumbnail);

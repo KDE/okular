@@ -19,11 +19,6 @@
 #pragma implementation
 #endif
 
-#include <qimage.h>
-#include <qpainter.h>
-
-#include "SplashBitmap.h"
-#include "SplashTypes.h"
 #include "TextOutputDev.h"
 
 #include "QOutputDev.h"
@@ -32,8 +27,8 @@
 // QOutputDev
 //------------------------------------------------------------------------
 
-QOutputDev::QOutputDev(QPainter *p, SplashColor paperColor)
-	: SplashOutputDev(splashModeRGB8, false, paperColor), m_painter(p)
+QOutputDev::QOutputDev(SplashColor paperColor)
+	: SplashOutputDev(splashModeRGB8, false, paperColor)
 {
 	// create text object
 	m_text = new TextPage ( gFalse );
@@ -72,7 +67,6 @@ void QOutputDev::endPage()
 {
 	SplashOutputDev::endPage();
 	m_text->coalesce(gTrue);
-	draw();
 }
 
 void QOutputDev::updateFont(GfxState *state)
@@ -81,29 +75,7 @@ void QOutputDev::updateFont(GfxState *state)
 	m_text->updateFont(state);
 }
 
-void QOutputDev::draw()
+bool QOutputDev::find(Unicode *u, int len, double *xMin, double *yMin, double *xMax, double *yMax)
 {
-	SplashColorPtr dataPtr;
-	int bh, bw;
-	
-	if (!m_painter) return;
-	
-	bh = getBitmap()->getHeight();
-	bw = getBitmap()->getWidth();
-	dataPtr = getBitmap()->getDataPtr();
-	
-	m_painter->drawImage(0, 0, QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian));
-}
-
-bool QOutputDev::find(QString s, double *xMin, double *yMin, double *xMax, double *yMax)
-{
-	int len;
-	Unicode *u;
-	
-	// This is more or less copied from what xpdf does, surely can be optimized
-	len = strlen(s.latin1());
-	u = (Unicode *)gmalloc(len * sizeof(Unicode));
-	for (int i = 0; i < len; ++i) u[i] = (Unicode)(s.latin1()[i] & 0xff);
-	
 	return m_text -> findText(u, len, true, false, false, false, xMin, yMin, xMax, yMax);
 }

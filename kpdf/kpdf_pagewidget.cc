@@ -145,6 +145,7 @@ namespace KPDF
             {
                 kdDebug() << "selection over " << qRound(m_xMin) << " " << qRound(m_yMin) << " " << qRound(m_xMax- m_xMin) << " " << qRound(m_yMax- m_yMin) << endl;
                 p->setBrush(Qt::SolidPattern);
+                p->setPen(QPen(Qt::black, 1)); // should not be necessary bug a Qt bug makes it necessary
                 p->setRasterOp(Qt::NotROP);
                 p->drawRect(qRound(m_xMin), qRound(m_yMin), qRound(m_xMax- m_xMin), qRound(m_yMax- m_yMin));
             }
@@ -184,7 +185,7 @@ namespace KPDF
         mutex.lock();
         if (m_doc)
         {
-            m_currentPage = KMAX(0, KMIN( page, m_doc->getNumPages()));
+            m_currentPage = page;
         } else {
             m_currentPage = 0;
         }
@@ -363,15 +364,21 @@ namespace KPDF
         }
     }
 
-    bool PageWidget::find(QString s)
+    bool PageWidget::find(Unicode *u, int len)
     {
         bool b;
+        // dirty hack to ensure we are searching the whole page
+        m_xMin = 0;
+        m_yMin = 0;
+        m_xMax = 10000;
+        m_yMax = 10000;
         
-        b = m_outputdev -> find(s, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
+        b = m_outputdev -> find(u, len, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
         m_selection = b;
-        if (b) updateContents();
+        updateContents();
         return b;
     }
+
 }
 
 // vim:ts=2:sw=2:tw=78:et

@@ -10,13 +10,17 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "SplashBitmap.h"
+#include "SplashTypes.h"
+ 
 #include "QOutputDevKPrinter.h"
 
 #include <kprinter.h>
 #include <qpainter.h>
+#include <qimage.h>
 
 QOutputDevKPrinter::QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer )
-  : QOutputDev(&painter, paperColor), m_printer( printer )
+  : QOutputDev(paperColor), m_printer( printer ), m_painter( painter )
 {
 }
 
@@ -32,6 +36,12 @@ void QOutputDevKPrinter::startPage(int page, GfxState *state)
 
 void QOutputDevKPrinter::endPage()
 {
-  QOutputDev::endPage();
-}
+  SplashColorPtr dataPtr;
+  int bh, bw;
 
+  QOutputDev::endPage();
+  bh = getBitmap()->getHeight();
+  bw = getBitmap()->getWidth();
+  dataPtr = getBitmap()->getDataPtr();
+  m_painter.drawPixmap(0, 0, QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian));
+}

@@ -80,8 +80,8 @@ namespace KPDF
 
     bool closeURL();
 
-    void displayPage(int pageNumber, float zoomFactor = 1.0);
-    void displayDestination(LinkDest*);
+      void displayPage(int pageNumber, float zoomFactor = 1.0);
+    /*void displayDestination(LinkDest*);*/
       void updateActionPage();
       void setFullScreen( bool fs );
       PageWidget* pageWidget() const {return m_outputDev;}
@@ -112,16 +112,14 @@ namespace KPDF
     void zoomOut()  { m_zoomFactor -= 0.1; update(); };
     void back()     { /* stub */ };
     void forward()  { /* stub */ };
-      void slotNextPage();
-      void slotPreviousPage();
-      void slotGotoEnd();
-      void slotGotoStart();
-      void slotGoToPage();
-    void displayNextPage();
-    void displayPreviousPage();
+    void slotNextPage();
+    void slotPreviousPage();
+    void slotGotoEnd();
+    void slotGotoStart();
+    void slotGoToPage();
     void printPreview();
 
-    void executeAction(LinkAction*);
+    /*void executeAction(LinkAction*);*/
 
       void showScrollBars( bool );
       void showMarkList( bool );
@@ -144,6 +142,7 @@ namespace KPDF
       KSelectAction *m_zoomTo;
       KToggleAction* m_fitToWidth;
 
+    // first page is page 1
     int   m_currentPage;
 
     ZoomMode m_zoomMode;
@@ -153,7 +152,7 @@ namespace KPDF
     static unsigned int m_count;
 
   private slots:
-    void slotFitToWidthToggled();
+		void slotFitToWidthToggled();
 		void redrawPage();
 		void pageClicked ( int );
     void nextThumbnail();

@@ -49,6 +49,7 @@
 
 #include "GlobalParams.h"
 #include "PDFDoc.h"
+#include "TextOutputDev.h"
 #include "QOutputDevKPrinter.h"
 #include "QOutputDevPixmap.h"
 
@@ -84,7 +85,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   m_outputDev = pdfpartview->outputdev;
   m_outputDev->setAcceptDrops( true );
-
 
   setWidget(pdfpartview);
 
@@ -196,7 +196,7 @@ void Part::slotGoToPage()
     if ( m_doc )
     {
         bool ok = false;
-        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage+1,
+        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage,
                                            1, m_doc->getNumPages(), 1, 10, &ok/*, _part->widget()*/);
         if (ok)
             goToPage( num );
@@ -205,15 +205,15 @@ void Part::slotGoToPage()
 
 void Part::goToPage( int page )
 {
-    m_currentPage = page-1;
-    pdfpartview->setCurrentItem(m_currentPage);
-    m_outputDev->setPage(m_currentPage+1);
+    m_currentPage = page;
+    pdfpartview->setCurrentThumbnail(m_currentPage);
+    m_outputDev->setPage(m_currentPage);
     updateActionPage();
 }
 
 void Part::slotOpenUrlDropped( const KURL &url )
 {
-    openURL(url );
+    openURL(url);
 }
 
 void Part::setFullScreen( bool fs )
@@ -226,10 +226,10 @@ void Part::updateActionPage()
 {
     if ( m_doc )
     {
-        m_firstPage->setEnabled(m_currentPage!=0);
-        m_lastPage->setEnabled(m_currentPage<m_doc->getNumPages()-1);
-        m_prevPage->setEnabled(m_currentPage!=0);
-        m_nextPage->setEnabled(m_currentPage<m_doc->getNumPages()-1);
+        m_firstPage->setEnabled(m_currentPage>1);
+        m_lastPage->setEnabled(m_currentPage<m_doc->getNumPages());
+        m_prevPage->setEnabled(m_currentPage>1);
+        m_nextPage->setEnabled(m_currentPage<m_doc->getNumPages());
     }
     else
     {
@@ -291,39 +291,30 @@ void Part::showMarkList( bool show )
 
 void Part::slotGotoEnd()
 {
-    if ( m_doc && m_doc->getNumPages() > 0 );
+    if ( m_doc && m_doc->getNumPages() > 0 )
     {
-        m_currentPage = m_doc->getNumPages()-1;
-        m_outputDev->setPage(m_currentPage+1);
-        pdfpartview->setCurrentItem(m_currentPage);
-        updateActionPage();
+        goToPage(m_doc->getNumPages());
     }
 }
 
 void Part::slotGotoStart()
 {
-    if ( m_doc && m_doc->getNumPages() > 0 );
+    if ( m_doc && m_doc->getNumPages() > 0 )
     {
-        m_currentPage = 0;
-
-        m_outputDev->setPage(m_currentPage+1);
-        pdfpartview->setCurrentItem(m_currentPage);
-        updateActionPage();
+        goToPage(1);
      }
 }
 
 bool Part::nextPage()
 {
     m_currentPage++;
-    if ( m_doc && m_currentPage >= m_doc->getNumPages())
+    if ( m_doc && m_currentPage > m_doc->getNumPages())
     {
         m_currentPage--;
         return false;
     }
 
-    m_outputDev->setPage(m_currentPage+1);
-    pdfpartview->setCurrentItem(m_currentPage);
-    updateActionPage();
+    goToPage(m_currentPage);
     return true;
 }
 
@@ -340,15 +331,13 @@ void Part::slotPreviousPage()
 bool Part::previousPage()
 {
     m_currentPage--;
-    if (m_currentPage < 0)
+    if (m_currentPage < 1)
     {
         m_currentPage++;
         return false;
     }
 
-    m_outputDev->setPage(m_currentPage+1);
-    pdfpartview->setCurrentItem(m_currentPage);
-    updateActionPage();
+    goToPage(m_currentPage);
     return true;
 }
 
@@ -392,10 +381,9 @@ Part::openFile()
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?
     pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1)); 
-    
-    displayPage(1);
-    pdfpartview->setCurrentItem(0);
+
     m_outputDev->setPDFDocument(m_doc);
+    goToPage(1);
   
     m_nextThumbnail=1;
     QTimer::singleShot(10, this, SLOT(nextThumbnail()));
@@ -481,7 +469,7 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 
 //  m_currentPage = pageNumber;
 }
-
+/*
   void
 Part::displayDestination(LinkDest* dest)
 {
@@ -505,7 +493,7 @@ Part::displayDestination(LinkDest* dest)
 
   displayPage(pageNumber);
   return;
-/*
+
   if (fullScreen) {
     return;
   }
@@ -554,8 +542,7 @@ Part::displayDestination(LinkDest* dest)
     canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
     break;
   }
-*/
-}
+}*/
 
   void
 Part::print()
@@ -567,24 +554,12 @@ Part::print()
 
   printer.setPageSelection(KPrinter::ApplicationSide);
   printer.setMinMax(1, m_doc->getNumPages());
-  printer.setCurrentPage(m_currentPage+1);
+  printer.setCurrentPage(m_currentPage);
 
   if (printer.setup(widget()))
   {
     doPrint( printer );
   }
-}
-
-  void
-Part::displayNextPage()
-{
-  displayPage(m_currentPage + 1);
-}
-
-  void
-Part::displayPreviousPage()
-{
-  displayPage(m_currentPage - 1);
 }
 
 /*
@@ -594,7 +569,7 @@ Part::setFixedZoomFactor(float zoomFactor)
 
 }
 */
-
+/*
   void
 Part::executeAction(LinkAction* action)
 {
@@ -618,7 +593,7 @@ Part::executeAction(LinkAction* action)
       else if ((namedDest = ((LinkGoTo*)action)->getNamedDest()))
         namedDest = namedDest->copy();
     }
-    /*
+    
     else
     {
       if ((dest = ((LinkGoToR*)action)->getDest()))
@@ -634,7 +609,7 @@ Part::executeAction(LinkAction* action)
         return;
       }
     }
-    */
+    
 
     if (namedDest != 0)
     {
@@ -656,10 +631,9 @@ Part::executeAction(LinkAction* action)
   default:
       break;
   }
-}
+}*/
 
-  void
-Part::slotFitToWidthToggled()
+void Part::slotFitToWidthToggled()
 {
   m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
   displayPage(m_currentPage);
@@ -668,8 +642,7 @@ Part::slotFitToWidthToggled()
 // for optimization
 bool redrawing = false;
 
-void
-Part::update()
+void Part::update()
 {
 	if (m_outputDev && ! redrawing)
 	{
@@ -678,8 +651,7 @@ Part::update()
 	}
 }
 
-void
-Part::redrawPage()
+void Part::redrawPage()
 {
 	redrawing = false;
 	displayPage(m_currentPage);
@@ -687,9 +659,8 @@ Part::redrawPage()
 
 void Part::pageClicked ( int i )
 {
-    m_currentPage = i;
-    m_outputDev->setPage(m_currentPage+1);
-    updateActionPage();
+    // ThumbnailList is 0 based
+    goToPage(i+1);
 }
 
 BrowserExtension::BrowserExtension(Part* parent)
@@ -744,9 +715,64 @@ void Part::doPrint( KPrinter& printer )
 
 void Part::find()
 {
+  TextOutputDev *textOut;
+  Unicode *u;
+  bool found;
+  double xMin1, yMin1, xMax1, yMax1;
+  int len, pg;
   KFindDialog dlg(pdfpartview);
   if (dlg.exec() != QDialog::Accepted) return;
-  kdDebug() << m_outputDev->find(dlg.pattern()) << endl;
+  
+  // This is more or less copied from what xpdf does, surely can be optimized
+  len = strlen(dlg.pattern().latin1());
+  u = (Unicode *)gmalloc(len * sizeof(Unicode));
+  for (int i = 0; i < len; ++i) u[i] = (Unicode)(dlg.pattern().latin1()[i] & 0xff);
+  
+  // search current
+  found = m_outputDev->find(u, len);
+  
+  if (!found)
+  {
+    // search following pages
+    textOut = new TextOutputDev(NULL, gTrue, gFalse, gFalse);
+    if (!textOut->isOk())
+    {
+      gfree(u);
+      delete textOut;
+      return;
+    }
+    
+    pg = m_currentPage + 1;
+    while(!found && pg <= m_doc->getNumPages())
+    {
+      m_doc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
+      found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
+      if (!found) pg++;
+    }
+
+    if (!found)
+    {
+       // search previous pages
+       pg = 1;
+       while(!found && pg < m_currentPage)
+       {
+         m_doc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
+         found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
+         if (!found) pg++;
+       }
+    }
+
+    delete textOut;
+    if (found)
+    {
+       kdDebug() << "found at " << pg << endl;
+       kdDebug() << xMin1 << " " << yMin1 << " " << xMax1 << " " << yMax1 << endl;
+       goToPage(pg);
+       // xpdf says: can happen that we do not find the text if coalescing is bad OUCH
+       m_outputDev->find(u, len);
+    }
+  }
+  gfree(u);
 }
 
 // vim:ts=2:sw=2:tw=78:et

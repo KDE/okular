@@ -45,9 +45,10 @@ PDFPartView::~PDFPartView()
     // no need to delete child widgets, Qt does it all for us
 }
 
-void PDFPartView::setCurrentItem(int i)
+void PDFPartView::setCurrentThumbnail(int i)
 {
-    pagesList->setCurrentItem(i);
+    // ThumbnailList is 0 based
+    pagesList->setCurrentItem(i-1);
 }
 
 void PDFPartView::setPages(int i, double ar)

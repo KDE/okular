@@ -11,7 +11,7 @@
  ***************************************************************************/
 
 #ifndef QOUTPUTDEVKPRINTER_H
-#define OUTPUTDEVKPRINTER_H
+#define QOUTPUTDEVKPRINTER_H
 
 #include "QOutputDev.h"
 
@@ -31,8 +31,12 @@ public:
 	// End a page
 	virtual void endPage();
 
+protected:
+	void draw();
+
 private:
         KPrinter& m_printer;            // the printer that we're drawing to
+        QPainter& m_painter;            // the painter that we're drawing to
 };
 
 #endif

@@ -342,10 +342,20 @@ void dviWindow::setFile( const char *fname )
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
 
-  // Make sure the file actually exists.
-  if (strlen(fname) == 0)
+  // If fname is the empty string, then this means: "close". Delete
+  // the dvifile and the pixmap.
+  if (strlen(fname) == 0) {
+    if (dviFile)
+      delete dviFile;
+    dviFile = 0;
+    if (pixmap)
+      delete pixmap;
+    pixmap = 0;
+    resize(0, 0);
     return;
+  }
 
+  // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
     KMessageBox::error( this,
 			i18n("File error!\n\n") +

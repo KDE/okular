@@ -124,11 +124,8 @@ bool KDVIMultiPage::openFile()
 
 bool KDVIMultiPage::closeURL()
 {
-  window->setFile("");
-  scrollView()->resizeContents(0, 0);
-
+  window->setFile(""); // That means: close the file. Resize the widget to 0x0.
   emit previewChanged(false);
-
   return true;
 }
 

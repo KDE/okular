@@ -379,7 +379,7 @@ void OptionDialog::fontPathCheckChanged( bool state )
 }
 
 
-static bool OptionDialog::paperSizes( const char *p, float &w, float &h )
+bool OptionDialog::paperSizes( const char *p, float &w, float &h )
 {
   QString s(p);
   s = s.simplifyWhiteSpace();

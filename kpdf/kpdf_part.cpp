@@ -937,6 +937,11 @@ void Part::doPrint( KPrinter& printer )
 void Part::find()
 {
   KFindDialog dlg(pdfpartview);
+  dlg.setHasCursor(false);
+  dlg.setSupportsBackwardsFind(false);
+  dlg.setSupportsCaseSensitiveFind(false);
+  dlg.setSupportsWholeWordsFind(false);
+  dlg.setSupportsRegularExpressionFind(false);
   if (dlg.exec() != QDialog::Accepted) return;
 
   doFind(dlg.pattern(), false);

@@ -54,8 +54,18 @@ fontMap::fontMap()
       QString fontFileName = line.section('<', -1).stripWhiteSpace().section(' ', 0, 0);
       QString encodingName = line.section('<', -2, -2).stripWhiteSpace().section(' ', 0, 0);
       
+      double slant = 0.0;
+      int i = line.find("SlantFont");
+      if (i >= 0) {
+	bool ok;
+	slant = line.left(i).section(' ', -1, -1 ,QString::SectionSkipEmpty).toDouble(&ok);
+	if (ok == false)
+	  slant = 0.0;
+      }
+      
       fontMapEntry &entry = fontMapEntries[TeXName];
       
+      entry.slant        = slant;
       entry.fontFileName = fontFileName;
       entry.fullFontName = FullName;
       if (encodingName.endsWith(".enc"))
@@ -110,6 +120,17 @@ const QString &fontMap::findEncoding(const QString &TeXName)
     return it.data().fontEncoding;
   else
     return QString::null;
+}
+
+
+double fontMap::findSlant(const QString &TeXName)
+{
+  QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
+  
+  if (it != fontMapEntries.end())
+    return it.data().slant;
+  else
+    return 0.0;
 }
 
 #endif // HAVE_FREETYPE

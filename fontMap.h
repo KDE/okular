@@ -39,6 +39,11 @@ class fontMapEntry {
   // (on the author's machine: /usr/share/texmf/dvips/psnfss/8r.enc)
   // must be looked up using the kpsewhich comman.
   QString fontEncoding;
+
+  // Some fonts need to be slanted, and the font map file defines by
+  // how much. This field is set to 0.0 if no slanting is specified in
+  // the map file.
+  double slant;
 };
 
 
@@ -101,6 +106,10 @@ class fontMap {
       TeX font name (e.g. 'rpbkd'). This method return a reference to
       QString::null if the font could not be found. */
   const QString &findEncoding(const QString &TeXName);
+
+  /** This method finds the slant of a font. Returns 0.0 if no slant
+      was defined. */
+  double findSlant(const QString &TeXName);
   
  private:
   /** This member maps TeX font names mapEntry classes that contain

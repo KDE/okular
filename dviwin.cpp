@@ -53,7 +53,6 @@ struct drawinf	currinf;
 
 
 const char *dvi_oops_msg;	/* error message */
-double	dimconv;
 extern struct frame        frame0; /* dummy head of list */  
 
 jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
@@ -63,12 +62,11 @@ QIntDict<font> tn_table;
 
 
 int	_pixels_per_inch; //@@@
-_Xconst char	*_paper;
+
 
 
 
 // The following are really used
-long	        magnification;
 unsigned int	page_w;
 unsigned int	page_h;
 // end of "really used"
@@ -650,7 +648,7 @@ bool dviWindow::setFile( const QString & fname )
     currinf.end       = dvi_buffer;
     currinf.pos       = dvi_buffer;
     currinf._virtual  = NULL;
-    draw_part(current_frame = &frame0, dimconv, false);
+    draw_part(current_frame = &frame0, dviFile->dimconv, false);
 
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);

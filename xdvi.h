@@ -1,7 +1,5 @@
 #ifndef _xdvi_h
 #define _xdvi_h
-// Define the following flags to generate more debugging output
-  
 
 #include <setjmp.h>
 
@@ -140,40 +138,19 @@ extern	struct drawinf	currinf;
 #define ZZ      currinf.data.z
 #define ROUNDUP(x,y) (((x)+(y)-1)/(y))
 
-extern	int	current_page;
-extern	int	total_pages;
-extern	long	magnification;
-extern	double	dimconv;
-extern	double	tpic_conv;
+//extern	int	total_pages;
 extern	int	n_files_left;	/* for LRU closing of fonts */
-extern	unsigned int	page_w, page_h;
 
 #define	PS	1
 
-/*
- * Table of page offsets in DVI file, indexed by page number - 1.
- * Initialized in prepare_pages().
- */
-extern	long	*page_offset;
-
-
-
 extern QIntDict<struct font> tn_table;
-extern	struct font	*font_head	INIT(NULL);
 
-extern	unsigned char		maxchar;
-extern	unsigned short	current_timestamp INIT(0);
 
 /*
  *	Command line flags.
  */
 
-//extern	char	*debug_arg;
 extern	int	_pixels_per_inch;
-//extern	char	*sidemargin;
-//extern	char	*topmargin;
-extern	_Xconst char	*_paper;
-extern	char	*mg_arg[5];
 
 extern  unsigned long   num ARGS((FILE *, int));     
 extern  long    snum ARGS((FILE *, int));
@@ -181,29 +158,6 @@ extern  long    snum ARGS((FILE *, int));
 
 #define	pixels_per_inch	_pixels_per_inch
 
-
-
-extern	struct	mg_size_rec {
-	int	w;
-	int	h;
-}
-	mg_size[5];
-
-extern	int	_debug	INIT(0);
-
-#define	DBG_BITMAP	0x1
-#define	DBG_DVI		0x2
-#define	DBG_PK		0x4
-#define	DBG_BATCH	0x8
-#define	DBG_EVENT	0x10	/* 16 */
-#define	DBG_OPEN	0x20	/* 32 */
-#define	DBG_PS		0x40	/* 64 */
-#define	DBG_STAT	0x80	/* 128 */
-#define	DBG_HASH	0x100	/* 256 */
-#define	DBG_PATHS	0x200	/* 512 */
-#define	DBG_EXPAND	0x400	/* 1024 */
-#define	DBG_SEARCH	0x800	/* 2048 */
-#define	DBG_ALL		(0xffff & ~DBG_BATCH)
 
 
 extern	Display	*DISP;

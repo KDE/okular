@@ -94,61 +94,11 @@ extern struct frame	frame0;	/* dummy head of list */
 
 #define	dvi_oops(str)	(dvi_oops_msg = (str.utf8()), longjmp(dvi_env, 1))
 
-static	Boolean	font_not_found;
 
-/*
- * DVI preamble and postamble information.
- */
-
-static	long	numerator, denominator;
-
-/*
- * Offset in DVI file of last page, set in read_postamble().
- */
-static	long	last_page_offset;
-
-
-
-
-
-
-/** define_font reads the rest of the fntdef command and then reads in
- *  the specified pixel file, adding it to the global linked-list
- *  holding all of the fonts used in the job.  */
-
-font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable, class fontPool *font_pool)
-{
-  int   TeXnumber = num(file, (int) cmnd - FNTDEF1 + 1);
-  long  checksum  = four(file);
-  int   scale     = four(file);
-  int   design    = four(file);
-  int   len       = one(file) + one(file); /* sequence point in the middle */
-  char *fontname  = xmalloc((unsigned) len + 1, "font name");
-  Fread(fontname, sizeof(char), len, file);
-  fontname[len] = '\0';
-
-#ifdef DEBUG_FONTS
-  kdDebug() << "Define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
-#endif
-
-  //  struct font *fontp = font_pool->appendx(fontname, fsize, checksum, scale * scale_dimconv / (1<<20));
-  struct font *fontp = font_pool->appendx(fontname, checksum, scale, design, vfparent);
-
-  // Insert font in dictionary and make sure the dictionary is big
-  // enough.
-  if (TeXNumberTable->size()-2 <= TeXNumberTable->count())
-    // Not quite optimal. The size of the dictionary should be a
-    // prime. I don't care
-    TeXNumberTable->resize(TeXNumberTable->size()*2); 
-  TeXNumberTable->insert(TeXnumber, fontp);
-  return fontp;
-}
 
 
 void dvifile::process_preamble(void)
 {
-  unsigned char   k;
-
   if (one(file) != PRE)
     dvi_oops(i18n("DVI file doesn't start with preamble."));
   if (one(file) != 2)
@@ -157,12 +107,13 @@ void dvifile::process_preamble(void)
   numerator     = four(file);
   denominator   = four(file);
   magnification = four(file);
-  dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.));
+  dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.0));
+  // @@@@ This does not fit the description of dimconv in the header file!!!
   dimconv       = dimconv * (((long) pixels_per_inch)<<16) / 254000;
 
   // Read the generatorString (such as "TeX output ..." from the DVI-File)
   char	job_id[300];
-  k             = one(file);
+  unsigned char k = one(file);
   k             = (k > 299) ? 299 : k;
   Fread(job_id, sizeof(char), (int) k, file);
   job_id[k] = '\0';
@@ -227,9 +178,34 @@ void dvifile::read_postamble(void)
   int unshrunk_page_w = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
   (void) two(file);	/* max stack size */
   total_pages = two(file);
-  font_not_found = False;
-  while ((cmnd = one(file)) >= FNTDEF1 && cmnd <= FNTDEF4)
-    (void) define_font(file, cmnd, (struct font *) NULL, &tn_table, font_pool);
+  Boolean font_not_found = False;
+  while ((cmnd = one(file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
+    int   TeXnumber = num(file, (int) cmnd - FNTDEF1 + 1);
+    long  checksum  = four(file);
+    int   scale     = four(file);
+    int   design    = four(file);
+    int   len       = one(file) + one(file); /* sequence point in the middle */
+    char *fontname  = xmalloc((unsigned) len + 1, "font name");
+    Fread(fontname, sizeof(char), len, file);
+    fontname[len] = '\0';
+    
+#ifdef DEBUG_FONTS
+    kdDebug() << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+#endif
+    
+    // Calculate the fsize as:  fsize = 0.001 * scale / design * magnification * MFResolutions[MetafontMode]
+    struct font *fontp = font_pool->appendx(fontname, checksum, scale, design, 
+					    0.001*scale/design*magnification*MFResolutions[font_pool->getMetafontMode()], dimconv);
+    
+    // Insert font in dictionary and make sure the dictionary is big
+    // enough.
+    if (tn_table.size()-2 <= tn_table.count())
+      // Not quite optimal. The size of the dictionary should be a
+      // prime. I don't care.
+      tn_table.resize(tn_table.size()*2); 
+    tn_table.insert(TeXnumber, fontp);
+  }
+
   if (cmnd != POSTPOST)
     dvi_oops(i18n("Non-fntdef command found in postamble"));
   if (font_not_found)

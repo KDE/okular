@@ -35,7 +35,6 @@
 #include "dvi.h"
 
 extern	char	*xmalloc (unsigned, const char *);
-extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable, class fontPool *pool);
 extern void oops(QString message);
 
 /***
@@ -90,7 +89,35 @@ void font::read_VF_index(void)
   // Read the fonts.
   first_font = NULL;
   while ((cmnd = one(VF_file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
-    struct font *newfontp = define_font(VF_file, cmnd, this, &(vf_table), font_pool);
+    int   TeXnumber = num(VF_file, (int) cmnd - FNTDEF1 + 1);
+    long  checksum  = four(VF_file);
+    int   scale     = four(VF_file);
+    int   design    = four(VF_file);
+    int   len       = one(VF_file) + one(VF_file); /* sequence point in the middle */
+    char *fontname  = xmalloc((unsigned) len + 1, "font name");
+    Fread(fontname, sizeof(char), len, VF_file);
+    fontname[len] = '\0';
+	
+#ifdef DEBUG_FONTS
+    kdDebug() << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+#endif
+
+    // The scaled size is given in units of vfparent->scale * 2 ** -20
+    // SPELL units, so we convert it into SPELL units by multiplying
+    // by vfparent->dimconv. The design size is given in units of 2
+    // -20 pt, so we convert into SPELL units by multiplying by
+    // (pixels_per_inch * 2**16) / (72.27 * 2**20).
+    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, design, 
+					       (72.27 * (1<<4)) * dimconv * scale / design, dimconv);
+	
+    // Insert font in dictionary and make sure the dictionary is big
+    // enough.
+    if (vf_table.size()-2 <= vf_table.count())
+      // Not quite optimal. The size of the dictionary should be a
+      // prime. I don't care.
+      vf_table.resize(vf_table.size()*2); 
+    vf_table.insert(TeXnumber, newfontp);
+    
     if (first_font == NULL)
       first_font = newfontp;
   }
@@ -146,7 +173,7 @@ void font::read_VF_index(void)
   }
   if (cmnd != POST)
     oops(QString(i18n("Wrong command byte found in VF macro list: %1")).arg(cmnd));
-	
+  
   Fclose (VF_file);
   file = NULL;
 }

@@ -91,28 +91,10 @@ void fontPool::setMakePK(int flag)
 }
 
 
-class font *fontPool::appendx(char *fontname, long checksum, int scale, int design, font *vfparent)
+class font *fontPool::appendx(char *fontname, long checksum, int scale, int design, float fsize, double scale_dimconv)
 {
-  // The calculation here is some sort of black magic which I do not
-  // understand. Anyone with time, could you figure out what's going
-  // on here? -- Stefan Kebekus
-  float  fsize;
-  double scale_dimconv;
-  if (vfparent == NULL) {
-    fsize = 0.001 * scale / design * magnification * MFResolutions[MetafontMode];
-    scale_dimconv = dimconv;
-  } else {
-    /* The scaled size is given in units of vfparent->scale * 2 ** -20
-       SPELL units, so we convert it into SPELL units by multiplying
-       by vfparent->dimconv. The design size is given in units of 2 **
-       -20 pt, so we convert into SPELL units by multiplying by
-       (pixels_per_inch * 2**16) / (72.27 * 2**20).  */
-
-    fsize = (72.27 * (1<<4)) * vfparent->dimconv * scale / design;
-    scale_dimconv = vfparent->dimconv;
-  }
-
-  // reuse font if possible
+  // Reuse font if possible: check if a font with that name and fsize
+  // is already in the fontpool, and use that, if possible.
   class font *fontp = fontList.first();
   while( fontp != 0 ) {
     if (strcmp(fontname, fontp->fontname) == 0 && (int (fsize+0.5)) == (int)(fontp->fsize + 0.5)) {
@@ -124,13 +106,12 @@ class font *fontPool::appendx(char *fontname, long checksum, int scale, int desi
     fontp=fontList.next();
   }
 
-  // if font doesn't exist yet
+  // If font doesn't exist yet, we have to generate a new font.
   fontp = new font(fontname, fsize, checksum, scale*scale_dimconv/(1<<20), this);
   if (fontp == 0) {
     kdError(4300) << i18n("Could not allocate memory for a font structure!") << endl;
     exit(0);
   }
-
   fontList.append(fontp);
 
   // Now start kpsewhich/MetaFont, etc. if necessary

@@ -14,6 +14,7 @@
 #include <qwhatsthis.h>
 
 #include "dvi_init.h"
+#include "fontpool.h"
 #include "infodialog.h"
 
 infoDialog::infoDialog( QWidget* parent )

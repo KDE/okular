@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <qstring.h>
 
-#include <fontpool.h>
+class fontPool;
 
 class dvifile {
  public:
@@ -18,6 +18,24 @@ class dvifile {
   FILE         * file;
   int	         total_pages;
   long         * page_offset;
+
+  /** Numerator and denominator of the TeX units, as explained in
+      section A.3 of the DVI driver standard, Level 0, published by
+      the TUG DVI driver standards committee. */
+  unsigned long           numerator, denominator;
+
+  /** Magnification value, as explained in section A.3 of the DVI
+      driver standard, Level 0, published by the TUG DVI driver
+      standards committee. */
+  unsigned long	        magnification;
+
+  /** dimconv = numerator*magnification/(1000*denominator), as
+      explained in section A.3 of the DVI driver standard, Level 0,
+      published by the TUG DVI driver standards committee. */
+  double         dimconv;
+
+  /** Offset in DVI file of last page, set in read_postamble(). */
+  long           last_page_offset;
 
   /** init_dvi_file is the main subroutine for reading the startup
       information from the dvi file. Returns True on success.  */

@@ -565,7 +565,7 @@ void dviWindow::draw_page(void)
   currinf._virtual       = NULL;
   HTML_href              = NULL;
   num_of_used_hyperlinks = 0;
-  draw_part(current_frame = &frame0, dimconv, false);
+  draw_part(current_frame = &frame0, dviFile->dimconv, false);
   if (HTML_href != NULL) {
     delete HTML_href;
     HTML_href = NULL;

@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,6 +13,8 @@
 
 #include <qobject.h>
 #include <qvaluevector.h>
+
+class Outline;
 
 class KPDFPage;
 
@@ -37,6 +40,7 @@ public:
 
 #define PAGEWIDGET_ID 1
 #define THUMBNAILS_ID 2
+#define TOC_ID 2
 
 /**
  * @short The information container. Actions (like open,find) take place here.
@@ -62,6 +66,7 @@ public:
     bool atBegin() const;
     bool atEnd() const;
     const KPDFPage * page( uint page ) const;
+    Outline * outline() const;
 
     // observers related methods
     void addObserver( KPDFDocumentObserver * pObserver );

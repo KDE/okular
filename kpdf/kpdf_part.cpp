@@ -53,6 +53,7 @@
 #include "searchwidget.h"
 #include "thumbnaillist.h"
 #include "document.h"
+#include "toc.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
@@ -93,7 +94,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	toolBox->setMinimumWidth( 60 );
 	toolBox->setMaximumWidth( 200 );
 
-	QFrame * tocFrame = new QFrame( toolBox );
+	// TODO when links following is done connect the execute(LinkAction *action) signal from
+	// tocFrame to the same slot
+	TOC * tocFrame = new TOC( toolBox, document );
 	toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 
 	QVBox * thumbsBox = new ThumbnailsBox( toolBox );
@@ -119,6 +122,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// add document observers
 	document->addObserver( m_thumbnailList );
 	document->addObserver( m_pageView );
+	document->addObserver( tocFrame );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -177,6 +181,7 @@ Part::~Part()
 		delete globalParams;
 }
 
+//TODO does that really goes somewhere???
 KAboutData* Part::createAboutData()
 {
 	// the non-i18n name here must be the same as the directory in

@@ -12,28 +12,33 @@
 
 #include <klistview.h>
 
+#include "document.h"
+
 class GList;
 
 class PDFDoc;
 class UnicodeMap;
 
-class TOC : public KListView
+class TOC : public KListView, public KPDFDocumentObserver
 {
 Q_OBJECT
 	public:
-		TOC(QWidget *parent);
+		TOC(QWidget *parent, KPDFDocument *document);
 
-		bool generate(PDFDoc *doc);
+		uint observerId();
+		void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool documentChanged);
 
 	signals:
 		void execute(LinkAction *action);
+
+	private slots:
+		void slotExecuted(QListViewItem *i);
 
 	private:
 		void addKids(KListViewItem *last, GList *items, UnicodeMap *uMap);
 		QString getTitle(Unicode *u, int length, UnicodeMap *uMap) const;
 
-	private slots:
-		void slotExecuted(QListViewItem *i);
+		KPDFDocument *m_document;
 };
 
 #endif

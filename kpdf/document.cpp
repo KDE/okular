@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -177,6 +178,11 @@ const KPDFPage * KPDFDocument::page( uint n ) const
     return ( n < d->pages.count() ) ? d->pages[n] : 0;
 }
 
+Outline * KPDFDocument::outline() const
+{
+    return d->pdfdoc ? d->pdfdoc->getOutline() : 0;
+}
+
 
 void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 {
@@ -220,7 +226,7 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
     }
 }
 
-// BEGIN slots 
+// BEGIN slots
 void KPDFDocument::slotSetCurrentPage( int page )
 {
     slotSetCurrentPagePosition( page, 0.0 );
@@ -316,7 +322,7 @@ void KPDFDocument::slotFind( const QString & string, bool keepCase )
 void KPDFDocument::slotGoToLink( /* QString anchor */ )
 {
 }
-//END slots 
+//END slots
 
 void KPDFDocument::processPageList( bool documentChanged )
 {
@@ -431,7 +437,7 @@ void ThumbnailList::customEvent(QCustomEvent *e)
 	if (e->type() == 65432 && !m_ignoreNext)
 	{
 		QImage *i =  (QImage*)(e -> data());
-		
+
 		setThumbnail(m_nextThumbnail, i);
 		m_nextThumbnail++;
 		if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();

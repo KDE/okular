@@ -40,7 +40,7 @@ class TOCItem : public KListViewItem
 		LinkAction *m_action;
 };
 
-TOC::TOC(QWidget *parent) : KListView(parent)
+TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_document(document)
 {
 	addColumn("");
 	header() -> hide();
@@ -50,38 +50,49 @@ TOC::TOC(QWidget *parent) : KListView(parent)
 	connect(this, SIGNAL(executed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
 }
 
-bool TOC::generate(PDFDoc *doc)
+uint TOC::observerId()
 {
-	GList *items, *kids;
-	OutlineItem *item;
-	UnicodeMap *uMap;
-	GString *enc;
-	TOCItem *last;
-
-	clear();
-	last = 0;
-	items = doc->getOutline()->getItems();
-	if (items && items->getLength() > 0)
-	{
-		enc = new GString("Latin1");
-		uMap = globalParams->getUnicodeMap(enc);
-		delete enc;
-
-		for (int i = 0; i < items->getLength(); ++i)
-		{
-			item = (OutlineItem *)items->get(i);
-
-			last = new TOCItem(this, last, getTitle(item->getTitle(), item->getTitleLength(), uMap), item->getAction());
-			item->open();
-			if ((kids = item->getKids()))
-			{
-				addKids(last, kids, uMap);
-			}
-		}
-		return true;
-	}
-	return false;
+	return TOC_ID;
 }
+
+void TOC::pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool documentChanged)
+{
+	if (documentChanged)
+	{
+		GList *items, *kids;
+		OutlineItem *item;
+		UnicodeMap *uMap;
+		GString *enc;
+		TOCItem *last;
+
+		clear();
+		last = 0;
+		Outline *out = m_document->outline();
+		if (out) items = out->getItems();
+		else items = 0;
+		if (items && items->getLength() > 0)
+		{
+			enc = new GString("Latin1");
+			uMap = globalParams->getUnicodeMap(enc);
+			delete enc;
+
+			for (int i = 0; i < items->getLength(); ++i)
+			{
+				item = (OutlineItem *)items->get(i);
+
+				last = new TOCItem(this, last, getTitle(item->getTitle(), item->getTitleLength(), uMap), item->getAction());
+				item->open();
+				if ((kids = item->getKids()))
+				{
+					addKids(last, kids, uMap);
+				}
+			}
+// 			inform we have TOC
+		}
+// 			inform we DO NOT have TOC
+	}
+}
+
 
 void TOC::addKids(KListViewItem *parent, GList *items, UnicodeMap *uMap)
 {

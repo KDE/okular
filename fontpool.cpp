@@ -54,8 +54,6 @@ fontPool::fontPool(void)
   MetafontMode             = DefaultMFMode;
   fontList.setAutoDelete(TRUE);
 
-  kdDebug() << "Checking Xft Extension 1" << endl;
-
 #ifdef HAVE_FREETYPE
   // Initialize the Freetype Library
   if ( FT_Init_FreeType( &FreeType_library ) != 0 ) {

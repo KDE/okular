@@ -343,8 +343,9 @@ void dviWindow::prescan_setChar(unsigned int ch)
 
 void dviWindow::prescan(double current_dimconv)
 {
+#ifdef DEBUG_PRESCAN
   kdDebug(4300) << "dviWindow::prescan( current_dimconv=" << current_dimconv << " )" << endl;
-
+#endif
 
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   Q_UINT8 ch;

@@ -49,6 +49,7 @@
 #include "xdvi.h"
 #include "zoomlimits.h"
 
+//#define DEBUG_DVIWIN
 
 QPainter foreGroundPaint; // QPainter used for text
 
@@ -58,7 +59,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
   : QWidget( parent, name )
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow( zoom=" << zoom << ", mkpk=" << mkpk << ", parent=" << parent << ", name=" << name << " )" << endl;
+  kdDebug(4300) << "dviWindow( zoom=" << zoom << ", parent=" << parent << ", name=" << name << " )" << endl;
 #endif
 
   shrinkfactor = 3;
@@ -381,7 +382,7 @@ void dviWindow::drawPage()
 }
 
 
-bool dviWindow::correctDVI(QString filename)
+static bool dviWindow::correctDVI(const QString &filename)
 {
   QFile f(filename);
   if (!f.open(IO_ReadOnly))
@@ -435,8 +436,12 @@ void dviWindow::changePageSize()
 
 //------ setup the dvi interpreter (should do more here ?) ----------
 
-bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
+bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMarker)
 {
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::setFile( fname=" << fname << ", ref=" << ref << ", sourceMarker=" << sourceMarker << ")" << endl;
+#endif
+
   DVIselection.clear();
   reference              = QString::null;
   setMouseTracking(true);
@@ -497,7 +502,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
     return false;
   }
 
-
+  is_current_page_drawn  = 0;
   if (dviFile)
     delete dviFile;
   dviFile = dviFile_new;
@@ -517,30 +522,72 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   // denial of service attack.
   bool restrictIncludePath = true;
   QString tmp = KGlobal::dirs()->saveLocation("tmp", QString::null);
-  if (!filename.startsWith(tmp))
-  {
-     tmp = KGlobal::dirs()->saveLocation("data", QString::null);
-     if (!filename.startsWith(tmp))
-        restrictIncludePath = false;
+  if (!filename.startsWith(tmp)) {
+    tmp = KGlobal::dirs()->saveLocation("data", QString::null);
+    if (!filename.startsWith(tmp))
+      restrictIncludePath = false;
   }
   
   QString includePath;
-  if (restrictIncludePath)
-  {
-     includePath = filename;
-     includePath.truncate(includePath.findRev('/'));
+  if (restrictIncludePath) {
+    includePath = filename;
+    includePath.truncate(includePath.findRev('/'));
   }
-
+  
   PS_interface->setIncludePath(includePath);
-
+  
   // We will also generate a list of hyperlink-anchors and source-file
   // anchors in the document. So declare the existing lists empty.
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
-
+  
   if (dviFile->page_offset == 0)
     return false;
 
+  // If we are re-loading a document, e.g. because the user TeXed his
+  // document anew, then all fonts required for this document are
+  // probably already there, and we should pre-scan the document now
+  // (to extract embedded, PostScript, Hyperlinks, ets). Otherwise,
+  // the pre-scan will be carried out in the method 'all_fonts_loaded'
+  // after fonts have been loaded, and the fontPool emits the signal
+  // fonts_have_been_loaded().
+  if (font_pool->check_if_fonts_filenames_are_looked_up() == true) {
+    // Prescan phase starts here
+    // @@@@ In this implementation, a prescan is performed any time the
+    // user changes the zoom factor. This must be changed at all cost.
+#ifdef PERFORMANCE_MEASUREMENT
+    kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+    QTime preScanTimer;
+    preScanTimer.start();
+#endif
+    Q_UINT16 currPageSav = current_page;
+    
+    for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+      PostScriptOutPutString = new QString();
+      
+      if (current_page < dviFile->total_pages) {
+	command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
+	end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+      } else
+	command_pointer = end_pointer = 0;
+      
+      memset((char *) &currinf.data, 0, sizeof(currinf.data));
+      currinf.fonttable = &(dviFile->tn_table);
+      currinf._virtual  = NULL;
+      prescan(65536.0*fontPixelPerDVIunit());
+      
+      if (!PostScriptOutPutString->isEmpty())
+	PS_interface->setPostScript(current_page, *PostScriptOutPutString);
+      delete PostScriptOutPutString;
+    }
+    PostScriptOutPutString = NULL;
+    
+#ifdef PERFORMANCE_MEASUREMENT
+    kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+#endif
+    current_page = currPageSav;
+  }
+  
   QApplication::restoreOverrideCursor();
   reference              = ref;
   return true;
@@ -549,16 +596,23 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
 
 void dviWindow::all_fonts_loaded(fontPool *)
 {
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::all_fonts_loaded(...) called" << endl;
+#endif
+
   if (dviFile == 0)
     return;
 
   // Prescan phase starts here
+  // @@@@ In this implementation, a prescan is performed any time the
+  // user changes the zoom factor. This must be changed at all cost.
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
   QTime preScanTimer;
   preScanTimer.start();
 #endif
-  
+  Q_UINT16 currPageSav = current_page;
+
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
     
@@ -578,15 +632,14 @@ void dviWindow::all_fonts_loaded(fontPool *)
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
-  is_current_page_drawn  = 0;
   
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
+  current_page = currPageSav;
 
-  current_page=0;
+
   drawPage();
-
 
   // case 1: The reference is a number, which we'll interpret as a
   // page number.
@@ -655,15 +708,25 @@ void dviWindow::all_fonts_loaded(fontPool *)
 
 void dviWindow::gotoPage(unsigned int new_page)
 {
-  if (dviFile == NULL)
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::gotoPage( new_page=" << new_page << " )" << endl;
+#endif
+
+  if (dviFile == NULL) {
+#ifdef DEBUG_DVIWIN
+    kdDebug(4300) << "gotoPage fails because no DVI file loaded" << endl;
+#endif
     return;
+  }
 
   if (new_page<1)
     new_page = 1;
   if (new_page > dviFile->total_pages)
     new_page = dviFile->total_pages;
-  if ((new_page-1==current_page) &&  !is_current_page_drawn)
+  if ((new_page-1 == current_page) && (is_current_page_drawn != 0)) {
+    kdDebug(4300) << "gotoPage fails because page is already drawn, is_current_page_drawn=" << is_current_page_drawn << endl;
     return;
+  }
   current_page           = new_page-1;
   is_current_page_drawn  = 0;
   animationCounter       = 0;
@@ -681,6 +744,7 @@ void dviWindow::gotoPage(int new_page, int vflashOffset)
   timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
 }
 
+
 void dviWindow::timerEvent( QTimerEvent *e )
 {
   animationCounter++;
@@ -691,6 +755,7 @@ void dviWindow::timerEvent( QTimerEvent *e )
   }
   repaint(0, flashOffset, currentlyDrawnPage.pixmap->width(), currentlyDrawnPage.pixmap->height()/19, false);
 }
+
 
 int dviWindow::totalPages()
 {
@@ -718,6 +783,7 @@ double dviWindow::setZoom(double zoom)
   return _zoom;
 }
 
+
 void dviWindow::paintEvent(QPaintEvent *e)
 {
   if (currentlyDrawnPage.pixmap) {
@@ -742,10 +808,12 @@ void dviWindow::paintEvent(QPaintEvent *e)
   }
 }
 
+
 void dviWindow::clearStatusBar(void)
 {
   emit setStatusBarText( QString::null );
 }
+
 
 void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 {
@@ -817,7 +885,6 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
       }
 
     QString selectedText("");
-
 
 
     if (selectedTextStart != -1)

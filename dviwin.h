@@ -112,7 +112,6 @@ class pageData
 
   QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
   QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
-    
 };
 
 
@@ -138,9 +137,9 @@ public:
   int		curr_page(void) { return current_page+1; };
   void		setShowHyperLinks( bool flag );
   bool		showHyperLinks(void) { return _showHyperLinks; };
-  void		setEditorCommand( QString command )  { editorCommand = command; };
+  void		setEditorCommand( const QString &command )  { editorCommand = command; };
   void		setPaper(double w, double h);
-  bool          correctDVI(QString filename);
+  static bool   correctDVI(const QString &filename);
   
   // for the preview
   QPixmap      *pix() { return currentlyDrawnPage.pixmap; };
@@ -202,7 +201,7 @@ public slots:
   void          findPrevText(void);
 
   void          abortExternalProgramm(void);
-  bool		setFile(QString fname, QString ref = QString::null, bool sourceMarker=true);
+  bool		setFile(const QString &fname, const QString &ref = QString::null, bool sourceMarker=true);
 
   /** simply emits "setStatusBarText( QString::null )". This is used
       in dviWindow::mouseMoveEvent(), see the explanation there. */

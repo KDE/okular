@@ -34,6 +34,7 @@
 #include <stdlib.h>
 
 #include "pageview.h"
+#include "pageviewutils.h"
 #include "pixmapwidget.h"
 #include "page.h"
 
@@ -57,6 +58,7 @@ public:
     QPoint mouseGrabPos;
     QPoint mouseStartPos;
     bool mouseOnLink;
+    bool mouseOnActiveRect;
     PageWidget * mouseSelectionWidget;
 
     // other stuff
@@ -64,15 +66,19 @@ public:
     QTimer *scrollTimer;
     int scrollIncrement;
     bool dirtyLayout;
+    PageViewOverlay * overlayWindow;    //in pageviewutils.h
+    PageViewMessage * messageWindow;    //in pageviewutils.h
 
     // actions
     KSelectAction *aZoom;
     KToggleAction *aZoomFitWidth;
     KToggleAction *aZoomFitPage;
     KToggleAction *aZoomFitText;
+    KToggleAction *aZoomFitRect;
     KToggleAction *aViewTwoPages;
     KToggleAction *aViewContinous;
 };
+
 
 
 /* PageView. What's in this file? -> quick overview.
@@ -99,11 +105,14 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseOnLink = false;
+    d->mouseOnActiveRect = false;
     d->mouseSelectionWidget = 0;
     d->delayTimer = 0;
     d->scrollTimer = 0;
     d->scrollIncrement = 0;
     d->dirtyLayout = false;
+    d->overlayWindow = 0;
+    d->messageWindow = new PageViewMessage(this);
 
     // dealing with (very) large areas so enable clipper
     enableClipper( true );
@@ -152,6 +161,9 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
 
     d->aZoomFitText = new KToggleAction( i18n("Fit to &Text"), "viewmagfit", 0, ac, "zoom_fit_text" );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
+
+    d->aZoomFitRect = new KToggleAction( i18n("Zoom to rect"), "viewmag", 0, ac, "zoom_fit_rect" );
+    connect( d->aZoomFitRect, SIGNAL( toggled( bool ) ), SLOT( slotFitToRectToggled( bool ) ) );
 
     // View-Layout actions
     d->aViewTwoPages = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, ac, "view_twopages" );
@@ -284,43 +296,48 @@ void PageView::notifyPixmapChanged( int pageNumber )
 //BEGIN widget events
 void PageView::contentsMousePressEvent( QMouseEvent * e )
 {
-    bool leftButton = e->button() & LeftButton,
-         rightButton = e->button() & RightButton;
+    bool leftButton = e->button() & LeftButton;
+
+    // handle 'Zoom To Area', in every mouse mode
+    if ( leftButton && d->zoomMode == ZoomRect )
+    {
+        d->mouseStartPos = e->pos();
+        d->mouseGrabPos = QPoint();
+        return;
+    }
+
+    // handle mode dependant mouse press actions
     switch ( d->mouseMode )
     {
-    case MouseNormal:    // drag start / click / link following
-        if ( leftButton )
-        {
-            d->mouseStartPos = e->globalPos();
-            if ( d->mouseOnLink )
-                d->mouseGrabPos = QPoint();
-            else
+        case MouseNormal:    // drag start / click / link following
+            if ( leftButton )
             {
-                d->mouseGrabPos = d->mouseStartPos;
-                setCursor( sizeAllCursor );
+                d->mouseStartPos = e->globalPos();
+                d->mouseGrabPos = d->mouseOnLink ? QPoint() : d->mouseStartPos;
+                if ( !d->mouseOnLink )
+                    setCursor( sizeAllCursor );
             }
-        }
-        else if ( rightButton )
-            emit rightClick();
-        break;
+            else if ( e->button() & RightButton )
+                emit rightClick();
+            break;
 
-    case MouseSelection: // set first corner of the selection rect
-        if ( leftButton )
-        {
-            if ( d->mouseSelectionWidget )
-                d->mouseSelectionWidget->clearSelection();
-            d->mouseSelectionWidget = 0;
-            PageWidget * page = pickPageOnPoint( e->x(), e->y() );
-            if ( page )
+        case MouseSelection: // set first corner of the selection rect
+            if ( leftButton )
             {
-                page->setBeginCorner( e->x() - childX( page ), e->y() - childY( page ) );
-                d->mouseSelectionWidget = page;
+                if ( d->mouseSelectionWidget )
+                    d->mouseSelectionWidget->clearSelection();
+                d->mouseSelectionWidget = 0;
+                PageWidget * page = pickPageOnPoint( e->x(), e->y() );
+                if ( page )
+                {
+                    page->setBeginCorner( e->x() - childX( page ), e->y() - childY( page ) );
+                    d->mouseSelectionWidget = page;
+                }
             }
-        }
-        break;
+            break;
 
-    case MouseEdit:      // ? place the beginning of [tool] ?
-        break;
+        case MouseEdit:      // ? place the beginning of [tool] ?
+            break;
     }
 }
 
@@ -328,167 +345,254 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
     bool leftButton = e->button() & LeftButton,
          rightButton = e->button() & RightButton;
+
+    // handle 'Zoom To Area', in every mouse mode
+    if ( leftButton && d->overlayWindow )
+    {
+        // find out new zoom ratio
+        QRect selRect = d->overlayWindow->selectedRect();
+        float zoom = QMIN( (float)clipper()->width() / (float)selRect.width(),
+                           (float)clipper()->height() / (float)selRect.height() );
+
+        // get normalized view center (relative to the contentsRect)
+        // coeffs (2.0 and 1.5) are for correcting the asymmetic page border
+        // that makes the page not perfectly centered on the viewport
+        double nX = ( contentsX() - 1.0 + selRect.left() + (double)selRect.width() / 2.0 ) / (double)contentsWidth();
+        double nY = ( contentsY() - 1.5 + selRect.top() + (double)selRect.height() / 2.0 ) / (double)contentsHeight();
+
+        // zoom up to 400%
+        if ( d->zoomFactor <= 4.0 || zoom <= 1.0 )
+        {
+            d->zoomFactor *= zoom;
+            if ( d->zoomFactor > 4.0 )
+                d->zoomFactor = 4.0;
+            updateZoom( ZoomRefreshCurrent );
+        }
+
+        // recenter view
+        center( (int)(nX * contentsWidth()), (int)(nY * contentsHeight()) );
+
+        // hide message box and delete overlay window
+        d->messageWindow->hide();
+        delete d->overlayWindow;
+        d->overlayWindow = 0;
+
+        // reset start position
+        d->mouseStartPos = QPoint();
+        return;
+    }
+    // if in ZoomRect mode, right click zooms out
+    if ( rightButton && d->zoomMode == ZoomRect )
+    {
+        updateZoom( ZoomOut );
+        updateZoom( ZoomRect );
+        return;
+    }
+
     PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
     switch ( d->mouseMode )
     {
-    case MouseNormal:    // end drag / follow link
-        if ( leftButton )
-        {
+        case MouseNormal:
             setCursor( arrowCursor );
-            // check if over a link
-            if ( d->mouseOnLink && pageWidget )
+            if ( leftButton && pageWidget )
             {
-                int linkX = e->x() - childX( pageWidget ),
-                    linkY = e->y() - childY( pageWidget );
-                d->document->slotProcessLink( pageWidget->page()->getLink( linkX, linkY ) );
+                if ( d->mouseOnLink )
+                {
+                    // activate link
+                    int linkX = e->x() - childX( pageWidget ),
+                        linkY = e->y() - childY( pageWidget );
+                    d->document->slotProcessLink( pageWidget->page()->getLink( linkX, linkY ) );
+                }
+                else
+                {
+                    // mouse not moved since press, so we have a click. select the page.
+                    if ( e->globalPos() == d->mouseStartPos )
+                        d->document->slotSetCurrentPage( pageWidget->pageNumber() );
+                }
             }
-            // check if it was a click, in that case select the page
-            else if ( e->globalPos() == d->mouseStartPos && pageWidget )
-                d->document->slotSetCurrentPage( pageWidget->pageNumber() );
-            // check wether to restore the hand cursor
-            else if ( d->mouseOnLink )
-                setCursor( pointingHandCursor );
-        }
-        else if ( rightButton && pageWidget )
-        {
-            // If over a page display a popup menu
-            const KPDFPage * kpdfPage = pageWidget->page();
-            KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
-            m_popup->insertTitle( i18n( "Page %1" ).arg( kpdfPage->number() + 1 ) );
-            if ( kpdfPage->isBookmarked() )
-                m_popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
-            else
-                m_popup->insertItem( SmallIcon("bookmark"), i18n("Add Bookmark"), 1 );
-            m_popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Page"), 2 );
-            m_popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
-            switch ( m_popup->exec(e->globalPos()) )
+            else if ( rightButton && pageWidget )
             {
-            case 1:
-                d->document->slotBookmarkPage( kpdfPage->number(), !kpdfPage->isBookmarked() );
-                break;
-            case 2: // FIXME less hackish, please!
-                d->aZoomFitWidth->setChecked( true );
-                updateZoom( ZoomFitWidth );
-                d->aViewTwoPages->setChecked( false );
-                slotTwoPagesToggled( false );
-                d->document->slotSetCurrentPage( kpdfPage->number() );
-                break;
-            case 3: // TODO switch to edit mode
-                slotSetMouseDraw();
-                break;
+                // if over a page display a popup menu
+                const KPDFPage * kpdfPage = pageWidget->page();
+                KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
+                m_popup->insertTitle( i18n( "Page %1" ).arg( kpdfPage->number() + 1 ) );
+                if ( kpdfPage->isBookmarked() )
+                    m_popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
+                else
+                    m_popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
+                m_popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Page"), 2 );
+                m_popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
+                switch ( m_popup->exec(e->globalPos()) )
+                {
+                    case 1:
+                        d->document->slotBookmarkPage( kpdfPage->number(), !kpdfPage->isBookmarked() );
+                        break;
+                    case 2: // FiXME less hackish, please!
+                        d->aZoomFitWidth->setChecked( true );
+                        updateZoom( ZoomFitWidth );
+                        d->aViewTwoPages->setChecked( false );
+                        slotTwoPagesToggled( false );
+                        d->document->slotSetCurrentPage( kpdfPage->number() );
+                        break;
+                    case 3: // ToDO switch to edit mode
+                        slotSetMouseDraw();
+                        break;
+                }
             }
-        }
-        break;
+            // reset start position
+            d->mouseStartPos = QPoint();
+            break;
 
-    case MouseSelection: // get text from the page
-        if ( leftButton && d->mouseSelectionWidget )
-        {
-            // request the textpage if there isn't one
-            const KPDFPage * kpdfPage = d->mouseSelectionWidget->page();
-            if ( !kpdfPage->hasSearchPage() )
-                d->document->requestTextPage( kpdfPage->number() );
-            // copy text into the clipboard
-            QClipboard *cb = QApplication::clipboard();
-            const QString & selection = d->mouseSelectionWidget->selectedText();
-            cb->setText( selection, QClipboard::Clipboard );
-            if ( cb->supportsSelection() )
-                cb->setText( selection, QClipboard::Selection );
-            // clear widget selection
-            d->mouseSelectionWidget->clearSelection();
-            d->mouseSelectionWidget = 0;
-        }
-        break;
+        case MouseSelection:
+            if ( leftButton && d->mouseSelectionWidget )
+            {
+                // request the textpage if there isn't one
+                const KPDFPage * kpdfPage = d->mouseSelectionWidget->page();
+                if ( !kpdfPage->hasSearchPage() )
+                    d->document->requestTextPage( kpdfPage->number() );
 
-    case MouseEdit:      // ? apply [tool] ?
-        break;
+                // copy text into the clipboard
+                QClipboard *cb = QApplication::clipboard();
+                const QString & selection = d->mouseSelectionWidget->selectedText();
+                cb->setText( selection, QClipboard::Clipboard );
+                if ( cb->supportsSelection() )
+                    cb->setText( selection, QClipboard::Selection );
+
+                // clear widget selection
+                d->mouseSelectionWidget->clearSelection();
+                d->mouseSelectionWidget = 0;
+            }
+            break;
+
+        case MouseEdit:      // ? apply [tool] ?
+            break;
     }
 }
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
     bool leftButton = e->state() & LeftButton;
+
+    // handle 'Zoom To Area', in every mouse mode
+    if ( leftButton && d->zoomMode == ZoomRect && !d->mouseStartPos.isNull() )
+    {
+        // create zooming a window (overlay mode)
+        if ( !d->overlayWindow )
+        {
+            d->overlayWindow = new PageViewOverlay( clipper(), PageViewOverlay::Zoom );
+            d->overlayWindow->setBeginCorner( d->mouseStartPos.x() - contentsX(), d->mouseStartPos.y() - contentsY() );
+        }
+
+        // set rect's 2nd corner
+        d->overlayWindow->setEndCorner( e->x() - contentsX(), e->y() - contentsY() );
+        return;
+    }
+
     switch ( d->mouseMode )
     {
-    case MouseNormal:    // drag page / change mouse cursor if over links
-        if ( leftButton && !d->mouseGrabPos.isNull() )
-        {
-            QPoint delta = d->mouseGrabPos - e->globalPos();
-            scrollBy( delta.x(), delta.y() );
-            d->mouseGrabPos = e->globalPos();
-        }
-        else
-        {
-            // set cursor only when entering / leaving (setCursor has not an internal cache)
-            PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
-            if ( !pageWidget )
-                break;
-            bool onLink = pageWidget->page()->hasLink( e->x() - childX( pageWidget ), e->y() - childY( pageWidget ) );
-            if ( onLink != d->mouseOnLink )
+        case MouseNormal:
+            if ( leftButton )
             {
-                d->mouseOnLink = onLink;
-                setCursor( onLink ? pointingHandCursor : arrowCursor );
+                // drag page
+                if ( !d->mouseGrabPos.isNull() )
+                {
+                    // scroll page by position increment
+                    QPoint delta = d->mouseGrabPos - e->globalPos();
+                    scrollBy( delta.x(), delta.y() );
+                    d->mouseGrabPos = e->globalPos();
+                    // if the page was scrolling, stop it
+                    if ( d->scrollTimer )
+                    {
+                        d->scrollIncrement = 0;
+                        d->scrollTimer->stop();
+                    }
+                }
             }
-        }
-        break;
+            else
+            {
+                // detect the underlaying page (if present)
+                PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
+                if ( pageWidget )
+                {
+                    int pageX = e->x() - childX( pageWidget ),
+                        pageY = e->y() - childY( pageWidget );
 
-    case MouseSelection: // set selection's second corner
-        if ( leftButton && d->mouseSelectionWidget )
-            // continue selecting on current page
-            d->mouseSelectionWidget->setEndCorner(
-                e->x() - childX( d->mouseSelectionWidget ),
-                e->y() - childY( d->mouseSelectionWidget ) );
-        break;
+                    // check if over a KPDFActiveRect
+                    bool onActiveRect = pageWidget->page()->hasActiveRect( pageX, pageY );
+                    if ( onActiveRect != d->mouseOnActiveRect )
+                    {
+                        d->mouseOnActiveRect = onActiveRect;
+                        setCursor( onActiveRect ? pointingHandCursor : arrowCursor );
+                    }
 
-    case MouseEdit:      // ? update graphics ?
-        break;
+                    // check if over a KPDFLink
+                    bool onLink = pageWidget->page()->hasLink( pageX, pageY );
+                    if ( onLink != d->mouseOnLink )
+                    {
+                        d->mouseOnLink = onLink;
+                        setCursor( onLink ? pointingHandCursor : arrowCursor );
+                    }
+                }
+            }
+            break;
+
+        case MouseSelection:
+            // set second corner of selection in selection pagewidget
+            if ( leftButton && d->mouseSelectionWidget )
+                d->mouseSelectionWidget->setEndCorner( e->x() - childX( d->mouseSelectionWidget ),
+                                                       e->y() - childY( d->mouseSelectionWidget ) );
+            break;
+
+        case MouseEdit:      // ? update graphics ?
+            break;
     }
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
 {
+    e->accept();
+    // move/scroll page by using keys
     switch ( e->key() )
     {
-    case Key_Up:
-        if ( atTop() )
-            scrollUp();
-        else
-            verticalScrollBar()->subtractLine();
-        break;
-    case Key_Down:
-        if ( atBottom() )
-            scrollDown();
-        else
-            verticalScrollBar()->addLine();
-        break;
-    case Key_Left:
-        horizontalScrollBar()->subtractLine();
-        break;
-    case Key_Right:
-        horizontalScrollBar()->addLine();
-        break;
-    case Key_PageUp:
-        verticalScrollBar()->subtractPage();
-        break;
-    case Key_PageDown:
-        verticalScrollBar()->addPage();
-        break;
-    case Key_Shift:
-    case Key_Control:
-        if ( d->scrollTimer )
-        {
-            if ( d->scrollTimer->isActive() )
-                d->scrollTimer->stop();
+        case Key_Up:
+            if ( atTop() && !d->viewContinous )
+                scrollUp();
             else
-                slotAutoScoll();
-            e->accept();
+                verticalScrollBar()->subtractLine();
+            break;
+        case Key_Down:
+            if ( atBottom() && !d->viewContinous )
+                scrollDown();
+            else
+                verticalScrollBar()->addLine();
+            break;
+        case Key_Left:
+            horizontalScrollBar()->subtractLine();
+            break;
+        case Key_Right:
+            horizontalScrollBar()->addLine();
+            break;
+        case Key_PageUp:
+            verticalScrollBar()->subtractPage();
+            break;
+        case Key_PageDown:
+            verticalScrollBar()->addPage();
+            break;
+        case Key_Shift:
+        case Key_Control:
+            if ( d->scrollTimer )
+            {
+                if ( d->scrollTimer->isActive() )
+                    d->scrollTimer->stop();
+                else
+                    slotAutoScoll();
+                return;
+            }
+        default:
+            e->ignore();
             return;
-        }
-    default:
-        e->ignore();
-        return;
     }
-    e->accept();
-
+    // if a known key has been pressed, stop scrolling the page
     if ( d->scrollTimer )
     {
         d->scrollIncrement = 0;
@@ -567,6 +671,12 @@ void PageView::slotFitToPageToggled( bool on )
 void PageView::slotFitToTextToggled( bool on )
 {
     if ( on ) updateZoom( ZoomFitText );
+}
+
+void PageView::slotFitToRectToggled( bool on )
+{
+    if ( on ) updateZoom( ZoomRect );
+    else updateZoom( ZoomFixed );
 }
 
 void PageView::slotTwoPagesToggled( bool on )
@@ -847,6 +957,20 @@ void PageView::slotAutoScoll()
 
 void PageView::updateZoom( ZoomMode newZoomMode )
 {
+    // handle zoomRect case, showing message window too
+    if ( newZoomMode == ZoomRect )
+    {
+        d->zoomMode = ZoomRect;
+        d->aZoomFitWidth->setChecked( false );
+        d->aZoomFitPage->setChecked( false );
+        d->aZoomFitText->setChecked( false );
+        d->messageWindow->display( i18n( "Select Zooming Area. Right-Click to zoom out." ), PageViewMessage::Info );
+        return;
+    }
+    // if zoomMode is changing from ZoomRect, hide info popup
+    if ( d->zoomMode == ZoomRect )
+        d->messageWindow->hide();
+
     if ( newZoomMode == ZoomFixed )
     {
         if ( d->aZoom->currentItem() == 0 )
@@ -859,33 +983,37 @@ void PageView::updateZoom( ZoomMode newZoomMode )
     KAction * checkedZoomAction = 0;
     switch ( newZoomMode )
     {
-    case ZoomFixed:{
-        QString z = d->aZoom->currentText();
-        newFactor = KGlobal::locale()->readNumber( z.remove( z.find( '%' ), 1 ) ) / 100.0;
-        if ( newFactor < 0.1 || newFactor > 8.0 )
-            return;
-        }break;
-    case ZoomIn:
-        newFactor += 0.1;
-        if ( newFactor >= 4.0 )
-            newFactor = 4.0;
-        newZoomMode = ZoomFixed;
-        break;
-    case ZoomOut:
-        newFactor -= 0.1;
-        if ( newFactor <= 0.125 )
-            newFactor = 0.125;
-        newZoomMode = ZoomFixed;
-        break;
-    case ZoomFitWidth:
-        checkedZoomAction = d->aZoomFitWidth;
-        break;
-    case ZoomFitPage:
-        checkedZoomAction = d->aZoomFitPage;
-        break;
-    case ZoomFitText:
-        checkedZoomAction = d->aZoomFitText;
-        break;
+        default:{ //ZoomFixed case
+            QString z = d->aZoom->currentText();
+            newFactor = KGlobal::locale()->readNumber( z.remove( z.find( '%' ), 1 ) ) / 100.0;
+            if ( newFactor < 0.1 || newFactor > 8.0 )
+                return;
+            }break;
+        case ZoomIn:
+            newFactor += 0.1;
+            if ( newFactor >= 4.0 )
+                newFactor = 4.0;
+            newZoomMode = ZoomFixed;
+            break;
+        case ZoomOut:
+            newFactor -= 0.1;
+            if ( newFactor <= 0.125 )
+                newFactor = 0.125;
+            newZoomMode = ZoomFixed;
+            break;
+        case ZoomFitWidth:
+            checkedZoomAction = d->aZoomFitWidth;
+            break;
+        case ZoomFitPage:
+            checkedZoomAction = d->aZoomFitPage;
+            break;
+        case ZoomFitText:
+            checkedZoomAction = d->aZoomFitText;
+            break;
+        case ZoomRefreshCurrent:
+            newZoomMode = ZoomFixed;
+            d->zoomFactor = -1;
+            break;
     }
 
     if ( newZoomMode != d->zoomMode || (newZoomMode == ZoomFixed && newFactor != d->zoomFactor ) )
@@ -899,6 +1027,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
         d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
+        d->aZoomFitRect->setChecked( false );
         // request pixmaps
         slotRequestVisiblePixmaps();
     }
@@ -925,11 +1054,11 @@ void PageView::updateZoomText()
     while ( idx < 10 || !inserted )
     {
         float value = idx < 10 ? zoomValue[ idx ] : newFactor;
-        if ( !inserted && newFactor < (value - 0.001) )
+        if ( !inserted && newFactor < (value - 0.0001) )
             value = newFactor;
         else
             idx ++;
-        if ( value > (newFactor - 0.001) && value < (newFactor + 0.001) )
+        if ( value > (newFactor - 0.0001) && value < (newFactor + 0.0001) )
             inserted = true;
         if ( !inserted )
             selIdx++;

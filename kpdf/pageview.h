@@ -21,7 +21,7 @@
 #include <qscrollview.h>
 #include <qvaluevector.h>
 
-#include "CharTypes.h"
+//#include "CharTypes.h"
 #include "document.h"
 
 class KURL;
@@ -32,7 +32,8 @@ class PageWidget;
 class PageViewPrivate;
 
 /**
- * @short A scrollview that displays page pixmaps.
+ * @short The main view. Handles zoom and continous mode.. oh, and page
+ * @short display of course :-)
  *
  */
 class PageView : public QScrollView, public KPDFDocumentObserver
@@ -43,8 +44,9 @@ public:
     PageView( QWidget *parent, KPDFDocument *document );
     ~PageView();
 
-    // Zoom mode ( last 2 are internally used only! )
-    enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,  ZoomIn, ZoomOut };
+    // Zoom mode ( last 4 are internally used only! )
+    enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,
+                    ZoomIn, ZoomOut, ZoomRefreshCurrent, ZoomRect };
     enum MouseMode { MouseNormal, MouseSelection, MouseEdit };
 
     // create actions that interact with this widget
@@ -81,6 +83,7 @@ private slots:
     void slotFitToWidthToggled( bool );
     void slotFitToPageToggled( bool );
     void slotFitToTextToggled( bool );
+    void slotFitToRectToggled( bool );
     void slotTwoPagesToggled( bool );
     void slotContinousToggled( bool );
     void slotSetMouseNormal();
@@ -116,5 +119,3 @@ private:
 };
 
 #endif
-
-// vim:ts=2:sw=2:tw=78:et

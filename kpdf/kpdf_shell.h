@@ -92,7 +92,8 @@ namespace KPDF
       KRecentFilesAction* m_recent;
       KToggleAction* m_fullScreenAction;
       KToggleAction* m_showMenuBarAction;
-      bool m_isFullScreen;
+      KToggleAction* m_showToolBarAction;
+      bool m_menuBarWasShown, m_toolBarWasShown;
   };
 
 }

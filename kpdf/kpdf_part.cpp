@@ -71,7 +71,7 @@ unsigned int Part::m_count = 0;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_showMenuBarActionSearched(false)
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_actionsSearched(false)
 {
 	// create browser extension (for printing when embedded into browser)
 	new BrowserExtension(this);
@@ -508,7 +508,8 @@ void Part::slotPrintPreview()
 
 void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 {
-	if (!m_showMenuBarActionSearched)
+	bool reallyShow = false;
+	if (!m_actionsSearched)
 	{
 		// the quest for options_show_menubar
 		KXMLGUIClient *client;
@@ -517,7 +518,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		KActionPtrList actions;
 		QPtrList<KXMLGUIClient> clients(factory()->clients());
 		QPtrListIterator<KXMLGUIClient> clientsIt( clients );
-		for( ; !m_showMenuBarAction && clientsIt.current(); ++clientsIt)
+		for( ; (!m_showMenuBarAction || !m_showFullScreenAction) && clientsIt.current(); ++clientsIt)
 		{
 			client = clientsIt.current();
 			ac = client->actionCollection();
@@ -525,9 +526,12 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 			end = actions.end();
 			begin = actions.begin();
 			for ( it = begin; it != end; ++it )
+			{
 				if (QString((*it)->name()) == "options_show_menubar") m_showMenuBarAction = (KToggleAction*)(*it);
+				if (QString((*it)->name()) == "fullscreen") m_showFullScreenAction = (KToggleAction*)(*it);
+			}
 		}
-		m_showMenuBarActionSearched = true;
+		m_actionsSearched = true;
 	}
 	
 	
@@ -542,6 +546,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
+		reallyShow = true;
 	}
 /*
 	//Albert says: I have not ported this as i don't see it does anything
@@ -551,25 +556,31 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		m_popup->setItemEnabled( 4, false );
 }*/
 	
-	if (m_showMenuBarAction)
+	if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
 	{
 		popup->insertTitle( i18n( "Tools" ) );
-		m_showMenuBarAction->plug(popup);
+		if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) m_showMenuBarAction->plug(popup);
+		if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) m_showFullScreenAction->plug(popup);
+		reallyShow = true;
+		
 	}
 	
-	switch ( popup->exec(point) )
+	if (reallyShow)
 	{
-		case 1:
-			m_document->toggleBookmark( page->number() );
-			break;
-        case 2: // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
-            // (FIXME restore faster behavior and txt change as in old pageview implementation)
-			m_pageView->setZoomFitWidth();
-			m_document->setCurrentPage( page->number() );
-			break;
-//		case 3: // ToDO switch to edit mode
-//			m_pageView->slotSetMouseDraw();
-//			break;
+		switch ( popup->exec(point) )
+		{
+			case 1:
+				m_document->toggleBookmark( page->number() );
+				break;
+			case 2: // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
+				// (FIXME restore faster behavior and txt change as in old pageview implementation)
+				m_pageView->setZoomFitWidth();
+				m_document->setCurrentPage( page->number() );
+				break;
+	//		case 3: // ToDO switch to edit mode
+	//			m_pageView->slotSetMouseDraw();
+	//			break;
+		}
 	}
 	delete popup;
 }

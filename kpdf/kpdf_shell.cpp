@@ -41,7 +41,7 @@
 using namespace KPDF;
 
 Shell::Shell()
-  : KParts::MainWindow(0, "KPDF::Shell")
+  : KParts::MainWindow(0, "KPDF::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   // set the shell's ui resource file
   setXMLFile("kpdf_shell.rc");
@@ -64,6 +64,7 @@ Shell::Shell()
       // and integrate the part's GUI with the shell's
       setupGUI(Keys | Save);
       createGUI(m_part);
+      m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
     }
   }
   else
@@ -103,6 +104,31 @@ void Shell::readSettings()
     KGlobal::config()->setDesktopGroup();
     bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
     setFullScreen( fullScreen );
+    
+    // necessary to make fullscreen mode obey the last showmenubar /  showtoolbarsettings
+    KGlobal::config()->setGroup("MainWindow");
+    if (KGlobal::config()->readBoolEntry( "MenuBar", true ))
+    {
+      m_showMenuBarAction->setChecked(true);
+      menuBar()->show();
+    }
+    else
+    {
+      m_showMenuBarAction->setChecked(false);
+      menuBar()->hide();
+    }
+
+    KGlobal::config()->setGroup("MainWindow Toolbar mainToolBar");
+    if (KGlobal::config()->readBoolEntry("Hidden", false))
+    {
+      m_showToolBarAction->setChecked(true);
+      toolBar()->hide();
+    }
+    else
+    {
+      m_showToolBarAction->setChecked(false);
+      toolBar()->show();
+    }
 }
 
 void Shell::writeSettings()
@@ -126,9 +152,7 @@ Shell::setupActions()
 
   setStandardToolBarMenuEnabled(true);
 
-  m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );
-  KGlobal::config()->setGroup("MainWindow");
-  m_showMenuBarAction->setChecked(KGlobal::config()->readBoolEntry( "MenuBar", true ));
+  m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
   KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
   m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
 }
@@ -196,6 +220,7 @@ void Shell::slotQuit()
     kapp->closeAllWindows();
 }
 
+// only called when starting the program
 void Shell::setFullScreen( bool useFullScreen )
 {
     if( useFullScreen )
@@ -206,24 +231,31 @@ void Shell::setFullScreen( bool useFullScreen )
 
 void Shell::slotUpdateFullScreen()
 {
-    if( m_fullScreenAction->isChecked())
+    if(m_fullScreenAction->isChecked())
     {
-	menuBar()->hide();
-	toolBar()->hide();
-        //todo fixme
-	showFullScreen();
-#if 0
-	kapp->installEventFilter( m_fsFilter );
-	if ( m_gvpart->document()->isOpen() )
-		slotFitToPage();
-#endif
+      m_menuBarWasShown = m_showMenuBarAction->isChecked();
+      m_showMenuBarAction->setChecked(false);
+      menuBar()->hide();
+      
+      m_toolBarWasShown = m_showToolBarAction->isChecked();
+      m_showToolBarAction->setChecked(false);
+      toolBar()->hide();
+      
+      showFullScreen();
     }
     else
     {
-	//kapp->removeEventFilter( m_fsFilter );
-	menuBar()->show();
-	toolBar()->show();
-	showNormal();
+      if (m_menuBarWasShown)
+      {
+        m_showMenuBarAction->setChecked(true);
+        menuBar()->show();
+      }
+      if (m_toolBarWasShown)
+      {
+        m_showToolBarAction->setChecked(true);
+        toolBar()->show();
+      }
+      showNormal();
     }
 }
 

@@ -68,6 +68,7 @@ More items (first items will enter 'In progress list' first):
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 
 Done (newest feature comes firts):
+-> FIX: Some fullScreen loving, if we are on fullscreen put an action on RMB menu ti get out of it, if we were on fullScreen mode on exit bring back correctly if we were also seeing toolbar or menubar
 -> FIX: When in non continous mode and scrolling up a page, set the viewport at the bottom of the page (Albert)
 -> FIX: Dynamic zoom repaints the page while rescaling.
 -> ADD: Show the window maximized when the user opens the program for the very first time (Albert)

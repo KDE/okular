@@ -137,7 +137,8 @@ private:
 	KAction *m_showProperties;
 	KToggleAction* m_watchFile;
 	KToggleAction* m_showMenuBarAction;
-	bool m_showMenuBarActionSearched;
+	KToggleAction* m_showFullScreenAction;
+	bool m_actionsSearched;
 };
 
 

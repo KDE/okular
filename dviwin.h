@@ -171,7 +171,6 @@ private:
   fontPool      font_pool;
   infoDialog    *info;
 
-  QWidget       *parentWidget;
   double        resolutionInDPI;
 
   // @@@ explanation

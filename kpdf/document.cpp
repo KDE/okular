@@ -13,6 +13,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qvaluevector.h>
+#include <qtimer.h>
 #include <qmap.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -46,6 +47,9 @@ class KPDFDocumentPrivate
         // cached stuff
         int currentPage;
 
+        // memory check/free timer
+        QTimer * memCheckTimer;
+
         // observers related (note: won't delete oservers)
         QMap< int, class ObserverData* > observers;
 };
@@ -70,6 +74,8 @@ KPDFDocument::KPDFDocument()
 {
     d->currentPage = -1;
     d->searchPage = -1;
+    d->memCheckTimer = new QTimer( this );
+    connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotCheckMemory() ) );
 }
 
 KPDFDocument::~KPDFDocument()
@@ -112,6 +118,9 @@ bool KPDFDocument::openDocument( const QString & docFile )
     if ( !openOk )
         return false;
 
+    // start memory check timer
+    d->memCheckTimer->start( 1000 );
+
     // check local directory for an overlay xml
     // TODO import overlay layers from XML
 //  QString fileName = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
@@ -130,6 +139,9 @@ bool KPDFDocument::openDocument( const QString & docFile )
 
 void KPDFDocument::closeDocument()
 {
+    // stop memory check timer
+    d->memCheckTimer->stop();
+
     // delete pages and clear 'pages_vector' container
     for ( uint i = 0; i < pages_vector.count() ; i++ )
         delete pages_vector[i];
@@ -177,6 +189,7 @@ void KPDFDocument::removeObserver( KPDFDocumentObserver * pObserver )
         QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
             (*it)->deletePixmap( observerId );
+
         // delete observer
         delete d->observers[ observerId ];
         d->observers.remove( observerId );
@@ -243,8 +256,8 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
             continue;
 
         // 1. Update statistics (pageMemory / totalMemory) adding this pixmap
-        int pageNumber = request->pageNumber;
         ObserverData * obs = d->observers[ request->id ];
+        int pageNumber = request->pageNumber;
         if ( obs->pageMemory.contains( pageNumber ) )
             obs->totalMemory -= obs->pageMemory[ pageNumber ];
         int pixmapMemory = 4 * request->width * request->height / 1024;
@@ -495,6 +508,7 @@ void KPDFDocument::mCleanupMemory( int observerId  )
     ObserverData * obs = d->observers[ observerId ];
 
     // choose memory parameters based on configuration profile
+    int clipValue = 0;
     int memoryToFree = 0;
     switch ( Settings::memoryLevel() )
     {
@@ -503,13 +517,20 @@ void KPDFDocument::mCleanupMemory( int observerId  )
             break;
 
         case Settings::EnumMemoryLevel::Normal:
-            memoryToFree = obs->totalMemory - mTotalMemory()/4;
+            clipValue = obs->totalMemory - mFreeMemory() / 3;
+            if ( observerId == THUMBNAILS_ID )
+                memoryToFree = obs->totalMemory - mTotalMemory() / 20;
+            else
+                memoryToFree = obs->totalMemory - mTotalMemory() / 5;
             break;
 
         case Settings::EnumMemoryLevel::Aggressive:
-            memoryToFree = 0;
+            clipValue = obs->totalMemory - mFreeMemory() / 2;
             break;
     }
+
+    if ( clipValue > memoryToFree )
+        memoryToFree = clipValue;
 
     // free memory. remove older data until we free enough memory
     int freed = 0;
@@ -532,7 +553,7 @@ void KPDFDocument::mCleanupMemory( int observerId  )
             ++it;
         }
     }
-    kdWarning() << "[" << obs->totalMemory << "kB] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
+    kdDebug() << "Id:" << observerId << " [" << obs->totalMemory << "kB] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
 }
 
 int KPDFDocument::mTotalMemory()
@@ -563,10 +584,10 @@ int KPDFDocument::mTotalMemory()
 int KPDFDocument::mFreeMemory()
 {
 #ifdef __linux__
-    // if /proc/meminfo doesn't exist, return 128MB
+    // if /proc/meminfo doesn't exist, return MEMORY FULL
     QFile memFile( "/proc/meminfo" );
     if ( !memFile.open( IO_ReadOnly ) )
-        return 131072;
+        return 0;
 
     // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
     // and 'Cached' fields. consider swapped memory as used memory.
@@ -587,7 +608,8 @@ int KPDFDocument::mFreeMemory()
     memFile.close();
     return memoryFree;
 #else
-    return 131072;
+    // tell the memory is full.. will act as in LOW profile
+    return 0;
 #endif
 }
 
@@ -656,8 +678,23 @@ void KPDFDocument::unHilightPages()
     }
 }
 
+
+void KPDFDocument::slotCheckMemory()
+{
+    // perform the memory check for 'free mem dependant' profiles only
+    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low )
+        return;
+
+    // for each observer going over 1MB of memory, invoke the manager
+    QMap< int, ObserverData * >::iterator it = d->observers.begin(), end = d->observers.end();
+    for ( ; it != end ; ++ it )
+        if ( (*it)->totalMemory > 1024 )
+            mCleanupMemory( it.key() /*observerId*/ );
+}
+
 void KPDFDocument::slotGeneratedContents( int id, int pageNumber )
 {
+    // notify an observer that its pixmap changed
     if ( d->observers.contains( id ) )
         d->observers[ id ]->observer->notifyPixmapChanged( pageNumber );
 }

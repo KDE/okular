@@ -121,6 +121,7 @@ class KPDFDocument : public QObject // only for a private slot..
         class KPDFDocumentPrivate * d;
 
     private slots:
+        void slotCheckMemory();
         void slotGeneratedContents( int id, int pageNumber );
 };
 

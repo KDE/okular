@@ -36,7 +36,7 @@
 
 
 PDFGenerator::PDFGenerator()
-    : pdfdoc( 0 ), kpdfOutputDev( 0 ),
+    : pdfdoc( 0 ), kpdfOutputDev( 0 ), requestOnThread( 0 ),
     docInfoDirty( true ), docSynopsisDirty( true )
 {
     // generate kpdfOutputDev and cache page color
@@ -45,7 +45,14 @@ PDFGenerator::PDFGenerator()
 
 PDFGenerator::~PDFGenerator()
 {
+    // TODO wait for the end of threaded generator too and disable it
     docLock.lock();
+    // remove requests in queue
+    QValueList< PixmapRequest * >::iterator rIt = requestsQueue.begin(), rEnd = requestsQueue.end();
+    for ( ; rIt != rEnd; rIt++ )
+        delete *rIt;
+    requestsQueue.clear();
+    // remove other internal objects
     delete kpdfOutputDev;
     delete pdfdoc;
     docLock.unlock();
@@ -293,10 +300,14 @@ void PDFGenerator::requestPixmap( PixmapRequest * request, bool syncronous )
 
         // pixmap generated
         contentsChanged( request->id, request->pageNumber );
+
+        // free memory (since we took ownership of the request)
+        delete request;
     }
     else
     {
-        // TODO add the pixmaprequest in a queue ...
+        requestsQueue.push_back( request );
+        //startThreadedGeneration();
     }
 }
 

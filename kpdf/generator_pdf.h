@@ -73,8 +73,8 @@ class PDFGenerator : public Generator
         PDFDoc * pdfdoc;
         KPDFOutputDev * kpdfOutputDev;
         QColor paperColor;
-        //PixmapRequest * currentRequest;
-        //QValueList< PixmapRequest * > requests;
+        PixmapRequest * requestOnThread;
+        QValueList< PixmapRequest * > requestsQueue;
         bool docInfoDirty;
         DocumentInfo docInfo;
         bool docSynopsisDirty;

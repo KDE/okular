@@ -68,12 +68,12 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc)
     // the FreeType library function 'FT_Get_Name_Index()' to
     // associate glyph indices to those names.
 #ifdef DEBUG_PFB
-    kdDebug() << "Trying to associate glyph indices to names from the encoding vector." << endl;
+    kdDebug(4300) << "Trying to associate glyph indices to names from the encoding vector." << endl;
 #endif
     for(int i=0; i<256; i++) {
       charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].ascii()) );
 #ifdef DEBUG_PFB
-      kdDebug() << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i] << endl;
+      kdDebug(4300) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i] << endl;
 #endif
     }
   } else {
@@ -93,17 +93,26 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc)
       // Feed the charMap array with the charmap data found in the
       // previous step.
 #ifdef DEBUG_PFB
-      kdDebug() << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font." << endl;
+      kdDebug(4300) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font." << endl;
 #endif
       for(int i=0; i<256; i++) 
 	charMap[i] = FT_Get_Char_Index( face, i );
     } else {
-      // As a last resort, we use the identity map.
+      if ((found == 0) && (face->charmap != 0)) {
 #ifdef DEBUG_PFB
-      kdDebug() << "No encoding: using identity charmap." << endl;
+	kdDebug(4300) << "No encoding given: using charmap platform=" << face->charmap->platform_id <<
+	  ", encoding=" << face->charmap->encoding_id << " that is contained in the font." << endl;
 #endif
-      for(int i=0; i<256; i++) 
-	charMap[i] = i;
+	for(int i=0; i<256; i++) 
+	  charMap[i] = FT_Get_Char_Index( face, i );
+      } else {
+	// As a last resort, we use the identity map.
+#ifdef DEBUG_PFB
+	kdDebug(4300) << "No encoding given, no suitable charmaps found in the font: using identity charmap." << endl;
+#endif
+	for(int i=0; i<256; i++) 
+	  charMap[i] = i;
+      }
     }
   }
 }

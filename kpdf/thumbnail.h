@@ -28,7 +28,7 @@ public:
     int pageNumber() const;
     int previewWidth() const;
     int previewHeight() const;
-    
+
 protected:
     void paintEvent(QPaintEvent *);
 

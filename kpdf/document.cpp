@@ -7,10 +7,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-// qt includes
+// qt/kde includes
 #include <qfile.h>
 #include <qmutex.h>
 #include <qvaluevector.h>
+#include <kdebug.h>
 
 // local includes
 #include "PDFDoc.h"
@@ -38,7 +39,7 @@ public:
     int currentPage;
     float currentPosition;
     QValueVector< KPDFPage* > pages;
-    
+
     // observers related (note: won't delete oservers)
     QValueList< KPDFDocumentObserver* > observers;
 };
@@ -61,7 +62,7 @@ KPDFDocument::KPDFDocument()
     paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
     d->splashOutputDevice = new QOutputDev( paperColor );
 }
-    
+
 KPDFDocument::~KPDFDocument()
 {
     close();
@@ -106,7 +107,7 @@ bool KPDFDocument::openFile( const QString & docFile )
         sendFilteredPageList();
         slotSetCurrentPage( 0 );
     }
-    
+
     return true;
 }
 
@@ -267,7 +268,10 @@ void KPDFDocument::requestPixmap( uint page, int width, int height, bool syn )
 
             // it may happen (in fact it doesn't) that we need rescaling
             if ( d->splashOutputDevice->getImage().size() != QSize( width, height ) )
+            {
+                kdWarning() << "Pixmap for page '" << page << "' needed rescale." << endl;
                 kp->setPixmap( d->splashOutputDevice->getImage().smoothScale( width, height ) );
+            }
             else
                 kp->setPixmap( d->splashOutputDevice->getImage() );
 
@@ -286,7 +290,7 @@ void KPDFDocument::requestThumbnail( uint page, int width, int height, bool syn 
     if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
         return;
 
-    if ( /*syn*/ TRUE )
+    if ( syn )
     {
         // in-place Thumbnail generation for syncronous requests
         if ( !kp->hasThumbnail( width, height ) )
@@ -300,7 +304,10 @@ void KPDFDocument::requestThumbnail( uint page, int width, int height, bool syn 
 
             // it may happen (in fact it doesn't) that we need rescaling
             if ( d->splashOutputDevice->getImage().size() != QSize( width, height ) )
+            {
+                kdWarning() << "Thumbnail for page '" << page << "' needed rescale." << endl;
                 kp->setThumbnail( d->splashOutputDevice->getImage().smoothScale( width, height ) );
+            }
             else
                 kp->setThumbnail( d->splashOutputDevice->getImage() );
 

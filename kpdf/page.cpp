@@ -41,12 +41,22 @@ KPDFPage::~KPDFPage()
 }
 
 //BEGIN drawing functions
-void KPDFPage::drawPixmap( QPainter * p, const QRect & limits, int /*width*/, int /*height*/ ) const
-{// ###
+// drawing functions draw the pixmap directly if it has the right size, or
+// else set a scale matrix to the painter and paint a quick 'zoomed' pixmap
+void KPDFPage::drawPixmap( QPainter * p, const QRect & limits, int width, int height ) const
+{
     if ( m_pixmap )
-        p->drawPixmap( limits.topLeft(), *m_pixmap, limits );
+    {
+        //if ( m_pixmap->width() == width && m_pixmap->height() == height )
+            p->drawPixmap( limits.topLeft(), *m_pixmap, limits );
+        //else
+        //{
+        //    p->scale( width / (double)m_pixmap->width(), height / (double)m_pixmap->height() );
+        //    p->drawPixmap( 0,0, *m_pixmap, 0,0, m_pixmap->width(), m_pixmap->height() );
+        //}
+    }
     else
-        p->fillRect( limits, Qt::blue );
+        p->fillRect( limits, Qt::white /*FIXME change to the page bg color*/ );
 }
 
 void KPDFPage::drawThumbnail( QPainter * p, const QRect & limits, int width, int height ) const // OK

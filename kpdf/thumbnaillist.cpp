@@ -243,7 +243,7 @@ void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContents
 		if ( top > vHeight )
 			break;
 		else if ( top + t->height() > 0 )
-			m_document->requestThumbnail( t->pageNumber(), t->previewWidth(), t->previewHeight() );
+			m_document->requestThumbnail( t->pageNumber(), t->previewWidth(), t->previewHeight(), true );
 	}
 }
 //END internal SLOTS

@@ -1,0 +1,160 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>DlgPerformance</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>DlgPerformance</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>350</width>
+            <height>218</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>DlgPerformance</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>CPU Usage</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_UseCompositing</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Enable transparency and other effects (default)</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_TempDrawBoundaries</cstring>
+                    </property>
+                    <property name="text">
+                        <string>(TEMP) DRAW BOUNDARIES</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QButtonGroup">
+            <property name="name">
+                <cstring>kcfg_MemoryLevel</cstring>
+            </property>
+            <property name="title">
+                <string>Memory Usage</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>lowRadio</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Low</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>normalRadio</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Normal (default)</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>aggressiveRadio</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Aggressive</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>descLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>...</string>
+                    </property>
+                    <property name="textFormat">
+                        <enum>PlainText</enum>
+                    </property>
+                    <property name="alignment">
+                        <set>WordBreak|AlignVCenter</set>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>90</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>lowRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DlgPerformance</receiver>
+        <slot>lowRadio_toggled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>normalRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DlgPerformance</receiver>
+        <slot>normalRadio_toggled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>aggressiveRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DlgPerformance</receiver>
+        <slot>aggressiveRadio_toggled(bool)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in implementation">kdialog.h</include>
+    <include location="local" impldecl="in implementation">dlgperformance.ui.h</include>
+</includes>
+<slots>
+    <slot>lowRadio_toggled( bool on )</slot>
+    <slot>normalRadio_toggled( bool on )</slot>
+    <slot>aggressiveRadio_toggled( bool on )</slot>
+</slots>
+<functions>
+    <function access="private">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

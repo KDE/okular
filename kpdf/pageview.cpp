@@ -331,7 +331,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 continue;
         }
 
-        if ( Settings::tempUseCompositing() )
+        if ( Settings::useCompositing() )
         {
             // create pixmap and open a painter over it
             QPixmap doubleBuffer( contentsRect.size() );

@@ -24,7 +24,7 @@
         </property>
         <widget class="QButtonGroup">
             <property name="name">
-                <cstring>buttonGroup1</cstring>
+                <cstring>kcfg_RenderMode</cstring>
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
@@ -46,7 +46,7 @@
                         <cstring>radioNormal</cstring>
                     </property>
                     <property name="text">
-                        <string>Normal</string>
+                        <string>Normal (default)</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -54,7 +54,7 @@
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout4</cstring>
+                        <cstring>layout5</cstring>
                     </property>
                     <hbox>
                         <property name="name">
@@ -102,6 +102,20 @@
                                 <string></string>
                             </property>
                         </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>true</bool>
+                            </property>
+                            <property name="text">
+                                <string>(needs restart)</string>
+                            </property>
+                            <property name="buddy" stdset="0">
+                                <cstring>kcfg_PaperColor</cstring>
+                            </property>
+                        </widget>
                         <spacer>
                             <property name="name">
                                 <cstring>spacer7_2</cstring>
@@ -114,7 +128,7 @@
                             </property>
                             <property name="sizeHint">
                                 <size>
-                                    <width>180</width>
+                                    <width>30</width>
                                     <height>20</height>
                                 </size>
                             </property>
@@ -455,41 +469,13 @@
     <connection>
         <sender>radioNormal</sender>
         <signal>toggled(bool)</signal>
-        <receiver>DlgAccessibility</receiver>
-        <slot>radioNormal_toggled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>radioInverted</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>DlgAccessibility</receiver>
-        <slot>radioInverted_toggled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>radioRecolor</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>DlgAccessibility</receiver>
-        <slot>radioRecolor_toggled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>radioContrast</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>DlgAccessibility</receiver>
-        <slot>radioContrast_toggled(bool)</slot>
+        <receiver>textLabel1_2</receiver>
+        <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
-    <include location="local" impldecl="in implementation">dlgaccessibility.ui.h</include>
 </includes>
-<slots>
-    <slot>radioNormal_toggled( bool on )</slot>
-    <slot>radioInverted_toggled( bool on )</slot>
-    <slot>radioRecolor_toggled( bool on )</slot>
-    <slot>radioContrast_toggled( bool on )</slot>
-</slots>
-<functions>
-    <function access="private">init()</function>
-</functions>
 <layoutdefaults spacing="5" margin="11"/>
 <includehints>
     <includehint>kcolorbutton.h</includehint>

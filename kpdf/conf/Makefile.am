@@ -1,8 +1,7 @@
 noinst_LTLIBRARIES = libconf.la
 
-libconf_la_SOURCES = dlggeneral.ui dlgaccessibility.ui \
-                     preferencesdialog.cpp \
-                     settings.kcfgc
+libconf_la_SOURCES = dlggeneral.ui dlgperformance.ui dlgaccessibility.ui \
+                     preferencesdialog.cpp settings.kcfgc
 
 INCLUDES = -I$(srcdir)/.. $(all_includes)
 

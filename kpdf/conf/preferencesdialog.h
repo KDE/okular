@@ -17,6 +17,7 @@ class QWidget;
 class KConfigSkeleton;
 
 class DlgGeneral;
+class DlgPerformance;
 class DlgAccessibility;
 
 class PreferencesDialog : public KConfigDialog
@@ -34,6 +35,7 @@ class PreferencesDialog : public KConfigDialog
 
     private:
         DlgGeneral * m_general;
+        DlgPerformance * m_performance;
         DlgAccessibility * m_accessibility;
 };
 

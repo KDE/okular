@@ -11,6 +11,7 @@
 
 // single config pages
 #include "dlggeneral.h"
+#include "dlgperformance.h"
 #include "dlgaccessibility.h"
 
 // reimplementing this
@@ -20,8 +21,10 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     : KConfigDialog( parent, "preferences", skeleton )
 {
     m_general = new DlgGeneral(0);
+    m_performance = new DlgPerformance(0);
     m_accessibility = new DlgAccessibility(0);
 
     addPage( m_general, i18n("General"), "gohome", i18n("General Options") );
+    addPage( m_performance, i18n("Performance"), "launch", i18n("Performance Tuning") );
     addPage( m_accessibility, i18n("Accessibility"), "viewmag", i18n("Reading Aids") );
 }

@@ -15,9 +15,13 @@
    <default>Normal</default>
    <choices>
     <choice name="Normal" />
+    <choice name="pad_paper_color" />
     <choice name="Inverted" />
     <choice name="Recolor" />
+    <choice name="pad_fg_color" />
+    <choice name="pad_bg_color" />
     <choice name="BlackWhite" />
+    <choice name="pad_contrast" />
    </choices>
   </entry>
   <entry key="RecolorForeground" type="Color" >
@@ -61,17 +65,19 @@
  </group>
  <group name="Performance" >
   <entry key="MemoryLevel" type="Enum" >
-   <values>
-    <value>Low</value>
-    <value>Normal</value>
-    <value>Aggressive</value>
-   </values>
+   <default>Normal</default>
+   <choices>
+    <choice name="Low" />
+    <choice name="Normal" />
+    <choice name="Aggressive" />
+    <choice name="pad_description" />
+   </choices>
+  </entry>
+  <entry key="UseCompositing" type="Bool" >
+   <default>true</default>
   </entry>
  </group>
  <group name="Temp" >
-  <entry key="TempUseCompositing" type="Bool" >
-   <default>false</default>
-  </entry>
   <entry key="TempDrawBoundaries" type="Bool" >
    <default>false</default>
   </entry>

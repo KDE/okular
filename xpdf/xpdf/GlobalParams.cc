@@ -1045,7 +1045,7 @@ FILE *GlobalParams::findToUnicodeFile(GString *name) {
 // KPDF: parse xpdf font name into family and style
 // Helvetica-BoldOblique => name=Helvetica, weight=Bold, slant=Oblique
 
-void parseStyle(QString& name, int& weight, int& slant)
+void parseStyle(QString& name, int& weight, int& slant, int& width)
 {
   if (!name.contains('-') && !name.contains(',')) return;
   QString type = name.section(QRegExp("[-,]"),-1);
@@ -1071,10 +1071,10 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
   dfp = (DisplayFontParam *)displayFonts->lookup(fontName);
   // KPDF: try to find font using Xft
   if (!dfp) {
-  	int weight=FC_WEIGHT_MEDIUM, slant=FC_SLANT_ROMAN;
+  	int weight=FC_WEIGHT_MEDIUM, slant=FC_SLANT_ROMAN, width=FC_WIDTH_NORMAL;
 	QString name(fontName->getCString());
-	parseStyle(name,weight,slant);
-	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight, (char*)0);
+	parseStyle(name,weight,slant,width);
+	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight, FC_WIDTH, FcTypeInteger, width, (char*)0);
 	if (!p) goto fin;
 	m = XftFontMatch(qt_xdisplay(),qt_xscreen(),p,&res);
 	if (!m) goto fin; 

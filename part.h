@@ -18,9 +18,8 @@
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
-
+#include "core/observer.h"
 #include "dcop.h"
-#include "core/document.h"
 
 class QWidget;
 class QSplitter;
@@ -35,6 +34,7 @@ class KSelectAction;
 class KAboutData;
 class KPrinter;
 
+class KPDFDocument;
 class ThumbnailList;
 class PageView;
 class SearchWidget;

@@ -21,12 +21,12 @@
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
-
-#include "core/document.h"
+#include "core/observer.h"
 
 class KURL;
 class KActionCollection;
 
+class KPDFDocument;
 class PageViewItem;
 class PageViewPrivate;
 

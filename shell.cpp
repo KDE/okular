@@ -33,7 +33,7 @@
 #include <kpopupmenu.h>
 #include <kparts/componentfactory.h>
 #include <kio/netaccess.h>
-#include <kmainwindowiface.h> 
+#include <kmainwindowiface.h>
 
 // local includes
 #include "shell.h"

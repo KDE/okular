@@ -73,8 +73,8 @@ namespace KPDF
 
     void optionsConfigureToolbars();
     void applyNewToolbarConfig();
-      void slotUpdateFullScreen();
-       void slotShowMenubar();
+    void slotUpdateFullScreen();
+    void slotShowMenubar();
 
   public slots:
       void openURL( const KURL & url );

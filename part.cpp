@@ -21,6 +21,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+// qt/kde includes
 #include <qsplitter.h>
 #include <qpainter.h>
 #include <qlayout.h>
@@ -28,7 +29,6 @@
 #include <qvbox.h>
 #include <qtoolbox.h>
 #include <qpushbutton.h>
-
 #include <dcopobject.h>
 #include <kaction.h>
 #include <kdirwatch.h>
@@ -48,8 +48,8 @@
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 
+// local includes
 #include "xpdf/GlobalParams.h"
-
 #include "part.h"
 #include "ui/pageview.h"
 #include "ui/thumbnaillist.h"

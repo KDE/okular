@@ -7,13 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef THUMBNAILLIST_H
-#define THUMBNAILLIST_H
+#ifndef _KPDF_THUMBNAILLIST_H_
+#define _KPDF_THUMBNAILLIST_H_
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
 #include <qvbox.h>
-#include "core/document.h"
+#include "core/observer.h"
 
 class QTimer;
 class KActionCollection;

@@ -14,11 +14,14 @@
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qvaluevector.h>
-#include "core/document.h"
+#include "core/observer.h"
 
-class PresentationFrame;
 class KToolBar;
 class QTimer;
+
+class KPDFDocument;
+class KPDFPage;
+class PresentationFrame;
 
 /**
  * @short A widget that shows pages as fullscreen slides (with transitions fx).

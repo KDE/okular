@@ -15,43 +15,14 @@
 #include <qstring.h>
 #include <qdom.h>
 
-class KPrinter;
 class KPDFPage;
 class KPDFLink;
-class Generator;
+class KPDFDocumentObserver;
 class DocumentInfo;
 class DocumentSynopsis;
+class Generator;
 class PixmapRequest;
-
-/**
- * @short Base class for objects being notified when something changes.
- *
- * Inherit this class and call KPDFDocument->addObserver( yourClass ) to get
- * notified of asyncronous events (new pixmap generated, or changed, etc..).
- */
-class KPDFDocumentObserver
-{
-    public:
-        // you must give each observer a unique ID (used for notifications)
-        virtual uint observerId() const = 0;
-
-        // commands from the Document to all observers
-        virtual void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool /*documentChanged*/ ) {};
-        virtual void pageSetCurrent( int /*pageNumber*/, const QRect & /*viewport*/ = QRect() ) {};
-
-        // queries to observers
-        virtual bool canUnloadPixmap( int /*pageNum*/ ) { return true; }
-
-        // monitor changes in pixmaps (generation thread complete)
-        virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
-        virtual void notifyPixmapsCleared() {};
-};
-
-#define PRESENTATION_ID 1
-#define PART_ID 2
-#define PAGEVIEW_ID 3
-#define THUMBNAILS_ID 4
-#define TOC_ID 5
+class KPrinter;
 
 /**
  * @short The Document. Heart of everything. Actions take place here.

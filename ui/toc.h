@@ -7,12 +7,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef TOC_H
-#define TOC_H
+#ifndef _KPDF_TOC_H_
+#define _KPDF_TOC_H_
 
 #include <klistview.h>
-
-#include "core/document.h"
+#include "core/observer.h"
 
 class TOC : public KListView, public KPDFDocumentObserver
 {

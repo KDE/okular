@@ -16,13 +16,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+// qt/kde includes
 #include <qcursor.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
 #include <qapplication.h>
 #include <qclipboard.h>
-
 #include <kiconloader.h>
 #include <kurldrag.h>
 #include <kaction.h>
@@ -34,11 +34,14 @@
 #include <kimageio.h>
 #include <kdebug.h>
 
+// system includes
 #include <math.h>
 #include <stdlib.h>
 
+// local includes
 #include "pageview.h"
 #include "pageviewutils.h"
+#include "core/document.h"
 #include "core/page.h"
 #include "core/link.h"
 #include "core/generator.h"

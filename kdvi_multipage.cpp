@@ -17,6 +17,7 @@
 
 #include "../config.h"
 #include "fontpool.h"
+#include "infodialog.h"
 #include "kdvi_multipage.h"
 #include "kviewpart.h"
 #include "optiondialog.h"
@@ -83,7 +84,32 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   printer = 0;
   document_history.clear();
-  window = new dviWindow( 1.0, scrollView());
+
+  // initialize the dvi machinery
+  dviFile                = 0;
+
+  font_pool              = new fontPool();
+  if (font_pool == NULL) {
+    kdError(4300) << "Could not allocate memory for the font pool." << endl;
+    exit(-1);
+  }
+  connect(font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+
+
+  info                   = new infoDialog(scrollView());
+  if (info == 0) {
+    // The info dialog is not vital. Therefore we don't abort if
+    // something goes wrong here.
+    kdError(4300) << "Could not allocate memory for the info dialog." << endl;
+  } else {
+    qApp->connect(font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
+    qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), info, SLOT(setFontInfo(fontPool *)));
+    qApp->connect(font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
+  }
+
+
+  window = new dviWindow( 1.0, this, scrollView());
+  connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), window, SLOT(all_fonts_loaded(fontPool *)));
   preferencesChanged();
 
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
@@ -126,6 +152,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   enableActions(false);
   // Show tip of the day, when the first main window is shown.
   QTimer::singleShot(0,this,SLOT(showTipOnStart()));
+
 }
 
 
@@ -140,7 +167,7 @@ void KDVIMultiPage::slotEmbedPostScript(void)
 
 void KDVIMultiPage::setEmbedPostScriptAction(void)
 {
-  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->numberOfExternalPSFiles == 0))
+  if ((window == 0) || (dviFile == 0) || (dviFile->numberOfExternalPSFiles == 0))
     embedPSAction->setEnabled(false);
   else
     embedPSAction->setEnabled(true);
@@ -179,12 +206,12 @@ void KDVIMultiPage::slotSave()
   }
 
   // TODO: error handling...
-  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data != 0)) {
+  if ((window != 0) && (dviFile != 0) && (dviFile->dvi_Data != 0)) {
     QFile out(fileName);
     out.open( IO_Raw|IO_WriteOnly );
-    out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
+    out.writeBlock ( (char *)(dviFile->dvi_Data), dviFile->size_of_file );
     out.close();
-    window->dviFile->isModified = false;
+    dviFile->isModified = false;
   }
 
   return;
@@ -194,12 +221,12 @@ void KDVIMultiPage::slotSave()
 void KDVIMultiPage::slotSave_defaultFilename()
 {
   // TODO: error handling...
-  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data != 0)) {
+  if ((window != 0) && (dviFile != 0) && (dviFile->dvi_Data != 0)) {
     QFile out(m_file);
     out.open( IO_Raw|IO_WriteOnly );
-    out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
+    out.writeBlock ( (char *)(dviFile->dvi_Data), dviFile->size_of_file );
     out.close();
-    window->dviFile->isModified = false;
+    dviFile->isModified = false;
   }
 
   return;
@@ -208,15 +235,19 @@ void KDVIMultiPage::slotSave_defaultFilename()
 
 bool KDVIMultiPage::isModified()
 {
-  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->dvi_Data == 0)) 
+  if ((window == 0) || (dviFile == 0) || (dviFile->dvi_Data == 0)) 
     return false;
   else
-    return window->dviFile->isModified;
+    return dviFile->isModified;
 }
 
 
 KDVIMultiPage::~KDVIMultiPage()
 {
+  delete info;
+  delete dviFile;
+  delete font_pool;
+
   if (timer_id != -1)
     killTimer(timer_id);
   timer_id = -1;
@@ -338,8 +369,17 @@ bool KDVIMultiPage::preview(QPainter *p, int w, int h)
 
 void KDVIMultiPage::doInfo(void)
 {
-  window->showInfo();
+  if (info == 0)
+    return;
+  
+  info->setDVIData(dviFile);
+  // Call check_if_fonts_filenames_are_looked_up() to make sure that
+  // the fonts_info is emitted. That way, the infoDialog will know
+  // about the fonts and their status.
+  font_pool->check_if_fonts_filenames_are_looked_up();
+  info->show();
 }
+
 
 void KDVIMultiPage::doSelectAll(void)
 {
@@ -452,7 +492,7 @@ void KDVIMultiPage::preferencesChanged()
   bool useType1Fonts = config->readBoolEntry( "UseType1Fonts", true );
   bool useFontHints = config->readBoolEntry( "UseFontHints", false );
 
-  window->font_pool->setParameters(mfmode, makepk, useType1Fonts, useFontHints);
+  font_pool->setParameters(mfmode, makepk, useType1Fonts, useFontHints);
 
   window->setEditorCommand( config->readPathEntry( "EditorCommand" ));
 }

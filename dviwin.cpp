@@ -45,6 +45,7 @@
 #include "fontpool.h"
 #include "fontprogress.h"
 #include "infodialog.h"
+#include "kdvi_multipage.h"
 #include "optiondialog.h"
 #include "performanceMeasurement.h"
 #include "xdvi.h"
@@ -56,13 +57,14 @@ QPainter foreGroundPaint; // QPainter used for text
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
+dviWindow::dviWindow(double zoom, KDVIMultiPage *par, QWidget *parent, const char *name )
   : QWidget( parent, name )
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow( zoom=" << zoom << ", parent=" << parent << ", name=" << name << " )" << endl;
 #endif
 
+  _parentMPage = par;
   shrinkfactor = 3;
   current_page = 0;
 
@@ -75,27 +77,6 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
   currentlyDrawnPage.sourceHyperLinkList.reserve(200);
   currentlyDrawnPage.textLinkList.reserve(250);
 
-  // initialize the dvi machinery
-  dviFile                = 0;
-
-  font_pool              = new fontPool();
-  if (font_pool == NULL) {
-    kdError(4300) << "Could not allocate memory for the font pool." << endl;
-    exit(-1);
-  }
-  connect(font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-  connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), this, SLOT(all_fonts_loaded(fontPool *)));
-
-  info                   = new infoDialog(this);
-  if (info == 0) {
-    // The info dialog is not vital. Therefore we don't abort if
-    // something goes wrong here.
-    kdError(4300) << "Could not allocate memory for the info dialog." << endl;
-  } else {
-    qApp->connect(font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
-    qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), info, SLOT(setFontInfo(fontPool *)));
-    qApp->connect(font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
-  }
 
   editorCommand         = "";
 
@@ -157,29 +138,12 @@ dviWindow::~dviWindow()
   kdDebug(4300) << "~dviWindow" << endl;
 #endif
 
-  delete info;
   delete currentlyDrawnPage.pixmap;
   delete PS_interface;
-  delete dviFile;
-  delete font_pool;
   delete proc;
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
   export_printer = 0;
-}
-
-
-void dviWindow::showInfo(void)
-{
-  if (info == 0)
-    return;
-
-  info->setDVIData(dviFile);
-  // Call check_if_fonts_filenames_are_looked_up() to make sure that
-  // the fonts_info is emitted. That way, the infoDialog will know
-  // about the fonts and their status.
-  font_pool->check_if_fonts_filenames_are_looked_up();
-  info->show();
 }
 
 
@@ -249,7 +213,7 @@ void dviWindow::drawPage()
  start:
 #endif
 
-  shrinkfactor = MFResolutions[font_pool->getMetafontMode()]/(xres*_zoom);
+  shrinkfactor = MFResolutions[_parentMPage->font_pool->getMetafontMode()]/(xres*_zoom);
   setCursor(arrowCursor);
 
   // Stop any animation which may be in progress
@@ -263,11 +227,11 @@ void dviWindow::drawPage()
   DVIselection.clear();
 
   // Stop if there is no dvi-file present
-  if ( dviFile == 0 ) {
+  if ( _parentMPage->dviFile == 0 ) {
     resize(0, 0);
     return;
   }
-  if ( dviFile->dvi_Data == 0 ) {
+  if ( _parentMPage->dviFile->dvi_Data == 0 ) {
     resize(0, 0);
     return;
   }
@@ -301,8 +265,8 @@ void dviWindow::drawPage()
     // a button "Explain in more detail..." which opens the
     // Helpcenter. Thus, we practically re-implement the KMessagebox
     // here. Most of the code is stolen from there.
-    if ((dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0)) {
-      dviFile->sourceSpecialMarker = false;
+    if ((_parentMPage->dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0)) {
+      _parentMPage->dviFile->sourceSpecialMarker = false;
       // Check if the 'Don't show again' feature was used
       KConfig *config = kapp->config();
       KConfigGroupSaver saver( config, "Notification Messages" );
@@ -369,7 +333,7 @@ void dviWindow::drawPage()
   if (performanceFlag == 1) {
     qApp->processEvents(30);
     current_page++;
-    if (current_page < dviFile->total_pages)
+    if (current_page < _parentMPage->dviFile->total_pages)
       goto start;
     else {
       kdDebug(4300) << "Time required to draw all pages: " << performanceTimer.restart() << "ms" << endl;
@@ -387,7 +351,7 @@ void dviWindow::embedPostScript(void)
   kdDebug(4300) << "dviWindow::embedPostScript()" << endl;
 #endif
 
-  if (!dviFile)
+  if (!_parentMPage->dviFile)
     return;
 
   embedPS_progress = new KProgressDialog(this, "embedPSProgressDialog",
@@ -397,7 +361,7 @@ void dviWindow::embedPostScript(void)
   embedPS_progress->setAllowCancel(false);
   embedPS_progress->showCancelButton(false);
   embedPS_progress->setMinimumDuration(400);
-  embedPS_progress->progressBar()->setTotalSteps(dviFile->numberOfExternalPSFiles);
+  embedPS_progress->progressBar()->setTotalSteps(_parentMPage->dviFile->numberOfExternalPSFiles);
   embedPS_progress->progressBar()->setProgress(0);
   embedPS_numOfProgressedFiles = 0;
 
@@ -405,15 +369,15 @@ void dviWindow::embedPostScript(void)
 
   Q_UINT16 currPageSav = current_page;
   errorMsg = QString::null;
-  for(current_page=0; current_page < dviFile->total_pages; current_page++) {
-    if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+  for(current_page=0; current_page < _parentMPage->dviFile->total_pages; current_page++) {
+    if (current_page < _parentMPage->dviFile->total_pages) {
+      command_pointer = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page];
+      end_pointer     = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
-    currinf.fonttable = &(dviFile->tn_table);
+    currinf.fonttable = &(_parentMPage->dviFile->tn_table);
     currinf._virtual  = NULL;
     prescan(&dviWindow::prescan_embedPS);
   }
@@ -435,18 +399,18 @@ void dviWindow::embedPostScript(void)
   QTime preScanTimer;
   preScanTimer.start();
 #endif
-  dviFile->numberOfExternalPSFiles = 0;
-  for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+  _parentMPage->dviFile->numberOfExternalPSFiles = 0;
+  for(current_page=0; current_page < _parentMPage->dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
 
-    if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+    if (current_page < _parentMPage->dviFile->total_pages) {
+      command_pointer = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page];
+      end_pointer     = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
-    currinf.fonttable = &(dviFile->tn_table);
+    currinf.fonttable = &(_parentMPage->dviFile->tn_table);
     currinf._virtual  = NULL;
     prescan(&dviWindow::prescan_parseSpecials);
 
@@ -456,7 +420,7 @@ void dviWindow::embedPostScript(void)
   }
   PostScriptOutPutString = NULL;
   emit(prescanDone());
-  dviFile->prescan_is_performed = true;
+  _parentMPage->dviFile->prescan_is_performed = true;
 
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
@@ -537,10 +501,10 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   // the dvifile and the pixmap.
   if (fname.isEmpty()) {
     // Delete DVI file
-    if (info != 0)
-      info->setDVIData(0);
-    delete dviFile;
-    dviFile = 0;
+    if (_parentMPage->info != 0)
+      _parentMPage->info->setDVIData(0);
+    delete _parentMPage->dviFile;
+    _parentMPage->dviFile = 0;
 
     if (currentlyDrawnPage.pixmap)
       delete currentlyDrawnPage.pixmap;
@@ -573,7 +537,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   }
 
   QApplication::setOverrideCursor( waitCursor );
-  dvifile *dviFile_new = new dvifile(filename, font_pool, sourceMarker);
+  dvifile *dviFile_new = new dvifile(filename, _parentMPage->font_pool, sourceMarker);
   if ((dviFile_new->dvi_Data == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
@@ -586,13 +550,13 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   }
 
   is_current_page_drawn  = 0;
-  delete dviFile;
-  dviFile = dviFile_new;
-  if (info != 0)
-    info->setDVIData(dviFile);
+  delete _parentMPage->dviFile;
+  _parentMPage->dviFile = dviFile_new;
+  if (_parentMPage->info != 0)
+    _parentMPage->info->setDVIData(_parentMPage->dviFile);
 
-  font_pool->setExtraSearchPath( fi.dirPath(true) );
-  font_pool->setCMperDVIunit( dviFile->getCmPerDVIunit() );
+  _parentMPage->font_pool->setExtraSearchPath( fi.dirPath(true) );
+  _parentMPage->font_pool->setCMperDVIunit( _parentMPage->dviFile->getCmPerDVIunit() );
 
   // Extract PostScript from the DVI file, and store the PostScript
   // specials in PostScriptDirectory, and the headers in the
@@ -624,7 +588,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
 
-  if (dviFile->page_offset == 0)
+  if (_parentMPage->dviFile->page_offset == 0)
     return false;
 
   // If we are re-loading a document, e.g. because the user TeXed his
@@ -634,28 +598,28 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   // the pre-scan will be carried out in the method 'all_fonts_loaded'
   // after fonts have been loaded, and the fontPool emits the signal
   // fonts_have_been_loaded().
-  if (font_pool->check_if_fonts_filenames_are_looked_up() == true) {
-    if (dviFile->prescan_is_performed == false) {
+  if (_parentMPage->font_pool->check_if_fonts_filenames_are_looked_up() == true) {
+    if (_parentMPage->dviFile->prescan_is_performed == false) {
       // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
       kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
       QTime preScanTimer;
       preScanTimer.start();
 #endif
-      dviFile->numberOfExternalPSFiles = 0;
+      _parentMPage->dviFile->numberOfExternalPSFiles = 0;
       Q_UINT16 currPageSav = current_page;
 
-      for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+      for(current_page=0; current_page < _parentMPage->dviFile->total_pages; current_page++) {
 	PostScriptOutPutString = new QString();
 
-	if (current_page < dviFile->total_pages) {
-	  command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-	  end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+	if (current_page < _parentMPage->dviFile->total_pages) {
+	  command_pointer = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page];
+	  end_pointer     = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page+1];
 	} else
 	  command_pointer = end_pointer = 0;
 
 	memset((char *) &currinf.data, 0, sizeof(currinf.data));
-	currinf.fonttable = &(dviFile->tn_table);
+	currinf.fonttable = &(_parentMPage->dviFile->tn_table);
 	currinf._virtual  = NULL;
 	prescan(&dviWindow::prescan_parseSpecials);
 
@@ -665,15 +629,15 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
       }
       PostScriptOutPutString = NULL;
       emit(prescanDone());
-      dviFile->prescan_is_performed = true;
+      _parentMPage->dviFile->prescan_is_performed = true;
 
 #ifdef PERFORMANCE_MEASUREMENT
       kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
       current_page = currPageSav;
     }
-    if (dviFile->suggestedPageSize != 0)
-      emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
+    if (_parentMPage->dviFile->suggestedPageSize != 0)
+      emit( documentSpecifiedPageSize(*(_parentMPage->dviFile->suggestedPageSize)) );
   }
 
   QApplication::restoreOverrideCursor();
@@ -688,30 +652,30 @@ void dviWindow::all_fonts_loaded(fontPool *)
   kdDebug(4300) << "dviWindow::all_fonts_loaded(...) called" << endl;
 #endif
 
-  if (!dviFile)
+  if (!_parentMPage->dviFile)
     return;
 
-  if (dviFile->prescan_is_performed == false) {
+  if (_parentMPage->dviFile->prescan_is_performed == false) {
     // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
     kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
     QTime preScanTimer;
     preScanTimer.start();
 #endif
-    dviFile->numberOfExternalPSFiles = 0;
+    _parentMPage->dviFile->numberOfExternalPSFiles = 0;
     Q_UINT16 currPageSav = current_page;
 
-    for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+    for(current_page=0; current_page < _parentMPage->dviFile->total_pages; current_page++) {
       PostScriptOutPutString = new QString();
 
-      if (current_page < dviFile->total_pages) {
-	command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-	end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+      if (current_page < _parentMPage->dviFile->total_pages) {
+	command_pointer = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page];
+	end_pointer     = _parentMPage->dviFile->dvi_Data + _parentMPage->dviFile->page_offset[current_page+1];
       } else
 	command_pointer = end_pointer = 0;
 
       memset((char *) &currinf.data, 0, sizeof(currinf.data));
-      currinf.fonttable = &(dviFile->tn_table);
+      currinf.fonttable = &(_parentMPage->dviFile->tn_table);
       currinf._virtual  = NULL;
       prescan(&dviWindow::prescan_parseSpecials);
 
@@ -721,7 +685,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
     }
     PostScriptOutPutString = NULL;
     emit(prescanDone());
-    dviFile->prescan_is_performed = true;
+    _parentMPage->dviFile->prescan_is_performed = true;
 
 #ifdef PERFORMANCE_MEASUREMENT
     kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
@@ -737,8 +701,8 @@ void dviWindow::all_fonts_loaded(fontPool *)
   // independently. For documents that have a specified paper format
   // which is NOT the default format, that means that the document
   // will be drawn twice.
-  if (dviFile->suggestedPageSize != 0)
-    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
+  if (_parentMPage->dviFile->suggestedPageSize != 0)
+    emit( documentSpecifiedPageSize(*(_parentMPage->dviFile->suggestedPageSize)) );
   drawPage();
 
 
@@ -750,8 +714,8 @@ void dviWindow::all_fonts_loaded(fontPool *)
     page--;
     if (page < 0)
       page = 0;
-    if (page >= dviFile->total_pages)
-      page = dviFile->total_pages-1;
+    if (page >= _parentMPage->dviFile->total_pages)
+      page = _parentMPage->dviFile->total_pages-1;
     emit(request_goto_page(page, -1000));
     reference = QString::null;
     return;
@@ -770,7 +734,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
 	break;
     Q_UINT32 refLineNumber = ref.left(i).toUInt();
 
-    QFileInfo fi1(dviFile->filename);
+    QFileInfo fi1(_parentMPage->dviFile->filename);
     QString  refFileName   = QFileInfo(fi1.dir(), ref.mid(i).stripWhiteSpace()).absFilePath();
 
     if (sourceHyperLinkAnchors.isEmpty()) {
@@ -836,7 +800,7 @@ void dviWindow::gotoPage(unsigned int new_page)
   kdDebug(4300) << "dviWindow::gotoPage( new_page=" << new_page << " )" << endl;
 #endif
 
-  if (dviFile == NULL) {
+  if (_parentMPage->dviFile == NULL) {
 #ifdef DEBUG_DVIWIN
     kdDebug(4300) << "gotoPage fails because no DVI file loaded" << endl;
 #endif
@@ -845,8 +809,8 @@ void dviWindow::gotoPage(unsigned int new_page)
 
   if (new_page<1)
     new_page = 1;
-  if (new_page > dviFile->total_pages)
-    new_page = dviFile->total_pages;
+  if (new_page > _parentMPage->dviFile->total_pages)
+    new_page = _parentMPage->dviFile->total_pages;
   //  if ((new_page-1 == current_page) && (is_current_page_drawn != 0)) {
   if (new_page-1 == current_page)
     if (is_current_page_drawn != 0) {
@@ -886,8 +850,8 @@ void dviWindow::timerEvent( QTimerEvent *e )
 
 int dviWindow::totalPages()
 {
-  if (dviFile != NULL)
-    return dviFile->total_pages;
+  if (_parentMPage->dviFile != NULL)
+    return _parentMPage->dviFile->total_pages;
   else
     return 0;
 }
@@ -902,10 +866,10 @@ double dviWindow::setZoom(double zoom)
   if (zoom > ZoomLimits::MaxZoom/1000.0)
     zoom = ZoomLimits::MaxZoom/1000.0;
 
-  shrinkfactor = MFResolutions[font_pool->getMetafontMode()]/(xres*zoom);
+  shrinkfactor = MFResolutions[_parentMPage->font_pool->getMetafontMode()]/(xres*zoom);
   _zoom        = zoom;
 
-  font_pool->setDisplayResolution( xres*zoom );
+  _parentMPage->font_pool->setDisplayResolution( xres*zoom );
   changePageSize();
   return _zoom;
 }
@@ -1099,7 +1063,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	      // it is perhaps not a very good idea to allow a DVI-file to
 	      // specify arbitrary commands, such as "rm -rvf /". Using
 	      // the kfmclient seems to be MUCH safer.
-	      QUrl DVI_Url(dviFile->filename);
+	      QUrl DVI_Url(_parentMPage->dviFile->filename);
 	      QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
 	      
 	      QStringList args;
@@ -1132,7 +1096,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	// The macro-package srcltx gives a special like "src:99 test.tex"
 	// while MikTeX gives "src:99test.tex". KDVI tries
 	// to understand both.
-	QFileInfo fi1(dviFile->filename);
+	QFileInfo fi1(_parentMPage->dviFile->filename);
 	QFileInfo fi2(fi1.dir(),cp.mid(i+1));
 	QString TeXfile;
 	if ( fi2.exists() )
@@ -1197,8 +1161,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 				  "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
 				  "and a list of common problems.</qt>").arg(command);
 
-	if (info)
-	  info->clear(i18n("Starting the editor..."));
+	if (_parentMPage->info)
+	  _parentMPage->info->clear(i18n("Starting the editor..."));
 
 	animationCounter = 0;
 	flashOffset      = e->y(); // Heuristic correction. Looks better.

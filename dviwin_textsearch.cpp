@@ -35,6 +35,7 @@
 
 
 #include "dviwin.h"
+#include "kdvi_multipage.h"
 
 extern QPainter foreGroundPaint; // QPainter used for text
 
@@ -94,7 +95,7 @@ void dviWindow::findNextText(void)
   int current_page_sav = current_page;
 
   unsigned int firstPageOfSearch = current_page;
-  unsigned int lastPageOfSearch  = dviFile->total_pages-1;
+  unsigned int lastPageOfSearch  = _parentMPage->dviFile->total_pages-1;
 
   _postscript = FALSE; // Switch off postscript to speed up things...
   QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter. 
@@ -126,7 +127,7 @@ void dviWindow::findNextText(void)
     DVIselection.clear();
     current_page++;
 
-    if ((current_page == dviFile->total_pages)) {
+    if ((current_page == _parentMPage->dviFile->total_pages)) {
       progress.hide();
       if (oneTimeRound == true)
 	break;
@@ -193,11 +194,11 @@ void dviWindow::findPrevText(void)
 
   if (DVIselection.selectedTextStart == 0) {
     current_page--;
-    if (current_page >= dviFile->total_pages) { // Note: current_page is unsigned. It will not become negative, but very big
+    if (current_page >= _parentMPage->dviFile->total_pages) { // Note: current_page is unsigned. It will not become negative, but very big
       oneTimeRound      = true;
       firstPageOfSearch = current_page_sav;
-      current_page      = dviFile->total_pages-1;
-      lastPageOfSearch  = dviFile->total_pages-1;
+      current_page      = _parentMPage->dviFile->total_pages-1;
+      lastPageOfSearch  = _parentMPage->dviFile->total_pages-1;
       progress.setTotalSteps(lastPageOfSearch-firstPageOfSearch);
       progress.setProgress(0);
       DVIselection.clear();
@@ -208,7 +209,7 @@ void dviWindow::findPrevText(void)
   }
 
   do {
-    if ((current_page >= dviFile->total_pages)) { // Note: current_page is unsigned. It will not become negative, but very big
+    if ((current_page >= _parentMPage->dviFile->total_pages)) { // Note: current_page is unsigned. It will not become negative, but very big
       progress.hide();
       if (oneTimeRound == true)
 	break;
@@ -220,8 +221,8 @@ void dviWindow::findPrevText(void)
 					      i18n("Text Not Found")); 
 	if (answ == KMessageBox::Yes) {
 	  firstPageOfSearch = current_page_sav;
-	  current_page      = dviFile->total_pages-1;
-	  lastPageOfSearch  = dviFile->total_pages-1;
+	  current_page      = _parentMPage->dviFile->total_pages-1;
+	  lastPageOfSearch  = _parentMPage->dviFile->total_pages-1;
 	  progress.setTotalSteps(lastPageOfSearch-firstPageOfSearch);
 	  progress.setProgress(0);
 	}
@@ -258,7 +259,7 @@ void dviWindow::findPrevText(void)
     foreGroundPaint.begin( &pixie );
     draw_page(); // We don't really care for errors in draw_page(), no error handling here.
     foreGroundPaint.end();
-  } while( current_page < dviFile->total_pages ); // Note: current_page is unsigned. It will not become negative, but very big
+  } while( current_page < _parentMPage->dviFile->total_pages ); // Note: current_page is unsigned. It will not become negative, but very big
   
   KMessageBox::sorry( this, i18n("<qt>The search string <strong>%1</strong> could not be found.</qt>").arg(searchText) );
 

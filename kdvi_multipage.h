@@ -9,6 +9,7 @@
 #include <kparts/browserextension.h>
 #include <kparts/factory.h>
 
+class infoDialog;
 class KPrinter;
 class OptionDialog;
 class QLabel;
@@ -25,7 +26,6 @@ class KDVIMultiPageFactory : public KParts::Factory
   Q_OBJECT
 
 public:
-
   KDVIMultiPageFactory();
   virtual ~KDVIMultiPageFactory();
 
@@ -44,6 +44,11 @@ class KDVIMultiPage : public KMultiPage
   Q_OBJECT
 
 public:
+  fontPool      *font_pool;
+  class dvifile *dviFile;
+  infoDialog    *info;
+
+
 
   KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
   virtual ~KDVIMultiPage();

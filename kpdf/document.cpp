@@ -126,7 +126,6 @@ bool KPDFDocument::openDocument( const QString & docFile )
                     d->pdfdoc = new PDFDoc(filename, pwd2, pwd2);
                     delete pwd2;
                     correct = d->pdfdoc->isOk();
-					kdDebug() << correct << " " << (d->pdfdoc->getErrorCode() != errEncrypted) << endl;
                     if (!correct && d->pdfdoc->getErrorCode() != errEncrypted)
                     {
                         delete d->pdfdoc;

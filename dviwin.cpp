@@ -309,7 +309,7 @@ void dviWindow::drawPage()
 
       if (showMsg) {
 	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-					     this, "information", true, true, i18n("&OK"));
+					     this, "information", true, true, KStdGuiItem::ok());
 
 	QVBox *topcontents = new QVBox (dialog);
 	topcontents->setSpacing(KDialog::spacingHint()*2);
@@ -739,7 +739,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
   // which is NOT the default format, that means that the document
   // will be drawn twice.
   if (dviFile->suggestedPageSize != 0)
-    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
+    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
   drawPage();
 
 
@@ -799,21 +799,21 @@ void dviWindow::all_fonts_loaded(fontPool *)
     // the LaTeX file. In that case, we jump to the beginning of the
     // document.
     bool anchorForRefFileFound = false; // Flag that is set if source file anchors for the refFileName could be found at all
-    
+
     QValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
     QValueVector<DVI_SourceFileAnchor>::iterator it;
-    for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it ) 
+    for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
 	anchorForRefFileFound = true;
-	
+
 	if ( (it->line <= refLineNumber) &&
 	     ( (bestMatch == sourceHyperLinkAnchors.end()) || (it->line > bestMatch->line) ) )
 	  bestMatch = it;
       }
-    
+
     reference = QString::null;
-    
-    if (bestMatch != sourceHyperLinkAnchors.end()) 
+
+    if (bestMatch != sourceHyperLinkAnchors.end())
       emit(request_goto_page(bestMatch->page, (Q_INT32)(bestMatch->vertical_coordinate/shrinkfactor+0.5)));
     else
       if (anchorForRefFileFound == false)
@@ -822,7 +822,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
 			   i18n( "Could Not Find Reference" ));
       else
 	emit(request_goto_page(0, 0));
-    
+
     return;
   }
   reference = QString::null;
@@ -836,7 +836,7 @@ void dviWindow::gotoPage(unsigned int new_page)
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::gotoPage( new_page=" << new_page << " )" << endl;
 #endif
-  
+
   if (dviFile == NULL) {
 #ifdef DEBUG_DVIWIN
     kdDebug(4300) << "gotoPage fails because no DVI file loaded" << endl;
@@ -1075,7 +1075,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
     if (currentlyDrawnPage.hyperLinkList.size() > 0)
       for(int i=0; i<currentlyDrawnPage.hyperLinkList.size(); i++) {
 	if (currentlyDrawnPage.hyperLinkList[i].box.contains(e->pos())) {
-	  
+
 #ifdef DEBUG_SPECIAL
 	  kdDebug(4300) << "hit: local link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
 #endif
@@ -1102,7 +1102,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	      // the kfmclient seems to be MUCH safer.
 	      QUrl DVI_Url(dviFile->filename);
 	      QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
-	      
+
 	      QStringList args;
 	      args << "openURL";
 	      args << Link_Url.toString();
@@ -1142,7 +1142,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  QFileInfo fi3(fi1.dir(),cp.mid(i));
 	  TeXfile = fi3.absFilePath();
 	  if ( !fi3.exists() ) {
-	    KMessageBox::sorry(this, QString("<qt>") + 
+	    KMessageBox::sorry(this, QString("<qt>") +
 			       i18n("The DVI-file refers to the TeX-file "
 				    "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
 			       QString("</qt>"),
@@ -1157,7 +1157,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 						     i18n("You have not yet specified an editor for inverse search. "
 							  "Please choose your favorite editor in the "
 							  "<strong>DVI options dialog</strong> "
-							  "which you will find in the <strong>Settings</strong>-menu.") + 
+							  "which you will find in the <strong>Settings</strong>-menu.") +
 							  QString("</qt>"),
 						     i18n("Need to Specify Editor"),
 		                                     i18n("Use KDE's Editor Kate for Now"));

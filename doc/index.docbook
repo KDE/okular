@@ -221,7 +221,7 @@
     when you don't have a three-button mouse, you can simultaneously
     use the <mousebutton>left</mousebutton> and the
     <mousebutton>right</mousebutton> button). After that, your
-    favourite editor will open, load the TeX source file and jump to
+    favorite editor will open, load the TeX source file and jump to
     the proper paragraph. To use inverse search, do the
     following:</para>
 
@@ -325,7 +325,7 @@
       <title><application>Emacs</application></title>
 
       <para><application>Emacs</application> works well with
-      &kdvi;. The actual behaviour of <application>Emacs</application>
+      &kdvi;. The actual behavior of <application>Emacs</application>
       depends largely on the configuration. As usual, you can
       customize <application>Emacs</application> completely, if you
       are willing to fight your way through Lisp code.</para>
@@ -414,16 +414,16 @@
 	      your changes since the last save to be
 	      lost!</emphasis></para>
 
-	      <para><command>gnuclient</command>'s behaviour
+	      <para><command>gnuclient</command>'s behavior
 	      of silently reloading the changed buffer is probably
 	      preferable &mdash; add the following lines to your
 	      <filename>.emacs</filename> file to emulate
-	      <command>gnuclient</command>'s behaviour with
+	      <command>gnuclient</command>'s behavior with
 	      <command>emacsclient</command>:</para>
 
 <programlisting>
 (defadvice server-visit-files (around save-buffers last activate)
-  "Try to emulate gnuclient behaviour with emacsclient.
+  "Try to emulate gnuclient behavior with emacsclient.
 Works only for visiting one buffer at a time."
   (let* ((filen (car (car (ad-get-arg 0))))
          (buf (get-file-buffer filen))
@@ -525,7 +525,7 @@ Works only for visiting one buffer at a time."
       <title><application>XEmacs</application></title>
 
       <para><application>XEmacs</application> works well with
-      &kdvi;. The actual behaviour of
+      &kdvi;. The actual behavior of
       <application>XEmacs</application> depends largely on the
       configuration. As usual, you can customize
       <application>XEmacs</application> completely, if you are willing
@@ -868,7 +868,7 @@ Works only for visiting one buffer at a time."
             place. Unfortunately, rendering &PostScript; graphics is
             very slow in the current version of &kdvi;.  We will
             improve on the speed in later versions. If this option is
-            off, &kdvi; will either draw a grey box as a placeholder
+            off, &kdvi; will either draw a gray box as a placeholder
             for the graphics, or it will leave the space blank.</para>
 
             <note>

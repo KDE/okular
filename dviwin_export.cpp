@@ -10,12 +10,12 @@
 // modify it under the terms of the GNU General Public License as
 // published by the Free Software Foundation; either version 2 of the
 // License, or (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 // General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -35,7 +35,7 @@
 #include <kprinter.h>
 #include <kprocess.h>
 #include <qpainter.h>
-#include <qprogressdialog.h> 
+#include <qprogressdialog.h>
 
 #include "dviwin.h"
 #include "fontprogress.h"
@@ -48,7 +48,7 @@ void dviWindow::exportText(void)
   // That sould also not happen.
   if (dviFile == NULL)
     return;
-  if (dviFile->dvi_Data == 0 ) 
+  if (dviFile->dvi_Data == 0 )
     return;
   if (pixmap->paintingActive())
     return;
@@ -67,17 +67,17 @@ void dviWindow::exportText(void)
   QString suggestedName = dviFile->filename;
   suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
 
-  QString fileName = KFileDialog::getSaveFileName(suggestedName, "*.txt|Plain Text (Latin 1) (*.txt)", this, i18n("Export File As"));
+  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.txt|Plain Text (Latin 1) (*.txt)"), this, i18n("Export File As"));
   if (fileName.isEmpty())
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName),
+    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Shall I overwrite that file?").arg(fileName),
 				       i18n("Overwrite file"));
     if (r == KMessageBox::No)
       return;
   }
-  
+
   QFile textFile(fileName);
   textFile.open( IO_WriteOnly );
   QTextStream stream( &textFile );
@@ -101,20 +101,20 @@ void dviWindow::exportText(void)
 
     if ( progress.wasCancelled() )
       break;
-    
+
     foreGroundPaint.begin( &pixie );
     draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
     foreGroundPaint.end();
-    
-    for(unsigned int i=0; i<textLinkList.size(); i++) 
+
+    for(unsigned int i=0; i<textLinkList.size(); i++)
       stream << textLinkList[i].linkText << endl;
   }
 
   // Switch off the progress dialog, etc.
   progress.setProgress( dviFile->total_pages );
-  // Restore the PostScript setting 
+  // Restore the PostScript setting
   _postscript = _postscript_sav;
-  
+
   // Restore the current page.
   current_page = current_page_sav;
   foreGroundPaint.begin( &pixie );
@@ -171,21 +171,21 @@ void dviWindow::exportPDF(void)
   QString suggestedName = dviFile->filename;
   suggestedName = suggestedName.left(suggestedName.find(".")) + ".pdf";
 
-  QString fileName = KFileDialog::getSaveFileName(suggestedName, "*.pdf|Portable Document Format (*.pdf)", this, i18n("Export File As"));
+  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.pdf|Portable Document Format (*.pdf)"), this, i18n("Export File As"));
   if (fileName.isEmpty())
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName),
+    int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Shall I overwrite that file?").arg(fileName),
 				       i18n("Overwrite file"));
     if (r == KMessageBox::No)
       return;
   }
-  
+
   // Initialize the progress dialog
-  progress = new fontProgressDialog( QString::null, 
-				     i18n("Using dvipdfm to export the file to PDF"), 
-				     QString::null, 
+  progress = new fontProgressDialog( QString::null,
+				     i18n("Using dvipdfm to export the file to PDF"),
+				     QString::null,
 				     i18n("KDVI is currently using the external program 'dvipdfm' to "
 					  "convert your DVI-file to PDF. Sometimes that can take "
 					  "a while because dvipdfm needs to generate its own bitmap fonts "
@@ -215,7 +215,7 @@ void dviWindow::exportPDF(void)
 
 
   if (info)
-    info->clear(QString(i18n("Export: %1 to PDF")).arg(KShellProcess::quote(dviFile->filename)));
+    info->clear(i18n("Export: %1 to PDF").arg(KShellProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
   finfo.setFile(dviFile->filename);
@@ -253,19 +253,19 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   // That sould also not happen.
   if (dviFile == NULL)
     return;
-  
+
   QString fileName;
   if (fname.isEmpty()) {
     // Generate a suggestion for a reasonable file name
     QString suggestedName = dviFile->filename;
-    suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
+    suggestedName = suggestedName.left(suggestedName.find(".")) + ".ps";
 
-    fileName = KFileDialog::getSaveFileName(suggestedName, "*.ps|PostScript (*.ps)", this, i18n("Export File As"));
+    fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.ps|PostScript (*.ps)"), this, i18n("Export File As"));
     if (fileName.isEmpty())
       return;
     QFileInfo finfo(fileName);
     if (finfo.exists()) {
-      int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName),
+      int r = KMessageBox::warningYesNo (this, i18n("The file %1\nexists. Shall I overwrite that file?").arg(fileName),
 					 i18n("Overwrite File"));
       if (r == KMessageBox::No)
 	return;
@@ -276,9 +276,9 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   export_printer  = printer;
 
   // Initialize the progress dialog
-  progress = new fontProgressDialog( QString::null, 
-				     i18n("Using dvips to export the file to PostScript"), 
-				     QString::null, 
+  progress = new fontProgressDialog( QString::null,
+				     i18n("Using dvips to export the file to PostScript"),
+				     QString::null,
 				     i18n("KDVI is currently using the external program 'dvips' to "
 					  "convert your DVI-file to PostScript. Sometimes that can take "
 					  "a while because dvips needs to generate its own bitmap fonts "
@@ -312,7 +312,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     KTempFile export_tmpFile;
     export_tmpFileName = export_tmpFile.name();
     export_tmpFile.unlink();
-    
+
     sourceFileName     = export_tmpFileName;
     if (KIO::NetAccess::copy(dviFile->filename, sourceFileName)) {
       int wordSize;
@@ -357,7 +357,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     kdError(4300) << "Could not allocate ShellProcess for the dvips command." << endl;
     return;
   }
-  
+
   qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
@@ -365,7 +365,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
 			    "find in the File-Menu for a precise error report.</qt>") ;
   if (info)
-    info->clear(QString(i18n("Export: %1 to PostScript")).arg(KShellProcess::quote(dviFile->filename)));
+    info->clear(i18n("Export: %1 to PostScript").arg(KShellProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
   QFileInfo finfo(dviFile->filename);
@@ -404,9 +404,9 @@ void dviWindow::dvips_terminated(KProcess *sproc)
   // the LAST external program that was started by the user, then the
   // export_errorString, does not correspond to sproc. In that case,
   // we ingore the return status silently.
-  if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0)) 
+  if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0))
     KMessageBox::error( this, export_errorString );
-  
+
   if (export_printer != 0)
     export_printer->printFiles( QStringList(export_fileName), true );
   // Kill and delete the remaining process, reset the printer, etc.
@@ -420,9 +420,9 @@ void dviWindow::editorCommand_terminated(KProcess *sproc)
   // the LAST external program that was started by the user, then the
   // export_errorString, does not correspond to sproc. In that case,
   // we ingore the return status silently.
-  if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0)) 
+  if ((proc == sproc) && (sproc->normalExit() == true) && (sproc->exitStatus() != 0))
     KMessageBox::error( this, export_errorString );
-  
+
   // Let's hope that this is not all too nasty... killing a
   // KShellProcess from a slot that was called from the KShellProcess
   // itself. Until now, there weren't any problems.
@@ -450,7 +450,7 @@ void dviWindow::abortExternalProgramm(void)
     delete progress;
     progress = 0;
   }
-  
+
   export_printer  = 0;
   export_fileName = "";
 }

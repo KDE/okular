@@ -353,6 +353,37 @@ was placed somewhere on the following page. As you see, the background
 command does not fit well into \LaTeX's philosophy and should be
 avoided.
 
+\section{Rotated Text}
+
+Rotated text can sometimes be useful, e.g. to fit large table onto a
+single page. This is used, e.g.~in the style files of journals of the
+American Astronomical Society. Here is one example.
+
+\begin{table}[h]
+  \centering
+\begin{tabular}{l|ll}
+  & \rotatebox{90}{uses \TeX} & \rotatebox{90}{uses Linux} \\ \hline
+  Stefan & $\times$ & $\times$ \\
+  Anke & & $\times$ \\
+  Thomas & $\times$ &\\
+\end{tabular}
+\end{table}
+
+This was easily realized by including the line
+\begin{verbatim}
+\usepackage{graphicx}
+\end{verbatim}
+into the header of this document. The table itself was then typeset by
+{\footnotesize
+\begin{verbatim}
+\begin{tabular}{l|ll}
+  & \rotatebox{90}{uses \TeX} & \rotatebox{90}{uses Linux} \\ \hline
+  Stefan & $\times$ & $\times$ \\
+  Anke & & $\times$ \\
+  Thomas & $\times$ &\\
+\end{tabular}
+\end{verbatim}
+}
 
 \section{Source text specials}
 

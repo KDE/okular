@@ -6,6 +6,12 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress:
+[14:56] *eros* - implement all PDF 1.6 annotations data structures
+[14:56] *eros* - implement all renderers for each annotation (~20) in PagePainter
+[14:57] *eros* - implement parser in PDFGenerator to grab annotations from pages :-)
+[14:57] *eros* - implement Annotation handlers in PageView
+[14:57] *eros* - implement [MISSING] Annotation creators in PageViewAnnotator
+[15:00] *eros* - implement unified LOAD/SAVE of annotations in the Document class
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300,BR91251), yellow notes 'post-it' like
 -> se: investigate popup disappearing

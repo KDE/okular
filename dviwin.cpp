@@ -493,8 +493,8 @@ bool dviWindow::correctDVI()
 		return FALSE;
 	f.at( n-4 );
 	char test[4];
-	char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
-	if ( f.readBlock( test, 4 )<4 || strncmp( test, trailer, 4 ) )
+	unsigned char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
+	if ( f.readBlock( test, 4 )<4 || strncmp( test, (char *) trailer, 4 ) )
 		return FALSE;
 	// We suppose now that the dvi file is complete	and OK
 	return TRUE;

@@ -386,8 +386,8 @@ void KDVIMultiPage::about()
 		   true);
   ab->addTextPage (i18n("Authors"),
 		   i18n("Stefan Kebekus<br>"
-			"<a href=\"http://btm8x5.mat.uni-bayreuth.de/~kebekus\">"
-			"http://btm8x5.mat.uni-bayreuth.de/~kebekus</a><br>"
+			"<a href=\"http://www.mi.uni-koeln.de/~kebekus\">"
+			"http://www.mi.uni-koeln.de/~kebekus</a><br>"
 			"<a href=\"mailto:kebekus@kde.org\">kebekus@kde.org</a><br>"
 			"Current maintainer of kdvi. Major rewrite of version 0.4.3."
 			"Implementation of hyperlinks.<br>"

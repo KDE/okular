@@ -6,18 +6,16 @@
 #include "kpdf_shell.h"
 #include "kpdf_shell.moc"
 
-#include <kkeydialog.h>
-#include <kconfig.h>
-#include <kurl.h>
-
-#include <kedittoolbar.h>
-
 #include <kaction.h>
-#include <kstdaction.h>
-
+#include <kconfig.h>
+#include <kedittoolbar.h>
+#include <kfiledialog.h>
+#include <kkeydialog.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
 #include <kstatusbar.h>
+#include <kstdaction.h>
+#include <kurl.h>
 
 using namespace KPDF;
 
@@ -36,7 +34,7 @@ Shell::Shell()
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  KLibFactory *factory = KLibLoader::self()->factory("libkpdfpart");
+  KLibFactory *factory = KLibLoader::self()->factory("kparts_kpdf");
   if (factory)
   {
     // now that the Part is loaded, we cast it to a Part to get
@@ -78,6 +76,8 @@ Shell::load(const KURL& url)
   void
 Shell::setupActions()
 {
+  KStdAction::open(this, SLOT(fileOpen()), actionCollection());
+  KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
   KStdAction::quit(kapp, SLOT(quit()), actionCollection());
 
   m_toolbarAction   = KStdAction::showToolbar(this, SLOT(optionsShowToolbar()), actionCollection());
@@ -102,6 +102,29 @@ Shell::readProperties(KConfig* /*config*/)
   // config file.  this function is automatically called whenever
   // the app is being restored.  read in here whatever you wrote
   // in 'saveProperties'
+}
+
+  void
+Shell::fileOpen()
+{
+  // this slot is called whenever the File->Open menu is selected,
+  // the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
+  // button is clicked
+  QString file_name = KFileDialog::getOpenFileName();
+
+  if (file_name.isEmpty() == false)
+    load(file_name);
+}
+
+  void
+Shell::fileSaveAs()
+{
+    // this slot is called whenever the File->Save As menu is selected,
+    /*
+    QString file_name = KFileDialog::getSaveFileName();
+    if (file_name.isEmpty() == false)
+        saveAs(file_name);
+    */
 }
 
   void

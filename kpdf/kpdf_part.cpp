@@ -6,7 +6,6 @@
 
 #include <kaction.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
 #include <kinstance.h>
 #include <kprinter.h>
 #include <kstdaction.h>
@@ -22,7 +21,7 @@
 #include "kpdf_pagewidget.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
-K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory);
+K_EXPORT_COMPONENT_FACTORY(kparts_kpdf, KPDFPartFactory);
 
 using namespace KPDF;
 
@@ -36,6 +35,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
     m_zoomMode(FixedFactor),
     m_zoomFactor(1.0)
 {
+  new BrowserExtension(this);
+
   globalParams = new GlobalParams("");
 
   // we need an instance
@@ -59,9 +60,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                                WhitePixel(display, screen), false, 5);
 
   // create our actions
-  KStdAction::open  (this, SLOT(fileOpen()), actionCollection());
-  KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
-  KStdAction::print (this, SLOT(filePrint()), actionCollection());
   KStdAction::prior (this, SLOT(displayPreviousPage()), 
                      actionCollection(), "previous_page");
   KStdAction::next  (this, SLOT(displayNextPage()),
@@ -265,31 +263,8 @@ Part::displayDestination(LinkDest* dest)
 */
 }
 
-  void 
-Part::fileOpen()
-{
-  // this slot is called whenever the File->Open menu is selected,
-  // the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
-  // button is clicked
-  QString file_name = KFileDialog::getOpenFileName();
-
-  if (file_name.isEmpty() == false)
-    openURL(file_name);
-}
-
-  void 
-Part::fileSaveAs()
-{
-    // this slot is called whenever the File->Save As menu is selected,
-    /*
-    QString file_name = KFileDialog::getSaveFileName();
-    if (file_name.isEmpty() == false)
-        saveAs(file_name);
-    */
-}
-
   void
-Part::filePrint()
+Part::print()
 {
   if (m_doc == 0)
     return;
@@ -407,6 +382,22 @@ Part::fitWidthToggled()
   m_zoomMode = m_fitWidth->isChecked() ? FitWidth : FixedFactor;
   displayPage(m_currentPage);
 }
+
+
+BrowserExtension::BrowserExtension(Part* parent)
+  : KParts::BrowserExtension( parent, "KPDF::BrowserExtension" )
+{
+  emit enableAction("print", true);
+  setURLDropHandlingEnabled(true);
+}
+
+  void 
+BrowserExtension::print()
+{
+  static_cast<Part*>(parent())->print();
+}
+
+
 
 #include "kpdf_part.moc"
 

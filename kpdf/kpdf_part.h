@@ -5,6 +5,7 @@
 #include <qpixmap.h>
 #include <qwidget.h>
 
+#include <kparts/browserextension.h>
 #include <kparts/part.h>
 
 class QPainter;
@@ -23,6 +24,7 @@ class XOutputDev;
 
 namespace KPDF
 {
+  class BrowserExtension;
   class Canvas;
   class PageWidget;
 
@@ -58,6 +60,8 @@ namespace KPDF
 
     bool closeURL();
 
+    void print();
+
     void displayPage(int pageNumber, float zoomFactor = 1.0);
     void displayDestination(LinkDest*);
 
@@ -68,10 +72,6 @@ namespace KPDF
     virtual bool openFile();
 
   protected slots:
-    void fileOpen();
-    void fileSaveAs();
-    void filePrint();
-
     void displayNextPage();
     void displayPreviousPage();
 
@@ -94,6 +94,19 @@ namespace KPDF
   private slots:
     void fitWidthToggled();
   };
+
+  class BrowserExtension : public KParts::BrowserExtension
+  {
+    Q_OBJECT
+      
+  public:
+    BrowserExtension(Part*);
+
+  public slots:
+    // Automatically detected by the host.
+    void print();
+  };
+  
 }
 
 #endif

@@ -56,6 +56,9 @@ namespace KPDF
     void readProperties(KConfig*);
 
   private slots:
+    void fileOpen();
+    void fileSaveAs();
+
     void optionsShowToolbar();
     void optionsShowStatusbar();
     void optionsConfigureKeys();

@@ -29,7 +29,7 @@ squeeze_SOURCES	= squeeze.c
 
 
 ## this option you can leave out. Just, if you use "make dist", you need it
-noinst_HEADERS = c-openmx.h dvi.h dviwin.h oconfig.h\
+noinst_HEADERS = dvi.h dviwin.h oconfig.h\
 	optiondialog.h xdvi.h 
 
 messages: rc.cpp

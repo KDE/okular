@@ -183,8 +183,8 @@ void dviWindow::epsf_special(QString cp)
 
   if (PostScriptOutPutString) {
     if (QFile::exists(EPSfilename)) {
-      double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[MetafontMode])-300;
-      double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[MetafontMode] - 300;
+      double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool->getMetafontMode()])-300;
+      double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool->getMetafontMode()] - 300;
       PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
       PostScriptOutPutString->append( "@beginspecial " );
       PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
@@ -259,8 +259,8 @@ void dviWindow::quote_special(QString cp)
 #endif
   
   if (PostScriptOutPutString) {
-    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[MetafontMode])-300;
-    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[MetafontMode] - 300;
+    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool->getMetafontMode()])-300;
+    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool->getMetafontMode()] - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
     PostScriptOutPutString->append( cp );
@@ -275,8 +275,8 @@ void dviWindow::ps_special(QString cp)
 #endif
   
   if (PostScriptOutPutString) {
-    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[MetafontMode])-300;
-    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[MetafontMode] - 300;
+    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool->getMetafontMode()])-300;
+    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool->getMetafontMode()] - 300;
     
     if (cp.find("ps::[begin]", 0, false) == 0) {
       PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );

@@ -31,6 +31,7 @@
 #include <string.h>
 
 #include "dvi.h"
+#include "dviwin.h"
 #include "fontpool.h"
 #include "xdvi.h"
 

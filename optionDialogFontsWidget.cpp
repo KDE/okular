@@ -40,8 +40,8 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
   metafontMode->setCurrentItem( config->readNumEntry( "MetafontMode" , DefaultMFMode ));
   
 #ifdef HAVE_FREETYPE
-  usePFBCheckBox->setChecked( config->readBoolEntry( "UsePFB", true ) );
-  useFontHintingCheckBox->setChecked( config->readBoolEntry( "UsePFBFontHints", true ) );
+  usePFBCheckBox->setChecked( config->readBoolEntry( "UseType1Fonts", true ) );
+  useFontHintingCheckBox->setChecked( config->readBoolEntry( "UseFontHints", true ) );
   useFontHintingCheckBox->setEnabled(usePFBCheckBox->isChecked());
 #else
   usePFBCheckBox->setChecked(false);
@@ -70,8 +70,8 @@ void optionDialogFontsWidget::apply(void)
 {
   config->setGroup("kdvi");
 #ifdef HAVE_FREETYPE
-  config->writeEntry( "UsePFB", usePFBCheckBox->isChecked() );
-  config->writeEntry( "UsePFBFontHints", useFontHintingCheckBox->isChecked() );
+  config->writeEntry( "UseType1Fonts", usePFBCheckBox->isChecked() );
+  config->writeEntry( "UseFontHints", useFontHintingCheckBox->isChecked() );
 #endif
   config->writeEntry( "MetafontMode", metafontMode->currentItem() );
   config->writeEntry( "MakePK", fontGenerationCheckBox->isChecked() );

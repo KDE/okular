@@ -23,7 +23,7 @@ typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 #include <qstring.h>
 #include <stdio.h>
 
-#include "dviwin.h"
+//#include "dviwin.h"
 #include "glyph.h"
 
 class TeXFont;

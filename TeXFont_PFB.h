@@ -34,6 +34,7 @@ class TeXFont_PFB : public TeXFont {
 
  private:
   FT_Face     face;
+  bool        fatalErrorInFontLoading;
 };
 
 #endif

@@ -340,8 +340,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    line_boundary_encountered = true;
 	  }
 	  command_pointer += 11 * 4;
-	  currinf.data.dvi_h = MFResolutions[MetafontMode] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-	  currinf.data.dvi_v = MFResolutions[MetafontMode];
+	  currinf.data.dvi_h = MFResolutions[font_pool->getMetafontMode()] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
+	  currinf.data.dvi_v = MFResolutions[font_pool->getMetafontMode()];
 	  currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
 	  currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
 	  break;
@@ -606,7 +606,7 @@ void dviWindow::draw_page(void)
   // Mark hyperlinks in blue. We draw a blue line under the
   // character whose width is equivalent to 0.5 mm, but at least
   // one pixel.
-  int h = (int)(MFResolutions[MetafontMode]*0.05/(2.54*shrinkfactor) + 0.5);
+  int h = (int)(MFResolutions[font_pool->getMetafontMode()]*0.05/(2.54*shrinkfactor) + 0.5);
   h = (h < 1) ? 1 : h;
   for(unsigned int i=0; i<hyperLinkList.size(); i++) {
     int x = hyperLinkList[i].box.left();

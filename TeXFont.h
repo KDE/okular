@@ -19,7 +19,8 @@ class TeXFont {
  public:
   TeXFont(TeXFontDefinition *_parent)
     {
-      parent = _parent;
+      parent       = _parent;
+      errorMessage = QString::null;
     };
   
   virtual ~TeXFont();
@@ -37,7 +38,11 @@ class TeXFont {
   // in by the constructor, or set to 0.0, if the font format does not
   // contain checksums.
   Q_UINT32           checksum;
-  
+
+  // If the font or if some glyphs could not be loaded, error messages
+  // will be put here.
+  QString            errorMessage;
+   
  protected:
   glyph              glyphtable[TeXFontDefinition::max_num_of_chars_in_font];
   TeXFontDefinition *parent;

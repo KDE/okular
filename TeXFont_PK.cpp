@@ -52,7 +52,9 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <qbitmap.h>
+#include <qfile.h>
 #include <qimage.h>
+#include <qpainter.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

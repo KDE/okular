@@ -7,14 +7,14 @@
 #include <kdebug.h>
 #include <kinstance.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kprocess.h>
 #include <qapplication.h>
-#include <kmessagebox.h>
 #include <stdlib.h>
 
 #include "fontpool.h"
 #include "fontprogress.h"
-#include "xdvi.h"
+#include "TeXFont.h"
 
 // List of permissible MetaFontModes which are supported by kdvi.
 
@@ -75,69 +75,65 @@ fontPool::~fontPool(void)
 }
 
 
-unsigned int fontPool::setMetafontMode( unsigned int mode )
+void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _enlargeFonts, bool _useType1Fonts, bool _useFontHints )
 {
-#ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::setMetafontMode( " << mode << " ) called" << endl;
-#endif
-
-  if (mode >= NumberOfMFModes) {
-    kdError(4300) << "fontPool::setMetafontMode called with argument " << mode 
-	      << " which is more than the allowed value of " << NumberOfMFModes-1 << endl;
+  if (_metafontMode >= NumberOfMFModes) {
+    kdError(4300) << "fontPool::setMetafontMode called with argument " << _metafontMode 
+		  << " which is more than the allowed value of " << NumberOfMFModes-1 << endl;
     kdError(4300) << "setting mode to " << MFModes[DefaultMFMode] << " at " 
-	      << MFResolutions[DefaultMFMode] << "dpi" << endl;
-    mode = DefaultMFMode;
+		  << MFResolutions[DefaultMFMode] << "dpi" << endl;
+    _metafontMode = DefaultMFMode;
   }
-  MetafontMode = mode;
-
-  TeXFontDefinition *fontp = fontList.first();
-  while(fontp != 0 ) {
-    fontp->reset();
-    fontp = fontList.next();
+  
+  bool kpsewhichNeeded = false;
+  
+  // Check if a new run of kpsewhich is required
+  if ( (_metafontMode != MetafontMode) || (_useType1Fonts != useType1Fonts) ) {
+    TeXFontDefinition *fontp = fontList.first();
+    while(fontp != 0 ) {
+      fontp->reset();
+      fontp = fontList.next();
+    }
+    kpsewhichNeeded = true;
   }
-
-  check_if_fonts_filenames_are_looked_up();
-  return mode;
-}
-
-
-void fontPool::setMakePK(bool flag)
-{
-  makepk = flag;
-
-  // If we just disabled font generation, there is nothing left to do.
-  if (flag == false)
-    return;
-
+  
   // If we enable font generation, we look for fonts which have not
-  // yet been loaded, mark them as "not yet looked up" and try once
-  // more.
-  TeXFontDefinition *fontp =fontList.first();
-  while(fontp != 0 ) {
-    if (fontp->filename.isEmpty() )
-      fontp->flags &= ~TeXFontDefinition::FONT_KPSE_NAME;
-    fontp=fontList.next();
-  }
-  check_if_fonts_filenames_are_looked_up();
-}
-
-
-void fontPool::setEnlargeFonts( bool flag )
-{
-  enlargeFonts = flag;
-  
-  double displayResolution = displayResolution_in_dpi;
-  if (enlargeFonts == true)
-    displayResolution *= 1.1;
-
-  TeXFontDefinition *fontp = fontList.first();
-  while(fontp != 0 ) {
-    fontp->setDisplayResolution(displayResolution * fontp->enlargement);
-    fontp=fontList.next();
+  // yet been loaded, mark them as "not yet looked up" and try to run
+  // kpsewhich once more.
+  if ((_makePK == true) && (_makePK != makepk)) {
+    TeXFontDefinition *fontp =fontList.first();
+    while(fontp != 0 ) {
+      if (fontp->filename.isEmpty() )
+	fontp->flags &= ~TeXFontDefinition::FONT_KPSE_NAME;
+      fontp=fontList.next();
+    }
+    kpsewhichNeeded = true;
   }
   
-  // Do something that causes re-rendering of the dvi-window
-  emit fonts_have_been_loaded();
+  // Check if glyphs need to be cleared
+  if ((_enlargeFonts != enlargeFonts) || (_useFontHints != useFontHints)) {
+    double displayResolution = displayResolution_in_dpi;
+    if (_enlargeFonts == true)
+      displayResolution *= 1.1;
+    TeXFontDefinition *fontp = fontList.first();
+    while(fontp != 0 ) {
+      fontp->setDisplayResolution(displayResolution * fontp->enlargement);
+      fontp=fontList.next();
+    }
+  }
+
+  MetafontMode = _metafontMode;
+  makepk = _makePK;
+  enlargeFonts = _enlargeFonts;
+  useType1Fonts = _useType1Fonts;
+  useFontHints = _useFontHints;
+  
+  // Initiate a new concurrently running process of kpsewhich, if
+  // necessary. Otherwise, let the dvi window be redrawn
+  if (kpsewhichNeeded == true)
+    check_if_fonts_filenames_are_looked_up();
+  else
+    emit fonts_have_been_loaded();
 }
 
 
@@ -183,7 +179,7 @@ QString fontPool::status(void)
     return i18n("The fontlist is currently empty.");
 
   text.append("<table WIDTH=\"100%\" NOSAVE >");
-  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b></td></tr>").arg(i18n("Name")).arg(i18n("Enlargement")).arg(i18n("Type")).arg(i18n("Filename")) );
+  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b></td> <td><b>%5</b></td></tr>").arg(i18n("Name")).arg(i18n("Enlargement")).arg(i18n("Type")).arg(i18n("Filename")).arg(i18n("Comment")) );
   
  TeXFontDefinition *fontp = fontList.first();
   while ( fontp != 0 ) {
@@ -194,7 +190,10 @@ QString fontPool::status(void)
     else
       type = i18n("regular");
     
-    tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename);
+    if (fontp->font == 0)
+      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td> <td>%5</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename).arg("");
+    else
+      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td> <td>%5</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename).arg(fontp->font->errorMessage);
     fontp=fontList.next(); 
   }
 
@@ -335,12 +334,12 @@ void fontPool::start_kpsewhich(void)
       case 0:
 	// In the first pass, we look for PK fonts, and also for virtual fonts.
 #ifdef HAVE_FREETYPE
-	if (!fontp->fontname.contains("cmsy")) // @@@@ Special treatment for buggy (?) font
+	if (useType1Fonts == true) {
 	  *proc << KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname));
 #ifdef DEBUG_FONTPOOL
-	if (!fontp->fontname.contains("cmsy")) // @@@@ Special treatment for buggy (?) font
 	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname)) + " ";
 #endif
+	}
 #endif
 	*proc << KShellProcess::quote(QString("%1.vf").arg(fontp->fontname));
 	*proc << KShellProcess::quote(QString("%2.%1pk").arg(MFResolutions[MetafontMode]).arg(fontp->fontname));
@@ -350,7 +349,16 @@ void fontPool::start_kpsewhich(void)
 #endif
 	break;
       case 1:
-	// In the second pass, we generate PK fonts
+	// In the second pass, we generate PK fonts, but be also look
+	// for PFB fonts, as they might be used by virtual fonts.
+#ifdef HAVE_FREETYPE
+	if (useType1Fonts == true) {
+	  *proc << KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname));
+#ifdef DEBUG_FONTPOOL
+	  shellProcessCmdLine += KShellProcess::quote(QString("%1.pfb").arg(fontp->fontname)) + " ";
+#endif
+	}
+#endif
 	*proc << KShellProcess::quote(QString("%2.%1pk").arg(MFResolutions[MetafontMode]).arg(fontp->fontname));
 #ifdef DEBUG_FONTPOOL
 	shellProcessCmdLine += KShellProcess::quote(QString("%2.%1pk").arg(MFResolutions[MetafontMode]).arg(fontp->fontname)) + " ";
@@ -515,7 +523,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	    config->setGroup("kdvi");
 	    config->writeEntry( "MakePK", true );
 	    config->sync();
-	    setMakePK(1); // That will start kpsewhich again.
+	    setParameters( MetafontMode, true, enlargeFonts, useType1Fonts, useFontHints ); // That will start kpsewhich again.
 	    return;
 	  } 
 	} else
@@ -532,11 +540,21 @@ void fontPool::kpsewhich_terminated(KProcess *)
 void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called" <<endl;
+  kdDebug(4300) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called" << endl;
 #endif
-  
   displayResolution_in_dpi = _displayResolution_in_dpi;
-  setEnlargeFonts( enlargeFonts );
+  double displayResolution = displayResolution_in_dpi;
+  if (enlargeFonts == true)
+    displayResolution *= 1.1;
+
+  TeXFontDefinition *fontp = fontList.first();
+  while(fontp != 0 ) {
+    fontp->setDisplayResolution(displayResolution * fontp->enlargement);
+    fontp=fontList.next();
+  }
+  
+  // Do something that causes re-rendering of the dvi-window
+  emit fonts_have_been_loaded();
 }
 
 

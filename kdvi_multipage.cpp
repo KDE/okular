@@ -14,6 +14,7 @@
 #include <ktip.h>
 #include <qtimer.h>
 
+#include "../config.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"
 #include "kviewpart.h"
@@ -70,7 +71,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   printer = 0;
   document_history.clear();
-  window = new dviWindow( 1.0, true, scrollView());
+  window = new dviWindow( 1.0, scrollView());
   preferencesChanged();
 
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
@@ -335,15 +336,9 @@ void KDVIMultiPage::preferencesChanged()
   int mfmode = config->readNumEntry( "MetafontMode", DefaultMFMode );
   if (( mfmode < 0 ) || (mfmode >= NumberOfMFModes))
     config->writeEntry( "MetafontMode", mfmode = DefaultMFMode );
-  window->setMetafontMode( mfmode );
 
   bool makepk = config->readBoolEntry( "MakePK", true );
-  if ( makepk != window->makePK() )
-    window->setMakePK( makepk );
-
   bool enlargeFonts = config->readBoolEntry( "enlarge_for_readability", true );
-  if (enlargeFonts != window->font_pool->getEnlargeFonts())
-    window->font_pool->setEnlargeFonts(enlargeFonts);
 
   bool showPS = config->readBoolEntry( "ShowPS", true );
   if (showPS != window->showPS())
@@ -353,15 +348,10 @@ void KDVIMultiPage::preferencesChanged()
   if (showHyperLinks != window->showHyperLinks())
     window->setShowHyperLinks(showHyperLinks);
 
-  /*
-  bool usePFBFonts = config->readBoolEntry( "UsePFB", true );
-  if (showHyperLinks != window->showHyperLinks())
-    window->setShowHyperLinks(showHyperLinks);
+  bool useType1Fonts = config->readBoolEntry( "UseType1Fonts", true );
+  bool useFontHints = config->readBoolEntry( "UseFontHints", true );
 
-  bool usePFBFontHints = config->readBoolEntry( "UsePFBFontHints", true );
-  if (showHyperLinks != window->showHyperLinks())
-    window->setShowHyperLinks(showHyperLinks);
-  */
+  window->font_pool->setParameters(mfmode, makepk, enlargeFonts, useType1Fonts, useFontHints);
 
   window->setEditorCommand( config->readEntry( "EditorCommand", "" ));
 }
@@ -489,7 +479,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
 // feature of KDirWatch, I dare not say. We remedy that problem by
 // using a timer: when reload() was called on a bad file, we
 // automatically come back (via the timerEvent() function) every
-// second and check if the file becaome good. If so, we stop the
+// second and check if the file became good. If so, we stop the
 // timer. It may well happen that KDirWatch calls us several times
 // while we are waiting for the file to become good, but that does not
 // do any harm.

@@ -23,6 +23,7 @@
 
 #include "bigEndianByteReader.h"
 #include "dvi_init.h"
+#include "fontpool.h"
 #include "psgs.h"
 #include "selection.h"
 
@@ -101,7 +102,7 @@ class dviWindow : public QWidget, bigEndianByteReader
   Q_OBJECT
 
 public:
-  dviWindow( double zoom, int makepk, QWidget *parent=0, const char *name=0 );
+  dviWindow( double zoom, QWidget *parent=0, const char *name=0 );
   ~dviWindow();
 
   class dvifile *dviFile;
@@ -119,9 +120,6 @@ public:
   void		setShowHyperLinks( bool flag );
   bool		showHyperLinks(void) { return _showHyperLinks; };
   void		setEditorCommand( QString command )  { editorCommand = command; };
-  void		setMakePK( bool flag );
-  int		makePK(void) { return makepk; };
-  void		setMetafontMode( unsigned int );
   void		setPaper(double w, double h);
   bool          correctDVI(QString filename);
   
@@ -147,7 +145,7 @@ public:
   void          html_anchor_special(QString cp);
   void          draw_page(void);
 
-  class fontPool  *font_pool;
+  fontPool  *font_pool;
 
   double       xres;         // horizontal resolution of the display device in dots per inch.
   double       paper_width_in_cm;  // paper width in centimeters
@@ -305,11 +303,9 @@ private:
  /** List of anchors in a document */
  QMap<QString, DVI_Anchor> anchorList;
 
- double            fontPixelPerDVIunit() {return dviFile->cmPerDVIunit * MFResolutions[MetafontMode]/2.54;};
+ double            fontPixelPerDVIunit() {return dviFile->cmPerDVIunit * MFResolutions[font_pool->getMetafontMode()]/2.54;};
 
- int		   makepk;
  QPixmap          *pixmap;
- unsigned int	   MetafontMode;
  int		   ChangesPossible;
  unsigned int	   current_page;
 

@@ -53,7 +53,7 @@ QPainter foreGroundPaint; // QPainter used for text
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
+dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
   : QWidget( parent, name )
 {
 #ifdef DEBUG_DVIWIN
@@ -90,7 +90,6 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
     qApp->connect(font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
   }
 
-  setMakePK( mkpk );
   editorCommand         = "";
 
   // Calculate the horizontal resolution of the display device.  @@@
@@ -141,7 +140,6 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   animationCounter = 0;
   timerIdent       = 0;
 
-  setMetafontMode( DefaultMFMode );
   resize(0,0);
 }
 
@@ -220,14 +218,7 @@ void dviWindow::setShowHyperLinks( bool flag )
   drawPage();
 }
 
-
-void dviWindow::setMakePK( bool flag )
-{
-  makepk = flag;
-  font_pool->setMakePK(makepk);
-}
-
-
+#ifdef doof
 void dviWindow::setMetafontMode( unsigned int mode )
 {
 #ifdef DEBUG_DVIWIN
@@ -241,7 +232,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
   shrinkfactor = MFResolutions[MetafontMode]/(xres*_zoom);
   font_pool->setDisplayResolution( xres*_zoom );
 }
-
+#endif
 
 void dviWindow::setPaper(double width_in_cm, double height_in_cm)
 {
@@ -263,6 +254,7 @@ void dviWindow::drawPage()
   kdDebug(4300) << "dviWindow::drawPage()" << endl;
 #endif
 
+  shrinkfactor = MFResolutions[font_pool->getMetafontMode()]/(xres*_zoom);
   setCursor(arrowCursor);
 
   // Stop any animation which may be in progress
@@ -654,7 +646,7 @@ double dviWindow::setZoom(double zoom)
   if (zoom > ZoomLimits::MaxZoom/1000.0)
     zoom = ZoomLimits::MaxZoom/1000.0;
 
-  shrinkfactor = MFResolutions[MetafontMode]/(xres*zoom);
+  shrinkfactor = MFResolutions[font_pool->getMetafontMode()]/(xres*zoom);
   _zoom        = zoom;
 
   font_pool->setDisplayResolution( xres*zoom );

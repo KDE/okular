@@ -47,6 +47,9 @@ KPDFPage::~KPDFPage()
     QValueList< KPDFLink * >::iterator lIt = m_links.begin(), lEnd = m_links.end();
     for ( ; lIt != lEnd; ++lIt )
         delete *lIt;
+    QValueList< KPDFActiveRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
+    for ( ; rIt != rEnd; ++rIt )
+        delete *rIt;
     delete m_text;
 }
 
@@ -77,6 +80,17 @@ bool KPDFPage::hasLink( int mouseX, int mouseY ) const
     if ( m_links.count() < 1 )
         return false;
     QValueList< KPDFLink * >::const_iterator it = m_links.begin(), end = m_links.end();
+    for ( ; it != end; ++it )
+        if ( (*it)->contains( mouseX, mouseY ) )
+            return true;
+    return false;
+}
+
+bool KPDFPage::hasActiveRect( int mouseX, int mouseY ) const
+{
+    if ( m_rects.count() < 1 )
+        return false;
+    QValueList< KPDFActiveRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( mouseX, mouseY ) )
             return true;
@@ -210,6 +224,14 @@ void KPDFPage::setLinks( const QValueList<KPDFLink *> links )
     for ( ; it != end; ++it )
         delete *it;
     m_links = links;
+}
+
+void KPDFPage::setActiveRects( const QValueList<KPDFActiveRect *> rects )
+{
+    QValueList< KPDFActiveRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+    for ( ; it != end; ++it )
+        delete *it;
+    m_rects = rects;
 }
 
 /*
@@ -355,3 +377,15 @@ const char * KPDFLink::getURI() const
 {
     return m_uri;
 }
+
+
+KPDFActiveRect::KPDFActiveRect(int left, int top, int width, int height)
+    : m_left(left), m_top(top), m_right(left + width), m_bottom(top + height)
+{
+}
+
+bool KPDFActiveRect::contains(int x, int y)
+{
+    return (x > m_left) && (x < m_right) && (y > m_top) && (y < m_bottom);
+}
+

@@ -24,6 +24,7 @@
 #include <qimage.h>
 
 #include "page.h"
+#include "GfxState.h"
 #include "SplashBitmap.h"
 #include "TextOutputDev.h"
 #include "QOutputDev.h"
@@ -39,10 +40,13 @@ KPDFOutputDev::KPDFOutputDev(SplashColor paperColor)
 
 KPDFOutputDev::~KPDFOutputDev()
 {
-	QValueList< KPDFLink * >::iterator it = m_links.begin(), end = m_links.end();
-	for ( ; it != end; ++it )
-		delete *it;
-	delete m_pixmap;
+	QValueList< KPDFLink * >::iterator itL = m_links.begin(), endL = m_links.end();
+	for ( ; itL != endL; ++itL )
+		delete *itL;
+    QValueList< KPDFActiveRect * >::iterator itR = m_rects.begin(), endR = m_rects.end();
+    for ( ; itR != endR; ++itR )
+        delete *itR;
+    delete m_pixmap;
 	delete m_text;
 }
 
@@ -86,6 +90,13 @@ QValueList< KPDFLink * > KPDFOutputDev::takeLinks()
 	return linksCopy;
 }
 
+QValueList< KPDFActiveRect * > KPDFOutputDev::takeActiveRects()
+{
+    QValueList< KPDFActiveRect * > rectsCopy( m_rects );
+    m_rects.clear();
+    return rectsCopy;
+}
+
 void KPDFOutputDev::startPage(int pageNum, GfxState *state)
 {
 	m_pageNum = pageNum;
@@ -120,7 +131,7 @@ void KPDFOutputDev::endPage()
 	SplashOutputDev::startPage(0, NULL);
 }
 
-void KPDFOutputDev::drawLink(Link * link, Catalog */*catalog*/)
+void KPDFOutputDev::drawLink(Link * link, Catalog * catalog)
 {
 	if ( !link->isOk() )
 		return;
@@ -137,6 +148,9 @@ void KPDFOutputDev::drawLink(Link * link, Catalog */*catalog*/)
 
 	// add the link to the vector container
 	m_links.push_back( l );
+
+    // call parent's link handler
+    SplashOutputDev::drawLink(link, catalog);
 }
 
 void KPDFOutputDev::updateFont(GfxState *state)
@@ -158,6 +172,48 @@ GBool KPDFOutputDev::beginType3Char(GfxState *state, double x, double y, double 
 	if ( m_text )
 		m_text->addChar(state, x, y, dx, dy, code, u, uLen);
 	return SplashOutputDev::beginType3Char(state, x, y, dx, dy, code, u, uLen);
+}
+
+/*void KPDFOutputDev::drawImageMask(GfxState *state, Object *ref, Stream *str,
+                             int width, int height, GBool invert,
+                             GBool inlineImg)
+{
+    double * ctm = state->getCTM();
+    printf("> %d %d    %f %f %f %f %f %f\n", width, height, ctm[0], ctm[1], ctm[2], ctm[3], ctm[4], ctm[5]);
+    SplashOutputDev::drawImageMask(state, ref, str, width, height, invert, inlineImg);
+}
+*/
+void KPDFOutputDev::drawImage(GfxState *state, Object *ref, Stream *str,
+    int _width, int _height, GfxImageColorMap *colorMap,
+    int *maskColors, GBool inlineImg)
+{
+    // find out image rect from the Coord Transform Matrix
+    double * ctm = state->getCTM();
+    int left = (int)ctm[4],
+        top = (int)ctm[5],
+        width = (int)ctm[0],
+        height = (int)ctm[3];
+    // normalize width
+    if ( width < 0 )
+    {
+        width = -width;
+        left -= width;
+    }
+    // normalize height
+    if ( height < 0 )
+    {
+        height = -height;
+        top -= height;
+    }
+    if ( width > 10 && height > 10 )
+    {
+        KPDFActiveRect * r = new KPDFActiveRect(left, top, width, height);
+        // add the rect to the vector container
+        m_rects.push_back( r );
+    }
+
+    // call parent's image handler
+    SplashOutputDev::drawImage(state, ref, str, _width, _height, colorMap, maskColors, inlineImg);
 }
 // END KPDFOutputDev 
 

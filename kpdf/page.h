@@ -19,6 +19,7 @@ class TextPage;
 class LinkAction;
 class LinkDest;
 class KPDFLink;
+class KPDFActiveRect;
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -48,6 +49,7 @@ public:
     QString getTextInRect( const QRect & rect ) const;
     bool hasLink( int mouseX, int mouseY ) const;
     const KPDFLink * getLink( int mouseX, int mouseY ) const;
+    bool hasActiveRect( int mouseX, int mouseY ) const;
     void drawPixmap( int id, QPainter * p, const QRect & rect, int width, int height ) const;
 
     // commands (not const methods caled by KPDFDocument)
@@ -59,6 +61,7 @@ public:
     void setPixmap( int id, QPixmap * pixmap );
     void setSearchPage( TextPage * text );
     void setLinks( const QValueList<KPDFLink *> links );
+    void setActiveRects( const QValueList<KPDFActiveRect *> rects );
     /*void setPixmapOverlayNotations( ..DOMdescription.. );*/
 
 private:
@@ -70,6 +73,7 @@ private:
     QMap< int, QPixmap * > m_pixmaps;
     TextPage * m_text;
     QValueList< KPDFLink * > m_links;
+    QValueList< KPDFActiveRect * > m_rects;
 };
 
 
@@ -120,6 +124,24 @@ private:
     char * m_parameters;
     char * m_uri;
     int m_refNum, m_refGen;
+};
+
+
+/**
+ * @short Describes an 'active' rectange on the page.
+ *
+ * ...
+ */
+class KPDFActiveRect
+{
+public:
+    KPDFActiveRect(int left, int top, int width, int height);
+
+    // query
+    bool contains(int x, int y);
+
+private:
+    int m_left, m_top, m_right, m_bottom;
 };
 
 #endif

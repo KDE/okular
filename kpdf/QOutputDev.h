@@ -24,6 +24,7 @@
 
 class TextPage;
 class KPDFLink;
+class KPDFActiveRect;
 
 /**
  * @short A SplashOutputDev renderer that grabs text and links.
@@ -45,9 +46,10 @@ public:
 	// takes pointers out of the class (so deletion it's up to others)
 	QPixmap * takePixmap();
 	TextPage * takeTextPage();
-	QValueList< KPDFLink * > takeLinks();
+    QValueList< KPDFLink * > takeLinks();
+    QValueList< KPDFActiveRect * > takeActiveRects();
 
-	/** inherited from OutputDev */
+    /** inherited from OutputDev */
 	// Start a page.
 	virtual void startPage(int pageNum, GfxState *state);
 	// End a page.
@@ -59,6 +61,13 @@ public:
 	//----- text drawing
 	virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen);
 	virtual GBool beginType3Char(GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen);
+    //----- image drawing
+/*    virtual void drawImageMask(GfxState *state, Object *ref, Stream *str,
+                               int width, int height, GBool invert,
+    GBool inlineImg);*/
+    virtual void drawImage(GfxState *state, Object *ref, Stream *str,
+                           int width, int height, GfxImageColorMap *colorMap,
+                           int *maskColors, GBool inlineImg);
 
 private:
 	// the pixmap where the page is drawn (generated on every execution)
@@ -71,7 +80,10 @@ private:
 	TextPage * m_text;
 
 	// links generated on demand
-	QValueList< KPDFLink * > m_links;
+    QValueList< KPDFLink * > m_links;
+
+    // active areas on page
+    QValueList< KPDFActiveRect * > m_rects;
 };
 
 

@@ -476,10 +476,10 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
         {
 			KMimeType::Ptr mime;
 			KService::Ptr ptr;
-			
+
 			// the only pdf i have that has that kind of link don't define an application
 			// and use the fileName as the file to open
-			
+
 			fileName = giveAbsolutePath( fileName );
 			mime = KMimeType::findByPath( fileName );
 			// Check executables
@@ -506,7 +506,7 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
 					return;
 				}
 			}
-			
+
 			ptr = KServiceTypeProfile::preferredService(mime->name(), "Application");
 			if (ptr)
 			{
@@ -612,7 +612,7 @@ void KPDFDocument::processPageList( bool documentChanged )
 
 void KPDFDocument::unHilightPages()
 {
-    if ( d->filterText == "" )
+    if ( d->filterText.isEmpty() )
         return;
 
     d->filterText = "";

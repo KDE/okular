@@ -497,10 +497,12 @@ void SplashOutputDev::updateFont(GfxState *state) {
   FILE *tmpFile;
   Gushort *codeToGID;
   DisplayFontParam *dfp;
+  CharCodeToUnicode *ctu;
   double m11, m12, m21, m22, w1, w2;
   SplashCoord mat[4];
   const char *name;
-  int c, substIdx, n, code;
+  Unicode uBuf[8];
+  int c, substIdx, n, code, cmap;
 
   needFontUpdate = gFalse;
   font = NULL;
@@ -544,7 +546,6 @@ void SplashOutputDev::updateFont(GfxState *state) {
     } else if (!(fileName = gfxFont->getExtFontFile())) {
 
       // look for a display font mapping or a substitute font
-      dfp = NULL;
       if (gfxFont->isCIDFont()) {
 	if (((GfxCIDFont *)gfxFont)->getCollection()) {
 	  dfp = globalParams->
@@ -650,10 +651,48 @@ void SplashOutputDev::updateFont(GfxState *state) {
       }
       break;
     case fontCIDType2:
-      n = ((GfxCIDFont *)gfxFont)->getCIDToGIDLen();
-      codeToGID = (Gushort *)gmalloc(n * sizeof(Gushort));
-      memcpy(codeToGID, ((GfxCIDFont *)gfxFont)->getCIDToGID(),
-	     n * sizeof(Gushort));
+      codeToGID = NULL;
+      n = 0;
+      if (dfp) {
+	// create a CID-to-GID mapping, via Unicode
+	if ((ctu = ((GfxCIDFont *)gfxFont)->getToUnicode())) {
+	  if ((ff = FoFiTrueType::load(fileName->getCString()))) {
+	    // look for a Unicode cmap
+	    for (cmap = 0; cmap < ff->getNumCmaps(); ++cmap) {
+	      if ((ff->getCmapPlatform(cmap) == 3 &&
+		   ff->getCmapEncoding(cmap) == 1) ||
+		  ff->getCmapPlatform(cmap) == 0) {
+		break;
+	      }
+	    }
+	    if (cmap < ff->getNumCmaps()) {
+	      // map CID -> Unicode -> GID
+	      n = ctu->getLength();
+	      codeToGID = (Gushort *)gmalloc(n * sizeof(Gushort));
+	      for (code = 0; code < n; ++code) {
+		if (ctu->mapToUnicode(code, uBuf, 8) > 0) {
+		  codeToGID[code] = ff->mapCodeToGID(cmap, uBuf[0]);
+		} else {
+		  codeToGID[code] = 0;
+		}
+	      }
+	    }
+	    delete ff;
+	  }
+	  ctu->decRefCnt();
+	} else {
+	  error(-1, "Couldn't find a mapping to Unicode for font '%s'",
+		gfxFont->getName() ? gfxFont->getName()->getCString()
+		                   : "(unnamed)");
+	}
+      } else {
+	if (((GfxCIDFont *)gfxFont)->getCIDToGID()) {
+	  n = ((GfxCIDFont *)gfxFont)->getCIDToGIDLen();
+	  codeToGID = (Gushort *)gmalloc(n * sizeof(Gushort));
+	  memcpy(codeToGID, ((GfxCIDFont *)gfxFont)->getCIDToGID(),
+		 n * sizeof(Gushort));
+	}
+      }
       if (!(fontFile = fontEngine->loadTrueTypeFont(
 			   id,
 			   fileName->getCString(),

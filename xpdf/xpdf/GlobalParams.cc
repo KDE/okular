@@ -1046,6 +1046,8 @@ FILE *GlobalParams::findToUnicodeFile(GString *name) {
 
 void parseStyle(QString& name, int& weight, int& slant)
 {
+  if (name.find("MS-") == 0) name = "MS " + name.remove(0,3);
+
   if (!name.contains('-') && !name.contains(',')) return;
   QString type = name.section(QRegExp("[-,]"),-1);
   name = name.section(QRegExp("[-,]"),0,-2);
@@ -1106,6 +1108,7 @@ DisplayFontParam *GlobalParams::getDisplayCIDFont(GString *fontName,
     dfp = (DisplayFontParam *)displayCIDFonts->lookup(collection);
   }
   unlockGlobalParams;
+  if (!dfp) dfp = getDisplayFont(fontName);
   return dfp;
 }
 

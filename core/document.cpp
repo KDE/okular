@@ -684,7 +684,7 @@ void KPDFDocument::loadDocumentInfo()
     fileName = "kpdf/" + QString::number(fileReadTest.size()) + "." + fileName + ".xml";
     fileReadTest.close();
     QString localFN = locateLocal( "data", fileName );
-    kdDebug() << "Using '" << localFN << "' as document info file." << endl;
+    //kdDebug() << "Using '" << localFN << "' as document info file." << endl;
     QFile infoFile( localFN );
     if (infoFile.exists() && infoFile.open( IO_ReadOnly ) )
     {
@@ -824,7 +824,7 @@ void KPDFDocument::saveDocumentInfo() const
     fileName = "kpdf/" + QString::number(fileReadTest.size()) + "." + fileName + ".xml";
     fileReadTest.close();
     QString localFN = locateLocal( "data", fileName );
-    kdDebug() << "Using '" << localFN << "' as document info file for saving." << endl;
+    //kdDebug() << "Using '" << localFN << "' as document info file for saving." << endl;
     QFile infoFile( localFN );
     if (infoFile.open( IO_WriteOnly | IO_Truncate) )
     {

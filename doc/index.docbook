@@ -145,10 +145,10 @@
     <title>Printing &DVI; Files</title>
     
     <para>&kdvi; can print your &DVI; files using the standard &kde;
-    printing interface. Internally, &kdvi; uses the programm
+    printing interface. Internally, &kdvi; uses the program
     <command>dvips</command> to generate &PostScript;, which is then
     passed on to the printer. In particular, <command>dvips</command>
-    must be installed if you want to print with &kdvi;. The programm
+    must be installed if you want to print with &kdvi;. The program
     <command>dvips</command> uses its own configuration files and its
     own settings, which are fine for most purposes. However, if you
     care for optimal printing results, you should configure
@@ -192,7 +192,7 @@
       converts &DVI; to <acronym>PDF</acronym> using the external program
       <command>dvipdfm</command>. If you are working on a machine
       where an older distribution of the TeX typesetting system is
-      installed, it may be that the programm
+      installed, it may be that the program
       <command>dvipdfm</command> is not installed. In that case, you
       need to use the printing function to generate <acronym>PDF</acronym>
       output.</para>

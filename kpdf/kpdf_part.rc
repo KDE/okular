@@ -12,6 +12,7 @@
     <Action name="find_next"/>
   </Menu>
   <Menu name="view"><text>&amp;View</text>
+    <Action name="presentation"/>
     <Separator/>
     <Action name="zoom_out"/>
     <Action name="zoom_in"/>

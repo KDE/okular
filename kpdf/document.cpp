@@ -126,7 +126,18 @@ void KPDFDocument::closeDocument()
 
 void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 {
+    // keep the pointer to the observer in a map
     d->observers[ pObserver->observerId() ] = pObserver;
+
+    // if the observer is added while a document is already opened, tell it
+    if ( !pages_vector.isEmpty() )
+        pObserver->pageSetup( pages_vector, true );
+}
+
+void KPDFDocument::removeObserver( KPDFDocumentObserver * pObserver )
+{
+    // remove observer from the map. it won't receive notifications anymore
+    d->observers.remove( pObserver->observerId() );
 }
 
 void KPDFDocument::reparseConfig()
@@ -393,7 +404,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
 
         case KPDFLink::Browse: {
             const KPDFLinkBrowse * browse = static_cast< const KPDFLinkBrowse * >( link );
-            // get service for web browsing
+            // get service for web browsing TODO: check for "mailto:" links
             KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
             KURL::List lst;
             // append 'url' parameter to the service and run it

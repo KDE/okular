@@ -59,6 +59,7 @@
 #include "toc.h"
 #include "preferencesdialog.h"
 #include "propertiesdialog.h"
+#include "presentationwidget.h"
 #include "settings.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
@@ -177,6 +178,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showProperties = new KAction(i18n("Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
 
+    m_showPresentation = new KAction( i18n("Presentation"), "kpresenter_kpr", 0, this, SLOT(slotShowPresentation()), ac, "presentation");
+    m_showPresentation->setEnabled( false );
+
     // attach the actions of the 2 children widgets too
     m_pageView->setupActions( ac );
 
@@ -253,6 +257,7 @@ bool Part::openFile()
 	if ( ok && !m_watcher->contains(m_file)) m_watcher->addFile(m_file);
 	m_find->setEnabled( ok );
 	m_showProperties->setEnabled( ok );
+    m_showPresentation->setEnabled( ok );
 	return ok;
 }
 
@@ -598,6 +603,11 @@ void Part::slotShowProperties()
 	propertiesDialog *d = new propertiesDialog(widget(), m_document);
 	d->exec();
 	delete d;
+}
+
+void Part::slotShowPresentation()
+{
+    new PresentationWidget( m_document );
 }
 
 void Part::slotPrint()

@@ -43,10 +43,11 @@ class KPDFDocumentObserver
         virtual void pageSetCurrent( int /*pageNumber*/, const QRect & /*viewport*/ = QRect() ) {};
 };
 
-#define PART_ID 1
-#define PAGEVIEW_ID 2
-#define THUMBNAILS_ID 3
-#define TOC_ID 4
+#define PRESENTATION_ID 1
+#define PART_ID 2
+#define PAGEVIEW_ID 3
+#define THUMBNAILS_ID 4
+#define TOC_ID 5
 
 /**
  * @short The Document. Heart of everything. Actions take place here.
@@ -77,6 +78,7 @@ class KPDFDocument
 
         // misc methods
         void addObserver( KPDFDocumentObserver * pObserver );
+        void removeObserver( KPDFDocumentObserver * pObserver );
         void reparseConfig();
 
         // query methods (const ones)

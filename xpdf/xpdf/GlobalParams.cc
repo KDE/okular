@@ -13,6 +13,7 @@
 #endif
 
 #include <string.h>
+#include <strings.h>
 // KPDF: additional includes for Qt and Xft
 #include <qstring.h>
 #include <qregexp.h>
@@ -1070,7 +1071,9 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
   	int weight=FC_WEIGHT_MEDIUM, slant=FC_SLANT_ROMAN;
 	QString name(fontName->getCString());
 	parseStyle(name,weight,slant);
-	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight, (char*)0);
+	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), 
+		FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight,
+		FC_LANG, FcTypeString, "xx", (char*)0);
 	if (!p) goto fin;
 	m = XftFontMatch(qt_xdisplay(),qt_xscreen(),p,&res);
 	if (!m) goto fin; 

@@ -111,6 +111,14 @@
                                 <string>Show &amp;hints and info messages</string>
                             </property>
                         </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_ObeyDRM</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Obey DRM limitations</string>
+                            </property>
+                        </widget>
                     </vbox>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -223,7 +231,11 @@
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
     <include location="global" impldecl="in implementation">kiconloader.h</include>
+    <include location="local" impldecl="in implementation">dlggeneral.ui.h</include>
 </includes>
+<functions>
+    <function access="protected" specifier="non virtual">showEvent( QShowEvent * )</function>
+</functions>
 <pixmapfunction>DesktopIcon</pixmapfunction>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

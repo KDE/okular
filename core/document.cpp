@@ -140,8 +140,8 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     QString mimeName = mime->name();
     if ( mimeName == "application/pdf" )
         generator = new PDFGenerator( this );
-    else if ( mimeName == "application/postscript" )
-        kdError() << "PS generator not available" << endl;
+/*    else if ( mimeName == "application/postscript" )
+        kdError() << "PS generator not available" << endl;*/
     else
     {
         kdWarning() << "Unknown mimetype '" << mimeName << "'." << endl;
@@ -361,9 +361,9 @@ uint KPDFDocument::pages() const
     return pages_vector.size();
 }
 
-bool KPDFDocument::okToPrint() const
+bool KPDFDocument::isAllowed( int flags ) const
 {
-    return generator ? generator->isAllowed( Generator::Print ) : false;
+    return generator ? generator->isAllowed( flags ) : false;
 }
 
 bool KPDFDocument::historyAtBegin() const
@@ -1006,11 +1006,19 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 kapp->invokeMailer( browse->url() );
             else
             {
+                QString url = browse->url();
+
+                // fix for #100366, documents with relative links that are the form of http:foo.pdf
+                if (url.find("http:") == 0 && url.find("http://") == -1 && url.right(4) == ".pdf")
+                {
+                    openRelativeFile(url.mid(5));
+                    return;
+                }
                 // get service for web browsing
                 KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
                 KURL::List lst;
                 // append 'url' parameter to the service and run it
-                lst.append( browse->url() );
+                lst.append( url );
                 KRun::run( *ptr, lst );
             }
             } break;

@@ -52,25 +52,11 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
-    QRect d = KGlobalSettings::desktopGeometry(this);
-    m_width = d.width();
-    m_height = d.height();
 
-    // create top toolbar
-    m_topBar = new KToolBar( this, "presentationBar" );
-    m_topBar->setIconSize( 32 );
-    m_topBar->setMovingEnabled( false );
-    m_topBar->insertButton( "1leftarrow", 2, SIGNAL( clicked() ), this, SLOT( slotPrevPage() ) );
-    m_topBar->insertButton( "1rightarrow", 3, SIGNAL( clicked() ), this, SLOT( slotNextPage() ) );
-    m_topBar->insertButton( "exit", 1, SIGNAL( clicked() ), this, SLOT( close() ) );
-    m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
-    m_topBar->alignItemRight( 1 );
-    m_topBar->hide();
-    // change topbar background color
-    QPalette p = m_topBar->palette();
-    p.setColor( QPalette::Active, QColorGroup::Button, Qt::gray );
-    p.setColor( QPalette::Active, QColorGroup::Background, Qt::darkGray );
-    m_topBar->setPalette( p );
+    m_width = -1;
+
+    // show widget and take control
+    showFullScreen();
 
     // misc stuff
     setMouseTracking( true );
@@ -78,9 +64,6 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
     connect( m_transitionTimer, SIGNAL( timeout() ), this, SLOT( slotTransitionStep() ) );
     m_overlayHideTimer = new QTimer( this );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
-
-    // show widget and take control
-    showFullScreen();
 
     // handle cursor appearance as specified in configuration
     if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::HiddenDelay )
@@ -92,13 +75,6 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
     {
         setCursor( KCursor::blankCursor() );
     }
-
-    // register this observer in document. events will come immediately
-    m_document->addObserver( this );
-
-    // show summary if requested
-    if ( Settings::slidesShowSummary() )
-        generatePage();
 }
 
 PresentationWidget::~PresentationWidget()
@@ -194,6 +170,8 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber )
 // <widget events>
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
+    if (m_width == -1) return;
+	
     if ( e->key() == Key_Left || e->key() == Key_Backspace )
         slotPrevPage();
     else if ( e->key() == Key_Right || e->key() == Key_Space )
@@ -244,6 +222,8 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
 
 void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 {
+    if (m_width == -1) return;
+	
     // hide a shown bar when exiting the area
     if ( m_topBar->isShown() )
     {
@@ -260,6 +240,36 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
 {
+    if (m_width == -1)
+    {
+        QRect d = KGlobalSettings::desktopGeometry(this);
+        m_width = d.width();
+        m_height = d.height();
+
+        // create top toolbar
+        m_topBar = new KToolBar( this, "presentationBar" );
+        m_topBar->setIconSize( 32 );
+        m_topBar->setMovingEnabled( false );
+        m_topBar->insertButton( "1leftarrow", 2, SIGNAL( clicked() ), this, SLOT( slotPrevPage() ) );
+        m_topBar->insertButton( "1rightarrow", 3, SIGNAL( clicked() ), this, SLOT( slotNextPage() ) );
+        m_topBar->insertButton( "exit", 1, SIGNAL( clicked() ), this, SLOT( close() ) );
+        m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
+        m_topBar->alignItemRight( 1 );
+        m_topBar->hide();
+        // change topbar background color
+        QPalette p = m_topBar->palette();
+        p.setColor( QPalette::Active, QColorGroup::Button, Qt::gray );
+        p.setColor( QPalette::Active, QColorGroup::Background, Qt::darkGray );
+        m_topBar->setPalette( p );
+
+        // register this observer in document. events will come immediately
+        m_document->addObserver( this );
+
+        // show summary if requested
+        if ( Settings::slidesShowSummary() )
+            generatePage();
+    }
+
     // check painting rect consistancy
     QRect r = pe->rect().intersect( geometry() );
     if ( r.isNull() || m_lastRenderedPixmap.isNull() )
@@ -310,7 +320,7 @@ void PresentationWidget::overlayClick( const QPoint & position )
         return;
 
     // compute angle relative to indicator (note coord transformation)
-    float angle = 0.5 + 0.5 * atan2f( -xPos, -yPos ) / M_PI;
+    float angle = 0.5 + 0.5 * atan2( -xPos, -yPos ) / M_PI;
     int pageIndex = (int)( angle * ( m_frames.count() - 1 ) + 0.5 );
 
     // go to selected page
@@ -473,7 +483,7 @@ void PresentationWidget::generateOverlay()
     // draw PIE SLICES in blue levels (the levels will then be the alpha component)
     int pages = m_document->pages();
     if ( pages > 36 )
-    {   // draw continous slices
+    {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
         pixmapPainter.setPen( 0x20 );
         pixmapPainter.setBrush( 0x10 );

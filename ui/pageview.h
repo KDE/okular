@@ -31,7 +31,7 @@ class PageViewItem;
 class PageViewPrivate;
 
 /**
- * @short The main view. Handles zoom and continous mode.. oh, and page
+ * @short The main view. Handles zoom and continuous mode.. oh, and page
  * @short display of course :-)
  * ...
  */
@@ -125,7 +125,7 @@ class PageView : public QScrollView, public DocumentObserver
         void slotFitToPageToggled( bool );
         void slotFitToTextToggled( bool );
         void slotTwoPagesToggled( bool );
-        void slotContinousToggled( bool );
+        void slotContinuousToggled( bool );
         void slotSetMouseNormal();
         void slotSetMouseZoom();
         void slotSetMouseSelect();

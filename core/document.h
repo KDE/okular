@@ -61,6 +61,9 @@ class KPDFDocument : public QObject
         void removeObserver( DocumentObserver * pObserver );
         void reparseConfig();
 
+        // enum definitions
+        enum Permission { AllowModify = 1, AllowCopy = 2, AllowPrint = 4, AllowNotes = 8 };
+
         // query methods (const ones)
         bool isOpened() const;
         const DocumentInfo * documentInfo() const;
@@ -69,7 +72,7 @@ class KPDFDocument : public QObject
         const DocumentViewport & viewport() const;
         uint currentPage() const;
         uint pages() const;
-        bool okToPrint() const;
+        bool isAllowed( int /*Document::Permisison(s)*/ ) const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;

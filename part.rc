@@ -20,7 +20,7 @@
     <Action name="zoom_fit_page"/>
     <Action name="zoom_fit_rect"/>
     <Separator/>
-    <Action name="view_continous"/>
+    <Action name="view_continuous"/>
     <Action name="view_twopages"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
@@ -57,7 +57,7 @@
   <!--Action name="zoom_fit_width"/-->
   <!--Action name="zoom_fit_page"/-->
   <Separator/>
-  <Action name="view_continous"/>
+  <Action name="view_continuous"/>
   <Action name="view_twopages"/>
   <Separator/>
   <Action name="mouse_drag"/>

@@ -14,7 +14,6 @@
 #include <kstdaction.h>
 #include <kconfig.h>
 #include <kparts/genericfactory.h>
-#include <kdebug.h>
 #include <kurldrag.h>
 #include <kinputdialog.h>
 

@@ -53,10 +53,12 @@
 // Constants and macros
 //------------------------------------------------------------------------
 
+#ifndef KDE_USE_FINAL
 static inline QColor q_col ( const GfxRGB &rgb )
 {
 	return QColor ( lrint ( rgb. r * 255 ), lrint ( rgb. g * 255 ), lrint ( rgb. b * 255 ));
 }
+#endif
 
 //------------------------------------------------------------------------
 // Font substitutions
@@ -70,7 +72,7 @@ struct QOutFontSubst {
 	QFont::StyleHint m_hint;
 };
 
-static QOutFontSubst qStdFonts [] = {
+static QOutFontSubst qPixmapStdFonts [] = {
 	{ "Helvetica",             "Helvetica", false, false, QFont::Helvetica },
 	{ "Helvetica-Oblique",     "Helvetica", false, true,  QFont::Helvetica },
 	{ "Helvetica-Bold",        "Helvetica", true,  false, QFont::Helvetica },
@@ -96,7 +98,7 @@ QFont QOutputDevPixmap::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m
 
 	// build dict for std. fonts on first invocation
 	if ( stdfonts. isEmpty ( )) {
-		for ( QOutFontSubst *ptr = qStdFonts; ptr-> m_name; ptr++ ) {
+		for ( QOutFontSubst *ptr = qPixmapStdFonts; ptr-> m_name; ptr++ ) {
 			stdfonts. insert ( QString ( ptr-> m_name ), ptr );
 		}
 	}

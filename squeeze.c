@@ -181,6 +181,6 @@ default:
    }
    (void)fprintf(out, "\\n\";\n\n\
 int\tpsheaderlen\t= %d;\n", stringlen + linepos + 1);
-   exit(0) ;
+   return (0) ;
    /*NOTREACHED*/
 }

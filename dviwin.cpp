@@ -96,7 +96,6 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   setFocus();
   
   // initialize the dvi machinery
-
   dviFile                = 0;
 
   font_pool              = new fontPool();
@@ -120,6 +119,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
 
   setMakePK( mkpk );
+  editorCommand         = "";
   setMetafontMode( DefaultMFMode ); // that also sets the basedpi
   paper_width           = 21.0; // set A4 paper as default
   paper_height          = 27.9;
@@ -256,8 +256,8 @@ void dviWindow::exportPDF(void)
 					  "convert your DVI-file to PDF. Sometimes that can take "
 					  "a while because dvipdfm needs to generate its own bitmap fonts "
 					  "Please be patient."),
-				     i18n("Waiting for dvipdf to finish..."),
-				     this, "dvipdf progress dialog", false );
+				     i18n("Waiting for dvipdfm to finish..."),
+				     this, "dvipdfm progress dialog", false );
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
     progress->setTotalSteps( dviFile->total_pages );
@@ -403,9 +403,10 @@ void dviWindow::dvips_terminated(KProcess *)
 {
   if ((proc->normalExit() == true) && (proc->exitStatus() != 0)) 
     KMessageBox::error( this,
-			i18n("The external program used to export the DVI-file\n"
-			     "reported an error. You might wish to look at the\n"
-			     "document info dialog for a precise error report.") );
+			i18n("An external program (e.g. an editor used for inverse search, or a program like "
+			     "dvips or dvipdfm which is used by the export functions) reported an error. You "
+			     "might wish to look at the <strong>document info dialog</strong> which you will "
+			     "find in the File-Menu for a precise error report.") );
 
   // If a printer is defined, print and delete the output file.
   if (export_printer != 0)
@@ -782,37 +783,110 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
   kdDebug(4300) << "mouse event" << endl;
 #endif
 
-  for(int i=0; i<num_of_used_hyperlinks; i++) {
-    if (hyperLinkList[i].box.contains(e->pos())) {
-      if (hyperLinkList[i].linkText[0] == '#' ) {
+  // Check if the mouse is pressed on a regular hyperlink
+  if (e->button() == LeftButton)
+    for(int i=0; i<num_of_used_hyperlinks; i++) {
+      if (hyperLinkList[i].box.contains(e->pos())) {
+	if (hyperLinkList[i].linkText[0] == '#' ) {
 #ifdef DEBUG_SPECIAL
-	kdDebug(4300) << "hit: local link to " << hyperLinkList[i].linkText << endl;
+	  kdDebug(4300) << "hit: local link to " << hyperLinkList[i].linkText << endl;
 #endif
-	QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
-	for(int j=0; j<numAnchors; j++) {
-	  if (locallink.compare(AnchorList_String[j]) == 0) {
+	  QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
+	  for(int j=0; j<numAnchors; j++) {
+	    if (locallink.compare(AnchorList_String[j]) == 0) {
 #ifdef DEBUG_SPECIAL
-	    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-	    kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
+	      kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
+	      kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
 #endif
-	    emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
-	    break;
+	      emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
+	      break;
+	    }
 	  }
-	}
-      } else {
+	} else {
 #ifdef DEBUG_SPECIAL
-	kdDebug(4300) << "hit: external link to " << hyperLinkList[i].linkText << endl;
+	  kdDebug(4300) << "hit: external link to " << hyperLinkList[i].linkText << endl;
 #endif
-	QUrl DVI_Url(dviFile->filename);
-	QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
+	  QUrl DVI_Url(dviFile->filename);
+	  QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );
 	
-	KShellProcess proc;
-	proc << "kfmclient openURL " << Link_Url.toString();
-	proc.start(KProcess::Block);
-	//@@@ Set up a warning requester if the command failed?
+	  KShellProcess proc;
+	  proc << "kfmclient openURL " << Link_Url.toString();
+	  proc.start(KProcess::Block);
+	  //@@@ Set up a warning requester if the command failed?
+	}
+	break;
       }
-      break;
     }
-  }
+
+  // Check if the mouse is pressed on a source-hyperlink
+  if (e->button() == MidButton)
+    for(int i=0; i<num_of_used_source_hyperlinks; i++) 
+      if (sourceHyperLinkList[i].box.contains(e->pos())) {
+#ifdef DEBUG_SPECIAL
+	kdDebug(4300) << "Source hyperlink to " << sourceHyperLinkList[i].linkText << endl;
+#endif
+
+	QString cp = sourceHyperLinkList[i].linkText;
+	int max = cp.length();
+	int i;
+
+	for(i=0; i<max; i++)
+	  if (cp[i].isDigit() == false)
+	    break;
+
+	QString TeXfile = cp.mid(i);
+	if (!QFile::exists(TeXfile)) {
+	  KMessageBox::sorry(this, i18n("The DVI-file refers to the TeX-file "
+					"<strong>%1</strong> which could not be found.").arg(TeXfile),
+			     i18n( "Could not find file" ));
+	  return;
+	}
+
+
+	QString command = editorCommand;
+	if (command.isEmpty() == true) {
+	  int r = KMessageBox::warningContinueCancel(this, i18n("You have not yet specified an editor for inverse search. "
+								"Please choose your favourite editor in the "
+								"<strong>DVI options dialog</strong> "
+								"which you will find in the <strong>Settings</strong>-menu."),
+						     "Need to specify editor",
+						     "Use KDE's editor kate for now");
+	  if (r == KMessageBox::Continue)
+	    command = "xkate %f";
+	  else
+	    return;
+	}
+	command = command.replace( QRegExp("%l"), cp.left(i) ).replace( QRegExp("%f"), KShellProcess::quote(TeXfile) ); 
+	
+#ifdef DEBUG_SPECIAL
+	kdDebug(4300) << "Calling program: " << command << endl;
+#endif
+
+	// Problem... soll ich proc benutzen oder nicht? Ohne proc
+	// kann ich wahrscheinlich nicht feststellen, wenn das
+	// Kommando mit fehler zurückkehrt... andererseits benötige ich @@@@
+
+	proc = new KShellProcess();
+	if (proc == 0) {
+	  kdError(4300) << "Could not allocate ShellProcess for the editor command." << endl;
+	  return;
+	}
+  
+	qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+	qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+	qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
+
+	if (info)
+	  info->clear(i18n("Starting the editor..."));
+
+	proc->clearArguments();
+	*proc << command;
+	proc->closeStdin();
+	if (proc->start(KProcess::DontCare, KProcess::AllOutput) == false) {
+	  kdError(4300) << "Editor failed to start" << endl;
+	  return;
+	}
+      }
 }
+
 #include "dviwin.moc"

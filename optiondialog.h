@@ -21,12 +21,13 @@
 #ifndef _OPTION_DIALOG_H_
 #define _OPTION_DIALOG_H_
 
-class QCheckBox;
 class KComboBox;
+class KInstance;
+class KLineEdit;
+class QCheckBox;
 class QLabel;
 class QLineEdit;
 class QSpinBox;
-class KInstance;
 
 #include <kdialogbase.h>
 
@@ -47,16 +48,21 @@ class OptionDialog : public KDialogBase
     int         pageIndex;
     QCheckBox  *showSpecialCheck;
     QCheckBox  *showHyperLinksCheck;
+    KComboBox  *editorChoice;
+    QLabel     *editorDescription;
+    KLineEdit  *editorCallingCommand;
   };
 
   public:
     OptionDialog( QWidget *parent=0, const char *name=0, bool modal=true);
     virtual void show();
-    static bool paperSizes( const char *p, float &w, float &h );
+    QString     EditorCommand;
 
   protected slots:
-    virtual void slotOk();
-    virtual void slotApply();
+    void slotOk();
+    void slotApply();
+    void slotComboBox(int item);
+    void slotUserDefdEditorCommand( const QString & );
 
   private:
     void makeFontPage();
@@ -66,11 +72,16 @@ class OptionDialog : public KDialogBase
     void preferencesChanged();
 
   private:
+    bool        isUserDefdEditor;
+    QString     usersEditorCommand;
     FontItems   mFont;
     RenderItems mRender;
 
-    KInstance   *_instance;
+    QStringList EditorNames;
+    QStringList EditorCommands;
+    QStringList EditorDescriptions;
 
+    KInstance   *_instance;
 };
 
 

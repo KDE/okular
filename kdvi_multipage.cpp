@@ -313,6 +313,8 @@ void KDVIMultiPage::preferencesChanged()
   int showHyperLinks = config->readNumEntry( "ShowHyperLinks", 1 );
   if (showHyperLinks != window->showHyperLinks())
     window->setShowHyperLinks(showHyperLinks);
+
+  window->setEditorCommand( config->readEntry( "EditorCommand", "" ));
 }
 
 

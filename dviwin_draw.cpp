@@ -201,18 +201,44 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       // Now set up a rectangle which is checked against every mouse
       // event.
       if (word_boundary_encountered == true) {
+	// Set up hyperlink
 	hyperLinkList[num_of_used_hyperlinks].baseline = PXL_V;
 	hyperLinkList[num_of_used_hyperlinks].box.setRect(x, y, pix.width(), pix.height());
 	hyperLinkList[num_of_used_hyperlinks].linkText = *HTML_href;
 	if (num_of_used_hyperlinks < MAX_HYPERLINKS-1)
 	  num_of_used_hyperlinks++;
 	else
-	  kdError(4300) << "Used more than " << MAX_HYPERLINKS << " on a page. This is currently not supported." << endl;
+	  kdError(4300) << "Used more than " << MAX_HYPERLINKS << " hyperlinks on a page. This is currently not supported." << endl;
       } else {
        	QRect dshunion = hyperLinkList[num_of_used_hyperlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
 	hyperLinkList[num_of_used_hyperlinks-1].box = dshunion;
       }
     }
+
+
+    // Are we drawing text for a source hyperlink? And are source
+    // hyperlinks enabled? @@@@
+    if (source_href != NULL) {
+      // Now set up a rectangle which is checked against every mouse
+      // event.
+      if (word_boundary_encountered == true) {
+	// Set up source hyperlinks
+	sourceHyperLinkList[num_of_used_source_hyperlinks].baseline = PXL_V;
+	sourceHyperLinkList[num_of_used_source_hyperlinks].box.setRect(x, y, pix.width(), pix.height());
+	sourceHyperLinkList[num_of_used_source_hyperlinks].linkText = *source_href;
+	if (num_of_used_source_hyperlinks < MAX_HYPERLINKS-1)
+	  num_of_used_source_hyperlinks++;
+	else
+	  kdError(4300) << "Used more than " << MAX_HYPERLINKS << " source-hyperlinks on a page. This is currently not supported." << endl;
+      } else {
+
+       	QRect dshunion = sourceHyperLinkList[num_of_used_source_hyperlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+	sourceHyperLinkList[num_of_used_source_hyperlinks-1].box = dshunion;
+
+      }
+    }
+
+
   }
   if (cmd == PUT1)
     DVI_H = dvi_h_sav;
@@ -558,6 +584,7 @@ void dviWindow::draw_page(void)
   currinf._virtual       = NULL;
   HTML_href              = NULL;
   num_of_used_hyperlinks = 0;
+  num_of_used_source_hyperlinks = 0;
   draw_part(dviFile->dimconv, false);
   if (HTML_href != NULL) {
     delete HTML_href;

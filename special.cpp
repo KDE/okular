@@ -41,6 +41,7 @@ void dviWindow::html_anchor_special(QString cp)
   }
 }
 
+
 void dviWindow::html_href_special(QString cp)
 {
   cp.truncate(cp.find('"'));
@@ -53,6 +54,7 @@ void dviWindow::html_href_special(QString cp)
     HTML_href = new QString(cp);
   }
 }
+
 
 void dviWindow::html_anchor_end(void)
 {
@@ -77,6 +79,43 @@ void dviWindow::header_special(QString cp)
     PS_interface->PostScriptHeaderString->append( QString(" (%1) run\n").arg(cp) );
   }
 }
+
+void dviWindow::source_special(QString cp)
+{
+  // Separate the line-number and the TeX-filename part of the
+  // argument.  The convention for source-specials is very
+  // unfortunate. This method is given a string of type
+  // "881Filename.tex", which probably refers to line 881 in the
+  // TeX-sourcefile "Filename.tex", but perhaps also to line 88 in a
+  // file called "1Filename.tex".
+
+  // For the time being, we assume that the filename does not start
+  // with a number. @@@@ The productivity version of KDVI should
+  // correct this.
+
+  if (!PostScriptOutPutString) { // only when rendering really takes place
+    source_href = new QString(cp);
+  }
+
+  /*
+  int max = cp.length();
+  int i;
+
+  for(i=0; i<max; i++)
+    if (cp[i].isDigit() == false)
+      break;
+
+  unsigned int line = cp.left(i).toUInt(); 
+  QString filename = cp.mid(i);
+
+  source_href = filename;
+
+  kdDebug(4300) << "Source-special." << endl;
+  kdDebug(4300) << "File: " << filename << endl;
+  kdDebug(4300) << "Line: " << line << endl;
+  */
+}
+
 
 
 static void parse_special_argument(QString strg, const char *argument_name, int *variable)
@@ -293,9 +332,7 @@ void dviWindow::applicationDoSpecial(char *cp)
 
   // Encapsulated Postscript File
   if (special_command.find("src:", 0, false) == 0) {
-    // @@@@
-    kdDebug() << "Source special encountered: " << special_command << endl;
-    //    source_special(special_command.mid(4));
+    source_special(special_command.mid(4));
     return;
   }
   

@@ -81,6 +81,7 @@ public:
   int		curr_page() { return current_page+1; };
   void		setShowHyperLinks( int flag );
   int		showHyperLinks() { return _showHyperLinks; };
+  void		setEditorCommand( QString command )  { editorCommand = command; };
   void		setMakePK( int flag );
   int		makePK() { return makepk; };
   void		setMetafontMode( unsigned int );
@@ -104,12 +105,9 @@ public:
   void          set_empty_char(unsigned int cmd, unsigned int ch);
   void          set_no_char(unsigned int cmd, unsigned int ch);
   void          applicationDoSpecial(char * cp);
+
+
   void          special(long nbytes);
-  void          bang_special(QString cp);
-  void          quote_special(QString cp);
-  void          ps_special(QString cp);
-  void          epsf_special(QString cp);
-  void          header_special(QString cp);
   void          html_href_special(QString cp);
   void          html_anchor_end(void);
   void          html_anchor_special(QString cp);
@@ -158,6 +156,30 @@ protected:
  void paintEvent(QPaintEvent *ev);
 
 private:
+ /** Methods which handle certain special commands. */
+ void          bang_special(QString cp);
+ void          quote_special(QString cp);
+ void          ps_special(QString cp);
+ void          epsf_special(QString cp);
+ void          header_special(QString cp);
+ void          source_special(QString cp);
+
+ /** List of source-hyperlinks, for source-specials */
+ DVI_Hyperlink     sourceHyperLinkList[MAX_HYPERLINKS];
+ int               num_of_used_source_hyperlinks;
+ QString          *source_href; // If not NULL, the text currently
+				// drawn represents a source hyperlink
+				// to the (relative) URL given in the
+				// string;
+ QString           editorCommand;
+
+ /** List of ordinary-hyperlinks */
+ DVI_Hyperlink     hyperLinkList[MAX_HYPERLINKS];
+ int               num_of_used_hyperlinks;
+ QString          *HTML_href; // If not NULL, the text currently drawn
+			      // represents a hyperlink to the
+			      // (relative) URL given in the string;
+
  /** Stack for register compounds, used for the DVI-commands PUSH/POP
      as explained in section 2.5 and 2.6.2 of the DVI driver standard,
      Level 0, published by the TUG DVI driver standards committee. */
@@ -191,12 +213,7 @@ private:
  // TRUE, if Hyperlinks should be shown.
  unsigned char	   _showHyperLinks;
 
- // If not NULL, the text currently drawn represents a hyperlink
- // to the (relative) URL given in the string;
- QString          *HTML_href;
 
- DVI_Hyperlink     hyperLinkList[MAX_HYPERLINKS];
- int               num_of_used_hyperlinks;
 
  // This flag is used when rendering a dvi-page. It is set to "true"
  // when any dvi-command other than "set" or "put" series of commands

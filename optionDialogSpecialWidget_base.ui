@@ -1,0 +1,167 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>optionDialogSpecialWidget_base</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>optionDialogSpecialWidget_base</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>293</width>
+            <height>203</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Form1</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>showSpecialCheck</cstring>
+            </property>
+            <property name="text">
+                <string>Show PostScript specials</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>If in doubt, switch on</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>Some DVI files contain PostScript graphics. If switched on, KDVI will use the ghostview PostScript interpreter to display these. You probably want to switch this option on, unless you have a DVI-file whose PostScript part is broken, or too large for your machine.</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>showHyperLinksCheck</cstring>
+            </property>
+            <property name="text">
+                <string>Show Hyperlinks</string>
+            </property>
+            <property name="autoRepeat">
+                <bool>false</bool>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>If in doubt, switch on!</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>For your convenience, some DVI files contain hyperlinks which are cross-references or point to external documents. You probably want to switch this option on, unless you don't want the blue underlines which KDVI uses to mark the hyperlinks.</string>
+            </property>
+        </widget>
+        <widget class="QButtonGroup">
+            <property name="name">
+                <cstring>buttonGroup3</cstring>
+            </property>
+            <property name="title">
+                <string>Editor for inverse search</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KURLLabel" row="0" column="1">
+                    <property name="name">
+                        <cstring>urll</cstring>
+                    </property>
+                    <property name="text">
+                        <string>What is 'inverse search'? </string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignVCenter|AlignRight</set>
+                    </property>
+                    <property name="url" stdset="0">
+                        <string>inv-search</string>
+                    </property>
+                </widget>
+                <spacer row="0" column="0">
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Editor:</string>
+                    </property>
+                </widget>
+                <widget class="KComboBox" row="1" column="1">
+                    <property name="name">
+                        <cstring>editorChoice</cstring>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Choose an editor which is used in inverse search.</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>&lt;p&gt;Some DVI-files contain 'inverse search' information. If such a DVI-file is loaded, you can click with the right mouse into KDVI, an editor opens, loads the TeX-file and jumps to the proper position. You can select you favourite editor here. If in doubt, 'nedit' is usually a good choice.&lt;/p&gt;
+&lt;p&gt;Check the KDVI manual to see how to prepare DVI-files which support the inverse search.&lt;/p&gt;</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>textLabel3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Description:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>textLabel4</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Shell Command:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="1">
+                    <property name="name">
+                        <cstring>editorDescription</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Explains about the editor's capabilities in conjunction with inverse search.</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>&lt;p&gt;Not all editors are well-suited for inverse search. For instance, many editors have no command like 'If the file is not yet loaded, load it. Otherwise, bring the window with the file to the front'. If you are using an editor like this, clicking into the DVI file will always open a new editor, even if the TeX-file is already open. Likewise, many editors have no command line argument that would allow KDVI to specify the exact line which you wish to edit.&lt;/p&gt;
+&lt;p&gt;If you feel that KDVI's support for a certain editor is not well-done, please write to kebekus@kde.org.&lt;/p&gt;</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="3" column="1">
+                    <property name="name">
+                        <cstring>editorCallingCommand</cstring>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Shell-command line used to start the editor.</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>If you are using inverse search, KDVI uses this command line to start the editor. The field '%f' is replaced with the filename, and '%l' is replaced with the line number.</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+    </vbox>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kurllabel.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>klineedit.h</includehint>
+</includehints>
+</UI>

@@ -1,0 +1,148 @@
+// optionDialogSpecialWidget.cpp
+//
+// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+//
+// (C) 2003 Stefan Kebekus
+// Distributed under the GPL
+
+// Add header files alphabetically
+
+#include <kdebug.h>
+
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kcombobox.h>
+#include <kinstance.h>
+#include <klineedit.h>
+#include <klocale.h>
+#include <kurllabel.h>
+#include <qcheckbox.h>
+#include <qlabel.h>
+
+#include "optionDialogSpecialWidget.h"
+
+
+// Constructs a optionDialogWidget_base which is a child of 'parent', with
+// the name 'name' and widget flags set to 'f'.
+optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const char* name, WFlags fl )
+    : optionDialogSpecialWidget_base( parent,  name, fl )
+{
+  instance = 0;
+  config = 0;
+  instance = new KInstance("kdvi");
+  config = instance->config();
+  config->setGroup("kdvi");
+
+  // Set up the list of known and supported editors
+  editorNameString        += i18n("User-Defined Editor");
+  editorCommandString     += "";
+  editorDescriptionString += i18n("Enter the command line below.");
+  
+  editorNameString        += "Emacs / emacsclient";
+  editorCommandString     += "emacsclient --no-wait +%l %f || emacs +%l %f";
+  editorDescriptionString += i18n("Click 'Help' to learn how to set up Emacs.");
+  
+  editorNameString        += "Kate";
+  editorCommandString     += "kate %f";
+  editorDescriptionString += i18n("Kate does not jump to line");
+  
+  editorNameString        += "NEdit";
+  editorCommandString     += "ncl -noask -line %l %f || nc -noask -line %l %f";
+  editorDescriptionString += i18n("NEdit perfectly supports inverse search.");
+  
+  editorNameString        += "VIM - Vi IMproved / GUI";
+  editorCommandString     += "gvim --servername kdvi --remote +%l %f";
+  editorDescriptionString += i18n("VIM version 6.0 or greater works just fine.");
+
+  editorNameString        += "XEmacs / gnuclient";
+  editorCommandString     += "gnuclient -q +%l %f || xemacs  +%l %f";
+  editorDescriptionString += i18n("Click 'Help' to learn how to set up XEmacs.");
+
+
+  showSpecialCheck->setChecked(config->readBoolEntry("ShowPS", true));
+  showHyperLinksCheck->setChecked(config->readBoolEntry("ShowHyperLinks", true)); 
+  for(unsigned int i=0; i<editorNameString.count(); i++)
+    editorChoice->insertItem(editorNameString[i]);
+  // Set the proper editor on the "Rendering-Page", try to recognize
+  // the editor command from the config-file. If the editor command is
+  // not recognized, switch to "User defined editor". That way, kdvi
+  // stays compatible even if the EditorCommands[] change between
+  // different versions of kdvi.
+  QString currentEditorCommand = config->readEntry( "EditorCommand", "" );
+  int i;
+  for(i = editorCommandString.count()-1; i>0; i--)
+    if (editorCommandString[i] == currentEditorCommand)
+      break;
+  if (i == 0)
+    usersEditorCommand = currentEditorCommand;
+  slotComboBox(i);
+
+  connect(urll, SIGNAL(leftClickedURL(const QString&)), this, SLOT(slotExtraHelpButton(const QString&)));
+  connect(editorChoice, SIGNAL( activated( int ) ), this, SLOT( slotComboBox( int ) ) );
+
+  // Editor description strings (and their translations) vary in
+  // size. Find the longest description string available to make sure
+  // that the page is always large enough.
+  int maximumWidth = 0;
+  for ( QStringList::Iterator it = editorDescriptionString.begin(); it != editorDescriptionString.end(); ++it ) {
+    int width = editorDescription->fontMetrics().width(*it);
+    if (width > maximumWidth)
+      maximumWidth = width;
+  }
+  editorDescription->setMinimumWidth(maximumWidth+10);
+
+  editorCallingCommand->setReadOnly(true);
+  connect(editorCallingCommand, SIGNAL( textChanged (const QString &) ), this, SLOT( slotUserDefdEditorCommand( const QString & ) ) );
+}
+
+optionDialogSpecialWidget::~optionDialogSpecialWidget()
+{
+  if (config != 0L)
+    delete config;
+  if (instance != 0L)
+    delete instance;
+}
+
+void optionDialogSpecialWidget::slotUserDefdEditorCommand( const QString &text )
+{
+  if (isUserDefdEditor == true)
+    EditorCommand = usersEditorCommand = text;
+}
+
+
+void optionDialogSpecialWidget::slotComboBox(int item)
+{
+  if (item != editorChoice->currentItem())
+    editorChoice->setCurrentItem(item);
+
+  editorDescription->setText(editorDescriptionString[item]);
+
+  if (item != 0) {
+    isUserDefdEditor = false;
+    editorCallingCommand->setText(editorCommandString[item]);
+    editorCallingCommand->setReadOnly(true);
+    EditorCommand = editorCommandString[item];
+  } else {
+    editorCallingCommand->setText(usersEditorCommand);
+    editorCallingCommand->setReadOnly(false);
+    EditorCommand = usersEditorCommand;
+    isUserDefdEditor = true;
+  }
+}
+
+void optionDialogSpecialWidget::slotExtraHelpButton( const QString & )
+{
+  kapp->invokeHelp( "inv-search", "kdvi" );
+}
+
+void optionDialogSpecialWidget::apply(void)
+{
+  config->setGroup("kdvi");
+  config->writeEntry( "ShowPS", showSpecialCheck->isChecked() );
+  config->writeEntry( "ShowHyperLinks", showHyperLinksCheck->isChecked() );
+  config->writeEntry( "EditorCommand", EditorCommand );
+  config->sync();
+}
+
+
+#include "optionDialogSpecialWidget.moc"

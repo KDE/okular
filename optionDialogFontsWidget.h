@@ -1,0 +1,34 @@
+// optionDiologWidget.h
+//
+// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+//
+// (C) 2003 Stefan Kebekus
+// Distributed under the GPL
+
+#ifndef OPTIONDIALOGFONTSWIDGET_H
+#define OPTIONDIALOGFONTSWIDGET_H
+
+// Add header files alphabetically
+
+#include "optionDialogFontsWidget_base.h"
+
+class KConfig;
+class KInstance;
+
+class optionDialogFontsWidget : public optionDialogFontsWidget_base
+{ 
+  Q_OBJECT
+    
+ public:
+  optionDialogFontsWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+  ~optionDialogFontsWidget();
+  
+ public slots:
+  void apply(void);
+
+ private:
+  KInstance *instance;
+  KConfig *config;
+};
+
+#endif // OPTIONDIALOGFONTSWIDGET_H

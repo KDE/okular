@@ -1,0 +1,98 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>optionDialogFontsWidget_base</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>optionDialogFontsWidget_base</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>237</width>
+            <height>203</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>TeX Fonts</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QButtonGroup">
+            <property name="name">
+                <cstring>buttonGroup1</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>NoFrame</enum>
+            </property>
+            <property name="title">
+                <string></string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Metafont mode:</string>
+                    </property>
+                </widget>
+                <widget class="KComboBox" row="0" column="1">
+                    <property name="name">
+                        <cstring>metafontMode</cstring>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>LaserJet 4 is usually a good choice.</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>&lt;p&gt;Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p&gt;
+&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid to generate several bitmap versions of the same font.&lt;/p&gt;</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>fontGenerationCheckBox</cstring>
+            </property>
+            <property name="text">
+                <string>generate missing fonts</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>If in doubt, switch on!</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to switch this on.</string>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<slots>
+    <slot>buttonGroup1_clicked(int)</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kcombobox.h</includehint>
+</includehints>
+</UI>

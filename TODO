@@ -3,8 +3,9 @@ ToDo-List for kdvi
 URGENT / URGENT BUGFIXING
 
 o Proper handling of the base-url
-o give source-information in the status line
-o "File not found" is not centered
+o don't show REFERENCES, URLS in the title bar
+o don't show temporary file names in the titlebar
+o add "tt.dvi.gz" to the list of recent files, not "/tmp/kviews....."
 
 HIGHLY DESIRABLE
 
@@ -24,6 +25,5 @@ o Internal printing using QPrinter
 o Magnifier window
 o Two page view
 o Support for even more TeX specials
-o dynamical storage allocation for hyperlinks (see dviwin.h)
 o more robust Error handling with throw/catch; no need to abort just because a PK-file is bad.
 

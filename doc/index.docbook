@@ -1,9 +1,9 @@
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook V3.1-Based Variant V1.0//EN" [
+<?xml version="1.0" ?><!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN" "dtd/kdex.dtd" [
  <!ENTITY kappname "&kdvi;">
  <!ENTITY % English "INCLUDE">
  <!ENTITY % addindex "IGNORE">
- <!ENTITY % ents PUBLIC "-//KDE//ENTITIES Documentation V1.0//EN">
-  %ents;
+ 
+  
 ]>
 <book lang="&language;">
 
@@ -84,7 +84,7 @@
   <chapter id="options">
     <title>The option dialog</title>
 
-    <anchor id="opts">
+    <anchor id="opts"/>
     <section id="opt-fonts">
       <title>Font Options</title>
 
@@ -95,7 +95,7 @@
       <informalfigure>
 	<mediaobject>
           <imageobject>
- <imagedata fileref="optionrequester1.png" format="PNG"></imageobject>
+ <imagedata fileref="optionrequester1.png" format="PNG"/></imageobject>
  </mediaobject>	
       </informalfigure>
 
@@ -156,7 +156,7 @@
       <para> The following picture shows the second options dialog of
       kdvi.
       <informalfigure><mediaobject><imageobject>
-	  <imagedata fileref="optionrequester2.png" format="PNG"></imageobject>
+	  <imagedata fileref="optionrequester2.png" format="PNG"/></imageobject>
 </mediaobject>
 	</informalfigure>
 </para>
@@ -260,3 +260,4 @@ missfont.log are correct before enabling font generation.</para>
 </chapter>
 
 </book>
+

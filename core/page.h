@@ -124,6 +124,7 @@ class NormalizedRect
         NormalizedRect( double l, double t, double r, double b );
         NormalizedRect( const QRect & r, double xScale, double yScale );
 
+        bool isNull() const;
         bool contains( double x, double y ) const;
         bool intersects( const NormalizedRect & normRect ) const;
         bool intersects( double l, double t, double r, double b ) const;

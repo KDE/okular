@@ -103,7 +103,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
             for ( ; aIt != aEnd; ++aIt )
             {
-                if ( (*aIt)->r.intersects( nXMin, nYMin, nXMax, nYMax ) )
+                if ( (*aIt)->boundary.intersects( nXMin, nYMin, nXMax, nYMax ) )
                 {
                     paintAnnotations = true;
                     break;
@@ -245,7 +245,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         for ( ; aIt != aEnd; ++aIt )
         {
             Annotation * a = *aIt;
-            QRect annotRect = a->r.geometry( scaledWidth, scaledHeight );
+            QRect annotRect = a->boundary.geometry( scaledWidth, scaledHeight );
 
             // if annotation doesn't intersect paint region, skip it
             if ( !annotRect.isValid() || !annotRect.intersects( limits ) )
@@ -254,7 +254,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             // draw extents rectangle
             if ( Settings::debugDrawAnnotationRect() )
             {
-                mixedPainter->setPen( a->color );
+                mixedPainter->setPen( a->style.color );
                 mixedPainter->drawRect( annotRect );
             }
 

@@ -16,27 +16,105 @@
 // local includes
 #include "annotations.h"
 
-/** @short What's that bloated file? */
-/* In this file there is the implementation of Annotation and all its children
- * objects. For each object we do:
- *  1A) perform default initialization of data        // both done recurring \\
- *  1B) initialize data taking values from a XML node \\ to parent(s) too    //
- *   2) save data to XML node
- **/
+
+/** AnnotationManager **/
+
+Annotation * AnnotationManager::createAnnotation( const QDomElement & annElement )
+{
+    if ( !annElement.hasAttribute( "type" ) )
+        return 0;
+
+    // build annotation of given type
+    Annotation * annotation = 0;
+    int typeNumber = annElement.attribute( "type" ).toInt();
+    switch ( typeNumber )
+    {
+        case Annotation::AText:
+            annotation = new TextAnnotation( annElement );
+            break;
+        case Annotation::ALine:
+            annotation = new LineAnnotation( annElement );
+            break;
+        case Annotation::AGeom:
+            annotation = new GeomAnnotation( annElement );
+            break;
+        case Annotation::AHighlight:
+            annotation = new HighlightAnnotation( annElement );
+            break;
+        case Annotation::AStamp:
+            annotation = new StampAnnotation( annElement );
+            break;
+        case Annotation::AInk:
+            annotation = new InkAnnotation( annElement );
+            break;
+    }
+
+    // safety check
+    if ( !annotation )
+        return 0;
+
+    // if annotations contains previous revisions, recursively restore them
+    QDomNode childNode = annElement.firstChild();
+    while ( childNode.isElement() )
+    {
+        QDomElement childElement = childNode.toElement();
+        childNode = childNode.nextSibling();
+
+        if ( childElement.tagName() == "annotation" )
+        {
+            //Annotation * prevRevision = createAnnotation( childElement );
+            //TODO restore additional prevRevision parameters too
+            /*if ( prevRevision )
+            {
+                annotation->prevRevision = new AnnRevision();
+                annotation->prevRevision->annotation = prevRevision;
+        }*/
+            break;
+        }
+    }
+
+    // return created annotation
+    return annotation;
+}
+
+void AnnotationManager::storeAnnotation( const Annotation * ann, QDomNode & parentNode,
+    QDomDocument & document )
+{
+    // create annotation element and append it to parent
+    QDomElement annotElement = document.createElement( "annotation" );
+    parentNode.appendChild( annotElement );
+
+    // save annotation's type and states
+    annotElement.setAttribute( "type", (uint)ann->subType() );
+    ann->store( annotElement, document );
+
+    // if annotation has a previous revision, recourse saving it
+    //if ( ann->prevRevision && ann->prevRevision->annotation )
+    //    storeAnnotation( ann->prevRevision->annotation, annotElement, document );
+}
+
 
 /** Annotation **/
-
+/*
 Annotation::DrawStyle::DrawStyle()
     : style( Solid ), effect( NoEffect ), width( 1 ), xCornerRadius( 0 ),
     yCornerRadius( 0 ), dashMarks( 3 ), dashSpaces( 0 ),  effectIntensity( 0 ) {}
 
-Annotation::Annotation()
-    : rUnscaledWidth( -1 ), rUnscaledHeight( -1 ), flags( 0 ), external( false )
-{}
+Annotation::Window::Window()
+    : opened( false ), flags( 0 ) {}
 
-Annotation::Annotation( const QDomNode & node )
-    : rUnscaledWidth( -1 ), rUnscaledHeight( -1 ), flags( 0 ), external( false )
+Annotation::Revision::Revision()
+    : nextRevision( 0 ), scope( Reply ), stateModel( Mark ), state( Unmarked ) {}
+*/
+
+Annotation::Annotation()
+    : flags( 0 )
 {
+}
+
+Annotation::Annotation( const QDomNode & /*node*/ )
+    : flags( 0 )
+{/*
     // loop through the whole children looking for a 'base' element
     QDomNode subNode = node.firstChild();
     while( subNode.isElement() )
@@ -90,14 +168,34 @@ Annotation::Annotation( const QDomNode & node )
                 drawStyle.effectIntensity = ee.attribute( "intensity" ).toInt();
             }
         }
+ */
+        /** da WindowAnnotation
+        // loop through the whole children looking for a 'window' element
+        QDomNode subNode = node.firstChild();
+        while( subNode.isElement() )
+        {
+            QDomElement e = subNode.toElement();
+            subNode = subNode.nextSibling();
+            if ( e.tagName() != "window" )
+                continue;
 
+            // parse the attributes
+            if ( e.hasAttribute( "parent" ) )
+                windowMarkupParentID = e.attribute( "parent" ).toInt();
+            if ( e.hasAttribute( "opened" ) )
+                windowOpened = e.attribute( "opened" ).toInt();
+
+            // loading complete
+            break;
+        }*/
+    /*
         // loading complete
         break;
-    }
+    }*/
 }
 
-void Annotation::store( QDomNode & node, QDomDocument & document ) const
-{
+void Annotation::store( QDomNode & /*node*/, QDomDocument & /*document*/ ) const
+{/*
     // create [base] element (child of 'Annotation' node)
     QDomElement baseElement = document.createElement( "base" );
     node.appendChild( baseElement );
@@ -140,20 +238,33 @@ void Annotation::store( QDomNode & node, QDomDocument & document ) const
     }
     if ( color.isValid() )
         baseElement.setAttribute( "color", color.name() );
+        */
+    /** from WindowAnnotation
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [window] element
+    QDomElement windowElement = document.createElement( "window" );
+    node.appendChild( windowElement );
+
+    // append the optional attributes
+    if ( windowMarkupParentID != -1 )
+        windowElement.setAttribute( "parent", windowMarkupParentID );
+    if ( windowOpened )
+        windowElement.setAttribute( "opened", windowOpened );
+    */
 }
 
 
 /** MarkupAnnotation ** Annotation */
 
-MarkupAnnotation::InReplyTo::InReplyTo()
-    : ID( -1 ), scope( Reply ), stateModel( Mark ), state( Unmarked ) {}
-
+/*
 MarkupAnnotation::MarkupAnnotation()
-    : Annotation(), markupOpacity( 1.0 ), markupWindowID( -1 )
+    : Annotation(), markupOpacity( 1.0 )
 {}
 
 MarkupAnnotation::MarkupAnnotation( const QDomNode & node )
-    : Annotation( node ), markupOpacity( 1.0 ), markupWindowID( -1 )
+    : Annotation( node ), markupOpacity( 1.0 )
 {
     // loop through the whole children looking for a 'markup' element
     QDomNode subNode = node.firstChild();
@@ -167,12 +278,6 @@ MarkupAnnotation::MarkupAnnotation( const QDomNode & node )
         // parse the attributes
         if ( e.hasAttribute( "opacity" ) )
             markupOpacity = e.attribute( "opacity" ).toDouble();
-        if ( e.hasAttribute( "refID" ) )
-            markupWindowID = e.attribute( "refID" ).toInt();
-        if ( e.hasAttribute( "title" ) )
-            markupWindowTitle = e.attribute( "title" );
-        if ( e.hasAttribute( "summary" ) )
-            markupWindowSummary = e.attribute( "summary" );
         if ( e.hasAttribute( "creationDate" ) )
             markupCreationDate = QDateTime::fromString( e.attribute( "creationDate" ) );
 
@@ -183,16 +288,44 @@ MarkupAnnotation::MarkupAnnotation( const QDomNode & node )
             QDomElement ee = eSubNode.toElement();
             eSubNode = eSubNode.nextSibling();
 
-            if ( ee.tagName() == "escapedText" )
+            if ( ee.tagName() == "window" )
             {
-                markupWindowText = ee.firstChild().toCDATASection().data();
+                // parse window attributes
+                if ( ee.hasAttribute( "opened" ) )
+                    markupWindow.opened = (bool)ee.attribute( "opened" ).toInt();
+                if ( ee.hasAttribute( "flags" ) )
+                    markupWindow.flags = ee.attribute( "flags" ).toInt();
+                if ( ee.hasAttribute( "title" ) )
+                    markupWindow.title = ee.attribute( "title" );
+                if ( ee.hasAttribute( "summary" ) )
+                    markupWindow.summary = ee.attribute( "summary" );
+
+                // parse window subnodes
+                QDomNode eeSubNode = ee.firstChild();
+                while ( eeSubNode.isElement() )
+                {
+                    QDomElement eee = eeSubNode.toElement();
+                    eeSubNode = eeSubNode.nextSibling();
+
+                    if ( eee.tagName() == "rect" )
+                    {
+                        markupWindow.r.left = eee.attribute( "l" ).toDouble();
+                        markupWindow.r.top = eee.attribute( "t" ).toDouble();
+                        markupWindow.r.right = eee.attribute( "r" ).toDouble();
+                        markupWindow.r.bottom = eee.attribute( "b" ).toDouble();
+                    }
+                    else if ( eee.tagName() == "escapedText" )
+                    {
+                        markupWindow.text = eee.firstChild().toCDATASection().data();
+                    }
+                }
             }
-            else if ( ee.tagName() == "irt" )
+            else if ( ee.tagName() == "revision" )
             {
-                markupReply.ID = ee.attribute( "ID" ).toInt();
-                markupReply.scope = (InReplyTo::S)ee.attribute( "scope" ).toInt();
-                markupReply.stateModel = (InReplyTo::M)ee.attribute( "stateModel" ).toInt();
-                markupReply.state = (InReplyTo::T)ee.attribute( "state" ).toInt();
+                //TODO HERE - recursive rev parse!
+                markupRevision.scope = (Revision::S)ee.attribute( "scope" ).toInt();
+                markupRevision.stateModel = (Revision::M)ee.attribute( "stateModel" ).toInt();
+                markupRevision.state = (Revision::T)ee.attribute( "state" ).toInt();
             }
         }
 
@@ -213,89 +346,60 @@ void MarkupAnnotation::store( QDomNode & node, QDomDocument & document ) const
     // append the optional attributes
     if ( markupOpacity != 1.0 )
         markupElement.setAttribute( "opacity", markupOpacity );
-    if ( markupWindowID != -1 )
-        markupElement.setAttribute( "refID", markupWindowID );
-    if ( !markupWindowTitle.isEmpty() )
-        markupElement.setAttribute( "title", markupWindowTitle );
-    if ( !markupWindowText.isEmpty() )
-    {
-        QDomElement escapedText = document.createElement( "escapedText" );
-        markupElement.appendChild( escapedText );
-        QDomCDATASection cdataText = document.createCDATASection( markupWindowText );
-        escapedText.appendChild( cdataText );
-    }
-    if ( !markupWindowSummary.isEmpty() )
-        markupElement.setAttribute( "summary", markupWindowSummary );
     if ( markupCreationDate.isValid() )
         markupElement.setAttribute( "creationDate", markupCreationDate.toString() );
-    if ( markupReply.ID != -1 )
+
+    // append the window attributes
+    QDomElement winElement = document.createElement( "window" );
+    markupElement.appendChild( winElement );
+    if ( markupWindow.opened )
+        winElement.setAttribute( "opened", markupWindow.opened );
+    if ( markupWindow.flags )
+        winElement.setAttribute( "flags", markupWindow.flags );
+    if ( !markupWindow.r.isNull() )
     {
-        QDomElement irtElement = document.createElement( "irt" );
-        markupElement.appendChild( irtElement );
-        irtElement.setAttribute( "ID", markupReply.ID );
-        irtElement.setAttribute( "scope", (int)markupReply.scope );
-        irtElement.setAttribute( "stateModel", (int)markupReply.stateModel );
-        irtElement.setAttribute( "state", (int)markupReply.state );
+        QDomElement rectElement = document.createElement( "rect" );
+        winElement.appendChild( rectElement );
+        rectElement.setAttribute( "l", (double)markupWindow.r.left );
+        rectElement.setAttribute( "t", (double)markupWindow.r.top );
+        rectElement.setAttribute( "r", (double)markupWindow.r.right );
+        rectElement.setAttribute( "b", (double)markupWindow.r.bottom );
+    }
+    if ( !markupWindow.title.isEmpty() )
+        winElement.setAttribute( "title", markupWindow.title );
+    if ( !markupWindow.summary.isEmpty() )
+        markupElement.setAttribute( "summary", markupWindow.summary );
+    if ( !markupWindow.text.isEmpty() )
+    {
+        QDomElement escapedText = document.createElement( "escapedText" );
+        winElement.appendChild( escapedText );
+        QDomCDATASection cdataText = document.createCDATASection( markupWindow.text );
+        escapedText.appendChild( cdataText );
+    }
+
+    // append the revision(s) recursively
+    if ( markupRevision.nextRevision )
+    {
+        QDomElement revElement = document.createElement( "revision" );
+        markupElement.appendChild( revElement );
+        //FIXME revElement.setAttribute( "ID", .ID );
+        revElement.setAttribute( "scope", (int)markupRevision.scope );
+        revElement.setAttribute( "stateModel", (int)markupRevision.stateModel );
+        revElement.setAttribute( "state", (int)markupRevision.state );
     }
 }
+*/
 
-
-/** WindowAnnotation ** Annotation */
-
-WindowAnnotation::WindowAnnotation()
-    : Annotation(), windowMarkupParentID( -1 ), windowOpened( false )
-{}
-
-WindowAnnotation::WindowAnnotation( const QDomNode & node )
-    : Annotation( node ), windowMarkupParentID( -1 ), windowOpened( false )
-{
-    // loop through the whole children looking for a 'window' element
-    QDomNode subNode = node.firstChild();
-    while( subNode.isElement() )
-    {
-        QDomElement e = subNode.toElement();
-        subNode = subNode.nextSibling();
-        if ( e.tagName() != "window" )
-            continue;
-
-        // parse the attributes
-        if ( e.hasAttribute( "parent" ) )
-            windowMarkupParentID = e.attribute( "parent" ).toInt();
-        if ( e.hasAttribute( "opened" ) )
-            windowOpened = e.attribute( "opened" ).toInt();
-
-        // loading complete
-        break;
-    }
-}
-
-void WindowAnnotation::store( QDomNode & node, QDomDocument & document ) const
-{
-    // recurse to parent objects storing properties
-    Annotation::store( node, document );
-
-    // create [window] element
-    QDomElement windowElement = document.createElement( "window" );
-    node.appendChild( windowElement );
-
-    // append the optional attributes
-    if ( windowMarkupParentID != -1 )
-        windowElement.setAttribute( "parent", windowMarkupParentID );
-    if ( windowOpened )
-        windowElement.setAttribute( "opened", windowOpened );
-}
-
-
-/** TextAnnotation ** MarkupAnnotation : Annotation */
+/** TextAnnotation ** Annotation */
 
 TextAnnotation::TextAnnotation()
-    : MarkupAnnotation(), textType( Linked ), textFont(),
+    : Annotation(), textType( Linked ), textFont(),
     textOpened( false ), textIcon( "Note" ), inplaceAlign( 0 ),
     inplaceIntent( Unknown )
 {}
 
 TextAnnotation::TextAnnotation( const QDomNode & node )
-    : MarkupAnnotation( node ), textType( Linked ), textFont(),
+    : Annotation( node ), textType( Linked ), textFont(),
     textOpened( false ), textIcon( "Note" ), inplaceAlign( 0 ),
     inplaceIntent( Unknown )
 {
@@ -310,7 +414,7 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "type" ) )
-            textType = (TextAnnotation::T)e.attribute( "type" ).toInt();
+            textType = (TextAnnotation::TextType)e.attribute( "type" ).toInt();
         if ( e.hasAttribute( "font" ) )
             textFont.fromString( e.attribute( "font" ) );
         if ( e.hasAttribute( "opened" ) )
@@ -320,7 +424,7 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
         if ( e.hasAttribute( "align" ) )
             inplaceAlign = e.attribute( "align" ).toInt();
         if ( e.hasAttribute( "intent" ) )
-            inplaceIntent = (TextAnnotation::I)e.attribute( "intent" ).toInt();
+            inplaceIntent = (TextAnnotation::InplaceIntent)e.attribute( "intent" ).toInt();
 
         // parse the subnodes
         QDomNode eSubNode = e.firstChild();
@@ -331,7 +435,7 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
 
             if ( ee.tagName() == "escapedText" )
             {
-                inplaceString = ee.firstChild().toCDATASection().data();
+                inplaceText = ee.firstChild().toCDATASection().data();
             }
             else if ( ee.tagName() == "callout" )
             {
@@ -352,7 +456,7 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
 void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // recurse to parent objects storing properties
-    MarkupAnnotation::store( node, document );
+    Annotation::store( node, document );
 
     // create [text] element
     QDomElement textElement = document.createElement( "text" );
@@ -369,11 +473,11 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
         textElement.setAttribute( "icon", textIcon );
     if ( inplaceAlign )
         textElement.setAttribute( "align", inplaceAlign );
-    if ( !inplaceString.isEmpty() )
+    if ( !inplaceText.isEmpty() )
     {
         QDomElement escapedText = document.createElement( "escapedText" );
         textElement.appendChild( escapedText );
-        QDomCDATASection cdataText = document.createCDATASection( inplaceString );
+        QDomCDATASection cdataText = document.createCDATASection( inplaceText );
         escapedText.appendChild( cdataText );
     }
     if ( inplaceCallout[0].x != 0.0 )
@@ -392,16 +496,16 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
 }
 
 
-/** LineAnnotation ** MarkupAnnotation : Annotation */
+/** LineAnnotation ** Annotation */
 
 LineAnnotation::LineAnnotation()
-    : MarkupAnnotation(), lineStartStyle( None ), lineEndStyle( None ),
+    : Annotation(), lineStartStyle( None ), lineEndStyle( None ),
     lineClosed( false ), lineLeadingFwdPt( 0 ), lineLeadingBackPt( 0 ),
     lineShowCaption( false ), lineIntent( Unknown )
 {}
 
 LineAnnotation::LineAnnotation( const QDomNode & node )
-    : MarkupAnnotation( node ), lineStartStyle( None ), lineEndStyle( None ),
+    : Annotation( node ), lineStartStyle( None ), lineEndStyle( None ),
     lineClosed( false ), lineLeadingFwdPt( 0 ), lineLeadingBackPt( 0 ),
     lineShowCaption( false ), lineIntent( Unknown )
 {
@@ -416,9 +520,9 @@ LineAnnotation::LineAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "startStyle" ) )
-            lineStartStyle = (LineAnnotation::S)e.attribute( "startStyle" ).toInt();
+            lineStartStyle = (LineAnnotation::TermStyle)e.attribute( "startStyle" ).toInt();
         if ( e.hasAttribute( "endStyle" ) )
-            lineEndStyle = (LineAnnotation::S)e.attribute( "endStyle" ).toInt();
+            lineEndStyle = (LineAnnotation::TermStyle)e.attribute( "endStyle" ).toInt();
         if ( e.hasAttribute( "closed" ) )
             lineClosed = e.attribute( "closed" ).toInt();
         if ( e.hasAttribute( "innerColor" ) )
@@ -430,7 +534,7 @@ LineAnnotation::LineAnnotation( const QDomNode & node )
         if ( e.hasAttribute( "showCaption" ) )
             lineShowCaption = e.attribute( "showCaption" ).toInt();
         if ( e.hasAttribute( "intent" ) )
-            lineIntent = (LineAnnotation::I)e.attribute( "intent" ).toInt();
+            lineIntent = (LineAnnotation::LineIntent)e.attribute( "intent" ).toInt();
 
         // parse all 'point' subnodes
         QDomNode pointNode = e.firstChild();
@@ -456,7 +560,7 @@ LineAnnotation::LineAnnotation( const QDomNode & node )
 void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // recurse to parent objects storing properties
-    MarkupAnnotation::store( node, document );
+    Annotation::store( node, document );
 
     // create [line] element
     QDomElement lineElement = document.createElement( "line" );
@@ -497,14 +601,14 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
 }
 
 
-/** GeomAnnotation ** MarkupAnnotation : Annotation */
+/** GeomAnnotation ** Annotation */
 
 GeomAnnotation::GeomAnnotation()
-    : MarkupAnnotation(), geomType( InscribedSquare ), geomWidthPt( 18 )
+    : Annotation(), geomType( InscribedSquare ), geomWidthPt( 18 )
 {}
 
 GeomAnnotation::GeomAnnotation( const QDomNode & node )
-    : MarkupAnnotation( node ), geomType( InscribedSquare ), geomWidthPt( 18 )
+    : Annotation( node ), geomType( InscribedSquare ), geomWidthPt( 18 )
 {
     // loop through the whole children looking for a 'geom' element
     QDomNode subNode = node.firstChild();
@@ -517,7 +621,7 @@ GeomAnnotation::GeomAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "type" ) )
-            geomType = (GeomAnnotation::T)e.attribute( "type" ).toInt();
+            geomType = (GeomAnnotation::GeomType)e.attribute( "type" ).toInt();
         if ( e.hasAttribute( "color" ) )
             geomInnerColor = QColor( e.attribute( "color" ) );
         if ( e.hasAttribute( "width" ) )
@@ -531,7 +635,7 @@ GeomAnnotation::GeomAnnotation( const QDomNode & node )
 void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // recurse to parent objects storing properties
-    MarkupAnnotation::store( node, document );
+    Annotation::store( node, document );
 
     // create [geom] element
     QDomElement geomElement = document.createElement( "geom" );
@@ -547,14 +651,14 @@ void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
 }
 
 
-/** HighlightAnnotation ** MarkupAnnotation : Annotation */
+/** HighlightAnnotation ** Annotation */
 
 HighlightAnnotation::HighlightAnnotation()
-    : MarkupAnnotation(), highlightType( Highlight )
+    : Annotation(), highlightType( Highlight )
 {}
 
 HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
-    : MarkupAnnotation( node ), highlightType( Highlight )
+    : Annotation( node ), highlightType( Highlight )
 {
     // loop through the whole children looking for a 'hl' element
     QDomNode subNode = node.firstChild();
@@ -567,7 +671,7 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "type" ) )
-            highlightType = (HighlightAnnotation::T)e.attribute( "type" ).toInt();
+            highlightType = (HighlightAnnotation::HighlightType)e.attribute( "type" ).toInt();
 
         // parse all 'quad' subnodes
         QDomNode quadNode = e.firstChild();
@@ -599,7 +703,7 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
 void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // recurse to parent objects storing properties
-    MarkupAnnotation::store( node, document );
+    Annotation::store( node, document );
 
     // create [hl] element
     QDomElement hlElement = document.createElement( "hl" );
@@ -629,14 +733,14 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
 }
 
 
-/** StampAnnotation ** MarkupAnnotation : Annotation */
+/** StampAnnotation ** Annotation */
 
 StampAnnotation::StampAnnotation()
-    : MarkupAnnotation(), stampIconName( "kpdf" )
+    : Annotation(), stampIconName( "kpdf" )
 {}
 
 StampAnnotation::StampAnnotation( const QDomNode & node )
-    : MarkupAnnotation( node ), stampIconName( "kpdf" )
+    : Annotation( node ), stampIconName( "kpdf" )
 {
     // loop through the whole children looking for a 'stamp' element
     QDomNode subNode = node.firstChild();
@@ -659,7 +763,7 @@ StampAnnotation::StampAnnotation( const QDomNode & node )
 void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // recurse to parent objects storing properties
-    MarkupAnnotation::store( node, document );
+    Annotation::store( node, document );
 
     // create [stamp] element
     QDomElement stampElement = document.createElement( "stamp" );
@@ -671,14 +775,14 @@ void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
 }
 
 
-/** InkAnnotation ** MarkupAnnotation : Annotation */
+/** InkAnnotation ** Annotation */
 
 InkAnnotation::InkAnnotation()
-    : MarkupAnnotation()
+    : Annotation()
 {}
 
 InkAnnotation::InkAnnotation( const QDomNode & node )
-    : MarkupAnnotation( node )
+    : Annotation( node )
 {
     // loop through the whole children looking for a 'ink' element
     QDomNode subNode = node.firstChild();
@@ -729,7 +833,7 @@ InkAnnotation::InkAnnotation( const QDomNode & node )
 void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // recurse to parent objects storing properties
-    MarkupAnnotation::store( node, document );
+    Annotation::store( node, document );
 
     // create [ink] element
     QDomElement inkElement = document.createElement( "ink" );

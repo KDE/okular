@@ -319,42 +319,14 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
                 QDomElement annotElement = annotationNode.toElement();
                 annotationNode = annotationNode.nextSibling();
 
-                if ( !annotElement.hasAttribute( "type" ) )
-                    continue;
-
-                // build annotation of given type
-                Annotation * annotation = 0;
-                int typeNumber = annotElement.attribute( "type" ).toInt();
-                switch ( typeNumber )
-                {
-                    case Annotation::AWindow:
-                        annotation = new WindowAnnotation( annotElement );
-                        break;
-                    case Annotation::AText:
-                        annotation = new TextAnnotation( annotElement );
-                        break;
-                    case Annotation::ALine:
-                        annotation = new LineAnnotation( annotElement );
-                        break;
-                    case Annotation::AGeom:
-                        annotation = new GeomAnnotation( annotElement );
-                        break;
-                    case Annotation::AHighlight:
-                        annotation = new HighlightAnnotation( annotElement );
-                        break;
-                    case Annotation::AStamp:
-                        annotation = new StampAnnotation( annotElement );
-                        break;
-                    case Annotation::AInk:
-                        annotation = new InkAnnotation( annotElement );
-                        break;
-                }
+                // get annotation from the dom element
+                Annotation * annotation = AnnotationManager::createAnnotation( annotElement );
 
                 // append annotation to the list or show warning
                 if ( annotation )
                     m_annotations.append( annotation );
                 else
-                    kdWarning() << "can't restore Annotation of type '" << typeNumber << "from XML." << endl;
+                    kdWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
             }
              gettimeofday( &te, NULL );
              double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
@@ -406,15 +378,11 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
                 // get annotation
                 const Annotation * a = *aIt;
                 // only save annotations created by us (not loaded from document)
-                if ( a->isApplied() )
-                    continue;
-                // create annotation element and set type
-                QDomElement annotElement = document.createElement( "annotation" );
-                annotListElement.appendChild( annotElement );
-                annotElement.setAttribute( "type", (uint)a->subType() );
-                // add children and attributes to annotation element
-                a->store( annotElement, document );
-                addedAnnotations++;
+                if ( !a->flags & Annotation::External )
+                {
+                    AnnotationManager::storeAnnotation( a, annotListElement, document );
+                    addedAnnotations++;
+                }
             }
 
             // add number of children annotations as attribute
@@ -452,6 +420,11 @@ NormalizedRect::NormalizedRect( double l, double t, double r, double b )
 NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale )
     : left( (double)r.left() / xScale ), top( (double)r.top() / yScale ),
     right( (double)r.right() / xScale ), bottom( (double)r.bottom() / yScale ) {}
+
+bool NormalizedRect::isNull() const
+{
+    return left == 0 && top == 0 && right == 0 && bottom == 0;
+}
 
 bool NormalizedRect::contains( double x, double y ) const
 {

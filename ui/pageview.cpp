@@ -1879,7 +1879,7 @@ void PageView::slotMoveViewport()
         return;
     }
 
-    // move the viewport smoothly (kmplot: p(x)=x+x*(1-x)*(1-x))
+    // move the viewport smoothly (kmplot: p(x)=1+0.47*(x-1)^3-0.25*(x-1)^4)
     float convergeSpeed = (float)diffTime / 667.0,
           x = ((float)visibleWidth() / 2.0) + contentsX(),
           y = ((float)visibleHeight() / 2.0) + contentsY(),

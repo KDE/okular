@@ -415,7 +415,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
     KMessageBox::error( window,
 			i18n("The list of pages you selected was empty.\n"
 			     "Maybe you made an error in selecting the pages, "
-			     "e.g. by giving in invalid range like '7-2'.") );
+			     "e.g. by giving an invalid range like '7-2'.") );
     return false;
   }
 

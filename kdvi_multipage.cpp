@@ -133,7 +133,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   setXMLFile("kdvi_part.rc");
 
-  connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
+  connect(window, SIGNAL(request_goto_page(PageNumber, int)), this, SLOT(goto_page(PageNumber, int) ) );
 
   readSettings();
   preferencesChanged();
@@ -234,16 +234,16 @@ bool KDVIMultiPage::openFile()
 {
   document_history.clear();
   emit setStatusBarText(i18n("Loading file %1").arg(m_file));
-  
+
   bool r = window->setFile(m_file);
   setEmbedPostScriptAction();
   if (!r)
     emit setStatusBarText(QString::null);
-  
+
   generateDocumentWidgets();
   emit numberOfPages(window->totalPages());
   enableActions(r);
-  
+
   QString reference = url().ref();
   if (!reference.isEmpty())
     gotoPage(window->parseReference(reference));
@@ -307,7 +307,7 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
 
 
   Q_UINT16 y = pageData->textLinkList[beginSelection].box.bottom();
-  goto_page(pageNr-1, y);
+  goto_page(pageNr, y);
   /*
     document_history.add(pageNr,y);
 

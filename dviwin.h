@@ -161,7 +161,7 @@ signals:
   /** Emitted to indicate that a hyperlink has been clicked on, and
       that the widget requests that the controlling program goes to the
       page and the coordinates specified. */
-  void          request_goto_page(int page, int y);
+  void          request_goto_page(PageNumber page, int y);
 
   /** Passed through to the top-level kpart. */
   void setStatusBarText( const QString& );

@@ -3,7 +3,7 @@ INCLUDES = -I$(srcdir)/.. -I..
 
 noinst_LTLIBRARIES = libkpathsea.la
 
-libkpathsea_la_SOURCES = tex-file.c absolute.c basename.c cnf.c concat.c concat3.c      \
+libkpathsea_la_SOURCES = dummy.cpp tex-file.c absolute.c basename.c cnf.c concat.c concat3.c      \
 concatn.c db.c debug.c dir.c elt-dirs.c expand.c extend-fname.c file-p.c \
 find-suffix.c fn.c fontmap.c getopt.c getopt1.c hash.c itoa.c kdefault.c \
 line.c magstep.c make-suffix.c path-elt.c pathsearch.c proginit.c        \
@@ -39,7 +39,7 @@ texmf.cnf: texmf.cnf.in texmf.sed
 
 # The idea is to turn each var=value into s%@var@%value%g. Seems simpler
 # to put the substitutions in a file than to play shell games.
-texmf.sed: $(top_srcdir)/../make/makevars.make
+texmf.sed:
 	echo $(makevars) \
 	| tr ' ' '\012' \
 	| sed -e 's/^/s%@/' -e 's/=/@%/' -e 's/$$/%/' -e 's/$$/g/' \

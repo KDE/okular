@@ -30,6 +30,20 @@ extern void oops(QString message);
 
 const int font::max_num_of_chars_in_font = 256;
 
+macro::macro()
+{
+  pos = 0L;		/* address of first byte of macro */
+  end = 0L;		/* address of last+1 byte */
+  dvi_adv = 0;	/* DVI units to move reference point */
+}
+
+macro::~macro()
+{
+  if ((pos != 0L) && (free_me == true))
+    delete [] pos;
+}
+
+
 void font::fontNameReceiver(QString fname)
 {
   flags |= font::FONT_LOADED;

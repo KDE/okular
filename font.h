@@ -31,12 +31,15 @@ typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 
 // Per character information for virtual fonts
 
-struct macro {
+class macro {
+ public:
+  macro(void);
+  ~macro(void);
+
   unsigned char	*pos;		/* address of first byte of macro */
   unsigned char	*end;		/* address of last+1 byte */
   long	        dvi_adv;	/* DVI units to move reference point */
-  unsigned char	free_me;	/* if free(pos) should be called when */
-				/* freeing space */
+  bool          free_me;        // if memory at pos should be returned on destruction
 };
 
 

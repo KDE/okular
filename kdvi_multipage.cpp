@@ -147,6 +147,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
 
+  connect(scrollView(), SIGNAL(contentsMoving(int, int)), this, SLOT(contentsMovingInScrollView(int, int)) );
+
   readSettings();
   preferencesChanged();
 
@@ -300,11 +302,24 @@ KDVIMultiPage::~KDVIMultiPage()
 
 Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
 {
-  /*###  if (dviWidget == 0)
-    return 0;
-    return dviWidget->getPageNumber();
-  */
+  for(Q_UINT16 i=0; i<widgetList.size(); i++) {
+    documentWidget *dviWidget = (documentWidget *)(widgetList[i]);
+    if (dviWidget == 0) 
+      continue;
+    
+    int Y = scrollView()->childY(dviWidget) + dviWidget->height();
+    if (Y > scrollView()->contentsY())
+      return dviWidget->getPageNumber();
+  }
   return 0;
+}
+
+
+void KDVIMultiPage::contentsMovingInScrollView(int x, int y)
+{
+  Q_UINT16 cpg = getCurrentPageNumber();
+  if ((cpg != 0) && (window != 0) && (window->dviFile != 0)) 
+    emit(pageInfo(window->dviFile->total_pages, cpg-1));
 }
 
 
@@ -320,12 +335,6 @@ bool KDVIMultiPage::openFile()
   window->changePageSize();
   emit numberOfPages(window->totalPages());
   enableActions(r);
-  
-  /*
-  currentPage.setPageNumber(1);
-  */
-  //###  dviWidget->update();
-  
   return r;
 }
 
@@ -354,7 +363,6 @@ QStringList KDVIMultiPage::fileFormats()
   r << i18n("*.dvi *.DVI|TeX Device Independent files (*.dvi)");
   return r;
 }
-
 
 bool KDVIMultiPage::gotoPage(int page)
 {
@@ -469,7 +477,6 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     return;
   }
 
-  //###  dviWidget->setPageNumber(pageNr);
   documentPage *pageData = currentPage.getPage(pageNr);
   if (pageData == 0) {
 #ifdef DEBUG_DOCUMENTWIDGET
@@ -478,10 +485,8 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     return;
   }
 
-  //###  dviWidget->DVIselection.set(beginSelection, endSelection, pageData->textLinkList[beginSelection].linkText); // @@@
   Q_UINT16 y = pageData->textLinkList[beginSelection].box.bottom();
   document_history.add(pageNr,y);
-  //###  dviWidget->flash(y);
   
   scrollView()->ensureVisible(scrollView()->width()/2, y );
   emit pageInfo(window->totalPages(), pageNr );

@@ -3,8 +3,6 @@ ToDo-List for kdvi
 URGENT / URGENT BUGFIXING
 
 o Proper handling of the base-url
-o don't show REFERENCES, URLS in the title bar
-o don't show temporary file names in the titlebar
 o add "tt.dvi.gz" to the list of recent files, not "/tmp/kviews....."
 
 HIGHLY DESIRABLE

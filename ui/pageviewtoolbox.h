@@ -22,26 +22,43 @@ class PageViewToolbox : public QWidget
 {
     Q_OBJECT
     public:
-        PageViewToolbox( QWidget * parent, QWidget * anchorWidget, bool isVertical );
+        enum Side { Left = 0, Top = 1, Right = 2, Bottom = 3 };
+        PageViewToolbox( QWidget * parent, QWidget * anchorWidget );
 
-        void setItems( const QValueList<ToolboxItem> & items );
-        void show();
+        // animate widget displaying with given contents
+        void showItems( Side side, const QValueList<ToolboxItem> & items );
+        // animate widget hiding and destroy itself
         void hideAndDestroy();
+        // call this function to reposition the widget
         void anchorChanged();
 
-        void paintEvent( QPaintEvent * );
-        void timerEvent( QTimerEvent * );
-
     signals:
+        // the tool 'toolID' has been selected
         void toolSelected( int toolID );
 
-    private:
-        QPoint getStartPoint();
-        QPoint getEndPoint();
-        void buildGfx();
+    protected:
+        // handle widget events { paint, animation, dragging }
+        void mousePressEvent( QMouseEvent * e );
+        void mouseMoveEvent( QMouseEvent * e );
+        void mouseReleaseEvent( QMouseEvent * e );
+        void paintEvent( QPaintEvent * );
+        void timerEvent( QTimerEvent * );
+        // used by subclasses to save configuration
+        virtual void orientationChanged( Side /*side*/ ) {};
 
+    private:
+        // show widget full-sized in its place
+        void showFinal();
+        // build widget contents
+        void buildGfx();
+        // get the ending point of transition
+        QPoint getEndPoint();
+        // get the place from which transition starts
+        QPoint getStartPoint();
+
+        // private variables
         QWidget * m_anchor;
-        bool m_vertical;
+        Side m_side;
         QPoint m_currentPosition;
         QPoint m_endPosition;
         int m_timerID;
@@ -50,14 +67,8 @@ class PageViewToolbox : public QWidget
         QValueList< ToolboxButton * > m_buttons;
 
     private slots:
+        // send 'toolSelected' signal when a button is pressed
         void slotButtonClicked();
-};
-
-class PageViewEditTools : public PageViewToolbox
-{
-    public:
-        PageViewEditTools( QWidget * parent, QWidget * anchorWidget );
-
 };
 
 struct ToolboxItem
@@ -69,6 +80,16 @@ struct ToolboxItem
     ToolboxItem() {};
     ToolboxItem( int _id, const QString & _text, const QString & _pixmap )
     : id( _id ), text( _text ), pixmap( _pixmap ) {};
+};
+
+
+class PageViewEditTools : public PageViewToolbox
+{
+    public:
+        // constructs a toolbox filled up with edit tools
+        PageViewEditTools( QWidget * parent, QWidget * anchorWidget );
+        // hook call to save widget placement
+        void orientationChanged( Side side );
 };
 
 #endif

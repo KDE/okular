@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="17">
+<kpartgui name="kpdf_part" version="18">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="save" group="file_save"/>
@@ -38,6 +38,8 @@
     <Action name="mouse_drag"/>
     <Action name="mouse_zoom"/>
     <Action name="mouse_select"/>
+    <Separator/>
+    <Action name="mouse_toggle_annotate"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="watch_file" group="show_merge"/>
@@ -61,6 +63,5 @@
   <Action name="mouse_drag"/>
   <Action name="mouse_zoom"/>
   <Action name="mouse_select"/>
-  <Action name="mouse_edit"/>
 </ToolBar>
 </kpartgui>

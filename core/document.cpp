@@ -460,6 +460,20 @@ void KPDFDocument::requestTextPage( uint page )
 
     generator->generateSyncTextPage( kp );
 }
+
+void KPDFDocument::addPageAnnotation( int page, Annotation * annotation )
+{
+    // find out the page to attach annotation
+    KPDFPage * kp = pages_vector[ page ];
+    if ( !generator || !kp )
+        return;
+
+    // add annotation to the page
+    kp->addAnnotation( annotation );
+
+    // notify observers about the change
+    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+}
 /* REFERENCE IMPLEMENTATION: better calling setViewport from other code
 void KPDFDocument::setNextPage()
 {

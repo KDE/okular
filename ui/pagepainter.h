@@ -23,7 +23,8 @@ class PagePainter
         // list of flags passed to the painting function. by OR-ing those flags
         // you can decide wether or not to permit drawing of a certain feature.
         enum PagePainterFlags { Accessibility = 1, EnhanceLinks = 2,
-                                EnhanceImages = 4, Highlights = 8 };
+                                EnhanceImages = 4, Highlights = 8,
+                                Annotations = 16 };
 
         // draw (using painter 'p') the 'page' requested by 'id' using features
         // in 'flags'. 'limits' is the bounding rect of the paint operation,

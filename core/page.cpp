@@ -17,6 +17,7 @@
 #include "page.h"
 #include "pagetransition.h"
 #include "link.h"
+#include "annotations.h"
 #include "conf/settings.h"
 #include "xpdf/TextOutputDev.h"
 
@@ -44,6 +45,7 @@ KPDFPage::~KPDFPage()
 {
     deletePixmapsAndRects();
     deleteHighlights();
+    deleteAnnotations();
     delete m_text;
     delete m_transition;
 }
@@ -231,6 +233,11 @@ void KPDFPage::setHighlight( int s_id, NormalizedRect * &rect, const QColor & co
     rect = hr;
 }
 
+void KPDFPage::addAnnotation( Annotation * annotation )
+{
+    m_annotations.append( annotation );
+}
+
 void KPDFPage::setTransition( KPDFPageTransition * transition )
 {
     delete m_transition;
@@ -275,6 +282,15 @@ void KPDFPage::deleteHighlights( int s_id )
         else
             ++it;
     }
+}
+
+void KPDFPage::deleteAnnotations()
+{
+    // delete all stored annotations
+    QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+    for ( ; aIt != aEnd; ++aIt )
+        delete *aIt;
+    m_annotations.clear();
 }
 
 

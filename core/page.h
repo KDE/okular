@@ -66,11 +66,12 @@ class KPDFPage
         void setBookmark( bool state );
         void setObjectRects( const QValueList< ObjectRect * > rects );
         void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
-        //void setAnnotation( Annotation * annotation );
+        void addAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
         void deletePixmap( int p_id );
         void deletePixmapsAndRects();
         void deleteHighlights( int s_id = -1 );
+        void deleteAnnotations();
 
     private:
         friend class PagePainter;
@@ -82,7 +83,7 @@ class KPDFPage
         TextPage * m_text;
         QValueList< ObjectRect * > m_rects;
         QValueList< HighlightRect * > m_highlights;
-        //QValueList< Annotation * > m_annotations;
+        QValueList< Annotation * > m_annotations;
         KPDFPageTransition * m_transition;
 };
 

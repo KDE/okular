@@ -12,6 +12,8 @@
 
 #include <qstring.h>
 #include <qdatetime.h>
+#include <qpoint.h>
+#include <qvaluelist.h>
 #include "page.h"
 
 /**
@@ -31,9 +33,21 @@ class Annotation : public NormalizedRect
         Annotation();
         virtual ~Annotation();
 
-        enum State { Creating, Modifying, Closed, Opened };
-        enum MouseState { Normal, Hovered, Pressed };
+        enum State { NewBorn, Creating, Modifying, Closed, Opened };
+        enum MouseEvent { MousePress, MouseMove, MouseRelease };
+        //enum MouseState { Normal, Hovered, Pressed };
         enum Flags { Hidden, NoOpenable, Print, Locked, ReadOnly };
+
+        // provide some i18n strings
+        virtual QString usageTip() const = 0;
+
+        // event handlers (must update state)
+        virtual bool mouseEvent( MouseEvent e, double x, double y, Qt::ButtonState b ) = 0;
+
+        // paint roughtly over a cleared area
+        virtual void paintOverlay( QPainter * painter, int xScale, int yScale, const QRect & limits ) = 0;
+        // cool-paint over a pixmap
+        virtual void paintFinal( QImage & backImage, int xScale, int yScale, const QRect & limits ) = 0;
 
         State state() const { return m_state; }
         const QString & text() const { return m_text; }
@@ -42,19 +56,11 @@ class Annotation : public NormalizedRect
         const QDateTime & modifyDate() const { return m_modifyDate; }
         const QColor & baseColor() const { return m_baseColor; }
 
-        // event handlers (must update state)
-        virtual void mousePressEvent( double x, double y, Qt::ButtonState b ) = 0;
-        virtual void mouseMoveEvent( double x, double y, Qt::ButtonState b ) = 0;
-        virtual void mouseReleaseEvent( double x, double y, Qt::ButtonState b ) = 0;
-
-        // paint roughtly over a cleared area
-        virtual void overlayPaint( QPainter * painter ) = 0;
-        // cool-paint over a pixmap
-        virtual void finalPaint( QPixmap * pixmap, MouseState mouseState ) = 0;
+        void setBaseColor( const QColor & color ) { m_baseColor = color; }
 
     protected:
         State m_state;
-        MouseState m_mouseState;
+        //MouseState m_mouseState;
         QString m_text;
         QString m_uniqueName;
         QDateTime m_modifyDate;
@@ -66,6 +72,7 @@ class Annotation : public NormalizedRect
 
 class TextAnnotation : public Annotation
 {
+
     //Text (post-it like)
     //FreeText (direct on page)
     enum Type { InPlace, Popup };
@@ -87,10 +94,26 @@ class PathAnnotation : public Annotation
     //Polygon, PolyLine
 };
 
+struct FloatPoint
+{
+    double x, y;
+};
+
 class HighlightAnnotation : public Annotation
 {
-    //Highlight, Underline, Squiggly, StrikeOut, BLOCK
-    enum BrushHor { Horizontal, Vertical };
+    public:
+        enum Type { Highlight, Underline, Squiggly, StrikeOut, BLOCK };
+        HighlightAnnotation( Type type );
+
+        // [Annotation] inherited methods
+        QString usageTip() const;
+        bool mouseEvent( MouseEvent e, double x, double y, Qt::ButtonState b );
+        void paintOverlay( QPainter * painter, int xScale, int yScale, const QRect & limits );
+        void paintFinal( QImage & backImage, int xScale, int yScale, const QRect & limits );
+
+    private:
+        Type m_type;
+        QValueList<FloatPoint> m_points;
 };
 
 class StampAnnotation : public Annotation

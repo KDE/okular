@@ -111,6 +111,9 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     {
         switch ( icon )
         {
+            case Annotation:
+                symbol = SmallIcon( "pencil" );
+                break;
             case Find:
                 symbol = SmallIcon( "viewmag" );
                 break;

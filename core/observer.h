@@ -44,7 +44,7 @@ class DocumentObserver
         virtual uint observerId() const = 0;
 
         // commands from the Document to all observers
-        enum ChangedFlags { Pixmap = 1, Bookmark = 2, Highlights = 4 };
+        enum ChangedFlags { Pixmap = 1, Bookmark = 2, Highlights = 4, Annotations = 8 };
         virtual void notifySetup( const QValueVector< KPDFPage * > & /*pages*/, bool /*documentChanged*/ ) {};
         virtual void notifyViewportChanged( bool /*smoothMove*/ ) {};
         virtual void notifyPageChanged( int /*pageNumber*/, int /*changedFlags*/ ) {};

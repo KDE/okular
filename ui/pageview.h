@@ -46,7 +46,7 @@ class PageView : public QScrollView, public DocumentObserver
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
-        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseEdit };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelect };
 
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
@@ -94,6 +94,9 @@ class PageView : public QScrollView, public DocumentObserver
         void selectionStart( int x, int y, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( int x, int y );
         void selectionClear();
+        // annotation related stuff
+        void updateAnnotation( QMouseEvent * e );
+        void deleteAnnotation();
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
@@ -114,7 +117,9 @@ class PageView : public QScrollView, public DocumentObserver
         // activated by the autoscroll timer (Shift+Up/Down keys)
         void slotAutoScoll();
         // type-ahead find timeout
-        void findAheadStop();
+        void slotStopFindAhead();
+        // activated when a tool is selected in the edit toolbar
+        void slotSetAnnotationTool( int toolID );
 
         // connected to local actions (toolbar, menu, ..)
         void slotZoom();
@@ -128,7 +133,7 @@ class PageView : public QScrollView, public DocumentObserver
         void slotSetMouseNormal();
         void slotSetMouseZoom();
         void slotSetMouseSelect();
-        void slotSetMouseDraw();
+        void slotToggleEditTools( bool );
         void slotScrollUp();
         void slotScrollDown();
 };

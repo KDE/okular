@@ -24,6 +24,7 @@ class DocumentInfo;
 class DocumentSynopsis;
 class Generator;
 class PixmapRequest;
+class Annotation;
 class KPrinter;
 class KURL;
 
@@ -80,6 +81,7 @@ class KPDFDocument : public QObject
         void setNextViewport();
         void requestPixmaps( const QValueList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
+        void addPageAnnotation( int page, Annotation * annotation );
 
         enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleLike };
         bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,

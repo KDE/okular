@@ -508,7 +508,8 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
         if ( clipRect.isValid() )
         {
-            int flags = PagePainter::Accessibility | PagePainter::Highlights;
+            int flags = PagePainter::Accessibility | PagePainter::Highlights |
+                        PagePainter::Annotations;
             PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, flags, &p,
                                              clipRect, m_pixmapWidth, m_pixmapHeight );
         }

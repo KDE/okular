@@ -18,6 +18,7 @@
 // local includes
 #include "pagepainter.h"
 #include "core/page.h"
+#include "core/annotations.h"
 #include "conf/settings.h"
 
 void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
@@ -67,6 +68,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     // find out what to paint over the pixmap (manipulations / overlays)
     bool paintAccessibility = (flags & Accessibility) && Settings::changeColors() && (Settings::renderMode() != Settings::EnumRenderMode::Paper);
     bool paintHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
+    bool paintAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
     bool enhanceLinks = (flags & EnhanceLinks) && Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Settings::highlightImages();
     // check if there are really some highlightRects to paint
@@ -89,9 +91,14 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             }
         }
     }
+    // check if there are really some annotations to paint
+    if ( paintAnnotations )
+    {
+        // TODO
+    }
 
     // use backBuffer if 'pixmap direct manipulation' is needed
-    bool backBuffer = paintAccessibility || paintHighlights;
+    bool backBuffer = paintAccessibility || paintHighlights || paintAnnotations;
     QPixmap * backPixmap = 0;
     QPainter * p = destPainter;
     if ( backBuffer )
@@ -196,6 +203,25 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         }
         backPixmap->convertFromImage( backImage );
     }
+
+    // 2.3. annotations OVERLAY FIXME MOD in page
+    if ( paintAnnotations )
+    {
+        // draw annotations that are inside the 'limits' paint region
+        QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+        for ( ; aIt != aEnd; ++aIt )
+        {
+            Annotation * a = *aIt;
+            QRect annotRect = a->geometry( width, height );
+            if ( annotRect.isValid() && annotRect.intersects( limits ) )
+            {
+                // find out the annotation rect on pixmap
+                annotRect = annotRect.intersect( limits );
+                a->paintOverlay( p, width, height, limits );
+            }
+        }
+    }
+
 
     // 3. visually enchance links and images if requested
     if ( enhanceLinks || enhanceImages )

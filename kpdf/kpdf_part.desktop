@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KPDFPart
+Name[cs]=Komponenta KPDF
+Name[hi]=के-पीडीएफ-पार्ट
+Name[pt_BR]=Componente do KPDF
 Name[sv]=KPDF-del
+Name[ta]=KPDFபகுதி
+Name[uk]=Складова KPDF
+Name[xx]=xxKPDFPartxx
 MimeType=application/pdf
 InitialPreference=4
 ServiceTypes=KParts/ReadOnlyPart

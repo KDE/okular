@@ -29,9 +29,8 @@ kpdf_SOURCES = main.cpp kpdf_shell.cpp
 kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kpdf_LDADD   = $(LIB_KPARTS)
 
-# this is where the desktop file will go 
-shelldesktopdir   = $(kde_appsdir)/Utilities
-shelldesktop_DATA = kpdf.desktop
+EXTRA_DIST = kpdf.desktop
+xdg_apps_DATA = kpdf.desktop
 
 # this is where the shell's XML-GUI resource file goes
 shellrcdir   = $(kde_datadir)/kpdf

@@ -1,230 +1,214 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook V3.1-Based Variant V1.0//EN">
 
 <book lang="en">
-<bookinfo>
-<title>kdvi TeX DVI viewer - User Manual</title>
-<authorgroup>
-<author>
-<firstname>Markku</firstname>
-<surname>Hihnala</surname>
-<affiliation>
-<address><email>mah@ee.oulu.fi</email></address>
-</affiliation>
-</author>
-<author>
-<firstname>Stefan</firstname>
-<surname>Kebekus</surname>
-<affiliation>
-<address><email>mah@ee.oulu.fi</email></address>
-</affiliation>
-</authorgroup>
-<date>25/05/2000</date>
-<releaseinfo>1.00.00</releaseinfo>
-<keywordset>
-<keyword>KDE</keyword>
-<keyword>DVI</keyword>
-<keyword>TeX</keyword>
-<keyword>LaTeX</keyword>
-<keyword>device-independent</keyword>
-<keyword>viewer</keyword>
-<keyword>dvi viewer</keyword>
-<keyword>kdvi</keyword>
-<keyword>xdvi</keyword>
-</keywordset>
-</bookinfo>
+  <bookinfo>
+    <title> The KDVI Manual</title>
+    <authorgroup>
+      <author>
+	<firstname>Markku</firstname>
+	<surname>Hihnala</surname>
+	<affiliation>
+	  <address role="email">mah@ee.oulu.fi</address>
+	</affiliation>
+      </author>
+      
+      <author>
+	<firstname>Stefan</firstname>
+	<surname>Kebekus</surname>
+	<affiliation>
+	  <address role="email">kebekus@kde.org</address>
+	</affiliation>
+      </author>
+    </authorgroup>
 
-<chapter id="usage">
-<title>usage</title>
+    <date>30/06/2000</date>
+    <releaseinfo>0.9 beta</releaseinfo>
+    <abstract>
+      <para>This Handbook describes KDVI Version 0.9</para>
+    </abstract>
+    <keywordset>
+      <keyword>KDE</keyword>
+      <keyword>DVI</keyword>
+      <keyword>TeX</keyword>
+      <keyword>LaTeX</keyword>
+      <keyword>device-independent</keyword>
+      <keyword>viewer</keyword>
+      <keyword>dvi viewer</keyword>
+      <keyword>kdvi</keyword>
+      <keyword>xdvi</keyword>
+    </keywordset>
+  </bookinfo>
 
-<para>kdvi is a plugin for the kviewshell program which allows kviewshell to
-display dvi-files which are produced by the TeX typesetting system. More
-information about TeX and DVI can be found on the homepage of the TeX user
-group. kdvi 0.9 supports the inclusion of PostScript graphics and it supports
-hyperlinks. More details and the technical specifications can be found
-in a separate document.</para>
+  <chapter id="usage">
+    <title>Usage</title>
 
-<para>kdvi 0.9 is based on based on the stand-alone-program kdvi 0.4.3 by
-Markku Hihnala. That program in turn base based on xdvik version 18f which
-has many authors.</para>
+    <para>kdvi is a plugin for the kviewshell program which allows
+    kviewshell to display dvi-files which are produced by the TeX
+    typesetting system. More information about TeX and DVI can be
+    found on the homepage of the TeX user group. kdvi 0.9 supports the
+    inclusion of PostScript graphics and it supports hyperlinks. More
+    details and the technical specifications can be found in a <ulink
+    url="KDVI-features.dvi">separate document</ulink>. For up-to-date
+    information, consult <ulink
+    url="http://devel-home.kde.org/~kdvi">kdvi's home
+    page</ulink>.</para>
 
-<para>For convenience there exists a command kdvi which calls kviewshell
-with the kdvi-plugin preloaded. The viewer may thus be started using
-the command 
-<literal remap="verb">
-kdvi somepath/paper.dvi
-</literal>
-or without a file name as kviewshell will then allow a file to be
-opened from a dialog or a menu of recently used files. This menu can
-also be popped up by clicking the File button with the right mouse
-button.</para>
+    <para>kdvi 0.9 is based on based on the stand-alone-program kdvi
+    0.4.3 by Markku Hihnala. That program is in turn based on xdvik
+    version 18f which has many authors.</para>
 
-<para>The usual parameters handled by Qt and KDE applications also work:
-<literal remap="verb">
-kdvi -style windows -display :0 -geometry 400x400+0+0 -caption "DVI"
-</literal>
-For integration with TeX the opened DVI file is automatically reloaded
-when changed.</para>
+    <para>For convenience there exists a command kdvi which calls
+    kviewshell with the kdvi-plugin preloaded. The viewer may thus be
+    started using the command <screen>kdvi somepath/paper.dvi</screen>
+    or without a file name as kviewshell will then allow a file to be
+    opened from a dialog or a menu of recently used files. This menu
+    can also be popped up by clicking the File button with the right
+    mouse button.</para>
 
-
-</chapter>
-<chapter id="keyboard">
-<title>The option dialog</title>
-
-<h2>first page</h2>
-The following picture shows the options dialog of kdvi.
-<center>
-<p><graphic fileref="optionrequester1.png"></graphic></center>
+    <para>The usual parameters handled by Qt and KDE applications also
+    work: <screen>kdvi -style windows -display :0 -geometry 400x400+0+0 -caption "DVI"</screen>
+    For integration with TeX the opened DVI file is automatically
+    reloaded when changed.</para>
 
 
-<table WIDTH="100%" NOSAVE >
-<tr NOSAVE>
-<td VALIGN=TOP NOSAVE><b>Resolution/</b>
-<br><b>Metafont mode</b></td>
+  </chapter>
 
-<td>These options specify the fonts which kdvi will use for rendering.
-By carefully optimizing the settings here it is possible to improve on
-the display. However, unless you are an expert in MetaFont and know what
-you are doing, it is absolutely no good idea to change these options. Save
-values are "600" and "ljfour" for good quality or "300" and "cx" for medium
-quality and faster display.</td>
-</tr>
+  <chapter id="options">
+    <title>The option dialog</title>
 
-<tr NOSAVE>
-<td VALIGN=TOP NOSAVE><b>Generate fonts</b></td>
+    <anchor id="opts">
+    <section id="opt-fonts">
+      <title>Font Options</title>
 
-<td>Check this if you want kdvi to call the MetaFont program in the likely
-case that kdvi wants to display documents which use fonts which are not
-yet readily made. You most certainly want to set this option.</td>
-</tr>
+      <para> The following picture shows the options dialog of
+      kdvi.</para>
+      <informalfigure>
+	<graphic fileref="optionrequester1.png"></graphic>	
+      </informalfigure>
 
-<tr NOSAVE>
-<td VALIGN=TOP NOSAVE><b>PK font path</b></td>
+      <glosslist>
+	<glossentry>
+	  <glossterm>Resolution/Metafont mode</glossterm> 
+	  <glossdef> 
+	    <para> These options specify the fonts which kdvi will use
+	    for rendering.  By carefully optimizing the settings here
+	    it is possible to improve on the display. However, unless
+	    you are an expert in MetaFont and know what you are doing,
+	    it is absolutely no good idea to change these
+	    options. Save values are "600" and "ljfour" for good
+	    quality or "300" and "cx" for medium quality and faster
+	    display.</para> 
+	  </glossdef>
+	</glossentry>
+      
+	<glossentry>
+	  <glossterm>Generate fonts</glossterm> 
+	  <glossdef> 
+	    <para> Check this if you want kdvi to call the MetaFont
+	    program in the likely case that kdvi wants to display
+	    documents which use fonts which are not yet readily
+	    made. You most certainly want to set this option.</para>
+	    </glossdef>
+	</glossentry>
 
-<td>If this is not empty, it point to a list of directories to be searched
-for pk-fonts, e.g.&nbsp;
-<pre><font face="Courier New,Courier">/var/lib/texmf/fonts/pk/ljfour/:/some/other/place</font></pre>
-You can make kdvi search recursively by adding an extra / at the end of
-directory name:&nbsp;
-<pre>/var/lib/texmf/fonts//&nbsp;</pre>
-This works like xdvi's XDVIFONTS environment variable. There is also good
-(gnu info) documentation available for the kpathsea library that kdvi uses
-for font searching. This makes kdvi usable when you have some other tex
-system than <font face="Courier New,Courier">tetex</font> and don't have
-the <font face="Courier New,Courier">texmf.cnf</font> file. Again this
-option is strikly for the experts only.</td>
-</tr>
-</table>
+	<glossentry>
+	  <glossterm>PK font path</glossterm> 
+	  <glossdef> 
 
-<h2>
-second page</h2>
-The following picture shows the second options dialog of kdvi.
-<center>
-<p><img SRC="optionrequester2.png" height=234 width=358></center>
+	    <para>	    If this is not empty, it points to a list of directories
+	    to be searched for pk-fonts, e.g.
+	    <screen>
+/var/lib/texmf/fonts/pk/ljfour/:/some/other/place
+            </screen>
+	    You can make kdvi search recursively by adding an extra /
+	    at the end of directory name: <screen>
 
-<table WIDTH="100%" NOSAVE >
-<tr NOSAVE>
-<td VALIGN=TOP NOSAVE><b>PostScript</b></td>
+/var/lib/texmf/fonts//
+            </screen>
+	    This works like xdvi's XDVIFONTS environment
+	    variable. There is also good (gnu info) documentation
+	    available for the kpathsea library that kdvi uses for font
+	    searching. This makes kdvi usable when you have some other
+	    tex system than tetex and don't have the texmf.cnf
+	    file. Again this option is strikly for the experts only.</para>
+	    </glossdef> 
+	</glossentry>
+      </glosslist>
+    </section>
+    
+    <section id="opt-rendering">
+      <title>Rendering Options</title>
 
-<td>If this options is checked, kdvi will display PostScript graphics which
-are embedded into the dvi file. If an external PostScript file could not
-be found, kdvi will draw a red warning box in its place. Unfortunately,
-rendering PostScript graphics is very slow in the current version of kdvi.
-We will improve on the speed in later versions. If this option is off,
-kdvi will either draw a grey box as a placeholder for the graphics, or
-it will leave the space blank.
-<br><b>Note:</b> there is no standard way to embed PostScript graphics
-into a dvi file. It may therefore happen that kdvi cannot properly display
-a graphic which works fine with other programs. Older versions of xdvi
-and dvips support the execution of external commands. This is a hight security
-risk and therefore deliberately not implemented in kdvi. Technical information
-about supported ways to include PostScript can be found in an external
-document.</td>
-</tr>
 
-<tr NOSAVE>
-<td VALIGN=TOP NOSAVE><b>Hyperlinks</b></td>
+      <para> The following picture shows the second options dialog of
+      kdvi.
+      <informalfigure>
+	  <graphic fileref="optionrequester2.png"></graphic>
+	</informalfigure>
+</para>
+      
+      <glosslist>
+	<glossentry>
+	  <glossterm>PostScript</glossterm> 
+	  <glossdef> 
 
-<td>Check this if you want kdvi to display hyperlinks. The appropriate
-parts of the text will be underlined in blue.</td>
-</tr>
-</table>
+	    <para> If this options is checked, kdvi will display
+	    PostScript graphics which are embedded into the dvi
+	    file. If an external PostScript file could not be found,
+	    kdvi will draw a red warning box in its
+	    place. Unfortunately, rendering PostScript graphics is
+	    very slow in the current version of kdvi.  We will improve
+	    on the speed in later versions. If this option is off,
+	    kdvi will either draw a grey box as a placeholder for the
+	    graphics, or it will leave the space blank.</para>
 
-</chapter>
+	    <para> Note: there is no standard way to embed PostScript
+	    graphics into a dvi file. It may therefore happen that
+	    kdvi cannot properly display a graphic which works fine
+	    with other programs. Older versions of xdvi and dvips
+	    support the execution of external commands. This is a
+	    hight security risk and therefore deliberately not
+	    implemented in kdvi. Technical information about supported
+	    ways to include PostScript can be found in an external
+	    document.</para>
+	  </glossdef>
+      </glossentry>
 
-<chapter id="Movingaround">
-<title>Moving around</title>
+	<glossentry>
+	  <glossterm>Hyperlinks</glossterm> 
+	  <glossdef> 
 
-<para>You can scroll the page with various ways: Using keyboard <xref linkend="keyboard">, using the scrollbars, using the scroller
-widget located above the page list or by dragging the display with
-left mouse button.</para>
+	    <para> Check this if you want kdvi to display
+	    hyperlinks. The appropriate parts of the text will be
+	    underlined in blue.</para> </glossdef>
+	</glossentry>
+      </glosslist>
+    </section>
+  </chapter>
 
-<para>The Page menu provides commands for changing the displayed page. A
-primitive dialog is available to enter a page number. The scroller
-widget allows you to move to the next or the previous page by clicking
-the right or middle mouse button. The page list can be clicked with
-the left mouse button to select a page.</para>
 
-<para>The button bar provides buttons to change pages: First, Previous,
-Advance, Next and Last.  In the middle of these is the Advance button
-which can be used to easily read through many partly displayed pages:
-it scrolls down until at the bottom of page and then to the top of the
-next page.</para>
-</chapter>
+  <chapter id="Printing">
+    <title>Printing</title>
 
-<chapter id="Changingmagnification">
-<title>Changing magnification</title>
+    <para>This version has a print setup dialog (available from the
+    print dialog) that lets you configure the printing method, n-up
+    program, printer names and spooler command. Printing method
+    selects the external program to use for printing.  Available
+    choices are dvips and dvilj4. If you use dvips, you can also have
+    an n-up program called to make 2 or 4 pages per sheet. Select
+    psnup (preferred) or mpage (may work) if you have that installed
+    in your system.</para>
 
-<para>The View menu offers entries to step through available magnifications:
-Zoom in and Zoom out. The available magnifications corresponds to the
-base resolution of the used pk-font and its reductions by integer
-factors.</para>
+    <para>You may add printer names that will be available in the
+    print dialog.</para>
 
-<para>The button bar presents these same commands plus two fixed
-magnifications for quick selection. You can use these to switch
-between a readable text size and a magnified view (there is no
-separate magnifier window) or between a readable size and a full page
-view. You can configure these fixed sizes with preferences dialog.</para>
+    <para>And last you can change the spooler command (defaults to
+    lpr) that is supposed to read standard input. Option -P is
+    appended when printing to nondefault printer.</para>
 
-<para>One non-obvious feature is the selection of scaling center. You can
-select with left mouse button the point on the page that does not move
-(if possible) when changing the magnification. Use this by clicking
-with left mouse button at the detail you want to see magnified and
-then push the magnified view button.</para>
-</chapter>
-
-<chapter id="Markingpages">
-<title>Marking pages</title>
-
-<para>You can mark pages for printing. The marks are visible in the page list.</para>
-
-<para>The current page can be marked by selecting the entry 'Mark page' from
-the RMB popup menu of the viewing area. The page list gives more
-options for marking: you can mark all, even, odd or current page and
-unmark current or all pages and toggle marks using the RMB popup menu
-of page list. Clicking or dragging the middle mouse button also
-toggles the marks.</para>
-</chapter>
-
-<chapter id="Printing">
-<title>Printing</title>
-
-<para>This version has a print setup dialog (available from the print
-dialog) that lets you configure the printing method, n-up program,
-printer names and spooler command. Printing method selects the
-external program to use for printing.  Available choices are dvips and
-dvilj4. If you use dvips, you can also have an n-up program called to
-make 2 or 4 pages per sheet. Select psnup (preferred) or mpage (may
-work) if you have that installed in your system.</para>
-
-<para>You may add printer names that will be available in the print dialog.</para>
-
-<para>And last you can change the spooler command (defaults to lpr) that is
-supposed to read standard input. Option -P is appended when printing
-to nondefault printer.</para>
-
-<para>Having setup printing you can use the print dialog where you can
-select the pages to be printed, which printer or file to use for
-output and more.</para>
+    <para>Having setup printing you can use the print dialog where you
+    can select the pages to be printed, which printer or file to use
+    for output and more.</para>
 </chapter>
 
 <chapter id="QampA">
@@ -261,93 +245,4 @@ It is a good idea to check that the font generation commands in
 missfont.log are correct before enabling font generation.</para>
 </chapter>
 
-<chapter id="BUGS">
-<title>BUGS</title>
-
-<para>Known bugs:
-<itemizedlist>
-<listitem>
-<para> Changes in paper size only get applied correctly after restart.</para>
-</listitem>
-<listitem>
-<para> When showing PS the gs process seems to hang sometimes. Killing gs helps.</para>
-</listitem>
-<listitem>
-<para> When showing PS the rendered image is not always updated. Scrolling the
-view helps.</para>
-</listitem>
-<listitem>
-<para> You need to have xdvi installed and accessible via the program search path.
-You can replace the actual file with an empty executable though.</para>
-</listitem>
-</itemizedlist>
-</para>
-
-<para>Unknown bugs:
-<itemizedlist>
-<listitem>
-<para>Probably many</para>
-</listitem>
-</itemizedlist>
-</para>
-</chapter>
-
-<chapter id="TODO">
-<title>TO DO</title>
-
-<para><itemizedlist>
-<listitem>
-<para>Document info dialog</para>
-</listitem>
-<listitem>
-<para>More paper types, currently only those from xdvi are available</para>
-</listitem>
-<listitem>
-<para>Better onitemne help</para>
-</listitem>
-<listitem>
-<para>Internal printing using QPrinter</para>
-</listitem>
-<listitem>
-<para>Redirect error messages to a window (partly done)</para>
-</listitem>
-<listitem>
-<para>Better Postscript handling (currently not very robust)
-<itemizedlist>
-<listitem>
-<para>anti-aliasing</para>
-</listitem>
-</itemizedlist>
-</para>
-</listitem>
-<listitem>
-<para>More background processing to keep the UI responsive</para>
-</listitem>
-<listitem>
-<para>Magnifier window </para>
-</listitem>
-<listitem>
-<para>Two page view</para>
-</listitem>
-<listitem>
-<para>Support for more TeX specials</para>
-</listitem>
-<listitem>
-<para>Network URL support</para>
-</listitem>
-</itemizedlist>
-</para>
-
-<para>Anything else?  Feel free to make suggestions and report any problems you have.</para>
-
-<para>Markku Hihnala
-<ulink url="mailto:mah@ee.oulu.fi">mah@ee.oulu.fi</ulink></para>
-</chapter>
 </book>
-<!--
-Local Variables:
-mode: sgml
-sgml-omittag: nil
-sgml-shorttag: t
-End:
--->

@@ -55,7 +55,7 @@ class QOutputDev : public SplashOutputDev
 		// Clear out the document (used when displaying an empty window).
 		void clear();
 		
-		bool find(Unicode *u, int len, double *xMin, double *yMin, double *xMax, double *yMax);
+		bool find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom, GBool startAtLast, GBool stopAtLast, double *xMin, double *yMin, double *xMax, double *yMax);
 	
 	private:
 		

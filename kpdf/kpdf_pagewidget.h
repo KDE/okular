@@ -55,7 +55,7 @@ namespace KPDF
         bool atBottom() const;
         void zoomTo( double _value );
 
-        bool find(Unicode *u, int len);
+        bool find(Unicode *u, int len, bool next);
 
     public slots:
         void zoomIn();

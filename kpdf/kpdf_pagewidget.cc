@@ -366,16 +366,19 @@ namespace KPDF
         }
     }
 
-    bool PageWidget::find(Unicode *u, int len)
+    bool PageWidget::find(Unicode *u, int len, bool next)
     {
         bool b;
-        // dirty hack to ensure we are searching the whole page
-        m_xMin = 0;
-        m_yMin = 0;
-        m_xMax = 10000;
-        m_yMax = 10000;
+        if (!next)
+        {
+            // ensure we are searching the whole page
+            m_xMin = 0;
+            m_yMin = 0;
+            m_xMax = m_outputdev->getPixmap()->width();
+            m_yMax = m_outputdev->getPixmap()->height();
+        }
         
-        b = m_outputdev -> find(u, len, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
+        b = m_outputdev -> find(u, len, !next, false, false, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
         m_selection = b;
         updateContents();
         return b;

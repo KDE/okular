@@ -107,7 +107,7 @@ namespace KPDF
 
   protected slots:
     void find();
-    void findNext() { /* stub */ };
+    void findNext();
     void zoomIn()   { m_zoomFactor += 0.1; update(); };
     void zoomOut()  { m_zoomFactor -= 0.1; update(); };
     void back()     { /* stub */ };
@@ -129,18 +129,24 @@ namespace KPDF
       void slotZoom( const QString& );
 
   private:
-    PDFDoc*     m_doc;
-    PageWidget* m_outputDev;
+      void doFind(QString s, bool next);
+     
+      PDFDoc*     m_doc;
+      PageWidget* m_outputDev;
       PDFPartView * pdfpartview;
-    KAction* m_firstPage;
-    KAction* m_lastPage;
-    KAction* m_prevPage;
-    KAction* m_nextPage;
+      KAction* m_firstPage;
+      KAction* m_lastPage;
+      KAction* m_prevPage;
+      KAction* m_nextPage;
       KAction *m_gotoPage;
-    KToggleAction* m_showScrollBars;
-    KToggleAction* m_showPageList;
+      KToggleAction* m_showScrollBars;
+      KToggleAction* m_showPageList;
       KSelectAction *m_zoomTo;
       KToggleAction* m_fitToWidth;
+      KAction *m_find;
+      KAction *m_findNext;
+
+      QString m_findText;
 
     // first page is page 1
     int   m_currentPage;

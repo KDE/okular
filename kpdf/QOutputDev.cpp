@@ -75,7 +75,7 @@ void QOutputDev::updateFont(GfxState *state)
 	m_text->updateFont(state);
 }
 
-bool QOutputDev::find(Unicode *u, int len, double *xMin, double *yMin, double *xMax, double *yMax)
+bool QOutputDev::find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom, GBool startAtLast, GBool stopAtLast, double *xMin, double *yMin, double *xMax, double *yMax)
 {
-	return m_text -> findText(u, len, true, false, false, false, xMin, yMin, xMax, yMax);
+	return m_text -> findText(s, len, startAtTop, stopAtBottom, startAtLast, stopAtLast, xMin, yMin, xMax, yMax);
 }

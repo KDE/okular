@@ -40,6 +40,7 @@
 #include <kurldrag.h>
 #include <kinputdialog.h>
 #include <kfinddialog.h>
+#include <kmessagebox.h>
 
 #include "kpdf_error.h"
 #include "part.h"
@@ -100,10 +101,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
              SLOT( showMarkList( bool ) ) );
 
   // create our actions
-  KStdAction::find    (this, SLOT(find()),
+  m_find = KStdAction::find(this, SLOT(find()),
                        actionCollection(), "find");
-  KStdAction::findNext(this, SLOT(findNext()),
-                       actionCollection(), "find_next");
+  m_find->setEnabled(false);
+  m_findNext = KStdAction::findNext(this, SLOT(findNext()),
+                       actionCollection(), "find_next"); 
+  m_findNext->setEnabled(false);
   m_fitToWidth = new KToggleAction(i18n("Fit to Page &Width"), 0,
                        this, SLOT(slotFitToWidthToggled()),
                        actionCollection(), "fit_to_width");
@@ -368,9 +371,12 @@ Part::openFile()
 
   if (!m_doc->isOk())
     return false;
+
+  m_find->setEnabled(true);
+  m_findNext->setEnabled(true);
   
   errors::clear();
-  m_currentPage = 0; //so that goToPage if is true
+  m_currentPage = 0; //so that the if in goToPage is true
   if (m_doc->getNumPages() > 0)
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?
@@ -709,21 +715,32 @@ void Part::doPrint( KPrinter& printer )
 
 void Part::find()
 {
+  KFindDialog dlg(pdfpartview);
+  if (dlg.exec() != QDialog::Accepted) return;
+  
+  doFind(dlg.pattern(), false);
+}
+
+void Part::findNext()
+{
+  if (!m_findText.isEmpty()) doFind(m_findText, true);  
+}
+
+void Part::doFind(QString s, bool next)
+{
   TextOutputDev *textOut;
   Unicode *u;
   bool found;
   double xMin1, yMin1, xMax1, yMax1;
   int len, pg;
-  KFindDialog dlg(pdfpartview);
-  if (dlg.exec() != QDialog::Accepted) return;
-  
+
   // This is more or less copied from what xpdf does, surely can be optimized
-  len = strlen(dlg.pattern().latin1());
+  len = s.length();
   u = (Unicode *)gmalloc(len * sizeof(Unicode));
-  for (int i = 0; i < len; ++i) u[i] = (Unicode)(dlg.pattern().latin1()[i] & 0xff);
+  for (int i = 0; i < len; ++i) u[i] = (Unicode)(s.latin1()[i] & 0xff);
   
   // search current
-  found = m_outputDev->find(u, len);
+  found = m_outputDev->find(u, len, next);
   
   if (!found)
   {
@@ -744,16 +761,19 @@ void Part::find()
       if (!found) pg++;
     }
 
-    if (!found)
+    if (!found && m_currentPage != 1)
     {
-       // search previous pages
-       pg = 1;
-       while(!found && pg < m_currentPage)
-       {
-         m_doc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
-         found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
-         if (!found) pg++;
-       }
+      if (KMessageBox::questionYesNo(widget(), i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes)
+      {
+        // search previous pages
+        pg = 1;
+        while(!found && pg < m_currentPage)
+        {
+          m_doc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
+          found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
+          if (!found) pg++;
+        }
+      }
     }
 
     delete textOut;
@@ -762,7 +782,14 @@ void Part::find()
        kdDebug() << "found at " << pg << endl;
        goToPage(pg);
        // xpdf says: can happen that we do not find the text if coalescing is bad OUCH
-       m_outputDev->find(u, len);
+       m_outputDev->find(u, len, false);
+       m_findText = s;
+    }
+    else
+    {
+        m_findText = QString::null;
+        if (next) KMessageBox::information(widget(), i18n("No more matches found for '%1'.").arg(s));
+        else KMessageBox::information(widget(), i18n("No matches found for '%1'.").arg(s));
     }
   }
   gfree(u);

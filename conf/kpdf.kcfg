@@ -53,6 +53,9 @@
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="ObeyDRM" type="Bool" >
+   <default>true</default>
+  </entry>
  </group>
  <group name="MainView" >
   <entry key="ShowLeftPanel" type="Bool" >

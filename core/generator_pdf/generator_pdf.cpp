@@ -15,6 +15,7 @@
 #include <qapplication.h>
 #include <qpaintdevicemetrics.h>
 #include <qregexp.h>
+#include <kapplication.h>
 #include <klocale.h>
 #include <kpassdlg.h>
 #include <kprinter.h>
@@ -213,6 +214,8 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 
 bool PDFGenerator::isAllowed( int permissions )
 {
+    if (kapp->authorize("skip_drm") && !Settings::obeyDRM()) return true;
+
     bool b = true;
     if (permissions & KPDFDocument::AllowModify) b = b && pdfdoc->okToChange();
     if (permissions & KPDFDocument::AllowCopy) b = b && pdfdoc->okToCopy();

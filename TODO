@@ -75,6 +75,7 @@ More items (first items will enter 'In progress list' first):
 
 Done (newest features come first):
 -- merging from kdpf_annotations branch --
+-> ADD: Obey DRM is now a configuration option
 -> FIX: leakfix when closing document while thread was running (no more leaks now)
 -> FIX: direct hi-performance pixels manipulation for highlighting (instead of the obsoleted setRasterOp)
 -> CHG: new search api. supports multiple searches at once, multiple highlighs per page

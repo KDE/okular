@@ -112,6 +112,6 @@ AC_ARG_ENABLE(kpdf-drm,
 		;;
  esac
 ]
-, AC_DEFINE(KPDF_HAVE_DRM, 1, [Defines if use DRM in kpdf])
+, AC_DEFINE(KPDF_HAVE_DRM, 0, [Defines if use DRM in kpdf])
 )
 

@@ -388,17 +388,21 @@ bool dviWindow::correctDVI(QString filename)
   QFile f(filename);
   if (!f.open(IO_ReadOnly))
     return FALSE;
+
+  unsigned char test[4];
+  if ( f.readBlock( (char *)test,2)<2 || test[0] != 247 || test[1] != 2 )
+    return FALSE;
+
   int n = f.size();
   if ( n < 134 )	// Too short for a dvi file
     return FALSE;
   f.at( n-4 );
 
-  char test[4];
   unsigned char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
 
-  if ( f.readBlock( test, 4 )<4 || strncmp( test, (char *) trailer, 4 ) )
+  if ( f.readBlock( (char *)test, 4 )<4 || strncmp( (char *)test, (char *) trailer, 4 ) )
     return FALSE;
-  // We suppose now that the dvi file is complete	and OK
+  // We suppose now that the dvi file is complete and OK
   return TRUE;
 }
 

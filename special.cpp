@@ -126,7 +126,7 @@ static void parse_special_argument(QString strg, const char *argument_name, int 
   if (index >= 0) {
     QString tmp     = strg.mid(index + strlen(argument_name));
     tmp.truncate(tmp.find(' '));
-    int tmp_int = tmp.toUInt(&OK);
+    int tmp_int = tmp.toInt(&OK);
     if (OK)
       *variable = tmp_int;
     else
@@ -235,7 +235,7 @@ void dviWindow::epsf_special(QString cp)
       double bbox_height = ury - lly;
 
       if ((rwi != 0)&&(bbox_width != 0)) {
-	bbox_height *= rwi/bbox_width;
+       	bbox_height *= rwi/bbox_width;
 	bbox_width  = rwi;
       }
       if ((rhi != 0)&&(bbox_height != 0)) {

@@ -14,8 +14,11 @@
 #define Inherited printData
 
 #include "marklist.h"
+#include <qfile.h>
 #include <qmessagebox.h>
+
 #include <kapp.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -272,7 +275,7 @@ void print::okPressed()
 
 	cmd += " &";
 
-	kdebug(KDEBUG_INFO, 4300,"About to run: %s", cmd);
+	kdebug(KDEBUG_INFO, 4300,"About to run: %s", cmd.data());
 	system( cmd );
 	accept();
 }

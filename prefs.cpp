@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <kconfig.h>
 #include <klocale.h>
 
 #include "prefs.h"

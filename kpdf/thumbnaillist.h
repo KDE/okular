@@ -13,64 +13,24 @@
 #include <qtable.h>
 #include "document.h"
 
-class QImage;
-
-class PDFDoc;
-
-class ThumbnailGenerator;
 
 class ThumbnailList : public QTable, public KPDFDocumentObserver
 {
 Q_OBJECT
 	public:
-		ThumbnailList(QWidget *parent, QMutex *docMutex);
-		~ThumbnailList();
+		ThumbnailList(QWidget *parent, KPDFDocument *document);
 
-		// inherited as KPDFDocumentObserver
-		void pageSetup( const QValueList<int> & pages )
-		{
-			// TODO use a qvaluelist<int> to pass aspect ratio?
-			// TODO move it the thumbnail list?
-			setPages( pages.count(), 2 );
-			//generateThumbnails(d->pdfdoc);
-		}
-		void pageSetCurrent( int /*pageNumber*/, float /*position*/ )
-		{
-			//setCurrentThumbnail(m_currentPage);
-		}
+		// inherited as a KPDFDocumentObserver
+		void pageSetup( const QValueList<int> & pages );
+		void pageSetCurrent( int pageNumber, float position );
+		void notifyThumbnailChanged( int pageNumber );
 
-		void setCurrentThumbnail(int i);
-		void setPages(int i, double ar);
-		
-		void generateThumbnails(PDFDoc *doc);
-		void stopThumbnailGeneration();
-	
-	protected slots:
-		void customEvent(QCustomEvent *e);
-	
-	private slots:
-		void changeSelected(int i);
-		void emitClicked(int i);
-		
-	signals:
-		void clicked(int);
-	
 	protected:
 		void viewportResizeEvent(QResizeEvent *);
-	
+
 	private:
-		void generateNextThumbnail();
-		void resizeThumbnails();
-		void setThumbnail(int i, const QImage *thumbnail);
-		
-		double m_ar;
 		int m_selected;
-		int m_heightLimit;
-		int m_nextThumbnail;
-		ThumbnailGenerator *m_tg;
-		PDFDoc *m_doc;
-		QMutex *m_docMutex;
-		bool m_ignoreNext;
+		KPDFDocument *m_document;
 };
 
 #endif

@@ -21,7 +21,7 @@ KPDFPage::KPDFPage( uint i, float w, float h )
     : m_number( i ), m_width( w ), m_height( h ), m_zoom( 1 ),
     m_pixmap( 0 ), m_thumbnail( 0 ), m_text( 0 ), m_overlay( 0 )
 {
-    printf( "hello %d\n", i );
+    printf( "hello %d ", i );
 }
 
 KPDFPage::~KPDFPage()
@@ -34,28 +34,28 @@ KPDFPage::~KPDFPage()
 }
 
 /** DRAWING **/
-void KPDFPage::drawPixmap( QPainter * p, const QRect & limits )   // MUTEXED
+void KPDFPage::drawPixmap( QPainter * p, const QRect & limits ) const  // MUTEXED
 {
-    threadLock.lock();
+    //threadLock.lock();
     
     if ( m_pixmap )
         p->drawPixmap( limits.topLeft(), *m_pixmap, limits );
     else
         p->fillRect( limits, Qt::blue );
     
-    threadLock.unlock();
+    //threadLock.unlock();
 }
 
-void KPDFPage::drawThumbnail( QPainter * p )  // MUTEXED
+void KPDFPage::drawThumbnail( QPainter * p, const QRect & limits ) const  // MUTEXED
 {
-    threadLock.lock();
+    //threadLock.lock();
 
     if ( m_thumbnail )
-        p->drawPixmap( 0,0, *m_thumbnail );
+        p->drawPixmap( limits.topLeft(), *m_thumbnail, limits );
     else
-        p->fillRect( 10,10, 20,20, Qt::red );
+        p->fillRect( limits, Qt::red );
 
-    threadLock.unlock();
+    //threadLock.unlock();
 }
 
 

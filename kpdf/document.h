@@ -37,7 +37,7 @@ public:
 
 
 /**
- * @short The information container. Actions (like find) take place here.
+ * @short The information container. Actions (like open,find) take place here.
  *
  * xxxxxx
  * yyy.
@@ -57,21 +57,26 @@ public:
     bool openFile( const QString & docFile );
     void close();
 
-    // document control
-    const KPDFPage * page( uint page ) const;
+    // document query
+    uint currentPage() const;
     uint pages() const;
-    uint currentPage() const { return 0; }
-    void setCurrentPage( uint page, float position = 0.0 );
-    void find( bool nextMatch, const QString & text = "" );
-    void goToLink( /* QString anchor */ );
-    bool atBegin() {return false;}
-    bool atEnd() {return false;}
+    bool atBegin() const;
+    bool atEnd() const;
+    const KPDFPage * page( uint page ) const;
 
-    void setZoom( float zoom ) {};
-    void zoom( float offset ) {};
+public slots:
+    // document commands via slots
+    void slotSetCurrentPage( int page );
+    void slotSetCurrentPagePosition( int page, float position );
+    void slotFind( bool nextMatch, const QString & text = "" );
+    void slotGoToLink( /* QString anchor */ );
+    void slotSetZoom( float zoom );
+    void slotChangeZoom( float offset );
 
 signals:
+    // notify changes via signals
     void pageChanged();
+    void zoomChanged( float newZoom );
 
 private:
     void sendFilteredPageList();

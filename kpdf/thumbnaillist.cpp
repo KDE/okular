@@ -15,42 +15,86 @@
 #include "thumbnaillist.h"
 #include "thumbnail.h"
 
-ThumbnailList::ThumbnailList(QWidget *parent, QMutex *docMutex) : QTable(parent), m_tg(0), m_doc(0), m_docMutex(docMutex)
+#include "page.h"
+
+ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document) : QTable(parent), m_document(document)
 {
 	setNumCols(1);
+	setColumnStretchable(0,true);
 	setLeftMargin(0);
 	setTopMargin(0);
 	setHScrollBarMode(QScrollView::AlwaysOff);
+	setVScrollBarMode(QScrollView::AlwaysOn); //TODO soon restore autoscaling behavior
+	setReadOnly(true);
 	m_selected = 0;
-	
-	connect(this, SIGNAL(pressed(int, int, int, const QPoint&)), this, SLOT(emitClicked(int)));
-	connect(this, SIGNAL(currentChanged(int, int)), this, SLOT(emitClicked(int)));
-	connect(this, SIGNAL(currentChanged(int, int)), this, SLOT(changeSelected(int)));
+
+	connect(this, SIGNAL(currentChanged(int, int)), document, SLOT(slotSetCurrentPage(int)));
 }
 
-ThumbnailList::~ThumbnailList()
+void ThumbnailList::pageSetup( const QValueList<int> & pages )
 {
-	if (m_tg)
+	// delete old 'Thumbnail' objects
+	for (int i=0; i < numRows(); i++)
+		clearCellWidget( i, 0 );
+
+	// generate new 'Thumbnail' objects
+	Thumbnail *t;
+	//viewport()->setUpdatesEnabled(false);
+	setNumRows( pages.count() );
+	//viewport()->setUpdatesEnabled(true);
+	uint i = 0;
+	int width = columnWidth(0);
+	QValueList<int>::const_iterator it = pages.begin();
+	QValueList<int>::const_iterator end = pages.end();
+	for (; it != end ; ++it)
 	{
-		m_tg->wait();
-		delete m_tg;
+		int pageNumber = *it;
+		t = new Thumbnail( this, QString::number(pageNumber+1), viewport()->paletteBackgroundColor(),
+			(int)(width * m_document->page(pageNumber)->ratio()), width);
+		setCellWidget(i, 0, t);
+		setRowHeight(i++, t->sizeHint().height());
 	}
+
+	// request for thumbnail generation
+	//FIXME document->requestThumbnail...
+	//or generateThumbnails(d->pdfdoc);
 }
 
-void ThumbnailList::setCurrentThumbnail(int i)
+void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 {
-	setCurrentCell(i-1, 0); 
-	changeSelected(i-1);
-}
-
-void ThumbnailList::changeSelected(int i)
-{
+	setCurrentCell( pageNumber, 0 );
+printf("current:%d\n",pageNumber);
 	Thumbnail *t;
 	t = dynamic_cast<Thumbnail *>(cellWidget(m_selected, 0));
 	if (t) t -> setSelected(false);
-	m_selected = i;
+	m_selected = pageNumber;
 	t = dynamic_cast<Thumbnail *>(cellWidget(m_selected, 0));
 	if (t) t -> setSelected(true);
+}
+
+/** TO BE IMPORTED:
+	void generateThumbnails(PDFDoc *doc);
+	void stopThumbnailGeneration();
+protected slots:
+	void customEvent(QCustomEvent *e);
+private slots:
+	void changeSelected(int i);
+	void emitClicked(int i);
+signals:
+	void clicked(int);
+private:
+	void generateNextThumbnail();
+	ThumbnailGenerator *m_tg;
+
+	void resizeThumbnails();
+	int m_nextThumbnail;
+	bool m_ignoreNext;
+
+DELETE:
+if (m_tg)
+{
+	m_tg->wait();
+	delete m_tg;
 }
 
 void ThumbnailList::generateThumbnails(PDFDoc *doc)
@@ -71,6 +115,7 @@ void ThumbnailList::generateNextThumbnail()
 	m_tg->start();
 }
 
+
 void ThumbnailList::stopThumbnailGeneration()
 {
 	if (m_tg)
@@ -81,6 +126,7 @@ void ThumbnailList::stopThumbnailGeneration()
 		m_tg = 0;
 	}
 }
+
 
 void ThumbnailList::customEvent(QCustomEvent *e)
 {
@@ -100,30 +146,18 @@ void ThumbnailList::customEvent(QCustomEvent *e)
 	}
 	m_ignoreNext = false;
 }
+*/
 
-void ThumbnailList::setPages(int i, double ar)
+void ThumbnailList::notifyThumbnailChanged( int pageNumber )
 {
-	Thumbnail *t;
-	m_ar = ar;
-	setNumRows(i);
-	for(int j=1; j <= i; j++)
-	{
-		t = new Thumbnail(this, QString::number(j), viewport()->paletteBackgroundColor(), (int)(visibleWidth()*ar), visibleWidth());
-		setCellWidget(j-1, 0, t);
-		setRowHeight(j-1, t->sizeHint().height());
-	}
-	m_heightLimit = 0;
+	Thumbnail *t = dynamic_cast<Thumbnail *>(cellWidget(pageNumber, 0));
+	if ( t && viewport()->rect().intersects( t->rect() ) )
+		t->update();
 }
 
-void ThumbnailList::setThumbnail(int i, const QImage *thumbnail)
+void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 {
-	Thumbnail *t;
-	t = dynamic_cast<Thumbnail *>(cellWidget(i-1, 0));
-	t->setImage(thumbnail);
-}
-
-void ThumbnailList::viewportResizeEvent(QResizeEvent *)
-{
+	printf("%d\n",e->size().width());
 	// that if are here to avoid recursive resizing of death
 	// where the user makes the window smaller, that makes appear
 	// the vertical scrollbar, that makes thumbnails smaller, and
@@ -132,6 +166,7 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *)
 	// ... it also works for when the user makes the window larger
 	// and then the scrollbar disappears but that makes thumbnails
 	// larger and then scrollbar reappears and ...
+/*
 	Thumbnail *t;
 	if (numRows() == 0) return;
 	
@@ -156,10 +191,7 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *)
 			}
 		}
 	}
-}
-
-void ThumbnailList::resizeThumbnails()
-{
+	//THE "resizeThumbnails" method: ##IMPORT##
 	Thumbnail *t;
 	for(int i = 0; i < numRows(); ++i)
 	{
@@ -167,11 +199,7 @@ void ThumbnailList::resizeThumbnails()
 		t->setImageSize((int)(visibleWidth()*m_ar), visibleWidth());
 		setRowHeight(i, (int)(visibleWidth()*m_ar) + t->labelSizeHintHeight());
 	}
-}
-
-void ThumbnailList::emitClicked(int i)
-{
-	emit clicked(i+1);
+*/
 }
 
 #include "thumbnaillist.moc"

@@ -16,8 +16,6 @@
 #ifndef _KPDF_PART_H_
 #define _KPDF_PART_H_
 
-#include <qmutex.h>
-
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
 
@@ -73,7 +71,6 @@ namespace KPDF
 
 	// reimplemented from KParts::ReadOnlyPart
 	bool closeURL();
-
 	void displayPage(int pageNumber ); //TODO REMOVE ME!
 
   protected:
@@ -110,11 +107,6 @@ namespace KPDF
 	void slotPrint(); 
 
   private:
-
-// PORT!! ###
-// PDFDoc*     m_doc;
-QMutex m_docMutex; // REMOVE MEEE
-
 	// the document
 	KPDFDocument * document;
 

@@ -30,11 +30,11 @@
 
 namespace KPDF
 {
-    PageWidget::PageWidget(QWidget* parent, const char* name, QMutex *docMutex)
-        : QScrollView(parent, name, WRepaintNoErase),
+    PageWidget::PageWidget(QWidget *parent, KPDFDocument *doc)
+        : QScrollView(parent, "pageWidget", WRepaintNoErase),
           m_doc(0),
-          m_docMutex(docMutex),
           m_zoomFactor( 1.0 ),
+          m_document( doc ),
           m_currentPage( 1 ),
           m_pressedAction( 0 ),
           m_selection( false )
@@ -309,9 +309,9 @@ namespace KPDF
             // Pixels per point when the zoomFactor is 1.
             const float ppp = (float)QPaintDevice::x11AppDpiX() * m_zoomFactor; // pixels per point
 
-            m_docMutex->lock();
-            m_doc->displayPage(m_outputdev, m_currentPage, ppp, ppp, 0, true, true);
-            m_docMutex->unlock();
+            //m_docMutex->lock();
+            //m_doc->displayPage(m_outputdev, m_currentPage, ppp, ppp, 0, true, true);
+            //m_docMutex->unlock();
 
             resizeContents ( m_outputdev->getImage().width ( ), m_outputdev->getImage().height ( ));
 
@@ -397,5 +397,59 @@ namespace KPDF
     }
 
 }
+
+/** TO BE IMPORTED 
+void Part::displayPage( int pageNumber )
+{
+    if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
+        return;
+    updateActions();
+    const double pageWidth  = m_doc->getPageWidth (pageNumber) * m_zoomFactor;
+    const double pageHeight = m_doc->getPageHeight(pageNumber) * m_zoomFactor;
+
+    // Pixels per point when the zoomFactor is 1.
+    const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
+
+    switch (m_zoomMode)
+    {
+    case FitWidth:
+    {
+        const double pageAR = pageWidth/pageHeight; // Aspect ratio
+
+        const int canvasWidth    = m_pageWidget->contentsRect().width();
+        const int canvasHeight   = m_pageWidget->contentsRect().height();
+        const int scrollBarWidth = m_pageWidget->verticalScrollBar()->width();
+
+        // Calculate the height so that the page fits the viewport width
+        // assuming that we need a vertical scrollbar.
+        float height = float(canvasWidth - scrollBarWidth) / pageAR;
+
+        // If the vertical scrollbar wasn't needed after all, calculate the page
+        // size so that the page fits the viewport width without the scrollbar.
+        if (ceil(height) <= canvasHeight)
+        {
+            height = float(canvasWidth) / pageAR;
+
+            // Handle the rare case that enlarging the page resulted in the need of
+            // a vertical scrollbar. We can fit the page to the viewport height in
+            // this case.
+            if (ceil(height) > canvasHeight)
+                height = float(canvasHeight) * pageAR;
+        }
+
+        m_zoomFactor = (height / pageHeight) / basePpp;
+        break;
+    }
+    case FixedFactor:
+    default:
+        break;
+    }
+
+//const float ppp = basePpp * m_zoomFactor; // pixels per point
+//  m_doc->displayPage(m_pageWidget, pageNumber, int(m_zoomFactor * ppp * 72.0), 0, true);
+//  m_pageWidget->show();
+//  m_currentPage = pageNumber;
+}
+*/
 
 // vim:ts=2:sw=2:tw=78:et

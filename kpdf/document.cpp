@@ -20,9 +20,16 @@
 #include "document.h"
 #include "page.h"
 
+/* Notes:
+- FIXME event queuing to avoid flow interruption (!!??) maybe avoided by the
+  warning to not call something 'active' inside an observer method.
+- TODO implement filtering (on: "incremental search", "annotated pages", 
+*/
+
 // structure used internally by KPDFDocument for data storage
-struct KPDFDocumentPrivate
+class KPDFDocumentPrivate
 {
+public:
     // document related
     QMutex docLock;
     PDFDoc * pdfdoc;
@@ -45,6 +52,7 @@ KPDFDocument::KPDFDocument()
 {
     d = new KPDFDocumentPrivate;
     d->pdfdoc = 0;
+    d->currentPage = -1;
 }
     
 KPDFDocument::~KPDFDocument()
@@ -77,15 +85,16 @@ bool KPDFDocument::openFile( const QString & docFile )
     errors::clear();
 
     // build Pages
+    d->currentPage = -1;
     uint pageCount = d->pdfdoc->getNumPages();
     d->pages.resize( pageCount );
     for ( uint i = 0; i < pageCount ; i++ )
-        d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageHeight(i + 1), d->pdfdoc->getPageWidth(i + 1) );
+        d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1) );
 
     //filter = NONE; TODO
     sendFilteredPageList();
 
-    setCurrentPage( 0 );
+    slotSetCurrentPage( 0 );
     
     return true;
 }
@@ -98,9 +107,10 @@ void KPDFDocument::close()
     d->pdfdoc = 0;
 }
 
-const KPDFPage * KPDFDocument::page( uint n ) const
+
+uint KPDFDocument::currentPage() const
 {
-    return ( n < d->pages.count() ) ? d->pages[n] : 0;
+    return d->currentPage;
 }
 
 uint KPDFDocument::pages() const
@@ -108,16 +118,37 @@ uint KPDFDocument::pages() const
     return d->pdfdoc ? d->pdfdoc->getNumPages() : 0;
 }
 
-void KPDFDocument::setCurrentPage( uint page, float position )
-{   //FIXME event queuing to avoid flow interruption (!!??)
-    if ( (int)page == d->currentPage )   //TODO check position
+bool KPDFDocument::atBegin() const
+{
+    return d->currentPage < 1;
+}
+
+bool KPDFDocument::atEnd() const
+{
+    return d->currentPage >= ((int)d->pages.count() - 1);
+}
+
+const KPDFPage * KPDFDocument::page( uint n ) const
+{
+    return ( n < d->pages.count() ) ? d->pages[n] : 0;
+}
+
+
+void KPDFDocument::slotSetCurrentPage( int page )
+{
+    slotSetCurrentPagePosition( page, 0.0 );
+}
+
+void KPDFDocument::slotSetCurrentPagePosition( int page, float position )
+{
+    if ( page == d->currentPage )   //TODO check position
         return;
     d->currentPage = page;
     foreachObserver( pageSetCurrent( page, position ) );
     pageChanged();
 }
 
-void KPDFDocument::find( bool /*nextMatch*/, const QString & /*text*/ )
+void KPDFDocument::slotFind( bool /*nextMatch*/, const QString & /*text*/ )
 {
 /*
   TextOutputDev *textOut;
@@ -194,9 +225,16 @@ void KPDFDocument::find( bool /*nextMatch*/, const QString & /*text*/ )
 */
 }
 
-void KPDFDocument::goToLink( /* QString anchor */ )
+void KPDFDocument::slotGoToLink( /* QString anchor */ )
 {
+}
 
+void KPDFDocument::slotSetZoom( float /*zoom*/ )
+{
+}
+
+void KPDFDocument::slotChangeZoom( float /*offset*/ )
+{
 }
 
 void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
@@ -205,8 +243,7 @@ void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 }
 
 void KPDFDocument::sendFilteredPageList()
-{   //TODO implement filtering
-
+{
     // make up a value list of the pages [1,2,3..]
     uint pageCount = d->pages.count();
     QValueList<int> pagesList;

@@ -25,24 +25,23 @@
 
 #include <math.h>
 
-#include <qlistbox.h>
-#include <qfile.h>
-#include <qhbox.h>
+#include <qsplitter.h>
 #include <qpainter.h>
-#include <qtimer.h>
+#include <qlayout.h>
+#include <qlabel.h>
 
 #include <kaction.h>
-#include <kdebug.h>
 #include <kinstance.h>
 #include <kprinter.h>
 #include <kstdaction.h>
 #include <kconfig.h>
 #include <kparts/genericfactory.h>
 #include <kurldrag.h>
-#include <kinputdialog.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
+#include <kfinddialog.h>
+#include <knuminput.h>
 
 #include "kpdf_error.h"
 
@@ -77,29 +76,26 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// we need an instance
 	setInstance(KPDFPartFactory::instance());
 
-	// build widgets
-	QHBox *widget = new QHBox(parentWidget, widgetName);
-	widget->setSpacing(3);
-	widget->setMargin(3);
-
-	m_thumbnailList = new ThumbnailList(widget, &m_docMutex);
-	m_thumbnailList->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)7, 0, 0, m_thumbnailList->sizePolicy().hasHeightForWidth() ) );
-	m_thumbnailList->setMaximumSize( QSize( 75, 32767 ) );
-	m_thumbnailList->setColumnWidth(0, 75);
-
-	m_pageWidget = new KPDF::PageWidget( widget, "outputdev", &m_docMutex );
-	connect( m_pageWidget, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
-	//connect(m _pageWidget, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
-
-	// FIXME is the following line really necessary??
-	widget->resize( QSize(623, 381).expandedTo(widget->minimumSizeHint()) );
-	setWidget(widget);
-
 	// build the document
 	document = new KPDFDocument();
 	connect( document, SIGNAL( pageChanged() ), this, SLOT( updateActions() ) );
+
+	// build widgets
+	QSplitter *split = new QSplitter(parentWidget, widgetName);
+	split->setOpaqueResize( true );
+
+	m_thumbnailList = new ThumbnailList(split, document);
+	m_thumbnailList->setMaximumWidth( 90 );
+	m_thumbnailList->setMinimumWidth( 50 );
 	document->addObserver( m_thumbnailList );
+
+	m_pageWidget = new KPDF::PageWidget(split, document);
+	connect( m_pageWidget, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
+	//connect(m _pageWidget, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
 	document->addObserver( m_pageWidget );
+
+	//TODO split->setSizes( QValueList<int> list ); loaded from config file (last setup)
+	setWidget(split);
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -178,112 +174,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	updateActions();
 }
 
-// ###
-
 Part::~Part()
 {
 	delete document;
 	writeSettings();
 	if ( --m_count == 0 )
 		delete globalParams;
-}
-
-void Part::slotZoom( const QString & nz )
-{
-	QString z = nz;
-	z.remove( z.find( '%' ), 1 );
-	bool isNumber = true;
-	double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
-
-	if ( isNumber )
-		document->setZoom( zoom );
-}
-
-void Part::slotZoomIn()
-{
-	document->zoom( 0.1 );
-}
-
-void Part::slotZoomOut()
-{
-	document->zoom( -0.1 );
-}
-
-void Part::slotGoToPage()
-{
-	bool ok = false;
-	//TODO a better dialog with a slider too
-	int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), document->currentPage(),
-                                       1, document->pages(), 1, 10, &ok/*, _part->widget()*/);
-	if (ok)
-		document->setCurrentPage( num );
-}
-
-void Part::updateActions()
-{
-	if ( document->pages() > 0 )
-	{
-		m_firstPage->setEnabled( !document->atBegin() );
-		m_prevPage->setEnabled( !document->atBegin() );
-		m_lastPage->setEnabled( !document->atEnd() );
-		m_nextPage->setEnabled( !document->atEnd() );
-	}
-	else
-	{
-		m_firstPage->setEnabled(false);
-		m_lastPage->setEnabled(false);
-		m_prevPage->setEnabled(false);
-		m_nextPage->setEnabled(false);
-	}
-}
-
-void Part::writeSettings()
-{
-	KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
-	general.writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
-	general.writeEntry( "ShowPageList", m_showPageList->isChecked() );
-	general.sync();
-}
-
-void Part::readSettings()
-{
-	KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
-	m_showScrollBars->setChecked( general.readBoolEntry( "ShowScrollBars", true ) );
-	slotToggleScrollBars( m_showScrollBars->isChecked() );
-	m_showPageList->setChecked( general.readBoolEntry( "ShowPageList", true ) );
-	slotToggleThumbnails( m_showPageList->isChecked() );
-}
-
-void Part::slotToggleScrollBars( bool show )
-{
-	m_pageWidget->enableScrollBars( show );
-}
-
-void Part::slotToggleThumbnails( bool show )
-{
-	m_thumbnailList->setShown( show );
-}
-
-void Part::slotGotoEnd()
-{
-	document->setCurrentPage( document->pages() - 1 );
-}
-
-void Part::slotGotoStart()
-{
-	document->setCurrentPage( 0 );
-}
-
-void Part::slotNextPage()
-{
-	if ( !document->atEnd() )
-		document->setCurrentPage( document->currentPage() + 1 );
-}
-
-void Part::slotPreviousPage()
-{
-	if ( !document->atBegin() )
-		document->setCurrentPage( document->currentPage() - 1 );
 }
 
 KAboutData* Part::createAboutData()
@@ -310,6 +206,153 @@ bool Part::closeURL()
 	return KParts::ReadOnlyPart::closeURL();
 }
 
+void Part::updateActions()
+{
+	if ( document->pages() > 0 )
+	{
+		m_gotoPage->setEnabled(document->pages()>1);
+		m_firstPage->setEnabled(!document->atBegin());
+		m_prevPage->setEnabled(!document->atBegin());
+		m_lastPage->setEnabled(!document->atEnd());
+		m_nextPage->setEnabled(!document->atEnd());
+	}
+	else
+	{
+		m_gotoPage->setEnabled(false);
+		m_firstPage->setEnabled(false);
+		m_lastPage->setEnabled(false);
+		m_prevPage->setEnabled(false);
+		m_nextPage->setEnabled(false);
+	}
+}
+
+void Part::readSettings()
+{
+	KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
+	m_showScrollBars->setChecked( general.readBoolEntry( "ShowScrollBars", true ) );
+	slotToggleScrollBars( m_showScrollBars->isChecked() );
+	m_showPageList->setChecked( general.readBoolEntry( "ShowPageList", true ) );
+	slotToggleThumbnails( m_showPageList->isChecked() );
+}
+
+void Part::writeSettings()
+{
+	KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
+	general.writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
+	general.writeEntry( "ShowPageList", m_showPageList->isChecked() );
+	general.sync();
+}
+
+//BEGIN go to page dialog 
+class KPDFGotoPageDialog : public KDialogBase
+{
+public:
+	KPDFGotoPageDialog(QWidget *p, int current, int max) : KDialogBase(p, 0L, true, i18n("Go to Page"), Ok | Cancel, Ok) {
+		QWidget *w = new QWidget(this);
+		setMainWidget(w);
+		
+		QVBoxLayout *topLayout = new QVBoxLayout( w, 0, spacingHint() );
+		e1 = new KIntNumInput(current, w);
+		e1->setRange(1, max);
+		e1->setEditFocus(true);
+		
+		QLabel *label = new QLabel( e1,i18n("&Page:"), w );
+		topLayout->addWidget(label);
+		topLayout->addWidget(e1);
+		topLayout->addSpacing(spacingHint()); // A little bit extra space
+		topLayout->addStretch(10);
+		e1->setFocus();
+	}
+
+	int getPage() {
+		return e1->value();
+	}
+
+  protected:
+    KIntNumInput *e1;
+};
+//END go to page dialog 
+
+void Part::slotGoToPage()
+{
+	KPDFGotoPageDialog pageDialog( m_pageWidget, document->currentPage() + 1, document->pages() );
+	if ( pageDialog.exec() == QDialog::Accepted )
+		document->slotSetCurrentPage( pageDialog.getPage() - 1 );
+}
+
+void Part::slotPreviousPage()
+{
+	if ( !document->atBegin() )
+		document->slotSetCurrentPage( document->currentPage() - 1 );
+}
+
+void Part::slotNextPage()
+{
+	if ( !document->atEnd() )
+		document->slotSetCurrentPage( document->currentPage() + 1 );
+}
+
+void Part::slotGotoStart()
+{
+	document->slotSetCurrentPage( 0 );
+}
+
+void Part::slotGotoEnd()
+{
+	document->slotSetCurrentPage( document->pages() - 1 );
+}
+
+void Part::slotFind()
+{
+	KFindDialog dlg(widget());
+	if (dlg.exec() == QDialog::Accepted)
+		document->slotFind( false, dlg.pattern() );
+}
+
+void Part::slotFindNext()
+{
+	document->slotFind( true );
+}
+
+void Part::slotZoom( const QString & nz )
+{
+	QString z = nz;
+	z.remove( z.find( '%' ), 1 );
+	bool isNumber = true;
+	double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
+
+	if ( isNumber )
+		document->slotSetZoom( zoom );
+}
+
+void Part::slotZoomIn()
+{
+	document->slotChangeZoom( 0.1 );
+}
+
+void Part::slotZoomOut()
+{
+	document->slotChangeZoom( -0.1 );
+}
+
+void Part::slotFitToWidthToggled( bool /*fit*/ )
+{
+/*
+	m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
+	displayPage(m_currentPage);
+*/
+}
+
+void Part::slotToggleScrollBars( bool show )
+{
+	m_pageWidget->enableScrollBars( show );
+}
+
+void Part::slotToggleThumbnails( bool show )
+{
+	m_thumbnailList->setShown( show );
+}
+
 void Part::slotSaveFileAs()
 {
   KURL saveURL = KFileDialog::getSaveURL(
@@ -324,58 +367,7 @@ void Part::slotSaveFileAs()
 	; // TODO: Proper error dialog
 }
 
-void Part::displayPage( int /*pageNumber*/ )
-{
-/*
-    if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
-        return;
-    updateActions();
-    const double pageWidth  = m_doc->getPageWidth (pageNumber) * m_zoomFactor;
-    const double pageHeight = m_doc->getPageHeight(pageNumber) * m_zoomFactor;
 
-    // Pixels per point when the zoomFactor is 1.
-    const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
-
-    switch (m_zoomMode)
-    {
-    case FitWidth:
-    {
-        const double pageAR = pageWidth/pageHeight; // Aspect ratio
-
-        const int canvasWidth    = m_pageWidget->contentsRect().width();
-        const int canvasHeight   = m_pageWidget->contentsRect().height();
-        const int scrollBarWidth = m_pageWidget->verticalScrollBar()->width();
-
-        // Calculate the height so that the page fits the viewport width
-        // assuming that we need a vertical scrollbar.
-        float height = float(canvasWidth - scrollBarWidth) / pageAR;
-
-        // If the vertical scrollbar wasn't needed after all, calculate the page
-        // size so that the page fits the viewport width without the scrollbar.
-        if (ceil(height) <= canvasHeight)
-        {
-            height = float(canvasWidth) / pageAR;
-
-            // Handle the rare case that enlarging the page resulted in the need of
-            // a vertical scrollbar. We can fit the page to the viewport height in
-            // this case.
-            if (ceil(height) > canvasHeight)
-                height = float(canvasHeight) * pageAR;
-        }
-
-        m_zoomFactor = (height / pageHeight) / basePpp;
-        break;
-    }
-    case FixedFactor:
-    default:
-        break;
-    }
-*/
-//const float ppp = basePpp * m_zoomFactor; // pixels per point
-//  m_doc->displayPage(m_pageWidget, pageNumber, int(m_zoomFactor * ppp * 72.0), 0, true);
-//  m_pageWidget->show();
-//  m_currentPage = pageNumber;
-}
 /*
 void Part::displayDestination(LinkDest* dest)
 {
@@ -513,15 +505,6 @@ void Part::executeAction(LinkAction* action)
   }
 }*/
 
-void Part::slotFitToWidthToggled( bool /*fit*/ )
-{
-/*
-	m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
-	displayPage(m_currentPage);
-*/
-}
-
-
 void Part::slotPrint()
 {
 /*
@@ -611,21 +594,6 @@ void Part::doPrint( KPrinter& /*printer*/ )
 */
 }
 
-//temp
-#include <kfinddialog.h>
-
-void Part::slotFind()
-{
-	KFindDialog dlg(widget());
-	if (dlg.exec() == QDialog::Accepted)
-		document->find( false, dlg.pattern() );
-}
-
-void Part::slotFindNext()
-{
-	//if (!m_findText.isEmpty())
-	document->find( true );
-}
 
 /* 
 * BrowserExtension class

@@ -76,7 +76,7 @@ Shell::Shell()
     // next time we enter the event loop...
     return;
   }
-  connect( m_part, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
+  //FIXME READD: connect( m_part, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
 
   readSettings();
 }

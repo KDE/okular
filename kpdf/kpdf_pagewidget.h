@@ -22,13 +22,13 @@
 
 class KURL;
 
-class QMutex;
 class QWidget;
 
 class LinkAction;
 class PDFDoc;
 
 class QOutputDev;
+class KPDFDocument;
 
 namespace KPDF
 {
@@ -42,7 +42,7 @@ namespace KPDF
         enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
 
     public:
-        PageWidget(QWidget* parent, const char* name, QMutex *docMutex);
+        PageWidget(QWidget *parent, KPDFDocument *document);
         ~PageWidget();
         void setPDFDocument(PDFDoc*);
         void setPixelsPerPoint(float);
@@ -104,10 +104,10 @@ namespace KPDF
 
         QOutputDev *m_outputdev;
         PDFDoc* m_doc;
-        QMutex* m_docMutex;
         float   m_ppp; // Pixels per point
         float		m_zoomFactor;
         ZoomMode m_zoomMode;
+        KPDFDocument *m_document;
 
         // first page is page 1
         int m_currentPage;

@@ -42,16 +42,17 @@ public:
     KPDFPage( uint number, float width, float height );
     ~KPDFPage();
 
-    // query methods
+    // page properties
     uint number() const { return m_number; }
     float width() const { return m_width; }
     float height() const { return m_height; }
     float ratio() const { return m_height / m_width; }
 
+    // rendering
+    void drawPixmap( QPainter * p, const QRect & rect ) const;
+    void drawThumbnail( QPainter * p, const QRect & rect ) const;
     float currentZoom() const { return m_zoom; }
     const QSize & currentSize() const { return m_size; }
-    void drawPixmap( QPainter * p, const QRect & rect );
-    void drawThumbnail( QPainter * p );
 
     // find related methods
     bool hasText( QString & text );

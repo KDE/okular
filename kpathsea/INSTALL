@@ -1,18 +1,3 @@
-Contents:
-
-Installation
-  Default paths
-  Common problems
-    Unable to find files
-    Slow path searching
-    `XtInherit'
-    `wchar_t'
-    `ShellWidgetClass'
-    Pointer combination warnings
-  Shared library
-  Reporting bugs
-
-
 Installation
 ************
 

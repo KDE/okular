@@ -6,3 +6,4 @@ data_DATA = index.html
 # you have given the datas in data_DATA
 datadir = $(kde_htmldir)/en/kdvi
 
+EXTRA_DIST = $(data_DATA)

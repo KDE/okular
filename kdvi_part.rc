@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="kdvi_part">
+<kpartgui name="kdvi_part" version="1">
 <MenuBar>
  <Menu name="settings"><text>Settings</text>
   <Action name="settings_dvi" append="options_show_merge"/>

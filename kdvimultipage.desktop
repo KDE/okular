@@ -2,7 +2,12 @@
 Type=Service
 Comment=DVI
 Name=KDVIMultiPage
+Name[pt]=KDVIMultiPágina
+Name[pt_BR]=KDVIMultiPágina
+Name[ro]=KDVI Pagini Multiple
+Name[sv]=KDVI flera sidor
 ServiceTypes=KViewShell/MultiPage
 X-KDE-Library=kdvipart
 X-KDE-MultiPageFileType=dvi
+X-KDE-MimeTypes=application/x-dvi
 X-KDE-MultiPageVersion=1

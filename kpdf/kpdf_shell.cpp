@@ -88,11 +88,6 @@ Shell::~Shell()
     if(m_part) writeSettings();
 }
 
-bool Shell::foundPart() const
-{
-    return m_part;
-}
-
 void Shell::openURL( const KURL & url )
 {
     if ( m_part && m_part->openURL( url ) ) m_recent->addURL (url);

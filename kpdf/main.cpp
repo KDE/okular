@@ -48,7 +48,6 @@ int main(int argc, char** argv)
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
-    KPDF::Shell* widget;
 
     // see if we are starting with session management
     if (app.isRestored())
@@ -60,14 +59,14 @@ int main(int argc, char** argv)
 
         if (args->count() == 0)
         {
-            widget = new KPDF::Shell;
+            KPDF::Shell* widget = new KPDF::Shell;
             widget->show();
         }
         else
         {
             for (int i = 0; i < args->count(); ++i)
             {
-                widget = new KPDF::Shell;
+                KPDF::Shell* widget = new KPDF::Shell;
                 widget->show();
                 widget->openURL(args->url(i));
             }
@@ -75,8 +74,7 @@ int main(int argc, char** argv)
         args->clear();
     }
 
-    if (widget -> foundPart()) return app.exec();
-    else return 1;
+    return app.exec();
 }
 
 // vim:ts=2:sw=2:tw=78:et

@@ -44,8 +44,6 @@ namespace KPDF
      */
     Shell();
 
-    bool foundPart() const;
-
     /**
      * Default Destructor
      */

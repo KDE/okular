@@ -30,6 +30,7 @@
 #include <kconfigbase.h>
 
 #include <math.h>
+#include <stdlib.h>
 
 #include "pageview.h"
 #include "pixmapwidget.h"
@@ -58,6 +59,8 @@ public:
 
     // other stuff
     QTimer *delayTimer;
+    QTimer *scrollTimer;
+    int scrollIncrement;
     bool dirtyLayout;
 
     // actions
@@ -95,6 +98,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseMode = MouseNormal;
     d->mouseOnLink = false;
     d->delayTimer = 0;
+    d->scrollTimer = 0;
+    d->scrollIncrement = 0;
     d->dirtyLayout = false;
 
     // dealing with (very) large areas so enable clipper
@@ -170,6 +175,12 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
     //md->setEnabled( false ); // implement feature before removing this line
 
     // Other actions
+    KAction * su = new KAction( i18n("Scroll Up"), 0, this, SLOT( slotScrollUp() ), ac, "view_scroll_up" );
+    su->setShortcut( "Shift+Up" );
+
+    KAction * sd = new KAction( i18n("Scroll Down"), 0, this, SLOT( slotScrollDown() ), ac, "view_scroll_down" );
+    sd->setShortcut( "Shift+Down" );
+
     KToggleAction * ss = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
     ss->setCheckedState(i18n("Hide &Scrollbars"));
     connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
@@ -261,35 +272,27 @@ void PageView::notifyPixmapChanged( int pageNumber )
 //BEGIN widget events 
 void PageView::contentsMousePressEvent( QMouseEvent * e )
 {
+    bool leftButton = e->button() & LeftButton,
+         rightButton = e->button() & RightButton;
     switch ( d->mouseMode )
     {
-    case MouseNormal:    // drag / click start
-        if ( e->button() & LeftButton )
+    case MouseNormal:    // drag start / click / link following
+        if ( leftButton )
         {
             d->mouseStartPos = e->globalPos();
-            if ( false /*over a link*/ )
-            {
+            if ( d->mouseOnLink )
                 d->mouseGrabPos = QPoint();
-                /* TODO Albert
-                note: 'Page' is an 'information container' and has to deal with clean
-                data (such as the '(int)page & (float)position' where link refers to,
-                not a LinkAction struct.. better an own struct). 'Document' is the place
-                to put xpdf/Splash dependant stuff and fill up pages with interpreted
-                data. I think is a *clean* way to handle everything.
-                d->pressedLink = *PAGE* or *DOCUMENT* ->findLink( normalizedX, normY ); */
-            }
             else
             {
                 d->mouseGrabPos = d->mouseStartPos;
                 setCursor( sizeAllCursor );
             }
         }
-        else if ( e->button() & RightButton )
+        else if ( rightButton )
             emit rightClick();
         break;
 
     case MouseSelection: // ? set 1st corner of the selection rect ?
-        //d->
         break;
 
     case MouseEdit:      // ? place the beginning of [tool] ?
@@ -299,38 +302,35 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
+    bool leftButton = e->button() & LeftButton,
+         rightButton = e->button() & RightButton;
     PageWidget * page = pickPageOnPoint( e->x(), e->y() );
     switch ( d->mouseMode )
     {
     case MouseNormal:    // end drag / follow link
-        if ( e->button() & LeftButton )
+        if ( leftButton )
         {
             setCursor( arrowCursor );
-
-            // check if it was a click, in that case select the page
-            if ( e->globalPos() == d->mouseStartPos && page )
+            // check if over a link
+            if ( d->mouseOnLink && page )
             {
-                if ( d->mouseOnLink )
-                {
-                    /* TODO Enrico: port links here
-                        PageLink * link = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
-                        if ( link == d->pressedLink )
-                            //go to link, use:
-                            document->slotSetCurrentPagePosition( (int)link->page(), (float)link->position() );
-                            //and all the views will update and display the right page at the right position
-                        d->pressedLink = 0;
-                    */
-                }
-                else
-                    d->document->slotSetCurrentPage( page->pageNumber() );
+                int linkX = e->x() - childX( page ),
+                    linkY = e->y() - childY( page );
+                d->document->slotProcessLink( page->pageNumber(), linkX, linkY );
             }
+            // check if it was a click, in that case select the page
+            else if ( e->globalPos() == d->mouseStartPos && page )
+                d->document->slotSetCurrentPage( page->pageNumber() );
+            // check wether to restore the hand cursor
+            else if ( d->mouseOnLink )
+                setCursor( pointingHandCursor );
         }
-        else if ( e->button() == Qt::RightButton && page )
+        else if ( rightButton && page )
         {
             // If over a page display a popup menu
             const KPDFPage * kpdfPage = page->page();
             KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
-            m_popup->insertTitle( i18n( "Page %1" ).arg( page->pageNumber() ) );
+            m_popup->insertTitle( i18n( "Page %1" ).arg( page->pageNumber() + 1 ) );
             if ( kpdfPage->isBookmarked() )
                 m_popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
             else
@@ -368,26 +368,24 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
     bool leftButton = e->state() & LeftButton;
     switch ( d->mouseMode )
     {
-    case MouseNormal:    // move page / change mouse cursor if over links
+    case MouseNormal:    // drag page / change mouse cursor if over links
         if ( leftButton && !d->mouseGrabPos.isNull() )
         {
             QPoint delta = d->mouseGrabPos - e->globalPos();
             scrollBy( delta.x(), delta.y() );
             d->mouseGrabPos = e->globalPos();
         }
-        if ( !leftButton )
+        else
         {
             // set cursor only when entering / leaving (setCursor has not an internal cache)
             PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
-            if ( pageWidget )
+            if ( !pageWidget )
+                break;
+            bool onLink = pageWidget->page()->hasLink( e->x() - childX( pageWidget ), e->y() - childY( pageWidget ) );
+            if ( onLink != d->mouseOnLink )
             {
-                const KPDFPage * page = pageWidget->page();
-                bool onLink = page->hasLink( e->x() - childX( pageWidget ), e->y() - childY( pageWidget ) );
-                if ( onLink != d->mouseOnLink )
-                {
-                    d->mouseOnLink = onLink;
-                    setCursor( onLink ? pointingHandCursor : arrowCursor );
-                }
+                d->mouseOnLink = onLink;
+                setCursor( onLink ? pointingHandCursor : arrowCursor );
             }
         }
         break;
@@ -427,11 +425,28 @@ void PageView::keyPressEvent( QKeyEvent * e )
     case Key_PageDown:
         verticalScrollBar()->addPage();
         break;
+    case Key_Shift:
+    case Key_Control:
+        if ( d->scrollTimer )
+        {
+            if ( d->scrollTimer->isActive() )
+                d->scrollTimer->stop();
+            else
+                slotAutoScoll();
+            e->accept();
+            return;
+        }
     default:
         e->ignore();
         return;
     }
     e->accept();
+
+    if ( d->scrollTimer )
+    {
+        d->scrollIncrement = 0;
+        d->scrollTimer->stop();
+    }
 }
 
 void PageView::wheelEvent( QWheelEvent *e )
@@ -539,6 +554,22 @@ void PageView::slotSetMouseSelect()
 void PageView::slotSetMouseDraw()
 {
     d->mouseMode = MouseEdit;
+}
+
+void PageView::slotScrollUp()
+{
+    if ( d->scrollIncrement < -9 )
+        return;
+    d->scrollIncrement--;
+    slotAutoScoll();
+}
+
+void PageView::slotScrollDown()
+{
+    if ( d->scrollIncrement > 9 )
+        return;
+    d->scrollIncrement++;
+    slotAutoScoll();
 }
 
 void PageView::slotToggleScrollBars( bool on )
@@ -740,6 +771,30 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         if ( p->isShown() && pRight > vLeft && pLeft < vRight && pBottom > vTop && pTop < vBottom )
             d->document->requestPixmap( PAGEVIEW_ID, p->pageNumber(), p->pixmapWidth(), p->pixmapHeight(), true );
     }
+}
+
+void PageView::slotAutoScoll()
+{
+    // the first time create the timer
+    if ( !d->scrollTimer )
+    {
+        d->scrollTimer = new QTimer( this );
+        connect( d->scrollTimer, SIGNAL( timeout() ), this, SLOT( slotAutoScoll() ) );
+    }
+
+    // if scrollIncrement is zero, stop the timer
+    if ( !d->scrollIncrement )
+    {
+        d->scrollTimer->stop();
+        return;
+    }
+
+    // compute delay between timer ticks and scroll amount per tick
+    int index = abs( d->scrollIncrement ) - 1;  // 0..9
+    const int scrollDelay[10] =  { 200, 100, 50, 30, 20, 30, 25, 20, 30, 20 };
+    const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
+    d->scrollTimer->changeInterval( scrollDelay[ index ] );
+    scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
 }
 //END internal SLOTS
 

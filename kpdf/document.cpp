@@ -8,8 +8,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-// qt/kde includes
+// qt/kde/system includes
+#include <qdir.h>
 #include <qfile.h>
+#include <qfileinfo.h>
 #include <qmutex.h>
 #include <qvaluevector.h>
 #include <qmap.h>
@@ -19,6 +21,11 @@
 #include <kmessagebox.h>
 #include <kpassdlg.h>
 #include <kstandarddirs.h>
+#include <kapplication.h>
+#include <krun.h>
+#include <kurl.h>
+#include <kuserprofile.h>
+#include <string.h>
 
 // local includes
 #include "ErrorCodes.h"
@@ -296,13 +303,13 @@ void KPDFDocument::slotSetFilter( const QString & pattern, bool keepCase )
     processPageList( false );
 }
 
-void KPDFDocument::slotBookmarkPage( int page, bool on )
+void KPDFDocument::slotBookmarkPage( int n, bool on )
 {
-    KPDFPage * p = ( page < (int)d->pages.count() ) ? d->pages[page] : 0;
-    if ( p )
+    KPDFPage * page = ( n < (int)d->pages.count() ) ? d->pages[ n ] : 0;
+    if ( page )
     {
-        p->bookmark( on );
-        foreachObserver( notifyPixmapChanged( page ) );
+        page->bookmark( on );
+        foreachObserver( notifyPixmapChanged( n ) );
     }
 }
 
@@ -376,10 +383,121 @@ void KPDFDocument::slotFind( const QString & string, bool keepCase )
         KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(d->searchText) );
 }
 
-void KPDFDocument::slotGoToLink( /* QString anchor */ )
+void KPDFDocument::slotProcessLink( int n, int x, int y )
 {
+    KPDFPage * page = ( n < (int)d->pages.count() ) ? d->pages[ n ] : 0;
+    const KPDFLink * link = page ? page->getLink( x, y ) : 0;
+    if ( !link )
+        return;
+
+    switch( link->type() )
+    {
+    case KPDFLink::Goto: {
+        // make copies of the 'nameDest' (string) and the 'dest' (class)
+        char * namedDest = 0;
+        link->copyString( namedDest, link->getNamedDest() );
+        LinkDest * dest = link->getDest() ? ((LinkDest*)link->getDest())->copy() : 0;
+
+        // first open filename if link is pointing outside this document
+        QString fileName( link->getFileName() );
+        if ( !fileName.isNull() )
+            if ( !openRelativeFile( fileName ) )
+            {
+                kdWarning() << "Link: Error opening '" << fileName << "'." << endl;
+                delete dest;
+                delete namedDest;
+                return;
+            }
+
+        // now previous KPDFLink and KPDFPage don't exist anymore!
+        if ( namedDest && !dest )
+        {
+            d->docLock.lock();
+            GString temp( namedDest );
+            dest = d->pdfdoc->findDest( &temp  );
+            d->docLock.unlock();
+        }
+        if ( dest )
+        {
+            // TODO implement page traversal
+            //pri NOWARN ntf("HERE I AM\n");
+            //displayDest(dest, zoom, rotate, gTrue);
+        }
+        delete namedDest;
+        delete dest;
+        } break;
+
+    case KPDFLink::Execute: {
+        QString fileName( link->getFileName() );
+        if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
+            openRelativeFile( fileName );
+        else
+        {
+            KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
+            /* core developers say this is too dangerous
+            fileName = fileName->copy();
+            if (((LinkLaunch *)action)->getParams())
+            {
+                fileName->append(' ');
+                fileName->append(((LinkLaunch *)action)->getParams());
+            }
+            fileName->append(" &");
+            if (KMessageBox::questionYesNo(widget(), i18n("Do you want to execute the command:\n%1").arg(fileName->getCString()), i18n("Launching external application")) == KMessageBox::Yes)
+            {
+                system(fileName->getCString());
+            }*/
+        }
+        } break;
+
+    case KPDFLink::Named: {
+        const char * name = link->getName();
+        if ( !strcmp( name, "NextPage" ) && (d->currentPage < (int)d->pages.count() - 1) )
+            slotSetCurrentPage( d->currentPage + 1 );
+        else if ( !strcmp( name, "PrevPage" ) && d->currentPage > 0 )
+            slotSetCurrentPage( d->currentPage - 1 );
+        else if ( !strcmp( name, "FirstPage" ) )
+            slotSetCurrentPage( 0 );
+        else if ( !strcmp( name, "LastPage" ) )
+            slotSetCurrentPage( d->pages.count() - 1 );
+        else if ( !strcmp( name, "GoBack" ) )
+            {} //TODO
+        else if ( !strcmp( name, "GoForward" ) )
+            {} //TODO
+        else if ( !strcmp( name, "Quit" ) )
+            kapp->quit();
+        else
+            {}//FIXME error(-1, "Unknown named action: '%s'", name);
+        } break;
+
+    case KPDFLink::URI: {
+        KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
+        KURL::List lst;
+        lst.append( link->getURI() );
+        KRun::run( *ptr, lst );
+        } break;
+
+    case KPDFLink::Movie:
+    case KPDFLink::Unknown:
+        // unimplemented cases
+        break;
+    }
 }
 //END slots
+
+bool KPDFDocument::openRelativeFile( const QString & fileName )
+{
+    const char * currentName = d->pdfdoc->getFileName()->getCString();
+    if ( !currentName || currentName[0] == 0 )
+        return false;
+
+    // convert the pdf fileName to absolute using current pdf path
+    QFileInfo currentInfo( currentName );
+    QString absFileName( currentInfo.dir().absFilePath( fileName ) );
+    kdDebug() << "openDocument: '" << absFileName << "'" << endl;
+
+    // open the absolute filename
+    return openDocument( absFileName );
+}
 
 void KPDFDocument::processPageList( bool documentChanged )
 {

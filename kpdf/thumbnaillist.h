@@ -33,8 +33,8 @@ Q_OBJECT
 
 		// create actions that interact with this widget and load/save settings
 		uint observerId() { return THUMBNAILS_ID; }
-		void setupActions( KActionCollection * collection, KConfigGroup * config ) {};
-		void saveSettings( KConfigGroup * config ) {};
+		void setupActions( KActionCollection * /*collection*/, KConfigGroup * /*config*/ ) {};
+		void saveSettings( KConfigGroup * /*config*/ ) {};
 
 		// create thumbnails ( inherited as a DocumentObserver )
 		void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );

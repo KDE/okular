@@ -86,12 +86,16 @@ private slots:
     void slotSetMouseNormal();
     void slotSetMouseSelect();
     void slotSetMouseDraw();
+    void slotScrollUp();
+    void slotScrollDown();
     void slotToggleScrollBars( bool on );
 
     // activated either directly or via QTimer on the viewportResizeEvent
     void slotRelayoutPages();
     // activated either directly or via the contentsMoving(int,int) signal
     void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
+    // activated by the autoscroll timer (Shift+Up/Down keys)
+    void slotAutoScoll();
 
 private:
     // update internal zoom values and end in a slotRelayoutPages();

@@ -79,13 +79,14 @@ public slots:
     void slotSetFilter( const QString & pattern, bool caseSensitive );
     void slotBookmarkPage( int page, bool enabled );
     void slotFind( const QString & text = "", bool caseSensitive = false );
-    void slotGoToLink( /* UnknownType unknown */ );
+    void slotProcessLink( int page, int x, int y );
 
 signals:
     // notify changes via signals
     void pageChanged();
 
 private:
+    bool openRelativeFile( const QString & fileName );
     void processPageList( bool documentChanged );
     void unHilightPages();
 

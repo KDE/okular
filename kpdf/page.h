@@ -45,6 +45,7 @@ public:
     bool hasPixmap( int id, int width, int height ) const;
     bool hasSearchPage() const;
     bool hasLink( int mouseX, int mouseY ) const;
+    const KPDFLink * getLink( int mouseX, int mouseY ) const;
     void drawPixmap( int id, QPainter * p, const QRect & rect, int width, int height ) const;
 
     // commands (not const methods caled by KPDFDocument)
@@ -89,16 +90,25 @@ public:
     ~KPDFLink();
 
     // action types setup
-    enum LinkType { Goto, Execute, Action, URI, Movie, Unknown };
+    enum LinkType { Goto, Execute, Named, URI, Movie, Unknown };
     void setLinkGoto( LinkDest * dest, const char * namedDest, const char * fileName = 0 );
     void setLinkExecute( const char * file, const char * parameters );
     void setLinkNamed( const char * name );
     void setLinkURI( const char * uri );
     void setLinkMovie( int ref_num, int ref_gen, const char * title );
 
-    // query
+    // action queries
+    const LinkDest * getDest() const;   //1
+    const char * getNamedDest() const;  //1
+    const char * getFileName() const;   //1,2
+    const char * getParameters() const; //2
+    const char * getName() const;   //3
+    const char * getURI() const;    //4
+
+    // query / others
     LinkType type() const;
     bool contains( int x, int y ) const;
+    void copyString( char * &dest, const char * src ) const;
 
 private:
     // general
@@ -112,8 +122,6 @@ private:
     char * m_parameters;
     char * m_uri;
     int m_refNum, m_refGen;
-
-    void copyString( char * dest, const char * src );
 };
 
 #endif

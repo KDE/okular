@@ -60,7 +60,7 @@ bool KPDFPage::hasSearchPage() const
 
 bool KPDFPage::hasLink( int mouseX, int mouseY ) const
 {
-    if ( m_links.count() < 0 )
+    if ( m_links.count() < 1 )
         return false;
     QValueList< KPDFLink * >::const_iterator it = m_links.begin(), end = m_links.end();
     for ( ; it != end; ++it )
@@ -70,6 +70,15 @@ bool KPDFPage::hasLink( int mouseX, int mouseY ) const
 }
 
 // BEGIN commands (paint / search)
+const KPDFLink * KPDFPage::getLink( int mouseX, int mouseY ) const
+{
+    QValueList< KPDFLink * >::const_iterator it = m_links.begin(), end = m_links.end();
+    for ( ; it != end; ++it )
+        if ( (*it)->contains( mouseX, mouseY ) )
+            return *it;
+    return 0;
+}
+
 void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width, int height ) const
 {
     QPixmap * pixmap = 0;
@@ -235,7 +244,7 @@ void KPDFLink::setLinkExecute( const char * file, const char * par )
 
 void KPDFLink::setLinkNamed( const char * name )
 {
-    m_type = Action;
+    m_type = Named;
     copyString( m_uri, name );
 }
 
@@ -253,6 +262,38 @@ void KPDFLink::setLinkMovie( int ref_num, int ref_gen, const char * title )
     copyString( m_uri, title );
 }
 
+
+const LinkDest * KPDFLink::getDest() const
+{
+    return m_dest;
+}
+
+const char * KPDFLink::getNamedDest() const
+{
+    return m_destNamed;
+}
+
+const char * KPDFLink::getFileName() const
+{
+    return m_fileName;
+}
+
+const char * KPDFLink::getParameters() const
+{
+    return m_parameters;
+}
+
+const char * KPDFLink::getName() const
+{
+    return m_uri;
+}
+
+const char * KPDFLink::getURI() const
+{
+    return m_uri;
+}
+
+
 KPDFLink::LinkType KPDFLink::type() const
 {
     return m_type;
@@ -263,7 +304,7 @@ bool KPDFLink::contains( int x, int  y ) const
     return (x > x_min) && (x < x_max) && (y > y_min) && (y < y_max);
 }
 
-void KPDFLink::copyString( char * dest, const char * src )
+void KPDFLink::copyString( char * &dest, const char * src ) const
 {
     if ( dest )
         delete [] dest;
@@ -271,6 +312,6 @@ void KPDFLink::copyString( char * dest, const char * src )
     if ( src )
     {
         dest = new char[ strlen(src) + 1 ];
-        strcpy( dest, src );
+        strcpy( &dest[0], src );
     }
 }

@@ -557,7 +557,6 @@ bool KPDFDocument::findText( const QString & string, bool keepCase, bool findAhe
         {
             lastPage->clearAttribute( KPDFPage::Highlight );
             currentPage++;
-            pageCount--;
         }
 
     if ( !foundPage )

@@ -221,7 +221,7 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
   psEmbedCIDTrueType = gTrue;
   psOPI = gFalse;
   psASCIIHex = gFalse;
-  textEncoding = new GString("Latin1");
+  textEncoding = new GString("UTF-8");
 #if defined(WIN32)
   textEOL = eolDOS;
 #elif defined(MACOS)
@@ -425,8 +425,9 @@ void GlobalParams::parseFile(GString *fileName, FILE *f) {
 	parseYesNo("psOPI", &psOPI, tokens, fileName, line);
       } else if (!cmd->cmp("psASCIIHex")) {
 	parseYesNo("psASCIIHex", &psASCIIHex, tokens, fileName, line);
-      } else if (!cmd->cmp("textEncoding")) {
-	parseTextEncoding(tokens, fileName, line);
+//	Always use UTF-8 and allow QString do the magic
+//      } else if (!cmd->cmp("textEncoding")) {          
+//	parseTextEncoding(tokens, fileName, line);
       } else if (!cmd->cmp("textEOL")) {
 	parseTextEOL(tokens, fileName, line);
       } else if (!cmd->cmp("textPageBreaks")) {

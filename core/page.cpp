@@ -107,7 +107,7 @@ const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
         right = (int)((double)rect.right() / zoom),
         bottom = (int)((double)rect.bottom() / zoom);
     GString * text = m_text->getText( left, top, right, bottom );
-    return QString( text->getCString() );
+    return QString::fromUtf8( text->getCString() );
 }
 
 

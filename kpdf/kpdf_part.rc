@@ -26,9 +26,9 @@
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar">
-  <Action name="zoom_out"/>
-  <Action name="zoomTo" />
   <Action name="zoom_in"/>
+  <Action name="zoomTo" />
+  <Action name="zoom_out"/>
   <Separator/>
   <Action name="previous_page"/>
   <Action name="next_page"/>

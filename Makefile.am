@@ -43,6 +43,9 @@ messages: rc.cpp
 
 apps_DATA = kdvi.desktop
 
+
+bin_SCRIPTS = kdvi
+
 #partdir = $(kde_datadir)/kdvi
 #part_DATA = kdvi_part.rc
 

@@ -78,7 +78,7 @@ class KPDFLinkBrowse : public KPDFLink
         const QString & url() const { return m_url; }
 
         // create a KPDFLink_Browse
-        KPDFLinkBrowse( QString url ) { m_url = url; }
+        KPDFLinkBrowse( const QString &url ) { m_url = url; }
         LinkType linkType() const { return Browse; }
 
     private:

@@ -908,7 +908,7 @@ void GlobalParams::setupBaseFonts(char *dir) {
   GString *fileName;
   FILE *f;
   DisplayFontParam *dfp;
-  int i, j;
+  int i/*, j*/;
 
   for (i = 0; displayFontTab[i].name; ++i) {
     fontName = new GString(displayFontTab[i].name);

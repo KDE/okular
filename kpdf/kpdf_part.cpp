@@ -21,7 +21,7 @@
 #include "kpdf_pagewidget.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
-K_EXPORT_COMPONENT_FACTORY(kparts_kpdf, KPDFPartFactory);
+K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory);
 
 using namespace KPDF;
 

@@ -5,5 +5,5 @@ Name[sv]=KPDF-del
 MimeType=application/pdf
 InitialPreference=4
 ServiceTypes=KParts/ReadOnlyPart
-X-KDE-Library=kparts_kpdf
+X-KDE-Library=libkpdfpart
 Type=Service

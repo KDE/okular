@@ -40,12 +40,12 @@ shellrc_DATA = kpdf_shell.rc
 #########################################################################
 # KPART SECTION
 #########################################################################
-kde_module_LTLIBRARIES = kparts_kpdf.la
+kde_module_LTLIBRARIES = libkpdfpart.la
 
 # the Part's source, library search path, and link libraries
-kparts_kpdf_la_SOURCES = kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc
-kparts_kpdf_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-kparts_kpdf_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT)
+libkpdfpart_la_SOURCES = kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc
+libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT)
 
 # this is where the desktop file will go 
 partdesktopdir   = $(kde_servicesdir)

@@ -34,7 +34,7 @@ Shell::Shell()
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  KLibFactory *factory = KLibLoader::self()->factory("kparts_kpdf");
+  KLibFactory *factory = KLibLoader::self()->factory("libkpdfpart");
   if (factory)
   {
     // now that the Part is loaded, we cast it to a Part to get

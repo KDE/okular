@@ -93,6 +93,7 @@ $(srcdir)/psheader.c: psheader.txt squeeze $(kpathsea)
 # to create the stuff in the kpathsea directory first. vf.c is the last
 # source file in the list.
 vf.c: $(kpathsea)
+dviwin.cpp: $(kpathsea)
 
 $(kpathsea):
 	test -d kpathsea || mkdir kpathsea

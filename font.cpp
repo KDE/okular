@@ -1,8 +1,7 @@
 
-#define DEBUG 1
+#define DEBUG 0
 
 #include <malloc.h>
-
 #include <kdebug.h>
 
 #include "font.h"
@@ -20,12 +19,12 @@ extern "C" {
 #include <stdio.h>
 #include "oconfig.h"
 
-extern FILE *xfopen(char *filename, char *type);
+extern FILE *xfopen(const char *filename, const char *type);
 
 /** We try for a VF first because that's what dvips does.  Also, it's
  *  easier to avoid running MakeTeXPK if we have a VF this way.  */
 
-FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, int dummy, char **filename_ret)
+FILE *font::font_open (char *font, char **font_ret, double dpi, int *dpi_ret, char **filename_ret)
 {
   FILE *ret;
   char *name = kpse_find_vf (font);
@@ -50,7 +49,7 @@ FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, int dumm
   }
   
   // If we found a name, return the stream.
-  ret           = name ? xfopen (name, FOPEN_R_MODE) : NULL;
+  ret           = name ? xfopen(name, FOPEN_R_MODE) : NULL;
   *filename_ret = name;
 
   return ret;
@@ -68,7 +67,7 @@ font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
   fsize      = nfsize;
   checksum   = chk;
   magstepval = mag;
-  flags      = FONT_IN_USE;
+  flags      = font::FONT_IN_USE;
   file       = NULL; 
   filename   = NULL;
   dimconv    = dconv;
@@ -88,20 +87,15 @@ font::~font()
     free(filename);
 
     if (flags & FONT_VIRTUAL) {
-      register struct macro *m;
-
-      for (m = macro; m <= macro + maxchar; ++m)
+      for (macro *m = macrotable; m < macrotable + max_num_of_chars_in_font; ++m)
 	if (m->free_me)
 	  free((char *) m->pos);
-      free((char *) macro);
+      free((char *) macrotable);
       vf_table.clear();
     } else {
-      struct glyph *g;
-      
-      for (g = glyph; g <= glyph + maxchar; ++g)
+      for (glyph *g = glyphtable; g < glyphtable + max_num_of_chars_in_font; ++g)
 	delete g;
-      
-      free((char *) glyph);
+      free((char *) glyphtable);
     }
   }
 }
@@ -118,14 +112,13 @@ font::~font()
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
 /** load_font locates the raster file and reads the index of
- * characters, plus whatever other preprocessing is done (depending on
- * the format).  */
+    characters, plus whatever other preprocessing is done (depending
+    on the format).  */
 
 unsigned char font::load_font(void)
 {
   kDebugInfo(DEBUG, 4300, "loading font %s at %d dpi", fontname, (int) (fsize + 0.5));
 
-  double n_fsize  = fsize;
   int	 dpi      = (int)(fsize + 0.5);
   char	*font_found;
   int	 size_found;
@@ -133,8 +126,8 @@ unsigned char font::load_font(void)
 
   Boolean hushcs	= hush_chk;
 
-  flags |= FONT_LOADED;
-  file = font_open(fontname, &font_found, fsize, &size_found, magstepval, &filename);
+  flags |= font::FONT_LOADED;
+  file = font_open(fontname, &font_found, (double)fsize, &size_found, &filename);
   if (file == NULL) {
     kDebugError("Can't find font %s.", fontname);
     return True;
@@ -151,84 +144,79 @@ unsigned char font::load_font(void)
       kDebugError("Can't find font %s at %d dpi; using %d dpi instead.", fontname, dpi, size_found);
   fsize      = size_found;
   timestamp  = ++current_timestamp;
-  fmaxchar   = maxchar = 255;
   set_char_p = set_char;
   magic      = two(file);
 
   if (magic == PK_MAGIC)
-    read_PK_index(this, WIDENINT hushcs);
+    read_PK_index(WIDENINT hushcs);
   else
     if (magic == GF_MAGIC)
-      read_GF_index(this, WIDENINT hushcs);
+      oops("The GF format for font file %s is no longer supported", filename);
     else
       if (magic == VF_MAGIC)
-	read_VF_index(this, WIDENINT hushcs);
+	read_VF_index(WIDENINT hushcs);
       else
 	oops("Cannot recognize format for font file %s", filename);
 
-  if (flags & FONT_VIRTUAL) {
-    while (maxchar > 0 && macro[maxchar].pos == NULL)
-      --maxchar;
-    if (maxchar < 255)
-      realloc_font(WIDENINT maxchar);
-  } else {
-    while (maxchar > 0 && glyph[maxchar].addr == 0)
-      --maxchar;
-    if (maxchar < 255)
-      realloc_font(WIDENINT maxchar);
-  }
   return False;
 }
 
 
-/** realloc_font allocates the font structure to contain (newsize + 1)
- * characters (or macros, if the font is a virtual font).  */
-
-void font::realloc_font(unsigned int newsize)
-{
-  kDebugInfo(DEBUG, 4300, "Realloc font");
-
-  if (flags & FONT_VIRTUAL) {
-    struct macro *macrop;
-
-    macrop = macro = (struct macro *) realloc((char *) macro,
-					      ((unsigned int) newsize + 1) * sizeof(struct macro));
-    if (macrop == NULL)
-      oops("! Cannot reallocate space for macro array.");
-    if (newsize > fmaxchar)
-      bzero((char *) (macro + fmaxchar + 1), (int) (newsize - fmaxchar) * sizeof(struct macro));
-  } else {
-    struct glyph *glyphp;
-    
-    glyphp = glyph = (struct glyph *)realloc((char *) glyph,
-					     ((unsigned int) newsize + 1) * sizeof(struct glyph));
-    if (glyph == NULL) 
-      oops("! Cannot reallocate space for glyph array.");
-    if (newsize > fmaxchar)
-      bzero((char *) (glyph + fmaxchar + 1), (int) (newsize - fmaxchar) * sizeof(struct glyph));
-  }
-  fmaxchar = newsize;
-}
-
 
 /** mark_as_used marks the font, and all the fonts it referrs to, as
- * used, i.e. their FONT_IN_USE-flag is set. */
+    used, i.e. their FONT_IN_USE-flag is set. */
 
 void font::mark_as_used(void)
 {
-  if (flags & FONT_IN_USE) 
+  if (flags & font::FONT_IN_USE) 
     return;
 
   kDebugInfo(DEBUG, 4300, "marking font %s at %d dpi as used", fontname, (int) (fsize + 0.5));
 
-  flags |= FONT_IN_USE;
+  flags |= font::FONT_IN_USE;
 
   // For virtual fonts, also go through the list of referred fonts
-  if (flags & FONT_VIRTUAL) {
+  if (flags & font::FONT_VIRTUAL) {
     QIntDictIterator<font> it(vf_table);
     while( it.current() ) {
-      it.current()->flags |= FONT_IN_USE;
+      it.current()->flags |= font::FONT_IN_USE;
       ++it;
     }
   }
+}
+
+/** Returns a pointer to glyph number ch in the font, or NULL, if this
+    number does not exist. This function first reads the bitmap of the
+    character from the PK-file, if necessary */
+
+struct glyph *font::glyphptr(unsigned int ch) {
+  
+  struct glyph *g = glyphtable+ch;
+  if (g->bitmap.bits == NULL) {
+    if (g->addr == 0) {
+      kDebugError(1,4300,"Character %d not defined in font %s", ch, fontname);
+      g->addr = -1;
+      return NULL;
+    }
+    if (g->addr == -1)
+      return NULL;	/* previously flagged missing char */
+
+    if (file == NULL) {
+      file = xfopen(filename, OPEN_MODE);
+      if (file == NULL) {
+	oops("Font file disappeared: %s", filename);
+	return NULL;
+      }
+    }
+    Fseek(file, g->addr, 0);
+    read_PK_char(ch);
+    timestamp = ++current_timestamp;
+
+    if (g->bitmap.bits == NULL) {
+      g->addr = -1;
+      return NULL;
+    }
+  }
+
+  return g;
 }

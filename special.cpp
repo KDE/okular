@@ -55,6 +55,10 @@
  * it's worth it.
  */
 
+#define DEBUG 1
+
+#include <kdebug.h>
+
 #include "dviwin.h"
 
 #include <stdio.h>
@@ -72,20 +76,6 @@ extern "C" {
 #include <kpathsea/tex-file.h>
 #include <kpathsea/line.h>
 }
-
-/*
-extern "C" {
-#include <kpathsea/config.h>
-
-#include <kpathsea/c-stat.h>
-#include <kpathsea/magstep.h>
-#include <kpathsea/tex-glyph.h>
-
-
-
-#include "dvi.h"
-}
-*/
 
 #define	MAXPOINTS	300	/* Max points in a path */
 #define	TWOPI		(3.14159265359*2.0)
@@ -680,125 +670,129 @@ static	const char	*keytab[]	= {"clip",
 
 static	void epsf_special(char *cp)
 {
-	char	*filename, *name;
-	int 	decompress;
-	static	char		*buffer;
-	static	unsigned int	buflen	= 0;
-	unsigned int		len;
-	char	*p;
-	char	*q;
-	int	flags	= 0;
-	double	keyval[6];
+  char	*filename, *name;
+  int 	decompress;
+  static	char		*buffer;
+  static	unsigned int	buflen	= 0;
+  unsigned int		len;
+  char	*p;
+  char	*q;
+  int	flags	= 0;
+  double	keyval[6];
 
-	if (memcmp(cp, "ile=", 4) != 0) {
-	    if (!hush_spec_now)
-		Fprintf(stderr, "epsf special PSf%s is unknown\n", cp);
-	    return;
-	}
+  if (memcmp(cp, "ile=", 4) != 0) {
+    kDebugError(1, 4300, "epsf special PSf%s is unknown", cp);
+    return;
+  }
 
-	p = cp + 4;
-	filename = p;
-	if (*p == '\'' || *p == '"') {
-	    do ++p;
-	    while (*p != '\0' && *p != *filename);
-	    ++filename;
-	}
-	else
-	    while (*p != '\0' && *p != ' ' && *p != '\t') ++p;
-	if (*p != '\0') *p++ = '\0';
-	name = find_fig_file (filename, &decompress);
-	while (*p == ' ' || *p == '\t') ++p;
-	len = strlen(p) + NKEYS + 30;
-	if (buflen < len) {
-	    if (buflen != 0) free(buffer);
-	    buflen = len;
-	    buffer = xmalloc(buflen, "epsf buffer");
-	}
-	Strcpy(buffer, "@beginspecial");
-	q = buffer + strlen(buffer);
-	while (*p != '\0') {
-	    char *p1 = p;
-	    int keyno;
+  p = cp + 4;
+  filename = p;
+  if (*p == '\'' || *p == '"') {
+    do
+      ++p;
+    while (*p != '\0' && *p != *filename);
+    ++filename;
+  }
+  else
+    while (*p != '\0' && *p != ' ' && *p != '\t') 
+      ++p;
+  if (*p != '\0') 
+    *p++ = '\0';
+  name = find_fig_file (filename, &decompress);
+  while (*p == ' ' || *p == '\t') 
+    ++p;
+  len = strlen(p) + NKEYS + 30;
+  if (buflen < len) {
+    if (buflen != 0)
+      free(buffer);
+    buflen = len;
+    buffer = xmalloc(buflen, "epsf buffer");
+  }
+  Strcpy(buffer, "@beginspecial");
+  q = buffer + strlen(buffer);
+  while (*p != '\0') {
+    char *p1 = p;
+    int keyno;
 
-	    while (*p1 != '=' && !isspace(*p1) && *p1 != '\0') ++p1;
-	    for (keyno = 0;; ++keyno) {
-		if (keyno >= NKEYS) {
-		    if (!hush_spec_now)
-			Fprintf(stderr,
-			    "unknown keyword (%*s) in \\special will be ignored\n",
-			    (int) (p1 - p), p);
-		    break;
-		}
-		if (memcmp(p, keytab[keyno], p1 - p) == 0) {
-		    if (keyno >= N_ARGLESS_KEYS) {
-			if (*p1 == '=') ++p1;
-			if (keyno < N_ARGLESS_KEYS + 6) {
-			    keyval[keyno - N_ARGLESS_KEYS] = atof(p1);
-			    flags |= (1 << (keyno - N_ARGLESS_KEYS));
-			}
-			*q++ = ' ';
-			while (!isspace(*p1) && *p1 != '\0') *q++ = *p1++;
-		    }
-		    *q++ = ' ';
-		    *q++ = '@';
-		    Strcpy(q, keytab[keyno]);
-		    q += strlen(q);
-		    break;
-		}
-	    }
-	    p = p1;
-	    while (!isspace(*p) && *p != '\0') ++p;
-	    while (isspace(*p)) ++p;
+    while (*p1 != '=' && !isspace(*p1) && *p1 != '\0') 
+      ++p1;
+    for (keyno = 0;; ++keyno) {
+      if (keyno >= NKEYS) {
+	kDebugError(4300, 1, "unknown keyword (%*s) in \\special will be ignored\n", (int) (p1 - p), p);
+	break;
+      }
+      if (memcmp(p, keytab[keyno], p1 - p) == 0) {
+	if (keyno >= N_ARGLESS_KEYS) {
+	  if (*p1 == '=') 
+	    ++p1;
+	  if (keyno < N_ARGLESS_KEYS + 6) {
+	    keyval[keyno - N_ARGLESS_KEYS] = atof(p1);
+	    flags |= (1 << (keyno - N_ARGLESS_KEYS));
+	  }
+	  *q++ = ' ';
+	  while (!isspace(*p1) && *p1 != '\0') 
+	    *q++ = *p1++;
 	}
-	Strcpy(q, " @setspecial\n");
+	*q++ = ' ';
+	*q++ = '@';
+	Strcpy(q, keytab[keyno]);
+	q += strlen(q);
+	break;
+      }
+    }
+    p = p1;
+    while (!isspace(*p) && *p != '\0') 
+      ++p;
+    while (isspace(*p)) 
+      ++p;
+  }
+  Strcpy(q, " @setspecial\n");
 
-	bbox_valid = False;
-	if ((flags & 0x30) == 0x30 || ((flags & 0x30) && (flags & 0xf) == 0xf)){
-	    bbox_valid = True;
-	    bbox_width = 0.1 * ((flags & 0x10) ? KEY_RWI
-		: KEY_RHI * (KEY_URX - KEY_LLX) / (KEY_URY - KEY_LLY))
-		* dimconv / shrink_factor + 0.5;
-	    bbox_voffset = bbox_height = 0.1 * ((flags & 0x20) ? KEY_RHI
-		: KEY_RWI * (KEY_URY - KEY_LLY) / (KEY_URX - KEY_LLX))
-		* dimconv / shrink_factor + 0.5;
-	}
+  bbox_valid = False;
+  if ((flags & 0x30) == 0x30 || ((flags & 0x30) && (flags & 0xf) == 0xf)){
+    bbox_valid = True;
+    bbox_width = 0.1 * ((flags & 0x10) ? KEY_RWI
+			: KEY_RHI * (KEY_URX - KEY_LLX) / (KEY_URY - KEY_LLY))
+      * dimconv / shrink_factor + 0.5;
+    bbox_voffset = bbox_height = 0.1 * ((flags & 0x20) ? KEY_RHI
+					: KEY_RWI * (KEY_URY - KEY_LLY) / (KEY_URX - KEY_LLX))
+      * dimconv / shrink_factor + 0.5;
+  }
 
-	if (name && currwin.win == mane.win) {
-	    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,
-		buffer);
-	    draw_file(psp, name, decompress);
-	    psp.drawend(" @endspecial");
-	    if (!decompress && name != filename)
-	     free (name);
-	}
-	bbox_valid = False;
+  if (name && currwin.win == mane.win) {
+    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, buffer);
+    draw_file(psp, name, decompress);
+    psp.drawend(" @endspecial");
+    if (!decompress && name != filename)
+      free (name);
+  }
+  bbox_valid = False;
 }
 
 
 static	void bang_special(char *cp)
 {
-	bbox_valid = False;
-
-	if (currwin.win == mane.win) {
-	    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,
-	        "@defspecial ");
-	    /* talk directly with the DPSHandler here */
-	    psp.drawraw(cp);
-	    psp.drawend(" @fedspecial");
-	}
+  //  kDebugInfo(DEBUG, 4300, "bang %s", cp);
+  bbox_valid = False;
+  
+  if (currwin.win == mane.win) {
+    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, "@defspecial ");
+    /* talk directly with the DPSHandler here */
+    psp.drawraw(cp);
+    psp.drawend(" @fedspecial");
+  }
 }
 
 static	void quote_special(char *cp)
 {
-	bbox_valid = False;
+  bbox_valid = False;
 
-	if (currwin.win == mane.win) {
-	    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,
-		"@beginspecial @setspecial ");
-	    /* talk directly with the DPSHandler here */
-	    psp.drawraw(cp);
-	    psp.drawend(" @endspecial");
-	}
+  if (currwin.win == mane.win) {
+    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, "@beginspecial @setspecial ");
+    /* talk directly with the DPSHandler here */
+    psp.drawraw(cp);
+    psp.drawend(" @endspecial");
+  }
 }
 
 

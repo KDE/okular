@@ -224,17 +224,7 @@ extern	long	*page_offset;
 extern	Boolean	hush_spec_now;
 
 
-
-#define	FONT_IN_USE	1	/* used for housekeeping */
-#define	FONT_LOADED	2	/* if font file has been read */
-#define	FONT_VIRTUAL	4	/* if font is virtual */
-
-//#define	TNTABLELEN	30	/* length of TeXnumber array (dvi file) */
-//#define	VFTABLELEN	5	/* length of TeXnumber array (virtual fonts) */
-
 extern QIntDict<struct font> tn_table;
-//@@@extern	struct font	*tn_table[TNTABLELEN];
-//extern	struct tn	*tn_head	INIT(NULL);
 extern	struct font	*font_head	INIT(NULL);
 
 extern	unsigned char		maxchar;
@@ -371,16 +361,12 @@ extern	void	put_border ARGS((int, int, unsigned int, unsigned int));
 extern	void	set_char ARGS((unsigned int, unsigned int));
 extern	void	load_n_set_char ARGS((unsigned int, unsigned int));
 extern	void	set_vf_char ARGS((unsigned int, unsigned int));
-extern	void	init_font_open ARGS((void));
 extern	void	applicationDoSpecial ARGS((char *));
 extern	NORETURN void	oops(_Xconst char *, ...);
 extern	void	alloc_bitmap ARGS((struct bitmap *));
 extern	int	xpipe ARGS((int *));
 extern	unsigned long	num ARGS((FILE *, int));
 extern	long	snum ARGS((FILE *, int));
-extern	void	read_PK_index ARGS((struct font *, wide_bool));
-extern	void	read_GF_index ARGS((struct font *, wide_bool));
-extern	void	read_VF_index ARGS((struct font *, wide_bool));
 
 
 extern	void	drawbegin_none ARGS((int, int, char *));

@@ -34,47 +34,63 @@ struct macro {
 
 
 
-#define	FONT_IN_USE	1	/* used for housekeeping */
-#define	FONT_LOADED	2	/* if font file has been read */
-#define	FONT_VIRTUAL	4	/* if font is virtual */
 
 
-typedef	void (*read_char_proc)(register struct font *, unsigned int);
 typedef	void (*set_char_proc)(unsigned int, unsigned int);
 
 struct font {
-  struct font   *next;		/* link to next font info block */
-  char          *fontname;	/* name of font */
-  float          fsize;		/* size information (dots per inch) */
+  // Currently, kdvi supports fonts with at most 256 characters to
+  // comply with "The DVI Driver Standard, Level 0". If you change
+  // this value here, make sure to go through all the source and
+  // ensure that character numbers are stored in ints rather than
+  // unsigned chars.
+  static const int      max_num_of_chars_in_font = 256;
+  enum                  font_flags {
+                             FONT_IN_USE  = 1,	// used for housekeeping
+                             FONT_LOADED  = 2,	// if font file has been read
+                             FONT_VIRTUAL = 4	// if font is virtual 
+                         };
+
+
+  public:
+                 font(char *nfontname, float nfsize, long chk, int mag, double dconv);
+                ~font();
+  glyph         *glyphptr(unsigned int ch);
+  void           mark_as_used(void);
+  unsigned char  load_font(void);
+
+  struct font   *next;		// link to next font info block
+  char          *fontname;	// name of font 
+  unsigned char  flags;		// flags byte (see values below)
+  double         dimconv;	// size conversion factor
+  set_char_proc  set_char_p;	// proc used to set char
+  float          fsize;		// size information (dots per inch)
+  unsigned short timestamp;	// for LRU management of fonts
+  FILE          *file;		// open font file or NULL
+
+  glyph         *glyphtable;    // used by (loaded) raster fonts
+  macro         *macrotable;    // used by (loaded) virtual fonts
+  QIntDict<font> vf_table;      // used by (loaded) virtual fonts, list of fonts used by this vf, 
+                                // acessible by number
+  font          *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
+
+  private:
   int            magstepval;	/* magstep number * two, or NOMAGSTP */
-  FILE          *file;		/* open font file or NULL */
   char          *filename;	/* name of font file */
   long           checksum;	/* checksum */
-  unsigned short timestamp;	/* for LRU management of fonts */
-  unsigned char  flags;		/* flags byte (see values below) */
-  unsigned char  fmaxchar;	/* largest character code */
-  double         dimconv;	/* size conversion factor */
-  set_char_proc  set_char_p;	/* proc used to set char */
 
-  /* these fields are used by (loaded) raster fonts */
-  read_char_proc read_char;	/* function to read bitmap */
-  struct glyph  *glyph;
 
-  /* these fields are used by (loaded) virtual fonts */
-  QIntDict<struct font> vf_table;  /* list of fonts used by this vf */
-  struct font   *first_font;	/* first font defined */
-  struct macro  *macro;
+  FILE         *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, char **filename_ret);
 
-  /* I suppose the above could be put into a union, but we */
-  /* wouldn't save all that much space. */
-  
+  // Functions related to virtual fonts
+  void          read_VF_index(unsigned int hushcs);
 
-  font(char *nfontname, float nfsize, long chk, int mag, double dconv);
-  ~font();
-
-  void realloc_font(unsigned int newsize);
-  void mark_as_used(void);
-  unsigned char load_font(void);
+  // Functions for pk fonts
+  int           PK_get_nyb(FILE *fp);
+  int           PK_packed_num(FILE *fp);
+  void          PK_skip_specials(void);
+  void          read_PK_char(unsigned int ch);
+  void          read_PK_index(unsigned int hushcs);
 };
 
 

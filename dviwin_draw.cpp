@@ -206,45 +206,23 @@ static	void xskip(long offset)
     (void) lseek(fileno(dvi_file), (long) (currinf.pos - currinf.end), SEEK_CUR);
 }
 
-#if	NeedVarargsPrototypes
+
 static	NORETURN void tell_oops(_Xconst char *message, ...)
-#else
-/* VARARGS */
-static	NORETURN void tell_oops(va_alist)
-	va_dcl
-#endif
 {
-#if	!NeedVarargsPrototypes
-	_Xconst char *message;
-#endif
 	va_list	args;
 
 	kDebugError("%s: ", prog);
-#if	NeedVarargsPrototypes
 	va_start(args, message);
-#else
-	va_start(args);
-	message = va_arg(args, _Xconst char *);
-#endif
 	(void) vfprintf(stderr, message, args);
 	va_end(args);
 	if (currinf._virtual)
-	    kDebugError(" in virtual font %s", currinf._virtual->fontname);
+	  kDebugError(" in virtual font %s", currinf._virtual->fontname);
 	else
-	    kDebugError(", offset %ld", xtell(currinf.pos - 1));
+	  kDebugError(", offset %ld", xtell(currinf.pos - 1));
 	dvi_oops_msg = (message), longjmp(dvi_env, 1); /* dvi_oops */
 	exit(1);
 }
 
-
-
-static	_Xconst	char	*dvi_table1[] = {
-	"SET1", NULL, NULL, NULL, "SETRULE", "PUT1", NULL, NULL,
-	NULL, "PUTRULE", "NOP", "BOP", "EOP", "PUSH", "POP", "RIGHT1",
-	"RIGHT2", "RIGHT3", "RIGHT4", "W0", "W1", "W2", "W3", "W4",
-	"X0", "X1", "X2", "X3", "X4", "DOWN1", "DOWN2", "DOWN3",
-	"DOWN4", "Y0", "Y1", "Y2", "Y3", "Y4", "Z0", "Z1",
-	"Z2", "Z3", "Z4"};
 
 static	_Xconst	char	*dvi_table2[] = {
 	"FNT1", "FNT2", "FNT3", "FNT4", "XXX1", "XXX2", "XXX3", "XXX4",
@@ -261,56 +239,22 @@ static void change_font(unsigned long n)
   currinf.fontp = currinf.fonttable[n];
   if (currinf.fontp == NULL)
     tell_oops("non-existent font #%d", n);
-  maxchar = currinf.fontp->fmaxchar;
   currinf.set_char_p = currinf.fontp->set_char_p;
 }
 
 
-/*
- *	Open a font file.
- */
 
-static	void open_font_file(struct font *fontp)
-{
-  if (fontp->file == NULL) {
-    fontp->file = xfopen(fontp->filename, OPEN_MODE);
-    if (fontp->file == NULL)
-      oops("Font file disappeared:  %s", fontp->filename);
-  }
-}
-
-
-/*
- *	Routines to print characters.
- */
-
-#define	ERRVAL
+/** Routine to print characters.  */
 
 void set_char(unsigned int cmd, unsigned int ch)
 {
   kDebugInfo(DEBUG, 4300, "set_char");
 
-  register struct glyph *g;
-  long	dvi_h_sav;
+  glyph *g = currinf.fontp->glyphptr(ch);
+  if (g == NULL)
+    return;
 
-  if (ch > maxchar) 
-    currinf.fontp->realloc_font(WIDENINT ch);
-  if ((g = &currinf.fontp->glyph[ch])->bitmap.bits == NULL) {
-    if (g->addr == 0) {
-      if (!hush_chars)
-	kDebugError(1,4300,"Character %d not defined in font %s", ch, currinf.fontp->fontname);
-      g->addr = -1;
-      return ERRVAL;
-    }
-    if (g->addr == -1)
-      return ERRVAL;	/* previously flagged missing char */
-    open_font_file(currinf.fontp);
-    Fseek(currinf.fontp->file, g->addr, 0);
-    (*currinf.fontp->read_char)(currinf.fontp, ch);
-    currinf.fontp->timestamp = ++current_timestamp;
-  }
-
-  dvi_h_sav = DVI_H;
+  long dvi_h_sav = DVI_H;
   if (currinf.dir < 0) 
     DVI_H -= g->dvi_adv;
   if (scan_frame == NULL)
@@ -338,7 +282,6 @@ void load_n_set_char(unsigned int cmd, unsigned int ch)
     currinf.set_char_p = currinf.fontp->set_char_p = set_empty_char;
     return;
   }
-  maxchar = currinf.fontp->fmaxchar;
   currinf.set_char_p = currinf.fontp->set_char_p;
   (*currinf.set_char_p)(cmd, ch);
   return;
@@ -349,19 +292,16 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
 {
   kDebugInfo(DEBUG, 4300, "set_vf_char");
 
-  register struct macro *m;
+  macro *m;
   struct drawinf	 oldinfo;
-  unsigned char	         oldmaxchar;
   static unsigned char   c;
   long	                 dvi_h_sav;
 
-  if (ch > maxchar)
-    currinf.fontp->realloc_font(ch);
-  if ((m = &currinf.fontp->macro[ch])->pos == NULL) {
+  if ((m = &currinf.fontp->macrotable[ch])->pos == NULL) {
     if (!hush_chars)
       kDebugError(1, 4300, "Character %d not defined in font %s\n", ch, currinf.fontp->fontname);
     m->pos = m->end = &c;
-    return ERRVAL;
+    return;
   }
 
   dvi_h_sav = DVI_H;
@@ -369,7 +309,6 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
     DVI_H -= m->dvi_adv;
   if (scan_frame == NULL) {
     oldinfo    = currinf;
-    oldmaxchar = maxchar;
     WW         = 0;
     XX         = 0;
     YY         = 0;
@@ -383,7 +322,6 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
     if (currinf.pos != currinf.end + 1)
       tell_oops("virtual character macro does not end correctly");
     currinf = oldinfo;
-    maxchar = oldmaxchar;
   }
   if (cmd == PUT1)
     DVI_H = dvi_h_sav;
@@ -400,7 +338,6 @@ static	void set_no_char(unsigned int cmd, unsigned int ch)
   if (currinf._virtual) {
     currinf.fontp = currinf._virtual->first_font;
     if (currinf.fontp != NULL) {
-      maxchar = currinf.fontp->fmaxchar;
       currinf.set_char_p = currinf.fontp->set_char_p;
       (*currinf.set_char_p)(cmd, ch);
       return;
@@ -458,7 +395,6 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 
   unsigned char  ch;
   struct drawinf oldinfo;
-  unsigned char	 oldmaxchar;
   off_t	         file_pos;
   int	         refl_count;
 
@@ -541,7 +477,6 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 	  if (scan_frame == NULL) {
 	    /* we're not scanning:  save some info. */
 	    oldinfo = currinf;
-	    oldmaxchar = maxchar;
 	    if (!currinf._virtual)
 	      file_pos = xtell(currinf.pos);
 	    scan_frame = current_frame; /* now we're scanning */
@@ -580,7 +515,6 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 		}
 	      }
 	      currinf = oldinfo;
-	      maxchar = oldmaxchar;
 	      /* and then:  recover position info. */
 	      DVI_H = current_frame->data.dvi_h;
 	      DVI_V = current_frame->data.dvi_v;

@@ -49,6 +49,9 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#define DEBUG 0
+
+#include <kdebug.h>
 #include "dviwin.h"
 
 extern "C" {
@@ -57,6 +60,7 @@ extern "C" {
 #include <kpathsea/c-fopen.h>
 #include <kpathsea/c-vararg.h>
 }
+
 #include "oconfig.h"
 #include "dvi.h"
 
@@ -107,19 +111,19 @@ oops(va_alist)
 	exit(1);
 }
 
-/*
- *	Either allocate storage or fail with explanation.
- */
+/** Either allocate storage or fail with explanation.  */
 
 char * xmalloc(unsigned size, _Xconst char *why)
 {
-	/* Avoid malloc(0), though it's not clear if it ever actually
-	   happens any more.  */
-	char *mem = (char *)malloc(size ? size : 1);
+  kDebugInfo(DEBUG, 4300, "Allocating %d bytes for %s", size, why);
 
-	if (mem == NULL)
-	    oops("! Cannot allocate %u bytes for %s.\n", size, why);
-	return mem;
+  /* Avoid malloc(0), though it's not clear if it ever actually
+     happens any more.  */
+  char *mem = (char *)malloc(size ? size : 1);
+
+  if (mem == NULL)
+    oops("! Cannot allocate %u bytes for %s.\n", size, why);
+  return mem;
 }
 
 /*
@@ -128,13 +132,12 @@ char * xmalloc(unsigned size, _Xconst char *why)
 
 void alloc_bitmap(bitmap *bitmap)
 {
-	register unsigned int	size;
+  register unsigned int	size;
 
-	/* width must be multiple of 16 bits for raster_op */
-	bitmap->bytes_wide = ROUNDUP((int) bitmap->w, BITS_PER_BMUNIT) *
-	    BYTES_PER_BMUNIT;
-	size = bitmap->bytes_wide * bitmap->h;
-	bitmap->bits = xmalloc(size != 0 ? size : 1, "character bitmap");
+  /* width must be multiple of 16 bits for raster_op */
+  bitmap->bytes_wide = ROUNDUP((int) bitmap->w, BITS_PER_BMUNIT) * BYTES_PER_BMUNIT;
+  size = bitmap->bytes_wide * bitmap->h;
+  bitmap->bits = xmalloc(size != 0 ? size : 1, "character bitmap");
 }
 
 
@@ -144,46 +147,43 @@ void alloc_bitmap(bitmap *bitmap)
 
 static	void close_a_file()
 {
-	register struct font *fontp;
-	unsigned short oldest = ~0;
-	struct font *f = NULL;
+  register struct font *fontp;
+  unsigned short oldest = ~0;
+  struct font *f = NULL;
 
-	for (fontp = font_head; fontp != NULL; fontp = fontp->next)
-	    if (fontp->file != NULL && fontp->timestamp <= oldest) {
-		f = fontp;
-		oldest = fontp->timestamp;
-	    }
-	if (f == NULL)
-	    oops("Can't find an open pixel file to close");
-	Fclose(f->file);
-	f->file = NULL;
-	++n_files_left;
+  for (fontp = font_head; fontp != NULL; fontp = fontp->next)
+    if (fontp->file != NULL && fontp->timestamp <= oldest) {
+      f = fontp;
+      oldest = fontp->timestamp;
+    }
+  if (f == NULL)
+    oops("Can't find an open pixel file to close");
+  Fclose(f->file);
+  f->file = NULL;
+  ++n_files_left;
 }
 
 /*
  *	Open a file in the given mode.
  */
 
-FILE *xfopen(char *filename, char *type)
+FILE *xfopen(const char *filename, const char *type)
 #define	TYPE	type
 {
-	FILE	*f;
-
-        /* Try not to let the file table fill up completely.  */
-	if (n_files_left <= 5)
-	  close_a_file();
-	f = fopen(filename, OPEN_MODE);
-	/* If the open failed, try closing a file unconditionally.
-  	   Interactive Unix 2.2.1, at least, doesn't set errno to EMFILE
-  	   or ENFILE even when it should.  In any case, it doesn't hurt
-  	   much to always try.  */
-	if (f == NULL)
-	{
-	    n_files_left = 0;
-	    close_a_file();
-	    f = fopen(filename, TYPE);
-	}
-	return f;
+  /* Try not to let the file table fill up completely.  */
+  if (n_files_left <= 5)
+    close_a_file();
+  FILE	*f = fopen(filename, OPEN_MODE);
+  /* If the open failed, try closing a file unconditionally.
+     Interactive Unix 2.2.1, at least, doesn't set errno to EMFILE
+     or ENFILE even when it should.  In any case, it doesn't hurt
+     much to always try.  */
+  if (f == NULL) {
+    n_files_left = 0;
+    close_a_file();
+    f = fopen(filename, TYPE);
+  }
+  return f;
 }
 #undef	TYPE
 

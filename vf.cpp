@@ -32,7 +32,7 @@
 #include "oconfig.h"
 #include "dvi.h"
 
-extern char *xmalloc (unsigned, _Xconst char *);
+extern	char	*xmalloc (unsigned, _Xconst char *);
 extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable);
 
 /***
@@ -61,49 +61,42 @@ extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict
  *	The main routine
  */
 
-void read_VF_index(font *fontp, wide_bool hushcs)
+void font::read_VF_index(unsigned int hushcs)
 {
-  FILE *VF_file = fontp->file;
+  kDebugInfo(DEBUG, 4300, "read_VF_index");
+
+  FILE *VF_file = file;
   unsigned char	cmnd;
   unsigned char	*avail, *availend;	/* available space for macros */
-  long          checksum;
 
-  fontp->read_char   = NULL;
-  fontp->flags      |= FONT_VIRTUAL;
-  fontp->set_char_p  = set_vf_char;
-  //@@@ if (_debug & DBG_PK)
-  kDebugInfo("Reading VF pixel file %s", fontp->filename);
+  flags      |= FONT_VIRTUAL;
+  set_char_p  = set_vf_char;
+  kDebugInfo(DEBUG, 4300, "Reading VF pixel file %s", filename);
 
   // Read preamble.
   Fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
-  checksum = four(VF_file);
-  if (!hushcs && checksum && fontp->checksum && checksum != fontp->checksum)
+  long file_checksum = four(VF_file);
+  if (!hushcs && file_checksum && checksum && file_checksum != checksum)
     kDebugError("Checksum mismatch (dvi = %lu, vf = %lu) in font file %s", 
-		fontp->checksum, checksum, fontp->filename);
+		checksum, file_checksum, filename);
   (void) four(VF_file);		/* skip design size */
 
   // Read the fonts.
-  /*@@@
-    fontp->vf_table = (struct font **)xmalloc(VFTABLELEN * sizeof(struct font *), "table of VF TeXnumbers");
-    bzero((char *) fontp->vf_table, VFTABLELEN * sizeof(struct font *));
-    fontp->vf_chain = NULL;
-  */
-  fontp->first_font = NULL;
-
+  first_font = NULL;
   while ((cmnd = one(VF_file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
-    struct font *newfontp = define_font(VF_file, cmnd, fontp, &(fontp->vf_table));
-    if (fontp->first_font == NULL)
-      fontp->first_font = newfontp;
+    struct font *newfontp = define_font(VF_file, cmnd, this, &(vf_table));
+    if (first_font == NULL)
+      first_font = newfontp;
   }
 
   // Prepare macro array.
-  fontp->macro = (struct macro *) xmalloc(256 * sizeof(struct macro),"macro array");
-  bzero((char *) fontp->macro, 256 * sizeof(struct macro));
+  macrotable = (macro *)xmalloc(max_num_of_chars_in_font*sizeof(macro),"macro table");
+  bzero((char *) macrotable, max_num_of_chars_in_font*sizeof(macro));
 
   // Read macros.
   avail = availend = NULL;
   for (; cmnd <= LONG_CHAR; cmnd = one(VF_file)) {
-    register struct macro *m;
+    macro *m;
     int len;
     unsigned long cc;
     long width;
@@ -113,7 +106,7 @@ void read_VF_index(font *fontp, wide_bool hushcs)
       cc = four(VF_file);
       width = four(VF_file);
       if (cc >= 256) {
-	kDebugError(TRUE,4300,"Virtual character %lu in font %s ignored.", cc, fontp->fontname);
+	kDebugError(TRUE,4300,"Virtual character %lu in font %s ignored.", cc, fontname);
 	Fseek(VF_file, (long) len, 1);
 	continue;
       }
@@ -122,8 +115,8 @@ void read_VF_index(font *fontp, wide_bool hushcs)
       cc = one(VF_file);
       width = num(VF_file, 3);
     }
-    m = &fontp->macro[cc];
-    m->dvi_adv = width * fontp->dimconv;
+    m = &macrotable[cc];
+    m->dvi_adv = (int)(width * dimconv + 0.5);
     if (len > 0) {
       if (len <= availend - avail) {
 	m->pos = avail;
@@ -131,11 +124,11 @@ void read_VF_index(font *fontp, wide_bool hushcs)
       } else {
 	m->free_me = True;
 	if (len <= VF_PARM_1) {
-	  m->pos = avail = (unsigned char *) xmalloc(VF_PARM_2, "macro array");
+	  m->pos = avail = (unsigned char *)xmalloc(VF_PARM_2*sizeof(unsigned char ),"unknown");
 	  availend = avail + VF_PARM_2;
 	  avail += len;
 	} else 
-	  m->pos = (unsigned char *) xmalloc((unsigned) len, "macro array");
+	  m->pos = (unsigned char *)xmalloc(len*sizeof(unsigned char),"unknown");
       }
       Fread((char *) m->pos, 1, len, VF_file);
       m->end = m->pos + len;
@@ -147,5 +140,5 @@ void read_VF_index(font *fontp, wide_bool hushcs)
 	
   Fclose (VF_file);
   n_files_left++;
-  fontp->file = NULL;
+  file = NULL;
 }

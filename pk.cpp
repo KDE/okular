@@ -49,6 +49,11 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#define DEBUG 0
+
+#include <kdebug.h>
+
+#include "font.h"
 #include "dviwin.h"
 
 #include <stdio.h>
@@ -78,8 +83,10 @@ static	int	PK_bitpos;
 static	int	PK_dyn_f;
 static	int	PK_repeat_count;
 
-static	int PK_get_nyb(FILE *fp)
+int font::PK_get_nyb(FILE *fp)
 {
+  kDebugInfo(DEBUG, 4300, "PK_get_nyb");
+
 	unsigned temp;
 	if (PK_bitpos < 0) {
 	    PK_input_byte = one(fp);
@@ -91,8 +98,10 @@ static	int PK_get_nyb(FILE *fp)
 }
 
 
-static	int PK_packed_num(FILE *fp)
+int font::PK_packed_num(FILE *fp)
 {
+  kDebugInfo(DEBUG, 4300, "PK_packed_num");
+
 	int	i,j;
 
 	if ((i = PK_get_nyb(fp)) == 0) {
@@ -119,273 +128,254 @@ static	int PK_packed_num(FILE *fp)
 }
 
 
-static	void PK_skip_specials(font *fontp)
+void font::PK_skip_specials(void)
 {
-	int i,j;
-	register FILE *fp = fontp->file;
+  kDebugInfo(DEBUG, 4300, "PK_skip_specials");
 
-	do {
-	    PK_flag_byte = one(fp);
-	    if (PK_flag_byte >= PK_CMD_START) {
-		switch (PK_flag_byte) {
-		    case PK_X1 :
-		    case PK_X2 :
-		    case PK_X3 :
-		    case PK_X4 :
-			i = 0;
-			for (j = PK_CMD_START; j <= PK_flag_byte; ++j)
-			    i = (i << 8) | one(fp);
-			while (i--) (void) one(fp);
-			break;
-		    case PK_Y :
-			(void) four(fp);
-		    case PK_POST :
-		    case PK_NOOP :
-			break;
-		    default :
-			oops("Unexpected %d in PK file %s", PK_flag_byte,
-			    fontp->filename);
-			break;
-		}
-	    }
-	}
-	while (PK_flag_byte != PK_POST && PK_flag_byte >= PK_CMD_START);
+  int i,j;
+  register FILE *fp = file;
+
+  do {
+    PK_flag_byte = one(fp);
+    if (PK_flag_byte >= PK_CMD_START) {
+      switch (PK_flag_byte) {
+      case PK_X1 :
+      case PK_X2 :
+      case PK_X3 :
+      case PK_X4 :
+	i = 0;
+	for (j = PK_CMD_START; j <= PK_flag_byte; ++j)
+	  i = (i << 8) | one(fp);
+	while (i--) (void) one(fp);
+	break;
+      case PK_Y :
+	(void) four(fp);
+      case PK_POST :
+      case PK_NOOP :
+	break;
+      default :
+	oops("Unexpected %d in PK file %s", PK_flag_byte, filename);
+	break;
+      }
+    }
+  }
+  while (PK_flag_byte != PK_POST && PK_flag_byte >= PK_CMD_START)
+    ;
 }
 
 /*
  *	Public routines
  */
 
-static	void read_PK_char(struct font *fontp, unsigned int ch)
+void font::read_PK_char(unsigned int ch)
 {
-	int	i, j;
-	int	n;
-	int	row_bit_pos;
-	Boolean	paint_switch;
-	BMUNIT	*cp;
-	register struct glyph *g;
-	register FILE *fp = fontp->file;
-	long	fpwidth;
-	BMUNIT	word;
-	int	word_weight, bytes_wide;
-	int	rows_left, h_bit, count;
+  kDebugInfo(DEBUG, 4300, "read_PK_char");
 
-	g = &fontp->glyph[ch];
-	PK_flag_byte = g->x2;
-	PK_dyn_f = PK_flag_byte >> 4;
-	paint_switch = ((PK_flag_byte & 8) != 0);
-	PK_flag_byte &= 0x7;
-	if (PK_flag_byte == 7) n = 4;
-	else if (PK_flag_byte > 3) n = 2;
-	else n = 1;
+  int	i, j;
+  int	n;
+  int	row_bit_pos;
+  Boolean	paint_switch;
+  BMUNIT	*cp;
+  register struct glyph *g;
+  register FILE *fp = file;
+  long	fpwidth;
+  BMUNIT	word = 0;
+  int	word_weight, bytes_wide;
+  int	rows_left, h_bit, count;
 
-	if (_debug & DBG_PK) Printf("loading pk char %d, char type %d ", ch, n);
+  g = glyphtable + ch;
+  PK_flag_byte = g->x2;
+  PK_dyn_f = PK_flag_byte >> 4;
+  paint_switch = ((PK_flag_byte & 8) != 0);
+  PK_flag_byte &= 0x7;
+  if (PK_flag_byte == 7)
+    n = 4;
+  else 
+    if (PK_flag_byte > 3)
+      n = 2;
+    else
+      n = 1;
+  
+  kDebugInfo(DEBUG, 4300, "loading pk char %d, char type %d ", ch, n);
 
-	/*
-	 * now read rest of character preamble
-	 */
-	if (n != 4) fpwidth = num(fp, 3);
-	else {
-	    fpwidth = sfour(fp);
-	    (void) four(fp);	/* horizontal escapement */
-	}
-	(void) num(fp, n);	/* vertical escapement */
-	{
-	    unsigned long w, h;
+  /*
+   * now read rest of character preamble
+   */
+  if (n != 4)
+    fpwidth = num(fp, 3);
+  else {
+    fpwidth = sfour(fp);
+    (void) four(fp);	/* horizontal escapement */
+  }
+  (void) num(fp, n);	/* vertical escapement */
+  {
+    unsigned long w, h;
 
-	    w = num(fp, n);
-	    h = num(fp, n);
-	    if (w > 0x7fff || h > 0x7fff)
-		oops("Character %d too large in file %s", ch, fontp->fontname);
-	    g->bitmap.w = w;
-	    g->bitmap.h = h;
-	}
-	g->x = snum(fp, n);
-	g->y = snum(fp, n);
+    w = num(fp, n);
+    h = num(fp, n);
+    if (w > 0x7fff || h > 0x7fff)
+      oops("Character %d too large in file %s", ch, fontname);
+    g->bitmap.w = w;
+    g->bitmap.h = h;
+  }
+  g->x = snum(fp, n);
+  g->y = snum(fp, n);
 
-	g->dvi_adv = fontp->dimconv * fpwidth;
+  g->dvi_adv = (int)(dimconv * fpwidth + 0.5);
+  
+  if (DEBUG && g->bitmap.w != 0)
+    kDebugInfo(DEBUG, 4300, ", size=%dx%d, dvi_adv=%ld", g->bitmap.w, g->bitmap.h, g->dvi_adv);
 
-	if (_debug & DBG_PK) {
-	    if (g->bitmap.w != 0)
-		Printf(", size=%dx%d, dvi_adv=%ld", g->bitmap.w, g->bitmap.h,
-		    g->dvi_adv);
-	    Putchar('\n');
-	}
+  alloc_bitmap(&g->bitmap);
+  cp = (BMUNIT *) g->bitmap.bits;
 
-	alloc_bitmap(&g->bitmap);
-	cp = (BMUNIT *) g->bitmap.bits;
-
-	/*
-	 * read character data into *cp
-	 */
-	bytes_wide = ROUNDUP((int) g->bitmap.w, BITS_PER_BMUNIT)
-	    * BYTES_PER_BMUNIT;
-	PK_bitpos = -1;
-	if (PK_dyn_f == 14) {	/* get raster by bits */
-	    bzero(g->bitmap.bits, (int) g->bitmap.h * bytes_wide);
-	    for (i = 0; i < (int) g->bitmap.h; i++) {	/* get all rows */
-		cp = ADD(g->bitmap.bits, i * bytes_wide);
+  /*
+   * read character data into *cp
+   */
+  bytes_wide = ROUNDUP((int) g->bitmap.w, BITS_PER_BMUNIT)
+    * BYTES_PER_BMUNIT;
+  PK_bitpos = -1;
+  if (PK_dyn_f == 14) {	/* get raster by bits */
+    bzero(g->bitmap.bits, (int) g->bitmap.h * bytes_wide);
+    for (i = 0; i < (int) g->bitmap.h; i++) {	/* get all rows */
+      cp = ADD(g->bitmap.bits, i * bytes_wide);
 #ifndef	MSBITFIRST
-		row_bit_pos = -1;
+      row_bit_pos = -1;
 #else
-		row_bit_pos = BITS_PER_BMUNIT;
+      row_bit_pos = BITS_PER_BMUNIT;
 #endif
-		for (j = 0; j < (int) g->bitmap.w; j++) {    /* get one row */
-		    if (--PK_bitpos < 0) {
-			word = one(fp);
-			PK_bitpos = 7;
-		    }
-#ifndef	MSBITFIRST
-		    if (++row_bit_pos >= BITS_PER_BMUNIT) {
-			cp++;
-			row_bit_pos = 0;
-		    }
-#else
-		    if (--row_bit_pos < 0) {
-			cp++;
-			row_bit_pos = BITS_PER_BMUNIT - 1;
-		    }
-#endif
-		    if (word & (1 << PK_bitpos)) *cp |= 1 << row_bit_pos;
-		}
-	    }
+      for (j = 0; j < (int) g->bitmap.w; j++) {    /* get one row */
+	if (--PK_bitpos < 0) {
+	  word = one(fp);
+	  PK_bitpos = 7;
 	}
-	else {		/* get packed raster */
-	    rows_left = g->bitmap.h;
-	    h_bit = g->bitmap.w;
-	    PK_repeat_count = 0;
-	    word_weight = BITS_PER_BMUNIT;
-	    word = 0;
-	    while (rows_left > 0) {
-		count = PK_packed_num(fp);
-		while (count > 0) {
-		    if (count < word_weight && count < h_bit) {
 #ifndef	MSBITFIRST
-			if (paint_switch)
-			    word |= bit_masks[count] <<
-				(BITS_PER_BMUNIT - word_weight);
+	if (++row_bit_pos >= BITS_PER_BMUNIT) {
+	  cp++;
+	  row_bit_pos = 0;
+	}
+#else
+	if (--row_bit_pos < 0) {
+	  cp++;
+	  row_bit_pos = BITS_PER_BMUNIT - 1;
+	}
 #endif
-			h_bit -= count;
-			word_weight -= count;
+	if (word & (1 << PK_bitpos)) *cp |= 1 << row_bit_pos;
+      }
+    }
+  } else {		/* get packed raster */
+    rows_left = g->bitmap.h;
+    h_bit = g->bitmap.w;
+    PK_repeat_count = 0;
+    word_weight = BITS_PER_BMUNIT;
+    word = 0;
+    while (rows_left > 0) {
+      count = PK_packed_num(fp);
+      while (count > 0) {
+	if (count < word_weight && count < h_bit) {
+#ifndef	MSBITFIRST
+	  if (paint_switch)
+	    word |= bit_masks[count] <<
+	      (BITS_PER_BMUNIT - word_weight);
+#endif
+	  h_bit -= count;
+	  word_weight -= count;
 #ifdef	MSBITFIRST
-			if (paint_switch)
-			    word |= bit_masks[count] << word_weight;
+	  if (paint_switch)
+	    word |= bit_masks[count] << word_weight;
 #endif
-			count = 0;
-		    }
-		    else if (count >= h_bit && h_bit <= word_weight) {
-			if (paint_switch)
-			    word |= bit_masks[h_bit] <<
+	  count = 0;
+	} else 
+	  if (count >= h_bit && h_bit <= word_weight) {
+	    if (paint_switch)
+	      word |= bit_masks[h_bit] <<
 #ifndef	MSBITFIRST
-				(BITS_PER_BMUNIT - word_weight);
+		(BITS_PER_BMUNIT - word_weight);
 #else
-				(word_weight - h_bit);
+	    (word_weight - h_bit);
 #endif
-			*cp++ = word;
-			/* "output" row(s) */
-			for (i = PK_repeat_count * bytes_wide /
-				BYTES_PER_BMUNIT; i > 0; --i) {
-			    *cp = *SUB(cp, bytes_wide);
-			    ++cp;
-			}
-			rows_left -= PK_repeat_count + 1;
-			PK_repeat_count = 0;
-			word = 0;
-			word_weight = BITS_PER_BMUNIT;
-			count -= h_bit;
-			h_bit = g->bitmap.w;
-		    }
-		    else {
-			if (paint_switch)
-#ifndef	MSBITFIRST
-			    word |= bit_masks[word_weight] <<
-				(BITS_PER_BMUNIT - word_weight);
-#else
-			    word |= bit_masks[word_weight];
-#endif
-			*cp++ = word;
-			word = 0;
-			count -= word_weight;
-			h_bit -= word_weight;
-			word_weight = BITS_PER_BMUNIT;
-		    }
-		}
-		paint_switch = 1 - paint_switch;
+	    *cp++ = word;
+	    /* "output" row(s) */
+	    for (i = PK_repeat_count * bytes_wide /
+		   BYTES_PER_BMUNIT; i > 0; --i) {
+	      *cp = *SUB(cp, bytes_wide);
+	      ++cp;
 	    }
-	    if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
-		oops("Wrong number of bits stored:  char. %d, font %s", ch,
-		    fontp->fontname);
-	    if (rows_left != 0 || h_bit != g->bitmap.w)
-		oops("Bad pk file (%s), too many bits", fontp->fontname);
-	}
+	    rows_left -= PK_repeat_count + 1;
+	    PK_repeat_count = 0;
+	    word = 0;
+	    word_weight = BITS_PER_BMUNIT;
+	    count -= h_bit;
+	    h_bit = g->bitmap.w;
+	  } else {
+	    if (paint_switch)
+#ifndef	MSBITFIRST
+	      word |= bit_masks[word_weight] <<
+		(BITS_PER_BMUNIT - word_weight);
+#else
+	    word |= bit_masks[word_weight];
+#endif
+	    *cp++ = word;
+	    word = 0;
+	    count -= word_weight;
+	    h_bit -= word_weight;
+	    word_weight = BITS_PER_BMUNIT;
+	  }
+      }
+      paint_switch = 1 - paint_switch;
+    }
+    if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
+      oops("Wrong number of bits stored:  char. %d, font %s", ch, fontname);
+    if (rows_left != 0 || h_bit != g->bitmap.w)
+      oops("Bad pk file (%s), too many bits", fontname);
+  }
 }
 
-void read_PK_index(font *fontp, wide_bool hushcs)
+void font::read_PK_index(unsigned int hushcs)
 {
-	int	hppp, vppp;
-	long	checksum;
+  kDebugInfo(DEBUG, 4300, "Reading PK pixel file %s", filename);
+  
+  Fseek(file, (long) one(file), 1);	/* skip comment */
 
-	fontp->read_char = read_PK_char;
-	if (_debug & DBG_PK)
-	    Printf("Reading PK pixel file %s\n", fontp->filename);
-
-	Fseek(fontp->file, (long) one(fontp->file), 1);	/* skip comment */
-
-	(void) four(fontp->file);		/* skip design size */
-	checksum = four(fontp->file);
-	if (!hushcs && checksum && fontp->checksum
-	    && checksum != fontp->checksum)
-	    Fprintf(stderr,
-		"Checksum mismatch (dvi = %lu, pk = %lu) in font file %s\n",
-		fontp->checksum, checksum, fontp->filename);
-	hppp = sfour(fontp->file);
-	vppp = sfour(fontp->file);
-	if (hppp != vppp && (_debug & DBG_PK))
-	    Printf("Font has non-square aspect ratio %d:%d\n", vppp, hppp);
-	/*
-	 * Prepare glyph array.
-	 */
-	fontp->glyph = (struct glyph *) xmalloc(256 * sizeof(struct glyph),
-	    "glyph array");
-	bzero((char *) fontp->glyph, 256 * sizeof(struct glyph));
-	/*
-	 * Read glyph directory (really a whole pass over the file).
-	 */
-	for (;;) {
-	    int bytes_left, flag_low_bits;
-	    unsigned int ch;
-
-	    PK_skip_specials(fontp);
-	    if (PK_flag_byte == PK_POST) break;
-	    flag_low_bits = PK_flag_byte & 0x7;
-	    if (flag_low_bits == 7) {
-		bytes_left = four(fontp->file);
-		ch = four(fontp->file);
-	    } else if (flag_low_bits > 3) {
-		bytes_left = ((flag_low_bits - 4) << 16) + two(fontp->file);
-		ch = one(fontp->file);
-	    } else {
-		bytes_left = (flag_low_bits << 8) + one(fontp->file);
-		ch = one(fontp->file);
-	    }
-	    fontp->glyph[ch].addr = ftell(fontp->file);
-	    fontp->glyph[ch].x2 = PK_flag_byte;
-#ifdef linux
-#ifndef SHORTSEEK
-#define SHORTSEEK 1024
-#endif
-          /* A bug in Linux libc (as of 18oct94) makes a short read faster
-             than a short forward seek. Totally non-intuitive.  */
-          if (bytes_left > 0 && bytes_left < SHORTSEEK) {
-            char *dummy = xmalloc (bytes_left, "shortseek");
-            Fread (dummy, 1, bytes_left, fontp->file);
-            free (dummy);
-          } else
-            /* seek backward, or long forward */
-#endif /* linux */
-	    Fseek(fontp->file, (long) bytes_left, 1);
-	    if (_debug & DBG_PK)
-		Printf("Scanning pk char %u, at %ld.\n", ch,
-		    fontp->glyph[ch].addr);
-	}
+  (void) four(file);		/* skip design size */
+  long file_checksum = four(file);
+  if (!hushcs && checksum && checksum && file_checksum != checksum)
+    kDebugError(1, 4300, "Checksum mismatch (dvi = %lu, pk = %lu) in font file %s", 
+		checksum, file_checksum, filename);
+  int hppp = sfour(file);
+  int vppp = sfour(file);
+  if (DEBUG && hppp != vppp)
+    kDebugInfo(DEBUG, 4300, "Font has non-square aspect ratio %d:%d", vppp, hppp);
+  /*
+   * Prepare glyph array.
+   */
+  glyphtable = (struct glyph *) xmalloc(max_num_of_chars_in_font * sizeof(struct glyph), "glyph array");
+  bzero((char *) glyphtable, max_num_of_chars_in_font * sizeof(struct glyph));
+  /*
+   * Read glyph directory (really a whole pass over the file).
+   */
+  for (;;) {
+    int bytes_left, flag_low_bits;
+    unsigned int ch;
+    
+    PK_skip_specials();
+    if (PK_flag_byte == PK_POST)
+      break;
+    flag_low_bits = PK_flag_byte & 0x7;
+    if (flag_low_bits == 7) {
+      bytes_left = four(file);
+      ch = four(file);
+    } else 
+      if (flag_low_bits > 3) {
+	bytes_left = ((flag_low_bits - 4) << 16) + two(file);
+	ch = one(file);
+      } else {
+	bytes_left = (flag_low_bits << 8) + one(file);
+	ch = one(file);
+      }
+    glyphtable[ch].addr = ftell(file);
+    glyphtable[ch].x2 = PK_flag_byte;
+    Fseek(file, (long) bytes_left, 1);
+    kDebugInfo(DEBUG, 4300, "Scanning pk char %u, at %ld.", ch, glyphtable[ch].addr);
+  }
 }

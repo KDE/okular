@@ -70,7 +70,7 @@ extern "C" {
 #include "oconfig.h"
 
 extern char *xmalloc (unsigned, _Xconst char *);
-extern FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, int dummy, char **filename_ret);
+
 
 #define	PK_PRE		247
 #define	PK_ID		89
@@ -108,14 +108,13 @@ extern void reset_fonts(void)
 {
   kDebugInfo(DEBUG, 4300, "Reset Fonts");
 
-  register struct font *f;
-  register struct glyph *g;
+  struct font *f;
+  struct glyph *g;
 
   for (f = font_head; f != NULL; f = f->next)
-    if ((f->flags & FONT_LOADED) && !(f->flags & FONT_VIRTUAL))
-      for (g = f->glyph; g <= f->glyph + f->fmaxchar; ++g) {
+    if ((f->flags & font::FONT_LOADED) && !(f->flags & font::FONT_VIRTUAL))
+      for (g = f->glyphtable; g < f->glyphtable + font::max_num_of_chars_in_font; ++g)
 	g->clearShrunkCharacter();
-      }
 }
 
 
@@ -216,7 +215,7 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
 
   // Insert font in dictionary and make sure the dictionary is big
   // enough
-  if (TeXNumberTable->size() >= TeXNumberTable->count()-2)
+  if (TeXNumberTable->size()-2 <= TeXNumberTable->count())
     // Not quite optimal. The size of the dict. should be a prime. I
     // don't care
     TeXNumberTable->resize(TeXNumberTable->size()*2); 
@@ -332,7 +331,7 @@ static	void read_postamble()
   // free up fonts no longer in use
   fontpp = &font_head;
   while ((fontp = *fontpp) != NULL)
-    if (fontp->flags & FONT_IN_USE)  // Question: Is this ever false?
+    if (fontp->flags & font::FONT_IN_USE)  // Question: Is this ever false?
       fontpp = &fontp->next;
     else
       delete fontp;

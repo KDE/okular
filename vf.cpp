@@ -65,7 +65,7 @@ extern void oops(QString message);
 void font::read_VF_index(void)
 {
 #ifdef DEBUG_FONTS
-  kdDebug() << "read_VF_index" << endl;
+  kdDebug(4300) << "font::read_VF_index(void)" << endl;
 #endif
   FILE *VF_file = file;
   unsigned char	cmnd;
@@ -74,14 +74,14 @@ void font::read_VF_index(void)
   flags      |= FONT_VIRTUAL;
   set_char_p  = &dviWindow::set_vf_char;
 #ifdef DEBUG_FONTS
-  kdDebug() << "Reading VF pixel file " << filename << endl;
+  kdDebug(4300) << "font::read_VF_index: reading VF pixel file " << filename << endl;
 #endif
   // Read preamble.
   fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
   long file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
-    kdError() << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum << 
+    kdError(4300) << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum << 
       "u)" << i18n(" in font file ") << filename << endl;
   (void) four(VF_file);		/* skip design size */
 
@@ -107,7 +107,7 @@ void font::read_VF_index(void)
     // number which describes extra enlargement that the virtual font
     // imposes. One obtains the enlargement by dividing 2^20. 
     double enlargement_factor = double(scale)/(1<<20) * enlargement;
-    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor, cmPerDVIunit);
+    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
 
     // Insert font in dictionary and make sure the dictionary is big
     // enough.
@@ -152,7 +152,8 @@ void font::read_VF_index(void)
       width = num(VF_file, 3);
     }
     m = &macrotable[cc];
-    m->dvi_adv = (int)(width * x_dimconv/16.0 + 0.5);
+
+    m->dvi_advance_in_DVI_units = width;
     if (len > 0) {
       if (len <= availend - avail) {
 	m->pos = avail;

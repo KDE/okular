@@ -251,7 +251,7 @@ void dviWindow::bang_special(QString cp)
   kdDebug(4300) << "PostScript-special, literal header " << cp.latin1() << endl;
 #endif
 
-  if (currwin.win == mane.win && PostScriptOutPutString) {
+  if (PostScriptOutPutString) {
     PS_interface->PostScriptHeaderString->append( " @defspecial \n" );
     PS_interface->PostScriptHeaderString->append( cp );
     PS_interface->PostScriptHeaderString->append( " @fedspecial \n" );
@@ -264,7 +264,7 @@ void dviWindow::quote_special(QString cp)
   kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
 #endif
   
-  if (currwin.win == mane.win && PostScriptOutPutString) {
+  if (PostScriptOutPutString) {
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*basedpi)-300;
     double PS_V = (currinf.data.dvi_v*300.0)/basedpi - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
@@ -280,7 +280,7 @@ void dviWindow::ps_special(QString cp)
   kdError(4300) << "PostScript-special, direct PostScript " << cp.latin1() << endl;
 #endif
   
-  if (currwin.win == mane.win && PostScriptOutPutString) {
+  if (PostScriptOutPutString) {
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*basedpi)-300;
     double PS_V = (currinf.data.dvi_v*300.0)/basedpi - 300;
     

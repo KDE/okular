@@ -190,7 +190,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += g->dvi_adv;
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->cmPerDVIunit * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_DVI_units + 0.5);
 
   word_boundary_encountered = false;
   line_boundary_encountered = false;
@@ -229,7 +229,7 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
     Q_UINT8 *end_ptr_sav      = end_pointer;
     command_pointer           = m->pos;
     end_pointer               = m->end;
-    draw_part(currinf.fontp->x_dimconv/16.0, true);
+    draw_part(currinf.fontp->scaled_size_in_DVI_units*(dviFile->cmPerDVIunit * MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0, true);
     command_pointer           = command_ptr_sav;
     end_pointer               = end_ptr_sav;
     currinf = oldinfo;
@@ -237,7 +237,7 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += m->dvi_adv;
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->cmPerDVIunit * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_DVI_units + 0.5);
 }
 
 
@@ -391,7 +391,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  // accents. (comments stolen from the source of dvitype)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
-	      ((RRtmp >= currinf.fontp->scaled_size/6) || (RRtmp <= -4*(currinf.fontp->scaled_size/6))) && 
+	      ((RRtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (RRtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
 	      (textLinkList.size() > 0))
 	    textLinkList[textLinkList.size()-1].linkText += ' ';
 	  currinf.data.dvi_h += ((long) (RRtmp *  current_dimconv));
@@ -406,7 +406,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case W0:
 	  if ((is_vfmacro == false) && 
 	      (currinf.fontp != 0) &&
-	      ((WWtmp >= currinf.fontp->scaled_size/6) || (WWtmp <= -4*(currinf.fontp->scaled_size/6))) && 
+	      ((WWtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (WWtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
 	      (textLinkList.size() > 0) )
 	    textLinkList[textLinkList.size()-1].linkText += ' ';
 	  currinf.data.dvi_h += currinf.data.w;
@@ -421,7 +421,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case X0:
 	  if ((is_vfmacro == false)  && 
 	      (currinf.fontp != 0) &&
-	      ((XXtmp >= currinf.fontp->scaled_size/6) || (XXtmp <= -4*(currinf.fontp->scaled_size/6))) && 
+	      ((XXtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (XXtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
 	      (textLinkList.size() > 0))
 	    textLinkList[textLinkList.size()-1].linkText += ' ';
 	  currinf.data.dvi_h += currinf.data.x;
@@ -435,11 +435,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    Q_INT32 DDtmp = readINT(ch - DOWN1 + 1);
 	    if ((is_vfmacro == false) &&
 		(currinf.fontp != 0) &&
-		(abs(DDtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
+		(abs(DDtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
 		(textLinkList.size() > 0)) {
 	      word_boundary_encountered = true;
 	      line_boundary_encountered = true;
-	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size/6)) 
+	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
 		textLinkList[textLinkList.size()-1].linkText += '\n';
 	    }
 	    currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
@@ -456,11 +456,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case Y0:
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
-	      (abs(YYtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
+	      (abs(YYtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
 	      (textLinkList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
-	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size/6)) 
+	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.y/65536;
@@ -476,11 +476,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case Z0:
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
-	      (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
+	      (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
 	      (textLinkList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
-	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size/6)) 
+	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.z/65536;

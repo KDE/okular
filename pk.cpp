@@ -151,7 +151,7 @@ static	int	PK_repeat_count;
 int font::PK_get_nyb(FILE *fp)
 {
 #ifdef DEBUG_PK
-  kdDebug() << "PK_get_nyb" << endl;
+  kdDebug(4300) << "PK_get_nyb" << endl;
 #endif
 	unsigned temp;
 	if (PK_bitpos < 0) {
@@ -167,7 +167,7 @@ int font::PK_get_nyb(FILE *fp)
 int font::PK_packed_num(FILE *fp)
 {
 #ifdef DEBUG_PK
-  kdDebug() << "PK_packed_num" << endl;
+  kdDebug(4300) << "PK_packed_num" << endl;
 #endif
 
   int	i,j;
@@ -199,7 +199,7 @@ int font::PK_packed_num(FILE *fp)
 void font::PK_skip_specials(void)
 {
 #ifdef DEBUG_PK
-  kdDebug() << "PK_skip_specials" << endl;
+  kdDebug(4300) << "PK_skip_specials" << endl;
 #endif
 
   int i,j;
@@ -240,7 +240,7 @@ void font::PK_skip_specials(void)
 void font::read_PK_char(unsigned int ch)
 {
 #ifdef DEBUG_PK
-  kdDebug() << "read_PK_char" << endl;
+  kdDebug(4300) << "read_PK_char" << endl;
 #endif
 
   int	i, j;
@@ -269,7 +269,7 @@ void font::read_PK_char(unsigned int ch)
       n = 1;
   
 #ifdef DEBUG_PK
-  kdDebug() << "loading pk char " << ch << ", char type " << n << endl;
+  kdDebug(4300) << "loading pk char " << ch << ", char type " << n << endl;
 #endif
 
   /*
@@ -295,7 +295,7 @@ void font::read_PK_char(unsigned int ch)
   g->x = snum(fp, n);
   g->y = snum(fp, n);
 
-  g->dvi_adv = (int)(x_dimconv/16.0 * fpwidth + 0.5);
+  g->dvi_advance_in_DVI_units = fpwidth; // ####
   
   alloc_bitmap(&g->bitmap);
   cp = (BMUNIT *) g->bitmap.bits;
@@ -322,7 +322,7 @@ void font::read_PK_char(unsigned int ch)
     // (Ultra-)Sparc processors.
 
 #ifdef DEBUG_PK
-    kdDebug() << "big Endian byte ordering" << endl;
+    kdDebug(4300) << "big Endian byte ordering" << endl;
 #endif
 
     if (PK_dyn_f == 14) {	/* get raster by bits */
@@ -409,7 +409,7 @@ void font::read_PK_char(unsigned int ch)
     // Intel and Alpha processors.
 
 #ifdef DEBUG_PK
-    kdDebug() << "small Endian byte ordering" << endl;
+    kdDebug(4300) << "small Endian byte ordering" << endl;
 #endif
 
     if (PK_dyn_f == 14) {	/* get raster by bits */
@@ -485,26 +485,25 @@ void font::read_PK_char(unsigned int ch)
 void font::read_PK_index(void)
 {
 #ifdef DEBUG_PK
-  kdDebug() << "Reading PK pixel file " << filename << endl;
+  kdDebug(4300) << "Reading PK pixel file " << filename << endl;
 #endif
 
   fseek(file, (long) one(file), SEEK_CUR);	/* skip comment */
 
   (void) four(file);		/* skip design size */
-  long file_checksum = four(file);
+  Q_UINT32 file_checksum = four(file);
   if (checksum && checksum && file_checksum != checksum)
-    kdError(1) << i18n("Checksum mismatch") << " (dvi = " << checksum << "pk = " << file_checksum << 
-      ") " << i18n("in font file ") << filename << endl;
+    kdWarning(4300) << i18n("Checksum mismatch for PK font file %3 (dvi=%1, pk=%2)").arg(checksum).arg(file_checksum).arg(filename) << endl;
 
   int hppp = sfour(file);
   int vppp = sfour(file);
   if (hppp != vppp)
-    kdDebug() << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp << endl;
+    kdWarning(4300) << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp << endl;
 
   // Prepare glyph array.
   glyphtable = new glyph[max_num_of_chars_in_font];
   if (glyphtable == 0) {
-    kdError() << i18n("Could not allocate memory for a glyph table.") << endl;
+    kdError(4300) << i18n("Could not allocate memory for a glyph table.") << endl;
     exit(0);
   }
     
@@ -533,7 +532,7 @@ void font::read_PK_index(void)
     glyphtable[ch].x2 = PK_flag_byte;
     fseek(file, (long) bytes_left, SEEK_CUR);
 #ifdef DEBUG_PK
-    kdDebug() << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
+    kdDebug(4300) << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
 #endif
   }
 }

@@ -32,10 +32,10 @@ fontPool::fontPool(void)
 
   setName("Font Pool");
 
-  proc         = 0;
-  makepk       = true; // By default, fonts are generated
-  enlargeFonts = true; // By default, fonts are enlarged
-  shrinkFactor = 10.0; // A not-too-bad-default
+  proc                     = 0;
+  makepk                   = true; // By default, fonts are generated
+  enlargeFonts             = true; // By default, fonts are enlarged
+  displayResolution_in_dpi = 100.0; // A not-too-bad-default
 
   fontList.setAutoDelete(TRUE);
 
@@ -86,9 +86,7 @@ unsigned int fontPool::setMetafontMode( unsigned int mode )
 
   struct font *fontp = fontp=fontList.first();
   while(fontp != 0 ) {
-    double pixelPerDVIunit = fontp->cmPerDVIunit * MFResolutions[getMetafontMode()] / 2.54;
-    double fsize           = fontp->enlargement * MFResolutions[getMetafontMode()];
-    fontp->reset(fsize, pixelPerDVIunit);
+    fontp->reset();
     fontp = fontList.next();
   }
 
@@ -121,10 +119,14 @@ void fontPool::setMakePK(bool flag)
 void fontPool::setEnlargeFonts( bool flag )
 {
   enlargeFonts = flag;
+  
+  double displayResolution = displayResolution_in_dpi;
+  if (enlargeFonts == true)
+    displayResolution *= 1.1;
 
   struct font *fontp = fontp=fontList.first();
   while(fontp != 0 ) {
-    fontp->setShrinkFactor((enlargeFonts == true) ? shrinkFactor/1.1 : shrinkFactor );
+    fontp->setDisplayResolution(displayResolution);
     fontp=fontList.next();
   }
   
@@ -133,19 +135,16 @@ void fontPool::setEnlargeFonts( bool flag )
 }
 
 
-class font *fontPool::appendx(const char *fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement, double cmPerDVIunit)
+class font *fontPool::appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement)
 {
-  double fsize = enlargement * MFResolutions[getMetafontMode()];
-  
   // Reuse font if possible: check if a font with that name and
   // natural resolution is already in the fontpool, and use that, if
   // possible.
   class font *fontp = fontList.first();
   while( fontp != 0 ) {
-    if (strcmp(fontname, fontp->fontname) == 0 && (int (fsize+0.5)) == (int)(fontp->naturalResolution_in_dpi + 0.5)) {
+    if ((fontname == fontp->fontname) && ( (int)(enlargement*1000.0+0.5)) == (int)(fontp->enlargement*1000.0+0.5)) {
       // if font is already in the list
       fontp->mark_as_used();
-      delete [] fontname;
       return fontp;
     }
     fontp=fontList.next();
@@ -153,11 +152,11 @@ class font *fontPool::appendx(const char *fontname, Q_UINT32 checksum, Q_UINT32 
   
   // If font doesn't exist yet, we have to generate a new font.
   
-  // Calculate the number of pixel per DVI unit
-  double pixelPerDVIunit = cmPerDVIunit * MFResolutions[getMetafontMode()] / 2.54;
-  
-  fontp = new font(fontname, fsize, checksum, scale, pixelPerDVIunit, this, 
-		   (enlargeFonts == true) ? shrinkFactor/1.1 : shrinkFactor, enlargement, cmPerDVIunit);
+  double displayResolution = displayResolution_in_dpi;
+  if (enlargeFonts == true)
+    displayResolution *= 1.1;
+
+  fontp = new font(fontname, displayResolution, checksum, scale, this, enlargement);
   if (fontp == 0) {
     kdError(4300) << i18n("Could not allocate memory for a font structure!") << endl;
     exit(0);
@@ -178,20 +177,20 @@ QString fontPool::status(void)
     return i18n("The fontlist is currently empty.");
 
   text.append("<table WIDTH=\"100%\" NOSAVE >");
-  text.append("<tr><td><b>Name</b></td> <td><b>DPI</b></td> <td><b>Type</b></td> <td><b>Filename</b></td></tr>");
- 
+  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b></td></tr>").arg(i18n("Name")).arg(i18n("Enlargement")).arg(i18n("Type")).arg(i18n("Filename")) );
+  
   struct font  *fontp = fontList.first();
   while ( fontp != 0 ) {
     QString type;
-
+    
     if (fontp->flags & font::FONT_VIRTUAL)
       type = i18n("virtual");
     else
       type = i18n("regular");
-
-    tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->naturalResolution_in_dpi+0.5)).arg(type).arg(fontp->filename);
+    
+    tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename);
     fontp=fontList.next(); 
- }
+  }
 
   tmp.sort();
   text.append(tmp.join("\n"));
@@ -300,9 +299,11 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
   while ( fontp != 0 ) {
     if ((fontp->flags & font::FONT_KPSE_NAME) == 0) {
       numFontsInJob++;
-      *proc << KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->naturalResolution_in_dpi + 0.5)).arg(fontp->fontname));
+      *proc << KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->enlargement * MFResolutions[MetafontMode] + 0.5)).
+				    arg(fontp->fontname));
 #ifdef DEBUG_FONTPOOL
-      shellProcessCmdLine += KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->naturalResolution_in_dpi + 0.5)).arg(fontp->fontname)) + " ";
+      shellProcessCmdLine += KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->enlargement * MFResolutions[MetafontMode] + 0.5)).
+						  arg(fontp->fontname)) + " ";
 #endif
       // In the first pass, we look also for virtual fonts.
       if (pass == 0) {
@@ -373,7 +374,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
   class font *fontp=fontList.first();
   while ( fontp != 0 ) { 
     if (fontp->filename.isEmpty() == true) {
-      QString fontname = QString("%1.%2pk").arg(fontp->fontname).arg((int)(fontp->naturalResolution_in_dpi + 0.5));
+      QString fontname = QString("%1.%2pk").arg(fontp->fontname).arg((int)(fontp->enlargement * MFResolutions[MetafontMode] + 0.5));
       QStringList matchingFiles = fileNameList.grep(fontname);
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
@@ -459,15 +460,17 @@ void fontPool::kpsewhich_terminated(KProcess *)
   return;
 }
 
-void fontPool::setShrinkFactor( double sf )
+
+void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 {
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "fontPool::setShrinkFactor( " << sf << " ) called" <<endl;
 #endif
   
-  shrinkFactor = sf;
+  displayResolution_in_dpi = _displayResolution_in_dpi;
   setEnlargeFonts( enlargeFonts );
 }
+
 
 void fontPool::mark_fonts_as_unused(void)
 {
@@ -481,6 +484,7 @@ void fontPool::mark_fonts_as_unused(void)
     fontp=fontList.next();
   }
 }
+
 
 void fontPool::release_fonts(void)
 {
@@ -497,6 +501,7 @@ void fontPool::release_fonts(void)
       fontp = fontList.next();
   }
 }
+
 
 void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
 {
@@ -570,4 +575,5 @@ void fontPool::abortGeneration(void)
       proc->kill();
     }
 }
+
 #include "fontpool.moc"

@@ -71,10 +71,8 @@ Q_OBJECT
       glyphs will not be enlarged, otherwise they will. */
   void setEnlargeFonts( bool flag );
 
-  /** Sets the shrink-factor. The shrink-factor is then passed on to
-      all fonts in this fontpool. The fonts use it for re-sizing their
-      glyphs. */
-  void setShrinkFactor( double sf );
+  /** Sets the resolution of the output device. */
+  void setDisplayResolution( double _displayResolution_in_dpi );
 
   /** Returns the status of enlargeFonts.  If the return value is ==
       0, glyphs will not be enlarged, otherwise they will. */
@@ -85,7 +83,7 @@ Q_OBJECT
       will be called. Since this is done using a concurrently running
       process, there is no guarantee that the loading is already
       performed when the method returns. */
-  class font *appendx(const char *fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement, double cmPerDVIunit);
+  class font *appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement);
 
   /** Prints very basic debugging information about the fonts in the
       pool to the kdDebug output stream. */
@@ -196,9 +194,8 @@ private:
      fontpool.cpp */
  unsigned int   MetafontMode;
 
- /** This float is passed on to all fonts in this fontpool. The
-     shrinkFactor is used in re-sizing glyphs. */
- double         shrinkFactor;
+ /** Resolution of the output device. */
+ double         displayResolution_in_dpi;
 
  /** This QString is used to collect the output of the MetaFont
      programm while we are waiting for a full screen line */

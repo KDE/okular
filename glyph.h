@@ -30,7 +30,7 @@ class glyph {
   ~glyph();
 
   long addr;		/* address of bitmap in font file */
-  long dvi_adv;		/* DVI units to move reference point */
+  Q_INT32 dvi_advance_in_DVI_units;	/* DVI units to move reference point */
   short x, y;		/* x and y offset in pixels */
   // TODO: replace the bitmap by a Qbitmap
   struct bitmap bitmap;	/* bitmap for character */

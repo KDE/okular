@@ -48,17 +48,6 @@
 #include "zoomlimits.h"
 
 
-//------ some definitions from xdvi ----------
-
-
- //@@@ DO NOT USE STATIC VARIABLES!!!
-
-#define	MAXDIM		32767
-struct WindowRec mane	= {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
-struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
-extern	struct WindowRec alt;
-
-
 QPainter foreGroundPaint; // QPainter used for text
 
 
@@ -70,6 +59,14 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow( zoom=" << zoom << ", mkpk=" << mkpk << ", parent=" << parent << ", name=" << name << " )" << endl;
 #endif
+
+  mane.shrinkfactor = 3;
+  mane.base_x = 0;
+  mane.base_y = 0;
+  //  mane.width = 0;
+  //  mane.height = 0;
+  
+  currwin = mane;
 
   setBackgroundMode(NoBackground);
 
@@ -251,7 +248,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
 
   basedpi          = MFResolutions[MetafontMode];
   mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*_zoom);
-  font_pool->setShrinkFactor(currwin.shrinkfactor);
+  font_pool->setDisplayResolution( xres*_zoom );
 }
 
 
@@ -422,7 +419,6 @@ void dviWindow::changePageSize()
   pixmap->fill( white );
 
   resize( page_width_in_pixel, page_height_in_pixel );
-  currwin.win = mane.win = pixmap->handle();
 
   PS_interface->setSize( basedpi/mane.shrinkfactor, page_width_in_pixel, page_height_in_pixel );
   drawPage();
@@ -670,7 +666,7 @@ double dviWindow::setZoom(double zoom)
   mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*zoom);
   _zoom             = zoom;
 
-  font_pool->setShrinkFactor(currwin.shrinkfactor);
+  font_pool->setDisplayResolution( xres*zoom );
   changePageSize();
   return _zoom;
 }

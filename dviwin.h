@@ -30,6 +30,13 @@
 #include "dvi_init.h"
 #include "selection.h"
 
+struct	WindowRec {
+  double	shrinkfactor;
+  int		base_x;
+  int           base_y;
+};
+
+
 class fontProgressDialog;
 class infoDialog;
 class KAction;
@@ -220,6 +227,10 @@ protected:
  void          paintEvent(QPaintEvent *ev);
 
 private:
+
+ struct WindowRec mane;
+ struct WindowRec currwin;
+
  QString       errorMsg;
 
  /** Methods which handle certain special commands. */
@@ -308,7 +319,6 @@ private:
  int		   makepk;
  QPixmap          *pixmap;
  unsigned int	   MetafontMode;
- QString	   paper_type;
  int		   ChangesPossible;
  unsigned int	   current_page;
 
@@ -329,28 +339,6 @@ private:
 
  struct drawinf	currinf;
 };
-
-
-#include <X11/Xlib.h>
-
-struct	WindowRec {
-  Window	win;
-  double	shrinkfactor;
-  int		base_x;
-  int           base_y;
-  unsigned int	width;
-  unsigned int	height;
-  int	        min_x;	/* for pending expose events */
-  int	        max_x;	/* for pending expose events */
-  int	        min_y;	/* for pending expose events */
-  int	        max_y;	/* for pending expose events */
-};
-
-
-
-
-
-
 
 
 

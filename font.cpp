@@ -15,6 +15,7 @@
 
 extern void oops(QString message);
 
+extern const int MFResolutions[];
 
 #define	PK_PRE		247
 #define	PK_ID		89
@@ -27,11 +28,12 @@ extern void oops(QString message);
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
 
+
 macro::macro()
 {
   pos     = 0L;		/* address of first byte of macro */
   end     = 0L;		/* address of last+1 byte */
-  dvi_adv = 0;	/* DVI units to move reference point */
+  dvi_advance_in_DVI_units = 0;	/* DVI units to move reference point */
   free_me =  false;
 }
 
@@ -44,13 +46,12 @@ macro::~macro()
 
 void font::fontNameReceiver(QString fname)
 {
-  flags |= font::FONT_LOADED;
-
-  filename = fname;
-
 #ifdef DEBUG_FONT
-  kdDebug() << "FONT NAME RECEIVED:" << filename << endl;
+  kdDebug(4300) << "void font::fontNameReceiver( " << fname << " )" << endl;
 #endif
+
+  flags |= font::FONT_LOADED;
+  filename = fname;
 
   file = fopen(QFile::encodeName(filename), "r");
   if (file == NULL) {
@@ -77,33 +78,29 @@ void font::fontNameReceiver(QString fname)
 }
 
 
-font::font(const char *nfontname, double resolution_in_dpi, long chk, Q_INT32 scale, double pixelPerDVIunit, class fontPool *pool, double shrinkFact, 
-	   double _enlargement, double _cmPerDVIunit)
+font::font(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
+	   class fontPool *pool, double _enlargement)
 {
 #ifdef DEBUG_FONT
-  kdDebug() << "constructing font " << nfontname << " at " << (int) (resolution_in_dpi + 0.5) << " dpi" << endl;
+  kdDebug(4300) << "font::font(...); fontname=" << nfontname << ", enlargement=" << _enlargement << endl;
 #endif
 
-  shrinkFactor = shrinkFact;
-  enlargement  = _enlargement;
-  cmPerDVIunit = _cmPerDVIunit;
-
-  font_pool    = pool;
-  fontname     = nfontname;
-  naturalResolution_in_dpi        = resolution_in_dpi;
-  checksum     = chk;
-  flags        = font::FONT_IN_USE;
-  file         = NULL; 
-  filename     = "";
-  x_dimconv    = scale*pixelPerDVIunit;
-  scaled_size  = scale;
+  enlargement              = _enlargement;
+  font_pool                = pool;
+  fontname                 = nfontname;
+  displayResolution_in_dpi = _displayResolution_in_dpi;
+  checksum                 = chk;
+  flags                    = font::FONT_IN_USE;
+  file                     = 0; 
+  filename                 = QString::null;
+  scaled_size_in_DVI_units = _scaled_size_in_DVI_units;
   
-  glyphtable   = 0;
-  macrotable   = 0;
-
+  glyphtable               = 0;
+  macrotable               = 0;
+  
   for(unsigned int i=0; i<max_num_of_chars_in_font; i++)
     characterPixmaps[i] = 0;
-
+  
   // By default, this font contains only empty characters. After the
   // font has been loaded, this function pointer will be replaced by
   // another one.
@@ -114,13 +111,9 @@ font::font(const char *nfontname, double resolution_in_dpi, long chk, Q_INT32 sc
 font::~font()
 {
 #ifdef DEBUG_FONT
-  kdDebug() << "discarding font " << fontname << " at " << (int)(naturalResolution_in_dpi + 0.5) << " dpi" << endl;
+  kdDebug() << "discarding font " << fontname << " at " << (int)(enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi" << endl;
 #endif
-
-  if (fontname != 0) {
-    delete [] fontname;
-    fontname = 0;
-  }
+  
   if (glyphtable != 0) {
     delete [] glyphtable;
     glyphtable = 0;
@@ -146,7 +139,8 @@ font::~font()
   }
 }
 
-void font::reset(double resolution_in_dpi, double pixelPerDVIunit)
+
+void font::reset(void)
 {
   if (glyphtable != 0) {
     delete [] glyphtable;
@@ -174,14 +168,13 @@ void font::reset(double resolution_in_dpi, double pixelPerDVIunit)
  
   filename                 = QString::null;
   flags                    = font::FONT_IN_USE;
-  x_dimconv                = scaled_size*pixelPerDVIunit;
-  naturalResolution_in_dpi = resolution_in_dpi;
   set_char_p               = &dviWindow::set_empty_char;
 }
 
-void font::setShrinkFactor(float sf)
+
+void font::setDisplayResolution(double _displayResolution_in_dpi)
 {
-  shrinkFactor = sf;
+  displayResolution_in_dpi = _displayResolution_in_dpi;
 
   for(unsigned int i=0; i<max_num_of_chars_in_font; i++) {
     if (characterPixmaps[i] != 0) {
@@ -198,7 +191,7 @@ void font::setShrinkFactor(float sf)
 void font::mark_as_used(void)
 {
 #ifdef DEBUG_FONT
-  kdDebug() << "marking font " << fontname << " at " << (int) (naturalResolution_in_dpi + 0.5) << " dpi" << endl;
+  kdDebug() << "marking font " << fontname << " at " << (int) (enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi" << endl;
 #endif
 
   if (flags & font::FONT_IN_USE)
@@ -232,6 +225,8 @@ QPixmap font::characterPixmap(unsigned int ch)
     return nullPixmap;
   }
   
+  double shrinkFactor = MFResolutions[font_pool->getMetafontMode()] / displayResolution_in_dpi;
+
   // All is fine? Then we rescale the bitmap in order to produce the
   // required pixmap.  Rescaling a character, however, is an art that
   // requires some explanation...
@@ -253,12 +248,6 @@ QPixmap font::characterPixmap(unsigned int ch)
   // borders. The proper choice of the border size will ensure that
   // the hot point will fall exactly onto the coordinates which we
   // calculated previously.
-  
-  // Here the cheating starts ... on the screen many fonts look very
-  // light. We improve on the looks by lowering the shrink factor just
-  // when shrinking the characters. The position of the chars on the
-  // screen will not be affected, the chars are just slightly larger.
-
   
   // Calculate the coordinates of the hot point in the shrunken
   // bitmap

@@ -6,20 +6,26 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress [working on]:
+-> check mouse wrapping not screH / 2
+-> check unscaledwidth/height.. necessary ?
 -> annotations: renderers in PagePainter (for the 6 markup annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
 -> annotations: creators in PageViewAnnotator (80% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
+-> annotations: add the annot pane (cool plz!)
+-> check if fix was applied in head only (pageview.cpp 1676)
 
 More items (first items will enter 'In progress list' first):
+-> merge with head: core/ has no qwidgets around. the head fonts can't make exception!
+   use getMetaData for getting the font list instead of 'passing a klistview to the generator'!
 -> annotations: add config option for default name change
--> annotations: add the annot pane (cool plz!)
 -> annotations: toolbar: display tooltip only the first time
 -> annotations: provide nice wizards. Make it easy to deliver/copy/move the xml files (by Uga)
 -> popup context menu when using right button in selection mode (BR99315)
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> evaluate changing KPDFLink to KPDFAction
 -> evaluate completely handling links internally instead of asking xpdf structs
+-> preload: add a delay when forward loading pages
 -> toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR
 -> bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)
@@ -86,7 +92,15 @@ More items (first items will enter 'In progress list' first):
 -> take care of TODOs in code
 -> cleanup code and update README.png
 
+Icons needed:
+- KPDF (ToolBAR): 1 continuous, 2 tied-pages, 3 Normal (not scroll only, it
+    performs other ops), 4 Zoom, 5 Select, 6 Annotation/Review
+- KPDF (Edit Tools): highlighter( transp base, we colorize it)
+- COMMON (here in ToolBox): Toc, Annotations
+
 Done (newest features come first):
+-> CHG: cursor wraps on screen for dragging the page/dynZooming
+-> FIX: raised scaling performance by 10x times for typ usage, removed odd cases, speedups to viewScroll and dynZoom
 -> ADD: annotations: complete xml storage/retrieval of internal annotations
 -> CHG: page properties (bookmarks, annotations, ...) storage moved to Page class
 -> ADD: sidebar: add shortcut for showing/hiding it (BR99316)
@@ -95,7 +109,7 @@ Done (newest features come first):
 -> FIX: rmb when no doc displayed to restore menu
 -> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files
--> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]
+*> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]
 -> FIX: trigger redraw on 'filter text' on current page (need new highligh engine first)
 -> FIX: fixed viewport saving/restoring (+performance fix) on presentation mode
 -> FIX: leakfix when closing document while thread was running (no more leaks now)
@@ -133,7 +147,7 @@ Done (newest features come first):
 -> FIX: searchline back to work
 -> CHG: DocumentInfo is now a DomTree and the properties dialog is dynamically generated (Tobias)
 -> ADD: Presentation transitions are loaded from the pdf files as well as fullscreen state (Tobias)
--> Merged on HEAD on 2005-01-02 (The branch is frozen, development continues here)
+*> Merged on HEAD on 2005-01-02 (The branch is frozen, development continues here)
 -> FIX: Fix my update cursor FIX :-D
 -> ADD: Make kpdf aware of Find and GoToPage actions
 -> FIX: Update cursor correctly when a link moves to a page and the cursor is over a link on that page
@@ -186,7 +200,7 @@ Done (newest features come first):
 -> FIX: previews speedup: 50-100%
 -> CHG: use local instead of X memory for thumbnails (..)
 -> MRG: merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
--> The branch 'kpdf_experiments' was created at this point. Code refactoring started.
+*> The branch 'kpdf_experiments' was created at this point. Code refactoring started.
 -> ADD: Completely use xpdf code for rendering that solves most font problems (Albert)
 -> MRG: Replace xpdf version with lastest one (3.00) that supports PDF 1.5 (Albert)
 -> newest added features are at the top of the list

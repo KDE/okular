@@ -6,12 +6,18 @@ Legend:
     MRG - MeRGed from head
     (*) - Some parts of this item are already done
 
+In progress on the branch (first item comes first):
+-> FIX: rework PageView (QScrollView) to gain speed and reduce memory consumption
+-> ADD: reading aids (accessibility) [settings config done while now]
+-> ADD: click over image allows "save image" (and display rect around image too) [50% done]
+-> ADD: viewport changes the right way when clicking links [30% done]
+
 Things to do in order to merge in HEAD (first item has highest priority):
--> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive})
--> rework QScrollView internals to NOT generate paint events on invisible widgets.
-   the current behavior, using a large scrollview and the clipper is *Very* bad, wasting repaints
-   everywhere, even in widgets that get hidden. Need to solve this on its roots, a paintEvent patch
+-> VERY IMPORTANT: (1.5 to 3.0 speed LOSS!!) rework QScrollView internals to NOT generate paint events on
+   invisible widgets. the current behavior, using a large scrollview and the clipper is *Very* bad, wasting
+   repaints everywhere, even in widgets that get hidden. Need to solve this on its roots, a paintEvent patch
    solves this but is a bad way to solve this.
+-> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive})
 -> minimize PageView's reLayout and requestPixmaps on changes
 -> this may be postponed after merge: implementing async document generator using Albert's generator thread
 -> pageview: fix keys/mouse navigation in both single/continous modes [60% done]
@@ -37,11 +43,6 @@ More items (first items will enter 'In progress list' first):
 -> merge head xpdf changes for --enable-final (by adrian de groot/albert)
 -> merge head support for show menubar in rmb (by albert)
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
-
-Porting / In progress on the branch (first item comes first):
--> ADD: reading aids (accessibility) [settings config done while now]
--> ADD: click over image allows "save image" (and display rect around image too) [50% done]
--> ADD: viewport changes the right way when clicking links [30% done]
 
 Done (newest feature comes firts):
 -> ADD: KConfigXT settings framework and Accessibility config (acc. code mostly not done)

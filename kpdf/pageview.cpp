@@ -679,6 +679,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     m_popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
                 m_popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Page"), 2 );
                 m_popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
+                //implement this function before remove this line
+                m_popup->setItemEnabled( 3, false );
                 switch ( m_popup->exec(e->globalPos()) )
                 {
                     case 1:

@@ -22,6 +22,7 @@
 
 #include <kapp.h>
 #include <kmessagebox.h>
+#include <kmimemagic.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/job.h>
@@ -599,6 +600,20 @@ bool dviWindow::setFile( const QString & fname )
 			i18n("File error!\n\n") +
 			i18n("The file does not exist\n") + 
 			filename);
+    return false;
+  }
+
+  // Check if we are really loading a DVI file, and complain about the
+  // mime type, if the file is not DVI. 
+  // Perhaps we should move the procedure later to the kviewpart,
+  // instead of the implementaton of the multipage.
+  QString mimetype( KMimeMagic::self()->findFileType( fname )->mimeType() );
+  if (mimetype != "application/x-dvi") {
+    KMessageBox::sorry( this,
+			i18n( "Could not open file <nobr><strong>%1</strong></nobr> which has " 
+			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files." )
+			.arg( fname )
+			.arg( mimetype ) );
     return false;
   }
 

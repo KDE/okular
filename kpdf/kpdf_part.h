@@ -87,6 +87,8 @@ namespace KPDF
     void forward()  { /* stub */ };
       void slotNextPage();
       void slotPreviousPage();
+      void slotGotoEnd();
+      void slotGotoStart();
 
     void displayNextPage();
     void displayPreviousPage();
@@ -97,6 +99,8 @@ namespace KPDF
     PDFDoc*     m_doc;
     PageWidget* m_outputDev;
 		PDFPartView * pdfpartview;
+    KAction* m_firstPage;
+    KAction* m_lastPage;
 
     KToggleAction* m_fitToWidth;
 

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="4">
+<kpartgui name="kpdf_part" version="5">
 <MenuBar>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>
@@ -25,5 +25,8 @@
 	<Separator/>
 	<Action name="zoom_in"/>
 	<Action name="zoom_out"/>
+	<Separator/>
+	<Action name="goToStart"/>
+	<Action name="goToEnd"/>
 </ToolBar>
 </kpartgui>

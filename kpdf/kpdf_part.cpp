@@ -81,6 +81,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                        actionCollection(), "previous_page");
   KStdAction::next    (this, SLOT(slotNextPage()),
                        actionCollection(), "next_page" );
+  m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoStart() ),
+                                      actionCollection(), "goToStart" );
+  m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
+
+  m_lastPage  = KStdAction::lastPage( this, SLOT( slotGotoEnd() ),
+                                     actionCollection(), "goToEnd" );
+  m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");
@@ -88,6 +95,27 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
+}
+
+void Part::slotGotoEnd()
+{
+    if ( m_doc && m_doc->getNumPages() > 0 );
+    {
+        m_currentPage = m_doc->getNumPages();
+        pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+        m_outputDev->setPage(m_currentPage);
+    }
+}
+
+void Part::slotGotoStart()
+{
+    if ( m_doc && m_doc->getNumPages() > 0 );
+    {
+        m_currentPage = 1;
+
+        pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+        m_outputDev->setPage(m_currentPage);
+     }
 }
 
 void Part::slotNextPage()
@@ -144,7 +172,6 @@ Part::openFile()
 
   if (!m_doc->isOk())
     return false;
-
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
@@ -159,9 +186,7 @@ Part::openFile()
   pdfpartview->pagesListBox->update();
 
   displayPage(1);
-
   m_outputDev->setPDFDocument(m_doc);
-
   return true;
 }
 

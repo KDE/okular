@@ -63,9 +63,6 @@ class PDFGenerator : public Generator
 
         QString getMetaData( const QString & key, const QString & option );
 
-        // used by the KPDFOutputDev child
-        KPDFLinkGoto::Viewport decodeLinkViewport( class GString * namedDest, class LinkDest * dest );
-
     private:
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;

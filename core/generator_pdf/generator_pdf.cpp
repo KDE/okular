@@ -114,12 +114,13 @@ bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage
     }
 
     // initialize output device for rendering current pdf
-    kpdfOutputDev->startDoc( pdfdoc->getXRef() );
+    kpdfOutputDev->initDevice( pdfdoc );
 
     // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = pdfdoc->getNumPages();
     pagesVector.resize( pageCount );
-    for ( uint i = 0; i < pageCount ; i++ ) {
+    for ( uint i = 0; i < pageCount ; i++ )
+    {
         KPDFPage * page = new KPDFPage( i, pdfdoc->getPageWidth(i+1),
                                         pdfdoc->getPageHeight(i+1),
                                         pdfdoc->getPageRotate(i+1) );
@@ -466,12 +467,12 @@ bool PDFGenerator::reparseConfig()
         paperColor = color;
         SplashColor splashCol;
         splashCol.rgb8 = splashMakeRGB8( paperColor.red(), paperColor.green(), paperColor.blue() );
-        // rebuild the output device using the new paper color
+        // rebuild the output device using the new paper color and initialize it
         docLock.lock();
         delete kpdfOutputDev;
-        kpdfOutputDev = new KPDFOutputDev( this, splashCol );
+        kpdfOutputDev = new KPDFOutputDev( splashCol );
         if ( pdfdoc )
-            kpdfOutputDev->startDoc( pdfdoc->getXRef() );
+            kpdfOutputDev->initDevice( pdfdoc );
         docLock.unlock();
         return true;
     }
@@ -512,69 +513,8 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
     return QString();
 }
 
-KPDFLinkGoto::Viewport PDFGenerator::decodeLinkViewport( GString * namedDest, LinkDest * dest )
-// note: this function is called when processing a page, when the MUTEX is already LOCKED
-{
-    KPDFLinkGoto::Viewport vp;
-    vp.page = -1;
-
-    if ( namedDest && !dest )
-        dest = pdfdoc->findDest( namedDest );
-
-    if ( !dest || !dest->isOk() )
-        return vp;
-
-    // get destination page number
-    if ( !dest->isPageRef() )
-        vp.page = dest->getPageNum() - 1;
-    else
-    {
-        Ref ref = dest->getPageRef();
-        vp.page = pdfdoc->findPage( ref.num, ref.gen ) - 1;
-    }
-
-    // get destination position (fill remaining Viewport fields)
-    switch ( dest->getKind() )
-    {
-        case destXYZ:
-/*            OD -> cvtUserToDev( dest->getLeft(), dest->getTop(), &X, &Y );
-            if ( dest->getChangeLeft() )
-                make hor change
-            if ( dest->getChangeTop() )
-                make ver change
-            if ( dest->getChangeZoom() )
-                make zoom change
-*/          break;
-
-        case destFit:
-        case destFitB:
-            vp.fitWidth = true;
-            vp.fitHeight = true;
-            break;
-
-        case destFitH:
-        case destFitBH:
-//            read top, fit Width
-            vp.fitWidth = true;
-            break;
-
-        case destFitV:
-        case destFitBV:
-//            read left, fit Height
-            vp.fitHeight = true;
-            break;
-
-        case destFitR:
-//            read and fit left,bottom,right,top
-            break;
-    }
-
-    return vp;
-}
-
-
 QString PDFGenerator::getDocumentInfo( const QString & data ) const
-// note: this function is called by DocumentInfo gen, when the MUTEX is already LOCKED
+// note: MUTEX is LOCKED while calling this
 {
     // [Albert] Code adapted from pdfinfo.cc on xpdf
     Object info;
@@ -634,13 +574,13 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
 }
 
 QString PDFGenerator::getDocumentDate( const QString & data ) const
-// note: this function is called by DocumentInfo gen, when the MUTEX is already LOCKED
+// note: MUTEX is LOCKED while calling this
 {
     // [Albert] Code adapted from pdfinfo.cc on xpdf
-    Object info;
     if ( !pdfdoc )
         return i18n( "Unknown Date" );
 
+    Object info;
     pdfdoc->getDocInfo( &info );
     if ( !info.isDict() )
         return i18n( "Unknown Date" );
@@ -688,7 +628,11 @@ void PDFGenerator::startNewThreadedGeneration()
     PixmapRequest * req = requestsQueue.last();
     requestsQueue.pop_back();
     if ( req->page->hasPixmap( req->id, req->width, req->height ) )
-        return startNewThreadedGeneration();
+    {
+        delete req;
+        startNewThreadedGeneration();
+        return;
+    }
 
     // start generator thread with given PixmapRequest
     generatorThread->startGeneration( req );
@@ -696,11 +640,35 @@ void PDFGenerator::startNewThreadedGeneration()
 
 void PDFGenerator::customEvent( QCustomEvent * event )
 {
-    // catch generator responses only
+    // catch generator 'ready events' only
     if ( event->type() != TGE_DATAREADY_ID )
         return;
 
-    // put the requested data to the KPDFPage
+#if 0
+    // check if thread is running (has to be stopped now)
+    if ( generatorThread->running() )
+    {
+        // if so, wait for effective thread termination
+        if ( !generatorThread->wait( 9999 /*10s timeout*/ ) )
+        {
+            kdWarning() << "PDFGenerator: thread sent 'data available' "
+                        << "signal but had problems ending." << endl;
+            return;
+        }
+}
+#endif
+
+    // the mutex must be unlocked now
+    if ( docLock.locked() )
+    {
+        kdWarning() << "PDFGenerator: 'data available' but mutex still "
+                    << "held. Recovering." << endl;
+        // syncronize GUI thread (must not happen)
+        docLock.lock();
+        docLock.unlock();
+    }
+
+    // put thread's generated data into the KPDFPage
     const PixmapRequest * request = generatorThread->currentRequest();
     int reqId = request->id,
         reqPage = request->pageNumber;
@@ -718,7 +686,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     if ( !outRects.isEmpty() )
         request->page->setRects( outRects );
 
-    // tell generator that contents has been taken and can unlock mutex
+    // tell generator that generation is ended and to free its data
     // note: request will be deleted so we can't access it from here on
     generatorThread->endGeneration();
 
@@ -774,12 +742,15 @@ void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
     {
         kdDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
                   << "with the mutex already held." << endl;
+        delete request;
         return;
     }
 #endif
     // set generation parameters and run thread
     d->currentRequest = request;
-    start( QThread::LowestPriority );
+    // TODO: use a different priority for different types of requests
+    // TODO: embed priority in requests
+    start( request->id == PAGEVIEW_ID ? QThread::InheritPriority : QThread::LowPriority );
 }
 
 const PixmapRequest * PDFPixmapGeneratorThread::currentRequest() const
@@ -837,8 +808,8 @@ void PDFPixmapGeneratorThread::run()
     // setup kpdf output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
     bool genTextPage = !page->hasSearchPage() &&
-                    ( width == page->width() ) &&
-                    ( height == page->height() );
+                       ( width == page->width() ) &&
+                       ( height == page->height() );
 
     // generate links and image rects if rendering pages on pageview
     bool genPageRects = d->currentRequest->id == PAGEVIEW_ID;
@@ -856,8 +827,6 @@ void PDFPixmapGeneratorThread::run()
     d->m_image = d->generator->kpdfOutputDev->takeImage();
     d->m_textPage = d->generator->kpdfOutputDev->takeTextPage();
     d->m_rects = d->generator->kpdfOutputDev->takeRects();
-
-    //d->generator->kpdfOutputDev->freeInternalBitmap();
 
     // 3. [UNLOCK] mutex
     d->generator->docLock.unlock();

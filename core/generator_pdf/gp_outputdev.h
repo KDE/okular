@@ -22,11 +22,10 @@
 #include <qvaluelist.h>
 #include "xpdf/PDFDoc.h" // for 'Object'
 #include "xpdf/SplashOutputDev.h"
+#include "core/link.h"
 
 class QPixmap;
 class TextPage;
-class PDFGenerator;
-class KPDFLink;
 class KPDFPageRect;
 
 /**
@@ -41,16 +40,16 @@ class KPDFPageRect;
 class KPDFOutputDev : public SplashOutputDev
 {
     public:
-        KPDFOutputDev( PDFGenerator * parent, SplashColor paperColor );
+        KPDFOutputDev( SplashColor paperColor );
         virtual ~KPDFOutputDev();
 
-        // to be called before PDFDoc->displayPage( thisclass, .. )
-        // @param qtThreadSafety: use a slow QImage and conversions (for threads only)
+        // initialize device -> attach device to PDFDoc
+        void initDevice( class PDFDoc * pdfDoc );
+
+        // set parameters before rendering *each* page
+        // @param qtThreadSafety: duplicate memory buffer (slow but safe)
         void setParams( int pixmapWidth, int pixmapHeight, bool generateTextPage,
                         bool decodeLinks, bool decodeImages, bool qtThreadSafety = false );
-
-        // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
-        KPDFLink * generateLink( LinkAction * );
 
         // takes pointers out of the class (so deletion it's up to others)
         QPixmap * takePixmap();
@@ -77,6 +76,10 @@ class KPDFOutputDev : public SplashOutputDev
     private:
         // delete all interal objects and data
         void clear();
+        // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
+        KPDFLink * generateLink( LinkAction * a );
+        // fills up a Viewport structure out of a given LinkGoto link
+        KPDFLinkGoto::Viewport decodeViewport( GString *, class LinkDest * );
 
         // generator switches and parameters
         bool m_qtThreadSafety;
@@ -85,15 +88,13 @@ class KPDFOutputDev : public SplashOutputDev
         bool m_generateImages;
         int m_pixmapWidth;
         int m_pixmapHeight;
+
+        // Internal objects
+        PDFDoc * m_doc;
         QPixmap * m_pixmap;
         QImage * m_image;
-        PDFGenerator * m_generator;
-
-        // text page generated on demand
-        TextPage * m_text;
-
-        // rectangles on page (associated to links/images)
-        QValueList< KPDFPageRect * > m_rects;
+        TextPage * m_text;  // text page generated on demand
+        QValueList< KPDFPageRect * > m_rects; // pageRects (links/images)
 };
 
 

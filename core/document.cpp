@@ -554,26 +554,29 @@ void KPDFDocument::mCleanupMemory( int observerId  )
     if ( clipValue > memoryToFree )
         memoryToFree = clipValue;
 
+    if ( memoryToFree <= 0 )
+        return;
+
     // free memory. remove older data until we free enough memory
     int freed = 0;
-    if ( memoryToFree > 0 )
+    QMap< int, int >::iterator it = obs->pageMemory.begin(), end = obs->pageMemory.end();
+    while ( (it != end) && (memoryToFree > 0) )
     {
-        QMap< int, int >::iterator it = obs->pageMemory.begin(), end = obs->pageMemory.end();
-        while ( (it != end) && (memoryToFree > 0) )
+        int pageNumber = it.key();
+        if ( obs->observer->canUnloadPixmap( pageNumber ) )
         {
-            int freeNumber = it.key();
-            if ( obs->observer->canUnloadPixmap( freeNumber ) )
-            {
-                // update mem stats
-                memoryToFree -= it.data();
-                obs->totalMemory -= it.data();
-                obs->pageMemory.remove( it );
-                // delete pixmap
-                pages_vector[ freeNumber ]->deletePixmap( observerId );
-                freed++;
-            }
+            // copy iterator to avoid invalidation on map->remove( it )
+            QMap< int, int >::iterator i( it );
             ++it;
-        }
+            // update mem stats
+            memoryToFree -= i.data();
+            obs->totalMemory -= i.data();
+            obs->pageMemory.remove( i );
+            // delete pixmap
+            pages_vector[ pageNumber ]->deletePixmap( observerId );
+            freed++;
+        } else
+            ++it;
     }
     //kdDebug() << "Id:" << observerId << " [" << obs->totalMemory << "kB] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
 }

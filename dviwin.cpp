@@ -493,4 +493,4 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
     }
   }
 }
-//#include "dviwin.moc.cpp"
+#include "dviwin.moc"

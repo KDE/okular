@@ -145,14 +145,6 @@ dviWindow::dviWindow( int bdpi, double zoom, const QString & mfm, int mkpk, QWid
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   is_current_page_drawn  = 0;  
   n_files_left           = OPEN_MAX;
-  kpse_set_progname ("kdvi");
-  kpse_init_prog ("KDVI", basedpi, MetafontMode.ascii(), "cmr10");
-  kpse_set_program_enabled(kpse_any_glyph_format, 0, kpse_src_cmdline);
-  kpse_format_info[kpse_pk_format].override_path
-    = kpse_format_info[kpse_gf_format].override_path
-    = kpse_format_info[kpse_any_glyph_format].override_path
-    = kpse_format_info[kpse_tfm_format].override_path
-    = QFile::encodeName(FontPath);
   resize(0,0);
 }
 
@@ -331,6 +323,36 @@ void dviWindow::changePageSize()
 
 void dviWindow::setFile( const QString & fname )
 {
+  // Before opening the file, or even checking if the file exists, we
+  // initialize the kpathsearch mechanism which searches (or
+  // generates) the fonts for us.
+  kpse_set_progname ("kdvi");
+  kpse_init_prog ("KDVI", basedpi, MetafontMode.ascii(), "cmr10");
+  kpse_set_program_enabled(kpse_any_glyph_format, 0, kpse_src_cmdline);
+
+  // This is clearly a memory leak. We don't really care because the
+  // loss is minimal, and because this whole mechanism will be
+  // replaced in the next version of kdvi anyways. The addition of
+  // "/var/lib..." is just as clearly a dreadful hack that makes kdvi
+  // run more smoothly in the case that the file "texmf.cnf" in the
+  // "kpathsea" directory is incompatible with the "texmf.cnf" that is
+  // included in the TeX-distribution on the machine where kdvi is
+  // run.
+  char *Ptr;
+  if (FontPath.length() == 0)
+    Ptr = "/var/lib/texmf/pk//";
+  else {
+    Ptr = new char[FontPath.length()+21];
+    strncpy(Ptr,FontPath.latin1(),FontPath.length());
+    strncpy(Ptr,":/var/lib/texmf/pk//",20);
+    Ptr[FontPath.length()+21] = 0;
+  }
+  kpse_format_info[kpse_pk_format].override_path
+    = kpse_format_info[kpse_gf_format].override_path
+    = kpse_format_info[kpse_any_glyph_format].override_path
+    = kpse_format_info[kpse_tfm_format].override_path
+    = Ptr;
+
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
 

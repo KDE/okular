@@ -143,11 +143,10 @@ namespace KPDF
                         bc );
             if (m_selection)
             {
-                kdDebug() << "selection over " << qRound(m_xMin) << " " << qRound(m_yMin) << " " << qRound(m_xMax- m_xMin) << " " << qRound(m_yMax- m_yMin) << endl;
                 p->setBrush(Qt::SolidPattern);
                 p->setPen(QPen(Qt::black, 1)); // should not be necessary bug a Qt bug makes it necessary
                 p->setRasterOp(Qt::NotROP);
-                p->drawRect(qRound(m_xMin), qRound(m_yMin), qRound(m_xMax- m_xMin), qRound(m_yMax- m_yMin));
+                p->drawRect(qRound(m_xMin*m_zoomFactor), qRound(m_yMin*m_zoomFactor), qRound((m_xMax- m_xMin)*m_zoomFactor), qRound((m_yMax- m_yMin)*m_zoomFactor));
             }
         }
         else
@@ -377,6 +376,10 @@ namespace KPDF
         }
         
         b = m_outputdev -> find(u, len, !next, true, next, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
+        m_xMin = m_xMin / m_zoomFactor;
+        m_yMin = m_yMin / m_zoomFactor;
+        m_xMax = m_xMax / m_zoomFactor;
+        m_yMax = m_yMax / m_zoomFactor;
         m_selection = b;
         updateContents();
         return b;

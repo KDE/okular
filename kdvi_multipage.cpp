@@ -395,16 +395,8 @@ bool KDVIMultiPage::gotoPage(int page)
       return false;
     }
 
-    // Make the widget &ptr visible in the scrollview. We try to do
-    // that intelligently, so that the user gets to see most of the
-    // widget
-    if (ptr->height() < scrollView()->visibleHeight()) {
-      // If the widget is less tall then the visible portion of the
-      // viewPort, try to center the widget in the viewport
-      scrollView()->setContentsPos(0, scrollView()->childY(ptr) - (scrollView()->visibleHeight()-ptr->height())/2);
-      ptr->flash(0);
-    } else
-      scrollView()->setContentsPos(0, scrollView()->childY(ptr)-5);
+    // Make the widget &ptr visible in the scrollview.
+    scrollView()->setContentsPos(0, scrollView()->childY(ptr)-5);
   }
   return true;
 }

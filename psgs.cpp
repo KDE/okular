@@ -12,7 +12,9 @@ extern const char psheader[];
 pageInfo::pageInfo(QString _PostScriptString) {
   PostScriptString = new QString(_PostScriptString);
   Gfx              = NULL;
+  background       = Qt::white;
 }
+
 
 pageInfo::~pageInfo() {
   if (PostScriptString != 0L)
@@ -60,6 +62,7 @@ void ghostscript_interface::setPostScript(int page, QString PostScript) {
     *(pageList.find(page)->PostScriptString) = PostScript;
 }
 
+
 void ghostscript_interface::setIncludePath(const QString &_includePath) {
   if (_includePath.isEmpty())
      includePath = "*"; // Allow all files
@@ -67,7 +70,12 @@ void ghostscript_interface::setIncludePath(const QString &_includePath) {
      includePath = _includePath+"/*";
 }
 
+
 void ghostscript_interface::setColor(int page, QColor background_color) {
+#ifdef DEBUG_PSGS
+  kdDebug(4300) << "ghostscript_interface::setColor( " << page << ", " << background_color << " )" << endl;
+#endif
+
   if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(QString::null);
     info->background = background_color;
@@ -84,6 +92,10 @@ void ghostscript_interface::setColor(int page, QColor background_color) {
 // always guaranteed to be valid
 
 QColor ghostscript_interface::getBackgroundColor(int page) {
+#ifdef DEBUG_PSGS
+  kdDebug(4300) << "ghostscript_interface::getBackgroundColor( " << page << " )" << endl;
+#endif
+
   if (pageList.find(page) == 0) 
     return Qt::white;
   else 
@@ -93,17 +105,17 @@ QColor ghostscript_interface::getBackgroundColor(int page) {
 
 void ghostscript_interface::clear(void) {
   PostScriptHeaderString->truncate(0);
-
   MemoryCache.clear();
   DiskCache.clear();
-
+  
   // Deletes all items, removes temporary files, etc.
   pageList.clear();
 }
 
+
 void ghostscript_interface::gs_generate_graphics_file(int page, QString filename) {
   emit(setStatusBarText(i18n("Generating PostScript graphics...")));
-
+  
   pageInfo *info = pageList.find(page);
 
   // Generate a PNG-file
@@ -160,7 +172,6 @@ void ghostscript_interface::gs_generate_graphics_file(int page, QString filename
 
 
 QPixmap *ghostscript_interface::graphics(int page) {
-
   pageInfo *info = pageList.find(page);
 
   // No PostScript? Then return immediately.

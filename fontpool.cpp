@@ -36,7 +36,7 @@ fontPool::fontPool(void)
   makepk                   = true; // By default, fonts are generated
   enlargeFonts             = true; // By default, fonts are enlarged
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
-
+  MetafontMode             = DefaultMFMode;
   fontList.setAutoDelete(TRUE);
 
 #ifdef HAVE_FREETYPE

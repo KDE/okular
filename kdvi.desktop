@@ -64,5 +64,5 @@ Path=
 Type=Application
 Terminal=0
 ServiceTypes=Browser/View
-X-KDE-Library=libkdvipart
+X-KDE-Library=libkviewpart
 X-KDE-BrowserView-Args=dvi

@@ -6,7 +6,7 @@ INCLUDES= $(all_includes) -Ikpathsea -I$(top_srcdir)/kviewshell
 SUBDIRS = kpathsea . pix
 
 # you can add here more. This one gets installed
-lib_LTLIBRARIES= libkdvipart.la
+lib_LTLIBRARIES= libkdvi.la
 noinst_PROGRAMS = squeeze
 
 # just to make sure, automake makes them
@@ -14,7 +14,7 @@ METASOURCES = AUTO
 
 
 
-libkdvipart_la_SOURCES = kdvi_multipage.cpp \
+libkdvi_la_SOURCES = kdvi_multipage.cpp \
 	dviwin.cpp print.cpp \
 	printData.cpp printSetup.cpp printSetupData.cpp\
 	optiondialog.cpp \
@@ -22,8 +22,8 @@ libkdvipart_la_SOURCES = kdvi_multipage.cpp \
 	font.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
 
-libkdvipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
-libkdvipart_la_LIBADD = $(LIB_KFILE) -lkparts kpathsea/libkpathsea.la \
+libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
+libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts kpathsea/libkpathsea.la \
 			$(top_builddir)/kviewshell/libkmultipage.la
 
 

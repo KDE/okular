@@ -20,7 +20,7 @@
 
 extern "C"
 {
-  void *init_libkdvipart()
+  void *init_libkdvi()
   {
     return new KDVIMultiPageFactory;
   }

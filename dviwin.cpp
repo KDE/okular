@@ -114,8 +114,11 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   _postscript            = 0;
   pixmap                 = 0;
   findDialog             = 0;
+  findNextAction         = 0;
+  findPrevAction         = 0;
   DVIselection.clear();
   reference              = QString::null;
+  searchText             = QString::null;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
@@ -200,9 +203,9 @@ void dviWindow::exportText(void)
 
   if (KMessageBox::warningContinueCancel( this, 
 					  i18n("<qt>This function exports the DVI file to a plain text. Unfortunately, this version of "
-					       "KDVI treats only plain ASCII characters properly. Symbols, mathematical formulae, "
-					       "accented characters, and non-english text, such as Russian or Korean, will most likely be "
-					       "messed up completely.</qt>"),
+					       "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
+					       "formulae, accented characters, and non-english text, such as Russian or Korean, will "
+					       "most likely be messed up completely.</qt>"),
 					  i18n("Function may not work as expected"),
 					  i18n("Continue anyway"),
 					  "warning_export_to_text_may_not_work") == KMessageBox::Cancel)
@@ -603,77 +606,6 @@ void dviWindow::copyText(void)
 {
   QApplication::clipboard()->setSelectionMode(false);
   QApplication::clipboard()->setText(DVIselection.selectedText);
-}
-
-void dviWindow::showFindTextDialog(void)
-{
-  if (findDialog == 0) {
-    findDialog = new KEdFind(this, "Text find dialog", FALSE);
-    connect(findDialog, SIGNAL(search()), this, SLOT(do_findText()));
-  }
-  findDialog->show();
-}
-
-void dviWindow::do_findText(void)
-{
-  if (findDialog == 0)
-    return;
-
-  QString searchText  = findDialog->getText();
-  bool case_sensitive = findDialog->case_sensitive();
-
-  bool _postscript_sav = _postscript;
-  bool oneTimeRound    = false;
-  int current_page_sav = current_page;
-  _postscript = FALSE; // Switch off postscript to speed up things...
-  QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter. 
-
-  while(current_page < dviFile->total_pages) {
-    foreGroundPaint.begin( &pixie );
-    draw_page(); // We don't really care for errors in draw_page(), no error handling here
-    foreGroundPaint.end();
-
-    for(int i=DVIselection.selectedTextStart+1; i<num_of_used_textlinks; i++) 
-      if (textLinkList[i].linkText .find(searchText, 0, case_sensitive) >= 0) {
-	DVIselection.selectedTextStart = DVIselection.selectedTextEnd = i;
-	// Restore the previous settings, including the current
-	// page. Otherwise, the program is "smart enough" not to
-	// re-render the screen.
-	_postscript    = _postscript_sav;
-	int j = current_page;
-	current_page   = current_page_sav;
-	emit(request_goto_page(j, textLinkList[i].box.bottom() ));
-	return;
-      }
-    DVIselection.selectedTextStart = -1;
-    current_page++;
-
-    if ((current_page == dviFile->total_pages)) {
-      if (oneTimeRound == true)
-	break;
-      oneTimeRound = true;
-      if (dviFile->total_pages>2) {
-	int answ = KMessageBox::questionYesNo(this, i18n("<qt>The search string <strong>%1</strong> could not be found till the "
-							 "end of the document. Should the search be restarted from the beginning "
-							 "of the document?</qt>").arg(searchText), 
-					      i18n("Text not found")); 
-	if (answ == KMessageBox::Yes)
-	  current_page = 0;
-      }
-    }
-  }// of while
-
-  
-  KMessageBox::sorry( this, i18n("<qt>The search string <strong>%1</strong> could not be found.</qt>").arg(searchText) );
-
-  // Restore the PostScript setting 
-  _postscript = _postscript_sav;
-  
-  // Restore the current page.
-  current_page = current_page_sav;
-  foreGroundPaint.begin( &pixie );
-  draw_page(); // We don't care for errors here
-  foreGroundPaint.end();
 }
 
 void dviWindow::setShowPS( int flag )
@@ -1139,15 +1071,17 @@ void dviWindow::gotoPage(int new_page, int vflashOffset)
 {
   gotoPage(new_page);
   animationCounter = 0;
+  if (timerIdent != 0)
+    killTimer(timerIdent);
   flashOffset      = vflashOffset - pixmap->height()/100; // Heuristic correction. Looks better.
   timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
 }
 
-void dviWindow::timerEvent( QTimerEvent * ) 
+void dviWindow::timerEvent( QTimerEvent *e ) 
 {
   animationCounter++;
   if (animationCounter >= 10) {
-    killTimer(timerIdent);
+    killTimer(e->timerId());
     timerIdent       = 0;
     animationCounter = 0;
   }
@@ -1229,8 +1163,8 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     
     // Now that we know the rectangle, we have to find out which words
     // intersect it!
-    DVIselection.clear();
-    Q_INT32 selectedTextStart, selectedTextEnd;
+    Q_INT32 selectedTextStart = -1;
+    Q_INT32 selectedTextEnd   = -1;
 
     for(int i=0; i<num_of_used_textlinks; i++) 
       if ( selectedRectangle.intersects(textLinkList[i].box) ) {
@@ -1246,7 +1180,10 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	selectedText += "\n";
       }
 
-    DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
+    if (selectedTextEnd == -1)
+      DVIselection.clear();
+    else
+      DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
     repaint();
   }
 }

@@ -19,10 +19,13 @@
   <Action name="copy_text"/>
   <Action name="edit_select_all"/>
   <Separator/>
-  <Action name="find" append="options_show_merge"/>
+  <Action name="find"/>
+  <Action name="findnext"/>
+  <Action name="findprev"/>
  </Menu>
 
  <Menu name="settings"><text>Settings</text>
+  <Action name="enable_msgs"/>
   <Action name="settings_dvi" append="options_show_merge"/>
  </Menu>
 

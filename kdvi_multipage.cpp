@@ -8,18 +8,10 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kimageeffect.h>
-#include <kinstance.h>
 #include <kmessagebox.h>
 #include <kprinter.h>
 #include <kstdaction.h>
-#include <qobject.h>
-#include <qlabel.h>
-#include <qstring.h>
-#include <qimage.h>
-#include <qpixmap.h>
 
-#include "fontpool.h"
 #include "kviewpart.h"
 #include "optiondialog.h"
 #include "kdvi_multipage.h"
@@ -85,13 +77,18 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   document_history.setAction(backAction, forwardAction);
   document_history.clear();
 
-  findTextAction   = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
-  copyTextAction   = KStdAction::copy(window, SLOT(copyText()), actionCollection(), "copy_text");
+  findTextAction         = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
+  window->findNextAction = KStdAction::findNext(window, SLOT(findNextText()), actionCollection(), "findnext");
+  window->findNextAction->setEnabled(false);
+  window->findPrevAction = KStdAction::findPrev(window, SLOT(findPrevText()), actionCollection(), "findprev");
+  window->findPrevAction->setEnabled(false);
+  copyTextAction     = KStdAction::copy(window, SLOT(copyText()), actionCollection(), "copy_text");
   window->DVIselection.setAction(copyTextAction);
-  selectAllAction  = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
-  exportPSAction   = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
-  exportPDFAction  = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
-  exportTextAction = new KAction(i18n("Text"), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
+  selectAllAction    = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
+  new KAction(i18n("Enable all warnings and messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
+  exportPSAction     = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
+  exportPDFAction    = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
+  exportTextAction   = new KAction(i18n("Text"), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
   new KAction(i18n("&DVI Options"), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
   new KAction(i18n("About the KDVI plugin..."), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
@@ -266,7 +263,7 @@ void KDVIMultiPage::about()
 				      i18n("the KDVI plugin"), 
 				      KAboutDialog::Close, KAboutDialog::Close);
 
-  ab->setProduct("kdvi", "1.0alpha", QString::null, QString::null);
+  ab->setProduct("kdvi", "1.0beta", QString::null, QString::null);
   ab->addTextPage (i18n("About"), 
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"
@@ -301,7 +298,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.0alpha", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.0beta", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }
@@ -537,5 +534,11 @@ void KDVIMultiPage::doGoForward(void)
   return;
 }
 
+void KDVIMultiPage::doEnableWarnings(void)
+{
+  KMessageBox::information (window, i18n("All messages and warnings will now be shown."));
+  KMessageBox::enableAllMessages();
+  kapp->config()->reparseConfiguration();
+}
 
 #include "kdvi_multipage.moc"

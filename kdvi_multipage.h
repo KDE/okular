@@ -115,6 +115,7 @@ protected slots:
   void doSelectAll();
   void doGoBack();
   void doGoForward();
+  void doEnableWarnings();
   void about();
   void helpme();
   void bugform();
@@ -136,6 +137,7 @@ private:
   KAction      *copyTextAction;
   KAction      *selectAllAction;
   KAction      *findTextAction;
+  KAction      *findNextTextAction;
   KAction      *exportPSAction;
   KAction      *exportPDFAction;
   KAction      *exportTextAction;

@@ -28,6 +28,7 @@
 
 class fontProgressDialog;
 class infoDialog;
+class KAction;
 class KEdFind;
 class KPrinter;
 class KShellProcess;
@@ -126,11 +127,17 @@ public:
  /** Reference part of the URL which describes the filename. */
  QString             reference;
 
+ QString        searchText;
+ KAction        *findNextAction;
+ KAction        *findPrevAction;
 
 public slots:
   void          selectAll(void);
   void          copyText(void);
   void          showFindTextDialog(void);
+  void          findText(void);
+  void          findNextText(void);
+  void          findPrevText(void);
 
   void          abortExternalProgramm(void);
   bool		setFile(QString fname, QString ref = QString::null);
@@ -151,7 +158,7 @@ public slots:
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
   void          dvips_terminated(KProcess *);
   void          editorCommand_terminated(KProcess *);
-  void          do_findText();
+
 
   /** This slot is usually called by the fontpool if all fonts are
       loaded. The method will try to parse the reference part of the

@@ -73,6 +73,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   page_offset  = 0;
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
+  numberOfExternalNONPSFiles = 0;
   sourceSpecialMarker = old->sourceSpecialMarker;
 
   dviData = old->dviData.copy();

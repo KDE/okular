@@ -77,6 +77,15 @@ class fontEncoding {
   // that a certain position is left open, or empty, if the encoding
   // file did not contain 256 characters or could not be properly read
   QString glyphNameVector[256];
+
+  // Returns 'true' if the encoding file was found and could
+  // successfully be loaded.
+  bool isValid() {return _isValid;}
+
+ private:
+  // Set by the constructor to 'true', if the encoding file was found
+  // and could be loaded successfully.
+  bool _isValid;
 };
 
 #endif

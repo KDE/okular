@@ -64,9 +64,15 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   // macro packages (but not by others). This probably means that
   // graphic files are no longer found if the filename really does
   // contain quotes, but we don't really care that much.
-  if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
+  if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"'))
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
-  }
+
+  // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
+  // that this is NOT a PostScript file, and we exit here. The graphic
+  // file is later read when the page is rendered.
+  QString ending = EPSfilename.section('.', -1).lower();
+  if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg") || (ending == "mng"))
+    return;
 
   QString originalFName = EPSfilename;
 
@@ -367,8 +373,6 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
 
   QString include_command = cp.simplifyWhiteSpace();
 
-  dviFile->numberOfExternalPSFiles++;  
-
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away. Of
   // course, this does not work if the filename contains spaces
@@ -385,6 +389,17 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
 
+  // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
+  // that this is NOT a PostScript file, and we exit here.
+  QString ending = EPSfilename.section('.', -1).lower();
+  if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg")) {
+    dviFile->numberOfExternalNONPSFiles++;  
+    return;
+  }
+  
+  // Now assume that the graphics file *is* a PostScript file
+  dviFile->numberOfExternalPSFiles++;  
+  
   // Now locate the Gfx file on the hard disk...
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
@@ -408,9 +423,6 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
-
-    KMimeType::Ptr mimetype = KMimeType::findByPath( EPSfilename );
-    kdError() << EPSfilename << ": " << mimetype->name() << endl;
 
   if (QFile::exists(EPSfilename)) {
 

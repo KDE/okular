@@ -20,26 +20,28 @@
 fontEncoding::fontEncoding(const QString &encName)
 {
 #ifdef DEBUG_FONTENC
-  kdDebug(4700) << "fontEncoding( " << encName << " )" << endl;
+  kdDebug(4300) << "fontEncoding( " << encName << " )" << endl;
 #endif
 
+  _isValid = false;
   // Use kpsewhich to find the encoding file.
   KProcIO proc;
   QString encFileName;
   proc << "kpsewhich" << encName;
   if (proc.start(KProcess::Block) == false) {
-    kdError(4700) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
+    kdError(4300) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
     return;
   }
   proc.readln(encFileName);
   encFileName = encFileName.stripWhiteSpace();
+
   if (encFileName.isEmpty()) {
-    kdError(4700) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
+    kdError(4300) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
     return;
   }
 
 #ifdef DEBUG_FONTENC
-  kdDebug(4700) << "FileName of the encoding: " << encFileName << endl;
+  kdDebug(4300) << "FileName of the encoding: " << encFileName << endl;
 #endif  
 
   QFile file( encFileName );
@@ -57,24 +59,28 @@ fontEncoding::fontEncoding(const QString &encName)
     // Find the name of the encoding
     encodingFullName = fileContent.section('[', 0, 0).simplifyWhiteSpace().mid(1);
 #ifdef DEBUG_FONTENC
-    kdDebug(4700) << "encodingFullName: " << encodingFullName << endl;
+    kdDebug(4300) << "encodingFullName: " << encodingFullName << endl;
 #endif
     
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplifyWhiteSpace();
     QStringList glyphNameList = QStringList::split( '/', fileContent );
     
     int i = 0;
-    for ( QStringList::Iterator it = glyphNameList.begin(); it != glyphNameList.end(); ++it ) {
+    for ( QStringList::Iterator it = glyphNameList.begin(); (it != glyphNameList.end())&&(i<256); ++it ) {
       glyphNameVector[i] = (*it).simplifyWhiteSpace();
 #ifdef DEBUG_FONTENC
-      kdDebug(4700) << i << ": " << glyphNameVector[i] << endl;
+      kdDebug(4300) << i << ": " << glyphNameVector[i] << endl;
 #endif
       i++;
     }
+    for(; i<256; i++)
+      glyphNameVector[i] = ".notdef";
   } else {
-    kdError(4700) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
+    kdError(4300) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
     return;
   }
+
+  _isValid = true;
 }
 
 

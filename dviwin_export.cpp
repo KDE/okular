@@ -172,6 +172,19 @@ void dviRenderer::exportPS(QString fname, QString options, KPrinter *printer)
   if (dviFile == NULL)
     return;
 
+  if (dviFile->numberOfExternalNONPSFiles != 0) {
+    KMessageBox::sorry( parentWidget, 
+			i18n("<qt><P>This DVI file refers to external graphic files which are not in PostScript format, and cannot be handled by the "
+			     "<strong>dvips</strong> program that KDVI uses interally to print or to export to PostScript. The functionality that "
+			     "you require is therefore unavailable in this version of KDVI.</p>"
+			     "<p>As a workaround, you can use the <strong>File/Export As</strong>-Menu to save this file in PDF format, and then use "
+			     "a PDF viewer.</p>"
+			     "<p>The author of KDVI apologizes for the inconvenience. If enough users complain, the missing functionality might later "
+			     "be added.</p></qt>") ,
+			i18n("Functionality unavailable"));
+    return;
+  }
+  
   QString fileName;
   if (fname.isEmpty()) {
     // Generate a suggestion for a reasonable file name

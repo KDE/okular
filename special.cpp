@@ -14,6 +14,7 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qimage.h>
 #include <qstringlist.h>
 
 #include "dviwin.h"
@@ -269,6 +270,43 @@ void dviRenderer::epsf_special(QString cp)
   parse_special_argument(include_command, "rwi=", &rwi);
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
+
+
+  // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
+  // that this is NOT a PostScript file, and we need to draw that
+  // here.
+  QString ending = EPSfilename.section('.', -1).lower();
+  bool isGFX = false;
+  if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg") || (ending == "mng"))
+    isGFX = true;
+
+  // So, if we do not have a PostScript file, but a graphics file, and
+  // if that file exists, we draw it here.
+  if (isGFX && QFile::exists(EPSfilename)) {
+    // Don't show PostScript, just draw the bounding box. For this,
+    // calculate the size of the bounding box in Pixels. 
+    double bbox_width  = urx - llx;
+    double bbox_height = ury - lly;
+    
+    if ((rwi != 0)&&(bbox_width != 0)) {
+      bbox_height *= rwi/bbox_width;
+      bbox_width  = rwi;
+    }
+    if ((rhi != 0)&&(bbox_height != 0)) {
+      bbox_width  *= rhi/bbox_height;
+      bbox_height = rhi;
+    }
+
+    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * MFResolutions[font_pool.getMetafontMode()]/2.54;
+    
+    bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
+    bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
+    
+    QImage image(EPSfilename);
+    image = image.smoothScale(bbox_width, bbox_height);
+    foreGroundPaint.drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
+    return;
+  }
 
   if (!_postscript || !QFile::exists(EPSfilename)) {
     // Don't show PostScript, just draw the bounding box. For this,

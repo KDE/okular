@@ -227,10 +227,10 @@ void dviWindow::epsf_special(QString cp)
       foreGroundPaint.setPen(Qt::black);
       foreGroundPaint.drawRoundRect(bbox, 2, 2);
       if (QFile::exists(EPSfilename))
-	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1, &bbox);
+	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
       else
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), 
-				  QString(i18n("File not found:\n %1")).arg(EPSfilename), -1, &bbox);
+				  QString(i18n("File not found:\n %1")).arg(EPSfilename), -1);
       foreGroundPaint.restore();
     }
   }

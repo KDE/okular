@@ -1,12 +1,20 @@
-Personal Albert's list
--> make links functional (done in HEAD)
+TODO - branch version
+Legend:
+    ADD - ADDed
+    CHG - CHanGed
+    FIX - FIXed
+    MRG - MeRGed from head
+    (*) - Some parts of this item are already done
 
-More items
--> new icons (contest at kde-look that will end in 2004-Oct-XX)
--> screen editing (annotations): framework (BR67300,BR62793)
+More items (first items will enter 'In progress list' first):
 -> screen editing (annotations): tools (BR67300)
+-> implementing async document generator using Albert's thread as the generation thread
+-> new icons (contest at kde-look that will end in 2004-Oct-XX)
+-> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text (enhance links too)
+-> minimize PageView's reLayout and requestPixmaps on changes
 -> export all text in plain_text/html
 -> extract(export?) images
+-> text selection in wordprocessor style (very hard/impossible)
 -> implement history (mainly for actionNamed)
 -> history as a toolbox child (collecting DOs's setPage calls)
 -> zoom: fit text (with configurable margin)
@@ -15,49 +23,47 @@ More items
 -> merge head copyright headers (by albert)
 -> merge head xpdf changes for --enable-final (by adrian de groot/albert)
 -> merge head support for show menubar in rmb (by albert)
+-> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
--> use a kconfigxt settings framework
--> fix keys/mouse in single/continous modes
--> porting Albert's link following
--> minimize PageView's reLayout and requestPixmaps on changes
--> implementing async document generator using Albert's thread as the generation thread
--> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text (enhance links too)
+-> document: complete Albert's link following (gotoDest/movies stuff missing)
+-> pageview: fix keys/mouse in single/continous modes
+-> use a KConfigXT settings framework
+-> screen editing (annotations): framework (BR67300,BR62793)
 
-Done (sorted by inv.time)
--> remake single page mode
--> zoom buttons in sync with text
--> added continous mode
--> added multiple pages per view (gui selects 1 or 2 ppv)
--> added the option to open password protected files (from head)
--> added the TOC from head (missing click and go functionality because it needs link following)
--> added a 'search bar' with prune-as-you-type feature
--> ported Albert's search and implemented case sensitive
--> smart handling of pixmap using an Observer ID (thumbnails are gone, only pixmaps now)
--> some toolbar/menu changes
--> outline bottom and right edges (of pages)
--> centering pages in the view
--> kpdf output at 100% has exactly the same size as acroread now
--> qsplitter layouting
--> zooming works as expected (and added 'fit to page' too)
--> new go to page dialog
--> previews sorted by visible areas (prioritize items where the scrollbar is)
--> previews speedup: 50-100%
--> use local instead of X memory for thumbnails (..)
--> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
+Done (newest feature comes firts):
+-> ADD: text selection (rectangular blocks) in selection mode
+-> ADD: autoscroll page with Shift+Up/Dn keys (exact konqueror's behavior)
+-> CHG: remake single page mode
+-> FIX: zoom buttons in sync with text
+-> ADD: continous mode
+-> ADD: multiple pages per view (gui selects 1 or 2 ppv)
+-> MRG: the option to open password protected files (from head)
+-> MRG: the TOC from head (missing click and go functionality because it needs link following)
+-> ADD: a 'search bar' with prune-as-you-type feature
+-> MRG: Albert's search ported and implemented case sensitive
+-> CHG: smart handling of pixmap using an Observer ID (thumbnails are gone, only pixmaps now)
+-> FIX: some toolbar/menu changes
+-> ADD: outline bottom and right edges (of pages)
+-> FIX: centering pages in the view
+-> FIX: kpdf output at 100% has exactly the same size as acroread now
+-> CHG: qsplitter layouting
+-> FIX: zooming works as expected (and added 'fit to page' too)
+-> ADD: new go to page dialog
+-> GHG: previews sorted by visible areas (prioritize items where the scrollbar is)
+-> FIX: previews speedup: 50-100%
+-> CHG: use local instead of X memory for thumbnails (..)
+-> MRG: merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
 
 Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 and IRC:
- copy text from rectangular blocks
- text copy/selection in wordprocessor-style
- ruler
- distance measure tool
- color picker
- annotations 'postit' like
- hyperlinks (albert's work needs to be forward ported)
- integration with a voice synthesizer
- export in other formats keeping formatting (a dream.. expect for PNG :-)
- <theICEBear> pdf forms support.... :D if at all possible
+ Tool: ruler
+ Tool: distance measure
+ Tool: color picker
+ Annotations: yellow notes 'post-it' like
+ Speak: integration with a voice synthesizer
+ Export: export to other formats keeping formatting (a dream.. expect for PNG :-)
+ PDF: <theICEBear> pdf forms support.... :D if at all possible
 
 Bugs to close after merging to HEAD
 BR88661: (thumbnail prev. is blocking) Not only it's threaded, but it generates

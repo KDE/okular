@@ -41,8 +41,8 @@ kdviprefs::kdviprefs( QWidget *, const char * )
 	resize(400,330);
 	insertPages();
 
-	setApplyButton();
-	setCancelButton();
+	setApplyButton(translate("Apply"));
+	setCancelButton(translate("Cancel"));
 	setCaption(translate("Preferences"));
 
 	this->setMinimumSize(400,330);

@@ -270,6 +270,7 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
                 kp->setSearchPage( d->kpdfOutputDev->takeTextPage() );
             if ( genLinks )
                 kp->setLinks( d->kpdfOutputDev->takeLinks() );
+            kp->setActiveRects( d->kpdfOutputDev->takeActiveRects() );
 
             d->observers[id]->notifyPixmapChanged( page );
         }

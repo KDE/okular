@@ -62,9 +62,6 @@ public:
 	virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen);
 	virtual GBool beginType3Char(GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen);
     //----- image drawing
-/*    virtual void drawImageMask(GfxState *state, Object *ref, Stream *str,
-                               int width, int height, GBool invert,
-    GBool inlineImg);*/
     virtual void drawImage(GfxState *state, Object *ref, Stream *str,
                            int width, int height, GfxImageColorMap *colorMap,
                            int *maskColors, GBool inlineImg);

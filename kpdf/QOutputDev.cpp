@@ -174,15 +174,6 @@ GBool KPDFOutputDev::beginType3Char(GfxState *state, double x, double y, double 
 	return SplashOutputDev::beginType3Char(state, x, y, dx, dy, code, u, uLen);
 }
 
-/*void KPDFOutputDev::drawImageMask(GfxState *state, Object *ref, Stream *str,
-                             int width, int height, GBool invert,
-                             GBool inlineImg)
-{
-    double * ctm = state->getCTM();
-    printf("> %d %d    %f %f %f %f %f %f\n", width, height, ctm[0], ctm[1], ctm[2], ctm[3], ctm[4], ctm[5]);
-    SplashOutputDev::drawImageMask(state, ref, str, width, height, invert, inlineImg);
-}
-*/
 void KPDFOutputDev::drawImage(GfxState *state, Object *ref, Stream *str,
     int _width, int _height, GfxImageColorMap *colorMap,
     int *maskColors, GBool inlineImg)

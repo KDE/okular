@@ -29,6 +29,9 @@ More items (first items will enter 'In progress list' first):
 *THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
 -> fix: On continous view mode, if you click to a link that moves you to another
    page, then scroll up and click again on the same link it does not work. (by Albert)
+-> JJ: convert DocumentInfo to a DomTree containing a few common fields (see the current
+   implmentation) and being extensible for letting generator developers adding their
+   custom fields.
 -> display current page / total pages (with analog indicator too (progressbar/...))
    maybe this can be done on a small widget at the top of the toolbox, displaying
    'document' informations (pages, current pg, some metadata, etc..)

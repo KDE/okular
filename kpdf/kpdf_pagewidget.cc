@@ -46,6 +46,10 @@ namespace KPDF
     {
         if (m_doc == 0)
             return;
+        if ( e->button() & RightButton )
+        {
+            emit rightClick();
+        }
 
         m_pressedAction = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
     }

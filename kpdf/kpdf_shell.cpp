@@ -21,7 +21,9 @@
 #include <klocale.h>
 #include <kmainwindow.h>
 #include <kmenubar.h>
+#include <kpopupmenu.h>
 #include <kparts/componentfactory.h>
+#include <qcursor.h>
 
 using namespace KPDF;
 
@@ -63,6 +65,8 @@ Shell::Shell()
     // next time we enter the event loop...
     return;
   }
+  //FIXME m_part is not a KPART::readon... it's a kdpf_part...
+  //connect( m_part->pageWidget(), SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
 
   readSettings();
 }
@@ -128,6 +132,9 @@ Shell::setupActions()
 #else
     m_fullScreenAction = new KToggleAction( this, SLOT( slotToggleFullScreen() ) );
 #endif
+    m_popup = new KPopupMenu( this, "rmb popup" );
+    m_popup->insertTitle( i18n( "Full Screen Options" ) );
+    m_fullScreenAction->plug( m_popup );
 }
 
   void
@@ -234,6 +241,11 @@ void Shell::setFullScreen( bool useFullScreen )
 	toolBar()->show();
 	showNormal();
     }
+}
+
+void Shell::slotRMBClick()
+{
+    m_popup->exec( QCursor::pos() );
 }
 
 

@@ -71,6 +71,8 @@ namespace KPDF
     void displayDestination(LinkDest*);
       void updateActionPage();
       void setFullScreen( bool fs );
+      PageWidget* pageWidget() const {return m_outputDev;}
+
   protected:
     /**
      * This must be implemented by each part

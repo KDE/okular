@@ -57,6 +57,8 @@ namespace KPDF
         void ReadDown();
         void ZoomOut();
         void ZoomIn();
+        void rightClick();
+
     protected:
         virtual void keyPressEvent( QKeyEvent* );
         void contentsMousePressEvent(QMouseEvent*);

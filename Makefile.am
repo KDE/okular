@@ -13,7 +13,7 @@ noinst_PROGRAMS = squeeze
 METASOURCES = AUTO
 
 libkdvi_la_SOURCES = kdvi_multipage.cpp \
-	dviwin.cpp \
+	dviwin.cpp bigEndianByteReader.cpp \
 	optiondialog.cpp infodialog.cpp\
 	psheader.c dviwin_draw.cpp dvi_init.cpp\
 	font.cpp fontpool.cpp fontprogress.cpp pk.cpp psgs.cpp\

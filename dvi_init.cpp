@@ -74,55 +74,6 @@ extern "C" {
 #define	dvi_oops(str)	(dvi_oops_msg = (str.utf8()), longjmp(dvi_env, 1))
 
 
-Q_UINT8 dvifile::readUINT8(void)
-{
-  return *(command_pointer++);
-}
-
-Q_UINT16 dvifile::readUINT16(void)
-{
-  Q_UINT16 a;
-  a = *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  return a;
-}
-
-Q_UINT32 dvifile::readUINT32(void)
-{
-  Q_UINT32 a;
-  a = *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  return a;
-}
-
-Q_UINT32 dvifile::readUINT(Q_UINT8 size)
-{
-  Q_UINT32 a = 0;
-  while (size > 0) { 
-    a = (a << 8) + *(command_pointer++);
-    size--;
-  }
-  return a;
-}
-
-Q_INT32 dvifile::readINT(Q_UINT8 length)
-{
-  Q_UINT32 a = 0;
-
-
-  Q_UINT8 byte = *(command_pointer++);
-  a = byte;
-  if (a & 0x80)
-    a -= 0x100;
-
-  while ((--length) > 0) { 
-    byte = *(command_pointer++);
-    a = (a << 8) | byte;
-  }
-  return a;
-}
 
 void dvifile::process_preamble(void)
 {
@@ -171,8 +122,8 @@ void dvifile::find_postamble(void)
   
   // And this is finally the pointer to the beginning of the postamble
   command_pointer -= 4;
-  long pos         = readUINT32();
-  command_pointer  = dvi_Data + pos;
+  beginning_of_postamble = readUINT32();
+  command_pointer  = dvi_Data + beginning_of_postamble;
 }
 
 
@@ -239,9 +190,15 @@ void dvifile::prepare_pages()
   kdDebug() << "prepare_pages" << endl;
 #endif
 
-  page_offset      = new Q_UINT32[total_pages];
-  Q_UINT16 i       = total_pages-1;
-  page_offset[i]   = last_page_offset;
+  page_offset              = new Q_UINT32[total_pages+1];
+  if (page_offset == 0) {
+    kdError(4300) << "No memory for page list!" << endl;
+    return;
+  }
+
+  page_offset[total_pages] = beginning_of_postamble;
+  Q_UINT16 i               = total_pages-1;
+  page_offset[i]           = last_page_offset;
 
   // Follow back pointers through pages in the DVI file, storing the
   // offsets in the page_offset table.
@@ -252,6 +209,8 @@ void dvifile::prepare_pages()
       dvi_oops(i18n("Page does not start with BOP"));
     command_pointer += 10 * 4;
     page_offset[i] = readUINT32();
+    if ((dvi_Data+page_offset[i] < dvi_Data)||(dvi_Data+page_offset[i] > dvi_Data+size_of_file))
+      page_offset[i] = 0;
   }
 }
 
@@ -268,9 +227,13 @@ dvifile::dvifile(QString fname, fontPool *pool)
   sourceSpecialMarker = true;
 
   QFile file(fname);
+  filename = file.name();
   file.open( IO_ReadOnly );
   size_of_file = file.size();
   dvi_Data = new Q_UINT8[size_of_file];
+  // Sets the end pointer for the bigEndianByteReader so that the
+  // whole memory buffer is readable
+  end_pointer = dvi_Data+size_of_file; 
   if (dvi_Data == 0) {
     kdError() << i18n("Not enough memory to load the DVI-file.");
     return;

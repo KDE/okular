@@ -7,9 +7,12 @@
 #include <qfile.h>
 #include <qstring.h>
 
+#include "bigEndianByteReader.h"
+
 class fontPool;
 
-class dvifile {
+class dvifile : public bigEndianByteReader
+{
  public:
   dvifile(QString fname, class fontPool *pool);
   ~dvifile();
@@ -21,14 +24,7 @@ class dvifile {
   Q_UINT32     * page_offset;
 
   Q_UINT8      * dvi_Data;
-  Q_UINT8      * command_pointer;
   QIODevice::Offset size_of_file;
-
-  Q_UINT8        readUINT8(void);
-  Q_UINT16       readUINT16(void);
-  Q_UINT32       readUINT32(void);
-  Q_UINT32       readUINT(Q_UINT8);
-  Q_INT32        readINT(Q_UINT8);
 
   /** This flag is set to "true" during the construction of the
       dvifile, and is never changed afterwards by the dvifile
@@ -53,10 +49,6 @@ class dvifile {
       published by the TUG DVI driver standards committee. */
   double         dimconv;
 
-  /** Offset in DVI file of last page, set in read_postamble(). */
-  Q_UINT32       last_page_offset;
-
-
  private:
   /** process_preamble reads the information in the preamble and
       stores it into global variables for later use. */
@@ -67,6 +59,10 @@ class dvifile {
   void           find_postamble(void);
   void           read_postamble(void);
   void           prepare_pages(void);
+
+  /** Offset in DVI file of last page, set in read_postamble(). */
+  Q_UINT32       last_page_offset;
+  Q_UINT32       beginning_of_postamble;
 };
 
 #endif //ifndef _DVIFILE_H

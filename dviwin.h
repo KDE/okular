@@ -20,6 +20,7 @@
 
 #include <kviewpart.h>
 
+#include "bigEndianByteReader.h"
 #include "fontpool.h"
 #include "psgs.h"
 #include "dvi_init.h"
@@ -61,7 +62,7 @@ struct framedata {
 };
 
 
-class dviWindow : public QWidget
+class dviWindow : public QWidget, bigEndianByteReader
 {
   Q_OBJECT
 

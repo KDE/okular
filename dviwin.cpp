@@ -314,6 +314,10 @@ void dviWindow::exportPDF(void)
 
 void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 {
+  // Safety check.
+  if (dviFile->page_offset == 0)
+    return;
+
   // It could perhaps happen that a kShellProcess, which runs an
   // editor for inverse search, is still running. In that case, we
   // ingore any further output of the editor by detaching the
@@ -828,11 +832,19 @@ bool dviWindow::setFile( const QString & fname )
   // We will also generate a list of hyperlink-anchors in the
   // document. So declare the existing list empty.
   numAnchors = 0;
-  
+
+  if (dviFile->page_offset == 0)
+    return;
+
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
     
-    dviFile->command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
+    if (current_page < dviFile->total_pages) {
+      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
+      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+    } else
+      command_pointer = end_pointer = 0;
+    
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf._virtual  = NULL;

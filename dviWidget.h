@@ -17,7 +17,7 @@ class CenteringScrollview;
 class DocumentPageCache;
 class QPaintEvent;
 class QMouseEvent;
-class Selection;
+class textSelection;
 
 class DVIWidget : public DocumentWidget
 {
@@ -25,7 +25,7 @@ class DVIWidget : public DocumentWidget
 
 public: 
   DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size,
-            DocumentPageCache* cache, Selection* documentSelection, const char* name);
+            DocumentPageCache* cache, textSelection* documentSelection, const char* name);
 signals:
   void SRCLink(const QString&, QMouseEvent* e, DocumentWidget*);
 

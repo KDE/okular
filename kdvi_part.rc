@@ -15,6 +15,7 @@
   <Separator/>
   <Action name="copy_text"/>
   <Action name="edit_select_all"/>
+  <Action name="edit_deselect_all"/>
   <Separator/>
   <Action name="find"/>
   <Action name="findnext"/>

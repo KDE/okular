@@ -19,7 +19,8 @@
 #include "documentWidget.h"
 #include "selection.h"
 
-DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, DocumentPageCache* cache, Selection* documentSelection, const char* name)
+DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, DocumentPageCache* cache, 
+		     textSelection* documentSelection, const char* name)
   : DocumentWidget(parent, sv, size, cache, documentSelection, name)
 {
 }

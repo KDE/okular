@@ -25,6 +25,7 @@
 // of kdvi.
 
 
+#include <kaction.h>
 #include <kdebug.h>
 #include <keditcl.h>
 #include <kfiledialog.h>
@@ -203,12 +204,12 @@ void KDVIMultiPage::findNextText(void)
   // Optimize this to get a better 'user feeling'
   Q_UINT16 startingPage;
   Q_UINT16 startingTextItem;
-  if (userSelection.page == 0) {
+  if (userSelection.getPageNumber() == 0) {
     startingPage     = getCurrentPageNumber();
     startingTextItem = 0;
   } else {
-    startingPage     = userSelection.page;
-    startingTextItem = userSelection.selectedTextEnd+1;
+    startingPage     = userSelection.getPageNumber();
+    startingTextItem = userSelection.getSelectedTextEnd()+1;
   }
 
   for(Q_UINT16 pageNumber = startingPage;; pageNumber++) {
@@ -322,14 +323,14 @@ void KDVIMultiPage::findPrevText(void)
   Q_UINT16 startingPage;
   Q_UINT16 startingTextItem;
   DocumentPage dummyPage; 
-  if (userSelection.page == 0) {
+  if (userSelection.getPageNumber() == 0) {
     startingPage     = getCurrentPageNumber();
     dummyPage.setPageNumber(startingPage);
     window->drawPage(&dummyPage);
     startingTextItem = dummyPage.textLinkList.size();
   } else {
-    startingPage     = userSelection.page;
-    startingTextItem = userSelection.selectedTextStart;
+    startingPage     = userSelection.getPageNumber();
+    startingTextItem = userSelection.getSelectedTextStart();
   }
 
 

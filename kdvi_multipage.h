@@ -178,6 +178,7 @@ private:
   KAction      *embedPSAction;
   KAction      *copyTextAction;
   KAction      *selectAllAction;
+  KAction      *deselectAction;
   KAction      *findTextAction;
   KAction      *findNextTextAction;
   KAction      *findPrevAction;

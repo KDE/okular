@@ -112,7 +112,7 @@ protected slots:
   void bugform();
   void preferencesChanged();
   void goto_page(int page, int y);
-
+  void contents_of_dviwin_changed(void);
 
 private:
 

@@ -214,6 +214,28 @@ void dviWindow::exportPDF(void)
   if (dviFile == NULL)
     return;
 
+  // Is the dvipdfm-Programm available ??
+  QStringList texList = QStringList::split(":", QString::fromLocal8Bit(getenv("PATH")));
+  bool found = false;
+  for (QStringList::Iterator it=texList.begin(); it!=texList.end(); ++it) {
+    QString temp = (*it) + "/" + "dvipdfm";
+    if (QFile::exists(temp)) {
+      found = true;
+      break;
+    }
+  }
+  if (found == false) {
+    KMessageBox::sorry(0, i18n("KDVI could not locate the program 'dvipdfm' on your computer. That program is\n"
+			       "absolutely needed by the export function. You can, however, convert\n"
+			       "the DVI-file to PDF using the print function of KDVI, but that will often\n"
+			       "produce which print ok, but are of inferior quality if viewed in the \n"
+			       "Acrobat Reader. It may be wise to upgrade to a more recent version of your\n"
+			       "TeX distribution which includes the 'dvipdfm' program.\n\n"
+			       "Hint to the perplexed system administrator: KDVI uses the shell's PATH variable\n"
+			       "when looking for programs."));
+    return;
+  }
+
   QString fileName = KFileDialog::getSaveFileName(QString::null, "*.pdf|Portable Document Format (*.pdf)", this, i18n("Export File As"));
   if (fileName.isEmpty())
     return;
@@ -331,6 +353,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   proc->clearArguments();
   QFileInfo finfo(dviFile->filename);
   *proc << QString("cd %1; dvips").arg(KShellProcess::quote(finfo.dirPath(true)));
+  *proc << "-z"; // export Hyperlinks
   if (options.isEmpty() == false)
     *proc << options;
   *proc << QString("%1").arg(KShellProcess::quote(dviFile->filename));
@@ -461,7 +484,7 @@ void dviWindow::drawPage()
 
   setCursor(arrowCursor);
 
-  // Stop any animation may be in progress
+  // Stop any animation which may be in progress
   if (timerIdent != 0) {
     killTimer(timerIdent);
     timerIdent       = 0;
@@ -500,6 +523,7 @@ void dviWindow::drawPage()
   }
   resize(pixmap->width(), pixmap->height());
   repaint();
+  emit(contents_changed());
 }
 
 

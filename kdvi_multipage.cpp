@@ -91,6 +91,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   scrollView()->addChild(window);
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
+  connect(window, SIGNAL(contents_changed(void)), this, SLOT(contents_of_dviwin_changed(void)) );
 
   readSettings();
   enableActions(false);
@@ -113,20 +114,26 @@ bool KDVIMultiPage::openFile()
   bool r = window->setFile(m_file);
   window->gotoPage(1);
   window->changePageSize(); //  This also calles drawPage();
-
+  
   emit numberOfPages(window->totalPages());
-  scrollView()->resizeContents(window->width(), window->height());
-  emit previewChanged(true);
+  //  scrollView()->resizeContents(window->width(), window->height());
+  // @@@emit previewChanged(true);
   enableActions(r);
 
   return r;
 }
 
 
+void KDVIMultiPage::contents_of_dviwin_changed(void)
+{
+  emit previewChanged(true);
+}
+
+
 bool KDVIMultiPage::closeURL()
 {
   window->setFile(""); // That means: close the file. Resize the widget to 0x0.
-  emit previewChanged(false);
+  //@@@  emit previewChanged(false);
   enableActions(false);
   return true;
 }
@@ -144,7 +151,7 @@ bool KDVIMultiPage::gotoPage(int page)
 {
   window->gotoPage(page+1);
 
-  emit previewChanged(true);
+  //@@@  emit previewChanged(true);
 
   return true;
 }
@@ -154,7 +161,7 @@ void KDVIMultiPage::goto_page(int page, int y)
   window->gotoPage(page+1, y);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
 
-  emit previewChanged(true);
+  //@@@  emit previewChanged(true);
   emit pageInfo(window->totalPages(), page );
 }
 
@@ -476,8 +483,8 @@ void KDVIMultiPage::reload()
     // exist. In that case, gotoPage already selected another page.
     emit pageInfo(window->totalPages(), window->curr_page()-1 ); 
 
-    //    scrollView()->resizeContents(window->width(), window->height());
-    emit previewChanged(true);
+    //@@@    scrollView()->resizeContents(window->width(), window->height());
+    //@@@    emit previewChanged(true);
   } else {
     if (timer_id == -1)
       timer_id = startTimer(1000);

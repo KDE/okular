@@ -217,7 +217,6 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       DVI_H += g->dvi_adv;
 }
 
-
 void dviWindow::set_empty_char(unsigned int cmd, unsigned int ch)
 {
   return;

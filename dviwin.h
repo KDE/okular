@@ -119,10 +119,14 @@ public slots:
   void          dvips_terminated(KProcess *);
 
 signals:
-  /// Emitted to indicate that a hyperlink has been clicked on, and
-  //that the widget requests that the controlling program goes to the
-  //page and the coordinates specified.
+  /** Emitted to indicate that a hyperlink has been clicked on, and
+      that the widget requests that the controlling program goes to the
+      page and the coordinates specified. */
   void          request_goto_page(int page, int y);
+
+  /** Emitted to indicate the the contents of the widget has changed
+      and that the tumbnail image should be updated. */
+  void          contents_changed(void);
 
 protected:
  void paintEvent(QPaintEvent *ev);

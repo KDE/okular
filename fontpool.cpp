@@ -368,7 +368,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 			   "which are necessary to display the current DVI file. \n"
 			   "Some characters are therefore left blank, and your \n"
 			   "document might be unreadable.");
-      QString metaf = i18n("\n\nExperts will find helpfull information in the 'MetaFont'-\n"
+      QString metaf = i18n("\n\nExperts will find helpful information in the 'MetaFont'-\n"
 			   "section of the document info dialog");
 
       if (fatal_error_in_kpsewhich == true)

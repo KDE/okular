@@ -219,7 +219,7 @@ void dviWindow::exportPDF(void)
 				     QString::null, 
 				     i18n("KDVI is currently using the external program 'dvipdfm' to "
 					  "convert your DVI-file to PDF. Sometimes that can take "
-					  "a while because dvipdfm needs to generate it's own bitmap fonts "
+					  "a while because dvipdfm needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvipdf to finish..."),
 				     this, "dvipdf progress dialog", false );
@@ -286,7 +286,7 @@ void dviWindow::exportPS(void)
 				     QString::null, 
 				     i18n("KDVI is currently using the external program 'dvips' to "
 					  "convert your DVI-file to PostScript. Sometimes that can take "
-					  "a while because dvips needs to generate it's own bitmap fonts "
+					  "a while because dvips needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvips to finish..."),
 				     this, "dvips progress dialog", false );

@@ -8,9 +8,6 @@ bin_PROGRAMS = kdvi
 # you can add here more. This one gets installed
 kde_module_LTLIBRARIES= kdvipart.la
 noinst_PROGRAMS = squeeze
-noinst_LTLIBRARIES = ../kviewshell/libifaces.la
-
-libifaces_la_SOURCES = ../kviewshell/kviewpart_iface.cpp
 
 # just to make sure, automake makes them
 METASOURCES = AUTO

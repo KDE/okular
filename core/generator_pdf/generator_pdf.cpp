@@ -13,6 +13,8 @@
 #include <qevent.h>
 #include <qimage.h>
 #include <qapplication.h>
+#include <qpaintdevicemetrics.h>
+#include <qregexp.h>
 #include <klocale.h>
 #include <kpassdlg.h>
 #include <kprinter.h>
@@ -296,6 +298,28 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
 
 bool PDFGenerator::print( KPrinter& printer )
 {
+    QString ps = printer.option("PageSize");
+    if (ps.find(QRegExp("w\\d+h\\d+")) == 0)
+    {
+        // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
+        // remove the w
+        ps = ps.mid(1);
+        int hPos = ps.find("h");
+        globalParams->setPSPaperWidth(ps.left(hPos).toInt());
+        globalParams->setPSPaperHeight(ps.mid(hPos+1).toInt());
+    }
+    else
+    {
+        // size is supported by Qt, we get either the pageSize name or nothing because the default pageSize is used
+        QPrinter dummy(QPrinter::PrinterResolution);
+        dummy.setFullPage(true);
+        dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
+
+        QPaintDeviceMetrics metrics(&dummy);
+        globalParams->setPSPaperWidth(metrics.width());
+        globalParams->setPSPaperHeight(metrics.height());
+    }
+
     KTempFile tf( QString::null, ".ps" );
     PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
 

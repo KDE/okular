@@ -40,6 +40,7 @@ Catalog::Catalog(XRef *xrefA) {
   pageRefs = NULL;
   numPages = pagesSize = 0;
   baseURI = NULL;
+  pageMode = UseNone;
 
   xref->getCatalog(&catDict);
   if (!catDict.isDict()) {
@@ -102,6 +103,23 @@ Catalog::Catalog(XRef *xrefA) {
       baseURI = obj2.getString()->copy();
     }
     obj2.free();
+  }
+  obj.free();
+
+  // read page mode
+  if (catDict.dictLookup("PageMode", &obj)->isName()) {
+    if (strcmp(obj.getName(), "UseNone") == 0)
+      pageMode = UseNone;
+    else if (strcmp(obj.getName(), "UseOutlines") == 0)
+      pageMode = UseOutlines;
+    else if (strcmp(obj.getName(), "UseThumbs") == 0)
+      pageMode = UseThumbs;
+    else if (strcmp(obj.getName(), "FullScreen") == 0)
+      pageMode = FullScreen;
+    else if (strcmp(obj.getName(), "UseOC") == 0)
+      pageMode = UseOC;
+  } else {
+    pageMode = UseNone;
   }
   obj.free();
 

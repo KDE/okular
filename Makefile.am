@@ -1,1 +1,1 @@
-SUBDIRS = fofi goo splash xpdf kpdf
+SUBDIRS = xpdf

@@ -91,7 +91,7 @@ void fontPool::setMakePK(int flag)
 }
 
 
-class font *fontPool::appendx(char *fontname, long checksum, int scale, int design, float fsize, double scale_dimconv)
+class font *fontPool::appendx(char *fontname, long checksum, Q_INT32 scale, int design, float fsize, double scale_dimconv)
 {
   // Reuse font if possible: check if a font with that name and fsize
   // is already in the fontpool, and use that, if possible.
@@ -107,7 +107,7 @@ class font *fontPool::appendx(char *fontname, long checksum, int scale, int desi
   }
 
   // If font doesn't exist yet, we have to generate a new font.
-  fontp = new font(fontname, fsize, checksum, scale*scale_dimconv/(1<<20), this);
+  fontp = new font(fontname, fsize, checksum, scale, scale*scale_dimconv/(1<<20), this);
   if (fontp == 0) {
     kdError(4300) << i18n("Could not allocate memory for a font structure!") << endl;
     exit(0);

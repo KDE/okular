@@ -12,6 +12,7 @@
 #include <kinstance.h>
 #include <kmessagebox.h>
 #include <kprinter.h>
+#include <kstdaction.h>
 #include <qobject.h>
 #include <qlabel.h>
 #include <qstring.h>
@@ -77,8 +78,10 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   docInfoAction   = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
+  findTextAction = KStdAction::find(this, SLOT(doFindText()), actionCollection(), "find");
   exportPSAction  = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
   exportPDFAction = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
+  exportTextAction = new KAction(i18n("Text"), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
   new KAction(i18n("&DVI Options"), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
   new KAction(i18n("About the KDVI plugin..."), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
@@ -87,7 +90,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   setXMLFile("kdvi_part.rc");
 
-  //@@@  scrollView()->setPage(window);
   scrollView()->addChild(window);
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
   connect(window, SIGNAL(contents_changed(void)), this, SLOT(contents_of_dviwin_changed(void)) );
@@ -218,6 +220,16 @@ void KDVIMultiPage::doExportPS(void)
 void KDVIMultiPage::doExportPDF(void)
 {
   window->exportPDF();
+}
+
+void KDVIMultiPage::doExportText(void)
+{
+  window->exportText();
+}
+
+void KDVIMultiPage::doFindText(void)
+{
+  window->findText();
 }
 
 void KDVIMultiPage::doSettings()
@@ -486,8 +498,10 @@ void KDVIMultiPage::reload()
 void KDVIMultiPage::enableActions(bool b)
 {
   docInfoAction->setEnabled(b);
+  findTextAction->setEnabled(b);
   exportPSAction->setEnabled(b);
   exportPDFAction->setEnabled(b);
+  exportTextAction->setEnabled(b);
 }
 
 #include "kdvi_multipage.moc"

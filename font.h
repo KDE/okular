@@ -58,7 +58,7 @@ public:
                          };
 
 
-                 font(char *nfontname, float nfsize, long chk, double dconv, class fontPool *pool);
+                 font(char *nfontname, float nfsize, long chk, Q_INT32 scale, double dconv, class fontPool *pool);
                 ~font();
   glyph         *glyphptr(unsigned int ch);
   void           mark_as_used(void);
@@ -67,6 +67,7 @@ public:
   char          *fontname;	// name of font, such as "cmr10"
   unsigned char  flags;		// flags byte (see values below)
   double         dimconv;	// size conversion factor
+  Q_INT32        scaled_size;   // Scaled size from the font definition command; in DVI units
   set_char_proc  set_char_p;	// proc used to set char
   float          fsize;		// size information (dots per inch)
   unsigned short timestamp;	// for LRU management of fonts

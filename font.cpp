@@ -63,28 +63,29 @@ void font::fontNameReceiver(QString fname)
 }
 
 
-font::font(char *nfontname, float nfsize, long chk, double dconv, class fontPool *pool)
+font::font(char *nfontname, float nfsize, long chk, Q_INT32 scale, double dconv, class fontPool *pool)
 {
 #ifdef DEBUG_FONT
   kdDebug() << "constructing font " << nfontname << " at " << (int) (nfsize + 0.5) << " dpi" << endl;
 #endif
 
-  font_pool  = pool;
-  fontname   = nfontname;
-  fsize      = nfsize;
-  checksum   = chk;
-  flags      = font::FONT_IN_USE;
-  file       = NULL; 
-  filename   = "";
-  dimconv    = dconv;
+  font_pool   = pool;
+  fontname    = nfontname;
+  fsize       = nfsize;
+  checksum    = chk;
+  flags       = font::FONT_IN_USE;
+  file        = NULL; 
+  filename    = "";
+  dimconv     = dconv;
+  scaled_size = scale;
   
-  glyphtable = 0;
-  macrotable = 0;
+  glyphtable  = 0;
+  macrotable  = 0;
 
   // By default, this font contains only empty characters. After the
   // font has been loaded, this function pointer will be replaced by
   // another one.
-  set_char_p = &dviWindow::set_empty_char;
+  set_char_p  = &dviWindow::set_empty_char;
 }
 
 font::~font()

@@ -72,7 +72,7 @@ Q_OBJECT
       will be called. Since this is done using a concurrently running
       process, there is no guarantee that the loading is already
       performed when the method returns.  */
-  class font *appendx(char *fontname, long checksum, int scale, int design, float fsize, double scale_dimconv);
+  class font *appendx(char *fontname, long checksum, Q_INT32 scale, int design, float fsize, double scale_dimconv);
 
   /** Prints very basic debugging information about the fonts in the
       pool to the kdDebug output stream. */

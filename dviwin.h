@@ -75,6 +75,11 @@ public:
   void          showInfo();
   void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
+  void          exportText();
+
+  void          findText();
+  QRect        *markedBox;
+
   void          changePageSize();
   int		totalPages();
   void		setShowPS( int flag );
@@ -180,6 +185,11 @@ private:
 			      // represents a hyperlink to the
 			      // (relative) URL given in the string;
 
+ /** List of text in the window */
+ DVI_Hyperlink     textLinkList[MAX_HYPERLINKS];
+ int               num_of_used_textlinks;
+
+
  /** Stack for register compounds, used for the DVI-commands PUSH/POP
      as explained in section 2.5 and 2.6.2 of the DVI driver standard,
      Level 0, published by the TUG DVI driver standards committee. */
@@ -216,6 +226,7 @@ private:
  /** This flag is used when rendering a dvi-page. It is set to "true"
      when any dvi-command other than "set" or "put" series of commands
      is encountered. This is considered to mark the end of a word. */
+ bool              line_boundary_encountered;
  bool              word_boundary_encountered;
 
  /** List of anchors in a document */

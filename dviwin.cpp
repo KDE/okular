@@ -21,6 +21,7 @@
 #include <qmessagebox.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
+#include <qprogressdialog.h> 
 #include <qregexp.h>
 #include <qurl.h>
 #include <qvbox.h>
@@ -137,6 +138,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   mane                   = currwin;
   _postscript            = 0;
   pixmap                 = 0;
+  markedBox              = 0;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
@@ -207,6 +209,85 @@ void dviWindow::showInfo(void)
   // and their status.
   font_pool->check_if_fonts_are_loaded();
   info->show();
+}
+
+
+void dviWindow::exportText(void)
+{
+  // That sould also not happen.
+  if (dviFile == NULL)
+    return;
+  if (dviFile->dvi_Data == 0 ) 
+    return;
+  if (pixmap->paintingActive())
+    return;
+
+  if (KMessageBox::warningContinueCancel( this, 
+					  i18n("<qt>This function exports the DVI file to a plain text. Unfortunately, this version of "
+					       "KDVI treats only plain ASCII characters properly. Symbols, mathematical formulae, "
+					       "accented characters, and non-english text, such as Russian or Korean, will most likely be "
+					       "messed up completely.</qt>"),
+					  i18n("Function may not work as expected"),
+					  i18n("Continue anyway"),
+					  "warning_export_to_text_may_not_work") == KMessageBox::Cancel)
+    return;
+
+  QString fileName = KFileDialog::getSaveFileName(QString::null, "*.txt|Plain Text (Latin 1) (*.txt)", this, i18n("Export File As"));
+  if (fileName.isEmpty())
+    return;
+  QFileInfo finfo(fileName);
+  if (finfo.exists()) {
+    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
+				       i18n("Overwrite file"));
+    if (r == KMessageBox::No)
+      return;
+  }
+  
+  QFile textFile(fileName);
+  textFile.open( IO_WriteOnly );
+  QTextStream stream( &textFile );
+
+  bool _postscript_sav = _postscript;
+  int current_page_sav = current_page;
+  _postscript = FALSE; // Switch off postscript to speed up things...
+  QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), dviFile->total_pages, this, "export_text_progress", TRUE );
+  progress.setMinimumDuration(300);
+  QPixmap pixie(1,1);
+  for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+    progress.setProgress( current_page );
+    //    qApp->processEvents();
+    if ( progress.wasCancelled() )
+      break;
+    
+    foreGroundPaint.begin( &pixie );
+    if (setjmp(dvi_env)) {	// dvi_oops called
+      foreGroundPaint.end();
+      break;
+    } else {
+      draw_page();
+    }
+    foreGroundPaint.end();
+    
+    for(int i=0; i<num_of_used_textlinks; i++) 
+      stream << textLinkList[i].linkText << endl;
+  }
+
+  // Switch off the progress dialog, etc.
+  progress.setProgress( dviFile->total_pages );
+  // Restore the PostScript setting 
+  _postscript = _postscript_sav;
+  
+  // Restore the current page.
+  current_page = current_page_sav;
+  foreGroundPaint.begin( &pixie );
+  if (setjmp(dvi_env)) {	// dvi_oops called
+    foreGroundPaint.end();
+  } else {
+    draw_page();
+    foreGroundPaint.end();
+  }
+
+  return;
 }
 
 
@@ -532,7 +613,18 @@ void dviWindow::abortExternalProgramm(void)
   export_fileName = "";
 }
 
-
+void dviWindow::findText(void)
+{
+  // @@@@ Sucht nur nach "Kebekus", und das auch noch ganz dumm...
+  KMessageBox::sorry( this, "<qt>The search functionality is not really implemented...</qt>" );
+  
+  for(int i=0; i<num_of_used_textlinks; i++) 
+    if (textLinkList[i].linkText .find("Kebekus") >= 0) {
+      markedBox = &textLinkList[i].box;
+      emit(request_goto_page(current_page, textLinkList[i].box.bottom() ));
+      break;
+    }
+}
 
 void dviWindow::setShowPS( int flag )
 {
@@ -610,6 +702,7 @@ void dviWindow::drawPage()
     timerIdent       = 0;
     animationCounter = 0;
   }
+  markedBox          = 0;
 
   // Stop if there is no dvi-file present
   if ( dviFile == 0 ) {
@@ -698,9 +791,7 @@ void dviWindow::drawPage()
 	  config->writeEntry( "KDVI-info_on_source_specials", showMsg);
 	}
 	config->sync();
-
       }
-
     }
   }
   repaint();
@@ -834,7 +925,7 @@ bool dviWindow::setFile( const QString & fname )
   numAnchors = 0;
 
   if (dviFile->page_offset == 0)
-    return false;  // let's hope this was correct (Werner)
+    return false;
 
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
@@ -879,7 +970,8 @@ void dviWindow::gotoPage(unsigned int new_page)
     return;
   current_page           = new_page-1;
   is_current_page_drawn  = 0;  
-  animationCounter = 0;
+  animationCounter       = 0;
+  markedBox              = 0;
   drawPage();
 }
 
@@ -936,13 +1028,20 @@ double dviWindow::setZoom(double zoom)
 void dviWindow::paintEvent(QPaintEvent *)
 {
   if (pixmap) {
+    bitBlt ( this, 0, 0, pixmap, 0, 0, -1, -1, CopyROP, TRUE);
     QPainter p(this);
-    p.drawPixmap(QPoint(0, 0), *pixmap);
     if (animationCounter > 0 && animationCounter < 10) {
       int wdt = pixmap->width()/(10-animationCounter);
       int hgt = pixmap->height()/((10-animationCounter)*20);
       p.setPen(QPen(QColor(150,0,0), 3, DashLine));
       p.drawRect((pixmap->width()-wdt)/2, flashOffset, wdt, hgt);
+    }
+
+    if (markedBox != 0) {
+      p.setPen( NoPen );
+      p.setBrush( white );
+      p.setRasterOp( Qt::XorROP );
+      p.drawRect(*markedBox);
     }
   }
 }
@@ -983,6 +1082,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	      kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
 	      kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
 #endif
+	      markedBox = 0;
 	      emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
 	      break;
 	    }

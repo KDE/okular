@@ -105,6 +105,8 @@ protected slots:
   void doInfo();
   void doExportPS();
   void doExportPDF();
+  void doExportText();
+  void doFindText();
   void about();
   void helpme();
   void bugform();
@@ -121,8 +123,10 @@ private:
   /** Pointers to several actions which are disabled if no file is
       loaded. */
   KAction      *docInfoAction;
+  KAction      *findTextAction;
   KAction      *exportPSAction;
   KAction      *exportPDFAction;
+  KAction      *exportTextAction;
 
   /** Used to enable the export menu when a file is successfully
       loaded. */

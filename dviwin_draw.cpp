@@ -121,7 +121,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     if (HTML_href != NULL && _showHyperLinks != 0) {
       // Now set up a rectangle which is checked against every mouse
       // event.
-      if (word_boundary_encountered == true) {
+      if (line_boundary_encountered == true) {
 	// Set up hyperlink
 	hyperLinkList[num_of_used_hyperlinks].baseline = PXL_V;
 	hyperLinkList[num_of_used_hyperlinks].box.setRect(x, y, pix.width(), pix.height());
@@ -138,25 +138,84 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
 
     // Are we drawing text for a source hyperlink? And are source
     // hyperlinks enabled?
-    if (source_href != NULL) {
+    if (source_href != 0) {
       // Now set up a rectangle which is checked against every mouse
       // event.
-      if (word_boundary_encountered == true) {
+      if (line_boundary_encountered == true) {
 	// Set up source hyperlinks
 	sourceHyperLinkList[num_of_used_source_hyperlinks].baseline = PXL_V;
 	sourceHyperLinkList[num_of_used_source_hyperlinks].box.setRect(x, y, pix.width(), pix.height());
-	sourceHyperLinkList[num_of_used_source_hyperlinks].linkText = *source_href;
+	if (source_href != NULL) 
+	  sourceHyperLinkList[num_of_used_source_hyperlinks].linkText = *source_href;
+	else
+	  sourceHyperLinkList[num_of_used_source_hyperlinks].linkText = "";
 	if (num_of_used_source_hyperlinks < MAX_HYPERLINKS-1)
 	  num_of_used_source_hyperlinks++;
 	else
 	  kdError(4300) << "Used more than " << MAX_HYPERLINKS << " source-hyperlinks on a page. This is currently not supported." << endl;
       } else {
-
-       	QRect dshunion = sourceHyperLinkList[num_of_used_source_hyperlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+	QRect dshunion = sourceHyperLinkList[num_of_used_source_hyperlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
 	sourceHyperLinkList[num_of_used_source_hyperlinks-1].box = dshunion;
-
       }
     }
+
+    // Now set up a rectangle which is checked against every mouse
+    // event.
+    if (line_boundary_encountered == true) {
+      // Set up source hyperlinks
+      textLinkList[num_of_used_textlinks].baseline = PXL_V;
+      textLinkList[num_of_used_textlinks].box.setRect(x, y, pix.width(), pix.height());
+      textLinkList[num_of_used_textlinks].linkText = "";
+      if (num_of_used_textlinks < MAX_HYPERLINKS-1)
+	num_of_used_textlinks++;
+      else
+	kdError(4300) << "Used more than " << MAX_HYPERLINKS << " textlinks on a page. This is currently not supported." << endl;
+    } else { // line boundary encountered
+      QRect dshunion = textLinkList[num_of_used_textlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      textLinkList[num_of_used_textlinks-1].box = dshunion;
+    }
+
+    switch(ch) {
+    case 0x0b:
+      textLinkList[num_of_used_textlinks-1].linkText += "ff";
+      break;
+    case 0x0c:
+      textLinkList[num_of_used_textlinks-1].linkText += "fi";
+      break;
+    case 0x0d:
+      textLinkList[num_of_used_textlinks-1].linkText += "fl";
+      break;
+    case 0x0e:
+      textLinkList[num_of_used_textlinks-1].linkText += "ffi";
+      break;
+    case 0x0f:
+      textLinkList[num_of_used_textlinks-1].linkText += "ffl";
+      break;
+
+    case 0x7b:
+      textLinkList[num_of_used_textlinks-1].linkText += "-";
+      break;
+    case 0x7c:
+      textLinkList[num_of_used_textlinks-1].linkText += "---";
+      break;
+    case 0x7d:
+      textLinkList[num_of_used_textlinks-1].linkText += "\"";
+      break;
+    case 0x7e:
+      textLinkList[num_of_used_textlinks-1].linkText += "~";
+      break;
+    case 0x7f:
+      textLinkList[num_of_used_textlinks-1].linkText += "@@"; // @@@ check!
+      break;
+      
+    default:
+      if ((ch >= 0x21) && (ch <= 0x7a))
+	textLinkList[num_of_used_textlinks-1].linkText += QChar(ch);
+      else
+	textLinkList[num_of_used_textlinks-1].linkText += "?";
+      break;
+    }
+
   }
   if (cmd == PUT1)
     DVI_H = dvi_h_sav;
@@ -164,6 +223,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     DVI_H += g->dvi_adv;
 
   word_boundary_encountered = false;
+  line_boundary_encountered = false;
 }
 
 void dviWindow::set_empty_char(unsigned int, unsigned int)
@@ -246,6 +306,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
   kdDebug() << "draw_part" << endl;
 #endif
 
+  Q_INT32 RRtmp, WWtmp, XXtmp, YYtmp, ZZtmp;
   Q_UINT8 ch;
 
   currinf.fontp        = NULL;
@@ -268,8 +329,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  break;
 	  
 	case SETRULE:
-	  if (is_vfmacro == false)
+	  if (is_vfmacro == false) {
 	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
+	  }
 	  /* Be careful, dvicopy outputs rules with height =
 	     0x80000000. We don't want any SIGFPE here. */
 	  a = readUINT32();
@@ -281,8 +344,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  break;
 
 	case PUTRULE:
-	  if (is_vfmacro == false)
+	  if (is_vfmacro == false) {
 	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
+	  }
 	  a = readUINT32();
 	  b = readUINT32();
 	  a = xspell_conv(a);
@@ -295,8 +360,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  break;
 	  
 	case BOP:
-	  if (is_vfmacro == false)
+	  if (is_vfmacro == false) {
 	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
+	  }
 	  command_pointer += 11 * 4;
 	  DVI_H = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
 	  DVI_V = basedpi << 16;
@@ -310,6 +377,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    // This is really the end of a page, and not just the end
 	    // of a macro. Mark the end of the current word.
 	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
 	    // Sanity check for the dvi-file: The DVI-standard asserts
 	    // that at the end of a page, the stack should always be
 	    // empty.
@@ -333,15 +401,35 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case RIGHT2:
 	case RIGHT3:
 	case RIGHT4:
-	  DVI_H += xspell_conv(readINT(ch - RIGHT1 + 1));
-	  break;
+	  RRtmp = readINT(ch - RIGHT1 + 1);
 
+	  // A horizontal motion in the range 4 * font space [f] < h <
+	  // font space [f] will be treated as a kern that is not
+	  // indicated in the printouts that DVItype produces between
+	  // brackets. We allow a larger space in the negative
+	  // direction than in the positive one, because TEX makes
+	  // comparatively large backspaces when it positions
+	  // accents. (comments stolen from the source of dvitype)
+	  if ((is_vfmacro == false) &&
+	      (currinf.fontp != 0) &&
+	      ((RRtmp >= currinf.fontp->scaled_size/6) || (RRtmp <= -4*(currinf.fontp->scaled_size/6))) && 
+	      (num_of_used_textlinks > 0))
+	    textLinkList[num_of_used_textlinks-1].linkText += ' ';
+	  DVI_H += xspell_conv(RRtmp);
+	  break;
+	  
 	case W1:
 	case W2:
 	case W3:
 	case W4:
-	  WW = xspell_conv(readINT(ch - W0));
+	  WWtmp = readINT(ch - W0);
+	  WW = xspell_conv(WWtmp);
 	case W0:
+	  if ((is_vfmacro == false) && 
+	      (currinf.fontp != 0) &&
+	      ((WWtmp >= currinf.fontp->scaled_size/6) || (WWtmp <= -4*(currinf.fontp->scaled_size/6))) && 
+	      (num_of_used_textlinks > 0) )
+	    textLinkList[num_of_used_textlinks-1].linkText += ' ';
 	  DVI_H += WW;
 	  break;
 	  
@@ -349,40 +437,73 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case X2:
 	case X3:
 	case X4:
-	  XX = xspell_conv(readINT(ch - X0));
+	  XXtmp = readINT(ch - X0);
+	  XX = xspell_conv(XXtmp);
 	case X0:
+	  if ((is_vfmacro == false)  && 
+	      (currinf.fontp != 0) &&
+	      ((XXtmp >= currinf.fontp->scaled_size/6) || (XXtmp <= -4*(currinf.fontp->scaled_size/6))) && 
+	      (num_of_used_textlinks > 0))
+	    textLinkList[num_of_used_textlinks-1].linkText += ' ';
 	  DVI_H += XX;
 	  break;
-
+	  
 	case DOWN1:
 	case DOWN2:
 	case DOWN3:
 	case DOWN4:
-	  if (is_vfmacro == false)
-	    word_boundary_encountered = true;
-	  DVI_V += xspell_conv(readINT(ch - DOWN1 + 1));
-	  PXL_V = pixel_conv(DVI_V);
+	  {
+	    Q_INT32 DDtmp = readINT(ch - DOWN1 + 1);
+	    if ((is_vfmacro == false) &&
+		(currinf.fontp != 0) &&
+		(abs(DDtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
+		(num_of_used_textlinks > 0)) {
+	      word_boundary_encountered = true;
+	      line_boundary_encountered = true;
+	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size/6)) 
+		textLinkList[num_of_used_textlinks-1].linkText += '\n';
+	    }
+	    DVI_V += xspell_conv(DDtmp);
+	    PXL_V = pixel_conv(DVI_V);
+	  }
 	  break;
-
+	  
 	case Y1:
 	case Y2:
 	case Y3:
 	case Y4:
-	  YY = xspell_conv(readINT(ch - Y0));
+	  YYtmp = readINT(ch - Y0);
+	  YY    = xspell_conv(YYtmp);
 	case Y0:
-	  word_boundary_encountered = true;
+	  if ((is_vfmacro == false) &&
+	      (currinf.fontp != 0) &&
+	      (abs(YYtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
+	      (num_of_used_textlinks > 0)) {
+	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
+	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size/6)) 
+	      textLinkList[num_of_used_textlinks-1].linkText += '\n';
+	  }
 	  DVI_V += YY;
 	  PXL_V = pixel_conv(DVI_V);
 	  break;
-
+	  
 	case Z1:
 	case Z2:
 	case Z3:
 	case Z4:
-	  ZZ = xspell_conv(readINT(ch - Z0));
+	  ZZtmp = readINT(ch - Z0);
+	  ZZ    = xspell_conv(ZZtmp);
 	case Z0:
-	  if (is_vfmacro == false)
+	  if ((is_vfmacro == false) &&
+	      (currinf.fontp != 0) &&
+	      (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size/6)) && 
+	      (num_of_used_textlinks > 0)) {
 	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
+	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size/6)) 
+	      textLinkList[num_of_used_textlinks-1].linkText += '\n';
+	  }
 	  DVI_V += ZZ;
 	  PXL_V = pixel_conv(DVI_V);
 	  break;
@@ -390,14 +511,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case FNT1:
 	case FNT2:
 	case FNT3:
-	  if (is_vfmacro == false)
-	    word_boundary_encountered = true;
 	  change_font(readUINT(ch - FNT1 + 1));
 	  break;
 
 	case FNT4:
-	  if (is_vfmacro == false)
-	    word_boundary_encountered = true;
 	  change_font(readINT(ch - FNT1 + 1));
 	  break;
 
@@ -405,8 +522,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case XXX2:
 	case XXX3:
 	case XXX4:
-	  if (is_vfmacro == false)
+	  if (is_vfmacro == false) {
 	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
+	  }
 	  a = readUINT(ch - XXX1 + 1);
 	  if (a > 0) {
 	    char	*cmd	= new char[a+1];
@@ -422,26 +541,21 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case FNTDEF2:
 	case FNTDEF3:
 	case FNTDEF4:
-	  if (is_vfmacro == false)
-	    word_boundary_encountered = true;
-	  {
-	    command_pointer += 12 + ch - FNTDEF1 + 1;
-	    Q_UINT16 len = readUINT8() + readUINT8();
-	    command_pointer += len;
-	  }
+	  command_pointer += 12 + ch - FNTDEF1 + 1;
+	  command_pointer += readUINT8() + readUINT8();
 	  break;
 	  
 	case PRE:
 	case POST:
 	case POSTPOST:
-	  if (is_vfmacro == false)
-	    word_boundary_encountered = true;
 	  tell_oops(QString("shouldn't happen: illegal command encountered"));
 	  break;
 	  
 	default:
-	  if (is_vfmacro == false)
+	  if (is_vfmacro == false) {
 	    word_boundary_encountered = true;
+	    line_boundary_encountered = true;
+	  }
 	  tell_oops(QString("unknown op-code %1").arg(ch));
 	} /* end switch*/
       } /* end else (ch not a SETCHAR or FNTNUM) */
@@ -456,6 +570,7 @@ void dviWindow::draw_page(void)
   HTML_href              = 0;
   source_href            = 0;
   num_of_used_hyperlinks = 0;
+  num_of_used_textlinks  = 0;
   num_of_used_source_hyperlinks = 0;
 
   // Check if all the fonts are loaded. If that is not the case, we

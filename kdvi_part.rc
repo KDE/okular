@@ -6,7 +6,12 @@
   <Menu name="export" group="file_save" ><text>Export as...</text>
    <Action name="export_postscript" append="options_show_merge"/>
    <Action name="export_pdf" append="options_show_merge"/>
+   <Action name="export_text" append="options_show_merge"/>
   </Menu>
+ </Menu>
+
+ <Menu name="edit"><text>Edit</text>
+  <Action name="find" append="options_show_merge"/>
  </Menu>
 
  <Menu name="settings"><text>Settings</text>

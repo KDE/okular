@@ -36,7 +36,7 @@ class KAction;
 class KEdFind;
 class KPrinter;
 class KShellProcess;
-
+extern const int MFResolutions[];
 
 class DVI_Hyperlink {
  public:
@@ -294,7 +294,9 @@ private:
  /** List of anchors in a document */
  QMap<QString, DVI_Anchor> anchorList;
 
- int		   basedpi;
+ unsigned int	   basedpi;
+ double            fontPixelPerDVIunit() {return dviFile->cmPerDVIunit * MFResolutions[MetafontMode]/2.54;};
+
  int		   makepk;
  QPixmap          *pixmap;
  unsigned int	   MetafontMode;

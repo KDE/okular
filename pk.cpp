@@ -270,7 +270,7 @@ void font::read_PK_char(unsigned int ch)
   g->x = snum(fp, n);
   g->y = snum(fp, n);
 
-  g->dvi_adv = (int)(dimconv * fpwidth + 0.5);
+  g->dvi_adv = (int)(x_dimconv/16.0 * fpwidth + 0.5);
   
   alloc_bitmap(&g->bitmap);
   cp = (BMUNIT *) g->bitmap.bits;

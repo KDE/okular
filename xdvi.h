@@ -16,7 +16,7 @@
 #define	pixel_conv(x)		((int) ((x) / (shrink_factor * 65536)))
 #define	pixel_round(x)		((int) ROUNDUP(x, shrink_factor * 65536))
 #define	spell_conv0(n, f)	((long) (n * f))
-#define	spell_conv(n)		spell_conv0(n, dimconv)
+
 
 #ifdef	BMBYTE
 #define	BMUNIT			unsigned char
@@ -67,14 +67,8 @@ extern QIntDict<struct font> tn_table;
  *	Command line flags.
  */
 
-extern	int	_pixels_per_inch;
-
 extern  unsigned long   num (FILE *, int);
 extern  long    snum(FILE *, int);
-
-
-#define	pixels_per_inch	_pixels_per_inch
-
 extern	struct WindowRec mane, currwin;
 
 #define	shrink_factor	currwin.shrinkfactor

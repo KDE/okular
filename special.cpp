@@ -30,7 +30,7 @@ void dviWindow::html_anchor_special(QString cp)
     kdDebug(4300) << "page " << current_page << endl;
 #endif
     
-    anchorList[cp] = DVI_Anchor(current_page, DVI_V/65536);
+    anchorList[cp] = DVI_Anchor(current_page, DVI_V);
   }
 }
 
@@ -95,7 +95,7 @@ void dviWindow::source_special(QString cp)
 	break;
     Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
     QString  sourceFileName   = QFileInfo(cp.mid(j).stripWhiteSpace()).absFilePath();
-    DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page, DVI_V/65536);
+    DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page, DVI_V);
     sourceHyperLinkAnchors.push_back(sfa);
   }
 }
@@ -190,7 +190,7 @@ void dviWindow::epsf_special(QString cp)
   if (PostScriptOutPutString) {
     if (QFile::exists(EPSfilename)) {
       double PS_H = (DVI_H*300.0)/(65536*basedpi)-300;
-      double PS_V = (DVI_V*300.0)/(65536*basedpi)-300;
+      double PS_V = (DVI_V*300.0)/basedpi - 300;
       PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
       PostScriptOutPutString->append( "@beginspecial " );
       PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
@@ -223,8 +223,8 @@ void dviWindow::epsf_special(QString cp)
 	bbox_height = rhi;
       }
 
-      bbox_width  *= 0.1 * dviFile->dimconv / shrink_factor;
-      bbox_height *= 0.1 * dviFile->dimconv / shrink_factor;
+      bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrink_factor;
+      bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit() / shrink_factor;
 
       QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y - (int)bbox_height, (int)bbox_width, (int)bbox_height);
       foreGroundPaint.save();
@@ -266,7 +266,7 @@ void dviWindow::quote_special(QString cp)
   
   if (currwin.win == mane.win && PostScriptOutPutString) {
     double PS_H = (DVI_H*300.0)/(65536*basedpi)-300;
-    double PS_V = (DVI_V*300.0)/(65536*basedpi)-300;
+    double PS_V = (DVI_V*300.0)/basedpi - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
     PostScriptOutPutString->append( cp );
@@ -282,7 +282,7 @@ void dviWindow::ps_special(QString cp)
   
   if (currwin.win == mane.win && PostScriptOutPutString) {
     double PS_H = (DVI_H*300.0)/(65536*basedpi)-300;
-    double PS_V = (DVI_V*300.0)/(65536*basedpi)-300;
+    double PS_V = (DVI_V*300.0)/basedpi - 300;
     
     if (cp.find("ps::[begin]", 0, false) == 0) {
       PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );

@@ -84,8 +84,8 @@ Q_OBJECT
       currently loaded, it's file will be located and font::load_font
       will be called. Since this is done using a concurrently running
       process, there is no guarantee that the loading is already
-      performed when the method returns.  */
-  class font *appendx(char *fontname, long checksum, Q_INT32 scale, float fsize, double scale_dimconv);
+      performed when the method returns. */
+  class font *appendx(const char *fontname, long checksum, Q_INT32 scale, double enlargement, double cmPerDVIunit);
 
   /** Prints very basic debugging information about the fonts in the
       pool to the kdDebug output stream. */

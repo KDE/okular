@@ -44,6 +44,7 @@
 #include "fontprogress.h"
 #include "infodialog.h"
 #include "optiondialog.h"
+#include "xdvi.h"
 #include "zoomlimits.h"
 
 
@@ -59,8 +60,6 @@ extern	struct WindowRec alt;
 struct drawinf	currinf;
 
 QIntDict<font> tn_table;
-
-int	_pixels_per_inch;
 
 // The following are really used
 unsigned int	page_w;
@@ -254,7 +253,6 @@ void dviWindow::setMetafontMode( unsigned int mode )
 
   MetafontMode     = font_pool->setMetafontMode(mode);
   basedpi          = MFResolutions[MetafontMode];
-  _pixels_per_inch = MFResolutions[MetafontMode];  //@@@
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "basedpi " << basedpi << endl;
 #endif
@@ -527,7 +525,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf._virtual  = NULL;
-    draw_part(dviFile->dimconv, false);
+    draw_part(65536.0*fontPixelPerDVIunit(), false);
     
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);

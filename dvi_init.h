@@ -35,20 +35,8 @@ class dvifile : public bigEndianByteReader
       KDVI ensures that the user is only informed once. */
   bool           sourceSpecialMarker;
 
-  /** Numerator and denominator of the TeX units, as explained in
-      section A.3 of the DVI driver standard, Level 0, published by
-      the TUG DVI driver standards committee. */
-  Q_UINT32       numerator, denominator;
 
-  /** Magnification value, as explained in section A.3 of the DVI
-      driver standard, Level 0, published by the TUG DVI driver
-      standards committee. */
-  Q_UINT32       magnification;
-
-  /** dimconv = numerator*magnification/(1000*denominator), as
-      explained in section A.3 of the DVI driver standard, Level 0,
-      published by the TUG DVI driver standards committee. */
-  double         dimconv;
+  double         cmPerDVIunit;
 
  private:
   /** process_preamble reads the information in the preamble and
@@ -61,9 +49,11 @@ class dvifile : public bigEndianByteReader
   void           read_postamble(void);
   void           prepare_pages(void);
 
+
   /** Offset in DVI file of last page, set in read_postamble(). */
   Q_UINT32       last_page_offset;
   Q_UINT32       beginning_of_postamble;
+  Q_UINT32 magnification;
 };
 
 #endif //ifndef _DVIFILE_H

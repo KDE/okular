@@ -15,6 +15,7 @@
 #include "font.h"
 #include "fontpool.h"
 #include "fontprogress.h"
+#include "xdvi.h"
 
 // List of permissible MetaFontModes which are supported by kdvi.
 
@@ -110,13 +111,16 @@ void fontPool::setEnlargeFonts( bool flag )
 }
 
 
-class font *fontPool::appendx(char *fontname, long checksum, Q_INT32 scale, float fsize, double scale_dimconv)
+class font *fontPool::appendx(const char *fontname, long checksum, Q_INT32 scale, double enlargement, double cmPerDVIunit)
 {
-  // Reuse font if possible: check if a font with that name and fsize
-  // is already in the fontpool, and use that, if possible.
+  double fsize = enlargement * MFResolutions[getMetafontMode()];
+
+  // Reuse font if possible: check if a font with that name and
+  // natural resolution is already in the fontpool, and use that, if
+  // possible.
   class font *fontp = fontList.first();
   while( fontp != 0 ) {
-    if (strcmp(fontname, fontp->fontname) == 0 && (int (fsize+0.5)) == (int)(fontp->fsize + 0.5)) {
+    if (strcmp(fontname, fontp->fontname) == 0 && (int (fsize+0.5)) == (int)(fontp->naturalResolution_in_dpi + 0.5)) {
       // if font is already in the list
       fontp->mark_as_used();
       delete [] fontname;
@@ -126,8 +130,12 @@ class font *fontPool::appendx(char *fontname, long checksum, Q_INT32 scale, floa
   }
 
   // If font doesn't exist yet, we have to generate a new font.
-  fontp = new font(fontname, fsize, checksum, scale, scale*scale_dimconv/(1<<20), this, 
-		   (enlargeFonts == true) ? shrinkFactor/1.1 : shrinkFactor);
+
+  // Calculate the number of pixel per DVI unit
+  double pixelPerDVIunit = cmPerDVIunit * MFResolutions[getMetafontMode()] / 2.54;
+
+  fontp = new font(fontname, fsize, checksum, scale, pixelPerDVIunit, this, 
+		   (enlargeFonts == true) ? shrinkFactor/1.1 : shrinkFactor, enlargement, cmPerDVIunit);
   if (fontp == 0) {
     kdError(4300) << i18n("Could not allocate memory for a font structure!") << endl;
     exit(0);
@@ -159,7 +167,7 @@ QString fontPool::status(void)
     else
       type = i18n("regular");
 
-    tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->fsize+0.5)).arg(type).arg(fontp->filename);
+    tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->naturalResolution_in_dpi+0.5)).arg(type).arg(fontp->filename);
     fontp=fontList.next(); 
  }
 
@@ -249,7 +257,7 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
   while ( fontp != 0 ) {
     if ((fontp->flags & font::FONT_KPSE_NAME) == 0) {
       numFontsInJob++;
-      *proc << KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->fsize + 0.5)).arg(fontp->fontname));
+      *proc << KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->naturalResolution_in_dpi + 0.5)).arg(fontp->fontname));
       // In the first pass, we look also for virtual fonts.
       if (pass == 0)
 	*proc << KShellProcess::quote(QString("%1.vf").arg(fontp->fontname));
@@ -310,7 +318,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
   class font *fontp=fontList.first();
   while ( fontp != 0 ) { 
     if (fontp->filename.isEmpty() == true) {
-      QString fontname = QString("%1.%2pk").arg(fontp->fontname).arg((int)(fontp->fsize + 0.5));
+      QString fontname = QString("%1.%2pk").arg(fontp->fontname).arg((int)(fontp->naturalResolution_in_dpi + 0.5));
       QStringList matchingFiles = fileNameList.grep(fontname);
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL

@@ -50,32 +50,23 @@
  */
 
 
-
-#include "dvi_init.h"
-#include "dviwin.h"
-
-
-
 #include <kdebug.h>
 #include <klocale.h>
-#include <qbitmap.h> 
-#include <qfileinfo.h>
 #include <stdlib.h>
-
 
 extern "C" {
 #include "dvi.h"
 }
 
+#include "dvi_init.h"
 #include "fontpool.h"
-#include "glyph.h"
 #include "xdvi.h"
 
 
 void dvifile::process_preamble(void)
 {
   command_pointer = dvi_Data;
-
+  
   Q_UINT8 magic_number = readUINT8();
   if (magic_number != PRE) {
     errorMsg = i18n("The DVI file does not start with the preamble.");
@@ -88,14 +79,18 @@ void dvifile::process_preamble(void)
 		    "program, such as oxdvi.");
     return;
   }
-
-  numerator     = readUINT32();
-  denominator   = readUINT32();
+  
+  /** numerator, denominator and the magnification value that describe
+      how many centimeters there are in one TeX unit, as explained in
+      section A.3 of the DVI driver standard, Level 0, published by
+      the TUG DVI driver standards committee. */
+  Q_UINT32 numerator     = readUINT32();
+  Q_UINT32 denominator   = readUINT32();
   magnification = readUINT32();
-  dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.0));
-  // @@@@ This does not fit the description of dimconv in the header file!!!
-  dimconv       = dimconv * (((long) pixels_per_inch)<<16) / 254000;
-
+  
+  cmPerDVIunit =  (double(numerator) / double(denominator)) * (double(magnification) / 1000.0) * (1.0 / 1e5);
+  
+  
   // Read the generatorString (such as "TeX output ..." from the
   // DVI-File). The variable "magic_number" holds the length of the
   // string.
@@ -149,11 +144,14 @@ void dvifile::read_postamble(void)
   Q_UINT8 cmnd = readUINT8();
   while (cmnd >= FNTDEF1 && cmnd <= FNTDEF4) {
     Q_UINT32 TeXnumber = readUINT(cmnd-FNTDEF1+1);
-    Q_UINT32 checksum  = readUINT32();
-    Q_UINT32 scale     = readUINT32();
-    Q_UINT32 design    = readUINT32();
-    Q_UINT16 len       = readUINT8() + readUINT8();
+    Q_UINT32 checksum  = readUINT32(); // Checksum of the font, as found by TeX in the TFM file
 
+    // Read scale and design factor, and the name of the font. All
+    // these are explained in section A.4 of the DVI driver standard,
+    // Level 0, published by the TUG DVI driver standards committee
+    Q_UINT32 scale     = readUINT32(); 
+    Q_UINT32 design    = readUINT32(); 
+    Q_UINT16 len       = readUINT8() + readUINT8(); // Length of the font name, including the directory name
     char *fontname  = new char[len + 1];
     strncpy(fontname, (char *)command_pointer, len );
     fontname[len] = '\0';
@@ -163,17 +161,20 @@ void dvifile::read_postamble(void)
     kdDebug() << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
     
-    // Calculate the fsize as:  fsize = 0.001 * scale / design * magnification * MFResolutions[MetafontMode]
-    struct font *fontp = font_pool->appendx(fontname, checksum, scale, 0.001*scale/design*magnification*MFResolutions[font_pool->getMetafontMode()], dimconv);
+    // According to section A.4 of the DVI driver standard, this font
+    // shall be enlarged by the following factor before it is used.
+    double enlargement_factor = (double(scale) * double(magnification))/(double(design) * 1000.0);
+    
+    struct font *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor, cmPerDVIunit);
     
     // Insert font in dictionary and make sure the dictionary is big
     // enough.
     if (tn_table.size()-2 <= tn_table.count())
       // Not quite optimal. The size of the dictionary should be a
-      // prime. I don't care.
+      // prime for optimal performance. I don't care.
       tn_table.resize(tn_table.size()*2); 
     tn_table.insert(TeXnumber, fontp);
-
+    
     // Read the next command
     cmnd = readUINT8();
   }

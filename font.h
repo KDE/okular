@@ -26,9 +26,6 @@ typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 #include "dviwin.h"
 #include "glyph.h"
 
-class QPixmap;
-
-//#define	NOMAGSTP (-29999)
 
 // Per character information for virtual fonts
 
@@ -62,7 +59,8 @@ public:
   };
   
 
-  font(char *nfontname, float nfsize, long chk, Q_INT32 scale, double dconv, class fontPool *pool, float shrinkFact);
+  font(const char *nfontname, double resolution_in_dpi, long chk, Q_INT32 scale, double pixelsPerDVIunit, class fontPool *pool, double shrinkFact, 
+       double _enlargement, double _cmPerDVIunit);
   ~font();
 
   
@@ -75,12 +73,15 @@ public:
   void           mark_as_used(void);
 
   class fontPool *font_pool;    // Pointer to the pool that contains this font.
-  char          *fontname;	// name of font, such as "cmr10"
+  const char    *fontname;	// name of font, such as "cmr10"
   unsigned char  flags;		// flags byte (see values below)
-  double         dimconv;	// size conversion factor
+  double         x_dimconv;	// size conversion factor
   Q_INT32        scaled_size;   // Scaled size from the font definition command; in DVI units
   set_char_proc  set_char_p;	// proc used to set char
-  float          fsize;		// size information (dots per inch)
+
+  // Resolution at which this font was rendered by MetaFont
+  double         naturalResolution_in_dpi;
+
   FILE          *file;		// open font file or NULL
   QString        filename;	// name of font file
 
@@ -95,6 +96,9 @@ private:
   QPixmap       nullPixmap;
   QPixmap       *characterPixmaps[max_num_of_chars_in_font];
 
+  // FIND OUT ABOUT THOSE! @@@@@@@@@@@@@@@@@@@@@@
+  double         enlargement;
+  double         cmPerDVIunit;
   long           checksum;	// checksum
 
   // Functions related to virtual fonts

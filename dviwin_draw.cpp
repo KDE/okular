@@ -229,7 +229,7 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
     Q_UINT8 *end_ptr_sav      = end_pointer;
     command_pointer           = m->pos;
     end_pointer               = m->end;
-    draw_part(currinf.fontp->dimconv, true);
+    draw_part(currinf.fontp->x_dimconv/16.0, true);
     command_pointer           = command_ptr_sav;
     end_pointer               = end_ptr_sav;
     currinf = oldinfo;
@@ -343,8 +343,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  }
 	  command_pointer += 11 * 4;
 	  DVI_H = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-	  DVI_V = basedpi << 16;
-	  PXL_V = pixel_conv(DVI_V);
+	  DVI_V = basedpi;
+	  PXL_V = int(DVI_V/shrink_factor);
 	  WW = XX = YY = ZZ = 0;
 	  break;
 
@@ -445,8 +445,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size/6)) 
 		textLinkList[textLinkList.size()-1].linkText += '\n';
 	    }
-	    DVI_V += xspell_conv(DDtmp);
-	    PXL_V = pixel_conv(DVI_V);
+	    DVI_V += xspell_conv(DDtmp)/65536;
+	    PXL_V = int(DVI_V/shrink_factor);
 	  }
 	  break;
 	  
@@ -466,8 +466,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size/6)) 
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
-	  DVI_V += YY;
-	  PXL_V = pixel_conv(DVI_V);
+	  DVI_V += YY/65536;
+	  PXL_V = int(DVI_V/shrink_factor);
 	  break;
 	  
 	case Z1:
@@ -486,8 +486,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size/6)) 
 	      textLinkList[textLinkList.size()-1].linkText += '\n';
 	  }
-	  DVI_V += ZZ;
-	  PXL_V = pixel_conv(DVI_V);
+	  DVI_V += ZZ/65536;
+	  PXL_V = int(DVI_V/shrink_factor);
 	  break;
 	  
 	case FNT1:
@@ -596,7 +596,7 @@ void dviWindow::draw_page(void)
   memset((char *) &currinf.data, 0, sizeof(currinf.data));
   currinf.fonttable      = tn_table;
   currinf._virtual       = 0;
-  draw_part(dviFile->dimconv, false);
+  draw_part(65536.0*fontPixelPerDVIunit(), false);
   if (HTML_href != 0) {
     delete HTML_href;
     HTML_href = 0;

@@ -77,21 +77,25 @@ void font::fontNameReceiver(QString fname)
 }
 
 
-font::font(char *nfontname, float nfsize, long chk, Q_INT32 scale, double dconv, class fontPool *pool, float shrinkFact)
+font::font(const char *nfontname, double resolution_in_dpi, long chk, Q_INT32 scale, double pixelPerDVIunit, class fontPool *pool, double shrinkFact, 
+	   double _enlargement, double _cmPerDVIunit)
 {
 #ifdef DEBUG_FONT
-  kdDebug() << "constructing font " << nfontname << " at " << (int) (nfsize + 0.5) << " dpi" << endl;
+  kdDebug() << "constructing font " << nfontname << " at " << (int) (resolution_in_dpi + 0.5) << " dpi" << endl;
 #endif
 
   shrinkFactor = shrinkFact;
+  enlargement  = _enlargement;
+  cmPerDVIunit = _cmPerDVIunit;
+
   font_pool    = pool;
   fontname     = nfontname;
-  fsize        = nfsize;
+  naturalResolution_in_dpi        = resolution_in_dpi;
   checksum     = chk;
   flags        = font::FONT_IN_USE;
   file         = NULL; 
   filename     = "";
-  dimconv      = dconv;
+  x_dimconv    = scale*pixelPerDVIunit;
   scaled_size  = scale;
   
   glyphtable   = 0;
@@ -111,7 +115,7 @@ font::font(char *nfontname, float nfsize, long chk, Q_INT32 scale, double dconv,
 font::~font()
 {
 #ifdef DEBUG_FONT
-  kdDebug() << "discarding font " << fontname << " at " << (int)(fsize + 0.5) << " dpi" << endl;
+  kdDebug() << "discarding font " << fontname << " at " << (int)(naturalResolution_in_dpi + 0.5) << " dpi" << endl;
 #endif
 
   if (fontname != 0)
@@ -133,7 +137,8 @@ font::~font()
   }
 }
 
-void  font::setShrinkFactor(float sf)
+
+void font::setShrinkFactor(float sf)
 {
   shrinkFactor = sf;
 
@@ -145,13 +150,14 @@ void  font::setShrinkFactor(float sf)
   }
 }
 
+
 /** mark_as_used marks the font, and all the fonts it referrs to, as
     used, i.e. their FONT_IN_USE-flag is set. */
 
 void font::mark_as_used(void)
 {
 #ifdef DEBUG_FONT
-  kdDebug() << "marking font " << fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
+  kdDebug() << "marking font " << fontname << " at " << (int) (naturalResolution_in_dpi + 0.5) << " dpi" << endl;
 #endif
 
   if (flags & font::FONT_IN_USE)
@@ -172,6 +178,7 @@ void font::mark_as_used(void)
 
 QPixmap font::characterPixmap(unsigned int ch)
 {
+  // Paranoia checks
   if (ch > max_num_of_chars_in_font) {
     kdError(4300) << "Tried to access character with number " << ch << endl;
     return nullPixmap;
@@ -184,10 +191,9 @@ QPixmap font::characterPixmap(unsigned int ch)
     return nullPixmap;
   }
   
-  
-  // Otherwise, we rescale the bitmap in order to produce the required
-  // pixmap.  Rescaling a character, however, is an art that requires
-  // some explanation...
+  // All is fine? Then we rescale the bitmap in order to produce the
+  // required pixmap.  Rescaling a character, however, is an art that
+  // requires some explanation...
   //
   // If we would just divide the size of the character and the
   // coordinates by the shrink factor, then the result would look

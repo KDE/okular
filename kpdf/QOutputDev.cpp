@@ -21,9 +21,6 @@
 #include <math.h>
 #include <iostream>
 
-// include xpdf config.h file
-#include "config.h"
-
 #include <GString.h>
 #include <Object.h>
 #include <Stream.h>
@@ -35,10 +32,11 @@
 #include <FontFile.h>
 #include <Error.h>
 #include <TextOutputDev.h>
-#include "QOutputDev.moc"
+#include <Catalog.h>
 
 
 #include <qpixmap.h>
+#include <qcolor.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qdict.h>
@@ -46,22 +44,23 @@
 #include <qapplication.h>
 #include <qclipboard.h>
 
-static inline long int round( float x ) { static_cast<long int>( x + x > 0 ? 0.5 : -0.5); }
+#include <kdebug.h>
 
-//#define QPDFDBG(x) x		// special debug mode
-#define QPDFDBG(x)   		// normal compilation
+#include "QOutputDev.moc"
 
+#define QPDFDBG(x) x		// special debug mode
+//#define QPDFDBG(x)   		// normal compilation
 
 //------------------------------------------------------------------------
 // Constants and macros
 //------------------------------------------------------------------------
 
-
+#ifndef KDE_USE_FINAL
 static inline QColor q_col ( const GfxRGB &rgb )
 {
-	return QColor ( round ( rgb. r * 255 ), round ( rgb. g * 255 ), round ( rgb. b * 255 ));
+	return QColor ( qRound ( rgb. r * 255 ), qRound ( rgb. g * 255 ), qRound ( rgb. b * 255 ));
 }
-
+#endif
 
 //------------------------------------------------------------------------
 // Font substitutions
@@ -75,12 +74,8 @@ struct QOutFontSubst {
 	QFont::StyleHint m_hint;
 };
 
-static QOutFontSubst qStdFonts [] = {
-	{ "Helvetica",
-          "Helvetica",
-          false,
-          false,
-          QFont::Helvetica },
+static QOutFontSubst qPixmapStdFonts [] = {
+	{ "Helvetica",             "Helvetica", false, false, QFont::Helvetica },
 	{ "Helvetica-Oblique",     "Helvetica", false, true,  QFont::Helvetica },
 	{ "Helvetica-Bold",        "Helvetica", true,  false, QFont::Helvetica },
 	{ "Helvetica-BoldOblique", "Helvetica", true,  true,  QFont::Helvetica },
@@ -99,31 +94,31 @@ static QOutFontSubst qStdFonts [] = {
 	{ 0,                       0,           false, false, QFont::AnyStyle }
 };
 
-QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t /* m11 */, fp_t m12, fp_t m21, fp_t m22 )
+QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m21, fp_t m22 )
 {
 	static QDict<QOutFontSubst> stdfonts;
 
 	// build dict for std. fonts on first invocation
 	if ( stdfonts. isEmpty ( )) {
-		for ( QOutFontSubst *ptr = qStdFonts; ptr-> m_name; ptr++ ) {
+		for ( QOutFontSubst *ptr = qPixmapStdFonts; ptr-> m_name; ptr++ ) {
 			stdfonts. insert ( QString ( ptr-> m_name ), ptr );
 		}
 	}
 
 	// compute size and normalized transform matrix
-	int size = round ( sqrt ( m21 * m21 + m22 * m22 ));
+	int size = qRound ( sqrt ( m21 * m21 + m22 * m22 ));
 
-	QPDFDBG( printf ( "SET FONT: Name=%s, Size=%d, Bold=%d, Italic=%d, Mono=%d, Serif=%d, Symbol=%d, CID=%d, EmbFN=%s, M=(%f,%f,%f,%f)\n",
-	         (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" ),
-	         size,
-	         gfxFont-> isBold ( ),
-	         gfxFont-> isItalic ( ),
-	         gfxFont-> isFixedWidth ( ),
-	         gfxFont-> isSerif ( ),
-	         gfxFont-> isSymbolic ( ),
-	         gfxFont-> isCIDFont ( ),
-	         ( gfxFont-> getEmbeddedFontName ( ) ? gfxFont-> getEmbeddedFontName ( ) : "<n/a>" ),
-	         (double) m11, (double) m12, (double) m21, (double) m22 ));
+//	QPDFDBG( printf ( "SET FONT: Name=%s, Size=%d, Bold=%d, Italic=%d, Mono=%d, Serif=%d, Symbol=%d, CID=%d, EmbFN=%s, M=(%f,%f,%f,%f)\n",
+//	         (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" ),
+//	         size,
+//	         gfxFont-> isBold ( ),
+//	         gfxFont-> isItalic ( ),
+//	         gfxFont-> isFixedWidth ( ),
+//	         gfxFont-> isSerif ( ),
+//	         gfxFont-> isSymbolic ( ),
+//	         gfxFont-> isCIDFont ( ),
+//	         ( gfxFont-> getEmbeddedFontName ( ) ? gfxFont-> getEmbeddedFontName ( ) : "<n/a>" ),
+//	         (double) m11, (double) m12, (double) m21, (double) m22 ));
 
 
 	QString fname (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" );
@@ -175,61 +170,34 @@ QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t /* m11 */, fp_t m12, fp_t m
 	return f;
 }
 
-
-
 //------------------------------------------------------------------------
 // QOutputDev
 //------------------------------------------------------------------------
 
-QOutputDev::QOutputDev ( QWidget *parent, const char *name, int flags ) : QScrollView ( parent, name, WRepaintNoErase | WResizeNoErase | flags )
+QOutputDev::QOutputDev( QPainter * p )
+	: m_painter(p)
 {
-	m_pixmap = 0;
-	m_painter = 0;
-
 	// create text object
 	m_text = new TextPage ( gFalse );
-
-	// enable mouse tracking for links
-	setMouseTracking(true);
 }
 
 QOutputDev::~QOutputDev ( )
 {
-	delete m_painter;
-	delete m_pixmap;
 	delete m_text;
 }
 
 
 void QOutputDev::startPage ( int /*pageNum*/, GfxState *state )
 {
-	delete m_pixmap;
-	delete m_painter;
-
-	m_pixmap = new QPixmap ( round ( state-> getPageWidth ( )), round ( state-> getPageHeight ( )));
-	m_painter = new QPainter ( m_pixmap );
-
-	QPDFDBG( printf ( "NEW PIXMAP (%ld x %ld)\n", round ( state-> getPageWidth ( )),  round ( state-> getPageHeight ( ))));
-
-	resizeContents ( m_pixmap-> width ( ), m_pixmap-> height ( ));
-	setContentsPos ( 0, 0 );
-
-	m_pixmap-> fill ( white ); // clear window
-	m_text-> clear ( ); // cleat text object
-	viewport ( )-> repaint ( );
+	m_text->clear();
 }
 
 void QOutputDev::endPage ( )
 {
-	m_text-> coalesce ( true );
-
-	delete m_painter;
-	m_painter = 0;
-
-	updateContents ( 0, 0, contentsWidth ( ), contentsHeight ( ));
+	m_text->coalesce(true);
 }
 
-void QOutputDev::drawLink ( Link *link, Catalog */*catalog*/ )
+void QOutputDev::drawLink ( Link *link, Catalog * /* catalog */ )
 {
 	fp_t x1, y1, x2, y2, w;
 
@@ -242,7 +210,7 @@ void QOutputDev::drawLink ( Link *link, Catalog */*catalog*/ )
 		cvtUserToDev ( x2, y2, &dx, &dy );
 
 		QPen oldpen = m_painter-> pen ( );
-		m_painter-> setPen ( blue );
+		m_painter-> setPen ( Qt::blue );
 		m_painter-> drawRect ( x, y, dx, dy );
 		m_painter-> setPen ( oldpen );
 	}
@@ -257,6 +225,7 @@ void QOutputDev::saveState ( GfxState */*state*/ )
 
 void QOutputDev::restoreState ( GfxState */*state*/ )
 {
+    if (! m_painter) return;
 	m_painter-> restore ( );
 
 //	m_painter-> setClipRegion ( QRect ( 0, 0, m_pixmap-> width ( ), m_pixmap-> height ( )));
@@ -321,25 +290,25 @@ void QOutputDev::updateLineAttrs ( GfxState *state, GBool updateDash )
 	Qt::PenJoinStyle join;
 	int width;
 
-	width = round ( state-> getTransformedLineWidth ( ));
+	width = qRound ( state-> getTransformedLineWidth ( ));
 
 	switch ( state-> getLineCap ( )) {
-		case 0: cap = FlatCap; break;
-		case 1: cap = RoundCap; break;
-		case 2: cap = SquareCap; break;
+		case 0: cap = Qt::FlatCap; break;
+		case 1: cap = Qt::RoundCap; break;
+		case 2: cap = Qt::SquareCap; break;
 		default:
 			qWarning ( "Bad line cap style (%d)\n", state-> getLineCap ( ));
-			cap = FlatCap;
+			cap = Qt::FlatCap;
 			break;
 	}
 
 	switch (state->getLineJoin()) {
-		case 0: join = MiterJoin; break;
-		case 1: join = RoundJoin; break;
-		case 2: join = BevelJoin; break;
+		case 0: join = Qt::MiterJoin; break;
+		case 1: join = Qt::RoundJoin; break;
+		case 2: join = Qt::BevelJoin; break;
 		default:
 			qWarning ( "Bad line join style (%d)\n", state->getLineJoin ( ));
-			join = MiterJoin;
+			join = Qt::MiterJoin;
 			break;
 	}
 
@@ -351,7 +320,7 @@ void QOutputDev::updateLineAttrs ( GfxState *state, GBool updateDash )
 	state-> getStrokeRGB ( &rgb );
 	oldcol = q_col ( rgb );
 
-	m_painter-> setPen ( QPen ( oldcol, width, dashLength > 0 ? DashLine : SolidLine, cap, join ));
+	m_painter-> setPen ( QPen ( oldcol, width, dashLength > 0 ? Qt::DashLine : Qt::SolidLine, cap, join ));
 
 	if ( updateDash && ( dashLength > 0 )) {
 		// Not supported by QT
@@ -360,11 +329,11 @@ void QOutputDev::updateLineAttrs ( GfxState *state, GBool updateDash )
 		if (dashLength > 20)
 			dashLength = 20;
 		for ( int i = 0; i < dashLength; ++i ) {
-			dashList[i] = xoutRound(state->transformWidth(dashPattern[i]));
+			dashList[i] = xoutqRound(state->transformWidth(dashPattern[i]));
 			if (dashList[i] == 0)
 				dashList[i] = 1;
 		}
-		XSetDashes(display, strokeGC, xoutRound(dashStart), dashList, dashLength);
+		XSetDashes(display, strokeGC, xoutqRound(dashStart), dashList, dashLength);
 */
 	}
 }
@@ -408,7 +377,7 @@ void QOutputDev::updateFont ( GfxState *state )
 void QOutputDev::stroke ( GfxState *state )
 {
 	QPointArray points;
-	QArray<int> lengths;
+	QMemArray<int> lengths;
 
 	// transform points
 	int n = convertPath ( state, points, lengths );
@@ -447,14 +416,14 @@ void QOutputDev::eoFill ( GfxState *state )
 //  borders of a polygon.  This means that one-pixel-thick polygons
 //  are not colored at all.  I think this is supposed to be a
 //  feature, but I can't figure out why.  So after it fills a
-//  polygon, it also draws lines around the border.  This is done
+//  polygon, it also draws lines aqRound the border.  This is done
 //  only for single-component polygons, since it's not very
 //  compatible with the compound polygon kludge (see convertPath()).
 //
 void QOutputDev::doFill ( GfxState *state, bool winding )
 {
 	QPointArray points;
-	QArray<int> lengths;
+	QMemArray<int> lengths;
 
 	// transform points
 	int n = convertPath ( state, points, lengths );
@@ -462,7 +431,7 @@ void QOutputDev::doFill ( GfxState *state, bool winding )
 	QPDFDBG( printf ( "FILLING: %d POLYS\n", n ));
 
 	QPen oldpen = m_painter-> pen ( );
-	m_painter-> setPen ( QPen ( NoPen ));
+	m_painter-> setPen ( QPen ( Qt::NoPen ));
 
 	// draw each subpath
 	int j = 0;
@@ -480,6 +449,7 @@ void QOutputDev::doFill ( GfxState *state, bool winding )
 		j += len;
 	}
 	m_painter-> setPen ( oldpen );
+
 }
 
 void QOutputDev::clip ( GfxState *state )
@@ -495,10 +465,17 @@ void QOutputDev::eoClip ( GfxState *state )
 void QOutputDev::doClip ( GfxState *state, bool winding )
 {
 	QPointArray points;
-	QArray<int> lengths;
+	QMemArray<int> lengths;
 
 	// transform points
 	int n = convertPath ( state, points, lengths );
+
+	kdDebug() << k_funcinfo << endl;
+	for (unsigned int j = 0; j < points.count(); j++) {
+		int x = points[j].x();
+		int y = points[j].y();
+		kdDebug() << '(' << x << ',' << y << ')' << endl;
+	}
 
 	QRegion region;
 
@@ -513,9 +490,16 @@ void QOutputDev::doClip ( GfxState *state, bool winding )
 			QPointArray dummy;
 			dummy. setRawData ( points. data ( ) + j, len );
 
-			QPDFDBG( printf ( " - POLY %d: ", i ));
-			QPDFDBG( for ( int ii = 0; ii < len; ii++ ) printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( )));
-			QPDFDBG( printf ( "\n" ));
+			printf ( " - POLY %d: ", i );
+			for ( int ii = 0; ii < len; ii++ ) printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( ));
+			printf ( "\n" );
+
+			kdDebug() << k_funcinfo << endl;
+			for (unsigned int j = 0; j < dummy.count(); j++) {
+				int x = dummy[j].x();
+				int y = dummy[j].y();
+				kdDebug() << '(' << x << ',' << y << ')' << endl;
+			}
 
 			region |= QRegion ( dummy, winding );
 
@@ -543,7 +527,7 @@ void QOutputDev::doClip ( GfxState *state, bool winding )
 // Then it connects subaths within a single compound polygon to a single
 // point so that X can fill the polygon (sort of).
 //
-int QOutputDev::convertPath ( GfxState *state, QPointArray &points, QArray<int> &lengths )
+int QOutputDev::convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths )
 {
 	GfxPath *path = state-> getPath ( );
 	int n = path-> getNumSubpaths ( );
@@ -554,6 +538,13 @@ int QOutputDev::convertPath ( GfxState *state, QPointArray &points, QArray<int> 
 	for ( int i = 0; i < n; i++ ) {
 		// transform the points
 		lengths [i] = convertSubpath ( state, path-> getSubpath ( i ), points );
+	}
+
+	kdDebug() << k_funcinfo << endl;
+	for (unsigned int j = 0; j < points.count(); j++) {
+		int x = points[j].x();
+		int y = points[j].y();
+		kdDebug() << '(' << x << ',' << y << ')' << endl;
 	}
 
 	return n;
@@ -579,28 +570,28 @@ int QOutputDev::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArr
 			state-> transform ( subpath-> getX ( i + 1 ), subpath-> getY ( i + 1 ), &x2, &y2 );
 			state-> transform ( subpath-> getX ( i + 2 ), subpath-> getY ( i + 2 ), &x3, &y3 );
 
+			kdDebug() << "Points : " << "(" << x0 << "," << y0 << "),(" << x1 << "," << y1 << "),("
+					<< x2 << "," << y2 << "),(" << x3 << "," << y3 << ")" << endl;
+
 			QPointArray tmp;
-			tmp. setPoints ( 4, round ( x0 ), round ( y0 ), round ( x1 ), round ( y1 ),
-			                    round ( x2 ), round ( y2 ), round ( x3 ), round ( y3 ));
+			tmp. setPoints ( 4, qRound ( x0 ), qRound ( y0 ), qRound ( x1 ), qRound ( y1 ),
+			                    qRound ( x2 ), qRound ( y2 ), qRound ( x3 ), qRound ( y3 ));
 
-#if QT_VERSION < 300
-			tmp = tmp. quadBezier ( );
-
-			for ( uint loop = 0; loop < tmp. count ( ); loop++ ) {
-				QPoint p = tmp. point ( loop );
-				points. putPoints ( points. count ( ), 1, p. x ( ), p. y ( ));
+			for (unsigned int j = 0; j < tmp.count(); j++) {
+				int x = tmp[j].x();
+				int y = tmp[j].y();
+				kdDebug() << '(' << x << ',' << y << ')' << endl;
 			}
-#else
+
 			tmp = tmp. cubicBezier ( );
 			points. putPoints ( points. count ( ), tmp. count ( ), tmp );
-#endif
 
 			i += 3;
 		}
 		else {
 			state-> transform ( subpath-> getX ( i ), subpath-> getY ( i ), &x1, &y1 );
 
-			points. putPoints ( points. count ( ), 1, round ( x1 ), round ( y1 ));
+			points. putPoints ( points. count ( ), 1, qRound ( x1 ), qRound ( y1 ));
 			++i;
 		}
 	}
@@ -608,7 +599,7 @@ int QOutputDev::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArr
 }
 
 
-void QOutputDev::beginString ( GfxState *state, GString */*s*/ )
+void QOutputDev::beginString ( GfxState *state, GString * /*s*/ )
 {
 	m_text-> beginWord ( state, state->getCurX(), state->getCurY() );
 }
@@ -676,7 +667,7 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 
 			// std::cerr << std::endl << "ROTATED: " << m11 << ", " << m12 << ", " << m21 << ", " << m22 << " / SIZE: " << fsize << " / TEXT: " << str. local8Bit ( ) << endl << endl;
 
-			QWMatrix mat ( round ( m11 / fsize ), round ( m12 / fsize ), -round ( m21 / fsize ), -round ( m22 / fsize ), round ( x1 ), round ( y1 ));
+			QWMatrix mat ( qRound ( m11 / fsize ), qRound ( m12 / fsize ), -qRound ( m21 / fsize ), -qRound ( m22 / fsize ), qRound ( x1 ), qRound ( y1 ));
 
 			m_painter-> setWorldMatrix ( mat );
 
@@ -695,9 +686,9 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 		}
 
 		if ( fsize > 5 )
-			m_painter-> drawText ( round ( x1 ), round ( y1 ), str );
+			m_painter-> drawText ( qRound ( x1 ), qRound ( y1 ), str );
 		else
-			m_painter-> fillRect ( round ( x1 ), round ( y1 ), round ( QMAX( fp_t(1), dx1 )), round ( QMAX( fsize, dy1 )), m_painter-> pen ( ). color ( ));
+			m_painter-> fillRect ( qRound ( x1 ), qRound ( y1 ), qRound ( QMAX( fp_t(1), dx1 )), qRound ( QMAX( fsize, dy1 )), m_painter-> pen ( ). color ( ));
 
 		m_painter-> setPen ( oldpen );
 
@@ -706,7 +697,7 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 			m_painter-> setWorldMatrix ( oldmat );
 #endif
 
-		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), round ( x1 ), round ( y1 )));
+		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), qRound ( x1 ), qRound ( y1 )));
 	}
 	else if ( code != 0 ) {
 		// some PDF files use CID 0, which is .notdef, so just ignore it
@@ -737,7 +728,7 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 
 	GfxRGB rgb;
 	state-> getFillRGB ( &rgb );
-	uint val = ( int( round ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( round ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( round ( rgb. b * 255 ) ) & 0xff );
+	uint val = ( int( qRound ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( qRound ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( qRound ( rgb. b * 255 ) ) & 0xff );
 
 
 	QImage img ( width, height, 32 );
@@ -773,14 +764,13 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
 		ctm [3] > 0 ? scanlines-- : scanlines++;
-
 	}
 
 #ifndef QT_NO_TRANSFORMATIONS
-	QWMatrix mat ( ctm [0] / width, ctm [1], ctm [2], ctm [3] / height, ctm [4], ctm [5] );
+	QWMatrix mat ( ctm [0] / width, ctm [1] / height, ctm [2] / width, ctm [3] / height, ctm [4], ctm [5] );
 
-	//std::cerr << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << std::endl
-	//         << " - M=" << mat. m11 ( ) << "/" << mat. m12 ( ) << "/" << mat. m21 ( ) << "/" << mat. m22 ( ) << std::endl;
+	kdDebug() << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << endl
+	         << " - M=" << mat. m11 ( ) << "/" << mat. m12 ( ) << "/" << mat. m21 ( ) << "/" << mat. m22 ( ) << endl;
 
 	QWMatrix oldmat = m_painter-> worldMatrix ( );
 	m_painter-> setWorldMatrix ( mat, true );
@@ -800,11 +790,11 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 		QPDFDBG( printf (  "### ROTATED / SHEARED / ETC -- CANNOT DISPLAY THIS IMAGE\n" ));
 	}
 	else {
-		int x = round ( ctm [4] );
-		int y = round ( ctm [5] );
+		int x = qRound ( ctm [4] );
+		int y = qRound ( ctm [5] );
 
-		int w = round ( ctm [0] );
-		int h = round ( ctm [3] );
+		int w = qRound ( ctm [0] );
+		int h = qRound ( ctm [3] );
 
 		if ( w < 0 ) {
 			x += w;
@@ -858,7 +848,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 	if ( maskColors )
 		img. setAlphaBuffer ( true );
 
-	QPDFDBG( printf ( "IMAGE (%dx%d)\n", width, height ));
+	printf ( "IMAGE (%dx%d)\n", width, height );
 
 	// initialize the image stream
 	ImageStream *imgStr = new ImageStream ( str, width, nComps, nBits );
@@ -870,8 +860,8 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 
 	uchar **scanlines = img. jumpTable ( );
 
-	if ( ctm [3] > 0 )
-		scanlines += ( height - 1 );
+ 	if ( ctm [3] < 0 )
+ 		scanlines += ( height - 1 );
 
 	for ( int y = 0; y < height; y++ ) {
 		QRgb *scanline = (QRgb *) *scanlines;
@@ -883,7 +873,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 			imgStr-> getPixel ( pixBuf );
 			colorMap-> getRGB ( pixBuf, &rgb );
 
-			uint val = ( int( round ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( round ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( round ( rgb. b * 255 ) ) & 0xff );
+			uint val = ( int( qRound ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( qRound ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( qRound ( rgb. b * 255 ) ) & 0xff );
 
 			if ( maskColors ) {
 				for ( int k = 0; k < nComps; ++k ) {
@@ -897,12 +887,11 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
-		ctm [3] > 0 ? scanlines-- : scanlines++;
+		ctm [3] > 0 ? scanlines++ : scanlines--;
+
 	}
 
-
-#ifndef QT_NO_TRANSFORMATIONS
-	QWMatrix mat ( ctm [0] / width, ctm [1], ctm [2], ctm [3] / height, ctm [4], ctm [5] );
+	QWMatrix mat ( ctm [0] / width, ctm [1] / height, ctm [2] / width, ctm [3] / height, ctm [4], ctm [5] );
 
 	// std::cerr << "MATRIX T=" << mat. dx ( ) << "/" << mat. dy ( ) << std::endl
 	//          << " - M=" << mat. m11 ( ) << "/" << mat. m12 ( ) << "/" << mat. m21 ( ) << "/" << mat. m22 ( ) << std::endl;
@@ -910,45 +899,9 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 	QWMatrix oldmat = m_painter-> worldMatrix ( );
 	m_painter-> setWorldMatrix ( mat, true );
 
-#ifdef QWS
-	QPixmap pm;
-	pm. convertFromImage ( img );
-	m_painter-> drawPixmap ( 0, 0, pm );
-#else
 	m_painter-> drawImage ( QPoint ( 0, 0 ), img );
-#endif
 
 	m_painter-> setWorldMatrix ( oldmat );
-
-#else // QT_NO_TRANSFORMATIONS
-
-	if (( ctm [1] < -0.1 ) || ( ctm [1] > 0.1 ) || ( ctm [2] < -0.1 ) || ( ctm [2] > 0.1 )) {
-		QPDFDBG( printf ( "### ROTATED / SHEARED / ETC -- CANNOT DISPLAY THIS IMAGE\n" ));
-	}
-	else {
-		int x = round ( ctm [4] );
-		int y = round ( ctm [5] );
-
-		int w = round ( ctm [0] );
-		int h = round ( ctm [3] );
-
-		if ( w < 0 ) {
-			x += w;
-			w = -w;
-		}
-		if ( h < 0 ) {
-			y += h;
-			h = -h;
-		}
-
-		QPDFDBG( printf ( "DRAWING IMAGE: %d/%d - %dx%d\n", x, y, w, h ));
-
-		img = img. smoothScale ( w, h );
-		m_painter-> drawImage ( x, y, img );
-	}
-
-#endif
-
 
 	delete imgStr;
 }
@@ -981,10 +934,10 @@ bool QOutputDev::findText ( const QString &str, int &l, int &t, int &w, int &h, 
 	fp_t y2 = (fp_t) t + h - 1;
 
 	if ( m_text-> findText ( s, len, top, bottom, &x1, &y1, &x2, &y2 )) {
-		l = round ( x1 );
-		t = round ( y1 );
-		w = round ( x2 ) - l + 1;
-		h = round ( y2 ) - t + 1;
+		l = qRound ( x1 );
+		t = qRound ( y1 );
+		w = qRound ( x2 ) - l + 1;
+		h = qRound ( y2 ) - t + 1;
 		found = true;
 	}
 	delete [] s;
@@ -1001,10 +954,10 @@ GBool QOutputDev::findText ( Unicode *s, int len, GBool top, GBool bottom, int *
 	fp_t yMax1 = (double) *yMax;
 
 	if ( m_text-> findText ( s, len, top, bottom, &xMin1, &yMin1, &xMax1, &yMax1 )) {
-		*xMin = round ( xMin1 );
-		*xMax = round ( xMax1 );
-		*yMin = round ( yMin1 );
-		*yMax = round ( yMax1 );
+		*xMin = qRound ( xMin1 );
+		*xMax = qRound ( xMax1 );
+		*yMin = qRound ( yMin1 );
+		*yMax = qRound ( yMax1 );
 		found = true;
 	}
 	return found;
@@ -1021,14 +974,4 @@ QString QOutputDev::getText ( int l, int t, int w, int h )
 QString QOutputDev::getText ( const QRect &r )
 {
 	return getText ( r. left ( ), r. top ( ), r. width ( ), r. height ( ));
-}
-
-
-
-void QOutputDev::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
-{
-	if ( m_pixmap )
-		p-> drawPixmap ( clipx, clipy, *m_pixmap, clipx, clipy, clipw, cliph );
-	else
-		p-> fillRect ( clipx, clipy, clipw, cliph, white );
 }

@@ -27,6 +27,7 @@ class PDFDoc;
 class XOutputDev;
 
 class PDFPartView;
+class KPrinter;
 
 namespace KPDF
 {
@@ -66,13 +67,15 @@ namespace KPDF
 
     bool closeURL();
 
-    void print();
-
     void displayPage(int pageNumber, float zoomFactor = 1.0);
     void displayDestination(LinkDest*);
       void updateActionPage();
       void setFullScreen( bool fs );
       PageWidget* pageWidget() const {return m_outputDev;}
+
+  public slots:
+    void print();
+
 
   protected:
     /**
@@ -87,6 +90,7 @@ namespace KPDF
       bool previousPage();
       void updateAction();
       void goToPage( int page );
+      void doPrint( KPrinter& printer );
 
   protected slots:
     void find()     { /* stub */ };
@@ -102,6 +106,7 @@ namespace KPDF
       void slotGoToPage();
     void displayNextPage();
     void displayPreviousPage();
+    void printPreview();
 
     void executeAction(LinkAction*);
 

@@ -15,7 +15,7 @@
 #include <kconfig.h>
 #include <kparts/genericfactory.h>
 #include <kurldrag.h>
-#include <kinputdialog.h>
+#include <qinputdialog.h>
 
 #include "part.h"
 
@@ -25,6 +25,7 @@
 #include "GlobalParams.h"
 #include "PDFDoc.h"
 #include "XOutputDev.h"
+#include "QOutputDevKPrinter.h"
 
 // #include "kpdf_canvas.h"
 #include "kpdf_pagewidget.h"
@@ -87,6 +88,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                        actionCollection(), "back");
   KStdAction::forward (this, SLOT(forward()),
                        actionCollection(), "forward");
+
+  KStdAction::print( this, SLOT( print() ), actionCollection() );
+  KStdAction::printPreview( this, SLOT( printPreview() ), actionCollection() );
 
   m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()),
                        actionCollection(), "previous_page");
@@ -162,8 +166,8 @@ void Part::slotGoToPage()
     if ( m_doc )
     {
         bool ok = false;
-        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage,
-                                           1, m_doc->getNumPages(), 1, 10, &ok/*, _part->widget()*/);
+        int num = QInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage,
+                                           1, m_doc->getNumPages(), 1, &ok/*, _part->widget()*/);
         if (ok)
             goToPage( num );
     }
@@ -510,24 +514,12 @@ Part::print()
   KPrinter printer;
 
   printer.setPageSelection(KPrinter::ApplicationSide);
-  printer.setCurrentPage(m_currentPage);
   printer.setMinMax(1, m_doc->getNumPages());
+  printer.setCurrentPage(m_currentPage+1);
 
   if (printer.setup(widget()))
   {
-    /*
-    KTempFile tf(QString::null, ".ps");
-    if (tf.status() == 0)
-    {
-      savePages(tf.name(), printer.pageList());
-      printer.printFiles(QStringList( tf.name() ), true);
-    }
-    else
-    {
-       // TODO: Proper error handling
-      ;
-    }
-    */
+    doPrint( printer );
   }
 }
 
@@ -661,6 +653,26 @@ BrowserExtension::BrowserExtension(Part* parent)
 BrowserExtension::print()
 {
   static_cast<Part*>(parent())->print();
+}
+
+void Part::printPreview()
+{
+  KPrinter printer;
+  printer.setPreviewOnly( true );
+  doPrint( printer );
+}
+
+void Part::doPrint( KPrinter& printer )
+{
+  QPainter painter( &printer );
+  QOutputDevKPrinter printdev( painter, printer );
+  QValueList<int> pages = printer.pageList();
+  for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
+  {
+    m_doc->displayPage( &printdev, *i, printer.resolution(), 0, true );
+    if ( ++i != pages.end() )
+      printer.newPage();
+  }
 }
 
 // vim:ts=2:sw=2:tw=78:et

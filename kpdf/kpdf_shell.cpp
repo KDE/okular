@@ -176,16 +176,15 @@ Shell::fileOpen()
   void
 Shell::fileSaveAs()
 {
-  KURL saveURL = KFileDialog::getSaveURL( 
-					 m_part->url().isLocalFile() 
-					 ? m_part->url().url() 
-					 : m_part->url().fileName(), 
-					 QString::null, 
-					 m_part->widget(), 
+  KURL saveURL = KFileDialog::getSaveURL(
+					 m_part->url().isLocalFile()
+					 ? m_part->url().url()
+					 : m_part->url().fileName(),
+					 QString::null,
+					 m_part->widget(),
 					 QString::null );
   if( !KIO::NetAccess::upload( m_part->url().path(),
-			       saveURL,
-			       static_cast<QWidget*>( 0 ) ) )
+			       saveURL ) )
 	; // TODO: Proper error dialog
 
 }

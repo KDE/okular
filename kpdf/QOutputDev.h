@@ -17,10 +17,9 @@
 #include "aconf.h"
 #include <stddef.h>
 
-#include <qscrollview.h>
-#include <qmemarray.h>
-
 class Object;
+
+#include <qobject.h>
 
 #include "config.h"
 #include "CharTypes.h"
@@ -39,7 +38,6 @@ class Catalog;
 class DisplayFontParam;
 class UnicodeMap;
 class CharCodeToUnicode;
-
 
 class QPainter;
 class QPixmap;
@@ -61,13 +59,13 @@ typedef double fp_t;
 // XOutputDev
 //------------------------------------------------------------------------
 
-class QOutputDev : public QScrollView, public OutputDev {
+class QOutputDev : public QObject, public OutputDev {
 	Q_OBJECT
 
 public:
 
 	// Constructor.
-	QOutputDev( QWidget *parent = 0, const char *name = 0, int flags = 0 );
+	QOutputDev( QPainter * p = 0 );
 
 	// Destructor.
 	virtual ~QOutputDev();
@@ -84,7 +82,7 @@ public:
 	// Does this device use beginType3Char/endType3Char?  Otherwise,
 	// text in Type 3 fonts will be drawn with drawChar/drawString.
 	virtual GBool interpretType3Chars() { return gFalse; }
-       
+
 	// Does this device need non-text content?
 	virtual GBool needNonText() { return gFalse; }
 
@@ -150,7 +148,7 @@ public:
 	// of page.  If found, sets the text bounding rectange and returns
 	// true; otherwise returns false.
 	GBool findText ( Unicode *s, int len, GBool top, GBool bottom, int *xMin, int *yMin, int *xMax, int *yMax );
-	
+
 	//----- special QT access
 
 	bool findText ( const QString &str, int &l, int &t, int &w, int &h, bool top = 0, bool bottom = 0 );
@@ -161,15 +159,10 @@ public:
 	QString getText ( const QRect &r );
 
 protected:
-	virtual void drawContents ( QPainter *p, int, int, int, int );
-
-private:
-	QPixmap *m_pixmap;   		// pixmap to draw into
 	QPainter *m_painter;
-
 	TextPage *m_text;		// text from the current page
 
-private:	
+private:
 	QFont matchFont ( GfxFont *, fp_t m11, fp_t m12, fp_t m21, fp_t m22 );
 
 	void updateLineAttrs ( GfxState *state, GBool updateDash );

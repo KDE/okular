@@ -2,7 +2,7 @@
 INCLUDES = -I.. -I$(top_srcdir)/kpdf/goo -I$(top_srcdir)/kpdf/xpdf $(all_includes)
 
 # these are the headers for your project
-noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_canvas.h kpdf_pagewidget.h QOutputDev.h
+noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_canvas.h kpdf_pagewidget.h QOutputDevPixmap.h QOutputDev.h
 
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
@@ -30,7 +30,7 @@ kpdf_LDADD   = $(LIB_KPARTS)
 kpdf_COMPILE_FIRST = ../aconf.h
 
 EXTRA_DIST = kpdf.desktop
-xdg_apps_DATA = kpdf.desktop
+#xdg_apps_DATA = kpdf.desktop
 
 # this is where the shell's XML-GUI resource file goes
 shellrcdir   = $(kde_datadir)/kpdf
@@ -42,7 +42,7 @@ shellrc_DATA = kpdf_shell.rc
 kde_module_LTLIBRARIES = libkpdfpart.la
 
 # the Part's source, library search path, and link libraries
-libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevPixmap.cpp kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc part.ui 
+libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevPixmap.cpp QOutputDevKPrinter.cpp kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc part.ui 
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT)
 libkpdfpart_la_COMPILE_FIRST = ../aconf.h

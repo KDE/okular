@@ -1,6 +1,10 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <kpartgui name="kpdf_part" version="11">
 <MenuBar>
+  <Menu name="file"><text>&amp;File</text>
+    <Action name="file_print"/>
+    <Action name="file_print_preview"/>
+  </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>
     <Action name="find_next"/>

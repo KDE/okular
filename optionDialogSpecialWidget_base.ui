@@ -27,10 +27,10 @@
                 <string>Show PostScript specials</string>
             </property>
             <property name="toolTip" stdset="0">
-                <string>If in doubt, switch on</string>
+                <string>If in doubt, enable this option.</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>Some DVI files contain PostScript graphics. If switched on, KDVI will use the ghostview PostScript interpreter to display these. You probably want to switch this option on, unless you have a DVI-file whose PostScript part is broken, or too large for your machine.</string>
+                <string>Some DVI files contain PostScript graphics. If enabled, KDVI will use the Ghostview PostScript interpreter to display these. You probably want to enable this option, unless you have a DVI-file whose PostScript part is broken, or too large for your machine.</string>
             </property>
         </widget>
         <widget class="QCheckBox">
@@ -44,10 +44,10 @@
                 <bool>false</bool>
             </property>
             <property name="toolTip" stdset="0">
-                <string>If in doubt, switch on!</string>
+                <string>If in doubt, enable this option.</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>For your convenience, some DVI files contain hyperlinks which are cross-references or point to external documents. You probably want to switch this option on, unless you don't want the blue underlines which KDVI uses to mark the hyperlinks.</string>
+                <string>For your convenience, some DVI files contain hyperlinks which are cross-references or point to external documents. You probably want to enable this option, unless you don't want the blue underlines which KDVI uses to mark the hyperlinks.</string>
             </property>
         </widget>
         <widget class="QButtonGroup">
@@ -83,8 +83,8 @@
                         <string>Choose an editor which is used in inverse search.</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>&lt;p&gt;Some DVI-files contain 'inverse search' information. If such a DVI-file is loaded, you can click with the right mouse into KDVI, an editor opens, loads the TeX-file and jumps to the proper position. You can select your favorite editor here. If in doubt, 'nedit' is usually a good choice.&lt;/p&gt;
-&lt;p&gt;Check the KDVI manual to see how to prepare DVI-files which support the inverse search.&lt;/p&gt;</string>
+                        <string>&lt;p&gt;Some DVI files contain 'inverse search' information. If such a DVI file is loaded, you can right-click into KDVI and an editor will open, load the TeX file and jump to the correct position. You can select your favorite editor here. If in doubt, 'nedit' is usually a good choice.&lt;/p&gt;
+&lt;p&gt;Check the KDVI manual to see how to prepare DVI files which support the inverse search.&lt;/p&gt;</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="2" column="0">
@@ -114,8 +114,8 @@
                         <string>Explains about the editor's capabilities in conjunction with inverse search.</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>&lt;p&gt;Not all editors are well-suited for inverse search. For instance, many editors have no command like 'If the file is not yet loaded, load it. Otherwise, bring the window with the file to the front'. If you are using an editor like this, clicking into the DVI file will always open a new editor, even if the TeX-file is already open. Likewise, many editors have no command line argument that would allow KDVI to specify the exact line which you wish to edit.&lt;/p&gt;
-&lt;p&gt;If you feel that KDVI's support for a certain editor is not well-done, please write to kebekus@kde.org.&lt;/p&gt;</string>
+                        <string>&lt;p&gt;Not all editors are well suited for inverse search. For instance, many editors have no command like 'If the file is not yet loaded, load it. Otherwise, bring the window with the file to the front'. If you are using an editor like this, clicking into the DVI file will always open a new editor, even if the TeX file is already open. Likewise, many editors have no command line argument that would allow KDVI to specify the exact line which you wish to edit.&lt;/p&gt;
+&lt;p&gt;If you feel that KDVI's support for a certain editor is inadequate, please write to kebekus@kde.org.&lt;/p&gt;</string>
                     </property>
                 </widget>
                 <widget class="KLineEdit" row="3" column="1">

@@ -42,6 +42,9 @@ public:
   // 
   void setPostScript(int page, QString PostScript);
 
+  // sets path from additional postscript files may be read
+  void setIncludePath(const QString &_includePath);
+
   // Returns the graphics of the page, if possible. The functions
   // returns a pointer to a QPixmap, or null. The referred QPixmap
   // should be deleted after use.
@@ -64,6 +67,8 @@ private:
   double                resolution;    // in dots per inch
   int                   pixel_page_w; // in pixels
   int                   pixel_page_h; // in pixels
+
+  QString               includePath;
 
 signals:
   /** Passed through to the top-level kpart. */

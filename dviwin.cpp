@@ -37,7 +37,7 @@
 #include <klocale.h>
 #include <kprinter.h>
 #include <kprocess.h>
-
+#include <kstandarddirs.h>
 
 #include "dviwin.h"
 #include "fontpool.h"
@@ -503,6 +503,28 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   // specials in PostScriptDirectory, and the headers in the
   // PostScriptHeaderString.
   PS_interface->clear();
+
+  // Files that reside under "tmp" or under the "data" resource are most
+  // likely remote files. We limit the files they are able to read to
+  // the directory they are in in order to limit the possibilities of a 
+  // denial of service attack.
+  bool restrictIncludePath = true;
+  QString tmp = KGlobal::dirs()->saveLocation("tmp", QString::null);
+  if (!filename.startsWith(tmp))
+  {
+     tmp = KGlobal::dirs()->saveLocation("data", QString::null);
+     if (!filename.startsWith(tmp))
+        restrictIncludePath = false;
+  }
+  
+  QString includePath;
+  if (restrictIncludePath)
+  {
+     includePath = filename;
+     includePath.truncate(includePath.findRev('/'));
+  }
+
+  PS_interface->setIncludePath(includePath);     
 
   // We will also generate a list of hyperlink-anchors in the
   // document. So declare the existing list empty.

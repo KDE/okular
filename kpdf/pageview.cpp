@@ -364,6 +364,23 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 pixmapPainter.drawRect( selectionRect );
             }
             // 4) Layer 3: overlays
+#if 1
+            // only a test to try selecting under alpha items
+            QValueVector< PageViewItem * >::iterator pIt = d->pages.begin(), pEnd = d->pages.end();
+            for ( ; pIt != pEnd; ++pIt )
+            {
+                // check if a piece of the page intersects the contents rect
+                if ( (*pIt)->geometry().intersects( contentsRect ) )
+                {
+                    PageViewItem * item = *pIt;
+                    QRect pixmapGeometry = item->geometry();
+                    pixmapGeometry.setWidth( QMIN( pixmapGeometry.width(), 74 ) );
+                    pixmapGeometry.setHeight( QMIN( pixmapGeometry.height(), 74 ) );
+                    if ( pixmapGeometry.intersects( contentsRect ) )
+                        pixmapPainter.drawPixmap( pixmapGeometry.left() + 10, pixmapGeometry.top() + 10, DesktopIcon( "kpdf", 64 ) );
+                }
+            }
+#endif
             if ( Settings::tempDrawBoundaries() )
             {
                 pixmapPainter.setPen( Qt::blue );

@@ -130,7 +130,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   exportPDFAction    = new KAction(i18n("PDF..."), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
   exportTextAction   = new KAction(i18n("Text..."), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
-  new KAction(i18n("&DVI Options..."), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
   new KAction(i18n("About KDVI"), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
   new KAction(i18n("KDVI Handbook"), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
@@ -431,24 +430,18 @@ void KDVIMultiPage::doExportPDF(void)
 }
 
 
-void KDVIMultiPage::doSettings()
+void KDVIMultiPage::addConfigDialogs(KConfigDialog* configDialog)
 {
   static optionDialogFontsWidget* fontConfigWidget = 0;
-  if (KConfigDialog::showDialog("kdvi_config"))
-    return;
-  
-  KConfigDialog* configDialog = new KConfigDialog(scrollView(), "kdvi_config", Prefs::self());
   
   fontConfigWidget = new optionDialogFontsWidget(scrollView());
   optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(scrollView());
   
-  configDialog->addPage(fontConfigWidget, i18n("Tex Fonts"), "fonts");
-  configDialog->addPage(specialConfigWidget, i18n("DVI Specials"), "dvi");
+  configDialog->addPage(fontConfigWidget, Prefs::self(), i18n("Tex Fonts"), "fonts");
+  configDialog->addPage(specialConfigWidget, Prefs::self(), i18n("DVI Specials"), "dvi");
   configDialog->setHelp("preferences", "kdvi");
   
   connect(configDialog, SIGNAL(settingsChanged()), this, SLOT(preferencesChanged()));
-  
-  configDialog->show();
 }
 
 

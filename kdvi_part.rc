@@ -23,7 +23,6 @@
 
  <Menu name="settings"><text>&amp;Settings</text>
   <Action name="enable_msgs" group="settings_top"/>
-  <Action name="settings_dvi"/>
  </Menu>
 
  <Menu name="help"><text>Help</text>

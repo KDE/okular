@@ -78,6 +78,8 @@ public:
   /// multipage implementations that offer read- and write
   /// functionality should re-implement this method.
   virtual bool isModified();
+  
+  virtual void addConfigDialogs(KConfigDialog* configDialog);
 
 private:
   virtual DocumentWidget* createDocumentWidget();
@@ -135,7 +137,6 @@ protected:
   virtual void reload();
 
 protected slots:
-  void doSettings();
   void doExportPS();
   void doExportPDF();
   void doExportText();

@@ -23,7 +23,6 @@
 #include <qdir.h>
 #include <qregexp.h> 
 #include <qdatetime.h> 
-#include <qmessagebox.h> 
 #include <qlistbox.h> 
 #include <qstrlist.h>
 

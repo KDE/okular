@@ -11,13 +11,14 @@
 #include <qpushbutton.h>
 #include <qtooltip.h>
 #include <qapplication.h>
-#include <kmenubar.h>
-#include <qmessagebox.h>
 #include <qgroupbox.h>
 #include <qfileinfo.h>
 #include <qkeycode.h>
 #include <qlineedit.h>
 #include <qframe.h>
+
+#include <kmenubar.h>
+#include <kmessagebox.h>
 #include <kapp.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -481,9 +482,9 @@ void kdvi::openFile( QString name)
 		name.append( ".dvi" );
 	if ( ! QFileInfo( name ).isReadable() )
 	{
-		QMessageBox::information( this, i18n("Notice"),
+		KMessageBox::sorry( this,
 				i18n("Can't read file:\n") +
-				oname, i18n("OK"));
+				oname);
 		return;
 	}
 	QDir::setCurrent( QFileInfo( name ).dirPath() );
@@ -801,21 +802,6 @@ void kdvi::helpContents()
 {
 	kapp->invokeHTMLHelp("","");
 }
-/*
-void kdvi::helpAbout()
-{
-	QMessageBox::information( this, i18n("About Kdvi"),
-		i18n("kdvi - TeX DVI viewer\nVersion ")
-			+ QString( KDVI_VERSION )
-			+ i18n("\n\nMarkku Hihnala <mah@ee.oulu.fi>"),
-		i18n("OK") );
-}
-
-void kdvi::helpAboutQt()
-{
-	QMessageBox::aboutQt( this, "About Qt" );
-}
-*/
 
 void kdvi::pageActivated( const QString & text)
 {

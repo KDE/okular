@@ -15,8 +15,8 @@
 
 #include "marklist.h"
 #include <qfile.h>
-#include <qmessagebox.h>
 
+#include <kmessagebox.h>
 #include <kapp.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -119,13 +119,11 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 		texfont[i] = fontdeflen[i] = fontseen[i] = 0;
 */
 	if (!in.open(IO_ReadOnly))
-		QMessageBox::warning( 0L, i18n("Warning"),
-			i18n("Cannot open dvi file!"),
-			i18n("OK") );
+		KMessageBox::sorry( 0L,
+			i18n("Cannot open dvi file!"));
 	if (!out.open(IO_WriteOnly))
-		QMessageBox::warning( 0L, i18n("Warning"),
-			i18n("Cannot open output dvi file!"),
-			i18n("OK") );;
+		KMessageBox::sorry( 0L,
+			i18n("Cannot open output dvi file!"));
 	in.readBlock( buf, 14 );
 	out.writeBlock( buf, 14 );
 	out.writeBlock( "\013kdvi output", 12 );
@@ -135,9 +133,8 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 	while ( ( c = in.getch() ) == 223 ) // trailer
 		in.at( --p );
 	if ( c != 2 )
-		QMessageBox::warning( 0L, i18n("Warning"),
-			i18n("Cannot handle this dvi version!"),
-			i18n("OK") );;
+		KMessageBox::sorry( 0L,
+			i18n("Cannot handle this dvi version!"));
 	int post_post = p - 5;
 	in.at( post_post + 1 );
 	int post =  get4( in );
@@ -240,9 +237,7 @@ void print::okPressed()
 			    t = QString(rangeTo->text()).toInt();
 			if ( f < 1 || f > totalpages || t < f || t > totalpages )
 			{
-				QMessageBox::warning( 0L, i18n("Warning"),
-					i18n("Invalid page range!"),
-					i18n("OK") );
+				KMessageBox::sorry( 0L, i18n("Invalid page range!"));
 				return;
 			}
 			dvi.dviCopy( ifile, ofile, NULL, f, t );

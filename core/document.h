@@ -62,7 +62,6 @@ class KPDFDocument : public QObject
 
         // enum definitions
         enum Permission { AllowModify = 1, AllowCopy = 2, AllowPrint = 4, AllowNotes = 8 };
-        enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleLike };
 
         // query methods (const ones)
         bool isOpened() const;
@@ -84,6 +83,8 @@ class KPDFDocument : public QObject
         void setNextViewport();
         void requestPixmaps( const QValueList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
+
+        enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleAll, GoogleAny };
         bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
         bool continueSearch( int searchID );

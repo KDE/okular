@@ -36,13 +36,14 @@ class SearchWidget : public KToolBar
 
     private:
         KPDFDocument * m_document;
-        KPopupMenu * m_caseMenu;
+        KPopupMenu * m_menu;
         QTimer * m_inputDelayTimer;
+        int m_searchType;
         bool m_caseSensitive;
 
     private slots:
         void slotTextChanged( const QString & text );
-        void slotCaseChanged( int index );
+        void slotMenuChaged( int index );
         void startSearch();
 };
 

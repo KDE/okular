@@ -18,6 +18,7 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <kpassdlg.h>
+#include <kwallet.h>
 #include <kprinter.h>
 #include <ktempfile.h>
 #include <kmessagebox.h>
@@ -87,7 +88,7 @@ PDFGenerator::~PDFGenerator()
 
 
 //BEGIN Generator inherited functions
-bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
+bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage*> & pagesVector )
 {
 #ifndef NDEBUG
     if ( pdfdoc )
@@ -97,28 +98,62 @@ bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage
     }
 #endif
     // create PDFDoc for the given file
-    pdfdoc = new PDFDoc( new GString( QFile::encodeName( fileName ) ), 0, 0 );
+    pdfdoc = new PDFDoc( new GString( QFile::encodeName( filePath ) ), 0, 0 );
 
     // if the file didn't open correctly it might be encrypted, so ask for a pass
-    bool firstTry = true;
+    bool firstInput = true;
+    bool triedWallet = false;
+    KWallet::Wallet * wallet = 0;
     while ( !pdfdoc->isOk() && pdfdoc->getErrorCode() == errEncrypted )
     {
+        QCString password;
+
+        // 1.A. try to retrieve the first password from the kde wallet system
+        if ( !triedWallet )
+        {
+            QString walletName = KWallet::Wallet::NetworkWallet();
+            wallet = KWallet::Wallet::openWallet( walletName );
+            if ( wallet )
+            {
+                // use the KPdf folder (and create if missing)
+                if ( !wallet->hasFolder( "KPdf" ) )
+                    wallet->createFolder( "KPdf" );
+                wallet->setFolder( "KPdf" );
+
+                // look for the pass in that folder
+                QString retrievedPass;
+                if ( !wallet->readPassword( filePath.section('/', -1, -1), retrievedPass ) )
+                    password = retrievedPass.local8Bit();
+            }
+            triedWallet = true;
+        }
+
+        // 1.B. if not retrieved, ask the password using the kde password dialog
+        if ( password.isNull() )
+        {
         QString prompt;
-        if ( firstTry )
+            if ( firstInput )
             prompt = i18n( "Please insert the password to read the document:" );
         else
             prompt = i18n( "Incorrect password. Try again:" );
-        firstTry = false;
+            firstInput = false;
 
-        QCString pwd;
-        if ( KPasswordDialog::getPassword( pwd, prompt ) != KPasswordDialog::Accepted )
+            // if the user presses cancel, abort opening
+            if ( KPasswordDialog::getPassword( password, prompt ) != KPasswordDialog::Accepted )
             break;
-        else
-        {
-            GString * pwd2 = new GString( pwd.data() );
+        }
+
+        // 2. reopen the document using the password
+        GString * pwd2 = new GString( password.data() );
             delete pdfdoc;
-            pdfdoc = new PDFDoc( new GString( QFile::encodeName( fileName ) ), pwd2, pwd2 );
+        pdfdoc = new PDFDoc( new GString( QFile::encodeName( filePath ) ), pwd2, pwd2 );
             delete pwd2;
+
+        // 3. if the password is correct, store it to the wallet
+        if ( pdfdoc->isOk() && wallet && /*safety check*/ wallet->isOpen() )
+        {
+            QString goodPass = QString::fromLocal8Bit( password.data() );
+            wallet->writePassword( filePath.section('/', -1, -1), goodPass );
         }
     }
     if ( !pdfdoc->isOk() )

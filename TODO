@@ -9,7 +9,6 @@ In progress:
   -- 2005-Feb-26: Merge from 'kpdf_annotations' branch --
 
 More items (first items will enter 'In progress list' first):
--> search: google search in the page
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300), yellow notes 'post-it' like
@@ -65,7 +64,6 @@ More items (first items will enter 'In progress list' first):
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 -> add search on the toc widget (a 'prune on type' lineedit like in thumbnails widget)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
--> use wallet for storing passwords of encrypted files
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
@@ -75,6 +73,8 @@ More items (first items will enter 'In progress list' first):
 
 Done (newest features come first):
 -- merging from kdpf_annotations branch --
+-> ADD: google-like search on thumbnails
+-> ADD: use kde wallet for storing passwords of protected files
 -> ADD: Obey DRM is now a configuration option
 -> FIX: leakfix when closing document while thread was running (no more leaks now)
 -> FIX: direct hi-performance pixels manipulation for highlighting (instead of the obsoleted setRasterOp)

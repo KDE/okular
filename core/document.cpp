@@ -735,9 +735,77 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
     else if ( type == PrevMatch )
     {
     }
-    // 4. GOOGLELIKE //TODO
-    else if ( type == GoogleLike )
+    // 4. GOOGLE* - process all document marking pages
+    else if ( type == GoogleAll || type == GoogleAny )
     {
+        // search and highlight every word in 'text' on all pages
+        bool matchAll = type == GoogleAll;
+        QStringList words = QStringList::split( " ", text );
+        int wordsCount = words.count(),
+            hueStep = (wordsCount > 1) ? (60 / (wordsCount - 1)) : 60,
+            baseHue, baseSat, baseVal;
+        color.getHsv( &baseHue, &baseSat, &baseVal );
+        QValueVector< KPDFPage * >::iterator it = pages_vector.begin(), end = pages_vector.end();
+        for ( ; it != end; ++it )
+        {
+            // get page (from the first to the last)
+            KPDFPage * page = *it;
+            int pageNumber = page->number();
+
+            // request search page if needed
+            if ( !page->hasSearchPage() )
+                requestTextPage( pageNumber );
+
+            // loop on a page adding highlights for all found items
+            bool allMatched = wordsCount > 0,
+                 anyMatched = false;
+            for ( int w = 0; w < wordsCount; w++ )
+            {
+                QString word = words[ w ];
+                int newHue = baseHue - w * hueStep;
+                if ( newHue < 0 )
+                    newHue += 360;
+                QColor wordColor = QColor( newHue, baseSat, baseVal, QColor::Hsv );
+                NormalizedRect * lastMatch = 0;
+                // add all highlights for current word
+                bool wordMatched = false;
+                while ( 1 )
+    {
+                    if ( lastMatch )
+                        lastMatch = page->findText( word, caseSensitive, lastMatch );
+                    else
+                        lastMatch = page->findText( word, caseSensitive );
+
+                    if ( !lastMatch )
+                        break;
+
+                    // add highligh rect to the page
+                    page->setHighlight( searchID, lastMatch, wordColor );
+                    wordMatched = true;
+                }
+                allMatched = allMatched && wordMatched;
+                anyMatched = anyMatched || wordMatched;
+            }
+
+            // if not all words are present in page, remove partial highlights
+            if ( !allMatched && matchAll )
+                page->deleteHighlights( searchID );
+
+            // if page contains all words, udpate internals and queue page for notify
+            if ( (allMatched && matchAll) || (anyMatched && !matchAll) )
+            {
+                foundAMatch = true;
+                s->highlightedPages.append( pageNumber );
+                if ( !pagesToNotify.contains( pageNumber ) )
+                    pagesToNotify.append( pageNumber );
+            }
+        }
+
+        // reset cursor to previous shape
+        QApplication::restoreOverrideCursor();
+
+        // send page lists to update observers (since some filter on bookmarks)
+        foreachObserver( notifySetup( pages_vector, false ) );
     }
 
     // notify observers about highlights changes

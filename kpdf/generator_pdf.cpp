@@ -174,13 +174,13 @@ const DocumentSynopsis * GeneratorPDF::documentSynopsis()
 
     docSyn = DocumentSynopsis();
     if ( items->getLength() > 0 )
-        addDomChildren( &docSyn, items );
+        addSynopsisChildren( &docSyn, items );
 
     docSynopsisDirty = false;
     return &docSyn;
 }
 
-void GeneratorPDF::addDomChildren( QDomNode * parent, GList * items )
+void GeneratorPDF::addSynopsisChildren( QDomNode * parent, GList * items )
 {
     int numItems = items->getLength();
     for ( int i = 0; i < numItems; ++i )
@@ -215,7 +215,7 @@ void GeneratorPDF::addDomChildren( QDomNode * parent, GList * items )
         outlineItem->open();
         GList * children = outlineItem->getKids();
         if ( children )
-            addDomChildren( &item, children );
+            addSynopsisChildren( &item, children );
     }
 }
 
@@ -484,7 +484,8 @@ QString GeneratorPDF::getDocumentDate( const QString & data ) const
             s += 2;
         if ( sscanf( s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
         {
-            QDate d( year, mon - 1, day );
+            kdDebug() << s << endl;
+            QDate d( year, mon, day );  //CHECK: it was mon-1, Jan->0 (??)
             QTime t( hour, min, sec );
             if ( d.isValid() && t.isValid() )
                 return KGlobal::locale()->formatDateTime( QDateTime(d, t), false, true );

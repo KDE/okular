@@ -10,31 +10,27 @@
 #ifndef _KPDF_SEARCHWIDGET_H_
 #define _KPDF_SEARCHWIDGET_H_
 
-#include <qhbox.h>
+#include <ktoolbar.h>
 
 class KPopupMenu;
-class KLineEdit;
-
 class KPDFDocument;
 
 /**
- * @short A search widget for find-as-you-type search.
+ * @short A widget for find-as-you-type search. Outputs to the Document.
  *
- * ...
+ * This widget accepts keyboard input and performs a call to findTextAll(..)
+ * in the KPDFDocument class when there are 3 or more chars to search for.
+ * It supports case sensitive/unsensitive(default) and provieds a button
+ * for switching between the 2 modes.
  */
-class SearchWidget : public QHBox
+class SearchWidget : public KToolBar
 {
     Q_OBJECT
-
     public:
         SearchWidget( QWidget *parent, KPDFDocument *document );
 
-    protected:
-        void hideEvent( QHideEvent * );
-
     private:
         KPDFDocument * m_document;
-        KLineEdit * m_lineEdit;
         KPopupMenu * m_caseMenu;
         bool m_caseSensitive;
 

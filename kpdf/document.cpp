@@ -270,6 +270,11 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
 
 void KPDFDocument::findTextAll( const QString & pattern, bool keepCase )
 {
+    // if pattern is null, clear 'hilighted' attribute in all pages
+    if ( pattern.isEmpty() )
+        unHilightPages();
+
+    // cache search pattern and perform a linear search/mark
     d->filterText = pattern;
     d->filterCase = keepCase;
     processPageList( false );

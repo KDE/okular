@@ -126,7 +126,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
 
     // ### [RELEASE: REMOVE] show initial warning for dev_version > 2004-Dec-04
-    d->messageWindow->display( "We're in progress of abstracting code. You will see some REGRESSIONS at this stage.", PageViewMessage::Warning, 8000 );
+    d->messageWindow->display( "kpdf_experiments is taking its way to HEAD! ;-)", PageViewMessage::Warning, 8000 );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -1337,6 +1337,7 @@ void PageView::slotAutoScoll()
 
 void PageView::slotZoom()
 {
+    setFocus();
     updateZoom( ZoomFixed );
 }
 

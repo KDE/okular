@@ -56,7 +56,7 @@ class GeneratorPDF : public Generator
         QString getDocumentInfo( const QString & data ) const;
         QString getDocumentDate( const QString & data ) const;
         // private function for creating the document synopsis hieracy
-        void addDomChildren( QDomNode * parent, GList * items );
+        void addSynopsisChildren( QDomNode * parent, GList * items );
 
         // private classes
         QMutex docLock;

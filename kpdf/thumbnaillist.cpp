@@ -373,13 +373,23 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     // draw page outline and pixmap
     if ( clipRect.top() < m_pixmapHeight + 4 )
     {
+        // if page is bookmarked draw a colored border
+        bool isBookmarked = m_page->attributes() & KPDFPage::Bookmark;
+        // draw the inner rect
+        p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
         p.drawRect( 1, 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );
-        p.setPen( palette().active().base() );
+        // draw the clear rect
+        p.setPen( isBookmarked ? QColor( 0x804000 ) : palette().active().base() );
         p.drawRect( 0, 0, m_pixmapWidth + 4, m_pixmapHeight + 4 );
-        p.setPen( Qt::gray );
-        p.drawLine( 5, m_pixmapHeight + 3, m_pixmapWidth + 3, m_pixmapHeight + 3 );
-        p.drawLine( m_pixmapWidth + 3, 5, m_pixmapWidth + 3, m_pixmapHeight + 3 );
+        // draw the bottom and right shadow edges
+        if ( !isBookmarked )
+        {
+            p.setPen( Qt::gray );
+            p.drawLine( 5, m_pixmapHeight + 3, m_pixmapWidth + 3, m_pixmapHeight + 3 );
+            p.drawLine( m_pixmapWidth + 3, 5, m_pixmapWidth + 3, m_pixmapHeight + 3 );
+        }
 
+        // draw the page using the shared PagePainter class
         p.translate( 2, 2 );
         clipRect.moveBy( -2, -2 );
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );

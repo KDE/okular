@@ -106,7 +106,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// widgets: [left toolbox] | []
 	m_toolBox = new QToolBox( m_splitter );
-	m_toolBox->setMinimumWidth( 60 );
+	m_toolBox->setMinimumWidth( 80 );
 	m_toolBox->setMaximumWidth( 300 );
 
 	TOC * tocFrame = new TOC( m_toolBox, m_document );
@@ -121,12 +121,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
 
-	QFrame * bookmarksFrame = new QFrame( m_toolBox );
-	int iIdx = m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
-	m_toolBox->setItemEnabled( iIdx, false );
+// commented because probably the thumbnaillist will act as the bookmark widget too
+//	QFrame * bookmarksFrame = new QFrame( m_toolBox );
+//	int iIdx = m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
+//	m_toolBox->setItemEnabled( iIdx, false );
 
 	QFrame * editFrame = new QFrame( m_toolBox );
-	iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
+	int iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
 	m_toolBox->setItemEnabled( iIdx, false );
 
 	// widgets: [] | [right 'pageView']
@@ -177,10 +178,17 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showProperties->setEnabled( false );
 
     // attach the actions of the 2 children widgets too
-	m_pageView->setupActions( ac );
+    m_pageView->setupActions( ac );
 
-	// apply configuration (both internal settings and GUI configured items)
-    m_splitter->setSizes( Settings::splitterSizes() );
+    // apply configuration (both internal settings and GUI configured items)
+    QValueList<int> splitterSizes = Settings::splitterSizes();
+    if ( !splitterSizes.count() )
+    {
+        // the first time use 1/10 for the panel and 9/10 for the pageView
+        splitterSizes.push_back( 50 );
+        splitterSizes.push_back( 500 );
+    }
+    m_splitter->setSizes( splitterSizes );
     slotNewConfig();
 
 	m_watcher = new KDirWatch( this );

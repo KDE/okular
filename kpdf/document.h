@@ -134,7 +134,9 @@ struct DocumentInfo
 };
 
 /**
- * @short Viewport.
+ * @short A window on the document.
+ *
+ * TODO HACK OVER ME AND FIXME WITH A CHAINSAW
  */
 struct DocumentViewport
 {

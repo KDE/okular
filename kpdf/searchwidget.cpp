@@ -23,57 +23,54 @@
 #include "document.h"
 #include "settings.h"
 
-SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
-    : QHBox( parent ), m_document( document ), m_caseSensitive( false )
-{
-    setMargin( 4 );
+// uncomment following to enable the case switching button
+//#define SW_ENABLE_CASE_BUTTON
+#define CLEAR_ID    1
+#define LEDIT_ID    2
+#define FIND_ID     3
 
-    // clear button
-    KToolBarButton * m_clearButton = new KToolBarButton( SmallIcon(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"), 1, this );
-    QToolTip::add( m_clearButton, i18n( "Clear filter" ) );
+SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
+    : KToolBar( parent, "iSearchBar" ), m_document( document ), m_caseSensitive( false )
+{
+    // change toolbar appearance
+    setMargin( 3 );
+    setFlat( true );
+    setIconSize( 16 );
+    setMovingEnabled( false );
 
     // line edit
-    m_lineEdit = new KLineEdit( this );
-    m_lineEdit->setFrame( QFrame::Sunken );
-    connect( m_lineEdit, SIGNAL(textChanged(const QString &)), SLOT(slotTextChanged(const QString &)) );
-    connect( m_clearButton, SIGNAL(clicked()), m_lineEdit, SLOT(clear()) );
-    QToolTip::add( m_lineEdit, i18n( "Enter at least 3 letters to filter pages" ) );
+    insertLined( QString::null, LEDIT_ID, SIGNAL( textChanged(const QString &) ),
+        this, SLOT( slotTextChanged(const QString &) ), true,
+        i18n( "Enter at least 3 letters to filter pages" ), 0/*size*/, 1 );
 
-    // change case button and menu (commented because there isn't enough space)
-#if 0
-    KToolBarButton * search = new KToolBarButton( SmallIcon("find"), 2, this );
-    m_caseMenu = new KPopupMenu( search );
+    // clear button (uses a lineEdit slot, so it must be created after)
+    insertButton( "editclear", CLEAR_ID, SIGNAL( clicked() ),
+        getLined( LEDIT_ID ), SLOT( clear() ), true,
+        i18n( "Clear filter" ), 0/*index*/ );
+
+#ifdef SW_ENABLE_CASE_BUTTON
+    // create popup menu for change case button
+    m_caseMenu = new KPopupMenu( this );
     m_caseMenu->insertItem( i18n("Case Insensitive"), 1 );
     m_caseMenu->insertItem( i18n("Case Sensitive"), 2 );
     m_caseMenu->setItemChecked( 1, true );
-    connect( m_caseMenu, SIGNAL( activated(int) ), SLOT( slotChangeCase(int) ) );
-    search->setPopup( m_caseMenu );
+    connect( m_caseMenu, SIGNAL( activated(int) ), SLOT( slotCaseChanged(int) ) );
+
+    // create the change case button
+    insertButton( "find", FIND_ID, m_caseMenu, true,
+        i18n( "Change Case" ), 2/*index*/ );
 #endif
 
-    int sideLength = m_lineEdit->sizeHint().height();
-    m_clearButton->setMinimumSize( QSize( sideLength, sideLength ) );
-#if 0
-    search->setMinimumSize( QSize( sideLength, sideLength ) );
-#endif
-}
-
-void SearchWidget::hideEvent( QHideEvent * )
-{
-    m_document->findTextAll( QString::null, m_caseSensitive );
+    // setStretchableWidget( lineEditWidget );
+    setItemAutoSized( LEDIT_ID );
 }
 
 void SearchWidget::slotTextChanged( const QString & text )
 {
-    if ( text.length() > 2 || text.isEmpty() )
-    {
-        m_lineEdit->setPaletteForegroundColor( palette().active().text() );
-        m_document->findTextAll( text, m_caseSensitive );
-    }
-    else
-    {
-        m_lineEdit->setPaletteForegroundColor( Qt::red );
-        m_document->findTextAll( QString::null, m_caseSensitive );
-    }
+    // if length<3 set 'red' text and send a blank string to document
+    QColor color = text.length() < 3 ? Qt::red : palette().active().text();
+    getLined( LEDIT_ID )->setPaletteForegroundColor( color );
+    m_document->findTextAll( text.length() < 3 ? QString::null : text, m_caseSensitive );
 }
 
 void SearchWidget::slotCaseChanged( int index )
@@ -84,7 +81,7 @@ void SearchWidget::slotCaseChanged( int index )
         m_caseSensitive = newState;
         m_caseMenu->setItemChecked( 1, !m_caseSensitive );
         m_caseMenu->setItemChecked( 2, m_caseSensitive );
-        slotTextChanged( m_lineEdit->text() );
+        slotTextChanged( getLined( LEDIT_ID )->text() );
     }
 }
 

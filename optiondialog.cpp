@@ -21,7 +21,7 @@
 
 // Add header files alphabetically
 
-#include <kapp.h>
+#include <config.h>
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -31,16 +31,17 @@
 #include <klocale.h>
 #include <qcheckbox.h>
 #include <qfontmetrics.h>
+#include <qgrid.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
-#include <qlayout.h>
 #include <qlineedit.h>
-#include <qspinbox.h>
 #include <qtooltip.h>
+#include <qvbox.h>
 #include <qwhatsthis.h>
 
 #include "fontpool.h"
 #include "optiondialog.h"
-#include <config.h>
+
 
 
 OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
@@ -51,7 +52,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   setHelp("opts", "kdvi");
 
   // Set up the list of known and supported editors
-  EditorNames        += "User-defined editor";
+  EditorNames        += i18n("User-defined editor");
   EditorCommands     += "";
   EditorDescriptions += i18n("Enter the command line below.");
   
@@ -63,9 +64,14 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   EditorCommands     += "ncl -noask -line %l %f";
   EditorDescriptions += i18n("NEdit perfectly supports inverse search.");
   
-  EditorNames        += "XEmacs";
+  EditorNames        += "VIM - Vi IMproved / GUI";
+  EditorCommands     += "gvim +%l %f";
+  EditorDescriptions += i18n("VIM always opens a new window.");
+
+  EditorNames        += "XEmacs / gnuclient";
   EditorCommands     += "gnuclient -q +%l %f";
   EditorDescriptions += i18n("Click 'Help' to learn how to set up XEmacs.");
+
   
   makeFontPage();
   makeRenderingPage();
@@ -169,86 +175,59 @@ void OptionDialog::slotComboBox(int item)
 
 void OptionDialog::makeFontPage()
 {
-  QFrame *page = addPage( i18n("Fonts") );
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
-  mFont.pageIndex = pageIndex(page);
+  QGrid *page = addGridPage( 2, QGrid::Horizontal, i18n("Fonts") );
 
-  QGridLayout *glay = new QGridLayout(topLayout, 8, 2 );
-
-  QLabel *label = new QLabel( i18n("Metafont mode:"), page );
+  new QLabel( i18n("Metafont mode:"), page );
   mFont.metafontMode = new KComboBox( page );
   QToolTip::add( mFont.metafontMode, i18n("LaserJet 4 is usually a good choice.") );
   QWhatsThis::add( mFont.metafontMode, i18n("Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower. \nIf you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid to generate several bitmap versions of the same font.") );
 
-  glay->addWidget( label, 0, 0 );
-  glay->addWidget( mFont.metafontMode, 0, 1 );
-
-  glay->addRowSpacing( 2, spacingHint()*2 );
-
   mFont.fontPathCheck = new QCheckBox( i18n("Generate missing fonts"), page );
   QToolTip::add( mFont.fontPathCheck, i18n("If in doubt, switch on!") );
   QWhatsThis::add( mFont.fontPathCheck, i18n("Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to switch this on.") );
-  glay->addMultiCellWidget( mFont.fontPathCheck, 3, 3, 0, 1 );
-
-  topLayout->addStretch(1);
 }
 
 void OptionDialog::makeRenderingPage()
 {
-  QFrame *page = addPage( i18n("Rendering") );
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
-  mRender.pageIndex = pageIndex(page);
-
-  QGridLayout *glay = new QGridLayout(topLayout, 8, 2 );
+  QVBox *page = addVBoxPage( i18n("Rendering") );
 
   mRender.showSpecialCheck = new QCheckBox( i18n("Show PostScript specials"), page );
   QToolTip::add( mRender.showSpecialCheck, i18n("If in doubt, switch on!") );
   QWhatsThis::add( mRender.showSpecialCheck, i18n("Some DVI files contain PostScript graphics. If switched on, KDVI will use the ghostview PostScript interpreter to display these. You probably want to switch this option on, unless you have a DVI-file whose PostScript part is broken, or too large for your machine.") );
-  glay->addWidget( mRender.showSpecialCheck, 0, 0 );
 
   mRender.showHyperLinksCheck =  new QCheckBox( i18n("Show Hyperlinks"), page );  
   QToolTip::add( mRender.showHyperLinksCheck, i18n("If in doubt, switch on!") );
   QWhatsThis::add( mRender.showHyperLinksCheck, i18n("For your convenience, some DVI files contain hyperlinks which are corss-references or point to external documents. You probably want to switch this option on, unless you are annoyed by the blue underlines which KDVI uses to mark the hyperlinks.") );
-  glay->addWidget( mRender.showHyperLinksCheck, 1, 0 );
 
-  glay->addRowSpacing( 2, spacingHint()*2 );
+  QGroupBox *editorBox = new QGroupBox( 2, Horizontal, i18n("Editor for inverse search"), page ); 
 
-  QLabel *label = new QLabel( i18n("Editor for inverse search:"), page );
-  glay->addWidget( label, 2, 0 );
-  mRender.editorChoice =  new KComboBox( page );
+  new QLabel( i18n("Editor:"), editorBox );
+  mRender.editorChoice =  new KComboBox( editorBox );
   connect(mRender.editorChoice, SIGNAL( activated( int ) ), this, SLOT( slotComboBox( int ) ) );
   QToolTip::add( mRender.editorChoice, i18n("Choose an editor which is used in inverse search.") );
   QWhatsThis::add( mRender.editorChoice, i18n("Some DVI-files contain 'inverse search' information. If such a DVI-file is loaded, you can click with the right mouse into KDVI, an editor opens, loads the TeX-file and jumps to the proper position. You can select you favourite editor here. If in doubt, 'nedit' is usually a good choice.\nCheck the KDVI manual to see how to prepare DVI-files which support the inverse search.") );
-  glay->addWidget( mRender.editorChoice, 2, 1 );
-
-  label = new QLabel( i18n("Editor description:"), page );
-  glay->addWidget( label, 3, 0 );
 
   // Editor description strings (and their translations) vary in
   // size. Find the longest description string available, to make sure
   // that the page is always large enough.
-  unsigned int maximumWidth = 0;
+  new QLabel( i18n("Description:"), editorBox );
+  mRender.editorDescription = new QLabel( editorBox );
+  int maximumWidth = 0;
   for ( QStringList::Iterator it = EditorDescriptions.begin(); it != EditorDescriptions.end(); ++it ) {
     int width = mRender.editorDescription->fontMetrics().width(*it);
     if (width > maximumWidth) 
       maximumWidth = width;
   }
-
-  mRender.editorDescription = new QLabel( longest, page );
   mRender.editorDescription->setMinimumWidth(maximumWidth+10);
   QToolTip::add( mRender.editorDescription, i18n("Explains about the editor's capabilities in conjunction with inverse search.") );
   QWhatsThis::add( mRender.editorDescription, i18n("Not all editors are well-suited for inverse search. For instance, many editors have no command like 'If the file is not yet loaded, load it. Otherwise, bring the window with the file to the front'. If you are using an editor like this, clicking into the DVI file will always open a new editor, even if the TeX-file is already open. Likewise, many editors have no command line argument that would allow KDVI to specify the exact line which you wish to edit.\nIf you feel that KDVI's support for a certain editor is not well-done, please write to kebekus@kde.org.") );
-  glay->addWidget( mRender.editorDescription, 3, 1 );
 
-  label = new QLabel( i18n("Command to start the editor:"), page );
-  glay->addWidget( label, 4, 0 );
-  mRender.editorCallingCommand =  new KLineEdit( page );
+  new QLabel( i18n("Shell Command:"), editorBox );
+  mRender.editorCallingCommand =  new KLineEdit( editorBox );
   mRender.editorCallingCommand->setReadOnly(true);
   connect(mRender.editorCallingCommand, SIGNAL( textChanged (const QString &) ), this, SLOT( slotUserDefdEditorCommand( const QString & ) ) );
-  QToolTip::add( mRender.editorCallingCommand, i18n("Shell-command line used start the editor.") );
+  QToolTip::add( mRender.editorCallingCommand, i18n("Shell-command line used to start the editor.") );
   QWhatsThis::add( mRender.editorCallingCommand, i18n("If you are using inverse search, KDVI uses this command line to start the editor. The field '%f' is replaced with the filename, and '%l' is replaced with the line number.") );
-  glay->addWidget( mRender.editorCallingCommand, 4, 1 );
-  topLayout->addStretch(1);
 }
 
 

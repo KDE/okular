@@ -1,12 +1,12 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="kdvi_part" version="1">
+<kpartgui name="kdvi_part" version="2">
 <MenuBar>
  <Menu name="file"><text>File</text>
-  <Action name="info_dvi" group="file_print" append="options_show_merge"/>
+  <Action name="info_dvi" group="file_print"/>
   <Menu name="export" group="file_save" ><text>Export As</text>
-   <Action name="export_postscript" append="options_show_merge"/>
-   <Action name="export_pdf" append="options_show_merge"/>
-   <Action name="export_text" append="options_show_merge"/>
+   <Action name="export_postscript"/>
+   <Action name="export_pdf"/>
+   <Action name="export_text"/>
   </Menu>
  </Menu>
 
@@ -24,17 +24,17 @@
   <Action name="findprev"/>
  </Menu>
 
- <Menu name="settings"><text>Settings</text>
-  <Action name="enable_msgs"/>
-  <Action name="settings_dvi" append="options_show_merge"/>
+ <Menu name="settings"><text>&amp;Settings</text>
+  <Action name="enable_msgs" group="settings_top"/>
+  <Action name="settings_dvi"/>
  </Menu>
 
  <Menu name="help"><text>Help</text>
   <Action name="help_tipofday"/>
   <Separator/>
-  <Action name="help_dvi" append="options_show_merge"/>
-  <Action name="about_kdvi" append="options_show_merge"/>
-  <Action name="bug_dvi" append="options_show_merge"/>
+  <Action name="help_dvi"/>
+  <Action name="about_kdvi"/>
+  <Action name="bug_dvi"/>
  </Menu>
 </MenuBar>
 

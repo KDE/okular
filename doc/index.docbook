@@ -6,43 +6,43 @@
   %ents;
 ]>
 <book lang="&language;">
-  <bookinfo>
-    <title> The &kdvi; Manual</title>
-    <authorgroup>
-      <author>
-	<firstname>Markku</firstname>
-	<surname>Hihnala</surname>
-	<affiliation>
-	  <address role="email">mah@ee.oulu.fi</address>
-	</affiliation>
-      </author>
-      
-      <author>
-	<firstname>Stefan</firstname>
-	<surname>Kebekus</surname>
-	<affiliation>
-	  <address role="email">kebekus@kde.org</address>
-	</affiliation>
-      </author>
-    </authorgroup>
 
-    <date>30/06/2000</date>
-    <releaseinfo>0.09.02</releaseinfo>
-    <abstract>
-      <para>This Handbook describes KDVI Version 0.9</para>
-    </abstract>
-    <keywordset>
-      <keyword>KDE</keyword>
-      <keyword>DVI</keyword>
-      <keyword>TeX</keyword>
-      <keyword>LaTeX</keyword>
-      <keyword>device-independent</keyword>
-      <keyword>viewer</keyword>
-      <keyword>dvi viewer</keyword>
-      <keyword>kdvi</keyword>
-      <keyword>xdvi</keyword>
-    </keywordset>
-  </bookinfo>
+<bookinfo>
+<title> The &kdvi; Manual</title>
+
+<authorgroup>
+<author>
+<firstname>Markku</firstname>
+<surname>Hihnala</surname>
+<affiliation><address role="email">mah@ee.oulu.fi</address></affiliation>
+</author>
+      
+<author>
+<firstname>Stefan</firstname>
+<surname>Kebekus</surname>
+<affiliation><address role="email">kebekus@kde.org</address></affiliation>
+</author>
+</authorgroup>
+
+<date>30/06/2000</date>
+<releaseinfo>0.09.02</releaseinfo>
+
+<abstract>
+<para>This Handbook describes KDVI Version 0.9</para>
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>DVI</keyword>
+<keyword>TeX</keyword>
+<keyword>LaTeX</keyword>
+<keyword>device-independent</keyword>
+<keyword>viewer</keyword>
+<keyword>dvi viewer</keyword>
+<keyword>kdvi</keyword>
+<keyword>xdvi</keyword>
+</keywordset>
+</bookinfo>
 
   <chapter id="usage">
     <title>Usage</title>

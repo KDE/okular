@@ -26,7 +26,7 @@ extern "C"
     KGlobal::locale()->insertCatalogue("kviewshell");
     return new KDVIMultiPageFactory;
   }
-};
+}
 
 
 KInstance *KDVIMultiPageFactory::s_instance = 0L;

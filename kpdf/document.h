@@ -38,7 +38,7 @@ public:
     virtual void pageSetCurrent( int /*pageNumber*/, float /*position*/ ) {};
 };
 
-#define PAGEWIDGET_ID 1
+#define PAGEVIEW_ID 1
 #define THUMBNAILS_ID 2
 #define TOC_ID 3
 

@@ -18,7 +18,7 @@
 class QTimer;
 class KActionCollection;
 class KConfigGroup;
-class Thumbnail;
+class ThumbnailWidget;
 
 /**
  * @short A scrollview that displays pages pixmaps previews (aka thumbnails).
@@ -62,9 +62,9 @@ Q_OBJECT
 	private:
 		void requestPixmaps( int delayMs = 0 );
 		KPDFDocument *m_document;
-		Thumbnail *m_selected;
+		ThumbnailWidget *m_selected;
 		QTimer *m_delayTimer;
-		QValueVector<Thumbnail *> m_thumbnails;
+		QValueVector<ThumbnailWidget *> m_thumbnails;
 		int m_vectorIndex;
 };
 

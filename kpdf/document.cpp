@@ -34,7 +34,7 @@
   warning to not call something 'active' inside an observer method.
 */
 
-// structure used internally by KPDFDocument for data storage
+// structure used internally by KPDFDocument for local variables storage
 class KPDFDocumentPrivate
 {
 public:

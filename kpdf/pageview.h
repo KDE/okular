@@ -17,7 +17,6 @@
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
-#include <qhbox.h>
 
 #include "CharTypes.h"
 #include "document.h"
@@ -26,61 +25,46 @@ class KURL;
 class KActionCollection;
 class KConfigGroup;
 
-class PageWidget : public QWidget
-{
-public:
-    PageWidget(QWidget *parent, const KPDFPage *page);
+class PageViewPrivate;
 
-    // resize / select commands
-    int setThumbnailWidth(int width);
-    void setSelected(bool selected);
-
-    // query methods
-    int pageNumber() const;
-    int previewWidth() const;
-    int previewHeight() const;
-
-protected:
-    void paintEvent(QPaintEvent *);
-
-private:
-    const KPDFPage *m_page;
-    uint m_previewWidth;
-    uint m_previewHeight;
-    bool m_selected;
-    uint m_labelNumber;
-    uint m_labelHeight;
-    uint m_labelWidth;
-};
-
-
+/**
+ * @short A scrollview that displays page pixmaps.
+ *
+ */
 class PageView : public QScrollView, public KPDFDocumentObserver
 {
 Q_OBJECT
 
 public:
-	PageView( QWidget *parent, KPDFDocument *document );
+    PageView( QWidget *parent, KPDFDocument *document );
+    ~PageView();
 
-	// create actions that interact with this widget
-	uint observerId() { return PAGEWIDGET_ID; }
-	void setupActions( KActionCollection * collection, KConfigGroup * config );
-	void saveSettings( KConfigGroup * config );
+    // some enums used to control view behavior
+    enum ViewMode { ViewSingle, ViewDouble, ViewContinous };
+    enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText };
+    enum MouseMode { MouseNormal, MouseSelection, MouseEdit };
 
-	// inherited from KPDFDocumentObserver
-	void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
-	void pageSetCurrent( int pageNumber, float position );
-	void notifyPixmapChanged( int pageNumber );
+    // create actions that interact with this widget
+    void setupActions( KActionCollection * collection, KConfigGroup * config );
+    void saveSettings( KConfigGroup * config );
+
+    // inherited from KPDFDocumentObserver
+    uint observerId() { return PAGEVIEW_ID; }
+    void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
+    void pageSetCurrent( int pageNumber, float position );
+    void notifyPixmapChanged( int pageNumber );
 
 protected:
 	void contentsMousePressEvent( QMouseEvent* );
 	void contentsMouseReleaseEvent( QMouseEvent* );
 	void contentsMouseMoveEvent( QMouseEvent* );
+
 	void viewportResizeEvent( QResizeEvent * );
 	void keyPressEvent( QKeyEvent* );
 	void wheelEvent( QWheelEvent * );
+
 	void dragEnterEvent( QDragEnterEvent* );
 	void dropEvent( QDropEvent* );
-	void drawContents( QPainter *p, int, int, int, int );
 
 private slots:
 	// connected to local actions
@@ -88,13 +72,17 @@ private slots:
 	void slotZoomIn();
 	void slotZoomOut();
 	void slotFitToWidthToggled( bool );
-	void slotFitToPageToggled( bool );
+    void slotFitToPageToggled( bool );
+    void slotFitToTextToggled( bool );
+
 	void slotSetViewSingle();
 	void slotSetViewDouble();
 	void slotSetViewContinous();
+
 	void slotSetMouseNormal();
 	void slotSetMouseSelect();
 	void slotSetMouseDraw();
+
 	void slotToggleScrollBars( bool on );
 	// activated directly or via QTimer on the viewportResizeEvent
 	void slotUpdateView( bool repaint = true );
@@ -104,36 +92,15 @@ signals:
 	void rightClick();
 
 private:
-	// FIXME what does atTop() means if I see 4 tiled pages on screen ?
+    void reLayoutPages();
+	// FIXME REMOVE ME what does atTop() means if I see 4 tiled pages on screen ?
 	bool atTop()    const;
 	bool atBottom() const;
 	void scrollUp();
 	void scrollDown();
 
-	// the document, current page and pages indices vector
-	KPDFDocument * m_document;
-	// FIXME only for knowing the order of pages.. not useful, change me
-	QValueVector<int> m_pages;
-	int m_vectorIndex;
-	const KPDFPage * m_page;
-	QRect m_pageRect;
-
-	enum MouseMode { MouseNormal, MouseSelection, MouseEdit } m_mouseMode;
-	QPoint m_mouseGrabPos;
-	bool m_mouseOnLink;
-	//enum ViewMode { ... } m_viewMode;
-	//int m_viewsNumber;
-
-	// zoom related
-	enum ZoomMode { FixedFactor, FitWidth, FitPage /*FitVisible*/ } m_zoomMode;
-	float m_zoomFactor;
-
-	// actions
-	KSelectAction *m_aZoom;
-	KToggleAction *m_aZoomFitWidth;
-	KToggleAction *m_aZoomFitPage;
-
-	QTimer *m_delayTimer;
+    // don't want to expose classes in here
+	class PageViewPrivate * d;
 };
 
 #endif

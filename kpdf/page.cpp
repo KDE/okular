@@ -99,8 +99,8 @@ void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width
             p->restore();
             // draw a red cross (to hilight that the pixmap has not the right size)
             p->setPen( Qt::red );
-            p->drawLine( 0, 0, width, height );
-            p->drawLine( 0, height, width, 0 );
+            p->drawLine( 0, 0, width-1, height-1 );
+            p->drawLine( 0, height-1, width-1, 0 );
         }
         // draw selection
         if ( m_hilighting )

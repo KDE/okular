@@ -49,9 +49,9 @@
 #include "QOutputDevKPrinter.h"
 
 #include "kpdf_part.h"
-#include "kpdf_pagewidget.h"
-#include "searchwidget.h"
+#include "pageview.h"
 #include "thumbnaillist.h"
+#include "searchwidget.h"
 #include "document.h"
 #include "toc.h"
 
@@ -110,7 +110,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
 
 	QFrame * editFrame = new QFrame( m_toolBox );
-	m_toolBox->addItem( editFrame, QIconSet(SmallIcon("favorites")), i18n("Edited Chunks") );
+	m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
 
 	QFrame * moreFrame = new QFrame( m_toolBox );
 	m_toolBox->addItem( moreFrame, QIconSet(SmallIcon("fork")), i18n("More stuff..") );
@@ -182,7 +182,7 @@ Part::~Part()
 		delete globalParams;
 }
 
-//TODO does that really goes somewhere???
+//this don't go anywhere but is required by genericfactory.h
 KAboutData* Part::createAboutData()
 {
 	// the non-i18n name here must be the same as the directory in

@@ -14,7 +14,7 @@
 #include <kactioncollection.h>
 
 #include "thumbnaillist.h"
-#include "thumbnail.h"
+#include "pixmapwidget.h"
 #include "page.h"
 
 ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
@@ -55,8 +55,8 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool docum
 documentChanged = false;
 //TODO
 	// delete all the Thumbnails
-	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
+	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
 	for ( ; thumbIt != thumbEnd; ++thumbIt )
 		delete *thumbIt;
 	m_thumbnails.clear();
@@ -75,20 +75,21 @@ documentChanged = false;
 			skipCheck = false;
 
 	// generate Thumbnails for the given set of pages
-	Thumbnail *t;
+	ThumbnailWidget *t;
 	int width = clipper()->width(),
 	    totalHeight = 0;
 	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin();
 	QValueVector<KPDFPage*>::const_iterator pageEnd = pages.end();
 	for (; pageIt != pageEnd ; ++pageIt)
 		if ( skipCheck || (*pageIt)->isHilighted() ) {
-			t = new Thumbnail( viewport(), *pageIt );
+			t = new ThumbnailWidget( viewport(), *pageIt );
 			// add to the scrollview
 			addChild( t, 0, totalHeight );
 			// add to the internal queue
 			m_thumbnails.push_back( t );
 			// update total height (asking widget its own height)
-			totalHeight += t->setThumbnailWidth( width );
+            t->setZoomFitWidth( width );
+			totalHeight += t->heightHint() + 4;
 			t->show();
 		}
 
@@ -108,8 +109,8 @@ void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 
 	// select next page
 	m_vectorIndex = 0;
-	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
+	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
 	for (; thumbIt != thumbEnd; ++thumbIt)
 	{
 		if ( (*thumbIt)->pageNumber() == pageNumber )
@@ -126,8 +127,8 @@ void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 
 void ThumbnailList::notifyPixmapChanged( int pageNumber )
 {
-	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
+	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
 	for (; thumbIt != thumbEnd; ++thumbIt)
 		if ( (*thumbIt)->pageNumber() == pageNumber )
 		{
@@ -176,11 +177,11 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 {
 	int clickY = e->y();
-	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
+	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
 	for ( ; thumbIt != thumbEnd; ++thumbIt )
 	{
-		Thumbnail * t = *thumbIt;
+		ThumbnailWidget * t = *thumbIt;
 		int childTop = childY(t);
 		if ( clickY > childTop && clickY < (childTop + t->height()) )
 		{
@@ -204,14 +205,16 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 		// resize and reposition items
 		int totalHeight = 0,
 		    newWidth = e->size().width();
-		QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
-		QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
+		QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
+		QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
 		for ( ; thumbIt != thumbEnd; ++thumbIt )
 		{
-			Thumbnail *t = *thumbIt;
+			ThumbnailWidget *t = *thumbIt;
 			moveChild( t, 0, totalHeight );
-			totalHeight += t->setThumbnailWidth( newWidth );
-		}
+            t->setZoomFitWidth( newWidth );
+            totalHeight += t->heightHint() + 4;
+            t->show();
+    	}
 
 		// update scrollview's contents size (sets scrollbars limits)
 		resizeContents( newWidth, totalHeight );
@@ -238,16 +241,16 @@ void ThumbnailList::slotRequestPixmaps( int /*newContentsX*/, int newContentsY )
 	    vOffset = newContentsY == -1 ? contentsY() : newContentsY;
 
 	// scroll from the top to the last visible thumbnail
-	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
+	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
+	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
 	for ( ; thumbIt != thumbEnd; ++thumbIt )
 	{
-		Thumbnail * t = *thumbIt;
+		ThumbnailWidget * t = *thumbIt;
 		int top = childY( t ) - vOffset;
 		if ( top > vHeight )
 			break;
 		else if ( top + t->height() > 0 )
-			m_document->requestPixmap( THUMBNAILS_ID, t->pageNumber(), t->previewWidth(), t->previewHeight(), true );
+			m_document->requestPixmap( THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), true );
 	}
 }
 //END internal SLOTS

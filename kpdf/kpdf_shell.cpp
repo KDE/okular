@@ -154,7 +154,7 @@ Shell::setupActions()
 
   m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
   KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
-  m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
+  m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this, "show_fullscreen" );
 }
 
   void

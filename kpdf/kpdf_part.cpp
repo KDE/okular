@@ -541,7 +541,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 			for ( it = begin; it != end; ++it )
 			{
 				if (QString((*it)->name()) == "options_show_menubar") m_showMenuBarAction = (KToggleAction*)(*it);
-				if (QString((*it)->name()) == "fullscreen") m_showFullScreenAction = (KToggleAction*)(*it);
+				if (QString((*it)->name()) == "show_fullscreen") m_showFullScreenAction = (KToggleAction*)(*it);
 			}
 		}
 		m_actionsSearched = true;

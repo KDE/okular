@@ -6,7 +6,7 @@
    <DefineGroup append="print_merge" name="file_print" />
   </Menu>
   <Menu name="view" >
-   <Action name="fullscreen" />
+   <Action name="show_fullscreen" />
   </Menu>
   <Menu name="settings" >
    <DefineGroup append="show_merge" name="show_merge" />

@@ -508,25 +508,25 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
 
   // We will also generate a list of hyperlink-anchors in the
   // document. So declare the existing list empty.
-  numAnchors = 0;
+  anchorList.clear();
 
   if (dviFile->page_offset == 0)
     return false;
-
+  
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
-
+    
     if (current_page < dviFile->total_pages) {
       command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
       end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
-
+    
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
     currinf._virtual  = NULL;
     draw_part(dviFile->dimconv, false);
-
+    
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
     delete PostScriptOutPutString;
@@ -606,7 +606,7 @@ void dviWindow::all_fonts_loaded(void)
       foreGroundPaint.end();
       if (sourceHyperLinkList.size() > 0)
 	sourceSpecialsFlag = true;
-      for(int i=0; i<sourceHyperLinkList.size(); i++) {
+      for(Q_UINT32 i=0; i<sourceHyperLinkList.size(); i++) {
 	QString sourceLink = sourceHyperLinkList[i].linkText;
 	// Extract the file name and the numeral part from the string
 	unsigned int j;
@@ -877,15 +877,13 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  kdDebug(4300) << "hit: local link to " << hyperLinkList[i].linkText << endl;
 #endif
 	  QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
-	  for(int j=0; j<numAnchors; j++) {
-	    if (locallink.compare(AnchorList_String[j]) == 0) {
+	  QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
+	  if (it != anchorList.end()) {
 #ifdef DEBUG_SPECIAL
-	      kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-	      kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
+	    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
+	    kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
 #endif
-	      emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
-	      break;
-	    }
+	    emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/mane.shrinkfactor)));
 	  }
 	} else {
 #ifdef DEBUG_SPECIAL

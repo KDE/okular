@@ -38,18 +38,24 @@ class KPrinter;
 class KShellProcess;
 
 
-// max. number of anchors per document. This should later be replaced by
-// a dynamic allocation scheme.
-#define MAX_ANCHORS    1000
-
-
 class DVI_Hyperlink {
  public:
-  unsigned int baseline;
-  QRect        box;
-  QString      linkText;
+  DVI_Hyperlink() {}
+  DVI_Hyperlink(Q_UINT32 bl, QRect re, QString lT): baseline(bl), box(re), linkText(lT) {}
+
+  Q_UINT32 baseline;
+  QRect    box;
+  QString  linkText;
 };
 
+class DVI_Anchor {
+ public:
+  DVI_Anchor() {}
+  DVI_Anchor(Q_INT32 pg, double vc): page(pg), vertical_coordinate(vc) {}
+
+  Q_UINT32   page;
+  double     vertical_coordinate;
+};
 
 /** Compound of registers, as defined in section 2.6.2 of the DVI
     driver standard, Level 0, published by the TUG DVI driver
@@ -240,8 +246,6 @@ private:
  QPoint            firstSelectedPoint;
  QRect             selectedRectangle;
 
- 
-
  /** These fields contain information about the geometry of the
      page. */
  unsigned int	   unshrunk_page_w; // basedpi * width(in inch)
@@ -270,10 +274,7 @@ private:
  bool              word_boundary_encountered;
 
  /** List of anchors in a document */
- QString           AnchorList_String[MAX_ANCHORS];
- unsigned int      AnchorList_Page[MAX_ANCHORS];
- double            AnchorList_Vert[MAX_ANCHORS];
- int               numAnchors;
+ QMap<QString, DVI_Anchor> anchorList;
 
  int		   basedpi;
  int		   makepk;

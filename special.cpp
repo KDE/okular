@@ -33,14 +33,9 @@ void dviWindow::html_anchor_special(QString cp)
     kdDebug(4300) << "page " << current_page << endl;
 #endif
     
-    AnchorList_String[numAnchors] = cp;
-    AnchorList_Page[numAnchors]   = current_page;
-    AnchorList_Vert[numAnchors]   = DVI_V/65536; // multiply with zoom to get pixel coords
-    if (numAnchors < MAX_ANCHORS-2)
-      numAnchors++;
+    anchorList[cp] = DVI_Anchor(current_page, DVI_V/65536);
   }
 }
-
 
 void dviWindow::html_href_special(QString cp)
 {
@@ -55,7 +50,6 @@ void dviWindow::html_href_special(QString cp)
   }
 }
 
-
 void dviWindow::html_anchor_end(void)
 {
 #ifdef DEBUG_SPECIAL
@@ -67,7 +61,6 @@ void dviWindow::html_anchor_end(void)
     HTML_href = NULL;
   }
 }
-
 
 void dviWindow::header_special(QString cp)
 {
@@ -106,8 +99,6 @@ static void parse_special_argument(QString strg, const char *argument_name, int 
       kdError(4300) << i18n("Malformed parameter in the epsf special command.") << endl;
   }
 }
-
-
 
 void dviWindow::epsf_special(QString cp)
 {
@@ -250,8 +241,6 @@ void dviWindow::bang_special(QString cp)
   }
 }
 
-
-
 void dviWindow::quote_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
@@ -267,7 +256,6 @@ void dviWindow::quote_special(QString cp)
     PostScriptOutPutString->append( " @endspecial \n" );
   }
 }
-
 
 void dviWindow::ps_special(QString cp)
 {
@@ -296,7 +284,6 @@ void dviWindow::ps_special(QString cp)
     }
   }
 }
-
 
 void dviWindow::applicationDoSpecial(char *cp)
 {

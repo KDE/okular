@@ -22,7 +22,7 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2005-01-10</date>
+		<date>2005-02-20</date>
 		<releaseinfo>1.0</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -37,7 +37,7 @@
 	<chapter id="introduction">
 		<title>Introduction</title>
 		<para>&kpdf; is a &kde; PDF viewer based on xpdf code. Although being
-			based on xpdf code, &kpdf; has some unique feautures like continous
+			based on xpdf code, &kpdf; has some unique features like continuous
 			mode, presentation support, etc.</para>
 	</chapter>
 	<chapter id="navigating">
@@ -362,11 +362,11 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Continous</guimenuitem>
+							<guimenuitem>Continuous</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Enables</action> the continous page mode.</para>
+						<para><action>Enables</action> the continuous page mode.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -437,7 +437,7 @@
 			</variablelist>
 		</sect1>
 
-		<sect1>
+		<sect1 id="settings-menu">
 			<title>The <guimenu>Settings</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
@@ -630,7 +630,7 @@
 					<term>Enable transparency effects</term>
 					<listitem>
 						<para>Draw selections and other special graphics using
-							transparency effets. Disable the option to draw them using
+							transparency effects. Disable the option to draw them using
 							outline or opaque fill styles and increase speed on selections.</para>
 					</listitem>
 				</varlistentry>
@@ -645,9 +645,9 @@
 				<varlistentry>
 					<term>Memory usage profiles</term>
 					<listitem>
-						<para>KPdf can acheive best performance by tuning the memory usage, based on your system and your tastes.
+						<para>&kpdf; can achieve best performance by tuning the memory usage, based on your system and your tastes.
 							The more memory you let it to use, the faster the program will behave. The Default profile is good
-							for every system, but you can prevent KPdf from using more memory than necessary by selecting the Low
+							for every system, but you can prevent &kpdf; from using more memory than necessary by selecting the Low
 							profile, or let it get the most out of your system using Aggressive.</para>
 					</listitem>
 				</varlistentry>
@@ -706,7 +706,7 @@
 		
 		<itemizedlist>
 			<title>Program Copyright:</title>
-			<listitem><para>Albert Astals Cid<email>tsdgeos@yahoo.es</email> Current mantainer</para></listitem>
+			<listitem><para>Albert Astals Cid<email>tsdgeos@yahoo.es</email> Current maintainer</para></listitem>
 			<listitem><para>Christophe Devriese<email>oelewapperke@ulyssis.org</email></para></listitem>
 			<listitem><para>Wilco Greven <email>greven@kde.org</email> Original author</para></listitem>
 			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> Refactoring for 3.4</para></listitem>

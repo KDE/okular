@@ -26,10 +26,6 @@ public:
 	int		totalPages();
 	int		zoom();
 	double		shrink();
-	void		setChecking( int time = 1000 );
-	int		checking();
-	void		setShowScrollbars( int flag );
-	int		showScrollbars();
 	void		setShowPS( int flag );
 	int		showPS();
 	void		setAntiAlias( int flag );
@@ -84,7 +80,6 @@ protected:
                                        int clipx, int clipy, 
                                        int clipw, int cliph );
 private slots:
-	void		timerEvent();
         void            contentsMoving(int x, int y);
 
 private:
@@ -101,7 +96,6 @@ private:
 	QString		FontPath;
 	QString		paper_type;
 	int		ChangesPossible;
-	int		checkinterval;
 	QDateTime	changetime;
 };
 

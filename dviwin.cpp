@@ -105,10 +105,8 @@ dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int 
 	setFocusPolicy(QWidget::StrongFocus);
 	setFocus();
 
-	timer = new QTimer( this );
-	connect( timer, SIGNAL(timeout()),
-		 this, SLOT(timerEvent()) );
-	checkinterval = 1000;
+	setHScrollBarMode(QScrollView::AlwaysOff);
+	setVScrollBarMode(QScrollView::AlwaysOff);
 
         connect(this, SIGNAL(contentsMoving(int, int)),
                 this, SLOT(contentsMoving(int, int)));
@@ -138,35 +136,6 @@ dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int 
 dviWindow::~dviWindow()
 {
 	psp_destroy();
-}
-
-void dviWindow::setChecking( int time )
-{
-	checkinterval = time;
-	if ( timer->isActive() )
-		timer->changeInterval( time );
-}
-
-int dviWindow::checking()
-{
-	return checkinterval;
-}
-
-void dviWindow::setShowScrollbars( int flag )
-{
-        if( flag ) { 
-	        setVScrollBarMode(Auto);
-	        setHScrollBarMode(Auto);                
-	}
-        else {
-	        setVScrollBarMode(AlwaysOff);
-	        setHScrollBarMode(AlwaysOff);                          
-        }
-}
-
-int dviWindow::showScrollbars()
-{
-	return  (vScrollBarMode() == Auto);
 }
 
 void dviWindow::setShowPS( int flag )
@@ -399,7 +368,6 @@ void dviWindow::drawPage()
     gotoPage(1);
     changePageSize();
     emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
-    timer->start( 1000 );
     return;
   }
   min_x = 0;
@@ -431,6 +399,7 @@ void dviWindow::drawPage()
     QApplication::restoreOverrideCursor();
     paint.end();
   }
+  resize(pixmap->width(), pixmap->height());
   repaintContents(contentsX(), contentsY(), visibleWidth(), visibleHeight(), FALSE);
 }
 
@@ -456,24 +425,6 @@ bool dviWindow::correctDVI()
   return TRUE;
 }
 
-void dviWindow::timerEvent()
-{
-  static int changing = 0;
-
-  if ( !changedDVI() )
-    return;
-  if ( !changing )
-    emit statusChange( i18n("File status changed.") );
-  changing = 1;
-  if ( !correctDVI() )
-    return;
-  changing = 0;
-  emit statusChange( i18n("File reloaded.") );
-  changetime = QFileInfo(filename).lastModified();
-
-  drawPage();
-  emit fileChanged();
-}
 
 void dviWindow::changePageSize()
 {

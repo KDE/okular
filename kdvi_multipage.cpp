@@ -107,7 +107,7 @@ bool KDVIMultiPage::closeURL()
 QStringList KDVIMultiPage::fileFormats()
 {
   QStringList r;
-  r << "*.dvi|DVI files (*dvi)";
+  r << i18n("*.dvi|DVI files (*.dvi)");
   return r;
 }
 

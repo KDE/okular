@@ -58,15 +58,15 @@
 <title>Introduction</title>
 
 <para>
-&kdvi; is a plugin for the &kviewshell; program which allows
+&kdvi; is a plug-in for the &kviewshell; program which allows
 &kviewshell; to display &DVI;-files which are produced by the TeX
 typesetting system.
 </para>
 
 <para>
-More information about TeX and &DVI; can be found on the homepage of the
-TeX user group. &kdvi; supports the inclusion of &PostScript; graphics
-and it supports hyperlinks. More details and the technical
+More information about TeX and &DVI; can be found on the home page of
+the TeX user group. &kdvi; supports the inclusion of &PostScript;
+graphics and it supports hyperlinks. More details and the technical
 specifications can be found in the file
 <filename>KDVI-features.dvi</filename>.
 </para>
@@ -151,8 +151,8 @@ display. However, unless you are an expert in
 good idea to change these options.
 </para>
 <para>
-Safe values are <guilabel>1200 dpi / Lexmark</guilabel> for good
-quality, or <guilabel>600 dpi / LaserJet 4</guilabel> for medium quality
+Safe values are <guilabel>1200 DPI / Lexmark</guilabel> for good
+quality, or <guilabel>600 DPI / LaserJet 4</guilabel> for medium quality
 and faster display.
 </para>
 </listitem>
@@ -197,9 +197,8 @@ The following picture shows the second options dialog of &kdvi;.
 <term><guilabel>Show PostScript specials</guilabel></term>
 <listitem>
 <para>
-If this options is checked, &kdvi; will display
-&PostScript; graphics which are embedded into the &DVI;
-file.
+If this options is checked, &kdvi; will display &PostScript; graphics
+which are embedded into the &DVI; file.
 </para>
 
 <para>
@@ -213,7 +212,7 @@ leave the space blank.
 
 <note>
 <para>
-There is no standard way to embed &PostScript; graphics into a dvi
+There is no standard way to embed &PostScript; graphics into a &DVI;
 file. It may therefore happen that &kdvi; cannot properly display a
 graphic which works fine with other programs. Older versions of
 <command>xdvi</command> and <command>dvips</command> support the
@@ -233,8 +232,7 @@ document. You probably want to set this option.
 <para>
 Check this if you want &kdvi; to display hyperlinks. The appropriate
 parts of the text will be underlined in blue. You probably want to set
-this option.
-</para> 
+this option.  </para>
 </listitem>
 </varlistentry>
 </variablelist>
@@ -263,7 +261,7 @@ You may add printer names that will be available in the print dialog.
 <para>
 And last you can change the spooler command (defaults to
 <command>lpr</command>) that is supposed to read standard input. Option
-<option>-P</option> is appended when printing to nondefault printer.
+<option>-P</option> is appended when printing to non default printer.
 </para>
 
 <para>
@@ -285,9 +283,9 @@ Why is &kdvi; not displaying anything but a busy cursor?
 </question>
 <answer>
 <para>
-It is possible, that &kdvi; is searching for the pk-fonts from wrong
-places, and this can be very time consuming if these include network
-mounted filesystems. You can check for this with
+It is possible, that &kdvi; is searching for the <acronym>PK</acronym>
+fonts from wrong places, and this can be very time consuming if these
+include network mounted filesystems. You can check for this with
 <command>strace</command> and see below for a cure.
 </para>
 </answer>
@@ -296,15 +294,16 @@ mounted filesystems. You can check for this with
 <qandaentry>
 <question>
 <para>
-What can I do when &kdvi; does not find my PK-fonts?
+What can I do when &kdvi; does not find my <acronym>PK</acronym> fonts?
 </para>
 </question>
 <answer>
 <para>
 You must have correct settings for resolution and
 <command>Metafont</command> mode. If this does not help, you may set the
-field 'PK Font Path' in Preferences/Fonts to point to the list of
-directories to be searched for pk-fonts: <userinput><filename
+field <guilabel>PK Font Path</guilabel> in Preferences/Fonts to point to
+the list of directories to be searched for <acronym>PK</acronym> fonts:
+<userinput><filename
 class="directory">/var/lib/texmf/fonts/pk/ljfour/</filename>:<filename
 class="directory"><replaceable>/some/other/place</replaceable></filename></userinput>.
 You can make &kdvi; search recursively by adding an extra / at the end

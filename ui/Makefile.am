@@ -1,4 +1,4 @@
-INCLUDES = -I$(srcdir)/.. $(all_includes)
+INCLUDES = -I$(srcdir)/.. -I$(top_builddir)/kpdf $(all_includes)
 
 METASOURCES = AUTO
 

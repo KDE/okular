@@ -499,9 +499,8 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
             pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
             // 1) Layer 0: paint items and clear bg on unpainted rects
-            paintItems( &pixmapPainter, contentsRect );
-            // 2) Layer 1: pixmap manipulated areas
-            // 3) Layer 2: paint (blend) transparent selection
+            drawDocumentOnPainter( contentsRect, &pixmapPainter );
+            // 2) Layer 1: paint (blend) transparent selection
             if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
                  !selectionRectInternal.contains( contentsRect ) )
             {
@@ -524,7 +523,10 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 pixmapPainter.setPen( selBlendColor );
                 pixmapPainter.drawRect( selectionRect );
             }
-            // 4) Layer 3: overlays
+            // 3) Layer 1: give annotator painting control
+            if ( d->annotator && d->annotator->routePaints( contentsRect ) )
+                d->annotator->routePaint( &pixmapPainter, contentsRect );
+            // 4) Layer 2: overlays
             if ( Settings::debugDrawBoundaries() )
             {
                 pixmapPainter.setPen( Qt::blue );
@@ -538,16 +540,18 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
         else
         {
             // 1) Layer 0: paint items and clear bg on unpainted rects
-            paintItems( &screenPainter, contentsRect );
-            // 2) Layer 1: opaque manipulated ares (filled / contours)
-            // 3) Layer 2: paint opaque selection
+            drawDocumentOnPainter( contentsRect, &screenPainter );
+            // 2) Layer 1: paint opaque selection
             if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
                  !selectionRectInternal.contains( contentsRect ) )
             {
                 screenPainter.setPen( palette().active().highlight().dark(110) );
                 screenPainter.drawRect( selectionRect );
             }
-            // 4) Layer 3: overlays
+            // 3) Layer 1: give annotator painting control
+            if ( d->annotator && d->annotator->routePaints( contentsRect ) )
+                d->annotator->routePaint( &screenPainter, contentsRect );
+            // 4) Layer 2: overlays
             if ( Settings::debugDrawBoundaries() )
             {
                 screenPainter.setPen( Qt::red );
@@ -1094,7 +1098,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 QPixmap copyPix( selectionRect.width(), selectionRect.height() );
                 QPainter copyPainter( &copyPix );
                 copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
-                paintItems( &copyPainter, selectionRect );
+                drawDocumentOnPainter( selectionRect, &copyPainter );
 
                 if ( choice == 3 )
                 {
@@ -1249,7 +1253,7 @@ void PageView::dropEvent( QDropEvent * ev )
 }
 //END widget events
 
-void PageView::paintItems( QPainter * p, const QRect & contentsRect )
+void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 {
     // when checking if an Item is contained in contentsRect, instead of
     // growing PageViewItems rects (for keeping outline into account), we
@@ -1260,7 +1264,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
     // create a region from wich we'll subtract painted rects
     QRegion remainingArea( contentsRect );
 
-    //CHECK: QValueVector< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
+    // iterate over all items painting the ones intersecting contentsRect
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
@@ -1268,25 +1272,24 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
         if ( !(*iIt)->geometry().intersects( checkRect ) )
             continue;
 
+        // get item and item's outline geometries
         PageViewItem * item = *iIt;
-        QRect pixmapGeometry = item->geometry();
-
-        // translate the painter so we draw top-left pixmap corner in 0,0
-        p->save();
-        p->translate( pixmapGeometry.left(), pixmapGeometry.top() );
-
-        // item pixmap and outline geometry
-        QRect outlineGeometry = pixmapGeometry;
+        QRect itemGeometry = item->geometry(),
+              outlineGeometry = itemGeometry;
         outlineGeometry.addCoords( -1, -1, 3, 3 );
 
-        // draw the page outline (little black border and 2px shadow)
-        if ( !pixmapGeometry.contains( contentsRect ) )
+        // move the painter to the top-left corner of the page
+        p->save();
+        p->translate( itemGeometry.left(), itemGeometry.top() );
+
+        // draw the page outline (black border and 2px bottom-right shadow)
+        if ( !itemGeometry.contains( contentsRect ) )
         {
-            int pixmapWidth = pixmapGeometry.width(),
-                pixmapHeight = pixmapGeometry.height();
+            int itemWidth = itemGeometry.width(),
+                itemHeight = itemGeometry.height();
             // draw simple outline
             p->setPen( Qt::black );
-            p->drawRect( -1, -1, pixmapWidth + 2, pixmapHeight + 2 );
+            p->drawRect( -1, -1, itemWidth + 2, itemHeight + 2 );
             // draw bottom/right gradient
             int levels = 2;
             int r = Qt::gray.red() / (levels + 2),
@@ -1295,25 +1298,24 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
             for ( int i = 0; i < levels; i++ )
             {
                 p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
-                p->drawLine( i, i + pixmapHeight + 1, i + pixmapWidth + 1, i + pixmapHeight + 1 );
-                p->drawLine( i + pixmapWidth + 1, i, i + pixmapWidth + 1, i + pixmapHeight );
+                p->drawLine( i, i + itemHeight + 1, i + itemWidth + 1, i + itemHeight + 1 );
+                p->drawLine( i + itemWidth + 1, i, i + itemWidth + 1, i + itemHeight );
                 p->setPen( Qt::gray );
-                p->drawLine( -1, i + pixmapHeight + 1, i - 1, i + pixmapHeight + 1 );
-                p->drawLine( i + pixmapWidth + 1, -1, i + pixmapWidth + 1, i - 1 );
+                p->drawLine( -1, i + itemHeight + 1, i - 1, i + itemHeight + 1 );
+                p->drawLine( i + itemWidth + 1, -1, i + itemWidth + 1, i - 1 );
             }
         }
 
         // draw the page using the PagePainter whith all flags active
-        if ( contentsRect.intersects( pixmapGeometry ) )
+        if ( contentsRect.intersects( itemGeometry ) )
         {
-            QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
-            pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
+            QRect pixmapRect = contentsRect.intersect( itemGeometry );
+            pixmapRect.moveBy( -itemGeometry.left(), -itemGeometry.top() );
             int flags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                         PagePainter::EnhanceImages | PagePainter::Highlights |
                         PagePainter::Annotations;
-            PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, flags, p,
-                                             pixmapGeometry.width(), pixmapGeometry.height(),
-                                             pixmapRect );
+            PagePainter::paintPageOnPainter( p, item->page(), PAGEVIEW_ID, flags,
+                itemGeometry.width(), itemGeometry.height(), pixmapRect );
         }
 
         // remove painted area from 'remainingArea' and restore painter
@@ -1321,16 +1323,12 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
         p->restore();
     }
 
-    // paint with background color the unpainted area
+    // fill with background color the unpainted area
     QMemArray<QRect> backRects = remainingArea.rects();
     uint backRectsNumber = backRects.count();
     QColor backColor = /*d->items.isEmpty() ? Qt::lightGray :*/ Qt::gray;
     for ( uint jr = 0; jr < backRectsNumber; jr++ )
         p->fillRect( backRects[ jr ], backColor );
-
-    // paint annotation being created by the annotator
-    if ( d->annotator && d->annotator->routePaints( contentsRect ) )
-      d->annotator->routePaint( p, contentsRect );
 }
 
 void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight )

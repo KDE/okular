@@ -510,7 +510,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         {
             int flags = PagePainter::Accessibility | PagePainter::Highlights |
                         PagePainter::Annotations;
-            PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, flags, &p,
+            PagePainter::paintPageOnPainter( &p, m_page, THUMBNAILS_ID, flags,
                                              m_pixmapWidth, m_pixmapHeight, clipRect );
         }
 

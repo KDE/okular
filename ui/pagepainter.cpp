@@ -22,15 +22,15 @@
 #include "core/annotations.h"
 #include "conf/settings.h"
 
-void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
-    QPainter * destPainter, int scaledWidth, int scaledHeight, const QRect & limits )
+void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * page,
+    int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )
 {
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
     const QPixmap * pixmap = 0;
 
     // if a pixmap is present for given id, use it
-    if ( page->m_pixmaps.contains( id ) )
-        pixmap = page->m_pixmaps[ id ];
+    if ( page->m_pixmaps.contains( pixID ) )
+        pixmap = page->m_pixmaps[ pixID ];
 
     // else find the closest match using pixmaps of other IDs (great optim!)
     else if ( !page->m_pixmaps.isEmpty() )
@@ -128,7 +128,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         else
         {
             QImage destImage;
-            scalePixmapOnImage( pixmap, destImage, scaledWidth, scaledHeight, limits );
+            scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limits );
             destPainter->drawPixmap( limits.left(), limits.top(), destImage, 0, 0,
                                      limits.width(),limits.height() );
         }
@@ -144,9 +144,9 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
 
         // 4B.1. draw the page pixmap: normal or scaled
         if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-            cropPixmapOnImage( pixmap, backImage, limits );
+            cropPixmapOnImage( backImage, pixmap, limits );
         else
-            scalePixmapOnImage( pixmap, backImage, scaledWidth, scaledHeight, limits );
+            scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limits );
 
         // 4B.2. modify pixmap following accessibility settings
         if ( paintAccessibility )
@@ -267,7 +267,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             {
                 QPixmap pic = DesktopIcon( "kpdf" );
                 //QImage destImage;
-                //scalePixmapOnImage( &pic, destImage, annotRect.width(), annotRect.height(), QRect(0,0,annotRect.width(), annotRect.height()) );
+                //scalePixmapOnImage( destImage, &pic, annotRect.width(), annotRect.height(), QRect(0,0,annotRect.width(), annotRect.height()) );
                 //mixedPainter->drawPixmap( annotRect.left(), annotRect.top(), destImage, 0, 0, annotRect.width(), annotRect.height() );
                 pic = pic.convertToImage().scale( annotRect.width(), annotRect.height() );
                 mixedPainter->drawPixmap( annotRect.left(), annotRect.top(), pic, 0, 0, annotRect.width(), annotRect.height() );
@@ -319,7 +319,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
 
 
 /** Private Helpers :: Pixmap conversion **/
-void PagePainter::cropPixmapOnImage( const QPixmap * src, QImage & dest, const QRect & r )
+void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r )
 {
     // handle quickly the case in which the whole pixmap has to be converted
     if ( r == QRect( 0, 0, src->width(), src->height() ) )
@@ -335,7 +335,7 @@ void PagePainter::cropPixmapOnImage( const QPixmap * src, QImage & dest, const Q
     }
 }
 
-void PagePainter::scalePixmapOnImage ( const QPixmap * src, QImage & dest,
+void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     int scaledWidth, int scaledHeight, const QRect & cropRect )
 {
     // {source, destination, scaling} params
@@ -370,9 +370,5 @@ void PagePainter::scalePixmapOnImage ( const QPixmap * src, QImage & dest,
 }
 
 /** Private Helpers :: Image Drawing **/
-void image_draw_line( const QImage & img, bool antiAlias = true )
-{
-    
-}
-
+//void image_draw_line( const QImage & img, bool antiAlias = true ) {}
 

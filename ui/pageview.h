@@ -85,8 +85,8 @@ class PageView : public QScrollView, public DocumentObserver
         void dropEvent( QDropEvent* );
 
     private:
-        // draw items on the opened qpainter
-        void paintItems( QPainter * p, const QRect & clipRect );
+        // draw background and items on the opened qpainter
+        void drawDocumentOnPainter( const QRect & pageViewRect, QPainter * p );
         // update item width and height using current zoom parameters
         void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space

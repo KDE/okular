@@ -29,21 +29,19 @@ class PagePainter
         // draw (using painter 'p') the 'page' requested by 'id' using features
         // in 'flags'. 'limits' is the bounding rect of the paint operation,
         // 'scaledWidth' and 'scaledHeight' the expected size of page contents
-        static void paintPageOnPainter( const KPDFPage * page, int id, int flags,
-            QPainter * p, int scaledWidth, int scaledHeight, const QRect & pageLimits );
-
-        //static void paintPageOnImage(  const KPDFPage * page, int id, int flags,
-        //    QPainter * p, int scaledWidth, int scaledHeight, const QRect & pageLimits );
+        static void paintPageOnPainter( QPainter * p, const KPDFPage * page, int pixID,
+            int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
 
     private:
         // create an image taking the 'cropRect' portion of a pixmap. the
         // cropRect must be inside the source pixmap
-        static void cropPixmapOnImage( const QPixmap * src, QImage & dest,
+        static void cropPixmapOnImage( QImage & dest, const QPixmap * src,
             const QRect & cropRect );
+
         // create an image taking the 'cropRect' portion of a pixmap scaled
         // to 'scaledWidth' by 'scaledHeight' pixels. cropRect must be inside
         // the QRect(0,0, scaledWidth,scaledHeight)
-        static void scalePixmapOnImage( const QPixmap * src, QImage & dest,
+        static void scalePixmapOnImage( QImage & dest, const QPixmap * src,
             int scaledWidth, int scaledHeight, const QRect & cropRect );
 };
 

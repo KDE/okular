@@ -336,7 +336,18 @@ QString XPDFErrorTranslator::translateError(const QString & originalError) {
 		translationmap["Unknown security handler '%s'"] = i18n("Unknown security handler '%s'");
 		translationmap["PDF file is encrypted and this version of the Xpdf tools"] = i18n("PDF file is encrypted and this version of the Xpdf tools");
 		translationmap["was built without decryption support."] = i18n("was built without decryption support.");
-		
+		translationmap["Couldn't run print command '%s'"] = i18n("Could not run print command '%s'");
+		translationmap["Print commands are not supported ('%s')"] = i18n("Print commands are not supported ('%s')");
+		translationmap["Couldn't open PostScript file '%s'"] = i18n("Could not open PostScript file '%s'");
+		translationmap["Couldn't find Unicode map for 16-bit font encoding '%s'"] = i18n("Could not find Unicode map for 16-bit font encoding '%s'");
+		translationmap["Couldn't find a font to substitute for '%s' ('%s' character collection)"] = i18n("Could not find a font to substitute for '%s' ('%s' character collection)");
+		translationmap["Embedded font file object is not a stream"] = i18n("Embedded font file object is not a stream");
+		translationmap["Embedded font stream is missing its dictionary"] = i18n("Embedded font stream is missing its dictionary");
+		translationmap["Missing length fields in embedded font stream dictionary"] = i18n("Missing length fields in embedded font stream dictionary");
+		translationmap["Unexpected end of file in embedded font stream"] = i18n("Unexpected end of file in embedded font stream");
+		translationmap["Couldn't open external font file"] = i18n("Could not open external font file");
+		translationmap["Image in resource dict is not an indirect reference"] = i18n("Image in resource dict is not an indirect reference");
+		translationmap["Internal: OPI in inline image"] = i18n("Internal: OPI in inline image");
 		
 		mapNotInitialised = false;
 	}

@@ -52,3 +52,4 @@ part_DATA = kdvi_part.rc
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@
 
+# serial num for Makefile.am to retrigger remake: 1

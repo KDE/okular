@@ -550,21 +550,22 @@ void dviWindow::setFile( const char *fname )
 
 //------ class private stuff, scrolling----------
 
-#define SBW 16
 
 void dviWindow::setChildrenGeometries(int doupdate)
 {
 	int oldhc = hclip;
-	int oldvc = vclip;
+        int oldvc = vclip;
+        int sbw = QApplication::style().scrollBarExtent().width();
+        int sbh = QApplication::style().scrollBarExtent().height();
 
 	// deside if scrollbars needed
 
 	hscroll = vscroll = 0;
 	if (showsbs)
 	{
-		if ( width()		< int(page_w) ) hscroll = SBW;
-		if ( height() - hscroll < int(page_h) ) vscroll = SBW;
-		if ( width()  - vscroll < int(page_w) ) hscroll = SBW;
+		if ( width()		< int(page_w) ) hscroll = sbw;
+		if ( height() - hscroll < int(page_h) ) vscroll = sbh;
+		if ( width()  - vscroll < int(page_w) ) hscroll = sbw;
 	}
 
 	// store clip sizes
@@ -577,7 +578,7 @@ void dviWindow::setChildrenGeometries(int doupdate)
 	if (hscroll)
 	{
 		hsb->show();
-		hsb->setGeometry( 0, vclip, hclip, hscroll );
+		hsb->setGeometry( 0, vclip, hclip, sbh );
 		hsb->setRange( 0, page_w - hclip );
 		hsb->setValue( base.x() );
 		hsb->setSteps( 15, hclip );
@@ -588,7 +589,7 @@ void dviWindow::setChildrenGeometries(int doupdate)
 	if (vscroll)
 	{
 		vsb->show();
-		vsb->setGeometry( hclip, 0, vscroll, vclip );
+		vsb->setGeometry( hclip, 0, sbw, vclip );
 		vsb->setRange( 0, page_h - vclip );
 		vsb->setValue( base.y() );
 		vsb->setSteps( 15, vclip );
@@ -598,7 +599,7 @@ void dviWindow::setChildrenGeometries(int doupdate)
 
 	if (hscroll&&vscroll)
 	{
-		block.setGeometry( hclip, vclip, SBW, SBW );
+		block.setGeometry( hclip, vclip, sbw, sbh );
 		block.show();
 	}
 	else

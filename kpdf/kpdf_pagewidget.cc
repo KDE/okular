@@ -273,9 +273,6 @@ namespace KPDF
     {
         if ( m_doc )
         {
-            const double pageWidth  = m_doc->getPageWidth (m_currentPage) * m_zoomFactor;
-            const double pageHeight = m_doc->getPageHeight(m_currentPage) * m_zoomFactor;
-
             // Pixels per point when the zoomFactor is 1.
             const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
 

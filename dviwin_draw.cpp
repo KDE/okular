@@ -198,7 +198,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     currinf.data.dvi_h = dvi_h_sav;
   else
     currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
-				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+				(1200.0 / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 
   word_boundary_encountered = false;
   line_boundary_encountered = false;
@@ -237,7 +237,7 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
   Q_UINT8 *end_ptr_sav      = end_pointer;
   command_pointer           = m->pos;
   end_pointer               = m->end;
-  draw_part(currinf.fontp->scaled_size_in_DVI_units*(dviFile->getCmPerDVIunit() * MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0, true);
+  draw_part(currinf.fontp->scaled_size_in_DVI_units*(dviFile->getCmPerDVIunit() * 1200.0 / 2.54)/16.0, true);
   command_pointer           = command_ptr_sav;
   end_pointer               = end_ptr_sav;
   currinf = oldinfo;
@@ -246,7 +246,7 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
     currinf.data.dvi_h = dvi_h_sav;
   else
     currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
-				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+				(1200.0 / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 }
 
 
@@ -357,8 +357,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	    line_boundary_encountered = true;
 	  }
 	  command_pointer += 11 * 4;
-	  currinf.data.dvi_h = MFResolutions[font_pool.getMetafontMode()] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-	  currinf.data.dvi_v = MFResolutions[font_pool.getMetafontMode()];
+	  currinf.data.dvi_h = 1200 << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
+	  currinf.data.dvi_v = 1200;
 	  currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
 	  currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
 	  break;
@@ -618,8 +618,7 @@ void dviRenderer::draw_page(void)
   currinf.fonttable      = &(dviFile->tn_table);
   currinf._virtual       = 0;
   
-  double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 
-    MFResolutions[font_pool.getMetafontMode()]/2.54;
+  double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
   
   draw_part(65536.0*fontPixelPerDVIunit, false);
   if (HTML_href != 0) {

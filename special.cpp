@@ -298,7 +298,7 @@ void dviRenderer::epsf_special(QString cp)
       bbox_height = rhi;
     }
 
-    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * MFResolutions[font_pool.getMetafontMode()]/2.54;
+    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
     
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
@@ -324,7 +324,7 @@ void dviRenderer::epsf_special(QString cp)
       bbox_height = rhi;
     }
 
-    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * MFResolutions[font_pool.getMetafontMode()]/2.54;
+    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
     
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;

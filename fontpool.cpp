@@ -29,9 +29,9 @@
 
 // List of permissible MetaFontModes which are supported by kdvi.
 
-const char *MFModes[]       = { "cx", "ljfour", "lexmarks" };
-const char *MFModenames[]   = { "Canon CX", "LaserJet 4", "Lexmark S" };
-const int   MFResolutions[] = { 300, 600, 1200 };
+//const char *MFModes[]       = { "cx", "ljfour", "lexmarks" };
+//const char *MFModenames[]   = { "Canon CX", "LaserJet 4", "Lexmark S" };
+//const int   MFResolutions[] = { 300, 600, 1200 };
 
 #ifdef PERFORMANCE_MEASUREMENT
 QTime fontPoolTimer;
@@ -57,7 +57,6 @@ fontPool::fontPool(void)
   setName("Font Pool");
 
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
-  MetafontMode             = DefaultMFMode;
   useFontHints             = true;
   CMperDVIunit             = 0;
   extraSearchPath          = QString::null;
@@ -118,28 +117,8 @@ fontPool::~fontPool(void)
 }
 
 
-void fontPool::setParameters( unsigned int _metafontMode, bool _useFontHints )
+void fontPool::setParameters( bool _useFontHints )
 {
-  if (_metafontMode >= NumberOfMFModes) {
-    kdError(4300) << "fontPool::setMetafontMode called with argument " << _metafontMode
-		  << " which is more than the allowed value of " << NumberOfMFModes-1 << endl;
-    kdError(4300) << "setting mode to " << MFModes[DefaultMFMode] << " at "
-		  << MFResolutions[DefaultMFMode] << "dpi" << endl;
-    _metafontMode = DefaultMFMode;
-  }
-
-  bool kpsewhichNeeded = false;
-
-  // Check if a new run of kpsewhich is required
-  if (_metafontMode != MetafontMode) {
-    TeXFontDefinition *fontp = fontList.first();
-    while(fontp != 0 ) {
-      fontp->reset();
-      fontp = fontList.next();
-    }
-    kpsewhichNeeded = true;
-  }
-
   // Check if glyphs need to be cleared
   if (_useFontHints != useFontHints) {
     double displayResolution = displayResolution_in_dpi;
@@ -150,12 +129,7 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _useFontHints )
     }
   }
 
-  MetafontMode = _metafontMode;
   useFontHints = _useFontHints;
-
-  // Initiate a new concurrently running process of kpsewhich, if
-  // necessary. Otherwise, let the dvi window be redrawn
-  locateFonts();
 }
 
 
@@ -314,16 +288,6 @@ void fontPool::locateFonts(void)
 
 void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound)
 {
-  // Just make sure that MetafontMode is in the permissible range, so
-  // as to avoid segfaults.
-  if (MetafontMode >= NumberOfMFModes) {
-    kdError(4300) << "fontPool::locateFonts called with bad MetafontMode " << MetafontMode
-		  << " which is more than the allowed value of " << NumberOfMFModes-1 << endl
-		  << "setting mode to " << MFModes[DefaultMFMode] << " at "
-		  << MFResolutions[DefaultMFMode] << "dpi" << endl;
-    MetafontMode = DefaultMFMode;
-  }
-  
   // Set up the kpsewhich process. If pass == 0, look for vf-fonts and
   // disable automatic font generation as vf-fonts can't be
   // generated. If pass == 0, ennable font generation, if it was
@@ -345,8 +309,8 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // Now generate the command line for the kpsewhich
   // program. Unfortunately, this can be rather long and involved...
   shellProcessCmdLine += "kpsewhich";
-  shellProcessCmdLine += QString("--dpi %1").arg(MFResolutions[MetafontMode]);
-  shellProcessCmdLine += QString("--mode %1").arg(KShellProcess::quote(MFModes[MetafontMode]));
+  shellProcessCmdLine += QString("--dpi 1200");
+  shellProcessCmdLine += QString("--mode lexmarks");
   
   // Disable automatic pk-font generation.
   if (makePK == true)
@@ -372,7 +336,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 	}
 #endif
 	shellProcessCmdLine += KShellProcess::quote(QString("%1.vf").arg(fontp->fontname));
-	shellProcessCmdLine += KShellProcess::quote(QString("%2.%1pk").arg(MFResolutions[MetafontMode]).arg(fontp->fontname));
+	shellProcessCmdLine += KShellProcess::quote(QString("%1.1200pk").arg(fontp->fontname));
       }
     }
     fontp=fontList.next();

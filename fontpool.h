@@ -26,12 +26,6 @@
 class KProcess;
 class KShellProcess;
 
-#define NumberOfMFModes 3
-#define DefaultMFMode 1
-
-extern const char *MFModes[];
-extern const char *MFModenames[];
-extern const int   MFResolutions[];
 
 /**
  *  A list of fonts and a compilation of utility functions
@@ -56,17 +50,10 @@ public:
  ~fontPool( void );
  
  /** Method used to set the MetafontMode for the PK font files. This
-     data is used when loading fonts. Currently, a change here will
-     be applied only to those font which were not yet loaded
-     ---expect funny results when changing the data in the
-     mid-work. The integer argument must be smaller than
-     NumberOfMFModes, which is defined in fontpool.h and refers to a
-     Mode/Resolution pair in the lists MFModes and MFResolutins which
-     are also defined in fontpool.h and implemented in
-     fontpool.cpp. Returns the mode number of the mode which was
-      actually set ---if an invalid argument is given, this will be
-      the DefaultMFMode as defined in fontPool.h */
- void setParameters( unsigned int MetaFontMode, bool useFontHints );
+     data is used when loading fonts. Currently, a change here will be
+     applied only to those font which were not yet loaded ---expect
+     funny results when changing the data in the mid-work. */
+ void setParameters( bool useFontHints );
  
  /** Sets the DVI file's path. This information is used to set the
      current working directory for the kpsewhich command, so that
@@ -78,9 +65,6 @@ public:
      for the kpsewhich command, so that kpsewhich will find fonts
      that are stored in the DVI file's directory. */ 
  QString getExtraSearchPath( ) const {return extraSearchPath;};
- 
- /** Returns the currently set MetafontMode */
- unsigned int getMetafontMode(void) const {return MetafontMode;}
  
  /** Sets the resolution of the output device. */
  void setDisplayResolution( double _displayResolution_in_dpi );
@@ -176,13 +160,6 @@ private:
  // This flag is used by PFB fonts to determine if the FREETYPE engine
  // should use hinted fonts or not
  bool           useFontHints; 
- 
- // This integer determines the Metafont-Mode which is used in
- // generating bitmaps. The value must satisfy 0 <= MetafontMode <
- // NumberOfMFModes, and refers to an entry in the lists
- // MFModenames/MFModes and MFResolutions which are defined in
- // fontpool.cpp
- unsigned int   MetafontMode;
  
  // Resolution of the output device.
  double         displayResolution_in_dpi;

@@ -248,12 +248,10 @@ void KDVIMultiPage::preferencesChanged()
   kdDebug(4300) << "preferencesChanged" << endl;
 #endif
 
-  int mfmode = Prefs::metafontMode();
-
   bool showPS = Prefs::showPS();
   bool useFontHints = Prefs::useFontHints();
 
-  DVIRenderer.setPrefs( showPS, Prefs::editorCommand(), mfmode, useFontHints);
+  DVIRenderer.setPrefs( showPS, Prefs::editorCommand(), useFontHints);
 }
 
 

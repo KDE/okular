@@ -161,7 +161,7 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
       ((g->shrunkenCharacter.isNull()) || (color != g->color)) &&
       (characterBitmaps[ch]->w != 0)) {
     g->color = color;
-    double shrinkFactor = MFResolutions[parent->font_pool->getMetafontMode()] / parent->displayResolution_in_dpi;
+    double shrinkFactor = 1200 / parent->displayResolution_in_dpi;
     
     // All is fine? Then we rescale the bitmap in order to produce the
     // required pixmap.  Rescaling a character, however, is an art

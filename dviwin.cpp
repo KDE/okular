@@ -113,12 +113,11 @@ dviRenderer::~dviRenderer()
 }
 
 
-void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, 
-			 unsigned int MetaFontMode, bool useFontHints )
+void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, bool useFontHints )
 {
   _postscript = flag_showPS;
   editorCommand = str_editorCommand;
-  font_pool.setParameters(MetaFontMode, useFontHints );
+  font_pool.setParameters( useFontHints );
   emit(needsRepainting());
 }
 
@@ -168,7 +167,7 @@ void dviRenderer::drawPage(double resolution, documentPage *page)
     setResolution(resolution);
   
   currentlyDrawnPage     = page;
-  shrinkfactor           = MFResolutions[font_pool.getMetafontMode()]/resolutionInDPI;
+  shrinkfactor           = 1200/resolutionInDPI;
   current_page           = page->getPageNumber()-1;
   
   
@@ -632,7 +631,7 @@ void dviRenderer::setResolution(double resolution_in_DPI)
   
   // Pass the information on to the font pool. 
   font_pool.setDisplayResolution( resolutionInDPI );
-  shrinkfactor = MFResolutions[font_pool.getMetafontMode()]/(resolutionInDPI);
+  shrinkfactor = 1200/resolutionInDPI;
   return;
 }
 

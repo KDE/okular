@@ -293,8 +293,8 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(QString cp)
 
 #endif
   
-  double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
-  double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
+  double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
+  double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
   PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
   PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
   PostScriptOutPutString->append( cp );
@@ -338,8 +338,8 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
   }
   
   
-  double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
-  double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
+  double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
+  double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
   
   if (cp.find("ps::[begin]", 0, false) == 0) {
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
@@ -419,8 +419,8 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
 
 
   if (QFile::exists(EPSfilename)) {
-    double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
-    double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
+    double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
+    double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( "@beginspecial " );
     PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
@@ -547,7 +547,7 @@ void dviRenderer::prescan_setChar(unsigned int ch)
     if (g == NULL)
       return;
     currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
-				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+				(1200.0 / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
     return;
   }
  
@@ -556,7 +556,7 @@ void dviRenderer::prescan_setChar(unsigned int ch)
     if (m->pos == NULL) 
       return;
     currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
-				(MFResolutions[font_pool.getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+				(1200.0 / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
     return;
   }
 }
@@ -573,8 +573,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
 
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   Q_UINT8 ch;
-  double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 
-    MFResolutions[font_pool.getMetafontMode()]/2.54;
+  double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
 
   stack.clear();
 
@@ -627,8 +626,8 @@ void dviRenderer::prescan(parseSpecials specialParser)
       
     case BOP:
       command_pointer += 11 * 4;
-      currinf.data.dvi_h = MFResolutions[font_pool.getMetafontMode()] << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
-      currinf.data.dvi_v = MFResolutions[font_pool.getMetafontMode()];
+      currinf.data.dvi_h = 1200 << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
+      currinf.data.dvi_v = 1200;
       currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
       currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
       break;

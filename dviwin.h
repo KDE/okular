@@ -100,8 +100,7 @@ public:
 
   class dvifile *dviFile;
 
-  void          setPrefs(bool flag_showPS, const QString &editorCommand, 
-			 unsigned int MetaFontMode, bool useFontHints );
+  void          setPrefs(bool flag_showPS, const QString &editorCommand, bool useFontHints );
 
   virtual bool  supportsTextSearch(void) {return true;};
 

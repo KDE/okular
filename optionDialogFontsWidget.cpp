@@ -25,10 +25,6 @@
 optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* name, WFlags fl )
     : optionDialogFontsWidget_base( parent,  name, fl )
 {
-  // Important! The default values here must be the same as in kdvi_multipage.cpp
-  for(int i=0; i<NumberOfMFModes; i++)
-    kcfg_MetafontMode->insertItem(QString("%1 dpi / %2").arg(MFResolutions[i]).arg(MFModenames[i]));
-  
 #ifndef HAVE_FREETYPE
   kcfg_UseType1Fonts->setChecked(false);
   kcfg_UseType1Fonts->setEnabled(false);

@@ -14,6 +14,7 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
+// This file follows coding style described in kdebase/kicker/HACKING
 
 #ifndef _KPDF_PAGEVIEW_H_
 #define _KPDF_PAGEVIEW_H_
@@ -21,7 +22,6 @@
 #include <qscrollview.h>
 #include <qvaluevector.h>
 
-//#include "CharTypes.h"
 #include "document.h"
 
 class KURL;
@@ -29,91 +29,88 @@ class KActionCollection;
 
 class PageWidget;
 class PageViewPrivate;
-class KToggleAction;
 
 /**
  * @short The main view. Handles zoom and continous mode.. oh, and page
  * @short display of course :-)
- *
+ * ...
  */
 class PageView : public QScrollView, public KPDFDocumentObserver
 {
-Q_OBJECT
+    Q_OBJECT
 
-public:
-    PageView( QWidget *parent, KPDFDocument *document );
-    ~PageView();
+    public:
+        PageView( QWidget *parent, KPDFDocument *document );
+        ~PageView();
 
-    // Zoom mode ( last 4 are internally used only! )
-    enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,
-                    ZoomIn, ZoomOut, ZoomRefreshCurrent, ZoomRect };
-    enum MouseMode { MouseNormal, MouseSelection, MouseEdit };
+        // Zoom mode ( last 4 are internally used only! )
+        enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,
+                        ZoomIn, ZoomOut, ZoomRefreshCurrent, ZoomRect };
+        enum MouseMode { MouseNormal, MouseSelection, MouseEdit };
 
-    // create actions that interact with this widget
-    void setupActions( KActionCollection * collection );
+        // create actions that interact with this widget
+        void setupActions( KActionCollection * collection );
 
-    // inherited from KPDFDocumentObserver
-    uint observerId() const { return PAGEVIEW_ID; }
-    void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
-    void pageSetCurrent( int pageNumber, const QRect & viewport );
-    void notifyPixmapChanged( int pageNumber );
+        // inherited from KPDFDocumentObserver
+        uint observerId() const { return PAGEVIEW_ID; }
+        void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
+        void pageSetCurrent( int pageNumber, const QRect & viewport );
+        void notifyPixmapChanged( int pageNumber );
 
-protected:
-    void contentsMousePressEvent( QMouseEvent* );
-    void contentsMouseReleaseEvent( QMouseEvent* );
-    void contentsMouseMoveEvent( QMouseEvent* );
+    signals:
+        void urlDropped( const KURL& );
+        void rightClick();
 
-    void keyPressEvent( QKeyEvent* );
-    void wheelEvent( QWheelEvent* );
-    void viewportResizeEvent( QResizeEvent* );
+    protected:
+        // main draw loop, draws pageViews on viewport
+        void drawContents( QPainter * p, int clipx, int clipy, int clipw, int cliph );
+        void viewportResizeEvent( QResizeEvent* );
 
-    void dragEnterEvent( QDragEnterEvent* );
-    void dropEvent( QDropEvent* );
+        // mouse / keyboard events
+        void keyPressEvent( QKeyEvent* );
+        void contentsMouseMoveEvent( QMouseEvent* );
+        void contentsMousePressEvent( QMouseEvent* );
+        void contentsMouseReleaseEvent( QMouseEvent* );
+        void wheelEvent( QWheelEvent* );
 
-signals:
-    void urlDropped( const KURL& );
-    void rightClick();
+        // drag and drop related events
+        void dragEnterEvent( QDragEnterEvent* );
+        void dropEvent( QDropEvent* );
 
-private slots:
-    // connected to local actions
-    void slotZoom();
-    void slotZoomIn();
-    void slotZoomOut();
-    void slotFitToWidthToggled( bool );
-    void slotFitToPageToggled( bool );
-    void slotFitToTextToggled( bool );
-    void slotFitToRectToggled( bool );
-    void slotTwoPagesToggled( bool );
-    void slotContinousToggled( bool );
-    void slotSetMouseNormal();
-    void slotSetMouseSelect();
-    void slotSetMouseDraw();
-    void slotScrollUp();
-    void slotScrollDown();
+    private:
+        // update internal zoom values and end in a slotRelayoutPages();
+        void updateZoom( ZoomMode newZm );
+        // update the text on the label using global zoom value or current page's one
+        void updateZoomText();
+        // return the widget placed on a certain point or 0 if clicking on empty space
+        PageWidget * pickPageOnPoint( int x, int y );
 
-    // activated either directly or via QTimer on the viewportResizeEvent
-    void slotRelayoutPages();
-    // activated either directly or via the contentsMoving(int,int) signal
-    void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
-    // activated by the autoscroll timer (Shift+Up/Down keys)
-    void slotAutoScoll();
+        // don't want to expose classes in here
+        class PageViewPrivate * d;
 
-private:
-    // update internal zoom values and end in a slotRelayoutPages();
-    void updateZoom( ZoomMode newZm );
-    // update the text on the label using global zoom value or current page's one
-    void updateZoomText();
-    // return the widget placed on a certain point or 0 if clicking on empty space
-    PageWidget * pickPageOnPoint( int x, int y );
+    private slots:
+        // activated either directly or via QTimer on the viewportResizeEvent
+        void slotRelayoutPages();
+        // activated either directly or via the contentsMoving(int,int) signal
+        void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
+        // activated by the autoscroll timer (Shift+Up/Down keys)
+        void slotAutoScoll();
 
-    // FIXME REMOVE ME what does atTop() means if I see 4 tiled pages on screen ?
-    bool atTop()    const;
-    bool atBottom() const;
-    void scrollUp();
-    void scrollDown();
-    KToggleAction * md;
-    // don't want to expose classes in here
-    class PageViewPrivate * d;
+        // connected to local actions
+        void slotZoom();
+        void slotZoomIn();
+        void slotZoomOut();
+        void slotFitToWidthToggled( bool );
+        void slotFitToPageToggled( bool );
+        void slotFitToTextToggled( bool );
+        void slotFitToRectToggled( bool );
+        void slotTwoPagesToggled( bool );
+        void slotContinousToggled( bool );
+        void slotSetMouseNormal();
+        void slotSetMouseSelect();
+        void slotSetMouseDraw();
+        void slotScrollUp();
+        void slotScrollDown();
 };
 
 #endif

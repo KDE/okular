@@ -11,6 +11,7 @@
 #define THUMBNAILLIST_H
 
 #include <qtable.h>
+#include "document.h"
 
 class QImage;
 
@@ -18,13 +19,26 @@ class PDFDoc;
 
 class ThumbnailGenerator;
 
-class ThumbnailList : public QTable
+class ThumbnailList : public QTable, public KPDFDocumentObserver
 {
 Q_OBJECT
 	public:
 		ThumbnailList(QWidget *parent, QMutex *docMutex);
 		~ThumbnailList();
-		
+
+		// inherited as KPDFDocumentObserver
+		void pageSetup( const QValueList<int> & pages )
+		{
+			// TODO use a qvaluelist<int> to pass aspect ratio?
+			// TODO move it the thumbnail list?
+			setPages( pages.count(), 2 );
+			//generateThumbnails(d->pdfdoc);
+		}
+		void pageSetCurrent( int /*pageNumber*/, float /*position*/ )
+		{
+			//setCurrentThumbnail(m_currentPage);
+		}
+
 		void setCurrentThumbnail(int i);
 		void setPages(int i, double ar);
 		

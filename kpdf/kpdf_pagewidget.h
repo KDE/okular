@@ -16,6 +16,7 @@
 #define _KPDF_PAGEWIDGET_H_
 
 #include <qscrollview.h>
+#include "document.h"
 
 #include "CharTypes.h"
 
@@ -34,7 +35,7 @@ namespace KPDF
     /**
      * Widget displaying a pixmap containing a PDF page and Links.
      */
-    class PageWidget : public QScrollView
+    class PageWidget : public QScrollView, public KPDFDocumentObserver
     {
         Q_OBJECT
 
@@ -46,6 +47,16 @@ namespace KPDF
         void setPDFDocument(PDFDoc*);
         void setPixelsPerPoint(float);
         /* void setLinks(); */
+
+		// inherited from KPDFDocumentObserver
+		void pageSetup( const QValueList<int> & /*pages*/ )
+		{/*
+			m_outputDev->setPDFDocument(d->pdfdoc);
+		*/}
+		void pageSetCurrent( int /*pageNumber*/, float /*position*/ )
+		{
+			//m_pageWidget->setPage(m_currentPage);
+		}
 
         void setPage(int pagenum);
         void enableScrollBars( bool b );
@@ -107,6 +118,40 @@ namespace KPDF
         double m_xMin, m_yMin, m_xMax, m_yMax;
     };
 }
+
+/*
+    ZoomMode m_zoomMode;
+    float    m_zoomFactor;
+     // Do with these first. We can always add the other zoommodes which can
+     // be specified in a Destination later.
+     enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
+*/
+
+/*
+  connect( m_pageWidget, SIGNAL( ReadUp() ), SLOT( slotReadUp() ));
+  connect( m_pageWidget, SIGNAL( ReadDown() ), SLOT( slotReadDown() ));
+  connect( m_pageWidget, SIGNAL( spacePressed() ), this, SLOT( slotReadDown() ) );
+void Part::slotReadUp()
+{
+	if( !m_doc )
+	return;
+
+	if( !m_pageWidget->readUp() ) {
+		if ( previousPage() )
+			m_pageWidget->scrollBottom();
+	}
+}
+void Part::slotReadDown()
+{
+	if( !m_doc )
+	return;
+
+	if( !m_pageWidget->readDown() ) {
+		if ( nextPage() )
+			m_pageWidget->scrollTop();
+	}
+}
+*/
 
 #endif
 

@@ -154,8 +154,8 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *)
 			{
 				m_heightLimit = (int) ceil(numRows() * ((visibleWidth() + verticalScrollBar() -> width()) * m_ar + t -> labelSizeHintHeight()));
 			}
-        }
-    }
+		}
+	}
 }
 
 void ThumbnailList::resizeThumbnails()
@@ -166,7 +166,7 @@ void ThumbnailList::resizeThumbnails()
 		t = dynamic_cast<Thumbnail *>(cellWidget(i, 0));
 		t->setImageSize((int)(visibleWidth()*m_ar), visibleWidth());
 		setRowHeight(i, (int)(visibleWidth()*m_ar) + t->labelSizeHintHeight());
-    }
+	}
 }
 
 void ThumbnailList::emitClicked(int i)

@@ -43,11 +43,12 @@ namespace KPDF
         paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
         m_outputdev = new QOutputDev(paperColor);
         setFocusPolicy( QWidget::StrongFocus );
+        setAcceptDrops( true );
         viewport()->setFocusPolicy( QWidget::WheelFocus );
 
-	QPushButton * w = new QPushButton( viewport() );
-	w->setPixmap( SmallIcon("up") );
-	setCornerWidget( w );
+        QPushButton * w = new QPushButton( viewport() );
+        w->setPixmap( SmallIcon("up") );
+        setCornerWidget( w );
     }
     PageWidget::~PageWidget()
     {
@@ -306,12 +307,10 @@ namespace KPDF
         if ( m_doc )
         {
             // Pixels per point when the zoomFactor is 1.
-            const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
-
-            const float ppp = basePpp * m_zoomFactor; // pixels per point
+            const float ppp = (float)QPaintDevice::x11AppDpiX() * m_zoomFactor; // pixels per point
 
             m_docMutex->lock();
-            m_doc->displayPage(m_outputdev, m_currentPage, ppp * 72.0, ppp * 72.0, 0, true, true);
+            m_doc->displayPage(m_outputdev, m_currentPage, ppp, ppp, 0, true, true);
             m_docMutex->unlock();
 
             resizeContents ( m_outputdev->getImage().width ( ), m_outputdev->getImage().height ( ));

@@ -115,7 +115,7 @@ Shell::setupActions()
   KStdAction::open(this, SLOT(fileOpen()), actionCollection());
   recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
 				    actionCollection() );
-  KStdAction::print(m_part, SLOT(print()), actionCollection());
+  KStdAction::print(m_part, SLOT(slotPrint()), actionCollection());
   KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
 
 

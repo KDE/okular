@@ -32,11 +32,12 @@ class KSelectAction;
 
 class LinkAction;
 class LinkDest;
-class PDFDoc;
 class XOutputDev;
 
 class ThumbnailList;
 class PDFPartView;
+
+class KPDFDocument;
 
 namespace KPDF
 {
@@ -49,131 +50,105 @@ namespace KPDF
    *
    * @short Main Part
    * @author Wilco Greven <greven@kde.org>
-   * @version 0.1
+   * @version 0.2
    */
   class Part : public KParts::ReadOnlyPart
   {
-    Q_OBJECT
+	Q_OBJECT
 
   public:
-     // Do with these first. We can always add the other zoommodes which can
-     // be specified in a Destination later.
-     enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
 
-    /**
-     * Default constructor
-     */
-    Part(QWidget* parentWidget, const char* widgetName,
-         QObject* parent, const char* name, const QStringList& args);
+	/**
+	* Default constructor
+	*/
+	Part(QWidget* parentWidget, const char* widgetName,
+	     QObject* parent, const char* name, const QStringList& args);
 
-    /**
-     * Destructor
-     */
-    virtual ~Part();
+	/**
+	* Destructor
+	*/
+	virtual ~Part();
 
-    static KAboutData* createAboutData();
+	static KAboutData* createAboutData();
 
-    bool closeURL();
+	// reimplemented from KParts::ReadOnlyPart
+	bool closeURL();
 
-      void displayPage(int pageNumber, float zoomFactor = 1.0);
-    /*void displayDestination(LinkDest*);*/
-      void updateActionPage();
-      PageWidget* pageWidget() const {return m_outputDev;}
-
-  public slots:
-    void print();
-
-  signals:
-    void rightClick();
-
+	void displayPage(int pageNumber ); //TODO REMOVE ME!
 
   protected:
-    /**
-     * This must be implemented by each part
-     */
-    virtual bool openFile();
+	// reimplemented from KParts::ReadOnlyPart
+	virtual bool openFile();
 
-      void update();
-      void readSettings();
-      void writeSettings();
-      bool nextPage();
-      bool previousPage();
-      void updateAction();
-      void goToPage( int page );
-      void doPrint( KPrinter& printer );
+	void readSettings();
+	void writeSettings();
+	void updateAction();
+	void doPrint( KPrinter& printer );
 
   protected slots:
-    void find();
-    void findNext();
-    void zoomIn()   { m_zoomFactor += 0.1; update(); };
-    void zoomOut()  { m_zoomFactor -= 0.1; update(); };
-    void back()     { /* stub */ };
-    void forward()  { /* stub */ };
-    void slotNextPage();
-    void slotPreviousPage();
-    void slotGotoEnd();
-    void slotGotoStart();
-    void slotGoToPage();
-    void printPreview();
+	// connected to actions
+	void slotGoToPage();
+	void slotPreviousPage();
+	void slotNextPage();
+	void slotGotoStart();
+	void slotGotoEnd();
+	void slotFind();
+	void slotFindNext();
+	void slotZoom( const QString& );
+	void slotZoomIn();
+	void slotZoomOut();
+	void slotFitToWidthToggled( bool );
+	void slotPrintPreview();
+	void slotToggleScrollBars( bool );
+	void slotToggleThumbnails( bool );
+	void slotSaveFileAs();
+	// can be connected do widget elements
+	void updateActions();
 
-    /*void executeAction(LinkAction*);*/
-
-      void showScrollBars( bool );
-      void showMarkList( bool );
-      void slotReadUp();
-      void slotReadDown();
-      void slotOpenUrlDropped( const KURL & );
-      void slotZoom( const QString& );
+  public slots:
+	// connected to Shell action (and browserExtension), not local one
+	void slotPrint(); 
 
   private:
-      void doFind(QString s, bool next);
 
-      ThumbnailList *m_thumbnailList;
-	  // TODO rename to something else
-      PageWidget* m_outputDev;
-   
-      PDFDoc*     m_doc;
-           
-      KAction* m_firstPage;
-      KAction* m_lastPage;
-      KAction* m_prevPage;
-      KAction* m_nextPage;
-      KAction *m_gotoPage;
-      KToggleAction* m_showScrollBars;
-      KToggleAction* m_showPageList;
-      KSelectAction *m_zoomTo;
-      KToggleAction* m_fitToWidth;
-      KAction *m_find;
-      KAction *m_findNext;
+// PORT!! ###
+// PDFDoc*     m_doc;
+QMutex m_docMutex; // REMOVE MEEE
 
-      QString m_findText;
+	// the document
+	KPDFDocument * document;
 
-    // first page is page 1
-    int   m_currentPage;
-    QMutex m_docMutex;
+	// main widgets
+	ThumbnailList *m_thumbnailList;
+	PageWidget *m_pageWidget;
 
-    ZoomMode m_zoomMode;
-    float    m_zoomFactor;
+	// static instances counter
+	static unsigned int m_count;
 
-    static unsigned int m_count;
-
-  private slots:
-		void slotFitToWidthToggled();
-		void redrawPage();
-		void pageClicked ( int );
-    void fileSaveAs();
+	// actions
+	KAction *m_gotoPage;
+	KAction *m_prevPage;
+	KAction *m_nextPage;
+	KAction *m_firstPage;
+	KAction *m_lastPage;
+	KToggleAction *m_showScrollBars;
+	KToggleAction *m_showPageList;
+	KSelectAction *m_zoomTo;
+	KToggleAction *m_fitToWidth;
+	KAction *m_find;
+	KAction *m_findNext;
   };
 
   class BrowserExtension : public KParts::BrowserExtension
   {
-    Q_OBJECT
+	Q_OBJECT
 
   public:
-    BrowserExtension(Part*);
+	BrowserExtension(Part*);
 
   public slots:
-    // Automatically detected by the host.
-    void print();
+	// Automatically detected by the host.
+	void print();
   };
 
 }

@@ -1,3 +1,5 @@
+KDE_OPTIONS = foreign
+
 AUTOMAKE_OPTIONS = foreign
 
 noinst_LTLIBRARIES = libkpathsea.la
@@ -82,22 +84,11 @@ makevars = prefix=$(prefix) exec_prefix=$(exec_prefix) \
   default_texsizes='$(default_texsizes)'
 # End of makevars.make.
 
-# Do not override CPPFLAGS; change XCPPFLAGS, CFLAGS, XCFLAGS, or DEFS instead.
-INCLUDES = -I. -I$(srcdir) \
-	   -I$(kpathsea_parent) -I$(kpathsea_srcdir_parent) \
-	   $(prog_cflags) 
+INCLUDES = -I. -I$(srcdir) -I$(srcdir)/.. -I..
 
 AM_DEFS = -DDEFAULT_FONT_SIZES='\"$(default_texsizes)\"'
 
-# This is so kpathsea will get remade automatically if you change
-# something in it and recompile from the package directory.
-kpathsea_parent = ..
-kpathsea_dir = $(kpathsea_parent)/kpathsea
-kpathsea_srcdir_parent = $(top_srcdir)/..
-kpathsea_srcdir = $(kpathsea_srcdir_parent)/kpathsea
-kpathsea = $(kpathsea_dir)/kpathsea.a
-
-$(srcdir)/tex-file.c: $(kpathsea_dir)/paths.h
+$(srcdir)/tex-file.c: ./paths.h
 
 libkpathsea_la_SOURCES = tex-file.c absolute.c atou.c cnf.c concat.c concat3.c \
 concatn.c db.c debug.c dir.c elt-dirs.c expand.c extend-fname.c \
@@ -113,6 +104,8 @@ xopendir.c xputenv.c xrealloc.c xstat.c xstrdup.c $(LTLIBOBJS)
 # Make variable substitutions for paths.h.
 texmf.cnf: texmf.in texmf.sed
 	sed -f texmf.sed $(srcdir)/texmf.in >$@
+
+$(srcdir)/tex-file.c: $(CONFIG_HEADER)
 
 # The idea is to turn each var=value into s%@var@%value%g. Seems simpler
 # to put the substitutions in a file than to play shell quoting games.
@@ -165,7 +158,7 @@ texmf.sed: Makefile
 #
 # We also replace all semicolons with colons in the paths.  Ultimately
 # the path-splitting code should be changed to understand both.
-$(kpathsea_dir)/paths.h: stamp-paths
+./paths.h: stamp-paths
 stamp-paths: texmf.cnf
 	echo "/* paths.h: Generated from texmf.cnf. */" >paths.tmp
 	sed -e 's/%.*//' -e 's/^[ 	]*//' -e 's/[ 	]*$$//' texmf.cnf \
@@ -188,10 +181,6 @@ stamp-paths: texmf.cnf
 	fi
 	rm -f paths.tmp
 	date >stamp-paths
-
-# Need an extra definition for this. Dependencies included below.
-tex-file.o:
-	$(KPATHSEA_CC)  $(srcdir)/tex-file.c
 
 check: kpsewhich
 	./kpsewhich -expand-var '$$TEXMF'

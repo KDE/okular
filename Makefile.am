@@ -1,6 +1,4 @@
 
-kpathsea = kpathsea/libkpathsea.la
-
 # just set the variable
 appsdir = $(kde_appsdir)/Programs/Graphics
 # set the include path for X, qt and KDE
@@ -15,7 +13,6 @@ noinst_PROGRAMS = squeeze
 
 # just to make sure, automake makes them 
 METASOURCES = USE_AUTOMOC
-BUILT_SOURCES = psheader.c
 
 # Which sources should be compiled for kdvi.
 libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
@@ -50,7 +47,7 @@ messages:
 
 apps_DATA = kdvi.desktop
 
-$(srcdir)/psheader.c: psheader.txt squeeze $(kpathsea)
+psheader.c: psheader.txt squeeze 
 	./squeeze $(srcdir)/psheader.txt $@
 
 kbrowser.moc.cc: $(kde_includes)/kbrowser.h

@@ -1,0 +1,607 @@
+# Makefile.in generated automatically by automake 1.4 from Makefile.am
+
+# Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+DESTDIR =
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = .
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AS = @AS@
+CC = @CC@
+DLLTOOL = @DLLTOOL@
+EXEEXT = @EXEEXT@
+KPSEVERSION = @KPSEVERSION@
+LD = @LD@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+LTLIBOBJS = @LTLIBOBJS@
+MAKEINFO = @MAKEINFO@
+NM = @NM@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
+with_gcc = @with_gcc@
+with_gnu_ld = @with_gnu_ld@
+
+KDE_OPTIONS = foreign
+
+AUTOMAKE_OPTIONS = foreign
+
+noinst_LTLIBRARIES = libkpathsea.la
+
+# Makefile for kpathsea --kb@mail.tug.org.  Public domain.
+version = @KPSEVERSION@
+
+# The root of the tree.
+texmf = $(prefix)/texmf
+
+# TeX, MF, and MP source files.
+texinputdir = $(texmf)/tex
+mfinputdir = $(texmf)/mf
+mpinputdir = $(texmf)/mp
+
+# MakeTeXPK.site, texmf.cnf, etc.
+web2cdir = $(texmf)/web2c
+
+# The top-level font directory.
+fontdir = $(texmf)/fonts
+
+# Memory dumps (.fmt, .base, and .mem).
+fmtdir = $(texmf)/web2c
+basedir = $(texmf)/web2c
+memdir = $(texmf)/web2c
+
+# Pool files.
+texpooldir = $(texmf)/web2c
+mfpooldir = $(texmf)/web2c
+mppooldir = $(texmf)/web2c
+
+# If install_fonts=true, the PostScript/LaserJet TFM and VF files for
+# the builtin fonts get installed in subdirectories of this directory,
+# named for the typeface families of these directories. If you don't
+# have the default directory setup, you will want to set
+# install_fonts=false.  Ditto for install_macros.
+install_fonts = false
+install_macros = false
+
+# Where the .map files from fontname are installed.
+fontnamedir = $(texmf)/fontname
+
+# Where the dvips configuration files get installed, and where
+# psfonts.map is.
+dvipsdir = $(texmf)/dvips
+psheaderdir = $(dvipsdir)
+
+# MakeTeXPK will go here to create dc*.
+dcfontdir = $(fontdir)/public/dc
+
+# MakeTeXPK will go here if it exists to create nonstandard CM fonts,
+# e.g., cmr11. See ftp.cs.umb.edu:pub/tex/sauter.tar.gz. The Sauter
+# files must be in your regular MFINPUTS.
+sauterdir = $(fontdir)/public/sauter
+
+# If a font can't be found close enough to its stated size, we look for
+# each of these sizes in the order given.  This colon-separated list is
+# overridden by the envvar TEXSIZES, and by a program-specific variable
+# (e.g., XDVISIZES), and perhaps by a config file (e.g., in dvips).
+default_texsizes = 300:600
+
+# End of paths.make.
+
+# makevars.make -- the directory names we pass.
+# It's important that none of these values contain [ @%], for the sake
+# of kpathsea/texmf.sed.
+makevars = prefix=$(prefix) exec_prefix=$(exec_prefix)   platform=$(platform)   bindir=$(bindir) scriptdir=$(scriptdir) libdir=$(libdir)   datadir=$(datadir) infodir=$(infodir) includedir=$(includedir)   manext=$(manext) mandir=$(mandir)   texmf=$(texmf) web2cdir=$(web2cdir)   texinputdir=$(texinputdir) mfinputdir=$(mfinputdir)   mpinputdir=$(mpinputdir)   fontdir=$(fontdir)   fmtdir=$(fmtdir) basedir=$(basedir)   memdir=$(memdir)   texpooldir=$(texpooldir) mfpooldir=$(mfpooldir)   mppooldir=$(mppooldir)   install_fonts=$(install_fonts)   dvipsdir=$(dvipsdir) psheaderdir=$(psheaderdir)   default_texsizes='$(default_texsizes)'
+
+# End of makevars.make.
+
+INCLUDES = -I. -I$(srcdir) -I$(srcdir)/.. -I..
+
+AM_DEFS = -DDEFAULT_FONT_SIZES='\"$(default_texsizes)\"'
+
+libkpathsea_la_SOURCES = tex-file.c absolute.c atou.c cnf.c concat.c concat3.c concatn.c db.c debug.c dir.c elt-dirs.c expand.c extend-fname.c file-p.c find-suffix.c fn.c fontmap.c getopt.c getopt1.c hash.c kdefault.c line.c magstep.c make-suffix.c path-elt.c pathsearch.c proginit.c progname.c readable.c rm-suffix.c str-list.c str-llist.c tex-glyph.c tex-hush.c tex-make.c tilde.c truncate.c uppercasify.c variable.c version.c xbasename.c xcalloc.c xdirname.c xfopen.c xfseek.c xftell.c xgetcwd.c xmalloc.c xopendir.c xputenv.c xrealloc.c xstat.c xstrdup.c $(LTLIBOBJS)
+
+ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = c-auto.h
+CONFIG_CLEAN_FILES = 
+LTLIBRARIES =  $(noinst_LTLIBRARIES)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) -I.
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+libkpathsea_la_LDFLAGS = 
+libkpathsea_la_LIBADD = 
+libkpathsea_la_OBJECTS =  tex-file.lo absolute.lo atou.lo cnf.lo \
+concat.lo concat3.lo concatn.lo db.lo debug.lo dir.lo elt-dirs.lo \
+expand.lo extend-fname.lo file-p.lo find-suffix.lo fn.lo fontmap.lo \
+getopt.lo getopt1.lo hash.lo kdefault.lo line.lo magstep.lo \
+make-suffix.lo path-elt.lo pathsearch.lo proginit.lo progname.lo \
+readable.lo rm-suffix.lo str-list.lo str-llist.lo tex-glyph.lo \
+tex-hush.lo tex-make.lo tilde.lo truncate.lo uppercasify.lo variable.lo \
+version.lo xbasename.lo xcalloc.lo xdirname.lo xfopen.lo xfseek.lo \
+xftell.lo xgetcwd.lo xmalloc.lo xopendir.lo xputenv.lo xrealloc.lo \
+xstat.lo xstrdup.lo
+CFLAGS = @CFLAGS@
+COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
+DIST_COMMON =  README ./stamp-h.in AUTHORS ChangeLog INSTALL Makefile.am \
+Makefile.in NEWS acconfig.h acinclude.m4 aclocal.m4 c-auto.h.in \
+config.guess config.sub configure configure.in install-sh ltconfig \
+ltmain.sh missing mkinstalldirs
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = tar
+GZIP_ENV = --best
+DEP_FILES =  .deps/absolute.P .deps/atou.P .deps/cnf.P .deps/concat.P \
+.deps/concat3.P .deps/concatn.P .deps/db.P .deps/debug.P .deps/dir.P \
+.deps/elt-dirs.P .deps/expand.P .deps/extend-fname.P .deps/file-p.P \
+.deps/find-suffix.P .deps/fn.P .deps/fontmap.P .deps/getopt.P \
+.deps/getopt1.P .deps/hash.P .deps/kdefault.P .deps/line.P \
+.deps/magstep.P .deps/make-suffix.P .deps/path-elt.P .deps/pathsearch.P \
+.deps/proginit.P .deps/progname.P .deps/readable.P .deps/rm-suffix.P \
+.deps/str-list.P .deps/str-llist.P .deps/tex-file.P .deps/tex-glyph.P \
+.deps/tex-hush.P .deps/tex-make.P .deps/tilde.P .deps/truncate.P \
+.deps/uppercasify.P .deps/variable.P .deps/version.P .deps/xbasename.P \
+.deps/xcalloc.P .deps/xdirname.P .deps/xfopen.P .deps/xfseek.P \
+.deps/xftell.P .deps/xgetcwd.P .deps/xmalloc.P .deps/xopendir.P \
+.deps/xputenv.P .deps/xrealloc.P .deps/xstat.P .deps/xstrdup.P
+SOURCES = $(libkpathsea_la_SOURCES)
+OBJECTS = $(libkpathsea_la_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .lo .o .obj .s
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --foreign Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+$(ACLOCAL_M4):  configure.in  acinclude.m4
+	cd $(srcdir) && $(ACLOCAL)
+
+config.status: $(srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
+	$(SHELL) ./config.status --recheck
+$(srcdir)/configure: $(srcdir)/configure.in $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
+	cd $(srcdir) && $(AUTOCONF)
+
+c-auto.h: stamp-h
+	@if test ! -f $@; then \
+		rm -f stamp-h; \
+		$(MAKE) stamp-h; \
+	else :; fi
+stamp-h: $(srcdir)/c-auto.h.in $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES= CONFIG_HEADERS=c-auto.h \
+	     $(SHELL) ./config.status
+	@echo timestamp > stamp-h 2> /dev/null
+$(srcdir)/c-auto.h.in: $(srcdir)/stamp-h.in
+	@if test ! -f $@; then \
+		rm -f $(srcdir)/stamp-h.in; \
+		$(MAKE) $(srcdir)/stamp-h.in; \
+	else :; fi
+$(srcdir)/stamp-h.in: $(top_srcdir)/configure.in $(ACLOCAL_M4) acconfig.h
+	cd $(top_srcdir) && $(AUTOHEADER)
+	@echo timestamp > $(srcdir)/stamp-h.in 2> /dev/null
+
+mostlyclean-hdr:
+
+clean-hdr:
+
+distclean-hdr:
+	-rm -f c-auto.h
+
+maintainer-clean-hdr:
+
+mostlyclean-noinstLTLIBRARIES:
+
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+
+distclean-noinstLTLIBRARIES:
+
+maintainer-clean-noinstLTLIBRARIES:
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+libkpathsea.la: $(libkpathsea_la_OBJECTS) $(libkpathsea_la_DEPENDENCIES)
+	$(LINK)  $(libkpathsea_la_LDFLAGS) $(libkpathsea_la_OBJECTS) $(libkpathsea_la_LIBADD) $(LIBS)
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS:  $(HEADERS) $(SOURCES) c-auto.h.in $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)c-auto.h.in$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags c-auto.h.in $$unique $(LISP) -o $$here/TAGS)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(PACKAGE)-$(VERSION)
+top_distdir = $(distdir)
+
+# This target untars the dist file and tries a VPATH configuration.  Then
+# it guarantees that the distribution is self-contained by making another
+# tarfile.
+distcheck: dist
+	-rm -rf $(distdir)
+	GZIP=$(GZIP_ENV) $(TAR) zxf $(distdir).tar.gz
+	mkdir $(distdir)/=build
+	mkdir $(distdir)/=inst
+	dc_install_base=`cd $(distdir)/=inst && pwd`; \
+	cd $(distdir)/=build \
+	  && ../configure --srcdir=.. --prefix=$$dc_install_base \
+	  && $(MAKE) $(AM_MAKEFLAGS) \
+	  && $(MAKE) $(AM_MAKEFLAGS) dvi \
+	  && $(MAKE) $(AM_MAKEFLAGS) check \
+	  && $(MAKE) $(AM_MAKEFLAGS) install \
+	  && $(MAKE) $(AM_MAKEFLAGS) installcheck \
+	  && $(MAKE) $(AM_MAKEFLAGS) dist
+	-rm -rf $(distdir)
+	@banner="$(distdir).tar.gz is ready for distribution"; \
+	dashes=`echo "$$banner" | sed s/./=/g`; \
+	echo "$$dashes"; \
+	echo "$$banner"; \
+	echo "$$dashes"
+dist: distdir
+	-chmod -R a+r $(distdir)
+	GZIP=$(GZIP_ENV) $(TAR) chozf $(distdir).tar.gz $(distdir)
+	-rm -rf $(distdir)
+dist-all: distdir
+	-chmod -R a+r $(distdir)
+	GZIP=$(GZIP_ENV) $(TAR) chozf $(distdir).tar.gz $(distdir)
+	-rm -rf $(distdir)
+distdir: $(DISTFILES)
+	-rm -rf $(distdir)
+	mkdir $(distdir)
+	-chmod 777 $(distdir)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --foreign Makefile
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+
+DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+
+-include $(DEP_FILES)
+
+mostlyclean-depend:
+
+clean-depend:
+
+distclean-depend:
+	-rm -rf .deps
+
+maintainer-clean-depend:
+
+%.o: %.c
+	@echo '$(COMPILE) -c $<'; \
+	$(COMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.c
+	@echo '$(LTCOMPILE) -c $<'; \
+	$(LTCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+info-am:
+info: info-am
+dvi-am:
+dvi: dvi-am
+check-am: all-am
+check: check-am
+installcheck-am:
+installcheck: installcheck-am
+all-recursive-am: c-auto.h
+	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+
+install-exec-am:
+install-exec: install-exec-am
+
+install-data-am:
+install-data: install-data-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-am
+uninstall-am:
+uninstall: uninstall-am
+all-am: Makefile $(LTLIBRARIES) c-auto.h
+all-redirect: all-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs:
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-hdr mostlyclean-noinstLTLIBRARIES \
+		mostlyclean-compile mostlyclean-libtool \
+		mostlyclean-tags mostlyclean-depend mostlyclean-generic
+
+mostlyclean: mostlyclean-am
+
+clean-am:  clean-hdr clean-noinstLTLIBRARIES clean-compile clean-libtool \
+		clean-tags clean-depend clean-generic mostlyclean-am
+
+clean: clean-am
+
+distclean-am:  distclean-hdr distclean-noinstLTLIBRARIES \
+		distclean-compile distclean-libtool distclean-tags \
+		distclean-depend distclean-generic clean-am
+	-rm -f libtool
+
+distclean: distclean-am
+	-rm -f config.status
+
+maintainer-clean-am:  maintainer-clean-hdr \
+		maintainer-clean-noinstLTLIBRARIES \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-tags maintainer-clean-depend \
+		maintainer-clean-generic distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-am
+	-rm -f config.status
+
+.PHONY: mostlyclean-hdr distclean-hdr clean-hdr maintainer-clean-hdr \
+mostlyclean-noinstLTLIBRARIES distclean-noinstLTLIBRARIES \
+clean-noinstLTLIBRARIES maintainer-clean-noinstLTLIBRARIES \
+mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile mostlyclean-libtool distclean-libtool \
+clean-libtool maintainer-clean-libtool tags mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir \
+mostlyclean-depend distclean-depend clean-depend \
+maintainer-clean-depend info-am info dvi-am dvi check check-am \
+installcheck-am installcheck all-recursive-am install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all installdirs \
+mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+
+
+$(srcdir)/tex-file.c: ./paths.h
+
+# Make variable substitutions for paths.h.
+texmf.cnf: texmf.in texmf.sed
+	sed -f texmf.sed $(srcdir)/texmf.in >$@
+
+$(srcdir)/tex-file.c: $(CONFIG_HEADER)
+
+# The idea is to turn each var=value into s%@var@%value%g. Seems simpler
+# to put the substitutions in a file than to play shell quoting games.
+texmf.sed: Makefile
+	rm -f texmf.sed
+	echo $(makevars) \
+	| tr ' ' '\012' \
+	| sed -e 's/^/s%@/' -e 's/=/@%/' -e 's/$$/%g/' \
+	>$@
+# Insert $TEXMF in as many of the hardwired paths as possible.  We could
+# use the slightly different rule 's%$(texmf)/%\$$TEXMF/%g' and avoid
+# the need for the corrections below.  But if texmf.in is edited
+# the heuristic may no longer work.
+	echo 's%$(texmf)%\$$TEXMF%g' >>$@
+# Now we repair the damage this may have caused.  Don't replace the rhs of
+# the TEXMFMAIN assignment itself, then we'd end up with TEXMFMAIN = $TEXMF
+# and TEXMF = $TEXMFMAIN.  The (commented) assignment of TEXMFLOCAL is
+# likely to have been mangled as well.
+	echo '/^ *TEXMFMAIN[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+	echo '/^[% ]*TEXMFLOCAL[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+	echo '/^[% ]*VARTEXMF[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+	echo '/^[% ]*TEXMFCNF[ =]/s%\$$TEXMF%$(texmf)%' >>$@
+# And fill in the last clause of TEXMFCNF with an absolute path.
+	echo '/^ *TEXMFCNF[ =]/s%@web2c@%$(web2cdir)%' >>$@
+
+# First null out comments and leading/trailing whitespace, then remove
+# lines that define invalid C identifiers, then remove blank lines and
+# lines that define lowercase values (those are never path values). Each
+# line remaining looks like
+# <name> = <value>
+# (but = and surrounding spaces are optional, hence can't remove all spaces).
+# Change this to #ifndef DEFAULT_name@#define DEFAULT_name "value"@#endif,
+# then change the @'s to newlines (sed isn't good at multiline replacements).
+# 
+# No backslash-newline escapes in the long sed replacement because that
+# will turn into a space in the output.
+# 
+# Without the $TEXMF/prefix/etc. substitutions, if the cnf file was
+# not found, the compile-time paths would be of little use, since TEXMF
+# (etc.) wouldn't be defined. Alternatively, we could have a way to
+# specify compile-time default values for variables in general, but I
+# think it's better to keep the last-resort paths as simple as possible.
+# 
+# The definition of DEFAULT_TEXMF (and other variables)
+# that winds up in the final paths.h will not be used.
+#
+# We don't want to rewrite paths.h when we have only changed comments
+# in texmf.in that have no effect on paths.h, since that would cause
+# almost everything to be rebuilt.
+#
+# We also replace all semicolons with colons in the paths.  Ultimately
+# the path-splitting code should be changed to understand both.
+./paths.h: stamp-paths
+stamp-paths: texmf.cnf
+	echo "/* paths.h: Generated from texmf.cnf. */" >paths.tmp
+	sed -e 's/%.*//' -e 's/^[ 	]*//' -e 's/[ 	]*$$//' texmf.cnf \
+	| grep '^[ 	]*[A-Z0-9_]*[ 	=]' \
+	| sed '/^$$/d' \
+	| sed 's/^\([^ 	=]*\)[ 	]*=*[ 	]*\(.*\)/#ifndef DEFAULT_\1@#define DEFAULT_\1 "\2"@#endif/' \
+	| tr '@' '\012' \
+	| sed -e 's%\$$TEXMFMAIN%$(texmf)%g' \
+	      -e 's%\$$TEXMF%$(texmf)%g' \
+	      -e 's%\$$VARTEXFONTS%$(vartexfonts)%g' \
+	      -e 's%\$$web2cdir%$(web2cdir)%g' \
+	      -e 's%\$$prefix%$(prefix)%g' \
+	| sed -e 's%;%:%g' \
+	>>paths.tmp
+	@if cmp -s paths.h paths.tmp 2>/dev/null; then \
+	  echo "paths.h is unchanged"; \
+	else \
+	  echo "cp paths.tmp paths.h"; \
+	  cp paths.tmp paths.h; \
+	fi
+	rm -f paths.tmp
+	date >stamp-paths
+
+check: kpsewhich
+	./kpsewhich -expand-var '$$TEXMF'
+
+# autoheader input file, not an includable C header. Bad name.
+$(library).h: always
+	rm -f $@
+	echo '#include <kpathsea/config.h>' >$@
+	ls -1 *.h \
+	  | grep -v '\(acconfig\|config\|kpathsea\|win32lib\)\.h' \
+	  | sed -e 's,^,#include <kpathsea/,' -e s',$$,>,' >>$@
+	touch -r `ls -1t *.h | tail +2 | head -1` $@ 
+always:
+.PHONY: always
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

@@ -3,9 +3,8 @@ dnl the following is just to fool the toplevel configure.in
 LTLIBOBJS=
 AC_SUBST(LTLIBOBJS)
 
-dnl configure in kfloppy/e2fs, if kfloppy will be built.
 dnl AC_CONFIG_SUBDIRS has to be done before KDE_CREATE_SUBDIRSLIST
-if test -f kfloppy/e2fs/configure && test "$ac_cv_compile_kfloppy" = "yes"; then
-  touch kfloppy/e2fs/configure
+if test -f kdvi/kpathsea/configure; then
+  touch kdvi/kpathsea/configure
   AC_CONFIG_SUBDIRS([kdvi/kpathsea])
 fi

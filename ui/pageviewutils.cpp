@@ -18,7 +18,7 @@
 // local includes
 #include "pageviewutils.h"
 #include "core/page.h"
-#include "core/settings.h"
+#include "conf/settings.h"
 
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent, "pageViewMessage" ), m_timer( 0 )

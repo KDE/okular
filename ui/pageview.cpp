@@ -565,7 +565,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             {
                 d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
                 bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
-                        KPDFDocument::NextMatch, true, Qt::yellow, true );
+                        KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
                 QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
                 d->messageWindow->display( status.arg(d->typeAheadString.lower()),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
@@ -599,7 +599,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
         {
             d->typeAheadString += e->text();
             bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
-                    KPDFDocument::NextMatch, true, Qt::yellow, true );
+                    KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
             QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
             d->messageWindow->display( status.arg(d->typeAheadString.lower()),
                                        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );

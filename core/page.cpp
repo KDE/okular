@@ -49,6 +49,22 @@ KPDFPage::~KPDFPage()
 }
 
 
+bool KPDFPage::hasHighlights( int id ) const
+{
+    // simple case: have no highlights
+    if ( m_highlights.isEmpty() )
+        return false;
+    // simple case: we have highlights and no id to match
+    if ( id == -1 )
+        return true;
+    // iterate on the highlights list to find an entry by id
+    QValueList< HighlightRect * >::const_iterator it = m_highlights.begin(), end = m_highlights.end();
+    for ( ; it != end; ++it )
+        if ( (*it)->id == id )
+            return true;
+    return false;
+}
+
 bool KPDFPage::hasPixmap( int id, int width, int height ) const
 {
     if ( !m_pixmaps.contains( id ) )
@@ -143,7 +159,7 @@ HighlightRect * KPDFPage::searchText( const QString & text, bool strictCase, Hig
         else if ( dir == NextMatch )
             found = m_text->findText( u, len, gFalse, gTrue, gTrue, gFalse, &sLeft, &sTop, &sRight, &sBottom );
         else if ( dir == PrevMatch )
-            // FIXME: this doesn't work as expected
+            // FIXME: this doesn't work as expected (luckily backward search isn't yet used)
             found = m_text->findText( u, len, gTrue, gFalse, gFalse, gTrue, &sLeft, &sTop, &sRight, &sBottom );
 
         // if not found (even in case unsensitive search), terminate

@@ -720,6 +720,7 @@ PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
         for ( ; it != end; ++it )
             delete *it;
     }
+    delete d->currentRequest;
     // delete internal storage structure
     delete d;
 }

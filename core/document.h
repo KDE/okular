@@ -107,7 +107,6 @@ class KPDFDocument : public QObject
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
-        void processPageList( bool documentChanged );
 
         Generator * generator;
         QValueVector< KPDFPage * > pages_vector;

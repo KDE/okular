@@ -44,17 +44,13 @@ class KPDFPage
         inline float height() const { return m_height; }
         inline float ratio() const { return m_height / m_width; }
         inline bool hasBookmark() const { return m_bookmarked; }
-        inline bool hasHighlights() const { return !m_highlights.isEmpty(); }
-
+        bool hasHighlights( int id = -1 ) const;
         bool hasPixmap( int id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
         bool hasRect( int mouseX, int mouseY ) const;
         bool hasLink( int mouseX, int mouseY ) const;
-
         const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
-        // - HL? .. -
         const KPDFPageTransition * getTransition() const;
-
         const QString getTextInRect( const QRect & rect, double zoom /*= 1.0*/ ) const;
 
         // operations (by KPDFDocument)
@@ -128,7 +124,9 @@ class KPDFPageRect
         void * m_pointer;
 };
 
-// TODO: comment this
+/**
+ * @short A normalized and colored highlight on the page.
+ */
 struct HighlightRect
 {
     // publicly accessed fields

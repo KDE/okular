@@ -373,6 +373,7 @@ bool Part::closeURL()
     m_searchStarted = false;
     if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
     m_document->closeDocument();
+    m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
 }
 
@@ -524,8 +525,9 @@ void Part::slotFind()
     if ( dlg.exec() == QDialog::Accepted )
     {
         m_searchStarted = true;
+        m_document->resetSearch( PART_SEARCH_ID );
         m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFindDialog::CaseSensitive,
-                                KPDFDocument::NextMatch, true, Qt::red );
+                                KPDFDocument::NextMatch, true, qRgb( 255, 255, 64 ) );
     }
 }
 

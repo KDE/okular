@@ -16,6 +16,9 @@ class KPopupMenu;
 class KPDFDocument;
 class m_inputDelayTimer;
 
+// definition of searchID for this class (publicly available to ThumbnailsList)
+#define SW_SEARCH_ID 3
+
 /**
  * @short A widget for find-as-you-type search. Outputs to the Document.
  *
@@ -29,6 +32,7 @@ class SearchWidget : public KToolBar
     Q_OBJECT
     public:
         SearchWidget( QWidget *parent, KPDFDocument *document );
+        void clearText();
 
     private:
         KPDFDocument * m_document;

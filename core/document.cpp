@@ -157,7 +157,7 @@ bool KPDFDocument::openDocument( const QString & docFile )
     loadDocumentInfo();
 
     // 3. setup observers inernal lists and data
-    processPageList( true );
+    foreachObserver( notifySetup( pages_vector, true ) );
 
     // 4. set initial page (restoring the page saved in xml if loaded)
     DocumentViewport loadedViewport = (*d->viewportIterator);
@@ -554,6 +554,10 @@ void KPDFDocument::setNextViewport()
 bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
 {
+    // don't perform searches on empty docs
+    if ( !generator || pages_vector.isEmpty() )
+        return false;
+
     // if searchID search not recorded, create new descriptor and init params
     if ( !d->searches.contains( searchID ) )
     {
@@ -1211,32 +1215,6 @@ bool KPDFDocument::openRelativeFile( const QString & fileName )
 
     // open the absolute filename
     return openDocument( absFileName );
-}
-
-void KPDFDocument::processPageList( bool documentChanged )
-{
-    /* FIXME
-    if ( d->filterText.length() < 3 )
-        unHilightPages();
-    else
-    {
-        uint pageCount = pages_vector.count();
-        for ( uint i = 0; i < pageCount ; i++ )
-        {
-            KPDFPage * page = pages_vector[ i ];
-            //page->clearAttribute( KPDFPage::Highlight );
-            if ( d->filterText.length() > 2 )
-            {
-                if ( !page->hasSearchPage() )
-                    requestTextPage( i );
-                if ( page->hasText( d->filterText, d->filterCase, true ) )
-                    page->setAttribute( KPDFPage::Highlight );
-            }
-        }
-    }
-    */
-    // send the list to observers
-    foreachObserver( notifySetup( pages_vector, documentChanged ) );
 }
 
 

@@ -20,6 +20,7 @@
 // local includes
 #include "thumbnaillist.h"
 #include "pagepainter.h"
+#include "searchwidget.h"   // for SW_SEARCH_ID
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
@@ -114,7 +115,7 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
     bool skipCheck = true;
     for ( ; pIt != pEnd ; ++pIt )
         //if ( (*pIt)->attributes() & flags )
-        if ( (*pIt)->hasHighlights() )
+        if ( (*pIt)->hasHighlights( SW_SEARCH_ID ) )
             skipCheck = false;
 
     // generate Thumbnails for the given set of pages
@@ -122,7 +123,7 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
         totalHeight = 0;
     for ( pIt = pages.begin(); pIt != pEnd ; ++pIt )
         //if ( skipCheck || (*pIt)->attributes() & flags )
-        if ( skipCheck || (*pIt)->hasHighlights() )
+        if ( skipCheck || (*pIt)->hasHighlights( SW_SEARCH_ID ) )
         {
             ThumbnailWidget * t = new ThumbnailWidget( viewport(), *pIt, this );
             t->setFocusProxy( this );

@@ -24,9 +24,6 @@
 #include "core/document.h"
 #include "conf/settings.h"
 
-// definition of searchID for this class
-#define SW_SEARCH_ID 3
-
 // uncomment following to enable the case switching button
 //#define SW_ENABLE_CASE_BUTTON
 #define CLEAR_ID    1
@@ -75,11 +72,18 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     setItemAutoSized( LEDIT_ID );
 }
 
+void SearchWidget::clearText()
+{
+    getLined( LEDIT_ID )->clear();
+}
+
 void SearchWidget::slotTextChanged( const QString & text )
 {
     // if length<3 set 'red' text and send a blank string to document
     QColor color = text.length() < 3 ? Qt::darkRed : palette().active().text();
-    getLined( LEDIT_ID )->setPaletteForegroundColor( color );
+    KLineEdit * lineEdit = getLined( LEDIT_ID );
+    lineEdit->setPaletteForegroundColor( color );
+    lineEdit->setPaletteBackgroundColor( palette().active().base() );
     m_inputDelayTimer->stop();
     m_inputDelayTimer->start(333, true);
 }
@@ -90,12 +94,16 @@ void SearchWidget::startSearch()
     QString text = getLined( LEDIT_ID )->text();
     bool ok = true;
     if ( text.length() >= 3 )
-        ok = m_document->searchText( SW_SEARCH_ID, text, true, m_caseSensitive, KPDFDocument::AllDoc, false, Qt::green );
+        ok = m_document->searchText( SW_SEARCH_ID, text, true, m_caseSensitive, KPDFDocument::AllDoc, false, qRgb( 0, 183, 255 ) );
     else
         m_document->resetSearch( SW_SEARCH_ID );
-    // change color to red if text not found
-    QColor color = ok ? palette().active().text() : Qt::red;
-    getLined( LEDIT_ID )->setPaletteForegroundColor( color );
+    // if not found, use warning colors
+    if ( !ok )
+    {
+        KLineEdit * lineEdit = getLined( LEDIT_ID );
+        lineEdit->setPaletteForegroundColor( Qt::white );
+        lineEdit->setPaletteBackgroundColor( Qt::red );
+    }
 }
 
 void SearchWidget::slotCaseChanged( int index )

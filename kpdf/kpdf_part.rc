@@ -5,10 +5,6 @@
     <Action name="file_print" group="file_print"/>
     <Action name="file_print_preview" group="file_print"/>
   </Menu>
-  <Menu name="edit"><text>&amp;Edit</text>
-    <Action name="find"/>
-    <Action name="find_next"/>
-  </Menu>
   <Menu name="view"><text>&amp;View</text>
     <Action name="fit_to_width"/>
     <Separator/>

@@ -75,7 +75,6 @@ private slots:
 	void		helpContents();
 //	void		helpAbout();
 //	void		helpAboutQt();
-	void		pannerChanged();
 	void		pageActivated(const QString &);
 	void		setPage(int p=0);
 	void		selectLarge();
@@ -113,9 +112,6 @@ private:
 	void		newWindow( const char *name=0 );
 	void		readConfig();
 	dviWindow *	dviwin;
-	KMenuBar *	menuBar;
-	KToolBar *	toolBar;
-	KStatusBar *	statusBar;
 	QFrame *	f;
 	QFrame *	f2;
 	QLabel *	msg;

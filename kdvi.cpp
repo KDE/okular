@@ -31,10 +31,12 @@
 #include "pushbutton.h"
 #include "prefs.h"
 #include "version.h"
+#include <qsplitter.h>
 
 #include <unistd.h>
 #include <signal.h>
 #include <kglobal.h>
+#include <qdragobject.h>
 
 enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
 enum {ID_OPT_PK = 3, ID_OPT_PS, ID_OPT_MB, ID_OPT_BB, ID_OPT_TB, ID_OPT_SB, ID_OPT_SC };
@@ -53,56 +55,45 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 	setMinimumSize( 400, 60 );
 	setCaption( kapp->getCaption() );
 	tipgroup = new QToolTipGroup( this, "TipGroup" );
-	connect( tipgroup, SIGNAL(showTip(const QString &)), SLOT(showTip(const QString &)) );
+	connect( tipgroup, SIGNAL(showTip(const QString &)), 
+		 SLOT(showTip(const QString &)) );
 	connect( tipgroup, SIGNAL(removeTip()), SLOT(removeTip()) );
 
   // Create KPanner for toolBar2 and dviwindow
   
-  	kpan = new QSplitter( QSplitter::Vertical, this, "splitter");
-	QValueList<int> sizes;
-	size << 90 << 10;
-	kpan->setSizes(sizes);
+  	kpan = new QSplitter( QSplitter::Horizontal, this, "splitter");
+
 	setView( kpan, TRUE );
 	setFrameBorderWidth( 4 );
-	kpan->setAbsSeparator( pannerValue );
-	connect( kpan, SIGNAL(positionChanged()), SLOT(pannerChanged()) );
-
+	
   // Create a dvi window
 
 	dviwin = new dviWindow( basedpi, mfmode, paper, makepk,
-				kpan->child1(), "dviWindow" );
+				kpan, "dviWindow" );
 	connect( dviwin, SIGNAL(currentPage(int)), SLOT(setPage(int)) );
 	connect( dviwin, SIGNAL(shrinkChanged(int)), SLOT(shrinkChanged(int)) );
 	connect( dviwin, SIGNAL(fileChanged()), SLOT(fileChanged()) );
 	connect( dviwin, SIGNAL(statusChange(const QString &)),
 			 SLOT(showTip(const QString &)) );
 	connect( dviwin, SIGNAL(setPoint(QPoint)), SLOT(showPoint(QPoint)) );
+	
+	// Create a menubar
 
-  // Create a menubar
-
-	menuBar = NULL;
 	makeMenuBar();
 
-  // Create toolbars
-
-	toolBar = NULL;
+	// Create toolbars
 	makeButtons();
-	makeToolBar2( kpan->child0() );
+	makeToolBar2( kpan );
 
-  // Create a statusbar
+	kpan->moveToLast(dviwin);
+	
+    // Create a statusbar
 
-	statusBar = NULL;
 	makeStatusBar( i18n("No document") );
 
-  // Lay out widgets
-
-	QBoxLayout *l;
-	l = new QBoxLayout( kpan->child0(), QBoxLayout::LeftToRight );
-	l->addWidget( toolBar2 );
-	l->activate();
-	l = new QBoxLayout( kpan->child1(), QBoxLayout::LeftToRight );
-	l->addWidget( dviwin );
-	l->activate();
+	QValueList<int> size;
+	size << 10 << 90;
+	kpan->setSizes(size);
 
   // Create RMB menu
 
@@ -122,7 +113,7 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 	bindKeys();
 	updateMenuAccel();
 
-	setAcceptDrop(true);
+	setAcceptDrops(true);
 
   // Read config options
 
@@ -137,22 +128,14 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 
 kdvi::~kdvi()
 {
- 	if ( toolBar ) delete toolBar;
- 	if ( statusBar ) delete statusBar;
- 	if ( menuBar ) delete menuBar;
 }
 
 // This avoids seg fault at destructor:
 
 void kdvi::closeEvent( QCloseEvent *e )
 {
- 	if ( toolBar ) delete toolBar;
- 	toolBar = NULL;
- 	if ( statusBar ) delete statusBar;
- 	statusBar = NULL;
- 	if ( menuBar ) delete menuBar;
- 	menuBar = NULL;
-	e->accept();
+  KTopLevelWidget::closeEvent(e);
+  e->accept();
 }
 
 static QPopupMenu *m_f, *m_v, *m_p, *m_o, *m_h;
@@ -161,10 +144,6 @@ static int m_fn, m_fo, m_fr, m_fp, m_fx, m_vi, m_vo, m_vf, m_vw, m_vr, m_pp, m_p
 	
 void kdvi::makeMenuBar()
 {
-	if (menuBar) delete menuBar;
-	menuBar = new KMenuBar( this );
-	CHECK_PTR( menuBar );
-
 	QPopupMenu *p = new QPopupMenu;
 	CHECK_PTR( p );
 
@@ -182,7 +161,7 @@ void kdvi::makeMenuBar()
 	m_fx = p->insertItem( i18n("E&xit"), this, SLOT(fileExit()));
 
 	m_f = p;
-	menuBar->insertItem( i18n("&File"), p, -2 );
+	menuBar()->insertItem( i18n("&File"), p, -2 );
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
@@ -194,7 +173,7 @@ void kdvi::makeMenuBar()
 	m_vr = p->insertItem( i18n("&Redraw page"),	dviwin, SLOT(drawPage()) );
 
 	m_v = p;
-	menuBar->insertItem( i18n("&View"), p, -2 );
+	menuBar()->insertItem( i18n("&View"), p, -2 );
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
@@ -205,7 +184,7 @@ void kdvi::makeMenuBar()
 	m_pg = p->insertItem( i18n("&Go to ..."),	this,   SLOT(pageGoto()) );
 
 	m_p = p;
-	menuBar->insertItem( i18n("&Page"), p, -2 );
+	menuBar()->insertItem( i18n("&Page"), p, -2 );
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
@@ -229,10 +208,10 @@ void kdvi::makeMenuBar()
 	p->setItemChecked( m_ol, !hideScrollbars );
 
 	m_o = p;
-	menuBar->insertItem( i18n("&Options"), p, -2 );
+	menuBar()->insertItem( i18n("&Options"), p, -2 );
 	optionsmenu = p;
 
-	menuBar->insertSeparator();
+	menuBar()->insertSeparator();
 
 	QPopupMenu *help = kapp->getHelpMenu(true, i18n("DVI Viewer")
 					     + " " + KDVI_VERSION
@@ -241,39 +220,33 @@ void kdvi::makeMenuBar()
 
 	m_h = help;
 	m_hc = help->idAt(0);
-	menuBar->insertItem( i18n("&Help"), help );
-	if ( hideMenubar )	menuBar->hide();
-	setMenu( menuBar );
+	menuBar()->insertItem( i18n("&Help"), help );
+	if ( hideMenubar )	menuBar()->hide();
 }
 
 void kdvi::makeButtons()
 {
 	QPixmap pm;
 
-	if ( toolBar ) delete toolBar;
-
-	toolBar = new KToolBar( this );
-  
-#define I(f,o,s,h) toolBar->insertButton( KGlobal::iconLoader()->loadIcon(f),\
+#define I(f,o,s,h) toolBar()->insertButton( KGlobal::iconLoader()->loadIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
 	I( "fileopen.xpm",	this,	fileOpen,	i18n("Open document ...") )
 	I( "reload.xpm",	dviwin,	drawPage,	i18n("Reload document") )
 	I( "fileprint.xpm",	this,	filePrint,	i18n("Print ...") )
-	toolBar->insertSeparator();
+	toolBar()->insertSeparator();
 	I( "start.xpm",		dviwin,	firstPage, 	i18n("Go to first page") )
 	I( "back.xpm",		dviwin,	prevPage,	i18n("Go to previous page") )
 	I( "forwpage.xpm",	dviwin,	goForward,	i18n("Go down then top of next page") )
 	I( "forward.xpm",	dviwin,	nextPage,	i18n("Go to next page") )
 	I( "finish.xpm",	dviwin,	lastPage,	i18n("Go to last page") )
-	toolBar->insertSeparator();
+	toolBar()->insertSeparator();
 	I( "viewmag-.xpm",	dviwin,	nextShrink,	i18n("Decrease magnification") )
 	I( "smalltext.xpm",	this,	selectSmall,	i18n("Small text") )
 	I( "largetext.xpm",	this,	selectLarge,	i18n("Large text") )
 	I( "viewmag+.xpm",	dviwin,	prevShrink,	i18n("Increase magnification") )
 #undef	I
 
-	addToolBar( toolBar );
 }
 
 void kdvi::makeToolBar2(QWidget *parent)
@@ -316,18 +289,15 @@ void kdvi::makeStatusBar( QString )
 {
 	QPixmap pm;
 
-	if ( statusBar ) delete statusBar;
-	statusBar = new KStatusBar( this );
-	statusBar->setInsertOrder( KStatusBar::RightToLeft );
-	statusBar->insertItem(i18n("X:0000, Y:0000 "), ID_STAT_XY);
-	statusBar->changeItem("", ID_STAT_XY);
-	statusBar->insertItem(i18n("Shrink: xx"), ID_STAT_SHRINK);
-	statusBar->changeItem("", ID_STAT_SHRINK);
-	statusBar->insertItem(i18n("Page: xxxx / xxxx"), ID_STAT_PAGE);
-	statusBar->changeItem("", ID_STAT_PAGE);
-	statusBar->insertItem("", ID_STAT_MSG);
+	statusBar()->setInsertOrder( KStatusBar::RightToLeft );
+	statusBar()->insertItem(i18n("X:0000, Y:0000 "), ID_STAT_XY);
+	statusBar()->changeItem("", ID_STAT_XY);
+	statusBar()->insertItem(i18n("Shrink: xx"), ID_STAT_SHRINK);
+	statusBar()->changeItem("", ID_STAT_SHRINK);
+	statusBar()->insertItem(i18n("Page: xxxx / xxxx"), ID_STAT_PAGE);
+	statusBar()->changeItem("", ID_STAT_PAGE);
+	statusBar()->insertItem("", ID_STAT_MSG);
 
-	setStatusBar( statusBar );
 }
 
 
@@ -748,8 +718,10 @@ void kdvi::toggleShowMenubar()
 
 void kdvi::applyShowMenubar()
 {
-	if ( hideMenubar )	menuBar->hide();
-	else			menuBar->show();
+	if ( hideMenubar )	
+	  menuBar()->hide();
+	else			
+	  menuBar()->show();
 	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_MB), !hideMenubar );
 	config->writeEntry( "HideMenubar", hideMenubar );
 
@@ -780,16 +752,17 @@ void kdvi::toggleVertToolbar()
 
 void kdvi::applyVertToolbar()
 {
+#warning TODO Finish QSplitter port
 	if (vertToolbar)
 	{
-		kpan->setLimits(0,0);
-		kpan->setAbsSeparator(pannerValue);
+	  //		kpan->setLimits(0,0);
+	  //		kpan->setAbsSeparator(pannerValue);
 	}
 	else
 	{
-		if (kpan->getAbsSeparator())
-			kpan->setAbsSeparator(0);
-		kpan->setLimits(0,1);
+	  //		if (kpan->getAbsSeparator())
+	  //			kpan->setAbsSeparator(0);
+	  //		kpan->setLimits(0,1);
 	}
 	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_TB), vertToolbar );
 	config->writeEntry( "VertToolbar", vertToolbar );
@@ -843,18 +816,6 @@ void kdvi::helpAboutQt()
 }
 */
 
-void kdvi::pannerChanged()
-{
-	int i = kpan->getAbsSeparator();
-	if ( i>1 )
-		config->writeEntry( "Separator", pannerValue = i );
-	else	
-	{
-		vertToolbar = 0;
-		applyVertToolbar();
-	}
-}
-
 void kdvi::pageActivated( const QString & text)
 {
 	int pg = text.toInt();
@@ -871,7 +832,7 @@ void kdvi::setPage( int pg )
 	if (!pg) return;
 	str.setNum( pg );
 	str = i18n("Page: ") + str + i18n(" / ") + QString().setNum(dviwin->totalPages());
-	statusBar->changeItem( str, ID_STAT_PAGE );
+	statusBar()->changeItem( str, ID_STAT_PAGE );
 
 	if ( marklist )
 		marklist->select( pg - 1 );
@@ -927,7 +888,7 @@ void kdvi::selectSmall()
 void kdvi::shrinkChanged(int s)
 {
 	QString t = i18n("Shrink: %1").arg( s );
-	statusBar->changeItem( t, ID_STAT_SHRINK);
+	statusBar()->changeItem( t, ID_STAT_SHRINK);
 }
 
 void kdvi::fileChanged()
@@ -950,7 +911,7 @@ void kdvi::removeTip( )
 
 void kdvi::message( const QString &s )
 {
-	statusBar->changeItem( s, ID_STAT_MSG );
+	statusBar()->changeItem( s, ID_STAT_MSG );
 }
 
 void kdvi::showPoint( QPoint p )
@@ -960,7 +921,7 @@ void kdvi::showPoint( QPoint p )
 	x = int(x * f), y = int(y * f);
 	QString s;
 	s.sprintf( "X:%4d, Y:%4d", x, y );
-	statusBar->changeItem( s, ID_STAT_XY );
+	statusBar()->changeItem( s, ID_STAT_XY );
 }
 
 
@@ -1001,11 +962,12 @@ void kdvi::readConfig()
 }
 
 
-void kdvi::dropEvent( QDropEvent * dropZone )
+void kdvi::dropEvent( QDropEvent * event )
 {
-    QStrList & list = dropZone->getURLList();
+    QStrList list;
+    QUriDrag::decode(event, list);
     
-    char *s;
+    const char *s;
 
     for ( s = list.first(); s != 0L; s = list.next() )
     {

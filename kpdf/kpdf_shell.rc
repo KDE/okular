@@ -1,0 +1,30 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui name="kpdf_shell" version="1">
+<MenuBar>
+  <Menu noMerge="1" name="file"><text>&amp;File</text>
+    <Merge/>
+    <Separator/>
+    <Action name="file_quit"/>
+  </Menu>
+  <Menu noMerge="1" name="view"><text>&amp;View</text>
+    <Merge/>
+  </Menu>
+  <Menu noMerge="1" name="settings"><text>&amp;Settings</text>
+    <Action name="options_show_toolbar"/>
+    <Action name="options_show_statusbar"/>
+    <Merge name="show_merge"/>
+    <Separator/>
+    <Action name="options_configure_keybinding"/>
+    <Action name="options_configure_toolbars"/>
+    <Action name="options_configure"/>
+    <Merge name="configure_merge"/>
+    <Separator/>
+    <Merge/>
+  </Menu>
+</MenuBar>
+<ToolBar noMerge="1" name="mainToolBar"><text>Main Toolbar</text>
+  <Action name="file_new"/>
+  <Merge/>
+  <Action name="help"/>
+</ToolBar>
+</kpartgui>

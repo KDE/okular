@@ -1,0 +1,21 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=KPDFPart
+Name[af]=KPDFdeel
+Name[de]=KPDF-Objekt
+Name[es]=Parte
+Name[et]=KPDF komponent
+Name[id]=KPDFbagian
+Name[ko]=KPDF 부분
+Name[lt]=KPDFDalis
+Name[nb]=KPDF
+Name[ro]=Componenta KPDF
+Name[sv]=KPDF-del
+Name[xh]=KPDFIqela
+Name[xx]=xx
+Name[zu]=KPDFIngxenye
+MimeType=application/pdf
+InitialPreference=4
+ServiceTypes=KParts/ReadOnlyPart
+X-KDE-Library=libkpdfpart
+Type=Service

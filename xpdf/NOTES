@@ -1,0 +1,3 @@
+- The XOutputDev constructor should have pixmapWA and pixmapHA arguments. 
+  Without them pixmapW and pixmapH won't be initialized, and one is forced to 
+  use setPixmap().

@@ -18,6 +18,7 @@
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
+#include <qguardedptr.h>
 #include "core/observer.h"
 #include "dcop.h"
 
@@ -38,6 +39,7 @@ class KPDFDocument;
 class ThumbnailList;
 class ThumbnailController;
 class PageView;
+class PresentationWidget;
 class SearchWidget;
 
 namespace KPDF {
@@ -123,6 +125,7 @@ private:
 	SearchWidget *m_searchWidget;
 	ThumbnailList *m_thumbnailList;
 	PageView *m_pageView;
+  QGuardedPtr<PresentationWidget> m_presentationWidget;
 
 	// static instances counter
 	static unsigned int m_count;

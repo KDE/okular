@@ -25,8 +25,8 @@
 
 class QPixmap;
 class TextPage;
-class KPDFPageRect;
 class KPDFLink;
+class ObjectRect;
 class DocumentViewport;
 
 /**
@@ -56,7 +56,7 @@ class KPDFOutputDev : public SplashOutputDev
         QPixmap * takePixmap();
         QImage * takeImage();
         TextPage * takeTextPage();
-        QValueList< KPDFPageRect * > takeRects();
+        QValueList< ObjectRect * > takeRects();
 
         /** inherited from OutputDev */
         // Start a page.
@@ -95,7 +95,7 @@ class KPDFOutputDev : public SplashOutputDev
         QPixmap * m_pixmap;
         QImage * m_image;
         TextPage * m_text;  // text page generated on demand
-        QValueList< KPDFPageRect * > m_rects; // pageRects (links/images)
+        QValueList< ObjectRect * > m_rects; // objectRects (links/images)
 };
 
 

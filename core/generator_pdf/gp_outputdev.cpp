@@ -91,11 +91,11 @@ TextPage * KPDFOutputDev::takeTextPage()
     return text;
 }
 
-QValueList< KPDFPageRect * > KPDFOutputDev::takeRects()
+QValueList< ObjectRect * > KPDFOutputDev::takeRects()
 {
     if ( m_rects.isEmpty() )
         return m_rects;
-    QValueList< KPDFPageRect * > rectsCopy( m_rects );
+    QValueList< ObjectRect * > rectsCopy( m_rects );
     m_rects.clear();
     return rectsCopy;
 }
@@ -168,10 +168,9 @@ void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )
                    nt = (double)top / (double)m_pixmapHeight,
                    nr = (double)right / (double)m_pixmapWidth,
                    nb = (double)bottom / (double)m_pixmapHeight;
-            // create the rect using normalized coords
-            KPDFPageRect * rect = new KPDFPageRect( nl, nt, nr, nb );
-            // attach the link  object to the rect and add it to the vector container
-            rect->setPointer( l, KPDFPageRect::Link );
+            // create the rect using normalized coords and attach the KPDFLink to it
+            ObjectRect * rect = new ObjectRect( nl, nt, nr, nb, ObjectRect::Link, l );
+            // add the ObjectRect to the vector container
             m_rects.push_back( rect );
         }
     }
@@ -229,11 +228,10 @@ void KPDFOutputDev::drawImage( GfxState *state, Object *ref, Stream *str,
                    nt = (double)top / (double)m_pixmapHeight,
                    nr = (double)(left + width) / (double)m_pixmapWidth,
                    nb = (double)(top + height) / (double)m_pixmapHeight;
-            // create the rect using normalized coords
-            KPDFPageRect * r = new KPDFPageRect( nl, nt, nr, nb );
-            r->setPointer( 0, KPDFPageRect::Image );
-            // add the rect to the vector container
-            m_rects.push_back( r );
+            // create the rect using normalized coords and set it of KPDFImage type
+            ObjectRect * rect = new ObjectRect( nl, nt, nr, nb, ObjectRect::Image, 0 );
+            // add the ObjectRect to the vector container
+            m_rects.push_back( rect );
         }
     }
     SplashOutputDev::drawImage( state, ref, str, _width, _height, colorMap, maskColors, inlineImg );
@@ -246,7 +244,7 @@ void KPDFOutputDev::clear()
     // delete rects
     if ( m_rects.count() )
     {
-        QValueList< KPDFPageRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+        QValueList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
         for ( ; it != end; ++it )
             delete *it;
         m_rects.clear();

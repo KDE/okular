@@ -19,7 +19,7 @@
 #include "pagepainter.h"
 #include "core/page.h"
 #include "conf/settings.h"
-
+#include <kdebug.h>
 void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     QPainter * destPainter, const QRect & limits, int width, int height )
 {
@@ -74,9 +74,9 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     {
         // precalc normalized 'limits rect' for intersection
         double nXMin = (double)limits.left() / (double)width,
-               nXMax = (double)(limits.right() + 0) / (double)width,
+               nXMax = (double)limits.right() / (double)width,
                nYMin = (double)limits.top() / (double)height,
-               nYMax = (double)(limits.bottom() + 0) / (double)height;
+               nYMax = (double)limits.bottom() / (double)height;
         // if no rect intersects limits, disable paintHighlights
         paintHighlights = false;
         QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
@@ -165,8 +165,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             for ( ; hIt != hEnd; ++hIt )
             {
                 HighlightRect * r = *hIt;
-                QRect highlightRect( (int)(r->left * width), (int)(r->top * height),
-                        (int)((r->right - r->left) * width) + 1, (int)((r->bottom - r->top) * height) + 1 );
+                QRect highlightRect = r->geometry( width, height );
                 if ( highlightRect.isValid() && highlightRect.intersects( limits ) )
                 {
                     // find out the rect to highlight on pixmap
@@ -207,12 +206,12 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         QRect limitsEnlarged = limits;
         limitsEnlarged.addCoords( -2, -2, 2, 2 );
         // draw rects that are inside the 'limits' paint region as opaque rects
-        QValueList< KPDFPageRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
+        QValueList< ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
         for ( ; lIt != lEnd; ++lIt )
         {
-            KPDFPageRect * rect = *lIt;
-            if ( (enhanceLinks && rect->pointerType() == KPDFPageRect::Link) ||
-                 (enhanceImages && rect->pointerType() == KPDFPageRect::Image) )
+            ObjectRect * rect = *lIt;
+            if ( (enhanceLinks && rect->objectType() == ObjectRect::Link) ||
+                 (enhanceImages && rect->objectType() == ObjectRect::Image) )
             {
                 QRect rectGeometry = rect->geometry( width, height );
                 if ( rectGeometry.intersects( limitsEnlarged ) )

@@ -16,9 +16,9 @@
 class QPixmap;
 class QRect;
 class TextPage;
-class KPDFPageRect;
 class KPDFPageTransition;
 class NormalizedRect;
+class ObjectRect;
 class HighlightRect;
 
 /**
@@ -54,14 +54,14 @@ class KPDFPage
 
         NormalizedRect * findText( const QString & text, bool keepCase, NormalizedRect * last = 0 ) const;
         const QString getText( const NormalizedRect & rect ) const;
-        const KPDFPageRect * getRect( double x, double y ) const;
+        const ObjectRect * getRect( double x, double y ) const;
         const KPDFPageTransition * getTransition() const;
 
         // oprations: set/delete contents (by KPDFDocument)
         void setPixmap( int p_id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
         void setBookmark( bool state );
-        void setRects( const QValueList< KPDFPageRect * > rects );
+        void setRects( const QValueList< ObjectRect * > rects );
         void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
         void setTransition( const KPDFPageTransition * transition );
         void deletePixmap( int p_id );
@@ -76,7 +76,7 @@ class KPDFPage
 
         QMap< int, QPixmap * > m_pixmaps;
         TextPage * m_text;
-        QValueList< KPDFPageRect * > m_rects;
+        QValueList< ObjectRect * > m_rects;
         QValueList< HighlightRect * > m_highlights;
         const KPDFPageTransition * m_transition;
 };
@@ -97,44 +97,36 @@ class NormalizedRect
         bool contains( double x, double y ) const;
         bool intersects( const NormalizedRect & normRect ) const;
         bool intersects( double l, double t, double r, double b ) const;
+
+        QRect geometry( int xScale, int yScale ) const;
 };
 
 /**
- * @short A rect on the page that may contain an object.
+ * @short NormalizedRect that contains a reference to an object.
  *
- * This class describes a rect (geometrical coordinates) and may hold a
- * pointer to an associated object. An object is reparented to this class
- * and deleted when this class is deleted.
- *
- * Objects are stored and read as 'void pointers' so you have to perform
- * the cast on the code that handles the object using information provided
- * by pointerType().
+ * These rects contains a pointer to a kpdf object (such as a link or something
+ * like that). The pointer is read and stored as 'void pointer' so cast is
+ * performed by accessors based on the value returned by objectType(). Objects
+ * are reparented to this class.
  *
  * Type / Class correspondency tab:
- *  - NoPointer : ''              : no object is stored
  *  - Link      : class KPDFLink  : description of a link
- *  - Image     : class KPDFImage : description of an image
+ *  - Image     : class KPDFImage : description of an image (n/a)
  */
-class KPDFPageRect : public NormalizedRect
+class ObjectRect : public NormalizedRect
 {
     public:
-        KPDFPageRect( double left, double top, double right, double bottom );
-        ~KPDFPageRect();
-
-        // expand NormalizedRect to given width and height
-        QRect geometry( int width, int height ) const;
-
-        // set a pointer to data associated to this rect
-        enum PointerType { NoPointer, Link, Image };
-        void setPointer( void * object, enum PointerType pType );
+        enum ObjectType { Link, Image };
+        ObjectRect( double left, double top, double right, double bottom,
+                    ObjectType t, void * object );
+        ~ObjectRect();
 
         // query type and get a const pointer to the stored object
-        PointerType pointerType() const;
-        const void * pointer() const;
+        inline ObjectType objectType() const { return m_objectType; }
+        inline const void * pointer() const { return m_pointer; }
 
     private:
-        void deletePointer();
-        PointerType m_pointerType;
+        ObjectType m_objectType;
         void * m_pointer;
 };
 

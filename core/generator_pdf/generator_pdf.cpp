@@ -663,7 +663,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     PixmapRequest * request = static_cast< PixmapRequest * >( event->data() );
     QImage * outImage = generatorThread->takeImage();
     TextPage * outTextPage = generatorThread->takeTextPage();
-    QValueList< KPDFPageRect * > outRects = generatorThread->takeRects();
+    QValueList< ObjectRect * > outRects = generatorThread->takeRects();
 
     request->page->setPixmap( request->id, new QPixmap( *outImage ) );
     delete outImage;
@@ -694,7 +694,7 @@ struct PPGThreadPrivate
     // internal temp stored items. don't delete this.
     QImage * m_image;
     TextPage * m_textPage;
-    QValueList< KPDFPageRect * > m_rects;
+    QValueList< ObjectRect * > m_rects;
     bool m_rectsTaken;
 };
 
@@ -716,7 +716,7 @@ PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
     delete d->m_textPage;
     if ( !d->m_rectsTaken && d->m_rects.count() )
     {
-        QValueList< KPDFPageRect * >::iterator it = d->m_rects.begin(), end = d->m_rects.end();
+        QValueList< ObjectRect * >::iterator it = d->m_rects.begin(), end = d->m_rects.end();
         for ( ; it != end; ++it )
             delete *it;
     }
@@ -780,7 +780,7 @@ TextPage * PDFPixmapGeneratorThread::takeTextPage() const
     return tp;
 }
 
-QValueList< KPDFPageRect * > PDFPixmapGeneratorThread::takeRects() const
+QValueList< ObjectRect * > PDFPixmapGeneratorThread::takeRects() const
 {
     d->m_rectsTaken = true;
     return d->m_rects;

@@ -876,18 +876,18 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
-                const KPDFPageRect * rect = pageItem->page()->getRect( nX, nY );
+                const ObjectRect * rect = pageItem->page()->getRect( nX, nY );
                 if ( rect )
                 {
-                    // handle click over a link
-                    if ( rect->pointerType() == KPDFPageRect::Link )
+                    // handle click over a link/image
+                    switch ( rect->objectType() )
                     {
-                        const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
-                        d->document->processLink( link );
-                    }
-                    // handle click over an image
-                    if ( rect->pointerType() == KPDFPageRect::Image )
-                    {
+                        case ObjectRect::Link:{
+                            const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
+                            d->document->processLink( link );
+                            }break;
+                        case ObjectRect::Image:
+                            break;
                     }
                 }
                 else
@@ -1436,11 +1436,10 @@ void PageView::updateCursor( const QPoint &p )
         double nX = (double)(p.x() - pageItem->geometry().left()) / (double)pageItem->width(),
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
 
-        // check if over a KPDFPageRect
-        const KPDFPageRect * r = pageItem->page()->getRect( nX, nY );
-        bool onLink = r && r->pointerType() == KPDFPageRect::Link;
-        d->mouseOnRect = onLink;
-        if ( onLink )
+        // if over a ObjectRect (of type Link) change cursor to hand
+        const ObjectRect * r = pageItem->page()->getRect( nX, nY );
+        d->mouseOnRect = r && r->objectType() == ObjectRect::Link;
+        if ( d->mouseOnRect )
             setCursor( pointingHandCursor );
         else
             setCursor( arrowCursor );

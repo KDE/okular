@@ -73,7 +73,7 @@ bool KPDFPage::hasRect( double x, double y ) const
 {
     if ( m_rects.count() < 1 )
         return false;
-    QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y ) )
             return true;
@@ -173,9 +173,9 @@ const QString KPDFPage::getText( const NormalizedRect & rect ) const
     return result; 
 }
 
-const KPDFPageRect * KPDFPage::getRect( double x, double y ) const
+const ObjectRect * KPDFPage::getRect( double x, double y ) const
 {
-    QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y ) )
             return *it;
@@ -206,9 +206,9 @@ void KPDFPage::setBookmark( bool state )
     m_bookmarked = state;
 }
 
-void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
+void KPDFPage::setRects( const QValueList< ObjectRect * > rects )
 {
-    QValueList< KPDFPageRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+    QValueList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
@@ -254,7 +254,7 @@ void KPDFPage::deletePixmapsAndRects()
         delete *it;
     m_pixmaps.clear();
     // delete PageRects
-    QValueList< KPDFPageRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
+    QValueList< ObjectRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
     for ( ; rIt != rEnd; ++rIt )
         delete *rIt;
     m_rects.clear();
@@ -306,55 +306,32 @@ bool NormalizedRect::intersects( double l, double t, double r, double b ) const
     return (l < right) && (r > left) && (t < bottom) && (b > top);
 }
 
+QRect NormalizedRect::geometry( int xScale, int yScale ) const
+{
+    int l = (int)( left * xScale ),
+        t = (int)( top * yScale ),
+        r = (int)( right * xScale ),
+        b = (int)( bottom * yScale );
+    return QRect( l, t, r - l + 1, b - t + 1 );
+}
 
-/** class KPDFPageRect **/
 
-KPDFPageRect::KPDFPageRect( double l, double t, double r, double b )
+/** class ObjectRect **/
+
+ObjectRect::ObjectRect( double l, double t, double r, double b, ObjectType type, void * pnt )
     // assign coordinates swapping them if negative width or height
     : NormalizedRect( r > l ? l : r, b > t ? t : b, r > l ? r : l, b > t ? b : t ),
-    m_pointerType( NoPointer ), m_pointer( 0 )
+    m_objectType( type ), m_pointer( pnt )
 {
 }
 
-KPDFPageRect::~KPDFPageRect()
-{
-    deletePointer();
-}
-
-QRect KPDFPageRect::geometry( int width, int height ) const
-{
-    int l = (int)( left * width ),
-        t = (int)( top * height ),
-        r = (int)( right * width ),
-        b = (int)( bottom * height );
-    return QRect( l, t, r - l, b - t );
-}
-
-void KPDFPageRect::setPointer( void * object, enum PointerType pType )
-{
-    deletePointer();
-    m_pointer = object;
-    m_pointerType = pType;
-}
-
-KPDFPageRect::PointerType KPDFPageRect::pointerType() const
-{
-    return m_pointerType;
-}
-
-const void * KPDFPageRect::pointer() const
-{
-    return m_pointer;
-}
-
-void KPDFPageRect::deletePointer()
+ObjectRect::~ObjectRect()
 {
     if ( !m_pointer )
         return;
 
-    if ( m_pointerType == Link )
+    if ( m_objectType == Link )
         delete static_cast<KPDFLink*>( m_pointer );
     else
-        kdDebug() << "Object deletion not implemented for type '"
-                  << m_pointerType << "' ." << endl;
+        kdDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
 }

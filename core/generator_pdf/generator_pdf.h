@@ -22,7 +22,8 @@
 class PDFDoc;
 class GList;
 class TextPage;
-class KPDFPageRect;
+
+class ObjectRect;
 class KPDFOutputDev;
 class PDFPixmapGeneratorThread;
 
@@ -118,7 +119,7 @@ class PDFPixmapGeneratorThread : public QThread
         // methods for getting contents from the GUI thread
         QImage * takeImage() const;
         TextPage * takeTextPage() const;
-        QValueList< KPDFPageRect * > takeRects() const;
+        QValueList< ObjectRect * > takeRects() const;
 
     private:
         // can't be called from the outside (but from startGeneration)

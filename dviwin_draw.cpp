@@ -191,7 +191,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->cmPerDVIunit * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_DVI_units + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->cmPerDVIunit * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 
   word_boundary_encountered = false;
   line_boundary_encountered = false;
@@ -238,7 +238,7 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->cmPerDVIunit * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_DVI_units + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->cmPerDVIunit * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 }
 
 

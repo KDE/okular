@@ -10,7 +10,7 @@
 #include <qstringlist.h>
 #include <qobject.h>
 
-#include "font.h"
+#include "TeXFontDefinition.h"
 
 class KProcess;
 class KShellProcess;

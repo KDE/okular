@@ -11,14 +11,14 @@ class glyph;
 
 class TeXFont_PK : public TeXFont {
  public:
-  TeXFont_PK(QString filename, double displayResolution_in_dpi, double fontResolution_in_dpi=0.0);
+  TeXFont_PK(TeXFontDefinition *parent);
   ~TeXFont_PK();
   
   glyph *getGlyph(unsigned int character, bool generateCharacterPixmap=false);
 
  private:
   FILE         *file;		// open font file or NULL
-  class bitmap *characterBitmaps[max_num_of_chars_in_font];
+  class bitmap *characterBitmaps[TeXFontDefinition::max_num_of_chars_in_font];
 
   // For use by PK-decryption routines. I don't understand what these
   // are good for -- Stefan Kebekus

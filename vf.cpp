@@ -153,7 +153,7 @@ void TeXFontDefinition::read_VF_index(void)
     }
     m = &macrotable[cc];
 
-    m->dvi_advance_in_DVI_units = width;
+    m->dvi_advance_in_units_of_design_size_by_2e20 = width;
     if (len > 0) {
       if (len <= availend - avail) {
 	m->pos = avail;

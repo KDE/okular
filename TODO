@@ -6,6 +6,7 @@ o add "papersize" which does not display the margin
 o get rid of useless README.kdvi
 o Proper handling of the base-url
 o add "tt.dvi.gz" to the list of recent files, not "/tmp/kviews....."
+o If one presses PgDn for a while, kdvi spends minutes browsing through pages...
 
 HIGHLY DESIRABLE
 

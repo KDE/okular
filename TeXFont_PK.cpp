@@ -57,12 +57,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dviwin.h"
-#include "font.h"
+#include "fontpool.h"
 #include "glyph.h"
-#include "kdvi.h"  // This is where debugging flags are set.
 #include "xdvi.h"
+#include "TeXFontDefinition.h"
 #include "TeXFont_PK.h"
+
 
 //#define DEBUG_PK
 
@@ -75,19 +75,18 @@ extern void oops(QString message);
 
 
 
-TeXFont_PK::TeXFont_PK(QString filename, double displayResolution_in_dpi, double fontResolution_in_dpi) 
-  : TeXFont(filename, displayResolution_in_dpi, fontResolution_in_dpi)
+TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
+  : TeXFont(parent)
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::TeXFont_PK( filename=" << filename << ", displayResolution_in_dpi=" << displayResolution_in_dpi 
-		<< ", fontResolution_in_dpi=" << fontResolution_in_dpi << ")" << endl;
+  kdDebug(4300) << "TeXFont_PK::TeXFont_PK( parent=" << parent << ")" << endl;
 #endif
 
-  for(unsigned int i=0; i<max_num_of_chars_in_font; i++)
+  for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
     characterBitmaps[i] = 0;
-  file = fopen(QFile::encodeName(filename), "r");
+  file = fopen(QFile::encodeName(parent->filename), "r");
   if (file == 0) 
-    kdError(4300) << i18n("Cannot open font file %1.").arg(filename) << endl;
+    kdError(4300) << i18n("Cannot open font file %1.").arg(parent->filename) << endl;
 #ifdef DEBUG_PK
   else
     kdDebug(4300) << "TeXFont_PK::TeXFont_PK(): file opened successfully" << endl;
@@ -119,7 +118,7 @@ glyph *TeXFont_PK::getGlyph(unsigned int ch, bool generateCharacterPixmap)
 #endif
 
   // Paranoia checks
-  if (ch >= max_num_of_chars_in_font) {
+  if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
     kdError(4300) << "TeXFont_PK::getGlyph(): Argument is too big." << endl;
     return glyphtable;
   }
@@ -132,7 +131,7 @@ glyph *TeXFont_PK::getGlyph(unsigned int ch, bool generateCharacterPixmap)
     // If the character is not defined in the PK file, mark the
     // character as missing, and print an error message
     if (g->addr == 0) {
-      kdError(4300) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2").arg(ch).arg(filename) << endl;
+      kdError(4300) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2").arg(ch).arg(parent->filename) << endl;
       g->addr = -1;
       return g;
     }
@@ -156,7 +155,7 @@ glyph *TeXFont_PK::getGlyph(unsigned int ch, bool generateCharacterPixmap)
   // At this point, g points to a properly loaded character. Generate
   // a smoothly scaled QPixmap if the user asks for it.
   if ((generateCharacterPixmap == true) && (g->shrunkenCharacter.isNull()) && (characterBitmaps[ch]->w != 0)) {
-    double shrinkFactor = fontResolution_in_dpi/displayResolution_in_dpi;
+    double shrinkFactor = MFResolutions[parent->font_pool->getMetafontMode()] / parent->displayResolution_in_dpi;
     
     // All is fine? Then we rescale the bitmap in order to produce the
     // required pixmap.  Rescaling a character, however, is an art
@@ -381,7 +380,7 @@ void TeXFont_PK::PK_skip_specials(void)
       case PK_NOOP :
 	break;
       default :
-	oops(i18n("Unexpected %1 in PK file %2").arg(PK_flag_byte).arg(filename) );
+	oops(i18n("Unexpected %1 in PK file %2").arg(PK_flag_byte).arg(parent->filename) );
 	break;
       }
     }
@@ -448,14 +447,14 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     w = num(fp, n);
     h = num(fp, n);
     if (w > 0x7fff || h > 0x7fff)
-      oops(i18n("The character %1 is too large in file %2").arg(ch).arg(filename));
+      oops(i18n("The character %1 is too large in file %2").arg(ch).arg(parent->filename));
     characterBitmaps[ch]->w = w;
     characterBitmaps[ch]->h = h;
   }
   g->x = snum(fp, n);
   g->y = snum(fp, n);
   
-  g->dvi_advance_in_DVI_units = fpwidth; // ####
+  g->dvi_advance_in_units_of_design_size_by_2e20 = fpwidth;
   
   {
     /* width must be multiple of 16 bits for raster_op */
@@ -554,9 +553,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 	paint_switch = 1 - paint_switch;
       }
       if (cp != ((BMUNIT *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
-	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(filename));
+	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
-	oops(i18n("Bad pk file (%1), too many bits").arg(filename));
+	oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));
     }
 
     // The data in the bitmap is now in the processor's bit order,
@@ -641,9 +640,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 	paint_switch = 1 - paint_switch;
       }
       if (cp != ((BMUNIT *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
-	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(filename));
+	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
-	oops(i18n("Bad pk file (%1), too many bits").arg(filename));
+	oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));
     }
   } // endif: big or small Endian?
 }
@@ -669,9 +668,7 @@ void TeXFont_PK::read_PK_index(void)
   fseek(file, (long) one(file), SEEK_CUR);      /* skip comment */
   (void) four(file);		/* skip design size */
 
-  Q_UINT32 file_checksum = four(file);
-  if (checksum && checksum && file_checksum != checksum)
-    kdWarning(4300) << i18n("Checksum mismatch for PK font file %3 (dvi=%1, pk=%2)").arg(checksum).arg(file_checksum).arg(filename) << endl;
+  checksum = four(file);
 
   int hppp = sfour(file);
   int vppp = sfour(file);

@@ -39,12 +39,12 @@ class macro {
 
   unsigned char	*pos;		/* address of first byte of macro */
   unsigned char	*end;		/* address of last+1 byte */
-  Q_INT32        dvi_advance_in_DVI_units;	/* DVI units to move reference point */
+  Q_INT32        dvi_advance_in_units_of_design_size_by_2e20;	/* DVI units to move reference point */
   bool          free_me;        // if memory at pos should be returned on destruction
 };
 
 
-class TeXFontDefinition : public QObject {
+class TeXFontDefinition {
  public:
   // Currently, kdvi supports fonts with at most 256 characters to
   // comply with "The DVI Driver Standard, Level 0". If you change

@@ -4,12 +4,12 @@
 #include <klocale.h>
 #include <qfile.h>
 
-#include "font.h"
 #include "fontpool.h"
 #include "kdvi.h"
+#include "TeXFont_PK.h"
+#include "TeXFont_TFM.h"
+#include "TeXFontDefinition.h"
 #include "xdvi.h"
-
-extern void oops(QString message);
 
 extern const int MFResolutions[];
 
@@ -23,7 +23,6 @@ extern const int MFResolutions[];
 #define	VF_ID_BYTE	202
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
-#include "TeXFont_PK.h"
 
 
 TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
@@ -90,23 +89,39 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
 
   file = fopen(QFile::encodeName(filename), "r");
   if (file == NULL) {
-    kdError() << i18n("Can't find font ") << fontname << "." << endl;
+    kdError(4300) << i18n("Can't find font ") << fontname << "." << endl;
     return;
   }
   set_char_p = &dviWindow::set_char;
   int magic      = two(file);
 
-  if (magic == PK_MAGIC) {
-    fclose(file);
-    file = 0;
-    font = new TeXFont_PK(filename, enlargement*displayResolution_in_dpi, enlargement*MFResolutions[font_pool->getMetafontMode()]);
-    set_char_p = &dviWindow::set_char;
-  } else
+  if (fname.endsWith("pk"))
+    if (magic == PK_MAGIC) {
+      fclose(file);
+      file = 0;
+      font = new TeXFont_PK(this);
+      set_char_p = &dviWindow::set_char;
+      if ((font->checksum != 0) && (checksum != font->checksum))
+	kdWarning(4300) << i18n("Checksum mismatch for font file %1").arg(filename) << endl;
+      return;
+    }
+    
+  if (fname.endsWith(".vf"))  
     if (magic == VF_MAGIC) {
       read_VF_index();
       set_char_p = &dviWindow::set_vf_char;
-    } else
-      oops(i18n("Cannot recognize format for font file %1").arg(filename) );
+      return;
+    }
+
+  if (fname.endsWith(".tfm")) {
+      fclose(file);
+      file = 0;
+      font = new TeXFont_TFM(this);
+      set_char_p = &dviWindow::set_char;
+      return;
+  }
+  
+  kdError(4300) << i18n("Cannot recognize format for font file %1").arg(filename) << endl; // @@@ Do sth smarter here
 }
 
 
@@ -139,9 +154,9 @@ void TeXFontDefinition::reset(void)
 
 void TeXFontDefinition::setDisplayResolution(double _displayResolution_in_dpi)
 {
-  if (font != 0)
-    font->setDisplayResolution(_displayResolution_in_dpi*enlargement);
   displayResolution_in_dpi = _displayResolution_in_dpi;
+  if (font != 0)
+    font->setDisplayResolution();
 }
 
 
@@ -172,10 +187,10 @@ void TeXFontDefinition::mark_as_used(void)
 
 macro::macro()
 {
-  pos     = 0L;		/* address of first byte of macro */
-  end     = 0L;		/* address of last+1 byte */
-  dvi_advance_in_DVI_units = 0;	/* DVI units to move reference point */
-  free_me =  false;
+  pos     = 0;		/* address of first byte of macro */
+  end     = 0;		/* address of last+1 byte */
+  dvi_advance_in_units_of_design_size_by_2e20 = 0;	/* DVI units to move reference point */
+  free_me = false;
 }
 
 

@@ -158,7 +158,7 @@ void dvifile::read_postamble(void)
     command_pointer += len;
     
 #ifdef DEBUG_FONTS
-    kdDebug() << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+    kdDebug(4300) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
     
     // According to section A.4 of the DVI driver standard, this font

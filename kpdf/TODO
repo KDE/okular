@@ -10,7 +10,6 @@ Legend:
 
 Urgent fixes in HEAD:
 -> REGRESSION: find-as-you-type somewhat broken here
--> REGRESSIONS: mouse cursor on drag (, add small ones here)
 -> FIX 1/2: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
 -> FIX 2/2: check for removing 'canUnloadPixmap' from observers in place of requesting
    a list of visible pixmaps
@@ -93,6 +92,7 @@ More items (first items will enter 'In progress list' first):
 -> move some document related features from part to the document (see find, goto dialog, ...)
 
 Done (newest feature comes firts):
+-> FIX: Fix my update cursor FIX :-D
 -> ADD: Make kpdf aware of Find and GoToPage actions
 -> FIX: Update cursor correctly when a link moves to a page and the cursor is over a link on that page
 -> ADD: Asyncronous PDF Generator implementation (for the user: faster UI, preloading, etc..)

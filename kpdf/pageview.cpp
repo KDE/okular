@@ -311,10 +311,17 @@ void PageView::notifyPixmapChanged( int pageNumber )
             QRect expandedRect = (*iIt)->geometry();
             expandedRect.addCoords( -1, -1, 3, 3 );
             updateContents( expandedRect );
-            // that is here because of that
-            // you clicked on a link that brought you to another page
-            // the page was not on the cache so the updateCursor from pageSetCurrent does not work
-            updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+
+            // if we where "zoom-dragging" do not overwrite the "zoom-drag" cursor
+            if (cursor().shape() != Qt::SizeVerCursor)
+            {
+                // that is here because of that
+                // you clicked on a link that brought you to another page
+                // the page was not on the cache so the updateCursor from pageSetCurrent does not work
+                updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+            }
+
+
             break;
         }
 }
@@ -613,7 +620,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     if ( (e->state() & MidButton) && d->mouseMidStartY > 0 )
     {
         d->mouseMidStartY = -1;
-        setCursor( arrowCursor );
+        // while drag-zooming we could have gone over a link
+        updateCursor( e->pos() );
         return;
     }
 
@@ -622,6 +630,14 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     switch ( d->mouseMode )
     {
         case MouseNormal:{  // do Follow Link or Display RMB
+            // return the cursor to its normal state after dragging
+            if (cursor().shape() == Qt::SizeAllCursor) updateCursor( e->pos() );
+
+            // avoid the situation in where you click on a "row" that has a link but you are not over it
+            // drag a bit and move the mouse left to place it over the link while dragging
+            // release the button and BOOM you get the link followed
+            if (d->mouseStartPos != e->globalPos()) return;
+
             PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
             if ( leftButton && pageItem )
             {
@@ -645,8 +661,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 else
                 {
                     // mouse not moved since press, so we have a click. select the page.
-                    if ( e->globalPos() == d->mouseStartPos )
-                        d->document->setCurrentPage( pageItem->pageNumber() );
+                    d->document->setCurrentPage( pageItem->pageNumber() );
                 }
             }
             else if ( rightButton )
@@ -1124,19 +1139,19 @@ void PageView::updateCursor( const QPoint &p )
             pageY = p.y() - pageItem->geometry().top();
 
         // check if over a KPDFPageRect
-        bool onRect = pageItem->page()->hasLink( pageX, pageY );
-        if ( onRect != d->mouseOnRect )
-            setCursor( (d->mouseOnRect = onRect) ? pointingHandCursor : arrowCursor );
+        bool onLink = pageItem->page()->hasLink( pageX, pageY );
+        d->mouseOnRect = onLink;
+        if ( onLink )
+            setCursor( pointingHandCursor );
+        else
+            setCursor( arrowCursor );
     }
     else
     {
         // if there's no page over the cursor and we were showing the pointingHandCursor
         // go back to the normal one
-        if ( d->mouseOnRect )
-        {
-            d->mouseOnRect = false;
-            setCursor( arrowCursor );
-        }
+        d->mouseOnRect = false;
+        setCursor( arrowCursor );
     }
 }
 

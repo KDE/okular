@@ -314,7 +314,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
     export_tmpFile.unlink();
 
     sourceFileName     = export_tmpFileName;
-    if (KIO::NetAccess::copy(dviFile->filename, sourceFileName)) {
+    if (KIO::NetAccess::copy(KURL::fromPathOrURL( dviFile->filename ), KURL::fromPathOrURL( sourceFileName ))) {
       int wordSize;
       bool bigEndian;
       qSysInfo (&wordSize, &bigEndian);

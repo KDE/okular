@@ -44,7 +44,7 @@ Object *Parser::getObj(Object *obj,
 #else
 Object *Parser::getObj(Object *obj) {
 #endif
-  char *key;
+  const char *key;
   Stream *str;
   Object obj2;
   int num;
@@ -90,7 +90,7 @@ Object *Parser::getObj(Object *obj) {
 	key = copyString(buf1.getName());
 	shift();
 	if (buf1.isEOF() || buf1.isError()) {
-	  gfree(key);
+	  gfree((void*)key);
 	  break;
 	}
 #ifndef NO_DECRYPTION

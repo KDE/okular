@@ -7,7 +7,7 @@ libxpdf_la_SOURCES = Annot.cc Array.cc BuiltinFont.cc BuiltinFontTables.cc \
      FontEncodingTables.cc Function.cc Gfx.cc \
      GfxFont.cc GfxState.cc GlobalParams.cc JArithmeticDecoder.cc \
      JBIG2Stream.cc Lexer.cc Link.cc NameToCharCode.cc Object.cc Outline.cc \
-     OutputDev.cc PDFDoc.cc PDFDocEncoding.cc PSOutputDev.cc PSTokenizer.cc \
+     OutputDev.cc PDFDoc.cc PDFDocEncoding.cc PSTokenizer.cc \
      Page.cc Parser.cc Stream.cc JPXStream.cc \
      TextOutputDev.cc UnicodeMap.cc UnicodeTypeTable.cc XRef.cc
 libxpdf_la_COMPILE_FIRST = ../aconf.h

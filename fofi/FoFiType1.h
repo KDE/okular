@@ -34,11 +34,11 @@ public:
   virtual ~FoFiType1();
 
   // Return the font name.
-  char *getName();
+  const char *getName();
 
   // Return the encoding, as an array of 256 names (any of which may
   // be NULL).
-  char **getEncoding();
+  const char **getEncoding();
 
   // Write a version of the Type 1 font file with a new encoding.
   void writeEncoded(char **newEncoding,
@@ -51,8 +51,8 @@ private:
   char *getNextLine(char *line);
   void parse();
 
-  char *name;
-  char **encoding;
+  const char *name;
+  const char **encoding;
   GBool parsed;
 };
 

@@ -410,7 +410,7 @@ void SampledFunction::transform(double *in, double *out) {
 // ExponentialFunction
 //------------------------------------------------------------------------
 
-ExponentialFunction::ExponentialFunction(Object *funcObj, Dict *dict) {
+ExponentialFunction::ExponentialFunction(Object * /*funcObj*/, Dict *dict) {
   Object obj1, obj2;
   int i;
 
@@ -529,7 +529,7 @@ void ExponentialFunction::transform(double *in, double *out) {
 // StitchingFunction
 //------------------------------------------------------------------------
 
-StitchingFunction::StitchingFunction(Object *funcObj, Dict *dict) {
+StitchingFunction::StitchingFunction(Object * /*funcObj*/, Dict *dict) {
   Object obj1, obj2;
   int i;
 
@@ -719,7 +719,7 @@ enum PSOp {
 // Note: 'if' and 'ifelse' are parsed separately.
 // The rest are listed here in alphabetical order.
 // The index in this table is equivalent to the entry in PSOp.
-char *psOpNames[] = {
+const char *psOpNames[] = {
   "abs",
   "add",
   "and",

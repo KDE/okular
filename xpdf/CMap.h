@@ -73,7 +73,7 @@ private:
   CMapVectorEntry *vector;	// vector for first byte (NULL for
 				//   identity CMap)
   int refCnt;
-#ifdef MULTITHREADED
+#if MULTITHREADED
   GMutex mutex;
 #endif
 };

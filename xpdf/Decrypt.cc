@@ -123,7 +123,7 @@ GBool Decrypt::makeFileKey(int encVersion, int encRevision, int keyLength,
 		      permissions, fileID, userPassword, fileKey);
 }
 
-GBool Decrypt::makeFileKey2(int encVersion, int encRevision, int keyLength,
+GBool Decrypt::makeFileKey2(int /*encVersion*/, int encRevision, int keyLength,
 			    GString *ownerKey, GString *userKey,
 			    int permissions, GString *fileID,
 			    GString *userPassword, Guchar *fileKey) {

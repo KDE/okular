@@ -366,11 +366,11 @@ void JPXStream::fillReadBuf() {
   } while (readBufLen < 8);
 }
 
-GString *JPXStream::getPSFilter(int psLevel, char *indent) {
+GString *JPXStream::getPSFilter(int /*psLevel*/, char */*indent*/) {
   return NULL;
 }
 
-GBool JPXStream::isBinary(GBool last) {
+GBool JPXStream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -660,7 +660,7 @@ GBool JPXStream::readColorSpecBox(Guint dataLen) {
   return gFalse;
 }
 
-GBool JPXStream::readCodestream(Guint len) {
+GBool JPXStream::readCodestream(Guint /*len*/) {
   JPXTile *tile;
   JPXTileComp *tileComp;
   int segType;
@@ -1957,9 +1957,9 @@ GBool JPXStream::readTilePartData(Guint tileIdx,
 }
 
 GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
-				   JPXResLevel *resLevel,
-				   JPXPrecinct *precinct,
-				   JPXSubband *subband,
+				   JPXResLevel */*resLevel*/,
+				   JPXPrecinct */*precinct*/,
+				   JPXSubband */*subband*/,
 				   Guint res, Guint sb,
 				   JPXCodeBlock *cb) {
   JPXCoeff *coeff0, *coeff1, *coeff;

@@ -11,7 +11,7 @@
 #include "UnicodeTypeTable.h"
 
 struct UnicodeMapTableEntry {
-  char *vector;
+  const char *vector;
   char type;
 };
 

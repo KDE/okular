@@ -232,7 +232,7 @@ TextWord::~TextWord() {
   gfree(edge);
 }
 
-void TextWord::addChar(GfxState *state, double x, double y,
+void TextWord::addChar(GfxState */*state*/, double x, double y,
 		       double dx, double dy, Unicode u) {
   if (len == size) {
     size += 16;
@@ -1478,7 +1478,7 @@ void TextFlow::addBlock(TextBlock *blk) {
   }
 }
 
-GBool TextFlow::blockFits(TextBlock *blk, TextBlock *prevBlk) {
+GBool TextFlow::blockFits(TextBlock *blk, TextBlock */*prevBlk*/) {
   GBool fits;
 
   // lower blocks must use smaller fonts
@@ -1691,7 +1691,7 @@ void TextPage::clear() {
 void TextPage::updateFont(GfxState *state) {
   GfxFont *gfxFont;
   double *fm;
-  char *name;
+  const char *name;
   int code, mCode, letterCode, anyCode;
   double w;
   int i;
@@ -1945,7 +1945,7 @@ void TextPage::addWord(TextWord *word) {
   }
 }
 
-void TextPage::coalesce(GBool physLayout) {
+void TextPage::coalesce(GBool /*physLayout*/) {
   UnicodeMap *uMap;
   TextPool *pool;
   TextWord *word0, *word1, *word2;
@@ -3473,7 +3473,7 @@ TextOutputDev::~TextOutputDev() {
   }
 }
 
-void TextOutputDev::startPage(int pageNum, GfxState *state) {
+void TextOutputDev::startPage(int /*pageNum*/, GfxState *state) {
   text->startPage(state);
 }
 
@@ -3489,15 +3489,15 @@ void TextOutputDev::updateFont(GfxState *state) {
   text->updateFont(state);
 }
 
-void TextOutputDev::beginString(GfxState *state, GString *s) {
+void TextOutputDev::beginString(GfxState */*state*/, GString */*s*/) {
 }
 
-void TextOutputDev::endString(GfxState *state) {
+void TextOutputDev::endString(GfxState */*state*/) {
 }
 
 void TextOutputDev::drawChar(GfxState *state, double x, double y,
 			     double dx, double dy,
-			     double originX, double originY,
+			     double /*originX*/, double /*originY*/,
 			     CharCode c, Unicode *u, int uLen) {
   text->addChar(state, x, y, dx, dy, c, u, uLen);
 }

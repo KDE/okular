@@ -291,7 +291,7 @@ GfxResources::~GfxResources() {
   gStateDict.free();
 }
 
-GfxFont *GfxResources::lookupFont(char *name) {
+GfxFont *GfxResources::lookupFont(const char *name) {
   GfxFont *font;
   GfxResources *resPtr;
 
@@ -305,7 +305,7 @@ GfxFont *GfxResources::lookupFont(char *name) {
   return NULL;
 }
 
-GBool GfxResources::lookupXObject(char *name, Object *obj) {
+GBool GfxResources::lookupXObject(const char *name, Object *obj) {
   GfxResources *resPtr;
 
   for (resPtr = this; resPtr; resPtr = resPtr->next) {
@@ -319,7 +319,7 @@ GBool GfxResources::lookupXObject(char *name, Object *obj) {
   return gFalse;
 }
 
-GBool GfxResources::lookupXObjectNF(char *name, Object *obj) {
+GBool GfxResources::lookupXObjectNF(const char *name, Object *obj) {
   GfxResources *resPtr;
 
   for (resPtr = this; resPtr; resPtr = resPtr->next) {
@@ -333,7 +333,7 @@ GBool GfxResources::lookupXObjectNF(char *name, Object *obj) {
   return gFalse;
 }
 
-void GfxResources::lookupColorSpace(char *name, Object *obj) {
+void GfxResources::lookupColorSpace(const char *name, Object *obj) {
   GfxResources *resPtr;
 
   for (resPtr = this; resPtr; resPtr = resPtr->next) {
@@ -347,7 +347,7 @@ void GfxResources::lookupColorSpace(char *name, Object *obj) {
   obj->initNull();
 }
 
-GfxPattern *GfxResources::lookupPattern(char *name) {
+GfxPattern *GfxResources::lookupPattern(const char *name) {
   GfxResources *resPtr;
   GfxPattern *pattern;
   Object obj;
@@ -366,7 +366,7 @@ GfxPattern *GfxResources::lookupPattern(char *name) {
   return NULL;
 }
 
-GfxShading *GfxResources::lookupShading(char *name) {
+GfxShading *GfxResources::lookupShading(const char *name) {
   GfxResources *resPtr;
   GfxShading *shading;
   Object obj;
@@ -385,7 +385,7 @@ GfxShading *GfxResources::lookupShading(char *name) {
   return NULL;
 }
 
-GBool GfxResources::lookupGState(char *name, Object *obj) {
+GBool GfxResources::lookupGState(const char *name, Object *obj) {
   GfxResources *resPtr;
 
   for (resPtr = this; resPtr; resPtr = resPtr->next) {
@@ -615,7 +615,7 @@ void Gfx::go(GBool topLevel) {
 
 void Gfx::execOp(Object *cmd, Object args[], int numArgs) {
   Operator *op;
-  char *name;
+  const char *name;
   Object *argPtr;
   int i;
 
@@ -660,7 +660,7 @@ void Gfx::execOp(Object *cmd, Object args[], int numArgs) {
   (this->*op->func)(argPtr, numArgs);
 }
 
-Operator *Gfx::findOp(char *name) {
+Operator *Gfx::findOp(const char *name) {
   int a, b, m, cmp;
 
   a = -1;
@@ -704,15 +704,15 @@ int Gfx::getPos() {
 // graphics state operators
 //------------------------------------------------------------------------
 
-void Gfx::opSave(Object args[], int numArgs) {
+void Gfx::opSave(Object * /*args*/, int /*numArgs*/) {
   saveState();
 }
 
-void Gfx::opRestore(Object args[], int numArgs) {
+void Gfx::opRestore(Object * /*args*/, int /*numArgs*/) {
   restoreState();
 }
 
-void Gfx::opConcat(Object args[], int numArgs) {
+void Gfx::opConcat(Object args[], int /*numArgs*/) {
   state->concatCTM(args[0].getNum(), args[1].getNum(),
 		   args[2].getNum(), args[3].getNum(),
 		   args[4].getNum(), args[5].getNum());
@@ -722,7 +722,7 @@ void Gfx::opConcat(Object args[], int numArgs) {
   fontChanged = gTrue;
 }
 
-void Gfx::opSetDash(Object args[], int numArgs) {
+void Gfx::opSetDash(Object args[], int /*numArgs*/) {
   Array *a;
   int length;
   Object obj;
@@ -744,32 +744,32 @@ void Gfx::opSetDash(Object args[], int numArgs) {
   out->updateLineDash(state);
 }
 
-void Gfx::opSetFlat(Object args[], int numArgs) {
+void Gfx::opSetFlat(Object args[], int /*numArgs*/) {
   state->setFlatness((int)args[0].getNum());
   out->updateFlatness(state);
 }
 
-void Gfx::opSetLineJoin(Object args[], int numArgs) {
+void Gfx::opSetLineJoin(Object args[], int /*numArgs*/) {
   state->setLineJoin(args[0].getInt());
   out->updateLineJoin(state);
 }
 
-void Gfx::opSetLineCap(Object args[], int numArgs) {
+void Gfx::opSetLineCap(Object args[], int /*numArgs*/) {
   state->setLineCap(args[0].getInt());
   out->updateLineCap(state);
 }
 
-void Gfx::opSetMiterLimit(Object args[], int numArgs) {
+void Gfx::opSetMiterLimit(Object args[], int /*numArgs*/) {
   state->setMiterLimit(args[0].getNum());
   out->updateMiterLimit(state);
 }
 
-void Gfx::opSetLineWidth(Object args[], int numArgs) {
+void Gfx::opSetLineWidth(Object args[], int /*numArgs*/) {
   state->setLineWidth(args[0].getNum());
   out->updateLineWidth(state);
 }
 
-void Gfx::opSetExtGState(Object args[], int numArgs) {
+void Gfx::opSetExtGState(Object args[], int /*numArgs*/) {
   Object obj1, obj2;
 
   if (!res->lookupGState(args[0].getName(), &obj1)) {
@@ -793,14 +793,14 @@ void Gfx::opSetExtGState(Object args[], int numArgs) {
   obj1.free();
 }
 
-void Gfx::opSetRenderingIntent(Object args[], int numArgs) {
+void Gfx::opSetRenderingIntent(Object * /*args*/, int /*numArgs*/) {
 }
 
 //------------------------------------------------------------------------
 // color operators
 //------------------------------------------------------------------------
 
-void Gfx::opSetFillGray(Object args[], int numArgs) {
+void Gfx::opSetFillGray(Object args[], int /*numArgs*/) {
   GfxColor color;
 
   state->setFillPattern(NULL);
@@ -810,7 +810,7 @@ void Gfx::opSetFillGray(Object args[], int numArgs) {
   out->updateFillColor(state);
 }
 
-void Gfx::opSetStrokeGray(Object args[], int numArgs) {
+void Gfx::opSetStrokeGray(Object args[], int /*numArgs*/) {
   GfxColor color;
 
   state->setStrokePattern(NULL);
@@ -820,7 +820,7 @@ void Gfx::opSetStrokeGray(Object args[], int numArgs) {
   out->updateStrokeColor(state);
 }
 
-void Gfx::opSetFillCMYKColor(Object args[], int numArgs) {
+void Gfx::opSetFillCMYKColor(Object args[], int /*numArgs*/) {
   GfxColor color;
   int i;
 
@@ -833,7 +833,7 @@ void Gfx::opSetFillCMYKColor(Object args[], int numArgs) {
   out->updateFillColor(state);
 }
 
-void Gfx::opSetStrokeCMYKColor(Object args[], int numArgs) {
+void Gfx::opSetStrokeCMYKColor(Object args[], int /*numArgs*/) {
   GfxColor color;
   int i;
 
@@ -846,7 +846,7 @@ void Gfx::opSetStrokeCMYKColor(Object args[], int numArgs) {
   out->updateStrokeColor(state);
 }
 
-void Gfx::opSetFillRGBColor(Object args[], int numArgs) {
+void Gfx::opSetFillRGBColor(Object args[], int /*numArgs*/) {
   GfxColor color;
   int i;
 
@@ -859,7 +859,7 @@ void Gfx::opSetFillRGBColor(Object args[], int numArgs) {
   out->updateFillColor(state);
 }
 
-void Gfx::opSetStrokeRGBColor(Object args[], int numArgs) {
+void Gfx::opSetStrokeRGBColor(Object args[], int /*numArgs*/) {
   GfxColor color;
   int i;
 
@@ -872,7 +872,7 @@ void Gfx::opSetStrokeRGBColor(Object args[], int numArgs) {
   out->updateStrokeColor(state);
 }
 
-void Gfx::opSetFillColorSpace(Object args[], int numArgs) {
+void Gfx::opSetFillColorSpace(Object args[], int /*numArgs*/) {
   Object obj;
   GfxColorSpace *colorSpace;
   GfxColor color;
@@ -898,7 +898,7 @@ void Gfx::opSetFillColorSpace(Object args[], int numArgs) {
   out->updateFillColor(state);
 }
 
-void Gfx::opSetStrokeColorSpace(Object args[], int numArgs) {
+void Gfx::opSetStrokeColorSpace(Object args[], int /*numArgs*/) {
   Object obj;
   GfxColorSpace *colorSpace;
   GfxColor color;
@@ -1016,11 +1016,11 @@ void Gfx::opSetStrokeColorN(Object args[], int numArgs) {
 // path segment operators
 //------------------------------------------------------------------------
 
-void Gfx::opMoveTo(Object args[], int numArgs) {
+void Gfx::opMoveTo(Object args[], int /*numArgs*/) {
   state->moveTo(args[0].getNum(), args[1].getNum());
 }
 
-void Gfx::opLineTo(Object args[], int numArgs) {
+void Gfx::opLineTo(Object args[], int /*numArgs*/) {
   if (!state->isCurPt()) {
     error(getPos(), "No current point in lineto");
     return;
@@ -1028,7 +1028,7 @@ void Gfx::opLineTo(Object args[], int numArgs) {
   state->lineTo(args[0].getNum(), args[1].getNum());
 }
 
-void Gfx::opCurveTo(Object args[], int numArgs) {
+void Gfx::opCurveTo(Object args[], int /*numArgs*/) {
   double x1, y1, x2, y2, x3, y3;
 
   if (!state->isCurPt()) {
@@ -1044,7 +1044,7 @@ void Gfx::opCurveTo(Object args[], int numArgs) {
   state->curveTo(x1, y1, x2, y2, x3, y3);
 }
 
-void Gfx::opCurveTo1(Object args[], int numArgs) {
+void Gfx::opCurveTo1(Object args[], int /*numArgs*/) {
   double x1, y1, x2, y2, x3, y3;
 
   if (!state->isCurPt()) {
@@ -1060,7 +1060,7 @@ void Gfx::opCurveTo1(Object args[], int numArgs) {
   state->curveTo(x1, y1, x2, y2, x3, y3);
 }
 
-void Gfx::opCurveTo2(Object args[], int numArgs) {
+void Gfx::opCurveTo2(Object args[], int /*numArgs*/) {
   double x1, y1, x2, y2, x3, y3;
 
   if (!state->isCurPt()) {
@@ -1076,7 +1076,7 @@ void Gfx::opCurveTo2(Object args[], int numArgs) {
   state->curveTo(x1, y1, x2, y2, x3, y3);
 }
 
-void Gfx::opRectangle(Object args[], int numArgs) {
+void Gfx::opRectangle(Object args[], int /*numArgs*/) {
   double x, y, w, h;
 
   x = args[0].getNum();
@@ -1090,7 +1090,7 @@ void Gfx::opRectangle(Object args[], int numArgs) {
   state->closePath();
 }
 
-void Gfx::opClosePath(Object args[], int numArgs) {
+void Gfx::opClosePath(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     error(getPos(), "No current point in closepath");
     return;
@@ -1102,11 +1102,11 @@ void Gfx::opClosePath(Object args[], int numArgs) {
 // path painting operators
 //------------------------------------------------------------------------
 
-void Gfx::opEndPath(Object args[], int numArgs) {
+void Gfx::opEndPath(Object * /*args*/, int /*numArgs*/) {
   doEndPath();
 }
 
-void Gfx::opStroke(Object args[], int numArgs) {
+void Gfx::opStroke(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in stroke");
     return;
@@ -1116,7 +1116,7 @@ void Gfx::opStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void Gfx::opCloseStroke(Object args[], int numArgs) {
+void Gfx::opCloseStroke(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in closepath/stroke");
     return;
@@ -1128,7 +1128,7 @@ void Gfx::opCloseStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void Gfx::opFill(Object args[], int numArgs) {
+void Gfx::opFill(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in fill");
     return;
@@ -1143,7 +1143,7 @@ void Gfx::opFill(Object args[], int numArgs) {
   doEndPath();
 }
 
-void Gfx::opEOFill(Object args[], int numArgs) {
+void Gfx::opEOFill(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in eofill");
     return;
@@ -1158,7 +1158,7 @@ void Gfx::opEOFill(Object args[], int numArgs) {
   doEndPath();
 }
 
-void Gfx::opFillStroke(Object args[], int numArgs) {
+void Gfx::opFillStroke(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in fill/stroke");
     return;
@@ -1174,7 +1174,7 @@ void Gfx::opFillStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void Gfx::opCloseFillStroke(Object args[], int numArgs) {
+void Gfx::opCloseFillStroke(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in closepath/fill/stroke");
     return;
@@ -1191,7 +1191,7 @@ void Gfx::opCloseFillStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void Gfx::opEOFillStroke(Object args[], int numArgs) {
+void Gfx::opEOFillStroke(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in eofill/stroke");
     return;
@@ -1207,7 +1207,7 @@ void Gfx::opEOFillStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void Gfx::opCloseEOFillStroke(Object args[], int numArgs) {
+void Gfx::opCloseEOFillStroke(Object * /*args*/, int /*numArgs*/) {
   if (!state->isCurPt()) {
     //error(getPos(), "No path in closepath/eofill/stroke");
     return;
@@ -1491,7 +1491,7 @@ void Gfx::doShadingPatternFill(GfxShadingPattern *sPat, GBool eoFill) {
   state->setPath(savedPath);
 }
 
-void Gfx::opShFill(Object args[], int numArgs) {
+void Gfx::opShFill(Object args[], int /*numArgs*/) {
   GfxShading *shading;
   GfxPath *savedPath;
   double xMin, yMin, xMax, yMax;
@@ -2108,11 +2108,11 @@ void Gfx::doEndPath() {
 // path clipping operators
 //------------------------------------------------------------------------
 
-void Gfx::opClip(Object args[], int numArgs) {
+void Gfx::opClip(Object * /*args*/, int /*numArgs*/) {
   clip = clipNormal;
 }
 
-void Gfx::opEOClip(Object args[], int numArgs) {
+void Gfx::opEOClip(Object * /*args*/, int /*numArgs*/) {
   clip = clipEO;
 }
 
@@ -2120,7 +2120,7 @@ void Gfx::opEOClip(Object args[], int numArgs) {
 // text object operators
 //------------------------------------------------------------------------
 
-void Gfx::opBeginText(Object args[], int numArgs) {
+void Gfx::opBeginText(Object * /*args*/, int /*numArgs*/) {
   state->setTextMat(1, 0, 0, 1, 0, 0);
   state->textMoveTo(0, 0);
   out->updateTextMat(state);
@@ -2128,7 +2128,7 @@ void Gfx::opBeginText(Object args[], int numArgs) {
   fontChanged = gTrue;
 }
 
-void Gfx::opEndText(Object args[], int numArgs) {
+void Gfx::opEndText(Object * /*args*/, int /*numArgs*/) {
   out->endTextObject(state);
 }
 
@@ -2136,12 +2136,12 @@ void Gfx::opEndText(Object args[], int numArgs) {
 // text state operators
 //------------------------------------------------------------------------
 
-void Gfx::opSetCharSpacing(Object args[], int numArgs) {
+void Gfx::opSetCharSpacing(Object args[], int /*numArgs*/) {
   state->setCharSpace(args[0].getNum());
   out->updateCharSpace(state);
 }
 
-void Gfx::opSetFont(Object args[], int numArgs) {
+void Gfx::opSetFont(Object args[], int /*numArgs*/) {
   GfxFont *font;
 
   if (!(font = res->lookupFont(args[0].getName()))) {
@@ -2158,26 +2158,26 @@ void Gfx::opSetFont(Object args[], int numArgs) {
   fontChanged = gTrue;
 }
 
-void Gfx::opSetTextLeading(Object args[], int numArgs) {
+void Gfx::opSetTextLeading(Object args[], int /*numArgs*/) {
   state->setLeading(args[0].getNum());
 }
 
-void Gfx::opSetTextRender(Object args[], int numArgs) {
+void Gfx::opSetTextRender(Object args[], int /*numArgs*/) {
   state->setRender(args[0].getInt());
   out->updateRender(state);
 }
 
-void Gfx::opSetTextRise(Object args[], int numArgs) {
+void Gfx::opSetTextRise(Object args[], int /*numArgs*/) {
   state->setRise(args[0].getNum());
   out->updateRise(state);
 }
 
-void Gfx::opSetWordSpacing(Object args[], int numArgs) {
+void Gfx::opSetWordSpacing(Object args[], int /*numArgs*/) {
   state->setWordSpace(args[0].getNum());
   out->updateWordSpace(state);
 }
 
-void Gfx::opSetHorizScaling(Object args[], int numArgs) {
+void Gfx::opSetHorizScaling(Object args[], int /*numArgs*/) {
   state->setHorizScaling(args[0].getNum());
   out->updateHorizScaling(state);
   fontChanged = gTrue;
@@ -2187,7 +2187,7 @@ void Gfx::opSetHorizScaling(Object args[], int numArgs) {
 // text positioning operators
 //------------------------------------------------------------------------
 
-void Gfx::opTextMove(Object args[], int numArgs) {
+void Gfx::opTextMove(Object args[], int /*numArgs*/) {
   double tx, ty;
 
   tx = state->getLineX() + args[0].getNum();
@@ -2196,7 +2196,7 @@ void Gfx::opTextMove(Object args[], int numArgs) {
   out->updateTextPos(state);
 }
 
-void Gfx::opTextMoveSet(Object args[], int numArgs) {
+void Gfx::opTextMoveSet(Object args[], int /*numArgs*/) {
   double tx, ty;
 
   tx = state->getLineX() + args[0].getNum();
@@ -2207,7 +2207,7 @@ void Gfx::opTextMoveSet(Object args[], int numArgs) {
   out->updateTextPos(state);
 }
 
-void Gfx::opSetTextMatrix(Object args[], int numArgs) {
+void Gfx::opSetTextMatrix(Object args[], int /*numArgs*/) {
   state->setTextMat(args[0].getNum(), args[1].getNum(),
 		    args[2].getNum(), args[3].getNum(),
 		    args[4].getNum(), args[5].getNum());
@@ -2217,7 +2217,7 @@ void Gfx::opSetTextMatrix(Object args[], int numArgs) {
   fontChanged = gTrue;
 }
 
-void Gfx::opTextNextLine(Object args[], int numArgs) {
+void Gfx::opTextNextLine(Object * /*args*/, int /*numArgs*/) {
   double tx, ty;
 
   tx = state->getLineX();
@@ -2230,7 +2230,7 @@ void Gfx::opTextNextLine(Object args[], int numArgs) {
 // text string operators
 //------------------------------------------------------------------------
 
-void Gfx::opShowText(Object args[], int numArgs) {
+void Gfx::opShowText(Object args[], int /*numArgs*/) {
   if (!state->getFont()) {
     error(getPos(), "No font in show");
     return;
@@ -2238,7 +2238,7 @@ void Gfx::opShowText(Object args[], int numArgs) {
   doShowText(args[0].getString());
 }
 
-void Gfx::opMoveShowText(Object args[], int numArgs) {
+void Gfx::opMoveShowText(Object args[], int /*numArgs*/) {
   double tx, ty;
 
   if (!state->getFont()) {
@@ -2252,7 +2252,7 @@ void Gfx::opMoveShowText(Object args[], int numArgs) {
   doShowText(args[0].getString());
 }
 
-void Gfx::opMoveSetShowText(Object args[], int numArgs) {
+void Gfx::opMoveSetShowText(Object args[], int /*numArgs*/) {
   double tx, ty;
 
   if (!state->getFont()) {
@@ -2270,7 +2270,7 @@ void Gfx::opMoveSetShowText(Object args[], int numArgs) {
   doShowText(args[2].getString());
 }
 
-void Gfx::opShowSpaceText(Object args[], int numArgs) {
+void Gfx::opShowSpaceText(Object args[], int /*numArgs*/) {
   Array *a;
   Object obj;
   int wMode;
@@ -2480,7 +2480,7 @@ void Gfx::doShowText(GString *s) {
 // XObject operators
 //------------------------------------------------------------------------
 
-void Gfx::opXObject(Object args[], int numArgs) {
+void Gfx::opXObject(Object args[], int /*numArgs*/) {
   Object obj1, obj2, obj3, refObj;
 #if OPI_SUPPORT
   Object opiDict;
@@ -2926,7 +2926,7 @@ void Gfx::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox) {
 // in-line image operators
 //------------------------------------------------------------------------
 
-void Gfx::opBeginImage(Object args[], int numArgs) {
+void Gfx::opBeginImage(Object * /*args*/, int /*numArgs*/) {
   Stream *str;
   int c1, c2;
 
@@ -2951,7 +2951,7 @@ void Gfx::opBeginImage(Object args[], int numArgs) {
 Stream *Gfx::buildImageStream() {
   Object dict;
   Object obj;
-  char *key;
+  const char *key;
   Stream *str;
 
   // build dictionary
@@ -2966,7 +2966,7 @@ Stream *Gfx::buildImageStream() {
       obj.free();
       parser->getObj(&obj);
       if (obj.isEOF() || obj.isError()) {
-	gfree(key);
+	gfree((void*)key);
 	break;
       }
       dict.dictAdd(key, &obj);
@@ -2988,11 +2988,11 @@ Stream *Gfx::buildImageStream() {
   return str;
 }
 
-void Gfx::opImageData(Object args[], int numArgs) {
+void Gfx::opImageData(Object * /*args*/, int /*numArgs*/) {
   error(getPos(), "Internal: got 'ID' operator");
 }
 
-void Gfx::opEndImage(Object args[], int numArgs) {
+void Gfx::opEndImage(Object * /*args*/, int /*numArgs*/) {
   error(getPos(), "Internal: got 'EI' operator");
 }
 
@@ -3000,11 +3000,11 @@ void Gfx::opEndImage(Object args[], int numArgs) {
 // type 3 font operators
 //------------------------------------------------------------------------
 
-void Gfx::opSetCharWidth(Object args[], int numArgs) {
+void Gfx::opSetCharWidth(Object args[], int /*numArgs*/) {
   out->type3D0(state, args[0].getNum(), args[1].getNum());
 }
 
-void Gfx::opSetCacheDevice(Object args[], int numArgs) {
+void Gfx::opSetCacheDevice(Object args[], int /*numArgs*/) {
   out->type3D1(state, args[0].getNum(), args[1].getNum(),
 	       args[2].getNum(), args[3].getNum(),
 	       args[4].getNum(), args[5].getNum());
@@ -3014,11 +3014,11 @@ void Gfx::opSetCacheDevice(Object args[], int numArgs) {
 // compatibility operators
 //------------------------------------------------------------------------
 
-void Gfx::opBeginIgnoreUndef(Object args[], int numArgs) {
+void Gfx::opBeginIgnoreUndef(Object * /*args*/, int /*numArgs*/) {
   ++ignoreUndef;
 }
 
-void Gfx::opEndIgnoreUndef(Object args[], int numArgs) {
+void Gfx::opEndIgnoreUndef(Object * /*args*/, int /*numArgs*/) {
   if (ignoreUndef > 0)
     --ignoreUndef;
 }
@@ -3037,7 +3037,7 @@ void Gfx::opBeginMarkedContent(Object args[], int numArgs) {
   }
 }
 
-void Gfx::opEndMarkedContent(Object args[], int numArgs) {
+void Gfx::opEndMarkedContent(Object */*args*/, int /*numArgs*/) {
 }
 
 void Gfx::opMarkPoint(Object args[], int numArgs) {

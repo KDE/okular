@@ -56,7 +56,7 @@ public:
   // Returns the GID corresponding to <name> according to the post
   // table.  Returns 0 if there is no mapping for <name> or if the
   // font does not have a post table.
-  int mapNameToGID(char *name);
+  int mapNameToGID(const char *name);
 
   // Returns the least restrictive embedding licensing right (as
   // defined by the TrueType spec):
@@ -73,7 +73,7 @@ public:
   // <encoding> array specifies the mapping from char codes to names.
   // If <encoding> is NULL, the encoding is unknown or undefined.  The
   // <codeToGID> array specifies the mapping from char codes to GIDs.
-  void convertToType42(char *psName, char **encoding,
+  void convertToType42(char *psName, const char **encoding,
 		       Gushort *codeToGID,
 		       FoFiOutputFunc outputFunc, void *outputStream);
 
@@ -101,10 +101,10 @@ public:
 private:
 
   FoFiTrueType(char *fileA, int lenA, GBool freeFileDataA);
-  void cvtEncoding(char **encoding,
+  void cvtEncoding(const char **encoding,
 		   FoFiOutputFunc outputFunc,
 		   void *outputStream);
-  void cvtCharStrings(char **encoding,
+  void cvtCharStrings(const char **encoding,
 		      Gushort *codeToGID,
 		      FoFiOutputFunc outputFunc,
 		      void *outputStream);
@@ -116,7 +116,7 @@ private:
   Guint computeTableChecksum(Guchar *data, int length);
   void parse();
   void readPostTable();
-  int seekTable(char *tag);
+  int seekTable(const char *tag);
 
   TrueTypeTable *tables;
   int nTables;

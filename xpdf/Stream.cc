@@ -85,7 +85,7 @@ char *Stream::getLine(char *buf, int size) {
   return buf;
 }
 
-GString *Stream::getPSFilter(int psLevel, char *indent) {
+GString *Stream::getPSFilter(int /*psLevel*/, const char */*indent*/) {
   return new GString();
 }
 
@@ -133,7 +133,7 @@ Stream *Stream::addFilters(Object *dict) {
   return str;
 }
 
-Stream *Stream::makeFilter(char *name, Stream *str, Object *params) {
+Stream *Stream::makeFilter(const char *name, Stream *str, Object *params) {
   int pred;			// parameters
   int colors;
   int bits;
@@ -307,7 +307,7 @@ void FilterStream::close() {
   str->close();
 }
 
-void FilterStream::setPos(Guint pos, int dir) {
+void FilterStream::setPos(Guint /*pos*/, int /*dir*/) {
   error(-1, "Internal: called setPos() on FilterStream");
 }
 
@@ -798,8 +798,8 @@ EmbedStream::EmbedStream(Stream *strA, Object *dictA,
 EmbedStream::~EmbedStream() {
 }
 
-Stream *EmbedStream::makeSubStream(Guint start, GBool limitedA,
-				   Guint lengthA, Object *dictA) {
+Stream *EmbedStream::makeSubStream(Guint /*start*/, GBool /*limitedA*/,
+				   Guint /*lengthA*/, Object */*dictA*/) {
   error(-1, "Internal: called makeSubStream() on EmbedStream");
   return NULL;
 }
@@ -819,7 +819,7 @@ int EmbedStream::lookChar() {
   return str->lookChar();
 }
 
-void EmbedStream::setPos(Guint pos, int dir) {
+void EmbedStream::setPos(Guint /*pos*/, int /*dir*/) {
   error(-1, "Internal: called setPos() on EmbedStream");
 }
 
@@ -828,7 +828,7 @@ Guint EmbedStream::getStart() {
   return 0;
 }
 
-void EmbedStream::moveStart(int delta) {
+void EmbedStream::moveStart(int /*delta*/) {
   error(-1, "Internal: called moveStart() on EmbedStream");
 }
 
@@ -918,7 +918,7 @@ GString *ASCIIHexStream::getPSFilter(int psLevel, char *indent) {
   return s;
 }
 
-GBool ASCIIHexStream::isBinary(GBool last) {
+GBool ASCIIHexStream::isBinary(GBool /*last*/) {
   return str->isBinary(gFalse);
 }
 
@@ -999,7 +999,7 @@ GString *ASCII85Stream::getPSFilter(int psLevel, char *indent) {
   return s;
 }
 
-GBool ASCII85Stream::isBinary(GBool last) {
+GBool ASCII85Stream::isBinary(GBool /*last*/) {
   return str->isBinary(gFalse);
 }
 
@@ -1181,7 +1181,7 @@ GString *LZWStream::getPSFilter(int psLevel, char *indent) {
   return s;
 }
 
-GBool LZWStream::isBinary(GBool last) {
+GBool LZWStream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -1218,7 +1218,7 @@ GString *RunLengthStream::getPSFilter(int psLevel, char *indent) {
   return s;
 }
 
-GBool RunLengthStream::isBinary(GBool last) {
+GBool RunLengthStream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -1782,7 +1782,7 @@ GString *CCITTFaxStream::getPSFilter(int psLevel, char *indent) {
   return s;
 }
 
-GBool CCITTFaxStream::isBinary(GBool last) {
+GBool CCITTFaxStream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -3173,7 +3173,7 @@ GString *DCTStream::getPSFilter(int psLevel, char *indent) {
   return s;
 }
 
-GBool DCTStream::isBinary(GBool last) {
+GBool DCTStream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -3366,7 +3366,7 @@ GString *FlateStream::getPSFilter(int psLevel, char *indent) {
   return s;
 }
 
-GBool FlateStream::isBinary(GBool last) {
+GBool FlateStream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -3753,7 +3753,7 @@ int FixedLengthEncoder::lookChar() {
   return str->getChar();
 }
 
-GBool FixedLengthEncoder::isBinary(GBool last) {
+GBool FixedLengthEncoder::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -3782,7 +3782,7 @@ void ASCIIHexEncoder::reset() {
 }
 
 GBool ASCIIHexEncoder::fillBuf() {
-  static char *hex = "0123456789abcdef";
+  static const char *hex = "0123456789abcdef";
   int c;
 
   if (eof) {

@@ -48,24 +48,24 @@ FoFiType1::~FoFiType1() {
   int i;
 
   if (name) {
-    gfree(name);
+    gfree((void*)name);
   }
   if (encoding && encoding != fofiType1StandardEncoding) {
     for (i = 0; i < 256; ++i) {
-      gfree(encoding[i]);
+      gfree((void*)encoding[i]);
     }
     gfree(encoding);
   }
 }
 
-char *FoFiType1::getName() {
+const char *FoFiType1::getName() {
   if (!parsed) {
     parse();
   }
   return name;
 }
 
-char **FoFiType1::getEncoding() {
+const char **FoFiType1::getEncoding() {
   if (!parsed) {
     parse();
   }
@@ -156,7 +156,7 @@ void FoFiType1::parse() {
       encoding = fofiType1StandardEncoding;
     } else if (!encoding &&
 	       !strncmp(line, "/Encoding 256 array", 19)) {
-      encoding = (char **)gmalloc(256 * sizeof(char *));
+      encoding = (const char **)gmalloc(256 * sizeof(char *));
       for (j = 0; j < 256; ++j) {
 	encoding[j] = NULL;
       }

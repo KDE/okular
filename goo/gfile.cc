@@ -102,7 +102,7 @@ GString *getCurrentDir() {
   return new GString();
 }
 
-GString *appendToPath(GString *path, char *fileName) {
+GString *appendToPath(GString *path, const char *fileName) {
 #if defined(VMS)
   //---------- VMS ----------
   //~ this should handle everything necessary for file
@@ -437,7 +437,7 @@ time_t getModTime(char *fileName) {
 #endif
 }
 
-GBool openTempFile(GString **name, FILE **f, char *mode, char *ext) {
+GBool openTempFile(GString **name, FILE **f, const char *mode, char *ext) {
 #if defined(WIN32)
   //---------- Win32 ----------
   char *s;

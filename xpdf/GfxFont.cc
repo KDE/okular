@@ -33,8 +33,8 @@
 //------------------------------------------------------------------------
 
 struct StdFontMapEntry {
-  char *altName;
-  char *properName;
+  const char *altName;
+  const char *properName;
 };
 
 // Acrobat 4.0 and earlier substituted Base14-compatible fonts without
@@ -100,7 +100,7 @@ static StdFontMapEntry stdFontMap[] = {
 // GfxFont
 //------------------------------------------------------------------------
 
-GfxFont *GfxFont::makeFont(XRef *xref, char *tagA, Ref idA, Dict *fontDict) {
+GfxFont *GfxFont::makeFont(XRef *xref, const char *tagA, Ref idA, Dict *fontDict) {
   GString *nameA;
   GfxFont *font;
   Object obj1;
@@ -136,7 +136,7 @@ GfxFont *GfxFont::makeFont(XRef *xref, char *tagA, Ref idA, Dict *fontDict) {
   return font;
 }
 
-GfxFont::GfxFont(char *tagA, Ref idA, GString *nameA) {
+GfxFont::GfxFont(const char *tagA, Ref idA, GString *nameA) {
   ok = gFalse;
   tag = new GString(tagA);
   id = idA;
@@ -322,8 +322,8 @@ CharCodeToUnicode *GfxFont::readToUnicodeCMap(Dict *fontDict, int nBits,
 }
 
 void GfxFont::findExtFontFile() {
-  static char *type1Exts[] = { ".pfa", ".pfb", ".ps", "", NULL };
-  static char *ttExts[] = { ".ttf", NULL };
+  static const char *type1Exts[] = { ".pfa", ".pfb", ".ps", "", NULL };
+  static const char *ttExts[] = { ".ttf", NULL };
 
   if (name) {
     if (type == fontType1) {
@@ -395,19 +395,19 @@ char *GfxFont::readEmbFontFile(XRef *xref, int *len) {
 // Gfx8BitFont
 //------------------------------------------------------------------------
 
-Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
+Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
 			 GfxFontType typeA, Dict *fontDict):
   GfxFont(tagA, idA, nameA)
 {
   BuiltinFont *builtinFont;
-  char **baseEnc;
+  const char **baseEnc;
   GBool baseEncFromFontFile;
   char *buf;
   int len;
   FoFiType1 *ffT1;
   FoFiType1C *ffT1C;
   int code, code2;
-  char *charName;
+  const char *charName;
   GBool missing, hex;
   Unicode toUnicode[256];
   CharCodeToUnicode *utu, *ctu2;
@@ -652,7 +652,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
 	} else if (obj3.isName()) {
 	  if (code >= 0 && code < 256) {
 	    if (encFree[code]) {
-	      gfree(enc[code]);
+	      gfree((void*)enc[code]);
 	    }
 	    enc[code] = copyString(obj3.getName());
 	    encFree[code] = gTrue;
@@ -861,7 +861,7 @@ Gfx8BitFont::~Gfx8BitFont() {
 
   for (i = 0; i < 256; ++i) {
     if (encFree[i] && enc[i]) {
-      gfree(enc[i]);
+      gfree((void*)enc[i]);
     }
   }
   ctu->decRefCnt();
@@ -873,7 +873,7 @@ Gfx8BitFont::~Gfx8BitFont() {
   }
 }
 
-int Gfx8BitFont::getNextChar(char *s, int len, CharCode *code,
+int Gfx8BitFont::getNextChar(char *s, int /*len*/, CharCode *code,
 			     Unicode *u, int uSize, int *uLen,
 			     double *dx, double *dy, double *ox, double *oy) {
   CharCode c;
@@ -895,7 +895,7 @@ Gushort *Gfx8BitFont::getCodeToGIDMap(FoFiTrueType *ff) {
   int cmapPlatform, cmapEncoding;
   int unicodeCmap, macRomanCmap, msSymbolCmap, cmap;
   GBool useMacRoman, useUnicode;
-  char *charName;
+  const char *charName;
   Unicode u;
   int code, i, n;
 
@@ -1035,7 +1035,7 @@ static int CDECL cmpWidthExcepV(const void *w1, const void *w2) {
          ((GfxFontCIDWidthExcepV *)w2)->first;
 }
 
-GfxCIDFont::GfxCIDFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
+GfxCIDFont::GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
 		       Dict *fontDict):
   GfxFont(tagA, idA, nameA)
 {
@@ -1496,7 +1496,7 @@ GfxFontDict::~GfxFontDict() {
   gfree(fonts);
 }
 
-GfxFont *GfxFontDict::lookup(char *tag) {
+GfxFont *GfxFontDict::lookup(const char *tag) {
   int i;
 
   for (i = 0; i < numFonts; ++i) {

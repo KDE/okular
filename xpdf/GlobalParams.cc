@@ -60,8 +60,8 @@
 //------------------------------------------------------------------------
 
 static struct {
-  char *name;
-  char *fileName;
+  const char *name;
+  const char *fileName;
 } displayFontTab[] = {
   {"Courier",               "n022003l.pfb"},
   {"Courier-Bold",          "n022004l.pfb"},
@@ -77,10 +77,10 @@ static struct {
   {"Times-Italic",          "n021023l.pfb"},
   {"Times-Roman",           "n021003l.pfb"},
   {"ZapfDingbats",          "d050000l.pfb"},
-  {NULL}
+  {NULL, NULL}
 };
 
-static char *displayFontDirs[] = {
+static const char *displayFontDirs[] = {
   "/usr/share/ghostscript/fonts",
   "/usr/local/share/ghostscript/fonts",
   "/usr/share/fonts/default/Type1",
@@ -149,7 +149,7 @@ PSFontParam::~PSFontParam() {
 // parsing
 //------------------------------------------------------------------------
 
-GlobalParams::GlobalParams(char *cfgFileName) {
+GlobalParams::GlobalParams(const char *cfgFileName) {
   UnicodeMap *map;
   GString *fileName;
   FILE *f;
@@ -716,7 +716,7 @@ void GlobalParams::parsePSFont(GList *tokens, GString *fileName, int line) {
   psFonts->add(param->pdfFontName, param);
 }
 
-void GlobalParams::parsePSFont16(char *cmdName, GList *fontList,
+void GlobalParams::parsePSFont16(const char *cmdName, GList *fontList,
 				 GList *tokens, GString *fileName, int line) {
   PSFontParam *param;
   int wMode;
@@ -796,7 +796,7 @@ void GlobalParams::parseInitialZoom(GList *tokens,
   initialZoom = ((GString *)tokens->get(1))->copy();
 }
 
-void GlobalParams::parseCommand(char *cmdName, GString **val,
+void GlobalParams::parseCommand(const char *cmdName, GString **val,
 				GList *tokens, GString *fileName, int line) {
   if (tokens->getLength() != 2) {
     error(-1, "Bad '%s' config file command (%s:%d)",
@@ -809,7 +809,7 @@ void GlobalParams::parseCommand(char *cmdName, GString **val,
   *val = ((GString *)tokens->get(1))->copy();
 }
 
-void GlobalParams::parseYesNo(char *cmdName, GBool *flag,
+void GlobalParams::parseYesNo(const char *cmdName, GBool *flag,
 			      GList *tokens, GString *fileName, int line) {
   GString *tok;
 
@@ -940,12 +940,12 @@ void GlobalParams::setupBaseFonts(char *dir) {
 // accessors
 //------------------------------------------------------------------------
 
-CharCode GlobalParams::getMacRomanCharCode(char *charName) {
+CharCode GlobalParams::getMacRomanCharCode(const char *charName) {
   // no need to lock - macRomanReverseMap is constant
   return macRomanReverseMap->lookup(charName);
 }
 
-Unicode GlobalParams::mapNameToUnicode(char *charName) {
+Unicode GlobalParams::mapNameToUnicode(const char *charName) {
   // no need to lock - nameToUnicode is constant
   return nameToUnicode->lookup(charName);
 }
@@ -1264,9 +1264,9 @@ GBool GlobalParams::getTextKeepTinyChars() {
   return tiny;
 }
 
-GString *GlobalParams::findFontFile(GString *fontName, char **exts) {
+GString *GlobalParams::findFontFile(GString *fontName, const char **exts) {
   GString *dir, *fileName;
-  char **ext;
+  const char **ext;
   FILE *f;
   int i;
 

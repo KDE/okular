@@ -133,7 +133,7 @@ static int cmpTrueTypeTableTag(const void *p1, const void *p2) {
 //------------------------------------------------------------------------
 
 struct T42Table {
-  char *tag;			// 4-byte tag
+  const char *tag;		// 4-byte tag
   GBool required;		// required by the TrueType spec?
 };
 
@@ -161,7 +161,7 @@ static T42Table t42Tables[nT42Tables] = {
 
 // Glyph names in some arbitrary standard order that Apple uses for
 // their TrueType fonts.
-static char *macGlyphNames[258] = {
+static const char *macGlyphNames[258] = {
   ".notdef",        "null",           "CR",             "space",
   "exclam",         "quotedbl",       "numbersign",     "dollar",
   "percent",        "ampersand",      "quotesingle",    "parenleft",
@@ -374,7 +374,7 @@ Gushort FoFiTrueType::mapCodeToGID(int i, int c) {
   return gid;
 }
 
-int FoFiTrueType::mapNameToGID(char *name) {
+int FoFiTrueType::mapNameToGID(const char *name) {
   if (!nameToGID) {
     return 0;
   }
@@ -405,7 +405,7 @@ int FoFiTrueType::getEmbeddingRights() {
   return 3;
 }
 
-void FoFiTrueType::convertToType42(char *psName, char **encoding,
+void FoFiTrueType::convertToType42(char *psName, const char **encoding,
 				   Gushort *codeToGID,
 				   FoFiOutputFunc outputFunc,
 				   void *outputStream) {
@@ -896,10 +896,10 @@ void FoFiTrueType::writeTTF(FoFiOutputFunc outputFunc,
   gfree(locaTable);
 }
 
-void FoFiTrueType::cvtEncoding(char **encoding,
+void FoFiTrueType::cvtEncoding(const char **encoding,
 			       FoFiOutputFunc outputFunc,
 			       void *outputStream) {
-  char *name;
+  const char *name;
   char buf[64];
   int i;
 
@@ -923,11 +923,11 @@ void FoFiTrueType::cvtEncoding(char **encoding,
   (*outputFunc)(outputStream, "readonly def\n", 13);
 }
 
-void FoFiTrueType::cvtCharStrings(char **encoding,
+void FoFiTrueType::cvtCharStrings(const char **encoding,
 				  Gushort *codeToGID,
 				  FoFiOutputFunc outputFunc,
 				  void *outputStream) {
-  char *name;
+  const char *name;
   char buf[64], buf2[16];
   int i, k;
 
@@ -1421,7 +1421,7 @@ void FoFiTrueType::readPostTable() {
   }
 }
 
-int FoFiTrueType::seekTable(char *tag) {
+int FoFiTrueType::seekTable(const char *tag) {
   Guint tagI;
   int i;
 

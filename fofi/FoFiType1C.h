@@ -142,7 +142,7 @@ public:
 
   // Return the encoding, as an array of 256 names (any of which may
   // be NULL).  This is only useful with 8-bit fonts.
-  char **getEncoding();
+  const char **getEncoding();
 
   // Return the mapping from CIDs to GIDs, and return the number of
   // CIDs in *<nCIDs>.  This is only useful for CID fonts.
@@ -153,7 +153,7 @@ public:
   // not NULL, it will be used in place of the encoding in the Type 1C
   // font.  If <ascii> is true the eexec section will be hex-encoded,
   // otherwise it will be left as binary data.
-  void convertToType1(char **newEncoding, GBool ascii,
+  void convertToType1(const char **newEncoding, GBool ascii,
 		      FoFiOutputFunc outputFunc, void *outputStream);
 
   // Convert to a Type 0 CIDFont, suitable for embedding in a
@@ -171,7 +171,7 @@ public:
 private:
 
   FoFiType1C(char *fileA, int lenA, GBool freeFileDataA);
-  void eexecCvtGlyph(Type1CEexecBuf *eb, char *glyphName,
+  void eexecCvtGlyph(Type1CEexecBuf *eb, const char *glyphName,
 		     int offset, int nBytes,
 		     Type1CIndex *subrIdx,
 		     Type1CPrivateDict *pDict);
@@ -181,7 +181,7 @@ private:
   void cvtGlyphWidth(GBool useOp, GString *charBuf,
 		     Type1CPrivateDict *pDict);
   void cvtNum(double x, GBool isFP, GString *charBuf);
-  void eexecWrite(Type1CEexecBuf *eb, char *s);
+  void eexecWrite(Type1CEexecBuf *eb, const char *s);
   void eexecWriteCharstring(Type1CEexecBuf *eb, Guchar *s, int n);
   GBool parse();
   void readTopDict();
@@ -198,7 +198,7 @@ private:
   char *getString(int sid, char *buf, GBool *ok);
 
   GString *name;
-  char **encoding;
+  const char **encoding;
 
   Type1CIndex nameIdx;
   Type1CIndex topDictIdx;

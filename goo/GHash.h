@@ -33,11 +33,11 @@ public:
   void *lookup(GString *key);
   int lookupInt(GString *key);
   void *lookup(char *key);
-  int lookupInt(char *key);
+  int lookupInt(const char *key);
   void *remove(GString *key);
   int removeInt(GString *key);
   void *remove(char *key);
-  int removeInt(char *key);
+  int removeInt(const char *key);
   int getLength() { return len; }
   void startIter(GHashIter **iter);
   GBool getNext(GHashIter **iter, GString **key, void **val);
@@ -48,9 +48,9 @@ private:
 
   void expand();
   GHashBucket *find(GString *key, int *h);
-  GHashBucket *find(char *key, int *h);
+  GHashBucket *find(const char *key, int *h);
   int hash(GString *key);
-  int hash(char *key);
+  int hash(const char *key);
 
   GBool deleteKeys;		// set if key strings should be deleted
   int size;			// number of buckets

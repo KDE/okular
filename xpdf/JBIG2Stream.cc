@@ -1191,11 +1191,11 @@ int JBIG2Stream::lookChar() {
   return EOF;
 }
 
-GString *JBIG2Stream::getPSFilter(int psLevel, char *indent) {
+GString *JBIG2Stream::getPSFilter(int /*psLevel*/, char */*indent*/) {
   return NULL;
 }
 
-GBool JBIG2Stream::isBinary(GBool last) {
+GBool JBIG2Stream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
@@ -1356,7 +1356,7 @@ void JBIG2Stream::readSegments() {
   error(getPos(), "Unexpected EOF in JBIG2 stream");
 }
 
-void JBIG2Stream::readSymbolDictSeg(Guint segNum, Guint length,
+void JBIG2Stream::readSymbolDictSeg(Guint segNum, Guint /*length*/,
 				    Guint *refSegs, Guint nRefSegs) {
   JBIG2SymbolDict *symbolDict;
   JBIG2HuffmanTable *huffDHTable, *huffDWTable;
@@ -1697,7 +1697,7 @@ void JBIG2Stream::readSymbolDictSeg(Guint segNum, Guint length,
 }
 
 void JBIG2Stream::readTextRegionSeg(Guint segNum, GBool imm,
-				    GBool lossless, Guint length,
+				    GBool /*lossless*/, Guint /*length*/,
 				    Guint *refSegs, Guint nRefSegs) {
   JBIG2Bitmap *bitmap;
   JBIG2HuffmanTable runLengthTab[36];
@@ -1964,7 +1964,7 @@ JBIG2Bitmap *JBIG2Stream::readTextRegion(GBool huff, GBool refine,
 					 int w, int h,
 					 Guint numInstances,
 					 Guint logStrips,
-					 int numSyms,
+					 int /*numSyms*/,
 					 JBIG2HuffmanTable *symCodeTab,
 					 Guint symCodeLen,
 					 JBIG2Bitmap **syms,
@@ -2208,7 +2208,7 @@ void JBIG2Stream::readPatternDictSeg(Guint segNum, Guint length) {
 }
 
 void JBIG2Stream::readHalftoneRegionSeg(Guint segNum, GBool imm,
-					GBool lossless, Guint length,
+					GBool /*lossless*/, Guint /*length*/,
 					Guint *refSegs, Guint nRefSegs) {
   JBIG2Bitmap *bitmap;
   JBIG2Segment *seg;
@@ -2356,7 +2356,7 @@ void JBIG2Stream::readHalftoneRegionSeg(Guint segNum, GBool imm,
 }
 
 void JBIG2Stream::readGenericRegionSeg(Guint segNum, GBool imm,
-				       GBool lossless, Guint length) {
+				       GBool /*lossless*/, Guint length) {
   JBIG2Bitmap *bitmap;
   Guint w, h, x, y, segInfoFlags, extCombOp;
   Guint flags, mmr, templ, tpgdOn;
@@ -2788,7 +2788,7 @@ JBIG2Bitmap *JBIG2Stream::readGenericBitmap(GBool mmr, int w, int h,
 }
 
 void JBIG2Stream::readGenericRefinementRegionSeg(Guint segNum, GBool imm,
-						 GBool lossless, Guint length,
+						 GBool /*lossless*/, Guint /*length*/,
 						 Guint *refSegs,
 						 Guint nRefSegs) {
   JBIG2Bitmap *bitmap, *refBitmap;
@@ -3045,7 +3045,7 @@ JBIG2Bitmap *JBIG2Stream::readGenericRefinementRegion(int w, int h,
   return bitmap;
 }
 
-void JBIG2Stream::readPageInfoSeg(Guint length) {
+void JBIG2Stream::readPageInfoSeg(Guint /*length*/) {
   Guint xRes, yRes, flags, striping;
 
   if (!readULong(&pageW) || !readULong(&pageH) ||
@@ -3095,7 +3095,7 @@ void JBIG2Stream::readProfilesSeg(Guint length) {
   }
 }
 
-void JBIG2Stream::readCodeTableSeg(Guint segNum, Guint length) {
+void JBIG2Stream::readCodeTableSeg(Guint segNum, Guint /*length*/) {
   JBIG2HuffmanTable *huffTab;
   Guint flags, oob, prefixBits, rangeBits;
   int lowVal, highVal, val;

@@ -111,7 +111,7 @@ public:
 
   // Initialize the global parameters by attempting to read a config
   // file.
-  GlobalParams(char *cfgFileName);
+  GlobalParams(const char *cfgFileName);
 
   ~GlobalParams();
 
@@ -119,9 +119,9 @@ public:
 
   //----- accessors
 
-  CharCode getMacRomanCharCode(char *charName);
+  CharCode getMacRomanCharCode(const char *charName);
 
-  Unicode mapNameToUnicode(char *charName);
+  Unicode mapNameToUnicode(const char *charName);
   UnicodeMap *getResidentUnicodeMap(GString *encodingName);
   FILE *getUnicodeMapFile(GString *encodingName);
   FILE *findCMapFile(GString *collection, GString *cMapName);
@@ -150,7 +150,7 @@ public:
   EndOfLineKind getTextEOL();
   GBool getTextPageBreaks();
   GBool getTextKeepTinyChars();
-  GString *findFontFile(GString *fontName, char **exts);
+  GString *findFontFile(GString *fontName, const char **exts);
   GString *getInitialZoom();
   GBool getEnableT1lib();
   GBool getEnableFreeType();
@@ -216,15 +216,15 @@ private:
   void parsePSImageableArea(GList *tokens, GString *fileName, int line);
   void parsePSLevel(GList *tokens, GString *fileName, int line);
   void parsePSFont(GList *tokens, GString *fileName, int line);
-  void parsePSFont16(char *cmdName, GList *fontList,
+  void parsePSFont16(const char *cmdName, GList *fontList,
 		     GList *tokens, GString *fileName, int line);
   void parseTextEncoding(GList *tokens, GString *fileName, int line);
   void parseTextEOL(GList *tokens, GString *fileName, int line);
   void parseFontDir(GList *tokens, GString *fileName, int line);
   void parseInitialZoom(GList *tokens, GString *fileName, int line);
-  void parseCommand(char *cmdName, GString **val,
+  void parseCommand(const char *cmdName, GString **val,
 		    GList *tokens, GString *fileName, int line);
-  void parseYesNo(char *cmdName, GBool *flag,
+  void parseYesNo(const char *cmdName, GBool *flag,
 		  GList *tokens, GString *fileName, int line);
   GBool parseYesNo2(char *token, GBool *flag);
   UnicodeMap *getUnicodeMap2(GString *encodingName);

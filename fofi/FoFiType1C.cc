@@ -75,7 +75,7 @@ FoFiType1C::~FoFiType1C() {
       encoding != fofiType1StandardEncoding &&
       encoding != fofiType1ExpertEncoding) {
     for (i = 0; i < 256; ++i) {
-      gfree(encoding[i]);
+      gfree((void*)encoding[i]);
     }
     gfree(encoding);
   }
@@ -97,7 +97,7 @@ char *FoFiType1C::getName() {
   return name ? name->getCString() : (char *)NULL;
 }
 
-char **FoFiType1C::getEncoding() {
+const char **FoFiType1C::getEncoding() {
   return encoding;
 }
 
@@ -129,14 +129,14 @@ Gushort *FoFiType1C::getCIDToGIDMap(int *nCIDs) {
   return map;
 }
 
-void FoFiType1C::convertToType1(char **newEncoding, GBool ascii,
+void FoFiType1C::convertToType1(const char **newEncoding, GBool ascii,
 				FoFiOutputFunc outputFunc,
 				void *outputStream) {
   Type1CEexecBuf eb;
   Type1CIndex subrIdx;
   Type1CIndexVal val;
   char buf[512];
-  char **enc;
+  const char **enc;
   GBool ok;
   int i;
 
@@ -908,7 +908,7 @@ void FoFiType1C::convertToType0(char *psName,
   gfree(cidMap);
 }
 
-void FoFiType1C::eexecCvtGlyph(Type1CEexecBuf *eb, char *glyphName,
+void FoFiType1C::eexecCvtGlyph(Type1CEexecBuf *eb, const char *glyphName,
 			       int offset, int nBytes,
 			       Type1CIndex *subrIdx,
 			       Type1CPrivateDict *pDict) {
@@ -1600,7 +1600,7 @@ void FoFiType1C::cvtNum(double x, GBool isFP, GString *charBuf) {
   charBuf->append((char *)buf, n);
 }
 
-void FoFiType1C::eexecWrite(Type1CEexecBuf *eb, char *s) {
+void FoFiType1C::eexecWrite(Type1CEexecBuf *eb, const char *s) {
   Guchar *p;
   Guchar x;
 
@@ -2049,7 +2049,7 @@ void FoFiType1C::buildEncoding() {
     encoding = fofiType1ExpertEncoding;
 
   } else {
-    encoding = (char **)gmalloc(256 * sizeof(char *));
+    encoding = (const char **)gmalloc(256 * sizeof(char *));
     for (i = 0; i < 256; ++i) {
       encoding[i] = NULL;
     }
@@ -2072,7 +2072,7 @@ void FoFiType1C::buildEncoding() {
 	  return;
 	}
 	if (encoding[c]) {
-	  gfree(encoding[c]);
+	  gfree((void*)encoding[c]);
 	}
 	encoding[c] = copyString(getString(charset[i], buf, &parsedOk));
       }
@@ -2091,7 +2091,7 @@ void FoFiType1C::buildEncoding() {
 	for (j = 0; j <= nLeft && nCodes < nGlyphs; ++j) {
 	  if (c < 256) {
 	    if (encoding[c]) {
-	      gfree(encoding[c]);
+	      gfree((void*)encoding[c]);
 	    }
 	    encoding[c] = copyString(getString(charset[nCodes], buf,
 					       &parsedOk));
@@ -2117,7 +2117,7 @@ void FoFiType1C::buildEncoding() {
 	  return;
 	}
 	if (encoding[c]) {
-	  gfree(encoding[c]);
+	  gfree((void*)encoding[c]);
 	}
 	encoding[c] = copyString(getString(sid, buf, &parsedOk));
       }

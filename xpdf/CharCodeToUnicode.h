@@ -83,7 +83,7 @@ private:
   CharCodeToUnicodeString *sMap;
   int sMapLen, sMapSize;
   int refCnt;
-#ifdef MULTITHREADED
+#if MULTITHREADED
   GMutex mutex;
 #endif
 };

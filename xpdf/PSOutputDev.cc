@@ -45,7 +45,7 @@
 // PostScript prolog and setup
 //------------------------------------------------------------------------
 
-static char *prolog[] = {
+static const char *prolog[] = {
   "/xpdf 75 dict def xpdf begin",
   "% PDF special state",
   "/pdfDictSize 15 def",
@@ -434,7 +434,7 @@ static char *prolog[] = {
   NULL
 };
 
-static char *cmapProlog[] = {
+static const char *cmapProlog[] = {
   "/CIDInit /ProcSet findresource begin",
   "10 dict begin",
   "  begincmap",
@@ -484,11 +484,11 @@ static char *cmapProlog[] = {
 //------------------------------------------------------------------------
 
 struct PSSubstFont {
-  char *psName;			// PostScript name
+  const char *psName;	// PostScript name
   double mWidth;		// width of 'm' character
 };
 
-static char *psFonts[] = {
+static const char *psFonts[] = {
   "Courier",
   "Courier-Bold",
   "Courier-Oblique",
@@ -583,8 +583,8 @@ public:
     { return (bufIdx >= bufSize && !fillBuf()) ? EOF : buf[bufIdx++]; }
   virtual int lookChar()
     { return (bufIdx >= bufSize && !fillBuf()) ? EOF : buf[bufIdx]; }
-  virtual GString *getPSFilter(int psLevel, char *indent) { return NULL; }
-  virtual GBool isBinary(GBool last = gTrue) { return gTrue; }
+  virtual GString *getPSFilter(int /*psLevel*/, char */*indent*/) { return NULL; }
+  virtual GBool isBinary(GBool /*last = gTrue*/) { return gTrue; }
   virtual GBool isEncoder() { return gTrue; }
 
 private:
@@ -656,7 +656,7 @@ extern "C" {
 typedef void (*SignalFunc)(int);
 }
 
-static void outputToFile(void *stream, char *data, int len) {
+static void outputToFile(void *stream, const char *data, int len) {
   fwrite(data, 1, len, (FILE *)stream);
 }
 
@@ -976,7 +976,7 @@ void PSOutputDev::writeHeader(int firstPage, int lastPage,
 
 void PSOutputDev::writeXpdfProcset() {
   char prologLevel;
-  char **p;
+  const char **p;
 
   writePSFmt("%%%%BeginResource: procset xpdf %s 0\n", xpdfVersion);
   prologLevel = 'a';
@@ -1183,7 +1183,7 @@ void PSOutputDev::setupFont(GfxFont *font, Dict *parentResDict) {
   char type3Name[64], buf[16];
   GBool subst;
   UnicodeMap *uMap;
-  char *charName;
+  const char *charName;
   double xs, ys;
   int code;
   double w1, w2;
@@ -1654,7 +1654,7 @@ void PSOutputDev::setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id,
     ffTT->convertToType42(psName->getCString(),
 			  ((Gfx8BitFont *)font)->getHasEncoding()
 			    ? ((Gfx8BitFont *)font)->getEncoding()
-			    : (char **)NULL,
+			    : NULL,
 			  codeToGID, outputFunc, outputStream);
     gfree(codeToGID);
     delete ffTT;
@@ -1708,7 +1708,7 @@ void PSOutputDev::setupExternalTrueTypeFont(GfxFont *font, GString *psName) {
     ffTT->convertToType42(psName->getCString(),
 			  ((Gfx8BitFont *)font)->getHasEncoding()
 			    ? ((Gfx8BitFont *)font)->getEncoding()
-			    : (char **)NULL,
+			    : NULL,
 			  codeToGID, outputFunc, outputStream);
     delete ffTT;
   }
@@ -2150,17 +2150,17 @@ void PSOutputDev::endPage() {
   }
 }
 
-void PSOutputDev::saveState(GfxState *state) {
+void PSOutputDev::saveState(GfxState */*state*/) {
   writePS("q\n");
   ++numSaves;
 }
 
-void PSOutputDev::restoreState(GfxState *state) {
+void PSOutputDev::restoreState(GfxState */*state*/) {
   writePS("Q\n");
   --numSaves;
 }
 
-void PSOutputDev::updateCTM(GfxState *state, double m11, double m12,
+void PSOutputDev::updateCTM(GfxState */*state*/, double m11, double m12,
 			    double m21, double m22, double m31, double m32) {
   writePSFmt("[%g %g %g %g %g %g] cm\n", m11, m12, m21, m22, m31, m32);
 }
@@ -2587,14 +2587,14 @@ void PSOutputDev::drawString(GfxState *state, GString *s) {
   }
 }
 
-void PSOutputDev::endTextObject(GfxState *state) {
+void PSOutputDev::endTextObject(GfxState */*state*/) {
   if (haveTextClip) {
     writePS("Tclip\n");
     haveTextClip = gFalse;
   }
 }
 
-void PSOutputDev::drawImageMask(GfxState *state, Object *ref, Stream *str,
+void PSOutputDev::drawImageMask(GfxState */*state*/, Object *ref, Stream *str,
 				int width, int height, GBool invert,
 				GBool inlineImg) {
   int len;
@@ -2607,9 +2607,9 @@ void PSOutputDev::drawImageMask(GfxState *state, Object *ref, Stream *str,
   }
 }
 
-void PSOutputDev::drawImage(GfxState *state, Object *ref, Stream *str,
+void PSOutputDev::drawImage(GfxState */*state*/, Object *ref, Stream *str,
 			    int width, int height, GfxImageColorMap *colorMap,
-			    int *maskColors, GBool inlineImg) {
+			    int */*maskColors*/, GBool inlineImg) {
   int len;
 
   len = height * ((width * colorMap->getNumPixelComps() *
@@ -2743,8 +2743,8 @@ void PSOutputDev::doImageL1(Object *ref, GfxImageColorMap *colorMap,
 }
 
 void PSOutputDev::doImageL1Sep(GfxImageColorMap *colorMap,
-			       GBool invert, GBool inlineImg,
-			       Stream *str, int width, int height, int len) {
+			       GBool /*invert*/, GBool /*inlineImg*/,
+			       Stream *str, int width, int height, int /*len*/) {
   ImageStream *imgStr;
   Guchar *lineBuf;
   Guchar pixBuf[gfxColorMaxComps];
@@ -3666,12 +3666,12 @@ GBool PSOutputDev::getFileSpec(Object *fileSpec, Object *fileName) {
 }
 #endif // OPI_SUPPORT
 
-void PSOutputDev::type3D0(GfxState *state, double wx, double wy) {
+void PSOutputDev::type3D0(GfxState */*state*/, double wx, double wy) {
   writePSFmt("%g %g setcharwidth\n", wx, wy);
   writePS("q\n");
 }
 
-void PSOutputDev::type3D1(GfxState *state, double wx, double wy,
+void PSOutputDev::type3D1(GfxState */*state*/, double wx, double wy,
 			  double llx, double lly, double urx, double ury) {
   t3WX = wx;
   t3WY = wy;
@@ -3708,7 +3708,7 @@ void PSOutputDev::writePSChar(char c) {
   }
 }
 
-void PSOutputDev::writePS(char *s) {
+void PSOutputDev::writePS(const char *s) {
   if (t3String) {
     t3String->append(s);
   } else {
@@ -3754,8 +3754,8 @@ void PSOutputDev::writePSString(GString *s) {
   writePSChar(')');
 }
 
-void PSOutputDev::writePSName(char *s) {
-  char *p;
+void PSOutputDev::writePSName(const char *s) {
+  const char *p;
   char c;
 
   p = s;

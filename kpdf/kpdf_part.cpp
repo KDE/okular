@@ -1,4 +1,4 @@
-#include "kpdf_part.h"
+#include "kpdf_part.moc"
 
 #include <math.h>
 
@@ -662,7 +662,5 @@ BrowserExtension::print()
 {
   static_cast<Part*>(parent())->print();
 }
-
-#include "kpdf_part.moc"
 
 // vim:ts=2:sw=2:tw=78:et

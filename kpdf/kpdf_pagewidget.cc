@@ -1,3 +1,6 @@
+// include xpdf config file
+#include "config.h"
+
 #include "QOutputDevPixmap.h"
 
 #include <kglobal.h>

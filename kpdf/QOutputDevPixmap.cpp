@@ -65,8 +65,8 @@ static inline QColor q_col ( const GfxRGB &rgb )
 //------------------------------------------------------------------------
 
 struct QOutFontSubst {
-	char * m_name;
-	char * m_sname;
+	const char * m_name;
+	const char * m_sname;
 	bool   m_bold;
 	bool   m_italic;
 	QFont::StyleHint m_hint;

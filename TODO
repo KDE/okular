@@ -88,7 +88,7 @@ More items (first items will enter 'In progress list' first):
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 -> tools: ruler, measure: distance, perimeter, ?area?, color picker
--> export: export to other formats keeping formatting (a dream.. except for PNG :-)
+-> export: export to other formats keeping formatting (a dream.. except for PNG :-) (PS is easy, we just have PSOutputDev that does it :-D)
 
 Done (newest features come first):
 -> FIX: various in memory unallocator, preload with single pages, pageview

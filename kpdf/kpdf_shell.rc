@@ -9,7 +9,7 @@
     <Action name="fullscreen"/>
   </Menu>
   <Menu name="settings">
-    <Action name="showmenubar" append="show_merge"/>
+    <DefineGroup name="show_merge" append="show_merge"/>
   </Menu>
   <Merge/>
 </MenuBar>

@@ -1,9 +1,10 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="11">
+<kpartgui name="kpdf_part" version="12">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
-    <Action name="file_print"/>
-    <Action name="file_print_preview"/>
+    <Action name="file_print" group="file_print"/>
+    <Action name="file_print_preview" group="file_print"/>
+    <Separator group="file_print"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>
@@ -25,8 +26,8 @@
     <Action name="goToPage"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
-    <Action name="show_scrollbars"/>
-    <Action name="show_page_list"/>
+    <Action name="show_scrollbars" group="show_merge"/>
+    <Action name="show_page_list" group="show_merge"/>
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar">

@@ -116,7 +116,7 @@ Shell::setupActions()
 
   KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
-  m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "showmenubar" );
+  m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );
 #if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
     createStandardStatusBarAction();
 #endif

@@ -356,7 +356,8 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   proc->clearArguments();
   QFileInfo finfo(dviFile->filename);
   *proc << QString("cd %1; dvips").arg(KShellProcess::quote(finfo.dirPath(true)));
-  *proc << "-z"; // export Hyperlinks
+  if (printer == 0)
+    *proc << "-z"; // export Hyperlinks
   if (options.isEmpty() == false)
     *proc << options;
   *proc << QString("%1").arg(KShellProcess::quote(dviFile->filename));

@@ -1,5 +1,7 @@
 # set the include path for X, qt and KDE
-INCLUDES= -I$(top_srcdir)/kviewshell $(all_includes) $(LIBFREETYPE_CFLAGS)
+INCLUDES= -I$(top_srcdir)/kviewshell \
+	-I$(top_builddir)/kviewshell \
+	$(all_includes) $(LIBFREETYPE_CFLAGS)
 # claim, which subdirectories you want to install
 SUBDIRS = . pix
 

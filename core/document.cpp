@@ -895,7 +895,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             }
             else
             {
-                setViewport( d->nextDocumentViewport );
+                setViewport( d->nextDocumentViewport, -1, true );
                 d->nextDocumentViewport = DocumentViewport();
             }
 

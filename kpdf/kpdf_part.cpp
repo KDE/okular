@@ -119,7 +119,7 @@ Part::openFile()
   if (file.open(IO_ReadOnly) == false)
     return false;
 
-  GString* filename = new GString(m_file);
+  GString* filename = new GString(m_file.ascii);
   m_doc = new PDFDoc(filename, 0, 0);
 
   if (!m_doc->isOk())

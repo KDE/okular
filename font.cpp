@@ -146,7 +146,7 @@ unsigned char font::load_font(void)
   }
   else
     if (!kpse_bitmap_tolerance ((double) size_found, fsize))
-      kdError() << i18n("Can't find font %1 at %2 dpi; using %d dpi instead.\n").arg(fontname).arg(dpi).arg(size_found);
+      kdError() << i18n("Can't find font %1 at %2 dpi; using %3 dpi instead.\n").arg(fontname).arg(dpi).arg(size_found);
   fsize      = size_found;
   timestamp  = ++current_timestamp;
   set_char_p = &dviWindow::set_char;

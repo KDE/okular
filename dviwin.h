@@ -19,7 +19,7 @@ class dviWindow : public QWidget
 	Q_OBJECT
 
 public:
-	dviWindow( int basedpi, int zoom, const char *mfmode, const char *paper, int makepk,
+	dviWindow( int basedpi, double zoom, const char *mfmode, const char *paper, int makepk,
 	QWidget *parent=0, const char *name=0 );
 	~dviWindow();
 
@@ -45,7 +45,11 @@ public:
 public slots:
 	void		setFile(const char *fname);
 	void		gotoPage(int page);
-	void		setZoom(int zoom);
+	//	void		setZoom(int zoom);
+
+	void		setZoom(double zoom);
+	double          zoom() { return _zoom; };
+
 	void		drawPage();
 
 protected:
@@ -63,6 +67,8 @@ private:
 	QString		FontPath;
 	QString		paper_type;
 	int		ChangesPossible;
+	double          _zoom;
+
 };
 
 #endif

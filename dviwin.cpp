@@ -98,7 +98,7 @@ extern  void qt_processEvents(void)
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) 
+dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) 
   : QWidget( parent, name )
 {
   setBackgroundMode(NoBackground);
@@ -126,8 +126,9 @@ dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int 
 	pixmap = NULL;
 
 	double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) ); //@@@
-	double s    = (basedpi * 100)/(xres*(double)zoom);
+	double s    = basedpi/(xres*zoom);
 	mane.shrinkfactor = currwin.shrinkfactor = s;
+	_zoom = zoom;
 
 	resize(0,0);
 }
@@ -381,6 +382,8 @@ void dviWindow::changePageSize()
   resize( page_w, page_h );
   currwin.win = mane.win = pixmap->handle();
   drawPage();
+
+  kdDebug() << "New Pixmap size = " << page_w << "x" << page_h << endl;
 }
 
 //------ setup the dvi interpreter (should do more here ?) ----------
@@ -418,14 +421,16 @@ int dviWindow::totalPages()
 }
 
 
-void dviWindow::setZoom(int zoom)
+void dviWindow::setZoom(double zoom)
 {
-  if ((zoom < 5) || (zoom > 500))
-    zoom = 100;
+  //  if ((zoom < 0.05) || (zoom > 5.0))
+  //    zoom = 1.0;
 
   double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) ); //@@@
-  double s    = (basedpi * 100)/(xres*(double)zoom);
+  double s    = basedpi/(xres*zoom);
   mane.shrinkfactor = currwin.shrinkfactor = s;
+  _zoom = zoom;
+
   init_page();
   reset_fonts();
   changePageSize();

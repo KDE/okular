@@ -15,7 +15,6 @@ extern "C"
 {
   void *init_libkdvi()
   {
-    kdDebug() << "DVI Widget created!" << endl;
     return new KDVIMultiPageFactory;
   }
 };
@@ -59,7 +58,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parent, const char *name)
 {
   setInstance(KDVIMultiPageFactory::instance()); 
 
-  window = new dviWindow(300, 100, "cx", "a4", 1, scrollView());
+  window = new dviWindow(300, 1.0, "cx", "a4", 0, scrollView());
 
   scrollView()->addChild(window);
 }
@@ -76,6 +75,8 @@ bool KDVIMultiPage::openFile()
 
   emit numberOfPages(window->totalPages());
   scrollView()->resizeContents(window->width(), window->height());
+
+  return true;
 }
 
 
@@ -90,27 +91,27 @@ QStringList KDVIMultiPage::fileFormats()
 
 bool KDVIMultiPage::gotoPage(int page)
 {
-  kdDebug() << "New Page number: " << page << endl;
+  window->gotoPage(page);
   return true;
 }
 
 
 void KDVIMultiPage::setZoom(double zoom)
 {
-  kdDebug() << "New Zoom Factor: " << zoom << endl;
-
-  window->setZoom(zoom*100);
+  window->setZoom(zoom);
   scrollView()->resizeContents(window->width(), window->height());
 }
 
 
+extern unsigned int page_w, page_h; 
+
 double KDVIMultiPage::zoomForHeight(int height)
 {
-  return height/200.0;
+  return (window->zoom() * (double)height)/(double)page_h;
 }
 
 
 double KDVIMultiPage::zoomForWidth(int width)
 {
-  return width/300.0;
+  return (window->zoom() * (double)width)/(double)page_w;
 }

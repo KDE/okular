@@ -387,8 +387,10 @@ void dviRenderer::TPIC_addPath_special(QString cp)
     return;
   }
   
-  int x = (int)( currinf.data.dvi_h/(shrinkfactor*65536.0) + xKoord*resolutionInDPI/1000.0 + 0.5 );
-  int y = (int)( currinf.data.pxl_v + yKoord*resolutionInDPI/1000.0 + 0.5 );
+  float mag = dviFile->getMagnification()/1000.0;
+  
+  int x = (int)( currinf.data.dvi_h/(shrinkfactor*65536.0) + mag*xKoord*resolutionInDPI/1000.0 + 0.5 );
+  int y = (int)( currinf.data.pxl_v + mag*yKoord*resolutionInDPI/1000.0 + 0.5 );
   
   // Initialize the point array used to store the path
   if (TPIC_path.size() == 0) 

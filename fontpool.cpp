@@ -655,23 +655,27 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called" << endl;
 #endif
-
+  
   // Ignore minute changes by less than 2 DPI. The difference would
   // hardly be visible anyway. That saves a lot of re-painting,
   // e.g. when the user resizes the window, and a flickery mouse
   // changes the window size by 1 pixel all the time.
-  if ( fabs(displayResolution_in_dpi = _displayResolution_in_dpi) <= 2.0 )
+  if ( fabs(displayResolution_in_dpi - _displayResolution_in_dpi) <= 2.0 ) {
+#ifdef DEBUG_FONTPOOL
+    kdDebug(4300) << "fontPool::setDisplayResolution(...): resolution wasn't changed. Aborting." << endl;
+#endif
     return;
-
+  }
+  
   displayResolution_in_dpi = _displayResolution_in_dpi;
   double displayResolution = displayResolution_in_dpi;
-
+  
   TeXFontDefinition *fontp = fontList.first();
   while(fontp != 0 ) {
     fontp->setDisplayResolution(displayResolution * fontp->enlargement);
     fontp=fontList.next();
   }
-
+  
   // Do something that causes re-rendering of the dvi-window
   emit fonts_have_been_loaded(this);
 }

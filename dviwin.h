@@ -113,7 +113,7 @@ public:
   void          exportPDF();
 
   void          changePageSize(void);
-  virtual int   totalPages();
+  virtual int   totalPages() const;
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
   void		setPaper(double w, double h);
@@ -181,7 +181,7 @@ signals:
       network download finished. */
   void          needsRepainting();
 
-  /** Emitted to indicate that the prescan phase has ended */
+  /** Emitted to indicate that the prescan phase has ended. */
   void          prescanDone();
 
   /** Emitted to indicate that a hyperlink has been clicked on, and

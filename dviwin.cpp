@@ -166,9 +166,9 @@ void dviWindow::setPaper(double width_in_cm, double height_in_cm)
 void dviWindow::drawPage(DocumentPage *page)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::drawPage(DocumentPage *) called" << endl;
+  kdDebug(4300) << "dviWindow::drawPage(DocumentPage *) called, page number " << page->getPageNumber() << endl;
 #endif
-
+  
   // Paranoid safety checks
   if (page == 0) {
     kdError(4300) << "dviWindow::drawPage(DocumentPage *) called with argument == 0" << endl; 
@@ -193,22 +193,22 @@ void dviWindow::drawPage(DocumentPage *page)
     page->clear();
     return;
   }
-
+  
   currentlyDrawnPage     = page;;
   shrinkfactor           = MFResolutions[font_pool.getMetafontMode()]/(xres*_zoom);
   current_page           = page->getPageNumber()-1;
-
+  
   if ( currentlyDrawnPixmap.isNull() ) {
     currentlyDrawnPage = 0;
     return;
   }
-
-
+  
+  
   if ( !currentlyDrawnPixmap.paintingActive() ) {
     // Reset colors
     colorStack.clear();
     globalColor = Qt::black;
-
+    
     // Check if all the fonts are loaded. If that is not the case, we
     // return and do not draw anything. The font_pool will later emit
     // the signal "fonts_are_loaded" and thus trigger a redraw of the
@@ -734,7 +734,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
 }
 
 
-int dviWindow::totalPages()
+int dviWindow::totalPages() const
 {
   if (dviFile != NULL)
     return dviFile->total_pages;
@@ -751,20 +751,20 @@ double dviWindow::setZoom(double zoom)
     zoom = ZoomLimits::MinZoom/1000.0;
   if (zoom > ZoomLimits::MaxZoom/1000.0)
     zoom = ZoomLimits::MaxZoom/1000.0;
-
+  
   // Pass the information on to the font pool. 
   font_pool.setDisplayResolution( xres*zoom );
-
+  
   // Ignore minute changes by less than 1%. The difference to the
   // current zoom value would hardly be visible anyway. That saves a
   // lot of re-painting, e.g. when the user resizes the window, and a
   // flickery mouse changes the window size by 1 pixel all the time.
   if (fabs(zoom-_zoom) < 0.01)
     return zoom;
-
+  
   shrinkfactor = MFResolutions[font_pool.getMetafontMode()]/(xres*zoom);
   _zoom        = zoom;
-
+  
   changePageSize();
   return _zoom;
 }

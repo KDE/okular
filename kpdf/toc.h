@@ -25,7 +25,7 @@ Q_OBJECT
 	public:
 		TOC(QWidget *parent, KPDFDocument *document);
 
-		uint observerId();
+		uint observerId() const ;
 		void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool documentChanged);
 
 	signals:

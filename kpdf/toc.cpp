@@ -51,7 +51,7 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_documen
 	connect(this, SIGNAL(executed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
 }
 
-uint TOC::observerId()
+uint TOC::observerId() const
 {
 	return TOC_ID;
 }

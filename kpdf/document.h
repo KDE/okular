@@ -29,7 +29,7 @@ class KPDFDocumentObserver
 {
 public:
     // you must give each observer a unique ID (used for notifications)
-    virtual uint observerId() = 0;
+    virtual uint observerId() const = 0;
 
     // monitor changes in pixmaps (generation thread complete)
     virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};

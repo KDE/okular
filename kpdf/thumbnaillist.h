@@ -32,7 +32,7 @@ Q_OBJECT
 		ThumbnailList(QWidget *parent, KPDFDocument *document);
 
 		// create actions that interact with this widget and load/save settings
-		uint observerId() { return THUMBNAILS_ID; }
+		uint observerId() const { return THUMBNAILS_ID; }
 		void setupActions( KActionCollection * /*collection*/, KConfigGroup * /*config*/ ) {};
 		void saveSettings( KConfigGroup * /*config*/ ) {};
 

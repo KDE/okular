@@ -54,7 +54,7 @@ public:
     void saveSettings( KConfigGroup * config );
 
     // inherited from KPDFDocumentObserver
-    uint observerId() { return PAGEVIEW_ID; }
+    uint observerId() const { return PAGEVIEW_ID; }
     void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
     void pageSetCurrent( int pageNumber, const QRect & viewport );
     void notifyPixmapChanged( int pageNumber );

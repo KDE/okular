@@ -13,7 +13,7 @@
 
 #include "oconfig.h"
 
-extern FILE *xfopen(const char *filename, const char *type);
+extern FILE *xdvi_xfopen(const char *filename, const char *type);
 extern void oops(QString message);
 extern int n_files_left;
 
@@ -40,7 +40,7 @@ void font::font_name_receiver(KProcess *, char *buffer, int buflen)
 
   kdDebug() << "FONT NAME RECEIVED:" << filename << endl;
 
-  file = xfopen(filename.latin1(), "r");
+  file = xdvi_xfopen(filename.latin1(), "r");
   if (file == NULL) {
     kdError() << i18n("Can't find font ") << fontname << "." << endl;
     return;
@@ -160,7 +160,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
       return NULL;	/* previously flagged missing char */
 
     if (file == NULL) {
-      file = xfopen(filename.latin1(), "r");
+      file = xdvi_xfopen(filename.latin1(), "r");
       if (file == NULL) {
 	oops(QString(i18n("Font file disappeared: %1")).arg(filename) );
 	return NULL;

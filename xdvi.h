@@ -12,10 +12,6 @@
  *	The C environment	*
  *******************************/
 
-/* Avoid name clashes with kpathsea.  */
-#define xmalloc xdvi_xmalloc
-#define xfopen xdvi_xfopen
-
 /* For wchar_t et al., that the X files might want. */
 extern "C" {
 #include <sys/types.h>

@@ -148,8 +148,7 @@ static	void close_a_file()
 /*
  *	Open a file in the given mode.
  */
-
-FILE *xfopen(const char *filename, const char *type)
+FILE *xdvi_xfopen(const char *filename, const char *type)
 #define	TYPE	type
 {
   /* Try not to let the file table fill up completely.  */

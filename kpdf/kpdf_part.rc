@@ -33,6 +33,7 @@
     <Action name="show_scrollbars" group="show_merge"/>
     <Action name="show_leftpanel" group="show_merge"/>
     <Action name="show_searchbar" group="show_merge"/>
+    <Action name="preferences" />
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>

@@ -72,7 +72,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
 
   currentlyDrawnPage.sourceHyperLinkList.reserve(200);
   currentlyDrawnPage.textLinkList.reserve(250);
- 
+
   // initialize the dvi machinery
   dviFile                = 0;
 
@@ -155,15 +155,11 @@ dviWindow::~dviWindow()
   kdDebug(4300) << "~dviWindow" << endl;
 #endif
 
-  if (info)
-    delete info;
-  if (currentlyDrawnPage.pixmap)
-    delete currentlyDrawnPage.pixmap;
+  delete info;
+  delete currentlyDrawnPage.pixmap;
   delete PS_interface;
-  if (dviFile)
-    delete dviFile;
-  if (font_pool)
-    delete font_pool;
+  delete dviFile;
+  delete font_pool;
 
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
@@ -253,17 +249,17 @@ void dviWindow::drawPage()
 
   shrinkfactor = MFResolutions[font_pool->getMetafontMode()]/(xres*_zoom);
   setCursor(arrowCursor);
-  
+
   // Stop any animation which may be in progress
   if (timerIdent != 0) {
     killTimer(timerIdent);
     timerIdent       = 0;
     animationCounter = 0;
   }
-  
+
   // Remove the mouse selection
   DVIselection.clear();
-  
+
   // Stop if there is no dvi-file present
   if ( dviFile == 0 ) {
     resize(0, 0);
@@ -392,18 +388,18 @@ void dviWindow::embedPostScript(void)
   if (dviFile == 0)
     return;
 
-  embedPS_progress = new KProgressDialog(this, "embedPSProgressDialog", 
+  embedPS_progress = new KProgressDialog(this, "embedPSProgressDialog",
 					 i18n("Embedding PostScript Files"), QString::null, true);
   if (embedPS_progress == 0)
     return;
   embedPS_progress->setAllowCancel(false);
   embedPS_progress->showCancelButton(false);
   embedPS_progress->setMinimumDuration(400);
-  embedPS_progress->progressBar()->setTotalSteps(dviFile->numberOfExternalPSFiles);  
-  embedPS_progress->progressBar()->setProgress(0);  
+  embedPS_progress->progressBar()->setTotalSteps(dviFile->numberOfExternalPSFiles);
+  embedPS_progress->progressBar()->setProgress(0);
   embedPS_numOfProgressedFiles = 0;
 
- 
+
 
   Q_UINT16 currPageSav = current_page;
   errorMsg = QString::null;
@@ -413,7 +409,7 @@ void dviWindow::embedPostScript(void)
       end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
-    
+
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
@@ -440,18 +436,18 @@ void dviWindow::embedPostScript(void)
   dviFile->numberOfExternalPSFiles = 0;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
-    
+
     if (current_page < dviFile->total_pages) {
       command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
       end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
-    
+
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
     prescan(&dviWindow::prescan_parseSpecials);
-    
+
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
     delete PostScriptOutPutString;
@@ -459,7 +455,7 @@ void dviWindow::embedPostScript(void)
   PostScriptOutPutString = NULL;
   emit(prescanDone());
   dviFile->prescan_is_performed = true;
-  
+
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
@@ -497,16 +493,16 @@ void dviWindow::changePageSize()
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::changePageSize()" << endl;
 #endif
-  
+
   if ( currentlyDrawnPage.pixmap && currentlyDrawnPage.pixmap->paintingActive() )
     return;
-  
+
   if (currentlyDrawnPage.pixmap)
     delete currentlyDrawnPage.pixmap;
-  
+
   unsigned int page_width_in_pixel = (unsigned int)(_zoom*paper_width_in_cm/2.54 * xres + 0.5);
   unsigned int page_height_in_pixel = (unsigned int)(_zoom*paper_height_in_cm/2.54 * xres + 0.5);
-  
+
   currentlyDrawnPage.pixmap = new QPixmap( page_width_in_pixel, page_height_in_pixel );
   if (currentlyDrawnPage.pixmap == 0) {
     kdError(4300) << "dviWindow::changePageSize(), no memory for pixmap, width=" << page_width_in_pixel << ", height=" << page_height_in_pixel << endl;
@@ -604,7 +600,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
 
   // Files that reside under "tmp" or under the "data" resource are most
   // likely remote files. We limit the files they are able to read to
-  // the directory they are in in order to limit the possibilities of a 
+  // the directory they are in in order to limit the possibilities of a
   // denial of service attack.
   bool restrictIncludePath = true;
   QString tmp = KGlobal::dirs()->saveLocation("tmp", QString::null);
@@ -613,20 +609,20 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
     if (!filename.startsWith(tmp))
       restrictIncludePath = false;
   }
-  
+
   QString includePath;
   if (restrictIncludePath) {
     includePath = filename;
     includePath.truncate(includePath.findRev('/'));
   }
-  
+
   PS_interface->setIncludePath(includePath);
-  
+
   // We will also generate a list of hyperlink-anchors and source-file
   // anchors in the document. So declare the existing lists empty.
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
-  
+
   if (dviFile->page_offset == 0)
     return false;
 
@@ -647,21 +643,21 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
 #endif
       dviFile->numberOfExternalPSFiles = 0;
       Q_UINT16 currPageSav = current_page;
-      
+
       for(current_page=0; current_page < dviFile->total_pages; current_page++) {
 	PostScriptOutPutString = new QString();
-	
+
 	if (current_page < dviFile->total_pages) {
 	  command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
 	  end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
 	} else
 	  command_pointer = end_pointer = 0;
-	
+
 	memset((char *) &currinf.data, 0, sizeof(currinf.data));
 	currinf.fonttable = &(dviFile->tn_table);
 	currinf._virtual  = NULL;
 	prescan(&dviWindow::prescan_parseSpecials);
-	
+
 	if (!PostScriptOutPutString->isEmpty())
 	  PS_interface->setPostScript(current_page, *PostScriptOutPutString);
 	delete PostScriptOutPutString;
@@ -669,16 +665,16 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
       PostScriptOutPutString = NULL;
       emit(prescanDone());
       dviFile->prescan_is_performed = true;
-      
+
 #ifdef PERFORMANCE_MEASUREMENT
       kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
       current_page = currPageSav;
     }
     if (dviFile->suggestedPageSize != 0)
-      emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
+      emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
   }
-  
+
   QApplication::restoreOverrideCursor();
   reference              = ref;
   return true;
@@ -703,21 +699,21 @@ void dviWindow::all_fonts_loaded(fontPool *)
 #endif
     dviFile->numberOfExternalPSFiles = 0;
     Q_UINT16 currPageSav = current_page;
-    
+
     for(current_page=0; current_page < dviFile->total_pages; current_page++) {
       PostScriptOutPutString = new QString();
-      
+
       if (current_page < dviFile->total_pages) {
 	command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
 	end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
       } else
 	command_pointer = end_pointer = 0;
-      
+
       memset((char *) &currinf.data, 0, sizeof(currinf.data));
       currinf.fonttable = &(dviFile->tn_table);
       currinf._virtual  = NULL;
       prescan(&dviWindow::prescan_parseSpecials);
-      
+
       if (!PostScriptOutPutString->isEmpty())
 	PS_interface->setPostScript(current_page, *PostScriptOutPutString);
       delete PostScriptOutPutString;
@@ -725,7 +721,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
     PostScriptOutPutString = NULL;
     emit(prescanDone());
     dviFile->prescan_is_performed = true;
-    
+
 #ifdef PERFORMANCE_MEASUREMENT
     kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
@@ -733,7 +729,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
   }
 
   if (dviFile->suggestedPageSize != 0)
-    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
+    emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
   else
     drawPage();
 
@@ -765,7 +761,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
 	break;
     Q_UINT32 refLineNumber = ref.left(i).toUInt();
     QString  refFileName   = QFileInfo(ref.mid(i).stripWhiteSpace()).absFilePath();
-    
+
     if (sourceHyperLinkAnchors.isEmpty()) {
       KMessageBox::sorry(this, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
 				    "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
@@ -775,7 +771,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
 			 i18n( "Could Not Find Reference" ));
       return;
     }
-    
+
     Q_INT32 page = 0;
     Q_INT32 y    = -1000;
     QValueVector<DVI_SourceFileAnchor>::iterator it;
@@ -784,9 +780,9 @@ void dviWindow::all_fonts_loaded(fontPool *)
 	if (refLineNumber >= it->line) {
 	  page = it->page;
 	  y    = (Q_INT32)(it->vertical_coordinate/shrinkfactor+0.5);
-	} 
+	}
       }
-    
+
     reference = QString::null;
     if (y >= 0)
       emit(request_goto_page(page, y));
@@ -948,7 +944,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	for(i=0; i<max; i++)
 	  if (cp[i].isDigit() == false)
 	    break;
-	
+
 	emit setStatusBarText( i18n("line %1 of %2").arg(cp.left(i)).arg(cp.mid(i).simplifyWhiteSpace()) );
 	return;
       }
@@ -1049,7 +1045,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	kdDebug(4300) << "hit: local link to " << currentlyDrawnPage.hyperLinkList[i].linkText << endl;
 #endif
 	QString locallink;
-	if (currentlyDrawnPage.hyperLinkList[i].linkText[0] == '#' ) 
+	if (currentlyDrawnPage.hyperLinkList[i].linkText[0] == '#' )
 	  locallink = currentlyDrawnPage.hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
 	else
 	  locallink = currentlyDrawnPage.hyperLinkList[i].linkText;
@@ -1071,7 +1067,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	    // the kfmclient seems to be MUCH safer.
 	    QUrl DVI_Url(dviFile->filename);
 	    QUrl Link_Url(DVI_Url, currentlyDrawnPage.hyperLinkList[i].linkText, TRUE );
-	    
+
 	    QStringList args;
 	    args << "openURL";
 	    args << Link_Url.toString();
@@ -1081,7 +1077,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	break;
       }
     }
-  
+
   // Check if the mouse is pressed on a source-hyperlink
   if ((e->button() == MidButton) && (currentlyDrawnPage.sourceHyperLinkList.size() > 0))
     for(unsigned int i=0; i<currentlyDrawnPage.sourceHyperLinkList.size(); i++)

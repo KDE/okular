@@ -94,7 +94,7 @@ typedef int pid_t;
 #define	vfork	fork
 #endif
 
-extern	_Xconst	char	psheader[];
+extern	char		psheader[];
 extern	int		psheaderlen;
 
 #define	postscript	_postscript

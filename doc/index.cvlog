@@ -1,0 +1,28 @@
+=== LinuxDoc conversion errors ===================
+-> Check if any important attributes have been left behind.
+    INPUT                     OUTPUT
+Line Tag                  Line Tag
+   7 `HTMLURL'               0 `<affiliation><address><email><ulink>'
+   7 `'                      0 `'
+! Check the authorname (<collab><collabname> instead of <author><name>?)
+  15 `VERB'                  0 `<literal remap="verb">'
+! Check and correct manually
+  15 `VERB'                  0 `<literal remap="verb">'
+! Check and correct manually
+  17 `VERB'                  0 `<literal remap="verb">'
+! Check and correct manually
+  20 `'                      0 `'
+! check if reference ID keyboard was meant for a section (if not, change manually)
+  41 `REF'                   0 `<xref>'
+ 103 `NEWLINE'               0 `'
+ 110 `NEWLINE'               0 `'
+ 110 `NEWLINE'               0 `'
+ 115 `NEWLINE'               0 `'
+ 117 `NEWLINE'               0 `'
+ 120 `NEWLINE'               0 `'
+ 122 `NEWLINE'               0 `'
+ 123 `NEWLINE'               0 `'
+ 129 `NEWLINE'               0 `'
+ 168 `NEWLINE'               0 `'
+ 168 `HTMLURL'               0 `<ulink>'
+=== NIF conversion errors ========================

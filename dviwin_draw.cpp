@@ -315,8 +315,13 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if (a > 0 && b > 0) {
 	    int h = ((int) ROUNDUP(((long) (a *  current_dimconv)), shrinkfactor * 65536));
 	    int w =  ((int) ROUNDUP(b, shrinkfactor * 65536));
-	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
-				      currinf.data.pxl_v - h + 1, w?w:1, h?h:1, Qt::black );
+	    
+	    if (colorStack.isEmpty())
+	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
+	    else
+	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
 	  }
 	  currinf.data.dvi_h += b;
 	  break;
@@ -333,8 +338,12 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  if (a > 0 && b > 0) {
 	    int h = ((int) ROUNDUP(a, shrinkfactor * 65536));
 	    int w = ((int) ROUNDUP(b, shrinkfactor * 65536));
-	    foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
-				      currinf.data.pxl_v - h + 1, w?w:1, h?h:1, Qt::black );
+	    if (colorStack.isEmpty())
+	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
+	    else
+	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
 	  }
 	  break;
 

@@ -82,6 +82,8 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   setFocusPolicy(QWidget::StrongFocus);
   setFocus();
 
+  connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
+ 
   // initialize the dvi machinery
   dviFile                = 0;
 
@@ -747,36 +749,44 @@ void dviWindow::paintEvent(QPaintEvent *e)
   }
 }
 
+void dviWindow::clearStatusBar(void)
+{
+  emit setStatusBarText( QString::null );
+}
+
 void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 {
   // If no mouse button pressed
   if ( e->state() == 0 ) {
-    QString statusbarMessage;
-
     // go through hyperlinks
     for(unsigned int i=0; i<hyperLinkList.size(); i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
-	statusbarMessage = hyperLinkList[i].linkText;
-	break;
+	clearStatusBarTimer.stop();
+	setCursor(pointingHandCursor);
+	QString link = hyperLinkList[i].linkText;
+	if ( link.startsWith("#") )
+	  link = link.remove(0,1);
+	emit setStatusBarText( i18n("Link to %1").arg(link) );
+	return;
       }
     }
-    if ( statusbarMessage == QString::null)
-      setCursor(arrowCursor);
-    else
-      setCursor(pointingHandCursor);
 
-    // go through sourceHyperlinks
+    // Cursor not over hyperlink? Then let the cursor be the usual arrow
+    setCursor(arrowCursor);
+
+    // But maybe the cursor hovers over a sourceHyperlink?
     for(unsigned int i=0; i<sourceHyperLinkList.size(); i++) {
       if (sourceHyperLinkList[i].box.contains(e->pos())) {
-	if ( statusbarMessage != QString::null)
-	  statusbarMessage += " | ";
+	clearStatusBarTimer.stop();
 	KStringHandler kstr;
-	statusbarMessage += i18n("Line %1 of %2").arg(kstr.word(sourceHyperLinkList[i].linkText, "0")).arg(kstr.word(sourceHyperLinkList[i].linkText, "1:"));
-	break;
+	QString line = kstr.word(sourceHyperLinkList[i].linkText, "0");
+	QString file = kstr.word(sourceHyperLinkList[i].linkText, "1:");
+	emit setStatusBarText( i18n("Link to line %1 of %2").arg(line).arg(file) );
+	return;
       }
     }
-
-    emit setStatusBarText( statusbarMessage );
+    if (!clearStatusBarTimer.isActive())
+      clearStatusBarTimer.start( 200, TRUE ); // clear the statusbar after 200 msec.
     return;
   }
 

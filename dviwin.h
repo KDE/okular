@@ -143,6 +143,10 @@ public slots:
   void          abortExternalProgramm(void);
   bool		setFile(QString fname, QString ref = QString::null, bool sourceMarker=true);
 
+  /** simply emits "setStatusBarText( QString::null )". This is used
+      in dviWindow::mouseMoveEvent(), see the explanation there. */;
+  void          clearStatusBar(void);
+
   /** Displays the page of the first argument */
   void		gotoPage(unsigned int page);
 
@@ -196,6 +200,12 @@ private:
  void          header_special(QString cp);
  void          source_special(QString cp);
 
+ /* This timer is used to delay clearing of the statusbar. Clearing
+    the statusbar is delayed to avoid awful flickering when the mouse
+    moves over a block of text that contains source hyperlinks. The
+    signal timeout() is connected to the method clearStatusBar() of
+    *this. */
+ QTimer        clearStatusBarTimer;
 
  QValueVector<DVI_Hyperlink> sourceHyperLinkList; // List of source-hyperlinks, for source-specials
  QString          *source_href; // If not NULL, the text currently

@@ -21,10 +21,14 @@ More items (first items will enter 'In progress list' first):
 -> annotations: add config option for default name change
 -> annotations: toolbar: display tooltip only the first time
 -> annotations: provide nice wizards. Make it easy to deliver/copy/move the xml files (by Uga)
+-> GHNS: get hot new ebooks on the supported formats (pdf for now) (enrico)
 -> popup context menu when using right button in selection mode (BR99315)
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> evaluate changing KPDFLink to KPDFAction
 -> evaluate completely handling links internally instead of asking xpdf structs
+-> pageview: change document viewport after mouse scrolling ended (not every scroll frame)
+   this will give better mvc consistancy
+-> part: collapsing the left panel will hide it (activate hiding action)
 -> preload: add a delay when forward loading pages
 -> toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR

@@ -59,7 +59,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   EditorDescriptions += i18n("Enter the command line below.");
   
   EditorNames        += "Emacs / emacsclient";
-  EditorCommands     += "emacsclient --no-wait +%l %f";
+  EditorCommands     += "emacsclient --no-wait +%l %f || emacs +%l %f";
   EditorDescriptions += i18n("Click 'Help' to learn how to set up Emacs.");
   
   EditorNames        += "Kate";
@@ -75,7 +75,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   EditorDescriptions += i18n("VIM always opens a new window.");
 
   EditorNames        += "XEmacs / gnuclient";
-  EditorCommands     += "gnuclient -q +%l %f";
+  EditorCommands     += "gnuclient -q +%l %f || xemacs  +%l %f";
   EditorDescriptions += i18n("Click 'Help' to learn how to set up XEmacs.");
 
   

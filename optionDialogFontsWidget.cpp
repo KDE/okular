@@ -48,9 +48,9 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
   usePFBCheckBox->setEnabled(false);
   useFontHintingCheckBox->setEnabled(false);
   useFontHintingCheckBox->setChecked(false);
-  QToolTip::add(PFB_ButtonGroup, i18n("This version of KDVI does not support type 1 fonts."));
-  QWhatsThis::add(PFB_ButtonGroup, i18n("KDVI needs the FreeType library to access type 1 fonts. This library "
-					"was not present when KDVI was compiled. If you want to use type 1 "
+  QToolTip::add(PFB_ButtonGroup, i18n("This version of KDVI does not support Type 1 fonts."));
+  QWhatsThis::add(PFB_ButtonGroup, i18n("KDVI needs the FreeType library to access Type 1 fonts. This library "
+					"was not present when KDVI was compiled. If you want to use Type 1 "
 					"fonts, you must either install the FreeType library and recompile KDVI "
 					"yourself, or find a precompiled software package for your operating "
 					"system."));

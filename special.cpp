@@ -138,7 +138,7 @@ void dviWindow::color_special(QString cp)
   if (command == "pop") {
     // Take color off the stack
     if (colorStack.isEmpty())
-      printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Color pop command issued when the color stack is empty." ).
+      printErrorMsgForSpecials( i18n("Error in DVI file '%1', page %2. Color pop command issued when the color stack is empty." ).
 				arg(dviFile->filename).arg(current_page));
     else
       colorStack.pop();

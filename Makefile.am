@@ -19,7 +19,7 @@ libkdvi_la_SOURCES = kdvi_multipage.cpp \
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
 	optiondialog.cpp \
 	psheader.c dviwin_draw.cpp dvi_init.cpp\
-	font-open.cpp gf.cpp new.cpp pk.cpp psgs.cpp\
+	font-open.cpp gf.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
 
 libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)

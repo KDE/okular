@@ -234,6 +234,7 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
     for ( ; dIt != dEnd; ++dIt )
         delete *dIt;
     d->items.clear();
+    d->visibleItems.clear();
     d->activeItem = 0;
 
     // create children widgets

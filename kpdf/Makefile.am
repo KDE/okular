@@ -27,9 +27,7 @@ bin_PROGRAMS = kpdf
 kpdf_SOURCES = main.cpp kpdf_shell.cpp
 kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kpdf_LDADD   = $(LIB_KPARTS)
-kpdf_COMPILE_FIRST = ../aconf.h
-
-kpdf_shell.o: part.h
+kpdf_COMPILE_FIRST = ../aconf.h part.h
 
 EXTRA_DIST = kpdf.desktop
 xdg_apps_DATA = kpdf.desktop

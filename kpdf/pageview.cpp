@@ -205,6 +205,7 @@ void PageView::setZoomFitWidth()
     slotRelayoutPages();
     viewport()->setUpdatesEnabled( true );
     updateContents();
+    updateZoomText();
 }
 
 

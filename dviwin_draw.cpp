@@ -93,7 +93,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     int y = PXL_V - g->y2 - currwin.base_y;
 
     // Draw the character.
-    bitBlt(pixmap, x, y, &pix, 0, 0, -1, -1, CopyROP, FALSE); // Slow, but correct
+    foreGroundPaint.drawPixmap(x, y, pix);
 
     // Are we drawing text for a hyperlink? And are hyperlinks
     // enabled?

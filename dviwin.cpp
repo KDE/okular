@@ -203,7 +203,7 @@ void dviWindow::selectAll(void)
     selectedText += "\n";
   }
   DVIselection.set(0, num_of_used_textlinks-1, selectedText);
-  repaint();
+  update();
 }
 
 void dviWindow::copyText(void)
@@ -376,7 +376,7 @@ void dviWindow::drawPage()
       }
     }
   }
-  repaint();
+  update();
   emit contents_changed();
 }
 
@@ -685,7 +685,7 @@ void dviWindow::timerEvent( QTimerEvent *e )
     timerIdent       = 0;
     animationCounter = 0;
   }
-  repaint();
+  repaint(0, flashOffset, pixmap->width(), pixmap->height()/19, false);
 }
 
 int dviWindow::totalPages()
@@ -787,11 +787,36 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
       }
 
     if ((selectedTextStart != DVIselection.selectedTextStart) || (selectedTextEnd != DVIselection.selectedTextEnd)) {
-      if (selectedTextEnd == -1)
+      if (selectedTextEnd == -1) {
 	DVIselection.clear();
-      else
+	update();
+      } else {
+	// Find the rectangle that needs to be updated (reduces
+	// flicker)
+	int a = DVIselection.selectedTextStart;
+	int b = DVIselection.selectedTextEnd+1;
+	int c = selectedTextStart;
+	int d = selectedTextEnd+1;
+
+	int i1 = min(a,c);
+	int i2 = min(max(a,c),min(b,d));
+	int i3 = max(max(a,c),min(b,d));
+	int i4 = max(b,d);
+	
+	QRect box;
+	int i=i1;
+	while(i<i2) {
+	  if (i != -1)
+	    box = box.unite(textLinkList[i].box);
+	  i++;
+	}
+
+	for(int i=i3; i<i4; i++) 
+	  if (i != -1)
+	    box = box.unite(textLinkList[i].box);
 	DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
-      repaint();
+	update(box);
+      }
     }
   }
 }

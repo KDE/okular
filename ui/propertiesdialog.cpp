@@ -8,10 +8,12 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <klocale.h>
-#include <klistview.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <klistview.h>
+#include <klocale.h>
+#include <ksqueezedtextlabel.h>
+#include <kglobalsettings.h>
 
 // local includes
 #include "propertiesdialog.h"
@@ -38,18 +40,24 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   QDomElement docElement = info->documentElement();
 
   int row = 0;
+  int valMaxWidth = 100;
   for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() ) {
     QDomElement element = node.toElement();
 
-    if ( !element.attribute( "title" ).isEmpty() ) {
-      QLabel *key = new QLabel( i18n( "%1:" ).arg( element.attribute( "title" ) ), page );
-      QLabel *value = new QLabel( element.attribute( "value" ), page );
+    QString titleString = element.attribute( "title" );
+    QString valueString = element.attribute( "value" );
+    if ( titleString.isEmpty() || valueString.isEmpty() )
+        continue;
 
-      layout->addWidget( key, row, 0, AlignRight );
-      layout->addWidget( value, row, 1 );
+    // create labels and layout them
+    QLabel *key = new QLabel( i18n( "%1:" ).arg( titleString ), page );
+    QLabel *value = new KSqueezedTextLabel( valueString, page );
+    layout->addWidget( key, row, 0, AlignRight );
+    layout->addWidget( value, row, 1 );
+    row++;
 
-      row++;
-    }
+    // refine maximum width of 'value' labels
+    valMaxWidth = QMAX( valMaxWidth, fontMetrics().width( valueString ) );
   }
 
   // add the number of pages if the generator hasn't done it already
@@ -62,13 +70,25 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     layout->addWidget( value, row, 1 );
   }
 
+  // Fonts
+  QVBoxLayout *page2Layout = 0;
   if (doc->hasFonts())
   {
-    // Properties
-    page = addPage(i18n("Fonts"));
-    QVBoxLayout *topLayout = new QVBoxLayout(page, 0, KDialog::spacingHint());
-    KListView *lv = new KListView(page);
-    topLayout->add(lv);
+    QFrame *page2 = addPage(i18n("Fonts"));
+    page2Layout = new QVBoxLayout(page2, 0, KDialog::spacingHint());
+    KListView *lv = new KListView(page2);
+    page2Layout->add(lv);
     doc->putFontInfo(lv);
   }
+
+  // current width: left column + right column + dialog borders
+  int width = layout->minimumSize().width() + valMaxWidth + marginHint() + spacingHint() + marginHint() + 30;
+  if (page2Layout)
+  {
+    width = QMAX( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
+  }
+  // stay inside the 2/3 of the screen width
+  QRect screenContainer = KGlobalSettings::desktopGeometry( this );
+  width = QMIN( width, 2*screenContainer.width()/3 );
+  resize(width, 1);
 }

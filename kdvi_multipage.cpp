@@ -21,7 +21,7 @@
 
 extern "C"
 {
-  void *init_libkdvipart()
+  void *init_kdvipart()
   {
     KGlobal::locale()->insertCatalogue("kviewshell");
     return new KDVIMultiPageFactory;

@@ -68,7 +68,7 @@ public:
   virtual bool gotoPage(int page); 
 
   /// sets a zoom factor
-  virtual void setZoom(double z); 
+  virtual double setZoom(double z); 
 
   /// calculates the zoom needed to fit into a given width
   virtual double zoomForWidth(int width); 

@@ -126,10 +126,12 @@ bool KDVIMultiPage::gotoPage(int page)
 }
 
 
-void KDVIMultiPage::setZoom(double zoom)
+double KDVIMultiPage::setZoom(double zoom)
 {
   window->setZoom(zoom);
   scrollView()->resizeContents(window->width(), window->height());
+
+  return zoom;
 }
 
 

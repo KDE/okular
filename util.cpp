@@ -127,28 +127,6 @@ void alloc_bitmap(bitmap *bitmap)
 
 extern fontPool font_pool;
 
-static	void close_a_file()
-{
-  return; //@@@
-
-  /*
-  register struct font *fontp;
-  unsigned short oldest = (unsigned short)~0;
-  struct font *f = NULL;
-
-  for ( fontp = font_pool.first(); fontp != 0; fontp=font_pool.next() )
-    if (fontp->file != NULL && fontp->timestamp <= oldest) {
-      f = fontp;
-      oldest = fontp->timestamp;
-    }
-  if (f == NULL)
-    oops(i18n("Can't find an open pixel file to close."));
-  Fclose(f->file);
-  f->file = NULL;
-  ++n_files_left;
-  */
-}
-
 /*
  *	Open a file in the given mode.
  */
@@ -156,18 +134,13 @@ FILE *xdvi_xfopen(const char *filename, const char *type)
 #define	TYPE	type
 {
   /* Try not to let the file table fill up completely.  */
-  if (n_files_left <= 5)
-    close_a_file();
   FILE	*f = fopen(filename, "r");
   /* If the open failed, try closing a file unconditionally.
      Interactive Unix 2.2.1, at least, doesn't set errno to EMFILE
      or ENFILE even when it should.  In any case, it doesn't hurt
      much to always try.  */
-  if (f == NULL) {
-    n_files_left = 0;
-    close_a_file();
+  if (f == NULL) 
     f = fopen(filename, TYPE);
-  }
   return f;
 }
 #undef	TYPE

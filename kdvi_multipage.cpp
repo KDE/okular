@@ -75,6 +75,10 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window = new dviWindow( 1.0, true, scrollView());
   preferencesChanged();
 
+  new KAction(i18n("Document &Info"), 0, this,
+	      SLOT(doInfo()), actionCollection(),
+	      "info_dvi");
+
   new KAction(i18n("&DVI Options"), 0, this,
 	      SLOT(doSettings()), actionCollection(),
 	      "settings_dvi");
@@ -209,6 +213,11 @@ bool KDVIMultiPage::preview(QPainter *p, int w, int h)
 }
 
 
+void KDVIMultiPage::doInfo(void)
+{
+  window->showInfo();
+}
+
 void KDVIMultiPage::doSettings()
 {
   if (options) {
@@ -236,18 +245,18 @@ void KDVIMultiPage::about()
 			"<a href=\"http://devel-home.kde.org/~kdvi\">KDVI's Homepage</a>."),
 		   true);
   ab->addTextPage (i18n("Authors"), 
-		   i18n("Markku Hinhala<br>"
-			"Author of kdvi 0.4.3"
-			"<hr>"
-			"Stefan Kebekus<br>"
+		   i18n("Stefan Kebekus<br>"
 			"<a href=\"http://btm8x5.mat.uni-bayreuth.de/~kebekus\">"
 			"http://btm8x5.mat.uni-bayreuth.de/~kebekus</a><br>"
 			"<a href=\"mailto:kebekus@kde.org\">kebekus@kde.org</a><br>"
 			"Current maintainer of kdvi. Major rewrite of version 0.4.3."
 			"Implementation of hyperlinks.<br>"
 			"<hr>"
+			"Markku Hinhala<br>"
+			"Author of kdvi 0.4.3"
+			"<hr>"
 			"Nicolai Langfeldt<br>"
-			" Maintainer of xdvik"
+			"Maintainer of xdvik"
 			"<hr>"
 			"Paul Vojta<br>"
 			" Author of xdvi<br>"
@@ -256,12 +265,13 @@ void KDVIMultiPage::about()
 			"xdvi. I apologize to those who I did not mention here. Please send me an "
 			"email if you think your name belongs here."),
 		   true);
+  ab->setMinimumWidth(500);
   ab->show();
 }
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9e", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }
@@ -341,7 +351,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
 //
 // -- Stefan Kebekus.
 
-void KDVIMultiPage::timerEvent( QTimerEvent *e )
+void KDVIMultiPage::timerEvent( QTimerEvent * )
 {
 #ifdef DEBUG
   kdDebug(4300) << "Timer Event " << endl;

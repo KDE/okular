@@ -16,7 +16,7 @@
 
 extern FILE *xdvi_xfopen(const char *filename, const char *type);
 extern void oops(QString message);
-extern int n_files_left;
+
 
 #define	PK_PRE		247
 #define	PK_ID		89
@@ -44,8 +44,6 @@ void font::fontNameReceiver(QString fname)
     return;
   }
 
-  --n_files_left;
-  timestamp  = ++current_timestamp;
   set_char_p = &dviWindow::set_char;
   int magic      = two(file);
 
@@ -100,24 +98,11 @@ font::~font()
     free(fontname);
 
   if (flags & FONT_LOADED) {
-
-    if (file != NULL) {
+    if (file != NULL) 
       fclose(file);
-      ++n_files_left;
-    }
-
     if (flags & FONT_VIRTUAL) {
       delete [] macrotable;
-
-      /* @@@
-      for (macro *m = macrotable; m < macrotable + max_num_of_chars_in_font; ++m)
-	if (m->free_me)
-	  free((char *) m->pos);
-      free((char *) macrotable);
-      */
-
       vf_table.clear();
-
     } else
       delete [] glyphtable;
   }
@@ -176,7 +161,6 @@ struct glyph *font::glyphptr(unsigned int ch) {
     }
     Fseek(file, g->addr, 0);
     read_PK_char(ch);
-    timestamp = ++current_timestamp;
 
     if (g->bitmap.bits == NULL) {
       g->addr = -1;

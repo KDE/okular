@@ -15,9 +15,9 @@ METASOURCES = AUTO
 libkdvi_la_SOURCES = kdvi_multipage.cpp \
 	dviwin.cpp print.cpp \
 	printData.cpp printSetup.cpp printSetupData.cpp\
-	optiondialog.cpp \
+	optiondialog.cpp infodialog.cpp\
 	psheader.c dviwin_draw.cpp dvi_init.cpp\
-	font.cpp fontpool.cpp pk.cpp psgs.cpp\
+	font.cpp fontpool.cpp fontprogress.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
 
 libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)

@@ -510,9 +510,6 @@ void dviWindow::draw_page(void)
   if (font_pool->check_if_fonts_are_loaded() == -1)
     return;
 
-  // Print debugging information @@@ - remove later
-  font_pool->status();
-
 #ifdef DEBUG_RENDER
   kdDebug() <<"draw_page" << endl;
 #endif

@@ -99,7 +99,7 @@ static	Boolean	font_not_found;
 /*
  * DVI preamble and postamble information.
  */
-static	char	job_id[300];
+
 static	long	numerator, denominator;
 
 /*
@@ -258,9 +258,14 @@ void dvifile::process_preamble(void)
   magnification = four(file);
   dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.));
   dimconv       = dimconv * (((long) pixels_per_inch)<<16) / 254000;
+
+  // Read the generatorString (such as "TeX output ..." from the DVI-File)
+  char	job_id[300];
   k             = one(file);
+  k             = (k > 299) ? 299 : k;
   Fread(job_id, sizeof(char), (int) k, file);
   job_id[k] = '\0';
+  generatorString = job_id;
 }
 
 /*

@@ -148,6 +148,5 @@ void font::read_VF_index(void)
     oops(QString(i18n("Wrong command byte found in VF macro list: %1")).arg(cmnd));
 	
   Fclose (VF_file);
-  n_files_left++;
   file = NULL;
 }

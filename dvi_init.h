@@ -14,6 +14,7 @@ class dvifile {
 
   fontPool     * font_pool;
   QString        filename;
+  QString        generatorString;
   FILE         * file;
   int	         total_pages;
   long         * page_offset;

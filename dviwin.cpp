@@ -26,6 +26,8 @@
 
 #include "dviwin.h"
 #include "fontpool.h"
+#include "fontprogress.h"
+#include "infodialog.h"
 #include "optiondialog.h"
 
 
@@ -47,8 +49,6 @@ struct drawinf	currinf;
 
 const char *dvi_oops_msg;	/* error message */
 double	dimconv;
-int	        n_files_left;    	/* for LRU closing of fonts */
-unsigned short	current_timestamp = 0;	/* for LRU closing of fonts */
 extern struct frame        frame0; /* dummy head of list */  
 
 jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
@@ -56,8 +56,6 @@ jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 
 QIntDict<font> tn_table;
 
-
-#include "c-openmx.h" // for OPEN_MAX
 
 int	_pixels_per_inch;
 _Xconst char	*_paper;
@@ -70,7 +68,6 @@ unsigned int	page_w;
 unsigned int	page_h;
 // end of "really used"
 
-extern int 		n_files_left;
 extern unsigned int	page_w, page_h;
 Window                  mainwin;
 
@@ -88,7 +85,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   : QWidget( parent, name )
 {
 #ifdef DEBUG
-  kdDebug() << "dviWindow" << endl;
+  kdDebug(4300) << "dviWindow" << endl;
 #endif
 
   setBackgroundMode(NoBackground);
@@ -98,15 +95,26 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   
   // initialize the dvi machinery
 
-  dviFile                = NULL;
-  font_pool              = new fontPool();
-  if (font_pool == NULL) {
-    kdError() << "Could not allocate memory for the font pool." << endl;
+  dviFile                = 0;
+  info                   = 0;
+  progress               = new fontProgressDialog(this);
+  if (progress == NULL) {
+    kdError(4300) << "Could not allocate memory for the font progress dialog." << endl;
     exit(-1);
   }
-  qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded()),
-		this, SLOT(drawPage()));
 
+  font_pool              = new fontPool();
+  if (font_pool == NULL) {
+    kdError(4300) << "Could not allocate memory for the font pool." << endl;
+    exit(-1);
+  }
+
+  qApp->connect(font_pool, SIGNAL(MFOutput(QString)), progress, SLOT(outputReceiver(QString)));
+  qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded()), progress, SLOT(hideDialog()));
+  qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded()), this, SLOT(drawPage()));
+  qApp->connect(font_pool, SIGNAL(totalFontsInJob(int)), progress, SLOT(setTotalSteps(int)));
+
+  qApp->connect(progress, SIGNAL(finished(void)), font_pool, SLOT(abortGeneration(void)));
 
   setMakePK( mkpk );
   setMetafontMode( DefaultMFMode ); // that also sets the basedpi
@@ -140,24 +148,53 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   is_current_page_drawn  = 0;  
-  n_files_left           = OPEN_MAX;
   resize(0,0);
 }
 
 dviWindow::~dviWindow()
 {
 #ifdef DEBUG
-  kdDebug() << "~dviWindow" << endl;
+  kdDebug(4300) << "~dviWindow" << endl;
 #endif
 
+  if (info)
+    delete info;
+
+  if (progress)
+    delete progress;
+
   delete PS_interface;
-  delete dviFile;
+
+  if (dviFile)
+    delete dviFile;
 }
+
+void dviWindow::showInfo(void)
+{
+  if (info == 0) {
+    info = new infoDialog(this);
+    if (info == 0) {
+      // The info dialog is not vital. Therefore we don't abort if
+      // something goes wrong here.
+      kdError(4300) << "Could not allocate memory for the info dialog." << endl;
+      return;
+    }
+    qApp->connect(font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
+    qApp->connect(font_pool, SIGNAL(fonts_info(class fontPool *)), info, SLOT(setFontInfo(class fontPool *)));
+  }
+  info->setDVIData(dviFile);
+  // Call check_if_fonts_are_loaded() to make sure that the fonts_info
+  // is emitted. That way, the infoDialog will know about the fonts
+  // and their status.
+  font_pool->check_if_fonts_are_loaded();
+  info->show();
+}
+
 
 void dviWindow::setShowPS( int flag )
 {
 #ifdef DEBUG
-  kdDebug() << "setShowPS" << endl;
+  kdDebug(4300) << "setShowPS" << endl;
 #endif
 
   if ( _postscript == flag )
@@ -192,7 +229,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
   basedpi          = MFResolutions[MetafontMode];
   _pixels_per_inch = MFResolutions[MetafontMode];
 #ifdef DEBUG
-  kdDebug() << "basedpi " << basedpi << endl;
+  kdDebug(4300) << "basedpi " << basedpi << endl;
 #endif
 }
 
@@ -200,7 +237,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
 void dviWindow::setPaper(double w, double h)
 {
 #ifdef DEBUG
-  kdDebug() << "setPaper" << endl;
+  kdDebug(4300) << "setPaper" << endl;
 #endif
 
   unshrunk_paper_w = int( w * basedpi/2.54 + 0.5 );
@@ -308,9 +345,13 @@ void dviWindow::setFile( const QString & fname )
   // If fname is the empty string, then this means: "close". Delete
   // the dvifile and the pixmap.
   if (fname.isEmpty()) {
+    // Delete DVI file
+    if (info != 0)
+      info->setDVIData(0);
     if (dviFile)
       delete dviFile;
     dviFile = 0;
+
     if (pixmap)
       delete pixmap;
     pixmap = 0;
@@ -348,7 +389,9 @@ void dviWindow::setFile( const QString & fname )
   if (dviFile)
     delete dviFile;
   dviFile = dviFile_new;
-  
+  if (info != 0)
+    info->setDVIData(dviFile);
+
   page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
 
@@ -435,7 +478,7 @@ double dviWindow::setZoom(double zoom)
 }
 
 
-void dviWindow::paintEvent(QPaintEvent *ev)
+void dviWindow::paintEvent(QPaintEvent *)
 {
   if (pixmap) {
     QPainter p(this);
@@ -446,21 +489,21 @@ void dviWindow::paintEvent(QPaintEvent *ev)
 void dviWindow::mousePressEvent ( QMouseEvent * e )
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug() << "mouse event" << endl;
+  kdDebug(4300) << "mouse event" << endl;
 #endif
 
   for(int i=0; i<num_of_used_hyperlinks; i++) {
     if (hyperLinkList[i].box.contains(e->pos())) {
       if (hyperLinkList[i].linkText[0] == '#' ) {
 #ifdef DEBUG_SPECIAL
-	kdDebug() << "hit: local link to " << hyperLinkList[i].linkText << endl;
+	kdDebug(4300) << "hit: local link to " << hyperLinkList[i].linkText << endl;
 #endif
 	QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
 	for(int j=0; j<numAnchors; j++) {
 	  if (locallink.compare(AnchorList_String[j]) == 0) {
 #ifdef DEBUG_SPECIAL
-	    kdDebug() << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-	    kdDebug() << "hit: local link to sf=" << mane.shrinkfactor << endl;
+	    kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
+	    kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
 #endif
 	    emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
 	    break;
@@ -468,7 +511,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	}
       } else {
 #ifdef DEBUG_SPECIAL
-	kdDebug() << "hit: external link to " << hyperLinkList[i].linkText << endl;
+	kdDebug(4300) << "hit: external link to " << hyperLinkList[i].linkText << endl;
 #endif
 	QUrl DVI_Url(dviFile->filename);
 	QUrl Link_Url(DVI_Url, hyperLinkList[i].linkText, TRUE );

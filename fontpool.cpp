@@ -38,7 +38,7 @@ void fontPool::setMakePK(int flag)
 {
   makepk = flag;
 
-  // If we just diabled font generation, there is nothing left to do.
+  // If we just disabled font generation, there is nothing left to do.
   if (flag == 0)
     return;
 
@@ -81,37 +81,34 @@ class font *fontPool::appendx(char *fontname, float fsize, long checksum, int ma
 }
 
 
-void fontPool::status(void)
+QString fontPool::status(void)
 {
-  struct font *fontp;
+  struct font  *fontp;
+  QString       text;
+  QStringList   tmp;
 
-  // Replace later by a better-looking table.
+  if (fontList.isEmpty()) 
+    return i18n("The fontlist is currently empty.");
+
+  text.append("<table WIDTH=\"100%\" NOSAVE >");
+  text.append("<tr><td><b>Name</b></td> <td><b>DPI</b></td> <td><b>Type</b></td> <td><b>Filename</b></td></tr>");
   for ( fontp=fontList.first(); fontp != 0; fontp=fontList.next() ) {
-    QString entry = QString(" Font '%1'").arg(fontp->fontname);
-    if (fontp->flags & font::FONT_IN_USE)
-      entry.append(i18n(" is in use,"));
-    else
-      entry.append(i18n(" is not in use,"));
-
-    if (fontp->flags & font::FONT_LOADED)
-      entry.append(i18n(" has been loaded,"));
-    else
-      entry.append(i18n(" has not been loaded,"));
+    QString type;
 
     if (fontp->flags & font::FONT_VIRTUAL)
-      entry.append(i18n(" is a 'virtual font',"));
+      type = i18n("virtual");
     else
-      entry.append(i18n(" is a regular 'pk' font,"));
+      type = i18n("regular");
 
-    if (fontp->flags & font::FONT_KPSE_NAME)
-      entry.append(i18n(" filename has been looked up"));
-    else
-      entry.append(i18n(" filename has not (yet) been looked up"));
-
-#ifdef DEBUG_FONTPOOL
-    kdDebug(4300) << entry << endl;
-#endif
+    tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->fsize+0.5)).arg(type).arg(fontp->filename);
   }
+
+  tmp.sort();
+  text.append(tmp.join("\n"));
+
+  text.append("</table>");
+
+  return text;
 }
 
 
@@ -129,6 +126,7 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "... no, kpsewhich is still running." << endl;
 #endif
+    emit fonts_info(this);
     return -1;
   }
 
@@ -140,6 +138,7 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "... yes, all fonts are there, or could not be found." << endl;
 #endif
+    emit fonts_info(this);
     return 0; // That says that all fonts are loaded.
   }
    
@@ -180,8 +179,10 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
     *proc << "--no-mktex pk";
   else
     *proc << "--mktex pk";
+  int numFontsInJob = 0;
   for (fontp=fontList.first(); fontp != 0; fontp=fontList.next() ) 
     if ((fontp->flags & font::FONT_KPSE_NAME) == 0) {
+      numFontsInJob++;
       *proc << QString("%1.%2pk").arg(fontp->fontname).arg((int)(fontp->fsize + 0.5));
       // In the first pass, we look also for virtual fonts.
       if (pass == 0)
@@ -193,10 +194,13 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
       if (pass != 0)
 	fontp->flags |= font::FONT_KPSE_NAME;
     }
+  if (pass != 0)
+    emit(totalFontsInJob(numFontsInJob));
 
   kpsewhichOutput = "";
   proc->start(KProcess::NotifyOnExit, KProcess::All);
   
+  emit fonts_info(this);
   return -1; // That says that not all fonts are loaded.
 }
 
@@ -232,6 +236,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 #endif
 	fontp->fontNameReceiver(matchingFiles.first());
 	fontp->flags |= font::FONT_KPSE_NAME;
+	emit fonts_info(this);
 	// Constructing a virtual font will most likely insert other
 	// fonts into the fontList. After that, fontList.next() will
 	// no longer work. It is therefore safer to start over.
@@ -301,11 +306,15 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
   if (buflen < 0)
     return;
 
-  MetafontOutput.append(QString::fromLocal8Bit(buffer, buflen));
+  QString op = QString::fromLocal8Bit(buffer, buflen);
+
+
+  MetafontOutput.append(op);
 
   // We'd like to print only full lines of text.
   while( (numleft = MetafontOutput.find('\n')) != -1) {
-    kdDebug(4300) << "MF OUTPUT RECEIVED: " << MetafontOutput.left(numleft+1);
+    emit(MFOutput(MetafontOutput.left(numleft+1)));
+    //    kdDebug(4300) << "MF OUTPUT RECEIVED: " << MetafontOutput.left(numleft+1);
     MetafontOutput = MetafontOutput.remove(0,numleft+1);
   }
 }
@@ -314,4 +323,15 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
 void fontPool::kpsewhich_output_receiver(KProcess *, char *buffer, int buflen)
 {
   kpsewhichOutput.append(QString::fromLocal8Bit(buffer, buflen));
+  emit(numFoundFonts(kpsewhichOutput.contains('\n')));
+}
+
+
+void fontPool::abortGeneration(void)
+{
+  kdDebug(4300) << "Font generation is aborted." << endl;
+  if (proc != 0) 
+    if (proc->isRunning()) {
+      proc->kill();
+    }
 }

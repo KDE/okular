@@ -67,7 +67,7 @@ Q_OBJECT
 
   /** Prints very basic debugging information about the fonts in the
       pool to the kdDebug output stream. */
-  void status(); 
+  QString status(); 
 
   /** Releases all the shrunken bitmaps in all fonts. */
   void reset_fonts(void);
@@ -84,7 +84,8 @@ Q_OBJECT
       loaded. These may define further pk-fonts. The pk-fonts will be
       loaded/generated in the second stage with pass!=0 which is
       called automatically when the first instance of the kpsewhich
-      programm exists. */
+      programm exists.  Calling this method will ALWAYS emit the
+      signal fonts_info. */
   char check_if_fonts_are_loaded(unsigned char pass=0);
 
   /** This is the list which actually enumerates the fonts in the
@@ -110,7 +111,28 @@ signals:
       that the first page can be rendered. */
   void fonts_have_been_loaded(void);
 
+  /** Emitted at the start of a kpsewhich job to indicate how many
+      fonts there are to be looked up/generated. */
+  void totalFontsInJob(int);
+
+  /** Emitted during the kpsewhich job to give the total number of
+    fonts which have been looked up/generated. */
+  void numFoundFonts(int);
+
+  /** Emitted to pass output of MetaFont and friends on to the user
+      interface. */
+  void MFOutput(QString);
+
+  /** Emitted when the font-pool has changed. The class receiving the
+      signal might whish to call status() in order to receive the
+      data. We don't send the data here directly as the compilation of
+      the string is quite costy. */
+  void fonts_info(class fontPool *);
+
 public slots:
+  /** Aborts the font generation. Nasty. */
+  void abortGeneration(void);
+
   /** For internal purposes only. This slot is called when the
       kpsewhich program has terminated. */
   void kpsewhich_terminated(KProcess *);

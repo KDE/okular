@@ -3,6 +3,8 @@ ToDo-List for kdvi
 
 URGENT
 
+o i18n for infoDialog, fontPool & friends
+
 o implement SaveAs
 
 o feedback when running kpsewhich or ghostview

@@ -106,6 +106,7 @@ signals:
 protected slots:
 
   void doSettings();
+  void doInfo();
   void about();
   void helpme();
   void bugform();

@@ -1238,26 +1238,28 @@ void KPDFDocument::loadDocumentInfo()
     {
         QString catName = topLevelNode.toElement().tagName();
 
-        // Get bookmarks list from DOM
-        if ( catName == "bookmarkList" )
+        // Restore page attributes (bookmark, annotations, ...) from the DOM
+        if ( catName == "pageList" )
         {
-            QDomNode n = topLevelNode.firstChild();
-            QDomElement e;
-            int pageNumber;
-            bool ok;
-            while ( n.isElement() )
+            QDomNode pageNode = topLevelNode.firstChild();
+            while ( pageNode.isElement() )
             {
-                e = n.toElement();
-                if (e.tagName() == "page")
+                QDomElement pageElement = pageNode.toElement();
+                if ( pageElement.hasAttribute( "number" ) )
                 {
-                    pageNumber = e.text().toInt(&ok);
+                    // get page number (node's attribute)
+                    bool ok;
+                    int pageNumber = pageElement.attribute( "number" ).toInt( &ok );
+
+                    // pass the domElement to the right page, to read config data from
                     if ( ok && pageNumber >= 0 && pageNumber < (int)pages_vector.count() )
-                        pages_vector[ pageNumber ]->setBookmark( true );
+                        pages_vector[ pageNumber ]->restoreLocalContents( pageElement );
                 }
-                n = n.nextSibling();
+                pageNode = pageNode.nextSibling();
             }
-        } // </bookmarkList>
-        // Get 'general info' from the DOM
+        }
+
+        // Restore 'general info' from the DOM
         else if ( catName == "generalInfo" )
         {
             QDomNode infoNode = topLevelNode.firstChild();
@@ -1296,7 +1298,8 @@ void KPDFDocument::loadDocumentInfo()
                 }
                 infoNode = infoNode.nextSibling();
             }
-        } // </generalInfo>
+        }
+
         topLevelNode = topLevelNode.nextSibling();
     } // </documentInfo>
 }
@@ -1305,7 +1308,7 @@ QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 {
     if ( !d->url.isValid() )
         return QString::null;
-    
+
     return d->url.upURL().url() + fileName;
 }
 
@@ -1330,31 +1333,23 @@ void KPDFDocument::saveDocumentInfo() const
     QFile infoFile( d->xmlFileName );
     if (infoFile.open( IO_WriteOnly | IO_Truncate) )
     {
-        // Create DOM
+        // 1. Create DOM
         QDomDocument doc( "documentInfo" );
         QDomElement root = doc.createElement( "documentInfo" );
         doc.appendChild( root );
 
-        // Add bookmark list to DOM
-        QDomElement bookmarkList = doc.createElement( "bookmarkList" );
-        root.appendChild( bookmarkList );
+        // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
+        QDomElement pageList = doc.createElement( "pageList" );
+        root.appendChild( pageList );
+        // <page list><page number='x'>.... </page> save pages that hold data
+        QValueVector< KPDFPage * >::const_iterator pIt = pages_vector.begin(), pEnd = pages_vector.end();
+        for ( ; pIt != pEnd; ++pIt )
+            (*pIt)->saveLocalContents( pageList, doc );
 
-        for ( uint i = 0; i < pages_vector.count() ; i++ )
-        {
-            if ( pages_vector[i]->hasBookmark() )
-            {
-                QDomElement page = doc.createElement( "page" );
-                page.appendChild( doc.createTextNode( QString::number(i) ) );
-
-                bookmarkList.appendChild( page );
-            }
-        }
-
-        // Add general info to DOM
+        // 2.2. Save document info (current viewport, history, ... ) to DOM
         QDomElement generalInfo = doc.createElement( "generalInfo" );
         root.appendChild( generalInfo );
-
-        // <general info><history> ... </history> saves history up to 10 viewports
+        // <general info><history> ... </history> save history up to 10 viewports
         QValueList< DocumentViewport >::iterator backIterator = d->viewportIterator;
         if ( backIterator != d->viewportHistory.end() )
         {
@@ -1380,7 +1375,7 @@ void KPDFDocument::saveDocumentInfo() const
             }
         }
 
-        // Save DOM to XML file
+        // 3. Save DOM to XML file
         QString xml = doc.toString();
         QTextStream os( &infoFile );
         os << xml;

@@ -11,6 +11,7 @@
 #include <qpixmap.h>
 #include <qstring.h>
 #include <qmap.h>
+#include <qdom.h>
 #include <kdebug.h>
 
 // local includes
@@ -291,6 +292,116 @@ void KPDFPage::deleteAnnotations()
     for ( ; aIt != aEnd; ++aIt )
         delete *aIt;
     m_annotations.clear();
+}
+
+void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
+{
+    // iterate over all chilren (bookmark, annotationList, ...)
+    QDomNode childNode = pageNode.firstChild();
+    while ( childNode.isElement() )
+    {
+        QDomElement childElement = childNode.toElement();
+        childNode = childNode.nextSibling();
+
+        // parse annotationList child element
+        if ( childElement.tagName() == "annotationList" )
+        {
+            // iterate over all annotations
+            QDomNode annotationNode = childElement.firstChild();
+            while( annotationNode.isElement() )
+            {
+                // get annotation element and advance to next annot
+                QDomElement annotElement = annotationNode.toElement();
+                annotationNode = annotationNode.nextSibling();
+
+                if ( !annotElement.hasAttribute( "type" ) )
+                    continue;
+
+                // build annotation of given type
+                Annotation * annotation = 0;
+                int typeNumber = annotElement.attribute( "type" ).toInt();
+                switch ( typeNumber )
+                {
+                    case Annotation::APopup:
+                        annotation = new PopupAnnotation( annotElement );
+                        break;
+                    case Annotation::AText:
+                        annotation = new TextAnnotation( annotElement );
+                        break;
+                    case Annotation::ALine:
+                        annotation = new LineAnnotation( annotElement );
+                        break;
+                    case Annotation::AGeom:
+                        annotation = new GeomAnnotation( annotElement );
+                        break;
+                    case Annotation::AHighlight:
+                        annotation = new HighlightAnnotation( annotElement );
+                        break;
+                    case Annotation::AStamp:
+                        annotation = new StampAnnotation( annotElement );
+                        break;
+                    case Annotation::AInk:
+                        annotation = new InkAnnotation( annotElement );
+                        break;
+                }
+
+                // append annotation to the list or show warning
+                if ( annotation )
+                    m_annotations.append( annotation );
+                else
+                    kdWarning() << "can't restore Annotation of type '" << typeNumber << "from XML." << endl;
+            }
+        }
+
+        // parse bookmark child element
+        else if ( childElement.tagName() == "bookmark" )
+            m_bookmarked = true;
+    }
+}
+
+void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
+{
+    // only add a node if there is some stuff to write into
+    if ( m_bookmarked || !m_annotations.isEmpty() )
+    {
+        // create the page node and set the 'number' attribute
+        QDomElement pageElement = document.createElement( "page" );
+        parentNode.appendChild( pageElement );
+        pageElement.setAttribute( "number", m_number );
+
+        // add bookmark info if is bookmarked
+        if ( m_bookmarked )
+        {
+            // create the pageElement's 'bookmark' child
+            QDomElement bookmarkElement = document.createElement( "bookmark" );
+            pageElement.appendChild( bookmarkElement );
+
+            // add attributes to the element
+            //bookmarkElement.setAttribute( "name", bookmark name );
+        }
+
+        // add annotations info if has got any
+        if ( !m_annotations.isEmpty() )
+        {
+            // create the annotationList
+            QDomElement annotListElement = document.createElement( "annotationList" );
+            pageElement.appendChild( annotListElement );
+
+            // add every annotation to the annotationList
+            QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+            for ( ; aIt != aEnd; ++aIt )
+            {
+                // get annotation
+                const Annotation * a = *aIt;
+                // create annotation element and set type
+                QDomElement annotElement = document.createElement( "annotation" );
+                annotListElement.appendChild( annotElement );
+                annotElement.setAttribute( "type", (uint)a->subType() );
+                // add children and attributes to annotation element
+                a->store( annotElement, document );
+            }
+        }
+    }
 }
 
 

@@ -30,7 +30,7 @@ Annotation::Annotation( const QDomElement & /*node*/ )
 {
 }
 
-void Annotation::store( QDomElement & /*node*/, QDomDocument & /*document*/ )
+void Annotation::store( QDomNode & /*node*/, QDomDocument & /*document*/ ) const
 {
 }
 
@@ -52,7 +52,7 @@ MarkupAnnotation::MarkupAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void MarkupAnnotation::store( QDomElement & node, QDomDocument & document )
+void MarkupAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // ... save stuff ...
     Annotation::store( node, document );
@@ -72,7 +72,7 @@ PopupAnnotation::PopupAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void PopupAnnotation::store( QDomElement & node, QDomDocument & document )
+void PopupAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // ... save stuff ...
     Annotation::store( node, document );
@@ -94,7 +94,7 @@ TextAnnotation::TextAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void TextAnnotation::store( QDomElement & node, QDomDocument & document )
+void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // ... save stuff ...
     MarkupAnnotation::store( node, document );
@@ -116,7 +116,7 @@ LineAnnotation::LineAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void LineAnnotation::store( QDomElement & node, QDomDocument & document )
+void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // ... save stuff ...
     MarkupAnnotation::store( node, document );
@@ -136,7 +136,7 @@ GeomAnnotation::GeomAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void GeomAnnotation::store( QDomElement & node, QDomDocument & document )
+void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // ... save stuff ...
     MarkupAnnotation::store( node, document );
@@ -156,7 +156,7 @@ HighlightAnnotation::HighlightAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void HighlightAnnotation::store( QDomElement & node, QDomDocument & document )
+void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // ... save stuff ...
     MarkupAnnotation::store( node, document );
@@ -176,7 +176,7 @@ StampAnnotation::StampAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void StampAnnotation::store( QDomElement & node, QDomDocument & document )
+void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
     // ... save stuff ...
     MarkupAnnotation::store( node, document );
@@ -196,8 +196,10 @@ InkAnnotation::InkAnnotation( const QDomElement & node )
     // ... load stuff ...
 }
 
-void InkAnnotation::store( QDomElement & node, QDomDocument & document )
+void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
-    // ... save stuff ...
+    // recurse saving parent's attributes
     MarkupAnnotation::store( node, document );
+
+    // save local attributes
 }

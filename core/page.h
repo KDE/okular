@@ -15,6 +15,8 @@
 
 class QPixmap;
 class QRect;
+class QDomNode;
+class QDomDocument;
 class TextPage;
 class KPDFPageTransition;
 class NormalizedRect;
@@ -72,6 +74,10 @@ class KPDFPage
         void deletePixmapsAndRects();
         void deleteHighlights( int s_id = -1 );
         void deleteAnnotations();
+
+        // operations to save/restore page state (by KPDFDocument)
+        void restoreLocalContents( const QDomNode & pageNode );
+        void saveLocalContents( QDomNode & parentNode, QDomDocument & document );
 
     private:
         friend class PagePainter;

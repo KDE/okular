@@ -116,10 +116,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_splitter = new QSplitter( parentWidget, widgetName );
 	m_splitter->setOpaqueResize( true );
 	setWidget( m_splitter );
-	
-	m_showLeftPanel = new KToggleAction( i18n( "Show &left panel"), 0, this, SLOT( slotShowLeftPanel() ), actionCollection(), "show_leftpanel" ); 
-	m_showLeftPanel->setShortcut( "CTRL+L" );
-	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
 
 	// widgets: [left panel] | []
 	m_leftPanel = new QWidget( m_splitter );
@@ -150,8 +146,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	thumbsBox->setStretchFactor( m_tc, 1 );
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
-
-	slotShowLeftPanel();
 
 /*	// [left toolbox: Annotations] | []
 	QFrame * editFrame = new QFrame( m_toolBox );
@@ -229,6 +223,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	prefs->setText( i18n( "Configure PDF Viewer..." ) );
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
+
+	m_showLeftPanel = new KToggleAction( i18n( "Show &left panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" ); 
+	m_showLeftPanel->setShortcut( "CTRL+L" );
+	m_showLeftPanel->setCheckedState( i18n("Hide &left panel") );
+	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
+	slotShowLeftPanel();
 
 	m_showProperties = new KAction(i18n("&Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
@@ -381,8 +381,8 @@ bool Part::closeURL()
 void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
-    Settings::setShowLeftPanel(showLeft);
-    // show/hide left qtoolbox
+    Settings::setShowLeftPanel( showLeft );
+    // show/hide left panel
     m_leftPanel->setShown( showLeft );
     // this needs to be hidden explicitly to disable thumbnails gen
     m_thumbnailList->setShown( showLeft );

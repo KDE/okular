@@ -180,7 +180,7 @@ Unused / Incomplete :
 struct Annotation
 {
     // enum definitions
-    enum SubType { APopup, AText, ALine, AGeom, AHighlight, AStamp, AInk, AMedia };
+    enum SubType { APopup, AText, ALine, AGeom, AHighlight, AStamp, AInk };
     enum Flags { Hidden, NoOpenable, Print, Locked, ReadOnly };
 
     // struct definitions
@@ -215,7 +215,7 @@ struct Annotation
     // read values from XML node
     Annotation( const QDomElement & node );
     // store custom config to XML node
-    virtual void store( QDomElement & node, QDomDocument & document );
+    virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct MarkupAnnotation : public Annotation
@@ -247,7 +247,7 @@ struct MarkupAnnotation : public Annotation
     // read values from XML node
     MarkupAnnotation( const QDomElement & node );
     // store custom config to XML node
-    virtual void store( QDomElement & node, QDomDocument & document );
+    virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct PopupAnnotation : public Annotation
@@ -262,7 +262,7 @@ struct PopupAnnotation : public Annotation
     // common functions
     PopupAnnotation();
     PopupAnnotation( const QDomElement & node );
-    void store( QDomElement & node, QDomDocument & document );
+    void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct TextAnnotation : public MarkupAnnotation
@@ -284,7 +284,7 @@ struct TextAnnotation : public MarkupAnnotation
     // common functions
     TextAnnotation();
     TextAnnotation( const QDomElement & node );
-    void store( QDomElement & node, QDomDocument & document );
+    void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct LineAnnotation : public MarkupAnnotation
@@ -306,7 +306,7 @@ struct LineAnnotation : public MarkupAnnotation
     // common functions
     LineAnnotation();
     LineAnnotation( const QDomElement & node );
-    void store( QDomElement & node, QDomDocument & document );
+    void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct GeomAnnotation : public MarkupAnnotation
@@ -322,7 +322,7 @@ struct GeomAnnotation : public MarkupAnnotation
     // common functions
     GeomAnnotation();
     GeomAnnotation( const QDomElement & node );
-    void store( QDomElement & node, QDomDocument & document );
+    void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct HighlightAnnotation : public MarkupAnnotation
@@ -337,7 +337,7 @@ struct HighlightAnnotation : public MarkupAnnotation
     // common functions
     HighlightAnnotation();
     HighlightAnnotation( const QDomElement & node );
-    void store( QDomElement & node, QDomDocument & document );
+    void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct StampAnnotation : public MarkupAnnotation
@@ -351,7 +351,7 @@ struct StampAnnotation : public MarkupAnnotation
     // common functions
     StampAnnotation();
     StampAnnotation( const QDomElement & node );
-    void store( QDomElement & node, QDomDocument & document );
+    void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct InkAnnotation : public MarkupAnnotation
@@ -365,7 +365,7 @@ struct InkAnnotation : public MarkupAnnotation
     // common functions
     InkAnnotation();
     InkAnnotation( const QDomElement & node );
-    void store( QDomElement & node, QDomDocument & document );
+    void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 #endif

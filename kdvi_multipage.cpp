@@ -153,7 +153,7 @@ bool KDVIMultiPage::gotoPage(int page)
 void KDVIMultiPage::goto_page(int page, int y)
 {
   window->gotoPage(page+1);
-  scrollView()->ensureVisible(scrollView()->width()/2, (int)(y/window->zoom()) );
+  scrollView()->ensureVisible(scrollView()->width()/2, y );
 
   emit previewChanged(true);
   emit pageInfo(window->totalPages(), page );
@@ -224,7 +224,7 @@ void KDVIMultiPage::about()
 				      i18n("the KDVI plugin"), 
 				      KAboutDialog::Close, KAboutDialog::Close);
 
-  ab->setProduct("kdvi", "0.9beta", QString::null, QString::null);
+  ab->setProduct("kdvi", "0.9", QString::null, QString::null);
   ab->addTextPage (i18n("About"), 
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"
@@ -258,7 +258,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", i18n("KDVI"), "0.9 beta", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", i18n("KDVI"), "0.9", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }

@@ -473,7 +473,9 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
 	for(int j=0; j<numAnchors; j++) {
 	  if (locallink.compare(AnchorList_String[j]) == 0) {
-	    emit(request_goto_page(AnchorList_Page[j], AnchorList_Vert[j]));
+	    kdDebug() << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
+	    kdDebug() << "hit: local link to sf=" << mane.shrinkfactor << endl;
+	    emit(request_goto_page(AnchorList_Page[j], AnchorList_Vert[j]/mane.shrinkfactor));
 	    break;
 	  }
 	}

@@ -4,8 +4,8 @@
 // Previewer for TeX DVI files.
 //
 
-#include "dviwin.h"
-#include "prefs.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 #include <qbitmap.h> 
 #include <qkeycode.h>
@@ -17,8 +17,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <stdlib.h>
-#include <unistd.h>
+#include "dviwin.h"
+#include "prefs.h"
 
 //------ some definitions from xdvi ----------
 
@@ -113,14 +113,12 @@ extern "C" void qt_processEvents()
 //------ now comes the dviWindow class implementation ----------
 
 dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr,
-			int mkpk, QWidget *parent, const char *name )
-	: QWidget( parent, name ), block( this )
+                      int mkpk, QWidget *parent, const char *name )
+	: QScrollView( parent, name )
 {
 	ChangesPossible = 1;
-	showsbs = 1;
 	FontPath = QString::null;
-	setBackgroundColor( white );
-	setUpdatesEnabled(FALSE);
+	viewport()->setBackgroundColor( white );
 	setFocusPolicy(QWidget::StrongFocus);
 	setFocus();
 
@@ -129,16 +127,9 @@ dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr,
 		 this, SLOT(timerEvent()) );
 	checkinterval = 1000;
 
-  // Create a Vertical scroll bar
-
-	vsb = new QScrollBar( QScrollBar::Vertical,this,"scrollBar" );
-	connect( vsb, SIGNAL(valueChanged(int)), SLOT(scrollVert(int)) );
-
-  // Create a Horizontal scroll bar
-
-	hsb = new QScrollBar( QScrollBar::Horizontal,this,"scrollBar" );
-	connect( hsb, SIGNAL(valueChanged(int)), SLOT(scrollHorz(int)) );
-
+        connect(this, SIGNAL(contentsMoving(int, int)),
+                this, SLOT(contentsMoving(int, int)));
+        
 	// initialize the dvi machinery
 
 	setResolution( bdpi );
@@ -179,15 +170,19 @@ int dviWindow::checking()
 
 void dviWindow::setShowScrollbars( int flag )
 {
-	if ( showsbs == flag )
-		return;
-	showsbs = flag;
-	setChildrenGeometries();
+        if( flag ) { 
+	        setVScrollBarMode(Auto);
+	        setHScrollBarMode(Auto);                
+	}
+        else {
+	        setVScrollBarMode(AlwaysOff);
+	        setHScrollBarMode(AlwaysOff);                          
+        }
 }
 
 int dviWindow::showScrollbars()
 {
-	return showsbs;
+	return  (vScrollBarMode() == Auto);
 }
 
 void dviWindow::setShowPS( int flag )
@@ -320,23 +315,21 @@ float dviWindow::gamma()
 
 //------ reimplement virtual event handlers -------------
 
-void dviWindow::mousePressEvent ( QMouseEvent *e)
+void dviWindow::viewportMousePressEvent ( QMouseEvent *e)
 {
-	if (!(e->button()&LeftButton))
+        if (!(e->button()&LeftButton))
 		return;
 	mouse = e->pos();
-	emit setPoint( mouse + base );
+        emit setPoint( viewportToContents(mouse) );
 }
 
-void dviWindow::mouseMoveEvent ( QMouseEvent *e)
+void dviWindow::viewportMouseMoveEvent ( QMouseEvent *e)
 {
-	const int mouseSpeed = 1;
-
 	if (!(e->state()&LeftButton))
 		return;
-	QPoint diff = mouse - e->pos();
+        QPoint diff = mouse - e->pos();
 	mouse = e->pos();
-	scrollRelative(diff*mouseSpeed);
+        scrollBy(diff.x(), diff.y());
 }
 
 void dviWindow::keyPressEvent ( QKeyEvent *e)
@@ -352,47 +345,24 @@ void dviWindow::keyPressEvent ( QKeyEvent *e)
 	case Key_Space:	goForward();				break;
 	case Key_Plus:	prevShrink();				break;
 	case Key_Minus:	nextShrink();				break;
-	case Key_Down:	scrollRelative(QPoint(0,speed));	break;
-	case Key_Up:	scrollRelative(QPoint(0,-speed));	break;
-	case Key_Right:	scrollRelative(QPoint(speed,0));	break;
-	case Key_Left:	scrollRelative(QPoint(-speed,0));	break;
+        case Key_Down:	scrollBy(0,speed);              	break;
+	case Key_Up:	scrollBy(0,-speed);             	break;
+	case Key_Right:	scrollBy(speed,0);              	break;
+	case Key_Left:	scrollBy(-speed,0);                     break;
 	case Key_Home:	
 		if (e->state() == ControlButton)
 			firstPage();
 		else
-			scrollAbsolute(QPoint(base.x(),0));
+			setContentsPos(0,0);
 		break;
 	case Key_End:
 		if (e->state() == ControlButton)
 			lastPage();
 		else
-			scrollAbsolute(QPoint(base.x(),page_h));
+			setContentsPos(0, contentsHeight()-visibleHeight());
 		break;
-
 	default:	e->ignore();				break;
 	}
-}
-
-void dviWindow::paintEvent( QPaintEvent *p )
-{
-	if ( !pixmap )
-		return;
-	QRect r( 0, 0, hclip, vclip );
-	r = r.intersect( p->rect() );
-
-	bitBlt( this, r.x(), r.y(),
-		pixmap, base.x() + r.x(), base.y() + r.y(),
-		r.width(), r.height() );
-}
-
-void dviWindow::resizeEvent ( QResizeEvent *)
-{
-	if ( !pixmap || ( width() > pixmap->width() )
-	     || ( height() > pixmap->height() ) )
-		changePageSize();
-	setChildrenGeometries( FALSE );
-	// The following will ensure that view position is within limits
-	scrollRelative( QPoint(0,0) );
 }
 
 void dviWindow::initDVI()
@@ -443,9 +413,8 @@ void dviWindow::drawDVI()
 
 		QApplication::restoreOverrideCursor();
 		gotoPage(1);
-		setChildrenGeometries(FALSE);
 		changePageSize();
-		emit viewSizeChanged( QSize( hclip, vclip ) );
+                emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
 		timer->start( 1000 );
 		return;
 	}
@@ -485,8 +454,9 @@ void dviWindow::drawDVI()
 
 void dviWindow::drawPage()
 {
-	drawDVI();
-	setUpdatesEnabled(TRUE);repaint(0);setUpdatesEnabled(FALSE);
+  drawDVI();
+  repaintContents(contentsX(), contentsY(), 
+                  visibleWidth(), visibleHeight(), FALSE);
 }
 
 bool dviWindow::changedDVI()
@@ -513,7 +483,7 @@ bool dviWindow::correctDVI()
 void dviWindow::timerEvent()
 {
 	static int changing = 0;
-	
+
 	if ( !changedDVI() )
 		return;
 	if ( !changing )
@@ -535,14 +505,13 @@ void dviWindow::changePageSize()
 	psp_destroy();
 	if (pixmap)
 		delete pixmap;
-	pixmap = new QPixmap( QMAX( width(), (int)page_w ),
-				QMAX( height(), (int)page_h ) );
+	pixmap = new QPixmap( (int)page_w, (int)page_h );
 	emit pageSizeChanged( QSize( page_w, page_h ) );
-
+        resizeContents( page_w, page_h );
+        
 	currwin.win = mane.win = pixmap->handle();
-
-	pixmap->fill( white );
-	drawPage();
+	
+        drawPage();
 }
 
 //------ setup the dvi interpreter (should do more here ?) ----------
@@ -558,130 +527,21 @@ void dviWindow::setFile( const char *fname )
         drawPage();
 }
 
-//------ class private stuff, scrolling----------
-
-
-void dviWindow::setChildrenGeometries(int doupdate)
-{
-	int oldhc = hclip;
-        int oldvc = vclip;
-        int sbw = QApplication::style().scrollBarExtent().width();
-        int sbh = QApplication::style().scrollBarExtent().height();
-
-	// deside if scrollbars needed
-
-	hscroll = vscroll = 0;
-	if (showsbs)
-	{
-		if ( width()		< int(page_w) ) hscroll = sbw;
-		if ( height() - hscroll < int(page_h) ) vscroll = sbh;
-		if ( width()  - vscroll < int(page_w) ) hscroll = sbw;
-	}
-
-	// store clip sizes
-
-	hclip = width() - vscroll;
-	vclip = height() - hscroll;
-
-	// reconfig scrollbars accordingly
-
-	if (hscroll)
-	{
-		hsb->show();
-		hsb->setGeometry( 0, vclip, hclip, sbh );
-		hsb->setRange( 0, page_w - hclip );
-		hsb->setValue( base.x() );
-		hsb->setSteps( 15, hclip );
-	}
-	else
-		hsb->hide();
-
-	if (vscroll)
-	{
-		vsb->show();
-		vsb->setGeometry( hclip, 0, sbw, vclip );
-		vsb->setRange( 0, page_h - vclip );
-		vsb->setValue( base.y() );
-		vsb->setSteps( 15, vclip );
-	}
-	else
-		vsb->hide();
-
-	if (hscroll&&vscroll)
-	{
-		block.setGeometry( hclip, vclip, sbw, sbh );
-		block.show();
-	}
-	else
-		block.hide();
-	if (doupdate)
-		setUpdatesEnabled(TRUE);repaint(0);setUpdatesEnabled(FALSE);
-
-	if ( oldhc != hclip || oldvc != vclip )
-		emit viewSizeChanged( QSize( hclip, vclip ) );
-}
-
-void dviWindow::scrollVert( int value )
-{
-	scrollRelative( QPoint(0,value - base.y()) );
-}
-
-void dviWindow::scrollHorz( int value )
-{
-	scrollRelative( QPoint(value - base.x(),0) );
-}
-
-void dviWindow::scrollRelative(const QPoint r, int doupdate)
-{
-	int maxx = page_w - hclip;
-	int maxy = page_h - vclip;
-
-	QPoint old = base;
-	base += r;
-
-	if ( maxx < 0 ) maxx = 0;
-	if ( maxy < 0 ) maxy = 0;
-	if ( base.x() <= 0 )
-		base.rx() = 0;
-	else if ( base.x() > maxx )
-		base.rx() = maxx;
-	if ( base.y() <= 0)
-		base.ry() = 0;
-	else if ( base.y() > maxy )
-		base.ry() = maxy;
-
-	if ( (base-old).isNull() )
-		return;
-
-	setChildrenGeometries(FALSE);
-
-	if ( doupdate )
-	{
-		setUpdatesEnabled(TRUE);repaint(0);setUpdatesEnabled(FALSE);
-	}
-	emit currentPosChanged( base );
-}
-
-void dviWindow::scrollAbsolute(const QPoint p)
-{
-	scrollRelative( p - base );
-}
-
 //------ following member functions are in the public interface ----------
 
 QPoint dviWindow::currentPos()
 {
-	return base;
+	return QPoint(contentsX(), contentsY());
 }
 
 void dviWindow::scroll( QPoint to )
 {
-	scrollAbsolute( to );
+	setContentsPos(to.x(), to.y());
 }
 
 QSize dviWindow::viewSize()
 {
-	return QSize( hclip, vclip );
+	return QSize( visibleWidth(), visibleHeight() );
 }
 
 QSize dviWindow::pageSize()
@@ -693,13 +553,12 @@ QSize dviWindow::pageSize()
 
 void dviWindow::goForward()
 {
-	if ( base.y() >= int(page_h) - vclip )
-	{
-		scrollRelative(QPoint (0,-base.y()), FALSE );
-		nextPage();
-	}
-	else
-		scrollRelative(QPoint(0,2*vclip/3));
+  if(contentsY() >= contentsHeight()-visibleHeight()) {
+    nextPage();
+    setContentsPos(0, 0);
+  }
+  else
+    scrollBy(0, 2*visibleWidth()/3);
 }
 
 void dviWindow::prevPage()
@@ -772,9 +631,26 @@ void dviWindow::setShrink(int s)
 	init_page();
 	init_pix(FALSE);
 	reset_fonts();
-	QPoint newbase = ((base + mouse) * olds - s * mouse) / s;
-	setChildrenGeometries();
 	changePageSize();
-	scrollAbsolute(newbase);
 	emit shrinkChanged( shrink() );
+}
+
+void   dviWindow::resizeEvent(QResizeEvent *e)
+{
+       QScrollView::resizeEvent(e);
+       emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
+}	
+
+void   dviWindow::contentsMoving( int x, int y ) 
+{
+  emit currentPosChanged( QPoint(x, y) );
+}
+  
+
+void   dviWindow::drawContents(QPainter *p, 
+                               int clipx, int clipy, 
+                               int clipw, int cliph ) 
+{
+  if ( pixmap )
+    p->drawPixmap(clipx, clipy, *pixmap, clipx, clipy, clipw, cliph);
 }

@@ -7,18 +7,12 @@
 **
 *****************************************************************************/
 
-#include "scrbox.h"
-#include <qtabdialog.h>
-#include <qmultilinedit.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qlayout.h>
 #include <stdio.h>
-#include <qstring.h>
+
 #include <qpainter.h>
 #include <qdrawutil.h>
+
+#include "scrbox.h"
 
 ScrollBox::ScrollBox( QWidget * parent , const char * name )
     : QFrame( parent, name )
@@ -46,14 +40,20 @@ void ScrollBox::mouseMoveEvent ( QMouseEvent *e )
 		 pagesize.height() /
 		 height();
 	
-	setViewPos( viewpos + QPoint( dx, dy ) );
+        // Notify the word what the view position has changed
+        // The word in turn will notify as that view position has changed
+        // Even if coordinates are out of range JScrollView hendle
+        // this properly
+        emit valueChanged( viewpos + QPoint( dx, dy ) );
+
 	mouse = e->pos();
 }
 
 void ScrollBox::drawContents ( QPainter *p )
 {
-	if (pagesize.isNull())
+        if (pagesize.isNull())
 		return;
+
 	QRect c( contentsRect() );
 
 	int len = pagesize.width();
@@ -66,36 +66,23 @@ void ScrollBox::drawContents ( QPainter *p )
 	int h = c.height() * viewsize.height() / len;
 	if ( h > c.height() ) h = c.height();
 
-	qDrawShadePanel( p, x, y, w, h, colorGroup(), FALSE, 1, 0);
+        qDrawShadePanel( p, x, y, w, h, colorGroup(), FALSE, 1, 0);
 }
 
 void ScrollBox::setPageSize( QSize s )
 {
 	pagesize = s;
-	update();
+	repaint();
 }
 
 void ScrollBox::setViewSize( QSize s )
 {
 	viewsize = s;
-	update();
+	repaint();
 }
 
 void ScrollBox::setViewPos( QPoint pos )
 {
-	QPoint old = viewpos;
-	int x = pos.x();
-	int y = pos.y();
-	QSize limit = pagesize - viewsize + QSize(1,1);
-	if ( x > limit.width() ) x = limit.width();
-	if ( x < 0 ) x = 0;
-	if ( y > limit.height() ) y = limit.height();
-	if ( y < 0 ) y = 0;
-
-	viewpos = QPoint( x, y );
-
-	if ( viewpos == old )
-		return;
-	emit valueChanged( viewpos );
-	update();
+        viewpos = pos;
+        repaint();
 }

@@ -8,14 +8,13 @@
 #define _dviwin_h_
 
 #include "../config.h"
-#include <qwidget.h>
 #include <qpainter.h> 
 #include <qevent.h>
-#include <qscrollbar.h>
 #include <qtimer.h>
 #include <qdatetime.h>
+#include <qscrollview.h> 
 
-class dviWindow : public QWidget
+class dviWindow : public QScrollView
 {
 	Q_OBJECT
 
@@ -49,16 +48,17 @@ public:
 	QSize		viewSize();
 	QSize		pageSize();
 	QPoint		currentPos();
-
+        
 signals:
+	void		setPoint( QPoint p );
 	void		currentPage(int page);
 	void		pageSizeChanged( QSize );
-	void		viewSizeChanged( QSize );
+	void		viewSizeChanged( QSize ); 
 	void		currentPosChanged( QPoint );
 	void		shrinkChanged( int shrink );
 	void		fileChanged();
 	void		statusChange( const QString & );
-	void		setPoint( QPoint p );
+
 
 public slots:
 	void		setFile(const char *fname);
@@ -75,16 +75,16 @@ public slots:
 	void		drawPage();
 
 protected:
-	void		paintEvent( QPaintEvent *pe );
-	void		resizeEvent ( QResizeEvent *);
-	void		mousePressEvent ( QMouseEvent *e);
-	void		mouseMoveEvent ( QMouseEvent *e);
+	void            resizeEvent(QResizeEvent *e);
+        void		viewportMousePressEvent ( QMouseEvent *e);
+	void		viewportMouseMoveEvent ( QMouseEvent *e);
 	void		keyPressEvent ( QKeyEvent *e);
-
+        void            drawContents ( QPainter *p, 
+                                       int clipx, int clipy, 
+                                       int clipw, int cliph );
 private slots:
-	void		scrollVert( int );
-	void		scrollHorz( int );
 	void		timerEvent();
+        void            contentsMoving(int x, int y);
 
 private:
 	bool		changedDVI();
@@ -92,18 +92,9 @@ private:
 	void		initDVI();
 	void		drawDVI();
 	void		changePageSize();
-	void		setChildrenGeometries(int doupdate=TRUE);
-	void		scrollRelative(const QPoint r, int doupdate=TRUE);
-	void		scrollAbsolute(const QPoint r);
-	QScrollBar *	hsb;
-	QScrollBar *	vsb;
-	QWidget		block;
-	int 		hscroll, vscroll;	
-	int		hclip, vclip;
-	QPoint		mouse, base;
+	QPoint		mouse;
 	QString		filename;
 	int		basedpi, makepk;
-	int		showsbs;
 	QPixmap	*	pixmap;
 	QTimer *	timer;
 	QString		MetafontMode;

@@ -85,6 +85,7 @@ static const char *displayFontDirs[] = {
   "/usr/local/share/ghostscript/fonts",
   "/usr/share/fonts/default/Type1",
   "/usr/share/fonts/type1/gsfonts",
+  "/usr/share/fonts/default/ghostscript/",
   NULL
 };
 

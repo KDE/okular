@@ -71,7 +71,7 @@ More items (first items will enter 'In progress list' first):
 -> history as a toolbox child (collecting DOs's setPage calls)
 -> zoom: fit text (with configurable margin)
 -> open gzipped (.pdf.gz?) files
--> kttsd output with menu entries. speech{document/page/selection}. (see kdenonbeta/kttsd)
+-> kttsd output with menu entries. speech{document/page/selection}. (patch available - enrico)
 -> kttsd alternative (1): autodetect "/dev/speech" (speechd/festival) and provide reading
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
@@ -84,6 +84,8 @@ More items (first items will enter 'In progress list' first):
 -> add search on the toc widget (a prune on type lineedit like in thumbnails widget)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> use wallet for storing passwords of encrypted files
+-> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
+-> set a marker on the pdf file to immediately start presentation when opening it (by Tobias Koenig)
 
 Done (newest feature comes firts):
 -> ADD: Asyncronous PDF Generator implementation (for the user: faster UI, preloading, etc..)

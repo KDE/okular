@@ -241,7 +241,7 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
     d->dirtyLayout = true;
 
     // OSD to display pages
-    if ( documentChanged && pageSet.count() > 0 && !Settings::hideOSD() )
+    if ( documentChanged && pageSet.count() > 0 && Settings::showOSD() )
         d->messageWindow->display(
             i18n(" Loaded a one page document.",
                  " Loaded a %n pages document.",
@@ -406,7 +406,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 pixmapPainter.drawRect( selectionRect );
             }
             // 4) Layer 3: overlays
-            if ( Settings::tempDrawBoundaries() )
+            if ( Settings::debugDrawBoundaries() )
             {
                 pixmapPainter.setPen( Qt::blue );
                 pixmapPainter.drawRect( contentsRect );
@@ -429,7 +429,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 screenPainter.drawRect( selectionRect );
             }
             // 4) Layer 3: overlays
-            if ( Settings::tempDrawBoundaries() )
+            if ( Settings::debugDrawBoundaries() )
             {
                 screenPainter.setPen( Qt::red );
                 screenPainter.drawRect( contentsRect );

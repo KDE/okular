@@ -33,7 +33,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 void PageViewMessage::display( const QString & message, Icon icon, int durationMs )
 // give to Caesar what Caesar owns: code taken from Amarok's osd.h/.cpp
 {
-    if ( Settings::hideOSD() )
+    if ( !Settings::showOSD() )
     {
         hide();
         return;

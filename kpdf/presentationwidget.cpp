@@ -27,6 +27,7 @@
 #include "document.h"   // for PRESENTATION_ID
 #include "generator.h"
 #include "page.h"
+#include "settings.h"
 
 
 // comment this to disable the top-right progress indicator
@@ -56,12 +57,12 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
 
     // create top toolbar
     m_topBar = new KToolBar( this, "presentationBar" );
-    m_topBar->setIconSize( 22 );
+    m_topBar->setIconSize( 32 );
     m_topBar->setMovingEnabled( false );
     m_topBar->insertButton( "1leftarrow", 2, SIGNAL( clicked() ), this, SLOT( slotPrevPage() ) );
     m_topBar->insertButton( "1rightarrow", 3, SIGNAL( clicked() ), this, SLOT( slotNextPage() ) );
     m_topBar->insertButton( "exit", 1, SIGNAL( clicked() ), this, SLOT( close() ) );
-    m_topBar->setGeometry( 0, 0, m_width, 22 + 10 );
+    m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
     m_topBar->alignItemRight( 1 );
     m_topBar->hide();
     // change topbar background color
@@ -82,7 +83,10 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
 
     // show widget and take control
     showFullScreen();
-    generatePage();
+    if ( Settings::slidesShowSummary() )
+        generatePage();
+    else
+        slotNextPage();
 }
 
 PresentationWidget::~PresentationWidget()
@@ -114,7 +118,8 @@ void PresentationWidget::pageSetup( const QValueVector<KPDFPage*> & pageSet, boo
     {
         PresentationFrame * frame = new PresentationFrame();
         frame->page = *setIt;
-        frame->transType = NoTrans; //TODO get transition from the document
+        //TODO get transition from the document
+        frame->transType = Settings::slidesGlitterTrans() ? Glitter : NoTrans;
         frame->transDir = Left;
         // calculate frame geometry keeping constant aspect ratio
         float pageRatio = frame->page->ratio();
@@ -162,9 +167,9 @@ void PresentationWidget::notifyPixmapChanged( int pageNumber )
 // <widget events>
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
-    if ( e->key() == Key_Left )
+    if ( e->key() == Key_Left || e->key() == Key_Backspace )
         slotPrevPage();
-    else if ( e->key() == Key_Right )
+    else if ( e->key() == Key_Right || e->key() == Key_Space )
         slotNextPage();
     else if ( e->key() == Key_Escape )
     {
@@ -228,7 +233,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     {
         const QRect & r = allRects[i];
 #ifdef ENABLE_PROGRESS_OVERLAY
-        if ( r.intersects( m_overlayGeometry ) )
+        if ( Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
         {
             // backbuffer the overlay operation
             QPixmap backPixmap( r.size() );
@@ -273,7 +278,7 @@ void PresentationWidget::generatePage()
 
     // generate the top-right corner overlay
 #ifdef ENABLE_PROGRESS_OVERLAY
-    if ( m_frameIndex != -1 )
+    if ( Settings::slidesShowProgress() && m_frameIndex != -1 )
         generateOverlay();
 #endif
 
@@ -358,23 +363,31 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     for ( uint i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
-        // use a vertical gray gradient background
-        int baseTint = Qt::gray.red(),
-            blendLevel = 9 * m_height / 10,
-            blendLeft = r.left(),
-            blendWidth = r.width();
-        float blendDiv = (m_height * m_height) / 100; // use 100 to fade to pure white
-        QColor baseColor( baseTint, baseTint, baseTint );
-        for ( int i = r.top(); i <= r.bottom(); i++ )
+        if ( Settings::slidesShowGrayBack() )
         {
-            if ( i <= blendLevel )
-                p.fillRect( blendLeft, i, blendWidth, 1, baseColor );
-            else
+            // use a vertical gray gradient background
+            int baseTint = Qt::gray.red(),
+                blendLevel = 9 * m_height / 10,
+                blendLeft = r.left(),
+                blendWidth = r.width();
+            float blendDiv = (m_height * m_height) / 100; // use 100 to fade to pure white
+            QColor baseColor( baseTint, baseTint, baseTint );
+            for ( int i = r.top(); i <= r.bottom(); i++ )
             {
-                int k = i - blendLevel;
-                k = baseTint + (int)( (255-baseTint) * (k * k) / blendDiv );
-                p.fillRect( blendLeft, i, blendWidth, 1, QColor( baseTint, baseTint, k ) );
+                if ( i <= blendLevel )
+                    p.fillRect( blendLeft, i, blendWidth, 1, baseColor );
+                else
+                {
+                    int k = i - blendLevel;
+                    k = baseTint + (int)( (255-baseTint) * (k * k) / blendDiv );
+                    p.fillRect( blendLeft, i, blendWidth, 1, QColor( baseTint, baseTint, k ) );
+                }
             }
+        }
+        else
+        {
+            // use the black color that 'crops' images on beamers
+            p.fillRect( r, Qt::black );
         }
     }
 }

@@ -44,26 +44,26 @@
   </entry>
  </group>
  <group name="General" >
-  <entry key="ShowScrollBars" type="Bool" >
+  <entry key="ShowOSD" type="Bool" >
    <default>true</default>
-  </entry>
-  <entry key="ShowLeftPanel" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="ShowSearchBar" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="HideOSD" type="Bool" >
-   <default>false</default>
   </entry>
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>
  </group>
  <group name="MainView" >
+  <entry key="ShowLeftPanel" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="ShowSearchBar" type="Bool" >
+   <default>true</default>
+  </entry>
   <entry key="SplitterSizes" type="IntList" />
  </group>
  <group name="PageView" >
+  <entry key="ShowScrollBars" type="Bool" >
+   <default>true</default>
+  </entry>
   <entry key="ViewContinous" type="Bool" >
    <default>true</default>
   </entry>
@@ -90,8 +90,22 @@
    <default>false</default>
   </entry>
  </group>
- <group name="Temp" >
-  <entry key="TempDrawBoundaries" type="Bool" >
+ <group name="Presentation" >
+  <entry key="SlidesGlitterTrans" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SlidesShowProgress" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SlidesShowGrayBack" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SlidesShowSummary" type="Bool" >
+   <default>false</default>
+  </entry>
+ </group>
+ <group name="Debugging Options" >
+  <entry key="DebugDrawBoundaries" type="Bool" >
    <default>false</default>
   </entry>
  </group>

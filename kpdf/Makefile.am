@@ -10,6 +10,9 @@ METASOURCES = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kpdf.pot
 
+# TODO: fix the code!
+KDE_OPTIONS = nofinal
+
 KDE_ICON = kpdf
 
 # this Makefile creates both a KPart application and a KPart

@@ -14,23 +14,23 @@
 
 class DVIFile;
 
-class print : public printData
+class Print : public printData
 {
     Q_OBJECT
 
 public:
 
-    print
+    Print
     (
         QWidget* parent = NULL,
         const char* name = NULL
     );
 
-    virtual ~print();
+    virtual ~Print();
 
     void setFile( QString file );
     void setCurrentPage( int page, int totalpages );
-    void setMarkList( QStrList *marklist );
+    void setMarkList( const QStrList *marklist );
 
 protected slots:
 

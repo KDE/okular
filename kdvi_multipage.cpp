@@ -13,6 +13,7 @@
 #include <kconfig.h>
 
 
+#include "print.h"
 #include "optiondialog.h"
 #include "kdvi_multipage.moc"
 
@@ -214,4 +215,17 @@ void KDVIMultiPage::preferencesChanged()
     window->setShowPS(showPS);
  
   window->setAntiAlias( config->readNumEntry( "PS Anti Alias", 1 ) );  
+}
+
+
+bool KDVIMultiPage::print(const QStrList &pages, int current)
+{
+  Print * printdlg = new Print(window, "printdlg");
+ 
+  printdlg->setFile(m_file);
+  printdlg->setCurrentPage(current, window->totalPages());
+  printdlg->setMarkList(&pages);
+  printdlg->exec();
+  
+  delete printdlg;                                                                 
 }

@@ -33,7 +33,7 @@ public:
 
 };
 
-print::print
+Print::Print
 (
 	QWidget* parent,
 	const char* name
@@ -54,11 +54,11 @@ print::print
 }
 
 
-print::~print()
+Print::~Print()
 {
 }
 
-void print::setFile( QString _file )
+void Print::setFile( QString _file )
 {
 	ifile = ofile = _file.copy();
 	setCaption( i18n("Print ") + ifile );
@@ -69,13 +69,13 @@ void print::setFile( QString _file )
 	printFileName->setText(of);
 }
 
-void print::setCurrentPage( int _page, int _totalpages )
+void Print::setCurrentPage( int _page, int _totalpages )
 {
 	curpage = _page;
 	totalpages = _totalpages;
 }
 
-void print::setMarkList( QStrList *_marklist )
+void Print::setMarkList( const QStrList *_marklist )
 {
 	marklist = _marklist;
 	if ( !marklist || marklist->isEmpty() )
@@ -87,7 +87,7 @@ void print::setMarkList( QStrList *_marklist )
 	printCurrent->setChecked( FALSE );		
 }
 
-void print::rangeToggled( bool on )
+void Print::rangeToggled( bool on )
 {
 	if ( on )
 	{
@@ -214,7 +214,7 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 	delete pg;
 }
 
-void print::okPressed()
+void Print::okPressed()
 {
 	QString cmd;
 	
@@ -275,12 +275,12 @@ void print::okPressed()
 	accept();
 }
 
-void print::nupPressed(int n)
+void Print::nupPressed(int n)
 {
 	nup = 1 << n;
 }
 
-void print::printDestinationChanged(int i)
+void Print::printDestinationChanged(int i)
 {
 	printdest = i;
 	if ( printdest == 1 )
@@ -295,7 +295,7 @@ void print::printDestinationChanged(int i)
 	}
 }
 
-void print::setupPressed()
+void Print::setupPressed()
 {
 	printSetup * ps = new printSetup( this, "ps" );
 	ps->exec();
@@ -303,12 +303,12 @@ void print::setupPressed()
 	readConfig();
 }
 
-void print::cancelPressed()
+void Print::cancelPressed()
 {
 	reject();
 }
 
-void print::readConfig()
+void Print::readConfig()
 {
 	KConfig *config = kapp->config();
 

@@ -93,7 +93,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_thumbnailList->setMinimumWidth( 50 );
 	document->addObserver( m_thumbnailList );
 
-	m_pageWidget = new KPDF::PageWidget( m_splitter, document );
+	m_pageWidget = new PageWidget( m_splitter, document );
 	connect( m_pageWidget, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	//connect(m _pageWidget, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
 	document->addObserver( m_pageWidget );

@@ -98,13 +98,21 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
 #endif
 
   file = fopen(QFile::encodeName(filename), "r");
-  if (file == NULL) {
-    kdError(4300) << i18n("Can't find font ") << fontname << "." << endl;
-    return;
+  // Check if the file could be opened. If not, try to find the file
+  // in the DVI file's directory. If that works, modify the filename
+  // accordingly and go on.
+  if (file == 0) {
+    QString filename_test(font_pool->getExtraSearchPath() + "/" + filename);
+    file = fopen( QFile::encodeName(filename_test), "r");
+    if (file == 0) {
+      kdError(4300) << i18n("Cannot find font %1, file %2.").arg(fontname).arg(filename) << endl;
+      return;
+    } else
+      filename = filename_test;
   }
   set_char_p = &dviWindow::set_char;
   int magic      = two(file);
-
+  
   if (fname.endsWith("pk"))
     if (magic == PK_MAGIC) {
       fclose(file);

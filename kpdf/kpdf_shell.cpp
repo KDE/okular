@@ -25,6 +25,8 @@
 #include <kmenubar.h>
 #include <kpopupmenu.h>
 #include <kparts/componentfactory.h>
+#include <kio/netaccess.h>
+
 #include <qcursor.h>
 
 using namespace KPDF;
@@ -183,12 +185,18 @@ Shell::fileOpen()
   void
 Shell::fileSaveAs()
 {
-    // this slot is called whenever the File->Save As menu is selected,
-    /*
-    QString file_name = KFileDialog::getSaveFileName();
-    if (file_name.isEmpty() == false)
-        saveAs(file_name);
-    */
+  KURL saveURL = KFileDialog::getSaveURL( 
+					 m_part->url().isLocalFile() 
+					 ? m_part->url().url() 
+					 : m_part->url().fileName(), 
+					 QString::null, 
+					 m_part->widget(), 
+					 QString::null );
+  if( !KIO::NetAccess::upload( m_part->url().path(),
+			       saveURL,
+			       static_cast<QWidget*>( 0 ) ) )
+	; // TODO: Proper error dialog
+
 }
 
   void

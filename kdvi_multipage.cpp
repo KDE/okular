@@ -213,14 +213,38 @@ void KDVIMultiPage::generateDocumentWidgets(void)
 #ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) called" << endl;
 #endif
-  
-  widgetList.setAutoDelete(true);
-  if (viewModeAction->currentItem() == KVS_SinglePage)
-    widgetList.resize(1);
-  else
-    widgetList.resize(window->totalPages());
-  widgetList.setAutoDelete(false);
 
+  // Find the number of the current page, for later use. If
+  // window->totalPages()>0, make sure that currPg is in the
+  // permissible range.
+  Q_UINT16 currPg = getCurrentPageNumber();
+  if (currPg > window->totalPages())
+    currPg = window->totalPages();
+  if (currPg < 1)
+    currPg = 1;
+  
+  // Find out how many widgets are needed, and resize the widgetList
+  // accordingly
+  widgetList.setAutoDelete(true);
+  Q_UINT16 oldwidgetListSize = widgetList.size();
+  if (window->totalPages() == 0)
+    widgetList.resize(0);
+  else
+    if (viewModeAction->currentItem() == KVS_SinglePage)
+      widgetList.resize(1);
+    else
+      widgetList.resize(window->totalPages());
+  bool isWidgetListResized = (widgetList.size() != oldwidgetListSize);
+  widgetList.setAutoDelete(false);
+  
+  // If the widgetList is empty, there is nothing left to do.
+  if (widgetList.size() == 0) {
+    scrollView()->addChild(&widgetList);
+    return;
+  }
+  
+  // Allocate documentWidget structures so that all entries of
+  // widgetList point to a valid documentWidget
   documentWidget *dviWidget;
   for(Q_UINT16 i=0; i<widgetList.size(); i++) {
     dviWidget = (documentWidget *)(widgetList[i]);
@@ -234,11 +258,52 @@ void KDVIMultiPage::generateDocumentWidgets(void)
       connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), window,
 	      SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
       connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-    } else
-      dviWidget->setPageNumber(i+1);
+    }
+    else
+      if (viewModeAction->currentItem() == KVS_SinglePage)
+	dviWidget->update();
+      else
+	dviWidget->setPageNumber(i+1);
   }
 
+  // Set the page numbers for the newly allocated widgets. How this is
+  // done depends on the viewMode.
+  if (viewModeAction->currentItem() == KVS_SinglePage) {
+    // In KVS_SinglePage mode, any number between 1 and the maximum
+    // number of pages is acceptable. If an acceptable value is found,
+    // nothing is done, and otherwise '1' is set as a default.
+    dviWidget = (documentWidget *)(widgetList[0]);
+    if (dviWidget != 0) { // Paranoia safety check
+      dviWidget->setPageNumber(currPg);
+      dviWidget->update();
+    } else
+      kdError(4300) << "Zero-Pointer in widgetList in KDVIMultiPage::generateDocumentWidgets()" << endl;
+  } else {
+    // In all other modes, the widgets will be numbered continuously,
+    // starting from 1.
+    for(Q_UINT16 i=0; i<widgetList.size(); i++) {
+      dviWidget = (documentWidget *)(widgetList[i]);
+      if (dviWidget != 0) // Paranoia safety check
+	dviWidget->setPageNumber(i+1);
+      else
+	kdError(4300) << "Zero-Pointer in widgetList in KDVIMultiPage::generateDocumentWidgets()" << endl;
+    }
+  }
+  
+  // Make the changes in the widgetList known to the scrollview. so
+  // that the scrollview may update its contents.
   scrollView()->addChild(&widgetList);
+
+  // If the number of widgets has changed, the widget that displays
+  // 'currPg' may not be visible anymore. Bring it back into focus.
+  if (isWidgetListResized == true)
+    gotoPage(currPg-1);
+
+  // The layout of the widgets, the number of the widgets, and the
+  // "current" widget, i.e. the topmost visible widget might all have
+  // changed. Pass that information on.
+  emit pageInfo(window->totalPages(), getCurrentPageNumber()-1 );
+
 #ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) ended" << endl;
 #endif
@@ -256,11 +321,24 @@ void KDVIMultiPage::setViewMode(int mode)
     config->sync();
   }
 
+  // We save the current page and restore it later. That way the user
+  // doesn't get 'lost' when he switches the view mode
+  Q_UINT16 currPg = getCurrentPageNumber();
+
+  // Set the view mode, i.e., set the number of columns in the
+  // scrollView, and generate new widgets, if necessary
   if (mode == KVS_ContinuousFacing)
     scrollView()->setNrColumns(2);
   else
     scrollView()->setNrColumns(1);
   generateDocumentWidgets();
+
+  // Restore the current 
+  if (currPg != 0)
+    gotoPage(currPg-1);
+
+  // Let the controlling application know that the viewMode was
+  // changed
   emit viewModeChanged();
 }
 
@@ -1041,8 +1119,6 @@ void KDVIMultiPage::reload()
     timer_id = -1;
     bool r = window->setFile(m_file, QString::null, false);
     enableActions(r);
-
-    emit pageInfo(window->totalPages(), window->curr_page()-1 );
   } else {
     if (timer_id == -1)
       timer_id = startTimer(1000);

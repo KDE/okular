@@ -79,3 +79,4 @@ Terminal=0
 ServiceTypes=Browser/View
 X-KDE-Library=libkviewerpart
 X-KDE-BrowserView-Args=dvi
+MapNotify=true

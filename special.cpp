@@ -106,20 +106,30 @@ void dviWindow::epsf_special(QString cp)
   QString include_command = cp.simplifyWhiteSpace();
 
   // The line is supposed to start with "..ile=", and then comes the
-  // filename. Figure out what the filename is and stow it away
+  // filename. Figure out what the filename is and stow it away. Of
+  // course, this does not work if the filename contains spaces
+  // (already the simplifyWhiteSpace() above is wrong). If you have
+  // files like this, go away.
   QString EPSfilename = include_command;
   EPSfilename.truncate(EPSfilename.find(' '));
+
+  // Strip enclosing quotation marks which are included by some LaTeX
+  // macro packages (but not by others). This probably means that
+  // graphic files are no longer found if the filename really does
+  // contain quotes, but we don't really care that much.
+  if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
+    EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
+  }
+
+  // Now see if the Gfx file exists...
   if (! QFile::exists(EPSfilename)) {
     QFileInfo fi1(dviFile->filename);
     QFileInfo fi2(fi1.dir(),EPSfilename);
     if (fi2.exists())
       EPSfilename = fi2.absFilePath();
   }
-
-
-  //
+  
   // Now parse the arguments. 
-  //
   int  llx     = 0; 
   int  lly     = 0;
   int  urx     = 0;

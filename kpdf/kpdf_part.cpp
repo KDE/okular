@@ -578,6 +578,7 @@ Part::print()
     return;
 
   double width, height;
+  int landscape, portrait;
   KPrinter printer;
   
   printer.setPageSelection(KPrinter::ApplicationSide);
@@ -585,11 +586,19 @@ Part::print()
   printer.setCurrentPage(m_currentPage);
   printer.setMargins(0, 0, 0, 0);
   
-  // TODO what if some pages are landscape and others are not?
-  width = m_doc->getPageWidth(1);
-  height = m_doc->getPageHeight(1);
-  if (m_doc->getPageRotate(1) == 90 || m_doc->getPageRotate(1) == 270) qSwap(width, height);
-  if (width > height) printer.setOrientation(KPrinter::Landscape);
+  // if some pages are landscape and others are not the most common win as kprinter does
+  // not accept a per page setting
+  landscape = 0;
+  portrait = 0;
+  for (int i = 1; i <= m_doc->getNumPages(); i++)
+  {
+    width = m_doc->getPageWidth(i);
+    height = m_doc->getPageHeight(i);
+    if (m_doc->getPageRotate(i) == 90 || m_doc->getPageRotate(i) == 270) qSwap(width, height);
+    if (width > height) landscape++;
+    else portrait++;
+  }
+  if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
   
   if (printer.setup(widget()))
   {
@@ -717,17 +726,26 @@ void Part::printPreview()
     return;
 
   double width, height;
+  int landscape, portrait;
   KPrinter printer;
   
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setPreviewOnly( true );
   printer.setMargins(0, 0, 0, 0);
   
-  // TODO what if some pages are landscape and others are not?
-  width = m_doc->getPageWidth(1);
-  height = m_doc->getPageHeight(1);
-  if (m_doc->getPageRotate(1) == 90 || m_doc->getPageRotate(1) == 270) qSwap(width, height);
-  if (width > height) printer.setOption("orientation-requested", "4");
+  // if some pages are landscape and others are not the most common win as kprinter does
+  // not accept a per page setting
+  landscape = 0;
+  portrait = 0;
+  for (int i = 1; i <= m_doc->getNumPages(); i++)
+  {
+    width = m_doc->getPageWidth(i);
+    height = m_doc->getPageHeight(i);
+    if (m_doc->getPageRotate(i) == 90 || m_doc->getPageRotate(i) == 270) qSwap(width, height);
+    if (width > height) landscape++;
+    else portrait++;
+  }
+  if (landscape > portrait) printer.setOption("orientation-requested", "4");
   
   doPrint(printer);
 }

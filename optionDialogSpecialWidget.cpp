@@ -95,7 +95,6 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   }
   editorDescription->setMinimumWidth(maximumWidth+10);
 
-  editorCallingCommand->setReadOnly(true);
   connect(editorCallingCommand, SIGNAL( textChanged (const QString &) ), this, SLOT( slotUserDefdEditorCommand( const QString & ) ) );
 }
 

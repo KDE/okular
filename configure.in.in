@@ -44,10 +44,21 @@ if test "$xpdfrc" != NO; then
   AC_DEFINE_UNQUOTED(SYSTEM_XPDFRC, "$xpdfrc/xpdfrc", [Define the location your xpdfrc])
 fi
 
+dnl #### Check for FSEEK variants
+AC_SYS_LARGEFILE
+AC_FUNC_FSEEKO
+AC_CHECK_FUNCS(fseek64, xpdf_cv_func_fseek64=yes, xpdf_cv_func_fseek64=no)
+AC_CHECK_FUNCS(ftell64, xpdf_cv_func_ftell64=yes, xpdf_cv_func_ftell64=no)
+if test "$xpdf_cv_func_fseek64" = yes -a "$xpdf_cv_func_ftell64" = yes; then
+        AC_DEFINE(HAVE_FSEEK64, 1)
+else
+	AC_DEFINE(HAVE_FSEEK64, 0)
+fi
+	  
+dnl #### Check for libt1
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 
-dnl #### Check for libt1
 kpdf_have_t1lib=
 KDE_CHECK_LIB(t1, T1_InitLib, [LIBT1="-lt1"; kpdf_have_t1lib=yes],
 [

@@ -50,9 +50,6 @@ Shell::Shell()
   // set the shell's ui resource file
   setXMLFile("kpdf_shell.rc");
 
-  // then, setup our actions
-  setupActions();
-
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
@@ -65,6 +62,8 @@ Shell::Shell()
                 factory->create(this, "kpdf_part", "KParts::ReadOnlyPart"));
     if (m_part)
     {
+      // then, setup our actions
+      setupActions();
       // tell the KParts::MainWindow that this is indeed the main widget
       setCentralWidget(m_part->widget());
       // and integrate the part's GUI with the shell's
@@ -83,7 +82,7 @@ Shell::Shell()
   }
   PDFPartView * partView = static_cast<PDFPartView *>(m_part->widget());
   connect( partView->outputdev, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
-
+  
   readSettings();
 }
 
@@ -122,27 +121,22 @@ Shell::setupActions()
   recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
 				    actionCollection() );
   KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
-  KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
+  KStdAction::print(m_part, SLOT(print()), actionCollection());
+  KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
 
-  //createStandardStatusBarAction();
+  
   setStandardToolBarMenuEnabled(true);
 
   KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
   m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );
-#if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
-    createStandardStatusBarAction();
-#endif
-    setAutoSaveSettings();
-    setStandardToolBarMenuEnabled(true);
-#if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
-    m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
-#else
-    m_fullScreenAction = new KToggleAction( this, SLOT( slotUpdateFullScreen() ) );
-#endif
-    m_popup = new KPopupMenu( this, "rmb popup" );
-    m_popup->insertTitle( i18n( "Full Screen Options" ) );
-    m_fullScreenAction->plug( m_popup );
+  createStandardStatusBarAction();
+  setAutoSaveSettings();
+  setStandardToolBarMenuEnabled(true);
+  m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
+  m_popup = new KPopupMenu( this, "rmb popup" );
+  m_popup->insertTitle( i18n( "Full Screen Options" ) );
+  m_fullScreenAction->plug( m_popup );
 }
 
   void

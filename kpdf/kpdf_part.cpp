@@ -89,7 +89,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   KStdAction::forward (this, SLOT(forward()),
                        actionCollection(), "forward");
 
-  KStdAction::print( this, SLOT( print() ), actionCollection() );
   KStdAction::printPreview( this, SLOT( printPreview() ), actionCollection() );
 
   m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()),

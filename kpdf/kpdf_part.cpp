@@ -35,7 +35,6 @@
 #include <kprinter.h>
 #include <kstdaction.h>
 #include <kdeversion.h>
-#include <kconfig.h>
 #include <kparts/genericfactory.h>
 #include <kurldrag.h>
 #include <kfiledialog.h>
@@ -56,6 +55,8 @@
 #include "searchwidget.h"
 #include "document.h"
 #include "toc.h"
+#include "preferencesdialog.h"
+#include "settings.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
@@ -167,7 +168,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_findNext->setEnabled(false);
 
 	KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
-
+    KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 
 	KToggleAction * sLp = new KToggleAction( i18n( "Show &Left Panel" ), 0, ac, "show_leftpanel" );
@@ -175,15 +176,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( sLp, SIGNAL( toggled( bool ) ), SLOT( slotToggleLeftPanel( bool ) ) );
 
     // attach the actions of the 2 children widgets too
-	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
-	m_pageView->setupActions( ac, &settings );
-	m_searchWidget->setupActions( ac, &settings );
-	m_thumbnailList->setupActions( ac, &settings );
+	m_pageView->setupActions( ac );
+	m_searchWidget->setupActions( ac );
+	m_thumbnailList->setupActions( ac );
 
 	// local settings
-	m_splitter->setSizes( settings.readIntListEntry( "SplitterSizes" ) );
-	sLp->setChecked( settings.readBoolEntry( "ShowLeftPanel", true ) );
-	slotToggleLeftPanel( sLp->isChecked() );
+    m_splitter->setSizes( Settings::splitterSizes() );
+    sLp->setChecked( Settings::showLeftPanel() );
+    slotToggleLeftPanel( sLp->isChecked() );
 
 	// set our XML-UI resource file
 	setXMLFile("kpdf_part.rc");
@@ -192,17 +192,19 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
-	KConfigGroup settings( KPDFPartFactory::instance()->config(), "General" );
-	m_pageView->saveSettings( &settings );
-	m_searchWidget->saveSettings( &settings );
-	m_thumbnailList->saveSettings( &settings );
-	settings.writeEntry( "SplitterSizes", m_splitter->sizes() );
-	settings.writeEntry( "ShowLeftPanel", m_toolBox->isShown() );
+    // save local settings
+    Settings::setSplitterSizes( m_splitter->sizes() );
+    Settings::setShowLeftPanel( m_toolBox->isShown() );
+    // save settings of internal widgets
+    m_pageView->saveSettings();
+    m_searchWidget->saveSettings();
+    m_thumbnailList->saveSettings();
+    // save config file
+    Settings::writeConfig();
 
-	settings.sync();
-	delete document;
-	if ( --m_count == 0 )
-		delete globalParams;
+    delete document;
+    if ( --m_count == 0 )
+        delete globalParams;
 }
 
 void Part::goToPage(uint i)
@@ -366,12 +368,26 @@ void Part::slotSaveFileAs()
 		KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( url().path() ) );
 }
 
-void Part::slotToggleLeftPanel( bool on )
+void Part::slotPreferences()
 {
-    // show/hide left qtoolbox
-    m_toolBox->setShown( on );
-    // this needs to be hidden explicitly to disable thumbnails gen
-    m_thumbnailList->setShown( on );
+    // an instance the dialog could be already created and could be cached,
+    // in which case you want to display the cached dialog
+    if ( PreferencesDialog::showDialog( "preferences" ) )
+        return;
+
+    // we didn't find an instance of this dialog, so lets create it
+    PreferencesDialog * dialog = new PreferencesDialog( 0, Settings::self() );
+
+    // keep us informed when the user changes settings
+    connect( dialog, SIGNAL( settingsChanged() ),
+             this, SLOT( slotNewConfig() ) );
+
+    dialog->show();
+}
+
+void Part::slotNewConfig()
+{
+    // apply runtime changes TODO apply changes here
 }
 
 void Part::slotPrintPreview()
@@ -404,6 +420,14 @@ void Part::slotPrintPreview()
 
     doPrint(printer);
 */
+}
+
+void Part::slotToggleLeftPanel( bool on )
+{
+    // show/hide left qtoolbox
+    m_toolBox->setShown( on );
+    // this needs to be hidden explicitly to disable thumbnails gen
+    m_thumbnailList->setShown( on );
 }
 
 void Part::slotPrint()

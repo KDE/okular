@@ -22,7 +22,6 @@
 
 #include <kaction.h>
 #include <kapplication.h>
-#include <kconfig.h>
 #include <kfiledialog.h>
 #include <klibloader.h>
 #include <kmessagebox.h>

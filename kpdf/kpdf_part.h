@@ -85,9 +85,11 @@ protected slots:
 	void slotGotoLast();
 	void slotFind();
 	void slotFindNext();
-	void slotSaveFileAs();
-	void slotPrintPreview();
-	void slotToggleLeftPanel( bool );
+    void slotSaveFileAs();
+    void slotPreferences();
+    void slotNewConfig();
+    void slotPrintPreview();
+    void slotToggleLeftPanel( bool );
 	// can be connected to widget elements
 	void updateActions();
 	void enableTOC(bool enable);

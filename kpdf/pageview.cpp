@@ -431,16 +431,28 @@ void PageView::keyPressEvent( QKeyEvent * e )
     switch ( e->key() )
     {
         case Key_Up:
-            if ( Settings::viewContinous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
-                verticalScrollBar()->subtractLine();
+        case Key_PageUp:
             // if in single page mode and at the top of the screen, go to previous page
+            if ( Settings::viewContinous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
+            {
+                if ( e->key() == Key_Up )
+                    verticalScrollBar()->subtractLine();
+                else
+                    verticalScrollBar()->subtractPage();
+            }
             else if ( d->vectorIndex > 0 )
                 d->document->slotSetCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
             break;
         case Key_Down:
-            if ( Settings::viewContinous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
-                verticalScrollBar()->addLine();
+        case Key_PageDown:
             // if in single page mode and at the bottom of the screen, go to next page
+            if ( Settings::viewContinous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
+            {
+                if ( e->key() == Key_Down )
+                    verticalScrollBar()->addLine();
+                else
+                    verticalScrollBar()->addPage();
+            }
             else if ( d->vectorIndex < (int)d->items.count() - 1 )
                 d->document->slotSetCurrentPage( d->items[ d->vectorIndex + 1 ]->pageNumber() );
             break;
@@ -449,12 +461,6 @@ void PageView::keyPressEvent( QKeyEvent * e )
             break;
         case Key_Right:
             horizontalScrollBar()->addLine();
-            break;
-        case Key_PageUp:
-            verticalScrollBar()->subtractPage();
-            break;
-        case Key_PageDown:
-            verticalScrollBar()->addPage();
             break;
         case Key_Shift:
         case Key_Control:
@@ -650,19 +656,17 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             break;
 
         case MouseZoom:
-            // handle 'Zoom To Area', in every mouse mode FIXME
+            // handle 'Zoom To Area', in every mouse mode
             if ( leftButton && !d->mouseSelectionRect.isNull() )
             {
-                // find out new zoom ratio
-                const QRect & selRect = d->mouseSelectionRect;
-                float zoom = QMIN( (float)visibleWidth() / (float)selRect.width(),
-                                    (float)visibleHeight() / (float)selRect.height() );
+                QRect selRect = d->mouseSelectionRect.normalize();
+                if ( selRect.width() < 2 || selRect.height() < 2 )
+                    break;
 
-                // get normalized view center (relative to the contentsRect)
-                // coeffs (1.0 and 1.5) are for correcting the asymmetic page border
-                // that makes the page not perfectly centered on the viewport
-                double nX = ( contentsX() - 1.0 + selRect.left() + (double)selRect.width() / 2.0 ) / (double)contentsWidth();
-                double nY = ( contentsY() - 1.5 + selRect.top() + (double)selRect.height() / 2.0 ) / (double)contentsHeight();
+                // find out new zoom ratio and normalized view center (relative to the contentsRect)
+                double zoom = QMIN( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
+                double nX = ( selRect.left() + (double)selRect.width() / 2 ) / (double)contentsWidth();
+                double nY = ( selRect.top() + (double)selRect.height() / 2 ) / (double)contentsHeight();
 
                 // zoom up to 400%
                 if ( d->zoomFactor <= 4.0 || zoom <= 1.0 )
@@ -670,18 +674,21 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     d->zoomFactor *= zoom;
                     if ( d->zoomFactor > 4.0 )
                         d->zoomFactor = 4.0;
+                    viewport()->setUpdatesEnabled( false );
                     updateZoom( ZoomRefreshCurrent );
+                    viewport()->setUpdatesEnabled( true );
                 }
 
-                // recenter view
+                // recenter view and update the viewport
                 center( (int)(nX * contentsWidth()), (int)(nY * contentsHeight()) );
+                updateContents();
 
                 // hide message box and delete overlay window
                 selectionClear();
                 return;
             }
             // if in ZoomRect mode, right click zooms out
-            if ( rightButton )
+            else if ( rightButton )
             {
                 updateZoom( ZoomOut );
                 return;
@@ -689,8 +696,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             break;
 
         case MouseSelText:
-            if ( leftButton && d->mouseSelectionRect.width() > 2 && d->mouseSelectionRect.height() > 2 )
+            if ( leftButton && !d->mouseSelectionRect.isNull() )
             {
+                QRect relativeRect = d->mouseSelectionRect.normalize();
+                if ( relativeRect.width() < 2 || relativeRect.height() < 2 )
+                    break;
+
                 // request the textpage if there isn't one
                 const KPDFPage * kpdfPage = d->mouseSelectionItem->page();
                 if ( !kpdfPage->hasSearchPage() )
@@ -698,7 +709,6 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
                 // copy text into the clipboard
                 QClipboard *cb = QApplication::clipboard();
-                QRect relativeRect = d->mouseSelectionRect.normalize();
                 relativeRect.moveBy( -d->mouseSelectionItem->geometry().left(),
                                      -d->mouseSelectionItem->geometry().top() );
                 const QString & selection = kpdfPage->getTextInRect( relativeRect, d->mouseSelectionItem->zoomFactor() );
@@ -1013,11 +1023,11 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             newFactor = KGlobal::locale()->readNumber( z.remove( z.find( '%' ), 1 ) ) / 100.0;
             }break;
         case ZoomIn:
-            newFactor += (newFactor > 1.0) ? 0.2 : 0.1;
+            newFactor += (newFactor > 0.99) ? ( newFactor > 1.99 ? 0.5 : 0.2 ) : 0.1;
             newZoomMode = ZoomFixed;
             break;
         case ZoomOut:
-            newFactor -= (newFactor > 1.0) ? 0.2 : 0.1;
+            newFactor -= (newFactor > 0.99) ? ( newFactor > 1.99 ? 0.5 : 0.2 ) : 0.1;
             newZoomMode = ZoomFixed;
             break;
         case ZoomFitWidth:
@@ -1276,6 +1286,7 @@ void PageView::slotRelayoutPages()
     // 4) update scrollview's contents size and recenter view
     if ( fullWidth != contentsWidth() || fullHeight != contentsHeight() )
     {
+        bool prevUpdatesState = viewport()->isUpdatesEnabled();
         viewport()->setUpdatesEnabled( false );
         resizeContents( fullWidth, fullHeight );
         if ( focusedPage )
@@ -1286,7 +1297,7 @@ void PageView::slotRelayoutPages()
         }
         else
             center( fullWidth / 2, 0 );
-        viewport()->setUpdatesEnabled( true );
+        viewport()->setUpdatesEnabled( prevUpdatesState );
     }
 
     // 5) update the whole viewport

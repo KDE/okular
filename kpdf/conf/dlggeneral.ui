@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>266</width>
-            <height>109</height>
+            <height>139</height>
         </rect>
     </property>
     <property name="caption">
@@ -22,17 +22,6 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>kcfg_ShowScrollBars</cstring>
-            </property>
-            <property name="text">
-                <string>Show scroll&amp;bars</string>
-            </property>
-            <property name="accel">
-                <string>Alt+B</string>
-            </property>
-        </widget>
         <widget class="QCheckBox">
             <property name="name">
                 <cstring>kcfg_ShowLeftPanel</cstring>
@@ -87,6 +76,17 @@
         </widget>
         <widget class="QCheckBox">
             <property name="name">
+                <cstring>kcfg_ShowScrollBars</cstring>
+            </property>
+            <property name="text">
+                <string>Show scroll&amp;bars</string>
+            </property>
+            <property name="accel">
+                <string>Alt+B</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
                 <cstring>kcfg_HideOSD</cstring>
             </property>
             <property name="text">
@@ -95,6 +95,52 @@
             <property name="accel">
                 <string>Alt+H</string>
             </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout2</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>View Columns:</string>
+                    </property>
+                </widget>
+                <widget class="QSpinBox">
+                    <property name="name">
+                        <cstring>kcfg_ViewColumns</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer3_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>51</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+            </hbox>
         </widget>
         <spacer>
             <property name="name">
@@ -109,7 +155,7 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>60</height>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>

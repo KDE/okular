@@ -12,6 +12,7 @@
 
 class QLabel;
 class QPainter;
+class OptionDialog;
 
 
 #include <kmultipage.h>
@@ -85,9 +86,17 @@ signals:
   /// emitted to indicate the number of pages in the file
   void numberOfPages(int nr);
 
+
+protected slots:
+
+  void doSettings();
+  void preferencesChanged();
+
+
 private:
 
   dviWindow *window;
+  OptionDialog *options;
 
 };
 

@@ -42,8 +42,6 @@ class OptionDialog : public KDialogBase
     QCheckBox   *fontPathCheck;
     QLabel      *fontPathLabel;
     QLineEdit   *fontPathEdit;
-    QLineEdit   *zoomSmallEdit;
-    QLineEdit   *zoomLargeEdit;
   };
     
   struct RenderItems
@@ -53,18 +51,6 @@ class OptionDialog : public KDialogBase
     QCheckBox *antialiasCheck;
     QLineEdit *gammaEdit;
   };
-
-  struct PaperItems
-  {
-    int pageIndex;
-    QComboBox *paperCombo;
-  };
-
-  struct MiscItems
-  {
-    int pageIndex;
-    QSpinBox *recentSpin;
-  }; 
 
   public:
     OptionDialog( QWidget *parent=0, const char *name=0, bool modal=true);
@@ -79,8 +65,6 @@ class OptionDialog : public KDialogBase
     void setup();
     void makeFontPage();
     void makeRenderingPage();
-    void makePaperPage();
-    void makeMiscPage();
 
   private slots:
     void fontPathCheckChanged( bool state );
@@ -91,8 +75,6 @@ class OptionDialog : public KDialogBase
   private:
     FontItems   mFont;
     RenderItems mRender;
-    PaperItems  mPaper;
-    MiscItems   mMisc;
 };
 
 

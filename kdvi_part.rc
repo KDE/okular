@@ -1,17 +1,8 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="KDVI">
+<kpartgui name="kdvi_part">
 <MenuBar>
- <Menu name="view"><text>&amp;View</text>
-  <Action name="firstPage"/>
-  <Action name="prevPage"/>
-  <Action name="goForward"/>
-  <Action name="nextPage"/>
-  <Action name="lastPage"/>
-  <Action name="nextShrink"/>
-  <Action name="selectSmall"/>
-  <Action name="selectLarge"/>
-  <Action name="prevShrink"/>
+ <Menu name="settings"><text>&amp;Settings</text>
+  <Action name="settings_dvi"/>
  </Menu>
 </MenuBar>
-<StatusBar/>
 </kpartgui>

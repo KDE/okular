@@ -46,11 +46,8 @@ apps_DATA = kdvi.desktop
 
 bin_SCRIPTS = kdvi
 
-#partdir = $(kde_datadir)/kdvi
-#part_DATA = kdvi_part.rc
-
-#rcdir = $(kde_datadir)/kdvi
-#rc_DATA = kdvi.rc
+partdir = $(kde_datadir)/kdvi
+part_DATA = kdvi_part.rc
 
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@

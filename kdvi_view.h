@@ -65,7 +65,7 @@ private:
   KDVIMiniWidget *w;
   int jobId;
 
-  KAction *printAct, *startAct, *backAct, *forPageAct, *forwardAct,
+  KAction *startAct, *backAct, *forPageAct, *forwardAct,
       *finishAct, *zoomOutAct, *smallAct, *largeAct, *zoomInAct;
 };
 

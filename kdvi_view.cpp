@@ -61,9 +61,6 @@ KDVIKonqView::KDVIKonqView()
     w = new KDVIMiniWidget(NULL, this );
     dviWindow *dviwin = w->window();
     jobId = 0;
-    printAct = new KAction(i18n("Print..."),
-                           QIconSet(BarIcon("fileprint", KDVIFactory::instance())) ,
-                           0, w, SLOT(filePrint() ), this);
     startAct = new KAction(i18n("Go to first page"),
                            QIconSet(BarIcon("start", KDVIFactory::instance())) ,
                            0, dviwin, SLOT(firstPage() ), this);
@@ -92,8 +89,6 @@ KDVIKonqView::KDVIKonqView()
                             QIconSet(BarIcon("viewmag+", KDVIFactory::instance())) ,
                             0, dviwin, SLOT(prevShrink() ), this);
 
-    actions()->append(BrowserView::ViewAction(printAct, BrowserView::MenuEdit
-                                               | BrowserView::ToolBar ) );
     actions()->append(BrowserView::ViewAction(startAct, BrowserView::MenuEdit
                                                | BrowserView::ToolBar ) );
     actions()->append(BrowserView::ViewAction(backAct, BrowserView::MenuEdit

@@ -35,6 +35,7 @@
  *   as a constant string.
  */
 #include <stdio.h>
+#include <string.h>
 #define LINELENGTH (72)
 #define BUFLENGTH (1000)
 #undef putchar
@@ -43,7 +44,6 @@ FILE *in, *out ;
 static int linepos = 0 ;
 static int lastspecial = 1 ;
 static int stringlen = 0;
-extern int strlen() ;
 /*
  *   This next routine writes out a `special' character.  In this case,
  *   we simply put it out, since any special character terminates the

@@ -101,7 +101,7 @@ static QOutFontSubst qPixmapStdFonts [] = {
 	{ 0,                       0,           false, false, QFont::AnyStyle }
 };
 
-QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m21, fp_t m22 )
+QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t /*m11*/, fp_t m12, fp_t m21, fp_t m22 )
 {
 	static QDict<QOutFontSubst> stdfonts;
 
@@ -198,11 +198,11 @@ void QOutputDev::drawLink ( Link *link, Catalog * /* catalog */ )
 	double x1, y1, x2, y2;
 	LinkBorderStyle *borderStyle;
 	GfxRGB rgb;
-	double *dash;
-	int dashLength;
-	double dashList[20];
+// 	double *dash;
+// 	int dashLength;
+// 	double dashList[20];
 	QPointArray path;
-	int x, y, i;
+	int x, y/*, i*/;
 	QPen oldpen, newpen;
 	 
 	link->getRect(&x1, &y1, &x2, &y2);

@@ -271,6 +271,7 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
   find_postamble();
   read_postamble();
   prepare_pages();
+  isModified = false;
 
   return;
 }

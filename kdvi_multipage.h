@@ -81,12 +81,25 @@ public:
 
   virtual bool print(const QStringList &pages, int current);
 
+  /// KDVI offers read- and write functionality must re-implement this
+  /// method and return true here.
+  virtual bool isReadWrite() {return true;};
+
+  /// multipage implementations that offer read- and write
+  /// functionality should re-implement this method.
+  virtual bool isModified();
+
 public slots:
-  /** Opens a file requestor and starts a basic copy KIO-Job. A
-      multipage implementation that wishes to offer saving in various
-      formats must re-implement this slot. */
+  /** Opens a file requestor and saves. This really saves the content
+      of the DVI-file, and does not just start a copy job */
   virtual void slotSave();
-  void setEmbedPostScriptAction(void);
+
+  /** Similar to slotSave, but does not ask for a filename. */
+  virtual void slotSave_defaultFilename();
+
+ void setEmbedPostScriptAction(void);
+
+ void slotEmbedPostScript(void);
 
 protected:
   history document_history;

@@ -95,7 +95,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   document_history.setAction(backAction, forwardAction);
   document_history.clear();
 
-  embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, window, SLOT(embedPostScript()), actionCollection(), "embed_postscript");
+  embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
   connect(window, SIGNAL(prescanDone()), this, SLOT(setEmbedPostScriptAction()));
   findTextAction         = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
   window->findNextAction = KStdAction::findNext(window, SLOT(findNextText()), actionCollection(), "findnext");
@@ -129,6 +129,15 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 }
 
 
+void KDVIMultiPage::slotEmbedPostScript(void)
+{
+  if (window) {
+    window->embedPostScript();
+    emit askingToCheckActions();
+  }
+}
+
+
 void KDVIMultiPage::setEmbedPostScriptAction(void)
 {
   if ((window == 0) || (window->dviFile == 0) || (window->dviFile->numberOfExternalPSFiles == 0))
@@ -140,9 +149,6 @@ void KDVIMultiPage::setEmbedPostScriptAction(void)
 
 void KDVIMultiPage::slotSave()
 {
-  kdDebug(4300) << "KDVIMultiPage::slotSave()" << endl;
-
-
   // Try to guess the proper ending...
   QString formats;
   QString ending;
@@ -173,12 +179,39 @@ void KDVIMultiPage::slotSave()
   }
 
   // TODO: error handling...
-  QFile out(fileName);
-  out.open( IO_Raw|IO_WriteOnly );
-  out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
-  out.close();
+  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data != 0)) {
+    QFile out(fileName);
+    out.open( IO_Raw|IO_WriteOnly );
+    out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
+    out.close();
+    window->dviFile->isModified = false;
+  }
 
   return;
+}
+
+
+void KDVIMultiPage::slotSave_defaultFilename()
+{
+  // TODO: error handling...
+  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data != 0)) {
+    QFile out(m_file);
+    out.open( IO_Raw|IO_WriteOnly );
+    out.writeBlock ( (char *)(window->dviFile->dvi_Data), window->dviFile->size_of_file );
+    out.close();
+    window->dviFile->isModified = false;
+  }
+
+  return;
+}
+
+
+bool KDVIMultiPage::isModified()
+{
+  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->dvi_Data == 0)) 
+    return false;
+  else
+    return window->dviFile->isModified;
 }
 
 

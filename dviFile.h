@@ -21,6 +21,7 @@ class dvifile : public bigEndianByteReader
   dvifile(QString fname, class fontPool *pool, bool sourceSpecialMark=true);
   ~dvifile();
 
+  bool           isModified;
   fontPool     * font_pool;
   QString        filename;
   QString        generatorString;

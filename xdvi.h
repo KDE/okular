@@ -138,9 +138,6 @@ extern	struct drawinf	currinf;
 #define ZZ      currinf.data.z
 #define ROUNDUP(x,y) (((x)+(y)-1)/(y))
 
-//extern	int	total_pages;
-extern	int	n_files_left;	/* for LRU closing of fonts */
-
 #define	PS	1
 
 extern QIntDict<struct font> tn_table;
@@ -158,10 +155,6 @@ extern  long    snum ARGS((FILE *, int));
 
 #define	pixels_per_inch	_pixels_per_inch
 
-
-
-extern	Display	*DISP;
-extern	Screen	*SCRN;
 extern	struct WindowRec mane, alt, currwin;
 
 #define	shrink_factor	currwin.shrinkfactor

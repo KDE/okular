@@ -44,7 +44,6 @@
 
 #define	MAXDIM		32767
 #define    DVI_BUFFER_LEN  512     
-extern struct frame        *current_frame;     
 struct WindowRec mane	= {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
@@ -648,7 +647,7 @@ bool dviWindow::setFile( const QString & fname )
     currinf.end       = dvi_buffer;
     currinf.pos       = dvi_buffer;
     currinf._virtual  = NULL;
-    draw_part(current_frame = &frame0, dviFile->dimconv, false);
+    draw_part(dviFile->dimconv, false);
 
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);

@@ -71,16 +71,12 @@
 extern char *xmalloc (unsigned, const char *);
 extern FILE *xfopen(const char *filename, char *type);
 
-struct frame	frame0;	/* dummy head of list */
-
-
 #ifndef	DVI_BUFFER_LEN
 #define	DVI_BUFFER_LEN	512
 #endif
 
 extern QPainter foreGroundPaint;
 unsigned char	dvi_buffer[DVI_BUFFER_LEN];
-struct frame	*current_frame;
 
 #define	DIR	currinf.dir
 
@@ -263,7 +259,7 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
     currinf.pos       = m->pos;
     currinf.end       = m->end;
     currinf._virtual  = currinf.fontp;
-    draw_part(current_frame, currinf.fontp->dimconv, true);
+    draw_part(currinf.fontp->dimconv, true);
     if (currinf.pos != currinf.end + 1)
       tell_oops("virtual character macro does not end correctly");
     currinf = oldinfo;
@@ -336,14 +332,13 @@ void dviWindow::special(long nbytes)
 
 #define	xspell_conv(n)	spell_conv0(n, current_dimconv)
 
-void dviWindow::draw_part(struct frame *minframe, double current_dimconv, bool is_vfmacro)
+void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 {
 #ifdef DEBUG_RENDER
   kdDebug() << "draw_part" << endl;
 #endif
 
   unsigned char  ch;
-  struct drawinf oldinfo;
 
   currinf.fontp        = NULL;
   currinf.set_char_p   = &dviWindow::set_no_char;
@@ -368,14 +363,12 @@ void dviWindow::draw_part(struct frame *minframe, double current_dimconv, bool i
 	case SETRULE:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  /* Be careful, dvicopy outputs rules with
-	     height = 0x80000000.  We don't want any
-	     SIGFPE here. */
+	  /* Be careful, dvicopy outputs rules with height =
+	     0x80000000. We don't want any SIGFPE here. */
 	  a = xsfour();
 	  b = xspell_conv(xsfour());
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
-	    set_rule(pixel_round(xspell_conv(a)),
-		     pixel_round(b));
+	    set_rule(pixel_round(xspell_conv(a)), pixel_round(b));
 	  DVI_H += DIR * b;
 	  break;
 
@@ -395,35 +388,35 @@ void dviWindow::draw_part(struct frame *minframe, double current_dimconv, bool i
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
 	  xskip((long) 11 * 4);
-	  DVI_H = basedpi << 16; // Reminder: DVI-coords. start at (1",1") from top of page
+	  DVI_H = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
 	  DVI_V = basedpi << 16;
 	  PXL_V = pixel_conv(DVI_V);
 	  WW = XX = YY = ZZ = 0;
 	  break;
 
 	case EOP:
-	  if (is_vfmacro == false)
+	  // Check if we are just at the end of a virtual font macro.
+	  if (is_vfmacro == false) {
+	    // This is really the end of a page, and not just the end
+	    // of a macro. Mark the end of the current word.
 	    word_boundary_encountered = true;
-	  if (current_frame != minframe)
-	    tell_oops("stack not empty at EOP");
+	    // Sanity check for the dvi-file: The DVI-standard asserts
+	    // that at the end of a page, the stack should always be
+	    // empty.
+	    if (!stack.isEmpty()) 
+	      tell_oops("stack not empty at EOP");
+	  }
 	  return;
 
 	case PUSH:
-	  if (current_frame->next == NULL) {
-	    struct frame *newp = (struct frame *)xmalloc(sizeof(struct frame), "stack frame");
-	    current_frame->next = newp;
-	    newp->prev = current_frame;
-	    newp->next = NULL;
-	  }
-	  current_frame = current_frame->next;
-	  current_frame->data = currinf.data;
+	  stack.push(currinf.data);
 	  break;
 
 	case POP:
-	  if (current_frame == minframe)
+	  if (stack.isEmpty())
 	    tell_oops("more POPs than PUSHes");
-	  currinf.data = current_frame->data;
-	  current_frame = current_frame->prev;
+	  else
+	    currinf.data = stack.pop();
 	  break;
 
 	case RIGHT1:
@@ -565,7 +558,7 @@ void dviWindow::draw_page(void)
   currinf._virtual       = NULL;
   HTML_href              = NULL;
   num_of_used_hyperlinks = 0;
-  draw_part(current_frame = &frame0, dviFile->dimconv, false);
+  draw_part(dviFile->dimconv, false);
   if (HTML_href != NULL) {
     delete HTML_href;
     HTML_href = NULL;

@@ -109,7 +109,7 @@ void font::read_VF_index(void)
     // (pixels_per_inch * 2**16) / (72.27 * 2**20).
     struct font *newfontp = font_pool->appendx(fontname, checksum, scale, design, 
 					       (72.27 * (1<<4)) * dimconv * scale / design, dimconv);
-	
+
     // Insert font in dictionary and make sure the dictionary is big
     // enough.
     if (vf_table.size()-2 <= vf_table.count())

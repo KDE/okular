@@ -204,11 +204,8 @@ void dviWindow::epsf_special(QString cp)
 	bbox_height = rhi;
       }
 
-      kdDebug() << "dimconv: " << dviFile->dimconv << endl;
-      // @@@@
       bbox_width  *= 0.1 * dviFile->dimconv / shrink_factor;
       bbox_height *= 0.1 * dviFile->dimconv / shrink_factor;
-      kdDebug() << "bbox_width: " << (int)bbox_width << endl;
 
       QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y - (int)bbox_height, (int)bbox_width, (int)bbox_height);
       foreGroundPaint.save();

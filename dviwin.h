@@ -27,6 +27,7 @@
 #include "dviFile.h"
 #include "fontpool.h"
 #include "infodialog.h"
+#include "pageSize.h"
 #include "psgs.h"
 
 
@@ -204,7 +205,6 @@ private:
   KProgressDialog *embedPS_progress;
   Q_UINT16         embedPS_numOfProgressedFiles;
 
-
   /** Shrink factor. Units are not quite clear */
   double	shrinkfactor;
   
@@ -219,11 +219,11 @@ private:
   void TPIC_addPath_special(QString cp);
   void TPIC_flushPath_special(void);
   
-  /* This timer is used to delay clearing of the statusbar. Clearing
-     the statusbar is delayed to avoid awful flickering when the mouse
-     moves over a block of text that contains source hyperlinks. The
-     signal timeout() is connected to the method clearStatusBar() of
-     *this. */
+  /** This timer is used to delay clearing of the statusbar. Clearing
+      the statusbar is delayed to avoid awful flickering when the
+      mouse moves over a block of text that contains source
+      hyperlinks. The signal timeout() is connected to the method
+      clearStatusBar() of *this. */
   QTimer        clearStatusBarTimer;
   
   // List of source-hyperlinks on all pages. This vector is generated
@@ -287,7 +287,7 @@ private:
   
   struct drawinf	currinf;
   DocumentPage* currentlyDrawnPage;
-
+  QPixmap currentlyDrawnPixmap;
 };
 
 

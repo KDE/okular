@@ -77,9 +77,6 @@ dviRenderer::dviRenderer(QWidget *par)
   currentlyDrawnPage = 0;
   editorCommand         = "";
 
-  paper_width_in_cm           = 21.0; // set A4 paper as default
-  paper_height_in_cm          = 29.7;
-
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
   _postscript            = 0;
@@ -136,8 +133,7 @@ void dviRenderer::setPaper(double width_in_cm, double height_in_cm)
   kdDebug(4300) << "dviRenderer::setPaper( width_in_cm=" << width_in_cm << ", height_in_cm=" << height_in_cm << " )" << endl;
 #endif
 
-  paper_width_in_cm      = width_in_cm;
-  paper_height_in_cm     = height_in_cm;
+  userPreferredSize.setPageSize(width_in_cm*10.0, height_in_cm*10.0);
   changePageSize();
 }
 
@@ -395,11 +391,11 @@ void dviRenderer::changePageSize()
 
   if ( currentlyDrawnPixmap.paintingActive() )
     return;
-
-  unsigned int page_width_in_pixel = (unsigned int)(resolutionInDPI*paper_width_in_cm/2.54 + 0.5);
-  unsigned int page_height_in_pixel = (unsigned int)(resolutionInDPI*paper_height_in_cm/2.54 + 0.5);
-
-  currentlyDrawnPixmap.resize( page_width_in_pixel, page_height_in_pixel );
+  
+  unsigned int page_width_in_pixel = (unsigned int)(resolutionInDPI*paperWidthInCm()/2.54 + 0.5);
+  unsigned int page_height_in_pixel = (unsigned int)(resolutionInDPI*paperHeightInCm()/2.54 + 0.5);
+  
+  currentlyDrawnPixmap.resize( sizeOfPage(0) );
   currentlyDrawnPixmap.fill( white );
 
   PS_interface->setSize( resolutionInDPI, page_width_in_pixel, page_height_in_pixel );

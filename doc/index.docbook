@@ -270,12 +270,12 @@
       <itemizedlist>
 	<listitem>
 	  <para>A TeX binary which generates and includes the
-	  necessary information automatically, is certainly the
+	  necessary information automatically is certainly the
 	  preferred method of including inverse search information. By
 	  the time of writing, a binary was not yet available for
 	  &UNIX;. However, it is said that the next version of the
 	  <ulink url="http://www.tetex.org">TeTeX
-	  TeX-distribution</ulink> will support inverse search
+	  TeX distribution</ulink> will support inverse search
 	  natively.
 	  </para>
 	</listitem>
@@ -284,15 +284,15 @@
 	  search information natively, copy the files
 	  <filename>srcltx.sty</filename> and
 	  <filename>srctex.sty</filename> to the directory where your
-	  TeX-file resides (you can do that by <keycombo
-	  action="simul">&Shift;<mousebutton>Left</mousebutton></keycombo>
-	  the hyperlinks). If you use LaTeX, add the line
+	  TeX-file resides (you can do that by pressing the &Shift; key
+	  and &LMB; while the mouse pointer is on a hyperlink.)
+	  If you use LaTeX, add the line
 <programlisting>
 
     \usepackage[active]{srcltx}
 
 </programlisting>
-	   to the preamble of your TeX file. If you use plain TeX, the line 
+	   to the preamble of your LaTeX file. If you use plain TeX, the line 
 <programlisting>
 
     \include{srctex}
@@ -545,7 +545,7 @@
     (gnuserv-start)
 
 </programlisting>
-	   to your or <filename>.xemacs</filename> file. If you use a
+	   to your <filename>.xemacs</filename> file. If you use a
 	   more recent version of <application>XEmacs</application>,
 	   <filename class="directory">.xemacs</filename> will be a
 	   directory. In that case, you should append the line to the

@@ -768,7 +768,9 @@ void dviWindow::all_fonts_loaded(fontPool *)
       if (!ref.at(i).isNumber())
 	break;
     Q_UINT32 refLineNumber = ref.left(i).toUInt();
-    QString  refFileName   = QFileInfo(ref.mid(i).stripWhiteSpace()).absFilePath();
+
+    QFileInfo fi1(dviFile->filename);
+    QString  refFileName   = QFileInfo(fi1.dir(), ref.mid(i).stripWhiteSpace()).absFilePath();
 
     if (sourceHyperLinkAnchors.isEmpty()) {
       KMessageBox::sorry(this, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
@@ -776,21 +778,21 @@ void dviWindow::all_fonts_loaded(fontPool *)
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
 				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(refFileName),
-			 i18n( "Could Not Find Reference" ));
+			 i18n("Could Not Find Reference"));
       return;
     }
-
+    
     Q_INT32 page = 0;
     Q_INT32 y    = -1000;
     QValueVector<DVI_SourceFileAnchor>::iterator it;
-    for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
+    for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it ) 
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
 	if (refLineNumber >= it->line) {
 	  page = it->page;
 	  y    = (Q_INT32)(it->vertical_coordinate/shrinkfactor+0.5);
 	}
       }
-
+    
     reference = QString::null;
     if (y >= 0)
       emit(request_goto_page(page, y));
@@ -1113,8 +1115,10 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  QFileInfo fi3(fi1.dir(),cp.mid(i));
 	  TeXfile = fi3.absFilePath();
 	  if ( !fi3.exists() ) {
-	    KMessageBox::sorry(this, i18n("<qt>The DVI-file refers to the TeX-file "
-					  "<strong>%1</strong> which could not be found.</qt>").arg(KShellProcess::quote(TeXfile)),
+	    KMessageBox::sorry(this, QString("<qt>") + 
+			       i18n("The DVI-file refers to the TeX-file "
+				    "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
+			       QString("</qt>"),
 			       i18n( "Could Not Find File" ));
 	    return;
 	  }
@@ -1122,10 +1126,12 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 
 	QString command = editorCommand;
 	if (command.isEmpty() == true) {
-	  int r = KMessageBox::warningContinueCancel(this, i18n("<qt>You have not yet specified an editor for inverse search. "
-								"Please choose your favorite editor in the <strong>DVI "
-								"options dialog</strong> which you will find in the "
-								"<strong>Settings</strong> menu.</qt>"),
+	  int r = KMessageBox::warningContinueCancel(this, QString("<qt>") +
+						     i18n("You have not yet specified an editor for inverse search. "
+							  "Please choose your favorite editor in the "
+							  "<strong>DVI options dialog</strong> "
+							  "which you will find in the <strong>Settings</strong>-menu.") + 
+							  QString("</qt>"),
 						     i18n("Need to Specify Editor"),
 		                                     i18n("Use KDE's Editor Kate for Now"));
 	  if (r == KMessageBox::Continue)

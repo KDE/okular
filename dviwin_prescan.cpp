@@ -432,7 +432,8 @@ void dviWindow::prescan_ParseSourceSpecial(QString cp)
     if (!cp.at(j).isNumber())
       break;
   Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
-  QString  sourceFileName   = QFileInfo(cp.mid(j).stripWhiteSpace()).absFilePath();
+  QFileInfo fi1(dviFile->filename);
+  QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).stripWhiteSpace()).absFilePath();
   DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page, currinf.data.dvi_v);
   sourceHyperLinkAnchors.push_back(sfa);
 }

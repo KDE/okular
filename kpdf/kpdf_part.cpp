@@ -17,6 +17,7 @@
 #include <kurldrag.h>
 #include <kinputdialog.h>
 
+#include "kpdf_error.h"
 #include "part.h"
 
 

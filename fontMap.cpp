@@ -44,15 +44,15 @@ fontMap::fontMap()
     QTextStream stream( &file );
     QString line;
     while ( !stream.atEnd() ) {
-      line = stream.readLine().stripWhiteSpace();
+      line = stream.readLine().simplifyWhiteSpace();
       if (line.at(0) == '%')
 	continue;
       
       QString TeXName  = KStringHandler::word(line, (unsigned int)0);
-      QString FullName  = KStringHandler::word(line, (unsigned int)1);
+      QString FullName = KStringHandler::word(line, (unsigned int)1);
       QString fontFileName = line.section('<', -1);
       QString encodingName = line.section('<', -2, -2).stripWhiteSpace();
-      
+
       fontMapEntry &entry = fontMapEntries[TeXName];
 
       entry.fontFileName = fontFileName;

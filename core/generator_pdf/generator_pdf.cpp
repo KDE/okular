@@ -234,75 +234,77 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
 
 void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
 {
-    KPDFPageTransition *transition = new KPDFPageTransition();
-
     Page *pdfPage = pdfdoc->getCatalog()->getPage( pageNumber + 1 );
-    if ( pdfPage && pdfPage->getTransition() ) {
-        PageTransition *pdfTransition = pdfPage->getTransition();
+    if ( !pdfPage )
+        return;
 
-        switch ( pdfTransition->getType() ) {
-            case PageTransition::Replace:
-                transition->setType( KPDFPageTransition::Replace );
-                break;
-            case PageTransition::Split:
-                transition->setType( KPDFPageTransition::Split );
-                break;
-            case PageTransition::Blinds:
-                transition->setType( KPDFPageTransition::Blinds );
-                break;
-            case PageTransition::Box:
-                transition->setType( KPDFPageTransition::Box );
-                break;
-            case PageTransition::Wipe:
-                transition->setType( KPDFPageTransition::Wipe );
-                break;
-            case PageTransition::Dissolve:
-                transition->setType( KPDFPageTransition::Dissolve );
-                break;
-            case PageTransition::Glitter:
-                transition->setType( KPDFPageTransition::Glitter );
-                break;
-            case PageTransition::Fly:
-                transition->setType( KPDFPageTransition::Fly );
-                break;
-            case PageTransition::Push:
-                transition->setType( KPDFPageTransition::Push );
-                break;
-            case PageTransition::Cover:
-                transition->setType( KPDFPageTransition::Cover );
-                break;
-            case PageTransition::Uncover:
-                transition->setType( KPDFPageTransition::Uncover );
-                break;
-            case PageTransition::Fade:
-                transition->setType( KPDFPageTransition::Fade );
-                break;
-        }
+    PageTransition *pdfTransition = pdfPage->getTransition();
+    if ( !pdfTransition || pdfTransition->getType() == PageTransition::Replace )
+        return;
 
-        transition->setDuration( pdfTransition->getDuration() );
-
-        switch ( pdfTransition->getAlignment() ) {
-            case PageTransition::Horizontal:
-                transition->setAlignment( KPDFPageTransition::Horizontal );
-                break;
-            case PageTransition::Vertical:
-                transition->setAlignment( KPDFPageTransition::Vertical );
-                break;
-        }
-
-        switch ( pdfTransition->getDirection() ) {
-            case PageTransition::Inward:
-                transition->setDirection( KPDFPageTransition::Inward );
-                break;
-            case PageTransition::Outward:
-                transition->setDirection( KPDFPageTransition::Outward );
-                break;
-        }
-
-        transition->setAngle( pdfTransition->getAngle() );
-        transition->setScale( pdfTransition->getScale() );
-        transition->setIsRectangular( pdfTransition->isRectangular() == gTrue );
+    KPDFPageTransition *transition = new KPDFPageTransition();
+    switch ( pdfTransition->getType() ) {
+        case PageTransition::Replace:
+            // won't get here, added to avoid warning
+            break;
+        case PageTransition::Split:
+            transition->setType( KPDFPageTransition::Split );
+            break;
+        case PageTransition::Blinds:
+            transition->setType( KPDFPageTransition::Blinds );
+            break;
+        case PageTransition::Box:
+            transition->setType( KPDFPageTransition::Box );
+            break;
+        case PageTransition::Wipe:
+            transition->setType( KPDFPageTransition::Wipe );
+            break;
+        case PageTransition::Dissolve:
+            transition->setType( KPDFPageTransition::Dissolve );
+            break;
+        case PageTransition::Glitter:
+            transition->setType( KPDFPageTransition::Glitter );
+            break;
+        case PageTransition::Fly:
+            transition->setType( KPDFPageTransition::Fly );
+            break;
+        case PageTransition::Push:
+            transition->setType( KPDFPageTransition::Push );
+            break;
+        case PageTransition::Cover:
+            transition->setType( KPDFPageTransition::Cover );
+            break;
+        case PageTransition::Uncover:
+            transition->setType( KPDFPageTransition::Uncover );
+            break;
+        case PageTransition::Fade:
+            transition->setType( KPDFPageTransition::Fade );
+            break;
     }
+
+    transition->setDuration( pdfTransition->getDuration() );
+
+    switch ( pdfTransition->getAlignment() ) {
+        case PageTransition::Horizontal:
+            transition->setAlignment( KPDFPageTransition::Horizontal );
+            break;
+        case PageTransition::Vertical:
+            transition->setAlignment( KPDFPageTransition::Vertical );
+            break;
+    }
+
+    switch ( pdfTransition->getDirection() ) {
+        case PageTransition::Inward:
+            transition->setDirection( KPDFPageTransition::Inward );
+            break;
+        case PageTransition::Outward:
+            transition->setDirection( KPDFPageTransition::Outward );
+            break;
+    }
+
+    transition->setAngle( pdfTransition->getAngle() );
+    transition->setScale( pdfTransition->getScale() );
+    transition->setIsRectangular( pdfTransition->isRectangular() == gTrue );
 
     page->setTransition( transition );
 }

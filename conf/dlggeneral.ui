@@ -168,14 +168,6 @@
                         </property>
                         <widget class="QCheckBox">
                             <property name="name">
-                                <cstring>kcfg_SlidesGlitterTrans</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Use 'glittering' &amp;transition</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
                                 <cstring>kcfg_SlidesShowProgress</cstring>
                             </property>
                             <property name="text">

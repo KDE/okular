@@ -52,7 +52,6 @@ public slots:
 
 protected:
 	void		resizeEvent( QResizeEvent* e );
-	bool		eventFilter ( QObject *, QEvent *);
 	void		closeEvent ( QCloseEvent * e );
 	void		dropEvent( QDropEvent * dropZone );
 

@@ -7,10 +7,9 @@
 **
 *****************************************************************************/
 
-#include <stdio.h>
 
-#include <qpainter.h>
 #include <qdrawutil.h>
+#include <qpainter.h>
 
 #include "scrbox.h"
 
@@ -18,6 +17,7 @@ ScrollBox::ScrollBox( QWidget * parent , const char * name )
     : QFrame( parent, name )
 {
 	setFrameStyle( Panel | Sunken );
+	setBackgroundMode();
 }
 
 void ScrollBox::mousePressEvent ( QMouseEvent *e )
@@ -66,18 +66,21 @@ void ScrollBox::drawContents ( QPainter *p )
 	int h = c.height() * viewsize.height() / len;
 	if ( h > c.height() ) h = c.height();
 
-        qDrawShadePanel( p, x, y, w, h, colorGroup(), FALSE, 1, 0);
+	QBrush b( colorGroup().background() );
+        qDrawShadePanel( p, x, y, w, h, colorGroup(), FALSE, 1, &b );
 }
 
 void ScrollBox::setPageSize( QSize s )
 {
 	pagesize = s;
+	setBackgroundMode();
 	repaint();
 }
 
 void ScrollBox::setViewSize( QSize s )
 {
 	viewsize = s;
+	setBackgroundMode();
 	repaint();
 }
 
@@ -86,3 +89,22 @@ void ScrollBox::setViewPos( QPoint pos )
         viewpos = pos;
         repaint();
 }
+
+
+
+void ScrollBox::setBackgroundMode()
+{
+  if( pagesize.isNull() || 
+      (viewsize.rwidth() >= pagesize.rwidth() && 
+       viewsize.rheight() >= pagesize.rheight()) )
+  {
+    QFrame::setBackgroundMode( PaletteBackground );
+  }
+  else
+  {
+    QFrame::setBackgroundMode( PaletteMid ); // As in QScrollBar
+  }
+}
+
+
+

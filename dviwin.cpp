@@ -294,14 +294,17 @@ float dviWindow::gamma()
 
 
 //------ reimplement virtual event handlers -------------
-
 void dviWindow::viewportMousePressEvent ( QMouseEvent *e)
 {
         if (!(e->button()&LeftButton))
-		return;
+	{
+	  QScrollView::viewportMousePressEvent(e);
+	  return;
+	}
 	mouse = e->pos();
         emit setPoint( viewportToContents(mouse) );
 }
+
 
 void dviWindow::viewportMouseMoveEvent ( QMouseEvent *e)
 {

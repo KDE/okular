@@ -23,6 +23,7 @@
 #include <kmenubar.h>
 #include <kmessagebox.h>
 #include <kapp.h>
+#include <kcmenumngr.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
@@ -45,6 +46,11 @@
 enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
 enum {ID_OPT_PK = 3, ID_OPT_PS, ID_OPT_MB, ID_OPT_BB, ID_OPT_TB, ID_OPT_SB, ID_OPT_SC };
 
+static QPopupMenu *m_f, *m_v, *m_p, *m_o, *m_h;
+static int m_fn, m_fo, m_fr, m_fp, m_fx, m_vi, m_vo, m_vf, m_vw, m_vr, m_pp, m_pn, m_pf, m_pl, m_pg,
+	m_op, m_ok, m_of, m_o0, m_om, m_ob, m_ot, m_os, m_ol,  m_hc, m_rmbm; // , m_ha, m_hq;
+
+
 kdvi::kdvi( const QString &fname, QWidget *, const char *name )
 	: KTMainWindow( name )
 {
@@ -58,7 +64,7 @@ kdvi::kdvi( const QString &fname, QWidget *, const char *name )
 
 	readConfig();
 	setMinimumSize( 400, 60 );
-	setCaption( kapp->caption() );
+	//setCaption( kapp->caption() );
 	tipgroup = new QToolTipGroup( this, "TipGroup" );
 	connect( tipgroup, SIGNAL(showTip(const QString &)), 
 		 SLOT(showTip(const QString &)) );
@@ -68,8 +74,8 @@ kdvi::kdvi( const QString &fname, QWidget *, const char *name )
   
   	kpan = new QSplitter( QSplitter::Horizontal, this, "splitter");
 
-	setView( kpan, TRUE );
-	setFrameBorderWidth( 4 );
+	setView( kpan/*, TRUE*/ );
+	//setFrameBorderWidth( 4 );
 	
   // Create a dvi window
 
@@ -103,15 +109,19 @@ kdvi::kdvi( const QString &fname, QWidget *, const char *name )
   // Create RMB menu
 
 	rmbmenu = new QPopupMenu;
-	rmbmenu->setMouseTracking( TRUE );
-	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Toggle Menubar")),
-		      this, SLOT(toggleShowMenubar()) );
+	m_rmbm = rmbmenu->insertItem(i18n("Show Menubar"),
+	  this, SLOT(toggleShowMenubar()));
+	rmbmenu->setItemChecked( m_rmbm, !hideMenubar );  
+
 	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Mark page")),
 			marklist, SLOT(markSelected()) );
 	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Redraw")),
 			dviwin, SLOT(drawPage()) );
-	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Preferences ...")),
+	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Preferences...")),
 			this, SLOT(optionsPreferences()) );
+
+	KContextMenuManager::insert( dviwin->viewport(), rmbmenu );
+
 
   // Bind keys
 
@@ -125,8 +135,6 @@ kdvi::kdvi( const QString &fname, QWidget *, const char *name )
 	applyPreferences();
 
 	selectSmall();
-	dviwin->installEventFilter( this );
-
 	message( "" );
 	openFile(fname);
 }
@@ -143,10 +151,6 @@ void kdvi::closeEvent( QCloseEvent *e )
   e->accept();
 }
 
-static QPopupMenu *m_f, *m_v, *m_p, *m_o, *m_h;
-static int m_fn, m_fo, m_fr, m_fp, m_fx, m_vi, m_vo, m_vf, m_vw, m_vr, m_pp, m_pn, m_pf, m_pl, m_pg,
-	m_op, m_ok, m_of, m_o0, m_om, m_ob, m_ot, m_os, m_ol,  m_hc; // , m_ha, m_hq;
-	
 void kdvi::makeMenuBar()
 {
 	QPopupMenu *p = new QPopupMenu;
@@ -194,36 +198,6 @@ void kdvi::makeMenuBar()
 
 	m_p = p;
 	menuBar()->insertItem( i18n("&Page"), p, -2 );
-
-
-
-	/*
-	p = new QPopupMenu;
-	CHECK_PTR( p );
-	p->setCheckable( TRUE );
-	m_op = p->insertItem( i18n("&Preferences ..."), this, SLOT(optionsPreferences()));
-	m_ok = p->insertItem( i18n("&Keys ..."), this, SLOT(configKeys()));
-	p->insertSeparator();
-	m_of = p->insertItem( i18n("Make PK-&fonts"), this, SLOT(toggleMakePK()) );
-	p->setItemChecked( m_of, makepk );
-	m_o0 = p->insertItem( i18n("Show PS"), this, SLOT(toggleShowPS()));
-	p->setItemChecked( m_o0, showPS );
-	m_om = p->insertItem( i18n("Show &Menubar"), this, SLOT(toggleShowMenubar()) );
-	p->setItemChecked( m_om, !hideMenubar );
-	m_ob = p->insertItem( i18n("Show &Buttons"), this, SLOT(toggleShowButtons()) );
-	p->setItemChecked( m_ob, !hideButtons );
-	m_ot = p->insertItem( i18n("Show Page Lis&t"), this, SLOT(toggleVertToolbar()) );
-	p->setItemChecked( m_ol, vertToolbar );
-	m_os = p->insertItem( i18n("Show &Statusbar"), this, SLOT(toggleShowStatusbar()) );
-	p->setItemChecked( m_os, !hideStatusbar );
-	m_ol = p->insertItem( i18n("Show Scro&llbars"), this, SLOT(toggleShowScrollbars()) );
-	p->setItemChecked( m_ol, !hideScrollbars );
-
-	m_o = p;
-	menuBar()->insertItem( i18n("&Options"), p, -2 );
-	optionsmenu = p;
-	*/
-
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
@@ -462,16 +436,6 @@ void kdvi::resizeEvent( QResizeEvent* e )
 	config->writeEntry( "Height", height() );
 }
 
-bool kdvi::eventFilter( QObject *obj , QEvent *e )
-{
-	if ( obj != dviwin || e->type() != QEvent::MouseButtonPress )
-		return FALSE;
-	QMouseEvent *me = (QMouseEvent*)e;
-	if ( me->button() != RightButton )
-		return FALSE;
-	rmbmenu->popup( dviwin->mapToGlobal(me->pos()), 0 );
-	return TRUE;
-}
 
 void kdvi::fileNew( )
 {
@@ -776,6 +740,7 @@ void kdvi::applyShowMenubar()
 	  menuBar()->show();
 
 	optionsmenu->setItemChecked( m_om, !hideMenubar );
+	rmbmenu->setItemChecked( m_rmbm, !hideMenubar );  
 	config->writeEntry( "HideMenubar", hideMenubar );
 
 	// calling this will update the child geometries

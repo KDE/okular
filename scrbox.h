@@ -35,6 +35,9 @@ protected:
 	void	drawContents ( QPainter *);
 
 private:
+	void    setBackgroundMode();
+
+private:
 	QPoint	viewpos, mouse;
 	QSize	pagesize;
 	QSize	viewsize;

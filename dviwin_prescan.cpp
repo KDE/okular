@@ -15,6 +15,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmimetype.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <kprogress.h>
@@ -407,7 +408,12 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
+
+    KMimeType::Ptr mimetype = KMimeType::findByPath( EPSfilename );
+    kdError() << EPSfilename << ": " << mimetype->name() << endl;
+
   if (QFile::exists(EPSfilename)) {
+
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
     double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );

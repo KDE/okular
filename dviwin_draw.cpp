@@ -602,16 +602,9 @@ void dviRenderer::draw_page(void)
   foreGroundPaint.fillRect( foreGroundPaint.viewport(), PS_interface->getBackgroundColor(current_page) );
 
   // Render the PostScript background, if there is one.
-  if (_postscript) {
-    kdError() << "Trying to render PS: TODO" << endl;
-    QPixmap *pxm = PS_interface->graphics(current_page, resolutionInDPI, foreGroundPaint.viewport().width(), foreGroundPaint.viewport().height() );
-    if (pxm != NULL) {
-      foreGroundPaint.drawPixmap(0, 0, *pxm);
-      delete pxm;
-    }
-  } else
-    kdError() << "Trying to not render PS" << endl;
-
+  if (_postscript)
+    PS_interface->graphics(current_page, resolutionInDPI, foreGroundPaint);
+  
   // Now really write the text
   if (dviFile->page_offset.isEmpty() == true)
     return;
@@ -620,11 +613,11 @@ void dviRenderer::draw_page(void)
     end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
   } else
     command_pointer = end_pointer = 0;
-
+  
   memset((char *) &currinf.data, 0, sizeof(currinf.data));
   currinf.fonttable      = &(dviFile->tn_table);
   currinf._virtual       = 0;
-
+  
   double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 
     MFResolutions[font_pool.getMetafontMode()]/2.54;
   
@@ -637,7 +630,7 @@ void dviRenderer::draw_page(void)
     delete source_href;
     source_href = 0;
   }
-
+  
   // Mark hyperlinks in blue. We draw a blue line under the
   // character whose width is equivalent to 0.5 mm, but at least
   // one pixel.

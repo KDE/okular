@@ -1,13 +1,23 @@
+//
+// ghostscript_interface
+//
+// Part of KDVI - A framework for multipage text/gfx viewers
+//
+// (C) 2004 Stefan Kebekus
+// Distributed under the GPL
+
 #ifndef _PSGS_H_
 #define _PSGS_H_
+
 
 #include <ktempfile.h>
 #include <qstring.h>
 #include <qintdict.h>
-#include <qintcache.h>
-#include <qpixmap.h>
-#include <qobject.h>
 
+#include "../kviewshell/pageNumber.h"
+
+
+class QPainter;
 
 class pageInfo
 {
@@ -21,13 +31,6 @@ public:
 };
 
 
-// Maximal number of PostScript-Pages which are held in memory (or on
-// the disk) for speedup. This should later be made dynamic, maybe
-// with the possibility of switching on/off.
-#define PAGES_IN_MEMORY_CACHE  13
-#define PAGES_IN_DISK_CACHE   101
-
-
 class ghostscript_interface  : public QObject 
 {
  Q_OBJECT
@@ -39,22 +42,21 @@ public:
   void clear();
 
   // sets the PostScript which is used on a certain page
-  void setPostScript(int page, QString PostScript);
+  void setPostScript(pageNumber page, QString PostScript);
 
   // sets path from additional postscript files may be read
   void setIncludePath(const QString &_includePath);
 
   // sets the background color for a certain page
-  void setColor(int page, QColor background_color);
+  void setColor(pageNumber page, QColor background_color);
 
-  // Returns the graphics of the page, if possible. The functions
-  // returns a pointer to a QPixmap, or null. The referred QPixmap
-  // should be deleted after use.
-  QPixmap  *graphics(int page, double dpi, int pxlw=600, int pxlh=600 );
+  // Draws the graphics of the page into the painter, if possible. If
+  // the page does not contain any graphics, nothing happens
+  void     graphics(pageNumber page, double dpi, QPainter &paint );
 
   // Returns the background color for a certain page. If no color was
   // set, Qt::white is returned.
-  QColor   getBackgroundColor(int page);
+  QColor   getBackgroundColor(pageNumber page);
 
   QString  *PostScriptHeaderString;
 
@@ -68,7 +70,7 @@ public:
   static  QString locateEPSfile(const QString &filename, class dvifile *dvi);
 
 private:
-  void                  gs_generate_graphics_file(int page, const QString &filename);
+  void                  gs_generate_graphics_file(pageNumber page, const QString &filename);
   QIntDict<pageInfo>    pageList;
 
   double                resolution;   // in dots per inch

@@ -1,13 +1,19 @@
-#include <stdio.h>
+//
+// ghostscript_interface
+//
+// Part of KDVI - A framework for multipage text/gfx viewers
+//
+// (C) 2004 Stefan Kebekus
+// Distributed under the GPL
+
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprocess.h>
 #include <kprocio.h>
 #include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <qpainter.h>
+#include <stdio.h>
 
 #include "dviFile.h"
 #include "psgs.h"
@@ -49,7 +55,7 @@ ghostscript_interface::~ghostscript_interface() {
 }
 
 
-void ghostscript_interface::setPostScript(int page, QString PostScript) {
+void ghostscript_interface::setPostScript(pageNumber page, QString PostScript) {
   if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(PostScript);
     // Check if dict is big enough
@@ -69,7 +75,7 @@ void ghostscript_interface::setIncludePath(const QString &_includePath) {
 }
 
 
-void ghostscript_interface::setColor(int page, QColor background_color) {
+void ghostscript_interface::setColor(pageNumber page, QColor background_color) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::setColor( " << page << ", " << background_color << " )" << endl;
 #endif
@@ -89,7 +95,7 @@ void ghostscript_interface::setColor(int page, QColor background_color) {
 // Returns the background color for a certain page. This color is
 // always guaranteed to be valid
 
-QColor ghostscript_interface::getBackgroundColor(int page) {
+QColor ghostscript_interface::getBackgroundColor(pageNumber page) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::getBackgroundColor( " << page << " )" << endl;
 #endif
@@ -109,11 +115,13 @@ void ghostscript_interface::clear(void) {
 }
 
 
-void ghostscript_interface::gs_generate_graphics_file(int page, const QString &filename) {
-  kdError() << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
+void ghostscript_interface::gs_generate_graphics_file(pageNumber page, const QString &filename) {
+#ifdef DEBUG_PSGS
+  kdDebug(4300) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
+#endif
 
   if (knownDevices.isEmpty()) {
-    kdError() << "No known devices found" << endl;
+    kdError(4300) << "No known devices found" << endl;
     return;
   }
 
@@ -181,7 +189,9 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
   argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
   argus << "-f" << PSfile.name();
   
-  kdError() << argus.join(" ") << endl;
+#ifdef DEBUG_PSGS
+  kdDebug(4300) << argus.join(" ") << endl;
+#endif
 
   proc << argus;
   if (proc.start(KProcess::Block) == false) {
@@ -199,9 +209,6 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
     // ghostscript. If so, try again with another device.
     QString GSoutput;
     while(proc.readln(GSoutput) != -1) {
-      kdError() << GSoutput << endl;
-
-
       if (GSoutput.contains("Unknown device")) {
 	kdDebug(4300) << QString("The version of ghostview installed on this computer does not support "
 				   "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
@@ -237,35 +244,39 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
       }
     }
   }
-
   emit(setStatusBarText(QString::null));
 }
 
 
-QPixmap *ghostscript_interface::graphics(int page, double dpi, int pxlw, int pxlh) {
-  kdError() << "ghostscript_interface::graphics( " << page << ", " << dpi << ", " << pxlw << ", " << pxlh <<" ) called." << endl;
+void ghostscript_interface::graphics(pageNumber page, double dpi, QPainter &paint) {
+#ifdef DEBUG_PSGS
+  kdDebug(4300) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
+#endif
 
   resolution   = dpi;
-  pixel_page_w = pxlw;
-  pixel_page_h = pxlh;
+
+  pixel_page_w = paint.viewport().width();
+  pixel_page_h = paint.viewport().height();
+
   pageInfo *info = pageList.find(page);
 
   // No PostScript? Then return immediately.
   if ((info == 0) || (info->PostScriptString->isEmpty())) {
-    kdError() << "No PS found." << endl;
-    return 0;
+#ifdef DEBUG_PSGS
+    kdDebug(4300) << "No PostScript found. Not drawing anything." << endl;
+#endif
+    return;
   }
-
+  
   KTempFile *GfxFile = new KTempFile(QString::null,".png");
   GfxFile->setAutoDelete(1);
   GfxFile->close(); // we are want the filename, not the file
-
+  
   gs_generate_graphics_file(page, GfxFile->name());
-
-  QPixmap *MemoryCopy = new QPixmap(GfxFile->name());
-  kdError() << "MemoryCopy->isEmtpy() = " << MemoryCopy->isNull() << endl;
-  QPixmap *ReturnCopy = new QPixmap(*MemoryCopy);
-  return ReturnCopy;
+  
+  QPixmap MemoryCopy(GfxFile->name());
+  paint.drawPixmap(0, 0, MemoryCopy);
+  return;
 }
 
 

@@ -224,6 +224,7 @@ void parse_special_argument(QString strg, const char *argument_name, int *variab
   }
 }
 
+
 void dviRenderer::epsf_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
@@ -284,8 +285,7 @@ void dviRenderer::epsf_special(QString cp)
       bbox_height = rhi;
     }
 
-    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 
-      MFResolutions[font_pool.getMetafontMode()]/2.54;
+    double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * MFResolutions[font_pool.getMetafontMode()]/2.54;
     
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
@@ -529,6 +529,33 @@ void dviRenderer::applicationDoSpecial(char *cp)
     }
   }
   
+  // Detect text rotation specials that are included by the graphicx
+  // package. If one of these specials is found, the state of the
+  // painter is saved, and the coordinate system is rotated
+  // accordingly
+  if (special_command.startsWith("ps: gsave currentpoint currentpoint translate ") && 
+      special_command.endsWith(" neg rotate neg exch neg exch translate") ) {
+    bool ok;
+    double angle = special_command.section(' ', 5, 5).toDouble(&ok);
+    if (ok == true) {
+      int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536)));
+      int y = currinf.data.pxl_v;
+      
+      foreGroundPaint.save();
+      // Rotate about the current point
+      foreGroundPaint.translate(x,y);
+      foreGroundPaint.rotate(-angle);
+      foreGroundPaint.translate(-x,-y);
+    } else
+      printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Could not interpret angle in text rotation special." ).
+				arg(dviFile->filename).arg(current_page));
+  }
+
+  // The graphicx package marks the end of rotated text with this
+  // special. The state of the painter is restored.
+  if (special_command == "ps: currentpoint grestore moveto") {
+    foreGroundPaint.restore();
+  }
   
   // The following special commands are not used here; they are of
   // interest only during the prescan phase. We recognize them here

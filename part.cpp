@@ -78,7 +78,7 @@ unsigned int Part::m_count = 0;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0),
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_showFullScreenAction(0),
 	m_actionsSearched(false), m_searchStarted(false)
 {
 	// load catalog for translation
@@ -646,19 +646,23 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		KActionCollection *ac;
 		KActionPtrList::const_iterator it, end, begin;
 		KActionPtrList actions;
-		QPtrList<KXMLGUIClient> clients(factory()->clients());
-		QPtrListIterator<KXMLGUIClient> clientsIt( clients );
-		for( ; (!m_showMenuBarAction || !m_showFullScreenAction) && clientsIt.current(); ++clientsIt)
+		
+		if (factory())
 		{
-			client = clientsIt.current();
-			ac = client->actionCollection();
-			actions = ac->actions();
-			end = actions.end();
-			begin = actions.begin();
-			for ( it = begin; it != end; ++it )
+			QPtrList<KXMLGUIClient> clients(factory()->clients());
+			QPtrListIterator<KXMLGUIClient> clientsIt( clients );
+			for( ; (!m_showMenuBarAction || !m_showFullScreenAction) && clientsIt.current(); ++clientsIt)
 			{
-				if (QString((*it)->name()) == "options_show_menubar") m_showMenuBarAction = (KToggleAction*)(*it);
-				if (QString((*it)->name()) == "fullscreen") m_showFullScreenAction = (KToggleAction*)(*it);
+				client = clientsIt.current();
+				ac = client->actionCollection();
+				actions = ac->actions();
+				end = actions.end();
+				begin = actions.begin();
+				for ( it = begin; it != end; ++it )
+				{
+					if (QString((*it)->name()) == "options_show_menubar") m_showMenuBarAction = (KToggleAction*)(*it);
+					if (QString((*it)->name()) == "fullscreen") m_showFullScreenAction = (KToggleAction*)(*it);
+				}
 			}
 		}
 		m_actionsSearched = true;

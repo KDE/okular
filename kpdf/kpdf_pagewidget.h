@@ -5,6 +5,8 @@
 #include <qwidget.h>
 #include <qscrollview.h>
 
+#include <kurl.h>
+
 class LinkAction;
 class PDFDoc;
 

@@ -135,6 +135,8 @@ namespace KPDF
     float    m_zoomFactor;
     int m_nextThumbnail;
 
+    static unsigned int m_count;
+
   private slots:
     void slotFitToWidthToggled();
 		void redrawPage();

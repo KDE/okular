@@ -49,6 +49,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   new BrowserExtension(this);
 
   globalParams = new GlobalParams("");
+  globalParams->setupBaseFonts(NULL);
 
   // we need an instance
   setInstance(KPDFPartFactory::instance());

@@ -3,11 +3,9 @@ ToDo-List for kdvi
 
 URGENT
 
+o Default settings switch Hyperlinks OFF, this is not good.
+
 o implement SaveAs
-
-o kviewshell should change pageno when clicking on internal
-  hyperlinks, same on reloading
-
 
 HIGHLY DESIRABLE
 

@@ -370,9 +370,7 @@ void KDVIMultiPage::reload()
 
     window->setFile(m_file);
     window->gotoPage(currsav);
-    emit pageInfo(window->totalPages(), window->curr_page() ); // We don't use "currsav" here, because that page may no longer exist. In that case, gotoPage already selected another page.
-
-    emit numberOfPages(window->totalPages());
+    emit pageInfo(window->totalPages(), window->curr_page()-1 ); // We don't use "currsav" here, because that page may no longer exist. In that case, gotoPage already selected another page.
     scrollView()->resizeContents(window->width(), window->height());
     emit previewChanged(true);
   } else {

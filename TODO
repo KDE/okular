@@ -5,7 +5,12 @@ Legend:
     FIX - FIXed (bug or regression)
     MRG - MeRGed (code from a branch or a patch)
 
-In progress [working on]:
+Doing Now [working on]:
+-> annotations: DS refactor
+-> annotations: pdf parser adaptation
+-> annotations: xml storage adaptation
+
+In progress [temporary suspended]:
 -> check mouse wrapping not screH / 2
 -> check unscaledwidth/height.. necessary ?
 -> annotations: renderers in PagePainter (for the 6 markup annots)
@@ -72,6 +77,7 @@ More items (first items will enter 'In progress list' first):
 -> kspeech TTS interface. speech {document(missing) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
 -> core: pdf forms support (BR91809)
+-> open dialog: switch to directory where the already opened (local) file is
 -> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages

@@ -359,6 +359,7 @@ Part::openFile()
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
+  errors::clear();
   if (m_doc->getNumPages() > 0)
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?

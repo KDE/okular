@@ -85,6 +85,8 @@ namespace KPDF
     void zoomOut()  { m_zoomFactor -= 0.1; update(); };
     void back()     { /* stub */ };
     void forward()  { /* stub */ };
+      void slotNextPage();
+      void slotPreviousPage();
 
     void displayNextPage();
     void displayPreviousPage();
@@ -112,7 +114,7 @@ namespace KPDF
   class BrowserExtension : public KParts::BrowserExtension
   {
     Q_OBJECT
-      
+
   public:
     BrowserExtension(Part*);
 
@@ -120,7 +122,7 @@ namespace KPDF
     // Automatically detected by the host.
     void print();
   };
-  
+
 }
 
 #endif

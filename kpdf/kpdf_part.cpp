@@ -13,6 +13,7 @@
 #include <kprinter.h>
 #include <kstdaction.h>
 #include <kparts/genericfactory.h>
+#include <kdebug.h>
 
 #include "part.h"
 
@@ -76,9 +77,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                        actionCollection(), "back");
   KStdAction::forward (this, SLOT(forward()),
                        actionCollection(), "forward");
-  KStdAction::prior   (m_outputDev, SLOT(previousPage()),
+  KStdAction::prior   (this, SLOT(slotPreviousPage()),
                        actionCollection(), "previous_page");
-  KStdAction::next    (m_outputDev, SLOT(nextPage()),
+  KStdAction::next    (this, SLOT(slotNextPage()),
                        actionCollection(), "next_page" );
 
   // set our XML-UI resource file
@@ -87,6 +88,20 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
+}
+
+void Part::slotNextPage()
+{
+    m_currentPage = pdfpartview->pagesListBox->currentItem() + 1;
+    pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+    m_outputDev->nextPage();
+}
+
+void Part::slotPreviousPage()
+{
+    m_currentPage = pdfpartview->pagesListBox->currentItem() - 1;
+    pdfpartview->pagesListBox->setCurrentItem(m_currentPage );
+    m_outputDev->previousPage();
 }
 
   KAboutData*
@@ -147,49 +162,48 @@ Part::openFile()
   void
 Part::displayPage(int pageNumber, float /*zoomFactor*/)
 {
-  if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
-    return;
+    if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
+        return;
+    const double pageWidth  = m_doc->getPageWidth (pageNumber) * m_zoomFactor;
+    const double pageHeight = m_doc->getPageHeight(pageNumber) * m_zoomFactor;
 
-  const double pageWidth  = m_doc->getPageWidth (pageNumber) * m_zoomFactor;
-  const double pageHeight = m_doc->getPageHeight(pageNumber) * m_zoomFactor;
+    // Pixels per point when the zoomFactor is 1.
+    const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
 
-  // Pixels per point when the zoomFactor is 1.
-  const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
+    switch (m_zoomMode)
+    {
+    case FitWidth:
+    {
+        const double pageAR = pageWidth/pageHeight; // Aspect ratio
 
-  switch (m_zoomMode)
-	{
-		case FitWidth:
-			{
-				const double pageAR = pageWidth/pageHeight; // Aspect ratio
+        const int canvasWidth    = m_outputDev->contentsRect().width();
+        const int canvasHeight   = m_outputDev->contentsRect().height();
+        const int scrollBarWidth = m_outputDev->verticalScrollBar()->width();
 
-				const int canvasWidth    = m_outputDev->contentsRect().width();
-				const int canvasHeight   = m_outputDev->contentsRect().height();
-				const int scrollBarWidth = m_outputDev->verticalScrollBar()->width();
+        // Calculate the height so that the page fits the viewport width
+        // assuming that we need a vertical scrollbar.
+        float height = float(canvasWidth - scrollBarWidth) / pageAR;
 
-				// Calculate the height so that the page fits the viewport width
-				// assuming that we need a vertical scrollbar.
-				float height = float(canvasWidth - scrollBarWidth) / pageAR;
+        // If the vertical scrollbar wasn't needed after all, calculate the page
+        // size so that the page fits the viewport width without the scrollbar.
+        if (ceil(height) <= canvasHeight)
+        {
+            height = float(canvasWidth) / pageAR;
 
-				// If the vertical scrollbar wasn't needed after all, calculate the page
-				// size so that the page fits the viewport width without the scrollbar.
-				if (ceil(height) <= canvasHeight)
-				{
-					height = float(canvasWidth) / pageAR;
+            // Handle the rare case that enlarging the page resulted in the need of
+            // a vertical scrollbar. We can fit the page to the viewport height in
+            // this case.
+            if (ceil(height) > canvasHeight)
+                height = float(canvasHeight) * pageAR;
+        }
 
-					// Handle the rare case that enlarging the page resulted in the need of
-					// a vertical scrollbar. We can fit the page to the viewport height in
-					// this case.
-					if (ceil(height) > canvasHeight)
-						height = float(canvasHeight) * pageAR;
-				}
-
-				m_zoomFactor = (height / pageHeight) / basePpp;
-				break;
-			}
-		case FixedFactor:
-		default:
-			break;
-	}
+        m_zoomFactor = (height / pageHeight) / basePpp;
+        break;
+    }
+    case FixedFactor:
+    default:
+        break;
+    }
 
 //const float ppp = basePpp * m_zoomFactor; // pixels per point
 
@@ -418,7 +432,9 @@ Part::redrawPage()
 void
 Part::pageClicked ( QListBoxItem * qbi )
 {
-	m_outputDev->setPage(pdfpartview->pagesListBox->index(qbi) + 1);
+    kdDebug()<<"Part::pageClicked ( QListBoxItem * qbi ) \n";
+    m_currentPage = pdfpartview->pagesListBox->index(qbi)+1;
+    m_outputDev->setPage(m_currentPage);
 }
 
 BrowserExtension::BrowserExtension(Part* parent)

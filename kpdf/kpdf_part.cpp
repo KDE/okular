@@ -118,7 +118,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   QStringList translated;
   int idx = 0;
   int cur = 0;
-  for ( int i = 0; i < 14;i++)
+  for ( int i = 0; i < 10;i++)
   {
       translated << QString( "%1%" ).arg( zoomValue[i] * 100.0 );
       if ( zoomValue[i] == 1.0 )
@@ -155,8 +155,7 @@ void Part::slotZoom( const QString&nz )
     z.remove(  z.find(  '%' ), 1 );
     zoom = KGlobal::locale()->readNumber(  z ) / 100;
     kdDebug() << "ZOOM = "  << nz << ", setting zoom = " << zoom << endl;
-    m_zoomFactor +=zoom;
-    update();
+    m_outputDev->zoomTo( zoom );
 }
 
 void Part::slotGoToPage()

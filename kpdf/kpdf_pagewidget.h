@@ -38,6 +38,8 @@ namespace KPDF
          */
         bool atTop()    const;
         bool atBottom() const;
+        void zoomTo( double _value );
+
     public slots:
         void nextPage();
         void previousPage();

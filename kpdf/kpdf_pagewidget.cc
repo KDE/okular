@@ -118,6 +118,15 @@ namespace KPDF
         setPage( getPage() - 1 );
     }
 
+    void PageWidget::zoomTo( double _value )
+    {
+        if ( m_zoomFactor != _value)
+        {
+            m_zoomFactor = _value;
+            updatePixmap();
+        }
+    }
+
     void PageWidget::zoomIn()
     {
         m_zoomFactor += 0.1;

@@ -121,6 +121,8 @@ public:
   double       paper_width;  // paper width in centimeters
   double       paper_height; // paper height in centimeters
 
+ /** Reference part of the URL which describes the filename. */
+ QString             reference;
 
 
 public slots:
@@ -274,9 +276,6 @@ private:
  QString             export_fileName;
  QString             export_tmpFileName;
  QString             export_errorString;
-
- /** Reference part of the URL which describes the filename. */
- QString             reference;
 };
 
 

@@ -46,7 +46,10 @@ public:
 
   KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
   virtual ~KDVIMultiPage();
-
+  // Methods which are associated with the DCOP functionality of the
+  // kmultipage. This method can be implemented by the multipage,
+  // e.g. to jump to a certain location.
+  void  jumpToReference(QString reference);
 
 // Interface definition start ------------------------------------------------
 

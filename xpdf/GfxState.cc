@@ -1054,7 +1054,7 @@ GfxColorSpace *GfxDeviceNColorSpace::parse(Array *arr) {
   nCompsA = obj1.arrayGetLength();
   if (nCompsA > gfxColorMaxComps) {
     error(-1, "DeviceN color space with too many (%d > %d) components",
-·         nCompsA, gfxColorMaxComps);
+         nCompsA, gfxColorMaxComps);
     nCompsA = gfxColorMaxComps;
   }
   for (i = 0; i < nCompsA; ++i) {

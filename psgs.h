@@ -42,21 +42,21 @@ public:
   void clear();
 
   // sets the PostScript which is used on a certain page
-  void setPostScript(pageNumber page, QString PostScript);
+  void setPostScript(PageNumber page, QString PostScript);
 
   // sets path from additional postscript files may be read
   void setIncludePath(const QString &_includePath);
 
   // sets the background color for a certain page
-  void setColor(pageNumber page, QColor background_color);
+  void setColor(PageNumber page, QColor background_color);
 
   // Draws the graphics of the page into the painter, if possible. If
   // the page does not contain any graphics, nothing happens
-  void     graphics(pageNumber page, double dpi, QPainter &paint );
+  void     graphics(PageNumber page, double dpi, QPainter &paint );
 
   // Returns the background color for a certain page. If no color was
   // set, Qt::white is returned.
-  QColor   getBackgroundColor(pageNumber page);
+  QColor   getBackgroundColor(PageNumber page);
 
   QString  *PostScriptHeaderString;
 
@@ -70,7 +70,7 @@ public:
   static  QString locateEPSfile(const QString &filename, class dvifile *dvi);
 
 private:
-  void                  gs_generate_graphics_file(pageNumber page, const QString &filename);
+  void                  gs_generate_graphics_file(PageNumber page, const QString &filename);
   QIntDict<pageInfo>    pageList;
 
   double                resolution;   // in dots per inch

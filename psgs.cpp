@@ -55,7 +55,7 @@ ghostscript_interface::~ghostscript_interface() {
 }
 
 
-void ghostscript_interface::setPostScript(pageNumber page, QString PostScript) {
+void ghostscript_interface::setPostScript(PageNumber page, QString PostScript) {
   if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(PostScript);
     // Check if dict is big enough
@@ -75,7 +75,7 @@ void ghostscript_interface::setIncludePath(const QString &_includePath) {
 }
 
 
-void ghostscript_interface::setColor(pageNumber page, QColor background_color) {
+void ghostscript_interface::setColor(PageNumber page, QColor background_color) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::setColor( " << page << ", " << background_color << " )" << endl;
 #endif
@@ -95,7 +95,7 @@ void ghostscript_interface::setColor(pageNumber page, QColor background_color) {
 // Returns the background color for a certain page. This color is
 // always guaranteed to be valid
 
-QColor ghostscript_interface::getBackgroundColor(pageNumber page) {
+QColor ghostscript_interface::getBackgroundColor(PageNumber page) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::getBackgroundColor( " << page << " )" << endl;
 #endif
@@ -115,7 +115,7 @@ void ghostscript_interface::clear(void) {
 }
 
 
-void ghostscript_interface::gs_generate_graphics_file(pageNumber page, const QString &filename) {
+void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QString &filename) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
 #endif
@@ -248,7 +248,7 @@ void ghostscript_interface::gs_generate_graphics_file(pageNumber page, const QSt
 }
 
 
-void ghostscript_interface::graphics(pageNumber page, double dpi, QPainter &paint) {
+void ghostscript_interface::graphics(PageNumber page, double dpi, QPainter &paint) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
 #endif

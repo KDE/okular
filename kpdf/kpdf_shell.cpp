@@ -130,7 +130,7 @@ Shell::setupActions()
     setAutoSaveSettings();
     setStandardToolBarMenuEnabled(true);
 #if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
-    m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotToggleFullScreen() ), actionCollection() );
+    m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotToggleFullScreen() ), actionCollection(), this );
 #else
     m_fullScreenAction = new KToggleAction( this, SLOT( slotToggleFullScreen() ) );
 #endif

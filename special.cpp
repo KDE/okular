@@ -124,6 +124,30 @@ static QColor parseColorSpecification(QString colorSpec)
 }
 
 
+
+void dviWindow::papersize_special(QString cp)
+{
+#ifdef DEBUG_SPECIAL
+  kdDebug(4300) << "Papersize-Special : papersize" << cp << endl;
+#endif
+
+  cp = cp.simplifyWhiteSpace();
+
+  if (cp[0] == '=') {
+    cp = cp.mid(1);
+    dviFile->suggestedPageSize.setPageSize(cp);
+#ifdef DEBUG_SPECIAL
+    kdDebug(4300) << "Suggested paper size is " << dviFile->suggestedPageSize.serialize() << "." << endl;
+#endif
+    emit( documentSpecifiedPageSize(dviFile->suggestedPageSize) );    
+  } else 
+    printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.").arg(cp));
+
+  return;
+}
+
+
+
 void dviWindow::color_special(QString cp)
 {
   cp = cp.stripWhiteSpace();
@@ -464,6 +488,13 @@ void dviWindow::applicationDoSpecial(char *cp)
   // Now to those specials which are only interpreted during the
   // prescan phase, and NOT during rendering.
 
+  // color special for background color
+  if (strncasecmp(cp, "papersize", 9) == 0) {
+    if (PostScriptOutPutString != NULL)
+      papersize_special(special_command.mid(9));
+    return;
+  }
+  
   // color special for background color
   if (strncasecmp(cp, "background", 10) == 0) {
     if (PostScriptOutPutString != NULL)

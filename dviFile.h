@@ -8,7 +8,9 @@
 #include <qintdict.h>
 #include <qstring.h>
 
+#include "../kviewshell/pageSize.h"
 #include "bigEndianByteReader.h"
+
 
 class fontPool;
 class TeXFontDefinition;
@@ -46,6 +48,10 @@ class dvifile : public bigEndianByteReader
       the DVI-file was processed. Suggested application: limit the
       number of error messages to, say, 25. */
   Q_UINT8        errorCounter;
+
+  /** Papersize information read from the dvi-File */
+  pageSize       suggestedPageSize;
+
 
  private:
   /** process_preamble reads the information in the preamble and

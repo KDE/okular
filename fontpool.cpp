@@ -202,7 +202,7 @@ QString fontPool::status(void)
     return i18n("The fontlist is currently empty.");
 
   text.append("<table WIDTH=\"100%\" NOSAVE >");
-  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b></td> <td><b>%5</b></td></tr>").arg(i18n("Name")).arg(i18n("Enlargement")).arg(i18n("Type")).arg(i18n("Filename")).arg(i18n("Comment")) );
+  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b></td></tr>").arg(i18n("Name")).arg(i18n("Enlargement")).arg(i18n("Type")).arg(i18n("Comment")) );
   
  TeXFontDefinition *fontp = fontList.first();
   while ( fontp != 0 ) {
@@ -214,9 +214,9 @@ QString fontPool::status(void)
       type = i18n("regular");
     
     if (fontp->font == 0)
-      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td> <td>%5</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename).arg(i18n("Font file not found"));
+      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(i18n("Font file not found"));
     else
-      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td> <td>%5</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->filename).arg(fontp->font->errorMessage);
+      tmp << QString ("<tr><td>%1</td> <td>%2%</td> <td>%3</td> <td>%4</td></tr>").arg(fontp->fontname).arg((int)(fontp->enlargement*100 + 0.5)).arg(type).arg(fontp->font->errorMessage);
     fontp=fontList.next(); 
   }
 

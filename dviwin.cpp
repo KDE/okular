@@ -765,10 +765,18 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     for(unsigned int i=0; i<currentlyDrawnPage.sourceHyperLinkList.size(); i++) {
       if (currentlyDrawnPage.sourceHyperLinkList[i].box.contains(e->pos())) {
 	clearStatusBarTimer.stop();
-	KStringHandler kstr;
-	QString line = kstr.word(currentlyDrawnPage.sourceHyperLinkList[i].linkText, "0");
-	QString file = kstr.word(currentlyDrawnPage.sourceHyperLinkList[i].linkText, "1:");
-	emit setStatusBarText( i18n("Link to line %1 of %2").arg(line).arg(file) );
+
+	// The macro-package srcltx gives a special like "src:99 test.tex"
+	// while MikTeX gives "src:99test.tex". KDVI tries
+	// to understand both.
+	QString cp = currentlyDrawnPage.sourceHyperLinkList[i].linkText;
+	int max = cp.length();
+	int i;
+	for(i=0; i<max; i++)
+	  if (cp[i].isDigit() == false)
+	    break;
+	
+	emit setStatusBarText( i18n("line %1 of %2").arg(cp.left(i)).arg(cp.mid(i).simplifyWhiteSpace()) );
 	return;
       }
     }
@@ -803,6 +811,9 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
       }
 
     QString selectedText("");
+
+
+
     if (selectedTextStart != -1)
       for(unsigned int i = selectedTextStart; (i <= selectedTextEnd)&&(i < currentlyDrawnPage.textLinkList.size()); i++) {
 	selectedText += currentlyDrawnPage.textLinkList[i].linkText;

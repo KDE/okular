@@ -160,6 +160,7 @@ public:
 
   void          special(long nbytes);
   void          printErrorMsgForSpecials(QString msg);
+  void          papersize_special(QString cp);
   void          background_special(QString cp);
   void          color_special(QString cp);
   void          html_href_special(QString cp);
@@ -235,6 +236,9 @@ signals:
 
   /** Passed through to the top-level kpart. */
   void setStatusBarText( const QString& );
+
+  /** To be passed through to the kmultipage */
+  void documentSpecifiedPageSize(const pageSize &size);
 
 protected:
  void          paintEvent(QPaintEvent *ev);

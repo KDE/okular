@@ -86,6 +86,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   preferencesChanged();
 
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+  connect( window, SIGNAL( documentSpecifiedPageSize(const pageSize&)), this, SIGNAL( documentSpecifiedPageSize(const pageSize&)) );
   docInfoAction    = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
 
   backAction       = KStdAction::back(this, SLOT(doGoBack()), actionCollection(), "go_back");
@@ -108,9 +109,9 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   new KAction(i18n("&DVI Options..."), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
-  new KAction(i18n("About the KDVI Plugin"), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
-  new KAction(i18n("Help on the KDVI Plugin"), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
-  new KAction(i18n("Report Bug in the KDVI Plugin..."), 0, this, SLOT(bugform()), actionCollection(), "bug_dvi");
+  new KAction(i18n("About KDVI"), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
+  new KAction(i18n("KDVI Handbook"), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
+  new KAction(i18n("Report Bug in KDVI..."), 0, this, SLOT(bugform()), actionCollection(), "bug_dvi");
 
   setXMLFile("kdvi_part.rc");
 

@@ -47,11 +47,13 @@
   <entry key="SplitterSizes" type="IntList" />
  </group>
  <group name="PageView" >
-  <entry key="ViewTwoPages" type="Bool" >
-   <default>false</default>
-  </entry>
   <entry key="ViewContinous" type="Bool" >
    <default>true</default>
+  </entry>
+  <entry key="ViewColumns" type="UInt" >
+   <default>1</default>
+   <min>1</min>
+   <max>8</max>
   </entry>
  </group>
  <group name="Performance" >

@@ -49,9 +49,7 @@ public:
     QValueVector< PageWidget * > pages;
     int vectorIndex;
 
-    // view layout, zoom and mouse
-    int viewColumns;
-    bool viewContinous;
+    // view layout (columns and continous in Settings), zoom and mouse
     PageView::ZoomMode zoomMode;
     float zoomFactor;
     PageView::MouseMode mouseMode;
@@ -99,8 +97,6 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->document = document;
     d->page = 0;
     d->vectorIndex = -1;
-    d->viewColumns = 1;
-    d->viewContinous = false;
     d->zoomMode = ZoomFixed;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
@@ -168,13 +164,11 @@ void PageView::setupActions( KActionCollection * ac )
     // View-Layout actions
     d->aViewTwoPages = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, ac, "view_twopages" );
     connect( d->aViewTwoPages, SIGNAL( toggled( bool ) ), SLOT( slotTwoPagesToggled( bool ) ) );
-    d->aViewTwoPages->setChecked( Settings::viewTwoPages() );
-    slotTwoPagesToggled( d->aViewTwoPages->isChecked() );
+    d->aViewTwoPages->setChecked( Settings::viewColumns() > 1 );
 
     d->aViewContinous = new KToggleAction( i18n("Continous"), "view_text", 0, ac, "view_continous" );
     connect( d->aViewContinous, SIGNAL( toggled( bool ) ), SLOT( slotContinousToggled( bool ) ) );
     d->aViewContinous->setChecked( Settings::viewContinous() );
-    slotContinousToggled( d->aViewContinous->isChecked() );
 
     // Mouse-Mode actions
     KToggleAction * mn = new KRadioAction( i18n("Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
@@ -195,20 +189,6 @@ void PageView::setupActions( KActionCollection * ac )
 
     KAction * sd = new KAction( i18n("Scroll Down"), 0, this, SLOT( slotScrollDown() ), ac, "view_scroll_down" );
     sd->setShortcut( "Shift+Down" );
-
-    KToggleAction * ss = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
-    ss->setCheckedState(i18n("Hide &Scrollbars"));
-    connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
-
-    ss->setChecked( Settings::showScrollBars() );
-    slotToggleScrollBars( ss->isChecked() );
-}
-
-void PageView::saveSettings()
-{
-    Settings::setShowScrollBars( hScrollBarMode() == AlwaysOn );
-    Settings::setViewTwoPages( d->aViewTwoPages->isChecked() );
-    Settings::setViewContinous( d->aViewContinous->isChecked() );
 }
 
 
@@ -266,7 +246,7 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
         return;
 
     // relayout in "Single Pages" mode or if a relayout is pending
-    if ( !d->viewContinous || d->dirtyLayout )
+    if ( !Settings::viewContinous() || d->dirtyLayout )
         slotRelayoutPages();
 
     // center the view to see the selected page
@@ -556,13 +536,13 @@ void PageView::keyPressEvent( QKeyEvent * e )
     switch ( e->key() )
     {
         case Key_Up:
-            if ( atTop() && !d->viewContinous )
+            if ( atTop() && !Settings::viewContinous() )
                 scrollUp();
             else
                 verticalScrollBar()->subtractLine();
             break;
         case Key_Down:
-            if ( atBottom() && !d->viewContinous )
+            if ( atBottom() && !Settings::viewContinous() )
                 scrollDown();
             else
                 verticalScrollBar()->addLine();
@@ -611,9 +591,9 @@ void PageView::wheelEvent( QWheelEvent *e )
         else
             slotZoomIn();
     }
-    else if ( delta <= -120 && atBottom() && !d->viewContinous )
+    else if ( delta <= -120 && atBottom() && !Settings::viewContinous() )
         scrollDown();
-    else if ( delta >= 120 && atTop() && !d->viewContinous )
+    else if ( delta >= 120 && atTop() && !Settings::viewContinous() )
         scrollUp();
     else
         QScrollView::wheelEvent( e );
@@ -682,20 +662,22 @@ void PageView::slotFitToRectToggled( bool on )
 
 void PageView::slotTwoPagesToggled( bool on )
 {
-    int newColumns = on ? 2 : 1;
-    if ( d->viewColumns != newColumns )
+    uint newColumns = on ? 2 : 1;
+    if ( Settings::viewColumns() != newColumns )
     {
-        d->viewColumns = newColumns;
-        slotRelayoutPages();
+        Settings::setViewColumns( newColumns );
+        if ( d->document->pages() > 0 )
+            slotRelayoutPages();
     }
 }
 
 void PageView::slotContinousToggled( bool on )
 {
-    if ( d->viewContinous != on )
+    if ( Settings::viewContinous() != on )
     {
-        d->viewContinous = on;
-        slotRelayoutPages();
+        Settings::setViewContinous( on );
+        if ( d->document->pages() > 0 )
+            slotRelayoutPages();
     }
 }
 
@@ -731,12 +713,6 @@ void PageView::slotScrollDown()
     slotAutoScoll();
 }
 
-void PageView::slotToggleScrollBars( bool on )
-{
-    setHScrollBarMode( on ? AlwaysOn : AlwaysOff );
-    setVScrollBarMode( on ? AlwaysOn : AlwaysOff );
-}
-
 void PageView::slotRelayoutPages()
 // called by: pageSetup, viewportResizeEvent, slotTwoPagesToggled, slotContinousToggled, updateZoom
 {
@@ -753,11 +729,11 @@ void PageView::slotRelayoutPages()
         fullWidth = 0,
         fullHeight = 0;
 
-    if ( d->viewContinous == TRUE )
+    if ( Settings::viewContinous() )
     {
         // Here we find out column's width and row's height to compute a table
         // so we can place widgets 'centered in virtual cells'.
-        int nCols = d->viewColumns,
+        int nCols = Settings::viewColumns(),
             nRows = (int)ceilf( (float)pageCount / (float)nCols ),
             * colWidth = new int[ nCols ],
             * rowHeight = new int[ nRows ],
@@ -836,7 +812,7 @@ void PageView::slotRelayoutPages()
         PageWidget * currentPage = d->page ? d->page : d->pages[0];
 
         // setup varialbles for a 1(row) x N(columns) grid
-        int nCols = d->viewColumns,
+        int nCols = Settings::viewColumns(),
             * colWidth = new int[ nCols ],
             cIdx = 0;
         fullHeight = viewportHeight;

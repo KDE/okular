@@ -52,9 +52,6 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     int sideLength = m_lineEdit->sizeHint().height();
     m_clearButton->setMinimumSize( QSize( sideLength, sideLength ) );
  //   search->setMinimumSize( QSize( sideLength, sideLength ) );
-
-    // handle initial visiblity
-    setShown( Settings::showSearchBar() );
 }
 
 void SearchWidget::hideEvent( QHideEvent * )

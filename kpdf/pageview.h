@@ -51,7 +51,6 @@ public:
 
     // create actions that interact with this widget
     void setupActions( KActionCollection * collection );
-    void saveSettings();
 
     // inherited from KPDFDocumentObserver
     uint observerId() const { return PAGEVIEW_ID; }
@@ -91,7 +90,6 @@ private slots:
     void slotSetMouseDraw();
     void slotScrollUp();
     void slotScrollDown();
-    void slotToggleScrollBars( bool on );
 
     // activated either directly or via QTimer on the viewportResizeEvent
     void slotRelayoutPages();

@@ -125,10 +125,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
 	m_toolBox->setItemEnabled( iIdx, false );
 
-	QFrame * moreFrame = new QFrame( m_toolBox );
-	iIdx = m_toolBox->addItem( moreFrame, QIconSet(SmallIcon("fork")), i18n("More stuff..") );
-	m_toolBox->setItemEnabled( iIdx, false );
-
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, document );
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
@@ -171,17 +167,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
     KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 
-	KToggleAction * sLp = new KToggleAction( i18n( "Show &Left Panel" ), 0, ac, "show_leftpanel" );
-	sLp->setCheckedState(i18n("Hide &Left Panel"));
-	connect( sLp, SIGNAL( toggled( bool ) ), SLOT( slotToggleLeftPanel( bool ) ) );
-
     // attach the actions of the 2 children widgets too
 	m_pageView->setupActions( ac );
 
-	// local settings
+	// apply configuration (both internal settings and GUI configured items)
     m_splitter->setSizes( Settings::splitterSizes() );
-    sLp->setChecked( Settings::showLeftPanel() );
-    slotToggleLeftPanel( sLp->isChecked() );
+    slotNewConfig();
 
 	// set our XML-UI resource file
 	setXMLFile("kpdf_part.rc");
@@ -190,12 +181,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
-    // save local settings
+    // save internal settings
     Settings::setSplitterSizes( m_splitter->sizes() );
-    Settings::setShowLeftPanel( m_toolBox->isShown() );
-    // save settings of internal widgets
-    m_pageView->saveSettings();
-    // save config file
+    // write to disk config file
     Settings::writeConfig();
 
     delete document;
@@ -372,20 +360,40 @@ void Part::slotPreferences()
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    PreferencesDialog * dialog = new PreferencesDialog( 0, Settings::self() );
-
+    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Settings::self() );
     // keep us informed when the user changes settings
-    connect( dialog, SIGNAL( settingsChanged() ),
-             this, SLOT( slotNewConfig() ) );
+    connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
 
     dialog->show();
 }
 
 void Part::slotNewConfig()
 {
-    // apply runtime changes TODO apply changes here
-    if ( Settings::showSearchBar() != m_searchWidget->isShown() )
-        m_searchWidget->setShown( Settings::showSearchBar() );
+    // Apply settings here. A good policy is to check wether the setting has
+    // changed before applying changes.
+
+    // Left Panel and search Widget
+    bool showLeft = Settings::showLeftPanel();
+    if ( m_toolBox->isShown() != showLeft )
+    {
+        // show/hide left qtoolbox
+        m_toolBox->setShown( showLeft );
+        // this needs to be hidden explicitly to disable thumbnails gen
+        m_thumbnailList->setShown( showLeft );
+    }
+
+    bool showSearch = Settings::showSearchBar();
+    if ( m_searchWidget->isShown() != showSearch )
+        m_searchWidget->setShown( showSearch );
+
+    // Main View
+    QScrollView::ScrollBarMode scrollBarMode = Settings::showScrollBars() ?
+        QScrollView::AlwaysOn : QScrollView::AlwaysOff;
+    if ( m_pageView->hScrollBarMode() != scrollBarMode )
+    {
+        m_pageView->setHScrollBarMode( scrollBarMode );
+        m_pageView->setVScrollBarMode( scrollBarMode );
+    }
 }
 
 void Part::slotPrintPreview()
@@ -418,14 +426,6 @@ void Part::slotPrintPreview()
 
     doPrint(printer);
 */
-}
-
-void Part::slotToggleLeftPanel( bool on )
-{
-    // show/hide left qtoolbox
-    m_toolBox->setShown( on );
-    // this needs to be hidden explicitly to disable thumbnails gen
-    m_thumbnailList->setShown( on );
 }
 
 void Part::slotPrint()

@@ -1,8 +1,11 @@
-
 //
 // Class: dviWindow
 //
-// Previewer for TeX DVI files.
+// Widget for displaying TeX DVI files.
+// Part of KDVI- A previewer for TeX DVI files.
+//
+// (C) 2001 Stefan Kebekus
+// Distributed under the GPL
 //
 
 #include <stdio.h>
@@ -344,11 +347,7 @@ void dviWindow::drawPage()
 	
 	lay->addStretch(1);
 	QLabel *label1 = new QLabel( contents);
-#if QT_VERSION < 300
-	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information, kapp->style().guiStyle()));
-#else
 	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
-#endif
 	lay->add( label1 );
 	QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
 					  "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
@@ -407,11 +406,9 @@ void dviWindow::changePageSize()
   if ( pixmap && pixmap->paintingActive() )
     return;
 
-  int old_width = 0;
-  if (pixmap) {
-    old_width = pixmap->width();
+  if (pixmap)
     delete pixmap;
-  }
+
   pixmap = new QPixmap( (int)page_w, (int)page_h );
   pixmap->fill( white );
 
@@ -720,11 +717,12 @@ double dviWindow::setZoom(double zoom)
   return _zoom;
 }
 
-void dviWindow::paintEvent(QPaintEvent *)
+void dviWindow::paintEvent(QPaintEvent *e)
 {
   if (pixmap) {
-    bitBlt ( this, 0, 0, pixmap, 0, 0, -1, -1, CopyROP, TRUE);
+    bitBlt ( this, e->rect().topLeft(), pixmap, e->rect(), CopyROP);
     QPainter p(this);
+    p.setClipRect(e->rect());
     if (animationCounter > 0 && animationCounter < 10) {
       int wdt = pixmap->width()/(10-animationCounter);
       int hgt = pixmap->height()/((10-animationCounter)*20);
@@ -756,12 +754,17 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     setCursor(arrowCursor);
   }
   
+  // Right mouse button pressed -> Text copy function
   if ((e->state() & RightButton) != 0) {
-    if (selectedRectangle.isEmpty())
+    if (selectedRectangle.isEmpty()) {
+      firstSelectedPoint = e->pos();
       selectedRectangle.setRect(e->pos().x(),e->pos().y(),1,1);
-    else {
-      QRect R(e->pos().x(),e->pos().y(),1,1);
-      selectedRectangle = selectedRectangle.unite(R);
+    } else {
+      int lx = e->pos().x() < firstSelectedPoint.x() ? e->pos().x() : firstSelectedPoint.x();
+      int rx = e->pos().x() > firstSelectedPoint.x() ? e->pos().x() : firstSelectedPoint.x();
+      int ty = e->pos().y() < firstSelectedPoint.y() ? e->pos().y() : firstSelectedPoint.y();
+      int by = e->pos().y() > firstSelectedPoint.y() ? e->pos().y() : firstSelectedPoint.y();
+      selectedRectangle.setCoords(lx,ty,rx,by);
     }
     
     // Now that we know the rectangle, we have to find out which words
@@ -783,11 +786,13 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	selectedText += "\n";
       }
 
-    if (selectedTextEnd == -1)
-      DVIselection.clear();
-    else
-      DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
-    repaint();
+    if ((selectedTextStart != DVIselection.selectedTextStart) || (selectedTextEnd != DVIselection.selectedTextEnd)) {
+      if (selectedTextEnd == -1)
+	DVIselection.clear();
+      else
+	DVIselection.set(selectedTextStart, selectedTextEnd, selectedText);
+      repaint();
+    }
   }
 }
 

@@ -1,5 +1,7 @@
 // selection.cpp
 //
+// Part of KDVI - A previewer for TeX DVI files.
+//
 // (C) 2001 Stefan Kebekus
 // Distributed under the GPL
 

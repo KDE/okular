@@ -2,6 +2,10 @@
 // Class: dviWindow
 //
 // Widget for displaying TeX DVI files.
+// Part of KDVI- A previewer for TeX DVI files.
+//
+// (C) 2001 Stefan Kebekus
+// Distributed under the GPL
 //
 
 #ifndef _dviwin_h_
@@ -231,6 +235,7 @@ private:
  /** Methods and classes concerned with the find functionality and
      with selecting text */
  class KEdFind    *findDialog;
+ QPoint            firstSelectedPoint;
  QRect             selectedRectangle;
 
  

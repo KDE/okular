@@ -73,22 +73,6 @@
 extern QPainter foreGroundPaint;
 
 
-#ifdef food
-/*
- *	Find font #n.
- */
-
-static void change_font(unsigned long n)
-{
-  currinf.fontp = currinf.fonttable[n];
-  if (currinf.fontp == NULL) {
-    errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.").arg(n);
-    return;
-  }
-  currinf.set_char_p = currinf.fontp->set_char_p;
-}
-#endif
-
 
 /** Routine to print characters.  */
 
@@ -109,8 +93,8 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     int y = PXL_V - g->y2 - currwin.base_y;
 
     // Draw the character.
-    foreGroundPaint.drawPixmap(x, y, pix);
-   
+    bitBlt(pixmap, x, y, &pix, 0, 0, -1, -1, CopyROP, FALSE); // Slow, but correct
+
     // Are we drawing text for a hyperlink? And are hyperlinks
     // enabled?
     if (HTML_href != NULL && _showHyperLinks != 0) {
@@ -210,8 +194,8 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
 	textLinkList[num_of_used_textlinks-1].linkText += "?";
       break;
     }
-
   }
+
   if (cmd == PUT1)
     DVI_H = dvi_h_sav;
   else

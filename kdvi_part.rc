@@ -3,18 +3,20 @@
 <MenuBar>
  <Menu name="file"><text>File</text>
   <Action name="info_dvi" group="file_print" append="options_show_merge"/>
+  <Menu name="export" group="file_save" ><text>Export as...</text>
+   <Action name="export_postscript" append="options_show_merge"/>
+   <Action name="export_pdf" append="options_show_merge"/>
+  </Menu>
  </Menu>
+
  <Menu name="settings"><text>Settings</text>
   <Action name="settings_dvi" append="options_show_merge"/>
  </Menu>
+
  <Menu name="help"><text>Help</text>
   <Separator/>
   <Action name="help_dvi" append="options_show_merge"/>
- </Menu>
- <Menu name="help"><text>Help</text>
   <Action name="about_kdvi" append="options_show_merge"/>
- </Menu>
- <Menu name="help"><text>Help</text>
   <Action name="bug_dvi" append="options_show_merge"/>
  </Menu>
 </MenuBar>

@@ -14,6 +14,7 @@
 
 #include "font.h"
 #include "fontpool.h"
+#include "fontprogress.h"
 #include "kdvi.h"
 #include "xdvi.h"
 
@@ -26,9 +27,35 @@ const int   MFResolutions[] = { 300, 600, 1200 };
 
 fontPool::fontPool(void)
 {
+  setName("Font Pool");
+
   proc = 0;
   fontList.setAutoDelete(TRUE);
+
+  progress = new fontProgressDialog( "fontgen",  // Chapter in the documentation for help.
+				     i18n( "KDVI is currently generating bitmap fonts..." ),
+				     i18n( "Aborts the font generation. Don't do this." ),
+				     i18n( "KDVI is currently generating bitmap fonts which are needed to display your document. "
+					   "For this, KDVI uses a number of external programs, such as MetaFont. You can find "
+					   "the output of these programs later in the document info dialog." ),
+				     i18n( "KDVI is generating fonts. Please wait." ),
+				     0 );
+  if (progress == NULL)
+    kdError(4300) << "Could not allocate memory for the font progress dialog." << endl;
+  else {
+    qApp->connect(this, SIGNAL(hide_progress_dialog()), progress, SLOT(hideDialog()));
+    qApp->connect(this, SIGNAL(totalFontsInJob(int)), progress, SLOT(setTotalSteps(int)));
+    qApp->connect(this, SIGNAL(show_progress(void)), progress, SLOT(show(void)));
+    qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortGeneration(void)));
+  }
 }
+
+fontPool::~fontPool(void)
+{
+  if (progress)
+    delete progress;
+}
+
 
 unsigned int fontPool::setMetafontMode( unsigned int mode )
 {
@@ -202,7 +229,8 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
 		this, SLOT(kpsewhich_terminated(KProcess *)));
   qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)),
 		this, SLOT(mf_output_receiver(KProcess *, char *, int)));
-      
+  emit(new_kpsewhich_run(i18n("Font Generation")));
+
   proc->clearArguments();
   *proc << "kpsewhich";
   *proc << QString("--dpi %1").arg(MFResolutions[MetafontMode]);
@@ -428,6 +456,7 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
   bool show_prog = false;
   while( (numleft = MetafontOutput.find('\n')) != -1) {
     QString line = MetafontOutput.left(numleft+1); 
+    emit(MFOutput(line));
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "MF OUTPUT RECEIVED: " << line;
 #endif
@@ -435,7 +464,28 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
     // and show the progress dialog at the end of this method.
     if (line.find("kpathsea:") == 0)
       show_prog = true;
-    emit(MFOutput(line));
+
+    // If the Output of the kpsewhich program contains a line starting
+    // with "kpathsea:", this means that a new MetaFont-run has been
+    // started. We filter these lines out and update the display
+    // accordingly.
+    int startlineindex = line.find("kpathsea:");
+    if (startlineindex != -1) {
+      int endstartline  = line.find("\n",startlineindex);
+      QString startLine = line.mid(startlineindex,endstartline-startlineindex);
+
+      // The last word in the startline is the name of the font which we
+      // are generating. The second-to-last word is the resolution in
+      // dots per inch. Display this info in the text label below the
+      // progress bar.
+      int lastblank     = startLine.findRev(' ');
+      QString fontName  = startLine.mid(lastblank+1);
+      int secondblank   = startLine.findRev(' ',lastblank-1);
+      QString dpi       = startLine.mid(secondblank+1,lastblank-secondblank-1);
+
+      progress->increaseNumSteps( i18n("Currently generating %1 at %2 dpi").arg(fontName).arg(dpi) );
+    }
+    
     MetafontOutput = MetafontOutput.remove(0,numleft+1);
   }
 

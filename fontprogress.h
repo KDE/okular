@@ -38,7 +38,7 @@ class fontProgressDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    fontProgressDialog( QWidget* parent = 0, const QString &name = 0 );
+    fontProgressDialog( QString helpIndex, QString label, QString abortTip, QString whatsThis, QString ttip, QWidget* parent = 0, const QString &name = 0, bool progressbar=true );
     ~fontProgressDialog();
 
     QLabel* TextLabel1;
@@ -46,9 +46,9 @@ public:
     QLabel* TextLabel2;
 
 public slots:
-  /** Used to receive text from the external program. The text
-      received here is analyzed and presented to the user. */
-  void outputReceiver(const QString);
+  /** The number of steps already done is increased, the text received
+      here is analyzed and presented to the user. */
+  void increaseNumSteps( const QString explanation );
 
   /** Used to initialize the progress bar. */
   void setTotalSteps(int);

@@ -17,7 +17,7 @@
 #include "infodialog.h"
 
 infoDialog::infoDialog( QWidget* parent )
-  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "documentinfo", false, false)
+  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false)
 {
   QFrame *page1 = addPage( i18n("DVI File") );
   QVBoxLayout *topLayout1 = new QVBoxLayout( page1, 0, 6 );
@@ -31,18 +31,23 @@ infoDialog::infoDialog( QWidget* parent )
   TextLabel2->setMinimumWidth(fontMetrics().maxWidth()*50);
   TextLabel2->setMinimumHeight(fontMetrics().height()*10);
   QToolTip::add( TextLabel2, i18n("Information on currently loaded fonts.") );
-  QWhatsThis::add( TextLabel2, i18n("This text field shows detailed information about the currently loaded fonts. This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );  
+  QWhatsThis::add( TextLabel2, i18n("This text field shows detailed information about the currently loaded fonts. "
+				    "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );  
   topLayout2->addWidget( TextLabel2 );
 
-  QFrame *page3 = addPage( i18n("MetaFont") );
+  QFrame *page3 = addPage( i18n("External Programs") );
   QVBoxLayout *topLayout3 = new QVBoxLayout( page3, 0, 6 );
   TextLabel3 = new QTextView( page3, "TextLabel1" );
-  TextLabel3->setText( i18n("No output from MetaFont received.") );
-  QToolTip::add( TextLabel3, i18n("Output of the MetaFont program.") );
-  QWhatsThis::add( TextLabel3, i18n("KDVI uses external programs, such as MetaFont, to generate the bitmap fonts. This text field shows the output of these programs which is useful for experts who want to find problems in the setup of TeX or KDVI.") );
+  TextLabel3->setText( i18n("No output from any external program received.") );
+  QToolTip::add( TextLabel3, i18n("Output of external programs.") );
+  QWhatsThis::add( TextLabel3, i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
+				    "This text field shows the output of these programs. "
+				    "That is useful for experts who want to find problems in the setup of TeX or KDVI.") );
   topLayout3->addWidget( TextLabel3 );
 
   MFOutputReceived = false;
+  headline         = QString::null;
+  pool             = QString::null;
 }
 
 
@@ -85,25 +90,47 @@ void infoDialog::setFontInfo(class fontPool *fp)
   TextLabel2->setText(fp->status()); 
 }
 
-void infoDialog::outputReceiver(const QString op)
+void infoDialog::outputReceiver(QString op)
 {
-  if (MFOutputReceived == false)
-    TextLabel3->setText("");
+  op = op.replace( QRegExp("<"), "&lt;" );
 
-  // If the Output of the kpsewhich program contains a line starting
-  // with "kpathsea:", this means that a new MetaFont-run has been
-  // started. We filter these lines out and print them in boldface.
-  int startlineindex = op.find("kpathsea:");
-  if (startlineindex != -1) {
-    int endstartline  = op.find("\n",startlineindex);
-    QString startLine = op.mid(startlineindex,endstartline-startlineindex);
-    if (MFOutputReceived)
-      TextLabel3->append("<hr>\n<b>"+startLine+"</b>");
-    else 
-      TextLabel3->append("<b>"+startLine+"</b>");
-    TextLabel3->append(op.mid(endstartline));
-  } else
-    TextLabel3->append(op);
+  if (MFOutputReceived == false) {
+    TextLabel3->setText("<b>"+headline+"</b><br>");
+    headline = QString::null;
+  }
+
+  // It seems that the QTextView wants that we append only full lines.
+  // We see to that.
+  pool = pool+op;
+  int idx = pool.findRev("\n");
+
+  while(idx != -1) {
+    QString line = pool.left(idx);
+    pool = pool.mid(idx+1);
+
+    // If the Output of the kpsewhich program contains a line starting
+    // with "kpathsea:", this means that a new MetaFont-run has been
+    // started. We filter these lines out and print them in boldface.
+    int startlineindex = line.find("kpathsea:");
+    if (startlineindex != -1) {
+      int endstartline  = line.find("\n",startlineindex);
+      QString startLine = line.mid(startlineindex,endstartline-startlineindex);
+      if (MFOutputReceived)
+	TextLabel3->append("<hr>\n<b>"+startLine+"</b>");
+      else 
+	TextLabel3->append("<b>"+startLine+"</b>");
+    TextLabel3->append(line.mid(endstartline));
+    } else
+      TextLabel3->append(line);
+    idx = pool.findRev("\n");
+  }
 
   MFOutputReceived = true;
+}
+
+void infoDialog::clear(QString op)
+{
+  headline         = op;
+  pool             = QString::null;
+  MFOutputReceived = false;
 }

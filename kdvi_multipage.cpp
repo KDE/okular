@@ -5,11 +5,12 @@
 #include <kapp.h>
 #include <kbugreport.h>
 #include <kconfig.h>
-#include <klocale.h>
 #include <kdebug.h>
+#include <klocale.h>
 #include <kglobal.h>
 #include <kimageeffect.h>
 #include <kinstance.h>
+#include <kmessagebox.h>
 #include <qobject.h>
 #include <qlabel.h>
 #include <qstring.h>
@@ -75,25 +76,14 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window = new dviWindow( 1.0, true, scrollView());
   preferencesChanged();
 
-  new KAction(i18n("Document &Info"), 0, this,
-	      SLOT(doInfo()), actionCollection(),
-	      "info_dvi");
+  docInfoAction   = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
+  exportPSAction  = new KAction(i18n("PostScript"), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
+  exportPDFAction = new KAction(i18n("PDF"), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
 
-  new KAction(i18n("&DVI Options"), 0, this,
-	      SLOT(doSettings()), actionCollection(),
-	      "settings_dvi");
-
-  new KAction(i18n("About the KDVI plugin..."), 0, this,
-	      SLOT(about()), actionCollection(),
-	      "about_kdvi");
-  
-  new KAction(i18n("Help on the KDVI plugin..."), 0, this,
-	      SLOT(helpme()), actionCollection(),
-	      "help_dvi");
-
-  new KAction(i18n("Report Bug in the KDVI plugin..."), 0, this,
-	      SLOT(bugform()), actionCollection(),
-	      "bug_dvi");
+  new KAction(i18n("&DVI Options"), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
+  new KAction(i18n("About the KDVI plugin..."), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
+  new KAction(i18n("Help on the KDVI plugin..."), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
+  new KAction(i18n("Report Bug in the KDVI plugin..."), 0, this, SLOT(bugform()), actionCollection(), "bug_dvi");
 
   setXMLFile("kdvi_part.rc");
 
@@ -101,6 +91,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
 
   readSettings();
+  enableActions(false);
 }
 
 
@@ -122,6 +113,7 @@ bool KDVIMultiPage::openFile()
   emit numberOfPages(window->totalPages());
   scrollView()->resizeContents(window->width(), window->height());
   emit previewChanged(true);
+  enableActions(r);
 
   return r;
 }
@@ -131,6 +123,7 @@ bool KDVIMultiPage::closeURL()
 {
   window->setFile(""); // That means: close the file. Resize the widget to 0x0.
   emit previewChanged(false);
+  enableActions(false);
   return true;
 }
 
@@ -138,7 +131,7 @@ bool KDVIMultiPage::closeURL()
 QStringList KDVIMultiPage::fileFormats()
 {
   QStringList r;
-  r << i18n("*.dvi *.DVI|DVI files (*.dvi)");
+  r << i18n("*.dvi *.DVI|TeX Device Independent files (*.dvi)");
   return r;
 }
 
@@ -215,6 +208,16 @@ void KDVIMultiPage::doInfo(void)
   window->showInfo();
 }
 
+void KDVIMultiPage::doExportPS(void)
+{
+  window->exportPS();
+}
+
+void KDVIMultiPage::doExportPDF(void)
+{
+  window->exportPDF();
+}
+
 void KDVIMultiPage::doSettings()
 {
   if (options) {
@@ -233,7 +236,7 @@ void KDVIMultiPage::about()
 				      i18n("the KDVI plugin"), 
 				      KAboutDialog::Close, KAboutDialog::Close);
 
-  ab->setProduct("kdvi", "0.9e", QString::null, QString::null);
+  ab->setProduct("kdvi", "0.9f", QString::null, QString::null);
   ab->addTextPage (i18n("About"), 
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"
@@ -268,7 +271,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9e", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9f", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }
@@ -367,7 +370,8 @@ void KDVIMultiPage::reload()
     timer_id = -1;
     int currsav = window->curr_page();
 
-    window->setFile(m_file);
+    bool r = window->setFile(m_file);
+    enableActions(r);
 
     // Go to the old page and tell kviewshell where we are.
     window->gotoPage(currsav);
@@ -381,4 +385,11 @@ void KDVIMultiPage::reload()
     if (timer_id == -1)
       timer_id = startTimer(1000);
   }
+}
+
+void KDVIMultiPage::enableActions(bool b)
+{
+  docInfoAction->setEnabled(b);
+  exportPSAction->setEnabled(b);
+  exportPDFAction->setEnabled(b);
 }

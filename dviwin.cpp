@@ -1,3 +1,4 @@
+
 //
 // Class: dviWindow
 //
@@ -10,17 +11,20 @@
 #include <unistd.h>
 #include <setjmp.h>
 
-#include <qpainter.h>
 #include <qbitmap.h> 
-#include <qkeycode.h>
-#include <qpaintdevice.h>
 #include <qfileinfo.h>
 #include <qimage.h>
+#include <qkeycode.h>
+#include <qlabel.h>
+#include <qpaintdevice.h>
+#include <qpainter.h>
 #include <qurl.h>
 
 #include <kapp.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kfiledialog.h>
+#include <kio/job.h>
 #include <klocale.h>
 #include <kprocess.h>
 
@@ -97,23 +101,12 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
   dviFile                = 0;
 
-  progress               = new fontProgressDialog(this);
-  if (progress == NULL) {
-    kdError(4300) << "Could not allocate memory for the font progress dialog." << endl;
-    exit(-1);
-  }
-
   font_pool              = new fontPool();
   if (font_pool == NULL) {
     kdError(4300) << "Could not allocate memory for the font pool." << endl;
     exit(-1);
   }
-  qApp->connect(font_pool, SIGNAL(MFOutput(const QString)), progress, SLOT(outputReceiver(const QString)));
-  qApp->connect(font_pool, SIGNAL(hide_progress_dialog()), progress, SLOT(hideDialog()));
   qApp->connect(font_pool, SIGNAL(fonts_have_been_loaded()), this, SLOT(drawPage()));
-  qApp->connect(font_pool, SIGNAL(totalFontsInJob(int)), progress, SLOT(setTotalSteps(int)));
-  qApp->connect(font_pool, SIGNAL(show_progress(void)), progress, SLOT(show(void)));
-  qApp->connect(progress, SIGNAL(finished(void)), font_pool, SLOT(abortGeneration(void)));
 
   info                   = new infoDialog(this);
   if (info == 0) {
@@ -121,8 +114,9 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
     // something goes wrong here.
     kdError(4300) << "Could not allocate memory for the info dialog." << endl;
   } else {
-    qApp->connect(font_pool, SIGNAL(MFOutput(const QString)), info, SLOT(outputReceiver(const QString)));
+    qApp->connect(font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
     qApp->connect(font_pool, SIGNAL(fonts_info(class fontPool *)), info, SLOT(setFontInfo(class fontPool *)));
+    qApp->connect(font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
   }
 
 
@@ -135,7 +129,11 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   mainwin                = handle();
   mane                   = currwin;
   _postscript            = 0;
-  pixmap                 = NULL;
+  pixmap                 = 0;
+
+  // Storage used for dvips and friends.
+  proc                   = 0;
+  progress               = 0;
 
   // Calculate the horizontal resolution of the display device.  @@@
   // We assume implicitly that the horizontal and vertical resolutions
@@ -171,9 +169,6 @@ dviWindow::~dviWindow()
   if (info)
     delete info;
 
-  if (progress)
-    delete progress;
-
   delete PS_interface;
 
   if (dviFile)
@@ -191,6 +186,179 @@ void dviWindow::showInfo(void)
   // and their status.
   font_pool->check_if_fonts_are_loaded();
   info->show();
+}
+
+
+void dviWindow::exportPDF(void)
+{
+  // Should not happen since the progressDialog is modal... but who
+  // knows?
+  if (proc != 0) {
+    KMessageBox::sorry(0, i18n("Another export command is currently running"));
+    return;
+  }
+
+  // That sould also not happen.
+  if (dviFile == NULL)
+    return;
+
+  QString fileName = KFileDialog::getSaveFileName(QString::null, "*.pdf|Portable Document Format (*.pdf)", this, i18n("Export File As"));
+  if (fileName.isEmpty())
+    return;
+  QFileInfo finfo(fileName);
+  if (finfo.exists()) {
+    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
+				       i18n("Overwrite file"));
+    if (r == KMessageBox::No)
+      return;
+  }
+  
+  // Initialize the progress dialog
+  progress = new fontProgressDialog( QString::null, 
+				     i18n("Using dvipdfm to export the file to PDF"), 
+				     QString::null, 
+				     i18n("KDVI is currently using the external program 'dvipdfm' to "
+					  "convert your DVI-file to PDF. Sometimes that can take "
+					  "a while because dvipdfm needs to generate it's own bitmap fonts "
+					  "Please be patient."),
+				     i18n("Waiting for dvipdf to finish..."),
+				     this, "dvipdf progress dialog", false );
+  if (progress != 0) {
+    progress->TextLabel2->setText( i18n("Please be patient") );
+    progress->setTotalSteps( dviFile->total_pages );
+    qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortExternalProgramm(void)));
+  }
+
+  proc = new KShellProcess();
+  if (proc == 0) {
+    kdError(4300) << "Could not allocate ShellProcess for the dvipdfm command." << endl;
+    return;
+  }
+  
+  qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+  qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+  qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
+
+  if (info)
+    info->clear(QString(i18n("Export: %1 to PDF")).arg(KShellProcess::quote(dviFile->filename)));
+
+  proc->clearArguments();
+  finfo.setFile(dviFile->filename);
+  *proc << QString("cd %1; dvipdfm").arg(KShellProcess::quote(finfo.dirPath(true)));
+  *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
+  *proc << KShellProcess::quote(dviFile->filename);
+  proc->closeStdin();
+  if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
+    kdError(4300) << "dvipdfm failed to start" << endl;
+    return;
+  }
+  return;
+}
+
+
+void dviWindow::exportPS(void)
+{
+  // Should not happen since the progressDialog is modal... but who
+  // knows?
+  if (proc != 0) {
+    KMessageBox::sorry(0, i18n("Another export command is currently running"));
+    return;
+  }
+
+  // That sould also not happen.
+  if (dviFile == NULL)
+    return;
+
+  QString fileName = KFileDialog::getSaveFileName(QString::null, "*.ps|PostScript (*.ps)", this, i18n("Export File As"));
+  if (fileName.isEmpty())
+    return;
+  QFileInfo finfo(fileName);
+  if (finfo.exists()) {
+    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
+				       i18n("Overwrite file"));
+    if (r == KMessageBox::No)
+      return;
+  }
+  
+  // Initialize the progress dialog
+  progress = new fontProgressDialog( QString::null, 
+				     i18n("Using dvips to export the file to PostScript"), 
+				     QString::null, 
+				     i18n("KDVI is currently using the external program 'dvips' to "
+					  "convert your DVI-file to PostScript. Sometimes that can take "
+					  "a while because dvips needs to generate it's own bitmap fonts "
+					  "Please be patient."),
+				     i18n("Waiting for dvips to finish..."),
+				     this, "dvips progress dialog", false );
+  if (progress != 0) {
+    progress->TextLabel2->setText( i18n("Please be patient") );
+    progress->setTotalSteps( dviFile->total_pages );
+    qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortExternalProgramm(void)));
+  }
+
+  proc = new KShellProcess();
+  if (proc == 0) {
+    kdError(4300) << "Could not allocate ShellProcess for the dvips command." << endl;
+    return;
+  }
+  
+  qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)),
+		this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
+  qApp->connect(proc, SIGNAL(processExited(KProcess *)),
+		this, SLOT(dvips_terminated(KProcess *)));
+
+  if (info)
+    info->clear(QString(i18n("Export: %1 to PostScript")).arg(KShellProcess::quote(dviFile->filename)));
+
+  proc->clearArguments();
+  finfo.setFile(dviFile->filename);
+  *proc << QString("cd %1; dvips").arg(KShellProcess::quote(finfo.dirPath(true)));
+  *proc << QString("%1").arg(KShellProcess::quote(dviFile->filename));
+  *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
+  proc->closeStdin();
+  if (proc->start(KProcess::NotifyOnExit, KProcess::Stderr) == false) {
+    kdError(4300) << "dvips failed to start" << endl;
+    return;
+  }
+  return;
+}
+
+
+void dviWindow::abortExternalProgramm(void)
+{
+  if (proc != 0) {
+    delete proc; // Deleting the KProcess kills the child.
+    proc = 0;
+  }
+
+  if (progress != 0) {
+    progress->hideDialog();
+    delete progress;
+    progress = 0;
+  }
+}
+
+void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
+{
+  // Paranoia.
+  if (buflen < 0)
+    return;
+  QString op = QString::fromLocal8Bit(buffer, buflen);
+
+  if (info != 0)
+    info->outputReceiver(op);
+  if (progress != 0)
+    progress->show();
+}
+
+void dviWindow::dvips_terminated(KProcess *)
+{
+  if ((proc->normalExit() == true) && (proc->exitStatus() != 0)) 
+    KMessageBox::error( this,
+			i18n("The external program used to export the DVI-file\n"
+			     "reported an error. You might wish to look at the\n"
+			     "document info dialog for a precise error report.") );
+   abortExternalProgramm();
 }
 
 
@@ -362,7 +530,7 @@ bool dviWindow::setFile( const QString & fname )
       delete pixmap;
     pixmap = 0;
     resize(0, 0);
-    return true; // added "true" to fix compilation. Is this correct ? (David)
+    return true;
   }
 
   // Make sure the file actually exists.

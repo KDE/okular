@@ -24,6 +24,7 @@
 #include "dvi_init.h"
 
 class infoDialog;
+class KShellProcess;
 class fontProgressDialog;
 
 // max. number of hyperlinks per page. This should later be replaced by
@@ -52,6 +53,8 @@ public:
   class dvifile *dviFile;
 
   void          showInfo();
+  void          exportPS();
+  void          exportPDF();
   void          changePageSize();
   int		totalPages();
   void		setShowPS( int flag );
@@ -94,14 +97,16 @@ public:
   void          draw_page(void);
 
   class fontPool  *font_pool;
-  class fontProgressDialog *progress;
+
 public slots:
+  void          abortExternalProgramm(void);
   bool		setFile(const QString & fname);
   void		gotoPage(int page);
   double	setZoom(double zoom);
   double        zoom() { return _zoom; };
   void		drawPage();
-
+  void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
+  void          dvips_terminated(KProcess *);
 
 signals:
   /// Emitted to indicate that a hyperlink has been clicked on, and
@@ -113,6 +118,8 @@ protected:
  void paintEvent(QPaintEvent *ev);
 
 private:
+ // Used to run commands like "dvips" or "dvipdfm"
+ KShellProcess     *proc;
 
  // These fields contain information about the geometry of the page.
  unsigned int	   unshrunk_paper_w; // basedpi * width(in inch)
@@ -159,6 +166,9 @@ private:
  // Indicates if the current page is already drawn (=1) or not (=0).
  char              is_current_page_drawn;
  double            _zoom;
+
+ // Used to show the progress of dvips and friends.
+ fontProgressDialog *progress;
 };
 
 

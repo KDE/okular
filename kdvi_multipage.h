@@ -37,7 +37,6 @@ public:
 private:
 
   static KInstance *s_instance;
-
 };
 
 
@@ -93,20 +92,21 @@ protected:
 
 signals:
 
-  /// Emitted to indicate the number of pages in the file. The
-  //receiver will set the current page to zero and call the
-  //gotoPage()-method.
+  /** Emitted to indicate the number of pages in the file. The
+      receiver will set the current page to zero and call the
+      gotoPage()-method. */
   void numberOfPages(int nr);
 
-  /// Emitted to indicate the number of pages in the file and the
-  //current page. The receiver will not change or update the display,
-  //nor call the gotoPage()-method.
+  /** Emitted to indicate the number of pages in the file and the
+      current page. The receiver will not change or update the
+      display, nor call the gotoPage()-method. */
   void pageInfo(int nr, int currpg);
 
 protected slots:
-
   void doSettings();
   void doInfo();
+  void doExportPS();
+  void doExportPDF();
   void about();
   void helpme();
   void bugform();
@@ -116,9 +116,18 @@ protected slots:
 
 private:
 
-  dviWindow *window;
+  dviWindow    *window;
   OptionDialog *options;
 
+  /** Pointers to several actions which are disabled if no file is
+      loaded. */
+  KAction      *docInfoAction;
+  KAction      *exportPSAction;
+  KAction      *exportPDFAction;
+
+  /** Used to enable the export menu when a file is successfully
+      loaded. */
+  void enableActions(bool);
 };
 
 

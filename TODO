@@ -3,18 +3,12 @@ ToDo-List for kdvi
 
 URGENT
 
-o i18n for infoDialog, fontPool & friends
-
-o implement SaveAs
-
-o feedback when running kpsewhich or ghostview
-
 o "Helper-Application" setup
 
 
 HIGHLY DESIRABLE
 
-o Speedup, in particular for ghostscript and kpsewhich.
+o Speedup, in particular for ghostscript and glyph enlarging.
 
 o Support for colored font specials
 
@@ -29,14 +23,12 @@ o Extra enlargement of characters for improved readability should be switchable.
 
 NOT SO URGENT
 
-o Document info dialog
 o Internal printing using QPrinter
 o Redirect error messages to a window
 o More background processing to keep the UI responsive
 o Magnifier window
 o Two page view
 o Support for even more TeX specials
-o Popup-Window to inform the user when Fonts are generated
 o Search option
 o dynamical storage allocation for hyperlinks (see dviwin.h)
 o more robust Error handling with throw/catch; no need to abort just because a PK-file is bad.

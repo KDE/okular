@@ -16,12 +16,12 @@
 #include "marklist.h"
 #include <qfile.h>
 
-#include <kmessagebox.h>
-#include <kdebug.h>
 #include <kapp.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmessagebox.h>
+#include <kprocess.h>
 
 Print::Print
 (
@@ -138,7 +138,7 @@ void Print::okPressed()
     }
   }
 
-  cmd += " " + ifile;
+  cmd += " " + KShellProcess::quote(ifile);
 
   if ( nup != 1 ) {
     cmd += nupProgram == "mpage" ? " | mpage -" : " | psnup -";

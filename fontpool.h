@@ -43,6 +43,9 @@ Q_OBJECT
   /** Default constructor. */ 
   fontPool( void );
 
+  /** Default destructor. */ 
+  ~fontPool( void );
+
   /** Method used to set the MetafontMode for the PK font files. This
       data is used when loading fonts. Currently, a change here will
       be applied only to those font which were not yet loaded
@@ -134,7 +137,11 @@ signals:
 
   /** Emitted to pass output of MetaFont and friends on to the user
       interface. */
-  void MFOutput(const QString);
+  void MFOutput(QString);
+
+  /** Emitted when a kpsewhich run is started in order to clear the
+      info dialog window. */
+  void new_kpsewhich_run(QString);
 
   /** Emitted when the font-pool has changed. The class receiving the
       signal might whish to call status() in order to receive the
@@ -182,6 +189,9 @@ private:
   /** This is the ShellProcess which is used to run the kpsewhich
       command which locates the font-files for us. */
  KShellProcess *proc;
+
+ /** FontProgress; the progress dialog used when generating fonts. */
+ class fontProgressDialog *progress;
 };
 
 #endif //ifndef _FONTPOOL_H

@@ -343,7 +343,7 @@
                                 <cstring>radioContrast</cstring>
                             </property>
                             <property name="text">
-                                <string>Convert to &amp;Black and White</string>
+                                <string>Convert to &amp;black and white</string>
                             </property>
                         </widget>
                         <widget class="QLayoutWidget">

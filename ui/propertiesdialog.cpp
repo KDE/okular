@@ -16,7 +16,7 @@
 #include "properties.h"
 #include "core/document.h"
 
-propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialogBase(parent, 0, true, i18n( "Unknown file." ), Ok)
+propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialogBase(parent, 0, true, i18n( "Unknown File" ), Ok)
 {
   // embed the properties widget (TODO switch to a dynamic generated one)
   properties *p = new properties(this);
@@ -30,7 +30,7 @@ propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialog
   }
   // mime name based on mimetype id
   QString mimeName = info->mimeType.section( '/', -1 ).upper();
-  setCaption( i18n("%1 properties").arg( mimeName ) );
+  setCaption( i18n("%1 Properties").arg( mimeName ) );
   // fill in document property values
   p->pagesValue->setText( QString::number( doc->pages() ) );
   p->authorValue->setText( info->author );

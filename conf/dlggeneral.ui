@@ -24,7 +24,7 @@
                 <cstring>groupBox2</cstring>
             </property>
             <property name="title">
-                <string>Program look</string>
+                <string>Program Look</string>
             </property>
             <hbox>
                 <property name="name">

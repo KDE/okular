@@ -78,6 +78,16 @@
    <min>1</min>
    <max>8</max>
   </entry>
+  <entry key="ZoomMode" type="UInt" >
+    <default>0</default>
+    <min>0</min>
+    <max>2</max>
+  </entry>
+  <entry key="ZoomFactor" type="Double" >
+    <default>1.0</default>
+    <min>0.1</min>
+    <max>4.0</max>
+  </entry>
  </group>
  <group name="ThumbnailsList" >
   <entry key="SyncThumbnailsViewport" type="Bool" >

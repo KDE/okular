@@ -438,6 +438,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         slotSetMouseDraw();
                         break;
                 }
+                delete m_popup;
             }
             // reset start position
             d->mouseStartPos = QPoint();

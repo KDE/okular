@@ -5,6 +5,7 @@
 #include <kdvi.h>
 #include <kconfig.h>
 #include <qfile.h>
+#include <kaboutdata.h>
 
 static const char *description = 
 	I18N_NOOP("KDE DVI viewer");
@@ -18,9 +19,23 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-	KCmdLineArgs::init( argc, argv, "kdvi", description, KDVI_VERSION);
-
-	KCmdLineArgs::addCmdLineOptions( options );
+	KAboutData aboutData( "kdvi", I18N_NOOP("KDVI"), 
+		KDVI_VERSION, description, KAboutData::GPL, 
+		"(c) 1999-2000, The Various KDVI and KDE Developers");
+	aboutData.addAuthor("Markku Hihnala",0, "mah@ee.oulu.fi");
+	aboutData.addAuthor("Bernd Johannes Wuebben",0, "wuebben@math.cornell.edu");
+	aboutData.addAuthor("Robert Williams",0, "rwilliams@jrcmaui.com");
+	aboutData.addAuthor("Eric Cooper");
+	aboutData.addAuthor("Bob Scheifler");
+	aboutData.addAuthor("Paal Kvamme");
+	aboutData.addAuthor("H\\aa vard Eidnes");
+	aboutData.addAuthor("Mark Eichin");
+	aboutData.addAuthor("Paul Vojta");
+	aboutData.addAuthor("Jeffrey Lee");
+	aboutData.addAuthor("Donald Richardson");
+	
+	KCmdLineArgs::init( argc, argv, &aboutData );
+	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
 	KApplication a;
 	kdvi *k;

@@ -136,7 +136,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   connect( m_outputDev, SIGNAL( ReadUp() ), SLOT( slotReadUp() ));
   connect( m_outputDev, SIGNAL( ReadDown() ), SLOT( slotReadDown() ));
   connect( m_outputDev, SIGNAL( urlDropped( const KURL& ) ), SLOT( slotOpenUrlDropped( const KURL & )));
-
+  connect( m_outputDev, SIGNAL( spacePressed() ), this, SLOT( slotReadDown() ) );
   readSettings();
   updateActionPage();
 }

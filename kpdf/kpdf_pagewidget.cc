@@ -211,6 +211,12 @@ namespace KPDF
         case Key_Right:
             scrollRight();
             break;
+        case Key_Space:
+        {
+            if( e->state() != ShiftButton ) {
+                emit spacePressed();
+            }
+        }
         default:
             e->ignore();
             return;

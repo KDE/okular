@@ -63,7 +63,7 @@ namespace KPDF
         void ZoomIn();
         void rightClick();
         void urlDropped( const KURL& );
-
+        void spacePressed();
     protected:
         virtual void keyPressEvent( QKeyEvent* );
         void contentsMousePressEvent(QMouseEvent*);

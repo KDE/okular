@@ -503,7 +503,7 @@ bool KDVIMultiPage::gotoPage(int page)
     // Make the widget &ptr visible in the scrollview. Somehow this
     // doesn't seem to trigger the signal contentsMoved in the
     // QScrollview, so that we better set lastCurrentPage ourselves.
-    scrollView()->setContentsPos(0, scrollView()->childY(ptr)-5);
+    scrollView()->setContentsPos(scrollView()->contentsX(), scrollView()->childY(ptr)-5);
     lastCurrentPage = page+1;
   }
   return true;

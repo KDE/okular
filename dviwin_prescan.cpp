@@ -72,24 +72,8 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   qApp->processEvents();
 
   
-  // Now see if the Gfx file exists... try to find it in the current
-  // directory, in the DVI file's directory, and finally, if all else
-  // fails, use kpsewhich to find the file. Later on, we should
-  // probably use the DVI file's baseURL, once this is implemented.
-  if (! QFile::exists(EPSfilename)) {
-    QFileInfo fi1(dviFile->filename);
-    QFileInfo fi2(fi1.dir(),EPSfilename);
-    if (fi2.exists())
-      EPSfilename = fi2.absFilePath();
-    else {
-      // Use kpsewhich to find the eps file.
-      KProcIO proc;
-      proc << "kpsewhich" << EPSfilename;
-      proc.start(KProcess::Block);
-      proc.readln(EPSfilename);
-      EPSfilename = EPSfilename.stripWhiteSpace();
-    }
-  }
+  // Now locate the Gfx file on the hard disk...
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
@@ -388,24 +372,8 @@ void dviWindow::prescan_ParsePSFileSpecial(QString cp)
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
 
-  // Now see if the Gfx file exists... try to find it in the current
-  // directory, in the DVI file's directory, and finally, if all else
-  // fails, use kpsewhich to find the file. Later on, we should
-  // probably use the DVI file's baseURL, once this is implemented.
-  if (! QFile::exists(EPSfilename)) {
-    QFileInfo fi1(dviFile->filename);
-    QFileInfo fi2(fi1.dir(),EPSfilename);
-    if (fi2.exists())
-      EPSfilename = fi2.absFilePath();
-    else {
-      // Use kpsewhich to find the eps file.
-      KProcIO proc;
-      proc << "kpsewhich" << EPSfilename;
-      proc.start(KProcess::Block);
-      proc.readln(EPSfilename);
-      EPSfilename = EPSfilename.stripWhiteSpace();
-    }
-  }
+  // Now locate the Gfx file on the hard disk...
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
   // Now parse the arguments. 
   int  llx     = 0; 

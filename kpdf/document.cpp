@@ -13,11 +13,13 @@
 #include <qvaluevector.h>
 #include <qmap.h>
 #include <kdebug.h>
+#include <klocale.h>
+#include <kfinddialog.h>
+#include <kmessagebox.h>
 
 // local includes
 #include "PDFDoc.h"
 #include "QOutputDev.h"
-//#include "TextOutputDev.h"
 
 #include "kpdf_error.h"
 #include "document.h"
@@ -41,6 +43,14 @@ public:
     float currentPosition;
     QValueVector< KPDFPage* > pages;
 
+    // find related
+    QString lastSearchText;
+    long lastSearchOptions;
+    KPDFPage * lastSearchPage;
+
+    // filtering related
+    QString filterString;
+
     // observers related (note: won't delete oservers)
     QMap< int, KPDFDocumentObserver* > observers;
 };
@@ -59,6 +69,7 @@ KPDFDocument::KPDFDocument()
     d->pdfdoc = 0;
     d->currentPage = -1;
     d->currentPosition = 0;
+    d->lastSearchPage = 0;
     SplashColor paperColor;
     paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
     d->kpdfOutputDev = new KPDFOutputDev( paperColor );
@@ -163,17 +174,22 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
         // in-place Pixmap generation for syncronous requests
         if ( !kp->hasPixmap( id, width, height ) )
         {
-            // set KPDFPage pointer to outputdevice for links/text harvesting
-            d->kpdfOutputDev->setParams( width, height, false );
-
             // compute dpi used to get an image with desired width and height
             double fakeDpiX = width * 72.0 / kp->width(),
                    fakeDpiY = height * 72.0 / kp->height();
+
+            // setup kpdf output device: text page is generated only if we are at 72dpi.
+            // since we can pre-generate the TextPage at the right res.. why not?
+            bool genTextPage = !kp->hasSearchPage() && (width == kp->width()) && (height == kp->height());
+            d->kpdfOutputDev->setParams( width, height, genTextPage );
+
             d->docLock.lock();
-            d->pdfdoc->displayPage( d->kpdfOutputDev, page + 1, fakeDpiX, fakeDpiY, 0, true, true );
+            d->pdfdoc->displayPage( d->kpdfOutputDev, page + 1, fakeDpiX, fakeDpiY, 0, true, false/*dolinks*/ );
             d->docLock.unlock();
 
             kp->setPixmap( id, d->kpdfOutputDev->takePixmap() );
+            if ( genTextPage )
+                kp->setSearchPage( d->kpdfOutputDev->takeTextPage() );
 
             d->observers[id]->notifyPixmapChanged( page );
         }
@@ -200,101 +216,80 @@ void KPDFDocument::slotSetCurrentPagePosition( int page, float position )
     pageChanged();
 }
 
-void KPDFDocument::slotFind( bool /*nextMatch*/, const QString & /*text*/ )
+void KPDFDocument::slotSetFilter( const QString & pattern )
 {
-/*
-  TextOutputDev *textOut;
-  Unicode *u;
-  bool found;
-  double xMin1, yMin1, xMax1, yMax1;
-  int len, pg;
+    d->filterString = pattern;
+    if ( pattern.length() > 3 )
+        sendFilteredPageList();
+}
 
-  // This is more or less copied from what xpdf does, surely can be optimized
-  len = s.length();
-  u = (Unicode *)gmalloc(len * sizeof(Unicode));
-  for (int i = 0; i < len; ++i) u[i] = (Unicode)(s.latin1()[i] & 0xff);
-
-  // search current
-  found = m_outputDev->find(u, len, next);
-
-  if (!found)
-  {
-    // search following pages
-    textOut = new TextOutputDev(NULL, gTrue, gFalse, gFalse);
-    if (!textOut->isOk())
+void KPDFDocument::slotFind( const QString & t, long opt )
+{
+    // reload last options if in 'find next' case
+    long options = t.isEmpty() ? d->lastSearchOptions : opt;
+    QString text = t.isEmpty() ? d->lastSearchText : t;
+    if ( !t.isEmpty() )
     {
-      gfree(u);
-      delete textOut;
-      return;
+        d->lastSearchText = t;
+        d->lastSearchOptions = opt;
     }
 
-    pg = m_currentPage + 1;
-    while(!found && pg <= d->pdfdoc->getNumPages())
-    {
-      m_docMutex.lock();
-      d->pdfdoc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
-      m_docMutex.unlock();
-      found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
-      if (!found) pg++;
-    }
+    // check enabled options (only caseSensitive support until now)
+    bool caseSensitive = options & KFindDialog::CaseSensitive;
 
-    if (!found && m_currentPage != 1)
-    {
-      if (KMessageBox::questionYesNo(widget(), i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes)
-      {
-        // search previous pages
-        pg = 1;
-        while(!found && pg < m_currentPage)
+    // continue checking last SearchPage first (if it is the current page)
+    KPDFPage * foundPage = 0;
+    int currentPage = d->currentPage;
+    int pageCount = d->pages.count();
+    if ( d->lastSearchPage && (int)d->lastSearchPage->number() == currentPage )
+        if ( d->lastSearchPage->hasText( text, caseSensitive, false ) )
+            foundPage = d->lastSearchPage;
+        else
         {
-          m_docMutex.lock();
-          d->pdfdoc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
-          m_docMutex.unlock();
-          found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
-          if (!found) pg++;
-        }
-      }
-    }
-
-    delete textOut;
-    if (found)
-    {
-       kdDebug() << "found at " << pg << endl;
-       goToPage(pg);
-       // xpdf says: can happen that we do not find the text if coalescing is bad OUCH
-       //FIXME Enrico: expanded "m_outputDev(the widget)->find(u, len, false);" above:
-    bool PageWidget::find( Unicode * u, int len, bool next )
-    {return false;  TODO !!restore!! Enrico
-        bool b;
-        if (!next)
-        {
-            // ensure we are searching the whole page
-            m_xMin = 0;
-            m_yMin = 0;
+            d->lastSearchPage->hilightLastSearch( false );
+            currentPage++;
+            pageCount--;
         }
 
-        b = m_outputdev(a QOut..) -> find(u, len, !next, true, next, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
-        m_xMin = m_xMin / m_zoomFactor;
-        m_yMin = m_yMin / m_zoomFactor;
-        m_xMax = m_xMax / m_zoomFactor;
-        m_yMax = m_yMax / m_zoomFactor;
-        m_selection = b;
-        updateContents();
-        return b;
-    }
-        // expanded ends here
+    if ( !foundPage )
+        // loop through the whole document
+        for ( int i = 0; i < pageCount; i++ )
+        {
+            if ( currentPage >= pageCount )
+            {
+                if ( KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
+                    currentPage = 0;
+                else
+                    break;
+            }
+            KPDFPage * page = d->pages[ currentPage ];
+            if ( !page->hasSearchPage() )
+            {
+                // build a TextPage using the lightweight KPDFTextDev generator..
+                KPDFTextDev td;
+                d->docLock.lock();
+                d->pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+                d->docLock.unlock();
+                // ..and attach it to the page
+                page->setSearchPage( td.takeTextPage() );
+            }
+            if ( page->hasText( text, caseSensitive, true ) )
+            {
+                foundPage = page;
+                break;
+            }
+            currentPage++;
+        }
+
+    if ( foundPage )
+    {
+        d->lastSearchPage = foundPage;
+        foundPage->hilightLastSearch( true );
+        slotSetCurrentPage( foundPage->number() );
+        foreachObserver( notifyPixmapChanged( foundPage->number() ) );
     }
     else
-    {
-        if (next) KMessageBox::information(widget(), i18n("No more matches found for '%1'.").arg(s));
-        else KMessageBox::information(widget(), i18n("No matches found for '%1'.").arg(s));
-    }
-  }
-
-  if (found) m_findText = s;
-  else m_findText = QString::null;
-
-  gfree(u);
-*/
+        KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(text) );
 }
 
 void KPDFDocument::slotGoToLink( /* QString anchor */ )
@@ -328,6 +323,7 @@ void KPDFDocument::deletePages()
         delete d->pages[i];
     d->pages.clear();
     d->currentPage = -1;
+    d->lastSearchPage = 0;
 }
 
 /** TO BE IMPORTED:
@@ -405,6 +401,5 @@ void ThumbnailList::customEvent(QCustomEvent *e)
 	m_ignoreNext = false;
 }
 */
-
 
 #include "document.moc"

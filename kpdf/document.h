@@ -33,7 +33,6 @@ public:
     // commands from the Document to all observers
     virtual void pageSetup( const QValueList<int> & /*pages*/ ) {};
     virtual void pageSetCurrent( int /*pageNumber*/, float /*position*/ ) {};
-    //virtual void pageSetHilight( int /*x*/, int /*y*/, int /*width*/, int /*height*/ ) {};
 };
 
 #define PAGEWIDGET_ID 1
@@ -72,7 +71,8 @@ public slots:
     // document commands via slots
     void slotSetCurrentPage( int page );
     void slotSetCurrentPagePosition( int page, float position );
-    void slotFind( bool nextMatch, const QString & text = "" );
+    void slotSetFilter( const QString & pattern );
+    void slotFind( const QString & text = "", long options = 0 );
     void slotGoToLink( /* QString anchor */ );
 
 signals:

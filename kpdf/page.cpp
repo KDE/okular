@@ -23,7 +23,9 @@
 // TODO think about moving rendering ...
 
 KPDFPage::KPDFPage( int page, float w, float h, int r )
-    : m_number( page ), m_rotation( r ), m_width( w ), m_height( h ), m_text( 0 )
+    : m_number( page ), m_rotation( r ), m_width( w ), m_height( h ),
+    m_sEnabled( false ), m_sLeft( 0 ), m_sTop( 0 ), m_sRight( 0 ),
+    m_sBottom( 0 ), m_text( 0 )
 {
 }
 
@@ -36,6 +38,27 @@ KPDFPage::~KPDFPage()
 }
 
 
+bool KPDFPage::hasPixmap( int id, int width, int height ) const
+{
+    if ( !m_pixmaps.contains( id ) )
+        return false;
+    QPixmap * p = m_pixmaps[ id ];
+    return p ? ( p->width() == width && p->height() == height ) : false;
+}
+
+bool KPDFPage::hasSearchPage() const
+{
+    return (m_text != 0);
+}
+
+bool KPDFPage::hasLink( int mouseX, int mouseY ) const
+{
+    //TODO this.
+    //Sample implementation using a small rect as 'active' link zone
+    return QRect( 20,20, 100,50 ).contains( mouseX, mouseY );
+}
+
+// BEGIN commands (paint / search)
 void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width, int height ) const
 {
     QPixmap * pixmap = 0;
@@ -79,34 +102,53 @@ void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width
             p->drawLine( 0, 0, width, height );
             p->drawLine( 0, height, width, 0 );
         }
-        // draw selection (FIXME Enrico: move selection stuff inside PAGE!!)
-        /*if ( there is something to hilght )
-            p->setBrush(Qt::SolidPattern);
-            p->setPen(QPen(Qt::black, 1)); // should not be necessary bug a Qt bug makes it necessary
-            p->setRasterOp(Qt::NotROP);
-            p->drawRect(qRound(m_xMin*m_zoomFactor), qRound(m_yMin*m_zoomFactor), qRound((m_xMax- m_xMin)*m_zoomFactor), qRound((m_yMax- m_yMin)*m_zoomFactor));
-        */
+        // draw selection
+        if ( m_sEnabled )
+        {
+            int x = (int)( m_sLeft * width / m_width ),
+                y = (int)( m_sTop * height / m_height ),
+                w = (int)( m_sRight * width / m_width ) - x,
+                h = (int)( m_sBottom * height / m_height ) - y;
+            if ( w > 0 && h > 0 )
+            {
+                p->setBrush( Qt::SolidPattern );
+                p->setPen( QPen( Qt::black, 1 ) ); // should not be necessary bug a Qt bug makes it necessary
+                p->setRasterOp( Qt::NotROP );
+                p->drawRect( x, y, w, h );
+            }
+        }
     }
     // else draw a blank area
     else
         p->fillRect( limits, Qt::white /*FIXME change to the page bg color*/ );
 }
 
-
-bool KPDFPage::hasPixmap( int id, int width, int height ) const
+bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
 {
-    if ( !m_pixmaps.contains( id ) )
+    if ( !m_text )
         return false;
-    QPixmap * p = m_pixmaps[ id ];
-    return p ? ( p->width() == width && p->height() == height ) : false;
+
+    const char * str = text.latin1();
+    int len = text.length();
+    Unicode *u = (Unicode *)gmalloc(len * sizeof(Unicode));
+    for (int i = 0; i < len; ++i)
+        u[i] = (Unicode) str[i];
+
+    bool found = m_text->findText( u, len, fromTop ? gTrue : gFalse, gTrue, fromTop ? gFalse : gTrue, gFalse, &m_sLeft, &m_sTop, &m_sRight, &m_sBottom );
+    if( found && strictCase )
+    {
+        GString * orig = m_text->getText( m_sLeft, m_sTop, m_sRight, m_sBottom );
+        found = !strcmp( text.latin1(), orig->getCString() );
+    }
+    return found;
 }
 
-bool KPDFPage::hasLink( int mouseX, int mouseY ) const
+void KPDFPage::hilightLastSearch( bool on )
 {
-    //TODO this.
-    //Sample implementation using a small rect as 'active' link zone
-    return QRect( 20,20, 100,50 ).contains( mouseX, mouseY );
+    m_sEnabled = on;
 }
+// END commands (paint / search)
+
 
 void KPDFPage::setPixmap( int id, QPixmap * pixmap )
 {
@@ -115,38 +157,18 @@ void KPDFPage::setPixmap( int id, QPixmap * pixmap )
     m_pixmaps[id] = pixmap;
 }
 
+void KPDFPage::setSearchPage( TextPage * tp )
+{
+    delete m_text;
+    m_text = tp;
+}
+
 /*
-void KPDFPage::setPixmapOverlaySelection( const QRect & normalizedRect );
+void KPDFPage::setLinks( ..SomeStruct.. )
 {   //TODO this
 }
+
 void KPDFPage::setPixmapOverlayNotations( ..DOMdescription.. )
 {   //TODO this
 }
 */
-
-/*
-void KPDFPage::setTextPage( TextOutputDev * textPage )
-{
-    delete m_text;
-    m_text = 0;
-    if ( m_text )
-        m_text = textPage;
-}
-
-void KPDFPage::setLinks( ..SomeStruct.. )
-{
-}
-*/
-
-/*bool KPDFPage::hasText( QString & text )
-{   //TODO this
-    return text.isNull();
-// FIXME MOVED from the QOutputDev. Find over a textpage.
-//bool find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom, GBool startAtLast, GBool stopAtLast, double *xMin, double *yMin, double *xMax, double *yMax)
-//{return m_text -> findText(s, len, startAtTop, stopAtBottom, startAtLast, stopAtLast, xMin, yMin, xMax, yMax);}
-}
-
-const QRect & KPDFPage::textPosition()
-{   //TODO this
-    return QRect();
-}*/

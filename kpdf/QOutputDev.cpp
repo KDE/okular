@@ -27,10 +27,7 @@
 
 // NOTE: XPDF/Splash implementation dependant code will be marked with '###'
 
-//------------------------------------------------------------------------
-// KPDFOutputDev
-//------------------------------------------------------------------------
-
+// BEGIN KPDFOutputDev 
 KPDFOutputDev::KPDFOutputDev(SplashColor paperColor)
 	: SplashOutputDev(splashModeRGB8, false, paperColor),
 	m_pixmapWidth( -1 ), m_pixmapHeight( -1 ), m_pixmap( 0 ), m_text( 0 )
@@ -71,8 +68,6 @@ TextPage * KPDFOutputDev::takeTextPage()
 	return text;
 }
 
-
-
 void KPDFOutputDev::startPage(int pageNum, GfxState *state)
 {
 	m_pageNum = pageNum;
@@ -96,7 +91,6 @@ void KPDFOutputDev::endPage()
 	if ( bw != m_pixmapWidth || bh != m_pixmapHeight )
 	{
 		// it may happen (in fact it doesn't) that we need rescaling
-
 		kdWarning() << "Pixmap at page '" << m_pageNum << "' needed rescale." << endl;
 		m_pixmap = new QPixmap( img->smoothScale( m_pixmapWidth, m_pixmapHeight ) );
 	}
@@ -137,3 +131,47 @@ GBool KPDFOutputDev::beginType3Char(GfxState *state, double x, double y, double 
 		m_text->addChar(state, x, y, dx, dy, code, u, uLen);
 	return SplashOutputDev::beginType3Char(state, x, y, dx, dy, code, u, uLen);
 }
+// END KPDFOutputDev 
+
+
+// BEGIN KPDFTextDev 
+KPDFTextDev::KPDFTextDev()
+{
+	m_text = new TextPage( gFalse );
+}
+
+KPDFTextDev::~KPDFTextDev()
+{
+	delete m_text;
+}
+
+TextPage * KPDFTextDev::takeTextPage()
+{
+	TextPage * t = m_text;
+	m_text = 0;
+	return t;
+}
+
+void KPDFTextDev::startPage(int, GfxState *state)
+{
+	if ( !m_text )
+		m_text = new TextPage( gFalse );
+	m_text->startPage(state);
+}
+	
+void KPDFTextDev::endPage()
+{
+	m_text->endPage();
+	m_text->coalesce(gTrue);
+}
+
+void KPDFTextDev::updateFont(GfxState *state)
+{
+	m_text->updateFont(state);
+}
+
+void KPDFTextDev::drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen)
+{
+	m_text->addChar(state, x, y, dx, dy, code, u, uLen);
+}
+// END KPDFTextDev 

@@ -103,6 +103,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// Page Traversal actions
 	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
+	m_gotoPage->setShortcut( "CTRL+G" );
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
@@ -166,7 +167,6 @@ bool Part::openFile()
 {
 	bool ok = document->openFile( m_file );
 	m_find->setEnabled( ok );
-	m_findNext->setEnabled( ok );
 	return ok;
 }
 
@@ -257,14 +257,17 @@ void Part::slotGotoLast()
 
 void Part::slotFind()
 {
-	KFindDialog dlg(widget());
+	KFindDialog dlg( widget() );
 	if (dlg.exec() == QDialog::Accepted)
-		document->slotFind( false, dlg.pattern() );
+	{
+		m_findNext->setEnabled( true );
+		document->slotFind( dlg.pattern(), dlg.options() );
+	}
 }
 
 void Part::slotFindNext()
 {
-	document->slotFind( true );
+	document->slotFind();
 }
 
 void Part::slotSaveFileAs()

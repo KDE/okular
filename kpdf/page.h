@@ -14,7 +14,7 @@ class QPainter;
 class QPixmap;
 //class QString;
 //class QRect;
-class TextOutputDev;
+class TextPage;
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -40,26 +40,28 @@ public:
     float ratio() const { return m_height / m_width; }
     float rotation() const { return m_rotation; }
     bool hasPixmap( int id, int width, int height ) const;
+    bool hasSearchPage() const;
     bool hasLink( int mouseX, int mouseY ) const;
+
+    // commands
     void drawPixmap( int id, QPainter * p, const QRect & rect, int width, int height ) const;
+    bool hasText( const QString & text, bool strictCase, bool fromTop );
+    void hilightLastSearch( bool enabled );
 
-    // page contents setup *NOTE changes in progress*
+    // set page contents
     void setPixmap( int id, QPixmap * pixmap );
-    /*void setTextPage( TextOutputDev * );*/
+    void setSearchPage( TextPage * text );
     /*void setLinks( ..SomeStruct.. );    or (better): */
-    /*void setPixmapOverlaySelection( const QRect & normalizedRect );*/
     /*void setPixmapOverlayNotations( ..DOMdescription.. );*/
-
-    // FIND command
-    //bool hasText( QString & text );
-    //const QRect & textPosition();
 
 private:
     int m_number, m_rotation;
     float m_width, m_height;
+    bool m_sEnabled;
+    double m_sLeft, m_sTop, m_sRight, m_sBottom;
 
     QMap<int,QPixmap *> m_pixmaps;
-    TextOutputDev * m_text;
+    TextPage * m_text;
 };
 /*
 class KPDFLink

@@ -49,8 +49,6 @@
   <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_zoom"/>
-  <Action name="mouse_select_text"/>
-  <Action name="mouse_select_gfx"/>
-  <Action name="mouse_draw"/>
+  <Action name="mouse_select"/>
 </ToolBar>
 </kpartgui>

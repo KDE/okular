@@ -8,25 +8,29 @@ Legend:
 
 In progress on the branch (first item comes first):
 -> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [40% done]
+-> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive}) [0%]
+-> async document generator using Albert's generator thread [0%]
 
 Things to do in order to merge in HEAD (first item has highest priority):
--> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive})
--> async document generator using Albert's generator thread
+-> import Marco Martin's "another kpdf icon" (kde-look: 16146)
 -> link thumbnails view with document
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignemnt. (by Mikolaj)
 -> usability: clear search must restore the full thumbs list (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
--> new icons (contest at kde-look has ended and we know the winner. good choice :-)
+-> watch out for FIXMEs in code
 -> take care of naming on merge, too differences (remove some kpdf_* prefixes
-   and rename internals toodocument->kpdfdocument)
+   and rename internals too document->kpdfdocument, page->kpdfpage, etc..)
 
 More items (first items will enter 'In progress list' first):
 *THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
+-> display current page / total pages (with analog indicator too (progressbar/...))
+   maybe this can be done on a small widget at the top of the toolbox, displaying
+   'document' informations (pages, current pg, some metadata, etc..)
+-> take care of TODOs in code
 -> find: scroll page if the the searched string is not visible [after 'viewport changes']
 -> ADD: click over image allows "save image" [60% done]
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
--> display current page / total pages (with analog indicator too (progressbar/indicator/...))
 -> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
@@ -45,6 +49,8 @@ More items (first items will enter 'In progress list' first):
 -> rotate the whole document / individual pages
 
 Done (newest feature comes firts):
+-> ADD: dynamic zoom with mid mouse button (click and drag up-down to zoom in-out)
+-> FIX: merge select text & select gfx, two sections on the same pop-up menu
 -> ADD: reading aids (inverted display, recolor, black/white, draw link border, draw image border)
 -> FIX: zoom preserved when switching modes and flickerless drawing
 -> ADD: Printing as PS instead of as image (Albert)
@@ -85,7 +91,6 @@ Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 a
  Tool: ruler, measure: distance, perimeter, ?area?
  Tool: color picker
  Annotations: yellow notes 'post-it' like
- Speak: integration with a voice synthesizer
  Export: export to other formats keeping formatting (a dream.. except for PNG :-)
  PDF: <theICEBear> pdf forms support.... :D if at all possible
 

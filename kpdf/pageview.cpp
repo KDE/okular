@@ -41,7 +41,6 @@
 #include "page.h"
 #include "settings.h"
 
-
 // structure used internally by PageView for data storage
 class PageViewPrivate
 {
@@ -58,10 +57,10 @@ public:
     PageView::MouseMode mouseMode;
     QPoint mouseGrabPos;
     QPoint mouseStartPos;
+    int mouseMidStartY;
     bool mouseOnLink;
     bool mouseOnActiveRect;
     QRect mouseSelectionRect;
-    PageViewItem * mouseSelectionItem;
 
     // other stuff
     QTimer * delayTimer;
@@ -103,9 +102,9 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->zoomMode = ZoomFixed;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
+    d->mouseMidStartY = -1;
     d->mouseOnLink = false;
     d->mouseOnActiveRect = false;
-    d->mouseSelectionItem = 0;
     d->delayTimer = 0;
     d->scrollTimer = 0;
     d->scrollIncrement = 0;
@@ -115,7 +114,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );
     viewport()->setFocusPolicy( StrongFocus );
-    viewport()->setPaletteBackgroundColor( Qt::gray );
+    //viewport()->setPaletteBackgroundColor( Qt::white );
+    viewport()->setBackgroundMode( Qt::NoBackground );
     setResizePolicy( Manual );
     setAcceptDrops( true );
     setDragAutoScroll( false );
@@ -174,11 +174,8 @@ void PageView::setupActions( KActionCollection * ac )
     KToggleAction * mz = new KRadioAction( i18n("Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
     mz->setExclusiveGroup( "MouseType" );
 
-    KToggleAction * mst = new KRadioAction( i18n("Select Text"), "frame_edit", 0, this, SLOT( slotSetMouseSelText() ), ac, "mouse_select_text" );
+    KToggleAction * mst = new KRadioAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     mst->setExclusiveGroup( "MouseType" );
-
-    KToggleAction * msg = new KRadioAction( i18n("Select Graphics"), "frame_image", 0, this, SLOT( slotSetMouseSelGfx() ), ac, "mouse_select_gfx" );
-    msg->setExclusiveGroup( "MouseType" );
 
     d->aMouseEdit = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
     d->aMouseEdit->setExclusiveGroup("MouseType");
@@ -480,8 +477,19 @@ void PageView::keyPressEvent( QKeyEvent * e )
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
-    bool leftButton = e->state() & LeftButton;
+    // if holding mouse mid button, perform zoom
+    if ( (e->state() & MidButton) && d->mouseMidStartY > 0 )
+    {
+        int deltaY = d->mouseMidStartY - e->globalPos().y();
+        d->mouseMidStartY = e->globalPos().y();
+        d->zoomFactor *= ( 1.0 + ( (double)deltaY / 500.0 ) );
+        updateZoom( ZoomRefreshCurrent );
+	// uncomment following line to force a complete redraw
+	//viewport()->repaint();
+        return;
+    }
 
+    bool leftButton = e->state() & LeftButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -531,8 +539,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
             break;
 
         case MouseZoom:
-        case MouseSelText:
-        case MouseSelGfx:
+        case MouseSelect:
             // set second corner of selection in selection pageItem
             if ( leftButton && !d->mouseSelectionRect.isNull() )
                 selectionEndPoint( e->x(), e->y() );
@@ -545,9 +552,16 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 
 void PageView::contentsMousePressEvent( QMouseEvent * e )
 {
-    bool leftButton = e->button() & LeftButton;
+    // if pressing mid mouse button while not doing other things, begin 'comtinous zoom' mode
+    if ( (e->button() & MidButton) && d->mouseSelectionRect.isNull() )
+    {
+        d->mouseMidStartY = e->globalPos().y();
+        setCursor( sizeVerCursor );
+        return;
+    }
 
     // handle mode dependant mouse press actions
+    bool leftButton = e->button() & LeftButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:    // drag start / click / link following
@@ -563,20 +577,10 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             break;
 
         case MouseZoom:
-        case MouseSelGfx:
+        case MouseSelect:   // set first corner of the selection rect
             if ( leftButton )
                 selectionStart( e->x(), e->y(), false );
             break;
-
-        case MouseSelText: // set first corner of the selection rect
-            if ( leftButton )
-            {
-                PageViewItem * item = pickItemOnPoint( e->x(), e->y() );
-                if ( item )
-                    selectionStart( e->x(), e->y(), false, item );
-            }
-            break;
-
 
         case MouseEdit:      // ? place the beginning of [tool] ?
             break;
@@ -585,14 +589,21 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
+    // handle mode indepent mid buttom zoom
+    if ( (e->state() & MidButton) && d->mouseMidStartY > 0 )
+    {
+        d->mouseMidStartY = -1;
+        setCursor( arrowCursor );
+        return;
+    }
+
     bool leftButton = e->button() & LeftButton,
          rightButton = e->button() & RightButton;
-
-    PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
     switch ( d->mouseMode )
     {
-        case MouseNormal:
+        case MouseNormal:{  // do Follow Link or Display RMB
             setCursor( arrowCursor );
+            PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
             if ( leftButton && pageItem )
             {
                 if ( d->mouseOnLink )
@@ -654,10 +665,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             }
             // reset start position
             d->mouseStartPos = QPoint();
-            break;
+            }break;
 
-        case MouseZoom:
-            // handle 'Zoom To Area', in every mouse mode
+        case MouseZoom:     // do ZOOM
             if ( leftButton && !d->mouseSelectionRect.isNull() )
             {
                 QRect selRect = d->mouseSelectionRect.normalize();
@@ -694,88 +704,91 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             }
             break;
 
-        case MouseSelText:
-            if ( leftButton && !d->mouseSelectionRect.isNull() )
+        case MouseSelect:{  // do SELECT
+            if ( !leftButton || d->mouseSelectionRect.isNull() )
+                break;
+
+            QRect selectionRect = d->mouseSelectionRect.normalize();
+            if ( selectionRect.width() < 5 || selectionRect.height() < 5 )
+                break;
+
+            // grab text in selection by extracting it from all intersected pages
+            QString selectedText;
+            QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+            for ( ; iIt != iEnd; ++iIt )
             {
-                QRect relativeRect = d->mouseSelectionRect.normalize();
-                if ( relativeRect.width() < 2 || relativeRect.height() < 2 )
-                    break;
-
-                // request the textpage if there isn't one
-                const KPDFPage * kpdfPage = d->mouseSelectionItem->page();
-                if ( !kpdfPage->hasSearchPage() )
-                    d->document->requestTextPage( kpdfPage->number() );
-
-                // copy text into the clipboard
-                QClipboard *cb = QApplication::clipboard();
-                relativeRect.moveBy( -d->mouseSelectionItem->geometry().left(),
-                                     -d->mouseSelectionItem->geometry().top() );
-                const QString & selection = kpdfPage->getTextInRect( relativeRect, d->mouseSelectionItem->zoomFactor() );
-
-                cb->setText( selection, QClipboard::Clipboard );
-                if ( cb->supportsSelection() )
-                    cb->setText( selection, QClipboard::Selection );
-
-                // clear widget selection and invalidate rect
-                selectionClear();
-
-                // user friendly message
-                if ( selection.length() < 1 )
-                    d->messageWindow->display( i18n( "No characters copied to clipboard." ), PageViewMessage::Error );
-                else
-                    d->messageWindow->display( i18n( "%1 characters copied to clipboard." ).arg( selection.length() ) );
-            }
-            break;
-
-        case MouseSelGfx:
-            if ( leftButton && !d->mouseSelectionRect.isNull() )
-            {
-                QRect relativeRect = d->mouseSelectionRect.normalize();
-                if ( relativeRect.width() > 4 && relativeRect.height() > 4 )
+                PageViewItem * item = *iIt;
+                const QRect & itemRect = item->geometry();
+                if ( selectionRect.intersects( itemRect ) )
                 {
-                    // grab rendered page into the pixmap
-                    QPixmap copyPix( relativeRect.width(), relativeRect.height() );
-                    QPainter copyPainter( &copyPix );
-                    copyPainter.translate( -relativeRect.left(), -relativeRect.top() );
-                    paintItems( &copyPainter, relativeRect );
-
-                    // popup that ask to copy or save image
-                    KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
-                    m_popup->insertTitle( i18n( "Copy Image [%1x%2]" ).arg( copyPix.width() ).arg( copyPix.height() ) );
-                    m_popup->insertItem( SmallIcon("editcopy"), i18n("Copy to Clipboard"), 1 );
-                    m_popup->insertItem( SmallIcon("filesave"), i18n("Save to File ..."), 2 );
-                    switch ( m_popup->exec(e->globalPos()) )
-                    {
-                        case 1:{
-                            // save pixmap to clipboard
-                            QClipboard *cb = QApplication::clipboard();
-                            cb->setPixmap( copyPix, QClipboard::Clipboard );
-                            if ( cb->supportsSelection() )
-                                cb->setPixmap( copyPix, QClipboard::Selection );
-                            d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard." ).arg( copyPix.width() ).arg( copyPix.height() ) );
-                            }break;
-                        case 2:
-                            // save pixmap to file
-                            QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
-                            if ( !fileName.isNull() )
-                            {
-                                QString type( KImageIO::type( fileName ) );
-                                if ( type.isNull() )
-                                    type = "PNG";
-                                copyPix.save( fileName, type.latin1() );
-                                d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file." ).arg( copyPix.width() ).arg( copyPix.height() ).arg( type ) );
-                            }
-                            else
-                                d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
-                            break;
-                    }
-                    delete m_popup;
+                    // request the textpage if there isn't one
+                    const KPDFPage * kpdfPage = item->page();
+                    if ( !kpdfPage->hasSearchPage() )
+                        d->document->requestTextPage( kpdfPage->number() );
+                    // grab text
+                    QRect relativeRect = selectionRect.intersect( itemRect );
+                    relativeRect.moveBy( -itemRect.left(), -itemRect.top() );
+                    selectedText += kpdfPage->getTextInRect( relativeRect, item->zoomFactor() );
                 }
-
-                // clear widget selection and invalidate rect
-                selectionClear();
             }
-            break;
+
+            // popup that ask to copy:text and copy/save:image
+            KPopupMenu menu( this );
+            if ( !selectedText.isEmpty() )
+            {
+                menu.insertTitle( i18n( "Text ( %1 characters )" ).arg( selectedText.length() ) );
+                menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
+            }
+            menu.insertTitle( i18n( "Image ( %1 by %2 pixels )" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+            menu.insertItem( SmallIcon("image"), i18n( "Copy to Clipboard" ), 2 );
+            menu.insertItem( SmallIcon("filesave"), i18n( "Save to File ..." ), 3 );
+            int choice = menu.exec( e->globalPos() );
+            // IMAGE operation choosen
+            if ( choice > 1 )
+            {
+                // renders page into a pixmap
+                QPixmap copyPix( selectionRect.width(), selectionRect.height() );
+                QPainter copyPainter( &copyPix );
+                copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
+                paintItems( &copyPainter, selectionRect );
+
+                if ( choice == 2 )
+                {
+                    // [2] copy pixmap to clipboard
+                    QClipboard *cb = QApplication::clipboard();
+                    cb->setPixmap( copyPix, QClipboard::Clipboard );
+                    if ( cb->supportsSelection() )
+                        cb->setPixmap( copyPix, QClipboard::Selection );
+                    d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard." ).arg( copyPix.width() ).arg( copyPix.height() ) );
+                }
+                else
+                {
+                    // [3] save pixmap to file
+                    QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
+                    if ( fileName.isNull() )
+                        d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
+                    else
+                    {
+                        QString type( KImageIO::type( fileName ) );
+                        if ( type.isNull() )
+                            type = "PNG";
+                        copyPix.save( fileName, type.latin1() );
+                        d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file." ).arg( copyPix.width() ).arg( copyPix.height() ).arg( type ) );
+                    }
+                }
+            }
+            // TEXT operation choosen
+            else if ( choice == 1 )
+            {
+                QClipboard *cb = QApplication::clipboard();
+                cb->setText( selectedText, QClipboard::Clipboard );
+                if ( cb->supportsSelection() )
+                    cb->setText( selectedText, QClipboard::Selection );
+            }
+
+            // clear widget selection and invalidate rect
+            selectionClear();
+            }break;
 
         case MouseEdit:      // ? apply [tool] ?
             break;
@@ -947,10 +960,8 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     return item;
 }
 
-void PageView::selectionStart( int x, int y, bool /*aboveAll*/, PageViewItem * pageLock)
+void PageView::selectionStart( int x, int y, bool /*aboveAll*/ )
 {
-    // pick current page as the active one
-    d->mouseSelectionItem = pageLock;
     d->mouseSelectionRect.setRect( x, y, 1, 1 );
     // ensures page doesn't scroll
     if ( d->scrollTimer )
@@ -962,13 +973,10 @@ void PageView::selectionStart( int x, int y, bool /*aboveAll*/, PageViewItem * p
 
 void PageView::selectionEndPoint( int x, int y )
 {
-    // clip selection to the current page (if set)
-    if ( d->mouseSelectionItem )
-    {
-        const QRect & itemRect = d->mouseSelectionItem->geometry();
-        x = QMAX( QMIN( x, itemRect.right() ), itemRect.left() ),
-        y = QMAX( QMIN( y, itemRect.bottom() ), itemRect.top() );
-    }
+    // clip selection to the viewport
+    QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
+    x = QMAX( QMIN( x, viewportRect.right() ), viewportRect.left() ),
+    y = QMAX( QMIN( y, viewportRect.bottom() ), viewportRect.top() );
     // if selection changed update rect
     if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
     {
@@ -997,7 +1005,6 @@ void PageView::selectionClear()
 {
     updateContents( d->mouseSelectionRect.normalize() );
     d->mouseSelectionRect.setCoords( 0, 0, -1, -1 );
-    d->mouseSelectionItem = 0;
 }
 
 void PageView::updateZoom( ZoomMode newZoomMode )
@@ -1132,9 +1139,9 @@ void PageView::slotRelayoutPages()
     // look for the item closest to viewport center and the relative position
     // between the item and the viewport center (for viewport restoring at end)
     PageViewItem * focusedPage = 0;
-    float focusedX = 0.5,
-          focusedY = 0.0,
-          minDistance = -1.0;
+    double focusedX = 0.5,
+           focusedY = 0.0,
+           minDistance = -1.0;
     // find the page nearest to viewport center
     for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
     {
@@ -1142,7 +1149,7 @@ void PageView::slotRelayoutPages()
         if ( geometry.intersects( viewportRect ) )
         {
             // compute distance between item center and viewport center
-            float distance = hypotf( geometry.left() + geometry.width() / 2 - viewportCenterX,
+            double distance = hypot( geometry.left() + geometry.width() / 2 - viewportCenterX,
                                      geometry.top() + geometry.height() / 2 - viewportCenterY );
             if ( distance >= minDistance && minDistance != -1.0 )
                 continue;
@@ -1150,8 +1157,8 @@ void PageView::slotRelayoutPages()
             minDistance = distance;
             if ( geometry.height() > 0 && geometry.width() > 0 )
             {
-                focusedX = ( viewportCenterX - geometry.left() ) / (float)geometry.width();
-                focusedY = ( viewportCenterY - geometry.top() ) / (float)geometry.height();
+                focusedX = (double)( viewportCenterX - geometry.left() ) / (double)geometry.width();
+                focusedY = (double)( viewportCenterY - geometry.top() ) / (double)geometry.height();
             }
         }
     }
@@ -1288,8 +1295,8 @@ void PageView::slotRelayoutPages()
         if ( focusedPage )
         {
             const QRect & geometry = focusedPage->geometry();
-            center( geometry.left() + (int)( focusedX * (float)geometry.width() ),
-                    geometry.top() + (int)( focusedY * (float)geometry.height() ) );
+            center( geometry.left() + (int) round( focusedX * (double)geometry.width() ),
+                    geometry.top() + (int) round( focusedY * (double)geometry.height() ) );
         }
         else
             center( fullWidth / 2, 0 );
@@ -1405,19 +1412,13 @@ void PageView::slotSetMouseNormal()
 void PageView::slotSetMouseZoom()
 {
     d->mouseMode = MouseZoom;
-    d->messageWindow->display( i18n( "Select Zooming Area. Right-Click to zoom out." ), PageViewMessage::Info );
+    d->messageWindow->display( i18n( "Select Zooming Area. Right-Click to zoom out." ), PageViewMessage::Info, -1 );
 }
 
-void PageView::slotSetMouseSelText()
+void PageView::slotSetMouseSelect()
 {
-    d->mouseMode = MouseSelText;
-    d->messageWindow->display( i18n( "Draw a rectangle around the text to copy." ), PageViewMessage::Info, 2000 );
-}
-
-void PageView::slotSetMouseSelGfx()
-{
-    d->mouseMode = MouseSelGfx;
-    d->messageWindow->display( i18n( "Draw a rectangle around the graphics to copy." ), PageViewMessage::Info, 2000 );
+    d->mouseMode = MouseSelect;
+    d->messageWindow->display( i18n( "Draw a rectangle around the text/gfx to copy." ), PageViewMessage::Info, -1 );
 }
 
 void PageView::slotSetMouseDraw()

@@ -46,7 +46,7 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
-        enum MouseMode { MouseNormal, MouseZoom, MouseSelText, MouseSelGfx, MouseEdit };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseEdit };
 
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
@@ -86,7 +86,7 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
-        void selectionStart( int x, int y, bool aboveAll = false, PageViewItem * pageLock = 0 );
+        void selectionStart( int x, int y, bool aboveAll = false );
         void selectionEndPoint( int x, int y );
         void selectionClear();
         // update internal zoom values and end in a slotRelayoutPages();
@@ -116,8 +116,7 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         void slotContinousToggled( bool );
         void slotSetMouseNormal();
         void slotSetMouseZoom();
-        void slotSetMouseSelText();
-        void slotSetMouseSelGfx();
+        void slotSetMouseSelect();
         void slotSetMouseDraw();
         void slotScrollUp();
         void slotScrollDown();

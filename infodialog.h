@@ -1,3 +1,8 @@
+// infodialog.h
+//
+// (C) 2001 Stefan Kebekus
+// Distributed under the GPL
+
 #ifndef INFO_KDVI_H
 #define INFO_KDVI_H
 

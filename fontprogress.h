@@ -1,3 +1,8 @@
+// fontprogress.h
+//
+// (C) 2001 Stefan Kebekus
+// Distributed under the GPL
+
 #ifndef FONT_GENERATION_H
 #define FONT_GENERATION_H
 

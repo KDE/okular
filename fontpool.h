@@ -1,3 +1,7 @@
+// fontpool.h
+//
+// (C) 2001 Stefan Kebekus
+// Distributed under the GPL
 
 #ifndef _FONTPOOL_H
 #define _FONTPOOL_H

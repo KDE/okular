@@ -1,3 +1,7 @@
+// fontpool.cpp
+//
+// (C) 2001 Stefan Kebekus
+// Distributed under the GPL
 
 #include <kdebug.h>
 #include <klocale.h>

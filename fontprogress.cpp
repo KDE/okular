@@ -1,3 +1,8 @@
+// fontprogress.cpp
+//
+// (C) 2001 Stefan Kebekus
+// Distributed under the GPL
+
 #include "fontprogress.h"
 
 #include <kdebug.h>

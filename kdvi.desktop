@@ -105,4 +105,4 @@ ServiceTypes=Browser/View
 X-KDE-Library=libkviewerpart
 X-KDE-BrowserView-Args=dvi
 DocPath=kdvi/index.html
-KDE-X-StartupNotify=true
+X-KDE-StartupNotify=true

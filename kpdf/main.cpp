@@ -4,10 +4,10 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 
-static const char* description =
+static const char description[] =
 I18N_NOOP("kpdf, a kde pdf viewer based on xpdf");
 
-static const char* version = "v0.3";
+static const char version[] = "v0.3";
 
 static KCmdLineOptions options[] =
 {

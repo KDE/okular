@@ -1,4 +1,4 @@
-INCLUDES = $(all_includes) -I$(top_srcdir)/kpdf/goo -I/usr/include/freetype2 -I$(top_srcdir)/kpdf
+INCLUDES = $(all_includes) -I$(top_srcdir)/kpdf/goo -I/usr/include/freetype2 -I..
 
 libxpdf_la_LDFLAGS = $(all_libraries) -no-undefined
 libxpdf_la_LIBADD  = $(LIB_X11) $(freetype2_LIBS) $(t1_LIBS) $(libpaper_LIBS) ../goo/libgoo.la

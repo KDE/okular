@@ -234,7 +234,7 @@ read_from_gs() {
 	line_end = linepos + bytes;
 	/* Check for ack strings */
 	for (p = line; p < line_end - 2; ++p) {
-	    p = memchr(p, '\347', line_end - p - 2);
+	    p = (char *)memchr(p, '\347', line_end - p - 2);
 	    if (p == NULL) break;
 	    if (memcmp(p, ackstr, 3) == 0) {
 		--GS_pending;
@@ -252,7 +252,7 @@ read_from_gs() {
 	    }
 	}
 	for (;;) {
-	    p = memchr(linepos, '\n', line_end - linepos);
+	    p = (char *)memchr(linepos, '\n', line_end - linepos);
 	    if (p == NULL) break;
 	    *p = '\0';
 	    Printf("gs: %s\n", line);
@@ -518,7 +518,7 @@ Boolean initGS()
    * header; i.e., no save/restore.
    * `execute' is unique to ghostscript.
    */
-  static	_Xconst	char	str1[]	= "\
+  static	char	str1[]	= "\
 /xdvi$run {$error /newerror false put {currentfile cvx execute} stopped pop} def \
 /xdvi$ack (\347\310\376) def \
 /xdvi$dslen countdictstack def \
@@ -531,7 +531,7 @@ Boolean initGS()
     {clear} {pop eq {exit} if} ifelse }loop \
   flushpage xdvi$ack print flush \
 }loop\nH";
-	static	_Xconst	char	str2[]	= "matrix currentmatrix \
+	static	char	str2[]	= "matrix currentmatrix \
 dup dup 4 get round 4 exch put \
 dup dup 5 get round 5 exch put setmatrix\n\
 stop\n%%xdvimark\n";
@@ -572,7 +572,7 @@ stop\n%%xdvimark\n";
 	    (void) dup2(std_out[1], 1);
 	    (void) dup2(std_out[1], 2);
 	    (void) close(std_out[1]);
-	    argv[1] = useAlpha ? "-sDEVICE=x11alpha" : "-sDEVICE=x11";
+	    argv[1] = useAlpha ? (char *)"-sDEVICE=x11alpha" : (char *)"-sDEVICE=x11";
 	    (void) execvp(argv[0], argv);
 	    Fprintf(stderr, "Execvp of %s failed.\n", argv[0]);
 	    Fflush(stderr);
@@ -663,7 +663,7 @@ static	void destroy_gs()
 static	void
 interrupt_gs()
 {
-	static	_Xconst	char	str[]	= " stop\n%%xdvimark\n";
+	static	char	str[]	= " stop\n%%xdvimark\n";
 
 	if (_debug & DBG_PS) Puts("Running interrupt_gs()");
 	if (GS_sending) GS_pending_int = True;
@@ -685,7 +685,7 @@ interrupt_gs()
 
 static	void endpage_gs()
 {
-	static	_Xconst	char	str[]	= "stop\n%%xdvimark\n";
+	static	char	str[]	= "stop\n%%xdvimark\n";
 
 	if (_debug & DBG_PS) Puts("Running endpage_gs()");
 	if (GS_active) {
@@ -698,7 +698,7 @@ static	void endpage_gs()
 static	void drawbegin_gs(int xul, int yul, char *cp)
 {
 	char	buf[100];
-	static	_Xconst	char	str[]	= " TeXDict begin\n";
+	static	char	str[]	= " TeXDict begin\n";
 
 	/* check page_w and page_h to see that they haven't increased */
 	if (page_w > GS_page_w || page_h > GS_page_h) {

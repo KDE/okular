@@ -12,8 +12,10 @@ Things to do in order to merge in HEAD (first item has highest priority):
  and rename internals too (document->kpdfdocument, page->kpdfpage, etc..)) ]
 
 IN PROGRESS on the branch (first item comes first):
--> sync Memory Management (in Document) with the Generator (exp. undoing requests)
--> add preloading
+-> FIX: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
+-> FIX: priorities for requests (pageview regular over thumbnails regular over pv preloading ...)
+-> FIX: linearize memory pages map iterators in respect to time
+-> ADD: preloading
 -> FIX: viewport changes the right way when clicking links and TOC items (also
    suggested by Mikolaj Machowski). Create a great viewport definition and merge
    it inside the synopsis too. [60% done]

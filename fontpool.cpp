@@ -23,7 +23,7 @@
 #include "performanceMeasurement.h"
 #include "TeXFont.h"
 
-
+//#define DEBUG_FONTPOOL
 
 
 
@@ -407,14 +407,17 @@ void fontPool::start_kpsewhich(void)
 
       switch(pass){
       case 0:
-	// In the first pass, we look for PK fonts, and also for virtual fonts.
+	// In the first pass, we look for PK fonts, for FreeType
+	// fonts, and also for virtual fonts.
 #ifdef HAVE_FREETYPE
 	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
 	  const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
-	  *proc << KShellProcess::quote(QString("%1").arg(filename));
+	  if (!filename.isEmpty()) {
+	    *proc << KShellProcess::quote(QString("%1").arg(filename));
 #ifdef DEBUG_FONTPOOL
-	  shellProcessCmdLine += KShellProcess::quote(QString("%1").arg(filename)) + " ";
+	    shellProcessCmdLine += KShellProcess::quote(QString("%1").arg(filename)) + " ";
 #endif
+	  }
 	}
 #endif
 	*proc << KShellProcess::quote(QString("%1.vf").arg(fontp->fontname));
@@ -425,17 +428,7 @@ void fontPool::start_kpsewhich(void)
 #endif
 	break;
       case 1:
-	// In the second pass, we generate PK fonts, but we also look
-	// for PFB fonts, as they might be used by virtual fonts.
-#ifdef HAVE_FREETYPE
-	if ((useType1Fonts == true) && (FreeType_could_be_loaded == true)) {
-	  const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
-	  *proc << KShellProcess::quote(QString("%1").arg(filename));
-#ifdef DEBUG_FONTPOOL
-	  shellProcessCmdLine += KShellProcess::quote(QString("%1").arg(filename)) + " ";
-#endif
-	}
-#endif
+	// In the second pass, we try to generate PK fonts.
 	*proc << KShellProcess::quote(QString("%2.%1pk").arg(MFResolutions[MetafontMode]).arg(fontp->fontname));
 #ifdef DEBUG_FONTPOOL
 	shellProcessCmdLine += KShellProcess::quote(QString("%2.%1pk").arg(MFResolutions[MetafontMode]).arg(fontp->fontname)) + " ";
@@ -449,7 +442,7 @@ void fontPool::start_kpsewhich(void)
 #endif
 	break;
       }
-
+      
       // In the second (last) pass, mark the font "looked up". As this
       // is the last chance that the filename could be found, we
       // ensure that if the filename is still not found now, we won't
@@ -461,7 +454,7 @@ void fontPool::start_kpsewhich(void)
   }
 
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "pass " << pass << " kpsewhich run with " << numFontsInJob << "fonts to locate." << endl;
+  kdDebug(4300) << "pass " << pass << " kpsewhich run with " << numFontsInJob << " fonts to locate." << endl;
   kdDebug(4300) << "command line: " << shellProcessCmdLine << endl;
 #endif
 
@@ -505,6 +498,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
   proc = 0;
 
   QStringList fileNameList = QStringList::split('\n', kpsewhichOutput);
+  bool foundVirtualFont = false; // Flag that is set to 'true' if a virtual font has been found
 
   TeXFontDefinition *fontp=fontList.first();
   while ( fontp != 0 ) {
@@ -522,13 +516,17 @@ void fontPool::kpsewhich_terminated(KProcess *)
 #ifdef DEBUG_FONTPOOL
 	kdDebug(4300) << "Associated " << fontp->fontname << " to " << matchingFiles.first() << endl;
 #endif
-	fontp->fontNameReceiver(matchingFiles.first());
+	QString fname = matchingFiles.first();
+	fontp->fontNameReceiver(fname);
 	fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
-	// Constructing a virtual font will most likely insert other
-	// fonts into the fontList. After that, fontList.next() will
-	// no longer work. It is therefore safer to start over.
-	fontp=fontList.first();
-	continue;
+	if (fname.endsWith(".vf")) {
+	  foundVirtualFont = true;
+	  // Constructing a virtual font will most likely insert other
+	  // fonts into the fontList. After that, fontList.next() will
+	  // no longer work. It is therefore safer to start over.
+	  fontp=fontList.first();
+	  continue;
+	}
       }
     } // of if (fontp->filename.isEmpty() == true)
     fontp = fontList.next();
@@ -559,6 +557,16 @@ void fontPool::kpsewhich_terminated(KProcess *)
   }
 
   if (pass == 0) {
+    // If a virtual font has been found, we repeat pass one, as that
+    // virtual font may refer to other virtual fonts, or to PFB-fonts
+    if (foundVirtualFont) {
+#ifdef DEBUG_FONTPOOL
+      kdDebug(4300) << "Virtual font found. Repeating pass #0." << endl;
+#endif
+      start_kpsewhich();
+      return;
+    }
+    
     pass = 1;
     // If automatic pk-font generation is enabled, we call
     // check_if_fonts_filenames_are_looked_up.
@@ -567,7 +575,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
       return;
     }
   }
-
+  
   if (pass == 1) {
     // Now all fonts should be there. It may, however, have happened
     // that still not all fonts were found. If that is so, issue a

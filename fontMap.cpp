@@ -10,10 +10,11 @@
 
 #include <kdebug.h>
 #include <kprocio.h>
-#include <kstringhandler.h>
 #include <qfile.h>
 
 #include "fontMap.h"
+
+//#define DEBUG_FONTMAP
 
 fontMap::fontMap()
 {
@@ -48,13 +49,13 @@ fontMap::fontMap()
       if (line.at(0) == '%')
 	continue;
       
-      QString TeXName  = KStringHandler::word(line, (unsigned int)0);
-      QString FullName = KStringHandler::word(line, (unsigned int)1);
-      QString fontFileName = line.section('<', -1);
-      QString encodingName = line.section('<', -2, -2).stripWhiteSpace();
-
+      QString TeXName  = line.section(' ', 0, 0);
+      QString FullName = line.section(' ', 1, 1);
+      QString fontFileName = line.section('<', -1).stripWhiteSpace().section(' ', 0, 0);
+      QString encodingName = line.section('<', -2, -2).stripWhiteSpace().section(' ', 0, 0);
+      
       fontMapEntry &entry = fontMapEntries[TeXName];
-
+      
       entry.fontFileName = fontFileName;
       entry.fullFontName = FullName;
       if (encodingName.endsWith(".enc"))
@@ -63,17 +64,26 @@ fontMap::fontMap()
 	entry.fontEncoding = QString::null;
     }
     file.close();
-  } else {
-    kdError(4700) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
-    return;
-  }
+  } else
+    kdError(4300) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
+  
+#ifdef DEBUG_FONTMAP
+  kdDebug(4300) << "FontMap file parsed. Results:" << endl;
+  QMap<QString, fontMapEntry>::Iterator it;
+  for ( it = fontMapEntries.begin(); it != fontMapEntries.end(); ++it ) 
+    kdDebug(4300) << "TeXName: " << it.key() 
+		  << ", FontFileName=" << it.data().fontFileName 
+		  << ", FullName=" << it.data().fullFontName 
+		  << ", Encoding=" << it.data().fontEncoding
+		  << "." << endl;;
+#endif
 }
 
 
 const QString &fontMap::findFileName(const QString &TeXName)
 {
   QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
-
+  
   if (it != fontMapEntries.end())
     return it.data().fontFileName;
   else
@@ -84,7 +94,7 @@ const QString &fontMap::findFileName(const QString &TeXName)
 const QString &fontMap::findFontName(const QString &TeXName)
 {
   QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
-
+  
   if (it != fontMapEntries.end())
     return it.data().fullFontName;
   else
@@ -95,7 +105,7 @@ const QString &fontMap::findFontName(const QString &TeXName)
 const QString &fontMap::findEncoding(const QString &TeXName)
 {
   QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
-
+  
   if (it != fontMapEntries.end())
     return it.data().fontEncoding;
   else

@@ -1,11 +1,14 @@
 [Desktop Entry]
 Type=Service
 Comment=DVI
+Comment[xx]=xxDVIxx
 Name=KDVIMultiPage
+Name[fr]=Multi-page KDVI
+Name[nl]=KDVIMultiPagina
 Name[pt]=KDVIMultiPágina
-Name[pt_BR]=KDVIMultiPágina
 Name[ro]=KDVI Pagini Multiple
 Name[sv]=KDVI flera sidor
+Name[xx]=xxKDVIMultiPagexx
 ServiceTypes=KViewShell/MultiPage
 X-KDE-Library=kdvipart
 X-KDE-MimeTypes=application/x-dvi

@@ -1,4 +1,4 @@
-SUBDIRS = xpdf conf core ui
+SUBDIRS = xpdf conf core ui shell
 
 INCLUDES = -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo -I$(top_builddir)/kpdf $(all_includes) $(FREETYPE_CFLAGS)
 
@@ -8,21 +8,6 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kpdf.pot
 
 KDE_ICON = kpdf
-
-# #########################################################################
-# # APPLICATION SECTION
-# #########################################################################
-bin_PROGRAMS = kpdf
-
-kpdf_SOURCES = main.cpp shell.cpp
-kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-kpdf_LDADD   = $(LIB_KPARTS)
-
-EXTRA_DIST = kpdf.desktop
-xdg_apps_DATA = kpdf.desktop
-
-shellrcdir   = $(kde_datadir)/kpdf
-shellrc_DATA = shell.rc
 
 #########################################################################
 # KPART SECTION

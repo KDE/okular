@@ -4,6 +4,7 @@
 // Distributed under the GPL
 
 #include <kdebug.h>
+#include <kio/global.h>
 #include <klocale.h>
 #include <kpushbutton.h>
 #include <qfile.h>
@@ -56,34 +57,25 @@ infoDialog::infoDialog( QWidget* parent )
 
 void infoDialog::setDVIData(dvifile *dviFile)
 {
-  QString text;
+  QString text = "";
 
   if (dviFile == NULL) 
     text = i18n("There is no DVI file loaded at the moment.");
   else {
-    QString size;
-    QFile *file = new QFile(dviFile->filename);
-    if (file != 0) {
-      unsigned int s = file->size();
-      if (s < 1024)
-	size = QString("%1 bytes").arg(s);
-      else {
-	if (s < 1024*1024)
-	  size = QString("%1 kB").arg(s/1024);
-	else
-	  size = QString("%1 MB").arg(s/(1024*1024));
-      }
-    } else
-      size = "---";
-
     text.append("<table WIDTH=\"100%\" NOSAVE >");
     text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("Filename")).arg(dviFile->filename));
-    text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("File Size")).arg(size));
+
+    QFile file(dviFile->filename);
+    if (file.exists()) 
+      text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("File Size")).arg(KIO::convertSize(file.size())));
+    else
+      text.append(QString("<tr><td><b> </b></td> <td>%1</td></tr>").arg(i18n("The file does no longer exist.")));
+    
     text.append(QString("<tr><td><b>  </b></td> <td>  </td></tr>"));
     text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("#Pages")).arg(dviFile->total_pages));
     text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("Generator/Date")).arg(dviFile->generatorString));
-  }
-
+  } // else (dviFile == NULL)
+  
   TextLabel1->setText( text ); 
 }
 

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 MimeType=application/pdf
-Terminal=0
+Terminal=false
 Name=KPDF
 Name[ar]=برنامج KPDF
 Name[hi]=के-पीडीएफ
@@ -25,6 +25,7 @@ GenericName[fa]=نمایشگر PDF
 GenericName[fi]=PDF-näyttäjä
 GenericName[fr]=Afficheur PDF
 GenericName[gl]=Visor PDF
+GenericName[he]=מציג PDF
 GenericName[hi]=पीडीएफ प्रदर्शक
 GenericName[hr]=Preglednik PDF dokumenata
 GenericName[hu]=PDF-nézegető
@@ -68,5 +69,5 @@ Icon=kpdf
 Type=Application
 DocPath=kpdf/index.html
 InitialPreference=4
-Categories=Qt;KDE;Graphics;PDFViewer
+Categories=Qt;KDE;Graphics;PDFViewer;
 

@@ -9,7 +9,7 @@
 #include <klocale.h>
 #include <kprocess.h>
 #include <qapplication.h>
-#include <qmessagebox.h>
+#include <kmessagebox.h>
 #include <stdlib.h>
 
 #include "font.h"
@@ -342,23 +342,23 @@ void fontPool::kpsewhich_terminated(KProcess *)
 
     if (all_fonts_are_found == false) {
       QString title = i18n("Font not found - KDVI");
-      QString nokps = i18n("There were problems running the kpsewhich program.\n"
-			   "KDVI will not work if TeX is not installed on your\n"
-			   "system or if the kpsewhich program cannot be found\n"
-			   "in the standard search path.\n\n");
-      QString body  = i18n("KDVI was not able to locate all the font files \n"
-			   "which are necessary to display the current DVI file. \n"
-			   "Some characters are therefore left blank, and your \n"
+      QString nokps = i18n("There were problems running the kpsewhich program.  "
+			   "KDVI will not work if TeX is not installed on your "
+			   "system or if the kpsewhich program cannot be found "
+			   "in the standard search path.\n");
+      QString body  = i18n("KDVI was not able to locate all the font files "
+			   "which are necessary to display the current DVI file.  "
+			   "Some characters are therefore left blank, and your "
 			   "document might be unreadable.");
-      QString metaf = i18n("\n\nExperts will find helpful information in the 'MetaFont'-\n"
+      QString metaf = i18n("\nExperts will find helpful information in the 'MetaFont'-"
 			   "section of the document info dialog");
 
       if (fatal_error_in_kpsewhich == true)
-	QMessageBox::warning( 0, title, nokps+body+metaf );
+	KMessageBox::sorry( 0, nokps+body+metaf, title );
       else
 	if (makepk == 0) {
-	  if(QMessageBox::warning( 0, title, body+i18n("\nAutomatic font generation is switched off.\n"),
-				   "Generate fonts now", "Continue without" ) == 0) {
+	  if(KMessageBox::warningYesNo( 0, body+i18n("\nAutomatic font generation is switched off."), title, 
+				   i18n("Generate fonts now"), i18n("Continue without") ) == KMessageBox::Yes) {
 	    KInstance *instance = new KInstance("kdvi");
 	    KConfig *config = instance->config();
 	    config->setGroup("kdvi");
@@ -368,7 +368,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	    return;
 	  } 
 	} else
-	  QMessageBox::warning( 0, title, body+metaf );
+	  KMessageBox::sorry( 0, body+metaf, title );
     }
     
     emit(fonts_have_been_loaded());

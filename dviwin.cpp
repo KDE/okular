@@ -244,7 +244,7 @@ void dviWindow::setMetafontMode( unsigned int mode )
 {
   if ((dviFile != NULL) && (mode != font_pool->getMetafontMode()))
     KMessageBox::sorry( this,
-			i18n("The change in Metafont mode will be effective\n"
+			i18n("The change in Metafont mode will be effective "
 			     "only after you start kdvi again!") );
   
   MetafontMode     = font_pool->setMetafontMode(mode);

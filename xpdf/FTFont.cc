@@ -6,13 +6,11 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
-#pragma implementation
-#endif
-
 #include <aconf.h>
 
-#if FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
+#ifdef USE_GCC_PRAGMAS
+#pragma implementation
+#endif
 
 #include <math.h>
 #include <string.h>
@@ -261,15 +259,11 @@ FTFont::FTFont(FTFontFile *fontFileA, double *m) {
     yMax = (int)(1.2 * size);
   }
   // this should be (max - min + 1), but we add some padding to
-  // deal with rounding errors
+  // deal with rounding errors, bogus bboxes, etc.
   glyphW = xMax - xMin + 3;
+  glyphW += glyphW >> 1;
   glyphH = yMax - yMin + 3;
-  // another kludge: some CJK TT fonts have bogus bboxes, so add more
-  // padding
-  if (face->num_glyphs > 1000) {
-    glyphW += glyphW >> 1;
-    glyphH += glyphH >> 1;
-  }
+  glyphH += glyphH >> 1;
   if (engine->aa) {
     glyphSize = glyphW * glyphH;
   } else {
@@ -444,9 +438,9 @@ Guchar *FTFont::getGlyphPixmap(CharCode c, Unicode u,
 			       int *x, int *y, int *w, int *h) {
   FT_GlyphSlot slot;
   FT_UInt idx;
-  int gSize;
+  int rowSize;
   int i, j, k;
-  Guchar *ret;
+  Guchar *ret, *p, *q;
 
   // check the cache
   i = (c & (cacheSets - 1)) * cacheAssoc;
@@ -473,7 +467,6 @@ Guchar *FTFont::getGlyphPixmap(CharCode c, Unicode u,
   slot = fontFile->face->glyph;
   idx = getGlyphIndex(c, u);
   // if we have the FT2 bytecode interpreter, autohinting won't be used
-/*
 #ifdef TT_CONFIG_OPTION_BYTECODE_INTERPRETER
   if (FT_Load_Glyph(fontFile->face, idx, FT_LOAD_DEFAULT)) {
     return gFalse;
@@ -489,11 +482,6 @@ Guchar *FTFont::getGlyphPixmap(CharCode c, Unicode u,
     return gFalse;
   }
 #endif
-*/
-  if (FT_Load_Glyph(fontFile->face, idx, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP)) {
-    return gFalse;
-  }
-  
   if (FT_Render_Glyph(slot,
 		      fontFile->engine->aa ? ft_render_mode_normal :
 		                             ft_render_mode_mono)) {
@@ -522,12 +510,16 @@ Guchar *FTFont::getGlyphPixmap(CharCode c, Unicode u,
       cacheTags[i+j].w = *w;
       cacheTags[i+j].h = *h;
       if (fontFile->engine->aa) {
-	gSize = *w * *h;
+	rowSize = *w;
       } else {
-	gSize = ((*w + 7) >> 3) * *h;
+	rowSize = (*w + 7) >> 3;
       }
       ret = cache + (i+j) * glyphSize;
-      memcpy(ret, slot->bitmap.buffer, gSize);
+      for (k = 0, p = ret, q = slot->bitmap.buffer;
+	   k < slot->bitmap.rows;
+	   ++k, p += rowSize, q += slot->bitmap.pitch) {
+	memcpy(p, q, rowSize);
+      }
     } else {
       ++cacheTags[i+j].mru;
     }
@@ -688,4 +680,3 @@ FT_UInt FTFont::getGlyphIndex(CharCode c, Unicode u) {
   return idx;
 }
 
-#endif // FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)

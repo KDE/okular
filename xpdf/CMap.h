@@ -9,7 +9,9 @@
 #ifndef CMAP_H
 #define CMAP_H
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 

@@ -9,7 +9,9 @@
 #ifndef GFXSTATE_H
 #define GFXSTATE_H
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 
@@ -19,7 +21,7 @@
 
 class Array;
 class GfxFont;
-struct PDFRectangle;
+class PDFRectangle;
 
 //------------------------------------------------------------------------
 // GfxColor
@@ -406,7 +408,9 @@ public:
   virtual int getNComps() { return nComps; }
 
   // DeviceN-specific access.
+  GString *getColorantName(int i) { return names[i]; }
   GfxColorSpace *getAlt() { return alt; }
+  Function *getTintTransformFunc() { return func; }
 
 private:
 

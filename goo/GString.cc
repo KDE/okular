@@ -8,11 +8,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
@@ -203,8 +204,12 @@ GString *GString::del(int i, int n) {
   int j;
 
   if (n > 0) {
-    for (j = i; j <= length - n; ++j)
+    if (i + n > length) {
+      n = length - i;
+    }
+    for (j = i; j <= length - n; ++j) {
       s[j] = s[j + n];
+    }
     resize(length -= n);
   }
   return this;

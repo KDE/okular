@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include "gmem.h"
 #include "GString.h"
 #include "GHash.h"

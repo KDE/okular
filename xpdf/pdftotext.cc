@@ -91,6 +91,9 @@ int main(int argc, char *argv[]) {
   Object info;
   GBool ok;
   char *p;
+  int exitCode;
+
+  exitCode = 99;
 
   // parse args
   ok = parseArgs(argDesc, &argc, argv);
@@ -100,7 +103,7 @@ int main(int argc, char *argv[]) {
     if (!printVersion) {
       printUsage("pdftotext", "<PDF-file> [<text-file>]", argDesc);
     }
-    exit(1);
+    goto err0;
   }
   fileName = new GString(argv[1]);
 
@@ -144,6 +147,7 @@ int main(int argc, char *argv[]) {
     delete ownerPW;
   }
   if (!doc->isOk()) {
+    exitCode = 1;
     goto err2;
   }
 
@@ -151,6 +155,7 @@ int main(int argc, char *argv[]) {
   // check for copy permission
   if (!doc->okToCopy()) {
     error(-1, "Copying of text from this document is not allowed.");
+    exitCode = 3;
     goto err2;
   }
 #endif
@@ -184,6 +189,7 @@ int main(int argc, char *argv[]) {
     } else {
       if (!(f = fopen(textFileName->getCString(), "wb"))) {
 	error(-1, "Couldn't open text file '%s'", textFileName->getCString());
+	exitCode = 2;
 	goto err3;
       }
     }
@@ -221,6 +227,10 @@ int main(int argc, char *argv[]) {
   textOut = new TextOutputDev(textFileName->getCString(), rawOrder, htmlMeta);
   if (textOut->isOk()) {
     doc->displayPages(textOut, firstPage, lastPage, 72, 0, gFalse);
+  } else {
+    delete textOut;
+    exitCode = 2;
+    goto err3;
   }
   delete textOut;
 
@@ -231,6 +241,7 @@ int main(int argc, char *argv[]) {
     } else {
       if (!(f = fopen(textFileName->getCString(), "ab"))) {
 	error(-1, "Couldn't open text file '%s'", textFileName->getCString());
+	exitCode = 2;
 	goto err3;
       }
     }
@@ -242,6 +253,8 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  exitCode = 0;
+
   // clean up
  err3:
   delete textFileName;
@@ -250,12 +263,13 @@ int main(int argc, char *argv[]) {
   uMap->decRefCnt();
  err1:
   delete globalParams;
+ err0:
 
   // check for memory leaks
   Object::memCheck(stderr);
   gMemReport(stderr);
 
-  return 0;
+  return exitCode;
 }
 
 static void printInfoString(FILE *f, Dict *infoDict, char *key,

@@ -14,8 +14,11 @@
 //------------------------------------------------------------------------
 
 // xpdf version
-
-#define xpdfVersion "1.01"
+#define xpdfVersion         "2.00"
+#define xpdfVersionNum      2.00
+#define xpdfMajorVersion    2
+#define xpdfMinorVersion    0
+#define xpdfMajorVersionStr "2"
 
 // supported PDF version
 #define supportedPDFVersionStr "1.4"
@@ -23,6 +26,10 @@
 
 // copyright notice
 #define xpdfCopyright "Copyright 1996-2002 Glyph & Cog, LLC"
+
+// Windows resource file stuff
+#define winxpdfVersion "WinXpdf 2.00"
+#define xpdfCopyrightAmp "Copyright 1996-2002 Glyph && Cog, LLC"
 
 //------------------------------------------------------------------------
 // paper size
@@ -79,39 +86,11 @@
 #define pclose _pclose
 #endif
 
-#if defined(VMS) || defined(VMCMS) || defined(DOS) || defined(OS2) || defined(__EMX__) || defined(WIN32) || defined(__DJGPP__) || defined(__CYGWIN32__) || defined(MACOS)
+#if defined(VMS) || defined(VMCMS) || defined(DOS) || defined(OS2) || defined(__EMX__) || defined(WIN32) || defined(__DJGPP__) || defined(MACOS)
 #define POPEN_READ_MODE "rb"
 #else
 #define POPEN_READ_MODE "r"
 #endif
-
-//------------------------------------------------------------------------
-// uncompress program
-//------------------------------------------------------------------------
-
-#ifdef HAVE_POPEN
-
-// command to uncompress to stdout
-#  ifdef USE_GZIP
-#    define uncompressCmd "gzip -d -c -q"
-#  else
-#    ifdef __EMX__
-#      define uncompressCmd "compress -d -c"
-#    else
-#      define uncompressCmd "uncompress -c"
-#    endif // __EMX__
-#  endif // USE_GZIP
-
-#else // HAVE_POPEN
-
-// command to uncompress a file
-#  ifdef USE_GZIP
-#    define uncompressCmd "gzip -d -q"
-#  else
-#    define uncompressCmd "uncompress"
-#  endif // USE_GZIP
-
-#endif // HAVE_POPEN
 
 //------------------------------------------------------------------------
 // Win32 stuff

@@ -9,7 +9,9 @@
 #ifndef NAMETOCHARCODE_H
 #define NAMETOCHARCODE_H
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 
@@ -25,12 +27,12 @@ public:
   NameToCharCode();
   ~NameToCharCode();
 
-  void add(char *name, CharCode c);
-  CharCode lookup(char *name);
+  void add(const char *name, CharCode c);
+  CharCode lookup(const char *name);
 
 private:
 
-  int hash(char *name);
+  int hash(const char *name);
 
   NameToCharCodeEntry *tab;
   int size;

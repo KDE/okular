@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stddef.h>
 #include "Object.h"
 #include "Array.h"
@@ -23,7 +24,7 @@
 // Object
 //------------------------------------------------------------------------
 
-char *objTypeNames[numObjTypes] = {
+const char *objTypeNames[numObjTypes] = {
   "boolean",
   "integer",
   "real",
@@ -133,7 +134,7 @@ void Object::free() {
   type = objNone;
 }
 
-char *Object::getTypeName() {
+const char *Object::getTypeName() {
   return objTypeNames[type];
 }
 

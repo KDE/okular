@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stdio.h>
 #include <string.h>
 #include "gmem.h"
@@ -85,6 +86,7 @@ CharCodeToUnicode *CharCodeToUnicode::parseCIDToUnicode(GString *collectionA) {
     }
     ++mapLenA;
   }
+  fclose(f);
 
   ctu = new CharCodeToUnicode(collectionA->copy(), mapA, mapLenA, gTrue,
 			      NULL, 0);

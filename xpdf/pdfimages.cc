@@ -72,6 +72,9 @@ int main(int argc, char *argv[]) {
   GString *ownerPW, *userPW;
   ImageOutputDev *imgOut;
   GBool ok;
+  int exitCode;
+
+  exitCode = 99;
 
   // parse args
   ok = parseArgs(argDesc, &argc, argv);
@@ -81,7 +84,7 @@ int main(int argc, char *argv[]) {
     if (!printVersion) {
       printUsage("pdfimages", "<PDF-file> <image-root>", argDesc);
     }
-    exit(1);
+    goto err0;
   }
   fileName = new GString(argv[1]);
   imgRoot = argv[2];
@@ -111,14 +114,16 @@ int main(int argc, char *argv[]) {
     delete ownerPW;
   }
   if (!doc->isOk()) {
-    goto err;
+    exitCode = 1;
+    goto err1;
   }
 
 #ifdef ENFORCE_PERMISSIONS
   // check for copy permission
   if (!doc->okToCopy()) {
     error(-1, "Copying of images from this document is not allowed.");
-    goto err;
+    exitCode = 3;
+    goto err1;
   }
 #endif
 
@@ -130,18 +135,22 @@ int main(int argc, char *argv[]) {
 
   // write image files
   imgOut = new ImageOutputDev(imgRoot, dumpJPEG);
-  if (imgOut->isOk())
+  if (imgOut->isOk()) {
     doc->displayPages(imgOut, firstPage, lastPage, 72, 0, gFalse);
+  }
   delete imgOut;
 
+  exitCode = 0;
+
   // clean up
- err:
+ err1:
   delete doc;
   delete globalParams;
+ err0:
 
   // check for memory leaks
   Object::memCheck(stderr);
   gMemReport(stderr);
 
-  return 0;
+  return exitCode;
 }

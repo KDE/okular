@@ -121,7 +121,7 @@ Part::openFile()
     return false;
 
   GString* filename = new GString(m_file);
-  m_doc = new PDFDoc(filename, 0, 0, false);
+  m_doc = new PDFDoc(filename, 0, 0);
 
   if (!m_doc->isOk())
     return false;

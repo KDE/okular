@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -82,10 +83,12 @@ void PBMOutputDev::killPBMOutputDev(PBMOutputDev *out) {
 PBMOutputDev::PBMOutputDev(Display *displayA, int screenA,
 			   Pixmap pixmapA, Window dummyWinA,
 			   int invertA, char *fileRootA):
-  XOutputDev(displayA, pixmapA, 1,
-	     DefaultColormap(displayA, screenA), gFalse,
+  XOutputDev(displayA, screenA,
+	     DefaultVisual(displayA, screenA),
+	     DefaultColormap(displayA, screenA),
+	     gFalse,
 	     WhitePixel(displayA, DefaultScreen(displayA)),
-	     gFalse, 1)
+	     gFalse, 1, 1)
 {
   display = displayA;
   screen = screenA;

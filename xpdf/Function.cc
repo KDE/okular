@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -719,7 +720,7 @@ enum PSOp {
 // Note: 'if' and 'ifelse' are parsed separately.
 // The rest are listed here in alphabetical order.
 // The index in this table is equivalent to the entry in PSOp.
-char *psOpNames[] = {
+const char *psOpNames[] = {
   "abs",
   "add",
   "and",
@@ -1095,13 +1096,13 @@ GBool PostScriptFunction::parseCode(Stream *str, int *codePtr) {
 	if (!parseCode(str, codePtr)) {
 	  return gFalse;
 	}
-      } else {
-	elsePtr = -1;
-      }
       delete tok;
       if (!(tok = getToken(str))) {
 	error(-1, "Unexpected end of PostScript function stream");
 	return gFalse;
+      }
+      } else {
+	elsePtr = -1;
       }
       if (!tok->cmp("if")) {
 	if (elsePtr >= 0) {

@@ -127,6 +127,9 @@ int main(int argc, char *argv[]) {
   PSOutputDev *psOut;
   GBool ok;
   char *p;
+  int exitCode;
+
+  exitCode = 99;
 
   // parse args
   ok = parseArgs(argDesc, &argc, argv);
@@ -178,7 +181,7 @@ int main(int argc, char *argv[]) {
   if (paperSize[0]) {
     if (!globalParams->setPSPaperSize(paperSize)) {
       fprintf(stderr, "Invalid paper size\n");
-      exit(1);
+      goto err0;
     }
   } else {
     if (paperWidth) {
@@ -234,6 +237,7 @@ int main(int argc, char *argv[]) {
     delete ownerPW;
   }
   if (!doc->isOk()) {
+    exitCode = 1;
     goto err1;
   }
 
@@ -241,6 +245,7 @@ int main(int argc, char *argv[]) {
   // check for print permission
   if (!doc->okToPrint()) {
     error(-1, "Printing this document is not allowed.");
+    exitCode = 3;
     goto err1;
   }
 #endif
@@ -278,8 +283,14 @@ int main(int argc, char *argv[]) {
 			  doc->getCatalog(), firstPage, lastPage, mode);
   if (psOut->isOk()) {
     doc->displayPages(psOut, firstPage, lastPage, 72, 0, gFalse);
+  } else {
+    delete psOut;
+    exitCode = 2;
+    goto err2;
   }
   delete psOut;
+
+  exitCode = 0;
 
   // clean up
  err2:
@@ -287,10 +298,11 @@ int main(int argc, char *argv[]) {
  err1:
   delete doc;
   delete globalParams;
+ err0:
 
   // check for memory leaks
   Object::memCheck(stderr);
   gMemReport(stderr);
 
-  return 0;
+  return exitCode;
 }

@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,8 +31,8 @@
 //------------------------------------------------------------------------
 
 struct StdFontMapEntry {
-  char *altName;
-  char *properName;
+  const char *altName;
+  const char *properName;
 };
 
 static StdFontMapEntry stdFontMap[] = {
@@ -370,7 +371,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
   GfxFont(tagA, idA, nameA)
 {
   BuiltinFont *builtinFont;
-  char **baseEnc;
+  const char **baseEnc;
   GBool baseEncFromFontFile;
   char *buf;
   int len;
@@ -564,8 +565,9 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
   if (!baseEnc) {
     if (builtinFont) {
       baseEnc = builtinFont->defaultBaseEnc;
+      hasEncoding = gTrue;
     } else if (type == fontTrueType) {
-      baseEnc = macRomanEncoding;
+      baseEnc = winAnsiEncoding;
     } else {
       baseEnc = standardEncoding;
     }
@@ -1240,21 +1242,31 @@ GString *GfxCIDFont::getCollection() {
 GfxFontDict::GfxFontDict(XRef *xref, Dict *fontDict) {
   int i;
   Object obj1, obj2;
+  Ref r;
 
   numFonts = fontDict->getLength();
   fonts = (GfxFont **)gmalloc(numFonts * sizeof(GfxFont *));
   for (i = 0; i < numFonts; ++i) {
     fontDict->getValNF(i, &obj1);
     obj1.fetch(xref, &obj2);
-    if (obj1.isRef() && obj2.isDict()) {
+    if (obj2.isDict()) {
+      if (obj1.isRef()) {
+	r = obj1.getRef();
+      } else {
+	// no indirect reference for this font, so invent a unique one
+	// (legal generation numbers are five digits, so any 6-digit
+	// number would be safe)
+	r.num = i;
+	r.gen = 999999;
+      }
       fonts[i] = GfxFont::makeFont(xref, fontDict->getKey(i),
-				   obj1.getRef(), obj2.getDict());
+				   r, obj2.getDict());
       if (fonts[i] && !fonts[i]->isOk()) {
 	delete fonts[i];
 	fonts[i] = NULL;
       }
     } else {
-      error(-1, "font resource is not a dictionary reference");
+      error(-1, "font resource is not a dictionary");
       fonts[i] = NULL;
     }
     obj1.free();

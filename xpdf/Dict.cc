@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stddef.h>
 #include <string.h>
 #include "gmem.h"
@@ -49,7 +50,7 @@ void Dict::add(char *key, Object *val) {
   ++length;
 }
 
-inline DictEntry *Dict::find(char *key) {
+inline DictEntry *Dict::find(const char *key) {
   int i;
 
   for (i = 0; i < length; ++i) {
@@ -59,19 +60,19 @@ inline DictEntry *Dict::find(char *key) {
   return NULL;
 }
 
-GBool Dict::is(char *type) {
+GBool Dict::is(const char *type) {
   DictEntry *e;
 
   return (e = find("Type")) && e->val.isName(type);
 }
 
-Object *Dict::lookup(char *key, Object *obj) {
+Object *Dict::lookup(const char *key, Object *obj) {
   DictEntry *e;
 
   return (e = find(key)) ? e->val.fetch(xref, obj) : obj->initNull();
 }
 
-Object *Dict::lookupNF(char *key, Object *obj) {
+Object *Dict::lookupNF(const char *key, Object *obj) {
   DictEntry *e;
 
   return (e = find(key)) ? e->val.copy(obj) : obj->initNull();

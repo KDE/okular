@@ -9,7 +9,9 @@
 #ifndef BUILTINFONT_H
 #define BUILTINFONT_H
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 
@@ -21,7 +23,7 @@ class BuiltinFontWidths;
 //------------------------------------------------------------------------
 
 struct BuiltinFont {
-  char *name;
+  const char *name;
   char **defaultBaseEnc;
   short ascent;
   short descent;
@@ -32,7 +34,7 @@ struct BuiltinFont {
 //------------------------------------------------------------------------
 
 struct BuiltinFontWidth {
-  char *name;
+  const char *name;
   Gushort width;
   BuiltinFontWidth *next;
 };
@@ -46,7 +48,7 @@ public:
 
 private:
 
-  int hash(char *name);
+  int hash(const char *name);
 
   BuiltinFontWidth **tab;
   int size;

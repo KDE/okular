@@ -9,7 +9,9 @@
 #ifndef GLOBALPARAMS_H
 #define GLOBALPARAMS_H
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 
@@ -63,7 +65,7 @@ public:
   };
 
   DisplayFontParam(GString *nameA, DisplayFontParamKind kindA);
-  DisplayFontParam(char *nameA, char *xlfdA, char *encodingA);
+  DisplayFontParam(const char *nameA, const char *xlfdA, const char *encodingA);
   ~DisplayFontParam();
 };
 
@@ -150,12 +152,15 @@ public:
   GBool getPSASCIIHex() { return psASCIIHex; }
   GString *getTextEncodingName() { return textEncoding; }
   EndOfLineKind getTextEOL() { return textEOL; }
-  GString *findFontFile(GString *fontName, char *ext1, char *ext2);
+  GBool getTextKeepTinyChars() { return textKeepTinyChars; }
+  GString *findFontFile(GString *fontName, const char *ext1, const char *ext2);
   GString *getInitialZoom() { return initialZoom; }
   FontRastControl getT1libControl() { return t1libControl; }
   FontRastControl getFreeTypeControl() { return freetypeControl; }
   GString *getURLCommand() { return urlCommand; }
+  GString *getMovieCommand() { return movieCommand; }
   GBool getMapNumericCharNames() { return mapNumericCharNames; }
+  GBool getPrintCommands() { return printCommands; }
   GBool getErrQuiet() { return errQuiet; }
 
   CharCodeToUnicode *getCIDToUnicode(GString *collection);
@@ -165,6 +170,7 @@ public:
 
   //----- functions to set parameters
 
+  void addDisplayFont(DisplayFontParam *param);
   void setPSFile(char *file);
   GBool setPSPaperSize(char *size);
   void setPSPaperWidth(int width);
@@ -179,9 +185,12 @@ public:
   void setPSASCIIHex(GBool hex);
   void setTextEncoding(char *encodingName);
   GBool setTextEOL(char *s);
+  void setTextKeepTinyChars(GBool keep);
   void setInitialZoom(char *s);
   GBool setT1libControl(char *s);
   GBool setFreeTypeControl(char *s);
+  void setMapNumericCharNames(GBool map);
+  void setPrintCommands(GBool printCommandsA);
   void setErrQuiet(GBool errQuietA);
 
 private:
@@ -199,16 +208,17 @@ private:
   void parsePSPaperSize(GList *tokens, GString *fileName, int line);
   void parsePSLevel(GList *tokens, GString *fileName, int line);
   void parsePSFont(GList *tokens, GString *fileName, int line);
-  void parsePSFont16(char *cmdName, GList *fontList,
+  void parsePSFont16(const char *cmdName, GList *fontList,
 		     GList *tokens, GString *fileName, int line);
   void parseTextEncoding(GList *tokens, GString *fileName, int line);
   void parseTextEOL(GList *tokens, GString *fileName, int line);
   void parseFontDir(GList *tokens, GString *fileName, int line);
   void parseInitialZoom(GList *tokens, GString *fileName, int line);
-  void parseFontRastControl(char *cmdName, FontRastControl *val,
+  void parseFontRastControl(const char *cmdName, FontRastControl *val,
 			    GList *tokens, GString *fileName, int line);
-  void parseURLCommand(GList *tokens, GString *fileName, int line);
-  void parseYesNo(char *cmdName, GBool *flag,
+  void parseCommand(const char *cmdName, GString **val,
+		    GList *tokens, GString *fileName, int line);
+  void parseYesNo(const char *cmdName, GBool *flag,
 		  GList *tokens, GString *fileName, int line);
   GBool setFontRastControl(FontRastControl *val, char *s);
 
@@ -256,13 +266,16 @@ private:
 				//   output
   EndOfLineKind textEOL;	// type of EOL marker to use for text
 				//   output
+  GBool textKeepTinyChars;	// keep all characters in text output
   GList *fontDirs;		// list of font dirs [GString]
   GString *initialZoom;		// initial zoom level
   FontRastControl t1libControl;	// t1lib rasterization mode
   FontRastControl		// FreeType rasterization mode
     freetypeControl;
   GString *urlCommand;		// command executed for URL links
+  GString *movieCommand;	// command executed for movie annotations
   GBool mapNumericCharNames;	// map numeric char names (from font subsets)?
+  GBool printCommands;		// print the drawing commands
   GBool errQuiet;		// suppress error messages?
 
   CIDToUnicodeCache *cidToUnicodeCache;

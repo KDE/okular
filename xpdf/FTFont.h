@@ -11,9 +11,9 @@
 #ifndef FTFONT_H
 #define FTFONT_H
 
-#if FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
+#include <aconf.h>
 
-#ifdef __GNUC__
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 
@@ -127,7 +127,5 @@ private:
   int cacheAssoc;		// cache associativity (glyphs per set)
   GBool ok;
 };
-
-#endif // FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
 
 #endif

@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stddef.h>
 #include <math.h>
 #include <string.h> // for memcpy()
@@ -836,12 +837,14 @@ GfxColorSpace *GfxIndexedColorSpace::parse(Array *arr) {
 void GfxIndexedColorSpace::getGray(GfxColor *color, double *gray) {
   Guchar *p;
   GfxColor color2;
+  double low[gfxColorMaxComps], range[gfxColorMaxComps];
   int n, i;
 
   n = base->getNComps();
+  base->getDefaultRanges(low, range, indexHigh);
   p = &lookup[(int)(color->c[0] + 0.5) * n];
   for (i = 0; i < n; ++i) {
-    color2.c[i] = p[i] / 255.0;
+    color2.c[i] = low[i] + (p[i] / 255.0) * range[i];
   }
   base->getGray(&color2, gray);
 }
@@ -849,12 +852,14 @@ void GfxIndexedColorSpace::getGray(GfxColor *color, double *gray) {
 void GfxIndexedColorSpace::getRGB(GfxColor *color, GfxRGB *rgb) {
   Guchar *p;
   GfxColor color2;
+  double low[gfxColorMaxComps], range[gfxColorMaxComps];
   int n, i;
 
   n = base->getNComps();
+  base->getDefaultRanges(low, range, indexHigh);
   p = &lookup[(int)(color->c[0] + 0.5) * n];
   for (i = 0; i < n; ++i) {
-    color2.c[i] = p[i] / 255.0;
+    color2.c[i] = low[i] + (p[i] / 255.0) * range[i];
   }
   base->getRGB(&color2, rgb);
 }
@@ -862,12 +867,14 @@ void GfxIndexedColorSpace::getRGB(GfxColor *color, GfxRGB *rgb) {
 void GfxIndexedColorSpace::getCMYK(GfxColor *color, GfxCMYK *cmyk) {
   Guchar *p;
   GfxColor color2;
+  double low[gfxColorMaxComps], range[gfxColorMaxComps];
   int n, i;
 
   n = base->getNComps();
+  base->getDefaultRanges(low, range, indexHigh);
   p = &lookup[(int)(color->c[0] + 0.5) * n];
   for (i = 0; i < n; ++i) {
-    color2.c[i] = p[i] / 255.0;
+    color2.c[i] = low[i] + (p[i] / 255.0) * range[i];
   }
   base->getCMYK(&color2, cmyk);
 }
@@ -1666,10 +1673,11 @@ GfxImageColorMap::GfxImageColorMap(int bitsA, Object *decode,
     nComps2 = colorSpace2->getNComps();
     lookup = (double *)gmalloc((indexHigh + 1) * nComps2 * sizeof(double));
     lookup2 = indexedCS->getLookup();
+    colorSpace2->getDefaultRanges(x, y, indexHigh);
     for (i = 0; i <= indexHigh; ++i) {
-      j = (int)(decodeLow[0] +(i * decodeRange[0]) / maxPixel + 0.5);
+      j = (int)(decodeLow[0] + (i * decodeRange[0]) / maxPixel + 0.5);
       for (k = 0; k < nComps2; ++k) {
-	lookup[i*nComps2 + k] = lookup2[i*nComps2 + k] / 255.0;
+	lookup[j*nComps2 + k] = x[k] + (lookup2[i*nComps2 + k] / 255.0) * y[k];
       }
     }
   } else if (colorSpace->getMode() == csSeparation) {

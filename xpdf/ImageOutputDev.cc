@@ -6,11 +6,12 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -98,7 +99,7 @@ void ImageOutputDev::drawImage(GfxState *state, Object *ref, Stream *str,
 			       int *maskColors, GBool inlineImg) {
   FILE *f;
   ImageStream *imgStr;
-  Guchar pixBuf[4];
+  Guchar *p;
   GfxRGB rgb;
   int x, y;
   int c;
@@ -148,7 +149,7 @@ void ImageOutputDev::drawImage(GfxState *state, Object *ref, Stream *str,
     // copy the stream
     size = height * ((width + 7) / 8);
     for (i = 0; i < size; ++i) {
-      fputc(str->getChar(), f);
+      fputc(str->getChar() ^ 0xff, f);
     }
 
     str->close();
@@ -177,12 +178,13 @@ void ImageOutputDev::drawImage(GfxState *state, Object *ref, Stream *str,
     for (y = 0; y < height; ++y) {
 
       // write the line
+      p = imgStr->getLine();
       for (x = 0; x < width; ++x) {
-	imgStr->getPixel(pixBuf);
-	colorMap->getRGB(pixBuf, &rgb);
+	colorMap->getRGB(p, &rgb);
 	fputc((int)(rgb.r * 255 + 0.5), f);
 	fputc((int)(rgb.g * 255 + 0.5), f);
 	fputc((int)(rgb.b * 255 + 0.5), f);
+	p += colorMap->getNumPixelComps();
       }
     }
     delete imgStr;

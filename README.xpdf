@@ -1,8 +1,8 @@
 Xpdf
 ====
 
-version 1.01
-2002-may-20
+version 2.00
+2002-nov-04
 
 The Xpdf software and documentation are
 copyright 1996-2002 Glyph & Cog, LLC.
@@ -140,8 +140,8 @@ pages (xpdf.1, etc.) and the VMS help files (xpdf.hlp, etc.).
 Upgrading from Xpdf 0.9x
 ------------------------
 
-WARNING: Xpdf 1.x uses a completely different config file setup than
-Xpdf 0.9x.
+WARNING: Xpdf 1.x switched to a completely different config file setup
+than Xpdf 0.9x.
 
 Many of the configuration options that used to be X resources have
 been moved into the Xpdf config file.  There are also lots of new and
@@ -175,8 +175,8 @@ executable, e.g.:
 
     C:/Program Files/Xpdf/xpdfrc
 
-Xpdf 1.x comes with a "sample-xpdfrc" file in the doc directory.  This
-is a good starting point for constructing your own config file.
+Xpdf comes with a "sample-xpdfrc" file in the doc directory.  This is
+a good starting point for constructing your own config file.
 
 For full details, please see the xpdfrc(5) man page.
 
@@ -219,35 +219,6 @@ displayFontT1 ZapfDingbats		/usr/local/share/ghostscript/fonts/d050000l.pfb
 
 You will need to replace '/usr/local/share/ghostscript/fonts' with the
 appropriate path on your system.
-
-
-The Unisys LZW Patent
----------------------
-
-Nearly all PDF files include data which has been compressed with the
-LZW compression algorithm.  Unfortunately, LZW is covered by a
-software patent which is owned by Unisys Corporation.  Unisys refuses
-to license this patent for PDF-related use in software such as Xpdf
-which is released for free and which may be freely redistributed.
-(This is same algorithm which is used by GIF.  However, Unisys is not
-doing licensing for free PDF viewers in the same way as for free GIF
-viewers.)
-
-As a workaround, Xpdf converts PDF-format LZW data to compress-format
-LZW data.  (The standard UNIX compress utility also uses LZW, but with
-a slightly different file format.)  This conversion does *not*
-decompress the data; it simply converts it to a different file format.
-Xpdf then calls uncompress to actually decompress the data.
-
-I have been told by several notable people that the LZW patent covers
-compression only, and does not cover decompression.  This seems pretty
-fuzzy to me, so I'm going to stick with my workaround, at least for
-now.
-
-For Unisys's slant on things (mostly regarding GIF), see
-<http://www.unisys.com/LeadStory/lzwterms.html> and
-<http://www.unisys.com/LeadStory/lzwfaq.html>.  These pages mention
-an email address for feedback.
 
 
 Compiling Xpdf
@@ -336,10 +307,10 @@ CID-Keyed Fonts_, Adobe Developer Support Technical Note #5078.
 http://partners.adobe.com/asn/developer/PDFS/TN/5078.CID_Glyph.pdf
 [The Adobe Japanese character set.]
 
-Adobe Systems, Inc., _Adobe-GB1-3 Character Collection for
+Adobe Systems, Inc., _Adobe-GB1-4 Character Collection for
 CID-Keyed Fonts_, Adobe Developer Support Technical Note #5079.
-1998.
-http://partners.adobe.com/asn/developer/PDFS/TN/5079.GB_CharColl.pdf
+2000.
+http://partners.adobe.com/asn/developer/pdfs/tn/5079.Adobe-GB1-4.pdf
 [The Adobe Chinese GB (simplified) character set.]
 
 Adobe Systems, Inc., _Adobe-CNS1-3 Character Collection for
@@ -380,12 +351,11 @@ T. Boutell, et al., "PNG (Portable Network Graphics) Specification,
 Version 1.0.  RFC 2083.
 [PDF uses the PNG filter algorithms.]
 
-CCITT, _Blue Book_, Volume VII Fascicle 3: "Terminal Equipment and
-Protocols for Telematic Services", Recommendations T.4 and T.6.
-ftp://ftp.uu.net/doc/standards/ccitt/1988/7_3_01.ps
-ftp://ftp.uu.net/doc/standards/ccitt/1988/7_3_02.ps
-[The official Group 3 and 4 fax standards.  The online copies are
-unfortunately misformatted.]
+CCITT, "Information Technology - Digital Compression and Coding of
+Continuous-tone Still Images - Requirements and Guidelines", CCITT
+Recommendation T.81.
+http://www.w3.org/Graphics/JPEG/
+[The official JPEG spec.]
 
 A. Chernov, "Registration of a Cyrillic Character Set".  RFC 1489.
 [Documentation for the KOI8-R Cyrillic encoding.]
@@ -416,6 +386,18 @@ Practice_, 2nd ed.  Addison-Wesley, 1990, ISBN 0-201-12110-7.
 Robert L. Hummel, _Programmer's Technical Reference: Data and Fax
 Communications_.  Ziff-Davis Press, 1993, ISBN 1-56276-077-7.
 [CCITT Group 3 and 4 fax decoding.]
+
+ISO, _Coding of Still Pictures_, IS 14492 Final Committee Draft.
+http://www.jpeg.org/fcd14492.pdf
+[The final draft of the JBIG2 spec.]
+
+ITU, "Standardization of Group 3 facsimile terminals for document
+transmission", ITU-T Recommendation T.4, 1999.
+ITU, "Facsimile coding schemes and coding control functions for Group 4
+facsimile apparatus", ITU-T Recommendation T.6, 1993.
+http://www.itu.int/
+[The official Group 3 and 4 fax standards - used by the CCITTFaxDecode
+stream, as well as the JBIG2Decode stream.]
 
 Christoph Loeffler, Adriaan Ligtenberg, George S. Moschytz, "Practical
 Fast 1-D DCT Algorithms with 11 Multiplications".  IEEE Intl. Conf. on

@@ -76,6 +76,9 @@ int main(int argc, char *argv[]) {
   FILE *f;
   GString *metadata;
   GBool ok;
+  int exitCode;
+
+  exitCode = 99;
 
   // parse args
   ok = parseArgs(argDesc, &argc, argv);
@@ -85,7 +88,7 @@ int main(int argc, char *argv[]) {
     if (!printVersion) {
       printUsage("pdfinfo", "<PDF-file>", argDesc);
     }
-    exit(1);
+    goto err0;
   }
   fileName = new GString(argv[1]);
 
@@ -121,6 +124,7 @@ int main(int argc, char *argv[]) {
     delete ownerPW;
   }
   if (!doc->isOk()) {
+    exitCode = 1;
     goto err2;
   }
 
@@ -179,7 +183,10 @@ int main(int argc, char *argv[]) {
   f = fopen(fileName->getCString(), "rb");
 #endif
   if (f) {
-#if HAVE_FSEEK64
+#if HAVE_FSEEKO
+    fseeko(f, 0, SEEK_END);
+    printf("File size:    %u bytes\n", (Guint)ftello(f));
+#elif HAVE_FSEEK64
     fseek64(f, 0, SEEK_END);
     printf("File size:    %u bytes\n", (Guint)ftell64(f));
 #else
@@ -203,18 +210,21 @@ int main(int argc, char *argv[]) {
     delete metadata;
   }
 
+  exitCode = 0;
+
   // clean up
  err2:
   uMap->decRefCnt();
   delete doc;
  err1:
   delete globalParams;
+ err0:
 
   // check for memory leaks
   Object::memCheck(stderr);
   gMemReport(stderr);
 
-  return 0;
+  return exitCode;
 }
 
 static void printInfoString(Dict *infoDict, char *key, char *text,
@@ -278,8 +288,9 @@ static void printInfoDate(Dict *infoDict, char *key, char *text) {
       tmStruct.tm_wday = -1;
       tmStruct.tm_yday = -1;
       tmStruct.tm_isdst = -1;
-      mktime(&tmStruct); // compute the tm_wday and tm_yday fields
-      if (strftime(buf, sizeof(buf), "%c", &tmStruct)) {
+      // compute the tm_wday and tm_yday fields
+      if (mktime(&tmStruct) != (time_t)-1 &&
+	  strftime(buf, sizeof(buf), "%c", &tmStruct)) {
 	fputs(buf, stdout);
       } else {
 	fputs(s, stdout);

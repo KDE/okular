@@ -9,7 +9,9 @@
 #ifndef IMAGEOUTPUTDEV_H
 #define IMAGEOUTPUTDEV_H
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 

@@ -72,6 +72,9 @@ int main(int argc, char *argv[]) {
   GString *ownerPW, *userPW;
   PBMOutputDev *pbmOut;
   GBool ok;
+  int exitCode;
+
+  exitCode = 99;
 
   // parse args
   ok = parseArgs(argDesc, &argc, argv);
@@ -81,7 +84,7 @@ int main(int argc, char *argv[]) {
     if (!printVersion) {
       printUsage("pdftopbm", "<PDF-file> <PBM-root>", argDesc);
     }
-    exit(1);
+    goto err0;
   }
   fileName = new GString(argv[1]);
   pbmRoot = argv[2];
@@ -111,7 +114,8 @@ int main(int argc, char *argv[]) {
     delete ownerPW;
   }
   if (!doc->isOk()) {
-    goto err;
+    exitCode = 1;
+    goto err1;
   }
 
   // get page range
@@ -126,14 +130,17 @@ int main(int argc, char *argv[]) {
   doc->displayPages(pbmOut, firstPage, lastPage, resolution, 0, gFalse);
   PBMOutputDev::killPBMOutputDev(pbmOut);
 
+  exitCode = 0;
+
   // clean up
- err:
+ err1:
   delete doc;
   delete globalParams;
+ err0:
 
   // check for memory leaks
   Object::memCheck(stderr);
   gMemReport(stderr);
 
-  return 0;
+  return exitCode;
 }

@@ -9,7 +9,9 @@
 #ifndef TEXTOUTPUTDEV_H
 #define TEXTOUTPUTDEV_H
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
 
@@ -20,10 +22,15 @@
 
 class GfxState;
 class GString;
+class TextBlock;
+class TextLine;
+
+#undef TEXTOUT_DO_SYMBOLS
 
 //------------------------------------------------------------------------
 
 typedef void (*TextOutputFunc)(void *stream, char *text, int len);
+
 
 //------------------------------------------------------------------------
 // TextString
@@ -33,7 +40,9 @@ class TextString {
 public:
 
   // Constructor.
-  TextString(GfxState *state, double fontSize);
+  TextString(GfxState *state, double x0, double y0,
+	     double fontSize);
+
 
   // Destructor.
   ~TextString();
@@ -46,15 +55,18 @@ private:
 
   double xMin, xMax;		// bounding box x coordinates
   double yMin, yMax;		// bounding box y coordinates
-  int col;			// starting column
+  union {
+    GBool marked;		// temporary flag used by coalesce()
+    GBool spaceAfter;		// insert a space after this string?
+  };
   Unicode *text;		// the text
   double *xRight;		// right-hand x coord of each char
   int len;			// length of text and xRight
   int size;			// size of text and xRight arrays
-  TextString *yxNext;		// next string in y-major order
-  TextString *xyNext;		// next string in x-major order
+  TextString *next;
 
   friend class TextPage;
+  friend class TextBlock;
 };
 
 //------------------------------------------------------------------------
@@ -73,8 +85,9 @@ public:
   // Update the current font.
   void updateFont(GfxState *state);
 
+
   // Begin a new string.
-  void beginString(GfxState *state);
+  void beginString(GfxState *state, double x0, double y0);
 
   // Add a character to the current string.
   void addChar(GfxState *state, double x, double y,
@@ -82,6 +95,10 @@ public:
 
   // End the current string, sorting it into the list of strings.
   void endString();
+
+  // Add a string, sorting it into the list of strings.
+  void addString(TextString *str);
+
 
   // Coalesce strings that look like parts of the same line.
   void coalesce();
@@ -108,16 +125,25 @@ public:
 
 private:
 
+  GBool xyBefore(TextString *str1, TextString *str2);
+  GBool xyBefore(TextBlock *blk1, TextBlock *blk2);
+  GBool yxBefore(TextBlock *blk1, TextBlock *blk2);
+  double coalesceFit(TextString *str1, TextString *str2);
+
   GBool rawOrder;		// keep strings in content stream order
 
   TextString *curStr;		// currently active string
   double fontSize;		// current font size
 
-  TextString *yxStrings;	// strings in y-major order
-  TextString *xyStrings;	// strings in x-major order
-  TextString *yxCur1, *yxCur2;	// cursors for yxStrings list
+  TextString *xyStrings;	// strings in x-major order (before
+				//   they're sorted into lines)
+  TextString *xyCur1, *xyCur2;	// cursors for xyStrings list
+  TextLine *lines;		// list of lines
 
   int nest;			// current nesting level (for Type 3 fonts)
+
+  int nTinyChars;		// number of "tiny" chars seen so far
+
 };
 
 //------------------------------------------------------------------------
@@ -177,6 +203,8 @@ public:
 			double originX, double originY,
 			CharCode c, Unicode *u, int uLen);
 
+  //----- path painting
+
   //----- special access
 
   // Find a string.  If <top> is true, starts looking at top of page;
@@ -189,6 +217,10 @@ public:
 		 double *xMin, double *yMin,
 		 double *xMax, double *yMax);
 
+  // Get the text which is inside the specified rectangle.
+  GString *getText(double xMin, double yMin,
+		   double xMax, double yMax);
+
 private:
 
   TextOutputFunc outputFunc;	// output function
@@ -198,6 +230,7 @@ private:
   TextPage *text;		// text for the current page
   GBool rawOrder;		// keep text in content stream order
   GBool ok;			// set up ok?
+
 };
 
 #endif

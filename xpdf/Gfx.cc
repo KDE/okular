@@ -6,16 +6,18 @@
 //
 //========================================================================
 
-#ifdef __GNUC__
+#include <aconf.h>
+
+#ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
 
-#include <aconf.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
 #include <math.h>
 #include "gmem.h"
+#include "GlobalParams.h"
 #include "CharTypes.h"
 #include "Object.h"
 #include "Array.h"
@@ -381,12 +383,13 @@ GBool GfxResources::lookupGState(char *name, Object *obj) {
 
 Gfx::Gfx(XRef *xrefA, OutputDev *outA, int pageNum, Dict *resDict, double dpi,
 	 PDFRectangle *box, GBool crop, PDFRectangle *cropBox, int rotate,
-	 GBool printCommandsA) {
+	 GBool (*abortCheckCbkA)(void *data),
+	 void *abortCheckCbkDataA) {
   int i;
 
   xref = xrefA;
   subPage = gFalse;
-  printCommands = printCommandsA;
+  printCommands = globalParams->getPrintCommands();
 
   // start the resource stack
   res = new GfxResources(xref, resDict, NULL);
@@ -403,6 +406,8 @@ Gfx::Gfx(XRef *xrefA, OutputDev *outA, int pageNum, Dict *resDict, double dpi,
   for (i = 0; i < 6; ++i) {
     baseMatrix[i] = state->getCTM()[i];
   }
+  abortCheckCbk = abortCheckCbkA;
+  abortCheckCbkData = abortCheckCbkDataA;
 
   // set crop box
   if (crop) {
@@ -418,12 +423,14 @@ Gfx::Gfx(XRef *xrefA, OutputDev *outA, int pageNum, Dict *resDict, double dpi,
 }
 
 Gfx::Gfx(XRef *xrefA, OutputDev *outA, Dict *resDict,
-	 PDFRectangle *box, GBool crop, PDFRectangle *cropBox) {
+	 PDFRectangle *box, GBool crop, PDFRectangle *cropBox,
+	 GBool (*abortCheckCbkA)(void *data),
+	 void *abortCheckCbkDataA) {
   int i;
 
   xref = xrefA;
   subPage = gTrue;
-  printCommands = gFalse;
+  printCommands = globalParams->getPrintCommands();
 
   // start the resource stack
   res = new GfxResources(xref, resDict, NULL);
@@ -437,6 +444,8 @@ Gfx::Gfx(XRef *xrefA, OutputDev *outA, Dict *resDict,
   for (i = 0; i < 6; ++i) {
     baseMatrix[i] = state->getCTM()[i];
   }
+  abortCheckCbk = abortCheckCbkA;
+  abortCheckCbkData = abortCheckCbkDataA;
 
   // set crop box
   if (crop) {
@@ -494,11 +503,11 @@ void Gfx::display(Object *obj, GBool topLevel) {
 void Gfx::go(GBool topLevel) {
   Object obj;
   Object args[maxArgs];
-  int numArgs;
-  int i;
+  int numArgs, i;
+  int lastAbortCheck;
 
   // scan a sequence of objects
-  updateLevel = 0;
+  updateLevel = lastAbortCheck = 0;
   numArgs = 0;
   parser->getObj(&obj);
   while (!obj.isEOF()) {
@@ -524,6 +533,16 @@ void Gfx::go(GBool topLevel) {
       if (++updateLevel >= 20000) {
 	out->dump();
 	updateLevel = 0;
+      }
+
+      // check for an abort
+      if (abortCheckCbk) {
+	if (updateLevel - lastAbortCheck > 10) {
+	  if ((*abortCheckCbk)(abortCheckCbkData)) {
+	    break;
+	  }
+	  lastAbortCheck = updateLevel;
+	}
       }
 
     // got an argument - save it
@@ -575,7 +594,7 @@ void Gfx::execOp(Object *cmd, Object args[], int numArgs) {
   int i;
 
   // find operator
-  name = cmd->getName();
+  name = cmd->getCmd();
   if (!(op = findOp(name))) {
     if (ignoreUndef == 0)
       error(getPos(), "Unknown operator '%s'", name);

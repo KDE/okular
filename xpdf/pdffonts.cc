@@ -84,6 +84,9 @@ int main(int argc, char *argv[]) {
   Annots *annots;
   Object obj1, obj2;
   int pg, i;
+  int exitCode;
+
+  exitCode = 99;
 
   // parse args
   ok = parseArgs(argDesc, &argc, argv);
@@ -93,7 +96,7 @@ int main(int argc, char *argv[]) {
     if (!printVersion) {
       printUsage("pdfinfo", "<PDF-file>", argDesc);
     }
-    exit(1);
+    goto err0;
   }
   fileName = new GString(argv[1]);
 
@@ -119,7 +122,8 @@ int main(int argc, char *argv[]) {
     delete ownerPW;
   }
   if (!doc->isOk()) {
-    exit(1);
+    exitCode = 1;
+    goto err1;
   }
 
   // get page range
@@ -155,16 +159,20 @@ int main(int argc, char *argv[]) {
     delete annots;
   }
 
+  exitCode = 0;
+
   // clean up
   gfree(fonts);
+ err1:
   delete doc;
   delete globalParams;
+ err0:
 
   // check for memory leaks
   Object::memCheck(stderr);
   gMemReport(stderr);
 
-  return 0;
+  return exitCode;
 }
 
 static void scanFonts(Dict *resDict, PDFDoc *doc) {
@@ -249,13 +257,17 @@ static void scanFont(GfxFont *font, PDFDoc *doc) {
   }
 
   // print the font info
-  printf("%-36s %-12s %-3s %-3s %-3s %6d %2d\n",
+  printf("%-36s %-12s %-3s %-3s %-3s",
 	 name ? name->getCString() : "[none]",
 	 fontTypeNames[font->getType()],
 	 font->getEmbeddedFontID(&embRef) ? "yes" : "no",
 	 subset ? "yes" : "no",
-	 hasToUnicode ? "yes" : "no",
-	 fontRef.num, fontRef.gen);
+	 hasToUnicode ? "yes" : "no");
+  if (fontRef.gen == 999999) {
+    printf(" [none]\n");
+  } else {
+    printf(" %6d %2d\n", fontRef.num, fontRef.gen);
+  }
   if (name) {
     delete name;
   }

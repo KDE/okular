@@ -651,6 +651,9 @@ void KDVIMultiPage::reload()
     killTimer(timer_id);
     timer_id = -1;
     bool r = window->setFile(m_file);
+
+    generateDocumentWidgets();
+  emit numberOfPages(window->totalPages());
     enableActions(r);
 
     emit pageInfo(window->totalPages(), window->curr_page()-1 );

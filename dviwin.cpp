@@ -438,10 +438,11 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
     info->setDVIData(0);
     delete dviFile;
     dviFile = 0;
-
+    
     currentlyDrawnPixmap.resize(0,0);
     if (currentlyDrawnPage != 0)
       currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
+    emit(prescanDone()); // ####
     return true;
   }
 
@@ -795,7 +796,7 @@ void dviWindow::handleLocalLink(const QString &linkText)
 }
 
 
-void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent * e)
+void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;
@@ -885,8 +886,8 @@ void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent * e)
   info->clear(i18n("Starting the editor..."));
   
   int flashOffset      = e->y(); // Heuristic correction. Looks better.
-  emit(flash(flashOffset));
-
+  win->flash(flashOffset);
+  
   
   proc->clearArguments();
   *proc << command;

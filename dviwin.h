@@ -28,6 +28,7 @@
 #include "psgs.h"
 
 
+class documentWidget;
 class dviWindow;
 class fontProgressDialog;
 class infoDialog;
@@ -151,7 +152,7 @@ public:
 public slots:
   void          showInfo(void);
   void          handleLocalLink(const QString &linkText);
-  void          handleSRCLink(const QString &linkText, QMouseEvent * e);
+  void          handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *widget);
 
   void          embedPostScript(void);
   void          abortExternalProgramm(void);
@@ -199,7 +200,6 @@ signals:
   /** To be passed through to the kmultipage */
   void documentSpecifiedPageSize(const pageSize &size);
 
-  void flash(int);
 
 private:
   fontPool      font_pool;

@@ -44,7 +44,7 @@ class KDVIMultiPage : public KMultiPage
   Q_OBJECT
 
 public:
-  enum viewModes {KVS_SinglePage = 0, KVS_Continuous = 1};
+  enum viewModes {KVS_SinglePage = 0, KVS_Continuous = 1, KVS_ContinuousFacing = 2};
 
   documentPageCache  currentPage;
 

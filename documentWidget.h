@@ -43,7 +43,7 @@ signals:
   /** Passed through to the top-level kpart. */
   void          setStatusBarText( const QString& );
   void          localLink( const QString& );
-  void          SRCLink( const QString&, QMouseEvent * e );
+  void          SRCLink(const QString&, QMouseEvent * e, documentWidget *);
 
   /** This signal is emitted when the widget resizes itself */
   void          resized(void);

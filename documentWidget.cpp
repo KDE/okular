@@ -197,7 +197,7 @@ void documentWidget::mousePressEvent ( QMouseEvent * e )
   if ((e->button() == MidButton) && (pageData->sourceHyperLinkList.size() > 0))
     for(unsigned int i=0; i<pageData->sourceHyperLinkList.size(); i++)
       if (pageData->sourceHyperLinkList[i].box.contains(e->pos())) {
-	emit(SRCLink(pageData->sourceHyperLinkList[i].linkText, e));
+	emit(SRCLink(pageData->sourceHyperLinkList[i].linkText, e, this));
 	e->accept();
 	return;
       }

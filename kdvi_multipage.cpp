@@ -110,6 +110,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   QStringList viewModes;
   viewModes.append(i18n("Single Page"));
   viewModes.append(i18n("Continuous"));
+  viewModes.append(i18n("Continuous - Facing"));
   viewModeAction = new KSelectAction (i18n("View Mode"), 0, 0, 0, actionCollection(), "viewmode");
   viewModeAction->setItems(viewModes);
   connect(viewModeAction, SIGNAL(activated (int)), this, SLOT(setViewMode(int)));
@@ -181,9 +182,9 @@ void KDVIMultiPage::generateDocumentWidgets(void)
     dviWidget->show();
     
     connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
-    connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *)), window, SLOT(handleSRCLink(const QString &,QMouseEvent *)));
+    connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), window,
+	    SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
     connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-    connect(window, SIGNAL(flash(int)), dviWidget, SLOT(flash(int)));
     connect(window, SIGNAL(needsRepainting()), dviWidget, SLOT(update()));
   }
   
@@ -191,7 +192,7 @@ void KDVIMultiPage::generateDocumentWidgets(void)
 }
 
 
-void KDVIMultiPage::setViewMode(int)
+void KDVIMultiPage::setViewMode(int mode)
 {
   // Save viewMode for future uses of KDVI
   if (viewModeAction != 0) {
@@ -201,7 +202,12 @@ void KDVIMultiPage::setViewMode(int)
     config->writeEntry( "ViewMode", viewModeAction->currentItem() );
     config->sync();
   }
-  generateDocumentWidgets();  
+  
+  if (mode == KVS_ContinuousFacing)
+    scrollView()->setNrColumns(2);
+  else
+    scrollView()->setNrColumns(1);
+  generateDocumentWidgets();
 }
 
 
@@ -705,10 +711,14 @@ void KDVIMultiPage::preferencesChanged()
   bool useFontHints = config->readBoolEntry( "UseFontHints", false );
 
   int viewMode = config->readNumEntry( "ViewMode", KVS_Continuous );
-  if ((viewMode < 0) || (viewMode > KVS_Continuous))
+  if ((viewMode < 0) || (viewMode > KVS_ContinuousFacing))
     viewMode = KVS_Continuous;
   if (viewModeAction != 0)
     viewModeAction->setCurrentItem(viewMode);
+  if (viewMode == KVS_ContinuousFacing)
+    scrollView()->setNrColumns(2);
+  else
+    scrollView()->setNrColumns(1);
 
   window->setPrefs( showPS, showHyperLinks, config->readPathEntry( "EditorCommand" ), mfmode, makepk, useType1Fonts, useFontHints);
 }

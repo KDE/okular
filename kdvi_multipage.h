@@ -47,9 +47,7 @@ class KDVIMultiPage : public KMultiPage
 public:
   enum viewModes {KVS_SinglePage = 0, KVS_Continuous = 1};
 
-  documentWidget *dviWidget;
   documentPageCache  currentPage;
-
 
   KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
   virtual ~KDVIMultiPage();
@@ -136,6 +134,8 @@ public slots:
       currently selected text, if there is any. */
   void findPrevText(void);
 
+  void setViewMode(int);
+
 protected:
   history document_history;
 
@@ -172,6 +172,8 @@ protected slots:
   void preferencesChanged();
   void goto_page(int page, int y);
 
+  void generateDocumentWidgets(void);
+
   /** Makes page # pageNr visible, selects the text Elements
       beginSelection-endSelection, and draws the users attention to
       this place with an animated frame  */
@@ -184,6 +186,7 @@ private:
   OptionDialog *options;
   KPrinter     *printer;
 
+  QPtrVector<QWidget> widgetList; 
   /*************************************************************
    * Methods and classes concerned with the find functionality *
    *************************************************************/

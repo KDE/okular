@@ -47,6 +47,9 @@ signals:
   void          localLink( const QString& );
   void          SRCLink( const QString&, QMouseEvent * e );
 
+  /** This signal is emitted when the widget resizes itself */
+  void          resized(void);
+
 protected:
   void          paintEvent (QPaintEvent *);
 

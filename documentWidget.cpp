@@ -90,8 +90,12 @@ void documentWidget::paintEvent(QPaintEvent *e)
   }
 
   // Resize the widget, if appropriate
-  if (pixmap->size() != this->size())
+  if (pixmap->size() != this->size()) {
     resize(pixmap->size());
+    // emit the signal 'resized' so that the widget can be newly
+    // centered
+    emit resized();
+  }
   
   // Paint widget contents
   bitBlt ( this, e->rect().topLeft(), pageData->getPixmap(), e->rect(), CopyROP);

@@ -208,7 +208,7 @@ void KDVIMultiPage::findNextText(void)
       
       // Do not ask the user if the search really started from the
       // beginning of the first page
-      if ( (getCurrentPageNumber() == 1)&&(dviWidget->DVIselection.selectedTextStart == 0) )
+      //###      if ( (getCurrentPageNumber() == 1)&&(dviWidget->DVIselection.selectedTextStart == 0) )
 	return;
       
       int answ = KMessageBox::questionYesNo(scrollView(), i18n("<qt>The search string <strong>%1</strong> could not be found till the "
@@ -253,7 +253,8 @@ void KDVIMultiPage::findNextText(void)
 	// The first time we search on the current page, search
 	// everything from the end of the selected text to the end of
 	// the page
-	for(unsigned int i=dviWidget->DVIselection.selectedTextStart+1; i<dummyPage.textLinkList.size(); i++) 
+	//###	for(unsigned int i=dviWidget->DVIselection.selectedTextStart+1; i<dummyPage.textLinkList.size(); i++) 
+	int i=0;//###
 	  if (dummyPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	    gotoPage(pageNumber, i, i );
 	    return;
@@ -262,7 +263,8 @@ void KDVIMultiPage::findNextText(void)
 	// The second time we come to the current page, search
 	// everything from the beginning of the page till the
 	// beginning of the selected test, then end the search.
-	for(unsigned int i=0; i<dviWidget->DVIselection.selectedTextStart+1; i++) 
+	//###	for(unsigned int i=0; i<dviWidget->DVIselection.selectedTextStart+1; i++) 
+	int i=0;//###
 	  if (dummyPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	    gotoPage(pageNumber, i, i );
 	    return;
@@ -356,9 +358,9 @@ void KDVIMultiPage::findPrevText(void)
 	// everything from the beginning of the selected text to the
 	// beginning of the page
 	int i;
-	if (dviWidget->DVIselection.selectedTextStart != -1)
-	  i = dviWidget->DVIselection.selectedTextStart-1;
-	else
+	//###	if (dviWidget->DVIselection.selectedTextStart != -1)
+	//###	  i = dviWidget->DVIselection.selectedTextStart-1;
+	  //###	else
 	  i = dummyPage.textLinkList.size()-1;
 	for(; i>=0; i--) {
 	  if (dummyPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
@@ -370,7 +372,8 @@ void KDVIMultiPage::findPrevText(void)
 	// The second time we come to the current page, search
 	// everything from the end of the page till the end of the
 	// selected test, then end the search.
-	for(int i=dummyPage.textLinkList.size()-1; i>dviWidget->DVIselection.selectedTextStart+1; i--)
+	//###	for(int i=dummyPage.textLinkList.size()-1; i>dviWidget->DVIselection.selectedTextStart+1; i--)
+	int i=0;//###
 	  if (dummyPage.textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	    gotoPage(pageNumber, i, i );
 	    return;

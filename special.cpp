@@ -290,6 +290,14 @@ void dviWindow::ps_special(QString cp)
 void dviWindow::applicationDoSpecial(char *cp)
 {
   QString special_command(cp);
+
+  // Encapsulated Postscript File
+  if (special_command.find("src:", 0, false) == 0) {
+    // @@@@
+    kdDebug() << "Source special encountered: " << special_command << endl;
+    //    source_special(special_command.mid(4));
+    return;
+  }
   
   // Literal Postscript inclusion
   if (special_command[0] == '"') {

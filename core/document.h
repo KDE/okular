@@ -92,9 +92,10 @@ class KPDFDocument : public QObject // only for a private slot..
     private:
         void sendGeneratorRequest();
         // memory management related functions
-        void mCleanupMemory( int observerId );
-        int mTotalMemory();
-        int mFreeMemory();
+        void cleanupMemory( int bytesOffset = 0 );
+        void freeMemory( int bytes );
+        int getTotalMemory();
+        int getFreeMemory();
         // more private functions
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName );

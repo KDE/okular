@@ -525,7 +525,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             releaseKeyboard();
             if ( d->document->findText() )
                 d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->findString.lower()),
-                                           PageViewMessage::Info, 3000 );
+                                           PageViewMessage::Find, 3000 );
             d->findTimer->start( 3000, true );
             grabKeyboard();
             return;
@@ -546,7 +546,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
     else if( e->key() == '/' && d->document->isOpened() )
     {
         d->findString = QString();
-        d->messageWindow->display(i18n("Starting -- find text as you type"), PageViewMessage::Info, 3000);
+        d->messageWindow->display(i18n("Starting -- find text as you type"), PageViewMessage::Find, 3000);
         d->typeAheadActivated = true;
         if ( !d->findTimer )
         {
@@ -634,7 +634,7 @@ void PageView::findTimeout()
 {
     d->typeAheadActivated = false;
     d->findString = "";
-    d->messageWindow->display(i18n("Find stopped."),PageViewMessage::Info,1000);
+    d->messageWindow->display(i18n("Find stopped."),PageViewMessage::Find,1000);
     releaseKeyboard();
 }
 
@@ -644,11 +644,13 @@ void PageView::findAhead(bool increase)
         d->document->setViewportPage(0);
     QString status;
     d->document->unHilightPages(false);
-    if(d->document->findText(d->findString, false, true))
+    bool found = d->document->findText(d->findString, false, true);
+    if(found)
         status = i18n("Text found: \"%1\".");
     else 
         status = i18n("Text not found: \"%1\".");
-    d->messageWindow->display(status.arg(d->findString.lower()), PageViewMessage::Info, 4000);
+    d->messageWindow->display(status.arg(d->findString.lower()),
+        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000);
 }
 
 
@@ -1530,35 +1532,37 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         }
     }
 
-    // request pixmaps in 'requests list'
-    if ( !requestedPixmaps.isEmpty() )
+    // if preloading is enabled, add the pages before and after in preloading
+    if ( !d->visibleItems.isEmpty() &&
+         Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+         Settings::enableThreading() )
     {
-        // if preloading is enabled, add the pages before and after in preloading
-        if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
-             Settings::enableThreading() )
+        // add the page before the 'visible series' in preload
+        int headRequest = d->visibleItems.first()->pageNumber() - 1;
+        if ( headRequest >= 0 )
         {
-            int headRequest = requestedPixmaps.first()->pageNumber - 1;
-            int tailRequest = requestedPixmaps.last()->pageNumber + 1;
-            // add the page before in preload
-            if ( headRequest >= 0 )
-            {
-                PageViewItem * i = d->items[ headRequest ];
-                PixmapRequest * p = new PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true );
-                requestedPixmaps.push_back( p );
-            }
-            // add the page before in preload
-            if ( tailRequest < d->items.count() )
-            {
-                PageViewItem * i = d->items[ tailRequest ];
-                PixmapRequest * p = new PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true );
-                requestedPixmaps.push_back( p );
-            }
+            PageViewItem * i = d->items[ headRequest ];
+            // request the pixmap if not already present
+            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
+                requestedPixmaps.push_back( new PixmapRequest(
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
-        // send requests to the document
-        d->document->requestPixmaps( requestedPixmaps );
+
+        // add the page after the 'visible series' in preload
+        int tailRequest = d->visibleItems.last()->pageNumber() + 1;
+        if ( tailRequest < (int)d->items.count() )
+        {
+            PageViewItem * i = d->items[ tailRequest ];
+            // request the pixmap if not already present
+            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
+                requestedPixmaps.push_back( new PixmapRequest(
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
+        }
     }
+
+    // send requests to the document
+    if ( !requestedPixmaps.isEmpty() )
+        d->document->requestPixmaps( requestedPixmaps );
 
     // if this functions was invoked by viewport events
     if ( isEvent && nearPageNumber != -1 )

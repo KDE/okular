@@ -1,17 +1,27 @@
-TODO - branch version
+TODO - KPdf HEAD
 Legend:
-    ADD - ADDed
-    CHG - CHanGed
-    FIX - FIXed
-    MRG - MeRGed from head
-    (*) - Some parts of this item are already done
+    ADD - ADDed (new feature)
+    CHG - CHanGed (existing behavior)
+    FIX - FIXed (bug or regression)
+    MRG - MeRGed (code from a branch or a patch)
 
+Status:
+-> 2005-01-20: Stable. Apart from a bad memory deallocation mechanism
+   the core is ready for a public release. Usability: needs testing.
+   next steps: empty the in-progress list and keep it empty until release.
 
 In progress:
+-> memory: check for alloc/dealloc dynamic loops
 -> new word highlighting for searches / other highlights (on paper - enrico)
--> mem: iterate from older pages to newest ones when freeing memory (not rand)
 
 More items (first items will enter 'In progress list' first):
+-> display current page / total pages (with analog indicator too (progressbar/...))
+   maybe this can be done on a small widget at the top of the toolbox, displaying
+   'document' informations (pages, current pg, some metadata, etc..)
+   Tested a 16px ktoolbar in the left-bottom corner.. looks goos and can be used to
+   insert some actions that aren't so useful in the main (and bigger) toolbar
+-> c00l: add scrollbar marks for bookmarks (like kate)
+-> google search in the page
 -> cleanup code and update README.png
 -> find-as-you-type: use shortcut for 'find next' action (not the default one)
 -> show Viewport in ThumbnailsList (blended/contour)
@@ -22,11 +32,6 @@ More items (first items will enter 'In progress list' first):
 -> move toolbar view actions in the PageView instead of the part. maybe.. or not...
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment. (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
--> display current page / total pages (with analog indicator too (progressbar/...))
-   maybe this can be done on a small widget at the top of the toolbox, displaying
-   'document' informations (pages, current pg, some metadata, etc..).
-   Tested a 16px ktoolbar in the left-bottom corner.. looks goos and can be used to
-   insert some actions that aren't so useful in the main (and bigger) toolbar
 -> abstract TextPage generation (the last xpdf dependant class!). then go dancing in the
    streets.
 -> better boomark rendering (tested a 'clip overlay' but looks bad actually)
@@ -50,7 +55,7 @@ More items (first items will enter 'In progress list' first):
 -> take care of TODOs in code
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]
 -> screen editing (annotations): framework (BR67300,BR62793)
--> screen editing (annotations): tools (BR67300)
+-> screen editing (annotations): tools (BR67300), yellow notes 'post-it' like
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> text selection in wordprocessor style (very hard/impossible)
@@ -61,6 +66,7 @@ More items (first items will enter 'In progress list' first):
 -> kttsd output with menu entries. speech{document/page/selection}. (patch available - enrico)
 -> kttsd alternative (1): autodetect "/dev/speech" (speechd/festival) and provide reading
 -> automatic online dictionaries / translators (BR80338)
+-> core: pdf forms support
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> rotate the whole document / individual pages
 -> presentation: implement transitions (6/11 done)
@@ -75,8 +81,13 @@ More items (first items will enter 'In progress list' first):
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
+-> tools: ruler, measure: distance, perimeter, ?area?, color picker
+-> export: export to other formats keeping formatting (a dream.. except for PNG :-)
 
 Done (newest features come first):
+-> FIX: memory unloading order and hard swap avoiding
+-> CHG: open and open-recent buttons unified in Shell
+-> CHG: lens icon for the find-ahead messages
 -> ADD: page preloading
 -> FIX: smarter memory management / prioritize queries
 -> ADD: type ahead search in pageview (type '/' then the word to search..) (JakubS)
@@ -150,10 +161,3 @@ Done (newest features come first):
 -> The branch 'kpdf_experiments' was created at this point. Code refactoring started.
 -> ADD: Completely use xpdf code for rendering that solves most font problems (Albert)
 -> MRG: Replace xpdf version with lastest one (3.00) that supports PDF 1.5 (Albert)
-
-Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 and IRC:
- Tool: ruler, measure: distance, perimeter, ?area?
- Tool: color picker
- Annotations: yellow notes 'post-it' like
- Export: export to other formats keeping formatting (a dream.. except for PNG :-)
- PDF: <theICEBear> pdf forms support.... :D if at all possible

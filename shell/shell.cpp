@@ -140,15 +140,13 @@ void Shell::writeSettings()
     KGlobal::config()->sync();
 }
 
-  void
-Shell::setupActions()
+void Shell::setupActions()
 {
-  KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-  m_recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
-				    actionCollection() );
+  KAction * openAction = KStdAction::open(this, SLOT(fileOpen()), actionCollection());
+  m_recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ), actionCollection() );
+  connect( m_recent, SIGNAL( activated() ), openAction, SLOT( activate() ) );
   KStdAction::print(m_part, SLOT(slotPrint()), actionCollection());
   KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
-
 
   setStandardToolBarMenuEnabled(true);
 

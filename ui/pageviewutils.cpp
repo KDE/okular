@@ -54,6 +54,9 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     {
         switch ( icon )
         {
+            case Find:
+                symbol = SmallIcon( "viewmag" );
+                break;
             case Error:
                 symbol = SmallIcon( "messagebox_critical" );
                 break;

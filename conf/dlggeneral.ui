@@ -90,7 +90,7 @@
                                         <bool>false</bool>
                                     </property>
                                     <property name="text">
-                                        <string>Link &amp;thumbnails list with the page</string>
+                                        <string>Link the &amp;thumbnails with the page</string>
                                     </property>
                                 </widget>
                             </grid>

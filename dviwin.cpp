@@ -50,6 +50,8 @@
 //------ some definitions from xdvi ----------
 
 
+ //@@@ DO NOT USE STATIC VARIABLES!!!
+
 #define	MAXDIM		32767
 struct WindowRec mane	= {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
@@ -58,7 +60,7 @@ struct drawinf	currinf;
 
 QIntDict<font> tn_table;
 
-int	_pixels_per_inch; //@@@
+int	_pixels_per_inch;
 
 // The following are really used
 unsigned int	page_w;
@@ -216,7 +218,7 @@ void dviWindow::copyText(void)
   QApplication::clipboard()->setText(DVIselection.selectedText);
 }
 
-void dviWindow::setShowPS( int flag )
+void dviWindow::setShowPS( bool flag )
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "setShowPS" << endl;
@@ -228,7 +230,7 @@ void dviWindow::setShowPS( int flag )
   drawPage();
 }
 
-void dviWindow::setShowHyperLinks( int flag )
+void dviWindow::setShowHyperLinks( bool flag )
 {
   if ( _showHyperLinks == flag )
     return;
@@ -237,7 +239,7 @@ void dviWindow::setShowHyperLinks( int flag )
   drawPage();
 }
 
-void dviWindow::setMakePK( int flag )
+void dviWindow::setMakePK( bool flag )
 {
   makepk = flag;
   font_pool->setMakePK(makepk);
@@ -271,7 +273,6 @@ void dviWindow::setPaper(double w, double h)
   unshrunk_page_h  = int( h * basedpi/2.54 + 0.5 );
   page_w           = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h           = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
-  font_pool->reset_fonts();
   changePageSize();
 }
 
@@ -675,7 +676,7 @@ double dviWindow::setZoom(double zoom)
   page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
 
-  font_pool->reset_fonts();
+  font_pool->setShrinkFactor(currwin.shrinkfactor);
   changePageSize();
   return _zoom;
 }

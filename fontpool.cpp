@@ -15,8 +15,6 @@
 #include "font.h"
 #include "fontpool.h"
 #include "fontprogress.h"
-#include "kdvi.h"
-#include "xdvi.h"
 
 // List of permissible MetaFontModes which are supported by kdvi.
 
@@ -29,7 +27,11 @@ fontPool::fontPool(void)
 {
   setName("Font Pool");
 
-  proc = 0;
+  proc         = 0;
+  makepk       = true; // By default, fonts are generated
+  enlargeFonts = true; // By default, fonts are enlarged
+  shrinkFactor = 10.0; // A not-too-bad-default
+
   fontList.setAutoDelete(TRUE);
 
   progress = new fontProgressDialog( "fontgen",  // Chapter in the documentation for help.
@@ -49,6 +51,7 @@ fontPool::fontPool(void)
     qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortGeneration(void)));
   }
 }
+
 
 fontPool::~fontPool(void)
 {
@@ -70,12 +73,13 @@ unsigned int fontPool::setMetafontMode( unsigned int mode )
   return mode;
 }
 
-void fontPool::setMakePK(int flag)
+
+void fontPool::setMakePK(bool flag)
 {
   makepk = flag;
 
   // If we just disabled font generation, there is nothing left to do.
-  if (flag == 0)
+  if (flag == false)
     return;
 
   // If we enable font generation, we look for fonts which have not
@@ -91,7 +95,22 @@ void fontPool::setMakePK(int flag)
 }
 
 
-class font *fontPool::appendx(char *fontname, long checksum, Q_INT32 scale, int design, float fsize, double scale_dimconv)
+void fontPool::setEnlargeFonts( bool flag )
+{
+  enlargeFonts = flag;
+
+  struct font *fontp = fontp=fontList.first();
+  while(fontp != 0 ) {
+    fontp->setShrinkFactor((enlargeFonts == true) ? shrinkFactor/1.1 : shrinkFactor );
+    fontp=fontList.next();
+  }
+  
+  // Do something that causes re-rendering of the dvi-window
+  emit fonts_have_been_loaded();
+}
+
+
+class font *fontPool::appendx(char *fontname, long checksum, Q_INT32 scale, float fsize, double scale_dimconv)
 {
   // Reuse font if possible: check if a font with that name and fsize
   // is already in the fontpool, and use that, if possible.
@@ -107,7 +126,8 @@ class font *fontPool::appendx(char *fontname, long checksum, Q_INT32 scale, int 
   }
 
   // If font doesn't exist yet, we have to generate a new font.
-  fontp = new font(fontname, fsize, checksum, scale, scale*scale_dimconv/(1<<20), this);
+  fontp = new font(fontname, fsize, checksum, scale, scale*scale_dimconv/(1<<20), this, 
+		   (enlargeFonts == true) ? shrinkFactor/1.1 : shrinkFactor);
   if (fontp == 0) {
     kdError(4300) << i18n("Could not allocate memory for a font structure!") << endl;
     exit(0);
@@ -377,21 +397,14 @@ void fontPool::kpsewhich_terminated(KProcess *)
 }
 
 
-void fontPool::reset_fonts(void)
+void fontPool::setShrinkFactor( float sf )
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "Reset Fonts" << endl;
+  kdDebug(4300) << "Set ShrinkFactor in fontpool to" << sf << endl;
 #endif
-
-  struct font  *fontp = fontList.first();
-  while ( fontp != 0 ) {
-    if ((fontp->flags & font::FONT_LOADED) && !(fontp->flags & font::FONT_VIRTUAL)) {
-      struct glyph *glyphp;
-      for (glyphp = fontp->glyphtable; glyphp < fontp->glyphtable + font::max_num_of_chars_in_font; ++glyphp)
-	glyphp->clearShrunkCharacter();
-    }
-    fontp=fontList.next();
-  }
+  
+  shrinkFactor = sf;
+  setEnlargeFonts( enlargeFonts );
 }
 
 void fontPool::mark_fonts_as_unused(void)

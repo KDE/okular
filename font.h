@@ -23,11 +23,12 @@ typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 #include <qstring.h>
 #include <stdio.h>
 
-
 #include "dviwin.h"
 #include "glyph.h"
 
-#define	NOMAGSTP (-29999)
+class QPixmap;
+
+//#define	NOMAGSTP (-29999)
 
 // Per character information for virtual fonts
 
@@ -52,18 +53,25 @@ public:
   // this value here, make sure to go through all the source and
   // ensure that character numbers are stored in ints rather than
   // unsigned chars.
-  static const int      max_num_of_chars_in_font;
-  enum                  font_flags {
-                             FONT_IN_USE  = 1,	// used for housekeeping
-                             FONT_LOADED  = 2,	// if font file has been read
-                             FONT_VIRTUAL = 4,	// if font is virtual 
-			     FONT_KPSE_NAME = 8 // if kpathsea has already tried to find the font name
-                         };
+  static const unsigned int max_num_of_chars_in_font = 256;
+  enum font_flags {
+    FONT_IN_USE  = 1,	// used for housekeeping
+    FONT_LOADED  = 2,	// if font file has been read
+    FONT_VIRTUAL = 4,	// if font is virtual 
+    FONT_KPSE_NAME = 8 // if kpathsea has already tried to find the font name
+  };
+  
 
+  font(char *nfontname, float nfsize, long chk, Q_INT32 scale, double dconv, class fontPool *pool, float shrinkFact);
+  ~font();
 
-                 font(char *nfontname, float nfsize, long chk, Q_INT32 scale, double dconv, class fontPool *pool);
-                ~font();
+  
+
+  // Members for character fonts
   glyph         *glyphptr(unsigned int ch);
+  QPixmap       characterPixmap(unsigned int ch);
+  void          setShrinkFactor(float sf);
+
   void           mark_as_used(void);
 
   class fontPool *font_pool;    // Pointer to the pool that contains this font.
@@ -73,7 +81,6 @@ public:
   Q_INT32        scaled_size;   // Scaled size from the font definition command; in DVI units
   set_char_proc  set_char_p;	// proc used to set char
   float          fsize;		// size information (dots per inch)
-  unsigned short timestamp;	// for LRU management of fonts
   FILE          *file;		// open font file or NULL
   QString        filename;	// name of font file
 
@@ -84,6 +91,10 @@ public:
   font          *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
 
 private:
+  float         shrinkFactor;
+  QPixmap       nullPixmap;
+  QPixmap       *characterPixmaps[max_num_of_chars_in_font];
+
   long           checksum;	// checksum
 
   // Functions related to virtual fonts

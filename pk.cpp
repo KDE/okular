@@ -60,7 +60,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "glyph.h"
-#include "oconfig.h"
+#include "xdvi.h"
 
 extern void oops(QString message);
 extern void alloc_bitmap(bitmap *bitmap);

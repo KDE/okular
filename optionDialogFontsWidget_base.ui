@@ -15,6 +15,12 @@
     <property name="caption">
         <string>TeX Fonts</string>
     </property>
+    <property name="toolTip" stdset="0">
+        <string>On low-resolution displays, such as laptop screen, you probably want to switch this on</string>
+    </property>
+    <property name="whatsThis" stdset="0">
+        <string>If this option is set, KDVI will enlarge all characters by 10%. The text will then usually be easier to read, but it may happen that some characters overlap a little.</string>
+    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -69,6 +75,14 @@
                 <string>Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to switch this on.</string>
             </property>
         </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>fontEnlargementCheckBox</cstring>
+            </property>
+            <property name="text">
+                <string>enlarge font for better readability</string>
+            </property>
+        </widget>
         <spacer>
             <property name="name">
                 <cstring>spacer2</cstring>
@@ -82,7 +96,7 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>20</height>
+                    <height>60</height>
                 </size>
             </property>
         </spacer>

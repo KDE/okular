@@ -51,14 +51,10 @@
 
 //#define DEBUG_RENDER 0
 
-#include <stdlib.h>
-#include <string.h>
-
 #include "dviwin.h"
-#include "glyph.h"
-#include "oconfig.h"
 #include "dvi.h"
 #include "fontpool.h"
+#include "xdvi.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -88,7 +84,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
 
   long dvi_h_sav = DVI_H;
   if (PostScriptOutPutString == NULL) {
-    QPixmap pix = g->shrunkCharacter();
+    QPixmap pix = currinf.fontp->characterPixmap(ch);
     int x = PXL_H - g->x2 - currwin.base_x;
     int y = PXL_V - g->y2 - currwin.base_y;
 
@@ -615,7 +611,7 @@ void dviWindow::draw_page(void)
   // one pixel.
   int h = (int)(basedpi*0.05/(2.54*shrink_factor) + 0.5);
   h = (h < 1) ? 1 : h;
-  for(int i=0; i<hyperLinkList.size(); i++) {
+  for(unsigned int i=0; i<hyperLinkList.size(); i++) {
     int x = hyperLinkList[i].box.left();
     int w = hyperLinkList[i].box.width();
     int y = hyperLinkList[i].baseline;

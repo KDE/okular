@@ -31,8 +31,8 @@
 #include <string.h>
 
 #include "dviwin.h"
-#include "oconfig.h"
 #include "dvi.h"
+#include "xdvi.h"
 
 extern void oops(QString message);
 
@@ -106,7 +106,7 @@ void font::read_VF_index(void)
     // by vfparent->dimconv. The design size is given in units of 2
     // -20 pt, so we convert into SPELL units by multiplying by
     // (pixels_per_inch * 2**16) / (72.27 * 2**20).
-    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, design, 
+    struct font *newfontp = font_pool->appendx(fontname, checksum, scale,
 					       (72.27 * (1<<4)) * dimconv * scale / design, dimconv);
 
     // Insert font in dictionary and make sure the dictionary is big

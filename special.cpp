@@ -16,10 +16,7 @@
 
 #include "dviwin.h"
 #include "kdvi.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "oconfig.h"
+#include "xdvi.h"
 
 
 extern QPainter foreGroundPaint;

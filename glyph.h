@@ -29,16 +29,12 @@ class glyph {
   glyph();
   ~glyph();
 
-  void clearShrunkCharacter();
-  QPixmap shrunkCharacter();
-
   long addr;		/* address of bitmap in font file */
   long dvi_adv;		/* DVI units to move reference point */
   short x, y;		/* x and y offset in pixels */
   // TODO: replace the bitmap by a Qbitmap
   struct bitmap bitmap;	/* bitmap for character */
   short x2, y2;		/* x and y offset in pixels (shrunken bitmap) */
-  struct QPixmap *SmallChar; // shrunken bitmap for character 
 };
 
 #endif //ifndef _GLYPH_H

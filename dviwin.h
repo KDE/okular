@@ -100,13 +100,13 @@ public:
 
   void          changePageSize(void);
   int		totalPages(void);
-  void		setShowPS( int flag );
-  int		showPS(void) { return _postscript; };
+  void		setShowPS( bool flag );
+  bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
-  void		setShowHyperLinks( int flag );
-  int		showHyperLinks(void) { return _showHyperLinks; };
+  void		setShowHyperLinks( bool flag );
+  bool		showHyperLinks(void) { return _showHyperLinks; };
   void		setEditorCommand( QString command )  { editorCommand = command; };
-  void		setMakePK( int flag );
+  void		setMakePK( bool flag );
   int		makePK(void) { return makepk; };
   void		setMetafontMode( unsigned int );
   void		setPaper(double w, double h);
@@ -280,10 +280,10 @@ private:
 
  /** TRUE, if gs should be used, otherwise, only bounding boxes are
      drawn. */
- unsigned char	   _postscript;
+ bool    	   _postscript;
 
  /** TRUE, if Hyperlinks should be shown. */
- unsigned char	   _showHyperLinks;
+ bool     	   _showHyperLinks;
 
  /** This flag is used when rendering a dvi-page. It is set to "true"
      when any dvi-command other than "set" or "put" series of commands

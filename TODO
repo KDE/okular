@@ -2,6 +2,9 @@ ToDo-List for kdvi
 
 URGENT / URGENT BUGFIXING
 
+o add tip: kdvi can load compressed files!
+o get rid of useless README.kdvi
+o "neue datei laden" geht nicht mehr
 o Proper handling of the base-url
 o add "tt.dvi.gz" to the list of recent files, not "/tmp/kviews....."
 
@@ -24,4 +27,3 @@ o Magnifier window
 o Two page view
 o Support for even more TeX specials
 o more robust Error handling with throw/catch; no need to abort just because a PK-file is bad.
-

@@ -336,15 +336,19 @@ void KDVIMultiPage::preferencesChanged()
     config->writeEntry( "MetafontMode", mfmode = DefaultMFMode );
   window->setMetafontMode( mfmode );
 
-  int makepk = config->readBoolEntry( "MakePK", true );
+  bool makepk = config->readBoolEntry( "MakePK", true );
   if ( makepk != window->makePK() )
     window->setMakePK( makepk );
 
-  int showPS = config->readBoolEntry( "ShowPS", true );
+  bool enlargeFonts = config->readBoolEntry( "enlarge_for_readability", true );
+  if (enlargeFonts != window->font_pool->getEnlargeFonts())
+    window->font_pool->setEnlargeFonts(enlargeFonts);
+
+  bool showPS = config->readBoolEntry( "ShowPS", true );
   if (showPS != window->showPS())
     window->setShowPS(showPS);
 
-  int showHyperLinks = config->readBoolEntry( "ShowHyperLinks", true );
+  bool showHyperLinks = config->readBoolEntry( "ShowHyperLinks", true );
   if (showHyperLinks != window->showHyperLinks())
     window->setShowHyperLinks(showHyperLinks);
 

@@ -69,7 +69,7 @@ extern "C" {
 
 #include "fontpool.h"
 #include "glyph.h"
-#include "oconfig.h"
+#include "xdvi.h"
 
 
 void dvifile::process_preamble(void)
@@ -164,7 +164,7 @@ void dvifile::read_postamble(void)
 #endif
     
     // Calculate the fsize as:  fsize = 0.001 * scale / design * magnification * MFResolutions[MetafontMode]
-    struct font *fontp = font_pool->appendx(fontname, checksum, scale, design, 0.001*scale/design*magnification*MFResolutions[font_pool->getMetafontMode()], dimconv);
+    struct font *fontp = font_pool->appendx(fontname, checksum, scale, 0.001*scale/design*magnification*MFResolutions[font_pool->getMetafontMode()], dimconv);
     
     // Insert font in dictionary and make sure the dictionary is big
     // enough.

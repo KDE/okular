@@ -96,22 +96,23 @@ QPixmap glyph::shrunkCharacter()
       init_cols += shrink_factor;
     else
       ++x2;
-    
-    // include row zero with the positively numbered rows 
-    cols = y + 1; // spare register variable
-    y2 = cols / shrink_factor;
-    rows = cols - y2 * shrink_factor;
-    if (rows <= 0) {
-      rows += shrink_factor;
-      --y2;
-    }
 
-    int shrunk_height = y2 + (((int) bitmap.h - cols)/ shrink_factor) + 1;   
-    int shrunk_width  = x2 + (((int) bitmap.w - x)/ shrink_factor) + 1;
+    y2 = y / shrink_factor;
+    rows = y - y2 * shrink_factor;
+    if (rows <= 0) 
+      rows += shrink_factor;
+    else
+      ++y2;
+
+
+#define ROUNDUP(x,y) (((x)+(y)-1)/(y)) 
+
+    int shrunk_height = y2 + ROUNDUP(((int) bitmap.h - y) , shrink_factor);
+    int shrunk_width  = x2 + (((int) bitmap.w - x) / shrink_factor) + 1;
 
     QBitmap bm(bitmap.bytes_wide*8, (int)bitmap.h, (const uchar *)(bitmap.bits) ,TRUE);
     // The intermediate Pixmap pm is taken to be slightly too large. 
-    // After the smoothscale(), this give lighter characters which are easier to read.
+    // After the smoothscale(), this gives lighter characters which are easier to read.
     SmallChar= new QPixmap(bitmap.w+2*(shrink_factor/3), bitmap.h+2*(shrink_factor/3));
     
 
@@ -135,14 +136,16 @@ QPixmap glyph::shrunkCharacter()
     for(int y=0; y<im.height(); y++) {
       QRgb *imag_scanline = (QRgb *)im32.scanLine(y);
       for(int x=0; x<im.width(); x++) {
-	if (*imag_scanline != 0x00ffffff)
+	// Make White => Transaparent
+	if ((0x00ffffff & *imag_scanline) == 0x00ffffff)
+	  *imag_scanline &= 0x00ffffff;
+	else
 	  *imag_scanline |= 0xff000000;
 	imag_scanline++; // Disgusting pointer arithmetic. Should be forbidden.
       }
     }
     SmallChar->convertFromImage(im32,0);
-    // TODO: throw execption if SmallChar == NULL
+    // TODO: throw execption if SmallChar is empty
   }
   return *SmallChar; 
 }
-

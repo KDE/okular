@@ -99,7 +99,7 @@ void TeXFontDefinition::read_VF_index(void)
     fontname[len] = '\0';
     
 #ifdef DEBUG_FONTS
-    kdDebug() << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+    kdDebug(4300) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
 
     // According to Knuth's documentation found in the web source code

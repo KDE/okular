@@ -602,7 +602,7 @@ void dviWindow::draw_page(void)
 
 
 #ifdef DEBUG_RENDER
-  kdDebug() <<"draw_page" << endl;
+  kdDebug(4300) <<"draw_page" << endl;
 #endif
 
   foreGroundPaint.fillRect(currentlyDrawnPage.pixmap->rect(), PS_interface->getBackgroundColor(current_page) );

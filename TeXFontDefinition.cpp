@@ -144,12 +144,12 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
   
   if (enc.isEmpty() == false) {
 #ifdef DEBUG_FONT
-    kdDebug() << "Font " << fontname << " uses encoding " << enc << endl;
+    kdDebug(4300) << "Font " << fontname << " uses encoding " << enc << endl;
 #endif
     font = new TeXFont_PFB(this, font_pool->encodingPool.findByName(enc) );
   } else {
 #ifdef DEBUG_FONT
-    kdDebug() << "Font " << fontname << " does not have an encoding." << endl;
+    kdDebug(4300) << "Font " << fontname << " does not have an encoding." << endl;
 #endif
     font = new TeXFont_PFB(this);
   }

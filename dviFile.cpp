@@ -198,7 +198,7 @@ void dvifile::read_postamble(void)
 void dvifile::prepare_pages()
 {
 #ifdef DEBUG_DVIFILE
-  kdDebug() << "prepare_pages" << endl;
+  kdDebug(4300) << "prepare_pages" << endl;
 #endif
 
   page_offset              = new Q_UINT32[total_pages+1];
@@ -233,7 +233,7 @@ void dvifile::prepare_pages()
 dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
 {
 #ifdef DEBUG_DVIFILE
-  kdDebug() << "init_dvi_file: " << fname << endl;
+  kdDebug(4300) << "init_dvi_file: " << fname << endl;
 #endif
 
   errorMsg     = QString::null;
@@ -279,7 +279,7 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
 dvifile::~dvifile()
 {
 #ifdef DEBUG_DVIFILE
-  kdDebug() << "destroy dvi-file" << endl;
+  kdDebug(4300) << "destroy dvi-file" << endl;
 #endif
 
   if (suggestedPageSize != 0)

@@ -31,7 +31,7 @@
 #include <kkeydialog.h>
 #include <kaccel.h>
 
-class KPanner;
+class QSplitter;
 class QToolTipGroup;
 
 class kdvi : public KTopLevelWidget
@@ -53,6 +53,7 @@ protected:
 	void		resizeEvent( QResizeEvent* e );
 	bool		eventFilter ( QObject *, QEvent *);
 	void		closeEvent ( QCloseEvent * e );
+	void		dropEvent( QDropEvent * dropZone );
 
 private slots:
 	void		fileOpen();
@@ -85,7 +86,6 @@ private slots:
 	void		openRecent(int id);
 	void		openRecent(QPoint);
 	void		openFile(QString name);
-	void		dropEvent( KDNDDropZone * dropZone );
 	void		updateMarklist();
 	void		showTip( const QString &);
 	void		removeTip( );
@@ -108,7 +108,7 @@ private:
 	void		applyVertToolbar();
 	QBoxLayout *	vbl;
 	QBoxLayout *	hbl;
-	KPanner *	kpan;
+	QSplitter *	kpan;
 	QGridLayout *	gl;
 	void		newWindow( const char *name=0 );
 	void		readConfig();

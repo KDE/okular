@@ -19,7 +19,6 @@
 #include <qlineedit.h>
 #include <qframe.h>
 #include <kapp.h>
-#include <kpanner.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
@@ -35,7 +34,6 @@
 
 #include <unistd.h>
 #include <signal.h>
-#include <drag.h>
 #include <kglobal.h>
 
 enum {ID_STAT_SHRINK, ID_STAT_PAGE, ID_STAT_MSG, ID_STAT_XY};
@@ -60,8 +58,10 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 
   // Create KPanner for toolBar2 and dviwindow
   
-  	kpan = new KPanner( this, "panner",
-	  			KPanner::O_VERTICAL|KPanner::U_ABSOLUTE, 100);
+  	kpan = new QSplitter( QSplitter::Vertical, this, "splitter");
+	QValueList<int> sizes;
+	size << 90 << 10;
+	kpan->setSizes(sizes);
 	setView( kpan, TRUE );
 	setFrameBorderWidth( 4 );
 	kpan->setAbsSeparator( pannerValue );
@@ -122,11 +122,7 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 	bindKeys();
 	updateMenuAccel();
 
- // Drag and drop
-
-	KDNDDropZone * dropZone = new KDNDDropZone( this , DndURL);
-	connect( dropZone, SIGNAL( dropAction( KDNDDropZone *) ),
-		 SLOT( dropEvent( KDNDDropZone *) ) );
+	setAcceptDrop(true);
 
   // Read config options
 
@@ -1005,7 +1001,7 @@ void kdvi::readConfig()
 }
 
 
-void kdvi::dropEvent( KDNDDropZone * dropZone )
+void kdvi::dropEvent( QDropEvent * dropZone )
 {
     QStrList & list = dropZone->getURLList();
     

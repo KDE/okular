@@ -12,6 +12,8 @@ Status (last 3 updates):
 
 More items (first items will enter 'In progress list' first):
   -- THIS LIST IS FROZEN FOR 3.4 RELEASE --
+-> good viewport support in presentation (dynamic obs notify) and viewport queuing for
+   hidden widgets
 -> search: google search in the page
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> screen editing (annotations): framework (BR67300,BR62793)

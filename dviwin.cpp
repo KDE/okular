@@ -292,7 +292,7 @@ void dviWindow::drawPage()
       KMessageBox::detailedError(this,
 				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
 				      "likely this means that the DVI file is broken.</qt>"),
-				 errorMsg, i18n("DVI File error"));
+				 errorMsg, i18n("DVI File Error"));
       errorMsg = QString::null;
       return;
     }

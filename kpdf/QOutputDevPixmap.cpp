@@ -564,18 +564,9 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 			QPointArray tmp;
 			tmp. setPoints ( 4, qRound ( x0 ), qRound ( y0 ), qRound ( x1 ), qRound ( y1 ),
 			                    qRound ( x2 ), qRound ( y2 ), qRound ( x3 ), qRound ( y3 ));
-
-#if QT_VERSION < 300
-			tmp = tmp. quadBezier ( );
-
-			for ( uint loop = 0; loop < tmp. count ( ); loop++ ) {
-				QPoint p = tmp. point ( loop );
-				points. putPoints ( points. count ( ), 1, p. x ( ), p. y ( ));
-			}
-#else
+			
 			tmp = tmp. cubicBezier ( );
 			points. putPoints ( points. count ( ), tmp. count ( ), tmp );
-#endif
 
 			i += 3;
 		}

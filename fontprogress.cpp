@@ -29,7 +29,7 @@ fontProgressDialog::fontProgressDialog( QString helpIndex, QString label, QStrin
 {
   setCursor( QCursor( 3 ) );
 
-  setButtonCancelText( i18n("Abort"), abortTip );
+  setButtonCancel(KGuiItem(i18n("Abort"), abortTip));
 
   if (helpIndex.isEmpty() == false) {
     setHelp(helpIndex, "kdvi");

@@ -42,20 +42,20 @@ void dviRenderer::printErrorMsgForSpecials(QString msg)
 
 QColor parseColorSpecification(QString colorSpec)
 {
-  QString specType = KStringHandler::word(colorSpec, (unsigned int)0);
+  QString specType = colorSpec.section(' ', 0, 0);
 
   if (specType.find("rgb", false) == 0) {
     bool ok;
 
-    double r = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    double r = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (r < 0.0) || (r > 1.0))
       return QColor();
     
-    double g = KStringHandler::word(colorSpec, (unsigned int)2).toDouble(&ok);
+    double g = colorSpec.section(' ', 2, 2).toDouble(&ok);
     if ((ok == false) || (g < 0.0) || (g > 1.0))
       return QColor();
     
-    double b = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    double b = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (b < 0.0) || (b > 1.0))
       return QColor();
 
@@ -65,15 +65,15 @@ QColor parseColorSpecification(QString colorSpec)
   if (specType.find("hsb", false) == 0) {
     bool ok;
 
-    double h = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    double h = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (h < 0.0) || (h > 1.0))
       return QColor();
     
-    double s = KStringHandler::word(colorSpec, (unsigned int)2).toDouble(&ok);
+    double s = colorSpec.section(' ', 2, 2).toDouble(&ok);
     if ((ok == false) || (s < 0.0) || (s > 1.0))
       return QColor();
     
-    double b = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    double b = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (b < 0.0) || (b > 1.0))
       return QColor();
 
@@ -83,19 +83,19 @@ QColor parseColorSpecification(QString colorSpec)
   if (specType.find("cmyk", false) == 0) {
     bool ok;
 
-    double c = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    double c = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (c < 0.0) || (c > 1.0))
       return QColor();
     
-    double m = KStringHandler::word(colorSpec, (unsigned int)2).toDouble(&ok);
+    double m = colorSpec.section(' ', 2, 2).toDouble(&ok);
     if ((ok == false) || (m < 0.0) || (m > 1.0))
       return QColor();
     
-    double y = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    double y = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (y < 0.0) || (y > 1.0))
       return QColor();
     
-    double k = KStringHandler::word(colorSpec, (unsigned int)3).toDouble(&ok);
+    double k = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (k < 0.0) || (k > 1.0))
       return QColor();
 
@@ -116,7 +116,7 @@ QColor parseColorSpecification(QString colorSpec)
   if (specType.find("gray", false) == 0) {
     bool ok;
 
-    double g = KStringHandler::word(colorSpec, (unsigned int)1).toDouble(&ok);
+    double g = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (g < 0.0) || (g > 1.0))
       return QColor();
     
@@ -135,7 +135,7 @@ void dviRenderer::color_special(QString cp)
 {
   cp = cp.stripWhiteSpace();
   
-  QString command = KStringHandler::word(cp, (unsigned int)0);
+  QString command = cp.section(' ', 0, 0);
   
   if (command == "pop") {
     // Take color off the stack
@@ -303,7 +303,7 @@ void dviRenderer::epsf_special(QString cp)
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     
     QImage image(EPSfilename);
-    image = image.smoothScale(bbox_width, bbox_height);
+    image = image.smoothScale((int)(bbox_width), (int)(bbox_height));
     foreGroundPaint.drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
     return;
   }
@@ -376,12 +376,12 @@ void dviRenderer::TPIC_addPath_special(QString cp)
   // Adds a point to the path list
   QString cp_noWhiteSpace = cp.stripWhiteSpace();
   bool ok;
-  float xKoord = KStringHandler::word(cp_noWhiteSpace, (uint)0).toFloat(&ok);
+  float xKoord = cp_noWhiteSpace.section(' ', 0, 0).toFloat(&ok);
   if (ok == false) {
     printErrorMsgForSpecials( QString("TPIC special; cannot parse first argument in 'pn %1'.").arg(cp) );
     return;
   }
-  float yKoord = KStringHandler::word(cp_noWhiteSpace, (uint)1).toFloat(&ok);
+  float yKoord = cp_noWhiteSpace.section(' ', 1, 1).toFloat(&ok);
   if (ok == false) {
     printErrorMsgForSpecials( QString("TPIC special; cannot parse second argument in 'pn %1'.").arg(cp) );
     return;

@@ -450,14 +450,46 @@ void dviWindow::applicationDoSpecial(char *cp)
   // major nuisance, so that we try to filter and interpret the
   // hypertex generated PostScript here.
   if (special_command.startsWith("ps:SDict begin")) {
-    // We suspect this may be hyperref generated nonsense. Let's check
-    // for some known code that hyperref generates.
-    if (special_command == "ps:SDict begin H.S end") { // start of hyperref rectangle
+
+    // Hyperref: start of hyperref rectangle. At this stage it is not
+    // yet clear if the rectangle will conain a hyperlink, an anchor,
+    // or another type of object. We suspect that this rectangle will
+    // define a hyperlink, allocate a QString and set HTML_href to
+    // point to this string. The string contains the name of the
+    // destination which ---due to the nature of the PostScript
+    // language--- will be defined only after characters are drawn and
+    // the hyperref rectangle has been closed. We use "glopglyph" as a
+    // temporary name. Since the pointer HTML_href is not NULL, the
+    // chracter drawing routines will now underline all characters in
+    // blue to point out that they correspond to a hyperlink. Also, as
+    // soon as characters are drawn, the drawing routines will
+    // allocate a DVI_Hyperlink and add it to the top of the vector
+    // currentlyDrawnPage.hyperLinkList.
+    if (special_command == "ps:SDict begin H.S end") {
+      // At this stage, the vector 'hyperLinkList' should not contain
+      // links with unspecified destinations (i.e. destination set to
+      // 'glopglyph'). As a protection against bad DVI files, we make
+      // sure to remove all link rectangles which point to
+      // 'glopglyph'.
+      while (!currentlyDrawnPage.hyperLinkList.isEmpty())
+	if (currentlyDrawnPage.hyperLinkList.last().linkText == "glopglyph")
+	  currentlyDrawnPage.hyperLinkList.pop_back();
+	else
+	  break;
+
       HTML_href = new QString("glopglyph");
       return;
     }
     
-    if (special_command == "ps:SDict begin H.R end") {
+    // Hyperref: end of hyperref rectangle of unknown type or hyperref
+    // link rectangle. In these cases we set HTML_href to NULL, which
+    // causes the character drawing routines to stop drawing
+    // characters underlined in blue. Note that the name of the
+    // destination is still set to "glopglyph". In a well-formed DVI
+    // file, this special command is immediately followed by another
+    // special, where the destination is specified. This special is
+    // treated below.
+    if ((special_command == "ps:SDict begin H.R end") || special_command.endsWith("H.L end")) {
       if (HTML_href != NULL) {
 	delete HTML_href;
 	HTML_href = NULL;
@@ -465,28 +497,49 @@ void dviWindow::applicationDoSpecial(char *cp)
       return; // end of hyperref rectangle
     }
     
+    // Hyperref: end of anchor rectangle. If this special is
+    // encountered, the rectangle, which was started with "ps:SDict
+    // begin H.S end" does not contain a link, but an anchor for a
+    // link. Anchors, however, have already been dealt with in the
+    // prescan phase and will not be considered here. Thus, we set
+    // HTML_href to NULL so that character drawing routines will no
+    // longer underline hyperlinks in blue, and remove the link from
+    // the hyperLinkList. NOTE: in a well-formed DVI file, the "H.A"
+    // special comes directly after the "H.S" special. A
+    // hyperlink-anchor rectangle therefore never contains characters,
+    // so no character will by accidentally underlined in blue.
     if (special_command.endsWith("H.A end")) {
       if (HTML_href != NULL) {
 	delete HTML_href;
 	HTML_href = NULL;
       }
-      if (!currentlyDrawnPage.hyperLinkList.isEmpty())
+      while (!currentlyDrawnPage.hyperLinkList.isEmpty())
 	if (currentlyDrawnPage.hyperLinkList.last().linkText == "glopglyph")
 	  currentlyDrawnPage.hyperLinkList.pop_back();
+	else
+	  break;
       return; // end of hyperref anchor
     }
     
+    // Hyperref: specification of a hyperref link rectangle's
+    // destination. As mentioned above, the destination of a hyperlink
+    // is specified only AFTER the rectangle has been specified. We
+    // will therefore go through the list of rectangles stored in
+    // currentlyDrawnPage.hyperLinkList, find those whose destination
+    // is open and fill in the value found here. NOTE: the character
+    // drawing routines sometimes split a single hyperlink rectangle
+    // into several rectangles (e.g. if the font changes, or when a
+    // line break is encountered) 
     if (special_command.startsWith("ps:SDict begin [") && special_command.endsWith(" pdfmark end")) {
       if (!currentlyDrawnPage.hyperLinkList.isEmpty()) {
-	DVI_Hyperlink &lastLink = currentlyDrawnPage.hyperLinkList.last();
 	QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
-	if (lastLink.linkText == "glopglyph")
-	  lastLink.linkText = targetName;
+	QValueVector<DVI_Hyperlink>::iterator it;
+        for( it = currentlyDrawnPage.hyperLinkList.begin(); it != currentlyDrawnPage.hyperLinkList.end(); ++it ) 
+	  if (it->linkText == "glopglyph")
+	    it->linkText = targetName;
       }
       return; // hyperref definition of link/anchor/bookmark/etc
     }
-    
-
   }
   
   

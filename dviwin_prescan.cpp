@@ -327,6 +327,8 @@ void dviWindow::prescan_ParsePSSpecial(QString cp)
       return; // end of hyperref rectangle
     if (cp.endsWith("H.A end"))
       return; // end of hyperref anchor
+    if (cp.endsWith("H.L end"))
+      return; // end of hyperref link
     if (cp.startsWith("ps:SDict begin /product where{pop product(Distiller)"))
       return; // hyperref tries to work around Distiller bug
     if (cp.startsWith("ps:SDict begin [") && cp.endsWith(" pdfmark end")) {  // hyperref definition of link/anchor/bookmark/etc

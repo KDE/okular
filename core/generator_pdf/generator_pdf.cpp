@@ -385,15 +385,12 @@ bool PDFGenerator::reparseConfig()
 static QString unicodeToQString(Unicode* u, int len) {
     unsigned short int ucs2char[2];
     QString ret;
-    ucs2char[1]=0;
-    for (int i=0;i<len;i++) 
-    {
-        ucs2char[0] = u[i]; 
-        ret+=QString::fromUcs2(ucs2char);
-    }
-    return ret; 
+    ret.setLength(len);
+    QChar* qch = (QChar*) ret.unicode();
+    for (;len;--len)
+      *qch++ = (QChar) *u++;
+    return ret;
 }
-
 
 QString PDFGenerator::getDocumentInfo( const QString & data ) const
 // note: MUTEX is LOCKED while calling this
@@ -412,8 +409,7 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
     GString *s1;
     GBool isUnicode;
     Unicode u;
-    char buf[8];
-    int i, n;
+    int i;
     Dict *infoDict = info.getDict();
 
     if ( infoDict->lookup( data.latin1(), &obj )->isString() )

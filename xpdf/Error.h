@@ -16,7 +16,7 @@
 #endif
 
 #include <stdio.h>
-#include "config.h"
+#include "xpdf_config.h"
 
 extern void CDECL error(int pos, const char *msg, ...);
 

@@ -304,7 +304,7 @@ void set_char(unsigned int cmd, unsigned int ch)
   long	dvi_h_sav;
 
   if (ch > maxchar) 
-    realloc_font(currinf.fontp, WIDENINT ch);
+    currinf.fontp->realloc_font(WIDENINT ch);
   if ((g = &currinf.fontp->glyph[ch])->bitmap.bits == NULL) {
     if (g->addr == 0) {
       if (!hush_chars)
@@ -364,7 +364,7 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
 
 
   if (ch > maxchar)
-    realloc_virtual_font(currinf.fontp, ch);
+    currinf.fontp->realloc_font(ch);
   if ((m = &currinf.fontp->macro[ch])->pos == NULL) {
     if (!hush_chars)
       Fprintf(stderr, "Character %d not defined in font %s\n", ch,

@@ -224,17 +224,6 @@ extern	long	*page_offset;
 extern	Boolean	hush_spec_now;
 
 
-/*
- * Per character information for virtual fonts
- */
-struct macro {
-	unsigned char	*pos;		/* address of first byte of macro */
-	unsigned char	*end;		/* address of last+1 byte */
-	long	dvi_adv;	/* DVI units to move reference point */
-	Boolean	free_me;	/* if free(pos) should be called when */
-				/* freeing space */
-};
-
 
 #define	FONT_IN_USE	1	/* used for housekeeping */
 #define	FONT_LOADED	2	/* if font file has been read */
@@ -242,12 +231,6 @@ struct macro {
 
 #define	TNTABLELEN	30	/* length of TeXnumber array (dvi file) */
 #define	VFTABLELEN	5	/* length of TeXnumber array (virtual fonts) */
-
-struct tn {
-	struct tn *next;		/* link to next TeXnumber info block */
-	int TeXnumber;			/* font number (in DVI file) */
-	struct font *fontp;		/* pointer to the rest of the info */
-};
 
 extern	struct font	*tn_table[TNTABLELEN];
 extern	struct font	*font_head	INIT(NULL);

@@ -1,6 +1,13 @@
 /* font-open.c: find font filenames.  This bears no relation (but the
    interface) to the original font_open.c, so I renamed it.  */
 
+#include <malloc.h>
+#include <stdio.h>
+
+#include <kdebug.h>
+
+#include "font.h"
+
 
 extern "C" {
 #include <kpathsea/config.h>
@@ -53,4 +60,78 @@ FILE *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, int dumm
   *filename_ret = name;
 
   return ret;
+}
+
+
+
+extern int n_files_left;
+
+
+font::~font()
+{
+  //@@@  if (_debug & DBG_PK)
+  kDebugInfo("xdvi: Discarding font \"%s\" at %d dpi\n",fontname,(int)(fsize + 0.5));
+
+  free(fontname);
+
+  if (flags & FONT_LOADED) {
+    if (file != NULL) {
+      fclose(file);
+      ++n_files_left;
+    }
+    free(filename);
+
+    if (flags & FONT_VIRTUAL) {
+      register struct macro *m;
+
+      for (m = macro; m <= macro + maxchar; ++m)
+	if (m->free_me)
+	  free((char *) m->pos);
+      free((char *) macro);
+      free((char *) vf_table);
+
+      tn *tnp = vf_chain;
+      while (tnp != NULL) {
+	register struct tn *tnp1 = tnp->next;
+	free((char *) tnp);
+	tnp = tnp1;
+      }
+    } else {
+      struct glyph *g;
+      
+      for (g = glyph; g <= glyph + maxchar; ++g)
+	delete g;
+      
+      free((char *) glyph);
+    }
+  }
+}
+
+
+
+/** realloc_font allocates the font structure to contain (newsize + 1)
+ * characters (or macros, if the font is a virtual font).  */
+
+void font::realloc_font(unsigned int newsize)
+{
+  if (flags & FONT_VIRTUAL) {
+    struct macro *macrop;
+
+    macrop = macro = (struct macro *) realloc((char *) macro,
+					      ((unsigned int) newsize + 1) * sizeof(struct macro));
+    if (macrop == NULL)
+      oops("! Cannot reallocate space for macro array.");
+    if (newsize > maxchar)
+      bzero((char *) (macro + maxchar + 1), (int) (newsize - maxchar) * sizeof(struct macro));
+  } else {
+    struct glyph *glyphp;
+    
+    glyphp = glyph = (struct glyph *)realloc((char *) glyph,
+					     ((unsigned int) newsize + 1) * sizeof(struct glyph));
+    if (glyph == NULL) 
+      oops("! Cannot reallocate space for glyph array.");
+    if (newsize > maxchar)
+      bzero((char *) (glyph + maxchar + 1), (int) (newsize - maxchar) * sizeof(struct glyph));
+  }
+  maxchar = newsize;
 }

@@ -11,33 +11,75 @@
  * We then change the sizes to SPELL units (unshrunk pixel / 2^16).
  */
 
+
+#ifndef _FONT_H
+#define _FONT_H
+
+
 #include <stdio.h>
+
+#include "glyph.h"
 
 #define	NOMAGSTP (-29999)
 
+/** Per character information for virtual fonts */
+struct macro {
+  unsigned char	*pos;		/* address of first byte of macro */
+  unsigned char	*end;		/* address of last+1 byte */
+  long	        dvi_adv;	/* DVI units to move reference point */
+  unsigned char	free_me;	/* if free(pos) should be called when */
+				/* freeing space */
+};
+
+
+
+#define	FONT_IN_USE	1	/* used for housekeeping */
+#define	FONT_LOADED	2	/* if font file has been read */
+#define	FONT_VIRTUAL	4	/* if font is virtual */
+
+
 typedef	void (*read_char_proc)(register struct font *, unsigned int);
+typedef	void  (*set_char_proc)(unsigned int, unsigned int);
 
 struct font {
-	struct font *next;		/* link to next font info block */
-	char *fontname;			/* name of font */
-	float fsize;			/* size information (dots per inch) */
-	int magstepval;			/* magstep number * two, or NOMAGSTP */
-	FILE *file;			/* open font file or NULL */
-	char *filename;			/* name of font file */
-	long checksum;			/* checksum */
-	unsigned short timestamp;	/* for LRU management of fonts */
-	unsigned char flags;			/* flags byte (see values below) */
-	unsigned char maxchar;			/* largest character code */
-	double dimconv;			/* size conversion factor */
-	set_char_proc set_char_p;	/* proc used to set char */
-		/* these fields are used by (loaded) raster fonts */
-	read_char_proc read_char;	/* function to read bitmap */
-	struct glyph *glyph;
-		/* these fields are used by (loaded) virtual fonts */
-	struct font **vf_table;		/* list of fonts used by this vf */
-	struct tn *vf_chain;		/* ditto, if TeXnumber >= VFTABLELEN */
-	struct font *first_font;	/* first font defined */
-	struct macro *macro;
-		/* I suppose the above could be put into a union, but we */
-		/* wouldn't save all that much space. */
+  struct font *next;		/* link to next font info block */
+  char *fontname;		/* name of font */
+  float fsize;			/* size information (dots per inch) */
+  int magstepval;		/* magstep number * two, or NOMAGSTP */
+  FILE *file;			/* open font file or NULL */
+  char *filename;		/* name of font file */
+  long checksum;		/* checksum */
+  unsigned short timestamp;	/* for LRU management of fonts */
+  unsigned char flags;		/* flags byte (see values below) */
+  unsigned char maxchar;	/* largest character code */
+  double dimconv;		/* size conversion factor */
+  set_char_proc set_char_p;	/* proc used to set char */
+
+  /* these fields are used by (loaded) raster fonts */
+  read_char_proc read_char;	/* function to read bitmap */
+  struct glyph *glyph;
+
+  /* these fields are used by (loaded) virtual fonts */
+  struct font **vf_table;	/* list of fonts used by this vf */
+  struct tn *vf_chain;		/* ditto, if TeXnumber >= VFTABLELEN */
+  struct font *first_font;	/* first font defined */
+  struct macro *macro;
+
+  /* I suppose the above could be put into a union, but we */
+  /* wouldn't save all that much space. */
+  
+
+  ~font();
+
+  void realloc_font(unsigned int newsize);
 };
+
+
+struct tn {
+  struct tn *next;		/* link to next TeXnumber info block */
+  int TeXnumber;		/* font number (in DVI file) */
+  struct font *fontp;		/* pointer to the rest of the info */
+};
+
+
+#endif

@@ -1,4 +1,7 @@
 
+#ifndef _GLYPH_H
+#define _GLYPH_H
+
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
@@ -36,3 +39,5 @@ class glyph {
   short x2, y2;		/* x and y offset in pixels (shrunken bitmap) */
   struct QPixmap *SmallChar; // shrunken bitmap for character 
 };
+
+#endif //ifndef _GLYPH_H

@@ -99,19 +99,6 @@ static	long	numerator, denominator;
 static	long	last_page_offset;
 
 
-/*
- *	free_vf_chain frees the vf_chain structure.
- */
-
-static	void free_vf_chain(tn *tnp)
-{
-	while (tnp != NULL) {
-	    register struct tn *tnp1 = tnp->next;
-	    free((char *) tnp);
-	    tnp = tnp1;
-	}
-}
-
 
 /*
  *	Release all shrunken bitmaps for all fonts.
@@ -127,42 +114,6 @@ extern void reset_fonts(void)
       for (g = f->glyph; g <= f->glyph + f->maxchar; ++g) {
 	g->clearShrunkCharacter();
       }
-}
-
-/*
- *	realloc_font allocates the font structure to contain (newsize + 1)
- *	characters.
- */
-
-void realloc_font(font *fontp, unsigned int newsize)
-{
-  struct glyph *glyph;
-
-  glyph = fontp->glyph = (struct glyph *) realloc((char *) fontp->glyph,
-						  ((unsigned int) newsize + 1) * sizeof(struct glyph));
-  if (glyph == NULL) oops("! Cannot reallocate space for glyph array.");
-  if (newsize > fontp->maxchar)
-    bzero((char *) (glyph + fontp->maxchar + 1),
-	  (int) (newsize - fontp->maxchar) * sizeof(struct glyph));
-  maxchar = fontp->maxchar = newsize;
-}
-
-
-/*
- *	realloc_virtual_font does the same thing for virtual fonts.
- */
-
-void realloc_virtual_font(font *fontp, unsigned int newsize)
-{
-	struct macro *macro;
-
-	macro = fontp->macro = (struct macro *) realloc((char *) fontp->macro,
-	    ((unsigned int) newsize + 1) * sizeof(struct macro));
-	if (macro == NULL) oops("! Cannot reallocate space for macro array.");
-	if (newsize > fontp->maxchar)
-	    bzero((char *) (macro + fontp->maxchar + 1),
-		(int) (newsize - fontp->maxchar) * sizeof(struct macro));
-	maxchar = fontp->maxchar = newsize;
 }
 
 
@@ -220,12 +171,12 @@ Boolean load_font(font *fontp)
 	if (fontp->flags & FONT_VIRTUAL) {
 	    while (maxchar > 0 && fontp->macro[maxchar].pos == NULL) --maxchar;
 	    if (maxchar < 255)
-		realloc_virtual_font(fontp, WIDENINT maxchar);
+		fontp->realloc_font(WIDENINT maxchar);
 	}
 	else {
 	    while (maxchar > 0 && fontp->glyph[maxchar].addr == 0) --maxchar;
 	    if (maxchar < 255)
-		realloc_font(fontp, WIDENINT maxchar);
+	      fontp->realloc_font(WIDENINT maxchar);
 	}
 	return False;
 }
@@ -486,37 +437,11 @@ static	void read_postamble()
 	    if (fontp->flags & FONT_IN_USE)
 		fontpp = &fontp->next;
 	    else {
-		if (_debug & DBG_PK)
-		    Printf("xdvi: Discarding font \"%s\" at %d dpi\n",
-			fontp->fontname, (int) (fontp->fsize + 0.5));
-		*fontpp = fontp->next;		/* remove from list */
-		free(fontp->fontname);
-		if (fontp->flags & FONT_LOADED) {
-		    if (fontp->file != NULL) {
-			Fclose(fontp->file);
-			++n_files_left;
-		    }
-		    free(fontp->filename);
-		    if (fontp->flags & FONT_VIRTUAL) {
-			register struct macro *m;
+	      
+	      delete fontp;
+	      
 
-			for (m = fontp->macro;
-				m <= fontp->macro + fontp->maxchar; ++m)
-			    if (m->free_me) free((char *) m->pos);
-			free((char *) fontp->macro);
-			free((char *) fontp->vf_table);
-			free_vf_chain(fontp->vf_chain);
-		    }
-		    else {
-			register struct glyph *g;
 
-			for (g = fontp->glyph; g <= fontp->glyph + fontp->maxchar; ++g) {
-			  delete g;
-			}
-			free((char *) fontp->glyph);
-		    }
-		    free((char *) fontp);
-		}
 	    }
 }
 

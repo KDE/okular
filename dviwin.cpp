@@ -473,8 +473,6 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
 	for(int j=0; j<numAnchors; j++) {
 	  if (locallink.compare(AnchorList_String[j]) == 0) {
-	    // @@@Currently there is no-one listening. Make sure
-	    // kviewshell has a slot for this.
 	    emit(request_goto_page(AnchorList_Page[j], AnchorList_Vert[j]));
 	    break;
 	  }
@@ -495,4 +493,4 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
     }
   }
 }
-#include "dviwin.moc"
+//#include "dviwin.moc.cpp"

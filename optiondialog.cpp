@@ -89,14 +89,15 @@ void OptionDialog::setup()
   config->setGroup("kdvi");
 
   // Font page
+  // Important! The default values here must be the same as in kdvi_multipage.cpp
   mFont.resolutionEdit->setText( config->readEntry( "BaseResolution", "300" ) );
-  mFont.metafontEdit->setText( config->readEntry( "MetafontMode", "/" ) );
+  mFont.metafontEdit->setText( config->readEntry( "MetafontMode", "cx" ) );
   mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
   mFont.fontPathEdit->setText( config->readEntry( "FontPath" ) );
   fontPathCheckChanged( mFont.fontPathCheck->isChecked() );
 
   // Rendering page
-  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 0 ) );
+  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
   mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
 }
 
@@ -159,4 +160,4 @@ void OptionDialog::fontPathCheckChanged( bool state )
 }
 
 
-#include "optiondialog.moc"
+//#include "optiondialog.moc.cpp"

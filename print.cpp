@@ -335,4 +335,4 @@ void Print::readConfig()
 }
 
 #undef Inherited
-#include "print.moc"
+//#include "print.moc.cpp"

@@ -192,4 +192,4 @@ void printData::cancelPressed()
 }
 
 #undef Inherited
-#include "printData.moc"
+//#include "printData.moc.cpp"

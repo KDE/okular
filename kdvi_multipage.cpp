@@ -285,6 +285,7 @@ void KDVIMultiPage::preferencesChanged()
   if ( !s.isEmpty() && s != window->fontPath() )
     window->setFontPath( s );
 
+  // Important! The default values here must be the same as in optiondialog.cpp
   int basedpi = config->readNumEntry( "BaseResolution" );
   if ( basedpi <= 0 )
     config->writeEntry( "BaseResolution", basedpi = 300 );
@@ -293,7 +294,7 @@ void KDVIMultiPage::preferencesChanged()
 
   QString mfmode =  config->readEntry( "MetafontMode" );
   if ( mfmode.isNull() )
-    config->writeEntry( "MetafontMode", mfmode = "/" );
+    config->writeEntry( "MetafontMode", mfmode = "cx" );
   if ( mfmode != window->metafontMode() )
     window->setMetafontMode( mfmode );
 
@@ -301,11 +302,11 @@ void KDVIMultiPage::preferencesChanged()
   if ( makepk != window->makePK() )
     window->setMakePK( makepk );
 
-  int showPS = config->readNumEntry( "ShowPS" );
+  int showPS = config->readNumEntry( "ShowPS", 1 );
   if (showPS != window->showPS())
     window->setShowPS(showPS);
 
-  int showHyperLinks = config->readNumEntry( "ShowHyperLinks" );
+  int showHyperLinks = config->readNumEntry( "ShowHyperLinks", 1 );
   if (showHyperLinks != window->showHyperLinks())
     window->setShowHyperLinks(showHyperLinks);
 }

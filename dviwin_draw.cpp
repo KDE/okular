@@ -49,7 +49,7 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-#define DEBUG 0
+//#define DEBUG 0
 
 #include <stdlib.h>
 

@@ -88,7 +88,6 @@ extern int 		total_pages;
 extern Display *	DISP;
 extern Screen  *	SCRN;
 Window                  mainwin;
-int			useAlpha;
 
 void 	draw_page(void);
 extern "C" void 	kpse_set_progname(const char*);
@@ -165,6 +164,8 @@ dviWindow::~dviWindow()
 
 void dviWindow::setShowPS( int flag )
 {
+  kdDebug() << "setShowPS" << endl;
+
   if ( _postscript == flag )
     return;
   _postscript = flag;
@@ -176,27 +177,27 @@ int dviWindow::showPS()
   return _postscript;
 }
 
-void dviWindow::setAntiAlias( int flag )
+void dviWindow::setShowHyperLinks( int flag )
 {
-  if ( !useAlpha == !flag )
+  if ( _showHyperLinks == flag )
     return;
-  useAlpha = flag;
-  //@@@	psp_destroy();
+  _showHyperLinks = flag;
+
   drawPage();
 }
 
-int dviWindow::antiAlias()
+int dviWindow::showHyperLinks()
 {
-  return useAlpha;
+  return _showHyperLinks;
 }
 
 void dviWindow::setMakePK( int flag )
 {
-	if (!ChangesPossible)
-		KMessageBox::sorry( this,
+  if (!ChangesPossible)
+    KMessageBox::sorry( this,
 			i18n("The change in font generation will be effective\n"
-			"only after you start kdvi again!") );
-	makepk = flag;
+			     "only after you start kdvi again!") );
+  makepk = flag;
 }
 
 int dviWindow::makePK()
@@ -283,11 +284,11 @@ void dviWindow::initDVI()
 
 void dviWindow::drawPage()
 {
-  //@@@  psp_interrupt();
   if (filename.isEmpty()) {	// must call setFile first
     resize(0, 0);
     return;
   }
+
   if (!dvi_name) {			//  dvi file not initialized yet
     QApplication::setOverrideCursor( waitCursor );
     dvi_name = const_cast<char*>(filename.ascii());
@@ -297,8 +298,11 @@ void dviWindow::drawPage()
       dvi_time.setTime_t(0); // force init_dvi_file
       QApplication::restoreOverrideCursor();
       KMessageBox::error( this,
-			  i18n("What's this? DVI problem!\n")
-			  + dvi_oops_msg);
+			  i18n("File corruption!\n\n") +
+			  dvi_oops_msg +
+			  i18n("\n\nMost likely this means that the DVI file\n") + 
+			  filename +
+			  i18n("\nis broken, or that it is not a DVI file."));
       return;
     }
     check_dvi_file();
@@ -307,13 +311,6 @@ void dviWindow::drawPage()
     changePageSize();
     return;
   }
-
-  /*@@@
-  min_x = 0;
-  min_y = 0;
-  max_x = page_w;
-  max_y = page_h;
-  */
 
   if ( !pixmap )
     return;
@@ -327,8 +324,11 @@ void dviWindow::drawPage()
       QApplication::restoreOverrideCursor();
       foreGroundPaint.end();
       KMessageBox::error( this,
-			  i18n("What's this? DVI problem!\n") 
-			  + dvi_oops_msg);
+			  i18n("File corruption!\n\n") +
+			  dvi_oops_msg +
+			  i18n("\n\nMost likely this means that the DVI file\n") + 
+			  filename +
+			  i18n("\nis broken, or that it is not a DVI file."));
       return;
     } else {
       check_dvi_file();

@@ -201,10 +201,13 @@ void KDVIMultiPage::doSettings()
 
 void KDVIMultiPage::preferencesChanged()
 {
+  kdDebug() << "preferencesChanged" << endl;
+
   KConfig *config = instance()->config();
 
   QString s;
   
+  config->reparseConfiguration();
   config->setGroup( "kdvi" );
  
   s = config->readEntry( "FontPath" );
@@ -230,8 +233,10 @@ void KDVIMultiPage::preferencesChanged()
   int showPS = config->readNumEntry( "ShowPS" );
   if (showPS != window->showPS())
     window->setShowPS(showPS);
- 
-  window->setAntiAlias( config->readNumEntry( "PS Anti Alias", 1 ) );  
+
+  int showHyperLinks = config->readNumEntry( "ShowHyperLinks" );
+  if (showHyperLinks != window->showHyperLinks())
+    window->setShowHyperLinks(showHyperLinks);
 }
 
 

@@ -33,7 +33,7 @@
 
 extern	char	*xmalloc (unsigned, const char *);
 extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable);
-extern void oops(const char *message, ...);
+extern void oops(QString message);
 
 /***
  ***	VF font reading routines.
@@ -138,7 +138,7 @@ void font::read_VF_index(void)
     }
   }
   if (cmnd != POST)
-    oops("Wrong command byte found in VF macro list:  %d", cmnd);
+    oops(QString("Wrong command byte found in VF macro list: %1").arg(cmnd));
 	
   Fclose (VF_file);
   n_files_left++;

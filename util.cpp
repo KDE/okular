@@ -50,6 +50,8 @@
  */
 
 #include <kdebug.h>
+#include <kmessagebox.h>
+#include <klocale.h>
 #include "dviwin.h"
 
 extern "C" {
@@ -64,13 +66,6 @@ extern "C" {
 
 #include "glyph.h"
 
-#ifdef	Mips
-extern	int	errno;
-#endif
-
-#ifdef VMS
-#include <rmsdef.h>
-#endif /* VMS */
 
 
 /*
@@ -81,24 +76,21 @@ extern	int	errno;
  *	Print error message and quit.
  */
 
-void oops(const char *message, ...)
+void oops(QString message)
 {
-#if	!NeedVarargsPrototypes
-	const char *message;
-#endif
-	va_list	args;
+  kdError() << "Fatal Error! " << message << endl;
 
-	//@@@	Fprintf(stderr, "%s: ", prog);
-#if	NeedVarargsPrototypes
-	va_start(args, message);
-#else
-	va_start(args);
-	message = va_arg(args, const char *);
-#endif
-	(void) vfprintf(stderr, message, args);
-	va_end(args);
-	Putc('\n', stderr);
-	exit(1);
+  KMessageBox::error( NULL,
+		      i18n("Fatal Error!\n\n") +
+		      message +
+		      i18n("\n\n\
+This probably means that either you found bug in KDVI,\n\
+or that the DVI file, or auxiliary files (such as font files, \n\
+or virtual font files) were really badly broken.\n\
+KDVI will abort after this message. If you believe that you \n\
+found a bug, or that KDVI should behave better in this situtation\n\
+please report the problem."));
+  exit(1);
 }
 
 /** Either allocate storage or fail with explanation.  */
@@ -114,7 +106,7 @@ char * xmalloc(unsigned size, const char *why)
   char *mem = (char *)malloc(size ? size : 1);
   
   if (mem == NULL)
-    oops("! Cannot allocate %u bytes for %s.\n", size, why);
+    oops(QString("Cannot allocate %1 bytes for %2.").arg(size).arg(why) );
   return mem;
 }
 
@@ -178,27 +170,6 @@ FILE *xfopen(const char *filename, const char *type)
   return f;
 }
 #undef	TYPE
-
-
-/*
- *	Create a pipe, closing a file if necessary.  This is (so far) used only
- *	in psgs.c.
- */
-
-int xpipe(int *fd)
-{
-	int	retval;
-
-	for (;;) {
-	    retval = pipe(fd);
-	    if (retval == 0 || (errno != EMFILE && errno != ENFILE)) break;
-	    n_files_left = 0;
-	    close_a_file();
-	}
-	return retval;
-}
-
-
 
 /*
  *

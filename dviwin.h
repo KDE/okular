@@ -44,8 +44,8 @@ public:
 
   void		setShowPS( int flag );
   int		showPS();
-  void		setAntiAlias( int flag );
-  int		antiAlias();
+  void		setShowHyperLinks( int flag );
+  int		showHyperLinks();
   void		setMakePK( int flag );
   int		makePK();
   void		setResolution( int basedpi );
@@ -120,6 +120,9 @@ private:
  // TRUE, if gs should be used, otherwise, only bounding boxes are
  // drawn.
  unsigned char	   _postscript;
+
+ // TRUE, if Hyperlinks should be shown.
+ unsigned char	   _showHyperLinks;
 
  // For each page, this vector contains the PostScript needed to
  // render that page. All entries point to valid QString which migt,

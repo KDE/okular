@@ -76,7 +76,7 @@ void OptionDialog::slotApply()
   config->writeEntry( "FontPath", mFont.fontPathEdit->text() );
 
   config->writeEntry( "ShowPS", mRender.showSpecialCheck->isChecked() );
-  config->writeEntry( "PS Anti Alias", mRender.antialiasCheck->isChecked() );
+  config->writeEntry( "ShowHyperLinks", mRender.showHyperLinksCheck->isChecked() );
 
   config->sync();
 
@@ -98,7 +98,7 @@ void OptionDialog::setup()
 
   // Rendering page
   mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 0 ) );
-  mRender.antialiasCheck->setChecked(config->readNumEntry("PS Anti Alias", 1)); 
+  mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
 }
 
 
@@ -144,10 +144,10 @@ void OptionDialog::makeRenderingPage()
 
   mRender.showSpecialCheck = 
     new QCheckBox( i18n("Show PostScript specials"), page );
-  mRender.antialiasCheck = 
-    new QCheckBox( i18n("Antialiased PostScript"), page );  
+  mRender.showHyperLinksCheck = 
+    new QCheckBox( i18n("Show Hyperlinks"), page );  
   topLayout->addWidget( mRender.showSpecialCheck );
-  topLayout->addWidget( mRender.antialiasCheck );
+  topLayout->addWidget( mRender.showHyperLinksCheck );
 
   topLayout->addStretch(1);
 }

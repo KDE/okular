@@ -20,7 +20,7 @@ extern "C" {
 #include "oconfig.h"
 
 extern FILE *xfopen(const char *filename, const char *type);
-extern void oops(const char *message, ...);
+extern void oops(QString message);
 
 /** We try for a VF first because that's what dvips does.  Also, it's
  *  easier to avoid running MakeTeXPK if we have a VF this way.  */
@@ -156,12 +156,12 @@ unsigned char font::load_font(void)
     read_PK_index();
   else
     if (magic == GF_MAGIC)
-      oops("The GF format for font file %s is no longer supported", filename);
+      oops(QString("The GF format for font file %1 is no longer supported").arg(filename) );
     else
       if (magic == VF_MAGIC)
 	read_VF_index();
       else
-	oops("Cannot recognize format for font file %s", filename);
+	oops(QString("Cannot recognize format for font file %1").arg(filename) );
 
   return False;
 }
@@ -211,7 +211,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
     if (file == NULL) {
       file = xfopen(filename, OPEN_MODE);
       if (file == NULL) {
-	oops("Font file disappeared: %s", filename);
+	oops(QString("Font file disappeared: %1").arg(filename) );
 	return NULL;
       }
     }

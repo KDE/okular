@@ -3,6 +3,7 @@
 #include <qpainter.h>
 #include <kdebug.h>
 #include <kprocess.h>
+#include <ktempfile.h>
 
 #include "dviwin.h"
 
@@ -15,15 +16,19 @@ QString PostScriptHeaderString;
 void dviWindow::renderPostScript(QString *PostScript) {
 
   // Step 1: Write the PostScriptString to a File
-  FILE *f = fopen("/tmp/t","w");
+  KTempFile PSfile(QString::null,".ps");
+  FILE *f = PSfile.fstream();
 
   fputs("%!PS-Adobe-2.0\n",f);
   fputs("%%Creator: kdvi\n",f);
-  fputs("%%Title: test.dvi\n",f);
+  fprintf(f,"%%Title: %s\n", filename.latin1());
   fputs("%%Pages: 1\n",f);
   fputs("%%PageOrder: Ascend\n",f);
-  fputs("%%BoundingBox: 0 0 596 842\n",f); //@@@
+  fprintf(f,"%%BoundingBox: 0 0 %ld %ld\n", (long)(72*unshrunk_paper_w) / basedpi, 
+	  (long)(72*unshrunk_paper_h) / basedpi);  // HSize and VSize in 1/72 inch
+  fputs("",f); //@@@
   fputs("%%EndComments\n",f);
+  fputs("%!\n",f);
 
   fputs("(/usr/share/texmf/dvips/base/texc.pro) run\n",f);
   fputs("(/usr/share/texmf/dvips/base/special.pro) run\n",f);
@@ -38,26 +43,30 @@ void dviWindow::renderPostScript(QString *PostScript) {
   fputs("TeXDict begin\n",f);
 
   fputs("1 0 bop 0 0 a \n",f);                                     // Start page
-  //  fputs("@beginspecial 0 @llx 0 @lly 100 @urx 100 @ury @setspecial\n",f);
   if (PostScriptHeaderString.latin1() != NULL)
     fputs(PostScriptHeaderString.latin1(),f);
   if (PostScript->latin1() != NULL)
     fputs(PostScript->latin1(),f);
-  //  fputs("@endspecial\n",f);
   fputs("end\n",f);
   fputs("showpage \n",f);
-  fclose(f);
+  PSfile.close();
 
   // Step 2: Call GS with the File
+  KTempFile PNGfile(QString::null,".png");
+  PNGfile.close(); // we are just interested in the filename, not the file
+
   KProcess proc;
   proc << "gs";
-  proc << "-dNOPAUSE" << "-dBATCH" << "-sDEVICE=png16m" << "-sOutputFile=/tmp/s";
+  proc << "-dNOPAUSE" << "-dBATCH" << "-sDEVICE=png16m";
+  proc << QString("-sOutputFile=%1").arg(PNGfile.name());
   proc << QString("-g%1x%2").arg(page_w).arg(page_h);        // page size in pixels
   proc << QString("-r%1").arg(basedpi/currwin.shrinkfactor); // resolution in dpi
-  proc << "/tmp/t";
+  proc << PSfile.name();
   proc.start(KProcess::Block);
+  PSfile.unlink();
 
   // Step 3: write the generated output to the pixmap
-  QPixmap tmp("/tmp/s");
+  QPixmap tmp(PNGfile.name());
   foreGroundPaint.drawPixmap(0, 0, tmp);
+  PNGfile.unlink();
 }

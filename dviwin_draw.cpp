@@ -150,18 +150,8 @@ static	void xskip(long offset)
 }
 
 
-static	void tell_oops(const char *message, ...)
+static	void tell_oops(QString message)
 {
-  /* @@@
-  kdError() << prog << ": " << endl;
-  va_start(args, message);
-  (void) vfprintf(stderr, message, args);
-  va_end(args);
-  if (currinf._virtual)
-    kdError() << " in virtual font " << currinf._virtual->fontname << endl;
-  else
-    kdError() << ", offset " << xtell(currinf.pos - 1) << "d" << endl;
-  */
   dvi_oops_msg = (message), longjmp(dvi_env, 1); /* dvi_oops */
   exit(1);
 }
@@ -181,7 +171,7 @@ static void change_font(unsigned long n)
 {
   currinf.fontp = currinf.fonttable[n];
   if (currinf.fontp == NULL)
-    tell_oops("non-existent font #%d", n);
+    tell_oops(QString("non-existent font #%1").arg(n) );
   currinf.set_char_p = currinf.fontp->set_char_p;
 }
 
@@ -210,7 +200,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     // Draw the character.
     foreGroundPaint.drawPixmap(x, y, pix);
     // Mark hyperlinks in blue. 
-    if (HTML_href != NULL) {
+    if (HTML_href != NULL && _showHyperLinks != 0) {
       int width = (int)(basedpi*0.05/(2.54*shrink_factor) + 0.5); // Line width 0.5 mm
       width = (width < 1) ? 1 : width;                         // but at least one pt.
       foreGroundPaint.fillRect(x, PXL_V, pix.width(), width, Qt::blue);
@@ -419,7 +409,6 @@ void dviWindow::draw_part(struct frame *minframe, double current_dimconv)
 	case EOP:
 	  if (current_frame != minframe)
 	    tell_oops("stack not empty at EOP");
-	  //@@@	  psp.endpage();
 	  return;
 
 	case PUSH:
@@ -520,11 +509,11 @@ void dviWindow::draw_part(struct frame *minframe, double current_dimconv)
 	case PRE:
 	case POST:
 	case POSTPOST:
-	  tell_oops("shouldn't happen: %s encountered", dvi_table2[ch - (FNTNUM0 + 64)]);
+	  tell_oops(QString("shouldn't happen: %1 encountered").arg(dvi_table2[ch - (FNTNUM0 + 64)]));
 	  break;
 	  
 	default:
-	  tell_oops("unknown op-code %d", ch);
+	  tell_oops(QString("unknown op-code %1").arg(ch));
 	} /* end switch*/
       } /* end else (ch not a SETCHAR or FNTNUM) */
   } /* end for */

@@ -241,6 +241,7 @@ static void process_preamble()
 
   if (one(dvi_file) != PRE)
     dvi_oops("DVI file doesn't start with preamble");
+  // @@@ throw("DVI file doesn't start with preamble");
   if (one(dvi_file) != 2)
     dvi_oops("Wrong version of DVI output for this program");
 

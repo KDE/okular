@@ -60,7 +60,7 @@
 #include "glyph.h"
 #include "oconfig.h"
 extern	char  *xmalloc (unsigned, const char *);
-extern void oops(const char *message, ...);
+extern void oops(QString message);
 extern void alloc_bitmap(bitmap *bitmap);
 
 BMUNIT	bit_masks[33] = {
@@ -174,7 +174,7 @@ void font::PK_skip_specials(void)
       case PK_NOOP :
 	break;
       default :
-	oops("Unexpected %d in PK file %s", PK_flag_byte, filename);
+	oops(QString("Unexpected %1 in PK file %2").arg(PK_flag_byte).arg(filename) );
 	break;
       }
     }
@@ -238,7 +238,7 @@ void font::read_PK_char(unsigned int ch)
     w = num(fp, n);
     h = num(fp, n);
     if (w > 0x7fff || h > 0x7fff)
-      oops("Character %d too large in file %s", ch, fontname);
+      oops(QString("Character %1 too large in file %2").arg(ch).arg(fontname));
     g->bitmap.w = w;
     g->bitmap.h = h;
   }
@@ -346,9 +346,9 @@ void font::read_PK_char(unsigned int ch)
       paint_switch = 1 - paint_switch;
     }
     if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
-      oops("Wrong number of bits stored:  char. %d, font %s", ch, fontname);
+      oops(QString("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(fontname));
     if (rows_left != 0 || h_bit != g->bitmap.w)
-      oops("Bad pk file (%s), too many bits", fontname);
+      oops(QString("Bad pk file (%1), too many bits").arg(fontname));
   }
 }
 

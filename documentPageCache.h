@@ -28,11 +28,16 @@ class documentPageCache: public QObject
   documentPageCache();
   ~documentPageCache();
 
+  /** This method is used to name the documentRenderer, that the
+      documentPageCache uses to render the page. The renderer can be
+      used any time (e.g., triggered by an internal timer event), and
+      must not be deleted before either the documentRenderer is
+      deleted, or another renderer has been set. */
   void     setRenderer(dviWindow *_renderer);
-  Q_UINT16 getPageNumber();
 
   /** Returns a pointer to a documentPage structure, or 0, if the
-      documentPage could not be generated for some reason. */
+      documentPage could not be generated for some reason (e.g.,
+      because no renderer has been set). */
   documentPage *getPage(Q_UINT16 pageNr);
   
 

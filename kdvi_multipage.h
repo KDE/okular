@@ -93,6 +93,14 @@ public:
   /// functionality should re-implement this method.
   virtual bool isModified();
 
+  /** Returns the number of the first (i.e. top-left) page in the
+      display. Such a number cannot be reasonably assigned
+      (e.g. because the current document is empty, or because no
+      document has been loaded yet), the method returns "invalid
+      page", i.e. 0. */
+  Q_UINT16 getPageNumber();
+
+
 public slots:
   /** Opens a file requestor and saves. This really saves the content
       of the DVI-file, and does not just start a copy job */

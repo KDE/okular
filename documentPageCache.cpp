@@ -46,14 +46,6 @@ documentPage *documentPageCache::getPage(Q_UINT16 pageNr)
 }
 
 
-Q_UINT16 documentPageCache::getPageNumber()
-{
-  if (currentPage == 0)
-    return 0;
-  return currentPage->getPageNumber();
-}
-
-
 void documentPageCache::clear()
 {
   delete currentPage;

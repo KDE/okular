@@ -29,9 +29,10 @@ public:
   documentWidget(QWidget *parent, documentPageCache *cache, const char *name);
 
 
-  void setPageNumber(Q_UINT16 pageNr);
+  void          setPageNumber(Q_UINT16 pageNr);
+  Q_UINT16      getPageNumber() {return pageNr;};
 
-  selection    DVIselection;
+  selection     DVIselection;
 
 
 public slots:

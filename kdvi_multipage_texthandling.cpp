@@ -197,7 +197,7 @@ void KDVIMultiPage::findNextText(void)
 
   documentPage dummyPage; 
 
-  for(Q_UINT16 pageNumber = currentPage.getPageNumber();; pageNumber++) {
+  for(Q_UINT16 pageNumber = getPageNumber();; pageNumber++) {
     // If we reach the end of the last page, start from the beginning
     // of the document, but ask the user first.
     if (pageNumber > window->dviFile->total_pages) {
@@ -208,7 +208,7 @@ void KDVIMultiPage::findNextText(void)
       
       // Do not ask the user if the search really started from the
       // beginning of the first page
-      if ( (currentPage.getPageNumber() == 1)&&(dviWidget->DVIselection.selectedTextStart == 0) )
+      if ( (getPageNumber() == 1)&&(dviWidget->DVIselection.selectedTextStart == 0) )
 	return;
       
       int answ = KMessageBox::questionYesNo(scrollView(), i18n("<qt>The search string <strong>%1</strong> could not be found till the "
@@ -221,10 +221,10 @@ void KDVIMultiPage::findNextText(void)
 	return;
     }
     
-    if (pageNumber > currentPage.getPageNumber())
-      progress.setProgress( pageNumber - currentPage.getPageNumber() );
+    if (pageNumber > getPageNumber())
+      progress.setProgress( pageNumber - getPageNumber() );
     else
-      progress.setProgress( pageNumber +  window->dviFile->total_pages - currentPage.getPageNumber() );
+      progress.setProgress( pageNumber +  window->dviFile->total_pages - getPageNumber() );
     
     qApp->processEvents();
     if ( progress.wasCancelled() )
@@ -240,7 +240,7 @@ void KDVIMultiPage::findNextText(void)
     // start the search on the current page *after* the selected text,
     // if there is any, then search the other pages entirely, and then
     // the rest of the current page. 
-    if (pageNumber != currentPage.getPageNumber()) {
+    if (pageNumber != getPageNumber()) {
       // On pages which are not our current page, search through
       // everything
       for(unsigned int i=0; i<dummyPage.textLinkList.size(); i++) 
@@ -302,7 +302,7 @@ void KDVIMultiPage::findPrevText(void)
   progress.setMinimumDuration ( 1000 );
 
   documentPage dummyPage; 
-  for(Q_UINT16 pageNumber = currentPage.getPageNumber();; pageNumber--) {
+  for(Q_UINT16 pageNumber = getPageNumber();; pageNumber--) {
 
     // If we reach the beginning of the last page, start from the end
     // of the document, but ask the user first.
@@ -322,10 +322,10 @@ void KDVIMultiPage::findPrevText(void)
 	return;
     }
     
-    if (pageNumber < currentPage.getPageNumber())
-      progress.setProgress( currentPage.getPageNumber() - pageNumber );
+    if (pageNumber < getPageNumber())
+      progress.setProgress( getPageNumber() - pageNumber );
     else
-      progress.setProgress( currentPage.getPageNumber() + window->dviFile->total_pages - pageNumber );
+      progress.setProgress( getPageNumber() + window->dviFile->total_pages - pageNumber );
 
     qApp->processEvents();
     if ( progress.wasCancelled() )
@@ -342,7 +342,7 @@ void KDVIMultiPage::findPrevText(void)
     // start the search on the current page *before* the selected
     // text, if there is any, then search the other pages entirely,
     // and then the rest of the current page.
-    if (pageNumber != currentPage.getPageNumber()) {
+    if (pageNumber != getPageNumber()) {
       // On pages which are not our current page, search through
       // everything
       for(int i=dummyPage.textLinkList.size()-1; i>=0; i--) 

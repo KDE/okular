@@ -33,10 +33,13 @@ protected:
     void paintEvent(QPaintEvent *);
 
 private:
-    QLabel *m_label;
     const KPDFPage *m_page;
     uint m_previewWidth;
     uint m_previewHeight;
+    bool m_selected;
+    uint m_labelNumber;
+    uint m_labelHeight;
+    uint m_labelWidth;
 };
 
 #endif

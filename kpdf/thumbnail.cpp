@@ -15,10 +15,9 @@
 #include "page.h"
 
 Thumbnail::Thumbnail( QWidget *parent, const KPDFPage *page )
-    : QWidget( parent ), m_page( page ), m_previewWidth( 0 ), m_previewHeight( 0 )
+    : QWidget( parent ), m_page( page ), m_previewWidth( 0 ), m_previewHeight( 0 ), m_selected( false )
 {
-    m_label = new QLabel( QString::number( page->number() + 1 ), this );
-    m_label->setAlignment( AlignCenter );
+    m_labelNumber = page->number() + 1;
     setPaletteBackgroundColor( palette().active().base() );
 }
 
@@ -32,11 +31,11 @@ int Thumbnail::setThumbnailWidth( int width )
     m_previewHeight = (int)(m_page->ratio() * width);
 
     // reposition label at bottom
-    int labelHeight = m_label->sizeHint().height();
-    m_label->setGeometry( 0, m_previewHeight + 3, width, labelHeight );
+    m_labelHeight = QFontMetrics( font() ).height();
+    m_labelWidth = width;
 
     // resize the widget
-    int totalHeight = m_previewHeight + 3 + labelHeight;
+    int totalHeight = m_previewHeight + 3 + m_labelHeight;
     resize( width, totalHeight );
 
     // return this->height plus a little (4px) margin to the next page
@@ -45,9 +44,8 @@ int Thumbnail::setThumbnailWidth( int width )
 
 void Thumbnail::setSelected( bool selected )
 {
-    // alternate 'base' or 'hilight' colors to represent selection
-    if (selected) m_label->setPaletteBackgroundColor( palette().active().highlight() );
-    else m_label->setPaletteBackgroundColor( palette().active().base() );
+    m_selected = selected;
+    update( 0, m_previewHeight + 3, m_labelWidth, m_labelHeight );
 }
 //END commands 
 
@@ -73,8 +71,12 @@ void Thumbnail::paintEvent( QPaintEvent * e )
     QRect clipRect = e->rect();
     QPainter p( this );
 
+    // draw the bottom label
+    QColor fillColor = m_selected ? palette().active().highlight() : palette().active().base();
+    p.fillRect( 0, m_previewHeight + 3, m_labelWidth, m_labelHeight, fillColor );
+    p.drawText( 0, m_previewHeight + 3, m_labelWidth, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
+
     // draw page outline
-    p.setPen( Qt::black );
     p.drawRect( 0, 0, m_previewWidth + 2, m_previewHeight + 2 );
     p.setPen( Qt::gray );
     p.drawLine( 4, m_previewHeight + 2, m_previewWidth + 2, m_previewHeight + 2 );

@@ -27,30 +27,22 @@ static const char description[] = I18N_NOOP("A previewer for Device Independent 
 
 int main(int argc, char** argv)
 {
-  KAboutData about ("kdvi", I18N_NOOP("KDVI"), "1.2",
+  KAboutData about ("kdvi", I18N_NOOP("KDVI"), "1.3",
                     description, KAboutData::License_GPL,
-                    "Markku Hinhala, Stefan Kebekus",
-                    I18N_NOOP("Displays Device Independent (DVI) files."
-                    "Based on original code from kdvi version 0.43 and xdvik."));
+                    "Markku Hinhala, Stephan Kebekus",
+                    I18N_NOOP("This program displays Device Independent (DVI) files which are produced by the TeX typesetting system.\n"
+                    "KDVI 1.3 is based on original code from KDVI version 0.43 and xdvik."));
 
   about.addAuthor ("Stefan Kebekus",
-                   I18N_NOOP("Current Maintainer.\n"
-                             "Major rewrite of version 0.4.3.\n"
-                             "Implementation of hyperlinks. "),
+                   I18N_NOOP("Current Maintainer."),
                    "kebekus@kde.org",
                    "http://www.mi.uni-koeln.de/~kebekus");
 
-  about.addAuthor ("Markku Hinhala",
-                   I18N_NOOP("Author of kdvi 0.4.3"));
-
-  about.addAuthor ("Nicolai Langfeldt",
-                   I18N_NOOP("Maintainer of xdvik"));
-
-  about.addAuthor ("Paul Vojta",
-                   I18N_NOOP("Author of xdvi"));
-
-  about.addCredit ("Philipp Lehmann",
-                   I18N_NOOP("testing and bug reporting."));
+  about.addAuthor ("Markku Hinhala", I18N_NOOP("Author of kdvi 0.4.3"));
+  about.addAuthor ("Nicolai Langfeldt", I18N_NOOP("Maintainer of xdvik"));
+  about.addAuthor ("Paul Vojta", I18N_NOOP("Author of xdvi"));
+  about.addCredit ("Philipp Lehmann", I18N_NOOP("Testing and bug reporting."));
+  about.addCredit ("Wilfried Huss", I18N_NOOP("Re-organisation of source code."));
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions(options);

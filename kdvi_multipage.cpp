@@ -134,8 +134,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
 
-  connect(scrollView(), SIGNAL(contentsMoving(int, int)), this, SLOT(contentsMovingInScrollView(int, int)) );
-
   readSettings();
   preferencesChanged();
 
@@ -228,14 +226,6 @@ KDVIMultiPage::~KDVIMultiPage()
   writeSettings();
   Prefs::writeConfig();
   delete printer;
-}
-
-
-void KDVIMultiPage::contentsMovingInScrollView(int x, int y)
-{
-  Q_UINT16 cpg = getCurrentPageNumber();
-  if ((cpg != 0) && (window != 0) && (window->dviFile != 0))
-    emit(pageInfo(window->dviFile->total_pages, cpg-1));
 }
 
 

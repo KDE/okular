@@ -125,8 +125,6 @@ protected slots:
   void doEnableWarnings();
   void preferencesChanged();
 
-  void contentsMovingInScrollView(int x, int y);
-
   /** Makes page # pageNr visible, selects the text Elements
       beginSelection-endSelection, and draws the users attention to
       this place with an animated frame  */

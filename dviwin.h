@@ -26,9 +26,10 @@
 #include "fontpool.h"
 #include "infodialog.h"
 #include "psgs.h"
+#include "documentRenderer.h"
 
 
-class documentWidget;
+class DocumentWidget;
 class dviWindow;
 class fontProgressDialog;
 class infoDialog;
@@ -93,17 +94,13 @@ struct drawinf {
 
 
 
-class dviWindow : public QObject, bigEndianByteReader
+class dviWindow : public DocumentRenderer, bigEndianByteReader
 {
   Q_OBJECT
 
 public:
   dviWindow(QWidget *parent);
   ~dviWindow();
-
-  documentPage  *currentlyDrawnPage;
-
-  QSize         sizeOfPage(Q_UINT16 page) {return currentlyDrawnPixmap.size();};
 
   class dvifile *dviFile;
 
@@ -116,15 +113,12 @@ public:
   void          exportPDF();
 
   void          changePageSize(void);
-  int		totalPages(void);
+  virtual int   totalPages();
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
   void		setPaper(double w, double h);
   static bool   correctDVI(const QString &filename);
   
-  // for the preview
-  QPixmap      *pix() { if (currentlyDrawnPage) return currentlyDrawnPage->getPixmap(); return 0; };
-
   // These should not be public... only for the moment
   void          read_postamble(void);
   void          draw_part(double current_dimconv, bool is_vfmacro);
@@ -153,7 +147,7 @@ public:
 public slots:
   void          showInfo(void);
   void          handleLocalLink(const QString &linkText);
-  void          handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *widget);
+  void          handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *widget);
 
   void          embedPostScript(void);
   void          abortExternalProgramm(void);
@@ -165,7 +159,7 @@ public slots:
 
   double	setZoom(double zoom);
   double        zoom() { return _zoom; };
-  void		drawPage(documentPage *page);
+  void		drawPage(DocumentPage *page);
  
   /** Slots used in conjunction with external programs */
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
@@ -250,8 +244,6 @@ private:
      signal timeout() is connected to the method clearStatusBar() of
      *this. */
   QTimer        clearStatusBarTimer;
-  
-  QPixmap       currentlyDrawnPixmap;
   
   // List of source-hyperlinks on all pages. This vector is generated
   // when the DVI-file is first loaded, i.e. when draw_part is called

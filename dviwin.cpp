@@ -57,7 +57,7 @@ QPainter foreGroundPaint; // QPainter used for text
 //------ now comes the dviWindow class implementation ----------
 
 dviWindow::dviWindow(QWidget *par)
-  : info(new infoDialog(par))
+  : DocumentRenderer(par), info(new infoDialog(par))
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow( parent=" << par << " )" << endl;
@@ -163,33 +163,33 @@ void dviWindow::setPaper(double width_in_cm, double height_in_cm)
 //------ this function calls the dvi interpreter ----------
 
 
-void dviWindow::drawPage(documentPage *page)
+void dviWindow::drawPage(DocumentPage *page)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::drawPage(documentPage *) called" << endl;
+  kdDebug(4300) << "dviWindow::drawPage(DocumentPage *) called" << endl;
 #endif
 
   // Paranoid safety checks
   if (page == 0) {
-    kdError(4300) << "dviWindow::drawPage(documentPage *) called with argument == 0" << endl; 
+    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called with argument == 0" << endl; 
     return;
   }
   if (page->getPageNumber() == 0) {
-    kdError(4300) << "dviWindow::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
+    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called for a DocumentPage with page number 0" << endl;
     return;
   }
   if ( dviFile == 0 ) {
-    kdError(4300) << "dviWindow::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
+    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
     return;
   }
   if (page->getPageNumber() > dviFile->total_pages) {
-    kdError(4300) << "dviWindow::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber() 
+    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called for a DocumentPage with page number " << page->getPageNumber() 
 		  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
   if ( dviFile->dvi_Data() == 0 ) {
-    kdError(4300) << "dviWindow::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
+    kdError(4300) << "dviWindow::drawPage(DocumentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
   }
@@ -812,7 +812,7 @@ void dviWindow::handleLocalLink(const QString &linkText)
 }
 
 
-void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *win)
+void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;

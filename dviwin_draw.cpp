@@ -104,7 +104,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     // event.
     if (line_boundary_encountered == true) {
       // Set up hyperlink
-      DVI_Hyperlink dhl;
+      Hyperlink dhl;
       dhl.baseline = currinf.data.pxl_v;
       dhl.box.setRect(x, y, pix.width(), pix.height());
       dhl.linkText = *HTML_href;
@@ -122,7 +122,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     // event.
     if (line_boundary_encountered == true) {
       // Set up source hyperlinks
-      DVI_Hyperlink dhl;
+      Hyperlink dhl;
       dhl.baseline = currinf.data.pxl_v;
       dhl.box.setRect(x, y, pix.width(), pix.height());
       if (source_href != NULL) 
@@ -140,7 +140,7 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   // search, etc.). Set up the currentlyDrawnPage->textLinkList.
   if (line_boundary_encountered == true) {
     // Set up source hyperlinks
-    DVI_Hyperlink link;
+    Hyperlink link;
     link.baseline = currinf.data.pxl_v;
     link.box.setRect(x, y, pix.width(), pix.height());
     link.linkText = "";

@@ -23,9 +23,9 @@
 #include "prefs.h"
 #include "zoomlimits.h"
 #include "kprinterwrapper.h"
+#include "dviWidget.h"
 
 #include "optionDialogFontsWidget.h"
-#include "optionDialogGUIWidget_base.h"
 #include "optionDialogSpecialWidget.h"
 
 #include <qlabel.h>
@@ -98,6 +98,9 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   lastCurrentPage = 0;
 
   window = new dviWindow(scrollView());
+  // Points to the same object as renderer to avoid downcasting.
+  // FIXME: Remove when the API of the Renderer-class is finished.
+  renderer = window;
   window->setName("DVI renderer");
   currentPage.setRenderer(window);
 
@@ -107,25 +110,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   connect(window, SIGNAL(documentSpecifiedPageSize(const pageSize&)), this, SIGNAL( documentSpecifiedPageSize(const pageSize&)) );
   connect(window, SIGNAL(needsRepainting()), this, SLOT(repaintAllVisibleWidgets()));
   docInfoAction    = new KAction(i18n("Document &Info"), 0, window, SLOT(showInfo()), actionCollection(), "info_dvi");
-
-
-  QStringList viewModes;
-  viewModes.append(i18n("Single Page"));
-  viewModes.append(i18n("Continuous"));
-  viewModes.append(i18n("Continuous - Facing"));
-  viewModes.append(i18n("Overview"));
-  viewModeAction = new KSelectAction (i18n("View Mode"), 0, 0, 0, actionCollection(), "viewmode");
-  viewModeAction->setItems(viewModes);
-  connect(viewModeAction, SIGNAL(activated (int)), this, SLOT(setViewMode(int)));
-
-  backAction = new KAction(i18n("&Back"), "1leftarrow", 0, 
-                   this, SLOT(doGoBack()), actionCollection(), "go_back");
-  forwardAction = new KAction(i18n("&Forward"), "1rightarrow", 0, 
-                      this, SLOT(doGoForward()), actionCollection(), "go_forward");
-
-  connect(&document_history, SIGNAL(backItem(bool)), backAction, SLOT(setEnabled(bool)));
-  connect(&document_history, SIGNAL(forwardItem(bool)), forwardAction, SLOT(setEnabled(bool)));
-  document_history.clear();
 
   embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
   connect(window, SIGNAL(prescanDone()), this, SLOT(setEmbedPostScriptAction()));
@@ -179,7 +163,7 @@ void KDVIMultiPage::repaintAllVisibleWidgets(void)
   // Go through the list of widgets and resize them, if necessary
   bool everResized = false;
   for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-    documentWidget *dviWidget = (documentWidget *)(widgetList[i]);
+    DocumentWidget *dviWidget = (DocumentWidget *)(widgetList[i]);
     if (dviWidget == 0)
       continue;
    
@@ -200,7 +184,7 @@ void KDVIMultiPage::repaintAllVisibleWidgets(void)
   else {
     QRect visiblRect(scrollView()->contentsX(), scrollView()->contentsY(), scrollView()->visibleWidth(), scrollView()->visibleHeight());
     for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-      documentWidget *dviWidget = (documentWidget *)(widgetList[i]);
+      DocumentWidget *dviWidget = (DocumentWidget *)(widgetList[i]);
       if (dviWidget == 0)
     continue;
     
@@ -212,169 +196,6 @@ void KDVIMultiPage::repaintAllVisibleWidgets(void)
   }
 }
 
-
-void KDVIMultiPage::generateDocumentWidgets(int startPage)
-{
-#ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) called" << endl;
-#endif
-  // This function is only called with its default value, when
-  // the file has been loaded or reloaded.
-  bool reload = (startPage <= 0);
-
-  if (reload)
-  {
-    // Find the number of the current page, for later use.
-    startPage = getCurrentPageNumber();
-  }
-   
-  // Make sure that startPage is in the permissible range.
-  if (startPage < 1)
-    startPage = 1;
-  if (startPage > window->totalPages())
-    startPage = window->totalPages();
-
-  int tableauStartPage = startPage;
-
-  // Find out how many widgets are needed, and resize the widgetList accordingly.
-  widgetList.setAutoDelete(true);
-  Q_UINT16 oldwidgetListSize = widgetList.size();
-  if (window->totalPages() == 0)
-    widgetList.resize(0);
-  else
-  {
-    switch (viewModeAction->currentItem())
-    {
-      case KVS_SinglePage:
-        widgetList.resize(1);
-        break;
-      case KVS_Overview:
-      {
-        // Calculate the number of pages shown in overview mode.
-        int visiblePages = Prefs::overviewModeColumns() *
-                           Prefs::overviewModeRows();
-        // Calculate the number of the first page in the tableau.
-        tableauStartPage = startPage + 1 - (startPage % visiblePages);
-        // We cannot have more widgets then pages in the document.
-        visiblePages = QMIN(visiblePages, window->totalPages() - tableauStartPage + 1);
-        if (widgetList.size() != visiblePages)
-          widgetList.resize(visiblePages);
-        break;
-      }
-      default:
-        // In KVS_Continuous and KVS_ContinuousFacing all pages in the document are shown.
-	widgetList.resize(window->totalPages());
-    }
-  }
-  bool isWidgetListResized = (widgetList.size() != oldwidgetListSize);
-  widgetList.setAutoDelete(false);
-
-  // If the widgetList is empty, there is nothing left to do.
-  if (widgetList.size() == 0) {
-    scrollView()->addChild(&widgetList);
-    return;
-  }
-  
-  // Allocate documentWidget structures so that all entries of
-  // widgetList point to a valid documentWidget.
-  documentWidget *dviWidget;
-  for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-    dviWidget = (documentWidget *)(widgetList[i]);
-    if (dviWidget == 0) {
-      dviWidget = new documentWidget(scrollView()->viewport(), scrollView(), window->sizeOfPage(i+1), &currentPage, &userSelection, "singlePageWidget" );
-      widgetList.insert(i, dviWidget);
-      dviWidget->show();
-      
-      connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
-      connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), window,
-              SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
-      connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this,
-              SIGNAL( setStatusBarText( const QString& ) ) );
-    }
-  }
-  
-  // Set the page numbers for the newly allocated widgets. How this is
-  // done depends on the viewMode.
-  if (viewModeAction->currentItem() == KVS_SinglePage) {
-    // In KVS_SinglePage mode, any number between 1 and the maximum
-    // number of pages is acceptable. If an acceptable value is found,
-    // nothing is done, and otherwise '1' is set as a default.
-    dviWidget = (documentWidget *)(widgetList[0]);
-    if (dviWidget != 0) { // Paranoia safety check
-      dviWidget->setPageNumber(startPage);
-      dviWidget->update();
-    } else
-      kdError(4300) << "Zero-Pointer in widgetList in KDVIMultiPage::generateDocumentWidgets()" << endl;
-  } else {
-    // In all other modes, the widgets will be numbered continuously,
-    // starting from firstShownPage.
-    for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-      dviWidget = (documentWidget *)(widgetList[i]);
-      if (dviWidget != 0) // Paranoia safety check
-        if (viewModeAction->currentItem() == KVS_Overview)
-          dviWidget->setPageNumber(i+tableauStartPage);
-        else
-          dviWidget->setPageNumber(i+1);
-      else
-        kdError(4300) << "Zero-Pointer in widgetList in KDVIMultiPage::generateDocumentWidgets()" << endl;
-    }
-  }
-
-  // Make the changes in the widgetList known to the scrollview. so
-  // that the scrollview may update its contents.
-  scrollView()->addChild(&widgetList);
-
-  // If the number of widgets has changed, or the viewmode has been changed the widget 
-  // that displays the current page may not be visible anymore. Bring it back into focus.
-  if (isWidgetListResized || !reload)
-    gotoPage(startPage-1);
-  
-  // The layout of the widgets, the number of the widgets, and the
-  // "current" widget, i.e. the topmost visible widget might all have
-  // changed. Pass that information on.
-  emit pageInfo(window->totalPages(), startPage-1 );
-
-#ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) ended" << endl;
-#endif
-}
-
-
-void KDVIMultiPage::setViewMode(int mode)
-{
-  // Save the current page number because when we are changing the columns
-  // and rows in the scrollview the currently shown Page probably out of view.
-  int currentPage = getCurrentPageNumber();
-  // Save viewMode for future uses of KDVI
-  switch (mode) 
-  {
-    case KVS_SinglePage:
-      Prefs::setViewMode(KVS_SinglePage);
-      scrollView()->setNrColumns(1);
-      scrollView()->setNrRows(1);
-      scrollView()->setContinuousViewMode(false);
-      break;
-    case KVS_ContinuousFacing:
-      Prefs::setViewMode(KVS_ContinuousFacing);
-    scrollView()->setNrColumns(2);
-      scrollView()->setNrRows(1);
-      scrollView()->setContinuousViewMode(true);
-      break;
-    case KVS_Overview:
-      Prefs::setViewMode(KVS_Overview);
-      scrollView()->setNrColumns(Prefs::overviewModeColumns());
-      scrollView()->setNrRows(Prefs::overviewModeRows());
-      scrollView()->setContinuousViewMode(false);
-      break;
-    default:  //KVS_Continuous
-      Prefs::setViewMode(KVS_Continuous);
-    scrollView()->setNrColumns(1);
-      scrollView()->setNrRows(1);
-      scrollView()->setContinuousViewMode(true);
-  }
-  generateDocumentWidgets(currentPage);
-  emit viewModeChanged();
-}
 
 void KDVIMultiPage::slotEmbedPostScript(void)
 {
@@ -462,63 +283,6 @@ KDVIMultiPage::~KDVIMultiPage()
 }
 
 
-Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
-{
-  documentWidget *dviWidget;
-  switch(widgetList.size()) {
-  case 0:
-    lastCurrentPage = 0;
-    return 0;
-  case 1:
-    // If there is only one widget, the matter is easy: just return
-    // the pageNumber of that widget (or 0 if the ptr to the widget is
-    // 0)
-    dviWidget= (documentWidget *)(widgetList[0]);
-    if (dviWidget == 0) {
-      lastCurrentPage = 0;
-      return 0;
-    }
-    lastCurrentPage = dviWidget->getPageNumber();
-    return lastCurrentPage;
-  default:
-    // Check if the page 'lastCurrentPage' is still visible. If yes,
-    // return that. We call that 'lazy page number display': the
-    // displayed page number remains unchanged as long as the
-    // appropriate widget is still visible.
-      
-      if ((widgetList.size() > lastCurrentPage) && (lastCurrentPage != 0)) {
-      dviWidget = (documentWidget *)(widgetList[lastCurrentPage-1]);
-      if (dviWidget != 0) {
-    if (dviWidget->getPageNumber() == lastCurrentPage) {
-      // Found the widget. Now check if it is visible
-      if ((scrollView()->childY(dviWidget) < (scrollView()->contentsY() + scrollView()->visibleHeight())) &&
-          ((scrollView()->childY(dviWidget)+dviWidget->height()) > scrollView()->contentsY())) {
-        return lastCurrentPage;
-      }
-    }
-      }
-    }
-
-    // Otherwise, find the first widget that is visible, and return
-    // the page number of that.
-    for(Q_UINT16 i=0; i<widgetList.size(); i++) {
-      dviWidget = (documentWidget *)(widgetList[i]);
-      if (dviWidget == 0)
-    continue;
-
-        int X = scrollView()->childX(dviWidget) + dviWidget->width();
-      int Y = scrollView()->childY(dviWidget) + dviWidget->height();
-        if (Y > scrollView()->contentsY() && X > scrollView()->contentsX()) {
-    lastCurrentPage = dviWidget->getPageNumber();
-    return lastCurrentPage;
-      }
-    }
-  }
-  lastCurrentPage = 0;
-  return lastCurrentPage;
-}
-
-
 void KDVIMultiPage::contentsMovingInScrollView(int x, int y)
 {
   Q_UINT16 cpg = getCurrentPageNumber();
@@ -569,206 +333,6 @@ QStringList KDVIMultiPage::fileFormats()
 }
 
 
-bool KDVIMultiPage::gotoPage(int page)
-{
-  if (widgetList.size() == 0) {
-    kdError(4300) << "KDVIMultiPage::gotoPage(" << page << ") called, but widgetList is empty" << endl;
-    return false;
-  }
-
-  document_history.add(page,0);
-
-  // If we are in overview viewmode
-  if (Prefs::viewMode() == KVS_Overview)
-  {
-    int visiblePages = Prefs::overviewModeRows() * Prefs::overviewModeColumns();
-    // Pagenumber of the first page in the current tableau.
-    int firstPage = ((documentWidget*)widgetList[0])->getPageNumber();
-    // Pagenumber of the first page in the new tableau.
-    int tableauStartPage = page + 1 - (page % visiblePages);
-    // If these numbers arn't equal "page" is not in the current tableu.
-    if (firstPage != tableauStartPage) // widgets need to be updated
-    {
-      if ( (window->totalPages() - tableauStartPage + 1 < visiblePages) ||
-           (widgetList.size() < visiblePages) ) 
-      {
-        // resize widgetList
-        // the pages are also set correctly by "generateDocumentWidgets"
-        generateDocumentWidgets(tableauStartPage);
-      }
-      else
-      {
-        // "page" is not shown in the scrollview, so we have to switch widgets.
-        // Here we don't need to resize the widgetList.
-        for (int i = 0; i < widgetList.size(); i++)
-        {
-          documentWidget* ptr = (documentWidget*)(widgetList[i]);
-          if (ptr != 0)
-          {
-            ptr->setPageNumber(tableauStartPage + i);
-          }
-        }
-      }
-    }
-    // move scrollview to "page".
-    
-    // Make the widget &ptr visible in the scrollview. Somehow this
-    // doesn't seem to trigger the signal contentsMoved in the
-    // QScrollview, so that we better set lastCurrentPage ourselves.
-    documentWidget* ptr = (documentWidget*)(widgetList[page % visiblePages]);
-    scrollView()->moveViewportToWidget(ptr);
-    lastCurrentPage = page+1;
-    return true;
-  }
-  
-  if (widgetList.size() == 1) {
-    // If the widget list contains only a single element, then either
-    // the document contains only one page, or we are in "single page"
-    // view mode. In either case, we set the page number of the single
-    // widget to 'page'
-    documentWidget *ptr = (documentWidget *)(widgetList[0]);
-
-    // Paranoia security check
-    if (ptr == 0) {
-      kdError(4300) << "KDVIMultiPage::gotoPage() called with widgetList.size() == 1, but widgetList[0] == 0" << endl;
-      return false;
-    }
-    ptr->setPageNumber(page+1);
-  } else {
-    // There are multiple widgets, then we are either in the
-    // "Continuous" or in the "Continouous-Facing" view mode. In that
-    // case, we find the widget which is supposed to display page
-    // 'page' and move the scrollview to make it visible
-
-    // Paranoia security checks
-    if (widgetList.size() < page) {
-      kdError(4300) << "KDVIMultiPage::gotoPage(page) called with widgetList.size()=" << widgetList.size() << ", and page=" << page << endl;
-      return false;
-    }
-    documentWidget *ptr = (documentWidget *)(widgetList[page]);
-    if (ptr == 0) {
-      kdError(4300) << "KDVIMultiPage::gotoPage() called with widgetList.size() > 1, but widgetList[page] == 0" << endl;
-      return false;
-    }
-
-    // Make the widget &ptr visible in the scrollview. Somehow this
-    // doesn't seem to trigger the signal contentsMoved in the
-    // QScrollview, so that we better set lastCurrentPage ourselves.
-    scrollView()->moveViewportToWidget(ptr);
-    lastCurrentPage = page+1;
-  }
-  return true;
-}
-
-
-void KDVIMultiPage::goto_page(int page, int y, bool isLink)
-{
-#ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "KDVIMultiPage::gotoPage( pageNr=" << page << ", y=" << y <<" )" << endl;
-#endif
-
-  if (widgetList.size() == 0) {
-    kdError(4300) << "KDVIMultiPage::goto_Page(" << page << ", y) called, but widgetList is empty" << endl;
-    return;
-  }
-
-  if (isLink)
-    document_history.add(page, y);
-
-  documentWidget *ptr;
-  
-  // If we are in overview viewmode
-  if (Prefs::viewMode() == KVS_Overview)
-  {
-    int visiblePages = Prefs::overviewModeRows() * Prefs::overviewModeColumns();
-    // Pagenumber of the first visibile Page
-    int firstPage = ((documentWidget*)widgetList[0])->getPageNumber();
-    int tableauStartPage = page + 1 - (page % visiblePages);
-    if (firstPage != tableauStartPage) // widgets need to be updated
-    {
-        if ( (window->totalPages() - tableauStartPage + 1 < visiblePages) ||
-            (widgetList.size() < visiblePages) ) 
-        {
-            // resize widgetList
-            // the pages are also set correctly by "generateDocumentWidgets"
-            generateDocumentWidgets(tableauStartPage);
-        }
-        else
-        {
-            // "page" is not shown in the scrollview, so we have to switch widgets.
-            // Here we don't need to resize the widgetList.
-            for (int i = 0; i < widgetList.size(); i++)
-            {
-                ptr = (documentWidget*)(widgetList[i]);
-                if (ptr != 0)
-                {
-                    ptr->setPageNumber(tableauStartPage + i);
-                }
-            }
-        }
-    }
-    // move scrollview to "page".
-    
-    // Make the widget &ptr visible in the scrollview. Somehow this
-    // doesn't seem to trigger the signal contentsMoved in the
-    // QScrollview, so that we better set lastCurrentPage ourselves.
-    ptr = (documentWidget*)(widgetList[page % visiblePages]);
-    // FIXME: This doesn't calculate the right position in all cases.
-    scrollView()->setContentsPos(scrollView()->childX(ptr) - scrollView()->distanceBetweenPages(), 
-                                 scrollView()->childY(ptr) + y);
-    lastCurrentPage = page+1;
-  } 
-  else if (widgetList.size() == 1) 
-  {
-    // If the widget list contains only a single element, then either
-    // the document contains only one page, or we are in "single page"
-    // view mode. In either case, we set the page number of the single
-    // widget to 'page'
-    ptr = (documentWidget *)(widgetList[0]);
-
-    // Paranoia security check
-    if (ptr == 0) {
-      kdError(4300) << "KDVIMultiPage::goto_Page() called with widgetList.size() == 1, but widgetList[0] == 0" << endl;
-      return;
-    }
-    ptr->setPageNumber(page+1);
-
-    scrollView()->ensureVisible(0, scrollView()->childY(ptr)+y);
-  } else {
-    // There are multiple widgets, then we are either in the
-    // "Continuous" or in the "Continouous-Facing" view mode. In that
-    // case, we find the widget which is supposed to display page
-    // 'page' and move the scrollview to make it visible
-
-    // Paranoia security checks
-    if (widgetList.size() < page) {
-      kdError(4300) << "KDVIMultiPage::goto_Page(page,y ) called with widgetList.size()=" << widgetList.size() << ", and page=" << page << endl;
-      return;
-    }
-    ptr = (documentWidget *)(widgetList[page]);
-    if (ptr == 0) {
-      kdError(4300) << "KDVIMultiPage::goto_Page() called with widgetList.size() > 1, but widgetList[page] == 0" << endl;
-      return;
-    }
-
-    // Make the widget &ptr visible in the scrollview. We try to do
-    // that intelligently, so that the user gets to see most of the
-    // widget
-    if (ptr->height() < scrollView()->visibleHeight()) {
-      // If the widget is less tall then the visible portion of the
-      // viewPort, try to center the widget in the viewport
-      scrollView()->setContentsPos(0, scrollView()->childY(ptr) - (scrollView()->visibleHeight()-ptr->height())/2);
-    } else
-      scrollView()->ensureVisible(0, scrollView()->childY(ptr)+y);
-    lastCurrentPage = page+1;
-    ptr->update();
-  }
-  if (isLink)
-    ptr->flash(y);
-  emit(pageInfo(window->dviFile->total_pages, page));
-}
-
-
 void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
 {
 #ifdef KDVI_MULTIPAGE_DEBUG
@@ -780,10 +344,10 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     return;
   }
 
-  documentPage *pageData = currentPage.getPage(pageNr);
+  DocumentPage *pageData = currentPage.getPage(pageNr);
   if (pageData == 0) {
 #ifdef DEBUG_DOCUMENTWIDGET
-    kdDebug(4300) << "documentWidget::paintEvent: no documentPage generated" << endl;
+    kdDebug(4300) << "DocumentWidget::paintEvent: no DocumentPage generated" << endl;
 #endif
     return;
   }
@@ -844,13 +408,13 @@ void KDVIMultiPage::doSelectAll(void)
     kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList is empty" << endl;
     break;
   case 1:
-    ((documentWidget *)widgetList[0])->selectAll();
+    ((DocumentWidget *)widgetList[0])->selectAll();
     break;
   default:
     if (widgetList.size() < getCurrentPageNumber())
       kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList.size()=" << widgetList.size() << "and getCurrentPageNumber()=" << getCurrentPageNumber() << endl;
     else
-      ((documentWidget *)widgetList[getCurrentPageNumber()-1])->selectAll();
+      ((DocumentWidget *)widgetList[getCurrentPageNumber()-1])->selectAll();
   }
 }
 
@@ -877,11 +441,9 @@ void KDVIMultiPage::doSettings()
   
   fontConfigWidget = new optionDialogFontsWidget(scrollView());
   optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(scrollView());
-  optionDialogGUIWidget_base* guiWidget = new optionDialogGUIWidget_base(scrollView());
   
   configDialog->addPage(fontConfigWidget, i18n("Tex Fonts"), "fonts");
   configDialog->addPage(specialConfigWidget, i18n("DVI Specials"), "dvi");
-  configDialog->addPage(guiWidget, i18n("Interface"), "view_icon");
   configDialog->setHelp("preferences", "kdvi");
   
   connect(configDialog, SIGNAL(settingsChanged()), this, SLOT(preferencesChanged()));
@@ -960,8 +522,6 @@ void KDVIMultiPage::preferencesChanged()
   bool showPS = Prefs::showPS();
   bool useFontHints = Prefs::useFontHints();
 
-  viewModeAction->setCurrentItem(Prefs::viewMode());
-  setViewMode(Prefs::viewMode());
   window->setPrefs( showPS, Prefs::editorCommand(), mfmode, makepk, useFontHints);
 }
 
@@ -1253,28 +813,6 @@ void KDVIMultiPage::enableActions(bool b)
 }
 
 
-void KDVIMultiPage::doGoBack(void)
-{
-  HistoryItem *it = document_history.back();
-  if (it != 0)
-    goto_page(it->page, it->ypos, false); // Do not add a history item.
-  else
-    kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
-  return;
-}
-
-
-void KDVIMultiPage::doGoForward(void)
-{
-  HistoryItem *it = document_history.forward();
-  if (it != 0)
-    goto_page(it->page, it->ypos, false); // Do not add a history item.
-  else
-    kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
-  return;
-}
-
-
 void KDVIMultiPage::doEnableWarnings(void)
 {
   KMessageBox::information (scrollView(), i18n("All messages and warnings will now be shown."));
@@ -1301,5 +839,18 @@ void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )
     emit setWindowCaption( i18n("KDVI") );
 }
 
+DocumentWidget* KDVIMultiPage::createDocumentWidget()
+{
+  // TODO: handle different sizes per page.
+  DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(),
+      renderer->sizeOfPage(/*page+*/1), &currentPage, 
+      &userSelection, "singlePageWidget" );
+
+  // Handle source links
+  connect(documentWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, DocumentWidget *)), renderer,
+          SLOT(handleSRCLink(const QString &,QMouseEvent *, DocumentWidget *)));
+
+  return documentWidget;
+}
 
 #include "kdvi_multipage.moc"

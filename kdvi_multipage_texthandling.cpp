@@ -83,7 +83,7 @@ void KDVIMultiPage::doExportText(void)
   QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), window->dviFile->total_pages, scrollView(), "export_text_progress", TRUE );
   progress.setMinimumDuration(300);
 
-  documentPage dummyPage;
+  DocumentPage dummyPage;
 
   for(int page=1; page <= window->dviFile->total_pages; page++) {
     progress.setProgress( page );
@@ -195,7 +195,7 @@ void KDVIMultiPage::findNextText(void)
 			    window->dviFile->total_pages, scrollView(), "searchForwardTextProgress", TRUE );
   progress.setMinimumDuration ( 1000 );
 
-  documentPage dummyPage; 
+  DocumentPage dummyPage; 
 
   // Find the page and text position on the page where the search will
   // start. If nothing is selected, we start at the beginning of the
@@ -321,7 +321,7 @@ void KDVIMultiPage::findPrevText(void)
   // this to get a better 'user feeling'
   Q_UINT16 startingPage;
   Q_UINT16 startingTextItem;
-  documentPage dummyPage; 
+  DocumentPage dummyPage; 
   if (userSelection.page == 0) {
     startingPage     = getCurrentPageNumber();
     dummyPage.setPageNumber(startingPage);

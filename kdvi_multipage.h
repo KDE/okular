@@ -14,10 +14,7 @@ class QPainter;
 
 
 #include "../kviewshell/kmultipage.h"
-#include "documentPageCache.h"
 #include "dviwin.h"
-#include "history.h"
-#include "selection.h"
 
 
 class KDVIMultiPageFactory : public KParts::Factory
@@ -43,11 +40,6 @@ class KDVIMultiPage : public KMultiPage
   Q_OBJECT
 
 public:
-  enum viewModes {KVS_SinglePage = 0, KVS_Continuous = 1, 
-                  KVS_ContinuousFacing = 2, KVS_Overview = 3};
-
-  documentPageCache  currentPage;
-
   KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
   virtual ~KDVIMultiPage();
   // Methods which are associated with the DCOP functionality of the
@@ -65,9 +57,6 @@ public:
 
   /// close a file
   virtual bool closeURL();
-
-  /// displays the given page
-  virtual bool gotoPage(int page);
 
   /// sets a zoom factor
   virtual double setZoom(double z);
@@ -90,14 +79,9 @@ public:
   /// functionality should re-implement this method.
   virtual bool isModified();
 
-  /** Returns the number of the first (i.e. top-left) page in the
-      display. Such a number cannot be reasonably assigned
-      (e.g. because the current document is empty, or because no
-      document has been loaded yet), the method returns "invalid
-      page", i.e. 0. */
-  Q_UINT16 getCurrentPageNumber();
-
-
+private:
+  virtual DocumentWidget* createDocumentWidget();
+   
 public slots:
   /** Calling this slot will empty the page cache and --as the name
       suggests-- repaint all visible widgets */
@@ -137,13 +121,7 @@ public slots:
       currently selected text, if there is any. */
   void findPrevText(void);
 
-  void setViewMode(int);
-
 protected:
-  selection     userSelection;
-
-  History document_history;
-
   /// For internal use only. See the comments in kdvi_multipage.cpp, right
   //before the timerEvent function.
   int  timer_id;
@@ -156,32 +134,18 @@ protected:
 
   virtual void reload();
 
-signals:
-  /** Emitted to indicate the number of pages in the file and the
-      current page. The receiver will not change or update the
-      display, nor call the gotoPage()-method. */
-  void pageInfo(int nr, int currpg);
-
 protected slots:
   void doSettings();
   void doExportPS();
   void doExportPDF();
   void doExportText();
   void doSelectAll();
-  void doGoBack();
-  void doGoForward();
   void doEnableWarnings();
   void about();
   void helpme();
   void bugform();
   void preferencesChanged();
-  void goto_page(int page, int y, bool isLink = true);
-
-  /** This function is called on viewmode change with
-      the current page number as parameter, and on
-      file load/reload with the default parameter. */
-  void generateDocumentWidgets(int startPage = 0);
-
+  
   void contentsMovingInScrollView(int x, int y);
 
   /** Makes page # pageNr visible, selects the text Elements
@@ -192,10 +156,11 @@ protected slots:
   void showTipOnStart(void);
 
 private:
+  // Points to the same object as renderer to avoid downcasting.
+  // FIXME: Remove when the API of the Renderer-class is finished.
   dviWindow       *window;
   KPrinter        *printer;
 
-  QPtrVector<QWidget> widgetList; 
   /*************************************************************
    * Methods and classes concerned with the find functionality *
    *************************************************************/
@@ -209,8 +174,6 @@ private:
   /** Pointers to several actions which are disabled if no file is
       loaded. */
   KAction      *docInfoAction;
-  KAction      *backAction;
-  KAction      *forwardAction;
   KAction      *embedPSAction;
   KAction      *copyTextAction;
   KAction      *selectAllAction;
@@ -221,16 +184,10 @@ private:
   KAction      *exportTextAction;
   KAction      *findNextAction;
   KAction      *exportPSAction;
-  KSelectAction *viewModeAction;
-
 
   /** Used to enable the export menu when a file is successfully
       loaded. */
   void enableActions(bool);
-
-  /** Variable which is used internally by the method
-      getCurrentPageNumber() to provide 'lazy' page numbers. */
-  Q_UINT16 lastCurrentPage;
 };
 
 

@@ -29,21 +29,6 @@
    <whatsthis>Many modern fonts contain &quot;font hinting&quot; information which can be used to improve the appearance of a font on low-resolution displays, such as a computer monitor, or a notebook screen. However, many people find the &quot;improved&quot; fonts quite ugly and prefer to have this option disabled.</whatsthis>
    <default>false</default>
   </entry>
-  <entry key="ViewMode" type="Enum" >
-   <default>KVS_Continuous</default>
-   <choices>
-    <choice name="KVS_SingePage" />
-    <choice name="KVS_Continuous" />
-    <choice name="KVS_ContinuousFacing" />
-    <choice name="KVS_Overview" />
-   </choices>
-  </entry>
-  <entry key="OverviewModeColumns" type="Int">
-    <default>4</default>
-  </entry>
-  <entry key="OverviewModeRows" type="Int">
-    <default>2</default>
-  </entry>
   <entry key="EditorCommand" type="Path" />
  </group>
 </kcfg>

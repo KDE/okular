@@ -450,7 +450,7 @@ void dviWindow::applicationDoSpecial(char *cp)
     // chracter drawing routines will now underline all characters in
     // blue to point out that they correspond to a hyperlink. Also, as
     // soon as characters are drawn, the drawing routines will
-    // allocate a DVI_Hyperlink and add it to the top of the vector
+    // allocate a Hyperlink and add it to the top of the vector
     // currentlyDrawnPage->hyperLinkList.
     if (special_command == "ps:SDict begin H.S end") {
       // At this stage, the vector 'hyperLinkList' should not contain
@@ -520,7 +520,7 @@ void dviWindow::applicationDoSpecial(char *cp)
     if (special_command.startsWith("ps:SDict begin [") && special_command.endsWith(" pdfmark end")) {
       if (!currentlyDrawnPage->hyperLinkList.isEmpty()) {
 	QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
-	QValueVector<DVI_Hyperlink>::iterator it;
+	QValueVector<Hyperlink>::iterator it;
         for( it = currentlyDrawnPage->hyperLinkList.begin(); it != currentlyDrawnPage->hyperLinkList.end(); ++it ) 
 	  if (it->linkText == "glopglyph")
 	    it->linkText = targetName;

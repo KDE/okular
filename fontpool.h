@@ -6,7 +6,7 @@
 #ifndef _FONTPOOL_H
 #define _FONTPOOL_H
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qstringlist.h>
 #include <qobject.h>
 
@@ -99,7 +99,7 @@ Q_OBJECT
 
   /** This is the list which actually enumerates the fonts in the
       fontPool */
-  QList<class font> fontList; 
+  QPtrList<class font> fontList; 
 
   /** This method marks all fonts in the fontpool as "not in use". The
       fonts are, however, not removed from memory until the method

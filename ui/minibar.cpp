@@ -8,15 +8,10 @@
  ***************************************************************************/
 
 // qt / kde includes
-#include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-
 #include <qvalidator.h>
 #include <qpainter.h>
 #include <kiconloader.h>

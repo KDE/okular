@@ -93,18 +93,26 @@ Shell::~Shell()
 
 void Shell::openURL( const KURL & url )
 {
-    if ( m_part && m_part->openURL( url ) ) m_recent->addURL (url);
-    else m_recent->removeURL(url);
+    if ( m_part )
+    {
+        bool openOk = m_part->openURL( url );
+        if ( openOk ) m_recent->addURL( url );
+        else m_recent->removeURL( url );
+        m_printAction->setEnabled( openOk );
+    }
 }
 
 
 void Shell::readSettings()
 {
     m_recent->loadEntries( KGlobal::config() );
+    m_recent->setEnabled( true ); // force enabling
+    m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
+
     KGlobal::config()->setDesktopGroup();
     bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
     setFullScreen( fullScreen );
-    
+
     // necessary to make fullscreen mode obey the last showmenubar /  showtoolbarsettings
     KGlobal::config()->setGroup("MainWindow");
     if (KGlobal::config()->readBoolEntry( "MenuBar", true ))
@@ -145,9 +153,9 @@ void Shell::setupActions()
   KAction * openAction = KStdAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ), actionCollection() );
   connect( m_recent, SIGNAL( activated() ), openAction, SLOT( activate() ) );
-  // the following line doesn't work! don't know why... -enrico
-  //m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
-  KStdAction::print(m_part, SLOT(slotPrint()), actionCollection());
+  m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
+  m_printAction = KStdAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
+  m_printAction->setEnabled( false );
   KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
 
   setStandardToolBarMenuEnabled(true);

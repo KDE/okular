@@ -68,11 +68,15 @@ class KPDFDocument : public QObject // only for a private slot..
         uint currentPage() const;
         uint pages() const;
         bool okToPrint() const;
+        bool historyAtBegin() const;
+        bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
 
         // perform actions on document / pages
-        void setViewportPage( int page, int id = -1 );
-        void setViewport( const DocumentViewport & viewport, int id = -1 );
+        void setViewportPage( int page, int excludeId = -1 );
+        void setViewport( const DocumentViewport & viewport, int excludeId = -1 );
+        void setPrevViewport();
+        void setNextViewport();
         void requestPixmaps( const QValueList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
         bool findText( const QString & text = "", bool caseSensitive = false, bool findAhead = false );

@@ -18,6 +18,7 @@
 
 // local includes
 #include "thumbnaillist.h"
+#include "pagepainter.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"

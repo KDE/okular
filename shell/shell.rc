@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui version="6" name="kpdf_shell" >
+<kpartgui version="7" name="kpdf_shell" >
  <MenuBar>
   <Menu name="file" >
    <DefineGroup append="save_merge" name="file_save" />
@@ -16,6 +16,6 @@
  <ToolBar noMerge="1" name="mainToolBar" >
   <text>Main Toolbar</text>
   <Action name="file_open_recent" />
-  <Action name="file_print" />
+  <!--Action name="file_print" /-->
  </ToolBar>
 </kpartgui>

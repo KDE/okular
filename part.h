@@ -87,15 +87,17 @@ protected slots:
 	void slotNextPage();
 	void slotGotoFirst();
 	void slotGotoLast();
+	void slotHistoryBack();
+	void slotHistoryNext();
 	void slotFind();
 	void slotFindNext();
-    void slotSaveFileAs();
-    void slotPreferences();
-    void slotNewConfig();
-    void slotPrintPreview();
+	void slotSaveFileAs();
+	void slotPreferences();
+	void slotNewConfig();
+	void slotPrintPreview();
 	void slotShowMenu(const KPDFPage *page, const QPoint &point);
 	void slotShowProperties();
-    void slotShowPresentation();
+	void slotShowPresentation();
 	// can be connected to widget elements
 	void updateActions();
 	void enableTOC(bool enable);
@@ -134,8 +136,12 @@ private:
 	KAction *m_nextPage;
 	KAction *m_firstPage;
 	KAction *m_lastPage;
+	KAction *m_historyBack;
+	KAction *m_historyNext;
 	KAction *m_find;
 	KAction *m_findNext;
+	KAction *m_saveAs;
+	KAction *m_printPreview;
 	KAction *m_showProperties;
 	KAction *m_showPresentation;
 	KToggleAction* m_watchFile;

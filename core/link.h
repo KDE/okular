@@ -103,7 +103,7 @@ class KPDFLinkAction : public KPDFLink
 
 /** Movie: Not yet defined -> think renaming to 'Media' link **/
 class KPDFLinkMovie : public KPDFLink
-//TODO: this
+// TODO this (Movie link)
 {
     public:
         KPDFLinkMovie() {};

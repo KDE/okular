@@ -42,6 +42,7 @@
 // local includes
 #include "pageview.h"
 #include "pageviewutils.h"
+#include "pagepainter.h"
 #include "core/document.h"
 #include "core/page.h"
 #include "core/link.h"
@@ -254,7 +255,10 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
         d->items.push_back( new PageViewItem( *setIt ) );
 
     // invalidate layout so relayout/repaint will happen on next viewport change
-    d->dirtyLayout = true;
+    if ( pageSet.count() > 0 )
+        d->dirtyLayout = true;
+    else
+        resizeContents( 0, 0 );
 
     // OSD to display pages
     if ( documentChanged && pageSet.count() > 0 && Settings::showOSD() )
@@ -1003,6 +1007,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
     // create a region from wich we'll subtract painted rects
     QRegion remainingArea( contentsRect );
 
+    //QValueVector< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
@@ -1045,7 +1050,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
             }
         }
 
-        // draw the pixmap (note: this modifies the painter (not saved for performance))
+        // draw the pixmap (note: this modifies the painter)
         if ( contentsRect.intersects( pixmapGeometry ) )
         {
             QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
@@ -1359,7 +1364,7 @@ void PageView::slotRelayoutPages()
 
         // 2) arrange widgets inside cells
         int insertX = 0,
-            insertY = 4; //TODO take d->zoomFactor into account (2+4*x)
+            insertY = 4; // 2 + 4*d->zoomFactor ?
         cIdx = 0;
         rIdx = 0;
         for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
@@ -1377,7 +1382,7 @@ void PageView::slotRelayoutPages()
                 cIdx = 0;
                 rIdx++;
                 insertX = 0;
-                insertY += rHeight + 15; //(int)(5.0 + 15.0 * d->zoomFactor);
+                insertY += rHeight + 15; // 5 + 15*d->zoomFactor ?
             }
         }
 

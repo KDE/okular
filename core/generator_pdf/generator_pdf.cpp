@@ -22,6 +22,7 @@
 
 // xpdf includes
 #include "xpdf/PSOutputDev.h"
+#include "xpdf/TextOutputDev.h"
 #include "xpdf/Link.h"
 #include "xpdf/ErrorCodes.h"
 #include "xpdf/UnicodeMap.h"
@@ -285,7 +286,6 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
 
 bool PDFGenerator::print( KPrinter& printer )
 {
-    //FIXME (if needed) TAKE CARE OF THREADING, READY STATE AND SIMILAR STUFF
     KTempFile tf( QString::null, ".ps" );
     PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
 
@@ -532,7 +532,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                     pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
                 }
                 // set page as attribute to node
-                // TODO add other attributes to the viewport
+                // TODO add other attributes to the viewport (taken from link)
                 item.setAttribute( "Viewport", DocumentViewport( pageNumber ).toString() );
             }
         }
@@ -690,6 +690,7 @@ struct PPGThreadPrivate
     QImage * m_image;
     TextPage * m_textPage;
     QValueList< KPDFPageRect * > m_rects;
+    bool m_rectsTaken;
 };
 
 PDFPixmapGeneratorThread::PDFPixmapGeneratorThread( PDFGenerator * gen )
@@ -697,10 +698,24 @@ PDFPixmapGeneratorThread::PDFPixmapGeneratorThread( PDFGenerator * gen )
 {
     d->generator = gen;
     d->currentRequest = 0;
+    d->m_image = 0;
+    d->m_textPage = 0;
+    d->m_rectsTaken = true;
 }
 
 PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
 {
+    // delete internal objects if the class is deleted before the gui thread
+    // takes the data
+    delete d->m_image;
+    delete d->m_textPage;
+    if ( !d->m_rectsTaken && d->m_rects.count() )
+    {
+        QValueList< KPDFPageRect * >::iterator it = d->m_rects.begin(), end = d->m_rects.end();
+        for ( ; it != end; ++it )
+            delete *it;
+    }
+    // delete internal storage structure
     delete d;
 }
 
@@ -727,9 +742,7 @@ void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
 #endif
     // set generation parameters and run thread
     d->currentRequest = request;
-    // TODO map priorities embedded in request
-    QThread::Priority prio = QThread::InheritPriority;
-    start( prio );
+    start( QThread::InheritPriority );
 }
 
 void PDFPixmapGeneratorThread::endGeneration()
@@ -749,16 +762,21 @@ void PDFPixmapGeneratorThread::endGeneration()
 
 QImage * PDFPixmapGeneratorThread::takeImage() const
 {
-    return d->m_image;
+    QImage * img = d->m_image;
+    d->m_image = 0;
+    return img;
 }
 
 TextPage * PDFPixmapGeneratorThread::takeTextPage() const
 {
-    return d->m_textPage;
+    TextPage * tp = d->m_textPage;
+    d->m_textPage = 0;
+    return tp;
 }
 
 QValueList< KPDFPageRect * > PDFPixmapGeneratorThread::takeRects() const
 {
+    d->m_rectsTaken = true;
     return d->m_rects;
 }
 
@@ -792,9 +810,16 @@ void PDFPixmapGeneratorThread::run()
                                       fakeDpiX, fakeDpiY, 0, true, genPageRects );
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
+#ifndef NDEBUG
+    if ( d->m_image )
+        kdDebug() << "PDFPixmapGeneratorThread: previous image not taken" << endl;
+    if ( d->m_textPage )
+        kdDebug() << "PDFPixmapGeneratorThread: previous textpage not taken" << endl;
+#endif
     d->m_image = d->generator->kpdfOutputDev->takeImage();
     d->m_textPage = d->generator->kpdfOutputDev->takeTextPage();
     d->m_rects = d->generator->kpdfOutputDev->takeRects();
+    d->m_rectsTaken = false;
 
     // 3. [UNLOCK] mutex
     d->generator->docLock.unlock();

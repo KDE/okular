@@ -324,7 +324,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
             break;
 
         case actionMovie:
-/*          { TODO this
+/*          { TODO this (Movie link)
             m_type = Movie;
             LinkMovie * m = (LinkMovie *) a;
             // copy Movie parameters (2 IDs and a const char *)
@@ -364,7 +364,8 @@ DocumentViewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkDest * 
         vp.pageNumber = m_doc->findPage( ref.num, ref.gen ) - 1;
     }
 
-    // get destination position (fill remaining Viewport fields)
+    // get destination position
+    // TODO add other attributes to the viewport (taken from link)
     switch ( dest->getKind() )
     {
         case destXYZ:

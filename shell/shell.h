@@ -90,6 +90,7 @@ namespace KPDF
   private:
       KParts::ReadOnlyPart* m_part;
       KRecentFilesAction* m_recent;
+      KAction* m_printAction;
       KToggleAction* m_fullScreenAction;
       KToggleAction* m_showMenuBarAction;
       KToggleAction* m_showToolBarAction;

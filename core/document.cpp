@@ -47,9 +47,12 @@ class KPDFDocumentPrivate
         bool filterCase;
 
         // cached stuff
-        DocumentViewport viewport;
         QString docFileName;
         QString xmlFileName;
+
+        // viewport stuff
+        QValueList< DocumentViewport > viewportHistory;
+        QValueList< DocumentViewport >::iterator viewportIterator;
 
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > observers;
@@ -144,12 +147,12 @@ bool KPDFDocument::openDocument( const QString & docFile )
     // 3. setup observers inernal lists and data
     processPageList( true );
 
-    // 4. set initial page (restoring previous page saved in xml)
-    DocumentViewport loadedViewport = d->viewport;
-    if ( loadedViewport.pageNumber < 0 )
-        loadedViewport.pageNumber = 0;
+    // 4. set initial page (restoring the page saved in xml if loaded)
+    DocumentViewport loadedViewport = (*d->viewportIterator);
+    if ( loadedViewport.pageNumber != -1 )
+        (*d->viewportIterator) = DocumentViewport();
     else
-        d->viewport = DocumentViewport();
+        loadedViewport.pageNumber = 0;
     setViewport( loadedViewport );
 
     // start bookmark saver timer
@@ -212,7 +215,9 @@ void KPDFDocument::closeDocument()
     d->allocatedPixmapsFifo.clear();
 
     // reset internal variables
-    d->viewport = DocumentViewport();
+    d->viewportHistory.clear();
+    d->viewportHistory.append( DocumentViewport() );
+    d->viewportIterator = d->viewportHistory.begin();
     d->searchPage = -1;
     d->allocatedPixmapsTotalMemory = 0;
 }
@@ -295,12 +300,12 @@ const KPDFPage * KPDFDocument::page( uint n ) const
 
 const DocumentViewport & KPDFDocument::viewport() const
 {
-    return d->viewport;
+    return (*d->viewportIterator);
 }
 
 uint KPDFDocument::currentPage() const
 {
-    return d->viewport.pageNumber;
+    return (*d->viewportIterator).pageNumber;
 }
 
 uint KPDFDocument::pages() const
@@ -313,6 +318,16 @@ bool KPDFDocument::okToPrint() const
     return generator ? generator->isAllowed( Generator::Print ) : false;
 }
 
+bool KPDFDocument::historyAtBegin() const
+{
+    return d->viewportIterator == d->viewportHistory.begin();
+}
+
+bool KPDFDocument::historyAtEnd() const
+{
+    return d->viewportIterator == --(d->viewportHistory.end());
+}
+
 QString KPDFDocument::getMetaData( const QString & key, const QString & option ) const
 {
     return generator ? generator->getMetaData( key, option ) : QString();
@@ -320,8 +335,15 @@ QString KPDFDocument::getMetaData( const QString & key, const QString & option )
 
 void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests )
 {
-    if ( !generator || requests.isEmpty() )
+    if ( !generator )
+    {
+        // delete requests..
+        QValueList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
+        for ( ; rIt != rEnd; ++rIt )
+            delete *rIt;
+        // ..and return
         return;
+    }
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
     int requesterID = requests.first()->id;
@@ -329,7 +351,11 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
     while ( sIt != sEnd )
     {
         if ( (*sIt)->id == requesterID )
+        {
+            // delete request and remove it from stack
+            delete *sIt;
             sIt = d->pixmapRequestsStack.remove( sIt );
+        }
         else
             ++sIt;
     }
@@ -342,7 +368,11 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
         if ( !(request->page = pages_vector[ request->pageNumber ]) )
+        {
+            // skip requests referencing an invalid page (must not happen)
+            delete request;
             continue;
+        }
 
         if ( !request->async )
             request->priority = 0;
@@ -386,18 +416,18 @@ void KPDFDocument::requestTextPage( uint page )
 void KPDFDocument::setNextPage()
 {
     // advance page and set viewport on observers
-    if ( d->viewport.pageNumber < (int)pages_vector.count() - 1 )
-        setViewport( DocumentViewport( d->viewport.pageNumber + 1 ) );
+    if ( (*d->viewportIterator).pageNumber < (int)pages_vector.count() - 1 )
+        setViewport( DocumentViewport( (*d->viewportIterator).pageNumber + 1 ) );
 }
 
 void KPDFDocument::setPrevPage()
 {
     // go to previous page and set viewport on observers
-    if ( d->viewport.pageNumber > 0 )
-        setViewport( DocumentViewport( d->viewport.pageNumber - 1 ) );
+    if ( (*d->viewportIterator).pageNumber > 0 )
+        setViewport( DocumentViewport( (*d->viewportIterator).pageNumber - 1 ) );
 }
 */
-void KPDFDocument::setViewportPage( int page, int id )
+void KPDFDocument::setViewportPage( int page, int excludeId )
 {
     // clamp page in range [0 ... numPages-1]
     if ( page < 0 )
@@ -406,22 +436,39 @@ void KPDFDocument::setViewportPage( int page, int id )
         page = pages_vector.count() - 1;
 
     // make a viewport from the page and broadcast it
-    setViewport( DocumentViewport( page ), id );
+    setViewport( DocumentViewport( page ), excludeId );
 }
 
-void KPDFDocument::setViewport( const DocumentViewport & viewport, int id )
+void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId )
 {
     // if already broadcasted, don't redo it
-    if ( viewport == d->viewport )
+    DocumentViewport & oldViewport = *d->viewportIterator;
+    if ( viewport == oldViewport )
         kdDebug() << "setViewport with the same viewport." << endl;
 
-    // set internal viewport
-    d->viewport = viewport;
+    // set internal viewport taking care of history
+    if ( oldViewport.pageNumber == viewport.pageNumber || oldViewport.pageNumber == -1 )
+    {
+        // if page is unchanged save the viewport at current position in queue
+        oldViewport = viewport;
+    }
+    else
+    {
+        // remove elements after viewportIterator in queue
+        d->viewportHistory.erase( ++d->viewportIterator, d->viewportHistory.end() );
 
-    // notify change to all other (different from id) viewports
+        // keep the list to a reasonable size by removing head when needed
+        if ( d->viewportHistory.count() >= 100 )
+            d->viewportHistory.pop_front();
+
+        // add the item at the end of the queue
+        d->viewportIterator = d->viewportHistory.append( viewport );
+    }
+
+    // notify change to all other (different from id) observers
     QMap< int, DocumentObserver * >::iterator it = d->observers.begin(), end = d->observers.end();
     for ( ; it != end ; ++ it )
-        if ( it.key() != id )
+        if ( it.key() != excludeId )
             (*it)->notifyViewportChanged();
 
     // [MEM] raise position of currently viewed page in allocation queue
@@ -446,6 +493,30 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int id )
     }
 }
 
+void KPDFDocument::setPrevViewport()
+// restore viewport from the history
+{
+    if ( d->viewportIterator != d->viewportHistory.begin() )
+    {
+        // restore previous viewport and notify it to observers
+        --d->viewportIterator;
+        foreachObserver( notifyViewportChanged() );
+    }
+}
+
+void KPDFDocument::setNextViewport()
+// restore next viewport from the history
+{
+    QValueList< DocumentViewport >::iterator nextIterator = d->viewportIterator;
+    ++nextIterator;
+    if ( nextIterator != d->viewportHistory.end() )
+    {
+        // restore next viewport and notify it to observers
+        ++d->viewportIterator;
+        foreachObserver( notifyViewportChanged() );
+    }
+}
+
 bool KPDFDocument::findText( const QString & string, bool keepCase, bool findAhead )
 {
     // turn selection drawing off on filtered pages
@@ -460,7 +531,7 @@ bool KPDFDocument::findText( const QString & string, bool keepCase, bool findAhe
     }
 
     // continue checking last SearchPage first (if it is the current page)
-    int currentPage = d->viewport.pageNumber;
+    int currentPage = (*d->viewportIterator).pageNumber;
     int pageCount = pages_vector.count();
     KPDFPage * foundPage = 0,
              * lastPage = (d->searchPage > -1) ? pages_vector[ d->searchPage ] : 0;
@@ -622,21 +693,21 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     setViewportPage( 0 );
                     break;
                 case KPDFLinkAction::PagePrev:
-                    if ( d->viewport.pageNumber > 0 )
-                        setViewportPage( d->viewport.pageNumber - 1 );
+                    if ( (*d->viewportIterator).pageNumber > 0 )
+                        setViewportPage( (*d->viewportIterator).pageNumber - 1 );
                     break;
                 case KPDFLinkAction::PageNext:
-                    if ( d->viewport.pageNumber < (int)pages_vector.count() - 1 )
-                        setViewportPage( d->viewport.pageNumber + 1 );
+                    if ( (*d->viewportIterator).pageNumber < (int)pages_vector.count() - 1 )
+                        setViewportPage( (*d->viewportIterator).pageNumber + 1 );
                     break;
                 case KPDFLinkAction::PageLast:
                     setViewportPage( pages_vector.count() - 1 );
                     break;
                 case KPDFLinkAction::HistoryBack:
-                    {} //TODO
+                    setPrevViewport();
                     break;
                 case KPDFLinkAction::HistoryForward:
-                    {} //TODO
+                    setNextViewport();
                     break;
                 case KPDFLinkAction::Quit:
                     kapp->quit();
@@ -652,17 +723,23 @@ void KPDFDocument::processLink( const KPDFLink * link )
 
         case KPDFLink::Browse: {
             const KPDFLinkBrowse * browse = static_cast< const KPDFLinkBrowse * >( link );
-            // get service for web browsing TODO: check for "mailto:" links
-            KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
-            KURL::List lst;
-            // append 'url' parameter to the service and run it
-            lst.append( browse->url() );
-            KRun::run( *ptr, lst );
+            // if the url is a mailto one, invoke mailer
+            if ( browse->url().startsWith( "mailto:", false ) )
+                kapp->invokeMailer( browse->url() );
+            else
+            {
+                // get service for web browsing
+                KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
+                KURL::List lst;
+                // append 'url' parameter to the service and run it
+                lst.append( browse->url() );
+                KRun::run( *ptr, lst );
+            }
             } break;
 
         case KPDFLink::Movie:
             //const KPDFLinkMovie * browse = static_cast< const KPDFLinkMovie * >( link );
-            // TODO this
+            // TODO this (Movie link)
             break;
     }
 }
@@ -738,7 +815,7 @@ void KPDFDocument::sendGeneratorRequest()
     generator->generatePixmap( request );
 }
 
-void KPDFDocument::cleanupPixmapMemory( int /*bytesOffset*/ )
+void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
 {
     // [MEM] choose memory parameters based on configuration profile
     int clipValue = -1;
@@ -901,7 +978,7 @@ void KPDFDocument::loadDocumentInfo()
                     if ( infoElement.tagName() == "activePage" )
                     {
                         if ( infoElement.hasAttribute( "viewport" ) )
-                            d->viewport = DocumentViewport( infoElement.attribute( "viewport" ) );
+                            *d->viewportIterator = DocumentViewport( infoElement.attribute( "viewport" ) );
                     }
                     infoNode = infoNode.nextSibling();
                 }
@@ -984,7 +1061,6 @@ void KPDFDocument::saveDocumentInfo() const
     if ( d->docFileName.isNull() )
         return;
 
-    //kdDebug() << "Using '" << d->xmlFileName << "' as document info file for saving." << endl;
     QFile infoFile( d->xmlFileName );
     if (infoFile.open( IO_WriteOnly | IO_Truncate) )
     {
@@ -1012,10 +1088,21 @@ void KPDFDocument::saveDocumentInfo() const
         QDomElement generalInfo = doc.createElement( "generalInfo" );
         root.appendChild( generalInfo );
 
+        // <general info><activePage />
         QDomElement activePage = doc.createElement( "activePage" );
-        activePage.setAttribute( "viewport", d->viewport.toString() );
+        activePage.setAttribute( "viewport", (*d->viewportIterator).toString() );
         generalInfo.appendChild( activePage );
-
+/*
+        // <general info><history> ... </history>
+        QDomElement historyNode = doc.createElement( "history" );
+        generalInfo.appendChild( historyNode );
+        for ( uint i = 0; i < 6 ; i++ )
+        {
+            QDomElement historyEntry = doc.createElement( "entry" );
+            historyEntry.setAttribute( "viewport", DocumentViewport().toString() );
+            historyNode.appendChild( historyEntry );
+        }
+*/
         // Save DOM to XML file
         QString xml = doc.toString();
         QTextStream os( &infoFile );

@@ -27,7 +27,7 @@
 
 // local includes
 #include "presentationwidget.h"
-#include "core/document.h"   // for PRESENTATION_ID
+#include "pagepainter.h"
 #include "core/generator.h"
 #include "core/page.h"
 #include "conf/settings.h"
@@ -1065,7 +1065,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
             m_transitionDelay = (int)( (m_transitionMul * 1000 * totalTime) / steps );
         } break;
 
-        // TODO: implement missing transitions
+        // implement missing transitions (a binary raster engine needed here)
         case KPDFPageTransition::Fly:
 
         case KPDFPageTransition::Push:

@@ -134,7 +134,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
-	// shrink the bottom toolbar (todo: find a less hackish way)
+	// shrink the bottom controller toolbar (too hackish..)
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
 	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
 //	thumbsBox->setStretchFactor( m_tc, 1 );
@@ -198,16 +198,24 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_lastPage = KStdAction::lastPage( this, SLOT( slotGotoLast() ), ac, "last_page" );
 	m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
+	m_historyBack = KStdAction::back( this, SLOT( slotHistoryBack() ), ac, "history_back" );
+	m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
+
+	m_historyNext = KStdAction::forward( this, SLOT( slotHistoryNext() ), ac, "history_forward" );
+	m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
+
 	// Find and other actions
 	m_find = KStdAction::find( this, SLOT( slotFind() ), ac, "find" );
-	m_find->setEnabled(false);
+	m_find->setEnabled( false );
 
 	m_findNext = KStdAction::findNext( this, SLOT( slotFindNext() ), ac, "find_next" );
-	m_findNext->setEnabled(false);
+	m_findNext->setEnabled( false );
 
-	KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
+	m_saveAs = KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
+	m_saveAs->setEnabled( false );
 	KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
-	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
+	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
+	m_printPreview->setEnabled( false );
 
 	m_showProperties = new KAction(i18n("&Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
@@ -215,19 +223,19 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showPresentation = new KAction( i18n("P&resentation"), "kpresenter_kpr", "Ctrl+Shift+P", this, SLOT(slotShowPresentation()), ac, "presentation");
 	m_showPresentation->setEnabled( false );
 
-    // attach the actions of the children widgets too
-    m_pageView->setupActions( ac );
+	// attach the actions of the children widgets too
+	m_pageView->setupActions( ac );
 
-    // apply configuration (both internal settings and GUI configured items)
-    QValueList<int> splitterSizes = Settings::splitterSizes();
-    if ( !splitterSizes.count() )
-    {
-        // the first time use 1/10 for the panel and 9/10 for the pageView
-        splitterSizes.push_back( 50 );
-        splitterSizes.push_back( 500 );
-    }
-    m_splitter->setSizes( splitterSizes );
-    slotNewConfig();
+	// apply configuration (both internal settings and GUI configured items)
+	QValueList<int> splitterSizes = Settings::splitterSizes();
+	if ( !splitterSizes.count() )
+	{
+		// the first time use 1/10 for the panel and 9/10 for the pageView
+		splitterSizes.push_back( 50 );
+		splitterSizes.push_back( 500 );
+	}
+	m_splitter->setSizes( splitterSizes );
+	slotNewConfig();
 
 	m_watcher = new KDirWatch( this );
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
@@ -294,30 +302,43 @@ KAboutData* Part::createAboutData()
 bool Part::openFile()
 {
     bool ok = m_document->openDocument( m_file );
-    if ( ok && !m_watcher->contains(m_file)) m_watcher->addFile(m_file);
+
+    // update one-time actions
+    m_saveAs->setEnabled( ok );
+    m_printPreview->setEnabled( ok );
+
+    // update viewing actions
     updateActions();
 
-    if ( ok && m_document->getMetaData( "StartFullScreen" ) == "yes" )
+    if ( !ok )
+    {
+        // if can't open document, update windows so they display blank contents
+        m_pageView->updateContents();
+        m_thumbnailList->updateContents();
+        return false;
+    }
+
+    // set the file to the fileWatcher
+    if ( !m_watcher->contains(m_file) )
+        m_watcher->addFile(m_file);
+
+    // if the 'StartFullScreen' flag is set, start presentation
+    if ( m_document->getMetaData( "StartFullScreen" ) == "yes" )
         slotShowPresentation();
 
-    return ok;
+    return true;
 }
 
 bool Part::openURL(const KURL &url)
 {
+    // this calls the above 'openURL' method
     bool b = KParts::ReadOnlyPart::openURL(url);
-    // if can't open document, update windows so they display blank contents
     if ( !b )
-    {
-        m_pageView->updateContents();
-        m_thumbnailList->updateContents();
-        KMessageBox::error( widget(), i18n("Could not open %1").arg(url.prettyURL()) );
-    }
+        KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
     return b;
 }
 
-void
-Part::slotWatchFile()
+void Part::slotWatchFile()
 {
   Settings::setWatchFile(m_watchFile->isChecked());
   if( m_watchFile->isChecked() )
@@ -329,8 +350,7 @@ Part::slotWatchFile()
   }
 }
 
-  void
-Part::slotFileDirty( const QString& fileName )
+void Part::slotFileDirty( const QString& fileName )
 {
   // The beauty of this is that each start cancels the previous one.
   // This means that timeout() is only fired when there have
@@ -343,8 +363,7 @@ Part::slotFileDirty( const QString& fileName )
   }
 }
 
-  void
-Part::slotDoFileDirty()
+void Part::slotDoFileDirty()
 {
   uint p = m_document->currentPage() + 1;
   if (openFile())
@@ -356,6 +375,8 @@ Part::slotDoFileDirty()
 
 bool Part::closeURL()
 {
+	m_saveAs->setEnabled( false );
+	m_printPreview->setEnabled( false );
 	if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
 	m_document->closeDocument();
 	return KParts::ReadOnlyPart::closeURL();
@@ -373,6 +394,8 @@ void Part::updateActions()
         m_prevPage->setEnabled( !atBegin );
         m_lastPage->setEnabled( !atEnd );
         m_nextPage->setEnabled( !atEnd );
+        m_historyBack->setEnabled( !m_document->historyAtBegin() );
+        m_historyNext->setEnabled( !m_document->historyAtEnd() );
     }
     else
     {
@@ -381,6 +404,8 @@ void Part::updateActions()
         m_lastPage->setEnabled( false );
         m_prevPage->setEnabled( false );
         m_nextPage->setEnabled( false );
+        m_historyBack->setEnabled( false );
+        m_historyNext->setEnabled( false );
     }
     m_find->setEnabled( ok );
     m_showProperties->setEnabled( ok );
@@ -449,6 +474,16 @@ void Part::slotGotoFirst()
 void Part::slotGotoLast()
 {
     m_document->setViewportPage( m_document->pages() - 1 );
+}
+
+void Part::slotHistoryBack()
+{
+    m_document->setPrevViewport();
+}
+
+void Part::slotHistoryNext()
+{
+    m_document->setNextViewport();
 }
 
 void Part::slotFind()
@@ -635,7 +670,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 			case 2:
 				m_pageView->fitPageWidth( page->number() );
 				break;
-	//		case 3: // ToDO switch to edit mode
+	//		case 3: // switch to edit mode
 	//			m_pageView->slotSetMouseDraw();
 	//			break;
 		}

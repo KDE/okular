@@ -392,14 +392,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
 
   // Turn the results of the options requestor into a list arguments
   // which are used by dvips.
-  QString dvips_options;
-  // Number of copies and collated copies.
-  int copies = printer->numCopies();
-  if (copies > 1)
-    if (printer->collate() == KPrinter::Collate)
-      dvips_options += QString("-C %1 ").arg(copies);
-    else
-      dvips_options += QString("-c %1 ").arg(copies);
+  QString dvips_options = QString::null;
   // Print in reverse order.
   if ( printer->pageOrder() == KPrinter::LastPageFirst )
     dvips_options += "-r ";

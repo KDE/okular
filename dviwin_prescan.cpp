@@ -16,6 +16,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
+#include <kprocio.h>
 #include <qbitmap.h> 
 #include <qdir.h> 
 #include <qimage.h> 

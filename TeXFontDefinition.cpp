@@ -92,8 +92,10 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
 
   flags |= TeXFontDefinition::FONT_LOADED;
   filename = fname;
+#ifdef HAVE_FREETYPE
   fullFontName = QString::null;
   fullEncodingName = QString::null;
+#endif
 
   file = fopen(QFile::encodeName(filename), "r");
   if (file == NULL) {

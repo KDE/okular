@@ -261,6 +261,7 @@ QString fontPool::status(void)
 	errMsg = i18n("Font file not found");
     }
     
+#ifdef HAVE_FREETYPE
     tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3%</td> <td>%4</td> <td>%5</td> <td>%6</td></tr>")
       .arg(fontp->fontname)
       .arg(fontp->getFullFontName())
@@ -268,6 +269,7 @@ QString fontPool::status(void)
       .arg(fontp->getFontTypeName())
       .arg(encoding)
       .arg(errMsg);
+#endif
     
     fontp=fontList.next(); 
   }

@@ -284,12 +284,15 @@ void Part::slotGotoStart()
 
 bool Part::nextPage()
 {
-    m_currentPage = pdfpartview->getCurrentItem() + 1;
+    m_currentPage++;
     if ( m_doc && m_currentPage >= m_doc->getNumPages())
+    {
+        m_currentPage--;
         return false;
+    }
 
+    m_outputDev->setPage(m_currentPage+1);
     pdfpartview->setCurrentItem(m_currentPage);
-    m_outputDev->nextPage();
     updateActionPage();
     return true;
 }
@@ -306,12 +309,15 @@ void Part::slotPreviousPage()
 
 bool Part::previousPage()
 {
-    m_currentPage = pdfpartview->getCurrentItem() - 1;
+    m_currentPage--;
     if (m_currentPage < 0)
+    {
+        m_currentPage++;
         return false;
-
+    }
+    
+    m_outputDev->setPage(m_currentPage+1);
     pdfpartview->setCurrentItem(m_currentPage);
-    m_outputDev->previousPage();
     updateActionPage();
     return true;
 }

@@ -20,6 +20,7 @@ ThumbnailList::ThumbnailList(QWidget *parent) : QTable(parent)
     m_selected = 0;
     
     connect(this, SIGNAL(pressed(int, int, int, const QPoint&)), this, SIGNAL(clicked(int)));
+    connect(this, SIGNAL(currentChanged(int, int)), this, SIGNAL(clicked(int)));
     connect(this, SIGNAL(currentChanged(int, int)), this, SLOT(changeSelected(int)));
 }
 
@@ -37,11 +38,6 @@ void ThumbnailList::changeSelected(int i)
     m_selected = i;
     t = dynamic_cast<Thumbnail *>(cellWidget(m_selected, 0));
     if (t) t -> setSelected(true);
-}
-
-int ThumbnailList::getCurrentItem() const
-{
-    return currentRow();
 }
 
 void ThumbnailList::setPages(int i, double ar)

@@ -20,7 +20,6 @@ class ThumbnailList : public QTable
 public:
     ThumbnailList(QWidget *parent);
     
-    int getCurrentItem() const;
     void setCurrentItem(int i);
     
     void setPages(int i, double ar);

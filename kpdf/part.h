@@ -22,7 +22,6 @@ public:
     ~PDFPartView();
     
     void setCurrentItem(int i);
-    int getCurrentItem() const;
     
     void setPages(int i, double ar);
     void setThumbnail(int i, const QPixmap *thumbnail);

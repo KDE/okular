@@ -122,16 +122,6 @@ namespace KPDF
             p->fillRect ( clipx, clipy, clipw, cliph, bc );
     }
 
-    void PageWidget::nextPage()
-    {
-        setPage( getPage() + 1);
-    }
-
-    void PageWidget::previousPage()
-    {
-        setPage( getPage() - 1 );
-    }
-
     void PageWidget::zoomTo( double _value )
     {
         if ( m_zoomFactor != _value)

@@ -41,11 +41,6 @@ void PDFPartView::setCurrentItem(int i)
     pagesList->setCurrentItem(i);
 }
 
-int PDFPartView::getCurrentItem() const
-{
-    return pagesList->getCurrentItem();
-}
-
 void PDFPartView::setPages(int i, double ar)
 {
     pagesList->setPages(i, ar);

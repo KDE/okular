@@ -247,6 +247,7 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
      *	into SPELL units by multiplying by
      *		(pixels_per_inch * 2**16) / (72.27 * 2**20).
      */
+
     fsize = (72.27 * (1<<4)) * vfparent->dimconv * scale / design;
     scale_dimconv = vfparent->dimconv;
   }
@@ -258,13 +259,10 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
     if (fontp == NULL) {		/* if font doesn't exist yet */
       fontp = new font(fontname, fsize, checksum, magstepval, scale * scale_dimconv / (1<<20));
       
-      //@@@fontp->set_char_p = &dviWindow::load_n_set_char;
       /* With virtual fonts, we might be opening another font
 	 (pncb.vf), instead of what we just allocated for
 	 (rpncb), thus leaving garbage in the structure for
 	 when close_a_file comes along looking for something.  */
-      //@@@      if (vfparent == NULL)
-      //@@@     	font_not_found |= font_pool.load_font(fontp);
       font_pool.appendx(fontp);
       break;
     }
@@ -364,8 +362,6 @@ void dvifile::find_postamble(void)
 void dvifile::read_postamble(void)
 {
   unsigned char   cmnd;
-  struct font	*fontp;
-  struct font	**fontpp;
 
   if (one(file) != POST)
     dvi_oops(i18n("Postamble doesn't begin with POST"));

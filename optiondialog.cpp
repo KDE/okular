@@ -21,20 +21,19 @@
 
 // Add header files alphabetically
 
+#include <kapp.h>
+#include <kcombobox.h>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kglobal.h>
+#include <kinstance.h>
 #include <qcheckbox.h>
-#include <qcombobox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlineedit.h>
 #include <qspinbox.h>
 
-#include <kapp.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kinstance.h>
-
-
+#include "fontpool.h"
 #include "optiondialog.h"
 #include <config.h>
 
@@ -69,8 +68,7 @@ void OptionDialog::slotApply()
   KConfig *config = _instance->config();
   config->setGroup("kdvi");
 
-  config->writeEntry( "BaseResolution", mFont.resolutionEdit->text() );
-  config->writeEntry( "MetafontMode", mFont.metafontEdit->text() );
+  config->writeEntry( "MetafontMode", mFont.metafontMode->currentItem() );
   config->writeEntry( "MakePK", mFont.fontPathCheck->isChecked() );
   config->writeEntry( "ShowPS", mRender.showSpecialCheck->isChecked() );
   config->writeEntry( "ShowHyperLinks", mRender.showHyperLinksCheck->isChecked() );
@@ -88,8 +86,9 @@ void OptionDialog::setup()
 
   // Font page
   // Important! The default values here must be the same as in kdvi_multipage.cpp
-  mFont.resolutionEdit->setText( config->readEntry( "BaseResolution", "300" ) );
-  mFont.metafontEdit->setText( config->readEntry( "MetafontMode", "cx" ) );
+  for(int i=0; i<NumberOfMFModes; i++)
+    mFont.metafontMode->insertItem(QString("%1 dpi / %2").arg(MFResolutions[i]).arg(MFModenames[i]));
+  mFont.metafontMode->setCurrentItem( config->readNumEntry( "MetafontMode" , DefaultMFMode ));
   mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
 
   // Rendering page
@@ -106,15 +105,11 @@ void OptionDialog::makeFontPage()
   mFont.pageIndex = pageIndex(page);
 
   QGridLayout *glay = new QGridLayout(topLayout, 8, 2 );
-  QLabel *label = new QLabel( i18n("Resolution [dpi]:"), page );
-  mFont.resolutionEdit = new QLineEdit( page );
-  glay->addWidget( label, 0, 0 );
-  glay->addWidget( mFont.resolutionEdit, 0, 1 );
 
-  label = new QLabel( i18n("Metafont mode:"), page );
-  mFont.metafontEdit = new QLineEdit( page );
-  glay->addWidget( label, 1, 0 );
-  glay->addWidget( mFont.metafontEdit, 1, 1 );
+  QLabel *label = new QLabel( i18n("Metafont mode:"), page );
+  mFont.metafontMode = new KComboBox( page );
+  glay->addWidget( label, 0, 0 );
+  glay->addWidget( mFont.metafontMode, 0, 1 );
 
   glay->addRowSpacing( 2, spacingHint()*2 );
 

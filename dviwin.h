@@ -43,8 +43,7 @@ class dviWindow : public QWidget
   Q_OBJECT
 
 public:
-  dviWindow( int basedpi, double zoom, const QString & mfmode, int makepk,
-	     QWidget *parent=0, const char *name=0 );
+  dviWindow( double zoom, int makepk, QWidget *parent=0, const char *name=0 );
   ~dviWindow();
 
   dvifile       *dviFile;
@@ -58,9 +57,7 @@ public:
   int		showHyperLinks() { return _showHyperLinks; };
   void		setMakePK( int flag );
   int		makePK() { return makepk; };
-  void		setResolution( int basedpi );
-  int		resolution() { return basedpi; };
-  void		setMetafontMode( const QString & );
+  void		setMetafontMode( unsigned int );
   void		setPaper(double w, double h);
   bool          correctDVI(QString filename);
   unsigned char xxone();
@@ -138,14 +135,14 @@ private:
 
  // List of anchors in a document
  QString           AnchorList_String[MAX_ANCHORS];
- unsigned int       AnchorList_Page[MAX_ANCHORS];
- double             AnchorList_Vert[MAX_ANCHORS];
+ unsigned int      AnchorList_Page[MAX_ANCHORS];
+ double            AnchorList_Vert[MAX_ANCHORS];
  int               numAnchors;
 
  int		   basedpi;
  int		   makepk;
  QPixmap          *pixmap;
- QString	   MetafontMode;
+ unsigned int	   MetafontMode;
  QString	   paper_type;
  int		   ChangesPossible;
  int		   current_page;

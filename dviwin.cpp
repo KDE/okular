@@ -85,7 +85,7 @@ QPainter foreGroundPaint; // QPainter used for text
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow( int bdpi, double zoom, const QString & mfm, int mkpk, QWidget *parent, const char *name ) 
+dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name ) 
   : QWidget( parent, name )
 {
 #ifdef DEBUG
@@ -100,9 +100,8 @@ dviWindow::dviWindow( int bdpi, double zoom, const QString & mfm, int mkpk, QWid
   // initialize the dvi machinery
 
   dviFile                = NULL;
-  setResolution( bdpi );
   setMakePK( mkpk );
-  setMetafontMode( mfm );
+  setMetafontMode( DefaultMFMode ); // that also sets the basedpi
   unshrunk_paper_w       = int( 21.0 * basedpi/2.54 + 0.5 ); // set A4 paper as default
   unshrunk_paper_h       = int( 27.9 * basedpi/2.54 + 0.5 ); 
   PostScriptOutPutString = NULL;
@@ -174,14 +173,17 @@ void dviWindow::setMakePK( int flag )
   font_pool.setMakePK(makepk);
 }
 
-void dviWindow::setMetafontMode( const QString & mfm )
+void dviWindow::setMetafontMode( unsigned int mode )
 {
   if (dviFile != NULL)
     KMessageBox::sorry( this,
 			i18n("The change in Metafont mode will be effective\n"
 			     "only after you start kdvi again!") );
-  MetafontMode = mfm;
-  font_pool.setMetafontMode(mfm);
+
+  MetafontMode     = font_pool.setMetafontMode(mode);
+  basedpi          = MFResolutions[MetafontMode];
+  _pixels_per_inch = MFResolutions[MetafontMode];
+  kdDebug() << "basedpi " << basedpi << endl;
 }
 
 
@@ -199,18 +201,6 @@ void dviWindow::setPaper(double w, double h)
   page_h           = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
   reset_fonts();
   changePageSize();
-}
-
-
-void dviWindow::setResolution( int bdpi )
-{
-  if (dviFile != NULL)
-    KMessageBox::sorry( this,
-			i18n("The change in resolution will be effective\n"
-			     "only after you start kdvi again!") );
-  basedpi          = bdpi;
-  _pixels_per_inch = bdpi;
-  font_pool.setResolution(bdpi);
 }
 
 

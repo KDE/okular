@@ -1,10 +1,4 @@
-#include <qobject.h>
-#include <qlabel.h>
-#include <qstring.h>
-#include <qscrollview.h>
-#include <qimage.h>
-#include <qpixmap.h>
-
+#include <config.h>
 #include <kaction.h>
 #include <kaboutdata.h>
 #include <kaboutdialog.h>
@@ -16,13 +10,19 @@
 #include <kglobal.h>
 #include <kimageeffect.h>
 #include <kinstance.h>
+#include <qobject.h>
+#include <qlabel.h>
+#include <qstring.h>
+#include <qscrollview.h>
+#include <qimage.h>
+#include <qpixmap.h>
 
-
-#include "print.h"
-#include "optiondialog.h"
+#include "fontpool.h"
 #include "kdvi_multipage.moc"
 #include "kviewpart.h"
-#include <config.h>
+#include "optiondialog.h"
+#include "print.h"
+
 
 extern "C"
 {
@@ -72,7 +72,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   timer_id = -1;
   setInstance(KDVIMultiPageFactory::instance()); 
 
-  window = new dviWindow(300, 1.0, "cx", true, scrollView());
+  window = new dviWindow( 1.0, true, scrollView());
   preferencesChanged();
 
   new KAction(i18n("&DVI Options"), 0, this,
@@ -284,16 +284,9 @@ void KDVIMultiPage::preferencesChanged()
   config->reparseConfiguration();
   config->setGroup( "kdvi" );
 
-  // Important! The default values here must be the same as in optiondialog.cpp
-  int basedpi = config->readNumEntry( "BaseResolution" );
-  if ( basedpi <= 0 )
-    config->writeEntry( "BaseResolution", basedpi = 300 );
-  if ( basedpi != window->resolution() )
-    window->setResolution( basedpi );
-
-  QString mfmode =  config->readEntry( "MetafontMode" );
-  if ( mfmode.isNull() )
-    config->writeEntry( "MetafontMode", mfmode = "cx" );
+  int mfmode = config->readNumEntry( "MetafontMode", DefaultMFMode );
+  if (( mfmode < 0 ) || (mfmode >= NumberOfMFModes))
+    config->writeEntry( "MetafontMode", mfmode = DefaultMFMode );
   window->setMetafontMode( mfmode );
 
   int makepk = config->readNumEntry( "MakePK" );

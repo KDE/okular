@@ -98,20 +98,24 @@ QPixmap glyph::shrunkCharacter()
     QBitmap bm(bitmap.bytes_wide*8, (int)bitmap.h, (const uchar *)(bitmap.bits) ,TRUE);
     // ... turn it into a Pixmap (highly inefficient, please improve)
     SmallChar = new QPixmap(bitmap.w+pre_cols+post_cols, bitmap.h+pre_rows+post_rows);
-    if (SmallChar == 0)
-      return 0;
-    if (SmallChar->isNull()) {
-      delete SmallChar;
+    if ((SmallChar == 0) || (SmallChar->isNull())) {
+      kdError() << "Could not properly allocate SmallChar in glyph::shrunkCharacter!" << endl;
+      if (SmallChar != 0)
+	delete SmallChar;
       SmallChar = 0;
       return 0;
     }
 
-    QPainter paint(SmallChar);
-    paint.setBackgroundColor(Qt::white);
-    paint.setPen( Qt::black );
-    paint.fillRect(0,0,bitmap.w+pre_cols+post_cols, bitmap.h+pre_rows+post_rows, Qt::white);
-    paint.drawPixmap(pre_cols, pre_rows, bm);
-    paint.end();
+    if (!bm.isNull()) {
+      QPainter paint(SmallChar);
+      paint.setBackgroundColor(Qt::white);
+      paint.setPen( Qt::black );
+      paint.fillRect(0,0,bitmap.w+pre_cols+post_cols, bitmap.h+pre_rows+post_rows, Qt::white);
+      paint.drawPixmap(pre_cols, pre_rows, bm);
+      paint.end();
+    } else 
+      kdError() << "Null Bitmap in glyph::shrunkCharacter encountered!" << endl;
+    
     // Generate an Image and shrink it to the proper size. By the
     // documentation of smoothScale, the resulting Image will be
     // 8-bit.

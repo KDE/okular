@@ -22,7 +22,7 @@
 #define _OPTION_DIALOG_H_
 
 class QCheckBox;
-class QComboBox;
+class KComboBox;
 class QLabel;
 class QLineEdit;
 class QSpinBox;
@@ -37,17 +37,16 @@ class OptionDialog : public KDialogBase
 
   struct FontItems
   {
-    int pageIndex;
-    QLineEdit   *resolutionEdit;
-    QLineEdit   *metafontEdit;
-    QCheckBox   *fontPathCheck;
+    int         pageIndex;
+    KComboBox  *metafontMode;
+    QCheckBox  *fontPathCheck;
   };
     
   struct RenderItems
   {
-    int pageIndex;
-    QCheckBox *showSpecialCheck;
-    QCheckBox *showHyperLinksCheck;
+    int         pageIndex;
+    QCheckBox  *showSpecialCheck;
+    QCheckBox  *showHyperLinksCheck;
   };
 
   public:

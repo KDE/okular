@@ -209,7 +209,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     ready = false;
 
     // debug message
-    kdDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
+    //kdDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
 
     /** asyncronous requests (generation in PDFPixmapGeneratorThread::run() **/
     if ( request->async )

@@ -106,9 +106,15 @@ namespace KPDF
         if (m_outputdev)
             m_pixmap = m_outputdev->getPixmap();
         if ( m_pixmap != NULL && ! m_pixmap->isNull() )
+				{
             p->drawPixmap ( clipx, clipy, *m_pixmap, clipx, clipy, clipw, cliph );
+            if (clipw > m_pixmap->width()) 
+							p->fillRect ( m_pixmap->width(), clipy, clipw, cliph, black );
+						if (cliph > m_pixmap->height())
+							p->fillRect ( clipx, m_pixmap->height() - clipy, clipw, cliph, black );
+				}
         else
-            p->fillRect ( clipx, clipy, clipw, cliph, white );
+            p->fillRect ( clipx, clipy, clipw, cliph, black );
     }
 
     void PageWidget::nextPage()

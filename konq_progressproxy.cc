@@ -19,7 +19,7 @@
 
 #include "konq_progressproxy.h"
 
-#include <browser.h>
+#include <kbrowser.h>
 
 #include <kio_job.h>
 

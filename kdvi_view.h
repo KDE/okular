@@ -1,7 +1,7 @@
 #ifndef __KDVI_VIEW_H
 #define __KDVI_VIEW_H
 
-#include <browser.h>
+#include <kbrowser.h>
 #include <klibloader.h>
 
 class KInstance;

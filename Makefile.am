@@ -20,7 +20,7 @@ BUILT_SOURCES = psheader.c
 # Which sources should be compiled for kdvi.
 libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
-	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp browser.moc.cc\
+	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp kbrowser.moc.cc\
 	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\
 	special.c util.c vf.c konq_progressproxy.cc
 
@@ -65,6 +65,6 @@ $(kpathsea):
 	cd $$oldpath/kpathsea && CC="$(CC)" CFLAGS="$(CFLAGS)" MAKE="$(MAKE)" $$newpath/kpathsea/configure 
 	cd kpathsea && $(MAKE)
 
-browser.moc.cc: $(kde_includes)/browser.h
-	$(MOC) $(kde_includes)/browser.h -o $(top_builddir)/kdvi/browser.moc.cc
+kbrowser.moc.cc: $(kde_includes)/kbrowser.h
+	$(MOC) $(kde_includes)/kbrowser.h -o $(top_builddir)/kdvi/kbrowser.moc.cc
 

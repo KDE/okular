@@ -32,8 +32,8 @@ namespace KPDF
 {
     class Part;
   /**
-   * This is the application "Shell".  It has a menubar, toolbar, and
-   * statusbar but relies on the "Part" to do all the real work.
+   * This is the application "Shell".  It has a menubar and a toolbar
+   * but relies on the "Part" to do all the real work.
    *
    * @short Application Shell
    * @author Wilco Greven <greven@kde.org>
@@ -75,8 +75,6 @@ namespace KPDF
     void fileOpen();
     void fileSaveAs();
 
-    void optionsConfigureKeys();
-    void optionsConfigureToolbars();
     void slotQuit();
 
     void applyNewToolbarConfig();

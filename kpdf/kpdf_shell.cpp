@@ -29,7 +29,6 @@
 #include <kkeydialog.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
-#include <kstatusbar.h>
 #include <kstdaction.h>
 #include <kurl.h>
 #include <kdebug.h>
@@ -67,6 +66,7 @@ Shell::Shell()
       // tell the KParts::MainWindow that this is indeed the main widget
       setCentralWidget(m_part->widget());
       // and integrate the part's GUI with the shell's
+      setupGUI(ToolBar | Keys | Save);
       createGUI(m_part);
     }
   }
@@ -127,12 +127,7 @@ Shell::setupActions()
   
   setStandardToolBarMenuEnabled(true);
 
-  KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
-  KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
   m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );
-  createStandardStatusBarAction();
-  setAutoSaveSettings();
-  setStandardToolBarMenuEnabled(true);
   m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
   m_popup = new KPopupMenu( this, "rmb popup" );
   m_popup->insertTitle( i18n( "Full Screen Options" ) );
@@ -197,24 +192,6 @@ Shell::fileSaveAs()
 }
 
   void
-Shell::optionsConfigureKeys()
-{
-  KKeyDialog::configure(actionCollection());
-}
-
-  void
-Shell::optionsConfigureToolbars()
-{
-  saveMainWindowSettings(KGlobal::config(), "MainWindow");
-
-  // use the standard toolbar editor
-  KEditToolbar dlg(factory());
-  connect(&dlg, SIGNAL(newToolbarConfig()),
-      this, SLOT(applyNewToolbarConfig()));
-  dlg.exec();
-}
-
-  void
 Shell::applyNewToolbarConfig()
 {
   applyMainWindowSettings(KGlobal::config(), "MainWindow");
@@ -238,7 +215,6 @@ void Shell::slotUpdateFullScreen()
     if( m_fullScreenAction->isChecked())
     {
 	menuBar()->hide();
-	statusBar()->hide();
 	toolBar()->hide();
         //todo fixme
 	//m_pdfpart->setFullScreen( true );
@@ -254,11 +230,6 @@ void Shell::slotUpdateFullScreen()
 	//kapp->removeEventFilter( m_fsFilter );
         //m_pdfpart->setFullScreen( false );
 	menuBar()->show();
-#if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
-	KToggleAction *statusbarAction = dynamic_cast<KToggleAction *>(actionCollection()->action(KStdAction::name(KStdAction::ShowStatusbar)));
-	Q_ASSERT( statusbarAction );
-	if (statusbarAction->isChecked()) statusBar()->show();
-#endif
 	toolBar()->show();
 	showNormal();
     }

@@ -357,9 +357,7 @@ Part::openFile()
 
   if (!m_doc->isOk())
     return false;
-  // just for fun, set the status bar
-  // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
-
+  
   errors::clear();
   if (m_doc->getNumPages() > 0)
   {

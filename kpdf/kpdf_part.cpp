@@ -577,13 +577,20 @@ Part::print()
   if (m_doc == 0)
     return;
 
+  double width, height;
   KPrinter printer;
-
+  
   printer.setPageSelection(KPrinter::ApplicationSide);
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setCurrentPage(m_currentPage);
   printer.setMargins(0, 0, 0, 0);
-
+  
+  // TODO what if some pages are landscape and others are not?
+  width = m_doc->getPageWidth(1);
+  height = m_doc->getPageHeight(1);
+  if (m_doc->getPageRotate(1) == 90 || m_doc->getPageRotate(1) == 270) qSwap(width, height);
+  if (width > height) printer.setOrientation(KPrinter::Landscape);
+  
   if (printer.setup(widget()))
   {
     doPrint( printer );
@@ -709,10 +716,19 @@ void Part::printPreview()
   if (m_doc == 0)
     return;
 
+  double width, height;
   KPrinter printer;
+  
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setPreviewOnly( true );
   printer.setMargins(0, 0, 0, 0);
+  
+  // TODO what if some pages are landscape and others are not?
+  width = m_doc->getPageWidth(1);
+  height = m_doc->getPageHeight(1);
+  if (m_doc->getPageRotate(1) == 90 || m_doc->getPageRotate(1) == 270) qSwap(width, height);
+  if (width > height) printer.setOption("orientation-requested", "4");
+  
   doPrint(printer);
 }
 

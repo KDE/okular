@@ -218,47 +218,122 @@ void KDVIMultiPage::generateDocumentWidgets(int startPage)
 #ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) called" << endl;
 #endif
-  
-  widgetList.setAutoDelete(true);
-  switch (viewModeAction->currentItem())
+  // This function is only called with its default value, when
+  // the file has been loaded or reloaded.
+  bool reload = (startPage <= 0);
+
+  if (reload)
   {
-    case KVS_SinglePage:
-    widgetList.resize(1);
-      break;
-    case KVS_Overview:
-    {
-      int visiblePages = Prefs::overviewModeColumns() * Prefs::overviewModeRows();
-      // In two column mode the first row contains only one page.
-      if (Prefs::overviewModeColumns() == 2)
-        visiblePages--;
-      // We cannot have more widgets then pages in the document
-      visiblePages = QMIN(visiblePages, window->totalPages() - startPage + 1);
-      widgetList.resize(visiblePages);
-      break;
-    }
-    default:
-    widgetList.resize(window->totalPages());
+    // Find the number of the current page, for later use.
+    startPage = getCurrentPageNumber();
   }
+   
+  // Make sure that startPage is in the permissible range.
+  if (startPage < 1)
+    startPage = 1;
+  if (startPage > window->totalPages())
+    startPage = window->totalPages();
+
+  int tableauStartPage = startPage;
+
+  // Find out how many widgets are needed, and resize the widgetList accordingly.
+  widgetList.setAutoDelete(true);
+  Q_UINT16 oldwidgetListSize = widgetList.size();
+  if (window->totalPages() == 0)
+    widgetList.resize(0);
+  else
+  {
+    switch (viewModeAction->currentItem())
+    {
+      case KVS_SinglePage:
+        widgetList.resize(1);
+        break;
+      case KVS_Overview:
+      {
+        // Calculate the number of pages shown in overview mode.
+        int visiblePages = Prefs::overviewModeColumns() *
+                           Prefs::overviewModeRows();
+        // Calculate the number of the first page in the tableau.
+        tableauStartPage = startPage + 1 - (startPage % visiblePages);
+        // We cannot have more widgets then pages in the document.
+        visiblePages = QMIN(visiblePages, window->totalPages() - tableauStartPage + 1);
+        if (widgetList.size() != visiblePages)
+          widgetList.resize(visiblePages);
+        break;
+      }
+      default:
+        // In KVS_Continuous and KVS_ContinuousFacing all pages in the document are shown.
+	widgetList.resize(window->totalPages());
+    }
+  }
+  bool isWidgetListResized = (widgetList.size() != oldwidgetListSize);
   widgetList.setAutoDelete(false);
 
+  // If the widgetList is empty, there is nothing left to do.
+  if (widgetList.size() == 0) {
+    scrollView()->addChild(&widgetList);
+    return;
+  }
+  
+  // Allocate documentWidget structures so that all entries of
+  // widgetList point to a valid documentWidget.
   documentWidget *dviWidget;
   for(Q_UINT16 i=0; i<widgetList.size(); i++) {
     dviWidget = (documentWidget *)(widgetList[i]);
     if (dviWidget == 0) {
       dviWidget = new documentWidget(scrollView()->viewport(), scrollView(), window->sizeOfPage(i+1), &currentPage, &userSelection, "singlePageWidget" );
       widgetList.insert(i, dviWidget);
-      dviWidget->setPageNumber(i+startPage);
       dviWidget->show();
       
       connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
       connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), window,
-          SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
-      connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+              SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
+      connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this,
+              SIGNAL( setStatusBarText( const QString& ) ) );
+    }
+  }
+  
+  // Set the page numbers for the newly allocated widgets. How this is
+  // done depends on the viewMode.
+  if (viewModeAction->currentItem() == KVS_SinglePage) {
+    // In KVS_SinglePage mode, any number between 1 and the maximum
+    // number of pages is acceptable. If an acceptable value is found,
+    // nothing is done, and otherwise '1' is set as a default.
+    dviWidget = (documentWidget *)(widgetList[0]);
+    if (dviWidget != 0) { // Paranoia safety check
+      dviWidget->setPageNumber(startPage);
+      dviWidget->update();
     } else
-      dviWidget->setPageNumber(i+startPage);
+      kdError(4300) << "Zero-Pointer in widgetList in KDVIMultiPage::generateDocumentWidgets()" << endl;
+  } else {
+    // In all other modes, the widgets will be numbered continuously,
+    // starting from firstShownPage.
+    for(Q_UINT16 i=0; i<widgetList.size(); i++) {
+      dviWidget = (documentWidget *)(widgetList[i]);
+      if (dviWidget != 0) // Paranoia safety check
+        if (viewModeAction->currentItem() == KVS_Overview)
+          dviWidget->setPageNumber(i+tableauStartPage);
+        else
+          dviWidget->setPageNumber(i+1);
+      else
+        kdError(4300) << "Zero-Pointer in widgetList in KDVIMultiPage::generateDocumentWidgets()" << endl;
+    }
   }
 
+  // Make the changes in the widgetList known to the scrollview. so
+  // that the scrollview may update its contents.
   scrollView()->addChild(&widgetList);
+
+  // If the number of widgets has changed, or the viewmode has been changed the widget 
+  // that displays the current page may not be visible anymore. Bring it back into focus.
+  if (isWidgetListResized || !reload)
+    gotoPage(startPage-1);
+  
+  // The layout of the widgets, the number of the widgets, and the
+  // "current" widget, i.e. the topmost visible widget might all have
+  // changed. Pass that information on.
+  emit pageInfo(window->totalPages(), startPage-1 );
+
 #ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) ended" << endl;
 #endif
@@ -267,8 +342,10 @@ void KDVIMultiPage::generateDocumentWidgets(int startPage)
 
 void KDVIMultiPage::setViewMode(int mode)
 {
+  // Save the current page number because when we are changing the columns
+  // and rows in the scrollview the currently shown Page probably out of view.
+  int currentPage = getCurrentPageNumber();
   // Save viewMode for future uses of KDVI
-
   switch (mode) 
   {
     case KVS_SinglePage:
@@ -295,8 +372,7 @@ void KDVIMultiPage::setViewMode(int mode)
       scrollView()->setNrRows(1);
       scrollView()->setContinuousViewMode(true);
   }
-  
-  generateDocumentWidgets();
+  generateDocumentWidgets(currentPage);
   emit viewModeChanged();
 }
 
@@ -409,7 +485,8 @@ Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
     // return that. We call that 'lazy page number display': the
     // displayed page number remains unchanged as long as the
     // appropriate widget is still visible.
-    if ((widgetList.size() > lastCurrentPage)&&(lastCurrentPage != 0)) {
+      
+      if ((widgetList.size() > lastCurrentPage) && (lastCurrentPage != 0)) {
       dviWidget = (documentWidget *)(widgetList[lastCurrentPage-1]);
       if (dviWidget != 0) {
     if (dviWidget->getPageNumber() == lastCurrentPage) {
@@ -429,8 +506,9 @@ Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
       if (dviWidget == 0)
     continue;
 
+        int X = scrollView()->childX(dviWidget) + dviWidget->width();
       int Y = scrollView()->childY(dviWidget) + dviWidget->height();
-      if (Y > scrollView()->contentsY()) {
+        if (Y > scrollView()->contentsY() && X > scrollView()->contentsX()) {
     lastCurrentPage = dviWidget->getPageNumber();
     return lastCurrentPage;
       }
@@ -504,17 +582,19 @@ bool KDVIMultiPage::gotoPage(int page)
   if (Prefs::viewMode() == KVS_Overview)
   {
     int visiblePages = Prefs::overviewModeRows() * Prefs::overviewModeColumns();
-    // Pagenumber of the first visibile Page
+    // Pagenumber of the first page in the current tableau.
     int firstPage = ((documentWidget*)widgetList[0])->getPageNumber();
-    int newFirstPage = page + 1 - (page % visiblePages);
-    if (firstPage != newFirstPage) // widgets need to be updated
+    // Pagenumber of the first page in the new tableau.
+    int tableauStartPage = page + 1 - (page % visiblePages);
+    // If these numbers arn't equal "page" is not in the current tableu.
+    if (firstPage != tableauStartPage) // widgets need to be updated
     {
-      if ( (window->totalPages() - newFirstPage + 1 < visiblePages) ||
+      if ( (window->totalPages() - tableauStartPage + 1 < visiblePages) ||
            (widgetList.size() < visiblePages) ) 
       {
         // resize widgetList
-        // the pages are also set correctly be "generateDocumentWidgets"
-        generateDocumentWidgets(newFirstPage);
+        // the pages are also set correctly by "generateDocumentWidgets"
+        generateDocumentWidgets(tableauStartPage);
       }
       else
       {
@@ -525,7 +605,7 @@ bool KDVIMultiPage::gotoPage(int page)
           documentWidget* ptr = (documentWidget*)(widgetList[i]);
           if (ptr != 0)
           {
-            ptr->setPageNumber(newFirstPage + i);
+            ptr->setPageNumber(tableauStartPage + i);
           }
         }
       }
@@ -603,15 +683,15 @@ void KDVIMultiPage::goto_page(int page, int y, bool isLink)
     int visiblePages = Prefs::overviewModeRows() * Prefs::overviewModeColumns();
     // Pagenumber of the first visibile Page
     int firstPage = ((documentWidget*)widgetList[0])->getPageNumber();
-    int newFirstPage = page + 1 - (page % visiblePages);
-    if (firstPage != newFirstPage) // widgets need to be updated
+    int tableauStartPage = page + 1 - (page % visiblePages);
+    if (firstPage != tableauStartPage) // widgets need to be updated
     {
-        if ( (window->totalPages() - newFirstPage + 1 < visiblePages) ||
+        if ( (window->totalPages() - tableauStartPage + 1 < visiblePages) ||
             (widgetList.size() < visiblePages) ) 
         {
             // resize widgetList
-            // the pages are also set correctly be "generateDocumentWidgets"
-            generateDocumentWidgets(newFirstPage);
+            // the pages are also set correctly by "generateDocumentWidgets"
+            generateDocumentWidgets(tableauStartPage);
         }
         else
         {
@@ -622,7 +702,7 @@ void KDVIMultiPage::goto_page(int page, int y, bool isLink)
                 ptr = (documentWidget*)(widgetList[i]);
                 if (ptr != 0)
                 {
-                    ptr->setPageNumber(newFirstPage + i);
+                    ptr->setPageNumber(tableauStartPage + i);
                 }
             }
         }

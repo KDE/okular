@@ -177,7 +177,10 @@ protected slots:
   void preferencesChanged();
   void goto_page(int page, int y, bool isLink = true);
 
-  void generateDocumentWidgets(int startPage = 1);
+  /** This function is called on viewmode change with
+      the current page number as parameter, and on
+      file load/reload with the default parameter. */
+  void generateDocumentWidgets(int startPage = 0);
 
   void contentsMovingInScrollView(int x, int y);
 

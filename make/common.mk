@@ -11,7 +11,7 @@ CPPFLAGS = @CPPFLAGS@ $(XCPPFLAGS)
 DEFS = @DEFS@ $(XDEFS)
 
 # Kpathsea needs this for compiling, programs need it for linking.
-LIBTOOL = $(kpathsea_srcdir_parent)/klibtool
+LIBTOOL = $(kpathsea_srcdir)/klibtool
 
 # You can change [X]CPPFLAGS, [X]CFLAGS, or [X]DEFS, but
 # please don't change ALL_CPPFLAGS or ALL_CFLAGS.

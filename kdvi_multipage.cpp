@@ -95,8 +95,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   new KAction(i18n("&DVI Options..."), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
   new KAction(i18n("&Tip of the Day..."), 0, this, SLOT(showTip()), actionCollection(), "help_tipofday");
-  new KAction(i18n("About the KDVI plugin..."), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
-  new KAction(i18n("Help on the KDVI plugin..."), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
+  new KAction(i18n("About the KDVI plugin"), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
+  new KAction(i18n("Help on the KDVI plugin"), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
   new KAction(i18n("Report Bug in the KDVI plugin..."), 0, this, SLOT(bugform()), actionCollection(), "bug_dvi");
 
   setXMLFile("kdvi_part.rc");

@@ -1,5 +1,6 @@
 #include "QOutputDevPixmap.h"
 
+#include <kglobal.h>
 #include <qcursor.h>
 #include <qpainter.h>
 #include <qmutex.h>
@@ -8,8 +9,6 @@
 
 #include "kpdf_pagewidget.h"
 #include "kpdf_pagewidget.moc"
-
-#include "utils.h"
 
 namespace KPDF
 {
@@ -110,7 +109,7 @@ namespace KPDF
             mutex.lock();
             if (m_doc)
             {
-                m_currentPage = max(0, min( page, m_doc->getNumPages()));
+                m_currentPage = KMAX(0, KMIN( page, m_doc->getNumPages()));
             } else {
                 m_currentPage = 0;
             }

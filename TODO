@@ -7,12 +7,15 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress:
--> Fix threaded generation. (seems more stable since 2005-Jan-03). Waiting4backtraces.
-
-Urgent fixes and items to get ready before 3.4 (special high-priority list):
+-> Enhance presentation mode. New preferences dialog. (by Tobias)
+-> Fix threaded generation. (crash reports on 02 and 03 Jan 2005).
 -> FIX 1/2: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
 -> FIX 2/2: check for removing 'canUnloadPixmap' from observers in place of requesting
    a list of visible pixmaps
+-> type ahead search in pageview (type '/' then the word to search..) (by JakobS)
+
+Urgent fixes and items to get ready before 3.4 (special high-priority list):
+-> New word highlighting for searches / other highlights (enrico)
 -> FIX: priorities for requests (pageview regular over thumbnails regular over pv preloading ...)
 -> FIX: linearize memory pages map iterators in respect to time = FIX:iterate
    from older pages to newest ones when freeing memory (not randomly)

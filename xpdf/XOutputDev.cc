@@ -34,14 +34,16 @@
 #include "Error.h"
 #include "TextOutputDev.h"
 #include "XOutputDev.h"
-#if HAVE_T1LIB_H
+#ifdef HAVE_T1LIB_H
 #include "T1Font.h"
 #endif
-#if FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
+#if defined(FREETYPE2) && (defined(HAVE_FREETYPE_FREETYPE_H) || defined(HAVE_FREETYPE_H))
 #include "FTFont.h"
 #endif
-#if !FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
+#ifndef FREETYPE2
+#if defined(HAVE_FREETYPE_FREETYPE_H) || defined(HAVE_FREETYPE_H)
 #include "TTFont.h"
+#endif
 #endif
 
 #ifdef VMS
@@ -130,7 +132,7 @@ void XOutputFont::getCharPath(GfxState *state,
 			      CharCode c, Unicode *u, int ulen) {
 }
 
-#if HAVE_T1LIB_H
+#ifdef HAVE_T1LIB_H
 //------------------------------------------------------------------------
 // XOutputT1Font
 //------------------------------------------------------------------------
@@ -184,7 +186,7 @@ void XOutputT1Font::getCharPath(GfxState *state,
 }
 #endif // HAVE_T1LIB_H
 
-#if FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
+#if defined(FREETYPE2) && (defined(HAVE_FREETYPE_FREETYPE_H) || defined(HAVE_FREETYPE_H))
 //------------------------------------------------------------------------
 // XOutputFTFont
 //------------------------------------------------------------------------
@@ -1350,7 +1352,8 @@ XOutputFont *XOutputFontCache::tryGetFTFontFromFile(XRef *xref,
 }
 #endif // FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
 
-#if !FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
+#ifndef FREETYPE2
+#if defined(HAVE_FREETYPE_FREETYPE_H) || defined(HAVE_FREETYPE_H)
 XOutputFont *XOutputFontCache::tryGetTTFont(XRef *xref,
 					    GfxFont *gfxFont,
 					    double m11, double m12,
@@ -1479,6 +1482,7 @@ XOutputFont *XOutputFontCache::tryGetTTFontFromFile(XRef *xref,
   }
   return font;
 }
+#endif
 #endif // !FREETYPE2 && (HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H)
 
 XOutputFont *XOutputFontCache::tryGetServerFont(GString *xlfd,

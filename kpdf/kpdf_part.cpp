@@ -370,6 +370,7 @@ Part::openFile()
     return false;
   
   errors::clear();
+  m_currentPage = 0; //so that goToPage if is true
   if (m_doc->getNumPages() > 0)
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?

@@ -55,8 +55,6 @@
  * it's worth it.
  */
 
-#define DEBUG 1
-
 #include <kdebug.h>
 
 #include "dviwin.h"
@@ -681,7 +679,7 @@ static	void epsf_special(char *cp)
   double	keyval[6];
 
   if (memcmp(cp, "ile=", 4) != 0) {
-    kDebugError(1, 4300, "epsf special PSf%s is unknown", cp);
+    kdError(1) << "epsf special PSf" << cp << " is unknown" << endl;
     return;
   }
 
@@ -718,7 +716,7 @@ static	void epsf_special(char *cp)
       ++p1;
     for (keyno = 0;; ++keyno) {
       if (keyno >= NKEYS) {
-	kDebugError(4300, 1, "unknown keyword (%*s) in \\special will be ignored\n", (int) (p1 - p), p);
+	kdError(4300) << "unknown keyword in \\special will be ignored" << endl;
 	break;
       }
       if (memcmp(p, keytab[keyno], p1 - p) == 0) {
@@ -772,7 +770,6 @@ static	void epsf_special(char *cp)
 
 static	void bang_special(char *cp)
 {
-  //  kDebugInfo(DEBUG, 4300, "bang %s", cp);
   bbox_valid = False;
   
   if (currwin.win == mane.win) {

@@ -211,14 +211,14 @@ static	NORETURN void tell_oops(_Xconst char *message, ...)
 {
 	va_list	args;
 
-	kDebugError("%s: ", prog);
+	kdError() << prog << ": " << endl;
 	va_start(args, message);
 	(void) vfprintf(stderr, message, args);
 	va_end(args);
 	if (currinf._virtual)
-	  kDebugError(" in virtual font %s", currinf._virtual->fontname);
+	  kdError() << " in virtual font " << currinf._virtual->fontname << endl;
 	else
-	  kDebugError(", offset %ld", xtell(currinf.pos - 1));
+	  kdError() << ", offset " << xtell(currinf.pos - 1) << "d" << endl;
 	dvi_oops_msg = (message), longjmp(dvi_env, 1); /* dvi_oops */
 	exit(1);
 }
@@ -248,7 +248,7 @@ static void change_font(unsigned long n)
 
 void set_char(unsigned int cmd, unsigned int ch)
 {
-  kDebugInfo(DEBUG, 4300, "set_char");
+  kdDebug() << "set_char" << endl;
 
   glyph *g = currinf.fontp->glyphptr(ch);
   if (g == NULL)
@@ -275,10 +275,10 @@ static	void set_empty_char(unsigned int cmd, unsigned int ch)
 
 void load_n_set_char(unsigned int cmd, unsigned int ch)
 {
-  kDebugInfo(DEBUG, 4300, "load_n_set_char");
+  kdDebug() << "load_n_set_char" << endl;
 
   if ( currinf.fontp->load_font() ) {	/* if not found */
-    kDebugError("Character(s) will be left blank.");
+    kdError() << "Character(s) will be left blank." << endl;
     currinf.set_char_p = currinf.fontp->set_char_p = set_empty_char;
     return;
   }
@@ -290,7 +290,7 @@ void load_n_set_char(unsigned int cmd, unsigned int ch)
 
 void set_vf_char(unsigned int cmd, unsigned int ch)
 {
-  kDebugInfo(DEBUG, 4300, "set_vf_char");
+  kdDebug() << "set_vf_char" << endl;
 
   macro *m;
   struct drawinf	 oldinfo;
@@ -299,7 +299,7 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
 
   if ((m = &currinf.fontp->macrotable[ch])->pos == NULL) {
     if (!hush_chars)
-      kDebugError(1, 4300, "Character %d not defined in font %s\n", ch, currinf.fontp->fontname);
+      kdError() << "Character " << ch << " not defined in font" << currinf.fontp->fontname << endl;
     m->pos = m->end = &c;
     return;
   }
@@ -333,7 +333,7 @@ void set_vf_char(unsigned int cmd, unsigned int ch)
 
 static	void set_no_char(unsigned int cmd, unsigned int ch)
 {
-  kDebugInfo(DEBUG, 4300, "set_no_char");
+  kdDebug() << "set_no_char" << endl;
 
   if (currinf._virtual) {
     currinf.fontp = currinf._virtual->first_font;
@@ -391,7 +391,7 @@ static	void special(long nbytes)
 
 static	void draw_part(struct frame *minframe, double current_dimconv)
 {
-  kDebugInfo(DEBUG, 4300, "draw_part");
+  kdDebug() << "draw_part" << endl;
 
   unsigned char  ch;
   struct drawinf oldinfo;
@@ -642,7 +642,7 @@ int need_to_redraw;
 
 void draw_page()
 {
-  kDebugInfo(DEBUG, 4300, "draw_page");
+  kdDebug() <<"draw_page" << endl;
 
   need_to_redraw = 0;
 

@@ -63,7 +63,7 @@ extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict
 
 void font::read_VF_index(unsigned int hushcs)
 {
-  kDebugInfo(DEBUG, 4300, "read_VF_index");
+  kdDebug() << "read_VF_index" << endl;
 
   FILE *VF_file = file;
   unsigned char	cmnd;
@@ -71,14 +71,13 @@ void font::read_VF_index(unsigned int hushcs)
 
   flags      |= FONT_VIRTUAL;
   set_char_p  = set_vf_char;
-  kDebugInfo(DEBUG, 4300, "Reading VF pixel file %s", filename);
+  kdDebug() << "Reading VF pixel file " << filename << endl;
 
   // Read preamble.
   Fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
   long file_checksum = four(VF_file);
   if (!hushcs && file_checksum && checksum && file_checksum != checksum)
-    kDebugError("Checksum mismatch (dvi = %lu, vf = %lu) in font file %s", 
-		checksum, file_checksum, filename);
+    kdError() << "Checksum mismatch (dvi = " << checksum << "u, vf = " << file_checksum << "u) in font file " << filename << endl;
   (void) four(VF_file);		/* skip design size */
 
   // Read the fonts.
@@ -106,7 +105,7 @@ void font::read_VF_index(unsigned int hushcs)
       cc = four(VF_file);
       width = four(VF_file);
       if (cc >= 256) {
-	kDebugError(TRUE,4300,"Virtual character %lu in font %s ignored.", cc, fontname);
+	kdError() << "Virtual character " << cc << " in font " << fontname << " ignored." << endl;
 	Fseek(VF_file, (long) len, 1);
 	continue;
       }
@@ -133,7 +132,6 @@ void font::read_VF_index(unsigned int hushcs)
       Fread((char *) m->pos, 1, len, VF_file);
       m->end = m->pos + len;
     }
-    kDebugInfo(DEBUG, 4300, "Read VF macro for character %lu; dy = %ld, length = %d",cc, m->dvi_adv, len);
   }
   if (cmnd != POST)
     oops("Wrong command byte found in VF macro list:  %d", cmnd);

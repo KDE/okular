@@ -61,7 +61,7 @@ extern int n_files_left;
 
 font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
 {
-  kDebugInfo(DEBUG, 4300, "constructing font %s at %d dpi", nfontname, (int) (nfsize + 0.5));
+  kdDebug() << "constructing font " << nfontname << " at " << (int) (nfsize + 0.5) << " dpi" << endl;
 
   fontname   = nfontname;
   fsize      = nfsize;
@@ -75,7 +75,7 @@ font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
 
 font::~font()
 {
-  kDebugInfo(DEBUG, 4300, "discarding font \"%s\" at %d dpi",fontname,(int)(fsize + 0.5));
+  kdDebug() << "discarding font " << fontname << " at " << (int)(fsize + 0.5) << " dpi" << endl;
 
   free(fontname);
 
@@ -117,7 +117,7 @@ font::~font()
 
 unsigned char font::load_font(void)
 {
-  kDebugInfo(DEBUG, 4300, "loading font %s at %d dpi", fontname, (int) (fsize + 0.5));
+  kdDebug() << "loading font " <<  fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
 
   int	 dpi      = (int)(fsize + 0.5);
   char	*font_found;
@@ -129,19 +129,19 @@ unsigned char font::load_font(void)
   flags |= font::FONT_LOADED;
   file = font_open(fontname, &font_found, (double)fsize, &size_found, &filename);
   if (file == NULL) {
-    kDebugError("Can't find font %s.", fontname);
+    kdError() << "Can't find font " << fontname << "." << endl;
     return True;
   }
   --n_files_left;
   if (font_found != NULL) {
-    kDebugError("Can't find font %s; using %s instead at %d dpi.", fontname, font_found, dpi);
+    kdError() << "Can't find font " << fontname << "; using " << font_found << " instead at " << dpi << " dpi." << endl;
     free(fontname);
     fontname = font_found;
     hushcs = True;
   }
   else
     if (!kpse_bitmap_tolerance ((double) size_found, fsize))
-      kDebugError("Can't find font %s at %d dpi; using %d dpi instead.", fontname, dpi, size_found);
+      kdError() << "Can't find font " << fontname << " at " << dpi << " dpi; using " << size_found << " dpi instead." << endl;
   fsize      = size_found;
   timestamp  = ++current_timestamp;
   set_char_p = set_char;
@@ -171,7 +171,7 @@ void font::mark_as_used(void)
   if (flags & font::FONT_IN_USE) 
     return;
 
-  kDebugInfo(DEBUG, 4300, "marking font %s at %d dpi as used", fontname, (int) (fsize + 0.5));
+  kdDebug() << "marking font " << fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
 
   flags |= font::FONT_IN_USE;
 
@@ -194,7 +194,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
   struct glyph *g = glyphtable+ch;
   if (g->bitmap.bits == NULL) {
     if (g->addr == 0) {
-      kDebugError(1,4300,"Character %d not defined in font %s", ch, fontname);
+      kdError() << "Character " << ch << " not defined in font " << fontname << endl;
       g->addr = -1;
       return NULL;
     }

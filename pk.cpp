@@ -49,7 +49,6 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-#define DEBUG 0
 
 #include <kdebug.h>
 
@@ -85,7 +84,7 @@ static	int	PK_repeat_count;
 
 int font::PK_get_nyb(FILE *fp)
 {
-  kDebugInfo(DEBUG, 4300, "PK_get_nyb");
+  kdDebug() << "PK_get_nyb" << endl;
 
 	unsigned temp;
 	if (PK_bitpos < 0) {
@@ -100,7 +99,7 @@ int font::PK_get_nyb(FILE *fp)
 
 int font::PK_packed_num(FILE *fp)
 {
-  kDebugInfo(DEBUG, 4300, "PK_packed_num");
+  kdDebug() << "PK_packed_num" << endl;
 
 	int	i,j;
 
@@ -130,7 +129,7 @@ int font::PK_packed_num(FILE *fp)
 
 void font::PK_skip_specials(void)
 {
-  kDebugInfo(DEBUG, 4300, "PK_skip_specials");
+  kdDebug() << "PK_skip_specials" << endl;
 
   int i,j;
   register FILE *fp = file;
@@ -169,7 +168,7 @@ void font::PK_skip_specials(void)
 
 void font::read_PK_char(unsigned int ch)
 {
-  kDebugInfo(DEBUG, 4300, "read_PK_char");
+  kdDebug() << "read_PK_char" << endl;
 
   int	i, j;
   int	n;
@@ -196,7 +195,7 @@ void font::read_PK_char(unsigned int ch)
     else
       n = 1;
   
-  kDebugInfo(DEBUG, 4300, "loading pk char %d, char type %d ", ch, n);
+  kdDebug() << "loading pk char " << ch << ", char type " << n << endl;
 
   /*
    * now read rest of character preamble
@@ -223,9 +222,6 @@ void font::read_PK_char(unsigned int ch)
 
   g->dvi_adv = (int)(dimconv * fpwidth + 0.5);
   
-  if (DEBUG && g->bitmap.w != 0)
-    kDebugInfo(DEBUG, 4300, ", size=%dx%d, dvi_adv=%ld", g->bitmap.w, g->bitmap.h, g->dvi_adv);
-
   alloc_bitmap(&g->bitmap);
   cp = (BMUNIT *) g->bitmap.bits;
 
@@ -333,19 +329,18 @@ void font::read_PK_char(unsigned int ch)
 
 void font::read_PK_index(unsigned int hushcs)
 {
-  kDebugInfo(DEBUG, 4300, "Reading PK pixel file %s", filename);
+  kdDebug() << "Reading PK pixel file " << filename << endl;
   
   Fseek(file, (long) one(file), 1);	/* skip comment */
 
   (void) four(file);		/* skip design size */
   long file_checksum = four(file);
   if (!hushcs && checksum && checksum && file_checksum != checksum)
-    kDebugError(1, 4300, "Checksum mismatch (dvi = %lu, pk = %lu) in font file %s", 
-		checksum, file_checksum, filename);
+    kdError(1) << "Checksum mismatch (dvi = " << checksum << "pk = " << file_checksum << ") in font file " << filename << endl;
   int hppp = sfour(file);
   int vppp = sfour(file);
-  if (DEBUG && hppp != vppp)
-    kDebugInfo(DEBUG, 4300, "Font has non-square aspect ratio %d:%d", vppp, hppp);
+  if (hppp != vppp)
+    kdDebug() << "Font has non-square aspect ratio " << vppp << ":" << hppp << endl;
   /*
    * Prepare glyph array.
    */
@@ -376,6 +371,6 @@ void font::read_PK_index(unsigned int hushcs)
     glyphtable[ch].addr = ftell(file);
     glyphtable[ch].x2 = PK_flag_byte;
     Fseek(file, (long) bytes_left, 1);
-    kDebugInfo(DEBUG, 4300, "Scanning pk char %u, at %ld.", ch, glyphtable[ch].addr);
+    kdDebug() << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
   }
 }

@@ -106,7 +106,7 @@ static	long	last_page_offset;
 
 extern void reset_fonts(void)
 {
-  kDebugInfo(DEBUG, 4300, "Reset Fonts");
+  kdDebug() << "Reset Fonts" << endl;
 
   struct font *f;
   struct glyph *g;
@@ -164,7 +164,7 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
   fontname[len] = '\0';
 
 
-  kDebugInfo(DEBUG, 4300, "Define font \"%s\" scale=%d design=%d", fontname, scale, design);
+  kdDebug() << "Define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 
 
   float  fsize;

@@ -115,7 +115,7 @@ oops(va_alist)
 
 char * xmalloc(unsigned size, _Xconst char *why)
 {
-  kDebugInfo(DEBUG, 4300, "Allocating %d bytes for %s", size, why);
+  kdDebug() << "Allocating " << size << " bytes for " << why << endl;
 
   /* Avoid malloc(0), though it's not clear if it ever actually
      happens any more.  */

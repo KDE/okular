@@ -270,7 +270,7 @@ void Print::okPressed()
 
 	cmd += " &";
 
-	kDebugInfo( 4300,"About to run: %s", cmd.data());
+	kdDebug(4300) << "About to run: " << cmd.data() << endl;
 	system( cmd );
 	accept();
 }

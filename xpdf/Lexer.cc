@@ -23,7 +23,7 @@
 
 // A '1' in this array means the character is white space.  A '1' or
 // '2' means the character ends a name or command.
-static char specialChars[256] = {
+static char Lexer_specialChars[256] = {
   1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0,   // 0x
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   // 1x
   1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2,   // 2x
@@ -129,7 +129,7 @@ Object *Lexer::getObj(Object *obj) {
 	comment = gFalse;
     } else if (c == '%') {
       comment = gTrue;
-    } else if (specialChars[c] != 1) {
+    } else if (Lexer_specialChars[c] != 1) {
       break;
     }
   }
@@ -300,7 +300,7 @@ Object *Lexer::getObj(Object *obj) {
   case '/':
     p = tokBuf;
     n = 0;
-    while ((c = lookChar()) != EOF && !specialChars[c]) {
+    while ((c = lookChar()) != EOF && !Lexer_specialChars[c]) {
       getChar();
       if (c == '#') {
 	c2 = lookChar();
@@ -369,7 +369,7 @@ Object *Lexer::getObj(Object *obj) {
 	} else if (c == EOF) {
 	  error(getPos(), "Unterminated hex string");
 	  break;
-	} else if (specialChars[c] != 1) {
+	} else if (Lexer_specialChars[c] != 1) {
 	  c2 = c2 << 4;
 	  if (c >= '0' && c <= '9')
 	    c2 += c - '0';
@@ -432,7 +432,7 @@ Object *Lexer::getObj(Object *obj) {
     p = tokBuf;
     *p++ = c;
     n = 1;
-    while ((c = lookChar()) != EOF && !specialChars[c]) {
+    while ((c = lookChar()) != EOF && !Lexer_specialChars[c]) {
       getChar();
       if (++n == tokBufSize) {
 	error(getPos(), "Command token too long");

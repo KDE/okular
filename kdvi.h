@@ -8,5 +8,5 @@
 // Define the following flags to generate debugging output
   
 // #define DEBUG_FONT 1
-#define DEBUG_FONTPOOL 1
+// #define DEBUG_FONTPOOL 1
 // #define DEBUG_PK 1

@@ -59,7 +59,6 @@ class OptionDialog : public KDialogBase
     virtual void slotApply();
 
   private:
-    void setup();
     void makeFontPage();
     void makeRenderingPage();
 

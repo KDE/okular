@@ -94,7 +94,7 @@ private:
   void          read_PK_index(void);
 
 public slots:
-    void font_name_receiver(KProcess *proc, char *buffer, int buflen);
+    void fontNameReceiver(QString);
 };
 
 #endif

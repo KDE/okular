@@ -289,7 +289,7 @@ void KDVIMultiPage::preferencesChanged()
     config->writeEntry( "MetafontMode", mfmode = DefaultMFMode );
   window->setMetafontMode( mfmode );
 
-  int makepk = config->readNumEntry( "MakePK" );
+  int makepk = config->readBoolEntry( "MakePK", true );
   if ( makepk != window->makePK() )
     window->setMakePK( makepk );
 

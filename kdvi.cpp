@@ -258,7 +258,7 @@ void kdvi::makeButtons()
 #define I(f,o,s,h) toolBar->insertButton( kapp->getIconLoader()->loadIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
-	I( "filenew2.xpm",	this,	fileOpen,	translate("Open new document") )
+	I( "fileopen.xpm",	this,	fileOpen,	translate("Open document ...") )
 	I( "reload.xpm",	dviwin,	drawPage,	translate("Reload document") )
 	I( "fileprint.xpm",	this,	filePrint,	translate("Print ...") )
 	toolBar->insertSeparator();
@@ -1052,10 +1052,19 @@ void kdvi::readProperties(KConfig *config)
 				config->readNumEntry( "Pos.y" ) ) );
 }
 
+static void getOptions( int& ac, char** av )
+{
+	if ( ac > 2 && av[1] == QString("-paper") )
+		av[1] = av[3], ac -= 2;
+}
+
+
 int main( int argc, char **argv )
 {
 	KApplication a( argc, argv, "kdvi" );
 	kdvi *k;
+
+	getOptions( argc, argv );
 	
 	if ( a.isRestored() && KTopLevelWidget::canBeRestored( 1 ) )
 	{

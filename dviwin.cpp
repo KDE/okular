@@ -394,7 +394,7 @@ void dviWindow::initDVI()
 	n_files_left = OPEN_MAX;
 	kpse_set_progname ("xdvi");
 	kpse_init_prog ("XDVI", basedpi, MetafontMode.data(), makepk,"cmr10");
-	kpse_font_override_path = (const char *)FontPath;
+	*(const_cast<char**>(&kpse_font_override_path)) = FontPath.data();
 	ChangesPossible = 0;
 }
 

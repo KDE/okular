@@ -99,6 +99,7 @@ protected slots:
 	void slotPrintPreview();
 	void slotShowMenu(const KPDFPage *page, const QPoint &point);
 	void slotShowProperties();
+	void slotShowLeftPanel();
 	void slotShowPresentation();
 	// can be connected to widget elements
 	void updateViewActions();
@@ -109,7 +110,6 @@ public slots:
 	void slotPrint();
 	void restoreDocument(const KURL &url, int page);
 	void saveDocumentRestoreInfo(KConfig* config);
-	void slotWatchFile();
 	void slotFileDirty( const QString& );
 	void slotDoFileDirty();
 
@@ -149,8 +149,8 @@ private:
 	KAction *m_printPreview;
 	KAction *m_showProperties;
 	KAction *m_showPresentation;
-	KToggleAction* m_watchFile;
 	KToggleAction* m_showMenuBarAction;
+	KToggleAction* m_showLeftPanel;
 	KToggleAction* m_showFullScreenAction;
 	bool m_actionsSearched;
 	bool m_searchStarted;

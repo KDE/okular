@@ -116,8 +116,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_splitter = new QSplitter( parentWidget, widgetName );
 	m_splitter->setOpaqueResize( true );
 	setWidget( m_splitter );
-	m_watchFile = new KToggleAction( i18n( "&Watch File" ), 0, this, SLOT( slotWatchFile() ), actionCollection(), "watch_file" );
-	m_watchFile->setChecked( Settings::watchFile() );
+	
+	m_showLeftPanel = new KToggleAction( i18n( "Show &left panel"), 0, this, SLOT( slotShowLeftPanel() ), actionCollection(), "show_leftpanel" ); 
+	m_showLeftPanel->setShortcut( "CTRL+L" );
+	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
 
 	// widgets: [left panel] | []
 	m_leftPanel = new QWidget( m_splitter );
@@ -148,6 +150,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	thumbsBox->setStretchFactor( m_tc, 1 );
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
+
+	slotShowLeftPanel();
 
 /*	// [left toolbox: Annotations] | []
 	QFrame * editFrame = new QFrame( m_toolBox );
@@ -244,12 +248,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 		splitterSizes.push_back( 500 );
 	}
 	m_splitter->setSizes( splitterSizes );
-	slotNewConfig();
-
 	m_watcher = new KDirWatch( this );
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
 	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+
+	slotNewConfig();
 
 	// [SPEECH] check for KTTSD presence and usability
 	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
@@ -258,7 +262,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
 	updateViewActions();
-	slotWatchFile();
 }
 
 Part::~Part()
@@ -377,16 +380,14 @@ bool Part::closeURL()
     return KParts::ReadOnlyPart::closeURL();
 }
 
-void Part::slotWatchFile()
+void Part::slotShowLeftPanel()
 {
-  Settings::setWatchFile(m_watchFile->isChecked());
-  if( m_watchFile->isChecked() )
-    m_watcher->startScan();
-  else
-  {
-    m_dirtyHandler->stop();
-    m_watcher->stopScan();
-  }
+    bool showLeft = m_showLeftPanel->isChecked();
+    Settings::setShowLeftPanel(showLeft);
+    // show/hide left qtoolbox
+    m_leftPanel->setShown( showLeft );
+    // this needs to be hidden explicitly to disable thumbnails gen
+    m_thumbnailList->setShown( showLeft );
 }
 
 void Part::slotFileDirty( const QString& fileName )
@@ -580,15 +581,16 @@ void Part::slotNewConfig()
     // Apply settings here. A good policy is to check wether the setting has
     // changed before applying changes.
 
-    // Left Panel and search Widget
-    bool showLeft = Settings::showLeftPanel();
-    if ( m_leftPanel->isShown() != showLeft )
+    // Watch File
+    bool watchFile = Settings::watchFile();  
+    if ( watchFile && m_watcher->isStopped() )
+        m_watcher->startScan();
+    if ( !watchFile && !m_watcher->isStopped() )
     {
-        // show/hide left qtoolbox
-        m_leftPanel->setShown( showLeft );
-        // this needs to be hidden explicitly to disable thumbnails gen
-        m_thumbnailList->setShown( showLeft );
+        m_dirtyHandler->stop();
+        m_watcher->stopScan();
     }
+
     bool showSearch = Settings::showSearchBar();
     if ( m_searchWidget->isShown() != showSearch )
         m_searchWidget->setShown( showSearch );
@@ -608,7 +610,7 @@ void Part::slotNewConfig()
     // update Main View and ThumbnailList contents
     // TODO do this only when changing Settings::renderMode()
     m_pageView->updateContents();
-    if ( showLeft && m_thumbnailList->isShown() )
+    if ( Settings::showLeftPanel() && m_thumbnailList->isShown() )
         m_thumbnailList->updateWidgets();
 }
 

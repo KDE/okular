@@ -40,7 +40,7 @@
     <Action name="mouse_select"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
-    <Action name="watch_file" group="show_merge"/>
+    <Action name="show_leftpanel" group="show_merge"/>
     <Action name="preferences"/>
   </Menu>
 </MenuBar>

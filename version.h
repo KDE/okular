@@ -1,1 +1,1 @@
-#define KDVI_VERSION	"0.4.2"
+#define KDVI_VERSION	"0.4.3"

@@ -1,3 +1,7 @@
+Mon Jun 29 08:43:45 1998  Bernd Johannes Wuebben  <wuebben@math.cornell.edu>
+
+	* KDVI uses KFileDialog now.
+
 Version 0.4.2
   * [Robert Williams]  Added version.h and ChangeLog
   * [Robert Williams]  Renamed Kdvi.kdelnk to kdvi.kdelnk

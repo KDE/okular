@@ -24,6 +24,7 @@
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <kprocess.h>
+#include <kfiledialog.h>
 
 #include "kdvi.h"
 #include "scrbox.h"
@@ -464,7 +465,7 @@ void kdvi::fileOpen()
 		dir = QFileInfo( dviName ).dirPath();	
 
 	message( translate("File open dialog is open") );
-	QString f = QFileDialog::getOpenFileName( dir, "*.dvi", this );
+	QString f = KFileDialog::getOpenFileName( dir, "*.dvi");
 	message( "" );
 
 	openFile( f );

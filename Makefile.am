@@ -46,7 +46,7 @@ kdvi_LDFLAGS = @all_libraries@ $(KDE_RPATH)
 
 # the libraries to link against. Be aware of the order. First the libraries,
 # that depend on the following ones.
-kdvi_LDADD   = $(kpathsea)  -lkfm -lkdeui -lkdecore -lqt -lXext -lX11 @LIBSOCKET@
+kdvi_LDADD   = $(kpathsea)  -lkfm -lkdeui -lkdecore -lkfile -lqt -lXext -lX11 @LIBSOCKET@
 
 
 ## this option you can leave out. Just, if you use "make dist", you need it

@@ -10,6 +10,7 @@
 #include <qfile.h>
 #include <qdir.h>
 #include <qfileinfo.h>
+#include <qstringlist.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -128,6 +129,24 @@ void dviWindow::epsf_special(QString cp)
     QFileInfo fi2(fi1.dir(),EPSfilename);
     if (fi2.exists())
       EPSfilename = fi2.absFilePath();
+    else if (QFile::exists(EPSfilename + QString::fromLatin1(".gz"))) {	//try harder to find a gzipped file
+      EPSfilename = EPSfilename + QString::fromLatin1(".gz");
+      //kdDebug(4300) << "gzEps=" << EPSfilename <<endl;
+    }
+    else {  //try even harder :)
+      QString texInputs = QString::fromLocal8Bit(getenv("TEXINPUTS"));
+      QStringList texList = QStringList::split(":", texInputs);
+      
+      QStringList::Iterator it;
+      for (it=texList.begin(); it!=texList.end(); ++it) {
+        QString temp = (*it) + "/" + EPSfilename;
+        if (QFile::exists(temp)) {
+          //kdDebug(4300) << "Found it! epsFile=" << temp.local8Bit() <<endl;
+          EPSfilename = temp;
+          break;
+        }
+      }
+    }
   }
   
   // Now parse the arguments. 

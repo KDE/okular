@@ -63,6 +63,8 @@ class PageView : public QScrollView, public DocumentObserver
         void notifyContentsCleared( int changedFlags );
         bool canUnloadPixmap( int pageNum );
 
+        void showText( const QString &text, int ms );
+
     signals:
         void urlDropped( const KURL& );
         void rightClick( const KPDFPage *, const QPoint & );

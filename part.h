@@ -19,6 +19,7 @@
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
 #include <qguardedptr.h>
+#include "core/document.h"
 #include "core/observer.h"
 #include "dcop.h"
 
@@ -35,7 +36,6 @@ class KSelectAction;
 class KAboutData;
 class KPrinter;
 
-class KPDFDocument;
 class ThumbnailList;
 class ThumbnailController;
 class PageView;
@@ -133,6 +133,7 @@ private:
 
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;
+	DocumentViewport m_viewportDirty;
 
 	// actions
 	KAction *m_gotoPage;

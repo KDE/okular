@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>187</width>
-            <height>29</height>
+            <width>266</width>
+            <height>83</height>
         </rect>
     </property>
     <property name="caption">
@@ -24,15 +24,70 @@
         </property>
         <widget class="QCheckBox">
             <property name="name">
-                <cstring>kcfg_youDontEvenKnowMe</cstring>
+                <cstring>kcfg_ShowScrollBars</cstring>
             </property>
             <property name="text">
-                <string>You don't even know me..</string>
+                <string>Show scroll&amp;bars</string>
             </property>
+            <property name="accel">
+                <string>Alt+B</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_ShowLeftPanel</cstring>
+            </property>
+            <property name="text">
+                <string>Show &amp;left panel</string>
+            </property>
+            <property name="accel">
+                <string>Alt+L</string>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>16</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_ShowSearchBar</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;search bar in thumbnails list</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+S</string>
+                    </property>
+                </widget>
+            </hbox>
         </widget>
         <spacer>
             <property name="name">
-                <cstring>spacer9</cstring>
+                <cstring>spacer3</cstring>
             </property>
             <property name="orientation">
                 <enum>Vertical</enum>
@@ -43,12 +98,20 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>21</height>
+                    <height>60</height>
                 </size>
             </property>
         </spacer>
     </vbox>
 </widget>
+<connections>
+    <connection>
+        <sender>kcfg_ShowLeftPanel</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_ShowSearchBar</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>

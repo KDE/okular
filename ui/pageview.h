@@ -68,7 +68,7 @@ class PageView : public QScrollView, public DocumentObserver
 
     signals:
         void urlDropped( const KURL& );
-        void rightClick(const KPDFPage *, const QPoint &);
+        void rightClick( const KPDFPage *, const QPoint & );
 
     protected:
         // main draw loop, draws pageViews on viewport

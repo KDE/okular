@@ -145,6 +145,8 @@ void Shell::setupActions()
   KAction * openAction = KStdAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ), actionCollection() );
   connect( m_recent, SIGNAL( activated() ), openAction, SLOT( activate() ) );
+  // the following line doesn't work! don't know why... -enrico
+  //m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
   KStdAction::print(m_part, SLOT(slotPrint()), actionCollection());
   KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
 

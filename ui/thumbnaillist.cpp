@@ -27,7 +27,7 @@
 class ThumbnailWidget : public QWidget
 {
     public:
-        ThumbnailWidget( QWidget * parent, const KPDFPage * page );
+        ThumbnailWidget( QWidget * parent, const KPDFPage * page, ThumbnailList * tl );
 
         // set internal parameters to fit the page in the given width
         void resizeFitWidth( int width );
@@ -42,9 +42,11 @@ class ThumbnailWidget : public QWidget
         const KPDFPage * page() const { return m_page; }
 
     protected:
+        void mouseReleaseEvent( QMouseEvent * e );
         void paintEvent(QPaintEvent *);
 
     private:
+        ThumbnailList * m_tl; // only for accessing 'forwardRightClick( .. )'
         const KPDFPage * m_page;
         bool m_selected;
         int m_pixmapWidth, m_pixmapHeight;
@@ -113,7 +115,7 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
     for ( pIt = pages.begin(); pIt != pEnd ; ++pIt )
         if ( skipCheck || (*pIt)->attributes() & flags )
         {
-            ThumbnailWidget * t = new ThumbnailWidget( viewport(), *pIt );
+            ThumbnailWidget * t = new ThumbnailWidget( viewport(), *pIt, this );
             t->setFocusProxy( this );
             // add to the scrollview
             addChild( t, 0, totalHeight );
@@ -218,6 +220,11 @@ void ThumbnailList::updateWidgets()
     }
 }
 
+void ThumbnailList::forwardRightClick( const KPDFPage * p, const QPoint & t )
+{
+    emit rightClick( p, t );
+}
+
 void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
     // save state
@@ -250,6 +257,10 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 		else if ( m_vectorIndex < (int)m_thumbnails.count() - 1 )
 			nextPage = m_thumbnails[ m_vectorIndex + 1 ]->pageNumber();
 	}
+	else if ( keyEvent->key() == Key_PageUp )
+		verticalScrollBar()->subtractPage();
+	else if ( keyEvent->key() == Key_PageDown )
+		verticalScrollBar()->addPage();
 	else if ( keyEvent->key() == Key_Home )
 		nextPage = m_thumbnails[ 0 ]->pageNumber();
 	else if ( keyEvent->key() == Key_End )
@@ -385,8 +396,8 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 
 /** ThumbnailWidget implementation **/
 
-ThumbnailWidget::ThumbnailWidget( QWidget * parent, const KPDFPage * kp  )
-    : QWidget( parent, 0, WNoAutoErase ), m_page( kp ),
+ThumbnailWidget::ThumbnailWidget( QWidget * parent, const KPDFPage * kp, ThumbnailList * tl )
+	: QWidget( parent, 0, WNoAutoErase ), m_tl( tl ), m_page( kp ),
     m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
 {
     m_labelNumber = m_page->number() + 1;
@@ -408,6 +419,14 @@ void ThumbnailWidget::setSelected( bool selected )
         m_selected = selected;
         update( 0, m_pixmapHeight + 4, width(), m_labelHeight );
     }
+}
+
+void ThumbnailWidget::mouseReleaseEvent( QMouseEvent * e )
+{
+    if ( e->button() != Qt::RightButton )
+        return;
+
+    m_tl->forwardRightClick( m_page, e->globalPos() );
 }
 
 void ThumbnailWidget::paintEvent( QPaintEvent * e )

@@ -4,7 +4,8 @@ METASOURCES = AUTO
 
 libkpdfui_la_SOURCES = pageview.cpp pageviewutils.cpp thumbnaillist.cpp \
                        toc.cpp searchwidget.cpp \
-                       propertiesdialog.cpp presentationwidget.cpp 
+                       propertiesdialog.cpp presentationwidget.cpp \
+                       minibar.cpp
 
 noinst_LTLIBRARIES = libkpdfui.la
 

@@ -51,7 +51,7 @@ class KPDFDocumentPrivate
         QString docFileName;
         QString xmlFileName;
 
-        // observers / requests stuff
+        // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > observers;
         QValueList< PixmapRequest * > pixmapRequestsStack;
         QValueList< class AllocatedPixmap * > allocatedPixmapsFifo;
@@ -75,6 +75,9 @@ struct AllocatedPixmap
 #define foreachObserver( cmd ) {\
     QMap< int, DocumentObserver * >::iterator it=d->observers.begin(), end=d->observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
+
+
+/** KPDFDocument **/
 
 KPDFDocument::KPDFDocument()
     : generator( 0 ), d( new KPDFDocumentPrivate )
@@ -201,7 +204,7 @@ void KPDFDocument::closeDocument()
         delete *pIt;
     pages_vector.clear();
 
-    // clear memory allocation descriptors
+    // clear 'memory allocation' descriptors
     QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
     QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
@@ -260,7 +263,7 @@ void KPDFDocument::reparseConfig()
         d->allocatedPixmapsTotalMemory = 0;
 
         // send reload signals to observers
-        foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap) );
+        foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap ) );
     }
 
     // free memory if in 'low' profile
@@ -319,12 +322,6 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
 {
     if ( !generator || requests.isEmpty() )
         return;
-
-#ifndef NDEBUG
-    //TODO REMOVE THIS
-    if ( !d->pixmapRequestsStack.isEmpty() && (*d->pixmapRequestsStack.begin())->priority == 0 )
-        kdDebug() << "calling requestPixmaps when SYNC generation has not yet finished." << endl;
-#endif
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
     int requesterID = requests.first()->id;
@@ -427,24 +424,26 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int id )
         if ( it.key() != id )
             (*it)->notifyViewportChanged();
 
-    /* [MEM] raise position of currently viewed page in allocation queue
+    // [MEM] raise position of currently viewed page in allocation queue
     if ( d->allocatedPixmapsFifo.count() > 1 )
     {
+        const int page = viewport.pageNumber;
+        QValueList< AllocatedPixmap * > viewportPixmaps;
         QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QValueList< AllocatedPixmap * >::iterator aLast = d->allocatedPixmapsFifo.end();
-        --aLast;
-        while ( aIt != aLast )
+        QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        while ( aIt != aEnd )
         {
-            if ( (*aIt)->page == viewport.pageNumber )
+            if ( (*aIt)->page == page )
             {
-                d->allocatedPixmapsFifo.append( *aIt );
+                viewportPixmaps.append( *aIt );
                 aIt = d->allocatedPixmapsFifo.remove( aIt );
-                p--rintf("%d raised prio of %d %d\n",d->allocatedPixmapsFifo.count(), (*aIt)->id, (*aIt)->page);
+                continue;
             }
-            else
-                ++aIt;
+            ++aIt;
         }
-    }*/
+        if ( !viewportPixmaps.isEmpty() )
+            d->allocatedPixmapsFifo += viewportPixmaps;
+    }
 }
 
 bool KPDFDocument::findText( const QString & string, bool keepCase, bool findAhead )

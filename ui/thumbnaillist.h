@@ -49,6 +49,9 @@ Q_OBJECT
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
 
+        // called by ThumbnailWidgets to send (forward) rightClick signals
+        void forwardRightClick( const KPDFPage *, const QPoint & );
+
     public slots:
         // these are connected to ThumbnailController buttons
         void slotFilterBookmarks( bool filterOn );
@@ -69,6 +72,7 @@ Q_OBJECT
 
 	signals:
 		void urlDropped( const KURL& );
+		void rightClick( const KPDFPage *, const QPoint & );
 
 	private:
 		void delayedRequestVisiblePixmaps( int delayMs = 0 );

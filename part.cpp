@@ -55,6 +55,7 @@
 #include "ui/thumbnaillist.h"
 #include "ui/searchwidget.h"
 #include "ui/toc.h"
+#include "ui/minibar.h"
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
 #include "conf/preferencesdialog.h"
@@ -110,10 +111,15 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_watchFile = new KToggleAction( i18n( "&Watch File" ), 0, this, SLOT( slotWatchFile() ), actionCollection(), "watch_file" );
 	m_watchFile->setChecked( Settings::watchFile() );
 
-	// widgets: [left toolbox] | []
-	m_toolBox = new QToolBox( m_splitter );
-	m_toolBox->setMinimumWidth( 80 );
-	m_toolBox->setMaximumWidth( 300 );
+	// widgets: [left panel] | []
+	QWidget * leftPanel = new QWidget( m_splitter );
+	leftPanel->setMinimumWidth( 90 );
+	leftPanel->setMaximumWidth( 300 );
+	QVBoxLayout * leftPanelLayout = new QVBoxLayout( leftPanel );
+
+	// widgets: [left toolbox/..] | []
+	m_toolBox = new QToolBox( leftPanel );
+	leftPanelLayout->addWidget( m_toolBox );
 
 	// [left toolbox: Table of Contents] | []
 	TOC * tocFrame = new TOC( m_toolBox, m_document );
@@ -127,6 +133,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )) );
+	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 	// shrink the bottom toolbar (todo: find a less hackish way)
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
 	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
@@ -139,6 +146,18 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	int iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
 	m_toolBox->setItemEnabled( iIdx, false );*/
 
+	// widgets: [../miniBarContainer] | []
+	QWidget * miniBarContainer = new QWidget( leftPanel );
+	leftPanelLayout->addWidget( miniBarContainer );
+	QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
+	// widgets: [../[spacer/..]] | []
+	QWidget * miniSpacer = new QWidget( miniBarContainer );
+	miniSpacer->setFixedHeight( 6 );
+	miniBarLayout->addWidget( miniSpacer );
+	// widgets: [../[../MiniBar]] | []
+	MiniBar * miniBar = new MiniBar( miniBarContainer, m_document );
+	miniBarLayout->addWidget( miniBar );
+
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
@@ -150,6 +169,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document->addObserver( m_thumbnailList );
 	m_document->addObserver( m_pageView );
 	m_document->addObserver( tocFrame );
+	m_document->addObserver( miniBar );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -157,14 +177,20 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// Page Traversal actions
 	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
 	m_gotoPage->setShortcut( "CTRL+G" );
+	// dirty way to activate gotopage when pressing miniBar's button
+	connect( miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( activate() ) );
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
 	m_prevPage->setShortcut( "Backspace" );
+	// dirty way to activate prev page when pressing miniBar's button
+	connect( miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( activate() ) );
 
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 	m_nextPage->setShortcut( "Space" );
+	// dirty way to activate next page when pressing miniBar's button
+	connect( miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( activate() ) );
 
 	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
@@ -189,7 +215,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showPresentation = new KAction( i18n("P&resentation"), "kpresenter_kpr", "Ctrl+Shift+P", this, SLOT(slotShowPresentation()), ac, "presentation");
 	m_showPresentation->setEnabled( false );
 
-    // attach the actions of the 2 children widgets too
+    // attach the actions of the children widgets too
     m_pageView->setupActions( ac );
 
     // apply configuration (both internal settings and GUI configured items)

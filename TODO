@@ -12,19 +12,13 @@ Status:
 
 In progress:
 -> new word highlighting for searches / other highlights
+-> implement history (for actionNamed and restoring previous viewports on navigation)
 
 High priority 3.4 features (deadline is 2k5-Feb-2):
--> display current page / total pages (with analog indicator too (progressbar/...))
-   maybe this can be done on a small widget at the top of the toolbox, displaying
-   'document' informations (pages, current pg, some metadata, etc..)
-   Tested a 16px ktoolbar in the left-bottom corner.. looks goos and can be used to
-   insert some actions that aren't so useful in the main (and bigger) toolbar
--> implement history (for actionNamed and restoring previous viewports on navigation)
--> rmb popup for bookmarking pages on thumbnailslist, showing bkmarked pages and
-   go to next/previous bookmark actions (support for showing bookmarked pages
-   is already in, but disabled)
+- empty! -
 
 More items (first items will enter 'In progress list' first):
+-> go to next/previous bookmark actions (showing in thumbnailslist rmb popup too)
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> add scrollbar marks for bookmarks (like kate)
@@ -91,6 +85,8 @@ More items (first items will enter 'In progress list' first):
 -> export: export to other formats keeping formatting (a dream.. except for PNG :-) (PS is easy, we just have PSOutputDev that does it :-D)
 
 Done (newest features come first):
+-> ADD: rmb popup on thumbnailslist (the popup shared with pageView: same behavior)
+-> ADD: display 'current page' / 'total pages' with analog indicator, active labels, etc
 -> CHG: Presentation mode is now Ctrl+Shift+p instead of F9 because it was colliding with Konqueror's toggle sidebar
 -> FIX: various in memory unallocator, preload with single pages, pageview
 -> FIX: optimized pageView (removed 1 waster req on start, lowered reqs)

@@ -10,8 +10,11 @@
 #ifndef _KPDF_TOC_H_
 #define _KPDF_TOC_H_
 
+#include <qdom.h>
 #include <klistview.h>
 #include "core/observer.h"
+
+class KPDFDocument;
 
 class TOC : public KListView, public KPDFDocumentObserver
 {

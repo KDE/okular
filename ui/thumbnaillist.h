@@ -17,6 +17,8 @@
 
 class QTimer;
 class KActionCollection;
+
+class KPDFDocument;
 class ThumbnailWidget;
 
 /**

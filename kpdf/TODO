@@ -12,7 +12,6 @@ In progress on the branch (first item comes first):
 -> async document generator using Albert's generator thread [0%]
 
 Things to do in order to merge in HEAD (first item has highest priority):
--> import Marco Martin's "another kpdf icon" (kde-look: 16146)
 -> link thumbnails view with document
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignemnt. (by Mikolaj)
 -> usability: clear search must restore the full thumbs list (by Mikolaj)
@@ -49,6 +48,7 @@ More items (first items will enter 'In progress list' first):
 -> rotate the whole document / individual pages
 
 Done (newest feature comes firts):
+-> ADD: import Marco Martin's "another kpdf icon" (kde-look: 16146) (Albert)
 -> ADD: dynamic zoom with mid mouse button (click and drag up-down to zoom in-out)
 -> FIX: merge select text & select gfx, two sections on the same pop-up menu
 -> ADD: reading aids (inverted display, recolor, black/white, draw link border, draw image border)

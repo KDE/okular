@@ -16,8 +16,7 @@
 #ifndef _KPDF_PART_H_
 #define _KPDF_PART_H_
 
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <qmutex.h>
 #include <qwidget.h>
 
 #include <kparts/browserextension.h>
@@ -25,8 +24,6 @@
 
 #include "QOutputDev.h"
 
-class QPainter;
-class QPixmap;
 class QWidget;
 
 class KAboutData;
@@ -150,10 +147,10 @@ namespace KPDF
 
     // first page is page 1
     int   m_currentPage;
+    QMutex m_docMutex;
 
     ZoomMode m_zoomMode;
     float    m_zoomFactor;
-    int m_nextThumbnail;
 
     static unsigned int m_count;
 
@@ -161,7 +158,6 @@ namespace KPDF
 		void slotFitToWidthToggled();
 		void redrawPage();
 		void pageClicked ( int );
-    void nextThumbnail();
     void fileSaveAs();
   };
 

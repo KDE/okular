@@ -24,19 +24,20 @@ Thumbnail::Thumbnail(QWidget *parent, const QString &text, const QColor &color, 
     setPaletteBackgroundColor(m_backgroundColor);
 }
 
-void Thumbnail::setPixmap(const QPixmap *thumbnail)
+void Thumbnail::setImage(const QImage *thumbnail)
 {
-    m_original = thumbnail->convertToImage().smoothScale(m_thumbnailW->size());
+    // TODO i am almost sure this can be done inside the thumbnailgenerator thread
+    m_original = thumbnail->smoothScale(m_thumbnailW->size());
     m_thumbnailW->setPaletteBackgroundPixmap(m_original);
 }
 
-void Thumbnail::setPixmapSize(int height, int width)
+void Thumbnail::setImageSize(int height, int width)
 {
     m_thumbnailW->setFixedHeight(height);
     m_thumbnailW->setFixedWidth(width);
 }
 
-int Thumbnail::getPixmapHeight() const
+int Thumbnail::getImageHeight() const
 {
     return m_thumbnailW->size().height();
 }

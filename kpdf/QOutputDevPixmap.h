@@ -21,7 +21,7 @@
 
 #include "QOutputDev.h"
 
-class QPixmap;
+#include <qimage.h>
 
 class QOutputDevPixmap : public QOutputDev {
 public:
@@ -32,18 +32,13 @@ public:
 	// Destructor.
 	virtual ~QOutputDevPixmap();
 
-	//----- initialization and control
-
-	// Start a page.
-	virtual void startPage(int pageNum, GfxState *state);
-
 	// End a page
 	virtual void endPage();
 
-	QPixmap * getPixmap() const { return m_pixmap; };
+	const QImage &getImage() const;
 
 private:
-	QPixmap * m_pixmap;   		// pixmap to draw into
+	QImage m_image;
 };
 
 #endif // QOUTPUTDEVPIXMAP

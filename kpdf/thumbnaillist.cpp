@@ -9,10 +9,13 @@
 
 #include <math.h>
 
+#include "PDFDoc.h"
+
+#include "thumbnailgenerator.h"
 #include "thumbnaillist.h"
 #include "thumbnail.h"
 
-ThumbnailList::ThumbnailList(QWidget *parent) : QTable(parent)
+ThumbnailList::ThumbnailList(QWidget *parent, QMutex *docMutex) : QTable(parent), m_tg(0), m_doc(0), m_docMutex(docMutex)
 {
     setNumCols(1);
     setLeftMargin(0);
@@ -23,6 +26,15 @@ ThumbnailList::ThumbnailList(QWidget *parent) : QTable(parent)
     connect(this, SIGNAL(pressed(int, int, int, const QPoint&)), this, SIGNAL(clicked(int)));
     connect(this, SIGNAL(currentChanged(int, int)), this, SIGNAL(clicked(int)));
     connect(this, SIGNAL(currentChanged(int, int)), this, SLOT(changeSelected(int)));
+}
+
+ThumbnailList::~ThumbnailList()
+{
+    if (m_tg)
+    {
+        m_tg->wait();
+        delete m_tg;
+    }
 }
 
 void ThumbnailList::setCurrentItem(int i)
@@ -41,6 +53,54 @@ void ThumbnailList::changeSelected(int i)
     if (t) t -> setSelected(true);
 }
 
+void ThumbnailList::generateThumbnails(PDFDoc *doc)
+{
+    m_nextThumbnail = 1;
+    m_doc = doc;
+    generateNextThumbnail();
+}
+
+void ThumbnailList::generateNextThumbnail()
+{
+    if (m_tg)
+    {
+        m_tg->wait();
+        delete m_tg;
+    }
+    m_tg = new ThumbnailGenerator(m_doc, m_docMutex, m_nextThumbnail, QPaintDevice::x11AppDpiX(), this);
+    m_tg->start(QThread::IdlePriority);
+}
+
+void ThumbnailList::stopThumbnailGeneration()
+{
+    if (m_tg)
+    {
+        m_ignoreNext = true;
+        m_tg->wait();
+        delete m_tg;
+        m_tg = 0;
+    }
+}
+
+void ThumbnailList::customEvent(QCustomEvent *e)
+{
+    if (e->type() == 65432 && !m_ignoreNext)
+    {
+        QImage *i =  (QImage*)(e -> data());
+    
+        setThumbnail(m_nextThumbnail, i);
+        m_nextThumbnail++;
+        if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();
+        else
+        {
+            m_tg->wait();
+            delete m_tg;
+            m_tg = 0;
+        }
+    }
+    m_ignoreNext = false;
+}
+
 void ThumbnailList::setPages(int i, double ar)
 {
     Thumbnail *t;
@@ -55,11 +115,11 @@ void ThumbnailList::setPages(int i, double ar)
     m_heightLimit = 0;
 }
 
-void ThumbnailList::setThumbnail(int i, const QPixmap *thumbnail)
+void ThumbnailList::setThumbnail(int i, const QImage *thumbnail)
 {
     Thumbnail *t;
     t = dynamic_cast<Thumbnail *>(cellWidget(i-1, 0));
-    t->setPixmap(thumbnail);
+    t->setImage(thumbnail);
 }
 
 void ThumbnailList::viewportResizeEvent(QResizeEvent *)
@@ -78,7 +138,7 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *)
     t = dynamic_cast<Thumbnail *>(cellWidget(0, 0));
     if (size().height() <= m_heightLimit)
     {
-        if (t->getPixmapHeight() > (int)(visibleWidth()*m_ar))
+        if (t->getImageHeight() > (int)(visibleWidth()*m_ar))
         {
             setColumnWidth(0, visibleWidth());
             resizeThumbnails();
@@ -102,7 +162,7 @@ void ThumbnailList::resizeThumbnails()
     for(int i = 0; i < numRows(); ++i)
     {
         t = dynamic_cast<Thumbnail *>(cellWidget(i, 0));
-        t->setPixmapSize((int)(visibleWidth()*m_ar), visibleWidth());
+        t->setImageSize((int)(visibleWidth()*m_ar), visibleWidth());
         setRowHeight(i, (int)(visibleWidth()*m_ar) + t->labelSizeHintHeight());
     }
 }

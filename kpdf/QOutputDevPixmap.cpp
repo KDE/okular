@@ -22,9 +22,6 @@
 
 #include <GfxState.h>
 
-#include <qpixmap.h>
-#include <qimage.h>
-
 #include <kdebug.h>
 
 #include "SplashBitmap.h"
@@ -36,25 +33,12 @@
 // QOutputDevPixmap
 //------------------------------------------------------------------------
 
-QOutputDevPixmap::QOutputDevPixmap(SplashColor paperColor) : QOutputDev(paperColor), m_pixmap(0)
+QOutputDevPixmap::QOutputDevPixmap(SplashColor paperColor) : QOutputDev(paperColor), m_image(0)
 {
 }
 
 QOutputDevPixmap::~QOutputDevPixmap( )
 {
-	delete m_pixmap;
-}
-
-void QOutputDevPixmap::startPage ( int pageNum, GfxState *state )
-{
-	QOutputDev::startPage(pageNum, state);
-	delete m_pixmap;
-
-	m_pixmap = new QPixmap ( qRound ( state->getPageWidth ( )), qRound ( state->getPageHeight ( )));
-
-	//printf ( "NEW PIXMAP (%ld x %ld)\n", qRound ( state-> getPageWidth ( )),  qRound ( state-> getPageHeight ( )));
-
-	m_pixmap-> fill ( Qt::white ); // clear pixmap
 }
 
 void QOutputDevPixmap::endPage ( )
@@ -66,5 +50,10 @@ void QOutputDevPixmap::endPage ( )
 	bh = getBitmap()->getHeight();
 	bw = getBitmap()->getWidth();
 	dataPtr = getBitmap()->getDataPtr();
-	m_pixmap->convertFromImage(QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian));
+	m_image = QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian);
+}
+
+const QImage &QOutputDevPixmap::getImage() const
+{
+	return m_image;
 }

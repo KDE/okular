@@ -28,6 +28,7 @@
 #include <qwidget.h>
 #include <qlistbox.h>
 #include <qfile.h>
+#include <qpainter.h>
 #include <qtimer.h>
 
 #include <kaction.h>
@@ -56,7 +57,6 @@
 #include "QOutputDevKPrinter.h"
 #include "QOutputDevPixmap.h"
 
-// #include "kpdf_canvas.h"
 #include "kpdf_pagewidget.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
@@ -82,7 +82,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // we need an instance
   setInstance(KPDFPartFactory::instance());
 
-  pdfpartview = new PDFPartView(parentWidget, widgetName);
+  pdfpartview = new PDFPartView(parentWidget, widgetName, &m_docMutex);
 
   connect(pdfpartview, SIGNAL( clicked ( int ) ), this, SLOT( pageClicked ( int ) ));
 
@@ -187,8 +187,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 Part::~Part()
 {
     m_count--;
-    if (m_count == 0) delete globalParams;
+    pdfpartview->stopThumbnailGeneration();
     writeSettings();
+    if (m_count == 0) delete globalParams;
     delete m_doc;
 }
 
@@ -365,6 +366,7 @@ Part::createAboutData()
   bool
 Part::closeURL()
 {
+  pdfpartview->stopThumbnailGeneration();
   delete m_doc;
   m_doc = 0;
 
@@ -393,36 +395,16 @@ Part::openFile()
   if (m_doc->getNumPages() > 0)
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?
+    // TODO move it to inside pdfpartview or even the thumbnail list itself?
     pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
+    pdfpartview->generateThumbnails(m_doc);
 
     m_outputDev->setPDFDocument(m_doc);
     goToPage(1);
 
-    m_nextThumbnail=1;
-    QTimer::singleShot(10, this, SLOT(nextThumbnail()));
   }
 
   return true;
-}
-
-void Part::nextThumbnail()
-{
-  // check the user did not change the document and we are trying to render somethiung that
-  // does not exist
-  if (m_nextThumbnail > m_doc->getNumPages()) return;
-  // Pixels per point when the zoomFactor is 1.
-  
-  SplashColor paperColor;
-  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-  QOutputDevPixmap odev(paperColor);
-  odev.startDoc(m_doc->getXRef());
-
-  m_doc->displayPage(&odev, m_nextThumbnail, QPaintDevice::x11AppDpiX(), QPaintDevice::x11AppDpiY(), 0, true, true);
-  pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
-
-  m_nextThumbnail++;
-  if (m_nextThumbnail <= m_doc->getNumPages())
-    QTimer::singleShot(10, this, SLOT(nextThumbnail()));
 }
 
   void
@@ -758,11 +740,14 @@ void Part::doPrint( KPrinter& printer )
   QOutputDevKPrinter printdev( painter, paperColor, printer );
   printdev.startDoc(m_doc->getXRef());
   QValueList<int> pages = printer.pageList();
+  
   for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
   {
+    m_docMutex.lock();
     m_doc->displayPage(&printdev, *i, printer.resolution(), printer.resolution(), 0, true, true);
     if ( ++i != pages.end() )
       printer.newPage();
+    m_docMutex.unlock();
   }
 }
 
@@ -809,7 +794,9 @@ void Part::doFind(QString s, bool next)
     pg = m_currentPage + 1;
     while(!found && pg <= m_doc->getNumPages())
     {
+      m_docMutex.lock();
       m_doc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
+      m_docMutex.unlock();
       found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
       if (!found) pg++;
     }
@@ -822,7 +809,9 @@ void Part::doFind(QString s, bool next)
         pg = 1;
         while(!found && pg < m_currentPage)
         {
+          m_docMutex.lock();
           m_doc->displayPage(textOut, pg, 72, 72, 0, gTrue, gFalse);
+          m_docMutex.unlock();
           found = textOut->findText(u, len, gTrue, gTrue, gFalse, gFalse, &xMin1, &yMin1, &xMax1, &yMax1);
           if (!found) pg++;
         }

@@ -31,9 +31,10 @@
 
 namespace KPDF
 {
-    PageWidget::PageWidget(QWidget* parent, const char* name)
+    PageWidget::PageWidget(QWidget* parent, const char* name, QMutex *docMutex)
         : QScrollView(parent, name, WRepaintNoErase),
           m_doc(0),
+          m_docMutex(docMutex),
           m_zoomFactor( 1.0 ),
           m_currentPage( 1 ),
           m_pressedAction( 0 ),
@@ -122,24 +123,24 @@ namespace KPDF
 
     void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
     {
-        QPixmap * m_pixmap = NULL;
+        QImage im;
         QColor bc(KGlobalSettings::calculateAlternateBackgroundColor(KGlobalSettings::baseColor()));
         if (m_outputdev)
-            m_pixmap = m_outputdev->getPixmap();
-        if ( m_pixmap != NULL && ! m_pixmap->isNull() )
+            im = m_outputdev->getImage();
+        if ( !im.isNull() )
         {
-            p->drawPixmap ( clipx, clipy, *m_pixmap, clipx, clipy, clipw, cliph );
-            if ((clipw + clipx) > m_pixmap->width()) 
-                p->fillRect ( m_pixmap->width(), 
+            p->drawImage ( clipx, clipy, im, clipx, clipy, clipw, cliph );
+            if ((clipw + clipx) > im.width()) 
+                p->fillRect ( im.width(), 
                         clipy, 
-                        clipw - (m_pixmap->width() - clipx), 
-                        m_pixmap->height() - clipy, 
+                        clipw - (im.width() - clipx), 
+                        im.height() - clipy, 
                         bc );
-            if ((cliph + clipy) > m_pixmap->height())
+            if ((cliph + clipy) > im.height())
                 p->fillRect ( clipx, 
-                        m_pixmap->height(), 
+                        im.height(), 
                         clipw, 
-                        cliph - (m_pixmap->height() - clipy), 
+                        cliph - (im.height() - clipy), 
                         bc );
             if (m_selection)
             {
@@ -300,9 +301,11 @@ namespace KPDF
 
             const float ppp = basePpp * m_zoomFactor; // pixels per point
 
+            m_docMutex->lock();
             m_doc->displayPage(m_outputdev, m_currentPage, ppp * 72.0, ppp * 72.0, 0, true, true);
+            m_docMutex->unlock();
 
-            resizeContents ( m_outputdev->getPixmap()->width ( ), m_outputdev->getPixmap()->height ( ));
+            resizeContents ( m_outputdev->getImage().width ( ), m_outputdev->getImage().height ( ));
 
             viewport()->update();
         }

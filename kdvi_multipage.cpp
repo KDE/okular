@@ -307,13 +307,7 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
 
 
   Q_UINT16 y = pageData->textLinkList[beginSelection].box.bottom();
-  goto_page(pageNr, y);
-  /*
-    document_history.add(pageNr,y);
-
-    scrollView()->ensureVisible(scrollView()->width()/2, y );
-    emit pageInfo(window->totalPages(), pageNr );
-  */
+  goto_page(pageNr-1, y);
 }
 
 

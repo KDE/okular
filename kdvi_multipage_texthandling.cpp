@@ -86,6 +86,7 @@ void KDVIMultiPage::doExportText(void)
   progress.setMinimumDuration(300);
 
   documentPagePixmap dummyPage;
+  dummyPage.resize(1,1);
 
   for(int page=1; page <= window->dviFile->total_pages; page++) {
     progress.setProgress( page );
@@ -198,6 +199,7 @@ void KDVIMultiPage::findNextText(void)
   progress.setMinimumDuration ( 1000 );
 
   documentPagePixmap dummyPage; 
+  dummyPage.resize(1,1);
 
   // Find the page and text position on the page where the search will
   // start. If nothing is selected, we start at the beginning of the
@@ -236,11 +238,11 @@ void KDVIMultiPage::findNextText(void)
       else
 	return;
     }
-    
+
     if (pageNumber > startingPage)
       progress.setProgress( pageNumber - startingPage );
     else
-      progress.setProgress( pageNumber +  window->dviFile->total_pages - startingPage );
+      progress.setProgress( pageNumber + window->dviFile->total_pages - startingPage );
     
     qApp->processEvents();
     if ( progress.wasCancelled() )
@@ -251,11 +253,12 @@ void KDVIMultiPage::findNextText(void)
     if (dummyPage.textLinkList.size() == 0)
       continue;
     
+
     // Go trough the text of the page and search for the string. How
     // much of the page we actually search depends on the page: we
     // start the search on the current page *after* the selected text,
     // if there is any, then search the other pages entirely, and then
-    // the rest of the current page. 
+    // the rest of the current page.
     if (pageNumber != startingPage) {
       // On pages which are not our current page, search through
       // everything
@@ -323,7 +326,8 @@ void KDVIMultiPage::findPrevText(void)
   // this to get a better 'user feeling'
   Q_UINT16 startingPage;
   Q_UINT16 startingTextItem;
-  documentPagePixmap dummyPage; 
+  documentPagePixmap dummyPage;
+  dummyPage.resize(1,1); 
   if (userSelection.getPageNumber() == 0) {
     startingPage     = getCurrentPageNumber();
     dummyPage.setPageNumber(startingPage);

@@ -216,7 +216,7 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
   proc->clearArguments();
   *proc << "kpsewhich";
   *proc << QString("--dpi %1").arg(MFResolutions[MetafontMode]);
-  *proc << QString("--mode %1").arg(MFModes[MetafontMode]);
+  *proc << QString("--mode %1").arg(KShellProcess::quote(MFModes[MetafontMode]));
   // Enable automatic pk-font generation only in the second pass, and
   // only if the user expressidly asked for it.
   if ((makepk == 0) || (pass == 0))
@@ -229,10 +229,10 @@ char fontPool::check_if_fonts_are_loaded(unsigned char pass)
   while ( fontp != 0 ) {
     if ((fontp->flags & font::FONT_KPSE_NAME) == 0) {
       numFontsInJob++;
-      *proc << QString("%1.%2pk").arg(fontp->fontname).arg((int)(fontp->fsize + 0.5));
+      *proc << KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->fsize + 0.5)).arg(fontp->fontname));
       // In the first pass, we look also for virtual fonts.
       if (pass == 0)
-	*proc << QString("%1.vf").arg(fontp->fontname);
+	*proc << KShellProcess::quote(QString("%1.vf").arg(fontp->fontname));
       // In the second (last) pass, mark the font "looked up". As this
       // is the last chance that the filename could be found, we
       // ensure that if the filename is still not found now, we won't

@@ -224,24 +224,6 @@ void dviWindow::set_empty_char(unsigned int cmd, unsigned int ch)
   return;
 }
 
-
-void dviWindow::load_n_set_char(unsigned int cmd, unsigned int ch)
-{
-#ifdef DEBUG_RENDER
-  kdDebug() << "load_n_set_char" << endl;
-#endif
-
-  if ( currinf.fontp->load_font() ) {	/* if not found */
-    kdError() << "Character(s) will be left blank." << endl;
-    currinf.set_char_p = currinf.fontp->set_char_p = &dviWindow::set_empty_char;
-    return;
-  }
-  currinf.set_char_p = currinf.fontp->set_char_p;
-  (this->*currinf.set_char_p)(cmd, ch);
-  return;
-}
-
-
 void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER

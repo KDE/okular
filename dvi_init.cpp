@@ -258,14 +258,14 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
     if (fontp == NULL) {		/* if font doesn't exist yet */
       fontp = new font(fontname, fsize, checksum, magstepval, scale * scale_dimconv / (1<<20));
       
-      fontp->set_char_p = &dviWindow::load_n_set_char;
+      //@@@fontp->set_char_p = &dviWindow::load_n_set_char;
       /* With virtual fonts, we might be opening another font
 	 (pncb.vf), instead of what we just allocated for
 	 (rpncb), thus leaving garbage in the structure for
 	 when close_a_file comes along looking for something.  */
       //@@@      if (vfparent == NULL)
       //@@@     	font_not_found |= font_pool.load_font(fontp);
-      font_pool.append(fontp);
+      font_pool.appendx(fontp);
       break;
     }
 

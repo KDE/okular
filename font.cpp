@@ -7,6 +7,7 @@
 #include <qapplication.h>
 #include <stdio.h>
 
+#include "dviwin.h"
 #include "font.h"
 #include "kdvi.h"
 
@@ -50,15 +51,18 @@ void font::font_name_receiver(KProcess *, char *buffer, int buflen)
   set_char_p = &dviWindow::set_char;
   int magic      = two(file);
 
-  if (magic == PK_MAGIC)
+  if (magic == PK_MAGIC) {
+    // Achtung! Read_PK_index kann auch schiefgehen!
     read_PK_index();
-  else
+    set_char_p = &dviWindow::set_char;
+  } else
     if (magic == GF_MAGIC)
       oops(QString(i18n("The GF format for font file %1 is no longer supported")).arg(filename) );
     else
-      if (magic == VF_MAGIC)
+      if (magic == VF_MAGIC) {
 	read_VF_index();
-      else
+	set_char_p = &dviWindow::set_vf_char;
+      } else
 	oops(QString(i18n("Cannot recognize format for font file %1")).arg(filename) );
 }
 
@@ -77,6 +81,10 @@ font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
   file       = NULL; 
   filename   = "";
   dimconv    = dconv;
+  
+  // By default, this font contains only empty characters. After the
+  // font has been loaded, this function pointer will be replaced by another one.
+  set_char_p = &dviWindow::set_empty_char;
 }
 
 font::~font()
@@ -108,51 +116,6 @@ font::~font()
 }
 
 
-
-/** load_font locates the raster file and reads the index of
-    characters, plus whatever other preprocessing is done (depending
-    on the format).  */
-
-unsigned char font::load_font(void)
-{
-#ifdef DEBUG_FONT
-  kdDebug() << "loading font " <<  fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
-#endif
-
-  // Find the font name. We use the external program "kpsewhich" for
-  // that purpose.
-  KShellProcess proc;
-  connect(&proc, SIGNAL(receivedStdout(KProcess *, char *, int)),
-	  this, SLOT(font_name_receiver(KProcess *, char *, int)));
-
-  // First try if the font is a virtual font
-  proc.clearArguments();
-  proc << "kpsewhich";
-  proc << "--dpi 600";
-  proc << "--mode ljfour";
-  proc << "--format vf";
-  proc << fontname;
-  proc.start(KProcess::NotifyOnExit, KProcess::All);
-  while(proc.isRunning())
-    qApp->processEvents();
-
-  // Font not found? Then check if the font is a regular font.
-  if (filename.isEmpty()) {
-    proc.clearArguments();
-    proc << "kpsewhich";
-    proc << "--dpi 600";
-    proc << "--mode ljfour";
-    proc << "--format pk";
-    proc << "--mktex pk";
-    proc << QString("%1.%2").arg(fontname).arg((int)(fsize + 0.5));
-    proc.start(KProcess::NotifyOnExit, KProcess::All);
-    while(proc.isRunning())
-      qApp->processEvents();
-  }
-
-
-  return False;
-}
 
 
 

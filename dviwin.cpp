@@ -170,11 +170,8 @@ void dviWindow::setShowHyperLinks( int flag )
 
 void dviWindow::setMakePK( int flag )
 {
-  if (dviFile != NULL)
-  KMessageBox::sorry( this,
-		      i18n("The change in font generation will be effective\n"
-			   "only after you start kdvi again!") );
   makepk = flag;
+  font_pool.setMakePK(makepk);
 }
 
 void dviWindow::setMetafontMode( const QString & mfm )

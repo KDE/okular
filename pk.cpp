@@ -51,11 +51,11 @@
 
 
 #include <kdebug.h>
-
 #include <klocale.h>
 
 #include "font.h"
 #include "dviwin.h"
+#include "kdvi.h"  // This is where debugging flags are set.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,8 +65,6 @@
 extern	char  *xmalloc (unsigned, const char *);
 extern void oops(QString message);
 extern void alloc_bitmap(bitmap *bitmap);
-
-#define DEBUG_PK 1
 
 BMUNIT	bit_masks[33] = {
 	0x0,		0x1,		0x3,		0x7,

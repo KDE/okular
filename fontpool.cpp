@@ -15,6 +15,11 @@ void fontPool::setMetafontMode( const QString &mode )
   MetafontMode = mode;
 }
 
+void fontPool::setMakePK(int flag)
+{
+  makepk = flag;
+  kdDebug() << "MakeTexPK " << flag << endl;
+}
 
 void fontPool::appendx(const struct font *fontp)
 {
@@ -35,8 +40,6 @@ void fontPool::appendx(const struct font *fontp)
   // First try if the font is a virtual font
   proc.clearArguments();
   proc << "kpsewhich";
-  //  proc << QString("--dpi %1").arg(Resolution);
-  //  proc << QString("--mode %1").arg(MetafontMode);
   proc << "--format vf";
   proc << fontp->fontname;
   proc.start(KProcess::NotifyOnExit, KProcess::All);
@@ -50,7 +53,10 @@ void fontPool::appendx(const struct font *fontp)
     proc << QString("--dpi %1").arg(Resolution);
     proc << QString("--mode %1").arg(MetafontMode);
     proc << "--format pk";
-    proc << "--mktex pk";
+    if (makepk == 0)
+      proc << "--no-mktex pk";
+    else
+      proc << "--mktex pk";
     proc << QString("%1.%2").arg(fontp->fontname).arg((int)(fontp->fsize + 0.5));
     proc.start(KProcess::NotifyOnExit, KProcess::All);
     while(proc.isRunning())
@@ -65,5 +71,4 @@ void fontPool::status(void)
 
   for ( fontp=this->first(); fontp != 0; fontp=this->next() ) 
     kdDebug() << fontp->fontname << ": " << fontp->flags << endl;
-
 }

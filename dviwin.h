@@ -77,7 +77,6 @@ public:
   void          draw_part(struct frame *minframe, double current_dimconv);
   void          draw_page(void);
   void          set_vf_char(unsigned int cmd, unsigned int ch);
-  void          load_n_set_char(unsigned int cmd, unsigned int ch);
   void          set_char(unsigned int cmd, unsigned int ch);
   void          set_empty_char(unsigned int cmd, unsigned int ch);
   void          set_no_char(unsigned int cmd, unsigned int ch);

@@ -38,8 +38,6 @@ struct macro {
 };
 
 
-typedef	void (dviWindow::*set_char_proc)(unsigned int, unsigned int);
-
 class font : public QObject {
   Q_OBJECT
 
@@ -62,7 +60,6 @@ public:
                 ~font();
   glyph         *glyphptr(unsigned int ch);
   void           mark_as_used(void);
-  unsigned char  load_font(void);
 
   char          *fontname;	// name of font, such as "cmr10"
   unsigned char  flags;		// flags byte (see values below)

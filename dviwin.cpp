@@ -609,13 +609,14 @@ void dviWindow::all_fonts_loaded(void)
 	  if (!sourceLink.at(j).isNumber())
 	    break;
 	Q_UINT32 sourceLineNumber = sourceLink.left(j).toUInt();
-	QString  sourceFileName   = QFileInfo(sourceLink.mid(j)).absFilePath();
-	if (fileName.stripWhiteSpace() == sourceFileName.stripWhiteSpace()) 
+	QString  sourceFileName   = QFileInfo(sourceLink.mid(j).stripWhiteSpace()).absFilePath();
+	if (fileName.stripWhiteSpace() == sourceFileName.stripWhiteSpace()) {
 	  if (refLineNumber >= sourceLineNumber) {
 	    page = current_page;
 	    y    = sourceHyperLinkList[i].box.top();
 	  } else
 	    break;
+	}
       }
     }
     progress.setProgress( dviFile->total_pages ); // Switch off the progress dialog, etc.

@@ -1,5 +1,8 @@
 //
 // Class: dviWindow
+// Author: Stefan Kebekus
+//
+// (C) 2001, Stefan Kebekus.
 //
 // Previewer for TeX DVI files.
 //

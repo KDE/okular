@@ -7,12 +7,13 @@
 // Copyright 2000--2001, Stefan Kebekus (stefan.kebekus@uni-bayreuth.de).
 
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qstringlist.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kprocio.h>
+#include <qdir.h>
+#include <qfile.h>
+#include <qfileinfo.h>
+#include <qstringlist.h>
 
 #include "dviwin.h"
 #include "kdvi.h"
@@ -162,18 +163,11 @@ void dviWindow::epsf_special(QString cp)
       EPSfilename = fi2.absFilePath();
     else {
       // Use kpsewhich to find the eps file.
-      QString cmd = "kpsewhich ";
-      cmd += KShellProcess::quote(EPSfilename);
-      
-      FILE *fs = popen(QFile::encodeName(cmd).data(), "r");
-      if (fs)
-      {
-        QTextStream ts(fs, IO_ReadOnly);
-        QString KPSEWHICH_EPSfilename = ts.read().stripWhiteSpace();
-	pclose(fs);
-	if (!KPSEWHICH_EPSfilename.isEmpty())
-	  EPSfilename = KPSEWHICH_EPSfilename;
-      }
+      KProcIO proc;
+      proc << "kpsewhich" << EPSfilename;
+      proc.start(KProcess::Block);
+      proc.readln(EPSfilename);
+      EPSfilename = EPSfilename.stripWhiteSpace();
     }
   }
   

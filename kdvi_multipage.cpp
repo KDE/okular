@@ -308,7 +308,7 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     return;
   }
 
-  DocumentPage *pageData = currentPage.getPage(pageNr);
+  DocumentPage *pageData = pageCache.getPage(pageNr);
   if (pageData == 0) {
 #ifdef DEBUG_DOCUMENTWIDGET
     kdDebug(4300) << "DocumentWidget::paintEvent: no DocumentPage generated" << endl;
@@ -789,7 +789,7 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget()
 {
   // TODO: handle different sizes per page.
   DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(),
-      getRenderer()->sizeOfPage(/*page+*/1), &currentPage, 
+      getRenderer()->sizeOfPage(/*page+*/1), &pageCache,
       &userSelection, "singlePageWidget" );
 
   // Handle source links

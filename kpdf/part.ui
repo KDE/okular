@@ -51,7 +51,7 @@
 <customwidgets>
     <customwidget>
         <class>PageWidget</class>
-        <header location="global">/home/oelewapperke/dev/kde/kdenonbeta/kpdf/kpdf/kpdf_pagewidget.h</header>
+        <header location="global">kpdf_pagewidget.h</header>
         <sizehint>
             <width>-1</width>
             <height>-1</height>

@@ -870,8 +870,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             KPopupMenu menu( this );
             if ( !selectedText.isEmpty() )
             {
-		QString tmp = i18n( "Text ( %n character )", "Text ( %n characters )", selectedText.length() );
-                menu.insertTitle( tmp );
+                menu.insertTitle( i18n( "Text ( %n character )", "Text ( %n characters )", selectedText.length() ) );
                 menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
             }
             menu.insertTitle( i18n( "Image ( %1 by %2 pixels )" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );

@@ -195,17 +195,57 @@ glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor c
     } else {
       QImage imgi(slot->bitmap.width, slot->bitmap.rows, 32);
       imgi.setAlphaBuffer(true);
-      uchar *srcScanLine = slot->bitmap.buffer;
-      for(int row=0; row<slot->bitmap.rows; row++) {
-	uchar *destScanLine = imgi.scanLine(row);
-	for(int col=0; col<slot->bitmap.width; col++) {
-	  destScanLine[4*col+0] = color.blue();
-	  destScanLine[4*col+1] = color.green();
-	  destScanLine[4*col+2] = color.red();
-	  destScanLine[4*col+3] = srcScanLine[col];
+
+      // Do QPixmaps fully support the alpha channel? If yes, we use
+      // that. Otherwise, use other routines as a fallback
+      if (parent->font_pool->QPixmapSupportsAlpha) {
+	// If the alpha channel is properly supported, we set the
+	// character glyph to a colored rectangle, and define the
+	// character outline only using the alpha channel. That
+	// ensures good quality rendering for overlapping characters.
+	uchar *srcScanLine = slot->bitmap.buffer;
+	for(int row=0; row<slot->bitmap.rows; row++) {
+	  uchar *destScanLine = imgi.scanLine(row);
+	  for(int col=0; col<slot->bitmap.width; col++) {
+	    destScanLine[4*col+0] = color.blue();
+	    destScanLine[4*col+1] = color.green();
+	    destScanLine[4*col+2] = color.red();
+	    destScanLine[4*col+3] = srcScanLine[col];
+	  }
+	  srcScanLine += slot->bitmap.pitch;
 	}
-	srcScanLine += slot->bitmap.pitch;
+      } else {
+	// If the alpha channel is not supported... QT seems to turn
+	// the alpha channel into a crude bitmap which is used to mask
+	// the resulting QPixmap. In this case, we define the
+	// character outline using the image data, and use the alpha
+	// channel only to store "maximally opaque" or "completely
+	// transparent" values. When characters are rendered,
+	// overlapping characters are no longer correctly drawn, but
+	// quality is still sufficient for most purposes. One notable
+	// exception is output from the gftodvi program, which will be
+	// partially unreadable.
+	Q_UINT16 rInv = 0xFF - color.red();
+	Q_UINT16 gInv = 0xFF - color.green();
+	Q_UINT16 bInv = 0xFF - color.blue();
+	
+	for(Q_UINT16 y=0; y<slot->bitmap.rows; y++) {
+	  Q_UINT8 *srcScanLine = slot->bitmap.buffer + y*slot->bitmap.pitch;
+	  unsigned int *destScanLine = (unsigned int *)imgi.scanLine(y);
+	  for(Q_UINT16 col=0; col<slot->bitmap.width; col++) {
+	    Q_UINT16 data =  *srcScanLine;
+	    // The value stored in "data" now has the following meaning:
+	    // data = 0 -> white; data = 0xff -> use "color"
+	    *destScanLine = qRgba(0xFF - (rInv*data + 0x7F) / 0xFF,
+				  0xFF - (gInv*data + 0x7F) / 0xFF,
+				  0xFF - (bInv*data + 0x7F) / 0xFF,
+				  (data > 0x03) ? 0xff : 0x00);
+	    destScanLine++;
+	    srcScanLine++;
+	  }
+	}
       }
+      
       g->shrunkenCharacter.convertFromImage (imgi, 0);
       g->x2 = -slot->bitmap_left;
       g->y2 = slot->bitmap_top;

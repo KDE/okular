@@ -264,15 +264,52 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
 	xydata[shrunk_width*y + x] = (int)(value/shrinkFactor);
       }
     
-    // Generate the alpha-channel.
     QImage im32(shrunk_width, shrunk_height, 32);
-    im32.fill(qRgb(color.red(), color.green(), color.blue()));
-    im32.setAlphaBuffer(TRUE);
-    for(Q_UINT16 y=0; y<shrunk_height; y++) {
-      Q_UINT8 *destScanLine = (Q_UINT8 *)im32.scanLine(y);
-      for(Q_UINT16 col=0; col<shrunk_width; col++) 
-	destScanLine[4*col+3] = xydata[shrunk_width*y + col];
+    im32.setAlphaBuffer(true);
+    // Do QPixmaps fully support the alpha channel? If yes, we use
+    // that. Otherwise, use other routines as a fallback
+    if (parent->font_pool->QPixmapSupportsAlpha) {
+      // If the alpha channel is properly supported, we set the
+      // character glyph to a colored rectangle, and define the
+      // character outline only using the alpha channel. That ensures
+      // good quality rendering for overlapping characters.
+      im32.fill(qRgb(color.red(), color.green(), color.blue()));
+      for(Q_UINT16 y=0; y<shrunk_height; y++) {
+	Q_UINT8 *destScanLine = (Q_UINT8 *)im32.scanLine(y);
+	for(Q_UINT16 col=0; col<shrunk_width; col++) 
+	  destScanLine[4*col+3] = xydata[shrunk_width*y + col];
+      }
+    } else {
+      // If the alpha channel is not supported... QT seems to turn the
+      // alpha channel into a crude bitmap which is used to mask the
+      // resulting QPixmap. In this case, we define the character
+      // outline using the image data, and use the alpha channel only
+      // to store "maximally opaque" or "completely transparent"
+      // values. When characters are rendered, overlapping characters
+      // are no longer correctly drawn, but quality is still
+      // sufficient for most purposes. One notable exception is output
+      // from the gftodvi program, which will be partially unreadable.
+      Q_UINT16 rInv = 0xFF - color.red();
+      Q_UINT16 gInv = 0xFF - color.green();
+      Q_UINT16 bInv = 0xFF - color.blue();
+      
+      Q_UINT8 *srcScanLine = xydata;
+      for(Q_UINT16 y=0; y<shrunk_height; y++) {
+	unsigned int *destScanLine = (unsigned int *)im32.scanLine(y);
+	for(Q_UINT16 col=0; col<shrunk_width; col++) {
+	  Q_UINT16 data =  *srcScanLine;
+	  // The value stored in "data" now has the following meaning:
+	  // data = 0 -> white; data = 0xff -> use "color"
+	  *destScanLine = qRgba(0xFF - (rInv*data + 0x7F) / 0xFF,
+				0xFF - (gInv*data + 0x7F) / 0xFF,
+				0xFF - (bInv*data + 0x7F) / 0xFF,
+				(data > 0x03) ? 0xff : 0x00);
+	  destScanLine++;
+	  srcScanLine++;
+	}
+      }
     }
+    
     g->shrunkenCharacter.convertFromImage(im32,0);
     g->shrunkenCharacter.setOptimization(QPixmap::BestOptim);
   }

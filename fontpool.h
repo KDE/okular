@@ -145,6 +145,15 @@ Q_OBJECT
   fontEncodingPool encodingPool;
 #endif
 
+  /** This flag is set during the construction of the fontPool
+      object. It indicates if the QT library supports the alpha
+      channel of pixmaps. Experiments show that --depending of the
+      configuration of QT at compile and runtime or the availability
+      of the XFt extension, alpha channels are either supported, or
+      silently converted to 1-bit masks. The redering routines in the
+      TeXFont implementation use this flag to choose the apropriate
+      drawing routines for the different setups. */
+  bool QPixmapSupportsAlpha;
 
 signals:
   /** Emitted to indicate that the progress dialog should show up now. */

@@ -146,8 +146,7 @@ unsigned char font::load_font(void)
   }
   else
     if (!kpse_bitmap_tolerance ((double) size_found, fsize))
-      kdError() << i18n("Can't find font ") << fontname << i18n(" at ") << dpi << i18n(" dpi; using ") 
-		<< size_found << i18n(" dpi instead.") << endl;
+      kdError() << i18n("Can't find font %1 at %2 dpi; using %d dpi instead.\n").arg(fontname).arg(dpi).arg(size_found);
   fsize      = size_found;
   timestamp  = ++current_timestamp;
   set_char_p = &dviWindow::set_char;
@@ -202,7 +201,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
   struct glyph *g = glyphtable+ch;
   if (g->bitmap.bits == NULL) {
     if (g->addr == 0) {
-      kdError() << i18n("Character ") << ch << i18n(" not defined in font ") << fontname << endl;
+      kdError() << i18n("Character %1 not defined in font %2").arg(ch).arg(fontname) << endl;
       g->addr = -1;
       return NULL;
     }

@@ -22,6 +22,7 @@
 
 // local includes
 #include "page.h"
+#include "pagetransition.h"
 #include "link.h"
 #include "conf/settings.h"
 #include "xpdf/TextOutputDev.h"

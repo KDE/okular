@@ -122,6 +122,8 @@ bool KDVIMultiPage::openFile()
   emit setStatusBarText(QString(i18n("Loading file %1")).arg(m_file));
 
   bool r = window->setFile(m_file,url().ref());
+  if (!r)
+    emit setStatusBarText(QString::null);
   window->changePageSize(); //  This also calles drawPage();
   emit numberOfPages(window->totalPages());
   enableActions(r);

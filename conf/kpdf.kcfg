@@ -1,0 +1,112 @@
+<!DOCTYPE kcfg SYSTEM "http://www.kde.org/standards/kcfg/1.0/kcfg.dtd">
+<kcfg>
+ <kcfgfile name="kpdfpartrc" />
+ <group name="Accessibility" >
+  <entry key="PaperColor" type="Color" >
+   <default code="true" >Qt::white</default>
+  </entry>
+  <entry key="HighlightImages" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="HighlightLinks" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="ChangeColors" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="RenderMode" type="Enum" >
+   <default>Inverted</default>
+   <choices>
+    <choice name="Inverted" />
+    <choice name="Paper" />
+    <choice name="pad_paper_color" />
+    <choice name="Recolor" />
+    <choice name="pad_fg_color" />
+    <choice name="pad_bg_color" />
+    <choice name="BlackWhite" />
+   </choices>
+  </entry>
+  <entry key="RecolorForeground" type="Color" >
+   <default code="true" >0x600000</default>
+  </entry>
+  <entry key="RecolorBackground" type="Color" >
+   <default code="true" >0xF0F0F0</default>
+  </entry>
+  <entry key="BWThreshold" type="UInt" >
+   <default>127</default>
+   <min>2</min>
+   <max>253</max>
+  </entry>
+  <entry key="BWContrast" type="UInt" >
+   <default>2</default>
+   <min>2</min>
+   <max>6</max>
+  </entry>
+ </group>
+ <group name="General" >
+  <entry key="ShowOSD" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="WatchFile" type="Bool" >
+   <default>true</default>
+  </entry>
+ </group>
+ <group name="MainView" >
+  <entry key="ShowLeftPanel" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="ShowSearchBar" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SplitterSizes" type="IntList" />
+ </group>
+ <group name="PageView" >
+  <entry key="ShowScrollBars" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="ViewContinous" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="ViewColumns" type="UInt" >
+   <default>1</default>
+   <min>1</min>
+   <max>8</max>
+  </entry>
+ </group>
+ <group name="Performance" >
+  <entry key="MemoryLevel" type="Enum" >
+   <default>Normal</default>
+   <choices>
+    <choice name="Low" />
+    <choice name="Normal" />
+    <choice name="Aggressive" />
+    <choice name="pad_description" />
+   </choices>
+  </entry>
+  <entry key="DisableCompositing" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="DisableThreading" type="Bool" >
+   <default>false</default>
+  </entry>
+ </group>
+ <group name="Presentation" >
+  <entry key="SlidesGlitterTrans" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SlidesShowProgress" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SlidesShowGrayBack" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SlidesShowSummary" type="Bool" >
+   <default>false</default>
+  </entry>
+ </group>
+ <group name="Debugging Options" >
+  <entry key="DebugDrawBoundaries" type="Bool" >
+   <default>false</default>
+  </entry>
+ </group>
+</kcfg>

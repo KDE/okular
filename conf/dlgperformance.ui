@@ -1,0 +1,170 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>DlgPerformance</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>DlgPerformance</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>252</width>
+            <height>218</height>
+        </rect>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="QButtonGroup">
+            <property name="name">
+                <cstring>kcfg_MemoryLevel</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>4</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="title">
+                <string>Memory Usage</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>lowRadio</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Low</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>normalRadio</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Normal (default)</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>aggressiveRadio</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Aggressive</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>descLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>...</string>
+                    </property>
+                    <property name="textFormat">
+                        <enum>PlainText</enum>
+                    </property>
+                    <property name="alignment">
+                        <set>WordBreak|AlignVCenter</set>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>4</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="title">
+                <string>CPU Usage</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_DisableCompositing</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disable &amp;transparency effects</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_DisableThreading</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disable &amp;asyncronous generation</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>21</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>lowRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DlgPerformance</receiver>
+        <slot>lowRadio_toggled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>normalRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DlgPerformance</receiver>
+        <slot>normalRadio_toggled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>aggressiveRadio</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>DlgPerformance</receiver>
+        <slot>aggressiveRadio_toggled(bool)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in implementation">kdialog.h</include>
+    <include location="local" impldecl="in implementation">dlgperformance.ui.h</include>
+</includes>
+<slots>
+    <slot>lowRadio_toggled( bool on )</slot>
+    <slot>normalRadio_toggled( bool on )</slot>
+    <slot>aggressiveRadio_toggled( bool on )</slot>
+</slots>
+<functions>
+    <function access="private">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -1,0 +1,22 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui version="6" name="kpdf_shell" >
+ <MenuBar>
+  <Menu name="file" >
+   <DefineGroup append="save_merge" name="file_save" />
+   <DefineGroup append="print_merge" name="file_print" />
+  </Menu>
+  <!--Menu name="view" >
+   <Action name="fullscreen" />
+  </Menu-->
+  <Menu name="settings" >
+   <DefineGroup append="show_merge" name="show_merge" />
+  </Menu>
+  <Merge/>
+ </MenuBar>
+ <ToolBar noMerge="1" name="mainToolBar" >
+  <text>Main Toolbar</text>
+  <Action name="file_open" />
+  <Action name="file_open_recent" />
+  <Action name="file_print" />
+ </ToolBar>
+</kpartgui>

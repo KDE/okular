@@ -74,11 +74,12 @@ class KPDFDocument : public QObject // only for a private slot..
         void setViewport( const DocumentViewport & viewport, int id = -1 );
         void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool asyncronous );
         void requestTextPage( uint page );
-        void findText( const QString & text = "", bool caseSensitive = false );
+        bool findText( const QString & text = "", bool caseSensitive = false, bool findAhead = false );
         void findTextAll( const QString & pattern, bool caseSensitive );
         void toggleBookmark( int page );
         void processLink( const KPDFLink * link );
         bool print( KPrinter &printer );
+        void unHilightPages(bool filteredOnly = true);
 
     signals:
         void linkFind();
@@ -94,7 +95,6 @@ class KPDFDocument : public QObject // only for a private slot..
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
         void processPageList( bool documentChanged );
-        void unHilightPages();
 
         Generator * generator;
         QString documentFileName;

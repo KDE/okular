@@ -29,7 +29,6 @@ More items (first items will enter 'In progress list' first):
 -> refactor ThumbnailsList to do internal rendering as pageview does (way
    faster than using QScrollView + inserted Widgets and saves 8% on document
    loading)
--> type ahead search in pageview (type '/' then the word to search..) (ready: patch by JakobS)
 -> move toolbar view actions in the PageView instead of the part. maybe.. or not...
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment. (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
@@ -87,6 +86,7 @@ More items (first items will enter 'In progress list' first):
 -> move some document related features from part to the document (see find, goto dialog, ...)
 
 Done (newest features come first):
+-> type ahead search in pageview (type '/' then the word to search..)
 -> FIX: scroll page if the the searched string is not visible
 -> FIX: use a global Viewport over the document (linked views, real link following, location restoring, etc)
 -> FIX: wrong zoom buttons order (BR74248) (check consistancy with kdvi/kviewshell/kghostview/.. (not konq))

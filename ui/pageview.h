@@ -103,6 +103,8 @@ class PageView : public QScrollView, public DocumentObserver
         void updateZoomText();
         // updates cursor
         void updateCursor( const QPoint &p );
+        
+	void findAhead(bool increase);
 
         // don't want to expose classes in here
         class PageViewPrivate * d;
@@ -114,7 +116,9 @@ class PageView : public QScrollView, public DocumentObserver
         void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
         // activated by the autoscroll timer (Shift+Up/Down keys)
         void slotAutoScoll();
-
+	// type-ahead find timeout
+	void findTimeout();
+	
         // connected to local actions
         void slotZoom();
         void slotZoomIn();

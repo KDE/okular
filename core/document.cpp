@@ -355,7 +355,7 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int id )
             (*it)->instance->notifyViewportChanged();
 }
 
-void KPDFDocument::findText( const QString & string, bool keepCase )
+bool KPDFDocument::findText( const QString & string, bool keepCase, bool findAhead )
 {
     // turn selection drawing off on filtered pages
     if ( !d->filterText.isEmpty() )
@@ -374,7 +374,7 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
     KPDFPage * foundPage = 0,
              * lastPage = (d->searchPage > -1) ? pages_vector[ d->searchPage ] : 0;
     if ( lastPage && d->searchPage == currentPage )
-        if ( lastPage->hasText( d->searchText, d->searchCase, false ) )
+        if ( lastPage->hasText( d->searchText, d->searchCase, findAhead ) )
             foundPage = lastPage;
         else
         {
@@ -389,7 +389,7 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
         {
             if ( currentPage >= pageCount )
             {
-                if ( KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
+                if ( !findAhead && KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
                     currentPage = 0;
                 else
                     break;
@@ -420,8 +420,9 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
         // notify all observers about hilighting chages
         foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
     }
-    else
+    else if ( !findAhead )
         KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(d->searchText) );
+    return foundPage;
 }
 
 void KPDFDocument::findTextAll( const QString & pattern, bool keepCase )
@@ -809,9 +810,9 @@ void KPDFDocument::processPageList( bool documentChanged )
     foreachObserver( notifySetup( pages_vector, documentChanged ) );
 }
 
-void KPDFDocument::unHilightPages()
+void KPDFDocument::unHilightPages(bool filteredOnly)
 {
-    if ( d->filterText.isEmpty() )
+    if ( filteredOnly && d->filterText.isEmpty() )
         return;
 
     d->filterText = QString::null;

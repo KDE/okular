@@ -26,6 +26,7 @@
 #include <kiconloader.h>
 #include <kurldrag.h>
 #include <kaction.h>
+#include <kstdaccel.h>
 #include <kactioncollection.h>
 #include <kpopupmenu.h>
 #include <klocale.h>
@@ -71,8 +72,11 @@ public:
     // other stuff
     QTimer * delayTimer;
     QTimer * scrollTimer;
+    QTimer * findTimer;
     int scrollIncrement;
     bool dirtyLayout;
+    bool typeAheadActivated;
+    QString findString;
     bool blockViewport;
     PageViewMessage * messageWindow;    //in pageviewutils.h
 
@@ -111,6 +115,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseOnRect = false;
     d->delayTimer = 0;
     d->scrollTimer = 0;
+    d->typeAheadActivated = false;
+    d->findTimer = new QTimer(this);
     d->scrollIncrement = 0;
     d->dirtyLayout = false;
     d->blockViewport = false;
@@ -138,6 +144,11 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 //    setCornerWidget( resizeButton );
 //    resizeButton->setEnabled( false );
     // connect(...);
+    
+    // find ahead timeout timer
+    connect(d->findTimer, SIGNAL(timeout()), this, SLOT(findTimeout()));
+
+    
 }
 
 PageView::~PageView()
@@ -493,6 +504,61 @@ void PageView::viewportResizeEvent( QResizeEvent * )
 void PageView::keyPressEvent( QKeyEvent * e )
 {
     e->accept();
+    
+    // based on khtml/khtmlview.cpp
+    if(d->typeAheadActivated)
+    {
+    // type-ahead find aka find-as-you-type
+        if(e->key() == Key_BackSpace)
+        {
+            d->findString = d->findString.left(d->findString.length() - 1);
+            if(!d->findString.isEmpty())
+            {
+                findAhead(false);
+                d->findTimer->start(3000, true);
+            }
+            else
+            {
+                findTimeout();
+                d->document->unHilightPages(false);
+            }
+            return;
+        }
+        else if(e->key() == KStdAccel::findNext())
+        { // part doesn't get this key event because of the keyboard grab
+            d->findTimer->stop(); // restore normal operation during possible messagebox is displayed
+	    releaseKeyboard();    
+            if (d->document->findText())
+                d->messageWindow->display(i18n("Text found: \"%1\".").arg(d->findString.lower()),
+                PageViewMessage::Info, 3000);
+            d->findTimer->start(3000, true);
+	    grabKeyboard();
+            return;
+        }
+        else if(e->key() == Key_Escape || e->key() == Key_Return)
+        {
+            findTimeout();
+            return;
+        }
+        else if(e->text().isEmpty() == false)
+        {
+            d->findString += e->text();
+            findAhead(true);
+            d->findTimer->start(3000, true);
+            return;
+        }
+    }
+    else if(e->key() == '/')
+    {
+        d->findString="";
+        d->messageWindow->display(i18n("Starting -- find text as you type"), PageViewMessage::Info, 3000);
+        d->typeAheadActivated = true;
+        d->findTimer->start(3000, true);
+        grabKeyboard();
+        return;
+    }
+
+    
     // move/scroll page by using keys
     switch ( e->key() )
     {
@@ -563,6 +629,28 @@ void PageView::keyPressEvent( QKeyEvent * e )
         d->scrollTimer->stop();
     }
 }
+
+void PageView::findTimeout()
+{
+    d->typeAheadActivated = false;
+    d->findString = "";
+    d->messageWindow->display(i18n("Find stopped."),PageViewMessage::Info,1000);
+    releaseKeyboard();
+}
+
+void PageView::findAhead(bool increase)
+{
+    if (!increase) 
+        d->document->setViewportPage(0);
+    QString status;
+    d->document->unHilightPages(false);
+    if(d->document->findText(d->findString, false, true))
+        status = i18n("Text found: \"%1\".");
+    else 
+        status = i18n("Text not found: \"%1\".");
+    d->messageWindow->display(status.arg(d->findString.lower()), PageViewMessage::Info, 4000);
+}
+
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {

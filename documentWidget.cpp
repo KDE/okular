@@ -17,6 +17,7 @@
 
 #include "documentWidget.h"
 
+//#define DEBUG_DOCUMENTWIDGET
 
 documentWidget::documentWidget(QWidget *parent, const char *name )
   : QWidget( parent, name )
@@ -30,6 +31,8 @@ documentWidget::documentWidget(QWidget *parent, const char *name )
   DVIselection.clear();
   setMouseTracking(true);
   resize(100,100);
+
+  setBackgroundMode(Qt::NoBackground);
 }
 
 
@@ -41,6 +44,16 @@ documentWidget::~documentWidget()
 
 void documentWidget::pixmapChanged(void)
 {
+#ifdef DEBUG_DOCUMENTWIDGET
+  kdDebug(4300) << "documentWidget::pixmapChanged() called." << endl; 
+  if (pageData != 0) {
+    if (pageData->getPixmap() != 0)
+      kdDebug(4300) << "New size is " << pageData->getPixmap()->size() << endl;
+    else
+      kdDebug(4300) << "pageData, but no pixmap given." << endl;
+  } else
+    kdDebug(4300) << "No pageData given." << endl;
+#endif
   /*
   // Stop any animation which may be in progress
   if (timerIdent != 0) {
@@ -98,12 +111,19 @@ void documentWidget::flash(int fo)
 
 void documentWidget::paintEvent(QPaintEvent *e)
 {
+#ifdef DEBUG_DOCUMENTWIDGET
+  kdDebug(4300) << "documentWidget::paintEvent() called" << endl;
+#endif
+
   if (pageData == 0)
     return;
 
-  if (pageData->getPixmap() == 0) 
+  if (pageData->getPixmap() == 0) {
+#ifdef DEBUG_DOCUMENTWIDGET
+    kdDebug(4300) << "documentWidget::paintEvent: calling for a Pixmap" << endl;
+#endif
     emit(needPixmap(pageData));
-  else {
+  } else {
     bitBlt ( this, e->rect().topLeft(), pageData->getPixmap(), e->rect(), CopyROP);
     
     QPainter p(this);
@@ -125,7 +145,6 @@ void documentWidget::paintEvent(QPaintEvent *e)
 	p.drawRect(pageData->textLinkList[i].box);
       }
   }
-
 }
 
 
@@ -153,7 +172,7 @@ void documentWidget::selectAll(void)
 
 void documentWidget::mousePressEvent ( QMouseEvent * e )
 {
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_DOCUMENTWIDGET
   kdDebug(4300) << "mouse event" << endl;
 #endif
 

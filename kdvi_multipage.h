@@ -50,6 +50,7 @@ public:
   infoDialog    *info;
 
   documentWidget *dviWidget;
+  documentPage  currentPage;
 
 
   KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
@@ -108,6 +109,29 @@ public slots:
 
  void slotEmbedPostScript(void);
 
+ /** Shows the "text search" dialog, if text search is supported by
+     the renderer. Otherwise, the method returns immediately. */
+ void showFindTextDialog(void);
+ 
+ /** Starts the text search functionality. The text to search, and the
+     direction in which to search is read off the 'findDialog'
+     member, which must not be NULL. */
+  void  findText(void);
+
+  /** This method may be called after the text search dialog
+      'findDialog' has been set up, and the user has entered a search
+      phrase. The method searches for the next occurence of the text,
+      starting from the beginning of the current page, or after the
+      currently selected text, if there is any. */
+  void findNextText(void);
+
+  /** This method may be called after the text search dialog
+      'findDialog' has been set up, and the user has entered a search
+      phrase. The method searches for the next occurence of the text,
+      starting from the end of the current page, or before the
+      currently selected text, if there is any. */
+  void findPrevText(void);
+
 protected:
   history document_history;
 
@@ -144,6 +168,11 @@ protected slots:
   void bugform();
   void preferencesChanged();
   void goto_page(int page, int y);
+
+  /** Makes page # pageNr visible, selects the text Elements
+      beginSelection-endSelection, and draws the users attention to
+      this place with an animated frame  */
+  void gotoPage(int pageNr, int beginSelection, int endSelection );
   void contents_of_dviwin_changed(void);
   void showTip(void);
   void showTipOnStart(void);
@@ -152,6 +181,17 @@ private:
   dviWindow    *window;
   OptionDialog *options;
   KPrinter     *printer;
+
+
+  /*************************************************************
+   * Methods and classes concerned with the find functionality *
+   *************************************************************/
+
+  /** Pointer to the text search dialog. This dialog is generally set
+      up when the method 'showFindTextDialog(void)' is first
+      called. */
+  class KEdFind    *findDialog;
+
 
   /** Pointers to several actions which are disabled if no file is
       loaded. */
@@ -163,9 +203,11 @@ private:
   KAction      *selectAllAction;
   KAction      *findTextAction;
   KAction      *findNextTextAction;
-  KAction      *exportPSAction;
+  KAction      *findPrevAction;
   KAction      *exportPDFAction;
   KAction      *exportTextAction;
+  KAction      *findNextAction;
+  KAction      *exportPSAction;
 
   /** Used to enable the export menu when a file is successfully
       loaded. */

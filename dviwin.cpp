@@ -61,7 +61,7 @@ QPainter foreGroundPaint; // QPainter used for text
 dviWindow::dviWindow(double zoom, KDVIMultiPage *par)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow( zoom=" << zoom << ", parent=" << parent << ", name=" << name << " )" << endl;
+  kdDebug(4300) << "dviWindow( zoom=" << zoom << ", parent=" << par << " )" << endl;
 #endif
 
   _parentMPage = par;
@@ -70,8 +70,8 @@ dviWindow::dviWindow(double zoom, KDVIMultiPage *par)
 
   connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
 
-  currentlyDrawnPage = new documentPage;
-  _parentMPage->dviWidget->setPage(currentlyDrawnPage);
+  currentlyDrawnPage = 0;
+  //@@@  _parentMPage->dviWidget->setPage(currentlyDrawnPage);
 
   editorCommand         = "";
 
@@ -98,11 +98,7 @@ dviWindow::dviWindow(double zoom, KDVIMultiPage *par)
   HTML_href              = NULL;
   _postscript            = 0;
   _showHyperLinks        = true;
-  findDialog             = 0;
-  findNextAction         = 0;
-  findPrevAction         = 0;
   reference              = QString::null;
-  searchText             = QString::null;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
@@ -143,7 +139,6 @@ void dviWindow::setShowPS( bool flag )
   if ( _postscript == flag )
     return;
   _postscript = flag;
-  drawPage();
 }
 
 
@@ -152,8 +147,6 @@ void dviWindow::setShowHyperLinks( bool flag )
   if ( _showHyperLinks == flag )
     return;
   _showHyperLinks = flag;
-
-  drawPage();
 }
 
 
@@ -203,13 +196,15 @@ void dviWindow::drawPage(documentPage *page)
     return;
   }
 
-
+  currentlyDrawnPage     = page;;
   shrinkfactor           = MFResolutions[_parentMPage->font_pool->getMetafontMode()]/(xres*_zoom);
   current_page           = page->getPageNumber()-1;
   is_current_page_drawn  = 0;
 
-  if ( currentlyDrawnPixmap.isNull() )
+  if ( currentlyDrawnPixmap.isNull() ) {
+    currentlyDrawnPage = 0;
     return;
+  }
 
 
   if ( !currentlyDrawnPixmap.paintingActive() ) {
@@ -230,6 +225,7 @@ void dviWindow::drawPage(documentPage *page)
 				      "likely this means that the DVI file is broken.</qt>"),
 				 errorMsg, i18n("DVI File Error"));
       errorMsg = QString::null;
+      currentlyDrawnPage = 0;
       return;
     }
     
@@ -290,133 +286,8 @@ void dviWindow::drawPage(documentPage *page)
     }
   }
   
-  emit contents_changed();
   page->setPixmap(currentlyDrawnPixmap);
-}
-
-
-
-
-void dviWindow::drawPage()
-{
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::drawPage()" << endl;
-#endif
-
-#ifdef PERFORMANCE_MEASUREMENT
- start:
-#endif
-
-  shrinkfactor = MFResolutions[_parentMPage->font_pool->getMetafontMode()]/(xres*_zoom);
-
-  // Stop if there is no dvi-file present
-  if ( _parentMPage->dviFile == 0 ) {
-    currentlyDrawnPage->clear();
-    return;
-  }
-  if ( _parentMPage->dviFile->dvi_Data == 0 ) {
-    currentlyDrawnPage->clear();
-    return;
-  }
-
-  if ( currentlyDrawnPixmap.isNull() )
-    return;
-
-  if ( !currentlyDrawnPixmap.paintingActive() ) {
-    // Reset colors
-    colorStack.clear();
-    globalColor = Qt::black;
-
-    foreGroundPaint.begin( &(currentlyDrawnPixmap) );
-    QApplication::setOverrideCursor( waitCursor );
-    errorMsg = QString::null;
-    draw_page();
-    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
-    foreGroundPaint.end();
-    QApplication::restoreOverrideCursor();
-    if (errorMsg.isEmpty() != true) {
-      KMessageBox::detailedError(_parentMPage->scrollView(),
-				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
-				      "likely this means that the DVI file is broken.</qt>"),
-				 errorMsg, i18n("DVI File Error"));
-      errorMsg = QString::null;
-      return;
-    }
-
-    // Tell the user (once) if the DVI file contains source specials
-    // ... wo don't want our great feature to go unnoticed. In
-    // principle, we should use a KMessagebox here, but we want to add
-    // a button "Explain in more detail..." which opens the
-    // Helpcenter. Thus, we practically re-implement the KMessagebox
-    // here. Most of the code is stolen from there.
-    if ((_parentMPage->dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
-      _parentMPage->dviFile->sourceSpecialMarker = false;
-      // Check if the 'Don't show again' feature was used
-      KConfig *config = kapp->config();
-      KConfigGroupSaver saver( config, "Notification Messages" );
-      bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
-
-      if (showMsg) {
-	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-					     _parentMPage->scrollView(), "information", true, true,KStdGuiItem::ok().text() );
-
-	QVBox *topcontents = new QVBox (dialog);
-	topcontents->setSpacing(KDialog::spacingHint()*2);
-	topcontents->setMargin(KDialog::marginHint()*2);
-
-	QWidget *contents = new QWidget(topcontents);
-	QHBoxLayout * lay = new QHBoxLayout(contents);
-	lay->setSpacing(KDialog::spacingHint()*2);
-
-	lay->addStretch(1);
-	QLabel *label1 = new QLabel( contents);
-	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
-	lay->add( label1 );
-	QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
-					  "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
-					  contents);
-	label2->setMinimumSize(label2->sizeHint());
-	lay->add( label2 );
-	lay->addStretch(1);
-	QSize extraSize = QSize(50,30);
-	QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
-	extraSize = QSize(50,0);
-	dialog->setHelpLinkText(i18n("Explain in more detail..."));
-	dialog->setHelp("inverse-search", "kdvi");
-	dialog->enableLinkedHelp(true);
-	dialog->setMainWidget(topcontents);
-	dialog->enableButtonSeparator(false);
-	dialog->incInitialSize( extraSize );
-	dialog->exec();
-	delete dialog;
-
-	showMsg = !checkbox->isChecked();
-	if (!showMsg) {
-	  KConfigGroupSaver saver( config, "Notification Messages" );
-	  config->writeEntry( "KDVI-info_on_source_specials", showMsg);
-	}
-	config->sync();
-      }
-    }
-  }
-  
-  emit contents_changed();
-  
-#ifdef PERFORMANCE_MEASUREMENT
-  if (performanceFlag == 1) {
-    qApp->processEvents(30);
-    current_page++;
-    if (current_page < _parentMPage->dviFile->total_pages)
-      goto start;
-    else {
-      kdDebug(4300) << "Time required to draw all pages: " << performanceTimer.restart() << "ms" << endl;
-      performanceFlag = 2;
-      exit(0);
-    }
-  }
-#endif
-  
-  currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
+  currentlyDrawnPage = 0;
 }
 
 
@@ -545,15 +416,14 @@ void dviWindow::changePageSize()
   currentlyDrawnPixmap.fill( white );
 
   PS_interface->setSize( xres*_zoom, page_width_in_pixel, page_height_in_pixel );
-  drawPage();
+  emit(needsRepainting());
 }
 
-//------ setup the dvi interpreter (should do more here ?) ----------
 
 bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMarker)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::setFile( fname=" << fname << ", ref=" << ref << ", sourceMarker=" << sourceMarker << ")" << endl;
+  kdDebug(4300) << "dviWindow::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
 
   reference              = QString::null;
@@ -571,10 +441,12 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
     _parentMPage->dviFile = 0;
 
     currentlyDrawnPixmap.resize(0,0);
-    currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
+    if (currentlyDrawnPage == 0)
+      kdDebug(4300) << "dviWindow::setFile() called when currentlyDrawnPage == 0" << endl;
+    else
+      currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
     return true;
   }
-
 
   // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
@@ -760,13 +632,13 @@ void dviWindow::all_fonts_loaded(fontPool *)
   // 'documentSpecifiedPageSize' here. Note that emitting
   // 'documentSpecifiedPageSize' may or may not lead to a call of
   // 'drawPage'; that depends on the question if the widget size
-  // really changes or not. To be on the safe side, we call drawPage()
-  // independently. For documents that have a specified paper format
-  // which is NOT the default format, that means that the document
-  // will be drawn twice.
+  // really changes or not. To be on the safe side, we emit
+  // emit(needsRepainting()) independently. For documents that have a
+  // specified paper format which is NOT the default format, that
+  // means that the document will be drawn twice.
   if (_parentMPage->dviFile->suggestedPageSize != 0)
     emit( documentSpecifiedPageSize(*(_parentMPage->dviFile->suggestedPageSize)) );
-  drawPage();
+  emit(needsRepainting());
 
 
   // case 1: The reference is a number, which we'll interpret as a
@@ -855,7 +727,6 @@ void dviWindow::all_fonts_loaded(fontPool *)
 }
 
 
-
 int dviWindow::totalPages()
 {
   if (_parentMPage->dviFile != NULL)
@@ -883,12 +754,10 @@ double dviWindow::setZoom(double zoom)
 }
 
 
-
 void dviWindow::clearStatusBar(void)
 {
   emit setStatusBarText( QString::null );
 }
-
 
 
 void dviWindow::handleLocalLink(const QString &linkText)
@@ -927,6 +796,7 @@ void dviWindow::handleLocalLink(const QString &linkText)
     }
   }
 }
+
 
 void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent * e)
 {
@@ -1025,7 +895,6 @@ void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent * e)
     return;
   }
 }
-
 
 
 #include "dviwin.moc"

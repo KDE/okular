@@ -32,6 +32,8 @@ int  performanceFlag = 0;
 #endif
 
 
+//#define KDVI_MULTIPAGE_DEBUG
+
 extern "C"
 {
   void *init_kdvipart()
@@ -86,6 +88,10 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   printer = 0;
   document_history.clear();
 
+  findDialog = 0;
+  findNextAction         = 0;
+  findPrevAction         = 0;
+  
   // initialize the dvi machinery
   dviFile                = 0;
 
@@ -111,11 +117,17 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   dviWidget = new documentWidget(scrollView(), "singlePageWidget" );
   window = new dviWindow( 1.0, this);
+  window->setName("DVI renderer");
+  currentPage.setName("All purpose document page");
+  dviWidget->setPage(&currentPage);
 
   connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
   connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *)), window, SLOT(handleSRCLink(const QString &,QMouseEvent *)));
   connect(dviWidget, SIGNAL(needPixmap(documentPage *)), window, SLOT(drawPage(documentPage *)));
   connect(window, SIGNAL(flash(int)), dviWidget, SLOT(flash(int)));
+
+  connect(window, SIGNAL(needsRepainting()), &currentPage, SLOT(clear()));
+  connect(window, SIGNAL(needsRepainting()), dviWidget, SLOT(update()));
 
 
   connect(font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), window, SLOT(all_fonts_loaded(fontPool *)));
@@ -133,11 +145,15 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
   connect(window, SIGNAL(prescanDone()), this, SLOT(setEmbedPostScriptAction()));
-  findTextAction         = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
-  window->findNextAction = KStdAction::findNext(window, SLOT(findNextText()), actionCollection(), "findnext");
-  window->findNextAction->setEnabled(false);
-  window->findPrevAction = KStdAction::findPrev(window, SLOT(findPrevText()), actionCollection(), "findprev");
-  window->findPrevAction->setEnabled(false);
+
+  if (window->supportsTextSearch()) {
+    findTextAction = KStdAction::find(this, SLOT(showFindTextDialog()), actionCollection(), "find");
+    findNextAction = KStdAction::findNext(this, SLOT(findNextText()), actionCollection(), "findnext");
+    findNextAction->setEnabled(false);
+    findPrevAction = KStdAction::findPrev(this, SLOT(findPrevText()), actionCollection(), "findprev");
+    findPrevAction->setEnabled(false);
+  }
+
   copyTextAction     = KStdAction::copy(dviWidget, SLOT(copyText()), actionCollection(), "copy_text");
   dviWidget->DVIselection.setAction(copyTextAction);
   selectAllAction    = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
@@ -145,19 +161,18 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   exportPSAction     = new KAction(i18n("PostScript..."), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
   exportPDFAction    = new KAction(i18n("PDF..."), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
   exportTextAction   = new KAction(i18n("Text..."), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
-
+  
   new KAction(i18n("&DVI Options..."), 0, this, SLOT(doSettings()), actionCollection(), "settings_dvi");
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
   new KAction(i18n("About KDVI"), 0, this, SLOT(about()), actionCollection(), "about_kdvi");
   new KAction(i18n("KDVI Handbook"), 0, this, SLOT(helpme()), actionCollection(), "help_dvi");
   new KAction(i18n("Report Bug in KDVI..."), 0, this, SLOT(bugform()), actionCollection(), "bug_dvi");
-
+  
   setXMLFile("kdvi_part.rc");
-
-  //  scrollView()->addChild(window);
+  
   scrollView()->addChild(dviWidget);
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
-  connect(window, SIGNAL(contents_changed(void)), this, SLOT(contents_of_dviwin_changed(void)) );
+  connect(&currentPage, SIGNAL(pixmapChanged(void)), this, SLOT(contents_of_dviwin_changed(void)) );
 
   readSettings();
   enableActions(false);
@@ -276,12 +291,17 @@ bool KDVIMultiPage::openFile()
   bool r = window->setFile(m_file,url().ref());
   if (!r)
     emit setStatusBarText(QString::null);
-  window->changePageSize(); //  This also calles drawPage();
+
+  window->changePageSize();
   emit numberOfPages(window->totalPages());
   enableActions(r);
 
+  currentPage.setPageNumber(1);
+  dviWidget->update();
+  
   return r;
 }
+
 
 void KDVIMultiPage::jumpToReference(QString reference)
 {
@@ -290,6 +310,7 @@ void KDVIMultiPage::jumpToReference(QString reference)
     window->all_fonts_loaded(0); // In spite of its name, this method tries to parse the reference.
   }
 }
+
 
 void KDVIMultiPage::contents_of_dviwin_changed(void)
 {
@@ -317,20 +338,45 @@ QStringList KDVIMultiPage::fileFormats()
 bool KDVIMultiPage::gotoPage(int page)
 {
   document_history.add(page,0);
-  window->currentlyDrawnPage->setPageNumber(page+1);
+  currentPage.setPageNumber(page+1);
   return true;
 }
+
 
 void KDVIMultiPage::goto_page(int page, int y)
 {
   document_history.add(page,y);
   if (y != 0) {
-    window->currentlyDrawnPage->setPageNumber(page+1);
+    currentPage.setPageNumber(page+1);
     dviWidget->flash(y);
   } else
-    window->currentlyDrawnPage->setPageNumber(page+1);
+    currentPage.setPageNumber(page+1);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
   emit pageInfo(window->totalPages(), page );
+}
+
+
+void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
+{
+#ifdef KDVI_MULTIPAGE_DEBUG
+  kdDebug(4300) << "KDVIMultiPage::gotoPage( pageNr=" << pageNr << ", beginSelection=" << beginSelection <<", endSelection=" << endSelection <<" )" << endl;
+#endif
+
+  if (pageNr == 0) {
+    kdError(4300) << "KDVIMultiPage::gotoPage(...) called with pageNr=0" << endl;
+    return;
+  }
+
+  currentPage.setPageNumber(pageNr);
+  window->drawPage(&currentPage);
+  dviWidget->DVIselection.set(beginSelection, endSelection, currentPage.textLinkList[beginSelection].linkText); // @@@
+
+  Q_UINT16 y = currentPage.textLinkList[beginSelection].box.bottom();
+  document_history.add(pageNr,y);
+  dviWidget->flash(y);
+  
+  scrollView()->ensureVisible(scrollView()->width()/2, y );
+  emit pageInfo(window->totalPages(), pageNr );
 }
 
 
@@ -399,20 +445,18 @@ void KDVIMultiPage::doSelectAll(void)
   dviWidget->selectAll();
 }
 
+
 void KDVIMultiPage::doExportPS(void)
 {
   window->exportPS();
 }
+
 
 void KDVIMultiPage::doExportPDF(void)
 {
   window->exportPDF();
 }
 
-void KDVIMultiPage::doExportText(void)
-{
-  window->exportText();
-}
 
 void KDVIMultiPage::doSettings()
 {
@@ -422,6 +466,7 @@ void KDVIMultiPage::doSettings()
   }
   options->show();
 }
+
 
 void KDVIMultiPage::about()
 {
@@ -473,14 +518,16 @@ void KDVIMultiPage::bugform()
   kbr->show();
 }
 
+
 void KDVIMultiPage::helpme()
 {
   kapp->invokeHelp( "", "kdvi" );
 }
 
+
 void KDVIMultiPage::preferencesChanged()
 {
-#ifdef DEBUG_MULTIPAGE
+#ifdef  KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "preferencesChanged" << endl;
 #endif
 
@@ -642,7 +689,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
 
 void KDVIMultiPage::timerEvent( QTimerEvent * )
 {
-#ifdef DEBUG_MULTIPAGE
+#ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "Timer Event " << endl;
 #endif
   reload();
@@ -650,7 +697,7 @@ void KDVIMultiPage::timerEvent( QTimerEvent * )
 
 void KDVIMultiPage::reload()
 {
-#ifdef DEBUG_MULTIPAGE
+#ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "Reload file " << m_file << endl;
 #endif
 
@@ -663,7 +710,7 @@ void KDVIMultiPage::reload()
     enableActions(r);
 
     // Go to the old page and tell kviewshell where we are.
-    window->currentlyDrawnPage->setPageNumber(currsav);
+    currentPage.setPageNumber(currsav);
     // We don't use "currsav" here, because that page may no longer
     // exist. In that case, gotoPage already selected another page.
     emit pageInfo(window->totalPages(), window->curr_page()-1 );
@@ -672,6 +719,7 @@ void KDVIMultiPage::reload()
       timer_id = startTimer(1000);
   }
 }
+
 
 void KDVIMultiPage::enableActions(bool b)
 {
@@ -684,6 +732,7 @@ void KDVIMultiPage::enableActions(bool b)
   setEmbedPostScriptAction();
 }
 
+
 void KDVIMultiPage::doGoBack(void)
 {
   historyItem *it = document_history.back();
@@ -693,6 +742,7 @@ void KDVIMultiPage::doGoBack(void)
     kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
   return;
 }
+
 
 void KDVIMultiPage::doGoForward(void)
 {
@@ -704,6 +754,7 @@ void KDVIMultiPage::doGoForward(void)
   return;
 }
 
+
 void KDVIMultiPage::doEnableWarnings(void)
 {
   KMessageBox::information (dviWidget, i18n("All messages and warnings will now be shown."));
@@ -712,20 +763,25 @@ void KDVIMultiPage::doEnableWarnings(void)
   KTipDialog::setShowOnStart(true);
 }
 
+
 void KDVIMultiPage::showTip(void)
 {
     KTipDialog::showTip(dviWidget, "kdvi/tips", true);
 }
+
 
 void KDVIMultiPage::showTipOnStart(void)
 {
     KTipDialog::showTip(dviWidget, "kdvi/tips");
 }
 
+
 void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )
 {
   if (event->activated() && url().isEmpty())
     emit setWindowCaption( i18n("KDVI") );
 }
+
+
 
 #include "kdvi_multipage.moc"

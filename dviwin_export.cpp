@@ -2,7 +2,7 @@
 // Class: dviWindow
 // Author: Stefan Kebekus
 //
-// (C) 2001-2003, Stefan Kebekus.
+// (C) 2001-2004, Stefan Kebekus.
 //
 // Previewer for TeX DVI files.
 //
@@ -34,8 +34,9 @@
 #include <klocale.h>
 #include <kprinter.h>
 #include <kprocess.h>
+#include <qlabel.h>
 #include <qpainter.h>
-#include <qprogressdialog.h>
+
 
 #include "dviwin.h"
 #include "fontprogress.h"
@@ -44,86 +45,6 @@
 
 extern QPainter foreGroundPaint; // QPainter used for text
 
-void dviWindow::exportText(void)
-{
-  // That sould also not happen.
-  if (_parentMPage->dviFile == NULL)
-    return;
-  if (_parentMPage->dviFile->dvi_Data == 0 )
-    return;
-  if (currentlyDrawnPixmap.paintingActive())
-    return;
-  
-  if (KMessageBox::warningContinueCancel( _parentMPage->scrollView(),
-					  i18n("<qt>This function exports the DVI file to a plain text. Unfortunately, this version of "
-					       "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
-					       "formulae, accented characters, and non-english text, such as Russian or Korean, will "
-					       "most likely be messed up completely.</qt>"),
-					  i18n("Function May Not Work as Expected"),
-					  i18n("Continue Anyway"),
-					  "warning_export_to_text_may_not_work") == KMessageBox::Cancel)
-    return;
-
-  // Generate a suggestion for a reasonable file name
-  QString suggestedName = _parentMPage->dviFile->filename;
-  suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
-
-  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.txt|Plain Text (Latin 1) (*.txt)"), _parentMPage->scrollView(), i18n("Export File As"));
-  if (fileName.isEmpty())
-    return;
-  QFileInfo finfo(fileName);
-  if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (_parentMPage->scrollView(), i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
-				       i18n("Overwrite File"));
-    if (r == KMessageBox::No)
-      return;
-  }
-
-  QFile textFile(fileName);
-  textFile.open( IO_WriteOnly );
-  QTextStream stream( &textFile );
-
-  bool _postscript_sav = _postscript;
-  int current_page_sav = current_page;
-  _postscript = FALSE; // Switch off postscript to speed up things...
-  QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), _parentMPage->dviFile->total_pages, _parentMPage->scrollView(), "export_text_progress", TRUE );
-  progress.setMinimumDuration(300);
-  QPixmap pixie(1,1);
-  for(current_page=0; current_page < _parentMPage->dviFile->total_pages; current_page++) {
-    progress.setProgress( current_page );
-    // Funny. The manual to QT tells us that we need to call
-    // qApp->processEvents() regularly to keep the application from
-    // freezing. However, the application crashes immediately if we
-    // uncomment the following line and works just fine as it is. Wild
-    // guess: Could that be related to the fact that we are linking
-    // agains qt-mt?
-
-    // qApp->processEvents();
-
-    if ( progress.wasCancelled() )
-      break;
-
-    foreGroundPaint.begin( &pixie );
-    draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
-    foreGroundPaint.end();
-
-    for(unsigned int i=0; i<currentlyDrawnPage->textLinkList.size(); i++)
-      stream << currentlyDrawnPage->textLinkList[i].linkText << endl;
-  }
-
-  // Switch off the progress dialog, etc.
-  progress.setProgress( _parentMPage->dviFile->total_pages );
-  // Restore the PostScript setting
-  _postscript = _postscript_sav;
-
-  // Restore the current page.
-  current_page = current_page_sav;
-  foreGroundPaint.begin( &pixie );
-  draw_page();  // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
-  foreGroundPaint.end();
-
-  return;
-}
 
 
 void dviWindow::exportPDF(void)

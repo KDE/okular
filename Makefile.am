@@ -10,9 +10,9 @@ noinst_PROGRAMS = squeeze
 # just to make sure, automake makes them
 METASOURCES = AUTO
 
-kdvipart_la_SOURCES = kdvi_multipage.cpp \
+kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 	dviwin.cpp bigEndianByteReader.cpp infodialog.cpp \
-	psheader.c dviwin_draw.cpp dviwin_prescan.cpp dviwin_export.cpp dviwin_textsearch.cpp \
+	psheader.c dviwin_draw.cpp dviwin_prescan.cpp dviwin_export.cpp \
 	dviFile.cpp fontpool.cpp fontprogress.cpp psgs.cpp \
 	fontMap.cpp fontEncoding.cpp fontEncodingPool.cpp \
 	special.cpp util.cpp vf.cpp glyph.cpp selection.cpp history.cpp \

@@ -10,19 +10,11 @@
 #ifndef _documentpage_h_
 #define _documentpage_h_
 
-
-//#include <qevent.h>
-//#include <qintdict.h>
-//#include <qpainter.h> 
-//#include <qptrvector.h>
-//#include <qvaluestack.h>
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qrect.h>
 #include <qstring.h>
 #include <qvaluevector.h>
-//#include <qwidget.h> 
-//#include <kviewpart.h>
 
 
 
@@ -61,13 +53,6 @@ class documentPage: public QObject
       clear(). */
   Q_UINT16 getPageNumber() {return pageNumber;};
 
-  /** Clears the contents of the class, but leaves pageNumber intact,
-      and does not free the memory for the QValueVectors so the
-      lengthy re-allocation won't be necessary later. Clears the
-      Pixmap. Before setPixmap() is called next time, getPixmap() will
-      return 0. */
-  void clear();
-
   /** Returns a pointer to the pixmap last set, or 0 if no pixmap has
       been set since the class has been constructed or last
       clear()ed. */
@@ -82,7 +67,16 @@ class documentPage: public QObject
   QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
   QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
 
-signals:
+ public slots:
+  /** Clears the contents of the class, but leaves pageNumber intact,
+      and does not free the memory for the QValueVectors so the
+      lengthy re-allocation won't be necessary later. Clears the
+      Pixmap. Before setPixmap() is called next time, getPixmap() will
+      return 0. */
+  void clear();
+
+
+ signals:
   void      pixmapChanged(void);
 
  private:

@@ -28,6 +28,10 @@ void documentPage::setPageNumber(Q_UINT16 pnr)
 
 void documentPage::clear()
 {
+#ifdef DEBUG_DOCUMENTPAGE
+  kdDebug(4300) << "documentPage::clear() called for page #" << pageNumber << endl;
+#endif
+
   sourceHyperLinkList.clear();
   textLinkList.clear();
   hyperLinkList.clear();

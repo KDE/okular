@@ -435,10 +435,8 @@ void dviWindow::editorCommand_terminated(KProcess *sproc)
 
 void dviWindow::abortExternalProgramm(void)
 {
-  if (proc != 0) {
     delete proc; // Deleting the KProcess kills the child.
     proc = 0;
-  }
 
   if (export_tmpFileName.isEmpty() != true) {
     unlink(QFile::encodeName(export_tmpFileName)); // That should delete the file.

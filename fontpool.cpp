@@ -64,7 +64,7 @@ fontPool::fontPool(void)
   if ( FT_Init_FreeType( &FreeType_library ) != 0 ) {
     kdError(4300) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
     FreeType_could_be_loaded = false;
-  } else 
+  } else
     FreeType_could_be_loaded = true;
 #endif
 
@@ -90,7 +90,7 @@ fontPool::fontPool(void)
   // pixmaps. Experiments show that --depending of the configuration
   // of QT at compile and runtime or the availability of the XFt
   // extension, alpha channels are either supported, or silently
-  // converted to 1-bit masks. 
+  // converted to 1-bit masks.
   QImage start(1, 1, 32); // Generate a 1x1 image, black with alpha=0x10
   start.setAlphaBuffer(true);
   Q_UINT32 *destScanLine = (Q_UINT32 *)start.scanLine(0);
@@ -128,24 +128,23 @@ fontPool::~fontPool(void)
   if (FreeType_could_be_loaded == true)
     FT_Done_FreeType( FreeType_library );
 #endif
-
-  if (progress)
-    delete progress;
+  delete proc;
+  delete progress;
 }
 
 
 void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _useType1Fonts, bool _useFontHints )
 {
   if (_metafontMode >= NumberOfMFModes) {
-    kdError(4300) << "fontPool::setMetafontMode called with argument " << _metafontMode 
+    kdError(4300) << "fontPool::setMetafontMode called with argument " << _metafontMode
 		  << " which is more than the allowed value of " << NumberOfMFModes-1 << endl;
-    kdError(4300) << "setting mode to " << MFModes[DefaultMFMode] << " at " 
+    kdError(4300) << "setting mode to " << MFModes[DefaultMFMode] << " at "
 		  << MFResolutions[DefaultMFMode] << "dpi" << endl;
     _metafontMode = DefaultMFMode;
   }
-  
+
   bool kpsewhichNeeded = false;
-  
+
   // Check if a new run of kpsewhich is required
   if ( (_metafontMode != MetafontMode) || (_useType1Fonts != useType1Fonts) ) {
     TeXFontDefinition *fontp = fontList.first();
@@ -155,7 +154,7 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _us
     }
     kpsewhichNeeded = true;
   }
-  
+
   // If we enable font generation, we look for fonts which have not
   // yet been loaded, mark them as "not yet looked up" and try to run
   // kpsewhich once more.
@@ -168,7 +167,7 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _us
     }
     kpsewhichNeeded = true;
   }
-  
+
   // Check if glyphs need to be cleared
   if (_useFontHints != useFontHints) {
     double displayResolution = displayResolution_in_dpi;
@@ -183,7 +182,7 @@ void fontPool::setParameters( unsigned int _metafontMode, bool _makePK, bool _us
   makepk = _makePK;
   useType1Fonts = _useType1Fonts;
   useFontHints = _useFontHints;
-  
+
   // Initiate a new concurrently running process of kpsewhich, if
   // necessary. Otherwise, let the dvi window be redrawn
   if (kpsewhichNeeded == true)
@@ -207,9 +206,9 @@ class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, 
     }
     fontp=fontList.next();
   }
-  
+
   // If font doesn't exist yet, we have to generate a new font.
-  
+
   double displayResolution = displayResolution_in_dpi;
 
   fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
@@ -218,12 +217,12 @@ class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, 
     exit(0);
   }
   fontList.append(fontp);
- 
+
 #ifdef PERFORMANCE_MEASUREMENT
   fontPoolTimer.start();
   fontPoolTimerFlag = false;
 #endif
- 
+
   // Now start kpsewhich/MetaFont, etc. if necessary
   return fontp;
 }
@@ -238,7 +237,7 @@ QString fontPool::status(void)
   QString       text;
   QStringList   tmp;
 
-  if (fontList.isEmpty()) 
+  if (fontList.isEmpty())
     return i18n("The fontlist is currently empty.");
 
   text.append("<table WIDTH=\"100%\" NOSAVE >");
@@ -249,7 +248,7 @@ QString fontPool::status(void)
 	       .arg(i18n("Type"))
 	       .arg(i18n("Encoding"))
 	       .arg(i18n("Comment")) );
-  
+
  TeXFontDefinition *fontp = fontList.first();
   while ( fontp != 0 ) {
     QString errMsg, encoding;
@@ -258,12 +257,12 @@ QString fontPool::status(void)
 #ifdef HAVE_FREETYPE
       encoding = fontp->getFullEncodingName();
 #endif
-      if (fontp->font != 0) 
+      if (fontp->font != 0)
 	errMsg = fontp->font->errorMessage;
       else
 	errMsg = i18n("Font file not found");
     }
-    
+
 #ifdef HAVE_FREETYPE
     tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3%</td> <td>%4</td> <td>%5</td> <td>%6</td></tr>")
       .arg(fontp->fontname)
@@ -273,24 +272,24 @@ QString fontPool::status(void)
       .arg(encoding)
       .arg(errMsg);
 #endif
-    
-    fontp=fontList.next(); 
+
+    fontp=fontList.next();
   }
-  
+
   tmp.sort();
   text.append(tmp.join("\n"));
   text.append("</table>");
-  
+
   return text;
 }
 
 
-bool fontPool::check_if_fonts_filenames_are_looked_up(void) 
+bool fontPool::check_if_fonts_filenames_are_looked_up(void)
 {
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "fontPool::check_if_fonts_filenames_are_looked_up(void) called" << endl;
 #endif
-  
+
   // Check if kpsewhich is still running. In that case certainly not
   // all fonts have been properly looked up.
   if (proc != 0) {
@@ -307,7 +306,7 @@ bool fontPool::check_if_fonts_filenames_are_looked_up(void)
       break;
     fontp=fontList.next();
   }
-  
+
   if (fontp == 0) {
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "... yes, all fonts are there, or could not be found." << endl;
@@ -317,7 +316,7 @@ bool fontPool::check_if_fonts_filenames_are_looked_up(void)
 
   pass = 0;
   start_kpsewhich();
-  return false; // That says that not all fonts are loaded.  
+  return false; // That says that not all fonts are loaded.
 }
 
 
@@ -339,9 +338,9 @@ void fontPool::start_kpsewhich(void)
   // Just make sure that MetafontMode is in the permissible range, so
   // as to avoid segfaults.
   if (MetafontMode >= NumberOfMFModes) {
-    kdError(4300) << "fontPool::appendx called with bad MetafontMode " << MetafontMode 
+    kdError(4300) << "fontPool::appendx called with bad MetafontMode " << MetafontMode
 		  << " which is more than the allowed value of " << NumberOfMFModes-1 << endl
-		  << "setting mode to " << MFModes[DefaultMFMode] << " at " 
+		  << "setting mode to " << MFModes[DefaultMFMode] << " at "
 		  << MFResolutions[DefaultMFMode] << "dpi" << endl;
     MetafontMode = DefaultMFMode;
   }
@@ -351,11 +350,11 @@ void fontPool::start_kpsewhich(void)
   // generated. If pass == 0, ennable font generation, if it was
   // enabled globally.
   emit setStatusBarText(i18n("Locating fonts..."));
-  
+
 #ifdef DEBUG_FONTPOOL
   QString shellProcessCmdLine;
 #endif
-  
+
   proc = new KShellProcess();
   if (proc == 0) {
     kdError(4300) << "Could not allocate ShellProcess for the kpsewhich command." << endl;
@@ -369,7 +368,7 @@ void fontPool::start_kpsewhich(void)
   qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)),
 		this, SLOT(mf_output_receiver(KProcess *, char *, int)));
   emit(new_kpsewhich_run(i18n("Font Generation")));
-  
+
   proc->clearArguments();
   *proc << "kpsewhich";
 #ifdef DEBUG_FONTPOOL
@@ -383,7 +382,7 @@ void fontPool::start_kpsewhich(void)
 #ifdef DEBUG_FONTPOOL
   shellProcessCmdLine += QString("--mode %1").arg(KShellProcess::quote(MFModes[MetafontMode])) + " ";
 #endif
-  
+
   // Enable automatic pk-font generation only in the second pass. (If
   // automatic font generation is switched off, this method will never
   // be called with pass==1)
@@ -398,7 +397,7 @@ void fontPool::start_kpsewhich(void)
     shellProcessCmdLine +=  "--no-mktex pk ";
 #endif
   }
-  
+
   int numFontsInJob = 0;
 
   TeXFontDefinition *fontp = fontList.first();
@@ -460,15 +459,15 @@ void fontPool::start_kpsewhich(void)
     }
     fontp=fontList.next();
   }
-  
+
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "pass " << pass << " kpsewhich run with " << numFontsInJob << "fonts to locate." << endl;
   kdDebug(4300) << "command line: " << shellProcessCmdLine << endl;
 #endif
-  
+
   if (pass != 0)
     emit(totalFontsInJob(numFontsInJob));
-  
+
   kpsewhichOutput = "";
   MetafontOutput  = "";
   proc->closeStdin();
@@ -496,7 +495,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
     // Mark all fonts as done so kpsewhich will not be called again
     // soon.
     TeXFontDefinition *fontp=fontList.first();
-    while ( fontp != 0 ) { 
+    while ( fontp != 0 ) {
       fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
       fontp = fontList.next();
     }
@@ -508,7 +507,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
   QStringList fileNameList = QStringList::split('\n', kpsewhichOutput);
 
   TeXFontDefinition *fontp=fontList.first();
-  while ( fontp != 0 ) { 
+  while ( fontp != 0 ) {
     if (fontp->filename.isEmpty() == true) {
       QStringList matchingFiles;
 #ifdef HAVE_FREETYPE
@@ -516,9 +515,9 @@ void fontPool::kpsewhich_terminated(KProcess *)
       if (!fn.isEmpty())
 	matchingFiles = fileNameList.grep(fn);
 #endif
-      if (matchingFiles.isEmpty() == true) 
+      if (matchingFiles.isEmpty() == true)
 	matchingFiles += fileNameList.grep(fontp->fontname);
-      
+
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
 	kdDebug(4300) << "Associated " << fontp->fontname << " to " << matchingFiles.first() << endl;
@@ -538,7 +537,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
   // Check if some font filenames are still missing. If not, or if we
   // have just finished the last pass, we quit here.
   bool all_fonts_are_found = true;
-  
+
   fontp = fontList.first();
   while ( fontp != 0 ) {
     if (fontp->filename.isEmpty() == true) {
@@ -558,7 +557,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
     emit fonts_have_been_loaded(this);
     return;
   }
-  
+
   if (pass == 0) {
     pass = 1;
     // If automatic pk-font generation is enabled, we call
@@ -568,23 +567,23 @@ void fontPool::kpsewhich_terminated(KProcess *)
       return;
     }
   }
-  
+
   if (pass == 1) {
     // Now all fonts should be there. It may, however, have happened
     // that still not all fonts were found. If that is so, issue a
     // warning here.
     bool all_fonts_are_found = true;
-    
+
     fontp = fontList.first();
     while ( fontp != 0 ) {
       if (fontp->filename.isEmpty() == true) {
-	
+
 	all_fonts_are_found = false;
 	break;
       }
       fontp=fontList.next();
     }
-    
+
     if (all_fonts_are_found == false) {
       QString title = i18n("Font not found - KDVI");
       QString nokps = i18n("There were problems running the kpsewhich program. "
@@ -596,7 +595,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 			   "Your document might be unreadable.");
       QString metaf = i18n("\nExperts will find helpful information in the 'Fonts'-"
 			   "section of the document info dialog");
-      
+
       if (fatal_error_in_kpsewhich == true)
 	KMessageBox::sorry( 0, nokps+body+metaf, title );
       else
@@ -611,11 +610,11 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	    config->sync();
 	    setParameters( MetafontMode, true, useType1Fonts, useFontHints ); // That will start kpsewhich again.
 	    return;
-	  } 
+	  }
 	} else
 	  KMessageBox::sorry( 0, body+metaf, title );
     }
-    
+
     pass = 2;
     start_kpsewhich();
     return;
@@ -629,11 +628,11 @@ void fontPool::setCMperDVIunit( double _CMperDVI )
   kdDebug(4300) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )" << endl;
 #endif
 
-  if (CMperDVIunit == _CMperDVI) 
+  if (CMperDVIunit == _CMperDVI)
     return;
 
   CMperDVIunit = _CMperDVI;
-  
+
   TeXFontDefinition *fontp = fontList.first();
   while(fontp != 0 ) {
     fontp->setDisplayResolution(displayResolution_in_dpi * fontp->enlargement);
@@ -655,7 +654,7 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
     fontp->setDisplayResolution(displayResolution * fontp->enlargement);
     fontp=fontList.next();
   }
-  
+
   // Do something that causes re-rendering of the dvi-window
   emit fonts_have_been_loaded(this);
 }
@@ -669,7 +668,7 @@ void fontPool::mark_fonts_as_unused(void)
 
   TeXFontDefinition  *fontp = fontList.first();
   while ( fontp != 0 ) {
-    fontp->flags &= ~TeXFontDefinition::FONT_IN_USE; 
+    fontp->flags &= ~TeXFontDefinition::FONT_IN_USE;
     fontp=fontList.next();
   }
 }
@@ -680,13 +679,13 @@ void fontPool::release_fonts(void)
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "Release_fonts" << endl;
 #endif
-  
+
   TeXFontDefinition  *fontp = fontList.first();
   while(fontp != 0) {
     if ((fontp->flags & TeXFontDefinition::FONT_IN_USE) != TeXFontDefinition::FONT_IN_USE) {
       fontList.removeRef(fontp);
       fontp = fontList.first();
-    } else 
+    } else
       fontp = fontList.next();
   }
 }
@@ -706,7 +705,7 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
   int numleft;
   bool show_prog = false;
   while( (numleft = MetafontOutput.find('\n')) != -1) {
-    QString line = MetafontOutput.left(numleft+1); 
+    QString line = MetafontOutput.left(numleft+1);
     emit(MFOutput(line));
 #ifdef DEBUG_FONTPOOL
     kdDebug(4300) << "MF OUTPUT RECEIVED: " << line;
@@ -736,7 +735,7 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
 
       progress->increaseNumSteps( i18n("Currently generating %1 at %2 dpi").arg(fontName).arg(dpi) );
     }
-    
+
     MetafontOutput = MetafontOutput.remove(0,numleft+1);
   }
 
@@ -759,7 +758,7 @@ void fontPool::kpsewhich_output_receiver(KProcess *, char *buffer, int buflen)
 void fontPool::abortGeneration(void)
 {
   kdDebug(4300) << "Font generation is aborted." << endl;
-  if (proc != 0) 
+  if (proc != 0)
     if (proc->isRunning()) {
       proc->kill();
     }

@@ -160,7 +160,7 @@ dviWindow::~dviWindow()
   delete PS_interface;
   delete dviFile;
   delete font_pool;
-
+  delete proc;
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
   export_printer = 0;

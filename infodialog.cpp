@@ -9,8 +9,10 @@
 #include <qfile.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qregexp.h>
 #include <qtextview.h>
 #include <qtooltip.h>
+#include <qvariant.h>
 #include <qwhatsthis.h>
 
 #include "dvi_init.h"

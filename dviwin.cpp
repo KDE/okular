@@ -18,6 +18,7 @@
 #include <qlabel.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
+#include <qregexp.h>
 #include <qurl.h>
 
 #include <kapp.h>

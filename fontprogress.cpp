@@ -72,7 +72,7 @@ fontProgressDialog::~fontProgressDialog()
 void fontProgressDialog::increaseNumSteps( const QString explanation)
 {
   if (ProgressBar1 != 0)
-    ProgressBar1->setValue(progress++);
+    ProgressBar1->setProgress(progress++);
   TextLabel2->setText( explanation );
 }
 
@@ -85,8 +85,8 @@ void fontProgressDialog::hideDialog(void)
 void fontProgressDialog::setTotalSteps(int steps)
 {
   if (ProgressBar1 != 0) {
-    ProgressBar1->setRange(0,steps);
-    ProgressBar1->setValue(0);
+    ProgressBar1->setTotalSteps(steps);
+    ProgressBar1->setProgress(0);
   }
   progress = 0;
 }

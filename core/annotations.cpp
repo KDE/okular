@@ -9,58 +9,195 @@
 
 // qt/kde includes
 #include <qcolor.h>
+#include <qapplication.h>
 
 // local includes
 #include "annotations.h"
 
+
 /** Annotation **/
 
+Annotation::Border::Border()
+    : width( 1 ), xCornerRadius( 0 ), yCornerRadius( 0 ), style( Solid ),
+    dashMarks( 3 ), dashSpaces( 0 ), effect( NoEffect ), effectIntensity( 0 ) {}
+
 Annotation::Annotation()
+    : modifyDate( QDateTime::currentDateTime() ), flags( 0 )
 {
-    state = Opened;
-    flags = 0;
 }
 
-Annotation::~Annotation()
+Annotation::Annotation( const QDomElement & /*node*/ )
 {
 }
+
+void Annotation::store( QDomElement & /*node*/, QDomDocument & /*document*/ )
+{
+}
+
+
+/** MarkupAnnotation **/
+
+MarkupAnnotation::InReplyTo::InReplyTo()
+    : ID( -1 ), scope( Reply ), stateModel( Mark ), state( Unmarked ) {}
+
+MarkupAnnotation::MarkupAnnotation()
+    : Annotation(), markupOpacity( 1.0 ), markupPopupID( -1 ),
+    markupCreationDate( QDateTime::currentDateTime() )
+{
+}
+
+MarkupAnnotation::MarkupAnnotation( const QDomElement & node )
+    : Annotation( node )
+{
+    // ... load stuff ...
+}
+
+void MarkupAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    Annotation::store( node, document );
+}
+
+
+/** PopupAnnotation **/
+
+PopupAnnotation::PopupAnnotation()
+    : Annotation(), popupMarkupParentID( -1 ), popupOpened( false )
+{
+}
+
+PopupAnnotation::PopupAnnotation( const QDomElement & node )
+    : Annotation( node )
+{
+    // ... load stuff ...
+}
+
+void PopupAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    Annotation::store( node, document );
+}
+
 
 /** TextAnnotation **/
 
 TextAnnotation::TextAnnotation()
-    : subType( InPlace ) {}
+    : MarkupAnnotation(), textType( Popup ), textFont( QApplication::font() ),
+    popupOpened( false ), popupIcon( "Note" ), inplaceAlign( 0 ),
+    inplaceIntent( Unknown )
+{
+}
+
+TextAnnotation::TextAnnotation( const QDomElement & node )
+    : MarkupAnnotation( node )
+{
+    // ... load stuff ...
+}
+
+void TextAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    MarkupAnnotation::store( node, document );
+}
 
 
 /** LineAnnotation **/
 
 LineAnnotation::LineAnnotation()
-    : srcArrow( false ), dstArrow( false ), width( 2 ) {}
+    : MarkupAnnotation(), lineStartStyle( None ), lineEndStyle( None ),
+    lineClosed( false ), lineLeadingFwdPt( 0 ), lineLeadingBackPt( 0 ),
+    lineShowCaption( false ), lineIntent( Unknown )
+{
+}
+
+LineAnnotation::LineAnnotation( const QDomElement & node )
+    : MarkupAnnotation( node )
+{
+    // ... load stuff ...
+}
+
+void LineAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    MarkupAnnotation::store( node, document );
+}
 
 
 /** GeomAnnotation **/
 
 GeomAnnotation::GeomAnnotation()
-    : subType( Square ) {}
+    : MarkupAnnotation(), geomType( InscribedSquare ), geomWidthPt( 18 )
+{
+}
 
+GeomAnnotation::GeomAnnotation( const QDomElement & node )
+    : MarkupAnnotation( node )
+{
+    // ... load stuff ...
+}
 
-/** PathAnnotation **/
-
-PathAnnotation::PathAnnotation()
-    : subType( Ink ) {}
+void GeomAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    MarkupAnnotation::store( node, document );
+}
 
 
 /** HighlightAnnotation **/
 
 HighlightAnnotation::HighlightAnnotation()
-    : subType( Highlight ) {}
+    : MarkupAnnotation(), highlightType( Highlight )
+{
+}
+
+HighlightAnnotation::HighlightAnnotation( const QDomElement & node )
+    : MarkupAnnotation( node )
+{
+    // ... load stuff ...
+}
+
+void HighlightAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    MarkupAnnotation::store( node, document );
+}
 
 
 /** StampAnnotation **/
 
-StampAnnotation::StampAnnotation() {}
+StampAnnotation::StampAnnotation()
+    : MarkupAnnotation(), stampIconName( "kpdf" )
+{
+}
+
+StampAnnotation::StampAnnotation( const QDomElement & node )
+    : MarkupAnnotation( node )
+{
+    // ... load stuff ...
+}
+
+void StampAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    MarkupAnnotation::store( node, document );
+}
 
 
-/** MediaAnnotation **/
+/** InkAnnotation **/
 
-MediaAnnotation::MediaAnnotation()
-    : subType( URL ) {}
+InkAnnotation::InkAnnotation()
+    : MarkupAnnotation()
+{
+}
+
+InkAnnotation::InkAnnotation( const QDomElement & node )
+    : MarkupAnnotation( node )
+{
+    // ... load stuff ...
+}
+
+void InkAnnotation::store( QDomElement & node, QDomDocument & document )
+{
+    // ... save stuff ...
+    MarkupAnnotation::store( node, document );
+}

@@ -31,6 +31,7 @@
 #include "xpdf/ErrorCodes.h"
 #include "xpdf/UnicodeMap.h"
 #include "xpdf/Outline.h"
+#include "xpdf/GfxState.h"
 #include "goo/GList.h"
 
 // local includes
@@ -38,6 +39,7 @@
 #include "gp_outputdev.h"
 #include "core/observer.h" //for PAGEVIEW_ID
 #include "core/page.h"
+#include "core/annotations.h"
 #include "core/pagetransition.h"
 #include "conf/settings.h"
 
@@ -85,7 +87,6 @@ PDFGenerator::~PDFGenerator()
     delete pdfdoc;
     docLock.unlock();
 }
-
 
 //BEGIN Generator inherited functions
 bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage*> & pagesVector )
@@ -175,6 +176,8 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
                                         pdfdoc->getPageHeight(i+1),
                                         pdfdoc->getPageRotate(i+1) );
         addTransition( i, page );
+        //FIXME check wether to add or not annotations
+        addAnnotations( i, page );
         pagesVector[i] = page;
     }
 
@@ -626,7 +629,664 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
     }
 }
 
+class XPDFReader
+{
+    public:
+        // find named symbol and parse it
+        static void lookupName( Dict *, const char *, QString & dest );
+        static void lookupString( Dict *, const char *, QString & dest );
+        static void lookupBool( Dict *, const char *, bool & dest );
+        static void lookupInt( Dict *, const char *, int & dest );
+        static void lookupNum( Dict *, const char *, double & dest );
+        static int lookupNumArray( Dict *, const char *, double * dest, int len );
+        static void lookupColor( Dict *, const char *, QColor & color );
+        static void lookupRef( Dict *, const char *, int & dest );
+        static void lookupDate( Dict *, const char *, QDateTime & dest );
+        // transform from user coords to normalized ones using the matrix M
+        static inline void transform( double * M, double x, double y, double * tx, double * ty );
+};
+
+void XPDFReader::lookupName( Dict * dict, const char * type, QString & dest )
+{
+    Object nameObj;
+    dict->lookup( type, &nameObj );
+    if ( nameObj.isNull() )
+        return;
+    if ( nameObj.isName() )
+        dest = nameObj.getName();
+    else
+        kdDebug() << type << " is not Name." << endl;
+    nameObj.free();
+}
+
+void XPDFReader::lookupString( Dict * dict, const char * type, QString & dest )
+{
+    Object stringObj;
+    dict->lookup( type, &stringObj );
+    if ( stringObj.isNull() )
+        return;
+    if ( stringObj.isString() )
+        dest = stringObj.getString()->getCString();
+    else
+        kdDebug() << type << " is not String." << endl;
+    stringObj.free();
+}
+
+void XPDFReader::lookupBool( Dict * dict, const char * type, bool & dest )
+{
+    Object boolObj;
+    dict->lookup( type, &boolObj );
+    if ( boolObj.isNull() )
+        return;
+    if ( boolObj.isBool() )
+        dest = boolObj.getBool() == gTrue;
+    else
+        kdDebug() << type << " is not Bool." << endl;
+    boolObj.free();
+}
+
+void XPDFReader::lookupInt( Dict * dict, const char * type, int & dest )
+{
+    Object intObj;
+    dict->lookup( type, &intObj );
+    if ( intObj.isNull() )
+        return;
+    if ( intObj.isInt() )
+        dest = intObj.getInt();
+    else
+        kdDebug() << type << " is not Int." << endl;
+    intObj.free();
+}
+
+void XPDFReader::lookupNum( Dict * dict, const char * type, double & dest )
+{
+    Object numObj;
+    dict->lookup( type, &numObj );
+    if ( numObj.isNull() )
+        return;
+    if ( numObj.isNum() )
+        dest = numObj.getNum();
+    else
+        kdDebug() << type << " is not Num." << endl;
+    numObj.free();
+}
+
+int XPDFReader::lookupNumArray( Dict * dict, const char * type, double * dest, int len )
+{
+    Object arrObj;
+    dict->lookup( type, &arrObj );
+    if ( arrObj.isNull() )
+        return 0;
+    Object numObj;
+    if ( arrObj.isArray() )
+    {
+        len = QMIN( len, arrObj.arrayGetLength() );
+        for ( int i = 0; i < len; i++ )
+        {
+            dest[i] = arrObj.arrayGet( i, &numObj )->getNum();
+            numObj.free();
+        }
+    }
+    else
+    {
+        len = 0;
+        kdDebug() << type << "is not Array." << endl;
+    }
+    arrObj.free();
+    return len;
+}
+
+void XPDFReader::lookupColor( Dict * dict, const char * type, QColor & dest )
+{
+    double c[3];
+    if ( XPDFReader::lookupNumArray( dict, type, c, 3 ) == 3 )
+        dest = QColor( (int)(c[0]*255.0), (int)(c[1]*255.0), (int)(c[2]*255.0));
+}
+
+void XPDFReader::lookupRef( Dict * dict, const char * type, int & dest )
+{
+    Object refObj;
+    dict->lookupNF( type, &refObj );
+    if ( refObj.isNull() )
+        return;
+    if ( refObj.isRef() )
+        dest = refObj.getRefNum();
+    else
+        kdDebug() << type << " is not Ref." << endl;
+    refObj.free();
+}
+
+void XPDFReader::lookupDate( Dict * dict, const char * type, QDateTime & dest )
+{
+    Object dateObj;
+    dict->lookup( type, &dateObj );
+    if ( dateObj.isNull() )
+        return;
+    if ( dateObj.isString() )
+    {
+        const char * s = dateObj.getString()->getCString();
+        if ( s[0] == 'D' && s[1] == ':' )
+            s += 2;
+        int year, mon, day, hour, min, sec;
+        if ( sscanf( s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
+        {
+            QDate d( year, mon, day );
+            QTime t( hour, min, sec );
+            if ( d.isValid() && t.isValid() )
+                dest = QDateTime(d, t);
+        }
+        else
+            kdDebug() << "Wrong Date format '" << s << "' for '" << type << "'." << endl;
+    }
+    else
+        kdDebug() << type << " is not Date" << endl;
+    dateObj.free();
+}
+
+void XPDFReader::transform( double * M, double x, double y, double * tx, double * ty )
+{
+    *tx = M[0] * x + M[2] * y + M[4];
+    *ty = M[1] * x + M[3] * y + M[5];
+}
+
+
+
+void PDFGenerator::addAnnotations( int pageNumber, KPDFPage * page )
+// called on opening when MUTEX is not used
+{
+    Page * pdfPage = pdfdoc->getCatalog()->getPage( pageNumber + 1 );
+    Object annotArray;
+    pdfPage->getAnnots( &annotArray );
+    if ( !annotArray.isArray() || annotArray.arrayGetLength() < 1 )
+        return;
+
+    // build a normalized transform matrix for this page
+    GfxState * gfxState = new GfxState( 72.0, 72.0, pdfPage->getMediaBox(), pdfPage->getRotate(), gTrue );
+    double * gfxCTM = gfxState->getCTM();
+    double MTX[6];
+    for ( int i = 0; i < 6; i+=2 )
+    {
+        MTX[i] = gfxCTM[i] / pdfPage->getWidth();
+        MTX[i+1] = gfxCTM[i+1] / pdfPage->getHeight();
+    }
+    delete gfxState;
+
+    // parse each PDF annot and attach an 'Annotation' to the KPDFPage
+    Object annot;
+    uint numAnnotations = annotArray.arrayGetLength();
+    for ( uint j = 0; j < numAnnotations; j++ )
+    {
+        // get the j-th annotation
+        annotArray.arrayGet( j, &annot );
+        if ( !annot.isDict() )
+        {
+            kdDebug() << "annot not dictionary" << endl;
+            annot.free();
+            continue;
+        }
+
+        Annotation * annotation = 0;
+        Dict * annotDict = annot.getDict();
+
+        // 1. query Subtype
+        QString subType;
+        XPDFReader::lookupName( annotDict, "Subtype", subType );
+        if ( subType.isEmpty() )
+        {
+            kdDebug() << "annot has no Subtype" << endl;
+            annot.free();
+            continue;
+        }
+
+        // 2. parse *specific* params for Subtype annotation
+        if ( subType == "Popup" )
+        {
+            // parse PopupAnnotation params
+            PopupAnnotation * p = new PopupAnnotation();
+            annotation = p;
+
+            // -> popupMarkupParentID
+            XPDFReader::lookupRef( annotDict, "Parent", p->popupMarkupParentID );
+            // -> popupOpened
+            XPDFReader::lookupBool( annotDict, "Open", p->popupOpened );
+        }
+        else if ( subType == "Text" || subType == "FreeText" )
+        {
+            // parse TextAnnotation params
+            TextAnnotation * t = new TextAnnotation();
+            annotation = t;
+
+            if ( subType == "Text" )
+            {
+                // -> textType
+                t->textType = TextAnnotation::Popup;
+                // -> popupOpened
+                XPDFReader::lookupBool( annotDict, "Open", t->popupOpened );
+                // -> popupIcon
+                XPDFReader::lookupName( annotDict, "Name", t->popupIcon );
+            }
+            else
+            {
+                // -> textType
+                t->textType = TextAnnotation::InPlace;
+                // -> textFont
+                QString textFormat;
+                XPDFReader::lookupString( annotDict, "DA", textFormat );
+                // TODO, fill t->textFont using textFormat if not empty
+                // -> inplaceAlign
+                XPDFReader::lookupInt( annotDict, "Q", t->inplaceAlign );
+                // -> inplaceRichString
+                XPDFReader::lookupString( annotDict, "RC", t->inplaceRichString );
+                // -> inplacePlainString
+                XPDFReader::lookupString( annotDict, "DS", t->inplacePlainString );
+                // -> inplaceCallout
+                double c[6];
+                int n = XPDFReader::lookupNumArray( annotDict, "CL", c, 6 );
+                if ( n >= 4 )
+                {
+                    XPDFReader::transform( MTX, c[0], c[1], &t->inplaceCallout[0].x, &t->inplaceCallout[0].y );
+                    XPDFReader::transform( MTX, c[2], c[3], &t->inplaceCallout[1].x, &t->inplaceCallout[1].y );
+                    if ( n == 6 )
+                        XPDFReader::transform( MTX, c[4], c[5], &t->inplaceCallout[2].x, &t->inplaceCallout[3].y );
+                }
+                // -> inplaceIntent
+                QString intent;
+                XPDFReader::lookupString( annotDict, "IT", intent );
+                if ( intent == "FreeTextCallout" )
+                    t->inplaceIntent = TextAnnotation::Callout;
+                else if ( intent == "FreeTextTypeWriter" )
+                    t->inplaceIntent = TextAnnotation::TypeWriter;
+            }
+        }
+        else if ( subType == "Line" || subType == "Polygon" || subType == "PolyLine" )
+        {
+            // parse LineAnnotation params
+            LineAnnotation * l = new LineAnnotation();
+            annotation = l;
+
+            // -> linePoints
+            double c[100];
+            int num = XPDFReader::lookupNumArray( annotDict, (subType == "Line") ? "L" : "Vertices", c, 100 );
+            if ( num < 4 || (num % 2) != 0 )
+            {
+                kdDebug() << "L/Vertices wrong fol Line/Poly." << endl;
+                delete annotation;
+                annot.free();
+                continue;
+            }
+            for ( int i = 0; i < num; i += 2 )
+            {
+                NormalizedPoint p;
+                XPDFReader::transform( MTX, c[i], c[i+1], &p.x, &p.y );
+                l->linePoints.push_back( p );
+            }
+            // -> lineStartStyle, lineEndStyle
+            Object leArray;
+            annotDict->lookup( "LE", &leArray );
+            if ( leArray.isArray() && leArray.arrayGetLength() == 2 )
+            {
+                // -> lineStartStyle
+                Object styleObj;
+                leArray.arrayGet( 0, &styleObj );
+                if ( styleObj.isName() )
+                {
+                    const char * name = styleObj.getName();
+                    if ( !strcmp( name, "Square" ) )
+                        l->lineStartStyle = LineAnnotation::Square;
+                    else if ( !strcmp( name, "Circle" ) )
+                        l->lineStartStyle = LineAnnotation::Circle;
+                    else if ( !strcmp( name, "Diamond" ) )
+                        l->lineStartStyle = LineAnnotation::Diamond;
+                    else if ( !strcmp( name, "OpenArrow" ) )
+                        l->lineStartStyle = LineAnnotation::OpenArrow;
+                    else if ( !strcmp( name, "ClosedArrow" ) )
+                        l->lineStartStyle = LineAnnotation::ClosedArrow;
+                    else if ( !strcmp( name, "None" ) )
+                        l->lineStartStyle = LineAnnotation::None;
+                    else if ( !strcmp( name, "Butt" ) )
+                        l->lineStartStyle = LineAnnotation::Butt;
+                    else if ( !strcmp( name, "ROpenArrow" ) )
+                        l->lineStartStyle = LineAnnotation::ROpenArrow;
+                    else if ( !strcmp( name, "RClosedArrow" ) )
+                        l->lineStartStyle = LineAnnotation::RClosedArrow;
+                    else if ( !strcmp( name, "Slash" ) )
+                        l->lineStartStyle = LineAnnotation::Slash;
+                }
+                styleObj.free();
+                // -> lineEndStyle
+                leArray.arrayGet( 1, &styleObj );
+                if ( styleObj.isName() )
+                {
+                    const char * name = styleObj.getName();
+                    if ( !strcmp( name, "Square" ) )
+                        l->lineEndStyle = LineAnnotation::Square;
+                    else if ( !strcmp( name, "Circle" ) )
+                        l->lineEndStyle = LineAnnotation::Circle;
+                    else if ( !strcmp( name, "Diamond" ) )
+                        l->lineEndStyle = LineAnnotation::Diamond;
+                    else if ( !strcmp( name, "OpenArrow" ) )
+                        l->lineEndStyle = LineAnnotation::OpenArrow;
+                    else if ( !strcmp( name, "ClosedArrow" ) )
+                        l->lineEndStyle = LineAnnotation::ClosedArrow;
+                    else if ( !strcmp( name, "None" ) )
+                        l->lineEndStyle = LineAnnotation::None;
+                    else if ( !strcmp( name, "Butt" ) )
+                        l->lineEndStyle = LineAnnotation::Butt;
+                    else if ( !strcmp( name, "ROpenArrow" ) )
+                        l->lineEndStyle = LineAnnotation::ROpenArrow;
+                    else if ( !strcmp( name, "RClosedArrow" ) )
+                        l->lineEndStyle = LineAnnotation::RClosedArrow;
+                    else if ( !strcmp( name, "Slash" ) )
+                        l->lineEndStyle = LineAnnotation::Slash;
+                }
+                styleObj.free();
+            }
+            leArray.free();
+            // -> lineClosed
+            l->lineClosed = subType == "Polygon";
+            // -> lineInnerColor
+            XPDFReader::lookupColor( annotDict, "IC", l->lineInnerColor );
+            // -> lineLeadingFwdPt
+            XPDFReader::lookupNum( annotDict, "LL", l->lineLeadingFwdPt );
+            // -> lineLeadingBackPt
+            XPDFReader::lookupNum( annotDict, "LLE", l->lineLeadingBackPt );
+            // -> lineShowCaption
+            XPDFReader::lookupBool( annotDict, "Cap", l->lineShowCaption );
+            // -> lineIntent
+            QString intent;
+            XPDFReader::lookupString( annotDict, "IT", intent );
+            if ( intent == "LineArrow" )
+                l->lineIntent = LineAnnotation::Arrow;
+            else if ( intent == "LineDimension" )
+                l->lineIntent = LineAnnotation::Dimension;
+            else if ( intent == "PolygonCloud" )
+                l->lineIntent = LineAnnotation::PolygonCloud;
+        }
+        else if ( subType == "Square" || subType == "Circle" )
+        {
+            // parse GeomAnnotation params
+            GeomAnnotation * g = new GeomAnnotation();
+            annotation = g;
+
+            // -> geomType
+            if ( subType == "Square" )
+                g->geomType = GeomAnnotation::InscribedSquare;
+            else
+                g->geomType = GeomAnnotation::InscribedCircle;
+            // -> geomInnerColor
+            XPDFReader::lookupColor( annotDict, "IC", g->geomInnerColor );
+            // TODO RD
+        }
+        else if ( subType == "Highlight" || subType == "Underline" ||
+                  subType == "Squiggly" || subType == "StrikeOut" )
+        {
+            // parse HighlightAnnotation params
+            HighlightAnnotation * h = new HighlightAnnotation();
+            annotation = h;
+
+            // -> highlightType
+            if ( subType == "Highlight" )
+                h->highlightType = HighlightAnnotation::Highlight;
+            else if ( subType == "Underline" )
+                h->highlightType = HighlightAnnotation::Underline;
+            else if ( subType == "Squiggly" )
+                h->highlightType = HighlightAnnotation::Squiggly;
+            else if ( subType == "StrikeOut" )
+                h->highlightType = HighlightAnnotation::StrikeOut;
+
+            // -> highlightQuads
+            double c[80];
+            int num = XPDFReader::lookupNumArray( annotDict, "QuadPoints", c, 80 );
+            if ( num < 8 || (num % 8) != 0 )
+            {
+                kdDebug() << "Wrong QuadPoints for a Highlight annotation." << endl;
+                delete annotation;
+                annot.free();
+                continue;
+            }
+            for ( int p = 0; p < num; p += 8 )
+            {
+                NormalizedPoint quad[4];
+                for ( int q = 0; q < 4; q++ )
+                    XPDFReader::transform( MTX, c[ p + q*2 ], c[ p + q*2 + 1 ], &quad[q].x, &quad[q].y );
+                h->highlightQuads.push_back( quad );
+            }
+        }
+        else if ( subType == "Stamp" )
+        {
+            // parse StampAnnotation params
+            StampAnnotation * s = new StampAnnotation();
+            annotation = s;
+
+            // -> stampIconName
+            XPDFReader::lookupName( annotDict, "Name", s->stampIconName );
+        }
+        else if ( subType == "Ink" )
+        {
+            // parse InkAnnotation params
+            InkAnnotation * k = new InkAnnotation();
+            annotation = k;
+
+            // -> inkPaths
+            Object pathsArray;
+            annotDict->lookup( "InkList", &pathsArray );
+            if ( !pathsArray.isArray() || pathsArray.arrayGetLength() < 1 )
+            {
+                kdDebug() << "InkList not present for ink annot" << endl;
+                delete annotation;
+                annot.free();
+                continue;
+            }
+            int pathsNumber = pathsArray.arrayGetLength();
+            for ( int m = 0; m < pathsNumber; m++ )
+            {
+                // transform each path in a list of normalized points ..
+                QValueList<NormalizedPoint> localList;
+                Object pointsArray;
+                pathsArray.arrayGet( m, &pointsArray );
+                if ( pointsArray.isArray() )
+                {
+                    int pointsNumber = pointsArray.arrayGetLength();
+                    for ( int n = 0; n < pointsNumber; n+=2 )
+                    {
+                        // get the x,y numbers for current point
+                        Object numObj;
+                        double x = pointsArray.arrayGet( n, &numObj )->getNum();
+                        numObj.free();
+                        double y = pointsArray.arrayGet( n+1, &numObj )->getNum();
+                        numObj.free();
+                        // add normalized point to localList
+                        NormalizedPoint np;
+                        XPDFReader::transform( MTX, x, y, &np.x, &np.y );
+                        localList.push_back( np );
+                    }
+                }
+                pointsArray.free();
+                // ..and add it to the annotation
+                k->inkPaths.push_back( localList );
+            }
+            pathsArray.free();
+        }
+        else
+        {
+            // MISSING: Link, Caret, FileAttachment, Sound, Movie, Widget,
+            //          Screen, PrinterMark, TrapNet, Watermark, 3D
+            kdDebug() << "annotation '" << subType << "' not supported" << endl;
+            annot.free();
+            continue;
+        }
+
+        // 3. parse Markup parameters
+        if ( annotation->isMarkup() )
+        {
+            // parse Markup (common) parameters
+            MarkupAnnotation * markup = (MarkupAnnotation *)annotation;
+
+            // -> markupCreator
+            XPDFReader::lookupString( annotDict, "T", markup->markupCreator );
+            // -> markupOpacity
+            XPDFReader::lookupNum( annotDict, "CA", markup->markupOpacity );
+            // -> markupPopupID
+            XPDFReader::lookupRef( annotDict, "Popup", markup->markupPopupID );
+            // -> markupPopupText
+            XPDFReader::lookupString( annotDict, "RC", markup->markupPopupText );
+            // -> markupSubject
+            XPDFReader::lookupString( annotDict, "Subj", markup->markupSubject );
+            // -> markupCreationDate
+            XPDFReader::lookupDate( annotDict, "CreationDate", markup->markupCreationDate );
+            // -> markupReply.*
+            XPDFReader::lookupRef( annotDict, "IRT", markup->markupReply.ID );
+            if ( markup->markupReply.ID > 0 )
+            {
+                Object markupObj;
+                annotDict->lookup( "RT", &markupObj );
+                if ( markupObj.isName() )
+                {
+                    const char * name = markupObj.getName();
+                    if ( !strcmp( name, "R" ) )
+                        markup->markupReply.scope = MarkupAnnotation::InReplyTo::Reply;
+                    else if ( !strcmp( name, "Group" ) )
+                        markup->markupReply.scope = MarkupAnnotation::InReplyTo::Grouped;
+                }
+                markupObj.free();
+
+                annotDict->lookup( "State", &markupObj );
+                if ( markupObj.isString() )
+                {
+                    const char * name = markupObj.getString()->getCString();
+                    if ( !strcmp( name, "Marked" ) )
+                        markup->markupReply.state = MarkupAnnotation::InReplyTo::Marked;
+                    else if ( !strcmp( name, "Unmarked" ) )
+                        markup->markupReply.state = MarkupAnnotation::InReplyTo::Unmarked;
+                    else if ( !strcmp( name, "Accepted" ) )
+                        markup->markupReply.state = MarkupAnnotation::InReplyTo::Accepted;
+                    else if ( !strcmp( name, "Rejected" ) )
+                        markup->markupReply.state = MarkupAnnotation::InReplyTo::Rejected;
+                    else if ( !strcmp( name, "Cancelled" ) )
+                        markup->markupReply.state = MarkupAnnotation::InReplyTo::Cancelled;
+                    else if ( !strcmp( name, "Completed" ) )
+                        markup->markupReply.state = MarkupAnnotation::InReplyTo::Completed;
+                    else if ( !strcmp( name, "None" ) )
+                        markup->markupReply.state = MarkupAnnotation::InReplyTo::None;
+                }
+                markupObj.free();
+
+                annotDict->lookup( "StateModel", &markupObj );
+                if ( markupObj.isString() )
+                {
+                    const char * name = markupObj.getString()->getCString();
+                    if ( !strcmp( name, "Marked" ) )
+                        markup->markupReply.stateModel = MarkupAnnotation::InReplyTo::Mark;
+                    else if ( !strcmp( name, "Review" ) )
+                        markup->markupReply.stateModel = MarkupAnnotation::InReplyTo::Review;
+                }
+                markupObj.free();
+            }
+        }
+
+        // 4. parse Rect and other base parameters
+        // -> r
+        double r[4];
+        if ( XPDFReader::lookupNumArray( annotDict, "Rect", r, 4 ) != 4 )
+        {
+            kdDebug() << "Rect is missing for annotation." << endl;
+            annot.free();
+            continue;
+        }
+        // transform annotation rect to uniform coords
+        XPDFReader::transform( MTX, r[0], r[1], &annotation->r.left, &annotation->r.top );
+        XPDFReader::transform( MTX, r[2], r[3], &annotation->r.right, &annotation->r.bottom );
+        if ( annotation->r.left > annotation->r.right )
+            qSwap<double>( annotation->r.left, annotation->r.right );
+        if ( annotation->r.top > annotation->r.bottom )
+            qSwap<double>( annotation->r.top, annotation->r.bottom );
+        // -> contents
+        XPDFReader::lookupString( annotDict, "Contents", annotation->contents );
+        // -> uniqueName
+        XPDFReader::lookupString( annotDict, "NM", annotation->uniqueName );
+        // -> modifyDate
+        XPDFReader::lookupDate( annotDict, "M", annotation->modifyDate );
+        // -> flags
+        XPDFReader::lookupInt( annotDict, "F", annotation->flags );
+        // -> border (Border, BS, BE)
+        double border[3];
+        int bn = XPDFReader::lookupNumArray( annotDict, "Border", border, 3 );
+        if ( bn == 3 )
+        {
+            // -> border.xCornerRadius
+            annotation->border.xCornerRadius = border[0];
+            // -> border.yCornerRadius
+            annotation->border.yCornerRadius = border[1];
+            // -> border.width
+            annotation->border.width = border[2];
+        }
+        Object bsObj;
+        annotDict->lookup( "BS", &bsObj );
+        if ( bsObj.isDict() )
+        {
+            // -> border.width
+            XPDFReader::lookupNum( bsObj.getDict(), "W", annotation->border.width );
+            // -> border.style
+            QString style;
+            XPDFReader::lookupName( bsObj.getDict(), "S", style );
+            if ( style == "S" )
+                annotation->border.style = Annotation::Border::Solid;
+            else if ( style == "D" )
+                annotation->border.style = Annotation::Border::Dashed;
+            else if ( style == "B" )
+                annotation->border.style = Annotation::Border::Beveled;
+            else if ( style == "I" )
+                annotation->border.style = Annotation::Border::Inset;
+            else if ( style == "U" )
+                annotation->border.style = Annotation::Border::Underline;
+            // -> border.dashMarks and border.dashSpaces
+            Object dashArray;
+            bsObj.getDict()->lookup( "D", &dashArray );
+            if ( dashArray.isArray() )
+            {
+                int marks = 3;
+                int spaces = 0;
+                Object intObj;
+                dashArray.arrayGet( 0, &intObj );
+                if ( intObj.isInt() )
+                    marks = intObj.getInt();
+                intObj.free();
+                dashArray.arrayGet( 1, &intObj );
+                if ( intObj.isInt() )
+                    spaces = intObj.getInt();
+                intObj.free();
+                annotation->border.dashMarks = marks;
+                annotation->border.dashSpaces = spaces;
+            }
+            dashArray.free();
+        }
+        bsObj.free();
+        Object beObj;
+        annotDict->lookup( "BE", &beObj );
+        if ( beObj.isDict() )
+        {
+            // -> border.effect
+            QString effect;
+            XPDFReader::lookupName( beObj.getDict(), "S", effect );
+            if ( effect == "C" )
+                annotation->border.effect = Annotation::Border::Cloudy;
+            // -> border.effectIntensity
+            XPDFReader::lookupInt( beObj.getDict(), "I", annotation->border.effectIntensity );
+        }
+        beObj.free();
+        // -> color
+        XPDFReader::lookupColor( annotDict, "C", annotation->color );
+
+        // free annot object
+        annot.free();
+
+        // finally add annotation to the page
+        page->addAnnotation( annotation );
+    }
+}
+
 void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
+// called on opening when MUTEX is not used
 {
     Page *pdfPage = pdfdoc->getCatalog()->getPage( pageNumber + 1 );
     if ( !pdfPage )

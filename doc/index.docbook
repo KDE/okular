@@ -99,18 +99,18 @@
     <parameter>file:paper.dvi#43</parameter></userinput> will make
     &kdvi; to open page 43. If you have included source file
     information, a command like <userinput><command>kdvi</command>
-    <parameter>file:paper.dvi#src:143paper.tex</parameter></userinput>
+    <parameter>file:paper.dvi#src:43paper.tex</parameter></userinput>
     will make &kdvi; search for the place in the &DVI; file which
     corresponds to line 43 in the TeX file
     <parameter>paper.tex</parameter>. You will hardly use this option
-    yourself &mdash; read the section on <ulink
-    url="forward-search.html">forward search</ulink> to learn how to
+    yourself &mdash; read the section on <link
+    linkend="forward-search">forward search</link> to learn how to
     set up your editor to start &kdvi; automatically.
     </para>
 
     <warning><para>The command <userinput><command>kdvi</command>
     <parameter>file:paper.dvi#43</parameter></userinput> will open
-    page 43 of the file <parameter>paper.tex</parameter>. The command
+    page 43 of the file <filename>paper.dvi</filename>. The command
     <userinput><command>kdvi</command>
     <parameter>paper.dvi#43</parameter></userinput> will try to open
     the file <parameter>paper.dvi#43</parameter>.</para>
@@ -175,7 +175,7 @@
       <para>As in printing, the external program
       <command>dvips</command> is used to generate the &PostScript;
       file. If the &DVI; file contains hyperlinks, these will also be
-      included in the &PostScript; file. If you are an export, and if
+      included in the &PostScript; file. If you are an expert, and if
       you would like to generate output which is optimized for a
       specific printer, you should probably start
       <command>dvips</command> manually and choose the proper MetaFont
@@ -245,9 +245,9 @@
       <step>
 	<para>Some editors need to be started manually, or need
 	additional configuration. You will find a description of all
-	supported editors in the, <ulink
-	url="inverse-search-editor.html">Setting up your
-	editor</ulink> below.</para>
+	supported editors in the, <link
+	linkend="inverse-search-editor">Setting up your
+	editor</link> below.</para>
       </step>
       <step>
 	<para>Test your setup. Open your &DVI; file in &kdvi; and use
@@ -542,7 +542,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 </programlisting>
 	   to your or <filename>.xemacs</filename> file. If you use a
 	   more recent version of <application>XEmacs</application>,
-	   <filename class="directory">>.xemacs</filename> will be a
+	   <filename class="directory">.xemacs</filename> will be a
 	   directory. In that case, you should append the line to the
 	   file <filename>.xemacs/init.el</filename>. Restart
 	   <application>XEmacs</application></para>
@@ -786,7 +786,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	    unless you are an expert in <command>MetaFont</command>
 	    and know what you are doing, it is not a good idea to
 	    change these options. You may want to look at the <link
-	    linkend="MFModes">Frequently asked questions</link> section of
+	    linkend="mfmodes">Frequently asked questions</link> section of
 	    this manual.</para>
 
 	    <para>Safe values are <guilabel>1200 dpi /
@@ -860,7 +860,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	</varlistentry>
 	
 	<varlistentry>
-	  <term><guilabel>Hyperlinks</guilabel></term>
+	  <term><guilabel>Show Hyperlinks</guilabel></term>
 	  <listitem>
 	    <para>Check this if you want &kdvi; to display
 	    hyperlinks. The appropriate parts of the text will be
@@ -872,11 +872,11 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	<varlistentry>
 	  <term><guilabel>Editor for inverse search</guilabel></term>
 	  <listitem>
-	    <para>If you intend to use <ulink
-	    url="inverse-search.html">inverse search</ulink>, a very
-	    useful feature if you write TeX documents yourself, you
-	    have to specify which editor you are going to use, and how
-	    this editor can be started by &kdvi;. In the example
+	    <para>If you intend to use <link
+	    linkend="inverse-search">inverse search</link>, a
+	    very useful feature if you write TeX documents yourself,
+	    you have to specify which editor you are going to use, and
+	    how this editor can be started by &kdvi;. In the example
 	    shown, the user has opted for the
 	    <application>NEdit</application> editor. If you use one of
 	    the pre-configured editors from the
@@ -908,7 +908,8 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
       <qandaentry>
 	<question id="fontgen">
 	  <para>What happens when &kdvi; displays the message
-	  <errorcode>Generating bitmap fonts</errorcode>, and why does
+	  <computeroutput>KDVI is currently generating bitmap
+	  fonts</computeroutput>, and why does 
 	  the procedure take so long?</para>
 	</question>
 	<answer>
@@ -939,7 +940,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
       </qandaentry>
 
       <qandaentry>
-	<question id="MFModes">
+	<question id="mfmodes">
 	  <para>What is a MetaFont Mode?</para>
 	</question>
 	<answer>

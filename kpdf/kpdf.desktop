@@ -3,6 +3,7 @@ Encoding=UTF-8
 MimeType=application/pdf
 Terminal=0
 Name=KPDF
+Name[ar]=برنامج KPDF
 Name[hi]=के-पीडीएफ
 GenericName=PDF Viewer
 GenericName[ar]=عارض ملفات PDF

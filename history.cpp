@@ -20,27 +20,27 @@ history::~history(void)
 
 void history::add(Q_UINT32 page, Q_UINT32 ypos)
 {
-  if (historyList[currentItem].page == page) 
-    return;
-
   if (numItems == 0) {
     historyList[0].page = page;
     historyList[0].ypos = ypos;
     numItems = 1;
     return;
-  }
-
-  if (currentItem == HISTORYLENGTH-1) {
-    // Move all items forward one step, add item at the end
-    for (int i=0; i<HISTORYLENGTH-1; i++)
-      historyList[i] = historyList[i+1];
-    historyList[HISTORYLENGTH-1].page = page;
-    historyList[HISTORYLENGTH-1].ypos = ypos;
   } else {
-    currentItem++;
-    historyList[currentItem].page = page;
-    historyList[currentItem].ypos = ypos;
-    numItems = currentItem+1;
+    if (historyList[currentItem].page == page) 
+      return;
+
+    if (currentItem == HISTORYLENGTH-1) {
+      // Move all items forward one step, add item at the end
+      for (int i=0; i<HISTORYLENGTH-1; i++)
+	historyList[i] = historyList[i+1];
+      historyList[HISTORYLENGTH-1].page = page;
+      historyList[HISTORYLENGTH-1].ypos = ypos;
+    } else {
+      currentItem++;
+      historyList[currentItem].page = page;
+      historyList[currentItem].ypos = ypos;
+      numItems = currentItem+1;
+    }
   }
 
   if (backAct != 0)

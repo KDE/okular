@@ -119,6 +119,7 @@ KDVIMultiPage::~KDVIMultiPage()
 
 bool KDVIMultiPage::openFile()
 {
+  document_history.clear();
   emit setStatusBarText(QString(i18n("Loading file %1")).arg(m_file));
 
   bool r = window->setFile(m_file,url().ref());
@@ -149,6 +150,7 @@ void KDVIMultiPage::contents_of_dviwin_changed(void)
 
 bool KDVIMultiPage::closeURL()
 {
+  document_history.clear();
   window->setFile(""); // That means: close the file. Resize the widget to 0x0.
   enableActions(false);
   return true;
@@ -173,7 +175,10 @@ bool KDVIMultiPage::gotoPage(int page)
 void KDVIMultiPage::goto_page(int page, int y)
 {
   document_history.add(page,y);
-  window->gotoPage(page+1, y);
+  if (y != 0)
+    window->gotoPage(page+1, y);
+  else
+    window->gotoPage(page+1);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
   emit pageInfo(window->totalPages(), page );
 }

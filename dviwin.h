@@ -7,14 +7,14 @@
 #ifndef _dviwin_h_
 #define _dviwin_h_
 
+
 #include "../config.h"
 #include <qpainter.h> 
 #include <qevent.h>
-#include <qtimer.h>
-#include <qdatetime.h>
-#include <qscrollview.h> 
+#include <qwidget.h> 
 
-class dviWindow : public QScrollView
+
+class dviWindow : public QWidget
 {
 	Q_OBJECT
 
@@ -53,19 +53,16 @@ public slots:
 	void		drawPage();
 
 protected:
-        void            drawContents ( QPainter *p, 
-                                       int clipx, int clipy, 
-                                       int clipw, int cliph );
+	void paintEvent(QPaintEvent *ev);
+
 
 private:
 	bool		correctDVI();
 	void		initDVI();
 	void		changePageSize();
-	QPoint		mouse;
 	QString		filename;
 	int		basedpi, makepk;
 	QPixmap	*	pixmap;
-	QTimer *	timer;
 	QString		MetafontMode;
 	QString		FontPath;
 	QString		paper_type;

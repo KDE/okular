@@ -98,16 +98,15 @@ extern  void qt_processEvents(void)
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) : QScrollView( parent, name )
+dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) 
+  : QWidget( parent, name )
 {
+  setBackgroundMode(NoBackground);
+
 	ChangesPossible = 1;
 	FontPath = QString::null;
-	viewport()->setBackgroundColor( white );
 	setFocusPolicy(QWidget::StrongFocus);
 	setFocus();
-
-	setHScrollBarMode(QScrollView::AlwaysOff);
-	setVScrollBarMode(QScrollView::AlwaysOff);
 
 	// initialize the dvi machinery
 
@@ -129,6 +128,8 @@ dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int 
 	double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) ); //@@@
 	double s    = (basedpi * 100)/(xres*(double)zoom);
 	mane.shrinkfactor = currwin.shrinkfactor = s;
+
+	resize(0,0);
 }
 
 dviWindow::~dviWindow()
@@ -284,8 +285,8 @@ extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 extern	char *dvi_oops_msg;
 extern	QDateTime dvi_time;
 
-//------ this function calls the dvi interpreter ----------
 
+//------ this function calls the dvi interpreter ----------
 
 void dviWindow::drawPage()
 {
@@ -311,6 +312,7 @@ void dviWindow::drawPage()
     changePageSize();
     return;
   }
+
   min_x = 0;
   min_y = 0;
   max_x = page_w;
@@ -318,6 +320,7 @@ void dviWindow::drawPage()
 
   if ( !pixmap )
     return;
+
   if ( !pixmap->paintingActive() ) {
     QPainter paint;
     paint.begin( pixmap );
@@ -340,7 +343,7 @@ void dviWindow::drawPage()
     paint.end();
   }
   resize(pixmap->width(), pixmap->height());
-  repaintContents(contentsX(), contentsY(), visibleWidth(), visibleHeight(), FALSE);
+  repaint();
 }
 
 
@@ -375,30 +378,7 @@ void dviWindow::changePageSize()
   pixmap = new QPixmap( (int)page_w, (int)page_h );
   pixmap->fill( white );
 
-  // Resize the QScrollview. Be careful to maintain the locical positon 
-  // on the ScrollView. This looks kind of complicated, but my experience
-  // shows that this is what most users intuitively expect.
-  // -- Stefan Kebekus.
-  int new_x = 0;
-  if ( page_w > visibleWidth() ) {
-    if ( old_width < visibleWidth() ) {// First time the Pixmap is wider than the ScrollView?
-      // Yes. We center horizonzally by default.
-      // Don't ask me why I need to subtract 30. It just works better (with qt 2.1 b4, that is).
-      if (contentsWidth() < 10)
-	new_x = ( page_w - visibleWidth() ) / 2 - 30;
-      else
-	new_x = ( page_w - visibleWidth() ) / 2;
-    } else
-      // Otherwise maintain the logical horizontal position
-      // -- that is, the horizontal center of the screen stays where it is.
-      new_x = ((contentsX()+visibleWidth()/2)*page_w)/contentsWidth() - visibleWidth()/2;
-  }
-  // We are not that particular about the vertical position 
-  // -- just keep the upper corner where it is.
-  int new_y = (contentsY()*page_h) / contentsHeight();
-
-  resizeContents( page_w, page_h );
-  setContentsPos( new_x > 0 ? new_x : 0, new_y > 0 ? new_y : 0 );
+  resize( page_w, page_h );
   currwin.win = mane.win = pixmap->handle();
   drawPage();
 }
@@ -455,8 +435,11 @@ void dviWindow::setZoom(int zoom)
 }
 
 
-void dviWindow::drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph ) 
+void dviWindow::paintEvent(QPaintEvent *ev)
 {
-  if ( pixmap )
-    p->drawPixmap(clipx, clipy, *pixmap, clipx, clipy, clipw, cliph);
+  if (pixmap)
+    {
+      QPainter p(this);
+      p.drawPixmap(QPoint(0, 0), *pixmap);
+    }
 }

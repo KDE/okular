@@ -2,7 +2,8 @@ Personal Albert's list
 -> make links functional (done in HEAD)
 
 More items
--> screen editing (annotations): framework (BR67300)
+-> new icons (contest at kde-look that will end in 2004-Oct-01)
+-> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
 -> export all text in plain_text/html
 -> extract(export?) images
@@ -12,7 +13,6 @@ More items
 -> session support: restoring page location (BR82589)
 -> nice label box to the top to display messages to user (for example session restoring,etc..)
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
--> new icons (contest at kde-look that will end in 2004-Oct-01)
 
 Porting / In progress on the branch (first item comes first):
 -> continous mode (BR74435)
@@ -20,6 +20,7 @@ Porting / In progress on the branch (first item comes first):
 -> zoom buttons in sync with text (BR69092)
 -> porting Albert's link following
 -> implementing async document generator using Albert's thread as the generation thread
+-> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text
 
 Done (sorted by inv.time)
 -> added the option to open password protected files (from head)

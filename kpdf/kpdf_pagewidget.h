@@ -59,9 +59,13 @@ private slots:
 	void slotZoomIn();
 	void slotZoomOut();
 	void slotFitToWidthToggled( bool );
+	void slotFitToPageToggled( bool );
+	void slotSetMouseNormal();
+	void slotSetMouseSelect();
+	void slotSetMouseDraw();
 	void slotToggleScrollBars( bool on );
 	// activated directly or via QTimer on the viewportResizeEvent
-	void slotUpdateView( bool forceRepaint = false );
+	void slotUpdateView( bool repaint = true );
 
 signals:
 	void urlDropped( const KURL& );
@@ -80,14 +84,13 @@ private:
 	QValueVector<int> m_pages;
 	int m_vectorIndex;
 	const KPDFPage * m_page;
-	int m_pageWidth;
-	int m_pageHeight;
+	QRect m_pageRect;
 
-	enum MouseMode { MouseNormal, MouseSelection /*MouseEditing*/ } m_mouseMode;
-	QPoint m_mouseStartPos;
-	// mouse related vars ...
+	enum MouseMode { MouseNormal, MouseSelection, MouseEdit } m_mouseMode;
+	QPoint m_mouseGrabPos;
+	bool m_mouseOnLink;
 	//enum ViewMode { ... } m_viewMode;
-	//int m_viewNumber;
+	//int m_viewsNumber;
 
 	// zoom related
 	enum ZoomMode { FixedFactor, FitWidth, FitPage /*FitVisible*/ } m_zoomMode;
@@ -96,6 +99,7 @@ private:
 	// actions
 	KSelectAction *m_aZoom;
 	KToggleAction *m_aZoomFitWidth;
+	KToggleAction *m_aZoomFitPage;
 
 	QTimer *m_delayTimer;
 };

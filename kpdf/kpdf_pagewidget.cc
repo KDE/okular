@@ -15,7 +15,6 @@
 
 #include <qcursor.h>
 #include <qpainter.h>
-#include <qmutex.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
 
@@ -30,59 +29,71 @@
 #include "kpdf_pagewidget.h"
 #include "page.h"
 
-PageWidget::PageWidget(QWidget *parent, KPDFDocument *document)
-	: QScrollView(parent, "KPDF::pageWidget", WRepaintNoErase),
+PageWidget::PageWidget( QWidget *parent, KPDFDocument *document )
+	: QScrollView( parent, "KPDF::pageWidget", WRepaintNoErase ),
 	m_document( document ), m_page( 0 ),
-	m_pageWidth( 0 ), m_pageHeight( 0 ),
-	m_mouseMode( MouseNormal ),
+	m_mouseMode( MouseNormal ), m_mouseOnLink( false ),
 	m_zoomMode( FixedFactor ), m_zoomFactor( 1.0 ),
 	m_delayTimer( 0 )
 {
 	// widget setup
-	setMouseTracking( true );
 	setAcceptDrops( true );
 	setFocusPolicy( QWidget::StrongFocus );
 	viewport()->setFocusPolicy( QWidget::WheelFocus );
+	viewport()->setMouseTracking( true );
 
 	// set a corner button to resize the view to the page size
 	QPushButton * resizeButton = new QPushButton( viewport() );
 	resizeButton->setPixmap( SmallIcon("crop" /*"top"*/) );
 	setCornerWidget( resizeButton );
+	resizeButton->setEnabled( false );
 	// connect(...);
 }
 
 void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 {
 	// Zoom actions ( higher scales consumes lots of memory! )
-	const double zoomValue[10] = {0.125,0.25,0.3333,0.5,0.6667,0.75,1,1.25,1.50,2 };
+	const double zoomValue[10] = { 0.125, 0.25, 0.333, 0.5, 0.667, 0.75, 1, 1.25, 1.50, 2 };
 
-	m_aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, ac, "zoomTo" );
+	m_aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, ac, "zoom_to" );
 	connect( m_aZoom, SIGNAL( activated( const QString & ) ), this, SLOT( slotZoom( const QString& ) ) );
 	m_aZoom->setEditable(  true );
-	m_aZoom->clear();
 
 	QStringList translated;
+	translated << i18n("Fit Width") << i18n("Fit Page");
 	QString localValue;
 	QString double_oh( "00" );
-	int idx = 0;
 	for ( int i = 0; i < 10; i++ )
 	{
 		localValue = KGlobal::locale()->formatNumber( zoomValue[i] * 100.0, 2 );
 		localValue.remove( KGlobal::locale()->decimalSymbol() + double_oh );
 		translated << QString( "%1%" ).arg( localValue );
-		if ( zoomValue[i] == 1.0 )
-			idx = i;
 	}
 	m_aZoom->setItems( translated );
-	m_aZoom->setCurrentItem( idx );
+	m_aZoom->setCurrentItem( 8 );
 
 	KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
 
 	KStdAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
 
-	m_aZoomFitWidth = new KToggleAction( i18n("Fit to Page &Width"), "viewmagfit", 0, ac, "fit_to_width" );
+	m_aZoomFitWidth = new KToggleAction( i18n("Fit to Page &Width"), "viewmagfit", 0, ac, "zoom_fit_width" );
 	connect( m_aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
+	m_aZoomFitPage = new KToggleAction( i18n("Fit to &Page"), "viewmagfit", 0, ac, "zoom_fit_page" );
+	connect( m_aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
+
+	// Mouse-Mode actions
+	KToggleAction * mn = new KToggleAction( i18n("Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+	mn->setExclusiveGroup("MouseType");
+	mn->setChecked( true );
+
+	KToggleAction * ms = new KToggleAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+	ms->setExclusiveGroup("MouseType");
+
+	KToggleAction * md = new KToggleAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
+	md->setExclusiveGroup("MouseType");
+
+	// Other actions
 	KToggleAction * ss = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
 	ss->setCheckedState(i18n("Hide &Scrollbars"));
 	connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
@@ -136,8 +147,6 @@ void PageWidget::pageSetCurrent( int pageNumber, float position )
 
 	slotUpdateView();
 	verticalScrollBar()->setValue( (int)(position * verticalScrollBar()->maxValue()) );
-	// TODO : move request (Async or sync ?) to updateview.. check this
-	m_document->requestPixmap( pageNumber, m_pageWidth, m_pageHeight, true );
 }
 
 void PageWidget::notifyPixmapChanged( int pageNumber )
@@ -149,60 +158,107 @@ void PageWidget::notifyPixmapChanged( int pageNumber )
 //END KPDFDocumentObserver inherited methods
 
 //BEGIN widget events 
-void PageWidget::contentsMousePressEvent(QMouseEvent* /*e*/)
-{/* FIXME Albert
-	if ( e->button() & LeftButton )
+void PageWidget::contentsMousePressEvent( QMouseEvent * e )
+{
+	switch ( m_mouseMode )
 	{
-		m_dragGrabPos = e -> globalPos();
-		setCursor( sizeAllCursor );
-	}
-	else if ( e->button() & RightButton )
-	{
-		emit rightClick();
-	}
+	case MouseNormal:    // drag / click start
+		if ( e->button() & LeftButton )
+		{
+			m_mouseGrabPos = e->globalPos();
+			setCursor( sizeAllCursor );
+		}
+		else if ( e->button() & RightButton )
+			emit rightClick();
 
-	m_pressedAction = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
-*/}
+		/* TODO Albert
+			note: 'Page' is an 'information container' and has to deal with clean
+			data (such as the '(int)page & (float)position' where link refers to,
+			not a LinkAction struct.. better an own struct). 'Document' is the place
+			to put xpdf/Splash dependant stuff and fill up pages with interpreted
+			data. I think is a *clean* way to handle everything.
+			m_pressedLink = *PAGE* or *DOCUMENT* ->findLink( normalizedX, normY );
+		*/
+		break;
 
-void PageWidget::contentsMouseReleaseEvent(QMouseEvent* /*e*/)
-{/* FIXME Albert
-	if ( e -> button() & LeftButton )
+	case MouseSelection: // ? set 1st corner of the selection rect ?
+
+	case MouseEdit:      // ? place the beginning of [tool] ?
+		break;
+	}
+}
+
+void PageWidget::contentsMouseReleaseEvent( QMouseEvent * )
+{
+	switch ( m_mouseMode )
 	{
+	case MouseNormal:    // end drag / follow link
 		setCursor( arrowCursor );
-	}
-	else
-	{
-		LinkAction* action = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
-		if (action == m_pressedAction)
-			emit linkClicked(action);
 
-		m_pressedAction = 0;
-	}
-*/}
+		/* TODO Albert
+			PageLink * link = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
+			if ( link == m_pressedLink )
+				//go to link, use:
+				document->slotSetCurrentPagePosition( (int)link->page(), (float)link->position() );
+				//and all the views will update and display the right page at the right position
+			m_pressedLink = 0;
+		*/
+		break;
 
-void PageWidget::contentsMouseMoveEvent(QMouseEvent* /*e*/)
-{/* FIXME Albert
-	if ( e->state() & LeftButton )
-	{
-		QPoint delta = m_dragGrabPos - e->globalPos();
-		scrollBy( delta.x(), delta.y() );
-		m_dragGrabPos = e->globalPos();
+	case MouseSelection: // ? m_page->setPixmapOverlaySelection( QRect ) ?
+
+	case MouseEdit:      // ? apply [tool] ?
+		break;
 	}
-	else
+}
+
+void PageWidget::contentsMouseMoveEvent( QMouseEvent * e )
+{
+	switch ( m_mouseMode )
 	{
-		LinkAction* action = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
-		setCursor(action != 0 ? Qt::PointingHandCursor : Qt::ArrowCursor);
+	case MouseNormal:    // move page / change mouse cursor if over links
+		if ( e->state() & LeftButton )
+		{
+			QPoint delta = m_mouseGrabPos - e->globalPos();
+			scrollBy( delta.x(), delta.y() );
+			m_mouseGrabPos = e->globalPos();
+		}
+		/* TODO Albert
+			LinkAction* action = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
+			setCursor(action != 0 ? );
+			experimental version using Page->hasLink( int pageX, int pageY )
+			and haslink has a fake true response on
+		*/
+		if ( m_page && e->state() == NoButton && m_pageRect.isValid() )
+		{
+			bool onLink = m_page->hasLink( e->x() - m_pageRect.left(), e->y() - m_pageRect.top() );
+			// set cursor only when entering / leaving (setCursor has not an internal cache)
+			if ( onLink != m_mouseOnLink )
+			{
+				m_mouseOnLink = onLink;
+				setCursor( onLink ? pointingHandCursor : arrowCursor );
+			}
+		}
+		break;
+
+	case MouseSelection: // ? update selection contour ?
+
+	case MouseEdit:      // ? update graphics ?
+		break;
 	}
-*/}
+}
 
 void PageWidget::viewportResizeEvent( QResizeEvent * )
 {
+	// start a timer that will refresh the pixmap after 0.5s
 	if ( !m_delayTimer )
 	{
 		m_delayTimer = new QTimer( this );
 		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotUpdateView() ) );
 	}
 	m_delayTimer->start( 400, true );
+	// recalc coordinates
+	slotUpdateView( false );
 }
 
 void PageWidget::keyPressEvent( QKeyEvent * e )
@@ -270,21 +326,54 @@ void PageWidget::dropEvent( QDropEvent * ev )
 
 void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
 {
-	QColor bc( Qt::lightGray /*KGlobalSettings::calculateAlternateBackgroundColor( KGlobalSettings::baseColor() )*/ );
+	QColor bc( paletteBackgroundColor() /*KGlobalSettings::calculateAlternateBackgroundColor( KGlobalSettings::baseColor() )*/ );
 	if ( m_page )
 	{
-		// draw the page (and overlays such as hilighting and selection)
-		QRect clipRect( clipx, clipy, clipw, cliph );
-		QRect pageRect( 0,0, m_pageWidth, m_pageHeight );
-		p->save();
-		m_page->drawPixmap( p, clipRect.intersect(pageRect), m_pageWidth, m_pageHeight );
-		p->restore();
+		QRect clip( clipx, clipy, clipw, cliph );
+		QRect pageClip( clip.intersect( m_pageRect ) );
 
-		// fill the remaining area
-		if ( (clipx + clipw) > m_pageWidth )
-			p->fillRect ( m_pageWidth, clipy, clipw - (m_pageWidth - clipx), m_pageHeight - clipy, bc );
-		if ( (cliph + clipy) > m_pageHeight )
-			p->fillRect ( clipx, m_pageHeight, clipw, cliph - (m_pageHeight - clipy), bc );
+		// draw the page (and overlays such as hilighting and selection)
+		if ( pageClip.isValid() )
+		{
+			p->save();
+			p->translate( m_pageRect.left(), m_pageRect.top() );
+			QRect translatedPageClip( pageClip );
+			translatedPageClip.moveBy( -m_pageRect.left(), -m_pageRect.top() );
+			m_page->drawPixmap( p, translatedPageClip, m_pageRect.width(), m_pageRect.height() );
+			p->restore();
+		}
+
+		// if drawn region includes an edge of the page
+		if ( pageClip != clip )
+		{
+			// draw the outline and adapt pageClip
+			pageClip.moveBy( -1, -1 );
+			pageClip.setWidth( pageClip.width() + 2 );
+			pageClip.setHeight( pageClip.height() + 2 );
+			p->setPen( Qt::black );
+			p->drawRect( pageClip );
+			p->setPen( Qt::gray );
+			p->drawLine( pageClip.left(), pageClip.bottom() + 1,  pageClip.right() + 1, pageClip.bottom() + 1 );
+			p->drawLine( pageClip.right() + 1, pageClip.top(), pageClip.right() + 1, pageClip.bottom() + 1 );
+			p->setPen( Qt::lightGray );
+			p->drawLine( pageClip.left(), pageClip.bottom() + 2,  pageClip.right() + 2, pageClip.bottom() + 2 );
+			p->drawLine( pageClip.right() + 2, pageClip.top(), pageClip.right() + 2, pageClip.bottom() + 2 );
+			p->setPen( bc );
+			p->drawPoint( pageClip.left(), pageClip.bottom() + 2 );
+			p->drawPoint( pageClip.right() + 2, pageClip.top() );
+			pageClip.setWidth( pageClip.width() + 2 );
+			pageClip.setHeight( pageClip.height() + 2 );
+
+			// fill the remaining area (left side, right side, top crop, bottom crop)
+			if ( clip.left() < pageClip.left() )
+				p->fillRect( clip.left(), clip.top(), pageClip.left() - clip.left(), clip.height(), bc );
+			if ( clip.right() > pageClip.right() )
+				p->fillRect( pageClip.right() + 1, clip.top(), clip.right() - pageClip.right(), clip.height(), bc );
+			if ( clip.top() < pageClip.top() )
+				p->fillRect( pageClip.left(), clip.top(), pageClip.width(), pageClip.top() - clip.top(), bc );
+			if ( clip.bottom() > pageClip.bottom() )
+				p->fillRect( pageClip.left(), pageClip.bottom() + 1, pageClip.width(), clip.bottom() - pageClip.bottom(), bc );
+		}
 	}
 	else
 		p->fillRect ( clipx, clipy, clipw, cliph, bc );
@@ -294,17 +383,29 @@ void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, in
 //BEGIN internal SLOTS
 void PageWidget::slotZoom( const QString & nz )
 {
+	if ( nz == i18n("Fit Width") )
+	{
+		m_aZoomFitWidth->setChecked( true );
+		return slotFitToWidthToggled( true );
+	}
+	if ( nz == i18n("Fit Page") )
+	{
+		m_aZoomFitPage->setChecked( true );
+		return slotFitToPageToggled( true );
+	}
+
 	QString z = nz;
 	z.remove( z.find( '%' ), 1 );
 	bool isNumber = true;
 	double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
 	
-	if ( m_zoomFactor != zoom )
+	if ( m_zoomFactor != zoom && zoom > 0.1 && zoom < 8.0 )
 	{
 		m_zoomMode = FixedFactor;
 		m_zoomFactor = zoom;
 		slotUpdateView();
 		m_aZoomFitWidth->setChecked( false );
+		m_aZoomFitPage->setChecked( false );
 	}
 }
 
@@ -319,6 +420,7 @@ void PageWidget::slotZoomIn()
 	m_zoomMode = FixedFactor;
 	slotUpdateView();
 	m_aZoomFitWidth->setChecked( false );
+	m_aZoomFitPage->setChecked( false );
 }
 
 void PageWidget::slotZoomOut()
@@ -332,12 +434,36 @@ void PageWidget::slotZoomOut()
 	m_zoomMode = FixedFactor;
 	slotUpdateView();
 	m_aZoomFitWidth->setChecked( false );
+	m_aZoomFitPage->setChecked( false );
 }
 
 void PageWidget::slotFitToWidthToggled( bool on )
 {
 	m_zoomMode = on ? FitWidth : FixedFactor;
 	slotUpdateView();
+	m_aZoomFitPage->setChecked( false );
+}
+
+void PageWidget::slotFitToPageToggled( bool on )
+{
+	m_zoomMode = on ? FitPage : FixedFactor;
+	slotUpdateView();
+	m_aZoomFitWidth->setChecked( false );
+}
+
+void PageWidget::slotSetMouseNormal()
+{
+	m_mouseMode = MouseNormal;
+}
+
+void PageWidget::slotSetMouseSelect()
+{
+	m_mouseMode = MouseSelection;
+}
+
+void PageWidget::slotSetMouseDraw()
+{
+	m_mouseMode = MouseEdit;
 }
 
 void PageWidget::slotToggleScrollBars( bool on )
@@ -346,10 +472,13 @@ void PageWidget::slotToggleScrollBars( bool on )
 	setVScrollBarMode( on ? AlwaysOn : AlwaysOff );
 }
 
-void PageWidget::slotUpdateView( bool /*forceRepaint*/ )
+void PageWidget::slotUpdateView( bool repaint )
 {	//TODO ASYNC autogeneration!
 	if ( !m_page )
+	{
+		m_pageRect.setRect( 0, 0, 0, 0 );
 		resizeContents( 0, 0 );
+	}
 	else
 	{
 		// Zoom / AutoFit-Width / AutoFit-Page
@@ -364,12 +493,16 @@ void PageWidget::slotUpdateView( bool /*forceRepaint*/ )
 					scale = scaleH;
 			}
 		}
-		m_pageWidth = (int)( scale * m_page->width() );
-		m_pageHeight = (int)( scale * m_page->height() );
-		resizeContents( m_pageWidth, m_pageHeight );
-		m_document->requestPixmap( m_page->number(), m_pageWidth, m_pageHeight, true );
+		int pageW = (int)( scale * m_page->width() ),
+		    pageH = (int)( scale * m_page->height() ),
+		    viewW = QMAX( viewport()->width(), pageW ),
+		    viewH = QMAX( viewport()->height(), pageH );
+		m_pageRect.setRect( (viewW - pageW) / 2, (viewH - pageH) / 2, pageW, pageH );
+		resizeContents( viewW, viewH );
+		m_document->requestPixmap( m_page->number(), pageW, pageH, true );
 	}
-	viewport()->update();
+	if ( repaint )
+		viewport()->update();
 }
 //END internal SLOTS
 

@@ -15,7 +15,7 @@ More items (first items will enter 'In progress list' first):
 -> minimize PageView's reLayout and requestPixmaps on changes
 -> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
--> extract(export?) images
+-> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> text selection in wordprocessor style (very hard/impossible)
 -> implement history (mainly for actionNamed)
 -> history as a toolbox child (collecting DOs's setPage calls)

@@ -173,6 +173,8 @@ QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m21, fp
 			f. setWeight ( QFont::Light );
 		if ( fname. contains ( "Black" ))
 			f. setWeight ( QFont::Black );
+
+		kdDebug() << f.toString() << endl;
 	}
 	// Treat x-sheared fonts as italic
 	if (( m12 > -0.1 ) && ( m12 < 0.1 ) && ((( m21 > -5.0 ) && ( m21 < -0.1 )) || (( m21 > 0.1 ) && ( m21 < 5.0 )))) {
@@ -754,8 +756,7 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 
 	uchar **scanlines = img. jumpTable ( );
 
-	if ( ctm [3] > 0 )
-		scanlines += ( height - 1 );
+	scanlines += ( height - 1 );
 
 	for ( int y = 0; y < height; y++ ) {
 		QRgb *scanline = (QRgb *) *scanlines;
@@ -775,7 +776,7 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
-		ctm [3] > 0 ? scanlines-- : scanlines++;
+		scanlines--;
 	}
 
 #ifndef QT_NO_TRANSFORMATIONS
@@ -872,8 +873,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 
 	uchar **scanlines = img. jumpTable ( );
 
- 	if ( ctm [3] <= 0 )
- 		scanlines += ( height - 1 );
+	scanlines += ( height - 1 );
 
 	for ( int y = 0; y < height; y++ ) {
 		QRgb *scanline = (QRgb *) *scanlines;
@@ -899,7 +899,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
-		ctm [3] <= 0 ? scanlines-- : scanlines++;
+		scanlines--;
 
 	}
 

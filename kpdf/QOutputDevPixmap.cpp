@@ -49,8 +49,6 @@
 //#define QPDFDBG(x) x		// special debug mode
 #define QPDFDBG(x)   		// normal compilation
 
-static inline long int round( float x ) { static_cast<long int>( x + x > 0 ? 0.5 : -0.5); }
-
 //------------------------------------------------------------------------
 // Constants and macros
 //------------------------------------------------------------------------
@@ -58,7 +56,7 @@ static inline long int round( float x ) { static_cast<long int>( x + x > 0 ? 0.5
 #ifndef KDE_USE_FINAL
 static inline QColor q_col ( const GfxRGB &rgb )
 {
-	return QColor ( round ( rgb. r * 255 ), round ( rgb. g * 255 ), round ( rgb. b * 255 ));
+	return QColor ( qRound ( rgb. r * 255 ), qRound ( rgb. g * 255 ), qRound ( rgb. b * 255 ));
 }
 #endif
 
@@ -106,7 +104,7 @@ QFont QOutputDevPixmap::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m
 	}
 
 	// compute size and normalized transform matrix
-	int size = round ( sqrt ( m21 * m21 + m22 * m22 ));
+	int size = qRound ( sqrt ( m21 * m21 + m22 * m22 ));
 
 	QPDFDBG( printf ( "SET FONT: Name=%s, Size=%d, Bold=%d, Italic=%d, Mono=%d, Serif=%d, Symbol=%d, CID=%d, EmbFN=%s, M=(%f,%f,%f,%f)\n",
 	         (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" ),
@@ -194,10 +192,10 @@ void QOutputDevPixmap::startPage ( int /*pageNum*/, GfxState *state )
 	if (m_painter) delete m_painter;
 	if (m_pixmap) delete m_pixmap;
 
-	m_pixmap = new QPixmap ( round ( state-> getPageWidth ( )), round ( state-> getPageHeight ( )));
+	m_pixmap = new QPixmap ( qRound ( state-> getPageWidth ( )), qRound ( state-> getPageHeight ( )));
 	m_painter = new QPainter ( m_pixmap );
 
-	QPDFDBG( printf ( "NEW PIXMAP (%ld x %ld)\n", round ( state-> getPageWidth ( )),  round ( state-> getPageHeight ( ))));
+	QPDFDBG( printf ( "NEW PIXMAP (%ld x %ld)\n", qRound ( state-> getPageWidth ( )),  qRound ( state-> getPageHeight ( ))));
 
 	m_pixmap-> fill ( Qt::white ); // clear window
 	m_text-> clear ( ); // cleat text object
@@ -304,7 +302,7 @@ void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 	Qt::PenJoinStyle join;
 	int width;
 
-	width = round ( state-> getTransformedLineWidth ( ));
+	width = qRound ( state-> getTransformedLineWidth ( ));
 
 	switch ( state-> getLineCap ( )) {
 		case 0: cap = Qt::FlatCap; break;
@@ -343,11 +341,11 @@ void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
 		if (dashLength > 20)
 			dashLength = 20;
 		for ( int i = 0; i < dashLength; ++i ) {
-			dashList[i] = xoutRound(state->transformWidth(dashPattern[i]));
+			dashList[i] = xoutqRound(state->transformWidth(dashPattern[i]));
 			if (dashList[i] == 0)
 				dashList[i] = 1;
 		}
-		XSetDashes(display, strokeGC, xoutRound(dashStart), dashList, dashLength);
+		XSetDashes(display, strokeGC, xoutqRound(dashStart), dashList, dashLength);
 */
 	}
 }
@@ -430,7 +428,7 @@ void QOutputDevPixmap::eoFill ( GfxState *state )
 //  borders of a polygon.  This means that one-pixel-thick polygons
 //  are not colored at all.  I think this is supposed to be a
 //  feature, but I can't figure out why.  So after it fills a
-//  polygon, it also draws lines around the border.  This is done
+//  polygon, it also draws lines aqRound the border.  This is done
 //  only for single-component polygons, since it's not very
 //  compatible with the compound polygon kludge (see convertPath()).
 //
@@ -564,8 +562,8 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 			state-> transform ( subpath-> getX ( i + 2 ), subpath-> getY ( i + 2 ), &x3, &y3 );
 
 			QPointArray tmp;
-			tmp. setPoints ( 4, round ( x0 ), round ( y0 ), round ( x1 ), round ( y1 ),
-			                    round ( x2 ), round ( y2 ), round ( x3 ), round ( y3 ));
+			tmp. setPoints ( 4, qRound ( x0 ), qRound ( y0 ), qRound ( x1 ), qRound ( y1 ),
+			                    qRound ( x2 ), qRound ( y2 ), qRound ( x3 ), qRound ( y3 ));
 
 #if QT_VERSION < 300
 			tmp = tmp. quadBezier ( );
@@ -584,7 +582,7 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 		else {
 			state-> transform ( subpath-> getX ( i ), subpath-> getY ( i ), &x1, &y1 );
 
-			points. putPoints ( points. count ( ), 1, round ( x1 ), round ( y1 ));
+			points. putPoints ( points. count ( ), 1, qRound ( x1 ), qRound ( y1 ));
 			++i;
 		}
 	}
@@ -660,7 +658,7 @@ void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
 
 			// std::cerr << std::endl << "ROTATED: " << m11 << ", " << m12 << ", " << m21 << ", " << m22 << " / SIZE: " << fsize << " / TEXT: " << str. local8Bit ( ) << endl << endl;
 
-			QWMatrix mat ( round ( m11 / fsize ), round ( m12 / fsize ), -round ( m21 / fsize ), -round ( m22 / fsize ), round ( x1 ), round ( y1 ));
+			QWMatrix mat ( qRound ( m11 / fsize ), qRound ( m12 / fsize ), -qRound ( m21 / fsize ), -qRound ( m22 / fsize ), qRound ( x1 ), qRound ( y1 ));
 
 			m_painter-> setWorldMatrix ( mat );
 
@@ -679,9 +677,9 @@ void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
 		}
 
 		if ( fsize > 5 )
-			m_painter-> drawText ( round ( x1 ), round ( y1 ), str );
+			m_painter-> drawText ( qRound ( x1 ), qRound ( y1 ), str );
 		else
-			m_painter-> fillRect ( round ( x1 ), round ( y1 ), round ( QMAX( fp_t(1), dx1 )), round ( QMAX( fsize, dy1 )), m_painter-> pen ( ). color ( ));
+			m_painter-> fillRect ( qRound ( x1 ), qRound ( y1 ), qRound ( QMAX( fp_t(1), dx1 )), qRound ( QMAX( fsize, dy1 )), m_painter-> pen ( ). color ( ));
 
 		m_painter-> setPen ( oldpen );
 
@@ -690,7 +688,7 @@ void QOutputDevPixmap::drawChar ( GfxState *state, fp_t x, fp_t y,
 			m_painter-> setWorldMatrix ( oldmat );
 #endif
 
-		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), round ( x1 ), round ( y1 )));
+		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), qRound ( x1 ), qRound ( y1 )));
 	}
 	else if ( code != 0 ) {
 		// some PDF files use CID 0, which is .notdef, so just ignore it
@@ -721,7 +719,7 @@ void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream 
 
 	GfxRGB rgb;
 	state-> getFillRGB ( &rgb );
-	uint val = ( int( round ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( round ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( round ( rgb. b * 255 ) ) & 0xff );
+	uint val = ( int( qRound ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( qRound ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( qRound ( rgb. b * 255 ) ) & 0xff );
 
 
 	QImage img ( width, height, 32 );
@@ -783,11 +781,11 @@ void QOutputDevPixmap::drawImageMask ( GfxState *state, Object */*ref*/, Stream 
 		QPDFDBG( printf (  "### ROTATED / SHEARED / ETC -- CANNOT DISPLAY THIS IMAGE\n" ));
 	}
 	else {
-		int x = round ( ctm [4] );
-		int y = round ( ctm [5] );
+		int x = qRound ( ctm [4] );
+		int y = qRound ( ctm [5] );
 
-		int w = round ( ctm [0] );
-		int h = round ( ctm [3] );
+		int w = qRound ( ctm [0] );
+		int h = qRound ( ctm [3] );
 
 		if ( w < 0 ) {
 			x += w;
@@ -866,7 +864,7 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 			imgStr-> getPixel ( pixBuf );
 			colorMap-> getRGB ( pixBuf, &rgb );
 
-			uint val = ( int( round ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( round ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( round ( rgb. b * 255 ) ) & 0xff );
+			uint val = ( int( qRound ( rgb. r * 255 ) ) & 0xff ) << 16 | ( int( qRound ( rgb. g * 255 ) ) & 0xff ) << 8 | ( int( qRound ( rgb. b * 255 ) ) & 0xff );
 
 			if ( maskColors ) {
 				for ( int k = 0; k < nComps; ++k ) {
@@ -910,11 +908,11 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 		QPDFDBG( printf ( "### ROTATED / SHEARED / ETC -- CANNOT DISPLAY THIS IMAGE\n" ));
 	}
 	else {
-		int x = round ( ctm [4] );
-		int y = round ( ctm [5] );
+		int x = qRound ( ctm [4] );
+		int y = qRound ( ctm [5] );
 
-		int w = round ( ctm [0] );
-		int h = round ( ctm [3] );
+		int w = qRound ( ctm [0] );
+		int h = qRound ( ctm [3] );
 
 		if ( w < 0 ) {
 			x += w;
@@ -965,10 +963,10 @@ bool QOutputDevPixmap::findText ( const QString &str, int &l, int &t, int &w, in
 	fp_t y2 = (fp_t) t + h - 1;
 
 	if ( m_text-> findText ( s, len, top, bottom, &x1, &y1, &x2, &y2 )) {
-		l = round ( x1 );
-		t = round ( y1 );
-		w = round ( x2 ) - l + 1;
-		h = round ( y2 ) - t + 1;
+		l = qRound ( x1 );
+		t = qRound ( y1 );
+		w = qRound ( x2 ) - l + 1;
+		h = qRound ( y2 ) - t + 1;
 		found = true;
 	}
 	delete [] s;
@@ -985,10 +983,10 @@ GBool QOutputDevPixmap::findText ( Unicode *s, int len, GBool top, GBool bottom,
 	fp_t yMax1 = (double) *yMax;
 
 	if ( m_text-> findText ( s, len, top, bottom, &xMin1, &yMin1, &xMax1, &yMax1 )) {
-		*xMin = round ( xMin1 );
-		*xMax = round ( xMax1 );
-		*yMin = round ( yMin1 );
-		*yMax = round ( yMax1 );
+		*xMin = qRound ( xMin1 );
+		*xMax = qRound ( xMax1 );
+		*yMin = qRound ( yMin1 );
+		*yMax = qRound ( yMax1 );
 		found = true;
 	}
 	return found;

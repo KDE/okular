@@ -7,7 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <qpainter.h>
 #include <qpixmap.h>
+#include <kprinter.h>
 
 #include "core/page.h"
 #include "generator_png.h"
@@ -18,6 +20,7 @@ PNGGenerator::PNGGenerator( KPDFDocument * document ) : Generator( document )
 
 PNGGenerator::~PNGGenerator()
 {
+    delete m_pix;
 }
 
 bool PNGGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
@@ -59,4 +62,10 @@ bool PNGGenerator::hasFonts() const
 
 void PNGGenerator::putFontInfo( KListView * )
 {
+}
+
+bool PNGGenerator::print( KPrinter& printer )
+{
+    QPainter p(&printer);
+    p.drawPixmap(0, 0, *m_pix);
 }

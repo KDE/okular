@@ -33,6 +33,9 @@ class PNGGenerator : public Generator
         // font related
         void putFontInfo(KListView *list);
 
+        // [INHERITED] print document using already configured kprinter
+        bool print( KPrinter& printer );
+
     private:
         QPixmap *m_pix;
 };

@@ -417,7 +417,7 @@ void Part::nextThumbnail()
   QOutputDevPixmap odev(paperColor);
   odev.startDoc(m_doc->getXRef());
 
-  m_doc->displayPage(&odev, m_nextThumbnail, QPaintDevice::x11AppDpiX(), QPaintDevice::x11AppDpiX(), 0, true, true);
+  m_doc->displayPage(&odev, m_nextThumbnail, QPaintDevice::x11AppDpiX(), QPaintDevice::x11AppDpiY(), 0, true, true);
   pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
 
   m_nextThumbnail++;

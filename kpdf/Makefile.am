@@ -1,5 +1,5 @@
 # set the include path for X, qt and KDE
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../splash -I$(srcdir)/../fofi -I$(srcdir)/../goo -I$(srcdir)/../xpdf $(all_includes) $(FREETYPE_CFLAGS)
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../splash -I$(srcdir)/../goo -I$(srcdir)/../xpdf $(all_includes) $(FREETYPE_CFLAGS)
 
 # these are the headers for your project
 noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_pagewidget.h QOutputDevPixmap.h QOutputDev.h
@@ -45,7 +45,6 @@ kde_module_LTLIBRARIES = libkpdfpart.la
 libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevPixmap.cpp QOutputDevKPrinter.cpp kpdf_part.cpp kpdf_pagewidget.cc part.cpp thumbnail.cpp thumbnaillist.cpp kpdf_error.cpp xpdf_errors.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS)
-libkpdfpart_la_COMPILE_FIRST = ../aconf.h
 
 # this is where the desktop file will go 
 partdesktopdir   = $(kde_servicesdir)

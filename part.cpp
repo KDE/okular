@@ -74,6 +74,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
            const QStringList & /*args*/ )
 	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_actionsSearched(false)
 {
+	// load catalog for translation
+	KGlobal::locale()->insertCatalogue("kpdf");
+
 	// create browser extension (for printing when embedded into browser)
 	new BrowserExtension(this);
 

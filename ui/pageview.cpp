@@ -928,6 +928,13 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             break;
 
         case MouseSelect:{
+
+            if (d->mouseSelectionRect.isNull() && rightButton) 
+	    {
+	    	 PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+	    	 emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+	    }
+	    
             // if a selection is defined, display a popup
             if ( (!leftButton && !d->aPrevAction) || (leftButton && d->aPrevAction) ||
                  d->mouseSelectionRect.isNull() )

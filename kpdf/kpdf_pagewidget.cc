@@ -238,7 +238,7 @@ namespace KPDF
     {
         int delta = e->delta();
         e->accept();
-        if ((e->state() & ShiftButton) == ShiftButton) {
+        if ((e->state() & ControlButton) == ControlButton) {
             if ( e->delta() > 0 )
                 emit ZoomOut();
             else

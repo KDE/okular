@@ -77,10 +77,15 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                        actionCollection(), "back");
   KStdAction::forward (this, SLOT(forward()),
                        actionCollection(), "forward");
-  KStdAction::prior   (this, SLOT(slotPreviousPage()),
+
+  m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()),
                        actionCollection(), "previous_page");
-  KStdAction::next    (this, SLOT(slotNextPage()),
+  m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
+
+  m_nextPage = KStdAction::next(this, SLOT(slotNextPage()),
                        actionCollection(), "next_page" );
+  m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
+
   m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoStart() ),
                                       actionCollection(), "goToStart" );
   m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );

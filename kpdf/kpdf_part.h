@@ -101,8 +101,10 @@ namespace KPDF
 		PDFPartView * pdfpartview;
     KAction* m_firstPage;
     KAction* m_lastPage;
+    KAction* m_prevPage;
+    KAction* m_nextPage;
 
-    KToggleAction* m_fitToWidth;
+      KToggleAction* m_fitToWidth;
 
     int   m_currentPage;
 

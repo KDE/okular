@@ -14,14 +14,14 @@
 #include "dviWidget.h"
 
 #include "centeringScrollview.h"
-#include "documentPage.h"
+#include "documentPagePixmap.h"
 #include "documentPageCache.h"
 #include "documentWidget.h"
 #include "selection.h"
 
-DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, DocumentPageCache* cache, 
+DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, documentPageCache* cache, 
 		     textSelection* documentSelection, const char* name)
-  : DocumentWidget(parent, sv, size, cache, documentSelection, name)
+  : documentWidget(parent, sv, size, cache, documentSelection, name)
 {
 }
 
@@ -29,14 +29,14 @@ DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, Docum
 void DVIWidget::mousePressEvent(QMouseEvent* e)
 {
   // Call implementation from parent
-  DocumentWidget::mousePressEvent(e);
+  documentWidget::mousePressEvent(e);
 
   // pageNr == 0 indicated an invalid page (e.g. page number not yet set)
   if (pageNr == 0)
     return;
 
   // Get a pointer to the page contents
-  DocumentPage* pageData = documentCache->getPage(pageNr);
+  documentPage* pageData = documentCache->getPage(pageNr);
   if (pageData == 0)
   {
     kdDebug(4300) << "DVIWidget::mousePressEvent(...) pageData for page #" << pageNr << " is empty" << endl;
@@ -62,14 +62,14 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
 void DVIWidget::mouseMoveEvent(QMouseEvent* e)
 {
   // Call implementation from parent
-  DocumentWidget::mouseMoveEvent(e);
+  documentWidget::mouseMoveEvent(e);
 
   // pageNr == 0 indicated an invalid page (e.g. page number not yet set)
   if (pageNr == 0)
     return;
 
   // Get a pointer to the page contents
-  DocumentPage* pageData = documentCache->getPage(pageNr);
+  documentPage* pageData = documentCache->getPage(pageNr);
   if (pageData == 0) 
   {
     kdDebug(4300) << "DVIWidget::mouseMoveEvent(...) pageData for page #" << pageNr << " is empty" << endl;

@@ -14,20 +14,20 @@
 #include "documentWidget.h"
 
 class CenteringScrollview;
-class DocumentPageCache;
+class documentPageCache;
 class QPaintEvent;
 class QMouseEvent;
 class textSelection;
 
-class DVIWidget : public DocumentWidget
+class DVIWidget : public documentWidget
 {
   Q_OBJECT
 
 public: 
   DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size,
-            DocumentPageCache* cache, textSelection* documentSelection, const char* name);
+            documentPageCache* cache, textSelection* documentSelection, const char* name);
 signals:
-  void SRCLink(const QString&, QMouseEvent* e, DocumentWidget*);
+  void SRCLink(const QString&, QMouseEvent* e, documentWidget*);
 
 private:
   virtual void mousePressEvent(QMouseEvent* e);

@@ -66,7 +66,7 @@ public:
   virtual void addConfigDialogs(KConfigDialog* configDialog);
 
 private:
-  virtual DocumentWidget* createDocumentWidget();
+  virtual documentWidget* createDocumentWidget();
 
   /** Used to enable the export menu when a file is successfully
       loaded. */

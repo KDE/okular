@@ -34,6 +34,7 @@
 #include <qapplication.h>
 #include <qprogressdialog.h>
 
+#include "documentPagePixmap.h"
 #include "documentWidget.h"
 #include "kdvi_multipage.h"
 
@@ -84,7 +85,7 @@ void KDVIMultiPage::doExportText(void)
   QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), window->dviFile->total_pages, scrollView(), "export_text_progress", TRUE );
   progress.setMinimumDuration(300);
 
-  DocumentPage dummyPage;
+  documentPagePixmap dummyPage;
 
   for(int page=1; page <= window->dviFile->total_pages; page++) {
     progress.setProgress( page );
@@ -196,7 +197,7 @@ void KDVIMultiPage::findNextText(void)
 			    window->dviFile->total_pages, scrollView(), "searchForwardTextProgress", TRUE );
   progress.setMinimumDuration ( 1000 );
 
-  DocumentPage dummyPage; 
+  documentPagePixmap dummyPage; 
 
   // Find the page and text position on the page where the search will
   // start. If nothing is selected, we start at the beginning of the
@@ -322,7 +323,7 @@ void KDVIMultiPage::findPrevText(void)
   // this to get a better 'user feeling'
   Q_UINT16 startingPage;
   Q_UINT16 startingTextItem;
-  DocumentPage dummyPage; 
+  documentPagePixmap dummyPage; 
   if (userSelection.getPageNumber() == 0) {
     startingPage     = getCurrentPageNumber();
     dummyPage.setPageNumber(startingPage);

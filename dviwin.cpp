@@ -57,7 +57,7 @@ QPainter foreGroundPaint; // QPainter used for text
 //------ now comes the dviRenderer class implementation ----------
 
 dviRenderer::dviRenderer(QWidget *par)
-  : DocumentRenderer(par), info(new infoDialog(par))
+  : documentRenderer(par), info(new infoDialog(par))
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviRenderer( parent=" << par << " )" << endl;
@@ -89,8 +89,6 @@ dviRenderer::dviRenderer(QWidget *par)
   export_fileName        = "";
   export_tmpFileName     = "";
   export_errorString     = "";
-
-  currentlyDrawnPixmap = new QPixmap();
 
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   // pass status bar messages through
@@ -133,89 +131,76 @@ void dviRenderer::showInfo(void)
 //------ this function calls the dvi interpreter ----------
 
 
-void dviRenderer::drawPage(double resolution, DocumentPage *page)
+void dviRenderer::drawPage(double resolution, documentPage *page)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviRenderer::drawPage(DocumentPage *) called, page number " << page->getPageNumber() << endl;
+  kdDebug(4300) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
 #endif
   
   // Paranoid safety checks
   if (page == 0) {
-    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called with argument == 0" << endl; 
+    kdError(4300) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl; 
     return;
   }
   if (page->getPageNumber() == 0) {
-    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called for a DocumentPage with page number 0" << endl;
+    kdError(4300) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
     return;
   }
   if ( dviFile == 0 ) {
-    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called, but no dviFile class allocated." << endl;
+    kdError(4300) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
     return;
   }
   if (page->getPageNumber() > dviFile->total_pages) {
-    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called for a DocumentPage with page number " << page->getPageNumber() 
+    kdError(4300) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber() 
 		  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
-  if (page->getPixmap() == 0) {
-    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called, but the page had not pixmap set" << endl;
-    return;
-  }
   if ( dviFile->dvi_Data() == 0 ) {
-    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called, but no dviFile is loaded yet." << endl;
+    kdError(4300) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
   }
  
   if (resolution != resolutionInDPI)
     setResolution(resolution);
- 
+  
   currentlyDrawnPage     = page;
   shrinkfactor           = MFResolutions[font_pool.getMetafontMode()]/resolutionInDPI;
   current_page           = page->getPageNumber()-1;
   
-  currentlyDrawnPixmap = page->getPixmap();
-
-  if ( currentlyDrawnPixmap->isNull() ) {
+  
+  // Reset colors
+  colorStack.clear();
+  globalColor = Qt::black;
+  
+  foreGroundPaint.begin( page->getPaintDevice() );
+  QApplication::setOverrideCursor( waitCursor );
+  errorMsg = QString::null;
+  draw_page();
+  foreGroundPaint.drawRect( foreGroundPaint.viewport() );
+  foreGroundPaint.end();
+  QApplication::restoreOverrideCursor();
+  page->isEmpty = false;
+  if (errorMsg.isEmpty() != true) {
+    KMessageBox::detailedError(parentWidget,
+			       i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
+				    "likely this means that the DVI file is broken.</qt>"),
+			       errorMsg, i18n("DVI File Error"));
+    errorMsg = QString::null;
     currentlyDrawnPage = 0;
     return;
   }
-    
-  if ( !currentlyDrawnPixmap->paintingActive() ) {
-    // Reset colors
-    colorStack.clear();
-    globalColor = Qt::black;
-    
-    foreGroundPaint.begin( currentlyDrawnPixmap );
-    QApplication::setOverrideCursor( waitCursor );
-    errorMsg = QString::null;
-    draw_page();
-    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap->width(), currentlyDrawnPixmap->height());
-    foreGroundPaint.end();
-    QApplication::restoreOverrideCursor();
-    page->isEmpty = false;
-    if (errorMsg.isEmpty() != true) {
-      KMessageBox::detailedError(parentWidget,
-				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
-				      "likely this means that the DVI file is broken.</qt>"),
-				 errorMsg, i18n("DVI File Error"));
-      errorMsg = QString::null;
-      currentlyDrawnPage = 0;
-      return;
-    }
-    
-    // Tell the user (once) if the DVI file contains source specials
-    // ... wo don't want our great feature to go unnoticed.
-    if ((dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
-      dviFile->sourceSpecialMarker = false;
-      // Show the dialog as soon as event processing is finished, and
-      // the program is idle
-      QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
-    }
+  
+  // Tell the user (once) if the DVI file contains source specials
+  // ... wo don't want our great feature to go unnoticed.
+  if ((dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
+    dviFile->sourceSpecialMarker = false;
+    // Show the dialog as soon as event processing is finished, and
+    // the program is idle
+    QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
   }
   
-  page->setPixmap( *currentlyDrawnPixmap );
   currentlyDrawnPage = 0;
 }
 
@@ -400,9 +385,6 @@ bool dviRenderer::setFile(const QString &fname)
     delete dviFile;
     dviFile = 0;
     
-    currentlyDrawnPixmap->resize(0,0);
-    if (currentlyDrawnPage != 0)
-      currentlyDrawnPage->setPixmap( *currentlyDrawnPixmap );
     return true;
   }
 
@@ -452,6 +434,7 @@ bool dviRenderer::setFile(const QString &fname)
 
   delete dviFile;
   dviFile = dviFile_new;
+  numPages = dviFile->total_pages;
   info->setDVIData(dviFile);
 
   font_pool.setExtraSearchPath( fi.dirPath(true) );
@@ -640,15 +623,6 @@ anchor dviRenderer::parseReference(const QString &reference)
 }
 
 
-pageNumber dviRenderer::totalPages() const
-{
-  if (dviFile != NULL)
-    return dviFile->total_pages;
-  else
-    return 0;
-}
-
-
 void dviRenderer::setResolution(double resolution_in_DPI)
 {
   // Ignore minute changes. The difference to the current value would
@@ -711,7 +685,7 @@ void dviRenderer::handleLocalLink(const QString &linkText)
 }
 
 
-void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *win)
+void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;

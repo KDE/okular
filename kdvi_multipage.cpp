@@ -15,6 +15,7 @@
 #include <qtimer.h>
 
 #include "../config.h"
+#include "documentPagePixmap.h"
 #include "documentWidget.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"
@@ -292,10 +293,10 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     return;
   }
 
-  DocumentPage *pageData = pageCache.getPage(pageNr);
+  documentPage *pageData = pageCache.getPage(pageNr);
   if (pageData == 0) {
 #ifdef DEBUG_DOCUMENTWIDGET
-    kdDebug(4300) << "DocumentWidget::paintEvent: no DocumentPage generated" << endl;
+    kdDebug(4300) << "documentWidget::paintEvent: no documentPage generated" << endl;
 #endif
     return;
   }
@@ -332,13 +333,13 @@ void KDVIMultiPage::doSelectAll(void)
     kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList is empty" << endl;
     break;
   case 1:
-    ((DocumentWidget *)widgetList[0])->selectAll();
+    ((documentWidget *)widgetList[0])->selectAll();
     break;
   default:
     if (widgetList.size() < getCurrentPageNumber())
       kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList.size()=" << widgetList.size() << "and getCurrentPageNumber()=" << getCurrentPageNumber() << endl;
     else
-      ((DocumentWidget *)widgetList[getCurrentPageNumber()-1])->selectAll();
+      ((documentWidget *)widgetList[getCurrentPageNumber()-1])->selectAll();
   }
 }
 
@@ -692,7 +693,7 @@ void KDVIMultiPage::showTipOnStart(void)
 }
 
 
-DocumentWidget* KDVIMultiPage::createDocumentWidget()
+documentWidget* KDVIMultiPage::createDocumentWidget()
 {
   kdError() << "KDVIMultiPage::createDocumentWidget() called" << endl;
 
@@ -711,8 +712,8 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget()
 					    &userSelection, "singlePageWidget" );
   
   // Handle source links
-  connect(documentWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, DocumentWidget *)), getRenderer(),
-          SLOT(handleSRCLink(const QString &,QMouseEvent *, DocumentWidget *)));
+  connect(documentWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), getRenderer(),
+          SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
   
   return documentWidget;
 }

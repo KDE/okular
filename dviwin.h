@@ -31,7 +31,7 @@
 #include "psgs.h"
 
 
-class DocumentWidget;
+class documentWidget;
 class dviRenderer;
 class fontProgressDialog;
 class infoDialog;
@@ -88,7 +88,7 @@ struct drawinf {
 
 
 
-class dviRenderer : public DocumentRenderer, bigEndianByteReader
+class dviRenderer : public documentRenderer, bigEndianByteReader
 {
   Q_OBJECT
 
@@ -108,7 +108,6 @@ public:
   void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
 
-  virtual pageNumber totalPages() const;
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
   static bool   correctDVI(const QString &filename);
@@ -140,7 +139,7 @@ public:
 public slots:
   void          showInfo(void);
   void          handleLocalLink(const QString &linkText);
-  void          handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *widget);
+  void          handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *widget);
 
   void          embedPostScript(void);
   void          abortExternalProgramm(void);
@@ -151,7 +150,7 @@ public slots:
 
 
 
-  void		drawPage(double res, DocumentPage *page);
+  void		drawPage(double res, documentPage *page);
  
   /** Slots used in conjunction with external programs */
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
@@ -286,8 +285,7 @@ private:
   Q_UINT16    number_of_elements_in_path;
   
   struct drawinf	currinf;
-  DocumentPage* currentlyDrawnPage;
-  QPixmap *currentlyDrawnPixmap;
+  documentPage* currentlyDrawnPage;
 };
 
 

@@ -61,10 +61,7 @@ public:
   void		setResolution( int basedpi );
   int		resolution() { return basedpi; };
   void		setMetafontMode( const QString & );
-  QString	metafontMode() { return MetafontMode; };
   void		setPaper(double w, double h);
-  void		setFontPath( const QString & );
-  QString	fontPath() { return FontPath; };
   bool          correctDVI(QString filename);
   unsigned char xxone();
   unsigned long xnum(unsigned char size);
@@ -150,7 +147,6 @@ private:
  int		   makepk;
  QPixmap          *pixmap;
  QString	   MetafontMode;
- QString	   FontPath;
  QString	   paper_type;
  int		   ChangesPossible;
  int		   current_page;

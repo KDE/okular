@@ -72,8 +72,6 @@ void OptionDialog::slotApply()
   config->writeEntry( "BaseResolution", mFont.resolutionEdit->text() );
   config->writeEntry( "MetafontMode", mFont.metafontEdit->text() );
   config->writeEntry( "MakePK", mFont.fontPathCheck->isChecked() );
-  config->writeEntry( "FontPath", mFont.fontPathEdit->text() );
-
   config->writeEntry( "ShowPS", mRender.showSpecialCheck->isChecked() );
   config->writeEntry( "ShowHyperLinks", mRender.showHyperLinksCheck->isChecked() );
 
@@ -93,7 +91,6 @@ void OptionDialog::setup()
   mFont.resolutionEdit->setText( config->readEntry( "BaseResolution", "300" ) );
   mFont.metafontEdit->setText( config->readEntry( "MetafontMode", "cx" ) );
   mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
-  mFont.fontPathEdit->setText( config->readEntry( "FontPath", KDVI_DEFAULT_FONTPATH ) );
 
   // Rendering page
   mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
@@ -123,11 +120,6 @@ void OptionDialog::makeFontPage()
 
   mFont.fontPathCheck = new QCheckBox( i18n("Generate missing fonts"), page );
   glay->addMultiCellWidget( mFont.fontPathCheck, 3, 3, 0, 1 );
-
-  mFont.fontPathLabel = new QLabel( i18n("PK font path:"), page );
-  mFont.fontPathEdit = new QLineEdit( page );
-  glay->addWidget( mFont.fontPathLabel, 4, 0 );
-  glay->addWidget( mFont.fontPathEdit, 4, 1 );
 
   topLayout->addStretch(1);
 }

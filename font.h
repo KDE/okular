@@ -16,15 +16,19 @@
 #define _FONT_H
 
 
-#include <stdio.h>
+#include <kprocess.h>
 #include <qintdict.h>
+#include <qstring.h>
+#include <stdio.h>
+
 
 #include "dviwin.h"
 #include "glyph.h"
 
 #define	NOMAGSTP (-29999)
 
-/** Per character information for virtual fonts */
+// Per character information for virtual fonts
+
 struct macro {
   unsigned char	*pos;		/* address of first byte of macro */
   unsigned char	*end;		/* address of last+1 byte */
@@ -34,12 +38,12 @@ struct macro {
 };
 
 
-
-
-
 typedef	void (dviWindow::*set_char_proc)(unsigned int, unsigned int);
 
-struct font {
+class font : public QObject {
+  Q_OBJECT
+
+public:
   // Currently, kdvi supports fonts with at most 256 characters to
   // comply with "The DVI Driver Standard, Level 0". If you change
   // this value here, make sure to go through all the source and
@@ -49,25 +53,25 @@ struct font {
   enum                  font_flags {
                              FONT_IN_USE  = 1,	// used for housekeeping
                              FONT_LOADED  = 2,	// if font file has been read
-                             FONT_VIRTUAL = 4	// if font is virtual 
+                             FONT_VIRTUAL = 4,	// if font is virtual 
+			     FONT_NEEDS_TO_BE_LOADED = 8 // if font has been accessed and was not loaded
                          };
 
 
-  public:
                  font(char *nfontname, float nfsize, long chk, int mag, double dconv);
                 ~font();
   glyph         *glyphptr(unsigned int ch);
   void           mark_as_used(void);
   unsigned char  load_font(void);
 
-  struct font   *next;		// link to next font info block
-  char          *fontname;	// name of font 
+  char          *fontname;	// name of font, such as "cmr10"
   unsigned char  flags;		// flags byte (see values below)
   double         dimconv;	// size conversion factor
   set_char_proc  set_char_p;	// proc used to set char
   float          fsize;		// size information (dots per inch)
   unsigned short timestamp;	// for LRU management of fonts
   FILE          *file;		// open font file or NULL
+  QString        filename;	// name of font file
 
   glyph         *glyphtable;    // used by (loaded) raster fonts
   macro         *macrotable;    // used by (loaded) virtual fonts
@@ -75,13 +79,9 @@ struct font {
                                 // acessible by number
   font          *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
 
-  private:
-  int            magstepval;	/* magstep number * two, or NOMAGSTP */
-  char          *filename;	/* name of font file */
-  long           checksum;	/* checksum */
-
-
-  FILE         *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, char **filename_ret);
+private:
+  int            magstepval;	// magstep number * two, or NOMAGSTP
+  long           checksum;	// checksum
 
   // Functions related to virtual fonts
   void          read_VF_index(void );
@@ -92,8 +92,9 @@ struct font {
   void          PK_skip_specials(void);
   void          read_PK_char(unsigned int ch);
   void          read_PK_index(void);
+
+public slots:
+    void font_name_receiver(KProcess *proc, char *buffer, int buflen);
 };
-
-
 
 #endif

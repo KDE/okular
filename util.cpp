@@ -54,16 +54,10 @@
 #include <klocale.h>
 #include "dviwin.h"
 
-extern "C" {
-#include <kpathsea/config.h>
-#include <kpathsea/c-ctype.h>
-#include <kpathsea/c-fopen.h>
-#include <kpathsea/c-vararg.h>
-}
-
 #include "oconfig.h"
 #include "dvi.h"
 
+#include "fontpool.h"
 #include "glyph.h"
 
 
@@ -129,13 +123,17 @@ void alloc_bitmap(bitmap *bitmap)
  *	Close the pixel file for the least recently used font.
  */
 
+extern fontPool font_pool;
+
 static	void close_a_file()
 {
+  return; //@@@
+
   register struct font *fontp;
   unsigned short oldest = ~0;
   struct font *f = NULL;
 
-  for (fontp = font_head; fontp != NULL; fontp = fontp->next)
+  for ( fontp = font_pool.first(); fontp != 0; fontp=font_pool.next() )
     if (fontp->file != NULL && fontp->timestamp <= oldest) {
       f = fontp;
       oldest = fontp->timestamp;
@@ -157,7 +155,7 @@ FILE *xfopen(const char *filename, const char *type)
   /* Try not to let the file table fill up completely.  */
   if (n_files_left <= 5)
     close_a_file();
-  FILE	*f = fopen(filename, OPEN_MODE);
+  FILE	*f = fopen(filename, "r");
   /* If the open failed, try closing a file unconditionally.
      Interactive Unix 2.2.1, at least, doesn't set errno to EMFILE
      or ENFILE even when it should.  In any case, it doesn't hurt

@@ -25,6 +25,7 @@
 #include <kprocess.h>
 
 #include "dviwin.h"
+#include "fontpool.h"
 #include "optiondialog.h"
 
 
@@ -42,7 +43,7 @@ struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
 extern unsigned char       dvi_buffer[DVI_BUFFER_LEN];  
 struct drawinf	currinf;
-struct font	*font_head = NULL;
+fontPool font_pool;
 
 const char *dvi_oops_msg;	/* error message */
 double	dimconv;
@@ -53,7 +54,7 @@ extern struct frame        frame0; /* dummy head of list */
 jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 
 
-QIntDict<struct font> tn_table;
+QIntDict<font> tn_table;
 
 
 #include "c-openmx.h" // for OPEN_MAX
@@ -74,33 +75,12 @@ extern unsigned int	page_w, page_h;
 Window                  mainwin;
 
 void 	draw_page(void);
-extern "C" void 	kpse_set_progname(const char*);
 
 void 	reset_fonts();
-extern "C" {
-#undef PACKAGE // defined by both c-auto.h and config.h
-#undef VERSION
-#include <kpathsea/c-auto.h>
-#include <kpathsea/paths.h>
-#include <kpathsea/proginit.h>
-#include <kpathsea/tex-file.h>
-#include <kpathsea/tex-glyph.h>
-}
 #include <setjmp.h>
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 double xres;
-
-
-
-//------ next the drawing functions called from C-code (dvi_draw.c) ----
-
 QPainter foreGroundPaint; // QPainter used for text
-
-
-extern  void qt_processEvents(void)
-{
-  qApp->processEvents();
-}
 
 
 //------ now comes the dviWindow class implementation ----------
@@ -114,7 +94,6 @@ dviWindow::dviWindow( int bdpi, double zoom, const QString & mfm, int mkpk, QWid
 
   setBackgroundMode(NoBackground);
 
-  FontPath = QString::null;
   setFocusPolicy(QWidget::StrongFocus);
   setFocus();
   
@@ -197,23 +176,15 @@ void dviWindow::setMakePK( int flag )
 			   "only after you start kdvi again!") );
   makepk = flag;
 }
-	
-void dviWindow::setFontPath( const QString & s )
-{
-  if (dviFile != NULL)
-  KMessageBox::sorry( this,
-		      i18n("The change in font path will be effective\n"
-			   "only after you start kdvi again!"));
-  FontPath = s;
-}
 
 void dviWindow::setMetafontMode( const QString & mfm )
 {
   if (dviFile != NULL)
-  KMessageBox::sorry( this,
-		      i18n("The change in Metafont mode will be effective\n"
-			   "only after you start kdvi again!") );
+    KMessageBox::sorry( this,
+			i18n("The change in Metafont mode will be effective\n"
+			     "only after you start kdvi again!") );
   MetafontMode = mfm;
+  font_pool.setMetafontMode(mfm);
 }
 
 
@@ -237,11 +208,12 @@ void dviWindow::setPaper(double w, double h)
 void dviWindow::setResolution( int bdpi )
 {
   if (dviFile != NULL)
-  KMessageBox::sorry( this,
-		      i18n("The change in resolution will be effective\n"
-			   "only after you start kdvi again!") );
+    KMessageBox::sorry( this,
+			i18n("The change in resolution will be effective\n"
+			     "only after you start kdvi again!") );
   basedpi          = bdpi;
   _pixels_per_inch = bdpi;
+  font_pool.setResolution(bdpi);
 }
 
 
@@ -333,30 +305,6 @@ void dviWindow::changePageSize()
 
 void dviWindow::setFile( const QString & fname )
 {
-  // Before opening the file, or even checking if the file exists, we
-  // initialize the kpathsearch mechanism which searches (or
-  // generates) the fonts for us.
-  kpse_set_progname ("kdvi");
-  kpse_init_prog ("KDVI", basedpi, MetafontMode.ascii(), "cmr10");
-  kpse_set_program_enabled(kpse_any_glyph_format, 0, kpse_src_cmdline);
-
-  // This is clearly a memory leak. We don't really care because the
-  // loss is minimal, and because this whole mechanism will be
-  // replaced in the next version of kdvi anyways. The addition of
-  // "/var/lib..." is just as clearly a dreadful hack that makes kdvi
-  // run more smoothly in the case that the file "texmf.cnf" in the
-  // "kpathsea" directory is incompatible with the "texmf.cnf" that is
-  // included in the TeX-distribution on the machine where kdvi is
-  // run.
-
-  if (FontPath.length() != 0) {
-    kpse_format_info[kpse_pk_format].override_path
-    = kpse_format_info[kpse_vf_format].override_path
-    = kpse_format_info[kpse_any_glyph_format].override_path
-    = kpse_format_info[kpse_tfm_format].override_path
-    = FontPath.latin1();
-  }
-
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
 

@@ -55,22 +55,19 @@
 #include "dviwin.h"
 
 
+
+#include <kdebug.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 #include <qbitmap.h> 
 #include <qfileinfo.h>
 
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <klocale.h>
 
 extern "C" {
-#include <kpathsea/config.h>
-#include <kpathsea/c-fopen.h>
-#include <kpathsea/c-stat.h>
-#include <kpathsea/magstep.h>
-#include <kpathsea/tex-glyph.h>
 #include "dvi.h"
 }
 
+#include "fontpool.h"
 #include "glyph.h"
 #include "oconfig.h"
 
@@ -109,7 +106,7 @@ static	long	numerator, denominator;
  */
 static	long	last_page_offset;
 
-
+extern fontPool font_pool;
 
 /** Release all shrunken bitmaps for all fonts.  */
 
@@ -122,7 +119,7 @@ extern void reset_fonts(void)
   struct font *f;
   struct glyph *g;
 
-  for (f = font_head; f != NULL; f = f->next)
+  for ( f=font_pool.first(); f != 0; f=font_pool.next() )
     if ((f->flags & font::FONT_LOADED) && !(f->flags & font::FONT_VIRTUAL))
       for (g = f->glyphtable; g < f->glyphtable + font::max_num_of_chars_in_font; ++g)
 	g->clearShrunkCharacter();
@@ -138,7 +135,70 @@ extern void reset_fonts(void)
 
 #define	NOMAGSTP (-29999)
 #define	NOBUILD	29999
+#define MAGSTEP_MAX 40
 
+static int magstep(int n, int bdpi)
+{
+  double t;
+  int step;
+  int neg = 0;
+
+  if (n < 0)
+    {
+      neg = 1;
+      n = -n;
+    }
+  
+  if (n & 1)
+    {
+      n &= ~1;
+      t = 1.095445115;
+    }
+  else
+    t = 1.0;
+  
+  while (n > 8)
+    {
+      n -= 8;
+      t = t * 2.0736;
+    }
+
+  while (n > 0)
+    {
+      n -= 2;
+      t = t * 1.2;
+    }
+
+  /* Unnecessary casts to shut up stupid compilers. */
+  step = (int)(0.5 + (neg ? bdpi / t : bdpi * t));
+  return step;
+}
+
+static unsigned kpse_magstep_fix(unsigned dpi,  unsigned bdpi,  int *m_ret)
+{
+  int m;
+  int mdpi = -1;
+  unsigned real_dpi = 0;
+  int sign = dpi < bdpi ? -1 : 1; /* negative or positive magsteps? */
+  
+  for (m = 0; !real_dpi && m < MAGSTEP_MAX; m++) /* don't go forever */
+    {
+      mdpi = magstep (m * sign, bdpi);
+      if (abs(mdpi - (int) dpi) <= 1) /* if this magstep matches, quit */
+        real_dpi = mdpi;
+      else 
+	if ((mdpi - (int) dpi) * sign > 0) /* if gone too far, quit */
+	  real_dpi = dpi;
+    }
+  
+  /* If requested, return the encoded magstep (the loop went one too far).  */
+  /* More unnecessary casts. */
+  if (m_ret)
+    *m_ret = real_dpi == (unsigned)(mdpi ? (m - 1) * sign : 0);
+
+  /* Always return the true dpi found.  */
+  return real_dpi ? real_dpi : dpi;
+}
 
 static	int magstepvalue(float *mag)
 {
@@ -154,12 +214,6 @@ static	int magstepvalue(float *mag)
  *  holding all of the fonts used in the job.  */
 
 font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct font> *TeXNumberTable)
-  //	FILE		*file;
-  //	unsigned int	cmnd;
-  //	struct font	*vfparent;	/* vf parent of this font, or NULL */
-  //	struct font	**tntable;	/* table for low TeXnumbers */
-  //	unsigned int	tn_table_len;	/* length of table for TeXnumbers */
-  //	struct tn	**tn_headpp;	/* addr of head of list of TeXnumbers */
 {
   struct font *fontp;
   int	magstepval;
@@ -198,21 +252,20 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
   }
   magstepval = magstepvalue(&fsize);
   size       = (int)(fsize + 0.5);
-
+  
   // reuse font if possible
-  for (fontp = font_head;; fontp = fontp->next) {
+  for (fontp = font_pool.first();; fontp = font_pool.next()) {
     if (fontp == NULL) {		/* if font doesn't exist yet */
       fontp = new font(fontname, fsize, checksum, magstepval, scale * scale_dimconv / (1<<20));
-
+      
       fontp->set_char_p = &dviWindow::load_n_set_char;
       /* With virtual fonts, we might be opening another font
 	 (pncb.vf), instead of what we just allocated for
 	 (rpncb), thus leaving garbage in the structure for
 	 when close_a_file comes along looking for something.  */
-      if (vfparent == NULL)
-	font_not_found |= fontp->load_font();
-      fontp->next = font_head;
-      font_head   = fontp;
+      //@@@      if (vfparent == NULL)
+      //@@@     	font_not_found |= font_pool.load_font(fontp);
+      font_pool.append(fontp);
       break;
     }
 
@@ -323,11 +376,7 @@ void dvifile::read_postamble(void)
     dvi_oops(i18n("Postamble doesn't match preamble"));
   /* read largest box height and width */
   int unshrunk_page_h = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
-  //  if (unshrunk_page_h < unshrunk_paper_h)
-  //    unshrunk_page_h = unshrunk_paper_h;
   int unshrunk_page_w = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
-  //  if (unshrunk_page_w < unshrunk_paper_w)
-  //    unshrunk_page_w = unshrunk_paper_w;
   (void) two(file);	/* max stack size */
   total_pages = two(file);
   font_not_found = False;
@@ -338,13 +387,15 @@ void dvifile::read_postamble(void)
   if (font_not_found)
     KMessageBox::sorry( 0, i18n("Not all pixel files were found"));
 
-  // free up fonts no longer in use
+  //@@@ free up fonts no longer in use
+  /*
   fontpp = &font_head;
   while ((fontp = *fontpp) != NULL)
     if (fontp->flags & font::FONT_IN_USE)  // Question: Is this ever false?
       fontpp = &fontp->next;
     else
       delete fontp;
+  */
 }
 
 void dvifile::prepare_pages()

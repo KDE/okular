@@ -1,65 +1,71 @@
 
-//#define DEBUG 0
 
+
+#include <kdebug.h>
 #include <klocale.h>
 #include <malloc.h>
-#include <kdebug.h>
+#include <qapplication.h>
+#include <stdio.h>
 
 #include "font.h"
-
+#include "kdvi.h"
 
 extern "C" {
-#include <kpathsea/config.h>
 #include <kpathsea/c-fopen.h>
-#include <kpathsea/c-stat.h>
-#include <kpathsea/magstep.h>
-#include <kpathsea/tex-glyph.h>
-#include "dvi.h"
 }
 
-#include <stdio.h>
+
 #include "oconfig.h"
 
 extern FILE *xfopen(const char *filename, const char *type);
 extern void oops(QString message);
+extern int n_files_left;
 
-/** We try for a VF first because that's what dvips does.  Also, it's
- *  easier to avoid running MakeTeXPK if we have a VF this way.  */
+#define	PK_PRE		247
+#define	PK_ID		89
+#define	PK_MAGIC	(PK_PRE << 8) + PK_ID
+#define	GF_PRE		247
+#define	GF_ID		131
+#define	GF_MAGIC	(GF_PRE << 8) + GF_ID
+#define	VF_PRE		247
+#define	VF_ID_BYTE	202
+#define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
-FILE *font::font_open (char *font, char **font_ret, double dpi, int *dpi_ret, char **filename_ret)
+
+void font::font_name_receiver(KProcess *proc, char *buffer, int buflen)
 {
-  FILE *ret;
-  char *name = kpse_find_vf (font);
-  
-  if (name) {
-    // VF fonts don't have a resolution, but loadfont will complain if
-    // we don't return what it asked for.
-    *dpi_ret  = (int)dpi;
-    *font_ret = NULL;
-  } else {
-    kpse_glyph_file_type file_ret;
-    name = kpse_find_glyph (font, (unsigned) (dpi + .5), kpse_any_glyph_format, &file_ret);
-    if (name) {
-      // If we got it normally, from an alias, or from MakeTeXPK,
-      // don't fill in FONT_RET.  That tells load_font to complain.
+  if (buflen < 3)
+    return;
 
-      // tell load_font we found something good
-      *font_ret = file_ret.source == kpse_glyph_source_fallback ? file_ret.name : NULL; 
-      *dpi_ret  = file_ret.dpi;
-    }
-    // If no VF and no PK, FONT_RET is irrelevant?
+  flags |= font::FONT_LOADED;
+
+  filename = QString::fromLocal8Bit(buffer, buflen-1);
+
+  kdDebug() << "FONT NAME RECEIVED:" << filename << endl;
+
+  file = xfopen(filename.latin1(), FOPEN_R_MODE);
+  if (file == NULL) {
+    kdError() << i18n("Can't find font ") << fontname << "." << endl;
+    return True;
   }
-  
-  // If we found a name, return the stream.
-  ret           = name ? xfopen(name, FOPEN_R_MODE) : NULL;
-  *filename_ret = name;
 
-  return ret;
+  --n_files_left;
+  timestamp  = ++current_timestamp;
+  set_char_p = &dviWindow::set_char;
+  int magic      = two(file);
+
+  if (magic == PK_MAGIC)
+    read_PK_index();
+  else
+    if (magic == GF_MAGIC)
+      oops(QString(i18n("The GF format for font file %1 is no longer supported")).arg(filename) );
+    else
+      if (magic == VF_MAGIC)
+	read_VF_index();
+      else
+	oops(QString(i18n("Cannot recognize format for font file %1")).arg(filename) );
 }
 
-
-
-extern int n_files_left;
 
 font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
 {
@@ -71,9 +77,9 @@ font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
   fsize      = nfsize;
   checksum   = chk;
   magstepval = mag;
-  flags      = font::FONT_IN_USE;
+  flags      = font::FONT_IN_USE || font::FONT_NEEDS_TO_BE_LOADED;
   file       = NULL; 
-  filename   = NULL;
+  filename   = "";
   dimconv    = dconv;
 }
 
@@ -90,7 +96,6 @@ font::~font()
       fclose(file);
       ++n_files_left;
     }
-    free(filename);
 
     if (flags & FONT_VIRTUAL) {
       for (macro *m = macrotable; m < macrotable + max_num_of_chars_in_font; ++m)
@@ -107,15 +112,6 @@ font::~font()
 }
 
 
-#define	PK_PRE		247
-#define	PK_ID		89
-#define	PK_MAGIC	(PK_PRE << 8) + PK_ID
-#define	GF_PRE		247
-#define	GF_ID		131
-#define	GF_MAGIC	(GF_PRE << 8) + GF_ID
-#define	VF_PRE		247
-#define	VF_ID_BYTE	202
-#define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
 /** load_font locates the raster file and reads the index of
     characters, plus whatever other preprocessing is done (depending
@@ -127,41 +123,37 @@ unsigned char font::load_font(void)
   kdDebug() << "loading font " <<  fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
 #endif
 
-  int	 dpi      = (int)(fsize + 0.5);
-  char	*font_found;
-  int	 size_found;
-  int	 magic;
+  // Find the font name. We use the external program "kpsewhich" for
+  // that purpose.
+  KShellProcess proc;
+  connect(&proc, SIGNAL(receivedStdout(KProcess *, char *, int)),
+	  this, SLOT(font_name_receiver(KProcess *, char *, int)));
 
-  flags |= font::FONT_LOADED;
-  file = font_open(fontname, &font_found, (double)fsize, &size_found, &filename);
-  if (file == NULL) {
-    kdError() << i18n("Can't find font ") << fontname << "." << endl;
-    return True;
-  }
-  --n_files_left;
-  if (font_found != NULL) {
-    kdError() << QString(i18n("Can't find font %1; using %2 instead at %3 dpi.")).arg(fontname).arg(font_found).arg(dpi) << endl;
-    free(fontname);
-    fontname = font_found;
-  }
-  else
-    if (!kpse_bitmap_tolerance ((double) size_found, fsize))
-      kdError() << i18n("Can't find font %1 at %2 dpi; using %3 dpi instead.\n").arg(fontname).arg(dpi).arg(size_found);
-  fsize      = size_found;
-  timestamp  = ++current_timestamp;
-  set_char_p = &dviWindow::set_char;
-  magic      = two(file);
+  // First try if the font is a virtual font
+  proc.clearArguments();
+  proc << "kpsewhich";
+  proc << "--dpi 600";
+  proc << "--mode ljfour";
+  proc << "--format vf";
+  proc << fontname;
+  proc.start(KProcess::NotifyOnExit, KProcess::All);
+  while(proc.isRunning())
+    qApp->processEvents();
 
-  if (magic == PK_MAGIC)
-    read_PK_index();
-  else
-    if (magic == GF_MAGIC)
-      oops(QString(i18n("The GF format for font file %1 is no longer supported")).arg(filename) );
-    else
-      if (magic == VF_MAGIC)
-	read_VF_index();
-      else
-	oops(QString(i18n("Cannot recognize format for font file %1")).arg(filename) );
+  // Font not found? Then check if the font is a regular font.
+  if (filename.isEmpty()) {
+    proc.clearArguments();
+    proc << "kpsewhich";
+    proc << "--dpi 600";
+    proc << "--mode ljfour";
+    proc << "--format pk";
+    proc << "--mktex pk";
+    proc << QString("%1.%2").arg(fontname).arg((int)(fsize + 0.5));
+    proc.start(KProcess::NotifyOnExit, KProcess::All);
+    while(proc.isRunning())
+      qApp->processEvents();
+  }
+
 
   return False;
 }
@@ -177,7 +169,7 @@ void font::mark_as_used(void)
   kdDebug() << "marking font " << fontname << " at " << (int) (fsize + 0.5) << " dpi" << endl;
 #endif
 
-  if (flags & font::FONT_IN_USE) 
+  if (flags & font::FONT_IN_USE)
     return;
 
   flags |= font::FONT_IN_USE;
@@ -209,7 +201,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
       return NULL;	/* previously flagged missing char */
 
     if (file == NULL) {
-      file = xfopen(filename, OPEN_MODE);
+      file = xfopen(filename.latin1(), OPEN_MODE);
       if (file == NULL) {
 	oops(QString(i18n("Font file disappeared: %1")).arg(filename) );
 	return NULL;

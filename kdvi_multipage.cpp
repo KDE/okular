@@ -284,10 +284,6 @@ void KDVIMultiPage::preferencesChanged()
   config->reparseConfiguration();
   config->setGroup( "kdvi" );
 
-  s = config->readEntry( "FontPath", KDVI_DEFAULT_FONTPATH );
-  if ( !s.isEmpty() && s != window->fontPath() )
-    window->setFontPath( s );
-
   // Important! The default values here must be the same as in optiondialog.cpp
   int basedpi = config->readNumEntry( "BaseResolution" );
   if ( basedpi <= 0 )
@@ -298,8 +294,7 @@ void KDVIMultiPage::preferencesChanged()
   QString mfmode =  config->readEntry( "MetafontMode" );
   if ( mfmode.isNull() )
     config->writeEntry( "MetafontMode", mfmode = "cx" );
-  if ( mfmode != window->metafontMode() )
-    window->setMetafontMode( mfmode );
+  window->setMetafontMode( mfmode );
 
   int makepk = config->readNumEntry( "MakePK" );
   if ( makepk != window->makePK() )

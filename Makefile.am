@@ -1,9 +1,9 @@
 # just set the variable
 appsdir = $(kde_appsdir)/Graphics
 # set the include path for X, qt and KDE
-INCLUDES= $(all_includes) $(KDVI_KPATHSEA_INC) -I$(top_srcdir)/kviewshell
+INCLUDES= $(all_includes) -I$(top_srcdir)/kviewshell
 # claim, which subdirectories you want to install
-SUBDIRS = $(KDVI_KPATHSEA_DIR) . pix
+SUBDIRS = . pix
 
 # you can add here more. This one gets installed
 lib_LTLIBRARIES= libkdvi.la
@@ -17,11 +17,11 @@ libkdvi_la_SOURCES = kdvi_multipage.cpp \
 	printData.cpp printSetup.cpp printSetupData.cpp\
 	optiondialog.cpp \
 	psheader.c dviwin_draw.cpp dvi_init.cpp\
-	font.cpp pk.cpp psgs.cpp\
+	font.cpp fontpool.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
 
 libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
-libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts $(KDVI_KPATHSEA_LIB) \
+libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts \
 			$(top_builddir)/kviewshell/libkmultipage.la
 
 # Which sources should be compiled for squeeze.

@@ -49,7 +49,7 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-//#define DEBUG 0
+//#define DEBUG_RENDER 0
 
 #include <stdlib.h>
 #include <string.h>
@@ -58,6 +58,7 @@
 #include "glyph.h"
 #include "oconfig.h"
 #include "dvi.h"
+#include "fontpool.h"
 
 #include <kdebug.h>
 #include <kprocess.h>
@@ -69,6 +70,7 @@
 
 extern char *xmalloc (unsigned, const char *);
 extern FILE *xfopen(const char *filename, char *type);
+extern fontPool font_pool;
 
 struct frame	frame0;	/* dummy head of list */
 
@@ -520,6 +522,8 @@ void dviWindow::draw_part(struct frame *minframe, double current_dimconv)
 
 void dviWindow::draw_page(void)
 {
+  font_pool.status();
+
 #ifdef DEBUG_RENDER
   kdDebug() <<"draw_page" << endl;
 #endif

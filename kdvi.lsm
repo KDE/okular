@@ -9,6 +9,6 @@ Maintained-by:  Markku Hihnala <mah@ee.oulu.fi>
 Primary-site:   ftp://ftp.kde.org/pub/kde/
 Alternate-site: 
 Original-site:  ftp://ftp.kde.org/pub/kde/
-Platforms:      Linux, but should work on other Unices, needs Qt by Troll Tech
+Platforms:      Unix, Qt
 Copying-policy: GPL
 End

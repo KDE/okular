@@ -1,5 +1,3 @@
-
-
 kdvi 0.4 - Alpha release
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -12,24 +10,6 @@ specials in dvi files. kdvi uses the Qt toolkit.
 
 This version is quite useable.
 
-
-INSTALL
-~~~~~~~
-1. Set QTDIR and KDEDIR environment variables
-
-	Eg. in bash shell type
-
-	export QTDIR=/usr/lib/qt KDEDIR=/usr/local/kde
-
-2. Go to the top kdvi directory and type 
-
-	./configure
-	make
-
-3. If kdvi seems to build correctly you can install it by
-
-	make install
-	
 
 Note.	The make step currently runs configure in the kpathsea subdirectory.
 	I may eliminate this in a later version.
@@ -92,7 +72,7 @@ or without a file name as
 	kdvi
 
 kdvi will then allow a file to be opened from a dialog or when dropped from
-file manager (kfm).
+file manager (konqueror).
 
 The usual parameters handled by Qt should also work:
 

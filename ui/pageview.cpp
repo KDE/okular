@@ -35,6 +35,7 @@
 #include <kfiledialog.h>
 #include <kimageeffect.h>
 #include <kimageio.h>
+#include <kapplication.h>
 #include <kdebug.h>
 
 // system includes
@@ -1039,23 +1040,36 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     DCOPClient * client = DCOPClient::mainClient();
                     // Albert says is this ever necessary?
                     // we already attached on Part constructor
-                    if ( !client->isAttached() )
-                        client->attach();
-                    // serialize the text to speech (selectedText) and the
-                    // preferred reader ("" is the default voice) ...
-                    QByteArray data;
-                    QDataStream arg( data, IO_WriteOnly );
-                    arg << selectedText;
-                    arg << QString();
-                    QCString replyType;
-                    QByteArray replyData;
-                    // ..and send it to KTTSD
-                    if (client->call( "kttsd", "KSpeech", "setText(QString,QString)", data, replyType, replyData, true ))
+                    // if ( !client->isAttached() )
+                    //    client->attach();
+                    // If KTTSD not running, start it.
+                    if (!client->isApplicationRegistered("kttsd"))
                     {
-                        QByteArray  data2;
-                        QDataStream arg2(data2, IO_WriteOnly);
-                        arg2 << 0;
-                        client->send("kttsd", "KSpeech", "startText(uint)", data2 );
+                        QString error;
+                        if (KApplication::startServiceByDesktopName("kttsd", QStringList(), &error))
+                        {
+                            d->messageWindow->display( i18n("Starting KTTSD Failed: %1").arg(error) );
+                            Settings::setUseKTTSD(false);
+                        }
+                    }
+                    if ( Settings::useKTTSD() )
+                    {
+                        // serialize the text to speech (selectedText) and the
+                        // preferred reader ("" is the default voice) ...
+                        QByteArray data;
+                        QDataStream arg( data, IO_WriteOnly );
+                        arg << selectedText;
+                        arg << QString();
+                        QCString replyType;
+                        QByteArray replyData;
+                        // ..and send it to KTTSD
+                        if (client->call( "kttsd", "KSpeech", "setText(QString,QString)", data, replyType, replyData, true ))
+                        {
+                            QByteArray  data2;
+                            QDataStream arg2(data2, IO_WriteOnly);
+                            arg2 << 0;
+                            client->send("kttsd", "KSpeech", "startText(uint)", data2 );
+                        }
                     }
                 }
             }

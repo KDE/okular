@@ -523,7 +523,7 @@ void QOutputDevPixmap::doClip ( GfxState *state, bool winding )
 // Then it connects subaths within a single compound polygon to a single
 // point so that X can fill the polygon (sort of).
 //
-int QOutputDevPixmap::convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths ) 
+int QOutputDevPixmap::convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths )
 {
 	GfxPath *path = state-> getPath ( );
 	int n = path-> getNumSubpaths ( );
@@ -849,8 +849,8 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 
 	uchar **scanlines = img. jumpTable ( );
 
-	if ( ctm [3] > 0 )
-		scanlines += ( height - 1 );
+ 	if ( ctm [3] < 0 )
+ 		scanlines += ( height - 1 );
 
 	for ( int y = 0; y < height; y++ ) {
 		QRgb *scanline = (QRgb *) *scanlines;
@@ -876,7 +876,7 @@ void QOutputDevPixmap::drawImage(GfxState *state, Object */*ref*/, Stream *str, 
 
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
-		ctm [3] > 0 ? scanlines-- : scanlines++;
+		ctm [3] > 0 ? scanlines++ : scanlines--;
 
 	}
 

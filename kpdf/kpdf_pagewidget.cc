@@ -105,7 +105,8 @@ namespace KPDF
 	void PageWidget::setPage(int page)
 	{
             static QMutex mutex;
-
+						
+						ASSERT(mutex.locked() == false);
             mutex.lock();
             if (m_doc)
             {

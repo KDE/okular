@@ -1,7 +1,3 @@
-# this has all of the subdirectories that make will recurse into.  if
-# there are none, comment this out
-SUBDIRS = .
-
 # set the include path for X, qt and KDE
 INCLUDES = -I.. -I$(top_srcdir)/kpdf/goo -I$(top_srcdir)/kpdf/xpdf $(all_includes)
 
@@ -45,6 +41,7 @@ kde_module_LTLIBRARIES = libkpdfpart.la
 libkpdfpart_la_SOURCES = kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc QOutputDev.cpp QOutputDevPixmap.cpp part.ui 
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT)
+libkpdfpart_la_COMPILE_FIRST = ../aconf.h
 
 # this is where the desktop file will go 
 partdesktopdir   = $(kde_servicesdir)

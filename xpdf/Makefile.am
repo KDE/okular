@@ -10,6 +10,7 @@ libxpdf_la_SOURCES = Annot.cc Array.cc BuiltinFont.cc BuiltinFontTables.cc \
      OutputDev.cc PDFDoc.cc PDFDocEncoding.cc PSOutputDev.cc PSTokenizer.cc \
      Page.cc Parser.cc SFont.cc Stream.cc \
      TextOutputDev.cc UnicodeMap.cc XOutputDev.cc XRef.cc
+libxpdf_la_COMPILE_FIRST = ../aconf.h
 
 noinst_LTLIBRARIES = libxpdf.la
 noinst_HEADERS     = Annot.h Array.h BuiltinFont.h BuiltinFontTables.h \

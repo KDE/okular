@@ -90,7 +90,7 @@ void dviWindow::findNextText(void)
 
     // Go trough the text of the current page and search for the
     // string.
-    for(int i=DVIselection.selectedTextStart+1; i<textLinkList.size(); i++) 
+    for(unsigned int i=DVIselection.selectedTextStart+1; i<textLinkList.size(); i++) 
       if (textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
@@ -208,7 +208,6 @@ void dviWindow::findPrevText(void)
       }
     }
 
-
     progress.setProgress(  lastPageOfSearch - current_page );
     qApp->processEvents();
     if ( progress.wasCancelled() )
@@ -218,8 +217,8 @@ void dviWindow::findPrevText(void)
     // string.
     int i=DVIselection.selectedTextStart-1;
     if (i < 0)
-      i = textLinkList.size();
-    do{
+      i = textLinkList.size()-1;
+    while(i >= 0) {
       if (textLinkList[i].linkText.find(searchText, 0, case_sensitive) >= 0) {
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
@@ -233,7 +232,7 @@ void dviWindow::findPrevText(void)
 	return;
       }
       i--;
-    }while(i >= 0);
+    }
     current_page--;
     DVIselection.clear();
     foreGroundPaint.begin( &pixie );

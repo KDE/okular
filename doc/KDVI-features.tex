@@ -7,7 +7,7 @@
 \usepackage[arrow,matrix,curve,ps]{xy}
 \xyoption{dvips}
 \usepackage[active]{srcltx}
-\usepackage{hyperref}
+\usepackage[hypertex]{hyperref}
 \sloppy
 
 \newcommand{\KDVI}{{\sf KDVI 1.0}}
@@ -285,7 +285,7 @@ This document features a clickable table of contents, and also the
 references can be clicked on. This has been achieved by using the {\tt
   hyperref} macro package in \LaTeX\ by including the line
 \begin{verbatim}
-\usepackage{hyperref}
+\usepackage[hypertex]{hyperref}
 \end{verbatim}
 into the document preamble. Everything else is automatic.
 
@@ -296,6 +296,20 @@ Here is an external link which points to the \href{http://www.kde.org}{main
 \href{http://www.kde.org}{main
   website of the KDE project}
 \end{verbatim}
+
+
+\paragraph{Warning.} On some installations, the {\tt
+  hyperref} macro package is configured to generate PostScript
+hyperlinks for {\tt dvips} by default. On these systems, using the
+line
+\begin{verbatim}
+\usepackage{hyperref}
+\end{verbatim}
+will generate DVI file whose hyperlinks are not visible in KDVI.
+Worse, KDVI will call the {\tt ghostview} PostScript interpreter for
+every page, which makes the display very slow.
+
+
 
 \section{Colored \Red{text} \Green{and} \Blue{background}}
 

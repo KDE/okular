@@ -49,10 +49,9 @@ KDVIMultiPageFactory::KDVIMultiPageFactory()
 
 KDVIMultiPageFactory::~KDVIMultiPageFactory()
 {
-  if (s_instance)
     delete s_instance;
 
-  s_instance = 0;
+    s_instance = 0;
 }
 
 
@@ -121,9 +120,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   readSettings();
   enableActions(false);
-
   // Show tip of the day, when the first main window is shown.
-  QTimer::singleShot(0,this,SLOT(showTipOnStart()));
+  //QTimer::singleShot(0,this,SLOT(showTipOnStart()));
 }
 
 
@@ -133,8 +131,7 @@ KDVIMultiPage::~KDVIMultiPage()
     killTimer(timer_id);
   timer_id = -1;
   writeSettings();
-  if (printer != 0)
-    delete printer;
+  delete printer;
 }
 
 
@@ -155,7 +152,7 @@ bool KDVIMultiPage::openFile()
 
 void KDVIMultiPage::jumpToReference(QString reference)
 {
-  if (window != 0) {
+  if (window) {
     window->reference = reference;
     window->all_fonts_loaded(0); // In spite of its name, this method tries to parse the reference.
   }
@@ -569,12 +566,12 @@ void KDVIMultiPage::doEnableWarnings(void)
 
 void KDVIMultiPage::showTip(void)
 {
-  KTipDialog::showTip(window, "kdvi/tips", true);
+    KTipDialog::showTip(window, "kdvi/tips", true);
 }
 
 void KDVIMultiPage::showTipOnStart(void)
 {
-  KTipDialog::showTip(window, "kdvi/tips");
+    KTipDialog::showTip(window, "kdvi/tips");
 }
 
 void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )

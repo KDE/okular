@@ -6,9 +6,9 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress [working on]:
--> annotations: DS refactor (95%)
--> annotations: pdf parser adaptation (90%)
--> annotations: xml storage adaptation (5%)
+-> annotations: DS refactor (97%)
+-> annotations: pdf parser adaptation (95%)
+-> annotations: xml storage adaptation (6%)
 
 -> annotations: renderers in PagePainter (for the 6 markup annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
@@ -44,6 +44,7 @@ More items (first items will enter 'In progress list' first):
 -> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
 -> toolbar: move the toolbar to the top of pageview (left panel is really at the left of the toolbar)
+-> toc: higlight the row of the current page
 -> thumbnailslist: show Viewport in(blended/contour)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
 -> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)

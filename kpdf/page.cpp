@@ -41,15 +41,7 @@ KPDFPage::KPDFPage( uint page, float w, float h, int r )
 
 KPDFPage::~KPDFPage()
 {
-    QMap<int,QPixmap *>::iterator it = m_pixmaps.begin(), end = m_pixmaps.end();
-    for ( ; it != end; ++it )
-        delete *it;
-    QValueList< KPDFLink * >::iterator lIt = m_links.begin(), lEnd = m_links.end();
-    for ( ; lIt != lEnd; ++lIt )
-        delete *lIt;
-    QValueList< KPDFActiveRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
-    for ( ; rIt != rEnd; ++rIt )
-        delete *rIt;
+    deletePixmapsAndLinks();
     delete m_text;
 }
 
@@ -126,7 +118,6 @@ bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
     return found;
 }
 
-
 void KPDFPage::setPixmap( int id, QPixmap * pixmap )
 {
     if ( m_pixmaps.contains( id ) )
@@ -154,6 +145,25 @@ void KPDFPage::setActiveRects( const QValueList<KPDFActiveRect *> rects )
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
+}
+
+void KPDFPage::deletePixmapsAndLinks()
+{
+    // delete all stored pixmaps
+    QMap<int,QPixmap *>::iterator it = m_pixmaps.begin(), end = m_pixmaps.end();
+    for ( ; it != end; ++it )
+        delete *it;
+    m_pixmaps.clear();
+    // delete Links
+    QValueList< KPDFLink * >::iterator lIt = m_links.begin(), lEnd = m_links.end();
+    for ( ; lIt != lEnd; ++lIt )
+        delete *lIt;
+    m_links.clear();
+    // delete ActiveRects
+    QValueList< KPDFActiveRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
+    for ( ; rIt != rEnd; ++rIt )
+        delete *rIt;
+    m_rects.clear();
 }
 
 
@@ -270,12 +280,15 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     {
         QColor normalColor = QApplication::palette().active().highlight();
         QColor lightColor = normalColor.light( 140 );
+        // enlarging limits for intersection is like growing the 'linkGeometry' below
+        QRect limitsEnlarged = limits;
+        limitsEnlarged.addCoords( -2, -2, 2, 2 );
         // draw links that are inside the 'limits' paint region as opaque rects
         QValueList< KPDFLink * >::const_iterator lIt = page->m_links.begin(), lEnd = page->m_links.end();
         for ( ; lIt != lEnd; ++lIt )
         {
             QRect linkGeometry = (*lIt)->geometry();
-            if ( linkGeometry.intersects( limits ) )
+            if ( linkGeometry.intersects( limitsEnlarged ) )
             {
                 // expand rect and draw inner border
                 linkGeometry.addCoords( -1,-1,1,1 );
@@ -294,12 +307,15 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     {
         QColor normalColor = QApplication::palette().active().highlight();
         QColor lightColor = normalColor.light( 140 );
+        // enlarging limits for intersection is like growing the 'linkGeometry' below
+        QRect limitsEnlarged = limits;
+        limitsEnlarged.addCoords( -2, -2, 2, 2 );
         // draw links that are inside the 'limits' paint region as opaque rects
         QValueList< KPDFActiveRect * >::const_iterator rIt = page->m_rects.begin(), rEnd = page->m_rects.end();
         for ( ; rIt != rEnd; ++rIt )
         {
             QRect rectGeometry = (*rIt)->geometry();
-            if ( rectGeometry.intersects( limits ) )
+            if ( rectGeometry.intersects( limitsEnlarged ) )
             {
                 // expand rect and draw inner border
                 rectGeometry.addCoords( -1,-1,1,1 );

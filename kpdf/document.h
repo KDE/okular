@@ -33,6 +33,7 @@ class KPDFDocumentObserver
 
         // monitor changes in pixmaps (generation thread complete)
         virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
+        virtual void notifyPixmapsCleared() {};
 
         // commands from the Document to all observers
         virtual void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool /*documentChanged*/ ) {};

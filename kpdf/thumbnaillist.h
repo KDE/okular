@@ -33,14 +33,17 @@ Q_OBJECT
 		// return thumbnails observer id
 		uint observerId() const { return THUMBNAILS_ID; }
 
+        // redraw thumbnail ( inherited as DocumentObserver )
+        void notifyPixmapChanged( int pageNumber );
+
+        // request all visible pixmap (due to a global shange or so..)
+        void notifyPixmapsCleared();
+
 		// create thumbnails ( inherited as a DocumentObserver )
 		void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
 
 		// hilihght current thumbnail ( inherited as DocumentObserver )
 		void pageSetCurrent( int pageNumber, const QRect & viewport );
-
-		// redraw thumbnail ( inherited as DocumentObserver )
-		void notifyPixmapChanged( int pageNumber );
 
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();

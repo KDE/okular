@@ -75,6 +75,22 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 
 
 //BEGIN KPDFDocumentObserver inherited methods 
+void ThumbnailList::notifyPixmapChanged( int pageNumber )
+{
+    QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin(), thumbEnd = m_thumbnails.end();
+    for (; thumbIt != thumbEnd; ++thumbIt)
+        if ( (*thumbIt)->pageNumber() == pageNumber )
+        {
+            (*thumbIt)->update();
+            break;
+        }
+}
+
+void ThumbnailList::notifyPixmapsCleared()
+{
+    slotRequestPixmaps();
+}
+
 void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*documentChanged*/ )
 {
 	// delete all the Thumbnails
@@ -149,16 +165,6 @@ void ThumbnailList::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 	}
 }
 
-void ThumbnailList::notifyPixmapChanged( int pageNumber )
-{
-	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin(), thumbEnd = m_thumbnails.end();
-	for (; thumbIt != thumbEnd; ++thumbIt)
-		if ( (*thumbIt)->pageNumber() == pageNumber )
-		{
-			(*thumbIt)->update();
-			break;
-		}
-}
 
 void ThumbnailList::updateWidgets()
 {

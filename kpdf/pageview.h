@@ -53,9 +53,10 @@ class PageView : public QScrollView, public KPDFDocumentObserver
 
         // inherited from KPDFDocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
+        void notifyPixmapChanged( int pageNumber );
+        void notifyPixmapsCleared();
         void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
         void pageSetCurrent( int pageNumber, const QRect & viewport );
-        void notifyPixmapChanged( int pageNumber );
 
     signals:
         void urlDropped( const KURL& );

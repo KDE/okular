@@ -7,8 +7,7 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> ADD: click over image allows "save image" [60% done]
--> ADD: viewport changes the right way when clicking links [40% done]
+-> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [40% done]
 
 Things to do in order to merge in HEAD (first item has highest priority):
 -> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive})
@@ -17,13 +16,14 @@ Things to do in order to merge in HEAD (first item has highest priority):
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignemnt. (by Mikolaj)
 -> usability: clear search must restore the full thumbs list (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
--> fix viewport change on link (also suggested by Mikolaj Machowski)
 -> new icons (contest at kde-look has ended and we know the winner. good choice :-)
 -> take care of naming on merge, too differences (remove some kpdf_* prefixes
    and rename internals toodocument->kpdfdocument)
 
 More items (first items will enter 'In progress list' first):
 *THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
+-> find: scroll page if the the searched string is not visible [after 'viewport changes']
+-> ADD: click over image allows "save image" [60% done]
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
 -> display current page / total pages (with analog indicator too (progressbar/indicator/...))
@@ -34,9 +34,9 @@ More items (first items will enter 'In progress list' first):
 -> implement history (mainly for actionNamed)
 -> history as a toolbox child (collecting DOs's setPage calls)
 -> zoom: fit text (with configurable margin)
--> find: scroll page if the the searched string is not visible
 -> open gzipped (.pdf.gz?) files
--> autodetect "/dev/speech" and provide {document/page/selection} -> reading
+-> kttsd output with menu entries. speech{document/page/selection}. (see kdenonbeta/kttsd)
+-> kttsd alternative (1): autodetect "/dev/speech" (speechd/festival) and provide reading
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> merge head copyright headers (by albert)
@@ -46,7 +46,7 @@ More items (first items will enter 'In progress list' first):
 
 Done (newest feature comes firts):
 -> ADD: reading aids (inverted display, recolor, black/white, draw link border, draw image border)
--> FIX: zoom preserved when switching modes and flickerless
+-> FIX: zoom preserved when switching modes and flickerless drawing
 -> ADD: Printing as PS instead of as image (Albert)
 -> ADD: Remember page on session logout and put the document in it on session restore (Albert)
 -> ADD: gfx capturing tool

@@ -194,6 +194,25 @@ void PageView::setupActions( KActionCollection * ac )
 
 
 //BEGIN KPDFDocumentObserver inherited methods
+void PageView::notifyPixmapChanged( int pageNumber )
+{
+    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+    for ( ; iIt != iEnd; ++iIt )
+        if ( (*iIt)->pageNumber() == pageNumber )
+        {
+            // update item's rectangle plus the little outline
+            QRect expandedRect = (*iIt)->geometry();
+            expandedRect.addCoords( -1, -1, 3, 3 );
+            updateContents( expandedRect );
+            break;
+        }
+}
+
+void PageView::notifyPixmapsCleared()
+{
+    slotRequestVisiblePixmaps();
+}
+
 void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool documentChanged )
 {
     // reuse current pages if nothing new
@@ -262,20 +281,6 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & viewport )
     // update zoom text if in a ZoomFit/* zoom mode
     if ( d->zoomMode != ZoomFixed )
         updateZoomText();
-}
-
-void PageView::notifyPixmapChanged( int pageNumber )
-{
-    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
-    for ( ; iIt != iEnd; ++iIt )
-        if ( (*iIt)->pageNumber() == pageNumber )
-        {
-            // update item's rectangle plus the little outline
-            QRect expandedRect = (*iIt)->geometry();
-            expandedRect.addCoords( -1, -1, 3, 3 );
-            updateContents( expandedRect );
-            break;
-        }
 }
 //END KPDFDocumentObserver inherited methods
 

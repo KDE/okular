@@ -54,17 +54,18 @@ class KPDFPage
         const QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
         const KPDFLink * getLink( int mouseX, int mouseY ) const;
 
-        // operations (not const methods caled by KPDFDocument)
+        // operations (by KPDFDocument)
         inline void setAttribute( int att ) { m_attributes |= att; }
         inline void clearAttribute( int att ) { m_attributes &= ~att; }
         inline void toggleAttribute( int att ) { m_attributes ^= att; }
         bool hasText( const QString & text, bool strictCase, bool fromTop );
 
-        // set contents (not const methods caled by KPDFDocument)
+        // set contents (by KPDFDocument)
         void setPixmap( int id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
         void setLinks( const QValueList<KPDFLink *> links );
         void setActiveRects( const QValueList<KPDFActiveRect *> rects );
+        void deletePixmapsAndLinks();
 
     private:
         friend class PagePainter;

@@ -220,6 +220,9 @@ void KPDFDocument::reparseConfig()
     // load paper color from Settings or use the white default color
     QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
                      Settings::changeColors() ) ? Settings::paperColor() : Qt::white;
+    // if paper color changed we have to rebuild every visible pixmap in addition to
+    // the outputDevice. it's the 'heaviest' case, other effect are just recoloring
+    // over the page rendered on 'standard' white background.
     if ( color != d->paperColor || !d->kpdfOutputDev )
     {
         d->paperColor = color;
@@ -232,8 +235,11 @@ void KPDFDocument::reparseConfig()
         if ( d->pdfdoc )
             d->kpdfOutputDev->startDoc( d->pdfdoc->getXRef() );
         d->docLock.unlock();
-        // invalidate pixmaps
-        //FIXME missing
+        // invalidate pixmaps and send reload signals to observers
+        QValueVector<KPDFPage*>::iterator it = d->pages.begin(), end = d->pages.end();
+        for ( ; it != end; ++it )
+            (*it)->deletePixmapsAndLinks();
+        foreachObserver( notifyPixmapsCleared() );
     }
 }
 

@@ -234,9 +234,15 @@ bool Part::openFile()
 
 bool Part::openURL(const KURL &url)
 {
-	bool b = KParts::ReadOnlyPart::openURL(url);
-	if (!b) KMessageBox::error(widget(), i18n("Could not open %1").arg(url.prettyURL()));
-	return b;
+    bool b = KParts::ReadOnlyPart::openURL(url);
+    // if can't open document, update windows so they display blank contents
+    if ( !b )
+    {
+        m_pageView->updateContents();
+        m_thumbnailList->updateContents();
+        KMessageBox::error( widget(), i18n("Could not open %1").arg(url.prettyURL()) );
+    }
+    return b;
 }
 
 bool Part::closeURL()

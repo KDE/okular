@@ -156,7 +156,7 @@ void KDVIMultiPage::goto_page(int page, int y)
   scrollView()->ensureVisible(scrollView()->width()/2, (int)(y/window->zoom()) );
 
   emit previewChanged(true);
-  emit moved_to_page(page);
+  emit pageInfo(window->totalPages(), page );
 }
 
 
@@ -367,13 +367,11 @@ void KDVIMultiPage::reload()
     killTimer(timer_id);
     timer_id = -1;
     int currsav = window->curr_page();
+
     window->setFile(m_file);
-
     window->gotoPage(currsav);
+    emit pageInfo(window->totalPages(), window->curr_page() ); // We don't use "currsav" here, because that page may no longer exist. In that case, gotoPage already selected another page.
 
-    // @@@ Problem here. When kviewshell received this signal, it
-    // automatically moves to page one. This is very unfortunate
-    // indeed, I must say.
     emit numberOfPages(window->totalPages());
     scrollView()->resizeContents(window->width(), window->height());
     emit previewChanged(true);

@@ -227,7 +227,7 @@ void PageView::setupActions( KActionCollection * ac )
 
 bool PageView::canFitPageWidth()
 {
-    return Settings::viewColumns() != 1 || d->zoomMode != ZoomFitWidth;
+    return d->zoomMode != ZoomFitWidth;
 }
 
 void PageView::fitPageWidth( int page )

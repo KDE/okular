@@ -74,7 +74,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   window = new dviWindow(300, 1.0, "cx", true, scrollView());
   preferencesChanged();
 
-  new KAction(i18n("&DVI Options"), 0, this,
+  new KAction(i18n("&DVI Options..."), 0, this,
 	      SLOT(doSettings()), actionCollection(),
 	      "settings_dvi");
 

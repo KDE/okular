@@ -2,7 +2,7 @@
 //
 // Part of KDVI - A previewer for TeX DVI files.
 //
-// (C) 2001 Stefan Kebekus
+// (C) 2001-2004 Stefan Kebekus
 // Distributed under the GPL
 
 #include <kdebug.h>
@@ -37,6 +37,8 @@ void selection::set(Q_UINT16 pageNr, Q_INT32 start, Q_INT32 end, QString text)
   
   if (act != 0)
     act->setEnabled(!selectedText.isEmpty());
+
+  emit selectionIsNotEmpty( !isEmpty() );
 
   if (page != oldpage)
     emit pageChanged();

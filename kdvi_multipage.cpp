@@ -136,6 +136,11 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   copyTextAction     = KStdAction::copy(&userSelection, SLOT(copyText()), actionCollection(), "copy_text");
   userSelection.setAction(copyTextAction);
   selectAllAction    = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
+  deselectAction     = KStdAction::deselect(&userSelection, SLOT(clear()), actionCollection(), "edit_deselect_all");
+  deselectAction->setEnabled(!userSelection.isEmpty());
+  connect(&userSelection, SIGNAL(selectionIsNotEmpty(bool)), deselectAction, SLOT(setEnabled(bool)));
+
+
   new KAction(i18n("Enable All Warnings && Messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
   exportPSAction     = new KAction(i18n("PostScript..."), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
   exportPDFAction    = new KAction(i18n("PDF..."), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");

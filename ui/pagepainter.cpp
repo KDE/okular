@@ -23,7 +23,7 @@
 #include "conf/settings.h"
 
 void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
-    QPainter * destPainter, int pageWidth, int pageHeight, const QRect & limits )
+    QPainter * destPainter, int scaledWidth, int scaledHeight, const QRect & limits )
 {
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
     const QPixmap * pixmap = 0;
@@ -40,7 +40,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         for ( ; it != end; ++it )
         {
             int pixWidth = (*it)->width(),
-                distance = pixWidth > pageWidth ? pixWidth - pageWidth : pageWidth - pixWidth;
+                distance = pixWidth > scaledWidth ? pixWidth - scaledWidth : scaledWidth - pixWidth;
             if ( minDistance == -1 || distance < minDistance )
             {
                 pixmap = *it;
@@ -50,7 +50,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     }
 
     /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
-    double pixmapRescaleRatio = pixmap ? pageWidth / (double)pixmap->width() : -1;
+    double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
     if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 )
     {
         if ( Settings::changeColors() &&
@@ -62,8 +62,8 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         // draw a cross (to  that the pixmap as not yet been loaded)
         // helps a lot on pages that take much to render
         destPainter->setPen( Qt::gray );
-        destPainter->drawLine( 0, 0, pageWidth-1, pageHeight-1 );
-        destPainter->drawLine( 0, pageHeight-1, pageWidth-1, 0 );
+        destPainter->drawLine( 0, 0, scaledWidth-1, scaledHeight-1 );
+        destPainter->drawLine( 0, scaledHeight-1, scaledWidth-1, 0 );
         // idea here: draw a hourglass (or kpdf icon :-) on top-left corner
         return;
     }
@@ -78,10 +78,10 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     if ( paintHighlights || paintAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
-        double nXMin = (double)limits.left() / (double)pageWidth,
-               nXMax = (double)limits.right() / (double)pageWidth,
-               nYMin = (double)limits.top() / (double)pageHeight,
-               nYMax = (double)limits.bottom() / (double)pageHeight;
+        double nXMin = (double)limits.left() / (double)scaledWidth,
+               nXMax = (double)limits.right() / (double)scaledWidth,
+               nYMin = (double)limits.top() / (double)scaledHeight,
+               nYMax = (double)limits.bottom() / (double)scaledHeight;
         // if no rect intersects limits, disable paintHighlights
         if ( paintHighlights )
         {
@@ -113,27 +113,28 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     }
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
+    // FIXME: NOT ALL ANNOTATIONS REQUIRES BACKBUFFER
     bool useBackBuffer = paintAccessibility || paintHighlights || paintAnnotations;
     QPixmap * backPixmap = 0;
-    QPainter * p = 0;
+    QPainter * mixedPainter = 0;
 
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
     if ( !useBackBuffer )
     {
         // 4A.1. if size is ok, draw the page pixmap using painter
-        if ( pixmap->width() == pageWidth && pixmap->height() == pageHeight )
+        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
             destPainter->drawPixmap( limits.topLeft(), *pixmap, limits );
         // else draw a scaled portion of the magnified pixmap
         else
         {
             QImage destImage;
-            scalePixmapOnImage( pixmap, destImage, pageWidth, pageHeight, limits );
+            scalePixmapOnImage( pixmap, destImage, scaledWidth, scaledHeight, limits );
             destPainter->drawPixmap( limits.left(), limits.top(), destImage, 0, 0,
                                      limits.width(),limits.height() );
         }
 
         // 4A.2. active painter is the one passed to this method
-        p = destPainter;
+        mixedPainter = destPainter;
     }
     /** 4B -- BUFFERED FLOW. IMAGE PAINTING + OPERATIONS. QPAINTER OVER PIXMAP  **/
     else
@@ -142,10 +143,10 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         QImage backImage;
 
         // 4B.1. draw the page pixmap: normal or scaled
-        if ( pixmap->width() == pageWidth && pixmap->height() == pageHeight )
+        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
             cropPixmapOnImage( pixmap, backImage, limits );
         else
-            scalePixmapOnImage( pixmap, backImage, pageWidth, pageHeight, limits );
+            scalePixmapOnImage( pixmap, backImage, scaledWidth, scaledHeight, limits );
 
         // 4B.2. modify pixmap following accessibility settings
         if ( paintAccessibility )
@@ -193,7 +194,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             for ( ; hIt != hEnd; ++hIt )
             {
                 HighlightRect * r = *hIt;
-                QRect highlightRect = r->geometry( pageWidth, pageHeight );
+                QRect highlightRect = r->geometry( scaledWidth, scaledHeight );
                 if ( highlightRect.isValid() && highlightRect.intersects( limits ) )
                 {
                     // find out the rect to highlight on pixmap
@@ -232,8 +233,8 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         backPixmap = new QPixmap( backImage );
 
         // 4B.6. create a painter over the pixmap and set it as the active one
-        p = new QPainter( backPixmap );
-        p->translate( -limits.left(), -limits.top() );
+        mixedPainter = new QPainter( backPixmap );
+        mixedPainter->translate( -limits.left(), -limits.top() );
     }
 
     /** 5 -- MIXED FLOW. Draw ANNOTATIONS [OPAQUE ONES] on ACTIVE PAINTER  **/
@@ -244,7 +245,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         for ( ; aIt != aEnd; ++aIt )
         {
             Annotation * a = *aIt;
-            QRect annotRect = a->r.geometry( pageWidth, pageHeight );
+            QRect annotRect = a->r.geometry( scaledWidth, scaledHeight );
 
             // if annotation doesn't intersect paint region, skip it
             if ( !annotRect.isValid() || !annotRect.intersects( limits ) )
@@ -253,8 +254,8 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             // draw extents rectangle
             if ( Settings::debugDrawAnnotationRect() )
             {
-                p->setPen( a->color );
-                p->drawRect( annotRect );
+                mixedPainter->setPen( a->color );
+                mixedPainter->drawRect( annotRect );
             }
 
             //
@@ -267,9 +268,9 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
                 QPixmap pic = DesktopIcon( "kpdf" );
                 //QImage destImage;
                 //scalePixmapOnImage( &pic, destImage, annotRect.width(), annotRect.height(), QRect(0,0,annotRect.width(), annotRect.height()) );
-                //p->drawPixmap( annotRect.left(), annotRect.top(), destImage, 0, 0, annotRect.width(), annotRect.height() );
+                //mixedPainter->drawPixmap( annotRect.left(), annotRect.top(), destImage, 0, 0, annotRect.width(), annotRect.height() );
                 pic = pic.convertToImage().scale( annotRect.width(), annotRect.height() );
-                p->drawPixmap( annotRect.left(), annotRect.top(), pic, 0, 0, annotRect.width(), annotRect.height() );
+                mixedPainter->drawPixmap( annotRect.left(), annotRect.top(), pic, 0, 0, annotRect.width(), annotRect.height() );
             }
             //else if ( type == Annotation::AText ) TODO
         }
@@ -291,17 +292,17 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             if ( (enhanceLinks && rect->objectType() == ObjectRect::Link) ||
                  (enhanceImages && rect->objectType() == ObjectRect::Image) )
             {
-                QRect rectGeometry = rect->geometry( pageWidth, pageHeight );
+                QRect rectGeometry = rect->geometry( scaledWidth, scaledHeight );
                 if ( rectGeometry.intersects( limitsEnlarged ) )
                 {
                     // expand rect and draw inner border
                     rectGeometry.addCoords( -1,-1,1,1 );
-                    p->setPen( lightColor );
-                    p->drawRect( rectGeometry );
+                    mixedPainter->setPen( lightColor );
+                    mixedPainter->drawRect( rectGeometry );
                     // expand rect to draw outer border
                     rectGeometry.addCoords( -1,-1,1,1 );
-                    p->setPen( normalColor );
-                    p->drawRect( rectGeometry );
+                    mixedPainter->setPen( normalColor );
+                    mixedPainter->drawRect( rectGeometry );
                 }
             }
         }
@@ -310,13 +311,14 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     /** 7 -- BUFFERED FLOW. Copy BACKPIXMAP on DESTINATION PAINTER **/
     if ( useBackBuffer )
     {
-        delete p;
+        delete mixedPainter;
         destPainter->drawPixmap( limits.left(), limits.top(), *backPixmap );
         delete backPixmap;
     }
 }
 
 
+/** Private Helpers :: Pixmap conversion **/
 void PagePainter::cropPixmapOnImage( const QPixmap * src, QImage & dest, const QRect & r )
 {
     // handle quickly the case in which the whole pixmap has to be converted
@@ -334,7 +336,7 @@ void PagePainter::cropPixmapOnImage( const QPixmap * src, QImage & dest, const Q
 }
 
 void PagePainter::scalePixmapOnImage ( const QPixmap * src, QImage & dest,
-    int pageWidth, int pageHeight, const QRect & cropRect )
+    int scaledWidth, int scaledHeight, const QRect & cropRect )
 {
     // {source, destination, scaling} params
     int srcWidth = src->width(),
@@ -355,14 +357,22 @@ void PagePainter::scalePixmapOnImage ( const QPixmap * src, QImage & dest,
     // precalc the x correspondancy conversion in a lookup table
     unsigned int xOffset[ destWidth ];
     for ( int x = 0; x < destWidth; x++ )
-        xOffset[ x ] = ((x + destLeft) * srcWidth) / pageWidth;
+        xOffset[ x ] = ((x + destLeft) * srcWidth) / scaledWidth;
 
     // for each pixel of the destination image apply the color of the
     // corresponsing pixel on the source image (note: keep parenthesis)
     for ( int y = 0; y < destHeight; y++ )
     {
-        unsigned int srcOffset = srcWidth * (((destTop + y) * srcHeight) / pageHeight);
+        unsigned int srcOffset = srcWidth * (((destTop + y) * srcHeight) / scaledHeight);
         for ( int x = 0; x < destWidth; x++ )
             (*destData++) = srcData[ srcOffset + xOffset[x] ];
     }
 }
+
+/** Private Helpers :: Image Drawing **/
+void image_draw_line( const QImage & img, bool antiAlias = true )
+{
+    
+}
+
+

@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>320</width>
-            <height>143</height>
+            <height>169</height>
         </rect>
     </property>
     <vbox>
@@ -32,7 +32,7 @@
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout9</cstring>
+                        <cstring>layout6</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -48,13 +48,24 @@
                         </widget>
                         <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>layout1</cstring>
+                                <cstring>layout5</cstring>
                             </property>
-                            <hbox>
+                            <grid>
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <spacer>
+                                <widget class="QCheckBox" row="0" column="1">
+                                    <property name="name">
+                                        <cstring>kcfg_ShowSearchBar</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>Show &amp;search bar in thumbnails list</string>
+                                    </property>
+                                </widget>
+                                <spacer row="0" column="0" rowspan="2" colspan="1">
                                     <property name="name">
                                         <cstring>spacer2</cstring>
                                     </property>
@@ -67,22 +78,22 @@
                                     <property name="sizeHint">
                                         <size>
                                             <width>16</width>
-                                            <height>20</height>
+                                            <height>30</height>
                                         </size>
                                     </property>
                                 </spacer>
-                                <widget class="QCheckBox">
+                                <widget class="QCheckBox" row="1" column="1">
                                     <property name="name">
-                                        <cstring>kcfg_ShowSearchBar</cstring>
+                                        <cstring>kcfg_SyncThumbnailsViewport</cstring>
                                     </property>
                                     <property name="enabled">
                                         <bool>false</bool>
                                     </property>
                                     <property name="text">
-                                        <string>Show &amp;search bar in thumbnails list</string>
+                                        <string>Link &amp;thumbnails list with the page</string>
                                     </property>
                                 </widget>
-                            </hbox>
+                            </grid>
                         </widget>
                         <widget class="QCheckBox">
                             <property name="name">
@@ -171,6 +182,12 @@
         <sender>kcfg_ShowLeftPanel</sender>
         <signal>toggled(bool)</signal>
         <receiver>kcfg_ShowSearchBar</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_ShowLeftPanel</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_SyncThumbnailsViewport</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

@@ -75,6 +75,11 @@
    <max>8</max>
   </entry>
  </group>
+ <group name="ThumbnailsList" >
+  <entry key="SyncThumbnailsViewport" type="Bool" >
+   <default>true</default>
+  </entry>
+ </group>
  <group name="Performance" >
   <entry key="MemoryLevel" type="Enum" >
    <default>Normal</default>

@@ -134,23 +134,30 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
 
 void ThumbnailList::notifyViewportChanged()
 {
+	// skip notifies for the current page (already selected)
+	int newPage = m_document->viewport().pageNumber;
+	if ( m_selected && m_selected->pageNumber() == newPage )
+		return;
+
 	// deselect previous thumbnail
 	if ( m_selected )
 		m_selected->setSelected( false );
 	m_selected = 0;
 
 	// select the page with viewport and ensure it's centered in the view
-	int pageNumber = m_document->viewport().pageNumber;
 	m_vectorIndex = 0;
 	QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 	for ( ; tIt != tEnd; ++tIt )
 	{
-		if ( (*tIt)->pageNumber() == pageNumber )
+		if ( (*tIt)->pageNumber() == newPage )
 		{
 			m_selected = *tIt;
 			m_selected->setSelected( true );
-			ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, visibleHeight()/2 );
-			//non-centered version: ensureVisible( 0, itemTop + itemHeight/2, 0, itemHeight/2 );
+			if ( Settings::syncThumbnailsViewport() )
+			{
+				int yOffset = QMAX( visibleHeight() / 4, m_selected->height() / 2 );
+				ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, yOffset );
+			}
 			break;
 		}
 		m_vectorIndex++;

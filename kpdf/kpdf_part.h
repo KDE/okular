@@ -13,6 +13,7 @@
 class QPainter;
 class QPixmap;
 class QWidget;
+class QListBoxItem;
 
 class KAboutData;
 class KAction;
@@ -23,6 +24,8 @@ class LinkAction;
 class LinkDest;
 class PDFDoc;
 class XOutputDev;
+
+class PDFPartView;
 
 namespace KPDF
 {
@@ -73,11 +76,13 @@ namespace KPDF
      */
     virtual bool openFile();
 
+		void update();
+
   protected slots:
     void find()     { /* stub */ };
     void findNext() { /* stub */ };
-    void zoomIn()   { /* stub */ };
-    void zoomOut()  { /* stub */ };
+    void zoomIn()   { m_zoomFactor += 0.1; update(); };
+    void zoomOut()  { m_zoomFactor -= 0.1; update(); };
     void back()     { /* stub */ };
     void forward()  { /* stub */ };
 
@@ -89,6 +94,7 @@ namespace KPDF
   private:
     PDFDoc*     m_doc;
     QOutputDev* m_outputDev;
+		PDFPartView * pdfpartview;
 
     KToggleAction* m_fitToWidth;
 
@@ -99,6 +105,8 @@ namespace KPDF
 
   private slots:
     void slotFitToWidthToggled();
+		void redrawPage();
+		void pageClicked ( QListBoxItem * );
   };
 
   class BrowserExtension : public KParts::BrowserExtension

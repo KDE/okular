@@ -2,7 +2,10 @@
 
 #include <math.h>
 
+#include <qwidget.h>
+#include <qlistbox.h>
 #include <qfile.h>
+#include <qtimer.h>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -11,14 +14,18 @@
 #include <kstdaction.h>
 #include <kparts/genericfactory.h>
 
+#include <kdebug.h>
+
 #include "GString.h"
 
 #include "GlobalParams.h"
 #include "PDFDoc.h"
 #include "XOutputDev.h"
 
-#include "kpdf_canvas.h"
-#include "kpdf_pagewidget.h"
+// #include "kpdf_canvas.h"
+// #include "kpdf_pagewidget.h"
+
+#include "part.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory);
@@ -41,8 +48,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // we need an instance
   setInstance(KPDFPartFactory::instance());
 
-  m_outputDev = new QOutputDev(parentWidget, widgetName);
-  setWidget(m_outputDev);
+	pdfpartview = new PDFPartView(parentWidget, widgetName);
+
+	connect(pdfpartview->pagesListBox, SIGNAL( clicked ( QListBoxItem * ) ),
+			this, SLOT( pageClicked ( QListBoxItem * ) ));
+	
+  m_outputDev = pdfpartview->outputdev;
+  setWidget(pdfpartview);
 
   // create our actions
   KStdAction::find    (this, SLOT(find()), 
@@ -113,7 +125,16 @@ Part::openFile()
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
-  m_doc->displayPage( m_outputDev , 1, 72, 0, false );
+	// fill the listbox with entries for every page
+	pdfpartview->pagesListBox->setUpdatesEnabled(false);
+	pdfpartview->pagesListBox->clear();
+	for (int i = 1; i <= m_doc->getNumPages(); i++)
+	{
+		pdfpartview->pagesListBox->insertItem(QString("%1").arg(i));
+	}
+	pdfpartview->pagesListBox->setUpdatesEnabled(true);
+	pdfpartview->pagesListBox->update();
+	
   displayPage(1);
 
   return true;
@@ -122,11 +143,30 @@ Part::openFile()
   void 
 Part::displayPage(int pageNumber, float /*zoomFactor*/)
 {
+	kdDebug() << "display page" << endl;
+	kdDebug() << "page : " << pageNumber << endl;
+	kdDebug() << "zoom factor : " << m_zoomFactor << endl;
+
+	Page * p = m_doc->getCatalog()->getPage(pageNumber);
+	
+	kdDebug() << "metadata stream : " << endl;
+	char * md = new char[4096];
+	
+	if (p->getMetadata())
+	{
+		while(p->getMetadata()->getLine(md, 4096) != NULL)
+		{
+			kdDebug() << md << endl;
+		}
+	}
+
+	kdDebug() << "------------" << endl;
+		
   if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
     return;
 
-  const double pageWidth  = m_doc->getPageWidth (pageNumber);
-  const double pageHeight = m_doc->getPageHeight(pageNumber);
+  const double pageWidth  = m_doc->getPageWidth (pageNumber) * m_zoomFactor;
+  const double pageHeight = m_doc->getPageHeight(pageNumber) * m_zoomFactor;
 
   // Pixels per point when the zoomFactor is 1.
   const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
@@ -169,7 +209,7 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 
   const float ppp = basePpp * m_zoomFactor; // pixels per point
 
-  m_doc->displayPage(m_outputDev, pageNumber, int(ppp*72.0), 0, true);
+  m_doc->displayPage(m_outputDev, pageNumber, int(m_zoomFactor * ppp * 72.0), 0, true);
 
   m_outputDev->show();
 
@@ -371,7 +411,33 @@ Part::slotFitToWidthToggled()
   displayPage(m_currentPage);
 }
 
+// for optimization
+bool redrawing = false;
 
+void
+Part::update()
+{
+	if (m_outputDev && ! redrawing) 
+	{
+		redrawing = true;
+		QTimer::singleShot(200, this, SLOT( redrawPage() ));
+	}
+};
+
+void 
+Part::redrawPage()
+{ 
+	redrawing = false;
+	displayPage(m_currentPage); 
+}
+
+void 
+Part::pageClicked ( QListBoxItem * qbi )
+{
+	m_currentPage = pdfpartview->pagesListBox->index(qbi);
+	update();
+}
+	
 BrowserExtension::BrowserExtension(Part* parent)
   : KParts::BrowserExtension( parent, "KPDF::BrowserExtension" )
 {
@@ -384,8 +450,6 @@ BrowserExtension::print()
 {
   static_cast<Part*>(parent())->print();
 }
-
-
 
 #include "kpdf_part.moc"
 

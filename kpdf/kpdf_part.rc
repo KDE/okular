@@ -22,5 +22,8 @@
 <ToolBar name="mainToolBar">
   <Action name="previous_page"/>
   <Action name="next_page"/>
+	<Separator/>
+	<Action name="zoom_in"/>
+	<Action name="zoom_out"/>
 </ToolBar>
 </kpartgui>

@@ -185,6 +185,9 @@ QOutputDev::QOutputDev ( QWidget *parent, const char *name, int flags ) : QScrol
 	
 	// create text object
 	m_text = new TextPage ( gFalse );
+
+	// enable mouse tracking for links
+	setMouseTracking(true);
 }
 
 QOutputDev::~QOutputDev ( ) 

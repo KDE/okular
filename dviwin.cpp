@@ -1124,8 +1124,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	if (command.isEmpty() == true) {
 	  int r = KMessageBox::warningContinueCancel(this, i18n("<qt>You have not yet specified an editor for inverse search. "
 								"Please choose your favorite editor in the <strong>DVI "
-								"options  dialog</strong> which you will find in the "
-								"<strong>Settings</strong>-menu.</qt>"),
+								"options dialog</strong> which you will find in the "
+								"<strong>Settings</strong> menu.</qt>"),
 						     i18n("Need to Specify Editor"),
 		                                     i18n("Use KDE's Editor Kate for Now"));
 	  if (r == KMessageBox::Continue)

@@ -30,6 +30,7 @@
 #include "print.h"
 #include "pushbutton.h"
 #include "prefs.h"
+#include "version.h"
 
 #include <unistd.h>
 #include <signal.h>
@@ -157,7 +158,7 @@ void kdvi::closeEvent( QCloseEvent *e )
 
 static QPopupMenu *m_f, *m_v, *m_p, *m_o, *m_h;
 static int m_fn, m_fo, m_fr, m_fp, m_fx, m_vi, m_vo, m_vf, m_vw, m_vr, m_pp, m_pn, m_pf, m_pl, m_pg,
-	m_op, m_ok, m_of, m_o0, m_om, m_ob, m_ot, m_os, m_ol,  m_hc, m_ha, m_hq;
+	m_op, m_ok, m_of, m_o0, m_om, m_ob, m_ot, m_os, m_ol,  m_hc; // , m_ha, m_hq;
 	
 void kdvi::makeMenuBar()
 {
@@ -234,15 +235,13 @@ void kdvi::makeMenuBar()
 
 	menuBar->insertSeparator();
 
-	p = new QPopupMenu;
-	CHECK_PTR( p );
-	m_hc = p->insertItem( translate("&Contents"),	this, SLOT(helpContents()) );
-	p->insertSeparator();
-	m_ha = p->insertItem( translate("&About"),	this, SLOT(helpAbout()) );
-	m_hq = p->insertItem( translate("About &Qt"),	this, SLOT(helpAboutQt()) );
+	QPopupMenu *help = kapp->getHelpMenu(true, QString("DVI Viewer")
+                                         + " " + KDVI_VERSION
+                                         + "\n\nby Markku Hihnala"
+                                         + " (mah@ee.oulu.fi)");
 
 	m_h = p;
-	menuBar->insertItem( translate("&Help"), p, -2 );
+	menuBar->insertItem( translate("&Help"), help );
 	if ( hideMenubar )	menuBar->hide();
 	setMenu( menuBar );
 }
@@ -829,7 +828,7 @@ void kdvi::helpContents()
 {
 	kapp->invokeHTMLHelp("","");
 }
-
+/*
 void kdvi::helpAbout()
 {
 	QMessageBox::information( this, translate("About Kdvi"),
@@ -843,6 +842,7 @@ void kdvi::helpAboutQt()
 {
 	QMessageBox::aboutQt( this, "About Qt" );
 }
+*/
 
 void kdvi::pannerChanged()
 {

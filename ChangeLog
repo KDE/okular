@@ -1,0 +1,5 @@
+Version 0.4.2
+  * [Robert Williams]  Added version.h and ChangeLog
+  * [Robert Williams]  Renamed Kdvi.kdelnk to kdvi.kdelnk
+  * [Robert Williams]  Added -caption "%c" to kdvi.kdelnk
+  * [Robert Williams]  Added getHelpMenu()

@@ -70,7 +70,7 @@ messages:
 # if you have more of them, create a subdirectory with an extra Makefile 
 install-data-local: 
 	$(mkinstalldirs) $(APPSDIR)
-	$(INSTALL_DATA) Kdvi.kdelnk $(APPSDIR)
+	$(INSTALL_DATA) kdvi.kdelnk $(APPSDIR)
 	$(mkinstalldirs) $(kde_icondir)
 	$(INSTALL_DATA) pix/kdvi.xpm $(kde_icondir)
 	$(mkinstalldirs) $(kde_minidir)

@@ -4,7 +4,7 @@
 // Previewer for TeX DVI files.
 //
 
-#define KDVI_VERSION "0.4.1"
+//#define KDVI_VERSION "0.4.1"
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -67,8 +67,8 @@ private slots:
 	void		toggleShowStatusbar();
 	void		toggleShowScrollbars();
 	void		helpContents();
-	void		helpAbout();
-	void		helpAboutQt();
+//	void		helpAbout();
+//	void		helpAboutQt();
 	void		pannerChanged();
 	void		pageActivated(const char *);
 	void		setPage(int p=0);

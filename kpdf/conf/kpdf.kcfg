@@ -72,5 +72,8 @@
   <entry key="TempUseComposting" type="Bool" >
    <default>false</default>
   </entry>
+  <entry key="TempDrawBoundaries" type="Bool" >
+   <default>false</default>
+  </entry>
  </group>
 </kcfg>

@@ -273,7 +273,8 @@ void PageView::notifyPixmapChanged( int pageNumber )
 void PageView::viewportPaintEvent( QPaintEvent * pe )
 {
     // create the rect into contents from the clipped screen rect
-    QRect contentsRect = pe->rect().intersect( viewport()->rect() );
+    QRect viewportRect = viewport()->rect();
+    QRect contentsRect = pe->rect().intersect( viewportRect );
     contentsRect.moveBy( contentsX(), contentsY() );
     if ( !contentsRect.isValid() )
         return;
@@ -283,64 +284,70 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     QPainter screenPainter( viewport(), true );
     screenPainter.translate( -contentsX(), -contentsY() );
 
-    /*
-    const QRegion & re = pe->region();
-    QMemArray<QRect> transparentRects = re.rects();
-    for ( uint i = 0; i < transparentRects.count(); i++ )
+    // Iterate over the regions. This optimizes a lot the cases in which
+    // SUMj( Region[j].area ) is less than Region.boundingRect.area )
+    QMemArray<QRect> allRects = pe->region().rects();
+    int numRects = allRects.count();
+    // TODO: add a check to see wether to use area subdivision or not.
+    //kdDebug() << "painting " << numRects << " rects" << endl;
+    for ( uint i = 0; i < numRects; i++ )
     {
-        QRect r1 = transparentRects[i];
-        kdDebug() << r1 << endl;
-    }
-    */
-    //QRegion remaining( r );
+        //QRegion remaining( r );
+        contentsRect = allRects[i].intersect( viewportRect );
+        contentsRect.moveBy( contentsX(), contentsY() );
 
-    if ( Settings::tempUseComposting() )
-    {
-        // create pixmap and open a painter over it
-        QPixmap doubleBuffer( contentsRect.size() );
-        QPainter pixmapPainter( &doubleBuffer );
-        pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
-
-        // gfx operations on pixmap (rect {left,top} is pixmap {0,0})
-        // 1) clear bg
-        pixmapPainter.fillRect( contentsRect, Qt::gray );
-        // 2) paint items
-        paintItems( &pixmapPainter, contentsRect );
-        // 3) pixmap manipulate
-        // 4) paint selections
-        if ( !d->mouseSelectionRect.isNull() )
+        if ( Settings::tempUseComposting() )
         {
-            //pixmapPainter.save();
-            pixmapPainter.setPen( palette().active().highlight().dark(110) );
-            //pixmapPainter.setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
-            pixmapPainter.drawRect( d->mouseSelectionRect.normalize() );
-            //pixmapPainter.restore();
-        }
-        // 5) paint overlays
-        pixmapPainter.setPen( Qt::blue );
-        pixmapPainter.drawRect( contentsRect );
+            // create pixmap and open a painter over it
+            QPixmap doubleBuffer( contentsRect.size() );
+            QPainter pixmapPainter( &doubleBuffer );
+            pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
-        // finish painting and draw contents
-        pixmapPainter.end();
-        screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
-    }
-    else    // not using COMPOSTING
-    {
-        // 1) clear bg
-        screenPainter.fillRect( contentsRect, Qt::gray );
-        // 2) paint items
-        paintItems( &screenPainter, contentsRect );
-        // 5) paint opaque overlays
-        if ( !d->mouseSelectionRect.isNull() )
-        {
-            //screenPainter.save();
-            screenPainter.setPen( palette().active().highlight().dark(110) );
-            //screenPainter.setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
-            screenPainter.drawRect( d->mouseSelectionRect.normalize() );
-            //screenPainter.restore();
+            // gfx operations on pixmap (rect {left,top} is pixmap {0,0})
+            // 1) clear bg
+            pixmapPainter.fillRect( contentsRect, Qt::gray );
+            // 2) paint items
+            paintItems( &pixmapPainter, contentsRect );
+            // 3) pixmap manipulated areas
+            // 4) paint transparent selections
+            if ( !d->mouseSelectionRect.isNull() )
+            {
+                pixmapPainter.save();
+                pixmapPainter.setPen( palette().active().highlight().dark(110) );
+                pixmapPainter.setBrush( QBrush( palette().active().highlight(), Qt::Dense4Pattern ) );
+                pixmapPainter.drawRect( d->mouseSelectionRect.normalize() );
+                pixmapPainter.restore();
+            }
+            // 5) paint overlays
+            if ( Settings::tempDrawBoundaries() )
+            {
+                pixmapPainter.setPen( Qt::blue );
+                pixmapPainter.drawRect( contentsRect );
+            }
+
+            // finish painting and draw contents
+            pixmapPainter.end();
+            screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
         }
-        screenPainter.setPen( Qt::red );
-        screenPainter.drawRect( contentsRect );
+        else    // not using COMPOSTING
+        {
+            // 1) clear bg
+            screenPainter.fillRect( contentsRect, Qt::gray );
+            // 2) paint items
+            paintItems( &screenPainter, contentsRect );
+            // 4) paint opaque selections
+            if ( !d->mouseSelectionRect.isNull() )
+            {
+                screenPainter.setPen( palette().active().highlight().dark(110) );
+                screenPainter.drawRect( d->mouseSelectionRect.normalize() );
+            }
+            // 5) paint overlays
+            if ( Settings::tempDrawBoundaries() )
+            {
+                screenPainter.setPen( Qt::red );
+                screenPainter.drawRect( contentsRect );
+            }
+        }
     }
 }
 
@@ -484,13 +491,23 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                 // clip selection inside the page
                 int x = QMAX( QMIN( e->x(), itemRect.right() ), itemRect.left() ),
                     y = QMAX( QMIN( e->y(), itemRect.bottom() ), itemRect.top() );
-                // update rect if selection changed
+                // if selection changed update rect
                 if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
                 {
-                    updateContents( d->mouseSelectionRect.normalize() );
+                    // Send only incremental paint events!
+                    QRect oldRect = d->mouseSelectionRect.normalize();
                     d->mouseSelectionRect.setRight( x );
                     d->mouseSelectionRect.setBottom( y );
-                    updateContents( d->mouseSelectionRect.normalize() );
+                    QRect newRect = d->mouseSelectionRect.normalize();
+                    // (enqueue rects 1) areas to clear with bg color
+                    QMemArray<QRect> transparentRects = QRegion( oldRect ).subtract( newRect ).rects();
+                    for ( uint i = 0; i < transparentRects.count(); i++ )
+                        updateContents( transparentRects[i] );
+                    // (enqueue rects 2) new opaque areas 
+                    oldRect.addCoords( 1, 1, -1, -1 );
+                    QMemArray<QRect> opaqueRects = QRegion( newRect ).subtract( oldRect ).rects();
+                    for ( uint i = 0; i < opaqueRects.count(); i++ )
+                        updateContents( opaqueRects[i] );
                 }
             }
             break;

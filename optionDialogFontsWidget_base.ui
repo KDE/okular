@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>290</width>
-            <height>203</height>
+            <width>259</width>
+            <height>241</height>
         </rect>
     </property>
     <property name="caption">
@@ -27,60 +27,105 @@
         </property>
         <widget class="QButtonGroup">
             <property name="name">
-                <cstring>buttonGroup1</cstring>
-            </property>
-            <property name="frameShape">
-                <enum>NoFrame</enum>
+                <cstring>PFB_ButtonGroup</cstring>
             </property>
             <property name="title">
-                <string></string>
+                <string>Postscript Type1 Fonts</string>
             </property>
-            <grid>
+            <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="QCheckBox">
                     <property name="name">
-                        <cstring>textLabel1</cstring>
+                        <cstring>usePFBCheckBox</cstring>
                     </property>
                     <property name="text">
-                        <string>Metafont mode:</string>
+                        <string>Use Type 1 fonts if available</string>
                     </property>
                 </widget>
-                <widget class="KComboBox" row="0" column="1">
+                <widget class="QCheckBox">
                     <property name="name">
-                        <cstring>metafontMode</cstring>
+                        <cstring>useFontHintingCheckBox</cstring>
                     </property>
-                    <property name="toolTip" stdset="0">
-                        <string>LaserJet 4 is usually a good choice.</string>
+                    <property name="text">
+                        <string>Use font hinting</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>&lt;p&gt;Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p&gt;
-&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid to generate several bitmap versions of the same font.&lt;/p&gt;</string>
+                        <string></string>
                     </property>
                 </widget>
-            </grid>
+            </vbox>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QGroupBox">
             <property name="name">
-                <cstring>fontGenerationCheckBox</cstring>
+                <cstring>groupBox1</cstring>
             </property>
-            <property name="text">
-                <string>Generate missing fonts</string>
+            <property name="title">
+                <string>PK Fonts</string>
             </property>
-            <property name="toolTip" stdset="0">
-                <string>If in doubt, switch on!</string>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to switch this on.</string>
-            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QButtonGroup">
+                    <property name="name">
+                        <cstring>buttonGroup1</cstring>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Metafont mode:</string>
+                            </property>
+                        </widget>
+                        <widget class="KComboBox" row="0" column="1">
+                            <property name="name">
+                                <cstring>metafontMode</cstring>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>LaserJet 4 is usually a good choice.</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;p&gt;Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p&gt;
+&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid to generate several bitmap versions of the same font.&lt;/p&gt;</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>fontGenerationCheckBox</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Generate missing fonts</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>If in doubt, switch on!</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to switch this on.</string>
+                    </property>
+                </widget>
+            </vbox>
         </widget>
         <widget class="QCheckBox">
             <property name="name">
                 <cstring>fontEnlargementCheckBox</cstring>
             </property>
             <property name="text">
-                <string>Enlarge font for better readability</string>
+                <string>Enlarge fonts for better readability</string>
             </property>
         </widget>
         <spacer>
@@ -95,19 +140,26 @@
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>20</width>
-                    <height>60</height>
+                    <width>16</width>
+                    <height>0</height>
                 </size>
             </property>
         </spacer>
     </vbox>
 </widget>
+<connections>
+    <connection>
+        <sender>usePFBCheckBox</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>useFontHintingCheckBox</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 <slots>
     <slot>buttonGroup1_clicked(int)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>qwidget.h</includehint>
     <includehint>kcombobox.h</includehint>
 </includehints>
 </UI>

@@ -173,10 +173,10 @@ void dviWindow::showInfo(void)
     return;
 
   info->setDVIData(dviFile);
-  // Call check_if_fonts_are_loaded() to make sure that the fonts_info
-  // is emitted. That way, the infoDialog will know about the fonts
-  // and their status.
-  font_pool->check_if_fonts_are_loaded();
+  // Call check_if_fonts_filenames_are_looked_up() to make sure that
+  // the fonts_info is emitted. That way, the infoDialog will know
+  // about the fonts and their status.
+  font_pool->check_if_fonts_filenames_are_looked_up();
   info->show();
 }
 

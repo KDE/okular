@@ -564,7 +564,7 @@ void dviWindow::draw_page(void)
   // return and do not draw anything. The font_pool will later emit
   // the signal "fonts_are_loaded" and thus trigger a redraw of the
   // page.
-  if (font_pool->check_if_fonts_are_loaded() == -1)
+  if (font_pool->check_if_fonts_filenames_are_looked_up() == false)
     return;
 
 #ifdef DEBUG_RENDER

@@ -6,6 +6,11 @@
 #ifndef _FONTPOOL_H
 #define _FONTPOOL_H
 
+#include <../config.h>
+#ifdef HAVE_FREETYPE
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#endif
 #include <qptrlist.h>
 #include <qstringlist.h>
 #include <qobject.h>
@@ -89,22 +94,12 @@ Q_OBJECT
       pool to the kdDebug output stream. */
   QString status();
 
-  /** Checks if all the fonts are loaded and returns 0 if that is
-      so. Otherwise, returns -1. The argument is used only internally
-      and should always be 0, except for internal use. Actually, the
-      argument works in the following manner: if pass==0, then the
-      method looks for pk-fonts and virtual fonts, and disables
-      automatic pk generation, even if it is turned on with the
-      setMakePK-method. If pass!=0, then only pk fonts are looked for,
-      and fonts are generated, if necessary. This method works in
-      stages: first, it is called with pass=0, and vf-fonts are
-      loaded. These may define further pk-fonts. The pk-fonts will be
-      loaded/generated in the second stage with pass!=0 which is
-      called automatically when the first instance of the kpsewhich
-      programm exists.  Calling this method will ALWAYS emit the
-      signal fonts_info. */
-  int check_if_fonts_are_loaded(unsigned char pass=0);
-
+  /** Checks if all the fonts file names have been looked at, and
+      returns true if that is so. Otherwise, the method starts
+      kpsewhich in a concurrent process and returns false. Once the
+      kpsewhich is terminated, the signal fonts_info is emitted. */
+  bool check_if_fonts_filenames_are_looked_up(void);
+  
   /** This is the list which actually holds pointers to the fonts in
       the fontPool */
   QPtrList<TeXFontDefinition> fontList;
@@ -122,6 +117,12 @@ Q_OBJECT
       memory) which are labeled "not in use". For explanation, see the
       mark_fonts_as_unused method. */
   void release_fonts(void);
+
+#ifdef HAVE_FREETYPE
+  /** A handle to the FreeType library, which is used by TeXFont_PFM
+      font objects, if KDVI is compiled with FreeType support.  */
+  FT_Library FreeType_library;
+#endif
 
 signals:
   /** Emitted to indicate that the progress dialog should show up now. */
@@ -165,48 +166,76 @@ public slots:
 
   /** For internal purposes only. This slot is called when the
       kpsewhich program has terminated. */
-  void kpsewhich_terminated(KProcess *);
-
-/** For internal purposess only. This slot is called when MetaFont is
-    run via the kpsewhich programm. The MetaFont output is transmitted
-    to the fontpool via this slot. */
+ void kpsewhich_terminated(KProcess *);
+ 
+ /** For internal purposess only. This slot is called when MetaFont is
+     run via the kpsewhich programm. The MetaFont output is transmitted
+     to the fontpool via this slot. */
  void mf_output_receiver(KProcess *, char *, int);
-
-/** For internal purposess only. This slot is called when kpsewhich
-    outputs the name of a font which has been found or was
-    generated. */
+ 
+ /** For internal purposess only. This slot is called when kpsewhich
+     outputs the name of a font which has been found or was
+     generated. */
  void kpsewhich_output_receiver(KProcess *, char *, int);
+ 
+ private:
+  /** Runs kpsewhich in a concurrent process. The type of fonts which
+      is looked for is determined by the variable 'pass', and is
+      explained below. NOTE: 'pass' MUST BE SET TO A MEANINGFUL VALUE
+      BEFORE THIS METHOD IS CALLED. */
+  void start_kpsewhich(void);
 
-private:
+  /** This variable MUST be set before the method start_kpsewhich() is
+      called. It determines what kind of font files kpsewhich is told
+      to look for.
+      
+      0: concurrently runnign kpsewhich program looks for pk-fonts and
+      virtual fonts, and disables automatic pk generation, even if it
+      is turned on with the setMakePK-method. After the kpsewhich
+      process terminates, the method kpsewhich_terminated() is called,
+      sets pass to 1, and calls start_kpsewhich() again.
+      
+      1: kpsewhich will look only for pk fonts are looked for, and
+      fonts are generated, if necessary. After the kpsewhich process
+      terminates, the method kpsewhich_terminated() will check if all
+      font filenames are there. If so, the signal If not, a warning dialog is shown,
+      pass is set to 2, and start_kpsewhich() is called again.
+      
+      2: kpsewhich will look for TFM files, which are used as a last
+      resort. After the kpsewhich process terminates, the signals
+      setStatusBarText(QString::null) and fonts_have_been_loaded()
+      will be emitted. */
+  Q_UINT8 pass;
+
  /** This flag determines whether we try to have MetaFont generate the
      font if a bitmap is not available. If makepk == 0, then bitmaps
      are NOT generated. */
  bool           makepk;
-
+ 
  /** This flag determines whether the glyphs should be enlarged by 10%
      or not. If enlargeFonts==0, then fonts are NOT enlarged. */
  bool           enlargeFonts;
-
+ 
  /** This integer determines the Metafont-Mode which is used in
      generating bitmaps. The value must satisfy 0 <= MetafontMode <
      NumberOfMFModes, and refers to an entry in the lists
      MFModenames/MFModes and MFResolutions which are defined in
      fontpool.cpp */
  unsigned int   MetafontMode;
-
+ 
  /** Resolution of the output device. */
  double         displayResolution_in_dpi;
-
+ 
  /** This QString is used to collect the output of the MetaFont
      programm while we are waiting for a full screen line */
  QString        MetafontOutput;
-
+ 
  QString        kpsewhichOutput;
 
-  /** This is the ShellProcess which is used to run the kpsewhich
-      command which locates the font-files for us. */
+ /** This is the ShellProcess which is used to run the kpsewhich
+     command which locates the font-files for us. */
  KShellProcess *proc;
-
+ 
  /** FontProgress; the progress dialog used when generating fonts. */
  class fontProgressDialog *progress;
 };

@@ -4,8 +4,12 @@
 #include <klocale.h>
 #include <qfile.h>
 
+#include "../config.h"
 #include "fontpool.h"
 #include "kdvi.h"
+#ifdef HAVE_FREETYPE
+#include "TeXFont_PFB.h"
+#endif
 #include "TeXFont_PK.h"
 #include "TeXFont_TFM.h"
 #include "TeXFontDefinition.h"
@@ -94,6 +98,16 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
   }
   set_char_p = &dviWindow::set_char;
   int magic      = two(file);
+
+#ifdef HAVE_FREETYPE
+  if (fname.endsWith(".pfb")) {
+      fclose(file);
+      file = 0;
+      font = new TeXFont_PFB(this);
+      set_char_p = &dviWindow::set_char;
+      return;
+    }
+#endif
 
   if (fname.endsWith("pk"))
     if (magic == PK_MAGIC) {

@@ -353,6 +353,16 @@ void KDVIMultiPage::preferencesChanged()
   if (showHyperLinks != window->showHyperLinks())
     window->setShowHyperLinks(showHyperLinks);
 
+  /*
+  bool usePFBFonts = config->readBoolEntry( "UsePFB", true );
+  if (showHyperLinks != window->showHyperLinks())
+    window->setShowHyperLinks(showHyperLinks);
+
+  bool usePFBFontHints = config->readBoolEntry( "UsePFBFontHints", true );
+  if (showHyperLinks != window->showHyperLinks())
+    window->setShowHyperLinks(showHyperLinks);
+  */
+
   window->setEditorCommand( config->readEntry( "EditorCommand", "" ));
 }
 

@@ -18,32 +18,9 @@
 #include "GlobalParams.h"
 #include "Error.h"
 
-#include "kpdf_error.h"
-
 #include <qstring.h>
 
-#include <klocale.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
-
-#include "xpdf_errors.h"
-
-QStringList errors::p_errors;
-
-void errors::add(const QString &s)
-{
-	p_errors.append(s);
-}
-
-bool errors::exists(const QString &s)
-{
-	return p_errors.findIndex(s) != -1;
-}
-
-void errors::clear()
-{
-	p_errors.clear();
-}
 
 void CDECL error(int pos, const char *msg, ...) {
   va_list args;
@@ -55,19 +32,13 @@ void CDECL error(int pos, const char *msg, ...) {
     return;
   }
   if (pos >= 0) {
-    emsg = i18n("Error (%1): ").arg(pos);
+    emsg = QString("Error (%1): ").arg(pos);
   } else {
-    emsg = i18n("Error: ");
+    emsg = "Error: ";
   }
   va_start(args, msg);
-  tmsg = XPDFErrorTranslator::translateError(msg);
-  vsprintf(buffer, tmsg.latin1(), args);
+  vsprintf(buffer, msg, args);
   va_end(args);
   emsg += buffer;
-  if (!errors::exists(emsg))
-  {
-    //KMessageBox::error(0, emsg);
-    kdDebug() << emsg << endl;
-    errors::add(emsg);
-  }
+  kdDebug() << emsg << endl;
 }

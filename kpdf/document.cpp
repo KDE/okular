@@ -36,7 +36,6 @@
 #include "PSOutputDev.h"
 #include "QOutputDev.h"
 
-#include "kpdf_error.h"
 #include "document.h"
 #include "page.h"
 #include "settings.h"
@@ -161,9 +160,6 @@ bool KPDFDocument::openDocument( const QString & docFile )
             return false;
         }
     }
-
-    // clear xpdf errors
-    errors::clear();
 
     // initialize output device for rendering current pdf
     d->kpdfOutputDev->startDoc( d->pdfdoc->getXRef() );

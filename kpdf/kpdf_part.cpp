@@ -44,8 +44,6 @@
 #include <kiconloader.h>
 #include <kio/netaccess.h>
 
-#include "kpdf_error.h"
-
 #include "GlobalParams.h"
 
 #include "kpdf_part.h"

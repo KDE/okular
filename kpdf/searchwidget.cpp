@@ -9,6 +9,7 @@
 
 // qt/kde includes
 #include <qtooltip.h>
+#include <qapplication.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kconfigbase.h>
@@ -29,7 +30,7 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     setMargin( 4 );
 
     // clear button
-    KToolBarButton * m_clearButton = new KToolBarButton( SmallIcon("locationbar_erase"), 1, this );
+    KToolBarButton * m_clearButton = new KToolBarButton( SmallIcon(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"), 1, this );
     QToolTip::add( m_clearButton, i18n( "Clear filter" ) );
 
     // line edit

@@ -105,7 +105,7 @@ extern  void qt_processEvents(void)
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget *parent, const char *name ) 
+dviWindow::dviWindow( int bdpi, double zoom, const QString & mfm, int mkpk, QWidget *parent, const char *name ) 
   : QWidget( parent, name )
 {
 #ifdef DEBUG
@@ -146,13 +146,13 @@ dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget 
   is_current_page_drawn  = 0;  
   n_files_left           = OPEN_MAX;
   kpse_set_progname ("kdvi");
-  kpse_init_prog ("KDVI", basedpi, MetafontMode.data(), "cmr10");
+  kpse_init_prog ("KDVI", basedpi, MetafontMode.ascii(), "cmr10");
   kpse_set_program_enabled(kpse_any_glyph_format, 0, kpse_src_cmdline);
   kpse_format_info[kpse_pk_format].override_path
     = kpse_format_info[kpse_gf_format].override_path
     = kpse_format_info[kpse_any_glyph_format].override_path
     = kpse_format_info[kpse_tfm_format].override_path
-    = FontPath.ascii();
+    = QFile::encodeName(FontPath);
   resize(0,0);
 }
 
@@ -196,7 +196,7 @@ void dviWindow::setMakePK( int flag )
   makepk = flag;
 }
 	
-void dviWindow::setFontPath( const char *s )
+void dviWindow::setFontPath( const QString & s )
 {
   if (dviFile != NULL)
   KMessageBox::sorry( this,
@@ -205,7 +205,7 @@ void dviWindow::setFontPath( const char *s )
   FontPath = s;
 }
 
-void dviWindow::setMetafontMode( const char *mfm )
+void dviWindow::setMetafontMode( const QString & mfm )
 {
   if (dviFile != NULL)
   KMessageBox::sorry( this,
@@ -272,7 +272,7 @@ void dviWindow::drawPage()
       foreGroundPaint.end();
       KMessageBox::error( this,
 			  i18n("File corruption!\n\n") +
-			  dvi_oops_msg +
+			  QString::fromUtf8(dvi_oops_msg) +
 			  i18n("\n\nMost likely this means that the DVI file\nis broken, or that it is not a DVI file."));
       return;
     } else {
@@ -329,14 +329,14 @@ void dviWindow::changePageSize()
 
 //------ setup the dvi interpreter (should do more here ?) ----------
 
-void dviWindow::setFile( const char *fname )
+void dviWindow::setFile( const QString & fname )
 {
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
 
   // If fname is the empty string, then this means: "close". Delete
   // the dvifile and the pixmap.
-  if (strlen(fname) == 0) {
+  if (fname.isEmpty()) {
     if (dviFile)
       delete dviFile;
     dviFile = 0;
@@ -361,7 +361,7 @@ void dviWindow::setFile( const char *fname )
     QApplication::restoreOverrideCursor();
     KMessageBox::error( this,
 			i18n("File corruption!\n\n") +
-			dvi_oops_msg +
+			QString::fromUtf8(dvi_oops_msg) +
 			i18n("\n\nMost likely this means that the DVI file\n") + 
 			filename +
 			i18n("\nis broken, or that it is not a DVI file."));

@@ -148,9 +148,9 @@ void dviWindow::xskip(long offset)
 }
 
 
-static	void tell_oops(QString message)
+static	void tell_oops(const QString & message)
 {
-  dvi_oops_msg = (message), longjmp(dvi_env, 1); /* dvi_oops */
+  dvi_oops_msg = (message.utf8()), longjmp(dvi_env, 1); /* dvi_oops */
   exit(1);
 }
 

@@ -29,7 +29,7 @@ class DVIFile
 public:
 	DVIFile(){}
 	~DVIFile(){};
-	void dviCopy(QString ifile, QString ofile, QStrList *pagelist,
+	void dviCopy(const QString & ifile, const QString & ofile, const QStringList & pagelist,
 			int first = 0, int last = 999999 );
 
 };
@@ -76,10 +76,10 @@ void Print::setCurrentPage( int _page, int _totalpages )
 	totalpages = _totalpages;
 }
 
-void Print::setMarkList( const QStrList *_marklist )
+void Print::setMarkList( const QStringList & _marklist )
 {
-	marklist = (QStrList *)_marklist;
-	if ( !marklist || marklist->isEmpty() )
+	marklist = _marklist;
+	if ( marklist.isEmpty() )
 		return;
 	printMarked->setEnabled( TRUE );
 	printMarked->setChecked( TRUE );
@@ -108,7 +108,7 @@ void Print::rangeToggled( bool on )
 #define put2(f,i) (f.putch(((i)>>8)&0xff), f.putch((i)&0xff))
 #define put4(f,i) (put2(f,i>>16), put2(f,(i)))
 
-void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
+void DVIFile::dviCopy(const QString & ifile, const QString & ofile, const QStringList & pagelist,
 	int first, int last)
 {
 	QFile in(ifile);
@@ -171,8 +171,7 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 	int defsdone = 0;
 	for ( n=0; n < tot; n++ )	// copy pages to out
 	{		
-		if ( pagelist &&
-			pagelist->find( QString().sprintf( "%4d", n + 1 ) ) < 0 )
+		if ( pagelist.findIndex( QString().sprintf( "%4d", n + 1 ) ) < 0 )
 			continue;
 		if ( n + 1 < first || n + 1 > last )
 			continue;
@@ -271,8 +270,8 @@ void Print::okPressed()
 
 	cmd += " &";
 
-	kdError() << "About to run: " << cmd.data() << endl;
-	system( cmd );
+	kdError() << "About to run: " << cmd << endl;
+	system( QFile::encodeName(cmd) );
 	accept();
 }
 

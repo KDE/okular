@@ -30,7 +30,7 @@ public:
 
     void setFile( QString file );
     void setCurrentPage( int page, int totalpages );
-    void setMarkList( const QStrList *marklist );
+    void setMarkList( const QStringList & marklist );
 
 protected slots:
 
@@ -45,7 +45,7 @@ protected slots:
 private:
     QString ifile,ofile;
     int	curpage, totalpages, nup, printdest;
-    QStrList *marklist;
+    QStringList marklist;
     QString nupProgram, printMethod, spooler;
 
 };

@@ -78,7 +78,7 @@ public:
 
   virtual bool preview(QPainter *p, int w, int h);
 
-  virtual bool print(const QStrList &pages, int current);
+  virtual bool print(const QStringList &pages, int current);
 
 protected:
   /// For internal use only. See the comments in kdvi_multipage.cpp, right

@@ -94,7 +94,7 @@ extern struct frame	frame0;	/* dummy head of list */
 #define	VF_ID_BYTE	202
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
-#define	dvi_oops(str)	(dvi_oops_msg = (str), longjmp(dvi_env, 1))
+#define	dvi_oops(str)	(dvi_oops_msg = (str.utf8()), longjmp(dvi_env, 1))
 
 static	Boolean	font_not_found;
 

@@ -41,7 +41,7 @@ class dviWindow : public QWidget
   Q_OBJECT
 
 public:
-  dviWindow( int basedpi, double zoom, const char *mfmode, int makepk,
+  dviWindow( int basedpi, double zoom, const QString & mfmode, int makepk,
 	     QWidget *parent=0, const char *name=0 );
   ~dviWindow();
 
@@ -58,11 +58,11 @@ public:
   int		makePK() { return makepk; };
   void		setResolution( int basedpi );
   int		resolution() { return basedpi; };
-  void		setMetafontMode( const char * );
-  const char *	metafontMode() { return MetafontMode; };
+  void		setMetafontMode( const QString & );
+  QString	metafontMode() { return MetafontMode; };
   void		setPaper(double w, double h);
-  void		setFontPath( const char * );
-  const char *	fontPath() { return FontPath; };
+  void		setFontPath( const QString & );
+  QString	fontPath() { return FontPath; };
   bool          correctDVI(QString filename);
   unsigned char xxone();
   unsigned long xnum(unsigned char size);
@@ -82,7 +82,7 @@ public:
   void          set_char(unsigned int cmd, unsigned int ch);
   void          set_empty_char(unsigned int cmd, unsigned int ch);
   void          set_no_char(unsigned int cmd, unsigned int ch);
-  void          applicationDoSpecial(char *cp);
+  void          applicationDoSpecial(char * cp);
   void          special(long nbytes);
   void          bang_special(QString cp);
   void          quote_special(QString cp);
@@ -95,7 +95,7 @@ public:
 
 
 public slots:
-  void		setFile(const char *fname);
+  void		setFile(const QString & fname);
   void		gotoPage(int page);
   void		setZoom(double zoom);
   double        zoom() { return _zoom; };

@@ -256,7 +256,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", i18n("KDVI"), "0.9", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }
@@ -310,13 +310,13 @@ void KDVIMultiPage::preferencesChanged()
 }
 
 
-bool KDVIMultiPage::print(const QStrList &pages, int current)
+bool KDVIMultiPage::print(const QStringList &pages, int current)
 {
   Print * printdlg = new Print(window, "printdlg");
 
   printdlg->setFile(m_file);
   printdlg->setCurrentPage(current+1, window->totalPages());
-  printdlg->setMarkList(&pages);
+  printdlg->setMarkList(pages);
   printdlg->exec();
 
   delete printdlg;

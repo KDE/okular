@@ -70,7 +70,6 @@ namespace KPDF
 
   private slots:
     void fileOpen();
-    void fileSaveAs();
 
     void slotQuit();
 

@@ -39,8 +39,10 @@
 #include <kparts/genericfactory.h>
 #include <kurldrag.h>
 #include <kinputdialog.h>
+#include <kfiledialog.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
+#include <kio/netaccess.h>
 
 #include "kpdf_error.h"
 #include "part.h"
@@ -101,6 +103,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
              SLOT( showMarkList( bool ) ) );
 
   // create our actions
+  KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection(), "save");
   m_find = KStdAction::find(this, SLOT(find()),
                        actionCollection(), "find");
   m_find->setEnabled(false);
@@ -412,6 +415,22 @@ void Part::nextThumbnail()
   m_nextThumbnail++;
   if (m_nextThumbnail <= m_doc->getNumPages())
     QTimer::singleShot(10, this, SLOT(nextThumbnail()));
+}
+
+  void
+Part::fileSaveAs()
+{
+  KURL saveURL = KFileDialog::getSaveURL(
+					 url().isLocalFile()
+					 ? url().url()
+					 : url().fileName(),
+					 QString::null,
+					 widget(),
+					 QString::null );
+  if( !KIO::NetAccess::upload( url().path(),
+			       saveURL, static_cast<QWidget*>( 0 ) ) )
+	; // TODO: Proper error dialog
+
 }
 
   void

@@ -122,7 +122,6 @@ Shell::setupActions()
   KStdAction::open(this, SLOT(fileOpen()), actionCollection());
   recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
 				    actionCollection() );
-  KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
   KStdAction::print(m_part, SLOT(print()), actionCollection());
   KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
 
@@ -175,22 +174,6 @@ Shell::fileOpen()
 
   if (!url.isEmpty())
     openURL(url);
-}
-
-  void
-Shell::fileSaveAs()
-{
-  KURL saveURL = KFileDialog::getSaveURL(
-					 m_part->url().isLocalFile()
-					 ? m_part->url().url()
-					 : m_part->url().fileName(),
-					 QString::null,
-					 m_part->widget(),
-					 QString::null );
-  if( !KIO::NetAccess::upload( m_part->url().path(),
-			       saveURL, static_cast<QWidget*>( 0 ) ) )
-	; // TODO: Proper error dialog
-
 }
 
   void

@@ -162,6 +162,7 @@ namespace KPDF
 		void redrawPage();
 		void pageClicked ( int );
     void nextThumbnail();
+    void fileSaveAs();
   };
 
   class BrowserExtension : public KParts::BrowserExtension

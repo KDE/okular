@@ -18,7 +18,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
 #include <iostream>
 
 // include xpdf config.h file
@@ -46,6 +45,8 @@
 #include <qapplication.h>
 #include <qclipboard.h>
 
+static inline long int round( float x ) { static_cast<long int>( x + x > 0 ? 0.5 : -0.5); }
+
 //#define QPDFDBG(x) x		// special debug mode
 #define QPDFDBG(x)   		// normal compilation
 
@@ -57,7 +58,7 @@
 
 static inline QColor q_col ( const GfxRGB &rgb )
 {
-	return QColor ( lrint ( rgb. r * 255 ), lrint ( rgb. g * 255 ), lrint ( rgb. b * 255 ));
+	return QColor ( round ( rgb. r * 255 ), round ( rgb. g * 255 ), round ( rgb. b * 255 ));
 }
 
 
@@ -109,7 +110,7 @@ QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t /* m11 */, fp_t m12, fp_t m
 	}
 
 	// compute size and normalized transform matrix
-	int size = lrint ( sqrt ( m21 * m21 + m22 * m22 ));
+	int size = round ( sqrt ( m21 * m21 + m22 * m22 ));
 
 	QPDFDBG( printf ( "SET FONT: Name=%s, Size=%d, Bold=%d, Italic=%d, Mono=%d, Serif=%d, Symbol=%d, CID=%d, EmbFN=%s, M=(%f,%f,%f,%f)\n",
 	         (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" ),
@@ -204,10 +205,10 @@ void QOutputDev::startPage ( int /*pageNum*/, GfxState *state )
 	delete m_pixmap;
 	delete m_painter;
 
-	m_pixmap = new QPixmap ( lrint ( state-> getPageWidth ( )), lrint ( state-> getPageHeight ( )));
+	m_pixmap = new QPixmap ( round ( state-> getPageWidth ( )), round ( state-> getPageHeight ( )));
 	m_painter = new QPainter ( m_pixmap );
 
-	QPDFDBG( printf ( "NEW PIXMAP (%ld x %ld)\n", lrint ( state-> getPageWidth ( )),  lrint ( state-> getPageHeight ( ))));
+	QPDFDBG( printf ( "NEW PIXMAP (%ld x %ld)\n", round ( state-> getPageWidth ( )),  round ( state-> getPageHeight ( ))));
 
 	resizeContents ( m_pixmap-> width ( ), m_pixmap-> height ( ));
 	setContentsPos ( 0, 0 );
@@ -319,7 +320,7 @@ void QOutputDev::updateLineAttrs ( GfxState *state, GBool updateDash )
 	Qt::PenJoinStyle join;
 	int width;
 
-	width = lrint ( state-> getTransformedLineWidth ( ));
+	width = round ( state-> getTransformedLineWidth ( ));
 
 	switch ( state-> getLineCap ( )) {
 		case 0: cap = FlatCap; break;
@@ -578,8 +579,8 @@ int QOutputDev::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArr
 			state-> transform ( subpath-> getX ( i + 2 ), subpath-> getY ( i + 2 ), &x3, &y3 );
 
 			QPointArray tmp;
-			tmp. setPoints ( 4, lrint ( x0 ), lrint ( y0 ), lrint ( x1 ), lrint ( y1 ),
-			                    lrint ( x2 ), lrint ( y2 ), lrint ( x3 ), lrint ( y3 ));
+			tmp. setPoints ( 4, round ( x0 ), round ( y0 ), round ( x1 ), round ( y1 ),
+			                    round ( x2 ), round ( y2 ), round ( x3 ), round ( y3 ));
 
 #if QT_VERSION < 300
 			tmp = tmp. quadBezier ( );
@@ -598,7 +599,7 @@ int QOutputDev::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArr
 		else {
 			state-> transform ( subpath-> getX ( i ), subpath-> getY ( i ), &x1, &y1 );
 
-			points. putPoints ( points. count ( ), 1, lrint ( x1 ), lrint ( y1 ));
+			points. putPoints ( points. count ( ), 1, round ( x1 ), round ( y1 ));
 			++i;
 		}
 	}
@@ -674,7 +675,7 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 
 			// std::cerr << std::endl << "ROTATED: " << m11 << ", " << m12 << ", " << m21 << ", " << m22 << " / SIZE: " << fsize << " / TEXT: " << str. local8Bit ( ) << endl << endl;
 
-			QWMatrix mat ( lrint ( m11 / fsize ), lrint ( m12 / fsize ), -lrint ( m21 / fsize ), -lrint ( m22 / fsize ), lrint ( x1 ), lrint ( y1 ));
+			QWMatrix mat ( round ( m11 / fsize ), round ( m12 / fsize ), -round ( m21 / fsize ), -round ( m22 / fsize ), round ( x1 ), round ( y1 ));
 
 			m_painter-> setWorldMatrix ( mat );
 
@@ -693,9 +694,9 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 		}
 
 		if ( fsize > 5 )
-			m_painter-> drawText ( lrint ( x1 ), lrint ( y1 ), str );
+			m_painter-> drawText ( round ( x1 ), round ( y1 ), str );
 		else
-			m_painter-> fillRect ( lrint ( x1 ), lrint ( y1 ), lrint ( QMAX( fp_t(1), dx1 )), lrint ( QMAX( fsize, dy1 )), m_painter-> pen ( ). color ( ));
+			m_painter-> fillRect ( round ( x1 ), round ( y1 ), round ( QMAX( fp_t(1), dx1 )), round ( QMAX( fsize, dy1 )), m_painter-> pen ( ). color ( ));
 
 		m_painter-> setPen ( oldpen );
 
@@ -704,7 +705,7 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 			m_painter-> setWorldMatrix ( oldmat );
 #endif
 
-		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), lrint ( x1 ), lrint ( y1 )));
+		QPDFDBG( printf ( "DRAW TEXT: \"%s\" at (%ld/%ld)\n", str. local8Bit ( ). data ( ), round ( x1 ), round ( y1 )));
 	}
 	else if ( code != 0 ) {
 		// some PDF files use CID 0, which is .notdef, so just ignore it
@@ -735,7 +736,7 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 
 	GfxRGB rgb;
 	state-> getFillRGB ( &rgb );
-	uint val = ( lrint ( rgb. r * 255 ) & 0xff ) << 16 | ( lrint ( rgb. g * 255 ) & 0xff ) << 8 | ( lrint ( rgb. b * 255 ) & 0xff );
+	uint val = ( round ( rgb. r * 255 ) & 0xff ) << 16 | ( round ( rgb. g * 255 ) & 0xff ) << 8 | ( round ( rgb. b * 255 ) & 0xff );
 
 
 	QImage img ( width, height, 32 );
@@ -798,11 +799,11 @@ void QOutputDev::drawImageMask ( GfxState *state, Object */*ref*/, Stream *str, 
 		QPDFDBG( printf (  "### ROTATED / SHEARED / ETC -- CANNOT DISPLAY THIS IMAGE\n" ));
 	}
 	else {
-		int x = lrint ( ctm [4] );
-		int y = lrint ( ctm [5] );
+		int x = round ( ctm [4] );
+		int y = round ( ctm [5] );
 
-		int w = lrint ( ctm [0] );
-		int h = lrint ( ctm [3] );
+		int w = round ( ctm [0] );
+		int h = round ( ctm [3] );
 
 		if ( w < 0 ) {
 			x += w;
@@ -881,7 +882,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 			imgStr-> getPixel ( pixBuf );
 			colorMap-> getRGB ( pixBuf, &rgb );
 
-			uint val = ( lrint ( rgb. r * 255 ) & 0xff ) << 16 | ( lrint ( rgb. g * 255 ) & 0xff ) << 8 | ( lrint ( rgb. b * 255 ) & 0xff );
+			uint val = ( round ( rgb. r * 255 ) & 0xff ) << 16 | ( round ( rgb. g * 255 ) & 0xff ) << 8 | ( round ( rgb. b * 255 ) & 0xff );
 
 			if ( maskColors ) {
 				for ( int k = 0; k < nComps; ++k ) {
@@ -924,11 +925,11 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 		QPDFDBG( printf ( "### ROTATED / SHEARED / ETC -- CANNOT DISPLAY THIS IMAGE\n" ));
 	}
 	else {
-		int x = lrint ( ctm [4] );
-		int y = lrint ( ctm [5] );
+		int x = round ( ctm [4] );
+		int y = round ( ctm [5] );
 
-		int w = lrint ( ctm [0] );
-		int h = lrint ( ctm [3] );
+		int w = round ( ctm [0] );
+		int h = round ( ctm [3] );
 
 		if ( w < 0 ) {
 			x += w;
@@ -979,10 +980,10 @@ bool QOutputDev::findText ( const QString &str, int &l, int &t, int &w, int &h, 
 	fp_t y2 = (fp_t) t + h - 1;
 
 	if ( m_text-> findText ( s, len, top, bottom, &x1, &y1, &x2, &y2 )) {
-		l = lrint ( x1 );
-		t = lrint ( y1 );
-		w = lrint ( x2 ) - l + 1;
-		h = lrint ( y2 ) - t + 1;
+		l = round ( x1 );
+		t = round ( y1 );
+		w = round ( x2 ) - l + 1;
+		h = round ( y2 ) - t + 1;
 		found = true;
 	}
 	delete [] s;
@@ -999,10 +1000,10 @@ GBool QOutputDev::findText ( Unicode *s, int len, GBool top, GBool bottom, int *
 	fp_t yMax1 = (double) *yMax;
 
 	if ( m_text-> findText ( s, len, top, bottom, &xMin1, &yMin1, &xMax1, &yMax1 )) {
-		*xMin = lrint ( xMin1 );
-		*xMax = lrint ( xMax1 );
-		*yMin = lrint ( yMin1 );
-		*yMax = lrint ( yMax1 );
+		*xMin = round ( xMin1 );
+		*xMax = round ( xMax1 );
+		*yMin = round ( yMin1 );
+		*yMax = round ( yMax1 );
 		found = true;
 	}
 	return found;

@@ -258,7 +258,7 @@ void kdvi::makeButtons()
 #define I(f,o,s,h) toolBar->insertButton( kapp->getIconLoader()->loadIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
-	I( "fileopen.xpm",	this,	fileOpen,	translate("Open new document") )
+	I( "filenew2.xpm",	this,	fileOpen,	translate("Open new document") )
 	I( "reload.xpm",	dviwin,	drawPage,	translate("Reload document") )
 	I( "fileprint.xpm",	this,	filePrint,	translate("Print ...") )
 	toolBar->insertSeparator();

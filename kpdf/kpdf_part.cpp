@@ -48,7 +48,6 @@
 #include <kio/netaccess.h>
 #include <ktempfile.h>
 
-#include "kpdf_error.h"
 #include "part.h"
 
 
@@ -449,7 +448,6 @@ Part::openFile()
   m_find->setEnabled(true);
   m_findNext->setEnabled(true);
 
-  errors::clear();
   m_currentPage = 0; //so that the if in goToPage is true
   if (m_doc->getNumPages() > 0)
   {

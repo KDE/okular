@@ -18,7 +18,8 @@
 #include "page.h"
 
 ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
-	: QScrollView(parent), m_document(document), m_selected(0), m_delayTimer(0)
+	: QScrollView(parent, "KPDF::Thumbnails", WNoAutoErase),
+	m_document(document), m_selected(0), m_delayTimer(0)
 {
 	// set scrollbars
 	setHScrollBarMode( QScrollView::AlwaysOff );
@@ -29,7 +30,8 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 
 	// can be focused by tab and mouse click and grabs key events
 	viewport()->setFocusPolicy( StrongFocus );
-	viewport()->setInputMethodEnabled( true );
+	setFocusPolicy( NoFocus );
+	setInputMethodEnabled( true );
 
 	// set contents background to the 'base' color
 	viewport()->setPaletteBackgroundColor( palette().active().base() );
@@ -54,8 +56,11 @@ void ThumbnailList::saveSettings( KConfigGroup * config )
 }
 
 //BEGIN KPDFDocumentObserver inherited methods 
-void ThumbnailList::pageSetup( const QValueList<int> & pages )
+void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged )
 {
+//TODO
+documentChanged = false;
+//TODO
 	// delete all the Thumbnails
 	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
 	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
@@ -74,19 +79,19 @@ void ThumbnailList::pageSetup( const QValueList<int> & pages )
 	Thumbnail *t;
 	int width = clipper()->width(),
 	    totalHeight = 0;
-	QValueList<int>::const_iterator pageIt = pages.begin();
-	QValueList<int>::const_iterator pageEnd = pages.end();
+	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin();
+	QValueVector<KPDFPage*>::const_iterator pageEnd = pages.end();
 	for (; pageIt != pageEnd ; ++pageIt)
-	{
-		t = new Thumbnail( viewport(), m_document->page(*pageIt) );
-		// add to the scrollview
-		addChild( t, 0, totalHeight );
-		// add to the internal queue
-		m_thumbnails.push_back( t );
-		// update total height (asking widget its own height)
-		totalHeight += t->setThumbnailWidth( width );
-		t->show();
-	}
+		if ( (*pageIt)->isHilighted() ) {
+			t = new Thumbnail( viewport(), *pageIt );
+			// add to the scrollview
+			addChild( t, 0, totalHeight );
+			// add to the internal queue
+			m_thumbnails.push_back( t );
+			// update total height (asking widget its own height)
+			totalHeight += t->setThumbnailWidth( width );
+			t->show();
+		}
 
 	// update scrollview's contents size (sets scrollbars limits)
 	resizeContents( width, totalHeight );

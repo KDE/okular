@@ -40,16 +40,17 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     QToolTip::add( m_lineEdit, i18n( "Enter at least 3 letters to filter pages" ) );
 
     // change case button and menu
-    KToolBarButton * search = new KToolBarButton( SmallIcon("find"), 2, this );
+/*    KToolBarButton * search = new KToolBarButton( SmallIcon("find"), 2, this );
     m_caseMenu = new KPopupMenu( search );
     m_caseMenu->insertItem( i18n("Case Insensitive"), 1 );
     m_caseMenu->insertItem( i18n("Case Sensitive"), 2 );
     m_caseMenu->setItemChecked( 1, true );
     connect( m_caseMenu, SIGNAL( activated(int) ), SLOT( slotChangeCase(int) ) );
     search->setPopup( m_caseMenu );
-
-    clear->setMinimumHeight( m_lineEdit->sizeHint().height() );
-    search->setMinimumHeight( m_lineEdit->sizeHint().height() );
+*/
+    int sideLength = m_lineEdit->sizeHint().height();
+    clear->setMinimumSize( QSize( sideLength, sideLength ) );
+ //   search->setMinimumSize( QSize( sideLength, sideLength ) );
 }
 
 void SearchWidget::setupActions( KActionCollection * ac, KConfigGroup * config )

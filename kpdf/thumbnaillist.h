@@ -31,7 +31,7 @@ Q_OBJECT
 		void saveSettings( KConfigGroup * config );
 
 		// create thumbnails ( inherited as a DocumentObserver )
-		void pageSetup( const QValueList<int> & pages );
+		void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
 
 		// hilihght current thumbnail ( inherited as DocumentObserver )
 		void pageSetCurrent( int pageNumber, float position );

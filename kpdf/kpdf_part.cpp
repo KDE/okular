@@ -26,6 +26,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qvbox.h>
+#include <qpushbutton.h>
 
 #include <kaction.h>
 #include <kinstance.h>
@@ -38,6 +39,7 @@
 #include <kmessagebox.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
+#include <kiconloader.h>
 #include <kio/netaccess.h>
 
 #include "kpdf_error.h"
@@ -85,16 +87,20 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_splitter->setOpaqueResize( true );
 	setWidget( m_splitter );
 
-	m_thumbnailList = new ThumbnailList( m_splitter, document );
-	m_thumbnailList->setMaximumWidth( 125 );
-	m_thumbnailList->setMinimumWidth( 50 );
+	QVBox * leftVBox = new QVBox( m_splitter );
+	leftVBox->setMaximumWidth( 150 );
+	leftVBox->setMinimumWidth( 50 );
+
+	new QPushButton( QIconSet(SmallIcon("thumbnail")), "only a", leftVBox );
+	new QPushButton( QIconSet(SmallIcon("bookmark")), "layout", leftVBox );
+	new QPushButton( QIconSet(SmallIcon("filter")), "test", leftVBox );
+
+	m_searchWidget = new SearchWidget( leftVBox, document );
+
+	m_thumbnailList = new ThumbnailList( leftVBox, document );
 	document->addObserver( m_thumbnailList );
 
-	QVBox * rightVBox = new QVBox( m_splitter );
-
-	m_searchWidget = new SearchWidget( rightVBox, document );
-
-	m_pageWidget = new PageWidget( rightVBox, document );
+	m_pageWidget = new PageWidget( m_splitter, document );
 	connect( m_pageWidget, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	//connect(m _pageWidget, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
 	document->addObserver( m_pageWidget );
@@ -168,14 +174,14 @@ KAboutData* Part::createAboutData()
 
 bool Part::openFile()
 {
-	bool ok = document->openFile( m_file );
+	bool ok = document->openDocument( m_file );
 	m_find->setEnabled( ok );
 	return ok;
 }
 
 bool Part::closeURL()
 {
-	document->close();
+	document->closeDocument();
 	return KParts::ReadOnlyPart::closeURL();
 }
 
@@ -264,7 +270,7 @@ void Part::slotFind()
 	if (dlg.exec() == QDialog::Accepted)
 	{
 		m_findNext->setEnabled( true );
-		document->slotFind( dlg.pattern(), dlg.options() );
+		document->slotFind( dlg.pattern(), dlg.options() & KFindDialog::CaseSensitive );
 	}
 }
 

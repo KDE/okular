@@ -39,6 +39,7 @@ public:
     float height() const { return m_height; }
     float ratio() const { return m_height / m_width; }
     float rotation() const { return m_rotation; }
+    bool isHilighted() const { return m_hilighting; }
     bool hasPixmap( int id, int width, int height ) const;
     bool hasSearchPage() const;
     bool hasLink( int mouseX, int mouseY ) const;
@@ -57,7 +58,7 @@ public:
 private:
     int m_number, m_rotation;
     float m_width, m_height;
-    bool m_sEnabled;
+    bool m_hilighting;
     double m_sLeft, m_sTop, m_sRight, m_sBottom;
 
     QMap<int,QPixmap *> m_pixmaps;

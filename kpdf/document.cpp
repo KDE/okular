@@ -16,6 +16,7 @@
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 
 // local includes
 #include "PDFDoc.h"
@@ -26,9 +27,8 @@
 #include "page.h"
 
 /* Notes:
-- FIXME event queuing to avoid flow interruption (!!??) maybe avoided by the
+- FIXME event queuing to avoid flow loops (!!??) maybe avoided by the
   warning to not call something 'active' inside an observer method.
-- TODO implement filtering (on: "incremental search", "annotated pages", 
 */
 
 // structure used internally by KPDFDocument for data storage
@@ -44,14 +44,12 @@ public:
     QValueVector< KPDFPage* > pages;
 
     // find related
-    QString lastSearchText;
-    long lastSearchOptions;
-    KPDFPage * lastSearchPage;
-
+    QString searchText;
+    bool searchCase;
+    int searchPage;
     // filtering related
-    QString filterString;
-    bool filterCaseSensitive;
-    int filterLastCount;
+    QString filterText;
+    bool filterCase;
 
     // observers related (note: won't delete oservers)
     QMap< int, KPDFDocumentObserver* > observers;
@@ -71,8 +69,7 @@ KPDFDocument::KPDFDocument()
     d->pdfdoc = 0;
     d->currentPage = -1;
     d->currentPosition = 0;
-    d->lastSearchPage = 0;
-    d->filterLastCount = 0;
+    d->searchPage = -1;
     SplashColor paperColor;
     paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
     d->kpdfOutputDev = new KPDFOutputDev( paperColor );
@@ -80,23 +77,26 @@ KPDFDocument::KPDFDocument()
 
 KPDFDocument::~KPDFDocument()
 {
-    close();
+    closeDocument();
     delete d->kpdfOutputDev;
     delete d;
 }
 
-bool KPDFDocument::openFile( const QString & docFile )
+bool KPDFDocument::openDocument( const QString & docFile )
 {
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
     if ( !fileReadTest.open( IO_ReadOnly ) )
         return false;
+    long fileSize = fileReadTest.size();
     fileReadTest.close();
+
+    // free internal data
+    closeDocument();
 
     GString *filename = new GString( QFile::encodeName( docFile ) );
     delete d->pdfdoc;
     d->pdfdoc = new PDFDoc( filename, 0, 0 );
-    deletePages();
 
     if ( !d->pdfdoc->isOk() )
     {
@@ -119,17 +119,34 @@ bool KPDFDocument::openFile( const QString & docFile )
         for ( uint i = 0; i < pageCount ; i++ )
             d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1), d->pdfdoc->getPageRotate(i+1) );
         // filter pages, setup observers and set the first page as current
-        sendFilteredPageList();
+        processPageList( true );
         slotSetCurrentPage( 0 );
     }
+
+    // check local directory for an overlay xml
+    QString fileName = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
+    fileName = "kpdf/" + QString::number(fileSize) + "." + fileName + ".xml";
+    QString localFN = locateLocal( "data", fileName );
+    kdWarning() << localFN << endl;
 
     return true;
 }
 
-void KPDFDocument::close()
+void KPDFDocument::closeDocument()
 {
-    //stopRunningJobs()...
-    deletePages();
+    // delete pages and clear container
+    for ( uint i = 0; i < d->pages.count() ; i++ )
+        delete d->pages[i];
+    d->pages.clear();
+
+    // broadcast zero pages
+    processPageList( true );
+
+    // reset internal variables
+    d->currentPage = -1;
+    d->searchPage = -1;
+
+    // delete xpds's PDFDoc contents generator
     delete d->pdfdoc;
     d->pdfdoc = 0;
 }
@@ -163,7 +180,7 @@ const KPDFPage * KPDFDocument::page( uint n ) const
 
 void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 {
-	d->observers[ pObserver->observerId() ] = pObserver;
+    d->observers[ pObserver->observerId() ] = pObserver;
 }
 
 void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool syn )
@@ -219,37 +236,37 @@ void KPDFDocument::slotSetCurrentPagePosition( int page, float position )
     pageChanged();
 }
 
-void KPDFDocument::slotSetFilter( const QString & pattern, bool caseSensitive )
+void KPDFDocument::slotSetFilter( const QString & pattern, bool keepCase )
 {
-    d->filterCaseSensitive = caseSensitive;
-    d->filterString = pattern;
-    sendFilteredPageList();
+    d->filterText = pattern;
+    d->filterCase = keepCase;
+    processPageList( false );
 }
 
-void KPDFDocument::slotFind( const QString & t, long opt )
+void KPDFDocument::slotFind( const QString & string, bool keepCase )
 {
-    // reload last options if in 'find next' case
-    long options = t.isEmpty() ? d->lastSearchOptions : opt;
-    QString text = t.isEmpty() ? d->lastSearchText : t;
-    if ( !t.isEmpty() )
+    // turn selection drawing off on filtered pages
+    if ( !d->filterText.isEmpty() )
+        unHilightPages();
+
+    // save params for the 'find next' case
+    if ( !string.isEmpty() )
     {
-        d->lastSearchText = t;
-        d->lastSearchOptions = opt;
+        d->searchText = string;
+        d->searchCase = keepCase;
     }
 
-    // check enabled options (only caseSensitive support until now)
-    bool caseSensitive = options & KFindDialog::CaseSensitive;
-
     // continue checking last SearchPage first (if it is the current page)
-    KPDFPage * foundPage = 0;
     int currentPage = d->currentPage;
     int pageCount = d->pages.count();
-    if ( d->lastSearchPage && (int)d->lastSearchPage->number() == currentPage )
-        if ( d->lastSearchPage->hasText( text, caseSensitive, false ) )
-            foundPage = d->lastSearchPage;
+    KPDFPage * foundPage = 0,
+             * lastPage = (d->searchPage > -1) ? d->pages[ d->searchPage ] : 0;
+    if ( lastPage && d->searchPage == currentPage )
+        if ( lastPage->hasText( d->searchText, d->searchCase, false ) )
+            foundPage = lastPage;
         else
         {
-            d->lastSearchPage->hilightLastSearch( false );
+            lastPage->hilightLastSearch( false );
             currentPage++;
             pageCount--;
         }
@@ -276,7 +293,7 @@ void KPDFDocument::slotFind( const QString & t, long opt )
                 // ..and attach it to the page
                 page->setSearchPage( td.takeTextPage() );
             }
-            if ( page->hasText( text, caseSensitive, true ) )
+            if ( page->hasText( d->searchText, d->searchCase, true ) )
             {
                 foundPage = page;
                 break;
@@ -286,13 +303,14 @@ void KPDFDocument::slotFind( const QString & t, long opt )
 
     if ( foundPage )
     {
-        d->lastSearchPage = foundPage;
+        int pageNumber = foundPage->number();
+        d->searchPage = pageNumber;
         foundPage->hilightLastSearch( true );
-        slotSetCurrentPage( foundPage->number() );
-        foreachObserver( notifyPixmapChanged( foundPage->number() ) );
+        slotSetCurrentPage( pageNumber );
+        foreachObserver( notifyPixmapChanged( pageNumber ) );
     }
     else
-        KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(text) );
+        KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(d->searchText) );
 }
 
 void KPDFDocument::slotGoToLink( /* QString anchor */ )
@@ -300,22 +318,18 @@ void KPDFDocument::slotGoToLink( /* QString anchor */ )
 }
 //END slots 
 
-void KPDFDocument::sendFilteredPageList( bool forceEmpty )
+void KPDFDocument::processPageList( bool documentChanged )
 {
-    // make up a value list of the pages [1,2,3..]
-    uint pageCount = d->pages.count();
-    //d->filterLastCount
-    QValueList<int> pagesList;
-    if ( !forceEmpty )
+    if ( d->filterText.length() < 3 )
+        unHilightPages();
+    else
     {
+        uint pageCount = d->pages.count();
         for ( uint i = 0; i < pageCount ; i++ )
         {
             KPDFPage * page = d->pages[ i ];
-            if ( d->filterString.length() < 3 )
-            {
-                pagesList.push_back( i );
+            if ( d->filterText.length() < 3 )
                 page->hilightLastSearch( false );
-            }
             else
             {
                 if ( !page->hasSearchPage() )
@@ -328,33 +342,32 @@ void KPDFDocument::sendFilteredPageList( bool forceEmpty )
                     // ..and attach it to the page
                     page->setSearchPage( td.takeTextPage() );
                 }
-                bool ok = page->hasText( d->filterString, d->filterCaseSensitive, true );
-                if ( ok )
-                    pagesList.push_back( i );
-                page->hilightLastSearch( ok );
+                bool found = page->hasText( d->filterText, d->filterCase, true );
+                page->hilightLastSearch( found );
             }
         }
     }
 
     // send the list to observers
-    foreachObserver( pageSetup( pagesList ) );
+    foreachObserver( pageSetup( d->pages, documentChanged ) );
 }
 
-void KPDFDocument::deletePages()
+void KPDFDocument::unHilightPages()
 {
-    if ( d->pages.isEmpty() )
+    if ( d->filterText == "" )
         return;
 
-    // broadcast an empty page list to observers
-    sendFilteredPageList( true );
-
-    // delete pages and clear container
-    for ( uint i = 0; i < d->pages.count() ; i++ )
-        delete d->pages[i];
-    d->pages.clear();
-    d->currentPage = -1;
-    d->lastSearchPage = 0;
-    d->filterLastCount = 0;
+    d->filterText = "";
+    QValueVector<KPDFPage*>::iterator it = d->pages.begin(), end = d->pages.end();
+    for ( ; it != end; ++it )
+    {
+        KPDFPage * page = *it;
+        if ( page->isHilighted() )
+        {
+            page->hilightLastSearch( false );
+            foreachObserver( notifyPixmapChanged( page->number() ) );
+        }
+    }
 }
 
 /** TO BE IMPORTED:

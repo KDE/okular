@@ -40,7 +40,7 @@ public:
 	void saveSettings( KConfigGroup * config );
 
 	// inherited from KPDFDocumentObserver
-	void pageSetup( const QValueList<int> & pages );
+	void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
 	void pageSetCurrent( int pageNumber, float position );
 	void notifyPixmapChanged( int pageNumber );
 

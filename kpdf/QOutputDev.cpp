@@ -170,7 +170,7 @@ void KPDFTextDev::updateFont(GfxState *state)
 	m_text->updateFont(state);
 }
 
-void KPDFTextDev::drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen)
+void KPDFTextDev::drawChar(GfxState *state, double x, double y, double dx, double dy, double /*originX*/, double /*originY*/, CharCode code, Unicode *u, int uLen)
 {
 	m_text->addChar(state, x, y, dx, dy, code, u, uLen);
 }

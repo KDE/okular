@@ -110,8 +110,11 @@ void PageWidget::saveSettings( KConfigGroup * config )
 
 
 //BEGIN KPDFDocumentObserver inherited methods 
-void PageWidget::pageSetup( const QValueList<int> & pages )
+void PageWidget::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged )
 {
+//TODO
+documentChanged = false;
+//TODO
 	m_pages.clear();
 	m_page = 0;
 
@@ -119,10 +122,10 @@ void PageWidget::pageSetup( const QValueList<int> & pages )
 		return;
 
 	// populate internal vector with the list of pages and update
-	QValueList<int>::const_iterator pageIt = pages.begin();
-	QValueList<int>::const_iterator pageEnd = pages.end();
+	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin();
+	QValueVector<KPDFPage*>::const_iterator pageEnd = pages.end();
 	for ( ; pageIt != pageEnd ; ++pageIt )
-		m_pages.push_back( *pageIt );
+		m_pages.push_back( (*pageIt)->number() );
 }
 
 void PageWidget::pageSetCurrent( int pageNumber, float position )

@@ -11,7 +11,7 @@
 #define _KPDF_DOCUMENT_H_
 
 #include <qobject.h>
-#include <qvaluelist.h>
+#include <qvaluevector.h>
 
 class KPDFPage;
 
@@ -31,7 +31,7 @@ public:
     virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
 
     // commands from the Document to all observers
-    virtual void pageSetup( const QValueList<int> & /*pages*/ ) {};
+    virtual void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool /*documentChanged*/ ) {};
     virtual void pageSetCurrent( int /*pageNumber*/, float /*position*/ ) {};
 };
 
@@ -53,8 +53,8 @@ public:
     ~KPDFDocument();
 
     // document handling
-    bool openFile( const QString & docFile );
-    void close();
+    bool openDocument( const QString & docFile );
+    void closeDocument();
 
     // query methods
     uint currentPage() const;
@@ -72,16 +72,16 @@ public slots:
     void slotSetCurrentPage( int page );
     void slotSetCurrentPagePosition( int page, float position );
     void slotSetFilter( const QString & pattern, bool caseSensitive );
-    void slotFind( const QString & text = "", long options = 0 );
-    void slotGoToLink( /* QString anchor */ );
+    void slotFind( const QString & text = "", bool caseSensitive = false );
+    void slotGoToLink( /* UnknownType unknown */ );
 
 signals:
     // notify changes via signals
     void pageChanged();
 
 private:
-    void sendFilteredPageList( bool forceEmpty = false );
-    void deletePages();
+    void processPageList( bool documentChanged );
+    void unHilightPages();
 
     class KPDFDocumentPrivate * d;
 };

@@ -24,7 +24,7 @@
 
 KPDFPage::KPDFPage( int page, float w, float h, int r )
     : m_number( page ), m_rotation( r ), m_width( w ), m_height( h ),
-    m_sEnabled( false ), m_sLeft( 0 ), m_sTop( 0 ), m_sRight( 0 ),
+    m_hilighting( false ), m_sLeft( 0 ), m_sTop( 0 ), m_sRight( 0 ),
     m_sBottom( 0 ), m_text( 0 )
 {
 }
@@ -103,7 +103,7 @@ void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width
             p->drawLine( 0, height, width, 0 );
         }
         // draw selection
-        if ( m_sEnabled )
+        if ( m_hilighting )
         {
             int x = (int)( m_sLeft * width / m_width ),
                 y = (int)( m_sTop * height / m_height ),
@@ -145,7 +145,8 @@ bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
 
 void KPDFPage::hilightLastSearch( bool on )
 {
-    m_sEnabled = on;
+    m_hilighting = on;
+    //if ( !on ) -> invalidate search rect?
 }
 // END commands (paint / search)
 

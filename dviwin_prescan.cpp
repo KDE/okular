@@ -33,7 +33,7 @@ extern QColor parseColorSpecification(QString colorSpec);
 extern void parse_special_argument(QString strg, const char *argument_name, int *variable);
 
 
-#define DEBUG_PRESCAN
+//#define DEBUG_PRESCAN
 
 
 

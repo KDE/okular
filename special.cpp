@@ -22,7 +22,7 @@
 #include "kdvi_multipage.h"
 #include "xdvi.h"
 
-#define DEBUG_SPECIAL
+//#define DEBUG_SPECIAL
 
 extern QPainter foreGroundPaint;
 

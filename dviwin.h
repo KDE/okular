@@ -103,10 +103,7 @@ public:
   void          setPrefs(bool flag_showPS, const QString &editorCommand, 
 			 unsigned int MetaFontMode, bool useFontHints );
 
-  bool          supportsTextSearch(void) {return true;};
-
-  void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
-  void          exportPDF();
+  virtual bool  supportsTextSearch(void) {return true;};
 
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
@@ -118,7 +115,7 @@ public:
       number, or src:<line><filename>) and see if a corresponding
       section of the DVI file can be found. If so, it returns an
       anchor to that section. If not, it returns an invalid anchor. */
-  anchor        parseReference(const QString &reference);
+  virtual anchor        parseReference(const QString &reference);
   
   // These should not be public... only for the moment
   void          read_postamble(void);
@@ -137,6 +134,9 @@ public:
   void          draw_page(void);
 
 public slots:
+  void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
+  void          exportPDF();
+
   void          showInfo(void);
   void          handleLocalLink(const QString &linkText);
   void          handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *widget);

@@ -81,7 +81,7 @@ KInstance *KDVIMultiPageFactory::instance()
 
 
 KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name)
-  : KMultiPage(parentWidget, widgetName, parent, name), window(0)
+  : KMultiPage(parentWidget, widgetName, parent, name), DVIRenderer(parentWidget)
 {
 #ifdef PERFORMANCE_MEASUREMENT
   performanceTimer.start();
@@ -92,48 +92,23 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   printer = 0;
 
-  findDialog = 0;
-  findNextAction         = 0;
-  findPrevAction         = 0;
-  lastCurrentPage = 0;
-
-  window = new dviRenderer(scrollView());
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.
-  window->setName("DVI renderer");
-  setRenderer(window);
+  DVIRenderer.setName("DVI renderer");
+  setRenderer(&DVIRenderer);
 
-  docInfoAction    = new KAction(i18n("Document &Info"), 0, window, SLOT(showInfo()), actionCollection(), "info_dvi");
+  docInfoAction    = new KAction(i18n("Document &Info"), 0, &DVIRenderer, SLOT(showInfo()), actionCollection(), "info_dvi");
 
   embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
 
-  if (window->supportsTextSearch()) {
-    findTextAction = KStdAction::find(this, SLOT(showFindTextDialog()), actionCollection(), "find");
-    findNextAction = KStdAction::findNext(this, SLOT(findNextText()), actionCollection(), "findnext");
-    findNextAction->setEnabled(false);
-    findPrevAction = KStdAction::findPrev(this, SLOT(findPrevText()), actionCollection(), "findprev");
-    findPrevAction->setEnabled(false);
-  }
-
-  copyTextAction     = KStdAction::copy(&userSelection, SLOT(copyText()), actionCollection(), "copy_text");
-  copyTextAction->setEnabled(!userSelection.isEmpty());
-  connect(&userSelection, SIGNAL(selectionIsNotEmpty(bool)), copyTextAction, SLOT(setEnabled(bool)));
-
-  selectAllAction    = KStdAction::selectAll(this, SLOT(doSelectAll()), actionCollection(), "edit_select_all");
-  deselectAction     = KStdAction::deselect(&userSelection, SLOT(clear()), actionCollection(), "edit_deselect_all");
-  deselectAction->setEnabled(!userSelection.isEmpty());
-  connect(&userSelection, SIGNAL(selectionIsNotEmpty(bool)), deselectAction, SLOT(setEnabled(bool)));
-
   new KAction(i18n("Enable All Warnings && Messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
-  exportPSAction     = new KAction(i18n("PostScript..."), 0, this, SLOT(doExportPS()), actionCollection(), "export_postscript");
-  exportPDFAction    = new KAction(i18n("PDF..."), 0, this, SLOT(doExportPDF()), actionCollection(), "export_pdf");
+  exportPSAction     = new KAction(i18n("PostScript..."), 0, &DVIRenderer, SLOT(exportPS()), actionCollection(), "export_postscript");
+  exportPDFAction    = new KAction(i18n("PDF..."), 0, &DVIRenderer, SLOT(exportPDF()), actionCollection(), "export_pdf");
   exportTextAction   = new KAction(i18n("Text..."), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
 
   setXMLFile("kdvi_part.rc");
-
-  connect(window, SIGNAL(request_goto_page(PageNumber, int)), this, SLOT(goto_page(PageNumber, int) ) );
 
   readSettings();
   preferencesChanged();
@@ -146,16 +121,14 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
 void KDVIMultiPage::slotEmbedPostScript(void)
 {
-  if (window) {
-    window->embedPostScript();
-    emit askingToCheckActions();
-  }
+  DVIRenderer.embedPostScript();
+  emit askingToCheckActions();
 }
 
 
 void KDVIMultiPage::setEmbedPostScriptAction(void)
 {
-  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->numberOfExternalPSFiles == 0))
+  if ((DVIRenderer.dviFile == 0) || (DVIRenderer.dviFile->numberOfExternalPSFiles == 0))
     embedPSAction->setEnabled(false);
   else
     embedPSAction->setEnabled(true);
@@ -194,8 +167,8 @@ void KDVIMultiPage::slotSave()
   }
 
   // TODO: error handling...
-  if ((window != 0) && (window->dviFile != 0) && (window->dviFile->dvi_Data() != 0))
-    window->dviFile->saveAs(fileName);
+  if ((DVIRenderer.dviFile != 0) && (DVIRenderer.dviFile->dvi_Data() != 0))
+    DVIRenderer.dviFile->saveAs(fileName);
   
   return;
 }
@@ -204,18 +177,18 @@ void KDVIMultiPage::slotSave()
 void KDVIMultiPage::slotSave_defaultFilename()
 {
   // TODO: error handling...
-  if ((window != 0) && (window->dviFile != 0))
-    window->dviFile->saveAs(m_file);
+  if (DVIRenderer.dviFile != 0)
+    DVIRenderer.dviFile->saveAs(m_file);
   return;
 }
 
 
 bool KDVIMultiPage::isModified()
 {
-  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->dvi_Data() == 0))
+  if ((DVIRenderer.dviFile == 0) || (DVIRenderer.dviFile->dvi_Data() == 0))
     return false;
   else
-    return window->dviFile->isModified;
+    return DVIRenderer.dviFile->isModified;
 }
 
 
@@ -235,28 +208,19 @@ bool KDVIMultiPage::openFile()
   document_history.clear();
   emit setStatusBarText(i18n("Loading file %1").arg(m_file));
 
-  bool r = window->setFile(m_file);
+  bool r = DVIRenderer.setFile(m_file);
   setEmbedPostScriptAction();
   if (!r)
     emit setStatusBarText(QString::null);
 
   generateDocumentWidgets();
-  emit numberOfPages(window->totalPages());
+  emit numberOfPages(DVIRenderer.totalPages());
   enableActions(r);
 
   QString reference = url().ref();
   if (!reference.isEmpty())
-    gotoPage(window->parseReference(reference));
+    gotoPage(DVIRenderer.parseReference(reference));
   return r;
-}
-
-
-void KDVIMultiPage::jumpToReference(QString reference)
-{
-  if (window == 0)
-    return;
-  
-  gotoPage(window->parseReference(reference));
 }
 
 
@@ -265,85 +229,6 @@ QStringList KDVIMultiPage::fileFormats()
   QStringList r;
   r << i18n("*.dvi *.DVI|TeX Device Independent Files (*.dvi)");
   return r;
-}
-
-
-void KDVIMultiPage::gotoPage(const anchor &a)
-{
-  kdError() << "GOTOPAGE pg=" << a.page << ", dist=" << a.distance_from_top_in_inch << endl;
-
-  if (a.page.isInvalid() || (window == 0))
-    return;
-
-  goto_page(a.page-1, a.distance_from_top_in_inch * pageCache.getResolution() + 0.5);
-}
-
-
-void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
-{
-#ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "KDVIMultiPage::gotoPage( pageNr=" << pageNr << ", beginSelection=" << beginSelection <<", endSelection=" << endSelection <<" )" << endl;
-#endif
-
-  if (pageNr == 0) {
-    kdError(4300) << "KDVIMultiPage::gotoPage(...) called with pageNr=0" << endl;
-    return;
-  }
-
-  documentPage *pageData = pageCache.getPage(pageNr);
-  if (pageData == 0) {
-#ifdef DEBUG_DOCUMENTWIDGET
-    kdDebug(4300) << "documentWidget::paintEvent: no documentPage generated" << endl;
-#endif
-    return;
-  }
-
-  QString selectedText("");
-  for(unsigned int i = beginSelection; i < endSelection; i++) {
-    selectedText += pageData->textLinkList[i].linkText;
-    selectedText += "\n";
-  }
-  userSelection.set(pageNr, beginSelection, endSelection, selectedText);
-
-
-  Q_UINT16 y = pageData->textLinkList[beginSelection].box.bottom();
-  goto_page(pageNr-1, y);
-}
-
-
-void KDVIMultiPage::setPaperSize(double w, double h)
-{
-  //###  window->setPaper(w, h);
-}
-
-
-void KDVIMultiPage::doSelectAll(void)
-{
-  switch( widgetList.size() ) {
-  case 0:
-    kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList is empty" << endl;
-    break;
-  case 1:
-    ((documentWidget *)widgetList[0])->selectAll();
-    break;
-  default:
-    if (widgetList.size() < getCurrentPageNumber())
-      kdError(4300) << "KDVIMultiPage::doSelectAll(void) while widgetList.size()=" << widgetList.size() << "and getCurrentPageNumber()=" << getCurrentPageNumber() << endl;
-    else
-      ((documentWidget *)widgetList[getCurrentPageNumber()-1])->selectAll();
-  }
-}
-
-
-void KDVIMultiPage::doExportPS(void)
-{
-  window->exportPS();
-}
-
-
-void KDVIMultiPage::doExportPDF(void)
-{
-  window->exportPDF();
 }
 
 
@@ -373,7 +258,7 @@ void KDVIMultiPage::preferencesChanged()
   bool showPS = Prefs::showPS();
   bool useFontHints = Prefs::useFontHints();
 
-  window->setPrefs( showPS, Prefs::editorCommand(), mfmode, useFontHints);
+  DVIRenderer.setPrefs( showPS, Prefs::editorCommand(), mfmode, useFontHints);
 }
 
 
@@ -391,20 +276,9 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // Feed the printer with useful defaults and information.
   printer->setPageSelection( KPrinter::ApplicationSide );
   printer->setCurrentPage( current+1 );
-  printer->setMinMax( 1, window->totalPages() );
+  printer->setMinMax( 1, DVIRenderer.totalPages() );
   printer->setFullPage( true );
 
-  // Give a suggestion for the paper orientation. Unfortunately, as of
-  // now, KPrinter then automatically disables the orientation widget,
-  // so that the user cannot change our suggestion here. Thus, we
-  // comment this out for now.
-  /*
-  if (window != 0)
-    if (window->paper_height_in_cm >= window->paper_width_in_cm)
-      printer->setOrientation( KPrinter::Portrait );
-    else
-      printer->setOrientation( KPrinter::Landscape );
-  */
 
   // If pages are marked, give a list of marked pages to the
   // printer. We try to be smart and optimize the list by using ranges
@@ -592,7 +466,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // means that the dvi-widget will print the file when dvips
   // terminates, and then delete the output file.
   KTempFile tf;
-  window->exportPS(tf.name(), dvips_options, printer);
+  DVIRenderer.exportPS(tf.name(), dvips_options, printer);
 
   // "True" may be a bit euphemistic. However, since dvips runs
   // concurrently, there is no way of telling the result of the
@@ -639,16 +513,16 @@ void KDVIMultiPage::reload()
   kdDebug(4300) << "Reload file " << m_file << endl;
 #endif
   
-  if (window->isValidFile(m_file)) {
+  if (DVIRenderer.isValidFile(m_file)) {
     killTimer(timer_id);
     timer_id = -1;
-    bool r = window->setFile(m_file);
+    bool r = DVIRenderer.setFile(m_file);
     
     generateDocumentWidgets();
-    emit numberOfPages(window->totalPages());
+    emit numberOfPages(DVIRenderer.totalPages());
     enableActions(r);
     
-    emit pageInfo(window->totalPages(), window->curr_page()-1 );
+    emit pageInfo(DVIRenderer.totalPages(), DVIRenderer.curr_page()-1 );
   } else {
     if (timer_id == -1)
       timer_id = startTimer(1000);
@@ -659,8 +533,8 @@ void KDVIMultiPage::reload()
 void KDVIMultiPage::enableActions(bool b)
 {
   docInfoAction->setEnabled(b);
-  selectAllAction->setEnabled(b);
-  findTextAction->setEnabled(b);
+  //@@@  selectAllAction->setEnabled(b);
+  //@@@  findTextAction->setEnabled(b);
   exportPSAction->setEnabled(b);
   exportPDFAction->setEnabled(b);
   exportTextAction->setEnabled(b);

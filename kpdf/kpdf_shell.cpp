@@ -123,7 +123,7 @@ Shell::setupActions()
 
   KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
-
+  m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "showmenubar" );
 #if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
     createStandardStatusBarAction();
 #endif
@@ -147,6 +147,15 @@ Shell::saveProperties(KConfig* config)
   // later when this app is restored
     config->writePathEntry( "URL", m_part->url().prettyURL() );
 }
+
+void Shell::slotShowMenubar()
+{
+    if ( m_showMenuBarAction->isChecked() )
+        menuBar()->show();
+    else
+        menuBar()->hide();
+}
+
 
 void Shell::readProperties(KConfig* config)
 {

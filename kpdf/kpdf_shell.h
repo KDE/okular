@@ -8,7 +8,7 @@
 #include <kapplication.h>
 #include <kparts/mainwindow.h>
 class KPopupMenu;
-
+class KAction;
 
 namespace KPDF
 {
@@ -64,6 +64,7 @@ namespace KPDF
     void applyNewToolbarConfig();
       void slotToggleFullScreen();
       void slotRMBClick();
+      void slotShowMenubar();
 
   public slots:
       void openURL( const KURL & url );
@@ -78,6 +79,7 @@ namespace KPDF
       KToggleAction* m_fullScreenAction;
       bool m_isFullScreen;
       KPopupMenu* m_popup;
+      KToggleAction *m_showMenuBarAction;
   };
 
 }

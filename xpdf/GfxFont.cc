@@ -31,8 +31,8 @@
 //------------------------------------------------------------------------
 
 struct StdFontMapEntry {
-  char *altName;
-  char *properName;
+  const char *altName;
+  const char *properName;
 };
 
 // Acrobat 4.0 and earlier substituted Base14-compatible fonts without
@@ -95,7 +95,7 @@ static StdFontMapEntry stdFontMap[] = {
 // GfxFont
 //------------------------------------------------------------------------
 
-GfxFont *GfxFont::makeFont(XRef *xref, char *tagA, Ref idA, Dict *fontDict) {
+GfxFont *GfxFont::makeFont(XRef *xref, const char *tagA, Ref idA, Dict *fontDict) {
   GString *nameA;
   GfxFont *font;
   Object obj1;
@@ -131,7 +131,7 @@ GfxFont *GfxFont::makeFont(XRef *xref, char *tagA, Ref idA, Dict *fontDict) {
   return font;
 }
 
-GfxFont::GfxFont(char *tagA, Ref idA, GString *nameA) {
+GfxFont::GfxFont(const char *tagA, Ref idA, GString *nameA) {
   ok = gFalse;
   tag = new GString(tagA);
   id = idA;
@@ -309,8 +309,8 @@ CharCodeToUnicode *GfxFont::readToUnicodeCMap(Dict *fontDict, int nBits) {
 }
 
 void GfxFont::findExtFontFile() {
-  static char *type1Exts[] = { ".pfa", ".pfb", ".ps", "", NULL };
-  static char *ttExts[] = { ".ttf", NULL };
+  static const char *type1Exts[] = { ".pfa", ".pfb", ".ps", "", NULL };
+  static const char *ttExts[] = { ".ttf", NULL };
 
   if (name) {
     if (type == fontType1) {
@@ -381,7 +381,7 @@ char *GfxFont::readEmbFontFile(XRef *xref, int *len) {
 // Gfx8BitFont
 //------------------------------------------------------------------------
 
-Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
+Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
 			 GfxFontType typeA, Dict *fontDict):
   GfxFont(tagA, idA, nameA)
 {
@@ -750,7 +750,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
       }
     }
 
-  // couldn't find widths -- use defaults 
+  // couldn't find widths -- use defaults
   } else {
     // this is technically an error -- the Widths entry is required
     // for all but the Base-14 fonts -- but certain PDF generators
@@ -802,7 +802,7 @@ Gfx8BitFont::~Gfx8BitFont() {
   }
 }
 
-int Gfx8BitFont::getNextChar(char *s, int len, CharCode *code,
+int Gfx8BitFont::getNextChar(char *s, int /* len */, CharCode *code,
 			     Unicode *u, int uSize, int *uLen,
 			     double *dx, double *dy, double *ox, double *oy) {
   CharCode c;
@@ -850,7 +850,7 @@ static int CDECL cmpWidthExcepV(const void *w1, const void *w2) {
          ((GfxFontCIDWidthExcepV *)w2)->first;
 }
 
-GfxCIDFont::GfxCIDFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
+GfxCIDFont::GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
 		       Dict *fontDict):
   GfxFont(tagA, idA, nameA)
 {

@@ -636,7 +636,7 @@ void Type1CFontFile::convertToType1(FontFileOutputFunc outputFuncA,
   }
 }
 
-void Type1CFontFile::convertToCIDType0(char *psName,
+void Type1CFontFile::convertToCIDType0(const char *psName,
 				       FontFileOutputFunc outputFuncA,
 				       void *outputStreamA) {
   Type1CTopDict dict;
@@ -954,7 +954,7 @@ void Type1CFontFile::convertToCIDType0(char *psName,
  err0:;
 }
 
-void Type1CFontFile::convertToType0(char *psName,
+void Type1CFontFile::convertToType0(const char *psName,
 				    FontFileOutputFunc outputFuncA,
 				    void *outputStreamA) {
   Type1CTopDict dict;
@@ -1532,7 +1532,7 @@ Gushort *Type1CFontFile::readCharset(int charset, int nGlyphs) {
   return glyphNames;
 }
 
-void Type1CFontFile::eexecWrite(char *s) {
+void Type1CFontFile::eexecWrite(const char *s) {
   Guchar *p;
   Guchar x;
 
@@ -1549,7 +1549,7 @@ void Type1CFontFile::eexecWrite(char *s) {
   }
 }
 
-void Type1CFontFile::eexecCvtGlyph(char *glyphName, int pos, int n) {
+void Type1CFontFile::eexecCvtGlyph(const char *glyphName, int pos, int n) {
   char eBuf[256];
 
   cvtGlyph(pos, n, gTrue);
@@ -2273,7 +2273,7 @@ void Type1CFontFile::eexecWriteCharstring(Guchar *s, int n) {
   }
 }
 
-void Type1CFontFile::getDeltaInt(char *buf, char *key, double *opA,
+void Type1CFontFile::getDeltaInt(char *buf, const char *key, double *opA,
 				 int n) {
   int x, i;
 
@@ -2288,7 +2288,7 @@ void Type1CFontFile::getDeltaInt(char *buf, char *key, double *opA,
   sprintf(buf, "] def\n");
 }
 
-void Type1CFontFile::getDeltaReal(char *buf, char *key, double *opA,
+void Type1CFontFile::getDeltaReal(char *buf, const char *key, double *opA,
 				  int n) {
   double x;
   int i;
@@ -2536,7 +2536,7 @@ struct TTFontTableHdr {
 };
 
 struct T42Table {
-  char *tag;			// 4-byte tag
+  const char *tag;		// 4-byte tag
   GBool required;		// required by the TrueType spec?
 };
 
@@ -2562,7 +2562,7 @@ static T42Table t42Tables[nT42Tables] = {
 
 // Glyph names in some arbitrary standard that Apple uses for their
 // TrueType fonts.
-static char *macGlyphNames[258] = {
+static const char *macGlyphNames[258] = {
   ".notdef",
   "null",
   "CR",
@@ -3067,7 +3067,7 @@ char **TrueTypeFontFile::getEncoding() {
   return encoding;
 }
 
-void TrueTypeFontFile::convertToType42(char *name, char **encodingA,
+void TrueTypeFontFile::convertToType42(const char *name, char **encodingA,
 				       CharCodeToUnicode *toUnicode,
 				       GBool pdfFontHasEncoding,
 				       GBool pdfFontIsSymbolic,
@@ -3101,7 +3101,7 @@ void TrueTypeFontFile::convertToType42(char *name, char **encodingA,
   (*outputFunc)(outputStream, "FontName currentdict end definefont pop\n", 40);
 }
 
-void TrueTypeFontFile::convertToCIDType2(char *name, Gushort *cidMap,
+void TrueTypeFontFile::convertToCIDType2(const char *name, Gushort *cidMap,
 					 int nCIDs,
 					 FontFileOutputFunc outputFunc,
 					 void *outputStream) {
@@ -3209,7 +3209,7 @@ void TrueTypeFontFile::convertToCIDType2(char *name, Gushort *cidMap,
 		56);
 }
 
-void TrueTypeFontFile::convertToType0(char *name, Gushort *cidMap,
+void TrueTypeFontFile::convertToType0(const char *name, Gushort *cidMap,
 				      int nCIDs,
 				      FontFileOutputFunc outputFunc,
 				      void *outputStream) {
@@ -3345,7 +3345,7 @@ double TrueTypeFontFile::getFixed(int pos) {
   return (double)x + (double)y / 65536;
 }
 
-int TrueTypeFontFile::seekTable(char *tag) {
+int TrueTypeFontFile::seekTable(const char *tag) {
   int i;
 
   for (i = 0; i < nTables; ++i) {
@@ -3356,7 +3356,7 @@ int TrueTypeFontFile::seekTable(char *tag) {
   return -1;
 }
 
-int TrueTypeFontFile::seekTableIdx(char *tag) {
+int TrueTypeFontFile::seekTableIdx(const char *tag) {
   int i;
 
   for (i = 0; i < nTables; ++i) {
@@ -3373,7 +3373,7 @@ int TrueTypeFontFile::seekTableIdx(char *tag) {
 void TrueTypeFontFile::cvtEncoding(char **encodingA, GBool pdfFontHasEncoding,
 				   FontFileOutputFunc outputFunc,
 				   void *outputStream) {
-  char *name;
+  const char *name;
   char buf[64];
   int i;
 
@@ -4171,7 +4171,7 @@ void TrueTypeFontFile::writeTTF(FILE *out) {
       }
     }
   }
-    
+
   gfree(tableDir);
   gfree(newTableHdrs);
   if (unsortedLoca) {

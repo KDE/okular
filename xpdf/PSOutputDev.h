@@ -45,7 +45,7 @@ enum PSFileType {
   psGeneric			// write to a generic stream
 };
 
-typedef void (*PSOutputFunc)(void *stream, char *data, int len);
+typedef void (*PSOutputFunc)(void *stream, const char *data, int len);
 
 class PSOutputDev: public OutputDev {
 public:
@@ -133,7 +133,7 @@ public:
 			 int width, int height, GfxImageColorMap *colorMap,
 			 int *maskColors, GBool inlineImg);
 
-#if OPI_SUPPORT
+#ifdef OPI_SUPPORT
   //----- OPI functions
   virtual void opiBegin(GfxState *state, Dict *opiDict);
   virtual void opiEnd(GfxState *state, Dict *opiDict);
@@ -156,14 +156,14 @@ private:
   void setupResources(Dict *resDict);
   void setupFonts(Dict *resDict);
   void setupFont(GfxFont *font, Dict *parentResDict);
-  void setupEmbeddedType1Font(Ref *id, char *psName);
-  void setupExternalType1Font(GString *fileName, char *psName);
-  void setupEmbeddedType1CFont(GfxFont *font, Ref *id, char *psName);
-  void setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id, char *psName);
-  void setupExternalTrueTypeFont(GfxFont *font, char *psName);
-  void setupEmbeddedCIDType0Font(GfxFont *font, Ref *id, char *psName);
-  void setupEmbeddedCIDTrueTypeFont(GfxFont *font, Ref *id, char *psName);
-  void setupType3Font(GfxFont *font, char *psName, Dict *parentResDict);
+  void setupEmbeddedType1Font(Ref *id, const char *psName);
+  void setupExternalType1Font(GString *fileName, const char *psName);
+  void setupEmbeddedType1CFont(GfxFont *font, Ref *id, const char *psName);
+  void setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id, const char *psName);
+  void setupExternalTrueTypeFont(GfxFont *font, const char *psName);
+  void setupEmbeddedCIDType0Font(GfxFont *font, Ref *id, const char *psName);
+  void setupEmbeddedCIDTrueTypeFont(GfxFont *font, Ref *id, const char *psName);
+  void setupType3Font(GfxFont *font, const char *psName, Dict *parentResDict);
   void setupImages(Dict *resDict);
   void setupImage(Ref id, Stream *str);
   void addProcessColor(double c, double m, double y, double k);
@@ -179,7 +179,7 @@ private:
 		 GBool invert, GBool inlineImg,
 		 Stream *str, int width, int height, int len);
   void dumpColorSpaceL2(GfxColorSpace *colorSpace);
-#if OPI_SUPPORT
+#ifdef OPI_SUPPORT
   void opiBegin20(GfxState *state, Dict *dict);
   void opiBegin13(GfxState *state, Dict *dict);
   void opiTransform(GfxState *state, double x0, double y0,
@@ -190,7 +190,7 @@ private:
   void writePS(char *s);
   void writePSFmt(const char *fmt, ...);
   void writePSString(GString *s);
-  void writePSName(char *s);
+  void writePSName(const char *s);
   GString *filterPSName(GString *name);
 
   PSLevel level;		// PostScript level (1, 2, separation)
@@ -236,7 +236,7 @@ private:
          t3LLX, t3LLY, t3URX, t3URY;
   GBool t3Cacheable;		// cleared if char is not cacheable
 
-#if OPI_SUPPORT
+#ifdef OPI_SUPPORT
   int opi13Nest;		// nesting level of OPI 1.3 objects
   int opi20Nest;		// nesting level of OPI 2.0 objects
 #endif

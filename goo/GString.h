@@ -49,10 +49,11 @@ public:
   ~GString();
 
   // Get length.
-  int getLength() { return length; }
+  int getLength() const { return length; }
 
   // Get C string.
-  char *getCString() { return s; }
+  const char *getCString() const { return s; }
+  char *getCString()  { return s; }
 
   // Get <i>th character.
   char getChar(int i) { return s[i]; }
@@ -84,10 +85,10 @@ public:
 
   // Compare two strings:  -1:<  0:=  +1:>
   // These functions assume the strings do not contain null characters.
-  int cmp(GString *str) { return strcmp(s, str->getCString()); }
-  int cmpN(GString *str, int n) { return strncmp(s, str->getCString(), n); }
-  int cmp(const char *sA) { return strcmp(s, sA); }
-  int cmpN(const char *sA, int n) { return strncmp(s, sA, n); }
+  int cmp(const GString *str) const { return strcmp(s, str->getCString()); }
+  int cmpN(const GString *str, int n) const { return strncmp(s, str->getCString(), n); }
+  int cmp(const char *sA) const { return strcmp(s, sA); }
+  int cmpN(const char *sA, int n) const { return strncmp(s, sA, n); }
 
 private:
 

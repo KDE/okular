@@ -24,7 +24,7 @@
 // Object
 //------------------------------------------------------------------------
 
-char *objTypeNames[numObjTypes] = {
+const char *objTypeNames[numObjTypes] = {
   "boolean",
   "integer",
   "real",
@@ -134,7 +134,7 @@ void Object::free() {
   type = objNone;
 }
 
-char *Object::getTypeName() {
+const char *Object::getTypeName() const {
   return objTypeNames[type];
 }
 
@@ -205,7 +205,7 @@ void Object::print(FILE *f) {
   }
 }
 
-void Object::memCheck(FILE *f) {
+void Object::memCheck(FILE * f) {
 #ifdef DEBUG_MEM
   int i;
   int t;

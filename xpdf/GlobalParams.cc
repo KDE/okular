@@ -14,7 +14,7 @@
 
 #include <string.h>
 #include <ctype.h>
-#if HAVE_PAPER_H
+#ifdef HAVE_PAPER_H
 #include <paper.h>
 #endif
 #include "gmem.h"
@@ -31,7 +31,7 @@
 #include "FontEncodingTables.h"
 #include "GlobalParams.h"
 
-#if MULTITHREADED
+#ifdef MULTITHREADED
 #  define globalParamsLock gLockMutex(&mutex)
 #  define globalParamsUnlock gUnlockMutex(&mutex)
 #else
@@ -70,7 +70,7 @@ DisplayFontParam::DisplayFontParam(GString *nameA,
   }
 }
 
-DisplayFontParam::DisplayFontParam(char *nameA, char *xlfdA, char *encodingA) {
+DisplayFontParam::DisplayFontParam(const char *nameA, const char *xlfdA, const char *encodingA) {
   name = new GString(nameA);
   kind = displayFontX;
   x.xlfd = new GString(xlfdA);
@@ -132,7 +132,7 @@ GlobalParams::GlobalParams(char *cfgFileName) {
   FILE *f;
   int i;
 
-#if MULTITHREADED
+#ifdef MULTITHREADED
   gInitMutex(&mutex);
 #endif
 
@@ -156,7 +156,7 @@ GlobalParams::GlobalParams(char *cfgFileName) {
   displayFonts = new GHash();
   displayCIDFonts = new GHash();
   displayNamedCIDFonts = new GHash();
-#if HAVE_PAPER_H
+#ifdef HAVE_PAPER_H
   char *paperName;
   const struct paper *paperType;
   paperinit();
@@ -537,7 +537,7 @@ void GlobalParams::parseDisplayFont(GList *tokens, GHash *fontHash,
     goto err1;
   }
   param = new DisplayFontParam(((GString *)tokens->get(1))->copy(), kind);
-  
+
   switch (kind) {
   case displayFontX:
     if (tokens->getLength() != 4) {
@@ -819,7 +819,7 @@ GlobalParams::~GlobalParams() {
   delete unicodeMapCache;
   delete cMapCache;
 
-#if MULTITHREADED
+#ifdef MULTITHREADED
   gDestroyMutex(&mutex);
 #endif
 }
@@ -1067,9 +1067,9 @@ GBool GlobalParams::getTextKeepTinyChars() {
   return tiny;
 }
 
-GString *GlobalParams::findFontFile(GString *fontName, char **exts) {
+GString *GlobalParams::findFontFile(const GString *fontName, const char **exts) {
   GString *dir, *fileName;
-  char **ext;
+  const char **ext;
   FILE *f;
   int i;
 

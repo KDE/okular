@@ -24,7 +24,7 @@ class CharCodeToUnicode;
 
 //------------------------------------------------------------------------
 
-typedef void (*FontFileOutputFunc)(void *stream, char *data, int len);
+typedef void (*FontFileOutputFunc)(void *stream, const char *data, int len);
 
 //------------------------------------------------------------------------
 // FontFile
@@ -87,13 +87,13 @@ public:
   // Convert to a Type 0 CIDFont, suitable for embedding in a
   // PostScript file.  The name will be used as the PostScript font
   // name.
-  void convertToCIDType0(char *psName,
+  void convertToCIDType0(const char *psName,
 			 FontFileOutputFunc outputFuncA, void *outputStreamA);
 
   // Convert to a Type 0 (but non-CID) composite font, suitable for
   // embedding in a PostScript file.  The name will be used as the
   // PostScript font name.
-  void convertToType0(char *psName,
+  void convertToType0(const char *psName,
 		      FontFileOutputFunc outputFuncA, void *outputStreamA);
 
 private:
@@ -103,16 +103,16 @@ private:
   void readPrivateDict(Type1CPrivateDict *privateDict,
 		       int offset, int size);
   Gushort *readCharset(int charset, int nGlyphs);
-  void eexecWrite(char *s);
-  void eexecCvtGlyph(char *glyphName, int pos, int n);
+  void eexecWrite(const char *s);
+  void eexecCvtGlyph(const char *glyphName, int pos, int n);
   void cvtGlyph(int pos, int n, GBool top);
   void cvtGlyphWidth(GBool useOp);
   void eexecDumpNum(double x, GBool fpA);
   void eexecDumpOp1(int opA);
   void eexecDumpOp2(int opA);
   void eexecWriteCharstring(Guchar *s, int n);
-  void getDeltaInt(char *buf, char *key, double *opA, int n);
-  void getDeltaReal(char *buf, char *key, double *opA, int n);
+  void getDeltaInt(char *buf, const char *key, double *opA, int n);
+  void getDeltaReal(char *buf, const char *key, double *opA, int n);
   int getIndexLen(int indexPos);
   int getIndexValPos(int indexPos, int i, int *valLen);
   int getIndexEnd(int indexPos);
@@ -175,7 +175,7 @@ public:
   // don't need to depend on the 'name' table in the font).  The
   // encoding is needed because the PDF Font object can modify the
   // encoding.
-  void convertToType42(char *name, char **encodingA,
+  void convertToType42(const char *name, char **encodingA,
 		       CharCodeToUnicode *toUnicode,
 		       GBool pdfFontHasEncoding,
 		       GBool pdfFontIsSymbolic,
@@ -185,14 +185,14 @@ public:
   // PostScript file.  The name will be used as the PostScript font
   // name (so we don't need to depend on the 'name' table in the
   // font).
-  void convertToCIDType2(char *name, Gushort *cidMap, int nCIDs,
+  void convertToCIDType2(const char *name, Gushort *cidMap, int nCIDs,
 			 FontFileOutputFunc outputFunc, void *outputStream);
 
   // Convert to a Type 0 (but non-CID) composite font, suitable for
   // embedding in a PostScript file.  The name will be used as the
   // PostScript font name (so we don't need to depend on the 'name'
   // table in the font).
-  void convertToType0(char *name, Gushort *cidMap, int nCIDs,
+  void convertToType0(const char *name, Gushort *cidMap, int nCIDs,
 		      FontFileOutputFunc outputFunc, void *outputStream);
 
   // Write a TTF file, filling in any missing tables that are required
@@ -220,8 +220,8 @@ private:
   int getShort(int pos);
   Guint getULong(int pos);
   double getFixed(int pos);
-  int seekTable(char *tag);
-  int seekTableIdx(char *tag);
+  int seekTable(const char *tag);
+  int seekTableIdx(const char *tag);
   void cvtEncoding(char **encodingA, GBool pdfFontHasEncoding,
 		   FontFileOutputFunc outputFunc, void *outputStream);
   void cvtCharStrings(char **encodingA, CharCodeToUnicode *toUnicode,

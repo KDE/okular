@@ -7,9 +7,9 @@
 //========================================================================
 
 static struct {
-  char *name;
-  char *xlfd;
-  char *encoding;
+  const char *name;
+  const char *xlfd;
+  const char *encoding;
 } displayFontTab[] = {
   {"Courier",               "-*-courier-medium-r-normal-*-%s-*-*-*-*-*-iso8859-1",         "Latin1"},
   {"Courier-Bold",          "-*-courier-bold-r-normal-*-%s-*-*-*-*-*-iso8859-1",           "Latin1"},
@@ -25,5 +25,5 @@ static struct {
   {"Times-Italic",          "-*-times-medium-i-normal-*-%s-*-*-*-*-*-iso8859-1",           "Latin1"},
   {"Times-Roman",           "-*-times-medium-r-normal-*-%s-*-*-*-*-*-iso8859-1",           "Latin1"},
   {"ZapfDingbats",          "-*-zapfdingbats-medium-r-normal-*-%s-*-*-*-*-*-*-*",          "ZapfDingbats"},
-  {NULL}
+  {NULL, NULL, NULL}
 };

@@ -108,7 +108,7 @@ GString *getCurrentDir() {
   return new GString();
 }
 
-GString *appendToPath(GString *path, char *fileName) {
+GString *appendToPath(GString *path, const char *fileName) {
 #if defined(VMS)
   //---------- VMS ----------
   //~ this should handle everything necessary for file
@@ -487,7 +487,7 @@ GBool openTempFile(GString **name, FILE **f, char *mode, char *ext) {
   int fd;
 
   if (ext) {
-#if HAVE_MKSTEMPS
+#ifdef HAVE_MKSTEMPS
     if ((s = getenv("TMPDIR"))) {
       *name = new GString(s);
     } else {

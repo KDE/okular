@@ -19,7 +19,7 @@
 #include "gtypes.h"
 #include "CharTypes.h"
 
-#if MULTITHREADED
+#ifdef MULTITHREADED
 #include "GMutex.h"
 #endif
 
@@ -69,7 +69,7 @@ public:
   };
 
   DisplayFontParam(GString *nameA, DisplayFontParamKind kindA);
-  DisplayFontParam(char *nameA, char *xlfdA, char *encodingA);
+  DisplayFontParam(const char *nameA, const char *xlfdA, const char *encodingA);
   ~DisplayFontParam();
 };
 
@@ -156,7 +156,7 @@ public:
   GBool getPSASCIIHex();
   EndOfLineKind getTextEOL();
   GBool getTextKeepTinyChars();
-  GString *findFontFile(GString *fontName, char **exts);
+  GString *findFontFile(const GString *fontName, const char **exts);
   GString *getInitialZoom();
   FontRastControl getT1libControl();
   FontRastControl getFreeTypeControl();

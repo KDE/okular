@@ -116,29 +116,29 @@ public:
   void free();
 
   // Type checking.
-  ObjType getType() { return type; }
-  GBool isBool() { return type == objBool; }
-  GBool isInt() { return type == objInt; }
-  GBool isReal() { return type == objReal; }
-  GBool isNum() { return type == objInt || type == objReal; }
-  GBool isString() { return type == objString; }
-  GBool isName() { return type == objName; }
-  GBool isNull() { return type == objNull; }
-  GBool isArray() { return type == objArray; }
-  GBool isDict() { return type == objDict; }
-  GBool isStream() { return type == objStream; }
-  GBool isRef() { return type == objRef; }
-  GBool isCmd() { return type == objCmd; }
-  GBool isError() { return type == objError; }
-  GBool isEOF() { return type == objEOF; }
-  GBool isNone() { return type == objNone; }
+  ObjType getType() const { return type; }
+  GBool isBool() const { return type == objBool; }
+  GBool isInt() const { return type == objInt; }
+  GBool isReal() const { return type == objReal; }
+  GBool isNum() const { return type == objInt || type == objReal; }
+  GBool isString() const { return type == objString; }
+  GBool isName() const { return type == objName; }
+  GBool isNull() const { return type == objNull; }
+  GBool isArray() const { return type == objArray; }
+  GBool isDict() const { return type == objDict; }
+  GBool isStream() const { return type == objStream; }
+  GBool isRef() const { return type == objRef; }
+  GBool isCmd() const { return type == objCmd; }
+  GBool isError() const { return type == objError; }
+  GBool isEOF() const { return type == objEOF; }
+  GBool isNone() const { return type == objNone; }
 
   // Special type checking.
-  GBool isName(char *nameA)
+  GBool isName(const char *nameA) const
     { return type == objName && !strcmp(name, nameA); }
-  GBool isDict(char *dictType);
-  GBool isStream(char *dictType);
-  GBool isCmd(char *cmdA)
+  GBool isDict(const char *dictType);
+  GBool isStream(const char *dictType);
+  GBool isCmd(const char *cmdA)
     { return type == objCmd && !strcmp(cmd, cmdA); }
 
   // Accessors.  NB: these assume object is of correct type.
@@ -164,16 +164,16 @@ public:
 
   // Dict accessors.
   int dictGetLength();
-  void dictAdd(char *key, Object *val);
-  GBool dictIs(char *dictType);
-  Object *dictLookup(char *key, Object *obj);
-  Object *dictLookupNF(char *key, Object *obj);
-  char *dictGetKey(int i);
+  void dictAdd(const char *key, Object *val);
+  GBool dictIs(const char *dictType);
+  Object *dictLookup(const char *key, Object *obj);
+  Object *dictLookupNF(const char *key, Object *obj);
+  const char *dictGetKey(int i);
   Object *dictGetVal(int i, Object *obj);
   Object *dictGetValNF(int i, Object *obj);
 
   // Stream accessors.
-  GBool streamIs(char *dictType);
+  GBool streamIs(const char *dictType);
   void streamReset();
   void streamClose();
   int streamGetChar();
@@ -184,7 +184,7 @@ public:
   Dict *streamGetDict();
 
   // Output.
-  char *getTypeName();
+  const char *getTypeName() const;
   void print(FILE *f = stdout);
 
   // Memory testing.
@@ -239,22 +239,22 @@ inline Object *Object::arrayGetNF(int i, Object *obj)
 inline int Object::dictGetLength()
   { return dict->getLength(); }
 
-inline void Object::dictAdd(char *key, Object *val)
+inline void Object::dictAdd(const char *key, Object *val)
   { dict->add(key, val); }
 
-inline GBool Object::dictIs(char *dictType)
+inline GBool Object::dictIs(const char *dictType)
   { return dict->is(dictType); }
 
-inline GBool Object::isDict(char *dictType)
+inline GBool Object::isDict(const char *dictType)
   { return type == objDict && dictIs(dictType); }
 
-inline Object *Object::dictLookup(char *key, Object *obj)
+inline Object *Object::dictLookup(const char *key, Object *obj)
   { return dict->lookup(key, obj); }
 
-inline Object *Object::dictLookupNF(char *key, Object *obj)
+inline Object *Object::dictLookupNF(const char *key, Object *obj)
   { return dict->lookupNF(key, obj); }
 
-inline char *Object::dictGetKey(int i)
+inline const char *Object::dictGetKey(int i)
   { return dict->getKey(i); }
 
 inline Object *Object::dictGetVal(int i, Object *obj)
@@ -269,10 +269,10 @@ inline Object *Object::dictGetValNF(int i, Object *obj)
 
 #include "Stream.h"
 
-inline GBool Object::streamIs(char *dictType)
+inline GBool Object::streamIs(const char *dictType)
   { return stream->getDict()->is(dictType); }
 
-inline GBool Object::isStream(char *dictType)
+inline GBool Object::isStream(const char *dictType)
   { return type == objStream && streamIs(dictType); }
 
 inline void Object::streamReset()

@@ -74,7 +74,7 @@ Shell::Shell()
   {
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
-    KMessageBox::error(this, i18n("Unable to find kpdf Part."));
+    KMessageBox::error(this, i18n("Unable to find kpdf part."));
     kapp->quit();
     // we return here, cause kapp->quit() only means "exit the
     // next time we enter the event loop...

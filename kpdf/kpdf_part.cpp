@@ -382,7 +382,6 @@ void Part::slotNewConfig()
         // this needs to be hidden explicitly to disable thumbnails gen
         m_thumbnailList->setShown( showLeft );
     }
-
     bool showSearch = Settings::showSearchBar();
     if ( m_searchWidget->isShown() != showSearch )
         m_searchWidget->setShown( showSearch );
@@ -395,8 +394,12 @@ void Part::slotNewConfig()
         m_pageView->setHScrollBarMode( scrollBarMode );
         m_pageView->setVScrollBarMode( scrollBarMode );
     }
-    // update Main View contents (this should be done only if renderMode changed)
+
+    // update Main View and ThumbnailList contents
+    // TODO do this only when changing Settings::renderMode()
     m_pageView->updateContents();
+    if ( showLeft && m_thumbnailList->isShown() )
+        m_thumbnailList->updateContents();
 }
 
 void Part::slotPrintPreview()

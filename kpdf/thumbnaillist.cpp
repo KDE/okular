@@ -334,6 +334,8 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
 {
     int width = m_pixmapWidth + 4;
     QRect clipRect = e->rect();
+    if ( !clipRect.isValid() )
+        return;
     QPainter p( this );
 
     // draw the bottom label
@@ -357,7 +359,8 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         p.translate( 2, 2 );
         clipRect.moveBy( -2, -2 );
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
-        PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, &p, clipRect, m_pixmapWidth, m_pixmapHeight );
+        if ( clipRect.isValid() )
+            PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, &p, clipRect, m_pixmapWidth, m_pixmapHeight );
     }
 }
 

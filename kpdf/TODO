@@ -7,8 +7,8 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> ADD: composted renderer [30% done]
--> FIX: rework PageView (QScrollView) to gain speed and reduce memory consumption [65% done]
+-> common layer for selections (zoom outline, select&copy text, select&copy screen)
+-> FIX: rework PageView (QScrollView) to gain speed and reduce memory consumption [90% done]
    the current behavior, using a large scrollview and the clipper is *Very* bad, wasting
    repaints everywhere, even in widgets that get hidden. Need to solve this on its roots, a paintEvent patch
    solves this but is a bad way to solve this.
@@ -44,6 +44,7 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Done (newest feature comes firts):
+-> ADD: composted renderer framework
 -> ADD: KConfigXT settings framework and Accessibility config (acc. code mostly not done)
 -> FIX: workaround for scrollview bug 1/2 (painting hidden widgets under certain circumstances)
 -> ADD: zoom into a rect defined by mouse (aka zoom to window)

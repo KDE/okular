@@ -98,3 +98,4 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
     clearStatusBarTimer.start( 200, TRUE ); // clear the statusbar after 200 msec.
 }
 
+#include "dviWidget.moc"

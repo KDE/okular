@@ -9,7 +9,7 @@
 \usepackage{hyperref}
 \usepackage[active]{srcltx}
 
-\newcommand{\KDVI}{{\sf KDVI 0.9d}}
+\newcommand{\KDVI}{{\sf KDVI 1.0alpha}}
 
 \begin{document}
 
@@ -57,6 +57,27 @@ tried to implement those which are most useful and used most commonly.
 In this, we have tried to be consistent with the {\sf dvips} programm.
 \KDVI\ does not support a number of outdated and unsane standards, nor
 does it support features which impair the system security.
+
+\section{Source specials and inverse search}
+
+\KDVI\ supports ``source'' specials. A DVI file which contains these
+specials, such as the file you are currently looking at, allows \KDVI\ 
+to associate the mouse position in \KDVI's window with a line number
+in the TeX source of the DVI file. Practical use: click with the
+middle mouse button into the DVI display, and your favourite editor
+opens, loads the TeX source and jumps to the proper line. You can try
+this right now! See the \href{help:/kdvi/inverse-search.html}{handbook
+  of \KDVI\ } for an explanation how to tell \KDVI\ what you favourite
+editor actually is.
+
+Source information is included by adding the command
+\begin{verbatim}
+\special{src:<line-number><file-name>}
+\end{verbatim}
+to the beginning of each paragraph of your DVI file (or, if you like,
+to the beginning of each line). Again, the
+\href{help:/kdvi/inverse-search.html}{handbook of \KDVI\ } explains
+how to include source specials automatically with no extra work.
 
 
 \section{Virtual fonts}

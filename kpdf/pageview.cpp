@@ -31,6 +31,7 @@
 #include <kfiledialog.h>
 #include <kimageeffect.h>
 #include <kimageio.h>
+#include <kdebug.h>
 
 #include <math.h>
 #include <stdlib.h>
@@ -279,7 +280,6 @@ void PageView::notifyPixmapChanged( int pageNumber )
 //END KPDFDocumentObserver inherited methods
 
 //BEGIN widget events
-#include <kdebug.h>
 void PageView::viewportPaintEvent( QPaintEvent * pe )
 {
     // create the rect into contents from the clipped screen rect
@@ -318,10 +318,10 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     }
     // very elementary check: SUMj(Region[j].area) is less than boundingRect.area
     bool useSubdivision = summedArea < (0.7 * contentsRect.width() * contentsRect.height());
-
-    // iterate over the rects (only one loop if not using subdivision)
     if ( !useSubdivision )
         numRects = 1;
+
+    // iterate over the rects (only one loop if not using subdivision)
     for ( uint i = 0; i < numRects; i++ )
     {
         if ( useSubdivision )
@@ -333,19 +333,22 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 continue;
         }
 
-        if ( Settings::useCompositing() )
+        // note: this check will take care of all things requiring alpha blending (not only selection)
+        bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
+
+        if ( wantCompositing && !Settings::disableCompositing() )
         {
-            // create pixmap and open a painter over it
+            // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
             QPixmap doubleBuffer( contentsRect.size() );
             QPainter pixmapPainter( &doubleBuffer );
-            // gfx operations on pixmap (contents {left,top} is pixmap {0,0})
             pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
             // 1) Layer 0: paint items and clear bg on unpainted rects
             paintItems( &pixmapPainter, contentsRect );
             // 2) Layer 1: pixmap manipulated areas
             // 3) Layer 2: paint (blend) transparent selection
-            if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) )
+            if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
+                 !selectionRectInternal.contains( contentsRect ) )
             {
                 QRect blendRect = selectionRectInternal.intersect( contentsRect );
                 // skip rectangles covered by the selection's border
@@ -367,23 +370,6 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 pixmapPainter.drawRect( selectionRect );
             }
             // 4) Layer 3: overlays
-#if 1
-            // only a test to try selecting under alpha items
-            QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
-            for ( ; iIt != iEnd; ++iIt )
-            {
-                // check if a piece of the page intersects the contents rect
-                if ( (*iIt)->geometry().intersects( contentsRect ) )
-                {
-                    PageViewItem * item = *iIt;
-                    QRect pixmapGeometry = item->geometry();
-                    pixmapGeometry.setWidth( QMIN( pixmapGeometry.width(), 74 ) );
-                    pixmapGeometry.setHeight( QMIN( pixmapGeometry.height(), 74 ) );
-                    if ( pixmapGeometry.intersects( contentsRect ) )
-                        pixmapPainter.drawPixmap( pixmapGeometry.left() + 10, pixmapGeometry.top() + 10, DesktopIcon( "kpdf", 64 ) );
-                }
-            }
-#endif
             if ( Settings::tempDrawBoundaries() )
             {
                 pixmapPainter.setPen( Qt::blue );
@@ -394,16 +380,17 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
             pixmapPainter.end();
             screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
         }
-        else    // not using COMPOSITING
+        else
         {
             // 1) Layer 0: paint items and clear bg on unpainted rects
             paintItems( &screenPainter, contentsRect );
             // 2) Layer 1: opaque manipulated ares (filled / contours)
             // 3) Layer 2: paint opaque selection
-            if ( !d->mouseSelectionRect.isNull() )
+            if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
+                 !selectionRectInternal.contains( contentsRect ) )
             {
                 screenPainter.setPen( palette().active().highlight().dark(110) );
-                screenPainter.drawRect( d->mouseSelectionRect.normalize() );
+                screenPainter.drawRect( selectionRect );
             }
             // 4) Layer 3: overlays
             if ( Settings::tempDrawBoundaries() )

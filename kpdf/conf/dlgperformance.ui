@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>350</width>
-            <height>218</height>
+            <width>250</width>
+            <height>185</height>
         </rect>
     </property>
     <property name="caption">
@@ -22,44 +22,17 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox1</cstring>
-            </property>
-            <property name="title">
-                <string>CPU Usage</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_UseCompositing</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Enable &amp;transparency and other effects (default)</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+T</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_TempDrawBoundaries</cstring>
-                    </property>
-                    <property name="text">
-                        <string>(TEMP) DRAW BOUNDARIES</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
         <widget class="QButtonGroup">
             <property name="name">
                 <cstring>kcfg_MemoryLevel</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>4</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="title">
                 <string>Memory Usage</string>
@@ -117,23 +90,38 @@
                 </widget>
             </vbox>
         </widget>
-        <spacer>
+        <widget class="QGroupBox">
             <property name="name">
-                <cstring>spacer3</cstring>
+                <cstring>groupBox1</cstring>
             </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>4</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
+            <property name="title">
+                <string>CPU Usage</string>
             </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>90</height>
-                </size>
-            </property>
-        </spacer>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_DisableCompositing</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disable &amp;transparency (see help)</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+T</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
     </vbox>
 </widget>
 <connections>

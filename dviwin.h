@@ -195,7 +195,7 @@ public slots:
   bool		setFile(QString fname, QString ref = QString::null, bool sourceMarker=true);
 
   /** simply emits "setStatusBarText( QString::null )". This is used
-      in dviWindow::mouseMoveEvent(), see the explanation there. */;
+      in dviWindow::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar(void);
 
   /** Displays the page of the first argument */

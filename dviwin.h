@@ -31,16 +31,17 @@ class KShellProcess;
 
 // max. number of hyperlinks per page. This should later be replaced by
 // a dynamic allocation scheme.
-#define MAX_HYPERLINKS 200 
+#define MAX_HYPERLINKS 400 
 // max. number of anchors per document. This should later be replaced by
 // a dynamic allocation scheme.
-#define MAX_ANCHORS    300
+#define MAX_ANCHORS    1000
 
 
 class DVI_Hyperlink {
  public:
-  QRect    box;
-  QString  linkText;
+  unsigned int baseline;
+  QRect        box;
+  QString      linkText;
 };
 
 
@@ -81,7 +82,7 @@ public:
   void          mousePressEvent ( QMouseEvent * e );
   void          mouseMoveEvent ( QMouseEvent * e );
   void          read_postamble(void);
-  void          draw_part(struct frame *minframe, double current_dimconv);
+  void          draw_part(struct frame *minframe, double current_dimconv, bool is_vfmacro);
   void          set_vf_char(unsigned int cmd, unsigned int ch);
   void          set_char(unsigned int cmd, unsigned int ch);
   void          set_empty_char(unsigned int cmd, unsigned int ch);
@@ -170,6 +171,11 @@ private:
 
  DVI_Hyperlink     hyperLinkList[MAX_HYPERLINKS];
  int               num_of_used_hyperlinks;
+
+ // This flag is used when rendering a dvi-page. It is set to "true"
+ // when any dvi-command other than "set" or "put" series of commands
+ // is encountered. This is considered to mark the end of a word.
+ bool              word_boundary_encountered;
 
  // List of anchors in a document
  QString           AnchorList_String[MAX_ANCHORS];

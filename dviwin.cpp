@@ -133,7 +133,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   _postscript            = 0;
   pixmap                 = 0;
 
-  // Storage used for dvips and friends.
+  // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
   progress               = 0;
   export_printer         = 0;
@@ -493,6 +493,7 @@ void dviWindow::drawPage()
     animationCounter = 0;
   }
 
+  // Stop if there is no dvi-file present
   if (dviFile == NULL) {
     resize(0, 0);
     return;
@@ -501,12 +502,10 @@ void dviWindow::drawPage()
     resize(0, 0);
     return;
   }
-
   if ( !pixmap )
     return;
 
   if ( !pixmap->paintingActive() ) {
-
     foreGroundPaint.begin( pixmap );
     QApplication::setOverrideCursor( waitCursor );
     if (setjmp(dvi_env)) {	// dvi_oops called
@@ -520,10 +519,10 @@ void dviWindow::drawPage()
     } else {
       draw_page();
     }
+    foreGroundPaint.drawRect(0,0,pixmap->width(),pixmap->height());
     QApplication::restoreOverrideCursor();
     foreGroundPaint.end();
   }
-  resize(pixmap->width(), pixmap->height());
   repaint();
   emit contents_changed();
 }
@@ -565,7 +564,7 @@ void dviWindow::changePageSize()
   resize( page_w, page_h );
   currwin.win = mane.win = pixmap->handle();
 
-  PS_interface->setSize( basedpi/mane.shrinkfactor , page_w, page_h);
+  PS_interface->setSize( basedpi/mane.shrinkfactor, page_w, page_h );
   drawPage();
 }
 
@@ -635,7 +634,7 @@ bool dviWindow::setFile( const QString & fname )
   // specials in PostScriptDirectory, and the headers in the
   // PostScriptHeaderString.
   PS_interface->clear();
-
+  
   // We will also generate a list of hyperlink-anchors in the
   // document. So declare the existing list empty.
   numAnchors = 0;
@@ -649,7 +648,7 @@ bool dviWindow::setFile( const QString & fname )
     currinf.end       = dvi_buffer;
     currinf.pos       = dvi_buffer;
     currinf._virtual  = NULL;
-    draw_part(current_frame = &frame0, dimconv);
+    draw_part(current_frame = &frame0, dimconv, false);
 
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);

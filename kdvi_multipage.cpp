@@ -15,15 +15,14 @@
 #include <qobject.h>
 #include <qlabel.h>
 #include <qstring.h>
-#include <qscrollview.h>
 #include <qimage.h>
 #include <qpixmap.h>
 
+// #include "../kviewshell/centeringScrollView.h"
 #include "fontpool.h"
-#include "kdvi_multipage.moc"
 #include "kviewpart.h"
 #include "optiondialog.h"
-
+#include "kdvi_multipage.h"
 
 extern "C"
 {
@@ -89,6 +88,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   setXMLFile("kdvi_part.rc");
 
+  //@@@  scrollView()->setPage(window);
   scrollView()->addChild(window);
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
   connect(window, SIGNAL(contents_changed(void)), this, SLOT(contents_of_dviwin_changed(void)) );
@@ -241,7 +241,7 @@ void KDVIMultiPage::about()
 				      i18n("the KDVI plugin"), 
 				      KAboutDialog::Close, KAboutDialog::Close);
 
-  ab->setProduct("kdvi", "0.9f", QString::null, QString::null);
+  ab->setProduct("kdvi", "0.9g", QString::null, QString::null);
   ab->addTextPage (i18n("About"), 
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"
@@ -276,7 +276,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9f", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9g", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }
@@ -495,3 +495,5 @@ void KDVIMultiPage::enableActions(bool b)
   exportPSAction->setEnabled(b);
   exportPDFAction->setEnabled(b);
 }
+
+#include "kdvi_multipage.moc"

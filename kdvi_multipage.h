@@ -15,9 +15,7 @@ class QLabel;
 class QPainter;
 
 
-#include <kmultipage.h>
-
-
+#include "../kviewshell/kmultipage.h"
 #include "dviwin.h"
 
 

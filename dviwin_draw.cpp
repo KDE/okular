@@ -630,16 +630,4 @@ void dviRenderer::draw_page(void)
     delete source_href;
     source_href = 0;
   }
-  
-  // Mark hyperlinks in blue. We draw a blue line under the
-  // character whose width is equivalent to 0.5 mm, but at least
-  // one pixel.
-  int h = (int)(MFResolutions[font_pool.getMetafontMode()]*0.05/(2.54*shrinkfactor) + 0.5);
-  h = (h < 1) ? 1 : h;
-  for(unsigned int i=0; i<currentlyDrawnPage->hyperLinkList.size(); i++) {
-    int x = currentlyDrawnPage->hyperLinkList[i].box.left();
-    int w = currentlyDrawnPage->hyperLinkList[i].box.width();
-    int y = currentlyDrawnPage->hyperLinkList[i].baseline;
-    foreGroundPaint.fillRect(x, y, w, h, Qt::blue);
-  }
 }

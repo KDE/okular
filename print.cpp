@@ -61,7 +61,7 @@ print::~print()
 void print::setFile( QString _file )
 {
 	ifile = ofile = _file.copy();
-	setCaption( QString(i18n(i18n("Print "))) + ifile );
+	setCaption( i18n("Print ") + ifile );
 	QString of( _file );
 	if ( of.right(4) == ".dvi" )
 		of = of.left( of.length()-4 );

@@ -237,7 +237,7 @@ void kdvi::makeMenuBar()
 
 	menuBar->insertSeparator();
 
-	QPopupMenu *help = kapp->getHelpMenu(true, QString(i18n("DVI Viewer"))
+	QPopupMenu *help = kapp->getHelpMenu(true, i18n("DVI Viewer")
 					     + " " + KDVI_VERSION
 					     + i18n("\n\nby Markku Hihnala")
 					     + " (mah@ee.oulu.fi)");
@@ -514,7 +514,7 @@ void kdvi::openFile( QString name)
 	if ( ! QFileInfo( name ).isReadable() )
 	{
 		QMessageBox::information( this, i18n("Notice"),
-				QString(i18n("Can't read file:\n")) +
+				i18n("Can't read file:\n") +
 				oname, i18n("OK"));
 		return;
 	}
@@ -929,8 +929,7 @@ void kdvi::selectSmall()
 
 void kdvi::shrinkChanged(int s)
 {
-	QString t;
-	t.sprintf(i18n("Shrink: %d"), s );
+	QString t = i18n("Shrink: %1").arg( s );
 	statusBar->changeItem( t, ID_STAT_SHRINK);
 }
 

@@ -421,7 +421,7 @@ void dviWindow::drawDVI()
 			dvi_time = 0; // force init_dvi_file
 			QApplication::restoreOverrideCursor();
 			QMessageBox::critical( this, i18n("HEY"),
-				QString(i18n("What's this? DVI problem!\n"))
+				i18n("What's this? DVI problem!\n")
 					+ dvi_oops_msg,
 				i18n("OK"));
 			return;
@@ -455,7 +455,7 @@ void dviWindow::drawDVI()
 			QApplication::restoreOverrideCursor();
 			paint.end();
 			QMessageBox::critical( this, i18n("HEY"),
-				QString(i18n("What's this? DVI problem!\n"))
+				i18n("What's this? DVI problem!\n") 
 					+ dvi_oops_msg,
 				i18n("OK"));
 			return;

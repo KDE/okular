@@ -52,16 +52,14 @@
 #include <X11/Intrinsic.h>
 
 #define	MAXDIM		32767
-#define    DVI_BUFFER_LEN  512     
 struct WindowRec mane	= {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
-extern unsigned char       dvi_buffer[DVI_BUFFER_LEN];  
 struct drawinf	currinf;
 
 
 const char *dvi_oops_msg;	/* error message */
-extern struct frame        frame0; /* dummy head of list */  
+
 
 jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 
@@ -614,7 +612,7 @@ void dviWindow::drawPage()
     resize(0, 0);
     return;
   }
-  if ( dviFile->file == 0 ) {
+  if ( dviFile->dvi_Data == 0 ) {
     resize(0, 0);
     return;
   }
@@ -808,7 +806,7 @@ bool dviWindow::setFile( const QString & fname )
   }
 
   dvifile *dviFile_new = new dvifile(filename,font_pool);
-  if (dviFile_new->file == NULL) {
+  if (dviFile_new->dvi_Data == NULL) {
     delete dviFile_new;
     return false;
   }
@@ -834,11 +832,9 @@ bool dviWindow::setFile( const QString & fname )
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
     
-    (void) lseek(fileno(dviFile->file), dviFile->page_offset[current_page], SEEK_SET);
+    dviFile->command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = tn_table;
-    currinf.end       = dvi_buffer;
-    currinf.pos       = dvi_buffer;
     currinf._virtual  = NULL;
     draw_part(dviFile->dimconv, false);
 

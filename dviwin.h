@@ -46,7 +46,7 @@ class DVI_Hyperlink {
 };
 
 
-/** Compound of registers, as defines in section 2.6.2 of the DVI
+/** Compound of registers, as defined in section 2.6.2 of the DVI
     driver standard, Level 0, published by the TUG DVI driver
     standards committee. */
 
@@ -87,10 +87,6 @@ public:
   void		setMetafontMode( unsigned int );
   void		setPaper(double w, double h);
   bool          correctDVI(QString filename);
-  unsigned char xxone();
-  unsigned long xnum(unsigned char size);
-  long          xsnum(unsigned char size);
-  void          xskip(long offset);
   
   // for the preview
   QPixmap      *pix() { return pixmap; };
@@ -281,10 +277,7 @@ struct drawinf {
   set_char_proc	        set_char_p;
 
   QIntDict<struct font> fonttable;
-  unsigned char	       *pos;
-  unsigned char	       *end;
   struct font	       *_virtual;
-  int                   dir;
 };
 
 #undef Unsorted

@@ -58,7 +58,6 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <qbitmap.h> 
 #include <qfileinfo.h>
 #include <stdlib.h>
@@ -72,134 +71,147 @@ extern "C" {
 #include "glyph.h"
 #include "oconfig.h"
 
-extern char *xmalloc (unsigned, const char *);
-
-#ifndef	DVI_BUFFER_LEN
-#define	DVI_BUFFER_LEN	512
-#endif
-
-extern unsigned char	dvi_buffer[DVI_BUFFER_LEN];
-extern struct frame	*current_frame;
-extern struct frame	frame0;	/* dummy head of list */
-
-#define	PK_PRE		247
-#define	PK_ID		89
-#define	PK_MAGIC	(PK_PRE << 8) + PK_ID
-#define	GF_PRE		247
-#define	GF_ID		131
-#define	GF_MAGIC	(GF_PRE << 8) + GF_ID
-#define	VF_PRE		247
-#define	VF_ID_BYTE	202
-#define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
-
 #define	dvi_oops(str)	(dvi_oops_msg = (str.utf8()), longjmp(dvi_env, 1))
 
 
+Q_UINT8 dvifile::readUINT8(void)
+{
+  return *(command_pointer++);
+}
 
+Q_UINT16 dvifile::readUINT16(void)
+{
+  Q_UINT16 a;
+  a = *(command_pointer++);
+  a = (a << 8) | *(command_pointer++);
+  return a;
+}
+
+Q_UINT32 dvifile::readUINT32(void)
+{
+  Q_UINT32 a;
+  a = *(command_pointer++);
+  a = (a << 8) | *(command_pointer++);
+  a = (a << 8) | *(command_pointer++);
+  a = (a << 8) | *(command_pointer++);
+  return a;
+}
+
+Q_UINT32 dvifile::readUINT(Q_UINT8 size)
+{
+  Q_UINT32 a = 0;
+  while (size > 0) { 
+    a = (a << 8) + *(command_pointer++);
+    size--;
+  }
+  return a;
+}
+
+Q_INT32 dvifile::readINT(Q_UINT8 length)
+{
+  Q_UINT32 a = 0;
+
+
+  Q_UINT8 byte = *(command_pointer++);
+  a = byte;
+  if (a & 0x80)
+    a -= 0x100;
+
+  while ((--length) > 0) { 
+    byte = *(command_pointer++);
+    a = (a << 8) | byte;
+  }
+  return a;
+}
 
 void dvifile::process_preamble(void)
 {
-  if (one(file) != PRE)
+  command_pointer = dvi_Data;
+
+  Q_UINT8 magic_number = readUINT8();
+  if (magic_number != PRE)
     dvi_oops(i18n("DVI file doesn't start with preamble."));
-  if (one(file) != 2)
+  magic_number =  readUINT8();
+  if (magic_number != 2)
     dvi_oops(i18n("Wrong version of DVI output for this program."));
 
-  numerator     = four(file);
-  denominator   = four(file);
-  magnification = four(file);
+  numerator     = readUINT32();
+  denominator   = readUINT32();
+  magnification = readUINT32();
   dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.0));
   // @@@@ This does not fit the description of dimconv in the header file!!!
   dimconv       = dimconv * (((long) pixels_per_inch)<<16) / 254000;
 
-  // Read the generatorString (such as "TeX output ..." from the DVI-File)
+  // Read the generatorString (such as "TeX output ..." from the
+  // DVI-File). The variable "magic_number" holds the length of the
+  // string.
   char	job_id[300];
-  unsigned char k = one(file);
-  k             = (k > 299) ? 299 : k;
-  Fread(job_id, sizeof(char), (int) k, file);
-  job_id[k] = '\0';
+  magic_number = readUINT8();
+  strncpy(job_id, (char *)command_pointer, magic_number);
+  job_id[magic_number] = '\0';
   generatorString = job_id;
 }
 
-/*
- *      find_postamble locates the beginning of the postamble
- *	and leaves the file ready to start reading at that location.
- */
-#define	TMPSIZ	516	/* 4 trailer bytes + 512 junk bytes allowed */
+
+/** find_postamble locates the beginning of the postamble and leaves
+    the file ready to start reading at that location. */
+
 void dvifile::find_postamble(void)
 {
-  long	pos;
-  unsigned char	temp[TMPSIZ];
-  unsigned char	*p;
-  unsigned char	*p1;
-  unsigned char	byte;
+  // Move backwards through the TRAILER bytes
+  command_pointer = dvi_Data + size_of_file - 1;
+  while((*command_pointer == TRAILER) && (command_pointer > dvi_Data))
+    command_pointer--;
+  if (command_pointer == dvi_Data)
+    dvi_oops(i18n("DVI file corrupted"));
 
-  Fseek(file, (long) 0, 2);
-  pos = ftell(file) - TMPSIZ;
-  if (pos < 0)
-    pos = 0;
-  Fseek(file, pos, 0);
-  p = temp + fread((char *) temp, sizeof(char), TMPSIZ, file);
-  for (;;) {
-    p1 = p;
-    while (p1 > temp && *(--p1) != TRAILER)
-      ;
-    p = p1;
-    while (p > temp && *(--p) == TRAILER)
-      ;
-    if (p <= p1 - 4)
-      break;	/* found 4 TRAILER bytes */
-    if (p <= temp)
-      dvi_oops(i18n("DVI file corrupted"));
-  }
-  pos += p - temp;
-  byte = *p;
-  while (byte == TRAILER) {
-    Fseek(file, --pos, 0);
-    byte = one(file);
-  }
-  if (byte != 2)
+  // Next comes the value "i", the version of the DVI output
+  if (*command_pointer != 2)
     dvi_oops(i18n("Wrong version of DVI output for this program"));
-  Fseek(file, pos - 4, 0);
-  Fseek(file, sfour(file), 0);
+  
+  // And this is finally the pointer to the beginning of the postamble
+  command_pointer -= 4;
+  long pos         = readUINT32();
+  command_pointer  = dvi_Data + pos;
 }
 
 
 void dvifile::read_postamble(void)
 {
-  unsigned char   cmnd;
-
-  if (one(file) != POST)
+  Q_UINT8 magic_byte = readUINT8();
+  if (magic_byte != POST)
     dvi_oops(i18n("Postamble doesn't begin with POST"));
-  last_page_offset = four(file);
-  if (numerator != four(file) || denominator != four(file) || magnification != four(file))
-    dvi_oops(i18n("Postamble doesn't match preamble"));
-  /* Read largest box height and width. Not used at the moment. */
-  //int unshrunk_page_h = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
-  //int unshrunk_page_w = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
 
-  sfour(file);//@@@ + basedpi;
-  sfour(file);//@@@ + basedpi;
+  last_page_offset = readUINT32();
 
-  (void) two(file);	/* max stack size */
-  total_pages = two(file);
-  Boolean font_not_found = False;
-  while ((cmnd = one(file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
-    int   TeXnumber = num(file, (int) cmnd - FNTDEF1 + 1);
-    long  checksum  = four(file);
-    int   scale     = four(file);
-    int   design    = four(file);
-    int   len       = one(file) + one(file); /* sequence point in the middle */
-    char *fontname  = xmalloc((unsigned) len + 1, "font name");
-    Fread(fontname, sizeof(char), len, file);
+  // Skip the numerator, denominator and magnification, the largest
+  // box height and width and the maximal depth of the stack. These
+  // are not used at the moment.
+  command_pointer += 4 + 4 + 4 + 4 + 4 + 2;
+
+  // The number of pages is more interesting for us.
+  total_pages  = readUINT16();
+
+  // As a next step, read the font definitions.
+  Q_UINT8 cmnd = readUINT8();
+  while (cmnd >= FNTDEF1 && cmnd <= FNTDEF4) {
+    Q_UINT32 TeXnumber = readUINT(cmnd-FNTDEF1+1);
+    Q_UINT32 checksum  = readUINT32();
+    Q_UINT32 scale     = readUINT32();
+    Q_UINT32 design    = readUINT32();
+    Q_UINT16 len       = readUINT8() + readUINT8();
+
+    char *fontname  = new char[len + 1];
+    strncpy(fontname, (char *)command_pointer, len );
     fontname[len] = '\0';
+    command_pointer += len;
     
 #ifdef DEBUG_FONTS
     kdDebug() << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
     
     // Calculate the fsize as:  fsize = 0.001 * scale / design * magnification * MFResolutions[MetafontMode]
-    struct font *fontp = font_pool->appendx(fontname, checksum, scale, design, 
-					    0.001*scale/design*magnification*MFResolutions[font_pool->getMetafontMode()], dimconv);
+    struct font *fontp = font_pool->appendx(fontname, checksum, scale, design, 0.001*scale/design*magnification*MFResolutions[font_pool->getMetafontMode()], dimconv);
     
     // Insert font in dictionary and make sure the dictionary is big
     // enough.
@@ -208,12 +220,13 @@ void dvifile::read_postamble(void)
       // prime. I don't care.
       tn_table.resize(tn_table.size()*2); 
     tn_table.insert(TeXnumber, fontp);
-  }
 
+    // Read the next command
+    cmnd = readUINT8();
+  }
+  
   if (cmnd != POSTPOST)
     dvi_oops(i18n("Non-fntdef command found in postamble"));
-  if (font_not_found)
-    KMessageBox::sorry( 0, i18n("Not all pixel files were found"));
 
   // Now we remove all those fonts from the memory which are no longer
   // in use.
@@ -226,15 +239,19 @@ void dvifile::prepare_pages()
   kdDebug() << "prepare_pages" << endl;
 #endif
 
-  page_offset = (long *) xmalloc((unsigned) total_pages * sizeof(long), "page directory");
-  int i = total_pages;
-  page_offset[--i] = last_page_offset;
-  Fseek(file, last_page_offset, 0);
-  /* Follow back pointers through pages in the DVI file, storing the
-     offsets in the page_offset table. */
+  page_offset      = new Q_UINT32[total_pages];
+  Q_UINT16 i       = total_pages-1;
+  page_offset[i]   = last_page_offset;
+
+  // Follow back pointers through pages in the DVI file, storing the
+  // offsets in the page_offset table.
+  // @@@@ ADD CHECK FOR CONSISTENCY !!! NEVER LET THE COMMAND PTR POINT OUTSIDE THE ALLOCATED MEM !!!!
   while (i > 0) {
-    Fseek(file, (long) (1+4+(9*4)), 1);
-    Fseek(file, page_offset[--i] = four(file), 0);
+    command_pointer  = dvi_Data + page_offset[i--];
+    if (readUINT8() != BOP)
+      dvi_oops(i18n("Page does not start with BOP"));
+    command_pointer += 10 * 4;
+    page_offset[i] = readUINT32();
   }
 }
 
@@ -244,23 +261,27 @@ dvifile::dvifile(QString fname, fontPool *pool)
 #ifdef DEBUG_DVIFILE
   kdDebug() << "init_dvi_file: " << fname << endl;
 #endif
-
-  file        = NULL;
-  page_offset = NULL;
+  
+  dvi_Data    = 0;
+  page_offset = 0;
   font_pool   = pool;
   sourceSpecialMarker = true;
 
-  file = fopen(fname.ascii(), "r");
-  if (file == NULL) {
-    /*@@@    KMessageBox::error( this,
-			i18n("File error!\n\n") +
-			i18n("Could not open the file\n") + 
-			fname);
-    */		
+  QFile file(fname);
+  file.open( IO_ReadOnly );
+  size_of_file = file.size();
+  dvi_Data = new Q_UINT8[size_of_file];
+  if (dvi_Data == 0) {
+    kdError() << i18n("Not enough memory to load the DVI-file.");
+    return;
+  }
+  file.readBlock((char *)dvi_Data, size_of_file);
+  file.close();
+  if (file.status() != IO_Ok) {
+    kdError() << i18n("Could not load the DVI-file.");
     return;
   }
 
-  filename = fname;
   tn_table.clear();
   
   process_preamble();
@@ -277,11 +298,10 @@ dvifile::~dvifile()
   kdDebug() << "destroy dvi-file" << endl;
 #endif
 
+  if (dvi_Data != 0)
+    delete [] dvi_Data;
   if (font_pool != 0)
     font_pool->mark_fonts_as_unused();
-
   if (page_offset != NULL)
-    free(page_offset);
-  if (file != NULL)
-    fclose(file);
+    delete [] page_offset;
 }

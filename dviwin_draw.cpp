@@ -49,7 +49,7 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-//#define DEBUG_RENDER 0
+// #define DEBUG_RENDER 0
 
 #include <stdlib.h>
 #include <string.h>
@@ -70,81 +70,8 @@
 #include <qpaintdevice.h>
 #include <qfileinfo.h>
 
-extern char *xmalloc (unsigned, const char *);
-extern FILE *xfopen(const char *filename, char *type);
-
-#ifndef	DVI_BUFFER_LEN
-#define	DVI_BUFFER_LEN	512
-#endif
-
 extern QPainter foreGroundPaint;
-unsigned char	dvi_buffer[DVI_BUFFER_LEN];
 
-#define	DIR	currinf.dir
-
-
-
-extern	off_t	lseek();
-
-
-#ifndef	SEEK_SET	/* if <unistd.h> is not provided (or for <X11R5) */
-#define	SEEK_SET	0
-#define	SEEK_CUR	1
-#define	SEEK_END	2
-#endif
-
-
-
-/*
- *	Byte reading routines for dvi file.
- */
-
-#define	xtell(pos)	((long) (lseek(fileno(dviFile->file), 0L, SEEK_CUR) - (currinf.end - (pos))))
-
-unsigned char dviWindow::xxone()
-{
-  if (currinf._virtual) {
-    ++currinf.pos;
-    return EOP;
-  }
-  currinf.end = dvi_buffer +
-    read(fileno(dviFile->file), (char *) (currinf.pos = dvi_buffer),
-	 DVI_BUFFER_LEN);
-  return currinf.end > dvi_buffer ? *(currinf.pos)++ : EOF;
-}
-
-#define	xone()  (currinf.pos < currinf.end ? *(currinf.pos)++ : xxone())
-
-unsigned long dviWindow::xnum(unsigned char size)
-{
-  register long x = 0;
-
-  while (size--) x = (x << 8) | xone();
-  return x;
-}
-
-long dviWindow::xsnum(unsigned char size)
-{
-  register long x;
-
-#ifdef	__STDC__
-  x = (signed char) xone();
-#else
-  x = xone();
-  if (x & 0x80) x -= 0x100;
-#endif
-  while (--size) x = (x << 8) | xone();
-  return x;
-}
-
-#define	xsfour()	xsnum(4)
-
-void dviWindow::xskip(long offset)
-{
-  currinf.pos += offset;
-  if (!currinf._virtual && currinf.pos > currinf.end)
-    (void) lseek(fileno(dviFile->file), (long) (currinf.pos - currinf.end), SEEK_CUR);
-}
 
 
 static	void tell_oops(const QString & message)
@@ -152,12 +79,6 @@ static	void tell_oops(const QString & message)
   dvi_oops_msg = (message.utf8()), longjmp(dvi_env, 1); /* dvi_oops */
   exit(1);
 }
-
-
-static	const	char	*dvi_table2[] = {
-  "FNT1", "FNT2", "FNT3", "FNT4", "XXX1", "XXX2", "XXX3", "XXX4",
-    "FNTDEF1", "FNTDEF2", "FNTDEF3", "FNTDEF4", "PRE", "POST", "POSTPOST",
-    "SREFL", "EREFL", NULL, NULL, NULL, NULL};
 
 
 /*
@@ -187,8 +108,6 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
     return;
 
   long dvi_h_sav = DVI_H;
-  if (currinf.dir < 0) 
-    DVI_H -= g->dvi_adv;
   if (PostScriptOutPutString == NULL) {
     QPixmap pix = g->shrunkCharacter();
     int x = PXL_H - g->x2 - currwin.base_x;
@@ -217,7 +136,6 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       }
     }
 
-
     // Are we drawing text for a source hyperlink? And are source
     // hyperlinks enabled? @@@@
     if (source_href != NULL) {
@@ -239,14 +157,11 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
 
       }
     }
-
-
   }
   if (cmd == PUT1)
     DVI_H = dvi_h_sav;
   else
-    if (currinf.dir > 0)
-      DVI_H += g->dvi_adv;
+    DVI_H += g->dvi_adv;
 
   word_boundary_encountered = false;
 }
@@ -274,8 +189,6 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
   }
 
   dvi_h_sav = DVI_H;
-  if (currinf.dir < 0)
-    DVI_H -= m->dvi_adv;
   if (PostScriptOutPutString == NULL) {
     oldinfo    = currinf;
     WW         = 0;
@@ -284,19 +197,14 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
     ZZ         = 0;
 
     currinf.fonttable = currinf.fontp->vf_table;
-    currinf.pos       = m->pos;
-    currinf.end       = m->end;
     currinf._virtual  = currinf.fontp;
     draw_part(currinf.fontp->dimconv, true);
-    if (currinf.pos != currinf.end + 1)
-      tell_oops("virtual character macro does not end correctly");
     currinf = oldinfo;
   }
   if (cmd == PUT1)
     DVI_H = dvi_h_sav;
   else
-    if (currinf.dir > 0)
-      DVI_H += m->dvi_adv;
+    DVI_H += m->dvi_adv;
 }
 
 
@@ -323,39 +231,17 @@ void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
 
 static	void set_rule(int h, int w)
 {
-  foreGroundPaint.fillRect( PXL_H - (currinf.dir < 0 ? w - 1 : 0)-currwin.base_x,
-			    PXL_V - h + 1 -currwin.base_y, 
-			    w?w:1, h?h:1, Qt::black );
+  foreGroundPaint.fillRect( PXL_H - -currwin.base_x, PXL_V - h + 1 -currwin.base_y, w?w:1, h?h:1, Qt::black );
 }
 
-void dviWindow::special(long nbytes)
+void dviWindow::special(long len)
 {
-  char	*cmd	= NULL;
-  long	cmdlen	= -1;
-  char	*p;
-  
-  if (cmdlen < nbytes) {
-    if (cmd)
-      free(cmd);
-    cmd = xmalloc((unsigned) nbytes + 1, "special");
-    cmdlen = nbytes;
-  }
-  p = cmd;
-  for (;;) {
-    int i = currinf.end - currinf.pos;
-    
-    if (i > nbytes) 
-      i = nbytes;
-    memcpy(p, (char *) currinf.pos, i);
-    currinf.pos += i;
-    p += i;
-    nbytes -= i;
-    if (nbytes == 0) break;
-    (void) xxone();
-    --(currinf.pos);
-  }
-  *p = '\0';
+  char	*cmd	= new char[len+1];
+  strncpy(cmd, (char *)dviFile->command_pointer, len);
+  dviFile->command_pointer += len;
+  cmd[len] = '\0';
   applicationDoSpecial(cmd);
+  delete [] cmd;
 }
 
 #define	xspell_conv(n)	spell_conv0(n, current_dimconv)
@@ -366,26 +252,25 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
   kdDebug() << "draw_part" << endl;
 #endif
 
-  unsigned char  ch;
+  Q_UINT8 ch;
 
   currinf.fontp        = NULL;
   currinf.set_char_p   = &dviWindow::set_no_char;
-  currinf.dir          = 1;
 
   for (;;) {
-    ch = xone();
+    ch = dviFile->readUINT8();
     if (ch <= (unsigned char) (SETCHAR0 + 127))
       (this->*currinf.set_char_p)(ch, ch);
     else
       if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63))
 	change_font((unsigned long) (ch - FNTNUM0));
       else {
-	long a, b;
+	Q_INT32 a, b;
 	
 	switch (ch) {
 	case SET1:
 	case PUT1:
-	  (this->*currinf.set_char_p)(ch, xone());
+	  (this->*currinf.set_char_p)(ch, dviFile->readUINT8());
 	  break;
 	  
 	case SETRULE:
@@ -393,18 +278,21 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    word_boundary_encountered = true;
 	  /* Be careful, dvicopy outputs rules with height =
 	     0x80000000. We don't want any SIGFPE here. */
-	  a = xsfour();
-	  b = xspell_conv(xsfour());
+	  a = dviFile->readUINT32();
+	  b = dviFile->readUINT32();
+	  b = xspell_conv(b); 
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
 	    set_rule(pixel_round(xspell_conv(a)), pixel_round(b));
-	  DVI_H += DIR * b;
+	  DVI_H += b;
 	  break;
 
 	case PUTRULE:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  a = xspell_conv(xsfour());
-	  b = xspell_conv(xsfour());
+	  a = dviFile->readUINT32();
+	  b = dviFile->readUINT32();
+	  a = xspell_conv(a);
+	  b = xspell_conv(b);
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
 	    set_rule(pixel_round(a), pixel_round(b));
 	  break;
@@ -415,7 +303,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case BOP:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  xskip((long) 11 * 4);
+	  dviFile->command_pointer += 11 * 4;
 	  DVI_H = basedpi << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
 	  DVI_V = basedpi << 16;
 	  PXL_V = pixel_conv(DVI_V);
@@ -451,25 +339,25 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case RIGHT2:
 	case RIGHT3:
 	case RIGHT4:
-	  DVI_H += DIR * xspell_conv(xsnum(ch - RIGHT1 + 1));
+	  DVI_H += xspell_conv(dviFile->readINT(ch - RIGHT1 + 1));
 	  break;
 
 	case W1:
 	case W2:
 	case W3:
 	case W4:
-	  WW = xspell_conv(xsnum(ch - W0));
+	  WW = xspell_conv(dviFile->readINT(ch - W0));
 	case W0:
-	  DVI_H += DIR * WW;
+	  DVI_H += WW;
 	  break;
 	  
 	case X1:
 	case X2:
 	case X3:
 	case X4:
-	  XX = xspell_conv(xsnum(ch - X0));
+	  XX = xspell_conv(dviFile->readINT(ch - X0));
 	case X0:
-	  DVI_H += DIR * XX;
+	  DVI_H += XX;
 	  break;
 
 	case DOWN1:
@@ -478,7 +366,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case DOWN4:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  DVI_V += xspell_conv(xsnum(ch - DOWN1 + 1));
+	  DVI_V += xspell_conv(dviFile->readINT(ch - DOWN1 + 1));
 	  PXL_V = pixel_conv(DVI_V);
 	  break;
 
@@ -486,7 +374,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case Y2:
 	case Y3:
 	case Y4:
-	  YY = xspell_conv(xsnum(ch - Y0));
+	  YY = xspell_conv(dviFile->readINT(ch - Y0));
 	case Y0:
 	  word_boundary_encountered = true;
 	  DVI_V += YY;
@@ -497,7 +385,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case Z2:
 	case Z3:
 	case Z4:
-	  ZZ = xspell_conv(xsnum(ch - Z0));
+	  ZZ = xspell_conv(dviFile->readINT(ch - Z0));
 	case Z0:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
@@ -511,7 +399,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case FNT4:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  change_font(xnum(ch - FNT1 + 1));
+	  change_font(dviFile->readINT(ch - FNT1 + 1));
 	  break;
 
 	case XXX1:
@@ -520,7 +408,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case XXX4:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  a = xnum(ch - XXX1 + 1);
+	  a = dviFile->readINT(ch - XXX1 + 1);
 	  if (a > 0)
 	    special(a);
 	  break;
@@ -531,8 +419,11 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case FNTDEF4:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  xskip((long) (12 + ch - FNTDEF1 + 1));
-	  xskip((long) xone() + (long) xone());
+	  {
+	    dviFile->command_pointer += 12 + ch - FNTDEF1 + 1;
+	    Q_UINT16 len = dviFile->readUINT8() + dviFile->readUINT8();
+	    dviFile->command_pointer += len;
+	  }
 	  break;
 	  
 	case PRE:
@@ -540,7 +431,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case POSTPOST:
 	  if (is_vfmacro == false)
 	    word_boundary_encountered = true;
-	  tell_oops(QString("shouldn't happen: %1 encountered").arg(dvi_table2[ch - (FNTNUM0 + 64)]));
+	  tell_oops(QString("shouldn't happen: illegal command encountered"));
 	  break;
 	  
 	default:
@@ -584,11 +475,9 @@ void dviWindow::draw_page(void)
   }
   
   // Now really write the text
-  (void) lseek(fileno(dviFile->file), dviFile->page_offset[current_page], SEEK_SET);
+  dviFile->command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
   memset((char *) &currinf.data, 0, sizeof(currinf.data));
   currinf.fonttable      = tn_table;
-  currinf.end            = dvi_buffer;
-  currinf.pos            = dvi_buffer;
   currinf._virtual       = 0;
   draw_part(dviFile->dimconv, false);
   if (HTML_href != 0) {

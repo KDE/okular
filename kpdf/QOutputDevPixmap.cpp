@@ -6,7 +6,6 @@
  *   Copyright (C) 2003 by Dirk Mueller <mueller@kde.org>                  *
  *   Copyright (C) 2003 by Scott Wheeler <wheeler@kde.org>                 *
  *   Copyright (C) 2003 by Ingo Klöcker <kloecker@kde.org>                 *
- *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
  *                                                                         *

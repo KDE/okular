@@ -5,7 +5,6 @@
  *   Copyright (C) 2003-2004 by Christophe Devriese                        *
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Daniel Molkentin <molkentin@kde.org>            *
- *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
  *   Copyright (C) 2003 by Dirk Mueller <mueller@kde.org>                  *
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *

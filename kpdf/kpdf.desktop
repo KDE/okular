@@ -4,6 +4,7 @@ MimeType=application/pdf
 Terminal=0
 Name=KPDF
 Name[xx]=xxKPDFxx
+GenericName=PDF Viewer
 Exec=kpdf %i %m -caption "%c"
 Icon=kpdf
 Type=Application

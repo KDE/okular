@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 #include <iostream>
 
 // include xpdf config.h file

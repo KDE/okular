@@ -38,9 +38,6 @@ class KPrinter;
 class KShellProcess;
 
 
-// max. number of hyperlinks per page. This should later be replaced by
-// a dynamic allocation scheme.
-#define MAX_HYPERLINKS 400 
 // max. number of anchors per document. This should later be replaced by
 // a dynamic allocation scheme.
 #define MAX_ANCHORS    1000
@@ -53,7 +50,14 @@ class DVI_Hyperlink {
   QString      linkText;
 };
 
+class DVI_Anchor {
+ public:
+  DVI_Anchor() {}
+  DVI_Anchor(Q_UINT32 pg, double vc): page(pg), vertical_coordinate(vc) {}
 
+  Q_UINT32   page;
+  double     vertical_coordinate;
+};
 
 class DVI_SourceFileAnchor {
  public:
@@ -212,9 +216,9 @@ private:
  void          header_special(QString cp);
  void          source_special(QString cp);
 
- /** List of source-hyperlinks, for source-specials */
- DVI_Hyperlink     sourceHyperLinkList[MAX_HYPERLINKS];
- int               num_of_used_source_hyperlinks;
+ // List of source-hyperlinks in the current page. This vector is
+ // generated when the current page is drawn.
+ QValueVector<DVI_Hyperlink> sourceHyperLinkList;
 
  // List of source-hyperlinks on all pages. This vector is generated
  // when the DVI-file is first loaded, i.e. when draw_part is called
@@ -228,8 +232,11 @@ private:
  QString           editorCommand;
 
  /** List of ordinary-hyperlinks */
- DVI_Hyperlink     hyperLinkList[MAX_HYPERLINKS];
+QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
+
  int               num_of_used_hyperlinks;
+
+
  QString          *HTML_href; // If not NULL, the text currently drawn
 			      // represents a hyperlink to the
 			      // (relative) URL given in the string;
@@ -285,11 +292,8 @@ private:
  bool              word_boundary_encountered;
 
  /** List of anchors in a document */
- QString           AnchorList_String[MAX_ANCHORS];
- unsigned int      AnchorList_Page[MAX_ANCHORS];
- double            AnchorList_Vert[MAX_ANCHORS];
- int               numAnchors;
-
+ QMap<QString, DVI_Anchor> anchorList;
+ 
  int		   basedpi;
  int		   makepk;
  QPixmap          *pixmap;

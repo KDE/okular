@@ -33,11 +33,7 @@ void dviWindow::html_anchor_special(QString cp)
     kdDebug(4300) << "page " << current_page << endl;
 #endif
     
-    AnchorList_String[numAnchors] = cp;
-    AnchorList_Page[numAnchors]   = current_page;
-    AnchorList_Vert[numAnchors]   = DVI_V/65536; // multiply with zoom to get pixel coords
-    if (numAnchors < MAX_ANCHORS-2)
-      numAnchors++;
+    anchorList[cp] = DVI_Anchor(current_page, DVI_V/65536);
   }
 }
 

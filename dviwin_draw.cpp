@@ -101,17 +101,15 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       // Now set up a rectangle which is checked against every mouse
       // event.
       if (line_boundary_encountered == true) {
-	// Set up hyperlink
-	hyperLinkList[num_of_used_hyperlinks].baseline = PXL_V;
-	hyperLinkList[num_of_used_hyperlinks].box.setRect(x, y, pix.width(), pix.height());
-	hyperLinkList[num_of_used_hyperlinks].linkText = *HTML_href;
-	if (num_of_used_hyperlinks < MAX_HYPERLINKS-1)
-	  num_of_used_hyperlinks++;
-	else
-	  kdError(4300) << "Used more than " << MAX_HYPERLINKS << " hyperlinks on a page. This is currently not supported." << endl;
+        // Set up hyperlink
+        DVI_Hyperlink dhl;
+        dhl.baseline = PXL_V;
+        dhl.box.setRect(x, y, pix.width(), pix.height());
+        dhl.linkText = *HTML_href;
+        hyperLinkList.push_back(dhl);
       } else {
-       	QRect dshunion = hyperLinkList[num_of_used_hyperlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-	hyperLinkList[num_of_used_hyperlinks-1].box = dshunion;
+        QRect dshunion = hyperLinkList[hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+        hyperLinkList[hyperLinkList.size()-1].box = dshunion;
       }
     }
 
@@ -121,20 +119,18 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       // Now set up a rectangle which is checked against every mouse
       // event.
       if (line_boundary_encountered == true) {
-	// Set up source hyperlinks
-	sourceHyperLinkList[num_of_used_source_hyperlinks].baseline = PXL_V;
-	sourceHyperLinkList[num_of_used_source_hyperlinks].box.setRect(x, y, pix.width(), pix.height());
-	if (source_href != NULL) 
-	  sourceHyperLinkList[num_of_used_source_hyperlinks].linkText = *source_href;
-	else
-	  sourceHyperLinkList[num_of_used_source_hyperlinks].linkText = "";
-	if (num_of_used_source_hyperlinks < MAX_HYPERLINKS-1)
-	  num_of_used_source_hyperlinks++;
-	else
-	  kdError(4300) << "Used more than " << MAX_HYPERLINKS << " source-hyperlinks on a page. This is currently not supported." << endl;
+        // Set up source hyperlinks
+        DVI_Hyperlink dhl;
+        dhl.baseline = PXL_V;
+        dhl.box.setRect(x, y, pix.width(), pix.height());
+        if (source_href != NULL)
+          dhl.linkText = *source_href;
+        else
+          dhl.linkText = "";
+        sourceHyperLinkList.push_back(dhl);
       } else {
-	QRect dshunion = sourceHyperLinkList[num_of_used_source_hyperlinks-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-	sourceHyperLinkList[num_of_used_source_hyperlinks-1].box = dshunion;
+        QRect dshunion = sourceHyperLinkList[sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+        sourceHyperLinkList[sourceHyperLinkList.size()-1].box = dshunion;
       }
     }
 
@@ -567,9 +563,9 @@ void dviWindow::draw_page(void)
   // Reset a couple of variables
   HTML_href              = 0;
   source_href            = 0;
-  num_of_used_hyperlinks = 0;
+  hyperLinkList.clear();
   textLinkList.clear();
-  num_of_used_source_hyperlinks = 0;
+  sourceHyperLinkList.clear();
 
   // Check if all the fonts are loaded. If that is not the case, we
   // return and do not draw anything. The font_pool will later emit
@@ -619,7 +615,7 @@ void dviWindow::draw_page(void)
   // one pixel.
   int h = (int)(basedpi*0.05/(2.54*shrink_factor) + 0.5);
   h = (h < 1) ? 1 : h;
-  for(int i=0; i<num_of_used_hyperlinks; i++) {
+  for(unsigned int i=0; i<hyperLinkList.size(); i++) {
     int x = hyperLinkList[i].box.left();
     int w = hyperLinkList[i].box.width();
     int y = hyperLinkList[i].baseline;

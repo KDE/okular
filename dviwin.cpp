@@ -328,7 +328,7 @@ void dviWindow::drawPage()
     // a button "Explain in more detail..." which opens the
     // Helpcenter. Thus, we practically re-implement the KMessagebox
     // here. Most of the code is stolen from there.
-    if ((dviFile->sourceSpecialMarker == true) && (num_of_used_source_hyperlinks > 0)) {
+    if ((dviFile->sourceSpecialMarker == true) && (sourceHyperLinkList.size() > 0)) {
       dviFile->sourceSpecialMarker = false;
       // Check if the 'Don't show again' feature was used
       KConfig *config = kapp->config();
@@ -506,7 +506,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
 
   // We will also generate a list of hyperlink-anchors in the
   // document. So declare the existing list empty.
-  numAnchors = 0;
+  anchorList.clear();
   sourceHyperLinkAnchors.clear();
 
   if (dviFile->page_offset == 0)
@@ -707,7 +707,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 {
   // If no mouse button pressed
   if ( e->state() == 0 ) {
-    for(int i=0; i<num_of_used_hyperlinks; i++) {
+    for(unsigned int i=0; i<hyperLinkList.size(); i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
 	emit setStatusBarText( hyperLinkList[i].linkText );
 	setCursor(pointingHandCursor);
@@ -797,27 +797,25 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #endif
 
   // Check if the mouse is pressed on a regular hyperlink
-  if ((e->button() == LeftButton) && (num_of_used_hyperlinks > 0))
-    for(int i=0; i<num_of_used_hyperlinks; i++) {
+  if ((e->button() == LeftButton) && (hyperLinkList.size() > 0))
+    for(int i=0; i<hyperLinkList.size(); i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
-	if (hyperLinkList[i].linkText[0] == '#' ) {
+        if (hyperLinkList[i].linkText[0] == '#' ) {
 #ifdef DEBUG_SPECIAL
-	  kdDebug(4300) << "hit: local link to " << hyperLinkList[i].linkText << endl;
+          kdDebug(4300) << "hit: local link to " << hyperLinkList[i].linkText << endl;
 #endif
-	  QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
-	  for(int j=0; j<numAnchors; j++) {
-	    if (locallink.compare(AnchorList_String[j]) == 0) {
+          QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
+          QMap<QString,DVI_Anchor>::Iterator it = anchorList.find(locallink);
+          if (it != anchorList.end()) {
 #ifdef DEBUG_SPECIAL
-	      kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
-	      kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
+            kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
+            kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
 #endif
-	      emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
-	      break;
-	    }
-	  }
-	} else {
+            emit(request_goto_page(it.data().page, (int)(it.data().vertical_coordinate/mane.shrinkfactor)));
+          }
+        } else {
 #ifdef DEBUG_SPECIAL
-	  kdDebug(4300) << "hit: external link to " << hyperLinkList[i].linkText << endl;
+          kdDebug(4300) << "hit: external link to " << hyperLinkList[i].linkText << endl;
 #endif
 	  // We could in principle use KIO::Netaccess::run() here, but
 	  // it is perhaps not a very good idea to allow a DVI-file to
@@ -836,8 +834,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
     }
 
   // Check if the mouse is pressed on a source-hyperlink
-  if ((e->button() == MidButton) && (num_of_used_source_hyperlinks > 0))
-    for(int i=0; i<num_of_used_source_hyperlinks; i++)
+  if ((e->button() == MidButton) && (sourceHyperLinkList.size() > 0))
+    for(unsigned int i=0; i<sourceHyperLinkList.size(); i++)
       if (sourceHyperLinkList[i].box.contains(e->pos())) {
 #ifdef DEBUG_SPECIAL
 	kdDebug(4300) << "Source hyperlink to " << sourceHyperLinkList[i].linkText << endl;

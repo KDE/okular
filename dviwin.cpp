@@ -25,7 +25,7 @@
 #include <qurl.h>
 #include <qvbox.h>
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <kmessagebox.h>
 #include <kmimemagic.h>
 #include <kdebug.h>

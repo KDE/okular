@@ -22,7 +22,7 @@
 // Add header files alphabetically
 
 #include <config.h>
-#include <kapp.h>
+#include <kapplication.h>
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>

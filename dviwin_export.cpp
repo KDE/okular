@@ -181,7 +181,7 @@ void dviRenderer::exportPS(QString fname, QString options, KPrinter *printer)
 			     "a PDF viewer.</p>"
 			     "<p>The author of KDVI apologizes for the inconvenience. If enough users complain, the missing functionality might later "
 			     "be added.</p></qt>") ,
-			i18n("Functionality unavailable"));
+			i18n("Functionality Unavailable"));
     return;
   }
   

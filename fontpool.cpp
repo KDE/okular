@@ -307,7 +307,7 @@ void fontPool::locateFonts(void)
 					"which are necessary to display the current DVI file. "
 					"Your document might be unreadable.</p></qt>"),
 				details,
-				i18n("Not all font files found - KDVI") );
+				i18n("Not All Font Files Found") );
   }
 }
 

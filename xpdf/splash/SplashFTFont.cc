@@ -219,7 +219,7 @@ SplashPath *SplashFTFont::getGlyphPath(int c) {
   } else {
     gid = (FT_UInt)c;
   }
-  if (FT_Load_Glyph(ff->face, gid, FT_LOAD_NO_BITMAP)) {
+  if (FT_Load_Glyph(ff->face, gid, FT_LOAD_DEFAULT)) {
     return NULL;
   }
   if (FT_Get_Glyph(slot, &glyph)) {

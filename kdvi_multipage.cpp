@@ -54,7 +54,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   performanceTimer.start();
 #endif
 
-  timer_id = -1;
   setInstance(KDVIMultiPageFactory::instance());
 
   printer = 0;
@@ -183,9 +182,6 @@ bool KDVIMultiPage::isModified()
 
 KDVIMultiPage::~KDVIMultiPage()
 {
-  if (timer_id != -1)
-    killTimer(timer_id);
-  timer_id = -1;
   writeSettings();
   Prefs::writeConfig();
   delete printer;
@@ -445,65 +441,6 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // concurrently, there is no way of telling the result of the
   // printing command at this stage.
   return true;
-}
-
-
-// Explanation of the timerEvent.
-//
-// This is a dreadful hack. The problem we adress with this timer
-// event is the following: the kviewshell has a KDirWatch object which
-// looks at the DVI file and calls reload() when the object has
-// changed. That works very nicely in principle, but in practise, when
-// TeX runs for several seconds over a complicated file, this does not
-// work at all. First, most of the time, while TeX is still writing,
-// the file is invalid. Thus, reload() is very often called when the
-// DVI file is bad. We solve this problem by checking the file
-// first. If the file is bad, we do not reload. Second, when the file
-// finally becomes good, it very often happens that KDirWatch does not
-// notify us anymore. Whether this is a bug or a side effect of a
-// feature of KDirWatch, I dare not say. We remedy that problem by
-// using a timer: when reload() was called on a bad file, we
-// automatically come back (via the timerEvent() function) every
-// second and check if the file became good. If so, we stop the
-// timer. It may well happen that KDirWatch calls us several times
-// while we are waiting for the file to become good, but that does not
-// do any harm.
-//
-// -- Stefan Kebekus.
-
-void KDVIMultiPage::timerEvent( QTimerEvent * )
-{
-#ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "Timer Event " << endl;
-#endif
-  reload();
-}
-
-
-void KDVIMultiPage::reload()
-{
-#ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "Reload file " << m_file << endl;
-#endif
-  
-  if (DVIRenderer.isValidFile(m_file)) {
-    userSelection.clear();
-    Q_INT32 pg = currentPageNumber();
-
-    killTimer(timer_id);
-    timer_id = -1;
-    bool r = DVIRenderer.setFile(m_file);
-    
-    generateDocumentWidgets();
-    emit numberOfPages(DVIRenderer.totalPages());
-    enableActions(r);
-    emit setStatusBarText(QString::null);
-    markList()->setCurrentPageNumber(pg);
-    emit pageInfo(DVIRenderer.totalPages(), pg );
-  } else {
-    if (timer_id == -1)
-      timer_id = startTimer(1000);
-  }
 }
 
 

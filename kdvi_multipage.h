@@ -59,16 +59,6 @@ public slots:
 
   virtual void preferencesChanged();
 
-protected:
-  /// For internal use only. See the comments in kdvi_multipage.cpp, right
-  //before the timerEvent function.
-  int  timer_id;
-  /// For internal use only. See the comments in kdvi_multipage.cpp, right
-  //before the timerEvent function.
-  void timerEvent( QTimerEvent *e );
-
-  virtual void reload();
-
 protected slots:
   void doExportText();
   void doEnableWarnings();

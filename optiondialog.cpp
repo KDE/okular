@@ -58,6 +58,10 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   EditorCommands     += "";
   EditorDescriptions += i18n("Enter the command line below.");
   
+  EditorNames        += "Emacs / emacsclient";
+  EditorCommands     += "emacsclient --no-wait +%l %f";
+  EditorDescriptions += i18n("Click 'Help' to learn how to set up Emacs.");
+  
   EditorNames        += "Kate";
   EditorCommands     += "kate %f";
   EditorDescriptions += i18n("Kate does not jump to line");

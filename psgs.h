@@ -61,7 +61,7 @@ public:
   QString  *PostScriptHeaderString;
 
 private:
-  void                  gs_generate_graphics_file(int page, QString filename);
+  void                  gs_generate_graphics_file(int page, const QString &filename);
   QIntDict<pageInfo>    pageList;
 
   // Chache to store pages which contain PostScript and are therefore
@@ -77,6 +77,19 @@ private:
   int                   pixel_page_h; // in pixels
 
   QString               includePath;
+
+  // Output device that ghostscript is supposed tp use. Default is
+  // "png256". If that does not work, gs_generate_graphics_file will
+  // automatically try other known device drivers. If no known output
+  // device can be found, something is badly wrong. In that case,
+  // "gsDevice" is set to an empty string, and
+  // gs_generate_graphics_file will return immediately.
+  QValueListIterator<QString> gsDevice;
+
+  // A list of know devices, set by the constructor. This includes
+  // "png256", "pnm". If a device is found to not work, its name is
+  // removed from the list, and another device name is tried.
+  QStringList           knownDevices;
 
 signals:
   /** Passed through to the top-level kpart. */

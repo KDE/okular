@@ -32,9 +32,10 @@ const int font::max_num_of_chars_in_font = 256;
 
 macro::macro()
 {
-  pos = 0L;		/* address of first byte of macro */
-  end = 0L;		/* address of last+1 byte */
+  pos     = 0L;		/* address of first byte of macro */
+  end     = 0L;		/* address of last+1 byte */
   dvi_adv = 0;	/* DVI units to move reference point */
+  free_me =  false;
 }
 
 macro::~macro()

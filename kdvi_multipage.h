@@ -91,16 +91,12 @@ protected:
   //before the timerEvent function.
   void timerEvent( QTimerEvent *e );
 
+  // Set initial window caption
+  void guiActivateEvent( KParts::GUIActivateEvent * event );
+
   virtual void reload();
 
-
 signals:
-
-  /** Emitted to indicate the number of pages in the file. The
-      receiver will set the current page to zero and call the
-      gotoPage()-method. */
-  void numberOfPages(int nr);
-
   /** Emitted to indicate the number of pages in the file and the
       current page. The receiver will not change or update the
       display, nor call the gotoPage()-method. */

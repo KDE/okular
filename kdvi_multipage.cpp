@@ -65,7 +65,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   : KMultiPage(parentWidget, widgetName, parent, name), window(0), options(0)
 {
   timer_id = -1;
-  setInstance(KDVIMultiPageFactory::instance()); 
+  setInstance(KDVIMultiPageFactory::instance());
 
   printer = 0;
   document_history.clear();
@@ -272,19 +272,19 @@ void KDVIMultiPage::doSettings()
 
 void KDVIMultiPage::about()
 {
-  KAboutDialog *ab = new KAboutDialog(KAboutDialog::AbtAppStandard, 
-				      i18n("the KDVI plugin"), 
+  KAboutDialog *ab = new KAboutDialog(KAboutDialog::AbtAppStandard,
+				      i18n("the KDVI plugin"),
 				      KAboutDialog::Close, KAboutDialog::Close);
 
   ab->setProduct("kdvi", "1.0", QString::null, QString::null);
-  ab->addTextPage (i18n("About"), 
+  ab->addTextPage (i18n("About"),
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"
 			"Based on kdvi 0.4.3 and on xdvik, version 18f.<br><hr>"
 			"For latest information, visit "
 			"<a href=\"http://devel-home.kde.org/~kdvi\">KDVI's Homepage</a>."),
 		   true);
-  ab->addTextPage (i18n("Authors"), 
+  ab->addTextPage (i18n("Authors"),
 		   i18n("Stefan Kebekus<br>"
 			"<a href=\"http://btm8x5.mat.uni-bayreuth.de/~kebekus\">"
 			"http://btm8x5.mat.uni-bayreuth.de/~kebekus</a><br>"
@@ -366,7 +366,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
 
   // Feed the printer with useful defaults and information.
   printer->setPageSelection( KPrinter::ApplicationSide );
-  printer->setCurrentPage( current+1 ); 
+  printer->setCurrentPage( current+1 );
   printer->setMinMax( 1, window->totalPages() );
 
   // If pages are marked, give a list of marked pages to the
@@ -381,7 +381,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
     QStringList::ConstIterator it = pages.begin();
     do{
       int val = (*it).toUInt()+1;
-      if (commaflag == 1) 
+      if (commaflag == 1)
 	range +=  QString(", ");
       else
 	commaflag = 1;
@@ -409,7 +409,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   }
 
   // Show the printer options requestor
-  if (printer->setup(window) == false) 
+  if (printer->setup(window) == false)
     return false;
   if (printer->pageList().isEmpty() == true) {
     KMessageBox::error( window,
@@ -439,7 +439,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   dvips_options += "-pp ";
   int commaflag = 0;
   for( QValueList<int>::ConstIterator it = pageList.begin(); it != pageList.end(); ++it ) {
-    if (commaflag == 1) 
+    if (commaflag == 1)
       dvips_options +=  QString(",");
     else
       commaflag = 1;
@@ -510,7 +510,7 @@ void KDVIMultiPage::reload()
     window->gotoPage(currsav);
     // We don't use "currsav" here, because that page may no longer
     // exist. In that case, gotoPage already selected another page.
-    emit pageInfo(window->totalPages(), window->curr_page()-1 ); 
+    emit pageInfo(window->totalPages(), window->curr_page()-1 );
   } else {
     if (timer_id == -1)
       timer_id = startTimer(1000);
@@ -530,7 +530,7 @@ void KDVIMultiPage::enableActions(bool b)
 void KDVIMultiPage::doGoBack(void)
 {
   historyItem *it = document_history.back();
-  if (it != 0) 
+  if (it != 0)
     goto_page(it->page, it->ypos);
   else
     kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
@@ -565,5 +565,10 @@ void KDVIMultiPage::showTipOnStart(void)
   KTipDialog::showTip(window, "kdvi/tips");
 }
 
+void KDVIMultiPage::guiActivateEvent( KParts::GUIActivateEvent * event )
+{
+  if (event->activated() && url().isEmpty())
+    emit setWindowCaption( i18n("KDVI") );
+}
 
 #include "kdvi_multipage.moc"

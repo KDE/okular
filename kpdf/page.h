@@ -32,50 +32,58 @@ class KPDFActiveRect;
  */
 class KPDFPage
 {
-public:
-    KPDFPage( int number, float width, float height, int rotation );
-    ~KPDFPage();
+    public:
+        KPDFPage( uint number, float width, float height, int rotation );
+        ~KPDFPage();
 
-    // query properties and draw (const read-only methods)
-    uint number() const { return m_number; }
-    float width() const { return m_width; }
-    float height() const { return m_height; }
-    float ratio() const { return m_height / m_width; }
-    float rotation() const { return m_rotation; }
-    bool isHilighted() const { return m_hilighting; }
-    bool isBookmarked() const { return m_bookmarking; }
-    bool hasPixmap( int id, int width, int height ) const;
-    bool hasSearchPage() const;
-    QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
-    bool hasLink( int mouseX, int mouseY ) const;
-    const KPDFLink * getLink( int mouseX, int mouseY ) const;
-    bool hasActiveRect( int mouseX, int mouseY ) const;
-    void drawPixmap( int id, QPainter * p, const QRect & rect, int width, int height ) const;
+        enum KPDFPageAttributes { Highlight = 1, Bookmark = 2 };
 
-    // commands (not const methods caled by KPDFDocument)
-    bool hasText( const QString & text, bool strictCase, bool fromTop );
-    void hilightLastSearch( bool enabled );
-    void bookmark( bool enabled );
+        // query properties (const read-only methods)
+        inline int number() const { return m_number; }
+        inline int rotation() const { return m_rotation; }
+        inline int attributes() const { return m_attributes; }
+        inline float width() const { return m_width; }
+        inline float height() const { return m_height; }
+        inline float ratio() const { return m_height / m_width; }
 
-    // set page contents (not const methods caled by KPDFDocument)
-    void setPixmap( int id, QPixmap * pixmap );
-    void setSearchPage( TextPage * text );
-    void setLinks( const QValueList<KPDFLink *> links );
-    void setActiveRects( const QValueList<KPDFActiveRect *> rects );
-    /*void setPixmapOverlayNotations( ..DOMdescription.. );*/
+        bool hasPixmap( int id, int width, int height ) const;
+        bool hasSearchPage() const { return m_text != 0; }
+        bool hasLink( int mouseX, int mouseY ) const;
+        bool hasActiveRect( int mouseX, int mouseY ) const;
+        const QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
+        const KPDFLink * getLink( int mouseX, int mouseY ) const;
 
-private:
-    int m_number, m_rotation;
-    float m_width, m_height;
-    bool m_hilighting, m_bookmarking;
-    double m_sLeft, m_sTop, m_sRight, m_sBottom;
+        // operations (not const methods caled by KPDFDocument)
+        inline void setAttribute( int att ) { m_attributes |= att; }
+        inline void clearAttribute( int att ) { m_attributes &= ~att; }
+        inline void toggleAttribute( int att ) { m_attributes ^= att; }
+        bool hasText( const QString & text, bool strictCase, bool fromTop );
 
-    QMap< int, QPixmap * > m_pixmaps;
-    TextPage * m_text;
-    QValueList< KPDFLink * > m_links;
-    QValueList< KPDFActiveRect * > m_rects;
+        // set contents (not const methods caled by KPDFDocument)
+        void setPixmap( int id, QPixmap * pixmap );
+        void setSearchPage( TextPage * text );
+        void setLinks( const QValueList<KPDFLink *> links );
+        void setActiveRects( const QValueList<KPDFActiveRect *> rects );
+
+    private:
+        friend class PagePainter;
+        int m_number, m_rotation, m_attributes;
+        float m_width, m_height;
+        double m_sLeft, m_sTop, m_sRight, m_sBottom;
+
+        QMap< int, QPixmap * > m_pixmaps;
+        TextPage * m_text;
+        QValueList< KPDFLink * > m_links;
+        QValueList< KPDFActiveRect * > m_rects;
 };
 
+
+class PagePainter
+{
+    public:
+        static void paintPageOnPainter( const KPDFPage * page, int id,
+            QPainter * p, const QRect & limits, int width = -1, int height = -1 );
+};
 
 /**
  * @short Encapsulates data that describes a link.

@@ -26,10 +26,10 @@
 // TODO add painting effects (plus selection rectangle)
 // TODO think about moving rendering ...
 
-KPDFPage::KPDFPage( int page, float w, float h, int r )
-    : m_number( page ), m_rotation( r ), m_width( w ), m_height( h ),
-    m_hilighting( false ), m_bookmarking( false ), m_sLeft( 0 ),
-    m_sTop( 0 ), m_sRight( 0 ), m_sBottom( 0 ), m_text( 0 )
+KPDFPage::KPDFPage( uint page, float w, float h, int r )
+    : m_number( page ), m_rotation( r ), m_attributes( 0 ),
+    m_width( w ), m_height( h ), m_sLeft( 0 ), m_sTop( 0 ),
+    m_sRight( 0 ), m_sBottom( 0 ), m_text( 0 )
 {
     // if landscape swap width <-> height (rotate 90deg CCW)
     if ( r == 90 || r == 270 )
@@ -62,23 +62,6 @@ bool KPDFPage::hasPixmap( int id, int width, int height ) const
     return p ? ( p->width() == width && p->height() == height ) : false;
 }
 
-bool KPDFPage::hasSearchPage() const
-{
-    return ( m_text != 0 );
-}
-
-QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
-{
-    if ( !m_text )
-        return QString();
-    int left = (int)((double)rect.left() / zoom),
-        top = (int)((double)rect.top() / zoom),
-        right = (int)((double)rect.right() / zoom),
-        bottom = (int)((double)rect.bottom() / zoom);
-    GString * text = m_text->getText( left, top, right, bottom );
-    return QString( text->getCString() );
-}
-
 bool KPDFPage::hasLink( int mouseX, int mouseY ) const
 {
     if ( m_links.count() < 1 )
@@ -101,7 +84,18 @@ bool KPDFPage::hasActiveRect( int mouseX, int mouseY ) const
     return false;
 }
 
-// BEGIN commands (paint / search)
+const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
+{
+    if ( !m_text )
+        return QString::null;
+    int left = (int)((double)rect.left() / zoom),
+        top = (int)((double)rect.top() / zoom),
+        right = (int)((double)rect.right() / zoom),
+        bottom = (int)((double)rect.bottom() / zoom);
+    GString * text = m_text->getText( left, top, right, bottom );
+    return QString( text->getCString() );
+}
+
 const KPDFLink * KPDFPage::getLink( int mouseX, int mouseY ) const
 {
     QValueList< KPDFLink * >::const_iterator it = m_links.begin(), end = m_links.end();
@@ -111,71 +105,6 @@ const KPDFLink * KPDFPage::getLink( int mouseX, int mouseY ) const
     return 0;
 }
 
-void KPDFPage::drawPixmap( int id, QPainter * p, const QRect & limits, int width, int height ) const
-{
-    QPixmap * pixmap = 0;
-
-    // if a pixmap is present for given id, use it
-    if ( m_pixmaps.contains( id ) )
-        pixmap = m_pixmaps[ id ];
-
-    // else find the closest match using pixmaps of other IDs (great optim!)
-    else if ( !m_pixmaps.isEmpty() )
-    {
-        int minDistance = -1;
-        QMap<int,QPixmap *>::const_iterator it = m_pixmaps.begin(), end = m_pixmaps.end();
-        for ( ; it != end; ++it )
-        {
-            int pixWidth = (*it)->width(),
-                distance = pixWidth > width ? pixWidth - width : width - pixWidth;
-            if ( minDistance == -1 || distance < minDistance )
-            {
-                pixmap = *it;
-                minDistance = distance;
-            }
-        }
-    }
-
-    // if we found a pixmap draw it
-    if ( pixmap )
-    {
-        // fast blit the pixmap if it has the right size..
-        if ( pixmap->width() == width && pixmap->height() == height )
-            p->drawPixmap( limits.topLeft(), *pixmap, limits );
-        // ..else set a scale matrix to the painter and paint a quick 'zoomed' pixmap
-        else
-        {
-            p->save();
-            // TODO paint only the needed part
-            p->scale( width / (double)pixmap->width(), height / (double)pixmap->height() );
-            p->drawPixmap( 0,0, *pixmap, 0,0, pixmap->width(), pixmap->height() );
-            p->restore();
-            // draw a cross (to  that the pixmap has not the right size)
-            p->setPen( Qt::gray );
-            p->drawLine( 0, 0, width-1, height-1 );
-            p->drawLine( 0, height-1, width-1, 0 );
-        }
-        // draw selection (note: it is rescaled since the text page is at 100% scale)
-        if ( m_hilighting )
-        {
-            int x = (int)( m_sLeft * width / m_width ),
-                y = (int)( m_sTop * height / m_height ),
-                w = (int)( m_sRight * width / m_width ) - x,
-                h = (int)( m_sBottom * height / m_height ) - y;
-            if ( w > 0 && h > 0 )
-            {
-                // setRasterOp is no more on Qt4 find an alternative way of doing this
-                p->setBrush( Qt::SolidPattern );
-                p->setPen( QPen( Qt::black, 1 ) ); // should not be necessary bug a Qt bug makes it necessary
-                p->setRasterOp( Qt::NotROP );
-                p->drawRect( x, y, w, h );
-            }
-        }
-    }
-    // else draw a blank area
-    else
-        p->fillRect( limits, Qt::white /*FIXME change to the page bg color*/ );
-}
 
 bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
 {
@@ -196,18 +125,6 @@ bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
     }
     return found;
 }
-
-void KPDFPage::hilightLastSearch( bool on )
-{
-    m_hilighting = on;
-    //if ( !on ) -> invalidate search rect?
-}
-
-void KPDFPage::bookmark( bool on )
-{
-    m_bookmarking = on;
-}
-// END commands (paint / search)
 
 
 void KPDFPage::setPixmap( int id, QPixmap * pixmap )
@@ -239,11 +156,71 @@ void KPDFPage::setActiveRects( const QValueList<KPDFActiveRect *> rects )
     m_rects = rects;
 }
 
-/*
-void KPDFPage::setPixmapOverlayNotations( ..DOMdescription.. )
-{   //TODO this
+
+void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, QPainter * p, const QRect & limits, int width, int height )
+{
+    QPixmap * pixmap = 0;
+
+    // if a pixmap is present for given id, use it
+    if ( page->m_pixmaps.contains( id ) )
+        pixmap = page->m_pixmaps[ id ];
+
+    // else find the closest match using pixmaps of other IDs (great optim!)
+    else if ( !page->m_pixmaps.isEmpty() && width != -1 )
+    {
+        int minDistance = -1;
+        QMap< int,QPixmap * >::const_iterator it = page->m_pixmaps.begin(), end = page->m_pixmaps.end();
+        for ( ; it != end; ++it )
+        {
+            int pixWidth = (*it)->width(),
+                distance = pixWidth > width ? pixWidth - width : width - pixWidth;
+            if ( minDistance == -1 || distance < minDistance )
+            {
+                pixmap = *it;
+                minDistance = distance;
+            }
+        }
+    }
+
+    if ( !pixmap )
+    {
+        p->fillRect( limits, Qt::white );
+        return;
+    }
+
+    // fast blit the pixmap if it has the right size..
+    if ( pixmap->width() == width && pixmap->height() == height )
+        p->drawPixmap( limits.topLeft(), *pixmap, limits );
+    // ..else set a scale matrix to the painter and paint a quick 'zoomed' pixmap
+    else
+    {
+        p->save();
+        // TODO paint only the needed part
+        p->scale( width / (double)pixmap->width(), height / (double)pixmap->height() );
+        p->drawPixmap( 0,0, *pixmap, 0,0, pixmap->width(), pixmap->height() );
+        p->restore();
+        // draw a cross (to  that the pixmap has not the right size)
+        p->setPen( Qt::gray );
+        p->drawLine( 0, 0, width-1, height-1 );
+        p->drawLine( 0, height-1, width-1, 0 );
+    }
+    // draw selection (note: it is rescaled since the text page is at 100% scale)
+    if ( page->attributes() & KPDFPage::Highlight )
+    {
+        int x = (int)( page->m_sLeft * width / page->m_width ),
+        y = (int)( page->m_sTop * height / page->m_height ),
+        w = (int)( page->m_sRight * width / page->m_width ) - x,
+        h = (int)( page->m_sBottom * height / page->m_height ) - y;
+        if ( w > 0 && h > 0 )
+        {
+            // setRasterOp is no more on Qt4 find an alternative way of doing this
+            p->setBrush( Qt::SolidPattern );
+            p->setPen( QPen( Qt::black, 1 ) ); // should not be necessary bug a Qt bug makes it necessary
+            p->setRasterOp( Qt::NotROP );
+            p->drawRect( x, y, w, h );
+        }
+    }
 }
-*/
 
 
 
@@ -393,4 +370,3 @@ bool KPDFActiveRect::contains(int x, int y)
 {
     return (x > m_left) && (x < m_right) && (y > m_top) && (y < m_bottom);
 }
-

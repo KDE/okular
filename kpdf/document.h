@@ -83,7 +83,7 @@ public:
     // document commands via slots
     void slotSetCurrentPage( int page, const QRect & viewport = QRect() );
     void slotSetFilter( const QString & pattern, bool caseSensitive );
-    void slotBookmarkPage( int page, bool enabled );
+    void slotToggleBookmark( int page );
     void slotFind( const QString & text = "", bool caseSensitive = false );
     void slotProcessLink( const KPDFLink * link );
 

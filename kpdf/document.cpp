@@ -254,6 +254,7 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
     if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
         return;
 
+    //kdDebug() << "id: " << id << " is requesting pixmap for page " << page << " [" << width << " x " << height << "]." << endl;
     if ( syn )
     {
         // in-place Pixmap generation for syncronous requests
@@ -367,12 +368,12 @@ void KPDFDocument::slotSetFilter( const QString & pattern, bool keepCase )
     processPageList( false );
 }
 
-void KPDFDocument::slotBookmarkPage( int n, bool on )
+void KPDFDocument::slotToggleBookmark( int n )
 {
     KPDFPage * page = ( n < (int)d->pages.count() ) ? d->pages[ n ] : 0;
     if ( page )
     {
-        page->bookmark( on );
+        page->toggleAttribute( KPDFPage::Bookmark );
         foreachObserver( notifyPixmapChanged( n ) );
     }
 }
@@ -400,7 +401,7 @@ void KPDFDocument::slotFind( const QString & string, bool keepCase )
             foundPage = lastPage;
         else
         {
-            lastPage->hilightLastSearch( false );
+            lastPage->clearAttribute( KPDFPage::Highlight );
             currentPage++;
             pageCount--;
         }
@@ -431,7 +432,7 @@ void KPDFDocument::slotFind( const QString & string, bool keepCase )
     {
         int pageNumber = foundPage->number();
         d->searchPage = pageNumber;
-        foundPage->hilightLastSearch( true );
+        foundPage->setAttribute( KPDFPage::Highlight );
         slotSetCurrentPage( pageNumber );
         foreachObserver( notifyPixmapChanged( pageNumber ) );
     }
@@ -633,9 +634,8 @@ void KPDFDocument::processPageList( bool documentChanged )
         for ( uint i = 0; i < pageCount ; i++ )
         {
             KPDFPage * page = d->pages[ i ];
-            if ( d->filterText.length() < 3 )
-                page->hilightLastSearch( false );
-            else
+            page->clearAttribute( KPDFPage::Highlight );
+            if ( d->filterText.length() > 2 )
             {
                 if ( !page->hasSearchPage() )
                 {
@@ -647,8 +647,8 @@ void KPDFDocument::processPageList( bool documentChanged )
                     // ..and attach it to the page
                     page->setSearchPage( td.takeTextPage() );
                 }
-                bool found = page->hasText( d->filterText, d->filterCase, true );
-                page->hilightLastSearch( found );
+                if ( page->hasText( d->filterText, d->filterCase, true ) )
+                    page->setAttribute( KPDFPage::Highlight );
             }
         }
     }
@@ -662,14 +662,14 @@ void KPDFDocument::unHilightPages()
     if ( d->filterText.isEmpty() )
         return;
 
-    d->filterText = "";
+    d->filterText = QString::null;
     QValueVector<KPDFPage*>::iterator it = d->pages.begin(), end = d->pages.end();
     for ( ; it != end; ++it )
     {
         KPDFPage * page = *it;
-        if ( page->isHilighted() )
+        if ( page->attributes() & KPDFPage::Highlight )
         {
-            page->hilightLastSearch( false );
+            page->clearAttribute( KPDFPage::Highlight );
             foreachObserver( notifyPixmapChanged( page->number() ) );
         }
     }

@@ -623,7 +623,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 const KPDFPage * kpdfPage = pageItem->page();
                 KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
                 m_popup->insertTitle( i18n( "Page %1" ).arg( kpdfPage->number() + 1 ) );
-                if ( kpdfPage->isBookmarked() )
+                if ( kpdfPage->attributes() & KPDFPage::Bookmark )
                     m_popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
                 else
                     m_popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
@@ -638,7 +638,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 switch ( m_popup->exec(e->globalPos()) )
                 {
                     case 1:
-                        d->document->slotBookmarkPage( kpdfPage->number(), !kpdfPage->isBookmarked() );
+                        d->document->slotToggleBookmark( kpdfPage->number() );
                         break;
                     case 2:
                         // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
@@ -898,7 +898,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
                 QPixmap pagePix( pixmapRect.width(), pixmapRect.height() );
                 QPainter pixmapPainter( &pagePix );
                 pixmapPainter.translate( -pixmapRect.left(), -pixmapRect.top() );
-                item->page()->drawPixmap( PAGEVIEW_ID, &pixmapPainter, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
+                PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, &pixmapPainter, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
                 pixmapPainter.end();
 
                 // perform 'accessbility' enhancements on the (already painted) pixmap
@@ -943,7 +943,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
                 p->drawPixmap( pixmapRect.left(), pixmapRect.top(), pagePix );
             }
             else // paint pixmapRect area (as it is) in external painter
-                item->page()->drawPixmap( PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
+                PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
         }
 
         // remove painted area from 'remainingArea' and restore painter

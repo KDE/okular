@@ -95,7 +95,7 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 	//FIXME change this quick fix (lines that follows). Check if filtering:
 	bool skipCheck = true;
 	for ( uint i = 0; i < pages.count(); i++ )
-		if ( pages[i]->isHilighted() )
+        if ( pages[i]->attributes() & KPDFPage::Highlight )
 			skipCheck = false;
 
 	// generate Thumbnails for the given set of pages
@@ -105,7 +105,7 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin();
 	QValueVector<KPDFPage*>::const_iterator pageEnd = pages.end();
 	for (; pageIt != pageEnd ; ++pageIt)
-		if ( skipCheck || (*pageIt)->isHilighted() ) {
+        if ( skipCheck || ( (*pageIt)->attributes() & KPDFPage::Highlight ) ) {
 			t = new ThumbnailWidget( viewport(), *pageIt );
 			t->setFocusProxy( this );
 			// add to the scrollview
@@ -357,7 +357,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         p.translate( 2, 2 );
         clipRect.moveBy( -2, -2 );
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
-        m_page->drawPixmap( THUMBNAILS_ID, &p, clipRect, m_pixmapWidth, m_pixmapHeight );
+        PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, &p, clipRect, m_pixmapWidth, m_pixmapHeight );
     }
 }
 

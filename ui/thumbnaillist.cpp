@@ -7,6 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+// qt/kde includes
 #include <qtimer.h>
 #include <qpainter.h>
 #include <klocale.h>
@@ -15,9 +16,10 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 
+// local includes
 #include "thumbnaillist.h"
-#include "generator.h"
-#include "page.h"
+#include "core/generator.h"
+#include "core/page.h"
 
 // ThumbnailWidget represents a single thumbnail in the ThumbnailList
 class ThumbnailWidget : public QWidget

@@ -25,10 +25,10 @@
 
 // local includes
 #include "presentationwidget.h"
-#include "document.h"   // for PRESENTATION_ID
-#include "generator.h"
-#include "page.h"
-#include "settings.h"
+#include "core/document.h"   // for PRESENTATION_ID
+#include "core/generator.h"
+#include "core/page.h"
+#include "conf/settings.h"
 
 
 // comment this to disable the top-right progress indicator

@@ -21,8 +21,8 @@
 
 // local includes
 #include "searchwidget.h"
-#include "document.h"
-#include "settings.h"
+#include "core/document.h"
+#include "conf/settings.h"
 
 // uncomment following to enable the case switching button
 //#define SW_ENABLE_CASE_BUTTON

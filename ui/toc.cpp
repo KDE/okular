@@ -13,8 +13,8 @@
 
 // local includes
 #include "toc.h"
-#include "page.h"
-#include "document.h"
+#include "core/page.h"
+#include "core/document.h"
 
 // uncomment following to enable a 2nd column showing the page referred by
 // each tree entry

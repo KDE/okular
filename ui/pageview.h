@@ -22,7 +22,7 @@
 #include <qscrollview.h>
 #include <qvaluevector.h>
 
-#include "document.h"
+#include "core/document.h"
 
 class KURL;
 class KActionCollection;

@@ -13,14 +13,3 @@
 KPDFLink::~KPDFLink()
 {
 }
-
-/*
-void KPDFLink::copyString( char * &dest, const char * src ) const
-{
-    if ( src )
-    {
-        dest = new char[ strlen(src) + 1 ];
-        strcpy( &dest[0], src );
-    }
-}
-*/

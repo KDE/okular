@@ -39,10 +39,10 @@
 
 #include "pageview.h"
 #include "pageviewutils.h"
-#include "page.h"
-#include "link.h"
-#include "generator.h"
-#include "settings.h"
+#include "core/page.h"
+#include "core/link.h"
+#include "core/generator.h"
+#include "conf/settings.h"
 
 #define ROUND(x) (int(x + 0.5))
 

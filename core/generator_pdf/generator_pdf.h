@@ -15,9 +15,9 @@
 #include <qcolor.h>
 #include <qstring.h>
 #include <qthread.h>
-#include "generator.h"
-#include "document.h"
-#include "link.h"
+#include "core/generator.h"
+#include "core/document.h"
+#include "core/link.h"
 
 class PDFDoc;
 class GList;

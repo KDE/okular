@@ -12,7 +12,7 @@
 
 #include <klistview.h>
 
-#include "document.h"
+#include "core/document.h"
 
 class TOC : public KListView, public KPDFDocumentObserver
 {

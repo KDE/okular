@@ -14,7 +14,7 @@
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qvaluevector.h>
-#include "document.h"
+#include "core/document.h"
 
 class PresentationFrame;
 class KToolBar;

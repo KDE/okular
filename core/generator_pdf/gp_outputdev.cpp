@@ -25,8 +25,8 @@
 
 #include "gp_outputdev.h"
 #include "generator_pdf.h"
-#include "page.h"
-#include "link.h"
+#include "core/page.h"
+#include "core/link.h"
 #include "xpdf/Link.h"
 #include "xpdf/GfxState.h"
 #include "xpdf/TextOutputDev.h"

@@ -13,7 +13,7 @@
 #include <qscrollview.h>
 #include <qvaluevector.h>
 #include <qvbox.h>
-#include "document.h"
+#include "core/document.h"
 
 class QTimer;
 class KActionCollection;

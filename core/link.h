@@ -15,7 +15,6 @@
 
 /**
  * @short Encapsulates data that describes a link.
- * ### MERGE: MOVE definition/implementation to kpdflink.h/.cpp
  * ### TODO: recomment
  */
 class KPDFLink
@@ -33,7 +32,7 @@ class KPDFLink
 class KPDFLinkGoto : public KPDFLink
 {
     public:
-        // define a 'Viewport' TODO improve this
+        // define a 'Viewport' TODO MERGE WITH PAGE DEFINED VIEWPORT
         struct Viewport {
             int page;
             bool fitWidth, fitHeight;

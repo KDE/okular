@@ -28,9 +28,9 @@
 #include "document.h"
 #include "page.h"
 #include "link.h"
-#include "settings.h"
-#include "generator_pdf.h"  // PDF generator
-//#include "generator_ps.H" // PS generator
+#include "conf/settings.h"
+#include "generator_pdf/generator_pdf.h"  // PDF generator
+//#include "generator_ps/generator_ps.H" // PS generator
 
 // structures used internally by KPDFDocument for local variables storage
 class KPDFDocumentPrivate

@@ -7,13 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+// qt/kde includes
 #include <klocale.h>
-
 #include <qlabel.h>
 
-#include "document.h"
-#include "properties.h"
+// local includes
 #include "propertiesdialog.h"
+#include "properties.h"
+#include "core/document.h"
 
 propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialogBase(parent, 0, true, i18n( "Unknown file." ), Ok)
 {

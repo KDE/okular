@@ -31,9 +31,9 @@
 // local includes
 #include "generator_pdf.h"
 #include "gp_outputdev.h"
-#include "document.h" //for PAGEVIEW_ID
-#include "page.h"
-#include "settings.h"
+#include "core/document.h" //for PAGEVIEW_ID
+#include "core/page.h"
+#include "conf/settings.h"
 
 // id for DATA_READY ThreadedGenerator Event
 #define TGE_DATAREADY_ID 6969

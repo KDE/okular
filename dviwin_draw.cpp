@@ -330,7 +330,7 @@ void dviWindow::special(long nbytes)
     
     if (i > nbytes) 
       i = nbytes;
-    bcopy((char *) currinf.pos, p, i);
+    memcpy(p, (char *) currinf.pos, i);
     currinf.pos += i;
     p += i;
     nbytes -= i;

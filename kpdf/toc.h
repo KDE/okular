@@ -31,6 +31,7 @@ Q_OBJECT
         void slotExecuted(QListViewItem *i);
 
     private:
+        void addChildren( const QDomNode & parentNode, KListViewItem * parentItem = 0 );
         KPDFDocument *m_document;
 };
 

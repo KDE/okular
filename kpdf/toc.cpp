@@ -7,38 +7,57 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+// qt/kde includes
 #include <qheader.h>
+#include <klocale.h>
 
+// local includes
 #include "toc.h"
 #include "page.h"
 #include "document.h"
 
+// uncomment following to enable a 2nd column showing the page referred by
+// each tree entry
+//#define TOC_ENABLE_PAGE_COLUMN
+
 class TOCItem : public KListViewItem
 {
-	public:
-		TOCItem(KListView *parent, TOCItem *after, QString name, const QDomElement & e) :
-			KListViewItem(parent, after, name), m_element(e)
-		{
-		}
+    public:
+        TOCItem( KListView *parent, TOCItem *after, const QDomElement & e )
+            : KListViewItem( parent, after, e.tagName() ), m_element( e )
+        {
+#ifdef TOC_ENABLE_PAGE_COLUMN
+            if ( e.hasAttribute( "Page" ) )
+                setText( 1, e.attribute( "Page" ) );
+#endif
+        }
 
-		TOCItem(KListViewItem *parent, TOCItem *after, QString name, const QDomElement & e) :
-			KListViewItem(parent, after, name), m_element(e)
-		{
-		}
+        TOCItem( KListViewItem *parent, TOCItem *after, const QDomElement & e )
+            : KListViewItem( parent, after, e.tagName() ), m_element( e )
+        {
+#ifdef TOC_ENABLE_PAGE_COLUMN
+            if ( e.hasAttribute( "Page" ) )
+                setText( 1, e.attribute( "Page" ) );
+#endif
+        }
 
-		const QDomElement & element() const
-		{
-			return m_element;
-		}
+        const QDomElement & element() const
+        {
+            return m_element;
+        }
 
-	private:
-		QDomElement m_element;
+    private:
+        QDomElement m_element;
 };
 
 TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_document(document)
 {
-    addColumn("");
+    addColumn( i18n("Topic") );
+#ifdef TOC_ENABLE_PAGE_COLUMN
+    addColumn( i18n("Page") );
+#else
     header() -> hide();
+#endif
     setSorting(-1);
     setRootIsDecorated(true);
     setResizeMode(AllColumns);
@@ -50,27 +69,60 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged)
+void TOC::pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged )
 {
     if ( !documentChanged || pages.size() < 1 )
         return;
 
+    // clear contents
     clear();
+
+    // request synopsis description (is a dom tree)
     const DocumentSynopsis * syn = m_document->documentSynopsis();
-    if ( syn )
+
+    // if not present, disable the contents tab
+    if ( !syn )
     {
-        
+        emit hasTOC( false );
+        return;
     }
 
-    emit hasTOC( syn );
+    // else populate the listview and enable the tab
+    addChildren( *syn );
+    emit hasTOC( true );
 }
 
-void TOC::slotExecuted(QListViewItem *i)
+void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
 {
-//	TOCItem *ti = dynamic_cast<TOCItem*>(i);
-    //FIXME
-	//KPDFLink l( ti->getAction() );
-	//m_document->processLink( &l );
+    // keep track of the current listViewItem
+    TOCItem * currentItem = 0;
+    QDomNode n = parentNode.firstChild();
+    while( !n.isNull() )
+    {
+        // convert the node to an element (sure it is)
+        QDomElement e = n.toElement();
+
+        // insert the entry as top level (listview parented) or 2nd+ level
+        if ( !parentItem )
+            currentItem = new TOCItem( this, currentItem, e );
+        else
+            currentItem = new TOCItem( parentItem, currentItem, e );
+
+        // descend recursively and advance to the next node
+        if ( e.hasChildNodes() )
+            addChildren( n, currentItem );
+        n = n.nextSibling();
+    }
+}
+
+void TOC::slotExecuted( QListViewItem *i )
+{
+    const QDomElement & e = static_cast< TOCItem* >( i )->element();
+    // if the node has a referred page, jump to it
+    if ( e.hasAttribute( "Page" ) )
+        m_document->setCurrentPage( e.attribute( "Page" ).toUInt() );
+    // may check for other properties here
+    // ...
 }
 
 #include "toc.moc"

@@ -7,9 +7,10 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> Abstract contents generation [70% missing TextPage only!]
+-> FIX: viewport changes the right way when clicking links and TOC items (also
+   suggested by Mikolaj Machowski). Create a great viewport definition and merge
+   it inside the synopsis too. [70% done]
 -> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive}) [20%]
--> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [65% done]
 
 Things to do in order to merge in HEAD (first item has highest priority):
 -> take care of naming on merge, too differences (remove some kpdf_* prefixes
@@ -31,6 +32,8 @@ More items (first items will enter 'In progress list' first):
 -> display current page / total pages (with analog indicator too (progressbar/...))
    maybe this can be done on a small widget at the top of the toolbox, displaying
    'document' informations (pages, current pg, some metadata, etc..)
+-> abstract TextPage generation (the last xpdf dependant class!). then go dancing in the
+   streets.
 -> right click and drag while in 'scroll' mode changes to 'selection' mode and selects
 -> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..

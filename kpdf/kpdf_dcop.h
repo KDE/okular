@@ -20,6 +20,13 @@ K_DCOP
 		virtual ASYNC goToPage(uint page) = 0;
 		virtual ASYNC openDocument(KURL doc) = 0;
 		virtual uint pages() = 0;
+    virtual void slotPreferences() = 0;
+    virtual void slotFind() = 0;
+    virtual void slotPrintPreview() = 0;
+    virtual void slotPreviousPage() = 0;
+    virtual void slotNextPage() = 0;
+    virtual void slotGotoFirst() = 0;
+    virtual void slotGotoLast() = 0;
 };
 
 #endif

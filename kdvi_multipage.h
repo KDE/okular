@@ -60,6 +60,9 @@ public:
   /// opens a file
   virtual bool openFile(); 
 
+  /// close a file
+  virtual bool closeURL();
+
   /// displays the given page
   virtual bool gotoPage(int page); 
 

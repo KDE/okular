@@ -57,7 +57,7 @@ KInstance *KDVIMultiPageFactory::instance()
 
 
 KDVIMultiPage::KDVIMultiPage(QWidget *parent, const char *name)
-  : KMultiPage(parent, name)
+  : KMultiPage(parent, name), window(0)
 {
   setInstance(KDVIMultiPageFactory::instance()); 
 
@@ -83,6 +83,15 @@ bool KDVIMultiPage::openFile()
 }
 
 
+bool KDVIMultiPage::closeURL()
+{
+  window->setFile("");
+  scrollView()->resizeContents(0, 0);
+
+  return true;
+}
+
+
 // test code
 QStringList KDVIMultiPage::fileFormats()
 {
@@ -94,7 +103,7 @@ QStringList KDVIMultiPage::fileFormats()
 
 bool KDVIMultiPage::gotoPage(int page)
 {
-  window->gotoPage(page);
+  window->gotoPage(page+1);
   return true;
 }
 
@@ -128,10 +137,17 @@ void KDVIMultiPage::setPaperSize(double w, double h)
 
 bool KDVIMultiPage::preview(QPainter *p, int w, int h)
 {
-  if (!window->pix())
+  QPixmap *map = window->pix();
+
+  if (!map)
     return false;
 
-  p->drawImage(0, 0, window->pix()->convertToImage().smoothScale(w,h));
+  
+  // TODO: use higher quality preview if anti-aliasing?
+  //p->drawImage(0, 0, window->pix()->convertToImage().smoothScale(w,h));
+
+  p->scale((double)w/(double)map->width(), (double)h/(double)map->height());
+  p->drawPixmap(0, 0, *map);
 
   return true;
 }

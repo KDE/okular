@@ -288,7 +288,10 @@ void dviWindow::drawPage()
 {
   psp_interrupt();
   if (filename.isEmpty())	// must call setFile first
-    return;
+    {
+      resize(0, 0);
+      return;
+    }
   if (!dvi_name) {			//  dvi file not initialized yet
     QApplication::setOverrideCursor( waitCursor );
     dvi_name = const_cast<char*>(filename.ascii());

@@ -82,22 +82,25 @@ SplashT1FontEngine::~SplashT1FontEngine() {
 }
 
 SplashFontFile *SplashT1FontEngine::loadType1Font(SplashFontFileID *idA,
-						  char *fileName,
-						  GBool deleteFile,
+						  SplashFontSrc *src,
 						  const char **enc) {
-  return SplashT1FontFile::loadType1Font(this, idA, fileName, deleteFile, enc);
+  return SplashT1FontFile::loadType1Font(this, idA, src, enc);
 }
 
 SplashFontFile *SplashT1FontEngine::loadType1CFont(SplashFontFileID *idA,
-						   char *fileName,
-						   GBool deleteFile,
+						   SplashFontSrc *src,
 						   const char **enc) {
   FoFiType1C *ff;
   GString *tmpFileName;
   FILE *tmpFile;
   SplashFontFile *ret;
+  SplashFontSrc *newsrc;
 
-  if (!(ff = FoFiType1C::load(fileName))) {
+  if (src->isFile)
+    ff = FoFiType1C::load(src->fileName);
+  else
+    ff = new FoFiType1C(src->buf, src->bufLen, gFalse);
+  if (! ff)
     return NULL;
   }
   tmpFileName = NULL;
@@ -108,16 +111,11 @@ SplashFontFile *SplashT1FontEngine::loadType1CFont(SplashFontFileID *idA,
   ff->convertToType1(NULL, gTrue, &T1_fileWrite, tmpFile);
   delete ff;
   fclose(tmpFile);
-  ret = SplashT1FontFile::loadType1Font(this, idA, tmpFileName->getCString(),
-					gTrue, enc);
-  if (ret) {
-    if (deleteFile) {
-      unlink(fileName);
-    }
-  } else {
-    unlink(tmpFileName->getCString());
-  }
+  newsrc = new SplashFontSrc;
+  newsrc->setFile(tmpFileName, gTrue);
   delete tmpFileName;
+  ret = SplashT1FontFile::loadType1Font(this, idA, newsrc, enc);
+  newsrc->unref();
   return ret;
 }
 

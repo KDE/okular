@@ -46,6 +46,10 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorCommandString     += "kate %f";
   editorDescriptionString += i18n("Kate does not jump to line");
   
+  editorNameString        += "Kile";
+  editorCommandString     += "kile %f --line %l";
+  editorDescriptionString += i18n("Kile works very well");
+  
   editorNameString        += "NEdit";
   editorCommandString     += "ncl -noask -line %l %f || nc -noask -line %l %f";
   editorDescriptionString += i18n("NEdit perfectly supports inverse search.");

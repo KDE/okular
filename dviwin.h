@@ -52,12 +52,13 @@ public slots:
 
  void		drawPage();
 
+ bool correctDVI();
+
 protected:
  void paintEvent(QPaintEvent *ev);
 
 
 private:
- bool		correctDVI();
  void		initDVI();
  void		changePageSize();
  QString		filename;

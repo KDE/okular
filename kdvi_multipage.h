@@ -81,6 +81,8 @@ public:
   virtual bool preview(QPainter *p, int w, int h);
 
   virtual bool print(const QStrList &pages, int current);
+  
+  virtual void reload();
 
 
 signals:

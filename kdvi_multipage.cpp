@@ -110,7 +110,6 @@ bool KDVIMultiPage::closeURL()
 }
 
 
-// test code
 QStringList KDVIMultiPage::fileFormats()
 {
   QStringList r;
@@ -238,4 +237,14 @@ bool KDVIMultiPage::print(const QStrList &pages, int current)
   delete printdlg;       
 
   return true;
+}
+
+
+void KDVIMultiPage::reload()
+{
+  if (window->correctDVI())
+    {
+      window->setFile(m_file);
+      emit previewChanged(true);
+    }
 }

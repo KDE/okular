@@ -48,15 +48,16 @@ class KPDFDocumentPrivate
 
         // cached stuff
         DocumentViewport viewport;
+        QString docFileName;
+        QString xmlFileName;
 
-        // memory check/free timer
-        QTimer * memCheckTimer;
-
-        // bookmark saver timer
-        QTimer * saveBookmarksTimer;
-
-        // observers related (note: won't delete oservers)
+        // observers / requests stuff
         QMap< int, class ObserverData* > observers;
+        //QValueList< PixmapRequest * > asyncRequestsQueue;
+
+        // timers (memory checking / info saver)
+        QTimer * memCheckTimer;
+        QTimer * saveBookmarksTimer;
 };
 
 struct ObserverData
@@ -97,10 +98,15 @@ bool KPDFDocument::openDocument( const QString & docFile )
     QFile fileReadTest( docFile );
     if ( !fileReadTest.open( IO_ReadOnly ) )
     {
-        documentFileName = QString::null;
+        d->docFileName = QString::null;
         return false;
     }
+    // determine the related "xml document-info" filename
+    d->docFileName = docFile;
+    QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
+    fn = "kpdf/" + QString::number(fileReadTest.size()) + "." + fn + ".xml";
     fileReadTest.close();
+    d->xmlFileName = locateLocal( "data", fn );
 
     // create the generator based on the file's mimetype
     KMimeType::Ptr mime = KMimeType::findByPath( docFile );
@@ -119,7 +125,6 @@ bool KPDFDocument::openDocument( const QString & docFile )
              this, SLOT( slotGeneratedContents( int, int ) ) );
 
     // 1. load Document (and set busy cursor while loading)
-    documentFileName = docFile;
     QApplication::setOverrideCursor( waitCursor );
     bool openOk = generator->loadDocument( docFile, pages_vector );
     QApplication::restoreOverrideCursor();
@@ -694,15 +699,8 @@ void KPDFDocument::loadDocumentInfo()
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
-    QFile fileReadTest( documentFileName );
-    fileReadTest.open( IO_ReadOnly );
-
-    QString fileName = documentFileName.contains('/') ? documentFileName.section('/', -1, -1) : documentFileName;
-    fileName = "kpdf/" + QString::number(fileReadTest.size()) + "." + fileName + ".xml";
-    fileReadTest.close();
-    QString localFN = locateLocal( "data", fileName );
-    //kdDebug() << "Using '" << localFN << "' as document info file." << endl;
-    QFile infoFile( localFN );
+    //kdDebug() << "Using '" << d->xmlFileName << "' as document info file." << endl;
+    QFile infoFile( d->xmlFileName );
     if (infoFile.exists() && infoFile.open( IO_ReadOnly ) )
     {
         // Load DOM from XML file
@@ -766,11 +764,11 @@ void KPDFDocument::loadDocumentInfo()
 
 QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 {
-    if ( documentFileName.isEmpty() )
+    if ( d->docFileName.isEmpty() )
         return QString::null;
 
     // convert the pdf fileName to absolute using current pdf path
-    QFileInfo currentInfo( documentFileName );
+    QFileInfo currentInfo( d->docFileName );
     return currentInfo.dir().absFilePath( fileName );
 }
 
@@ -832,17 +830,11 @@ void KPDFDocument::unHilightPages()
 
 void KPDFDocument::saveDocumentInfo() const
 {
-    if (documentFileName.isNull()) return;
+    if ( d->docFileName.isNull() )
+        return;
 
-    QFile fileReadTest( documentFileName );
-    fileReadTest.open( IO_ReadOnly );
-
-    QString fileName = documentFileName.contains('/') ? documentFileName.section('/', -1, -1) : documentFileName;
-    fileName = "kpdf/" + QString::number(fileReadTest.size()) + "." + fileName + ".xml";
-    fileReadTest.close();
-    QString localFN = locateLocal( "data", fileName );
-    //kdDebug() << "Using '" << localFN << "' as document info file for saving." << endl;
-    QFile infoFile( localFN );
+    //kdDebug() << "Using '" << d->xmlFileName << "' as document info file for saving." << endl;
+    QFile infoFile( d->xmlFileName );
     if (infoFile.open( IO_WriteOnly | IO_Truncate) )
     {
         // Create DOM

@@ -8,16 +8,16 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>348</width>
-            <height>298</height>
+            <width>294</width>
+            <height>261</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>DlgPresentation</string>
     </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
         </property>
         <widget class="QGroupBox">
             <property name="name">
@@ -207,9 +207,6 @@
                     <property name="text">
                         <string>Show s&amp;ummary page</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
-                    </property>
                 </widget>
                 <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -218,16 +215,28 @@
                     <property name="text">
                         <string>Show &amp;progress indicator</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+P</string>
-                    </property>
                 </widget>
             </grid>
         </widget>
+        <spacer>
+            <property name="name">
+                <cstring>bspace</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>1</height>
+                </size>
+            </property>
+        </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_SlidesAdvance</sender>

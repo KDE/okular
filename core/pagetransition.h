@@ -59,10 +59,10 @@ class KPDFPageTransition
         // Get direction in which the transition effect moves.
         inline int angle() const { return m_angle; }
 
-        // Get starting or ending scale.
+        // Get starting or ending scale. (Fly only)
         inline double scale() const { return m_scale; }
 
-        // Returns true if the area to be flown is rectangular and opaque.
+        // Returns true if the area to be flown is rectangular and opaque.  (Fly only)
         inline bool isRectangular() const { return m_rectangular; }
 
         inline void setType( Type type ) { m_type = type; }

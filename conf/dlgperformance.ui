@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>252</width>
-            <height>218</height>
+            <width>284</width>
+            <height>222</height>
         </rect>
     </property>
     <vbox>
@@ -34,35 +34,11 @@
             <property name="title">
                 <string>Memory Usage</string>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
-                    <property name="name">
-                        <cstring>lowRadio</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Low</string>
-                    </property>
-                </widget>
-                <widget class="QRadioButton">
-                    <property name="name">
-                        <cstring>normalRadio</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Normal (default)</string>
-                    </property>
-                </widget>
-                <widget class="QRadioButton">
-                    <property name="name">
-                        <cstring>aggressiveRadio</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Aggressive</string>
-                    </property>
-                </widget>
-                <widget class="QLabel">
+                <widget class="QLabel" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>descLabel</cstring>
                     </property>
@@ -76,7 +52,84 @@
                         <set>WordBreak|AlignVCenter</set>
                     </property>
                 </widget>
-            </vbox>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>lowRadio</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Low</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>normalRadio</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Normal (default)</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>aggressiveRadio</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Aggressive</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget" row="0" column="1">
+                    <property name="name">
+                        <cstring>layout6</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>pixmapLabel1</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>"kcmmemory", 32</pixmap>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer7</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Minimum</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>21</width>
+                                    <height>1</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </vbox>
+                </widget>
+            </grid>
         </widget>
         <widget class="QGroupBox">
             <property name="name">
@@ -93,27 +146,80 @@
             <property name="title">
                 <string>CPU Usage</string>
             </property>
-            <vbox>
+            <hbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>kcfg_DisableCompositing</cstring>
+                        <cstring>layout9</cstring>
                     </property>
-                    <property name="text">
-                        <string>Disable &amp;transparency effects</string>
-                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_DisableCompositing</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Disable &amp;transparency effects</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_DisableThreading</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Disable &amp;asyncronous generation</string>
+                            </property>
+                        </widget>
+                    </vbox>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>kcfg_DisableThreading</cstring>
+                        <cstring>layout6_2</cstring>
                     </property>
-                    <property name="text">
-                        <string>Disable &amp;asyncronous generation</string>
-                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>pixmapLabel1_2</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>"kcmprocessor", 32</pixmap>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer7_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Minimum</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>21</width>
+                                    <height>1</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </vbox>
                 </widget>
-            </vbox>
+            </hbox>
         </widget>
         <spacer>
             <property name="name">
@@ -128,7 +234,7 @@
             <property name="sizeHint">
                 <size>
                     <width>21</width>
-                    <height>20</height>
+                    <height>16</height>
                 </size>
             </property>
         </spacer>
@@ -156,6 +262,7 @@
 </connections>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
+    <include location="global" impldecl="in implementation">kiconloader.h</include>
     <include location="local" impldecl="in implementation">dlgperformance.ui.h</include>
 </includes>
 <slots>
@@ -166,5 +273,6 @@
 <functions>
     <function access="private">init()</function>
 </functions>
+<pixmapfunction>DesktopIcon</pixmapfunction>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

@@ -253,6 +253,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     for ( uint i = 0; i < numRects; i++ )
     {
         const QRect & r = allRects[i];
+        if ( !r.isValid() )
+            continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
         if ( Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
         {
@@ -560,7 +562,12 @@ void PresentationWidget::slotHideOverlay()
 void PresentationWidget::slotTransitionStep()
 {
     if ( m_transitionRects.empty() )
+    {
+        // it's better to fix the transition to cover the whole screen than
+        // enabling the following line that wastes cpu for nothing
+        //update();
         return;
+    }
 
     for ( int i = 0; i < m_transitionMul && !m_transitionRects.empty(); i++ )
     {
@@ -617,40 +624,233 @@ const KPDFPageTransition PresentationWidget::defaultTransition() const
 /** ONLY the TRANSITIONS GENERATION function from here on **/
 void PresentationWidget::initTransition( const KPDFPageTransition *transition )
 {
+    // if it's just a 'replace' transition, repaint the screen
+    if ( transition->type() == KPDFPageTransition::Replace )
+    {
+        update();
+        return;
+    }
+
+    const bool isInward = transition->direction() == KPDFPageTransition::Inward;
+    const bool isHorizontal = transition->alignment() == KPDFPageTransition::Horizontal;
+    const float totalTime = transition->duration();
+
     m_transitionRects.clear();
-    const int gridXstep = 50;
-    const int gridYstep = 38;
+
     switch( transition->type() )
     {
-         // TODO: implement missing transitions
-        case KPDFPageTransition::Replace:
-            update();
-            return;
+            // split: horizontal / vertical and inward / outward
         case KPDFPageTransition::Split:
-            update();
-            return;
-        case KPDFPageTransition::Blinds:
-            update();
-            return;
-        case KPDFPageTransition::Box:
-            update();
-            return;
-        case KPDFPageTransition::Wipe:
-            update();
-            return;
-        case KPDFPageTransition::Dissolve:
-            update();
-            return;
-        case KPDFPageTransition::Glitter: {
-            int oldX = 0,
-                oldY = 0;
-            // create a grid of gridXstep by gridYstep QRects
-            for ( int y = 0; y < gridYstep; y++ )
+        {
+            const int steps = isHorizontal ? 100 : 75;
+            if ( isHorizontal )
             {
-                int newY = (int)( m_height * ((float)(y+1) / (float)gridYstep) );
-                for ( int x = 0; x < gridXstep; x++ )
+                if ( isInward )
                 {
-                    int newX = (int)( m_width * ((float)(x+1) / (float)gridXstep) );
+                    int xPosition = 0;
+                    for ( int i = 0; i < steps; i++ )
+                    {
+                        int xNext = ((i + 1) * m_width) / (2 * steps);
+                        m_transitionRects.push_back( QRect( xPosition, 0, xNext - xPosition, m_height ) );
+                        m_transitionRects.push_back( QRect( m_width - xNext, 0, xNext - xPosition, m_height ) );
+                        xPosition = xNext;
+                    }
+                }
+                else
+                {
+                    int xPosition = m_width / 2;
+                    for ( int i = 0; i < steps; i++ )
+                    {
+                        int xNext = ((steps - (i + 1)) * m_width) / (2 * steps);
+                        m_transitionRects.push_back( QRect( xNext, 0, xPosition - xNext, m_height ) );
+                        m_transitionRects.push_back( QRect( m_width - xPosition, 0, xPosition - xNext, m_height ) );
+                        xPosition = xNext;
+                    }
+                }
+            }
+            else
+            {
+                if ( isInward )
+                {
+                    int yPosition = 0;
+                    for ( int i = 0; i < steps; i++ )
+                    {
+                        int yNext = ((i + 1) * m_height) / (2 * steps);
+                        m_transitionRects.push_back( QRect( 0, yPosition, m_width, yNext - yPosition ) );
+                        m_transitionRects.push_back( QRect( 0, m_height - yNext, m_width, yNext - yPosition ) );
+                        yPosition = yNext;
+                    }
+                }
+                else
+                {
+                    int yPosition = m_height / 2;
+                    for ( int i = 0; i < steps; i++ )
+                    {
+                        int yNext = ((steps - (i + 1)) * m_height) / (2 * steps);
+                        m_transitionRects.push_back( QRect( 0, yNext, m_width, yPosition - yNext ) );
+                        m_transitionRects.push_back( QRect( 0, m_height - yPosition, m_width, yPosition - yNext ) );
+                        yPosition = yNext;
+                    }
+                }
+            }
+            m_transitionMul = 2;
+            m_transitionDelay = (int)( (totalTime * 1000) / steps );
+        } break;
+
+            // blinds: horizontal(l-to-r) / vertical(t-to-b)
+        case KPDFPageTransition::Blinds:
+        {
+            const int blinds = isHorizontal ? 8 : 6;
+            const int steps = m_width / (4 * blinds);
+            if ( isHorizontal )
+            {
+                int xPosition[ blinds ];
+                for ( int b = 0; b < blinds; b++ )
+                    xPosition[ b ] = (b * m_width) / blinds;
+
+                for ( int i = 0; i < steps; i++ )
+                {
+                    int stepOffset = (int)( ((float)i * (float)m_width) / ((float)blinds * (float)steps) );
+                    for ( int b = 0; b < blinds; b++ )
+                    {
+                        m_transitionRects.push_back( QRect( xPosition[ b ], 0, stepOffset, m_height ) );
+                        xPosition[ b ] = stepOffset + (b * m_width) / blinds;
+                    }
+                }
+            }
+            else
+            {
+                int yPosition[ blinds ];
+                for ( int b = 0; b < blinds; b++ )
+                    yPosition[ b ] = (b * m_height) / blinds;
+
+                for ( int i = 0; i < steps; i++ )
+                {
+                    int stepOffset = (int)( ((float)i * (float)m_height) / ((float)blinds * (float)steps) );
+                    for ( int b = 0; b < blinds; b++ )
+                    {
+                        m_transitionRects.push_back( QRect( 0, yPosition[ b ], m_width, stepOffset ) );
+                        yPosition[ b ] = stepOffset + (b * m_height) / blinds;
+                    }
+                }
+            }
+            m_transitionMul = blinds;
+            m_transitionDelay = (int)( (totalTime * 1000) / steps );
+        } break;
+
+            // box: inward / outward
+        case KPDFPageTransition::Box:
+        {
+            const int steps = m_width / 10;
+            if ( isInward )
+            {
+                int L = 0, T = 0, R = m_width, B = m_height;
+                for ( int i = 0; i < steps; i++ )
+                {
+                    // compure shrinked box coords
+                    int newL = ((i + 1) * m_width) / (2 * steps);
+                    int newT = ((i + 1) * m_height) / (2 * steps);
+                    int newR = m_width - newL;
+                    int newB = m_height - newT;
+                    // add left, right, topcenter, bottomcenter rects
+                    m_transitionRects.push_back( QRect( L, T, newL - L, B - T ) );
+                    m_transitionRects.push_back( QRect( newR, T, R - newR, B - T ) );
+                    m_transitionRects.push_back( QRect( newL, T, newR - newL, newT - T ) );
+                    m_transitionRects.push_back( QRect( newL, newB, newR - newL, B - newB ) );
+                    L = newL; T = newT; R = newR, B = newB;
+                }
+            }
+            else
+            {
+                int L = m_width / 2, T = m_height / 2, R = L, B = T;
+                for ( int i = 0; i < steps; i++ )
+                {
+                    // compure shrinked box coords
+                    int newL = ((steps - (i + 1)) * m_width) / (2 * steps);
+                    int newT = ((steps - (i + 1)) * m_height) / (2 * steps);
+                    int newR = m_width - newL;
+                    int newB = m_height - newT;
+                    // add left, right, topcenter, bottomcenter rects
+                    m_transitionRects.push_back( QRect( newL, newT, L - newL, newB - newT ) );
+                    m_transitionRects.push_back( QRect( R, newT, newR - R, newB - newT ) );
+                    m_transitionRects.push_back( QRect( L, newT, R - L, T - newT ) );
+                    m_transitionRects.push_back( QRect( L, B, R - L, newB - B ) );
+                    L = newL; T = newT; R = newR, B = newB;
+                }
+            }
+            m_transitionMul = 4;
+            m_transitionDelay = (int)( (totalTime * 1000) / steps );
+        } break;
+
+            // wipe: implemented for 4 canonical angles
+        case KPDFPageTransition::Wipe:
+        {
+            const int angle = transition->angle();
+            const int steps = (angle == 0) || (angle == 180) ? m_width / 8 : m_height / 8;
+            if ( angle == 0 )
+            {
+                int xPosition = 0;
+                for ( int i = 0; i < steps; i++ )
+                {
+                    int xNext = ((i + 1) * m_width) / steps;
+                    m_transitionRects.push_back( QRect( xPosition, 0, xNext - xPosition, m_height ) );
+                    xPosition = xNext;
+                }
+            }
+            else if ( angle == 90 )
+            {
+                int yPosition = m_height;
+                for ( int i = 0; i < steps; i++ )
+                {
+                    int yNext = ((steps - (i + 1)) * m_height) / steps;
+                    m_transitionRects.push_back( QRect( 0, yNext, m_width, yPosition - yNext ) );
+                    yPosition = yNext;
+                }
+            }
+            else if ( angle == 180 )
+            {
+                int xPosition = m_width;
+                for ( int i = 0; i < steps; i++ )
+                {
+                    int xNext = ((steps - (i + 1)) * m_width) / steps;
+                    m_transitionRects.push_back( QRect( xNext, 0, xPosition - xNext, m_height ) );
+                    xPosition = xNext;
+                }
+            }
+            else if ( angle == 270 )
+            {
+                int yPosition = 0;
+                for ( int i = 0; i < steps; i++ )
+                {
+                    int yNext = ((i + 1) * m_height) / steps;
+                    m_transitionRects.push_back( QRect( 0, yPosition, m_width, yNext - yPosition ) );
+                    yPosition = yNext;
+                }
+            }
+            else
+            {
+                update();
+                return;
+            }
+            m_transitionMul = 1;
+            m_transitionDelay = (int)( (totalTime * 1000) / steps );
+        } break;
+
+            // dissolve: replace 'random' rects
+        case KPDFPageTransition::Dissolve:
+        {
+            const int gridXsteps = 50;
+            const int gridYsteps = 38;
+            const int steps = gridXsteps * gridYsteps;
+            int oldX = 0;
+            int oldY = 0;
+            // create a grid of gridXstep by gridYstep QRects
+            for ( int y = 0; y < gridYsteps; y++ )
+            {
+                int newY = (int)( m_height * ((float)(y+1) / (float)gridYsteps) );
+                for ( int x = 0; x < gridXsteps; x++ )
+                {
+                    int newX = (int)( m_width * ((float)(x+1) / (float)gridXsteps) );
                     m_transitionRects.push_back( QRect( oldX, oldY, newX - oldX, newY - oldY ) );
                     oldX = newX;
                 }
@@ -658,14 +858,13 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
                 oldY = newY;
             }
             // randomize the grid
-            int steps = gridXstep * gridYstep;
             for ( int i = 0; i < steps; i++ )
             {
                 int n1 = (int)(steps * drand48());
                 int n2 = (int)(steps * drand48());
+                // swap items if index differs
                 if ( n1 != n2 )
                 {
-                    //swap items
                     QRect r = m_transitionRects[ n2 ];
                     m_transitionRects[ n2 ] = m_transitionRects[ n1 ];
                     m_transitionRects[ n1 ] = r;
@@ -673,21 +872,113 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
             }
             // set global transition parameters
             m_transitionMul = 40;
-            m_transitionDelay = (m_transitionMul * 500) / steps;
-            } break;
+            m_transitionDelay = (int)( (m_transitionMul * 1000 * totalTime) / steps );
+        } break;
+
+            // glitter: similar to dissolve but has a direction
+        case KPDFPageTransition::Glitter:
+        {
+            const int gridXsteps = 50;
+            const int gridYsteps = 38;
+            const int steps = gridXsteps * gridYsteps;
+            const int angle = transition->angle();
+            // generate boxes using a given direction
+            if ( angle == 90 )
+            {
+                int yPosition = m_height;
+                for ( int i = 0; i < gridYsteps; i++ )
+                {
+                    int yNext = ((gridYsteps - (i + 1)) * m_height) / gridYsteps;
+                    int xPosition = 0;
+                    for ( int j = 0; j < gridXsteps; j++ )
+                    {
+                        int xNext = ((j + 1) * m_width) / gridXsteps;
+                        m_transitionRects.push_back( QRect( xPosition, yNext, xNext - xPosition, yPosition - yNext ) );
+                        xPosition = xNext;
+                    }
+                    yPosition = yNext;
+                }
+            }
+            else if ( angle == 180 )
+            {
+                int xPosition = m_width;
+                for ( int i = 0; i < gridXsteps; i++ )
+                {
+                    int xNext = ((gridXsteps - (i + 1)) * m_width) / gridXsteps;
+                    int yPosition = 0;
+                    for ( int j = 0; j < gridYsteps; j++ )
+                    {
+                        int yNext = ((j + 1) * m_height) / gridYsteps;
+                        m_transitionRects.push_back( QRect( xNext, yPosition, xPosition - xNext, yNext - yPosition ) );
+                        yPosition = yNext;
+                    }
+                    xPosition = xNext;
+                }
+            }
+            else if ( angle == 270 )
+            {
+                int yPosition = 0;
+                for ( int i = 0; i < gridYsteps; i++ )
+                {
+                    int yNext = ((i + 1) * m_height) / gridYsteps;
+                    int xPosition = 0;
+                    for ( int j = 0; j < gridXsteps; j++ )
+                    {
+                        int xNext = ((j + 1) * m_width) / gridXsteps;
+                        m_transitionRects.push_back( QRect( xPosition, yPosition, xNext - xPosition, yNext - yPosition ) );
+                        xPosition = xNext;
+                    }
+                    yPosition = yNext;
+                }
+            }
+            else // if angle is 0 or 315
+            {
+                int xPosition = 0;
+                for ( int i = 0; i < gridXsteps; i++ )
+                {
+                    int xNext = ((i + 1) * m_width) / gridXsteps;
+                    int yPosition = 0;
+                    for ( int j = 0; j < gridYsteps; j++ )
+                    {
+                        int yNext = ((j + 1) * m_height) / gridYsteps;
+                        m_transitionRects.push_back( QRect( xPosition, yPosition, xNext - xPosition, yNext - yPosition ) );
+                        yPosition = yNext;
+                    }
+                    xPosition = xNext;
+                }
+            }
+            // add a 'glitter' (1 over 10 pieces is randomized)
+            int randomSteps = steps / 20;
+            for ( int i = 0; i < randomSteps; i++ )
+            {
+                int n1 = (int)(steps * drand48());
+                int n2 = (int)(steps * drand48());
+                // swap items if index differs
+                if ( n1 != n2 )
+                {
+                    QRect r = m_transitionRects[ n2 ];
+                    m_transitionRects[ n2 ] = m_transitionRects[ n1 ];
+                    m_transitionRects[ n1 ] = r;
+                }
+            }
+            // set global transition parameters
+            m_transitionMul = (angle == 90) || (angle == 270) ? gridYsteps : gridXsteps;
+            m_transitionMul /= 2;
+            m_transitionDelay = (int)( (m_transitionMul * 1000 * totalTime) / steps );
+        } break;
+
+        // TODO: implement missing transitions
         case KPDFPageTransition::Fly:
-            update();
-            return;
+
         case KPDFPageTransition::Push:
-            update();
-            return;
+
         case KPDFPageTransition::Cover:
-            update();
-            return;
+
         case KPDFPageTransition::Uncover:
-            update();
-            return;
+
         case KPDFPageTransition::Fade:
+
+        default:
             update();
             return;
     }

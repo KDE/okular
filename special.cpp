@@ -506,8 +506,7 @@ static	unsigned int	bbox_width;
 static	unsigned int	bbox_height;
 static	int		bbox_voffset;
 
-void
-draw_bbox()
+void draw_bbox()
 {
 	if (bbox_valid) {
 	    put_border(PXL_H - currwin.base_x,
@@ -517,49 +516,21 @@ draw_bbox()
 	}
 }
 
-#if	PS
-static	void
-actual_startup()
+static	void actual_startup()
 {
-	/*
-	 * Figure out what we want to use to display postscript figures
-	 * and set at most one of the following to True:
-	 * useGS, resource.useDPS, resource.useNeWS
-	 *
-	 * Choose DPS then NEWS then GhostScript if they are available
-	 */
-	if (!(
-#ifdef	PS_DPS
-	    (resource.useDPS && initDPS())
-#if	defined(PS_NEWS) || defined(PS_GS)
-	    ||
-#endif
-#endif	/* PS_DPS */
-
-#ifdef	PS_NEWS
-	    (resource.useNeWS && initNeWS())
-#ifdef	PS_GS
-	    ||
-#endif
-#endif	/* PS_NEWS */
-
-#ifdef	PS_GS
-	    (useGS && initGS())
-#endif
-
-	    ))
-	    psp = no_ps_procs;
+  if (!((useGS && initGS())))
+    psp = no_ps_procs;
 }
 
 static	void ps_startup(int xul, int yul, char *cp)
 {
-	if (!_postscript) {
-	    psp.toggle = actual_startup;
-	    draw_bbox();
-	    return;
-	}
-	actual_startup();
-	psp.drawbegin(xul, yul, cp);
+  if (!_postscript) {
+    psp.toggle = actual_startup;
+    draw_bbox();
+    return;
+  }
+  actual_startup();
+  psp.drawbegin(xul, yul, cp);
 }
 
 /* ARGSUSED */
@@ -568,18 +539,11 @@ static	void NullProc2(char *cp)
 }
 
 /* ARGSUSED */
-void
-#if	NeedFunctionPrototypes
-drawbegin_none(int xul, int yul, char *cp)
-#else	/* !NeedFunctionPrototypes */
-drawbegin_none(xul, yul, cp)
-	int	xul, yul;
-	char	*cp;
-#endif	/* NeedFunctionPrototypes */
+void drawbegin_none(int xul, int yul, char *cp)
 {
 	draw_bbox();
 }
-#endif	/* PS */
+
 
 
 /* If FILENAME starts with a left quote, set *DECOMPRESS to 1 and return
@@ -605,7 +569,6 @@ static string find_fig_file (char *filename, int *decompress)
 }
 
 
-#if PS
 /* If DECOMPRESS is zero, pass NAME to the drawfile proc.  But if
    DECOMPRESS is nonzero, open a pipe to it and pass the resulting
    output to the drawraw proc (in chunks).  */
@@ -637,64 +600,55 @@ static void draw_file (psprocs psp, char *name, int decompress)
     psp.drawfile (name);
   }
 }
-#endif /* PS */
 
 static	void psfig_special(char *cp)
 {
-	char	*filename;
-	int	raww, rawh;
+  char	*filename;
+  int	raww, rawh;
 
-	if (strncmp(cp, ":[begin]", 8) == 0) {
-	    cp += 8;
-	    bbox_valid = False;
-	    if (sscanf(cp,"%d %d\n", &raww, &rawh) >= 2) {
-		bbox_valid = True;
-		bbox_width = pixel_conv(spell_conv(raww));
-		bbox_height = pixel_conv(spell_conv(rawh));
-		bbox_voffset = 0;
-	    }
-	    if (currwin.win == mane.win)
-#if	PS
-		psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,
-		    cp);
-#else
-		draw_bbox();
-#endif
-	} else if (strncmp(cp, " plotfile ", 10) == 0) {
-	    cp += 10;
-	    while (isspace(*cp)) cp++;
-	    for (filename = cp; !isspace(*cp); ++cp);
-	    *cp = '\0';
-#if	PS
-	    {
-	      int decompress;
-	      char *name = find_fig_file (filename, &decompress);
-              if (name && currwin.win == mane.win) {
-                  draw_file(psp, name, decompress);
-                  if (!decompress && name != filename)
-                    free (name);
-              }
-	    }
-#endif
-	} else if (strncmp(cp, ":[end]", 6) == 0) {
-	    cp += 6;
-#if	PS
-	    if (currwin.win == mane.win) psp.drawend(cp);
-#endif
-	    bbox_valid = False;
-	} else { /* I am going to send some raw postscript stuff */
-	  if (*cp == ':')
-	    ++cp;	/* skip second colon in ps:: */
-#if	PS
-	  if (currwin.win == mane.win) {
-            /* It's drawbegin that initializes the ps process, so make
-               sure it's started up.  */
-            psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, "");
-            psp.drawend("");
-            psp.drawraw(cp);
-	  }
-#endif
+  if (strncmp(cp, ":[begin]", 8) == 0) {
+    cp += 8;
+    bbox_valid = False;
+    if (sscanf(cp,"%d %d\n", &raww, &rawh) >= 2) {
+      bbox_valid = True;
+      bbox_width = pixel_conv(spell_conv(raww));
+      bbox_height = pixel_conv(spell_conv(rawh));
+      bbox_voffset = 0;
+    }
+    if (currwin.win == mane.win)
+      psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,cp);
+  } else
+    if (strncmp(cp, " plotfile ", 10) == 0) {
+      cp += 10;
+      while (isspace(*cp)) cp++;
+      for (filename = cp; !isspace(*cp); ++cp);
+      *cp = '\0';
+      {
+	int decompress;
+	char *name = find_fig_file (filename, &decompress);
+	if (name && currwin.win == mane.win) {
+	  draw_file(psp, name, decompress);
+	  if (!decompress && name != filename)
+	    free (name);
 	}
+      }
+    } else
+      if (strncmp(cp, ":[end]", 6) == 0) {
+	cp += 6;
+	if (currwin.win == mane.win) 
+	  psp.drawend(cp);
+	bbox_valid = False;
+      } else { /* I am going to send some raw postscript stuff */
+	if (*cp == ':')
+	  ++cp;	/* skip second colon in ps:: */
+	if (currwin.win == mane.win) {
+	  /* It's drawbegin that initializes the ps process, so make
+	     sure it's started up.  */
+	  psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, "");
+	  psp.drawend("");
+	  psp.drawraw(cp);
+	}
+      }
 }
 
 
@@ -811,16 +765,12 @@ static	void epsf_special(char *cp)
 	}
 
 	if (name && currwin.win == mane.win) {
-#if	PS
 	    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,
 		buffer);
 	    draw_file(psp, name, decompress);
 	    psp.drawend(" @endspecial");
 	    if (!decompress && name != filename)
 	     free (name);
-#else
-	    draw_bbox();
-#endif
 	}
 	bbox_valid = False;
 }
@@ -830,7 +780,6 @@ static	void bang_special(char *cp)
 {
 	bbox_valid = False;
 
-#if	PS
 	if (currwin.win == mane.win) {
 	    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,
 	        "@defspecial ");
@@ -838,16 +787,12 @@ static	void bang_special(char *cp)
 	    psp.drawraw(cp);
 	    psp.drawend(" @fedspecial");
 	}
-#endif
-
-	/* nothing else to do--there's no bbox here */
 }
 
 static	void quote_special(char *cp)
 {
 	bbox_valid = False;
 
-#if	PS
 	if (currwin.win == mane.win) {
 	    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y,
 		"@beginspecial @setspecial ");
@@ -855,9 +800,6 @@ static	void quote_special(char *cp)
 	    psp.drawraw(cp);
 	    psp.drawend(" @endspecial");
 	}
-#endif
-
-	/* nothing else to do--there's no bbox here */
 }
 
 

@@ -146,6 +146,9 @@ static	Atom	gs_atom;
 static	Atom	gs_colors_atom;
 #define	XtPageOrientationPortrait 0
 
+// The need_to_redraw is a dreadful hack. See the comments in dviwin_draw.cpp
+extern int need_to_redraw;
+
 /*
  *	Our replacement for setenv(), which is not available on all systems.
  */
@@ -506,16 +509,16 @@ static	void waitack(int waittime)
 
 Boolean initGS()
 {
-	char	buf[100];
-		/*
-		 * This string reads chunks (delimited by %%xdvimark).
-		 * The first character of a chunk tells whether a given chunk
-		 * is to be done within save/restore or not.
-		 * The `H' at the end tells it that the first group is a
-		 * header; i.e., no save/restore.
-		 * `execute' is unique to ghostscript.
-		 */
-	static	_Xconst	char	str1[]	= "\
+  char	buf[100];
+  /*
+   * This string reads chunks (delimited by %%xdvimark).
+   * The first character of a chunk tells whether a given chunk
+   * is to be done within save/restore or not.
+   * The `H' at the end tells it that the first group is a
+   * header; i.e., no save/restore.
+   * `execute' is unique to ghostscript.
+   */
+  static	_Xconst	char	str1[]	= "\
 /xdvi$run {$error /newerror false put {currentfile cvx execute} stopped pop} def \
 /xdvi$ack (\347\310\376) def \
 /xdvi$dslen countdictstack def \
@@ -533,46 +536,6 @@ dup dup 4 get round 4 exch put \
 dup dup 5 get round 5 exch put setmatrix\n\
 stop\n%%xdvimark\n";
 
-#ifndef KDVI
-	gs_atom = XInternAtom(DISP, "GHOSTVIEW", False);
-	/* send bpixmap, orientation, bbox (in pixels), and h & v resolution */
-	Sprintf(buf, "%ld %d 0 0 %u %u 72 72",
-	    None,			/* bpixmap */ 
-	    XtPageOrientationPortrait,
-	    GS_page_w = page_w, GS_page_h = page_h);
-	XChangeProperty(DISP, mane.win, gs_atom, XA_STRING, 8,
-	    PropModeReplace, (unsigned char *) buf, strlen(buf));
-
-	gs_colors_atom = XInternAtom(DISP, "GHOSTVIEW_COLORS", False);
-	Sprintf(buf, "%s %ld %ld", "Color", fore_Pixel, back_Pixel);
-	XChangeProperty(DISP, mane.win, gs_colors_atom, XA_STRING, 8,
-	    PropModeReplace, (unsigned char *) buf, strlen(buf));
-
-	XSync(DISP, False);		/* update the window */
-
-	if (xpipe(std_in) != 0 || xpipe(std_out) != 0) {
-	    perror("pipe");
-	    return False;
-	}
-	Fflush(stderr);		/* to avoid double flushing */
-	GS_pid = vfork();
-	if (GS_pid == 0) {		/* child */
-	    Sprintf(buf, "%ld", mane.win);
-	    setenv("GHOSTVIEW", buf, True);
-	    setenv("DISPLAY", XDisplayString(DISP), True);
-	    (void) close(std_in[1]);
-	    (void) dup2(std_in[0], 0);
-	    (void) close(std_in[0]);
-	    (void) close(std_out[0]);
-	    (void) dup2(std_out[1], 1);
-	    (void) dup2(std_out[1], 2);
-	    (void) close(std_out[1]);
-	    (void) execvp(argv[0], argv);
-	    Fprintf(stderr, "Execvp of %s failed.\n", argv[0]);
-	    Fflush(stderr);
-	    _exit(1);
-	}
-#else /* KDVI */
 	extern int useAlpha;
 	extern Window mainwin;
 
@@ -615,7 +578,6 @@ stop\n%%xdvimark\n";
 	    Fflush(stderr);
 	    _exit(1);
 	}
-#endif /* KDVI */
 	if (GS_pid == -1) {	/* error */
 	    perror("vfork");
 	    return False;
@@ -659,21 +621,19 @@ stop\n%%xdvimark\n";
 	    destroy_gs();
 	    return False;
 	}
-	if (!postscript) toggle_gs();	/* if we got a 'v' already */
-	else {
-#ifndef KDVI
-	    canit = True;		/* ||| redraw the page */
-	    longjmp(canit_env, 1);
-#endif /* KDVI */
-	}
+	if (!postscript) 
+	  toggle_gs();	/* if we got a 'v' already */
+	else 
+          need_to_redraw = 1; // Dreadful hack. See the comments in dviwin_draw.cpp
 	return True;
 }
 
-static	void
-toggle_gs()
+static	void toggle_gs()
 {
-	if (_debug & DBG_PS) Puts("Toggling GS on or off");
-	if (postscript) psp.drawbegin = drawbegin_gs;
+	if (_debug & DBG_PS)
+ Puts("Toggling GS on or off");
+	if (postscript)
+ psp.drawbegin = drawbegin_gs;
 	else {
 	    interrupt_gs();
 	    psp.drawbegin = drawbegin_none;
@@ -681,8 +641,7 @@ toggle_gs()
 	    
 }
 
-static	void
-destroy_gs()
+static	void destroy_gs()
 {
 	if (_debug & DBG_PS) Puts("Destroying GS process");
 	if (linepos > line) {
@@ -724,8 +683,7 @@ interrupt_gs()
 	}
 }
 
-static	void
-endpage_gs()
+static	void endpage_gs()
 {
 	static	_Xconst	char	str[]	= "stop\n%%xdvimark\n";
 
@@ -754,8 +712,7 @@ static	void drawbegin_gs(int xul, int yul, char *cp)
 
 	if (!GS_active) {
 	    if (magnification != GS_mag) {
-		Sprintf(buf, "H TeXDict begin /DVImag %d 1000 div def \
-end stop\n%%%%xdvimark\n",
+		Sprintf(buf, "H TeXDict begin /DVImag %d 1000 div def end stop\n%%%%xdvimark\n",
 		    GS_mag = magnification);
 		send(buf, strlen(buf));
 		++GS_pending;

@@ -699,22 +699,45 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 
 #undef	xspell_conv
 
+// The need_to_redraw is a dreadful hack to adress the following
+// problem.  When the function initGS is called, in some circumstances
+// part of the screen is erased. In older versions of kdvi the lead to
+// errors in the output: part of the screen was blank. In xdvi, this
+// problem was already solved: in case of neew the initGS would call
+// longjump(canit_env) to ask the main program to draw the entire
+// screen anew. We do the same here, but we avoid longjump. Instead,
+// initGS sets need_to_redraw to 1 if it believes that it damaged part
+// of the visible screen.
+//
+// I would be very happy if someone would come forward with a better
+// solution.
+//
+// -- Stefan Kebekus.
+
+int need_to_redraw;
+
 void draw_page()
 {
-	/* Check for changes in dvi file. */
-	if (!check_dvi_file()) return;
+  need_to_redraw = 0;
 
-	put_border(-currwin.base_x, -currwin.base_y,
-	    ROUNDUP(unshrunk_paper_w, shrink_factor) + 2,
-	    ROUNDUP(unshrunk_paper_h, shrink_factor) + 2);
+  /* Check for changes in dvi file. */
+  if (!check_dvi_file())
+    return;
 
-	(void) lseek(fileno(dvi_file), page_offset[current_page], SEEK_SET);
+  put_border(-currwin.base_x, -currwin.base_y,
+	     ROUNDUP(unshrunk_paper_w, shrink_factor) + 2,
+	     ROUNDUP(unshrunk_paper_h, shrink_factor) + 2);
 
-	bzero((char *) &currinf.data, sizeof(currinf.data));
-	currinf.tn_table_len = TNTABLELEN;
-	currinf.tn_table = tn_table;
-	currinf.tn_head = tn_head;
-	currinf.pos = currinf.end = dvi_buffer;
-	currinf._virtual = NULL;
-	draw_part(current_frame = &frame0, dimconv);
+  (void) lseek(fileno(dvi_file), page_offset[current_page], SEEK_SET);
+
+  bzero((char *) &currinf.data, sizeof(currinf.data));
+  currinf.tn_table_len = TNTABLELEN;
+  currinf.tn_table = tn_table;
+  currinf.tn_head = tn_head;
+  currinf.pos = currinf.end = dvi_buffer;
+  currinf._virtual = NULL;
+  draw_part(current_frame = &frame0, dimconv);
+
+  if (need_to_redraw != 0)
+    draw_page();
 }

@@ -834,7 +834,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
+    {
+        // ..except for right Clicks (emitted even it viewport is empty)
+        if ( e->button() == RightButton )
+            emit rightClick( 0, e->globalPos() );
         return;
+    }
 
     // don't perform any mouse action when viewport is autoscrolling
     if ( d->viewportMoveActive )

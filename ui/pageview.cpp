@@ -83,6 +83,8 @@ public:
     PageViewMessage * messageWindow;    // in pageviewutils.h
 
     // actions
+    KToggleAction * aMouseNormal;
+    KToggleAction * aMouseSelect;
     KToggleAction * aMouseEdit;
     KSelectAction * aZoom;
     KToggleAction * aZoomFitWidth;
@@ -90,6 +92,7 @@ public:
     KToggleAction * aZoomFitText;
     KToggleAction * aViewTwoPages;
     KToggleAction * aViewContinous;
+    KAction * aPrevAction;
 };
 
 
@@ -124,6 +127,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->blockViewport = false;
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
+    d->aPrevAction = 0;
 
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );
@@ -184,15 +188,15 @@ void PageView::setupActions( KActionCollection * ac )
     d->aViewContinous->setChecked( Settings::viewContinous() );
 
     // Mouse-Mode actions
-    KToggleAction * mn = new KRadioAction( i18n("&Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
-    mn->setExclusiveGroup( "MouseType" );
-    mn->setChecked( true );
+    d->aMouseNormal = new KRadioAction( i18n("&Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+    d->aMouseNormal->setExclusiveGroup( "MouseType" );
+    d->aMouseNormal->setChecked( true );
 
     KToggleAction * mz = new KRadioAction( i18n("&Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
     mz->setExclusiveGroup( "MouseType" );
 
-    KToggleAction * mst = new KRadioAction( i18n("&Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
-    mst->setExclusiveGroup( "MouseType" );
+    d->aMouseSelect = new KRadioAction( i18n("&Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    d->aMouseSelect->setExclusiveGroup( "MouseType" );
 
     d->aMouseEdit = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
     d->aMouseEdit->setExclusiveGroup("MouseType");
@@ -303,8 +307,8 @@ void PageView::notifyViewportChanged()
     const QRect & r = item->geometry();
     if ( vp.reCenter.enabled )
     {
-        int xCenter = (int)( vp.reCenter.normalizedCenterX * (float)r.width() );
-        int yCenter = (int)( vp.reCenter.normalizedCenterY * (float)r.height() );
+        int xCenter = (int)( vp.reCenter.normalizedCenterX * (double)r.width() );
+        int yCenter = (int)( vp.reCenter.normalizedCenterY * (double)r.height() );
         center( r.left() + xCenter, r.top() + yCenter );
     }
     else
@@ -705,8 +709,8 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 
         case MouseZoom:
         case MouseSelect:
-            // set second corner of selection in selection pageItem
-            if ( leftButton && !d->mouseSelectionRect.isNull() )
+            // set second corner of selection
+            if ( (leftButton || d->aPrevAction) && !d->mouseSelectionRect.isNull() )
                 selectionEndPoint( e->x(), e->y() );
             break;
 
@@ -737,11 +741,19 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                 if ( !d->mouseOnRect )
                     setCursor( sizeAllCursor );
             }
+            else if ( e->button() & RightButton )
+            {
+                d->aPrevAction = d->aMouseNormal;
+                d->aMouseSelect->activate();
+                contentsMousePressEvent( e );
+                return;
+            }
             break;
 
         case MouseZoom:
-        case MouseSelect:   // set first corner of the selection rect
-            if ( leftButton )
+        case MouseSelect:
+            // set first corner of the selection rect
+            if ( (leftButton || d->aPrevAction) && d->mouseSelectionRect.isNull() )
                 selectionStart( e->x(), e->y(), false );
             break;
 
@@ -846,7 +858,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             break;
 
         case MouseSelect:{  // do SELECT
-            if ( !leftButton || d->mouseSelectionRect.isNull() )
+            if ( (!leftButton && !d->aPrevAction) || (leftButton && d->aPrevAction) ||
+                 d->mouseSelectionRect.isNull() )
                 break;
 
             QRect selectionRect = d->mouseSelectionRect.normalize();
@@ -932,6 +945,13 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
             // clear widget selection and invalidate rect
             selectionClear();
+
+            // restore previous action if came from it using right button
+            if ( d->aPrevAction )
+            {
+                d->aPrevAction->activate();
+                d->aPrevAction = 0;
+            }
             }break;
 
         case MouseEdit:      // ? apply [tool] ?
@@ -1497,10 +1517,10 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
                         visibleWidth(), visibleHeight() );
 
     // some variables used to determine the viewport
-    int nearPageNumber = -1,
-        viewportCenterX = (viewportRect.left() + viewportRect.right()) / 2,
-        viewportCenterY = (viewportRect.top() + viewportRect.bottom()) / 2;
-    double focusedX = 0.5,
+    int nearPageNumber = -1;
+    double viewportCenterX = (viewportRect.left() + viewportRect.right()) / 2.0,
+           viewportCenterY = (viewportRect.top() + viewportRect.bottom()) / 2.0,
+           focusedX = 0.5,
            focusedY = 0.0,
            minDistance = -1.0;
 
@@ -1541,8 +1561,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             minDistance = distance;
             if ( geometry.height() > 0 && geometry.width() > 0 )
             {
-                focusedX = (double)( viewportCenterX - geometry.left() ) / (double)geometry.width();
-                focusedY = (double)( viewportCenterY - geometry.top() ) / (double)geometry.height();
+                focusedX = ( viewportCenterX - (double)geometry.left() ) / (double)geometry.width();
+                focusedY = ( viewportCenterY - (double)geometry.top() ) / (double)geometry.height();
             }
         }
     }
@@ -1579,7 +1599,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
     if ( !requestedPixmaps.isEmpty() )
         d->document->requestPixmaps( requestedPixmaps );
 
-    // if this functions was invoked by viewport events
+    // if this functions was invoked by viewport events, send update to document
     if ( isEvent && nearPageNumber != -1 )
     {
         // determine the document viewport

@@ -42,11 +42,11 @@ private:
   SplashT1FontFile(SplashT1FontEngine *engineA,
 		   SplashFontFileID *idA,
 		   char *fileNameA, GBool deleteFileA,
-		   int t1libIDA, char **encA, char *encStrA);
+		   int t1libIDA, const char **encA, char *encStrA);
 
   SplashT1FontEngine *engine;
   int t1libID;			// t1lib font ID
-  char **enc;
+  const char **enc;
   char *encStr;
 
   friend class SplashT1Font;

@@ -29,7 +29,7 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
 						GBool deleteFileA,
 						const char **encA) {
   int t1libIDA;
-  char **encTmp;
+  const char **encTmp;
   char *encStrTmp;
   int encStrSize;
   char *encPtr;
@@ -48,7 +48,7 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
       encStrSize += strlen(encA[i]) + 1;
     }
   }
-  encTmp = (char **)gmalloc(257 * sizeof(char *));
+  encTmp = (const char **)gmalloc(257 * sizeof(char *));
   encStrTmp = (char *)gmalloc(encStrSize * sizeof(char));
   encPtr = encStrTmp;
   for (i = 0; i < 256; ++i) {
@@ -61,7 +61,7 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
     }
   }
   encTmp[256] = "custom";
-  T1_ReencodeFont(t1libIDA, encTmp);
+  T1_ReencodeFont(t1libIDA, (char**)encTmp);
 
   return new SplashT1FontFile(engineA, idA, fileNameA, deleteFileA,
 			      t1libIDA, encTmp, encStrTmp);
@@ -70,7 +70,7 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
 SplashT1FontFile::SplashT1FontFile(SplashT1FontEngine *engineA,
 				   SplashFontFileID *idA,
 				   char *fileNameA, GBool deleteFileA,
-				   int t1libIDA, char **encA, char *encStrA):
+				   int t1libIDA, const char **encA, char *encStrA):
   SplashFontFile(idA, fileNameA, deleteFileA)
 {
   engine = engineA;

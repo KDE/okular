@@ -170,12 +170,12 @@ SplashT1Font::~SplashT1Font() {
   T1_DeleteFont(t1libID);
 }
 
-GBool SplashT1Font::getGlyph(int c, int xFrac, int yFrac,
+GBool SplashT1Font::getGlyph(int c, int /*xFrac*/, int /*yFrac*/,
 			     SplashGlyphBitmap *bitmap) {
   return SplashFont::getGlyph(c, 0, 0, bitmap);
 }
 
-GBool SplashT1Font::makeGlyph(int c, int xFrac, int yFrac,
+GBool SplashT1Font::makeGlyph(int c, int /*xFrac*/, int /*yFrac*/,
 			      SplashGlyphBitmap *bitmap) {
   GLYPH *glyph;
   int n, i;

@@ -257,7 +257,7 @@ void SplashOutputDev::startDoc(XRef *xrefA) {
   nT3Fonts = 0;
 }
 
-void SplashOutputDev::startPage(int pageNum, GfxState *state) {
+void SplashOutputDev::startPage(int /*pageNum*/, GfxState *state) {
   int w, h;
   SplashColor color;
 
@@ -296,7 +296,7 @@ void SplashOutputDev::startPage(int pageNum, GfxState *state) {
 void SplashOutputDev::endPage() {
 }
 
-void SplashOutputDev::drawLink(Link *link, Catalog *catalog) {
+void SplashOutputDev::drawLink(Link *link, Catalog */*catalog*/) {
   double x1, y1, x2, y2;
   LinkBorderStyle *borderStyle;
   GfxRGB rgb;
@@ -349,11 +349,11 @@ void SplashOutputDev::drawLink(Link *link, Catalog *catalog) {
   }
 }
 
-void SplashOutputDev::saveState(GfxState *state) {
+void SplashOutputDev::saveState(GfxState */*state*/) {
   splash->saveState();
 }
 
-void SplashOutputDev::restoreState(GfxState *state) {
+void SplashOutputDev::restoreState(GfxState */*state*/) {
   splash->restoreState();
   needFontUpdate = gTrue;
 }
@@ -370,9 +370,9 @@ void SplashOutputDev::updateAll(GfxState *state) {
   needFontUpdate = gTrue;
 }
 
-void SplashOutputDev::updateCTM(GfxState *state, double m11, double m12,
-				double m21, double m22,
-				double m31, double m32) {
+void SplashOutputDev::updateCTM(GfxState *state, double /*m11*/, double /*m12*/,
+				double /*m21*/, double /*m22*/,
+				double /*m31*/, double /*m32*/) {
   updateLineDash(state);
   updateLineJoin(state);
   updateLineCap(state);
@@ -797,9 +797,9 @@ SplashPath *SplashOutputDev::convertPath(GfxState *state, GfxPath *path) {
 }
 
 void SplashOutputDev::drawChar(GfxState *state, double x, double y,
-			       double dx, double dy,
+			       double /*dx*/, double /*dy*/,
 			       double originX, double originY,
-			       CharCode code, Unicode *u, int uLen) {
+			       CharCode code, Unicode */*u*/, int /*uLen*/) {
   double x1, y1;
   SplashPath *path;
   int render;
@@ -848,9 +848,9 @@ void SplashOutputDev::drawChar(GfxState *state, double x, double y,
   }
 }
 
-GBool SplashOutputDev::beginType3Char(GfxState *state, double x, double y,
-				      double dx, double dy,
-				      CharCode code, Unicode *u, int uLen) {
+GBool SplashOutputDev::beginType3Char(GfxState *state, double /*x*/, double /*y*/,
+				      double /*dx*/, double /*dy*/,
+				      CharCode code, Unicode */*u*/, int /*uLen*/) {
   GfxFont *gfxFont;
   Ref *fontID;
   double *ctm, *bbox;
@@ -996,10 +996,10 @@ void SplashOutputDev::endType3Char(GfxState *state) {
   delete t3gs;
 }
 
-void SplashOutputDev::type3D0(GfxState *state, double wx, double wy) {
+void SplashOutputDev::type3D0(GfxState */*state*/, double /*wx*/, double /*wy*/) {
 }
 
-void SplashOutputDev::type3D1(GfxState *state, double wx, double wy,
+void SplashOutputDev::type3D1(GfxState *state, double /*wx*/, double /*wy*/,
 			      double llx, double lly, double urx, double ury) {
   double *ctm;
   T3FontCache *t3Font;
@@ -1097,7 +1097,7 @@ void SplashOutputDev::type3D1(GfxState *state, double wx, double wy,
 }
 
 void SplashOutputDev::drawType3Glyph(T3FontCache *t3Font,
-				     T3FontCacheTag *tag, Guchar *data,
+				     T3FontCacheTag */*tag*/, Guchar *data,
 				     double x, double y) {
   SplashGlyphBitmap glyph;
 
@@ -1111,7 +1111,7 @@ void SplashOutputDev::drawType3Glyph(T3FontCache *t3Font,
   splash->fillGlyph((SplashCoord)x, (SplashCoord)y, &glyph);
 }
 
-void SplashOutputDev::endTextObject(GfxState *state) {
+void SplashOutputDev::endTextObject(GfxState */*state*/) {
   if (textClipPath) {
     splash->clipToPath(textClipPath, gFalse);
     delete textClipPath;
@@ -1142,7 +1142,7 @@ GBool SplashOutputDev::imageMaskSrc(void *data, SplashMono1 *pixel) {
   return gTrue;
 }
 
-void SplashOutputDev::drawImageMask(GfxState *state, Object *ref, Stream *str,
+void SplashOutputDev::drawImageMask(GfxState *state, Object */*ref*/, Stream *str,
 				    int width, int height, GBool invert,
 				    GBool inlineImg) {
   double *ctm;
@@ -1231,7 +1231,7 @@ GBool SplashOutputDev::imageSrc(void *data, SplashColor *pixel,
   return gTrue;
 }
 
-void SplashOutputDev::drawImage(GfxState *state, Object *ref, Stream *str,
+void SplashOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str,
 				int width, int height,
 				GfxImageColorMap *colorMap,
 				int *maskColors, GBool inlineImg) {

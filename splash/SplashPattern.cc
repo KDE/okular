@@ -35,7 +35,7 @@ SplashSolidColor::SplashSolidColor(SplashColor colorA) {
 SplashSolidColor::~SplashSolidColor() {
 }
 
-SplashColor SplashSolidColor::getColor(int x, int y) {
+SplashColor SplashSolidColor::getColor(int /*x*/, int /*y*/) {
   return color;
 }
 

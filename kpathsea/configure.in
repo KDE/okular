@@ -33,16 +33,23 @@ AC_CHECK_HEADERS(assert.h float.h limits.h memory.h pwd.h stdlib.h \
 AC_ARG_WITH(tex-datadir,
     [  --with-tex-datadir=DIR       where the root of texmf/web2c/texmf.cnf is installed ],
     [  datadir=$withval
-    ], datadir=NO)     
+    ], datadir=NO)
 
-echo "checking for $datadir/texmf/web2c/texmf.cnf"
-if test ! -r $datadir/texmf/web2c/texmf.cnf; then
-  { 
-  echo "configure: error. Please use the --with-tex-datadir option to point to the main" 1>&2
-  echo "directory of your TeX installation, where the file texmf/web2c/texmf.cnf" 1>&2
-  echo "is found." 1>&2
-  exit -1
-  }
+AC_ARG_WITH(system-kpathsea,
+    [  --with-system-kpathsea  use system kpathsea library],
+    [  use_system_kpathsea=yes
+    ], use_system_kpathsea=no)
+
+if test ! x"${use_system_kpathsea}" = xyes; then
+    echo "checking for $datadir/texmf/web2c/texmf.cnf"
+    if test ! -r $datadir/texmf/web2c/texmf.cnf; then
+      { 
+      echo "configure: error. Please use the --with-tex-datadir option to point to the main" 1>&2
+      echo "directory of your TeX installation, where the file texmf/web2c/texmf.cnf" 1>&2
+      echo "is found." 1>&2
+      exit 1
+      }
+    fi
 fi
 
 

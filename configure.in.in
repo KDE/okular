@@ -3,34 +3,62 @@ dnl the following is just to fool the toplevel configure.in
 LTLIBOBJS=
 AC_SUBST(LTLIBOBJS)
 
+AC_ARG_WITH(system-kpathsea,
+    [  --with-system-kpathsea  use system kpathsea library],
+    [  use_system_kpathsea=$withval
+    ], use_system_kpathsea=no)
+
+# the following is repeated here, so it shows up in the top level configure --help
+AC_ARG_WITH(tex-datadir,
+    [  --with-tex-datadir=DIR  where the root of texmf/web2c/texmf.cnf is installed ],
+    [],
+    [])
+
 compile_kdvi=yes
 for j in $DO_NOT_COMPILE; do
    if test "kdvi" = $j; then
        compile_kdvi=no
-        echo "CCCCCC"
    fi
 done    
 
 dnl AC_CONFIG_SUBDIRS has to be done before KDE_CREATE_SUBDIRSLIST
-if test "$compile_kdvi" = "yes" && test -f $srcdir/kdvi/kpathsea/configure; then
-   kde_texdirs="/usr/lib /var/lib /usr/share /usr/share/teTeX /opt/local/teTeX/share /opt/teTeX/share /var /usr/local/share"
-   kde_texdir=NO
-   for dir in $kde_texdirs; do
-      if test -f $dir/texmf/web2c/texmf.cnf; then
-         kde_texdir=$dir
-         break 2
-      fi
-   done
-   if test ! "x$kde_texdir" = "xNO"; then
-     ac_configure_args="$ac_configure_args --with-tex-datadir=$kde_texdir"
-     AC_CONFIG_SUBDIRS([kdvi/kpathsea])
-  else
-		echo "ASDSDASD"
-   fi
-else 
-  if test $compile_kdvi = "yes"; then
-        echo "BBBB"
-    DO_NOT_COMPILE="$DO_NOT_COMPILE kdvi"
-  fi
+if test "$compile_kdvi" = "yes"; then
+    if test ! x"$use_system_kpathsea" = xno; then
+      	KDVI_KPATHSEA_DIR=
+	if test -f "$use_system_kpathsea"; then
+	   KDVI_KPATHSEA_LIB=$use_system_kpathsea
+	else
+           KDVI_KPATHSEA_LIB=-lkpathsea
+ 	fi
+        KDVI_KPATHSEA_INC=
+    else
+        KDVI_KPATHSEA_DIR=kpathsea
+        KDVI_KPATHSEA_INC=-Ikpathsea
+        KDVI_KPATHSEA_LIB=kpathsea/libkpathsea.la
+
+        if test -f $srcdir/kdvi/kpathsea/configure; then
+	   AC_MSG_CHECKING([for texmf.cnf])
+           kde_texdirs="/usr/lib /var/lib /usr/share /usr/share/teTeX /opt/local/teTeX/share /opt/teTeX/share /var /usr/local/share /opt/local/share"
+           kde_texdir=NO
+           for dir in $kde_texdirs; do
+             if test -f $dir/texmf/web2c/texmf.cnf; then
+               kde_texdir=$dir
+               break 2
+             fi
+           done
+	   AC_MSG_RESULT($kde_texdir)
+           if test ! "x$kde_texdir" = "xNO"; then
+             ac_configure_args="$ac_configure_args --with-tex-datadir=$kde_texdir"
+             AC_CONFIG_SUBDIRS([kdvi/kpathsea])
+           else 
+              if test $compile_kdvi = "yes"; then
+                 DO_NOT_COMPILE="$DO_NOT_COMPILE kdvi"
+              fi
+  	   fi
+        fi
+    fi
 fi
 
+AC_SUBST(KDVI_KPATHSEA_DIR)
+AC_SUBST(KDVI_KPATHSEA_INC)
+AC_SUBST(KDVI_KPATHSEA_LIB)

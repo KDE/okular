@@ -18,16 +18,16 @@ namespace KPDF
 	class PageWidget : public QScrollView
 	{
 		Q_OBJECT
-     
+
 		enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
 
 		public:
 			PageWidget(QWidget* parent = 0, const char* name = 0);
-
+            ~PageWidget();
 			void setPDFDocument(PDFDoc*);
 			void setPixelsPerPoint(float);
 			/* void setLinks(); */
-			
+
 			void setPage(int pagenum);
 			int getPage() { return m_currentPage; };
 
@@ -53,7 +53,7 @@ namespace KPDF
 
 			QOutputDevPixmap * m_outputdev;
 			PDFDoc* m_doc;
-			
+
 			float   m_ppp; // Pixels per point
 			float		m_zoomFactor;
 			ZoomMode m_zoomMode;

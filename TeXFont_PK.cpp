@@ -51,6 +51,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <math.h>
 #include <qbitmap.h>
 #include <qfile.h>
 #include <qimage.h>
@@ -173,72 +174,105 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     // a pixel. That doesn't sound much, but on low-resolution
     // devices, such as a notebook screen, the effect would be a
     // "dancing line" of characters, which looks really bad.
-    //
-    // The cure is the following procedure:
-    //
-    // (a) scale the hot point 
-    //
-    // (b) fit the unshrunken bitmap into a bitmap which is even
-    // bigger. Use this to produce extra empty rows and columns at the
-    // borders. The proper choice of the border size will ensure that
-    // the hot point will fall exactly onto the coordinates which we
-    // calculated previously.
     
     // Calculate the coordinates of the hot point in the shrunken
-    // bitmap
-    g->x2 = (int)(g->x/shrinkFactor);
-    g->y2 = (int)(g->y/shrinkFactor);
-    
-    // Calculate the size of the target bitmap for the
-    int shrunk_width  = g->x2 + (int)((characterBitmaps[ch]->w - g->x) / shrinkFactor + 0.5) + 1;
-    int shrunk_height = g->y2 + (int)((characterBitmaps[ch]->h - g->y) / shrinkFactor + 0.5) + 1;
-    
-    // Now calculate the size of the white border. This is some sort
-    // of black magic. Don't modify unless you know what you are doing.
-    int pre_rows = (int)((1.0 + g->y2)*shrinkFactor + 0.5) - g->y - 1;
-    if (pre_rows < 0)
-      pre_rows = 0;
-    int post_rows = (int)(shrunk_height*shrinkFactor + 0.5) - characterBitmaps[ch]->h;
-    if (post_rows < 0)
-      post_rows = 0;
-    
-    int pre_cols = (int)((1.0 + g->x2)*shrinkFactor + 0.5) - g->x - 1;
-    if (pre_cols < 0)
-      pre_cols = 0;
-    int post_cols = (int)(shrunk_width*shrinkFactor + 0.5) - characterBitmaps[ch]->w;
-    if (post_cols < 0)
-      post_cols = 0;
-    
-    // Now shrinking may begin. Produce a QBitmap with the unshrunk
-    // character.
-    QBitmap bm(characterBitmaps[ch]->bytes_wide*8, (int)characterBitmaps[ch]->h, (const uchar *)(characterBitmaps[ch]->bits), TRUE);
-    // ... turn it into a Pixmap (highly inefficient, please improve)
-    QPixmap intpm(characterBitmaps[ch]->w + pre_cols+post_cols, characterBitmaps[ch]->h + pre_rows+post_rows);
-    QPainter paint(&intpm);
-    paint.setBackgroundColor(Qt::white);
-    paint.setPen( Qt::black );
-    paint.fillRect(0,0,characterBitmaps[ch]->w + pre_cols+post_cols, characterBitmaps[ch]->h + pre_rows+post_rows, Qt::white);
-    paint.drawPixmap(pre_cols, pre_rows, bm);
-    paint.end();
-    
-    // Generate an Image and shrink it to the proper size. By the
-    // documentation of smoothScale, the resulting Image will be
-    // 8-bit.
-    QImage EightBitImage = intpm.convertToImage().smoothScale(shrunk_width, shrunk_height).convertDepth(32);
+    // bitmap. For simplicity, let us consider the x-coordinate
+    // first. In principle, the hot point should have an x-coordinate
+    // of (g->x/shrinkFactor). That, however, will generally NOT be an
+    // integral number. The cure is to translate the source image
+    // somewhat, so that the x-coordinate of the hot point falls onto
+    // the round-up of this number, i.e.
+    g->x2 = (int)ceil(g->x/shrinkFactor);
 
+    // Translating and scaling then means that the pixel in the scaled
+    // image which covers the range [x,x+1) corresponds to the range
+    // [x*shrinkFactor+srcXTrans, (x+1)*shrinkFactor+srcXTrans), where
+    // srcXTrans is the following NEGATIVE number
+    double srcXTrans = g->x/shrinkFactor - ceil(g->x/shrinkFactor);
+
+    // How big will the shrunken bitmap then become? If shrunk_width
+    // denotes that width of the scaled image, and
+    // characterBitmaps[ch]->w the width of the orininal image, we
+    // need to make sure that the following inequality holds:
+    //
+    // shrunk_width*shrinkFactor+srcXTrans >= characterBitmaps[ch]->w
+    //
+    // in other words,
+    int shrunk_width  = (int)ceil( (characterBitmaps[ch]->w - srcXTrans)/shrinkFactor );
+    
+    // Now do the same for the y-coordinate
+    g->y2 = (int)ceil(g->y/shrinkFactor);
+    double srcYTrans = g->y/shrinkFactor - ceil(g->y/shrinkFactor);
+    int shrunk_height = (int)ceil( (characterBitmaps[ch]->h - srcYTrans)/shrinkFactor );
+    
+    // Turn the image into 8 bit
+    QByteArray translated(characterBitmaps[ch]->w * characterBitmaps[ch]->h);
+    Q_UINT8 *data = (Q_UINT8 *)translated.data();
+    for(int x=0; x<characterBitmaps[ch]->w; x++)
+      for(int y=0; y<characterBitmaps[ch]->h; y++) {
+	Q_UINT8 bit = *(characterBitmaps[ch]->bits + characterBitmaps[ch]->bytes_wide*y + (x >> 3));
+	bit = bit >> (x & 7);
+	bit = bit & 1;
+	data[characterBitmaps[ch]->w*y + x] = bit;
+      }
+    
+    // Now shrink the image. We shrink the X-direction first
+    QByteArray xshrunk(shrunk_width*characterBitmaps[ch]->h);
+    Q_UINT8 *xdata = (Q_UINT8 *)xshrunk.data();
+    
+    // Do the shrinking. The pixel (x,y) that we want to calculate
+    // corresponds to the line segment from 
+    //
+    // [shrinkFactor*x+srcXTrans, shrinkFactor*(x+1)+srcXTrans)
+    //
+    // The trouble is, these numbers are in general no integers.
+    
+    for(int y=0; y<characterBitmaps[ch]->h; y++)
+      for(int x=0; x<shrunk_width; x++) {
+	Q_UINT32 value = 0;
+	double destStartX = shrinkFactor*x+srcXTrans;
+	double destEndX   = shrinkFactor*(x+1)+srcXTrans;
+	for(int srcX=(int)ceil(destStartX); srcX<floor(destEndX); srcX++)
+	  if ((srcX >= 0) && (srcX < characterBitmaps[ch]->w))
+	    value += data[characterBitmaps[ch]->w*y + srcX] * 255;
+	
+	if (destStartX >= 0.0)
+	  value += 255.0*(ceil(destStartX)-destStartX) * data[characterBitmaps[ch]->w*y + (int)floor(destStartX)];
+	if (floor(destEndX) < characterBitmaps[ch]->w)
+	  value += 255.0*(destEndX-floor(destEndX)) * data[characterBitmaps[ch]->w*y + (int)floor(destEndX)];
+	
+	xdata[shrunk_width*y + x] = (int)( value/shrinkFactor + 0.5);
+      }
+    
+    // Now shrink the Y-direction
+    QByteArray xyshrunk(shrunk_width*shrunk_height);
+    Q_UINT8 *xydata = (Q_UINT8 *)xyshrunk.data();
+    for(int x=0; x<shrunk_width; x++)
+      for(int y=0; y<shrunk_height; y++) {
+	Q_UINT32 value = 0;
+	double destStartY = shrinkFactor*y+srcYTrans;
+	double destEndY   = shrinkFactor*(y+1)+srcYTrans;
+	for(int srcY=(int)ceil(destStartY); srcY<floor(destEndY); srcY++)
+	  if ((srcY >= 0) && (srcY < characterBitmaps[ch]->h))
+	    value += xdata[shrunk_width*srcY + x];
+	
+	if (destStartY >= 0.0)
+	  value += (ceil(destStartY)-destStartY) * xdata[shrunk_width*(int)floor(destStartY) + x];
+	if (floor(destEndY) < characterBitmaps[ch]->h)
+	  value += (destEndY-floor(destEndY)) * xdata[shrunk_width*(int)floor(destEndY) + x];
+	
+	xydata[shrunk_width*y + x] = (int)(value/shrinkFactor);
+      }
+    
     // Generate the alpha-channel. This again is highly inefficient.
     // Would anybody please produce a faster routine?
     QImage im32(shrunk_width, shrunk_height, 32);
+    im32.fill(qRgb(color.red(), color.green(), color.blue()));
     im32.setAlphaBuffer(TRUE);
     for(Q_UINT16 y=0; y<shrunk_height; y++) {
-      Q_UINT8 *srcScanLine  = (Q_UINT8 *)EightBitImage.scanLine(y);
       Q_UINT8 *destScanLine = (Q_UINT8 *)im32.scanLine(y);
-      for(Q_UINT16 col=0; col<shrunk_width; col++) {
-	destScanLine[4*col+0] = color.blue();
-	destScanLine[4*col+1] = color.green();
-	destScanLine[4*col+2] = color.red();
-	destScanLine[4*col+3] = 0xFF-srcScanLine[4*col];
-      }
+      for(Q_UINT16 col=0; col<shrunk_width; col++) 
+	destScanLine[4*col+3] = xydata[shrunk_width*y + col];
     }
     g->shrunkenCharacter.convertFromImage(im32,0);
     g->shrunkenCharacter.setOptimization(QPixmap::BestOptim);
@@ -247,12 +281,9 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
 }
 
 
-#define BMUNIT                  Q_UINT32
-#define	BITS_PER_BMUNIT		32
-#define	BYTES_PER_BMUNIT	4
 
-#define	ADD(a, b)	((BMUNIT *) (((char *) a) + b))
-#define	SUB(a, b)	((BMUNIT *) (((char *) a) - b))
+#define	ADD(a, b)	((Q_UINT32 *) (((char *) a) + b))
+#define	SUB(a, b)	((Q_UINT32 *) (((char *) a) - b))
 
 
 
@@ -278,7 +309,7 @@ static const uchar bitflip[256] = {
   15, 143, 79, 207, 47, 175, 111, 239, 31, 159, 95, 223, 63, 191, 127, 255
 };                                                                              
 
-static BMUNIT	bit_masks[33] = {
+static Q_UINT32	bit_masks[33] = {
 	0x0,		0x1,		0x3,		0x7,
 	0xf,		0x1f,		0x3f,		0x7f,
 	0xff,		0x1ff,		0x3ff,		0x7ff,
@@ -408,11 +439,11 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   int	n;
   int	row_bit_pos;
   bool	paint_switch;
-  BMUNIT	*cp;
+  Q_UINT32	*cp;
   register struct glyph *g;
   register FILE *fp = file;
   long	fpwidth;
-  BMUNIT	word = 0;
+  Q_UINT32	word = 0;
   int	word_weight, bytes_wide;
   int	rows_left, h_bit, count;
   
@@ -463,21 +494,21 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   
   {
     /* width must be multiple of 16 bits for raster_op */
-    characterBitmaps[ch]->bytes_wide = ROUNDUP((int) characterBitmaps[ch]->w, BITS_PER_BMUNIT) * BYTES_PER_BMUNIT;
+    characterBitmaps[ch]->bytes_wide = ROUNDUP((int) characterBitmaps[ch]->w, 32) * 4;
     register unsigned int size = characterBitmaps[ch]->bytes_wide * characterBitmaps[ch]->h;
     characterBitmaps[ch]->bits = new char[size != 0 ? size : 1];
   }
   
-  cp = (BMUNIT *) characterBitmaps[ch]->bits;
+  cp = (Q_UINT32 *) characterBitmaps[ch]->bits;
   
   /*
    * read character data into *cp
    */
-  bytes_wide = ROUNDUP((int) characterBitmaps[ch]->w, BITS_PER_BMUNIT) * BYTES_PER_BMUNIT;
+  bytes_wide = ROUNDUP((int) characterBitmaps[ch]->w, 32) * 4;
   PK_bitpos = -1;
   
-  // The routines which read the character depend on the byte
-  // ordering. In principle, the byte order should be detected at
+  // The routines which read the character depend on the bit
+  // ordering. In principle, the bit order should be detected at
   // compile time and the proper routing chosen. For the moment, as
   // autoconf is somewhat complicated for the author, we prefer a
   // simpler -even if somewhat slower approach and detect the ordering
@@ -499,7 +530,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
       memset(characterBitmaps[ch]->bits, 0, (int) characterBitmaps[ch]->h * bytes_wide);
       for (i = 0; i < (int) characterBitmaps[ch]->h; i++) {	/* get all rows */
 	cp = ADD(characterBitmaps[ch]->bits, i * bytes_wide);
-	row_bit_pos = BITS_PER_BMUNIT;
+	row_bit_pos = 32;
 	for (j = 0; j < (int) characterBitmaps[ch]->w; j++) {    /* get one row */
 	  if (--PK_bitpos < 0) {
 	    word = one(fp);
@@ -507,7 +538,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 	  }
 	  if (--row_bit_pos < 0) {
 	    cp++;
-	    row_bit_pos = BITS_PER_BMUNIT - 1;
+	    row_bit_pos = 32 - 1;
 	  }
 	  if (word & (1 << PK_bitpos)) 
 	    *cp |= 1 << row_bit_pos;
@@ -517,7 +548,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
       rows_left = characterBitmaps[ch]->h;
       h_bit = characterBitmaps[ch]->w;
       PK_repeat_count = 0;
-      word_weight = BITS_PER_BMUNIT;
+      word_weight = 32;
       word = 0;
       while (rows_left > 0) {
 	count = PK_packed_num(fp);
@@ -534,15 +565,14 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 		word |= bit_masks[h_bit] << (word_weight - h_bit);
 	      *cp++ = word;
 	      /* "output" row(s) */
-	      for (i = PK_repeat_count * bytes_wide /
-		     BYTES_PER_BMUNIT; i > 0; --i) {
+	      for (i = PK_repeat_count * bytes_wide / 4; i > 0; --i) {
 		*cp = *SUB(cp, bytes_wide);
 		++cp;
 	      }
 	      rows_left -= PK_repeat_count + 1;
 	      PK_repeat_count = 0;
 	      word = 0;
-	      word_weight = BITS_PER_BMUNIT;
+	      word_weight = 32;
 	      count -= h_bit;
 	      h_bit = characterBitmaps[ch]->w;
 	    } else {
@@ -552,17 +582,17 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 	      word = 0;
 	      count -= word_weight;
 	      h_bit -= word_weight;
-	      word_weight = BITS_PER_BMUNIT;
+	      word_weight = 32;
 	    }
 	}
 	paint_switch = 1 - paint_switch;
       }
-      if (cp != ((BMUNIT *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+      if (cp != ((Q_UINT32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
 	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
 	oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));
     }
-
+    
     // The data in the bitmap is now in the processor's bit order,
     // that is, big endian. Since XWindows needs little endian, we
     // need to change the bit order now.
@@ -572,9 +602,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
       *bitmapData = bitflip[*bitmapData];
       bitmapData++;
     }
-
+    
   } else {
-
+    
     // Routines for small Endian start here. This applies e.g. to
     // Intel and Alpha processors.
 
@@ -592,7 +622,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 	    word = one(fp);
 	    PK_bitpos = 7;
 	  }
-	  if (++row_bit_pos >= BITS_PER_BMUNIT) {
+	  if (++row_bit_pos >= 32) {
 	    cp++;
 	    row_bit_pos = 0;
 	  }
@@ -604,47 +634,46 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
       rows_left = characterBitmaps[ch]->h;
       h_bit = characterBitmaps[ch]->w;
       PK_repeat_count = 0;
-      word_weight = BITS_PER_BMUNIT;
+      word_weight = 32;
       word = 0;
       while (rows_left > 0) {
 	count = PK_packed_num(fp);
 	while (count > 0) {
 	  if (count < word_weight && count < h_bit) {
 	    if (paint_switch)
-	      word |= bit_masks[count] << (BITS_PER_BMUNIT - word_weight);
+	      word |= bit_masks[count] << (32 - word_weight);
 	    h_bit -= count;
 	    word_weight -= count;
 	    count = 0;
 	  } else 
 	    if (count >= h_bit && h_bit <= word_weight) {
 	      if (paint_switch)
-		word |= bit_masks[h_bit] << (BITS_PER_BMUNIT - word_weight);
+		word |= bit_masks[h_bit] << (32 - word_weight);
 	      *cp++ = word;
 	      /* "output" row(s) */
-	      for (i = PK_repeat_count * bytes_wide /
-		     BYTES_PER_BMUNIT; i > 0; --i) {
+	      for (i = PK_repeat_count * bytes_wide / 4; i > 0; --i) {
 		*cp = *SUB(cp, bytes_wide);
 		++cp;
 	      }
 	      rows_left -= PK_repeat_count + 1;
 	      PK_repeat_count = 0;
 	      word = 0;
-	      word_weight = BITS_PER_BMUNIT;
+	      word_weight = 32;
 	      count -= h_bit;
 	      h_bit = characterBitmaps[ch]->w;
 	    } else {
 	      if (paint_switch)
-		word |= bit_masks[word_weight] << (BITS_PER_BMUNIT - word_weight);
+		word |= bit_masks[word_weight] << (32 - word_weight);
 	      *cp++ = word;
 	      word = 0;
 	      count -= word_weight;
 	      h_bit -= word_weight;
-	      word_weight = BITS_PER_BMUNIT;
+	      word_weight = 32;
 	    }
 	}
 	paint_switch = 1 - paint_switch;
       }
-      if (cp != ((BMUNIT *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+      if (cp != ((Q_UINT32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
 	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
 	oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));

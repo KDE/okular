@@ -561,8 +561,13 @@ void dviWindow::draw_page(void)
   HTML_href              = 0;
   source_href            = 0;
   hyperLinkList.clear();
-  textLinkList.clear();
-  sourceHyperLinkList.clear();
+
+
+  // Calling resize() here rather than clear() means that the memory
+  // taken up by the vector is not freed. This is faster than
+  // constantly allocating/freeing memory.
+  textLinkList.resize(0);
+  sourceHyperLinkList.resize(0);
 
   // Check if all the fonts are loaded. If that is not the case, we
   // return and do not draw anything. The font_pool will later emit
@@ -577,7 +582,6 @@ void dviWindow::draw_page(void)
   // it. Set the flag so that is message will not be printed again.
   if (performanceFlag == 0) {
     kdDebug(4300) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms" << endl;
-    exit(0);
     performanceFlag = 1;
   }
 #endif

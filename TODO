@@ -2,9 +2,9 @@ ToDo-List for kdvi
 
 URGENT / URGENT BUGFIXING
 
-o Checksum mismatches in all PK files
+o SGA1.dvi-novirtual läuft nicht mehr!
 o Bad display of virtual font ligatures
-o implement background according to DVIPS specifications, make it work is there is PS on the page
+o implement background according to DVIPS specifications, make it work if there is PS on the page
 o improve performance and perceived performance (see also under 'highly desirable')
 
 o add "papersize" which does not display the margin

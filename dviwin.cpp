@@ -68,6 +68,9 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
   setFocus();
 
   connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
+
+  sourceHyperLinkList.reserve(200);
+  textLinkList.reserve(250);
  
   // initialize the dvi machinery
   dviFile                = 0;
@@ -369,6 +372,7 @@ void dviWindow::drawPage()
     else {
       kdDebug(4300) << "Time required to draw all pages: " << performanceTimer.restart() << "ms" << endl;
       performanceFlag = 2;
+      exit(0);
     }
   }
 #endif

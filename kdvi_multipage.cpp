@@ -22,8 +22,6 @@
 #include "optiondialog.h"
 #include "kdvi_multipage.moc"
 
-#define DEBUG
-
 extern "C"
 {
   void *init_libkdvi()

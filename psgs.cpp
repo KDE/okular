@@ -8,8 +8,8 @@
 
 extern const char psheader[];
 
-pageInfo::pageInfo(QString PS) {
-  PostScriptString = new QString(PS);
+pageInfo::pageInfo(QString _PostScriptString) {
+  PostScriptString = new QString(_PostScriptString);
   Gfx              = NULL;
 }
 

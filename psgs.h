@@ -1,3 +1,6 @@
+#ifndef _PSGS_H_
+#define _PSGS_H_
+
 #include <qstring.h>
 #include <qintdict.h>
 #include <qintcache.h>
@@ -8,7 +11,7 @@
 class pageInfo
 {
 public:
-  pageInfo(QString PS);
+  pageInfo(QString _PostScriptString);
 
   QString   *PostScriptString;
   KTempFile *Gfx;
@@ -61,3 +64,5 @@ private:
   int                   pixel_page_w; // in pixels
   int                   pixel_page_h; // in pixels
 };
+
+#endif

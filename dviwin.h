@@ -210,4 +210,6 @@ struct drawinf {
   int                   dir;
 };
 
+#undef Unsorted
+
 #endif

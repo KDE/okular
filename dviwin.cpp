@@ -74,7 +74,7 @@ extern unsigned int	page_w, page_h;
 Window                  mainwin;
 
 void 	draw_page(void);
-extern "C" void 	kpse_set_progname(char*);
+extern "C" void 	kpse_set_progname(const char*);
 
 void 	reset_fonts();
 extern "C" {

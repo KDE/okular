@@ -68,7 +68,7 @@
 #include <qfileinfo.h>
 
 extern char *xmalloc (unsigned, const char *);
-extern FILE *xfopen(char *filename, char *type);
+extern FILE *xfopen(const char *filename, char *type);
 
 struct frame	frame0;	/* dummy head of list */
 

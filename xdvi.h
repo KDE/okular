@@ -24,14 +24,13 @@ extern "C" {
 #include <X11/Xlib.h>	/* include Xfuncs.h, if available */
 #include <X11/Xutil.h>	/* needed for XDestroyImage */
 #include <X11/Xos.h>
+#include <X11/Intrinsic.h>
 #undef wchar_t
 
-
-#define	XtNumber(arr)	(sizeof(arr)/sizeof(arr[0]))
 typedef	unsigned long	Pixel;
 typedef	char		Boolean;
-typedef	unsigned int	Dimension;
 #undef	BUTTONS
+#undef	Unsorted
 
 #define	True	1
 #define	False	0

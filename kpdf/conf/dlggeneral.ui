@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>266</width>
-            <height>83</height>
+            <height>109</height>
         </rect>
     </property>
     <property name="caption">
@@ -85,6 +85,17 @@
                 </widget>
             </hbox>
         </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_HideOSD</cstring>
+            </property>
+            <property name="text">
+                <string>Hide &amp;hints and info messages</string>
+            </property>
+            <property name="accel">
+                <string>Alt+H</string>
+            </property>
+        </widget>
         <spacer>
             <property name="name">
                 <cstring>spacer3</cstring>
@@ -98,7 +109,7 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>60</height>
+                    <height>50</height>
                 </size>
             </property>
         </spacer>

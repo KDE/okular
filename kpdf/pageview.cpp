@@ -177,11 +177,10 @@ void PageView::setupActions( KActionCollection * ac )
 
     KToggleAction *ms = new KRadioAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     ms->setExclusiveGroup("MouseType");
-    //ms->setEnabled( false ); // implement feature before removing this line
 
     md = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
     md->setExclusiveGroup("MouseType");
-    //md->setEnabled( false ); // implement feature before removing this line
+    md->setEnabled( false ); // implement feature before removing this line
 
     // Other actions
     KAction * su = new KAction( i18n("Scroll Up"), 0, this, SLOT( slotScrollUp() ), ac, "view_scroll_up" );
@@ -225,6 +224,12 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
 
     // invalidate layout
     d->dirtyLayout = true;
+
+    // OSD to display pages
+    if ( documentChanged && !Settings::hideOSD() )
+        d->messageWindow->display(
+            i18n(" Loaded a %1 pages document." ).arg( pageSet.count() ),
+            PageViewMessage::Info, 4000 );
 }
 
 void PageView::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
@@ -942,7 +947,8 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         d->aZoomFitWidth->setChecked( false );
         d->aZoomFitPage->setChecked( false );
         d->aZoomFitText->setChecked( false );
-        d->messageWindow->display( i18n( "Select Zooming Area. Right-Click to zoom out." ), PageViewMessage::Info );
+        if ( !Settings::hideOSD() )
+            d->messageWindow->display( i18n( "Select Zooming Area. Right-Click to zoom out." ), PageViewMessage::Info );
         return;
     }
     // if zoomMode is changing from ZoomRect, hide info popup

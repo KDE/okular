@@ -42,6 +42,9 @@
   <entry key="ShowSearchBar" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="HideOSD" type="Bool" >
+   <default>false</default>
+  </entry>
  </group>
  <group name="MainView" >
   <entry key="SplitterSizes" type="IntList" />

@@ -18,6 +18,7 @@
 #include <kparts/genericfactory.h>
 
 #include "../config.h"
+#include "../kviewshell/marklist.h"
 #include "documentPagePixmap.h"
 #include "documentWidget.h"
 #include "fontpool.h"
@@ -499,6 +500,9 @@ void KDVIMultiPage::reload()
 #endif
   
   if (DVIRenderer.isValidFile(m_file)) {
+
+    Q_INT32 pg = currentPageNumber();
+
     killTimer(timer_id);
     timer_id = -1;
     bool r = DVIRenderer.setFile(m_file);
@@ -506,8 +510,13 @@ void KDVIMultiPage::reload()
     generateDocumentWidgets();
     emit numberOfPages(DVIRenderer.totalPages());
     enableActions(r);
-    
-    emit pageInfo(DVIRenderer.totalPages(), DVIRenderer.curr_page()-1 );
+
+    emit setStatusBarText(QString::null);
+
+    //    emit pageInfo(DVIRenderer.totalPages(), DVIRenderer.curr_page()-1 );
+    markList()->setCurrentPageNumber(pg);
+    emit pageInfo(DVIRenderer.totalPages(), pg );
+
   } else {
     if (timer_id == -1)
       timer_id = startTimer(1000);
@@ -518,8 +527,6 @@ void KDVIMultiPage::reload()
 void KDVIMultiPage::enableActions(bool b)
 {
   docInfoAction->setEnabled(b);
-  //@@@  selectAllAction->setEnabled(b);
-  //@@@  findTextAction->setEnabled(b);
   exportPSAction->setEnabled(b);
   exportPDFAction->setEnabled(b);
   exportTextAction->setEnabled(b);
@@ -550,7 +557,6 @@ void KDVIMultiPage::showTipOnStart(void)
 documentWidget* KDVIMultiPage::createDocumentWidget()
 {
   QSize rendererSuggestedSize = pageCache.sizeOfPageInPixel(/*page+*/1); // FIXME
-  kdDebug() << "RSS " << rendererSuggestedSize << endl;
   QSize widgetSize;
   if (rendererSuggestedSize.isEmpty()) {
     widgetSize.setWidth(100);

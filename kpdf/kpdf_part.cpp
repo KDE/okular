@@ -90,6 +90,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   pdfpartview = new PDFPartView(parentWidget, widgetName, &m_docMutex);
 
   connect(pdfpartview, SIGNAL( clicked ( int ) ), this, SLOT( pageClicked ( int ) ));
+  connect(pdfpartview, SIGNAL( execute ( LinkAction* ) ), this, SLOT( executeAction ( LinkAction* ) ));
+  connect(pdfpartview, SIGNAL( hasTOC ( bool ) ), this, SLOT( hasTOC ( bool ) ));
 
   m_outputDev = pdfpartview->outputdev;
   connect(m_outputDev, SIGNAL(linkClicked(LinkAction*)), this, SLOT(executeAction(LinkAction*)));
@@ -100,11 +102,17 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0,
                                        actionCollection(), "show_scrollbars" );
   m_showScrollBars->setCheckedState(i18n("Hide &Scrollbars"));
+  m_showTOC = new KToggleAction( i18n( "Show &Table of Contents" ), 0,
+                                       actionCollection(), "show_toc" );
+  m_showTOC->setCheckedState(i18n("Hide &Table of Contents"));
+  m_showTOC->setEnabled(false);
   m_showPageList   = new KToggleAction( i18n( "Show &Page List" ), 0,
                                        actionCollection(), "show_page_list" );
   m_showPageList->setCheckedState(i18n("Hide &Page List"));
   connect( m_showScrollBars, SIGNAL( toggled( bool ) ),
              SLOT( showScrollBars( bool ) ) );
+  connect( m_showTOC, SIGNAL( toggled( bool ) ),
+             SLOT( showTOC( bool ) ) );
   connect( m_showPageList, SIGNAL( toggled( bool ) ),
              SLOT( showMarkList( bool ) ) );
 
@@ -292,6 +300,7 @@ void Part::writeSettings()
 {
     KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
     general.writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
+    general.writeEntry( "ShowTOC", m_showTOC->isChecked() );
     general.writeEntry( "ShowPageList", m_showPageList->isChecked() );
     general.sync();
 }
@@ -301,6 +310,8 @@ void Part::readSettings()
     KConfigGroup general( KPDFPartFactory::instance()->config(), "General" );
     m_showScrollBars->setChecked( general.readBoolEntry( "ShowScrollBars", true ) );
     showScrollBars( m_showScrollBars->isChecked() );
+    m_showTOC->setChecked( general.readBoolEntry( "ShowTOC", true ) );
+    showTOC( m_showTOC->isChecked() );
     m_showPageList->setChecked( general.readBoolEntry( "ShowPageList", true ) );
     showMarkList( m_showPageList->isChecked() );
 }
@@ -313,6 +324,16 @@ void Part::showScrollBars( bool show )
 void Part::showMarkList( bool show )
 {
     pdfpartview->showPageList(show);
+}
+
+void Part::showTOC( bool show )
+{
+    pdfpartview->showTOC(show);
+}
+
+void Part::hasTOC( bool show )
+{
+    m_showTOC->setEnabled(show);
 }
 
 void Part::slotGotoEnd()
@@ -405,6 +426,7 @@ Part::openFile()
     // TODO take page rotation into acount for calculating aspect ratio
     pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
     pdfpartview->generateThumbnails(m_doc);
+    pdfpartview->generateTOC(m_doc);
 
     m_outputDev->setPDFDocument(m_doc);
     goToPage(1);

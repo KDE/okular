@@ -12,16 +12,17 @@
 
 #include <qwidget.h>
 
-class QHBoxLayout;
 class QMutex;
 
 namespace KPDF {
     class PageWidget;
 }
 
+class LinkAction;
 class PDFDoc;
 
 class ThumbnailList;
+class TOC;
 
 class PDFPartView : public QWidget
 {
@@ -30,27 +31,33 @@ class PDFPartView : public QWidget
 public:
     PDFPartView(QWidget* parent, const char* name, QMutex *docMutex);
     ~PDFPartView();
-    
+
     // first page is page 1
     void setCurrentThumbnail(int i);
- 
-    void setPages(int i, double ar);   
+
+    void setPages(int i, double ar);
     void generateThumbnails(PDFDoc *doc);
     void stopThumbnailGeneration();
-        
+
+    void generateTOC(PDFDoc *doc);
+
     void showPageList(bool show);
+    void showTOC(bool show);
 
     // TODO make private
     KPDF::PageWidget* outputdev;
 
 signals:
     void clicked(int);
-
-protected:
-    QHBoxLayout* PDFPartViewLayout;
+    void execute(LinkAction*);
+    void hasTOC(bool);
 
 private:
-    ThumbnailList* pagesList;
+    void updateShowTOC();
+
+    ThumbnailList *pagesList;
+    TOC *toc;
+    bool m_showTOC, m_existsTOC;
 };
 
 #endif // PDFPARTVIEW_H

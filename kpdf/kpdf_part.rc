@@ -27,6 +27,7 @@
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_scrollbars" group="show_merge"/>
+    <Action name="show_toc" group="show_merge"/>
     <Action name="show_page_list" group="show_merge"/>
   </Menu>
 </MenuBar>

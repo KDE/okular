@@ -120,6 +120,8 @@ namespace KPDF
 
       void showScrollBars( bool );
       void showMarkList( bool );
+      void showTOC( bool );
+      void hasTOC( bool );
       void slotReadUp();
       void slotReadDown();
       void slotOpenUrlDropped( const KURL & );
@@ -138,6 +140,7 @@ namespace KPDF
       KAction *m_gotoPage;
       KToggleAction* m_showScrollBars;
       KToggleAction* m_showPageList;
+      KToggleAction* m_showTOC;
       KSelectAction *m_zoomTo;
       KToggleAction* m_fitToWidth;
       KAction *m_find;

@@ -10,31 +10,39 @@
 #include "part.h"
 
 #include <qlayout.h>
+#include <qsplitter.h>
 #include <qtable.h>
 
 #include "kpdf_pagewidget.h"
 #include "thumbnaillist.h"
+#include "toc.h"
 
 /*
  *  Constructs a PDFPartView as a child of 'parent', with the
- *  name 'name' 
+ *  name 'name'
  */
 PDFPartView::PDFPartView(QWidget* parent, const char* name, QMutex *docMutex) : QWidget(parent, name)
 {
-    PDFPartViewLayout = new QHBoxLayout( this, 3, 3, "PDFPartViewLayout"); 
+    QHBoxLayout* PDFPartViewLayout = new QHBoxLayout(this, 3, 3);
 
     pagesList = new ThumbnailList(this, docMutex);
     pagesList->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)7, 0, 0, pagesList->sizePolicy().hasHeightForWidth() ) );
-    pagesList->setMaximumSize( QSize( 75, 32767 ) );
+    pagesList->setMaximumSize(75, 32767);
     pagesList->setColumnWidth(0, 75);
     PDFPartViewLayout->addWidget( pagesList );
 
-    outputdev = new KPDF::PageWidget( this, "outputdev", docMutex );
-    PDFPartViewLayout->addWidget( outputdev );
-    resize( QSize(623, 381).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
-    
+    QSplitter *split = new QSplitter(this);
+    PDFPartViewLayout->addWidget(split);
+
+    toc = new TOC(split);
+    toc->hide();
+
+    outputdev = new KPDF::PageWidget( split, "outputdev", docMutex );
+
+    m_existsTOC = false;
+
     connect(pagesList, SIGNAL(clicked(int)), this, SIGNAL(clicked(int)));
+    connect(toc, SIGNAL(execute(LinkAction*)), this, SIGNAL(execute(LinkAction*)));
 }
 
 /*
@@ -66,10 +74,29 @@ void PDFPartView::stopThumbnailGeneration()
     pagesList->stopThumbnailGeneration();
 }
 
+void PDFPartView::generateTOC(PDFDoc *doc)
+{
+    m_existsTOC = toc->generate(doc);
+    emit hasTOC(m_existsTOC);
+    updateShowTOC();
+}
+
 void PDFPartView::showPageList(bool show)
 {
     if (show) pagesList->show();
     else pagesList->hide();
+}
+
+void PDFPartView::showTOC(bool show)
+{
+    m_showTOC = show;
+    updateShowTOC();
+}
+
+void PDFPartView::updateShowTOC()
+{
+    if (m_showTOC && m_existsTOC) toc->show();
+    else toc->hide();
 }
 
 #include "part.moc"

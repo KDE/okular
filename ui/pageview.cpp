@@ -1000,8 +1000,16 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     QDataStream arg( data, IO_WriteOnly );
                     arg << selectedText;
                     arg << QString();
+                    QCString replyType;
+                    QByteArray replyData;
                     // ..and send it to KTTSD
-                    client->send( "kttsd", "KSpeech", "sayMessage(QString,QString)", data );
+                    if (client->call( "kttsd", "KSpeech", "setText(QString,QString)", data, replyType, replyData, true ))
+                    {
+                        QByteArray  data2;
+                        QDataStream arg2(data2, IO_WriteOnly);
+                        arg2 << 0;
+                        client->send("kttsd", "KSpeech", "startText(uint)", data2 );
+                    }
                 }
             }
 

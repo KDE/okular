@@ -49,10 +49,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // we need an instance
   setInstance(KPDFPartFactory::instance());
 
-	pdfpartview = new PDFPartView(parentWidget, widgetName);
+  pdfpartview = new PDFPartView(parentWidget, widgetName);
 
-	connect(pdfpartview->pagesListBox, SIGNAL( clicked ( QListBoxItem * ) ),
-			this, SLOT( pageClicked ( QListBoxItem * ) ));
+  connect(pdfpartview->pagesListBox, SIGNAL( clicked ( QListBoxItem * ) ),
+          this, SLOT( pageClicked ( QListBoxItem * ) ));
 
   m_outputDev = pdfpartview->outputdev;
 
@@ -128,19 +128,19 @@ Part::openFile()
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
-	// fill the listbox with entries for every page
-	pdfpartview->pagesListBox->setUpdatesEnabled(false);
-	pdfpartview->pagesListBox->clear();
-	for (int i = 1; i <= m_doc->getNumPages(); i++)
-	{
-		pdfpartview->pagesListBox->insertItem(QString("%1").arg(i));
-	}
-	pdfpartview->pagesListBox->setUpdatesEnabled(true);
-	pdfpartview->pagesListBox->update();
+  // fill the listbox with entries for every page
+  pdfpartview->pagesListBox->setUpdatesEnabled(false);
+  pdfpartview->pagesListBox->clear();
+  for (int i = 1; i <= m_doc->getNumPages(); i++)
+  {
+    pdfpartview->pagesListBox->insertItem(QString::number(i));
+  }
+  pdfpartview->pagesListBox->setUpdatesEnabled(true);
+  pdfpartview->pagesListBox->update();
 
   displayPage(1);
 
-	m_outputDev->setPDFDocument(m_doc);
+  m_outputDev->setPDFDocument(m_doc);
 
   return true;
 }

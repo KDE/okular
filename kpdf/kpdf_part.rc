@@ -17,8 +17,8 @@
     <Action name="zoom_fit_width"/>
     <Action name="zoom_fit_page"/>
     <Separator/>
-    <Action name="view_continous"/>
     <Action name="view_twopages"/>
+    <Action name="view_continous"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
     <Action name="first_page"/>
@@ -46,8 +46,8 @@
   <!--Action name="zoom_fit_page"/-->
   <Merge/>
   <Separator/>
-  <Action name="view_continous"/>
   <Action name="view_twopages"/>
+  <Action name="view_continous"/>
   <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_select"/>

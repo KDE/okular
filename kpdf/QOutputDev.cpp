@@ -20,7 +20,10 @@
 #endif
 
 #include <kdebug.h>
+#include <qpixmap.h>
+#include <qimage.h>
 
+#include "page.h"
 #include "SplashBitmap.h"
 #include "TextOutputDev.h"
 #include "QOutputDev.h"
@@ -36,11 +39,14 @@ KPDFOutputDev::KPDFOutputDev(SplashColor paperColor)
 
 KPDFOutputDev::~KPDFOutputDev()
 {
+	QValueList< KPDFLink * >::iterator it = m_links.begin(), end = m_links.end();
+	for ( ; it != end; ++it )
+		delete *it;
 	delete m_pixmap;
 	delete m_text;
 }
 
-void KPDFOutputDev::setParams( int width, int height, bool generateText )
+void KPDFOutputDev::setParams( int width, int height, bool genText, bool /*genLinks*/ )
 {
 	m_pixmapWidth = width;
 	m_pixmapHeight = height;
@@ -51,7 +57,12 @@ void KPDFOutputDev::setParams( int width, int height, bool generateText )
 	}
 
 	delete m_text;
-	m_text = generateText ? new TextPage( gFalse ) : 0;
+	m_text = genText ? new TextPage( gFalse ) : 0;
+
+	QValueList< KPDFLink * >::iterator it = m_links.begin(), end = m_links.end();
+	for ( ; it != end; ++it )
+		delete *it;
+	m_links.clear();
 }
 
 QPixmap * KPDFOutputDev::takePixmap()
@@ -66,6 +77,13 @@ TextPage * KPDFOutputDev::takeTextPage()
 	TextPage * text = m_text;
 	m_text = 0;
 	return text;
+}
+
+QValueList< KPDFLink * > KPDFOutputDev::takeLinks()
+{
+	QValueList< KPDFLink * > linksCopy( m_links );
+	m_links.clear();
+	return linksCopy;
 }
 
 void KPDFOutputDev::startPage(int pageNum, GfxState *state)
@@ -102,14 +120,58 @@ void KPDFOutputDev::endPage()
 	SplashOutputDev::startPage(0, NULL);
 }
 
-void KPDFOutputDev::drawLink(Link * /*l*/, Catalog */*catalog*/)
+void KPDFOutputDev::drawLink(Link * link, Catalog */*catalog*/)
 {
-/*	double x1,y1, x2,y2;
-	l->getRect( &x1,&y1, &x2,&y2 );
-	LinkAction * a = l->getAction();
-	pri NOWARN ntf("LINK %x ok:%d t:%d rect:[%f,%f,%f,%f] \n", (uint)l, (int)l->isOk(),
-		(int)a->getKind(), x1,y2, x2-x1, y2-y1 );
-*/}
+	if ( !link->isOk() )
+		return;
+
+	// create the new KPDFLink using transformed link coordinates
+	double x1, y1, x2, y2;
+	link->getRect( &x1, &y1, &x2, &y2 );
+	int left, top, right, bottom;
+	cvtUserToDev( x1, y1, &left, &top );
+	cvtUserToDev( x2, y2, &right, &bottom );
+	KPDFLink * l = new KPDFLink( left, top, right, bottom );
+
+	// add the link to the vector container
+	m_links.push_back( l );
+
+	// set link action params processing (XPDF)LinkAction
+	LinkAction * a = link->getAction();
+	switch ( a->getKind() )
+	{
+	case actionGoTo: {
+		LinkGoTo * g = (LinkGoTo *) a;
+		GString * nd = g->getNamedDest();
+		LinkDest * d = g->getDest();
+		l->setLinkGoto( d ? d->copy() : 0, nd ? nd->getCString() : 0 );
+		} break;
+	case actionGoToR: {
+		LinkGoToR * g = (LinkGoToR *) a;
+		GString * nd = g->getNamedDest();
+		LinkDest * d = g->getDest();
+		l->setLinkGoto( d ? d->copy() : 0, nd ? nd->getCString() : 0, g->getFileName()->getCString() );
+		} break;
+	case actionLaunch:
+		l->setLinkExecute( ((LinkLaunch *)a)->getFileName()->getCString(),
+		                     ((LinkLaunch *)a)->getParams()->getCString() );
+		break;
+	case actionURI:
+		l->setLinkURI( ((LinkURI *)a)->getURI()->getCString() );
+		break;
+	case actionNamed:
+		l->setLinkNamed( ((LinkNamed *)a)->getName()->getCString() );
+		break;
+	case actionMovie: {
+		LinkMovie * m = (LinkMovie *) a;
+		Ref * r = m->getAnnotRef();
+		l->setLinkMovie( r->num, r->gen, m->getTitle()->getCString() );
+		} break;
+	case actionUnknown:
+		// TODO Warn or not???
+		break;
+	}
+}
 
 void KPDFOutputDev::updateFont(GfxState *state)
 {

@@ -250,15 +250,19 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
             // setup kpdf output device: text page is generated only if we are at 72dpi.
             // since we can pre-generate the TextPage at the right res.. why not?
             bool genTextPage = !kp->hasSearchPage() && (width == kp->width()) && (height == kp->height());
-            d->kpdfOutputDev->setParams( width, height, genTextPage );
+            // generate links if rendering pages on pageview
+            bool genLinks = id == PAGEVIEW_ID;
+            d->kpdfOutputDev->setParams( width, height, genTextPage, genLinks );
 
             d->docLock.lock();
-            d->pdfdoc->displayPage( d->kpdfOutputDev, page + 1, fakeDpiX, fakeDpiY, 0, true, false/*dolinks*/ );
+            d->pdfdoc->displayPage( d->kpdfOutputDev, page + 1, fakeDpiX, fakeDpiY, 0, true, genLinks );
             d->docLock.unlock();
 
             kp->setPixmap( id, d->kpdfOutputDev->takePixmap() );
             if ( genTextPage )
                 kp->setSearchPage( d->kpdfOutputDev->takeTextPage() );
+            if ( genLinks )
+                kp->setLinks( d->kpdfOutputDev->takeLinks() );
 
             d->observers[id]->notifyPixmapChanged( page );
         }
@@ -294,7 +298,7 @@ void KPDFDocument::slotSetFilter( const QString & pattern, bool keepCase )
 
 void KPDFDocument::slotBookmarkPage( int page, bool on )
 {
-    KPDFPage * p = ( page < d->pages.count() ) ? d->pages[page] : 0;
+    KPDFPage * p = ( page < (int)d->pages.count() ) ? d->pages[page] : 0;
     if ( p )
     {
         p->bookmark( on );

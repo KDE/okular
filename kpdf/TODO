@@ -2,23 +2,28 @@ Personal Albert's list
 -> make links functional (done in HEAD)
 
 More items
--> new icons (contest at kde-look that will end in 2004-Oct-01)
+-> new icons (contest at kde-look that will end in 2004-Oct-XX)
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
 -> export all text in plain_text/html
 -> extract(export?) images
 -> implement history (mainly for actionNamed)
+-> history as a toolbox child (collecting DOs's setPage calls)
 -> zoom: fit text (with configurable margin)
 -> automatic online dictionaries / translators (BR80338)
 -> session support: restoring page location (BR82589)
+-> merge head copyright headers (by albert)
+-> merge head xpdf changes for --enable-final (by adrian de groot/albert)
+-> merge head support for show menubar in rmb (by albert)
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
+-> use a kconfigxt settings framework
 -> fix keys/mouse in single/continous modes
 -> porting Albert's link following
 -> minimize PageView's reLayout and requestPixmaps on changes
 -> implementing async document generator using Albert's thread as the generation thread
--> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text
+-> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text (enhance links too)
 
 Done (sorted by inv.time)
 -> remake single page mode

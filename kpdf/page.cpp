@@ -15,7 +15,11 @@
 #include <qpainter.h>
 #include <qmap.h>
 
+// system includes
+#include <string.h>
+
 // local includes
+#include "Link.h"
 #include "TextOutputDev.h"
 #include "page.h"
 
@@ -34,6 +38,9 @@ KPDFPage::~KPDFPage()
     QMap<int,QPixmap *>::iterator it = m_pixmaps.begin(), end = m_pixmaps.end();
     for ( ; it != end; ++it )
         delete *it;
+    QValueList< KPDFLink * >::iterator lIt = m_links.begin(), lEnd = m_links.end();
+    for ( ; lIt != lEnd; ++lIt )
+        delete *lIt;
     delete m_text;
 }
 
@@ -53,9 +60,13 @@ bool KPDFPage::hasSearchPage() const
 
 bool KPDFPage::hasLink( int mouseX, int mouseY ) const
 {
-    //TODO this.
-    //Sample implementation using a small rect as 'active' link zone
-    return QRect( 20,20, 100,50 ).contains( mouseX, mouseY );
+    if ( m_links.count() < 0 )
+        return false;
+    QValueList< KPDFLink * >::const_iterator it = m_links.begin(), end = m_links.end();
+    for ( ; it != end; ++it )
+        if ( (*it)->contains( mouseX, mouseY ) )
+            return true;
+    return false;
 }
 
 // BEGIN commands (paint / search)
@@ -169,12 +180,96 @@ void KPDFPage::setSearchPage( TextPage * tp )
     m_text = tp;
 }
 
-/*
-void KPDFPage::setLinks( ..SomeStruct.. )
-{   //TODO this
+void KPDFPage::setLinks( const QValueList<KPDFLink *> links )
+{
+    QValueList< KPDFLink * >::iterator it = m_links.begin(), end = m_links.end();
+    for ( ; it != end; ++it )
+        delete *it;
+    m_links = links;
 }
 
+/*
 void KPDFPage::setPixmapOverlayNotations( ..DOMdescription.. )
 {   //TODO this
 }
 */
+
+
+
+KPDFLink::KPDFLink( int l, int t, int r, int b )
+    : m_type( Unknown ), m_dest( 0 ), m_destNamed( 0 ),
+    m_fileName( 0 ), m_parameters( 0 ), m_uri( 0 )
+{
+    // assign coordinates swapping them if negative width or height
+    x_min = r > l ? l : r;
+    x_max = r > l ? r : l;
+    y_min = b > t ? t : b;
+    y_max = b > t ? b : t;
+}
+
+KPDFLink::~KPDFLink()
+{
+    delete m_dest;
+    delete [] m_destNamed;
+    delete [] m_fileName;
+    delete [] m_parameters;
+    delete [] m_uri;
+}
+
+void KPDFLink::setLinkGoto( LinkDest * d, const char * n, const char * file )
+{
+    m_type = Goto;
+    delete m_dest;
+    m_dest = d;
+    copyString( m_destNamed, n );
+    copyString( m_fileName, file );
+}
+
+void KPDFLink::setLinkExecute( const char * file, const char * par )
+{
+    m_type = Execute;
+    copyString( m_fileName, file );
+    copyString( m_parameters, par );
+}
+
+void KPDFLink::setLinkNamed( const char * name )
+{
+    m_type = Action;
+    copyString( m_uri, name );
+}
+
+void KPDFLink::setLinkURI( const char * uri )
+{
+    m_type = URI;
+    copyString( m_uri, uri );
+}
+
+void KPDFLink::setLinkMovie( int ref_num, int ref_gen, const char * title )
+{
+    m_type = Movie;
+    m_refNum = ref_num;
+    m_refGen = ref_gen;
+    copyString( m_uri, title );
+}
+
+KPDFLink::LinkType KPDFLink::type() const
+{
+    return m_type;
+}
+
+bool KPDFLink::contains( int x, int  y ) const
+{
+    return (x > x_min) && (x < x_max) && (y > y_min) && (y < y_max);
+}
+
+void KPDFLink::copyString( char * dest, const char * src )
+{
+    if ( dest )
+        delete [] dest;
+    dest = 0;
+    if ( src )
+    {
+        dest = new char[ strlen(src) + 1 ];
+        strcpy( dest, src );
+    }
+}

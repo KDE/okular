@@ -19,13 +19,11 @@
 #pragma interface
 #endif
 
-#include <qimage.h>
-
 #include "SplashOutputDev.h"
 #include "Link.h"
 
 class TextPage;
-class KPDFPage;
+class KPDFLink;
 
 /**
  * @short A SplashOutputDev renderer that grabs text and links.
@@ -33,7 +31,7 @@ class KPDFPage;
  * This output device: 
  * - renders the page using SplashOutputDev (its parent)
  * - harvests text into a textPage (for searching text)
- * - harvests links and set them to a KPDFPage
+ * - harvests links and collect them
  */
 class KPDFOutputDev : public SplashOutputDev
 {
@@ -42,11 +40,12 @@ public:
 	virtual ~KPDFOutputDev();
 
 	// to be called before PDFDoc->displayPage( thisclass, .. )
-	void setParams( int pixmapWidth, int pixmapHeight, bool generateText );
+	void setParams( int pixmapWidth, int pixmapHeight, bool generateTextpage, bool generateLinks );
 
 	// takes pointers out of the class (so deletion it's up to others)
 	QPixmap * takePixmap();
 	TextPage * takeTextPage();
+	QValueList< KPDFLink * > takeLinks();
 
 	/** inherited from OutputDev */
 	// Start a page.
@@ -70,6 +69,9 @@ private:
 
 	// text page generated on demand
 	TextPage * m_text;
+
+	// links generated on demand
+	QValueList< KPDFLink * > m_links;
 };
 
 
@@ -78,7 +80,8 @@ private:
  *
  * This is the simplest OutputDev. It harvests text from currently
  * rendered page and provides a method for getting the TextPage.
- * Xpdf's textOutputDev can't return a textpage, unfortunately.
+ * Xpdf's textOutputDev can't return a textpage, unfortunately, and
+ * KPDFOutputDev is too heavy for sucha a simple task.
  */
 class KPDFTextDev : public OutputDev
 {

@@ -87,9 +87,10 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d = new PageViewPrivate();
     d->document = document;
     d->page = 0;
+    d->vectorIndex = -1;
     d->viewColumns = 1;
     d->viewContinous = false;
-    d->zoomMode = ZoomFitWidth;
+    d->zoomMode = ZoomFixed;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseOnLink = false;
@@ -308,17 +309,21 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
             // check if it was a click, in that case select the page
             if ( e->globalPos() == d->mouseStartPos && page )
-                d->document->slotSetCurrentPage( page->pageNumber() );
-
-            // check if we release the mouse over the same link if so play it
-            /* TODO Albert
-                PageLink * link = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
-                if ( link == d->pressedLink )
-                    //go to link, use:
-                    document->slotSetCurrentPagePosition( (int)link->page(), (float)link->position() );
-                    //and all the views will update and display the right page at the right position
-                d->pressedLink = 0;
-            */
+            {
+                if ( d->mouseOnLink )
+                {
+                    /* TODO Enrico: port links here
+                        PageLink * link = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
+                        if ( link == d->pressedLink )
+                            //go to link, use:
+                            document->slotSetCurrentPagePosition( (int)link->page(), (float)link->position() );
+                            //and all the views will update and display the right page at the right position
+                        d->pressedLink = 0;
+                    */
+                }
+                else
+                    d->document->slotSetCurrentPage( page->pageNumber() );
+            }
         }
         else if ( e->button() == Qt::RightButton && page )
         {

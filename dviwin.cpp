@@ -808,7 +808,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	int i2 = kMin(kMax(a,c),kMin(b,d));
 	int i3 = kMax(kMax(a,c),kMin(b,d));
 	int i4 = kMax(b,d);
-	
+
 	QRect box;
 	int i=i1;
 	while(i<i2) {
@@ -949,7 +949,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
 	qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(editorCommand_terminated(KProcess *)));
 	// Merge the editor-specific editor message here.
-	export_errorString = i18n("<qt>The external program<br/><br/><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
+	export_errorString = i18n("<qt>The external program<br><br><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
 				  "for inverse search, reported an error. You might wish to look at the <strong>document info "
 				  "dialog</strong> which you will find in the File-Menu for a precise error report. The "
 				  "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "

@@ -1,8 +1,13 @@
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook V3.1-Based Variant V1.0//EN">
-
-<book lang="en">
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook V3.1-Based Variant V1.0//EN" [
+ <!ENTITY kappname "&kdvi;">
+ <!ENTITY % English "INCLUDE">
+ <!ENTITY % addindex "IGNORE">
+ <!ENTITY % ents PUBLIC "-//KDE//ENTITIES Documentation V1.0//EN">
+  %ents;
+]>
+<book lang="&language;">
   <bookinfo>
-    <title> The KDVI Manual</title>
+    <title> The &kdvi; Manual</title>
     <authorgroup>
       <author>
 	<firstname>Markku</firstname>
@@ -82,12 +87,17 @@
 
       <para> The following picture shows the options dialog of
       kdvi.</para>
+
+
       <informalfigure>
-	<graphic fileref="optionrequester1.png"></graphic>	
+	<mediaobject>
+          <imageobject>
+ <imagedata fileref="optionrequester1.png" format="PNG"></imageobject>
+ </mediaobject>	
       </informalfigure>
 
       <glosslist>
-	<glossentry>
+	<glossentry id="gloss-resolution">
 	  <glossterm>Resolution/Metafont mode</glossterm> 
 	  <glossdef> 
 	    <para> These options specify the fonts which kdvi will use
@@ -101,7 +111,7 @@
 	  </glossdef>
 	</glossentry>
       
-	<glossentry>
+	<glossentry id="gloss-generate-fonts">
 	  <glossterm>Generate fonts</glossterm> 
 	  <glossdef> 
 	    <para> Check this if you want kdvi to call the MetaFont
@@ -111,7 +121,7 @@
 	    </glossdef>
 	</glossentry>
 
-	<glossentry>
+	<glossentry id="gloss-pk-font-path">
 	  <glossterm>PK font path</glossterm> 
 	  <glossdef> 
 
@@ -142,13 +152,14 @@
 
       <para> The following picture shows the second options dialog of
       kdvi.
-      <informalfigure>
-	  <graphic fileref="optionrequester2.png"></graphic>
+      <informalfigure><mediaobject><imageobject>
+	  <imagedata fileref="optionrequester2.png" format="PNG"></imageobject>
+</mediaobject>
 	</informalfigure>
 </para>
       
       <glosslist>
-	<glossentry>
+	<glossentry id="gloss-postscript">
 	  <glossterm>PostScript</glossterm> 
 	  <glossdef> 
 
@@ -174,7 +185,7 @@
 	  </glossdef>
       </glossentry>
 
-	<glossentry>
+	<glossentry id="gloss-hyperlinks">
 	  <glossterm>Hyperlinks</glossterm> 
 	  <glossdef> 
 

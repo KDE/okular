@@ -10,7 +10,6 @@
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004 by Christoph Cullmann <crossfire@babylon2k.de>     *
- *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
  *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
  *   Copyright (C) 2004 by Antti Markus <antti.markus@starman.ee>          *

@@ -16,16 +16,168 @@
 #include <qfont.h>
 #include "page.h"
 
-class QDomNode;
-class QDomDocument;
+// some helpers used to shorten the code presented below
+#define AN_COMMONDECL_VIRTUAL( className )\
+    className();\
+    className( const class QDomNode & node );\
+    virtual void store( class QDomNode & parentNode, class QDomDocument & document ) const;\
+    virtual ~className() {};
 
-/** Annotations in PDF 1.6 specification **
+#define AN_COMMONDECL( className, rttiType )\
+    className();\
+    className( const class QDomNode & node );\
+    void store( class QDomNode & parentNode, class QDomDocument & document ) const;\
+    SubType subType() const { return rttiType; }
 
-KDPF tries to support ALL annotations and ALL parameters for each one. If
+/**
+ * @short Annotation struct holds properties shared by all annotations.
+ *
+ * An Annotation is an object (text note, highlight, sound, popup window, ..)
+ * contained by a KPDFPage in the document.
+ *//*
+ * TODO: structure mods:
+ *  -markupannotations has modifies as children of the same type
+ *  -markupannotations has PopupAnnotation *
+ *  -PopupAnnotation is (or not?) annot, with ref counter.
+ *  resolve crossrefs for popups on loading (dupe popups?)
+ */
+struct Annotation
+{   AN_COMMONDECL_VIRTUAL( Annotation );
+
+    // enum definitions
+    enum SubType { AWindow, AText, ALine, AGeom, AHighlight, AStamp, AInk };
+    enum Flags { Hidden = 1, FixedSize = 2, FixedRotation = 4, DenyPrint = 8,
+                 DenyWrite = 16, DenyDelete = 32, ToggleHidingOnMouse = 64 };
+
+    // data fields
+    NormalizedRect  r;
+    double          rUnscaledWidth;
+    double          rUnscaledHeight;
+    QString         author;
+    QString         contents;
+    QString         uniqueName;
+    QDateTime       modifyDate;
+    int             flags;      // or-ed Flags
+    struct DrawStyle
+    {
+        DrawStyle();
+        enum S { Solid, Dashed, Beveled, Inset, Underline } style;
+        enum E { NoEffect, Cloudy } effect;
+        double          width;
+        double          xCornerRadius;
+        double          yCornerRadius;
+        int             dashMarks;
+        int             dashSpaces;
+        int             effectIntensity;
+    }               drawStyle;
+    QColor          color;
+    // special flags
+    bool            external;   // true: read from file, false: made by kpdf
+
+    // properties check
+    virtual SubType subType() const = 0;            // for RTTI
+    virtual bool isMarkup() const { return false; } // for RTTI
+    virtual bool isApplied() const { return external; } // TEMPORARY
+};
+
+struct MarkupAnnotation : public Annotation
+{   AN_COMMONDECL_VIRTUAL( MarkupAnnotation )
+
+    // data fields
+    double          markupOpacity;
+    int             markupWindowID;
+    QString         markupWindowTitle;
+    QString         markupWindowText;
+    QString         markupWindowSummary;
+    QDateTime       markupCreationDate;
+    struct InReplyTo
+    {
+        InReplyTo();
+        int             ID;
+        enum S { Reply, Grouped } scope;
+        enum M { Mark, Review } stateModel;
+        enum T { Marked, Unmarked, Accepted, Rejected, Cancelled, Completed, None } state;
+    }               markupReply;
+
+    // properties check
+    bool isMarkup() const { return true; }          // for RTTI
+};
+
+struct WindowAnnotation : public Annotation
+{   AN_COMMONDECL( WindowAnnotation, AWindow );
+
+    // data fields (takes {Contents,M,C,T,..} from related parent)
+    int             windowMarkupParentID;
+    bool            windowOpened;
+};
+
+struct TextAnnotation : public MarkupAnnotation
+{   AN_COMMONDECL( TextAnnotation, AText );
+
+    // data fields
+    enum T { Linked, InPlace } textType;
+    QFont           textFont;
+    bool            textOpened;
+    QString         textIcon;
+    int             inplaceAlign; // 0:left, 1:center, 2:right
+    QString         inplaceString; // use contents if this is empty
+    NormalizedPoint inplaceCallout[3];
+    enum I { Unknown, Callout, TypeWriter } inplaceIntent;
+};
+
+struct LineAnnotation : public MarkupAnnotation
+{   AN_COMMONDECL( LineAnnotation, ALine )
+
+    // data fields (note uses border for rendering style)
+    QValueList<NormalizedPoint> linePoints;
+    enum S { Square, Circle, Diamond, OpenArrow, ClosedArrow, None, Butt,
+             ROpenArrow, RClosedArrow, Slash } lineStartStyle, lineEndStyle;
+    bool            lineClosed; // def:false (if true connect first and last points)
+    QColor          lineInnerColor;
+    double          lineLeadingFwdPt;
+    double          lineLeadingBackPt;
+    bool            lineShowCaption;
+    enum I { Unknown, Arrow, Dimension, PolygonCloud } lineIntent;
+};
+
+struct GeomAnnotation : public MarkupAnnotation
+{   AN_COMMONDECL( GeomAnnotation, AGeom )
+
+    // data fields (note uses border for rendering style)
+    enum T { InscribedSquare, InscribedCircle } geomType;
+    QColor          geomInnerColor;
+    int             geomWidthPt;    //def:18
+};
+
+struct HighlightAnnotation : public MarkupAnnotation
+{   AN_COMMONDECL( HighlightAnnotation, AHighlight )
+
+    // data fields
+    enum T { Highlight, Underline, Squiggly, StrikeOut } highlightType;
+    QValueList<NormalizedPoint[4]>  highlightQuads;
+};
+
+struct StampAnnotation : public MarkupAnnotation
+{   AN_COMMONDECL( StampAnnotation, AStamp )
+
+    // data fields
+    QString         stampIconName;
+};
+
+struct InkAnnotation : public MarkupAnnotation
+{   AN_COMMONDECL( InkAnnotation, AInk )
+
+    // data fields
+    QValueList< QValueList<NormalizedPoint> > inkPaths;
+};
+
+
+/** Summary: Annotations and PDF 1.6 specification **
+
+KDPF tries to support ALL annotations and ALL parameters in PDF specs. If
 this can't be done, we must support at least the most common ones and the
 most common parameters.
-
-Current data structure status:
+Current Data Structure status:
 - COMPLETE: [markup], popup, text, freetext, line, polygon, polyline, highlight,
     underline, squiggly, strikeout, stamp, ink
 - PARTIAL: base{P,AP,AS,A,AA,StructPar,OC}, geom{RD}
@@ -141,7 +293,7 @@ CUSTOM FIELDS (for each subType) (X: is markup):
    *InkList    array         array or arrays of {x,y} userspace couples
     BS         dictionary    line width and dash pattern
 
-Unused / Incomplete :
+UNUSED / INCOMPLETE:
   Link            .     hypertext link to a location in document or action
     Dest       arr,nam,str   if A not present
     H          name          N(none) I(invert) O(outline) P(sunken)
@@ -167,215 +319,5 @@ Unused / Incomplete :
   Watermark       .     graphics to be printed at a fixed size and position on a page
   3D              .     the mean by which 3D artwork is represented in a document
 */
-
-/**
- * @short Base options for an annotation (highlights, stamps, boxes, ..).
- *
- * From PDFreferece v.1.6:
- *  An annotation associates an object such as a note, sound, or movie with a
- *  location on a page of a PDF document ...
- *
- * Inherited classes must modify protected variables as appropriate.
- * Other fields in pdf reference we dropped here:
- *   -subtype, rectangle(we are a rect), border stuff
- */
-struct Annotation
-{
-    // enum definitions
-    enum SubType { AWindow, AText, ALine, AGeom, AHighlight, AStamp, AInk };
-    enum Flags { Hidden = 1, FixedSize = 2, FixedRotation = 4, DenyPrint = 8,
-                 DenyWrite = 16, DenyDelete = 32, ToggleHidingOnMouse = 64 };
-
-    // struct definitions
-    struct DrawStyle
-    {
-        double width;
-        double xCornerRadius;
-        double yCornerRadius;
-        enum S { Solid, Dashed, Beveled, Inset, Underline } style;
-        int dashMarks;
-        int dashSpaces;
-        enum E { NoEffect, Cloudy } effect;
-        int effectIntensity;
-        // initialize default valudes
-        DrawStyle();
-    };
-
-    // check properties
-    virtual SubType subType() const = 0;            // for RTTI
-    virtual bool isMarkup() const { return false; } // for RTTI
-    virtual bool isApplied() const { return external; }
-
-    // data fields
-    NormalizedRect  r;
-    double          rUnscaledWidth;
-    double          rUnscaledHeight;
-    QString         author;
-    QString         contents;
-    QString         uniqueName;
-    QDateTime       modifyDate;
-    int             flags;
-    DrawStyle       drawStyle;
-    QColor          color;
-    // special flags
-    bool            external;   // true: read from file, false: made by kpdf
-
-    // initialize default values
-    Annotation();
-    virtual ~Annotation() {};
-    // read values from XML node
-    Annotation( const QDomNode & node );
-    // store custom config to XML node
-    virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct MarkupAnnotation : public Annotation
-{
-    // struct definitions
-    struct InReplyTo
-    {
-        int ID;
-        enum S { Reply, Grouped } scope;
-        enum M { Mark, Review } stateModel;
-        enum T { Marked, Unmarked, Accepted, Rejected, Cancelled, Completed, None } state;
-        // initialize default valudes
-        InReplyTo();
-    };
-
-    // data fields
-    bool isMarkup() const { return true; }          // for RTTI
-    double          markupOpacity;
-    int             markupWindowID;
-    QString         markupWindowTitle;
-    QString         markupWindowText;
-    QString         markupWindowSummary;
-    QDateTime       markupCreationDate;
-    InReplyTo       markupReply;
-
-    // initialize default values
-    MarkupAnnotation();
-    virtual ~MarkupAnnotation() {};
-    // read values from XML node
-    MarkupAnnotation( const QDomNode & node );
-    // store custom config to XML node
-    virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct WindowAnnotation : public Annotation
-{
-    // data fields (takes {Contents,M,C,T,..} from related parent)
-    int             windowMarkupParentID;
-    bool            windowOpened;
-
-    // RTTI
-    SubType subType() const { return AWindow; }
-
-    // common functions
-    WindowAnnotation();
-    WindowAnnotation( const QDomNode & node );
-    void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct TextAnnotation : public MarkupAnnotation
-{
-    // data fields
-    enum T { Linked, InPlace } textType;
-    QFont       textFont;
-    bool        textOpened;
-    QString     textIcon;
-    int         inplaceAlign; // 0:left, 1:center, 2:right
-    QString     inplaceString; // use contents if this is empty
-    NormalizedPoint inplaceCallout[3];
-    enum I { Unknown, Callout, TypeWriter } inplaceIntent;
-
-    // RTTI
-    SubType subType() const { return AText; }
-
-    // common functions
-    TextAnnotation();
-    TextAnnotation( const QDomNode & node );
-    void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct LineAnnotation : public MarkupAnnotation
-{
-    // data fields (note uses border for rendering style)
-    QValueList<NormalizedPoint> linePoints;
-    enum S { Square, Circle, Diamond, OpenArrow, ClosedArrow, None, Butt,
-           ROpenArrow, RClosedArrow, Slash } lineStartStyle, lineEndStyle;
-    bool        lineClosed; // def:false (if true connect first and last points)
-    QColor      lineInnerColor;
-    double      lineLeadingFwdPt;
-    double      lineLeadingBackPt;
-    bool        lineShowCaption;
-    enum I { Unknown, Arrow, Dimension, PolygonCloud } lineIntent;
-
-    // RTTI
-    SubType subType() const { return ALine; }
-
-    // common functions
-    LineAnnotation();
-    LineAnnotation( const QDomNode & node );
-    void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct GeomAnnotation : public MarkupAnnotation
-{
-    // data fields (note uses border for rendering style)
-    enum T { InscribedSquare, InscribedCircle } geomType;
-    QColor      geomInnerColor;
-    int         geomWidthPt;    //def:18
-
-    // RTTI
-    SubType subType() const { return AGeom; }
-
-    // common functions
-    GeomAnnotation();
-    GeomAnnotation( const QDomNode & node );
-    void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct HighlightAnnotation : public MarkupAnnotation
-{
-    // data fields
-    enum T { Highlight, Underline, Squiggly, StrikeOut } highlightType;
-    QValueList<NormalizedPoint[4]>  highlightQuads;
-
-    // RTTI
-    SubType subType() const { return AHighlight; }
-
-    // common functions
-    HighlightAnnotation();
-    HighlightAnnotation( const QDomNode & node );
-    void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct StampAnnotation : public MarkupAnnotation
-{
-    // data fields
-    QString     stampIconName;
-
-    // RTTI
-    SubType subType() const { return AStamp; }
-
-    // common functions
-    StampAnnotation();
-    StampAnnotation( const QDomNode & node );
-    void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
-
-struct InkAnnotation : public MarkupAnnotation
-{
-    // data fields (note uses border for rendering style)
-    QValueList< QValueList<NormalizedPoint> > inkPaths;
-
-    // RTTI
-    SubType subType() const { return AInk; }
-
-    // common functions
-    InkAnnotation();
-    InkAnnotation( const QDomNode & node );
-    void store( QDomNode & parentNode, QDomDocument & document ) const;
-};
 
 #endif

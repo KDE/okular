@@ -27,8 +27,8 @@
 /** Annotation **/
 
 Annotation::DrawStyle::DrawStyle()
-    : width( 1 ), xCornerRadius( 0 ), yCornerRadius( 0 ), style( Solid ),
-    dashMarks( 3 ), dashSpaces( 0 ), effect( NoEffect ), effectIntensity( 0 ) {}
+    : style( Solid ), effect( NoEffect ), width( 1 ), xCornerRadius( 0 ),
+    yCornerRadius( 0 ), dashMarks( 3 ), dashSpaces( 0 ),  effectIntensity( 0 ) {}
 
 Annotation::Annotation()
     : rUnscaledWidth( -1 ), rUnscaledHeight( -1 ), flags( 0 ), external( false )

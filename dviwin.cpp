@@ -823,7 +823,7 @@ void dviWindow::changePageSize()
 
 //------ setup the dvi interpreter (should do more here ?) ----------
 
-bool dviWindow::setFile(QString fname, QString ref)
+bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker=true)
 {
   DVIselection.clear();
   reference              = QString::null;
@@ -873,7 +873,7 @@ bool dviWindow::setFile(QString fname, QString ref)
   }
 
   QApplication::setOverrideCursor( waitCursor );
-  dvifile *dviFile_new = new dvifile(filename,font_pool);
+  dvifile *dviFile_new = new dvifile(filename, font_pool, sourceMarker);
   if ((dviFile_new->dvi_Data == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)

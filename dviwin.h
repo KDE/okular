@@ -140,7 +140,7 @@ public slots:
   void          findPrevText(void);
 
   void          abortExternalProgramm(void);
-  bool		setFile(QString fname, QString ref = QString::null);
+  bool		setFile(QString fname, QString ref = QString::null, bool sourceMarker=true);
 
   /** Displays the page of the first argument */
   void		gotoPage(unsigned int page);

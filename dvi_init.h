@@ -14,7 +14,7 @@ class fontPool;
 class dvifile : public bigEndianByteReader
 {
  public:
-  dvifile(QString fname, class fontPool *pool);
+  dvifile(QString fname, class fontPool *pool, bool sourceSpecialMark=true);
   ~dvifile();
 
   fontPool     * font_pool;

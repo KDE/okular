@@ -490,7 +490,7 @@ void KDVIMultiPage::reload()
     timer_id = -1;
     int currsav = window->curr_page();
 
-    bool r = window->setFile(m_file);
+    bool r = window->setFile(m_file, QString::null, false);
     enableActions(r);
 
     // Go to the old page and tell kviewshell where we are.

@@ -67,6 +67,17 @@ class KPDFDocument
         // query methods (const ones)
         uint currentPage() const;
         uint pages() const;
+        QString author() const;
+        QString creationDate() const;
+        QString creator() const;
+        bool encrypted() const;
+        QString keywords() const;
+        QString modificationDate() const;
+        bool optimized() const;
+        float PDFversion() const;
+        QString producer() const;
+        QString subject() const;
+        QString title() const;
         bool okToPrint() const;
         Outline * outline() const;
         const KPDFPage * page( uint page ) const;

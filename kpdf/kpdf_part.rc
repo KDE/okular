@@ -5,6 +5,7 @@
     <Action name="save" group="file_save"/>
     <Action name="file_print" group="file_print"/>
     <Action name="file_print_preview" group="file_print"/>
+    <Action name="properties" group="file_print"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>

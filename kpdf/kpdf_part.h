@@ -96,6 +96,7 @@ protected slots:
     void slotNewConfig();
     void slotPrintPreview();
 	void slotShowMenu(const KPDFPage *page, const QPoint &point);
+	void slotShowProperties();
 	// can be connected to widget elements
 	void updateActions();
 	void enableTOC(bool enable);
@@ -136,6 +137,7 @@ private:
 	KAction *m_lastPage;
 	KAction *m_find;
 	KAction *m_findNext;
+	KAction *m_showProperties;
 	KToggleAction* m_watchFile;
 	KToggleAction* m_showMenuBarAction;
 	bool m_showMenuBarActionSearched;

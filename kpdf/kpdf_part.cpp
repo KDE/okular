@@ -58,6 +58,7 @@
 #include "page.h"
 #include "toc.h"
 #include "preferencesdialog.h"
+#include "propertiesdialog.h"
 #include "settings.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
@@ -171,6 +172,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
     KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
+	
+	m_showProperties = new KAction(i18n("Properties"), 0, this, SLOT(slotShowProperties()), ac, "properties");
+	m_showProperties->setEnabled( false );
 
     // attach the actions of the 2 children widgets too
 	m_pageView->setupActions( ac );
@@ -240,6 +244,7 @@ bool Part::openFile()
 	bool ok = m_document->openDocument( m_file );
 	if ( ok && !m_watcher->contains(m_file)) m_watcher->addFile(m_file);
 	m_find->setEnabled( ok );
+	m_showProperties->setEnabled( ok );
 	return ok;
 }
 
@@ -567,6 +572,13 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	}
 	delete popup;
 	
+}
+
+void Part::slotShowProperties()
+{
+	propertiesDialog *d = new propertiesDialog(widget(), m_document);
+	d->exec();
+	delete d;
 }
 
 void Part::slotPrint()

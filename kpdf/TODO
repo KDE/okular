@@ -53,6 +53,7 @@ More items (first items will enter 'In progress list' first):
 -> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
 
 Done (newest feature comes firts):
+-> ADD: Add properties dialog (Albert)
 -> ADD: Support for show/hide menubar in rmb menu, different from HEAD so that supports Konqueror too (Albert)
 -> ADD: Watch File option (Albert)
 -> ADD: import Marco Martin's "another kpdf icon" (kde-look: 16146) (Albert)
@@ -114,3 +115,4 @@ BR74435: (smooth transition/continous mode) It's in from sept-27.
 BR80164: (2-up view of pdf pages)  It's in from sept-26.
 BR69092: Zoom displayed/internal values synced with fixed value or displayed page.
          It is editable and the list gets cleaned and rebuilt on changes.
+BR94385: PDF doesn't show PDF properties

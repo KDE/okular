@@ -9,6 +9,7 @@
  ***************************************************************************/
 
 // qt/kde/system includes
+#include <qdatetime.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
@@ -35,6 +36,7 @@
 #include "PDFDoc.h"
 #include "PSOutputDev.h"
 #include "QOutputDev.h"
+#include "UnicodeMap.h"
 
 #include "document.h"
 #include "page.h"
@@ -49,6 +51,109 @@
 class KPDFDocumentPrivate
 {
 public:
+    // Albert says: I've put that two functions here but they could go
+    // elsewhere, i leave it up to you if you want to change them Enrico
+    QString getDocumentInfo(const QString &data) const
+    {
+      // Code adapted from pdfinfo.cc on xpdf
+      Object info;
+      if (pdfdoc)
+      {
+        pdfdoc->getDocInfo(&info);
+        if (info.isDict())
+        {
+          QCString result;
+          Object obj;
+          GString *s1;
+          GBool isUnicode;
+          Unicode u;
+          char buf[8];
+          int i, n;
+          Dict *infoDict = info.getDict();
+          UnicodeMap *uMap = globalParams->getTextEncoding();
+          
+          if (!uMap) return i18n("Unknown");
+          
+          if (infoDict->lookup(data.latin1(), &obj)->isString())
+          {
+            s1 = obj.getString();
+            if ((s1->getChar(0) & 0xff) == 0xfe && (s1->getChar(1) & 0xff) == 0xff)
+            {
+              isUnicode = gTrue;
+              i = 2;
+            }
+            else
+            {
+              isUnicode = gFalse;
+              i = 0;
+            }
+            while (i < obj.getString()->getLength()) 
+            {
+              if (isUnicode)
+              {
+                u = ((s1->getChar(i) & 0xff) << 8) | (s1->getChar(i+1) & 0xff);
+                i += 2;
+              }
+              else
+              {
+                u = s1->getChar(i) & 0xff;
+                ++i;
+              }
+              n = uMap->mapUnicode(u, buf, sizeof(buf));
+              result += QCString(buf, n + 1);
+            }
+            obj.free();
+            return result;
+          }
+          obj.free();
+          return i18n("Unknown");
+        }
+        else return i18n("Unknown");
+      }
+      else return i18n("Unknown");
+    }
+    
+    QString getDocumentDate(const QString &data) const
+    {
+      // Code adapted from pdfinfo.cc on xpdf
+      Object info;
+      if (pdfdoc)
+      {
+        pdfdoc->getDocInfo(&info);
+        if (info.isDict())
+        {
+          Object obj;
+          char *s;
+          int year, mon, day, hour, min, sec;
+          Dict *infoDict = info.getDict();
+          UnicodeMap *uMap = globalParams->getTextEncoding();
+          
+          if (!uMap) return i18n("Unknown");
+          
+          if (infoDict->lookup(data.latin1(), &obj)->isString())
+          {
+            s = obj.getString()->getCString();
+            if (s[0] == 'D' && s[1] == ':') s += 2;
+            if (sscanf(s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec) == 6)
+            {
+              QDate d(year, mon - 1, day);
+              QTime t(hour, min, sec);
+              if (d.isValid() && t.isValid()) return KGlobal::locale()->formatDateTime(QDateTime(d, t), false, true);
+              else return s;
+            }
+            else return s;
+            fputc('\n', stdout);
+            obj.free();
+            //return result;
+          }
+          obj.free();
+          return i18n("Unknown");
+        }
+        else return i18n("Unknown");
+      }
+      else return i18n("Unknown");
+    }
+    
     // document related
     QMutex docLock;
     PDFDoc * pdfdoc;
@@ -248,6 +353,64 @@ uint KPDFDocument::currentPage() const
 uint KPDFDocument::pages() const
 {
     return d->pdfdoc ? d->pdfdoc->getNumPages() : 0;
+}
+
+QString KPDFDocument::author() const
+{
+  return d->getDocumentInfo("Author");
+}
+
+QString KPDFDocument::creationDate() const
+{
+  return d->getDocumentDate("CreationDate");
+}
+
+QString KPDFDocument::creator() const
+{
+  return d->getDocumentInfo("Creator");
+}
+
+bool KPDFDocument::encrypted() const
+{
+  if (d->pdfdoc) return d->pdfdoc->isEncrypted();
+  else return false;
+}
+
+QString KPDFDocument::keywords() const
+{
+  return d->getDocumentInfo("Keywords");
+}
+
+QString KPDFDocument::modificationDate() const
+{
+  return d->getDocumentDate("ModDate");
+}
+
+bool KPDFDocument::optimized() const
+{
+  if (d->pdfdoc) return d->pdfdoc->isLinearized();
+  else return false;
+}
+
+float KPDFDocument::PDFversion() const
+{
+  if (d->pdfdoc) return d->pdfdoc->getPDFVersion();
+  else return 0;
+}
+
+QString KPDFDocument::producer() const
+{
+  return d->getDocumentInfo("Producer");
+}
+
+QString KPDFDocument::subject() const
+{
+  return d->getDocumentInfo("Subject");
+}
+
+QString KPDFDocument::title() const
+{
+  return d->getDocumentInfo("Title");
 }
 
 bool KPDFDocument::okToPrint() const

@@ -238,7 +238,7 @@ void OptionDialog::makeRenderingPage()
   QToolTip::add( mRender.editorDescription, i18n("Explains about the editor's capabilities in conjunction with inverse search.") );
   QWhatsThis::add( mRender.editorDescription, i18n("Not all editors are well-suited for inverse search. For instance, many editors have no command like 'If the file is not yet loaded, load it. Otherwise, bring the window with the file to the front'. If you are using an editor like this, clicking into the DVI file will always open a new editor, even if the TeX-file is already open. Likewise, many editors have no command line argument that would allow KDVI to specify the exact line which you wish to edit.\nIf you feel that KDVI's support for a certain editor is not well-done, please write to kebekus@kde.org.") );
 
-  new QLabel( i18n("Shell Command:"), editorBox );
+  new QLabel( i18n("Shell command:"), editorBox );
   mRender.editorCallingCommand =  new KLineEdit( editorBox );
   mRender.editorCallingCommand->setReadOnly(true);
   connect(mRender.editorCallingCommand, SIGNAL( textChanged (const QString &) ), this, SLOT( slotUserDefdEditorCommand( const QString & ) ) );

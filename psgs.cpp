@@ -214,24 +214,24 @@ void ghostscript_interface::gs_generate_graphics_file(int page, const QString &f
 	if (knownDevices.isEmpty())
 	  // TODO: show a requestor of some sort.
 	  KMessageBox::detailedError(0, 
-				     i18n("<qt>The version of ghostview that is installed on this computer doesnot contain "
-					  "any of the ghostview devices drivers that are known to KDVI. PostScript "
-					  "support is therefore switched off now in KDVI.</qt>"), 
-				     i18n("<qt><p>The ghostview program, which KDVI uses internally to display the "
+				     i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
+					  "any of the Ghostview device drivers that are known to KDVI. PostScript "
+					  "support has therefore been turned off in KDVI.</qt>"), 
+				     i18n("<qt><p>The Ghostview program, which KDVI uses internally to display the "
 					  "PostScript graphics that is included in this DVI file, is generally able to "
-					  "write its output in a variety of formats. The sub-programs that ghostview uses "
-					  "for these tasks are called 'device drivers', there is one device driver for "
-					  "each format that ghostview is able to write. Different versions of ghostview "
-					  "often have different sets of device drivers available. It appears version of "
-					  "ghostview that is installed on this computer does not contain "
-					  "<strong>any</strong> of the devices drivers that are known to KDVI.</p>"
-					  "<p>It seems unlikely that a regular installation of ghostview does not contain "
+					  "write its output in a variety of formats. The sub-programs that Ghostview uses "
+					  "for these tasks are called 'device drivers'; there is one device driver for "
+					  "each format that Ghostview is able to write. Different versions of Ghostview "
+					  "often have different sets of device drivers available. It seems that the "
+					  "version of Ghostview that is installed on this computer does not contain "
+					  "<strong>any</strong> of the device drivers that are known to KDVI.</p>"
+					  "<p>It seems unlikely that a regular installation of Ghostview would not contain "
 					  "these drivers. This error may therefore point to a serious misconfiguration of "
-					  "the ghostview installation on your computer.</p>"
-					  "<p>If you want fix the problems with ghostview, you can use the command "
-					  "<strong>gs --help</strong> to display the list of device driver contained in "
-					  "ghostview. Among others, KDVI can use the 'png256', the 'jpeg' and the 'pnm' "
-					  "driver. Note that KDVIs need to be restarted to re-enable PostScript support."
+					  "the Ghostview installation on your computer.</p>"
+					  "<p>If you want to fix the problems with Ghostview, you can use the command "
+					  "<strong>gs --help</strong> to display the list of device drivers contained in "
+					  "Ghostview. Among others, KDVI can use the 'png256', 'jpeg' and 'pnm' "
+					  "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
 					  "</p></qt>"));
 	else {
 	  kdDebug(4300) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;

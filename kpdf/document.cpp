@@ -17,9 +17,11 @@
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
+#include <kpassdlg.h>
 #include <kstandarddirs.h>
 
 // local includes
+#include "ErrorCodes.h"
 #include "PDFDoc.h"
 #include "QOutputDev.h"
 
@@ -101,9 +103,51 @@ bool KPDFDocument::openDocument( const QString & docFile )
 
     if ( !d->pdfdoc->isOk() )
     {
-        delete d->pdfdoc;
-        d->pdfdoc = 0;
-        return false;
+        if (d->pdfdoc->getErrorCode() == errEncrypted)
+        {
+            bool first, correct;
+            QString prompt;
+            QCString pwd;
+
+            first = true;
+            correct = false;
+            while(!correct)
+            {
+                if (first)
+                {
+                    prompt = i18n("Please insert the password to read the document:");
+                    first = false;
+                }
+                else prompt = i18n("Incorrect password. Try again:");
+                if (KPasswordDialog::getPassword(pwd, prompt) == KPasswordDialog::Accepted)
+                {
+                    GString *pwd2;
+                    pwd2 = new GString(pwd.data());
+                    d->pdfdoc = new PDFDoc(filename, pwd2, pwd2);
+                    delete pwd2;
+                    correct = d->pdfdoc->isOk();
+					kdDebug() << correct << " " << (d->pdfdoc->getErrorCode() != errEncrypted) << endl;
+                    if (!correct && d->pdfdoc->getErrorCode() != errEncrypted)
+                    {
+                        delete d->pdfdoc;
+                        d->pdfdoc = 0;
+                        return false;
+                    }
+                }
+                else
+                {
+                    delete d->pdfdoc;
+                    d->pdfdoc = 0;
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            delete d->pdfdoc;
+            d->pdfdoc = 0;
+            return false;
+        }
     }
 
     // clear xpdf errors

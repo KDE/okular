@@ -23,6 +23,7 @@
 #include <qstring.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 #include <kmessagebox.h>
 
 #include "xpdf_errors.h"
@@ -65,7 +66,8 @@ void CDECL error(int pos, const char *msg, ...) {
   emsg += buffer;
   if (!errors::exists(emsg))
   {
-    KMessageBox::error(0, emsg);
+    //KMessageBox::error(0, emsg);
+    kdDebug() << emsg << endl;
     errors::add(emsg);
   }
 }

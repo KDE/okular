@@ -19,6 +19,7 @@ Porting / In progress on the branch (first item comes first):
 -> (store observers data into pages?)
 
 Done (sorted by inv.time)
+-> added the option to open password protected files (from head)
 -> added the TOC from head (missing click and go functionality because it needs link following)
 -> added a 'search bar' with prune-as-you-type feature
 -> ported Albert's search and implemented case sensitive

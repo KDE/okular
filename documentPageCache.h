@@ -27,6 +27,9 @@ class documentPageCache: public QObject
  public:
   documentPageCache();
   ~documentPageCache();
+  
+  /** The maximal number of elements in the cache. */
+  static const Q_UINT16 maxSize = 4;
 
   /** This method is used to name the documentRenderer, that the
       documentPageCache uses to render the page. The renderer can be
@@ -46,8 +49,17 @@ class documentPageCache: public QObject
   void clear();
 
  private:
-  documentPage *currentPage;
-  Q_UINT16      currentPageNr;
+
+  /** This list holds the cache. The least recently accessed page is
+      always the last. */
+  QPtrList<documentPage> LRUCache;
+
+  /** If a page is removed from the LRUCache, it is not deleted, but
+      clear()ed, and stored in this recycleBin. The page can then
+      later be re-used. This makes for a substantial preformance
+      gain. */
+  QPtrList<documentPage> recycleBin;
+
   dviWindow    *renderer;
 };
 

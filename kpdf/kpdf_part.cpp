@@ -59,6 +59,15 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   setWidget(pdfpartview);
 
+  m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0,
+                                       actionCollection(), "show_scrollbars" );
+  m_showPageList   = new KToggleAction( i18n( "Show &Page List" ), 0,
+                                       actionCollection(), "show_page_list" );
+  connect( m_showScrollBars, SIGNAL( toggled( bool ) ),
+             SLOT( showScrollBars( bool ) ) );
+  connect( m_showPageList, SIGNAL( toggled( bool ) ),
+             SLOT( showMarkList( bool ) ) );
+
   // create our actions
   KStdAction::find    (this, SLOT(find()),
                        actionCollection(), "find");
@@ -100,6 +109,20 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 Part::~Part()
 {
     delete globalParams;
+}
+
+void Part::showScrollBars( bool show )
+{
+    m_outputDev->enableScrollBars( show );
+}
+
+void Part::showMarkList( bool show )
+{
+#if 0
+    _markList->setShown( show );
+    _scrollBox->setShown( show );
+    _divider->setShown( show );
+#endif
 }
 
 void Part::slotGotoEnd()

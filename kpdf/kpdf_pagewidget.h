@@ -12,56 +12,56 @@ class QOutputDevPixmap;
 
 namespace KPDF
 {
-	/**
-	 * Widget displaying a pixmap containing a PDF page and Links.
-	 */
-	class PageWidget : public QScrollView
-	{
-		Q_OBJECT
+    /**
+     * Widget displaying a pixmap containing a PDF page and Links.
+     */
+    class PageWidget : public QScrollView
+    {
+        Q_OBJECT
 
-		enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
+        enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
 
-		public:
-			PageWidget(QWidget* parent = 0, const char* name = 0);
-            ~PageWidget();
-			void setPDFDocument(PDFDoc*);
-			void setPixelsPerPoint(float);
-			/* void setLinks(); */
+    public:
+        PageWidget(QWidget* parent = 0, const char* name = 0);
+        ~PageWidget();
+        void setPDFDocument(PDFDoc*);
+        void setPixelsPerPoint(float);
+        /* void setLinks(); */
 
-			void setPage(int pagenum);
-			int getPage() const { return m_currentPage; };
+        void setPage(int pagenum);
+        int getPage() const { return m_currentPage; };
+        void enableScrollBars( bool b );
+    public slots:
+        void nextPage();
+        void previousPage();
+        void zoomIn();
+        void zoomOut();
 
-		public slots:
-			void nextPage();
-			void previousPage();
-			void zoomIn();
-			void zoomOut();
+        void updatePixmap();
 
-			void updatePixmap();
+    signals:
+        void linkClicked(LinkAction*);
 
-		signals:
-			void linkClicked(LinkAction*);
+    protected:
+        void contentsMousePressEvent(QMouseEvent*);
+        void contentsMouseReleaseEvent(QMouseEvent*);
+        void contentsMouseMoveEvent(QMouseEvent*);
 
-		protected:
-			void contentsMousePressEvent(QMouseEvent*);
-			void contentsMouseReleaseEvent(QMouseEvent*);
-			void contentsMouseMoveEvent(QMouseEvent*);
+        virtual void drawContents ( QPainter *p, int, int, int, int );
 
-			virtual void drawContents ( QPainter *p, int, int, int, int );
+    private:
 
-		private:
+        QOutputDevPixmap * m_outputdev;
+        PDFDoc* m_doc;
 
-			QOutputDevPixmap * m_outputdev;
-			PDFDoc* m_doc;
+        float   m_ppp; // Pixels per point
+        float		m_zoomFactor;
+        ZoomMode m_zoomMode;
 
-			float   m_ppp; // Pixels per point
-			float		m_zoomFactor;
-			ZoomMode m_zoomMode;
+        int m_currentPage;
 
-			int m_currentPage;
-
-			LinkAction* m_pressedAction;
-	};
+        LinkAction* m_pressedAction;
+    };
 }
 
 #endif

@@ -120,6 +120,12 @@ namespace KPDF
         mutex.unlock();
     }
 
+    void PageWidget::enableScrollBars( bool b )
+    {
+        setHScrollBarMode( b ? Auto : AlwaysOff );
+        setVScrollBarMode( b ? Auto : AlwaysOff );
+    }
+
     void PageWidget::updatePixmap()
     {
         if ( m_doc )

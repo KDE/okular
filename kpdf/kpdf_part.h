@@ -95,14 +95,19 @@ namespace KPDF
 
     void executeAction(LinkAction*);
 
+      void showScrollBars( bool );
+      void showMarkList( bool );
+
   private:
     PDFDoc*     m_doc;
     PageWidget* m_outputDev;
-		PDFPartView * pdfpartview;
+      PDFPartView * pdfpartview;
     KAction* m_firstPage;
     KAction* m_lastPage;
     KAction* m_prevPage;
     KAction* m_nextPage;
+    KToggleAction* m_showScrollBars;
+    KToggleAction* m_showPageList;
 
       KToggleAction* m_fitToWidth;
 

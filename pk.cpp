@@ -463,7 +463,7 @@ void font::read_PK_index(void)
   kdDebug() << "Reading PK pixel file " << filename << endl;
 #endif
 
-  Fseek(file, (long) one(file), SEEK_CUR);	/* skip comment */
+  fseek(file, (long) one(file), SEEK_CUR);	/* skip comment */
 
   (void) four(file);		/* skip design size */
   long file_checksum = four(file);
@@ -506,7 +506,7 @@ void font::read_PK_index(void)
       }
     glyphtable[ch].addr = ftell(file);
     glyphtable[ch].x2 = PK_flag_byte;
-    Fseek(file, (long) bytes_left, SEEK_CUR);
+    fseek(file, (long) bytes_left, SEEK_CUR);
 #ifdef DEBUG_PK
     kdDebug() << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
 #endif

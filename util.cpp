@@ -120,31 +120,6 @@ void alloc_bitmap(bitmap *bitmap)
   bitmap->bits = xmalloc(size != 0 ? size : 1, "character bitmap");
 }
 
-
-/*
- *	Close the pixel file for the least recently used font.
- */
-
-extern fontPool font_pool;
-
-/*
- *	Open a file in the given mode.
- */
-FILE *xdvi_xfopen(const char *filename, const char *type)
-#define	TYPE	type
-{
-  /* Try not to let the file table fill up completely.  */
-  FILE	*f = fopen(filename, "r");
-  /* If the open failed, try closing a file unconditionally.
-     Interactive Unix 2.2.1, at least, doesn't set errno to EMFILE
-     or ENFILE even when it should.  In any case, it doesn't hurt
-     much to always try.  */
-  if (f == NULL) 
-    f = fopen(filename, TYPE);
-  return f;
-}
-#undef	TYPE
-
 /*
  *
  *      Read size bytes from the FILE fp, constructing them into a

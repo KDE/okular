@@ -78,7 +78,7 @@ void font::read_VF_index(void)
   kdDebug() << "Reading VF pixel file " << filename << endl;
 #endif
   // Read preamble.
-  Fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
+  fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
   long file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
@@ -95,7 +95,7 @@ void font::read_VF_index(void)
     int   design    = four(VF_file);
     int   len       = one(VF_file) + one(VF_file); /* sequence point in the middle */
     char *fontname  = xmalloc((unsigned) len + 1, "font name");
-    Fread(fontname, sizeof(char), len, VF_file);
+    fread(fontname, sizeof(char), len, VF_file);
     fontname[len] = '\0';
 	
 #ifdef DEBUG_FONTS
@@ -144,7 +144,7 @@ void font::read_VF_index(void)
       if (cc >= 256) {
 	kdError() << i18n("Virtual character ") << cc << i18n(" in font ") 
 		  << fontname << i18n(" ignored.") << endl;
-	Fseek(VF_file, (long) len, 1);
+	fseek(VF_file, (long) len, 1);
 	continue;
       }
     } else {	/* short form packet */
@@ -167,13 +167,13 @@ void font::read_VF_index(void)
 	} else 
 	  m->pos = (unsigned char *)xmalloc(len*sizeof(unsigned char),"unknown");
       }
-      Fread((char *) m->pos, 1, len, VF_file);
+      fread((char *) m->pos, 1, len, VF_file);
       m->end = m->pos + len;
     }
   }
   if (cmnd != POST)
     oops(QString(i18n("Wrong command byte found in VF macro list: %1")).arg(cmnd));
   
-  Fclose (VF_file);
+  fclose (VF_file);
   file = NULL;
 }

@@ -112,6 +112,8 @@ KDVIMultiPage::~KDVIMultiPage()
 
 bool KDVIMultiPage::openFile()
 {
+  kdDebug(4300) << url().prettyURL() << endl;
+
   emit setStatusBarText(QString(i18n("Loading file %1")).arg(m_file));
 
   bool r = window->setFile(m_file);

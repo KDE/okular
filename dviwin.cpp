@@ -457,8 +457,8 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       qSysInfo (&wordSize, &bigEndian);
       // Proper error handling? We don't care.
       FILE *f = fopen(QFile::encodeName(sourceFileName),"r+");
-      for(Q_UINT32 i=0; i<=dviFile->total_pages; i++) {
-	fseek(f,dviFile->page_offset[i]+1, SEEK_SET);
+      for(Q_UINT32 i=1; i<=dviFile->total_pages; i++) {
+	fseek(f,dviFile->page_offset[i-1]+1, SEEK_SET);
 	// Write the page number to the file, taking good care of byte
 	// orderings. Hopefully QT will implement random access QFiles
 	// soon.

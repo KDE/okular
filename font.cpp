@@ -15,7 +15,6 @@
 
 #include "oconfig.h"
 
-extern FILE *xdvi_xfopen(const char *filename, const char *type);
 extern void oops(QString message);
 
 
@@ -39,7 +38,7 @@ void font::fontNameReceiver(QString fname)
   kdDebug() << "FONT NAME RECEIVED:" << filename << endl;
 #endif
 
-  file = xdvi_xfopen(QFile::encodeName(filename), "r");
+  file = fopen(QFile::encodeName(filename), "r");
   if (file == NULL) {
     kdError() << i18n("Can't find font ") << fontname << "." << endl;
     return;
@@ -154,13 +153,13 @@ struct glyph *font::glyphptr(unsigned int ch) {
       return NULL;	/* previously flagged missing char */
 
     if (file == NULL) {
-      file = xdvi_xfopen(QFile::encodeName(filename), "r");
+      file = fopen(QFile::encodeName(filename), "r");
       if (file == NULL) {
 	oops(QString(i18n("Font file disappeared: %1")).arg(filename) );
 	return NULL;
       }
     }
-    Fseek(file, g->addr, 0);
+    fseek(file, g->addr, 0);
     read_PK_char(ch);
 
     if (g->bitmap.bits == NULL) {

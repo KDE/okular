@@ -5,21 +5,6 @@
  *	Written by Eric C. Cooper, CMU
  */
 
-/********************************
- *	The C environment	*
- *******************************/
-
-/* For wchar_t et al., that the X files might want. */
-extern "C" {
-#include <sys/types.h>
-}
-
-
-#include <X11/Xlib.h>	/* include Xfuncs.h, if available */
-#include <X11/Xutil.h>	/* needed for XDestroyImage */
-#include <X11/Xos.h>
-#include <X11/Intrinsic.h>
-#undef wchar_t
 
 typedef	unsigned long	Pixel;
 typedef	char		Boolean;
@@ -54,20 +39,6 @@ typedef	char		Boolean;
 #define	_XFUNCPROTOBEGIN
 #define	_XFUNCPROTOEND
 #endif
-
-
-#define	Printf	(void) printf
-#define	Puts	(void) puts
-#define	Fprintf	(void) fprintf
-#define	Sprintf	(void) sprintf
-#define	Fseek	(void) fseek
-#define	Fread	(void) fread
-#define	Fputs	(void) fputs
-#define	Putc	(void) putc
-#define	Putchar	(void) putchar
-#define	Fclose	(void) fclose
-#define	Fflush	(void) fflush
-#define	Strcpy	(void) strcpy
 
 /********************************
  *	 Types and data		*

@@ -717,6 +717,8 @@ Part::executeAction(LinkAction* action)
 			}
 			else
 			{
+				KMessageBox::information(widget(), i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that."));
+				/* core developers say this is too dangerous
 				fileName = fileName->copy();
 				if (((LinkLaunch *)action)->getParams())
 				{
@@ -727,7 +729,7 @@ Part::executeAction(LinkAction* action)
 				if (KMessageBox::questionYesNo(widget(), i18n("Do you want to execute the command:\n%1").arg(fileName->getCString()), i18n("Launching external application")) == KMessageBox::Yes)
 				{
 					system(fileName->getCString());
-				}
+				}*/
 				delete fileName;
 			}
 		break;

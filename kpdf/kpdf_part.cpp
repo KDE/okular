@@ -351,7 +351,7 @@ Part::openFile()
   if (file.open(IO_ReadOnly) == false)
     return false;
 
-  GString* filename = new GString(m_file.ascii());
+  GString* filename = new GString( QFile::encodeName( m_file ) );
   m_doc = new PDFDoc(filename, 0, 0);
 
   if (!m_doc->isOk())

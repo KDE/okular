@@ -11,10 +11,10 @@
 
 #include "kprinter.h"
 
-class KPrinterWrapper : public KPrinter
+class KDVIPrinterWrapper : public KPrinter
 {
 public:
-  KPrinterWrapper(void) : KPrinter(true, QPrinter::ScreenResolution) {; };
+  KDVIPrinterWrapper(void) : KPrinter(true, QPrinter::ScreenResolution) {; };
 
   void doPreparePrinting() { preparePrinting(); };
 };

@@ -932,7 +932,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // This funny method call is necessary for the KPrinter to return
   // proper results in printer->orientation() below. It seems that
   // KPrinter does some options parsing in that method.
-  ((KPrinterWrapper *)printer)->doPreparePrinting();
+  ((KDVIPrinterWrapper *)printer)->doPreparePrinting();
   if (printer->pageList().isEmpty()) {
     KMessageBox::error( scrollView(),
 			i18n("The list of pages you selected was empty.\n"

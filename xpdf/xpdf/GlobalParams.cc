@@ -1053,6 +1053,8 @@ void parseStyle(QString& name, int& weight, int& slant)
   if (type.contains("Oblique")) slant=FC_SLANT_OBLIQUE;
   if (type.contains("Italic")) slant=FC_SLANT_ITALIC;
   if (type.contains("Bold")) weight=FC_WEIGHT_BOLD;
+  if (type.contains("Light")) weight=FC_WEIGHT_LIGHT;
+  if (type.contains("Condensed")) width=FC_WIDTH_CONDENSED;
 }
 
 

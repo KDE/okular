@@ -72,7 +72,7 @@ private slots:
 //	void		helpAbout();
 //	void		helpAboutQt();
 	void		pannerChanged();
-	void		pageActivated(const char *);
+	void		pageActivated(const QString &);
 	void		setPage(int p=0);
 	void		selectLarge();
 	void		selectSmall();
@@ -84,7 +84,7 @@ private slots:
 	void		openFile(QString name);
 	void		dropEvent( KDNDDropZone * dropZone );
 	void		updateMarklist();
-	void		showTip( const char *);
+	void		showTip( const QString &);
 	void		removeTip( );
 	void		showPoint( QPoint );
 
@@ -154,7 +154,7 @@ class PageDialog : public QDialog
 public:
 	PageDialog();
 signals:
-	void textEntered(const char *);
+	void textEntered(const QString &);
 private slots:
 	void go() { emit textEntered(ed.text()); accept();}
 private:

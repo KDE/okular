@@ -109,7 +109,7 @@ dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr,
 {
 	ChangesPossible = 1;
 	showsbs = 1;
-	FontPath = QString(NULL);
+	FontPath = QString::null;
 	setBackgroundColor( white );
 	setUpdatesEnabled(FALSE);
 	setFocusPolicy(QWidget::StrongFocus);

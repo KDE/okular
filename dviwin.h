@@ -54,7 +54,7 @@ signals:
 	void		currentPosChanged( QPoint );
 	void		shrinkChanged( int shrink );
 	void		fileChanged();
-	void		statusChange( const char * );
+	void		statusChange( const QString & );
 	void		setPoint( QPoint p );
 
 public slots:

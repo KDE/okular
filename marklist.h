@@ -50,7 +50,7 @@ public slots:
 
 signals:
 	void	selected( int index );
-	void	selected( const char * text );
+	void	selected( const QString & text );
 
 protected:
 	void	mousePressEvent ( QMouseEvent* );

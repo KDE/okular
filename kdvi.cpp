@@ -53,7 +53,7 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 	setMinimumSize( 400, 60 );
 	setCaption( kapp->getCaption() );
 	tipgroup = new QToolTipGroup( this, "TipGroup" );
-	connect( tipgroup, SIGNAL(showTip(const char *)), SLOT(showTip(const char *)) );
+	connect( tipgroup, SIGNAL(showTip(const QString &)), SLOT(showTip(const QString &)) );
 	connect( tipgroup, SIGNAL(removeTip()), SLOT(removeTip()) );
 
   // Create KPanner for toolBar2 and dviwindow
@@ -72,8 +72,8 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 	connect( dviwin, SIGNAL(currentPage(int)), SLOT(setPage(int)) );
 	connect( dviwin, SIGNAL(shrinkChanged(int)), SLOT(shrinkChanged(int)) );
 	connect( dviwin, SIGNAL(fileChanged()), SLOT(fileChanged()) );
-	connect( dviwin, SIGNAL(statusChange(const char *)),
-			 SLOT(showTip(const char *)) );
+	connect( dviwin, SIGNAL(statusChange(const QString &)),
+			 SLOT(showTip(const QString &)) );
 	connect( dviwin, SIGNAL(setPoint(QPoint)), SLOT(showPoint(QPoint)) );
 
   // Create a menubar
@@ -296,16 +296,16 @@ void kdvi::makeToolBar2(QWidget *parent)
 		 sbox, SLOT(setViewSize( QSize )) );
 	connect( dviwin, SIGNAL(currentPosChanged( QPoint )),
 		 sbox, SLOT(setViewPos( QPoint )) );
-	QToolTip::add( sbox, 0, tipgroup, i18n("Scroll window and switch the page") );
+	QToolTip::add( sbox, "", tipgroup, i18n("Scroll window and switch the page") );
 	sbox->setFixedSize(70,80);
 	gl->addWidget( sbox );
 
   // Create a MarkList
 
 	marklist = new MarkList( toolBar2 );
-	connect( marklist, SIGNAL(selected(const char *)),
-		SLOT(pageActivated(const char *)) );
-	QToolTip::add( marklist, 0, tipgroup, i18n("Select page and mark pages for printing") );
+	connect( marklist, SIGNAL(selected(const QString &)),
+		SLOT(pageActivated(const QString &)) );
+	QToolTip::add( marklist, "", tipgroup, i18n("Select page and mark pages for printing") );
 
 	gl->addWidget( marklist );
 	gl->activate();
@@ -506,7 +506,7 @@ void kdvi::openFile( QString name)
 	if ( name.isEmpty() )
 		return;
 	QString oname( name );
-	name.detach();
+	//name.detach();
 	if ( ! QFileInfo( name ).isReadable() )
 		name.append( ".dvi" );
 	if ( ! QFileInfo( name ).isReadable() )
@@ -702,7 +702,7 @@ PageDialog::PageDialog() : QDialog( 0, 0, 1 ),
 void kdvi::pageGoto()
 {
 	PageDialog dlg;
-	connect( &dlg, SIGNAL(textEntered(const char *)), SLOT(pageActivated(const char *)) );
+	connect( &dlg, SIGNAL(textEntered(const QString &)), SLOT(pageActivated(const QString &)) );
 	dlg.show();
 }
 
@@ -856,9 +856,9 @@ void kdvi::pannerChanged()
 	}
 }
 
-void kdvi::pageActivated( const char * text)
+void kdvi::pageActivated( const QString & text)
 {
-	int pg = QString(text).toInt();
+	int pg = text.toInt();
 	if (dviwin->page() != pg)
 		dviwin->gotoPage( pg );
 	dviwin->setFocus();
@@ -940,7 +940,7 @@ void kdvi::fileChanged()
 	setPage();
 }
 
-void kdvi::showTip( const char * tip)
+void kdvi::showTip( const QString & tip)
 {
 	message( tip );
 }

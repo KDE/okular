@@ -49,7 +49,6 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -123,29 +122,29 @@ int font::PK_packed_num(FILE *fp)
   kdDebug() << "PK_packed_num" << endl;
 #endif
 
-	int	i,j;
+  int	i,j;
 
-	if ((i = PK_get_nyb(fp)) == 0) {
-	    do {
-		j = PK_get_nyb(fp);
-		++i;
-	    }
-	    while (j == 0);
-	    while (i > 0) {
-		j = (j << 4) | PK_get_nyb(fp);
-		--i;
-	    }
-	    return (j - 15 + ((13 - PK_dyn_f) << 4) + PK_dyn_f);
-	}
-	else {
-	    if (i <= PK_dyn_f) return i;
-	    if (i < 14)
-		return (((i - PK_dyn_f - 1) << 4) + PK_get_nyb(fp)
-		    + PK_dyn_f + 1);
-	    if (i == 14) PK_repeat_count = PK_packed_num(fp);
-	    else PK_repeat_count = 1;
-	    return PK_packed_num(fp);
-	}
+  if ((i = PK_get_nyb(fp)) == 0) {
+    do {
+      j = PK_get_nyb(fp);
+      ++i;
+    }
+    while (j == 0);
+    while (i > 0) {
+      j = (j << 4) | PK_get_nyb(fp);
+      --i;
+    }
+    return (j - 15 + ((13 - PK_dyn_f) << 4) + PK_dyn_f);
+  }
+  else {
+    if (i <= PK_dyn_f) return i;
+    if (i < 14)
+      return (((i - PK_dyn_f - 1) << 4) + PK_get_nyb(fp)
+	      + PK_dyn_f + 1);
+    if (i == 14) PK_repeat_count = PK_packed_num(fp);
+    else PK_repeat_count = 1;
+    return PK_packed_num(fp);
+  }
 }
 
 
@@ -256,103 +255,171 @@ void font::read_PK_char(unsigned int ch)
   /*
    * read character data into *cp
    */
-  bytes_wide = ROUNDUP((int) g->bitmap.w, BITS_PER_BMUNIT)
-    * BYTES_PER_BMUNIT;
+  bytes_wide = ROUNDUP((int) g->bitmap.w, BITS_PER_BMUNIT) * BYTES_PER_BMUNIT;
   PK_bitpos = -1;
-  if (PK_dyn_f == 14) {	/* get raster by bits */
-    memset(g->bitmap.bits, 0, (int) g->bitmap.h * bytes_wide);
-    for (i = 0; i < (int) g->bitmap.h; i++) {	/* get all rows */
-      cp = ADD(g->bitmap.bits, i * bytes_wide);
-#ifndef	MSBITFIRST
-      row_bit_pos = -1;
-#else
-      row_bit_pos = BITS_PER_BMUNIT;
+
+  // The routines which read the character depend on the byte
+  // ordering. In principle, the byte order should be detected at
+  // compile time and the proper routing chosen. For the moment, as
+  // autoconf is somewhat complicated for the author, we prefer a
+  // simpler -even if somewhat slower approach and detect the ordering
+  // at runtime. That should of course be changed in the future.
+
+  int wordSize;
+  bool bigEndian;
+  qSysInfo (&wordSize, &bigEndian);
+
+  if (bigEndian) { 
+    // Routine for big Endian machines. Applies e.g. to Motorola and
+    // (Ultra-)Sparc processors.
+
+#ifdef DEBUG_PK
+    kdDebug() << "big Endian byte ordering" << endl;
 #endif
-      for (j = 0; j < (int) g->bitmap.w; j++) {    /* get one row */
-	if (--PK_bitpos < 0) {
-	  word = one(fp);
-	  PK_bitpos = 7;
-	}
-#ifndef	MSBITFIRST
-	if (++row_bit_pos >= BITS_PER_BMUNIT) {
-	  cp++;
-	  row_bit_pos = 0;
-	}
-#else
-	if (--row_bit_pos < 0) {
-	  cp++;
-	  row_bit_pos = BITS_PER_BMUNIT - 1;
-	}
-#endif
-	if (word & (1 << PK_bitpos)) *cp |= 1 << row_bit_pos;
-      }
-    }
-  } else {		/* get packed raster */
-    rows_left = g->bitmap.h;
-    h_bit = g->bitmap.w;
-    PK_repeat_count = 0;
-    word_weight = BITS_PER_BMUNIT;
-    word = 0;
-    while (rows_left > 0) {
-      count = PK_packed_num(fp);
-      while (count > 0) {
-	if (count < word_weight && count < h_bit) {
-#ifndef	MSBITFIRST
-	  if (paint_switch)
-	    word |= bit_masks[count] <<
-	      (BITS_PER_BMUNIT - word_weight);
-#endif
-	  h_bit -= count;
-	  word_weight -= count;
-#ifdef	MSBITFIRST
-	  if (paint_switch)
-	    word |= bit_masks[count] << word_weight;
-#endif
-	  count = 0;
-	} else 
-	  if (count >= h_bit && h_bit <= word_weight) {
-	    if (paint_switch)
-	      word |= bit_masks[h_bit] <<
-#ifndef	MSBITFIRST
-		(BITS_PER_BMUNIT - word_weight);
-#else
-	    (word_weight - h_bit);
-#endif
-	    *cp++ = word;
-	    /* "output" row(s) */
-	    for (i = PK_repeat_count * bytes_wide /
-		   BYTES_PER_BMUNIT; i > 0; --i) {
-	      *cp = *SUB(cp, bytes_wide);
-	      ++cp;
-	    }
-	    rows_left -= PK_repeat_count + 1;
-	    PK_repeat_count = 0;
-	    word = 0;
-	    word_weight = BITS_PER_BMUNIT;
-	    count -= h_bit;
-	    h_bit = g->bitmap.w;
-	  } else {
-	    if (paint_switch)
-#ifndef	MSBITFIRST
-	      word |= bit_masks[word_weight] <<
-		(BITS_PER_BMUNIT - word_weight);
-#else
-	    word |= bit_masks[word_weight];
-#endif
-	    *cp++ = word;
-	    word = 0;
-	    count -= word_weight;
-	    h_bit -= word_weight;
-	    word_weight = BITS_PER_BMUNIT;
+
+    if (PK_dyn_f == 14) {	/* get raster by bits */
+      memset(g->bitmap.bits, 0, (int) g->bitmap.h * bytes_wide);
+      for (i = 0; i < (int) g->bitmap.h; i++) {	/* get all rows */
+	cp = ADD(g->bitmap.bits, i * bytes_wide);
+	row_bit_pos = BITS_PER_BMUNIT;
+	for (j = 0; j < (int) g->bitmap.w; j++) {    /* get one row */
+	  if (--PK_bitpos < 0) {
+	    word = one(fp);
+	    PK_bitpos = 7;
 	  }
+	  if (--row_bit_pos < 0) {
+	    cp++;
+	    row_bit_pos = BITS_PER_BMUNIT - 1;
+	  }
+	  if (word & (1 << PK_bitpos)) 
+	    *cp |= 1 << row_bit_pos;
+	}
       }
-      paint_switch = 1 - paint_switch;
+    } else {		/* get packed raster */
+      rows_left = g->bitmap.h;
+      h_bit = g->bitmap.w;
+      PK_repeat_count = 0;
+      word_weight = BITS_PER_BMUNIT;
+      word = 0;
+      while (rows_left > 0) {
+	count = PK_packed_num(fp);
+	while (count > 0) {
+	  if (count < word_weight && count < h_bit) {
+	    h_bit -= count;
+	    word_weight -= count;
+	    if (paint_switch)
+	      word |= bit_masks[count] << word_weight;
+	    count = 0;
+	  } else 
+	    if (count >= h_bit && h_bit <= word_weight) {
+	      if (paint_switch)
+		word |= bit_masks[h_bit] << (word_weight - h_bit);
+	      *cp++ = word;
+	      /* "output" row(s) */
+	      for (i = PK_repeat_count * bytes_wide /
+		     BYTES_PER_BMUNIT; i > 0; --i) {
+		*cp = *SUB(cp, bytes_wide);
+		++cp;
+	      }
+	      rows_left -= PK_repeat_count + 1;
+	      PK_repeat_count = 0;
+	      word = 0;
+	      word_weight = BITS_PER_BMUNIT;
+	      count -= h_bit;
+	      h_bit = g->bitmap.w;
+	    } else {
+	      if (paint_switch)
+		word |= bit_masks[word_weight];
+	      *cp++ = word;
+	      word = 0;
+	      count -= word_weight;
+	      h_bit -= word_weight;
+	      word_weight = BITS_PER_BMUNIT;
+	    }
+	}
+	paint_switch = 1 - paint_switch;
+      }
+      if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
+	oops(QString(i18n("Wrong number of bits stored:  char. %1, font %2")).arg(ch).arg(fontname));
+      if (rows_left != 0 || h_bit != g->bitmap.w)
+	oops(QString(i18n("Bad pk file (%1), too many bits")).arg(fontname));
     }
-    if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
-      oops(QString(i18n("Wrong number of bits stored:  char. %1, font %2")).arg(ch).arg(fontname));
-    if (rows_left != 0 || h_bit != g->bitmap.w)
-      oops(QString(i18n("Bad pk file (%1), too many bits")).arg(fontname));
-  }
+  } else {
+    // Routines for small Endian start here. This applies e.g. to
+    // Intel and Alpha processors.
+
+#ifdef DEBUG_PK
+    kdDebug() << "small Endian byte ordering" << endl;
+#endif
+
+    if (PK_dyn_f == 14) {	/* get raster by bits */
+      memset(g->bitmap.bits, 0, (int) g->bitmap.h * bytes_wide);
+      for (i = 0; i < (int) g->bitmap.h; i++) {	/* get all rows */
+	cp = ADD(g->bitmap.bits, i * bytes_wide);
+	row_bit_pos = -1;
+	for (j = 0; j < (int) g->bitmap.w; j++) {    /* get one row */
+	  if (--PK_bitpos < 0) {
+	    word = one(fp);
+	    PK_bitpos = 7;
+	  }
+	  if (++row_bit_pos >= BITS_PER_BMUNIT) {
+	    cp++;
+	    row_bit_pos = 0;
+	  }
+	  if (word & (1 << PK_bitpos)) 
+	    *cp |= 1 << row_bit_pos;
+	}
+      }
+    } else {		/* get packed raster */
+      rows_left = g->bitmap.h;
+      h_bit = g->bitmap.w;
+      PK_repeat_count = 0;
+      word_weight = BITS_PER_BMUNIT;
+      word = 0;
+      while (rows_left > 0) {
+	count = PK_packed_num(fp);
+	while (count > 0) {
+	  if (count < word_weight && count < h_bit) {
+	    if (paint_switch)
+	      word |= bit_masks[count] << (BITS_PER_BMUNIT - word_weight);
+	    h_bit -= count;
+	    word_weight -= count;
+	    count = 0;
+	  } else 
+	    if (count >= h_bit && h_bit <= word_weight) {
+	      if (paint_switch)
+		word |= bit_masks[h_bit] << (BITS_PER_BMUNIT - word_weight);
+	      *cp++ = word;
+	      /* "output" row(s) */
+	      for (i = PK_repeat_count * bytes_wide /
+		     BYTES_PER_BMUNIT; i > 0; --i) {
+		*cp = *SUB(cp, bytes_wide);
+		++cp;
+	      }
+	      rows_left -= PK_repeat_count + 1;
+	      PK_repeat_count = 0;
+	      word = 0;
+	      word_weight = BITS_PER_BMUNIT;
+	      count -= h_bit;
+	      h_bit = g->bitmap.w;
+	    } else {
+	      if (paint_switch)
+		word |= bit_masks[word_weight] << (BITS_PER_BMUNIT - word_weight);
+	      *cp++ = word;
+	      word = 0;
+	      count -= word_weight;
+	      h_bit -= word_weight;
+	      word_weight = BITS_PER_BMUNIT;
+	    }
+	}
+	paint_switch = 1 - paint_switch;
+      }
+      if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
+	oops(QString(i18n("Wrong number of bits stored:  char. %1, font %2")).arg(ch).arg(fontname));
+      if (rows_left != 0 || h_bit != g->bitmap.w)
+	oops(QString(i18n("Bad pk file (%1), too many bits")).arg(fontname));
+    }
+  } // endif: big or small Endian?
 }
 
 void font::read_PK_index(void)

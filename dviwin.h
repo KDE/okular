@@ -107,7 +107,7 @@ public:
   void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
 
-  void          changePageSize(void);
+  void          changePageSize();
   virtual pageNumber totalPages() const;
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
@@ -137,10 +137,6 @@ public:
   void          html_href_special(QString cp);
   void          html_anchor_end(void);
   void          draw_page(void);
-
-  double        paper_width_in_cm;  // paper width in centimeters
-  double        paper_height_in_cm; // paper height in centimeters
-
 
 public slots:
   void          showInfo(void);

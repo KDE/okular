@@ -51,12 +51,6 @@ public:
   /// opens a file
   virtual bool openFile();
 
-  /// calculates the zoom needed to fit into a given width
-  virtual double zoomForWidth(int width);
-
-  /// calculates the zoom needed to fit into a given height
-  virtual double zoomForHeight(int height);
-
   virtual void setPaperSize(double, double);
 
   virtual bool print(const QStringList &pages, int current);

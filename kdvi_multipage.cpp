@@ -335,18 +335,6 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
 }
 
 
-double KDVIMultiPage::zoomForHeight(int height)
-{
-  return (double)(height)/(QPaintDevice::x11AppDpiX()*(window->paper_height_in_cm/2.54));
-}
-
-
-double KDVIMultiPage::zoomForWidth(int width)
-{
-  return (double)(width)/(QPaintDevice::x11AppDpiX()*(window->paper_width_in_cm/2.54));
-}
-
-
 void KDVIMultiPage::setPaperSize(double w, double h)
 {
   window->setPaper(w, h);

@@ -403,7 +403,6 @@ void dviRenderer::changePageSize()
   currentlyDrawnPixmap.fill( white );
 
   PS_interface->setSize( resolutionInDPI, page_width_in_pixel, page_height_in_pixel );
-  emit(needsRepainting());
 }
 
 

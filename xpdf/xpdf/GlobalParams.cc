@@ -13,6 +13,12 @@
 #endif
 
 #include <string.h>
+// KPDF: additional includes for Qt and Xft
+#include <qstring.h>
+#include <qregexp.h>
+#include <qwindowdefs.h>
+#include <X11/Xft/Xft.h>
+#include <X11/Xft/XftCompat.h>
 #include <stdio.h>
 #include <ctype.h>
 #if HAVE_PAPER_H
@@ -80,14 +86,16 @@ static struct {
   {NULL, NULL}
 };
 
-static const char *displayFontDirs[] = {
+// KPDF: removed hardcoded font directories, Xft handles searching
+/*static const char *displayFontDirs[] = {
   "/usr/share/ghostscript/fonts",
   "/usr/local/share/ghostscript/fonts",
   "/usr/share/fonts/default/Type1",
   "/usr/share/fonts/type1/gsfonts",
   "/usr/share/fonts/default/ghostscript/",
   NULL
-};
+};*/
+
 
 //------------------------------------------------------------------------
 
@@ -221,6 +229,7 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
   psEmbedCIDTrueType = gTrue;
   psOPI = gFalse;
   psASCIIHex = gFalse;
+  // KPDF: use always UTF-8 and QString::fromUtf 
   textEncoding = new GString("UTF-8");
 #if defined(WIN32)
   textEOL = eolDOS;
@@ -368,10 +377,11 @@ void GlobalParams::parseFile(GString *fileName, FILE *f) {
 	parseCMapDir(tokens, fileName, line);
       } else if (!cmd->cmp("toUnicodeDir")) {
 	parseToUnicodeDir(tokens, fileName, line);
+      // KPDF: finding T1 and TTF fonts is handled by Xft now
       } else if (!cmd->cmp("displayFontT1")) {
-	parseDisplayFont(tokens, displayFonts, displayFontT1, fileName, line);
+//	parseDisplayFont(tokens, displayFonts, displayFontT1, fileName, line);
       } else if (!cmd->cmp("displayFontTT")) {
-	parseDisplayFont(tokens, displayFonts, displayFontTT, fileName, line);
+//	parseDisplayFont(tokens, displayFonts, displayFontTT, fileName, line);
       } else if (!cmd->cmp("displayNamedCIDFontT1")) {
 	parseDisplayFont(tokens, displayNamedCIDFonts,
 			 displayFontT1, fileName, line);
@@ -425,8 +435,8 @@ void GlobalParams::parseFile(GString *fileName, FILE *f) {
 	parseYesNo("psOPI", &psOPI, tokens, fileName, line);
       } else if (!cmd->cmp("psASCIIHex")) {
 	parseYesNo("psASCIIHex", &psASCIIHex, tokens, fileName, line);
+      } else if (!cmd->cmp("textEncoding")) {          
 //	Always use UTF-8 and allow QString do the magic
-//      } else if (!cmd->cmp("textEncoding")) {          
 //	parseTextEncoding(tokens, fileName, line);
       } else if (!cmd->cmp("textEOL")) {
 	parseTextEOL(tokens, fileName, line);
@@ -916,6 +926,8 @@ void GlobalParams::setupBaseFonts(char *dir) {
 	fileName = NULL;
       }
     }
+// KPDF: no more searching hardcoded dirs, Xft handles that
+/*
 #ifndef WIN32
     for (j = 0; !fileName && displayFontDirs[j]; ++j) {
       fileName = appendToPath(new GString(displayFontDirs[j]),
@@ -928,6 +940,7 @@ void GlobalParams::setupBaseFonts(char *dir) {
       }
     }
 #endif
+*/
     if (!fileName) {
       error(-1, "No display font for '%s'", displayFontTab[i].name);
       delete fontName;
@@ -1025,12 +1038,56 @@ FILE *GlobalParams::findToUnicodeFile(GString *name) {
   return NULL;
 }
 
+// KPDF: parse xpdf font name into family and style
+// Helvetica-BoldOblique => name=Helvetica, weight=Bold, slant=Oblique
+
+void parseStyle(QString& name, int& weight, int& slant)
+{
+  if (!name.contains('-') && !name.contains(',')) return;
+  QString type = name.section(QRegExp("[-,]"),-1);
+  name = name.section(QRegExp("[-,]"),0,-2);
+  if (type.contains("Oblique")) slant=FC_SLANT_OBLIQUE;
+  if (type.contains("Italic")) slant=FC_SLANT_ITALIC;
+  if (type.contains("Bold")) weight=FC_WEIGHT_BOLD;
+}
+
+
+
 DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
   DisplayFontParam *dfp;
+  FcPattern *p=0,*m=0;
+  FcChar8* s;
+  char * ext;
+  FcResult res;
+ 
 
   lockGlobalParams;
   dfp = (DisplayFontParam *)displayFonts->lookup(fontName);
-  unlockGlobalParams;
+  // KPDF: try to find font using Xft
+  if (!dfp) {
+  	int weight=FC_WEIGHT_MEDIUM, slant=FC_SLANT_ROMAN;
+	QString name(fontName->getCString());
+	parseStyle(name,weight,slant);
+	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight, (char*)0);
+	if (!p) goto fin;
+	m = XftFontMatch(qt_xdisplay(),qt_xscreen(),p,&res);
+	if (!m) goto fin; 
+	res = FcPatternGetString (m, FC_FILE, 0, &s);
+	if (res != FcResultMatch || !s)  goto fin; 
+	ext = rindex((char*)s,'.');
+	if (!ext) goto fin;
+	if (!strncasecmp(ext,".ttf",4)) {
+	  dfp = new DisplayFontParam(fontName->copy(), displayFontTT);  
+   	  dfp->tt.fileName = new GString((char*)s);
+	 }  else if (!strncasecmp(ext,".pfa",4) || !strncasecmp(ext,".pfb",4)) {
+	   dfp = new DisplayFontParam(fontName->copy(), displayFontT1);  
+	   dfp->t1.fileName = new GString((char*)s);
+	 } else goto fin;
+	displayFonts->add(dfp->name,dfp);
+	}		
+fin:  unlockGlobalParams;
+  if (m) FcPatternDestroy(m);
+  if (p) FcPatternDestroy(p);
   return dfp;
 }
 

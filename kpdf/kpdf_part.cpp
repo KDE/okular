@@ -45,6 +45,7 @@
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kuserprofile.h>
+#include <kpassdlg.h>
 #include <kio/netaccess.h>
 
 #include "kpdf_error.h"
@@ -55,6 +56,7 @@
 
 #include "gfile.h"
 #include "Error.h"
+#include "xpdf/ErrorCodes.h"
 #include "GlobalParams.h"
 #include "PDFDoc.h"
 #include "TextOutputDev.h"
@@ -412,7 +414,37 @@ Part::openFile()
   m_doc = new PDFDoc(filename, 0, 0);
 
   if (!m_doc->isOk())
-    return false;
+  {
+    if (m_doc->getErrorCode() == errEncrypted)
+    {
+      bool first, correct;
+      QString prompt;
+      QCString pwd;
+
+      first = true;
+      correct = false;
+      while(!correct)
+      {
+        if (first)
+        {
+          prompt = i18n("Please insert the password to read the document:");
+          first = false;
+        }
+        else prompt = i18n("Incorrect password. Try again:");
+        if (KPasswordDialog::getPassword(pwd, prompt) == KPasswordDialog::Accepted)
+        {
+          GString *pwd2;
+          pwd2 = new GString(pwd.data());
+          m_doc = new PDFDoc(filename, pwd2, pwd2);
+          delete pwd2;
+          correct = m_doc->isOk();
+          if (!correct && m_doc->getErrorCode() != errEncrypted) return false;
+        }
+        else return false;
+      }
+    }
+    else return false;
+  }
 
   m_find->setEnabled(true);
   m_findNext->setEnabled(true);

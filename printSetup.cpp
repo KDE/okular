@@ -22,7 +22,6 @@ printSetup::printSetup
 	Inherited( parent, name )
 {
 	setCaption( i18n( "Print Setup" ) );
-	internal->setEnabled( FALSE );
 	okButton->setDefault( TRUE );
 	spoolerLabel->setBuddy( spoolerCommand );
 	readConfig();
@@ -48,22 +47,20 @@ void printSetup::removePrinter()
 
 void printSetup::okPressed()
 {
-	KConfig *config = kapp->config();
+  KConfig *config = kapp->config();
 
-	config->setGroup( "Printing" );
-	for ( int i = printers->count(); i > 2; i-- )
-	{
-		QString p;
-		p = "Printer" + p.setNum( i - 2 );
-		config->writeEntry( p, printers->text( i - 1 ) );
-	}
-	config->writeEntry( "PrinterCount", printers->count() - 2 );
-	config->writeEntry( "NupProgram", psnup->isOn() ? "psnup" : "mpage" );
-	config->writeEntry( "PrintMethod", internal->isOn() ? "Internal" : dvips->isOn() ? "dvips" : "dvilj4" );
-	config->writeEntry( "SpoolerCommand", spoolerCommand->text() );
-	config->setGroup( "kdvi" );
-	config->sync();
-	accept();
+  config->setGroup( "Printing" );
+  for ( int i = printers->count(); i > 2; i-- ) {
+    QString p;
+    p = "Printer" + p.setNum( i - 2 );
+    config->writeEntry( p, printers->text( i - 1 ) );
+  }
+  config->writeEntry( "PrinterCount", printers->count() - 2 );
+  config->writeEntry( "NupProgram", psnup->isOn() ? "psnup" : "mpage" );
+  config->writeEntry( "SpoolerCommand", spoolerCommand->text() );
+  config->setGroup( "kdvi" );
+  config->sync();
+  accept();
 }
 
 void printSetup::readConfig()
@@ -85,9 +82,6 @@ void printSetup::readConfig()
 	QString nupProgram = config->readEntry( "NupProgram", "psnup" );
 	if ( nupProgram == "psnup" ) psnup->setChecked( TRUE );
 	if ( nupProgram == "mpage" ) mpage->setChecked( TRUE );
-	QString printMethod = config->readEntry( "PrintMethod", "dvips" );
-	if ( printMethod == "dvips" ) dvips->setChecked( TRUE );
-	if ( printMethod == "dvilj4" ) dvilj4->setChecked( TRUE );
 	spoolerCommand->setText( config->readEntry( "SpoolerCommand", "lpr" ) );
 	
 	config->setGroup( "kdvi" );

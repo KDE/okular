@@ -23,17 +23,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-class DVIFile 
-{
-	Q_OBJECT
-public:
-	DVIFile(){}
-	~DVIFile(){};
-	void dviCopy(const QString & ifile, const QString & ofile, const QStringList & pagelist,
-			int first = 0, int last = 999999 );
-
-};
-
 Print::Print
 (
 	QWidget* parent,
@@ -61,218 +50,120 @@ Print::~Print()
 
 void Print::setFile( QString _file )
 {
-	ifile = ofile = _file.copy();
-	setCaption( i18n("Print ") + ifile );
-	QString of( _file );
-	if ( of.right(4) == ".dvi" )
-		of = of.left( of.length()-4 );
-	of.append( printMethod == "dvilj4" ? ".lj" : ".ps" );
-	printFileName->setText(of);
+  ifile = ofile = _file.copy();
+  setCaption( i18n("Print ") + ifile );
+  QString of( _file );
+  if ( of.right(4) == ".dvi" )
+    of = of.left( of.length()-4 );
+  of.append( ".ps" );
+  printFileName->setText(of);
 }
 
 void Print::setCurrentPage( int _page, int _totalpages )
 {
-	curpage = _page;
-	totalpages = _totalpages;
+  curpage = _page;
+  totalpages = _totalpages;
 }
 
 void Print::setMarkList( const QStringList & _marklist )
 {
-	marklist = _marklist;
-	if ( marklist.isEmpty() )
-		return;
-	printMarked->setEnabled( TRUE );
-	printMarked->setChecked( TRUE );
-	printAll->setChecked( FALSE );		
-	printRange->setChecked( FALSE );		
-	printCurrent->setChecked( FALSE );		
+  marklist = _marklist;
+  if ( marklist.isEmpty() )
+    return;
+  printMarked->setEnabled( TRUE );
+  printMarked->setChecked( TRUE );
+  printAll->setChecked( FALSE );		
+  printRange->setChecked( FALSE );		
+  printCurrent->setChecked( FALSE );		
 }
 
 void Print::rangeToggled( bool on )
 {
-	if ( on )
-	{
-		rangeFrom->setEnabled( TRUE );
-		rangeTo->setEnabled( TRUE );
-		rangeFrom->setFocus();
-	}
-	else
-	{
-		rangeFrom->setEnabled( FALSE );
-		rangeTo->setEnabled( FALSE );
-	}
+  if ( on ) {
+    rangeFrom->setEnabled( TRUE );
+    rangeTo->setEnabled( TRUE );
+    rangeFrom->setFocus();
+  } else {
+    rangeFrom->setEnabled( FALSE );
+    rangeTo->setEnabled( FALSE );
+  }
 }
 
-#define get2(f) ((f.getch()<<8) + f.getch())
-#define get4(f) ((get2(f)<<16) + get2(f))
-#define put2(f,i) (f.putch(((i)>>8)&0xff), f.putch((i)&0xff))
-#define put4(f,i) (put2(f,i>>16), put2(f,(i)))
-
-void DVIFile::dviCopy(const QString & ifile, const QString & ofile, const QStringList & pagelist,
-	int first, int last)
-{
-	QFile in(ifile);
-	QFile out(ofile);
-	char buf[1024];
-/*	these would be needed for better handling the used fonts
-	int texfont[256], fontdeflen[256], fontseen[256];
-	for (int i=0; i<256; i++ )
-		texfont[i] = fontdeflen[i] = fontseen[i] = 0;
-*/
-	if (!in.open(IO_ReadOnly))
-		KMessageBox::sorry( 0L,
-			i18n("Cannot open dvi file!"));
-	if (!out.open(IO_WriteOnly))
-		KMessageBox::sorry( 0L,
-			i18n("Cannot open output dvi file!"));
-	in.readBlock( buf, 14 );
-	out.writeBlock( buf, 14 );
-	out.writeBlock( "\013kdvi output", 12 );
-	
-	int c, p = in.size()-3, n, tot, totout = 0, o = -1;
-	in.at(p);
-	while ( ( c = in.getch() ) == 223 ) // trailer
-		in.at( --p );
-	if ( c != 2 )
-		KMessageBox::sorry( 0L,
-			i18n("Cannot handle this dvi version!"));
-	int post_post = p - 5;
-	in.at( post_post + 1 );
-	int post =  get4( in );
-	in.at( post + 27 );
-	tot = n = get2( in );
-	int fntdefslen = post_post - in.at();
-	int *pg = new int[tot + 1];
-	pg[ tot ] = post;
-	p = post - 40;
-	while (n--)
-	{
-		in.at( p + 41 ),
-		pg[n] = p = get4( in );
-	}
-/*
-	for ( p = post + 29; p < post_post; p++ )
-	{
-		in.at( p );
-		c = in.getch();
-		if ( c == 138 ) )	// nop
-			continue;
-		if ( c == 243 )		// fnt_def1
-		{
-			texfont[ n = in.getch() ] = p;
-			in.at( p + 14 );
-			fontdeflen[ n ] = in.getch() + in.getch();
-			p += 16 + fontdeflen[ n ];
-		}
-		else	debug("DVI file format error!");
-	}
-*/
-
-	int defsdone = 0;
-	for ( n=0; n < tot; n++ )	// copy pages to out
-	{		
-		if ( pagelist.findIndex( QString().sprintf( "%4d", n + 1 ) ) < 0 )
-			continue;
-		if ( n + 1 < first || n + 1 > last )
-			continue;
-		in.at( pg[n] );
-		in.readBlock( buf, 41 );
-		out.writeBlock( buf, 41 );
-		put4( out, o );
-		o = out.at() - 45;
-		if ( !defsdone ) // cannot copy fnt defs before page 1 due to bug in dvips
-		{
-			in.at( post + 29 );
-			// copy font defs from postamble (bug: all not needed)
-			for ( int i = fntdefslen; i>0; i-- )
-				out.putch( in.getch() );
-			defsdone = 1;
-		}		
-		in.at( pg[n] + 45 );
-		for ( int i = pg[n+1] - pg[n] - 45; i > 0; i-- )
-			out.putch( in.getch() );
-		totout++;
-	}
-	out.putch( 248 );	// post
-	put4( out, o );
-	o = out.at() - 5;
-	in.at( post + 5 );
-	in.readBlock( buf, 22  );
-	out.writeBlock( buf, 22 );
-	put2( out, totout );
-	in.at( post + 29 );
-	for ( int i = post_post - ( post + 29 ); i > 0; i-- )
-		out.putch( in.getch() );
-	out.putch( 249 );	// post_post
-	put4( out, o );
-	out.putch( 2 );		// dvi file version id
-	put4( out, 0xdfdfdfdf );// trailers
-	while ( out.at() & 3 )
-		out.putch( 0xdf );
-	in.close();
-	out.close();
-	delete pg;
-}
 
 void Print::okPressed()
 {
-	QString cmd;
+  QString cmd;
 	
-	cmd = printMethod == "dvilj4" ? "dvilj4 -q -e-" : "dvips -q -f";
+  cmd = "dvips -q -f";
 
-	if ( printReverse->isOn() )
-		cmd += " -r";
+  if ( printReverse->isOn() )
+    cmd += " -r";
 
-	if ( ! printAll->isOn() )
-	{
-		DVIFile dvi;
-		ofile = tmpnam(NULL);
-		if ( printCurrent->isOn() )
-			dvi.dviCopy( ifile, ofile, NULL, curpage, curpage );
-		else if ( printMarked->isOn()  )
-			dvi.dviCopy( ifile, ofile, marklist );
-		else if ( printRange->isOn() )
-		{
-			int f = QString(rangeFrom->text()).toInt(),
-			    t = QString(rangeTo->text()).toInt();
-			if ( f < 1 || f > totalpages || t < f || t > totalpages )
-			{
-				KMessageBox::sorry( 0L, i18n("Invalid page range!"));
-				return;
-			}
-			dvi.dviCopy( ifile, ofile, NULL, f, t );
-		}
-	}
 
-	cmd += " " + ofile;
+  if ( ! printAll->isOn() ) {
+    // Print only current page
+    if ( printCurrent->isOn() )
+      cmd +=  QString(" -pp %1 ").arg(curpage);
 
-	if ( nup != 1 )
-	{
-		cmd += nupProgram == "mpage" ? " | mpage -" : " | psnup -";
-		cmd +=  QString().setNum(nup);
-		if ( colOrder->currentItem() == 1 )
-			cmd += nupProgram == "mpage" ? " -a" : " -c";
+    // print range of pages
+    if ( printRange->isOn() ) {
+      int from = QString(rangeFrom->text()).toInt();
+      int to   = QString(rangeTo->text()).toInt();
+      if ( from < 1 || from > totalpages || to < from || to > totalpages ) {
+	KMessageBox::sorry( 0L, i18n("Invalid page range!"));
+	return;
+      }
+      cmd +=  QString(" -pp %1-%2 ").arg(from).arg(to);
+    }
 
-	}
+    // print marked pages
+    if ( printMarked->isOn() ) {
+      if ( marklist.isEmpty() )
+	return;
 
-	if ( printdest == 1 )
-		cmd += QString(" > ") + printFileName->text();
+      int commaflag = 0;
+      cmd +=  QString(" -pp ");
+      for ( QStringList::Iterator it = marklist.begin(); it != marklist.end(); ++it ) {
+	if (commaflag == 1) 
+	  cmd +=  QString(",");
 	else
-	{
-		cmd += QString(" | ") + spooler;
-		if ( printdest > 1 )
-			cmd += QString(" -P") + 
-				printer->text(printer->currentItem());
-	}
+	  commaflag = 1;
 
-	if ( ifile != ofile )
-		cmd += " ; rm " + ofile;
+	// Add page numer. Remember that kviewshell starts with page 0
+	// while dvips calls the first page "Number 1".
+	bool ok;
+	int pnr = (*it).toInt( &ok );
+	cmd +=  QString("%1").arg(pnr+1);
+      }
+    }
+  }
 
-	cmd += " &";
+  cmd += " " + ifile;
 
-	kdError() << "About to run: " << cmd << endl;
-	system( QFile::encodeName(cmd) );
-	accept();
+  if ( nup != 1 ) {
+    cmd += nupProgram == "mpage" ? " | mpage -" : " | psnup -";
+    cmd +=  QString().setNum(nup);
+    if ( colOrder->currentItem() == 1 )
+      cmd += nupProgram == "mpage" ? " -a" : " -c";
+  }
+  
+  if ( printdest == 1 )
+    cmd += QString(" > ") + printFileName->text();
+  else {
+    cmd += QString(" | ") + spooler;
+    if ( printdest > 1 )
+      cmd += QString(" -P") + 
+	printer->text(printer->currentItem());
+  }
+
+  if ( ifile != ofile )
+    cmd += " ; rm " + ofile;
+
+  cmd += " &";
+
+  kdDebug() << "About to run print command: " << cmd << endl;
+  system( QFile::encodeName(cmd) );
+  accept();
 }
 
 void Print::nupPressed(int n)
@@ -325,9 +216,6 @@ void Print::readConfig()
 			printer->insertItem( p );
 		}
 	nupProgram = config->readEntry( "NupProgram", "psnup" );
-	printMethod = config->readEntry( "PrintMethod", "dvips" );
-	nupCombo->setEnabled( printMethod == "dvips" );
-	colOrder->setEnabled( printMethod == "dvips" );
 	spooler = config->readEntry( "SpoolerCommand", "lpr" );
 	
 	config->setGroup( "kdvi" );

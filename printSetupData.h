@@ -44,9 +44,6 @@ protected slots:
     virtual void addPrinter();
 
 protected:
-    QRadioButton* internal;
-    QRadioButton* dvips;
-    QRadioButton* dvilj4;
     QRadioButton* psnup;
     QRadioButton* mpage;
     QListBox* printers;

@@ -137,7 +137,9 @@ void dviWindow::epsf_special(QString cp)
 
   if (PostScriptOutPutString) {
     if (QFile::exists(EPSfilename)) {
-      PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(DVI_H/65536-300).arg(DVI_V/65536-300) );
+      double PS_H = (DVI_H*300.0)/(65536*basedpi)-300;
+      double PS_V = (DVI_V*300.0)/(65536*basedpi)-300;
+      PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
       PostScriptOutPutString->append( "@beginspecial " );
       PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
       PostScriptOutPutString->append( QString(" %1 @lly").arg(lly) );
@@ -209,7 +211,9 @@ void dviWindow::quote_special(QString cp)
 #endif
   
   if (currwin.win == mane.win && PostScriptOutPutString) {
-    PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(DVI_H/65536 - 300).arg(DVI_V/65536 - 300) );
+    double PS_H = (DVI_H*300.0)/(65536*basedpi)-300;
+    double PS_V = (DVI_V*300.0)/(65536*basedpi)-300;
+    PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
     PostScriptOutPutString->append( cp );
     PostScriptOutPutString->append( " @endspecial \n" );

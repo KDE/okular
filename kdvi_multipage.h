@@ -80,7 +80,16 @@ public:
 
   virtual bool print(const QStrList &pages, int current);
 
+protected:
+  /// For internal use only. See the comments in kdvi_multipage.cpp, right
+  //before the timerEvent function.
+  int  timer_id;
+  /// For internal use only. See the comments in kdvi_multipage.cpp, right
+  //before the timerEvent function.
+  void timerEvent( QTimerEvent *e );
+
   virtual void reload();
+
 
 signals:
 
@@ -96,8 +105,11 @@ signals:
 protected slots:
 
   void doSettings();
+  void about();
+  void helpme();
   void preferencesChanged();
   void goto_page(int page, int y);
+
 
 private:
 

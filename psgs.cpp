@@ -88,8 +88,8 @@ void ghostscript_interface::gs_generate_graphics_file(int page, QString filename
   fputs("%%Pages: 1\n",f);
   fputs("%%PageOrder: Ascend\n",f);
   fprintf(f,"%%BoundingBox: 0 0 %ld %ld\n", 
-	  (long)72*(pixel_page_w/resolution), 
-	  (long)72*(pixel_page_h/resolution));  // HSize and VSize in 1/72 inch
+	  (long)(72*(pixel_page_w/resolution)), 
+	  (long)(72*(pixel_page_h/resolution)));  // HSize and VSize in 1/72 inch
   fputs("%%EndComments\n",f);
   fputs("%!\n",f);
 

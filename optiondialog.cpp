@@ -43,6 +43,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
 		parent, name, modal )
 {
   _instance = new KInstance("kdvi");
+  setHelp("opts", "kdvi");
   makeFontPage();
   makeRenderingPage();
 }
@@ -50,14 +51,12 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
 
 void OptionDialog::show()
 {
-  if( isVisible() == false )
-  {
+  if( isVisible() == false ) {
     setup();
     showPage(0);
   }
   KDialogBase::show();
 }
-
 
 void OptionDialog::slotOk()
 {

@@ -44,7 +44,7 @@ struct drawinf	currinf;
 char	*prog;
 Display	*DISP;
 struct font	*font_head = NULL;
-int	current_page;
+
 const char *dvi_oops_msg;	/* error message */
 double	dimconv;
 int	        n_files_left;    	/* for LRU closing of fonts */
@@ -76,7 +76,6 @@ unsigned int	page_h;
 extern char *           prog;
 extern int 		n_files_left;
 extern unsigned int	page_w, page_h;
-extern int 		current_page;
 extern Display *	DISP;
 extern Screen  *	SCRN;
 Window                  mainwin;
@@ -117,7 +116,9 @@ extern  void qt_processEvents(void)
 dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget *parent, const char *name ) 
   : QWidget( parent, name )
 {
+#ifdef DEBUG
   kdDebug() << "dviWindow" << endl;
+#endif
 
   setBackgroundMode(NoBackground);
 
@@ -164,7 +165,9 @@ dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget 
 
 dviWindow::~dviWindow()
 {
+#ifdef DEBUG
   kdDebug() << "~dviWindow" << endl;
+#endif
 
   delete PS_interface;
   delete dviFile;
@@ -172,7 +175,9 @@ dviWindow::~dviWindow()
 
 void dviWindow::setShowPS( int flag )
 {
+#ifdef DEBUG
   kdDebug() << "setShowPS" << endl;
+#endif
 
   if ( _postscript == flag )
     return;
@@ -219,7 +224,9 @@ void dviWindow::setMetafontMode( const char *mfm )
 
 void dviWindow::setPaper(double w, double h)
 {
+#ifdef DEBUG
   kdDebug() << "setPaper" << endl;
+#endif
 
   unshrunk_paper_w = int( w * basedpi/2.54 + 0.5 );
   unshrunk_paper_h = int( h * basedpi/2.54 + 0.5 ); 
@@ -247,7 +254,9 @@ void dviWindow::setResolution( int bdpi )
 
 void dviWindow::drawPage()
 {
+#ifdef DEBUG
   kdDebug() << "drawPage" << endl;
+#endif
 
   if (dviFile == NULL) {
     resize(0, 0);
@@ -356,17 +365,15 @@ void dviWindow::setFile( const char *fname )
     return;
   }
 
-  if (dviFile) {
-    delete dviFile;
-    dviFile = NULL;
-  }
-
-  dviFile = new dvifile(filename);
-  if (dviFile->file == NULL) {
-    delete dviFile;
-    dviFile = NULL;
+  dvifile *dviFile_new = new dvifile(filename);
+  if (dviFile_new->file == NULL) {
+    delete dviFile_new;
     return;
   }
+
+  if (dviFile)
+    delete dviFile;
+  dviFile = dviFile_new;
   
   page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
@@ -402,8 +409,6 @@ void dviWindow::setFile( const char *fname )
   current_page           = save_current_page;
 
   QApplication::restoreOverrideCursor();
-  gotoPage(1);
-  changePageSize(); //  This also calles drawPage();
   return;
 }
 
@@ -430,7 +435,7 @@ int dviWindow::totalPages()
   if (dviFile != NULL)
     return dviFile->total_pages;
   else
-    return NULL;
+    return 0;
 }
 
 
@@ -460,6 +465,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #ifdef DEBUG_SPECIAL
   kdDebug() << "mouse event" << endl;
 #endif
+
   for(int i=0; i<num_of_used_hyperlinks; i++) {
     if (hyperLinkList[i].box.contains(e->pos())) {
       if (hyperLinkList[i].linkText[0] == '#' ) {

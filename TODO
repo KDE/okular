@@ -5,11 +5,7 @@ URGENT
 
 o implement SaveAs
 
-o Fonts should be free when file is reloaded and the fonts are no longer needed
-
-o Update the Manual.
-
-o Document the technical specs.
+o PS-Gfx is not updated upon reloading
 
 o kviewshell should change pageno when clicking on internal hyperlinks
 
@@ -18,7 +14,9 @@ HIGHLY DESIRABLE
 
 o Speedup, in particular for ghostscript.
 
-o Support for TPic and colored font specials
+o Fonts should be freed when file is reloaded and the fonts are no longer needed
+
+o Support for colored font specials
 
 o Support for click-on-dvi => editor (klyx!) jumps to proper position. This is
   included in the windows distribution of TeX. We should really catch up!
@@ -26,11 +24,11 @@ o Support for click-on-dvi => editor (klyx!) jumps to proper position. This is
 o Support papersize information given by the dvi-file on a page-by-page
   basis.
 
+o HelpMenu and AboutDialog - beautification
 
 NOT SO URGENT
 
 o Document info dialog
-o Better online help
 o Internal printing using QPrinter
 o Redirect error messages to a window
 o More background processing to keep the UI responsive

@@ -47,9 +47,11 @@ public:
 
   dvifile       *dviFile;
 
+  void          changePageSize();
   int		totalPages();
   void		setShowPS( int flag );
   int		showPS() { return _postscript; };
+  int		curr_page() { return current_page+1; };
   void		setShowHyperLinks( int flag );
   int		showHyperLinks() { return _showHyperLinks; };
   void		setMakePK( int flag );
@@ -107,7 +109,6 @@ signals:
 protected:
  void paintEvent(QPaintEvent *ev);
 
-
 private:
 
  // These fields contain information about the geometry of the page.
@@ -143,7 +144,6 @@ private:
  double             AnchorList_Vert[MAX_ANCHORS];
  int               numAnchors;
 
- void		   changePageSize();
  int		   basedpi;
  int		   makepk;
  QPixmap          *pixmap;
@@ -151,6 +151,7 @@ private:
  QString	   FontPath;
  QString	   paper_type;
  int		   ChangesPossible;
+ int		   current_page;
  double            _zoom;
 };
 

@@ -49,7 +49,7 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
-#define DEBUG 0
+
 
 #include "dvi_init.h"
 #include "dviwin.h"
@@ -349,7 +349,9 @@ void dvifile::read_postamble(void)
 
 void dvifile::prepare_pages()
 {
+#ifdef DEBUG
   kdDebug() << "prepare_pages" << endl;
+#endif
 
   page_offset = (long *) xmalloc((unsigned) total_pages * sizeof(long), "page directory");
   int i = total_pages;
@@ -370,7 +372,9 @@ void dvifile::prepare_pages()
 
 dvifile::dvifile(QString fname)
 {
+#ifdef DEBUG
   kdDebug() << "init_dvi_file: " << fname << endl;
+#endif
 
   file        = NULL;
   page_offset = NULL;
@@ -398,7 +402,9 @@ dvifile::dvifile(QString fname)
 
 dvifile::~dvifile()
 {
+#ifdef DEBUG
   kdDebug() << "destroy dvi-file" << endl;
+#endif
 
   if (page_offset != NULL)
     free(page_offset);

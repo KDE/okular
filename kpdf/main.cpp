@@ -1,3 +1,18 @@
+/***************************************************************************
+ *   Copyright (C) 2002 by Wilco Greven <greven@kde.org>                   *
+ *   Copyright (C) 2003 by Christophe Devriese                             *
+ *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
+ *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
+ *   Copyright (C) 2003-2004 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004 by Andy Goossens <andygoossens@telenet.be>         *
+ *   Copyright (C) 2004 by Stephan Binner <binner@kde.org>                 *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
+
 #include "kpdf_shell.h"
 #include <kapplication.h>
 #include <kaboutdata.h>

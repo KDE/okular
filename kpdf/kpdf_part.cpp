@@ -1,3 +1,26 @@
+/***************************************************************************
+ *   Copyright (C) 2002 by Wilco Greven <greven@kde.org>                   *
+ *   Copyright (C) 2002 by Chris Cheney <ccheney@cheney.cx>                *
+ *   Copyright (C) 2002 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
+ *   Copyright (C) 2003-2004 by Christophe Devriese                        *
+ *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
+ *   Copyright (C) 2003 by Daniel Molkentin <molkentin@kde.org>            *
+ *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
+ *   Copyright (C) 2003 by Dirk Mueller <mueller@kde.org>                  *
+ *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
+ *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
+ *   Copyright (C) 2004 by Christoph Cullmann <crossfire@babylon2k.de>     *
+ *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
+ *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004 by Stephan Binner <binner@kde.org>                 *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
+
 #include "kpdf_part.moc"
 
 #include <math.h>

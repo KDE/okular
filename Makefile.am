@@ -82,6 +82,9 @@ uninstall-local:
 	-rm -f $(kde_icondir)/kdvi.xpm
 	-rm -f $(kde_minidir)/kdvi.xpm
 
+distclean-local:
+	(cd kpathsea && test -r config.status && $(MAKE) distclean)
+
 # add a dependency for every moc file to be full portable
 
 mdviwin.cpp: dviwin.h

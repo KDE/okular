@@ -177,7 +177,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_findNext->setEnabled(false);
 
 	KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
-    KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
+	KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 
 	m_showProperties = new KAction(i18n("Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
@@ -185,6 +185,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	m_showPresentation = new KAction( i18n("Presentation"), "kpresenter_kpr", 0, this, SLOT(slotShowPresentation()), ac, "presentation");
 	m_showPresentation->setEnabled( false );
+	m_showPresentation->setShortcut( "F9" );
 
     // attach the actions of the 2 children widgets too
     m_pageView->setupActions( ac );

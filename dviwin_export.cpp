@@ -333,8 +333,8 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       }
       fclose(f);
     } else {
-      KMessageBox::error(this, i18n("Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
-				    "The export or print command is aborted.").arg(dviFile->filename).arg(sourceFileName));
+      KMessageBox::error(this, i18n("<qt>Failed to copy the DVI-file <strong>%1</strong> to the temporary file <strong>%2</strong>. "
+				    "The export or print command is aborted.</qt>").arg(dviFile->filename).arg(sourceFileName));
       return;
     }
   }
@@ -349,9 +349,9 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
   qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(dvips_terminated(KProcess *)));
-  export_errorString = i18n("The external program 'dvips', which was used to export the file, reported an error. "
+  export_errorString = i18n("<qt>The external program 'dvips', which was used to export the file, reported an error. "
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
-			    "find in the File-Menu for a precise error report.") ;
+			    "find in the File-Menu for a precise error report.</qt>") ;
   if (info)
     info->clear(QString(i18n("Export: %1 to PostScript")).arg(KShellProcess::quote(dviFile->filename)));
 

@@ -12,14 +12,18 @@
 #include <setjmp.h>
 
 #include <qbitmap.h> 
+#include <qcheckbox.h> 
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qkeycode.h>
 #include <qlabel.h>
+#include <qlayout.h>
+#include <qmessagebox.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
 #include <qregexp.h>
 #include <qurl.h>
+#include <qvbox.h>
 
 #include <kapp.h>
 #include <kmessagebox.h>
@@ -392,7 +396,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       // Proper error handling? We don't care.
       FILE *f = fopen(sourceFileName.latin1(),"r+");
       for(Q_UINT32 i=0; i<=dviFile->total_pages; i++) {
-	fseek(f,dviFile->page_offset[i-1]+1, SEEK_SET);
+	fseek(f,dviFile->page_offset[i]+1, SEEK_SET);
 	// Write the page number to the file, taking good care of byte
 	// orderings. Hopefully QT will implement random access QFiles
 	// soon.
@@ -635,14 +639,66 @@ void dviWindow::drawPage()
     QApplication::restoreOverrideCursor();
     foreGroundPaint.end();
 
-    // @@@ Problem here: KMessageBox doesn't support hyperlinks.
+    // Tell the user (once) if the DVI file contains source specials
+    // ... wo don't want our great feature to go unnoticed. In
+    // principle, we should use a KMessagebox here, but we want to add
+    // a button "Explain in more detail..." which opens the
+    // Helpcenter. Thus, we practically re-implement the KMessagebox
+    // here. Most of the code is stolen from there.
     if ((dviFile->sourceSpecialMarker == true) && (num_of_used_source_hyperlinks > 0)) {
       dviFile->sourceSpecialMarker = false;
-      KMessageBox::information(this, i18n("This DVI file contains source file information. You may click into the text with the "
-					  "middle mouse button, and an editor will open the TeX-source file immediately. See the "
-					  "<a href=\"http://devel-home.kde.org/~kdvi\">KDVI documentation</a> for a more "
-					  "detailed explanation of this."), 
-			       QString::null, "KDVI-SourceFileInfoFound", true);
+      // Check if the 'Don't show again' feature was used
+      KConfig *config = kapp->config();
+      KConfigGroupSaver saver( config, "Notification Messages" );
+      bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
+      
+      if (showMsg) {
+	KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
+					     this, "information", true, true, i18n("&OK"));
+	
+	QVBox *topcontents = new QVBox (dialog);
+	topcontents->setSpacing(KDialog::spacingHint()*2);
+	topcontents->setMargin(KDialog::marginHint()*2);
+	
+	QWidget *contents = new QWidget(topcontents);
+	QHBoxLayout * lay = new QHBoxLayout(contents);
+	lay->setSpacing(KDialog::spacingHint()*2);
+	
+	lay->addStretch(1);
+	QLabel *label1 = new QLabel( contents);
+#if QT_VERSION < 300
+	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information, kapp->style().guiStyle()));
+#else
+	label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
+#endif
+	lay->add( label1 );
+	QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
+					  "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
+					  contents);
+	label2->setMinimumSize(label2->sizeHint());
+	lay->add( label2 );
+	lay->addStretch(1);
+	QSize extraSize = QSize(50,30);
+	QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
+	extraSize = QSize(50,0);
+	dialog->setHelpLinkText(i18n("Explain in more detail..."));
+	dialog->setHelp("inverse-search", "kdvi");
+	dialog->enableLinkedHelp(true);
+	dialog->setMainWidget(topcontents);
+	dialog->enableButtonSeparator(false);
+	dialog->incInitialSize( extraSize );
+	dialog->exec();
+	delete dialog;
+	
+	showMsg = !checkbox->isChecked();
+	if (!showMsg) {
+	  KConfigGroupSaver saver( config, "Notification Messages" );
+	  config->writeEntry( "KDVI-info_on_source_specials", showMsg);
+	}
+	config->sync();
+
+      }
+
     }
   }
   repaint();
@@ -1023,6 +1079,11 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 
 	if (info)
 	  info->clear(i18n("Starting the editor..."));
+
+	animationCounter = 0;
+	flashOffset      = e->y(); // Heuristic correction. Looks better.
+	timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
+
 	
 	proc->clearArguments();
 	*proc << command;

@@ -22,6 +22,7 @@
 // Add header files alphabetically
 
 #include <config.h>
+#include <kapp.h>
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -174,6 +175,11 @@ void OptionDialog::slotComboBox(int item)
   }
 }
 
+void OptionDialog::slotExtraHelpButton( const QString &anchor)
+{
+  kapp->invokeHelp( anchor, "kdvi" );
+}
+
 void OptionDialog::makeFontPage()
 {
   QGrid *page = addGridPage( 2, QGrid::Horizontal, i18n("Fonts") );
@@ -205,7 +211,7 @@ void OptionDialog::makeRenderingPage()
   new QLabel( "", editorBox );
   KURLLabel *urll = new KURLLabel("inv-search", i18n("What is 'inverse search'?"), editorBox, "inverse search help");
   urll->setAlignment(Qt::AlignRight);
-  connect(urll, SIGNAL(leftClickedURL(const QString&)),  SLOT(helpClickedSlot(const QString&)));
+  connect(urll, SIGNAL(leftClickedURL(const QString&)),  SLOT(slotExtraHelpButton(const QString&)));
 
   new QLabel( i18n("Editor:"), editorBox );
   mRender.editorChoice =  new KComboBox( editorBox );

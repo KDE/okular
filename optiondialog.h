@@ -63,6 +63,7 @@ class OptionDialog : public KDialogBase
     void slotApply();
     void slotComboBox(int item);
     void slotUserDefdEditorCommand( const QString & );
+    void slotExtraHelpButton( const QString &);
 
   private:
     void makeFontPage();

@@ -1,19 +1,18 @@
 ToDo-List for kdvi
 
-URGENT
+URGENT / URGENT BUGFIXING
 
-o "Helper-Application" setup
-o Infrequent crashes when resizing the window or the view
-o Can't print pages 28--43 of "Characterization_of_Pn.dvi" / bad crash of dvips
+o Infrequent crashes when resizing the window or the view (probably related to kviewshell)
+o Add menu-item for re-enabeling warnings (should be done in kviewshell, item should appear only 
+  if at least some items are switched off)
+o Proper handling of the base-url
+o give source-information in the status line
 
 HIGHLY DESIRABLE
 
 o Speedup, in particular for ghostscript and glyph enlarging.
 
 o Support for colored font specials
-
-o Support for click-on-dvi => editor (klyx!) jumps to proper position. This is
-  included in the windows distribution of TeX. We should really catch up!
 
 o Support papersize information given by the dvi-file on a page-by-page
   basis.
@@ -24,8 +23,6 @@ o Extra enlargement of characters for improved readability should be switchable.
 NOT SO URGENT
 
 o Internal printing using QPrinter
-o Redirect error messages to a window
-o More background processing to keep the UI responsive
 o Magnifier window
 o Two page view
 o Support for even more TeX specials

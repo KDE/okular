@@ -92,13 +92,14 @@ Shell::~Shell()
 
 void Shell::openURL( const KURL & url )
 {
-    if ( m_part && m_part->openURL( url ) ) recent->addURL (url);
+    if ( m_part && m_part->openURL( url ) ) m_recent->addURL (url);
+    else m_recent->removeURL(url);
 }
 
 
 void Shell::readSettings()
 {
-    recent->loadEntries( KGlobal::config() );
+    m_recent->loadEntries( KGlobal::config() );
     KGlobal::config()->setDesktopGroup();
     bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
     setFullScreen( fullScreen );
@@ -107,7 +108,7 @@ void Shell::readSettings()
 void Shell::writeSettings()
 {
     saveMainWindowSettings(KGlobal::config(), "MainWindow");
-    recent->saveEntries( KGlobal::config() );
+    m_recent->saveEntries( KGlobal::config() );
     KGlobal::config()->setDesktopGroup();
     KGlobal::config()->writeEntry( "FullScreen", m_fullScreenAction->isChecked());
     KGlobal::config()->sync();
@@ -117,7 +118,7 @@ void Shell::writeSettings()
 Shell::setupActions()
 {
   KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-  recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
+  m_recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ),
 				    actionCollection() );
   KStdAction::print(m_part, SLOT(print()), actionCollection());
   KStdAction::quit(this, SLOT(slotQuit()), actionCollection());

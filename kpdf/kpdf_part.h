@@ -91,6 +91,8 @@ namespace KPDF
      */
     virtual bool openFile();
 
+    virtual bool openURL(const KURL &url);
+
       void update();
       void readSettings();
       void writeSettings();

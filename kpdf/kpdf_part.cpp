@@ -414,6 +414,17 @@ Part::openFile()
   return true;
 }
 
+bool Part::openURL(const KURL &url)
+{
+	bool b;
+	b = KParts::ReadOnlyPart::openURL(url);
+	if (!b)
+	{
+		KMessageBox::error(widget(), i18n("Could not open %1").arg(url.prettyURL()));
+	}
+	return b;
+}
+
   void
 Part::fileSaveAs()
 {

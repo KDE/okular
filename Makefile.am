@@ -1,7 +1,7 @@
 # just set the variable
 appsdir = $(kde_appsdir)/Graphics
 # set the include path for X, qt and KDE
-INCLUDES= $(all_includes) -I$(top_srcdir)/kviewshell
+INCLUDES= -I$(top_srcdir)/kviewshell $(all_includes)
 # claim, which subdirectories you want to install
 SUBDIRS = . pix
 

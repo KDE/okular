@@ -52,13 +52,13 @@
     <para>&kdvi; is a plugin for the &kviewshell; program which allows
     &kviewshell; to display &DVI;-files (<literal
     role="extension">.dvi</literal>) which are produced by the TeX
-    typesetting system.  &kdvi; supports many extensions of the DVI
+    typesetting system.  &kdvi; supports many extensions of the &DVI;
     standard, for instance the inclusion of &PostScript; graphics or
     hyperlinks. More details, examples and all the technical
     specifications can be found in the file
     <filename>KDVI-features.dvi</filename> (or see
     <filename>KDVI-features.tex</filename> 
-    for the TeX-source of that file).</para>
+    for the TeX source of that file).</para>
     
     <para>For up-to-date information, consult <ulink
     url="http://devel-home.kde.org/~kdvi">&kdvi;'s home page</ulink>.
@@ -78,7 +78,7 @@
     <title>Starting &kdvi;</title>
     
     <para>Most of the time, &kdvi; will be started by just clicking
-    onto a <literal role="extension">.dvi</literal>-file in the file
+    onto a <literal role="extension">.dvi</literal> file in the file
     manager. For convenience there exists a command
     <command>kdvi</command> which calls &kviewshell; with the &kdvi;
     plugin preloaded. The viewer may thus be started using the command
@@ -95,8 +95,9 @@
     </para>
 
     <para>If you give a &URL; as a parameter, you can tell &kdvi; to
-    jump directly to certain place of the &DVI; file. For example,
-    <userinput><command>kdvi</command>
+    jump directly to certain place of the &DVI; file. Don't forget the
+    <userinput>file:</userinput> prefix or it will give unexpected
+    results. For example, <userinput><command>kdvi</command>
     <parameter>file:paper.dvi#43</parameter></userinput> will make
     &kdvi; to open page 43. If you have included source file
     information, a command like <userinput><command>kdvi</command>
@@ -151,7 +152,7 @@
     own settings, which are fine for most purposes. However, if you
     care for optimal printing results, you should configure
     <command>dvips</command> manually and make sure to set a default
-    MetaFont mode which fits your printer best ---on many systems
+    MetaFont mode which fits your printer best &mdash; on many systems
     you'll find a <ulink url="info:/dvips">GNU-texinfo documentation
     of <command>dvips</command></ulink>, and you might also want to
     look for a file called <filename>dvips.dvi</filename> or
@@ -162,7 +163,7 @@
     <title>Exporting the &DVI; file to other formats</title>
 
     <para>If you want to save your file as in &PostScript; or
-    PDF-format, it is not recommended that you use the printing
+    PDF format, it is not recommended that you use the printing
     function and redirect the printer output to a file. Instead, you
     can use the export functions which produce better-quality output
     that retains many of the special features of the dvi format and
@@ -176,7 +177,7 @@
       <para>As in printing, the external program
       <command>dvips</command> is used to generate the &PostScript;
       file. If the &DVI; file contains hyperlinks, these will also be
-      included in the &PostScript; file. If you are an export, and if
+      included in the &PostScript; file. If you are an expert, and if
       you would like to generate output which is optimized for a
       specific printer, you should probably start
       <command>dvips</command> manually and choose the proper MetaFont
@@ -219,7 +220,7 @@
     when you don't have a three-button mouse, you can simultaneously
     use the <mousebutton>left</mousebutton> and the
     <mousebutton>right</mousebutton> button). After that, your
-    favourite editor will open, load the TeX-sourcefile and jump to
+    favourite editor will open, load the TeX sourcefile and jump to
     the proper paragraph. To use inverse search, do the
     following:</para>
 
@@ -228,7 +229,7 @@
       <step>
 	<para>Produce a &DVI; file that contains inverse search
 	information. This is explained in the section <link
-	linkend="inverse-search-tex">Producing TeX-files for inverse
+	linkend="inverse-search-tex">Producing TeX files for inverse
 	search</link> below. If you just want to test the inverse
 	search feature, you can also use the example file
 	<filename>KDVI-features.dvi</filename></para>
@@ -272,14 +273,14 @@
 	  necessary information automatically, is certainly the
 	  preferred method of including inverse search information. By
 	  the time of writing, a binary was not yet available for
-	  Unix. However, it is said that the next version of the
+	  &UNIX;. However, it is said that the next version of the
 	  <ulink url="http://www.tetex.org">TeTeX
 	  TeX-distribution</ulink> will support inverse search
 	  natively.
 	  </para>
 	</listitem>
 	<listitem>
-	  <para>If you do not have a TeX-binary which includes inverse
+	  <para>If you do not have a TeX binary which includes inverse
 	  search information natively, copy the files
 	  <filename>srcltx.sty</filename> and
 	  <filename>srctex.sty</filename> to the directory where your
@@ -291,7 +292,7 @@
     \usepackage[active]{srcltx}
 
 </programlisting>
-	   to the preamble of your TeX-file. If you use plain TeX, the line 
+	   to the preamble of your TeX file. If you use plain TeX, the line 
 <programlisting>
 
     \include{srctex}
@@ -332,21 +333,22 @@
       <important>
 	<para>The program <command>emacsclient</command> requires that
 	<application>Emacs</application> is running, and that the
-	program <command>emacs-server</command> is started inside
+	program <application>Emacs Server</application> is started inside
 	<application>Emacs</application>. Inverse search will not work
 	optimally unless you have started both
-	<application>Emacs</application> and the
-	<command>emacs-server</command>.</para>
+	<application>Emacs</application> and the <application>Emacs
+	Server</application>.</para>
       </important>
 
-      <para>To start the <command>emacs-server</command>, you can do
+      <para>To start the , you can do
       one of the following:</para>
       <procedure>
 	<step>
 	  <para>In <application>Emacs</application>, start the
-<command>emacs-server</command> by typing <userinput><keycombo
-action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
-<command>server-start</command></userinput></para> 
+ <application>Emacs Server</application> by typing
+ <userinput><keycombo
+ action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
+ <command>server-start</command></userinput></para>
 	</step>
 	<step>
 	  <para>Add the line 
@@ -355,7 +357,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
     (server-start)
 
 </programlisting>
-	   to your or <filename>.emacs</filename> file. Restart
+	   to your <filename>.emacs</filename> file. Restart
 	   <application>Emacs</application></para>
 	</step>
       </procedure>
@@ -386,7 +388,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      local</computeroutput>, make sure that
 	      <application>Emacs</application> is
 	      running. Furthermore, make sure that the
-	      <command>emacs-server</command> is started by typing
+	      <application>Emacs Server</application> is started by typing
 	      <userinput><keycombo
 	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      <command>server-start</command></userinput>.</para>
@@ -412,11 +414,13 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      your changes since the last save to be
 	      lost!</emphasis></para>
 
-	      <para>IMHO gnuclient's behaviour of silently reloading
-	      the changed buffer is preferable &mdash; add the
-	      following lines to your <filename>.emacs</filename> file
-	      to emulate gnuclient's behaviour with
-	      <command>emacsclient</command>:
+	      <para><application>gnuclient</application>'s behaviour
+	      of silently reloading the changed buffer is probably
+	      preferable &mdash; add the following lines to your
+	      <filename>.emacs</filename> file to emulate
+	      <command>gnuclient</command>'s behaviour with
+	      <command>emacsclient</command>:</para>
+
 <programlisting>
 
 	(defadvice server-visit-files (around save-buffers last activate)
@@ -449,7 +453,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	    (set-buffer-modified-p this-buf-modified-p)))
 
 </programlisting>
-</para> 
+
 	</listitem>
       </itemizedlist>
       </tip>
@@ -462,7 +466,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
       inverse search very well.  A
       <mousebutton>middle</mousebutton>-button mouseclick into the
       &DVI; file will always open a new instance of the &kate; editor,
-      even if &kate; is already running and even if the TeX-file is
+      even if &kate; is already running and even if the TeX file is
       already loaded. Worse, &kate; does not move the cursor to the
       beginning of the paragraph.</para>
     </section>
@@ -474,7 +478,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
       indeed. Clicking into the &DVI; file should open a new
       window. If the TeX-file is already used in another window of
       <application>NEdit</application>, the newly opened window
-      displays another view of the buffer. Otherwise, the TeX-file is
+      displays another view of the buffer. Otherwise, the TeX file is
       loaded. After opening the window,
       <application>NEdit</application> highlights the first line of
       the appropriate paragraph.</para>
@@ -518,20 +522,20 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
       <important>
 	<para>The program <command>gnuclient</command> requires that
 	<application>XEmacs</application> is running, and that the
-	program gnuserv is started inside
+	program <application>gnuserv</application> is started inside
 	<application>XEmacs</application>. Inverse search will not
 	work unless you have started both
 	<application>XEmacs</application> and
-	<command>gnuserv</command>.</para>
+	<application>gnuserv</application>.</para>
       </important>
 
-      <para>To start the <command>gnuserv</command> program, you can
+      <para>To start the <application>gnuserv</application> program, you can
       do one of the following:</para>
       <itemizedlist>
 	<listitem>
 	  <para>In <application>XEmacs</application>, start
-	  <command>gnuserv</command> by typing <userinput><keycombo
-	  action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	  <application>gnuserv</application> by typing <userinput><keycombo
+	  action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
 	  <command>gnuserv-start</command></userinput></para>
 	</listitem>
 	<listitem>
@@ -543,7 +547,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 </programlisting>
 	   to your or <filename>.xemacs</filename> file. If you use a
 	   more recent version of <application>XEmacs</application>,
-	   <filename class="directory">>.xemacs</filename> will be a
+	   <filename class="directory">.xemacs</filename> will be a
 	   directory. In that case, you should append the line to the
 	   file <filename>.xemacs/init.el</filename>. Restart
 	   <application>XEmacs</application></para>
@@ -568,7 +572,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      from the command line.</para>
 	  </listitem>
 	<listitem>
-	      <para>&kdvi; uses the command <command>gnuserv</command>
+	      <para>&kdvi; uses the command <application>gnuserv</application>
 	      to remote control
 	      <application>XEmacs</application>. Make sure that
 	      <command>gnuclient</command> is available on the command
@@ -579,14 +583,14 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      editor.</para>
 	</listitem>
 	<listitem>
-	      <para>If <command>gnuserv</command> fails with an error
+	      <para>If <application>gnuserv</application> fails with an error
 	      message like <computeroutput>unable to connect to
 	      local</computeroutput>, make sure that
 	      <application>XEmacs</application> is
 	      running. Furthermore, make sure that
-	      <command>gnuserv</command> is started by typing
+	      <application>gnuserv</application> is started by typing
 	      <userinput><keycombo
-	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      action="seq"><keycap>M</keycap><keycap>X</keycap></keycombo>
 	      <command>gnuserv-start</command></userinput>.</para>
 	</listitem>
 	<listitem>
@@ -596,7 +600,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	      frame</quote>, and add the <quote>raise-frame</quote>
 	      function to <quote>Visit Hook</quote>. Do
 	      <userinput><keycombo
-	      action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
+	      action="simul"><keycap>M</keycap><keycap>X</keycap></keycombo>
 	      <command>customize-group</command> <keycap>RET</keycap>
 	      <command>gnuserv</command></userinput> to make these
 	      settings.</para>
@@ -648,15 +652,15 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	<para>Add source file information to your &DVI; file, &eg; by
 	using the package <command>srcltx</command>.  This has been
 	described in the section <link
-	linkend="inverse-search-tex">"Producing TeX-files for inverse
-	search"</link>.</para>
+	linkend="inverse-search-tex">Producing TeX files for inverse
+	search</link>.</para>
       </listitem>
       <listitem>
 	<para>Go! If you use <application>Emacs</application> and
 	everything is properly set up, you just press
 	<userinput><keycombo
-	action="simul">&Ctrl;<keycap>x</keycap></keycombo> <keycombo
-	action="simul">&Ctrl;<keycap>j</keycap>
+	action="simul">&Ctrl;<keycap>X</keycap></keycombo> <keycombo
+	action="simul">&Ctrl;<keycap>J</keycap>
 	</keycombo></userinput>, and &kdvi; pops up and jumps to the
 	place which corresponds to the place of the TeX file which you
 	are currently editing.</para>
@@ -698,19 +702,24 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 
 	  <listitem>
 	    <para>Enjoy. Open <application>Emacs</application>, load a
-	    TeX-file, produce the corresponding &DVI; file, and either
+	    TeX file, produce the corresponding &DVI; file, and either
 	    enter the command <userinput><keycombo
 	    action="simul"><keycap>M</keycap><keycap>x</keycap>
 	    </keycombo><command>kdvi-jump-to-line</command></userinput>
-	    or press <userinput>Ctrl-x Ctrl-j</userinput>. It may
-	    happen that <application>Emacs</application> asks you for
-	    the name of a <quote>master file</quote>. This is useful
-	    if you use a TeX file which includes other files: the
-	    master file is the top-level file which includes the
+	    or press <userinput><keycombo action="seq"><keycombo
+	    action="simul">&Ctrl;<keycap>X</keycap></keycombo>
+	    <keycombo
+	    action="simul">&Ctrl;<keycap>J</keycap></keycombo>
+	    </keycombo></userinput>.
+	    It may happen that <application>Emacs</application> asks
+	    you for the name of a <quote>master file</quote>. This is
+	    useful if you use a TeX file which includes other files:
+	    the master file is the top-level file which includes the
 	    others. <application>Emacs</application> will perhaps also
-	    ask to save the name of the master-file <quote>as a local
+	    ask to save the name of the master file <quote>as a local
 	    variable</quote>, &ie; as a comment at the very end of the
-	    file. Say either yes or no, and enjoy!</para>
+	    file. Say either <userinput>yes</userinput> or
+	    <userinput>no</userinput>, and enjoy!</para> 
 	    </listitem>
 	</itemizedlist>
 
@@ -787,7 +796,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	    unless you are an expert in <command>MetaFont</command>
 	    and know what you are doing, it is not a good idea to
 	    change these options. You may want to look at the <link
-	    linkend="MFModes">Frequently asked questions</link> section of
+	    linkend="mfmodes">Frequently asked questions</link> section of
 	    this manual.</para>
 
 	    <para>Safe values are <guilabel>1200 dpi /
@@ -861,7 +870,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	</varlistentry>
 	
 	<varlistentry>
-	  <term><guilabel>Hyperlinks</guilabel></term>
+	  <term><guilabel>Show Hyperlinks</guilabel></term>
 	  <listitem>
 	    <para>Check this if you want &kdvi; to display
 	    hyperlinks. The appropriate parts of the text will be
@@ -873,11 +882,11 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	<varlistentry>
 	  <term><guilabel>Editor for inverse search</guilabel></term>
 	  <listitem>
-	    <para>If you intend to use <ulink
-	    url="inverse-search.html">inverse search</ulink>, a very
-	    useful feature if you write TeX documents yourself, you
-	    have to specify which editor you are going to use, and how
-	    this editor can be started by &kdvi;. In the example
+	    <para>If you intend to use <link
+	    linkend="inverse-search">inverse search</link>, a
+	    very useful feature if you write TeX documents yourself,
+	    you have to specify which editor you are going to use, and
+	    how this editor can be started by &kdvi;. In the example
 	    shown, the user has opted for the
 	    <application>NEdit</application> editor. If you use one of
 	    the pre-configured editors from the
@@ -909,7 +918,8 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
       <qandaentry>
 	<question id="fontgen">
 	  <para>What happens when &kdvi; displays the message
-	  <errorcode>Generating bitmap fonts</errorcode>, and why does
+	  <computeroutput>KDVI is currently generating bitmap
+	  fonts</computeroutput>, and why does 
 	  the procedure take so long?</para>
 	</question>
 	<answer>
@@ -917,13 +927,13 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	  document must be generated by the MetaFont system. Metafont
 	  is a language similar to TeX (included in most TeX
 	  distributions) which takes a description of the font
-	  outline, and produces a rasterized version (=
-	  <filename>.pk</filename>-file) of the font which can then be
-	  send to a printer or be used in a previewing program like
-	  &kdvi;. Metafont goes out of its way to produce the best
-	  possible output for your printer. For instance, it knows
-	  that a pixel of an inkjet printer is a roundisch blot, and
-	  that nearby pixels tend to smear into each other. In
+	  outline, and produces a rasterized version (<literal
+	  role="extension">.pk</literal> file) of the font which can
+	  then be send to a printer or be used in a previewing program
+	  like &kdvi;. Metafont goes out of its way to produce the
+	  best possible output for your printer. For instance, it
+	  knows that a pixel of an inkjet printer is a roundish blot,
+	  and that nearby pixels tend to smear into each other. In
 	  contrast, a pixel on a laser printer is rectangular, but an
 	  isolated pixel is very often not rendered at all.</para>
 
@@ -931,22 +941,22 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 	  naturally rather time-consuming, in particular since typical
 	  TeX documents use a large number of different fonts. We can
 	  only ask for your patience. To ease the matter somewhat,
-	  most distributions of TeX store the
-	  <filename>.pk</filename>-files for a limited time, e.g. 100
-	  days. Therefore, if you access the same document more than
-	  once, the <filename>.pk</filename> files will be
-	  reused.</para>
+	  most distributions of TeX store the <literal
+	  role="extension">.pk</literal> files for a limited time,
+	  &eg; 100 days. Therefore, if you access the same document
+	  more than once, the <literal role="extension">.pk</literal>
+	  files will be reused.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry>
-	<question id="MFModes">
+	<question id="mfmodes">
 	  <para>What is a MetaFont Mode?</para>
 	</question>
 	<answer>
 	  <para>In order to produce bitmap fonts which are optimized
 	  for your printer (see the answer to the first question),
-	  Metafont comes with a database of printing engines --look
+	  Metafont comes with a database of printing engines &mdash; look
 	  for a file called <filename>modes.mf</filename>. A Metafont
 	  Mode is just the name of a database entry. For example, the
 	  name <quote>ljfour</quote> refers to the entry in the

@@ -294,7 +294,7 @@ void PresentationWidget::overlayClick( const QPoint & position )
 
     // compute angle relative to indicator (note coord transformation)
     float angle = 0.5 + 0.5 * atan2f( -xPos, -yPos ) / M_PI;
-    int pageIndex = (int)roundf( angle * ( m_frames.count() - 1 ) );
+    int pageIndex = (int)( angle * ( m_frames.count() - 1 ) + 0.5 );
 
     // go to selected page
     changePage( pageIndex );

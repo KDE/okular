@@ -28,6 +28,8 @@ extern void oops(QString message);
 #define	VF_ID_BYTE	202
 #define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
 
+const int font::max_num_of_chars_in_font = 256;
+
 void font::fontNameReceiver(QString fname)
 {
   flags |= font::FONT_LOADED;

@@ -49,7 +49,7 @@ public:
   // this value here, make sure to go through all the source and
   // ensure that character numbers are stored in ints rather than
   // unsigned chars.
-  static const int      max_num_of_chars_in_font = 256;
+  static const int      max_num_of_chars_in_font;
   enum                  font_flags {
                              FONT_IN_USE  = 1,	// used for housekeeping
                              FONT_LOADED  = 2,	// if font file has been read

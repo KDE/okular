@@ -172,9 +172,9 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 	
-    if ( e->key() == Key_Left || e->key() == Key_Backspace )
+    if ( e->key() == Key_Left || e->key() == Key_Backspace || e->key() == Key_Prior )
         slotPrevPage();
-    else if ( e->key() == Key_Right || e->key() == Key_Space )
+    else if ( e->key() == Key_Right || e->key() == Key_Space || e->key() == Key_Next )
         slotNextPage();
     else if ( e->key() == Key_Escape )
     {

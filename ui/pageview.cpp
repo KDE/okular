@@ -331,11 +331,11 @@ void PageView::notifyViewportChanged()
     updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
 }
 
-void PageView::notifyPageChanged( int pageNumber, int /*changedFlags*/ )
+void PageView::notifyPageChanged( int pageNumber, int changedFlags )
 {
-    // only handle pixmap changed notifies (the only defined for now)
-    //if ( !(changedFlags & DocumentObserver::Pixmap) )
-    //    return;
+    // only handle pixmap / highlight changes notifies
+    if ( changedFlags & DocumentObserver::Bookmark )
+        return;
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
     QValueList< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();

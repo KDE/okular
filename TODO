@@ -16,6 +16,7 @@ In progress 3.4 features (deadline is 2k5-Feb-2):
 More items (first items will enter 'In progress list' first):
 -> go to next/previous bookmark actions (showing in thumbnailslist rmb popup too)
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
+-> viewport restoring: save the page width setting between runs (save/restore zoom factor)
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> add scrollbar marks for bookmarks (like kate)
 -> google search in the page

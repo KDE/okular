@@ -32,6 +32,7 @@ class ThumbnailList : public QScrollView, public DocumentObserver
 Q_OBJECT
 	public:
 		ThumbnailList(QWidget *parent, KPDFDocument *document);
+		~ThumbnailList();
 
         // inherited: return thumbnails observer id
         uint observerId() const { return THUMBNAILS_ID; }
@@ -51,6 +52,8 @@ Q_OBJECT
 
         // called by ThumbnailWidgets to send (forward) rightClick signals
         void forwardRightClick( const KPDFPage *, const QPoint & );
+        // called by ThumbnailWidgets to get the overlay bookmark pixmap
+        const QPixmap * getBookmarkOverlay() const;
 
     public slots:
         // these are connected to ThumbnailController buttons
@@ -79,6 +82,7 @@ Q_OBJECT
 		KPDFDocument *m_document;
 		ThumbnailWidget *m_selected;
 		QTimer *m_delayTimer;
+		QPixmap *m_bookmarkOverlay;
 		QValueVector<ThumbnailWidget *> m_thumbnails;
 		QValueList<ThumbnailWidget *> m_visibleThumbnails;
 		int m_vectorIndex;
@@ -86,6 +90,8 @@ Q_OBJECT
 	private slots:
 		// make requests for generating pixmaps for visible thumbnails
 		void slotRequestVisiblePixmaps( int newContentsX = -1, int newContentsY = -1 );
+		// delay timeout: resize overlays and requests pixmaps
+		void slotDelayTimeout();
 };
 
 /**

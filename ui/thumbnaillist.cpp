@@ -14,6 +14,7 @@
 #include <kurl.h>
 #include <kurldrag.h>
 #include <kaction.h>
+#include <kiconloader.h>
 #include <kactioncollection.h>
 
 // local includes
@@ -47,7 +48,8 @@ class ThumbnailWidget : public QWidget
         void paintEvent(QPaintEvent *);
 
     private:
-        ThumbnailList * m_tl; // only for accessing 'forwardRightClick( .. )'
+        // used to access 'forwardRightClick( .. )' and 'getBookmarkOverlay()'
+        ThumbnailList * m_tl;
         const KPDFPage * m_page;
         bool m_selected;
         int m_pixmapWidth, m_pixmapHeight;
@@ -59,7 +61,7 @@ class ThumbnailWidget : public QWidget
 
 ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 	: QScrollView( parent, "KPDF::Thumbnails", WNoAutoErase | WStaticContents ),
-	m_document( document ), m_selected( 0 ), m_delayTimer( 0 )
+	m_document( document ), m_selected( 0 ), m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
 {
 	// set scrollbars
 	setHScrollBarMode( QScrollView::AlwaysOff );
@@ -82,6 +84,10 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
 }
 
+ThumbnailList::~ThumbnailList()
+{
+    delete m_bookmarkOverlay;
+}
 
 //BEGIN DocumentObserver inherited methods 
 void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool /*documentChanged*/ )
@@ -226,6 +232,11 @@ void ThumbnailList::forwardRightClick( const KPDFPage * p, const QPoint & t )
     emit rightClick( p, t );
 }
 
+const QPixmap * ThumbnailList::getBookmarkOverlay() const
+{
+    return m_bookmarkOverlay;
+}
+
 void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
     // save state
@@ -300,6 +311,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 {
 	if ( m_thumbnails.count() < 1 || width() < 1 )
 		return;
+
 	// if width changed resize all the Thumbnails, reposition them to the
 	// right place and recalculate the contents area
 	if ( e->size().width() != e->oldSize().width() )
@@ -328,6 +340,14 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 	}
 	else if ( e->size().height() <= e->oldSize().height() )
 		return;
+
+	// invalidate the bookmark overlay
+	if ( m_bookmarkOverlay )
+	{
+		delete m_bookmarkOverlay;
+		m_bookmarkOverlay = 0;
+	}
+
 	// update Thumbnails since width has changed or height has increased
 	delayedRequestVisiblePixmaps( 500 );
 }
@@ -348,12 +368,12 @@ void ThumbnailList::dropEvent( QDropEvent * ev )
 //BEGIN internal SLOTS 
 void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsX*/, int newContentsY )
 {
-	// if an update is already scheduled or the widget is hidden, don't proceed
-	if ( (m_delayTimer && m_delayTimer->isActive()) || !isShown() )
-		return;
+    // if an update is already scheduled or the widget is hidden, don't proceed
+    if ( (m_delayTimer && m_delayTimer->isActive()) || !isShown() )
+        return;
 
-	int vHeight = visibleHeight(),
-	    vOffset = newContentsY == -1 ? contentsY() : newContentsY;
+    int vHeight = visibleHeight(),
+        vOffset = newContentsY == -1 ? contentsY() : newContentsY;
 
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
@@ -382,6 +402,20 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsX*/, int newCont
     if ( !requestedPixmaps.isEmpty() )
         m_document->requestPixmaps( requestedPixmaps );
 }
+
+void ThumbnailList::slotDelayTimeout()
+{
+    // resize the bookmark overlay
+    delete m_bookmarkOverlay;
+    int expectedWidth = contentsWidth() / 4;
+    if ( expectedWidth > 10 )
+        m_bookmarkOverlay = new QPixmap( DesktopIcon( "attach", expectedWidth ) );
+    else
+        m_bookmarkOverlay = 0;
+
+    // request pixmaps
+    slotRequestVisiblePixmaps();
+}
 //END internal SLOTS
 
 void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
@@ -389,7 +423,7 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 	if ( !m_delayTimer )
 	{
 		m_delayTimer = new QTimer( this );
-		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestVisiblePixmaps() ) );
+		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotDelayTimeout() ) );
 	}
 	m_delayTimer->start( delayMs, true );
 }
@@ -398,7 +432,7 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 /** ThumbnailWidget implementation **/
 
 ThumbnailWidget::ThumbnailWidget( QWidget * parent, const KPDFPage * kp, ThumbnailList * tl )
-	: QWidget( parent, 0, WNoAutoErase ), m_tl( tl ), m_page( kp ),
+    : QWidget( parent, 0, WNoAutoErase ), m_tl( tl ), m_page( kp ),
     m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
 {
     m_labelNumber = m_page->number() + 1;
@@ -474,6 +508,17 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
             int flags = PagePainter::Accessibility | PagePainter::Highlight;
             PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, flags, &p,
                                              clipRect, m_pixmapWidth, m_pixmapHeight );
+        }
+
+        // draw the bookmark overlay on the top-right corner
+        const QPixmap * bookmarkPixmap = m_tl->getBookmarkOverlay();
+        if ( isBookmarked && bookmarkPixmap )
+        {
+            int pixW = bookmarkPixmap->width(),
+                pixH = bookmarkPixmap->height();
+            clipRect = clipRect.intersect( QRect( m_pixmapWidth - pixW, 0, pixW, pixH ) );
+            if ( clipRect.isValid() )
+				p.drawPixmap( m_pixmapWidth - pixW, -pixH/8, *bookmarkPixmap );
         }
     }
 }

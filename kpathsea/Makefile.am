@@ -4,6 +4,9 @@ AUTOMAKE_OPTIONS = foreign
 
 noinst_LTLIBRARIES = libkpathsea.la
 
+check_PROGRAMS = kpsewhich
+kpsewhich_LDFLAGS = -L../ -lkdvi
+
 # Makefile for kpathsea --kb@mail.tug.org.  Public domain.
 version = @KPSEVERSION@
 

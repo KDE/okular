@@ -53,16 +53,16 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	connect(pdfpartview->pagesListBox, SIGNAL( clicked ( QListBoxItem * ) ),
 			this, SLOT( pageClicked ( QListBoxItem * ) ));
-	
+
   m_outputDev = pdfpartview->outputdev;
 
 
   setWidget(pdfpartview);
 
   // create our actions
-  KStdAction::find    (this, SLOT(find()), 
+  KStdAction::find    (this, SLOT(find()),
                        actionCollection(), "find");
-  KStdAction::findNext(this, SLOT(findNext()), 
+  KStdAction::findNext(this, SLOT(findNext()),
                        actionCollection(), "find_next");
 
   m_fitToWidth = new KToggleAction(i18n("Fit to Page &Width"), 0,
@@ -77,7 +77,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
                        actionCollection(), "back");
   KStdAction::forward (this, SLOT(forward()),
                        actionCollection(), "forward");
-  KStdAction::prior   (m_outputDev, SLOT(previousPage()), 
+  KStdAction::prior   (m_outputDev, SLOT(previousPage()),
                        actionCollection(), "previous_page");
   KStdAction::next    (m_outputDev, SLOT(nextPage()),
                        actionCollection(), "next_page" );
@@ -96,7 +96,7 @@ Part::createAboutData()
   // the non-i18n name here must be the same as the directory in
   // which the part's rc file is installed ('partrcdir' in the
   // Makefile)
-  KAboutData* aboutData = new KAboutData("kpdfpart", I18N_NOOP("KPDF::Part"), 
+  KAboutData* aboutData = new KAboutData("kpdfpart", I18N_NOOP("KPDF::Part"),
                                          "0.1");
   aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
   return aboutData;
@@ -107,7 +107,7 @@ Part::closeURL()
 {
   delete m_doc;
   m_doc = 0;
-  
+
   return KParts::ReadOnlyPart::closeURL();
 }
 
@@ -119,12 +119,12 @@ Part::openFile()
   if (file.open(IO_ReadOnly) == false)
     return false;
 
-  GString* filename = new GString(m_file.ascii);
+  GString* filename = new GString(m_file.ascii());
   m_doc = new PDFDoc(filename, 0, 0);
 
   if (!m_doc->isOk())
     return false;
-	
+
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
@@ -137,15 +137,15 @@ Part::openFile()
 	}
 	pdfpartview->pagesListBox->setUpdatesEnabled(true);
 	pdfpartview->pagesListBox->update();
-	
+
   displayPage(1);
-	
+
 	m_outputDev->setPDFDocument(m_doc);
 
   return true;
 }
 
-  void 
+  void
 Part::displayPage(int pageNumber, float /*zoomFactor*/)
 {
   if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
@@ -167,7 +167,7 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 				const int canvasHeight   = m_outputDev->contentsRect().height();
 				const int scrollBarWidth = m_outputDev->verticalScrollBar()->width();
 
-				// Calculate the height so that the page fits the viewport width 
+				// Calculate the height so that the page fits the viewport width
 				// assuming that we need a vertical scrollbar.
 				float height = float(canvasWidth - scrollBarWidth) / pageAR;
 
@@ -177,7 +177,7 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 				{
 					height = float(canvasWidth) / pageAR;
 
-					// Handle the rare case that enlarging the page resulted in the need of 
+					// Handle the rare case that enlarging the page resulted in the need of
 					// a vertical scrollbar. We can fit the page to the viewport height in
 					// this case.
 					if (ceil(height) > canvasHeight)
@@ -207,17 +207,17 @@ Part::displayDestination(LinkDest* dest)
   int pageNumber;
   // int dx, dy;
 
-  if (dest->isPageRef()) 
+  if (dest->isPageRef())
   {
     Ref pageRef = dest->getPageRef();
     pageNumber = m_doc->findPage(pageRef.num, pageRef.gen);
   }
-  else 
+  else
   {
     pageNumber = dest->getPageNum();
   }
 
-  if (pageNumber <= 0 || pageNumber > m_doc->getNumPages()) 
+  if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
   {
     pageNumber = 1;
   }
@@ -288,16 +288,16 @@ Part::print()
   printer.setCurrentPage(m_currentPage);
   printer.setMinMax(1, m_doc->getNumPages());
 
-  if (printer.setup(widget())) 
+  if (printer.setup(widget()))
   {
     /*
     KTempFile tf(QString::null, ".ps");
-    if (tf.status() == 0) 
+    if (tf.status() == 0)
     {
       savePages(tf.name(), printer.pageList());
       printer.printFiles(QStringList( tf.name() ), true);
     }
-    else 
+    else
     {
        // TODO: Proper error handling
       ;
@@ -306,27 +306,27 @@ Part::print()
   }
 }
 
-  void 
+  void
 Part::displayNextPage()
 {
   displayPage(m_currentPage + 1);
 }
 
-  void 
+  void
 Part::displayPreviousPage()
 {
   displayPage(m_currentPage - 1);
 }
 
 /*
-  void 
+  void
 Part::setFixedZoomFactor(float zoomFactor)
 {
 
 }
 */
 
-  void 
+  void
 Part::executeAction(LinkAction* action)
 {
   if (action == 0)
@@ -334,15 +334,15 @@ Part::executeAction(LinkAction* action)
 
   LinkActionKind kind = action->getKind();
 
-  switch (kind) 
+  switch (kind)
   {
   case actionGoTo:
   case actionGoToR:
   {
     LinkDest* dest = 0;
-    GString* namedDest = 0; 
+    GString* namedDest = 0;
 
-    if (kind == actionGoTo) 
+    if (kind == actionGoTo)
     {
       if ((dest = ((LinkGoTo*)action)->getDest()))
         dest = dest->copy();
@@ -358,7 +358,7 @@ Part::executeAction(LinkAction* action)
         namedDest = namedDest->copy();
       s = ((LinkGoToR*)action)->getFileName()->getCString();
       //~ translate path name for VMS (deal with '/')
-      if (!loadFile(fileName)) 
+      if (!loadFile(fileName))
       {
         delete dest;
         delete namedDest;
@@ -372,7 +372,7 @@ Part::executeAction(LinkAction* action)
       dest = m_doc->findDest(namedDest);
       delete namedDest;
     }
-    if (dest != 0) 
+    if (dest != 0)
     {
       displayDestination(dest);
       delete dest;
@@ -402,26 +402,26 @@ bool redrawing = false;
 void
 Part::update()
 {
-	if (m_outputDev && ! redrawing) 
+	if (m_outputDev && ! redrawing)
 	{
 		redrawing = true;
 		QTimer::singleShot(200, this, SLOT( redrawPage() ));
 	}
 };
 
-void 
+void
 Part::redrawPage()
-{ 
+{
 	redrawing = false;
-	displayPage(m_currentPage); 
+	displayPage(m_currentPage);
 }
 
-void 
+void
 Part::pageClicked ( QListBoxItem * qbi )
 {
 	m_outputDev->setPage(pdfpartview->pagesListBox->index(qbi) + 1);
 }
-	
+
 BrowserExtension::BrowserExtension(Part* parent)
   : KParts::BrowserExtension( parent, "KPDF::BrowserExtension" )
 {
@@ -429,7 +429,7 @@ BrowserExtension::BrowserExtension(Part* parent)
   setURLDropHandlingEnabled(true);
 }
 
-  void 
+  void
 BrowserExtension::print()
 {
   static_cast<Part*>(parent())->print();

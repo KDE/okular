@@ -464,8 +464,8 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   QString mimetype( KMimeMagic::self()->findFileType( fname )->mimeType() );
   if (mimetype != "application/x-dvi") {
     KMessageBox::sorry( this,
-			i18n( "Could not open file <nobr><strong>%1</strong></nobr> which has " 
-			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files." )
+			i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has " 
+			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
 			.arg( fname )
 			.arg( mimetype ) );
     return false;

@@ -34,7 +34,6 @@ Name[hr]=DVI preglednik
 Name[ro]=Vizualizor DVI
 Name[ru]=Просмотрщик DVI
 MimeType=application/x-dvi;
-Comment=TeX DVI File Viewer
 Exec=kdvi %f -caption "%c" %i %m
 TerminalOptions=
 Icon=kdvi.xpm

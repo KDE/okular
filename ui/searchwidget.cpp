@@ -24,6 +24,9 @@
 #include "core/document.h"
 #include "conf/settings.h"
 
+// definition of searchID for this class
+#define SW_SEARCH_ID 3
+
 // uncomment following to enable the case switching button
 //#define SW_ENABLE_CASE_BUTTON
 #define CLEAR_ID    1
@@ -75,7 +78,7 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
 void SearchWidget::slotTextChanged( const QString & text )
 {
     // if length<3 set 'red' text and send a blank string to document
-    QColor color = text.length() < 3 ? Qt::red : palette().active().text();
+    QColor color = text.length() < 3 ? Qt::darkRed : palette().active().text();
     getLined( LEDIT_ID )->setPaletteForegroundColor( color );
     m_inputDelayTimer->stop();
     m_inputDelayTimer->start(333, true);
@@ -83,11 +86,16 @@ void SearchWidget::slotTextChanged( const QString & text )
 
 void SearchWidget::startSearch()
 {
+    // search text if have more than 3 chars or else clear search
     QString text = getLined( LEDIT_ID )->text();
+    bool ok = true;
     if ( text.length() >= 3 )
-        m_document->searchText( 9, text, true, m_caseSensitive, KPDFDocument::AllDoc, false, Qt::green );
+        ok = m_document->searchText( SW_SEARCH_ID, text, true, m_caseSensitive, KPDFDocument::AllDoc, false, Qt::green );
     else
-        m_document->resetSearch( 9 );
+        m_document->resetSearch( SW_SEARCH_ID );
+    // change color to red if text not found
+    QColor color = ok ? palette().active().text() : Qt::red;
+    getLined( LEDIT_ID )->setPaletteForegroundColor( color );
 }
 
 void SearchWidget::slotCaseChanged( int index )

@@ -6,12 +6,10 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 Status:
+-> 2005-02-02: Features for 3.4 done. Ready for bugfixes.
 -> 2005-01-27: Stable and leakchecked. Usability: needs testing.
 -> 2005-01-20: Stable. Apart from a bad (but still safe) memory deallocation
    mechanism the core is ready for a public release.
-
-In progress 3.4 features (deadline is 2k5-Feb-2):
--> new word highlighting for searches / other highlights
 
 More items (first items will enter 'In progress list' first):
 -> go to next/previous bookmark actions (showing in thumbnailslist rmb popup too)
@@ -19,9 +17,9 @@ More items (first items will enter 'In progress list' first):
 -> viewport restoring: save the page width setting between runs (save/restore zoom factor)
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> add scrollbar marks for bookmarks (like kate)
--> google search in the page
+-> search: google search in the page
 -> cleanup code and update README.png
--> find-as-you-type: use shortcut for 'find next' action (not the default one)
+-> search: use shortcut for 'find next' action (not the default one) in find-ahead
 -> show Viewport in ThumbnailsList (blended/contour)
 -> Delay TOC (DocumentSynapsis) generation (and move it on thread)
 -> refactor ThumbnailsList to do internal rendering as pageview does (way faster
@@ -79,6 +77,7 @@ More items (first items will enter 'In progress list' first):
 -> export: export to other formats keeping formatting (a dream.. except for PNG :-) (PS is easy, we just have PSOutputDev that does it :-D)
 
 Done (newest features come first):
+-> FIX: memleaks, bugfixes (1,..)
 -> CHG: changes and cleanups in pageView's mouse handling functions
 -> ADD: KTTSD simple support: speech selection using kspeech api via pure dcop (don't break compatibiltiy)
 -> CHG: right click and drag while in 'normal' mode changes to 'selection' mode and selects

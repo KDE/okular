@@ -101,7 +101,7 @@ protected slots:
 	void slotShowProperties();
 	void slotShowPresentation();
 	// can be connected to widget elements
-	void updateActions();
+	void updateViewActions();
 	void enableTOC(bool enable);
 
 public slots:
@@ -125,7 +125,7 @@ private:
 	SearchWidget *m_searchWidget;
 	ThumbnailList *m_thumbnailList;
 	PageView *m_pageView;
-  QGuardedPtr<PresentationWidget> m_presentationWidget;
+	QGuardedPtr<PresentationWidget> m_presentationWidget;
 
 	// static instances counter
 	static unsigned int m_count;
@@ -151,6 +151,7 @@ private:
 	KToggleAction* m_showMenuBarAction;
 	KToggleAction* m_showFullScreenAction;
 	bool m_actionsSearched;
+	bool m_searchStarted;
 };
 
 

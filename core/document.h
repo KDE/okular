@@ -82,10 +82,10 @@ class KPDFDocument : public QObject
 
         enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleLike };
         bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
-                         SearchType type, bool moveViewport, const QColor & color );
+                         SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
         bool continueSearch( int searchID );
         void resetSearch( int searchID );
-        
+
         void toggleBookmark( int page );
         void processLink( const KPDFLink * link );
         bool print( KPrinter &printer );

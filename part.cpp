@@ -65,6 +65,9 @@
 #include "core/document.h"
 #include "core/page.h"
 
+// definition of searchID for this class
+#define PART_SEARCH_ID 1
+
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
 
@@ -75,7 +78,8 @@ unsigned int Part::m_count = 0;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_actionsSearched(false)
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0),
+	m_actionsSearched(false), m_searchStarted(false)
 {
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("kpdf");
@@ -255,7 +259,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
-	updateActions();
+	updateViewActions();
 	slotWatchFile();
 }
 
@@ -278,7 +282,7 @@ void Part::notifyViewportChanged( bool /*smoothMove*/ )
     int viewportPage = m_document->viewport().pageNumber;
     if ( viewportPage != lastPage )
     {
-        updateActions();
+        updateViewActions();
         lastPage = viewportPage;
     }
 }
@@ -315,11 +319,15 @@ bool Part::openFile()
     bool ok = m_document->openDocument( m_file );
 
     // update one-time actions
+    m_find->setEnabled( ok );
+    m_findNext->setEnabled( ok );
     m_saveAs->setEnabled( ok );
     m_printPreview->setEnabled( ok );
+    m_showProperties->setEnabled( ok );
+    m_showPresentation->setEnabled( ok );
 
     // update viewing actions
-    updateActions();
+    updateViewActions();
 
     if ( !ok )
     {
@@ -351,6 +359,21 @@ bool Part::openURL(const KURL &url)
     if ( !b )
         KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
     return b;
+}
+
+bool Part::closeURL()
+{
+    m_find->setEnabled( false );
+    m_findNext->setEnabled( false );
+    m_saveAs->setEnabled( false );
+    m_printPreview->setEnabled( false );
+    m_showProperties->setEnabled( false );
+    m_showPresentation->setEnabled( false );
+    updateViewActions();
+    m_searchStarted = false;
+    if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
+    m_document->closeDocument();
+    return KParts::ReadOnlyPart::closeURL();
 }
 
 void Part::slotWatchFile()
@@ -388,19 +411,10 @@ void Part::slotDoFileDirty()
   }
 }
 
-bool Part::closeURL()
+void Part::updateViewActions()
 {
-	m_saveAs->setEnabled( false );
-	m_printPreview->setEnabled( false );
-	if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
-	m_document->closeDocument();
-	return KParts::ReadOnlyPart::closeURL();
-}
-
-void Part::updateActions()
-{
-    bool ok = m_document->pages() > 0;
-    if ( ok )
+    bool opened = m_document->pages() > 0;
+    if ( opened )
     {
         bool atBegin = m_document->currentPage() < 1;
         bool atEnd = m_document->currentPage() >= (m_document->pages() - 1);
@@ -422,9 +436,6 @@ void Part::updateActions()
         m_historyBack->setEnabled( false );
         m_historyNext->setEnabled( false );
     }
-    m_find->setEnabled( ok );
-    m_showProperties->setEnabled( ok );
-    m_showPresentation->setEnabled( ok );
 }
 
 void Part::enableTOC(bool enable)
@@ -512,15 +523,18 @@ void Part::slotFind()
 #endif
     if ( dlg.exec() == QDialog::Accepted )
     {
-        m_findNext->setEnabled( true );
-        m_document->searchText( 10, dlg.pattern(), false, dlg.options() & KFindDialog::CaseSensitive,
+        m_searchStarted = true;
+        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFindDialog::CaseSensitive,
                                 KPDFDocument::NextMatch, true, Qt::red );
     }
 }
 
 void Part::slotFindNext()
 {
-    m_document->continueSearch( 10 );
+    if ( m_searchStarted )
+        m_document->continueSearch( PART_SEARCH_ID );
+    else
+        slotFind();
 }
 
 void Part::slotSaveFileAs()

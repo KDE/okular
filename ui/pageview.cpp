@@ -53,6 +53,9 @@
 
 #define ROUND(x) (int(x + 0.5))
 
+// definition of searchID for this class
+#define PAGEVIEW_SEARCH_ID 2
+
 // structure used internally by PageView for data storage
 class PageViewPrivate
 {
@@ -549,8 +552,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
     e->accept();
 
     // if performing a selection or dyn zooming, disable keys handling
-    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 ||
-         d->viewportMoveActive )
+    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 )
         return;
 
     // handle 'find as you type' (based on khtml/khtmlview.cpp)
@@ -562,8 +564,8 @@ void PageView::keyPressEvent( QKeyEvent * e )
             if( d->typeAheadString.length() > 1 )
             {
                 d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
-                bool found = d->document->searchText( 69, d->typeAheadString, true, false,
-                        KPDFDocument::NextMatch, true, Qt::yellow );
+                bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
+                        KPDFDocument::NextMatch, true, Qt::yellow, true );
                 QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
                 d->messageWindow->display( status.arg(d->typeAheadString.lower()),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
@@ -572,7 +574,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             else
             {
                 findAheadStop();
-                d->document->resetSearch( 69 );
+                d->document->resetSearch( PAGEVIEW_SEARCH_ID );
             }
         }
         // F3: go to next occurrency
@@ -581,7 +583,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
             releaseKeyboard();
-            if ( d->document->continueSearch( 69 ) )
+            if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
                 d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
@@ -592,11 +594,12 @@ void PageView::keyPressEvent( QKeyEvent * e )
         {
             findAheadStop();
         }
+        // other key: add to text and search
         else if( !e->text().isEmpty() )
         {
             d->typeAheadString += e->text();
-            bool found = d->document->searchText( 69, d->typeAheadString, false, false,
-                    KPDFDocument::NextMatch, true, Qt::yellow );
+            bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
+                    KPDFDocument::NextMatch, true, Qt::yellow, true );
             QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
             d->messageWindow->display( status.arg(d->typeAheadString.lower()),
                                        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
@@ -626,6 +629,10 @@ void PageView::keyPressEvent( QKeyEvent * e )
         grabKeyboard();
         return;
     }
+
+    // if viewport is moving, disable keys handling
+    if ( d->viewportMoveActive )
+        return;
 
     // move/scroll page by using keys
     switch ( e->key() )

@@ -35,11 +35,13 @@
 #include "conf/settings.h"
 
 // structures used internally by KPDFDocument for local variables storage
+class AllocatedPixmap;
+class RunningSearch;
 class KPDFDocumentPrivate
 {
     public:
-        // find descriptors (can handle multiple searches)
-        QMap< int, class RunningSearch * > searches;
+        // find descriptors, mapped by ID (we handle multiple searches)
+        QMap< int, RunningSearch * > searches;
 
         // cached stuff
         QString docFileName;
@@ -52,7 +54,7 @@ class KPDFDocumentPrivate
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > observers;
         QValueList< PixmapRequest * > pixmapRequestsStack;
-        QValueList< class AllocatedPixmap * > allocatedPixmapsFifo;
+        QValueList< AllocatedPixmap * > allocatedPixmapsFifo;
         int allocatedPixmapsTotalMemory;
 
         // timers (memory checking / info saver)
@@ -72,19 +74,18 @@ struct AllocatedPixmap
 
 struct RunningSearch
 {
-    // publicly accessible fields
-    QString text;
-    bool caseSensitive;
-    bool moveViewport;
-    KPDFDocument::SearchType type;
-    QColor highlightColor;
+    // store search properties
+    int continueOnPage;
+    HighlightRect continueOnMatch;
+    QValueList< int > highlightedPages;
 
-    int lastPage;
-    HighlightRect lastMatch;
-    QValueList< int > matchedPages;
-
-    // public constructor: initialize data
-    
+    // fields related to previous searches (used for 'continueSearch')
+    QString cachedString;
+    KPDFDocument::SearchType cachedType;
+    bool cachedCaseSensitive;
+    bool cachedViewportMove;
+    bool cachedNoDialogs;
+    QColor cachedColor;
 };
 
 #define foreachObserver( cmd ) {\
@@ -415,7 +416,7 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
         // add request to the 'stack' at the right place
         if ( !request->priority )
             // add priority zero requests to the top of the stack
-            d->pixmapRequestsStack.push_back( request );
+            d->pixmapRequestsStack.append( request );
         else
         {
             // insert in stack sorted by priority
@@ -550,57 +551,58 @@ void KPDFDocument::setNextViewport()
 }
 
 
-bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStart,
-    bool caseSensitive, SearchType type, bool moveViewport, const QColor & color )
+bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
+                               SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
 {
-    // add a new search descriptor to runningSearches
+    // if searchID search not recorded, create new descriptor and init params
     if ( !d->searches.contains( searchID ) )
     {
         RunningSearch * search = new RunningSearch();
-        search->text = text;
-        search->caseSensitive = caseSensitive;
-        search->moveViewport = moveViewport;
-        search->type = type;
-        search->highlightColor = color;
-        search->lastPage = -1;
+        search->continueOnPage = -1;
         d->searches[ searchID ] = search;
     }
-
-    // get search descriptor and update stucture
     RunningSearch * s = d->searches[ searchID ];
-    if ( text != s->text )
-        s->text = text;
-    if ( type != s->type )
-        s->type = type;
+
+    // update search stucture
+    bool newText = text != s->cachedString;
+    s->cachedString = text;
+    s->cachedType = type;
+    s->cachedCaseSensitive = caseSensitive;
+    s->cachedViewportMove = moveViewport;
+    s->cachedNoDialogs = noDialogs;
+    s->cachedColor = color;
+
+    // global data for search
+    bool foundAMatch = false;
+    QValueList< int > pagesToNotify;
+
+    // remove highlights from pages and queue them for notifying changes
+    pagesToNotify += s->highlightedPages;
+    QValueList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
+    for ( ; it != end; ++it )
+        pages_vector[ *it ]->deleteHighlights( searchID );
+    s->highlightedPages.clear();
 
     // set hourglass cursor
     QApplication::setOverrideCursor( waitCursor );
 
-    // unhighlight pages and inform observers about that
-    QValueList< int >::iterator it = s->matchedPages.begin(), end = s->matchedPages.end();
-    for ( ; it != end; ++it )
-    {
-        int pageNumber = *it;
-        pages_vector[ pageNumber ]->deleteHighlights( searchID );
-        foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
-    }
-    s->matchedPages.clear();
-
-    //
-    bool foundAMatch = false;
-
-    // [1] ALLDOC - proces all document marking pages
+    // 1. ALLDOC - proces all document marking pages
     if ( type == AllDoc )
     {
-        // perform a linear search/mark
+        // search and highlight text on all pages
         QValueVector< KPDFPage * >::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
         {
+            // get page (from the first to the last)
             KPDFPage * page = *it;
-            if ( !page->hasSearchPage() )
-                requestTextPage( page->number() );
+            int pageNumber = page->number();
 
-            bool found = false;
+            // request search page if needed
+            if ( !page->hasSearchPage() )
+                requestTextPage( pageNumber );
+
+            // loop on a page adding highlights for all found items
+            bool addedHighlights = false;
             HighlightRect * lastMatch = 0;
             while ( 1 )
             {
@@ -612,66 +614,64 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                 if ( !lastMatch )
                     break;
 
-                found = true;
+                // add highligh rect to the page
                 lastMatch->id = searchID;
                 lastMatch->color = color;
                 page->setHighlight( lastMatch );
-                s->lastMatch = *lastMatch;
+                addedHighlights = true;
             }
 
-            if ( found )
+            // if added highlights, udpate internals and queue page for notify
+            if ( addedHighlights )
             {
                 foundAMatch = true;
-                s->matchedPages.append( page->number() );
+                s->highlightedPages.append( pageNumber );
+                if ( !pagesToNotify.contains( pageNumber ) )
+                    pagesToNotify.append( pageNumber );
             }
         }
-        // send page lists
-        foreachObserver( notifySetup( pages_vector, false ) );
+
+        // reset cursor to previous shape
+        QApplication::restoreOverrideCursor();
+
+        // send page lists if found anything new
+        //if ( foundAMatch ) ?maybe?
+            foreachObserver( notifySetup( pages_vector, false ) );
     }
-    // [2] NEXTMATCH - find next matching item (or start from top)
-    else if ( s->type == NextMatch )
+    // 2. NEXTMATCH - find next matching item (or start from top)
+    else if ( type == NextMatch )
     {
         // find out from where to start/resume search from
         int viewportPage = (*d->viewportIterator).pageNumber;
-        int currentPage = 0;
-        KPDFPage * lastPage = 0;
-        if ( !fromStart )
-        {
-            currentPage = s->lastPage != -1 ? s->lastPage : viewportPage;
-            lastPage = pages_vector[ currentPage ];
-        }
-        else
-        {
-            s->lastPage = 0;
-        }
-
-        HighlightRect * r = 0;
+        int currentPage = fromStart ? 0 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
+        KPDFPage * lastPage = fromStart ? 0 : pages_vector[ currentPage ];
 
         // continue checking last SearchPage first (if it is the current page)
-        if ( lastPage && lastPage->number() == s->lastPage )
+        HighlightRect * r = 0;
+        if ( lastPage && lastPage->number() == s->continueOnPage )
         {
-            r = lastPage->searchText( text, caseSensitive, &s->lastMatch );
-            if ( !r )
+            if ( newText )
+                r = lastPage->searchText( text, caseSensitive );
+            else
+                r = lastPage->searchText( text, caseSensitive, &s->continueOnMatch );
+            if ( r )
             {
-                lastPage->deleteHighlights( searchID );
-                currentPage++;
+                s->continueOnMatch = *r;
+                s->highlightedPages.append( currentPage );
             }
             else
-            {
-                s->lastMatch = *r;
-                s->matchedPages.push_back( currentPage );
-            }
+                currentPage++;
         }
 
+        // if no match found, loop through the whole doc, starting from currentPage
         if ( !r )
         {
-            // loop through the whole document
             const int pageCount = pages_vector.count();
             for ( int i = 0; i < pageCount; i++ )
             {
                 if ( currentPage >= pageCount )
                 {
-                    if ( /*FIXME !findAhead &&*/ KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
+                    if ( !noDialogs && KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
                         currentPage = 0;
                     else
                         break;
@@ -681,52 +681,63 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                     requestTextPage( page->number() );
                 if ( (r = page->searchText( text, caseSensitive )) )
                 {
-                    s->lastPage = currentPage;
-                    s->lastMatch = *r;
-                    s->matchedPages.push_back( currentPage );
+                    s->continueOnPage = currentPage;
+                    s->continueOnMatch = *r;
+                    s->highlightedPages.append( currentPage );
                     break;
                 }
                 currentPage++;
             }
         }
 
+        // reset cursor to previous shape
+        QApplication::restoreOverrideCursor();
+
+        // if a match has been found..
         if ( r )
         {
-            // add highlight to the page
+            foundAMatch = true;
+            // ..add highlight to the page..
             int pageNumber = currentPage;
             KPDFPage * foundPage = pages_vector[ currentPage ];
             r->id = searchID;
             r->color = color;
             foundPage->setHighlight( r );
 
-            // move the viewport to show the searched word centered
-            DocumentViewport searchViewport( pageNumber );
-            searchViewport.reCenter.enabled = true;
-            searchViewport.reCenter.normalizedCenterX = (r->left + r->right) / 2.0;
-            searchViewport.reCenter.normalizedCenterY = (r->top + r->bottom) / 2.0;
-            setViewport( searchViewport, -1, true );
+            // ..queue page for notifying changes..
+            if ( !pagesToNotify.contains( pageNumber ) )
+                pagesToNotify.append( pageNumber );
 
-            // notify all observers about hilighting chages
-            foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
+            // ..move the viewport to show the searched word centered
+            if ( moveViewport )
+            {
+                DocumentViewport searchViewport( pageNumber );
+                searchViewport.reCenter.enabled = true;
+                searchViewport.reCenter.normalizedCenterX = (r->left + r->right) / 2.0;
+                searchViewport.reCenter.normalizedCenterY = (r->top + r->bottom) / 2.0;
+                setViewport( searchViewport, -1, true );
+            }
         }
-        else if ( true /*FIXME !findAhead*/ )
+        else if ( !noDialogs )
             KMessageBox::information( 0, i18n("No matches found for '%1'.").arg( text ) );
     }
+    // 3. PREVMATCH //TODO
     else if ( type == PrevMatch )
     {
-        //TODO
     }
+    // 4. GOOGLELIKE //TODO
     else if ( type == GoogleLike )
     {
-        //TODO
     }
 
-    // reset cursor to previous shape
-    QApplication::restoreOverrideCursor();
+    // notify observers about highlights changes
+    QValueList< int >::iterator nIt = pagesToNotify.begin(), nEnd = pagesToNotify.end();
+    for ( ; nIt != nEnd; ++nIt )
+        foreachObserver( notifyPageChanged( *nIt, DocumentObserver::Highlights ) );
 
+    // return if search has found one or more matches
     return foundAMatch;
 }
-
 
 bool KPDFDocument::continueSearch( int searchID )
 {
@@ -734,9 +745,11 @@ bool KPDFDocument::continueSearch( int searchID )
     if ( !d->searches.contains( searchID ) )
         return false;
 
-    // get previous parameters for search
+    // start search with cached parameters from last search by searchID
     RunningSearch * p = d->searches[ searchID ];
-    return searchText( searchID, p->text, false, p->caseSensitive, p->type, p->moveViewport, p->highlightColor );
+    return searchText( searchID, p->cachedString, false, p->cachedCaseSensitive,
+                       p->cachedType, p->cachedViewportMove, p->cachedColor,
+                       p->cachedNoDialogs );
 }
 
 void KPDFDocument::resetSearch( int searchID )
@@ -749,14 +762,16 @@ void KPDFDocument::resetSearch( int searchID )
     RunningSearch * s = d->searches[ searchID ];
 
     // unhighlight pages and inform observers about that
-    QValueList< int >::iterator it = s->matchedPages.begin(), end = s->matchedPages.end();
+    QValueList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
     {
         int pageNumber = *it;
         pages_vector[ pageNumber ]->deleteHighlights( searchID );
         foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
     }
-    s->matchedPages.clear();
+
+    // send the setup signal too (to update views that filter on matches)
+    foreachObserver( notifySetup( pages_vector, false ) );
 
     // remove serch from the runningSearches list and delete it
     d->searches.remove( searchID );

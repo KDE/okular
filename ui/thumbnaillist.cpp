@@ -520,7 +520,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
                 pixH = bookmarkPixmap->height();
             clipRect = clipRect.intersect( QRect( m_pixmapWidth - pixW, 0, pixW, pixH ) );
             if ( clipRect.isValid() )
-				p.drawPixmap( m_pixmapWidth - pixW, -pixH/8, *bookmarkPixmap );
+                p.drawPixmap( m_pixmapWidth - pixW, -pixH/8, *bookmarkPixmap );
         }
     }
 }

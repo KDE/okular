@@ -46,6 +46,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         }
     }
 
+    // if have no pixmap, draw blank page with gray cross and exit
     if ( !pixmap )
     {
         if ( Settings::changeColors() &&
@@ -62,11 +63,34 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         return;
     }
 
+    // clear accessibility flag if not really needed
+    if ( !Settings::changeColors() || Settings::renderMode() == Settings::EnumRenderMode::Paper )
+        flags &= ~Accessibility;
+    // use backBuffer if accessiblity (page color processing) is needed
+    bool backBuffer = flags & Accessibility;
+    // use backBuffer even if we have to render highlights
+    if ( !backBuffer && (flags & Highlights) && !page->m_highlights.isEmpty() )
+    {
+        // precalc normalized limits rect for intersection
+        double nXMin = (double)limits.left() / (double)width,
+               nXMax = (double)(limits.right() + 1) / (double)width,
+               nYMin = (double)limits.top() / (double)height,
+               nYMax = (double)(limits.bottom() + 1) / (double)height;
+        // if an highlightRect intersects limits, use backBuffer for painting
+        QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+        for ( ; hIt != hEnd; ++hIt )
+        {
+            HighlightRect * r = *hIt;
+            // intersection: A) highlightRect, B) normalized limits
+            if ( (r->left < nXMax) && (r->right > nXMin) && (r->top < nYMax) && (r->bottom > nYMin) )
+            {
+                backBuffer = true;
+                break;
+            }
+        }
+    }
+
     // we have a pixmap to paint, now let's paint it using a direct or buffered painter
-    bool backBuffer = Settings::changeColors() &&
-                      Settings::renderMode() != Settings::EnumRenderMode::Paper;
-    // if PagePainter::Accessibility is not in 'flags', disable backBuffer
-    backBuffer = backBuffer && (flags & Accessibility);
     QPixmap * backPixmap = 0;
     QPainter * p = destPainter;
     if ( backBuffer )
@@ -171,25 +195,52 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     }
 
     // draw selection (note: it is rescaled since the text page is at 100% scale)
-    if ( ( flags & Highlights ) && !page->m_highlights.isEmpty() )
+    if ( backBuffer && ( flags & Highlights ) && !page->m_highlights.isEmpty() )
     {
+        QImage backImage = backPixmap->convertToImage();
+        // draw highlights that are inside the 'limits' paint region
         QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
         for ( ; hIt != hEnd; ++hIt )
         {
             HighlightRect * r = *hIt;
-            int x = (int)( r->left * width ),
-                y = (int)( r->top * height ),
-                w = (int)( r->right * width ) - x,
-                h = (int)( r->bottom * height ) - y;
-            if ( w > 0 && h > 0 )
+            QRect highlightRect( (int)(r->left * width), (int)(r->top * height),
+                    (int)((r->right - r->left) * width) + 1, (int)((r->bottom - r->top) * height) + 1 );
+            if ( highlightRect.isValid() && highlightRect.intersects( limits ) )
             {
+#if 0
                 // TODO setRasterOp is no more on Qt4 find an alternative way of doing this
                 p->setBrush( Qt::SolidPattern );
                 p->setPen( QPen( Qt::black, 1 ) ); // should not be necessary bug a Qt bug makes it necessary
                 p->setRasterOp( Qt::NotROP );
-                p->drawRect( x, y, w, h );
+                p->drawRect( highlightRect );
+#else
+                // TODO this is the other way
+                // find out the rect to highlight on pixmap
+                highlightRect = highlightRect.intersect( limits );
+                highlightRect.moveBy( -limits.left(), -limits.top() );
+
+                // Manual yellow highlight
+                unsigned int * data = (unsigned int *)backImage.bits();
+                int val,
+                    rh = r->color.red(),
+                    gh = r->color.green(),
+                    bh = r->color.blue();
+                for( int y = highlightRect.top(); y < highlightRect.bottom(); ++y )
+                {
+                    int offset = y * backImage.width();
+                    for( int x = highlightRect.left(); x < highlightRect.right(); ++x )
+                    {
+                        val = data[x + offset];
+                        int newR = (qRed(val) * rh) / 255,
+                            newG = (qGreen(val) * gh) / 255,
+                            newB = (qBlue(val) * bh) / 255;
+                        data[x + offset] = qRgba( newR, newG, newB, 255 );
+                    }
+                }
+#endif
             }
         }
+        backPixmap->convertFromImage( backImage );
     }
 
     // if was backbuffering, copy the backPixmap to destination

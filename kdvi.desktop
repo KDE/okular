@@ -54,7 +54,6 @@ MimeType=application/x-dvi;
 Exec=kdvi %f -caption "%c" %i %m
 TerminalOptions=
 Icon=kdvi
-MiniIcon=kdvi
 Path=
 Type=Application
 Terminal=0

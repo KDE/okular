@@ -52,7 +52,7 @@ KDVIMiniWidget::KDVIMiniWidget( char *fname, QWidget *parent, const char *name )
 
         // Create a dvi window
 
-	dviwin = new dviWindow( basedpi, mfmode, paper, makepk,
+	dviwin = new dviWindow( basedpi, zoom, mfmode, paper, makepk,
                                 this, "dviWindow" );
 	connect( dviwin, SIGNAL(currentPage(int)), SLOT(setPage(int)) );
 	connect( dviwin, SIGNAL(fileChanged()), SLOT(fileChanged()) );
@@ -282,32 +282,33 @@ void KDVIMiniWidget::selectShrink( QPoint p )
 
 void KDVIMiniWidget::selectShrink( int id )
 {
-	if ( QString(sndr) == "largeButton" )
-	{
-		dviwin->setShrink( id + 1 );
-		largeShrink = dviwin->shrink();
-		config->writeEntry( "LargeShrink", largeShrink );
-		message(i18n("Large text button set to shrink factor ") +
-					QString().setNum(largeShrink) );
-	}
-	else
-	{
-		dviwin->setShrink( id + 1 );
-		smallShrink = dviwin->shrink();
-		config->writeEntry( "SmallShrink", smallShrink );
-		message(i18n("Small text button set to shrink factor ") +
-					QString().setNum(smallShrink) );
-	}
+  if ( QString(sndr) == "largeButton" ) {
+    //@@@		dviwin->setShrink( id + 1 );
+    dviwin->setZoom( 150 );
+    largeShrink = dviwin->zoom();
+    config->writeEntry( "LargeShrink", largeShrink );
+    message(i18n("Large text button set to shrink factor ") +
+	    QString().setNum(largeShrink) );
+  } else {
+    //@@@		dviwin->setShrink( id + 1 );
+    dviwin->setZoom( 100 );
+    smallShrink = dviwin->zoom();
+    config->writeEntry( "SmallShrink", smallShrink );
+    message(i18n("Small text button set to shrink factor ") +
+	    QString().setNum(smallShrink) );
+  }
 }
 
 void KDVIMiniWidget::selectLarge()
 {
-	dviwin->setShrink(largeShrink);
+  //@@@	dviwin->setShrink(largeShrink);
+  dviwin->setZoom(150);
 }
 
 void KDVIMiniWidget::selectSmall()
 {
-	dviwin->setShrink(smallShrink);
+  //@@@	dviwin->setShrink(smallShrink);  //@@@	dviwin->setShrink(smallShrink);
+  dviwin->setZoom(100);
 }
 
 void KDVIMiniWidget::fileChanged()
@@ -365,7 +366,7 @@ void KDVIMiniWidget::saveProperties(KConfig *config )
 {
 	config->writeEntry( "FileName", dviName );
 	config->writeEntry( "Page", dviwin->page() );
-	config->writeEntry( "Shrink", dviwin->shrink() );
+	config->writeEntry( "Zoom", dviwin->zoom() );
 	config->writeEntry( "Pos.x", dviwin->currentPos().x() );
 	config->writeEntry( "Pos.y", dviwin->currentPos().y() );
 }
@@ -380,7 +381,7 @@ void KDVIMiniWidget::readProperties(KConfig *config)
 	int page = config->readNumEntry( "Page", 1 );
         dviwin->gotoPage( page );
         setPage(page);
-	dviwin->setShrink( config->readNumEntry( "Shrink" ) );
+	dviwin->setZoom( config->readNumEntry( "Zoom" ) );
 	dviwin->scroll( QPoint( config->readNumEntry( "Pos.x" ),
 				config->readNumEntry( "Pos.y" ) ) );
 }
@@ -399,6 +400,12 @@ void KDVIMiniWidget::applyPreferences()
 		config->writeEntry( "BaseResolution", basedpi = 300 );
 	if ( basedpi != dviwin->resolution() )
 		dviwin->setResolution( basedpi );
+
+	zoom = config->readNumEntry( "Zoom" );
+	if ( (zoom < 5) || (zoom >500) )
+		config->writeEntry( "Zoom", zoom = 100 );
+	dviwin->setZoom( zoom );
+
 
 	mfmode =  config->readEntry( "MetafontMode" );
 	if ( mfmode.isNull() )

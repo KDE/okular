@@ -19,12 +19,13 @@ class dviWindow : public QScrollView
 	Q_OBJECT
 
 public:
-	dviWindow( int basedpi, const char *mfmode, const char *paper, int makepk,
+	dviWindow( int basedpi, int zoom, const char *mfmode, const char *paper, int makepk,
 	QWidget *parent=0, const char *name=0 );
 	~dviWindow();
 	int		page();
 	int		totalPages();
-	int		shrink();
+	int		zoom();
+	double		shrink();
 	void		setChecking( int time = 1000 );
 	int		checking();
 	void		setShowScrollbars( int flag );
@@ -55,7 +56,7 @@ signals:
 	void		pageSizeChanged( QSize );
 	void		viewSizeChanged( QSize ); 
 	void		currentPosChanged( QPoint );
-	void		shrinkChanged( int shrink );
+	void		zoomChanged( int zoom );
 	void		fileChanged();
 	void		statusChange( const QString & );
 
@@ -68,9 +69,9 @@ public slots:
 	void		goForward();
 	void		firstPage();
 	void		lastPage();
-	void		prevShrink();
-	void		nextShrink();
-	void		setShrink(int shrink);
+	void		zoomOut();
+	void		zoomIn();
+	void		setZoom(int zoom);
 	void		scroll( QPoint to );
 	void		drawPage();
 

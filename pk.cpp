@@ -154,12 +154,7 @@ static	void PK_skip_specials(font *fontp)
  *	Public routines
  */
 
-static	void
-#if	NeedFunctionPrototypes
-read_PK_char(register struct font *fontp, wide_ubyte ch)
-#else	/* !NeedFunctionPrototypes */
-read_PK_char(font *fontp, ubyte ch)
-#endif	/* NeedFunctionPrototypes */
+static	void read_PK_char(struct font *fontp, wide_ubyte ch)
 {
 	int	i, j;
 	int	n;

@@ -206,8 +206,8 @@ void OptionDialog::slotApply()
   config.writeEntry( "MetafontMode", mFont.metafontEdit->text() );
   config.writeEntry( "MakePK", mFont.fontPathCheck->isChecked() );
   config.writeEntry( "FontPath", mFont.fontPathEdit->text() );
-  config.writeEntry( "SmallShrink", mFont.shrinkSmallEdit->text() );
-  config.writeEntry( "LargeShrink", mFont.shrinkLargeEdit->text() );
+  config.writeEntry( "SmallZoom", mFont.zoomSmallEdit->text() );
+  config.writeEntry( "LargeZoom", mFont.zoomLargeEdit->text() );
 
   config.writeEntry( "ShowPS", mRender.showSpecialCheck->isChecked() );
   config.writeEntry( "PS Anti Alias", mRender.antialiasCheck->isChecked() );
@@ -233,8 +233,8 @@ void OptionDialog::setup()
   mFont.metafontEdit->setText( config.readEntry( "MetafontMode" ) );
   mFont.fontPathCheck->setChecked( config.readNumEntry( "MakePK" ) );
   mFont.fontPathEdit->setText( config.readEntry( "FontPath" ) );
-  mFont.shrinkSmallEdit->setText( config.readEntry( "SmallShrink" ) );
-  mFont.shrinkLargeEdit->setText( config.readEntry( "LargeShrink" ) );
+  mFont.zoomSmallEdit->setText( config.readEntry( "SmallZoom" ) );
+  mFont.zoomLargeEdit->setText( config.readEntry( "LargeZoom" ) );
   fontPathCheckChanged( mFont.fontPathCheck->isChecked() );
 
   // Rendering page
@@ -301,15 +301,15 @@ void OptionDialog::makeFontPage()
 
   glay->addRowSpacing( 5, spacingHint()*2 );
   
-  label = new QLabel( i18n("Shrink factor for small text:"), page );
-  mFont.shrinkSmallEdit = new QLineEdit( page );
+  label = new QLabel( i18n("Zoom factor for small text:"), page );
+  mFont.zoomSmallEdit = new QLineEdit( page );
   glay->addWidget( label, 6, 0 );
-  glay->addWidget( mFont.shrinkSmallEdit, 6, 1 );
+  glay->addWidget( mFont.zoomSmallEdit, 6, 1 );
 
-  label = new QLabel( i18n("Shrink factor for large text:"), page );
-  mFont.shrinkLargeEdit = new QLineEdit( page );
+  label = new QLabel( i18n("Zoom factor for large text:"), page );
+  mFont.zoomLargeEdit = new QLineEdit( page );
   glay->addWidget( label, 7, 0 );
-  glay->addWidget( mFont.shrinkLargeEdit, 7, 1 );
+  glay->addWidget( mFont.zoomLargeEdit, 7, 1 );
 
   topLayout->addStretch(1);
 }

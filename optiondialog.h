@@ -42,8 +42,8 @@ class OptionDialog : public KDialogBase
     QCheckBox   *fontPathCheck;
     QLabel      *fontPathLabel;
     QLineEdit   *fontPathEdit;
-    QLineEdit   *shrinkSmallEdit;
-    QLineEdit   *shrinkLargeEdit;
+    QLineEdit   *zoomSmallEdit;
+    QLineEdit   *zoomLargeEdit;
   };
     
   struct RenderItems

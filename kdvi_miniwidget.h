@@ -91,6 +91,7 @@ private:
 	int		largeShrink;
 	int		smallShrink;
 	int		basedpi;
+	int             zoom;
 	QString		mfmode, paper;
 	int		makepk;
 	KConfig *	config;

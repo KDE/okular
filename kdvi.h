@@ -44,7 +44,7 @@ public:
 	~kdvi();
 
 public slots:
-	void		shrinkChanged(int);
+	void		zoomChanged(int);
 	void		fileChanged();
 	void		applyPreferences();
 	void		saveProperties(KConfig*);
@@ -79,8 +79,6 @@ private slots:
 	void		setPage(int p=0);
 	void		selectLarge();
 	void		selectSmall();
-	void		selectShrink(QPoint);
-	void		selectShrink(int);
 //	void		selectResolution(const char *s);
 	void		openRecent(int id);
 	void		openRecent(QPoint);
@@ -118,9 +116,10 @@ private:
 	QLabel *	statusName;
 	QComboBox *	page;
 	QString		dviName;
-	int		largeShrink;
-	int		smallShrink;
+	double		largeZoom;
+	double		smallZoom;
 	int		basedpi;
+	int             zoom;
 	QString		mfmode, paper;
 	int		makepk;
 	QPopupMenu *	optionsmenu;

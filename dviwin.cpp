@@ -30,7 +30,7 @@
 
 struct	WindowRec {
 	Window		win;
-	int		shrinkfactor;
+	double		shrinkfactor;
 	int		base_x, base_y;
 	unsigned int	width, height;
 	int	min_x, max_x, min_y, max_y;
@@ -97,7 +97,7 @@ extern  void qt_processEvents(void)
 
 //------ now comes the dviWindow class implementation ----------
 
-dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) : QScrollView( parent, name )
+dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) : QScrollView( parent, name )
 {
 	ChangesPossible = 1;
 	FontPath = QString::null;
@@ -122,7 +122,6 @@ dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr, int mkpk, QWid
 
 	DISP = x11Display();
 	mainwin = handle();
-	currwin.shrinkfactor = 6;
 	mane = currwin;
 	SCRN = DefaultScreenOfDisplay(DISP);
 	_fore_Pixel = BlackPixelOfScreen(SCRN);
@@ -130,6 +129,10 @@ dviWindow::dviWindow( int bdpi, const char *mfm, const char *ppr, int mkpk, QWid
 	useGS = 1;
 	_postscript = 0;
 	pixmap = NULL;
+
+	double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) ); //@@@
+	double s    = (basedpi * 100)/(xres*(double)zoom);
+	mane.shrinkfactor = currwin.shrinkfactor = s;
 }
 
 dviWindow::~dviWindow()
@@ -326,8 +329,8 @@ void dviWindow::keyPressEvent ( QKeyEvent *e)
 	case Key_Next:	nextPage();				break;
 	case Key_Prior:	prevPage();				break;
 	case Key_Space:	goForward();				break;
-	case Key_Plus:	prevShrink();				break;
-	case Key_Minus:	nextShrink();				break;
+	case Key_Plus:	zoomIn();				break;
+	case Key_Minus:	zoomOut();				break;
         case Key_Down:	scrollBy(0,speed);              	break;
 	case Key_Up:	scrollBy(0,-speed);             	break;
 	case Key_Right:	scrollBy(speed,0);              	break;
@@ -474,19 +477,44 @@ void dviWindow::timerEvent()
 
 void dviWindow::changePageSize()
 {
-	if ( pixmap && pixmap->paintingActive() )
-		return;
-	psp_destroy();
-	if (pixmap)
-		delete pixmap;
-	pixmap = new QPixmap( (int)page_w, (int)page_h );
-	pixmap->fill( white );
-	emit pageSizeChanged( QSize( page_w, page_h ) );
-        resizeContents( page_w, page_h );
-        
-	currwin.win = mane.win = pixmap->handle();
-	
-        drawPage();
+  if ( pixmap && pixmap->paintingActive() )
+    return;
+  psp_destroy();
+  int old_width = 0;
+  if (pixmap) {
+    old_width = pixmap->width();
+    delete pixmap;
+  }
+  pixmap = new QPixmap( (int)page_w, (int)page_h );
+  pixmap->fill( white );
+  emit pageSizeChanged( QSize( page_w, page_h ) );
+
+  // Resize the QScrollview. Be careful to maintain the locical positon 
+  // on the ScrollView. This looks kind of complicated, but my experience
+  // shows that this is what most users intuitively expect.
+  // -- Stefan Kebekus.
+  int new_x = 0;
+  if ( page_w > visibleWidth() ) {
+    if ( old_width < visibleWidth() ) {// First time the Pixmap is wider than the ScrollView?
+      // Yes. We center horizonzally by default.
+      // Don't ask me why I need to subtract 30. It just works better (with qt 2.1 b4, that is).
+      if (contentsWidth() < 10)
+	new_x = ( page_w - visibleWidth() ) / 2 - 30;
+      else
+	new_x = ( page_w - visibleWidth() ) / 2;
+    } else
+      // Otherwise maintain the logical horizontal position
+      // -- that is, the horizontal center of the screen stays where it is.
+      new_x = ((contentsX()+visibleWidth()/2)*page_w)/contentsWidth() - visibleWidth()/2;
+  }
+  // We are not that particular about the vertical position 
+  // -- just keep the upper corner where it is.
+  int new_y = (contentsY()*page_h) / contentsHeight();
+
+  resizeContents( page_w, page_h );
+  setContentsPos( new_x > 0 ? new_x : 0, new_y > 0 ? new_y : 0 );
+  currwin.win = mane.win = pixmap->handle();
+  drawPage();
 }
 
 //------ setup the dvi interpreter (should do more here ?) ----------
@@ -580,34 +608,48 @@ int dviWindow::totalPages()
 	return total_pages;
 }
 
-//------ handling shrink factor ----------
+// Return the current zoom in percent.
+// Zoom = 100% means that the image on the screen has the same
+//             size as a printout.
 
-int dviWindow::shrink()
+int dviWindow::zoom()
 {
-	return currwin.shrinkfactor;
+  // @@@ We assume that pixels are square, i.e. that vertical and horizontal resolutions
+  // agree. Is that a safe assumption?
+  double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
+
+  return (int)( (basedpi * 100.0)/(currwin.shrinkfactor*xres) + 0.5);
 }
 
-void dviWindow::prevShrink()
+double dviWindow::shrink()
 {
-	setShrink( shrink() - 1 );
+  return currwin.shrinkfactor;
 }
 
-void dviWindow::nextShrink()
+void dviWindow::zoomOut()
 {
-	setShrink( shrink() + 1 );
+  //@@@	setShrink( shrink() - 1 );
+  setZoom(zoom()-10);
 }
 
-void dviWindow::setShrink(int s)
+void dviWindow::zoomIn()
 {
-	int olds = shrink();
+  //@@@	setShrink( shrink() + 1 );
+  setZoom(zoom()+10);
+}
 
-	if (s<=0 || s>basedpi/20 || olds == s)
-		return;
-	mane.shrinkfactor = currwin.shrinkfactor = s;
-	init_page();
-	reset_fonts();
-	changePageSize();
-	emit shrinkChanged( shrink() );
+void dviWindow::setZoom(int zoom)
+{
+  if ((zoom < 5) || (zoom > 500))
+    zoom = 100;
+
+  double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) ); //@@@
+  double s    = (basedpi * 100)/(xres*(double)zoom);
+  mane.shrinkfactor = currwin.shrinkfactor = s;
+  init_page();
+  reset_fonts();
+  changePageSize();
+  emit zoomChanged( zoom );
 }
 
 void dviWindow::resizeEvent(QResizeEvent *e)
@@ -622,7 +664,7 @@ void dviWindow::contentsMoving( int x, int y )
 }
 
 
-void   dviWindow::drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph ) 
+void dviWindow::drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph ) 
 {
   if ( pixmap )
     p->drawPixmap(clipx, clipy, *pixmap, clipx, clipy, clipw, cliph);

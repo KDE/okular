@@ -97,6 +97,7 @@ static	int	pen_size = 1;	/* Pixel width of lines drawn */
 static	Boolean	whiten = False;
 static	Boolean	shade = False;
 static	Boolean	blacken = False;
+GC	ruleGC; // @@@ needs to be removed.
 
 /* Unfortunately, these values also appear in dvisun.c */
 #define	xRESOLUTION	(pixels_per_inch/shrink_factor)
@@ -472,8 +473,6 @@ static	void blacken_last()
  *	Code for PostScript<tm> specials begins here.
  */
 
-#if	PS
-
 static	void	ps_startup ARGS((int, int, char *));
 void	NullProc ARGS((void)) {}
 /* ARGSUSED */
@@ -498,8 +497,6 @@ struct psprocs	no_ps_procs = {		/* used if postscript is unavailable */
 	/* drawraw */		NullProc2,
 	/* drawfile */		NullProc2,
 	/* drawend */		NullProc2};
-
-#endif	/* PS */
 
 static	Boolean		bbox_valid;
 static	unsigned int	bbox_width;
@@ -654,7 +651,7 @@ static	void psfig_special(char *cp)
 
 /*	Keys for epsf specials */
 
-static	char	*keytab[]	= {"clip", 
+static	const char	*keytab[]	= {"clip", 
                     "llx",
                     "lly",
                     "urx",
@@ -863,8 +860,8 @@ void applicationDoSpecial(char *cp)
 	    Fprintf(stderr, "%s:  special \"%s\" not implemented\n", prog,
 		orig_cp);
 }
-#ifdef KDVI
+
 void psp_destroy()	{	psp.destroy();		}
 void psp_toggle()	{	psp.toggle();		}
 void psp_interrupt()	{	psp.interrupt();	}
-#endif /* KDVI */
+

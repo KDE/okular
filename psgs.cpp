@@ -136,7 +136,7 @@ static	pid_t		GS_pid;
 static	unsigned int	GS_page_w;	/* how big our current page is */
 static	unsigned int	GS_page_h;
 static	int		GS_mag;		/* magnification currently in use */
-static	int		GS_shrink;	/* shrink factor currently in use */
+static	double		GS_shrink;	/* shrink factor currently in use */
 static	Boolean		GS_active;	/* if we've started a page yet */
 static	int		GS_pending;	/* number of ack's we're expecting */
 static	Boolean		GS_sending;	/* if we're in the middle of send() */
@@ -628,7 +628,7 @@ stop\n%%xdvimark\n";
 	return True;
 }
 
-static	void toggle_gs()
+static void toggle_gs()
 {
 	if (_debug & DBG_PS)
  Puts("Toggling GS on or off");
@@ -641,7 +641,7 @@ static	void toggle_gs()
 	    
 }
 
-static	void destroy_gs()
+static void destroy_gs()
 {
 	if (_debug & DBG_PS) Puts("Destroying GS process");
 	if (linepos > line) {
@@ -660,8 +660,7 @@ static	void destroy_gs()
 	GS_pending = 0;
 }
 
-static	void
-interrupt_gs()
+static void interrupt_gs()
 {
 	static	char	str[]	= " stop\n%%xdvimark\n";
 
@@ -719,7 +718,7 @@ static	void drawbegin_gs(int xul, int yul, char *cp)
 	    }
 	    if (mane.shrinkfactor != GS_shrink) {
 		Sprintf(buf,
-		    "H TeXDict begin %d %d div dup \
+		    "H TeXDict begin %d %lf div dup \
 /Resolution X /VResolution X \
 end stop\n%%%%xdvimark\n",
 		    pixels_per_inch, GS_shrink = mane.shrinkfactor);

@@ -38,19 +38,10 @@ extern "C" {
 typedef	unsigned long	Pixel;
 typedef	char		Boolean;
 typedef	unsigned int	Dimension;
-#undef	TOOLKIT
 #undef	BUTTONS
 
 #define	True	1
 #define	False	0
-
-#ifdef	VMS
-#include <string.h>
-#define	index	strchr
-#define	rindex	strrchr
-#define	bzero(a, b)	(void) memset ((void *) (a), 0, (size_t) (b))
-#define bcopy(a, b, c)  (void) memmove ((void *) (b), (void *) (a), (size_t) (c))
-#endif
 
 #if	defined(_SVR4) || defined(_SVR4_SOURCE) || defined(_SYSTYPE_SVR4)
 #undef	SVR4
@@ -74,11 +65,7 @@ typedef	unsigned int	Dimension;
 #define OPEN_MODE FOPEN_R_MODE
 #endif	/* OPEN_MODE */
 
-#ifndef	VMS
 #define	OPEN_MODE_ARGS	_Xconst char *
-#else
-#define	OPEN_MODE_ARGS	_Xconst char *, _Xconst char *
-#endif
 
 
 #ifndef	NeedFunctionPrototypes
@@ -89,11 +76,7 @@ typedef	unsigned int	Dimension;
 #endif	/* STDC */
 #endif	/* NeedFunctionPrototypes */
 
-#if	NeedFunctionPrototypes
 #define	ARGS(x)	x
-#else
-#define	ARGS(x)	()
-#endif
 
 #ifndef	NeedWidePrototypes
 #define	NeedWidePrototypes	NeedFunctionPrototypes
@@ -175,8 +158,11 @@ typedef	Boolean		wide_bool;
  *	the rounding is achieved instead by moving the constant 1 << 15 to
  *	PAGE_OFFSET in dvi_draw.c.
  */
-#define	pixel_conv(x)		((int) ((x) / shrink_factor >> 16))
-#define	pixel_round(x)		((int) ROUNDUP(x, shrink_factor << 16))
+//@@@
+//#define	pixel_conv(x)		((int) ((x) / (int)shrink_factor >> 16))
+//#define	pixel_round(x)		((int) ROUNDUP(x, (int)shrink_factor << 16))
+#define	pixel_conv(x)		((int) ((x) / (shrink_factor * 65536)))
+#define	pixel_round(x)		((int) ROUNDUP(x, shrink_factor * 65536))
 #define	spell_conv0(n, f)	((long) (n * f))
 #define	spell_conv(n)		spell_conv0(n, dimconv)
 
@@ -217,19 +203,9 @@ struct frame {
   struct frame *next, *prev;
 };
 
-#if	NeedFunctionPrototypes
-#ifndef	TEXXET
-typedef	long	(*set_char_proc)(wide_ubyte);
-#else	/* TEXXET */
+
 typedef	void	(*set_char_proc)(wide_ubyte, wide_ubyte);
-#endif	/* TEXXET */
-#else	/* NeedFunctionPrototypes */
-#ifndef	TEXXET
-typedef	long	(*set_char_proc)();
-#else	/* TEXXET */
-typedef	void	(*set_char_proc)();
-#endif	/* TEXXET */
-#endif	/* NeedFunctionPrototypes */
+
 
 struct drawinf {	/* this information is saved when using virtual fonts */
 	struct framedata data;
@@ -240,9 +216,7 @@ struct drawinf {	/* this information is saved when using virtual fonts */
 	struct tn	*tn_head;
 	ubyte		*pos, *end;
 	struct font	*_virtual;
-#ifdef	TEXXET
 	int		dir;
-#endif
 };
 
 EXTERN	struct drawinf	currinf;
@@ -268,11 +242,7 @@ EXTERN	double	tpic_conv;
 EXTERN	int	n_files_left;	/* for LRU closing of fonts */
 EXTERN	unsigned int	page_w, page_h;
 
-#if	defined(PS_DPS) || defined(PS_NEWS) || defined(PS_GS)
 #define	PS	1
-#else
-#define	PS	0
-#endif
 
 /*
  * Table of page offsets in DVI file, indexed by page number - 1.
@@ -312,11 +282,7 @@ struct macro {
 
 #define	NOMAGSTP (-29999)
 
-#if	NeedFunctionPrototypes
 typedef	void (*read_char_proc)(register struct font *, wide_ubyte);
-#else
-typedef	void (*read_char_proc)();
-#endif
 
 struct font {
 	struct font *next;		/* link to next font info block */
@@ -367,9 +333,6 @@ EXTERN	unsigned short	current_timestamp INIT(0);
  */
 
 extern	char	*debug_arg;
-#ifdef	TOOLKIT
-	int	shrinkfactor;
-#endif
 extern	int	_density;
 
 extern	float	_gamma;
@@ -392,36 +355,11 @@ extern	char	*high_color;
 extern	char	*curs_color;
 extern	Pixel	_fore_Pixel;
 extern	Pixel	_back_Pixel;
-#ifdef	TOOLKIT
-	Pixel	_brdr_Pixel;
-	Pixel	_hl_Pixel;
-	Pixel	_cr_Pixel;
-#endif
 extern	char	*icon_geometry;
 extern	Boolean	keep_flag;
-#ifdef	TOOLKIT
-	char	*copy_arg;
-#endif
-extern	Boolean	copy;
-extern	Boolean	thorough;
-#if	PS
-	/* default is to use DPS, then NEWS, then GhostScript;
-	 * we will figure out later on which one we will use */
 extern	Boolean	_postscript;
-#ifdef	PS_DPS
-	Boolean	useDPS;
-#endif
-#ifdef	PS_NEWS
-	Boolean	useNeWS;
-#endif
-#ifdef	PS_GS
 extern	Boolean	useGS;
-#endif
-#endif	/* PS */
 extern	Boolean	version_flag;
-#ifdef	BUTTONS
-	Boolean	expert;
-#endif
 extern	char	*mg_arg[5];
 
 /* As a convenience, we define the field names without leading underscores
@@ -436,9 +374,7 @@ extern	char	*mg_arg[5];
 #define	hush_chars	_hush_chars
 #define	hush_chk	_hush_chk
 
-#ifndef	TOOLKIT
 EXTERN	Pixel		brdr_Pixel;
-#endif
 
 extern	struct	mg_size_rec {
 	int	w;
@@ -473,31 +409,27 @@ EXTERN	unsigned int	unshrunk_page_w, unshrunk_page_h;
 EXTERN	char	*dvi_name	INIT(NULL);
 EXTERN	FILE	*dvi_file;			/* user's file */
 EXTERN	char	*prog;
-EXTERN	int	bak_shrink;			/* last shrink factor != 1 */
+EXTERN	double	bak_shrink;			/* last shrink factor != 1 */
 EXTERN	Dimension	window_w, window_h;
 EXTERN	XImage	*image;
 EXTERN	int	backing_store;
 EXTERN	int	home_x, home_y;
-
 EXTERN	Display	*DISP;
 EXTERN	Screen	*SCRN;
-EXTERN	GC	ruleGC; // @@@ needs to be removed.
+
 
 
 EXTERN	Cursor	redraw_cursor, ready_cursor;
 
-#if	PS
+
 EXTERN	Boolean	allow_can	INIT(True);
-#else
-#define	allow_can		0xff
-#endif
 
 struct	WindowRec {
-	Window		win;
-	int		shrinkfactor;
-	int		base_x, base_y;
-	unsigned int	width, height;
-	int	min_x, max_x, min_y, max_y;	/* for pending expose events */
+  Window		win;
+  double		shrinkfactor;
+  int		base_x, base_y;
+  unsigned int	width, height;
+  int	min_x, max_x, min_y, max_y;	/* for pending expose events */
 };
 
 extern	struct WindowRec mane, alt, currwin;
@@ -505,23 +437,15 @@ EXTERN	int		min_x, max_x, min_y, max_y;
 
 #define	shrink_factor	currwin.shrinkfactor
 
-#ifdef	TOOLKIT
-EXTERN	Widget	top_level, vport_widget, draw_widget, clip_widget;
-#ifdef	BUTTONS
-#define	XTRA_WID	79
-EXTERN	Widget	form_widget;
-#endif
-#else	/* !TOOLKIT */
 EXTERN	Window	top_level;
 
 #define	BAR_WID		12	/* width of darkened area */
 #define	BAR_THICK	15	/* gross amount removed */
-#endif	/* TOOLKIT */
+
 
 EXTERN	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 EXTERN	const char *dvi_oops_msg;	/* error message */
 
-#if	PS
 extern	struct psprocs	{
 	
 	void	(*toggle) ARGS((void));
@@ -534,8 +458,6 @@ extern	struct psprocs	{
 	void	(*drawend) ARGS((char *));
 }	psp, no_ps_procs;
 
-#endif	/* PS */
-
 /********************************
  *	   Procedures		*
  *******************************/
@@ -545,14 +467,6 @@ _XFUNCPROTOBEGIN
 extern	void	create_buttons ARGS((XtArgVal));
 #endif
 extern	void	reconfig ARGS((void));
-#ifdef	TOOLKIT
-extern	void	handle_key ARGS((Widget, XtPointer, XEvent *, Boolean *));
-extern	void	handle_resize ARGS((Widget, XtPointer, XEvent *, Boolean *));
-extern	void	handle_button ARGS((Widget, XtPointer, XEvent *, Boolean *));
-extern	void	handle_motion ARGS((Widget, XtPointer, XEvent *, Boolean *));
-extern	void	handle_release ARGS((Widget, XtPointer, XEvent *, Boolean *));
-extern	void	handle_exp ARGS((Widget, XtPointer, XEvent *, Boolean *));
-#endif
 extern	void	read_events ARGS((wide_bool));
 extern	void	redraw_page ARGS((void));
 extern	void	do_pages ARGS((void));
@@ -560,22 +474,17 @@ extern	void	realloc_font ARGS((struct font *, wide_ubyte));
 extern	void	realloc_virtual_font ARGS((struct font *, wide_ubyte));
 extern	Boolean	load_font ARGS((struct font *));
 extern	struct font	*define_font ARGS((FILE *, wide_ubyte,
-			struct font *, struct font **, unsigned int,
-			struct tn **));
-//extern	void	init_page ARGS((void));
+					   struct font *, struct font **, unsigned int,
+					   struct tn **));
 extern	void	open_dvi_file ARGS((void));
-//extern	Boolean	check_dvi_file (void);
 extern	void	put_border ARGS((int, int, unsigned int, unsigned int));
 extern	void	set_char ARGS((wide_ubyte, wide_ubyte));
 extern	void	load_n_set_char ARGS((wide_ubyte, wide_ubyte));
 extern	void	set_vf_char ARGS((wide_ubyte, wide_ubyte));
-//extern	void	draw_page ARGS((void));
 extern	void	init_font_open ARGS((void));
-//extern	FILE	*font_open ARGS((_Xconst char *, char **, double, int *, int, char **));
 extern	void	applicationDoSpecial ARGS((char *));
 extern	NORETURN void	oops(_Xconst char *, ...);
 extern	void	alloc_bitmap ARGS((struct bitmap *));
-//extern	FILE	*xfopen ARGS((_Xconst char *, OPEN_MODE_ARGS));
 extern	int	xpipe ARGS((int *));
 extern	unsigned long	num ARGS((FILE *, int));
 extern	long	snum ARGS((FILE *, int));
@@ -583,18 +492,12 @@ extern	void	read_PK_index ARGS((struct font *, wide_bool));
 extern	void	read_GF_index ARGS((struct font *, wide_bool));
 extern	void	read_VF_index ARGS((struct font *, wide_bool));
 
-#if	PS
+
 extern	void	drawbegin_none ARGS((int, int, char *));
 extern	void	draw_bbox ARGS((void));
 extern	void	NullProc ARGS((void));
-#ifdef	PS_DPS
-extern	Boolean	initDPS ARGS((void));
-#endif
-#ifdef	PS_NEWS
-extern	Boolean	initNeWS ARGS((void));
-#endif
 extern	Boolean	initGS ARGS((void));
-#endif	/* PS */
+
 
 _XFUNCPROTOEND
 

@@ -33,6 +33,7 @@ int main( int argc, char **argv )
 	aboutData.addAuthor("Paul Vojta");
 	aboutData.addAuthor("Jeffrey Lee");
 	aboutData.addAuthor("Donald Richardson");
+	aboutData.addAuthor("Stefan Kebekus");
 	
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.

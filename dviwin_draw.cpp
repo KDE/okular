@@ -72,6 +72,8 @@ extern Boolean check_dvi_file(void);
 
 Boolean	_hush_chars;
 
+
+
 static	struct frame	frame0;		/* dummy head of list */
 static	struct frame	*scan_frame;	/* head frame for scanning */
 
@@ -92,8 +94,8 @@ static	struct frame	*current_frame;
  *	shrink_factor << 16:	one pixel page border
  *	shrink_factor << 15:	rounding for pixel_conv
  */
-#define OFFSET_X	(offset_x << 16) + (shrink_factor * 3 << 15)
-#define OFFSET_Y	(offset_y << 16) + (shrink_factor * 3 << 15)
+#define OFFSET_X	(offset_x << 16) + ((int)shrink_factor * 3 << 15)
+#define OFFSET_Y	(offset_y << 16) + ((int)shrink_factor * 3 << 15)
 
 #ifndef	BMLONG
 #ifndef	BMSHORT

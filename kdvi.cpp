@@ -54,89 +54,68 @@ static int m_fn, m_fo, m_fr, m_fp, m_fx, m_vi, m_vo, m_vf, m_vw, m_vr, m_pp, m_p
 kdvi::kdvi( const QString &fname, QWidget *, const char *name )
 	: KTMainWindow( name )
 {
-	msg = NULL;
-	ssmenu = NULL;
-	hbl = NULL;
-	optionDialog = 0;
-	gotoDialog = 0;
+  msg = NULL;
+  ssmenu = NULL;
+  hbl = NULL;
+  optionDialog = 0;
+  gotoDialog = 0;
 
-	keys = new KAccel(this);
+  keys = new KAccel(this);
 
-	readConfig();
-	setMinimumSize( 400, 60 );
-	//setCaption( kapp->caption() );
-	tipgroup = new QToolTipGroup( this, "TipGroup" );
-	connect( tipgroup, SIGNAL(showTip(const QString &)), 
-		 SLOT(showTip(const QString &)) );
-	connect( tipgroup, SIGNAL(removeTip()), SLOT(removeTip()) );
+  readConfig();
+  setMinimumSize( 400, 60 );
+  //setCaption( kapp->caption() );
+  tipgroup = new QToolTipGroup( this, "TipGroup" );
+  connect( tipgroup, SIGNAL(showTip(const QString &)), 
+	   SLOT(showTip(const QString &)) );
+  connect( tipgroup, SIGNAL(removeTip()), SLOT(removeTip()) );
 
   // Create KPanner for toolBar2 and dviwindow
   
-  	kpan = new QSplitter( QSplitter::Horizontal, this, "splitter");
-
-	setView( kpan/*, TRUE*/ );
-	//setFrameBorderWidth( 4 );
+  kpan = new QSplitter( QSplitter::Horizontal, this, "splitter");
+  setView( kpan/*, TRUE*/ );
+  //setFrameBorderWidth( 4 );
 	
   // Create a dvi window
-
-	dviwin = new dviWindow( basedpi, mfmode, paper, makepk,
-				kpan, "dviWindow" );
-	connect( dviwin, SIGNAL(currentPage(int)), SLOT(setPage(int)) );
-	connect( dviwin, SIGNAL(shrinkChanged(int)), SLOT(shrinkChanged(int)) );
-	connect( dviwin, SIGNAL(fileChanged()), SLOT(fileChanged()) );
-	connect( dviwin, SIGNAL(statusChange(const QString &)),
-			 SLOT(showTip(const QString &)) );
-	connect( dviwin, SIGNAL(setPoint(QPoint)), SLOT(showPoint(QPoint)) );
+  dviwin = new dviWindow( basedpi, zoom, mfmode, paper, makepk, kpan, "dviWindow" );
+  connect( dviwin, SIGNAL(currentPage(int)), SLOT(setPage(int)) );
+  connect( dviwin, SIGNAL(zoomChanged(int)), SLOT(zoomChanged(int)) );
+  connect( dviwin, SIGNAL(fileChanged()), SLOT(fileChanged()) );
+  connect( dviwin, SIGNAL(statusChange(const QString &)), SLOT(showTip(const QString &)) );
+  connect( dviwin, SIGNAL(setPoint(QPoint)), SLOT(showPoint(QPoint)) );
 	
-	// Create a menubar
+  // Create a menubar
+  makeMenuBar();
 
-	makeMenuBar();
-
-	// Create toolbars
-	makeButtons();
-	makeToolBar2( kpan );
-
-	kpan->moveToLast(dviwin);
+  // Create toolbars
+  makeButtons();
+  makeToolBar2( kpan );
+  kpan->moveToLast(dviwin);
 	
-    // Create a statusbar
-
-	makeStatusBar( i18n("No document") );
-
-	QValueList<int> size;
-	size << 10 << 90;
-	kpan->setSizes(size);
+  // Create a statusbar
+  makeStatusBar( i18n("No document") );
+  QValueList<int> size;
+  size << 10 << 90;
+  kpan->setSizes(size);
 
   // Create RMB menu
-
-	rmbmenu = new QPopupMenu;
-	m_rmbm = rmbmenu->insertItem(i18n("Show Menubar"),
-	  this, SLOT(toggleShowMenubar()));
-	rmbmenu->setItemChecked( m_rmbm, !hideMenubar );  
-
-	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Mark page")),
-			marklist, SLOT(markSelected()) );
-	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Redraw")),
-			dviwin, SLOT(drawPage()) );
-	rmbmenu->connectItem( rmbmenu->insertItem(i18n("Preferences...")),
-			this, SLOT(optionsPreferences()) );
-
-	KContextMenuManager::insert( dviwin->viewport(), rmbmenu );
-
+  rmbmenu = new QPopupMenu;
+  m_rmbm = rmbmenu->insertItem(i18n("Show Menubar"), this, SLOT(toggleShowMenubar()));
+  rmbmenu->setItemChecked( m_rmbm, !hideMenubar );  
+  rmbmenu->connectItem( rmbmenu->insertItem(i18n("Mark page")), marklist, SLOT(markSelected()) );
+  rmbmenu->connectItem( rmbmenu->insertItem(i18n("Redraw")), dviwin, SLOT(drawPage()) );
+  rmbmenu->connectItem( rmbmenu->insertItem(i18n("Preferences...")), this, SLOT(optionsPreferences()) );
+  KContextMenuManager::insert( dviwin->viewport(), rmbmenu );
 
   // Bind keys
-
-	bindKeys();
-	updateMenuAccel();
-
-	setAcceptDrops(true);
+  bindKeys();
+  updateMenuAccel();
+  setAcceptDrops(true);
 
   // Read config options
-
-	applyPreferences();
-
-	selectSmall();
-	message( "" );
-	openFile(fname);
+  applyPreferences();
+  message( "" );
+  openFile(fname);
 }
 
 kdvi::~kdvi()
@@ -178,8 +157,8 @@ void kdvi::makeMenuBar()
 
 	p = new QPopupMenu;
 	CHECK_PTR( p );
-	m_vi = p->insertItem( i18n("Zoom &in"),	dviwin, SLOT(prevShrink()) );
-	m_vo = p->insertItem( i18n("Zoom &out"),	dviwin, SLOT(nextShrink()) );
+	m_vi = p->insertItem( i18n("Zoom &in"),	dviwin, SLOT(zoomIn()) );
+	m_vo = p->insertItem( i18n("Zoom &out"),	dviwin, SLOT(zoomOut()) );
 	m_vf = p->insertItem( i18n("&Fit to page"),	this, SLOT(viewFitPage()) );
 	m_vw = p->insertItem( i18n("Fit to page &width"),	this, SLOT(viewFitPageWidth()));
 	p->insertSeparator();
@@ -203,42 +182,33 @@ void kdvi::makeMenuBar()
 	CHECK_PTR( p );
 	p->setCheckable( TRUE );
 
-	m_om = p->insertItem( i18n("Show &Menubar"), 
-			      this, SLOT(toggleShowMenubar()) );
+	m_om = p->insertItem( i18n("Show &Menubar"), this, SLOT(toggleShowMenubar()) );
 	p->setItemChecked( m_om, !hideMenubar );
 
-	m_ob = p->insertItem( i18n("Show &Toolbar"), 
-			      this, SLOT(toggleShowButtons()) );
+	m_ob = p->insertItem( i18n("Show &Toolbar"), this, SLOT(toggleShowButtons()) );
 	p->setItemChecked( m_ob, !hideButtons );
 
-	m_os = p->insertItem( i18n("Show St&atusbar"), 
-			      this, SLOT(toggleShowStatusbar()) );
+	m_os = p->insertItem( i18n("Show St&atusbar"), this, SLOT(toggleShowStatusbar()) );
 	p->setItemChecked( m_os, !hideStatusbar );
 
 	p->insertSeparator();
 
-	m_ot = p->insertItem( i18n("Show &Page List"), 
-			      this, SLOT(toggleVertToolbar()) );
+	m_ot = p->insertItem( i18n("Show &Page List"), this, SLOT(toggleVertToolbar()) );
 	p->setItemChecked( m_ot, vertToolbar );
 
-	m_ol = p->insertItem( i18n("Show Scro&llbars"), 
-			      this, SLOT(toggleShowScrollbars()) );
+	m_ol = p->insertItem( i18n("Show Scro&llbars"), this, SLOT(toggleShowScrollbars()) );
 	p->setItemChecked( m_ol, !hideScrollbars );
 
-	m_of = p->insertItem( i18n("Make PK-&fonts"), 
-			      this, SLOT(toggleMakePK()) );
+	m_of = p->insertItem( i18n("Make PK-&fonts"), this, SLOT(toggleMakePK()) );
 	p->setItemChecked( m_of, makepk );
 
-	m_o0 = p->insertItem( i18n("Show PostSc&ript"), 
-			      this, SLOT(toggleShowPS()));
+	m_o0 = p->insertItem( i18n("Show PostSc&ript"), this, SLOT(toggleShowPS()));
 	p->setItemChecked( m_o0, showPS );
 
 	p->insertSeparator();
 
-	m_op = p->insertItem( i18n("&Preferences..."), 
-			      this, SLOT(optionsPreferences()));
-	m_ok = p->insertItem( i18n("&Keys..."), 
-			      this, SLOT(configKeys()));
+	m_op = p->insertItem( i18n("&Preferences..."), this, SLOT(optionsPreferences()));
+	m_ok = p->insertItem( i18n("&Keys..."), this, SLOT(configKeys()));
 
 	m_o = p;
 	menuBar()->insertItem( i18n("&Settings"), p, -2 );
@@ -276,10 +246,10 @@ void kdvi::makeButtons()
 	I( "forward",	dviwin,	nextPage,	i18n("Go to next page") )
 	I( "finish",	dviwin,	lastPage,	i18n("Go to last page") )
 	toolBar()->insertSeparator();
-	I( "viewmag-",	dviwin,	nextShrink,	i18n("Decrease magnification") )
+	I( "viewmag-",	dviwin,	zoomOut,	i18n("Decrease magnification") )
 	U( "smalltext",	this,	selectSmall,	i18n("Small text") )
 	U( "largetext",	this,	selectLarge,	i18n("Large text") )
-	I( "viewmag+",	dviwin,	prevShrink,	i18n("Increase magnification") )
+	I( "viewmag+",	dviwin,	zoomIn,	i18n("Increase magnification") )
 #undef	I
 #undef  U
 
@@ -325,7 +295,7 @@ void kdvi::makeStatusBar( QString )
 {
 	statusBar()->insertItem("", ID_STAT_MSG, 10 );
 	statusBar()->insertFixedItem(i18n("Page: xxxx / xxxx"), ID_STAT_PAGE); 
-	statusBar()->insertFixedItem(i18n("Shrink: xx"), ID_STAT_SHRINK);
+	statusBar()->insertFixedItem(i18n(" Zoom: xxxx "), ID_STAT_SHRINK);
 	statusBar()->insertFixedItem(i18n("X:0000, Y:0000 "), ID_STAT_XY);
 	statusBar()->changeItem("", ID_STAT_PAGE);
 	statusBar()->changeItem("", ID_STAT_SHRINK);
@@ -348,8 +318,8 @@ void kdvi::bindKeys()
 	AKCF(i18n("Open file"),	"CTRL+O",	this,	fileOpen	)
 	AKCF(i18n("Print dialog"),	"CTRL+P",	this,	filePrint	)
 	AKCF(i18n("Quit"),		"CTRL+Q",	qApp,	quit		)
-	AKCF(i18n("Zoom in"),	"Plus",		dviwin,	prevShrink	)
-	AKCF(i18n("Zoom out"),	"Minus",	dviwin,	nextShrink	)
+	AKCF(i18n("Zoom in"),	"Plus",		dviwin,	zoomIn	)
+	AKCF(i18n("Zoom out"),	"Minus",	dviwin,	zoomOut	)
 	AKCF(i18n("Fit window"),	"Asterisk",	this,	viewFitPage	)
 	AKCF(i18n("Fit width"),	"Slash",	this,	viewFitPageWidth)
 	AKCF(i18n("Redraw page"),	"CTRL+R",	dviwin,	drawPage	)
@@ -371,29 +341,6 @@ void kdvi::bindKeys()
 
 	config->setGroup( "kdvi" );
 }
-
-/*
-static void changeMenuAccel ( QPopupMenu *menu, int id,
-	const char *functionName )
-{
-	QString s = menu->text( id );
-	if ( !s ) return;
-	
-	int i = s.find('\t');
-	
-	QString k = keyToString( kKeys->readCurrentKey( functionName ) );
-	if( !k ) return;
-	
-	if ( i >= 0 )
-		s.replace( i+1, s.length()-i, k );
-	else {
-		s += '\t';
-		s += k;
-	}
-	
-	menu->changeItem( s, id );
-}
-*/
 
 void kdvi::updateMenuAccel()
 {
@@ -486,17 +433,15 @@ void kdvi::openRecent(int id)
 
 void kdvi::updateMarklist()
 {
-	QString s;
-	marklist->setAutoUpdate( FALSE );
-	marklist->clear();
-	for (int i = dviwin->totalPages(); i>0; i--)
-	{
-		s.sprintf( "%4d", i );
-		marklist->insertItem( s, 0 );
-	}
-	//	marklist->select(0); //@@@
-	marklist->setAutoUpdate( TRUE );
-	marklist->update();
+  QString s;
+  marklist->setAutoUpdate( FALSE );
+  marklist->clear();
+  for (int i = dviwin->totalPages(); i>0; i--) {
+    s.sprintf( "%4d", i );
+    marklist->insertItem( s, 0 );
+  }
+  marklist->setAutoUpdate( TRUE );
+  marklist->update();
 }
 
 void kdvi::openFile( QString name)
@@ -509,7 +454,6 @@ void kdvi::openFile( QString name)
             name = QDir().absPath() + "/" + name;
 
 	QString oname( name );
-	//name.detach();
 	if ( ! QFileInfo( name ).isReadable() )
 		name.append( ".dvi" );
 	if ( ! QFileInfo( name ).isReadable() )
@@ -530,7 +474,7 @@ void kdvi::openFile( QString name)
 	setCaption(name.mid(name.findRev('/')+1));
 
 	setPage();
-	shrinkChanged( dviwin->shrink() );
+	zoomChanged( dviwin->zoom() );
 	if (-1==recent.find(name))
 	{
 		recent.insert(0,name);
@@ -590,92 +534,98 @@ void kdvi::optionsPreferences()
 	if( optionDialog == 0 )
 	{
 	  optionDialog = new OptionDialog( topLevelWidget(), "option", false );
-	  connect( optionDialog, SIGNAL(preferencesChanged()),
-		   SLOT(applyPreferences()));
+	  connect( optionDialog, SIGNAL(preferencesChanged()), SLOT(applyPreferences()));
 	}
 	optionDialog->show();
 }
 
 void kdvi::applyPreferences()
 {
-	QString s;
-	config->setGroup( "kdvi" );
+  QString s;
+  config->setGroup( "kdvi" );
 
-	s = config->readEntry( "FontPath" );
-	if ( !s.isEmpty() && s != dviwin->fontPath() )
-		dviwin->setFontPath( s );
+  s = config->readEntry( "FontPath" );
+  if ( !s.isEmpty() && s != dviwin->fontPath() )
+    dviwin->setFontPath( s );
 
-	basedpi = config->readNumEntry( "BaseResolution" );
-	if ( basedpi <= 0 )
-		config->writeEntry( "BaseResolution", basedpi = 300 );
-	if ( basedpi != dviwin->resolution() )
-		dviwin->setResolution( basedpi );
+  basedpi = config->readNumEntry( "BaseResolution" );
+  if ( basedpi <= 0 )
+    config->writeEntry( "BaseResolution", basedpi = 300 );
+  if ( basedpi != dviwin->resolution() )
+    dviwin->setResolution( basedpi );
 
-	mfmode =  config->readEntry( "MetafontMode" );
-	if ( mfmode.isNull() )
-		config->writeEntry( "MetafontMode", mfmode = "/" );
-	if ( mfmode != dviwin->metafontMode() )
-		dviwin->setMetafontMode( mfmode );
+  mfmode =  config->readEntry( "MetafontMode" );
+  if ( mfmode.isNull() )
+    config->writeEntry( "MetafontMode", mfmode = "cx" );
+  if ( mfmode != dviwin->metafontMode() )
+    dviwin->setMetafontMode( mfmode );
 
-	paper = config->readEntry( "Paper" );
-	if ( paper.isNull() )
-		config->writeEntry( "Paper", paper = "A4" );
-	if ( paper != dviwin->paper() )
-		dviwin->setPaper( paper );
+  paper = config->readEntry( "Paper" );
+  if ( paper.isNull() )
+    config->writeEntry( "Paper", paper = "A4" );
+  if ( paper != dviwin->paper() )
+    dviwin->setPaper( paper );
 
-	s = config->readEntry( "Gamma" );
-	if ( !s.isEmpty() && s.toFloat() != dviwin->gamma() )
-		dviwin->setGamma( s.toFloat() );
+  s = config->readEntry( "Gamma" );
+  if ( !s.isEmpty() && s.toFloat() != dviwin->gamma() )
+    dviwin->setGamma( s.toFloat() );
 
-	makepk = config->readNumEntry( "MakePK" );
-	applyMakePK();
+  makepk = config->readNumEntry( "MakePK" );
+  applyMakePK();
 
-	showPS = config->readNumEntry( "ShowPS" );
-	applyShowPS();
+  showPS = config->readNumEntry( "ShowPS" );
+  applyShowPS();
 	
-	dviwin->setAntiAlias( config->readNumEntry( "PS Anti Alias", 1 ) );
+  dviwin->setAntiAlias( config->readNumEntry( "PS Anti Alias", 1 ) );
 
-	hideMenubar = config->readNumEntry( "HideMenubar" );
-	applyShowMenubar();
+  hideMenubar = config->readNumEntry( "HideMenubar" );
+  applyShowMenubar();
 
-	hideButtons = config->readNumEntry( "HideButtons" );
-	applyShowButtons();
+  hideButtons = config->readNumEntry( "HideButtons" );
+  applyShowButtons();
 
-	vertToolbar = config->readNumEntry( "VertToolbar" );
-	applyVertToolbar();
+  vertToolbar = config->readNumEntry( "VertToolbar" );
+  applyVertToolbar();
 
-	hideStatusbar = config->readNumEntry( "HideStatusbar" );
-	applyShowStatusbar();
+  hideStatusbar = config->readNumEntry( "HideStatusbar" );
+  applyShowStatusbar();
 
-	hideScrollbars = config->readNumEntry( "HideScrollbars" );
-	applyShowScrollbars();
+  hideScrollbars = config->readNumEntry( "HideScrollbars" );
+  applyShowScrollbars();
 
-	smallShrink = config->readNumEntry( "SmallShrink" );
-	if (!smallShrink) smallShrink = 6;
+  config->setGroup( "kdvi" );
+  smallZoom = config->readNumEntry( "SmallZoom" );
+  if ( (smallZoom > 300) || (smallZoom < 10) )
+    config->writeEntry( "SmallZoom", smallZoom = 100 );
+  largeZoom = config->readNumEntry( "LargeZoom" );
+  if ( (largeZoom > 500) || (largeZoom < 10) )
+    config->writeEntry( "LargeZoom", largeZoom = 200 );
 
-	largeShrink = config->readNumEntry( "LargeShrink" );
-	if (!largeShrink) largeShrink = 2;
+  zoom = config->readNumEntry( "Zoom" );
+  if (zoom == 0)
+    config->writeEntry( "Zoom", zoom = 100 );
+  dviwin->setZoom(zoom);
 
-	config->setGroup( "RecentFiles" );
-	s = config->readEntry( "MaxCount" );
-	if ( s.isNull() || (recentmax = s.toInt())<=0 )
-		config->writeEntry( "MaxCount", recentmax = 10 );
+  config->setGroup( "RecentFiles" );
+  s = config->readEntry( "MaxCount" );
+  if ( s.isNull() || (recentmax = s.toInt())<=0 )
+    config->writeEntry( "MaxCount", recentmax = 10 );
 
-	int n = 0;
-	recent.clear();
-	while ( n < recentmax )
-	{
-		s = config->readEntry(QString().setNum(n++));
-		if ( !s.isEmpty() )
-			recent.insert( 0, s );
-		else	break;
-	}
-	recentmenu->clear();
-	for (n=recent.count(); n-->0;)
-		recentmenu->insertItem( recent.at(n), n, 0 );
-	config->setGroup( "kdvi" );
+  int n = 0;
+  recent.clear();
+  while ( n < recentmax ) {
+    s = config->readEntry(QString().setNum(n++));
+    if ( !s.isEmpty() )
+      recent.insert( 0, s );
+    else	
+      break;
+  }
+  recentmenu->clear();
+  for (n=recent.count(); n-->0;)
+    recentmenu->insertItem( recent.at(n), n, 0 );
+  config->setGroup( "kdvi" );
 
-	message(i18n("Preferences applied"));
+  message(i18n("Preferences applied"));
 }
 
 
@@ -718,11 +668,12 @@ void kdvi::toggleShowPS()
 
 void kdvi::applyShowPS()
 {
-	if ( showPS == dviwin->showPS() )
-		return;
-	dviwin->setShowPS( showPS );
-	optionsmenu->setItemChecked( m_o0, showPS );
-	config->writeEntry( "ShowPS", showPS );
+  if ( showPS == dviwin->showPS() )
+    return;
+  dviwin->setShowPS( showPS );
+  optionsmenu->setItemChecked( m_o0, showPS );
+  config->setGroup( "kdvi" );
+  config->writeEntry( "ShowPS", showPS );
 }
 
 void kdvi::toggleShowMenubar()
@@ -840,57 +791,23 @@ void kdvi::setPage( int pg )
     marklist->select( pg - 1 );
 }
 
-void kdvi::selectShrink( QPoint p )
-{
-	sndr = sender()->name();
-	if (!ssmenu)
-	{
-		ssmenu = new QPopupMenu;
-		ssmenu->setMouseTracking( TRUE );
-		connect( ssmenu, SIGNAL(activated(int)),
-			 SLOT(selectShrink(int)) );
-		QString s;
-		for ( int i=1; i<=basedpi/20; i++ )
-			ssmenu->insertItem( s.setNum( i ) );
-	}
-	ssmenu->popup( p - QPoint( 10, 10 ),
-		(QString(sndr) == "largeButton" ? largeShrink : smallShrink) - 1 );
-}
-
-void kdvi::selectShrink( int id )
-{
-	if ( QString(sndr) == "largeButton" )
-	{
-		dviwin->setShrink( id + 1 );
-		largeShrink = dviwin->shrink();
-		config->writeEntry( "LargeShrink", largeShrink );
-		message(i18n("Large text button set to shrink factor ") +
-					QString().setNum(largeShrink) );
-	}
-	else
-	{
-		dviwin->setShrink( id + 1 );
-		smallShrink = dviwin->shrink();
-		config->writeEntry( "SmallShrink", smallShrink );
-		message(i18n("Small text button set to shrink factor ") +
-					QString().setNum(smallShrink) );
-	}
-}
-
 void kdvi::selectLarge()
 {
-	dviwin->setShrink(largeShrink);
+  dviwin->setZoom(largeZoom);
 }
 
 void kdvi::selectSmall()
 {
-	dviwin->setShrink(smallShrink);
+  dviwin->setZoom(smallZoom);
 }
 
-void kdvi::shrinkChanged(int s)
+void kdvi::zoomChanged(int new_zoom)
 {
-	QString t = i18n("Shrink: %1").arg( s );
-	statusBar()->changeItem( t, ID_STAT_SHRINK);
+  zoom = new_zoom;
+  QString t = i18n("Zoom: %3%").arg( zoom );
+  statusBar()->changeItem( t, ID_STAT_SHRINK);
+  config->setGroup( "kdvi" );
+  config->writeEntry( "Zoom", zoom );
 }
 
 
@@ -921,12 +838,12 @@ void kdvi::message( const QString &s )
 
 void kdvi::showPoint( QPoint p )
 {
-	int x = p.x(), y = p.y();
-	float f = dviwin->shrink() * 25.40 / dviwin->resolution();
-	x = int(x * f), y = int(y * f);
-	QString s;
-	s.sprintf( "X:%4d, Y:%4d", x, y );
-	statusBar()->changeItem( s, ID_STAT_XY );
+  int x = p.x(), y = p.y();
+  float f = dviwin->shrink() * 25.40 / dviwin->resolution();
+  x = int(x * f), y = int(y * f);
+  QString s;
+  s.sprintf( "X:%4d, Y:%4d", x, y );
+  statusBar()->changeItem( s, ID_STAT_XY );
 }
 
 
@@ -948,13 +865,13 @@ void kdvi::readConfig()
 	hideStatusbar = config->readNumEntry( "HideStatusbar" );
 	hideScrollbars = config->readNumEntry( "HideScrollbars" );
 
-	smallShrink = config->readNumEntry( "SmallShrink" );
-	if (!smallShrink)
-		config->writeEntry( "SmallShrink", smallShrink = 7 );
+	smallZoom = config->readNumEntry( "SmallZoom" );
+	if ( (smallZoom > 300) || (smallZoom < 10) )
+	  config->writeEntry( "SmallZoom", smallZoom = 100 );
 
-	largeShrink = config->readNumEntry( "LargeShrink" );
-	if (!largeShrink)
-		config->writeEntry( "LargeShrink", largeShrink = 3 );
+	largeZoom = config->readNumEntry( "LargeZoom" );
+	if ( (largeZoom > 500) || (largeZoom < 10) )
+	  config->writeEntry( "LargeZoom", largeZoom = 200 );
 
 	int width = config->readNumEntry( "Width" );
 	if (!width)
@@ -964,6 +881,10 @@ void kdvi::readConfig()
 	if (!height)
 		height = 450;
 	resize( width, height );
+
+	zoom = config->readNumEntry( "Zoom" );
+	if (zoom == 0)
+	  config->writeEntry( "Zoom", zoom = 100 );
 }
 
 
@@ -996,7 +917,7 @@ void kdvi::saveProperties(KConfig *config )
 {
 	config->writeEntry( "FileName", dviName );
 	config->writeEntry( "Page", dviwin->page() );
-	config->writeEntry( "Shrink", dviwin->shrink() );
+	config->writeEntry( "Zoom", dviwin->zoom() );
 	config->writeEntry( "Pos.x", dviwin->currentPos().x() );
 	config->writeEntry( "Pos.y", dviwin->currentPos().y() );
 }
@@ -1011,11 +932,9 @@ void kdvi::readProperties(KConfig *config)
 	int page = config->readNumEntry( "Page", 1 );
 	dviwin->gotoPage( page );
 	setPage( page );
-	dviwin->setShrink( config->readNumEntry( "Shrink" ) );
+	zoom = config->readNumEntry( "Zoom" );
+	dviwin->setZoom( zoom );
+	printf("C: Zoom: %d\n",zoom);
 	dviwin->scroll( QPoint( config->readNumEntry( "Pos.x" ),
 				config->readNumEntry( "Pos.y" ) ) );
 }
-
-
-
-

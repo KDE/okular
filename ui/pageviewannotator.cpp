@@ -74,8 +74,8 @@ class SmoothPathEngine : public AnnotatorEngine
             if ( type == Press && points.isEmpty() )
             {
                 NormalizedPoint newPoint;
-                m_annotation->left = m_annotation->right = newPoint.x = nX;
-                m_annotation->top = m_annotation->bottom = newPoint.y = nY;
+                m_annotation->r.left = m_annotation->r.right = newPoint.x = nX;
+                m_annotation->r.top = m_annotation->r.bottom = newPoint.y = nY;
                 points.append( newPoint );
                 return QRect();
             }
@@ -88,10 +88,10 @@ class SmoothPathEngine : public AnnotatorEngine
 
                 double dX = 2.0 / (double)xScale;
                 double dY = 2.0 / (double)yScale;
-                m_annotation->left = QMIN( m_annotation->left, nX - dX );
-                m_annotation->top = QMIN( m_annotation->top, nY - dY );
-                m_annotation->right = QMAX( nX + dX, m_annotation->right );
-                m_annotation->bottom = QMAX( nY + dY, m_annotation->bottom );
+                m_annotation->r.left = QMIN( m_annotation->r.left, nX - dX );
+                m_annotation->r.top = QMIN( m_annotation->r.top, nY - dY );
+                m_annotation->r.right = QMAX( nX + dX, m_annotation->r.right );
+                m_annotation->r.bottom = QMAX( nY + dY, m_annotation->r.bottom );
                 NormalizedPoint newPoint;
                 newPoint.x = nX;
                 newPoint.y = nY;
@@ -105,7 +105,7 @@ class SmoothPathEngine : public AnnotatorEngine
                 else
                     m_creationCompleted = true;
             }
-            return m_annotation->geometry( (int)xScale, (int)yScale );
+            return m_annotation->r.geometry( (int)xScale, (int)yScale );
         }
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
@@ -115,7 +115,7 @@ class SmoothPathEngine : public AnnotatorEngine
                 return;
 
             // use annotation color for painting
-            painter->setPen( QPen(m_annotation->baseColor, 3) );
+            painter->setPen( QPen(m_annotation->color, 3) );
 
             QValueList<NormalizedPoint>::iterator pIt = points.begin(), pEnd = points.end();
             NormalizedPoint pA = *pIt;
@@ -154,7 +154,7 @@ class PickPointEngine : public AnnotatorEngine
             delete pixmap;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale )
+        QRect event( EventType type, Button /*button*/, double nX, double nY, double xScale, double yScale )
         {
             // only proceed if pressing left button
             //if ( button != Left )
@@ -179,12 +179,12 @@ class PickPointEngine : public AnnotatorEngine
             // update variable and annotation geometry (zoom invariant rect)
             point.x = nX;
             point.y = nY;
-            m_annotation->left = nX - (16.0 / (double)xScale);
-            m_annotation->right = nX + (17.0 / (double)xScale);
-            m_annotation->top = nY - (16.0 / (double)yScale);
-            m_annotation->bottom = nY + (17.0 / (double)yScale);
+            m_annotation->r.left = nX - (16.0 / (double)xScale);
+            m_annotation->r.right = nX + (17.0 / (double)xScale);
+            m_annotation->r.top = nY - (16.0 / (double)yScale);
+            m_annotation->r.bottom = nY + (17.0 / (double)yScale);
 
-            return m_annotation->geometry( (int)xScale, (int)yScale );
+            return m_annotation->r.geometry( (int)xScale, (int)yScale );
         }
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
@@ -193,7 +193,7 @@ class PickPointEngine : public AnnotatorEngine
             if ( !clicked )
                 return;
 
-            painter->setPen( QPen(m_annotation->baseColor, 3) );
+            painter->setPen( QPen(m_annotation->color, 3) );
             int pX = (int)(point.x * (double)xScale);
             int pY = (int)(point.y * (double)yScale);
             if ( pixmap )
@@ -223,8 +223,8 @@ class TwoPointsEngine : public AnnotatorEngine
             if ( type == Press && points.isEmpty() )
             {
                 NormalizedPoint newPoint;
-                m_annotation->left = m_annotation->right = newPoint.x = nX;
-                m_annotation->top = m_annotation->bottom = newPoint.y = nY;
+                m_annotation->r.left = m_annotation->r.right = newPoint.x = nX;
+                m_annotation->r.top = m_annotation->r.bottom = newPoint.y = nY;
                 points.append( newPoint );
                 return QRect();
             }
@@ -238,16 +238,16 @@ class TwoPointsEngine : public AnnotatorEngine
                 newPoint.y = nY;
                 points.append( newPoint );
                 NormalizedPoint firstPoint = points.front();
-                m_annotation->left = QMIN( firstPoint.x, nX ) - 2.0 / (double)xScale;
-                m_annotation->right = QMAX( firstPoint.x, nX ) + 2.0 / (double)xScale;
-                m_annotation->top = QMIN( firstPoint.y, nY ) - 2.0 / (double)yScale;
-                m_annotation->bottom = QMAX( firstPoint.y, nY ) + 2.0 / (double)yScale;
+                m_annotation->r.left = QMIN( firstPoint.x, nX ) - 2.0 / (double)xScale;
+                m_annotation->r.right = QMAX( firstPoint.x, nX ) + 2.0 / (double)xScale;
+                m_annotation->r.top = QMIN( firstPoint.y, nY ) - 2.0 / (double)yScale;
+                m_annotation->r.bottom = QMAX( firstPoint.y, nY ) + 2.0 / (double)yScale;
             }
             // end creation if we have 2 points
             else if ( type == Release && points.count() == 2 )
                 m_creationCompleted = true;
 
-            return m_annotation->geometry( (int)xScale, (int)yScale );
+            return m_annotation->r.geometry( (int)xScale, (int)yScale );
         }
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
@@ -260,15 +260,15 @@ class TwoPointsEngine : public AnnotatorEngine
             if ( m_block )
             {
                 // draw a semitransparent block around the 2 points
-                painter->setPen( m_annotation->baseColor );
-                painter->setBrush( QBrush( m_annotation->baseColor.light(), Qt::Dense4Pattern ) );
+                painter->setPen( m_annotation->color );
+                painter->setBrush( QBrush( m_annotation->color.light(), Qt::Dense4Pattern ) );
                 painter->drawRect( (int)(first.x * (double)xScale), (int)(first.y * (double)yScale),
                                    (int)((second.x - first.x) * (double)xScale), (int)((second.y - first.y) * (double)yScale) );
             }
             else
             {
                 // draw a line that connects the 2 points
-                painter->setPen( QPen(m_annotation->baseColor, 2) );
+                painter->setPen( QPen(m_annotation->color, 2) );
                 painter->drawLine( (int)(first.x * (double)xScale), (int)(first.y * (double)yScale),
                                    (int)(second.x * (double)xScale), (int)(second.y * (double)yScale) );
             }
@@ -498,26 +498,22 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 else if ( aType == "Line" )
                 {
                     LineAnnotation * l = new LineAnnotation();
-                    l->srcArrow = a.attribute( "srcArrow" ) == "true";
-                    l->dstArrow = a.attribute( "dstArrow" ) == "true";
                     if ( a.hasAttribute( "width" ) )
-                        l->width = a.attribute( "width" ).toInt();
+                        l->border.width = a.attribute( "width" ).toInt();
                     annotation = l;
                 }
                 else if ( aType == "Geom" )
                     annotation = new GeomAnnotation();
-                else if ( aType == "Path" )
-                    annotation = new PathAnnotation();
                 else if ( aType == "Highlight" )
                     annotation = new HighlightAnnotation();
                 else if ( aType == "Stamp" )
                 {
                     StampAnnotation * s = new StampAnnotation();
-                    s->stampIcon = a.attribute( "icon" );
+                    s->stampIconName = a.attribute( "icon" );
                     annotation = s;
                 }
-                else if ( aType == "Media" )
-                    annotation = new MediaAnnotation();
+                else if ( aType == "Ink" )
+                    annotation = new InkAnnotation();
                 else
                     kdWarning() << "tools: annotation '" << aType << "' is not defined!" << endl;
 
@@ -525,7 +521,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 if ( annotation )
                 {
                     if ( a.hasAttribute( "color" ) )
-                        annotation->baseColor = QColor( a.attribute( "color" ) );
+                        annotation->color = QColor( a.attribute( "color" ) );
                 }
             }
             if ( !annotation )

@@ -1,7 +1,6 @@
 <!DOCTYPE simpleToolsDefinition>
 <!-- Annotation types:
-  Text Line[srcArrow(true);dstArrow(true);width] Geom Path
-  Highlight Stamp[icon] Media *[color] -->
+  Text Line[width] Geom Highlight Stamp[icon] Ink *[color] -->
 <!-- Engine Types:
   SmoothLine PickPoint[hoverIcon] TwoPoints[block(true)] -->
 <annotationTools>
@@ -36,7 +35,7 @@
   </tool>
   <tool id="6" name="Arrowed Black Line" pixmap="color_line">
     <engine type="TwoPoints" />
-    <annotation type="Line" dstArrow="true" color="#000000" />
+    <annotation type="Line" color="#000000" />
     <shortcut>6</shortcut>
   </tool>
   <tool id="7" name="Warning Stamp" pixmap="messagebox_warning">

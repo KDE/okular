@@ -204,12 +204,13 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         // 2.3. annotations overlay
         if ( paintAnnotations )
         {
+            /*
             // draw annotations that are inside the 'limits' paint region
             QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
             for ( ; aIt != aEnd; ++aIt )
             {
                 Annotation * a = *aIt;
-                QRect annotRect = a->geometry( width, height );
+                QRect annotRect = a->r.geometry( width, height );
                 if ( annotRect.isValid() && annotRect.intersects( limits ) )
                 {
                     // find out the annotation rect on pixmap
@@ -217,8 +218,24 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
                     //a->paintOverlay( p, width, height, limits );
                 }
             }
+            */
         }
         backPixmap->convertFromImage( backImage );
+    }
+
+    // 2.3. FIXME TEMP annotations overlay
+    if ( paintAnnotations )
+    {
+        // draw annotations that are inside the 'limits' paint region
+        QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+        for ( ; aIt != aEnd; ++aIt )
+        {
+            Annotation * a = *aIt;
+            QRect annotRect = a->r.geometry( width, height );
+            // draw the annotation extent
+            if ( annotRect.isValid() && annotRect.intersects( limits ) )
+                p->drawRect( annotRect );
+        }
     }
 
     // 3. visually enchance links and images if requested

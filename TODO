@@ -8,9 +8,6 @@ Legend:
 
 In progress:
 -> REGRESSION: find-as-you-type somewhat broken here
--> convert DocumentInfo to a DomTree containing a few common fields (see the current
-   implmentation) and being extensible for letting generator developers adding their
-   custom fields. convert the Properties dialog into a dynamic generated one.
 -> FIX: PageTransitions can be 0L.
 
 Urgent fixes and items to get ready before 3.4 (special high-priority list):
@@ -151,6 +148,9 @@ Done (newest feature comes firts):
 -> Branch 'kpdf_experiments' created at this point
 -> ADD: Completely use xpdf code for rendering that solves most font problems (Albert)
 -> MRG: Replace xpdf version with lastest one (3.00) that supports PDF 1.5 (Albert)
+-> CHG: convert DocumentInfo to a DomTree containing a few common fields (see the current
+        implmentation) and being extensible for letting generator developers adding their
+        custom fields. convert the Properties dialog into a dynamic generated one.
 
 Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 and IRC:
  Tool: ruler, measure: distance, perimeter, ?area?

@@ -11,7 +11,7 @@ kpsewhich_LDFLAGS = -L../ -lkdvi
 version = @KPSEVERSION@
 
 # The root of the tree.
-texmf = $(prefix)/texmf
+texmf = $(datadir)/texmf
 
 # TeX, MF, and MP source files.
 texinputdir = $(texmf)/tex

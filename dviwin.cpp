@@ -338,24 +338,14 @@ void dviWindow::setFile( const QString & fname )
   // "kpathsea" directory is incompatible with the "texmf.cnf" that is
   // included in the TeX-distribution on the machine where kdvi is
   // run.
-  char *hardcoded_paths = ":/var/lib/texmf/pk//:/usr/share/texmf/fonts/vf//";
 
-  char *Ptr;
-  if (FontPath.length() == 0) {
-    Ptr = new char[strlen(hardcoded_paths)];
-    strcpy(Ptr,hardcoded_paths+1);
-  } else {
-    Ptr = new char[FontPath.length()+strlen(hardcoded_paths)+2];
-    strcpy(Ptr,FontPath.latin1());
-    strcpy(Ptr+strlen(Ptr),hardcoded_paths);
-  }
-  kdDebug() << "Ptr: " << Ptr << endl;
-
-  kpse_format_info[kpse_pk_format].override_path
+  if (FontPath.length() != 0) {
+    kpse_format_info[kpse_pk_format].override_path
     = kpse_format_info[kpse_vf_format].override_path
     = kpse_format_info[kpse_any_glyph_format].override_path
     = kpse_format_info[kpse_tfm_format].override_path
-    = Ptr;
+    = FontPath.latin1();
+  }
 
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();

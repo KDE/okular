@@ -1,6 +1,7 @@
 # KDE Config File
 [KDE Desktop Entry]
 Comment[C]=TeX DVI File Viewer
+Comment[es]=Visor de archivos TeX DVI
 Comment[fr]=Visualiseur TeX-DVI
 Comment[de]=TeX-DVI-Dateibetrachter
 Comment[no]=TeX-DVI-filviser
@@ -17,6 +18,7 @@ Comment[ru]=Программа для просмотра DVI-файлов (TeX)
 BinaryPattern=kdvi;
 Name=DVI Viewer
 Name[C]=DVI Viewer
+Name[es]=Visor DVI
 Name[fr]=Visualiseur DVI
 Name[de]=DVI-Betrachter
 Name[no]=DVI-fremviser

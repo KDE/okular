@@ -86,6 +86,7 @@ public slots:
       multipage implementation that wishes to offer saving in various
       formats must re-implement this slot. */
   virtual void slotSave();
+  void setEmbedPostScriptAction(void);
 
 protected:
   history document_history;

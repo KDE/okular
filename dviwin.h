@@ -33,6 +33,7 @@ class KAction;
 class KEdFind;
 class KPrinter;
 class KProcess;
+class KProgressDialog;
 class KShellProcess;
 class TeXFontDefinition;
 
@@ -224,6 +225,9 @@ public slots:
   void          all_fonts_loaded(fontPool *);
 
 signals:
+  /** Emitted to indicate that the prescan phase has ended */
+  void          prescanDone();
+
   /** Emitted to indicate that a hyperlink has been clicked on, and
       that the widget requests that the controlling program goes to the
       page and the coordinates specified. */
@@ -258,6 +262,11 @@ private:
   void          prescan_ParseSourceSpecial(QString cp);
   void          prescan_setChar(unsigned int ch);
   
+  /** Utility fields used by the embedPostScript method*/
+  KProgressDialog *embedPS_progress;
+  Q_UINT16         embedPS_numOfProgressedFiles;
+
+
   /** Shrink factor. Units are not quite clear */
   double	shrinkfactor;
   

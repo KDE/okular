@@ -20,8 +20,6 @@
 #include <qmessagebox.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
-#include <qprogressdialog.h>
-#include <qregexp.h>
 #include <qurl.h>
 #include <qvbox.h>
 
@@ -37,6 +35,7 @@
 #include <klocale.h>
 #include <kprinter.h>
 #include <kprocess.h>
+#include <kprogress.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
 
@@ -63,6 +62,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
 #endif
 
   shrinkfactor = 3;
+  current_page = 0;
 
   setBackgroundMode(NoBackground);
   setFocusPolicy(QWidget::StrongFocus);
@@ -389,8 +389,24 @@ void dviWindow::embedPostScript(void)
   kdDebug(4300) << "dviWindow::embedPostScript()" << endl;
 #endif
 
+  if (dviFile == 0)
+    return;
+
+  embedPS_progress = new KProgressDialog(this, "embedPSProgressDialog", 
+					 i18n("Embedding PostScript Files"), QString::null, true);
+  if (embedPS_progress == 0)
+    return;
+  embedPS_progress->setAllowCancel(false);
+  embedPS_progress->showCancelButton(false);
+  embedPS_progress->setMinimumDuration(400);
+  embedPS_progress->progressBar()->setTotalSteps(dviFile->numberOfExternalPSFiles);  
+  embedPS_progress->progressBar()->setProgress(0);  
+  embedPS_numOfProgressedFiles = 0;
+
+ 
+
   Q_UINT16 currPageSav = current_page;
-  
+  errorMsg = QString::null;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     if (current_page < dviFile->total_pages) {
       command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
@@ -404,16 +420,24 @@ void dviWindow::embedPostScript(void)
     prescan(&dviWindow::prescan_embedPS);
   }
 
+  delete embedPS_progress;
+
+  if (!errorMsg.isEmpty()) {
+    errorMsg = "<qt>" + errorMsg + "</qt>";
+    KMessageBox::detailedError(this, "<qt>" + i18n("Not all PostScript files could be embedded into your document.") + "</qt>", errorMsg);
+    errorMsg = QString::null;
+  } else
+    KMessageBox::information(this, "<qt>" + i18n("All external PostScript files were embedded into your document. You "
+						 "will probably want to save the DVI file now.") + "</qt>",
+			     QString::null, "embeddingDone");
 
   // Prescan phase starts here
-  // @@@@ In this implementation, a prescan is performed any time the
-  // user changes the zoom factor. This must be changed at all cost.
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
   QTime preScanTimer;
   preScanTimer.start();
 #endif
-  
+  dviFile->numberOfExternalPSFiles = 0;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
     
@@ -433,6 +457,8 @@ void dviWindow::embedPostScript(void)
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
+  emit(prescanDone());
+  dviFile->prescan_is_performed = true;
   
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
@@ -612,14 +638,70 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   // after fonts have been loaded, and the fontPool emits the signal
   // fonts_have_been_loaded().
   if (font_pool->check_if_fonts_filenames_are_looked_up() == true) {
+    if (dviFile->prescan_is_performed == false) {
+      // Prescan phase starts here
+#ifdef PERFORMANCE_MEASUREMENT
+      kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+      QTime preScanTimer;
+      preScanTimer.start();
+#endif
+      dviFile->numberOfExternalPSFiles = 0;
+      Q_UINT16 currPageSav = current_page;
+      
+      for(current_page=0; current_page < dviFile->total_pages; current_page++) {
+	PostScriptOutPutString = new QString();
+	
+	if (current_page < dviFile->total_pages) {
+	  command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
+	  end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
+	} else
+	  command_pointer = end_pointer = 0;
+	
+	memset((char *) &currinf.data, 0, sizeof(currinf.data));
+	currinf.fonttable = &(dviFile->tn_table);
+	currinf._virtual  = NULL;
+	prescan(&dviWindow::prescan_parseSpecials);
+	
+	if (!PostScriptOutPutString->isEmpty())
+	  PS_interface->setPostScript(current_page, *PostScriptOutPutString);
+	delete PostScriptOutPutString;
+      }
+      PostScriptOutPutString = NULL;
+      emit(prescanDone());
+      dviFile->prescan_is_performed = true;
+      
+#ifdef PERFORMANCE_MEASUREMENT
+      kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+#endif
+      current_page = currPageSav;
+    }
+    if (dviFile->suggestedPageSize != 0)
+      emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
+  }
+  
+  QApplication::restoreOverrideCursor();
+  reference              = ref;
+  return true;
+}
+
+
+void dviWindow::all_fonts_loaded(fontPool *)
+{
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::all_fonts_loaded(...) called" << endl;
+#endif
+
+  if (dviFile == 0)
+    return;
+
+  if (dviFile->prescan_is_performed == false) {
     // Prescan phase starts here
-    // @@@@ In this implementation, a prescan is performed any time the
-    // user changes the zoom factor. This must be changed at all cost.
 #ifdef PERFORMANCE_MEASUREMENT
     kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
     QTime preScanTimer;
     preScanTimer.start();
 #endif
+    dviFile->numberOfExternalPSFiles = 0;
     Q_UINT16 currPageSav = current_page;
     
     for(current_page=0; current_page < dviFile->total_pages; current_page++) {
@@ -641,65 +723,14 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
       delete PostScriptOutPutString;
     }
     PostScriptOutPutString = NULL;
+    emit(prescanDone());
+    dviFile->prescan_is_performed = true;
     
 #ifdef PERFORMANCE_MEASUREMENT
     kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
     current_page = currPageSav;
-    if (dviFile->suggestedPageSize != 0)
-      emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    
-
   }
-  
-  QApplication::restoreOverrideCursor();
-  reference              = ref;
-  return true;
-}
-
-
-void dviWindow::all_fonts_loaded(fontPool *)
-{
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow::all_fonts_loaded(...) called" << endl;
-#endif
-
-  if (dviFile == 0)
-    return;
-
-  // Prescan phase starts here
-  // @@@@ In this implementation, a prescan is performed any time the
-  // user changes the zoom factor. This must be changed at all cost.
-#ifdef PERFORMANCE_MEASUREMENT
-  kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
-  QTime preScanTimer;
-  preScanTimer.start();
-#endif
-  Q_UINT16 currPageSav = current_page;
-
-  for(current_page=0; current_page < dviFile->total_pages; current_page++) {
-    PostScriptOutPutString = new QString();
-    
-    if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data + dviFile->page_offset[current_page+1];
-    } else
-      command_pointer = end_pointer = 0;
-    
-    memset((char *) &currinf.data, 0, sizeof(currinf.data));
-    currinf.fonttable = &(dviFile->tn_table);
-    currinf._virtual  = NULL;
-    prescan(&dviWindow::prescan_parseSpecials);
-    
-    if (!PostScriptOutPutString->isEmpty())
-      PS_interface->setPostScript(current_page, *PostScriptOutPutString);
-    delete PostScriptOutPutString;
-  }
-  PostScriptOutPutString = NULL;
-  
-#ifdef PERFORMANCE_MEASUREMENT
-  kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
-#endif
-  current_page = currPageSav;
 
   if (dviFile->suggestedPageSize != 0)
     emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );    

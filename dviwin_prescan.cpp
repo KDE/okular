@@ -16,7 +16,9 @@
 #include <klocale.h>
 #include <kprocess.h>
 #include <kprocio.h>
-#include <qbitmap.h> 
+#include <kprogress.h>
+#include <qapplication.h>
+#include <qbitmap.h>
 #include <qdir.h> 
 #include <qfileinfo.h>
 #include <qimage.h> 
@@ -65,6 +67,10 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   }
 
   QString originalFName = EPSfilename;
+
+  embedPS_progress->setLabel(i18n("Embedding %1").arg(EPSfilename));  
+  qApp->processEvents();
+
   
   // Now see if the Gfx file exists... try to find it in the current
   // directory, in the DVI file's directory, and finally, if all else
@@ -86,7 +92,15 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   }
   
   if (!QFile::exists(EPSfilename)) {
-    kdWarning(4300) << "Could not locate file '" << originalFName << "'" << endl;
+    // Find the number of the page
+    Q_UINT32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data;
+    Q_UINT16 page;
+    for(page=0; page < dviFile->total_pages; page++) 
+      if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
+	break;
+    errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>").arg(page+1).arg(originalFName);
+    embedPS_progress->progressBar()->advance(1);
+    qApp->processEvents();
     return;
   }
   
@@ -200,10 +214,12 @@ void dviWindow::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   // Modify all pointers to point to the newly allocated memory
   command_pointer = newDVI + (command_pointer - dviFile->dvi_Data) + lengthOfNewSpecial-lengthOfOldSpecial;
   end_pointer = newDVI + (end_pointer - dviFile->dvi_Data)  + lengthOfNewSpecial-lengthOfOldSpecial;
-
+  
   delete [] dviFile->dvi_Data;
   dviFile->dvi_Data = newDVI;
-
+  
+  embedPS_progress->progressBar()->advance(1);
+  qApp->processEvents();
   return;
 }
 
@@ -322,6 +338,8 @@ void dviWindow::prescan_ParsePSFileSpecial(QString cp)
 #endif
 
   QString include_command = cp.simplifyWhiteSpace();
+
+  dviFile->numberOfExternalPSFiles++;  
 
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away. Of
@@ -587,24 +605,14 @@ void dviWindow::prescan(parseSpecials specialParser)
       currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
       break;
       
-    case EOP:
-      // Sanity check for the dvi-file: The DVI-standard asserts that
-      // at the end of a page, the stack should always be empty.
-      if (!stack.isEmpty()) {
-	kdDebug(4300) << "Prescan: The stack was not empty when the EOP command was encountered." << endl;
-	errorMsg = i18n("The stack was not empty when the EOP command was encountered.");
-      }
-      return;
-      
     case PUSH:
       stack.push(currinf.data);
       break;
       
     case POP:
-      if (stack.isEmpty()) {
-	errorMsg = i18n("The stack was empty when a POP command was encountered.");
+      if (stack.isEmpty())
 	return;
-      } else
+      else
 	currinf.data = stack.pop();
       break;
       
@@ -674,10 +682,8 @@ void dviWindow::prescan(parseSpecials specialParser)
     case FNT3:
     case FNT4:
       currinf.fontp = currinf.fonttable->find(readUINT(ch - FNT1 + 1));
-      if (currinf.fontp == NULL) {
-	errorMsg = i18n("The DVI code referred to a font which was not previously defined.");
+      if (currinf.fontp == NULL) 
 	return;
-      }
       currinf.set_char_p = currinf.fontp->set_char_p;
       break;
       
@@ -707,15 +713,7 @@ void dviWindow::prescan(parseSpecials specialParser)
       command_pointer += readUINT8() + readUINT8();
       break;
       
-    case PRE:
-    case POST:
-    case POSTPOST:
-      errorMsg = i18n("An illegal command was encountered.");
-      return;
-
-      
     default:
-      errorMsg = i18n("The unknown op-code %1 was encountered.").arg(ch);
       return;
     } /* end switch */
   } /* end for */

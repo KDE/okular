@@ -241,9 +241,11 @@ dvifile::dvifile(QString fname, fontPool *pool, bool sourceSpecialMark)
   dvi_Data     = 0;
   page_offset  = 0;
   suggestedPageSize = 0;
+  numberOfExternalPSFiles = 0;
+  prescan_is_performed = false;
   font_pool    = pool;
   sourceSpecialMarker = sourceSpecialMark;
-
+  
   QFile file(fname);
   filename = file.name();
   file.open( IO_ReadOnly );

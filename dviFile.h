@@ -31,6 +31,16 @@ class dvifile : public bigEndianByteReader
   QIODevice::Offset size_of_file;
   QString        errorMsg;
 
+  /** This field is set to zero when the DVI file is constructed, and
+      will be modified during the prescan phase (at this time the
+      prescan code still resides in the dviwin class) */
+  Q_UINT16       numberOfExternalPSFiles;
+
+  /** This field is set to 'false' when the DVI file is constructed,
+      and is set to 'true' after the prescan phase (at this time the
+      prescan code still resides in the dviwin class) */
+  bool           prescan_is_performed;
+
   Q_UINT32       beginning_of_postamble;
   
   /** This flag is set to "true" during the construction of the

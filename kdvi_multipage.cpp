@@ -96,6 +96,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   document_history.clear();
 
   embedPSAction      = new KAction(i18n("Embed external PostScript files..."), 0, window, SLOT(embedPostScript()), actionCollection(), "embed_postscript");
+  connect(window, SIGNAL(prescanDone()), this, SLOT(setEmbedPostScriptAction()));
   findTextAction         = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
   window->findNextAction = KStdAction::findNext(window, SLOT(findNextText()), actionCollection(), "findnext");
   window->findNextAction->setEnabled(false);
@@ -125,6 +126,15 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   enableActions(false);
   // Show tip of the day, when the first main window is shown.
   QTimer::singleShot(0,this,SLOT(showTipOnStart()));
+}
+
+
+void KDVIMultiPage::setEmbedPostScriptAction(void)
+{
+  if ((window == 0) || (window->dviFile == 0) || (window->dviFile->numberOfExternalPSFiles == 0))
+    embedPSAction->setEnabled(false);
+  else
+    embedPSAction->setEnabled(true);
 }
 
 
@@ -368,7 +378,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.0", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "1.1", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }
@@ -581,6 +591,7 @@ void KDVIMultiPage::enableActions(bool b)
   exportPSAction->setEnabled(b);
   exportPDFAction->setEnabled(b);
   exportTextAction->setEnabled(b);
+  setEmbedPostScriptAction();
 }
 
 void KDVIMultiPage::doGoBack(void)

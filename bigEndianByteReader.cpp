@@ -11,7 +11,7 @@
 #include "bigEndianByteReader.h"
 #include "dvi.h"
 
-#define DEBUG_ENDIANREADER
+//#define DEBUG_ENDIANREADER
 
 Q_UINT8 bigEndianByteReader::readUINT8(void)
 {

@@ -1,13 +1,12 @@
+// $Id$
 
-
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <malloc.h>
 #include <qapplication.h>
 #include <qfile.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "dviwin.h"
 #include "font.h"

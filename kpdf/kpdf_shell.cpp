@@ -48,13 +48,12 @@ Shell::Shell()
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  KLibFactory *factory = KLibLoader::self()->factory("libkpdfpart");
+  KParts::Factory *factory = (KParts::Factory *) KLibLoader::self()->factory("libkpdfpart");
   if (factory)
   {
     // now that the Part is loaded, we cast it to a Part to get
     // our hands on it
-    m_part = static_cast<KParts::ReadOnlyPart*>(
-                factory->create(this, "kpdf_part", "KParts::ReadOnlyPart"));
+    m_part = (KParts::ReadOnlyPart*) factory->createPart(this, "kpdf_part", this, 0, "KParts::ReadOnlyPart");
     if (m_part)
     {
       // then, setup our actions
@@ -74,10 +73,8 @@ Shell::Shell()
     m_part = 0;
     return;
   }
-  //FIXME READD: connect( m_part, SIGNAL( rightClick() ),SLOT( slotRMBClick() ) );
   connect( this, SIGNAL( restoreDocument(const KURL &, int) ),m_part, SLOT( restoreDocument(const KURL &, int)));
   connect( this, SIGNAL( saveDocumentRestoreInfo(KConfig*) ), m_part, SLOT( saveDocumentRestoreInfo(KConfig*)));
-     
 
   readSettings();
 }
@@ -124,13 +121,10 @@ Shell::setupActions()
   setStandardToolBarMenuEnabled(true);
 
   m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );
+  KGlobal::config()->setGroup("MainWindow");
+  m_showMenuBarAction->setChecked(KGlobal::config()->readBoolEntry( "MenuBar", true ));
   KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
   m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
-  m_popup = new KPopupMenu( this, "rmb popup" );
-  m_popup->insertTitle( i18n( "Full Screen Options" ) );
-  m_fullScreenAction->plug( m_popup );
-  m_popup->insertTitle( i18n( "Tools" ) );
-  m_showMenuBarAction->plug( m_popup );
 }
 
   void
@@ -226,11 +220,5 @@ void Shell::slotUpdateFullScreen()
 	showNormal();
     }
 }
-
-void Shell::slotRMBClick()
-{
-    m_popup->exec( QCursor::pos() );
-}
-
 
 // vim:ts=2:sw=2:tw=78:et

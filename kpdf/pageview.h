@@ -51,6 +51,9 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
 
+        // used from RMB menu
+        void setZoomFitWidth();
+
         // inherited from KPDFDocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
         void notifyPixmapChanged( int pageNumber );
@@ -58,9 +61,12 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
         void pageSetCurrent( int pageNumber, const QRect & viewport );
 
+    public slots:
+        void slotSetMouseDraw();
+
     signals:
         void urlDropped( const KURL& );
-        void rightClick();
+        void rightClick(const KPDFPage *, const QPoint &);
 
     protected:
         // main draw loop, draws pageViews on viewport
@@ -117,7 +123,6 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         void slotSetMouseNormal();
         void slotSetMouseZoom();
         void slotSetMouseSelect();
-        void slotSetMouseDraw();
         void slotScrollUp();
         void slotScrollDown();
 };

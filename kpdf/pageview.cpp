@@ -191,6 +191,20 @@ void PageView::setupActions( KActionCollection * ac )
     sd->setShortcut( "Shift+Down" );
 }
 
+void PageView::setZoomFitWidth()
+{
+    d->zoomMode = ZoomFitWidth;
+    Settings::setViewColumns( 1 );
+    d->aZoomFitWidth->setChecked( true );
+    d->aZoomFitPage->setChecked( false );
+    d->aZoomFitText->setChecked( false );
+    d->aViewTwoPages->setChecked( false );
+    viewport()->setUpdatesEnabled( false );
+    slotRelayoutPages();
+    viewport()->setUpdatesEnabled( true );
+    updateContents();
+}
+
 
 //BEGIN KPDFDocumentObserver inherited methods
 void PageView::notifyPixmapChanged( int pageNumber )
@@ -576,8 +590,6 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                 if ( !d->mouseOnLink )
                     setCursor( sizeAllCursor );
             }
-            else if ( e->button() & RightButton )
-                emit rightClick();
             break;
 
         case MouseZoom:
@@ -624,48 +636,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         d->document->setCurrentPage( pageItem->pageNumber() );
                 }
             }
-            else if ( rightButton && pageItem )
+            else if ( rightButton )
             {
-                // if over a page display a popup menu
-                const KPDFPage * kpdfPage = pageItem->page();
-                KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
-                m_popup->insertTitle( i18n( "Page %1" ).arg( kpdfPage->number() + 1 ) );
-                if ( kpdfPage->attributes() & KPDFPage::Bookmark )
-                    m_popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
-                else
-                    m_popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
-                m_popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Page"), 2 );
-                m_popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
-                m_popup->setItemEnabled( 3, false );
-                if ( d->mouseOnActiveRect )
-                {
-                    m_popup->insertItem( SmallIcon("filesave"), i18n("Save Image ..."), 4 );
-                    m_popup->setItemEnabled( 4, false );
-                }
-                switch ( m_popup->exec(e->globalPos()) )
-                {
-                    case 1:
-                        d->document->toggleBookmark( kpdfPage->number() );
-                        break;
-                    case 2:
-                        // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
-                        d->zoomMode = ZoomFitWidth;
-                        Settings::setViewColumns( 1 );
-                        d->aZoomFitWidth->setChecked( true );
-                        d->aZoomFitPage->setChecked( false );
-                        d->aZoomFitText->setChecked( false );
-                        d->aViewTwoPages->setChecked( false );
-                        viewport()->setUpdatesEnabled( false );
-                        slotRelayoutPages();
-                        viewport()->setUpdatesEnabled( true );
-                        updateContents();
-                        d->document->setCurrentPage( kpdfPage->number() );
-                        break;
-                    case 3: // ToDO switch to edit mode
-                        slotSetMouseDraw();
-                        break;
-                }
-                delete m_popup;
+                if (pageItem) emit rightClick(pageItem->page(), e->globalPos());
+                else emit rightClick(0, e->globalPos());
             }
             // reset start position
             d->mouseStartPos = QPoint();

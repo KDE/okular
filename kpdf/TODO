@@ -47,13 +47,13 @@ More items (first items will enter 'In progress list' first):
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> merge head copyright headers (by albert)
--> merge head support for show menubar in rmb (by albert)
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 -> rotate the whole document / individual pages
 -> fullscreen pdf view (presentations-like) with some gfx tools
 -> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
 
 Done (newest feature comes firts):
+-> ADD: Support for show/hide menubar in rmb menu, different from HEAD so that supports Konqueror too (Albert)
 -> ADD: Watch File option (Albert)
 -> ADD: import Marco Martin's "another kpdf icon" (kde-look: 16146) (Albert)
 -> ADD: dynamic zoom with mid mouse button (click and drag up-down to zoom in-out)

@@ -44,6 +44,9 @@
 #include <knuminput.h>
 #include <kiconloader.h>
 #include <kio/netaccess.h>
+#include <kpopupmenu.h>
+#include <kxmlguiclient.h>
+#include <kxmlguifactory.h>
 
 #include "GlobalParams.h"
 
@@ -67,7 +70,7 @@ unsigned int Part::m_count = 0;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name)
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_showMenuBarActionSearched(false)
 {
 	// create browser extension (for printing when embedded into browser)
 	new BrowserExtension(this);
@@ -129,7 +132,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_pageView = new PageView( m_splitter, m_document );
         m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
-	//connect(m_pageView, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
+	connect(m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ));
 
 	// add document observers
     m_document->addObserver( this );
@@ -496,6 +499,74 @@ void Part::slotPrintPreview()
     if (landscape > portrait) printer.setOption("orientation-requested", "4");
 
     doPrint(printer);
+}
+
+void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
+{
+	if (!m_showMenuBarActionSearched)
+	{
+		// the quest for options_show_menubar
+		KXMLGUIClient *client;
+		KActionCollection *ac;
+		KActionPtrList::const_iterator it, end, begin;
+		KActionPtrList actions;
+		QPtrList<KXMLGUIClient> clients(factory()->clients());
+		QPtrListIterator<KXMLGUIClient> clientsIt( clients );
+		for( ; !m_showMenuBarAction && clientsIt.current(); ++clientsIt)
+		{
+			client = clientsIt.current();
+			ac = client->actionCollection();
+			actions = ac->actions();
+			end = actions.end();
+			begin = actions.begin();
+			for ( it = begin; it != end; ++it )
+				if (QString((*it)->name()) == "options_show_menubar") m_showMenuBarAction = (KToggleAction*)(*it);
+		}
+		m_showMenuBarActionSearched = true;
+	}
+	
+	
+	KPopupMenu *popup = new KPopupMenu( widget(), "rmb popup" );
+	if (page)
+	{
+		popup->insertTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
+		if ( page->attributes() & KPDFPage::Bookmark )
+			popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
+		else
+			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
+		popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
+		popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
+		popup->setItemEnabled( 3, false );
+	}
+/*
+	//Albert says: I have not ported this as i don't see it does anything
+	if ( d->mouseOnActiveRect )
+	{
+		m_popup->insertItem( SmallIcon("filesave"), i18n("Save Image ..."), 4 );
+		m_popup->setItemEnabled( 4, false );
+}*/
+	
+	if (m_showMenuBarAction)
+	{
+		popup->insertTitle( i18n( "Tools" ) );
+		m_showMenuBarAction->plug(popup);
+	}
+	
+	switch ( popup->exec(point) )
+	{
+		case 1:
+			m_document->toggleBookmark( page->number() );
+			break;
+		case 2:// zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
+			m_pageView->setZoomFitWidth();
+			m_document->setCurrentPage( page->number() );
+			break;
+		case 3: // ToDO switch to edit mode
+			m_pageView->slotSetMouseDraw();
+			break;
+	}
+	delete popup;
+	
 }
 
 void Part::slotPrint()

@@ -74,8 +74,7 @@ namespace KPDF
     void optionsConfigureToolbars();
     void applyNewToolbarConfig();
       void slotUpdateFullScreen();
-      void slotRMBClick();
-      void slotShowMenubar();
+       void slotShowMenubar();
 
   public slots:
       void openURL( const KURL & url );
@@ -92,9 +91,8 @@ namespace KPDF
       KParts::ReadOnlyPart* m_part;
       KRecentFilesAction* m_recent;
       KToggleAction* m_fullScreenAction;
+      KToggleAction* m_showMenuBarAction;
       bool m_isFullScreen;
-      KPopupMenu* m_popup;
-      KToggleAction *m_showMenuBarAction;
   };
 
 }

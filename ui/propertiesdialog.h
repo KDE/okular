@@ -14,10 +14,10 @@
 
 class KPDFDocument;
 
-class propertiesDialog : public KDialogBase
+class PropertiesDialog : public KDialogBase
 {
   public:
-	propertiesDialog(QWidget *parent, KPDFDocument *doc);
+  	PropertiesDialog( QWidget *parent, KPDFDocument *doc );
 };
 
 #endif

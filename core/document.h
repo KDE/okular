@@ -106,24 +106,24 @@ class KPDFDocument : public QObject // only for a private slot..
  *
  * The Info structure can be filled in by generators to display metadata
  * about the currently opened file.
- * FUTURE: use a Dom tree so every generator can have different fields for
- * its metadata and renew the display widget to use the dynamic format.
  */
-struct DocumentInfo
+class DocumentInfo : public QDomDocument
 {
-    QString author,
-            creationDate,
-            modificationDate,
-            creator,
-            keywords,
-            producer,
-            subject,
-            title,
-            mimeType,
-            format,
-            formatVersion,
-            encryption,
-            optimization;
+    public:
+        DocumentInfo();
+
+        /**
+         * Sets a value for a special key. The title should be an i18n'ed
+         * string, since it's used in the document information dialog.
+         */
+        void set( const QString &key, const QString &value,
+                  const QString &title = QString() );
+
+        /**
+         * Returns the value for a given key or an empty string when the
+         * key doesn't exist.
+         */
+        QString get( const QString &key ) const;
 };
 
 /**

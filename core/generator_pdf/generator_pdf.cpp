@@ -138,28 +138,31 @@ const DocumentInfo * PDFGenerator::documentInfo()
     {
         docLock.lock();
         // compile internal structure reading properties from PDFDoc
-        docInfo.author = getDocumentInfo("Author");
-        docInfo.creationDate = getDocumentDate("CreationDate");
-        docInfo.modificationDate = getDocumentDate("ModDate");
-        docInfo.creator = getDocumentInfo("Creator");
-        docInfo.keywords = getDocumentInfo("Keywords");
-        docInfo.producer = getDocumentInfo("Producer");
-        docInfo.subject = getDocumentInfo("Subject");
-        docInfo.title = getDocumentInfo("Title");
-        docInfo.mimeType = "application/pdf";
-        docInfo.format = "PDF";
+        docInfo.set( "title", getDocumentInfo("Title"), i18n("Title") );
+        docInfo.set( "subject", getDocumentInfo("Subject"), i18n("Subject") );
+        docInfo.set( "author", getDocumentInfo("Author"), i18n("Author") );
+        docInfo.set( "keywords", getDocumentInfo("Keywords"), i18n("Keywords") );
+        docInfo.set( "creator", getDocumentInfo("Creator"), i18n("Creator") );
+        docInfo.set( "producer", getDocumentInfo("Producer"), i18n("Producer") );
+        docInfo.set( "creationDate", getDocumentDate("CreationDate"), i18n("Created") );
+        docInfo.set( "modificationDate", getDocumentDate("ModDate"), i18n("Modified") );
+        docInfo.set( "mimeType", "application/pdf" );
         if ( pdfdoc )
         {
-            docInfo.formatVersion = QString::number( pdfdoc->getPDFVersion() );
-            docInfo.encryption = pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" );
-            docInfo.optimization = pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" );
+            docInfo.set( "format", i18n( "PDF v. <version>", "PDF v. %1" )
+                         .arg( QString::number( pdfdoc->getPDFVersion() ) ), i18n( "Format" ) );
+            docInfo.set( "encryption", pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ),
+                         i18n("Security") );
+            docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ),
+                         i18n("Optimized") );
         }
         else
         {
-            docInfo.formatVersion = i18n( "Unknown Version" );
-            docInfo.encryption = i18n( "Unknown Encryption" );
-            docInfo.optimization = i18n( "Unknown Optimization" );
+            docInfo.set( "format", "PDF", i18n( "Format" ) );
+            docInfo.set( "encryption", i18n( "Unknown Encryption" ), i18n( "Security" ) );
+            docInfo.set( "optimization", i18n( "Unknown Optimization" ), i18n( "Optimized" ) );
         }
+        docInfo.set( "pages", QString::number( pdfdoc->getCatalog()->getNumPages() ), i18n("Pages") );
         docLock.unlock();
 
         // if pdfdoc is valid then we cached good info -> don't cache them again

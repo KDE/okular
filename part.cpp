@@ -606,7 +606,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 
 void Part::slotShowProperties()
 {
-	propertiesDialog *d = new propertiesDialog(widget(), m_document);
+	PropertiesDialog *d = new PropertiesDialog(widget(), m_document);
 	d->exec();
 	delete d;
 }

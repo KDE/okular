@@ -709,5 +709,47 @@ void KPDFDocument::slotGeneratedContents( int id, int pageNumber )
         d->observers[ id ]->observer->notifyPixmapChanged( pageNumber );
 }
 
+/** DocumentInfo **/
+
+DocumentInfo::DocumentInfo()
+  : QDomDocument( "DocumentInformation" )
+{
+    QDomElement docElement = createElement( "DocumentInfo" );
+    appendChild( docElement );
+}
+
+void DocumentInfo::set( const QString &key, const QString &value,
+                        const QString &title )
+{
+    QDomElement docElement = documentElement();
+    QDomElement element;
+
+    // check whether key already exists
+    QDomNodeList list = docElement.elementsByTagName( key );
+    if ( list.count() > 0 )
+        element = list.item( 0 ).toElement();
+    else
+        element = createElement( key );
+
+    element.setAttribute( "value", value );
+    element.setAttribute( "title", title );
+
+    if ( list.count() == 0 )
+        docElement.appendChild( element );
+}
+
+QString DocumentInfo::get( const QString &key ) const
+{
+    QDomElement docElement = documentElement();
+    QDomElement element;
+
+    // check whether key already exists
+    QDomNodeList list = docElement.elementsByTagName( key );
+    if ( list.count() > 0 )
+        return list.item( 0 ).toElement().attribute( "value" );
+    else
+        return QString();
+}
+
 #include "document.moc"
 #include "generator.moc"

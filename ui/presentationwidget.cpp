@@ -140,10 +140,10 @@ void PresentationWidget::pageSetup( const QValueVector<KPDFPage*> & pageSet, boo
     const DocumentInfo * info = m_document->documentInfo();
     if ( info )
     {
-        if ( !info->title.isNull() )
-            m_metaStrings += i18n( "Title: %1" ).arg( info->title );
-        if ( !info->title.isNull() )
-            m_metaStrings += i18n( "Author: %1" ).arg( info->author );
+        if ( !info->get( "title" ).isNull() )
+            m_metaStrings += i18n( "Title: %1" ).arg( info->get( "title" ) );
+        if ( !info->get( "author" ).isNull() )
+            m_metaStrings += i18n( "Author: %1" ).arg( info->get( "author" ) );
     }
     m_metaStrings += i18n( "Pages: %1" ).arg( m_document->pages() );
     m_metaStrings += i18n( "Click to begin" );

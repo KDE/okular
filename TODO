@@ -56,7 +56,7 @@ More items (first items will enter 'In progress list' first):
 -> automatic online dictionaries / translators (BR80338)
 -> core: pdf forms support
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
--> rotate the whole document / individual pages
+-> rotate the whole document / individual pages - Have a look at the fifth parameter of displayPage, it is the rotation, so it should not be THAT hard to implement
 -> presentation: implement missing transitions (6/11 done)
 -> presentation: add some gfx tools (like a red pencil)
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode

@@ -13,9 +13,6 @@
             <height>24</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>optionDialogFontsWidget_base</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>

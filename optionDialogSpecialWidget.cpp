@@ -101,10 +101,8 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
 
 optionDialogSpecialWidget::~optionDialogSpecialWidget()
 {
-  if (config != 0L)
-    delete config;
   if (instance != 0L)
-    delete instance;
+    delete instance; // that will also delete the config
 }
 
 void optionDialogSpecialWidget::slotUserDefdEditorCommand( const QString &text )

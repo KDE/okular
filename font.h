@@ -63,19 +63,21 @@ public:
        double _enlargement, double _cmPerDVIunit);
   ~font();
 
-  
+  void reset(double resolution_in_dpi, double pixelPerDVIunit);
+
 
   // Members for character fonts
   glyph         *glyphptr(unsigned int ch);
-  QPixmap       characterPixmap(unsigned int ch);
-  void          setShrinkFactor(float sf);
+  QPixmap        characterPixmap(unsigned int ch);
+  void           setShrinkFactor(float sf);
 
   void           mark_as_used(void);
-
+  double         cmPerDVIunit;
   class fontPool *font_pool;    // Pointer to the pool that contains this font.
   const char    *fontname;	// name of font, such as "cmr10"
   unsigned char  flags;		// flags byte (see values below)
   double         x_dimconv;	// size conversion factor
+  double         enlargement;
   Q_INT32        scaled_size;   // Scaled size from the font definition command; in DVI units
   set_char_proc  set_char_p;	// proc used to set char
 
@@ -95,11 +97,7 @@ private:
   float         shrinkFactor;
   QPixmap       nullPixmap;
   QPixmap       *characterPixmaps[max_num_of_chars_in_font];
-
-  // FIND OUT ABOUT THOSE! @@@@@@@@@@@@@@@@@@@@@@
-  double         enlargement;
-  double         cmPerDVIunit;
-  long           checksum;	// checksum
+  Q_UINT32       checksum;
 
   // Functions related to virtual fonts
   void          read_VF_index(void );

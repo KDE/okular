@@ -74,7 +74,7 @@ Q_OBJECT
   /** Sets the shrink-factor. The shrink-factor is then passed on to
       all fonts in this fontpool. The fonts use it for re-sizing their
       glyphs. */
-  void setShrinkFactor( float sf );
+  void setShrinkFactor( double sf );
 
   /** Returns the status of enlargeFonts.  If the return value is ==
       0, glyphs will not be enlarged, otherwise they will. */
@@ -198,7 +198,7 @@ private:
 
  /** This float is passed on to all fonts in this fontpool. The
      shrinkFactor is used in re-sizing glyphs. */
- float          shrinkFactor;
+ double         shrinkFactor;
 
  /** This QString is used to collect the output of the MetaFont
      programm while we are waiting for a full screen line */

@@ -22,10 +22,14 @@
 const char *MFModes[]       = { "cx", "ljfour", "lexmarks" };
 const char *MFModenames[]   = { "Canon CX", "LaserJet 4", "Lexmark S" };
 const int   MFResolutions[] = { 300, 600, 1200 };
- 
+
 
 fontPool::fontPool(void)
 {
+#ifdef DEBUG_FONTPOOL
+  kdDebug(4300) << "fontPool::fontPool(void) called" << endl;
+#endif
+
   setName("Font Pool");
 
   proc         = 0;
@@ -56,6 +60,10 @@ fontPool::fontPool(void)
 
 fontPool::~fontPool(void)
 {
+#ifdef DEBUG_FONTPOOL
+  kdDebug(4300) << "fontPool::~fontPool(void) called" << endl;
+#endif
+
   if (progress)
     delete progress;
 }
@@ -63,6 +71,10 @@ fontPool::~fontPool(void)
 
 unsigned int fontPool::setMetafontMode( unsigned int mode )
 {
+#ifdef DEBUG_FONTPOOL
+  kdDebug(4300) << "fontPool::setMetafontMode( " << mode << " ) called" << endl;
+#endif
+
   if (mode >= NumberOfMFModes) {
     kdError(4300) << "fontPool::setMetafontMode called with argument " << mode 
 	      << " which is more than the allowed value of " << NumberOfMFModes-1 << endl;
@@ -71,6 +83,16 @@ unsigned int fontPool::setMetafontMode( unsigned int mode )
     mode = DefaultMFMode;
   }
   MetafontMode = mode;
+
+  struct font *fontp = fontp=fontList.first();
+  while(fontp != 0 ) {
+    double pixelPerDVIunit = fontp->cmPerDVIunit * MFResolutions[getMetafontMode()] / 2.54;
+    double fsize           = fontp->enlargement * MFResolutions[getMetafontMode()];
+    fontp->reset(fsize, pixelPerDVIunit);
+    fontp = fontList.next();
+  }
+
+  check_if_fonts_are_loaded();
   return mode;
 }
 
@@ -227,6 +249,11 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
   // generated. If pass != 0, ennable font generation, if it was
   // enabled globally.
   emit setStatusBarText(i18n("Locating fonts..."));
+
+#ifdef DEBUG_FONTPOOL
+  QString shellProcessCmdLine;
+#endif
+
   proc = new KShellProcess();
   if (proc == 0) {
     kdError(4300) << "Could not allocate ShellProcess for the kpsewhich command." << endl;
@@ -243,14 +270,30 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
 
   proc->clearArguments();
   *proc << "kpsewhich";
+#ifdef DEBUG_FONTPOOL
+  shellProcessCmdLine += "kpsewhich ";
+#endif
   *proc << QString("--dpi %1").arg(MFResolutions[MetafontMode]);
+#ifdef DEBUG_FONTPOOL
+  shellProcessCmdLine += QString("--dpi %1").arg(MFResolutions[MetafontMode]) + " ";
+#endif
   *proc << QString("--mode %1").arg(KShellProcess::quote(MFModes[MetafontMode]));
+#ifdef DEBUG_FONTPOOL
+  shellProcessCmdLine += QString("--mode %1").arg(KShellProcess::quote(MFModes[MetafontMode])) + " ";
+#endif
   // Enable automatic pk-font generation only in the second pass, and
   // only if the user expressidly asked for it.
-  if ((makepk == 0) || (pass == 0))
+  if ((makepk == 0) || (pass == 0)) {
     *proc << "--no-mktex pk";
-  else
+#ifdef DEBUG_FONTPOOL
+    shellProcessCmdLine +=  "--no-mktex pk ";
+#endif
+  } else {
     *proc << "--mktex pk";
+#ifdef DEBUG_FONTPOOL
+    shellProcessCmdLine +=  "--mktex pk ";
+#endif
+  }
   int numFontsInJob = 0;
 
   fontp = fontList.first();;
@@ -258,9 +301,16 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
     if ((fontp->flags & font::FONT_KPSE_NAME) == 0) {
       numFontsInJob++;
       *proc << KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->naturalResolution_in_dpi + 0.5)).arg(fontp->fontname));
+#ifdef DEBUG_FONTPOOL
+      shellProcessCmdLine += KShellProcess::quote(QString("%2.%1pk").arg((int)(fontp->naturalResolution_in_dpi + 0.5)).arg(fontp->fontname)) + " ";
+#endif
       // In the first pass, we look also for virtual fonts.
-      if (pass == 0)
+      if (pass == 0) {
 	*proc << KShellProcess::quote(QString("%1.vf").arg(fontp->fontname));
+#ifdef DEBUG_FONTPOOL
+	shellProcessCmdLine += KShellProcess::quote(QString("%1.vf").arg(fontp->fontname)) + " ";
+#endif
+      }
       // In the second (last) pass, mark the font "looked up". As this
       // is the last chance that the filename could be found, we
       // ensure that if the filename is still not found now, we won't
@@ -270,6 +320,11 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
     }
     fontp=fontList.next();
   }
+
+#ifdef DEBUG_FONTPOOL
+  kdDebug(4300) << "pass " << pass << " kpsewhich run with " << numFontsInJob << "fonts to locate." << endl;
+  kdDebug(4300) << "command line: " << shellProcessCmdLine << endl;
+#endif
 
   if (pass != 0)
     emit(totalFontsInJob(numFontsInJob));
@@ -289,7 +344,7 @@ int fontPool::check_if_fonts_are_loaded(unsigned char pass)
 void fontPool::kpsewhich_terminated(KProcess *)
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "kpsewhich terminated" << endl;
+  kdDebug(4300) << "kpsewhich terminated. Output was " << kpsewhichOutput << endl;
 #endif
 
   emit(hide_progress_dialog());
@@ -404,11 +459,10 @@ void fontPool::kpsewhich_terminated(KProcess *)
   return;
 }
 
-
-void fontPool::setShrinkFactor( float sf )
+void fontPool::setShrinkFactor( double sf )
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "Set ShrinkFactor in fontpool to" << sf << endl;
+  kdDebug(4300) << "fontPool::setShrinkFactor( " << sf << " ) called" <<endl;
 #endif
   
   shrinkFactor = sf;
@@ -418,7 +472,7 @@ void fontPool::setShrinkFactor( float sf )
 void fontPool::mark_fonts_as_unused(void)
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "Mark_fonts_as_unused" << endl;
+  kdDebug(4300) << "fontPool::mark_fonts_as_unused(void) called" << endl;
 #endif
 
   struct font  *fontp = fontList.first();

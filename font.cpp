@@ -111,32 +111,73 @@ font::font(const char *nfontname, double resolution_in_dpi, long chk, Q_INT32 sc
 }
 
 
-
 font::~font()
 {
 #ifdef DEBUG_FONT
   kdDebug() << "discarding font " << fontname << " at " << (int)(naturalResolution_in_dpi + 0.5) << " dpi" << endl;
 #endif
 
-  if (fontname != 0)
+  if (fontname != 0) {
     delete [] fontname;
-  if (glyphtable != 0)
+    fontname = 0;
+  }
+  if (glyphtable != 0) {
     delete [] glyphtable;
-  if (macrotable != 0)
+    glyphtable = 0;
+  }
+  if (macrotable != 0) {
     delete [] macrotable;
+    macrotable = 0;
+  }
 
   for(unsigned int i=0; i<max_num_of_chars_in_font; i++)
-    if (characterPixmaps[i])
+    if (characterPixmaps[i]) {
       delete characterPixmaps[i];
+      characterPixmaps[i] = 0;
+    }
 
   if (flags & FONT_LOADED) {
-    if (file != NULL) 
+    if (file != 0) {
       fclose(file);
+      file = 0;
+    }
     if (flags & FONT_VIRTUAL)
       vf_table.clear();
   }
 }
 
+void font::reset(double resolution_in_dpi, double pixelPerDVIunit)
+{
+  if (glyphtable != 0) {
+    delete [] glyphtable;
+    glyphtable = 0;
+  }
+  if (macrotable != 0) {
+    delete [] macrotable;
+    macrotable = 0;
+  }
+  
+  for(unsigned int i=0; i<max_num_of_chars_in_font; i++)
+    if (characterPixmaps[i]) {
+      delete characterPixmaps[i];
+      characterPixmaps[i] = 0;
+    }
+  
+  if (flags & FONT_LOADED) {
+    if (file != 0) {
+      fclose(file);
+      file = 0;
+    }
+    if (flags & FONT_VIRTUAL)
+      vf_table.clear();
+  }
+ 
+  filename                 = QString::null;
+  flags                    = font::FONT_IN_USE;
+  x_dimconv                = scaled_size*pixelPerDVIunit;
+  naturalResolution_in_dpi = resolution_in_dpi;
+  set_char_p               = &dviWindow::set_empty_char;
+}
 
 void font::setShrinkFactor(float sf)
 {

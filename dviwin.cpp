@@ -73,7 +73,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   : QWidget( parent, name )
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviWindow" << endl;
+  kdDebug(4300) << "dviWindow( zoom=" << zoom << ", mkpk=" << mkpk << ", parent=" << parent << ", name=" << name << " )" << endl;
 #endif
 
   setBackgroundMode(NoBackground);
@@ -105,14 +105,28 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
     qApp->connect(font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
   }
 
-
   setMakePK( mkpk );
   editorCommand         = "";
-  setMetafontMode( DefaultMFMode ); // that also sets the basedpi
+
+  // Calculate the horizontal resolution of the display device.  @@@
+  // We assume implicitly that the horizontal and vertical resolutions
+  // agree. This is probably not a safe assumption.
+  xres                   = QPaintDevice::x11AppDpiX ();
+  // Just to make sure that we are never dividing by zero.
+  if ((xres < 10)||(xres > 1000))
+    xres = 75.0;
+
+  // In principle, this method should never be called with illegal
+  // values for zoom. In principle.
+  if (zoom < ZoomLimits::MinZoom/1000.0)
+    zoom = ZoomLimits::MinZoom/1000.0;
+  if (zoom > ZoomLimits::MaxZoom/1000.0)
+    zoom = ZoomLimits::MaxZoom/1000.0;
+  _zoom                  = zoom;
+
   paper_width           = 21.0; // set A4 paper as default
   paper_height          = 27.9;
-  unshrunk_page_w       = int( 21.0 * basedpi/2.54 + 0.5 );
-  unshrunk_page_h       = int( 27.9 * basedpi/2.54 + 0.5 );
+
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
   mane                   = currwin;
@@ -134,24 +148,6 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   export_tmpFileName     = "";
   export_errorString     = "";
 
-  // Calculate the horizontal resolution of the display device.  @@@
-  // We assume implicitly that the horizontal and vertical resolutions
-  // agree. This is probably not a safe assumption.
-  xres                   = QPaintDevice::x11AppDpiX ();
-
-  // Just to make sure that we are never dividing by zero.
-  if ((xres < 10)||(xres > 1000))
-    xres = 75.0;
-
-  // In principle, this method should never be called with illegal
-  // values for zoom. In principle.
-  if (zoom < ZoomLimits::MinZoom/1000.0)
-    zoom = ZoomLimits::MinZoom/1000.0;
-  if (zoom > ZoomLimits::MaxZoom/1000.0)
-    zoom = ZoomLimits::MaxZoom/1000.0;
-  mane.shrinkfactor      = currwin.shrinkfactor = (double)basedpi/(xres*zoom);
-  _zoom                  = zoom;
-
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   // pass status bar messages through
   connect(PS_interface, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
@@ -161,6 +157,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   animationCounter = 0;
   timerIdent       = 0;
 
+  setMetafontMode( DefaultMFMode ); // that also sets the basedpi
   resize(0,0);
 }
 
@@ -177,6 +174,8 @@ dviWindow::~dviWindow()
   delete PS_interface;
   if (dviFile)
     delete dviFile;
+  if (font_pool)
+    delete font_pool;
 
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
@@ -227,6 +226,7 @@ void dviWindow::setShowPS( bool flag )
   drawPage();
 }
 
+
 void dviWindow::setShowHyperLinks( bool flag )
 {
   if ( _showHyperLinks == flag )
@@ -236,31 +236,35 @@ void dviWindow::setShowHyperLinks( bool flag )
   drawPage();
 }
 
+
 void dviWindow::setMakePK( bool flag )
 {
   makepk = flag;
   font_pool->setMakePK(makepk);
 }
 
+
 void dviWindow::setMetafontMode( unsigned int mode )
 {
-  if ((dviFile != NULL) && (mode != font_pool->getMetafontMode()))
-    KMessageBox::sorry( this,
-			i18n("The change in Metafont mode will be effective "
-			     "only after you start kdvi again!") );
-
-  MetafontMode     = font_pool->setMetafontMode(mode);
-  basedpi          = MFResolutions[MetafontMode];
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "basedpi " << basedpi << endl;
+  kdDebug(4300) << "dviWindow::setMetafontMode( mode=" << mode << " )" << endl;
 #endif
+  MetafontMode     = font_pool->setMetafontMode(mode);
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::setMetafontMode, new MetafontMode is at " << MFResolutions[MetafontMode] << " dpi" << endl;
+#endif
+
+  basedpi          = MFResolutions[MetafontMode];
+  mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*_zoom);
+  font_pool->setShrinkFactor(currwin.shrinkfactor);
+  setPaper( paper_width, paper_height);
 }
 
 
 void dviWindow::setPaper(double w, double h)
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "setPaper" << endl;
+  kdDebug(4300) << "dviWindow::setPaper( w=" << w << ", h=" << h << " )" << endl;
 #endif
 
   paper_width      = w;
@@ -278,7 +282,7 @@ void dviWindow::setPaper(double w, double h)
 void dviWindow::drawPage()
 {
 #ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "drawPage" << endl;
+  kdDebug(4300) << "dviWindow::drawPage()" << endl;
 #endif
 
   setCursor(arrowCursor);
@@ -408,6 +412,9 @@ bool dviWindow::correctDVI(QString filename)
 
 void dviWindow::changePageSize()
 {
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviWindow::changePageSize()" << endl;
+#endif
   if ( pixmap && pixmap->paintingActive() )
     return;
 
@@ -415,6 +422,10 @@ void dviWindow::changePageSize()
     delete pixmap;
 
   pixmap = new QPixmap( (int)page_w, (int)page_h );
+  if (pixmap == 0) {
+    kdError(4300) << "dviWindow::changePageSize(), no memory for pixmap, page_w=" << (int)page_w << ", page_h =" << (int)page_h << endl;
+    exit(0);
+  }
   pixmap->fill( white );
 
   resize( page_w, page_h );

@@ -41,10 +41,8 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
 
 optionDialogFontsWidget::~optionDialogFontsWidget()
 {
-  if (config != 0L)
-    delete config;
   if (instance != 0L)
-    delete instance;
+    delete instance; // that will also delete the config
 }
 
 void optionDialogFontsWidget::apply(void)

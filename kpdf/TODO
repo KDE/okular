@@ -31,3 +31,15 @@ Done (sorted by inv.time)
 -> previews speedup: 50-100%
 -> use local instead of X memory for thumbnails (..)
 -> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
+
+Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317:
+ copy text from rectangular blocks
+ text copy/selection in wordprocessor-style
+ ruler
+ distance measure tool
+ color picker
+ annotations 'postit' like
+ hyperlinks (albert's work needs to be forward ported)
+ integration with a voice synthesizer
+ export in other formats keeping formatting (a dream.. expect for PNG :-)
+

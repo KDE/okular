@@ -1,3 +1,9 @@
+Wed Aug 04 1999 Duncan Haldane <duncan@kde.org>
+	* updated the kpathsea library with sources from teTeX-1.0.6
+	* kdvi 's dviwin.cpp is adjusted for this with a patch supplied by 
+	* Mark Davies <mark@MCS.VUW.AC.NZ>
+	
+
 Mon Jun 29 08:43:45 1998  Bernd Johannes Wuebben  <wuebben@math.cornell.edu>
 
 	* KDVI uses KFileDialog now.

@@ -348,7 +348,7 @@ struct drawinf {
   struct font          *fontp;
   set_char_proc	        set_char_p;
 
-  QIntDict<struct font> fonttable;
+  QIntDict<struct font> *fonttable;
   struct font	       *_virtual;
 };
 

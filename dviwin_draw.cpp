@@ -138,8 +138,8 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       }
     }
 
-    // Now set up a rectangle which is checked against every mouse
-    // event.
+    // Code for DVI -> text functions (e.g. marking of text, full text
+    // search, etc.). Set up the textLinkList.
     if (line_boundary_encountered == true) {
       // Set up source hyperlinks
       textLinkList[num_of_used_textlinks].baseline = PXL_V;
@@ -384,6 +384,8 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    return;
 	  } else
 	    currinf.data = stack.pop();
+	  word_boundary_encountered = true;
+	  line_boundary_encountered = true;
 	  break;
 
 	case RIGHT1:

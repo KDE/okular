@@ -2150,7 +2150,7 @@ void Gfx::opSetFont(Object args[], int /*numArgs*/) {
   if (printCommands) {
     printf("  font: tag=%s name='%s' %g\n",
 	   font->getTag()->getCString(),
-	   font->getName() ? font->getName()->getCString() : "???",
+	   font->getName() ? font->getName()->getCString() : "\?\?\?",
 	   args[1].getNum());
     fflush(stdout);
   }
@@ -2371,7 +2371,7 @@ void Gfx::doShowText(GString *s) {
       state->transform(curX + riseX, curY + riseY, &x, &y);
       saveState();
       state->setCTM(newCTM[0], newCTM[1], newCTM[2], newCTM[3], x, y);
-      //~ out->updateCTM(???)
+      //~ out->updateCTM(\?\?\?)
       if (!out->beginType3Char(state, curX + riseX, curY + riseY, tdx, tdy,
 			       code, u, uLen)) {
 	((Gfx8BitFont *)font)->getCharProc(code, &charProc);

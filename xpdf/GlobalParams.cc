@@ -15,7 +15,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
-#if HAVE_PAPER_H
+#ifdef HAVE_PAPER_H
 #include <paper.h>
 #endif
 #include "gmem.h"
@@ -183,7 +183,7 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
   displayFonts = new GHash();
   displayCIDFonts = new GHash();
   displayNamedCIDFonts = new GHash();
-#if HAVE_PAPER_H
+#ifdef HAVE_PAPER_H
   char *paperName;
   const struct paper *paperType;
   paperinit();

@@ -142,7 +142,6 @@ bool KDVIMultiPage::openFile()
 
 void KDVIMultiPage::jumpToReference(QString reference)
 {
-  kdError() << "Reference: " << reference << endl;
   if (window != 0) {
     window->reference = reference;
     window->all_fonts_loaded(); // In spite of its name, this method tries to parse the reference.

@@ -1,378 +1,388 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN" "dtd/kdex.dtd" [
- <!ENTITY kappname "&kdvi;">
- <!ENTITY % English "INCLUDE">
- <!ENTITY % addindex "IGNORE">
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN"
+ "dtd/kdex.dtd" [
+  <!ENTITY kappname "&kdvi;">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE"><!-- change language only here -->
 ]>
-
 <book lang="&language;">
+  <bookinfo>
+    <title>The &kdvi; Handbook</title>
+    <authorgroup>
+      <author>
+	<firstname>Stefan</firstname>
+	<surname>Kebekus</surname>
+	<affiliation>
+	  <address>
+	   <email>kebekus@kde.org</email>
+          </address>
+	</affiliation>
+      </author>
+      <!-- TRANS:ROLES_OF_TRANSLATORS -->
+    </authorgroup>
+    
+    <copyright>
+      <year>2001</year>
+      <holder>Stefan Kebekus</holder>
+    </copyright>
+    
+    <legalnotice>&FDLNotice;</legalnotice>
+    
+    <date>2001-01-09</date>
+    <releaseinfo>1.0</releaseinfo>
+    
+    <abstract>
+      <para>This document describes &kdvi; version 0.9h</para>
+    </abstract>
+    
+    <keywordset>
+      <keyword>KDE</keyword>
+      <keyword>linux</keyword>
+      <keyword>TeX</keyword>
+      <keyword>DVI</keyword>
+    </keywordset>
+    
+  </bookinfo>
+  
+  <chapter id="introduction">
+    <title>Introduction</title>
+    
+    <para>&kdvi; is a plugin for the &kviewshell; program which allows
+    &kviewshell; to display &DVI;-files (<literal
+    role="extension">.dvi</literal>) which are produced by the TeX
+    typesetting system.  &kdvi; supports many extensions of the DVI
+    standard, for instance the inclusion of &PostScript; graphics or
+    hyperlinks. More details, examples and all the technical
+    specifications can be found in the file <ulink
+    url="KDVI-features.dvi"><filename>KDVI-features.dvi</filename></ulink>
+    (click <ulink url="KDVI-features.tex">here</ulink> for the
+    TeX-source of that file).</para>
+    
+    <para>For up-to-date information, consult <ulink
+    url="http://devel-home.kde.org/~kdvi">kdvi's home page</ulink>.
+    </para>
+    
+    <para>TeX is a high-end typesetting system geared towards
+    scientific, and in particular mathematical typesetting. More
+    information about TeX and &DVI; can be found on the <ulink
+    url="http://www.tug.org">homepage of the TeX user group</ulink> or
+    the German <ulink url="http://www.dante.de">German DANTE
+    e.V.</ulink>.
+    </para>
+  </chapter>
+  
+  
+  <chapter id="starting">
+    <title>Starting &kdvi;</title>
+    
+    <para>Most of the time, &kdvi; will be started by just clicking
+    onto a <literal role="extension">.dvi</literal>-file in the file
+    manager. For convenience there exists a command
+    <command>kdvi</command> which calls &kviewshell; with the &kdvi;
+    plugin preloaded. The viewer may thus be started using the command
+    <userinput><command>kdvi</command>
+    <parameter>somepath/paper.dvi</parameter></userinput>. The command
+    lines <userinput><command>kdvi</command>
+    <parameter>somepath/paper</parameter></userinput> or
+    <userinput><command>kdvi</command>
+    <parameter>somepath/paper.</parameter></userinput> will also work.
+    </para>
 
-<bookinfo>
-<title> The &kdvi; Manual</title>
+    <para>The usual parameters handled by &Qt; and &kde; applications
+    also work: <userinput><command>kdvi</command>
+    <option>-style</option> <parameter>windows</parameter>
+    <option>-display</option> <parameter>:0</parameter>
+    <option>-geometry</option> <parameter>400x400+0+0</parameter>
+    <option>-caption</option> <parameter>"DVI"</parameter></userinput>
+    </para>
+  </chapter>
+  
+  
+  <chapter id="print">
+    <title>Printing DVI-Files</title>
+    
+    <para>&kdvi; can print your DVI-files using the standard KDE
+    printing interface. Internally, &kdvi; uses the programm
+    <command>dvips</command> to generate PostScript, which is then
+    passed on to the printer. In particular, <command>dvips</command>
+    must be installed if you want to print with &kdvi;. The programm
+    <command>dvips</command> uses its own configuration files and its
+    own settings, which are fine for most purposes. However, if you
+    care for optimal printing results, you should configure
+    <command>dvips</command> manually and make sure to set a default
+    MetaFont mode which fits your printer best ---on many systems
+    you'll find a <ulink url="info:/dvips">GNU-texinfo documentation
+    of <command>dvips</command></ulink>, and you might also want to
+    look for a file called <filename>dvips.dvi</filename> or
+    similar.</para>
+  </chapter>
 
-<authorgroup>
-<author>
-<firstname>Markku</firstname>
-<surname>Hihnala</surname>
-<affiliation><address><email>mah@ee.oulu.fi</email></address></affiliation>
-</author>
+  <chapter id="export">
+    <title>Exporting the DVI file to other formats</title>
 
-<author>
-<firstname>Stefan</firstname>
-<surname>Kebekus</surname>
-<affiliation><address><email>kebekus@kde.org</email></address></affiliation>
-</author>
+    <para>If you want to save your file as in PostScript or
+    PDF-format, it is not recommended that you use the printing
+    function and redirect the printer output to a file. Instead, you
+    can use the export functions which produce better-quality output
+    that retains many of the special features of the dvi format and
+    looks better in many of the viewing applications, such as Adobe's
+    Acrobat Reader. You will find the export functions in the
+    <guimenu>File</guimenu> menu.</para>
 
-<!-- TRANS:ROLES_OF_TRANSLATORS -->
-</authorgroup>
+    <section id="export-ps">
+      <title>Exporting to PostScript</title> 
 
-<date>2001-06-05</date>
-<releaseinfo>0.09.02</releaseinfo>
+      <para>As in printing, the external program
+      <command>dvips</command> is used to generate the PostScript
+      file. If the DVI-file contains hyperlinks, these will also be
+      included in the PostScript file. If you are an export, and if
+      you would like to generate output which is optimized for a
+      specific printer, you should probably start
+      <command>dvips</command> manually and choose the proper MetaFont
+      mode yourself.</para>
+    </section>
 
-<legalnotice>&underFDL;</legalnotice>
+    <section id="export-pdf">
+      <title>Exporting to PDF</title> 
 
-<copyright>
-<year>2000</year>
-<holder>Markku Hihnala</holder>
-<holder>Stefan Kebekus</holder>
-</copyright>
+      <para>In order to produce PDF files of high quality, &kdvi;
+      converts DVI to PDF using the external program
+      <command>dvipdfm</command>. If you are working on a machine
+      where an older distribution of the TeX typesetting system is
+      installed, it may be that the programm
+      <command>dvipdfm</command> is not installed. In that case, you
+      need to use the printing function to generate PDF
+      output.</para>
 
-<abstract>
-<para>This Handbook describes &kdvi; Version 0.9</para>
-</abstract>
+      <warning> <para>If you are viewing the generated file in Adobe's
+      Acrobat reader, you may well find that some of the fonts look
+      extremely poor although a printout is fine, and although the
+      document looks ok in ghostview. This is a known issue with the
+      Acrobat Reader and bitmap fonts. At the time of writing, the
+      only practicable workaround seems to be to avoid bitmap
+      fonts.</para>
+      </warning>
+    </section>
+  </chapter>
+  
 
-<keywordset>
-<keyword>KDE</keyword>
-<keyword>DVI</keyword>
-<keyword>TeX</keyword>
-<keyword>LaTeX</keyword>
-<keyword>device-independent</keyword>
-<keyword>viewer</keyword>
-<keyword>dvi viewer</keyword>
-<keyword>kdvi</keyword>
-<keyword>xdvi</keyword>
-</keywordset>
-</bookinfo>
+  <chapter id="preferences">
+    <title>The <guilabel>Preferences</guilabel> dialog</title>
+    <anchor id="opts"></anchor>
 
-<chapter id="introduction">
-<title>Introduction</title>
+    <para>The <guilabel>Preferences</guilabel> dialog can be reached
+    by choosing <menuchoice><guimenu>Settings</guimenu>
+    <guimenuitem>DVI options</guimenuitem></menuchoice> in the
+    <guimenu>Settings</guimenu> menu.</para>
 
-<para>
-&kdvi; is a plug-in for the &kviewshell; program which allows
-&kviewshell; to display &DVI;-files which are produced by the TeX
-typesetting system.
-</para>
+    <para>The dialog consists of two tabs, <guilabel>Fonts</guilabel>
+    and <guilabel>Rendering</guilabel>.</para>
 
-<para>
-More information about TeX and &DVI; can be found on the home page of
-the TeX user group. &kdvi; supports the inclusion of &PostScript;
-graphics and it supports hyperlinks. More details and the technical
-specifications can be found in the file
-<filename>KDVI-features.dvi</filename>.
-</para>
+    <sect1 id="opt-fonts">
+      <title><guilabel>Fonts</guilabel> Options</title>
 
-<para>
-For up-to-date information, consult <ulink
-url="http://devel-home.kde.org/~kdvi">kdvi's home page</ulink>.
-</para>
+      <para>The following picture shows the options dialog of
+      &kdvi;.</para>
 
-</chapter>
+      <screenshot>
+	<screeninfo>The <guilabel>Fonts</guilabel> dialog</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="optionrequester1.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>The <guilabel>Fonts</guilabel> dialog</phrase>
+	  </textobject>
+	</mediaobject>	
+      </screenshot>
 
-<chapter id="starting">
-<title>Starting &kdvi;</title>
+      <variablelist>
+	<varlistentry>
+	  <term><guilabel>Metafont mode</guilabel> </term>
+	  <listitem>
+	    <para>These options specify the fonts which &kdvi; will
+	    use for rendering.  By carefully optimizing the settings
+	    here it is possible to improve on the display. However,
+	    unless you are an expert in <command>MetaFont</command>
+	    and know what you are doing, it is not a good idea to
+	    change these options. You may want to look at the <ulink
+	    url="faq.html#MFModes">Frequently asked questions</ulink>
+	    section of this manual.</para>
 
-<para>
-For convenience there exists a command <command>kdvi</command> which
-calls &kviewshell; with the &kdvi; plugin preloaded. The viewer may thus
-be started using the command <userinput><command>kdvi</command>
-<parameter>somepath/paper.dvi</parameter></userinput>, or without a file
-name as &kviewshell; will then allow a file to be opened from a dialog
-or a menu of recently used files.
-</para>
+	    <para>Safe values are <guilabel>1200 dpi /
+	    Lexmark</guilabel> for good quality, or <guilabel>600 dpi
+	    / LaserJet 4</guilabel> for medium quality and faster
+	    display.</para>
+	  </listitem>
+	</varlistentry>
 
-<para>
-The usual parameters handled by &Qt; and &kde; applications also 
-work: <userinput><command>kdvi</command> <option>-style</option>
-<parameter>windows</parameter> <option>-display</option>
-<parameter>:0</parameter> <option>-geometry</option>
-<parameter>400x400+0+0</parameter> <option>-caption</option>
-<parameter>"DVI"</parameter></userinput>
-</para>
+	<varlistentry>
+	  <term><guilabel>Generate missing fonts</guilabel></term>
+	  <listitem>
+	    <para>Check this if you want &kdvi; to call the
+	    <command>MetaFont</command> program in the likely case
+	    that kdvi wants to display documents which use fonts which
+	    are not yet readily made. You most certainly want to set
+	    this option.</para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect1>
 
-<para>
-For integration with TeX the opened &DVI; file is automatically reloaded
-when changed.
-</para>
+    <sect1 id="opt-rendering">
+      <title><guilabel>Rendering</guilabel> Options</title>
 
-</chapter>
+      <para>The following picture shows the second options dialog of
+      &kdvi;.</para>
 
-<chapter id="preferences">
-<title>The <guilabel>Preferences</guilabel> dialog</title>
+      <screenshot>
+	<screeninfo>The <guilabel>Rendering</guilabel> dialog</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="optionrequester2.png" format="PNG"/></imageobject>
+	  <textobject>
+	    <phrase>The <guilabel>Rendering</guilabel> dialog</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
 
-<para>
-The <guilabel>Preferences</guilabel> dialog can be reached by choosing
-<menuchoice><guimenu>Settings</guimenu> <guimenuitem>DVI
-options</guimenuitem></menuchoice> inside &kviewshell;.
-</para>
+      <variablelist>
+	<varlistentry>
+	  <term><guilabel>Show PostScript specials</guilabel></term>
+	  <listitem>
+	    <para>If this options is checked, &kdvi; will display
+	    &PostScript; graphics which are embedded into the &DVI;
+	    file. You probably want to set this option.</para>
 
-<para>
-The dialog consists of two tabs, <guilabel>Fonts</guilabel> and
-<guilabel>Rendering</guilabel>.
-</para>
+            <para>If an external &PostScript; file could not be found,
+            &kdvi; will draw a red warning box in its
+            place. Unfortunately, rendering &PostScript; graphics is
+            very slow in the current version of &kdvi;.  We will
+            improve on the speed in later versions. If this option is
+            off, &kdvi; will either draw a grey box as a placeholder
+            for the graphics, or it will leave the space blank.</para>
 
-<sect1 id="opt-fonts">
-<title><guilabel>Fonts</guilabel> Options</title>
+            <note>
+	      <para>There is no standard way to embed &PostScript;
+	      graphics into a dvi file. It may therefore happen that
+	      &kdvi; cannot properly display a graphic which works
+	      fine with other programs. Older versions of
+	      <command>xdvi</command> and <command>dvips</command>
+	      support the execution of external commands. This is a
+	      bad security risk and therefore deliberately not
+	      implemented in &kdvi;. Technical information about
+	      supported ways to include &PostScript; can be found in
+	      the document <ulink
+	      url="KDVI-features.dvi"><filename>KDVI-features.dvi</filename></ulink>.</para>
+	    </note>
 
-<para>
-The following picture shows the options dialog of
-&kdvi;.
-</para>
+	  </listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	  <term><guilabel>Hyperlinks</guilabel></term>
+	  <listitem>
+	    <para>Check this if you want &kdvi; to display
+	    hyperlinks. The appropriate parts of the text will be
+	    underlined in blue. You probably want to set this
+	    option.</para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
 
-<screenshot>
-<screeninfo>The <guilabel>Fonts</guilabel> dialog</screeninfo>
-<mediaobject>
-<imageobject>
-<imagedata fileref="optionrequester1.png" format="PNG"/></imageobject>
-<textobject>
-<phrase>The <guilabel>Fonts</guilabel> dialog</phrase>
-</textobject>
-</mediaobject>	
-</screenshot>
-
-<variablelist>
-<varlistentry>
-<term><guilabel>Metafont mode</guilabel></term>
-<listitem>
-<para>
-These options specify the fonts which &kdvi; will use for rendering.  By
-carefully optimizing the settings here it is possible to improve on the
-display. However, unless you are an expert in
-<command>MetaFont</command> and know what you are doing, it is not a
-good idea to change these options.
-</para>
-<para>
-Safe values are <guilabel>1200 DPI / Lexmark</guilabel> for good
-quality, or <guilabel>600 DPI / LaserJet 4</guilabel> for medium quality
-and faster display.
-</para>
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term><guilabel>Generate missing fonts</guilabel></term>
-<listitem>
-<para>
-Check this if you want &kdvi; to call the <command>MetaFont</command>
-program in the likely case that kdvi wants to display documents which
-use fonts which are not yet readily made. You most certainly want to set
-this option.
-</para>
-</listitem>
-</varlistentry>
-</variablelist>
-
-</sect1>
-
-<sect1 id="opt-rendering">
-<title><guilabel>Rendering</guilabel> Options</title>
-
-
-<para>
-The following picture shows the second options dialog of &kdvi;.
-</para>
-
-<screenshot>
-<screeninfo>The <guilabel>Rendering</guilabel> dialog</screeninfo>
-<mediaobject>
-<imageobject>
-<imagedata fileref="optionrequester2.png" format="PNG"/></imageobject>
-<textobject>
-<phrase>The <guilabel>Rendering</guilabel> dialog</phrase>
-</textobject>
-</mediaobject>
-</screenshot>
-
-<variablelist>
-<varlistentry>
-<term><guilabel>Show PostScript specials</guilabel></term>
-<listitem>
-<para>
-If this options is checked, &kdvi; will display &PostScript; graphics
-which are embedded into the &DVI; file.
-</para>
-
-<para>
-If an external &PostScript; file could not be found, &kdvi; will draw a
-red warning box in its place. Unfortunately, rendering &PostScript;
-graphics is very slow in the current version of &kdvi;.  We will improve
-on the speed in later versions. If this option is off, &kdvi; will
-either draw a grey box as a placeholder for the graphics, or it will
-leave the space blank.
-</para>
-
-<note>
-<para>
-There is no standard way to embed &PostScript; graphics into a &DVI;
-file. It may therefore happen that &kdvi; cannot properly display a
-graphic which works fine with other programs. Older versions of
-<command>xdvi</command> and <command>dvips</command> support the
-execution of external commands. This is a hight security risk and
-therefore deliberately not implemented in &kdvi;. Technical information
-about supported ways to include &PostScript; can be found in an external
-document. You probably want to set this option.
-</para>
-</note>
-
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term><guilabel>Hyperlinks</guilabel></term>
-<listitem>
-<para>
-Check this if you want &kdvi; to display hyperlinks. The appropriate
-parts of the text will be underlined in blue. You probably want to set
-this option.  </para>
-</listitem>
-</varlistentry>
-</variablelist>
-
-</sect1>
-</chapter>
-
-<chapter id="printing">
-<title>Printing</title>
-
-<para>
-This version has a print setup dialog (available from the print dialog)
-that lets you configure the printing method, n-up program, printer names
-and spooler command. Printing method selects the external program to use
-for printing.  Available choices are <command>dvips</command> and
-<command>dvilj4</command>. If you use <command>dvips</command>, you can
-also have an n-up program called to make 2 or 4 pages per sheet. Select
-<command>psnup</command> (preferred) or <command>mpage</command> (may
-work) if you have that installed in your system.
-</para>
-
-<para>
-You may add printer names that will be available in the print dialog.
-</para>
-
-<para>
-And last you can change the spooler command (defaults to
-<command>lpr</command>) that is supposed to read standard input. Option
-<option>-P</option> is appended when printing to non default printer.
-</para>
-
-<para>
-Having setup printing you can use the print dialog where you can select
-the pages to be printed, which printer or file to use for output and
-more.
-</para>
-</chapter>
-
-<chapter id="faq">
-<title>Q &amp; A</title>
-
-<qandaset>
-<qandaentry>
-<question>
-<para>
-Why is &kdvi; not displaying anything but a busy cursor?
-</para>
-</question>
-<answer>
-<para>
-It is possible, that &kdvi; is searching for the <acronym>PK</acronym>
-fonts from wrong places, and this can be very time consuming if these
-include network mounted filesystems. You can check for this with
-<command>strace</command> and see below for a cure.
-</para>
-</answer>
-</qandaentry>
-
-<qandaentry>
-<question>
-<para>
-What can I do when &kdvi; does not find my <acronym>PK</acronym> fonts?
-</para>
-</question>
-<answer>
-<para>
-You must have correct settings for resolution and
-<command>Metafont</command> mode. If this does not help, you may set the
-field <guilabel>PK Font Path</guilabel> in Preferences/Fonts to point to
-the list of directories to be searched for <acronym>PK</acronym> fonts:
-<userinput><filename
-class="directory">/var/lib/texmf/fonts/pk/ljfour/</filename>:<filename
-class="directory"><replaceable>/some/other/place</replaceable></filename></userinput>.
-You can make &kdvi; search recursively by adding an extra / at the end
-of directory name: <userinput>/var/lib/texmf/fonts//</userinput> (This
-works like <command>xdvi</command>'s <envar>XDVIFONTS</envar>
-environment variable.  There is also good (gnu <command>info</command>)
-documentation available for the kpathsea library that &kdvi; uses for
-font searching.)  This makes &kdvi; usable when you have some other tex
-system than <command>tetex</command> and don't have the
-<filename>texmf.cnf</filename> file.
-</para>
-</answer>
-</qandaentry>
-
-<qandaentry>
-<question>
-<para>
-How do I get the font generation to work?
-</para>
-</question>
-<answer>
-<para>
-If you would like to enable automatic font generation using
-<command>MakeTeXPK</command>, you must also supply correct
-<command>Metafont</command> mode in preferences dialog.  When automatic
-pk-font generation is disabled (menu option) the missing fonts will be
-logged to file <filename>missfont.log</filename> in the current
-directory.  It is a good idea to check that the font generation commands
-in <filename>missfont.log</filename> are correct before enabling font
-generation
-</para>
-</answer>
-</qandaentry>
-</qandaset>
-</chapter>
+    </sect1>
+  </chapter>
 
 
-<chapter id="credits-and-license">
-<title>Credits and Licenses</title>
+  <chapter id="faq">
+    <title>Frequently asked questions</title>
 
-<para>&kdvi;</para>
+    <qandaset>
+      <qandaentry>
+	<question id="fontgen">
+	  <para>What happens when &kdvi; displays the message
+	  "Generating bitmap fonts", and why does the procedure take
+	  so long?</para>
+	</question>
+	<answer>
+	  <para>Many of the fonts which are typically used in a TeX
+	  document must be generated by the MetaFont system. Metafont
+	  is a language similar to TeX (included in most TeX
+	  distributions) which takes a description of the font
+	  outline, and produces a rasterized version (=
+	  <filename>.pk</filename>-file) of the font which can then be
+	  send to a printer or be used in a previewing program like
+	  &kdvi;. Metafont goes out of its way to produce the best
+	  possible output for your printer. For instance, it knows
+	  that a pixel of an inkjet printer is a roundisch blot, and
+	  that nearby pixels tend to smear into each other. In
+	  contrast, a pixel on a laser printer is rectangular, but an
+	  isolated pixel is very often not rendered at all.</para>
 
-<para>
-&kdvi; 0.9 is based on based on the stand-alone-program &kdvi; 0.4.3 by
-Markku Hihnala. That program is in turn based on
-<application>xdvi</application> version 18f which has many authors.
-</para>
+	  <para>Generating such highly optimized bitmap fonts is
+	  naturally rather time-consuming, in particular since typical
+	  TeX documents use a large number of different fonts. We can
+	  only ask for your patience. To ease the matter somewhat,
+	  most distributions of TeX store the
+	  <filename>.pk</filename>-files for a limited time, e.g. 100
+	  days. Therefore, if you access the same document more than
+	  once, the <filename>.pk</filename> files will be
+	  reused.</para>
+	</answer>
+      </qandaentry>
 
-<para>
-Documentation is copyright 2000, 2001, Markku Hihnala
-<email>mah@ee.oulu.fi</email> and Stefan Kebekus
-<email>kebekus@kde.org</email>
-</para>
+      <qandaentry>
+	<question id="MFModes">
+	  <para>What is a MetaFont Mode?</para>
+	</question>
+	<answer>
+	  <para>In order to produce bitmap fonts which are optimized
+	  for your printer (see the answer to the first question),
+	  Metafont comes with a database of printing engines --look
+	  for a file called <filename>modes.mf</filename>. A Metafont
+	  Mode is just the name of a database entry. For example, the
+	  name "ljfour" refers to the entry in the database that
+	  describes a Hewlett Packard LaserJet 4 printer. A MetaFont
+	  Mode is usually followed by a number, the resolution. The
+	  LaserJet, for instance canprint in both 300 and 600 dots per
+	  inch. Thus, "ljfour/600" would be a full description.</para>
+	</answer>
+      </qandaentry>
 
-<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+    </qandaset>
+  </chapter>
 
+
+  <chapter id="credits-and-license">
+    <title>Credits and Licenses</title>
+
+    <para>&kdvi;</para>
+
+    <para>&kdvi; is based on based on the stand-alone-program &kdvi;
+    0.4.3 by Markku Hihnala. That program is in turn based on
+    <application>xdvi</application> version 18f which has many
+    authors.</para>
+
+    <para>Documentation is copyright 2001, Stefan Kebekus
+    <email>kebekus@kde.org</email></para>
+
+    <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+    
 &underGPL;
 &underFDL;
 
-</chapter>
+  </chapter>
 
-<appendix id="installation">
-<title>Installation</title>
+    
 
-<para>
-&kdvi; is part of the kdegraphics module of &kde;.
-</para>
-
-</appendix>
+&documentation.index;
 
 </book>
+<!--
+Local Variables:
+mode: sgml
+sgml-omittag: nil
+sgml-shorttag: t
+End:
+-->
 

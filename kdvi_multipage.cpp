@@ -240,7 +240,7 @@ void KDVIMultiPage::about()
 				      i18n("the KDVI plugin"), 
 				      KAboutDialog::Close, KAboutDialog::Close);
 
-  ab->setProduct("kdvi", "0.9g", QString::null, QString::null);
+  ab->setProduct("kdvi", "0.9h", QString::null, QString::null);
   ab->addTextPage (i18n("About"), 
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"
@@ -275,7 +275,7 @@ void KDVIMultiPage::about()
 
 void KDVIMultiPage::bugform()
 {
-  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9g", 0, 0, 0, 0, 0);
+  KAboutData *kab = new KAboutData("kdvi", I18N_NOOP("KDVI"), "0.9h", 0, 0, 0, 0, 0);
   KBugReport *kbr = new KBugReport(0, true, kab );
   kbr->show();
 }

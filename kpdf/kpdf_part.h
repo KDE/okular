@@ -38,51 +38,39 @@ class PageView;
 class SearchWidget;
 class KPDFDocument;
 
-namespace KPDF
+namespace KPDF {
+
+class BrowserExtension;
+
+/**
+ * This is a "Part".  It that does all the real work in a KPart
+ * application.
+ *
+ * @short Main Part
+ * @author Wilco Greven <greven@kde.org>
+ * @version 0.2
+ */
+class Part : public KParts::ReadOnlyPart
 {
-  class BrowserExtension;
+Q_OBJECT
 
-  /**
-   * This is a "Part".  It that does all the real work in a KPart
-   * application.
-   *
-   * @short Main Part
-   * @author Wilco Greven <greven@kde.org>
-   * @version 0.2
-   */
-  class Part : public KParts::ReadOnlyPart
-  {
-	Q_OBJECT
-
-  public:
-
-	/**
-	* Default constructor
-	*/
+public:
+	// Default constructor
 	Part(QWidget* parentWidget, const char* widgetName,
 	     QObject* parent, const char* name, const QStringList& args);
 
-	/**
-	* Destructor
-	*/
-	virtual ~Part();
+	// Destructor
+	~Part();
 
 	static KAboutData* createAboutData();
 
+protected:
 	// reimplemented from KParts::ReadOnlyPart
+	bool openFile();
+	bool openURL(const KURL &url);
 	bool closeURL();
-	void displayPage(int pageNumber ); //TODO REMOVE ME!
 
-  protected:
-	// reimplemented from KParts::ReadOnlyPart
-	virtual bool openFile();
-	// reimplemented from KParts::ReadOnlyPart
-	virtual bool openURL(const KURL &url);
-
-	void updateAction();
-	void doPrint( KPrinter& printer );
-
-  protected slots:
+protected slots:
 	// connected to actions
 	void slotGoToPage();
 	void slotPreviousPage();
@@ -98,11 +86,13 @@ namespace KPDF
 	void updateActions();
 	void enableTOC(bool enable);
 
-  public slots:
+public slots:
 	// connected to Shell action (and browserExtension), not local one
 	void slotPrint();
 
-  private:
+private:
+	void doPrint( KPrinter& printer );
+
 	// the document
 	KPDFDocument * document;
 
@@ -124,19 +114,20 @@ namespace KPDF
 	KAction *m_lastPage;
 	KAction *m_find;
 	KAction *m_findNext;
-  };
+};
 
-  class BrowserExtension : public KParts::BrowserExtension
-  {
-	Q_OBJECT
 
-  public:
+class BrowserExtension : public KParts::BrowserExtension
+{
+Q_OBJECT
+
+public:
 	BrowserExtension(Part*);
 
-  public slots:
+public slots:
 	// Automatically detected by the host.
 	void print();
-  };
+};
 
 }
 

@@ -319,7 +319,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
     bool leftButton = e->button() & LeftButton,
          rightButton = e->button() & RightButton;
-    PageWidget * page = pickPageOnPoint( e->x(), e->y() );
+    PageWidget * pageWidget = pickPageOnPoint( e->x(), e->y() );
     switch ( d->mouseMode )
     {
     case MouseNormal:    // end drag / follow link
@@ -327,25 +327,25 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
         {
             setCursor( arrowCursor );
             // check if over a link
-            if ( d->mouseOnLink && page )
+            if ( d->mouseOnLink && pageWidget )
             {
-                int linkX = e->x() - childX( page ),
-                    linkY = e->y() - childY( page );
-                d->document->slotProcessLink( page->pageNumber(), linkX, linkY );
+                int linkX = e->x() - childX( pageWidget ),
+                    linkY = e->y() - childY( pageWidget );
+                d->document->slotProcessLink( pageWidget->page()->getLink( linkX, linkY ) );
             }
             // check if it was a click, in that case select the page
-            else if ( e->globalPos() == d->mouseStartPos && page )
-                d->document->slotSetCurrentPage( page->pageNumber() );
+            else if ( e->globalPos() == d->mouseStartPos && pageWidget )
+                d->document->slotSetCurrentPage( pageWidget->pageNumber() );
             // check wether to restore the hand cursor
             else if ( d->mouseOnLink )
                 setCursor( pointingHandCursor );
         }
-        else if ( rightButton && page )
+        else if ( rightButton && pageWidget )
         {
             // If over a page display a popup menu
-            const KPDFPage * kpdfPage = page->page();
+            const KPDFPage * kpdfPage = pageWidget->page();
             KPopupMenu * m_popup = new KPopupMenu( this, "rmb popup" );
-            m_popup->insertTitle( i18n( "Page %1" ).arg( page->pageNumber() + 1 ) );
+            m_popup->insertTitle( i18n( "Page %1" ).arg( kpdfPage->number() + 1 ) );
             if ( kpdfPage->isBookmarked() )
                 m_popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
             else
@@ -355,14 +355,14 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             switch ( m_popup->exec(QCursor::pos()) )
             {
             case 1:
-                d->document->slotBookmarkPage( page->pageNumber(), !kpdfPage->isBookmarked() );
+                d->document->slotBookmarkPage( kpdfPage->number(), !kpdfPage->isBookmarked() );
                 break;
             case 2: // FIXME less hackish, please!
                 d->aZoomFitWidth->setChecked( true );
                 updateZoom( ZoomFitWidth );
                 d->aViewTwoPages->setChecked( false );
                 slotTwoPagesToggled( false );
-                d->document->slotSetCurrentPage( page->pageNumber() );
+                d->document->slotSetCurrentPage( kpdfPage->number() );
                 break;
             case 3: // TODO switch to edit mode
                 slotSetMouseDraw();
@@ -374,6 +374,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     case MouseSelection: // get text from the page
         if ( leftButton && d->mouseSelectionWidget )
         {
+            const KPDFPage * kpdfPage = d->mouseSelectionWidget->page();
+            if ( !kpdfPage->hasSearchPage() )
+                d->document->requestTextPage( kpdfPage->number() );
             kdWarning() << d->mouseSelectionWidget->selectedText() << endl;
             d->mouseSelectionWidget->clearSelection();
             d->mouseSelectionWidget = 0;

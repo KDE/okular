@@ -17,6 +17,7 @@
 class Outline;
 
 class KPDFPage;
+class KPDFLink;
 
 /**
  * @short Base class for objects being notified when something changes.
@@ -71,6 +72,7 @@ public:
     // observers related methods
     void addObserver( KPDFDocumentObserver * pObserver );
     void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
+    void requestTextPage( uint page );
 
 public slots:
     // document commands via slots
@@ -79,7 +81,7 @@ public slots:
     void slotSetFilter( const QString & pattern, bool caseSensitive );
     void slotBookmarkPage( int page, bool enabled );
     void slotFind( const QString & text = "", bool caseSensitive = false );
-    void slotProcessLink( int page, int x, int y );
+    void slotProcessLink( const KPDFLink * link );
 
 signals:
     // notify changes via signals

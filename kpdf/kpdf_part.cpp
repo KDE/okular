@@ -102,8 +102,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->setMinimumWidth( 60 );
 	m_toolBox->setMaximumWidth( 200 );
 
-	// TODO when links following is done connect the execute(LinkAction *action) signal from
-	// tocFrame to the same slot
 	TOC * tocFrame = new TOC( m_toolBox, document );
 	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	connect(tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
@@ -341,154 +339,52 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
-  KURL saveURL = KFileDialog::getSaveURL(
-					 url().isLocalFile()
-					 ? url().url()
-					 : url().fileName(),
-					 QString::null,
-					 widget(),
-					 QString::null );
+	KURL saveURL = KFileDialog::getSaveURL(
+		url().isLocalFile() ? url().url() : url().fileName(),
+		QString::null, widget(), QString::null );
 	if( !KIO::NetAccess::upload( url().path(), saveURL, static_cast<QWidget*>( 0 ) ) )
-	; // TODO: Proper error dialog
+		KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( url().path() ) );
 }
 
-
-/*
-void Part::displayDestination(LinkDest* dest)
+void Part::slotToggleLeftPanel( bool on )
 {
-  int pageNumber;
-  // int dx, dy;
+    // show/hide left qtoolbox
+    m_toolBox->setShown( on );
+    // this needs to be hidden explicitly to disable thumbnails gen
+    m_thumbnailList->setShown( on );
+}
 
-  if (dest->isPageRef())
-  {
-    Ref pageRef = dest->getPageRef();
-    pageNumber = m_doc->findPage(pageRef.num, pageRef.gen);
-  }
-  else
-  {
-    pageNumber = dest->getPageNum();
-  }
-
-  if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
-  {
-    pageNumber = 1;
-  }
-
-  displayPage(pageNumber);
-  return;
-
-  if (fullScreen) {
-    return;
-  }
-  switch (dest->getKind()) {
-  case destXYZ:
-    out->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
-    if (dest->getChangeLeft() || dest->getChangeTop()) {
-      if (dest->getChangeLeft()) {
-	hScrollbar->setPos(dx, canvas->getWidth());
-      }
-      if (dest->getChangeTop()) {
-	vScrollbar->setPos(dy, canvas->getHeight());
-      }
-      canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    }
-    //~ what is the zoom parameter?
-    break;
-  case destFit:
-  case destFitB:
-    //~ do fit
-    hScrollbar->setPos(0, canvas->getWidth());
-    vScrollbar->setPos(0, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  case destFitH:
-  case destFitBH:
-    //~ do fit
-    out->cvtUserToDev(0, dest->getTop(), &dx, &dy);
-    hScrollbar->setPos(0, canvas->getWidth());
-    vScrollbar->setPos(dy, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  case destFitV:
-  case destFitBV:
-    //~ do fit
-    out->cvtUserToDev(dest->getLeft(), 0, &dx, &dy);
-    hScrollbar->setPos(dx, canvas->getWidth());
-    vScrollbar->setPos(0, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  case destFitR:
-    //~ do fit
-    out->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
-    hScrollbar->setPos(dx, canvas->getWidth());
-    vScrollbar->setPos(dy, canvas->getHeight());
-    canvas->scroll(hScrollbar->getPos(), vScrollbar->getPos());
-    break;
-  }
-}*/
-
-/*
-void Part::executeAction(LinkAction* action)
+void Part::slotPrintPreview()
 {
-  if (action == 0)
+/*
+    if (m_doc == 0)
     return;
 
-  LinkActionKind kind = action->getKind();
+    double width, height;
+    int landscape, portrait;
+    KPrinter printer;
 
-  switch (kind)
-  {
-  case actionGoTo:
-  case actionGoToR:
-  {
-    LinkDest* dest = 0;
-    GString* namedDest = 0;
+    printer.setMinMax(1, m_doc->getNumPages());
+    printer.setPreviewOnly( true );
+    printer.setMargins(0, 0, 0, 0);
 
-    if (kind == actionGoTo)
+  // if some pages are landscape and others are not the most common win as kprinter does
+  // not accept a per page setting
+    landscape = 0;
+    portrait = 0;
+    for (int i = 1; i <= m_doc->getNumPages(); i++)
     {
-      if ((dest = ((LinkGoTo*)action)->getDest()))
-        dest = dest->copy();
-      else if ((namedDest = ((LinkGoTo*)action)->getNamedDest()))
-        namedDest = namedDest->copy();
-    }
+    width = m_doc->getPageWidth(i);
+    height = m_doc->getPageHeight(i);
+    if (m_doc->getPageRotate(i) == 90 || m_doc->getPageRotate(i) == 270) qSwap(width, height);
+    if (width > height) landscape++;
+    else portrait++;
+}
+    if (landscape > portrait) printer.setOption("orientation-requested", "4");
 
-    else
-    {
-      if ((dest = ((LinkGoToR*)action)->getDest()))
-        dest = dest->copy();
-      else if ((namedDest = ((LinkGoToR*)action)->getNamedDest()))
-        namedDest = namedDest->copy();
-      s = ((LinkGoToR*)action)->getFileName()->getCString();
-      //~ translate path name for VMS (deal with '/')
-      if (!loadFile(fileName))
-      {
-        delete dest;
-        delete namedDest;
-        return;
-      }
-    }
-
-
-    if (namedDest != 0)
-    {
-      dest = m_doc->findDest(namedDest);
-      delete namedDest;
-    }
-    if (dest != 0)
-    {
-      displayDestination(dest);
-      delete dest;
-    }
-    else
-    {
-      if (kind == actionGoToR)
-        displayPage(1);
-    }
-    break;
-  }
-  default:
-      break;
-  }
-}*/
+    doPrint(printer);
+*/
+}
 
 void Part::slotPrint()
 {
@@ -526,38 +422,6 @@ void Part::slotPrint()
 */
 }
 
-void Part::slotPrintPreview()
-{
-/*
-  if (m_doc == 0)
-    return;
-
-  double width, height;
-  int landscape, portrait;
-  KPrinter printer;
-
-  printer.setMinMax(1, m_doc->getNumPages());
-  printer.setPreviewOnly( true );
-  printer.setMargins(0, 0, 0, 0);
-
-  // if some pages are landscape and others are not the most common win as kprinter does
-  // not accept a per page setting
-  landscape = 0;
-  portrait = 0;
-  for (int i = 1; i <= m_doc->getNumPages(); i++)
-  {
-    width = m_doc->getPageWidth(i);
-    height = m_doc->getPageHeight(i);
-    if (m_doc->getPageRotate(i) == 90 || m_doc->getPageRotate(i) == 270) qSwap(width, height);
-    if (width > height) landscape++;
-    else portrait++;
-  }
-  if (landscape > portrait) printer.setOption("orientation-requested", "4");
-
-  doPrint(printer);
-*/
-}
-
 void Part::doPrint( KPrinter& /*printer*/ )
 {
 /*
@@ -577,14 +441,6 @@ void Part::doPrint( KPrinter& /*printer*/ )
     m_docMutex.unlock();
   }
 */
-}
-
-void Part::slotToggleLeftPanel( bool on )
-{
-	// show/hide left qtoolbox
-	m_toolBox->setShown( on );
-	// this needs to be hidden explicitly to disable thumbnails gen
-	m_thumbnailList->setShown( on );
 }
 
 /*

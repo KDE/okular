@@ -29,7 +29,6 @@ Q_OBJECT
 		void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool documentChanged);
 
 	signals:
-		void execute(LinkAction *action);
 		void hasTOC(bool has);
 
 	private slots:

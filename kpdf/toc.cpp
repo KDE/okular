@@ -17,6 +17,7 @@
 #include "xpdf/UnicodeMap.h"
 
 #include "toc.h"
+#include "page.h"
 
 class TOCItem : public KListViewItem
 {
@@ -138,7 +139,8 @@ QString TOC::getTitle(Unicode *u, int length, UnicodeMap *uMap) const
 void TOC::slotExecuted(QListViewItem *i)
 {
 	TOCItem *ti = dynamic_cast<TOCItem*>(i);
-	emit execute(ti -> getAction());
+	KPDFLink l( ti->getAction() );
+	m_document->slotProcessLink( &l );
 }
 
 #include "toc.moc"

@@ -280,6 +280,18 @@ void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool
     }
 }
 
+void KPDFDocument::requestTextPage( uint n )
+{
+    KPDFPage * page = d->pages[ n ];
+    // build a TextPage using the lightweight KPDFTextDev generator..
+    KPDFTextDev td;
+    d->docLock.lock();
+    d->pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+    d->docLock.unlock();
+    // ..and attach it to the page
+    page->setSearchPage( td.takeTextPage() );
+}
+
 // BEGIN slots
 void KPDFDocument::slotSetCurrentPage( int page )
 {
@@ -288,6 +300,8 @@ void KPDFDocument::slotSetCurrentPage( int page )
 
 void KPDFDocument::slotSetCurrentPagePosition( int page, float position )
 {
+    if ( page < 0 || page > (int)d->pages.count() )
+        page = 0;
     if ( page == d->currentPage && position == d->currentPosition )
         return;
     d->currentPage = page;
@@ -354,15 +368,7 @@ void KPDFDocument::slotFind( const QString & string, bool keepCase )
             }
             KPDFPage * page = d->pages[ currentPage ];
             if ( !page->hasSearchPage() )
-            {
-                // build a TextPage using the lightweight KPDFTextDev generator..
-                KPDFTextDev td;
-                d->docLock.lock();
-                d->pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
-                d->docLock.unlock();
-                // ..and attach it to the page
-                page->setSearchPage( td.takeTextPage() );
-            }
+                requestTextPage( page->number() );
             if ( page->hasText( d->searchText, d->searchCase, true ) )
             {
                 foundPage = page;
@@ -383,10 +389,8 @@ void KPDFDocument::slotFind( const QString & string, bool keepCase )
         KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(d->searchText) );
 }
 
-void KPDFDocument::slotProcessLink( int n, int x, int y )
+void KPDFDocument::slotProcessLink( const KPDFLink * link )
 {
-    KPDFPage * page = ( n < (int)d->pages.count() ) ? d->pages[ n ] : 0;
-    const KPDFLink * link = page ? page->getLink( x, y ) : 0;
     if ( !link )
         return;
 
@@ -412,16 +416,47 @@ void KPDFDocument::slotProcessLink( int n, int x, int y )
         // now previous KPDFLink and KPDFPage don't exist anymore!
         if ( namedDest && !dest )
         {
-            d->docLock.lock();
             GString temp( namedDest );
+            d->docLock.lock();
             dest = d->pdfdoc->findDest( &temp  );
             d->docLock.unlock();
         }
-        if ( dest )
+        if ( dest && dest->isOk() )
         {
-            // TODO implement page traversal
-            //pri NOWARN ntf("HERE I AM\n");
-            //displayDest(dest, zoom, rotate, gTrue);
+            // get destination page
+            int page = dest->getPageNum() - 1;
+            if ( dest->isPageRef() )
+            {
+                Ref ref = dest->getPageRef();
+                d->docLock.lock();
+                page = d->pdfdoc->findPage( ref.num, ref.gen ) - 1;
+                d->docLock.unlock();
+            }
+            // get destination position
+            /* TODO
+            switch ( dest->getKind() )
+            {
+            case destXYZ
+                OD -> cvtUserToDev( dest->getLeft(), dest->getTop(), &X, &Y );
+                if ( dest->getChangeLeft() )
+                    make hor change
+                if ( dest->getChangeTop() )
+                    make ver change
+                if ( dest->getChangeZoom() )
+                    make zoom change
+            case destFit
+            case destFitB
+                fit page
+            case destFitH
+            case destFitBH
+                read top, fit Width
+            case destFitV
+            case destFitBV
+                read left, fit Height
+            destFitR
+                read and fit left,bottom,right,top
+            }*/
+            slotSetCurrentPage( page );
         }
         delete namedDest;
         delete dest;
@@ -432,21 +467,15 @@ void KPDFDocument::slotProcessLink( int n, int x, int y )
         if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
             openRelativeFile( fileName );
         else
-        {
             KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
-            /* core developers say this is too dangerous
-            fileName = fileName->copy();
-            if (((LinkLaunch *)action)->getParams())
-            {
-                fileName->append(' ');
-                fileName->append(((LinkLaunch *)action)->getParams());
-            }
-            fileName->append(" &");
-            if (KMessageBox::questionYesNo(widget(), i18n("Do you want to execute the command:\n%1").arg(fileName->getCString()), i18n("Launching external application")) == KMessageBox::Yes)
-            {
-                system(fileName->getCString());
-            }*/
-        }
+            /* core developers say this is too dangerous. watch out for the security warning on kde-cvs :-)
+            fileName += " ";
+            if ( link->getParameters() )
+                fileName += link->getParameters();
+            fileName += " &";
+            if ( KMessageBox::questionYesNo( 0, i18n("Do you want to execute the command:\n%1").arg(fileName), i18n("Launching external application")) == KMessageBox::Yes )
+                system( fileName.latin1() );
+            */
         } break;
 
     case KPDFLink::Named: {

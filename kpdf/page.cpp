@@ -214,9 +214,73 @@ void KPDFPage::setPixmapOverlayNotations( ..DOMdescription.. )
 
 
 
-KPDFLink::KPDFLink( int l, int t, int r, int b )
-    : m_type( Unknown ), m_dest( 0 ), m_destNamed( 0 ),
-    m_fileName( 0 ), m_parameters( 0 ), m_uri( 0 )
+KPDFLink::KPDFLink( LinkAction * a )
+    : m_type( Unknown ), x_min( 0 ), x_max( 0 ), y_min( 0 ), y_max( 0 ),
+    m_dest( 0 ), m_destNamed( 0 ), m_fileName( 0 ), m_parameters( 0 ), m_uri( 0 )
+{
+    // set link action params processing (XPDF)LinkAction
+    switch ( a->getKind() )
+    {
+    case actionGoTo: {
+        LinkGoTo * g = (LinkGoTo *) a;
+        m_type = Goto;
+        // copy link dest (LinkDest class)
+        LinkDest * d = g->getDest();
+        m_dest = d ? d->copy() : 0;
+        // copy link namedDest (const char *)
+        GString * nd = g->getNamedDest();
+        copyString( m_destNamed, nd ? nd->getCString() : 0 );
+        } break;
+
+    case actionGoToR: {
+        m_type = Goto;
+        LinkGoToR * g = (LinkGoToR *) a;
+        // copy link file (const char *)
+        copyString( m_fileName, g->getFileName()->getCString() );
+        // copy link dest (LinkDest class)
+        LinkDest * d = g->getDest();
+        m_dest = d ? d->copy() : 0;
+        // copy link namedDest (const char *)
+        GString * nd = g->getNamedDest();
+        copyString( m_destNamed, nd ? nd->getCString() : 0 );
+        } break;
+
+    case actionLaunch: {
+        m_type = Execute;
+        LinkLaunch * e = (LinkLaunch *)a;
+        // copy name and parameters of the file to open(in case of PDF)/launch
+        copyString( m_fileName, e->getFileName()->getCString() );
+        copyString( m_parameters, e->getParams()->getCString() );
+        } break;
+
+    case actionURI:
+        m_type = URI;
+        // copy URI (const char *)
+        copyString( m_uri, ((LinkURI *)a)->getURI()->getCString() );
+        break;
+
+    case actionNamed:
+        m_type = Named;
+        // copy Action Name (const char * like Quit, Next, Back, etc..)
+        copyString( m_uri, ((LinkNamed *)a)->getName()->getCString() );
+        break;
+
+    case actionMovie: {
+        m_type = Movie;
+        LinkMovie * m = (LinkMovie *) a;
+        // copy Movie parameters (2 IDs and a const char *)
+        Ref * r = m->getAnnotRef();
+        m_refNum = r->num;
+        m_refGen = r->gen;
+        copyString( m_uri, m->getTitle()->getCString() );
+        } break;
+
+    case actionUnknown:
+        break;
+    }
+}
+
+void KPDFLink::setGeometry( int l, int t, int r, int b )
 {
     // assign coordinates swapping them if negative width or height
     x_min = r > l ? l : r;
@@ -234,42 +298,26 @@ KPDFLink::~KPDFLink()
     delete [] m_uri;
 }
 
-void KPDFLink::setLinkGoto( LinkDest * d, const char * n, const char * file )
+
+bool KPDFLink::contains( int x, int  y ) const
 {
-    m_type = Goto;
-    delete m_dest;
-    m_dest = d;
-    copyString( m_destNamed, n );
-    copyString( m_fileName, file );
+    return (x > x_min) && (x < x_max) && (y > y_min) && (y < y_max);
 }
 
-void KPDFLink::setLinkExecute( const char * file, const char * par )
+void KPDFLink::copyString( char * &dest, const char * src ) const
 {
-    m_type = Execute;
-    copyString( m_fileName, file );
-    copyString( m_parameters, par );
+    if ( src )
+    {
+        dest = new char[ strlen(src) + 1 ];
+        strcpy( &dest[0], src );
+    }
 }
 
-void KPDFLink::setLinkNamed( const char * name )
-{
-    m_type = Named;
-    copyString( m_uri, name );
-}
 
-void KPDFLink::setLinkURI( const char * uri )
+KPDFLink::LinkType KPDFLink::type() const
 {
-    m_type = URI;
-    copyString( m_uri, uri );
+    return m_type;
 }
-
-void KPDFLink::setLinkMovie( int ref_num, int ref_gen, const char * title )
-{
-    m_type = Movie;
-    m_refNum = ref_num;
-    m_refGen = ref_gen;
-    copyString( m_uri, title );
-}
-
 
 const LinkDest * KPDFLink::getDest() const
 {
@@ -299,27 +347,4 @@ const char * KPDFLink::getName() const
 const char * KPDFLink::getURI() const
 {
     return m_uri;
-}
-
-
-KPDFLink::LinkType KPDFLink::type() const
-{
-    return m_type;
-}
-
-bool KPDFLink::contains( int x, int  y ) const
-{
-    return (x > x_min) && (x < x_max) && (y > y_min) && (y < y_max);
-}
-
-void KPDFLink::copyString( char * &dest, const char * src ) const
-{
-    if ( dest )
-        delete [] dest;
-    dest = 0;
-    if ( src )
-    {
-        dest = new char[ strlen(src) + 1 ];
-        strcpy( &dest[0], src );
-    }
 }

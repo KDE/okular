@@ -125,52 +125,18 @@ void KPDFOutputDev::drawLink(Link * link, Catalog */*catalog*/)
 	if ( !link->isOk() )
 		return;
 
-	// create the new KPDFLink using transformed link coordinates
+	// create the new KPDFLink ...
+	KPDFLink * l = new KPDFLink( link->getAction() );
 	double x1, y1, x2, y2;
 	link->getRect( &x1, &y1, &x2, &y2 );
 	int left, top, right, bottom;
 	cvtUserToDev( x1, y1, &left, &top );
 	cvtUserToDev( x2, y2, &right, &bottom );
-	KPDFLink * l = new KPDFLink( left, top, right, bottom );
+	// ... and assign its coords withing current page geometry
+	l->setGeometry( left, top, right, bottom );
 
 	// add the link to the vector container
 	m_links.push_back( l );
-
-	// set link action params processing (XPDF)LinkAction
-	LinkAction * a = link->getAction();
-	switch ( a->getKind() )
-	{
-	case actionGoTo: {
-		LinkGoTo * g = (LinkGoTo *) a;
-		GString * nd = g->getNamedDest();
-		LinkDest * d = g->getDest();
-		l->setLinkGoto( d ? d->copy() : 0, nd ? nd->getCString() : 0 );
-		} break;
-	case actionGoToR: {
-		LinkGoToR * g = (LinkGoToR *) a;
-		GString * nd = g->getNamedDest();
-		LinkDest * d = g->getDest();
-		l->setLinkGoto( d ? d->copy() : 0, nd ? nd->getCString() : 0, g->getFileName()->getCString() );
-		} break;
-	case actionLaunch:
-		l->setLinkExecute( ((LinkLaunch *)a)->getFileName()->getCString(),
-		                     ((LinkLaunch *)a)->getParams()->getCString() );
-		break;
-	case actionURI:
-		l->setLinkURI( ((LinkURI *)a)->getURI()->getCString() );
-		break;
-	case actionNamed:
-		l->setLinkNamed( ((LinkNamed *)a)->getName()->getCString() );
-		break;
-	case actionMovie: {
-		LinkMovie * m = (LinkMovie *) a;
-		Ref * r = m->getAnnotRef();
-		l->setLinkMovie( r->num, r->gen, m->getTitle()->getCString() );
-		} break;
-	case actionUnknown:
-		// TODO Warn or not???
-		break;
-	}
 }
 
 void KPDFOutputDev::updateFont(GfxState *state)

@@ -16,6 +16,7 @@
 class QPainter;
 class QPixmap;
 class TextPage;
+class LinkAction;
 class LinkDest;
 class KPDFLink;
 
@@ -87,29 +88,25 @@ private:
 class KPDFLink
 {
 public:
-    KPDFLink( int left, int top, int right, int bottom );
+    KPDFLink( LinkAction * PDFAction );
     ~KPDFLink();
 
-    // action types setup
-    enum LinkType { Goto, Execute, Named, URI, Movie, Unknown };
-    void setLinkGoto( LinkDest * dest, const char * namedDest, const char * fileName = 0 );
-    void setLinkExecute( const char * file, const char * parameters );
-    void setLinkNamed( const char * name );
-    void setLinkURI( const char * uri );
-    void setLinkMovie( int ref_num, int ref_gen, const char * title );
+    // set geometry (only links collected KPDFPage(s))
+    void setGeometry( int left, int top, int right, int bottom );
+
+    // query / others
+    bool contains( int x, int y ) const;
+    void copyString( char * &dest, const char * src ) const;
 
     // action queries
+    enum LinkType { Goto, Execute, URI, Named, Movie, Unknown };
+    LinkType type() const;
     const LinkDest * getDest() const;   //1
     const char * getNamedDest() const;  //1
     const char * getFileName() const;   //1,2
     const char * getParameters() const; //2
-    const char * getName() const;   //3
-    const char * getURI() const;    //4
-
-    // query / others
-    LinkType type() const;
-    bool contains( int x, int y ) const;
-    void copyString( char * &dest, const char * src ) const;
+    const char * getName() const;       //3
+    const char * getURI() const;        //4
 
 private:
     // general

@@ -37,7 +37,7 @@ void PixmapWidget::setZoomFitWidth( int width )
     m_pixmapWidth = width - m_marginLeft - m_marginRight;
     m_pixmapHeight = (int)(m_page->ratio() * m_pixmapWidth);
     // compute equivalent zoom factor
-    m_zoomFactor = m_page->width() / (float)m_pixmapWidth;
+    m_zoomFactor = (double)m_pixmapWidth / (double)m_page->width();
 }
 
 void PixmapWidget::setZoomFitRect( int rectWidth, int rectHeight )

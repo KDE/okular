@@ -58,7 +58,7 @@ public:
 
     // other stuff
     QTimer *delayTimer;
-    bool dirty;
+    bool dirtyLayout;
 
     // actions
     KSelectAction *aZoom;
@@ -83,11 +83,11 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->viewColumns = 1;
     d->viewContinous = false;
     d->zoomMode = ZoomFitWidth;
-    d->zoomFactor = 0.999;
+    d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseOnLink = false;
     d->delayTimer = 0;
-    d->dirty = false;
+    d->dirtyLayout = false;
 
     // dealing with (very) large areas so enable clipper
     enableClipper( true );
@@ -118,25 +118,11 @@ PageView::~PageView()
 
 void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
 {
-    // Zoom actions ( higher scales consumes lots of memory! )
-    const double zoomValue[10] = { 0.125, 0.25, 0.333, 0.5, 0.667, 0.75, 1, 1.25, 1.50, 2 };
-
+    // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, ac, "zoom_to" );
     connect( d->aZoom, SIGNAL( activated( const QString & ) ), this, SLOT( slotZoom( const QString& ) ) );
-    d->aZoom->setEditable(  true );
-
-    QStringList translated;
-    translated << i18n("Fit Width") << i18n("Fit Page");
-    QString localValue;
-    QString double_oh( "00" );
-    for ( int i = 0; i < 10; i++ )
-    {
-        localValue = KGlobal::locale()->formatNumber( zoomValue[i] * 100.0, 2 );
-        localValue.remove( KGlobal::locale()->decimalSymbol() + double_oh );
-        translated << QString( "%1%" ).arg( localValue );
-    }
-    d->aZoom->setItems( translated );
-    d->aZoom->setCurrentItem( 0 ); // 8 for 100%
+    d->aZoom->setEditable( true );
+    updateZoomText();
 
     KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
 
@@ -147,6 +133,9 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
 
     d->aZoomFitPage = new KToggleAction( i18n("Fit to &Page"), "viewmagfit", 0, ac, "zoom_fit_page" );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
+
+    d->aZoomFitText = new KToggleAction( i18n("Fit Text"), "viewmagfit", 0, ac, "zoom_fit_text" );
+    connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions
     d->aViewTwoPages = new KToggleAction( i18n("Two Pages"), "view_left_right", 0, ac, "view_twopages" );
@@ -209,13 +198,13 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool /*docume
     }
 
     // invalidate layout
-    d->dirty = true;
+    d->dirtyLayout = true;
 }
 
 void PageView::pageSetCurrent( int pageNumber, float position )
 {
-    if ( d->dirty )
-        reLayoutPages();
+    if ( d->dirtyLayout )
+        slotRelayoutPages();
 
     // select next page
     d->vectorIndex = 0;
@@ -238,6 +227,8 @@ void PageView::pageSetCurrent( int pageNumber, float position )
             yPos = childY( d->page ) + (int)((float)d->page->heightHint() * position);
         center( xPos, yPos + visibleHeight() / 2 - 10 );
         slotRequestVisiblePixmaps();
+        if ( d->zoomMode != ZoomFixed )
+            updateZoomText();
     }
 }
 
@@ -387,7 +378,7 @@ void PageView::viewportResizeEvent( QResizeEvent * )
     if ( !d->delayTimer )
     {
         d->delayTimer = new QTimer( this );
-        connect( d->delayTimer, SIGNAL( timeout() ), this, SLOT( slotUpdateView() ) );
+        connect( d->delayTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
     }
     d->delayTimer->start( 400, true );
 }
@@ -456,94 +447,37 @@ void PageView::dropEvent( QDropEvent * ev )
     if (  KURLDrag::decode(  ev, lst ) )
         emit urlDropped( lst.first() );
 }
-
 //END widget events
 
 //BEGIN internal SLOTS
-void PageView::slotZoom( const QString & nz )
+void PageView::slotZoom( const QString & /*nz*/ )
 {
-    if ( nz == i18n("Fit Width") )
-    {
-        d->aZoomFitWidth->setChecked( true );
-        return slotFitToWidthToggled( true );
-    }
-    if ( nz == i18n("Fit Page") )
-    {
-        d->aZoomFitPage->setChecked( true );
-        return slotFitToPageToggled( true );
-    }
-
-    QString z = nz;
-    z.remove( z.find( '%' ), 1 );
-    bool isNumber = true;
-    double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
-
-    if ( d->zoomFactor != zoom && zoom > 0.1 && zoom < 8.0 )
-    {
-        d->zoomMode = ZoomFixed;
-        d->zoomFactor = zoom;
-        slotUpdateView();
-        d->aZoomFitWidth->setChecked( false );
-        d->aZoomFitPage->setChecked( false );
-    }
+    updateZoom( ZoomFixed );
 }
 
 void PageView::slotZoomIn()
 {
-    if ( d->zoomFactor >= 4.0 )
-        return;
-    d->zoomFactor += 0.1;
-    if ( d->zoomFactor >= 4.0 )
-        d->zoomFactor = 4.0;
-
-    d->zoomMode = ZoomFixed;
-    slotUpdateView();
-    d->aZoomFitWidth->setChecked( false );
-    d->aZoomFitPage->setChecked( false );
+    updateZoom( ZoomIn );
 }
 
 void PageView::slotZoomOut()
 {
-    if ( d->zoomFactor <= 0.125 )
-        return;
-    d->zoomFactor -= 0.1;
-    if ( d->zoomFactor <= 0.125 )
-        d->zoomFactor = 0.125;
-
-    d->zoomMode = ZoomFixed;
-    slotUpdateView();
-    d->aZoomFitWidth->setChecked( false );
-    d->aZoomFitPage->setChecked( false );
+    updateZoom( ZoomOut );
 }
 
 void PageView::slotFitToWidthToggled( bool on )
 {
-    d->zoomMode = on ? ZoomFitWidth : ZoomFixed;
-    slotUpdateView();
-    d->aZoomFitPage->setChecked( false );
-    //FIXME uncheck others (such as FitToText)
+    if ( on ) updateZoom( ZoomFitWidth );
 }
 
 void PageView::slotFitToPageToggled( bool on )
 {
-    ZoomMode newZoomMode = on ? ZoomFitText : ZoomFixed;
-    if ( newZoomMode != d->zoomMode )
-    {
-        d->zoomMode = newZoomMode;
-        slotUpdateView();
-        d->aZoomFitWidth->setChecked( false );
-    }
+    if ( on ) updateZoom( ZoomFitPage );
 }
 
 void PageView::slotFitToTextToggled( bool on )
 {
-    ZoomMode newZoomMode = on ? ZoomFitText : ZoomFixed;
-    if ( newZoomMode != d->zoomMode )
-    {
-        d->zoomMode = newZoomMode;
-        slotUpdateView();
-        d->aZoomFitWidth->setChecked( false );
-    }
+    if ( on ) updateZoom( ZoomFitText );
 }
 
 void PageView::slotTwoPagesToggled( bool on )
@@ -552,7 +486,7 @@ void PageView::slotTwoPagesToggled( bool on )
     if ( d->viewColumns != newColumns )
     {
         d->viewColumns = newColumns;
-        reLayoutPages();
+        slotRelayoutPages();
     }
 }
 
@@ -561,7 +495,7 @@ void PageView::slotContinousToggled( bool on )
     if ( d->viewContinous != on )
     {
         d->viewContinous = on;
-        reLayoutPages();
+        slotRelayoutPages();
     }
 }
 
@@ -584,11 +518,6 @@ void PageView::slotToggleScrollBars( bool on )
 {
     setHScrollBarMode( on ? AlwaysOn : AlwaysOff );
     setVScrollBarMode( on ? AlwaysOn : AlwaysOff );
-}
-
-void PageView::slotUpdateView( bool /*repaint*/ )
-{   //TODO ASYNC autogeneration!
-    reLayoutPages();
 }
 
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
@@ -618,7 +547,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 }
 //END internal SLOTS
 
-void PageView::reLayoutPages()
+void PageView::slotRelayoutPages()
+// called by: pageSetup, viewportResizeEvent, slotTwoPagesToggled, slotContinousToggled, updateZoom
 {
     // set an empty container if we have no pages
     int pageCount = d->pages.count();
@@ -730,7 +660,111 @@ void PageView::reLayoutPages()
     }
 
     // reset dirty state
-    d->dirty = false;
+    d->dirtyLayout = false;
+}
+
+void PageView::updateZoom( ZoomMode newZoomMode )
+{
+    if ( newZoomMode == ZoomFixed )
+    {
+        if ( d->aZoom->currentText() == i18n("Fit Width") )
+            newZoomMode = ZoomFitWidth;
+        else if ( d->aZoom->currentText() == i18n("Fit Page") )
+            newZoomMode = ZoomFitPage;
+    }
+
+    float newFactor = d->zoomFactor;
+    KAction * checkedZoomAction = 0;
+    switch ( newZoomMode )
+    {
+    case ZoomFixed:{
+        QString z = d->aZoom->currentText();
+        newFactor = KGlobal::locale()->readNumber( z.remove( z.find( '%' ), 1 ) ) / 100.0;
+        if ( newFactor < 0.1 || newFactor > 8.0 )
+            return;
+        }break;
+    case ZoomIn:
+        newFactor += 0.1;
+        if ( newFactor >= 4.0 )
+            newFactor = 4.0;
+        newZoomMode = ZoomFixed;
+        break;
+    case ZoomOut:
+        newFactor -= 0.1;
+        if ( newFactor <= 0.125 )
+            newFactor = 0.125;
+        newZoomMode = ZoomFixed;
+        break;
+    case ZoomFitWidth:
+        checkedZoomAction = d->aZoomFitWidth;
+        break;
+    case ZoomFitPage:
+        checkedZoomAction = d->aZoomFitPage;
+        break;
+    case ZoomFitText:
+        checkedZoomAction = d->aZoomFitText;
+        break;
+    }
+
+    if ( newZoomMode != d->zoomMode || (newZoomMode == ZoomFixed && newFactor != d->zoomFactor ) )
+    {
+        // rebuild layout and change the zoom selectAction contents
+        d->zoomMode = newZoomMode;
+        d->zoomFactor = newFactor;
+        slotRelayoutPages();
+        updateZoomText();
+        // update actions state
+        d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
+        d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
+        d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
+        // request pixmaps
+        slotRequestVisiblePixmaps();
+    }
+}
+
+void PageView::updateZoomText()
+{
+    // use current page zoom as zoomFactor if in ZoomFit/* mode
+    if ( d->zoomMode != ZoomFixed && d->pages.count() > 0 )
+        d->zoomFactor = d->page ? d->page->zoomFactor() : d->pages[0]->zoomFactor();
+    float newFactor = d->zoomFactor;
+    d->aZoom->clear();
+
+    // add items that describe fit actions
+    QStringList translated;
+    translated << i18n("Fit Width") << i18n("Fit Page"); // << i18n("Fit Text");
+
+    // add percent items
+    QString double_oh( "00" );
+    const float zoomValue[10] = { 0.125, 0.25, 0.333, 0.5, 0.667, 0.75, 1, 1.25, 1.50, 2 };
+    int idx = 0,
+        selIdx = 2; // use 3 if "fit text" present
+    bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
+    while ( idx < 10 || !inserted )
+    {
+        float value = idx < 10 ? zoomValue[ idx ] : newFactor;
+        if ( !inserted && newFactor < (value - 0.001) )
+            value = newFactor;
+        else
+            idx ++;
+        if ( value > (newFactor - 0.001) && value < (newFactor + 0.001) )
+            inserted = true;
+        if ( !inserted )
+            selIdx++;
+        QString localValue( KGlobal::locale()->formatNumber( value * 100.0, 2 ) );
+        localValue.remove( KGlobal::locale()->decimalSymbol() + double_oh );
+        translated << QString( "%1%" ).arg( localValue );
+    }
+    d->aZoom->setItems( translated );
+
+    // select current item in list
+    if ( d->zoomMode == ZoomFitWidth )
+        selIdx = 0;
+    else if ( d->zoomMode == ZoomFitPage )
+        selIdx = 1;
+    else if ( d->zoomMode == ZoomFitText )
+        selIdx = 2;
+    d->aZoom->setCurrentItem( selIdx );
 }
 
 PageWidget * PageView::pickPageOnPoint( int x, int y )

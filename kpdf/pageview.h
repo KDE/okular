@@ -43,8 +43,8 @@ public:
     PageView( QWidget *parent, KPDFDocument *document );
     ~PageView();
 
-    // some enums used to control view behavior
-    enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText };
+    // Zoom mode ( last 2 are internally used only! )
+    enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,  ZoomIn, ZoomOut };
     enum MouseMode { MouseNormal, MouseSelection, MouseEdit };
 
     // create actions that interact with this widget
@@ -69,6 +69,10 @@ protected:
     void dragEnterEvent( QDragEnterEvent* );
     void dropEvent( QDropEvent* );
 
+signals:
+    void urlDropped( const KURL& );
+    void rightClick();
+
 private slots:
     // connected to local actions
     void slotZoom( const QString& );
@@ -85,16 +89,13 @@ private slots:
     void slotToggleScrollBars( bool on );
 
     // activated either directly or via QTimer on the viewportResizeEvent
-    void slotUpdateView( bool repaint = true );
+    void slotRelayoutPages();
     // activated either directly or via the contentsMoving(int,int) signal
     void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
 
-signals:
-    void urlDropped( const KURL& );
-    void rightClick();
-
 private:
-    void reLayoutPages();
+    void updateZoom( ZoomMode newZm );
+    void updateZoomText();
     PageWidget * pickPageOnPoint( int x, int y );
 
     // FIXME REMOVE ME what does atTop() means if I see 4 tiled pages on screen ?

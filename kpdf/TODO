@@ -16,12 +16,13 @@ More items
 
 Porting / In progress on the branch (first item comes first):
 -> restore single page mode (broke up)
--> zoom buttons in sync with text (BR69092)
 -> porting Albert's link following
+-> minimize PageView's reLayout and requestPixmaps on changes
 -> implementing async document generator using Albert's thread as the generation thread
 -> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text
 
 Done (sorted by inv.time)
+-> zoom buttons in sync with text
 -> added continous mode
 -> added multiple pages per view (gui selects 1 or 2 ppv)
 -> added the option to open password protected files (from head)
@@ -59,8 +60,10 @@ BR88661: (thumbnail prev. is blocking) Not only it's threaded, but it generates
 BR72347: (search doesn't work) Closeable NOW. The feature is already on HEAD.
 BR72165: (showing a "scanned document PDF" is very slow). By running many tests
          on xpdf and kpdf_experiments, I measured 5-15% speed loss (due to
-	 internal pixmap conversions). No noticeable difference.
+         internal pixmap conversions). No noticeable difference.
 BR89835: (PDF pages to be aligned centrally). Done in branch.
 BR90026: (crash). Can't reproduce on branch.
 BR74435: (smooth transition/continous mode) It's in from sept-27.
 BR80164: (2-up view of pdf pages)  It's in from sept-26.
+BR69092: Zoom displayed/internal values synced with fixed value or displayed page.
+         It is editable and the list gets cleaned and rebuilt on changes.

@@ -342,12 +342,12 @@ void fontPool::kpsewhich_terminated(KProcess *)
 
     if (all_fonts_are_found == false) {
       QString title = i18n("Font not found - KDVI");
-      QString nokps = i18n("There were problems running the kpsewhich program.  "
+      QString nokps = i18n("There were problems running the kpsewhich program. "
 			   "KDVI will not work if TeX is not installed on your "
 			   "system or if the kpsewhich program cannot be found "
 			   "in the standard search path.\n");
       QString body  = i18n("KDVI was not able to locate all the font files "
-			   "which are necessary to display the current DVI file.  "
+			   "which are necessary to display the current DVI file. "
 			   "Some characters are therefore left blank, and your "
 			   "document might be unreadable.");
       QString metaf = i18n("\nExperts will find helpful information in the 'MetaFont'-"

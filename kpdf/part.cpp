@@ -10,7 +10,6 @@
 #include "part.h"
 
 #include <qlayout.h>
-#include <qtable.h>
 
 #include "kpdf_pagewidget.h"
 #include "thumbnaillist.h"
@@ -47,8 +46,7 @@ PDFPartView::~PDFPartView()
 
 void PDFPartView::setCurrentThumbnail(int i)
 {
-    // ThumbnailList is 0 based
-    pagesList->setCurrentItem(i-1);
+    pagesList->setCurrentItem(i);
 }
 
 void PDFPartView::setPages(int i, double ar)

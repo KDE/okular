@@ -686,8 +686,7 @@ void Part::redrawPage()
 
 void Part::pageClicked ( int i )
 {
-    // ThumbnailList is 0 based
-    goToPage(i+1);
+    goToPage(i);
 }
 
 BrowserExtension::BrowserExtension(Part* parent)

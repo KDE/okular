@@ -32,7 +32,7 @@
 #include <FontFile.h>
 #include <Error.h>
 #include <TextOutputDev.h>
-#include <QOutputDev.moc>
+#include "QOutputDev.moc"
 
 
 #include <qpixmap.h>

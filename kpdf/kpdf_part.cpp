@@ -16,7 +16,6 @@
 
 #include "part.h"
 
-#include <kdebug.h>
 
 #include "GString.h"
 

@@ -8,7 +8,7 @@
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
 
-#include <QOutputDev.h>
+#include "QOutputDev.h"
 
 class QPainter;
 class QPixmap;

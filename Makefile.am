@@ -119,4 +119,4 @@ psheader.c: psheader.txt squeeze $(kpathsea)
 	./squeeze psheader.txt $@
 
 $(kpathsea):
-	cd kpathsea && ./configure && make
+	cd kpathsea && ./configure && $(MAKE)

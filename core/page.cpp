@@ -116,11 +116,11 @@ bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
     if ( !m_text )
         return false;
 
-    const char * str = text.latin1();
+    const QChar* str = text.unicode();
     int len = text.length();
     Unicode *u = (Unicode *)gmalloc(len * sizeof(Unicode));
     for (int i = 0; i < len; ++i)
-        u[i] = (Unicode) str[i];
+        u[i] = str[i].unicode();
 
     bool found = m_text->findText( u, len, fromTop ? gTrue : gFalse, gTrue, fromTop ? gFalse : gTrue, gFalse, &m_sLeft, &m_sTop, &m_sRight, &m_sBottom );
     if( found && strictCase )

@@ -76,6 +76,8 @@ extern "C" void 	psp_destroy();
 extern "C" void 	psp_toggle();
 extern "C" void 	psp_interrupt();
 extern "C" {
+#undef PACKAGE // defined by both c-auto.h and config.h
+#undef VERSION
 #include <kpathsea/c-auto.h>
 #include <kpathsea/paths.h>
 #include <kpathsea/proginit.h>

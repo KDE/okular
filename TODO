@@ -75,6 +75,7 @@ More items (first items will enter 'In progress list' first):
 -> presentation: link following (now possible with uniform links) (BR98388)
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
 -> splash(xpdf): check lack of smoothness at low resolutions and antialiasing (BR94231)
+-> kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)

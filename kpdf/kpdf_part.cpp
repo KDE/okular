@@ -28,7 +28,7 @@
 
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
-K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory);
+K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
 
 using namespace KPDF;
 
@@ -406,7 +406,7 @@ Part::update()
 		redrawing = true;
 		QTimer::singleShot(200, this, SLOT( redrawPage() ));
 	}
-};
+}
 
 void
 Part::redrawPage()

@@ -83,30 +83,30 @@ namespace KPDF
 	void PageWidget::nextPage()
 	{
 		setPage( getPage() + 1);
-	};
+	}
 
 	void PageWidget::previousPage()
 	{
 		setPage( getPage() - 1 );
-	};
+	}
 
 	void PageWidget::zoomIn()
 	{
 		m_zoomFactor += 0.1;
 		updatePixmap();
-	};
+	}
 
 	void PageWidget::zoomOut()
 	{
 		m_zoomFactor -= 0.1;
 		updatePixmap();
-	};
+	}
 
 	void PageWidget::setPage(int page)
 	{
             static QMutex mutex;
 						
-						ASSERT(mutex.locked() == false);
+	    Q_ASSERT(mutex.locked() == false);
             mutex.lock();
             if (m_doc)
             {
@@ -116,7 +116,7 @@ namespace KPDF
             }
             updatePixmap();
             mutex.unlock();
-	};
+	}
 
 	void PageWidget::updatePixmap()
 	{

@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include <qtimer.h>
+#include <qpainter.h>
 #include <klocale.h>
 #include <kurl.h>
 #include <kurldrag.h>
@@ -15,8 +16,37 @@
 #include <kactioncollection.h>
 
 #include "thumbnaillist.h"
-#include "pixmapwidget.h"
 #include "page.h"
+
+// ThumbnailWidget represents a single thumbnail in the ThumbnailList
+class ThumbnailWidget : public QWidget
+{
+    public:
+        ThumbnailWidget( QWidget * parent, const KPDFPage * page );
+
+        // set internal parameters to fit the page in the given width
+        void resizeFitWidth( int width );
+        // set thumbnail's selected state
+        void setSelected( bool selected );
+
+        // query methods
+        int heightHint() const { return m_pixmapHeight + m_labelHeight + 4; }
+        int pixmapWidth() const { return m_pixmapWidth; }
+        int pixmapHeight() const { return m_pixmapHeight; }
+        int pageNumber() const { return m_page->number(); }
+
+    protected:
+        void paintEvent(QPaintEvent *);
+
+    private:
+        const KPDFPage * m_page;
+        bool m_selected;
+        int m_pixmapWidth, m_pixmapHeight;
+        int m_labelHeight, m_labelNumber;
+};
+
+
+/** ThumbnailList implementation **/
 
 ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 	: QScrollView( parent, "KPDF::Thumbnails", WNoAutoErase | WStaticContents ),
@@ -83,8 +113,7 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 			// add to the internal queue
 			m_thumbnails.push_back( t );
 			// update total height (asking widget its own height)
-			t->setZoomFitWidth( width );
-			t->resize( t->widthHint(), t->heightHint() );
+			t->resizeFitWidth( width );
 			totalHeight += t->heightHint() + 4;
 			t->show();
 		}
@@ -220,8 +249,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 		{
 			ThumbnailWidget *t = *thumbIt;
 			moveChild( t, 0, totalHeight );
-			t->setZoomFitWidth( newWidth );
-			t->resize( t->widthHint(), t->heightHint() );
+			t->resizeFitWidth( newWidth );
 			totalHeight += t->heightHint() + 4;
 		}
 
@@ -272,6 +300,65 @@ void ThumbnailList::requestPixmaps( int delayMs )
 		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestPixmaps() ) );
 	}
 	m_delayTimer->start( delayMs, true );
+}
+
+
+/** ThumbnailWidget implementation **/
+
+ThumbnailWidget::ThumbnailWidget( QWidget * parent, const KPDFPage * kp  )
+    : QWidget( parent, 0, WNoAutoErase ), m_page( kp ),
+    m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
+{
+    m_labelNumber = m_page->number() + 1;
+    m_labelHeight = QFontMetrics( font() ).height();
+}
+
+void ThumbnailWidget::resizeFitWidth( int width )
+{
+    m_pixmapWidth = width - 4;
+    m_pixmapHeight = (int)(m_page->ratio() * m_pixmapWidth);
+    resize( width, heightHint() );
+}
+
+void ThumbnailWidget::setSelected( bool selected )
+{
+    // update selected state
+    if ( m_selected != selected )
+    {
+        m_selected = selected;
+        update( 0, m_pixmapHeight + 4, width(), m_labelHeight );
+    }
+}
+
+void ThumbnailWidget::paintEvent( QPaintEvent * e )
+{
+    int width = m_pixmapWidth + 4;
+    QRect clipRect = e->rect();
+    QPainter p( this );
+
+    // draw the bottom label
+    if ( clipRect.bottom() > m_pixmapHeight + 3 )
+    {
+        QColor fillColor = m_selected ? palette().active().highlight() : palette().active().base();
+        p.fillRect( 0, m_pixmapHeight + 4, width, m_labelHeight, fillColor );
+        p.drawText( 0, m_pixmapHeight + 4, width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
+    }
+
+    // draw page outline and pixmap
+    if ( clipRect.top() < m_pixmapHeight + 4 )
+    {
+        p.drawRect( 1, 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );
+        p.setPen( palette().active().base() );
+        p.drawRect( 0, 0, m_pixmapWidth + 4, m_pixmapHeight + 4 );
+        p.setPen( Qt::gray );
+        p.drawLine( 5, m_pixmapHeight + 3, m_pixmapWidth + 3, m_pixmapHeight + 3 );
+        p.drawLine( m_pixmapWidth + 3, 5, m_pixmapWidth + 3, m_pixmapHeight + 3 );
+
+        p.translate( 2, 2 );
+        clipRect.moveBy( -2, -2 );
+        clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
+        m_page->drawPixmap( THUMBNAILS_ID, &p, clipRect, m_pixmapWidth, m_pixmapHeight );
+    }
 }
 
 #include "thumbnaillist.moc"

@@ -34,7 +34,6 @@
 
 #include "pageview.h"
 #include "pageviewutils.h"
-#include "pixmapwidget.h"
 #include "page.h"
 #include "settings.h"
 

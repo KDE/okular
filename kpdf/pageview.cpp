@@ -656,20 +656,18 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             if ( leftButton && !d->mouseSelectionRect.isNull() )
             {
                 QRect selRect = d->mouseSelectionRect.normalize();
-                if ( selRect.width() < 2 || selRect.height() < 2 )
+                if ( selRect.width() < 4 || selRect.height() < 4 )
                     break;
 
                 // find out new zoom ratio and normalized view center (relative to the contentsRect)
                 double zoom = QMIN( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
-                double nX = ( selRect.left() + (double)selRect.width() / 2 ) / (double)contentsWidth();
-                double nY = ( selRect.top() + (double)selRect.height() / 2 ) / (double)contentsHeight();
+                double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentsWidth());
+                double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentsHeight());
 
                 // zoom up to 400%
                 if ( d->zoomFactor <= 4.0 || zoom <= 1.0 )
                 {
                     d->zoomFactor *= zoom;
-                    if ( d->zoomFactor > 4.0 )
-                        d->zoomFactor = 4.0;
                     viewport()->setUpdatesEnabled( false );
                     updateZoom( ZoomRefreshCurrent );
                     viewport()->setUpdatesEnabled( true );

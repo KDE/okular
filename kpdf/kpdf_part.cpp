@@ -126,6 +126,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, m_document );
+        m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	//connect(m_pageView, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
 

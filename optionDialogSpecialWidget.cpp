@@ -10,9 +10,7 @@
 #include <kdebug.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
 #include <kcombobox.h>
-#include <kinstance.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kurllabel.h>
@@ -20,6 +18,7 @@
 #include <qlabel.h>
 
 #include "optionDialogSpecialWidget.h"
+#include "prefs.h"
 
 
 // Constructs a optionDialogWidget_base which is a child of 'parent', with
@@ -27,12 +26,6 @@
 optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const char* name, WFlags fl )
     : optionDialogSpecialWidget_base( parent,  name, fl )
 {
-  instance = 0;
-  config = 0;
-  instance = new KInstance("kdvi");
-  config = instance->config();
-  config->setGroup("kdvi");
-
   // Set up the list of known and supported editors
   editorNameString        += i18n("User-Defined Editor");
   editorCommandString     += "";
@@ -62,9 +55,6 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorCommandString     += "gnuclient -q +%l %f || xemacs  +%l %f";
   editorDescriptionString += i18n("Click 'Help' to learn how to set up XEmacs.");
 
-
-  showSpecialCheck->setChecked(config->readBoolEntry("ShowPS", true));
-  showHyperLinksCheck->setChecked(config->readBoolEntry("ShowHyperLinks", true)); 
   for(unsigned int i=0; i<editorNameString.count(); i++)
     editorChoice->insertItem(editorNameString[i]);
   // Set the proper editor on the "Rendering-Page", try to recognize
@@ -72,7 +62,7 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   // not recognized, switch to "User defined editor". That way, kdvi
   // stays compatible even if the EditorCommands[] change between
   // different versions of kdvi.
-  QString currentEditorCommand = config->readPathEntry( "EditorCommand" );
+  QString currentEditorCommand = Prefs::editorCommand();
   int i;
   for(i = editorCommandString.count()-1; i>0; i--)
     if (editorCommandString[i] == currentEditorCommand)
@@ -95,13 +85,11 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   }
   editorDescription->setMinimumWidth(maximumWidth+10);
 
-  connect(editorCallingCommand, SIGNAL( textChanged (const QString &) ), this, SLOT( slotUserDefdEditorCommand( const QString & ) ) );
+  connect(kcfg_EditorCommand, SIGNAL( textChanged (const QString &) ), this, SLOT( slotUserDefdEditorCommand( const QString & ) ) );
 }
 
 optionDialogSpecialWidget::~optionDialogSpecialWidget()
 {
-  if (instance != 0L)
-    delete instance; // that will also delete the config
 }
 
 void optionDialogSpecialWidget::slotUserDefdEditorCommand( const QString &text )
@@ -120,12 +108,12 @@ void optionDialogSpecialWidget::slotComboBox(int item)
 
   if (item != 0) {
     isUserDefdEditor = false;
-    editorCallingCommand->setText(editorCommandString[item]);
-    editorCallingCommand->setReadOnly(true);
+    kcfg_EditorCommand->setText(editorCommandString[item]);
+    kcfg_EditorCommand->setReadOnly(true);
     EditorCommand = editorCommandString[item];
   } else {
-    editorCallingCommand->setText(usersEditorCommand);
-    editorCallingCommand->setReadOnly(false);
+    kcfg_EditorCommand->setText(usersEditorCommand);
+    kcfg_EditorCommand->setReadOnly(false);
     EditorCommand = usersEditorCommand;
     isUserDefdEditor = true;
   }
@@ -138,11 +126,7 @@ void optionDialogSpecialWidget::slotExtraHelpButton( const QString & )
 
 void optionDialogSpecialWidget::apply(void)
 {
-  config->setGroup("kdvi");
-  config->writeEntry( "ShowPS", showSpecialCheck->isChecked() );
-  config->writeEntry( "ShowHyperLinks", showHyperLinksCheck->isChecked() );
-  config->writePathEntry( "EditorCommand", EditorCommand );
-  config->sync();
+  Prefs::setEditorCommand(EditorCommand);
 }
 
 

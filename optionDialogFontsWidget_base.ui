@@ -9,7 +9,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>234</width>
+            <width>239</width>
             <height>176</height>
         </rect>
     </property>
@@ -33,7 +33,7 @@
                 </property>
                 <widget class="QCheckBox">
                     <property name="name">
-                        <cstring>usePFBCheckBox</cstring>
+                        <cstring>kcfg_UseType1Fonts</cstring>
                     </property>
                     <property name="text">
                         <string>Use Type 1 fonts if available</string>
@@ -47,7 +47,7 @@
                 </widget>
                 <widget class="QCheckBox">
                     <property name="name">
-                        <cstring>useFontHintingCheckBox</cstring>
+                        <cstring>kcfg_UseFontHints</cstring>
                     </property>
                     <property name="text">
                         <string>Use font hinting</string>
@@ -74,7 +74,7 @@
                 </property>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>fontGenerationCheckBox</cstring>
+                        <cstring>kcfg_MakePK</cstring>
                     </property>
                     <property name="text">
                         <string>Generate missing fonts</string>
@@ -96,7 +96,7 @@
                 </widget>
                 <widget class="KComboBox" row="0" column="1">
                     <property name="name">
-                        <cstring>metafontMode</cstring>
+                        <cstring>kcfg_MetafontMode</cstring>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>LaserJet 4 is usually a good choice.</string>
@@ -112,12 +112,18 @@
 </widget>
 <connections>
     <connection>
-        <sender>usePFBCheckBox</sender>
+        <sender>kcfg_UseType1Fonts</sender>
         <signal>toggled(bool)</signal>
-        <receiver>useFontHintingCheckBox</receiver>
+        <receiver>kcfg_UseFontHints</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>kcfg_UseType1Fonts</tabstop>
+    <tabstop>kcfg_UseFontHints</tabstop>
+    <tabstop>kcfg_MetafontMode</tabstop>
+    <tabstop>kcfg_MakePK</tabstop>
+</tabstops>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>

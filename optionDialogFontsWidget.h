@@ -12,9 +12,6 @@
 
 #include "optionDialogFontsWidget_base.h"
 
-class KConfig;
-class KInstance;
-
 class optionDialogFontsWidget : public optionDialogFontsWidget_base
 { 
   Q_OBJECT
@@ -22,13 +19,6 @@ class optionDialogFontsWidget : public optionDialogFontsWidget_base
  public:
   optionDialogFontsWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
   ~optionDialogFontsWidget();
-  
- public slots:
-  void apply(void);
-
- private:
-  KInstance *instance;
-  KConfig *config;
 };
 
 #endif // OPTIONDIALOGFONTSWIDGET_H

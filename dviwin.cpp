@@ -46,7 +46,6 @@
 #include "fontpool.h"
 #include "fontprogress.h"
 #include "kdvi_multipage.h"
-#include "optiondialog.h"
 #include "performanceMeasurement.h"
 #include "xdvi.h"
 #include "zoomlimits.h"

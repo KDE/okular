@@ -12,9 +12,6 @@
 
 #include "optionDialogSpecialWidget_base.h"
 
-class KConfig;
-class KInstance;
-
 class optionDialogSpecialWidget : public optionDialogSpecialWidget_base
 { 
   Q_OBJECT
@@ -30,8 +27,6 @@ class optionDialogSpecialWidget : public optionDialogSpecialWidget_base
   void slotExtraHelpButton( const QString &anchor);
 
  private:
-  KInstance   *instance;
-  KConfig     *config;
   QStringList editorNameString, editorCommandString, editorDescriptionString;
   QString     EditorCommand;
   bool        isUserDefdEditor;

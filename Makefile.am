@@ -16,11 +16,14 @@ kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 	dviFile.cpp fontpool.cpp fontprogress.cpp psgs.cpp \
 	fontMap.cpp fontEncoding.cpp fontEncodingPool.cpp \
 	special.cpp util.cpp vf.cpp glyph.cpp selection.cpp history.cpp \
-	optiondialog.cpp optionDialogFontsWidget.cpp optionDialogFontsWidget_base.ui \
+	optionDialogFontsWidget.cpp optionDialogFontsWidget_base.ui \
 	optionDialogSpecialWidget.cpp optionDialogSpecialWidget_base.ui \
 	TeXFont.cpp TeXFont_PK.cpp TeXFont_PFB.cpp TeXFont_TFM.cpp \
 	TeXFontDefinition.cpp \
-	documentPage.cpp documentWidget.cpp documentPageCache.cpp
+	documentPage.cpp documentWidget.cpp documentPageCache.cpp \
+	prefs.kcfgc
+
+kde_kcfg_DATA = kdvi.kcfg
 
 kdvipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
 kdvipart_la_LIBADD = $(LIBFREETYPE_LIBS) -lkdeprint -lkparts \
@@ -32,7 +35,7 @@ squeeze_SOURCES	= squeeze.c
 KDE_OPTIONS = nofinal
 
 ## this option you can leave out. Just, if you use "make dist", you need it
-noinst_HEADERS = dvi.h dviwin.h optiondialog.h xdvi.h 
+noinst_HEADERS = dvi.h dviwin.h xdvi.h 
 
 messages: rc.cpp
 	$(PREPARETIPS) > tips.cpp

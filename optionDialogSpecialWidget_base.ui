@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>299</width>
+            <width>317</width>
             <height>194</height>
         </rect>
     </property>
@@ -21,7 +21,7 @@
         </property>
         <widget class="QCheckBox">
             <property name="name">
-                <cstring>showSpecialCheck</cstring>
+                <cstring>kcfg_ShowPS</cstring>
             </property>
             <property name="text">
                 <string>Show PostScript specials</string>
@@ -35,7 +35,7 @@
         </widget>
         <widget class="QCheckBox">
             <property name="name">
-                <cstring>showHyperLinksCheck</cstring>
+                <cstring>kcfg_ShowHyperLinks</cstring>
             </property>
             <property name="text">
                 <string>Show hyperlinks</string>
@@ -120,7 +120,7 @@
                 </widget>
                 <widget class="KLineEdit" row="3" column="1">
                     <property name="name">
-                        <cstring>editorCallingCommand</cstring>
+                        <cstring>kcfg_EditorCommand</cstring>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Shell-command line used to start the editor.</string>

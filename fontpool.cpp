@@ -3,7 +3,6 @@
 // (C) 2001-2003 Stefan Kebekus
 // Distributed under the GPL
 
-#include <kconfig.h>
 #include <kdebug.h>
 #include <kinstance.h>
 #include <klocale.h>
@@ -21,6 +20,7 @@
 #include "fontpool.h"
 #include "fontprogress.h"
 #include "performanceMeasurement.h"
+#include "prefs.h"
 #include "TeXFont.h"
 
 //#define DEBUG_FONTPOOL
@@ -619,11 +619,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	  if(KMessageBox::warningYesNo( 0, body+i18n("\nAutomatic font generation is switched off. "
 						     "You might want to switch it on now and generate the missing fonts."), title,
 					i18n("Generate Fonts Now"), i18n("Continue Without"), "WarnForMissingFonts" ) == KMessageBox::Yes) {
-	    KInstance *instance = new KInstance("kdvi");
-	    KConfig *config = instance->config();
-	    config->setGroup("kdvi");
-	    config->writeEntry( "MakePK", true );
-	    config->sync();
+        Prefs::setMakePK(true);
 	    setParameters( MetafontMode, true, useType1Fonts, useFontHints ); // That will start kpsewhich again.
 	    return;
 	  }

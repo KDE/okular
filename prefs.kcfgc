@@ -1,0 +1,5 @@
+# Code generation options for kconfig_compiler
+File=kdvi.kcfg
+ClassName=Prefs
+Singleton=true
+Mutators=true

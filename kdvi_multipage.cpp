@@ -4,7 +4,7 @@
 #include <kaboutdialog.h>
 #include <kapplication.h>
 #include <kbugreport.h>
-#include <kconfig.h>
+#include <kconfigdialog.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
@@ -19,10 +19,13 @@
 #include "fontpool.h"
 #include "kdvi_multipage.h"
 #include "kviewpart.h"
-#include "optiondialog.h"
 #include "performanceMeasurement.h"
+#include "prefs.h"
 #include "zoomlimits.h"
 #include "kprinterwrapper.h"
+
+#include "optionDialogFontsWidget.h"
+#include "optionDialogSpecialWidget.h"
 
 #include <qlabel.h>
 
@@ -248,13 +251,7 @@ void KDVIMultiPage::generateDocumentWidgets(void)
 void KDVIMultiPage::setViewMode(int mode)
 {
   // Save viewMode for future uses of KDVI
-  if (viewModeAction != 0) {
-    KInstance *instance = new KInstance("kdvi");
-    KConfig *config = instance->config();
-    config->setGroup("kdvi");
-    config->writeEntry( "ViewMode", viewModeAction->currentItem() );
-    config->sync();
-  }
+  Prefs::setViewMode(mode);
 
   if (mode == KVS_ContinuousFacing)
     scrollView()->setNrColumns(2);
@@ -346,6 +343,7 @@ KDVIMultiPage::~KDVIMultiPage()
     killTimer(timer_id);
   timer_id = -1;
   writeSettings();
+  Prefs::writeConfig();
   delete printer;
 }
 
@@ -674,11 +672,22 @@ void KDVIMultiPage::doExportPDF(void)
 
 void KDVIMultiPage::doSettings()
 {
-  if (!options) {
-    options = new OptionDialog(scrollView());
-    connect(options, SIGNAL(preferencesChanged()), this, SLOT(preferencesChanged()));
-  }
-  options->show();
+  static optionDialogFontsWidget* fontConfigWidget = 0;
+  if (KConfigDialog::showDialog("kdvi_config"))
+    return;
+  
+  KConfigDialog* configDialog = new KConfigDialog(scrollView(), "kdvi_config", Prefs::self());
+  
+  fontConfigWidget = new optionDialogFontsWidget(scrollView());
+  optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(scrollView());
+  
+  configDialog->addPage(fontConfigWidget, i18n("Tex Fonts"), "fonts");
+  configDialog->addPage(specialConfigWidget, i18n("DVI Specials"), "dvi");
+  configDialog->setHelp("preferences", "kdvi");
+  
+  connect(configDialog, SIGNAL(settingsChanged()), this, SLOT(preferencesChanged()));
+  
+  configDialog->show();
 }
 
 
@@ -746,24 +755,17 @@ void KDVIMultiPage::preferencesChanged()
   kdDebug(4300) << "preferencesChanged" << endl;
 #endif
 
-  KConfig *config = instance()->config();
+  int mfmode = Prefs::metafontMode();
 
-  config->reparseConfiguration();
-  config->setGroup( "kdvi" );
+  bool makepk = Prefs::makePK();
+  bool showPS = Prefs::showPS();
+  bool showHyperLinks = Prefs::showHyperLinks();
+  bool useType1Fonts = Prefs::useType1Fonts();
+  bool useFontHints = Prefs::useFontHints();
 
-  int mfmode = config->readNumEntry( "MetafontMode", DefaultMFMode );
-  if (( mfmode < 0 ) || (mfmode >= NumberOfMFModes))
-    config->writeEntry( "MetafontMode", mfmode = DefaultMFMode );
-
-  bool makepk = config->readBoolEntry( "MakePK", true );
-  bool showPS = config->readBoolEntry( "ShowPS", true );
-  bool showHyperLinks = config->readBoolEntry( "ShowHyperLinks", true );
-  bool useType1Fonts = config->readBoolEntry( "UseType1Fonts", true );
-  bool useFontHints = config->readBoolEntry( "UseFontHints", false );
-
-  int viewMode = config->readNumEntry( "ViewMode", KVS_Continuous );
+  int viewMode = Prefs::viewMode();
   if ((viewMode < 0) || (viewMode > KVS_ContinuousFacing))
-    viewMode = KVS_Continuous;
+    Prefs::setViewMode(KVS_Continuous);
   if (viewModeAction != 0)
     viewModeAction->setCurrentItem(viewMode);
   if (viewMode == KVS_ContinuousFacing)
@@ -771,7 +773,7 @@ void KDVIMultiPage::preferencesChanged()
   else
     scrollView()->setNrColumns(1);
 
-  window->setPrefs( showPS, showHyperLinks, config->readPathEntry( "EditorCommand" ), mfmode, makepk, useType1Fonts, useFontHints);
+  window->setPrefs( showPS, showHyperLinks, Prefs::editorCommand(), mfmode, makepk, useType1Fonts, useFontHints);
 }
 
 
@@ -1088,7 +1090,6 @@ void KDVIMultiPage::doEnableWarnings(void)
 {
   KMessageBox::information (scrollView(), i18n("All messages and warnings will now be shown."));
   KMessageBox::enableAllMessages();
-  kapp->config()->reparseConfiguration();
   KTipDialog::setShowOnStart(true);
 }
 

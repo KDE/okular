@@ -76,8 +76,9 @@
     work: <screen>kdvi -style windows -display :0 -geometry 400x400+0+0 -caption "DVI"</screen>
     For integration with TeX the opened DVI file is automatically
     reloaded when changed.</para>
-
-
+   
+    <!-- please move this to a place where it fits better when you create such a place -->
+    <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
   </chapter>
 
   <chapter id="options">

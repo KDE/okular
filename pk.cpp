@@ -221,7 +221,7 @@ void font::read_PK_char(unsigned int ch)
   int	i, j;
   int	n;
   int	row_bit_pos;
-  Boolean	paint_switch;
+  bool	paint_switch;
   BMUNIT	*cp;
   register struct glyph *g;
   register FILE *fp = file;

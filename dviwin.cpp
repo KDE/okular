@@ -14,8 +14,8 @@
 #include <qcheckbox.h> 
 #include <qclipboard.h> 
 #include <qfileinfo.h>
-#include <qimage.h>
-#include <qkeycode.h>
+//#include <qimage.h>
+//#include <qkeycode.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qmessagebox.h>
@@ -91,7 +91,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
     exit(-1);
   }
   connect(font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-  connect(font_pool, SIGNAL(fonts_have_been_loaded()), this, SLOT(drawPage()));
+  connect(font_pool, SIGNAL(fonts_have_been_loaded()), this, SLOT(all_fonts_loaded()));
 
   info                   = new infoDialog(this);
   if (info == 0) {
@@ -120,6 +120,7 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   findDialog             = 0;
   selectedTextStart      = -1;
   selectedTextEnd        = -1;
+  reference              = QString::null;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
@@ -880,8 +881,9 @@ void dviWindow::changePageSize()
 
 //------ setup the dvi interpreter (should do more here ?) ----------
 
-bool dviWindow::setFile( const QString & fname )
+bool dviWindow::setFile(QString fname, QString ref)
 {
+  reference              = QString::null;
   setMouseTracking(true);
 
   QFileInfo fi(fname);
@@ -984,10 +986,16 @@ bool dviWindow::setFile( const QString & fname )
   is_current_page_drawn  = 0;
 
   QApplication::restoreOverrideCursor();
+  reference              = ref;
   return true;
 }
 
-
+void dviWindow::all_fonts_loaded(void)
+{
+  kdDebug(4300) << reference << endl;
+  reference = QString::null;
+  drawPage();
+}
 
 //------ handling pages ----------
 

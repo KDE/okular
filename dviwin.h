@@ -125,7 +125,7 @@ public:
 
 public slots:
   void          abortExternalProgramm(void);
-  bool		setFile(const QString & fname);
+  bool		setFile(QString fname, QString ref = QString::null);
 
   /** Displays the page of the first argument */
   void		gotoPage(unsigned int page);
@@ -143,8 +143,15 @@ public slots:
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
   void          dvips_terminated(KProcess *);
   void          editorCommand_terminated(KProcess *);
-
   void          do_findText();
+
+  /** This slot is usually called by the fontpool if all fonts are
+      loaded. The method will try to parse the reference part of the
+      DVI file's URL, e.g. src:<line><filename> and see if a
+      corresponding section of the DVI file can be found. If so, it
+      will emit a "requestGotoPage", otherwise it will just call
+      drawpage */
+  void          all_fonts_loaded();
 
 signals:
   /** Emitted to indicate that a hyperlink has been clicked on, and
@@ -267,6 +274,9 @@ private:
  QString             export_fileName;
  QString             export_tmpFileName;
  QString             export_errorString;
+
+ /** Reference part of the URL which describes the filename. */
+ QString             reference;
 };
 
 

@@ -5,48 +5,6 @@
  *	Written by Eric C. Cooper, CMU
  */
 
-
-typedef	unsigned long	Pixel;
-typedef	char		Boolean;
-#undef	BUTTONS
-#undef	Unsorted
-
-#define	True	1
-#define	False	0
-
-#define	OPEN_MODE_ARGS	_Xconst char *
-
-
-#ifndef	NeedFunctionPrototypes
-#ifdef	__STDC__
-#define	NeedFunctionPrototypes	1
-#else	/* STDC */
-#define	NeedFunctionPrototypes	0
-#endif	/* STDC */
-#endif	/* NeedFunctionPrototypes */
-
-#define	ARGS(x)	x
-
-#ifndef	NeedWidePrototypes
-#define	NeedWidePrototypes	NeedFunctionPrototypes
-#endif
-
-#ifndef	NeedVarargsPrototypes
-#define	NeedVarargsPrototypes	NeedFunctionPrototypes
-#endif
-
-#ifndef	_XFUNCPROTOBEGIN
-#define	_XFUNCPROTOBEGIN
-#define	_XFUNCPROTOEND
-#endif
-
-/********************************
- *	 Types and data		*
- *******************************/
-
-#define	INIT(x)
-
-
 /*
  *	pixel_conv is currently used only for converting absolute positions
  *	to pixel values; although normally it should be
@@ -111,8 +69,8 @@ extern QIntDict<struct font> tn_table;
 
 extern	int	_pixels_per_inch;
 
-extern  unsigned long   num ARGS((FILE *, int));     
-extern  long    snum ARGS((FILE *, int));
+extern  unsigned long   num (FILE *, int);
+extern  long    snum(FILE *, int);
 
 
 #define	pixels_per_inch	_pixels_per_inch

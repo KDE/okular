@@ -121,6 +121,7 @@ private:
 
 	// main widgets
 	QSplitter *m_splitter;
+	QWidget *m_leftPanel;
 	QToolBox *m_toolBox;
 	SearchWidget *m_searchWidget;
 	ThumbnailList *m_thumbnailList;

@@ -119,13 +119,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_watchFile->setChecked( Settings::watchFile() );
 
 	// widgets: [left panel] | []
-	QWidget * leftPanel = new QWidget( m_splitter );
-	leftPanel->setMinimumWidth( 90 );
-	leftPanel->setMaximumWidth( 300 );
-	QVBoxLayout * leftPanelLayout = new QVBoxLayout( leftPanel );
+	m_leftPanel = new QWidget( m_splitter );
+	m_leftPanel->setMinimumWidth( 90 );
+	m_leftPanel->setMaximumWidth( 300 );
+	QVBoxLayout * leftPanelLayout = new QVBoxLayout( m_leftPanel );
 
 	// widgets: [left toolbox/..] | []
-	m_toolBox = new QToolBox( leftPanel );
+	m_toolBox = new QToolBox( m_leftPanel );
 	leftPanelLayout->addWidget( m_toolBox );
 
 	// [left toolbox: Table of Contents] | []
@@ -154,7 +154,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->setItemEnabled( iIdx, false );*/
 
 	// widgets: [../miniBarContainer] | []
-	QWidget * miniBarContainer = new QWidget( leftPanel );
+	QWidget * miniBarContainer = new QWidget( m_leftPanel );
 	leftPanelLayout->addWidget( miniBarContainer );
 	QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
 	// widgets: [../[spacer/..]] | []
@@ -575,10 +575,10 @@ void Part::slotNewConfig()
 
     // Left Panel and search Widget
     bool showLeft = Settings::showLeftPanel();
-    if ( m_toolBox->isShown() != showLeft )
+    if ( m_leftPanel->isShown() != showLeft )
     {
         // show/hide left qtoolbox
-        m_toolBox->setShown( showLeft );
+        m_leftPanel->setShown( showLeft );
         // this needs to be hidden explicitly to disable thumbnails gen
         m_thumbnailList->setShown( showLeft );
     }

@@ -18,12 +18,8 @@
 #include "TeXFontDefinition.h"
 
 #ifdef HAVE_FREETYPE
-#ifdef FT_FREETYPE_H
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#else
-#undef HAVE_FREETYPE
-#endif
 #endif
 
 class KProcess;

@@ -53,7 +53,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   pdfpartview = new PDFPartView(parentWidget, widgetName);
 
-  connect(pdfpartview->pagesListBox, SIGNAL( clicked ( QListBoxItem * ) ),
+  connect(pdfpartview->pagesListBox, SIGNAL( currentChanged ( QListBoxItem * ) ),
           this, SLOT( pageClicked ( QListBoxItem * ) ));
 
   m_outputDev = pdfpartview->outputdev;
@@ -170,7 +170,7 @@ void Part::slotGoToPage()
     if ( m_doc )
     {
         bool ok = false;
-        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage,
+        int num = KInputDialog::getInteger(i18n("Go to Page"), i18n("Page:"), m_currentPage+1,
                                            1, m_doc->getNumPages(), 1, 10, &ok/*, _part->widget()*/);
         if (ok)
             goToPage( num );
@@ -179,9 +179,9 @@ void Part::slotGoToPage()
 
 void Part::goToPage( int page )
 {
-    m_currentPage = page;
-    pdfpartview->pagesListBox->setCurrentItem(m_currentPage-1);
-    m_outputDev->setPage(m_currentPage);
+    m_currentPage = page-1;
+    pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
+    m_outputDev->setPage(m_currentPage+1);
     updateActionPage();
 }
 
@@ -204,9 +204,9 @@ void Part::updateActionPage()
     if ( m_doc )
     {
         m_firstPage->setEnabled(m_currentPage!=0);
-        m_lastPage->setEnabled(m_currentPage<m_doc->getNumPages());
+        m_lastPage->setEnabled(m_currentPage<m_doc->getNumPages()-1);
         m_prevPage->setEnabled(m_currentPage!=0);
-        m_nextPage->setEnabled(m_currentPage<m_doc->getNumPages());
+        m_nextPage->setEnabled(m_currentPage<m_doc->getNumPages()-1);
     }
     else
     {
@@ -273,9 +273,9 @@ void Part::slotGotoEnd()
 {
     if ( m_doc && m_doc->getNumPages() > 0 );
     {
-        m_currentPage = m_doc->getNumPages();
-        m_outputDev->setPage(m_currentPage);
-        pdfpartview->pagesListBox->setCurrentItem(m_currentPage-1);
+        m_currentPage = m_doc->getNumPages()-1;
+        m_outputDev->setPage(m_currentPage+1);
+        pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
         updateActionPage();
     }
 }
@@ -294,12 +294,16 @@ void Part::slotGotoStart()
 
 bool Part::nextPage()
 {
-    m_currentPage = pdfpartview->pagesListBox->currentItem() + 1;
-    if ( m_doc && m_currentPage >= m_doc->getNumPages())
+    m_currentPage++;
+    
+    if (m_doc && m_currentPage >= m_doc->getNumPages())
+    {
+        m_currentPage--;
         return false;
+    }
 
+    m_outputDev->setPage(m_currentPage+1);
     pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
-    m_outputDev->nextPage();
     updateActionPage();
     return true;
 }
@@ -316,12 +320,16 @@ void Part::slotPreviousPage()
 
 bool Part::previousPage()
 {
-    m_currentPage = pdfpartview->pagesListBox->currentItem() - 1;
-    if ( m_currentPage  < 0)
+    m_currentPage--;
+    
+    if (m_currentPage < 0)
+    {
+        m_currentPage++;
         return false;
+    }
 
-    pdfpartview->pagesListBox->setCurrentItem(m_currentPage );
-    m_outputDev->previousPage();
+    m_outputDev->setPage(m_currentPage+1);
+    pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
     updateActionPage();
     return true;
 }
@@ -641,8 +649,9 @@ void Part::pageClicked ( QListBoxItem * qbi )
 {
     if ( !qbi )
         return;
-    m_currentPage = pdfpartview->pagesListBox->index(qbi)+1;
-    m_outputDev->setPage(m_currentPage);
+    m_currentPage = pdfpartview->pagesListBox->index(qbi);
+    
+    m_outputDev->setPage(m_currentPage+1);
     updateActionPage();
 }
 

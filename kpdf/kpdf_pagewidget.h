@@ -41,8 +41,6 @@ namespace KPDF
         void zoomTo( double _value );
 
     public slots:
-        void nextPage();
-        void previousPage();
         void zoomIn();
         void zoomOut();
 

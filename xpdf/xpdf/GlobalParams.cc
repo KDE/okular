@@ -17,6 +17,11 @@
 #include <qstring.h>
 #include <qregexp.h>
 #include <qwindowdefs.h>
+// -- gentoo compile fix (XFree 4.3.0, FC 2.2.3, FreeType 2.1.9) --
+// on other distros these 2 lines should't harm
+#include <ft2build.h>
+#include FT_FREETYPE_H
+// -- ---------------------------------------------------------- --
 #include <X11/Xft/Xft.h>
 #include <X11/Xft/XftCompat.h>
 #include <stdio.h>

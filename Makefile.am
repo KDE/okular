@@ -39,7 +39,7 @@ noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h
 
 messages:
-	$(XGETTEXT) -C -kI18N_NOOP -ki18n -x $(includedir)/kde.pot *.cpp && mv messages.po $(podir)/kdvi.pot
+	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
 
 apps_DATA = kdvi.desktop
 

@@ -1,26 +1,14 @@
-TODO - KPdf HEAD
+TODO - KPdf MAIN HEAD
 Legend:
     ADD - ADDed (new feature)
     CHG - CHanGed (existing behavior)
     FIX - FIXed (bug or regression)
     MRG - MeRGed (code from a branch or a patch)
 
-Status (last 3 updates):
--> 2005-02-12: HEAD for bugfixes only. created a branch for development.
--> 2005-02-03+: Fixing bugs until 3.4 release.. reports are welcome!!!
--> 2005-02-02: Features for 3.4 done. Ready for bugfixes.
--> 2005-01-27: Stable and leakchecked. Usability: needs testing.
-
 In progress:
-  -- Branch 'kpdf_annotations' opened on 2005-Feb-12 --
-  HEAD: fixing bugs as they come.
-  BRANCH: implementing Annotations (and maybe other stuff).
-  please foreport fixes to the branch too.
+  -- 2005-Feb-26: Merge from 'kpdf_annotations' branch --
 
 More items (first items will enter 'In progress list' first):
-  -- THIS LIST IS FROZEN FOR 3.4 RELEASE --
--> good viewport support in presentation (dynamic obs notify) and viewport queuing for
-   hidden widgets
 -> search: google search in the page
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> screen editing (annotations): framework (BR67300,BR62793)
@@ -86,6 +74,7 @@ More items (first items will enter 'In progress list' first):
 -> history as a toolbox child (collecting Doc's viewport changes notifications)
 
 Done (newest features come first):
+-- merging from kdpf_annotations branch --
 -> FIX: leakfix when closing document while thread was running (no more leaks now)
 -> FIX: direct hi-performance pixels manipulation for highlighting (instead of the obsoleted setRasterOp)
 -> CHG: new search api. supports multiple searches at once, multiple highlighs per page

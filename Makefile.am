@@ -22,7 +22,7 @@ libkdvi_la_SOURCES = kdvi_multipage.cpp \
 	font-open.cpp gf.cpp new.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
 
-libkdvi_la_LDFLAGS = $(all_libraries) -avoid-version -module
+libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts kpathsea/libkpathsea.la \
 			$(top_srcdir)/kviewshell/libkmultipage.la
 

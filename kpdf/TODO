@@ -18,6 +18,8 @@ In progress on the branch (first item comes first):
 
 Things to do in order to merge in HEAD (first item has highest priority):
 -> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive})
+-> fix viewport restoring after zoom
+-> link thumbnails view with document
 -> this may be postponed after merge: implementing async document generator using Albert's generator thread
 -> this may be postponed after merge: albert: printing in a good way
 -> new icons (contest at kde-look has ended and we know the winner. good choice :-)
@@ -28,6 +30,7 @@ More items (first items will enter 'In progress list' first):
 *THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
+-> display current page / total pages (with analog indicator too (progressbar/indicator/...))
 -> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))

@@ -77,7 +77,7 @@ Shell::setupActions()
   KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
   KStdAction::quit(kapp, SLOT(quit()), actionCollection());
 
-  createStandardStatusBarAction();
+  //createStandardStatusBarAction();
   setStandardToolBarMenuEnabled(true);
 
   KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());

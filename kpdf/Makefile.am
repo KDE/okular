@@ -6,7 +6,7 @@ SUBDIRS = .
 INCLUDES = -I.. -I$(top_srcdir)/kpdf/goo -I$(top_srcdir)/kpdf/xpdf $(all_includes)
 
 # these are the headers for your project
-noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_canvas.h kpdf_pagewidget.h
+noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_canvas.h kpdf_pagewidget.h QOutputDev.h
 
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
@@ -43,7 +43,7 @@ shellrc_DATA = kpdf_shell.rc
 kde_module_LTLIBRARIES = libkpdfpart.la
 
 # the Part's source, library search path, and link libraries
-libkpdfpart_la_SOURCES = kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc
+libkpdfpart_la_SOURCES = kpdf_canvas.cpp kpdf_part.cpp kpdf_pagewidget.cc QOutputDev.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT)
 

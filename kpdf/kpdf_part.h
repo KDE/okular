@@ -8,6 +8,8 @@
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
 
+#include <QOutputDev.h>
+
 class QPainter;
 class QPixmap;
 class QWidget;
@@ -85,11 +87,8 @@ namespace KPDF
     void executeAction(LinkAction*);
 
   private:
-    Canvas*     m_canvas;
-    QPixmap     m_pagePixmap;
-    PageWidget* m_pageWidget;
     PDFDoc*     m_doc;
-    XOutputDev* m_outputDev;
+    QOutputDev* m_outputDev;
 
     KToggleAction* m_fitToWidth;
 

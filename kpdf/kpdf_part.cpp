@@ -29,7 +29,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
   : KParts::ReadOnlyPart(parent, name),
-    m_pagePixmap(1, 1),
     m_doc(0),
     m_currentPage(0),
     m_zoomMode(FixedFactor),
@@ -42,22 +41,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // we need an instance
   setInstance(KPDFPartFactory::instance());
 
-  m_canvas = new Canvas(parentWidget, widgetName);
-  setWidget(m_canvas);
-
-  m_pageWidget = new PageWidget(m_canvas->viewport());
-  m_canvas->addChild(m_pageWidget);
-
-  connect(m_pageWidget, SIGNAL(linkClicked(LinkAction*)), 
-          SLOT(executeAction(LinkAction*)));
-
-  Pixmap pixmap     = m_pagePixmap.handle();
-  Display* display  = m_pagePixmap.x11Display();
-  Colormap colormap = m_pagePixmap.x11Colormap();
-  int screen        = m_pagePixmap.x11Screen(); 
-
-  m_outputDev = new XOutputDev(display, pixmap, 0, colormap, false,
-                               WhitePixel(display, screen), false, 5);
+  m_outputDev = new QOutputDev(parentWidget, widgetName);
+  setWidget(m_outputDev);
 
   // create our actions
   KStdAction::find    (this, SLOT(find()), 
@@ -88,7 +73,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
-  delete m_outputDev;
 }
 
   KAboutData*
@@ -129,8 +113,7 @@ Part::openFile()
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
-  m_pageWidget->setPDFDocument(m_doc);
-  m_outputDev->startDoc(m_doc->getXRef());
+  m_doc->displayPage( m_outputDev , 1, 72, 0, false );
   displayPage(1);
 
   return true;
@@ -154,9 +137,9 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
   {
     const double pageAR = pageWidth/pageHeight; // Aspect ratio
 
-    const int canvasWidth    = m_canvas->contentsRect().width();
-    const int canvasHeight   = m_canvas->contentsRect().height();
-    const int scrollBarWidth = m_canvas->verticalScrollBar()->width();
+    const int canvasWidth    = m_outputDev->contentsRect().width();
+    const int canvasHeight   = m_outputDev->contentsRect().height();
+    const int scrollBarWidth = m_outputDev->verticalScrollBar()->width();
 
     // Calculate the height so that the page fits the viewport width 
     // assuming that we need a vertical scrollbar.
@@ -186,17 +169,9 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 
   const float ppp = basePpp * m_zoomFactor; // pixels per point
 
-  m_pagePixmap.resize(ceil(pageWidth*ppp), ceil(pageHeight*ppp));
-  m_pageWidget->setFixedSize(m_pagePixmap.size());
-  m_pageWidget->setErasePixmap(m_pagePixmap);
-  m_pageWidget->setPixelsPerPoint(ppp);
-
-  m_outputDev->setPixmap(m_pagePixmap.handle(),
-                         m_pagePixmap.width(), m_pagePixmap.height());
-
   m_doc->displayPage(m_outputDev, pageNumber, int(ppp*72.0), 0, true);
 
-  m_pageWidget->show();
+  m_outputDev->show();
 
   m_currentPage = pageNumber;
 }

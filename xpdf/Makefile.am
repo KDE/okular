@@ -21,6 +21,5 @@ noinst_HEADERS     = Annot.h Array.h BuiltinFont.h BuiltinFontTables.h \
     OutputDev.h PBMOutputDev.h PDFDoc.h PDFDocEncoding.cc PSOutputDev.h \
     PSTokenizer.h Page.h Parser.h SFont.h Stream-CCITT.h Stream.h \
     TextOutputDev.h UTF8.h UnicodeMap.h UnicodeMapTables.h \
-    XOutputDev.h XPDFApp.h XPDFCore.h XPDFTree.h XPDFTreeP.h XPDFViewer.h \
-    XPixmapOutputDev.h XRef.h config.h xpdf-ltk.h
+    XOutputDev.h XRef.h config.h xpdf-ltk.h
 

@@ -208,6 +208,7 @@ void dviWindow::epsf_special(QString cp)
       bbox_height *= 0.1 * dimconv / shrink_factor;
 
       QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y - (int)bbox_height, (int)bbox_width, (int)bbox_height);
+      foreGroundPaint.save();
       if (QFile::exists(EPSfilename))
 	foreGroundPaint.setBrush(Qt::lightGray);
       else
@@ -219,6 +220,7 @@ void dviWindow::epsf_special(QString cp)
       else
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), 
 				  QString(i18n("File not found:\n %1")).arg(EPSfilename), -1, &bbox);
+      foreGroundPaint.restore();
     }
   }
   return;

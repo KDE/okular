@@ -49,6 +49,8 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#include "dviwin.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "glyph.h"
@@ -154,7 +156,7 @@ static	void PK_skip_specials(font *fontp)
  *	Public routines
  */
 
-static	void read_PK_char(struct font *fontp, wide_ubyte ch)
+static	void read_PK_char(struct font *fontp, unsigned int ch)
 {
 	int	i, j;
 	int	n;

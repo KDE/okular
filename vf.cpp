@@ -23,6 +23,8 @@
  * SUCH DAMAGE.
  */
 
+#include "dviwin.h"
+
 #include <stdio.h>
 #include "oconfig.h"
 #include "dvi.h"
@@ -57,8 +59,8 @@ extern	char	*xmalloc (unsigned, _Xconst char *);
 void read_VF_index(font *fontp, wide_bool hushcs)
 {
 	FILE	*VF_file = fontp->file;
-	ubyte	cmnd;
-	ubyte	*avail, *availend;	/* available space for macros */
+	unsigned char	cmnd;
+	unsigned char	*avail, *availend;	/* available space for macros */
 	long	checksum;
 
 	fontp->read_char = NULL;
@@ -134,12 +136,12 @@ void read_VF_index(font *fontp, wide_bool hushcs)
 		else {
 		    m->free_me = True;
 		    if (len <= VF_PARM_1) {
-			m->pos = avail = (ubyte *) xmalloc(VF_PARM_2,
+			m->pos = avail = (unsigned char *) xmalloc(VF_PARM_2,
 			    "macro array");
 			availend = avail + VF_PARM_2;
 			avail += len;
 		    }
-		    else m->pos = (ubyte *) xmalloc((unsigned) len,
+		    else m->pos = (unsigned char *) xmalloc((unsigned) len,
 			"macro array");
 		}
 		Fread((char *) m->pos, 1, len, VF_file);

@@ -23,6 +23,8 @@
  * SUCH DAMAGE.
  */
 
+#include "dviwin.h"
+
 #include <stdio.h>
 #include "glyph.h"
 #include "oconfig.h"
@@ -64,15 +66,15 @@ extern	char	*xmalloc (unsigned, _Xconst char *);
 
 static	FILE	*GF_file;
 
-static	void expect(ubyte ch)
+static	void expect(unsigned char ch)
 {
-	ubyte ch1 = one(GF_file);
+	unsigned char ch1 = one(GF_file);
 
 	if (ch1 != ch)
 		oops("Bad GF file:  %d expected, %d received.", ch, ch1);
 }
 
-static	void too_many_bits(ubyte ch)
+static	void too_many_bits(unsigned char ch)
 {
 	oops("Too many bits found when loading character %d", ch);
 }
@@ -84,13 +86,13 @@ static	void too_many_bits(ubyte ch)
 
 static	void
 #if	NeedFunctionPrototypes
-read_GF_char(register struct font *fontp, wide_ubyte ch)
+read_GF_char(register struct font *fontp, unsigned int ch)
 #else	/* !NeedFunctionPrototypes */
-read_GF_char(font *fontp, ubyte ch)
+read_GF_char(font *fontp, unsigned char ch)
 #endif	/* NeedFunctionPrototypes */
 {
 	register struct glyph *g;
-	ubyte	cmnd;
+	unsigned char	cmnd;
 	int	min_m, max_m, min_n, max_n;
 	BMUNIT	*cp, *basep, *maxp;
 	int	bytes_wide;
@@ -245,7 +247,7 @@ read_GF_char(font *fontp, ubyte ch)
 void read_GF_index(font *fontp, wide_bool hushcs)
 {
 	int	hppp, vppp;
-	ubyte	ch, cmnd;
+	unsigned char	ch, cmnd;
 	register struct glyph *g;
 	long	checksum;
 

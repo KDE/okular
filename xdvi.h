@@ -132,21 +132,12 @@ typedef	unsigned int	Dimension;
  *	 Types and data		*
  *******************************/
 
-#ifndef	EXTERN
-#define	EXTERN	extern
 #define	INIT(x)
-#endif
-
-#define	MAXDIM		32767
-
-typedef	unsigned char ubyte;
 
 #if	NeedWidePrototypes
-typedef	unsigned int	wide_ubyte;
 typedef	int		wide_bool;
 #define	WIDENINT	(int)
 #else
-typedef	ubyte		wide_ubyte;
 typedef	Boolean		wide_bool;
 #define	WIDENINT
 #endif
@@ -192,34 +183,11 @@ typedef	Boolean		wide_bool;
 
 extern	BMUNIT	bit_masks[BITS_PER_BMUNIT + 1];
 
-struct framedata {
-  long dvi_h, dvi_v, w, x, y, z;
-  int pxl_v;
-};
+
+typedef	void	(*set_char_proc)(unsigned int, unsigned int);
 
 
-struct frame {
-  struct framedata data;
-  struct frame *next, *prev;
-};
-
-
-typedef	void	(*set_char_proc)(wide_ubyte, wide_ubyte);
-
-
-struct drawinf {	/* this information is saved when using virtual fonts */
-	struct framedata data;
-	struct font	*fontp;
-	set_char_proc	set_char_p;
-	int		tn_table_len;
-	struct font	**tn_table;
-	struct tn	*tn_head;
-	ubyte		*pos, *end;
-	struct font	*_virtual;
-	int		dir;
-};
-
-EXTERN	struct drawinf	currinf;
+extern	struct drawinf	currinf;
 
 /* entries below with the characters 'dvi' in them are actually stored in
    scaled pixel units */
@@ -234,13 +202,13 @@ EXTERN	struct drawinf	currinf;
 #define ZZ      currinf.data.z
 #define ROUNDUP(x,y) (((x)+(y)-1)/(y))
 
-EXTERN	int	current_page;
-EXTERN	int	total_pages;
-EXTERN	long	magnification;
-EXTERN	double	dimconv;
-EXTERN	double	tpic_conv;
-EXTERN	int	n_files_left;	/* for LRU closing of fonts */
-EXTERN	unsigned int	page_w, page_h;
+extern	int	current_page;
+extern	int	total_pages;
+extern	long	magnification;
+extern	double	dimconv;
+extern	double	tpic_conv;
+extern	int	n_files_left;	/* for LRU closing of fonts */
+extern	unsigned int	page_w, page_h;
 
 #define	PS	1
 
@@ -248,66 +216,25 @@ EXTERN	unsigned int	page_w, page_h;
  * Table of page offsets in DVI file, indexed by page number - 1.
  * Initialized in prepare_pages().
  */
-EXTERN	long	*page_offset;
+extern	long	*page_offset;
 
 /*
  * Mechanism for reducing repeated warning about specials, lost characters, etc.
  */
-EXTERN	Boolean	hush_spec_now;
+extern	Boolean	hush_spec_now;
 
 
 /*
  * Per character information for virtual fonts
  */
 struct macro {
-	ubyte	*pos;		/* address of first byte of macro */
-	ubyte	*end;		/* address of last+1 byte */
+	unsigned char	*pos;		/* address of first byte of macro */
+	unsigned char	*end;		/* address of last+1 byte */
 	long	dvi_adv;	/* DVI units to move reference point */
 	Boolean	free_me;	/* if free(pos) should be called when */
 				/* freeing space */
 };
 
-/*
- * The layout of a font information block.
- * There is one of these for every loaded font or magnification thereof.
- * Duplicates are eliminated:  this is necessary because of possible recursion
- * in virtual fonts.
- *
- * Also note the strange units.  The design size is in 1/2^20 point
- * units (also called micro-points), and the individual character widths
- * are in the TFM file in 1/2^20 ems units, i.e., relative to the design size.
- *
- * We then change the sizes to SPELL units (unshrunk pixel / 2^16).
- */
-
-#define	NOMAGSTP (-29999)
-
-typedef	void (*read_char_proc)(register struct font *, wide_ubyte);
-
-struct font {
-	struct font *next;		/* link to next font info block */
-	char *fontname;			/* name of font */
-	float fsize;			/* size information (dots per inch) */
-	int magstepval;			/* magstep number * two, or NOMAGSTP */
-	FILE *file;			/* open font file or NULL */
-	char *filename;			/* name of font file */
-	long checksum;			/* checksum */
-	unsigned short timestamp;	/* for LRU management of fonts */
-	ubyte flags;			/* flags byte (see values below) */
-	ubyte maxchar;			/* largest character code */
-	double dimconv;			/* size conversion factor */
-	set_char_proc set_char_p;	/* proc used to set char */
-		/* these fields are used by (loaded) raster fonts */
-	read_char_proc read_char;	/* function to read bitmap */
-	struct glyph *glyph;
-		/* these fields are used by (loaded) virtual fonts */
-	struct font **vf_table;		/* list of fonts used by this vf */
-	struct tn *vf_chain;		/* ditto, if TeXnumber >= VFTABLELEN */
-	struct font *first_font;	/* first font defined */
-	struct macro *macro;
-		/* I suppose the above could be put into a union, but we */
-		/* wouldn't save all that much space. */
-};
 
 #define	FONT_IN_USE	1	/* used for housekeeping */
 #define	FONT_LOADED	2	/* if font file has been read */
@@ -322,11 +249,11 @@ struct tn {
 	struct font *fontp;		/* pointer to the rest of the info */
 };
 
-EXTERN	struct font	*tn_table[TNTABLELEN];
-EXTERN	struct font	*font_head	INIT(NULL);
-EXTERN	struct tn	*tn_head	INIT(NULL);
-EXTERN	ubyte		maxchar;
-EXTERN	unsigned short	current_timestamp INIT(0);
+extern	struct font	*tn_table[TNTABLELEN];
+extern	struct font	*font_head	INIT(NULL);
+extern	struct tn	*tn_head	INIT(NULL);
+extern	unsigned char		maxchar;
+extern	unsigned short	current_timestamp INIT(0);
 
 /*
  *	Command line flags.
@@ -334,8 +261,6 @@ EXTERN	unsigned short	current_timestamp INIT(0);
 
 extern	char	*debug_arg;
 extern	int	_density;
-
-extern	float	_gamma;
 
 extern	int	_pixels_per_inch;
 extern	char	*sidemargin;
@@ -374,7 +299,7 @@ extern	char	*mg_arg[5];
 #define	hush_chars	_hush_chars
 #define	hush_chk	_hush_chk
 
-EXTERN	Pixel		brdr_Pixel;
+extern	Pixel		brdr_Pixel;
 
 extern	struct	mg_size_rec {
 	int	w;
@@ -382,7 +307,7 @@ extern	struct	mg_size_rec {
 }
 	mg_size[5];
 
-EXTERN	int	_debug	INIT(0);
+extern	int	_debug	INIT(0);
 
 #define	DBG_BITMAP	0x1
 #define	DBG_DVI		0x2
@@ -402,52 +327,43 @@ EXTERN	int	_debug	INIT(0);
 #define	BDPI	300
 #endif
 
-EXTERN	int		offset_x, offset_y;
-EXTERN	unsigned int	unshrunk_paper_w, unshrunk_paper_h;
-EXTERN	unsigned int	unshrunk_page_w, unshrunk_page_h;
+extern	int		offset_x, offset_y;
+extern	unsigned int	unshrunk_paper_w, unshrunk_paper_h;
+extern	unsigned int	unshrunk_page_w, unshrunk_page_h;
 
-EXTERN	char	*dvi_name	INIT(NULL);
-EXTERN	FILE	*dvi_file;			/* user's file */
-EXTERN	char	*prog;
-EXTERN	double	bak_shrink;			/* last shrink factor != 1 */
-EXTERN	Dimension	window_w, window_h;
-EXTERN	XImage	*image;
-EXTERN	int	backing_store;
-EXTERN	int	home_x, home_y;
-EXTERN	Display	*DISP;
-EXTERN	Screen	*SCRN;
-
-
-
-EXTERN	Cursor	redraw_cursor, ready_cursor;
+extern	char	*dvi_name	INIT(NULL);
+extern	FILE	*dvi_file;			/* user's file */
+extern	char	*prog;
+extern	double	bak_shrink;			/* last shrink factor != 1 */
+extern	Dimension	window_w, window_h;
+extern	XImage	*image;
+extern	int	backing_store;
+extern	int	home_x, home_y;
+extern	Display	*DISP;
+extern	Screen	*SCRN;
 
 
-EXTERN	Boolean	allow_can	INIT(True);
 
-struct	WindowRec {
-  Window		win;
-  double		shrinkfactor;
-  int		base_x, base_y;
-  unsigned int	width, height;
-  int	min_x, max_x, min_y, max_y;	/* for pending expose events */
-};
+extern	Cursor	redraw_cursor, ready_cursor;
+
+
+extern	Boolean	allow_can	INIT(True);
 
 extern	struct WindowRec mane, alt, currwin;
-EXTERN	int		min_x, max_x, min_y, max_y;
+extern	int		min_x, max_x, min_y, max_y;
 
 #define	shrink_factor	currwin.shrinkfactor
 
-EXTERN	Window	top_level;
+extern	Window	top_level;
 
 #define	BAR_WID		12	/* width of darkened area */
 #define	BAR_THICK	15	/* gross amount removed */
 
 
-EXTERN	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-EXTERN	const char *dvi_oops_msg;	/* error message */
+extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
+extern	const char *dvi_oops_msg;	/* error message */
 
 extern	struct psprocs	{
-	
 	void	(*toggle) ARGS((void));
 	void	(*destroy) ARGS((void));
 	void	(*interrupt) ARGS((void));
@@ -470,17 +386,17 @@ extern	void	reconfig ARGS((void));
 extern	void	read_events ARGS((wide_bool));
 extern	void	redraw_page ARGS((void));
 extern	void	do_pages ARGS((void));
-extern	void	realloc_font ARGS((struct font *, wide_ubyte));
-extern	void	realloc_virtual_font ARGS((struct font *, wide_ubyte));
+extern	void	realloc_font ARGS((struct font *, unsigned int));
+extern	void	realloc_virtual_font ARGS((struct font *, unsigned int));
 extern	Boolean	load_font ARGS((struct font *));
-extern	struct font	*define_font ARGS((FILE *, wide_ubyte,
+extern	struct font	*define_font ARGS((FILE *, unsigned int,
 					   struct font *, struct font **, unsigned int,
 					   struct tn **));
 extern	void	open_dvi_file ARGS((void));
 extern	void	put_border ARGS((int, int, unsigned int, unsigned int));
-extern	void	set_char ARGS((wide_ubyte, wide_ubyte));
-extern	void	load_n_set_char ARGS((wide_ubyte, wide_ubyte));
-extern	void	set_vf_char ARGS((wide_ubyte, wide_ubyte));
+extern	void	set_char ARGS((unsigned int, unsigned int));
+extern	void	load_n_set_char ARGS((unsigned int, unsigned int));
+extern	void	set_vf_char ARGS((unsigned int, unsigned int));
 extern	void	init_font_open ARGS((void));
 extern	void	applicationDoSpecial ARGS((char *));
 extern	NORETURN void	oops(_Xconst char *, ...);

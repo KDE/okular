@@ -49,6 +49,8 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#include "dviwin.h"
+
 extern "C" {
 #include <kpathsea/config.h>
 #include <kpathsea/c-ctype.h>

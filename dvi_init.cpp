@@ -49,6 +49,7 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#include "dviwin.h"
 
 #include <qbitmap.h> 
 #include <qfileinfo.h>
@@ -133,17 +134,17 @@ extern void reset_fonts(void)
  *	characters.
  */
 
-void realloc_font(font *fontp, wide_ubyte newsize)
+void realloc_font(font *fontp, unsigned int newsize)
 {
-	struct glyph *glyph;
+  struct glyph *glyph;
 
-	glyph = fontp->glyph = (struct glyph *) realloc((char *) fontp->glyph,
-	    ((unsigned int) newsize + 1) * sizeof(struct glyph));
-	if (glyph == NULL) oops("! Cannot reallocate space for glyph array.");
-	if (newsize > fontp->maxchar)
-	    bzero((char *) (glyph + fontp->maxchar + 1),
-		(int) (newsize - fontp->maxchar) * sizeof(struct glyph));
-	maxchar = fontp->maxchar = newsize;
+  glyph = fontp->glyph = (struct glyph *) realloc((char *) fontp->glyph,
+						  ((unsigned int) newsize + 1) * sizeof(struct glyph));
+  if (glyph == NULL) oops("! Cannot reallocate space for glyph array.");
+  if (newsize > fontp->maxchar)
+    bzero((char *) (glyph + fontp->maxchar + 1),
+	  (int) (newsize - fontp->maxchar) * sizeof(struct glyph));
+  maxchar = fontp->maxchar = newsize;
 }
 
 
@@ -151,7 +152,7 @@ void realloc_font(font *fontp, wide_ubyte newsize)
  *	realloc_virtual_font does the same thing for virtual fonts.
  */
 
-void realloc_virtual_font(font *fontp, wide_ubyte newsize)
+void realloc_virtual_font(font *fontp, unsigned int newsize)
 {
 	struct macro *macro;
 
@@ -277,9 +278,9 @@ static	void reuse_font(font *fontp)
  *      the specified pixel file, adding it to the global linked-list holding
  *      all of the fonts used in the job.
  */
-font *define_font(FILE *file, wide_ubyte cmnd, font *vfparent, font **tntable, unsigned int tn_table_len, tn **tn_headpp)
+font *define_font(FILE *file, unsigned int cmnd, font *vfparent, font **tntable, unsigned int tn_table_len, tn **tn_headpp)
   //	FILE		*file;
-  //	wide_ubyte	cmnd;
+  //	unsigned int	cmnd;
   //	struct font	*vfparent;	/* vf parent of this font, or NULL */
   //	struct font	**tntable;	/* table for low TeXnumbers */
   //	unsigned int	tn_table_len;	/* length of table for TeXnumbers */
@@ -383,7 +384,7 @@ font *define_font(FILE *file, wide_ubyte cmnd, font *vfparent, font **tntable, u
 static	void
 process_preamble()
 {
-	ubyte   k;
+	unsigned char   k;
 
 	if (one(dvi_file) != PRE)
 		dvi_oops("DVI file doesn't start with preamble");
@@ -410,10 +411,10 @@ static	void
 find_postamble()
 {
 	long	pos;
-	ubyte	temp[TMPSIZ];
-	ubyte	*p;
-	ubyte	*p1;
-	ubyte	byte;
+	unsigned char	temp[TMPSIZ];
+	unsigned char	*p;
+	unsigned char	*p1;
+	unsigned char	byte;
 
 	Fseek(dvi_file, (long) 0, 2);
 	pos = ftell(dvi_file) - TMPSIZ;
@@ -449,7 +450,7 @@ find_postamble()
  */
 static	void read_postamble()
 {
-	ubyte   cmnd;
+	unsigned char   cmnd;
 	struct font	*fontp;
 	struct font	**fontpp;
 

@@ -202,10 +202,6 @@ void KDVIMultiPage::preferencesChanged()
   if ( mfmode != window->metafontMode() )
     window->setMetafontMode( mfmode );
   
-  s = config->readEntry( "Gamma" );
-  if ( !s.isEmpty() && s.toFloat() != window->gamma() )
-    window->setGamma( s.toFloat() );
-  
   int makepk = config->readNumEntry( "MakePK" );
   if ( makepk != window->makePK() )
     window->setMakePK( makepk );                                                  

@@ -4,8 +4,10 @@
 // Previewer for TeX DVI files.
 //
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <setjmp.h>
 
 #include <qpainter.h>
 #include <qbitmap.h> 
@@ -29,19 +31,44 @@
 #include <X11/Xlib.h>
 #include <X11/Intrinsic.h>
 
-struct	WindowRec {
-	Window		win;
-	double		shrinkfactor;
-	int		base_x, base_y;
-	unsigned int	width, height;
-	int	min_x, max_x, min_y, max_y;
-};
+#define	MAXDIM		32767
 
-extern	struct WindowRec mane, alt, currwin;
+struct WindowRec mane	= {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
+struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
+extern	struct WindowRec alt;
+
+struct drawinf	currinf;
+int	_debug;
+Boolean	hush_spec_now;
+char	*prog;
+Display	*DISP;
+int		min_x, max_x, min_y, max_y;
+double	tpic_conv;
+struct font	*font_head = NULL;
+char	*dvi_name = NULL;
+int	total_pages;
+int	current_page;
+FILE	*dvi_file;			/* user's file */
+const char *dvi_oops_msg;	/* error message */
+double	dimconv;
+int	n_files_left;	/* for LRU closing of fonts */
+jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
+long	magnification;
+unsigned int	unshrunk_paper_w, unshrunk_paper_h;
+unsigned int	unshrunk_page_w, unshrunk_page_h;
+unsigned int	page_w, page_h;
+unsigned char		maxchar;
+int		offset_x, offset_y;
+long	*page_offset;
+struct tn	*tn_head = NULL;
+#define	TNTABLELEN	30	/* length of TeXnumber array (dvi file) */
+struct font	*tn_table[TNTABLELEN];
+unsigned short	current_timestamp = 0;
+Screen	*SCRN;
+
 
 #include "c-openmx.h" // for OPEN_MAX
 
-	float	_gamma;
 	int	_pixels_per_inch;
 	_Xconst char	*_paper;
 	Pixel	_fore_Pixel;
@@ -88,7 +115,6 @@ extern "C" {
 }
 #include <setjmp.h>
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-extern	char *dvi_oops_msg;
 extern	QDateTime dvi_time;
 
 
@@ -245,23 +271,6 @@ void dviWindow::setResolution( int bdpi )
 int dviWindow::resolution()
 {
 	return basedpi;
-}
-
-void dviWindow::setGamma( float gamma )
-{
-	if (!ChangesPossible)
-	{
-		KMessageBox::sorry( this,
-			i18n("The change in gamma will be effective\n"
-			"only after you start kdvi again!"), i18n( "OK" ) );
-		return;	// Qt will kill us otherwise ??
-	}
-	_gamma = gamma;
-}
-
-float dviWindow::gamma()
-{
-	return _gamma;
 }
 
 
@@ -431,10 +440,8 @@ void dviWindow::setZoom(double zoom)
 
 void dviWindow::paintEvent(QPaintEvent *ev)
 {
-  if (pixmap)
-    {
-      QPainter p(this);
-
-      p.drawPixmap(QPoint(0, 0), *pixmap);
-    }
+  if (pixmap) {
+    QPainter p(this);
+    p.drawPixmap(QPoint(0, 0), *pixmap);
+  }
 }

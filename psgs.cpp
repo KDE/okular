@@ -30,6 +30,8 @@
  *	palette resource and arguments
  */
 
+#include "dviwin.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "oconfig.h"

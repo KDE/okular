@@ -51,6 +51,8 @@
 
 
 /* The stuff from the path searching library.  */
+#include "dviwin.h"
+
 #include <kpathsea/config.h>
 #include <kpathsea/c-ctype.h>
 #include <kpathsea/c-fopen.h>
@@ -82,7 +84,7 @@ static	struct frame	*scan_frame;	/* head frame for scanning */
 #endif
 
 extern QPainter *dcp;
-static	ubyte	dvi_buffer[DVI_BUFFER_LEN];
+static	unsigned char	dvi_buffer[DVI_BUFFER_LEN];
 static	struct frame	*current_frame;
 
 #define	DIR	currinf.dir
@@ -157,7 +159,7 @@ static void put_border(int x, int y, unsigned int width, unsigned int height)
 #define	xtell(pos)	((long) (lseek(fileno(dvi_file), 0L, SEEK_CUR) - \
 			    (currinf.end - (pos))))
 
-static ubyte xxone()
+static unsigned char xxone()
 {
 	if (currinf._virtual) {
 	    ++currinf.pos;
@@ -171,7 +173,7 @@ static ubyte xxone()
 
 #define	xone()  (currinf.pos < currinf.end ? *(currinf.pos)++ : xxone())
 
-static unsigned long xnum(ubyte size)
+static unsigned long xnum(unsigned char size)
 {
   register long x = 0;
 
@@ -179,7 +181,7 @@ static unsigned long xnum(ubyte size)
   return x;
 }
 
-static long xsnum(ubyte size)
+static long xsnum(unsigned char size)
 {
   register long x;
 
@@ -296,7 +298,7 @@ static	void open_font_file(struct font *fontp)
 
 #define	ERRVAL
 
-void set_char(wide_ubyte cmd, wide_ubyte ch)
+void set_char(unsigned int cmd, unsigned int ch)
 {
   register struct glyph *g;
   long	dvi_h_sav;
@@ -332,13 +334,13 @@ void set_char(wide_ubyte cmd, wide_ubyte ch)
 }
 
 
-static	void set_empty_char(wide_ubyte cmd, wide_ubyte ch)
+static	void set_empty_char(unsigned int cmd, unsigned int ch)
 {
   return;
 }
 
 
-void load_n_set_char(wide_ubyte cmd, wide_ubyte ch)
+void load_n_set_char(unsigned int cmd, unsigned int ch)
 {
   if (load_font(currinf.fontp)) {	/* if not found */
     Fputs("Character(s) will be left blank.\n", stderr);
@@ -352,12 +354,12 @@ void load_n_set_char(wide_ubyte cmd, wide_ubyte ch)
 }
 
 
-void set_vf_char(wide_ubyte cmd, wide_ubyte ch)
+void set_vf_char(unsigned int cmd, unsigned int ch)
 {
   register struct macro *m;
   struct drawinf	oldinfo;
-  ubyte	oldmaxchar;
-  static	ubyte	c;
+  unsigned char	oldmaxchar;
+  static	unsigned char	c;
   long	dvi_h_sav;
 
 
@@ -398,7 +400,7 @@ void set_vf_char(wide_ubyte cmd, wide_ubyte ch)
 }
 
 
-static	void set_no_char(wide_ubyte cmd, wide_ubyte ch)
+static	void set_no_char(unsigned int cmd, unsigned int ch)
 {
   if (currinf._virtual) {
     currinf.fontp = currinf._virtual->first_font;
@@ -459,9 +461,9 @@ static	void special(long nbytes)
 
 static	void draw_part(struct frame *minframe, double current_dimconv)
 {
-  ubyte ch;
+  unsigned char ch;
   struct drawinf	oldinfo;
-  ubyte	oldmaxchar;
+  unsigned char	oldmaxchar;
   off_t	file_pos;
   int	refl_count;
 
@@ -474,10 +476,10 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 
   for (;;) {
     ch = xone();
-    if (ch <= (ubyte) (SETCHAR0 + 127))
+    if (ch <= (unsigned char) (SETCHAR0 + 127))
       (*currinf.set_char_p)(ch, ch);
     else
-      if (FNTNUM0 <= ch && ch <= (ubyte) (FNTNUM0 + 63))
+      if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63))
 	change_font((unsigned long) (ch - FNTNUM0));
       else {
 	long a, b;
@@ -560,45 +562,39 @@ static	void draw_part(struct frame *minframe, double current_dimconv)
 
 	case EREFL:
 	  if (scan_frame != NULL) {	/* if we're scanning */
-	    if (current_frame == scan_frame && --refl_count < 0)
-	      {
+	    if (current_frame == scan_frame && --refl_count < 0) {
 				/* we've hit the end of our scan */
-		scan_frame = NULL;
+	      scan_frame = NULL;
 				/* first:  push */
-		if (current_frame->next == NULL) {
-		  struct frame *newp = (struct frame *)
-		    xmalloc(sizeof(struct frame),
-			    "stack frame");
-		  current_frame->next = newp;
-		  newp->prev = current_frame;
-		  newp->next = NULL;
-		}
-		current_frame = current_frame->next;
-		current_frame->data = currinf.data;
-				/* next:  restore old file position, XX, etc. */
-		if (!currinf._virtual) {
-		  off_t bgn_pos = xtell(dvi_buffer);
-		  
-		  if (file_pos >= bgn_pos) {
-		    oldinfo.pos = dvi_buffer
-		      + (file_pos - bgn_pos);
-		    oldinfo.end = currinf.end;
-		  }
-		  else {
-		    (void) lseek(fileno(dvi_file), file_pos,
-				 SEEK_SET);
-		    oldinfo.pos = oldinfo.end;
-		  }
-		}
-		currinf = oldinfo;
-		maxchar = oldmaxchar;
-				/* and then:  recover position info. */
-		DVI_H = current_frame->data.dvi_h;
-		DVI_V = current_frame->data.dvi_v;
-		PXL_V = current_frame->data.pxl_v;
-				/* and finally, reverse direction */
-		currinf.dir = -currinf.dir;
+	      if (current_frame->next == NULL) {
+		struct frame *newp = (struct frame *)xmalloc(sizeof(struct frame),"stack frame");
+		current_frame->next = newp;
+		newp->prev = current_frame;
+		newp->next = NULL;
 	      }
+	      current_frame = current_frame->next;
+	      current_frame->data = currinf.data;
+				/* next:  restore old file position, XX, etc. */
+	      if (!currinf._virtual) {
+		off_t bgn_pos = xtell(dvi_buffer);
+		
+		if (file_pos >= bgn_pos) {
+		  oldinfo.pos = dvi_buffer + (file_pos - bgn_pos);
+		  oldinfo.end = currinf.end;
+		} else {
+		  (void) lseek(fileno(dvi_file), file_pos, SEEK_SET);
+		  oldinfo.pos = oldinfo.end;
+		}
+	      }
+	      currinf = oldinfo;
+	      maxchar = oldmaxchar;
+				/* and then:  recover position info. */
+	      DVI_H = current_frame->data.dvi_h;
+	      DVI_V = current_frame->data.dvi_v;
+	      PXL_V = current_frame->data.pxl_v;
+				/* and finally, reverse direction */
+	      currinf.dir = -currinf.dir;
+	    }
 	    break;
 	  }
 	  /* we're not scanning, */

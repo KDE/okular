@@ -36,8 +36,6 @@ public:
 	void		setMetafontMode( const char * );
 	const char *	metafontMode();
 	void		setPaper(double w, double h);
-	void		setGamma( float );
-	float		gamma();
 	void		setFontPath( const char * );
 	const char *	fontPath();
 
@@ -71,6 +69,58 @@ private:
 	int		ChangesPossible;
 	double          _zoom;
 
+};
+
+
+#include <X11/Xlib.h>
+//#include <X11/Intrinsic.h>
+
+struct	WindowRec {
+  Window	win;
+  double	shrinkfactor;
+  int		base_x;
+  int           base_y;
+  unsigned int	width;
+  unsigned int	height;
+  int	        min_x;	/* for pending expose events */
+  int	        max_x;	/* for pending expose events */
+  int	        min_y;	/* for pending expose events */
+  int	        max_y;	/* for pending expose events */
+};
+
+
+struct framedata {
+  long dvi_h;
+  long dvi_v;
+  long w;
+  long x;
+  long y;
+  long z;
+  int pxl_v;
+};
+
+
+struct frame {
+  struct framedata data;
+  struct frame *next, *prev;
+};
+
+
+
+typedef	void	(*set_char_proc)(unsigned int, unsigned int);
+
+#include "font.h"
+
+struct drawinf {	/* this information is saved when using virtual fonts */
+  struct framedata data;
+  struct font	*fontp;
+  set_char_proc	set_char_p;
+  int		tn_table_len;
+  struct font	**tn_table;
+  struct tn	*tn_head;
+  unsigned char		*pos, *end;
+  struct font	*_virtual;
+  int		dir;
 };
 
 #endif

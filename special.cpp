@@ -55,6 +55,8 @@
  * it's worth it.
  */
 
+#include "dviwin.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

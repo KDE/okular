@@ -312,7 +312,7 @@ void PageView::notifyPixmapChanged( int pageNumber )
             expandedRect.addCoords( -1, -1, 3, 3 );
             updateContents( expandedRect );
 
-            // if we where "zoom-dragging" do not overwrite the "zoom-drag" cursor
+            // if we were "zoom-dragging" do not overwrite the "zoom-drag" cursor
             if (cursor().shape() != Qt::SizeVerCursor)
             {
                 // that is here because of that

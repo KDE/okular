@@ -262,6 +262,12 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             destPainter->fillRect( limits, Settings::paperColor() );
         else
             destPainter->fillRect( limits, Qt::white );
+
+        // draw a cross (to  that the pixmap as not yet been loaded)
+        // helps a lot on pages that take much to render
+        destPainter->setPen( Qt::gray );
+        destPainter->drawLine( 0, 0, width-1, height-1 );
+        destPainter->drawLine( 0, height-1, width-1, 0 );
         return;
     }
 

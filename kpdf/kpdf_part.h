@@ -114,7 +114,7 @@ namespace KPDF
     void slotGoToPage();
     void printPreview();
 
-    /*void executeAction(LinkAction*);*/
+    void executeAction(LinkAction*);
 
       void showScrollBars( bool );
       void showMarkList( bool );
@@ -125,7 +125,7 @@ namespace KPDF
 
   private:
       void doFind(QString s, bool next);
-     
+
       PDFDoc*     m_doc;
       PageWidget* m_outputDev;
       PDFPartView * pdfpartview;

@@ -17,7 +17,7 @@
 #include <qpainter.h>
 #include <qmutex.h>
 
-#include <kglobalsettings.h> 
+#include <kglobalsettings.h>
 #include <kurldrag.h>
 
 #include "PDFDoc.h"
@@ -42,6 +42,7 @@ namespace KPDF
         m_outputdev = new QOutputDevPixmap(paperColor);
         setFocusPolicy( QWidget::StrongFocus );
         viewport()->setFocusPolicy( QWidget::WheelFocus );
+        viewport()->setMouseTracking( true );
     }
     PageWidget::~PageWidget()
     {
@@ -65,6 +66,7 @@ namespace KPDF
     void
     PageWidget::contentsMousePressEvent(QMouseEvent* e)
     {
+        double x, y;
         if (m_doc == 0)
             return;
         if ( e->button() & LeftButton )
@@ -77,12 +79,14 @@ namespace KPDF
             emit rightClick();
         }
 
-        m_pressedAction = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
+        m_outputdev->cvtDevToUser(e->x(), e->y(), &x, &y);
+        m_pressedAction = m_doc->findLink(x, y);
     }
 
     void
     PageWidget::contentsMouseReleaseEvent(QMouseEvent* e)
     {
+        double x, y;
         if (m_doc == 0)
             return;
 
@@ -90,14 +94,11 @@ namespace KPDF
         {
             setCursor( arrowCursor );
         }
-        else
-        {
-            LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
-            if (action == m_pressedAction)
-                emit linkClicked(action);
 
-            m_pressedAction = 0;
-        }
+        m_outputdev->cvtDevToUser(e->x(), e->y(), &x, &y);
+        LinkAction* action = m_doc->findLink(x, y);
+        if (action == m_pressedAction && action) emit linkClicked(action);
+        m_pressedAction = 0;
     }
 
     void
@@ -111,11 +112,11 @@ namespace KPDF
             scrollBy( delta.x(), delta.y() );
             m_dragGrabPos = e->globalPos();
         }
-        else
-        {
-            LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
-            setCursor(action != 0 ? Qt::PointingHandCursor : Qt::ArrowCursor);
-        }
+
+        double x, y;
+        m_outputdev->cvtDevToUser(e->x(), e->y(), &x, &y);
+        LinkAction* action = m_doc->findLink(x, y);
+        setCursor(action ? Qt::PointingHandCursor : Qt::ArrowCursor);
     }
 
     void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
@@ -127,17 +128,17 @@ namespace KPDF
         if ( !im.isNull() )
         {
             p->drawImage ( clipx, clipy, im, clipx, clipy, clipw, cliph );
-            if ((clipw + clipx) > im.width()) 
-                p->fillRect ( im.width(), 
-                        clipy, 
-                        clipw - (im.width() - clipx), 
-                        im.height() - clipy, 
+            if ((clipw + clipx) > im.width())
+                p->fillRect ( im.width(),
+                        clipy,
+                        clipw - (im.width() - clipx),
+                        im.height() - clipy,
                         bc );
             if ((cliph + clipy) > im.height())
-                p->fillRect ( clipx, 
-                        im.height(), 
-                        clipw, 
-                        cliph - (im.height() - clipy), 
+                p->fillRect ( clipx,
+                        im.height(),
+                        clipw,
+                        cliph - (im.height() - clipy),
                         bc );
             if (m_selection)
             {
@@ -178,7 +179,7 @@ namespace KPDF
     {
         // any idea why this mutex is necessary?
         static QMutex mutex;
-        
+
         m_selection = false;
         Q_ASSERT(mutex.locked() == false);
         mutex.lock();
@@ -374,7 +375,7 @@ namespace KPDF
             m_xMin = 0;
             m_yMin = 0;
         }
-        
+
         b = m_outputdev -> find(u, len, !next, true, next, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
         m_xMin = m_xMin / m_zoomFactor;
         m_yMin = m_yMin / m_zoomFactor;

@@ -31,6 +31,7 @@
 #include <qtimer.h>
 
 #include <kaction.h>
+#include <kapplication.h>
 #include <kdebug.h>
 #include <kinstance.h>
 #include <kprinter.h>
@@ -42,6 +43,8 @@
 #include <kfiledialog.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
+#include <krun.h>
+#include <kuserprofile.h>
 #include <kio/netaccess.h>
 
 #include "kpdf_error.h"
@@ -50,6 +53,8 @@
 
 #include "GString.h"
 
+#include "gfile.h"
+#include "Error.h"
 #include "GlobalParams.h"
 #include "PDFDoc.h"
 #include "TextOutputDev.h"
@@ -87,6 +92,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   connect(pdfpartview, SIGNAL( clicked ( int ) ), this, SLOT( pageClicked ( int ) ));
 
   m_outputDev = pdfpartview->outputdev;
+  connect(m_outputDev, SIGNAL(linkClicked(LinkAction*)), this, SLOT(executeAction(LinkAction*)));
   m_outputDev->setAcceptDrops( true );
 
   setWidget(pdfpartview);
@@ -200,7 +206,7 @@ void Part::slotZoom( const QString&nz )
     z.remove(  z.find(  '%' ), 1 );
     bool isNumber = true;
     zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
- 
+
     if ( isNumber )
     {
     	kdDebug() << "ZOOM = "  << nz << ", setting zoom = " << zoom << endl;
@@ -562,12 +568,12 @@ Part::print()
   double width, height;
   int landscape, portrait;
   KPrinter printer;
-  
+
   printer.setPageSelection(KPrinter::ApplicationSide);
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setCurrentPage(m_currentPage);
   printer.setMargins(0, 0, 0, 0);
-  
+
   // if some pages are landscape and others are not the most common win as kprinter does
   // not accept a per page setting
   landscape = 0;
@@ -581,7 +587,7 @@ Part::print()
     else portrait++;
   }
   if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
-  
+
   if (printer.setup(widget()))
   {
     doPrint( printer );
@@ -595,70 +601,234 @@ Part::setFixedZoomFactor(float zoomFactor)
 
 }
 */
-/*
-  void
+
+void
 Part::executeAction(LinkAction* action)
 {
-  if (action == 0)
-    return;
+	LinkActionKind kind;
+	LinkDest *dest;
+	GString *namedDest;
+	char *s;
+	GString *fileName, *fileName2;
+// 	GString *cmd;
+	GString *actionName;
+	Object movieAnnot, obj1, obj2;
+	int i;
+	KService::Ptr ptr;
+	KURL::List lst;
 
-  LinkActionKind kind = action->getKind();
+	kind = action -> getKind();
+	// copied from xpdf have a look and understand a bit :D
+	switch (kind)
+	{
+		// GoTo / GoToR action
+		case actionGoTo:
+		case actionGoToR:
+			if (kind == actionGoTo)
+			{
+				dest = NULL;
+				namedDest = NULL;
+				if ((dest = ((LinkGoTo *)action)->getDest()))
+				{
+					dest = dest->copy();
+				}
+				else if ((namedDest = ((LinkGoTo *)action)->getNamedDest()))
+				{
+					namedDest = namedDest->copy();
+				}
+			}
+			else
+			{
+				dest = NULL;
+				namedDest = NULL;
+				if ((dest = ((LinkGoToR *)action)->getDest()))
+				{
+					dest = dest->copy();
+				}
+				else if ((namedDest = ((LinkGoToR *)action)->getNamedDest()))
+				{
+					namedDest = namedDest->copy();
+				}
+				s = ((LinkGoToR *)action)->getFileName()->getCString();
+				//~ translate path name for VMS (deal with '/')
+				if (isAbsolutePath(s))
+				{
+					fileName = new GString(s);
+				}
+				else
+				{
+					fileName = appendToPath(grabPath(m_doc->getFileName()->getCString()), s);
+				}
+				if (!openURL(fileName->getCString()))
+				{
+					if (dest)
+					{
+						delete dest;
+					}
+					if (namedDest)
+					{
+						delete namedDest;
+					}
+					delete fileName;
+					return;
+				}
+				delete fileName;
+			}
+			if (namedDest)
+			{
+				dest = m_doc->findDest(namedDest);
+				delete namedDest;
+			}
+			if (dest)
+			{
+				// TODO implement
+				//displayDest(dest, zoom, rotate, gTrue);
+				delete dest;
+			}
+			else
+			{
+				if (kind == actionGoToR) goToPage(1);
+			}
+		break;
 
-  switch (kind)
-  {
-  case actionGoTo:
-  case actionGoToR:
-  {
-    LinkDest* dest = 0;
-    GString* namedDest = 0;
+		// Launch action
+		case actionLaunch:
+			fileName = ((LinkLaunch *)action)->getFileName();
+			s = fileName->getCString();
+			if (!strcmp(s + fileName->getLength() - 4, ".pdf") ||
+			    !strcmp(s + fileName->getLength() - 4, ".PDF"))
+			{
+				//~ translate path name for VMS (deal with '/')
+				if (isAbsolutePath(s))
+				{
+					fileName = fileName->copy();
+				}
+				else
+				{
+					fileName = appendToPath(grabPath(m_doc->getFileName()->getCString()), s);
+				}
+				if (!openURL(fileName->getCString()))
+				{
+					delete fileName;
+					return;
+				}
+				delete fileName;
+				goToPage(1);
+			}
+			else
+			{
+				fileName = fileName->copy();
+				if (((LinkLaunch *)action)->getParams())
+				{
+					fileName->append(' ');
+					fileName->append(((LinkLaunch *)action)->getParams());
+				}
+				fileName->append(" &");
+				if (KMessageBox::questionYesNo(widget(), i18n("Do you want to execute the command:\n%1").arg(fileName->getCString()), i18n("Launching external application")) == KMessageBox::Yes)
+				{
+					system(fileName->getCString());
+				}
+				delete fileName;
+			}
+		break;
 
-    if (kind == actionGoTo)
-    {
-      if ((dest = ((LinkGoTo*)action)->getDest()))
-        dest = dest->copy();
-      else if ((namedDest = ((LinkGoTo*)action)->getNamedDest()))
-        namedDest = namedDest->copy();
-    }
+		// URI action
+		case actionURI:
+			ptr = KServiceTypeProfile::preferredService("text/html", "Application");
+			lst.append(((LinkURI *)action)->getURI()->getCString());
+			KRun::run(*ptr, lst);
+		break;
 
-    else
-    {
-      if ((dest = ((LinkGoToR*)action)->getDest()))
-        dest = dest->copy();
-      else if ((namedDest = ((LinkGoToR*)action)->getNamedDest()))
-        namedDest = namedDest->copy();
-      s = ((LinkGoToR*)action)->getFileName()->getCString();
-      //~ translate path name for VMS (deal with '/')
-      if (!loadFile(fileName))
-      {
-        delete dest;
-        delete namedDest;
-        return;
-      }
-    }
+		// Named action
+		case actionNamed:
+			actionName = ((LinkNamed *)action)->getName();
+			if (!actionName->cmp("NextPage")) nextPage();
+			else if (!actionName->cmp("PrevPage")) previousPage();
+			else if (!actionName->cmp("FirstPage")) goToPage(1);
+			else if (!actionName->cmp("LastPage")) goToPage(m_doc->getNumPages());
+			else if (!actionName->cmp("GoBack"))
+			{
+				// TODO i think that means back in history not in page, check i XPDFCore.cc
+				//goBackward();
+			}
+			else if (!actionName->cmp("GoForward"))
+			{
+				// TODO i think that means forward in history not in page, check i XPDFCore.cc
+				// goForward();
+			}
+			// TODO is this legal if integrated on konqy?
+			else if (!actionName->cmp("Quit")) kapp -> quit();
+			else
+			{
+				error(-1, "Unknown named action: '%s'", actionName->getCString());
+			}
+		break;
 
+		// Movie action
+		case actionMovie:
+			if (((LinkMovie *)action)->hasAnnotRef())
+			{
+				m_doc->getXRef()->fetch(((LinkMovie *)action)->getAnnotRef()->num,
+				                      ((LinkMovie *)action)->getAnnotRef()->gen,
+				                      &movieAnnot);
+			}
+			else
+			{
+				m_doc->getCatalog()->getPage(m_currentPage)->getAnnots(&obj1);
+				if (obj1.isArray())
+				{
+					for (i = 0; i < obj1.arrayGetLength(); ++i)
+					{
+						if (obj1.arrayGet(i, &movieAnnot)->isDict())
+						{
+							if (movieAnnot.dictLookup("Subtype", &obj2)->isName("Movie"))
+							{
+								obj2.free();
+								break;
+							}
+							obj2.free();
+						}
+						movieAnnot.free();
+					}
+					obj1.free();
+				}
+			}
+			if (movieAnnot.isDict())
+			{
+				if (movieAnnot.dictLookup("Movie", &obj1)->isDict())
+				{
+					if (obj1.dictLookup("F", &obj2))
+					{
+						if ((fileName = LinkAction::getFileSpecName(&obj2)))
+						{
+							if (!isAbsolutePath(fileName->getCString()))
+							{
+								fileName2 = appendToPath(grabPath(m_doc->getFileName()->getCString()),
+								                         fileName->getCString());
+								delete fileName;
+								fileName = fileName2;
+							}
+							// TODO implement :D
+							// get the mimetype of fileName and then run KServiceTypeProfile
+							// preferredService on it
+							// Having a file where test would be cool
+							//runCommand(cmd, fileName);
+							delete fileName;
+						}
+						obj2.free();
+					}
+					obj1.free();
+				}
+			}
+			movieAnnot.free();
+		break;
 
-    if (namedDest != 0)
-    {
-      dest = m_doc->findDest(namedDest);
-      delete namedDest;
-    }
-    if (dest != 0)
-    {
-      displayDestination(dest);
-      delete dest;
-    }
-    else
-    {
-      if (kind == actionGoToR)
-        displayPage(1);
-    }
-    break;
-  }
-  default:
-      break;
-  }
-}*/
-
+		// unknown action type
+		case actionUnknown:
+			error(-1, "Unknown link action type: '%s'", ((LinkUnknown *)action)->getAction()->getCString());
+		break;
+	}
+}
 void Part::slotFitToWidthToggled()
 {
   m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
@@ -710,11 +880,11 @@ void Part::printPreview()
   double width, height;
   int landscape, portrait;
   KPrinter printer;
-  
+
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setPreviewOnly( true );
   printer.setMargins(0, 0, 0, 0);
-  
+
   // if some pages are landscape and others are not the most common win as kprinter does
   // not accept a per page setting
   landscape = 0;
@@ -728,7 +898,7 @@ void Part::printPreview()
     else portrait++;
   }
   if (landscape > portrait) printer.setOption("orientation-requested", "4");
-  
+
   doPrint(printer);
 }
 
@@ -740,7 +910,7 @@ void Part::doPrint( KPrinter& printer )
   QOutputDevKPrinter printdev( painter, paperColor, printer );
   printdev.startDoc(m_doc->getXRef());
   QValueList<int> pages = printer.pageList();
-  
+
   for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
   {
     m_docMutex.lock();

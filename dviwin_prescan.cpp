@@ -258,7 +258,7 @@ void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
 void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
 {
   cp.truncate(cp.find('"'));
-  anchorList[cp] = anchor(current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+  anchorList[cp] = Anchor(current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
 }
 
 
@@ -330,7 +330,7 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
     if (cp.startsWith("ps:SDict begin [") && cp.endsWith(" pdfmark end")) {  // hyperref definition of link/anchor/bookmark/etc
       if (cp.contains("/DEST")) { // The PostScript code defines an anchor
 	QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
-	anchorList[anchorName] = anchor(current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+	anchorList[anchorName] = Anchor(current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
       }
       return;
     }

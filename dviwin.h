@@ -114,7 +114,7 @@ public:
       number, or src:<line><filename>) and see if a corresponding
       section of the DVI file can be found. If so, it returns an
       anchor to that section. If not, it returns an invalid anchor. */
-  virtual anchor        parseReference(const QString &reference);
+  virtual Anchor        parseReference(const QString &reference);
   
   // These should not be public... only for the moment
   void          read_postamble(void);

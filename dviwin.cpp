@@ -104,6 +104,9 @@ dviRenderer::~dviRenderer()
   kdDebug(4300) << "~dviRenderer" << endl;
 #endif
 
+  mutex.lock();
+  mutex.unlock();
+
   delete PS_interface;
   delete proc;
   delete dviFile;
@@ -115,17 +118,21 @@ dviRenderer::~dviRenderer()
 
 void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, bool useFontHints )
 {
+  mutex.lock();
   _postscript = flag_showPS;
   editorCommand = str_editorCommand;
   font_pool.setParameters( useFontHints );
+  mutex.unlock();
   emit(needsRepainting());
 }
 
 
 void dviRenderer::showInfo(void)
 {
+  mutex.lock();
   info->setDVIData(dviFile);
   info->show();
+  mutex.unlock();
 }
 
 
@@ -147,19 +154,24 @@ void dviRenderer::drawPage(double resolution, documentPage *page)
     kdError(4300) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
     return;
   }
+
+  mutex.lock();
   if ( dviFile == 0 ) {
     kdError(4300) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
+    mutex.unlock();
     return;
   }
   if (page->getPageNumber() > dviFile->total_pages) {
     kdError(4300) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber() 
 		  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
+    mutex.unlock();
     return;
   }
   if ( dviFile->dvi_Data() == 0 ) {
     kdError(4300) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
+    mutex.unlock();
     return;
   }
  
@@ -189,6 +201,7 @@ void dviRenderer::drawPage(double resolution, documentPage *page)
 			       errorMsg, i18n("DVI File Error"));
     errorMsg = QString::null;
     currentlyDrawnPage = 0;
+    mutex.unlock();
     return;
   }
   
@@ -202,6 +215,7 @@ void dviRenderer::drawPage(double resolution, documentPage *page)
   }
   
   currentlyDrawnPage = 0;
+  mutex.unlock();
 }
 
 
@@ -373,6 +387,8 @@ bool dviRenderer::setFile(const QString &fname)
   kdDebug(4300) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
 
+  mutex.lock();
+
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
 
@@ -383,7 +399,8 @@ bool dviRenderer::setFile(const QString &fname)
     info->setDVIData(0);
     delete dviFile;
     dviFile = 0;
-    
+
+    mutex.unlock();    
     return true;
   }
 
@@ -394,6 +411,7 @@ bool dviRenderer::setFile(const QString &fname)
 			i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
 			     "KDVI already tried to add the ending '.dvi'.</qt>").arg(filename),
 			i18n("File Error!"));
+    mutex.unlock();
     return false;
   }
 
@@ -408,6 +426,7 @@ bool dviRenderer::setFile(const QString &fname)
 			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
 			.arg( fname )
 			.arg( mimetype ) );
+    mutex.unlock();
     return false;
   }
 
@@ -428,6 +447,7 @@ bool dviRenderer::setFile(const QString &fname)
 				      "likely this means that the DVI file is broken.</qt>"),
 				 dviFile_new->errorMsg, i18n("DVI File Error"));
     delete dviFile_new;
+    mutex.unlock();
     return false;
   }
 
@@ -469,8 +489,10 @@ bool dviRenderer::setFile(const QString &fname)
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
 
-  if (dviFile->page_offset.isEmpty() == true)
+  if (dviFile->page_offset.isEmpty() == true) {
+    mutex.unlock();
     return false;
+  }
 
   // Locate fonts.
   font_pool.locateFonts();
@@ -527,19 +549,24 @@ bool dviRenderer::setFile(const QString &fname)
   emit(needsRepainting());
   
   QApplication::restoreOverrideCursor();
+  mutex.unlock();
   return true;
 }
 
 
-anchor dviRenderer::parseReference(const QString &reference)
+Anchor dviRenderer::parseReference(const QString &reference)
 {
+  mutex.lock();
+
   //#ifdef DEBUG_DVIWIN
   kdError(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
   //#endif
   
-  if (dviFile == 0)
-    return anchor();
-    
+  if (dviFile == 0) {
+    mutex.unlock();
+    return Anchor();
+  }    
+
   // case 1: The reference is a number, which we'll interpret as a
   // page number.
   bool ok;
@@ -549,8 +576,9 @@ anchor dviRenderer::parseReference(const QString &reference)
       page = 0;
     if (page > dviFile->total_pages)
       page = dviFile->total_pages;
-    
-    return anchor(page, 0.0);
+
+    mutex.unlock();
+    return Anchor(page, 0.0);
   }
   
   // case 2: The reference is of form "src:1111Filename", where "1111"
@@ -571,7 +599,8 @@ anchor dviRenderer::parseReference(const QString &reference)
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
 				    "information. Press the F1 key to open the manual.</qt>").arg(refLineNumber).arg(refFileName),
 			 i18n("Could Not Find Reference"));
-      return anchor();
+      mutex.unlock();
+      return Anchor();
     }
 
     // Go through the list of source file anchors, and find the anchor
@@ -602,18 +631,23 @@ anchor dviRenderer::parseReference(const QString &reference)
 	  bestMatch = it;
       }
     
-    if (bestMatch != sourceHyperLinkAnchors.end())
-      return anchor(bestMatch->page, bestMatch->distance_from_top_in_inch);
-    else
+    if (bestMatch != sourceHyperLinkAnchors.end()) {
+      mutex.unlock();
+      return Anchor(bestMatch->page, bestMatch->distance_from_top_in_inch);
+    } else
       if (anchorForRefFileFound == false)
 	KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
 					      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(refLineNumber).arg(refFileName),
 			   i18n( "Could Not Find Reference" ));
-      else
-	return anchor();
-    return anchor();
+      else {
+	mutex.unlock();
+	return Anchor();
+      }
+    mutex.unlock();
+    return Anchor();
   }
-  return anchor();
+  mutex.unlock();
+  return Anchor();
 }
 
 

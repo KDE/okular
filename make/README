@@ -1,0 +1,6 @@
+make -- this subdirectory contains Makefile fragments.
+
+configure substitutes them for ac_include lines in Makefile.in.
+(This is an enhancement to standard Autoconf; see aclocal.m4.)
+
+kb@mail.tug.org

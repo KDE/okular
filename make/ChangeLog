@@ -1,0 +1,832 @@
+1999-03-15  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* config.mk: Changes to the handling of autoconf, autoreconf, and
+ 	autoheader.  After Luc Van Eycken
+ 	<Luc.VanEycken@ESAT.KULEUVEN.AC.BE>.
+
+1999-02-04  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* library.mk: Make AR and ARFLAGS configurable.
+
+	* dist.mk: Change of packaging: we add 'texk' directory under the
+ 	toplevel directory.  This contains the web2c material itelf.
+  	Libraries are to go into a sibling of this directory, out of the
+ 	direct texk tree.
+
+1999-01-24  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* texi.mk: Restrict generation of info files to
+ 	--enable-maintainer-mode.
+
+1999-01-10  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* Rename all *.make files in this directory to *.mk.
+
+Fri May 15 20:49:18 1998  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* common.make: Clear the SUFFIXES list, as suggested by Thomas
+ 	Esser.
+
+Thu Mar 12 20:22:00 1998  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* rdepend.make (depend): Add sed pattern for readlink.
+
+Tue Mar 10 22:09:59 1998  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* dist.make: Account for presence of withenable.ac in top source
+ 	dir.
+
+Tue Feb 24 13:21:58 1998  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* man.make: Additions from Vladimir Volovich <vvv@vvv.vsu.ru>.
+
+Mon Feb 16 09:44:30 1998  Olaf Weber  <olaf@infovore.xs4all.nl>
+
+	* makevars.make: Add vartexfonts to the variables being passed
+ 	around.
+
+	* paths.make: Add vartexfonts variable to make configuring
+ 	VARTEXFONTS directory easier.
+
+Tue Feb 10 17:58:44 1998  Olaf Weber  <infovore@xs4all.nl>
+
+	* man.make: Change sed delimiter from ! to %, in case !! is used
+ 	in any of the variables being substituted.  Spotted by Thomas
+ 	Esser.
+
+Fri Feb  6 17:57:27 1998  Olaf Weber  <infovore@xs4all.nl>
+
+	* dist.make: Correct ../contrib material.
+
+	* common.make: Add -pipe to gcc flags for maintainer.
+
+Tue Feb  3 22:13:56 1998  Olaf Weber  <infovore@xs4all.nl>
+
+	* dist.make [MAINT]: Improve handling of contrib dir.
+
+Thu Jan 29 16:20:12 1998  Olaf Weber  <infovore@xs4all.nl>
+
+	* paths.make: Let texmf be @texmfmain@, which is determined in
+ 	../kpathsea/withenable.ac.
+
+	* clean.make (distclean): Imply extraclean.
+
+Wed Jan 28 20:48:48 1998  Olaf Weber  <infovore@xs4all.nl>
+
+	* dist.make: Add unbackslsh.awk to top_files.  Account for contrib
+ 	dir.
+
+	* paths.make: A friendly warning: we're going full TDS in
+ 	texmf.in.
+
+	* rdepend.make: Since c-auto.h is generated, it must receive
+ 	special treatment like paths.h.
+
+Fri Jan  9 21:12:23 1998  Olaf Weber  <infovore@xs4all.nl>
+
+	* clean.make (distclean): Add stamp-tangle stamp-otangle to files
+ 	being removed.
+
+Sun Jan  4 15:56:57 1998  Olaf Weber  <infovore@xs4all.nl>
+
+	* man.make: Add end-of-file comment.
+
+	* Add man.make with rules for making manual pages.
+
+Fri Dec 12 10:30:25 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* dist.make (dist): Reflect change of install-sh to install.sh.
+  	Add djgpp directory to distributions.
+
+Tue Dec  2 16:12:53 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* clean.make (extraclean): Remove *.*pk and *.*gf, rather than *pk
+	and *gf.
+
+Mon Nov 24 19:07:23 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* texi.make: A change to get texi2dvi to work on the maintainer's
+ 	system.
+
+Thu Nov 20 00:03:29 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* dist.make (dist): Be less exuberant with write permissions when
+ 	creating a distribution.
+
+Tue Nov 18 13:46:49 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* rdepend.make (depend depend.make): Correct lex.yy to
+ 	$(LEX_OUTPUT_ROOT).
+
+Mon Nov 10 13:12:28 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* paths.make [mandir]: Corrected definition, which contained one
+ 	'man' too many.  From Sebastian Rahtz.
+
+Tue Oct 28 21:34:42 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* dist.make: Use cp -p when creating a distribution.
+
+Tue Oct 21 23:33:16 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* rdepend.make: Handle kpsestat and access when generating
+ 	dependencies.
+
+Mon Oct 20 11:38:09 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* clean.make, config.make, paths.make, tkpathsea.make: Renamed
+	texmf.cnf.in to texmf.in / c-auto.h.in to c-auto.in.
+
+Thu Oct 16 10:32:59 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* clean.make: Remove stamp-auto files for distclean and
+ 	configclean targets.  Remove *.exe files in clean target.  After
+ 	Peter Breitenlohner.
+
+Wed Oct 15 21:37:20 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* config.make: Don't try to create stamp-auto in source directory.
+
+	* dist.make: Do not bother to distribute stamp-auto.
+
+Mon Oct  6 09:27:18 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* config.make: Ensure that maintainer mode, once enabled, remains
+ 	enabled if the Makefiles are regenerated.
+
+	* rdepend.make (depend, depend.make): Add unbackslsh.awk filter.
+
+Tue Sep 30 12:14:55 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* texi.make (MAKEINFO_FLAGS): removed -I$(HOME)/gnu/gnuorg and
+ 	comment, added -I$(srcdir).
+
+Mon Sep 29 17:26:36 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* paths.make: Fixed mandir definition.  (Bruno BEAUFILS
+ 	<Bruno.Beaufils@lifl.fr>)
+
+Tue Sep 16 15:22:48 1997  Olaf Weber  <infovore@xs4all.nl>
+
+	* config.make: ac_dir is now /home/olaf/web2c/src/autoconf.  Use
+ 	-m $(ac_dir) in calls.
+
+	* rdepend.make: Enabled make depend.
+
+Thu Feb  6 17:35:18 1997  Karl Berry  <karl@cs.umb.edu>
+
+	* Kpathsea 3.0, Web2c 7.0, etc.
+
+Sat Feb  1 14:51:16 1997  Karl Berry  <karl@cs.umb.edu>
+
+	* dist.make: Copy acsite.m4 to etc/autoconf instead of ./aclocal.m4.
+
+Sat Jan 18 17:07:22 1997  Karl Berry  <karl@cs.umb.edu>
+
+	* dist.make (dist): Depend on depend, not depend.make, so we will
+	always make depend at dist time.
+
+	* rdepend.make (depend): Remove dependency on paths.h; why should
+	we remake depend.make then?
+
+Thu Jan 16 14:59:01 1997  Karl Berry  <karl@cs.umb.edu>
+
+	* dist.make (top_files): Add dir.
+
+Tue Dec 10 15:02:52 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* dist.make: Remove autoconf stuff, just create the necessary stuff
+	in etc/.
+
+Tue Dec  3 17:32:48 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* rdepend.make (depend): Include -I$(c_auto_h_dir) for web2c/window.
+
+Sun Nov 24 16:32:01 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* config.make (configure_in): Add xt.ac from Kpathsea.
+
+	* dist.make (dist): Copy new etc/ directory.
+	(top_files): Remove various informational files now in etc/.
+
+Fri Nov 15 16:20:58 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* common.make (INSTALL_SCRIPT): Define as $(INSTALL_PROGRAM).
+
+Fri Oct 25 16:52:00 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* clean.make (mostlyclean): Do not remove PROF etc. here,
+	they are only in kpathsea.
+
+	* dist.make (top_files): Include the empty dir file from the
+	Texinfo distribution.
+
+Tue Oct 15 17:45:28 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* dist.make (top_files): Add klibtool, config.guess, config.sub,
+	acklibtool.m4; unixtex.ftp.
+
+Sat Oct  5 17:21:08 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* rdepend.make (depend): Oops, need to parenthesize the extra
+	kpathsea stuff.
+
+Sun Sep 22 16:01:38 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* rdepend.make (depend): Generate dependencies for .lo instead of
+		.o in kpathsea (except for kpsewhich).
+
+Fri Sep  6 16:38:49 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* common.make (INSTALL_LIBTOOL_PROG): We will name this
+		install-prog, not install-progs.
+
+Tue Sep  3 19:10:57 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* config.make (configure_in): Add acklibtool.m4 as a dependency.
+
+Sun Sep  1 17:25:24 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* common.make (LIBTOOL): Define as @LIBTOOL@ for Autoconf expansion.
+
+Sat Jul 27 14:44:34 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* rdepend.make (depend: Depend on $(kpathsea_dir)/paths.h.
+
+Fri Jul 26 15:26:01 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* clean.make (clean): Move binary/library removal from
+	mostlyclean, and also remove *.bad (the libtool wrapper scripts).
+	(mostlyclean): Remove *.lo, PROF, PROF_SHARED, SHARED, and STATIC.
+
+	* programs.make (kpathsea_link): Use $(link_command) here, libtool 0.5.
+	* common.make (compile): New variable.
+	(kpathsea): Now $(kpathsea_dir)/libkpathsea.la.
+	(INSTALL_LIBTOOL_*): New install variables.
+	* co.make: Move .c.o rule back to common.make, remove this.
+
+Fri Jun  7 18:44:15 1996  K. Berry  <kb@cs.umb.edu>
+
+	* tkpathsea.make (.c.o): Move here.
+	* common.make: FRom here.
+
+Thu Jun  6 19:42:48 1996  K. Berry  <kb@cs.umb.edu>
+
+	* config.make (config.status): Remove --verbose.
+
+	* programs.make: Remove our sharedlib stuff.
+
+Sat Jun  1 13:47:17 1996  Karl Berry  <karl@cs.umb.edu>
+
+	* dist.make (dist): Check for ` ::' in Texinfo files.
+
+Sun Apr 28 14:58:27 1996  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (ALL_CPPFLAGS): Move $(prog_cflags) to be before
+        -I$(kpathsea_srcdir_parent), so subdirs of web2c find the right
+	c-auto.h.
+        From: Peter Breitenlohner <peb@MPPMU.MPG.DE>.
+        
+Fri Apr 26 13:36:03 1996  Karl Berry  <karl@cs.umb.edu>
+
+        * paths.make (dvi{ps,lj}_{plain,latex}_macrodir): Add these.
+        (install_fonts, install_macros): Remove these.
+        * common.make (CP_R): Remove this.
+        * makevars.make (makevars): Remove install_fonts and
+        install_macros, add dvi*_macrodir.
+
+Tue Feb 13 14:31:24 1996  Karl Berry  <karl@cs.umb.edu>
+
+        * programs.make: Doc fix.
+
+Fri Feb  9 15:49:01 1996  Karl Berry  <karl@cs.umb.edu>
+
+        * config.make (configure_in): Add dependency withenable.ac.
+
+Tue Feb  6 16:40:17 1996  Karl Berry  <karl@cs.umb.edu>
+
+        * makevars.make (makevars): Include install_macros.
+
+Sat Feb  3 15:14:53 1996  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (DEFS): Add this.
+
+Fri Dec 29 17:07:02 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * clean.make: Rename from misc.make.
+
+        * rdepend.make (TAGS): Add rule for TAGS.
+
+        * dist.make (dist): Do not depend on TAGS.
+
+Sat Dec  9 19:42:18 1995  Ulrik Vieth  <vieth@thphy.uni-duesseldorf.de>
+
+	* paths.make (mftinputdir): Add search path for MFT style files
+        since they have a separate directory in the TDS.
+
+Sat Nov 18 17:13:07 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * misc.make (mostlyclean): Include $(library).a again, for web2c/lib.
+
+Fri Nov 17 13:33:46 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * paths.make (bindir, etc.): Use @bindir@, etc., since Autoconf
+        2.4.2 substitutes for these (and has options to set them).
+
+        * common.make (sharedlibname, staticlibname): New variables for
+        convenience.
+        (sharedlib, staticlib): Use them.
+
+        * dist.make (dist): Keep name of unixtex.ftp.
+
+        * misc.make (extraclean): Remove *.mpx and mpout.*.
+
+Sun Nov 12 17:18:34 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (shared_env): Oops, had @shared_envvar@ instead of
+        @sharedlib_envvar@.
+
+Sat Nov 11 16:39:35 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * rdepend.make (depend): Use ALL_CPPFLAGS rather than just CPPFLAGS.
+
+Sun Oct 22 16:54:18 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (shared_env): New variable to set LD_LIBRARY_PATH or
+        whatever.
+
+Mon Oct  2 16:18:23 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * misc.make (mostlyclean): Remove lib$(library).*, not $(library).a.
+
+Fri Sep 29 11:25:35 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (ALL_CPPFLAGS): Rename from CPPFLAGS, so users can
+        set the CPPFLAGS envvar a la CFLAGS.
+
+Thu Sep 21 16:34:50 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * (many files): Avoid unnecessary blank lines.
+
+Tue Sep 19 17:18:42 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * paths.make (datadir): Change to $(prefix)/share.
+        Change other variables for TDS compliance.
+
+Sat Sep  2 17:40:55 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * misc.make (distclean): Do not remove MakeTeXPK anymore.
+
+Fri Sep  1 13:24:19 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * programs.make (LOADLIBES): Put the -L/-l here.
+        * common.make (kpathsea): Define as the real filename.
+        (shared_ext, etc.): Move there.
+
+Thu Aug 31 17:39:10 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (kpathsea): Use -L and -l instead of giving the .a
+        file, for the shared case.
+
+Tue Aug 29 17:35:08 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * config.make: Use date instead of echo to update timestamps, for
+        ``some old BSD systems''.
+
+Mon Aug 28 17:54:44 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * programs.make: Add shared library variables.
+
+Fri Aug 25 12:07:45 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * tkpathsea.make: Use && instead of ; after the cd.
+
+        * rdepend.make (depend): Replace all leading ../'s with
+        $(kpathsea_srcdir), not just one.
+
+Tue Aug 22 14:04:04 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * rdepend.make (c_auto_h_dir): New variable so subdirs of web2c
+        can use this.
+
+Sun Aug 20 14:49:46 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * misc.make (TAGS): Remove this.
+
+        * paths.make (dcfontdir): Remove this.
+
+Thu Aug 10 19:22:20 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * paths.make (default_texsizes): Note this list must be sorted in
+        ascending order.
+
+Thu Aug  3 11:26:10 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * dist.make (dist): Depend on all.
+
+Sat Jul 29 17:31:47 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (transform): Remove this. It's not worth it.
+
+Fri Jul 28 15:37:37 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * rdepend.make: Comment this out in the distribution.
+        From Greg.
+
+Sat Jul 22 17:13:57 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * paths.make (mppooldir, memdir, mpinputdir): Add these.
+        * makevars.make (makevars): Include mpinputdir, memdir, and
+        mppooldir.
+
+Tue Jul 18 14:32:55 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (transform): Include this, another configure
+        substitution.
+
+Mon Jul 17 15:58:40 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * tkpathsea.make: Doc fix.
+
+Sun Jul 16 14:09:41 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * config.make (stamp-auto.in): acconfig.h is now always in kpathsea.
+
+Tue May 16 15:52:50 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * tkpathsea.make: Mention that the dependencies are wrong :-(.
+
+        * common.make (XDEFS): Add -D__USE_FIXED_PROTOTYPES__ for
+        development use under SunOS 4.1.3.
+
+Tue Apr 25 13:49:38 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * misc.make (distclean): No need to remove .pool here, no one has
+        pool files but web2c.
+
+Fri Feb 24 15:11:39 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * dist.make (ln_files): Don't include TAGS in the distributions.
+
+Sun Jan  8 12:16:36 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * kpathsea 2.6/dviljk 2.5/dvipsk 5.58f/xdvik 18f.
+
+Wed Jan  4 12:41:25 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * tkpathsea.make (kpathsea): Don't depend on texmf.cnf, since it
+        doesn't exist at the first make.
+
+Tue Jan  3 13:43:12 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * rdepend.make (depend): paths.h is not in the srcdir.
+
+        * config.make (autoconf): Add acsite.m4.
+
+        * dist.make (top_files): FTP belongs here, not in ln_files.
+
+Sun Jan  1 14:02:42 1995  Karl Berry  <karl@cs.umb.edu>
+
+        * makevars.make (makevars): Include web2cdir.
+        * paths.make (web2cdir): New directory.  Suggested by Joachim.
+
+Sat Dec 31 14:35:29 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * tmtpk.make: Just incorporate this in kpathsea/Makefile.in now.
+
+        * rdepend.make (depend): Depend on ourselves.
+
+Fri Dec 30 15:50:37 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * rdepend.make (depend): Use kpathsea_srcdir, not kpathsea_dir.
+        From Joachim.
+
+Wed Dec 28 14:16:50 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * dist.make (ln_files): Add FTP.
+
+Mon Dec 26 10:31:14 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * dist.make (dist): Copy aclocal.m4 from acsite.m4.
+        Suggested by interran@uluru.Stanford.EDU (John Interrante).
+
+Wed Dec 14 15:17:42 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * kpathsea 2.5/dviljk 2.4/dvipsk 5.58e/xdvik 18e.
+
+Sun Dec 11 13:23:12 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * rdepend.make (depend): Remove system include files that are
+        alone on a line.
+
+Fri Nov 25 09:21:02 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * tmtpk.make (MakeTeXPK): Depend on the new filename.
+
+Tue Nov 15 15:28:14 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * tkpathsea.make (makeargs): Change MAKEARGS to XMAKEARGS.
+
+        * targets.make (makeargs): Don't bother to pass $(SHELL).
+
+Tue Nov  8 19:12:45 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (CFLAGS): Don't include -g, since now it's automatic.
+
+Sun Nov  6 15:53:36 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * paths.make (prefix, exec_prefix): These value are now @prefix@
+        and @exec_prefix@.
+
+        * common.make: Call @SET_MAKE@.
+
+        * misc.make (distclean): Remove config.log and config.cache.
+
+        * programs.make (LDFLAGS): Add @LDFLAGS@.
+        * common.make (CPPFLAGS): Add @CPPFLAGS@.
+        (CFLAGS): Add @CFLAGS@.
+
+        * dist.make (top_files): Distribute install-sh, not install.sh,
+        for Autoconf 2.0.
+
+Sun Oct 30 16:15:34 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * config.make (ac_dir): This is now $(gnu)/share.
+
+Tue Oct 25 17:48:02 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * kpathsea 2.3/dviljk 2.3/dvipsk 5.58c/xdvik 18d.
+
+Sun Oct 23 17:33:56 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * targets.make (MakeTeXPK): Make sed substitutions global.
+        Reported by wfranzki@hlrserv.hlrz.kfa-juelich.de.
+
+Mon Oct 17 13:28:41 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * paths.make (mfpooldir): Doc fix.
+
+Fri Oct 14 10:31:35 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * kpathsea 2.2/dviljk 2.2/dvipsk 5.58b/xdvik 18c.
+
+Mon Oct 10 15:31:06 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * common.make (.SUFFIXES): Declare .c.o.
+
+        * programs.make (LOADLIBES): Omit LEXLIB here.
+
+Sun Sep 25 15:54:36 1994  Karl Berry  <karl@cs.umb.edu>
+
+        * rdepend.make: Doc fix.
+
+        * library.make: New file.
+
+        * makevars.make (makevars): Remove MAKEARGS from here.
+
+        * programs.make (CCLD, link_command): New variables.
+        (LOADLIBES): Add proglib, LEXLIB.
+
+Mon Sep 12 11:06:14 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * kpathsea 2.1/dviljk 2.1/dvipsk 5.58a/xdvik 18b.
+
+Sun Sep 11 14:44:21 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * targets.make (install-MakeTeXPK): Install this if it didn't
+        exist, and mkdirchain $(scriptdir).
+
+        * dist.make (top_files): Include aclocal.m4.
+
+Sat Sep 10 13:40:10 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * texi.make (.texi.dvi): No -o option to texi2dvi.
+
+Thu Sep  8 14:31:59 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * kpathsea 2.0, dviljk 2.0, dvipsk 5.55b, xdvik 18a.
+
+Tue Sep  6 11:39:06 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * targets.make (MakeTeXPK): Use psheaderdir, not psconfigdir, and
+        depend on ourselves.
+
+Sat Sep  3 08:37:11 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * paths.make (psconfigdir): Toss this.
+
+        * misc.make (distclean): Add MakeTeXPK.
+
+        * rdepend.make: Rename from depend.make.
+
+Fri Sep  2 13:29:14 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * targets.make (makeargs, installargs): Declare these here.
+
+        * makevars.make (makevars): No need for ??_fontdir or psmacrodir.
+
+        * misc.make (TAGS): Omit -t, use -i, for Emacs 19.25's etags.
+
+Thu Sep  1 17:51:10 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * dist.make (top_files): Add install.sh.
+
+Tue Aug 30 14:46:18 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * dist.make (dist): Touch *.info* if they exist.
+
+Mon Aug 29 16:28:19 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * paths.make (dcfontdir, sauterdir): Move these here, since
+        everyone has MakeTeXPK now.
+
+Sun Aug 28 17:09:09 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * common.make (INSTALL_FONTS): New variable.
+
+Thu Aug 25 17:04:43 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * kpathsea.make (kpathsea): Also depend on texmf.cnf.in.
+
+        * paths.make (texmf_prefix): Rename to texmf; change uses.
+
+Sun Aug 21 11:03:48 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * programs.make: New file for driver-specific stuff.
+
+        * paths.make (fontnamedir): New definition.
+        (configdir, headerdir): Prepend with `ps'.
+
+Sat Aug 13 17:19:53 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * misc.make (mostlyclean): Don't remove $(lib), since we've tossed
+        that.
+
+Sun Jul 31 14:18:28 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * paths.make (DB_DIR, DB_NAME): Remove from here.
+
+Fri Jul 29 14:56:47 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * depend.make (depend): Add dvilj4l.o to the special cases.
+
+Sun Jul 17 11:37:57 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * paths.make (db_dir): Use $TEXMF.
+
+Mon Jun 27 17:32:47 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * paths.make (db_dir): Use $TEXMFROOT.
+
+Tue Jun 14 12:41:33 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * depend.make (depend): No need for depend_encies, I think.
+
+Mon May 30 13:50:34 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * common.make (LDFLAGS): Don't include $(CFLAGS), for Linux's sake. 
+
+Tue May 24 13:26:05 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * config.make (stamp-auto, stamp-auto.in): New targets, to avoid
+        rerunning autoheader/autoconf even when they don't change the main
+        output files.
+
+Sun Apr 17 16:11:34 1994  Karl Berry  (karl@ra.cs.umb.edu)
+
+        * config.make (configure): Change ; to && in case the cd fails.
+
+Thu Mar 24 11:12:56 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * dist.make (dist): Don't append kutil/ChangeLog to the source
+        ChangeLog.
+
+        * misc.make (extraclean): Don't delete patch*, since that kills
+        patchlevel.h.
+
+Sat Mar  5 13:48:15 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * common.make (LOADLIBES): Include XLOADLIBES.
+
+Fri Feb 25 14:21:17 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * dist.make (dist): Append kutil/ChangeLog to the top level, not
+        the main program.
+
+Thu Feb 24 16:11:37 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * misc.make (clean): Remove *.lj here.
+
+        * paths.make ({bh,cg,mt}_fontdir, install_fonts): Add these.
+
+Mon Feb 21 14:04:26 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * misc.make (distclean): remove pool files here.
+
+Wed Feb 16 15:18:13 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * paths.make: Doc fix.
+
+Sun Jan 23 17:17:37 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * dist.make (dist): Don't fake kpathsea/MACHINES any more, now we
+        have a real one.
+
+Fri Jan 14 14:53:12 1994  Karl Berry  (karl@cs.umb.edu)
+
+        * paths.make ({tex,mf}pooldir, fmtdir, basedir): Use
+        $(texmf_prefix)/ini for all these.
+
+Tue Dec 21 19:23:29 1993  Karl Berry  (karl@cs.umb.edu)
+
+        * common.make (LDFLAGS): Don't include $(x_lib_flags) here --
+        winds up getting included twice for virmf
+
+Tue Dec 14 17:40:23 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* dist.make (dist): Dist the top-level and kutil/ChangeLog.
+
+	* paths.make (formatdir): Rename to fmtdir.
+	(texprefix): Rename to texmf_prefix, change uses accordingly.
+
+Fri Dec 10 17:50:39 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* paths.make (dvipsprefix): Rename to dvips_prefix.
+
+Sun Nov 14 11:52:33 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* dist.make (dist): Do not depend on depend.make and TAGS, since
+	web2c doesn't have them.
+
+	* paths.make: Change defaults for new hierarchy.
+
+Thu Nov 11 11:07:22 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* common.make (CPPFLAGS, LDFLAGS): xincludedir, xlibdir, wlibs
+	names have changed.
+
+Sun Nov  7 15:22:32 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* paths.h: Give dire warning that editing Makefiles will not
+	rebuild paths.h.
+
+Fri Oct 29 14:01:57 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* dist.make (dist): chmod a+rw.
+
+Thu Oct 28 17:48:01 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* common.make (CPPFLAGS): Include -I. before -I$(srcdir).
+
+Fri Oct 22 13:08:19 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* paths.make: Remove the paths, and add the dvips directories.
+
+	* common.make (kpathsea_srcdir{,_parent}): Define. From
+	simon@lia.di.epfl.ch.
+
+Tue Oct 19 15:59:03 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* config.make (stamp-c-auto): New target.
+	(c-auto.h): Depend on it.
+
+Sat Oct  9 07:04:45 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* misc.make (mostlyclean): Remove programs.
+
+Sun Oct  3 12:44:04 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* misc.make (extraclean): Also remove .blg and .bbl, .vf and .vpl.
+	(clean): Remove *.pool.
+
+Tue Sep 28 13:11:01 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* common.make (CPPFLAGS): Add $(xincludedir) again; when did I
+	remove it?
+
+Fri Sep 24 07:53:45 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* common.make (warn_more) [kpathsea]: Move to kpathsea's Makefile.
+
+	* texi.make (.texi.dvi): New rule.
+
+	* common.make (warn_more): Had -pointer-arith twice.
+
+Thu Sep 23 17:42:42 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* common.make (autoconf): Toss aclocal.m4.
+	* dist.make (top_files): Ditto.
+	
+	* common.make (autoheader): New variable, split off from autoconf.
+
+Sun Aug 29 11:30:39 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* dist.make (dist): Remove MACHINES in kpathsea.
+
+	* common.make (CPPFLAGS): Remove the -I.  Why did I put it there?
+
+Sat Aug 28 07:01:52 1993  Karl Berry  (karl@cs.umb.edu)
+
+	* unbackslsh.awk: New file.
+
+	* common.make (CPPFLAGS): Add -I before $(xincludedir).

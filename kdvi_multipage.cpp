@@ -95,7 +95,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   document_history.setAction(backAction, forwardAction);
   document_history.clear();
 
-  embedPSAction      = new KAction(i18n("Embed external PostScript files..."), 0, window, SLOT(embedPostScript()), actionCollection(), "embed_postscript");
+  embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, window, SLOT(embedPostScript()), actionCollection(), "embed_postscript");
   connect(window, SIGNAL(prescanDone()), this, SLOT(setEmbedPostScriptAction()));
   findTextAction         = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
   window->findNextAction = KStdAction::findNext(window, SLOT(findNextText()), actionCollection(), "findnext");
@@ -167,7 +167,7 @@ void KDVIMultiPage::slotSave()
 
   if (QFile(fileName).exists()) {
     int r = KMessageBox::warningYesNo (0, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
-				       i18n("Overwrite file"));
+				       i18n("Overwrite File"));
     if (r == KMessageBox::No)
       return;
   }

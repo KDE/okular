@@ -772,7 +772,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
 				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(refFileName),
-			 i18n( "Could not Find Reference" ));
+			 i18n( "Could Not Find Reference" ));
       return;
     }
     
@@ -793,7 +793,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
     if (y < 0)
       KMessageBox::sorry(this, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
 				    "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(refFileName),
-			 i18n( "Could not Find Reference" ));
+			 i18n( "Could Not Find Reference" ));
     return;
   }
   reference = QString::null;
@@ -1106,7 +1106,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  if ( !fi3.exists() ) {
 	    KMessageBox::sorry(this, i18n("The DVI-file refers to the TeX-file "
 					  "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)),
-			       i18n( "Could not Find File" ));
+			       i18n( "Could Not Find File" ));
 	    return;
 	  }
 	}

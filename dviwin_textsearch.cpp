@@ -135,7 +135,7 @@ void dviWindow::findNextText(void)
 	int answ = KMessageBox::questionYesNo(this, i18n("<qt>The search string <strong>%1</strong> could not be found till the "
 							 "end of the document. Should the search be restarted from the beginning "
 							 "of the document?</qt>").arg(searchText), 
-					      i18n("Text not found")); 
+					      i18n("Text Not Found"));
 	if (answ == KMessageBox::Yes) {
 	  firstPageOfSearch = 0;
 	  current_page      = 0;
@@ -187,7 +187,7 @@ void dviWindow::findPrevText(void)
   _postscript = FALSE; // Switch off postscript to speed up things...
   QPixmap pixie(1,1); // Dummy pixmap for the method draw_page which wants to have a valid painter. 
 
-  QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"), 
+  QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"),
 			    lastPageOfSearch - firstPageOfSearch, this, "searchForwardTextProgress", TRUE );
   progress.setMinimumDuration ( 1000 );
 
@@ -217,7 +217,7 @@ void dviWindow::findPrevText(void)
 	int answ = KMessageBox::questionYesNo(this, i18n("<qt>The search string <strong>%1</strong> could not be found till the "
 							 "beginning of the document. Should the search be restarted from the end "
 							 "of the document?</qt>").arg(searchText), 
-					      i18n("Text not found")); 
+					      i18n("Text Not Found")); 
 	if (answ == KMessageBox::Yes) {
 	  firstPageOfSearch = current_page_sav;
 	  current_page      = dviFile->total_pages-1;

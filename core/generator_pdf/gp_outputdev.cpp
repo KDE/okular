@@ -377,14 +377,19 @@ DocumentViewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkDest * 
     switch ( dest->getKind() )
     {
         case destXYZ:
-/*            OD -> cvtUserToDev( dest->getLeft(), dest->getTop(), &X, &Y );
-            if ( dest->getChangeLeft() )
-                make hor change
-            if ( dest->getChangeTop() )
-                make ver change
-            if ( dest->getChangeZoom() )
-                make zoom change
-*/          break;
+            if (dest->getChangeLeft() || dest->getChangeTop())
+            {
+              int left, top;
+              cvtUserToDev( dest->getLeft(), dest->getTop(), &left, &top );
+              vp.rePos.normalizedX = (double)left / (double)m_pixmapWidth;
+              vp.rePos.normalizedY = (double)top / (double)m_pixmapHeight;
+              vp.rePos.enabled = true;
+              vp.rePos.pos = DocumentViewport::TopLeft;
+            }
+          /* TODO
+             if ( dest->getChangeZoom() )
+                make zoom change*/
+          break;
 
         case destFit:
         case destFitB:

@@ -722,9 +722,9 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             if ( moveViewport )
             {
                 DocumentViewport searchViewport( currentPage );
-                searchViewport.reCenter.enabled = true;
-                searchViewport.reCenter.normalizedCenterX = (match->left + match->right) / 2.0;
-                searchViewport.reCenter.normalizedCenterY = (match->top + match->bottom) / 2.0;
+                searchViewport.rePos.enabled = true;
+                searchViewport.rePos.normalizedX = (match->left + match->right) / 2.0;
+                searchViewport.rePos.normalizedY = (match->top + match->bottom) / 2.0;
                 setViewport( searchViewport, -1, true );
             }
         }
@@ -1391,9 +1391,10 @@ DocumentViewport::DocumentViewport( int n )
     : pageNumber( n )
 {
     // default settings
-    reCenter.enabled = false;
-    reCenter.normalizedCenterX = 0.5;
-    reCenter.normalizedCenterY = 0.0;
+    rePos.enabled = false;
+    rePos.normalizedX = 0.5;
+    rePos.normalizedY = 0.0;
+    rePos.pos = Center;
     autoFit.enabled = false;
     autoFit.width = false;
     autoFit.height = false;
@@ -1403,9 +1404,10 @@ DocumentViewport::DocumentViewport( const QString & xmlDesc )
     : pageNumber( -1 )
 {
     // default settings (maybe overridden below)
-    reCenter.enabled = false;
-    reCenter.normalizedCenterX = 0.5;
-    reCenter.normalizedCenterY = 0.0;
+    rePos.enabled = false;
+    rePos.normalizedX = 0.5;
+    rePos.normalizedY = 0.0;
+    rePos.pos = Center;
     autoFit.enabled = false;
     autoFit.width = false;
     autoFit.height = false;
@@ -1429,9 +1431,18 @@ DocumentViewport::DocumentViewport( const QString & xmlDesc )
         }
         else if ( token.startsWith( "C1" ) )
         {
-            reCenter.enabled = true;
-            reCenter.normalizedCenterX = token.section( ':', 1, 1 ).toDouble();
-            reCenter.normalizedCenterY = token.section( ':', 2, 2 ).toDouble();
+            rePos.enabled = true;
+            rePos.normalizedX = token.section( ':', 1, 1 ).toDouble();
+            rePos.normalizedY = token.section( ':', 2, 2 ).toDouble();
+            rePos.pos = Center;
+        }
+        else if ( token.startsWith( "C2" ) )
+        {
+            rePos.enabled = true;
+            rePos.normalizedX = token.section( ':', 1, 1 ).toDouble();
+            rePos.normalizedY = token.section( ':', 2, 2 ).toDouble();
+            if (token.section( ':', 3, 3 ).toInt() == 1) rePos.pos = Center;
+            else rePos.pos = TopLeft;
         }
         else if ( token.startsWith( "AF1" ) )
         {
@@ -1450,9 +1461,10 @@ QString DocumentViewport::toString() const
     // start string with page number
     QString s = QString::number( pageNumber );
     // if has center coordinates, save them on string
-    if ( reCenter.enabled )
-        s += QString( ";C1:" ) + QString::number( reCenter.normalizedCenterX ) +
-             ':' + QString::number( reCenter.normalizedCenterY );
+    if ( rePos.enabled )
+        s += QString( ";C2:" ) + QString::number( rePos.normalizedX ) +
+             ':' + QString::number( rePos.normalizedY ) +
+             ':' + QString::number( rePos.pos );
     // if has autofit enabled, save its state on string
     if ( autoFit.enabled )
         s += QString( ";AF1:" ) + (autoFit.width ? "T" : "F") +
@@ -1463,13 +1475,13 @@ QString DocumentViewport::toString() const
 bool DocumentViewport::operator==( const DocumentViewport & vp ) const
 {
     bool equal = ( pageNumber == vp.pageNumber ) &&
-                 ( reCenter.enabled == vp.reCenter.enabled ) &&
+                 ( rePos.enabled == vp.rePos.enabled ) &&
                  ( autoFit.enabled == vp.autoFit.enabled );
     if ( !equal )
         return false;
-    if ( reCenter.enabled &&
-         (( reCenter.normalizedCenterX != vp.reCenter.normalizedCenterX ) ||
-         ( reCenter.normalizedCenterY != vp.reCenter.normalizedCenterY )) )
+    if ( rePos.enabled &&
+         (( rePos.normalizedX != vp.rePos.normalizedX) ||
+         ( rePos.normalizedY != vp.rePos.normalizedY ) || rePos.pos != vp.rePos.pos) )
         return false;
     if ( autoFit.enabled &&
          (( autoFit.width != vp.autoFit.width ) ||

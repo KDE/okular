@@ -157,3 +157,4 @@ void printSetupData::removePrinter()
 void printSetupData::okPressed()
 {
 }
+#include "printSetupData.moc"

@@ -94,3 +94,4 @@ void printSetup::readConfig()
 }
 
 #undef Inherited
+#include "printSetup.moc"

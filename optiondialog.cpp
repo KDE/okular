@@ -159,3 +159,4 @@ void OptionDialog::fontPathCheckChanged( bool state )
 }
 
 
+#include "optiondialog.moc"

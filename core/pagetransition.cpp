@@ -12,8 +12,8 @@
 
 /** class KPDFPageTransition **/
 
-KPDFPageTransition::KPDFPageTransition()
-  : m_type( Replace ),
+KPDFPageTransition::KPDFPageTransition( Type type )
+  : m_type( type ),
     m_duration( 1 ),
     m_alignment( Horizontal ),
     m_direction( Inward ),

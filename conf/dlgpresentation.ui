@@ -1,0 +1,243 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>DlgPresentation</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>DlgPresentation</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>348</width>
+            <height>298</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>DlgPresentation</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Navigation</string>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout1</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QSpinBox" row="0" column="1">
+                            <property name="name">
+                                <cstring>kcfg_SlidesAdvanceTime</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="suffix">
+                                <string> sec.</string>
+                            </property>
+                            <property name="value">
+                                <number>5</number>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox" row="0" column="0">
+                            <property name="name">
+                                <cstring>kcfg_SlidesAdvance</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Advance Every</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox" row="2" column="0">
+                            <property name="name">
+                                <cstring>kcfg_SlidesLoop</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Loop After Last Page</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox2</cstring>
+            </property>
+            <property name="title">
+                <string>Appearance</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QComboBox" row="1" column="1">
+                    <item>
+                        <property name="text">
+                            <string>Replace</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Split</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Blinds</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Box</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Wipe</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Dissolve</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Glitter</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Fly</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Push</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Cover</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Uncover</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Fade</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>kcfg_SlidesTransition</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Default Transition:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Mouse Cursor:</string>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="2" column="1">
+                    <item>
+                        <property name="text">
+                            <string>Hidden After Delay</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Always Visible</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Always Hidden</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>kcfg_SlidesCursor</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Background Color:</string>
+                    </property>
+                </widget>
+                <widget class="KColorButton" row="0" column="1">
+                    <property name="name">
+                        <cstring>kcfg_SlidesBackgroundColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_SlidesShowSummary</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show s&amp;ummary page</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_SlidesShowProgress</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;progress indicator</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+P</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>kcfg_SlidesAdvance</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_SlidesAdvanceTime</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kcolorbutton.h</includehint>
+</includehints>
+</UI>

@@ -19,6 +19,7 @@ class KConfigSkeleton;
 class DlgGeneral;
 class DlgPerformance;
 class DlgAccessibility;
+class DlgPresentation;
 
 class PreferencesDialog : public KConfigDialog
 {
@@ -37,6 +38,7 @@ class PreferencesDialog : public KConfigDialog
         DlgGeneral * m_general;
         DlgPerformance * m_performance;
         DlgAccessibility * m_accessibility;
+        DlgPresentation * m_presentation;
 };
 
 #endif

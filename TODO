@@ -91,6 +91,10 @@ More items (first items will enter 'In progress list' first):
 -> move some document related features from part to the document (see find, goto dialog, ...)
 
 Done (newest features come first):
+-> ADD: presentation: cursor modes: hidden, visible, hidden with delay (Tobias)
+-> ADD: presentation: default transition which is used when no transition is defined in document (Tobias)
+-> ADD: presentation: support for automatic advance and loop on last page (Tobias)
+-> ADD: presentation: add additional presentation page to settings dialog (Tobias)
 -> CHG: presentation: the round wheel indicator can be clicked to change page
 -> FIX: layout margins on pageView
 -> ADD: restore the last active page when a file is opened again

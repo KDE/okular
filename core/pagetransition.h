@@ -16,9 +16,6 @@
 class KPDFPageTransition
 {
     public:
-        KPDFPageTransition();
-        ~KPDFPageTransition();
-
         enum Type {
             Replace,
             Split,
@@ -43,6 +40,9 @@ class KPDFPageTransition
             Inward,
             Outward
         };
+
+        KPDFPageTransition( Type type = Replace );
+        ~KPDFPageTransition();
 
         // Get type of the transition.
         inline Type type() const { return m_type; }

@@ -77,6 +77,8 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
     connect( m_transitionTimer, SIGNAL( timeout() ), this, SLOT( slotTransitionStep() ) );
     m_overlayHideTimer = new QTimer( this );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
+    m_advanceTimer = new QTimer( this );
+    connect( m_advanceTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) );
 
     // register this observer in document
     m_document->addObserver( this );
@@ -88,8 +90,15 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
     else
         slotNextPage();
 
-    KCursor::setAutoHideCursor( this, true );
-    KCursor::setHideCursorDelay( 3000 );
+    if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::HiddenDelay )
+    {
+        KCursor::setAutoHideCursor( this, true );
+        KCursor::setHideCursorDelay( 3000 );
+    }
+    else if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::Hidden )
+    {
+        setCursor( KCursor::blankCursor() );
+    }
 }
 
 PresentationWidget::~PresentationWidget()
@@ -338,8 +347,10 @@ void PresentationWidget::generatePage()
         m_frames[ m_frameIndex ]->page->getTransition() : 0;
     if ( transition )
         initTransition( transition );
-    else
-        update();
+    else {
+        KPDFPageTransition trans = defaultTransition();
+        initTransition( &trans );
+    }
 }
 
 void PresentationWidget::generateIntroPage( QPainter & p )
@@ -418,32 +429,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     for ( uint i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
-        if ( Settings::slidesShowGrayBack() )
-        {
-            // use a vertical gray gradient background
-            int baseTint = Qt::gray.red(),
-                blendLevel = 9 * m_height / 10,
-                blendLeft = r.left(),
-                blendWidth = r.width();
-            float blendDiv = (m_height * m_height) / 100; // use 100 to fade to pure white
-            QColor baseColor( baseTint, baseTint, baseTint );
-            for ( int i = r.top(); i <= r.bottom(); i++ )
-            {
-                if ( i <= blendLevel )
-                    p.fillRect( blendLeft, i, blendWidth, 1, baseColor );
-                else
-                {
-                    int k = i - blendLevel;
-                    k = baseTint + (int)( (255-baseTint) * (k * k) / blendDiv );
-                    p.fillRect( blendLeft, i, blendWidth, 1, QColor( baseTint, baseTint, k ) );
-                }
-            }
-        }
-        else
-        {
-            // use the black color that 'crops' images on beamers
-            p.fillRect( r, Qt::black );
-        }
+        p.fillRect( r, Settings::slidesBackgroundColor() );
     }
 }
 
@@ -525,6 +511,13 @@ void PresentationWidget::generateOverlay()
 
 void PresentationWidget::slotNextPage()
 {
+    if ( m_advanceTimer->isActive() )
+        m_advanceTimer->stop();
+
+    // loop when configured
+    if ( m_frameIndex == (int)m_frames.count() - 1 && Settings::slidesLoop() )
+        m_frameIndex = -1;
+
     if ( m_frameIndex < (int)m_frames.count() - 1 )
     {
         // go to next page
@@ -536,7 +529,11 @@ void PresentationWidget::slotNextPage()
         update();
     }
 
+    // we need the setFocus() call here to let KCursor::autoHide() work correctly
     setFocus();
+
+    if ( Settings::slidesAdvance() )
+        m_advanceTimer->start( Settings::slidesAdvanceTime() * 1000 );
 }
 
 void PresentationWidget::slotPrevPage()
@@ -573,6 +570,49 @@ void PresentationWidget::slotTransitionStep()
     m_transitionTimer->start( m_transitionDelay, true );
 }
 
+const KPDFPageTransition PresentationWidget::defaultTransition() const
+{
+    switch ( Settings::slidesTransition() )
+    {
+        case Settings::EnumSlidesTransition::Split:
+            return KPDFPageTransition( KPDFPageTransition::Split );
+            break;
+        case Settings::EnumSlidesTransition::Blinds:
+            return KPDFPageTransition( KPDFPageTransition::Blinds );
+            break;
+        case Settings::EnumSlidesTransition::Box:
+            return KPDFPageTransition( KPDFPageTransition::Box );
+            break;
+        case Settings::EnumSlidesTransition::Wipe:
+            return KPDFPageTransition( KPDFPageTransition::Wipe );
+            break;
+        case Settings::EnumSlidesTransition::Dissolve:
+            return KPDFPageTransition( KPDFPageTransition::Dissolve );
+            break;
+        case Settings::EnumSlidesTransition::Glitter:
+            return KPDFPageTransition( KPDFPageTransition::Glitter );
+            break;
+        case Settings::EnumSlidesTransition::Fly:
+            return KPDFPageTransition( KPDFPageTransition::Fly );
+            break;
+        case Settings::EnumSlidesTransition::Push:
+            return KPDFPageTransition( KPDFPageTransition::Push );
+            break;
+        case Settings::EnumSlidesTransition::Cover:
+            return KPDFPageTransition( KPDFPageTransition::Cover );
+            break;
+        case Settings::EnumSlidesTransition::Uncover:
+            return KPDFPageTransition( KPDFPageTransition::Uncover );
+            break;
+        case Settings::EnumSlidesTransition::Fade:
+            return KPDFPageTransition( KPDFPageTransition::Fade );
+            break;
+        case Settings::EnumSlidesTransition::Replace:
+        default:
+            return KPDFPageTransition( KPDFPageTransition::Replace );
+            break;
+    }
+}
 
 /** ONLY the TRANSITIONS GENERATION function from here on **/
 void PresentationWidget::initTransition( const KPDFPageTransition *transition )

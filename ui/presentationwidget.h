@@ -58,6 +58,7 @@ class PresentationWidget : public QWidget, public KPDFDocumentObserver
         void generateContentsPage( int page, QPainter & p );
         void generateOverlay();
         void initTransition( const KPDFPageTransition *transition );
+        const KPDFPageTransition defaultTransition() const;
 
         // cache stuff
         int m_width;
@@ -69,6 +70,7 @@ class PresentationWidget : public QWidget, public KPDFDocumentObserver
         // transition related
         QTimer * m_transitionTimer;
         QTimer * m_overlayHideTimer;
+        QTimer * m_advanceTimer;
         int m_transitionDelay;
         int m_transitionMul;
         QValueList< QRect > m_transitionRects;

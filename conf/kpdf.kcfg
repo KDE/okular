@@ -90,10 +90,46 @@
   </entry>
  </group>
  <group name="Presentation" >
-  <entry key="SlidesShowProgress" type="Bool" >
-   <default>true</default>
+  <entry key="SlidesAdvance" type="Bool" >
+   <default>false</default>
   </entry>
-  <entry key="SlidesShowGrayBack" type="Bool" >
+  <entry key="SlidesAdvanceTime" type="UInt" >
+   <default>5</default>
+   <min>1</min>
+   <max>3600</max>
+  </entry>
+  <entry key="SlidesLoop" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="SlidesBackgroundColor" type="Color" >
+   <default code="true" >Qt::black</default>
+  </entry>
+  <entry key="SlidesTransition" type="Enum" >
+   <default>Replace</default>
+   <choices>
+    <choice name="Replace" />
+    <choice name="Split" />
+    <choice name="Blinds" />
+    <choice name="Box" />
+    <choice name="Wipe" />
+    <choice name="Dissolve" />
+    <choice name="Glitter" />
+    <choice name="Fly" />
+    <choice name="Push" />
+    <choice name="Cover" />
+    <choice name="Uncover" />
+    <choice name="Fade" />
+   </choices>
+  </entry>
+  <entry key="SlidesCursor" type="Enum" >
+   <default>HiddenDelay</default>
+   <choices>
+    <choice name="HiddenDelay" />
+    <choice name="Visible" />
+    <choice name="Hidden" />
+   </choices>
+  </entry>
+  <entry key="SlidesShowProgress" type="Bool" >
    <default>true</default>
   </entry>
   <entry key="SlidesShowSummary" type="Bool" >

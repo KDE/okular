@@ -13,7 +13,8 @@
 
 selection::selection(void)
 {
-  act               = 0;
+  act            = 0;
+  page           = 0;
   clear();
 }
 

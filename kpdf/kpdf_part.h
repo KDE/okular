@@ -29,6 +29,7 @@ class QToolBox;
 class KURL;
 class KAction;
 class KConfig;
+class KDirWatch;
 class KToggleAction;
 class KSelectAction;
 class KAboutData;
@@ -101,8 +102,11 @@ protected slots:
 public slots:
 	// connected to Shell action (and browserExtension), not local one
 	void slotPrint();
-    void restoreDocument(const KURL &url, int page);
-    void saveDocumentRestoreInfo(KConfig* config);
+	void restoreDocument(const KURL &url, int page);
+	void saveDocumentRestoreInfo(KConfig* config);
+	void slotWatchFile();
+	void slotFileDirty( const QString& );
+	void slotDoFileDirty();
 
 private:
 	void doPrint( KPrinter& printer );
@@ -119,6 +123,9 @@ private:
 
 	// static instances counter
 	static unsigned int m_count;
+	
+	KDirWatch *m_watcher;
+	QTimer *m_dirtyHandler;
 
 	// actions
 	KAction *m_gotoPage;
@@ -128,6 +135,7 @@ private:
 	KAction *m_lastPage;
 	KAction *m_find;
 	KAction *m_findNext;
+	KToggleAction* m_watchFile;
 };
 
 

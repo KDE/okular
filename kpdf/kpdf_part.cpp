@@ -31,6 +31,7 @@
 
 #include <dcopobject.h>
 #include <kaction.h>
+#include <kdirwatch.h>
 #include <kinstance.h>
 #include <kprinter.h>
 #include <kstdaction.h>
@@ -96,6 +97,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_splitter = new QSplitter( parentWidget, widgetName );
 	m_splitter->setOpaqueResize( true );
 	setWidget( m_splitter );
+	m_watchFile = new KToggleAction( i18n( "&Watch File" ), 0, this, SLOT( slotWatchFile() ), actionCollection(), "watch_file" );
+	m_watchFile->setChecked( Settings::watchFile() );
 
 	// widgets: [left toolbox] | []
 	m_toolBox = new QToolBox( m_splitter );
@@ -173,9 +176,15 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
     m_splitter->setSizes( Settings::splitterSizes() );
     slotNewConfig();
 
+	m_watcher = new KDirWatch( this );
+	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
+	m_dirtyHandler = new QTimer( this );
+	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+
 	// set our XML-UI resource file
 	setXMLFile("kpdf_part.rc");
 	updateActions();
+	slotWatchFile();
 }
 
 Part::~Part()
@@ -226,6 +235,7 @@ KAboutData* Part::createAboutData()
 bool Part::openFile()
 {
 	bool ok = m_document->openDocument( m_file );
+	if ( ok && !m_watcher->contains(m_file)) m_watcher->addFile(m_file);
 	m_find->setEnabled( ok );
 	return ok;
 }
@@ -243,8 +253,47 @@ bool Part::openURL(const KURL &url)
     return b;
 }
 
+void
+Part::slotWatchFile()
+{
+  Settings::setWatchFile(m_watchFile->isChecked());
+  if( m_watchFile->isChecked() )
+    m_watcher->startScan();
+  else
+  {
+    m_dirtyHandler->stop();
+    m_watcher->stopScan();
+  }
+}
+
+  void
+Part::slotFileDirty( const QString& fileName )
+{
+  // The beauty of this is that each start cancels the previous one.
+  // This means that timeout() is only fired when there have
+  // no changes to the file for the last 750 milisecs.
+  // This is supposed to ensure that we don't update on every other byte
+  // that gets written to the file.
+  if ( fileName == m_file )
+  {
+    m_dirtyHandler->start( 750, true );
+  }
+}
+
+  void
+Part::slotDoFileDirty()
+{
+  uint p = m_document->currentPage() + 1;
+  if (openFile())
+  {
+    if (p > m_document->pages()) p = m_document->pages();
+    goToPage(p);
+  }
+}
+
 bool Part::closeURL()
 {
+	if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
 	m_document->closeDocument();
 	return KParts::ReadOnlyPart::closeURL();
 }

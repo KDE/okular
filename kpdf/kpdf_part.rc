@@ -30,6 +30,7 @@
     <Action name="goto_page"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
+    <Action name="watch_file" group="show_merge"/>
     <Action name="preferences"/>
   </Menu>
 </MenuBar>

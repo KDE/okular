@@ -52,6 +52,7 @@ More items (first items will enter 'In progress list' first):
 -> fullscreen pdf view (presentations-like) with some gfx tools
 
 Done (newest feature comes firts):
+-> ADD: Watch File option (Albert)
 -> ADD: import Marco Martin's "another kpdf icon" (kde-look: 16146) (Albert)
 -> ADD: dynamic zoom with mid mouse button (click and drag up-down to zoom in-out)
 -> FIX: merge select text & select gfx, two sections on the same pop-up menu

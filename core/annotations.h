@@ -103,46 +103,26 @@ struct Annotation
     /** properties: versioning */
     struct Revision
     {
-        // previous revision: a complete annotation
-        Annotation *    parent;             // 0 (parent revision not present)
-        // scope and type of revision (if annotation is not null)
-        RevScope        scope;              // RevScope::Reply
-        RevType         type;               // RevType::None
-    }               revision;
+        // child revision
+        Annotation *    annotation;         // not null
+        // scope and type of revision
+        RevScope        scope;              // Reply
+        RevType         type;               // None
+    };
+    QValueList< Revision > revisions;       // empty by default
 
-
-    // methods
-
-    // query annotation's type for runtime type identification
+    // methods: query annotation's type for runtime type identification
     virtual SubType subType() const { return A_BASE; }
-    QRect geometry( int scaledWidth, int scaledHeight, KPDFPage * page );
+    //QRect geometry( int scaledWidth, int scaledHeight, KPDFPage * page );
 
-    // storage/retrieval from xml nodes
+    // methods: storage/retrieval from xml nodes
     Annotation( const QDomNode & node );
     virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
 
-    // default constructor / virtual destructor
+    // methods: default constructor / virtual destructor
     Annotation();
     virtual ~Annotation() {};
 };
-
- /*
-         // initialize defaults / load from element / save as child of node
-        AnnStyle();
-        AnnStyle( const QDomElement & styleElement );
-        void store( QDomNode & annotNode, QDomDocument & document ) const;
-    // initialize defaults / load from element / save as child of node
-    AnnRevision();
-    AnnRevision( const QDomElement & revisionElement );
-    void store( QDomNode & annotNode, QDomDocument & document ) const;
-    // initialize defaults / load from element / save as child of node
-    AnnWindow();
-    AnnWindow( const QDomElement & windowElement );
-    void store( QDomNode & annotNode, QDomDocument & document ) const;
-
-    note 1 - via revModel -> si deduce nei 2 sensi da revtype
-             enum RevModel { Mark, Review };
- */
 
 
 //BEGIN  Annotations Definition
@@ -240,6 +220,5 @@ struct InkAnnotation : public Annotation
     QValueList< QValueList<NormalizedPoint> > inkPaths;
 };
 //END  Annotations definition
-
 
 #endif

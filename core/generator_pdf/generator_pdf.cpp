@@ -798,7 +798,10 @@ void XPDFReader::transform( double * M, double x, double y, double * tx, double 
 struct ResolveRevision
 {
     int           prevAnnotationID; // ID of the annotation to be reparended
-    Annotation *  childAnnotation;  // annotation that will act as parent
+    int           nextAnnotationID; // (only needed for speeding up resolving)
+    Annotation *  nextAnnotation;   // annotation that will act as parent
+    Annotation::RevScope nextScope; // scope of revision (Reply)
+    Annotation::RevType  nextType;  // type of revision (None)
 };
 
 struct ResolveWindow
@@ -821,6 +824,13 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
     if ( !annotArray.isArray() || annotArray.arrayGetLength() < 1 )
         return;
 
+    // ID to Annotation/PopupWindow maps
+    QMap< int, Annotation * > annotationsMap;
+    QMap< int, PopupWindow * > popupsMap;
+    // lists of Windows and Revisions that needs resolution
+    QValueList< ResolveRevision > resolveRevList;
+    QValueList< ResolveWindow > resolvePopList;
+
     // build a normalized transform matrix for this page at 100% scale
     GfxState * gfxState = new GfxState( 72.0, 72.0, pdfPage->getMediaBox(), pdfPage->getRotate(), gTrue );
     double * gfxCTM = gfxState->getCTM();
@@ -832,13 +842,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
     }
     delete gfxState;
 
-    // parsed annotations and maps for resolving dependencies
-    QMap< int, Annotation * > annotationsMap;
-    QMap< int, PopupWindow * > popupsMap;
-    QValueList< ResolveRevision > resolveRevList;
-    QValueList< ResolveWindow > resolvePopList;
-
-    // parse each PDF annot and attach an 'Annotation' to the KPDFPage
+    /** 1 - PARSE ALL ANNOTATIONS AND POPUPS FROM THE PAGE */
     Object annot;
     Object annotRef;    // no need to free this (impl. dependent!)
     uint numAnnotations = annotArray.arrayGetLength();
@@ -859,7 +863,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         bool parseMarkup = true,    // nearly all supported annots are markup
              addToPage = true;      // Popup annots are added to custom queue
 
-        // 1. query Subtype
+        /** 1.1. GET Subtype */
         QString subType;
         XPDFReader::lookupName( annotDict, "Subtype", subType );
         if ( subType.isEmpty() )
@@ -869,7 +873,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             continue;
         }
 
-        // 2. parse *specific* params for Subtype annotation
+        /** 1.2. CREATE Annotation / PopupWindow and PARSE specific params */
         if ( subType == "Text" || subType == "FreeText" )
         {
             // parse TextAnnotation params
@@ -1160,81 +1164,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             continue;
         }
 
-        // 3. parse markup { common, Popup, Revision } parameters
-        if ( parseMarkup )
-        {
-            // -> creationDate
-            XPDFReader::lookupDate( annotDict, "CreationDate", annotation->creationDate );
-            // -> style.opacity
-            XPDFReader::lookupNum( annotDict, "CA", annotation->style.opacity );
-            // -> window.title and author
-            XPDFReader::lookupString( annotDict, "T", annotation->window.title );
-            annotation->author = annotation->window.title;
-            // -> window.summary
-            XPDFReader::lookupString( annotDict, "Subj", annotation->window.summary );
-            // -> window.text
-            XPDFReader::lookupString( annotDict, "RC", annotation->window.text );
-
-            // if a popup is referenced, schedule for resolving it later
-            int popupID = 0;
-            XPDFReader::lookupIntRef( annotDict, "Popup", popupID );
-            if ( popupID )
-            {
-                ResolveWindow request;
-                request.popupWindowID = popupID;
-                request.annotation = annotation;
-                resolvePopList.append( request );
-            }
-
-            // if has an older version, schedule it for reparenting
-            int parentID = 0;
-            XPDFReader::lookupIntRef( annotDict, "IRT", parentID );
-            if ( parentID )
-            {
-                // -> revision.scope
-                Object revObj;
-                annotDict->lookup( "RT", &revObj );
-                if ( revObj.isName() )
-                {
-                    const char * name = revObj.getName();
-                    if ( !strcmp( name, "R" ) )
-                        annotation->revision.scope = Annotation::Reply;
-                    else if ( !strcmp( name, "Group" ) )
-                        annotation->revision.scope = Annotation::Group;
-                }
-                revObj.free();
-
-                // -> revision.type (StateModel is deduced from type, not parsed)
-                annotDict->lookup( "State", &revObj );
-                if ( revObj.isString() )
-                {
-                    const char * name = revObj.getString()->getCString();
-                    if ( !strcmp( name, "Marked" ) )
-                        annotation->revision.type = Annotation::Marked;
-                    else if ( !strcmp( name, "Unmarked" ) )
-                        annotation->revision.type = Annotation::Unmarked;
-                    else if ( !strcmp( name, "Accepted" ) )
-                        annotation->revision.type = Annotation::Accepted;
-                    else if ( !strcmp( name, "Rejected" ) )
-                        annotation->revision.type = Annotation::Rejected;
-                    else if ( !strcmp( name, "Cancelled" ) )
-                        annotation->revision.type = Annotation::Cancelled;
-                    else if ( !strcmp( name, "Completed" ) )
-                        annotation->revision.type = Annotation::Completed;
-                    else if ( !strcmp( name, "None" ) )
-                        annotation->revision.type = Annotation::None;
-                }
-                revObj.free();
-
-                // schedule for reparenting parentID to this annotation later
-                ResolveRevision request;
-                request.prevAnnotationID = parentID;
-                request.childAnnotation = annotation;
-                resolveRevList.append( request );
-            }
-        }
-
-        // 4. parse Rect and other base parameters
+        /** 1.3. PARSE common parameters */
         // -> boundary
         double r[4];
         if ( XPDFReader::lookupNumArray( annotDict, "Rect", r, 4 ) != 4 )
@@ -1256,8 +1186,10 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         XPDFReader::lookupString( annotDict, "Contents", annotation->contents );
         // -> uniqueName
         XPDFReader::lookupString( annotDict, "NM", annotation->uniqueName );
-        // -> modifyDate
+        // -> modifyDate (and -> creationDate)
         XPDFReader::lookupDate( annotDict, "M", annotation->modifyDate );
+        if ( annotation->creationDate.isNull() && !annotation->modifyDate.isNull() )
+            annotation->creationDate = annotation->modifyDate;
         // -> flags (set External since annotation is already on file)
         int flags = Annotation::External;
         XPDFReader::lookupInt( annotDict, "F", flags );
@@ -1347,10 +1279,87 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         // -> style.color
         XPDFReader::lookupColor( annotDict, "C", annotation->style.color );
 
+        /** 1.4. PARSE markup { common, Popup, Revision } parameters */
+        if ( parseMarkup )
+        {
+            // -> creationDate
+            XPDFReader::lookupDate( annotDict, "CreationDate", annotation->creationDate );
+            // -> style.opacity
+            XPDFReader::lookupNum( annotDict, "CA", annotation->style.opacity );
+            // -> window.title and author
+            XPDFReader::lookupString( annotDict, "T", annotation->window.title );
+            annotation->author = annotation->window.title;
+            // -> window.summary
+            XPDFReader::lookupString( annotDict, "Subj", annotation->window.summary );
+            // -> window.text
+            XPDFReader::lookupString( annotDict, "RC", annotation->window.text );
+
+            // if a popup is referenced, schedule for resolving it later
+            int popupID = 0;
+            XPDFReader::lookupIntRef( annotDict, "Popup", popupID );
+            if ( popupID )
+            {
+                ResolveWindow request;
+                request.popupWindowID = popupID;
+                request.annotation = annotation;
+                resolvePopList.append( request );
+            }
+
+            // if an older version is referenced, schedule for reparenting
+            int parentID = 0;
+            XPDFReader::lookupIntRef( annotDict, "IRT", parentID );
+            if ( parentID )
+            {
+                ResolveRevision request;
+                request.nextAnnotation = annotation;
+                request.nextAnnotationID = annotID;
+                request.prevAnnotationID = parentID;
+
+                // -> request.nextScope
+                request.nextScope = Annotation::Reply;
+                Object revObj;
+                annotDict->lookup( "RT", &revObj );
+                if ( revObj.isName() )
+                {
+                    const char * name = revObj.getName();
+                    if ( !strcmp( name, "R" ) )
+                        request.nextScope = Annotation::Reply;
+                    else if ( !strcmp( name, "Group" ) )
+                        request.nextScope = Annotation::Group;
+                }
+                revObj.free();
+
+                // -> revision.type (StateModel is deduced from type, not parsed)
+                request.nextType = Annotation::None;
+                annotDict->lookup( "State", &revObj );
+                if ( revObj.isString() )
+                {
+                    const char * name = revObj.getString()->getCString();
+                    if ( !strcmp( name, "Marked" ) )
+                        request.nextType = Annotation::Marked;
+                    else if ( !strcmp( name, "Unmarked" ) )
+                        request.nextType = Annotation::Unmarked;
+                    else if ( !strcmp( name, "Accepted" ) )
+                        request.nextType = Annotation::Accepted;
+                    else if ( !strcmp( name, "Rejected" ) )
+                        request.nextType = Annotation::Rejected;
+                    else if ( !strcmp( name, "Cancelled" ) )
+                        request.nextType = Annotation::Cancelled;
+                    else if ( !strcmp( name, "Completed" ) )
+                        request.nextType = Annotation::Completed;
+                    else if ( !strcmp( name, "None" ) )
+                        request.nextType = Annotation::None;
+                }
+                revObj.free();
+
+                // schedule for later reparenting
+                resolveRevList.append( request );
+            }
+        }
         // free annot object
         annot.free();
 
-        // add annotation to the annotationsMap
+        /** 1.5. ADD ANNOTATION to the annotationsMap  */
         if ( addToPage )
         {
             if ( annotationsMap.contains( annotID ) )
@@ -1359,67 +1368,83 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         }
     }
 
-    // resolve popups
+    /** 2 - RESOLVE POPUPS (popup.* -> annotation.window) */
     if ( !resolvePopList.isEmpty() && !popupsMap.isEmpty() )
     {
-        // set window properties for each window needing a popup
-        QValueList< ResolveWindow >::iterator it = resolvePopList.begin(), end = resolvePopList.end();
+        QValueList< ResolveWindow >::iterator it = resolvePopList.begin(),
+                                              end = resolvePopList.end();
         for ( ; it != end; ++it )
         {
             const ResolveWindow & request = *it;
             if ( !popupsMap.contains( request.popupWindowID ) )
+                // warn aboud problems in popup resolving logic
+                kdDebug() << "PDFGenerator: can't resolve popup "
+                          << request.popupWindowID << "." << endl;
+            else
             {
-                kdDebug() << "PDFGenerator: can't resolve popup " << request.popupWindowID << "." << endl;
-                continue;
+                // set annotation's window properties taking ones from popup
+                PopupWindow * pop = popupsMap[ request.popupWindowID ];
+                Annotation * pa = pop->dummyAnnotation;
+                Annotation::Window & w = request.annotation->window;
+
+                // transfer properties to Annotation's window
+                w.flags = pa->flags & (Annotation::Hidden | Annotation::FixedRotation);
+                if ( !pop->shown )
+                    w.flags |= Annotation::Hidden;
+                w.topLeft.x = pa->boundary.left;
+                w.topLeft.y = pa->boundary.top;
+                w.width = (int)(page->width() * (pa->boundary.right - pa->boundary.left));
+                w.height = (int)(page->height() * (pa->boundary.bottom - pa->boundary.top));
             }
-
-            PopupWindow * pop = popupsMap[ request.popupWindowID ];
-            Annotation * pa = pop->dummyAnnotation;
-            Annotation::Window & w = request.annotation->window;
-
-            // transfer properties to Annotation's window
-            w.flags = pa->flags & (Annotation::Hidden | Annotation::FixedRotation);
-            if ( !pop->shown )
-                w.flags |= Annotation::Hidden;
-            w.topLeft.x = pa->boundary.left;
-            w.topLeft.y = pa->boundary.top;
-            w.width = (int)(page->width() * (pa->boundary.right - pa->boundary.left));
-            w.height = (int)(page->height() * (pa->boundary.bottom - pa->boundary.top));
         }
 
         // clear data
         QMap< int, PopupWindow * >::Iterator dIt = popupsMap.begin(), dEnd = popupsMap.end();
         for ( ; dIt != dEnd; ++dIt )
-            delete dIt.data();
+        {
+            PopupWindow * p = dIt.data();
+            delete p->dummyAnnotation;
+            delete p;
+        }
     }
 
-    // resolve revisions
-    QValueList< Annotation * > excludeList;
+    /** 3 - RESOLVE REVISIONS (parent.revisions.append( children )) */
     if ( !resolveRevList.isEmpty() )
     {
-        // reparent older annotations to newer ones
+        // append children to parents
+        int excludeIDs[ resolveRevList.count() ];   // can't even reach this size
+        int excludeIndex = 0;                       // index in excludeIDs array
         QValueList< ResolveRevision >::iterator it = resolveRevList.begin(), end = resolveRevList.end();
         for ( ; it != end; ++it )
         {
             const ResolveRevision & request = *it;
-            if ( !annotationsMap.contains( request.prevAnnotationID ) )
+            int parentID = request.prevAnnotationID;
+            if ( !annotationsMap.contains( parentID ) )
+                // warn about problems in reparenting logic
+                kdDebug() << "PDFGenerator: can't reparent annotation to "
+                          << parentID << "." << endl;
+            else
             {
-                kdDebug() << "PDFGenerator: can't reparent to " << request.prevAnnotationID << "." << endl;
-                continue;
+                // compile and add a Revision structure to the parent annotation
+                Annotation::Revision childRevision;
+                childRevision.annotation = request.nextAnnotation;
+                childRevision.scope = request.nextScope;
+                childRevision.type = request.nextType;
+                annotationsMap[ parentID ]->revisions.append( childRevision );
+                // exclude child annotation from being rooted in page
+                excludeIDs[ excludeIndex++ ] = request.nextAnnotationID;
             }
-
-            Annotation * prevAnnotation = annotationsMap[ request.prevAnnotationID ];
-            request.childAnnotation->revision.parent = prevAnnotation;
-            //FIXME excludeList.append( prevAnnotation );
-            //FIXME kdDebug() << "geom: " << request.childAnnotation->boundary.geometry(100,100) << endl;
         }
+
+        // prevent children from being attached to page as roots
+        for ( int i = 0; i < excludeIndex; i++ )
+            annotationsMap.remove( excludeIDs[ i ] );
     }
 
     // finally add annotations to the page
     QMap< int, Annotation * >::Iterator it = annotationsMap.begin(), end = annotationsMap.end();
     for ( ; it != end; ++it )
-        if ( !excludeList.contains( it.data() ) )
-            page->addAnnotation( it.data() );
+        page->addAnnotation( it.data() );
 }
 
 void PDFGenerator::addTransition( Page * pdfPage, KPDFPage * page )

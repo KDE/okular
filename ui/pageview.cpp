@@ -472,7 +472,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
         summedArea += r.width() * r.height();
     }
     // very elementary check: SUMj(Region[j].area) is less than boundingRect.area
-    bool useSubdivision = summedArea < (0.7 * contentsRect.width() * contentsRect.height());
+    bool useSubdivision = summedArea < (0.6 * contentsRect.width() * contentsRect.height());
     if ( !useSubdivision )
         numRects = 1;
 

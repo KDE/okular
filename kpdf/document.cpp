@@ -42,7 +42,7 @@
 #include "settings.h"
 
 /* Notes:
-- FIXME event queuing to avoid flow loops (!!??) maybe avoided by the
+- FIXME event queuing to avoid flow loops (!!?) maybe avoided by the
   warning to not call something 'active' inside an observer method.
 */
 

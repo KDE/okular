@@ -41,6 +41,8 @@
 #include "page.h"
 #include "settings.h"
 
+#define ROUND(x) (int(x + 0.5))
+
 // structure used internally by PageView for data storage
 class PageViewPrivate
 {
@@ -1295,8 +1297,8 @@ void PageView::slotRelayoutPages()
         if ( focusedPage )
         {
             const QRect & geometry = focusedPage->geometry();
-            center( geometry.left() + (int) round( focusedX * (double)geometry.width() ),
-                    geometry.top() + (int) round( focusedY * (double)geometry.height() ) );
+            center( geometry.left() + ROUND( focusedX * (double)geometry.width() ),
+                    geometry.top() + ROUND( focusedY * (double)geometry.height() ) );
         }
         else
             center( fullWidth / 2, 0 );

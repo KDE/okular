@@ -102,15 +102,15 @@
 
       <glosslist>
 	<glossentry id="gloss-resolution">
-	  <glossterm>Resolution/Metafont mode</glossterm> 
+	  <glossterm>Metafont mode</glossterm> 
 	  <glossdef> 
 	    <para> These options specify the fonts which kdvi will use
 	    for rendering.  By carefully optimizing the settings here
 	    it is possible to improve on the display. However, unless
 	    you are an expert in MetaFont and know what you are doing,
 	    it is absolutely no good idea to change these
-	    options. Save values are "600" and "ljfour" for good
-	    quality or "300" and "cx" for medium quality and faster
+	    options. Save values are "1200" and "lexmarks" for good
+	    quality or "600" and "ljfour" for medium quality and faster
 	    display.</para> 
 	  </glossdef>
 	</glossentry>
@@ -125,28 +125,6 @@
 	    </glossdef>
 	</glossentry>
 
-	<glossentry id="gloss-pk-font-path">
-	  <glossterm>PK font path</glossterm> 
-	  <glossdef> 
-
-	    <para>	    If this is not empty, it points to a list of directories
-	    to be searched for pk-fonts, e.g.
-	    <screen>
-/var/lib/texmf/fonts/pk/ljfour/:/some/other/place
-            </screen>
-	    You can make kdvi search recursively by adding an extra /
-	    at the end of directory name: <screen>
-
-/var/lib/texmf/fonts//
-            </screen>
-	    This works like xdvi's XDVIFONTS environment
-	    variable. There is also good (gnu info) documentation
-	    available for the kpathsea library that kdvi uses for font
-	    searching. This makes kdvi usable when you have some other
-	    tex system than tetex and don't have the texmf.cnf
-	    file. Again this option is strikly for the experts only.</para>
-	    </glossdef> 
-	</glossentry>
       </glosslist>
     </section>
     
@@ -164,7 +142,7 @@
       
       <glosslist>
 	<glossentry id="gloss-postscript">
-	  <glossterm>PostScript</glossterm> 
+	  <glossterm>Show PostScript specials</glossterm> 
 	  <glossdef> 
 
 	    <para> If this options is checked, kdvi will display
@@ -185,7 +163,7 @@
 	    hight security risk and therefore deliberately not
 	    implemented in kdvi. Technical information about supported
 	    ways to include PostScript can be found in an external
-	    document.</para>
+	    document. You probably want to set this option.</para>
 	  </glossdef>
       </glossentry>
 
@@ -195,7 +173,7 @@
 
 	    <para> Check this if you want kdvi to display
 	    hyperlinks. The appropriate parts of the text will be
-	    underlined in blue.</para> </glossdef>
+	    underlined in blue. You probably want to set this option.</para> </glossdef>
 	</glossentry>
       </glosslist>
     </section>

@@ -39,7 +39,6 @@
 #include <kprocess.h>
 
 
-
 #include "dviwin.h"
 #include "fontpool.h"
 #include "fontprogress.h"
@@ -753,10 +752,12 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
   if ( e->state() == 0 ) {
     for(int i=0; i<num_of_used_hyperlinks; i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
+	emit setStatusBarText( hyperLinkList[i].linkText );
 	setCursor(pointingHandCursor);
 	return;
       }
     }
+    emit setStatusBarText( QString::null );
     setCursor(arrowCursor);
   }
   

@@ -127,6 +127,7 @@ void ghostscript_interface::gs_generate_graphics_file(int page, QString filename
   proc << PSfile.name();
   proc.start(KProcess::Block);
   PSfile.unlink();
+  emit(setStatusBarText(QString::null));
 }
 
 

@@ -282,7 +282,7 @@ void fontPool::kpsewhich_terminated(KProcess *)
     }
   }
 
-   delete proc;
+  delete proc;
   proc = 0;
 
   QStringList fileNameList = QStringList::split('\n', kpsewhichOutput);
@@ -370,8 +370,8 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	} else
 	  KMessageBox::sorry( 0, body+metaf, title );
     }
-    
-    emit(fonts_have_been_loaded());
+    emit setStatusBarText(QString::null);
+    emit fonts_have_been_loaded();
   }
   return;
 }

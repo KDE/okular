@@ -65,7 +65,8 @@ void CDECL error(int pos, const char *msg, ...) {
   emsg += buffer;
   if (!errors::exists(emsg))
   {
-    KMessageBox::error(0, emsg);
+  // TODO think a way to avoid threads can popup that
+  //  KMessageBox::error(0, emsg);
     errors::add(emsg);
   }
 }

@@ -1,6 +1,6 @@
 Personal Albert's list
 -> make links functional
--> improve thumbnail generation to make it non-gui blocking
+-> Activate errors again having in mind a thread (thumbnail) can generate an error and that will make a kmessagbox appear and kill kpdf
 
 More items
 -> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)

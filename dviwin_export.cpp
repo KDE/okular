@@ -112,7 +112,7 @@ void dviWindow::exportPDF(void)
 					  "a while because dvipdfm needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvipdfm to finish..."),
-				     parentWidget, "dvipdfm progress dialog", false );
+				     parentWidget, i18n("dvipdfm progress dialog"), false );
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
     progress->setTotalSteps( dviFile->total_pages );
@@ -202,7 +202,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
 					  "a while because dvips needs to generate its own bitmap fonts "
 					  "Please be patient."),
 				     i18n("Waiting for dvips to finish..."),
-				     parentWidget, "dvips progress dialog", false );
+				     parentWidget, i18n("dvips progress dialog"), false );
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
     progress->setTotalSteps( dviFile->total_pages );

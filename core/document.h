@@ -104,6 +104,17 @@ class KPDFDocument : public QObject // only for a private slot..
 };
 
 /**
+ * @short A window on the document.
+ *
+ * TODO HACK OVER ME AND FIXME WITH A CHAINSAW
+ */
+struct DocumentViewport
+{
+    int lastPage;
+};
+
+
+/**
  * @short Metadata that describes the document.
  *
  * The Info structure can be filled in by generators to display metadata
@@ -129,16 +140,6 @@ class DocumentInfo : public QDomDocument
 };
 
 /**
- * @short A window on the document.
- *
- * TODO HACK OVER ME AND FIXME WITH A CHAINSAW
- */
-struct DocumentViewport
-{
-    int lastPage;
-};
-
-/**
  * @short A Dom tree that describes the Table of Contents.
  *
  * The Synopsis (TOC or Table Of Contents for friends) is represented via
@@ -156,8 +157,7 @@ struct DocumentViewport
 class DocumentSynopsis : public QDomDocument
 {
     public:
-        // void implementation, only subclassed for naming!
-        DocumentSynopsis() : QDomDocument() {};
+        DocumentSynopsis();
 };
 
 #endif

@@ -1229,10 +1229,10 @@ void PageView::slotRelayoutPages()
         {
             PageViewItem * item = *iIt;
             // update internal page size (leaving a little margin in case of Fit* modes)
-            updateItemSize( item, colWidth[ cIdx ] - 10, viewportHeight - 10 );
+            updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 10 );
             // find row's maximum height and column's max width
-            if ( item->width() > colWidth[ cIdx ] )
-                colWidth[ cIdx ] = item->width();
+            if ( item->width() + 6 > colWidth[ cIdx ] )
+                colWidth[ cIdx ] = item->width() + 6;
             if ( item->height() > rowHeight[ rIdx ] )
                 rowHeight[ rIdx ] = item->height();
             // update col/row indices
@@ -1293,12 +1293,12 @@ void PageView::slotRelayoutPages()
             if ( item == currentItem || (cIdx > 0 && cIdx < nCols) )
             {
                 // update internal page size (leaving a little margin in case of Fit* modes)
-                updateItemSize( item, colWidth[ cIdx ] - 10, viewportHeight - 10 );
+                updateItemSize( item, colWidth[ cIdx ] - 4, viewportHeight - 6 );
                 // find row's maximum height and column's max width
-                if ( item->width() > colWidth[ cIdx ] )
-                    colWidth[ cIdx ] = item->width();
-                if ( item->height() > fullHeight )
-                    fullHeight = item->height();
+                if ( item->width() + 4 > colWidth[ cIdx ] )
+                    colWidth[ cIdx ] = item->width() + 4;
+                if ( item->height() + 6 > fullHeight )
+                    fullHeight = item->height() + 6;
                 cIdx++;
             }
         }

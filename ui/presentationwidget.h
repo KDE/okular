@@ -51,6 +51,8 @@ class PresentationWidget : public QWidget, public KPDFDocumentObserver
         void paintEvent( QPaintEvent * e );
 
     private:
+        void overlayClick( const QPoint & position );
+        void changePage( int newPage );
         void generatePage();
         void generateIntroPage( QPainter & p );
         void generateContentsPage( int page, QPainter & p );

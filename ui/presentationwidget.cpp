@@ -22,6 +22,7 @@
 
 // system includes
 #include <stdlib.h>
+#include <math.h>
 
 // local includes
 #include "presentationwidget.h"
@@ -201,21 +202,33 @@ void PresentationWidget::wheelEvent( QWheelEvent * e )
 
 void PresentationWidget::mousePressEvent( QMouseEvent * e )
 {
+    // pressing left button
     if ( e->button() == Qt::LeftButton )
-        slotNextPage();
+    {
+        if ( m_overlayGeometry.contains( e->pos() ) )
+            overlayClick( e->pos() );
+        else
+            slotNextPage();
+    }
+    // pressing right button
     else if ( e->button() == Qt::RightButton )
         slotPrevPage();
 }
 
 void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 {
+    // hide a shown bar when exiting the area
     if ( m_topBar->isShown() )
     {
         if ( e->y() > ( m_topBar->height() + 1 ) )
             m_topBar->hide();
     }
+    // show a hidden bar if mouse reaches the top of the screen
     else if ( !e->y() )
         m_topBar->show();
+    // change page if dragging the mouse over the 'wheel'
+    else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
+            overlayClick( e->pos() );
 }
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
@@ -258,6 +271,45 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 }
 // </widget events>
 
+
+void PresentationWidget::overlayClick( const QPoint & position )
+{
+    // clicking the progress indicator
+    int xPos = position.x() - m_overlayGeometry.x() - m_overlayGeometry.width() / 2,
+        yPos = m_overlayGeometry.height() / 2 - position.y();
+    if ( !xPos && !yPos )
+        return;
+
+    // compute angle relative to indicator (note coord transformation)
+    float angle = 0.5 + 0.5 * atan2f( -xPos, -yPos ) / M_PI;
+    int pageIndex = (int)roundf( angle * ( m_frames.count() - 1 ) );
+
+    // go to selected page
+    changePage( pageIndex );
+}
+
+void PresentationWidget::changePage( int newPage )
+{
+    if ( m_frameIndex == newPage )
+        return;
+
+    // check if pixmap exists or else request it
+    m_frameIndex = newPage;
+    PresentationFrame * frame = m_frames[ m_frameIndex ];
+    int pixW = frame->geometry.width();
+    int pixH = frame->geometry.height();
+
+    // if pixmap not inside the KPDFPage we request it and wait for
+    // notifyPixmapChanged call or else we can proceed to pixmap generation
+    if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+    {
+        QValueList< PixmapRequest * > request;
+        request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
+        m_document->requestPixmaps( request, false );
+    }
+    else
+        generatePage();
+}
 
 void PresentationWidget::generatePage()
 {
@@ -465,7 +517,7 @@ void PresentationWidget::generateOverlay()
     // start the autohide timer
     repaint( m_overlayGeometry, false /*clear*/ ); // toggle with next line
     //update( m_overlayGeometry );
-    m_overlayHideTimer->start( 1400, true );
+    m_overlayHideTimer->start( 2500, true );
 #endif
 }
 
@@ -476,22 +528,7 @@ void PresentationWidget::slotNextPage()
     if ( m_frameIndex < (int)m_frames.count() - 1 )
     {
         // go to next page
-        ++m_frameIndex;
-
-        // check if pixmap exists or else request it
-        PresentationFrame * frame = m_frames[ m_frameIndex ];
-        int pixW = frame->geometry.width();
-        int pixH = frame->geometry.height();
-        // if pixmap not inside the KPDFPage we request it and wait for
-        // notifyPixmapChanged call or else we proceed to pixmap generation
-        if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-        {
-            QValueList< PixmapRequest * > request;
-            request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
-            m_document->requestPixmaps( request, false );
-        }
-        else
-            generatePage();
+        changePage( m_frameIndex + 1 );
     }
     else if ( m_transitionTimer->isActive() )
     {
@@ -507,22 +544,7 @@ void PresentationWidget::slotPrevPage()
     if ( m_frameIndex > 0 )
     {
         // go to previous page
-        --m_frameIndex;
-
-        // check if pixmap exists or else request it
-        PresentationFrame * frame = m_frames[ m_frameIndex ];
-        int pixW = frame->geometry.width();
-        int pixH = frame->geometry.height();
-        // if pixmap not inside the KPDFPage we request it and wait for
-        // notifyPixmapChanged call or else we can proceed to pixmap generation
-        if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-        {
-            QValueList< PixmapRequest * > request;
-            request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
-            m_document->requestPixmaps( request, false );
-        }
-        else
-            generatePage();
+        changePage( m_frameIndex - 1 );
     }
     else if ( m_transitionTimer->isActive() )
     {

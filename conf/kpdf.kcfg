@@ -58,7 +58,6 @@
   <entry key="ShowSearchBar" type="Bool" >
    <default>true</default>
   </entry>
-  <entry key="SplitterSizes" type="IntList" />
  </group>
  <group name="PageView" >
   <entry key="ShowScrollBars" type="Bool" >
@@ -91,9 +90,6 @@
   </entry>
  </group>
  <group name="Presentation" >
-  <entry key="SlidesGlitterTrans" type="Bool" >
-   <default>true</default>
-  </entry>
   <entry key="SlidesShowProgress" type="Bool" >
    <default>true</default>
   </entry>
@@ -101,6 +97,12 @@
    <default>true</default>
   </entry>
   <entry key="SlidesShowSummary" type="Bool" >
+   <default>false</default>
+  </entry>
+ </group>
+ <group name="Internal Status" >
+  <entry key="SplitterSizes" type="IntList" />
+  <entry key="FilterBookmarks" type="Bool" >
    <default>false</default>
   </entry>
  </group>

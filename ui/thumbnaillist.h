@@ -13,6 +13,7 @@
 #include <qscrollview.h>
 #include <qvaluevector.h>
 #include <qvbox.h>
+#include <ktoolbar.h>
 #include "core/observer.h"
 
 class QTimer;
@@ -48,6 +49,10 @@ Q_OBJECT
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
 
+    public slots:
+        // these are connected to ThumbnailController buttons
+        void slotFilterBookmarks( bool filterOn );
+
 	protected:
 		// scroll up/down the view
 		void keyPressEvent( QKeyEvent * e );
@@ -65,10 +70,6 @@ Q_OBJECT
 	signals:
 		void urlDropped( const KURL& );
 
-	public slots:
-		// make requests for generating pixmaps for visible thumbnails
-		void slotRequestPixmaps( int newContentsX = -1, int newContentsY = -1 );
-
 	private:
 		void requestPixmaps( int delayMs = 0 );
 		KPDFDocument *m_document;
@@ -77,6 +78,10 @@ Q_OBJECT
 		QValueVector<ThumbnailWidget *> m_thumbnails;
 		QValueList<ThumbnailWidget *> m_visibleThumbnails;
 		int m_vectorIndex;
+
+	private slots:
+		// make requests for generating pixmaps for visible thumbnails
+		void slotRequestPixmaps( int newContentsX = -1, int newContentsY = -1 );
 };
 
 /**
@@ -87,6 +92,20 @@ class ThumbnailsBox : public QVBox
 	public:
 		ThumbnailsBox( QWidget * parent ) : QVBox( parent ) {};
 		QSize sizeHint() const { return QSize(); }
+};
+
+/**
+ * @short A toolbar thar set ThumbnailList properties when clicking on items
+ *
+ * This class is the small tolbar that resides in the bottom of the
+ * ThumbnailsBox container (below ThumbnailList and the SearchLine) and
+ * emits signals whenever a button is pressed. A click action results
+ * in invoking some method (or slot) in ThumbnailList.
+ */
+class ThumbnailController : public KToolBar
+{
+    public:
+        ThumbnailController( QWidget * parent, ThumbnailList * thumbnailList );
 };
 
 #endif

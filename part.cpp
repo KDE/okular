@@ -112,32 +112,35 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->setMinimumWidth( 80 );
 	m_toolBox->setMaximumWidth( 300 );
 
+	// [left toolbox: Table of Contents] | []
 	TOC * tocFrame = new TOC( m_toolBox, m_document );
-	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	connect(tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
+	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	enableTOC( false );
 
+	// [left toolbox: Thumbnails and Bookmarks] | []
 	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
-    m_searchWidget = new SearchWidget( thumbsBox, m_document );
-    m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
-	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
+	m_searchWidget = new SearchWidget( thumbsBox, m_document );
+	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
+//	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
+	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )) );
+	// shrink the bottom toolbar (todo: find a less hackish way)
+	thumbsBox->setStretchFactor( m_searchWidget, 100 );
+	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
+//	thumbsBox->setStretchFactor( m_tc, 1 );
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
 
-// commented because probably the thumbnaillist will act as the bookmark widget too
-//	QFrame * bookmarksFrame = new QFrame( m_toolBox );
-//	int iIdx = m_toolBox->addItem( bookmarksFrame, QIconSet(SmallIcon("bookmark")), i18n("Bookmarks") );
-//	m_toolBox->setItemEnabled( iIdx, false );
-
-/*	QFrame * editFrame = new QFrame( m_toolBox );
+/*	// [left toolbox: Annotations] | []
+	QFrame * editFrame = new QFrame( m_toolBox );
 	int iIdx = m_toolBox->addItem( editFrame, QIconSet(SmallIcon("pencil")), i18n("Annotations") );
 	m_toolBox->setItemEnabled( iIdx, false );*/
 
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, m_document );
-        m_pageView->setFocus(); //usability setting
+	m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
-	connect(m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ));
+	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 
 	// add document observers
 	m_document->addObserver( this );
@@ -180,8 +183,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showProperties = new KAction(i18n("Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
 
-    m_showPresentation = new KAction( i18n("Presentation"), "kpresenter_kpr", 0, this, SLOT(slotShowPresentation()), ac, "presentation");
-    m_showPresentation->setEnabled( false );
+	m_showPresentation = new KAction( i18n("Presentation"), "kpresenter_kpr", 0, this, SLOT(slotShowPresentation()), ac, "presentation");
+	m_showPresentation->setEnabled( false );
 
     // attach the actions of the 2 children widgets too
     m_pageView->setupActions( ac );

@@ -7,14 +7,15 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress:
--> Fix threaded generation. It's.. crashy..
+-> Fix threaded generation. (seems more stable since 2005-Jan-03). Waiting4backtraces.
 
 Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> FIX 1/2: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
 -> FIX 2/2: check for removing 'canUnloadPixmap' from observers in place of requesting
    a list of visible pixmaps
 -> FIX: priorities for requests (pageview regular over thumbnails regular over pv preloading ...)
--> FIX: linearize memory pages map iterators in respect to time
+-> FIX: linearize memory pages map iterators in respect to time = FIX:iterate
+   from older pages to newest ones when freeing memory (not randomly)
 -> ADD: preloading (very easy, but change request a little)
 -> FIX: check for removing 'canUnloadPixmap' from observers in place of a requested
    'visiblity list'
@@ -28,8 +29,7 @@ More items (first items will enter 'In progress list' first):
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment. (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
 -> watch out for FIXMEs in code
--> fix: requestPixmaps not triggered when exiting fullscreen mode (to verify..I can't reproduce)
--> fix: iterate from older pages to newest ones when freeing memory (not randomly)
+-> fix: requestPixmaps not triggered when exiting fullscreen mode (to verify..I can't reproduce-enrico)
 -> fix: On continous view mode, if you click to a link that moves you to another
    page, then scroll up and click again on the same link it does not work. (by Albert)
 -> display current page / total pages (with analog indicator too (progressbar/...))
@@ -39,11 +39,14 @@ More items (first items will enter 'In progress list' first):
    insert some actions that aren't so useful in the main (and bigger) toolbar
 -> abstract TextPage generation (the last xpdf dependant class!). then go dancing in the
    streets.
+-> better boomark rendering (tested a 'clip overlay' but looks bad actually)
+   maybe gray out other pages?
 -> Dom framework to cache document metadata. It should archive those types of data:
    (NOTE: already Dom'ed object is marked with 'X')
    - <X> Synopsis will go there after 1st generation (so we can edit it too)
    - <X> Document info (after the 1st gen)
-   - <X - in progress> Bookmarked pages
+   - <X> Bookmarked pages
+   - <X - only for pagenumber> General info (like viewport state)
    - Edited pages (rotated/with_data for example)
    - Overlay editing (hilighting/notations/etc..)
    - Presentation related overrides (FS mode, individual / global transitions)
@@ -56,12 +59,9 @@ More items (first items will enter 'In progress list' first):
    this visually explains basic usage, mouse buttons functions & more..
 -> take care of TODOs in code
 -> find: scroll page if the the searched string is not visible [after 'viewport changes']
--> ADD: click over image allows "save image" [60% done]
+-> ADD: click over image allows "save image" [60% done (activerect of type image)]
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
--> ADD: bookmark support, with clip overlays or something.. and the bookmark
-   widget. or maybe they should modify the thumbnail. note: bookmark property
-   is already in place. Saving bookmars for a document will be cool too.
 -> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
@@ -74,22 +74,23 @@ More items (first items will enter 'In progress list' first):
 -> kttsd alternative (1): autodetect "/dev/speech" (speechd/festival) and provide reading
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
--> merge head copyright headers (by albert)
--> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
+-> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kviewshell/kghostview/.. (not konq))
 -> rotate the whole document / individual pages
--> fullscreen pdf view (presentations-like) with some gfx tools
--> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
+-> presentation: implement transitions
+-> presentation: add some gfx tools (like a red pencil)
+-> presentation: save a flag (to the xml) to open a pdf in presentation mode
+-> presentation: link following (difficult due to pagerects related to pageview pixmap only)
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 -> add search on the toc widget (a prune on type lineedit like in thumbnails widget)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> use wallet for storing passwords of encrypted files
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
--> set a marker on the pdf file to immediately start presentation when opening it (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
--> link following when in presentation mode
--> FIX: single page mode: add a little margin on pageview (top-bottom edges)
 
 Done (newest features come first):
+-> CHG: presentation: the round wheel indicator can be clicked to change page
+-> FIX: layout margins on pageView
+-> ADD: restore the last active page when a file is opened again
 -> ADD: Save bookmarks into a file so you they get recovered when opening the same file again (Albert)
 -> FIX: searchline back to work
 -> CHG: DocumentInfo is now a DomTree and the properties dialog is dynamically generated (Tobias)

@@ -157,23 +157,13 @@ Shell::setupActions()
   m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
 }
 
-  void
-Shell::saveProperties(KConfig* config)
+void Shell::saveProperties(KConfig* config)
 {
   // the 'config' object points to the session managed
   // config file.  anything you write here will be available
   // later when this app is restored
     emit saveDocumentRestoreInfo(config);
 }
-
-void Shell::slotShowMenubar()
-{
-    if ( m_showMenuBarAction->isChecked() )
-        menuBar()->show();
-    else
-        menuBar()->hide();
-}
-
 
 void Shell::readProperties(KConfig* config)
 {
@@ -257,6 +247,14 @@ void Shell::slotUpdateFullScreen()
       }
       showNormal();
     }
+}
+
+void Shell::slotShowMenubar()
+{
+    if ( m_showMenuBarAction->isChecked() )
+        menuBar()->show();
+    else
+        menuBar()->hide();
 }
 
 #include "shell.moc"

@@ -36,6 +36,7 @@ class KPrinter;
 
 class KPDFDocument;
 class ThumbnailList;
+class ThumbnailController;
 class PageView;
 class SearchWidget;
 
@@ -117,13 +118,13 @@ private:
 	// main widgets
 	QSplitter *m_splitter;
 	QToolBox *m_toolBox;
+	SearchWidget *m_searchWidget;
 	ThumbnailList *m_thumbnailList;
 	PageView *m_pageView;
-	SearchWidget *m_searchWidget;
 
 	// static instances counter
 	static unsigned int m_count;
-	
+
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;
 
@@ -136,7 +137,7 @@ private:
 	KAction *m_find;
 	KAction *m_findNext;
 	KAction *m_showProperties;
-    KAction *m_showPresentation;
+	KAction *m_showPresentation;
 	KToggleAction* m_watchFile;
 	KToggleAction* m_showMenuBarAction;
 	KToggleAction* m_showFullScreenAction;

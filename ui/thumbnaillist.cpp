@@ -21,6 +21,7 @@
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
+#include "conf/settings.h"
 
 // ThumbnailWidget represents a single thumbnail in the ThumbnailList
 class ThumbnailWidget : public QWidget
@@ -96,31 +97,33 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 		return;
 	}
 
-	//FIXME change this quick fix (lines that follows). Check if filtering:
-	bool skipCheck = true;
-	for ( uint i = 0; i < pages.count(); i++ )
-        if ( pages[i]->attributes() & KPDFPage::Highlight )
+    // show pages containing hilighted text or bookmarked ones
+    int flags = Settings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
+
+    // if no page matches filter rule, then display all pages
+    QValueVector< KPDFPage * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
+    bool skipCheck = true;
+    for ( ; pIt != pEnd ; ++pIt )
+        if ( (*pIt)->attributes() & flags )
             skipCheck = false;
 
-	// generate Thumbnails for the given set of pages
-	ThumbnailWidget *t;
-	int width = clipper()->width(),
-	    totalHeight = 0;
-	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin(), pageEnd = pages.end();
-	for (; pageIt != pageEnd ; ++pageIt)
-		if ( skipCheck || ( (*pageIt)->attributes() & KPDFPage::Highlight ) )
-		{
-			t = new ThumbnailWidget( viewport(), *pageIt );
-			t->setFocusProxy( this );
-			// add to the scrollview
-			addChild( t, 0, totalHeight );
-			// add to the internal queue
-			m_thumbnails.push_back( t );
-			// update total height (asking widget its own height)
-			t->resizeFitWidth( width );
-			totalHeight += t->heightHint() + 4;
-			t->show();
-		}
+    // generate Thumbnails for the given set of pages
+    int width = clipper()->width(),
+        totalHeight = 0;
+    for ( pIt = pages.begin(); pIt != pEnd ; ++pIt )
+        if ( skipCheck || (*pIt)->attributes() & flags )
+        {
+            ThumbnailWidget * t = new ThumbnailWidget( viewport(), *pIt );
+            t->setFocusProxy( this );
+            // add to the scrollview
+            addChild( t, 0, totalHeight );
+            // add to the internal queue
+            m_thumbnails.push_back( t );
+            // update total height (asking widget its own height)
+            t->resizeFitWidth( width );
+            totalHeight += t->heightHint() + 4;
+            t->show();
+        }
 
 	// update scrollview's contents size (sets scrollbars limits)
 	resizeContents( width, totalHeight );
@@ -179,6 +182,7 @@ void ThumbnailList::notifyPixmapsCleared()
 {
     slotRequestPixmaps();
 }
+//END KPDFDocumentObserver inherited methods 
 
 
 void ThumbnailList::updateWidgets()
@@ -199,18 +203,16 @@ void ThumbnailList::updateWidgets()
     }
 }
 
-void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
+void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
-	ev->accept();
+    // save state
+    Settings::setFilterBookmarks( filterOn );
+    // ask for the 'pageSetup' with a little trick (on reinsertion the
+    // document sends the list again)
+    m_document->removeObserver( this );
+    m_document->addObserver( this );
 }
 
-void ThumbnailList::dropEvent( QDropEvent * ev )
-{
-	KURL::List lst;
-	if (  KURLDrag::decode(  ev, lst ) )
-		emit urlDropped( lst.first() );
-}
-//END KPDFDocumentObserver inherited methods 
 
 //BEGIN widget events 
 void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
@@ -300,6 +302,18 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 		return;
 	// update Thumbnails since width has changed or height has increased
 	requestPixmaps( 500 );
+}
+
+void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
+{
+    ev->accept();
+}
+
+void ThumbnailList::dropEvent( QDropEvent * ev )
+{
+    KURL::List lst;
+    if (  KURLDrag::decode(  ev, lst ) )
+        emit urlDropped( lst.first() );
 }
 //END widget events
 
@@ -423,5 +437,30 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         }
     }
 }
+
+
+/** ThumbnailsController implementation **/
+
+#define FILTERB_ID  1
+
+ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list )
+    : KToolBar( parent, "ThumbsControlBar" )
+{
+    // change toolbar appearance
+    setMargin( 3 );
+    setFlat( true );
+    setIconSize( 16 );
+    setMovingEnabled( false );
+
+    // insert a togglebutton [show only bookmarked pages]
+    //insertSeparator();
+    insertButton( "bookmark", FILTERB_ID, SIGNAL( toggled( bool ) ),
+                  list, SLOT( slotFilterBookmarks( bool ) ),
+                  true, i18n( "Show bookmarked pages only" ) );
+    setToggle( FILTERB_ID );
+    setButton( FILTERB_ID, Settings::filterBookmarks() );
+    //insertLineSeparator();
+}
+
 
 #include "thumbnaillist.moc"

@@ -119,20 +119,22 @@ bool KPDFDocument::openDocument( const QString & docFile )
     connect( generator, SIGNAL( contentsChanged( int, int ) ),
              this, SLOT( slotGeneratedContents( int, int ) ) );
 
-    // ask generator to open the document and return if unsuccessfull
+    // 1. load Document
     documentFileName = docFile;
     bool openOk = generator->loadDocument( docFile, pages_vector );
-    if ( !openOk )
-        return false;
+    if ( !openOk || pages_vector.size() <= 0 )
+        return openOk;
 
-    // filter pages, setup observers and set the first page as current
-    if ( pages_vector.size() > 0 )
-    {
-        processPageList( true );
-        setCurrentPage( 0 );
-    }
-
+    // 2. load Additional Data (our bookmarks and metadata) about the document
     loadDocumentInfo();
+
+    // 3. setup observers inernal lists and data
+    processPageList( true );
+
+    // 4. set initial page (restoring previous page saved in xml)
+    int displayedPage = ( d->currentPage >= 0 ) ? d->currentPage : 0;
+    d->currentPage = -1;
+    setCurrentPage( displayedPage );
 
     // start bookmark saver timer
     d->saveBookmarksTimer->start( 5 * 60 * 1000 );
@@ -145,7 +147,9 @@ bool KPDFDocument::openDocument( const QString & docFile )
 
 void KPDFDocument::closeDocument()
 {
-    saveDocumentInfo();
+    // save document info if a document is still opened
+    if ( generator && pages_vector.size() > 0 )
+        saveDocumentInfo();
 
     // stop memory check timer
     d->memCheckTimer->stop();
@@ -192,13 +196,13 @@ void KPDFDocument::removeObserver( KPDFDocumentObserver * pObserver )
     // remove observer from the map. it won't receive notifications anymore
     if ( d->observers.contains( pObserver->observerId() ) )
     {
-        // free observer data
+        // free observer's pixmap data
         int observerId = pObserver->observerId();
         QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
             (*it)->deletePixmap( observerId );
 
-        // delete observer
+        // delete observer storage info
         delete d->observers[ observerId ];
         d->observers.remove( observerId );
     }
@@ -632,6 +636,8 @@ int KPDFDocument::mFreeMemory()
 }
 
 void KPDFDocument::loadDocumentInfo()
+// note: load data and stores it internally (document or pages). observers
+// are still uninitialized at this point so don't access them
 {
     QFile fileReadTest( documentFileName );
     fileReadTest.open( IO_ReadOnly );
@@ -644,6 +650,7 @@ void KPDFDocument::loadDocumentInfo()
     QFile infoFile( localFN );
     if (infoFile.exists() && infoFile.open( IO_ReadOnly ) )
     {
+        // Load DOM from XML file
         QDomDocument doc( "documentInfo" );
         if ( !doc.setContent( &infoFile ) )
         {
@@ -655,26 +662,50 @@ void KPDFDocument::loadDocumentInfo()
         QDomElement root = doc.documentElement();
         if (root.tagName() != "documentInfo") return;
 
-        QDomNode bookMarkList = root.firstChild();
-        if (bookMarkList.isElement() && bookMarkList.toElement().tagName() != "bookmarkList") return;
-
-        QDomNode n = bookMarkList.firstChild();
-
-        QDomElement e;
-        int pageNumber;
-        bool ok;
-        while ( !n.isNull() )
+        // Parse the DOM tree
+        QDomNode topLevelNode = root.firstChild();
+        while ( topLevelNode.isElement() )
         {
-            if ( n.isElement() )
-            {
-                e = n.toElement();
-                if (e.tagName() != "page") return;
+            QString catName = topLevelNode.toElement().tagName();
 
-                pageNumber = e.text().toInt(&ok);
-                if (ok) toggleBookmark( pageNumber );
+            // Get bookmarks list from DOM
+            if ( catName == "bookmarkList" )
+            {
+                QDomNode n = topLevelNode.firstChild();
+                QDomElement e;
+                int pageNumber;
+                bool ok;
+                while ( n.isElement() )
+                {
+                    e = n.toElement();
+                    if (e.tagName() == "page")
+                    {
+                        pageNumber = e.text().toInt(&ok);
+                        if ( ok && pageNumber >= 0 && pageNumber < (int)pages_vector.count() )
+                            pages_vector[ pageNumber ]->setAttribute( KPDFPage::Bookmark );
+                    }
+                    n = n.nextSibling();
+                }
             }
-            n = n.nextSibling();
-       }
+            // Get 'general info' from the DOM
+            else if ( catName == "generalInfo" )
+            {
+                QDomNode infoNode = topLevelNode.firstChild();
+                while ( infoNode.isElement() )
+                {
+                    QDomElement infoElement = infoNode.toElement();
+                    if ( infoElement.tagName() == "activePage" )
+                    {
+                        uint page = infoElement.attribute( "number" ).toInt();
+                        if ( page < pages_vector.size() )
+                            d->currentPage = page;
+                    }
+                    infoNode = infoNode.nextSibling();
+                }
+            }
+
+            topLevelNode = topLevelNode.nextSibling();
+        }
     }
     infoFile.close();
 }
@@ -760,10 +791,12 @@ void KPDFDocument::saveDocumentInfo() const
     QFile infoFile( localFN );
     if (infoFile.open( IO_WriteOnly | IO_Truncate) )
     {
+        // Create DOM
         QDomDocument doc( "documentInfo" );
         QDomElement root = doc.createElement( "documentInfo" );
         doc.appendChild( root );
 
+        // Add bookmark list to DOM
         QDomElement bookmarkList = doc.createElement( "bookmarkList" );
         root.appendChild( bookmarkList );
 
@@ -778,6 +811,16 @@ void KPDFDocument::saveDocumentInfo() const
             }
         }
 
+        // Add general info to DOM
+        QDomElement generalInfo = doc.createElement( "generalInfo" );
+        root.appendChild( generalInfo );
+
+        QDomElement activePage = doc.createElement( "activePage" );
+        // FIXME: use viewport (when ready)
+        activePage.setAttribute( "number", d->currentPage );
+        generalInfo.appendChild( activePage );
+
+        // Save DOM to XML file
         QString xml = doc.toString();
         QTextStream os( &infoFile );
         os << xml;
@@ -845,6 +888,14 @@ QString DocumentInfo::get( const QString &key ) const
         return list.item( 0 ).toElement().attribute( "value" );
     else
         return QString();
+}
+
+/** DocumentSynopsis **/
+
+DocumentSynopsis::DocumentSynopsis()
+  : QDomDocument( "DocumentSynopsis" )
+{
+    // void implementation, only subclassed for naming
 }
 
 #include "document.moc"

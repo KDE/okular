@@ -50,7 +50,8 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
                              i18n( "Enter at least 3 letters to filter pages" ), 0/*size*/, 1 );
 
     // clear button (uses a lineEdit slot, so it must be created after)
-    insertButton( "editclear", CLEAR_ID, SIGNAL( clicked() ),
+    insertButton( QApplication::reverseLayout() ? "clear_left" : "locationbar_erase",
+        CLEAR_ID, SIGNAL( clicked() ),
         getLined( LEDIT_ID ), SLOT( clear() ), true,
         i18n( "Clear filter" ), 0/*index*/ );
 

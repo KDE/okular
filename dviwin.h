@@ -38,9 +38,6 @@ class KPrinter;
 class KShellProcess;
 
 
-// max. number of hyperlinks per page. This should later be replaced by
-// a dynamic allocation scheme.
-#define MAX_HYPERLINKS 400 
 // max. number of anchors per document. This should later be replaced by
 // a dynamic allocation scheme.
 #define MAX_ANCHORS    1000
@@ -199,24 +196,21 @@ private:
  void          header_special(QString cp);
  void          source_special(QString cp);
 
- /** List of source-hyperlinks, for source-specials */
- DVI_Hyperlink     sourceHyperLinkList[MAX_HYPERLINKS];
- int               num_of_used_source_hyperlinks;
+
+ QValueVector<DVI_Hyperlink> sourceHyperLinkList; // List of source-hyperlinks, for source-specials
  QString          *source_href; // If not NULL, the text currently
 				// drawn represents a source hyperlink
 				// to the (relative) URL given in the
 				// string;
- QString           editorCommand;
+ QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
+ QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
 
- /** List of ordinary-hyperlinks */
- DVI_Hyperlink     hyperLinkList[MAX_HYPERLINKS];
- int               num_of_used_hyperlinks;
+
  QString          *HTML_href; // If not NULL, the text currently drawn
 			      // represents a hyperlink to the
 			      // (relative) URL given in the string;
 
- /** List of text in the window */
- QValueVector<DVI_Hyperlink> textLinkList;
+ QString           editorCommand;
 
  /** Stack for register compounds, used for the DVI-commands PUSH/POP
      as explained in section 2.5 and 2.6.2 of the DVI driver standard,

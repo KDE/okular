@@ -328,7 +328,7 @@ void dviWindow::drawPage()
     // a button "Explain in more detail..." which opens the
     // Helpcenter. Thus, we practically re-implement the KMessagebox
     // here. Most of the code is stolen from there.
-    if ((dviFile->sourceSpecialMarker == true) && (num_of_used_source_hyperlinks > 0)) {
+    if ((dviFile->sourceSpecialMarker == true) && (sourceHyperLinkList.size() > 0)) {
       dviFile->sourceSpecialMarker = false;
       // Check if the 'Don't show again' feature was used
       KConfig *config = kapp->config();
@@ -602,9 +602,9 @@ void dviWindow::all_fonts_loaded(void)
       foreGroundPaint.begin( &pixie );
       draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
       foreGroundPaint.end();
-      if (num_of_used_source_hyperlinks > 0)
+      if (sourceHyperLinkList.size() > 0)
 	sourceSpecialsFlag = true;
-      for(int i=0; i<num_of_used_source_hyperlinks; i++) {
+      for(int i=0; i<sourceHyperLinkList.size(); i++) {
 	QString sourceLink = sourceHyperLinkList[i].linkText;
 	// Extract the file name and the numeral part from the string
 	unsigned int j;
@@ -751,7 +751,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 {
   // If no mouse button pressed
   if ( e->state() == 0 ) {
-    for(int i=0; i<num_of_used_hyperlinks; i++) {
+    for(int i=0; i<hyperLinkList.size(); i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
 	emit setStatusBarText( hyperLinkList[i].linkText );
 	setCursor(pointingHandCursor);
@@ -841,8 +841,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 #endif
 
   // Check if the mouse is pressed on a regular hyperlink
-  if ((e->button() == LeftButton) && (num_of_used_hyperlinks > 0))
-    for(int i=0; i<num_of_used_hyperlinks; i++) {
+  if ((e->button() == LeftButton) && (hyperLinkList.size() > 0))
+    for(int i=0; i<hyperLinkList.size(); i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {
 	if (hyperLinkList[i].linkText[0] == '#' ) {
 #ifdef DEBUG_SPECIAL
@@ -880,8 +880,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
     }
 
   // Check if the mouse is pressed on a source-hyperlink
-  if ((e->button() == MidButton) && (num_of_used_source_hyperlinks > 0))
-    for(int i=0; i<num_of_used_source_hyperlinks; i++)
+  if ((e->button() == MidButton) && (sourceHyperLinkList.size() > 0))
+    for(int i=0; i<sourceHyperLinkList.size(); i++)
       if (sourceHyperLinkList[i].box.contains(e->pos())) {
 #ifdef DEBUG_SPECIAL
 	kdDebug(4300) << "Source hyperlink to " << sourceHyperLinkList[i].linkText << endl;

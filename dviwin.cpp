@@ -58,7 +58,7 @@ QPainter foreGroundPaint; // QPainter used for text
 //------ now comes the dviWindow class implementation ----------
 
 dviWindow::dviWindow(QWidget *par)
-  : info(par)
+  : info(new infoDialog(par))
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow( parent=" << par << " )" << endl;
@@ -69,9 +69,9 @@ dviWindow::dviWindow(QWidget *par)
 
   connect(&font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   connect(&font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), this, SLOT(all_fonts_loaded(fontPool *)));
-  connect(&font_pool, SIGNAL(MFOutput(QString)), &info, SLOT(outputReceiver(QString)));
-  connect(&font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), &info, SLOT(setFontInfo(fontPool *)));
-  connect(&font_pool, SIGNAL(new_kpsewhich_run(QString)), &info, SLOT(clear(QString)));
+  connect(&font_pool, SIGNAL(MFOutput(QString)), info, SLOT(outputReceiver(QString)));
+  connect(&font_pool, SIGNAL(fonts_have_been_loaded(fontPool *)), info, SLOT(setFontInfo(fontPool *)));
+  connect(&font_pool, SIGNAL(new_kpsewhich_run(QString)), info, SLOT(clear(QString)));
 
   parentWidget = par;
   shrinkfactor = 3;
@@ -142,12 +142,12 @@ void dviWindow::setPrefs(bool flag_showPS, bool flag_showHyperLinks, const QStri
 
 void dviWindow::showInfo(void)
 {
-  info.setDVIData(dviFile);
+  info->setDVIData(dviFile);
   // Call check_if_fonts_filenames_are_looked_up() to make sure that
   // the fonts_info is emitted. That way, the infoDialog will know
   // about the fonts and their status.
   font_pool.check_if_fonts_filenames_are_looked_up();
-  info.show();
+  info->show();
 }
 
 
@@ -435,7 +435,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
   // the dvifile and the pixmap.
   if (fname.isEmpty()) {
     // Delete DVI file
-    info.setDVIData(0);
+    info->setDVIData(0);
     delete dviFile;
     dviFile = 0;
 
@@ -484,7 +484,7 @@ bool dviWindow::setFile(const QString &fname, const QString &ref, bool sourceMar
 
   delete dviFile;
   dviFile = dviFile_new;
-  info.setDVIData(dviFile);
+  info->setDVIData(dviFile);
 
   font_pool.setExtraSearchPath( fi.dirPath(true) );
   font_pool.setCMperDVIunit( dviFile->getCmPerDVIunit() );
@@ -876,7 +876,7 @@ void dviWindow::handleSRCLink(const QString &linkText, QMouseEvent * e)
 			    "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
 			    "and a list of common problems.</qt>").arg(command);
   
-  info.clear(i18n("Starting the editor..."));
+  info->clear(i18n("Starting the editor..."));
   
   int flashOffset      = e->y(); // Heuristic correction. Looks better.
   emit(flash(flashOffset));

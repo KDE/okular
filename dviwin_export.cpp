@@ -133,7 +133,7 @@ void dviWindow::exportPDF(void)
   export_errorString = i18n("<qt>The external program 'dvipdf', which was used to export the file, reported an error. "
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
 			    "find in the File-Menu for a precise error report.</qt>") ;
-  info.clear(i18n("Export: %1 to PDF").arg(KShellProcess::quote(dviFile->filename)));
+  info->clear(i18n("Export: %1 to PDF").arg(KShellProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
   finfo.setFile(dviFile->filename);
@@ -282,7 +282,7 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   export_errorString = i18n("<qt>The external program 'dvips', which was used to export the file, reported an error. "
 			    "You might wish to look at the <strong>document info dialog</strong> which you will "
 			    "find in the File-Menu for a precise error report.</qt>") ;
-  info.clear(i18n("Export: %1 to PostScript").arg(KShellProcess::quote(dviFile->filename)));
+  info->clear(i18n("Export: %1 to PostScript").arg(KShellProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
   QFileInfo finfo(dviFile->filename);
@@ -308,7 +308,7 @@ void dviWindow::dvips_output_receiver(KProcess *, char *buffer, int buflen)
     return;
   QString op = QString::fromLocal8Bit(buffer, buflen);
 
-  info.outputReceiver(op);
+  info->outputReceiver(op);
   if (progress != 0)
     progress->show();
 }

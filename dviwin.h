@@ -203,7 +203,7 @@ signals:
 
 private:
   fontPool      font_pool;
-  infoDialog    info;
+  infoDialog    *info;
 
   QWidget       *parentWidget;
 

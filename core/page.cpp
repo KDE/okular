@@ -22,6 +22,9 @@
 #include "conf/settings.h"
 #include "xpdf/TextOutputDev.h"
 
+// temp includes
+#include <sys/time.h>
+
 
 /** class KPDFPage **/
 
@@ -306,6 +309,8 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
         // parse annotationList child element
         if ( childElement.tagName() == "annotationList" )
         {
+             struct timeval ts, te;
+             gettimeofday( &ts, NULL );
             // iterate over all annotations
             QDomNode annotationNode = childElement.firstChild();
             while( annotationNode.isElement() )
@@ -322,8 +327,8 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
                 int typeNumber = annotElement.attribute( "type" ).toInt();
                 switch ( typeNumber )
                 {
-                    case Annotation::APopup:
-                        annotation = new PopupAnnotation( annotElement );
+                    case Annotation::AWindow:
+                        annotation = new WindowAnnotation( annotElement );
                         break;
                     case Annotation::AText:
                         annotation = new TextAnnotation( annotElement );
@@ -351,6 +356,10 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
                 else
                     kdWarning() << "can't restore Annotation of type '" << typeNumber << "from XML." << endl;
             }
+             gettimeofday( &te, NULL );
+             double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
+             double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
+             kdDebug() << "annots: XML Load time: " << (endTime-startTime)*1000.0 << "ms" << endl;
         }
 
         // parse bookmark child element
@@ -383,23 +392,38 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
         // add annotations info if has got any
         if ( !m_annotations.isEmpty() )
         {
+             struct timeval ts, te;
+             gettimeofday( &ts, NULL );
             // create the annotationList
             QDomElement annotListElement = document.createElement( "annotationList" );
             pageElement.appendChild( annotListElement );
 
             // add every annotation to the annotationList
+            int addedAnnotations = 0;
             QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
             for ( ; aIt != aEnd; ++aIt )
             {
                 // get annotation
                 const Annotation * a = *aIt;
+                // only save annotations created by us (not loaded from document)
+                if ( a->isApplied() )
+                    continue;
                 // create annotation element and set type
                 QDomElement annotElement = document.createElement( "annotation" );
                 annotListElement.appendChild( annotElement );
                 annotElement.setAttribute( "type", (uint)a->subType() );
                 // add children and attributes to annotation element
                 a->store( annotElement, document );
+                addedAnnotations++;
             }
+
+            // add number of children annotations as attribute
+            if ( addedAnnotations )
+                annotListElement.setAttribute( "annotations", addedAnnotations );
+             gettimeofday( &te, NULL );
+             double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
+             double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
+             kdDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
         }
     }
 }

@@ -27,7 +27,7 @@ class AnnotatorEngine;
  * annotation will become when finished.
  *
  * "data/tools.xml" is the file that contains Annotations/Engine association
- * for the items placed in the toolbar. The XML is parsed (1) when popuplating
+ * for the items placed in the toolbar. The XML is parsed (1) when populating
  * the toolbar and (2)after selecting a toolbar item, in which case an Ann is
  * initialized with the values in the XML and an engine is created to handle
  * that annotation.

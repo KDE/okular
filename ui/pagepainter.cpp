@@ -234,7 +234,10 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             QRect annotRect = a->r.geometry( width, height );
             // draw the annotation extent
             if ( annotRect.isValid() && annotRect.intersects( limits ) )
+            {
+                p->setPen( a->color );
                 p->drawRect( annotRect );
+            }
         }
     }
 

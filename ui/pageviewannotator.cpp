@@ -520,7 +520,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 {
                     LineAnnotation * l = new LineAnnotation();
                     if ( a.hasAttribute( "width" ) )
-                        l->border.width = a.attribute( "width" ).toInt();
+                        l->drawStyle.width = a.attribute( "width" ).toInt();
                     annotation = l;
                 }
                 else if ( aType == "Geom" )
@@ -541,6 +541,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 // parse generic annotation attributes
                 if ( annotation )
                 {
+                    annotation->author = Settings::annotationsAuthor();
                     if ( a.hasAttribute( "color" ) )
                         annotation->color = QColor( a.attribute( "color" ) );
                 }

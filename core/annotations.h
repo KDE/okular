@@ -14,8 +14,10 @@
 #include <qdatetime.h>
 #include <qvaluelist.h>
 #include <qfont.h>
-#include <qdom.h>
 #include "page.h"
+
+class QDomNode;
+class QDomDocument;
 
 /** Annotations in PDF 1.6 specification **
 
@@ -180,40 +182,49 @@ Unused / Incomplete :
 struct Annotation
 {
     // enum definitions
-    enum SubType { APopup, AText, ALine, AGeom, AHighlight, AStamp, AInk };
-    enum Flags { Hidden, NoOpenable, Print, Locked, ReadOnly };
+    enum SubType { AWindow, AText, ALine, AGeom, AHighlight, AStamp, AInk };
+    enum Flags { Hidden = 1, FixedSize = 2, FixedRotation = 4, DenyPrint = 8,
+                 DenyWrite = 16, DenyDelete = 32, ToggleHidingOnMouse = 64 };
 
     // struct definitions
-    struct Border
+    struct DrawStyle
     {
         double width;
         double xCornerRadius;
         double yCornerRadius;
-        enum { Solid, Dashed, Beveled, Inset, Underline } style;
+        enum S { Solid, Dashed, Beveled, Inset, Underline } style;
         int dashMarks;
         int dashSpaces;
-        enum { NoEffect, Cloudy } effect;
+        enum E { NoEffect, Cloudy } effect;
         int effectIntensity;
         // initialize default valudes
-        Border();
+        DrawStyle();
     };
 
-    // data fields
+    // check properties
     virtual SubType subType() const = 0;            // for RTTI
     virtual bool isMarkup() const { return false; } // for RTTI
+    virtual bool isApplied() const { return external; }
+
+    // data fields
     NormalizedRect  r;
+    double          rUnscaledWidth;
+    double          rUnscaledHeight;
+    QString         author;
     QString         contents;
     QString         uniqueName;
     QDateTime       modifyDate;
     int             flags;
-    Border          border;
+    DrawStyle       drawStyle;
     QColor          color;
+    // special flags
+    bool            external;   // true: read from file, false: made by kpdf
 
     // initialize default values
     Annotation();
     virtual ~Annotation() {};
     // read values from XML node
-    Annotation( const QDomElement & node );
+    Annotation( const QDomNode & node );
     // store custom config to XML node
     virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
@@ -224,20 +235,20 @@ struct MarkupAnnotation : public Annotation
     struct InReplyTo
     {
         int ID;
-        enum { Reply, Grouped } scope;
-        enum { Mark, Review } stateModel;
-        enum { Marked, Unmarked, Accepted, Rejected, Cancelled, Completed, None } state;
+        enum S { Reply, Grouped } scope;
+        enum M { Mark, Review } stateModel;
+        enum T { Marked, Unmarked, Accepted, Rejected, Cancelled, Completed, None } state;
         // initialize default valudes
         InReplyTo();
     };
 
     // data fields
     bool isMarkup() const { return true; }          // for RTTI
-    QString         markupCreator;
     double          markupOpacity;
-    int             markupPopupID;
-    QString         markupPopupText;
-    QString         markupSubject;
+    int             markupWindowID;
+    QString         markupWindowTitle;
+    QString         markupWindowText;
+    QString         markupWindowSummary;
     QDateTime       markupCreationDate;
     InReplyTo       markupReply;
 
@@ -245,45 +256,44 @@ struct MarkupAnnotation : public Annotation
     MarkupAnnotation();
     virtual ~MarkupAnnotation() {};
     // read values from XML node
-    MarkupAnnotation( const QDomElement & node );
+    MarkupAnnotation( const QDomNode & node );
     // store custom config to XML node
     virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
-struct PopupAnnotation : public Annotation
+struct WindowAnnotation : public Annotation
 {
     // data fields (takes {Contents,M,C,T,..} from related parent)
-    int             popupMarkupParentID;
-    bool            popupOpened;
+    int             windowMarkupParentID;
+    bool            windowOpened;
 
     // RTTI
-    SubType subType() const { return APopup; }
+    SubType subType() const { return AWindow; }
 
     // common functions
-    PopupAnnotation();
-    PopupAnnotation( const QDomElement & node );
+    WindowAnnotation();
+    WindowAnnotation( const QDomNode & node );
     void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct TextAnnotation : public MarkupAnnotation
 {
     // data fields
-    enum { Popup, InPlace } textType;
+    enum T { Linked, InPlace } textType;
     QFont       textFont;
-    bool        popupOpened;
-    QString     popupIcon;
+    bool        textOpened;
+    QString     textIcon;
     int         inplaceAlign; // 0:left, 1:center, 2:right
-    QString     inplaceRichString;
-    QString     inplacePlainString;
+    QString     inplaceString; // use contents if this is empty
     NormalizedPoint inplaceCallout[3];
-    enum { Unknown, Callout, TypeWriter } inplaceIntent;
+    enum I { Unknown, Callout, TypeWriter } inplaceIntent;
 
     // RTTI
     SubType subType() const { return AText; }
 
     // common functions
     TextAnnotation();
-    TextAnnotation( const QDomElement & node );
+    TextAnnotation( const QDomNode & node );
     void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
@@ -291,28 +301,28 @@ struct LineAnnotation : public MarkupAnnotation
 {
     // data fields (note uses border for rendering style)
     QValueList<NormalizedPoint> linePoints;
-    enum { Square, Circle, Diamond, OpenArrow, ClosedArrow, None, Butt,
+    enum S { Square, Circle, Diamond, OpenArrow, ClosedArrow, None, Butt,
            ROpenArrow, RClosedArrow, Slash } lineStartStyle, lineEndStyle;
     bool        lineClosed; // def:false (if true connect first and last points)
     QColor      lineInnerColor;
     double      lineLeadingFwdPt;
     double      lineLeadingBackPt;
     bool        lineShowCaption;
-    enum { Unknown, Arrow, Dimension, PolygonCloud } lineIntent;
+    enum I { Unknown, Arrow, Dimension, PolygonCloud } lineIntent;
 
     // RTTI
     SubType subType() const { return ALine; }
 
     // common functions
     LineAnnotation();
-    LineAnnotation( const QDomElement & node );
+    LineAnnotation( const QDomNode & node );
     void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct GeomAnnotation : public MarkupAnnotation
 {
     // data fields (note uses border for rendering style)
-    enum { InscribedSquare, InscribedCircle } geomType;
+    enum T { InscribedSquare, InscribedCircle } geomType;
     QColor      geomInnerColor;
     int         geomWidthPt;    //def:18
 
@@ -321,14 +331,14 @@ struct GeomAnnotation : public MarkupAnnotation
 
     // common functions
     GeomAnnotation();
-    GeomAnnotation( const QDomElement & node );
+    GeomAnnotation( const QDomNode & node );
     void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
 struct HighlightAnnotation : public MarkupAnnotation
 {
     // data fields
-    enum { Highlight, Underline, Squiggly, StrikeOut } highlightType;
+    enum T { Highlight, Underline, Squiggly, StrikeOut } highlightType;
     QValueList<NormalizedPoint[4]>  highlightQuads;
 
     // RTTI
@@ -336,7 +346,7 @@ struct HighlightAnnotation : public MarkupAnnotation
 
     // common functions
     HighlightAnnotation();
-    HighlightAnnotation( const QDomElement & node );
+    HighlightAnnotation( const QDomNode & node );
     void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
@@ -350,7 +360,7 @@ struct StampAnnotation : public MarkupAnnotation
 
     // common functions
     StampAnnotation();
-    StampAnnotation( const QDomElement & node );
+    StampAnnotation( const QDomNode & node );
     void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 
@@ -364,7 +374,7 @@ struct InkAnnotation : public MarkupAnnotation
 
     // common functions
     InkAnnotation();
-    InkAnnotation( const QDomElement & node );
+    InkAnnotation( const QDomNode & node );
     void store( QDomNode & parentNode, QDomDocument & document ) const;
 };
 

@@ -505,8 +505,9 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
 {
     // if already broadcasted, don't redo it
     DocumentViewport & oldViewport = *d->viewportIterator;
-    if ( viewport == oldViewport )
-        kdDebug() << "setViewport with the same viewport." << endl;
+    // disabled by enrico on 2005-03-18 (less debug output)
+    //if ( viewport == oldViewport )
+    //    kdDebug() << "setViewport with the same viewport." << endl;
 
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || oldViewport.pageNumber == -1 )
@@ -1222,7 +1223,7 @@ void KPDFDocument::loadDocumentInfo()
     QDomDocument doc( "documentInfo" );
     if ( !doc.setContent( &infoFile ) )
     {
-        kdDebug() << "Could not set content" << endl;
+        kdDebug() << "Can't load XML pair! Check for broken xml." << endl;
         infoFile.close();
         return;
     }

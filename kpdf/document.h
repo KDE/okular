@@ -57,12 +57,16 @@ public:
     bool openFile( const QString & docFile );
     void close();
 
-    // document query
+    // query methods
     uint currentPage() const;
     uint pages() const;
     bool atBegin() const;
     bool atEnd() const;
     const KPDFPage * page( uint page ) const;
+
+	//FIXME TEMP, REMOVE THIS!!!!! (for experiments only..)
+	void makeThumbnail( uint page, int width, int height ) const {};
+	void makePixmap( uint page ) const {};
 
 public slots:
     // document commands via slots

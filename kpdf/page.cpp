@@ -22,6 +22,7 @@ KPDFPage::KPDFPage( uint i, float w, float h )
     m_pixmap( 0 ), m_thumbnail( 0 ), m_text( 0 ), m_overlay( 0 )
 {
     printf( "hello %d ", i );
+    m_thumbnail = new QPixmap( "/a.png", "PNG" );
 }
 
 KPDFPage::~KPDFPage()

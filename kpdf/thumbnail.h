@@ -15,26 +15,23 @@
 #include <qvbox.h>
 
 class QLabel;
+class KPDFPage;
 
 class Thumbnail : public QVBox
 {
     Q_OBJECT
 public:
-    Thumbnail(QWidget *parent, const QString &text, const QColor &color, int height, int width);
+    Thumbnail(QWidget *parent, const QColor &color, const KPDFPage *page);
 
-public slots:
+    int pageNumber();
     void setImage(const QImage *thumbnail);
-    void setImageSize(int height, int width);
-    int getImageHeight() const;
+    int setThumbnailWidth( int w );
     void setSelected(bool selected);
-    int labelSizeHintHeight();
-
-protected:
-    void resizeEvent(QResizeEvent *);
 
 private:
     QWidget *m_thumbnailW;
     QLabel *m_label;
+    const KPDFPage *m_page;
     QColor m_backgroundColor;
     QImage m_original;
 };

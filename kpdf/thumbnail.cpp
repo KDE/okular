@@ -13,15 +13,20 @@
 #include <qpixmap.h>
 
 #include "thumbnail.h"
+#include "page.h"
 
-Thumbnail::Thumbnail(QWidget *parent, const QString &text, const QColor &color, int height, int width) : QVBox(parent), m_backgroundColor(color)
+Thumbnail::Thumbnail(QWidget *parent, const QColor &color, const KPDFPage *page) : QVBox(parent), m_page(page), m_backgroundColor(color)
 {
     m_thumbnailW = new QWidget(this);
-    m_thumbnailW->setFixedHeight(height);
-    m_thumbnailW->setFixedWidth(width);
-    m_label = new QLabel(text, this);
+    m_thumbnailW->setEraseColor(Qt::gray);
+    m_label = new QLabel(QString::number(page->number()+1), this);
     m_label->setAlignment(AlignCenter);
     setPaletteBackgroundColor(m_backgroundColor);
+}
+
+int Thumbnail::pageNumber()
+{
+    return m_page->number();
 }
 
 void Thumbnail::setImage(const QImage *thumbnail)
@@ -31,36 +36,20 @@ void Thumbnail::setImage(const QImage *thumbnail)
     m_thumbnailW->setPaletteBackgroundPixmap(m_original);
 }
 
-void Thumbnail::setImageSize(int height, int width)
+int Thumbnail::setThumbnailWidth(int width)
 {
+    int height = (int)(m_page->ratio() * width);
     m_thumbnailW->setFixedHeight(height);
     m_thumbnailW->setFixedWidth(width);
-}
-
-int Thumbnail::getImageHeight() const
-{
-    return m_thumbnailW->size().height();
-}
-
-void Thumbnail::resizeEvent(QResizeEvent *)
-{
-    QImage im;
-    if (!m_original.isNull())
-    {
-        im = m_original.smoothScale(m_thumbnailW->size());
-        m_thumbnailW->setPaletteBackgroundPixmap(im);
-    }
+    height += m_label->sizeHint().height();
+    resize( width, height );
+    return height;
 }
 
 void Thumbnail::setSelected(bool selected)
 {
     if (selected) setPaletteBackgroundColor(QApplication::palette().active().highlight());
     else setPaletteBackgroundColor(m_backgroundColor);
-}
-
-int Thumbnail::labelSizeHintHeight()
-{
-    return m_label->sizeHint().height();
 }
 
 

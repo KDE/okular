@@ -10,11 +10,13 @@
 #ifndef THUMBNAILLIST_H
 #define THUMBNAILLIST_H
 
-#include <qtable.h>
+#include <qscrollview.h>
+#include <qvaluevector.h>
 #include "document.h"
 
+class Thumbnail;
 
-class ThumbnailList : public QTable, public KPDFDocumentObserver
+class ThumbnailList : public QScrollView, public KPDFDocumentObserver
 {
 Q_OBJECT
 	public:
@@ -25,12 +27,20 @@ Q_OBJECT
 		void pageSetCurrent( int pageNumber, float position );
 		void notifyThumbnailChanged( int pageNumber );
 
+	public slots:
+		void slotRequestThumbnails( int newContentsX = -1, int newContentsY = -1 );
+
 	protected:
-		void viewportResizeEvent(QResizeEvent *);
+		void viewportResizeEvent( QResizeEvent * );
+		void contentsMousePressEvent( QMouseEvent * );
+		void keyPressEvent( QKeyEvent * e );
 
 	private:
-		int m_selected;
 		KPDFDocument *m_document;
+		Thumbnail *m_selected;
+		int m_oldWidth;
+		int m_oldHeight;
+		QValueVector<Thumbnail *> thumbnails;
 };
 
 #endif

@@ -85,7 +85,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	split->setOpaqueResize( true );
 
 	m_thumbnailList = new ThumbnailList(split, document);
-	m_thumbnailList->setMaximumWidth( 90 );
+	m_thumbnailList->setMaximumWidth( 125 );
 	m_thumbnailList->setMinimumWidth( 50 );
 	document->addObserver( m_thumbnailList );
 

@@ -12,7 +12,7 @@ METASOURCES = AUTO
 
 kdvipart_la_SOURCES = kdvi_multipage.cpp \
 	dviwin.cpp bigEndianByteReader.cpp infodialog.cpp \
-	psheader.c dviwin_draw.cpp dviwin_export.cpp dviwin_textsearch.cpp \
+	psheader.c dviwin_draw.cpp dviwin_prescan.cpp dviwin_export.cpp dviwin_textsearch.cpp \
 	dviFile.cpp fontpool.cpp fontprogress.cpp psgs.cpp \
 	fontMap.cpp fontEncoding.cpp fontEncodingPool.cpp \
 	special.cpp util.cpp vf.cpp glyph.cpp selection.cpp history.cpp \

@@ -531,7 +531,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
      includePath.truncate(includePath.findRev('/'));
   }
 
-  PS_interface->setIncludePath(includePath);     
+  PS_interface->setIncludePath(includePath);
 
   // We will also generate a list of hyperlink-anchors and source-file
   // anchors in the document. So declare the existing lists empty.
@@ -540,6 +540,17 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
 
   if (dviFile->page_offset == 0)
     return false;
+
+  QApplication::restoreOverrideCursor();
+  reference              = ref;
+  return true;
+}
+
+
+void dviWindow::all_fonts_loaded(fontPool *)
+{
+  if (dviFile == 0)
+    return;
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
@@ -560,7 +571,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
-    draw_part(65536.0*fontPixelPerDVIunit(), false);
+    prescan(65536.0*fontPixelPerDVIunit());
     
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
@@ -573,18 +584,9 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
 
-  QApplication::restoreOverrideCursor();
-  reference              = ref;
-  return true;
-}
-
-
-void dviWindow::all_fonts_loaded(fontPool *)
-{
-  if (dviFile == 0)
-    return;
-
+  current_page=0;
   drawPage();
+
 
   // case 1: The reference is a number, which we'll interpret as a
   // page number.

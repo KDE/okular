@@ -58,11 +58,11 @@ class dvifile : public bigEndianByteReader
  private:
   /** process_preamble reads the information in the preamble and
       stores it into global variables for later use. */
+  void           process_preamble(void);
+  void           find_postamble(void);
   /** read_postamble reads the information in the postamble, storing
       it into global variables. It also takes care of reading in all
       of the pixel files for the fonts used in the job. */
-  void           process_preamble(void);
-  void           find_postamble(void);
   void           read_postamble(void);
   void           prepare_pages(void);
 

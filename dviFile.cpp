@@ -52,6 +52,8 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <qdir.h>
+#include <qfileinfo.h>
 #include <stdlib.h>
 
 extern "C" {
@@ -61,6 +63,8 @@ extern "C" {
 #include "dviFile.h"
 #include "fontpool.h"
 #include "xdvi.h"
+
+
 
 
 void dvifile::process_preamble(void)

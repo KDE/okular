@@ -132,8 +132,8 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
       return;
   }
 
-  // None of these known types? Then it should be Type1 or TrueType,
-  // supported by the FreeType library
+  // None of these known types? Then it should be one of the font
+  // formats that are handled by the FreeType library
   fclose(file);
   file = 0;
 #ifdef HAVE_FREETYPE

@@ -145,7 +145,8 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
       link.linkText = "";
 
       currentlyDrawnPage.textLinkList.push_back(link);
-    } else { // line boundary encountered
+    } else {
+      // line boundary encountered
       QRect dshunion = currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
       currentlyDrawnPage.textLinkList[currentlyDrawnPage.textLinkList.size()-1].box = dshunion;
     }
@@ -195,7 +196,8 @@ void dviWindow::set_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
+				(MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 
   word_boundary_encountered = false;
   line_boundary_encountered = false;
@@ -209,13 +211,13 @@ void dviWindow::set_empty_char(unsigned int, unsigned int)
 void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug() << "set_vf_char" << endl;
+  kdDebug(4300) << "dviWindow::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )" << endl;
 #endif
 
   static unsigned char   c;
   macro *m = &currinf.fontp->macrotable[ch];
   if (m->pos == NULL) {
-    kdError() << "Character " << ch << " not defined in font" << currinf.fontp->fontname << endl;
+    kdError(4300) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
     m->pos = m->end = &c;
     return;
   }
@@ -242,16 +244,17 @@ void dviWindow::set_vf_char(unsigned int cmd, unsigned int ch)
   if (cmd == PUT1)
     currinf.data.dvi_h = dvi_h_sav;
   else
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * (MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
+				(MFResolutions[font_pool->getMetafontMode()] / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
 }
 
 
 void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug() << "set_no_char: #" << ch <<endl;
+  kdDebug(4300) << "dviWindow::set_no_char( cmd=" << cmd << ", ch =" << ch << " )"  << endl;
 #endif
-
+  
   if (currinf._virtual) {
     currinf.fontp = currinf._virtual->first_font;
     if (currinf.fontp != NULL) {

@@ -157,15 +157,25 @@ public:
   void          set_no_char(unsigned int cmd, unsigned int ch);
   void          applicationDoSpecial(char * cp);
 
+  // @@@ explanation
+  void          prescan(double current_dimconv);
+  void          prescan_parseSpecials(char *cp);
+  void          prescan_ParsePapersizeSpecial(QString cp);
+  void          prescan_ParseBackgroundSpecial(QString cp);
+  void          prescan_ParseHTMLAnchorSpecial(QString cp);
+  void          prescan_ParsePSHeaderSpecial(QString cp);
+  void          prescan_ParsePSBangSpecial(QString cp);
+  void          prescan_ParsePSQuoteSpecial(QString cp);
+  void          prescan_ParsePSSpecial(QString cp);
+  void          prescan_ParsePSFileSpecial(QString cp);
+  void          prescan_ParseSourceSpecial(QString cp);
+  void          prescan_setChar(unsigned int ch);
 
   void          special(long nbytes);
   void          printErrorMsgForSpecials(QString msg);
-  void          papersize_special(QString cp);
-  void          background_special(QString cp);
   void          color_special(QString cp);
   void          html_href_special(QString cp);
   void          html_anchor_end(void);
-  void          html_anchor_special(QString cp);
   void          draw_page(void);
 
   fontPool  *font_pool;
@@ -250,11 +260,7 @@ private:
  QString       errorMsg;
 
  /** Methods which handle certain special commands. */
- void bang_special(QString cp);
- void quote_special(QString cp);
- void ps_special(QString cp);
  void epsf_special(QString cp);
- void header_special(QString cp);
  void source_special(QString cp);
 
  /** TPIC specials */

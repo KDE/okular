@@ -80,15 +80,37 @@ void dviWindow::header_special(QString cp)
   }
 }
 
+
 void dviWindow::source_special(QString cp)
 {
-  // only when rendering really takes place
-  if (!PostScriptOutPutString)
+  if (PostScriptOutPutString == NULL) {  
+    // only when rendering really takes place: set source_href to the
+    // current special string. When characters are rendered, the
+    // rendering routine will then generate a DVI_HyperLink and add it
+    // to the proper list. This DVI_HyperLink is used to match mouse
+    // positions with the hyperlinks for inverse search.
     if (source_href)
       *source_href = cp;
     else
       source_href = new QString(cp);
+  } else { 
+    // if no rendering takes place, i.e. when the DVI file is first
+    // loaded, generate a DVI_SourceFileAnchor. These anchors are used
+    // in forward search, i.e. to relate references line
+    // "src:123file.tex" to positions in the DVI file
+
+    // extract the file name and the numeral part from the string
+    Q_UINT32 j;
+    for(j=0;j<cp.length();j++)
+      if (!cp.at(j).isNumber())
+	break;
+    Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
+    QString  sourceFileName   = QFileInfo(cp.mid(j).stripWhiteSpace()).absFilePath();
+    DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page, DVI_V/65536);
+    sourceHyperLinkAnchors.push_back(sfa);
+  }
 }
+
 
 static void parse_special_argument(QString strg, const char *argument_name, int *variable)
 {

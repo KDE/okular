@@ -54,6 +54,19 @@ class DVI_Hyperlink {
 };
 
 
+
+class DVI_SourceFileAnchor {
+ public:
+  DVI_SourceFileAnchor() {}
+  DVI_SourceFileAnchor(QString &name, Q_UINT32 ln, Q_UINT32 pg, double vc): fileName(name), line(ln), page(pg), vertical_coordinate(vc) {}
+
+  QString    fileName;
+  Q_UINT32   line;
+  Q_UINT32   page;
+  double     vertical_coordinate;
+};
+
+
 /** Compound of registers, as defined in section 2.6.2 of the DVI
     driver standard, Level 0, published by the TUG DVI driver
     standards committee. */
@@ -202,6 +215,12 @@ private:
  /** List of source-hyperlinks, for source-specials */
  DVI_Hyperlink     sourceHyperLinkList[MAX_HYPERLINKS];
  int               num_of_used_source_hyperlinks;
+
+ // List of source-hyperlinks on all pages. This vector is generated
+ // when the DVI-file is first loaded, i.e. when draw_part is called
+ // with PostScriptOutPutString != NULL
+ QValueVector<DVI_SourceFileAnchor>  sourceHyperLinkAnchors;
+
  QString          *source_href; // If not NULL, the text currently
 				// drawn represents a source hyperlink
 				// to the (relative) URL given in the

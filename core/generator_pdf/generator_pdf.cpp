@@ -382,6 +382,18 @@ bool PDFGenerator::reparseConfig()
 }
 //END Generator inherited functions
 
+static QString unicodeToQString(Unicode* u, int len) {
+    unsigned short int ucs2char[2];
+    QString ret;
+    ucs2char[1]=0;
+    for (int i=0;i<len;i++) 
+    {
+        ucs2char[0] = u[i]; 
+        ret+=QString::fromUcs2(ucs2char);
+    }
+    return ret; 
+}
+
 
 QString PDFGenerator::getDocumentInfo( const QString & data ) const
 // note: MUTEX is LOCKED while calling this
@@ -395,7 +407,7 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
     if ( !info.isDict() )
         return i18n( "Unknown" );
 
-    QCString result;
+    QString result;
     Object obj;
     GString *s1;
     GBool isUnicode;
@@ -403,10 +415,6 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
     char buf[8];
     int i, n;
     Dict *infoDict = info.getDict();
-    UnicodeMap *uMap = globalParams->getTextEncoding();
-
-    if ( !uMap )
-        return i18n( "Unknown" );
 
     if ( infoDict->lookup( data.latin1(), &obj )->isString() )
     {
@@ -433,8 +441,7 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
                 u = s1->getChar(i) & 0xff;
                 ++i;
             }
-            n = uMap->mapUnicode( u, buf, sizeof( buf ) );
-            result += QCString( buf, n + 1 );
+            result += unicodeToQString( &u, 1 );
         }
         obj.free();
         info.free();
@@ -504,8 +511,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
         QString name;
         Unicode * uniChar = outlineItem->getTitle();
         int titleLength = outlineItem->getTitleLength();
-        for ( int j = 0; j < titleLength; ++j )
-            name += uniChar[ j ];
+        name = unicodeToQString(uniChar, titleLength);
         if ( name.isEmpty() )
             continue;
         QDomElement item = docSyn.createElement( name );

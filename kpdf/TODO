@@ -7,18 +7,13 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> common layer for selections (zoom outline, select&copy text, select&copy screen)
--> FIX: rework PageView (QScrollView) to gain speed and reduce memory consumption [90% done]
-   the current behavior, using a large scrollview and the clipper is *Very* bad, wasting
-   repaints everywhere, even in widgets that get hidden. Need to solve this on its roots, a paintEvent patch
-   solves this but is a bad way to solve this.
--> ADD: reading aids (accessibility) [settings config done while now]
+-> ADD: reading aids (accessibility) [settings config done while now, 20% done]
 -> ADD: click over image allows "save image" (and display rect around image too) [50% done]
 -> ADD: viewport changes the right way when clicking links [30% done]
 
 Things to do in order to merge in HEAD (first item has highest priority):
 -> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive})
--> fix viewport restoring after zoom
+-> fix viewport restoring after zoom (not, fix zoom globally)
 -> link thumbnails view with document
 -> this may be postponed after merge: implementing async document generator using Albert's generator thread
 -> this may be postponed after merge: albert: printing in a good way
@@ -42,12 +37,13 @@ More items (first items will enter 'In progress list' first):
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> merge head copyright headers (by albert)
--> merge head xpdf changes for --enable-final (by adrian de groot/albert)
 -> merge head support for show menubar in rmb (by albert)
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Done (newest feature comes firts):
--> ADD: composted renderer framework
+-> ADD: gfx capturing tool
+-> ADD: composited renderer framework (in addition to a fast light one)
+-> FIX: pageview repaint done internally (speed boost and reduced memory consumption)
 -> ADD: KConfigXT settings framework and Accessibility config (acc. code mostly not done)
 -> FIX: workaround for scrollview bug 1/2 (painting hidden widgets under certain circumstances)
 -> ADD: zoom into a rect defined by mouse (aka zoom to window)

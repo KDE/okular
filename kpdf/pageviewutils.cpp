@@ -17,7 +17,8 @@
 
 // local includes
 #include "pageviewutils.h"
-
+#include "page.h"
+#include "settings.h"
 
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent, "pageViewMessage" ), m_timer( 0 )
@@ -32,6 +33,12 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 void PageViewMessage::display( const QString & message, Icon icon, int durationMs )
 // give to Caesar what Caesar owns: code taken from Amarok's osd.h/.cpp
 {
+    if ( Settings::hideOSD() )
+    {
+        hide();
+        return;
+    }
+
     // determine text rectangle
     QRect textRect = fontMetrics().boundingRect( message );
     textRect.moveBy( -textRect.left(), -textRect.top() );
@@ -108,7 +115,8 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
             connect( m_timer, SIGNAL( timeout() ), SLOT( hide() ) );
         }
         m_timer->start( durationMs, true );
-    }
+    } else if ( m_timer )
+        m_timer->stop();
 }
 
 void PageViewMessage::paintEvent( QPaintEvent * e )
@@ -126,77 +134,55 @@ void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
 
 
 
-// window placed in overlay when selecting a window to zoom into
-PageViewOverlay::PageViewOverlay( QWidget * parent, OverlayOperation /*op*/ )
-    : QWidget( parent, "overlayWindow", WNoAutoErase | WPaintUnclipped )
+PageViewItem::PageViewItem( const KPDFPage * page )
+    : m_page( page ), m_zoomFactor( 1.0 )
 {
-    // grab underlying contents
-    QPoint topLeft = mapToGlobal( QPoint( 0, 0 ) );
-    m_backPixmap = QPixmap::grabWindow( qt_xrootwin(), topLeft.x(), topLeft.y(), parent->width(), parent->height() );
-
-    // resize window
-    setBackgroundMode( Qt::NoBackground );
-    resize( parent->width(), parent->height() );
-    show();
 }
 
-void PageViewOverlay::setBeginCorner( int x, int y )
+const KPDFPage * PageViewItem::page() const
 {
-    m_startX = x;
-    m_startY = y;
+    return m_page;
 }
 
-void PageViewOverlay::setEndCorner( int x, int y )
+int PageViewItem::pageNumber() const
 {
-    // set previous area to be redrawn
-    if ( !m_currentRect.isNull() )
-        update(m_currentRect);
-
-    // update current area and schedule for redrawing
-    m_currentRect.setRect( m_startX, m_startY, x - m_startX, y - m_startY );
-    update(m_currentRect = m_currentRect.normalize());
+    return m_page->number();
 }
 
-const QRect & PageViewOverlay::selectedRect()
+const QRect& PageViewItem::geometry() const
 {
-    return m_currentRect;
+    return m_geometry;
 }
 
-void PageViewOverlay::paintEvent( QPaintEvent * )
+int PageViewItem::width() const
 {
-    QColor blendColor = palette().active().highlight();
-    QPainter p( this );
-
-    // draw uncovered background (subtracting current from old rect)
-    QMemArray<QRect> transparentRects = QRegion( m_oldRect ).subtract( m_currentRect ).rects();
-    for ( uint i = 0; i < transparentRects.count(); i++ )
-    {
-        QRect r = transparentRects[i];
-        p.drawPixmap( r.topLeft(), m_backPixmap, r );
-    }
-
-    // draw opaque rects (subtracting old from current rect)
-    m_oldRect.addCoords( 1, 1, -1, -1 );
-    QMemArray<QRect> opaqueRects = QRegion( m_currentRect ).subtract( m_oldRect ).rects();
-    for ( uint i = 0; i < opaqueRects.count(); i++ )
-    {
-        QRect r = opaqueRects[i];
-        // skip rectangles covered by the border from painting
-        if ( r.width() <= 1 || r.height() <= 1 )
-            continue;
-        QPixmap blendedPixmap( r.width(), r.height() );
-        copyBlt( &blendedPixmap, 0,0, &m_backPixmap, r.left(),r.top(), r.width(),r.height() );
-        QImage blendedImage = blendedPixmap.convertToImage();
-        KImageEffect::blend( blendColor.dark(140), blendedImage, 0.2 );
-        p.drawPixmap( r.left(),r.top(), blendedImage, 0,0,r.width(),r.height() );
-    }
-
-    // draw border
-    if ( m_currentRect.width() > 20 && m_currentRect.height() > 20 )
-        p.setPen( blendColor );
-    else
-        p.setPen( Qt::red );
-    p.drawRect( m_currentRect );
-    m_oldRect = m_currentRect;
+    return m_geometry.width();
 }
 
+int PageViewItem::height() const
+{
+    return m_geometry.height();
+}
+
+double PageViewItem::zoomFactor() const
+{
+    return m_zoomFactor;
+}
+
+void PageViewItem::setGeometry( int x, int y, int width, int height )
+{
+    m_geometry.setRect( x, y, width, height );
+}
+
+void PageViewItem::setWHZ( int w, int h, double z )
+{
+    m_geometry.setWidth( w );
+    m_geometry.setHeight( h );
+    m_zoomFactor = z;
+}
+
+void PageViewItem::moveTo( int x, int y )
+{
+    m_geometry.moveLeft( x );
+    m_geometry.moveTop( y );
+}

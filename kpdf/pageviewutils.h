@@ -18,40 +18,29 @@
 class QTimer;
 
 class PageView;
-#include "page.h"
+class KPDFPage;
 
+/**
+ * @short PageViewItem represents graphically a kpdfpage into the PageView.
+ *
+ * It has methods for settings Item's geometry and other visual properties such
+ * as the individual zoom factor.
+ */
 class PageViewItem
 {
     public:
-        PageViewItem( const KPDFPage * page )
-            : m_page( page ), m_zoomFactor( 1.0 )
-        {
-            // do something
-        }
+        PageViewItem( const KPDFPage * page );
 
-        void setWHZ( int w, int h, double z )
-        {
-            m_geometry.setWidth( w );
-            m_geometry.setHeight( h );
-            m_zoomFactor = z;
-        }
-        double zoomFactor() { return m_zoomFactor; }
+        const KPDFPage * page() const;
+        int pageNumber() const;
+        const QRect& geometry() const;
+        int width() const;
+        int height() const;
+        double zoomFactor() const;
 
-        int pageNumber() const { return m_page->number(); }
-        const KPDFPage * page() const { return m_page; }
-
-        const QRect& geometry() const { return m_geometry; }
-        int width() const { return m_geometry.width(); }
-        int height() const { return m_geometry.height(); }
-        void setGeometry( int x, int y, int width, int height )
-        {
-            m_geometry.setRect( x, y, width, height );
-        }
-        void moveTo( int x, int y )
-        {
-            m_geometry.moveLeft( x );
-            m_geometry.moveTop( y );
-        }
+        void setGeometry( int x, int y, int width, int height );
+        void setWHZ( int w, int h, double zoom );
+        void moveTo( int x, int y );
 
     private:
         const KPDFPage * m_page;
@@ -69,7 +58,7 @@ class PageViewMessage : public QWidget
         PageViewMessage( QWidget * parent );
 
         enum Icon { None, Info, Warning, Error };
-        void display( const QString & message, Icon icon, int durationMs = -1 );
+        void display( const QString & message, Icon icon = Info, int durationMs = 4000 );
 
     protected:
         void paintEvent( QPaintEvent * e );
@@ -78,31 +67,6 @@ class PageViewMessage : public QWidget
     private:
         QPixmap m_pixmap;
         QTimer * m_timer;
-};
-
-
-/**
- * @short The overlay widget draws transparent selections over the page.
- */
-class PageViewOverlay : public QWidget
-{
-    public:
-        enum OverlayOperation { Zoom, SnapShot };
-        PageViewOverlay( QWidget * parent, OverlayOperation op );
-
-        void setBeginCorner( int x, int y );
-        void setEndCorner( int x, int y );
-        const QRect & selectedRect();
-
-    protected:
-        void paintEvent( QPaintEvent * e );
-
-    private:
-        QPixmap m_backPixmap;
-        QRect m_oldRect;
-        QRect m_currentRect;
-        int m_startX;
-        int m_startY;
 };
 
 #endif

@@ -98,7 +98,7 @@
         </widget>
         <widget class="QCheckBox">
             <property name="name">
-                <cstring>kcfg_TempUseComposting</cstring>
+                <cstring>kcfg_TempUseCompositing</cstring>
             </property>
             <property name="text">
                 <string>USE COMPOSITE</string>

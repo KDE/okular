@@ -69,7 +69,7 @@
   </entry>
  </group>
  <group name="Temp" >
-  <entry key="TempUseComposting" type="Bool" >
+  <entry key="TempUseCompositing" type="Bool" >
    <default>false</default>
   </entry>
   <entry key="TempDrawBoundaries" type="Bool" >

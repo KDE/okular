@@ -45,8 +45,8 @@ class PageView : public QScrollView, public KPDFDocumentObserver
 
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,
-                        ZoomIn, ZoomOut, ZoomRefreshCurrent, ZoomRect };
-        enum MouseMode { MouseNormal, MouseSelection, MouseEdit };
+                        ZoomIn, ZoomOut, ZoomRefreshCurrent };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelText, MouseSelGfx, MouseEdit };
 
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
@@ -79,11 +79,15 @@ class PageView : public QScrollView, public KPDFDocumentObserver
 
     private:
         // draw items on the opened qpainter
-        void paintItems( QPainter * p, const QRect & clipRect, QRegion & remainingArea );
+        void paintItems( QPainter * p, const QRect & clipRect );
         // update item width and height using current zoom parameters
         void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
+        // start / modify / clear selection rectangle
+        void selectionStart( int x, int y, bool aboveAll = false, PageViewItem * pageLock = 0 );
+        void selectionEndPoint( int x, int y );
+        void selectionClear();
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
@@ -107,11 +111,12 @@ class PageView : public QScrollView, public KPDFDocumentObserver
         void slotFitToWidthToggled( bool );
         void slotFitToPageToggled( bool );
         void slotFitToTextToggled( bool );
-        void slotFitToRectToggled( bool );
         void slotTwoPagesToggled( bool );
         void slotContinousToggled( bool );
         void slotSetMouseNormal();
-        void slotSetMouseSelect();
+        void slotSetMouseZoom();
+        void slotSetMouseSelText();
+        void slotSetMouseSelGfx();
         void slotSetMouseDraw();
         void slotScrollUp();
         void slotScrollDown();

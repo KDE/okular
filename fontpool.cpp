@@ -152,7 +152,7 @@ QString fontPool::status(void)
 }
 
 
-char fontPool::check_if_fonts_are_loaded(unsigned char pass) 
+int fontPool::check_if_fonts_are_loaded(unsigned char pass) 
 {
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "Check if fonts have been looked for..." << endl;

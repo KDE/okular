@@ -95,7 +95,7 @@ Q_OBJECT
       called automatically when the first instance of the kpsewhich
       programm exists.  Calling this method will ALWAYS emit the
       signal fonts_info. */
-  char check_if_fonts_are_loaded(unsigned char pass=0);
+  int check_if_fonts_are_loaded(unsigned char pass=0);
 
   /** This is the list which actually enumerates the fonts in the
       fontPool */

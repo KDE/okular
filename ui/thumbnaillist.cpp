@@ -511,7 +511,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
             int flags = PagePainter::Accessibility | PagePainter::Highlights |
                         PagePainter::Annotations;
             PagePainter::paintPageOnPainter( m_page, THUMBNAILS_ID, flags, &p,
-                                             clipRect, m_pixmapWidth, m_pixmapHeight );
+                                             m_pixmapWidth, m_pixmapHeight, clipRect );
         }
 
         // draw the bookmark overlay on the top-right corner

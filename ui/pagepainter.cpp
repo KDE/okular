@@ -14,6 +14,7 @@
 #include <qimage.h>
 #include <qapplication.h>
 #include <kimageeffect.h>
+#include <kiconloader.h>
 
 // local includes
 #include "pagepainter.h"
@@ -22,23 +23,24 @@
 #include "conf/settings.h"
 
 void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
-    QPainter * destPainter, const QRect & limits, int width, int height )
+    QPainter * destPainter, int pageWidth, int pageHeight, const QRect & limits )
 {
-    QPixmap * pixmap = 0;
+    /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
+    const QPixmap * pixmap = 0;
 
     // if a pixmap is present for given id, use it
     if ( page->m_pixmaps.contains( id ) )
         pixmap = page->m_pixmaps[ id ];
 
     // else find the closest match using pixmaps of other IDs (great optim!)
-    else if ( !page->m_pixmaps.isEmpty() && width != -1 )
+    else if ( !page->m_pixmaps.isEmpty() )
     {
         int minDistance = -1;
         QMap< int,QPixmap * >::const_iterator it = page->m_pixmaps.begin(), end = page->m_pixmaps.end();
         for ( ; it != end; ++it )
         {
             int pixWidth = (*it)->width(),
-                distance = pixWidth > width ? pixWidth - width : width - pixWidth;
+                distance = pixWidth > pageWidth ? pixWidth - pageWidth : pageWidth - pixWidth;
             if ( minDistance == -1 || distance < minDistance )
             {
                 pixmap = *it;
@@ -47,8 +49,9 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         }
     }
 
-    // if have no pixmap, draw blank page with gray cross and exit
-    if ( !pixmap )
+    /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
+    double pixmapRescaleRatio = pixmap ? pageWidth / (double)pixmap->width() : -1;
+    if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 )
     {
         if ( Settings::changeColors() &&
              Settings::renderMode() == Settings::EnumRenderMode::Paper )
@@ -59,74 +62,92 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         // draw a cross (to  that the pixmap as not yet been loaded)
         // helps a lot on pages that take much to render
         destPainter->setPen( Qt::gray );
-        destPainter->drawLine( 0, 0, width-1, height-1 );
-        destPainter->drawLine( 0, height-1, width-1, 0 );
+        destPainter->drawLine( 0, 0, pageWidth-1, pageHeight-1 );
+        destPainter->drawLine( 0, pageHeight-1, pageWidth-1, 0 );
         // idea here: draw a hourglass (or kpdf icon :-) on top-left corner
         return;
     }
 
-    // find out what to paint over the pixmap (manipulations / overlays)
+    /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
     bool paintAccessibility = (flags & Accessibility) && Settings::changeColors() && (Settings::renderMode() != Settings::EnumRenderMode::Paper);
     bool paintHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
     bool paintAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
     bool enhanceLinks = (flags & EnhanceLinks) && Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Settings::highlightImages();
     // check if there are really some highlightRects to paint
-    if ( paintHighlights )
+    if ( paintHighlights || paintAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
-        double nXMin = (double)limits.left() / (double)width,
-               nXMax = (double)limits.right() / (double)width,
-               nYMin = (double)limits.top() / (double)height,
-               nYMax = (double)limits.bottom() / (double)height;
+        double nXMin = (double)limits.left() / (double)pageWidth,
+               nXMax = (double)limits.right() / (double)pageWidth,
+               nYMin = (double)limits.top() / (double)pageHeight,
+               nYMax = (double)limits.bottom() / (double)pageHeight;
         // if no rect intersects limits, disable paintHighlights
-        paintHighlights = false;
-        QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
-        for ( ; hIt != hEnd; ++hIt )
+        if ( paintHighlights )
         {
-            if ( (*hIt)->intersects( nXMin, nYMin, nXMax, nYMax ) )
+            paintHighlights = false;
+            QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+            for ( ; hIt != hEnd; ++hIt )
             {
-                paintHighlights = true;
-                break;
+                if ( (*hIt)->intersects( nXMin, nYMin, nXMax, nYMax ) )
+                {
+                    paintHighlights = true;
+                    break;
+                }
+            }
+        }
+        // if no annotation intersects limits, disable paintAnnotations
+        if ( paintAnnotations )
+        {
+            paintAnnotations = false;
+            QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+            for ( ; aIt != aEnd; ++aIt )
+            {
+                if ( (*aIt)->r.intersects( nXMin, nYMin, nXMax, nYMax ) )
+                {
+                    paintAnnotations = true;
+                    break;
+                }
             }
         }
     }
-    // check if there are really some annotations to paint
-    if ( paintAnnotations )
-    {
-        // TODO
-    }
 
-    // use backBuffer if 'pixmap direct manipulation' is needed
-    bool backBuffer = paintAccessibility || paintHighlights || paintAnnotations;
+    /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
+    bool useBackBuffer = paintAccessibility || paintHighlights || paintAnnotations;
     QPixmap * backPixmap = 0;
-    QPainter * p = destPainter;
-    if ( backBuffer )
-    {
-        // let's paint using a buffered painter
-        backPixmap = new QPixmap( limits.width(), limits.height() );
-        p = new QPainter( backPixmap );
-        p->translate( -limits.left(), -limits.top() );
-    }
+    QPainter * p = 0;
 
-    // 1. fast blit the pixmap if it has the right size..
-    if ( pixmap->width() == width && pixmap->height() == height )
-        p->drawPixmap( limits.topLeft(), *pixmap, limits );
-    // ..else set a scale matrix to the painter and paint a quick 'zoomed' pixmap
+    /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
+    if ( !useBackBuffer )
+    {
+        // 4A.1. if size is ok, draw the page pixmap using painter
+        if ( pixmap->width() == pageWidth && pixmap->height() == pageHeight )
+            destPainter->drawPixmap( limits.topLeft(), *pixmap, limits );
+        // else draw a scaled portion of the magnified pixmap
+        else
+        {
+            QImage destImage;
+            scalePixmapOnImage( pixmap, destImage, pageWidth, pageHeight, limits );
+            destPainter->drawPixmap( limits.left(), limits.top(), destImage, 0, 0,
+                                     limits.width(),limits.height() );
+        }
+
+        // 4A.2. active painter is the one passed to this method
+        p = destPainter;
+    }
+    /** 4B -- BUFFERED FLOW. IMAGE PAINTING + OPERATIONS. QPAINTER OVER PIXMAP  **/
     else
     {
-        p->save();
-        // TODO paint only the needed part (note: hope that Qt4 transforms are faster)
-        p->scale( width / (double)pixmap->width(), height / (double)pixmap->height() );
-        p->drawPixmap( 0,0, *pixmap, 0,0, pixmap->width(), pixmap->height() );
-        p->restore();
-    }
+        // the image over which we are going to draw
+        QImage backImage;
 
-    // 2. mangle pixmap: convert it to 32-bit qimage and perform pixel-level manipulations
-    if ( backBuffer )
-    {
-        QImage backImage = backPixmap->convertToImage();
-        // 2.1. modify pixmap following accessibility settings
+        // 4B.1. draw the page pixmap: normal or scaled
+        if ( pixmap->width() == pageWidth && pixmap->height() == pageHeight )
+            cropPixmapOnImage( pixmap, backImage, limits );
+        else
+            scalePixmapOnImage( pixmap, backImage, pageWidth, pageHeight, limits );
+
+        // 4B.2. modify pixmap following accessibility settings
         if ( paintAccessibility )
         {
             switch ( Settings::renderMode() )
@@ -164,7 +185,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
                     break;
             }
         }
-        // 2.2. highlight rects in page
+        // 4B.3. highlight rects in page
         if ( paintHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
@@ -172,7 +193,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             for ( ; hIt != hEnd; ++hIt )
             {
                 HighlightRect * r = *hIt;
-                QRect highlightRect = r->geometry( width, height );
+                QRect highlightRect = r->geometry( pageWidth, pageHeight );
                 if ( highlightRect.isValid() && highlightRect.intersects( limits ) )
                 {
                     // find out the rect to highlight on pixmap
@@ -201,47 +222,60 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
                 }
             }
         }
-        // 2.3. annotations overlay
+        // 4B.4. paint annotations [COMPOSITED ONES]
         if ( paintAnnotations )
         {
-            /*
-            // draw annotations that are inside the 'limits' paint region
-            QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
-            for ( ; aIt != aEnd; ++aIt )
-            {
-                Annotation * a = *aIt;
-                QRect annotRect = a->r.geometry( width, height );
-                if ( annotRect.isValid() && annotRect.intersects( limits ) )
-                {
-                    // find out the annotation rect on pixmap
-                    annotRect = annotRect.intersect( limits );
-                    //a->paintOverlay( p, width, height, limits );
-                }
-            }
-            */
+            // TODO draw AText(1), AHighlight
         }
-        backPixmap->convertFromImage( backImage );
+
+        // 4B.5. create the back pixmap converting from the local image
+        backPixmap = new QPixmap( backImage );
+
+        // 4B.6. create a painter over the pixmap and set it as the active one
+        p = new QPainter( backPixmap );
+        p->translate( -limits.left(), -limits.top() );
     }
 
-    // 2.3. FIXME TEMP annotations overlay
+    /** 5 -- MIXED FLOW. Draw ANNOTATIONS [OPAQUE ONES] on ACTIVE PAINTER  **/
     if ( paintAnnotations )
     {
-        // draw annotations that are inside the 'limits' paint region
+        // iterate over annotations and paint AText(2), ALine, AGeom, AStamp, AInk
         QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
         for ( ; aIt != aEnd; ++aIt )
         {
             Annotation * a = *aIt;
-            QRect annotRect = a->r.geometry( width, height );
-            // draw the annotation extent
-            if ( annotRect.isValid() && annotRect.intersects( limits ) )
+            QRect annotRect = a->r.geometry( pageWidth, pageHeight );
+
+            // if annotation doesn't intersect paint region, skip it
+            if ( !annotRect.isValid() || !annotRect.intersects( limits ) )
+                continue;
+
+            // draw extents rectangle
+            if ( Settings::debugDrawAnnotationRect() )
             {
                 p->setPen( a->color );
                 p->drawRect( annotRect );
             }
+
+            //
+            //annotRect = annotRect.intersect( limits );
+            Annotation::SubType type = a->subType();
+
+            // stamp annotation TODO
+            if ( type == Annotation::AStamp )
+            {
+                QPixmap pic = DesktopIcon( "kpdf" );
+                //QImage destImage;
+                //scalePixmapOnImage( &pic, destImage, annotRect.width(), annotRect.height(), QRect(0,0,annotRect.width(), annotRect.height()) );
+                //p->drawPixmap( annotRect.left(), annotRect.top(), destImage, 0, 0, annotRect.width(), annotRect.height() );
+                pic = pic.convertToImage().scale( annotRect.width(), annotRect.height() );
+                p->drawPixmap( annotRect.left(), annotRect.top(), pic, 0, 0, annotRect.width(), annotRect.height() );
+            }
+            //else if ( type == Annotation::AText ) TODO
         }
     }
 
-    // 3. visually enchance links and images if requested
+    /** 6 -- MIXED FLOW. Draw LINKS+IMAGES BORDER on ACTIVE PAINTER  **/
     if ( enhanceLinks || enhanceImages )
     {
         QColor normalColor = QApplication::palette().active().highlight();
@@ -257,7 +291,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
             if ( (enhanceLinks && rect->objectType() == ObjectRect::Link) ||
                  (enhanceImages && rect->objectType() == ObjectRect::Image) )
             {
-                QRect rectGeometry = rect->geometry( width, height );
+                QRect rectGeometry = rect->geometry( pageWidth, pageHeight );
                 if ( rectGeometry.intersects( limitsEnlarged ) )
                 {
                     // expand rect and draw inner border
@@ -273,11 +307,62 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         }
     }
 
-    // 4. if was backbuffering, copy the backPixmap to destination
-    if ( backBuffer )
+    /** 7 -- BUFFERED FLOW. Copy BACKPIXMAP on DESTINATION PAINTER **/
+    if ( useBackBuffer )
     {
         delete p;
         destPainter->drawPixmap( limits.left(), limits.top(), *backPixmap );
         delete backPixmap;
+    }
+}
+
+
+void PagePainter::cropPixmapOnImage( const QPixmap * src, QImage & dest, const QRect & r )
+{
+    // handle quickly the case in which the whole pixmap has to be converted
+    if ( r == QRect( 0, 0, src->width(), src->height() ) )
+    {
+        dest = src->convertToImage();
+    }
+    // else copy a portion of the src to an internal pixmap (smaller) and convert it
+    else
+    {
+        QPixmap croppedPixmap( r.width(), r.height() );
+        copyBlt( &croppedPixmap, 0, 0, src, r.left(), r.top(), r.width(), r.height() );
+        dest = croppedPixmap.convertToImage();
+    }
+}
+
+void PagePainter::scalePixmapOnImage ( const QPixmap * src, QImage & dest,
+    int pageWidth, int pageHeight, const QRect & cropRect )
+{
+    // {source, destination, scaling} params
+    int srcWidth = src->width(),
+        srcHeight = src->height(),
+        destLeft = cropRect.left(),
+        destTop = cropRect.top(),
+        destWidth = cropRect.width(),
+        destHeight = cropRect.height();
+
+    // destination image (same geometry as the pageLimits rect)
+    dest = QImage( destWidth, destHeight, 32 );
+    unsigned int * destData = (unsigned int *)dest.bits();
+
+    // source image (1:1 conversion from pixmap)
+    QImage srcImage = src->convertToImage();
+    unsigned int * srcData = (unsigned int *)srcImage.bits();
+
+    // precalc the x correspondancy conversion in a lookup table
+    unsigned int xOffset[ destWidth ];
+    for ( int x = 0; x < destWidth; x++ )
+        xOffset[ x ] = ((x + destLeft) * srcWidth) / pageWidth;
+
+    // for each pixel of the destination image apply the color of the
+    // corresponsing pixel on the source image (note: keep parenthesis)
+    for ( int y = 0; y < destHeight; y++ )
+    {
+        unsigned int srcOffset = srcWidth * (((destTop + y) * srcHeight) / pageHeight);
+        for ( int x = 0; x < destWidth; x++ )
+            (*destData++) = srcData[ srcOffset + xOffset[x] ];
     }
 }

@@ -95,9 +95,8 @@
     </para>
 
     <para>If you give a &URL; as a parameter, you can tell &kdvi; to
-    jump directly to certain place of the &DVI; file. Don't forget the
-    <userinput>file:</userinput> prefix or it will give unexpected
-    results. For example, <userinput><command>kdvi</command>
+    jump directly to certain place of the &DVI; file.
+    For example, <userinput><command>kdvi</command>
     <parameter>file:paper.dvi#43</parameter></userinput> will make
     &kdvi; to open page 43. If you have included source file
     information, a command like <userinput><command>kdvi</command>
@@ -110,7 +109,9 @@
     set up your editor to start &kdvi; automatically.
     </para>
 
-    <warning><para>The command <userinput><command>kdvi</command>
+    <warning><para>Don't forget the <userinput>file:</userinput>
+    prefix or it will give unexpected results. For example, the command
+    <userinput><command>kdvi</command>
     <parameter>file:paper.dvi#43</parameter></userinput> will open
     page 43 of the file <filename>paper.dvi</filename>. The command
     <userinput><command>kdvi</command>

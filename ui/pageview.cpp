@@ -78,7 +78,8 @@ public:
     bool typeAheadActivated;
     QString findString;
     bool blockViewport;
-    PageViewMessage * messageWindow;    //in pageviewutils.h
+    bool blockPixmapsRequest;           // prevent pixmap requests
+    PageViewMessage * messageWindow;    // in pageviewutils.h
 
     // actions
     KToggleAction * aMouseEdit;
@@ -120,6 +121,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->scrollIncrement = 0;
     d->dirtyLayout = false;
     d->blockViewport = false;
+    d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
 
     // widget setup: setup focus, accept drops and track mouse
@@ -273,11 +275,11 @@ void PageView::notifyViewportChanged()
     d->blockViewport = true;
 
     // find PageViewItem matching the viewport description
-    const DocumentViewport & viewport = d->document->viewport();
+    const DocumentViewport & vp = d->document->viewport();
     PageViewItem * item = 0;
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
-        if ( (*iIt)->pageNumber() == viewport.pageNumber )
+        if ( (*iIt)->pageNumber() == vp.pageNumber )
         {
             item = *iIt;
             break;
@@ -289,19 +291,21 @@ void PageView::notifyViewportChanged()
     }
 
     // relayout in "Single Pages" mode or if a relayout is pending
+    d->blockPixmapsRequest = true;
     if ( !Settings::viewContinous() || d->dirtyLayout )
         slotRelayoutPages();
 
     // restore viewport or use default x-center, v-top alignment
     const QRect & r = item->geometry();
-    if ( viewport.reCenter.enabled )
+    if ( vp.reCenter.enabled )
     {
-        int xCenter = (int)( viewport.reCenter.normalizedCenterX * (float)r.width() );
-        int yCenter = (int)( viewport.reCenter.normalizedCenterY * (float)r.height() );
+        int xCenter = (int)( vp.reCenter.normalizedCenterX * (float)r.width() );
+        int yCenter = (int)( vp.reCenter.normalizedCenterY * (float)r.height() );
         center( r.left() + xCenter, r.top() + yCenter );
     }
     else
         center( r.left() + r.width() / 2, r.top() + visibleHeight() / 2 - 10 );
+    d->blockPixmapsRequest = false;
 
     // request visible pixmaps in the current viewport and recompute it
     slotRequestVisiblePixmaps();
@@ -1339,7 +1343,7 @@ void PageView::slotRelayoutPages()
         {
             PageViewItem * item = *iIt;
             // update internal page size (leaving a little margin in case of Fit* modes)
-            updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 10 );
+            updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 8 );
             // find row's maximum height and column's max width
             if ( item->width() + 6 > colWidth[ cIdx ] )
                 colWidth[ cIdx ] = item->width() + 6;
@@ -1355,7 +1359,7 @@ void PageView::slotRelayoutPages()
 
         // 2) arrange widgets inside cells
         int insertX = 0,
-            insertY = 10; //TODO take d->zoomFactor into account (2+4*x)
+            insertY = 4; //TODO take d->zoomFactor into account (2+4*x)
         cIdx = 0;
         rIdx = 0;
         for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
@@ -1403,12 +1407,12 @@ void PageView::slotRelayoutPages()
             if ( item == currentItem || (cIdx > 0 && cIdx < nCols) )
             {
                 // update internal page size (leaving a little margin in case of Fit* modes)
-                updateItemSize( item, colWidth[ cIdx ] - 4, viewportHeight - 6 );
+                updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 8 );
                 // find row's maximum height and column's max width
-                if ( item->width() + 4 > colWidth[ cIdx ] )
-                    colWidth[ cIdx ] = item->width() + 4;
-                if ( item->height() + 6 > fullHeight )
-                    fullHeight = item->height() + 6;
+                if ( item->width() + 6 > colWidth[ cIdx ] )
+                    colWidth[ cIdx ] = item->width() + 6;
+                if ( item->height() + 8 > fullHeight )
+                    fullHeight = item->height() + 8;
                 cIdx++;
             }
         }
@@ -1435,7 +1439,9 @@ void PageView::slotRelayoutPages()
             fullWidth += colWidth[ i ];
 
         delete [] colWidth;
-	slotRequestVisiblePixmaps();
+
+        // this can cause a little overhead
+        slotRequestVisiblePixmaps();
     }
 
     // 3) reset dirty state
@@ -1475,6 +1481,10 @@ void PageView::slotRelayoutPages()
 
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 {
+    // if requests are blocked (because raised by an unwanted event), exit
+    if ( d->blockPixmapsRequest )
+        return;
+
     // precalc view limits for intersecting with page coords inside the lOOp
     bool isEvent = newLeft != -1 && newTop != -1 && !d->blockViewport;
     QRect viewportRect( isEvent ? newLeft : contentsX(),
@@ -1543,7 +1553,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         {
             PageViewItem * i = d->items[ headRequest ];
             // request the pixmap if not already present
-            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
+            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new PixmapRequest(
                         PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
@@ -1554,7 +1564,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         {
             PageViewItem * i = d->items[ tailRequest ];
             // request the pixmap if not already present
-            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
+            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new PixmapRequest(
                         PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }

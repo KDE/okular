@@ -39,6 +39,21 @@
 // id for DATA_READY PDFPixmapGeneratorThread Event
 #define TGE_DATAREADY_ID 6969
 
+/** NOTES on threading:
+ * internal: thread race prevention is done via the 'docLock' mutex. the
+ *           mutex is needed only because we have the asyncronous thread; else
+ *           the operations are all within the 'gui' thread, scheduled by the
+ *           Qt scheduler and no mutex is needed.
+ * external: dangerous operations are all locked via mutex internally, and the
+ *           only needed external thing is the 'canGeneratePixmap' method
+ *           that tells if the generator is free (since we don't want an
+ *           internal queue to store PixmapRequests). A generatedPixmap call
+ *           without the 'ready' flag set, results in undefined behavior.
+ * So, as example, printing while generating a pixmap asyncronously is safe,
+ * it might only block the gui thread by 1) waiting for the mutex to unlock
+ * in async thread and 2) doing the 'heavy' print operation.
+ */
+
 PDFGenerator::PDFGenerator( KPDFDocument * doc )
     : Generator( doc ), pdfdoc( 0 ), kpdfOutputDev( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true )
@@ -208,7 +223,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     // be set only to prevent asking a pixmap while the thread is running)
     ready = false;
 
-    // debug message
+    // debug requests to this (xpdf) generator
     //kdDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
 
     /** asyncronous requests (generation in PDFPixmapGeneratorThread::run() **/

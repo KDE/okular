@@ -92,8 +92,7 @@ class KPDFDocument : public QObject // only for a private slot..
     private:
         void sendGeneratorRequest();
         // memory management related functions
-        void cleanupMemory( int bytesOffset = 0 );
-        void freeMemory( int bytes );
+        void cleanupPixmapMemory( int bytesOffset = 0 );
         int getTotalMemory();
         int getFreeMemory();
         // more private functions
@@ -108,7 +107,7 @@ class KPDFDocument : public QObject // only for a private slot..
 
     private slots:
         void saveDocumentInfo() const;
-        void slotCheckMemory();
+        void slotTimedMemoryCheck();
 };
 
 

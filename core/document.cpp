@@ -81,10 +81,8 @@ KPDFDocument::KPDFDocument()
 {
     d->searchPage = -1;
     d->allocatedPixmapsTotalMemory = 0;
-    d->memCheckTimer = new QTimer( this );
-    connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotCheckMemory() ) );
-    d->saveBookmarksTimer = new QTimer( this );
-    connect( d->saveBookmarksTimer, SIGNAL( timeout() ), this, SLOT( saveDocumentInfo() ) );
+    d->memCheckTimer = 0;
+    d->saveBookmarksTimer = 0;
 }
 
 KPDFDocument::~KPDFDocument()
@@ -152,9 +150,19 @@ bool KPDFDocument::openDocument( const QString & docFile )
     setViewport( loadedViewport );
 
     // start bookmark saver timer
+    if ( !d->saveBookmarksTimer )
+    {
+        d->saveBookmarksTimer = new QTimer( this );
+        connect( d->saveBookmarksTimer, SIGNAL( timeout() ), this, SLOT( saveDocumentInfo() ) );
+    }
     d->saveBookmarksTimer->start( 5 * 60 * 1000 );
 
     // start memory check timer
+    if ( !d->memCheckTimer )
+    {
+        d->memCheckTimer = new QTimer( this );
+        connect( d->memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotTimedMemoryCheck() ) );
+    }
     d->memCheckTimer->start( 2000 );
 
     return true;
@@ -166,8 +174,11 @@ void KPDFDocument::closeDocument()
     if ( generator && pages_vector.size() > 0 )
         saveDocumentInfo();
 
-    // stop memory check timer
-    d->memCheckTimer->stop();
+    // stop timers
+    if ( d->memCheckTimer )
+        d->memCheckTimer->stop();
+    if ( d->saveBookmarksTimer )
+        d->saveBookmarksTimer->stop();
 
     // delete contents generator
     delete generator;
@@ -190,7 +201,7 @@ void KPDFDocument::closeDocument()
         delete *pIt;
     pages_vector.clear();
 
-    // clear memory management data
+    // clear memory allocation descriptors
     QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
     QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
@@ -235,12 +246,27 @@ void KPDFDocument::reparseConfig()
     // reparse generator config and if something changed clear KPDFPages
     if ( generator && generator->reparseConfig() )
     {
-        // invalidate pixmaps and send reload signals to observers
+        // invalidate pixmaps
         QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
             (*it)->deletePixmapsAndRects();
+
+        // [MEM] remove allocation descriptors
+        QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        for ( ; aIt != aEnd; ++aIt )
+            delete *aIt;
+        d->allocatedPixmapsFifo.clear();
+        d->allocatedPixmapsTotalMemory = 0;
+
+        // send reload signals to observers
         foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap) );
     }
+
+    // free memory if in 'low' profile
+    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+         !d->allocatedPixmapsFifo.isEmpty() && !pages_vector.isEmpty() )
+        cleanupPixmapMemory();
 }
 
 
@@ -707,15 +733,15 @@ void KPDFDocument::sendGeneratorRequest()
     // [MEM] preventive memory freeing
     int pixmapBytes = 4 * request->width * request->height;
     if ( pixmapBytes > (1024 * 1024) )
-        cleanupMemory( pixmapBytes );
+        cleanupPixmapMemory( pixmapBytes );
 
     // submit the request to the generator
     generator->generatePixmap( request );
 }
 
-void KPDFDocument::cleanupMemory( int /*freeOffset*/ )
+void KPDFDocument::cleanupPixmapMemory( int /*bytesOffset*/ )
 {
-    // choose memory parameters based on configuration profile
+    // [MEM] choose memory parameters based on configuration profile
     int clipValue = -1;
     int memoryToFree = -1;
     switch ( Settings::memoryLevel() )
@@ -725,50 +751,43 @@ void KPDFDocument::cleanupMemory( int /*freeOffset*/ )
             break;
 
         case Settings::EnumMemoryLevel::Normal:
-            memoryToFree = d->allocatedPixmapsTotalMemory - getTotalMemory() / 5;
-            clipValue = d->allocatedPixmapsTotalMemory - getFreeMemory() / 2;
+            memoryToFree = d->allocatedPixmapsTotalMemory - getTotalMemory() / 3;
+            clipValue = (d->allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
             break;
 
         case Settings::EnumMemoryLevel::Aggressive:
-            clipValue = d->allocatedPixmapsTotalMemory - getFreeMemory() / 2;
+            clipValue = (d->allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
             break;
     }
-
-    // p--rintf("T:%d TT:%d FF:%d  - c:%d m:%d\n", d->allocatedPixmapsTotalMemory, getTotalMemory(), getFreeMemory(), clipValue, memoryToFree);
 
     if ( clipValue > memoryToFree )
         memoryToFree = clipValue;
 
     if ( memoryToFree > 0 )
-        freeMemory( memoryToFree );
-}
-
-void KPDFDocument::freeMemory( int bytesToFree )
-{
-    //kdDebug() << "Freeing: " << bytesToFree << " bytes" << endl;
-    // [MEM] free memory starting from older pixmaps
-    int pagesFreed = 0;
-    QValueList< AllocatedPixmap * >::iterator pIt = d->allocatedPixmapsFifo.begin();
-    QValueList< AllocatedPixmap * >::iterator pEnd = d->allocatedPixmapsFifo.end();
-    while ( (pIt != pEnd) && (bytesToFree > 0) )
     {
-        AllocatedPixmap * p = *pIt;
-        if ( d->observers[ p->id ]->canUnloadPixmap( p->page ) )
+        // [MEM] free memory starting from older pixmaps
+        int pagesFreed = 0;
+        QValueList< AllocatedPixmap * >::iterator pIt = d->allocatedPixmapsFifo.begin();
+        QValueList< AllocatedPixmap * >::iterator pEnd = d->allocatedPixmapsFifo.end();
+        while ( (pIt != pEnd) && (memoryToFree > 0) )
         {
-            // update internal variables
-            pIt = d->allocatedPixmapsFifo.remove( pIt );
-            d->allocatedPixmapsTotalMemory -= p->memory;
-            bytesToFree -= p->memory;
-            pagesFreed++;
-            // delete pixmap
-            pages_vector[ p->page ]->deletePixmap( p->id );
-            // delete allocation descriptor
-            delete p;
-        } else
-            ++pIt;
+            AllocatedPixmap * p = *pIt;
+            if ( d->observers[ p->id ]->canUnloadPixmap( p->page ) )
+            {
+                // update internal variables
+                pIt = d->allocatedPixmapsFifo.remove( pIt );
+                d->allocatedPixmapsTotalMemory -= p->memory;
+                memoryToFree -= p->memory;
+                pagesFreed++;
+                // delete pixmap
+                pages_vector[ p->page ]->deletePixmap( p->id );
+                // delete allocation descriptor
+                delete p;
+            } else
+                ++pIt;
+        }
+        //p--rintf("freeMemory A:[%d -%d = %d] \n", d->allocatedPixmapsFifo.count() + pagesFreed, pagesFreed, d->allocatedPixmapsFifo.count() );
     }
-
-    //kdDebug() << "items: " << d->allocatedPixmapsFifo.count() << " [" << (d->allocatedPixmapsTotalMemory/1000) << "] Removed " << pagesFreed << " pages. gap: " << bytesToFree << endl;
 }
 
 int KPDFDocument::getTotalMemory()
@@ -1006,12 +1025,12 @@ void KPDFDocument::saveDocumentInfo() const
     infoFile.close();
 }
 
-void KPDFDocument::slotCheckMemory()
+void KPDFDocument::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
     if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
          d->allocatedPixmapsTotalMemory > 1024*1024 )
-        cleanupMemory();
+        cleanupPixmapMemory();
 }
 
 

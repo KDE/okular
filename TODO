@@ -11,27 +11,35 @@ Status:
    next steps: empty the in-progress list and keep it empty until release.
 
 In progress:
--> memory: check for alloc/dealloc dynamic loops
--> new word highlighting for searches / other highlights (on paper - enrico)
+-> new word highlighting for searches / other highlights
 
-More items (first items will enter 'In progress list' first):
+High priority 3.4 features (deadline is 2k5-Feb-2):
 -> display current page / total pages (with analog indicator too (progressbar/...))
    maybe this can be done on a small widget at the top of the toolbox, displaying
    'document' informations (pages, current pg, some metadata, etc..)
    Tested a 16px ktoolbar in the left-bottom corner.. looks goos and can be used to
    insert some actions that aren't so useful in the main (and bigger) toolbar
--> c00l: add scrollbar marks for bookmarks (like kate)
+-> implement history (for actionNamed and restoring previous viewports on navigation)
+-> rmb popup for bookmarking pages on thumbnailslist, showing bkmarked pages and
+   go to next/previous bookmark actions (support for showing bookmarked pages
+   is already in, but disabled)
+-> evaluate wether to change F9 as the default presentation shortcut
+
+More items (first items will enter 'In progress list' first):
+-> presentation: provide a pageX/totalPages indicator in addition to the circle one
+-> add scrollbar marks for bookmarks (like kate)
 -> google search in the page
 -> cleanup code and update README.png
 -> find-as-you-type: use shortcut for 'find next' action (not the default one)
 -> show Viewport in ThumbnailsList (blended/contour)
+-> history as a toolbox child (collecting Doc's viewport changes notifications)
 -> Delay TOC (DocumentSynapsis) generation (and move it on thread)
 -> refactor ThumbnailsList to do internal rendering as pageview does (way
    faster than using QScrollView + inserted Widgets and saves 8% on document
    loading)
 -> move toolbar view actions in the PageView instead of the part. maybe.. or not...
--> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment. (by Mikolaj)
--> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
+-> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment
+-> usability: trigger redraw on 'filter text' on current page
 -> abstract TextPage generation (the last xpdf dependant class!). then go dancing in the
    streets.
 -> better boomark rendering (tested a 'clip overlay' but looks bad actually)
@@ -59,8 +67,6 @@ More items (first items will enter 'In progress list' first):
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> text selection in wordprocessor style (very hard/impossible)
--> implement history (mainly for actionNamed)
--> history as a toolbox child (collecting Doc's viewport changes notifications)
 -> zoom: fit text (with configurable margin)
 -> open gzipped (.pdf.gz?) files
 -> kttsd output with menu entries. speech{document/page/selection}. (patch available - enrico)
@@ -85,6 +91,8 @@ More items (first items will enter 'In progress list' first):
 -> export: export to other formats keeping formatting (a dream.. except for PNG :-)
 
 Done (newest features come first):
+-> FIX: various in memory unallocator, preload with single pages, pageview
+-> FIX: optimized pageView (removed 1 waster req on start, lowered reqs)
 -> FIX: memory unloading order and hard swap avoiding
 -> CHG: open and open-recent buttons unified in Shell
 -> CHG: lens icon for the find-ahead messages

@@ -593,6 +593,7 @@ void Part::pageClicked ( QListBoxItem * qbi )
         return;
     m_currentPage = pdfpartview->pagesListBox->index(qbi)+1;
     m_outputDev->setPage(m_currentPage);
+    updateActionPage();
 }
 
 BrowserExtension::BrowserExtension(Part* parent)

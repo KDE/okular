@@ -214,14 +214,13 @@ void Shell::slotQuit()
 void Shell::setFullScreen( bool useFullScreen )
 {
     m_isFullScreen = useFullScreen;
-
     if( m_isFullScreen )
     {
 	menuBar()->hide();
 	statusBar()->hide();
 	toolBar()->hide();
         //todo fixme
-	//m_part->setFullScreen( true );
+	//m_pdfpart->setFullScreen( true );
 	showFullScreen();
 #if 0
 	kapp->installEventFilter( m_fsFilter );
@@ -232,8 +231,7 @@ void Shell::setFullScreen( bool useFullScreen )
     else
     {
 	//kapp->removeEventFilter( m_fsFilter );
-//todo fixme
-//m_part->setFullScreen( false );
+        //m_pdfpart->setFullScreen( false );
 	menuBar()->show();
 #if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
 	KToggleAction *statusbarAction = dynamic_cast<KToggleAction *>(actionCollection()->action(KStdAction::name(KStdAction::ShowStatusbar)));

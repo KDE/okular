@@ -21,7 +21,9 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kpassdlg.h>
+#include <kprinter.h>
 #include <kstandarddirs.h>
+#include <ktempfile.h>
 #include <kapplication.h>
 #include <krun.h>
 #include <kurl.h>
@@ -31,6 +33,7 @@
 // local includes
 #include "ErrorCodes.h"
 #include "PDFDoc.h"
+#include "PSOutputDev.h"
 #include "QOutputDev.h"
 
 #include "kpdf_error.h"
@@ -297,6 +300,49 @@ void KPDFDocument::requestTextPage( uint n )
     d->docLock.unlock();
     // ..and attach it to the page
     page->setSearchPage( td.takeTextPage() );
+}
+
+bool KPDFDocument::okToPrint() const
+{
+    return d->pdfdoc->okToPrint();
+}
+
+bool KPDFDocument::print(KPrinter &printer)
+{
+    KTempFile tf( QString::null, ".ps" );
+    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), d->pdfdoc->getXRef(), d->pdfdoc->getCatalog(), 1, d->pdfdoc->getNumPages(), psModePS);
+
+    if (psOut->isOk())
+    {
+        std::list<int> pages;
+
+        if (!printer.previewOnly())
+        {
+            QValueList<int> pageList = printer.pageList();
+            QValueList<int>::const_iterator it;
+
+            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
+        }
+        else
+        {
+            for(int i = 1; i <= d->pdfdoc->getNumPages(); i++) pages.push_back(i);
+        }
+
+        d->docLock.lock();
+        d->pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
+        d->docLock.unlock();
+
+        // needs to be here so that the file is flushed, do not merge with the one
+        // in the else
+        delete psOut;
+        printer.printFiles(tf.name(), true);
+        return true;
+    }
+    else
+    {
+        delete psOut;
+        return false;
+    }
 }
 
 // BEGIN slots

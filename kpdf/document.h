@@ -14,6 +14,8 @@
 #include <qobject.h>
 #include <qvaluevector.h>
 
+class KPrinter;
+
 class Outline;
 
 class KPDFPage;
@@ -73,6 +75,9 @@ public:
     void addObserver( KPDFDocumentObserver * pObserver );
     void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
     void requestTextPage( uint page );
+
+    bool okToPrint() const;
+    bool print(KPrinter &printer);
 
 //public slots:
     // document commands via slots

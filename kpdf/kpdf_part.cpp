@@ -47,13 +47,13 @@
 #include "kpdf_error.h"
 
 #include "GlobalParams.h"
-#include "QOutputDevKPrinter.h"
 
 #include "kpdf_part.h"
 #include "pageview.h"
 #include "thumbnaillist.h"
 #include "searchwidget.h"
 #include "document.h"
+#include "page.h"
 #include "toc.h"
 #include "preferencesdialog.h"
 #include "settings.h"
@@ -398,91 +398,79 @@ void Part::slotNewConfig()
 
 void Part::slotPrintPreview()
 {
-/*
-    if (m_doc == 0)
-    return;
+    if (document->pages() == 0) return;
 
     double width, height;
     int landscape, portrait;
     KPrinter printer;
+    const KPDFPage *page;
 
-    printer.setMinMax(1, m_doc->getNumPages());
+    printer.setMinMax(1, document->pages());
     printer.setPreviewOnly( true );
     printer.setMargins(0, 0, 0, 0);
 
-  // if some pages are landscape and others are not the most common win as kprinter does
-  // not accept a per page setting
+    // if some pages are landscape and others are not the most common win as kprinter does
+    // not accept a per page setting
     landscape = 0;
     portrait = 0;
-    for (int i = 1; i <= m_doc->getNumPages(); i++)
+    for (uint i = 0; i < document->pages(); i++)
     {
-    width = m_doc->getPageWidth(i);
-    height = m_doc->getPageHeight(i);
-    if (m_doc->getPageRotate(i) == 90 || m_doc->getPageRotate(i) == 270) qSwap(width, height);
-    if (width > height) landscape++;
-    else portrait++;
-}
+        page = document->page(i);
+        width = page->width();
+        height = page->height();
+        if (page->rotation() == 90 || page->rotation() == 270) qSwap(width, height);
+        if (width > height) landscape++;
+        else portrait++;
+    }
     if (landscape > portrait) printer.setOption("orientation-requested", "4");
 
     doPrint(printer);
-*/
 }
 
 void Part::slotPrint()
 {
-/*
-  if (m_doc == 0)
-    return;
+    if (document->pages() == 0) return;
 
-  double width, height;
-  int landscape, portrait;
-  KPrinter printer;
+    double width, height;
+    int landscape, portrait;
+    KPrinter printer;
+    const KPDFPage *page;
 
-  printer.setPageSelection(KPrinter::ApplicationSide);
-  printer.setMinMax(1, m_doc->getNumPages());
-  printer.setCurrentPage(m_currentPage);
-  printer.setMargins(0, 0, 0, 0);
+    printer.setPageSelection(KPrinter::ApplicationSide);
+    printer.setMinMax(1, document->pages());
+    printer.setCurrentPage(document->currentPage()+1);
+    printer.setMargins(0, 0, 0, 0);
 
-  // if some pages are landscape and others are not the most common win as kprinter does
-  // not accept a per page setting
-  landscape = 0;
-  portrait = 0;
-  for (int i = 1; i <= m_doc->getNumPages(); i++)
-  {
-    width = m_doc->getPageWidth(i);
-    height = m_doc->getPageHeight(i);
-    if (m_doc->getPageRotate(i) == 90 || m_doc->getPageRotate(i) == 270) qSwap(width, height);
-    if (width > height) landscape++;
-    else portrait++;
-  }
-  if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
+    // if some pages are landscape and others are not the most common win as kprinter does
+    // not accept a per page setting
+    landscape = 0;
+    portrait = 0;
+    for (uint i = 0; i < document->pages(); i++)
+    {
+        page = document->page(i);
+        width = page->width();
+        height = page->height();
+        if (page->rotation() == 90 || page->rotation() == 270) qSwap(width, height);
+        if (width > height) landscape++;
+        else portrait++;
+    }
+    if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
 
-  if (printer.setup(widget()))
-  {
-    doPrint( printer );
-  }
-*/
+    if (printer.setup(widget())) doPrint( printer );
 }
 
-void Part::doPrint( KPrinter& /*printer*/ )
+void Part::doPrint(KPrinter &printer)
 {
-/*
-  QPainter painter( &printer );
-  SplashColor paperColor;
-  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-  QOutputDevKPrinter printdev( painter, paperColor, printer );
-  printdev.startDoc(m_doc->getXRef());
-  QValueList<int> pages = printer.pageList();
+    if (!document->okToPrint())
+    {
+        KMessageBox::error(widget(), i18n("Printing this document is not allowed."));
+        return;
+    }
 
-  for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
-  {
-    m_docMutex.lock();
-    m_doc->displayPage(&printdev, *i, printer.resolution(), printer.resolution(), 0, true, true);
-    if ( ++i != pages.end() )
-      printer.newPage();
-    m_docMutex.unlock();
-  }
-*/
+    if (!document->print(printer))
+    {
+        KMessageBox::error(widget(), i18n("Could not print the document. Please report to bugs.kde.org"));	
+    }
 }
 
 void Part::restoreDocument(const KURL &url, int page)

@@ -13,6 +13,7 @@
  *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
  *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004 by Antti Markus <antti.markus@starman.ee>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -151,11 +152,16 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   m_zoomTo->clear();
 
   QStringList translated;
+  QString localValue;
+  QString double_oh("00");
   int idx = 0;
   int cur = 0;
   for ( int i = 0; i < 10;i++)
   {
-      translated << QString( "%1%" ).arg( zoomValue[i] * 100.0 );
+      localValue = KGlobal::locale()->formatNumber( zoomValue[i] * 100.0, 2 );
+      localValue.remove( KGlobal::locale()->decimalSymbol()+double_oh );
+
+      translated << QString( "%1%" ).arg( localValue );
       if ( zoomValue[i] == 1.0 )
           idx = cur;
       ++cur;
@@ -191,9 +197,14 @@ void Part::slotZoom( const QString&nz )
     QString z = nz;
     double zoom;
     z.remove(  z.find(  '%' ), 1 );
-    zoom = KGlobal::locale()->readNumber(  z ) / 100;
-    kdDebug() << "ZOOM = "  << nz << ", setting zoom = " << zoom << endl;
-    m_outputDev->zoomTo( zoom );
+    bool isNumber = true;
+    zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
+ 
+    if ( isNumber )
+    {
+    	kdDebug() << "ZOOM = "  << nz << ", setting zoom = " << zoom << endl;
+    	m_outputDev->zoomTo( zoom );
+    }
 }
 
 void Part::slotGoToPage()

@@ -43,12 +43,12 @@ if test "$compile_kdvi" = "yes"; then
   fi
 
   AC_DEFINE_UNQUOTED(KDVI_DEFAULT_FONTPATH, "$texmf_font_path", [Where kdvi should look for fonts])
-  
+
   texmf_cnf_path="$texmf_cnf_path:/usr/lib/texmf/web2c:/var/lib/texmf/web2c:/usr/share/texmf/web2c:/usr/share/teTeX/texmf/web2c:/opt/local/teTeX/share/texmf/web2c:/opt/teTeX/share/texmf/web2c:/var/texmf/web2c:/usr/local/share/texmf/web2c:/opt/local/share/texmf/web2c:/etc/texmf"
 
    # this gets the LAST directory in the path, which is assumed to be the
    # base installation directory. This also allows us to overwrite it with
-   # some standard paths. So it rather finds the /etc version than the 
+   # some standard paths. So it rather finds the /etc version than the
    # /var/share one
    AC_MSG_CHECKING([for texmf.cnf])
    kde_safe_IFS=$IFS
@@ -56,7 +56,7 @@ if test "$compile_kdvi" = "yes"; then
    texmf_dir=
    for d in ${texmf_cnf_path}
    do
-      if test -r "${d}/texmf.cnf"
+      if test -r "${d}/texmf.cnf" && test -r "$d/../../texmf/web2c/texmf.cnf"
       then
           texmf_dir="${d}"
       fi
@@ -65,7 +65,7 @@ if test "$compile_kdvi" = "yes"; then
 
    if test -n "${texmf_dir}"
    then
-     texmf_dir="`echo "${texmf_dir}" | sed 's,/web2c,,'`"
+    # texmf_dir="`echo "${texmf_dir}" | sed 's,/web2c,,'`"
      AC_MSG_RESULT([$texmf_dir])
    else
      AC_MSG_RESULT("not found")
@@ -86,9 +86,9 @@ if test "$compile_kdvi" = "yes"; then
 
         if test -f $srcdir/kdvi/kpathsea/configure; then
            if test -n "$texmf_dir"; then
-             ac_configure_args="$ac_configure_args --with-tex-datadir=$texmf_dir"
+             ac_configure_args="$ac_configure_args --with-tex-datadir=$texmf_dir/../.."
              AC_CONFIG_SUBDIRS([kdvi/kpathsea])
-           else 
+           else
               if test $compile_kdvi = "yes"; then
                  DO_NOT_COMPILE="$DO_NOT_COMPILE kdvi"
               fi

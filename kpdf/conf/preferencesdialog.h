@@ -16,6 +16,9 @@
 class QWidget;
 class KConfigSkeleton;
 
+class DlgGeneral;
+class DlgAccessibility;
+
 class PreferencesDialog : public KConfigDialog
 {
 
@@ -30,8 +33,8 @@ class PreferencesDialog : public KConfigDialog
 //      bool isDefault(); //  In order to correctly disable/enable Defaults button
 
     private:
-        class DlgGeneral * m_general;
-        class DlgAccessibility * m_accessibility;
+        DlgGeneral * m_general;
+        DlgAccessibility * m_accessibility;
 };
 
 #endif

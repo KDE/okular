@@ -5,16 +5,31 @@
   <entry key="PaperColor" type="Color" >
    <default code="true" >Qt::white</default>
   </entry>
-  <entry key="HilightLinks" type="Bool" >
+  <entry key="HighlightLinks" type="Bool" >
    <default>false</default>
   </entry>
   <entry key="RenderMode" type="Enum" >
-   <values>
-    <value>Normal</value>
-    <value>Inverted</value>
-    <value>Recolor</value>
-    <value>Contrast</value>
-   </values>
+   <default>Normal</default>
+   <choices>
+    <choice name="Normal" />
+    <choice name="Inverted" />
+    <choice name="Recolor" />
+    <choice name="BlackWhite" />
+   </choices>
+  </entry>
+  <entry key="HighlightImages" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="RecolorForeground" type="Color" >
+   <default code="true" >Qt::black</default>
+  </entry>
+  <entry key="RecolorBackground" type="Color" >
+   <default code="true" >Qt::white</default>
+  </entry>
+  <entry key="BWTreshold" type="UInt" >
+   <default>5</default>
+   <min>1</min>
+   <max>10</max>
   </entry>
  </group>
  <group name="General" />

@@ -1,19 +1,19 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>DlgNetwork</class>
+<class>DlgGeneral</class>
 <widget class="QWidget">
     <property name="name">
-        <cstring>DlgNetwork</cstring>
+        <cstring>DlgGeneral</cstring>
     </property>
     <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>332</width>
-            <height>315</height>
+            <width>187</width>
+            <height>29</height>
         </rect>
     </property>
     <property name="caption">
-        <string>DlgNetwork</string>
+        <string>DlgGeneral</string>
     </property>
     <vbox>
         <property name="name">
@@ -24,294 +24,15 @@
         </property>
         <widget class="QCheckBox">
             <property name="name">
-                <cstring>kcfg_DownloadAtStartup</cstring>
+                <cstring>kcfg_youDontEvenKnowMe</cstring>
             </property>
             <property name="text">
-                <string>Start downloading files immediately after startup</string>
+                <string>You don't even know me..</string>
             </property>
-        </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>kcfg_LimitDownloads</cstring>
-            </property>
-            <property name="text">
-                <string>Limit maximum downloads</string>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout19</cstring>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <spacer row="0" column="0" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>spacer16_2_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>16</width>
-                            <height>40</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="0" column="2" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>spacer19</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>50</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="KIntSpinBox" row="0" column="3">
-                    <property name="name">
-                        <cstring>kcfg_MaxConnections</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="1">
-                    <property name="name">
-                        <cstring>lbl_maxnum_2</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Downloads from the same server:</string>
-                    </property>
-                </widget>
-                <widget class="KIntSpinBox" row="1" column="3">
-                    <property name="name">
-                        <cstring>kcfg_MaxConnectionsServer</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="1">
-                    <property name="name">
-                        <cstring>lbl_maxnum</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Total downloads number:</string>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>kcfg_ReconnectOnBroken</cstring>
-            </property>
-            <property name="text">
-                <string>Reconnect on error or broken connection</string>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout14</cstring>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel" row="1" column="1">
-                    <property name="name">
-                        <cstring>lb_after_2</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Retry after:</string>
-                    </property>
-                </widget>
-                <spacer row="0" column="2" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>spacer2_3</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>90</width>
-                            <height>50</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="KIntSpinBox" row="1" column="3">
-                    <property name="name">
-                        <cstring>kcfg_ReconnectDelay</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="suffix">
-                        <string> sec</string>
-                    </property>
-                    <property name="maxValue">
-                        <number>3600</number>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                    <property name="value">
-                        <number>60</number>
-                    </property>
-                </widget>
-                <widget class="KIntSpinBox" row="0" column="3">
-                    <property name="name">
-                        <cstring>kcfg_ReconnectRetries</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="1">
-                    <property name="name">
-                        <cstring>lb_retries_2</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Number of retries:</string>
-                    </property>
-                </widget>
-                <spacer row="0" column="0" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>spacer16_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>16</width>
-                            <height>40</height>
-                        </size>
-                    </property>
-                </spacer>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox5</cstring>
-            </property>
-            <property name="title">
-                <string>After completing downloads</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_AutoShutdown</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Auto shutdown</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_AutoDisconnect</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Auto disconnect</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout9</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer16</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Fixed</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>16</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>lb_autoDisconnect</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>Disconnect command:</string>
-                            </property>
-                        </widget>
-                        <widget class="KLineEdit">
-                            <property name="name">
-                                <cstring>kcfg_DisconnectCommand</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>kppp -k</string>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-            </vbox>
         </widget>
         <spacer>
             <property name="name">
-                <cstring>spacer20</cstring>
+                <cstring>spacer9</cstring>
             </property>
             <property name="orientation">
                 <enum>Vertical</enum>
@@ -321,75 +42,13 @@
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>180</width>
-                    <height>16</height>
+                    <width>20</width>
+                    <height>21</height>
                 </size>
             </property>
         </spacer>
     </vbox>
 </widget>
-<connections>
-    <connection>
-        <sender>kcfg_AutoDisconnect</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>lb_autoDisconnect</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_AutoDisconnect</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_DisconnectCommand</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_ReconnectOnBroken</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>lb_retries_2</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_ReconnectOnBroken</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_ReconnectRetries</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_ReconnectOnBroken</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>lb_after_2</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_ReconnectOnBroken</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_ReconnectDelay</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_LimitDownloads</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>lbl_maxnum</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_LimitDownloads</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_MaxConnections</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_LimitDownloads</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>lbl_maxnum_2</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_LimitDownloads</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_MaxConnectionsServer</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>

@@ -10,10 +10,8 @@
 #include <klocale.h>
 
 // single config pages
-/*
 #include "dlggeneral.h"
 #include "dlgaccessibility.h"
-*/
 
 // reimplementing this
 #include "preferencesdialog.h"
@@ -21,11 +19,9 @@
 PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skeleton )
     : KConfigDialog( parent, "preferences", skeleton )
 {
-/*
     m_general = new DlgGeneral(0);
     m_accessibility = new DlgAccessibility(0);
 
-    addPage( m_general, i18n("General"), "looknfeel", i18n("General setup") );
-    addPage( m_accessibility, i18n("Accessibility"), "folder_open", i18n("Read aids") );
-*/
+    addPage( m_general, i18n("General"), "gohome", i18n("General Options") );
+    addPage( m_accessibility, i18n("Accessibility"), "viewmag", i18n("Reading Aids") );
 }

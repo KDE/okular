@@ -19,7 +19,7 @@
 #include "pagepainter.h"
 #include "core/page.h"
 #include "conf/settings.h"
-#include <kdebug.h>
+
 void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     QPainter * destPainter, const QRect & limits, int width, int height )
 {

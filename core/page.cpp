@@ -69,7 +69,7 @@ bool KPDFPage::hasBookmark() const
     return m_bookmarked;
 }
 
-bool KPDFPage::hasRect( double x, double y ) const
+bool KPDFPage::hasObjectRect( double x, double y ) const
 {
     if ( m_rects.count() < 1 )
         return false;
@@ -173,7 +173,7 @@ const QString KPDFPage::getText( const NormalizedRect & rect ) const
     return result; 
 }
 
-const ObjectRect * KPDFPage::getRect( double x, double y ) const
+const ObjectRect * KPDFPage::getObjectRect( double x, double y ) const
 {
     QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
@@ -206,7 +206,7 @@ void KPDFPage::setBookmark( bool state )
     m_bookmarked = state;
 }
 
-void KPDFPage::setRects( const QValueList< ObjectRect * > rects )
+void KPDFPage::setObjectRects( const QValueList< ObjectRect * > rects )
 {
     QValueList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
@@ -231,7 +231,7 @@ void KPDFPage::setHighlight( int s_id, NormalizedRect * &rect, const QColor & co
     rect = hr;
 }
 
-void KPDFPage::setTransition( const KPDFPageTransition * transition )
+void KPDFPage::setTransition( KPDFPageTransition * transition )
 {
     delete m_transition;
     m_transition = transition;
@@ -253,7 +253,7 @@ void KPDFPage::deletePixmapsAndRects()
     for ( ; it != end; ++it )
         delete *it;
     m_pixmaps.clear();
-    // delete PageRects
+    // delete ObjectRects
     QValueList< ObjectRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
     for ( ; rIt != rEnd; ++rIt )
         delete *rIt;

@@ -56,7 +56,7 @@ class KPDFOutputDev : public SplashOutputDev
         QPixmap * takePixmap();
         QImage * takeImage();
         TextPage * takeTextPage();
-        QValueList< ObjectRect * > takeRects();
+        QValueList< ObjectRect * > takeObjectRects();
 
         /** inherited from OutputDev */
         // Start a page.

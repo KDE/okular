@@ -876,7 +876,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
-                const ObjectRect * rect = pageItem->page()->getRect( nX, nY );
+                const ObjectRect * rect = pageItem->page()->getObjectRect( nX, nY );
                 if ( rect )
                 {
                     // handle click over a link/image
@@ -1437,7 +1437,7 @@ void PageView::updateCursor( const QPoint &p )
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        const ObjectRect * r = pageItem->page()->getRect( nX, nY );
+        const ObjectRect * r = pageItem->page()->getObjectRect( nX, nY );
         d->mouseOnRect = r && r->objectType() == ObjectRect::Link;
         if ( d->mouseOnRect )
             setCursor( pointingHandCursor );

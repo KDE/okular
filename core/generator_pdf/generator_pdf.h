@@ -119,7 +119,7 @@ class PDFPixmapGeneratorThread : public QThread
         // methods for getting contents from the GUI thread
         QImage * takeImage() const;
         TextPage * takeTextPage() const;
-        QValueList< ObjectRect * > takeRects() const;
+        QValueList< ObjectRect * > takeObjectRects() const;
 
     private:
         // can't be called from the outside (but from startGeneration)

@@ -246,22 +246,22 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     bool genTextPage = !page->hasSearchPage() && (request->width == page->width()) &&
                        (request->height == page->height());
     // generate links and image rects if rendering pages on pageview
-    bool genRects = request->id == PAGEVIEW_ID;
+    bool genObjectRects = request->id == PAGEVIEW_ID;
 
     // 0. LOCK [waits for the thread end]
     docLock.lock();
 
     // 1. Set OutputDev parameters and Generate contents
     // note: thread safety is set on 'false' for the GUI (this) thread
-    kpdfOutputDev->setParams( request->width, request->height, genTextPage, genRects, genRects, false );
-    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
+    kpdfOutputDev->setParams( request->width, request->height, genTextPage, genObjectRects, genObjectRects, false );
+    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genObjectRects );
 
     // 2. Take data from outputdev and attach it to the Page
     page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
     if ( genTextPage )
         page->setSearchPage( kpdfOutputDev->takeTextPage() );
-    if ( genRects )
-        page->setRects( kpdfOutputDev->takeRects() );
+    if ( genObjectRects )
+        page->setObjectRects( kpdfOutputDev->takeObjectRects() );
 
     // 3. UNLOCK [re-enables shared access]
     docLock.unlock();
@@ -663,14 +663,14 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     PixmapRequest * request = static_cast< PixmapRequest * >( event->data() );
     QImage * outImage = generatorThread->takeImage();
     TextPage * outTextPage = generatorThread->takeTextPage();
-    QValueList< ObjectRect * > outRects = generatorThread->takeRects();
+    QValueList< ObjectRect * > outRects = generatorThread->takeObjectRects();
 
     request->page->setPixmap( request->id, new QPixmap( *outImage ) );
     delete outImage;
     if ( outTextPage )
         request->page->setSearchPage( outTextPage );
     if ( !outRects.isEmpty() )
-        request->page->setRects( outRects );
+        request->page->setObjectRects( outRects );
 
     // 3. tell generator that data has been taken
     generatorThread->endGeneration();
@@ -780,7 +780,7 @@ TextPage * PDFPixmapGeneratorThread::takeTextPage() const
     return tp;
 }
 
-QValueList< ObjectRect * > PDFPixmapGeneratorThread::takeRects() const
+QValueList< ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
 {
     d->m_rectsTaken = true;
     return d->m_rects;
@@ -804,16 +804,16 @@ void PDFPixmapGeneratorThread::run()
                        ( height == page->height() );
 
     // generate links and image rects if rendering pages on pageview
-    bool genPageRects = d->currentRequest->id == PAGEVIEW_ID;
+    bool genObjectRects = d->currentRequest->id == PAGEVIEW_ID;
 
     // 0. LOCK s[tart locking XPDF thread unsafe classes]
     d->generator->docLock.lock();
 
     // 1. set OutputDev parameters and Generate contents
     d->generator->kpdfOutputDev->setParams( width, height, genTextPage,
-                                           genPageRects, genPageRects, TRUE /*thread safety*/ );
+                                            genObjectRects, genObjectRects, TRUE /*thread safety*/ );
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
-                                      fakeDpiX, fakeDpiY, 0, true, genPageRects );
+                                       fakeDpiX, fakeDpiY, 0, true, genObjectRects );
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
@@ -824,7 +824,7 @@ void PDFPixmapGeneratorThread::run()
 #endif
     d->m_image = d->generator->kpdfOutputDev->takeImage();
     d->m_textPage = d->generator->kpdfOutputDev->takeTextPage();
-    d->m_rects = d->generator->kpdfOutputDev->takeRects();
+    d->m_rects = d->generator->kpdfOutputDev->takeObjectRects();
     d->m_rectsTaken = false;
 
     // 3. [UNLOCK] mutex

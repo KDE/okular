@@ -91,7 +91,7 @@ TextPage * KPDFOutputDev::takeTextPage()
     return text;
 }
 
-QValueList< ObjectRect * > KPDFOutputDev::takeRects()
+QValueList< ObjectRect * > KPDFOutputDev::takeObjectRects()
 {
     if ( m_rects.isEmpty() )
         return m_rects;

@@ -197,9 +197,9 @@ void Part::updateActionPage()
     if ( m_doc )
     {
         m_firstPage->setEnabled(m_currentPage!=0);
-        m_lastPage->setEnabled(m_currentPage!=m_doc->getNumPages());
+        m_lastPage->setEnabled(m_currentPage<m_doc->getNumPages());
         m_prevPage->setEnabled(m_currentPage!=0);
-        m_nextPage->setEnabled(m_currentPage!=m_doc->getNumPages());
+        m_nextPage->setEnabled(m_currentPage<m_doc->getNumPages());
     }
     else
     {
@@ -267,8 +267,8 @@ void Part::slotGotoEnd()
     if ( m_doc && m_doc->getNumPages() > 0 );
     {
         m_currentPage = m_doc->getNumPages();
-        pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
         m_outputDev->setPage(m_currentPage);
+        pdfpartview->pagesListBox->setCurrentItem(m_currentPage-1);
         updateActionPage();
     }
 }
@@ -277,10 +277,10 @@ void Part::slotGotoStart()
 {
     if ( m_doc && m_doc->getNumPages() > 0 );
     {
-        m_currentPage = 1;
+        m_currentPage = 0;
 
+        m_outputDev->setPage(m_currentPage+1);
         pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
-        m_outputDev->setPage(m_currentPage);
         updateActionPage();
      }
 }

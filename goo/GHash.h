@@ -36,9 +36,6 @@ public:
   int getLength() { return len; }
   void startIter(GHashIter **iter);
   GBool getNext(GHashIter **iter, const GString **key, void **val);
-  GBool getNext(GHashIter **iter, GString ** key,  void ** val)  {
-      return getNext(iter, const_cast<GString **> (key), val);
-  }
   void killIter(GHashIter **iter);
 
 private:
@@ -59,7 +56,7 @@ private:
     GHash *_hash = (hash);                         \
     {                                              \
       GHashIter *_iter;                            \
-      GString *_key;                               \
+      const GString *_key;                         \
       void *_p;                                    \
       _hash->startIter(&_iter);                    \
       while (_hash->getNext(&_iter, &_key, &_p)) { \

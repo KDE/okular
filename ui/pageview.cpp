@@ -44,7 +44,6 @@
 // local includes
 #include "pageview.h"
 #include "pageviewutils.h"
-#include "pageviewtoolbox.h"
 #include "pagepainter.h"
 #include "core/document.h"
 #include "core/page.h"
@@ -550,19 +549,16 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
 
 void PageView::viewportResizeEvent( QResizeEvent * )
 {
+    if ( d->items.isEmpty() )
+        return;
+
     // start a timer that will refresh the pixmap after 0.5s
-    if ( !d->items.isEmpty() )
+    if ( !d->delayResizeTimer )
     {
-        if ( !d->delayResizeTimer )
-        {
-            d->delayResizeTimer = new QTimer( this );
-            connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
-        }
-        d->delayResizeTimer->start( 333, true );
+        d->delayResizeTimer = new QTimer( this );
+        connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
     }
-    // update geometry of tools slider widget (if any)
-    if ( d->editToolsWindow )
-        d->editToolsWindow->anchorChanged();
+    d->delayResizeTimer->start( 333, true );
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -875,9 +871,14 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
-    // don't perform any mouse action when no document is shown
+    // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
+    {
+        // ..except for right Clicks (emitted even it viewport is empty)
+        if ( e->button() == RightButton )
+            emit rightClick( 0, e->globalPos() );
         return;
+    }
 
     // don't perform any mouse action when viewport is autoscrolling
     if ( d->viewportMoveActive )
@@ -1937,6 +1938,15 @@ void PageView::slotSetAnnotationTool( int toolID )
     }
 
     // [take a look at pageviewtoolbox.cpp for toolIDs]
+    if ( toolID == 1 )
+        d->localAnnotation = new TextAnnotation( TextAnnotation::InPlace );
+    else if ( toolID == 2 )
+        d->localAnnotation = new HighlightAnnotation( HighlightAnnotation::Highlight );
+    else if ( toolID == 3 )
+        d->localAnnotation = new PathAnnotation( PathAnnotation::Ink );
+    else
+        d->localAnnotation = new LineAnnotation( LineAnnotation::Line );
+/*
     d->localAnnotation = new HighlightAnnotation( HighlightAnnotation::Highlight );
     if ( toolID == 2 )
         d->localAnnotation->setBaseColor( Qt::yellow );
@@ -1946,7 +1956,7 @@ void PageView::slotSetAnnotationTool( int toolID )
         d->localAnnotation->setBaseColor( Qt::green );
     else
         d->localAnnotation->setBaseColor( Qt::black );
-
+*/
     // display usage tip of the tool
     d->messageWindow->display( d->localAnnotation->usageTip(), PageViewMessage::Annotation );
 }

@@ -70,33 +70,64 @@ class Annotation : public NormalizedRect
         QDateTime m_creationDate;
 };
 
+
+struct FloatPoint {
+    double x, y;
+};
+
 class TextAnnotation : public Annotation
 {
+    public:
+        enum Type { InPlace, Popup };
+        TextAnnotation( Type type );
 
-    //Text (post-it like)
-    //FreeText (direct on page)
-    enum Type { InPlace, Popup };
+        // [Annotation] inherited methods
+        QString usageTip() const;
+        bool mouseEvent( MouseEvent e, double x, double y, Qt::ButtonState b );
+        void paintOverlay( QPainter * painter, int xScale, int yScale, const QRect & limits );
+        void paintFinal( QImage & backImage, int xScale, int yScale, const QRect & limits );
+
+    private:
+        Type m_type;
 };
 
 class LineAnnotation : public Annotation
 {
-    //Line (arrows too)
+    public:
+        enum Type { Line, DestArrow, SrcArrow, BiArrow };
+        LineAnnotation( Type type );
+
+        // [Annotation] inherited methods
+        QString usageTip() const;
+        bool mouseEvent( MouseEvent e, double x, double y, Qt::ButtonState b );
+        void paintOverlay( QPainter * painter, int xScale, int yScale, const QRect & limits );
+        void paintFinal( QImage & backImage, int xScale, int yScale, const QRect & limits );
+
+    private:
+        Type m_type;
 };
 
 class GeomAnnotation : public Annotation
 {
-    //Square, Circle
+    //Square, Circle, Polygon
 };
 
 class PathAnnotation : public Annotation
 {
-    //Ink (one or more disjoints paths)
-    //Polygon, PolyLine
-};
+    //Ink (one or more disjoints paths), Polygon, PolyLine
+    public:
+        enum Type { Ink, PolyLine };
+        PathAnnotation( Type type );
 
-struct FloatPoint
-{
-    double x, y;
+        // [Annotation] inherited methods
+        QString usageTip() const;
+        bool mouseEvent( MouseEvent e, double x, double y, Qt::ButtonState b );
+        void paintOverlay( QPainter * painter, int xScale, int yScale, const QRect & limits );
+        void paintFinal( QImage & backImage, int xScale, int yScale, const QRect & limits );
+
+    private:
+        Type m_type;
+        QValueList<FloatPoint> m_points;
 };
 
 class HighlightAnnotation : public Annotation

@@ -62,7 +62,7 @@
    <default>true</default>
   </entry>
   <entry key="SplitterSizes" type="IntList" />
-  <entry key="EditToolboxPlacement" type="Int" >
+  <entry key="EditToolBarPlacement" type="Int" >
    <default>0</default>
   </entry>
  </group>

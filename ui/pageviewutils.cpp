@@ -9,17 +9,27 @@
 
 // qt/kde includes
 #include <qbitmap.h>
+#include <qimage.h>
 #include <qpainter.h>
 #include <qtimer.h>
+#include <qtooltip.h>
+#include <qpushbutton.h>
 #include <kiconloader.h>
+#include <kimageeffect.h>
+#include <kaccelmanager.h>
+#include <klocale.h>
+
+// system includes
+#include <math.h>
 
 // local includes
 #include "pageviewutils.h"
 #include "core/page.h"
 #include "conf/settings.h"
 
-
-/** PageViewItem **/
+/*********************/
+/** PageViewItem     */
+/*********************/
 
 PageViewItem::PageViewItem( const KPDFPage * page )
     : m_page( page ), m_zoomFactor( 1.0 )
@@ -75,7 +85,9 @@ void PageViewItem::moveTo( int x, int y )
 }
 
 
-/** PageViewMessage **/
+/*********************/
+/** PageViewMessage  */
+/*********************/
 
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent, "pageViewMessage" ), m_timer( 0 )
@@ -88,7 +100,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 }
 
 void PageViewMessage::display( const QString & message, Icon icon, int durationMs )
-// give to Caesar what Caesar owns: code taken from Amarok's osd.h/.cpp
+// give Caesar what belongs to Caesar: code taken from Amarok's osd.h/.cpp
 {
     if ( !Settings::showOSD() )
     {
@@ -192,3 +204,432 @@ void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
         m_timer->stop();
     hide();
 }
+
+
+/*********************/
+/** PageViewToolBar  */
+/*********************/
+
+class ToolBarButton : public QPushButton
+{
+    public:
+        static const int iconSize = 32;
+        static const int buttonSize = 40;
+
+        ToolBarButton( QWidget * parent, const ToolBarItem & item, const QPixmap & parentPix );
+        int buttonID() const { return m_id; }
+
+    protected:
+        void mouseMoveEvent( QMouseEvent * e );
+        void paintEvent( QPaintEvent * e );
+
+    private:
+        int m_id;
+        bool m_hovering;
+        const QPixmap & m_background;
+};
+
+ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const QPixmap & pix )
+    : QPushButton( parent ), m_id( item.id ), m_hovering( false ), m_background( pix )
+{
+    setMouseTracking( true );
+    setToggleButton( true );
+    resize( buttonSize, buttonSize );
+    setPixmap( DesktopIcon( item.pixmap, iconSize ) );
+    QToolTip::add( this, item.text );
+    setWFlags( Qt::WNoAutoErase );
+    KAcceleratorManager::setNoAccel( this );
+}
+
+void ToolBarButton::mouseMoveEvent( QMouseEvent * e )
+{
+    // if hovering changes, update gfx
+    bool hover = QRect( 0, 0, width(), height() ) .contains( e->pos() );
+    if ( m_hovering != hover )
+    {
+        m_hovering = hover;
+        update();
+    }
+}
+
+void ToolBarButton::paintEvent( QPaintEvent * e )
+{
+    // if the button is pressed or we're hovering it, use QPushButton style
+    if ( isOn() || m_hovering )
+    {
+        QPushButton::paintEvent( e );
+        return;
+    }
+
+    // draw button's pixmap over the parent's background (fake transparency)
+    QPainter p( this );
+    QRect backRect = e->rect();
+    backRect.moveBy( x(), y() );
+    p.drawPixmap( e->rect().topLeft(), m_background, backRect );
+    drawButtonLabel( &p );
+}
+
+/* PageViewToolBar */
+
+static const int toolBarGridSize = 40;
+static const int toolBarRBMargin = 2;
+
+struct ToolBarPrivate
+{
+    // anchored widget and side
+    QWidget * anchorWidget;
+    PageViewToolBar::Side anchorSide;
+
+    // slide in/out stuff
+    QTimer * animTimer;
+    QPoint currentPosition;
+    QPoint endPosition;
+    bool hiding;
+
+    // background pixmap and buttons
+    QPixmap backgroundPixmap;
+    QValueList< ToolBarButton * > buttons;
+};
+
+PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
+    : QWidget( parent, "", Qt::WNoAutoErase ), d( new ToolBarPrivate )
+{
+    // initialize values of the private data storage structure
+    d->anchorWidget = anchorWidget;
+    d->anchorSide = Left;
+    d->hiding = false;
+
+    // create the animation timer
+    d->animTimer = new QTimer( this );
+    connect( d->animTimer, SIGNAL( timeout() ), this, SLOT( slotAnimate() ) );
+
+    // apply a filter to get notified when anchor changes geometry
+    d->anchorWidget->installEventFilter( this );
+}
+
+PageViewToolBar::~PageViewToolBar()
+{
+    // delete the private data storage structure
+    delete d;
+}
+
+void PageViewToolBar::showItems( Side side, const QValueList<ToolBarItem> & items )
+{
+    // set parameters for sliding in
+    d->anchorSide = side;
+    d->hiding = false;
+
+    // delete buttons if already present
+    if ( !d->buttons.isEmpty() )
+    {
+        QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+        for ( ; it != end; ++it )
+            delete *it;
+        d->buttons.clear();
+    }
+
+    // create new buttons for given items
+    QValueList<ToolBarItem>::const_iterator it = items.begin(), end = items.end();
+    for ( ; it != end; ++it )
+    {
+        ToolBarButton * button = new ToolBarButton( this, *it, d->backgroundPixmap );
+        connect( button, SIGNAL( clicked() ), this, SLOT( slotButtonClicked() ) );
+        d->buttons.append( button );
+    }
+
+    // rebuild toolbar shape and contents
+    buildToolBar();
+    d->currentPosition = getOuterPoint();
+    d->endPosition = getInnerPoint();
+    move( d->currentPosition );
+    show();
+
+    // start scrolling in
+    d->animTimer->start( 20 );
+}
+
+void PageViewToolBar::hideAndDestroy()
+{
+    // set parameters for sliding out
+    d->hiding = true;
+    d->endPosition = getOuterPoint();
+
+    // start scrolling out
+    d->animTimer->start( 20 );
+}
+
+bool PageViewToolBar::eventFilter( QObject * obj, QEvent * e )
+{
+    // if anchorWidget changed geometry reposition toolbar
+    if ( obj == d->anchorWidget && e->type() == QEvent::Resize )
+    {
+        d->animTimer->stop();
+        if ( d->hiding )
+            deleteLater();
+        else
+            reposition();
+    }
+
+    // don't block event
+    return false;
+}
+
+void PageViewToolBar::paintEvent( QPaintEvent * e )
+{
+    // paint the internal pixmap over the widget
+    bitBlt( this, e->rect().topLeft(), &d->backgroundPixmap, e->rect() );
+}
+
+void PageViewToolBar::mousePressEvent( QMouseEvent * e )
+{
+    // set 'dragging' cursor
+    if ( e->button() == Qt::LeftButton )
+        setCursor( sizeAllCursor );
+}
+
+void PageViewToolBar::mouseMoveEvent( QMouseEvent * e )
+{
+    if ( e->state() != Qt::LeftButton )
+        return;
+
+    // compute the nearest side to attach the widget to
+    QPoint parentPos = mapToParent( e->pos() );
+    float nX = (float)parentPos.x() / (float)d->anchorWidget->width(),
+          nY = (float)parentPos.y() / (float)d->anchorWidget->height();
+    if ( nX > 0.3 && nX < 0.7 && nY > 0.3 && nY < 0.7 )
+        return;
+    bool LT = nX < (1.0 - nY);
+    bool LB = nX < (nY);
+    Side side = LT ? ( LB ? Left : Top ) : ( LB ? Bottom : Right );
+
+    // if side changed, update stuff
+    if ( side != d->anchorSide )
+    {
+        // inform subclasses about orientation change
+        orientationChanged( d->anchorSide = side );
+
+        // rebuild and display the widget
+        reposition();
+    }
+}
+
+void PageViewToolBar::mouseReleaseEvent( QMouseEvent * e )
+{
+    // set normal cursor
+    if ( e->button() == Qt::LeftButton )
+        setCursor( arrowCursor );
+}
+
+void PageViewToolBar::buildToolBar()
+{
+    int buttonsNumber = d->buttons.count(),
+        parentWidth = d->anchorWidget->width(),
+        parentHeight = d->anchorWidget->height(),
+        myCols = 1,
+        myRows = 1;
+
+    // 1. find out columns and rows we're going to use
+    bool topLeft = d->anchorSide == Left || d->anchorSide == Top;
+    bool vertical = d->anchorSide == Left || d->anchorSide == Right;
+    if ( vertical )
+    {
+        myCols = 1 + (buttonsNumber * toolBarGridSize) /
+                 (parentHeight - toolBarGridSize);
+        myRows = (int)ceilf( (float)buttonsNumber / (float)myCols );
+    }
+    else
+    {
+        myRows = 1 + (buttonsNumber * toolBarGridSize) /
+                 (parentWidth - toolBarGridSize);
+        myCols = (int)ceilf( (float)buttonsNumber / (float)myRows );
+    }
+
+    // 2. compute widget size (from rows/cols)
+    int myWidth = myCols * toolBarGridSize,
+        myHeight = myRows * toolBarGridSize,
+        xOffset = (toolBarGridSize - ToolBarButton::buttonSize) / 2,
+        yOffset = (toolBarGridSize - ToolBarButton::buttonSize) / 2;
+
+    if ( vertical )
+    {
+        myHeight += 16;
+        myWidth += 4;
+        yOffset += 12;
+        if ( d->anchorSide == Right )
+            xOffset += 4;
+    }
+    else
+    {
+        myWidth += 16;
+        myHeight += 4;
+        xOffset += 12;
+        if ( d->anchorSide == Bottom )
+            yOffset += 4;
+    }
+
+    // 3. resize pixmap, mask and widget
+    static QBitmap mask;
+    mask.resize( myWidth, myHeight );
+    d->backgroundPixmap.resize( myWidth, myHeight );
+    resize( myWidth, myHeight );
+
+    // 4. create and set transparency mask
+    QPainter maskPainter( &mask);
+    mask.fill( Qt::black );
+    maskPainter.setBrush( Qt::white );
+    if ( vertical )
+        maskPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
+    else
+        maskPainter.drawRoundRect( 0, topLeft ? -10 : 0, myWidth, myHeight + 10, 2000 / myWidth, 2000 / (myHeight + 10) );
+    setMask( mask );
+
+    // 5. draw background
+    QPainter bufferPainter( &d->backgroundPixmap );
+    // 5.1. draw horizontal/vertical gradient
+    QColor fromColor = topLeft ? palette().active().button() : palette().active().light();
+    QColor toColor = topLeft ? palette().active().light() : palette().active().button();
+    QPixmap gradientPattern = KImageEffect::gradient(
+            vertical ? QSize( myWidth, 1) : QSize( 1, myHeight ), fromColor, toColor,
+            vertical ? KImageEffect::HorizontalGradient : KImageEffect::VerticalGradient );
+    bufferPainter.drawTiledPixmap( 0, 0, myWidth, myHeight, gradientPattern );
+    // 5.2. draw rounded border
+    bufferPainter.setPen( palette().active().dark() );
+    if ( vertical )
+        bufferPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
+    else
+        bufferPainter.drawRoundRect( 0, topLeft ? -10 : 0, myWidth, myHeight + 10, 2000 / myWidth, 2000 / (myHeight + 10) );
+    // 5.3. draw handle
+    bufferPainter.setPen( palette().active().mid() );
+    if ( vertical )
+    {
+        int dx = d->anchorSide == Left ? 2 : 4;
+        bufferPainter.drawLine( dx, 6, dx + myWidth - 8, 6 );
+        bufferPainter.drawLine( dx, 9, dx + myWidth - 8, 9 );
+        bufferPainter.setPen( palette().active().light() );
+        bufferPainter.drawLine( dx + 1, 7, dx + myWidth - 7, 7 );
+        bufferPainter.drawLine( dx + 1, 10, dx + myWidth - 7, 10 );
+    }
+    else
+    {
+        int dy = d->anchorSide == Top ? 2 : 4;
+        bufferPainter.drawLine( 6, dy, 6, dy + myHeight - 8 );
+        bufferPainter.drawLine( 9, dy, 9, dy + myHeight - 8 );
+        bufferPainter.setPen( palette().active().light() );
+        bufferPainter.drawLine( 7, dy + 1, 7, dy + myHeight - 7 );
+        bufferPainter.drawLine( 10, dy + 1, 10, dy + myHeight - 7 );
+    }
+
+    // 6. reposition buttons (in rows/col grid)
+    int gridX = 0,
+        gridY = 0;
+    QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+    for ( ; it != end; ++it )
+    {
+        ToolBarButton * button = *it;
+        button->move( gridX * toolBarGridSize + xOffset,
+                      gridY * toolBarGridSize + yOffset );
+        if ( ++gridX == myCols )
+        {
+            gridX = 0;
+            gridY++;
+        }
+    }
+}
+
+void PageViewToolBar::reposition()
+{
+    // note: hiding widget here will gives better gfx, but ends drag operation
+    // rebuild widget and move it to its final place
+    buildToolBar();
+    d->currentPosition = getInnerPoint();
+    move( d->currentPosition );
+
+    // repaint all buttons (to update background)
+    QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+    for ( ; it != end; ++it )
+        (*it)->update();
+}
+
+QPoint PageViewToolBar::getInnerPoint()
+{
+    // returns the final position of the widget
+    if ( d->anchorSide == Left )
+        return QPoint( 0, (d->anchorWidget->height() - height()) / 2 );
+    if ( d->anchorSide == Top )
+        return QPoint( (d->anchorWidget->width() - width()) / 2, 0 );
+    if ( d->anchorSide == Right )
+        return QPoint( d->anchorWidget->width() - width() + toolBarRBMargin, (d->anchorWidget->height() - height()) / 2 );
+    return QPoint( (d->anchorWidget->width() - width()) / 2, d->anchorWidget->height() - height() + toolBarRBMargin );
+}
+
+QPoint PageViewToolBar::getOuterPoint()
+{
+    // returns the point from which the transition starts
+    if ( d->anchorSide == Left )
+        return QPoint( -width(), (d->anchorWidget->height() - height()) / 2 );
+    if ( d->anchorSide == Top )
+        return QPoint( (d->anchorWidget->width() - width()) / 2, -height() );
+    if ( d->anchorSide == Right )
+        return QPoint( d->anchorWidget->width() + toolBarRBMargin, (d->anchorWidget->height() - height()) / 2 );
+    return QPoint( (d->anchorWidget->width() - width()) / 2, d->anchorWidget->height() + toolBarRBMargin );
+}
+
+void PageViewToolBar::slotAnimate()
+{
+    // move currentPosition towards endPosition
+    int dX = d->endPosition.x() - d->currentPosition.x(),
+        dY = d->endPosition.y() - d->currentPosition.y();
+    dX = dX / 6 + QMAX( -1, QMIN( 1, dX) );
+    dY = dY / 6 + QMAX( -1, QMIN( 1, dY) );
+    d->currentPosition.setX( d->currentPosition.x() + dX );
+    d->currentPosition.setY( d->currentPosition.y() + dY );
+
+    // move the widget
+    move( d->currentPosition );
+
+    // handle arrival to the end
+    if ( d->currentPosition == d->endPosition )
+    {
+        d->animTimer->stop();
+        if ( d->hiding )
+            deleteLater();
+    }
+}
+
+void PageViewToolBar::slotButtonClicked()
+{
+    ToolBarButton * button = (ToolBarButton *)sender();
+    if ( button )
+    {
+        // deselect other buttons
+        QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+        for ( ; it != end; ++it )
+            if ( *it != button )
+                (*it)->setOn( false );
+        // emit signal (-1 if button has been unselected)
+        emit toolSelected( button->isOn() ? button->buttonID() : -1 );
+    }
+}
+
+/* PageViewEditTools */
+
+PageViewEditTools::PageViewEditTools( QWidget * parent, QWidget * anchorWidget )
+    : PageViewToolBar( parent, anchorWidget )
+{
+    // create the ToolBarItems and show it on last place
+    QValueList<ToolBarItem> items;
+    items.push_back( ToolBarItem( 1, i18n("Text Tool"), "pinnote" ) );
+    items.push_back( ToolBarItem( 2, i18n("Highlighter"), "highlight_pink" ) );
+    items.push_back( ToolBarItem( 3, i18n("Pencil Tool"), "pencil" ) );
+    items.push_back( ToolBarItem( 4, i18n("Line Tool"), "color_line" ) );
+    //items.push_back( ToolBarItem( 5, i18n("sbiancante"), "coprex-white" ) );
+    showItems( (Side)Settings::editToolBarPlacement(), items );
+}
+
+void PageViewEditTools::orientationChanged( Side side )
+{
+    // save position to the conficuration file
+    Settings::setEditToolBarPlacement( (int)side );
+}
+
+#include "pageviewutils.moc"

@@ -48,6 +48,7 @@ More items (first items will enter 'In progress list' first):
 -> text selection in wordprocessor style (very hard, not impossible)
 -> zoom: fit text (with configurable margin)
 -> bookview: 3d opengl widget for viewing the document as a real book (turning pages, etc..)
+-> wallet: use asynchronous interface (to prevent ui-blocking)
 -> open gzipped (.pdf.gz?) files
 -> kspeech TTS interface. speech {document(missing) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
@@ -74,6 +75,7 @@ More items (first items will enter 'In progress list' first):
 -> cleanup code and update README.png
 
 Done (newest features come first):
+-> FIX: rmb when no doc displayed to restore menu
 -> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files
 -> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]

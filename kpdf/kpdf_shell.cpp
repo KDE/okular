@@ -135,7 +135,6 @@ Shell::setupActions()
   setStandardToolBarMenuEnabled(true);
   m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
   m_popup = new KPopupMenu( this, "rmb popup" );
-  m_popup->insertTitle( i18n( "Full Screen Options" ) );
   m_fullScreenAction->plug( m_popup );
 }
 
@@ -151,9 +150,15 @@ Shell::saveProperties(KConfig* config)
 void Shell::slotShowMenubar()
 {
     if ( m_showMenuBarAction->isChecked() )
+    {
         menuBar()->show();
+        m_showMenuBarAction->unplug( m_popup );
+    }
     else
+    {
         menuBar()->hide();
+        m_showMenuBarAction->plug( m_popup );
+    }
 }
 
 
@@ -237,6 +242,7 @@ void Shell::slotUpdateFullScreen()
 {
     if( m_fullScreenAction->isChecked())
     {
+    	m_showMenuBarAction->unplug( m_popup );
 	menuBar()->hide();
 	statusBar()->hide();
 	toolBar()->hide();
@@ -253,7 +259,7 @@ void Shell::slotUpdateFullScreen()
     {
 	//kapp->removeEventFilter( m_fsFilter );
         //m_pdfpart->setFullScreen( false );
-	menuBar()->show();
+  slotShowMenubar(); 
 #if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
 	KToggleAction *statusbarAction = dynamic_cast<KToggleAction *>(actionCollection()->action(KStdAction::name(KStdAction::ShowStatusbar)));
 	Q_ASSERT( statusbarAction );

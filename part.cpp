@@ -183,7 +183,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showProperties = new KAction(i18n("&Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
 
-	m_showPresentation = new KAction( i18n("P&resentation"), "kpresenter_kpr", "F9", this, SLOT(slotShowPresentation()), ac, "presentation");
+	m_showPresentation = new KAction( i18n("P&resentation"), "kpresenter_kpr", "Ctrl+Shift+P", this, SLOT(slotShowPresentation()), ac, "presentation");
 	m_showPresentation->setEnabled( false );
 
     // attach the actions of the 2 children widgets too

@@ -23,7 +23,6 @@ High priority 3.4 features (deadline is 2k5-Feb-2):
 -> rmb popup for bookmarking pages on thumbnailslist, showing bkmarked pages and
    go to next/previous bookmark actions (support for showing bookmarked pages
    is already in, but disabled)
--> evaluate wether to change F9 as the default presentation shortcut
 
 More items (first items will enter 'In progress list' first):
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
@@ -91,6 +90,7 @@ More items (first items will enter 'In progress list' first):
 -> export: export to other formats keeping formatting (a dream.. except for PNG :-) (PS is easy, we just have PSOutputDev that does it :-D)
 
 Done (newest features come first):
+-> CHG: Presentation mode is now Ctrl+Shift+p instead of F9 because it was colliding with Konqueror's toggle sidebar
 -> FIX: various in memory unallocator, preload with single pages, pageview
 -> FIX: optimized pageView (removed 1 waster req on start, lowered reqs)
 -> FIX: memory unloading order and hard swap avoiding

@@ -657,6 +657,9 @@ BrowserExtension::print()
 
 void Part::printPreview()
 {
+  if (m_doc == 0)
+    return;
+
   KPrinter printer;
   printer.setPreviewOnly( true );
   QPainter painter( &printer );

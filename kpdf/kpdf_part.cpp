@@ -466,9 +466,10 @@ Part::redrawPage()
 	displayPage(m_currentPage);
 }
 
-void
-Part::pageClicked ( QListBoxItem * qbi )
+void Part::pageClicked ( QListBoxItem * qbi )
 {
+    if ( !qbi )
+        return;
     m_currentPage = pdfpartview->pagesListBox->index(qbi)+1;
     m_outputDev->setPage(m_currentPage);
 }

@@ -29,7 +29,7 @@ namespace KPDF
 			/* void setLinks(); */
 
 			void setPage(int pagenum);
-			int getPage() { return m_currentPage; };
+			int getPage() const { return m_currentPage; };
 
 		public slots:
 			void nextPage();

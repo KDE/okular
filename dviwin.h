@@ -24,8 +24,6 @@ public:
 	~dviWindow();
 	int		page();
 	int		totalPages();
-	int		zoom();
-	double		shrink();
 	void		setShowPS( int flag );
 	int		showPS();
 	void		setAntiAlias( int flag );
@@ -42,48 +40,24 @@ public:
 	float		gamma();
 	void		setFontPath( const char * );
 	const char *	fontPath();
-	QSize		viewSize();
-	QSize		pageSize();
-	QPoint		currentPos();
         
 signals:
 	void		setPoint( QPoint p );
-	void		currentPage(int page);
-	void		pageSizeChanged( QSize );
-	void		viewSizeChanged( QSize ); 
-	void		currentPosChanged( QPoint );
-	void		zoomChanged( int zoom );
-	void		fileChanged();
 	void		statusChange( const QString & );
 
 
 public slots:
 	void		setFile(const char *fname);
-	void		prevPage();
-	void		nextPage();
 	void		gotoPage(int page);
-	void		goForward();
-	void		firstPage();
-	void		lastPage();
-	void		zoomOut();
-	void		zoomIn();
 	void		setZoom(int zoom);
-	void		scroll( QPoint to );
 	void		drawPage();
 
 protected:
-	void            resizeEvent(QResizeEvent *e);
-        void		viewportMousePressEvent ( QMouseEvent *e);
-	void		viewportMouseMoveEvent ( QMouseEvent *e);
-	void		keyPressEvent ( QKeyEvent *e);
         void            drawContents ( QPainter *p, 
                                        int clipx, int clipy, 
                                        int clipw, int cliph );
-private slots:
-        void            contentsMoving(int x, int y);
 
 private:
-	bool		changedDVI();
 	bool		correctDVI();
 	void		initDVI();
 	void		changePageSize();
@@ -96,7 +70,6 @@ private:
 	QString		FontPath;
 	QString		paper_type;
 	int		ChangesPossible;
-	QDateTime	changetime;
 };
 
 #endif

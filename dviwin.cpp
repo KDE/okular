@@ -95,6 +95,7 @@ extern  void qt_processEvents(void)
 	qApp->processEvents();
 }
 
+
 //------ now comes the dviWindow class implementation ----------
 
 dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int mkpk, QWidget *parent, const char *name ) : QScrollView( parent, name )
@@ -108,9 +109,6 @@ dviWindow::dviWindow( int bdpi, int zoom, const char *mfm, const char *ppr, int 
 	setHScrollBarMode(QScrollView::AlwaysOff);
 	setVScrollBarMode(QScrollView::AlwaysOff);
 
-        connect(this, SIGNAL(contentsMoving(int, int)),
-                this, SLOT(contentsMoving(int, int)));
-        
 	// initialize the dvi machinery
 
 	setResolution( bdpi );
@@ -265,61 +263,6 @@ float dviWindow::gamma()
 }
 
 
-//------ reimplement virtual event handlers -------------
-void dviWindow::viewportMousePressEvent ( QMouseEvent *e)
-{
-        if (!(e->button()&LeftButton))
-	{
-	  QScrollView::viewportMousePressEvent(e);
-	  return;
-	}
-	mouse = e->pos();
-        emit setPoint( viewportToContents(mouse) );
-}
-
-
-void dviWindow::viewportMouseMoveEvent ( QMouseEvent *e)
-{
-	if (!(e->state()&LeftButton))
-		return;
-        QPoint diff = mouse - e->pos();
-	mouse = e->pos();
-        scrollBy(diff.x(), diff.y());
-}
-
-void dviWindow::keyPressEvent ( QKeyEvent *e)
-{
-	const int slowScrollSpeed = 1;
-	const int fastScrollSpeed = 15;
-	int speed = e->state() & ControlButton ?
-			slowScrollSpeed : fastScrollSpeed;
-
-	switch( e->key() ) {
-	case Key_Next:	nextPage();				break;
-	case Key_Prior:	prevPage();				break;
-	case Key_Space:	goForward();				break;
-	case Key_Plus:	zoomIn();				break;
-	case Key_Minus:	zoomOut();				break;
-        case Key_Down:	scrollBy(0,speed);              	break;
-	case Key_Up:	scrollBy(0,-speed);             	break;
-	case Key_Right:	scrollBy(speed,0);              	break;
-	case Key_Left:	scrollBy(-speed,0);                     break;
-	case Key_Home:	
-		if (e->state() == ControlButton)
-			firstPage();
-		else
-			setContentsPos(0,0);
-		break;
-	case Key_End:
-		if (e->state() == ControlButton)
-			lastPage();
-		else
-			setContentsPos(0, contentsHeight()-visibleHeight());
-		break;
-	default:	e->ignore();				break;
-	}
-}
-
 void dviWindow::initDVI()
 {
         prog = const_cast<char*>("kdvi");
@@ -362,12 +305,10 @@ void dviWindow::drawPage()
 			  + dvi_oops_msg);
       return;
     }
-    if ( !check_dvi_file() )
-      emit fileChanged();
+    check_dvi_file();
     QApplication::restoreOverrideCursor();
     gotoPage(1);
     changePageSize();
-    emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
     return;
   }
   min_x = 0;
@@ -391,8 +332,7 @@ void dviWindow::drawPage()
 			  + dvi_oops_msg);
       return;
     } else {
-      if ( !check_dvi_file() )
-	emit fileChanged();
+      check_dvi_file();
       pixmap->fill( white );
       draw_page();
     }
@@ -403,10 +343,6 @@ void dviWindow::drawPage()
   repaintContents(contentsX(), contentsY(), visibleWidth(), visibleHeight(), FALSE);
 }
 
-bool dviWindow::changedDVI()
-{
-	return changetime != QFileInfo(filename).lastModified();
-}
 
 bool dviWindow::correctDVI()
 {
@@ -438,7 +374,6 @@ void dviWindow::changePageSize()
   }
   pixmap = new QPixmap( (int)page_w, (int)page_h );
   pixmap->fill( white );
-  emit pageSizeChanged( QSize( page_w, page_h ) );
 
   // Resize the QScrollview. Be careful to maintain the locical positon 
   // on the ScrollView. This looks kind of complicated, but my experience
@@ -477,54 +412,12 @@ void dviWindow::setFile( const char *fname )
         }
         filename = fname;
         dvi_name = 0;
-        changetime = QFileInfo(filename).lastModified();
         drawPage();
 }
 
-//------ following member functions are in the public interface ----------
-
-QPoint dviWindow::currentPos()
-{
-	return QPoint(contentsX(), contentsY());
-}
-
-void dviWindow::scroll( QPoint to )
-{
-	setContentsPos(to.x(), to.y());
-}
-
-QSize dviWindow::viewSize()
-{
-	return QSize( visibleWidth(), visibleHeight() );
-}
-
-QSize dviWindow::pageSize()
-{
-	return QSize( page_w, page_h );
-}
 
 //------ handling pages ----------
 
-void dviWindow::goForward()
-{
-  if(contentsY() >= contentsHeight()-visibleHeight()) {
-    nextPage();
-    // Go to the top of the page, but keep the horizontal position
-    setContentsPos(contentsX(), 0);
-  }
-  else
-    scrollBy(0, 2*visibleWidth()/3);
-}
-
-void dviWindow::prevPage()
-{
-	gotoPage( page()-1 );
-}
-
-void dviWindow::nextPage()
-{
-	gotoPage( page()+1 );
-}
 
 void dviWindow::gotoPage(int new_page)
 {
@@ -535,18 +428,7 @@ void dviWindow::gotoPage(int new_page)
   if (new_page-1==current_page)
     return;
   current_page = new_page-1;
-  emit currentPage(new_page);
   drawPage();
-}
-
-void dviWindow::firstPage()
-{
-	gotoPage(1);
-}
-
-void dviWindow::lastPage()
-{
-	gotoPage(totalPages());
 }
 
 int dviWindow::page()
@@ -557,36 +439,6 @@ int dviWindow::page()
 int dviWindow::totalPages()
 {
 	return total_pages;
-}
-
-// Return the current zoom in percent.
-// Zoom = 100% means that the image on the screen has the same
-//             size as a printout.
-
-int dviWindow::zoom()
-{
-  // @@@ We assume that pixels are square, i.e. that vertical and horizontal resolutions
-  // agree. Is that a safe assumption?
-  double xres = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4)/DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
-
-  return (int)( (basedpi * 100.0)/(currwin.shrinkfactor*xres) + 0.5);
-}
-
-double dviWindow::shrink()
-{
-  return currwin.shrinkfactor;
-}
-
-void dviWindow::zoomOut()
-{
-  //@@@	setShrink( shrink() - 1 );
-  setZoom(zoom()-10);
-}
-
-void dviWindow::zoomIn()
-{
-  //@@@	setShrink( shrink() + 1 );
-  setZoom(zoom()+10);
 }
 
 void dviWindow::setZoom(int zoom)
@@ -600,18 +452,6 @@ void dviWindow::setZoom(int zoom)
   init_page();
   reset_fonts();
   changePageSize();
-  emit zoomChanged( zoom );
-}
-
-void dviWindow::resizeEvent(QResizeEvent *e)
-{
-  QScrollView::resizeEvent(e);
-  emit viewSizeChanged( QSize( visibleWidth(),visibleHeight() ));
-}	
-
-void dviWindow::contentsMoving( int x, int y ) 
-{
-  emit currentPosChanged( QPoint(x, y) );
 }
 
 

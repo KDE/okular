@@ -443,7 +443,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
       dvips_options +=  QString(",");
     else
       commaflag = 1;
-    dvips_options += QString("%1").arg(*it);
+    dvips_options += QString("%1").arg((*it)-1);
   }
 
   // Now print. For that, export the DVI-File to PostScript. Note that

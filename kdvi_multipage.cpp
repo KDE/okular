@@ -5,7 +5,7 @@
 #include <qimage.h>
 #include <qpixmap.h>
 
-
+#include <kaction.h>
 #include <kaboutdata.h>
 #include <kaboutdialog.h>
 #include <kapp.h>

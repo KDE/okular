@@ -50,9 +50,6 @@
 #include <qimage.h>
 #include <qpainter.h>
 #include <qdict.h>
-#include <qtimer.h>
-#include <qapplication.h>
-#include <qclipboard.h>
 
 #include <kdebug.h>
 
@@ -116,7 +113,7 @@ QFont QOutputDev::matchFont ( GfxFont *gfxFont, fp_t /*m11*/, fp_t m12, fp_t m21
 	int size = qRound ( sqrt ( m21 * m21 + m22 * m22 ));
 
 	QString fname (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" );
-
+	
 	QFont f;
 	f. setPixelSize ( size > 0 ? size : 8 ); // type3 fonts misbehave sometimes
 
@@ -372,9 +369,10 @@ void QOutputDev::updateLineAttrs ( GfxState *state, GBool updateDash )
 void QOutputDev::updateFillColor ( GfxState *state )
 {
 	GfxRGB rgb;
-	state-> getFillRGB ( &rgb );
-
-	m_painter-> setBrush ( q_col ( rgb ));
+	state -> getFillRGB(&rgb);
+	
+	m_fillColor = q_col(rgb);
+	m_painter -> setBrush(m_fillColor);
 }
 
 void QOutputDev::updateStrokeColor ( GfxState *state )
@@ -387,22 +385,26 @@ void QOutputDev::updateStrokeColor ( GfxState *state )
 	m_painter-> setPen ( pen );
 }
 
-void QOutputDev::updateFont ( GfxState *state )
+void QOutputDev::updateFont(GfxState *state)
 {
 	fp_t m11, m12, m21, m22;
-	GfxFont *gfxFont = state-> getFont ( );
+	GfxFont *gfxFont;
+	GfxFontType fontType;
+	 
+	gfxFont = state->getFont();
+	if (!gfxFont) return;
+	fontType = gfxFont->getType();
+	if (fontType == fontType3) return;
 
-	if ( !gfxFont )
-		return;
+	// get the font matrix
+	state->getFontTransMat(&m11, &m12, &m21, &m22);
+	m11 *= state->getHorizScaling();
+	m12 *= state->getHorizScaling();
 
-	state-> getFontTransMat ( &m11, &m12, &m21, &m22 );
-	m11 *= state-> getHorizScaling ( );
-	m12 *= state-> getHorizScaling ( );
+	QFont font = matchFont(gfxFont, m11, m12, m21, m22);
 
-	QFont font = matchFont ( gfxFont, m11, m12, m21, m22 );
-
-	m_painter-> setFont ( font );
-	m_text-> updateFont ( state );
+	m_painter-> setFont(font);
+	m_text-> updateFont(state);
 }
 
 void QOutputDev::stroke ( GfxState *state )
@@ -411,16 +413,14 @@ void QOutputDev::stroke ( GfxState *state )
 	QMemArray<int> lengths;
 
 	// transform points
-	int n = convertPath ( state, points, lengths );
+	int n = convertPath(state, points, lengths);
 
 	// draw each subpath
 	int j = 0;
-	for ( int i = 0; i < n; i++ ) {
-		int len = lengths [i];
-
-		if ( len >= 2 ) {
-			m_painter-> drawPolyline ( points, j, len );
-		}
+	for ( int i = 0; i < n; i++ )
+	{
+		int len = lengths[i];
+		if ( len >= 2 ) m_painter-> drawPolyline(points, j, len);
 		j += len;
 	}
 }
@@ -444,29 +444,29 @@ void QOutputDev::eoFill ( GfxState *state )
 //  only for single-component polygons, since it's not very
 //  compatible with the compound polygon kludge (see convertPath()).
 //
-void QOutputDev::doFill ( GfxState *state, bool winding )
+void QOutputDev::doFill(GfxState *state, bool winding)
 {
 	QPointArray points;
 	QMemArray<int> lengths;
+	QPen pen, oldpen;
 
 	// transform points
-	int n = convertPath ( state, points, lengths );
+	int n = convertPath(state, points, lengths);
 
-	QPen oldpen = m_painter-> pen ( );
-	m_painter-> setPen ( QPen ( Qt::NoPen ));
+	oldpen = m_painter -> pen();
+	pen = oldpen;
+	pen.setColor(m_fillColor);
+	m_painter -> setPen(pen);
 
 	// draw each subpath
 	int j = 0;
-	for ( int i = 0; i < n; i++ ) {
-		int len = lengths [i];
-
-		if ( len >= 3 ) {
-			m_painter-> drawPolygon ( points, winding, j, len );
-		}
+	for (int i = 0; i < n; i++)
+	{
+		int len = lengths[i];
+		if (len >= 3) m_painter -> drawPolygon(points, winding, j, len);
 		j += len;
 	}
-	m_painter-> setPen ( oldpen );
-
+	m_painter -> setPen(oldpen);
 }
 
 void QOutputDev::clip ( GfxState *state )
@@ -638,7 +638,7 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 	if (( state-> getRender ( ) & 3 ) == 3 ) {
 		return;
 	}
-
+	
 	x -= originX;
 	y -= originY;
 	state-> transform      ( x,  y,  &x1,  &y1 );
@@ -650,16 +650,16 @@ void QOutputDev::drawChar ( GfxState *state, fp_t x, fp_t y,
 		QFontMetrics fm = m_painter-> fontMetrics ( );
 
 		for ( int i = 0; i < uLen; i++ ) {
-			QChar c = QChar ( u [i] );
-
-			if ( fm. inFont ( c )) {
-				str [i] = QChar ( u [i] );
+			QChar c = u[i];
+			
+			if ( fm.inFont ( c )) {
+				str[i] = c;
 			}
 			else {
 				str [i] = ' ';
 			}
 		}
-
+		
 		if (( uLen == 1 ) && ( str [0] == ' ' ))
 			return;
 

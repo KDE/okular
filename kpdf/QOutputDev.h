@@ -29,6 +29,7 @@
 
 class Object;
 
+#include <qcolor.h>
 #include <qobject.h>
 
 #include "config.h"
@@ -180,6 +181,8 @@ private:
 	void doClip ( GfxState *state, bool winding );
 	int convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths );
 	int convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArray &points );
+	
+	QColor m_fillColor;
 };
 
 #endif

@@ -88,6 +88,7 @@ signals:
     void pageChanged();
 
 private:
+    QString giveAbsolutePath( const QString & fileName );
     bool openRelativeFile( const QString & fileName );
     void processPageList( bool documentChanged );
     void unHilightPages();

@@ -19,6 +19,7 @@
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
+#include <kmimetype.h>
 #include <kpassdlg.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
@@ -471,15 +472,49 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
         if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
             openRelativeFile( fileName );
         else
-            KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
-            /* core developers say this is too dangerous. watch out for the security warning on kde-cvs :-)
-            fileName += " ";
-            if ( link->getParameters() )
-                fileName += link->getParameters();
-            fileName += " &";
-            if ( KMessageBox::questionYesNo( 0, i18n("Do you want to execute the command:\n%1").arg(fileName), i18n("Launching external application")) == KMessageBox::Yes )
-                system( fileName.latin1() );
-            */
+        {
+			KMimeType::Ptr mime;
+			KService::Ptr ptr;
+			
+			// the only pdf i have that has that kind of link don't define an application
+			// and use the fileName as the file to open
+			
+			fileName = giveAbsolutePath( fileName );
+			mime = KMimeType::findByPath( fileName );
+			// Check executables
+			if ( KRun::isExecutableFile( fileName, mime->name() ) )
+			{
+				// Don't have any pdf that uses this code path, just a guess on how it should work
+				if ( link->getParameters() )
+				{
+					fileName = giveAbsolutePath( link->getParameters() );
+					mime = KMimeType::findByPath( fileName );
+					if ( KRun::isExecutableFile( fileName, mime->name() ) )
+					{
+						// this case is a link pointing to an executable with a parameter
+						// that also is an executable, possibly a hand-crafted pdf
+						KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
+						return;
+					}
+				}
+				else
+				{
+					// this case is a link pointing to an executable with no parameters
+					// core developers find unacceptable executing it even after asking the user
+					KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
+					return;
+				}
+			}
+			
+			ptr = KServiceTypeProfile::preferredService(mime->name(), "Application");
+			if (ptr)
+			{
+				KURL::List lst;
+				lst.append( fileName );
+				KRun::run( *ptr, lst );
+			}
+			else KMessageBox::information( 0, i18n("No application found for opening file of mimetype %1.").arg(mime->name()) );
+        }
         } break;
 
     case KPDFLink::Named: {
@@ -517,15 +552,23 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
 }
 //END slots
 
-bool KPDFDocument::openRelativeFile( const QString & fileName )
+QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 {
-    const char * currentName = d->pdfdoc->getFileName()->getCString();
-    if ( !currentName || currentName[0] == 0 )
-        return false;
+	const char * currentName = d->pdfdoc->getFileName()->getCString();
+	if ( !currentName || currentName[0] == 0 )
+		return QString::null;
 
     // convert the pdf fileName to absolute using current pdf path
-    QFileInfo currentInfo( currentName );
-    QString absFileName( currentInfo.dir().absFilePath( fileName ) );
+	QFileInfo currentInfo( currentName );
+	return currentInfo.dir().absFilePath( fileName );
+}
+
+bool KPDFDocument::openRelativeFile( const QString & fileName )
+{
+    QString absFileName = giveAbsolutePath( fileName );
+    if ( absFileName.isNull() )
+        return false;
+
     kdDebug() << "openDocument: '" << absFileName << "'" << endl;
 
     // open the absolute filename

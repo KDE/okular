@@ -59,9 +59,8 @@ noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 DISTCLEANFILES = $(BUILTSOURCES)
 CLEANFILES = $(BUILTSOURCES) squeeze kdvi 
 
-# make messages.po. Move this one to ../po/ and "make merge" in po
 messages:
-	$(XGETTEXT) -C -ktranslate -x ../../kdelibs/po/kde.pot $(kdvi_SOURCES) && mv messages.po ../po/kdvi.pot
+	$(XGETTEXT) -C -ktranslate -ki18n -x $(includedir)/kde.pot $(kdvi_SOURCES) && mv messages.po ../po/kdvi.pot
 
 # just install datas here. Use install-exec-data for scripts and etc.
 # the binary itself is already installed from automake

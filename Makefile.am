@@ -2,7 +2,7 @@
 kpathsea = kpathsea/libkpathsea.la
 
 # just set the variable
-appsdir = $(kde_appsdir)/Graphics
+appsdir = $(kde_appsdir)/Programs/Graphics
 # set the include path for X, qt and KDE
 INCLUDES= $(all_includes) -Ikpathsea
 # claim, which subdirectories you want to install

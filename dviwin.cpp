@@ -224,7 +224,9 @@ int dviWindow::makePK()
 	return makepk;	
 }
 	
-extern char * kpse_font_override_path;
+extern "C"{
+    char * kpse_font_override_path;
+}
 
 void dviWindow::setFontPath( const char *s )
 {
@@ -537,12 +539,13 @@ void dviWindow::changePageSize()
 
 void dviWindow::setFile( const char *fname )
 {
-	if (ChangesPossible)
-		initDVI();
-	filename = fname;
-	dvi_name = 0;
-	changetime = QFileInfo(filename).lastModified();
-	drawPage();
+        if (ChangesPossible){
+            initDVI();
+        }
+        filename = fname;
+        dvi_name = 0;
+        changetime = QFileInfo(filename).lastModified();
+        drawPage();
 }
 
 //------ class private stuff, scrolling----------

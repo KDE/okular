@@ -10,33 +10,36 @@ SUBDIRS = pix
 
 # you can add here more. This one gets installed 
 bin_PROGRAMS = 	kdvi
+lib_LTLIBRARIES=libkdvi.la
 noinst_PROGRAMS = squeeze
 
 # just to make sure, automake makes them 
-kdvi_METASOURCES = USE_AUTOMOC
+METASOURCES = USE_AUTOMOC
 BUILT_SOURCES = psheader.c
 
 # Which sources should be compiled for kdvi.
-kdvi_SOURCES	= kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
+libkdvi_la_SOURCES = kdvi.cpp dviwin.cpp marklist.cpp prefs.cpp print.cpp\
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
-	scrbox.cpp \
+	scrbox.cpp kdvi_miniwidget.cpp kdvi_view.cpp browser.moc.cc\
 	psheader.c dvi_draw.c dvi_init.c font-open.c gf.c new.c pk.c psgs.c\
-	special.c util.c vf.c
+	special.c util.c vf.c konq_progressproxy.cc
+
+kdvi_SOURCES = main.cpp
 
 # Which sources should be compiled for squeeze.
 squeeze_SOURCES	= squeeze.c
 
 # the library search path
-kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+libkdvi_la_LDFLAGS = -L./kpathsea $(all_libraries) -version-info 1:0:0 -module 
+libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts -lkpathsea
 
-# the libraries to link against. Be aware of the order. First the libraries,
-# that depend on the following ones.
-kdvi_LDADD   = $(kpathsea) $(LIB_KFILE)
+kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kdvi_LDADD = libkdvi.la
 
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 	prefs.h print.h printData.h printSetup.h printSetupData.h pushbutton.h\
-	scrbox.h xdvi.h
+	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h konq_progressproxy.h
 
 # if you "make distclean", this files get removed. If you want to remove
 # them while "make clean", use CLEANFILES
@@ -61,4 +64,7 @@ $(kpathsea):
 	cd $(srcdir) && newpath=`pwd`; \
 	cd $$oldpath/kpathsea && CC="$(CC)" CFLAGS="$(CFLAGS)" MAKE="$(MAKE)" $$newpath/kpathsea/configure 
 	cd kpathsea && $(MAKE)
+
+browser.moc.cc: $(kde_includes)/browser.h
+	$(MOC) $(kde_includes)/browser.h -o $(top_builddir)/kdvi/browser.moc.cc
 

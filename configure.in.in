@@ -42,7 +42,24 @@ AC_FIND_FILE(xpdfrc, [/etc /usr/local/etc /etc/xpdf], xpdfrc)
 if test "$xpdfrc" != NO; then
   AC_DEFINE_UNQUOTED(SYSTEM_XPDFRC, "$xpdfrc/xpdfrc", [Define the location your xpdfrc])
 fi
- 
+
+AC_LANG_CPLUSPLUS
+
+dnl #### Check for libt1
+kpdf_have_t1lib=
+AC_CHECK_LIB(t1, T1_InitLib, [LIBT1="-lt1"; kpdf_have_t1lib=yes],
+[
+	kpdf_have_t1lib=no
+])
+AC_SUBST(LIBT1)
+if test $kpdf_have_t1lib = yes; then
+	AC_DEFINE_UNQUOTED(HAVE_T1LIB_H, 1, [Defines if your system has the t1 library])
+else
+	AC_DEFINE_UNQUOTED(HAVE_T1LIB_H, 0, [Defines if your system has the t1 library])
+fi
+
+
+dnl #### Enable the user to enable multithearind on xpdf
 AC_ARG_ENABLE(multithreaded-kpdf,
 AC_HELP_STRING([--enable-multithreaded-kpdf],[include support for multithreading in kpdf]),
 [

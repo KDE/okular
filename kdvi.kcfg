@@ -6,17 +6,6 @@
  <include>fontpool.h</include>
  <kcfgfile name="kdvirc" />
  <group name="kdvi" >
-  <entry key="MetafontMode" type="Int" >
-   <label>Type of bitmap fonts used. LaserJet 4 is usually a good choice.</label>
-   <whatsthis>&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;/head>&lt;body style=&quot;font-size:14pt;font-family:Bitstream Vera Sans&quot;>
-&lt;p>Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p>
-&lt;p>If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid generating several bitmap versions of the same font.&lt;/p>
-&lt;/body>&lt;/html>
-</whatsthis>
-   <default code="true" >DefaultMFMode</default>
-   <min>0</min>
-   <max code="true" >NumberOfMFModes-1</max>
-  </entry>
   <entry key="MakePK" type="Bool" >
    <label>Use MetaFont to generate missing fonts. If in doubt, enable this option.</label>
    <whatsthis>Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to enable this option.</whatsthis>

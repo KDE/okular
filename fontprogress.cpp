@@ -96,3 +96,4 @@ void fontProgressDialog::show(void)
   KDialogBase::show();
 }
 
+#include "fontprogress.moc"

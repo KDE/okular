@@ -134,3 +134,4 @@ void infoDialog::clear(QString op)
   pool             = QString::null;
   MFOutputReceived = false;
 }
+#include "infodialog.moc"

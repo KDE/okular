@@ -513,3 +513,4 @@ void fontPool::abortGeneration(void)
       proc->kill();
     }
 }
+#include "fontpool.moc"

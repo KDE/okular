@@ -169,3 +169,4 @@ struct glyph *font::glyphptr(unsigned int ch) {
 
   return g;
 }
+#include "font.moc"

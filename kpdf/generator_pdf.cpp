@@ -10,6 +10,9 @@
 
 // qt/kde includes
 #include <qfile.h>
+#include <qevent.h>
+#include <qimage.h>
+#include <qapplication.h>
 #include <klocale.h>
 #include <kpassdlg.h>
 #include <kprinter.h>
@@ -24,8 +27,6 @@
 #include "xpdf/UnicodeMap.h"
 #include "xpdf/Outline.h"
 #include "goo/GList.h"
-//#include "xpdf/PDFDoc.h"
-//#include "xpdf/GlobalParams.h"
 
 // local includes
 #include "generator_pdf.h"
@@ -34,25 +35,36 @@
 #include "settings.h"
 #include "QOutputDev.h"
 
+// id for DATA_READY ThreadedGenerator Event
+#define TGE_DATAREADY_ID 6969
 
 PDFGenerator::PDFGenerator()
-    : pdfdoc( 0 ), kpdfOutputDev( 0 ), requestOnThread( 0 ),
+    : pdfdoc( 0 ), kpdfOutputDev( 0 ),
     docInfoDirty( true ), docSynopsisDirty( true )
 {
     // generate kpdfOutputDev and cache page color
     reparseConfig();
+    // generate the pixmapGeneratorThread
+    generatorThread = new PDFPixmapGeneratorThread( this );
 }
 
 PDFGenerator::~PDFGenerator()
 {
-    // TODO wait for the end of threaded generator too and disable it
-    docLock.lock();
+    // first stop and delete the generator thread
+    if ( generatorThread )
+    {
+        generatorThread->wait();
+        if ( !generatorThread->isReady() )
+            generatorThread->endGeneration();
+        delete generatorThread;
+    }
     // remove requests in queue
     QValueList< PixmapRequest * >::iterator rIt = requestsQueue.begin(), rEnd = requestsQueue.end();
     for ( ; rIt != rEnd; rIt++ )
         delete *rIt;
     requestsQueue.clear();
     // remove other internal objects
+    docLock.lock();
     delete kpdfOutputDev;
     delete pdfdoc;
     docLock.unlock();
@@ -61,6 +73,13 @@ PDFGenerator::~PDFGenerator()
 
 bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
 {
+#ifndef NDEBUG
+    if ( pdfdoc )
+    {
+        kdDebug() << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
+        return false;
+    }
+#endif
     // create PDFDoc for the given file
     pdfdoc = new PDFDoc( new GString( QFile::encodeName( fileName ) ), 0, 0 );
 
@@ -111,6 +130,7 @@ const DocumentInfo * PDFGenerator::documentInfo()
 {
     if ( docInfoDirty )
     {
+        docLock.lock();
         // compile internal structure reading properties from PDFDoc
         docInfo.author = getDocumentInfo("Author");
         docInfo.creationDate = getDocumentDate("CreationDate");
@@ -134,6 +154,7 @@ const DocumentInfo * PDFGenerator::documentInfo()
             docInfo.encryption = i18n( "Unknown Encryption" );
             docInfo.optimization = i18n( "Unknown Optimization" );
         }
+        docLock.unlock();
 
         // if pdfdoc is valid then we cached good info -> don't cache them again
         if ( pdfdoc )
@@ -246,14 +267,15 @@ bool PDFGenerator::print( KPrinter& printer )
 
 void PDFGenerator::requestPixmap( PixmapRequest * request, bool syncronous )
 {
-    //kdDebug() << "id: " << id << " is requesting pixmap for page " << page->number() << " [" << width << " x " << height << "]." << endl;
+    //kdDebug() << "id: " << request->id << " is requesting pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
+
+    // check if request has already been satisfied
+    KPDFPage * page = request->page;
+    if ( page->hasPixmap( request->id, request->width, request->height ) )
+        return;
+
     if ( syncronous )
     {
-        // in-place Pixmap generation for syncronous requests
-        KPDFPage * page = request->page;
-        if ( page->hasPixmap( request->id, request->width, request->height ) )
-            return;
-
         // compute dpi used to get an image with desired width and height
         double fakeDpiX = request->width * 72.0 / page->width(),
                 fakeDpiY = request->height * 72.0 / page->height();
@@ -264,19 +286,25 @@ void PDFGenerator::requestPixmap( PixmapRequest * request, bool syncronous )
                             (request->height == page->height());
         // generate links and image rects if rendering pages on pageview
         bool genRects = request->id == PAGEVIEW_ID;
-        kpdfOutputDev->setParams( request->width, request->height, genTextPage, genRects, genRects );
 
+        // 0. LOCK [prevents thread from concurrent access]
         docLock.lock();
-        pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
-        docLock.unlock();
 
+        // 1. Set OutputDev parameters and Generate contents
+        kpdfOutputDev->setParams( request->width, request->height, genTextPage, genRects, genRects );
+        pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
+
+        // 2. Take data from outputdev and attach it to the Page
         page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
         if ( genTextPage )
             page->setSearchPage( kpdfOutputDev->takeTextPage() );
         if ( genRects )
             page->setRects( kpdfOutputDev->takeRects() );
 
-        // pixmap generated
+        // 3. UNLOCK [re-enables shared access]
+        docLock.unlock();
+
+        // notify the new generation
         contentsChanged( request->id, request->pageNumber );
 
         // free memory (since we took ownership of the request)
@@ -284,8 +312,29 @@ void PDFGenerator::requestPixmap( PixmapRequest * request, bool syncronous )
     }
     else
     {
+        // check if an overlapping request is already stacked. if so remove
+        // the duplicated requests from the stack.
+        QValueList< PixmapRequest * >::iterator rIt = requestsQueue.begin();
+        QValueList< PixmapRequest * >::iterator rEnd = requestsQueue.end();
+        while ( rIt != rEnd )
+        {
+            const PixmapRequest * stackedRequest = *rIt;
+            if ( stackedRequest->id == request->id && stackedRequest->page == request->page )
+            {
+                delete stackedRequest;
+                rIt = requestsQueue.remove( rIt );
+            }
+            else
+                ++rIt;
+        }
+
+        // queue the pixmap request at the top of the stack
         requestsQueue.push_back( request );
-        //startThreadedGeneration();
+
+        // try to pop an item out of the stack and start generation. if
+        // a generation is already being done, the item just added will
+        // be processed in the 'event handler' calling this function.
+        startNewThreadedGeneration();
     }
 }
 
@@ -295,9 +344,9 @@ void PDFGenerator::requestTextPage( KPDFPage * page )
     KPDFTextDev td;
     docLock.lock();
     pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
-    docLock.unlock();
     // ..and attach it to the page
     page->setSearchPage( td.takeTextPage() );
+    docLock.unlock();
 }
 
 bool PDFGenerator::reparseConfig()
@@ -387,6 +436,7 @@ KPDFLinkGoto::Viewport PDFGenerator::decodeLinkViewport( GString * namedDest, Li
 
 
 QString PDFGenerator::getDocumentInfo( const QString & data ) const
+// note: this function is called by DocumentInfo gen, when the MUTEX is already LOCKED
 {
     // [Albert] Code adapted from pdfinfo.cc on xpdf
     Object info;
@@ -446,6 +496,7 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
 }
 
 QString PDFGenerator::getDocumentDate( const QString & data ) const
+// note: this function is called by DocumentInfo gen, when the MUTEX is already LOCKED
 {
     // [Albert] Code adapted from pdfinfo.cc on xpdf
     Object info;
@@ -489,109 +540,152 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
     return i18n( "Unknown Date" );
 }
 
-/*
-#include <qapplication.h>
-#include <qevent.h>
-#include <qimage.h>
+void PDFGenerator::startNewThreadedGeneration()
+{
+    // exit if already processing a request or queue is empty
+    if ( !generatorThread->isReady() || requestsQueue.isEmpty() )
+        return;
 
-ThumbnailGenerator::ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o) : m_doc(doc), m_docMutex(docMutex), m_page(page), m_o(o), m_ppp(ppp)
+    // if any requests are already accomplished, pop them from the stack
+    PixmapRequest * req = requestsQueue.last();
+    requestsQueue.pop_back();
+    if ( req->page->hasPixmap( req->id, req->width, req->height ) )
+        return startNewThreadedGeneration();
+
+    // start generator thread with given PixmapRequest
+    generatorThread->startGeneration( req );
+}
+
+void PDFGenerator::customEvent( QCustomEvent * event )
+{
+    // catch generator responses only
+    if ( event->type() != TGE_DATAREADY_ID )
+        return;
+
+    // take data from the OutputDev
+    const PixmapRequest * request = generatorThread->currentRequest();
+    int reqId = request->id;
+    int reqPage = request->pageNumber;
+    // generate the QPixmap
+    QImage * outImage = kpdfOutputDev->takeImage();
+    QPixmap * pixmap = new QPixmap( *outImage );
+    delete outImage;
+    kpdfOutputDev->freeInternalBitmap();
+    // attach data to the Page
+    request->page->setPixmap( request->id, pixmap );
+    if ( kpdfOutputDev->generateTextPage() )
+        request->page->setSearchPage( kpdfOutputDev->takeTextPage() );
+    if ( kpdfOutputDev->generateRects() )
+        request->page->setRects( kpdfOutputDev->takeRects() );
+
+    // tell generator that contents has been taken and can unlock mutex
+    // note: request will be deleted so we can't access it from here on
+    generatorThread->endGeneration();
+
+    // notify the observer about changes in the page
+    contentsChanged( reqId, reqPage );
+
+    // proceed with generation
+    startNewThreadedGeneration();
+}
+
+
+
+/** The  PDF Pixmap Generator Thread  **/
+
+PDFPixmapGeneratorThread::PDFPixmapGeneratorThread( PDFGenerator * gen )
+    : m_generator( gen ), m_currentRequest( 0 )
 {
 }
 
-int ThumbnailGenerator::getPage() const
+PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
 {
-    return m_page;
+    delete m_currentRequest;
 }
 
-void ThumbnailGenerator::run()
+void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
 {
-    QCustomEvent *ce;
-    //QImage *i;
-    
-    SplashColor paperColor;
-    paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-    KPDFOutputDev odev(paperColor);
-    odev.startDoc(m_doc->getXRef());
-    m_docMutex->lock();
-    m_doc -> displayPage(&odev, m_page, m_ppp, m_ppp, 0, true, false);
-    m_docMutex->unlock();
-    ce = new QCustomEvent(65432);
-    //i = new QImage(odev.getImage());
-    //i -> detach();
-    //ce -> setData(i);
-    QApplication::postEvent(m_o, ce);
-}
-*/
-/** TO BE IMPORTED:
-       void generateThumbnails(PDFDoc *doc);
-       void stopThumbnailGeneration();
-protected slots:
-       void customEvent(QCustomEvent *e);
-private slots:
-       void changeSelected(int i);
-       void emitClicked(int i);
-signals:
-       void clicked(int);
-private:
-       void generateNextThumbnail();
-       ThumbnailGenerator *m_tg;
+#ifndef NDEBUG
+    // check if a generation is already running
+    if ( m_currentRequest )
+    {
+        kdDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
+                  << "when another is being generated." << endl;
+        delete request;
+        return;
+    }
 
-       void resizeThumbnails();
-       int m_nextThumbnail;
-       bool m_ignoreNext;
+    // check if the mutex is already held
+    if ( m_generator->docLock.locked() )
+    {
+        kdDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
+                  << "with the mutex already held." << endl;
+        return;
+    }
+#endif
+    // [LOCK] start locking XPDF thread unsafe classes
+    m_generator->docLock.lock();
 
-DELETE:
-if (m_tg)
-{
-       m_tg->wait();
-       delete m_tg;
+    // set generation parameters and run thread
+    m_currentRequest = request;
+    start( QThread::LowestPriority );
 }
 
-void ThumbnailList::generateThumbnails(PDFDoc *doc)
+const PixmapRequest * PDFPixmapGeneratorThread::currentRequest() const
 {
-       m_nextThumbnail = 1;
-       m_doc = doc;
-       generateNextThumbnail();
+    return m_currentRequest;
 }
 
-void ThumbnailList::generateNextThumbnail()
+bool PDFPixmapGeneratorThread::isReady() const
 {
-       if (m_tg)
-       {
-              m_tg->wait();
-              delete m_tg;
-       }
-       m_tg = new ThumbnailGenerator(m_doc, m_docMutex, m_nextThumbnail, QPaintDevice::x11AppDpiX(), this);
-       m_tg->start();
+    return !m_currentRequest;
 }
 
-void ThumbnailList::stopThumbnailGeneration()
+void PDFPixmapGeneratorThread::endGeneration()
 {
-       if (m_tg)
-       {
-              m_ignoreNext = true;
-              m_tg->wait();
-              delete m_tg;
-              m_tg = 0;
-       }
+#ifndef NDEBUG
+    // check if a generation is already running
+    if ( !m_currentRequest )
+    {
+        kdDebug() << "PDFPixmapGeneratorThread: 'end generation' called "
+                  << "but generation was not started." << endl;
+        return;
+    }
+#endif
+    // reset internal members preparing for a new generation
+    delete m_currentRequest;
+    m_currentRequest = 0;
+
+    // [UNLOCK] mutex
+    m_generator->docLock.unlock();
 }
 
-void ThumbnailList::customEvent(QCustomEvent *e)
+void PDFPixmapGeneratorThread::run()
+// perform contents generation, when the MUTEX is already LOCKED
+// @see PDFGenerator::requestPixmap( .. ) (and be aware to sync the code)
 {
-       if (e->type() == 65432 && !m_ignoreNext)
-       {
-              QImage *i =  (QImage*)(e -> data());
+    // compute dpi used to get an image with desired width and height
+    KPDFPage * page = m_currentRequest->page;
+    int width = m_currentRequest->width,
+        height = m_currentRequest->height;
+    double fakeDpiX = width * 72.0 / page->width(),
+           fakeDpiY = height * 72.0 / page->height();
 
-              setThumbnail(m_nextThumbnail, i);
-              m_nextThumbnail++;
-              if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();
-              else
-              {
-                     m_tg->wait();
-                     delete m_tg;
-                     m_tg = 0;
-              }
-       }
-       m_ignoreNext = false;
+    // setup kpdf output device: text page is generated only if we are at 72dpi.
+    // since we can pre-generate the TextPage at the right res.. why not?
+    m_genTextPage = !page->hasSearchPage() &&
+                    ( width == page->width() ) &&
+                    ( height == page->height() );
+
+    // generate links and image rects if rendering pages on pageview
+    m_genPageRects = m_currentRequest->id == PAGEVIEW_ID;
+
+    // set OutputDev parameters and Generate contents
+    m_generator->kpdfOutputDev->setParams( width, height, m_genTextPage,
+                                           m_genPageRects, m_genPageRects, TRUE /*thread safety*/ );
+    m_generator->pdfdoc->displayPage( m_generator->kpdfOutputDev, page->number() + 1,
+                                      fakeDpiX, fakeDpiY, 0, true, m_genPageRects );
+
+    // notify the GUI thread that data is pending and can be read
+    QApplication::postEvent( m_generator, new QCustomEvent( TGE_DATAREADY_ID ) );
 }
-*/

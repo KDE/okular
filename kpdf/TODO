@@ -6,27 +6,27 @@ Legend:
     MRG - MeRGed from head
     (*) - Some parts of this item are already done
 
-In progress on the branch (first item comes first):
--> create a memory manager in Document with different profiles [90%]
+Things to do in order to merge in HEAD (first item has highest priority):
+**** 20041228 - READY TO MERGE ****
+[ take care of naming on merge, too many differences (remove some kpdf_* prefixes
+ and rename internals too (document->kpdfdocument, page->kpdfpage, etc..)) ]
+
+IN PROGRESS on the branch (first item comes first):
+-> fix megaLock bug in PDF Threaded Pixmap Generator
+-> sync Memory Management (in Document) with the Generator (exp. undoing requests)
+-> add preloading
 -> FIX: viewport changes the right way when clicking links and TOC items (also
    suggested by Mikolaj Machowski). Create a great viewport definition and merge
    it inside the synopsis too. [60% done]
 
-Things to do in order to merge in HEAD (first item has highest priority):
--> take care of naming on merge, too differences (remove some kpdf_* prefixes
-   and rename internals too document->kpdfdocument, page->kpdfpage, etc..)
-
-Higher priority after merge:
--> move toolbar view actions in the PageView instead of the part.. maybe.. or not...
+More items (first items will enter 'In progress list' first):
+-> move toolbar view actions in the PageView instead of the part. maybe.. or not...
 -> link thumbnails view with document [first, the 'Viewport' must be defined]
 -> usability: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add option for 'ebook' style alignment. (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
--> async document generator using Albert's generator thread [0%]
 -> watch out for FIXMEs in code
 -> fix: requestPixmaps not triggered when exiting fullscreen mode (to verify..I can't reproduce)
 
-More items (first items will enter 'In progress list' first):
-*THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
 -> fix: iterate from older pages to newest ones when freeing memory (not randomly)
 -> fix: On continous view mode, if you click to a link that moves you to another
    page, then scroll up and click again on the same link it does not work. (by Albert)
@@ -84,8 +84,9 @@ More items (first items will enter 'In progress list' first):
 -> use wallet for storing passwords of encrypted files
 
 Done (newest feature comes firts):
+-> ADD: Asyncronous PDF Generator implementation (for the user: faster UI, preloading, etc..)
 -> FIX: Memory manager (free cache if needed, avoid disk swap and oom)
--> ADD: Presentation View
+-> ADD: Presentation View (only the 'glitter' transition implemented for now)
 -> FIX: FixPack1 [dyn_zoom repaints, initial panel width, zoom_lineedit focus proxy, searchwidget refactor{thumbs restoring on clear, buttons size, less code}, hilight bookmarked thumbnails]
 -> FIX: Some fullScreen loving, if we are on fullscreen put an action on RMB menu ti get out of it, if we were on fullScreen mode on exit bring back correctly if we were also seeing toolbar or menubar
 -> FIX: When in non continous mode and scrolling up a page, set the viewport at the bottom of the page (Albert)

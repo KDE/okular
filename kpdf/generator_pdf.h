@@ -22,7 +22,7 @@
 class PDFDoc;
 class GList;
 class KPDFOutputDev;
-class PDFGeneratorThread;
+class PDFPixmapGeneratorThread;
 
 /**
  * @short A generator that builds contents from a PDF document.
@@ -62,12 +62,21 @@ class PDFGenerator : public Generator
         // used by the KPDFOutputDev child
         KPDFLinkGoto::Viewport decodeLinkViewport( class GString * namedDest, class LinkDest * dest );
 
+    protected:
+
     private:
+        // friend class to access private document related variables
+        friend class PDFPixmapGeneratorThread;
+
         // private functions for accessing document informations via PDFDoc
         QString getDocumentInfo( const QString & data ) const;
         QString getDocumentDate( const QString & data ) const;
         // private function for creating the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parent, GList * items );
+        // (GT) take the first queued item from the stack and feed it to the thread
+        void startNewThreadedGeneration();
+        // (GT) receive data from the generator thread
+        void customEvent( QCustomEvent * );
 
         // xpdf dependant stuff
         QMutex docLock;
@@ -76,8 +85,7 @@ class PDFGenerator : public Generator
         QColor paperColor;
 
         // asyncronous generation related things
-        PDFGeneratorThread * generatorThread;
-        PixmapRequest * requestOnThread;
+        PDFPixmapGeneratorThread * generatorThread;
         QValueList< PixmapRequest * > requestsQueue;
 
         // misc variables for document info and synopsis caching
@@ -93,23 +101,30 @@ class PDFGenerator : public Generator
  *
  * 
  */
-class PDFGeneratorThread : public QThread
+class PDFPixmapGeneratorThread : public QThread
 {
-/*
     public:
-        PDFGeneratorThread(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o);
-        int getPage() const;
+        PDFPixmapGeneratorThread( PDFGenerator * generator );
+        ~PDFPixmapGeneratorThread();
 
-    protected:
-        void run();
+        // set the request to the thread (it will be reparented)
+        void startGeneration( PixmapRequest * request );
+        // get a const reference to the currently processed pixmap
+        const PixmapRequest * currentRequest() const;
+        // return wether we can add a new request or not
+        bool isReady() const;
+        // end generation
+        void endGeneration();
 
     private:
-        PDFDoc *m_doc;
-        QMutex *m_docMutex;
-        int m_page;
-        QObject *m_o;
-        double m_ppp;
-*/
+        // can't be called from the outside (but from startGeneration)
+        void run();
+
+        // local members
+        PDFGenerator * m_generator;
+        PixmapRequest * m_currentRequest;
+        bool m_genTextPage;
+        bool m_genPageRects;
 };
 
 #endif

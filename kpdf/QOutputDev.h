@@ -46,16 +46,23 @@ class KPDFOutputDev : public SplashOutputDev
         virtual ~KPDFOutputDev();
 
         // to be called before PDFDoc->displayPage( thisclass, .. )
-        void setParams( int pixmapWidth, int pixmapHeight, bool generateTextpage,
-                        bool decodeLinks, bool decodeImages );
+        // @param qtThreadSafety: use a slow QImage and conversions (for threads only)
+        void setParams( int pixmapWidth, int pixmapHeight, bool generateTextPage,
+                        bool decodeLinks, bool decodeImages, bool qtThreadSafety = false );
+        bool generateTextPage() const;
+        bool generateRects() const;
 
         // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
         KPDFLink * generateLink( LinkAction * );
 
         // takes pointers out of the class (so deletion it's up to others)
         QPixmap * takePixmap();
+        QImage * takeImage();
         TextPage * takeTextPage();
         QValueList< KPDFPageRect * > takeRects();
+
+        // free internal memory used by SplashOutputDev
+        void freeInternalBitmap();
 
         /** inherited from OutputDev */
         // Start a page.
@@ -78,12 +85,14 @@ class KPDFOutputDev : public SplashOutputDev
         void clear();
 
         // generator switches and parameters
+        bool m_qtThreadSafety;
         bool m_generateText;
         bool m_generateLinks;
         bool m_generateImages;
         int m_pixmapWidth;
         int m_pixmapHeight;
         QPixmap * m_pixmap;
+        QImage * m_image;
         PDFGenerator * m_generator;
 
         // text page generated on demand

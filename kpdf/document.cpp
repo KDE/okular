@@ -553,7 +553,7 @@ void KPDFDocument::mCleanupMemory( int observerId  )
             ++it;
         }
     }
-    kdDebug() << "Id:" << observerId << " [" << obs->totalMemory << "kB] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
+    //kdDebug() << "Id:" << observerId << " [" << obs->totalMemory << "kB] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
 }
 
 int KPDFDocument::mTotalMemory()

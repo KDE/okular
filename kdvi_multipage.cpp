@@ -522,10 +522,13 @@ void KDVIMultiPage::reload()
 
 void KDVIMultiPage::enableActions(bool b)
 {
+  KMultiPage::enableActions(b);
+
   docInfoAction->setEnabled(b);
   exportPSAction->setEnabled(b);
   exportPDFAction->setEnabled(b);
   exportTextAction->setEnabled(b);
+
   setEmbedPostScriptAction();
 }
 

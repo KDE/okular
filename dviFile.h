@@ -52,6 +52,7 @@ class dvifile : public bigEndianByteReader
   /** Papersize information read from the dvi-File */
   pageSize       suggestedPageSize;
 
+  float          getMagnification(void) {return (float)magnification / 1000.0;};
 
  private:
   /** process_preamble reads the information in the preamble and
@@ -68,7 +69,7 @@ class dvifile : public bigEndianByteReader
   /** Offset in DVI file of last page, set in read_postamble(). */
   Q_UINT32       last_page_offset;
   Q_UINT32       beginning_of_postamble;
-  Q_UINT32 magnification;
+  Q_UINT32       magnification;
 };
 
 #endif //ifndef _DVIFILE_H

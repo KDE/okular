@@ -113,7 +113,7 @@ dviWindow::dviWindow(double zoom, QWidget *parent, const char *name )
   _zoom                  = zoom;
 
   paper_width_in_cm           = 21.0; // set A4 paper as default
-  paper_height_in_cm          = 27.9;
+  paper_height_in_cm          = 29.7;
 
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
@@ -410,15 +410,16 @@ void dviWindow::changePageSize()
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviWindow::changePageSize()" << endl;
 #endif
+  
   if ( currentlyDrawnPage.pixmap && currentlyDrawnPage.pixmap->paintingActive() )
     return;
-
+  
   if (currentlyDrawnPage.pixmap)
     delete currentlyDrawnPage.pixmap;
-
+  
   unsigned int page_width_in_pixel = (unsigned int)(_zoom*paper_width_in_cm/2.54 * xres + 0.5);
   unsigned int page_height_in_pixel = (unsigned int)(_zoom*paper_height_in_cm/2.54 * xres + 0.5);
-
+  
   currentlyDrawnPage.pixmap = new QPixmap( page_width_in_pixel, page_height_in_pixel );
   if (currentlyDrawnPage.pixmap == 0) {
     kdError(4300) << "dviWindow::changePageSize(), no memory for pixmap, width=" << page_width_in_pixel << ", height=" << page_height_in_pixel << endl;

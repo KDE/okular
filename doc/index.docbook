@@ -85,8 +85,47 @@
     lines <userinput><command>kdvi</command>
     <parameter>somepath/paper</parameter></userinput> or
     <userinput><command>kdvi</command>
-    <parameter>somepath/paper.</parameter></userinput> will also work.
+    <parameter>somepath/paper.</parameter></userinput> will also
+    work. If you are connected to the internet, you can access files
+    which reside on other computers by giving a URL as a parameter,
+    like this: <userinput><command>kdvi</command>
+    <parameter>http://somepath/paper.dvi</parameter></userinput>
     </para>
+
+    <para>If you give a URL as a parameter, you can tell &kdvi; to
+    jump directly to certain place of the DVI file. For example,
+    <userinput><command>kdvi</command>
+    <parameter>file:paper.dvi#43</parameter></userinput> will make
+    &kdvi; to open page 43. If you have included source file
+    information, a command like <userinput><command>kdvi</command>
+    <parameter>file:paper.dvi#src:143paper.tex</parameter></userinput>
+    will make &kdvi; search for the place in the DVI file which
+    corresponds to line 43 in the TeX file
+    <parameter>paper.tex</parameter>. You will hardly use this option
+    yourself ---read the section on <ulink
+    url="forward-search.html">forward search</ulink> to learn how to
+    set up your editor to start &kdvi; automatically.
+    </para>
+
+    <warning><para>The command <userinput><command>kdvi</command>
+    <parameter>file:paper.dvi#43</parameter></userinput> will open
+    page 43 of the file <parameter>paper.tex</parameter>. The command
+    <userinput><command>kdvi</command>
+    <parameter>paper.dvi#43</parameter></userinput> will try to open
+    the file <parameter>paper.dvi#43</parameter>.</para>
+    </warning>
+
+    <para>There is another option which you will most likely not need
+    to specify yourself. If you type
+    <userinput><command>kdvi</command> <parameter>--unique</parameter>
+    <parameter>somepath/paper.dvi</parameter></userinput>, &kdvi; will
+    load the file if there is no other instance running which has the
+    file already loaded. If there is, this instance of &kdvi; will pop
+    to the front. A command like <userinput><command>kdvi</command>
+    <parameter>--unique</parameter>
+    <parameter>file:paper.dvi#43</parameter></userinput> can be used
+    in shell scripts to make a running instance of &kdvi; to jump to
+    page 43.</para>
 
     <para>The usual parameters handled by &Qt; and &kde; applications
     also work: <userinput><command>kdvi</command>
@@ -276,6 +315,125 @@
     editors, some of them require a bit of extra care. This section
     explains how to configure your editor.</para>
 
+    <section id="editor-setup-emacs">
+      <title>Emacs</title>
+
+      <para>Emacs works well with &kdvi;. The actual behaviour of
+      Emacs depends largely on the configuration. As usual, you can
+      customize Emacs completely, if you are willing to fight your way
+      through Lisp code.</para>
+
+      <para>&kdvi; uses the program <command>emacsclient</command> to
+      remote control Emacs.</para>
+      <important>
+	<para>The program <command>emacsclient</command> requires that
+	Emacs is running, and that the program emacs-server is started
+	inside Emacs. Inverse search will not work optimally unless
+	you have started both Emacs and the emacs-server.</para>
+      </important>
+
+      <para>To start the emacs-server, you can do one of the
+      following:</para>
+      <itemizedlist>
+	<listitem>
+	  <para>In Emacs, start the emacs-server by typing <userinput>M-x
+	  server-start</userinput></para>
+	</listitem>
+	<listitem>
+	  <para>Add the line 
+<programlisting>
+
+
+    (server-start)
+
+</programlisting>
+	   to your or <filename>.emacs</filename> file. Restart
+	   Emacs</para>
+	</listitem>
+      </itemizedlist>
+
+      
+      <tip>
+	<itemizedlist>
+	  <listitem>
+	      <para>Make sure that Emacs is installed. Try to start
+	      <command>emacs</command> from the command line.</para>
+	  </listitem>
+	<listitem>
+	      <para>&kdvi; uses the command
+	      <command>emacsclient</command> to remote control
+	      Emacs. Make sure that <command>emacsclient</command> is
+	      available on the command line by trying the command
+	      <userinput><command>emacsclient</command> <parameter>'Name
+	      of a text file'</parameter></userinput>. This should
+	      open a new text in the Emacs editor.</para>
+	</listitem>
+	<listitem>
+	      <para>If <command>emacsclient</command> fails with an
+	      error message like <computeroutput>unable to connect to
+	      local</computeroutput>, make sure that XEmacs is
+	      running. Furthermore, make sure that the emacs-server is
+	      started by typing <userinput>M-x
+	      server-start</userinput>.</para>
+	</listitem>
+	<listitem>
+	      <para>If you want the frame to be auto-raised, add the
+	      "raise-frame" function to "server-switch-hook" (do
+	      <userinput>M-x customize-variable RET
+	      server-switch-hook</userinput> and enter the function
+	      name into the text field.</para> 
+	</listitem>
+	<listitem>
+	      <para>If you have changed the buffer since your last
+	      save, Emacs will ask you: <computeroutput>Revert buffer
+	      from file ...? (yes or no)</computeroutput>. You will
+	      probably always want to say *no* here, since reverting
+	      means that the file is reread from disk, CAUSING ALL
+	      YOUR CHANGES SINCE THE LAST SAVE TO BE LOST!</para>
+
+	      <para>IMHO gnuclient's behaviour of silently reloading
+	      the changed buffer is preferable ---add the following
+	      lines to your <filename>.emacs</filename> file to
+	      emulate gnuclient's behaviour with emacsclient:
+<programlisting>
+
+
+	(defadvice server-visit-files (around save-buffers last activate)
+	  "Try to emulate gnuclient behaviour with emacsclient.
+	Works only for visiting one buffer at a time."
+	  (let* ((filen (car (car (ad-get-arg 0))))
+		 (buf (get-file-buffer filen))
+		 (this-buf-modified-p nil))
+	    ;;; the following is copied from server-visit-files, with
+	    ;;; a modification for the `verify-visited-file-modtime' test
+	    (if (and buf (set-buffer buf))
+		(if (file-exists-p filen)
+		    ;;; if the file has changed on disk, reload it
+		    ;;; using `find-file-noselect'
+		    (if (not (verify-visited-file-modtime buf))
+			(progn
+			  (find-file-noselect filen)
+			  ;;; if user answered `no', reset modtime anyway
+			  ;;; so that server-visit-files doesn't realize the
+			  ;;; difference:
+			  (set-visited-file-modtime)))
+		  ;;; if file exists no longer, we let server-visit-files
+		  ;;; deal with that
+		  t)
+	      (setq buf (find-file-noselect filen)))
+	    (setq this-buf-modified-p (buffer-modified-p buf))
+	    (set-buffer buf)
+	    (set-buffer-modified-p nil)
+	    ad-do-it
+	    (set-buffer-modified-p this-buf-modified-p)))
+
+</programlisting>
+</para> 
+	</listitem>
+      </itemizedlist>
+      </tip>
+    </section>
+
     <section id="editor-setup-kate">
       <title>Kate</title> 
 
@@ -323,8 +481,8 @@
 
       <para>XEmacs works well with &kdvi;. The actual behaviour of
       XEmacs depends largely on the configuration. As usual, you can
-      customize XEmacs complete, if you are willing to fight your way
-      through Lisp code.</para>
+      customize XEmacs completely, if you are willing to fight your
+      way through Lisp code.</para>
 
       <para>&kdvi; uses the program <command>gnuclient</command> to
       remote control XEmacs.</para>
@@ -344,10 +502,16 @@
 	<listitem>
 	  <para>Add the line 
 <programlisting>
+
+
     (gnuserv-start)
+
 </programlisting>
-	   to your <filename>.emacs</filename> or
-	   <filename>.xemacs</filename> file.</para>
+	   to your or <filename>.xemacs</filename> file. If you use a
+	   more recent version of XEmacs, <filename>.xemacs</filename>
+	   will be a directory. In that case, you should append the
+	   line to the file
+	   <filename>.xemacs/init.el</filename>. Restart XEmacs</para>
 	</listitem>
       </itemizedlist>
 
@@ -355,37 +519,38 @@
       call, and want the frame to be auto-raised, set "Gnuserv Frame"
       to "Use selected frame", and add the "raise-frame" function to
       "Visit Hook". Do <userinput>M-x customize-group RET
-      gnuserv</userinput> to make these settings. The resulting
-      entries in your <filename>.emacs</filename> file should look
-      like this:
-<programlisting>
-    (custom-set-variables
-       ;;; ... other stuff ...
-	 '(gnuserv-frame t)
-	 '(gnuserv-visit-hook (lambda () (raise-frame) (recenter))))
-</programlisting>
-</para>
+      gnuserv</userinput> to make these settings.</para>
 
       <tip>
 	<itemizedlist>
 	  <listitem>
-            <para>Make sure that XEmacs is installed. Try to start
-            <command>xemacs</command> from the command line.</para>
+	      <para>Make sure that XEmacs is installed. Try to start
+	      <command>xemacs</command> from the command line.</para>
 	  </listitem>
 	<listitem>
-	  <para>&kdvi; uses the command <command>gnuserv</command> to
-	  remote control XEmacs. Make sure that
-	  <command>gnuclient</command> is available on the command
-	  line by trying the command
-	  <userinput><command>gnuclient</command> <parameter>'Name of
-	  a text file'</parameter></userinput>. This should open a new
-	  frame in the XEmacs editor.</para>
+	      <para>&kdvi; uses the command <command>gnuserv</command>
+	      to remote control XEmacs. Make sure that
+	      <command>gnuclient</command> is available on the command
+	      line by trying the command
+	      <userinput><command>gnuclient</command> <parameter>'Name
+	      of a text file'</parameter></userinput>. This should
+	      open a new frame in the XEmacs editor.</para>
 	</listitem>
-	<listitem> <para>If <command>gnuserv</command> fails with an
-	error message like <computeroutput>unable to connect to
-	local</computeroutput>, make sure that XEmacs is
-	running. Furthermore, make sure that gnuserv is started by
-	typing <userinput>M-x gnuserv-start</userinput>.</para>
+	<listitem>
+	      <para>If <command>gnuserv</command> fails with an error
+	      message like <computeroutput>unable to connect to
+	      local</computeroutput>, make sure that XEmacs is
+	      running. Furthermore, make sure that gnuserv is started
+	      by typing <userinput>M-x
+	      gnuserv-start</userinput>.</para>
+	</listitem>
+	<listitem>
+	      <para>If you don't want to open a new frame for each
+	      editor call, and want the frame to be auto-raised, set
+	      "Gnuserv Frame" to "Use selected frame", and add the
+	      "raise-frame" function to "Visit Hook". Do
+	      <userinput>M-x customize-group RET gnuserv</userinput>
+	      to make these settings.</para>
 	</listitem>
       </itemizedlist>
       </tip>
@@ -411,6 +576,111 @@
 
   </chapter>
 
+
+  <chapter id="forward-search">
+    <title>Forward search</title>
+
+    <para>The forward search functions allow you to jump from your
+    editor directly into the associated position of the DVI
+    file. Since forward search must be supported by your editor, only
+    Emacs and XEmacs are currently supported. Other editors will
+    hopefully join in soon.</para>
+
+    <para>To use forward search, you have to do the following:</para>
+    <itemizedlist>
+      <listitem>
+	<para>Set up your editor ---this is described below.</para>
+      </listitem>
+      <listitem>
+	<para>Add source file information to your DVI file, e.g. by
+	using the package <command>srcltx</command> ---this has been
+	described in the section <ulink
+	url="inverse-search.html#inverse-search-tex">"Producing
+	TeX-files for inverse search"</ulink>.</para>
+      </listitem>
+      <listitem>
+	<para>Go! If you use Emacs and everything is properly set up,
+	you just press <userinput>Ctrl-x Ctrl-j</userinput>, and
+	&kdvi; pops up and jumps to the place which corresponds to the
+	place of the TeX file which you are currently editing.</para>
+      </listitem>
+    </itemizedlist>
+
+    <section id="forward-search-editor">
+      <title>Setting up your editor for forward search</title>
+      
+      <section id="forw-editor-setup-emacs">
+	<title>Emacs</title>
+	
+	<para>In order to use forward search in Emacs, follow these
+	steps:</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>Download the following Emacs script, <ulink url =
+	    "kdvi-search.el"><filename>kdvi-search.el</filename></ulink>
+	    (press shift and click the filename to download) and store
+	    it in a place where Emacs can access it ---we recommend a
+	    directory <filename>emacs-scripts</filename>.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Add the lines 
+<programlisting>
+
+
+(add-to-list 'load-path (expand-file-name "~/emacs-scripts/"))
+(require 'kdvi-search)
+(add-hook 'LaTeX-mode-hook (lambda () (local-set-key "\C-x\C-j" 'kdvi-jump-to-line)))
+(add-hook 'tex-mode-hook (lambda () (local-set-key "\C-x\C-j" 'kdvi-jump-to-line)))
+
+</programlisting>
+	    to your <filename>.emacs</filename> file. Restart Emacs.</para>
+	  </listitem>
+
+	  <listitem>
+	    <para>Enjoy. Open Emacs, load a TeX-file, produce the
+	    corresponding DVI file, and either enter the command
+	    <userinput>M-x kdvi-jump-to-line</userinput> or press
+	    <userinput>Ctrl-x Ctrl-j</userinput>. It may happen that
+	    Emacs asks you for the name of a "master file". This is
+	    useful if you use a TeX file which includes other files:
+	    the master file is the top-level file which includes the
+	    others. Emacs will perhaps also ask to save the name of
+	    the master-file "as a local variable", i.e. as a comment
+	    at the very end of the file. Say either yes or no, and
+	    enjoy!</para>
+	    </listitem>
+	</itemizedlist>
+
+	<tip>
+	  <itemizedlist>
+	    <listitem>
+	      <para>Make sure that Emacs is installed. Try to start
+	      <command>emacs</command> from the command line.</para>
+	    </listitem>
+	    <listitem>
+	      <para>If Emacs fails to start &kdvi;, you can find its
+	      output in the Buffer "kdvi-output".</para>
+	    </listitem>
+	  </itemizedlist>
+	</tip>
+      </section>
+
+      <section id="forw-editor-setup-xemacs">
+	<title>XEmacs</title>
+	
+	<para>To set up XEmacs, follow the steps for Emacs above, but
+	modify your <filename>.xemacs</filename> rather than your
+	<filename>.emacs</filename> file. If you use a very recent
+	version of XEmacs, <filename>.xemacs</filename> may be a
+	directory. In that case, append the lines to
+	<filename>.xemacs/init.el</filename>.
+	</para>
+      </section>
+    </section>
+
+
+  </chapter>
 
   <chapter id="preferences">
     <title>The <guilabel>Preferences</guilabel> dialog</title>

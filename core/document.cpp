@@ -88,6 +88,16 @@ KPDFDocument::KPDFDocument()
 KPDFDocument::~KPDFDocument()
 {
     closeDocument();
+
+    ObserverData *o;
+    QMap< int, ObserverData * >::iterator oIt;
+    while (d->observers.count() > 0)
+    {
+	oIt = d->observers.begin();
+	o = *oIt;
+	d->observers.remove(oIt);
+	delete o;
+    }
     delete d;
 }
 

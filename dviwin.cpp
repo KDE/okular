@@ -394,7 +394,7 @@ void dviWindow::initDVI()
 	n_files_left = OPEN_MAX;
 	kpse_set_progname ("xdvi");
 	kpse_init_prog ("XDVI", basedpi, MetafontMode.data(), makepk,"cmr10");
-	*(const_cast<char**>(&kpse_font_override_path)) = FontPath.data();
+	kpse_font_override_path = const_cast<char*>(FontPath.ascii());
 	ChangesPossible = 0;
 }
 
@@ -413,7 +413,7 @@ void dviWindow::drawDVI()
 	if (!dvi_name)
 	{			//  dvi file not initialized yet
 		QApplication::setOverrideCursor( waitCursor );
-		dvi_name = filename.data();
+		dvi_name = const_cast<char*>(filename.ascii());
 
 		dvi_file = NULL;
 		if (setjmp(dvi_env))

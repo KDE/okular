@@ -131,6 +131,7 @@ static	void close_a_file()
 {
   return; //@@@
 
+  /*
   register struct font *fontp;
   unsigned short oldest = (unsigned short)~0;
   struct font *f = NULL;
@@ -145,6 +146,7 @@ static	void close_a_file()
   Fclose(f->file);
   f->file = NULL;
   ++n_files_left;
+  */
 }
 
 /*

@@ -469,20 +469,22 @@ void font::read_PK_index(void)
   long file_checksum = four(file);
   if (checksum && checksum && file_checksum != checksum)
     kdError(1) << i18n("Checksum mismatch") << " (dvi = " << checksum << "pk = " << file_checksum << 
-      ") "<< i18n("in font file ") << filename << endl;
+      ") " << i18n("in font file ") << filename << endl;
 
   int hppp = sfour(file);
   int vppp = sfour(file);
   if (hppp != vppp)
     kdDebug() << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp << endl;
-  /*
-   * Prepare glyph array.
-   */
-  glyphtable = (struct glyph *) xmalloc(max_num_of_chars_in_font * sizeof(struct glyph), "glyph array");
-  memset((char *) glyphtable, 0, max_num_of_chars_in_font * sizeof(struct glyph));
-  /*
-   * Read glyph directory (really a whole pass over the file).
-   */
+
+  // Prepare glyph array.
+  glyphtable = new glyph[max_num_of_chars_in_font];
+  if (glyphtable == 0) {
+    kdError() << i18n("Could not allocate memory for a glyph table.") << endl;
+    exit(0);
+  }
+    
+
+  // Read glyph directory (really a whole pass over the file).
   for (;;) {
     int bytes_left, flag_low_bits;
     unsigned int ch;

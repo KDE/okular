@@ -39,7 +39,9 @@ void font::font_name_receiver(KProcess *, char *buffer, int buflen)
 
   filename = QString::fromLocal8Bit(buffer, buflen-1);
 
+#ifdef DEBUG_FONT
   kdDebug() << "FONT NAME RECEIVED:" << filename << endl;
+#endif
 
   file = xdvi_xfopen(filename.latin1(), "r");
   if (file == NULL) {
@@ -68,23 +70,28 @@ void font::font_name_receiver(KProcess *, char *buffer, int buflen)
 }
 
 
-font::font(char *nfontname, float nfsize, long chk, int mag, double dconv)
+font::font(char *nfontname, float nfsize, long chk, int mag, double dconv, class fontPool *pool)
 {
 #ifdef DEBUG_FONT
   kdDebug() << "constructing font " << nfontname << " at " << (int) (nfsize + 0.5) << " dpi" << endl;
 #endif
 
+  font_pool  = pool;
   fontname   = nfontname;
   fsize      = nfsize;
   checksum   = chk;
   magstepval = mag;
-  flags      = font::FONT_IN_USE || font::FONT_NEEDS_TO_BE_LOADED;
+  flags      = font::FONT_IN_USE;
   file       = NULL; 
   filename   = "";
   dimconv    = dconv;
   
+  glyphtable = 0;
+  macrotable = 0;
+
   // By default, this font contains only empty characters. After the
-  // font has been loaded, this function pointer will be replaced by another one.
+  // font has been loaded, this function pointer will be replaced by
+  // another one.
   set_char_p = &dviWindow::set_empty_char;
 }
 
@@ -94,25 +101,30 @@ font::~font()
   kdDebug() << "discarding font " << fontname << " at " << (int)(fsize + 0.5) << " dpi" << endl;
 #endif
 
-  free(fontname);
+  if (fontname != 0)
+    free(fontname);
 
   if (flags & FONT_LOADED) {
+
     if (file != NULL) {
       fclose(file);
       ++n_files_left;
     }
 
     if (flags & FONT_VIRTUAL) {
+      delete [] macrotable;
+
+      /* @@@
       for (macro *m = macrotable; m < macrotable + max_num_of_chars_in_font; ++m)
 	if (m->free_me)
 	  free((char *) m->pos);
       free((char *) macrotable);
+      */
+
       vf_table.clear();
-    } else {
-      for (glyph *g = glyphtable; g < glyphtable + max_num_of_chars_in_font; ++g)
-	delete g;
-      free((char *) glyphtable);
-    }
+
+    } else
+      delete [] glyphtable;
   }
 }
 

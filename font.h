@@ -15,6 +15,8 @@
 #ifndef _FONT_H
 #define _FONT_H
 
+class dviWindow;
+typedef	void	(dviWindow::*set_char_proc)(unsigned int, unsigned int);
 
 #include <kprocess.h>
 #include <qintdict.h>
@@ -52,15 +54,16 @@ public:
                              FONT_IN_USE  = 1,	// used for housekeeping
                              FONT_LOADED  = 2,	// if font file has been read
                              FONT_VIRTUAL = 4,	// if font is virtual 
-			     FONT_NEEDS_TO_BE_LOADED = 8 // if font has been accessed and was not loaded
+			     FONT_KPSE_NAME = 8 // if kpathsea has already tried to find the font name
                          };
 
 
-                 font(char *nfontname, float nfsize, long chk, int mag, double dconv);
+                 font(char *nfontname, float nfsize, long chk, int mag, double dconv, class fontPool *pool);
                 ~font();
   glyph         *glyphptr(unsigned int ch);
   void           mark_as_used(void);
 
+  class fontPool *font_pool;    // Pointer to the pool that contains this font.
   char          *fontname;	// name of font, such as "cmr10"
   unsigned char  flags;		// flags byte (see values below)
   double         dimconv;	// size conversion factor

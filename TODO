@@ -3,15 +3,16 @@ ToDo-List for kdvi
 
 URGENT
 
-o automatic font generation cannot be switched off
-
 o implement SaveAs
+
+o feedback when running kpsewhich or ghostview
+
+o "Helper-Application" setup
+
 
 HIGHLY DESIRABLE
 
-o Speedup, in particular for ghostscript.
-
-o Fonts should be freed when file is reloaded and the fonts are no longer needed
+o Speedup, in particular for ghostscript and kpsewhich.
 
 o Support for colored font specials
 
@@ -20,6 +21,10 @@ o Support for click-on-dvi => editor (klyx!) jumps to proper position. This is
 
 o Support papersize information given by the dvi-file on a page-by-page
   basis.
+
+o Extra enlargement of characters for improved readability should be switchable.
+
+o Rotated Postscript should be supported.
 
 
 NOT SO URGENT

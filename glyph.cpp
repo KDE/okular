@@ -18,6 +18,12 @@
 
 #include <kdebug.h> 
 
+glyph::glyph() 
+{
+  bitmap.bits = 0;
+  SmallChar   = 0;
+}
+
 glyph::~glyph()
 {
   if (bitmap.bits != NULL)

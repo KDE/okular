@@ -437,9 +437,11 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
             result += QCString( buf, n + 1 );
         }
         obj.free();
+        info.free();
         return result;
     }
     obj.free();
+    info.free();
     return i18n( "Unknown" );
 }
 
@@ -460,6 +462,7 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
     int year, mon, day, hour, min, sec;
     Dict *infoDict = info.getDict();
     UnicodeMap *uMap = globalParams->getTextEncoding();
+    QString result;
 
     if ( !uMap )
         return i18n( "Unknown Date" );
@@ -469,23 +472,24 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
         s = obj.getString()->getCString();
         if ( s[0] == 'D' && s[1] == ':' )
             s += 2;
+
         if ( sscanf( s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
         {
             QDate d( year, mon, day );  //CHECK: it was mon-1, Jan->0 (??)
             QTime t( hour, min, sec );
             if ( d.isValid() && t.isValid() )
-                return KGlobal::locale()->formatDateTime( QDateTime(d, t), false, true );
+                result = KGlobal::locale()->formatDateTime( QDateTime(d, t), false, true );
             else
-                return s;
+                result = s;
         }
         else
-            return s;
-        fputc( '\n', stdout );
-        obj.free();
-        //return result;
+            result = s;
     }
+    else
+        result = i18n( "Unknown Date" );
     obj.free();
-    return i18n( "Unknown Date" );
+    info.free();
+    return result;
 }
 
 void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )

@@ -2,10 +2,12 @@
 [KDE Desktop Entry]
 Comment[C]=TeX DVI File Viewer
 Comment[pl]=Podgl±darka plików TeX DVI
+Comment[fi]=TeX DVI tiedostonäyttäjä
 BinaryPattern=kdvi;
 Name=DVI Viewer
 Name[C]=DVI Viewer
-Name[pl=DVI Viewer
+Name[pl]=DVI Viewer
+Name[fi]=DVI Näyttäjä
 MimeType=application/x-dvi;
 Comment=TeX DVI File Viewer
 Exec=kdvi %f

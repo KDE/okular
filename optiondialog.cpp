@@ -30,6 +30,7 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <qcheckbox.h>
+#include <qfontmetrics.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlineedit.h>
@@ -223,23 +224,18 @@ void OptionDialog::makeRenderingPage()
   label = new QLabel( i18n("Editor description:"), page );
   glay->addWidget( label, 3, 0 );
 
-  // Find the longest description string available, to make sure that
-  // the page is always large enough. Of course, we are making a
-  // mistake here, since we use variable-width fonts. Let's hope that
-  // this is not going to be trouble.
-  QString longest;
-  unsigned int size = 0;
-  kdError() << "Test" << endl;
+  // Editor description strings (and their translations) vary in
+  // size. Find the longest description string available, to make sure
+  // that the page is always large enough.
+  unsigned int maximumWidth = 0;
   for ( QStringList::Iterator it = EditorDescriptions.begin(); it != EditorDescriptions.end(); ++it ) {
-    kdError() << *it << endl;
-    if ((*it).length() > size) {
-      longest = *it;
-      size = longest.length();
-    }
+    int width = mRender.editorDescription->fontMetrics().width(*it);
+    if (width > maximumWidth) 
+      maximumWidth = width;
   }
-  kdError() << longest << endl;
+
   mRender.editorDescription = new QLabel( longest, page );
-  // Do something about minimum size here!
+  mRender.editorDescription->setMinimumWidth(maximumWidth+10);
   QToolTip::add( mRender.editorDescription, i18n("Explains about the editor's capabilities in conjunction with inverse search.") );
   QWhatsThis::add( mRender.editorDescription, i18n("Not all editors are well-suited for inverse search. For instance, many editors have no command like 'If the file is not yet loaded, load it. Otherwise, bring the window with the file to the front'. If you are using an editor like this, clicking into the DVI file will always open a new editor, even if the TeX-file is already open. Likewise, many editors have no command line argument that would allow KDVI to specify the exact line which you wish to edit.\nIf you feel that KDVI's support for a certain editor is not well-done, please write to kebekus@kde.org.") );
   glay->addWidget( mRender.editorDescription, 3, 1 );

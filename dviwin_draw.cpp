@@ -278,7 +278,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
   kdDebug() << "draw_part" << endl;
 #endif
 
-  Q_INT32 RRtmp, WWtmp, XXtmp, YYtmp, ZZtmp;
+  Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   Q_UINT8 ch;
 
   currinf.fontp        = NULL;

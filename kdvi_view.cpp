@@ -118,7 +118,6 @@ bool KDVIPart::openFile()
 KDVIBrowserExtension::KDVIBrowserExtension( KDVIPart *parent ) :
   KParts::BrowserExtension( parent, "KDVIBrowserExtension" )
 {
-  emit enableAction( "print", true );
 }
 
 void KDVIBrowserExtension::print()

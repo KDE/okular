@@ -7,7 +7,8 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress on the branch (first item comes first):
--> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [40% done]
+-> Abstract contents generation [60% missing TextPage, Outline]
+-> ADD: viewport changes the right way when clicking links (also suggested by Mikolaj Machowski) [60% done]
 -> memory manager with different profiles (mem/cpu tradeoff: {memory saving, normal, memory aggressive}) [0%]
 -> async document generator using Albert's generator thread [0%]
 
@@ -53,6 +54,7 @@ More items (first items will enter 'In progress list' first):
 -> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
 
 Done (newest feature comes firts):
+-> ADD: Use 'Generators' as providers for contents generation.
 -> ADD: Add properties dialog (Albert)
 -> ADD: Support for show/hide menubar in rmb menu, different from HEAD so that supports Konqueror too (Albert)
 -> ADD: Watch File option (Albert)

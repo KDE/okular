@@ -39,6 +39,7 @@
 #include "pageview.h"
 #include "pageviewutils.h"
 #include "page.h"
+#include "link.h"
 #include "settings.h"
 
 #define ROUND(x) (int(x + 0.5))
@@ -60,8 +61,7 @@ public:
     QPoint mouseGrabPos;
     QPoint mouseStartPos;
     int mouseMidStartY;
-    bool mouseOnLink;
-    bool mouseOnActiveRect;
+    bool mouseOnRect;
     QRect mouseSelectionRect;
 
     // other stuff
@@ -105,8 +105,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseMidStartY = -1;
-    d->mouseOnLink = false;
-    d->mouseOnActiveRect = false;
+    d->mouseOnRect = false;
     d->delayTimer = 0;
     d->scrollTimer = 0;
     d->scrollIncrement = 0;
@@ -125,6 +124,9 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 
     // conntect the padding of the viewport to pixmaps requests
     connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
+
+    // ### [RELEASE: REMOVE] show initial warning for dev_version > 2004-Dec-04
+    d->messageWindow->display( "We're in progress of abstracting code. You will see some REGRESSIONS at this stage.", PageViewMessage::Warning, 8000 );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -255,10 +257,10 @@ void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool document
     d->dirtyLayout = true;
 
     // OSD to display pages
-    if ( documentChanged && !Settings::hideOSD() )
+    if ( documentChanged && pageSet.count() > 0 && !Settings::hideOSD() )
         d->messageWindow->display(
-            i18n(" Loaded a 1 page document.",
-                 " Loaded a %n page document.",
+            i18n(" Loaded a one page document.",
+                 " Loaded a %n pages document.",
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
 }
@@ -502,8 +504,8 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         d->mouseMidStartY = e->globalPos().y();
         d->zoomFactor *= ( 1.0 + ( (double)deltaY / 500.0 ) );
         updateZoom( ZoomRefreshCurrent );
-	// uncomment following line to force a complete redraw
-	//viewport()->repaint();
+        // uncomment following line to force a complete redraw
+        viewport()->repaint( false );
         return;
     }
 
@@ -537,21 +539,10 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                     int pageX = e->x() - pageItem->geometry().left(),
                         pageY = e->y() - pageItem->geometry().top();
 
-                    // check if over a KPDFActiveRect
-                    bool onActiveRect = pageItem->page()->hasActiveRect( pageX, pageY );
-                    if ( onActiveRect != d->mouseOnActiveRect )
-                    {
-                        d->mouseOnActiveRect = onActiveRect;
-                        setCursor( onActiveRect ? pointingHandCursor : arrowCursor );
-                    }
-
-                    // check if over a KPDFLink
-                    bool onLink = pageItem->page()->hasLink( pageX, pageY );
-                    if ( onLink != d->mouseOnLink )
-                    {
-                        d->mouseOnLink = onLink;
-                        setCursor( onLink ? pointingHandCursor : arrowCursor );
-                    }
+                    // check if over a KPDFPageRect
+                    bool onRect = pageItem->page()->hasRect( pageX, pageY );
+                    if ( onRect != d->mouseOnRect )
+                        setCursor( (d->mouseOnRect = onRect) ? pointingHandCursor : arrowCursor );
                 }
             }
             break;
@@ -586,8 +577,8 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             if ( leftButton )
             {
                 d->mouseStartPos = e->globalPos();
-                d->mouseGrabPos = d->mouseOnLink ? QPoint() : d->mouseStartPos;
-                if ( !d->mouseOnLink )
+                d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mouseStartPos;
+                if ( !d->mouseOnRect )
                     setCursor( sizeAllCursor );
             }
             break;
@@ -622,12 +613,22 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
             if ( leftButton && pageItem )
             {
-                if ( d->mouseOnLink )
+                const KPDFPageRect * rect = pageItem->page()->getRect(
+                    e->x() - pageItem->geometry().left(),
+                    e->y() - pageItem->geometry().top()
+                );
+                if ( rect )
                 {
-                    // activate link
-                    int linkX = e->x() - pageItem->geometry().left(),
-                        linkY = e->y() - pageItem->geometry().top();
-                    d->document->processLink( pageItem->page()->getLink( linkX, linkY ) );
+                    // release over a link
+                    if ( rect->pointerType() == KPDFPageRect::Link )
+                    {
+                        const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
+                        d->document->processLink( link );
+                    }
+                    // release over an image
+                    if ( rect->pointerType() == KPDFPageRect::Image )
+                    {
+                    }
                 }
                 else
                 {
@@ -872,7 +873,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
             QRect pixmapRect = contentsRect.intersect( pixmapGeometry );
             pixmapRect.moveBy( -pixmapGeometry.left(), -pixmapGeometry.top() );
             int flags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
-                        PagePainter::EnhanceRects | PagePainter::Highlight;
+                        PagePainter::EnhanceImages | PagePainter::Highlight;
             PagePainter::paintPageOnPainter( item->page(), PAGEVIEW_ID, flags, p, pixmapRect,
                                              pixmapGeometry.width(), pixmapGeometry.height() );
         }

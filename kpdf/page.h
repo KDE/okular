@@ -16,14 +16,12 @@
 class QPainter;
 class QPixmap;
 class TextPage;
-class LinkAction;
-class LinkDest;
-class KPDFLink;
-class KPDFActiveRect;
+class KPDFPageRect;
 
 /**
  * @short Collector for all the data belonging to a page.
  * ### MERGE: definition and implementation must be moved to kpdfpage.h/.cpp
+ * ### RECOMMENT
  *
  * The KPDFPage class contains pixmaps (referenced using obsedvers id as key),
  * a search page (a class used internally for searching data), link classes
@@ -48,11 +46,10 @@ class KPDFPage
         inline float ratio() const { return m_height / m_width; }
 
         bool hasPixmap( int id, int width, int height ) const;
-        bool hasSearchPage() const { return m_text != 0; }
-        bool hasLink( int mouseX, int mouseY ) const;
-        bool hasActiveRect( int mouseX, int mouseY ) const;
+        bool hasSearchPage() const;
+        bool hasRect( int mouseX, int mouseY ) const;
+        const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
         const QString getTextInRect( const QRect & rect, double zoom = 1.0 ) const;
-        const KPDFLink * getLink( int mouseX, int mouseY ) const;
 
         // operations (by KPDFDocument)
         inline void setAttribute( int att ) { m_attributes |= att; }
@@ -63,9 +60,8 @@ class KPDFPage
         // set contents (by KPDFDocument)
         void setPixmap( int id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
-        void setLinks( const QValueList<KPDFLink *> links );
-        void setActiveRects( const QValueList<KPDFActiveRect *> rects );
-        void deletePixmapsAndLinks();
+        void setRects( const QValueList< KPDFPageRect * > rects );
+        void deletePixmapsAndRects();
 
     private:
         friend class PagePainter;
@@ -75,9 +71,53 @@ class KPDFPage
 
         QMap< int, QPixmap * > m_pixmaps;
         TextPage * m_text;
-        QValueList< KPDFLink * > m_links;
-        QValueList< KPDFActiveRect * > m_rects;
+        QValueList< KPDFPageRect * > m_rects;
 };
+
+
+/**
+ * @short A rect on the page that may contain an object.
+ *
+ * This class describes a rect (geometrical coordinates) and may hold a
+ * pointer to an associated object. An object is reparented to this class
+ * and deleted when this class is deleted.
+ *
+ * Objects are stored and read as 'void pointers' so you have to perform
+ * the cast on the code that handles the object using information provided
+ * by pointerType().
+ *
+ * Type / Class correspondency tab:
+ *  - NoPointer : ''              : no object is stored
+ *  - Link      : class KPDFLink  : description of a link
+ *  - Image     : class KPDFImage : description of an image
+ *
+ */
+class KPDFPageRect
+{
+    public:
+        KPDFPageRect( int left, int top, int right, int bottom );
+        ~KPDFPageRect();
+
+        // query geometric properties
+        bool contains( int x, int y ) const;
+        QRect geometry() const; //TODO add intersects( qrect )
+
+        // set a pointer to data associated to this rect
+        enum PointerType { NoPointer, Link, Image };
+        void setPointer( void * object, enum PointerType pType );
+
+        // query type and get a const pointer to the stored object
+        PointerType pointerType() const;
+        const void * pointer() const;
+
+    private:
+        void deletePointer();
+        int m_xMin, m_xMax, m_yMin, m_yMax;
+        PointerType m_pointerType;
+        void * m_pointer;
+};
+
+
 
 /**
  * @short Paints a KPDFPage to an open painter using given flags.
@@ -90,7 +130,7 @@ class PagePainter
         // list of flags passed to the painting function. by OR-ing those flags
         // you can decide wether or not to permit drawing of a certain feature.
         enum PagePainterFlags { Accessibility = 1, EnhanceLinks = 2,
-                                EnhanceRects = 4, Highlight = 8 };
+                                EnhanceImages = 4, Highlight = 8 };
 
         // draw (using painter 'p') the 'page' requested by 'id' using features
         // in 'flags'. 'limits' is the bounding rect of the paint operation,
@@ -98,79 +138,6 @@ class PagePainter
         // to pick up an alternative pixmap if the pixmap of 'id' is missing.
         static void paintPageOnPainter( const KPDFPage * page, int id, int flags,
             QPainter * p, const QRect & limits, int width = -1, int height = -1 );
-};
-
-/**
- * @short Encapsulates data that describes a link.
- * ### MERGE: MOVE definition/implementation to kpdflink.h/.cpp
- * ### NOTE: KPDFActiveRect and KPDFLink SHOULD BE MERGED !!
- *
- * There are many types of PDF links, here we provide accessors to set the
- * link to be of the given type. Other functions are for asking if a point
- * is inside the link rect (in displayed page coordinates).
- * KPDFLinks are created by the KPDFOutputDevice then stored and deleted
- * inside the referring KPDFPage.
- * Note: this structure is similar to XPDF LinkAction and its hieracy, but
- * is needed for storing data inside pages, since XPDF's PDFDoc deletes
- * Links objects when changing page (and we need persistant storage).
- */
-class KPDFLink
-{
-public:
-    KPDFLink( LinkAction * PDFAction );
-    ~KPDFLink();
-
-    // set geometry (only links collected KPDFPage(s))
-    void setGeometry( int left, int top, int right, int bottom );
-
-    // query / others
-    bool contains( int x, int y ) const;
-    void copyString( char * &dest, const char * src ) const;
-    QRect geometry() const; //TODO add intersects( qrect )
-
-    // action queries
-    enum LinkType { Goto, Execute, URI, Named, Movie, Unknown };
-    LinkType type() const;
-    const LinkDest * getDest() const;   //1
-    const char * getNamedDest() const;  //1
-    const char * getFileName() const;   //1,2
-    const char * getParameters() const; //2
-    const char * getName() const;       //3
-    const char * getURI() const;        //4
-
-private:
-    // general
-    LinkType m_type;
-    int x_min, x_max, y_min, y_max;
-
-    // actions related
-    LinkDest * m_dest;
-    char * m_destNamed;
-    char * m_fileName;
-    char * m_parameters;
-    char * m_uri;
-    int m_refNum, m_refGen;
-};
-
-
-/**
- * @short Describes an 'active' rectange on the page.
- * ### MERGE: MOVE definition/implementation to kpdflink.h/.cpp
- * ### NOTE: KPDFActiveRect and KPDFLink SHOULD BE MERGED !!
- *
- * ...
- */
-class KPDFActiveRect
-{
-    public:
-        KPDFActiveRect(int left, int top, int width, int height);
-
-        // query
-        bool contains(int x, int y);
-        QRect geometry() const;
-
-    private:
-        int m_left, m_top, m_right, m_bottom;
 };
 
 #endif

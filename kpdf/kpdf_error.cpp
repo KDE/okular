@@ -15,8 +15,8 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdarg.h>
-#include "GlobalParams.h"
-#include "Error.h"
+#include "xpdf/GlobalParams.h"
+#include "xpdf/Error.h"
 
 #include <qstring.h>
 

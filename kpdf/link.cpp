@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -7,31 +7,20 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef THUMBNAILGENERATOR_H
-#define THUMBNAILGENERATOR_H
+// local includes
+#include "link.h"
 
-#include <qthread.h> 
-
-class QMutex;
-
-class PDFDoc;
-
-class ThumbnailGenerator : public QThread
+KPDFLink::~KPDFLink()
 {
-	public:
-		ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o);
-		
-		int getPage() const;
+}
 
-	protected:
-		void run();
-	
-	private:
-		PDFDoc *m_doc;
-		QMutex *m_docMutex;
-		int m_page;
-		QObject *m_o;
-		double m_ppp;
-};
-
-#endif
+/*
+void KPDFLink::copyString( char * &dest, const char * src ) const
+{
+    if ( src )
+    {
+        dest = new char[ strlen(src) + 1 ];
+        strcpy( &dest[0], src );
+    }
+}
+*/

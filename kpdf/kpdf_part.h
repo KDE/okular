@@ -35,9 +35,6 @@ class KSelectAction;
 class KAboutData;
 class KPrinter;
 
-class LinkAction;
-class LinkDest;
-
 class ThumbnailList;
 class PageView;
 class SearchWidget;

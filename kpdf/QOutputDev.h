@@ -19,21 +19,25 @@
 #pragma interface
 #endif
 
-#include "SplashOutputDev.h"
-#include "Link.h"
+#include <qvaluelist.h>
+#include "xpdf/PDFDoc.h" // for 'Object'
+#include "xpdf/SplashOutputDev.h"
 
+class QPixmap;
 class TextPage;
+class GeneratorPDF;
 class KPDFLink;
-class KPDFActiveRect;
+class KPDFPageRect;
 
 /**
  * @short A SplashOutputDev renderer that grabs text and links.
+ * ### MERGE: rename definition/impl to generator_pdf_outputdev.h/.cpp
  *
  * This output device:
  * - renders the page using SplashOutputDev (its parent)
  * - harvests text into a textPage (for searching text)
- * - harvests links and collect them
- * - collects images and collect them as generic 'activerects'
+ * - harvests links and collects them
+ * - collects images and collects them
  */
 class KPDFOutputDev : public SplashOutputDev
 {
@@ -43,13 +47,15 @@ class KPDFOutputDev : public SplashOutputDev
 
         // to be called before PDFDoc->displayPage( thisclass, .. )
         void setParams( int pixmapWidth, int pixmapHeight, bool generateTextpage,
-                        bool generateLinks, bool generateActiveRects );
+                        bool decodeLinks, bool decodeImages, GeneratorPDF * parent );
+
+        // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
+        KPDFLink * generateLink( LinkAction * );
 
         // takes pointers out of the class (so deletion it's up to others)
         QPixmap * takePixmap();
         TextPage * takeTextPage();
-        QValueList< KPDFLink * > takeLinks();
-        QValueList< KPDFActiveRect * > takeActiveRects();
+        QValueList< KPDFPageRect * > takeRects();
 
         /** inherited from OutputDev */
         // Start a page.
@@ -74,19 +80,17 @@ class KPDFOutputDev : public SplashOutputDev
         // generator switches and parameters
         bool m_generateText;
         bool m_generateLinks;
-        bool m_generateActiveRects;
+        bool m_generateImages;
         int m_pixmapWidth;
         int m_pixmapHeight;
         QPixmap * m_pixmap;
+        GeneratorPDF * m_generator;
 
         // text page generated on demand
         TextPage * m_text;
 
-        // links generated on demand
-        QValueList< KPDFLink * > m_links;
-
-        // active areas on page
-        QValueList< KPDFActiveRect * > m_rects;
+        // rectangles on page (associated to links/images)
+        QValueList< KPDFPageRect * > m_rects;
 };
 
 

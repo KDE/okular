@@ -23,17 +23,21 @@
 #include <qpixmap.h>
 #include <qimage.h>
 
-#include "page.h"
-#include "GfxState.h"
-#include "SplashBitmap.h"
-#include "TextOutputDev.h"
 #include "QOutputDev.h"
+#include "generator_pdf.h"
+#include "page.h"
+#include "link.h"
+#include "xpdf/Link.h"
+#include "xpdf/GfxState.h"
+#include "xpdf/TextOutputDev.h"
+#include "splash/SplashBitmap.h"
 
-// NOTE: XPDF/Splash implementation dependant code will be marked with '###'
+//NOTE: XPDF/Splash *implementation dependant* code is marked with '###'
 
-// BEGIN KPDFOutputDev 
+//BEGIN KPDFOutputDev 
 KPDFOutputDev::KPDFOutputDev( SplashColor paperColor )
-    : SplashOutputDev( splashModeRGB8, false, paperColor ), m_pixmap( 0 ), m_text( 0 )
+    : SplashOutputDev( splashModeRGB8, false, paperColor ), m_pixmap( 0 ),
+    m_generator( 0 ), m_text( 0 )
 {
 }
 
@@ -42,7 +46,7 @@ KPDFOutputDev::~KPDFOutputDev()
     clear();
 }
 
-void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool genAR )
+void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool genI, GeneratorPDF * parent )
 {
     clear();
 
@@ -51,11 +55,93 @@ void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool
 
     m_generateText = genT;
     m_generateLinks = genL;
-    m_generateActiveRects = genAR;
+    m_generateImages = genI;
+
+    m_generator = parent;
 
     if ( m_generateText )
         m_text = new TextPage( gFalse );
 }
+
+
+KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
+{
+    KPDFLink * link = 0;
+    switch ( a->getKind() )
+    {
+        case actionGoTo:
+            {
+            LinkGoTo * g = (LinkGoTo *) a;
+            // ceate link: no ext file, namedDest, object pointer
+            link = new KPDFLinkGoto( QString::null, m_generator->decodeLinkViewport( g->getNamedDest(), g->getDest() ) );
+            }
+            break;
+
+        case actionGoToR:
+            {
+            LinkGoToR * g = (LinkGoToR *) a;
+            // copy link file
+            const char * fileName = g->getFileName()->getCString();
+            // ceate link: fileName, namedDest, object pointer
+            link = new KPDFLinkGoto( (QString)fileName, m_generator->decodeLinkViewport( g->getNamedDest(), g->getDest() ) );
+            }
+            break;
+
+        case actionLaunch:
+            {
+            LinkLaunch * e = (LinkLaunch *)a;
+            GString * p = e->getParams();
+            link = new KPDFLinkExecute( e->getFileName()->getCString(), p ? p->getCString() : 0 );
+            }
+            break;
+
+        case actionNamed:
+            {
+            const char * name = ((LinkNamed *)a)->getName()->getCString();
+            if ( !strcmp( name, "NextPage" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::PageNext );
+            else if ( !strcmp( name, "PrevPage" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::PagePrev );
+            else if ( !strcmp( name, "FirstPage" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::PageFirst );
+            else if ( !strcmp( name, "LastPage" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::PageLast );
+            else if ( !strcmp( name, "GoBack" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::HistoryBack );
+            else if ( !strcmp( name, "GoForward" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::HistoryForward );
+            else if ( !strcmp( name, "Quit" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::Quit );
+            else
+                kdDebug() << "Unknown named action: '" << name << "'" << endl;
+            }
+            break;
+
+        case actionURI:
+            link = new KPDFLinkBrowse( ((LinkURI *)a)->getURI()->getCString() );
+            break;
+
+        case actionMovie:
+/*          { TODO this
+            m_type = Movie;
+            LinkMovie * m = (LinkMovie *) a;
+            // copy Movie parameters (2 IDs and a const char *)
+            Ref * r = m->getAnnotRef();
+            m_refNum = r->num;
+            m_refGen = r->gen;
+            copyString( m_uri, m->getTitle()->getCString() );
+            }
+*/          break;
+
+        case actionUnknown:
+            kdDebug() << "Unknown link." << endl;
+            break;
+    }
+
+    // link may be zero at that point
+    return link;
+}
+
 
 QPixmap * KPDFOutputDev::takePixmap()
 {
@@ -71,16 +157,9 @@ TextPage * KPDFOutputDev::takeTextPage()
     return text;
 }
 
-QValueList< KPDFLink * > KPDFOutputDev::takeLinks()
+QValueList< KPDFPageRect * > KPDFOutputDev::takeRects()
 {
-    QValueList< KPDFLink * > linksCopy( m_links );
-    m_links.clear();
-    return linksCopy;
-}
-
-QValueList< KPDFActiveRect * > KPDFOutputDev::takeActiveRects()
-{
-    QValueList< KPDFActiveRect * > rectsCopy( m_rects );
+    QValueList< KPDFPageRect * > rectsCopy( m_rects );
     m_rects.clear();
     return rectsCopy;
 }
@@ -122,17 +201,21 @@ void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )
 
     if ( m_generateLinks )
     {
-        // create the new KPDFLink ...
-        KPDFLink * l = new KPDFLink( link->getAction() );
-        double x1, y1, x2, y2;
-        link->getRect( &x1, &y1, &x2, &y2 );
-        int left, top, right, bottom;
-        cvtUserToDev( x1, y1, &left, &top );
-        cvtUserToDev( x2, y2, &right, &bottom );
-        // ... and assign its coords withing current page geometry
-        l->setGeometry( left, top, right, bottom );
-        // add the link to the vector container
-        m_links.push_back( l );
+        // create the link descriptor
+        KPDFLink * l = generateLink( link->getAction() );
+        if ( l )
+        {
+            // create the page rect representing the link
+            double x1, y1, x2, y2;
+            link->getRect( &x1, &y1, &x2, &y2 );
+            int left, top, right, bottom;
+            cvtUserToDev( x1, y1, &left, &top );
+            cvtUserToDev( x2, y2, &right, &bottom );
+            KPDFPageRect * rect = new KPDFPageRect( left, top, right, bottom );
+            // attach the link  object to the rect and add it to the vector container
+            rect->setPointer( l, KPDFPageRect::Link );
+            m_rects.push_back( rect );
+        }
     }
     SplashOutputDev::drawLink( link, catalog );
 }
@@ -161,7 +244,7 @@ GBool KPDFOutputDev::beginType3Char( GfxState *state, double x, double y, double
 void KPDFOutputDev::drawImage( GfxState *state, Object *ref, Stream *str,
     int _width, int _height, GfxImageColorMap *colorMap, int *maskColors, GBool inlineImg )
 {
-    if ( m_generateActiveRects )
+    if ( m_generateImages )
     {
         // find out image rect from the Coord Transform Matrix
         double * ctm = state->getCTM();
@@ -183,7 +266,9 @@ void KPDFOutputDev::drawImage( GfxState *state, Object *ref, Stream *str,
         }
         if ( width > 10 && height > 10 )
         {
-            KPDFActiveRect * r = new KPDFActiveRect( left, top, width, height );
+            // build a descriptor for the image rect
+            KPDFPageRect * r = new KPDFPageRect( left, top, left + width, top + height );
+            r->setPointer( 0, KPDFPageRect::Image );
             // add the rect to the vector container
             m_rects.push_back( r );
         }
@@ -193,18 +278,10 @@ void KPDFOutputDev::drawImage( GfxState *state, Object *ref, Stream *str,
 
 void KPDFOutputDev::clear()
 {
-    // delete links
-    if ( m_links.count() )
-    {
-        QValueList< KPDFLink * >::iterator it = m_links.begin(), end = m_links.end();
-        for ( ; it != end; ++it )
-            delete *it;
-        m_links.clear();
-    }
-    // delete activerects
+    // delete rects
     if ( m_rects.count() )
     {
-        QValueList< KPDFActiveRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+        QValueList< KPDFPageRect * >::iterator it = m_rects.begin(), end = m_rects.end();
         for ( ; it != end; ++it )
             delete *it;
         m_rects.clear();
@@ -222,10 +299,10 @@ void KPDFOutputDev::clear()
         m_text = 0;
     }
 }
-// END KPDFOutputDev 
+//END KPDFOutputDev 
 
 
-// BEGIN KPDFTextDev 
+//BEGIN KPDFTextDev 
 KPDFTextDev::KPDFTextDev()
 {
     m_text = new TextPage( gFalse );
@@ -265,4 +342,4 @@ void KPDFTextDev::drawChar( GfxState *state, double x, double y, double dx, doub
 {
     m_text->addChar( state, x, y, dx, dy, code, u, uLen );
 }
-// END KPDFTextDev 
+//END KPDFTextDev 

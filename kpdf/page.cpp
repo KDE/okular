@@ -15,16 +15,19 @@
 #include <qpainter.h>
 #include <qmap.h>
 #include <kimageeffect.h>
+#include <kdebug.h>
 
 // system includes
 #include <string.h>
 
 // local includes
-#include "Link.h"
-#include "TextOutputDev.h"
-#include "settings.h"
 #include "page.h"
+#include "link.h"
+#include "settings.h"
+#include "xpdf/TextOutputDev.h"
 
+
+/** class KPDFPage **/
 
 KPDFPage::KPDFPage( uint page, float w, float h, int r )
     : m_number( page ), m_rotation( r ), m_attributes( 0 ),
@@ -41,7 +44,7 @@ KPDFPage::KPDFPage( uint page, float w, float h, int r )
 
 KPDFPage::~KPDFPage()
 {
-    deletePixmapsAndLinks();
+    deletePixmapsAndRects();
     delete m_text;
 }
 
@@ -54,26 +57,29 @@ bool KPDFPage::hasPixmap( int id, int width, int height ) const
     return p ? ( p->width() == width && p->height() == height ) : false;
 }
 
-bool KPDFPage::hasLink( int mouseX, int mouseY ) const
+bool KPDFPage::hasSearchPage() const
 {
-    if ( m_links.count() < 1 )
+    return m_text != 0;
+}
+
+bool KPDFPage::hasRect( int mouseX, int mouseY ) const
+{
+    if ( m_rects.count() < 1 )
         return false;
-    QValueList< KPDFLink * >::const_iterator it = m_links.begin(), end = m_links.end();
+    QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( mouseX, mouseY ) )
             return true;
     return false;
 }
 
-bool KPDFPage::hasActiveRect( int mouseX, int mouseY ) const
+const KPDFPageRect * KPDFPage::getRect( int mouseX, int mouseY ) const
 {
-    if ( m_rects.count() < 1 )
-        return false;
-    QValueList< KPDFActiveRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    QValueList< KPDFPageRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( mouseX, mouseY ) )
-            return true;
-    return false;
+            return *it;
+    return 0;
 }
 
 const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
@@ -86,15 +92,6 @@ const QString KPDFPage::getTextInRect( const QRect & rect, double zoom ) const
         bottom = (int)((double)rect.bottom() / zoom);
     GString * text = m_text->getText( left, top, right, bottom );
     return QString( text->getCString() );
-}
-
-const KPDFLink * KPDFPage::getLink( int mouseX, int mouseY ) const
-{
-    QValueList< KPDFLink * >::const_iterator it = m_links.begin(), end = m_links.end();
-    for ( ; it != end; ++it )
-        if ( (*it)->contains( mouseX, mouseY ) )
-            return *it;
-    return 0;
 }
 
 
@@ -131,41 +128,87 @@ void KPDFPage::setSearchPage( TextPage * tp )
     m_text = tp;
 }
 
-void KPDFPage::setLinks( const QValueList<KPDFLink *> links )
+void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
 {
-    QValueList< KPDFLink * >::iterator it = m_links.begin(), end = m_links.end();
-    for ( ; it != end; ++it )
-        delete *it;
-    m_links = links;
-}
-
-void KPDFPage::setActiveRects( const QValueList<KPDFActiveRect *> rects )
-{
-    QValueList< KPDFActiveRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+    QValueList< KPDFPageRect * >::iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
 }
 
-void KPDFPage::deletePixmapsAndLinks()
+void KPDFPage::deletePixmapsAndRects()
 {
     // delete all stored pixmaps
     QMap<int,QPixmap *>::iterator it = m_pixmaps.begin(), end = m_pixmaps.end();
     for ( ; it != end; ++it )
         delete *it;
     m_pixmaps.clear();
-    // delete Links
-    QValueList< KPDFLink * >::iterator lIt = m_links.begin(), lEnd = m_links.end();
-    for ( ; lIt != lEnd; ++lIt )
-        delete *lIt;
-    m_links.clear();
-    // delete ActiveRects
-    QValueList< KPDFActiveRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
+    // delete PageRects
+    QValueList< KPDFPageRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
     for ( ; rIt != rEnd; ++rIt )
         delete *rIt;
     m_rects.clear();
 }
 
+
+/** class KPDFPageRect **/
+
+KPDFPageRect::KPDFPageRect( int l, int t, int r, int b )
+    : m_pointerType( NoPointer ), m_pointer( 0 )
+{
+    // assign coordinates swapping them if negative width or height
+    m_xMin = r > l ? l : r;
+    m_xMax = r > l ? r : l;
+    m_yMin = b > t ? t : b;
+    m_yMax = b > t ? b : t;
+}
+
+KPDFPageRect::~KPDFPageRect()
+{
+    deletePointer();
+}
+
+bool KPDFPageRect::contains( int x, int y ) const
+{
+    return (x > m_xMin) && (x < m_xMax) && (y > m_yMin) && (y < m_yMax);
+}
+
+QRect KPDFPageRect::geometry() const
+{
+    return QRect( m_xMin, m_yMin, m_xMax - m_xMin, m_yMax - m_yMin );
+}
+
+void KPDFPageRect::setPointer( void * object, enum PointerType pType )
+{
+    deletePointer();
+    m_pointer = object;
+    m_pointerType = pType;
+}
+
+KPDFPageRect::PointerType KPDFPageRect::pointerType() const
+{
+    return m_pointerType;
+}
+
+const void * KPDFPageRect::pointer() const
+{
+    return m_pointer;
+}
+
+void KPDFPageRect::deletePointer()
+{
+    if ( !m_pointer )
+        return;
+
+    if ( m_pointerType == Link )
+        delete static_cast<KPDFLink*>( m_pointer );
+    else
+        kdDebug() << "Object deletion not implemented for type '"
+                  << m_pointerType << "' ." << endl;
+}
+
+
+/** class PagePainter **/
 
 void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     QPainter * destPainter, const QRect & limits, int width, int height )
@@ -275,56 +318,36 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         backPixmap->convertFromImage( backImage );
     }
 
-    // visually enchance links active area if requested
-    if ( ( flags & EnhanceLinks ) && Settings::highlightLinks() )
+    // visually enchance links and images if requested
+    bool hLinks = ( flags & EnhanceLinks ) && Settings::highlightLinks();
+    bool hImages = ( flags & EnhanceImages ) && Settings::highlightImages();
+    if ( hLinks || hImages )
     {
         QColor normalColor = QApplication::palette().active().highlight();
         QColor lightColor = normalColor.light( 140 );
-        // enlarging limits for intersection is like growing the 'linkGeometry' below
+        // enlarging limits for intersection is like growing the 'rectGeometry' below
         QRect limitsEnlarged = limits;
         limitsEnlarged.addCoords( -2, -2, 2, 2 );
-        // draw links that are inside the 'limits' paint region as opaque rects
-        QValueList< KPDFLink * >::const_iterator lIt = page->m_links.begin(), lEnd = page->m_links.end();
+        // draw rects that are inside the 'limits' paint region as opaque rects
+        QValueList< KPDFPageRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
         for ( ; lIt != lEnd; ++lIt )
         {
-            QRect linkGeometry = (*lIt)->geometry();
-            if ( linkGeometry.intersects( limitsEnlarged ) )
+            KPDFPageRect * rect = *lIt;
+            if ( (hLinks && rect->pointerType() == KPDFPageRect::Link) ||
+                 (hImages && rect->pointerType() == KPDFPageRect::Image) )
             {
-                // expand rect and draw inner border
-                linkGeometry.addCoords( -1,-1,1,1 );
-                p->setPen( lightColor );
-                p->drawRect( linkGeometry );
-                // expand rect to draw outer border
-                linkGeometry.addCoords( -1,-1,1,1 );
-                p->setPen( normalColor );
-                p->drawRect( linkGeometry );
-            }
-        }
-    }
-
-    // visually enchance image borders if requested
-    if ( ( flags & EnhanceRects ) && Settings::highlightImages() )
-    {
-        QColor normalColor = QApplication::palette().active().highlight();
-        QColor lightColor = normalColor.light( 140 );
-        // enlarging limits for intersection is like growing the 'linkGeometry' below
-        QRect limitsEnlarged = limits;
-        limitsEnlarged.addCoords( -2, -2, 2, 2 );
-        // draw links that are inside the 'limits' paint region as opaque rects
-        QValueList< KPDFActiveRect * >::const_iterator rIt = page->m_rects.begin(), rEnd = page->m_rects.end();
-        for ( ; rIt != rEnd; ++rIt )
-        {
-            QRect rectGeometry = (*rIt)->geometry();
-            if ( rectGeometry.intersects( limitsEnlarged ) )
-            {
-                // expand rect and draw inner border
-                rectGeometry.addCoords( -1,-1,1,1 );
-                p->setPen( lightColor );
-                p->drawRect( rectGeometry );
-                // expand rect to draw outer border
-                rectGeometry.addCoords( -1,-1,1,1 );
-                p->setPen( normalColor );
-                p->drawRect( rectGeometry );
+                QRect rectGeometry = rect->geometry();
+                if ( rectGeometry.intersects( limitsEnlarged ) )
+                {
+                    // expand rect and draw inner border
+                    rectGeometry.addCoords( -1,-1,1,1 );
+                    p->setPen( lightColor );
+                    p->drawRect( rectGeometry );
+                    // expand rect to draw outer border
+                    rectGeometry.addCoords( -1,-1,1,1 );
+                    p->setPen( normalColor );
+                    p->drawRect( rectGeometry );
+                }
             }
         }
     }
@@ -353,162 +376,4 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         destPainter->drawPixmap( limits.left(), limits.top(), *backPixmap );
         delete backPixmap;
     }
-}
-
-
-KPDFLink::KPDFLink( LinkAction * a )
-    : m_type( Unknown ), x_min( 0 ), x_max( 0 ), y_min( 0 ), y_max( 0 ),
-    m_dest( 0 ), m_destNamed( 0 ), m_fileName( 0 ), m_parameters( 0 ), m_uri( 0 )
-{
-    // set link action params processing (XPDF)LinkAction
-    switch ( a->getKind() )
-    {
-    case actionGoTo: {
-        LinkGoTo * g = (LinkGoTo *) a;
-        m_type = Goto;
-        // copy link dest (LinkDest class)
-        LinkDest * d = g->getDest();
-        m_dest = d ? d->copy() : 0;
-        // copy link namedDest (const char *)
-        GString * nd = g->getNamedDest();
-        copyString( m_destNamed, nd ? nd->getCString() : 0 );
-        } break;
-
-    case actionGoToR: {
-        m_type = Goto;
-        LinkGoToR * g = (LinkGoToR *) a;
-        // copy link file (const char *)
-        copyString( m_fileName, g->getFileName()->getCString() );
-        // copy link dest (LinkDest class)
-        LinkDest * d = g->getDest();
-        m_dest = d ? d->copy() : 0;
-        // copy link namedDest (const char *)
-        GString * nd = g->getNamedDest();
-        copyString( m_destNamed, nd ? nd->getCString() : 0 );
-        } break;
-
-    case actionLaunch: {
-        m_type = Execute;
-        LinkLaunch * e = (LinkLaunch *)a;
-        // copy name and parameters of the file to open(in case of PDF)/launch
-        copyString( m_fileName, e->getFileName()->getCString() );
-        GString * par = e->getParams();
-        copyString( m_parameters, par ? par->getCString() : 0 );
-        } break;
-
-    case actionURI:
-        m_type = URI;
-        // copy URI (const char *)
-        copyString( m_uri, ((LinkURI *)a)->getURI()->getCString() );
-        break;
-
-    case actionNamed:
-        m_type = Named;
-        // copy Action Name (const char * like Quit, Next, Back, etc..)
-        copyString( m_uri, ((LinkNamed *)a)->getName()->getCString() );
-        break;
-
-    case actionMovie: {
-        m_type = Movie;
-        LinkMovie * m = (LinkMovie *) a;
-        // copy Movie parameters (2 IDs and a const char *)
-        Ref * r = m->getAnnotRef();
-        m_refNum = r->num;
-        m_refGen = r->gen;
-        copyString( m_uri, m->getTitle()->getCString() );
-        } break;
-
-    case actionUnknown:
-        break;
-    }
-}
-
-void KPDFLink::setGeometry( int l, int t, int r, int b )
-{
-    // assign coordinates swapping them if negative width or height
-    x_min = r > l ? l : r;
-    x_max = r > l ? r : l;
-    y_min = b > t ? t : b;
-    y_max = b > t ? b : t;
-}
-
-KPDFLink::~KPDFLink()
-{
-    delete m_dest;
-    delete [] m_destNamed;
-    delete [] m_fileName;
-    delete [] m_parameters;
-    delete [] m_uri;
-}
-
-
-bool KPDFLink::contains( int x, int  y ) const
-{
-    return (x > x_min) && (x < x_max) && (y > y_min) && (y < y_max);
-}
-
-void KPDFLink::copyString( char * &dest, const char * src ) const
-{
-    if ( src )
-    {
-        dest = new char[ strlen(src) + 1 ];
-        strcpy( &dest[0], src );
-    }
-}
-
-QRect KPDFLink::geometry() const
-{
-    return QRect( x_min, y_min, x_max - x_min, y_max - y_min );
-}
-
-
-KPDFLink::LinkType KPDFLink::type() const
-{
-    return m_type;
-}
-
-const LinkDest * KPDFLink::getDest() const
-{
-    return m_dest;
-}
-
-const char * KPDFLink::getNamedDest() const
-{
-    return m_destNamed;
-}
-
-const char * KPDFLink::getFileName() const
-{
-    return m_fileName;
-}
-
-const char * KPDFLink::getParameters() const
-{
-    return m_parameters;
-}
-
-const char * KPDFLink::getName() const
-{
-    return m_uri;
-}
-
-const char * KPDFLink::getURI() const
-{
-    return m_uri;
-}
-
-
-KPDFActiveRect::KPDFActiveRect(int left, int top, int width, int height)
-    : m_left(left), m_top(top), m_right(left + width), m_bottom(top + height)
-{
-}
-
-bool KPDFActiveRect::contains(int x, int y)
-{
-    return (x > m_left) && (x < m_right) && (y > m_top) && (y < m_bottom);
-}
-
-QRect KPDFActiveRect::geometry() const
-{
-    return QRect( m_left, m_top, m_right - m_left, m_bottom - m_top );
 }

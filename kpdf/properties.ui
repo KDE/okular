@@ -21,7 +21,7 @@
                 <cstring>textLabel1_3_2_3_6</cstring>
             </property>
             <property name="text">
-                <string>PDF version:</string>
+                <string>Format:</string>
             </property>
         </widget>
         <widget class="QLabel" row="8" column="0">
@@ -50,6 +50,12 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
         </spacer>
         <spacer row="6" column="2">
             <property name="name">
@@ -60,6 +66,12 @@
             </property>
             <property name="sizeType">
                 <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
             </property>
         </spacer>
         <widget class="QLabel" row="5" column="0">

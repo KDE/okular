@@ -12,11 +12,14 @@
 #define _KPDF_DOCUMENT_H_
 
 #include <qvaluevector.h>
+#include <qstring.h>
 
 class KPrinter;
-class Outline;
 class KPDFPage;
 class KPDFLink;
+class Generator;
+class DocumentInfo;
+class Outline; // FIXME: ABSTRACT-REDO
 
 /**
  * @short Base class for objects being notified when something changes.
@@ -45,10 +48,9 @@ class KPDFDocumentObserver
 #define TOC_ID 4
 
 /**
- * @short The information container. Actions (like open,find) take place here.
+ * @short The Document. Actions (like open,find) take place here.
  *
- * xxxxxx
- * yyy.
+ * ### MERGE: comment
  */
 class KPDFDocument
 {
@@ -65,22 +67,12 @@ class KPDFDocument
         void reparseConfig();
 
         // query methods (const ones)
+        const DocumentInfo & documentInfo() const;
+        const KPDFPage * page( uint page ) const;
         uint currentPage() const;
         uint pages() const;
-        QString author() const;
-        QString creationDate() const;
-        QString creator() const;
-        bool encrypted() const;
-        QString keywords() const;
-        QString modificationDate() const;
-        bool optimized() const;
-        float PDFversion() const;
-        QString producer() const;
-        QString subject() const;
-        QString title() const;
         bool okToPrint() const;
         Outline * outline() const;
-        const KPDFPage * page( uint page ) const;
 
         // perform actions on document / pages
         void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
@@ -98,7 +90,40 @@ class KPDFDocument
         void processPageList( bool documentChanged );
         void unHilightPages();
 
+        Generator * generator;
+        QString documentFileName;
+        QValueVector< KPDFPage * > pages_vector;
         class KPDFDocumentPrivate * d;
+};
+
+
+/**
+ * ### MERGE: comment
+ */
+struct DocumentInfo
+{
+    QString author,
+            creationDate,
+            modificationDate,
+            creator,
+            keywords,
+            producer,
+            subject,
+            title,
+            format,
+            formatVersion,
+            encryption,
+            optimization;
+};
+
+/**
+ * ### TEMP IMPLEMENTATION. ABSTRACT OutLine !!
+ * ### NOTE: this IMPL is for PDF only. Need to better abstract this.
+ */
+class DocumentSynopsis
+{
+    public:
+        Outline * outline;
 };
 
 #endif

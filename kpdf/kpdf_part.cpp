@@ -48,7 +48,7 @@
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 
-#include "GlobalParams.h"
+#include "xpdf/GlobalParams.h"
 
 #include "kpdf_part.h"
 #include "pageview.h"
@@ -172,7 +172,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
     KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
-	
+
 	m_showProperties = new KAction(i18n("Properties"), 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
 
@@ -540,12 +540,12 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		else
 			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
 		popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
-		popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
-		popup->setItemEnabled( 3, false );
+		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
+		//popup->setItemEnabled( 3, false );
 	}
 /*
 	//Albert says: I have not ported this as i don't see it does anything
-	if ( d->mouseOnActiveRect )
+    if ( d->mouseOnRect ) // and rect->pointerType() == KDPFPageRect::Image ...
 	{
 		m_popup->insertItem( SmallIcon("filesave"), i18n("Save Image ..."), 4 );
 		m_popup->setItemEnabled( 4, false );
@@ -562,16 +562,16 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		case 1:
 			m_document->toggleBookmark( page->number() );
 			break;
-		case 2:// zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
+        case 2: // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
+            // (FIXME restore faster behavior and txt change as in old pageview implementation)
 			m_pageView->setZoomFitWidth();
 			m_document->setCurrentPage( page->number() );
 			break;
-		case 3: // ToDO switch to edit mode
-			m_pageView->slotSetMouseDraw();
-			break;
+//		case 3: // ToDO switch to edit mode
+//			m_pageView->slotSetMouseDraw();
+//			break;
 	}
 	delete popup;
-	
 }
 
 void Part::slotShowProperties()

@@ -19,18 +19,17 @@ propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialog
 {
   properties *p = new properties(this);
   setMainWidget(p);
+  const DocumentInfo & info = doc->documentInfo();
   p->pagesValue->setText(QString::number(doc->pages()));
-  p->authorValue->setText(doc->author());
-  p->titleValue->setText(doc->title());
-  p->subjectValue->setText(doc->subject());
-  p->keywordsValue->setText(doc->keywords());
-  p->producerValue->setText(doc->producer());
-  p->creatorValue->setText(doc->creator());
-  if (doc->optimized()) p->optimizedValue->setText(i18n("Yes"));
-  else p->optimizedValue->setText(i18n("No"));
-  if (doc->encrypted()) p->securityValue->setText(i18n("Encrypted"));
-  else p->securityValue->setText(i18n("No"));
-  p->versionValue->setText(QString::number(doc->PDFversion()));
-  p->createdValue->setText(doc->creationDate());
-  p->modifiedValue->setText(doc->modificationDate());
+  p->authorValue->setText( info.author );
+  p->titleValue->setText( info.title );
+  p->subjectValue->setText( info.subject );
+  p->keywordsValue->setText( info.keywords );
+  p->producerValue->setText( info.producer );
+  p->creatorValue->setText( info.creator );
+  p->optimizedValue->setText( info.optimization );
+  p->securityValue->setText( info.encryption );
+  p->versionValue->setText( info.format + " v." + info.formatVersion );
+  p->createdValue->setText( info.creationDate );
+  p->modifiedValue->setText( info.modificationDate );
 }

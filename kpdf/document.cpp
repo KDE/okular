@@ -9,170 +9,46 @@
  ***************************************************************************/
 
 // qt/kde/system includes
-#include <qdatetime.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <qmutex.h>
 #include <qvaluevector.h>
 #include <qmap.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>
-#include <kpassdlg.h>
-#include <kprinter.h>
-#include <kstandarddirs.h>
-#include <ktempfile.h>
 #include <kapplication.h>
-#include <krun.h>
-#include <kurl.h>
 #include <kuserprofile.h>
-#include <string.h>
+#include <kmimetype.h>
+#include <krun.h>
 
 // local includes
-#include "ErrorCodes.h"
-#include "PDFDoc.h"
-#include "PSOutputDev.h"
-#include "QOutputDev.h"
-#include "UnicodeMap.h"
-
 #include "document.h"
 #include "page.h"
+#include "link.h"
 #include "settings.h"
-
-/* Notes:
-- FIXME event queuing to avoid flow loops (!!?) maybe avoided by the
-  warning to not call something 'active' inside an observer method.
-*/
+#include "generator_pdf.h"  // PDF generator
+//#include "generator_ps.H" // PS generator
 
 // structure used internally by KPDFDocument for local variables storage
 class KPDFDocumentPrivate
 {
-public:
-    // Albert says: I've put that two functions here but they could go
-    // elsewhere, i leave it up to you if you want to change them Enrico
-    QString getDocumentInfo(const QString &data) const
-    {
-      // Code adapted from pdfinfo.cc on xpdf
-      Object info;
-      if (pdfdoc)
-      {
-        pdfdoc->getDocInfo(&info);
-        if (info.isDict())
-        {
-          QCString result;
-          Object obj;
-          GString *s1;
-          GBool isUnicode;
-          Unicode u;
-          char buf[8];
-          int i, n;
-          Dict *infoDict = info.getDict();
-          UnicodeMap *uMap = globalParams->getTextEncoding();
-          
-          if (!uMap) return i18n("Unknown");
-          
-          if (infoDict->lookup(data.latin1(), &obj)->isString())
-          {
-            s1 = obj.getString();
-            if ((s1->getChar(0) & 0xff) == 0xfe && (s1->getChar(1) & 0xff) == 0xff)
-            {
-              isUnicode = gTrue;
-              i = 2;
-            }
-            else
-            {
-              isUnicode = gFalse;
-              i = 0;
-            }
-            while (i < obj.getString()->getLength()) 
-            {
-              if (isUnicode)
-              {
-                u = ((s1->getChar(i) & 0xff) << 8) | (s1->getChar(i+1) & 0xff);
-                i += 2;
-              }
-              else
-              {
-                u = s1->getChar(i) & 0xff;
-                ++i;
-              }
-              n = uMap->mapUnicode(u, buf, sizeof(buf));
-              result += QCString(buf, n + 1);
-            }
-            obj.free();
-            return result;
-          }
-          obj.free();
-          return i18n("Unknown");
-        }
-        else return i18n("Unknown");
-      }
-      else return i18n("Unknown");
-    }
-    
-    QString getDocumentDate(const QString &data) const
-    {
-      // Code adapted from pdfinfo.cc on xpdf
-      Object info;
-      if (pdfdoc)
-      {
-        pdfdoc->getDocInfo(&info);
-        if (info.isDict())
-        {
-          Object obj;
-          char *s;
-          int year, mon, day, hour, min, sec;
-          Dict *infoDict = info.getDict();
-          UnicodeMap *uMap = globalParams->getTextEncoding();
-          
-          if (!uMap) return i18n("Unknown");
-          
-          if (infoDict->lookup(data.latin1(), &obj)->isString())
-          {
-            s = obj.getString()->getCString();
-            if (s[0] == 'D' && s[1] == ':') s += 2;
-            if (sscanf(s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec) == 6)
-            {
-              QDate d(year, mon - 1, day);
-              QTime t(hour, min, sec);
-              if (d.isValid() && t.isValid()) return KGlobal::locale()->formatDateTime(QDateTime(d, t), false, true);
-              else return s;
-            }
-            else return s;
-            fputc('\n', stdout);
-            obj.free();
-            //return result;
-          }
-          obj.free();
-          return i18n("Unknown");
-        }
-        else return i18n("Unknown");
-      }
-      else return i18n("Unknown");
-    }
-    
-    // document related
-    QMutex docLock;
-    PDFDoc * pdfdoc;
-    KPDFOutputDev * kpdfOutputDev;
-    int currentPage;
-    QRect currentViewport;
-    QValueVector< KPDFPage* > pages;
-    QColor paperColor;
+    public:
+        // find related
+        QString searchText;
+        bool searchCase;
+        int searchPage;
+        // filtering related
+        QString filterText;
+        bool filterCase;
 
-    // find related
-    QString searchText;
-    bool searchCase;
-    int searchPage;
-    // filtering related
-    QString filterText;
-    bool filterCase;
+        // cached stuff
+        int currentPage;
+        DocumentInfo noDocumentInfo;
 
-    // observers related (note: won't delete oservers)
-    QMap< int, KPDFDocumentObserver* > observers;
+        // observers related (note: won't delete oservers)
+        QMap< int, KPDFDocumentObserver* > observers;
 };
 
 #define foreachObserver( cmd ) {\
@@ -180,24 +56,17 @@ public:
     QMap<int,KPDFDocumentObserver*>::iterator end = d->observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
-/*
- * KPDFDocument class
- */
 KPDFDocument::KPDFDocument()
+    : generator( 0 ), d( new KPDFDocumentPrivate )
 {
-    d = new KPDFDocumentPrivate;
-    d->pdfdoc = 0;
     d->currentPage = -1;
     d->searchPage = -1;
-    d->kpdfOutputDev = 0;
-    // create the outputdev
-    reparseConfig();
+    d->noDocumentInfo.title = i18n( "No document opened!" );
 }
 
 KPDFDocument::~KPDFDocument()
 {
     closeDocument();
-    delete d->kpdfOutputDev;
     delete d;
 }
 
@@ -208,106 +77,52 @@ bool KPDFDocument::openDocument( const QString & docFile )
     QFile fileReadTest( docFile );
     if ( !fileReadTest.open( IO_ReadOnly ) )
         return false;
-    long fileSize = fileReadTest.size();
     fileReadTest.close();
 
-    // free internal data
+    // reset internal status and frees memory
     closeDocument();
 
-    GString *filename = new GString( QFile::encodeName( docFile ) );
-    delete d->pdfdoc;
-    d->pdfdoc = new PDFDoc( filename, 0, 0 );
-
-    if ( !d->pdfdoc->isOk() )
-    {
-        if (d->pdfdoc->getErrorCode() == errEncrypted)
-        {
-            bool first, correct;
-            QString prompt;
-            QCString pwd;
-
-            first = true;
-            correct = false;
-            while(!correct)
-            {
-                if (first)
-                {
-                    prompt = i18n("Please insert the password to read the document:");
-                    first = false;
-                }
-                else prompt = i18n("Incorrect password. Try again:");
-                if (KPasswordDialog::getPassword(pwd, prompt) == KPasswordDialog::Accepted)
-                {
-                    GString *pwd2;
-                    pwd2 = new GString(pwd.data());
-                    d->pdfdoc = new PDFDoc(filename, pwd2, pwd2);
-                    delete pwd2;
-                    correct = d->pdfdoc->isOk();
-                    if (!correct && d->pdfdoc->getErrorCode() != errEncrypted)
-                    {
-                        delete d->pdfdoc;
-                        d->pdfdoc = 0;
-                        return false;
-                    }
-                }
-                else
-                {
-                    delete d->pdfdoc;
-                    d->pdfdoc = 0;
-                    return false;
-                }
-            }
-        }
-        else
-        {
-            delete d->pdfdoc;
-            d->pdfdoc = 0;
-            return false;
-        }
-    }
-
-    // initialize output device for rendering current pdf
-    d->kpdfOutputDev->startDoc( d->pdfdoc->getXRef() );
-
-    // build Pages (currentPage was set -1 by deletePages)
-    uint pageCount = d->pdfdoc->getNumPages();
-    d->pages.resize( pageCount );
-    if ( pageCount > 0 )
-    {
-        for ( uint i = 0; i < pageCount ; i++ )
-            d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1), d->pdfdoc->getPageRotate(i+1) );
-        // filter pages, setup observers and set the first page as current
-        processPageList( true );
-        setCurrentPage( 0 );
-    }
+    // create the generator
+    // TODO: switch on mimetype for generator selection
+    generator = new GeneratorPDF();
+    documentFileName = docFile;
+    bool openOk = generator->loadDocument( docFile, pages_vector );
+    if ( !openOk )
+        return false;
 
     // check local directory for an overlay xml
     // TODO import overlay layers from XML
-    QString fileName = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
-    fileName = "kpdf/" + QString::number(fileSize) + "." + fileName + ".xml";
-    QString localFN = locateLocal( "data", fileName );
-    //kdWarning() << localFN << endl;
+//  QString fileName = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
+//  fileName = "kpdf/" + QString::number(fileSize) + "." + fileName + ".xml";
+//  QString localFN = locateLocal( "data", fileName );
+//  kdDebug() << "Using '" << localFN << "' as overlay descriptor." << endl;
 
+    // filter pages, setup observers and set the first page as current
+    if ( pages_vector.size() > 0 )
+    {
+        processPageList( true );
+        setCurrentPage( 0 );
+    }
     return true;
 }
 
 void KPDFDocument::closeDocument()
 {
-    // delete pages and clear container
-    for ( uint i = 0; i < d->pages.count() ; i++ )
-        delete d->pages[i];
-    d->pages.clear();
+    // delete pages and clear 'pages_vector' container
+    for ( uint i = 0; i < pages_vector.count() ; i++ )
+        delete pages_vector[i];
+    pages_vector.clear();
 
-    // broadcast zero pages
-    processPageList( true );
+    // send an empty list to observers (to free their data)
+    foreachObserver( pageSetup( pages_vector, true ) );
+
+    // delete contents generator
+    delete generator;
+    generator = 0;
 
     // reset internal variables
     d->currentPage = -1;
     d->searchPage = -1;
-
-    // delete xpds's PDFDoc contents generator
-    delete d->pdfdoc;
-    d->pdfdoc = 0;
 }
 
 
@@ -318,32 +133,29 @@ void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 
 void KPDFDocument::reparseConfig()
 {
-    // load paper color from Settings or use the white default color
-    QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
-                     Settings::changeColors() ) ? Settings::paperColor() : Qt::white;
-    // if paper color changed we have to rebuild every visible pixmap in addition to
-    // the outputDevice. it's the 'heaviest' case, other effect are just recoloring
-    // over the page rendered on 'standard' white background.
-    if ( color != d->paperColor || !d->kpdfOutputDev )
+    // reparse generator config and if something changed clear KPDFPages
+    if ( generator && generator->reparseConfig() )
     {
-        d->paperColor = color;
-        SplashColor paperColor;
-        paperColor.rgb8 = splashMakeRGB8( d->paperColor.red(), d->paperColor.green(), d->paperColor.blue() );
-        // rebuild the output device using the new paper color
-        d->docLock.lock();
-        delete d->kpdfOutputDev;
-        d->kpdfOutputDev = new KPDFOutputDev( paperColor );
-        if ( d->pdfdoc )
-            d->kpdfOutputDev->startDoc( d->pdfdoc->getXRef() );
-        d->docLock.unlock();
         // invalidate pixmaps and send reload signals to observers
-        QValueVector<KPDFPage*>::iterator it = d->pages.begin(), end = d->pages.end();
+        QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
-            (*it)->deletePixmapsAndLinks();
+            (*it)->deletePixmapsAndRects();
         foreachObserver( notifyPixmapsCleared() );
     }
 }
 
+
+const DocumentInfo & KPDFDocument::documentInfo() const
+{
+    if ( generator )
+        return generator->documentInfo();
+    return d->noDocumentInfo;
+}
+
+const KPDFPage * KPDFDocument::page( uint n ) const
+{
+    return ( n < pages_vector.count() ) ? pages_vector[n] : 0;
+}
 
 uint KPDFDocument::currentPage() const
 {
@@ -352,150 +164,49 @@ uint KPDFDocument::currentPage() const
 
 uint KPDFDocument::pages() const
 {
-    return d->pdfdoc ? d->pdfdoc->getNumPages() : 0;
-}
-
-QString KPDFDocument::author() const
-{
-  return d->getDocumentInfo("Author");
-}
-
-QString KPDFDocument::creationDate() const
-{
-  return d->getDocumentDate("CreationDate");
-}
-
-QString KPDFDocument::creator() const
-{
-  return d->getDocumentInfo("Creator");
-}
-
-bool KPDFDocument::encrypted() const
-{
-  if (d->pdfdoc) return d->pdfdoc->isEncrypted();
-  else return false;
-}
-
-QString KPDFDocument::keywords() const
-{
-  return d->getDocumentInfo("Keywords");
-}
-
-QString KPDFDocument::modificationDate() const
-{
-  return d->getDocumentDate("ModDate");
-}
-
-bool KPDFDocument::optimized() const
-{
-  if (d->pdfdoc) return d->pdfdoc->isLinearized();
-  else return false;
-}
-
-float KPDFDocument::PDFversion() const
-{
-  if (d->pdfdoc) return d->pdfdoc->getPDFVersion();
-  else return 0;
-}
-
-QString KPDFDocument::producer() const
-{
-  return d->getDocumentInfo("Producer");
-}
-
-QString KPDFDocument::subject() const
-{
-  return d->getDocumentInfo("Subject");
-}
-
-QString KPDFDocument::title() const
-{
-  return d->getDocumentInfo("Title");
+    return pages_vector.size();
 }
 
 bool KPDFDocument::okToPrint() const
 {
-    return d->pdfdoc->okToPrint();
+    return generator ? generator->allowed( Generator::Print ) : false;
 }
 
 Outline * KPDFDocument::outline() const
 {
-    return d->pdfdoc ? d->pdfdoc->getOutline() : 0;
-}
-
-const KPDFPage * KPDFDocument::page( uint n ) const
-{
-    return ( n < d->pages.count() ) ? d->pages[n] : 0;
+    return generator ? generator->synopsis().outline : 0;
 }
 
 
 void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool syn )
 {
-    KPDFPage * kp = d->pages[page];
-    if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
+    KPDFPage * kp = pages_vector[ page ];
+    if ( !generator || !kp || kp->width() < 1 || kp->height() < 1 )
         return;
 
-    //kdDebug() << "id: " << id << " is requesting pixmap for page " << page << " [" << width << " x " << height << "]." << endl;
-    if ( syn )
-    {
-        // in-place Pixmap generation for syncronous requests
-        if ( !kp->hasPixmap( id, width, height ) )
-        {
-            // compute dpi used to get an image with desired width and height
-            double fakeDpiX = width * 72.0 / kp->width(),
-                   fakeDpiY = height * 72.0 / kp->height();
-
-            // setup kpdf output device: text page is generated only if we are at 72dpi.
-            // since we can pre-generate the TextPage at the right res.. why not?
-            bool genTextPage = !kp->hasSearchPage() && (width == kp->width()) && (height == kp->height());
-            // generate links and activeRects if rendering pages on pageview
-            bool genLinks = id == PAGEVIEW_ID;
-            d->kpdfOutputDev->setParams( width, height, genTextPage, genLinks, genLinks );
-
-            d->docLock.lock();
-            d->pdfdoc->displayPage( d->kpdfOutputDev, page + 1, fakeDpiX, fakeDpiY, 0, true, genLinks );
-            d->docLock.unlock();
-
-            kp->setPixmap( id, d->kpdfOutputDev->takePixmap() );
-            if ( genTextPage )
-                kp->setSearchPage( d->kpdfOutputDev->takeTextPage() );
-            if ( genLinks )
-            {
-                kp->setLinks( d->kpdfOutputDev->takeLinks() );
-                kp->setActiveRects( d->kpdfOutputDev->takeActiveRects() );
-            }
-
-            d->observers[id]->notifyPixmapChanged( page );
-        }
-    }
-    else
-    {
-        //TODO asyncronous events queuing
-    }
+    bool pixChanged = generator->requestPixmap( id, kp, width, height, syn );
+    if ( pixChanged )
+        d->observers[id]->notifyPixmapChanged( page );
 }
 
-void KPDFDocument::requestTextPage( uint n )
+void KPDFDocument::requestTextPage( uint page )
 {
-    KPDFPage * page = d->pages[ n ];
-    // build a TextPage using the lightweight KPDFTextDev generator..
-    KPDFTextDev td;
-    d->docLock.lock();
-    d->pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
-    d->docLock.unlock();
-    // ..and attach it to the page
-    page->setSearchPage( td.takeTextPage() );
+    KPDFPage * kp = pages_vector[ page ];
+    if ( !generator || !kp )
+        return;
+
+    generator->requestTextPage( kp );
 }
 
 void KPDFDocument::setCurrentPage( int page, const QRect & viewport )
 {
     if ( page < 0 )
         page = 0;
-    else if ( page > (int)d->pages.count() )
-        page = d->pages.count() - 1;
-    if ( page == d->currentPage && viewport == d->currentViewport )
+    else if ( page > (int)pages_vector.count() )
+        page = pages_vector.count() - 1;
+    if ( page == d->currentPage )
         return;
     d->currentPage = page;
-    d->currentViewport = viewport;
     foreachObserver( pageSetCurrent( page, viewport ) );
 }
 
@@ -514,9 +225,9 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
 
     // continue checking last SearchPage first (if it is the current page)
     int currentPage = d->currentPage;
-    int pageCount = d->pages.count();
+    int pageCount = pages_vector.count();
     KPDFPage * foundPage = 0,
-             * lastPage = (d->searchPage > -1) ? d->pages[ d->searchPage ] : 0;
+             * lastPage = (d->searchPage > -1) ? pages_vector[ d->searchPage ] : 0;
     if ( lastPage && d->searchPage == currentPage )
         if ( lastPage->hasText( d->searchText, d->searchCase, false ) )
             foundPage = lastPage;
@@ -538,7 +249,7 @@ void KPDFDocument::findText( const QString & string, bool keepCase )
                 else
                     break;
             }
-            KPDFPage * page = d->pages[ currentPage ];
+            KPDFPage * page = pages_vector[ currentPage ];
             if ( !page->hasSearchPage() )
                 requestTextPage( page->number() );
             if ( page->hasText( d->searchText, d->searchCase, true ) )
@@ -570,7 +281,7 @@ void KPDFDocument::findTextAll( const QString & pattern, bool keepCase )
 
 void KPDFDocument::toggleBookmark( int n )
 {
-    KPDFPage * page = ( n < (int)d->pages.count() ) ? d->pages[ n ] : 0;
+    KPDFPage * page = ( n < (int)pages_vector.count() ) ? pages_vector[ n ] : 0;
     if ( page )
     {
         page->toggleAttribute( KPDFPage::Bookmark );
@@ -583,209 +294,132 @@ void KPDFDocument::processLink( const KPDFLink * link )
     if ( !link )
         return;
 
-    switch( link->type() )
+    switch( link->linkType() )
     {
-    case KPDFLink::Goto: {
-        // make copies of the 'nameDest' (string) and the 'dest' (class)
-        char * namedDest = 0;
-        link->copyString( namedDest, link->getNamedDest() );
-        LinkDest * dest = link->getDest() ? ((LinkDest*)link->getDest())->copy() : 0;
+        case KPDFLink::Goto: {
+            const KPDFLinkGoto * go = static_cast< const KPDFLinkGoto * >( link );
+            KPDFLinkGoto::Viewport destVp = go->destViewport();
 
-        // first open filename if link is pointing outside this document
-        QString fileName( link->getFileName() );
-        if ( !fileName.isNull() )
-            if ( !openRelativeFile( fileName ) )
+            // first open filename if link is pointing outside this document
+            if ( go->isExternal() && !openRelativeFile( go->fileName() ) )
             {
-                kdWarning() << "Link: Error opening '" << fileName << "'." << endl;
-                delete dest;
-                delete namedDest;
+                kdWarning() << "Link: Error opening '" << go->fileName() << "'." << endl;
                 return;
             }
 
-        // now previous KPDFLink and KPDFPage don't exist anymore!
-        if ( namedDest && !dest )
-        {
-            GString temp( namedDest );
-            d->docLock.lock();
-            dest = d->pdfdoc->findDest( &temp  );
-            d->docLock.unlock();
-        }
-        if ( dest && dest->isOk() )
-        {
-            // get destination page number
-            int pageNum = dest->getPageNum() - 1;
-            if ( dest->isPageRef() )
+            // note: if external file is opened, 'link' doesn't exist anymore!
+            setCurrentPage( destVp.page );  //TODO implement and use viewport
+            } break;
+
+        case KPDFLink::Execute: {
+            const KPDFLinkExecute * exe  = static_cast< const KPDFLinkExecute * >( link );
+            QString fileName = exe->fileName();
+            if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
             {
-                Ref ref = dest->getPageRef();
-                d->docLock.lock();
-                pageNum = d->pdfdoc->findPage( ref.num, ref.gen ) - 1;
-                d->docLock.unlock();
+                openRelativeFile( fileName );
+                return;
             }
-            // get destination position
-            QRect r;
-            //KPDFPage * page = (pageNum >= 0 && pageNum < (int)d->pages.count()) ? d->pages[ pageNum ] : 0;
-            //if ( page )
-            /* TODO
-            switch ( dest->getKind() )
+
+            // Albert: the only pdf i have that has that kind of link don't define
+            // an application and use the fileName as the file to open
+            fileName = giveAbsolutePath( fileName );
+            KMimeType::Ptr mime = KMimeType::findByPath( fileName );
+            // Check executables
+            if ( KRun::isExecutableFile( fileName, mime->name() ) )
             {
-            case destXYZ
-                OD -> cvtUserToDev( dest->getLeft(), dest->getTop(), &X, &Y );ù
-                if ( dest->getChangeLeft() )
-                    make hor change
-                if ( dest->getChangeTop() )
-                    make ver change
-                if ( dest->getChangeZoom() )
-                    make zoom change
-            case destFit
-            case destFitB
-                fit page
-            case destFitH
-            case destFitBH
-                read top, fit Width
-            case destFitV
-            case destFitBV
-                read left, fit Height
-            destFitR
-                read and fit left,bottom,right,top
-            }*/
-            setCurrentPage( pageNum, r );
-        }
-        delete namedDest;
-        delete dest;
-        } break;
+                // Don't have any pdf that uses this code path, just a guess on how it should work
+                if ( !exe->parameters().isEmpty() )
+                {
+                    fileName = giveAbsolutePath( exe->parameters() );
+                    mime = KMimeType::findByPath( fileName );
+                    if ( KRun::isExecutableFile( fileName, mime->name() ) )
+                    {
+                        // this case is a link pointing to an executable with a parameter
+                        // that also is an executable, possibly a hand-crafted pdf
+                        KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
+                        return;
+                    }
+                }
+                else
+                {
+                    // this case is a link pointing to an executable with no parameters
+                    // core developers find unacceptable executing it even after asking the user
+                    KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
+                    return;
+                }
+            }
 
-    case KPDFLink::Execute: {
-        QString fileName( link->getFileName() );
-        if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
-            openRelativeFile( fileName );
-        else
-        {
-			KMimeType::Ptr mime;
-			KService::Ptr ptr;
+            KService::Ptr ptr = KServiceTypeProfile::preferredService( mime->name(), "Application" );
+            if ( ptr )
+            {
+                KURL::List lst;
+                lst.append( fileName );
+                KRun::run( *ptr, lst );
+            }
+            else
+                KMessageBox::information( 0, i18n( "No application found for opening file of mimetype %1." ).arg( mime->name() ) );
+            } break;
 
-			// the only pdf i have that has that kind of link don't define an application
-			// and use the fileName as the file to open
+        case KPDFLink::Action: {
+            const KPDFLinkAction * action = static_cast< const KPDFLinkAction * >( link );
+            switch( action->actionType() )
+            {
+                case KPDFLinkAction::PageFirst:
+                    setCurrentPage( 0 );
+                    break;
+                case KPDFLinkAction::PagePrev:
+                    if ( d->currentPage > 0 )
+                        setCurrentPage( d->currentPage - 1 );
+                    break;
+                case KPDFLinkAction::PageNext:
+                    if ( d->currentPage < (int)pages_vector.count() - 1 )
+                        setCurrentPage( d->currentPage + 1 );
+                    break;
+                case KPDFLinkAction::PageLast:
+                    setCurrentPage( pages_vector.count() - 1 );
+                    break;
+                case KPDFLinkAction::HistoryBack:
+                    {} //TODO
+                    break;
+                case KPDFLinkAction::HistoryForward:
+                    {} //TODO
+                    break;
+                case KPDFLinkAction::Quit:
+                    kapp->quit();
+                    break;
+            }
+            } break;
 
-			fileName = giveAbsolutePath( fileName );
-			mime = KMimeType::findByPath( fileName );
-			// Check executables
-			if ( KRun::isExecutableFile( fileName, mime->name() ) )
-			{
-				// Don't have any pdf that uses this code path, just a guess on how it should work
-				if ( link->getParameters() )
-				{
-					fileName = giveAbsolutePath( link->getParameters() );
-					mime = KMimeType::findByPath( fileName );
-					if ( KRun::isExecutableFile( fileName, mime->name() ) )
-					{
-						// this case is a link pointing to an executable with a parameter
-						// that also is an executable, possibly a hand-crafted pdf
-						KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
-						return;
-					}
-				}
-				else
-				{
-					// this case is a link pointing to an executable with no parameters
-					// core developers find unacceptable executing it even after asking the user
-					KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
-					return;
-				}
-			}
+        case KPDFLink::Browse: {
+            const KPDFLinkBrowse * browse = static_cast< const KPDFLinkBrowse * >( link );
+            // get service for web browsing
+            KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
+            KURL::List lst;
+            // append 'url' parameter to the service and run it
+            lst.append( browse->url() );
+            KRun::run( *ptr, lst );
+            } break;
 
-			ptr = KServiceTypeProfile::preferredService(mime->name(), "Application");
-			if (ptr)
-			{
-				KURL::List lst;
-				lst.append( fileName );
-				KRun::run( *ptr, lst );
-			}
-			else KMessageBox::information( 0, i18n("No application found for opening file of mimetype %1.").arg(mime->name()) );
-        }
-        } break;
-
-    case KPDFLink::Named: {
-        const char * name = link->getName();
-        if ( !strcmp( name, "NextPage" ) && (d->currentPage < (int)d->pages.count() - 1) )
-            setCurrentPage( d->currentPage + 1 );
-        else if ( !strcmp( name, "PrevPage" ) && d->currentPage > 0 )
-            setCurrentPage( d->currentPage - 1 );
-        else if ( !strcmp( name, "FirstPage" ) )
-            setCurrentPage( 0 );
-        else if ( !strcmp( name, "LastPage" ) )
-            setCurrentPage( d->pages.count() - 1 );
-        else if ( !strcmp( name, "GoBack" ) )
-            {} //TODO
-        else if ( !strcmp( name, "GoForward" ) )
-            {} //TODO
-        else if ( !strcmp( name, "Quit" ) )
-            kapp->quit();
-        else
-            {}//FIXME error(-1, "Unknown named action: '%s'", name);
-        } break;
-
-    case KPDFLink::URI: {
-        KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
-        KURL::List lst;
-        lst.append( link->getURI() );
-        KRun::run( *ptr, lst );
-        } break;
-
-    case KPDFLink::Movie:
-    case KPDFLink::Unknown:
-        // unimplemented cases
-        break;
+        case KPDFLink::Movie:
+            // TODO this
+            break;
     }
 }
 
-bool KPDFDocument::print(KPrinter &printer)
+bool KPDFDocument::print( KPrinter &printer )
 {
-    KTempFile tf( QString::null, ".ps" );
-    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), d->pdfdoc->getXRef(), d->pdfdoc->getCatalog(), 1, d->pdfdoc->getNumPages(), psModePS);
-
-    if (psOut->isOk())
-    {
-        std::list<int> pages;
-
-        if (!printer.previewOnly())
-        {
-            QValueList<int> pageList = printer.pageList();
-            QValueList<int>::const_iterator it;
-
-            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
-        }
-        else
-        {
-            for(int i = 1; i <= d->pdfdoc->getNumPages(); i++) pages.push_back(i);
-        }
-
-        d->docLock.lock();
-        d->pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
-        d->docLock.unlock();
-
-        // needs to be here so that the file is flushed, do not merge with the one
-        // in the else
-        delete psOut;
-        printer.printFiles(tf.name(), true);
-        return true;
-    }
-    else
-    {
-        delete psOut;
-        return false;
-    }
+    return generator ? generator->print( printer ) : false;
 }
-//END slots
+
 
 QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 {
-	const char * currentName = d->pdfdoc->getFileName()->getCString();
-	if ( !currentName || currentName[0] == 0 )
-		return QString::null;
+    if ( documentFileName.isEmpty() )
+        return QString::null;
 
     // convert the pdf fileName to absolute using current pdf path
-	QFileInfo currentInfo( currentName );
-	return currentInfo.dir().absFilePath( fileName );
+    QFileInfo currentInfo( documentFileName );
+    return currentInfo.dir().absFilePath( fileName );
 }
 
 bool KPDFDocument::openRelativeFile( const QString & fileName )
@@ -806,23 +440,15 @@ void KPDFDocument::processPageList( bool documentChanged )
         unHilightPages();
     else
     {
-        uint pageCount = d->pages.count();
+        uint pageCount = pages_vector.count();
         for ( uint i = 0; i < pageCount ; i++ )
         {
-            KPDFPage * page = d->pages[ i ];
+            KPDFPage * page = pages_vector[ i ];
             page->clearAttribute( KPDFPage::Highlight );
             if ( d->filterText.length() > 2 )
             {
                 if ( !page->hasSearchPage() )
-                {
-                    // build a TextPage using the lightweight KPDFTextDev generator..
-                    KPDFTextDev td;
-                    d->docLock.lock();
-                    d->pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
-                    d->docLock.unlock();
-                    // ..and attach it to the page
-                    page->setSearchPage( td.takeTextPage() );
-                }
+                    requestTextPage( i );
                 if ( page->hasText( d->filterText, d->filterCase, true ) )
                     page->setAttribute( KPDFPage::Highlight );
             }
@@ -830,7 +456,7 @@ void KPDFDocument::processPageList( bool documentChanged )
     }
 
     // send the list to observers
-    foreachObserver( pageSetup( d->pages, documentChanged ) );
+    foreachObserver( pageSetup( pages_vector, documentChanged ) );
 }
 
 void KPDFDocument::unHilightPages()
@@ -839,7 +465,7 @@ void KPDFDocument::unHilightPages()
         return;
 
     d->filterText = QString::null;
-    QValueVector<KPDFPage*>::iterator it = d->pages.begin(), end = d->pages.end();
+    QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
     for ( ; it != end; ++it )
     {
         KPDFPage * page = *it;
@@ -850,79 +476,3 @@ void KPDFDocument::unHilightPages()
         }
     }
 }
-
-/** TO BE IMPORTED:
-	void generateThumbnails(PDFDoc *doc);
-	void stopThumbnailGeneration();
-protected slots:
-	void customEvent(QCustomEvent *e);
-private slots:
-	void changeSelected(int i);
-	void emitClicked(int i);
-signals:
-	void clicked(int);
-private:
-	void generateNextThumbnail();
-	ThumbnailGenerator *m_tg;
-
-	void resizeThumbnails();
-	int m_nextThumbnail;
-	bool m_ignoreNext;
-
-DELETE:
-if (m_tg)
-{
-	m_tg->wait();
-	delete m_tg;
-}
-
-void ThumbnailList::generateThumbnails(PDFDoc *doc)
-{
-	m_nextThumbnail = 1;
-	m_doc = doc;
-	generateNextThumbnail();
-}
-
-void ThumbnailList::generateNextThumbnail()
-{
-	if (m_tg)
-	{
-		m_tg->wait();
-		delete m_tg;
-	}
-	m_tg = new ThumbnailGenerator(m_doc, m_docMutex, m_nextThumbnail, QPaintDevice::x11AppDpiX(), this);
-	m_tg->start();
-}
-
-
-void ThumbnailList::stopThumbnailGeneration()
-{
-	if (m_tg)
-	{
-		m_ignoreNext = true;
-		m_tg->wait();
-		delete m_tg;
-		m_tg = 0;
-	}
-}
-
-
-void ThumbnailList::customEvent(QCustomEvent *e)
-{
-	if (e->type() == 65432 && !m_ignoreNext)
-	{
-		QImage *i =  (QImage*)(e -> data());
-
-		setThumbnail(m_nextThumbnail, i);
-		m_nextThumbnail++;
-		if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();
-		else
-		{
-			m_tg->wait();
-			delete m_tg;
-			m_tg = 0;
-		}
-	}
-	m_ignoreNext = false;
-}
-*/

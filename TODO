@@ -88,8 +88,11 @@ More items (first items will enter 'In progress list' first):
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> set a marker on the pdf file to immediately start presentation when opening it (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
+-> link following when in presentation mode
+-> FIX: single page mode: add a little margin on pageview (top-bottom edges)
 
 Done (newest feature comes firts):
+-> ADD: Presentation transitions are loaded from the pdf files as well as fullscreen state (Tobias)
 -> Merged on HEAD on 2005-01-02 (The branch is frozen, development continues here)
 -> FIX: Fix my update cursor FIX :-D
 -> ADD: Make kpdf aware of Find and GoToPage actions

@@ -17,7 +17,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "GString.h"
-#include "config.h"
+#include "xpdf_config.h"
 #include "GlobalParams.h"
 #include "Page.h"
 #include "Catalog.h"

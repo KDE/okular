@@ -22,7 +22,7 @@
 #include <ctype.h>
 #include "gmem.h"
 #include "gfile.h"
-#include "config.h"
+#include "xpdf_config.h"
 #include "Error.h"
 #include "Object.h"
 #ifndef NO_DECRYPTION

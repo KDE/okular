@@ -17,7 +17,7 @@
 
 #include "gtypes.h"
 #include "SplashTypes.h"
-#include "config.h"
+#include "xpdf_config.h"
 #include "OutputDev.h"
 
 class GfxState;

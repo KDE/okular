@@ -52,9 +52,9 @@ PresentationWidget::PresentationWidget( KPDFDocument * doc )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
-    QDesktopWidget * d = QApplication::desktop();
-    m_width = d->width();
-    m_height = d->height();
+    QRect d = KGlobalSettings::desktopGeometry(this);
+    m_width = d.width();
+    m_height = d.height();
 
     // create top toolbar
     m_topBar = new KToolBar( this, "presentationBar" );

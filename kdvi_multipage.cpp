@@ -76,7 +76,7 @@ KInstance *KDVIMultiPageFactory::instance()
 
 
 KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name)
-  : KMultiPage(parentWidget, widgetName, parent, name), window(0), options(0)
+  : KMultiPage(parentWidget, widgetName, parent, name), window(0), options(0) 
 {
 #ifdef PERFORMANCE_MEASUREMENT
   performanceTimer.start();
@@ -93,18 +93,17 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   findPrevAction         = 0;
   
 
-
-  dviWidget = new documentWidget(scrollView(), "singlePageWidget" );
+  dviWidget = new documentWidget(scrollView(), &currentPage, "singlePageWidget" );
   window = new dviWindow(scrollView());
   window->setName("DVI renderer");
-  currentPage.setName("All purpose document page");
-  dviWidget->setPage(&currentPage);
+  currentPage.setRenderer(window);
+
+  dviWidget->setPageNumber(0);
+
 
   connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
   connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *)), window, SLOT(handleSRCLink(const QString &,QMouseEvent *)));
-  connect(dviWidget, SIGNAL(needPixmap(documentPage *)), window, SLOT(drawPage(documentPage *)));
   connect(window, SIGNAL(flash(int)), dviWidget, SLOT(flash(int)));
-
   connect(window, SIGNAL(needsRepainting()), &currentPage, SLOT(clear()));
   connect(window, SIGNAL(needsRepainting()), dviWidget, SLOT(update()));
 
@@ -150,7 +149,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   
   scrollView()->addChild(dviWidget);
   connect(window, SIGNAL(request_goto_page(int, int)), this, SLOT(goto_page(int, int) ) );
-  connect(&currentPage, SIGNAL(pixmapChanged(void)), this, SLOT(contents_of_dviwin_changed(void)) );
 
   readSettings();
   enableActions(false);
@@ -271,7 +269,9 @@ bool KDVIMultiPage::openFile()
   emit numberOfPages(window->totalPages());
   enableActions(r);
 
+  /*
   currentPage.setPageNumber(1);
+  */
   dviWidget->update();
   
   return r;
@@ -313,7 +313,7 @@ QStringList KDVIMultiPage::fileFormats()
 bool KDVIMultiPage::gotoPage(int page)
 {
   document_history.add(page,0);
-  currentPage.setPageNumber(page+1);
+  dviWidget->setPageNumber(page+1);
   return true;
 }
 
@@ -322,10 +322,10 @@ void KDVIMultiPage::goto_page(int page, int y)
 {
   document_history.add(page,y);
   if (y != 0) {
-    currentPage.setPageNumber(page+1);
+    dviWidget->setPageNumber(page+1);
     dviWidget->flash(y);
   } else
-    currentPage.setPageNumber(page+1);
+    dviWidget->setPageNumber(page+1);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
   emit pageInfo(window->totalPages(), page );
 }
@@ -342,11 +342,17 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
     return;
   }
 
-  currentPage.setPageNumber(pageNr);
-  window->drawPage(&currentPage);
-  dviWidget->DVIselection.set(beginSelection, endSelection, currentPage.textLinkList[beginSelection].linkText); // @@@
+  dviWidget->setPageNumber(pageNr);
+  documentPage *pageData = currentPage.getPage(pageNr);
+  if (pageData == 0) {
+#ifdef DEBUG_DOCUMENTWIDGET
+    kdDebug(4300) << "documentWidget::paintEvent: no documentPage generated" << endl;
+#endif
+    return;
+  }
 
-  Q_UINT16 y = currentPage.textLinkList[beginSelection].box.bottom();
+  dviWidget->DVIselection.set(beginSelection, endSelection, pageData->textLinkList[beginSelection].linkText); // @@@
+  Q_UINT16 y = pageData->textLinkList[beginSelection].box.bottom();
   document_history.add(pageNr,y);
   dviWidget->flash(y);
   
@@ -663,7 +669,7 @@ void KDVIMultiPage::reload()
     enableActions(r);
 
     // Go to the old page and tell kviewshell where we are.
-    currentPage.setPageNumber(currsav);
+    dviWidget->setPageNumber(currsav);
     // We don't use "currsav" here, because that page may no longer
     // exist. In that case, gotoPage already selected another page.
     emit pageInfo(window->totalPages(), window->curr_page()-1 );

@@ -16,6 +16,7 @@
 #include "documentPage.h"
 #include "selection.h"
 
+class documentPageCache;
 class QPaintEvent;
 class QMouseEvent;
 
@@ -25,11 +26,10 @@ class documentWidget : public QWidget
   Q_OBJECT
 
 public:
-  documentWidget(QWidget *parent, const char *name);
-  ~documentWidget();
+  documentWidget(QWidget *parent, documentPageCache *cache, const char *name);
 
-  void setPage(documentPage *pagw);
 
+  void setPageNumber(Q_UINT16 pageNr);
 
   selection    DVIselection;
 
@@ -38,14 +38,13 @@ public slots:
   void          selectAll(void);
   void          copyText(void);
   void          flash(int);
-  void          pixmapChanged(void);
+
 
 signals:
   /** Passed through to the top-level kpart. */
   void          setStatusBarText( const QString& );
   void          localLink( const QString& );
   void          SRCLink( const QString&, QMouseEvent * e );
-  void          needPixmap( documentPage * );
 
 protected:
   void          paintEvent (QPaintEvent *);
@@ -62,6 +61,8 @@ private:
   int           animationCounter;
   int           flashOffset;
 
+  Q_UINT16      pageNr;
+
   /* This timer is used to delay clearing of the statusbar. Clearing
      the statusbar is delayed to avoid awful flickering when the mouse
      moves over a block of text that contains source hyperlinks. The
@@ -73,8 +74,7 @@ private:
   QPoint       firstSelectedPoint;
   QRect        selectedRectangle;
 
-
-  documentPage  *pageData;
+  documentPageCache *documentCache;
 };
 
 

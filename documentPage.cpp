@@ -37,10 +37,8 @@ void documentPage::clear()
   hyperLinkList.clear();
   
   isPixmapSet = false;
-  bool flag = pixmap.isNull();
+  pixmap.isNull();
   pixmap.resize(0, 0);
-  if (flag != true)
-    emit (pixmapChanged());
 }
 
 
@@ -57,7 +55,6 @@ void documentPage::setPixmap(const QPixmap &pm)
 {
   pixmap = pm; 
   isPixmapSet = true;
-  emit (pixmapChanged());
 };
 
 #include "documentPage.moc"

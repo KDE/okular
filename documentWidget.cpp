@@ -15,18 +15,19 @@
 #include <qcursor.h>
 #include <qpainter.h>
 
+#include "documentPageCache.h"
 #include "documentWidget.h"
 
 //#define DEBUG_DOCUMENTWIDGET
 
-documentWidget::documentWidget(QWidget *parent, const char *name )
+
+documentWidget::documentWidget(QWidget *parent, documentPageCache *cache, const char *name )
   : QWidget( parent, name )
 {
   // Variables used in animation.
   animationCounter = 0;
   timerIdent       = 0;
-
-  pageData         = 0;
+  documentCache    = cache;
 
   DVIselection.clear();
   setMouseTracking(true);
@@ -36,59 +37,16 @@ documentWidget::documentWidget(QWidget *parent, const char *name )
 }
 
 
-documentWidget::~documentWidget()
+void documentWidget::setPageNumber(Q_UINT16 nr)
 {
-  ;
-}
-
-
-void documentWidget::pixmapChanged(void)
-{
-#ifdef DEBUG_DOCUMENTWIDGET
-  kdDebug(4300) << "documentWidget::pixmapChanged() called." << endl; 
-  if (pageData != 0) {
-    if (pageData->getPixmap() != 0)
-      kdDebug(4300) << "New size is " << pageData->getPixmap()->size() << endl;
-    else
-      kdDebug(4300) << "pageData, but no pixmap given." << endl;
-  } else
-    kdDebug(4300) << "No pageData given." << endl;
-#endif
-  /*
-  // Stop any animation which may be in progress
-  if (timerIdent != 0) {
-  killTimer(timerIdent);
-  timerIdent       = 0;
-  animationCounter = 0;
-  }
-  */
-  
-  // Remove the mouse selection
   DVIselection.clear();
-  
-  if (pageData != 0) {
-    if (pageData->getPixmap() != 0)
-      resize(pageData->getPixmap()->size());
-  } else
-    resize(0,0);
+  pageNr = nr;
   update();
-}
-
-
-void documentWidget::setPage(documentPage *page)
-{
-  pageData = page;
-  if (pageData != 0) 
-    connect(page, SIGNAL(pixmapChanged()), this, SLOT(pixmapChanged()));
-  pixmapChanged();
 }
 
 
 void documentWidget::timerEvent( QTimerEvent *e )
 {
-  if (pageData == 0)
-    return;
-
   animationCounter++;
   if (animationCounter >= 10) {
     killTimer(e->timerId());
@@ -115,36 +73,47 @@ void documentWidget::paintEvent(QPaintEvent *e)
   kdDebug(4300) << "documentWidget::paintEvent() called" << endl;
 #endif
 
-  if (pageData == 0)
-    return;
-
-  if (pageData->getPixmap() == 0) {
+  documentPage *pageData = documentCache->getPage(pageNr);
+  if (pageData == 0) {
 #ifdef DEBUG_DOCUMENTWIDGET
-    kdDebug(4300) << "documentWidget::paintEvent: calling for a Pixmap" << endl;
+    kdDebug(4300) << "documentWidget::paintEvent: no documentPage generated" << endl;
 #endif
-    emit(needPixmap(pageData));
-  } else {
-    bitBlt ( this, e->rect().topLeft(), pageData->getPixmap(), e->rect(), CopyROP);
-    
-    QPainter p(this);
-    p.setClipRect(e->rect());
-    
-    if (animationCounter > 0 && animationCounter < 10) {
-      int wdt = width()/(10-animationCounter);
-      int hgt = height()/((10-animationCounter)*20);
-      p.setPen(QPen(QColor(150,0,0), 3, DashLine));
-      p.drawRect((width()-wdt)/2, flashOffset, wdt, hgt);
-    }
-    
-    // Mark selected text.
-    if (DVIselection.selectedTextStart != -1)
-      for(unsigned int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < pageData->textLinkList.size()); i++) {
-	p.setPen( NoPen );
-	p.setBrush( white );
-	p.setRasterOp( Qt::XorROP );
-	p.drawRect(pageData->textLinkList[i].box);
-      }
+    return;
   }
+
+  QPixmap *pixmap = pageData->getPixmap();
+  if (pixmap == 0) {
+#ifdef DEBUG_DOCUMENTWIDGET
+    kdDebug(4300) << "documentWidget::paintEvent: no pixmap found" << endl;
+#endif
+    return;
+  }
+
+  // Resize the widget, if appropriate
+  if (pixmap->size() != this->size())
+    resize(pixmap->size());
+  
+  // Paint widget contents
+  bitBlt ( this, e->rect().topLeft(), pageData->getPixmap(), e->rect(), CopyROP);
+  
+  // Paint flashing frame, if appropriate
+  QPainter p(this);
+  p.setClipRect(e->rect());
+  if (animationCounter > 0 && animationCounter < 10) {
+    int wdt = width()/(10-animationCounter);
+    int hgt = height()/((10-animationCounter)*20);
+    p.setPen(QPen(QColor(150,0,0), 3, DashLine));
+    p.drawRect((width()-wdt)/2, flashOffset, wdt, hgt);
+  }
+  
+  // Mark selected text.
+  if (DVIselection.selectedTextStart != -1)
+    for(unsigned int i = DVIselection.selectedTextStart; (i <= DVIselection.selectedTextEnd)&&(i < pageData->textLinkList.size()); i++) {
+      p.setPen( NoPen );
+      p.setBrush( white );
+      p.setRasterOp( Qt::XorROP );
+      p.drawRect(pageData->textLinkList[i].box);
+    }
 }
 
 
@@ -157,15 +126,29 @@ void documentWidget::copyText(void)
 
 void documentWidget::selectAll(void)
 {
-  if (pageData == 0)
+  kdDebug(4300) << "documentWidget::selectAll(void) called" << endl;
+
+  // pageNr == 0 indicated an invalid page (e.g. page number not yet
+  // set)
+  if (pageNr == 0)
     return;
 
+  // Get a pointer to the page contents
+  documentPage *pageData = documentCache->getPage(pageNr);
+  if (pageData == 0) {
+    kdDebug(4300) << "documentWidget::selectAll() pageData for page #" << pageNr << " is empty" << endl;
+    return;
+  }
+  
+  // mark everything as selected
   QString selectedText("");
   for(unsigned int i = 0; i < pageData->textLinkList.size(); i++) {
     selectedText += pageData->textLinkList[i].linkText;
     selectedText += "\n";
   }
   DVIselection.set(0, pageData->textLinkList.size()-1, selectedText);
+
+  // Re-paint
   update();
 }
 
@@ -173,11 +156,20 @@ void documentWidget::selectAll(void)
 void documentWidget::mousePressEvent ( QMouseEvent * e )
 {
 #ifdef DEBUG_DOCUMENTWIDGET
-  kdDebug(4300) << "mouse event" << endl;
+  kdDebug(4300) << "documentWidget::mousePressEvent(...) called" << endl;
 #endif
-
-  if (pageData == 0)
+  
+  // pageNr == 0 indicated an invalid page (e.g. page number not yet
+  // set)
+  if (pageNr == 0)
     return;
+
+  // Get a pointer to the page contents
+  documentPage *pageData = documentCache->getPage(pageNr);
+  if (pageData == 0) {
+    kdDebug(4300) << "documentWidget::selectAll() pageData for page #" << pageNr << " is empty" << endl;
+    return;
+  }
 
   // Check if the mouse is pressed on a regular hyperlink
   if (e->button() == LeftButton) {
@@ -210,8 +202,22 @@ void documentWidget::mouseReleaseEvent ( QMouseEvent * )
 
 void documentWidget::mouseMoveEvent ( QMouseEvent * e )
 {
-  if (pageData == 0)
+#ifdef DEBUG_DOCUMENTWIDGET
+  kdDebug(4300) << "documentWidget::mouseMoveEvent(...) called" << endl;
+#endif
+
+
+  // pageNr == 0 indicated an invalid page (e.g. page number not yet
+  // set)
+  if (pageNr == 0)
     return;
+
+  // Get a pointer to the page contents
+  documentPage *pageData = documentCache->getPage(pageNr);
+  if (pageData == 0) {
+    kdDebug(4300) << "documentWidget::selectAll() pageData for page #" << pageNr << " is empty" << endl;
+    return;
+  }
 
   // If no mouse button pressed
   if ( e->state() == 0 ) {

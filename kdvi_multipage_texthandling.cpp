@@ -188,7 +188,7 @@ void KDVIMultiPage::findNextText(void)
   }
 
   bool case_sensitive = findDialog->case_sensitive();
-  bool oneTimeRound    = false;
+  bool oneTimeRound   = false;
 
 
   QProgressDialog progress( i18n("Searching for '%1'...").arg(searchText), i18n("Abort"), 
@@ -196,8 +196,8 @@ void KDVIMultiPage::findNextText(void)
   progress.setMinimumDuration ( 1000 );
 
   documentPage dummyPage; 
-  for(Q_UINT16 pageNumber = currentPage.getPageNumber();; pageNumber++) {
 
+  for(Q_UINT16 pageNumber = currentPage.getPageNumber();; pageNumber++) {
     // If we reach the end of the last page, start from the beginning
     // of the document, but ask the user first.
     if (pageNumber > window->dviFile->total_pages) {
@@ -205,17 +205,17 @@ void KDVIMultiPage::findNextText(void)
       if (oneTimeRound == true)
 	break;
       oneTimeRound = true;
-
+      
       // Do not ask the user if the search really started from the
       // beginning of the first page
       if ( (currentPage.getPageNumber() == 1)&&(dviWidget->DVIselection.selectedTextStart == 0) )
 	return;
-
+      
       int answ = KMessageBox::questionYesNo(scrollView(), i18n("<qt>The search string <strong>%1</strong> could not be found till the "
 							       "end of the document. Should the search be restarted from the beginning "
 							       "of the document?</qt>").arg(searchText), 
 					    i18n("Text Not Found"));
-      if (answ == KMessageBox::Yes) 
+      if (answ == KMessageBox::Yes)
 	pageNumber = 1;
       else
 	return;
@@ -225,16 +225,16 @@ void KDVIMultiPage::findNextText(void)
       progress.setProgress( pageNumber - currentPage.getPageNumber() );
     else
       progress.setProgress( pageNumber +  window->dviFile->total_pages - currentPage.getPageNumber() );
-
+    
     qApp->processEvents();
     if ( progress.wasCancelled() )
       break;
-
+    
     dummyPage.setPageNumber(pageNumber);
     window->drawPage(&dummyPage); // We don't really care for errors in draw_page(), no error handling here.
     if (dummyPage.textLinkList.size() == 0)
       continue;
-
+    
     // Go trough the text of the page and search for the string. How
     // much of the page we actually search depends on the page: we
     // start the search on the current page *after* the selected text,

@@ -17,6 +17,7 @@ class QPainter;
 
 
 #include "../kviewshell/kmultipage.h"
+#include "documentPageCache.h"
 #include "dviwin.h"
 #include "history.h"
 
@@ -45,7 +46,7 @@ class KDVIMultiPage : public KMultiPage
 
 public:
   documentWidget *dviWidget;
-  documentPage  currentPage;
+  documentPageCache  currentPage;
 
 
   KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);

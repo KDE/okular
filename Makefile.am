@@ -20,7 +20,7 @@ kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 	optionDialogSpecialWidget.cpp optionDialogSpecialWidget_base.ui \
 	TeXFont.cpp TeXFont_PK.cpp TeXFont_PFB.cpp TeXFont_TFM.cpp \
 	TeXFontDefinition.cpp \
-	documentPage.cpp documentWidget.cpp
+	documentPage.cpp documentWidget.cpp documentPageCache.cpp
 
 kdvipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
 kdvipart_la_LIBADD = $(LIBFREETYPE_LIBS) -lkdeprint -lkparts \

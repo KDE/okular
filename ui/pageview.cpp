@@ -984,7 +984,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
                 if ( Settings::useKTTSD() )
-                    menu.insertItem( SmallIcon("kttsd"), i18n( "Speech" ), 2 );
+                    menu.insertItem( SmallIcon("kttsd"), i18n( "Speak Text" ), 2 );
             }
             menu.insertTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
             menu.insertItem( SmallIcon("image"), i18n( "Copy to Clipboard" ), 3 );

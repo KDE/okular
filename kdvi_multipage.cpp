@@ -202,12 +202,12 @@ void KDVIMultiPage::repaintAllVisibleWidgets(void)
     for(Q_UINT16 i=0; i<widgetList.size(); i++) {
       documentWidget *dviWidget = (documentWidget *)(widgetList[i]);
       if (dviWidget == 0)
-	continue;
+    continue;
     
       // Check visibility, and update
       QRect widgetRect(scrollView()->childX(dviWidget), scrollView()->childY(dviWidget), dviWidget->width(), dviWidget->height() );
       if (widgetRect.intersects(visiblRect))
-	dviWidget->update();
+    dviWidget->update();
     }
   }
 }
@@ -252,7 +252,7 @@ void KDVIMultiPage::generateDocumentWidgets(int startPage)
       
       connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
       connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), window,
-	      SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
+          SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
       connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
     } else
       dviWidget->setPageNumber(i+startPage);
@@ -344,7 +344,7 @@ void KDVIMultiPage::slotSave()
 
   if (QFile(fileName).exists()) {
     int r = KMessageBox::warningYesNo (0, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
-				       i18n("Overwrite File"));
+                       i18n("Overwrite File"));
     if (r == KMessageBox::No)
       return;
   }
@@ -412,13 +412,13 @@ Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
     if ((widgetList.size() > lastCurrentPage)&&(lastCurrentPage != 0)) {
       dviWidget = (documentWidget *)(widgetList[lastCurrentPage-1]);
       if (dviWidget != 0) {
-	if (dviWidget->getPageNumber() == lastCurrentPage) {
-	  // Found the widget. Now check if it is visible
-	  if ((scrollView()->childY(dviWidget) < (scrollView()->contentsY() + scrollView()->visibleHeight())) &&
-	      ((scrollView()->childY(dviWidget)+dviWidget->height()) > scrollView()->contentsY())) {
-	    return lastCurrentPage;
-	  }
-	}
+    if (dviWidget->getPageNumber() == lastCurrentPage) {
+      // Found the widget. Now check if it is visible
+      if ((scrollView()->childY(dviWidget) < (scrollView()->contentsY() + scrollView()->visibleHeight())) &&
+          ((scrollView()->childY(dviWidget)+dviWidget->height()) > scrollView()->contentsY())) {
+        return lastCurrentPage;
+      }
+    }
       }
     }
 
@@ -427,12 +427,12 @@ Q_UINT16 KDVIMultiPage::getCurrentPageNumber()
     for(Q_UINT16 i=0; i<widgetList.size(); i++) {
       dviWidget = (documentWidget *)(widgetList[i]);
       if (dviWidget == 0)
-	continue;
+    continue;
 
       int Y = scrollView()->childY(dviWidget) + dviWidget->height();
       if (Y > scrollView()->contentsY()) {
-	lastCurrentPage = dviWidget->getPageNumber();
-	return lastCurrentPage;
+    lastCurrentPage = dviWidget->getPageNumber();
+    return lastCurrentPage;
       }
     }
   }
@@ -596,7 +596,50 @@ void KDVIMultiPage::goto_page(int page, int y, bool isLink)
     document_history.add(page, y);
 
   documentWidget *ptr;
-  if (widgetList.size() == 1) {
+  
+  // If we are in overview viewmode
+  if (Prefs::viewMode() == KVS_Overview)
+  {
+    int visiblePages = Prefs::overviewModeRows() * Prefs::overviewModeColumns();
+    // Pagenumber of the first visibile Page
+    int firstPage = ((documentWidget*)widgetList[0])->getPageNumber();
+    int newFirstPage = page + 1 - (page % visiblePages);
+    if (firstPage != newFirstPage) // widgets need to be updated
+    {
+        if ( (window->totalPages() - newFirstPage + 1 < visiblePages) ||
+            (widgetList.size() < visiblePages) ) 
+        {
+            // resize widgetList
+            // the pages are also set correctly be "generateDocumentWidgets"
+            generateDocumentWidgets(newFirstPage);
+        }
+        else
+        {
+            // "page" is not shown in the scrollview, so we have to switch widgets.
+            // Here we don't need to resize the widgetList.
+            for (int i = 0; i < widgetList.size(); i++)
+            {
+                ptr = (documentWidget*)(widgetList[i]);
+                if (ptr != 0)
+                {
+                    ptr->setPageNumber(newFirstPage + i);
+                }
+            }
+        }
+    }
+    // move scrollview to "page".
+    
+    // Make the widget &ptr visible in the scrollview. Somehow this
+    // doesn't seem to trigger the signal contentsMoved in the
+    // QScrollview, so that we better set lastCurrentPage ourselves.
+    ptr = (documentWidget*)(widgetList[page % visiblePages]);
+    // FIXME: This doesn't calculate the right position in all cases.
+    scrollView()->setContentsPos(scrollView()->childX(ptr) - scrollView()->distanceBetweenPages(), 
+                                 scrollView()->childY(ptr) + y);
+    lastCurrentPage = page+1;
+  } 
+  else if (widgetList.size() == 1) 
+  {
     // If the widget list contains only a single element, then either
     // the document contains only one page, or we are in "single page"
     // view mode. In either case, we set the page number of the single
@@ -770,41 +813,41 @@ void KDVIMultiPage::doSettings()
 void KDVIMultiPage::about()
 {
   KAboutDialog *ab = new KAboutDialog(KAboutDialog::AbtAppStandard,
-				      i18n("the KDVI plugin"),
-				      KAboutDialog::Close, KAboutDialog::Close);
+                      i18n("the KDVI plugin"),
+                      KAboutDialog::Close, KAboutDialog::Close);
 
   ab->setProduct("kdvi", "1.2", QString::null, QString::null);
   ab->addTextPage (i18n("About"),
-		   i18n("A previewer for Device Independent files (DVI files) produced "
-			"by the TeX typesetting system.<br>"
-			"Based on kdvi 0.4.3 and on xdvik, version 18f.<br><hr>"
-			"For latest information, visit "
-			"<a href=\"http://devel-home.kde.org/~kdvi\">KDVI's Homepage</a>."),
-		   true);
+           i18n("A previewer for Device Independent files (DVI files) produced "
+            "by the TeX typesetting system.<br>"
+            "Based on kdvi 0.4.3 and on xdvik, version 18f.<br><hr>"
+            "For latest information, visit "
+            "<a href=\"http://devel-home.kde.org/~kdvi\">KDVI's Homepage</a>."),
+           true);
   ab->addTextPage (i18n("Authors"),
-		   i18n("Stefan Kebekus<br>"
-			"<a href=\"http://www.mi.uni-koeln.de/~kebekus\">"
-			"http://www.mi.uni-koeln.de/~kebekus</a><br>"
-			"<a href=\"mailto:kebekus@kde.org\">kebekus@kde.org</a><br>"
-			"Current maintainer of kdvi. Major rewrite of version 0.4.3."
-			"Implementation of hyperlinks.<br>"
-			"<hr>"
-			"Philipp Lehmann<br>"
-			"testing and bug reporting"
-			"<hr>"
-			"Markku Hinhala<br>"
-			"Author of kdvi 0.4.3"
-			"<hr>"
-			"Nicolai Langfeldt<br>"
-			"Maintainer of xdvik"
-			"<hr>"
-			"Paul Vojta<br>"
-			" Author of xdvi<br>"
-			"<hr>"
-			"Many others. Really, lots of people who were involved in kdvi, xdvik and "
-			"xdvi. I apologize to those who I did not mention here. Please send me an "
-			"email if you think your name belongs here."),
-		   true);
+           i18n("Stefan Kebekus<br>"
+            "<a href=\"http://www.mi.uni-koeln.de/~kebekus\">"
+            "http://www.mi.uni-koeln.de/~kebekus</a><br>"
+            "<a href=\"mailto:kebekus@kde.org\">kebekus@kde.org</a><br>"
+            "Current maintainer of kdvi. Major rewrite of version 0.4.3."
+            "Implementation of hyperlinks.<br>"
+            "<hr>"
+            "Philipp Lehmann<br>"
+            "testing and bug reporting"
+            "<hr>"
+            "Markku Hinhala<br>"
+            "Author of kdvi 0.4.3"
+            "<hr>"
+            "Nicolai Langfeldt<br>"
+            "Maintainer of xdvik"
+            "<hr>"
+            "Paul Vojta<br>"
+            " Author of xdvi<br>"
+            "<hr>"
+            "Many others. Really, lots of people who were involved in kdvi, xdvik and "
+            "xdvi. I apologize to those who I did not mention here. Please send me an "
+            "email if you think your name belongs here."),
+           true);
 
   ab->setMinimumWidth(500);
   ab->show();
@@ -887,28 +930,28 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
     do{
       int val = (*it).toUInt()+1;
       if (commaflag == 1)
-	range +=  QString(", ");
+    range +=  QString(", ");
       else
-	commaflag = 1;
+    commaflag = 1;
       int endval = val;
       if (it != pages.end()) {
-	QStringList::ConstIterator jt = it;
-	jt++;
-	do{
-	  int val2 = (*jt).toUInt()+1;
-	  if (val2 == endval+1)
-	    endval++;
-	  else
-	    break;
-	  jt++;
-	} while( jt != pages.end() );
-	it = jt;
-      } else
-	it++;
-      if (endval == val)
-	range +=  QString("%1").arg(val);
+    QStringList::ConstIterator jt = it;
+    jt++;
+    do{
+      int val2 = (*jt).toUInt()+1;
+      if (val2 == endval+1)
+        endval++;
       else
-	range +=  QString("%1-%2").arg(val).arg(endval);
+        break;
+      jt++;
+    } while( jt != pages.end() );
+    it = jt;
+      } else
+    it++;
+      if (endval == val)
+    range +=  QString("%1").arg(val);
+      else
+    range +=  QString("%1-%2").arg(val).arg(endval);
     } while (it != pages.end() );
     printer->setOption( "kde-range", range );
   }
@@ -922,9 +965,9 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   ((KPrinterWrapper *)printer)->doPreparePrinting();
   if (printer->pageList().isEmpty()) {
     KMessageBox::error( scrollView(),
-			i18n("The list of pages you selected was empty.\n"
-			     "Maybe you made an error in selecting the pages, "
-			     "e.g. by giving an invalid range like '7-2'.") );
+            i18n("The list of pages you selected was empty.\n"
+                 "Maybe you made an error in selecting the pages, "
+                 "e.g. by giving an invalid range like '7-2'.") );
     return false;
   }
 

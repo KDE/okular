@@ -39,10 +39,8 @@ namespace KPDF
     {
         Q_OBJECT
 
-        enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
-
     public:
-        PageWidget(QWidget *parent, KPDFDocument *document);
+        PageWidget( QWidget *parent, KPDFDocument *document );
         ~PageWidget();
 
 		// create actions that interact with this widget
@@ -53,53 +51,36 @@ namespace KPDF
 		void pageSetup( const QValueList<int> & pages );
 		void pageSetCurrent( int pageNumber, float position );
 
-        void setPixelsPerPoint(float);
-        /* void setLinks(); */
-
-        void enableScrollBars( bool b );
-        /**
-         * Return true if the top resp. bottom of the page is visible.
-         */
+        // FIXME what atTop() means if I see 4 tiled pages on screen ?
         bool atTop()    const;
         bool atBottom() const;
-        void zoomTo( double _value );
 
         bool find(Unicode *u, int len, bool next);
+        /* void setLinks(); */
 
     public slots:
-        void zoomIn();
-        void zoomOut();
+		void slotScrollUp();
+		void slotScrollDown();
 
-        void updatePixmap();
-        void scrollBottom();
-        void scrollTop();
-        bool readUp();
-        bool readDown();
+		// connected to local actions
+		void slotZoom( const QString& );
+		void slotZoomIn();
+		void slotZoomOut();
+		void slotFitToWidthToggled( bool );
+		void slotToggleScrollBars( bool on );
 
-	void slotZoom( const QString& );
-	void slotZoomIn();
-	void slotZoomOut();
-	void slotFitToWidthToggled( bool );
-	void slotToggleScrollBars( bool );
-
-    void slotSetZoom( float zoom );
-    void slotChangeZoom( float offset );
 private:
-	KToggleAction *m_showScrollBars;
-	KSelectAction *m_zoomTo;
-	KToggleAction *m_fitToWidth;
+	// the document
+	KPDFDocument * m_document;
 
-signals:
-    void zoomChanged( float newZoom );
+	// zoom related
+	enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor } m_zoomMode;
+	float m_zoomFactor;
 
-        void linkClicked(LinkAction*);
-        void ReadUp();
-        void ReadDown();
-        void ZoomOut();
-        void ZoomIn();
-        void rightClick();
-        void urlDropped( const KURL& );
-        void spacePressed();
+	// actions
+	KSelectAction *m_aZoom;
+	KToggleAction *m_aZoomFitWidth;
+
     protected:
         virtual void keyPressEvent( QKeyEvent* );
         void contentsMousePressEvent(QMouseEvent*);
@@ -109,14 +90,20 @@ signals:
         virtual void drawContents ( QPainter *p, int, int, int, int );
         virtual void dragEnterEvent( QDragEnterEvent* );
         virtual void dropEvent( QDropEvent* );
+
+signals:
+    void zoomChanged( float newZoom );
+
+        void linkClicked(LinkAction*);
+        void rightClick();
+        void urlDropped( const KURL& );
+
     private:
+        void updatePixmap();
 
         QOutputDev *m_outputdev;
         PDFDoc* m_doc;
         float   m_ppp; // Pixels per point
-        float		m_zoomFactor;
-        ZoomMode m_zoomMode;
-        KPDFDocument *m_document;
 
         // first page is page 1
         int m_currentPage;
@@ -127,40 +114,6 @@ signals:
         double m_xMin, m_yMin, m_xMax, m_yMax;
     };
 }
-
-/*
-    ZoomMode m_zoomMode;
-    float    m_zoomFactor;
-     // Do with these first. We can always add the other zoommodes which can
-     // be specified in a Destination later.
-     enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
-*/
-
-/*
-  connect( m_pageWidget, SIGNAL( ReadUp() ), SLOT( slotReadUp() ));
-  connect( m_pageWidget, SIGNAL( ReadDown() ), SLOT( slotReadDown() ));
-  connect( m_pageWidget, SIGNAL( spacePressed() ), this, SLOT( slotReadDown() ) );
-void Part::slotReadUp()
-{
-	if( !m_doc )
-	return;
-
-	if( !m_pageWidget->readUp() ) {
-		if ( previousPage() )
-			m_pageWidget->scrollBottom();
-	}
-}
-void Part::slotReadDown()
-{
-	if( !m_doc )
-	return;
-
-	if( !m_pageWidget->readDown() ) {
-		if ( nextPage() )
-			m_pageWidget->scrollTop();
-	}
-}
-*/
 
 #endif
 

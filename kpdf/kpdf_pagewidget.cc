@@ -51,6 +51,8 @@ namespace KPDF
         setAcceptDrops( true );
         viewport()->setFocusPolicy( QWidget::WheelFocus );
 
+		setMouseTracking( true );
+
         QPushButton * w = new QPushButton( viewport() );
         w->setPixmap( SmallIcon("up") );
         setCornerWidget( w );
@@ -90,12 +92,6 @@ void PageWidget::pageSetCurrent( int /*pageNumber*/, float /*position*/ )
 	mutex.unlock();
 */
 }
-
-    void
-    PageWidget::setPixelsPerPoint(float ppp)
-    {
-        m_ppp = ppp;
-    }
 
     void
     PageWidget::contentsMousePressEvent(QMouseEvent* e)
@@ -186,57 +182,18 @@ void PageWidget::pageSetCurrent( int /*pageNumber*/, float /*position*/ )
             p->fillRect ( clipx, clipy, clipw, cliph, bc );
     }
 
-    void PageWidget::zoomTo( double _value )
-    {
-        if ( m_zoomFactor != _value)
-        {
-            m_zoomFactor = _value;
-            updatePixmap();
-        }
-    }
-
-    void PageWidget::zoomIn()
-    {
-        m_zoomFactor += 0.1;
-        updatePixmap();
-    }
-
-    void PageWidget::zoomOut()
-    {
-        if ( (m_zoomFactor-0.1)<0.1 )
-            return;
-        m_zoomFactor -= 0.1;
-        updatePixmap();
-    }
-
-    void PageWidget::enableScrollBars( bool b )
-    {
-        setHScrollBarMode( b ? Auto : AlwaysOff );
-        setVScrollBarMode( b ? Auto : AlwaysOff );
-    }
-
-    void PageWidget::scrollBottom()
-    {
-        verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
-    }
-
-    void PageWidget::scrollTop()
-    {
-        verticalScrollBar()->setValue( verticalScrollBar()->minValue() );
-    }
-
 void PageWidget::keyPressEvent( QKeyEvent* e )
 {
 	switch ( e->key() ) {
 	case Key_Up:
 		if ( atTop() )
-			emit ReadUp();
+			slotScrollUp(); //TODO direct document request to change page
 		else
 			verticalScrollBar()->subtractLine();
 		break;
 	case Key_Down:
 		if ( atBottom() )
-			emit ReadDown();
+			slotScrollDown(); //TODO direct document request to change 
 		else
 			verticalScrollBar()->addLine();
 		break;
@@ -248,7 +205,8 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
 		break;
 	case Key_Space:
 		if( e->state() != ShiftButton )
-			emit spacePressed();
+			slotScrollDown(); //TODO direct document request to change 
+		break;
 	default:
 		e->ignore();
 		return;
@@ -272,17 +230,17 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
         e->accept();
         if ((e->state() & ControlButton) == ControlButton) {
             if ( e->delta() > 0 )
-                emit ZoomOut();
+                emit slotZoomOut();
             else
-                emit ZoomIn();
+                emit slotZoomIn();
         }
         else if ( delta <= -120 && atBottom() )
         {
-            emit ReadDown();
+            slotScrollDown(); //TODO direct document request to change
         }
         else if ( delta >= 120 && atTop())
         {
-            emit ReadUp();
+            slotScrollUp(); //TODO direct document request to change 
         }
 
         else
@@ -306,28 +264,6 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
         }
     }
 
-    bool PageWidget::readUp()
-    {
-        if( atTop() )
-            return false;
-        else {
-            int newValue = QMAX( verticalScrollBar()->value() - height() + 50,
-                                 verticalScrollBar()->minValue() );
-
-            /*
-              int step = 10;
-              int value = verticalScrollBar()->value();
-              while( value > newValue - step ) {
-              verticalScrollBar()->setValue( value );
-              value -= step;
-              }
-            */
-
-            verticalScrollBar()->setValue( newValue );
-            return true;
-        }
-    }
-
     void PageWidget::dropEvent( QDropEvent* ev )
     {
         KURL::List lst;
@@ -341,11 +277,36 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
         ev->accept();
     }
 
-    bool PageWidget::readDown()
+    void PageWidget::slotScrollUp()
     {
-        if( atBottom() )
-            return false;
-        else {
+        if( atTop() ) {
+			if ( /*previousPage()*/true )
+			 //TODO direct document request to change 
+				verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
+        } else {
+            int newValue = QMAX( verticalScrollBar()->value() - height() + 50,
+                                 verticalScrollBar()->minValue() );
+
+            /*
+              int step = 10;
+              int value = verticalScrollBar()->value();
+              while( value > newValue - step ) {
+              verticalScrollBar()->setValue( value );
+              value -= step;
+              }
+            */
+
+            verticalScrollBar()->setValue( newValue );
+        }
+    }
+
+    void PageWidget::slotScrollDown()
+    {
+        if( atBottom() ) {
+			if ( true/*nextPage()*/ )
+			 //TODO direct document request to change .. maybe
+				verticalScrollBar()->setValue( verticalScrollBar()->minValue() );
+        } else {
             int newValue = QMIN( verticalScrollBar()->value() + height() - 50,
                                  verticalScrollBar()->maxValue() );
 
@@ -359,7 +320,6 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
             */
 
             verticalScrollBar()->setValue( newValue );
-            return true;
         }
     }
 
@@ -372,7 +332,7 @@ void PageWidget::keyPressEvent( QKeyEvent* e )
             m_xMin = 0;
             m_yMin = 0;
         }
-        
+
         b = m_outputdev -> find(u, len, !next, true, next, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
         m_xMin = m_xMin / m_zoomFactor;
         m_yMin = m_yMin / m_zoomFactor;
@@ -388,10 +348,10 @@ void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 	// Zoom actions
 	const double zoomValue[14] = {0.125,0.25,0.3333,0.5,0.6667,0.75,1,1.25,1.50,2,3,4,6,8 };
 
-	m_zoomTo = new KSelectAction(  i18n( "Zoom" ), "zoomTo", 0, ac, "zoomTo" );
-	connect( m_zoomTo, SIGNAL(  activated(  const QString & ) ), this, SLOT(  slotZoom( const QString& ) ) );
-	m_zoomTo->setEditable(  true );
-	m_zoomTo->clear();
+	m_aZoom = new KSelectAction(  i18n( "Zoom" ), "viewmag", 0, ac, "zoomTo" );
+	connect( m_aZoom, SIGNAL(  activated(  const QString & ) ), this, SLOT(  slotZoom( const QString& ) ) );
+	m_aZoom->setEditable(  true );
+	m_aZoom->clear();
 
 	QStringList translated;
 	QString localValue;
@@ -408,27 +368,27 @@ void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 			idx = cur;
 		++cur;
 	}
-	m_zoomTo->setItems( translated );
-	m_zoomTo->setCurrentItem( idx );
+	m_aZoom->setItems( translated );
+	m_aZoom->setCurrentItem( idx );
 
-	KStdAction::zoomIn( this, SLOT(slotZoomIn()), ac, "zoom_in" );
+	KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
 
-	KStdAction::zoomOut( this, SLOT(slotZoomOut()), ac, "zoom_out" );
+	KStdAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
 
-	m_fitToWidth = new KToggleAction( i18n("Fit to Page &Width"), 0, ac, "fit_to_width" );
-	connect( m_fitToWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
+	m_aZoomFitWidth = new KToggleAction( i18n("Fit to Page &Width"), 0, ac, "fit_to_width" );
+	connect( m_aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
-	m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
-	m_showScrollBars->setCheckedState(i18n("Hide &Scrollbars"));
-	connect( m_showScrollBars, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
+	KToggleAction * ss = new KToggleAction( i18n( "Show &Scrollbars" ), 0, ac, "show_scrollbars" );
+	ss->setCheckedState(i18n("Hide &Scrollbars"));
+	connect( ss, SIGNAL( toggled( bool ) ), SLOT( slotToggleScrollBars( bool ) ) );
 
-	m_showScrollBars->setChecked( config->readBoolEntry( "ShowScrollBars", true ) );
-	slotToggleScrollBars( m_showScrollBars->isChecked() );
+	ss->setChecked( config->readBoolEntry( "ShowScrollBars", true ) );
+	slotToggleScrollBars( ss->isChecked() );
 }
 
 void PageWidget::saveSettings( KConfigGroup * config )
 {
-	config->writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
+	config->writeEntry( "ShowScrollBars", hScrollBarMode() == Auto );
 }
 
 void PageWidget::slotZoom( const QString & nz )
@@ -437,19 +397,27 @@ void PageWidget::slotZoom( const QString & nz )
 	z.remove( z.find( '%' ), 1 );
 	bool isNumber = true;
 	double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
+	
 zoom = 0;//CUT WARNINGS (but remove me:-)
-/*	if ( isNumber )
-		document->slotSetZoom( zoom );*/
+	if ( m_zoomFactor != zoom)
+	{
+		m_zoomFactor = zoom;
+		updatePixmap();
+	}
 }
 
 void PageWidget::slotZoomIn()
 {
-// 	document->slotChangeZoom( 0.1 );
+	m_zoomFactor += 0.1;
+	updatePixmap();
 }
 
 void PageWidget::slotZoomOut()
 {
-// 	document->slotChangeZoom( -0.1 );
+	if ( m_zoomFactor < 0.2 )
+		return;
+	m_zoomFactor -= 0.1;
+	updatePixmap();
 }
 
 void PageWidget::slotFitToWidthToggled( bool /*fit*/ )
@@ -460,21 +428,14 @@ void PageWidget::slotFitToWidthToggled( bool /*fit*/ )
 */
 }
 
-void PageWidget::slotToggleScrollBars( bool show )
+
+void PageWidget::slotToggleScrollBars( bool on )
 {
-	enableScrollBars( show );
+	setHScrollBarMode( on ? Auto : AlwaysOff );
+	setVScrollBarMode( on ? Auto : AlwaysOff );
 }
 
-void PageWidget::slotSetZoom( float /*zoom*/ )
-{
-}
-
-void PageWidget::slotChangeZoom( float /*offset*/ )
-{
-}
-
-}
-
+} //NAMESPACE
 /** TO BE IMPORTED 
 void Part::displayPage( int pageNumber )
 {

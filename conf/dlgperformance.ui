@@ -51,7 +51,7 @@
                                 <cstring>kcfg_EnableCompositing</cstring>
                             </property>
                             <property name="text">
-                                <string>Enabled &amp;transparency effects</string>
+                                <string>Enable &amp;transparency effects</string>
                             </property>
                         </widget>
                         <widget class="QCheckBox">

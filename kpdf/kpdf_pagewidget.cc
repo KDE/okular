@@ -24,7 +24,7 @@
 
 #include "kpdf_pagewidget.h"
 #include "kpdf_pagewidget.moc"
-#include "QOutputDevPixmap.h"
+#include "QOutputDev.h"
 #include <qpushbutton.h>
 #include <kiconloader.h>
 
@@ -41,7 +41,7 @@ namespace KPDF
     {
         SplashColor paperColor;
         paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-        m_outputdev = new QOutputDevPixmap(paperColor);
+        m_outputdev = new QOutputDev(paperColor);
         setFocusPolicy( QWidget::StrongFocus );
         viewport()->setFocusPolicy( QWidget::WheelFocus );
 

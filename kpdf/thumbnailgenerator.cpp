@@ -14,6 +14,7 @@
  
 #include "PDFDoc.h"
 
+#include "QOutputDev.h"
 #include "thumbnailgenerator.h"
 
 ThumbnailGenerator::ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o) : m_doc(doc), m_docMutex(docMutex), m_page(page), m_o(o), m_ppp(ppp)
@@ -32,7 +33,7 @@ void ThumbnailGenerator::run()
 	
 	SplashColor paperColor;
 	paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-	QOutputDevPixmap odev(paperColor);
+	QOutputDev odev(paperColor);
 	odev.startDoc(m_doc->getXRef());
 	m_docMutex->lock();
 	m_doc -> displayPage(&odev, m_page, m_ppp, m_ppp, 0, true, false);

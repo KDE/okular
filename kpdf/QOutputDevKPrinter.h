@@ -13,31 +13,27 @@
 #ifndef QOUTPUTDEVKPRINTER_H
 #define QOUTPUTDEVKPRINTER_H
 
-#include "QOutputDev.h"
+#include "XRef.h"
+#include "SplashOutputDev.h"
 
 class KPrinter;
 class QPainter;
 
-class QOutputDevKPrinter : public QOutputDev
+class QOutputDevKPrinter : public SplashOutputDev
 {
-public:
-        QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer);
-        virtual ~QOutputDevKPrinter();
-
-	//----- initialization and control
-
-	// Start a page.
-	virtual void startPage(int pageNum, GfxState *state);
-
-	// End a page
-	virtual void endPage();
-
-protected:
-	void draw();
-
-private:
-        KPrinter& m_printer;            // the printer that we're drawing to
-        QPainter& m_painter;            // the painter that we're drawing to
+	public:
+		QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer);
+		virtual ~QOutputDevKPrinter();
+		
+		// Start a page.
+		virtual void startPage(int pageNum, GfxState *state);
+		
+		// End a page
+		virtual void endPage();
+		
+	private:
+		KPrinter& m_printer;            // the printer that we're drawing to
+		QPainter& m_painter;            // the painter that we're drawing to
 };
 
 #endif

@@ -19,6 +19,7 @@
 #pragma implementation
 #endif
 
+#include "SplashBitmap.h"
 #include "TextOutputDev.h"
 
 #include "QOutputDev.h"
@@ -28,7 +29,7 @@
 //------------------------------------------------------------------------
 
 QOutputDev::QOutputDev(SplashColor paperColor)
-	: SplashOutputDev(splashModeRGB8, false, paperColor)
+	: SplashOutputDev(splashModeRGB8, false, paperColor), m_image(0)
 {
 	// create text object
 	m_text = new TextPage ( gFalse );
@@ -65,8 +66,15 @@ void QOutputDev::startPage(int pageNum, GfxState *state)
 
 void QOutputDev::endPage()
 {
+	SplashColorPtr dataPtr;
+	int bh, bw;
+
 	SplashOutputDev::endPage();
 	m_text->coalesce(gTrue);
+	bh = getBitmap()->getHeight();
+	bw = getBitmap()->getWidth();
+	dataPtr = getBitmap()->getDataPtr();
+	m_image = QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian);
 }
 
 void QOutputDev::updateFont(GfxState *state)
@@ -78,4 +86,9 @@ void QOutputDev::updateFont(GfxState *state)
 bool QOutputDev::find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom, GBool startAtLast, GBool stopAtLast, double *xMin, double *yMin, double *xMax, double *yMax)
 {
 	return m_text -> findText(s, len, startAtTop, stopAtBottom, startAtLast, stopAtLast, xMin, yMin, xMax, yMax);
+}
+
+const QImage &QOutputDev::getImage() const
+{
+	return m_image;
 }

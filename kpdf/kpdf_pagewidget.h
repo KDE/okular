@@ -27,7 +27,7 @@ class QWidget;
 class LinkAction;
 class PDFDoc;
 
-class QOutputDevPixmap;
+class QOutputDev;
 
 namespace KPDF
 {
@@ -91,7 +91,7 @@ namespace KPDF
         virtual void dropEvent( QDropEvent* );
     private:
 
-        QOutputDevPixmap * m_outputdev;
+        QOutputDev *m_outputdev;
         PDFDoc* m_doc;
         QMutex* m_docMutex;
         float   m_ppp; // Pixels per point

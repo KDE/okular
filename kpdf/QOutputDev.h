@@ -19,14 +19,12 @@
 #pragma interface
 #endif
 
+#include <qimage.h>
+
 #include "XRef.h"
 #include "SplashOutputDev.h"
 
 class TextPage;
-
-//------------------------------------------------------------------------
-// QOutputDev
-//------------------------------------------------------------------------
 
 class QOutputDev : public SplashOutputDev
 {
@@ -54,10 +52,12 @@ class QOutputDev : public SplashOutputDev
 		void clear();
 		
 		bool find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom, GBool startAtLast, GBool stopAtLast, double *xMin, double *yMin, double *xMax, double *yMax);
+		
+		const QImage &getImage() const;
 	
 	private:
-		
-		TextPage *m_text;		// text from the current page
+		TextPage *m_text;	// text from the current page
+		QImage m_image;		// the image where the page is drawn
 };
 
 #endif

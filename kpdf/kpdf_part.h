@@ -17,7 +17,6 @@
 #define _KPDF_PART_H_
 
 #include <qmutex.h>
-#include <qwidget.h>
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>

@@ -1,9 +1,6 @@
 # set the include path for X, qt and KDE
 INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../splash -I$(srcdir)/../goo -I$(srcdir)/../xpdf $(all_includes) $(FREETYPE_CFLAGS)
 
-# these are the headers for your project
-noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_pagewidget.h QOutputDevPixmap.h QOutputDev.h
-
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
@@ -42,7 +39,7 @@ shellrc_DATA = kpdf_shell.rc
 kde_module_LTLIBRARIES = libkpdfpart.la
 
 # the Part's source, library search path, and link libraries
-libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevPixmap.cpp QOutputDevKPrinter.cpp kpdf_part.cpp kpdf_pagewidget.cc part.cpp thumbnail.cpp thumbnaillist.cpp kpdf_error.cpp xpdf_errors.cpp thumbnailgenerator.cpp
+libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevKPrinter.cpp kpdf_part.cpp kpdf_pagewidget.cc part.cpp thumbnail.cpp thumbnaillist.cpp kpdf_error.cpp xpdf_errors.cpp thumbnailgenerator.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS) -lm
 

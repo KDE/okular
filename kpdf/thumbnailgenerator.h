@@ -12,8 +12,6 @@
 
 #include <qthread.h> 
 
-#include "QOutputDevPixmap.h"
-
 class QMutex;
 
 class PDFDoc;

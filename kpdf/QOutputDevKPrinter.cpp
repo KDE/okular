@@ -20,7 +20,7 @@
 #include <qimage.h>
 
 QOutputDevKPrinter::QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer )
-  : QOutputDev(paperColor), m_printer( printer ), m_painter( painter )
+  : SplashOutputDev(splashModeRGB8, false, paperColor), m_printer( printer ), m_painter( painter )
 {
 }
 
@@ -30,18 +30,18 @@ QOutputDevKPrinter::~QOutputDevKPrinter()
 
 void QOutputDevKPrinter::startPage(int page, GfxState *state)
 {
-  // TODO: page size ?
-  QOutputDev::startPage( page, state);
+	// TODO: page size ?
+	SplashOutputDev::startPage( page, state);
 }
 
 void QOutputDevKPrinter::endPage()
 {
-  SplashColorPtr dataPtr;
-  int bh, bw;
-
-  QOutputDev::endPage();
-  bh = getBitmap()->getHeight();
-  bw = getBitmap()->getWidth();
-  dataPtr = getBitmap()->getDataPtr();
-  m_painter.drawPixmap(0, 0, QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian));
+	SplashColorPtr dataPtr;
+	int bh, bw;
+	
+	SplashOutputDev::endPage();
+	bh = getBitmap()->getHeight();
+	bw = getBitmap()->getWidth();
+	dataPtr = getBitmap()->getDataPtr();
+	m_painter.drawPixmap(0, 0, QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian));
 }

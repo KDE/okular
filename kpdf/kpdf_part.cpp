@@ -48,14 +48,12 @@
 #include "kpdf_error.h"
 #include "part.h"
 
-
 #include "GString.h"
 
 #include "GlobalParams.h"
 #include "PDFDoc.h"
 #include "TextOutputDev.h"
 #include "QOutputDevKPrinter.h"
-#include "QOutputDevPixmap.h"
 
 #include "kpdf_pagewidget.h"
 

@@ -71,6 +71,7 @@ dviRenderer::dviRenderer(QWidget *par)
   parentWidget = par;
   shrinkfactor = 3;
   current_page = 0;
+  resolutionInDPI = 0.0;
 
   connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
 
@@ -88,6 +89,8 @@ dviRenderer::dviRenderer(QWidget *par)
   export_fileName        = "";
   export_tmpFileName     = "";
   export_errorString     = "";
+
+  currentlyDrawnPixmap = new QPixmap();
 
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   // pass status bar messages through
@@ -127,21 +130,10 @@ void dviRenderer::showInfo(void)
 }
 
 
-void dviRenderer::setPaper(double width_in_cm, double height_in_cm)
-{
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviRenderer::setPaper( width_in_cm=" << width_in_cm << ", height_in_cm=" << height_in_cm << " )" << endl;
-#endif
-
-  userPreferredSize.setPageSize(width_in_cm*10.0, height_in_cm*10.0);
-  changePageSize();
-}
-
-
 //------ this function calls the dvi interpreter ----------
 
 
-void dviRenderer::drawPage(DocumentPage *page)
+void dviRenderer::drawPage(double resolution, DocumentPage *page)
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviRenderer::drawPage(DocumentPage *) called, page number " << page->getPageNumber() << endl;
@@ -166,32 +158,40 @@ void dviRenderer::drawPage(DocumentPage *page)
 		  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
+  if (page->getPixmap() == 0) {
+    kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called, but the page had not pixmap set" << endl;
+    return;
+  }
   if ( dviFile->dvi_Data() == 0 ) {
     kdError(4300) << "dviRenderer::drawPage(DocumentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
   }
-  
+ 
+  if (resolution != resolutionInDPI)
+    setResolution(resolution);
+ 
   currentlyDrawnPage     = page;
   shrinkfactor           = MFResolutions[font_pool.getMetafontMode()]/resolutionInDPI;
   current_page           = page->getPageNumber()-1;
   
-  if ( currentlyDrawnPixmap.isNull() ) {
+  currentlyDrawnPixmap = page->getPixmap();
+
+  if ( currentlyDrawnPixmap->isNull() ) {
     currentlyDrawnPage = 0;
     return;
   }
-  
-  
-  if ( !currentlyDrawnPixmap.paintingActive() ) {
+    
+  if ( !currentlyDrawnPixmap->paintingActive() ) {
     // Reset colors
     colorStack.clear();
     globalColor = Qt::black;
     
-    foreGroundPaint.begin( &(currentlyDrawnPixmap) );
+    foreGroundPaint.begin( currentlyDrawnPixmap );
     QApplication::setOverrideCursor( waitCursor );
     errorMsg = QString::null;
     draw_page();
-    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
+    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap->width(), currentlyDrawnPixmap->height());
     foreGroundPaint.end();
     QApplication::restoreOverrideCursor();
     page->isEmpty = false;
@@ -215,7 +215,7 @@ void dviRenderer::drawPage(DocumentPage *page)
     }
   }
   
-  page->setPixmap(currentlyDrawnPixmap);
+  page->setPixmap( *currentlyDrawnPixmap );
   currentlyDrawnPage = 0;
 }
 
@@ -383,25 +383,6 @@ bool dviRenderer::correctDVI(const QString &filename)
 }
 
 
-void dviRenderer::changePageSize()
-{
-#ifdef DEBUG_DVIWIN
-  kdDebug(4300) << "dviRenderer::changePageSize()" << endl;
-#endif
-
-  if ( currentlyDrawnPixmap.paintingActive() )
-    return;
-  
-  unsigned int page_width_in_pixel = (unsigned int)(resolutionInDPI*paperWidthInCm()/2.54 + 0.5);
-  unsigned int page_height_in_pixel = (unsigned int)(resolutionInDPI*paperHeightInCm()/2.54 + 0.5);
-  
-  currentlyDrawnPixmap.resize( sizeOfPage(0) );
-  currentlyDrawnPixmap.fill( white );
-
-  PS_interface->setSize( resolutionInDPI, page_width_in_pixel, page_height_in_pixel );
-}
-
-
 bool dviRenderer::setFile(const QString &fname)
 {
 #ifdef DEBUG_DVIWIN
@@ -419,9 +400,9 @@ bool dviRenderer::setFile(const QString &fname)
     delete dviFile;
     dviFile = 0;
     
-    currentlyDrawnPixmap.resize(0,0);
+    currentlyDrawnPixmap->resize(0,0);
     if (currentlyDrawnPage != 0)
-      currentlyDrawnPage->setPixmap(currentlyDrawnPixmap);
+      currentlyDrawnPage->setPixmap( *currentlyDrawnPixmap );
     return true;
   }
 
@@ -451,8 +432,6 @@ bool dviRenderer::setFile(const QString &fname)
 
   QApplication::setOverrideCursor( waitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
-
-  //@@@  dviFile_new->sourceSpecialMarker = sourceMarker;
 
   if ((dviFile == 0) || (dviFile->filename != filename))
     dviFile_new->sourceSpecialMarker = true;
@@ -557,11 +536,14 @@ bool dviRenderer::setFile(const QString &fname)
   current_page = currPageSav;
   // PRESCAN ENDS HERE
   
-  
-  emit(needsRepainting());
-  if (dviFile->suggestedPageSize != 0)
+ 
+  pageSizes.resize(0);
+  if (dviFile->suggestedPageSize != 0) {
     emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
-  
+    // Fill the vector pageSizes with total_pages identical entries
+    pageSizes.resize(dviFile->total_pages, *(dviFile->suggestedPageSize));
+  }
+  emit(needsRepainting());
   
   QApplication::restoreOverrideCursor();
   return true;
@@ -681,8 +663,6 @@ void dviRenderer::setResolution(double resolution_in_DPI)
   // Pass the information on to the font pool. 
   font_pool.setDisplayResolution( resolutionInDPI );
   shrinkfactor = MFResolutions[font_pool.getMetafontMode()]/(resolutionInDPI);
-  changePageSize();
-
   return;
 }
 

@@ -240,7 +240,6 @@ bool KDVIMultiPage::openFile()
     emit setStatusBarText(QString::null);
 
   generateDocumentWidgets();
-  window->changePageSize();
   emit numberOfPages(window->totalPages());
   enableActions(r);
 
@@ -279,9 +278,7 @@ void KDVIMultiPage::gotoPage(const anchor &a)
   if (a.page.isInvalid() || (window == 0))
     return;
 
-
-
-  goto_page(a.page-1, a.distance_from_top_in_inch * window->getResolution() + 0.5);
+  goto_page(a.page-1, a.distance_from_top_in_inch * pageCache.getResolution() + 0.5);
 }
 
 void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
@@ -324,7 +321,7 @@ void KDVIMultiPage::gotoPage(int pageNr, int beginSelection, int endSelection )
 
 void KDVIMultiPage::setPaperSize(double w, double h)
 {
-  window->setPaper(w, h);
+  //###  window->setPaper(w, h);
 }
 
 
@@ -697,15 +694,26 @@ void KDVIMultiPage::showTipOnStart(void)
 
 DocumentWidget* KDVIMultiPage::createDocumentWidget()
 {
-  // TODO: handle different sizes per page.
-  DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(),
-      getRenderer()->sizeOfPage(/*page+*/1), &pageCache,
-      &userSelection, "singlePageWidget" );
+  kdError() << "KDVIMultiPage::createDocumentWidget() called" << endl;
 
+  QSize rendererSuggestedSize = pageCache.sizeOfPageInPixel(/*page+*/1); // FIXME
+  kdError() << "RSS " << rendererSuggestedSize << endl;
+  QSize widgetSize;
+  if (rendererSuggestedSize.isEmpty()) {
+    widgetSize.setWidth(100);
+    widgetSize.setHeight(100);
+  } else
+    widgetSize = rendererSuggestedSize;
+
+
+  // TODO: handle different sizes per page.
+  DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(), widgetSize, &pageCache,
+					    &userSelection, "singlePageWidget" );
+  
   // Handle source links
   connect(documentWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, DocumentWidget *)), getRenderer(),
           SLOT(handleSRCLink(const QString &,QMouseEvent *, DocumentWidget *)));
-
+  
   return documentWidget;
 }
 

@@ -108,11 +108,9 @@ public:
   void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
 
-  void          changePageSize();
   virtual pageNumber totalPages() const;
   bool		showPS(void) { return _postscript; };
   int		curr_page(void) { return current_page+1; };
-  void		setPaper(double w, double h);
   static bool   correctDVI(const QString &filename);
 
 
@@ -151,9 +149,9 @@ public slots:
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar(void);
 
-  virtual void  setResolution(double resolution_in_DPI);
 
-  void		drawPage(DocumentPage *page);
+
+  void		drawPage(double res, DocumentPage *page);
  
   /** Slots used in conjunction with external programs */
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
@@ -179,11 +177,13 @@ private slots:
   void          showThatSourceInformationIsPresent(void);
 
 private:
+  void  setResolution(double resolution_in_DPI);
+
   fontPool      font_pool;
   infoDialog    *info;
 
   QWidget       *parentWidget;
-
+  double        resolutionInDPI;
 
   // @@@ explanation
   void          prescan(parseSpecials specialParser);
@@ -287,7 +287,7 @@ private:
   
   struct drawinf	currinf;
   DocumentPage* currentlyDrawnPage;
-  QPixmap currentlyDrawnPixmap;
+  QPixmap *currentlyDrawnPixmap;
 };
 
 

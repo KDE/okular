@@ -101,7 +101,7 @@ void KDVIMultiPage::doExportText(void)
       break;
 
     dummyPage.setPageNumber(page);
-    window->drawPage(&dummyPage); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
+    window->drawPage(100.0, &dummyPage); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
 
     for(unsigned int i=0; i<dummyPage.textLinkList.size(); i++)
       stream << dummyPage.textLinkList[i].linkText << endl;
@@ -246,7 +246,7 @@ void KDVIMultiPage::findNextText(void)
       break;
     
     dummyPage.setPageNumber(pageNumber);
-    window->drawPage(&dummyPage); // We don't really care for errors in draw_page(), no error handling here.
+    window->drawPage(100.0, &dummyPage); // We don't really care for errors in draw_page(), no error handling here.
     if (dummyPage.textLinkList.size() == 0)
       continue;
     
@@ -326,7 +326,7 @@ void KDVIMultiPage::findPrevText(void)
   if (userSelection.getPageNumber() == 0) {
     startingPage     = getCurrentPageNumber();
     dummyPage.setPageNumber(startingPage);
-    window->drawPage(&dummyPage);
+    window->drawPage(100.0, &dummyPage);
     startingTextItem = dummyPage.textLinkList.size();
   } else {
     startingPage     = userSelection.getPageNumber();
@@ -363,7 +363,7 @@ void KDVIMultiPage::findPrevText(void)
       break;
 
     dummyPage.setPageNumber(pageNumber);
-    window->drawPage(&dummyPage);
+    window->drawPage(100.0, &dummyPage);
     if (dummyPage.textLinkList.size() == 0)
       continue;
 

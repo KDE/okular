@@ -64,8 +64,8 @@ Catalog::Catalog(XRef *xrefA) {
   }
   pagesSize = numPages0 = obj.getInt();
   obj.free();
-  if (pagesSize >= INT_MAX / (signed) sizeof(Page *) ||
-      pagesSize >= INT_MAX / (signed) sizeof(Ref)) {
+  if ((unsigned) pagesSize >= INT_MAX / sizeof(Page *) ||
+      (unsigned) pagesSize >= INT_MAX / sizeof(Ref)) {
     error(-1, "Invalid 'pagesSize'");
     ok = gFalse;
     return;
@@ -197,8 +197,8 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
       }
       if (start >= pagesSize) {
 	pagesSize += 32;
-        if (pagesSize >= INT_MAX / (signed) sizeof(Page *) ||
-            pagesSize >= INT_MAX / (signed) sizeof(Ref)) {
+        if ((unsigned) pagesSize >= INT_MAX / sizeof(Page *) ||
+            (unsigned) pagesSize >= INT_MAX / sizeof(Ref)) {
           error(-1, "Invalid 'pagesSize' parameter.");
           goto err3;
         }

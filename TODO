@@ -6,6 +6,7 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress [nearly done]:
+-> annotations: ask/confirm author's name for annotations (add config option)
 [15:00] *eros* - implement unified LOAD/SAVE of annotations in the Document class
 -> annotations: framework (BR67300,BR62793)
 [14:57] *eros* - implement Annotation handlers in PageView

@@ -272,7 +272,7 @@ void PageView::notifyPixmapChanged( int pageNumber )
 //BEGIN widget events
 #include <kdebug.h>
 void PageView::viewportPaintEvent( QPaintEvent * pe )
-{//TODO add blanking on the 'remaining' area only.
+{
     // create the rect into contents from the clipped screen rect
     QRect viewportRect = viewport()->rect();
     QRect contentsRect = pe->rect().intersect( viewportRect );
@@ -317,12 +317,16 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
             // gfx operations on pixmap (contents {left,top} is pixmap {0,0})
             pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
-            // 1) clear bg
-            pixmapPainter.fillRect( contentsRect, Qt::gray );
-            // 2) paint items
-            paintItems( &pixmapPainter, contentsRect );
-            // 3) pixmap manipulated areas
-            // 4) paint (blend) transparent selection
+            // 1) Layer 0: paint items and clear bg on unpainted rects
+            QRegion remaining( contentsRect );
+            paintItems( &pixmapPainter, contentsRect, remaining );
+
+            QMemArray<QRect> backRects = remaining.rects();
+            uint backRectsNumber = backRects.count();
+            for ( uint jr = 0; jr < backRectsNumber; jr++ )
+                pixmapPainter.fillRect( backRects[ jr ], Qt::gray );
+            // 2) Layer 1: pixmap manipulated areas
+            // 3) Layer 2: paint (blend) transparent selection
             if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) )
             {
                 QRect blendRect = selectionRectInternal.intersect( contentsRect );
@@ -344,7 +348,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                 pixmapPainter.setPen( selBlendColor );
                 pixmapPainter.drawRect( selectionRect );
             }
-            // 5) paint overlays
+            // 4) Layer 3: overlays
             if ( Settings::tempDrawBoundaries() )
             {
                 pixmapPainter.setPen( Qt::blue );
@@ -357,17 +361,21 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
         }
         else    // not using COMPOSTING
         {
-            // 1) clear bg
-            screenPainter.fillRect( contentsRect, Qt::gray );
-            // 2) paint items
-            paintItems( &screenPainter, contentsRect );
-            // 4) paint opaque selection
+            // 1) Layer 0: paint items and clear bg on unpainted rects
+            QRegion remaining( contentsRect );
+            paintItems( &screenPainter, contentsRect, remaining );
+            QMemArray<QRect> backRects = remaining.rects();
+            uint backRectsNumber = backRects.count();
+            for ( uint jr = 0; jr < backRectsNumber; jr++ )
+                screenPainter.fillRect( backRects[ jr ], Qt::gray );
+            // 2) Layer 1: opaque manipulated ares (filled / contours)
+            // 3) Layer 2: paint opaque selection
             if ( !d->mouseSelectionRect.isNull() )
             {
                 screenPainter.setPen( palette().active().highlight().dark(110) );
                 screenPainter.drawRect( d->mouseSelectionRect.normalize() );
             }
-            // 5) paint overlays
+            // 4) Layer 3: overlays
             if ( Settings::tempDrawBoundaries() )
             {
                 screenPainter.setPen( Qt::red );
@@ -773,7 +781,7 @@ void PageView::dropEvent( QDropEvent * ev )
 }
 //END widget events
 
-void PageView::paintItems( QPainter * p, const QRect & contentsRect )
+void PageView::paintItems( QPainter * p, const QRect & contentsRect, QRegion & remainingArea )
 {
     // when checking if an Item is contained in contentsRect, instead of
     // growing PageViewItems rects (for keeping outline into account), we
@@ -834,6 +842,9 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
                 // draw the pixmap
                 item->page()->drawPixmap( PAGEVIEW_ID, p, pixmapRect, pixmapGeometry.width(), pixmapGeometry.height() );
             }
+
+            // remove painted area from 'remainingArea'
+            remainingArea -= outlineGeometry.intersect( contentsRect );
 
             p->restore();
         }

@@ -79,7 +79,7 @@ class PageView : public QScrollView, public KPDFDocumentObserver
 
     private:
         // draw items on the opened qpainter
-        void paintItems( QPainter * p, const QRect & clipRect );
+        void paintItems( QPainter * p, const QRect & clipRect, QRegion & remainingArea );
         // update item width and height using current zoom parameters
         void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space

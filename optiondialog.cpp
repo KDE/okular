@@ -94,7 +94,6 @@ void OptionDialog::setup()
   mFont.metafontEdit->setText( config->readEntry( "MetafontMode", "cx" ) );
   mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
   mFont.fontPathEdit->setText( config->readEntry( "FontPath" ) );
-  fontPathCheckChanged( mFont.fontPathCheck->isChecked() );
 
   // Rendering page
   mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
@@ -123,8 +122,6 @@ void OptionDialog::makeFontPage()
   glay->addRowSpacing( 2, spacingHint()*2 );
 
   mFont.fontPathCheck = new QCheckBox( i18n("Generate missing fonts"), page );
-  connect( mFont.fontPathCheck, SIGNAL(toggled(bool)), 
-	   this, SLOT(fontPathCheckChanged(bool)) );
   glay->addMultiCellWidget( mFont.fontPathCheck, 3, 3, 0, 1 );
 
   mFont.fontPathLabel = new QLabel( i18n("PK font path:"), page );
@@ -150,13 +147,6 @@ void OptionDialog::makeRenderingPage()
   topLayout->addWidget( mRender.showHyperLinksCheck );
 
   topLayout->addStretch(1);
-}
-
-
-void OptionDialog::fontPathCheckChanged( bool state )
-{
-  mFont.fontPathLabel->setEnabled( state );
-  mFont.fontPathEdit->setEnabled( state );
 }
 
 

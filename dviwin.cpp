@@ -42,8 +42,6 @@ struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
 extern unsigned char       dvi_buffer[DVI_BUFFER_LEN];  
 struct drawinf	currinf;
-char	*prog;
-Display	*DISP;
 struct font	*font_head = NULL;
 
 const char *dvi_oops_msg;	/* error message */
@@ -56,9 +54,6 @@ jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 
 
 QIntDict<struct font> tn_table;
-
-
-Screen	*SCRN;
 
 
 #include "c-openmx.h" // for OPEN_MAX
@@ -74,15 +69,12 @@ unsigned int	page_w;
 unsigned int	page_h;
 // end of "really used"
 
-extern char *           prog;
 extern int 		n_files_left;
 extern unsigned int	page_w, page_h;
-extern Display *	DISP;
-extern Screen  *	SCRN;
 Window                  mainwin;
 
 void 	draw_page(void);
-extern "C" void 	kpse_set_progname(const char*);
+extern "C" void 	kpse_set_progname(char*);
 
 void 	reset_fonts();
 extern "C" {
@@ -96,7 +88,6 @@ extern "C" {
 }
 #include <setjmp.h>
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-//extern	QDateTime dvi_time;
 double xres;
 
 
@@ -137,30 +128,31 @@ dviWindow::dviWindow( int bdpi, double zoom, const char *mfm, int mkpk, QWidget 
   unshrunk_paper_h       = int( 27.9 * basedpi/2.54 + 0.5 ); 
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
-  DISP                   = x11Display();
-  SCRN                   = DefaultScreenOfDisplay(DISP);
   mainwin                = handle();
   mane                   = currwin;
   _postscript            = 0;
   pixmap                 = NULL;
+
+  // Calculate the horizontal resolution of the display device.  @@@
+  // We assume implicitly that the horizontal and vertical resolutions
+  // agree. This is probably not a safe assumption.
+  Display *DISP          = x11Display();
   xres                   = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4) /
 			    DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
+
   mane.shrinkfactor      = currwin.shrinkfactor = (double)basedpi/(xres*zoom);
   _zoom                  = zoom;
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   is_current_page_drawn  = 0;  
-  prog = const_cast<char*>("kdvi");
-  n_files_left = OPEN_MAX;
+  n_files_left           = OPEN_MAX;
   kpse_set_progname ("kdvi");
   kpse_init_prog ("KDVI", basedpi, MetafontMode.data(), "cmr10");
-  kpse_set_program_enabled(kpse_any_glyph_format,
-			   makepk, kpse_src_client_cnf);
+  kpse_set_program_enabled(kpse_any_glyph_format, 0, kpse_src_cmdline);
   kpse_format_info[kpse_pk_format].override_path
     = kpse_format_info[kpse_gf_format].override_path
     = kpse_format_info[kpse_any_glyph_format].override_path
     = kpse_format_info[kpse_tfm_format].override_path
     = FontPath.ascii();
-
   resize(0,0);
 }
 

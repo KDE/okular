@@ -66,9 +66,6 @@ class OptionDialog : public KDialogBase
     void makeFontPage();
     void makeRenderingPage();
 
-  private slots:
-    void fontPathCheckChanged( bool state );
-
   signals:
     void preferencesChanged();
 

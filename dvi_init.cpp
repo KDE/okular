@@ -336,7 +336,7 @@ void dvifile::read_postamble(void)
   if (cmnd != POSTPOST)
     dvi_oops(i18n("Non-fntdef command found in postamble"));
   if (font_not_found)
-    dvi_oops(i18n("Not all pixel files were found"));
+    KMessageBox::sorry( 0, i18n("Not all pixel files were found"));
 
   // free up fonts no longer in use
   fontpp = &font_head;

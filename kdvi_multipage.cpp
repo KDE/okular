@@ -22,6 +22,7 @@
 #include "optiondialog.h"
 #include "kdvi_multipage.moc"
 
+#define DEBUG
 
 extern "C"
 {
@@ -71,7 +72,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   timer_id = -1;
   setInstance(KDVIMultiPageFactory::instance()); 
 
-  window = new dviWindow(300, 1.0, "cx", 0, scrollView());
+  window = new dviWindow(300, 1.0, "cx", true, scrollView());
   preferencesChanged();
 
   new KAction(i18n("&DVI Options"), 0, this,

@@ -15,7 +15,7 @@ METASOURCES = AUTO
 
 
 libkdvi_la_SOURCES = kdvi_multipage.cpp \
-	dviwin.cpp print.cpp marklist.cpp \
+	dviwin.cpp print.cpp \
 	printData.cpp printSetup.cpp printSetupData.cpp pushbutton.cpp\
 	optiondialog.cpp \
 	psheader.c dviwin_draw.cpp dvi_init.cpp\

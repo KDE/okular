@@ -57,7 +57,7 @@
                                 <cstring>kcfg_SlidesAdvance</cstring>
                             </property>
                             <property name="text">
-                                <string>Advance Every</string>
+                                <string>Advance every:</string>
                             </property>
                         </widget>
                         <widget class="QCheckBox" row="2" column="0">
@@ -65,7 +65,7 @@
                                 <cstring>kcfg_SlidesLoop</cstring>
                             </property>
                             <property name="text">
-                                <string>Loop After Last Page</string>
+                                <string>Loop after last page</string>
                             </property>
                         </widget>
                     </grid>
@@ -126,7 +126,7 @@
                     </item>
                     <item>
                         <property name="text">
-                            <string>Random Transition</string>
+                            <string>Random transition</string>
                         </property>
                     </item>
                     <item>
@@ -191,7 +191,7 @@
                         <cstring>textLabel2</cstring>
                     </property>
                     <property name="text">
-                        <string>Mouse Cursor:</string>
+                        <string>Mouse cursor:</string>
                     </property>
                 </widget>
                 <widget class="QComboBox" row="2" column="1">
@@ -219,7 +219,7 @@
                         <cstring>textLabel3</cstring>
                     </property>
                     <property name="text">
-                        <string>Background Color:</string>
+                        <string>Background color:</string>
                     </property>
                 </widget>
                 <widget class="KColorButton" row="0" column="1">

@@ -17,7 +17,7 @@ kpathsea = kpathsea/kpathsea.a
 # just set the variable
 APPSDIR = $(kde_appsdir)/Graphics
 # set the include path for X, qt and KDE
-INCLUDES= @all_includes@ -Ikpathsea
+INCLUDES= $(all_includes) -Ikpathsea
 # claim, which subdirectories you want to install
 SUBDIRS = doc pix
 
@@ -80,6 +80,9 @@ uninstall-local:
 	-rm -f $(APPSDIR)/Kdvi.kdelnk
 	-rm -f $(kde_icondir)/kdvi.xpm
 	-rm -f $(kde_minidir)/kdvi.xpm
+
+clean-local:
+	(cd kpathsea && test -r Makefile && $(MAKE) distclean)
 
 distclean-local:
 	(cd kpathsea && test -r config.status && $(MAKE) distclean)

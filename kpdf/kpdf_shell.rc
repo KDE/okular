@@ -13,4 +13,6 @@
   </Menu>
   <Merge/>
 </MenuBar>
+<ToolBar name="mainToolBar"><text>Main Toolbar</text>
+</ToolBar>
 </kpartgui>

@@ -168,14 +168,24 @@
 
   <chapter id="inverse-search">
     <title>Using inverse search</title>
-    
+    <anchor id="inv-search"></anchor>
+
     <para>Inverse search is a very useful feature when you are writing
     a TeX-text yourself. If everything is properly set up, you can
     click into KDVI's window with the right mouse button. After that,
     your favourite editor will open, load the TeX-sourcefile and jump
     to the proper paragraph. To use inverse search, do the following:</para>
 
+
     <orderedlist>
+      <listitem>
+	<para>Produce a DVI file that contains inverse search
+	information. This is explained in the section "Producing
+	TeX-files for inverse search" below. If you just want to test
+	the inverse search feature, you can also use the example file
+	<ulink
+	url="KDVI-features.dvi"><filename>KDVI-features.dvi</filename></ulink></para>
+      </listitem>
       <listitem>
 	<para>Let &kdvi; know which editor you would like to
 	use. Choose an editor in the <guilabel>Preferences</guilabel>
@@ -191,6 +201,11 @@
 	supported editors in the, <ulink
 	url="inverse-search-editor.html">"Setting up your
 	editor"</ulink> below.</para>
+      </listitem>
+      <listitem>
+	<para>Test your setup. Open your DVI file in &kdvi; and use
+	the middle mouse button to click into &kdvi;. The editor
+	should pop up and display the TeX file.</para>
       </listitem>
     </orderedlist>
 
@@ -395,6 +410,7 @@
 
   <chapter id="preferences">
     <title>The <guilabel>Preferences</guilabel> dialog</title>
+    <anchor id="opts"></anchor>
 
     <para>The <guilabel>Preferences</guilabel> dialog can be reached
     by choosing <menuchoice><guimenu>Settings</guimenu>
@@ -493,11 +509,12 @@
 	      fine with other programs. Older versions of
 	      <command>xdvi</command> and <command>dvips</command>
 	      support the execution of external commands. This is a
-	      high security risk and therefore deliberately not
+	      bad security risk and therefore deliberately not
 	      implemented in &kdvi;. Technical information about
 	      supported ways to include &PostScript; can be found in
-	      an external document. You probably want to set this
-	      option.</para>
+	      the document <ulink
+	      url="KDVI-features.dvi"><filename>KDVI-features.dvi</filename></ulink>. You
+	      probably want to set this option.</para>
 </note>
 
 </listitem>

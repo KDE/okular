@@ -50,8 +50,10 @@ KDVIPart::KDVIPart( QWidget *parent, const char *name )
 {
     setInstance( KDVIFactory::instance() );
     w = new KDVIMiniWidget(NULL, parent );
-    dviWindow *dviwin = w->window();
+    // Clicking on it should make it active (required by KParts)
+    w->setFocusPolicy( QWidget::ClickFocus );
 
+    dviWindow *dviwin = w->window();
     setWidget( w );
 
     startAct = new KAction(i18n("Go to first page"),

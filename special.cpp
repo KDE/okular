@@ -14,6 +14,7 @@
 #include <klocale.h>
 
 #include "dviwin.h"
+#include "kdvi.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -100,7 +101,7 @@ static void parse_special_argument(QString strg, const char *argument_name, int 
 void dviWindow::epsf_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdError() << "epsf-special: psfile=" << cp <<endl;
+  kdDebug() << "epsf-special: psfile=" << cp <<endl;
 #endif
 
   QString include_command = cp.simplifyWhiteSpace();
@@ -160,31 +161,31 @@ void dviWindow::epsf_special(QString cp)
       if (rwi != 0)
 	PostScriptOutPutString->append( QString(" %1 @rwi").arg(rwi) );
       if (rhi != 0)
-	PostScriptOutPutString->append( QString(" %1 @rhi").arg(rwi) );
+	PostScriptOutPutString->append( QString(" %1 @rhi").arg(rhi) );
       PostScriptOutPutString->append( " @setspecial \n" );
       PostScriptOutPutString->append( QString(" (%1) run\n").arg(EPSfilename) );
       PostScriptOutPutString->append( "@endspecial \n" );
     }
   } else {
     if (!_postscript || !QFile::exists(EPSfilename)) {
-      // Don't show PostScript, just draw the bounding box
-      // For this, calculate the size of the bounding box in Pixels
+      // Don't show PostScript, just draw the bounding box. For this,
+      // calculate the size of the bounding box in Pixels. 
       double bbox_width  = urx - llx;
-      double bbox_height = lly - ury;
+      double bbox_height = ury - lly;
 
       if ((rwi != 0)&&(bbox_width != 0)) {
-	bbox_height = bbox_height*rwi/bbox_width;
+	bbox_height *= rwi/bbox_width;
 	bbox_width  = rwi;
       }
       if ((rhi != 0)&&(bbox_height != 0)) {
+	bbox_width  *= rhi/bbox_height;
 	bbox_height = rhi;
-	bbox_width  = bbox_width*rhi/bbox_height;
       }
 
       bbox_width  *= 0.1 * dimconv / shrink_factor;
       bbox_height *= 0.1 * dimconv / shrink_factor;
 
-      QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y, (int)bbox_width, (int)bbox_height);
+      QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y - (int)bbox_height, (int)bbox_width, (int)bbox_height);
       if (QFile::exists(EPSfilename))
 	foreGroundPaint.setBrush(Qt::lightGray);
       else

@@ -617,8 +617,8 @@
 
 	<itemizedlist>
 	  <listitem>
-	    <para>Download the following Emacs script, <ulink url =
-	    "kdvi-search.el"><filename>kdvi-search.el</filename></ulink>
+		<para>Download the following Emacs script, <ulink url="kdvi-search.el">
+		<filename>kdvi-search.el</filename></ulink>
 	    (press shift and click the filename to download) and store
 	    it in a place where Emacs can access it ---we recommend a
 	    directory <filename>emacs-scripts</filename>.</para>

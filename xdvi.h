@@ -1,8 +1,6 @@
 #ifndef _xdvi_h
 #define _xdvi_h
 
-#include <setjmp.h>
-
 /*
  *	Written by Eric C. Cooper, CMU
  */
@@ -16,11 +14,6 @@ extern "C" {
 #include <sys/types.h>
 }
 
-/* See kpathsea/INSTALL for the purpose of the FOIL...  */
-#ifdef FOIL_X_WCHAR_T
-#define wchar_t foil_x_defining_wchar_t
-#define X_WCHAR
-#endif
 
 #include <X11/Xlib.h>	/* include Xfuncs.h, if available */
 #include <X11/Xutil.h>	/* needed for XDestroyImage */
@@ -138,8 +131,6 @@ extern	struct drawinf	currinf;
 #define ZZ      currinf.data.z
 #define ROUNDUP(x,y) (((x)+(y)-1)/(y))
 
-#define	PS	1
-
 extern QIntDict<struct font> tn_table;
 
 
@@ -155,13 +146,9 @@ extern  long    snum ARGS((FILE *, int));
 
 #define	pixels_per_inch	_pixels_per_inch
 
-extern	struct WindowRec mane, alt, currwin;
+extern	struct WindowRec mane, currwin;
 
 #define	shrink_factor	currwin.shrinkfactor
-
-extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-extern	const char *dvi_oops_msg;	/* error message */
-
 
 #define one(fp)		((unsigned char) getc(fp))
 #define sone(fp)	((long) one(fp))

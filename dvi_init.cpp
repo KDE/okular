@@ -71,20 +71,23 @@ extern "C" {
 #include "glyph.h"
 #include "oconfig.h"
 
-#define	dvi_oops(str)	(dvi_oops_msg = (str.utf8()), longjmp(dvi_env, 1))
-
-
 
 void dvifile::process_preamble(void)
 {
   command_pointer = dvi_Data;
 
   Q_UINT8 magic_number = readUINT8();
-  if (magic_number != PRE)
-    dvi_oops(i18n("DVI file doesn't start with preamble."));
+  if (magic_number != PRE) {
+    errorMsg = i18n("The DVI file does not start with the preamble.");
+    return;
+  }
   magic_number =  readUINT8();
-  if (magic_number != 2)
-    dvi_oops(i18n("Wrong version of DVI output for this program."));
+  if (magic_number != 2) {
+    errorMsg = i18n("The DVI file contains the wrong version of DVI output for this program. "
+		    "Hint: If you use the typesetting system Omega, you have to use a special "
+		    "program, such as oxdvi.");
+    return;
+  }
 
   numerator     = readUINT32();
   denominator   = readUINT32();
@@ -113,13 +116,11 @@ void dvifile::find_postamble(void)
   command_pointer = dvi_Data + size_of_file - 1;
   while((*command_pointer == TRAILER) && (command_pointer > dvi_Data))
     command_pointer--;
-  if (command_pointer == dvi_Data)
-    dvi_oops(i18n("DVI file corrupted"));
+  if (command_pointer == dvi_Data) {
+    errorMsg = i18n("The DVI file is badly corrupted. KDVI was not able to find the postamble.");
+    return;
+  }
 
-  // Next comes the value "i", the version of the DVI output
-  if (*command_pointer != 2)
-    dvi_oops(i18n("Wrong version of DVI output for this program"));
-  
   // And this is finally the pointer to the beginning of the postamble
   command_pointer -= 4;
   beginning_of_postamble = readUINT32();
@@ -130,9 +131,10 @@ void dvifile::find_postamble(void)
 void dvifile::read_postamble(void)
 {
   Q_UINT8 magic_byte = readUINT8();
-  if (magic_byte != POST)
-    dvi_oops(i18n("Postamble doesn't begin with POST"));
-
+  if (magic_byte != POST) {
+    errorMsg = i18n("The postamble does not begin with the POST command.");
+    return;
+  }
   last_page_offset = readUINT32();
 
   // Skip the numerator, denominator and magnification, the largest
@@ -176,8 +178,10 @@ void dvifile::read_postamble(void)
     cmnd = readUINT8();
   }
   
-  if (cmnd != POSTPOST)
-    dvi_oops(i18n("Non-fntdef command found in postamble"));
+  if (cmnd != POSTPOST) {
+    errorMsg = i18n("The postamble contained a command other than FNTDEF.");
+    return;
+  }
 
   // Now we remove all those fonts from the memory which are no longer
   // in use.
@@ -205,8 +209,10 @@ void dvifile::prepare_pages()
   // @@@@ ADD CHECK FOR CONSISTENCY !!! NEVER LET THE COMMAND PTR POINT OUTSIDE THE ALLOCATED MEM !!!!
   while (i > 0) {
     command_pointer  = dvi_Data + page_offset[i--];
-    if (readUINT8() != BOP)
-      dvi_oops(i18n("Page does not start with BOP"));
+    if (readUINT8() != BOP) {
+      errorMsg = i18n("The page %1 does not start with the BOP command.").arg(i+1);
+      return;
+    }
     command_pointer += 10 * 4;
     page_offset[i] = readUINT32();
     if ((dvi_Data+page_offset[i] < dvi_Data)||(dvi_Data+page_offset[i] > dvi_Data+size_of_file))
@@ -220,7 +226,8 @@ dvifile::dvifile(QString fname, fontPool *pool)
 #ifdef DEBUG_DVIFILE
   kdDebug() << "init_dvi_file: " << fname << endl;
 #endif
-  
+
+  errorMsg    = QString::null;
   dvi_Data    = 0;
   page_offset = 0;
   font_pool   = pool;

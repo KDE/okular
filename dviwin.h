@@ -27,6 +27,7 @@
 
 class fontProgressDialog;
 class infoDialog;
+class KEdFind;
 class KPrinter;
 class KShellProcess;
 
@@ -144,6 +145,8 @@ public slots:
   void          dvips_terminated(KProcess *);
   void          editorCommand_terminated(KProcess *);
 
+  void          do_findText();
+
 signals:
   /** Emitted to indicate that a hyperlink has been clicked on, and
       that the widget requests that the controlling program goes to the
@@ -158,9 +161,11 @@ signals:
   void setStatusBarText( const QString& );
 
 protected:
- void paintEvent(QPaintEvent *ev);
+ void          paintEvent(QPaintEvent *ev);
 
 private:
+ QString       errorMsg;
+
  /** Methods which handle certain special commands. */
  void          bang_special(QString cp);
  void          quote_special(QString cp);
@@ -201,6 +206,10 @@ private:
  void              timerEvent( QTimerEvent *e );
  int               animationCounter;
  int               flashOffset;
+
+ /** Methods and classes concerned with the find functionality */
+ class KEdFind    *findDialog;
+ Q_INT32           numOfFoundLink;
 
  /** These fields contain information about the geometry of the
      page. */

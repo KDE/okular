@@ -25,6 +25,7 @@ class dvifile : public bigEndianByteReader
 
   Q_UINT8      * dvi_Data;
   QIODevice::Offset size_of_file;
+  QString        errorMsg;
 
   /** This flag is set to "true" during the construction of the
       dvifile, and is never changed afterwards by the dvifile

@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <setjmp.h>
 
 #include <qbitmap.h> 
 #include <qcheckbox.h> 
@@ -30,6 +29,7 @@
 #include <kmessagebox.h>
 #include <kmimemagic.h>
 #include <kdebug.h>
+#include <keditcl.h>
 #include <kfiledialog.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
@@ -49,42 +49,21 @@
 //------ some definitions from xdvi ----------
 
 
-#include <X11/Xlib.h>
-#include <X11/Intrinsic.h>
-
 #define	MAXDIM		32767
 struct WindowRec mane	= {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
 struct drawinf	currinf;
 
-
-const char *dvi_oops_msg;	/* error message */
-
-
-jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-
-
 QIntDict<font> tn_table;
 
-
 int	_pixels_per_inch; //@@@
-
-
-
 
 // The following are really used
 unsigned int	page_w;
 unsigned int	page_h;
 // end of "really used"
 
-extern unsigned int	page_w, page_h;
-Window                  mainwin;
-
-void 	draw_page(void);
-
-#include <setjmp.h>
-extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 QPainter foreGroundPaint; // QPainter used for text
 
 
@@ -134,11 +113,12 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   unshrunk_page_h       = int( 27.9 * basedpi/2.54 + 0.5 ); 
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
-  mainwin                = handle();
   mane                   = currwin;
   _postscript            = 0;
   pixmap                 = 0;
   markedBox              = 0;
+  findDialog             = 0;
+  numOfFoundLink         = -1;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
@@ -151,9 +131,8 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   // Calculate the horizontal resolution of the display device.  @@@
   // We assume implicitly that the horizontal and vertical resolutions
   // agree. This is probably not a safe assumption.
-  Display *DISP          = x11Display();
-  xres                   = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4) /
-			    DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
+  xres                   = QPaintDevice::x11AppDpiX ();
+
   // Just to make sure that we are never dividing by zero.
   if ((xres < 10)||(xres > 1000))
     xres = 75.0;
@@ -255,17 +234,20 @@ void dviWindow::exportText(void)
   QPixmap pixie(1,1);
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     progress.setProgress( current_page );
-    //    qApp->processEvents();
+    // Funny. The manual to QT tells us that we need to call
+    // qApp->processEvents() regularly to keep the application from
+    // freezing. However, the application crashes immediately if we
+    // uncomment the following line and works just fine as it is. Wild
+    // guess: Could that be related to the fact that we are linking
+    // agains qt-mt?
+
+    // qApp->processEvents();
+
     if ( progress.wasCancelled() )
       break;
     
     foreGroundPaint.begin( &pixie );
-    if (setjmp(dvi_env)) {	// dvi_oops called
-      foreGroundPaint.end();
-      break;
-    } else {
-      draw_page();
-    }
+    draw_page(); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
     foreGroundPaint.end();
     
     for(int i=0; i<num_of_used_textlinks; i++) 
@@ -280,12 +262,8 @@ void dviWindow::exportText(void)
   // Restore the current page.
   current_page = current_page_sav;
   foreGroundPaint.begin( &pixie );
-  if (setjmp(dvi_env)) {	// dvi_oops called
-    foreGroundPaint.end();
-  } else {
-    draw_page();
-    foreGroundPaint.end();
-  }
+  draw_page();  // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
+  foreGroundPaint.end();
 
   return;
 }
@@ -613,17 +591,61 @@ void dviWindow::abortExternalProgramm(void)
   export_fileName = "";
 }
 
+
 void dviWindow::findText(void)
 {
-  // @@@@ Sucht nur nach "Kebekus", und das auch noch ganz dumm...
-  KMessageBox::sorry( this, "<qt>The search functionality is not really implemented...</qt>" );
+  if (findDialog == 0) {
+    findDialog = new KEdFind(this, "Text find dialog", FALSE);
+    connect(findDialog, SIGNAL(search()), this, SLOT(do_findText()));
+  }
+  findDialog->show();
+
+  // @@@@ KMessageBox::sorry( this, "<qt>The search functionality is not really implemented...</qt>" );
+}
+
+void dviWindow::do_findText(void)
+{
+  if (findDialog == 0)
+    return;
+
+  QString searchText  = findDialog->getText();
+  bool case_sensitive = findDialog->case_sensitive();
+
+  bool _postscript_sav = _postscript;
+  int current_page_sav = current_page;
+  _postscript = FALSE; // Switch off postscript to speed up things...
+  QPixmap pixie(1,1);
+  for(; current_page < dviFile->total_pages; current_page++) {
+
+    foreGroundPaint.begin( &pixie );
+    draw_page(); // We don't really care for errors in draw_page()
+    foreGroundPaint.end();
+
+    for(int i=numOfFoundLink+1; i<num_of_used_textlinks; i++) 
+      if (textLinkList[i].linkText .find(searchText,case_sensitive) >= 0) {
+	numOfFoundLink = i;
+	markedBox      = &textLinkList[i].box;
+	// Restore the previous settings, including the current
+	// page. Otherwise, the program is "smart enough" not to
+	// re-render the screen.
+	_postscript    = _postscript_sav;
+	int j = current_page;
+	current_page   = current_page_sav;
+	emit(request_goto_page(j, textLinkList[i].box.bottom() ));
+	return;
+      }
+    
+    numOfFoundLink = -1;
+  }
+
+  // Restore the PostScript setting 
+  _postscript = _postscript_sav;
   
-  for(int i=0; i<num_of_used_textlinks; i++) 
-    if (textLinkList[i].linkText .find("Kebekus") >= 0) {
-      markedBox = &textLinkList[i].box;
-      emit(request_goto_page(current_page, textLinkList[i].box.bottom() ));
-      break;
-    }
+  // Restore the current page.
+  current_page = current_page_sav;
+  foreGroundPaint.begin( &pixie );
+  draw_page(); // We don't care for errors here
+  foreGroundPaint.end();
 }
 
 void dviWindow::setShowPS( int flag )
@@ -719,20 +741,18 @@ void dviWindow::drawPage()
   if ( !pixmap->paintingActive() ) {
     foreGroundPaint.begin( pixmap );
     QApplication::setOverrideCursor( waitCursor );
-    if (setjmp(dvi_env)) {	// dvi_oops called
-      QApplication::restoreOverrideCursor();
-      foreGroundPaint.end();
-      KMessageBox::error( this,
-			  i18n("File corruption!\n\n") +
-			  QString::fromUtf8(dvi_oops_msg) +
-			  i18n("\n\nMost likely this means that the DVI file\nis broken, or that it is not a DVI file."));
-      return;
-    } else {
-      draw_page();
-    }
+    errorMsg = QString::null;
+    draw_page();
     foreGroundPaint.drawRect(0,0,pixmap->width(),pixmap->height());
-    QApplication::restoreOverrideCursor();
     foreGroundPaint.end();
+    QApplication::restoreOverrideCursor();
+    if (errorMsg.isEmpty() != true) {
+      KMessageBox::detailedError(this, 
+				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
+				      "likely this means that the DVI file is broken.</qt>"), 
+				 errorMsg, i18n("DVI File error"));
+      return;
+    }
 
     // Tell the user (once) if the DVI file contains source specials
     // ... wo don't want our great feature to go unnoticed. In
@@ -868,16 +888,16 @@ bool dviWindow::setFile( const QString & fname )
   // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
     KMessageBox::error( this,
-			i18n("File error!\n\n") +
-			i18n("The file does not exist\n") + 
-			filename);
+			i18n("<qt><strong>File error!</strong> The specified file '%1' does not exist. "
+			     "KDVI already tried to add the ending '.dvi'</qt>").arg(filename), 
+			i18n("File error!"));
     return false;
   }
 
   // Check if we are really loading a DVI file, and complain about the
-  // mime type, if the file is not DVI. 
-  // Perhaps we should move the procedure later to the kviewpart,
-  // instead of the implementaton of the multipage.
+  // mime type, if the file is not DVI. Perhaps we should move the
+  // procedure later to the kviewpart, instead of the implementaton in
+  // the multipage.
   QString mimetype( KMimeMagic::self()->findFileType( fname )->mimeType() );
   if (mimetype != "application/x-dvi") {
     KMessageBox::sorry( this,
@@ -889,23 +909,19 @@ bool dviWindow::setFile( const QString & fname )
   }
 
   QApplication::setOverrideCursor( waitCursor );
-  if (setjmp(dvi_env)) {	// dvi_oops called
-    QApplication::restoreOverrideCursor();
-    KMessageBox::error( this,
-			i18n("File corruption!\n\n") +
-			QString::fromUtf8(dvi_oops_msg) +
-			i18n("\n\nMost likely this means that the DVI file\n") + 
-			filename +
-			i18n("\nis broken, or that it is not a DVI file."));
-    return false;
-  }
-
   dvifile *dviFile_new = new dvifile(filename,font_pool);
-  if (dviFile_new->dvi_Data == NULL) {
+  if ((dviFile_new->dvi_Data == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
+    QApplication::restoreOverrideCursor();
+    if (dviFile_new->errorMsg.isEmpty() != true)
+      KMessageBox::detailedError(this, 
+				 i18n("<qt>File corruption! KDVI had trouble interpreting your DVI file. Most "
+				      "likely this means that the DVI file is broken.</qt>"), 
+				 dviFile_new->errorMsg, i18n("DVI File error"));
     delete dviFile_new;
     return false;
   }
-
+    
+  
   if (dviFile)
     delete dviFile;
   dviFile = dviFile_new;

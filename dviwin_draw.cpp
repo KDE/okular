@@ -73,14 +73,7 @@
 extern QPainter foreGroundPaint;
 
 
-
-static	void tell_oops(const QString & message)
-{
-  dvi_oops_msg = (message.utf8()), longjmp(dvi_env, 1); /* dvi_oops */
-  exit(1);
-}
-
-
+#ifdef food
 /*
  *	Find font #n.
  */
@@ -88,11 +81,13 @@ static	void tell_oops(const QString & message)
 static void change_font(unsigned long n)
 {
   currinf.fontp = currinf.fonttable[n];
-  if (currinf.fontp == NULL)
-    tell_oops(QString("non-existent font #%1").arg(n) );
+  if (currinf.fontp == NULL) {
+    errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.").arg(n);
+    return;
+  }
   currinf.set_char_p = currinf.fontp->set_char_p;
 }
-
+#endif
 
 
 /** Routine to print characters.  */
@@ -285,7 +280,9 @@ void dviWindow::set_no_char(unsigned int cmd, unsigned int ch)
       return;
     }
   }
-  tell_oops("attempt to set character of unknown font");
+
+  errorMsg = i18n("The DVI code set a character of unknown font");
+  return;
   /* NOTREACHED */
 }
 
@@ -317,9 +314,14 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
     if (ch <= (unsigned char) (SETCHAR0 + 127)) {
       (this->*currinf.set_char_p)(ch, ch);
     } else
-      if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63))
-	change_font((unsigned long) (ch - FNTNUM0));
-      else {
+      if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63)) {
+	currinf.fontp = currinf.fonttable[ch - FNTNUM0];
+	if (currinf.fontp == NULL) {
+	  errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.").arg(ch - FNTNUM0);
+	  return;
+	}
+	currinf.set_char_p = currinf.fontp->set_char_p;
+      } else {
 	Q_INT32 a, b;
 	
 	switch (ch) {
@@ -381,8 +383,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	    // Sanity check for the dvi-file: The DVI-standard asserts
 	    // that at the end of a page, the stack should always be
 	    // empty.
-	    if (!stack.isEmpty()) 
-	      tell_oops("stack not empty at EOP");
+	    if (!stack.isEmpty()) {
+	      errorMsg = i18n("The stack was not empty when the EOP command was encountered.");
+	      return;
+	    }
 	  }
 	  return;
 
@@ -391,9 +395,10 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  break;
 
 	case POP:
-	  if (stack.isEmpty())
-	    tell_oops("more POPs than PUSHes");
-	  else
+	  if (stack.isEmpty()) {
+	    errorMsg = i18n("The stack was empty when a POP command was encountered.");
+	    return;
+	  } else
 	    currinf.data = stack.pop();
 	  break;
 
@@ -511,11 +516,21 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case FNT1:
 	case FNT2:
 	case FNT3:
-	  change_font(readUINT(ch - FNT1 + 1));
+	  currinf.fontp = currinf.fonttable[readUINT(ch - FNT1 + 1)];
+	  if (currinf.fontp == NULL) {
+	    errorMsg = i18n("The DVI code referred to a font which was not previously defined.");
+	    return;
+	  }
+	  currinf.set_char_p = currinf.fontp->set_char_p;
 	  break;
 
 	case FNT4:
-	  change_font(readINT(ch - FNT1 + 1));
+	  currinf.fontp = currinf.fonttable[readINT(ch - FNT1 + 1)];
+	  if (currinf.fontp == NULL) {
+	    errorMsg = i18n("The DVI code referred to a font which was not previously defined.");
+	    return;
+	  }
+	  currinf.set_char_p = currinf.fontp->set_char_p;
 	  break;
 
 	case XXX1:
@@ -548,15 +563,13 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	case PRE:
 	case POST:
 	case POSTPOST:
-	  tell_oops(QString("shouldn't happen: illegal command encountered"));
+	  errorMsg = i18n("An illegal command was encountered.");
+	  return;
 	  break;
 	  
 	default:
-	  if (is_vfmacro == false) {
-	    word_boundary_encountered = true;
-	    line_boundary_encountered = true;
-	  }
-	  tell_oops(QString("unknown op-code %1").arg(ch));
+	  errorMsg = i18n("The unknown op-code %1 was encountered.").arg(ch);
+	  return;
 	} /* end switch*/
       } /* end else (ch not a SETCHAR or FNTNUM) */
   } /* end for */

@@ -4,8 +4,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <setjmp.h>
-
 /* Some kdvi options we want by default.  */
 #define USE_PK
 #define USE_GF

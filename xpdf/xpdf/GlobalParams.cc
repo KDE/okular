@@ -91,15 +91,14 @@ static struct {
   {NULL, NULL}
 };
 
-// KPDF: removed hardcoded font directories, Xft handles searching
-/*static const char *displayFontDirs[] = {
+static const char *displayFontDirs[] = {
   "/usr/share/ghostscript/fonts",
   "/usr/local/share/ghostscript/fonts",
   "/usr/share/fonts/default/Type1",
   "/usr/share/fonts/type1/gsfonts",
   "/usr/share/fonts/default/ghostscript/",
   NULL
-};*/
+};
 
 
 //------------------------------------------------------------------------
@@ -382,11 +381,10 @@ void GlobalParams::parseFile(GString *fileName, FILE *f) {
 	parseCMapDir(tokens, fileName, line);
       } else if (!cmd->cmp("toUnicodeDir")) {
 	parseToUnicodeDir(tokens, fileName, line);
-      // KPDF: finding T1 and TTF fonts is handled by Xft now
       } else if (!cmd->cmp("displayFontT1")) {
-//	parseDisplayFont(tokens, displayFonts, displayFontT1, fileName, line);
+	parseDisplayFont(tokens, displayFonts, displayFontT1, fileName, line);
       } else if (!cmd->cmp("displayFontTT")) {
-//	parseDisplayFont(tokens, displayFonts, displayFontTT, fileName, line);
+	parseDisplayFont(tokens, displayFonts, displayFontTT, fileName, line);
       } else if (!cmd->cmp("displayNamedCIDFontT1")) {
 	parseDisplayFont(tokens, displayNamedCIDFonts,
 			 displayFontT1, fileName, line);
@@ -913,7 +911,7 @@ void GlobalParams::setupBaseFonts(char *dir) {
   GString *fileName;
   FILE *f;
   DisplayFontParam *dfp;
-  int i/*, j*/;
+  int i, j;
 
   for (i = 0; displayFontTab[i].name; ++i) {
     fontName = new GString(displayFontTab[i].name);
@@ -931,8 +929,7 @@ void GlobalParams::setupBaseFonts(char *dir) {
 	fileName = NULL;
       }
     }
-// KPDF: no more searching hardcoded dirs, Xft handles that
-/*
+
 #ifndef WIN32
     for (j = 0; !fileName && displayFontDirs[j]; ++j) {
       fileName = appendToPath(new GString(displayFontDirs[j]),
@@ -945,7 +942,7 @@ void GlobalParams::setupBaseFonts(char *dir) {
       }
     }
 #endif
-*/
+
     if (!fileName) {
       error(-1, "No display font for '%s'", displayFontTab[i].name);
       delete fontName;

@@ -34,7 +34,7 @@ fontPool::fontPool(void)
 
   progress = new fontProgressDialog( "fontgen",  // Chapter in the documentation for help.
 				     i18n( "KDVI is currently generating bitmap fonts..." ),
-				     i18n( "Aborts the font generation. Do not do this." ),
+				     i18n( "Aborts the font generation. Don't do this." ),
 				     i18n( "KDVI is currently generating bitmap fonts which are needed to display your document. "
 					   "For this, KDVI uses a number of external programs, such as MetaFont. You can find "
 					   "the output of these programs later in the document info dialog." ),
@@ -125,7 +125,7 @@ QString fontPool::status(void)
   QStringList   tmp;
 
   if (fontList.isEmpty()) 
-    return i18n("The font list is currently empty.");
+    return i18n("The fontlist is currently empty.");
 
   text.append("<table WIDTH=\"100%\" NOSAVE >");
   text.append("<tr><td><b>Name</b></td> <td><b>DPI</b></td> <td><b>Type</b></td> <td><b>Filename</b></td></tr>");

@@ -263,7 +263,7 @@ void font::read_PK_char(unsigned int ch)
     w = num(fp, n);
     h = num(fp, n);
     if (w > 0x7fff || h > 0x7fff)
-      oops(QString(i18n("The character %1 is too large in file %2.")).arg(ch).arg(fontname));
+      oops(QString(i18n("The character %1 is too large in file %2")).arg(ch).arg(fontname));
     g->bitmap.w = w;
     g->bitmap.h = h;
   }

@@ -31,7 +31,7 @@ fontProgressDialog::fontProgressDialog( QString helpIndex, QString label, QStrin
 
   if (helpIndex.isEmpty() == false) {
     setHelp(helpIndex, "kdvi");
-    setHelpLinkText( i18n( "What is going on here?") ); 
+    setHelpLinkText( i18n( "What's going on here?") ); 
     enableLinkedHelp(true);
   } else
     enableLinkedHelp(false);

@@ -55,13 +55,13 @@ void font::fontNameReceiver(QString fname)
     set_char_p = &dviWindow::set_char;
   } else
     if (magic == GF_MAGIC)
-      oops(QString(i18n("The GF format for font file %1 is no longer supported.")).arg(filename) );
+      oops(QString(i18n("The GF format for font file %1 is no longer supported")).arg(filename) );
     else
       if (magic == VF_MAGIC) {
 	read_VF_index();
 	set_char_p = &dviWindow::set_vf_char;
       } else
-	oops(QString(i18n("Cannot recognize format for font file %1.")).arg(filename) );
+	oops(QString(i18n("Cannot recognize format for font file %1")).arg(filename) );
 }
 
 

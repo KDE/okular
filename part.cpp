@@ -686,7 +686,6 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 				m_pageView->fitPageWidth( page->number() );
 				break;
 	//		case 3: // switch to edit mode
-	//			m_pageView->slotSetMouseDraw();
 	//			break;
 		}
 	}

@@ -20,6 +20,7 @@
 #include <qcursor.h>
 #include <qpainter.h>
 #include <qtimer.h>
+#include <qdatetime.h>
 #include <qpushbutton.h>
 #include <qapplication.h>
 #include <qclipboard.h>
@@ -72,15 +73,22 @@ public:
     QRect mouseSelectionRect;
     QColor selectionRectColor;
 
-    // other stuff
-    QTimer * delayTimer;
-    QTimer * scrollTimer;
-    QTimer * findTimer;
+    // type ahead find
+    bool typeAheadActive;
+    QString typeAheadString;
+    QTimer * findTimeoutTimer;
+    // viewport move
+    bool viewportMoveActive;
+    QTime viewportMoveTime;
+    QPoint viewportMoveDest;
+    QTimer * viewportMoveTimer;
+    // auto scroll
     int scrollIncrement;
+    QTimer * autoScrollTimer;
+    // other stuff
+    QTimer * delayResizeTimer;
     bool dirtyLayout;
-    bool typeAheadActivated;
-    QString findString;
-    bool blockViewport;
+    bool blockViewport;                 // prevents changes to viewport
     bool blockPixmapsRequest;           // prevent pixmap requests
     PageViewMessage * messageWindow;    // in pageviewutils.h
 
@@ -120,11 +128,13 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseMode = MouseNormal;
     d->mouseMidStartY = -1;
     d->mouseOnRect = false;
-    d->delayTimer = 0;
-    d->scrollTimer = 0;
-    d->findTimer = 0;
-    d->typeAheadActivated = false;
+    d->typeAheadActive = false;
+    d->findTimeoutTimer = 0;
+    d->viewportMoveActive = false;
+    d->viewportMoveTimer = 0;
     d->scrollIncrement = 0;
+    d->autoScrollTimer = 0;
+    d->delayResizeTimer = 0;
     d->dirtyLayout = false;
     d->blockViewport = false;
     d->blockPixmapsRequest = false;
@@ -275,7 +285,7 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
             PageViewMessage::Info, 4000 );
 }
 
-void PageView::notifyViewportChanged( bool /*smoothMove*/ )
+void PageView::notifyViewportChanged( bool smoothMove )
 {
     // if we are the one changing viewport, skip this nofity
     if ( d->blockViewport )
@@ -305,16 +315,40 @@ void PageView::notifyViewportChanged( bool /*smoothMove*/ )
     if ( !Settings::viewContinous() || d->dirtyLayout )
         slotRelayoutPages();
 
-    // restore viewport or use default x-center, v-top alignment
+    // restore viewport center or use default {x-center,v-top} alignment
     const QRect & r = item->geometry();
+    int newCenterX = r.left(),
+        newCenterY = r.top();
     if ( vp.reCenter.enabled )
     {
-        int xCenter = (int)( vp.reCenter.normalizedCenterX * (double)r.width() );
-        int yCenter = (int)( vp.reCenter.normalizedCenterY * (double)r.height() );
-        center( r.left() + xCenter, r.top() + yCenter );
+        newCenterX += (int)( vp.reCenter.normalizedCenterX * (double)r.width() );
+        newCenterY += (int)( vp.reCenter.normalizedCenterY * (double)r.height() );
     }
     else
-        center( r.left() + r.width() / 2, r.top() + visibleHeight() / 2 - 10 );
+    {
+        newCenterX += r.width() / 2;
+        newCenterY += visibleHeight() / 2 - 10;
+    }
+
+    // if smooth movement requested, setup parameters and start it
+    if ( smoothMove )
+    {
+        d->viewportMoveActive = true;
+        d->viewportMoveTime.start();
+        d->viewportMoveDest.setX( newCenterX );
+        d->viewportMoveDest.setY( newCenterY );
+        if ( !d->viewportMoveTimer )
+        {
+            d->viewportMoveTimer = new QTimer( this );
+            connect( d->viewportMoveTimer, SIGNAL( timeout() ),
+                     this, SLOT( slotMoveViewport() ) );
+        }
+        d->viewportMoveTimer->start( 25 );
+        verticalScrollBar()->setEnabled( false );
+        horizontalScrollBar()->setEnabled( false );
+    }
+    else
+        center( newCenterX, newCenterY );
     d->blockPixmapsRequest = false;
 
     // request visible pixmaps in the current viewport and recompute it
@@ -502,28 +536,33 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
 void PageView::viewportResizeEvent( QResizeEvent * )
 {
     // start a timer that will refresh the pixmap after 0.5s
-    if ( !d->delayTimer )
+    if ( !d->delayResizeTimer )
     {
-        d->delayTimer = new QTimer( this );
-        connect( d->delayTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
+        d->delayResizeTimer = new QTimer( this );
+        connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
     }
-    d->delayTimer->start( 333, true );
+    d->delayResizeTimer->start( 333, true );
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
 {
     e->accept();
 
+    // if performing a selection or dyn zooming, disable keys handling
+    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 ||
+         d->viewportMoveActive )
+        return;
+
     // handle 'find as you type' (based on khtml/khtmlview.cpp)
-    if( d->typeAheadActivated )
+    if( d->typeAheadActive )
     {
         if( e->key() == Key_BackSpace )
         {
-            d->findString = d->findString.left( d->findString.length() - 1 );
-            if( !d->findString.isEmpty() )
+            d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
+            if( !d->typeAheadString.isEmpty() )
             {
                 findAhead( false );
-                d->findTimer->start( 3000, true );
+                d->findTimeoutTimer->start( 3000, true );
             }
             else
             {
@@ -535,12 +574,12 @@ void PageView::keyPressEvent( QKeyEvent * e )
         else if( e->key() == KStdAccel::findNext() )
         {
             // part doesn't get this key event because of the keyboard grab
-            d->findTimer->stop(); // restore normal operation during possible messagebox is displayed
+            d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
             releaseKeyboard();
             if ( d->document->findText() )
-                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->findString.lower()),
+                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
                                            PageViewMessage::Find, 3000 );
-            d->findTimer->start( 3000, true );
+            d->findTimeoutTimer->start( 3000, true );
             grabKeyboard();
             return;
         }
@@ -551,24 +590,31 @@ void PageView::keyPressEvent( QKeyEvent * e )
         }
         else if( e->text().isEmpty() == false )
         {
-            d->findString += e->text();
+            d->typeAheadString += e->text();
             findAhead( true );
-            d->findTimer->start( 3000, true );
+            d->findTimeoutTimer->start( 3000, true );
             return;
         }
     }
     else if( e->key() == '/' && d->document->isOpened() )
     {
-        d->findString = QString();
+        // stop scrolling the page (if doing it)
+        if ( d->autoScrollTimer )
+        {
+            d->scrollIncrement = 0;
+            d->autoScrollTimer->stop();
+        }
+        // start type-adeas search
+        d->typeAheadString = QString();
         d->messageWindow->display(i18n("Starting -- find text as you type"), PageViewMessage::Find, 3000);
-        d->typeAheadActivated = true;
-        if ( !d->findTimer )
+        d->typeAheadActive = true;
+        if ( !d->findTimeoutTimer )
         {
             // create the timer on demand
-            d->findTimer = new QTimer( this );
-            connect( d->findTimer, SIGNAL(timeout()), this, SLOT(findTimeout()) );
+            d->findTimeoutTimer = new QTimer( this );
+            connect( d->findTimeoutTimer, SIGNAL(timeout()), this, SLOT(findTimeout()) );
         }
-        d->findTimer->start( 3000, true );
+        d->findTimeoutTimer->start( 3000, true );
         grabKeyboard();
         return;
     }
@@ -624,10 +670,10 @@ void PageView::keyPressEvent( QKeyEvent * e )
             break;
         case Key_Shift:
         case Key_Control:
-            if ( d->scrollTimer )
+            if ( d->autoScrollTimer )
             {
-                if ( d->scrollTimer->isActive() )
-                    d->scrollTimer->stop();
+                if ( d->autoScrollTimer->isActive() )
+                    d->autoScrollTimer->stop();
                 else
                     slotAutoScoll();
                 return;
@@ -637,17 +683,17 @@ void PageView::keyPressEvent( QKeyEvent * e )
             return;
     }
     // if a known key has been pressed, stop scrolling the page
-    if ( d->scrollTimer )
+    if ( d->autoScrollTimer )
     {
         d->scrollIncrement = 0;
-        d->scrollTimer->stop();
+        d->autoScrollTimer->stop();
     }
 }
 
 void PageView::findTimeout()
 {
-    d->typeAheadActivated = false;
-    d->findString = "";
+    d->typeAheadActive = false;
+    d->typeAheadString = "";
     d->messageWindow->display(i18n("Find stopped."),PageViewMessage::Find,1000);
     releaseKeyboard();
 }
@@ -658,12 +704,12 @@ void PageView::findAhead(bool increase)
         d->document->setViewportPage(0);
     QString status;
     d->document->unHilightPages(false);
-    bool found = d->document->findText(d->findString, false, true);
+    bool found = d->document->findText(d->typeAheadString, false, true);
     if(found)
         status = i18n("Text found: \"%1\".");
     else 
         status = i18n("Text not found: \"%1\".");
-    d->messageWindow->display(status.arg(d->findString.lower()),
+    d->messageWindow->display(status.arg(d->typeAheadString.lower()),
         found ? PageViewMessage::Find : PageViewMessage::Warning, 4000);
 }
 
@@ -672,6 +718,10 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
+        return;
+
+    // don't perform any mouse action when viewport is autoscrolling
+    if ( d->viewportMoveActive )
         return;
 
     // if holding mouse mid button, perform zoom
@@ -700,12 +750,6 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                     QPoint delta = d->mouseGrabPos - e->globalPos();
                     scrollBy( delta.x(), delta.y() );
                     d->mouseGrabPos = e->globalPos();
-                    // if the page was scrolling, stop it
-                    if ( d->scrollTimer )
-                    {
-                        d->scrollIncrement = 0;
-                        d->scrollTimer->stop();
-                    }
                 }
             }
             else if ( rightButton && !d->mousePressPos.isNull() )
@@ -749,8 +793,16 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
         return;
 
     // if performing a selection or dyn zooming, disable mouse press
-    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 )
+    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 ||
+         d->viewportMoveActive )
         return;
+
+    // if the page is scrolling, stop it
+    if ( d->autoScrollTimer )
+    {
+        d->scrollIncrement = 0;
+        d->autoScrollTimer->stop();
+    }
 
     // if pressing mid mouse button while not doing other things, begin 'comtinous zoom' mode
     if ( e->button() & MidButton )
@@ -801,6 +853,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
+        return;
+
+    // don't perform any mouse action when viewport is autoscrolling
+    if ( d->viewportMoveActive )
         return;
 
     // handle mode indepent mid buttom zoom
@@ -1034,6 +1090,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
 void PageView::wheelEvent( QWheelEvent *e )
 {
+    // don't perform any mouse action when viewport is autoscrolling
+    if ( d->viewportMoveActive )
+        return;
+
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();
@@ -1220,10 +1280,10 @@ void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveA
     d->mouseSelectionRect.setRect( x, y, 1, 1 );
     d->selectionRectColor = color;
     // ensures page doesn't scroll
-    if ( d->scrollTimer )
+    if ( d->autoScrollTimer )
     {
         d->scrollIncrement = 0;
-        d->scrollTimer->stop();
+        d->autoScrollTimer->stop();
     }
 }
 
@@ -1412,6 +1472,15 @@ void PageView::slotRelayoutPages()
         return;
     }
 
+    // if viewport was auto-moving, stop it
+    if ( d->viewportMoveActive )
+    {
+        d->viewportMoveActive = false;
+        d->viewportMoveTimer->stop();
+        verticalScrollBar()->setEnabled( true );
+        horizontalScrollBar()->setEnabled( true );
+    }
+
     // common iterator used in this method and viewport parameters
     QValueVector< PageViewItem * >::iterator iIt, iEnd = d->items.end();
     int viewportWidth = visibleWidth(),
@@ -1581,7 +1650,7 @@ void PageView::slotRelayoutPages()
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 {
     // if requests are blocked (because raised by an unwanted event), exit
-    if ( d->blockPixmapsRequest )
+    if ( d->blockPixmapsRequest || d->viewportMoveActive )
         return;
 
     // precalc view limits for intersecting with page coords inside the lOOp
@@ -1686,19 +1755,45 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
     }
 }
 
+void PageView::slotMoveViewport()
+{
+    // converge to viewportMoveDest in 1 second
+    int diffTime = d->viewportMoveTime.elapsed();
+    if ( diffTime >= 667 || !d->viewportMoveActive )
+    {
+        center( d->viewportMoveDest.x(), d->viewportMoveDest.y() );
+        d->viewportMoveTimer->stop();
+        d->viewportMoveActive = false;
+        slotRequestVisiblePixmaps();
+        verticalScrollBar()->setEnabled( true );
+        horizontalScrollBar()->setEnabled( true );
+        return;
+    }
+
+    // move the viewport smoothly (kmplot: p(x)=x+x*(1-x)*(1-x))
+    float convergeSpeed = (float)diffTime / 667.0,
+          x = ((float)visibleWidth() / 2.0) + contentsX(),
+          y = ((float)visibleHeight() / 2.0) + contentsY(),
+          diffX = (float)d->viewportMoveDest.x() - x,
+          diffY = (float)d->viewportMoveDest.y() - y;
+    convergeSpeed *= convergeSpeed * (1.4 - convergeSpeed);
+    center( (int)(x + diffX * convergeSpeed),
+            (int)(y + diffY * convergeSpeed ) );
+}
+
 void PageView::slotAutoScoll()
 {
     // the first time create the timer
-    if ( !d->scrollTimer )
+    if ( !d->autoScrollTimer )
     {
-        d->scrollTimer = new QTimer( this );
-        connect( d->scrollTimer, SIGNAL( timeout() ), this, SLOT( slotAutoScoll() ) );
+        d->autoScrollTimer = new QTimer( this );
+        connect( d->autoScrollTimer, SIGNAL( timeout() ), this, SLOT( slotAutoScoll() ) );
     }
 
     // if scrollIncrement is zero, stop the timer
     if ( !d->scrollIncrement )
     {
-        d->scrollTimer->stop();
+        d->autoScrollTimer->stop();
         return;
     }
 
@@ -1706,7 +1801,7 @@ void PageView::slotAutoScoll()
     int index = abs( d->scrollIncrement ) - 1;  // 0..9
     const int scrollDelay[10] =  { 200, 100, 50, 30, 20, 30, 25, 20, 30, 20 };
     const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
-    d->scrollTimer->changeInterval( scrollDelay[ index ] );
+    d->autoScrollTimer->changeInterval( scrollDelay[ index ] );
     scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
 }
 

@@ -63,9 +63,6 @@ class PageView : public QScrollView, public DocumentObserver
         void notifyContentsCleared( int changedFlags );
         bool canUnloadPixmap( int pageNum );
 
-    public slots:
-        void slotSetMouseDraw();
-
     signals:
         void urlDropped( const KURL& );
         void rightClick( const KPDFPage *, const QPoint & );
@@ -114,12 +111,14 @@ class PageView : public QScrollView, public DocumentObserver
         void slotRelayoutPages();
         // activated either directly or via the contentsMoving(int,int) signal
         void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
+        // activated by the viewport move timer
+        void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)
         void slotAutoScoll();
         // type-ahead find timeout
         void findTimeout();
 
-        // connected to local actions
+        // connected to local actions (toolbar, menu, ..)
         void slotZoom();
         void slotZoomIn();
         void slotZoomOut();
@@ -131,6 +130,7 @@ class PageView : public QScrollView, public DocumentObserver
         void slotSetMouseNormal();
         void slotSetMouseZoom();
         void slotSetMouseSelect();
+        void slotSetMouseDraw();
         void slotScrollUp();
         void slotScrollDown();
 };

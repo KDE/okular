@@ -46,8 +46,8 @@ extern	struct WindowRec mane, alt, currwin;
 	Boolean	useGS;
 	Boolean	_use_grey;
 
-extern char		*prog;
-extern char *		dvi_name;
+extern char *           prog;
+extern char *	        dvi_name;
 extern FILE *		dvi_file;
 extern int 		n_files_left;
 extern int 		min_x;
@@ -390,7 +390,7 @@ void dviWindow::resizeEvent ( QResizeEvent *)
 
 void dviWindow::initDVI()
 {
-	prog = "kdvi";
+        prog = const_cast<char*>("kdvi");
 	n_files_left = OPEN_MAX;
 	kpse_set_progname ("xdvi");
 	kpse_init_prog ("XDVI", basedpi, MetafontMode.data(), makepk,"cmr10");
@@ -492,7 +492,8 @@ bool dviWindow::correctDVI()
 	if ( n < 134 )	// Too short for a dvi file
 		return FALSE;
 	f.at( n-4 );
-	char test[4], trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
+	char test[4];
+	char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
 	if ( f.readBlock( test, 4 )<4 || strncmp( test, trailer, 4 ) )
 		return FALSE;
 	// We suppose now that the dvi file is complete	and OK

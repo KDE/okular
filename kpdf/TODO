@@ -13,7 +13,6 @@ Things to do in order to merge in HEAD (first item has highest priority):
    everywhere, even in widgets that get hidden. Need to solve this on its roots, a paintEvent patch
    solves this but is a bad way to solve this.
 -> minimize PageView's reLayout and requestPixmaps on changes
--> use a KConfigXT settings framework {general, [reading aids,] ...}
 -> this may be postponed after merge: implementing async document generator using Albert's generator thread
 -> pageview: fix keys/mouse navigation in both single/continous modes [60% done]
 -> new icons (contest at kde-look that will end in 2004-Oct-XX)
@@ -24,7 +23,6 @@ More items (first items will enter 'In progress list' first):
 *THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
--> reading aids (accessibility): paper color: select, mode: normal, invert, contrast, recolor bg/text, enhance: links, ...
 -> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
@@ -41,10 +39,12 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
+-> ADD: reading aids (accessibility) [settings config done while now]
 -> ADD: click over image allows "save image" (and display rect around image too) [50% done]
 -> ADD: viewport changes the right way when clicking links [30% done]
 
 Done (newest feature comes firts):
+-> ADD: KConfigXT settings framework and Accessibility config (acc. code mostly not done)
 -> FIX: workaround for scrollview bug 1/2 (painting hidden widgets under certain circumstances)
 -> ADD: zoom into a rect defined by mouse (aka zoom to window)
 -> FIX: sheet rotation in landscape case

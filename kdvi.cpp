@@ -501,7 +501,10 @@ void kdvi::openFile( QString name)
 
 	dviwin->setFile( name );
 	dviwin->repaint();
-	setCaption( QString()+kapp->caption()+": "+name );
+
+	// Set the window title. Show only the filename, not the path.
+	setCaption(name.mid(name.findRev('/')+1));
+
 	setPage();
 	shrinkChanged( dviwin->shrink() );
 	if (-1==recent.find(name))

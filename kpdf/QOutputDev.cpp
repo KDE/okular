@@ -872,7 +872,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 
 	uchar **scanlines = img. jumpTable ( );
 
- 	if ( ctm [3] < 0 )
+ 	if ( ctm [3] <= 0 )
  		scanlines += ( height - 1 );
 
 	for ( int y = 0; y < height; y++ ) {
@@ -899,7 +899,7 @@ void QOutputDev::drawImage(GfxState *state, Object */*ref*/, Stream *str, int wi
 
 			ctm [0] < 0 ? scanline-- : scanline++;
 		}
-		ctm [3] > 0 ? scanlines++ : scanlines--;
+		ctm [3] <= 0 ? scanlines-- : scanlines++;
 
 	}
 

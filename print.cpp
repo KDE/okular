@@ -119,11 +119,11 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 		texfont[i] = fontdeflen[i] = fontseen[i] = 0;
 */
 	if (!in.open(IO_ReadOnly))
-		QMessageBox::message( i18n("Warning"),
+		QMessageBox::warning( 0L, i18n("Warning"),
 			i18n("Cannot open dvi file!"),
 			i18n("OK") );
 	if (!out.open(IO_WriteOnly))
-		QMessageBox::message( i18n("Warning"),
+		QMessageBox::warning( 0L, i18n("Warning"),
 			i18n("Cannot open output dvi file!"),
 			i18n("OK") );;
 	in.readBlock( buf, 14 );
@@ -135,7 +135,7 @@ void DVIFile::dviCopy(QString ifile, QString ofile, QStrList *pagelist,
 	while ( ( c = in.getch() ) == 223 ) // trailer
 		in.at( --p );
 	if ( c != 2 )
-		QMessageBox::message( i18n("Warning"),
+		QMessageBox::warning( 0L, i18n("Warning"),
 			i18n("Cannot handle this dvi version!"),
 			i18n("OK") );;
 	int post_post = p - 5;
@@ -240,7 +240,7 @@ void print::okPressed()
 			    t = QString(rangeTo->text()).toInt();
 			if ( f < 1 || f > totalpages || t < f || t > totalpages )
 			{
-				QMessageBox::message( i18n("Warning"),
+				QMessageBox::warning( 0L, i18n("Warning"),
 					i18n("Invalid page range!"),
 					i18n("OK") );
 				return;

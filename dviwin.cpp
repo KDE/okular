@@ -362,7 +362,7 @@ bool dviWindow::setFile( const QString & fname )
       delete pixmap;
     pixmap = 0;
     resize(0, 0);
-    return;
+    return true; // added "true" to fix compilation. Is this correct ? (David)
   }
 
   // Make sure the file actually exists.

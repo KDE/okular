@@ -1,6 +1,7 @@
 
-#define DEBUG 0
+//#define DEBUG 0
 
+#include <klocale.h>
 #include <malloc.h>
 #include <kdebug.h>
 
@@ -134,19 +135,19 @@ unsigned char font::load_font(void)
   flags |= font::FONT_LOADED;
   file = font_open(fontname, &font_found, (double)fsize, &size_found, &filename);
   if (file == NULL) {
-    kdError() << "Can't find font " << fontname << "." << endl;
+    kdError() << i18n("Can't find font ") << fontname << "." << endl;
     return True;
   }
   --n_files_left;
   if (font_found != NULL) {
-    kdError() << "Can't find font " << fontname << "; using " << font_found << " instead at " << dpi << " dpi." << endl;
+    kdError() << QString(i18n("Can't find font %1; using %2 instead at %3 dpi.")).arg(fontname).arg(font_found).arg(dpi) << endl;
     free(fontname);
     fontname = font_found;
   }
   else
     if (!kpse_bitmap_tolerance ((double) size_found, fsize))
-      kdError() << "Can't find font " << fontname << " at " << dpi << " dpi; using " 
-		<< size_found << " dpi instead." << endl;
+      kdError() << i18n("Can't find font ") << fontname << i18n(" at ") << dpi << i18n(" dpi; using ") 
+		<< size_found << i18n(" dpi instead.") << endl;
   fsize      = size_found;
   timestamp  = ++current_timestamp;
   set_char_p = &dviWindow::set_char;
@@ -156,12 +157,12 @@ unsigned char font::load_font(void)
     read_PK_index();
   else
     if (magic == GF_MAGIC)
-      oops(QString("The GF format for font file %1 is no longer supported").arg(filename) );
+      oops(QString(i18n("The GF format for font file %1 is no longer supported")).arg(filename) );
     else
       if (magic == VF_MAGIC)
 	read_VF_index();
       else
-	oops(QString("Cannot recognize format for font file %1").arg(filename) );
+	oops(QString(i18n("Cannot recognize format for font file %1")).arg(filename) );
 
   return False;
 }
@@ -201,7 +202,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
   struct glyph *g = glyphtable+ch;
   if (g->bitmap.bits == NULL) {
     if (g->addr == 0) {
-      kdError() << "Character " << ch << " not defined in font " << fontname << endl;
+      kdError() << i18n("Character ") << ch << i18n(" not defined in font ") << fontname << endl;
       g->addr = -1;
       return NULL;
     }
@@ -211,7 +212,7 @@ struct glyph *font::glyphptr(unsigned int ch) {
     if (file == NULL) {
       file = xfopen(filename, OPEN_MODE);
       if (file == NULL) {
-	oops(QString("Font file disappeared: %1").arg(filename) );
+	oops(QString(i18n("Font file disappeared: %1")).arg(filename) );
 	return NULL;
       }
     }

@@ -11,6 +11,7 @@
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include "dviwin.h"
 
@@ -89,7 +90,8 @@ static void parse_special_argument(QString strg, const char *argument_name, int 
     if (OK)
       *variable = tmp_int;
     else
-      kdError() << "Malformed urx in special" << endl;
+      // Maybe we should open a dialog here.
+      kdError() << i18n("Malformed parameter in the epsf special command.") << endl;
   }
 }
 
@@ -183,7 +185,7 @@ void dviWindow::epsf_special(QString cp)
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1, &bbox);
       else
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), 
-				  QString("File not found:\n %1").arg(EPSfilename), -1, &bbox);
+				  QString(i18n("File not found:\n %1")).arg(EPSfilename), -1, &bbox);
     }
   }
   return;
@@ -267,6 +269,6 @@ void dviWindow::applicationDoSpecial(char *cp)
     return;
   }
 
-  kdError() << "special \"" << cp << "\" not implemented" << endl;
+  kdError() << i18n("The special command\"") << cp << i18n("\" is not implemented.") << endl;
   return;
 }

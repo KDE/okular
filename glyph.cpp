@@ -45,7 +45,7 @@ QPixmap glyph::shrunkCharacter()
     // coordinates by the shrink factor, then the result would look
     // quite ugly: due to the ineviatable rounding errors in the
     // integer arithmetic, the characters would be displaced by up to
-    // a point. That doesn't sound much, but on low-resolution
+    // a pixel. That doesn't sound much, but on low-resolution
     // devices, such as a notebook screen, the effect would be a
     // "dancing line" of characters, which looks really bad.
     //

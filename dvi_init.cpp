@@ -244,9 +244,9 @@ void dvifile::process_preamble(void)
   unsigned char   k;
 
   if (one(file) != PRE)
-    dvi_oops("DVI file doesn't start with preamble");
+    dvi_oops(i18n("DVI file doesn't start with preamble."));
   if (one(file) != 2)
-    dvi_oops("Wrong version of DVI output for this program");
+    dvi_oops(i18n("Wrong version of DVI output for this program."));
 
   numerator     = four(file);
   denominator   = four(file);
@@ -287,7 +287,7 @@ void dvifile::find_postamble(void)
     if (p <= p1 - 4)
       break;	/* found 4 TRAILER bytes */
     if (p <= temp)
-      dvi_oops("DVI file corrupted");
+      dvi_oops(i18n("DVI file corrupted"));
   }
   pos += p - temp;
   byte = *p;
@@ -296,7 +296,7 @@ void dvifile::find_postamble(void)
     byte = one(file);
   }
   if (byte != 2)
-    dvi_oops("Wrong version of DVI output for this program");
+    dvi_oops(i18n("Wrong version of DVI output for this program"));
   Fseek(file, pos - 4, 0);
   Fseek(file, sfour(file), 0);
 }
@@ -315,12 +315,12 @@ void dvifile::read_postamble(void)
   struct font	**fontpp;
 
   if (one(file) != POST)
-    dvi_oops("Postamble doesn't begin with POST");
+    dvi_oops(i18n("Postamble doesn't begin with POST"));
   last_page_offset = four(file);
   if (numerator != four(file)
       || denominator != four(file)
       || magnification != four(file))
-    dvi_oops("Postamble doesn't match preamble");
+    dvi_oops(i18n("Postamble doesn't match preamble"));
   /* read largest box height and width */
   int unshrunk_page_h = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
   //  if (unshrunk_page_h < unshrunk_paper_h)
@@ -334,9 +334,9 @@ void dvifile::read_postamble(void)
   while ((cmnd = one(file)) >= FNTDEF1 && cmnd <= FNTDEF4)
     (void) define_font(file, cmnd, (struct font *) NULL, &tn_table);
   if (cmnd != POSTPOST)
-    dvi_oops("Non-fntdef command found in postamble");
+    dvi_oops(i18n("Non-fntdef command found in postamble"));
   if (font_not_found)
-    dvi_oops("Not all pixel files were found");
+    dvi_oops(i18n("Not all pixel files were found"));
 
   // free up fonts no longer in use
   fontpp = &font_head;

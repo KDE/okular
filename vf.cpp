@@ -25,6 +25,7 @@
 
 
 #include <kdebug.h>
+#include <klocale.h>
 #include <stdio.h>
 
 #include "dviwin.h"
@@ -80,8 +81,8 @@ void font::read_VF_index(void)
   long file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
-    kdError() << "Checksum mismatch (dvi = " << checksum << "u, vf = " << file_checksum << 
-      "u) in font file " << filename << endl;
+    kdError() << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum << 
+      "u)" << i18n(" in font file ") << filename << endl;
   (void) four(VF_file);		/* skip design size */
 
   // Read the fonts.
@@ -109,7 +110,8 @@ void font::read_VF_index(void)
       cc = four(VF_file);
       width = four(VF_file);
       if (cc >= 256) {
-	kdError() << "Virtual character " << cc << " in font " << fontname << " ignored." << endl;
+	kdError() << i18n("Virtual character ") << cc << i18n(" in font ") << 
+	  fontname << i18n(" ignored.") << endl;
 	Fseek(VF_file, (long) len, 1);
 	continue;
       }
@@ -138,7 +140,7 @@ void font::read_VF_index(void)
     }
   }
   if (cmnd != POST)
-    oops(QString("Wrong command byte found in VF macro list: %1").arg(cmnd));
+    oops(QString(i18n("Wrong command byte found in VF macro list: %1")).arg(cmnd));
 	
   Fclose (VF_file);
   n_files_left++;

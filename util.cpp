@@ -78,7 +78,7 @@ extern "C" {
 
 void oops(QString message)
 {
-  kdError() << "Fatal Error! " << message << endl;
+  kdError() << i18n("Fatal Error! ") << message << endl;
 
   KMessageBox::error( NULL,
 		      i18n("Fatal Error!\n\n") +
@@ -106,7 +106,7 @@ char * xmalloc(unsigned size, const char *why)
   char *mem = (char *)malloc(size ? size : 1);
   
   if (mem == NULL)
-    oops(QString("Cannot allocate %1 bytes for %2.").arg(size).arg(why) );
+    oops(QString(i18n("Cannot allocate %1 bytes for %2.")).arg(size).arg(why) );
   return mem;
 }
 
@@ -141,7 +141,7 @@ static	void close_a_file()
       oldest = fontp->timestamp;
     }
   if (f == NULL)
-    oops("Can't find an open pixel file to close");
+    oops(i18n("Can't find an open pixel file to close."));
   Fclose(f->file);
   f->file = NULL;
   ++n_files_left;

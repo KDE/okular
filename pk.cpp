@@ -52,6 +52,8 @@
 
 #include <kdebug.h>
 
+#include <klocale.h>
+
 #include "font.h"
 #include "dviwin.h"
 
@@ -174,7 +176,7 @@ void font::PK_skip_specials(void)
       case PK_NOOP :
 	break;
       default :
-	oops(QString("Unexpected %1 in PK file %2").arg(PK_flag_byte).arg(filename) );
+	oops(QString(i18n("Unexpected %1 in PK file %2")).arg(PK_flag_byte).arg(filename) );
 	break;
       }
     }
@@ -238,7 +240,7 @@ void font::read_PK_char(unsigned int ch)
     w = num(fp, n);
     h = num(fp, n);
     if (w > 0x7fff || h > 0x7fff)
-      oops(QString("Character %1 too large in file %2").arg(ch).arg(fontname));
+      oops(QString(i18n("The character %1 is too large in file %2")).arg(ch).arg(fontname));
     g->bitmap.w = w;
     g->bitmap.h = h;
   }
@@ -346,9 +348,9 @@ void font::read_PK_char(unsigned int ch)
       paint_switch = 1 - paint_switch;
     }
     if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
-      oops(QString("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(fontname));
+      oops(QString(i18n("Wrong number of bits stored:  char. %1, font %2")).arg(ch).arg(fontname));
     if (rows_left != 0 || h_bit != g->bitmap.w)
-      oops(QString("Bad pk file (%1), too many bits").arg(fontname));
+      oops(QString(i18n("Bad pk file (%1), too many bits")).arg(fontname));
   }
 }
 
@@ -363,13 +365,13 @@ void font::read_PK_index(void)
   (void) four(file);		/* skip design size */
   long file_checksum = four(file);
   if (checksum && checksum && file_checksum != checksum)
-    kdError(1) << "Checksum mismatch (dvi = " << checksum << "pk = " << file_checksum << 
-      ") in font file " << filename << endl;
+    kdError(1) << i18n("Checksum mismatch") << " (dvi = " << checksum << "pk = " << file_checksum << 
+      ") "<< i18n("in font file ") << filename << endl;
 
   int hppp = sfour(file);
   int vppp = sfour(file);
   if (hppp != vppp)
-    kdDebug() << "Font has non-square aspect ratio " << vppp << ":" << hppp << endl;
+    kdDebug() << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp << endl;
   /*
    * Prepare glyph array.
    */

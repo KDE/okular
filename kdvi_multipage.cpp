@@ -1,5 +1,3 @@
-//i18n and Debug ok.
-
 #include <qobject.h>
 #include <qlabel.h>
 #include <qstring.h>

@@ -8,9 +8,10 @@
 #include <kapplication.h>
 #include <kparts/mainwindow.h>
 
+
 namespace KPDF
 {
-
+    class Part;
   /**
    * This is the application "Shell".  It has a menubar, toolbar, and
    * statusbar but relies on the "Part" to do all the real work.
@@ -49,6 +50,7 @@ namespace KPDF
     void readProperties(KConfig*);
     void readSettings();
     void writeSettings();
+    void setFullScreen( bool );
 
   private slots:
     void fileOpen();
@@ -59,6 +61,7 @@ namespace KPDF
     void slotQuit();
 
     void applyNewToolbarConfig();
+      void slotToggleFullScreen();
   public slots:
       void openURL( const KURL & url );
 
@@ -67,8 +70,10 @@ namespace KPDF
     void setupActions();
 
   private:
-    KParts::ReadOnlyPart* m_part;
+      KParts::ReadOnlyPart* m_part;
       KRecentFilesAction* recent;
+      KToggleAction* m_fullScreenAction;
+      bool m_isFullScreen;
   };
 
 }

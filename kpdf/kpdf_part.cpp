@@ -119,6 +119,15 @@ Part::~Part()
     writeSettings();
 }
 
+void Part::setFullScreen( bool fs )
+{
+    if ( !fs )
+        pdfpartview->pagesListBox->show();
+    else
+        pdfpartview->pagesListBox->hide();
+}
+
+
 void Part::updateActionPage()
 {
     if ( m_doc )

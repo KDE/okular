@@ -5,6 +5,7 @@
  */
 #include "kpdf_shell.h"
 #include "kpdf_shell.moc"
+#include "kpdf_part.h"
 
 #include <kaction.h>
 #include <kconfig.h>
@@ -18,11 +19,15 @@
 #include <kurl.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmainwindow.h>
+#include <kmenubar.h>
+#include <kparts/componentfactory.h>
 
 using namespace KPDF;
 
 Shell::Shell()
-  : KParts::MainWindow(0, "KPDF::Shell")
+  : KParts::MainWindow(0, "KPDF::Shell"),
+    m_isFullScreen( false )
 {
   // set the shell's ui resource file
   setXMLFile("kpdf_shell.rc");
@@ -40,12 +45,10 @@ Shell::Shell()
     // our hands on it
     m_part = static_cast<KParts::ReadOnlyPart*>(
                 factory->create(this, "kpdf_part", "KParts::ReadOnlyPart"));
-
     if (m_part)
     {
       // tell the KParts::MainWindow that this is indeed the main widget
       setCentralWidget(m_part->widget());
-
       // and integrate the part's GUI with the shell's
       createGUI(m_part);
     }
@@ -60,6 +63,7 @@ Shell::Shell()
     // next time we enter the event loop...
     return;
   }
+
   readSettings();
 }
 
@@ -78,12 +82,24 @@ void Shell::openURL( const KURL & url )
 void Shell::readSettings()
 {
     recent->loadEntries( KGlobal::config() );
+    KGlobal::config()->setDesktopGroup();
+    bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
+    m_fullScreenAction->setChecked( fullScreen );
+    setFullScreen( fullScreen );
 }
 
 void Shell::writeSettings()
 {
     saveMainWindowSettings(KGlobal::config(), "MainWindow");
     recent->saveEntries( KGlobal::config() );
+    KGlobal::config()->setDesktopGroup();
+    KGlobal::config()->writeEntry( "FullScreen", m_isFullScreen );
+    KGlobal::config()->sync();
+}
+
+void Shell::slotToggleFullScreen()
+{
+    setFullScreen(m_fullScreenAction->isChecked());
 }
 
 
@@ -101,6 +117,17 @@ Shell::setupActions()
 
   KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
+
+#if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
+    createStandardStatusBarAction();
+#endif
+    setAutoSaveSettings();
+    setStandardToolBarMenuEnabled(true);
+#if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
+    m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotToggleFullScreen() ), actionCollection() );
+#else
+    m_fullScreenAction = new KToggleAction( this, SLOT( slotToggleFullScreen() ) );
+#endif
 }
 
   void
@@ -174,4 +201,40 @@ void Shell::slotQuit()
 {
     kapp->closeAllWindows();
 }
+
+void Shell::setFullScreen( bool useFullScreen )
+{
+    m_isFullScreen = useFullScreen;
+
+    if( m_isFullScreen )
+    {
+	menuBar()->hide();
+	statusBar()->hide();
+	toolBar()->hide();
+        //todo fixme
+	//m_part->setFullScreen( true );
+	showFullScreen();
+#if 0
+	kapp->installEventFilter( m_fsFilter );
+	if ( m_gvpart->document()->isOpen() )
+		slotFitToPage();
+#endif
+    }
+    else
+    {
+	//kapp->removeEventFilter( m_fsFilter );
+//todo fixme
+//m_part->setFullScreen( false );
+	menuBar()->show();
+#if KDE_VERSION >= KDE_MAKE_VERSION(3,1,90)
+	KToggleAction *statusbarAction = dynamic_cast<KToggleAction *>(actionCollection()->action(KStdAction::name(KStdAction::ShowStatusbar)));
+	Q_ASSERT( statusbarAction );
+	if (statusbarAction->isChecked()) statusBar()->show();
+#endif
+	toolBar()->show();
+	showNormal();
+    }
+}
+
+
 // vim:ts=2:sw=2:tw=78:et

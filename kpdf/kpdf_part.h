@@ -70,6 +70,7 @@ namespace KPDF
     void displayPage(int pageNumber, float zoomFactor = 1.0);
     void displayDestination(LinkDest*);
       void updateActionPage();
+      void setFullScreen( bool fs );
   protected:
     /**
      * This must be implemented by each part

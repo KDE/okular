@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="7">
+<kpartgui name="kpdf_part" version="8">
 <MenuBar>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>

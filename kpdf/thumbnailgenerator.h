@@ -10,7 +10,7 @@
 #ifndef THUMBNAILGENERATOR_H
 #define THUMBNAILGENERATOR_H
 
-#include <qthread.h> 
+#include <qthread.h>
 
 #include "QOutputDevPixmap.h"
 
@@ -21,19 +21,20 @@ class PDFDoc;
 class ThumbnailGenerator : public QThread
 {
 	public:
-		ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o);
-		
+		ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o, const QSize &size);
+
 		int getPage() const;
 
 	protected:
 		void run();
-	
+
 	private:
 		PDFDoc *m_doc;
 		QMutex *m_docMutex;
 		int m_page;
 		QObject *m_o;
 		double m_ppp;
+		QSize m_size;
 };
 
 #endif

@@ -11,12 +11,12 @@
 #include <qevent.h>
 #include <qimage.h>
 #include <qmutex.h>
- 
+
 #include "PDFDoc.h"
 
 #include "thumbnailgenerator.h"
 
-ThumbnailGenerator::ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o) : m_doc(doc), m_docMutex(docMutex), m_page(page), m_o(o), m_ppp(ppp)
+ThumbnailGenerator::ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o, const QSize &size) : m_doc(doc), m_docMutex(docMutex), m_page(page), m_o(o), m_ppp(ppp), m_size(size)
 {
 }
 
@@ -29,7 +29,7 @@ void ThumbnailGenerator::run()
 {
 	QCustomEvent *ce;
 	QImage *i;
-	
+
 	SplashColor paperColor;
 	paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
 	QOutputDevPixmap odev(paperColor);
@@ -38,7 +38,7 @@ void ThumbnailGenerator::run()
 	m_doc -> displayPage(&odev, m_page, m_ppp, m_ppp, 0, true, false);
 	m_docMutex->unlock();
 	ce = new QCustomEvent(65432);
-	i = new QImage(odev.getImage());
+	i = new QImage(odev.getImage().smoothScale(m_size));
 	i -> detach();
 	ce -> setData(i);
 	QApplication::postEvent(m_o, ce);

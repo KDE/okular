@@ -68,7 +68,7 @@ void ThumbnailList::generateNextThumbnail()
         m_tg->wait();
         delete m_tg;
     }
-    m_tg = new ThumbnailGenerator(m_doc, m_docMutex, m_nextThumbnail, QPaintDevice::x11AppDpiX(), this);
+    m_tg = new ThumbnailGenerator(m_doc, m_docMutex, m_nextThumbnail, QPaintDevice::x11AppDpiX(), this, QSize(visibleWidth(), (int)(visibleWidth()*m_ar)));
     m_tg->start();
 }
 

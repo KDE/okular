@@ -402,6 +402,7 @@ Part::openFile()
   {
     // TODO use a qvaluelist<int> to pass aspect ratio?
     // TODO move it to inside pdfpartview or even the thumbnail list itself?
+    // TODO take page rotation into acount for calculating aspect ratio
     pdfpartview->setPages(m_doc->getNumPages(), m_doc->getPageHeight(1)/m_doc->getPageWidth(1));
     pdfpartview->generateThumbnails(m_doc);
 

@@ -26,8 +26,9 @@ Thumbnail::Thumbnail(QWidget *parent, const QString &text, const QColor &color, 
 
 void Thumbnail::setImage(const QImage *thumbnail)
 {
-    // TODO i am almost sure this can be done inside the thumbnailgenerator thread
-    m_original = thumbnail->smoothScale(m_thumbnailW->size());
+    // Happens for the very first thumbnail on scrollbar appear
+    if (thumbnail->size() != m_thumbnailW->size()) m_original = thumbnail->smoothScale(m_thumbnailW->size());
+    else m_original = *thumbnail;
     m_thumbnailW->setPaletteBackgroundPixmap(m_original);
 }
 

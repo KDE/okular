@@ -19,6 +19,12 @@ if test -n "$FREETYPE_CONFIG"; then
     LIBFREETYPE_RPATH=`echo $LIBFREETYPE_RPATH | sed -e "s/-L/-R/g"`
     LIBFREETYPE_CFLAGS="`$FREETYPE_CONFIG --cflags`"
     AC_DEFINE_UNQUOTED(HAVE_FREETYPE, 1, [Defines if your system has the freetype library])
+    if test -n "$vers" && test "$vers" -le 9005003; then
+	    AC_DEFINE_UNQUOTED(HAVE_FREETYPE_217_OR_OLDER, 1, [Defines if your system has the freetype library 2.1.7 or older])
+    else
+	    AC_DEFINE_UNQUOTED(HAVE_FREETYPE_217_OR_OLDER, 0, [Defines if your system has the freetype library 2.1.7 or older])
+    fi
+	    
   else
     AC_MSG_WARN([You need at least libfreetype 2.0.5])
   fi

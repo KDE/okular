@@ -67,6 +67,6 @@ Exec=kpdf %i %m -caption "%c"
 Icon=kpdf
 Type=Application
 DocPath=kpdf/index.html
-InitialPreference=4
+InitialPreference=7
 Categories=Qt;KDE;Graphics;PDFViewer;
 

@@ -212,10 +212,10 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 bool PDFGenerator::isAllowed( int permissions )
 {
     bool b = true;
-    if (permissions & Modify) b = b && pdfdoc->okToChange();
-    if (permissions & Copy) b = b && pdfdoc->okToCopy();
-    if (permissions & Print) b = b && pdfdoc->okToPrint();
-    if (permissions & AddNotes) b = b && pdfdoc->okToAddNotes();
+    if (permissions & KPDFDocument::AllowModify) b = b && pdfdoc->okToChange();
+    if (permissions & KPDFDocument::AllowCopy) b = b && pdfdoc->okToCopy();
+    if (permissions & KPDFDocument::AllowPrint) b = b && pdfdoc->okToPrint();
+    if (permissions & KPDFDocument::AllowNotes) b = b && pdfdoc->okToAddNotes();
     return b;
 }
 

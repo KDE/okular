@@ -51,8 +51,7 @@ class Generator : public QObject
         virtual const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
 
         // DRM handling
-        enum Permissions { Modify = 1, Copy = 2, Print = 4, AddNotes = 8 };
-        virtual bool isAllowed( int /*permissions*/ ) { return true; }
+        virtual bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
 
         // page contents generation
         virtual bool canGeneratePixmap() = 0;

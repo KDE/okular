@@ -60,6 +60,10 @@ class KPDFDocument : public QObject
         void removeObserver( DocumentObserver * pObserver );
         void reparseConfig();
 
+        // enum definitions
+        enum Permission { AllowModify = 1, AllowCopy = 2, AllowPrint = 4, AllowNotes = 8 };
+        enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleLike };
+
         // query methods (const ones)
         bool isOpened() const;
         const DocumentInfo * documentInfo() const;
@@ -68,7 +72,7 @@ class KPDFDocument : public QObject
         const DocumentViewport & viewport() const;
         uint currentPage() const;
         uint pages() const;
-        bool okToPrint() const;
+        bool isAllowed( int /*Document::Permisison(s)*/ ) const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
@@ -80,13 +84,10 @@ class KPDFDocument : public QObject
         void setNextViewport();
         void requestPixmaps( const QValueList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
-
-        enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleLike };
         bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
         bool continueSearch( int searchID );
         void resetSearch( int searchID );
-
         void toggleBookmark( int page );
         void processLink( const KPDFLink * link );
         bool print( KPrinter &printer );

@@ -361,9 +361,9 @@ uint KPDFDocument::pages() const
     return pages_vector.size();
 }
 
-bool KPDFDocument::okToPrint() const
+bool KPDFDocument::isAllowed( int flags ) const
 {
-    return generator ? generator->isAllowed( Generator::Print ) : false;
+    return generator ? generator->isAllowed( flags ) : false;
 }
 
 bool KPDFDocument::historyAtBegin() const

@@ -761,7 +761,7 @@ void Part::slotPrint()
 
 void Part::doPrint(KPrinter &printer)
 {
-    if (!m_document->okToPrint())
+    if (!m_document->isAllowed(KPDFDocument::AllowPrint))
     {
         KMessageBox::error(widget(), i18n("Printing this document is not allowed."));
         return;

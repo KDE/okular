@@ -81,7 +81,7 @@ Shell::~Shell()
 
 void Shell::openURL( const KURL & url )
 {
-    if ( m_part->openURL( url ) ) recent->addURL (url);
+    if ( m_part && m_part->openURL( url ) ) recent->addURL (url);
 }
 
 

@@ -67,7 +67,7 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   EditorDescriptions += i18n("Kate does not jump to line");
   
   EditorNames        += "NEdit";
-  EditorCommands     += "ncl -noask -line %l %f";
+  EditorCommands     += "ncl -noask -line %l %f || nc -noask -line %l %f";
   EditorDescriptions += i18n("NEdit perfectly supports inverse search.");
   
   EditorNames        += "VIM - Vi IMproved / GUI";

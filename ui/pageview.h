@@ -94,7 +94,7 @@ class PageView : public QScrollView, public DocumentObserver
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
-        void selectionStart( int x, int y, bool aboveAll = false );
+        void selectionStart( int x, int y, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( int x, int y );
         void selectionClear();
         // update internal zoom values and end in a slotRelayoutPages();

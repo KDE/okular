@@ -30,6 +30,8 @@
 #include <qtoolbox.h>
 #include <qpushbutton.h>
 #include <dcopobject.h>
+#include <dcopclient.h>
+#include <kapplication.h>
 #include <kaction.h>
 #include <kdirwatch.h>
 #include <kinstance.h>
@@ -241,6 +243,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
 	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+
+	// [SPEECH] check for KTTSD presence and usability
+	Settings::setUseKTTSD( true );
+	DCOPClient * client = DCOPClient::mainClient();
+	client->attach();
+	if ( !client->isApplicationRegistered("kttsd") )
+		if ( KApplication::startServiceByName( "KTTSD" ) )
+			Settings::setUseKTTSD( false );
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");

@@ -23,6 +23,7 @@
 #include <qpushbutton.h>
 #include <qapplication.h>
 #include <qclipboard.h>
+#include <dcopclient.h>
 #include <kiconloader.h>
 #include <kurldrag.h>
 #include <kaction.h>
@@ -65,10 +66,11 @@ public:
     float zoomFactor;
     PageView::MouseMode mouseMode;
     QPoint mouseGrabPos;
-    QPoint mouseStartPos;
+    QPoint mousePressPos;
     int mouseMidStartY;
     bool mouseOnRect;
     QRect mouseSelectionRect;
+    QColor selectionRectColor;
 
     // other stuff
     QTimer * delayTimer;
@@ -397,8 +399,8 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     QRect selectionRectInternal = selectionRect;
     selectionRectInternal.addCoords( 1, 1, -1, -1 );
     // color for blending
-    QColor selBlendColor = (selectionRect.width() > 20 || selectionRect.height() > 20) ?
-                           palette().active().highlight() : Qt::red;
+    QColor selBlendColor = (selectionRect.width() > 8 || selectionRect.height() > 8) ?
+                           d->selectionRectColor : Qt::red;
 
     // subdivide region into rects
     QMemArray<QRect> allRects = pe->region().rects();
@@ -668,6 +670,10 @@ void PageView::findAhead(bool increase)
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
+    // don't perform any mouse action when no document is shown
+    if ( d->items.isEmpty() )
+        return;
+
     // if holding mouse mid button, perform zoom
     if ( (e->state() & MidButton) && d->mouseMidStartY > 0 )
     {
@@ -680,7 +686,8 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         return;
     }
 
-    bool leftButton = e->state() & LeftButton;
+    bool leftButton = e->state() & LeftButton,
+         rightButton = e->state() & RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -701,8 +708,24 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                     }
                 }
             }
-            else // only hovering the page
+            else if ( rightButton && !d->mousePressPos.isNull() )
             {
+                // if mouse moves 5 px away from the press point, switch to 'selection'
+                int deltaX = d->mousePressPos.x() - e->globalPos().x(),
+                    deltaY = d->mousePressPos.y() - e->globalPos().y();
+                if ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 )
+                {
+                    d->aPrevAction = d->aMouseNormal;
+                    d->aMouseSelect->activate();
+                    QColor selColor = palette().active().highlight().light( 120 );
+                    selectionStart( e->x() + deltaX, e->y() + deltaY, selColor, false );
+                    selectionEndPoint( e->x(), e->y() );
+                    break;
+                }
+            }
+            else
+            {
+                // only hovering the page, so update the cursor
                 updateCursor( e->pos() );
             }
             break;
@@ -721,51 +744,68 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 
 void PageView::contentsMousePressEvent( QMouseEvent * e )
 {
+    // don't perform any mouse action when no document is shown
+    if ( d->items.isEmpty() )
+        return;
+
+    // if performing a selection or dyn zooming, disable mouse press
+    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 )
+        return;
+
     // if pressing mid mouse button while not doing other things, begin 'comtinous zoom' mode
-    if ( (e->button() & MidButton) && d->mouseSelectionRect.isNull() )
+    if ( e->button() & MidButton )
     {
         d->mouseMidStartY = e->globalPos().y();
         setCursor( sizeVerCursor );
         return;
     }
 
+    // update press / 'start drag' mouse position
+    d->mousePressPos = e->globalPos();
+
     // handle mode dependant mouse press actions
-    bool leftButton = e->button() & LeftButton;
+    bool leftButton = e->button() & LeftButton,
+         rightButton = e->button() & RightButton;
     switch ( d->mouseMode )
     {
-        case MouseNormal:    // drag start / click / link following
+        case MouseNormal:   // drag start / click / link following
             if ( leftButton )
             {
-                d->mouseStartPos = e->globalPos();
-                d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mouseStartPos;
+                d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
                 if ( !d->mouseOnRect )
                     setCursor( sizeAllCursor );
             }
-            else if ( e->button() & RightButton )
+            break;
+
+        case MouseZoom:     // set first corner of the zoom rect
+            if ( leftButton )
+                selectionStart( e->x(), e->y(), palette().active().highlight(), false );
+            else if ( rightButton )
+                updateZoom( ZoomOut );
+            break;
+
+        case MouseSelect:   // set first corner of the selection rect
+            if ( leftButton )
             {
-                d->aPrevAction = d->aMouseNormal;
-                d->aMouseSelect->activate();
-                contentsMousePressEvent( e );
-                return;
+                QColor selColor = palette().active().highlight().light( 120 );
+                selectionStart( e->x(), e->y(), selColor, false );
             }
             break;
 
-        case MouseZoom:
-        case MouseSelect:
-            // set first corner of the selection rect
-            if ( (leftButton || d->aPrevAction) && d->mouseSelectionRect.isNull() )
-                selectionStart( e->x(), e->y(), false );
-            break;
-
-        case MouseEdit:      // ? place the beginning of [tool] ?
+        case MouseEdit:     // ..to do..
             break;
     }
 }
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
+    // don't perform any mouse action when no document is shown
+    if ( d->items.isEmpty() )
+        return;
+
     // handle mode indepent mid buttom zoom
-    if ( (e->state() & MidButton) && d->mouseMidStartY > 0 )
+    bool midButton = e->button() & MidButton;
+    if ( midButton && d->mouseMidStartY > 0 )
     {
         d->mouseMidStartY = -1;
         // while drag-zooming we could have gone over a link
@@ -777,16 +817,15 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
          rightButton = e->button() & RightButton;
     switch ( d->mouseMode )
     {
-        case MouseNormal:{  // do Follow Link or Display RMB
+        case MouseNormal:{
             // return the cursor to its normal state after dragging
-            if (cursor().shape() == Qt::SizeAllCursor) updateCursor( e->pos() );
+            if ( cursor().shape() == Qt::SizeAllCursor )
+                updateCursor( e->pos() );
 
             PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
 
-            // avoid the situation in where you click on a "row" that has a link but you are not over it
-            // drag a bit and move the mouse left to place it over the link while dragging
-            // release the button and BOOM you get the link followed
-            if ( leftButton && pageItem && d->mouseStartPos == e->globalPos())
+            // if the mouse has not moved since the press, that's a -click-
+            if ( leftButton && pageItem && d->mousePressPos == e->globalPos())
             {
                 const KPDFPageRect * rect = pageItem->page()->getRect(
                     e->x() - pageItem->geometry().left(),
@@ -794,38 +833,41 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 );
                 if ( rect )
                 {
-                    // release over a link
+                    // handle click over a link
                     if ( rect->pointerType() == KPDFPageRect::Link )
                     {
                         const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
                         d->document->processLink( link );
                     }
-                    // release over an image
+                    // handle click over an image
                     if ( rect->pointerType() == KPDFPageRect::Image )
                     {
                     }
                 }
                 else
                 {
-                    // mouse not moved since press, so we have a click. select the page.
+                    // if not on a rect, the click selects the page
                     d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
                 }
             }
             else if ( rightButton )
             {
-                if (pageItem) emit rightClick(pageItem->page(), e->globalPos());
-                else emit rightClick(0, e->globalPos());
+                // right click (if not within 5 px of the press point, the mode
+                // had been already changed to 'Selection' instead of 'Normal')
+                emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
             }
-            // reset start position
-            d->mouseStartPos = QPoint();
             }break;
 
-        case MouseZoom:     // do ZOOM
+        case MouseZoom:
+            // if a selection rect has been defined, zoom into it
             if ( leftButton && !d->mouseSelectionRect.isNull() )
             {
                 QRect selRect = d->mouseSelectionRect.normalize();
-                if ( selRect.width() < 4 || selRect.height() < 4 )
+                if ( selRect.width() <= 8 && selRect.height() <= 8 )
+                {
+                    selectionClear();
                     break;
+                }
 
                 // find out new zoom ratio and normalized view center (relative to the contentsRect)
                 double zoom = QMIN( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
@@ -847,25 +889,24 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
                 // hide message box and delete overlay window
                 selectionClear();
-                return;
-            }
-            // if in ZoomRect mode, right click zooms out
-            else if ( rightButton )
-            {
-                updateZoom( ZoomOut );
-                return;
             }
             break;
 
-        case MouseSelect:{  // do SELECT
+        case MouseSelect:{
+            // if a selection is defined, display a popup
             if ( (!leftButton && !d->aPrevAction) || (leftButton && d->aPrevAction) ||
                  d->mouseSelectionRect.isNull() )
                 break;
 
             QRect selectionRect = d->mouseSelectionRect.normalize();
-            if ( selectionRect.width() < 5 || selectionRect.height() < 5 )
+            if ( selectionRect.width() <= 8 && selectionRect.height() <= 8 )
             {
                 selectionClear();
+                if ( d->aPrevAction )
+                {
+                    d->aPrevAction->activate();
+                    d->aPrevAction = 0;
+                }
                 break;
             }
 
@@ -895,13 +936,15 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
+                if ( Settings::useKTTSD() )
+                    menu.insertItem( SmallIcon("kttsd"), i18n( "Speech" ), 2 );
             }
             menu.insertTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
-            menu.insertItem( SmallIcon("image"), i18n( "Copy to Clipboard" ), 2 );
-            menu.insertItem( SmallIcon("filesave"), i18n( "Save to File..." ), 3 );
+            menu.insertItem( SmallIcon("image"), i18n( "Copy to Clipboard" ), 3 );
+            menu.insertItem( SmallIcon("filesave"), i18n( "Save to File..." ), 4 );
             int choice = menu.exec( e->globalPos() );
             // IMAGE operation choosen
-            if ( choice > 1 )
+            if ( choice > 2 )
             {
                 // renders page into a pixmap
                 QPixmap copyPix( selectionRect.width(), selectionRect.height() );
@@ -909,7 +952,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
                 paintItems( &copyPainter, selectionRect );
 
-                if ( choice == 2 )
+                if ( choice == 3 )
                 {
                     // [2] copy pixmap to clipboard
                     QClipboard *cb = QApplication::clipboard();
@@ -918,7 +961,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         cb->setPixmap( copyPix, QClipboard::Selection );
                     d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard." ).arg( copyPix.width() ).arg( copyPix.height() ) );
                 }
-                else
+                else if ( choice == 4 )
                 {
                     // [3] save pixmap to file
                     QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
@@ -935,12 +978,31 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 }
             }
             // TEXT operation choosen
-            else if ( choice == 1 )
+            else
             {
-                QClipboard *cb = QApplication::clipboard();
-                cb->setText( selectedText, QClipboard::Clipboard );
-                if ( cb->supportsSelection() )
-                    cb->setText( selectedText, QClipboard::Selection );
+                if ( choice == 1 )
+                {
+                    // [1] copy text to clipboard
+                    QClipboard *cb = QApplication::clipboard();
+                    cb->setText( selectedText, QClipboard::Clipboard );
+                    if ( cb->supportsSelection() )
+                        cb->setText( selectedText, QClipboard::Selection );
+                }
+                else if ( choice == 2 )
+                {
+                    // [2] speech selection using KTTSD
+                    DCOPClient * client = DCOPClient::mainClient();
+                    if ( !client->isAttached() )
+                        client->attach();
+                    // serialize the text to speech (selectedText) and the
+                    // preferred reader ("" is the default voice) ...
+                    QByteArray data;
+                    QDataStream arg( data, IO_WriteOnly );
+                    arg << selectedText;
+                    arg << QString();
+                    // ..and send it to KTTSD
+                    client->send( "kttsd", "KSpeech", "sayMessage(QString,QString)", data );
+                }
             }
 
             // clear widget selection and invalidate rect
@@ -957,6 +1019,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
         case MouseEdit:      // ? apply [tool] ?
             break;
     }
+
+    // reset mouse press / 'drag start' position
+    d->mousePressPos = QPoint();
 }
 
 void PageView::wheelEvent( QWheelEvent *e )
@@ -1142,9 +1207,10 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     return item;
 }
 
-void PageView::selectionStart( int x, int y, bool /*aboveAll*/ )
+void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveAll*/ )
 {
     d->mouseSelectionRect.setRect( x, y, 1, 1 );
+    d->selectionRectColor = color;
     // ensures page doesn't scroll
     if ( d->scrollTimer )
     {

@@ -56,8 +56,7 @@ More items (first items will enter 'In progress list' first):
 -> text selection in wordprocessor style (very hard)
 -> zoom: fit text (with configurable margin)
 -> open gzipped (.pdf.gz?) files
--> kttsd output with menu entries. speech{document/page/selection}. (patch available - enrico)
--> kttsd alternative (1): autodetect "/dev/speech" (speechd/festival) and provide reading
+-> kspeech TTS interface. speech {document / page / selection}
 -> automatic online dictionaries / translators (BR80338)
 -> core: pdf forms support
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
@@ -79,6 +78,8 @@ More items (first items will enter 'In progress list' first):
 -> export: export to other formats keeping formatting (a dream.. except for PNG :-) (PS is easy, we just have PSOutputDev that does it :-D)
 
 Done (newest features come first):
+-> CHG: changes and cleanups in pageView's mouse handling functions
+-> ADD: KTTSD simple support: speech selection using kspeech api via pure dcop (don't break compatibiltiy)
 -> CHG: right click and drag while in 'normal' mode changes to 'selection' mode and selects
 -> FIX: complete valgrind check and leakfix (2 leaks were present) [27-Jan-04]
 -> ADD: history, forward/back history actions, history links and xml storage (10 steps)

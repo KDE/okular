@@ -61,6 +61,7 @@
   <entry key="ShowSearchBar" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="SplitterSizes" type="IntList" />
  </group>
  <group name="PageView" >
   <entry key="ShowScrollBars" type="Bool" >
@@ -151,10 +152,10 @@
   </entry>
  </group>
  <group name="Internal Status" >
-  <entry key="SplitterSizes" type="IntList" />
   <entry key="FilterBookmarks" type="Bool" >
    <default>false</default>
   </entry>
+  <entry key="UseKTTSD" type="Bool" />
  </group>
  <group name="Debugging Options" >
   <entry key="DebugDrawBoundaries" type="Bool" >

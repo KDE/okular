@@ -16,7 +16,7 @@
         <string>TeX Fonts</string>
     </property>
     <property name="toolTip" stdset="0">
-        <string>On low-resolution displays, such as laptop screen, you probably want to switch this on</string>
+        <string>On low-resolution displays, such as a laptop screen, you probably want to switch this on</string>
     </property>
     <property name="whatsThis" stdset="0">
         <string>If this option is set, KDVI will enlarge all characters by 10%. The text will then usually be easier to read, but it may happen that some characters overlap a little.</string>
@@ -30,7 +30,7 @@
                 <cstring>PFB_ButtonGroup</cstring>
             </property>
             <property name="title">
-                <string>Postscript Type1 Fonts</string>
+                <string>PostScript Type1 Fonts</string>
             </property>
             <vbox>
                 <property name="name">
@@ -99,7 +99,7 @@
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>&lt;p&gt;Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p&gt;
-&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid to generate several bitmap versions of the same font.&lt;/p&gt;</string>
+&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid generating several bitmap versions of the same font.&lt;/p&gt;</string>
                             </property>
                         </widget>
                     </grid>

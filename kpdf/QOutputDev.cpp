@@ -59,8 +59,8 @@
 
 #include "QOutputDev.moc"
 
-#define QPDFDBG(x) x		// special debug mode
-//#define QPDFDBG(x)   		// normal compilation
+//#define QPDFDBG(x) x		// special debug mode
+#define QPDFDBG(x)   		// normal compilation
 
 //------------------------------------------------------------------------
 // Constants and macros

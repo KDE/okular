@@ -80,7 +80,6 @@ void 	draw_page(void);
 
 #include <setjmp.h>
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
-double xres;
 QPainter foreGroundPaint; // QPainter used for text
 
 
@@ -124,8 +123,10 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
   setMakePK( mkpk );
   setMetafontMode( DefaultMFMode ); // that also sets the basedpi
-  unshrunk_paper_w       = int( 21.0 * basedpi/2.54 + 0.5 ); // set A4 paper as default
-  unshrunk_paper_h       = int( 27.9 * basedpi/2.54 + 0.5 ); 
+  paper_width           = 21.0; // set A4 paper as default
+  paper_height          = 27.9;
+  unshrunk_page_w       = int( 21.0 * basedpi/2.54 + 0.5 );
+  unshrunk_page_h       = int( 27.9 * basedpi/2.54 + 0.5 ); 
   PostScriptOutPutString = NULL;
   HTML_href              = NULL;
   mainwin                = handle();
@@ -465,10 +466,10 @@ void dviWindow::setPaper(double w, double h)
   kdDebug(4300) << "setPaper" << endl;
 #endif
 
-  unshrunk_paper_w = int( w * basedpi/2.54 + 0.5 );
-  unshrunk_paper_h = int( h * basedpi/2.54 + 0.5 ); 
-  unshrunk_page_w  = unshrunk_paper_w;
-  unshrunk_page_h  = unshrunk_paper_h;
+  paper_width      = w;
+  paper_height     = h;
+  unshrunk_page_w  = int( w * basedpi/2.54 + 0.5 );
+  unshrunk_page_h  = int( h * basedpi/2.54 + 0.5 ); 
   page_w           = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
   page_h           = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
   font_pool->reset_fonts();

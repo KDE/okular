@@ -23,7 +23,6 @@
 
 
 extern QPainter foreGroundPaint;
-extern double   xres;
 
 void dviWindow::html_anchor_special(QString cp)
 {

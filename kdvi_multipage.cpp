@@ -174,17 +174,15 @@ double KDVIMultiPage::setZoom(double zoom)
 }
 
 
-extern unsigned int page_w, page_h;
-
 double KDVIMultiPage::zoomForHeight(int height)
 {
-  return (window->zoom() * (double)height)/(double)page_h;
+  return (double)(height-1)/(window->xres*(window->paper_height/2.54));
 }
 
 
 double KDVIMultiPage::zoomForWidth(int width)
 {
-  return (window->zoom() * (double)width)/(double)page_w;
+  return (double)(width-1)/(window->xres*(window->paper_width/2.54));
 }
 
 

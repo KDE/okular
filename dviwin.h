@@ -101,6 +101,12 @@ public:
 
   class fontPool  *font_pool;
 
+  double       xres;         // horizontal resolution of the display device in dots per inch.
+  double       paper_width;  // paper width in centimeters
+  double       paper_height; // paper height in centimeters
+
+
+
 public slots:
   void          abortExternalProgramm(void);
   bool		setFile(const QString & fname);
@@ -144,10 +150,8 @@ private:
  int               flashOffset;
 
  // These fields contain information about the geometry of the page.
- unsigned int	   unshrunk_paper_w; // basedpi * width(in inch)
- unsigned int	   unshrunk_paper_h; // basedpi * height(in inch)
- unsigned int	   unshrunk_page_w;
- unsigned int	   unshrunk_page_h;
+ unsigned int	   unshrunk_page_w; // basedpi * width(in inch)
+ unsigned int	   unshrunk_page_h; // basedpi * height(in inch)
 
  infoDialog       *info;
 

@@ -1,4 +1,4 @@
-INCLUDES = $(all_includes) -I..
+INCLUDES = -I.. $(all_includes)
 
 libgoo_la_LDFLAGS = $(all_libraries) -no-undefined
 libgoo_la_SOURCES = GHash.cc GList.cc GString.cc gfile.cc gmem.c gmempp.cc \

@@ -38,6 +38,7 @@ namespace KPDF
     PageWidget::setPDFDocument(PDFDoc* doc)
     {
         m_doc = doc;
+        m_currentPage = 1;
         updatePixmap();
     }
 

@@ -4,7 +4,6 @@ URGENT / URGENT BUGFIXING
 
 o add tip: kdvi can load compressed files!
 o get rid of useless README.kdvi
-o "neue datei laden" geht nicht mehr
 o Proper handling of the base-url
 o add "tt.dvi.gz" to the list of recent files, not "/tmp/kviews....."
 
@@ -17,7 +16,7 @@ o Support for colored font specials
 o Support papersize information given by the dvi-file on a page-by-page
   basis.
 
-o Extra enlargement of characters for improved readability should be switchable.
+o asynchronous rendering of pages, so that browsing with pg up/down looks faster
 
 
 NOT SO URGENT

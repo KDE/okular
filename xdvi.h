@@ -13,31 +13,11 @@
  *	PAGE_OFFSET in dvi_draw.c.
  */
 
-#define	pixel_conv(x)		((int) ((x) / (shrink_factor * 65536)))
-#define	pixel_round(x)		((int) ROUNDUP(x, shrink_factor * 65536))
-#define	spell_conv0(n, f)	((long) (n * f))
 
-
-#ifdef	BMBYTE
-#define	BMUNIT			unsigned char
-#define	BITS_PER_BMUNIT		8
-#define	BYTES_PER_BMUNIT	1
-#else	/* !BMBYTE */
-#ifdef	BMSHORT
-#define	BMUNIT			unsigned short
-#define	BITS_PER_BMUNIT		16
-#define	BYTES_PER_BMUNIT	2
-#else	/* !BMSHORT */
-#define	BMLONG
-#ifdef	__alpha
-#define	BMUNIT			unsigned int
-#else
-#define	BMUNIT			unsigned long
-#endif	/* if __alpha */
+#define BMUNIT                  Q_UINT32
 #define	BITS_PER_BMUNIT		32
 #define	BYTES_PER_BMUNIT	4
-#endif	/* !BMSHORT */
-#endif	/* !BMBYTE */
+
 
 #define	ADD(a, b)	((BMUNIT *) (((char *) a) + b))
 #define	SUB(a, b)	((BMUNIT *) (((char *) a) - b))
@@ -51,7 +31,7 @@ extern	struct drawinf	currinf;
    scaled pixel units */
 
 #define DVI_H   currinf.data.dvi_h
-#define PXL_H   pixel_conv(currinf.data.dvi_h)
+#define PXL_H   ((int) ((currinf.data.dvi_h) / (shrink_factor * 65536)))
 #define DVI_V   currinf.data.dvi_v
 #define PXL_V   currinf.data.pxl_v
 #define WW      currinf.data.w
@@ -59,13 +39,6 @@ extern	struct drawinf	currinf;
 #define YY      currinf.data.y
 #define ZZ      currinf.data.z
 #define ROUNDUP(x,y) (((x)+(y)-1)/(y))
-
-extern QIntDict<struct font> tn_table;
-
-
-/*
- *	Command line flags.
- */
 
 extern  unsigned long   num (FILE *, int);
 extern  long    snum(FILE *, int);

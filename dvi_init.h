@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <qdatastream.h>
 #include <qfile.h>
+#include <qintdict.h>
 #include <qstring.h>
 
 #include "bigEndianByteReader.h"
@@ -26,7 +27,7 @@ class dvifile : public bigEndianByteReader
   Q_UINT8      * dvi_Data;
   QIODevice::Offset size_of_file;
   QString        errorMsg;
-
+  
   /** This flag is set to "true" during the construction of the
       dvifile, and is never changed afterwards by the dvifile
       class. It is used in kdvi in conjuction with source-specials:
@@ -34,7 +35,8 @@ class dvifile : public bigEndianByteReader
       shows an info dialog, and the flag is set to false. That way
       KDVI ensures that the user is only informed once. */
   bool           sourceSpecialMarker;
-
+  
+  QIntDict<struct font> tn_table;
 
   double         cmPerDVIunit;
 

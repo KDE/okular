@@ -270,7 +270,7 @@ static	void set_rule(int h, int w)
 }
 
 
-#define	xspell_conv(n)	spell_conv0(n, current_dimconv)
+#define	xspell_conv(n)	((long) (n *  current_dimconv))
 
 void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 {
@@ -316,7 +316,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  b = readUINT32();
 	  b = xspell_conv(b); 
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
-	    set_rule(pixel_round(xspell_conv(a)), pixel_round(b));
+	    set_rule( ((int) ROUNDUP(xspell_conv(a), shrink_factor * 65536)), ((int) ROUNDUP(b, shrink_factor * 65536)) );
 	  DVI_H += b;
 	  break;
 
@@ -330,7 +330,7 @@ void dviWindow::draw_part(double current_dimconv, bool is_vfmacro)
 	  a = xspell_conv(a);
 	  b = xspell_conv(b);
 	  if (a > 0 && b > 0 && PostScriptOutPutString == NULL)
-	    set_rule(pixel_round(a), pixel_round(b));
+	    set_rule(((int) ROUNDUP(a, shrink_factor * 65536)), ((int) ROUNDUP(b, shrink_factor * 65536)));
 	  break;
 
 	case NOP:
@@ -594,7 +594,7 @@ void dviWindow::draw_page(void)
     command_pointer = end_pointer = 0;
 
   memset((char *) &currinf.data, 0, sizeof(currinf.data));
-  currinf.fonttable      = tn_table;
+  currinf.fonttable      = dviFile->tn_table;
   currinf._virtual       = 0;
   draw_part(65536.0*fontPixelPerDVIunit(), false);
   if (HTML_href != 0) {

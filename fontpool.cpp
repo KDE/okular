@@ -111,10 +111,10 @@ void fontPool::setEnlargeFonts( bool flag )
 }
 
 
-class font *fontPool::appendx(const char *fontname, long checksum, Q_INT32 scale, double enlargement, double cmPerDVIunit)
+class font *fontPool::appendx(const char *fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement, double cmPerDVIunit)
 {
   double fsize = enlargement * MFResolutions[getMetafontMode()];
-
+  
   // Reuse font if possible: check if a font with that name and
   // natural resolution is already in the fontpool, and use that, if
   // possible.
@@ -128,12 +128,12 @@ class font *fontPool::appendx(const char *fontname, long checksum, Q_INT32 scale
     }
     fontp=fontList.next();
   }
-
+  
   // If font doesn't exist yet, we have to generate a new font.
-
+  
   // Calculate the number of pixel per DVI unit
   double pixelPerDVIunit = cmPerDVIunit * MFResolutions[getMetafontMode()] / 2.54;
-
+  
   fontp = new font(fontname, fsize, checksum, scale, pixelPerDVIunit, this, 
 		   (enlargeFonts == true) ? shrinkFactor/1.1 : shrinkFactor, enlargement, cmPerDVIunit);
   if (fontp == 0) {
@@ -141,7 +141,7 @@ class font *fontPool::appendx(const char *fontname, long checksum, Q_INT32 scale
     exit(0);
   }
   fontList.append(fontp);
-
+  
   // Now start kpsewhich/MetaFont, etc. if necessary
   return fontp;
 }

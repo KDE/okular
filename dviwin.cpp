@@ -59,8 +59,6 @@ struct WindowRec currwin = {(Window) 0, 3, 0, 0, 0, 0, MAXDIM, 0, MAXDIM, 0};
 extern	struct WindowRec alt;
 struct drawinf	currinf;
 
-QIntDict<font> tn_table;
-
 // The following are really used
 unsigned int	page_w;
 unsigned int	page_h;
@@ -523,7 +521,7 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
       command_pointer = end_pointer = 0;
     
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
-    currinf.fonttable = tn_table;
+    currinf.fonttable = dviFile->tn_table;
     currinf._virtual  = NULL;
     draw_part(65536.0*fontPixelPerDVIunit(), false);
     

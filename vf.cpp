@@ -89,26 +89,25 @@ void font::read_VF_index(void)
   first_font = NULL;
   while ((cmnd = one(VF_file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
     int   TeXnumber = num(VF_file, (int) cmnd - FNTDEF1 + 1);
-    long  checksum  = four(VF_file);
-    int   scale     = four(VF_file);
-    int   design    = four(VF_file);
-    int   len       = one(VF_file) + one(VF_file); /* sequence point in the middle */
-    char *fontname  = new char[(unsigned) len + 1];
+    Q_UINT32 checksum  = four(VF_file);
+    Q_UINT32 scale     = four(VF_file);
+    Q_UINT32 design    = four(VF_file);
+    Q_UINT16 len       = one(VF_file) + one(VF_file); /* sequence point in the middle */
+    char *fontname  = new char[len + 1];
     fread(fontname, sizeof(char), len, VF_file);
     fontname[len] = '\0';
-	
+    
 #ifdef DEBUG_FONTS
     kdDebug() << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
 
-    // The scaled size is given in units of vfparent->scale * 2 ** -20
-    // SPELL units, so we convert it into SPELL units by multiplying
-    // by vfparent->dimconv. The design size is given in units of 2
-    // -20 pt, so we convert into SPELL units by multiplying by
-    // (pixels_per_inch * 2**16) / (72.27 * 2**20).
-    // @@@@@@@@@@@@@@ CHECK THAT @@@@@@@@@@@@@@@@@@@@@@@ THIS CALL OF appendx PROBABLY HAS A WRONG enlargement. ORIGINAL CODE WAS:
-    //    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, (72.27 * (1<<4)) * dimconv * scale / design, dimconv);
-    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, enlargement, cmPerDVIunit);
+    // According to Knuth's documentation found in the web source code
+    // of the "vftovp" program (which seems to be the standard
+    // definition of virtual fonts), the "scale" is a fixed point
+    // number which describes extra enlargement that the virtual font
+    // imposes. One obtains the enlargement by dividing 2^20. 
+    double enlargement_factor = double(scale)/(1<<20) * enlargement;
+    struct font *newfontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor, cmPerDVIunit);
 
     // Insert font in dictionary and make sure the dictionary is big
     // enough.

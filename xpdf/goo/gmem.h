@@ -19,13 +19,13 @@ extern "C" {
  * Same as malloc, but prints error message and exits if malloc()
  * returns NULL.
  */
-extern void *gmalloc(int size);
+extern void *gmalloc(size_t size);
 
 /*
  * Same as realloc, but prints error message and exits if realloc()
  * returns NULL.  If <p> is NULL, calls malloc instead of realloc().
  */
-extern void *grealloc(void *p, int size);
+extern void *grealloc(void *p, size_t size);
 
 /*
  * Same as free, but checks for and ignores NULL pointers.

@@ -53,9 +53,9 @@ static int gMemAlloc = 0;
 
 #endif /* DEBUG_MEM */
 
-void *gmalloc(int size) {
+void *gmalloc(size_t size) {
 #ifdef DEBUG_MEM
-  int size1;
+  size_t size1;
   char *mem;
   GMemHdr *hdr;
   void *data;
@@ -94,11 +94,11 @@ void *gmalloc(int size) {
 #endif
 }
 
-void *grealloc(void *p, int size) {
+void *grealloc(void *p, size_t size) {
 #ifdef DEBUG_MEM
   GMemHdr *hdr;
   void *q;
-  int oldSize;
+  size_t oldSize;
 
   if (size == 0) {
     if (p)
@@ -137,7 +137,7 @@ void *grealloc(void *p, int size) {
 
 void gfree(void *p) {
 #ifdef DEBUG_MEM
-  int size;
+  size_t size;
   GMemHdr *hdr;
   GMemHdr *prevHdr, *q;
   int lst;

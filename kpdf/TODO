@@ -17,6 +17,7 @@ Things to do in order to merge in HEAD (first item has highest priority):
 -> usability: clear search must restore the full thumbs list (by Mikolaj)
 -> usability: trigger redraw on 'filter text' on current page (by Mikolaj)
 -> watch out for FIXMEs in code
+-> small fix: requestPixmaps not triggered when exiting fullscreen mode
 -> take care of naming on merge, too differences (remove some kpdf_* prefixes
    and rename internals too document->kpdfdocument, page->kpdfpage, etc..)
 
@@ -50,6 +51,7 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 -> rotate the whole document / individual pages
 -> fullscreen pdf view (presentations-like) with some gfx tools
+-> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
 
 Done (newest feature comes firts):
 -> ADD: Watch File option (Albert)

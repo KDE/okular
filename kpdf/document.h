@@ -134,6 +134,14 @@ struct DocumentInfo
 };
 
 /**
+ * @short Viewport.
+ */
+struct DocumentViewport
+{
+    int lastPage;
+};
+
+/**
  * @short A Dom tree that describes the Table of Contents.
  *
  * The Synopsis (TOC or Table Of Contents for friends) is represented via

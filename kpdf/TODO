@@ -45,6 +45,9 @@ More items (first items will enter 'In progress list' first):
 -> ADD: click over image allows "save image" [60% done]
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
+-> ADD: bookmark support, with clip overlays or something.. and the bookmark
+   widget. or maybe they should modify the thumbnail. note: bookmark property
+   is already in place. Saving bookmars for a document will be cool too.
 -> session support: restoring page location (BR82589)
 -> export all text in plain_text/html
 -> extract(export?) images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))

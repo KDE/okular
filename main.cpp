@@ -128,7 +128,7 @@ int main(int argc, char** argv)
 
   // We need to register as "kviewshell" to stay compatible with existing DCOP-skripts.
   app.dcopClient()->registerAs("kviewshell");
-  KViewShell* shell = new KViewShell("dvi");
+  KViewShell* shell = new KViewShell();
 
   if (args->count() > 0)
     shell->openURL(args->url(0));

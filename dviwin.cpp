@@ -68,7 +68,6 @@ int			useAlpha;
 
 extern "C" void 	draw_page(void);
 extern "C" void 	kpse_set_progname(const char*);
-extern "C" void 	kpse_init_prog(const char*, unsigned, const char*, bool, const char*);
 extern "C" Boolean 	check_dvi_file();
 extern "C" void 	reset_fonts();
 extern "C" void 	init_page();
@@ -76,6 +75,13 @@ extern "C" void 	init_pix(Boolean warn);
 extern "C" void 	psp_destroy();
 extern "C" void 	psp_toggle();
 extern "C" void 	psp_interrupt();
+extern "C" {
+#include <kpathsea/c-auto.h>
+#include <kpathsea/paths.h>
+#include <kpathsea/proginit.h>
+#include <kpathsea/tex-file.h>
+#include <kpathsea/tex-glyph.h>
+}
 
 //------ next the drawing functions called from C-code (dvi_draw.c) ----
 
@@ -224,8 +230,6 @@ int dviWindow::makePK()
 	return makepk;	
 }
 	
-extern "C" {char * kpse_font_override_path;}
-
 void dviWindow::setFontPath( const char *s )
 {
 	if (!ChangesPossible)
@@ -394,8 +398,14 @@ void dviWindow::initDVI()
         prog = const_cast<char*>("kdvi");
 	n_files_left = OPEN_MAX;
 	kpse_set_progname ("xdvi");
-	kpse_init_prog ("XDVI", basedpi, MetafontMode.data(), makepk,"cmr10");
-	kpse_font_override_path = const_cast<char*>(FontPath.ascii());
+	kpse_init_prog ("XDVI", basedpi, MetafontMode.data(), "cmr10");
+	kpse_set_program_enabled(kpse_any_glyph_format,
+				 makepk, kpse_src_client_cnf);
+	kpse_format_info[kpse_pk_format].override_path
+		= kpse_format_info[kpse_gf_format].override_path
+		= kpse_format_info[kpse_any_glyph_format].override_path
+		= kpse_format_info[kpse_tfm_format].override_path
+		= FontPath.ascii();
 	ChangesPossible = 0;
 }
 

@@ -230,7 +230,7 @@ void dviWindow::epsf_special(QString cp)
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
       else
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), 
-				  QString(i18n("File not found: \n %1")).arg(EPSfilename), -1);
+				  i18n("File not found: \n %1").arg(EPSfilename), -1);
       foreGroundPaint.restore();
     }
   }

@@ -127,7 +127,7 @@ KDVIMultiPage::~KDVIMultiPage()
 bool KDVIMultiPage::openFile()
 {
   document_history.clear();
-  emit setStatusBarText(QString(i18n("Loading file %1")).arg(m_file));
+  emit setStatusBarText(i18n("Loading file %1").arg(m_file));
 
   bool r = window->setFile(m_file,url().ref());
   if (!r)

@@ -199,7 +199,7 @@ void font::PK_skip_specials(void)
       case PK_NOOP :
 	break;
       default :
-	oops(QString(i18n("Unexpected %1 in PK file %2")).arg(PK_flag_byte).arg(filename) );
+	oops(i18n("Unexpected %1 in PK file %2").arg(PK_flag_byte).arg(filename) );
 	break;
       }
     }
@@ -263,7 +263,7 @@ void font::read_PK_char(unsigned int ch)
     w = num(fp, n);
     h = num(fp, n);
     if (w > 0x7fff || h > 0x7fff)
-      oops(QString(i18n("The character %1 is too large in file %2")).arg(ch).arg(fontname));
+      oops(i18n("The character %1 is too large in file %2").arg(ch).arg(fontname));
     g->bitmap.w = w;
     g->bitmap.h = h;
   }
@@ -363,9 +363,9 @@ void font::read_PK_char(unsigned int ch)
 	paint_switch = 1 - paint_switch;
       }
       if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
-	oops(QString(i18n("Wrong number of bits stored:  char. %1, font %2")).arg(ch).arg(fontname));
+	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(fontname));
       if (rows_left != 0 || h_bit != g->bitmap.w)
-	oops(QString(i18n("Bad pk file (%1), too many bits")).arg(fontname));
+	oops(i18n("Bad pk file (%1), too many bits").arg(fontname));
     }
 
     // The data in the bitmap is now in the processor's bit order,
@@ -450,9 +450,9 @@ void font::read_PK_char(unsigned int ch)
 	paint_switch = 1 - paint_switch;
       }
       if (cp != ((BMUNIT *) (g->bitmap.bits + bytes_wide * g->bitmap.h)))
-	oops(QString(i18n("Wrong number of bits stored:  char. %1, font %2")).arg(ch).arg(fontname));
+	oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(fontname));
       if (rows_left != 0 || h_bit != g->bitmap.w)
-	oops(QString(i18n("Bad pk file (%1), too many bits")).arg(fontname));
+	oops(i18n("Bad pk file (%1), too many bits").arg(fontname));
     }
   } // endif: big or small Endian?
 }

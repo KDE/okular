@@ -19,7 +19,6 @@
 
 #include <kmenubar.h>
 #include <kmessagebox.h>
-#include <kapp.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
@@ -28,6 +27,7 @@
 
 #include "kdvi_miniwidget.h"
 #include "kdvi.h"
+#include "kdvi_view.h" // KDVIFactory
 #include "scrbox.h"
 #include "print.h"
 #include "pushbutton.h"
@@ -333,7 +333,7 @@ void KDVIMiniWidget::message( const QString &s )
 void KDVIMiniWidget::readConfig()
 {
 	QString s;
-	config = KApplication::kApplication()->config();
+	config = KDVIFactory::instance()->config();
         config->setGroup( "kdvi" );
 
 	pannerValue = config->readNumEntry( "Separator" );

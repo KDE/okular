@@ -87,9 +87,9 @@ KDVIPart::KDVIPart( QWidget *parent, const char *name )
     m_extension = new KDVIBrowserExtension( this );
 
     connect(w, SIGNAL(statusMessage(const QString &)),
-            m_extension, SIGNAL( setStatusBarText( const QString & ) ) );
+            this, SIGNAL( setStatusBarText( const QString & ) ) );
     connect(w->window(), SIGNAL(statusChange(const QString &)),
-            m_extension, SIGNAL( setStatusBarText( const QString & ) ) );
+            this, SIGNAL( setStatusBarText( const QString & ) ) );
 
     setXMLFile( "kdvi_part.rc" );
 

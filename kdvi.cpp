@@ -215,7 +215,7 @@ void kdvi::makeMenuBar()
 
 	menuBar()->insertSeparator();
 
-	QPopupMenu *help = kapp->helpMenu(true, i18n("DVI Viewer")
+	QPopupMenu *help = helpMenu(i18n("DVI Viewer")
 					     + " " + KDVI_VERSION
 					     + i18n("\n\nby Markku Hihnala")
 					     + " (mah@ee.oulu.fi)");

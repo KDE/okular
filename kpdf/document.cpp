@@ -175,10 +175,11 @@ bool KPDFDocument::openDocument( const QString & docFile )
     }
 
     // check local directory for an overlay xml
+    // TODO import overlay layers from XML
     QString fileName = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
     fileName = "kpdf/" + QString::number(fileSize) + "." + fileName + ".xml";
     QString localFN = locateLocal( "data", fileName );
-    kdWarning() << localFN << endl;
+    //kdWarning() << localFN << endl;
 
     return true;
 }

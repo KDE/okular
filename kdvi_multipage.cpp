@@ -21,6 +21,7 @@
 #include "print.h"
 #include "optiondialog.h"
 #include "kdvi_multipage.moc"
+#include "kviewpart.h"
 #include <config.h>
 
 extern "C"
@@ -159,10 +160,15 @@ void KDVIMultiPage::goto_page(int page, int y)
 
 double KDVIMultiPage::setZoom(double zoom)
 {
-  window->setZoom(zoom);
+  if (zoom < KViewPart::minZoom/1000.0)
+    zoom = KViewPart::minZoom/1000.0;
+  if (zoom > KViewPart::maxZoom/1000.0)
+    zoom = KViewPart::maxZoom/1000.0;
+
+  double z = window->setZoom(zoom);
   scrollView()->resizeContents(window->width(), window->height());
 
-  return zoom;
+  return z;
 }
 
 

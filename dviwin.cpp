@@ -139,9 +139,19 @@ dviWindow::dviWindow( int bdpi, double zoom, const QString & mfm, int mkpk, QWid
   Display *DISP          = x11Display();
   xres                   = ((double)(DisplayWidth(DISP,(int)DefaultScreen(DISP)) *25.4) /
 			    DisplayWidthMM(DISP,(int)DefaultScreen(DISP)) );
+  // Just to make sure that we are never dividing by zero.
+  if ((xres < 10)||(xres > 1000))
+    xres = 75.0;
 
+  // In principle, this method should never be called with illegal
+  // values for zoom. In principle.
+  if (zoom < KViewPart::minZoom/1000.0)
+    zoom = KViewPart::minZoom/1000.0;
+  if (zoom > KViewPart::maxZoom/1000.0)
+    zoom = KViewPart::maxZoom/1000.0;
   mane.shrinkfactor      = currwin.shrinkfactor = (double)basedpi/(xres*zoom);
   _zoom                  = zoom;
+
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   is_current_page_drawn  = 0;  
   n_files_left           = OPEN_MAX;
@@ -459,8 +469,15 @@ int dviWindow::totalPages()
 }
 
 
-void dviWindow::setZoom(double zoom)
+double dviWindow::setZoom(double zoom)
 {
+  // In principle, this method should never be called with illegal
+  // values. In principle.
+  if (zoom < KViewPart::minZoom/1000.0)
+    zoom = KViewPart::minZoom/1000.0;
+  if (zoom > KViewPart::maxZoom/1000.0)
+    zoom = KViewPart::maxZoom/1000.0;
+
   mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*zoom);
   _zoom             = zoom;
 
@@ -469,6 +486,7 @@ void dviWindow::setZoom(double zoom)
 
   reset_fonts();
   changePageSize();
+  return _zoom;
 }
 
 
@@ -495,9 +513,11 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	QString locallink = hyperLinkList[i].linkText.mid(1); // Drop the '#' at the beginning
 	for(int j=0; j<numAnchors; j++) {
 	  if (locallink.compare(AnchorList_String[j]) == 0) {
+#ifdef DEBUG_SPECIAL
 	    kdDebug() << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
 	    kdDebug() << "hit: local link to sf=" << mane.shrinkfactor << endl;
-	    emit(request_goto_page(AnchorList_Page[j], AnchorList_Vert[j]/mane.shrinkfactor));
+#endif
+	    emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
 	    break;
 	  }
 	}

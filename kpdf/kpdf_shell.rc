@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_shell" version="4">
+<kpartgui name="kpdf_shell" version="5">
 <MenuBar>
   <Menu name="file">
     <DefineGroup name="file_save" append="save_merge"/>
@@ -9,7 +9,7 @@
     <Action name="fullscreen"/>
   </Menu>
   <Menu name="settings">
-    <Action name="showmenubar"/>
+    <Action name="showmenubar" append="show_merge"/>
   </Menu>
   <Merge/>
 </MenuBar>

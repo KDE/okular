@@ -38,7 +38,7 @@ noinst_HEADERS = c-openmx.h dvi.h dviwin.h kdvi.h marklist.h oconfig.h\
 	prefs.h print.h printData.h printSetup.h printSetupData.h pushbutton.h\
 	scrbox.h xdvi.h kdvi_miniwidget.h kdvi_view.h
 
-messages:
+messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
 
 apps_DATA = kdvi.desktop

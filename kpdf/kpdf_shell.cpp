@@ -22,6 +22,7 @@
 
 #include <kaction.h>
 #include <kapplication.h>
+#include <kedittoolbar.h>
 #include <kfiledialog.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
@@ -61,7 +62,7 @@ Shell::Shell()
       // tell the KParts::MainWindow that this is indeed the main widget
       setCentralWidget(m_part->widget());
       // and integrate the part's GUI with the shell's
-      setupGUI(ToolBar | Keys | Save);
+      setupGUI(Keys | Save);
       createGUI(m_part);
     }
   }
@@ -123,6 +124,7 @@ Shell::setupActions()
   setStandardToolBarMenuEnabled(true);
 
   m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection(), "options_show_menubar" );
+  KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
   m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
   m_popup = new KPopupMenu( this, "rmb popup" );
   m_popup->insertTitle( i18n( "Full Screen Options" ) );
@@ -172,6 +174,15 @@ Shell::fileOpen()
 
   if (!url.isEmpty())
     openURL(url);
+}
+
+  void
+Shell::optionsConfigureToolbars()
+{
+  saveMainWindowSettings(KGlobal::config(), "MainWindow");
+  KEditToolbar dlg(factory());
+  connect(&dlg, SIGNAL(newToolbarConfig()), this, SLOT(applyNewToolbarConfig()));
+  dlg.exec();
 }
 
   void

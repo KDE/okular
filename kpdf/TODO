@@ -19,6 +19,7 @@ More items (first items will enter 'In progress list' first):
 -> text selection in wordprocessor style (very hard/impossible)
 -> implement history (mainly for actionNamed)
 -> history as a toolbox child (collecting DOs's setPage calls)
+-> click over image allows "save image"
 -> zoom: fit text (with configurable margin)
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages

@@ -19,6 +19,8 @@
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
+#include <qapplication.h>
+#include <qclipboard.h>
 
 #include <kiconloader.h>
 #include <kurldrag.h>
@@ -322,7 +324,6 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     }
 }
 
-#include <kdebug.h>
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
     bool leftButton = e->button() & LeftButton,
@@ -382,10 +383,17 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     case MouseSelection: // get text from the page
         if ( leftButton && d->mouseSelectionWidget )
         {
+            // request the textpage if there isn't one
             const KPDFPage * kpdfPage = d->mouseSelectionWidget->page();
             if ( !kpdfPage->hasSearchPage() )
                 d->document->requestTextPage( kpdfPage->number() );
-            kdWarning() << d->mouseSelectionWidget->selectedText() << endl;
+            // copy text into the clipboard
+            QClipboard *cb = QApplication::clipboard();
+            const QString & selection = d->mouseSelectionWidget->selectedText();
+            cb->setText( selection, QClipboard::Clipboard );
+            if ( cb->supportsSelection() )
+                cb->setText( selection, QClipboard::Selection );
+            // clear widget selection
             d->mouseSelectionWidget->clearSelection();
             d->mouseSelectionWidget = 0;
         }

@@ -1,4 +1,4 @@
-INCLUDES = -I.. -I$(srcdir)/../fofi -I$(srcdir)/../splash -I$(srcdir)/../goo $(all_includes) $(LIBFREETYPE_CFLAGS)
+INCLUDES = -I$(top_srcdir)/kpdf -I$(srcdir)/../fofi -I$(srcdir)/../splash -I$(srcdir)/../goo $(all_includes) $(LIBFREETYPE_CFLAGS)
 
 libxpdf_la_LDFLAGS = $(all_libraries)
 libxpdf_la_LIBADD = $(LIB_X11) $(LIBFREETYPE_LIBS) $(LIBPAPER_LIBS) $(LIBT1) ../goo/libgoo.la ../fofi/libfofi.la ../splash/libsplash.la 

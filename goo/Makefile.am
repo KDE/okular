@@ -1,4 +1,4 @@
-INCLUDES = -I..
+INCLUDES = -I$(top_srcdir)/kpdf
 
 libgoo_la_SOURCES = GHash.cc GList.cc GString.cc gfile.cc gmem.c gmempp.cc
 

@@ -45,6 +45,7 @@
 #include "fontprogress.h"
 #include "infodialog.h"
 #include "optiondialog.h"
+#include "zoomlimits.h"
 
 
 //------ some definitions from xdvi ----------
@@ -143,10 +144,10 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
   // In principle, this method should never be called with illegal
   // values for zoom. In principle.
-  if (zoom < KViewPart::minZoom/1000.0)
-    zoom = KViewPart::minZoom/1000.0;
-  if (zoom > KViewPart::maxZoom/1000.0)
-    zoom = KViewPart::maxZoom/1000.0;
+  if (zoom < ZoomLimits::MinZoom/1000.0)
+    zoom = ZoomLimits::MinZoom/1000.0;
+  if (zoom > ZoomLimits::MaxZoom/1000.0)
+    zoom = ZoomLimits::MaxZoom/1000.0;
   mane.shrinkfactor      = currwin.shrinkfactor = (double)basedpi/(xres*zoom);
   _zoom                  = zoom;
 
@@ -702,10 +703,10 @@ double dviWindow::setZoom(double zoom)
 {
   // In principle, this method should never be called with illegal
   // values. In principle.
-  if (zoom < KViewPart::minZoom/1000.0)
-    zoom = KViewPart::minZoom/1000.0;
-  if (zoom > KViewPart::maxZoom/1000.0)
-    zoom = KViewPart::maxZoom/1000.0;
+  if (zoom < ZoomLimits::MinZoom/1000.0)
+    zoom = ZoomLimits::MinZoom/1000.0;
+  if (zoom > ZoomLimits::MaxZoom/1000.0)
+    zoom = ZoomLimits::MaxZoom/1000.0;
 
   mane.shrinkfactor = currwin.shrinkfactor = basedpi/(xres*zoom);
   _zoom             = zoom;

@@ -31,7 +31,7 @@
 #include "generator_pdf.h"  // PDF generator
 //#include "generator_ps.H" // PS generator
 
-// structure used internally by KPDFDocument for local variables storage
+// structures used internally by KPDFDocument for local variables storage
 class KPDFDocumentPrivate
 {
     public:
@@ -47,13 +47,23 @@ class KPDFDocumentPrivate
         int currentPage;
 
         // observers related (note: won't delete oservers)
-        QMap< int, KPDFDocumentObserver* > observers;
+        QMap< int, class ObserverData* > observers;
+};
+
+struct ObserverData
+{
+    // public data fields
+    KPDFDocumentObserver * observer;
+    QMap< int, int > pageMemory;
+    int totalMemory;
+    // public constructor: initialize data
+    ObserverData( KPDFDocumentObserver * obs ) : observer( obs ), totalMemory( 0 ) {};
 };
 
 #define foreachObserver( cmd ) {\
-    QMap<int,KPDFDocumentObserver*>::iterator it = d->observers.begin();\
-    QMap<int,KPDFDocumentObserver*>::iterator end = d->observers.end();\
-    for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
+    QMap< int, ObserverData * >::iterator it = d->observers.begin(), end = d->observers.end();\
+    for ( ; it != end ; ++ it ) { (*it)->observer-> cmd ; } }
+
 
 KPDFDocument::KPDFDocument()
     : generator( 0 ), d( new KPDFDocumentPrivate )
@@ -80,9 +90,19 @@ bool KPDFDocument::openDocument( const QString & docFile )
     // reset internal status and frees memory
     closeDocument();
 
-    // create the generator
-    // TODO: switch on mimetype for generator selection
-    generator = new GeneratorPDF();
+    // create the generator based on the file's mimetype
+    KMimeType::Ptr mime = KMimeType::findByPath( docFile );
+    QString mimeName = mime->name();
+    if ( mimeName == "application/pdf" )
+        generator = new PDFGenerator();
+//  else if ( mimeName == "application/postscript" )
+//      generator = new PSGenerator();
+    else
+    {
+        kdWarning() << "Unknown mimetype '" << mimeName << "'." << endl;
+        return false;
+    }
+
     documentFileName = docFile;
     bool openOk = generator->loadDocument( docFile, pages_vector );
     if ( !openOk )
@@ -127,7 +147,7 @@ void KPDFDocument::closeDocument()
 void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 {
     // keep the pointer to the observer in a map
-    d->observers[ pObserver->observerId() ] = pObserver;
+    d->observers[ pObserver->observerId() ] = new ObserverData( pObserver );
 
     // if the observer is added while a document is already opened, tell it
     if ( !pages_vector.isEmpty() )
@@ -137,7 +157,17 @@ void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
 void KPDFDocument::removeObserver( KPDFDocumentObserver * pObserver )
 {
     // remove observer from the map. it won't receive notifications anymore
-    d->observers.remove( pObserver->observerId() );
+    if ( d->observers.contains( pObserver->observerId() ) )
+    {
+        // free observer data
+        int observerId = pObserver->observerId();
+        QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
+        for ( ; it != end; ++it )
+            (*it)->deletePixmap( observerId );
+        // delete observer
+        delete d->observers[ observerId ];
+        d->observers.remove( observerId );
+    }
 }
 
 void KPDFDocument::reparseConfig()
@@ -185,15 +215,65 @@ bool KPDFDocument::okToPrint() const
 }
 
 
-void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool syn )
+void KPDFDocument::requestPixmap( int id, int page, int width, int height, bool syn )
 {
     KPDFPage * kp = pages_vector[ page ];
     if ( !generator || !kp || kp->width() < 1 || kp->height() < 1 )
         return;
 
+    // 1. Update statistics (pageMemory / totalMemory) adding this pixmap
+    ObserverData * obs = d->observers[ id ];
+    if ( obs->pageMemory.contains( page ) )
+        obs->totalMemory -= obs->pageMemory[ page ];
+    int pixmapMemory = 4 * width * height / 1024;
+    obs->pageMemory[ page ] = pixmapMemory;
+    obs->totalMemory += pixmapMemory;
+
+    // 
+    int memoryToFree;
+    switch ( Settings::memoryLevel() )
+    {
+        case Settings::EnumMemoryLevel::Low:
+            memoryToFree = obs->totalMemory;
+            break;
+
+        case Settings::EnumMemoryLevel::Normal:
+            memoryToFree = obs->totalMemory - mTotalMemory()/4;
+            printf("%d\n",memoryToFree);
+            break;
+
+        case Settings::EnumMemoryLevel::Aggressive:
+            memoryToFree = 0;
+            break;
+    }
+
+    // 2. FREE Memory Loop. remove older data first.
+    int freed = 0;
+    if ( memoryToFree > 0 )
+    {
+        QMap< int, int >::iterator it = obs->pageMemory.begin(), end = obs->pageMemory.end();
+        while ( (it != end) && (memoryToFree > 0) )
+        {
+            int freeNumber = it.key();
+            if ( page != freeNumber && obs->observer->canUnloadPixmap( freeNumber ) )
+            {
+                // update mem stats
+                memoryToFree -= it.data();
+                obs->totalMemory -= it.data();
+                obs->pageMemory.remove( it );
+                // delete pixmap
+                pages_vector[ freeNumber ]->deletePixmap( id );
+                freed++;
+            }
+            ++it;
+        }
+    }
+    kdWarning() << "[" << obs->totalMemory << "] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
+
+    // 3. Request next pixmap to generator
     bool pixChanged = generator->requestPixmap( id, kp, width, height, syn );
     if ( pixChanged )
-        d->observers[id]->notifyPixmapChanged( page );
+        d->observers[id]->observer->notifyPixmapChanged( page );
 }
 
 void KPDFDocument::requestTextPage( uint page )
@@ -201,6 +281,8 @@ void KPDFDocument::requestTextPage( uint page )
     KPDFPage * kp = pages_vector[ page ];
     if ( !generator || !kp )
         return;
+
+    // Memory management for TextPages
 
     generator->requestTextPage( kp );
 }
@@ -423,6 +505,58 @@ bool KPDFDocument::print( KPrinter &printer )
     return generator ? generator->print( printer ) : false;
 }
 
+
+int KPDFDocument::mTotalMemory()
+{
+#ifdef __linux__
+    // if /proc/meminfo doesn't exist, return 128MB
+    QFile memFile( "/proc/meminfo" );
+    if ( !memFile.open( IO_ReadOnly ) )
+        return 131072;
+
+    // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
+    // and 'Cached' fields. consider swapped memory as used memory.
+    QTextStream readStream( &memFile );
+    while ( !readStream.atEnd() )
+    {
+        QString entry = readStream.readLine();
+        if ( entry.startsWith( "MemTotal:" ) )
+            return entry.section( ' ', -2, -2 ).toInt();
+    }
+#endif
+    return 131072;
+}
+
+int KPDFDocument::mFreeMemory()
+{
+#ifdef __linux__
+    // if /proc/meminfo doesn't exist, return 128MB
+    QFile memFile( "/proc/meminfo" );
+    if ( !memFile.open( IO_ReadOnly ) )
+        return 131072;
+
+    // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
+    // and 'Cached' fields. consider swapped memory as used memory.
+    int memoryFree = 0;
+    QString entry;
+    QTextStream readStream( &memFile );
+    while ( !readStream.atEnd() )
+    {
+        entry = readStream.readLine();
+        if ( entry.startsWith( "MemFree:" ) ||
+                entry.startsWith( "Buffers:" ) ||
+                entry.startsWith( "Cached:" ) ||
+                entry.startsWith( "SwapFree:" ) )
+            memoryFree += entry.section( ' ', -2, -2 ).toInt();
+        if ( entry.startsWith( "SwapTotal:" ) )
+            memoryFree -= entry.section( ' ', -2, -2 ).toInt();
+    }
+    memFile.close();
+    return memoryFree;
+#else
+    return 131072;
+#endif
+}
 
 QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 {

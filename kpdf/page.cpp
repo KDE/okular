@@ -53,6 +53,8 @@ bool KPDFPage::hasPixmap( int id, int width, int height ) const
 {
     if ( !m_pixmaps.contains( id ) )
         return false;
+    if ( width == -1 || height == -1 )
+        return true;
     QPixmap * p = m_pixmaps[ id ];
     return p ? ( p->width() == width && p->height() == height ) : false;
 }
@@ -134,6 +136,15 @@ void KPDFPage::setRects( const QValueList< KPDFPageRect * > rects )
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
+}
+
+void KPDFPage::deletePixmap( int id )
+{
+    if ( m_pixmaps.contains( id ) )
+    {
+        delete m_pixmaps[ id ];
+        m_pixmaps.remove( id );
+    }
 }
 
 void KPDFPage::deletePixmapsAndRects()

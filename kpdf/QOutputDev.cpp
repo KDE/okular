@@ -35,7 +35,7 @@
 //NOTE: XPDF/Splash *implementation dependant* code is marked with '###'
 
 //BEGIN KPDFOutputDev 
-KPDFOutputDev::KPDFOutputDev( GeneratorPDF * parent, SplashColor paperColor )
+KPDFOutputDev::KPDFOutputDev( PDFGenerator * parent, SplashColor paperColor )
     : SplashOutputDev( splashModeRGB8, false, paperColor ), m_pixmap( 0 ),
     m_generator( parent ), m_text( 0 )
 {

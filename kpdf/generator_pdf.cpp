@@ -35,7 +35,7 @@
 #include "QOutputDev.h"
 
 
-GeneratorPDF::GeneratorPDF()
+PDFGenerator::PDFGenerator()
     : pdfdoc( 0 ), kpdfOutputDev( 0 ),
     docInfoDirty( true ), docSynopsisDirty( true )
 {
@@ -43,7 +43,7 @@ GeneratorPDF::GeneratorPDF()
     reparseConfig();
 }
 
-GeneratorPDF::~GeneratorPDF()
+PDFGenerator::~PDFGenerator()
 {
     docLock.lock();
     delete kpdfOutputDev;
@@ -52,7 +52,7 @@ GeneratorPDF::~GeneratorPDF()
 }
 
 
-bool GeneratorPDF::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
+bool PDFGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
 {
     // create PDFDoc for the given file
     GString *filename = new GString( QFile::encodeName( fileName ) );
@@ -122,7 +122,7 @@ bool GeneratorPDF::loadDocument( const QString & fileName, QValueVector<KPDFPage
 }
 
 
-const DocumentInfo * GeneratorPDF::documentInfo()
+const DocumentInfo * PDFGenerator::documentInfo()
 {
     if ( docInfoDirty )
     {
@@ -135,6 +135,7 @@ const DocumentInfo * GeneratorPDF::documentInfo()
         docInfo.producer = getDocumentInfo("Producer");
         docInfo.subject = getDocumentInfo("Subject");
         docInfo.title = getDocumentInfo("Title");
+        docInfo.mimeType = "application/pdf";
         docInfo.format = "PDF";
         if ( pdfdoc )
         {
@@ -156,7 +157,7 @@ const DocumentInfo * GeneratorPDF::documentInfo()
     return &docInfo;
 }
 
-const DocumentSynopsis * GeneratorPDF::documentSynopsis()
+const DocumentSynopsis * PDFGenerator::documentSynopsis()
 {
     if ( !docSynopsisDirty )
         return &docSyn;
@@ -180,7 +181,7 @@ const DocumentSynopsis * GeneratorPDF::documentSynopsis()
     return &docSyn;
 }
 
-void GeneratorPDF::addSynopsisChildren( QDomNode * parent, GList * items )
+void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
 {
     int numItems = items->getLength();
     for ( int i = 0; i < numItems; ++i )
@@ -220,7 +221,7 @@ void GeneratorPDF::addSynopsisChildren( QDomNode * parent, GList * items )
 }
 
 
-bool GeneratorPDF::print( KPrinter& printer )
+bool PDFGenerator::print( KPrinter& printer )
 {
     KTempFile tf( QString::null, ".ps" );
     PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
@@ -258,7 +259,7 @@ bool GeneratorPDF::print( KPrinter& printer )
     }
 }
 
-bool GeneratorPDF::requestPixmap( int id, KPDFPage * page, int width, int height, bool syncronous )
+bool PDFGenerator::requestPixmap( int id, KPDFPage * page, int width, int height, bool syncronous )
 {
     //kdDebug() << "id: " << id << " is requesting pixmap for page " << page->number() << " [" << width << " x " << height << "]." << endl;
     if ( syncronous )
@@ -301,7 +302,7 @@ bool GeneratorPDF::requestPixmap( int id, KPDFPage * page, int width, int height
     return false;
 }
 
-void GeneratorPDF::requestTextPage( KPDFPage * page )
+void PDFGenerator::requestTextPage( KPDFPage * page )
 {
     // build a TextPage using the lightweight KPDFTextDev generator..
     KPDFTextDev td;
@@ -312,7 +313,7 @@ void GeneratorPDF::requestTextPage( KPDFPage * page )
     page->setSearchPage( td.takeTextPage() );
 }
 
-bool GeneratorPDF::reparseConfig()
+bool PDFGenerator::reparseConfig()
 {
     // load paper color from Settings or use the white default color
     QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
@@ -337,7 +338,7 @@ bool GeneratorPDF::reparseConfig()
     return false;
 }
 
-KPDFLinkGoto::Viewport GeneratorPDF::decodeLinkViewport( GString * namedDest, LinkDest * dest )
+KPDFLinkGoto::Viewport PDFGenerator::decodeLinkViewport( GString * namedDest, LinkDest * dest )
 // note: this function is called when processing a page, when the MUTEX is already LOCKED
 {
     KPDFLinkGoto::Viewport vp;
@@ -398,7 +399,7 @@ KPDFLinkGoto::Viewport GeneratorPDF::decodeLinkViewport( GString * namedDest, Li
 }
 
 
-QString GeneratorPDF::getDocumentInfo( const QString & data ) const
+QString PDFGenerator::getDocumentInfo( const QString & data ) const
 {
     // [Albert] Code adapted from pdfinfo.cc on xpdf
     Object info;
@@ -457,7 +458,7 @@ QString GeneratorPDF::getDocumentInfo( const QString & data ) const
     return i18n( "Unknown" );
 }
 
-QString GeneratorPDF::getDocumentDate( const QString & data ) const
+QString PDFGenerator::getDocumentDate( const QString & data ) const
 {
     // [Albert] Code adapted from pdfinfo.cc on xpdf
     Object info;

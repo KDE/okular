@@ -53,6 +53,7 @@ public:
     PageViewItem * activeItem; //equal to items[vectorIndex]
     QValueVector< PageViewItem * > items;
     int vectorIndex;
+    QValueList< PageViewItem * > visibleItems;
 
     // view layout (columns and continous in Settings), zoom and mouse
     PageView::ZoomMode zoomMode;
@@ -210,25 +211,6 @@ void PageView::setZoomFitWidth()
 
 
 //BEGIN KPDFDocumentObserver inherited methods
-void PageView::notifyPixmapChanged( int pageNumber )
-{
-    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
-    for ( ; iIt != iEnd; ++iIt )
-        if ( (*iIt)->pageNumber() == pageNumber )
-        {
-            // update item's rectangle plus the little outline
-            QRect expandedRect = (*iIt)->geometry();
-            expandedRect.addCoords( -1, -1, 3, 3 );
-            updateContents( expandedRect );
-            break;
-        }
-}
-
-void PageView::notifyPixmapsCleared()
-{
-    slotRequestVisiblePixmaps();
-}
-
 void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool documentChanged )
 {
     // reuse current pages if nothing new
@@ -299,6 +281,36 @@ void PageView::pageSetCurrent( int pageNumber, const QRect & viewport )
     // update zoom text if in a ZoomFit/* zoom mode
     if ( d->zoomMode != ZoomFixed )
         updateZoomText();
+}
+
+bool PageView::canUnloadPixmap( int pageNumber )
+{
+    // if the item is visible, forbid unloading
+    QValueList< PageViewItem * >::iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
+    for ( ; vIt != vEnd; ++vIt )
+        if ( (*vIt)->pageNumber() == pageNumber )
+            return false;
+    // if hidden premit unloading
+    return true;
+}
+
+void PageView::notifyPixmapChanged( int pageNumber )
+{
+    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+    for ( ; iIt != iEnd; ++iIt )
+        if ( (*iIt)->pageNumber() == pageNumber )
+        {
+            // update item's rectangle plus the little outline
+            QRect expandedRect = (*iIt)->geometry();
+            expandedRect.addCoords( -1, -1, 3, 3 );
+            updateContents( expandedRect );
+            break;
+        }
+}
+
+void PageView::notifyPixmapsCleared()
+{
+    slotRequestVisiblePixmaps();
 }
 //END KPDFDocumentObserver inherited methods
 
@@ -1297,17 +1309,23 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
                         newTop == -1 ? contentsY() : newTop,
                         visibleWidth(), visibleHeight() );
 
-    // scroll from the top to the last visible thumbnail
+    // for each item, check if it intersects the viewport
+    d->visibleItems.clear();
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * item = *iIt;
-        const QRect & itemRect = item->geometry();
-        if ( viewportRect.intersects( itemRect ) )
-        {
-            d->document->requestPixmap( PAGEVIEW_ID, item->pageNumber(),
-                                        itemRect.width(), itemRect.height(), true );
-        }
+        if ( viewportRect.intersects( item->geometry() ) )
+            d->visibleItems.push_back( item );
+    }
+
+    // actually request pixmaps
+    QValueList< PageViewItem * >::iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
+    for ( ; vIt != vEnd; ++vIt )
+    {
+        PageViewItem * item = *vIt;
+        if ( !item->page()->hasPixmap( PAGEVIEW_ID, item->width(), item->height() ) )
+            d->document->requestPixmap( PAGEVIEW_ID, item->pageNumber(), item->width(), item->height(), true );
     }
 }
 

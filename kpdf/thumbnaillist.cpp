@@ -34,6 +34,7 @@ class ThumbnailWidget : public QWidget
         int pixmapWidth() const { return m_pixmapWidth; }
         int pixmapHeight() const { return m_pixmapHeight; }
         int pageNumber() const { return m_page->number(); }
+        const KPDFPage * page() const { return m_page; }
 
     protected:
         void paintEvent(QPaintEvent *);
@@ -310,8 +311,9 @@ void ThumbnailList::slotRequestPixmaps( int /*newContentsX*/, int newContentsY )
 		int top = childY( t ) - vOffset;
 		if ( top > vHeight )
 			break;
-		else if ( top + t->height() > 0 )
-			m_document->requestPixmap( THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), true );
+        else if ( top + t->height() > 0 &&
+                  !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
+            m_document->requestPixmap( THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), true );
 	}
 }
 //END internal SLOTS

@@ -45,7 +45,7 @@ class KPDFPage
         inline float height() const { return m_height; }
         inline float ratio() const { return m_height / m_width; }
 
-        bool hasPixmap( int id, int width, int height ) const;
+        bool hasPixmap( int id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
         bool hasRect( int mouseX, int mouseY ) const;
         const KPDFPageRect * getRect( int mouseX, int mouseY ) const;
@@ -57,10 +57,11 @@ class KPDFPage
         inline void toggleAttribute( int att ) { m_attributes ^= att; }
         bool hasText( const QString & text, bool strictCase, bool fromTop );
 
-        // set contents (by KPDFDocument)
+        // set/delete contents (by KPDFDocument)
         void setPixmap( int id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
         void setRects( const QValueList< KPDFPageRect * > rects );
+        void deletePixmap( int id );
         void deletePixmapsAndRects();
 
     private:

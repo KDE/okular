@@ -15,16 +15,22 @@
 #include "properties.h"
 #include "propertiesdialog.h"
 
-propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialogBase(parent, 0, true, i18n("PDF properties"), Ok)
+propertiesDialog::propertiesDialog(QWidget *parent, KPDFDocument *doc) : KDialogBase(parent, 0, true, i18n( "Unknown file." ), Ok)
 {
+  // embed the properties widget (TODO switch to a dynamic generated one)
   properties *p = new properties(this);
   setMainWidget(p);
+  // get document info, if not present display blank data and a warning
   const DocumentInfo * info = doc->documentInfo();
   if ( !info )
   {
     p->titleValue->setText( i18n( "No document opened!" ) );
     return;
   }
+  // mime name based on mimetype id
+  QString mimeName = info->mimeType.section( '/', -1 ).upper();
+  setCaption( i18n("%1 properties").arg( mimeName ) );
+  // fill in document property values
   p->pagesValue->setText( QString::number( doc->pages() ) );
   p->authorValue->setText( info->author );
   p->titleValue->setText( info->title );

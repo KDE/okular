@@ -25,7 +25,7 @@
 
 class QPixmap;
 class TextPage;
-class GeneratorPDF;
+class PDFGenerator;
 class KPDFLink;
 class KPDFPageRect;
 
@@ -42,7 +42,7 @@ class KPDFPageRect;
 class KPDFOutputDev : public SplashOutputDev
 {
     public:
-        KPDFOutputDev( GeneratorPDF * parent, SplashColor paperColor );
+        KPDFOutputDev( PDFGenerator * parent, SplashColor paperColor );
         virtual ~KPDFOutputDev();
 
         // to be called before PDFDoc->displayPage( thisclass, .. )
@@ -84,7 +84,7 @@ class KPDFOutputDev : public SplashOutputDev
         int m_pixmapWidth;
         int m_pixmapHeight;
         QPixmap * m_pixmap;
-        GeneratorPDF * m_generator;
+        PDFGenerator * m_generator;
 
         // text page generated on demand
         TextPage * m_text;

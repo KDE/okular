@@ -34,13 +34,16 @@ class KPDFDocumentObserver
         // you must give each observer a unique ID (used for notifications)
         virtual uint observerId() const = 0;
 
-        // monitor changes in pixmaps (generation thread complete)
-        virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
-        virtual void notifyPixmapsCleared() {};
-
         // commands from the Document to all observers
         virtual void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool /*documentChanged*/ ) {};
         virtual void pageSetCurrent( int /*pageNumber*/, const QRect & /*viewport*/ = QRect() ) {};
+
+        // queries to observers
+        virtual bool canUnloadPixmap( int /*pageNum*/ ) { return true; }
+
+        // monitor changes in pixmaps (generation thread complete)
+        virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
+        virtual void notifyPixmapsCleared() {};
 };
 
 #define PRESENTATION_ID 1
@@ -90,7 +93,8 @@ class KPDFDocument
         bool okToPrint() const;
 
         // perform actions on document / pages
-        void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
+        //void requestPixmaps( int id, const QValueList<int> & pages, int width, int height, bool syncronous = false );
+        void requestPixmap( int id, int pageNum, int width, int height, bool syncronous = false );
         void requestTextPage( uint page );
         void setCurrentPage( int page, const QRect & viewport = QRect() );
         void findText( const QString & text = "", bool caseSensitive = false );
@@ -100,6 +104,10 @@ class KPDFDocument
         bool print( KPrinter &printer );
 
     private:
+        // memory management related functions
+        int mTotalMemory();
+        int mFreeMemory();
+        // more private functions
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
         void processPageList( bool documentChanged );
@@ -129,6 +137,7 @@ struct DocumentInfo
             producer,
             subject,
             title,
+            mimeType,
             format,
             formatVersion,
             encryption,

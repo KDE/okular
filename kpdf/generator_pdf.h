@@ -14,6 +14,7 @@
 #include <qmutex.h>
 #include <qcolor.h>
 #include <qstring.h>
+#include <qthread.h>
 #include "generator.h"
 #include "document.h"
 #include "link.h"
@@ -25,13 +26,22 @@ class KPDFOutputDev;
 /**
  * @short A generator that builds contents from a PDF document.
  *
- * ...
+ * All Generator features are supported and implented by this one.
+ * Internally this holds a reference to xpdf's core objects and provides
+ * contents generation using the PDFDoc object and a couple of OutputDevices
+ * called KPDFOutputDev and KPDFTextDev (both defined in QOutputDev.h).
+ *
+ * For generating page contents we tell PDFDoc to render a page and grab
+ * contents from out OutputDevs when rendering finishes.
+ *
+ * Background asyncronous contents providing is done via a QThread inherited
+ * class defined at the bottom of the file.
  */
-class GeneratorPDF : public Generator
+class PDFGenerator : public Generator
 {
     public:
-        GeneratorPDF();
-        virtual ~GeneratorPDF();
+        PDFGenerator();
+        virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
@@ -69,33 +79,29 @@ class GeneratorPDF : public Generator
         DocumentSynopsis docSyn;
 };
 
-/*
-#ifndef THUMBNAILGENERATOR_H
-#define THUMBNAILGENERATOR_H
 
-#include <qthread.h> 
-
-class QMutex;
-
-class ThumbnailGenerator : public QThread
+/**
+ * @short A thread that builds contents for PDFGenerator in the background.
+ *
+ * 
+ */
+class PDFGeneratorThread : public QThread
 {
+/*
     public:
-        ThumbnailGenerator(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o);
-        
+        PDFGeneratorThread(PDFDoc *doc, QMutex *docMutex, int page, double ppp, QObject *o);
         int getPage() const;
 
     protected:
         void run();
-    
+
     private:
         PDFDoc *m_doc;
         QMutex *m_docMutex;
         int m_page;
         QObject *m_o;
         double m_ppp;
-};
-
-#endif
 */
+};
 
 #endif

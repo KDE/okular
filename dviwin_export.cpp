@@ -63,7 +63,11 @@ void dviWindow::exportText(void)
 					  "warning_export_to_text_may_not_work") == KMessageBox::Cancel)
     return;
 
-  QString fileName = KFileDialog::getSaveFileName(QString::null, "*.txt|Plain Text (Latin 1) (*.txt)", this, i18n("Export File As"));
+  // Generate a suggestion for a reasonable file name
+  QString suggestedName = dviFile->filename;
+  suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
+
+  QString fileName = KFileDialog::getSaveFileName(suggestedName, "*.txt|Plain Text (Latin 1) (*.txt)", this, i18n("Export File As"));
   if (fileName.isEmpty())
     return;
   QFileInfo finfo(fileName);
@@ -163,7 +167,11 @@ void dviWindow::exportPDF(void)
     return;
   }
 
-  QString fileName = KFileDialog::getSaveFileName(QString::null, "*.pdf|Portable Document Format (*.pdf)", this, i18n("Export File As"));
+  // Generate a suggestion for a reasonable file name
+  QString suggestedName = dviFile->filename;
+  suggestedName = suggestedName.left(suggestedName.find(".")) + ".pdf";
+
+  QString fileName = KFileDialog::getSaveFileName(suggestedName, "*.pdf|Portable Document Format (*.pdf)", this, i18n("Export File As"));
   if (fileName.isEmpty())
     return;
   QFileInfo finfo(fileName);
@@ -248,7 +256,11 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
   
   QString fileName;
   if (fname.isEmpty()) {
-    fileName = KFileDialog::getSaveFileName(QString::null, "*.ps|PostScript (*.ps)", this, i18n("Export File As"));
+    // Generate a suggestion for a reasonable file name
+    QString suggestedName = dviFile->filename;
+    suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
+
+    fileName = KFileDialog::getSaveFileName(suggestedName, "*.ps|PostScript (*.ps)", this, i18n("Export File As"));
     if (fileName.isEmpty())
       return;
     QFileInfo finfo(fileName);

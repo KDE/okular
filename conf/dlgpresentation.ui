@@ -126,7 +126,7 @@
                     </item>
                     <item>
                         <property name="text">
-                            <string>Random transition</string>
+                            <string>Random Transition</string>
                         </property>
                     </item>
                     <item>
@@ -183,7 +183,7 @@
                         <cstring>textLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>Default Transition:</string>
+                        <string>Default transition:</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="2" column="0">

@@ -42,7 +42,7 @@ int  performanceFlag = 0;
 #endif
 
 typedef KParts::GenericFactory<KDVIMultiPage> KDVIMultiPageFactory;
-K_EXPORT_COMPONENT_FACTORY(kdvipart, KDVIMultiPageFactory);
+K_EXPORT_COMPONENT_FACTORY(kdvipart, KDVIMultiPageFactory)
 
 KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent,
                              const char *name, const QStringList& args)

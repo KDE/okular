@@ -68,9 +68,6 @@
 
 extern char *xmalloc (unsigned, const char *);
 extern FILE *xfopen(char *filename, char *type);
-extern Boolean check_dvi_file(void);
-
-
 
 struct frame	frame0;	/* dummy head of list */
 
@@ -102,23 +99,23 @@ extern	off_t	lseek();
  *	Byte reading routines for dvi file.
  */
 
-#define	xtell(pos)	((long) (lseek(fileno(dvi_file), 0L, SEEK_CUR) - (currinf.end - (pos))))
+#define	xtell(pos)	((long) (lseek(fileno(dviFile->file), 0L, SEEK_CUR) - (currinf.end - (pos))))
 
-static unsigned char xxone()
+unsigned char dviWindow::xxone()
 {
   if (currinf._virtual) {
     ++currinf.pos;
     return EOP;
   }
   currinf.end = dvi_buffer +
-    read(fileno(dvi_file), (char *) (currinf.pos = dvi_buffer),
+    read(fileno(dviFile->file), (char *) (currinf.pos = dvi_buffer),
 	 DVI_BUFFER_LEN);
   return currinf.end > dvi_buffer ? *(currinf.pos)++ : EOF;
 }
 
 #define	xone()  (currinf.pos < currinf.end ? *(currinf.pos)++ : xxone())
 
-static unsigned long xnum(unsigned char size)
+unsigned long dviWindow::xnum(unsigned char size)
 {
   register long x = 0;
 
@@ -126,7 +123,7 @@ static unsigned long xnum(unsigned char size)
   return x;
 }
 
-static long xsnum(unsigned char size)
+long dviWindow::xsnum(unsigned char size)
 {
   register long x;
 
@@ -142,11 +139,11 @@ static long xsnum(unsigned char size)
 
 #define	xsfour()	xsnum(4)
 
-static	void xskip(long offset)
+void dviWindow::xskip(long offset)
 {
   currinf.pos += offset;
   if (!currinf._virtual && currinf.pos > currinf.end)
-    (void) lseek(fileno(dvi_file), (long) (currinf.pos - currinf.end), SEEK_CUR);
+    (void) lseek(fileno(dviFile->file), (long) (currinf.pos - currinf.end), SEEK_CUR);
 }
 
 
@@ -358,7 +355,6 @@ void dviWindow::draw_part(struct frame *minframe, double current_dimconv)
   currinf.fontp        = NULL;
   currinf.set_char_p   = &dviWindow::set_no_char;
   currinf.dir          = 1;
-  //@@@  PostScriptOutPutString = NULL;	/* indicates we're not scanning */
 
   for (;;) {
     ch = xone();
@@ -527,17 +523,19 @@ void dviWindow::draw_page(void)
   kdDebug() <<"draw_page" << endl;
 #endif
 
-  /* Check for changes in dvi file. */
-  if (!check_dvi_file())
-    return;
-
-  if ((_postscript) && !PostScriptDirectory->at(current_page)->isEmpty())
-    renderPostScript(PostScriptDirectory->at(current_page));
-  else
+  // Render the PostScript background, if there is one.
+  if (_postscript) {
+    QPixmap *pxm = PS_interface->graphics(current_page);
+    if (pxm != NULL) {
+      foreGroundPaint.drawPixmap(0, 0, *pxm);
+      delete pxm;
+    } else
+      foreGroundPaint.fillRect(pixmap->rect(), Qt::white );
+  } else
     foreGroundPaint.fillRect(pixmap->rect(), Qt::white );
   
   // Step 4: Now really write the text
-  (void) lseek(fileno(dvi_file), page_offset[current_page], SEEK_SET);
+  (void) lseek(fileno(dviFile->file), dviFile->page_offset[current_page], SEEK_SET);
   bzero((char *) &currinf.data, sizeof(currinf.data));
   currinf.fonttable      = tn_table;
   currinf.end            = dvi_buffer;

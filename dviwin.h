@@ -17,12 +17,17 @@
 #include <qintdict.h>
 #include <qvector.h>
 
+#include "psgs.h"
+#include "dvi_init.h"
+
+
 // max. number of hyperlinks per page. This should late be replaced by
 // a dynamic allocation scheme.
 #define MAX_HYPERLINKS 200 
 // max. number of anchors per document. This should late be replaced by
 // a dynamic allocation scheme.
 #define MAX_ANCHORS    300
+
 
 class DVI_Hyperlink {
  public:
@@ -40,30 +45,34 @@ public:
 	     QWidget *parent=0, const char *name=0 );
   ~dviWindow();
 
-  int		totalPages();
+  dvifile       *dviFile;
 
+  int		totalPages();
   void		setShowPS( int flag );
-  int		showPS();
+  int		showPS() { return _postscript; };
   void		setShowHyperLinks( int flag );
-  int		showHyperLinks();
+  int		showHyperLinks() { return _showHyperLinks; };
   void		setMakePK( int flag );
-  int		makePK();
+  int		makePK() { return makepk; };
   void		setResolution( int basedpi );
-  int		resolution();
+  int		resolution() { return basedpi; };
   void		setMetafontMode( const char * );
-  const char *	metafontMode();
+  const char *	metafontMode() { return MetafontMode; };
   void		setPaper(double w, double h);
   void		setFontPath( const char * );
-  const char *	fontPath();
+  const char *	fontPath() { return FontPath; };
+  bool          correctDVI(QString filename);
+  unsigned char xxone();
+  unsigned long xnum(unsigned char size);
+  long          xsnum(unsigned char size);
+  void          xskip(long offset);
   
   // for the preview
-  QPixmap		*pix() { return pixmap; };
+  QPixmap      *pix() { return pixmap; };
 
   // These should not be public... only for the moment
   void          mousePressEvent ( QMouseEvent * e );
   void          read_postamble(void);
-  char          init_dvi_file(void);
-  char          check_dvi_file(void);
   void          draw_part(struct frame *minframe, double current_dimconv);
   void          draw_page(void);
   void          set_vf_char(unsigned int cmd, unsigned int ch);
@@ -71,7 +80,6 @@ public:
   void          set_char(unsigned int cmd, unsigned int ch);
   void          set_empty_char(unsigned int cmd, unsigned int ch);
   void          set_no_char(unsigned int cmd, unsigned int ch);
-  void          renderPostScript(QString *PostScript);
   void          applicationDoSpecial(char *cp);
   void          special(long nbytes);
   void          bang_special(QString cp);
@@ -82,7 +90,7 @@ public:
   void          html_anchor_end(void);
   void          html_anchor_special(QString cp);
   void		drawPage();
-  bool          correctDVI();
+
 
 public slots:
   void		setFile(const char *fname);
@@ -113,9 +121,7 @@ private:
  // \special-commands is written to the PostScriptString
  QString          *PostScriptOutPutString;	
 
- // Contains headers for PostScript, which must be send whenever
- // ghostview is started
- QString           PostScriptHeaderString; 
+ ghostscript_interface *PS_interface;
 
  // TRUE, if gs should be used, otherwise, only bounding boxes are
  // drawn.
@@ -123,11 +129,6 @@ private:
 
  // TRUE, if Hyperlinks should be shown.
  unsigned char	   _showHyperLinks;
-
- // For each page, this vector contains the PostScript needed to
- // render that page. All entries point to valid QString which migt,
- // however, be empty.
- QVector<QString> *PostScriptDirectory;
 
  // If not NULL, the text currently drawn represents a hyperlink
  // to the (relative) URL given in the string;
@@ -138,13 +139,11 @@ private:
 
  // List of anchors in a document
  QString           AnchorList_String[MAX_ANCHORS];
- unsigned int      AnchorList_Page[MAX_ANCHORS];
- double            AnchorList_Vert[MAX_ANCHORS];
+ unsigned int       AnchorList_Page[MAX_ANCHORS];
+ double             AnchorList_Vert[MAX_ANCHORS];
  int               numAnchors;
 
- void	  	   initDVI();
  void		   changePageSize();
- QString	   filename;
  int		   basedpi;
  int		   makepk;
  QPixmap          *pixmap;

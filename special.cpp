@@ -8,6 +8,8 @@
 
 
 #include <qfile.h>
+#include <qdir.h>
+#include <qfileinfo.h>
 #include <kdebug.h>
 
 #include "dviwin.h"
@@ -70,7 +72,7 @@ void dviWindow::header_special(QString cp)
 #endif
 
   if (PostScriptOutPutString && QFile::exists(cp)) {
-    PostScriptHeaderString.append( QString(" (%1) run\n").arg(cp) );
+    PS_interface->PostScriptHeaderString->append( QString(" (%1) run\n").arg(cp) );
   }
 }
 
@@ -103,8 +105,15 @@ void dviWindow::epsf_special(QString cp)
 
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away
-  QString filename = include_command;
-  filename.truncate(filename.find(' '));
+  QString EPSfilename = include_command;
+  EPSfilename.truncate(EPSfilename.find(' '));
+  if (! QFile::exists(EPSfilename)) {
+    QFileInfo fi1(dviFile->filename);
+    QFileInfo fi2(fi1.dir(),EPSfilename);
+    if (fi2.exists())
+      EPSfilename = fi2.absFilePath();
+  }
+
 
   //
   // Now parse the arguments. 
@@ -127,8 +136,8 @@ void dviWindow::epsf_special(QString cp)
   parse_special_argument(include_command, "rhi=", &rhi);
 
   if (PostScriptOutPutString) {
-    if (QFile::exists(filename)) {
-      PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(DVI_H/65536 - 300).arg(DVI_V/65536 - 520) );
+    if (QFile::exists(EPSfilename)) {
+      PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(DVI_H/65536-300).arg(DVI_V/65536-300) );
       PostScriptOutPutString->append( "@beginspecial " );
       PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
       PostScriptOutPutString->append( QString(" %1 @lly").arg(lly) );
@@ -139,11 +148,11 @@ void dviWindow::epsf_special(QString cp)
       if (rhi != 0)
 	PostScriptOutPutString->append( QString(" %1 @rhi").arg(rwi) );
       PostScriptOutPutString->append( " @setspecial \n" );
-      PostScriptOutPutString->append( QString(" (%1) run\n").arg(filename) );
+      PostScriptOutPutString->append( QString(" (%1) run\n").arg(EPSfilename) );
       PostScriptOutPutString->append( "@endspecial \n" );
     }
   } else {
-    if (!_postscript || !QFile::exists(filename)) {
+    if (!_postscript || !QFile::exists(EPSfilename)) {
       // Don't show PostScript, just draw the bounding box
       // For this, calculate the size of the bounding box in Pixels
       double bbox_width  = urx - llx;
@@ -162,17 +171,17 @@ void dviWindow::epsf_special(QString cp)
       bbox_height *= 0.1 * dimconv / shrink_factor;
 
       QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y, (int)bbox_width, (int)bbox_height);
-      if (QFile::exists(filename))
+      if (QFile::exists(EPSfilename))
 	foreGroundPaint.setBrush(Qt::lightGray);
       else
 	foreGroundPaint.setBrush(Qt::red);
       foreGroundPaint.setPen(Qt::black);
       foreGroundPaint.drawRoundRect(bbox, 2, 2);
-      if (QFile::exists(filename))
-	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), filename, -1, &bbox);
+      if (QFile::exists(EPSfilename))
+	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1, &bbox);
       else
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), 
-				  QString("File not found:\n %1").arg(filename), -1, &bbox);
+				  QString("File not found:\n %1").arg(EPSfilename), -1, &bbox);
     }
   }
   return;
@@ -185,9 +194,9 @@ void dviWindow::bang_special(QString cp)
 #endif
 
   if (currwin.win == mane.win && PostScriptOutPutString) {
-    PostScriptHeaderString.append( " @defspecial \n" );
-    PostScriptHeaderString.append( cp );
-    PostScriptHeaderString.append( " @fedspecial \n" );
+    PS_interface->PostScriptHeaderString->append( " @defspecial \n" );
+    PS_interface->PostScriptHeaderString->append( cp );
+    PS_interface->PostScriptHeaderString->append( " @fedspecial \n" );
   }
 }
 
@@ -200,7 +209,7 @@ void dviWindow::quote_special(QString cp)
 #endif
   
   if (currwin.win == mane.win && PostScriptOutPutString) {
-    PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(DVI_H/65536 - 300).arg(DVI_V/65536 - 520) );
+    PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(DVI_H/65536 - 300).arg(DVI_V/65536 - 300) );
     PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
     PostScriptOutPutString->append( cp );
     PostScriptOutPutString->append( " @endspecial \n" );

@@ -257,9 +257,10 @@ bool KDVIMultiPage::print(const QStrList &pages, int current)
 
 void KDVIMultiPage::reload()
 {
-  if (window->correctDVI())
-    {
-      window->setFile(m_file);
-      emit previewChanged(true);
-    }
+  kdDebug() << "Reload file " << m_file << endl;
+
+  if (window->correctDVI(m_file)) {
+    window->setFile(m_file);
+    emit previewChanged(true);
+  }
 }

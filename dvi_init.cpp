@@ -51,11 +51,16 @@
 
 #define DEBUG 0
 
+#include "dvi_init.h"
 #include "dviwin.h"
-#include <kdebug.h>
+
 
 #include <qbitmap.h> 
 #include <qfileinfo.h>
+
+#include <kdebug.h>
+#include <kmessagebox.h>
+#include <klocale.h>
 
 extern "C" {
 #include <kpathsea/config.h>
@@ -92,7 +97,6 @@ extern struct frame	frame0;	/* dummy head of list */
 #define	dvi_oops(str)	(dvi_oops_msg = (str), longjmp(dvi_env, 1))
 
 static	Boolean	font_not_found;
-QDateTime dvi_time;
 
 /*
  * DVI preamble and postamble information.
@@ -235,23 +239,22 @@ font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict<struct
  *      process_preamble reads the information in the preamble and stores
  *      it into global variables for later use.
  */
-static void process_preamble()
+void dvifile::process_preamble(void)
 {
   unsigned char   k;
 
-  if (one(dvi_file) != PRE)
+  if (one(file) != PRE)
     dvi_oops("DVI file doesn't start with preamble");
-  // @@@ throw("DVI file doesn't start with preamble");
-  if (one(dvi_file) != 2)
+  if (one(file) != 2)
     dvi_oops("Wrong version of DVI output for this program");
 
-  numerator     = four(dvi_file);
-  denominator   = four(dvi_file);
-  magnification = four(dvi_file);
+  numerator     = four(file);
+  denominator   = four(file);
+  magnification = four(file);
   dimconv       = (((double) numerator * magnification) / ((double) denominator * 1000.));
   dimconv       = dimconv * (((long) pixels_per_inch)<<16) / 254000;
-  k             = one(dvi_file);
-  Fread(job_id, sizeof(char), (int) k, dvi_file);
+  k             = one(file);
+  Fread(job_id, sizeof(char), (int) k, file);
   job_id[k] = '\0';
 }
 
@@ -260,7 +263,7 @@ static void process_preamble()
  *	and leaves the file ready to start reading at that location.
  */
 #define	TMPSIZ	516	/* 4 trailer bytes + 512 junk bytes allowed */
-static	void find_postamble()
+void dvifile::find_postamble(void)
 {
   long	pos;
   unsigned char	temp[TMPSIZ];
@@ -268,12 +271,12 @@ static	void find_postamble()
   unsigned char	*p1;
   unsigned char	byte;
 
-  Fseek(dvi_file, (long) 0, 2);
-  pos = ftell(dvi_file) - TMPSIZ;
+  Fseek(file, (long) 0, 2);
+  pos = ftell(file) - TMPSIZ;
   if (pos < 0)
     pos = 0;
-  Fseek(dvi_file, pos, 0);
-  p = temp + fread((char *) temp, sizeof(char), TMPSIZ, dvi_file);
+  Fseek(file, pos, 0);
+  p = temp + fread((char *) temp, sizeof(char), TMPSIZ, file);
   for (;;) {
     p1 = p;
     while (p1 > temp && *(--p1) != TRAILER)
@@ -289,13 +292,13 @@ static	void find_postamble()
   pos += p - temp;
   byte = *p;
   while (byte == TRAILER) {
-    Fseek(dvi_file, --pos, 0);
-    byte = one(dvi_file);
+    Fseek(file, --pos, 0);
+    byte = one(file);
   }
   if (byte != 2)
     dvi_oops("Wrong version of DVI output for this program");
-  Fseek(dvi_file, pos - 4, 0);
-  Fseek(dvi_file, sfour(dvi_file), 0);
+  Fseek(file, pos - 4, 0);
+  Fseek(file, sfour(file), 0);
 }
 
 
@@ -305,31 +308,31 @@ static	void find_postamble()
  *      It also takes care of reading in all of the pixel files for the fonts
  *      used in the job.
  */
-void dviWindow::read_postamble(void)
+void dvifile::read_postamble(void)
 {
   unsigned char   cmnd;
   struct font	*fontp;
   struct font	**fontpp;
 
-  if (one(dvi_file) != POST)
+  if (one(file) != POST)
     dvi_oops("Postamble doesn't begin with POST");
-  last_page_offset = four(dvi_file);
-  if (numerator != four(dvi_file)
-      || denominator != four(dvi_file)
-      || magnification != four(dvi_file))
+  last_page_offset = four(file);
+  if (numerator != four(file)
+      || denominator != four(file)
+      || magnification != four(file))
     dvi_oops("Postamble doesn't match preamble");
   /* read largest box height and width */
-  unshrunk_page_h = (spell_conv(sfour(dvi_file)) >> 16) + basedpi;
-  if (unshrunk_page_h < unshrunk_paper_h)
-    unshrunk_page_h = unshrunk_paper_h;
-  unshrunk_page_w = (spell_conv(sfour(dvi_file)) >> 16) + basedpi;
-  if (unshrunk_page_w < unshrunk_paper_w)
-    unshrunk_page_w = unshrunk_paper_w;
-  (void) two(dvi_file);	/* max stack size */
-  total_pages = two(dvi_file);
+  int unshrunk_page_h = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
+  //  if (unshrunk_page_h < unshrunk_paper_h)
+  //    unshrunk_page_h = unshrunk_paper_h;
+  int unshrunk_page_w = (spell_conv(sfour(file)) >> 16);//@@@ + basedpi;
+  //  if (unshrunk_page_w < unshrunk_paper_w)
+  //    unshrunk_page_w = unshrunk_paper_w;
+  (void) two(file);	/* max stack size */
+  total_pages = two(file);
   font_not_found = False;
-  while ((cmnd = one(dvi_file)) >= FNTDEF1 && cmnd <= FNTDEF4)
-    (void) define_font(dvi_file, cmnd, (struct font *) NULL, &tn_table);
+  while ((cmnd = one(file)) >= FNTDEF1 && cmnd <= FNTDEF4)
+    (void) define_font(file, cmnd, (struct font *) NULL, &tn_table);
   if (cmnd != POSTPOST)
     dvi_oops("Non-fntdef command found in postamble");
   if (font_not_found)
@@ -344,95 +347,61 @@ void dviWindow::read_postamble(void)
       delete fontp;
 }
 
-static void prepare_pages()
+void dvifile::prepare_pages()
 {
+  kdDebug() << "prepare_pages" << endl;
+
   page_offset = (long *) xmalloc((unsigned) total_pages * sizeof(long), "page directory");
   int i = total_pages;
   page_offset[--i] = last_page_offset;
-  Fseek(dvi_file, last_page_offset, 0);
+  Fseek(file, last_page_offset, 0);
   /*
    * Follow back pointers through pages in the DVI file,
    * storing the offsets in the page_offset table.
    */
   while (i > 0) {
-    Fseek(dvi_file, (long) (1+4+(9*4)), 1);
-    Fseek(dvi_file, page_offset[--i] = four(dvi_file), 0);
+    Fseek(file, (long) (1+4+(9*4)), 1);
+    Fseek(file, page_offset[--i] = four(file), 0);
   }
 }
 
 /** init_dvi_file is the main subroutine for reading the startup
  *  information from the dvi file.  Returns True on success.  */
 
-Boolean dviWindow::init_dvi_file()
+dvifile::dvifile(QString fname)
 {
-  if (QFileInfo(dvi_name).isDir())
-    return False;
+  kdDebug() << "init_dvi_file: " << fname << endl;
 
+  file        = NULL;
+  page_offset = NULL;
+
+  file = fopen(fname.ascii(), "r");
+  if (file == NULL) {
+    /*@@@    KMessageBox::error( this,
+			i18n("File error!\n\n") +
+			i18n("Could not open the file\n") + 
+			fname);
+    */		
+    return;
+  }
+
+  filename = fname;
   tn_table.clear();
   
-  dvi_time = QFileInfo(dvi_name).lastModified();
   process_preamble();
   find_postamble();
   read_postamble();
   prepare_pages();
-  page_w = (int)(unshrunk_page_w / mane.shrinkfactor  + 0.5) + 2;
-  page_h = (int)(unshrunk_page_h / mane.shrinkfactor  + 0.5) + 2;
-  if (current_page >= total_pages)
-    current_page = total_pages - 1;
 
-  // Extract PostScript from the DVI file, and store the PostScript
-  // specials in PostScriptDirectory, and the headers in the
-  // PostScriptHeaderString.
-
-  // First, delete the old vector, if there is any
-  if (PostScriptDirectory) {
-    PostScriptDirectory->clear();
-    delete PostScriptDirectory;
-  }    
-  
-  PostScriptDirectory = new QVector<QString>(total_pages+1);
-  PostScriptDirectory->setAutoDelete(TRUE);
-  PostScriptHeaderString.truncate(0);
-
-  // We will also generate a list of hyperlink-anchors in the
-  // document. So declare the existing list empty.
-  numAnchors = 0;
-
-  int save_current_page = current_page;
-  for(current_page=0; current_page<total_pages; current_page++) {
-    PostScriptOutPutString = new QString();
-
-    (void) lseek(fileno(dvi_file), page_offset[current_page], SEEK_SET);
-    bzero((char *) &currinf.data, sizeof(currinf.data));
-    currinf.fonttable = tn_table;
-    currinf.end       = dvi_buffer;
-    currinf.pos       = dvi_buffer;
-    currinf._virtual  = NULL;
-    draw_part(current_frame = &frame0, dimconv);
-
-    PostScriptDirectory->insert(current_page,PostScriptOutPutString);
-  }
-  PostScriptOutPutString = NULL;	
-  current_page           = save_current_page;
-  return True;
+  return;
 }
 
-
-/**
- **	Check for changes in dvi file.
- **/
-
-Boolean dviWindow::check_dvi_file(void)
+dvifile::~dvifile()
 {
-  if (dvi_file == NULL || (dvi_time != QFileInfo(dvi_name).lastModified())) {
-    if (dvi_file) {
-      Fclose(dvi_file);
-      dvi_file = NULL;
-    }
-    dvi_file = fopen(dvi_name, OPEN_MODE);
-    if (dvi_file == NULL || !init_dvi_file())
-      dvi_oops("Cannot reopen dvi file.");
-    return False;
-  }
-  return True;
+  kdDebug() << "destroy dvi-file" << endl;
+
+  if (page_offset != NULL)
+    free(page_offset);
+  if (file != NULL)
+    fclose(file);
 }

@@ -172,12 +172,10 @@ extern	unsigned short	current_timestamp INIT(0);
  *	Command line flags.
  */
 
-extern	char	*debug_arg;
+//extern	char	*debug_arg;
 extern	int	_pixels_per_inch;
-extern	char	*sidemargin;
-extern	char	*topmargin;
-//extern	char	*xoffset;
-//extern	char	*yoffset;
+//extern	char	*sidemargin;
+//extern	char	*topmargin;
 extern	_Xconst char	*_paper;
 extern	char	*mg_arg[5];
 
@@ -211,24 +209,12 @@ extern	int	_debug	INIT(0);
 #define	DBG_SEARCH	0x800	/* 2048 */
 #define	DBG_ALL		(0xffff & ~DBG_BATCH)
 
-//#ifndef	BDPI
-//#define	BDPI	300
-//#endif
 
-extern	char	*dvi_name	INIT(NULL);
-extern	FILE	*dvi_file;			/* user's file */
-//extern	char	*prog;
 extern	Display	*DISP;
 extern	Screen	*SCRN;
-//extern	Boolean	allow_can	INIT(True);
 extern	struct WindowRec mane, alt, currwin;
-//extern	int		min_x, max_x, min_y, max_y;
 
 #define	shrink_factor	currwin.shrinkfactor
-
-//extern	Window	top_level;
-
-
 
 extern	jmp_buf	dvi_env;	/* mechanism to communicate dvi file errors */
 extern	const char *dvi_oops_msg;	/* error message */

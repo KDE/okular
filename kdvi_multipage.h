@@ -7,11 +7,7 @@
 #include <kparts/browserextension.h>
 #include <kparts/factory.h>
 
-class documentWidget;
 class KPrinter;
-class QLabel;
-class QPainter;
-
 
 #include "../kviewshell/kmultipage.h"
 #include "dviwin.h"
@@ -55,9 +51,6 @@ public:
   /// opens a file
   virtual bool openFile();
 
-  /// close a file
-  virtual bool closeURL();
-
   /// sets a zoom factor
   virtual double setZoom(double z);
 
@@ -78,12 +71,16 @@ public:
   /// multipage implementations that offer read- and write
   /// functionality should re-implement this method.
   virtual bool isModified();
-  
+
   virtual void addConfigDialogs(KConfigDialog* configDialog);
 
 private:
   virtual DocumentWidget* createDocumentWidget();
-   
+
+  /** Used to enable the export menu when a file is successfully
+      loaded. */
+  virtual void enableActions(bool);
+
 public slots:
   /** Opens a file requestor and saves. This really saves the content
       of the DVI-file, and does not just start a copy job */
@@ -184,10 +181,6 @@ private:
   KAction      *exportTextAction;
   KAction      *findNextAction;
   KAction      *exportPSAction;
-
-  /** Used to enable the export menu when a file is successfully
-      loaded. */
-  void enableActions(bool);
 };
 
 

@@ -283,15 +283,6 @@ void KDVIMultiPage::jumpToReference(QString reference)
 }
 
 
-bool KDVIMultiPage::closeURL()
-{
-  document_history.clear();
-  window->setFile(QString::null); // That means: close the file. Resize the widget to 0x0.
-  enableActions(false);
-  return true;
-}
-
-
 QStringList KDVIMultiPage::fileFormats()
 {
   QStringList r;

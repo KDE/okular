@@ -16,7 +16,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qcursor.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
@@ -199,7 +198,7 @@ void PageView::saveSettings( KConfigGroup * config )
 }
 
 
-//BEGIN KPDFDocumentObserver inherited methods 
+//BEGIN KPDFDocumentObserver inherited methods
 void PageView::pageSetup( const QValueVector<KPDFPage*> & pageSet, bool /*documentChanged*/ )
 { /* TODO: preserve (reuse) existing pages if !documentChanged */
     // delete all pages
@@ -271,7 +270,7 @@ void PageView::notifyPixmapChanged( int pageNumber )
 }
 //END KPDFDocumentObserver inherited methods
 
-//BEGIN widget events 
+//BEGIN widget events
 void PageView::contentsMousePressEvent( QMouseEvent * e )
 {
     bool leftButton = e->button() & LeftButton,
@@ -352,7 +351,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 m_popup->insertItem( SmallIcon("bookmark"), i18n("Add Bookmark"), 1 );
             m_popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Page"), 2 );
             m_popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
-            switch ( m_popup->exec(QCursor::pos()) )
+            switch ( m_popup->exec(e->globalPos()) )
             {
             case 1:
                 d->document->slotBookmarkPage( kpdfPage->number(), !kpdfPage->isBookmarked() );

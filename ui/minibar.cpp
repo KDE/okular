@@ -16,6 +16,7 @@
 #include <qpainter.h>
 #include <kiconloader.h>
 #include <kaccelmanager.h>
+#include <kdeversion.h>
 
 // local includes
 #include "core/document.h"
@@ -397,7 +398,9 @@ HoverButton::HoverButton( QWidget * parent )
     : QPushButton( parent ), m_hovering( false )
 {
     setMouseTracking( true );
+#if KDE_IS_VERSION(3,3,90)
     KAcceleratorManager::setNoAccel( this );
+#endif
 }
 
 void HoverButton::mouseMoveEvent( QMouseEvent * e )

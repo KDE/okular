@@ -38,7 +38,7 @@ shellrc_DATA = kpdf_shell.rc
 kde_module_LTLIBRARIES = libkpdfpart.la
 
 # the Part's source, library search path, and link libraries
-libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevKPrinter.cpp kpdf_part.cpp pixmapwidget.cpp pageview.cpp thumbnaillist.cpp kpdf_error.cpp xpdf_errors.cpp thumbnailgenerator.cpp document.cpp page.cpp searchwidget.cpp toc.cpp
+libkpdfpart_la_SOURCES = QOutputDev.cpp QOutputDevKPrinter.cpp kpdf_part.cpp pixmapwidget.cpp pageview.cpp thumbnaillist.cpp kpdf_error.cpp xpdf_errors.cpp thumbnailgenerator.cpp document.cpp page.cpp searchwidget.cpp toc.cpp kpdf_dcop.skel
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS) -lm
 

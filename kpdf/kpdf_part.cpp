@@ -29,6 +29,7 @@
 #include <qtoolbox.h>
 #include <qpushbutton.h>
 
+#include <dcopobject.h>
 #include <kaction.h>
 #include <kinstance.h>
 #include <kprinter.h>
@@ -66,7 +67,7 @@ unsigned int Part::m_count = 0;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-  : KParts::ReadOnlyPart(parent, name)
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name)
 {
 	// create browser extension (for printing when embedded into browser)
 	new BrowserExtension(this);
@@ -202,6 +203,22 @@ Part::~Part()
 	delete document;
 	if ( --m_count == 0 )
 		delete globalParams;
+}
+
+void Part::goToPage(uint i)
+{
+	if (i <= document->pages())
+		document->slotSetCurrentPage( i - 1 );
+}
+
+void Part::openDocument(KURL doc)
+{
+	openURL(doc);
+}
+
+uint Part::pages()
+{
+	return document->pages();
 }
 
 //this don't go anywhere but is required by genericfactory.h

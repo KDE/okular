@@ -19,6 +19,8 @@
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
 
+#include "kpdf_dcop.h"
+
 class QWidget;
 class QSplitter;
 class QToolBox;
@@ -50,7 +52,7 @@ class BrowserExtension;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart
+class Part : public KParts::ReadOnlyPart, virtual public kpdf_dcop
 {
 Q_OBJECT
 
@@ -63,6 +65,10 @@ public:
 	~Part();
 
 	static KAboutData* createAboutData();
+	
+	ASYNC goToPage(uint page);
+	ASYNC openDocument(KURL doc);
+	uint pages();
 
 protected:
 	// reimplemented from KParts::ReadOnlyPart

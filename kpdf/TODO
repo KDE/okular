@@ -34,6 +34,7 @@ Porting / In progress on the branch (first item comes first):
 -> pageview: fix keys/mouse in single/continous modes
 
 Done (newest feature comes firts):
+-> ADD: Some dcop functions (goToPage, openDocument and give # of pages) (Albert)
 -> MRG: link following ('actionMovie' kind is missing)
 -> ADD: text selection (rectangular blocks) in selection mode
 -> ADD: autoscroll page with Shift+Up/Dn keys (exact konqueror's behavior)

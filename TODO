@@ -73,6 +73,7 @@ More items (first items will enter 'In progress list' first):
 
 Done (newest features come first):
 -- merging from kdpf_annotations branch --
+-> ADD: Put fonts used by the document on the properties dialog
 -> ADD: partial implementation of XYZ links
 -> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files

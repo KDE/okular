@@ -9,7 +9,6 @@
 
 class QPainter;
 class QPixmap;
-class QScrollView;
 class QWidget;
 
 class KAboutData;
@@ -22,31 +21,9 @@ class LinkDest;
 class PDFDoc;
 class XOutputDev;
 
-/*
-class QPixmapWidget : public QWidget
-{
-public:
-    QPixmapWidget( QPixmap* bg, QWidget* parent = 0, const char* name = 0 )
-        : QWidget( parent, name )
-	, m_pixmap( bg )
-    {
-        setFixedSize( bg->size() );
-    }
-
-protected:
-    void paintEvent( QPaintEvent* pe )
-    {
-	QPainter p( this );
-	p.drawPixmap( pe->rect().topLeft(), *m_pixmap, pe->rect() );
-    }
-
-private:
-    QPixmap* m_pixmap;
-};
-*/
-
 namespace KPDF
 {
+  class Canvas;
   class PageWidget;
 
   /**
@@ -101,11 +78,11 @@ namespace KPDF
     void executeAction(LinkAction*);
 
   private:
-    QScrollView* m_scrollView;
-    QPixmap      m_pagePixmap;
-    PageWidget*  m_pageWidget;
-    PDFDoc*      m_doc;
-    XOutputDev*  m_outputDev;
+    Canvas*     m_canvas;
+    QPixmap     m_pagePixmap;
+    PageWidget* m_pageWidget;
+    PDFDoc*     m_doc;
+    XOutputDev* m_outputDev;
 
     KToggleAction* m_fitWidth;
 

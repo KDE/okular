@@ -3,8 +3,6 @@
 #include <math.h>
 
 #include <qfile.h>
-#include <qscrollview.h>
-#include <qtextstream.h>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -20,6 +18,7 @@
 #include "PDFDoc.h"
 #include "XOutputDev.h"
 
+#include "kpdf_canvas.h"
 #include "kpdf_pagewidget.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
@@ -42,11 +41,11 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   // we need an instance
   setInstance(KPDFPartFactory::instance());
 
-  m_scrollView = new QScrollView(parentWidget, widgetName);
-  setWidget(m_scrollView);
+  m_canvas = new Canvas(parentWidget, widgetName);
+  setWidget(m_canvas);
 
-  m_pageWidget = new PageWidget(m_scrollView->viewport());
-  m_scrollView->addChild(m_pageWidget);
+  m_pageWidget = new PageWidget(m_canvas->viewport());
+  m_canvas->addChild(m_pageWidget);
 
   connect(m_pageWidget, SIGNAL(linkClicked(LinkAction*)), 
           SLOT(executeAction(LinkAction*)));
@@ -144,25 +143,25 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
   {
     const double pageAR = pageWidth/pageHeight; // Aspect ratio
 
-    const int scrollViewWidth  = m_scrollView->contentsRect().width();
-    const int scrollViewHeight = m_scrollView->contentsRect().height();
-    const int scrollBarWidth   = m_scrollView->verticalScrollBar()->width();
+    const int canvasWidth    = m_canvas->contentsRect().width();
+    const int canvasHeight   = m_canvas->contentsRect().height();
+    const int scrollBarWidth = m_canvas->verticalScrollBar()->width();
 
     // Calculate the height so that the page fits the viewport width 
     // assuming that we need a vertical scrollbar.
-    float height = float(scrollViewWidth - scrollBarWidth) / pageAR;
+    float height = float(canvasWidth - scrollBarWidth) / pageAR;
 
     // If the vertical scrollbar wasn't needed after all, calculate the page
     // size so that the page fits the viewport width without the scrollbar.
-    if (ceil(height) <= scrollViewHeight)
+    if (ceil(height) <= canvasHeight)
     {
-      height = float(scrollViewWidth) / pageAR;
+      height = float(canvasWidth) / pageAR;
 
       // Handle the rare case that enlarging the page resulted in the need of 
       // a vertical scrollbar. We can fit the page to the viewport height in
       // this case.
-      if (ceil(height) > scrollViewHeight)
-        height = float(scrollViewHeight) * pageAR;
+      if (ceil(height) > canvasHeight)
+        height = float(canvasHeight) * pageAR;
     }
 
     m_zoomFactor = (height / pageHeight) / basePpp;

@@ -282,11 +282,13 @@
 	<listitem>
 	  <para>If you do not have a TeX binary which includes inverse
 	  search information natively, copy the files
-	  <filename>srcltx.sty</filename> and
-	  <filename>srctex.sty</filename> to the directory where your
-	  TeX file resides (you can do that by pressing the &Shift; key
-	  and &LMB; while the mouse pointer is on a hyperlink.)
-	  If you use LaTeX, add the line
+	  <ulink url="srcltx.sty">
+	  <filename>srcltx.sty</filename> </ulink> and
+	  <ulink url="srctex.sty"> <filename>srctex.sty</filename>
+	  </ulink> to the directory where your TeX file resides (you
+	  can do that by pressing the &Shift; key and &LMB; while the
+	  mouse pointer is on a hyperlink.)  If you use LaTeX, add the
+	  line
 <programlisting>
 
     \usepackage[active]{srcltx}
@@ -680,10 +682,11 @@
 	  <listitem>
 		<para>Download the following
 		<application>Emacs</application> script,
-		<filename>kdvi-search.el</filename> (press &Shift; and
-		&LMB; the filename to download) and store it in a
-		place where <application>Emacs</application> can
-		access it &mdash; we recommend a directory
+		<ulink url="kdvi-search.el">
+		<filename>kdvi-search.el</filename> </ulink> (press
+		&Shift; and &LMB; the filename to download) and store
+		it in a place where <application>Emacs</application>
+		can access it &mdash; we recommend a directory
 		<filename class="directory">emacs-scripts</filename>.</para>
 	  </listitem>
 	  <listitem>

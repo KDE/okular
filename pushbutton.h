@@ -10,8 +10,8 @@
 #ifndef PUSHBUTTON_H
 #define PUSHBUTTON_H
 
-#include <qpushbt.h>
-#include <qpopmenu.h>
+#include <qpushbutton.h>
+#include <qpopupmenu.h>
 
 class PushButton: public QPushButton
 {

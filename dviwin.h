@@ -8,9 +8,9 @@
 #include <qwidget.h>
 #include <qpainter.h> 
 #include <qevent.h>
-#include <qscrbar.h>
+#include <qscrollbar.h>
 #include <qtimer.h>
-#include <qdatetm.h>
+#include <qdatetime.h>
 
 class dviWindow : public QWidget
 {

@@ -8,17 +8,17 @@
 *****************************************************************************/
 
 #include "scrbox.h"
-#include <qtabdlg.h>
-#include <qmlined.h>
-#include <qbttngrp.h>
-#include <qradiobt.h>
+#include <qtabdialog.h>
+#include <qmultilinedit.h>
+#include <qbuttongroup.h>
+#include <qradiobutton.h>
 #include <qlabel.h>
-#include <qcombo.h>
+#include <qcombobox.h>
 #include <qlayout.h>
 #include <stdio.h>
 #include <qstring.h>
 #include <qpainter.h>
-#include <qdrawutl.h>
+#include <qdrawutil.h>
 
 ScrollBox::ScrollBox( QWidget * parent , const char * name )
     : QFrame( parent, name )

@@ -6,17 +6,17 @@
 
 #include <qlayout.h>
 #include <qdir.h>
-#include <qfiledlg.h>
+#include <qfiledialog.h>
 #include <qpixmap.h>
-#include <qpushbt.h>
+#include <qpushbutton.h>
 #include <qtooltip.h>
-#include <qapp.h>
+#include <qapplication.h>
 #include <kmenubar.h>
-#include <qmsgbox.h>
-#include <qgrpbox.h>
-#include <qfileinf.h>
+#include <qmessagebox.h>
+#include <qgroupbox.h>
+#include <qfileinfo.h>
 #include <qkeycode.h>
-#include <qlined.h>
+#include <qlineedit.h>
 #include <qframe.h>
 #include <kapp.h>
 #include <kpanner.h>
@@ -433,7 +433,7 @@ void kdvi::resizeEvent( QResizeEvent* e )
 
 bool kdvi::eventFilter( QObject *obj , QEvent *e )
 {
-	if ( obj != dviwin || e->type() != Event_MouseButtonPress )
+	if ( obj != dviwin || e->type() != QEvent::MouseButtonPress )
 		return FALSE;
 	QMouseEvent *me = (QMouseEvent*)e;
 	if ( me->button() != RightButton )

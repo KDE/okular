@@ -15,10 +15,10 @@
 
 #include <qdialog.h>
 #include <qlabel.h>
-#include <qlined.h>
+#include <qlineedit.h>
 #include <qlistbox.h>
-#include <qpushbt.h>
-#include <qradiobt.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
 
 class printSetupData : public QDialog
 {

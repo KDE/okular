@@ -14,7 +14,7 @@
 
 #define Inherited QDialog
 
-#include <qbttngrp.h>
+#include <qbuttongroup.h>
 #include <qlabel.h>
 #include <kapp.h>
 

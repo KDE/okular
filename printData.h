@@ -14,12 +14,12 @@
 #define printData_included
 
 #include <qdialog.h>
-#include <qchkbox.h>
-#include <qcombo.h>
+#include <qcheckbox.h>
+#include <qcombobox.h>
 #include <qlabel.h>
-#include <qlined.h>
-#include <qpushbt.h>
-#include <qradiobt.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
 
 class printData : public QDialog
 {

@@ -8,10 +8,10 @@
 #include "prefs.h"
 #include <qbitmap.h> 
 #include <qkeycode.h>
-#include <qpaintd.h>
+#include <qpaintdevice.h>
 #include <kapp.h>
-#include <qmsgbox.h>
-#include <qfileinf.h>
+#include <qmessagebox.h>
+#include <qfileinfo.h>
 #include <kdebug.h>
 
 #include <klocale.h>
@@ -82,7 +82,7 @@ QPainter *dcp;
 
 extern "C" void qtPutRule(int x, int y, int w, int h)
 {
-	dcp->fillRect( x, y, w, h, black );
+	dcp->fillRect( x, y, w, h, Qt::black );
 }
 
 extern "C" void qtPutBorder(int x, int y, int w, int h)

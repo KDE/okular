@@ -11,7 +11,7 @@
 #define SCROLL_BOX_H
 
 #include <qframe.h>
-#include <qrangect.h>
+#include <qrangecontrol.h>
 
 class ScrollBox: public QFrame
 {

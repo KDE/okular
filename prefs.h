@@ -21,7 +21,7 @@ class QListBox;
 class QBoxLayout;
 class QGridLayout;
 
-#include <qtabdlg.h>
+#include <qtabdialog.h>
 #include <kapp.h>
 
 class kdviprefs: public QTabDialog

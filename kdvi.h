@@ -8,18 +8,18 @@
 
 #include <qframe.h>
 #include <qlabel.h>
-#include <qcombo.h>
-#include <qpopmenu.h>
+#include <qcombobox.h>
+#include <qpopupmenu.h>
 #include "dviwin.h"
-#include <qapp.h>
+#include <qapplication.h>
 #include <kapp.h>
 #include "scrbox.h"
 #include "marklist.h"
 #include <qaccel.h>
 #include <qlayout.h>
 #include <qdialog.h>
-#include <qlined.h>
-#include <qpushbt.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
 #include "prefs.h"
 
 #include <ktopwidget.h>
@@ -146,7 +146,7 @@ private:
 	KAccel *	keys;
 };
 
-#include <qgrpbox.h>
+#include <qgroupbox.h>
 
 class PageDialog : public QDialog
 {

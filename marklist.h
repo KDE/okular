@@ -10,8 +10,8 @@
 #ifndef MARKLIST_H
 #define MARKLIST_H
 
-#include <qtablevw.h>
-#include "qpopmenu.h"
+#include <qtableview.h>
+#include "qpopupmenu.h"
 #include <qstrlist.h>
 
 class MarkListItem

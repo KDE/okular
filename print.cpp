@@ -14,7 +14,7 @@
 #define Inherited printData
 
 #include "marklist.h"
-#include <qmsgbox.h>
+#include <qmessagebox.h>
 #include <kapp.h>
 #include <kdebug.h>
 #include <klocale.h>

@@ -14,9 +14,9 @@
 
 #define Inherited QDialog
 
-#include <qbttngrp.h>
-#include <qgrpbox.h>
-#include <qpushbt.h>
+#include <qbuttongroup.h>
+#include <qgroupbox.h>
+#include <qpushbutton.h>
 #include <kapp.h>
 
 printSetupData::printSetupData

@@ -4,26 +4,26 @@
  *
  **********************************************************************/
 
-#include <qapp.h>
-#include <qtabdlg.h>
-#include <qmlined.h>
-#include <qbttngrp.h>
-#include <qradiobt.h>
+#include <qapplication.h>
+#include <qtabdialog.h>
+#include <qmultilinedit.h>
+#include <qbuttongroup.h>
+#include <qradiobutton.h>
 #include <qlabel.h>
-#include <qcombo.h>
+#include <qcombobox.h>
 #include <qlayout.h>
 #include <stdio.h>
 #include <qstring.h>
 #include <qfont.h>
 #include <qtooltip.h>
-#include <qlined.h>
-#include <qchkbox.h>
-#include <qpushbt.h>
-#include <qfiledlg.h> 
+#include <qlineedit.h>
+#include <qcheckbox.h>
+#include <qpushbutton.h>
+#include <qfiledialog.h> 
 #include <qdir.h>
 #include <qregexp.h> 
-#include <qdatetm.h> 
-#include <qmsgbox.h> 
+#include <qdatetime.h> 
+#include <qmessagebox.h> 
 #include <qlistbox.h> 
 #include <qstrlist.h>
 

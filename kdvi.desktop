@@ -70,4 +70,4 @@ X-KDE-Library=kviewerpart
 X-KDE-BrowserView-Args=dvi
 DocPath=kdvi/index.html
 X-KDE-StartupNotify=true
-Categories=QT;KDE;Graphics
+Categories=Qt;KDE;Graphics

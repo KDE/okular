@@ -221,6 +221,7 @@ void MarkList::changeMarks( int how, int which  )
 		updateCell( i, 0 );
 	}
 	setUpdatesEnabled( TRUE );
+        repaint();
 }
 
 QStrList *MarkList::markList()

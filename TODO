@@ -7,23 +7,24 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress:
+-> gen / mem: priorities for requests (pageview, thumbnails, pv preloading, th preloading)
+-> mem: iterate from older pages to newest ones when freeing memory (not rand)
 -> gen / mem: sync Memory Management (in Document) with the Generator, so
    generators can be notified when cancelling jobs (use the notification signal
    from generator) -> real cleaning
 -> gen / mem: check for removing 'canUnloadPixmap' from observers in place of requesting a
    list of visible pixmaps. Think at adding visible list to ObserverData and
    passing the visible list from observers (to remove visi lists)
+-> generator: add preloading
 
 Urgent fixes and items to get ready before 3.4 (special high-priority list):
--> gen / mem: priorities for requests (pageview, thumbnails, pv preloading, th preloading)
--> mem: check for running request in thread too
--> mem: iterate from older pages to newest ones when freeing memory (not rand)
--> generator: add preloading
+-> fix: find-as-you-type (start kpdf, /, aaa, backspace, open doc)
 -> new word highlighting for searches / other highlights (on paper - enrico)
 -> cleanup code and update README.png
 
 
 More items (first items will enter 'In progress list' first):
+-> find-as-you-type: use shortcut for 'find next' action (not the default one)
 -> show Viewport in ThumbnailsList (blended/contour)
 -> Delay TOC (DocumentSynapsis) generation (and move it on thread)
 -> refactor ThumbnailsList to do internal rendering as pageview does (way

@@ -30,6 +30,7 @@ class KConfigGroup;
 
 class PageWidget;
 class PageViewPrivate;
+class KToggleAction;
 
 /**
  * @short The main view. Handles zoom and continous mode.. oh, and page
@@ -113,7 +114,7 @@ private:
     bool atBottom() const;
     void scrollUp();
     void scrollDown();
-
+    KToggleAction * md;
     // don't want to expose classes in here
     class PageViewPrivate * d;
 };

@@ -181,11 +181,11 @@ void PageView::setupActions( KActionCollection * ac, KConfigGroup * config )
     mn->setExclusiveGroup("MouseType");
     mn->setChecked( true );
 
-    KToggleAction * ms = new KRadioAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    KToggleAction *ms = new KRadioAction( i18n("Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     ms->setExclusiveGroup("MouseType");
     //ms->setEnabled( false ); // implement feature before removing this line
 
-    KToggleAction * md = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
+    md = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
     md->setExclusiveGroup("MouseType");
     //md->setEnabled( false ); // implement feature before removing this line
 
@@ -712,6 +712,7 @@ void PageView::slotSetMouseSelect()
 void PageView::slotSetMouseDraw()
 {
     d->mouseMode = MouseEdit;
+    md->setChecked( true );
 }
 
 void PageView::slotScrollUp()

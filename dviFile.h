@@ -1,3 +1,11 @@
+//
+// Class: dviFile
+//
+// Class that represents a DVI file. Part of KDVI - A DVI previewing
+// plugin for kviewshell.
+//
+// (C) 2004 Stefan Kebekus. Distributed under the GPL.
+//
 
 #ifndef _DVIFILE_H
 #define _DVIFILE_H
@@ -65,7 +73,11 @@ class dvifile : public bigEndianByteReader
 
   /** Returns the number of centimeters per DVI unit in this DVI
       file. */
-  double         getCmPerDVIunit(void) {return cmPerDVIunit;};
+  double         getCmPerDVIunit(void) const {return cmPerDVIunit;}
+
+  /** Returns the magnification of the DVI file, as described in the
+      DVI Standard. */
+  Q_UINT32        getMagnification() const {return _magnification;}
 
   /** This member is set to zero on construction and can be used by
       other software to count error messages that were printed when
@@ -99,7 +111,7 @@ class dvifile : public bigEndianByteReader
 
   /** Offset in DVI file of last page, set in read_postamble(). */
   Q_UINT32       last_page_offset;
-  Q_UINT32       magnification;
+  Q_UINT32       _magnification;
 
   double         cmPerDVIunit;
 

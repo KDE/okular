@@ -124,9 +124,9 @@ void dvifile::process_preamble(void)
       the TUG DVI driver standards committee. */
   Q_UINT32 numerator     = readUINT32();
   Q_UINT32 denominator   = readUINT32();
-  magnification = readUINT32();
+  _magnification = readUINT32();
   
-  cmPerDVIunit =  (double(numerator) / double(denominator)) * (double(magnification) / 1000.0) * (1.0 / 1e5);
+  cmPerDVIunit =  (double(numerator) / double(denominator)) * (double(_magnification) / 1000.0) * (1.0 / 1e5);
   
   
   // Read the generatorString (such as "TeX output ..." from the
@@ -201,7 +201,7 @@ void dvifile::read_postamble(void)
     
     // According to section A.4 of the DVI driver standard, this font
     // shall be enlarged by the following factor before it is used.
-    double enlargement_factor = (double(scale) * double(magnification))/(double(design) * 1000.0);
+    double enlargement_factor = (double(scale) * double(_magnification))/(double(design) * 1000.0);
     
     if (font_pool != 0) {
       TeXFontDefinition *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);

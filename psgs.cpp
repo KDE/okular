@@ -24,7 +24,6 @@ extern const char psheader[];
 
 pageInfo::pageInfo(QString _PostScriptString) {
   PostScriptString = new QString(_PostScriptString);
-  Gfx              = NULL;
   background       = Qt::white;
 }
 
@@ -56,6 +55,9 @@ ghostscript_interface::~ghostscript_interface() {
 
 
 void ghostscript_interface::setPostScript(PageNumber page, QString PostScript) {
+
+  kdError(4300) << "ghostscript_interface::setPostScript( " << page << ", ... )" << endl;
+
   if (pageList.find(page) == 0) {
     pageInfo *info = new pageInfo(PostScript);
     // Check if dict is big enough
@@ -115,7 +117,7 @@ void ghostscript_interface::clear(void) {
 }
 
 
-void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QString &filename) {
+void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QString &filename, long magnification) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
 #endif
@@ -150,8 +152,7 @@ void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QSt
 
   fprintf(f," %ld", (long)(72*65781*(pixel_page_w/resolution)) );  // HSize in (1/(65781.76*72))inch @@@
   fprintf(f," %ld", (long)(72*65781*(pixel_page_h/resolution)) );  // VSize in (1/(65781.76*72))inch 
-
-  fputs(" 1000",f);                           // Magnification
+  fprintf(f," %ld", magnification );  // Magnification
   fputs(" 300 300",f);                        // dpi and vdpi
   fputs(" (test.dvi)",f);                     // Name
   fputs(" @start end\n",f);
@@ -203,7 +204,7 @@ void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QSt
 
   // Check if gs has indeed produced a file.
   if (QFile::exists(filename) == false) {
-    kdError() << "GS did not produce output." << endl;
+    kdError(4300) << "GS did not produce output." << endl;
 
     // No. Check is the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
@@ -238,7 +239,7 @@ void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QSt
 					  "</p></qt>"));
 	else {
 	  kdDebug(4300) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
-	  gs_generate_graphics_file(page, filename);
+	  gs_generate_graphics_file(page, filename, magnification);
 	}
 	return;
       }
@@ -248,7 +249,7 @@ void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QSt
 }
 
 
-void ghostscript_interface::graphics(PageNumber page, double dpi, QPainter &paint) {
+void ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter &paint) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
 #endif
@@ -272,7 +273,7 @@ void ghostscript_interface::graphics(PageNumber page, double dpi, QPainter &pain
   GfxFile->setAutoDelete(1);
   GfxFile->close(); // we are want the filename, not the file
   
-  gs_generate_graphics_file(page, GfxFile->name());
+  gs_generate_graphics_file(page, GfxFile->name(), magnification);
   
   QPixmap MemoryCopy(GfxFile->name());
   paint.drawPixmap(0, 0, MemoryCopy);

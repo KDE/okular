@@ -33,7 +33,7 @@ extern QColor parseColorSpecification(QString colorSpec);
 extern void parse_special_argument(QString strg, const char *argument_name, int *variable);
 
 
-//#define DEBUG_PRESCAN
+#define DEBUG_PRESCAN
 
 
 
@@ -228,7 +228,7 @@ void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpeci
 
 void dviRenderer::prescan_ParsePapersizeSpecial(QString cp)
 {
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_PRESCAN
   kdDebug(4300) << "Papersize-Special : papersize" << cp << endl;
 #endif
 
@@ -238,9 +238,6 @@ void dviRenderer::prescan_ParsePapersizeSpecial(QString cp)
     cp = cp.mid(1);
     dviFile->suggestedPageSize = new pageSize;
     dviFile->suggestedPageSize->setPageSize(cp);
-#ifdef DEBUG_SPECIAL
-    kdDebug(4300) << "Suggested paper size is " << dviFile->suggestedPageSize.serialize() << "." << endl;
-#endif
   } else 
     printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.").arg(cp));
 
@@ -261,7 +258,7 @@ void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
 void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
 {
   cp.truncate(cp.find('"'));
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_PRESCAN
   kdDebug(4300) << "HTML-special, anchor " << cp.latin1() << endl;
   kdDebug(4300) << "page " << current_page << endl;
 #endif
@@ -271,7 +268,7 @@ void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
 
 void dviRenderer::prescan_ParsePSHeaderSpecial(QString cp)
 {
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_PRESCAN
   kdDebug(4300) << "PostScript-special, header " << cp.latin1() << endl;
 #endif
 
@@ -282,7 +279,7 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(QString cp)
 
 void dviRenderer::prescan_ParsePSBangSpecial(QString cp)
 {
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_PRESCAN
   kdDebug(4300) << "PostScript-special, literal header " << cp.latin1() << endl;
 #endif
   
@@ -294,7 +291,7 @@ void dviRenderer::prescan_ParsePSBangSpecial(QString cp)
 
 void dviRenderer::prescan_ParsePSQuoteSpecial(QString cp)
 {
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_PRESCAN
   kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
 
 #endif
@@ -310,7 +307,7 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(QString cp)
 
 void dviRenderer::prescan_ParsePSSpecial(QString cp)
 {
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_PRESCAN
   kdDebug(4300) << "PostScript-special, direct PostScript " << cp << endl;
 #endif
 
@@ -367,7 +364,7 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
 
 void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
 {
-#ifdef DEBUG_SPECIAL
+#ifdef DEBUG_PRESCAN
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
 #endif
 
@@ -425,7 +422,6 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
 
 
   if (QFile::exists(EPSfilename)) {
-
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*MFResolutions[font_pool.getMetafontMode()])-300;
     double PS_V = (currinf.data.dvi_v*300.0)/MFResolutions[font_pool.getMetafontMode()] - 300;
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );

@@ -603,7 +603,7 @@ void dviRenderer::draw_page(void)
 
   // Render the PostScript background, if there is one.
   if (_postscript)
-    PS_interface->graphics(current_page, resolutionInDPI, foreGroundPaint);
+    PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPaint);
   
   // Now really write the text
   if (dviFile->page_offset.isEmpty() == true)

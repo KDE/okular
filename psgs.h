@@ -27,7 +27,6 @@ public:
 
   QColor    background;
   QString   *PostScriptString;
-  KTempFile *Gfx;
 };
 
 
@@ -52,7 +51,7 @@ public:
 
   // Draws the graphics of the page into the painter, if possible. If
   // the page does not contain any graphics, nothing happens
-  void     graphics(PageNumber page, double dpi, QPainter &paint );
+  void     graphics(PageNumber page, double dpi, long magnification, QPainter &paint );
 
   // Returns the background color for a certain page. If no color was
   // set, Qt::white is returned.
@@ -70,7 +69,7 @@ public:
   static  QString locateEPSfile(const QString &filename, class dvifile *dvi);
 
 private:
-  void                  gs_generate_graphics_file(PageNumber page, const QString &filename);
+  void                  gs_generate_graphics_file(PageNumber page, const QString &filename, long magnification);
   QIntDict<pageInfo>    pageList;
 
   double                resolution;   // in dots per inch

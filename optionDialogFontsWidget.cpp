@@ -41,7 +41,7 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
   
 #ifdef HAVE_FREETYPE
   usePFBCheckBox->setChecked( config->readBoolEntry( "UseType1Fonts", true ) );
-  useFontHintingCheckBox->setChecked( config->readBoolEntry( "UseFontHints", true ) );
+  useFontHintingCheckBox->setChecked( config->readBoolEntry( "UseFontHints", false ) );
   useFontHintingCheckBox->setEnabled(usePFBCheckBox->isChecked());
 #else
   usePFBCheckBox->setChecked(false);

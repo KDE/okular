@@ -357,7 +357,7 @@ void KDVIMultiPage::preferencesChanged()
     window->setShowHyperLinks(showHyperLinks);
 
   bool useType1Fonts = config->readBoolEntry( "UseType1Fonts", true );
-  bool useFontHints = config->readBoolEntry( "UseFontHints", true );
+  bool useFontHints = config->readBoolEntry( "UseFontHints", false );
 
   window->font_pool->setParameters(mfmode, makepk, useType1Fonts, useFontHints);
 

@@ -121,6 +121,7 @@ bool KPDFPage::hasText( const QString & text, bool strictCase, bool fromTop )
         GString * orig = m_text->getText( m_sLeft, m_sTop, m_sRight, m_sBottom );
         found = !strcmp( text.latin1(), orig->getCString() );
     }
+    gfree(u);
     return found;
 }
 

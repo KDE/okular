@@ -138,7 +138,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect(m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ));
 
 	// add document observers
-    m_document->addObserver( this );
+	m_document->addObserver( this );
 	m_document->addObserver( m_thumbnailList );
 	m_document->addObserver( m_pageView );
 	m_document->addObserver( tocFrame );

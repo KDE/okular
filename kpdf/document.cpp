@@ -36,6 +36,7 @@
 #include "kpdf_error.h"
 #include "document.h"
 #include "page.h"
+#include "settings.h"
 
 /* Notes:
 - FIXME event queuing to avoid flow loops (!!??) maybe avoided by the
@@ -80,8 +81,11 @@ KPDFDocument::KPDFDocument()
     d->pdfdoc = 0;
     d->currentPage = -1;
     d->searchPage = -1;
+    // load paper color from Settings
+    QColor col = Settings::paperColor();
     SplashColor paperColor;
-    paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
+    paperColor.rgb8 = splashMakeRGB8( col.red(), col.green(), col.blue() );
+    // create the output device
     d->kpdfOutputDev = new KPDFOutputDev( paperColor );
 }
 
@@ -91,6 +95,7 @@ KPDFDocument::~KPDFDocument()
     delete d->kpdfOutputDev;
     delete d;
 }
+
 
 bool KPDFDocument::openDocument( const QString & docFile )
 {
@@ -295,12 +300,7 @@ void KPDFDocument::requestTextPage( uint n )
 }
 
 // BEGIN slots
-void KPDFDocument::slotSetCurrentPage( int page )
-{
-    slotSetCurrentPageViewport( page, QRect() );
-}
-
-void KPDFDocument::slotSetCurrentPageViewport( int page, const QRect & viewport )
+void KPDFDocument::slotSetCurrentPage( int page, const QRect & viewport )
 {
     if ( page < 0 )
         page = 0;
@@ -438,7 +438,7 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
             }
             // get destination position
             QRect r;
-            KPDFPage * page = (pageNum >= 0 && pageNum < (int)d->pages.count()) ? d->pages[ pageNum ] : 0;
+            //KPDFPage * page = (pageNum >= 0 && pageNum < (int)d->pages.count()) ? d->pages[ pageNum ] : 0;
             //if ( page )
             /* TODO
             switch ( dest->getKind() )
@@ -463,7 +463,7 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
             destFitR
                 read and fit left,bottom,right,top
             }*/
-            slotSetCurrentPageViewport( pageNum, r );
+            slotSetCurrentPage( pageNum, r );
         }
         delete namedDest;
         delete dest;

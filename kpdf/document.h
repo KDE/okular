@@ -74,10 +74,9 @@ public:
     void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
     void requestTextPage( uint page );
 
-public slots:
+//public slots:
     // document commands via slots
-    void slotSetCurrentPage( int page );
-    void slotSetCurrentPageViewport( int page, const QRect & viewport );
+    void slotSetCurrentPage( int page, const QRect & viewport = QRect() );
     void slotSetFilter( const QString & pattern, bool caseSensitive );
     void slotBookmarkPage( int page, bool enabled );
     void slotFind( const QString & text = "", bool caseSensitive = false );

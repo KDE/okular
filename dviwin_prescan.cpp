@@ -258,10 +258,7 @@ void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
 void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
 {
   cp.truncate(cp.find('"'));
-#ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "HTML-special, anchor " << cp.latin1() << endl;
-  kdDebug(4300) << "page " << current_page << endl;
-#endif
+
   anchorList[cp] = anchor(current_page, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
 }
 
@@ -570,7 +567,10 @@ void dviRenderer::prescan(parseSpecials specialParser)
 #ifdef DEBUG_PRESCAN
   kdDebug(4300) << "dviRenderer::prescan( ... )" << endl;
 #endif
-  
+
+  if (resolutionInDPI == 0.0)
+    setResolution(100);
+
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   Q_UINT8 ch;
   double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 

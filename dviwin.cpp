@@ -633,7 +633,7 @@ void dviWindow::all_fonts_loaded(void)
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
 				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(fileName),
-			 i18n( "Could not Find EReference" ));
+			 i18n( "Could not Find Reference" ));
       return;
     }
     if (y >= 0)

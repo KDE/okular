@@ -19,11 +19,59 @@ for j in $DO_NOT_COMPILE; do
    if test "kdvi" = $j; then
        compile_kdvi=no
    fi
-done    
+done
 
 dnl AC_CONFIG_SUBDIRS has to be done before KDE_CREATE_SUBDIRSLIST
 if test "$compile_kdvi" = "yes"; then
-    if test ! x"$use_system_kpathsea" = xno; then
+
+   KDE_FIND_PATH(kpsewhich, KPSEWHICH, [/usr/bin /bin /usr/sbin /opt/teTeX/bin /opt/local/bin /opt/bin], [ ])
+
+   have_kpsewhich=no
+   test_kpsewhich="`${KPSEWHICH-kpsewhich} -show-path cnf 2>/dev/null`"
+   test -n "${test_kpsewhich}" && have_kpsewhich=yes
+
+   texmf_dir=
+   texmf_font_path=
+   if test x"${have_kpsewhich}" = xyes
+   then
+      texmf_cnf_path="`${KPSEWHICH} -show-path cnf 2>/dev/null`"
+      texmf_font_path="`${KPSEWHICH} -show-path pk`"
+   else
+      texmf_cnf_path="/var/lib/texmf/web2c:/usr/share/texmf/web2c:/opt/teTeX/share/texmf/web2c"
+      # whatever the default should be
+      texmf_font_path="/var/lib/texmf/fonts/pk//"
+  fi
+
+  AC_DEFINE_UNQUOTED(KDVI_DEFAULT_FONTPATH, "$texmf_font_path", [Where kdvi should look for fonts])
+  
+  texmf_cnf_path="$texmf_cnf_path:/usr/lib/texmf/web2c:/var/lib/texmf/web2c:/usr/share/texmf/web2c:/usr/share/teTeX/texmf/web2c:/opt/local/teTeX/share/texmf/web2c:/opt/teTeX/share/texmf/web2c:/var/texmf/web2c:/usr/local/share/texmf/web2c:/opt/local/share/texmf/web2c:/etc/texmf"
+
+   # this gets the LAST directory in the path, which is assumed to be the
+   # base installation directory. This also allows us to overwrite it with
+   # some standard paths. So it rather finds the /etc version than the 
+   # /var/share one
+   AC_MSG_CHECKING([for texmf.cnf])
+   kde_safe_IFS=$IFS
+   IFS=:
+   texmf_dir=
+   for d in ${texmf_cnf_path}
+   do
+      if test -r "${d}/texmf.cnf"
+      then
+          texmf_dir="${d}"
+      fi
+   done
+   IFS=$kde_safe_IFS
+
+   if test -n "${texmf_dir}"
+   then
+     texmf_dir="`echo "${texmf_dir}" | sed 's,/web2c,,'`"
+     AC_MSG_RESULT([$texmf_dir])
+   else
+     AC_MSG_RESULT("not found")
+   fi
+
+   if test ! x"$use_system_kpathsea" = xno; then
       	KDVI_KPATHSEA_DIR=
 	if test -f "$use_system_kpathsea"; then
 	   KDVI_KPATHSEA_LIB=$use_system_kpathsea
@@ -31,24 +79,14 @@ if test "$compile_kdvi" = "yes"; then
            KDVI_KPATHSEA_LIB=-lkpathsea
  	fi
         KDVI_KPATHSEA_INC=
-    else
+   else
         KDVI_KPATHSEA_DIR=kpathsea
         KDVI_KPATHSEA_INC=-Ikpathsea
         KDVI_KPATHSEA_LIB=kpathsea/libkpathsea.la
 
         if test -f $srcdir/kdvi/kpathsea/configure; then
-	   AC_MSG_CHECKING([for texmf.cnf])
-           kde_texdirs="/usr/lib /var/lib /usr/share /usr/share/teTeX /opt/local/teTeX/share /opt/teTeX/share /var /usr/local/share /opt/local/share"
-           kde_texdir=NO
-           for dir in $kde_texdirs; do
-             if test -f $dir/texmf/web2c/texmf.cnf; then
-               kde_texdir=$dir
-               break 2
-             fi
-           done
-	   AC_MSG_RESULT($kde_texdir)
-           if test ! "x$kde_texdir" = "xNO"; then
-             ac_configure_args="$ac_configure_args --with-tex-datadir=$kde_texdir"
+           if test -n "$texmf_dir"; then
+             ac_configure_args="$ac_configure_args --with-tex-datadir=$texmf_dir"
              AC_CONFIG_SUBDIRS([kdvi/kpathsea])
            else 
               if test $compile_kdvi = "yes"; then
@@ -62,3 +100,4 @@ fi
 AC_SUBST(KDVI_KPATHSEA_DIR)
 AC_SUBST(KDVI_KPATHSEA_INC)
 AC_SUBST(KDVI_KPATHSEA_LIB)
+

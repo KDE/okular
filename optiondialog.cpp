@@ -93,7 +93,7 @@ void OptionDialog::setup()
   mFont.resolutionEdit->setText( config->readEntry( "BaseResolution", "300" ) );
   mFont.metafontEdit->setText( config->readEntry( "MetafontMode", "cx" ) );
   mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
-  mFont.fontPathEdit->setText( config->readEntry( "FontPath" ) );
+  mFont.fontPathEdit->setText( config->readEntry( "FontPath", KDVI_DEFAULT_FONTPATH ) );
 
   // Rendering page
   mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );

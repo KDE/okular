@@ -69,7 +69,7 @@ namespace KPDF
 
     void displayPage(int pageNumber, float zoomFactor = 1.0);
     void displayDestination(LinkDest*);
-
+      void updateActionPage();
   protected:
     /**
      * This must be implemented by each part
@@ -81,6 +81,8 @@ namespace KPDF
       void writeSettings();
       bool nextPage();
       bool previousPage();
+      void updateAction();
+
   protected slots:
     void find()     { /* stub */ };
     void findNext() { /* stub */ };

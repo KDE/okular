@@ -105,17 +105,36 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");
-  connect( m_outputDev, SIGNAL( ZoomIn() ), SLOT( slotZoomIn() ));
-  connect( m_outputDev, SIGNAL( ZoomOut() ), SLOT( slotZoomOut() ));
+  connect( m_outputDev, SIGNAL( ZoomIn() ), SLOT( zoomIn() ));
+  connect( m_outputDev, SIGNAL( ZoomOut() ), SLOT( zoomOut() ));
   connect( m_outputDev, SIGNAL( ReadUp() ), SLOT( slotReadUp() ));
   connect( m_outputDev, SIGNAL( ReadDown() ), SLOT( slotReadDown() ));
   readSettings();
+  updateActionPage();
 }
 
 Part::~Part()
 {
     delete globalParams;
     writeSettings();
+}
+
+void Part::updateActionPage()
+{
+    if ( m_doc )
+    {
+        m_firstPage->setEnabled(m_currentPage!=0);
+        m_lastPage->setEnabled(m_currentPage!=m_doc->getNumPages());
+        m_prevPage->setEnabled(m_currentPage!=0);
+        m_nextPage->setEnabled(m_currentPage!=m_doc->getNumPages());
+    }
+    else
+    {
+        m_firstPage->setEnabled(false);
+        m_lastPage->setEnabled(false);
+        m_prevPage->setEnabled(false);
+        m_nextPage->setEnabled(false);
+    }
 }
 
 void Part::slotReadUp()
@@ -177,6 +196,7 @@ void Part::slotGotoEnd()
         m_currentPage = m_doc->getNumPages();
         pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
         m_outputDev->setPage(m_currentPage);
+        updateActionPage();
     }
 }
 
@@ -188,6 +208,7 @@ void Part::slotGotoStart()
 
         pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
         m_outputDev->setPage(m_currentPage);
+        updateActionPage();
      }
 }
 
@@ -199,6 +220,7 @@ bool Part::nextPage()
 
     pdfpartview->pagesListBox->setCurrentItem(m_currentPage);
     m_outputDev->nextPage();
+    updateActionPage();
     return true;
 }
 
@@ -220,6 +242,7 @@ bool Part::previousPage()
 
     pdfpartview->pagesListBox->setCurrentItem(m_currentPage );
     m_outputDev->previousPage();
+    updateActionPage();
     return true;
 }
 
@@ -280,6 +303,7 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
 {
     if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
         return;
+    updateActionPage();
     const double pageWidth  = m_doc->getPageWidth (pageNumber) * m_zoomFactor;
     const double pageHeight = m_doc->getPageHeight(pageNumber) * m_zoomFactor;
 

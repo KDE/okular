@@ -7,6 +7,7 @@ Legend:
     (*) - Some parts of this item are already done
 
 More items (first items will enter 'In progress list' first):
+-> ADD: zoom to "window"
 -> screen editing (annotations): framework (BR67300,BR62793)
 -> screen editing (annotations): tools (BR67300)
 -> implementing async document generator using Albert's thread as the generator thread
@@ -19,7 +20,7 @@ More items (first items will enter 'In progress list' first):
 -> text selection in wordprocessor style (very hard/impossible)
 -> implement history (mainly for actionNamed)
 -> history as a toolbox child (collecting DOs's setPage calls)
--> click over image allows "save image"
+-> click over image allows "save image" (and display rect around image too)
 -> zoom: fit text (with configurable margin)
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
@@ -29,9 +30,10 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
+-> FIX: sheet rotation (portrait / landscape / ...)
 -> ADD: viewport changes the right way when clicking links
 -> use a KConfigXT settings framework
--> reading aids (accessibility): mode: normal, invert, contrast, recolor bg/text (enhance links too)
+-> reading aids (accessibility): paper color: select, mode: normal, invert, contrast, recolor bg/text, enhance: links, ...
 -> pageview: fix keys/mouse in single/continous modes
 
 Done (newest feature comes firts):

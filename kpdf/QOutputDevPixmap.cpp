@@ -48,9 +48,6 @@
 #include "QOutputDevPixmap.h"
 #include "QOutputDevPixmap.moc"
 
-//#define QPDFDBG(x) x		// special debug mode
-#define QPDFDBG(x)   		// normal compilation
-
 //------------------------------------------------------------------------
 // Constants and macros
 //------------------------------------------------------------------------

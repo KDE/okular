@@ -96,7 +96,7 @@ public:
   class fontPool  *font_pool;
   class fontProgressDialog *progress;
 public slots:
-  void		setFile(const QString & fname);
+  bool		setFile(const QString & fname);
   void		gotoPage(int page);
   double	setZoom(double zoom);
   double        zoom() { return _zoom; };

@@ -341,7 +341,7 @@ void dviWindow::changePageSize()
 
 //------ setup the dvi interpreter (should do more here ?) ----------
 
-void dviWindow::setFile( const QString & fname )
+bool dviWindow::setFile( const QString & fname )
 {
   setMouseTracking(true);
 
@@ -371,7 +371,7 @@ void dviWindow::setFile( const QString & fname )
 			i18n("File error!\n\n") +
 			i18n("The file does not exist\n") + 
 			filename);
-    return;
+    return false;
   }
 
   QApplication::setOverrideCursor( waitCursor );
@@ -383,13 +383,13 @@ void dviWindow::setFile( const QString & fname )
 			i18n("\n\nMost likely this means that the DVI file\n") + 
 			filename +
 			i18n("\nis broken, or that it is not a DVI file."));
-    return;
+    return false;
   }
 
   dvifile *dviFile_new = new dvifile(filename,font_pool);
   if (dviFile_new->file == NULL) {
     delete dviFile_new;
-    return;
+    return false;
   }
 
   if (dviFile)
@@ -429,7 +429,7 @@ void dviWindow::setFile( const QString & fname )
   is_current_page_drawn  = 0;
 
   QApplication::restoreOverrideCursor();
-  return;
+  return true;
 }
 
 
@@ -494,6 +494,7 @@ void dviWindow::paintEvent(QPaintEvent *)
 
 void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 {
+  // If no mouse button pressed
   if ( e->state() == 0 ) {
     for(int i=0; i<num_of_used_hyperlinks; i++) {
       if (hyperLinkList[i].box.contains(e->pos())) {

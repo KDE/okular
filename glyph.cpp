@@ -105,7 +105,7 @@ QPixmap glyph::shrunkCharacter()
     // ... turn it into a Pixmap (highly inefficient, please improve)
     SmallChar = new QPixmap(bitmap.w+pre_cols+post_cols, bitmap.h+pre_rows+post_rows);
     if ((SmallChar == 0) || (SmallChar->isNull())) {
-      kdError() << "Could not properly allocate SmallChar in glyph::shrunkCharacter!" << endl;
+      kdError(4300) << "Could not properly allocate SmallChar in glyph::shrunkCharacter!" << endl;
       if (SmallChar != 0)
 	delete SmallChar;
       SmallChar = 0;
@@ -120,7 +120,7 @@ QPixmap glyph::shrunkCharacter()
       paint.drawPixmap(pre_cols, pre_rows, bm);
       paint.end();
     } else 
-      kdError() << "Null Bitmap in glyph::shrunkCharacter encountered!" << endl;
+      kdError(4300) << "Null Bitmap in glyph::shrunkCharacter encountered!" << endl;
     
     // Generate an Image and shrink it to the proper size. By the
     // documentation of smoothScale, the resulting Image will be

@@ -115,7 +115,7 @@ KDVIMultiPage::~KDVIMultiPage()
 
 bool KDVIMultiPage::openFile()
 {
-  window->setFile(m_file);
+  bool r = window->setFile(m_file);
   window->gotoPage(1);
   window->changePageSize(); //  This also calles drawPage();
 
@@ -123,7 +123,7 @@ bool KDVIMultiPage::openFile()
   scrollView()->resizeContents(window->width(), window->height());
   emit previewChanged(true);
 
-  return true; //@@@ THIS IS WRONG!! Really, we should return something meaningful here.
+  return r;
 }
 
 
@@ -138,7 +138,7 @@ bool KDVIMultiPage::closeURL()
 QStringList KDVIMultiPage::fileFormats()
 {
   QStringList r;
-  r << i18n("*.dvi|DVI files (*.dvi)");
+  r << i18n("*.dvi *.DVI|DVI files (*.dvi)");
   return r;
 }
 

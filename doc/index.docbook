@@ -30,8 +30,8 @@
     
     <legalnotice>&FDLNotice;</legalnotice>
     
-    <date>2001-01-09</date>
-    <releaseinfo>1.0</releaseinfo>
+    <date>2002-04-27</date>
+    <releaseinfo>1.00.00</releaseinfo>
     
     <abstract>
       <para>This document describes &kdvi; version 1.0</para>
@@ -961,7 +961,7 @@
 	  name <quote>ljfour</quote> refers to the entry in the
 	  database that describes a &Hewlett-Packard; LaserJet 4
 	  printer. A MetaFont Mode is usually followed by a number,
-	  the resolution. The LaserJet, for instance canprint in both
+	  the resolution. The LaserJet, for instance, can print in both
 	  300 and 600 dots per inch. Thus, <quote>ljfour/600</quote>
 	  would be a full description.</para>
 	</answer>

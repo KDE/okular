@@ -188,7 +188,7 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     // image which covers the range [x,x+1) corresponds to the range
     // [x*shrinkFactor+srcXTrans, (x+1)*shrinkFactor+srcXTrans), where
     // srcXTrans is the following NEGATIVE number
-    double srcXTrans = g->x/shrinkFactor - ceil(g->x/shrinkFactor);
+    double srcXTrans = shrinkFactor * (g->x/shrinkFactor - ceil(g->x/shrinkFactor));
 
     // How big will the shrunken bitmap then become? If shrunk_width
     // denotes that width of the scaled image, and
@@ -201,8 +201,8 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     int shrunk_width  = (int)ceil( (characterBitmaps[ch]->w - srcXTrans)/shrinkFactor );
     
     // Now do the same for the y-coordinate
-    g->y2 = (int)ceil(g->y/shrinkFactor);
-    double srcYTrans = g->y/shrinkFactor - ceil(g->y/shrinkFactor);
+    g->y2 = (int)ceil(g->y/shrinkFactor); // original code. The following is better. But: WHY?    g->y2 = (int)ceil(g->y/shrinkFactor + 0.5);
+    double srcYTrans = shrinkFactor * (g->y/shrinkFactor - ceil(g->y/shrinkFactor ));
     int shrunk_height = (int)ceil( (characterBitmaps[ch]->h - srcYTrans)/shrinkFactor );
     
     // Turn the image into 8 bit
@@ -226,7 +226,7 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     // [shrinkFactor*x+srcXTrans, shrinkFactor*(x+1)+srcXTrans)
     //
     // The trouble is, these numbers are in general no integers.
-    
+
     for(int y=0; y<characterBitmaps[ch]->h; y++)
       for(int x=0; x<shrunk_width; x++) {
 	Q_UINT32 value = 0;
@@ -237,11 +237,11 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
 	    value += data[characterBitmaps[ch]->w*y + srcX] * 255;
 	
 	if (destStartX >= 0.0)
-	  value += 255.0*(ceil(destStartX)-destStartX) * data[characterBitmaps[ch]->w*y + (int)floor(destStartX)];
+	  value += (Q_UINT32) (255.0*(ceil(destStartX)-destStartX) * data[characterBitmaps[ch]->w*y + (int)floor(destStartX)]);
 	if (floor(destEndX) < characterBitmaps[ch]->w)
-	  value += 255.0*(destEndX-floor(destEndX)) * data[characterBitmaps[ch]->w*y + (int)floor(destEndX)];
+	  value += (Q_UINT32) (255.0*(destEndX-floor(destEndX)) * data[characterBitmaps[ch]->w*y + (int)floor(destEndX)]);
 	
-	xdata[shrunk_width*y + x] = (int)( value/shrinkFactor + 0.5);
+	xdata[shrunk_width*y + x] = (int)(value/shrinkFactor + 0.5);
       }
     
     // Now shrink the Y-direction
@@ -257,9 +257,9 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
 	    value += xdata[shrunk_width*srcY + x];
 	
 	if (destStartY >= 0.0)
-	  value += (ceil(destStartY)-destStartY) * xdata[shrunk_width*(int)floor(destStartY) + x];
+	  value += (Q_UINT32) ((ceil(destStartY)-destStartY) * xdata[shrunk_width*(int)floor(destStartY) + x]);
 	if (floor(destEndY) < characterBitmaps[ch]->h)
-	  value += (destEndY-floor(destEndY)) * xdata[shrunk_width*(int)floor(destEndY) + x];
+	  value += (Q_UINT32) ((destEndY-floor(destEndY)) * xdata[shrunk_width*(int)floor(destEndY) + x]);
 	
 	xydata[shrunk_width*y + x] = (int)(value/shrinkFactor);
       }

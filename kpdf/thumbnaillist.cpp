@@ -7,18 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <math.h>
+#include <qtimer.h>
 
-#include "PDFDoc.h"
-
-#include "thumbnailgenerator.h"
 #include "thumbnaillist.h"
 #include "thumbnail.h"
-
 #include "page.h"
 
 ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
-	: QScrollView(parent), m_document(document), m_selected(0), m_oldWidth(0), m_oldHeight(0)
+	: QScrollView(parent), m_document(document), m_selected(0), m_delayTimer(0)
 {
 	// set scrollbars
 	setHScrollBarMode( QScrollView::AlwaysOff );
@@ -37,21 +33,24 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestThumbnails(int, int)) );
 }
 
-
+//BEGIN KPDFDocumentObserver inherited methods 
 void ThumbnailList::pageSetup( const QValueList<int> & pages )
 {
 	// delete all the Thumbnails
 	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
 	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
-	for (; thumbIt != thumbEnd; ++thumbIt)
-		delete (*thumbIt);
+	for ( ; thumbIt != thumbEnd; ++thumbIt )
+		delete *thumbIt;
 	thumbnails.clear();
 	m_selected = 0;
 
 	if ( pages.count() < 1 )
+	{
+		resizeContents( 0, 0 );
 		return;
+	}
 
-	// generate a new 'Thumbnail' objects for every page
+	// generate Thumbnails for the given set of pages
 	Thumbnail *t;
 	int width = clipper()->width(),
 	    totalHeight = 0;
@@ -73,7 +72,7 @@ void ThumbnailList::pageSetup( const QValueList<int> & pages )
 	resizeContents( width, totalHeight );
 
 	// request for thumbnail generation
-	slotRequestThumbnails();
+	requestThumbnails( 200 );
 }
 
 void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
@@ -84,18 +83,21 @@ void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 	m_selected = 0;
 
 	// select next page
+	vectorIndex = 0;
 	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
 	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
 	for (; thumbIt != thumbEnd; ++thumbIt)
+	{
 		if ( (*thumbIt)->pageNumber() == pageNumber )
 		{
 			m_selected = *thumbIt;
 			m_selected->setSelected( true );
-			int itemTop = childY( m_selected );
-			int itemHeight = m_selected->height();
-			ensureVisible( 0, itemTop + itemHeight/2, 0, itemHeight/2 );
+			ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, visibleHeight()/2 );
+			//non-centered version: ensureVisible( 0, itemTop + itemHeight/2, 0, itemHeight/2 );
 			break;
 		}
+		vectorIndex++;
+	}
 }
 
 void ThumbnailList::notifyThumbnailChanged( int pageNumber )
@@ -109,115 +111,35 @@ void ThumbnailList::notifyThumbnailChanged( int pageNumber )
 			break;
 		}
 }
+//END KPDFDocumentObserver inherited methods 
 
-
-void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContentsY )
+//BEGIN widget events 
+void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
-	int vHeight = visibleHeight(),
-	    vOffset = newContentsY == -1 ? contentsY() : newContentsY;
-
-	// scroll from the top to the last visible thumbnail
-	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
-	for (; thumbIt != thumbEnd; ++thumbIt)
+	if ( thumbnails.count() < 1 )
+		return;
+	if ( keyEvent->key() == Key_Up )
 	{
-		Thumbnail * t = *thumbIt;
-		int top = childY( t ) - vOffset;
-		if ( top > vHeight )
-			break;
-		else if ( top + t->height() > 0 )
-			m_document->makeThumbnail( t->pageNumber(), t->width(), t->height() );
+		if ( !m_selected )
+			m_document->slotSetCurrentPage( 0 );
+		else if ( vectorIndex > 0 )
+			m_document->slotSetCurrentPage( thumbnails[ --vectorIndex ]->pageNumber() );
 	}
-}
-
-void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
-{
-	// do not dispatch resize event (QTable::viewportResizeEvent(e)) so we
-	// can refresh thumbnail size here
-
-	// check if *width* changed (for rescaling thumbnails)
-	int newWidth = e->size().width();
-	if ( newWidth != m_oldWidth )
+	else if ( keyEvent->key() == Key_Down )
 	{
-		m_oldWidth = newWidth;
-
-		viewport()->setUpdatesEnabled( false );
-		setUpdatesEnabled( false );
-		int totalHeight = 0;
-		QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
-		QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
-		for (; thumbIt != thumbEnd; ++thumbIt)
-		{
-			Thumbnail *t = *thumbIt;
-			moveChild( t, 0, totalHeight );
-			totalHeight += t->setThumbnailWidth( newWidth );
-		}
-		setUpdatesEnabled( true );
-		viewport()->setUpdatesEnabled( true );
-
-		// update scrollview's contents size (sets scrollbars limits)
-		resizeContents( newWidth, totalHeight );
-/*
-		int rows = numRows();
-		for(int i = 0; i < rows; ++i)
-			setRowHeight(i, static_cast<Thumbnail *>(cellWidget(i, 0))->setThumbnailWidth( newWidth ));
-*/
-	// that if are here to avoid recursive resizing of death
-	// where the user makes the window smaller, that makes appear
-	// the vertical scrollbar, that makes thumbnails smaller, and
-	// while they get smaller the vertical scrollbar is not needed 
-	// and ...
-	// ... it also works for when the user makes the window larger
-	// and then the scrollbar disappears but that makes thumbnails
-	// larger and then scrollbar reappears and ...
-/*
-	Thumbnail *t;
-	if (numRows() == 0) return;
-	
-	t = dynamic_cast<Thumbnail *>(cellWidget(0, 0));
-	if (size().height() <= m_heightLimit)
-	{
-		if (t->getImageHeight() > (int)(visibleWidth()*m_ar))
-		{
-			setColumnWidth(0, visibleWidth());
-			resizeThumbnails();
-		}
-	}
-	else
-	{
-		if (visibleWidth() != columnWidth(0))
-		{
-			setColumnWidth(0, visibleWidth());
-			resizeThumbnails();
-			if (size().height() > m_heightLimit && verticalScrollBar() -> isVisible())
-			{
-				m_heightLimit = (int) ceil(numRows() * ((visibleWidth() + verticalScrollBar() -> width()) * m_ar + t -> labelSizeHintHeight()));
-			}
-		}
-	}
-
-*/
-		// update thumbnails
-		slotRequestThumbnails();
-	}
-
-	// check if height increased
-	else if ( e->size().height() > m_oldHeight )
-	{
-		m_oldHeight = e->size().height();
-		// only update thumbnails
-		slotRequestThumbnails();
+		if ( !m_selected )
+			m_document->slotSetCurrentPage( 0 );
+		else if ( vectorIndex < (int)thumbnails.count() - 1 )
+			m_document->slotSetCurrentPage( thumbnails[ ++vectorIndex ]->pageNumber() );
 	}
 }
 
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 {
 	int clickY = e->y();
-
-	// find the Thumbnail over which the click is done
 	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
 	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
-	for (; thumbIt != thumbEnd; ++thumbIt)
+	for ( ; thumbIt != thumbEnd; ++thumbIt )
 	{
 		Thumbnail * t = *thumbIt;
 		int childTop = childY(t);
@@ -229,100 +151,68 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 	}
 }
 
-void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
+void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 {
-	int pageNumber = m_selected->pageNumber();
-	if ( keyEvent->key() == Key_Up )
+	if ( thumbnails.count() < 1 )
+		return;
+	// if width changed resize all the Thumbnails, reposition them to the
+	// right place and recalculate the contents area
+	if ( e->size().width() != e->oldSize().width() )
 	{
-		if ( !m_selected )
-			m_document->slotSetCurrentPage( 0 );
-		else if ( m_selected->pageNumber() > 0 )
-			m_document->slotSetCurrentPage( pageNumber - 1 );
-	}
-	else if ( keyEvent->key() == Key_Down )
-	{
-		if ( !m_selected )
-			m_document->slotSetCurrentPage( 0 );
-		else if ( m_selected->pageNumber() < (int)m_document->pages() - 1 )
-			m_document->slotSetCurrentPage( pageNumber + 1 );
-	}
-}
-
-
-/** TO BE IMPORTED:
-	void generateThumbnails(PDFDoc *doc);
-	void stopThumbnailGeneration();
-protected slots:
-	void customEvent(QCustomEvent *e);
-private slots:
-	void changeSelected(int i);
-	void emitClicked(int i);
-signals:
-	void clicked(int);
-private:
-	void generateNextThumbnail();
-	ThumbnailGenerator *m_tg;
-
-	void resizeThumbnails();
-	int m_nextThumbnail;
-	bool m_ignoreNext;
-
-DELETE:
-if (m_tg)
-{
-	m_tg->wait();
-	delete m_tg;
-}
-
-void ThumbnailList::generateThumbnails(PDFDoc *doc)
-{
-	m_nextThumbnail = 1;
-	m_doc = doc;
-	generateNextThumbnail();
-}
-
-void ThumbnailList::generateNextThumbnail()
-{
-	if (m_tg)
-	{
-		m_tg->wait();
-		delete m_tg;
-	}
-	m_tg = new ThumbnailGenerator(m_doc, m_docMutex, m_nextThumbnail, QPaintDevice::x11AppDpiX(), this);
-	m_tg->start();
-}
-
-
-void ThumbnailList::stopThumbnailGeneration()
-{
-	if (m_tg)
-	{
-		m_ignoreNext = true;
-		m_tg->wait();
-		delete m_tg;
-		m_tg = 0;
-	}
-}
-
-
-void ThumbnailList::customEvent(QCustomEvent *e)
-{
-	if (e->type() == 65432 && !m_ignoreNext)
-	{
-		QImage *i =  (QImage*)(e -> data());
-		
-		setThumbnail(m_nextThumbnail, i);
-		m_nextThumbnail++;
-		if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();
-		else
+		int totalHeight = 0,
+		    newWidth = e->size().width();
+		QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
+		QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+		for ( ; thumbIt != thumbEnd; ++thumbIt )
 		{
-			m_tg->wait();
-			delete m_tg;
-			m_tg = 0;
+			Thumbnail *t = *thumbIt;
+			moveChild( t, 0, totalHeight );
+			totalHeight += t->setThumbnailWidth( newWidth );
 		}
+
+		// update scrollview's contents size (sets scrollbars limits)
+		resizeContents( newWidth, totalHeight );
+
+		// ensure selected item remains visible
+		if ( m_selected )
+			ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, visibleHeight()/2 );
 	}
-	m_ignoreNext = false;
+	else if ( e->size().height() > e->oldSize().height() )
+		return;
+	// update thumbnails since width has changed or height has increased
+	requestThumbnails( 500 );
 }
-*/
+//END widget events 
+
+//BEGIN internal SLOTS 
+void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContentsY )
+{
+	int vHeight = visibleHeight(),
+	    vOffset = newContentsY == -1 ? contentsY() : newContentsY;
+
+	// scroll from the top to the last visible thumbnail
+	QValueVector<Thumbnail *>::iterator thumbIt = thumbnails.begin();
+	QValueVector<Thumbnail *>::iterator thumbEnd = thumbnails.end();
+	for ( ; thumbIt != thumbEnd; ++thumbIt )
+	{
+		Thumbnail * t = *thumbIt;
+		int top = childY( t ) - vOffset;
+		if ( top > vHeight )
+			break;
+		else if ( top + t->height() > 0 )
+			m_document->makeThumbnail( t->pageNumber(), t->width(), t->height() );
+	}
+}
+//END internal SLOTS
+
+void ThumbnailList::requestThumbnails( int delayMs )
+{
+	if ( !m_delayTimer )
+	{
+		m_delayTimer = new QTimer( this );
+		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestThumbnails() ) );
+	}
+	m_delayTimer->start( delayMs, true );
+}
 
 #include "thumbnaillist.moc"

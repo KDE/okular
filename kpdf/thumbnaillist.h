@@ -15,6 +15,7 @@
 #include "document.h"
 
 class Thumbnail;
+class QTimer;
 
 class ThumbnailList : public QScrollView, public KPDFDocumentObserver
 {
@@ -22,25 +23,36 @@ Q_OBJECT
 	public:
 		ThumbnailList(QWidget *parent, KPDFDocument *document);
 
-		// inherited as a KPDFDocumentObserver
+		// create thumbnails
 		void pageSetup( const QValueList<int> & pages );
+
+		// hilihght current thumbnail
 		void pageSetCurrent( int pageNumber, float position );
+
+		// redraw thumbnail
 		void notifyThumbnailChanged( int pageNumber );
 
-	public slots:
-		void slotRequestThumbnails( int newContentsX = -1, int newContentsY = -1 );
-
 	protected:
-		void viewportResizeEvent( QResizeEvent * );
-		void contentsMousePressEvent( QMouseEvent * );
+		// scroll up/down the view
 		void keyPressEvent( QKeyEvent * e );
 
+		// select a thumbnail by clicking on it
+		void contentsMousePressEvent( QMouseEvent * );
+
+		// resize thumbnails to fit the width
+		void viewportResizeEvent( QResizeEvent * );
+
+	public slots:
+		// make requests for generating pixmaps for visible thumbnails
+		void slotRequestThumbnails( int newContentsX = -1, int newContentsY = -1 );
+
 	private:
+		void requestThumbnails( int delayMs = 0 );
 		KPDFDocument *m_document;
 		Thumbnail *m_selected;
-		int m_oldWidth;
-		int m_oldHeight;
+		QTimer *m_delayTimer;
 		QValueVector<Thumbnail *> thumbnails;
+		int vectorIndex;
 };
 
 #endif

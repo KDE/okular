@@ -270,4 +270,81 @@ void KPDFDocument::deletePages()
     d->currentPage = -1;
 }
 
+/** TO BE IMPORTED:
+	void generateThumbnails(PDFDoc *doc);
+	void stopThumbnailGeneration();
+protected slots:
+	void customEvent(QCustomEvent *e);
+private slots:
+	void changeSelected(int i);
+	void emitClicked(int i);
+signals:
+	void clicked(int);
+private:
+	void generateNextThumbnail();
+	ThumbnailGenerator *m_tg;
+
+	void resizeThumbnails();
+	int m_nextThumbnail;
+	bool m_ignoreNext;
+
+DELETE:
+if (m_tg)
+{
+	m_tg->wait();
+	delete m_tg;
+}
+
+void ThumbnailList::generateThumbnails(PDFDoc *doc)
+{
+	m_nextThumbnail = 1;
+	m_doc = doc;
+	generateNextThumbnail();
+}
+
+void ThumbnailList::generateNextThumbnail()
+{
+	if (m_tg)
+	{
+		m_tg->wait();
+		delete m_tg;
+	}
+	m_tg = new ThumbnailGenerator(m_doc, m_docMutex, m_nextThumbnail, QPaintDevice::x11AppDpiX(), this);
+	m_tg->start();
+}
+
+
+void ThumbnailList::stopThumbnailGeneration()
+{
+	if (m_tg)
+	{
+		m_ignoreNext = true;
+		m_tg->wait();
+		delete m_tg;
+		m_tg = 0;
+	}
+}
+
+
+void ThumbnailList::customEvent(QCustomEvent *e)
+{
+	if (e->type() == 65432 && !m_ignoreNext)
+	{
+		QImage *i =  (QImage*)(e -> data());
+		
+		setThumbnail(m_nextThumbnail, i);
+		m_nextThumbnail++;
+		if (m_nextThumbnail <= m_doc->getNumPages()) generateNextThumbnail();
+		else
+		{
+			m_tg->wait();
+			delete m_tg;
+			m_tg = 0;
+		}
+	}
+	m_ignoreNext = false;
+}
+*/
+
+
 #include "document.moc"

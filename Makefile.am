@@ -3,7 +3,7 @@ kpathsea = kpathsea/kpathsea.a
 
 # this 10 paths are KDE specific. Use them:
 # kde_htmldir       Where your docs should go to. (contains lang subdirs)
-# kde_appsdir       Where your application file (.kdelnk) should go to. 
+# kde_appsdir       Where your application file (.desktop) should go to. 
 # kde_icondir       Where your icon should go to.
 # kde_minidir       Where your mini icon should go to.
 # kde_datadir       Where you install application data. (Use a subdir)
@@ -65,7 +65,7 @@ messages:
 # if you have more of them, create a subdirectory with an extra Makefile 
 install-data-local: 
 	$(mkinstalldirs) $(APPSDIR)
-	$(INSTALL_DATA) $(srcdir)/kdvi.kdelnk $(APPSDIR)
+	$(INSTALL_DATA) $(srcdir)/kdvi.desktop $(APPSDIR)
 	$(mkinstalldirs) $(kde_icondir)
 	$(INSTALL_DATA) $(srcdir)/pix/kdvi.xpm $(kde_icondir)
 	$(mkinstalldirs) $(kde_minidir)
@@ -73,15 +73,9 @@ install-data-local:
 
 # remove ALL you have installed in install-data-local or install-exec-local
 uninstall-local:
-	-rm -f $(APPSDIR)/Kdvi.kdelnk
+	-rm -f $(APPSDIR)/kdvi.desktop
 	-rm -f $(kde_icondir)/kdvi.xpm
 	-rm -f $(kde_minidir)/kdvi.xpm
-
-clean-local:
-	(cd kpathsea && test -r Makefile && $(MAKE) distclean)
-
-distclean-local:
-	(cd kpathsea && test -r config.status && $(MAKE) distclean)
 
 $(srcdir)/psheader.c: psheader.txt squeeze $(kpathsea)
 	./squeeze $(srcdir)/psheader.txt $@

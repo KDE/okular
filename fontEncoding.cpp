@@ -20,19 +20,26 @@
 fontEncoding::fontEncoding(const QString &encName)
 {
 #ifdef DEBUG_FONTENC
-  kdDebug() << "fontEncoding( " << encName << " )" << endl;
+  kdDebug(4700) << "fontEncoding( " << encName << " )" << endl;
 #endif
 
   // Use kpsewhich to find the encoding file.
   KProcIO proc;
   QString encFileName;
   proc << "kpsewhich" << encName;
-  proc.start(KProcess::Block);
+  if (proc.start(KProcess::Block) == false) {
+    kdError(4700) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
+    return;
+  }
   proc.readln(encFileName);
   encFileName = encFileName.stripWhiteSpace();
-  
+  if (encFileName.isEmpty()) {
+    kdError(4700) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
+    return;
+  }
+
 #ifdef DEBUG_FONTENC
-  kdDebug() << "FileName of the encoding: " << encFileName << endl;
+  kdDebug(4700) << "FileName of the encoding: " << encFileName << endl;
 #endif  
 
   QFile file( encFileName );
@@ -50,7 +57,7 @@ fontEncoding::fontEncoding(const QString &encName)
     // Find the name of the encoding
     encodingFullName = fileContent.section(' ', 0, 0).mid(1);
 #ifdef DEBUG_FONTENC
-    kdDebug() << "encodingFullName: " << encodingFullName << endl;
+    kdDebug(4700) << "encodingFullName: " << encodingFullName << endl;
 #endif
     
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplifyWhiteSpace();
@@ -60,11 +67,13 @@ fontEncoding::fontEncoding(const QString &encName)
     for ( QStringList::Iterator it = glyphNameList.begin(); it != glyphNameList.end(); ++it ) {
       glyphNameVector[i] = (*it).simplifyWhiteSpace();
 #ifdef DEBUG_FONTENC
-      kdDebug() << i << ": " << glyphNameVector[i] << endl;
+      kdDebug(4700) << i << ": " << glyphNameVector[i] << endl;
 #endif
       i++;
     }
-    
+  } else {
+    kdError(4700) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
+    return;
   }
 }
 

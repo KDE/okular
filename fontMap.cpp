@@ -8,6 +8,7 @@
 #include <../config.h>
 #ifdef HAVE_FREETYPE
 
+#include <kdebug.h>
 #include <kprocio.h>
 #include <kstringhandler.h>
 #include <qfile.h>
@@ -22,13 +23,21 @@ fontMap::fontMap()
   // "ptmr8y" in the DVI file, but the Type1 font file name is
   // "utmr8a.pfb". We use the map file of "ps2pk" because that progam
   // has, like kdvi (and unlike dvips), no built-in fonts.
-
+  
   KProcIO proc;
   proc << "kpsewhich" << "--format=dvips config" << "ps2pk.map";
-  proc.start(KProcess::Block);
+  if (proc.start(KProcess::Block) == false) {
+    kdError(4700) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+    return;
+  }
+
   QString map_fileName;
   proc.readln(map_fileName);
   map_fileName = map_fileName.stripWhiteSpace();
+  if (map_fileName.isEmpty()) {
+    kdError(4700) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
+    return;
+  }
   
   QFile file( map_fileName );
   if ( file.open( IO_ReadOnly ) ) {
@@ -50,6 +59,9 @@ fontMap::fontMap()
 	entry.fontEncoding = encodingName;
     }
     file.close();
+  } else {
+    kdError(4700) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
+    return;
   }
 }
 

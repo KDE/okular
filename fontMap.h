@@ -81,19 +81,26 @@ class fontMapEntry {
 class fontMap {
  public:
   /** The default constructor will try to locate the file 'ps2pk.map',
-      and read its contents. */
+      and read its contents. If the file 'ps2pk.map' cannot be found
+      using the kpsewhich command, or if it cannot be read, or is
+      (partially) in an improper format, an error message is printed
+      to stderr using the kdDebug() stream. */
   fontMap( void );
   
-  /** */
+  /** find the name of a font file (e.g. 'ubkd8a.pfb') from a TeX font
+      name (e.g. 'rpbkd'). This method return a reference to
+      QString::null if the font could not be found. */
   const QString &findFileName(const QString &TeXName);
   
+  /** find the name of an encoding file for a font (e.g. '8r') from a
+      TeX font name (e.g. 'rpbkd'). This method return a reference to
+      QString::null if the font could not be found. */
   const QString &findEncoding(const QString &TeXName);
   
+ private:
   /** This member maps TeX font names mapEntry classes that contain
       the font's filenames, full font names and encodings. */
   QMap<QString, fontMapEntry> fontMapEntries;
-
-  
 };
 
 #endif // ifdef HAVE_FREETYPE

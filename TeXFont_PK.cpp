@@ -201,7 +201,7 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     int shrunk_width  = (int)ceil( (characterBitmaps[ch]->w - srcXTrans)/shrinkFactor );
     
     // Now do the same for the y-coordinate
-    g->y2 = (int)ceil(g->y/shrinkFactor); // original code. The following is better. But: WHY?    g->y2 = (int)ceil(g->y/shrinkFactor + 0.5);
+    g->y2 = (int)ceil(g->y/shrinkFactor);
     double srcYTrans = shrinkFactor * (g->y/shrinkFactor - ceil(g->y/shrinkFactor ));
     int shrunk_height = (int)ceil( (characterBitmaps[ch]->h - srcYTrans)/shrinkFactor );
     
@@ -264,8 +264,7 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
 	xydata[shrunk_width*y + x] = (int)(value/shrinkFactor);
       }
     
-    // Generate the alpha-channel. This again is highly inefficient.
-    // Would anybody please produce a faster routine?
+    // Generate the alpha-channel.
     QImage im32(shrunk_width, shrunk_height, 32);
     im32.fill(qRgb(color.red(), color.green(), color.blue()));
     im32.setAlphaBuffer(TRUE);

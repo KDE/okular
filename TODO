@@ -85,6 +85,7 @@ More items (first items will enter 'In progress list' first):
 -> use wallet for storing passwords of encrypted files
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
+-> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 
 Done (newest features come first):
 -> type ahead search in pageview (type '/' then the word to search..)

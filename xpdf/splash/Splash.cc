@@ -628,7 +628,7 @@ SplashError Splash::fillWithPattern(SplashPath *path, GBool eo,
   int xMinI, yMinI, xMaxI, yMaxI, x0, x1, y;
   SplashClipResult clipRes, clipRes2;
 
-  if (path->length == 0) {
+  if (path->length == 0 || path->length == 1) {
     return splashErrEmptyPath;
   }
   xPath = new SplashXPath(path, state->flatness, gTrue);

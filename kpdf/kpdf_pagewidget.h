@@ -34,6 +34,7 @@ public:
 	PageWidget( QWidget *parent, KPDFDocument *document );
 
 	// create actions that interact with this widget
+	uint observerId() { return PAGEWIDGET_ID; }
 	void setupActions( KActionCollection * collection, KConfigGroup * config );
 	void saveSettings( KConfigGroup * config );
 

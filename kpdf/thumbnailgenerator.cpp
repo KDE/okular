@@ -29,18 +29,18 @@ int ThumbnailGenerator::getPage() const
 void ThumbnailGenerator::run()
 {
 	QCustomEvent *ce;
-	QImage *i;
+	//QImage *i;
 	
 	SplashColor paperColor;
 	paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-	QOutputDev odev(paperColor);
+	KPDFOutputDev odev(paperColor);
 	odev.startDoc(m_doc->getXRef());
 	m_docMutex->lock();
 	m_doc -> displayPage(&odev, m_page, m_ppp, m_ppp, 0, true, false);
 	m_docMutex->unlock();
 	ce = new QCustomEvent(65432);
-	i = new QImage(odev.getImage());
-	i -> detach();
-	ce -> setData(i);
+	//i = new QImage(odev.getImage()); FIXME commented because the ODEV is changing
+	//i -> detach();
+	//ce -> setData(i);
 	QApplication::postEvent(m_o, ce);
 }

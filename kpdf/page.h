@@ -10,37 +10,27 @@
 #ifndef _KPDF_PAGE_H_
 #define _KPDF_PAGE_H_
 
-class QPixmap;
 class QPainter;
-class QImage;
+class QPixmap;
 //class QString;
 //class QRect;
-
 class TextOutputDev;
-class PageOverlay;
 
 /**
  * @short Collector for all the data belonging to a page.
  *
- * The Page class contains its pixmap, the thumbnail, a search page (a class
- * used internally for searching data) the modifiers descriptors (for overlay
- * graphics) and more.
- * It provides accessor methods for all those operations too.
- * 
- * Note: add stuff this class contains is destroyed automatically when the
- * class is destroyed.
+ * The KPDFPage class contains pixmaps (referenced using obsedvers id as key),
+ * a search page (a class used internally for searching data), link classes
+ * (that describe links in the current page) plus graphics overlays and more.
+ *
+ * Note: All objects passed to this class will be destoryed on class deletion.
  */
 
-/*
-[19:52] *TSDgeos* is, for links to work i need to enable setMouseTracking in the widget
-[19:53] *TSDgeos* that generates a mousemoveevent even if the user does not click the mouse so i can change the cursor when the user is over a link
-[19:53] *TSDgeos* do you think page could have a "cache" of places where the link exists so i don't have to query xpdf every time?
-[19:57] *eros* I'll add a cache.
-*/
+// ### HACK : this structure is under big changes ###
 class KPDFPage
 {
 public:
-    KPDFPage( uint number, float width, float height, int rotation );
+    KPDFPage( int number, float width, float height, int rotation );
     ~KPDFPage();
 
     // query properties (const read-only methods)
@@ -48,34 +38,46 @@ public:
     float width() const { return m_width; }
     float height() const { return m_height; }
     float ratio() const { return m_height / m_width; }
-    float rotation() const { return m_rotate; }
-    bool hasPixmap( int width, int height ) const;
-    bool hasThumbnail( int width, int height ) const;
+    float rotation() const { return m_rotation; }
+    bool hasPixmap( int id, int width, int height ) const;
     bool hasLink( int mouseX, int mouseY ) const;
-    void drawPixmap( QPainter * p, const QRect & rect, int width, int height ) const;
-    void drawThumbnail( QPainter * p, const QRect & rect, int width, int height ) const;
+    void drawPixmap( int id, QPainter * p, const QRect & rect, int width, int height ) const;
 
-    // page contents setup
-    void setPixmap( const QImage & image );
-    /*void setPixmapOverlaySelection( const QRect & normalizedRect );*/
-    /*void setPixmapOverlayNotations( ..DOMdescription.. );*/
-    void setThumbnail( const QImage & image );
+    // page contents setup *NOTE changes in progress*
+    void setPixmap( int id, QPixmap * pixmap );
     /*void setTextPage( TextOutputDev * );*/
     /*void setLinks( ..SomeStruct.. );    or (better): */
-    /*void addLink( QFloatRect( normalizedRect ), int destPage, int destPos ); */
+    /*void setPixmapOverlaySelection( const QRect & normalizedRect );*/
+    /*void setPixmapOverlayNotations( ..DOMdescription.. );*/
 
     // FIND command
     //bool hasText( QString & text );
     //const QRect & textPosition();
 
 private:
-    uint m_number;
+    int m_number, m_rotation;
     float m_width, m_height;
-    int m_rotate;
-    QPixmap * m_pixmap;
-    QPixmap * m_thumbnail;
-    TextOutputDev * m_text;
-    PageOverlay * m_overlay;
-};
 
+    QMap<int,QPixmap *> m_pixmaps;
+    TextOutputDev * m_text;
+};
+/*
+class KPDFLink
+{
+public:
+	enum LinkType { Goto, Execute, Action, URI, Movie };
+
+	KPDFLink( LinkType type ) : m_type( type ) {};
+
+	void setType( LinkType type ) { m_type = type; }
+	LinkType type() { return m_type; }
+
+private:
+	LinkType m_type;
+	float x_min, x_max, y_min, y_max;
+	// [Goto] type
+
+	// []
+};
+*/
 #endif

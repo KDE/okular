@@ -35,7 +35,7 @@ ThumbnailList::ThumbnailList(QWidget *parent, KPDFDocument *document)
 	viewport()->setPaletteBackgroundColor( palette().active().base() );
 
 	setFrameStyle( StyledPanel | Raised );
-	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestThumbnails(int, int)) );
+	connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestPixmaps(int, int)) );
 }
 
 void ThumbnailList::setupActions( KActionCollection * ac, KConfigGroup * config )
@@ -92,7 +92,7 @@ void ThumbnailList::pageSetup( const QValueList<int> & pages )
 	resizeContents( width, totalHeight );
 
 	// request for thumbnail generation
-	requestThumbnails( 200 );
+	requestPixmaps( 200 );
 }
 
 void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
@@ -120,7 +120,7 @@ void ThumbnailList::pageSetCurrent( int pageNumber, float /*position*/ )
 	}
 }
 
-void ThumbnailList::notifyThumbnailChanged( int pageNumber )
+void ThumbnailList::notifyPixmapChanged( int pageNumber )
 {
 	QValueVector<Thumbnail *>::iterator thumbIt = m_thumbnails.begin();
 	QValueVector<Thumbnail *>::iterator thumbEnd = m_thumbnails.end();
@@ -195,7 +195,7 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 	if ( e->size().width() != e->oldSize().width() )
 	{
 		// runs the timer avoiding a thumbnail regeneration by 'contentsMoving'
-		requestThumbnails( 2000 );
+		requestPixmaps( 2000 );
 
 		// resize and reposition items
 		int totalHeight = 0,
@@ -219,12 +219,12 @@ void ThumbnailList::viewportResizeEvent(QResizeEvent *e)
 	else if ( e->size().height() <= e->oldSize().height() )
 		return;
 	// update Thumbnails since width has changed or height has increased
-	requestThumbnails( 500 );
+	requestPixmaps( 500 );
 }
 //END widget events 
 
 //BEGIN internal SLOTS 
-void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContentsY )
+void ThumbnailList::slotRequestPixmaps( int /*newContentsX*/, int newContentsY )
 {
 	// an update is already scheduled, so don't proceed
 	if ( m_delayTimer && m_delayTimer->isActive() )
@@ -243,17 +243,17 @@ void ThumbnailList::slotRequestThumbnails( int /*newContentsX*/, int newContents
 		if ( top > vHeight )
 			break;
 		else if ( top + t->height() > 0 )
-			m_document->requestThumbnail( t->pageNumber(), t->previewWidth(), t->previewHeight(), true );
+			m_document->requestPixmap( THUMBNAILS_ID, t->pageNumber(), t->previewWidth(), t->previewHeight(), true );
 	}
 }
 //END internal SLOTS
 
-void ThumbnailList::requestThumbnails( int delayMs )
+void ThumbnailList::requestPixmaps( int delayMs )
 {
 	if ( !m_delayTimer )
 	{
 		m_delayTimer = new QTimer( this );
-		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestThumbnails() ) );
+		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotRequestPixmaps() ) );
 	}
 	m_delayTimer->start( delayMs, true );
 }

@@ -26,6 +26,7 @@ Q_OBJECT
 		ThumbnailList(QWidget *parent, KPDFDocument *document);
 
 		// create actions that interact with this widget and load/save settings
+		uint observerId() { return THUMBNAILS_ID; }
 		void setupActions( KActionCollection * collection, KConfigGroup * config );
 		void saveSettings( KConfigGroup * config );
 
@@ -36,7 +37,7 @@ Q_OBJECT
 		void pageSetCurrent( int pageNumber, float position );
 
 		// redraw thumbnail ( inherited as DocumentObserver )
-		void notifyThumbnailChanged( int pageNumber );
+		void notifyPixmapChanged( int pageNumber );
 
 	protected:
 		// scroll up/down the view
@@ -50,10 +51,10 @@ Q_OBJECT
 
 	public slots:
 		// make requests for generating pixmaps for visible thumbnails
-		void slotRequestThumbnails( int newContentsX = -1, int newContentsY = -1 );
+		void slotRequestPixmaps( int newContentsX = -1, int newContentsY = -1 );
 
 	private:
-		void requestThumbnails( int delayMs = 0 );
+		void requestPixmaps( int delayMs = 0 );
 		KPDFDocument *m_document;
 		Thumbnail *m_selected;
 		QTimer *m_delayTimer;

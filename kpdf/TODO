@@ -1,18 +1,32 @@
 Personal Albert's list
--> make links functional
+-> make links functional (done in HEAD)
 
 More items
+-> multiple pages per view
+-> continous mode
 -> screen editing: framework
 -> screen editing: tools
+-> export all text in plain_text/html
+-> extract(export?) images
+-> implement history (mainly for actionNamed)
+-> new icons (contest at kde-look that will end in 2004-Oct-01)
 
-Porting / In progress
--> implementing Document / Page using AACid's thread as the generation thread
--> improve thumbnail generation to make it non-gui blocking
--> multiple pages per view
--> centering pages in the view
+Porting / In progress on the branch (first item comes first):
+-> porting Albert's link following
+-> porting Albert's search
+-> implementing async document generator using Albert's thread as the generation thread
+-> better zoom handling
+
+Done (sorted by inv.time)
+-> smart handling of pixmap using an Observer ID (thumbnails are gone, only pixmaps now)
+-> some toolbar/menu changes
 -> outline bottom and right edges (of pages)
-
-Done
--> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
--> maybe: use local instead of X memory for thumbnails (..)
+-> centering pages in the view
+-> kpdf output at 100% has exactly the same size as acroread now
+-> qsplitter layouting
+-> zooming works as expected (and added 'fit to page' too)
+-> new go to page dialog
 -> previews sorted by visible areas (prioritize items where the scrollbar is)
+-> previews speedup: 50-100%
+-> use local instead of X memory for thumbnails (..)
+-> merge lots of kpdf_part and part (centralview) code (to simplify/clenup)

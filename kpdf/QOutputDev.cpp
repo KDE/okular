@@ -19,80 +19,121 @@
 #pragma implementation
 #endif
 
+#include <kdebug.h>
+
 #include "SplashBitmap.h"
 #include "TextOutputDev.h"
-
 #include "QOutputDev.h"
 
+// NOTE: XPDF/Splash implementation dependant code will be marked with '###'
+
 //------------------------------------------------------------------------
-// QOutputDev
+// KPDFOutputDev
 //------------------------------------------------------------------------
 
-QOutputDev::QOutputDev(SplashColor paperColor)
-	: SplashOutputDev(splashModeRGB8, false, paperColor), m_image(0)
+KPDFOutputDev::KPDFOutputDev(SplashColor paperColor)
+	: SplashOutputDev(splashModeRGB8, false, paperColor),
+	m_pixmapWidth( -1 ), m_pixmapHeight( -1 ), m_pixmap( 0 ), m_text( 0 )
 {
-	// create text object
-	m_text = new TextPage ( gFalse );
 }
 
-QOutputDev::~QOutputDev ( )
+KPDFOutputDev::~KPDFOutputDev()
 {
+	delete m_pixmap;
 	delete m_text;
 }
 
-void QOutputDev::drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen)
+void KPDFOutputDev::setParams( int width, int height, bool generateText )
 {
-	m_text->addChar(state, x, y, dx, dy, code, u, uLen);
+	m_pixmapWidth = width;
+	m_pixmapHeight = height;
+	if ( m_pixmap )
+	{
+		delete m_pixmap;
+		m_pixmap = 0;
+	}
+
+	delete m_text;
+	m_text = generateText ? new TextPage( gFalse ) : 0;
+}
+
+QPixmap * KPDFOutputDev::takePixmap()
+{
+	QPixmap * pix = m_pixmap;
+	m_pixmap = 0;
+	return pix;
+}
+
+TextPage * KPDFOutputDev::takeTextPage()
+{
+	TextPage * text = m_text;
+	m_text = 0;
+	return text;
+}
+
+
+
+void KPDFOutputDev::startPage(int pageNum, GfxState *state)
+{
+	m_pageNum = pageNum;
+	SplashOutputDev::startPage(pageNum, state);
+	if ( m_text )
+		m_text->startPage(state);
+}
+
+void KPDFOutputDev::endPage()
+{
+	SplashOutputDev::endPage();
+	if ( m_text )
+		m_text->coalesce(gTrue);
+
+	// create a QPixmap from page data
+	delete m_pixmap;
+	int bh = getBitmap()->getHeight(),
+	    bw = getBitmap()->getWidth();
+	SplashColorPtr dataPtr = getBitmap()->getDataPtr();
+	QImage * img = new QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian);
+	if ( bw != m_pixmapWidth || bh != m_pixmapHeight )
+	{
+		// it may happen (in fact it doesn't) that we need rescaling
+
+		kdWarning() << "Pixmap at page '" << m_pageNum << "' needed rescale." << endl;
+		m_pixmap = new QPixmap( img->smoothScale( m_pixmapWidth, m_pixmapHeight ) );
+	}
+	else
+		m_pixmap = new QPixmap( *img );
+	delete img;
+
+	// ### hack: unload memory used by bitmap
+	SplashOutputDev::startPage(0, NULL);
+}
+
+void KPDFOutputDev::drawLink(Link * /*l*/, Catalog */*catalog*/)
+{
+/*	double x1,y1, x2,y2;
+	l->getRect( &x1,&y1, &x2,&y2 );
+	LinkAction * a = l->getAction();
+	pri NOWARN ntf("LINK %x ok:%d t:%d rect:[%f,%f,%f,%f] \n", (uint)l, (int)l->isOk(),
+		(int)a->getKind(), x1,y2, x2-x1, y2-y1 );
+*/}
+
+void KPDFOutputDev::updateFont(GfxState *state)
+{
+	SplashOutputDev::updateFont(state);
+	if ( m_text )
+		m_text->updateFont(state);
+}
+
+void KPDFOutputDev::drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen)
+{
+	if ( m_text )
+		m_text->addChar(state, x, y, dx, dy, code, u, uLen);
 	SplashOutputDev::drawChar(state, x, y, dx, dy, originX, originY, code, u, uLen);
 }
 
-GBool QOutputDev::beginType3Char(GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen)
+GBool KPDFOutputDev::beginType3Char(GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen)
 {
-	m_text->addChar(state, x, y, dx, dy, code, u, uLen);
+	if ( m_text )
+		m_text->addChar(state, x, y, dx, dy, code, u, uLen);
 	return SplashOutputDev::beginType3Char(state, x, y, dx, dy, code, u, uLen);
-}
-
-void QOutputDev::clear()
-{
-	startDoc(NULL);
-	startPage(0, NULL);
-}
-
-void QOutputDev::startPage(int pageNum, GfxState *state)
-{
-	SplashOutputDev::startPage(pageNum, state);
-	m_text->startPage(state);
-}
-
-void QOutputDev::endPage()
-{
-	SplashColorPtr dataPtr;
-	int bh, bw;
-
-	SplashOutputDev::endPage();
-	m_text->coalesce(gTrue);
-	bh = getBitmap()->getHeight();
-	bw = getBitmap()->getWidth();
-	dataPtr = getBitmap()->getDataPtr();
-	m_image = QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian);
-	m_image.setAlphaBuffer( false );
-
-	// TODO HACK: unload memory used by bitmap
-	//SplashOutputDev::startPage(pageNum, state (with pix size={0,0}) );
-}
-
-void QOutputDev::updateFont(GfxState *state)
-{
-	SplashOutputDev::updateFont(state);
-	m_text->updateFont(state);
-}
-
-bool QOutputDev::find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom, GBool startAtLast, GBool stopAtLast, double *xMin, double *yMin, double *xMax, double *yMax)
-{
-	return m_text -> findText(s, len, startAtTop, stopAtBottom, startAtLast, stopAtLast, xMin, yMin, xMax, yMax);
-}
-
-const QImage &QOutputDev::getImage() const
-{
-	return m_image;
 }

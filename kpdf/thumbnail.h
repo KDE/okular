@@ -9,7 +9,7 @@
 
 #ifndef THUMBNAIL_H
 #define THUMBNAIL_H
- 
+
 #include <qwidget.h>
 
 class QLabel;

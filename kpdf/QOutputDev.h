@@ -12,8 +12,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef QOUTPUTDEV_H
-#define QOUTPUTDEV_H
+#ifndef KPDFOUTPUTDEV_H
+#define KPDFOUTPUTDEV_H
 
 #ifdef __GNUC__
 #pragma interface
@@ -21,43 +21,55 @@
 
 #include <qimage.h>
 
-#include "XRef.h"
 #include "SplashOutputDev.h"
+#include "Link.h"
 
 class TextPage;
+class KPDFPage;
 
-class QOutputDev : public SplashOutputDev
+/**
+ * @short A SplashOutputDev rendered that grab text and links.
+ *
+ * This output device: 
+ * - renders the page using SplashOutputDev (its parent)
+ * - harvests text into a textPage (for searching text)
+ * - harvests links and set them to a KPDFPage
+ */
+class KPDFOutputDev : public SplashOutputDev
 {
-	public:
-		// Constructor
-		QOutputDev(SplashColor paperColor);
-		
-		// Destructor.
-		virtual ~QOutputDev();
-		
-		// Start a page.
-		virtual void startPage(int pageNum, GfxState *state);
-		
-		// End a page.
-		virtual void endPage();
-		
-		//----- update text state
-		virtual void updateFont(GfxState *state);
-		
-		//----- text drawing
-		virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen);
-		virtual GBool beginType3Char(GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen);
-		
-		// Clear out the document (used when displaying an empty window).
-		void clear();
-		
-		bool find(Unicode *s, int len, GBool startAtTop, GBool stopAtBottom, GBool startAtLast, GBool stopAtLast, double *xMin, double *yMin, double *xMax, double *yMax);
-		
-		const QImage &getImage() const;
-	
-	private:
-		TextPage *m_text;	// text from the current page
-		QImage m_image;		// the image where the page is drawn
+public:
+	KPDFOutputDev( SplashColor paperColor );
+	virtual ~KPDFOutputDev();
+
+	// to be called before PDFDoc->displayPage( thisclass, .. )
+	void setParams( int pixmapWidth, int pixmapHeight, bool generateText );
+
+	// takes pointers out of the class (so deletion it's up to others)
+	QPixmap * takePixmap();
+	TextPage * takeTextPage();
+
+	/** inherited from OutputDev */
+	// Start a page.
+	virtual void startPage(int pageNum, GfxState *state);
+	// End a page.
+	virtual void endPage();
+	//----- link borders
+	virtual void drawLink(Link *link, Catalog *catalog);
+	//----- update text state
+	virtual void updateFont(GfxState *state);
+	//----- text drawing
+	virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen);
+	virtual GBool beginType3Char(GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen);
+
+private:
+	// the pixmap where the page is drawn (generated on every execution)
+	int m_pageNum;
+	int m_pixmapWidth;
+	int m_pixmapHeight;
+	QPixmap * m_pixmap;
+
+	// text page generated on demand
+	TextPage * m_text;
 };
 
 #endif

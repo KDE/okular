@@ -18,23 +18,26 @@ class KPDFPage;
 /**
  * @short Base class for objects being notified when something changes.
  *
- * Inherit this class and call KPDFDocument->addObserver( obsClass ) to get
- * notified of asyncronous events (a new thumbnail has arrived, a pixmap has
- * changed, and other events).
+ * Inherit this class and call KPDFDocument->addObserver( obsClass ) to get notified
+ * of asyncronous events (a new pixmap has arrived, changed, etc... ).
  */
 class KPDFDocumentObserver
 {
 public:
+    // you must give each observer a unique ID (used for notifications)
+    virtual uint observerId() = 0;
+
     // monitor changes in pixmaps (generation thread complete)
-    virtual void notifyThumbnailChanged( int /*pageNumber*/ ) {};
     virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
 
-    // commands from the Document to observers
+    // commands from the Document to all observers
     virtual void pageSetup( const QValueList<int> & /*pages*/ ) {};
     virtual void pageSetCurrent( int /*pageNumber*/, float /*position*/ ) {};
-    virtual void pageSetHilight( int /*x*/, int /*y*/, int /*width*/, int /*height*/ ) {};
+    //virtual void pageSetHilight( int /*x*/, int /*y*/, int /*width*/, int /*height*/ ) {};
 };
 
+#define PAGEWIDGET_ID 1
+#define THUMBNAILS_ID 2
 
 /**
  * @short The information container. Actions (like open,find) take place here.
@@ -63,8 +66,7 @@ public:
 
     // observers related methods
     void addObserver( KPDFDocumentObserver * pObserver );
-    void requestPixmap( uint page, int width, int height, bool syncronous = false );
-    void requestThumbnail( uint page, int width, int height, bool syncronous = false );
+    void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
 
 public slots:
     // document commands via slots
@@ -78,7 +80,7 @@ signals:
     void pageChanged();
 
 private:
-    void sendFilteredPageList();
+    void sendFilteredPageList( bool forceEmpty = false );
     void deletePages();
 
     class KPDFDocumentPrivate * d;

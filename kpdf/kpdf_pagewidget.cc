@@ -115,7 +115,7 @@ void PageWidget::pageSetup( const QValueList<int> & pages )
 	m_page = 0;
 
 	if ( pages.count() < 1 )
-		return slotUpdateView();
+		return;
 
 	// populate internal vector with the list of pages and update
 	QValueList<int>::const_iterator pageIt = pages.begin();
@@ -258,7 +258,7 @@ void PageWidget::viewportResizeEvent( QResizeEvent * )
 	}
 	m_delayTimer->start( 400, true );
 	// recalc coordinates
-	slotUpdateView( false );
+	//slotUpdateView( false );
 }
 
 void PageWidget::keyPressEvent( QKeyEvent * e )
@@ -324,7 +324,7 @@ void PageWidget::dropEvent( QDropEvent * ev )
 		emit urlDropped( lst.first() );
 }
 
-void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
+void PageWidget::drawContents( QPainter *p, int clipx, int clipy, int clipw, int cliph )
 {
 	QColor bc( paletteBackgroundColor() /*KGlobalSettings::calculateAlternateBackgroundColor( KGlobalSettings::baseColor() )*/ );
 	if ( m_page )
@@ -339,7 +339,7 @@ void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, in
 			p->translate( m_pageRect.left(), m_pageRect.top() );
 			QRect translatedPageClip( pageClip );
 			translatedPageClip.moveBy( -m_pageRect.left(), -m_pageRect.top() );
-			m_page->drawPixmap( p, translatedPageClip, m_pageRect.width(), m_pageRect.height() );
+			m_page->drawPixmap( PAGEWIDGET_ID, p, translatedPageClip, m_pageRect.width(), m_pageRect.height() );
 			p->restore();
 		}
 
@@ -499,7 +499,7 @@ void PageWidget::slotUpdateView( bool repaint )
 		    viewH = QMAX( viewport()->height(), pageH );
 		m_pageRect.setRect( (viewW - pageW) / 2, (viewH - pageH) / 2, pageW, pageH );
 		resizeContents( viewW, viewH );
-		m_document->requestPixmap( m_page->number(), pageW, pageH, true );
+		m_document->requestPixmap( PAGEWIDGET_ID, m_page->number(), pageW, pageH, true );
 	}
 	if ( repaint )
 		viewport()->update();

@@ -11,6 +11,7 @@
 #include <qpainter.h>
 
 #include "thumbnail.h"
+#include "document.h"
 #include "page.h"
 
 Thumbnail::Thumbnail( QWidget *parent, const KPDFPage *page )
@@ -83,7 +84,7 @@ void Thumbnail::paintEvent( QPaintEvent * e )
     p.translate( 1, 1 );
     clipRect.moveBy( -1, -1 );
     clipRect = clipRect.intersect( QRect( 0, 0, m_previewWidth, m_previewHeight ) );
-    m_page->drawThumbnail( &p, clipRect, m_previewWidth, m_previewHeight );
+    m_page->drawPixmap( THUMBNAILS_ID, &p, clipRect, m_previewWidth, m_previewHeight );
 
     p.end();
 }

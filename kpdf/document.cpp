@@ -11,6 +11,7 @@
 #include <qfile.h>
 #include <qmutex.h>
 #include <qvaluevector.h>
+#include <qmap.h>
 #include <kdebug.h>
 
 // local includes
@@ -35,18 +36,18 @@ public:
     // document related
     QMutex docLock;
     PDFDoc * pdfdoc;
-    QOutputDev * splashOutputDevice;
+    KPDFOutputDev * kpdfOutputDev;
     int currentPage;
     float currentPosition;
     QValueVector< KPDFPage* > pages;
 
     // observers related (note: won't delete oservers)
-    QValueList< KPDFDocumentObserver* > observers;
+    QMap< int, KPDFDocumentObserver* > observers;
 };
 
 #define foreachObserver( cmd ) {\
-    QValueList<KPDFDocumentObserver*>::iterator it = d->observers.begin();\
-    QValueList<KPDFDocumentObserver*>::iterator end = d->observers.end();\
+    QMap<int,KPDFDocumentObserver*>::iterator it = d->observers.begin();\
+    QMap<int,KPDFDocumentObserver*>::iterator end = d->observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 /*
@@ -60,13 +61,13 @@ KPDFDocument::KPDFDocument()
     d->currentPosition = 0;
     SplashColor paperColor;
     paperColor.rgb8 = splashMakeRGB8( 0xff, 0xff, 0xff );
-    d->splashOutputDevice = new QOutputDev( paperColor );
+    d->kpdfOutputDev = new KPDFOutputDev( paperColor );
 }
 
 KPDFDocument::~KPDFDocument()
 {
     close();
-    delete d->splashOutputDevice;
+    delete d->kpdfOutputDev;
     delete d;
 }
 
@@ -94,7 +95,7 @@ bool KPDFDocument::openFile( const QString & docFile )
     errors::clear();
 
     // initialize output device for rendering current pdf
-    d->splashOutputDevice->startDoc( d->pdfdoc->getXRef() );
+    d->kpdfOutputDev->startDoc( d->pdfdoc->getXRef() );
 
     // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = d->pdfdoc->getNumPages();
@@ -146,6 +147,44 @@ const KPDFPage * KPDFDocument::page( uint n ) const
 }
 
 
+void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
+{
+	d->observers[ pObserver->observerId() ] = pObserver;
+}
+
+void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool syn )
+{
+    KPDFPage * kp = d->pages[page];
+    if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
+        return;
+
+    if ( syn )
+    {
+        // in-place Pixmap generation for syncronous requests
+        if ( !kp->hasPixmap( id, width, height ) )
+        {
+            // set KPDFPage pointer to outputdevice for links/text harvesting
+            d->kpdfOutputDev->setParams( width, height, false );
+
+            // compute dpi used to get an image with desired width and height
+            double fakeDpiX = width * 72.0 / kp->width(),
+                   fakeDpiY = height * 72.0 / kp->height();
+            d->docLock.lock();
+            d->pdfdoc->displayPage( d->kpdfOutputDev, page + 1, fakeDpiX, fakeDpiY, 0, true, true );
+            d->docLock.unlock();
+
+            kp->setPixmap( id, d->kpdfOutputDev->takePixmap() );
+
+            d->observers[id]->notifyPixmapChanged( page );
+        }
+    }
+    else
+    {
+        //TODO asyncronous events queuing
+    }
+}
+
+// BEGIN slots 
 void KPDFDocument::slotSetCurrentPage( int page )
 {
     slotSetCurrentPagePosition( page, 0.0 );
@@ -261,93 +300,16 @@ void KPDFDocument::slotFind( bool /*nextMatch*/, const QString & /*text*/ )
 void KPDFDocument::slotGoToLink( /* QString anchor */ )
 {
 }
+//END slots 
 
-
-void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
-{
-    d->observers.push_back( pObserver );
-}
-
-void KPDFDocument::requestPixmap( uint page, int width, int height, bool syn )
-{
-    KPDFPage * kp = d->pages[page];
-    if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
-        return;
-
-    if ( syn )
-    {
-        // in-place Pixmap generation for syncronous requests
-        if ( !kp->hasPixmap( width, height ) )
-        {
-            // compute dpi used to get an image with desired width and height
-            double fakeDpiX = width * 72.0 / kp->width(),
-                   fakeDpiY = height * 72.0 / kp->height();
-            d->docLock.lock();
-            d->pdfdoc->displayPage( d->splashOutputDevice, page + 1, fakeDpiX, fakeDpiY, 0, true, false );
-            d->docLock.unlock();
-
-            // it may happen (in fact it doesn't) that we need rescaling
-            if ( d->splashOutputDevice->getImage().size() != QSize( width, height ) )
-            {
-                kdWarning() << "Pixmap for page '" << page << "' needed rescale." << endl;
-                kp->setPixmap( d->splashOutputDevice->getImage().smoothScale( width, height ) );
-            }
-            else
-                kp->setPixmap( d->splashOutputDevice->getImage() );
-
-            foreachObserver( notifyPixmapChanged( page ) );
-        }
-    }
-    else
-    {
-        //TODO asyncronous events queuing
-    }
-}
-
-void KPDFDocument::requestThumbnail( uint page, int width, int height, bool syn )
-{
-    KPDFPage * kp = d->pages[page];
-    if ( !d->pdfdoc || !kp || kp->width() < 1 || kp->height() < 1 )
-        return;
-
-    if ( syn )
-    {
-        // in-place Thumbnail generation for syncronous requests
-        if ( !kp->hasThumbnail( width, height ) )
-        {
-            // compute dpi used to get an image with desired width and height
-            double fakeDpiX = width * 72.0 / kp->width(),
-                   fakeDpiY = height * 72.0 / kp->height();
-            d->docLock.lock();
-            d->pdfdoc->displayPage( d->splashOutputDevice, page + 1, fakeDpiX, fakeDpiY, 0, true, false );
-            d->docLock.unlock();
-
-            // it may happen (in fact it doesn't) that we need rescaling
-            if ( d->splashOutputDevice->getImage().size() != QSize( width, height ) )
-            {
-                kdWarning() << "Thumbnail for page '" << page << "' needed rescale." << endl;
-                kp->setThumbnail( d->splashOutputDevice->getImage().smoothScale( width, height ) );
-            }
-            else
-                kp->setThumbnail( d->splashOutputDevice->getImage() );
-
-            foreachObserver( notifyThumbnailChanged( page ) );
-        }
-    }
-    else
-    {
-        //TODO asyncronous events queuing
-    }
-}
-
-
-void KPDFDocument::sendFilteredPageList()
+void KPDFDocument::sendFilteredPageList( bool forceEmpty )
 {
     // make up a value list of the pages [1,2,3..]
     uint pageCount = d->pages.count();
     QValueList<int> pagesList;
-    for ( uint i = 0; i < pageCount ; i++ )
-        pagesList.push_back( i );
+    if ( !forceEmpty )
+        for ( uint i = 0; i < pageCount ; i++ )
+            pagesList.push_back( i );
 
     // send the list to observers
     foreachObserver( pageSetup( pagesList ) );
@@ -359,8 +321,7 @@ void KPDFDocument::deletePages()
         return;
 
     // broadcast an empty page list to observers
-    QValueList<int> pagesList;
-    foreachObserver( pageSetup( pagesList ) );
+    sendFilteredPageList( true );
 
     // delete pages and clear container
     for ( uint i = 0; i < d->pages.count() ; i++ )

@@ -101,7 +101,15 @@ public:
 public slots:
   void          abortExternalProgramm(void);
   bool		setFile(const QString & fname);
+
+  /** Displays the page of the first argument */
   void		gotoPage(int page);
+
+  /** Displays the page of the first argument, and blinks the display
+      at the vertical offset vflashOffset. This is used when the user
+      clicks on a hyperlink: the target of the jump flashes so that
+      the user can locate it more easily. */
+  void		gotoPage(int page, int vflashOffset);
   double	setZoom(double zoom);
   double        zoom() { return _zoom; };
   void		drawPage();
@@ -118,6 +126,13 @@ protected:
  void paintEvent(QPaintEvent *ev);
 
 private:
+ /** Methods and counters used for the animation to mark the target of
+     an hyperlink. */
+ int               timerIdent;
+ void              timerEvent( QTimerEvent *e );
+ int               animationCounter;
+ int               flashOffset;
+
  // Used to run commands like "dvips" or "dvipdfm"
  KShellProcess     *proc;
 

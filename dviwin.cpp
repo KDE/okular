@@ -156,6 +156,11 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
 
   PS_interface           = new ghostscript_interface(0.0, 0, 0);
   is_current_page_drawn  = 0;  
+
+  // Variables used in animation.
+  animationCounter = 0;
+  timerIdent       = 0;
+
   resize(0,0);
   //@@@  setMouseTracking(true);
 }
@@ -432,6 +437,13 @@ void dviWindow::drawPage()
 
   setCursor(arrowCursor);
 
+  // Stop any animation may be in progress
+  if (timerIdent != 0) {
+    killTimer(timerIdent);
+    timerIdent       = 0;
+    animationCounter = 0;
+  }
+
   if (dviFile == NULL) {
     resize(0, 0);
     return;
@@ -618,9 +630,30 @@ void dviWindow::gotoPage(int new_page)
     return;
   current_page           = new_page-1;
   is_current_page_drawn  = 0;  
+  animationCounter = 0;
   drawPage();
 }
 
+
+void dviWindow::gotoPage(int new_page, int vflashOffset)
+{
+  gotoPage(new_page);
+  animationCounter = 0;
+  flashOffset      = vflashOffset - pixmap->height()/100; // Heuristic correction. Looks better.
+  timerIdent       = startTimer(50); // Start the animation. The animation proceeds in 1/10s intervals
+}
+
+void dviWindow::timerEvent( QTimerEvent * ) 
+{
+  animationCounter++;
+  if (animationCounter >= 10) {
+    killTimer(timerIdent);
+    timerIdent       = 0;
+    animationCounter = 0;
+  }
+
+  repaint();
+}
 
 int dviWindow::totalPages()
 {
@@ -651,12 +684,17 @@ double dviWindow::setZoom(double zoom)
   return _zoom;
 }
 
-
 void dviWindow::paintEvent(QPaintEvent *)
 {
   if (pixmap) {
     QPainter p(this);
     p.drawPixmap(QPoint(0, 0), *pixmap);
+    if (animationCounter > 0 && animationCounter < 10) {
+      int wdt = pixmap->width()/(10-animationCounter);
+      int hgt = pixmap->height()/((10-animationCounter)*20);
+      p.setPen(QPen(QColor(150,0,0), 3, DashLine));
+      p.drawRect((pixmap->width()-wdt)/2, flashOffset, wdt, hgt);
+    }
   }
 }
 

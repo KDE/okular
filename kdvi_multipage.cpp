@@ -147,7 +147,7 @@ bool KDVIMultiPage::gotoPage(int page)
 
 void KDVIMultiPage::goto_page(int page, int y)
 {
-  window->gotoPage(page+1);
+  window->gotoPage(page+1, y);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
 
   emit previewChanged(true);

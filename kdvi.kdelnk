@@ -2,6 +2,7 @@
 [KDE Desktop Entry]
 Comment=TeX DVI File Viewer
 Comment[cs]=Prohlí¾eè Device Independent (DVI) souborù
+Comment[da]=TeX DVI-fil fremviser
 Comment[de]=TeX-DVI-Dateibetrachter
 Comment[es]=Visor de archivos TeX DVI
 Comment[fi]=TeX DVI tiedostonäyttäjä
@@ -21,6 +22,7 @@ Comment[sv]=Visare för TeX DVI-dokument
 BinaryPattern=kdvi;
 Name=DVI Viewer
 Name[cs]=Prohlí¾eè DVI souborù
+Name[da]=DVI-fremviser
 Name[de]=DVI-Betrachter
 Name[es]=Visor DVI
 Name[fi]=DVI Näyttäjä

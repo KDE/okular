@@ -35,6 +35,8 @@ K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
 
 using namespace KPDF;
 
+unsigned int Part::m_count = 0; 
+
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
@@ -146,11 +148,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   connect( m_outputDev, SIGNAL( spacePressed() ), this, SLOT( slotReadDown() ) );
   readSettings();
   updateActionPage();
+  m_count++;
 }
 
 Part::~Part()
 {
-    delete globalParams;
+    m_count--; 
+    if (m_count == 0) delete globalParams;
     writeSettings();
 }
 

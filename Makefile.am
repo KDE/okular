@@ -48,3 +48,5 @@ part_DATA = kdvi_part.rc
 
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@
+
+CLEANFILES = psheader.c

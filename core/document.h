@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004-2005 by Albert Astals Cid <tsdgeos@terra.es>       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -60,6 +60,7 @@ class KPDFDocument : public QObject // only for a private slot..
         void reparseConfig();
 
         // query methods (const ones)
+        bool isOpened() const;
         const DocumentInfo * documentInfo() const;
         const DocumentSynopsis * documentSynopsis() const;
         const KPDFPage * page( uint page ) const;

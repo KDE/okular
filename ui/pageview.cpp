@@ -548,7 +548,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             return;
         }
     }
-    else if(e->key() == '/')
+    else if(e->key() == '/' && d->document->isOpened())
     {
         d->findString="";
         d->messageWindow->display(i18n("Starting -- find text as you type"), PageViewMessage::Info, 3000);

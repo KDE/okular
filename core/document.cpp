@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004-2005 by Albert Astals Cid <tsdgeos@terra.es>       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -129,7 +129,11 @@ bool KPDFDocument::openDocument( const QString & docFile )
     bool openOk = generator->loadDocument( docFile, pages_vector );
     QApplication::restoreOverrideCursor();
     if ( !openOk || pages_vector.size() <= 0 )
+    {
+        delete generator;
+        generator = 0;
         return openOk;
+    }
 
     // 2. load Additional Data (our bookmarks and metadata) about the document
     loadDocumentInfo();
@@ -230,6 +234,11 @@ void KPDFDocument::reparseConfig()
     }
 }
 
+
+bool KPDFDocument::isOpened() const
+{
+    return generator;
+}
 
 const DocumentInfo * KPDFDocument::documentInfo() const
 {

@@ -151,8 +151,10 @@ void dviWindow::epsf_special(QString cp)
       if (fs)
       {
         QTextStream ts(fs, IO_ReadOnly);
-        EPSfilename = ts.read().stripWhiteSpace();
-        pclose(fs);
+        QString KPSEWHICH_EPSfilename = ts.read().stripWhiteSpace();
+	pclose(fs);
+	if (!KPSEWHICH_EPSfilename.isEmpty())
+	  EPSfilename = KPSEWHICH_EPSfilename;
       }
     }
   }
@@ -228,7 +230,7 @@ void dviWindow::epsf_special(QString cp)
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
       else
 	foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), 
-				  QString(i18n("File not found:\n %1")).arg(EPSfilename), -1);
+				  QString(i18n("File not found: \n %1")).arg(EPSfilename), -1);
       foreGroundPaint.restore();
     }
   }

@@ -121,7 +121,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   readSettings();
   enableActions(false);
   // Show tip of the day, when the first main window is shown.
-  //QTimer::singleShot(0,this,SLOT(showTipOnStart()));
+  QTimer::singleShot(0,this,SLOT(showTipOnStart()));
 }
 
 

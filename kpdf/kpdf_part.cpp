@@ -32,6 +32,7 @@
 #include <kaction.h>
 #include <kapplication.h>
 #include <kdebug.h>
+#include <kdirwatch.h>
 #include <kinstance.h>
 #include <kprinter.h>
 #include <kstdaction.h>
@@ -99,6 +100,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   m_outputDev->setAcceptDrops( true );
 
   setWidget(pdfpartview);
+  m_watchFile = new KToggleAction( i18n( "&Watch File" ), 0, this, SLOT( slotWatchFile() ), actionCollection(), "watch_file" );
 
   m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0,
                                        actionCollection(), "show_scrollbars" );
@@ -184,6 +186,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   m_zoomTo->setItems( translated );
   m_zoomTo->setCurrentItem( idx );
+
+  m_watcher = new KDirWatch( this );
+  connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
+  m_dirtyHandler = new QTimer( this );
+  connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+
 
 
   // set our XML-UI resource file
@@ -303,6 +311,7 @@ void Part::writeSettings()
     general.writeEntry( "ShowScrollBars", m_showScrollBars->isChecked() );
     general.writeEntry( "ShowTOC", m_showTOC->isChecked() );
     general.writeEntry( "ShowPageList", m_showPageList->isChecked() );
+    general.writeEntry( "WatchFile", m_watchFile->isChecked() );
     general.sync();
 }
 
@@ -315,6 +324,8 @@ void Part::readSettings()
     showTOC( m_showTOC->isChecked() );
     m_showPageList->setChecked( general.readBoolEntry( "ShowPageList", true ) );
     showMarkList( m_showPageList->isChecked() );
+    m_watchFile->setChecked( general.readBoolEntry( "WatchFile", true ) );
+    slotWatchFile();
 }
 
 void Part::showScrollBars( bool show )
@@ -391,9 +402,48 @@ Part::createAboutData()
   return aboutData;
 }
 
+  void
+Part::slotWatchFile()
+{
+  if( m_watchFile->isChecked() )
+    m_watcher->startScan();
+  else
+  {
+    m_dirtyHandler->stop();
+    m_watcher->stopScan();
+  }
+}
+
+  void
+Part::slotFileDirty( const QString& fileName )
+{
+  // The beauty of this is that each start cancels the previous one.
+  // This means that timeout() is only fired when there have
+  // no changes to the file for the last 750 milisecs.
+  // This is supposed to ensure that we don't update on every other byte
+  // that gets written to the file.
+  if ( fileName == m_file )
+  {
+    m_dirtyHandler->start( 750, true );
+  }
+}
+
+  void
+Part::slotDoFileDirty()
+{
+  int p = m_currentPage;
+  if (openFile())
+  {
+    if (p > m_doc->getNumPages()) p = m_doc->getNumPages();
+    goToPage(p);
+  }
+}
+
+
   bool
 Part::closeURL()
 {
+  if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
   pdfpartview->stopThumbnailGeneration();
   delete m_doc;
   m_doc = 0;
@@ -460,8 +510,8 @@ Part::openFile()
 
     m_outputDev->setPDFDocument(m_doc);
     goToPage(1);
-
   }
+  if (!m_watcher->contains(m_file)) m_watcher->addFile(m_file);
 
   return true;
 }

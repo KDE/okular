@@ -26,6 +26,7 @@ class QWidget;
 class KAboutData;
 class KAction;
 class KConfig;
+class KDirWatch;
 class KURL;
 class KToggleAction;
 class KSelectAction;
@@ -140,6 +141,7 @@ namespace KPDF
       KAction* m_prevPage;
       KAction* m_nextPage;
       KAction *m_gotoPage;
+      KToggleAction* m_watchFile;
       KToggleAction* m_showScrollBars;
       KToggleAction* m_showPageList;
       KToggleAction* m_showTOC;
@@ -147,7 +149,8 @@ namespace KPDF
       KToggleAction* m_fitToWidth;
       KAction *m_find;
       KAction *m_findNext;
-
+      KDirWatch *m_watcher;
+      QTimer *m_dirtyHandler;
       QString m_findText;
 
     // first page is page 1
@@ -160,10 +163,13 @@ namespace KPDF
     static unsigned int m_count;
 
   private slots:
-		void slotFitToWidthToggled();
-		void redrawPage();
-		void pageClicked ( int );
+    void slotFitToWidthToggled();
+    void redrawPage();
+    void pageClicked ( int );
     void fileSaveAs();
+    void slotWatchFile();
+    void slotFileDirty( const QString& );
+    void slotDoFileDirty();
   };
 
   class BrowserExtension : public KParts::BrowserExtension

@@ -99,6 +99,7 @@ public:
   // These should not be public... only for the moment
   void          mousePressEvent ( QMouseEvent * e );
   void          mouseMoveEvent ( QMouseEvent * e );
+  void          mouseReleaseEvent ( QMouseEvent * e );
   void          read_postamble(void);
   void          draw_part(double current_dimconv, bool is_vfmacro);
   void          set_vf_char(unsigned int cmd, unsigned int ch);

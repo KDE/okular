@@ -1095,7 +1095,7 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
     setCursor(arrowCursor);
   }
   
-  if ((e->state() && RightButton) != 0) {
+  if ((e->state() & RightButton) != 0) {
     if (selectedRectangle.isEmpty())
       selectedRectangle.setRect(e->pos().x(),e->pos().y(),1,1);
     else {
@@ -1126,6 +1126,10 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
   }
 }
 
+void dviWindow::mouseReleaseEvent ( QMouseEvent * )
+{
+  selectedRectangle.setRect(0,0,0,0);
+}
 
 void dviWindow::mousePressEvent ( QMouseEvent * e )
 {

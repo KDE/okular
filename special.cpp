@@ -79,384 +79,15 @@ extern "C" {
 #define	TWOPI		(3.14159265359*2.0)
 #define	MAX_PEN_SIZE	7	/* Max pixels of pen width */
 
+extern QString PostScriptString;
 
-static	int	xx[MAXPOINTS], yy[MAXPOINTS];	/* Path in milli-inches */
-static	int	path_len = 0;	/* # points in current path */
-static	int	pen_size = 1;	/* Pixel width of lines drawn */
 
-static	Boolean	whiten = False;
-static	Boolean	shade = False;
-static	Boolean	blacken = False;
 GC	ruleGC; // @@@ needs to be removed.
 
 /* Unfortunately, these values also appear in dvisun.c */
 #define	xRESOLUTION	(pixels_per_inch/shrink_factor)
 #define	yRESOLUTION	(pixels_per_inch/shrink_factor)
 
-
-/*
- *	Issue warning messages
- */
-
-static	void Warning(char *fmt, char *msg)
-{
-	Fprintf(stderr, fmt, msg);
-	(void) fputc('\n', stderr);
-}
-
-
-/*
- *	X drawing routines
- */
-
-#define	toint(x)	((int) ((x) + 0.5))
-#define	xconv(x)	(toint(tpic_conv*(x))/shrink_factor + PXL_H)
-#define	yconv(y)	(toint(tpic_conv*(y))/shrink_factor + PXL_V)
-
-/*
- *	Draw a line from (fx,fy) to (tx,ty).
- *	Right now, we ignore pen_size.
- */
-static	void line_btw(int fx, int fy, int tx, int ty)
-{
-	register int	fcx = xconv(fx),
-			tcx = xconv(tx),
-			fcy = yconv(fy),
-			tcy = yconv(ty);
-
-	if ((fcx < max_x || tcx < max_x) && (fcx >= min_x || tcx >= min_x) &&
-	    (fcy < max_y || tcy < max_y) && (fcy >= min_y || tcy >= min_y))
-		XDrawLine(DISP, currwin.win, ruleGC,
-		    fcx - currwin.base_x, fcy - currwin.base_y,
-		    tcx - currwin.base_x, tcy - currwin.base_y);
-}
-
-/*
- *	Draw a dot at (x,y)
- */
-static	void dot_at(int x, int y)
-{
-	register int	cx = xconv(x),
-			cy = yconv(y);
-
-	if (cx < max_x && cx >= min_x && cy < max_y && cy >= min_y)
-	    XDrawPoint(DISP, currwin.win, ruleGC,
-		cx - currwin.base_x, cy - currwin.base_y);
-}
-
-/*
- *	Apply the requested attributes to the last path (box) drawn.
- *	Attributes are reset.
- *	(Not currently implemented.)
- */
-	/* ARGSUSED */
-static	void do_attribute_path(int last_min_x, int last_max_x, int last_min_y, int last_max_y)
-{
-}
-
-/*
- *	Set the size of the virtual pen used to draw in milli-inches
- */
-
-/* ARGSUSED */
-static	void set_pen_size(char *cp)
-{
-	int	ps;
-
-	if (sscanf(cp, " %d ", &ps) != 1) {
-	    Warning("illegal .ps command format: %s", cp);
-	    return;
-	}
-	pen_size = (ps * (xRESOLUTION + yRESOLUTION) + 1000) / 2000;
-	if (pen_size < 1) pen_size = 1;
-	else if (pen_size > MAX_PEN_SIZE) pen_size = MAX_PEN_SIZE;
-}
-
-
-/*
- *	Print the line defined by previous path commands
- */
-
-static	void flush_path()
-{
-	register int i;
-	int	last_min_x, last_max_x, last_min_y, last_max_y;
-
-	last_min_x = 30000;
-	last_min_y = 30000;
-	last_max_x = -30000;
-	last_max_y = -30000;
-	for (i = 1; i < path_len; i++) {
-	    if (xx[i] > last_max_x) last_max_x = xx[i];
-	    if (xx[i] < last_min_x) last_min_x = xx[i];
-	    if (yy[i] > last_max_y) last_max_y = yy[i];
-	    if (yy[i] < last_min_y) last_min_y = yy[i];
-	    line_btw(xx[i], yy[i], xx[i+1], yy[i+1]);
-	}
-	if (xx[path_len] > last_max_x) last_max_x = xx[path_len];
-	if (xx[path_len] < last_min_x) last_min_x = xx[path_len];
-	if (yy[path_len] > last_max_y) last_max_y = yy[path_len];
-	if (yy[path_len] < last_min_y) last_min_y = yy[path_len];
-	path_len = 0;
-	do_attribute_path(last_min_x, last_max_x, last_min_y, last_max_y);
-}
-
-
-/*
- *	Print a dashed line along the previously defined path, with
- *	the dashes/inch defined.
- */
-
-static	void flush_dashed(char *cp, Boolean dotted)
-{
-	int	i;
-	int	numdots;
-	int	lx0, ly0, lx1, ly1;
-	int	cx0, cy0, cx1, cy1;
-	float	inchesperdash;
-	double	d, spacesize, a, b, dx, dy, milliperdash;
-
-	if (sscanf(cp, " %f ", &inchesperdash) != 1) {
-	    Warning("illegal format for dotted/dashed line: %s", cp);
-	    return;
-	}
-	if (path_len <= 1 || inchesperdash <= 0.0) {
-	    Warning("illegal conditions for dotted/dashed line", "");
-	    return;
-	}
-	milliperdash = inchesperdash * 1000.0;
-	lx0 = xx[1];	ly0 = yy[1];
-	lx1 = xx[2];	ly1 = yy[2];
-	dx = lx1 - lx0;
-	dy = ly1 - ly0;
-	if (dotted) {
-	    numdots = sqrt(dx*dx + dy*dy) / milliperdash + 0.5;
-	    if (numdots == 0) numdots = 1;
-	    for (i = 0; i <= numdots; i++) {
-		a = (float) i / (float) numdots;
-		cx0 = lx0 + a * dx + 0.5;
-		cy0 = ly0 + a * dy + 0.5;
-		dot_at(cx0, cy0);
-	    }
-	}
-	else {
-	    d = sqrt(dx*dx + dy*dy);
-	    numdots = d / (2.0 * milliperdash) + 1.0;
-	    if (numdots <= 1)
-		line_btw(lx0, ly0, lx1, ly1);
-	    else {
-		spacesize = (d - numdots * milliperdash) / (numdots - 1);
-		for (i = 0; i < numdots - 1; i++) {
-		    a = i * (milliperdash + spacesize) / d;
-		    b = a + milliperdash / d;
-		    cx0 = lx0 + a * dx + 0.5;
-		    cy0 = ly0 + a * dy + 0.5;
-		    cx1 = lx0 + b * dx + 0.5;
-		    cy1 = ly0 + b * dy + 0.5;
-		    line_btw(cx0, cy0, cx1, cy1);
-		    b += spacesize / d;
-		}
-		cx0 = lx0 + b * dx + 0.5;
-		cy0 = ly0 + b * dy + 0.5;
-		line_btw(cx0, cy0, lx1, ly1);
-	    }
-	}
-	path_len = 0;
-}
-
-
-/*
- *	Add a point to the current path
- */
-
-static	void add_path(char *cp)
-{
-	int	pathx, pathy;
-
-	if (++path_len >= MAXPOINTS) oops("Too many points");
-	if (sscanf(cp, " %d %d ", &pathx, &pathy) != 2)
-	    oops("Malformed path command");
-	xx[path_len] = pathx;
-	yy[path_len] = pathy;
-}
-
-
-/*
- *	Draw to a floating point position
- */
-
-static void im_fdraw(double x, double y)
-{
-	if (++path_len >= MAXPOINTS) oops("Too many arc points");
-	xx[path_len] = x + 0.5;
-	yy[path_len] = y + 0.5;
-}
-
-
-/*
- *	Draw an ellipse with the indicated center and radices.
- */
-
-static	void draw_ellipse(int xc, int yc, int xr, int yr)
-{
-	double	angle, theta;
-	int	n;
-	int	px0, py0, px1, py1;
-
-	angle = (xr + yr) / 2.0;
-	theta = sqrt(1.0 / angle);
-	n = TWOPI / theta + 0.5;
-	if (n < 12) n = 12;
-	else if (n > 80) n = 80;
-	n /= 2;
-	theta = TWOPI / n;
-
-	angle = 0.0;
-	px0 = xc + xr;		/* cos(0) = 1 */
-	py0 = yc;		/* sin(0) = 0 */
-	while ((angle += theta) <= TWOPI) {
-	    px1 = xc + xr*cos(angle) + 0.5;
-	    py1 = yc + yr*sin(angle) + 0.5;
-	    line_btw(px0, py0, px1, py1);
-	    px0 = px1;
-	    py0 = py1;
-	}
-	line_btw(px0, py0, xc + xr, yc);
-}
-
-/*
- *	Draw an arc
- */
-
-static	void arc(char *cp, Boolean invis)
-{
-	int	xc, yc, xrad, yrad, n;
-	float	start_angle, end_angle, angle, theta, r;
-	double	xradius, yradius, xcenter, ycenter;
-
-	if (sscanf(cp, " %d %d %d %d %f %f ", &xc, &yc, &xrad, &yrad,
-		&start_angle, &end_angle) != 6) {
-	    Warning("illegal arc specification: %s", cp);
-	    return;
-	}
-
-	if (invis) return;
-
-	/* We have a specialized fast way to draw closed circles/ellipses */
-	if (start_angle <= 0.0 && end_angle >= 6.282) {
-	    draw_ellipse(xc, yc, xrad, yrad);
-	    return;
-	}
-	xcenter = xc;
-	ycenter = yc;
-	xradius = xrad;
-	yradius = yrad;
-	r = (xradius + yradius) / 2.0;
-	theta = sqrt(1.0 / r);
-	n = 0.3 * TWOPI / theta + 0.5;
-	if (n < 12) n = 12;
-	else if (n > 80) n = 80;
-	n /= 2;
-	theta = TWOPI / n;
-	flush_path();
-	im_fdraw(xcenter + xradius * cos(start_angle),
-	    ycenter + yradius * sin(start_angle));
-	angle = start_angle + theta;
-	if (end_angle < start_angle) end_angle += TWOPI;
-	while (angle < end_angle) {
-	    im_fdraw(xcenter + xradius * cos(angle),
-		ycenter + yradius * sin(angle));
-	    angle += theta;
-	}
-	im_fdraw(xcenter + xradius * cos(end_angle),
-	    ycenter + yradius * sin(end_angle));
-	flush_path();
-}
-
-
-/*
- *	APPROXIMATE integer distance between two points
- */
-
-#define	dist(x0, y0, x1, y1)	(abs(x0 - x1) + abs(y0 - y1))
-
-
-/*
- *	Draw a spline along the previously defined path
- */
-
-static	void flush_spline()
-{
-	int	xp, yp;
-	int	N;
-	int	lastx, lasty;
-	Boolean	lastvalid = False;
-	int	t1, t2, t3;
-	int	steps;
-	int	j;
-	register int i, w;
-
-#ifdef	lint
-	lastx = lasty = -1;
-#endif
-	N = path_len + 1;
-	xx[0] = xx[1];
-	yy[0] = yy[1];
-	xx[N] = xx[N-1];
-	yy[N] = yy[N-1];
-	for (i = 0; i < N - 1; i++) {	/* interval */
-	    steps = (dist(xx[i], yy[i], xx[i+1], yy[i+1]) +
-		dist(xx[i+1], yy[i+1], xx[i+2], yy[i+2])) / 80;
-	    for (j = 0; j < steps; j++) {	/* points within */
-		w = (j * 1000 + 500) / steps;
-		t1 = w * w / 20;
-		w -= 500;
-		t2 = (750000 - w * w) / 10;
-		w -= 500;
-		t3 = w * w / 20;
-		xp = (t1*xx[i+2] + t2*xx[i+1] + t3*xx[i] + 50000) / 100000;
-		yp = (t1*yy[i+2] + t2*yy[i+1] + t3*yy[i] + 50000) / 100000;
-		if (lastvalid) line_btw(lastx, lasty, xp, yp);
-		lastx = xp;
-		lasty = yp;
-		lastvalid = True;
-	    }
-	}
-	path_len = 0;
-}
-
-
-/*
- *	Shade the last box, circle, or ellipse
- */
-
-static	void shade_last()
-{
-	blacken = whiten = False;
-	shade = True;
-}
-
-
-/*
- *	Make the last box, circle, or ellipse, white inside (shade with white)
- */
-
-static	void whiten_last()
-{
-	whiten = True;
-	blacken = shade = False;
-}
-
-
-/*
- *	Make last box, etc, black inside
- */
-
-static	void blacken_last()
-{
-	blacken = True;
-	whiten = shade = False;
-}
 
 
 /*
@@ -495,12 +126,14 @@ static	int		bbox_voffset;
 
 void draw_bbox()
 {
-	if (bbox_valid) {
-	    put_border(PXL_H - currwin.base_x,
-		PXL_V - currwin.base_y - bbox_voffset,
-		bbox_width, bbox_height);
-	    bbox_valid = False;
-	}
+#ifdef auskommentiert
+  if (bbox_valid) {
+    put_border(PXL_H - currwin.base_x,
+	       PXL_V - currwin.base_y - bbox_voffset,
+	       bbox_width, bbox_height);
+    bbox_valid = False;
+  }
+#endif
 }
 
 static	void actual_startup()
@@ -528,29 +161,23 @@ static	void NullProc2(char *cp)
 /* ARGSUSED */
 void drawbegin_none(int xul, int yul, char *cp)
 {
-	draw_bbox();
+  draw_bbox();
 }
 
 
-
+#ifdef auskommentiert
 /* If FILENAME starts with a left quote, set *DECOMPRESS to 1 and return
    the rest of FILENAME. Otherwise, look up FILENAME along the usual
    path for figure files, set *DECOMPRESS to 0, and return the result
    (NULL if can't find the file).  */
 
-static string find_fig_file (char *filename, int *decompress)
+static string find_fig_file (char *filename)
 {
   char *name;
   
-  if (*filename == '`') {
-     name = filename + 1;
-    *decompress = 1;
-  } else {
-    name = kpse_find_pict (filename);
-    if (!name)
-      fprintf (stderr, "xdvi: %s: Cannot open PS file.\n", filename);
-    *decompress = 0;
-  }
+  name = kpse_find_pict (filename);
+  if (!name)
+    kdError() << "Cannot open PS file " << filename << endl;
   
   return name;
 }
@@ -560,36 +187,16 @@ static string find_fig_file (char *filename, int *decompress)
    DECOMPRESS is nonzero, open a pipe to it and pass the resulting
    output to the drawraw proc (in chunks).  */
 
-static void draw_file (psprocs psp, char *name, int decompress)
+static void draw_file (psprocs psp, char *name)
 {
-  if (decompress) {
-    FILE *pipe;
-    if (_debug & DBG_PS)
-      printf ("%s: piping to PostScript\n", name);
-      
-    pipe = popen (name, FOPEN_R_MODE);
-    if (pipe == NULL)
-      perror (name);
-    else
-      {
-        char *line;
-        int save_debug = _debug;
-        _debug = 0; /* don't print every line we send */
-        while ((line = read_line (pipe)) != NULL) {
-          psp.drawraw (line);
-          free (line);
-        }
-        pclose (pipe); /* Linux gives a spurious error, so don't check. */
-        _debug = save_debug;
-      }
-
-  } else { /* a regular file, not decompressing */
-    psp.drawfile (name);
-  }
+  kDebugInfo(DEBUG, 4300, "draw file %s",name);
+  psp.drawfile (name);
 }
 
 static	void psfig_special(char *cp)
 {
+  kDebugInfo("PSFig special: %s",cp);
+
   char	*filename;
   int	raww, rawh;
 
@@ -611,11 +218,10 @@ static	void psfig_special(char *cp)
       for (filename = cp; !isspace(*cp); ++cp);
       *cp = '\0';
       {
-	int decompress;
-	char *name = find_fig_file (filename, &decompress);
+	char *name = find_fig_file (filename);
 	if (name && currwin.win == mane.win) {
-	  draw_file(psp, name, decompress);
-	  if (!decompress && name != filename)
+	  draw_file(psp, name);
+	  if (name != filename)
 	    free (name);
 	}
       }
@@ -637,24 +243,26 @@ static	void psfig_special(char *cp)
 	}
       }
 }
-
+#endif
 
 /*	Keys for epsf specials */
 
-static	const char	*keytab[]	= {"clip", 
-                    "llx",
-                    "lly",
-                    "urx",
-                    "ury",
-                    "rwi",
-                    "rhi",
-                    "hsize",
-                    "vsize",
-                    "hoffset",
-                    "voffset",
-                    "hscale",
-                    "vscale",
-                    "angle"};
+static	const char	*keytab[]	= {
+    "clip", 
+    "llx",
+    "lly",
+    "urx",
+    "ury",
+    "rwi",
+    "rhi",
+    "hsize",
+    "vsize",
+    "hoffset",
+    "voffset",
+    "hscale",
+    "vscale",
+    "angle"
+    };
 
 #define	KEY_LLX	keyval[0]
 #define	KEY_LLY	keyval[1]
@@ -666,10 +274,101 @@ static	const char	*keytab[]	= {"clip",
 #define	NKEYS	(sizeof(keytab)/sizeof(*keytab))
 #define	N_ARGLESS_KEYS 1
 
+static parse_special_argument(QString strg, char *argument_name, int *variable)
+{
+  bool    OK;
+  
+  int index = strg.find(argument_name);
+  if (index >= 0) {
+    QString tmp     = strg.mid(index + strlen(argument_name));
+    tmp.truncate(tmp.find(' '));
+    int tmp_int = tmp.toUInt(&OK);
+    if (OK)
+      *variable = tmp_int;
+    else
+      kdError() << "Malformed urx in special" << endl;
+  }
+}
+
+extern QPainter foreGroundPaint;
+
 static	void epsf_special(char *cp)
 {
+  kdError() << "epsf-special: psf" << cp <<endl;
+
+  QString include_command_line(cp);
+  QString include_command = include_command_line.simplifyWhiteSpace();
+
+  // The line is supposed to start with "..ile=", and then comes the
+  // filename. Figure out what the filename is and stow it away
+  if (include_command.find("ile=") != 0) {
+    kdError() << "epsf special PSf" << cp << " is unknown" << endl;
+    return;
+  }
+  QString filename = include_command.mid(4);
+  filename.truncate(filename.find(' '));
+  char *name = kpse_find_pict(filename.local8Bit());
+  if (name != NULL) {
+    filename = name;
+    free(name);
+  } else
+    filename.truncate(0);
+
+  //
+  // Now parse the arguments. 
+  //
+  int  llx     = 0; 
+  int  lly     = 0;
+  int  urx     = 0;
+  int  ury     = 0;
+  int  rwi     = 0;
+  int  rhi     = 0;
+  int  hoffset = 0;
+
+  // just to avoid ambiguities; the filename could contain keywords
+  include_command = include_command.mid(include_command.find(' '));
+  
+  parse_special_argument(include_command, "llx=", &llx);
+  parse_special_argument(include_command, "lly=", &lly);
+  parse_special_argument(include_command, "urx=", &urx);
+  parse_special_argument(include_command, "ury=", &ury);
+  parse_special_argument(include_command, "rwi=", &rwi);
+  parse_special_argument(include_command, "rhi=", &rhi);
+
+  // calculate the size of the bounding box
+  double bbox_width  = urx - llx;
+  double bbox_height = lly - ury;
+
+  if ((rwi != 0)&&(bbox_width != 0)) {
+    bbox_height = bbox_height*rwi/bbox_width;
+    bbox_width  = rwi;
+  }
+  if ((rhi != 0)&&(bbox_height != 0)) {
+    bbox_height = rhi;
+    bbox_width  = bbox_width*rhi/bbox_height;
+  }
+
+  bbox_width  *= 0.1 * dimconv / shrink_factor;
+  bbox_height *= 0.1 * dimconv / shrink_factor;
+
+  // Now draw the bounding box
+  QRect bbox(PXL_H - currwin.base_x, PXL_V - currwin.base_y, (int)bbox_width, (int)bbox_height);
+  //  foreGroundPaint.rotate(20);
+  foreGroundPaint.setBrush(Qt::lightGray);
+  foreGroundPaint.setPen  (Qt::black);
+  foreGroundPaint.drawRoundRect(bbox, 1, 1);
+  foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), filename, -1, &bbox);
+
+
+  PostScriptString.append( QString(" %1 %2 moveto\n").arg(PXL_H - currwin.base_x).arg(PXL_V - currwin.base_y) );
+  PostScriptString.append( "@beginspecial @setspecial \n" );
+  PostScriptString.append( QString(" (%1) run\n").arg(filename) );
+  PostScriptString.append( "@endspecial \n" );
+
+  return;
+
+  /*
   char	*filename, *name;
-  int 	decompress;
   static	char		*buffer;
   static	unsigned int	buflen	= 0;
   unsigned int		len;
@@ -683,6 +382,7 @@ static	void epsf_special(char *cp)
     return;
   }
 
+  // find the filename
   p = cp + 4;
   filename = p;
   if (*p == '\'' || *p == '"') {
@@ -692,13 +392,17 @@ static	void epsf_special(char *cp)
     ++filename;
   }
   else
-    while (*p != '\0' && *p != ' ' && *p != '\t') 
+    while (*p != '\0' && *p != ' ' && *p != '\t') // Go to end of string or to next white space
       ++p;
   if (*p != '\0') 
     *p++ = '\0';
-  name = find_fig_file (filename, &decompress);
+
+  name = find_fig_file (filename);
+
+  // Skip white space
   while (*p == ' ' || *p == '\t') 
     ++p;
+
   len = strlen(p) + NKEYS + 30;
   if (buflen < len) {
     if (buflen != 0)
@@ -716,7 +420,11 @@ static	void epsf_special(char *cp)
       ++p1;
     for (keyno = 0;; ++keyno) {
       if (keyno >= NKEYS) {
+<<<<<<< special.cpp
+	kDebugError(4300, 1, "The unknown keyword (%*s) in \\special will be ignored", (int)(p1 - p), p);
+=======
 	kdError(4300) << "unknown keyword in \\special will be ignored" << endl;
+>>>>>>> 1.6
 	break;
       }
       if (memcmp(p, keytab[keyno], p1 - p) == 0) {
@@ -735,7 +443,7 @@ static	void epsf_special(char *cp)
 	*q++ = '@';
 	Strcpy(q, keytab[keyno]);
 	q += strlen(q);
-	break;
+ 	break;
       }
     }
     p = p1;
@@ -749,109 +457,72 @@ static	void epsf_special(char *cp)
   bbox_valid = False;
   if ((flags & 0x30) == 0x30 || ((flags & 0x30) && (flags & 0xf) == 0xf)){
     bbox_valid = True;
-    bbox_width = 0.1 * ((flags & 0x10) ? KEY_RWI
-			: KEY_RHI * (KEY_URX - KEY_LLX) / (KEY_URY - KEY_LLY))
+    bbox_width = 0.1 * ((flags & 0x10) ? KEY_RWI : KEY_RHI * (KEY_URX - KEY_LLX) / (KEY_URY - KEY_LLY))
       * dimconv / shrink_factor + 0.5;
-    bbox_voffset = bbox_height = 0.1 * ((flags & 0x20) ? KEY_RHI
-					: KEY_RWI * (KEY_URY - KEY_LLY) / (KEY_URX - KEY_LLX))
+    bbox_voffset = 
+      bbox_height = 0.1 * ((flags & 0x20) ? KEY_RHI : KEY_RWI * (KEY_URY - KEY_LLY) / (KEY_URX - KEY_LLX))
       * dimconv / shrink_factor + 0.5;
   }
 
   if (name && currwin.win == mane.win) {
     psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, buffer);
-    draw_file(psp, name, decompress);
+    draw_file(psp, name);
     psp.drawend(" @endspecial");
-    if (!decompress && name != filename)
+    if (name != filename)
       free (name);
   }
   bbox_valid = False;
+  */
 }
 
-
+/*
 static	void bang_special(char *cp)
 {
+<<<<<<< special.cpp
+  kDebugInfo(DEBUG, 4300, "bang %s", cp);
+=======
+>>>>>>> 1.6
   bbox_valid = False;
   
   if (currwin.win == mane.win) {
     psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, "@defspecial ");
-    /* talk directly with the DPSHandler here */
     psp.drawraw(cp);
     psp.drawend(" @fedspecial");
   }
 }
+*/
 
-static	void quote_special(char *cp)
+
+static	void quote_special(QString cp)
 {
-  bbox_valid = False;
-
+  kdError() << "PostScript-quote " << cp.latin1() << endl;
+  
   if (currwin.win == mane.win) {
-    psp.drawbegin(PXL_H - currwin.base_x, PXL_V - currwin.base_y, "@beginspecial @setspecial ");
-    /* talk directly with the DPSHandler here */
-    psp.drawraw(cp);
-    psp.drawend(" @endspecial");
+    PostScriptString.append( QString(" %1 %2 moveto\n").arg(DVI_H/65536 - 300).arg(DVI_V/65536 - 300) );
+
+    /*
+    kDebugInfo("DVI_H/65536     %d",(int)(DVI_H/65536) );
+    kDebugInfo("DVI_V/65536     %d",(int)(DVI_V/65536) );
+    kDebugInfo("PXL_V           %d",(int)(PXL_V) );
+    kDebugInfo("unshrunk page_h %d",unshrunk_page_h);
+    */
+    PostScriptString.append( " @beginspecial @setspecial \n" );
+    PostScriptString.append( cp );
+    PostScriptString.append( " @endspecial \n" );
   }
 }
 
 
-/*
- *	The following copyright message applies to the rest of this file.  --PV
- */
-
-/*
- *	This program is Copyright (C) 1987 by the Board of Trustees of the
- *	University of Illinois, and by the author Dirk Grunwald.
- *
- *	This program may be freely copied, as long as this copyright
- *	message remaines affixed. It may not be sold, although it may
- *	be distributed with other software which is sold. If the
- *	software is distributed, the source code must be made available.
- *
- *	No warranty, expressed or implied, is given with this software.
- *	It is presented in the hope that it will prove useful.
- *
- *	Hacked in ignorance and desperation by jonah@db.toronto.edu
- */
-
-/*
- *      The code to handle the \specials generated by tpic was modified
- *      by Dirk Grunwald using the code Tim Morgan at Univ. of Calif, Irvine
- *      wrote for TeXsun.
- */
-
-#define	COMLEN	3
-
 void applicationDoSpecial(char *cp)
 {
-	char	command[COMLEN + 1];
-	char	*q;
-	char	*orig_cp;
-
-	orig_cp = cp;
-	while (ISSPACE(*cp)) ++cp;
-	q = command;
-	while (!ISSPACE(*cp) && *cp && q < command + COMLEN) *q++ = *cp++;
-	*q = '\0';
-	if (strcmp(command, "pn") == 0) set_pen_size(cp);
-	else if (strcmp(command, "fp") == 0) flush_path();
-	else if (strcmp(command, "da") == 0) flush_dashed(cp, False);
-	else if (strcmp(command, "dt") == 0) flush_dashed(cp, True);
-	else if (strcmp(command, "pa") == 0) add_path(cp);
-	else if (strcmp(command, "ar") == 0) arc(cp, False);
-	else if (strcmp(command, "ia") == 0) arc(cp, True);
-	else if (strcmp(command, "sp") == 0) flush_spline();
-	else if (strcmp(command, "sh") == 0) shade_last();
-	else if (strcmp(command, "wh") == 0) whiten_last();
-	else if (strcmp(command, "bk") == 0) blacken_last();
-	/* throw away the path -- jansteen */
-	else if (strcmp(command, "ip") == 0) path_len = 0;
-	else if (strcmp(command, "ps:") == 0) psfig_special(cp);
-	else if (strcmp(command, "PSf") == 0) epsf_special(cp);
-	else if (strcmp(command, "psf") == 0) epsf_special(cp);
-	else if (*orig_cp == '"') quote_special(orig_cp + 1);
-	else if (*orig_cp == '!') bang_special(orig_cp + 1);
-	else if (!hush_spec_now)
-	    Fprintf(stderr, "%s:  special \"%s\" not implemented\n", prog,
-		orig_cp);
+  QString special_command(cp);
+  
+  if (special_command[0] == '"') {
+    quote_special(special_command.mid(1));
+    return;
+  }
+  kdError() << "special \"" << cp << "\" not implemented" << endl;
+  return;
 }
 
 void psp_destroy()	{	psp.destroy();		}

@@ -60,6 +60,21 @@
 #include "glyph.h"
 #include "oconfig.h"
 extern	char	*xmalloc (unsigned, _Xconst char *);
+
+
+BMUNIT	bit_masks[33] = {
+	0x0,		0x1,		0x3,		0x7,
+	0xf,		0x1f,		0x3f,		0x7f,
+	0xff,		0x1ff,		0x3ff,		0x7ff,
+	0xfff,		0x1fff,		0x3fff,		0x7fff,
+	0xffff,		0x1ffff,	0x3ffff,	0x7ffff,
+	0xfffff,	0x1fffff,	0x3fffff,	0x7fffff,
+	0xffffff,	0x1ffffff,	0x3ffffff,	0x7ffffff,
+	0xfffffff,	0x1fffffff,	0x3fffffff,	0x7fffffff,
+	0xffffffff
+};
+
+
 /***
  ***	PK font reading routines.
  ***	Public routines are read_PK_index and read_PK_char.
@@ -327,7 +342,7 @@ void font::read_PK_char(unsigned int ch)
   }
 }
 
-void font::read_PK_index(unsigned int hushcs)
+void font::read_PK_index(void)
 {
   kdDebug() << "Reading PK pixel file " << filename << endl;
   
@@ -335,8 +350,10 @@ void font::read_PK_index(unsigned int hushcs)
 
   (void) four(file);		/* skip design size */
   long file_checksum = four(file);
-  if (!hushcs && checksum && checksum && file_checksum != checksum)
-    kdError(1) << "Checksum mismatch (dvi = " << checksum << "pk = " << file_checksum << ") in font file " << filename << endl;
+  if (checksum && checksum && file_checksum != checksum)
+    kdError(1) << "Checksum mismatch (dvi = " << checksum << "pk = " << file_checksum << 
+      ") in font file " << filename << endl;
+
   int hppp = sfour(file);
   int vppp = sfour(file);
   if (hppp != vppp)

@@ -39,7 +39,6 @@ extern	struct WindowRec alt;
 
 struct drawinf	currinf;
 int	_debug;
-Boolean	hush_spec_now;
 char	*prog;
 Display	*DISP;
 int		min_x, max_x, min_y, max_y;
@@ -58,7 +57,6 @@ unsigned int	unshrunk_paper_w, unshrunk_paper_h;
 unsigned int	unshrunk_page_w, unshrunk_page_h;
 unsigned int	page_w, page_h;
 unsigned char		maxchar;
-int		offset_x, offset_y;
 long	*page_offset;
 
 QIntDict<struct font> tn_table;
@@ -85,7 +83,6 @@ extern int 		min_x;
 extern int 		min_y;
 extern int 		max_x;
 extern int 		max_y;
-extern int		offset_x, offset_y;
 extern unsigned int	unshrunk_paper_w, unshrunk_paper_h;
 extern unsigned int	unshrunk_page_w, unshrunk_page_h;
 extern unsigned int	page_w, page_h;
@@ -123,7 +120,8 @@ double xres;
 
 //------ next the drawing functions called from C-code (dvi_draw.c) ----
 
-QPainter *dcp;
+QPainter foreGroundPaint; // QPainter used for text
+
 
 extern  void qt_processEvents(void)
 {
@@ -265,8 +263,6 @@ void dviWindow::setResolution( int bdpi )
 			     "only after you start kdvi again!") );
   basedpi          = bdpi;
   _pixels_per_inch = bdpi;
-  offset_x         = bdpi;
-  offset_y         = bdpi;
 }
 
 int dviWindow::resolution()
@@ -331,14 +327,13 @@ void dviWindow::drawPage()
     return;
 
   if ( !pixmap->paintingActive() ) {
-    QPainter paint;
-    paint.begin( pixmap );
+
+    foreGroundPaint.begin( pixmap );
     QApplication::setOverrideCursor( waitCursor );
-    dcp = &paint;
     if (setjmp(dvi_env)) {	// dvi_oops called
       dvi_time.setTime_t(0); // force init_dvi_file
       QApplication::restoreOverrideCursor();
-      paint.end();
+      foreGroundPaint.end();
       KMessageBox::error( this,
 			  i18n("What's this? DVI problem!\n") 
 			  + dvi_oops_msg);
@@ -349,7 +344,7 @@ void dviWindow::drawPage()
       draw_page();
     }
     QApplication::restoreOverrideCursor();
-    paint.end();
+    foreGroundPaint.end();
   }
   resize(pixmap->width(), pixmap->height());
   repaint();

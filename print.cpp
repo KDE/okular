@@ -17,6 +17,7 @@
 #include <qfile.h>
 
 #include <kmessagebox.h>
+#include <kdebug.h>
 #include <kapp.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -270,7 +271,7 @@ void Print::okPressed()
 
 	cmd += " &";
 
-	kdDebug(4300) << "About to run: " << cmd.data() << endl;
+	kdError() << "About to run: " << cmd.data() << endl;
 	system( cmd );
 	accept();
 }

@@ -85,8 +85,6 @@ extern char *xmalloc (unsigned, _Xconst char *);
 #define	dvi_oops(str)	(dvi_oops_msg = (str), longjmp(dvi_env, 1))
 
 static	Boolean	font_not_found;
-Boolean	_hush_spec;
-Boolean	_hush_chk;
 QDateTime dvi_time;
 
 /*
@@ -298,7 +296,7 @@ static	void find_postamble()
  *      It also takes care of reading in all of the pixel files for the fonts
  *      used in the job.
  */
-static	void read_postamble()
+void dviWindow::read_postamble(void)
 {
   unsigned char   cmnd;
   struct font	*fontp;
@@ -312,10 +310,10 @@ static	void read_postamble()
       || magnification != four(dvi_file))
     dvi_oops("Postamble doesn't match preamble");
   /* read largest box height and width */
-  unshrunk_page_h = (spell_conv(sfour(dvi_file)) >> 16) + offset_y;
+  unshrunk_page_h = (spell_conv(sfour(dvi_file)) >> 16) + basedpi;
   if (unshrunk_page_h < unshrunk_paper_h)
     unshrunk_page_h = unshrunk_paper_h;
-  unshrunk_page_w = (spell_conv(sfour(dvi_file)) >> 16) + offset_x;
+  unshrunk_page_w = (spell_conv(sfour(dvi_file)) >> 16) + basedpi;
   if (unshrunk_page_w < unshrunk_paper_w)
     unshrunk_page_w = unshrunk_paper_w;
   (void) two(dvi_file);	/* max stack size */
@@ -339,21 +337,18 @@ static	void read_postamble()
 
 static void prepare_pages()
 {
-	int i;
-
-	page_offset = (long *) xmalloc((unsigned) total_pages * sizeof(long),
-	    "page directory");
-	i = total_pages;
-	page_offset[--i] = last_page_offset;
-	Fseek(dvi_file, last_page_offset, 0);
-	/*
-	 * Follow back pointers through pages in the DVI file,
-	 * storing the offsets in the page_offset table.
-	 */
-	while (i > 0) {
-	    Fseek(dvi_file, (long) (1+4+(9*4)), 1);
-	    Fseek(dvi_file, page_offset[--i] = four(dvi_file), 0);
-	}
+  page_offset = (long *) xmalloc((unsigned) total_pages * sizeof(long), "page directory");
+  int i = total_pages;
+  page_offset[--i] = last_page_offset;
+  Fseek(dvi_file, last_page_offset, 0);
+  /*
+   * Follow back pointers through pages in the DVI file,
+   * storing the offsets in the page_offset table.
+   */
+  while (i > 0) {
+    Fseek(dvi_file, (long) (1+4+(9*4)), 1);
+    Fseek(dvi_file, page_offset[--i] = four(dvi_file), 0);
+  }
 }
 
 void init_page()
@@ -365,7 +360,7 @@ void init_page()
 /** init_dvi_file is the main subroutine for reading the startup
  *  information from the dvi file.  Returns True on success.  */
 
-static Boolean init_dvi_file()
+Boolean dviWindow::init_dvi_file()
 {
   if (QFileInfo(dvi_name).isDir())
     return False;
@@ -380,7 +375,6 @@ static Boolean init_dvi_file()
   init_page();
   if (current_page >= total_pages)
     current_page = total_pages - 1;
-  hush_spec_now = hush_spec;
   return True;
 }
 
@@ -389,7 +383,7 @@ static Boolean init_dvi_file()
  **	Check for changes in dvi file.
  **/
 
-extern Boolean check_dvi_file(void)
+Boolean dviWindow::check_dvi_file(void)
 {
   if (dvi_file == NULL || (dvi_time != QFileInfo(dvi_name).lastModified())) {
     if (dvi_file) {

@@ -83,14 +83,14 @@ struct font {
   FILE         *font_open (char *font, char **font_ret, double dpi, int *dpi_ret, char **filename_ret);
 
   // Functions related to virtual fonts
-  void          read_VF_index(unsigned int hushcs);
+  void          read_VF_index(void );
 
   // Functions for pk fonts
   int           PK_get_nyb(FILE *fp);
   int           PK_packed_num(FILE *fp);
   void          PK_skip_specials(void);
   void          read_PK_char(unsigned int ch);
-  void          read_PK_index(unsigned int hushcs);
+  void          read_PK_index(void);
 };
 
 

@@ -218,10 +218,6 @@ extern	unsigned int	page_w, page_h;
  */
 extern	long	*page_offset;
 
-/*
- * Mechanism for reducing repeated warning about specials, lost characters, etc.
- */
-extern	Boolean	hush_spec_now;
 
 
 extern QIntDict<struct font> tn_table;
@@ -244,9 +240,6 @@ extern	char	*xoffset;
 extern	char	*yoffset;
 extern	_Xconst char	*_paper;
 extern	Boolean	reverse;
-extern	Boolean	_hush_spec;
-extern	Boolean	_hush_chars;
-extern	Boolean	_hush_chk;
 extern	char	*fore_color;
 extern	char	*back_color;
 extern	char	*brdr_color;
@@ -268,9 +261,6 @@ extern	char	*mg_arg[5];
 
 #define	density		_density
 #define	pixels_per_inch	_pixels_per_inch
-#define	hush_spec	_hush_spec
-#define	hush_chars	_hush_chars
-#define	hush_chk	_hush_chk
 
 extern	Pixel		brdr_Pixel;
 

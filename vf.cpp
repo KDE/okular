@@ -61,7 +61,7 @@ extern font *define_font(FILE *file, unsigned int cmnd, font *vfparent, QIntDict
  *	The main routine
  */
 
-void font::read_VF_index(unsigned int hushcs)
+void font::read_VF_index(void)
 {
   kdDebug() << "read_VF_index" << endl;
 
@@ -76,8 +76,10 @@ void font::read_VF_index(unsigned int hushcs)
   // Read preamble.
   Fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
   long file_checksum = four(VF_file);
-  if (!hushcs && file_checksum && checksum && file_checksum != checksum)
-    kdError() << "Checksum mismatch (dvi = " << checksum << "u, vf = " << file_checksum << "u) in font file " << filename << endl;
+
+  if (file_checksum && checksum && file_checksum != checksum)
+    kdError() << "Checksum mismatch (dvi = " << checksum << "u, vf = " << file_checksum << 
+      "u) in font file " << filename << endl;
   (void) four(VF_file);		/* skip design size */
 
   // Read the fonts.

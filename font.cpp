@@ -124,8 +124,6 @@ unsigned char font::load_font(void)
   int	 size_found;
   int	 magic;
 
-  Boolean hushcs	= hush_chk;
-
   flags |= font::FONT_LOADED;
   file = font_open(fontname, &font_found, (double)fsize, &size_found, &filename);
   if (file == NULL) {
@@ -137,7 +135,6 @@ unsigned char font::load_font(void)
     kdError() << "Can't find font " << fontname << "; using " << font_found << " instead at " << dpi << " dpi." << endl;
     free(fontname);
     fontname = font_found;
-    hushcs = True;
   }
   else
     if (!kpse_bitmap_tolerance ((double) size_found, fsize))
@@ -148,13 +145,13 @@ unsigned char font::load_font(void)
   magic      = two(file);
 
   if (magic == PK_MAGIC)
-    read_PK_index(WIDENINT hushcs);
+    read_PK_index();
   else
     if (magic == GF_MAGIC)
       oops("The GF format for font file %s is no longer supported", filename);
     else
       if (magic == VF_MAGIC)
-	read_VF_index(WIDENINT hushcs);
+	read_VF_index();
       else
 	oops("Cannot recognize format for font file %s", filename);
 

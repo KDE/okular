@@ -41,10 +41,17 @@ public:
   
   // for the preview
   QPixmap		*pix() { return pixmap; };
-        
+
+  // These should not be public... only for the moment
+  void          read_postamble(void);
+  char          init_dvi_file(void);
+  char          check_dvi_file(void);
+  void          draw_part(struct frame *minframe, double current_dimconv);
+  void          draw_page(void);
+
 public slots:
-    void		setFile(const char *fname);
- void		gotoPage(int page);
+  void		setFile(const char *fname);
+  void		gotoPage(int page);
  //	void		setZoom(int zoom);
 
  void		setZoom(double zoom);
@@ -61,15 +68,14 @@ protected:
 private:
  void		initDVI();
  void		changePageSize();
- QString		filename;
+ QString	filename;
  int		basedpi, makepk;
- QPixmap	*	pixmap;
- QString		MetafontMode;
- QString		FontPath;
- QString		paper_type;
+ QPixmap	*pixmap;
+ QString	MetafontMode;
+ QString	FontPath;
+ QString	paper_type;
  int		ChangesPossible;
  double          _zoom;
-
 };
 
 

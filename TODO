@@ -1,30 +1,43 @@
-TODO:
-~~~~~
 
-URGENT:
+ToDo-List for kdvi
 
-- Release unsued fonts after reloading a file.
+URGENT
 
-- Update Manual.
-- Useful Zooms
+o Re-Implement PostScript specials, including proper handling of header (="bang")
+  specials.
 
---------
+o Proper Error handling with throw/catch
 
-NOT SO URGENT:
+o Update the Manual.
 
-- Document info dialog
-- More paper types, currently only those from xdvi are available
-- Better online help
-- Internal printing using QPrinter
-- Redirect error messages to a window (partly done)
-- Better, more robust PostScript handling (use the PostScript-Widget from kghostview)
-- More background processing to keep the UI responsive
-- Magnifier window
-- Two page view
-- Support for more TeX specials
-- Popup-Window to inform the user when Fonts are generated
+o Document the technical specs.
 
-- Colored Fonts
-- Hyperlinks to click on
-- Search option
-- SOURCE CLEANUP
+o Bugfixing
+
+
+HIGHLY DESIRABLE
+
+o Support for Hyperlatex specials (xxx.lanl.gov, probably the world's largest
+  collection of dvi-files, uses Hyperlatex for every file!)
+
+o Support for TPic and colored font specials
+
+o Support for click-on-dvi => editor (klyx!) jumps to proper position. This is
+  included in the windows distribution of TeX. We should really catch up!
+
+o Support papersize informational given by the dvi-file on a page-by-page
+  basis.
+
+
+NOT SO URGENT
+
+o Document info dialog
+o Better online help
+o Internal printing using QPrinter
+o Redirect error messages to a window (partly done)
+o More background processing to keep the UI responsive
+o Magnifier window
+o Two page view
+o Support for even more TeX specials
+o Popup-Window to inform the user when Fonts are generated
+o Search option

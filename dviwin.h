@@ -79,8 +79,6 @@ public:
   void          exportText();
 
   void          findText();
-  QRect        *markedBox;
-
   void          changePageSize();
   int		totalPages();
   void		setShowPS( int flag );
@@ -207,9 +205,13 @@ private:
  int               animationCounter;
  int               flashOffset;
 
- /** Methods and classes concerned with the find functionality */
+ /** Methods and classes concerned with the find functionality and
+     with selecting text */
  class KEdFind    *findDialog;
- Q_INT32           numOfFoundLink;
+ Q_INT32           selectedTextStart, selectedTextEnd;
+ QRect             selectedRectangle;
+
+ 
 
  /** These fields contain information about the geometry of the
      page. */

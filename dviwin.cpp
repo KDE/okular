@@ -12,6 +12,7 @@
 
 #include <qbitmap.h> 
 #include <qcheckbox.h> 
+#include <qclipboard.h> 
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qkeycode.h>
@@ -116,9 +117,9 @@ dviWindow::dviWindow(double zoom, int mkpk, QWidget *parent, const char *name )
   mane                   = currwin;
   _postscript            = 0;
   pixmap                 = 0;
-  markedBox              = 0;
   findDialog             = 0;
-  numOfFoundLink         = -1;
+  selectedTextStart      = -1;
+  selectedTextEnd        = -1;
 
   // Storage used for dvips and friends, i.e. for the "export" functions.
   proc                   = 0;
@@ -621,10 +622,9 @@ void dviWindow::do_findText(void)
     draw_page(); // We don't really care for errors in draw_page(), no error handling here
     foreGroundPaint.end();
 
-    for(int i=numOfFoundLink+1; i<num_of_used_textlinks; i++) 
+    for(int i=selectedTextStart+1; i<num_of_used_textlinks; i++) 
       if (textLinkList[i].linkText .find(searchText, 0, case_sensitive) >= 0) {
-	numOfFoundLink = i;
-	markedBox      = &textLinkList[i].box;
+	selectedTextStart = selectedTextEnd = i;
 	// Restore the previous settings, including the current
 	// page. Otherwise, the program is "smart enough" not to
 	// re-render the screen.
@@ -634,7 +634,7 @@ void dviWindow::do_findText(void)
 	emit(request_goto_page(j, textLinkList[i].box.bottom() ));
 	return;
       }
-    numOfFoundLink = -1;
+    selectedTextStart = -1;
     current_page++;
 
     if ((current_page == dviFile->total_pages)) {
@@ -741,7 +741,9 @@ void dviWindow::drawPage()
     timerIdent       = 0;
     animationCounter = 0;
   }
-  markedBox          = 0;
+
+  // Remove the mouse selection
+  selectedTextStart = selectedTextEnd = -1;
 
   // Stop if there is no dvi-file present
   if ( dviFile == 0 ) {
@@ -1004,7 +1006,6 @@ void dviWindow::gotoPage(unsigned int new_page)
   current_page           = new_page-1;
   is_current_page_drawn  = 0;  
   animationCounter       = 0;
-  markedBox              = 0;
   drawPage();
 }
 
@@ -1070,12 +1071,14 @@ void dviWindow::paintEvent(QPaintEvent *)
       p.drawRect((pixmap->width()-wdt)/2, flashOffset, wdt, hgt);
     }
 
-    if (markedBox != 0) {
-      p.setPen( NoPen );
-      p.setBrush( white );
-      p.setRasterOp( Qt::XorROP );
-      p.drawRect(*markedBox);
-    }
+    // Mark selected text.
+    if (selectedTextStart != -1)
+      for(int i = selectedTextStart; (i <= selectedTextEnd)&&(i < num_of_used_textlinks); i++) {
+	p.setPen( NoPen );
+	p.setBrush( white );
+	p.setRasterOp( Qt::XorROP );
+	p.drawRect(textLinkList[i].box);
+      }
   }
 }
 
@@ -1090,6 +1093,36 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
       }
     }
     setCursor(arrowCursor);
+  }
+  
+  if ((e->state() && RightButton) != 0) {
+    if (selectedRectangle.isEmpty())
+      selectedRectangle.setRect(e->pos().x(),e->pos().y(),1,1);
+    else {
+      QRect R(e->pos().x(),e->pos().y(),1,1);
+      selectedRectangle = selectedRectangle.unite(R);
+    }
+    
+    // Now that we know the rectangle, we have to find out which words
+    // intersect it!
+    selectedTextStart = selectedTextEnd = -1;
+    for(int i=0; i<num_of_used_textlinks; i++) 
+      if ( selectedRectangle.intersects(textLinkList[i].box) ) {
+	if (selectedTextStart == -1)
+	  selectedTextStart = i;
+	selectedTextEnd = i;
+      }
+
+    QString selectedText("");
+    if (selectedTextStart != -1)
+      for(int i = selectedTextStart; (i <= selectedTextEnd)&&(i < num_of_used_textlinks); i++) {
+	selectedText += textLinkList[i].linkText;
+	selectedText += "\n";
+      }
+
+    QApplication::clipboard()->setSelectionMode(true);
+    QApplication::clipboard()->setText(selectedText);
+    repaint();
   }
 }
 
@@ -1115,7 +1148,6 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	      kdDebug(4300) << "hit: local link to  y=" << AnchorList_Vert[j] << endl;
 	      kdDebug(4300) << "hit: local link to sf=" << mane.shrinkfactor << endl;
 #endif
-	      markedBox = 0;
 	      emit(request_goto_page(AnchorList_Page[j], (int)(AnchorList_Vert[j]/mane.shrinkfactor)));
 	      break;
 	    }

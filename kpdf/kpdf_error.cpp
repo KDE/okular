@@ -25,6 +25,8 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include "xpdf_errors.h"
+
 QStringList errors::p_errors;
 
 void errors::add(const QString &s)
@@ -57,7 +59,7 @@ void CDECL error(int pos, const char *msg, ...) {
     emsg = i18n("Error: ");
   }
   va_start(args, msg);
-  tmsg = i18n(msg);
+  tmsg = XPDFErrorTranslator::translateError(msg);
   vsprintf(buffer, tmsg.latin1(), args);
   va_end(args);
   emsg += buffer;

@@ -275,7 +275,7 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
             PageViewMessage::Info, 4000 );
 }
 
-void PageView::notifyViewportChanged()
+void PageView::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // if we are the one changing viewport, skip this nofity
     if ( d->blockViewport )

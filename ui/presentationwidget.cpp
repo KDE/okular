@@ -160,7 +160,7 @@ void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet
     m_metaStrings += i18n( "Click to begin" );
 }
 
-void PresentationWidget::notifyViewportChanged()
+void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 {
   changePage( m_document->viewport().pageNumber );
 }

@@ -39,7 +39,7 @@ Q_OBJECT
         // inherited: create thumbnails ( inherited as a DocumentObserver )
         void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
-        void notifyViewportChanged();
+        void notifyViewportChanged( bool smoothMove );
         // inherited: redraw thumbnail ( inherited as DocumentObserver )
         void notifyPageChanged( int pageNumber, int changedFlags );
         // inherited: request all visible pixmap (due to a global shange or so..)

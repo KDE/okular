@@ -442,7 +442,7 @@ void KPDFDocument::setPrevPage()
         setViewport( DocumentViewport( (*d->viewportIterator).pageNumber - 1 ) );
 }
 */
-void KPDFDocument::setViewportPage( int page, int excludeId )
+void KPDFDocument::setViewportPage( int page, int excludeId, bool smoothMove )
 {
     // clamp page in range [0 ... numPages-1]
     if ( page < 0 )
@@ -451,10 +451,10 @@ void KPDFDocument::setViewportPage( int page, int excludeId )
         page = pages_vector.count() - 1;
 
     // make a viewport from the page and broadcast it
-    setViewport( DocumentViewport( page ), excludeId );
+    setViewport( DocumentViewport( page ), excludeId, smoothMove );
 }
 
-void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId )
+void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId, bool smoothMove )
 {
     // if already broadcasted, don't redo it
     DocumentViewport & oldViewport = *d->viewportIterator;
@@ -484,7 +484,7 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
     QMap< int, DocumentObserver * >::iterator it = d->observers.begin(), end = d->observers.end();
     for ( ; it != end ; ++ it )
         if ( it.key() != excludeId )
-            (*it)->notifyViewportChanged();
+            (*it)->notifyViewportChanged( smoothMove );
 
     // [MEM] raise position of currently viewed page in allocation queue
     if ( d->allocatedPixmapsFifo.count() > 1 )
@@ -515,7 +515,7 @@ void KPDFDocument::setPrevViewport()
     {
         // restore previous viewport and notify it to observers
         --d->viewportIterator;
-        foreachObserver( notifyViewportChanged() );
+        foreachObserver( notifyViewportChanged( true ) );
     }
 }
 
@@ -528,7 +528,7 @@ void KPDFDocument::setNextViewport()
     {
         // restore next viewport and notify it to observers
         ++d->viewportIterator;
-        foreachObserver( notifyViewportChanged() );
+        foreachObserver( notifyViewportChanged( true ) );
     }
 }
 
@@ -592,7 +592,7 @@ bool KPDFDocument::findText( const QString & string, bool keepCase, bool findAhe
         searchViewport.reCenter.enabled = true;
         searchViewport.reCenter.normalizedCenterX = (double)center.x() / foundPage->width();
         searchViewport.reCenter.normalizedCenterY = (double)center.y() / foundPage->height();
-        setViewport( searchViewport );
+        setViewport( searchViewport, -1, true );
         // notify all observers about hilighting chages
         foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
     }

@@ -43,7 +43,7 @@ class KPrinter;
  * For a better understanding of hieracies @see README.internals.png
  * @see DocumentObserver, KPDFPage
  */
-class KPDFDocument : public QObject // only for a private slot..
+class KPDFDocument : public QObject
 {
     Q_OBJECT
     public:
@@ -73,8 +73,8 @@ class KPDFDocument : public QObject // only for a private slot..
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
 
         // perform actions on document / pages
-        void setViewportPage( int page, int excludeId = -1 );
-        void setViewport( const DocumentViewport & viewport, int excludeId = -1 );
+        void setViewportPage( int page, int excludeId = -1, bool smoothMove = false );
+        void setViewport( const DocumentViewport & viewport, int excludeId = -1, bool smoothMove = false );
         void setPrevViewport();
         void setNextViewport();
         void requestPixmaps( const QValueList< PixmapRequest * > & requests );

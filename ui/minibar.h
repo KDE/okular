@@ -30,7 +30,7 @@ class MiniBar : public QFrame, public DocumentObserver
         // [INHERITED] from DocumentObserver
         uint observerId() const { return MINIBAR_ID; }
         void notifySetup( const QValueVector< KPDFPage * > & pages, bool );
-        void notifyViewportChanged();
+        void notifyViewportChanged( bool smoothMove );
 
     signals:
         void gotoPage();

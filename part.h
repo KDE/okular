@@ -68,7 +68,7 @@ public:
 
     // inherited from DocumentObserver
     uint observerId() const { return PART_ID; }
-    void notifyViewportChanged();
+    void notifyViewportChanged( bool smoothMove );
 
 	static KAboutData* createAboutData();
 

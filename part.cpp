@@ -215,7 +215,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	m_saveAs = KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
 	m_saveAs->setEnabled( false );
-	KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
+	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
+	prefs->setText( i18n( "Configure PDF Viewer..." ) );
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
@@ -270,7 +271,7 @@ Part::~Part()
         delete globalParams;
 }
 
-void Part::notifyViewportChanged()
+void Part::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // update actions if the page is changed
     static int lastPage = -1;
@@ -341,6 +342,10 @@ bool Part::openFile()
 
 bool Part::openURL(const KURL &url)
 {
+    // note: this can be the right place to check the file for gz or bz2 extension
+    // if it matches then: download it (if not local) extract to a temp file using
+    // KTar and proceed with the URL of the temporary file
+
     // this calls the above 'openURL' method
     bool b = KParts::ReadOnlyPart::openURL(url);
     if ( !b )

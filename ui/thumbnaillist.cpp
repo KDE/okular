@@ -141,7 +141,7 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
     delayedRequestVisiblePixmaps( 200 );
 }
 
-void ThumbnailList::notifyViewportChanged()
+void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 {
 	// skip notifies for the current page (already selected)
 	int newPage = m_document->viewport().pageNumber;

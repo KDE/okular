@@ -170,7 +170,7 @@ void MiniBar::notifySetup( const QValueVector< KPDFPage * > & pageVector, bool c
     static_cast<QWidget*>( parent() )->show();
 }
 
-void MiniBar::notifyViewportChanged()
+void MiniBar::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // get current page number
     int page = m_document->viewport().pageNumber;

@@ -694,7 +694,7 @@ void KDVIMultiPage::about()
 				      i18n("the KDVI plugin"),
 				      KAboutDialog::Close, KAboutDialog::Close);
 
-  ab->setProduct("kdvi", "1.1", QString::null, QString::null);
+  ab->setProduct("kdvi", "1.2", QString::null, QString::null);
   ab->addTextPage (i18n("About"),
 		   i18n("A previewer for Device Independent files (DVI files) produced "
 			"by the TeX typesetting system.<br>"

@@ -23,7 +23,7 @@ class KPDFPage;
 class PixmapWidget : public QWidget
 {
 public:
-    PixmapWidget( QWidget * parent, const KPDFPage * page );
+    PixmapWidget( QWidget * parent, const KPDFPage * page, const char * name = 0 );
 
     // internal size/placements evaluators
     void setZoomFixed( double magFactor = 1.0 );
@@ -34,8 +34,8 @@ public:
     // full size (for resizing) and inner pixmap size
     int widthHint() const;
     int heightHint() const;
-    int pixmapWidth() const { return m_pixmapWidth; }
-    int pixmapHeight() const { return m_pixmapHeight; }
+    int pixmapWidth() const;
+    int pixmapHeight() const;
 
     // other queries
     int pageNumber() const;

@@ -20,6 +20,7 @@ More items (first items will enter 'In progress list' first):
 -> implement history (mainly for actionNamed)
 -> history as a toolbox child (collecting DOs's setPage calls)
 -> zoom: fit text (with configurable margin)
+-> autodetect "/dev/speech" and provide {document/page/selection} -> reading
 -> automatic online dictionaries / translators (BR80338)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> merge head copyright headers (by albert)
@@ -28,13 +29,14 @@ More items (first items will enter 'In progress list' first):
 -> wrong zoom buttons order (BR74248) (check consistancy with kdvi/kghostview/.. (not konq))
 
 Porting / In progress on the branch (first item comes first):
--> click over image allows "save image" (and display rect around image too)
+-> ADD: click over image allows "save image" (and display rect around image too)
 -> ADD: viewport changes the right way when clicking links
 -> use a KConfigXT settings framework
 -> reading aids (accessibility): paper color: select, mode: normal, invert, contrast, recolor bg/text, enhance: links, ...
 -> pageview: fix keys/mouse in single/continous modes
 
 Done (newest feature comes firts):
+-> FIX: workaround for scrollview bug 1/2 (painting hidden widgets under certain circumstances)
 -> ADD: zoom into a rect defined by mouse (aka zoom to window)
 -> FIX: sheet rotation in landscape case
 -> ADD: Some dcop functions (goToPage, openDocument and give # of pages) (Albert)
@@ -63,8 +65,7 @@ Done (newest feature comes firts):
 -> MRG: merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
 
 Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 and IRC:
- Tool: ruler
- Tool: distance measure
+ Tool: ruler, measure: distance, perimeter, ?area?
  Tool: color picker
  Annotations: yellow notes 'post-it' like
  Speak: integration with a voice synthesizer

@@ -11,17 +11,25 @@
 #include <qpainter.h>
 #include <qsize.h>
 #include <kglobalsettings.h>
+#include <kdebug.h>
 
 #include "pixmapwidget.h"
 #include "document.h"
 #include "page.h"
 
-/** PixmapWidget TODO: check image rotation for aspect ratio (and implement rotation) **/
+// TODO : REMOVE "#ifndef NDEBUG" stuff before merging to HEAD! (added 20041024)
 
-PixmapWidget::PixmapWidget( QWidget * parent, const KPDFPage * kp )
-    : QWidget( parent, 0, WNoAutoErase ), m_page( kp ),
-    m_marginLeft(0), m_marginTop(0), m_marginRight(0), m_marginBottom(0),
-    m_pixmapWidth(0), m_pixmapHeight(0), m_zoomFactor( 1.0 )
+PixmapWidget::PixmapWidget( QWidget * parent, const KPDFPage * kp, const char * name )
+/* Note on PixmapWidget Wflags (Enrico):
+    It's SO IMPORTANT to set WNoAutoErase and WStaticContents.
+    If not, already exposed widgets will receive a paint event when resized
+    (for example when zooming/relayouting in PageView) even if not shown in
+    current PageView's viewport.
+*/
+    : QWidget( parent, name, WNoAutoErase | WStaticContents ), m_page( kp ),
+    m_marginLeft( 0 ), m_marginTop( 0 ), m_marginRight( 0 ), m_marginBottom( 0 ),
+    m_pixmapWidth( -1 ), m_pixmapHeight( -1 ),
+    m_zoomFactor( 1.0 )
 {
 }
 
@@ -51,12 +59,48 @@ void PixmapWidget::setZoomFitRect( int rectWidth, int rectHeight )
 
 int PixmapWidget::widthHint() const
 {
+#ifndef NDEBUG
+    return m_marginLeft + pixmapWidth() + m_marginRight;
+#else
     return m_marginLeft + m_pixmapWidth + m_marginRight;
+#endif
 }
 
 int PixmapWidget::heightHint() const
 {
+#ifndef NDEBUG
+    return m_marginTop + pixmapHeight() + m_marginBottom;
+#else
     return m_marginTop + m_pixmapHeight + m_marginBottom;
+#endif
+}
+
+int PixmapWidget::pixmapWidth() const
+{
+#ifndef NDEBUG
+    // code enabled for dev/testers only. please make sure that setZoom*
+    // gets called
+    if ( m_pixmapWidth < 0 )
+    {
+	kdDebug() << "No pixmapWidth set for page " << m_page->number() << " !" << endl;
+	return 1;
+    }
+#endif
+    return m_pixmapWidth;
+}
+
+int PixmapWidget::pixmapHeight() const
+{
+#ifndef NDEBUG
+    // code enabled for dev/testers only. please make sure that setZoom*
+    // gets called
+    if ( m_pixmapHeight < 0 )
+    {
+	kdDebug() << "No pixmapHeight set for page " << m_page->number() << " !" << endl;
+	return 1;
+    }
+#endif
+    return m_pixmapHeight;
 }
 
 int PixmapWidget::pageNumber() const
@@ -131,7 +175,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
 /** PageWidget **/
 
 PageWidget::PageWidget( QWidget *parent, const KPDFPage *page )
-    : PixmapWidget( parent, page ), m_selBeginX( -1 ), m_selBeginY( -1 )
+    : PixmapWidget( parent, page, "pageWidget" ), m_selBeginX( -1 ), m_selBeginY( -1 )
 {
     // keep bottom equal to right margin
     setPixmapMargins( 1, 1, 4, 4 );
@@ -178,6 +222,13 @@ void PageWidget::paintEvent( QPaintEvent * e )
 {
     QRect clip = e->rect();
     QRect pageClip = clip.intersect( QRect( m_marginLeft, m_marginTop, m_pixmapWidth, m_pixmapHeight ) );
+
+    // FIXME: this prevents outline-only paints (but saves pixmap repaints!!)
+    if ( !pageClip.isValid() || pageClip.width() < 1 || pageClip.height() < 1 )
+        return;
+
+    // kdDebug() << "repaint on page " << pageNumber() << " on rect: " << pageClip << endl;
+
     QPainter p( this );
 
     // if drawn region includes an edge of the page

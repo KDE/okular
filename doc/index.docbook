@@ -311,7 +311,7 @@
 	  preferred method of including inverse search information. By
 	  the time of writing, a binary was not yet available for
 	  &UNIX;. However, it is said that the next version of the
-	  <ulink url="http://www.tetex.org">TeTeX
+	  <ulink url="http://www.tug.org/teTex/">TeTeX
 	  TeX distribution</ulink> will support inverse search
 	  natively.
 	  </para>

@@ -34,6 +34,7 @@
 #include <kpopupmenu.h>
 #include <kparts/componentfactory.h>
 #include <kio/netaccess.h>
+#include <kmainwindowiface.h> 
 
 #include <qcursor.h>
 
@@ -77,6 +78,11 @@ Shell::Shell()
   connect( this, SIGNAL( saveDocumentRestoreInfo(KConfig*) ), m_part, SLOT( saveDocumentRestoreInfo(KConfig*)));
 
   readSettings();
+  if (!KGlobal::config()->hasGroup("MainWindow"))
+  {
+    KMainWindowInterface kmwi(this);
+    kmwi.maximize();
+  }
 }
 
 Shell::~Shell()

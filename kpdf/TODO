@@ -54,6 +54,7 @@ More items (first items will enter 'In progress list' first):
 -> incremental zoom with fast-refresh (tested but flickering!) or contour tracing
 
 Done (newest feature comes firts):
+-> ADD: Show the window maximized when the user opens the program for the very first time (Albert)
 -> ADD: Use 'Generators' as providers for contents generation.
 -> ADD: Add properties dialog (Albert)
 -> ADD: Support for show/hide menubar in rmb menu, different from HEAD so that supports Konqueror too (Albert)

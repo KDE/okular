@@ -99,7 +99,7 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 	bool skipCheck = true;
 	for ( uint i = 0; i < pages.count(); i++ )
         if ( pages[i]->attributes() & KPDFPage::Highlight )
-			skipCheck = false;
+            skipCheck = false;
 
 	// generate Thumbnails for the given set of pages
 	ThumbnailWidget *t;

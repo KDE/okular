@@ -7,8 +7,6 @@ Legend:
     (*) - Some parts of this item are already done
 
 In progress:
--> REGRESSION: find-as-you-type somewhat broken here
--> FIX: PageTransitions can be 0L.
 
 Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> FIX 1/2: sync Memory Management (in Document) with the Generator (exp. undoing requests) (may Segfault!)
@@ -17,12 +15,12 @@ Urgent fixes and items to get ready before 3.4 (special high-priority list):
 -> FIX: priorities for requests (pageview regular over thumbnails regular over pv preloading ...)
 -> FIX: linearize memory pages map iterators in respect to time
 -> ADD: preloading (very easy, but change request a little)
+-> FIX: check for removing 'canUnloadPixmap' from observers in place of a requested
+   'visiblity list'
 -> FIX: viewport changes the right way when clicking links and TOC items (also
    suggested by Mikolaj Machowski). Create a great viewport definition and merge
    it inside the synopsis too. [60% done]
 -> link thumbnails view with document [first, the 'Viewport' must be defined]
--> FIX: check for removing 'canUnloadPixmap' from observers in place of a requested
-   'visiblity list'
 
 More items (first items will enter 'In progress list' first):
 -> move toolbar view actions in the PageView instead of the part. maybe.. or not...
@@ -43,8 +41,8 @@ More items (first items will enter 'In progress list' first):
 -> Dom framework to cache document metadata. It should archive those types of data:
    (NOTE: already Dom'ed object is marked with 'X')
    - <X> Synopsis will go there after 1st generation (so we can edit it too)
-   - <X - on progress> Document info (after the 1st gen)
-   - <X - Albert?> Bookmarked pages
+   - <X> Document info (after the 1st gen)
+   - <X - in progress> Bookmarked pages
    - Edited pages (rotated/with_data for example)
    - Overlay editing (hilighting/notations/etc..)
    - Presentation related overrides (FS mode, individual / global transitions)
@@ -90,7 +88,9 @@ More items (first items will enter 'In progress list' first):
 -> link following when in presentation mode
 -> FIX: single page mode: add a little margin on pageview (top-bottom edges)
 
-Done (newest feature comes firts):
+Done (newest features come first):
+-> FIX: searchline back to work
+-> CHG: DocumentInfo is now a DomTree and the properties dialog is dynamically generated (Tobias)
 -> ADD: Presentation transitions are loaded from the pdf files as well as fullscreen state (Tobias)
 -> Merged on HEAD on 2005-01-02 (The branch is frozen, development continues here)
 -> FIX: Fix my update cursor FIX :-D
@@ -145,12 +145,9 @@ Done (newest feature comes firts):
 -> FIX: previews speedup: 50-100%
 -> CHG: use local instead of X memory for thumbnails (..)
 -> MRG: merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
--> Branch 'kpdf_experiments' created at this point
+-> The branch 'kpdf_experiments' was created at this point. Code refactoring started.
 -> ADD: Completely use xpdf code for rendering that solves most font problems (Albert)
 -> MRG: Replace xpdf version with lastest one (3.00) that supports PDF 1.5 (Albert)
--> CHG: convert DocumentInfo to a DomTree containing a few common fields (see the current
-        implmentation) and being extensible for letting generator developers adding their
-        custom fields. convert the Properties dialog into a dynamic generated one.
 
 Here comes a list of suggestions from a dot post http://dot.kde.org/1095261317 and IRC:
  Tool: ruler, measure: distance, perimeter, ?area?

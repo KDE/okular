@@ -45,15 +45,15 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
              this, SLOT( startSearch() ) );
 
     // line edit
-    m_linedId = insertLined( QString::null, LEDIT_ID, SIGNAL( textChanged(const QString &) ),
-                             this, SLOT( slotTextChanged(const QString &) ), true,
-                             i18n( "Enter at least 3 letters to filter pages" ), 0/*size*/, 1 );
+    insertLined( QString::null, LEDIT_ID, SIGNAL( textChanged(const QString &) ),
+                 this, SLOT( slotTextChanged(const QString &) ), true,
+                 i18n( "Enter at least 3 letters to filter pages" ), 0/*size*/, 1 );
 
     // clear button (uses a lineEdit slot, so it must be created after)
     insertButton( QApplication::reverseLayout() ? "clear_left" : "locationbar_erase",
-        CLEAR_ID, SIGNAL( clicked() ),
-        getLined( LEDIT_ID ), SLOT( clear() ), true,
-        i18n( "Clear filter" ), 0/*index*/ );
+                  CLEAR_ID, SIGNAL( clicked() ),
+                  getLined( LEDIT_ID ), SLOT( clear() ), true,
+                  i18n( "Clear filter" ), 0/*index*/ );
 
 #ifdef SW_ENABLE_CASE_BUTTON
     // create popup menu for change case button
@@ -83,7 +83,7 @@ void SearchWidget::slotTextChanged( const QString & text )
 
 void SearchWidget::startSearch()
 {
-    QString text = getLinedText(m_linedId);
+    QString text = getLined( LEDIT_ID )->text();
     m_document->findTextAll( text.length() < 3 ? QString::null : text, m_caseSensitive );
 }
 

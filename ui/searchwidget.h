@@ -33,8 +33,7 @@ class SearchWidget : public KToolBar
     private:
         KPDFDocument * m_document;
         KPopupMenu * m_caseMenu;
-        QTimer* m_inputDelayTimer;
-        int m_linedId;
+        QTimer * m_inputDelayTimer;
         bool m_caseSensitive;
 
     private slots:

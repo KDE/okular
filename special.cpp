@@ -133,29 +133,33 @@ void dviWindow::epsf_special(QString cp)
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
 
-  // Now see if the Gfx file exists...
+  // Now see if the Gfx file exists... try to find it in the current
+  // directory, in the DVI file's directory, and finally, if all else
+  // fails, use kpsewhich to find the file. Later on, we should
+  // probably use the DVI file's baseURL, once this is implemented.
   if (! QFile::exists(EPSfilename)) {
     QFileInfo fi1(dviFile->filename);
     QFileInfo fi2(fi1.dir(),EPSfilename);
     if (fi2.exists())
       EPSfilename = fi2.absFilePath();
-    else if (QFile::exists(EPSfilename + QString::fromLatin1(".gz"))) {	//try harder to find a gzipped file
-      EPSfilename = EPSfilename + QString::fromLatin1(".gz");
-      //kdDebug(4300) << "gzEps=" << EPSfilename <<endl;
-    }
-    else {  //try even harder :)
-      QString texInputs = QString::fromLocal8Bit(getenv("TEXINPUTS"));
-      QStringList texList = QStringList::split(":", texInputs);
-      
-      QStringList::Iterator it;
-      for (it=texList.begin(); it!=texList.end(); ++it) {
-        QString temp = (*it) + "/" + EPSfilename;
-        if (QFile::exists(temp)) {
-          //kdDebug(4300) << "Found it! epsFile=" << temp.local8Bit() <<endl;
-          EPSfilename = temp;
-          break;
-        }
-      }
+    else {
+      // Use kpsewhich to find the eps file. The code here is of
+      // course terrible, a weak programmer's failed attempt to work
+      // around the difficulties in Unix process control. All we want
+      // to do is to call kpsewhich, wait for it to terminate, and to
+      // store its output in a QString. Maybe you have a better
+      // solution?
+      KTempFile *answerFile = new KTempFile(QString::null,".tmp"); // get name of a temporary file
+      QString answerFileName = answerFile->name();
+      delete answerFile;
+
+      KShellProcess proc;
+      proc << "kpsewhich " << EPSfilename << " >" << answerFileName;
+      proc.start(KProcess::Block, KProcess::NoCommunication);
+      QFile resultfile(answerFileName);
+      resultfile.open(IO_ReadOnly);
+      resultfile.readLine(EPSfilename,500);
+      EPSfilename = EPSfilename.stripWhiteSpace();
     }
   }
   

@@ -158,7 +158,7 @@ void kdvi::makeMenuBar()
 	m_fr = p->insertItem( i18n("Open &recent"),	recentmenu );
 	
 	m_fp = p->insertItem( i18n("&Print ..."),	this, SLOT(filePrint()));
-	m_fx = p->insertItem( i18n("E&xit"), this, SLOT(fileExit()));
+	m_fx = p->insertItem( i18n("&Quit"), this, SLOT(fileExit()));
 
 	m_f = p;
 	menuBar()->insertItem( i18n("&File"), p, -2 );
@@ -750,18 +750,15 @@ void kdvi::toggleVertToolbar()
 
 void kdvi::applyVertToolbar()
 {
-#warning TODO Finish QSplitter port
 	if (vertToolbar)
 	{
-	  //		kpan->setLimits(0,0);
-	  //		kpan->setAbsSeparator(pannerValue);
+	        toolBar2->show();
 	}
 	else
 	{
-	  //		if (kpan->getAbsSeparator())
-	  //			kpan->setAbsSeparator(0);
-	  //		kpan->setLimits(0,1);
+                toolBar2->hide();
 	}
+        
 	optionsmenu->setItemChecked( optionsmenu->idAt(ID_OPT_TB), vertToolbar );
 	config->writeEntry( "VertToolbar", vertToolbar );
 }

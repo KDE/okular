@@ -232,6 +232,8 @@ void kdvi::makeButtons()
 
 #define I(f,o,s,h) toolBar()->insertButton( BarIcon(f),\
 	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
+#define U(f,o,s,h) toolBar()->insertButton( UserIcon(f),\
+	 0, SIGNAL(clicked()), o, SLOT(s()), TRUE, h);
 
 	I( "fileopen",	this,	fileOpen,	i18n("Open document ...") )
 	I( "reload",	dviwin,	drawPage,	i18n("Reload document") )
@@ -239,15 +241,16 @@ void kdvi::makeButtons()
 	toolBar()->insertSeparator();
 	I( "start",		dviwin,	firstPage, 	i18n("Go to first page") )
 	I( "back",		dviwin,	prevPage,	i18n("Go to previous page") )
-	I( "forwpage",	dviwin,	goForward,	i18n("Go down then top of next page") )
+	U( "forwpage",	dviwin,	goForward,	i18n("Go down then top of next page") )
 	I( "forward",	dviwin,	nextPage,	i18n("Go to next page") )
 	I( "finish",	dviwin,	lastPage,	i18n("Go to last page") )
 	toolBar()->insertSeparator();
 	I( "viewmag-",	dviwin,	nextShrink,	i18n("Decrease magnification") )
-	I( "smalltext",	this,	selectSmall,	i18n("Small text") )
-	I( "largetext",	this,	selectLarge,	i18n("Large text") )
+	U( "smalltext",	this,	selectSmall,	i18n("Small text") )
+	U( "largetext",	this,	selectLarge,	i18n("Large text") )
 	I( "viewmag+",	dviwin,	prevShrink,	i18n("Increase magnification") )
 #undef	I
+#undef  U
 
 }
 

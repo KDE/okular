@@ -63,7 +63,7 @@ KDVIPart::KDVIPart( QWidget *parent, const char *name )
                           QIconSet(BarIcon("back", KDVIFactory::instance())) ,
                           0, dviwin, SLOT(prevPage() ), actionCollection(), "prevPage");
     forPageAct = new KAction(i18n("Go down then top of next page"),
-                             QIconSet(BarIcon("forwpage", KDVIFactory::instance())) ,
+                             QIconSet(UserIcon("forwpage", KDVIFactory::instance())) ,
                              0, dviwin, SLOT(goForward() ), actionCollection(), "goForward");
     forwardAct = new KAction(i18n("Go to next page"),
                              QIconSet(BarIcon("forward", KDVIFactory::instance())) ,
@@ -75,10 +75,10 @@ KDVIPart::KDVIPart( QWidget *parent, const char *name )
                              QIconSet(BarIcon("viewmag-", KDVIFactory::instance())) ,
                              0, dviwin, SLOT(nextShrink() ), actionCollection(), "nextShrink");
     smallAct = new KAction(i18n("Small text"),
-                           QIconSet(BarIcon("smalltext", KDVIFactory::instance())) ,
+                           QIconSet(UserIcon("smalltext", KDVIFactory::instance())) ,
                            0, w, SLOT(selectSmall() ), actionCollection(), "selectSmall");
     largeAct = new KAction(i18n("Large text"),
-                           QIconSet(BarIcon("largetext", KDVIFactory::instance())) ,
+                           QIconSet(UserIcon("largetext", KDVIFactory::instance())) ,
                            0, w, SLOT(selectLarge() ), actionCollection(), "selectLarge");
     zoomInAct = new KAction(i18n("Increase magnification"),
                             QIconSet(BarIcon("viewmag+", KDVIFactory::instance())) ,

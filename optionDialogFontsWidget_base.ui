@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>237</width>
+            <width>290</width>
             <height>203</height>
         </rect>
     </property>
@@ -66,7 +66,7 @@
                 <cstring>fontGenerationCheckBox</cstring>
             </property>
             <property name="text">
-                <string>generate missing fonts</string>
+                <string>Generate missing fonts</string>
             </property>
             <property name="toolTip" stdset="0">
                 <string>If in doubt, switch on!</string>
@@ -80,7 +80,7 @@
                 <cstring>fontEnlargementCheckBox</cstring>
             </property>
             <property name="text">
-                <string>enlarge font for better readability</string>
+                <string>Enlarge font for better readability</string>
             </property>
         </widget>
         <spacer>
@@ -107,6 +107,7 @@
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>qwidget.h</includehint>
     <includehint>kcombobox.h</includehint>
 </includehints>
 </UI>

@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>293</width>
-            <height>203</height>
+            <width>367</width>
+            <height>228</height>
         </rect>
     </property>
     <property name="caption">
@@ -38,7 +38,7 @@
                 <cstring>showHyperLinksCheck</cstring>
             </property>
             <property name="text">
-                <string>Show Hyperlinks</string>
+                <string>Show hyperlinks</string>
             </property>
             <property name="autoRepeat">
                 <bool>false</bool>
@@ -55,7 +55,7 @@
                 <cstring>buttonGroup3</cstring>
             </property>
             <property name="title">
-                <string>Editor for inverse search</string>
+                <string>Editor for Inverse Search</string>
             </property>
             <grid>
                 <property name="name">
@@ -125,7 +125,7 @@
                         <cstring>textLabel4</cstring>
                     </property>
                     <property name="text">
-                        <string>Shell Command:</string>
+                        <string>Shell command:</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="2" column="1">
@@ -160,6 +160,7 @@
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>qwidget.h</includehint>
     <includehint>kurllabel.h</includehint>
     <includehint>kcombobox.h</includehint>
     <includehint>klineedit.h</includehint>

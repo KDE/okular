@@ -62,11 +62,26 @@ public:
 
   // Get page parameters.
   double getPageWidth(int page)
-    { return catalog->getPage(page)->getWidth(); }
+    {
+        if ( catalog->getPage(page))
+            return catalog->getPage(page)->getWidth();
+        else
+            return 0.0;
+    }
   double getPageHeight(int page)
-    { return catalog->getPage(page)->getHeight(); }
+    {
+        if ( catalog->getPage(page))
+            return catalog->getPage(page)->getHeight();
+        else
+            return 0.0;
+    }
   int getPageRotate(int page)
-    { return catalog->getPage(page)->getRotate(); }
+    {
+        if ( catalog->getPage(page) )
+            return catalog->getPage(page)->getRotate();
+        else
+            return 0;
+    }
 
   // Get number of pages.
   int getNumPages() { return catalog->getNumPages(); }

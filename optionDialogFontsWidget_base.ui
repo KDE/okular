@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>optionDialogFontsWidget_base</class>
 <author>Stefan Kebekus</author>
 <widget class="QWidget">
@@ -9,16 +9,19 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>259</width>
-            <height>299</height>
+            <width>234</width>
+            <height>176</height>
         </rect>
     </property>
     <property name="caption">
-        <string>TeX Fonts</string>
+        <string>optionDialogFontsWidget_base</string>
     </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
         </property>
         <widget class="QButtonGroup">
             <property name="name">
@@ -68,47 +71,11 @@
             <property name="title">
                 <string>PK Fonts</string>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QButtonGroup">
-                    <property name="name">
-                        <cstring>buttonGroup1</cstring>
-                    </property>
-                    <property name="frameShape">
-                        <enum>NoFrame</enum>
-                    </property>
-                    <property name="title">
-                        <string></string>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel1</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Metafont mode:</string>
-                            </property>
-                        </widget>
-                        <widget class="KComboBox" row="0" column="1">
-                            <property name="name">
-                                <cstring>metafontMode</cstring>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>LaserJet 4 is usually a good choice.</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>&lt;p&gt;Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p&gt;
-&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid generating several bitmap versions of the same font.&lt;/p&gt;</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-                <widget class="QCheckBox">
+                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>fontGenerationCheckBox</cstring>
                     </property>
@@ -122,25 +89,28 @@
                         <string>Allows KDVI to use MetaFont to produce bitmap fonts. Unless you have a very specific reason, you probably want to switch this on.</string>
                     </property>
                 </widget>
-            </vbox>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Metafont mode:</string>
+                    </property>
+                </widget>
+                <widget class="KComboBox" row="0" column="1">
+                    <property name="name">
+                        <cstring>metafontMode</cstring>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>LaserJet 4 is usually a good choice.</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>&lt;p&gt;Chooses the type of bitmap fonts used for the display. As a general rule, the higher the dpi value, the better quality of the output. On the other hand, large dpi fonts use more resources and make KDVI slower.&lt;/p&gt;
+&lt;p&gt;If you are low on hard disk space, or have a slow machine, you may want to choose the same setting that is also used by dvips. That way you avoid generating several bitmap versions of the same font.&lt;/p&gt;</string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>16</width>
-                    <height>0</height>
-                </size>
-            </property>
-        </spacer>
     </vbox>
 </widget>
 <connections>
@@ -151,11 +121,12 @@
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
+<includes>
+    <include location="global" impldecl="in implementation">kdialog.h</include>
+</includes>
 <slots>
     <slot>buttonGroup1_clicked(int)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
-<includehints>
-    <includehint>kcombobox.h</includehint>
-</includehints>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

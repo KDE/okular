@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>328</width>
-            <height>305</height>
+            <width>296</width>
+            <height>311</height>
         </rect>
     </property>
     <vbox>
@@ -40,6 +40,14 @@
                         </property>
                         <widget class="QCheckBox">
                             <property name="name">
+                                <cstring>kcfg_ShowScrollBars</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Show scroll&amp;bars</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
                                 <cstring>kcfg_ShowSearchBar</cstring>
                             </property>
                             <property name="enabled">
@@ -62,34 +70,10 @@
                         </widget>
                         <widget class="QCheckBox">
                             <property name="name">
-                                <cstring>kcfg_ShowScrollBars</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Show scroll&amp;bars</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
                                 <cstring>kcfg_ShowOSD</cstring>
                             </property>
                             <property name="text">
                                 <string>Show &amp;hints and info messages</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_ObeyDRM</cstring>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Obey DRM limitations</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_WatchFile</cstring>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Watch File</string>
                             </property>
                         </widget>
                     </vbox>
@@ -121,6 +105,88 @@
                         <spacer>
                             <property name="name">
                                 <cstring>spacerV1</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Minimum</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>1</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox3</cstring>
+            </property>
+            <property name="title">
+                <string>Program Features</string>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout4</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_ObeyDRM</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Obey DRM limitations</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_WatchFile</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Watch File</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout3_2_2</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>pixmapLabel1_2_2</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>"exec", 32</pixmap>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacerV1_2</cstring>
                             </property>
                             <property name="orientation">
                                 <enum>Vertical</enum>

@@ -15,6 +15,8 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <kinputdialog.h>
+#include <kuser.h>
 #include <kdebug.h>
 
 // system includes
@@ -358,6 +360,25 @@ void PageViewAnnotator::setEnabled( bool on )
 
     // show the toolBar
     m_toolBar->showItems( (PageViewToolBar::Side)Settings::editToolBarPlacement(), items );
+
+    // ask for Author's name if not already set
+    if ( Settings::annotationsAuthor().isEmpty() )
+    {
+        // get default username from the kdelibs/kdecore/KUser
+        KUser currentUser;
+        QString userName = currentUser.fullName();
+        // ask the user for confirmation/change
+        bool firstTry = true;
+        while ( firstTry || userName.isEmpty()  )
+        {
+            QString prompt = firstTry ? i18n( "Please insert your name or initials:" ) :
+                i18n( "You must set this name:" );
+            userName = KInputDialog::getText( i18n("Annotations author"), prompt, userName );
+            firstTry = false;
+        }
+        // save the name
+        Settings::setAnnotationsAuthor( userName );
+    }
 }
 
 bool PageViewAnnotator::routeEvents() const

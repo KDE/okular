@@ -46,6 +46,9 @@
    <max>6</max>
   </entry>
  </group>
+ <group name="Annotations" >
+  <entry key="AnnotationsAuthor" type="String" />
+ </group>
  <group name="General" >
   <entry key="ShowOSD" type="Bool" >
    <default>true</default>

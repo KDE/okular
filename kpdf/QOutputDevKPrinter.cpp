@@ -1,32 +1,27 @@
-// QOutputDevKPrinter.cc
+/***************************************************************************
+ *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
+ *   Copyright (C) 2004 by Christophe Devriese                             *
+ *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
 
-// Copyright (C)  2004  Dominique Devriese <devriese@kde.org>
-
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-// 02111-1307, USA.
-
+#include "SplashBitmap.h"
+#include "SplashTypes.h"
+ 
 #include "QOutputDevKPrinter.h"
-#include "QOutputDevKPrinter.moc"
 
 #include <kprinter.h>
 #include <qpainter.h>
+#include <qimage.h>
 
-QOutputDevKPrinter::QOutputDevKPrinter( QPainter& painter, KPrinter& printer )
-  : m_printer( printer )
+QOutputDevKPrinter::QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer )
+  : QOutputDev(paperColor), m_printer( printer ), m_painter( painter )
 {
-  m_painter = &painter;
 }
 
 QOutputDevKPrinter::~QOutputDevKPrinter()
@@ -41,6 +36,12 @@ void QOutputDevKPrinter::startPage(int page, GfxState *state)
 
 void QOutputDevKPrinter::endPage()
 {
-  QOutputDev::endPage();
-}
+  SplashColorPtr dataPtr;
+  int bh, bw;
 
+  QOutputDev::endPage();
+  bh = getBitmap()->getHeight();
+  bw = getBitmap()->getWidth();
+  dataPtr = getBitmap()->getDataPtr();
+  m_painter.drawPixmap(0, 0, QImage((uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian));
+}

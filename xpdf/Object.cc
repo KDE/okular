@@ -58,6 +58,13 @@ Object *Object::initDict(XRef *xref) {
   return this;
 }
 
+Object *Object::initDict(Dict *dictA) {
+  initObj(objDict);
+  dict = dictA;
+  dict->incRef();
+  return this;
+}
+
 Object *Object::initStream(Stream *streamA) {
   initObj(objStream);
   stream = streamA;
@@ -105,7 +112,7 @@ void Object::free() {
     delete string;
     break;
   case objName:
-    gfree(name);
+    gfree((void*)name);
     break;
   case objArray:
     if (!array->decRef()) {
@@ -123,7 +130,7 @@ void Object::free() {
     }
     break;
   case objCmd:
-    gfree(cmd);
+    gfree((void*)cmd);
     break;
   default:
     break;
@@ -134,7 +141,7 @@ void Object::free() {
   type = objNone;
 }
 
-const char *Object::getTypeName() const {
+const char *Object::getTypeName() {
   return objTypeNames[type];
 }
 
@@ -205,7 +212,11 @@ void Object::print(FILE *f) {
   }
 }
 
-void Object::memCheck(FILE * f) {
+void Object::memCheck(FILE *
+#ifdef DEBUG_MEM
+ f
+#endif
+) {
 #ifdef DEBUG_MEM
   int i;
   int t;

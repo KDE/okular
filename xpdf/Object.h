@@ -89,16 +89,17 @@ public:
     { initObj(objReal); real = realA; return this; }
   Object *initString(GString *stringA)
     { initObj(objString); string = stringA; return this; }
-  Object *initName(char *nameA)
+  Object *initName(const char *nameA)
     { initObj(objName); name = copyString(nameA); return this; }
   Object *initNull()
     { initObj(objNull); return this; }
   Object *initArray(XRef *xref);
   Object *initDict(XRef *xref);
+  Object *initDict(Dict *dictA);
   Object *initStream(Stream *streamA);
   Object *initRef(int numA, int genA)
     { initObj(objRef); ref.num = numA; ref.gen = genA; return this; }
-  Object *initCmd(char *cmdA)
+  Object *initCmd(const char *cmdA)
     { initObj(objCmd); cmd = copyString(cmdA); return this; }
   Object *initError()
     { initObj(objError); return this; }
@@ -116,28 +117,28 @@ public:
   void free();
 
   // Type checking.
-  ObjType getType() const { return type; }
-  GBool isBool() const { return type == objBool; }
-  GBool isInt() const { return type == objInt; }
-  GBool isReal() const { return type == objReal; }
-  GBool isNum() const { return type == objInt || type == objReal; }
-  GBool isString() const { return type == objString; }
-  GBool isName() const { return type == objName; }
-  GBool isNull() const { return type == objNull; }
-  GBool isArray() const { return type == objArray; }
-  GBool isDict() const { return type == objDict; }
-  GBool isStream() const { return type == objStream; }
-  GBool isRef() const { return type == objRef; }
-  GBool isCmd() const { return type == objCmd; }
-  GBool isError() const { return type == objError; }
-  GBool isEOF() const { return type == objEOF; }
-  GBool isNone() const { return type == objNone; }
+  ObjType getType() { return type; }
+  GBool isBool() { return type == objBool; }
+  GBool isInt() { return type == objInt; }
+  GBool isReal() { return type == objReal; }
+  GBool isNum() { return type == objInt || type == objReal; }
+  GBool isString() { return type == objString; }
+  GBool isName() { return type == objName; }
+  GBool isNull() { return type == objNull; }
+  GBool isArray() { return type == objArray; }
+  GBool isDict() { return type == objDict; }
+  GBool isStream() { return type == objStream; }
+  GBool isRef() { return type == objRef; }
+  GBool isCmd() { return type == objCmd; }
+  GBool isError() { return type == objError; }
+  GBool isEOF() { return type == objEOF; }
+  GBool isNone() { return type == objNone; }
 
   // Special type checking.
-  GBool isName(const char *nameA) const
+  GBool isName(const char *nameA)
     { return type == objName && !strcmp(name, nameA); }
   GBool isDict(const char *dictType);
-  GBool isStream(const char *dictType);
+  GBool isStream(char *dictType);
   GBool isCmd(const char *cmdA)
     { return type == objCmd && !strcmp(cmd, cmdA); }
 
@@ -147,14 +148,14 @@ public:
   double getReal() { return real; }
   double getNum() { return type == objInt ? (double)intg : real; }
   GString *getString() { return string; }
-  char *getName() { return name; }
+  const char *getName() { return name; }
   Array *getArray() { return array; }
   Dict *getDict() { return dict; }
   Stream *getStream() { return stream; }
   Ref getRef() { return ref; }
   int getRefNum() { return ref.num; }
   int getRefGen() { return ref.gen; }
-  char *getCmd() { return cmd; }
+  const char *getCmd() { return cmd; }
 
   // Array accessors.
   int arrayGetLength();
@@ -173,7 +174,7 @@ public:
   Object *dictGetValNF(int i, Object *obj);
 
   // Stream accessors.
-  GBool streamIs(const char *dictType);
+  GBool streamIs(char *dictType);
   void streamReset();
   void streamClose();
   int streamGetChar();
@@ -184,7 +185,7 @@ public:
   Dict *streamGetDict();
 
   // Output.
-  const char *getTypeName() const;
+  const char *getTypeName();
   void print(FILE *f = stdout);
 
   // Memory testing.
@@ -198,12 +199,12 @@ private:
     int intg;			//   integer
     double real;		//   real
     GString *string;		//   string
-    char *name;			//   name
+    const char *name;		//   name
     Array *array;		//   array
     Dict *dict;			//   dictionary
     Stream *stream;		//   stream
     Ref ref;			//   indirect reference
-    char *cmd;			//   command
+    const char *cmd;		//   command
   };
 
 #ifdef DEBUG_MEM
@@ -269,10 +270,10 @@ inline Object *Object::dictGetValNF(int i, Object *obj)
 
 #include "Stream.h"
 
-inline GBool Object::streamIs(const char *dictType)
+inline GBool Object::streamIs(char *dictType)
   { return stream->getDict()->is(dictType); }
 
-inline GBool Object::isStream(const char *dictType)
+inline GBool Object::isStream(char *dictType)
   { return type == objStream && streamIs(dictType); }
 
 inline void Object::streamReset()

@@ -24,7 +24,6 @@
 
 #include "GlobalParams.h"
 #include "PDFDoc.h"
-#include "XOutputDev.h"
 #include "QOutputDevKPrinter.h"
 #include "QOutputDevPixmap.h"
 
@@ -395,9 +394,12 @@ void Part::nextThumbnail()
   // check the user did not change the document and we are trying to render somethiung that
   // does not exist
   if (m_nextThumbnail > m_doc->getNumPages()) return;
-  QOutputDevPixmap odev;
+  SplashColor paperColor;
+  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+  QOutputDevPixmap odev(paperColor);
+  odev.startDoc(m_doc->getXRef());
 
-  m_doc->displayPage(&odev, m_nextThumbnail, QPaintDevice::x11AppDpiX(), 0, true);
+  m_doc->displayPage(&odev, m_nextThumbnail, QPaintDevice::x11AppDpiX(), QPaintDevice::x11AppDpiY(), 0, true, true);
   pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
 
   m_nextThumbnail++;
@@ -692,11 +694,14 @@ void Part::printPreview()
   KPrinter printer;
   printer.setPreviewOnly( true );
   QPainter painter( &printer );
-  QOutputDevKPrinter printdev( painter, printer );
+  SplashColor paperColor;
+  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+  QOutputDevKPrinter printdev( painter, paperColor, printer );
+  printdev.startDoc(m_doc->getXRef());
   int max = m_doc->getNumPages();
   for ( int i = 1; i <= max; ++i )
   {
-    m_doc->displayPage( &printdev, i, printer.resolution(), 0, true );
+    m_doc->displayPage( &printdev, i, printer.resolution(), printer.resolution(), 0, true, true );
     if ( i != max )
       printer.newPage();
   }
@@ -705,11 +710,14 @@ void Part::printPreview()
 void Part::doPrint( KPrinter& printer )
 {
   QPainter painter( &printer );
-  QOutputDevKPrinter printdev( painter, printer );
+  SplashColor paperColor;
+  paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+  QOutputDevKPrinter printdev( painter, paperColor, printer );
+  printdev.startDoc(m_doc->getXRef());
   QValueList<int> pages = printer.pageList();
   for ( QValueList<int>::ConstIterator i = pages.begin(); i != pages.end();)
   {
-    m_doc->displayPage( &printdev, *i, printer.resolution(), 0, true );
+    m_doc->displayPage( &printdev, *i, printer.resolution(), printer.resolution(), 0, true, true );
     if ( ++i != pages.end() )
       printer.newPage();
   }

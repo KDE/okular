@@ -26,7 +26,9 @@ namespace KPDF
           m_currentPage( 1 ),
           m_pressedAction( 0 )
     {
-        m_outputdev = new QOutputDevPixmap();
+        SplashColor paperColor;
+        paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
+        m_outputdev = new QOutputDevPixmap(paperColor);
         setFocusPolicy( QWidget::StrongFocus );
         viewport()->setFocusPolicy( QWidget::WheelFocus );
     }
@@ -38,6 +40,7 @@ namespace KPDF
     PageWidget::setPDFDocument(PDFDoc* doc)
     {
         m_doc = doc;
+        m_outputdev -> startDoc(doc->getXRef());
         m_currentPage = 1;
         updatePixmap();
     }
@@ -278,7 +281,7 @@ namespace KPDF
 
             const float ppp = basePpp * m_zoomFactor; // pixels per point
 
-            m_doc->displayPage(m_outputdev, m_currentPage, int(ppp * 72.0), 0, true);
+            m_doc->displayPage(m_outputdev, m_currentPage, int(ppp * 72.0), int(ppp * 72.0), 0, true, true);
 
             resizeContents ( m_outputdev->getPixmap()->width ( ), m_outputdev->getPixmap()->height ( ));
 

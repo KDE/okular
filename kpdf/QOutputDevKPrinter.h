@@ -1,23 +1,17 @@
-// QOutputDevKPrinter.h
-// Copyright (C)  2004  Dominique Devriese <devriese@kde.org>
+/***************************************************************************
+ *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
+ *   Copyright (C) 2004 by Christophe Devriese                             *
+ *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
 
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-// 02111-1307, USA.
-
-#ifndef KPDF_KPDF_QOUTPUTDEVKPRINTER_H
-#define KPDF_KPDF_QOUTPUTDEVKPRINTER_H
+#ifndef QOUTPUTDEVKPRINTER_H
+#define QOUTPUTDEVKPRINTER_H
 
 #include "QOutputDev.h"
 
@@ -25,9 +19,8 @@ class KPrinter;
 
 class QOutputDevKPrinter : public QOutputDev
 {
-        Q_OBJECT
 public:
-        QOutputDevKPrinter( QPainter& painter, KPrinter& printer );
+        QOutputDevKPrinter(QPainter& painter, SplashColor paperColor, KPrinter& printer);
         virtual ~QOutputDevKPrinter();
 
 	//----- initialization and control
@@ -38,8 +31,12 @@ public:
 	// End a page
 	virtual void endPage();
 
+protected:
+	void draw();
+
 private:
         KPrinter& m_printer;            // the printer that we're drawing to
+        QPainter& m_painter;            // the painter that we're drawing to
 };
 
 #endif

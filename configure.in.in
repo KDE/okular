@@ -18,6 +18,7 @@ if test -n "$FREETYPE_CONFIG"; then
     done
     LIBFREETYPE_RPATH=`echo $LIBFREETYPE_RPATH | sed -e "s/-L/-R/g"`
     LIBFREETYPE_CFLAGS="`$FREETYPE_CONFIG --cflags`"
+    AC_DEFINE_UNQUOTED(HAVE_FREETYPE, 1, [Defines if your system has the freetype library])
   else
     AC_MSG_WARN([You need at least libfreetype 2.0.5])
   fi
@@ -42,3 +43,47 @@ AC_FIND_FILE(xpdfrc, [/etc /usr/local/etc /etc/xpdf], xpdfrc)
 if test "$xpdfrc" != NO; then
   AC_DEFINE_UNQUOTED(SYSTEM_XPDFRC, "$xpdfrc/xpdfrc", [Define the location your xpdfrc])
 fi
+
+dnl #### Check for FSEEK variants
+AC_SYS_LARGEFILE
+AC_FUNC_FSEEKO
+AC_CHECK_FUNCS(fseek64, xpdf_cv_func_fseek64=yes, xpdf_cv_func_fseek64=no)
+AC_CHECK_FUNCS(ftell64, xpdf_cv_func_ftell64=yes, xpdf_cv_func_ftell64=no)
+if test "$xpdf_cv_func_fseek64" = yes -a "$xpdf_cv_func_ftell64" = yes; then
+        AC_DEFINE(HAVE_FSEEK64, 1)
+else
+	AC_DEFINE(HAVE_FSEEK64, 0)
+fi
+	  
+dnl #### Check for libt1
+AC_LANG_SAVE
+AC_LANG_CPLUSPLUS
+
+kpdf_have_t1lib=
+KDE_CHECK_LIB(t1, T1_InitLib, [LIBT1="-lt1"; kpdf_have_t1lib=yes],
+[
+	kpdf_have_t1lib=no
+])
+AC_SUBST(LIBT1)
+if test $kpdf_have_t1lib = yes; then
+	AC_DEFINE_UNQUOTED(HAVE_T1LIB_H, 1, [Defines if your system has the t1 library])
+else
+	AC_DEFINE_UNQUOTED(HAVE_T1LIB_H, 0, [Defines if your system has the t1 library])
+fi
+AC_LANG_RESTORE
+
+dnl #### Enable the user to enable multithearind on xpdf
+AC_ARG_ENABLE(multithreaded-kpdf,
+AC_HELP_STRING([--enable-multithreaded-kpdf],[include support for multithreading in kpdf]),
+[
+    case $enableval in
+	yes)
+		AC_DEFINE(MULTITHREADED, 1, [Defines if use multithreading in kpdf])
+		;;
+	*)
+		AC_DEFINE(MULTITHREADED, 0, [Defines if use multithreading in kpdf])
+		;;
+ esac
+]
+, AC_DEFINE(MULTITHREADED, 0, [Defines if use multithreading in kpdf])
+)

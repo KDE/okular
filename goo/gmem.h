@@ -44,7 +44,7 @@ extern void gMemReport(FILE *f);
 /*
  * Allocate memory and copy a string into it.
  */
-extern char *copyString(const char *s);
+extern const char *copyString(const char *s);
 
 #ifdef __cplusplus
 }

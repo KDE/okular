@@ -1,29 +1,16 @@
-// QOutputDevPixmap.h
-
-// Copyright (C)  2003  Christophe Devriese <oelewapperke@oelewapperke.org>
-
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public
-// License as published by the Free Software Foundation; either
-// version 2.1 of the License, or (at your option) any later version.
-
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Lesser General Public License for more details.
-
-// You should have received a copy of the GNU Lesser General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-// 02111-1307  USA
-
-//========================================================================
-//
-// XOutputDev.h
-//
-// Copyright 1996 Derek B. Noonburg
-//
-//========================================================================
+/***************************************************************************
+ *   Copyright (C) 2003-2004 by Christophe Devriese                        *
+ *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
+ *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
+ *   Copyright (C) 2003 by Helio Chissini de Castro                        *
+ *                           <helio@conectiva.com.br>                      *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
 
 #ifndef QOUTPUTDEVPIXMAP_H
 #define QOUTPUTDEVPIXMAP_H
@@ -34,15 +21,13 @@
 
 #include "QOutputDev.h"
 
-typedef double fp_t;
+class QPixmap;
 
 class QOutputDevPixmap : public QOutputDev {
-	Q_OBJECT
-
 public:
 
 	// Constructor.
-	QOutputDevPixmap( );
+	QOutputDevPixmap(SplashColor paperColor);
 
 	// Destructor.
 	virtual ~QOutputDevPixmap();
@@ -55,7 +40,6 @@ public:
 	// End a page
 	virtual void endPage();
 
-public:
 	QPixmap * getPixmap() const { return m_pixmap; };
 
 private:

@@ -1,5 +1,5 @@
 # set the include path for X, qt and KDE
-INCLUDES = -I.. -I$(top_srcdir)/kpdf/goo -I$(top_srcdir)/kpdf/xpdf $(all_includes)
+INCLUDES = -I.. -I$(top_srcdir)/kpdf/goo -I$(top_srcdir)/kpdf/splash -I$(top_srcdir)/kpdf/xpdf $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = kpdf_shell.h kpdf_part.h kpdf_canvas.h kpdf_pagewidget.h QOutputDevPixmap.h QOutputDev.h

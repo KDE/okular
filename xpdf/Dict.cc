@@ -34,15 +34,19 @@ Dict::~Dict() {
   int i;
 
   for (i = 0; i < length; ++i) {
-    gfree((void *) entries[i].key);
+    gfree((void*)entries[i].key);
     entries[i].val.free();
   }
   gfree(entries);
 }
 
 void Dict::add(const char *key, Object *val) {
-  if (length + 1 > size) {
-    size += 8;
+  if (length == size) {
+    if (length == 0) {
+      size = 8;
+    } else {
+      size *= 2;
+    }
     entries = (DictEntry *)grealloc(entries, size * sizeof(DictEntry));
   }
   entries[length].key = key;
@@ -50,7 +54,7 @@ void Dict::add(const char *key, Object *val) {
   ++length;
 }
 
-inline DictEntry *Dict::find(const char *key) {
+inline DictEntry *Dict::find(const  char *key) {
   int i;
 
   for (i = 0; i < length; ++i) {

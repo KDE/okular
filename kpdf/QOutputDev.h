@@ -1,21 +1,16 @@
-/* This file is part of the KDE libraries
-   Copyright (C) 2001, 2003 Christophe Devriese <oelewapperke@kde.org>
-   Copyright 1996 Derek B. Noonburg
-
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License version 2 as published by the Free Software Foundation.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.
-*/
+/***************************************************************************
+ *   Copyright (C) 2003-2004 by Christophe Devriese                        *
+ *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
+ *   Copyright (C) 2003 by Helio Chissini de Castro                        *
+ *                           <helio@conectiva.com.br>                      *
+ *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
+ *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
 
 #ifndef QOUTPUTDEV_H
 #define QOUTPUTDEV_H
@@ -24,162 +19,45 @@
 #pragma interface
 #endif
 
-#include "aconf.h"
-#include <stddef.h>
+#include "XRef.h"
+#include "SplashOutputDev.h"
 
-class Object;
-
-#include <qobject.h>
-
-#include "config.h"
-#include "CharTypes.h"
-#include "GlobalParams.h"
-#include "OutputDev.h"
-
-class GString;
-class GList;
-struct GfxRGB;
-class GfxFont;
-class GfxSubpath;
 class TextPage;
-class XOutputFontCache;
-class Link;
-class Catalog;
-class DisplayFontParam;
-class UnicodeMap;
-class CharCodeToUnicode;
 
 class QPainter;
-class QPixmap;
-class QPointArray;
-
-typedef double fp_t;
 
 //------------------------------------------------------------------------
-// Constants
+// QOutputDev
 //------------------------------------------------------------------------
 
-
-//------------------------------------------------------------------------
-// Misc types
-//------------------------------------------------------------------------
-
-
-//------------------------------------------------------------------------
-// XOutputDev
-//------------------------------------------------------------------------
-
-class QOutputDev : public QObject, public OutputDev {
-	Q_OBJECT
-
-public:
-
-	// Constructor.
-	QOutputDev( QPainter * p = 0 );
-
-	// Destructor.
-	virtual ~QOutputDev();
-
-	//---- get info about output device
-
-	// Does this device use upside-down coordinates?
-	// (Upside-down means (0,0) is the top left corner of the page.)
-	virtual GBool upsideDown() { return gTrue; }
-
-	// Does this device use drawChar() or drawString()?
-	virtual GBool useDrawChar() { return gTrue; }
-
-	// Does this device use beginType3Char/endType3Char?  Otherwise,
-	// text in Type 3 fonts will be drawn with drawChar/drawString.
-	virtual GBool interpretType3Chars() { return gFalse; }
-
-	// Does this device need non-text content?
-	virtual GBool needNonText() { return gFalse; }
-
-	//----- initialization and control
-
-	// Start a page.
-	virtual void startPage(int pageNum, GfxState *state);
-
-	// End a page.
-	virtual void endPage();
-
-	//----- link borders
-	virtual void drawLink(Link *link, Catalog *catalog);
-
-	//----- save/restore graphics state
-	virtual void saveState(GfxState *state);
-	virtual void restoreState(GfxState *state);
-
-	//----- update graphics state
-	virtual void updateAll(GfxState *state);
-	virtual void updateCTM(GfxState *state, fp_t m11, fp_t m12,
-			 fp_t m21, fp_t m22, fp_t m31, fp_t m32);
-	virtual void updateLineDash(GfxState *state);
-	virtual void updateFlatness(GfxState *state);
-	virtual void updateLineJoin(GfxState *state);
-	virtual void updateLineCap(GfxState *state);
-	virtual void updateMiterLimit(GfxState *state);
-	virtual void updateLineWidth(GfxState *state);
-	virtual void updateFillColor(GfxState *state);
-	virtual void updateStrokeColor(GfxState *state);
-
-	//----- update text state
-	virtual void updateFont(GfxState *state);
-
-	//----- path painting
-	virtual void stroke(GfxState *state);
-	virtual void fill(GfxState *state);
-	virtual void eoFill(GfxState *state);
-
-	//----- path clipping
-	virtual void clip(GfxState *state);
-	virtual void eoClip(GfxState *state);
-
-	//----- text drawing
-	virtual void beginString(GfxState *state, GString *s);
-	virtual void endString(GfxState *state);
-	virtual void drawChar(GfxState *state, fp_t x, fp_t y,
-	                      fp_t dx, fp_t dy,
-	                      fp_t originX, fp_t originY,
-	                      CharCode code, Unicode *u, int uLen);
-
-	//----- image drawing
-	virtual void drawImageMask(GfxState *state, Object *ref, Stream *str,
-	                          int width, int height, GBool invert,
-	                          GBool inlineImg);
-	virtual void drawImage(GfxState *state, Object *ref, Stream *str,
-	                       int width, int height, GfxImageColorMap *colorMap,
-	                       int *maskColors, GBool inlineImg);
-
-	// Find a string.  If <top> is true, starts looking at <l>,<t>;
-	// otherwise starts looking at top of page.  If <bottom> is true,
-	// stops looking at <l+w-1>,<t+h-1>; otherwise stops looking at bottom
-	// of page.  If found, sets the text bounding rectange and returns
-	// true; otherwise returns false.
-	GBool findText ( Unicode *s, int len, GBool top, GBool bottom, int *xMin, int *yMin, int *xMax, int *yMax );
-
-	//----- special QT access
-
-	bool findText ( const QString &str, int &l, int &t, int &w, int &h, bool top = 0, bool bottom = 0 );
-	bool findText ( const QString &str, QRect &r, bool top = 0, bool bottom = 0 );
-
-	// Get the text which is inside the specified rectangle.
-	QString getText ( int left, int top, int width, int height );
-	QString getText ( const QRect &r );
-
-protected:
-	QPainter *m_painter;
-	TextPage *m_text;		// text from the current page
-
-private:
-	QFont matchFont ( GfxFont *, fp_t m11, fp_t m12, fp_t m21, fp_t m22 );
-
-	void updateLineAttrs ( GfxState *state, GBool updateDash );
-	void doFill ( GfxState *state, bool winding );
-	void doClip ( GfxState *state, bool winding );
-	int convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths );
-	int convertSubpath ( GfxState *state, GfxSubpath *subpath, QPointArray &points );
+class QOutputDev : public SplashOutputDev
+{
+	public:
+		// Constructor
+		QOutputDev(SplashColor paperColor);
+		
+		// Destructor.
+		virtual ~QOutputDev();
+		
+		// Start a page.
+		virtual void startPage(int pageNum, GfxState *state);
+		
+		// End a page.
+		virtual void endPage();
+		
+		//----- update text state
+		virtual void updateFont(GfxState *state);
+		
+		//----- text drawing
+		virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen);
+		virtual GBool beginType3Char(GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen);
+		
+		// Clear out the document (used when displaying an empty window).
+		void clear();
+		
+	private:
+		
+		TextPage *m_text;		// text from the current page
 };
 
 #endif

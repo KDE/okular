@@ -23,4 +23,14 @@
 
 #define errHighlightFile    5	// nonexistent or invalid highlight file
 
+#define errBadPrinter       6   // invalid printer
+
+#define errPrinting         7   // error during printing
+
+#define errPermission       8	// PDF file doesn't allow that operation
+
+#define errBadPageNum       9	// invalid page number
+
+#define errFileIO          10   // file I/O error
+
 #endif

@@ -21,8 +21,8 @@ static void md5(Guchar *msg, int msgLen, Guchar *digest);
 
 static Guchar passwordPad[32] = {
   0x28, 0xbf, 0x4e, 0x5e, 0x4e, 0x75, 0x8a, 0x41,
-  0x64, 0x00, 0x4e, 0x56, 0xff, 0xfa, 0x01, 0x08,
-  0x2e, 0x2e, 0x00, 0xb6, 0xd0, 0x68, 0x3e, 0x80,
+  0x64, 0x00, 0x4e, 0x56, 0xff, 0xfa, 0x01, 0x08, 
+  0x2e, 0x2e, 0x00, 0xb6, 0xd0, 0x68, 0x3e, 0x80, 
   0x2f, 0x0c, 0xa9, 0xfe, 0x64, 0x53, 0x69, 0x7a
 };
 
@@ -74,6 +74,7 @@ GBool Decrypt::makeFileKey(int encVersion, int encRevision, int keyLength,
   int len, i, j;
 
   // try using the supplied owner password to generate the user password
+  *ownerPasswordOk = gFalse;
   if (ownerPassword) {
     len = ownerPassword->getLength();
     if (len < 32) {
@@ -82,50 +83,47 @@ GBool Decrypt::makeFileKey(int encVersion, int encRevision, int keyLength,
     } else {
       memcpy(test, ownerPassword->getCString(), 32);
     }
-  } else {
-    memcpy(test, passwordPad, 32);
-  }
-  md5(test, 32, test);
-  if (encRevision == 3) {
-    for (i = 0; i < 50; ++i) {
-      md5(test, 16, test);
-    }
-  }
-  if (encRevision == 2) {
-    rc4InitKey(test, keyLength, fState);
-    fx = fy = 0;
-    for (i = 0; i < 32; ++i) {
-      test2[i] = rc4DecryptByte(fState, &fx, &fy, ownerKey->getChar(i));
-    }
-  } else {
-    memcpy(test2, ownerKey->getCString(), 32);
-    for (i = 19; i >= 0; --i) {
-      for (j = 0; j < keyLength; ++j) {
-	tmpKey[j] = test[j] ^ i;
+    md5(test, 32, test);
+    if (encRevision == 3) {
+      for (i = 0; i < 50; ++i) {
+	md5(test, 16, test);
       }
-      rc4InitKey(tmpKey, keyLength, fState);
+    }
+    if (encRevision == 2) {
+      rc4InitKey(test, keyLength, fState);
       fx = fy = 0;
-      for (j = 0; j < 32; ++j) {
-	test2[j] = rc4DecryptByte(fState, &fx, &fy, test2[j]);
+      for (i = 0; i < 32; ++i) {
+	test2[i] = rc4DecryptByte(fState, &fx, &fy, ownerKey->getChar(i));
+      }
+    } else {
+      memcpy(test2, ownerKey->getCString(), 32);
+      for (i = 19; i >= 0; --i) {
+	for (j = 0; j < keyLength; ++j) {
+	  tmpKey[j] = test[j] ^ i;
+	}
+	rc4InitKey(tmpKey, keyLength, fState);
+	fx = fy = 0;
+	for (j = 0; j < 32; ++j) {
+	  test2[j] = rc4DecryptByte(fState, &fx, &fy, test2[j]);
+	}
       }
     }
-  }
-  userPassword2 = new GString((char *)test2, 32);
-  if (makeFileKey2(encVersion, encRevision, keyLength, ownerKey, userKey,
-		   permissions, fileID, userPassword2, fileKey)) {
-    *ownerPasswordOk = gTrue;
+    userPassword2 = new GString((char *)test2, 32);
+    if (makeFileKey2(encVersion, encRevision, keyLength, ownerKey, userKey,
+		     permissions, fileID, userPassword2, fileKey)) {
+      *ownerPasswordOk = gTrue;
+      delete userPassword2;
+      return gTrue;
+    }
     delete userPassword2;
-    return gTrue;
   }
-  *ownerPasswordOk = gFalse;
-  delete userPassword2;
 
   // try using the supplied user password
   return makeFileKey2(encVersion, encRevision, keyLength, ownerKey, userKey,
 		      permissions, fileID, userPassword, fileKey);
 }
 
-GBool Decrypt::makeFileKey2(int /* encVersion */, int encRevision, int keyLength,
+GBool Decrypt::makeFileKey2(int /*encVersion*/, int encRevision, int keyLength,
 			    GString *ownerKey, GString *userKey,
 			    int permissions, GString *fileID,
 			    GString *userPassword, Guchar *fileKey) {

@@ -27,8 +27,8 @@ class PSStack;
 // Function
 //------------------------------------------------------------------------
 
-#define funcMaxInputs  8
-#define funcMaxOutputs 8
+#define funcMaxInputs   8
+#define funcMaxOutputs 32
 
 class Function {
 public:

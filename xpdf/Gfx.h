@@ -27,10 +27,14 @@ class OutputDev;
 class GfxFontDict;
 class GfxFont;
 class GfxPattern;
+class GfxTilingPattern;
+class GfxShadingPattern;
 class GfxShading;
+class GfxFunctionShading;
 class GfxAxialShading;
 class GfxRadialShading;
 class GfxState;
+struct GfxColor;
 class Gfx;
 class PDFRectangle;
 
@@ -71,13 +75,13 @@ public:
   GfxResources(XRef *xref, Dict *resDict, GfxResources *nextA);
   ~GfxResources();
 
-  GfxFont *lookupFont(char *name);
-  GBool lookupXObject(char *name, Object *obj);
-  GBool lookupXObjectNF(char *name, Object *obj);
-  void lookupColorSpace(char *name, Object *obj);
-  GfxPattern *lookupPattern(char *name);
-  GfxShading *lookupShading(char *name);
-  GBool lookupGState(char *name, Object *obj);
+  GfxFont *lookupFont(const char *name);
+  GBool lookupXObject(const char *name, Object *obj);
+  GBool lookupXObjectNF(const char *name, Object *obj);
+  void lookupColorSpace(const char *name, Object *obj);
+  GfxPattern *lookupPattern(const char *name);
+  GfxShading *lookupShading(const char *name);
+  GBool lookupGState(const char *name, Object *obj);
 
   GfxResources *getNext() { return next; }
 
@@ -96,8 +100,9 @@ class Gfx {
 public:
 
   // Constructor for regular output.
-  Gfx(XRef *xrefA, OutputDev *outA, int pageNum, Dict *resDict, double dpi,
-      PDFRectangle *box, GBool crop, PDFRectangle *cropBox, int rotate,
+  Gfx(XRef *xrefA, OutputDev *outA, int pageNum, Dict *resDict,
+      double hDPI, double vDPI, PDFRectangle *box, GBool crop,
+      PDFRectangle *cropBox, int rotate,
       GBool (*abortCheckCbkA)(void *data) = NULL,
       void *abortCheckCbkDataA = NULL);
 
@@ -117,8 +122,11 @@ public:
   void doAnnot(Object *str, double xMin, double yMin,
 	       double xMax, double yMax);
 
-  void pushResources(Dict *resDict);
-  void popResources();
+  // Save graphics state.
+  void saveState();
+
+  // Restore graphics state.
+  void restoreState();
 
 private:
 
@@ -135,6 +143,7 @@ private:
   int ignoreUndef;		// current BX/EX nesting level
   double baseMatrix[6];		// default matrix for most recent
 				//   page/form/pattern
+  int formDepth;
 
   Parser *parser;		// parser for page content stream(s)
 
@@ -146,7 +155,7 @@ private:
 
   void go(GBool topLevel);
   void execOp(Object *cmd, Object args[], int numArgs);
-  Operator *findOp(char *name);
+  Operator *findOp(const char *name);
   GBool checkArg(Object *arg, TchkType type);
   int getPos();
 
@@ -197,7 +206,14 @@ private:
   void opEOFillStroke(Object args[], int numArgs);
   void opCloseEOFillStroke(Object args[], int numArgs);
   void doPatternFill(GBool eoFill);
+  void doTilingPatternFill(GfxTilingPattern *tPat, GBool eoFill);
+  void doShadingPatternFill(GfxShadingPattern *sPat, GBool eoFill);
   void opShFill(Object args[], int numArgs);
+  void doFunctionShFill(GfxFunctionShading *shading);
+  void doFunctionShFill1(GfxFunctionShading *shading,
+			 double x0, double y0,
+			 double x1, double y1,
+			 GfxColor *colors, int depth);
   void doAxialShFill(GfxAxialShading *shading);
   void doRadialShFill(GfxRadialShading *shading);
   void doEndPath();
@@ -256,6 +272,9 @@ private:
   void opBeginMarkedContent(Object args[], int numArgs);
   void opEndMarkedContent(Object args[], int numArgs);
   void opMarkPoint(Object args[], int numArgs);
+
+  void pushResources(Dict *resDict);
+  void popResources();
 };
 
 #endif

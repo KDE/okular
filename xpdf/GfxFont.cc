@@ -25,7 +25,9 @@
 #include "CharCodeToUnicode.h"
 #include "FontEncodingTables.h"
 #include "BuiltinFontTables.h"
-#include "FontFile.h"
+#include "FoFiType1.h"
+#include "FoFiType1C.h"
+#include "FoFiTrueType.h"
 #include "GfxFont.h"
 
 //------------------------------------------------------------------------
@@ -88,7 +90,10 @@ static StdFontMapEntry stdFontMap[] = {
   { "TimesNewRomanPS-BoldMT",       "Times-Bold" },
   { "TimesNewRomanPS-Italic",       "Times-Italic" },
   { "TimesNewRomanPS-ItalicMT",     "Times-Italic" },
-  { "TimesNewRomanPSMT",            "Times-Roman" }
+  { "TimesNewRomanPSMT",            "Times-Roman" },
+  { "TimesNewRomanPSMT,Bold",       "Times-Bold" },
+  { "TimesNewRomanPSMT,BoldItalic", "Times-BoldItalic" },
+  { "TimesNewRomanPSMT,Italic",     "Times-Italic" }
 };
 
 //------------------------------------------------------------------------
@@ -136,12 +141,16 @@ GfxFont::GfxFont(const char *tagA, Ref idA, GString *nameA) {
   tag = new GString(tagA);
   id = idA;
   name = nameA;
+  origName = nameA;
   embFontName = NULL;
   extFontFile = NULL;
 }
 
 GfxFont::~GfxFont() {
   delete tag;
+  if (origName && origName != name) {
+    delete origName;
+  }
   if (name) {
     delete name;
   }
@@ -286,8 +295,8 @@ void GfxFont::readFontDescriptor(XRef *xref, Dict *fontDict) {
   obj1.free();
 }
 
-CharCodeToUnicode *GfxFont::readToUnicodeCMap(Dict *fontDict, int nBits) {
-  CharCodeToUnicode *ctu;
+CharCodeToUnicode *GfxFont::readToUnicodeCMap(Dict *fontDict, int nBits,
+					      CharCodeToUnicode *ctu) {
   GString *buf;
   Object obj1;
   int c;
@@ -303,7 +312,11 @@ CharCodeToUnicode *GfxFont::readToUnicodeCMap(Dict *fontDict, int nBits) {
   }
   obj1.streamClose();
   obj1.free();
-  ctu = CharCodeToUnicode::parseCMap(buf, nBits);
+  if (ctu) {
+    ctu->mergeCMap(buf, nBits);
+  } else {
+    ctu = CharCodeToUnicode::parseCMap(buf, nBits);
+  }
   delete buf;
   return ctu;
 }
@@ -334,7 +347,8 @@ char *GfxFont::readExtFontFile(int *len) {
   fseek(f, 0, SEEK_SET);
   buf = (char *)gmalloc(*len);
   if ((int)fread(buf, 1, *len, f) != *len) {
-    error(-1, "Error reading external font file '%s'", extFontFile);
+    error(-1, "Error reading external font file '%s'",
+	  extFontFile->getCString());
   }
   fclose(f);
   return buf;
@@ -386,15 +400,18 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
   GfxFont(tagA, idA, nameA)
 {
   BuiltinFont *builtinFont;
-  char **baseEnc;
+  const char **baseEnc;
   GBool baseEncFromFontFile;
   char *buf;
   int len;
-  FontFile *fontFile;
+  FoFiType1 *ffT1;
+  FoFiType1C *ffT1C;
   int code, code2;
-  char *charName;
+  const char *charName;
   GBool missing, hex;
   Unicode toUnicode[256];
+  CharCodeToUnicode *utu, *ctu2;
+  Unicode uBuf[8];
   double mul;
   int firstChar, lastChar;
   Gushort w;
@@ -419,7 +436,6 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
       }
     }
     if (!name->cmp(stdFontMap[a].altName)) {
-      delete name;
       name = new GString(stdFontMap[a].properName);
     }
   }
@@ -504,6 +520,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
 
   // check FontDict for base encoding
   hasEncoding = gFalse;
+  usesMacRomanEnc = gFalse;
   baseEnc = NULL;
   baseEncFromFontFile = gFalse;
   fontDict->lookup("Encoding", &obj1);
@@ -511,6 +528,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
     obj1.dictLookup("BaseEncoding", &obj2);
     if (obj2.isName("MacRomanEncoding")) {
       hasEncoding = gTrue;
+      usesMacRomanEnc = gTrue;
       baseEnc = macRomanEncoding;
     } else if (obj2.isName("MacExpertEncoding")) {
       hasEncoding = gTrue;
@@ -525,6 +543,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
     obj2.free();
   } else if (obj1.isName("MacRomanEncoding")) {
     hasEncoding = gTrue;
+    usesMacRomanEnc = gTrue;
     baseEnc = macRomanEncoding;
   } else if (obj1.isName("MacExpertEncoding")) {
     hasEncoding = gTrue;
@@ -540,42 +559,50 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
   // check embedded or external font file for base encoding
   // (only for Type 1 fonts - trying to get an encoding out of a
   // TrueType font is a losing proposition)
-  fontFile = NULL;
+  ffT1 = NULL;
+  ffT1C = NULL;
   buf = NULL;
-  if ((type == fontType1 || type == fontType1C) &&
-      (extFontFile || embFontID.num >= 0)) {
+  if (type == fontType1 && (extFontFile || embFontID.num >= 0)) {
     if (extFontFile) {
-      buf = readExtFontFile(&len);
+      ffT1 = FoFiType1::load(extFontFile->getCString());
     } else {
       buf = readEmbFontFile(xref, &len);
+      ffT1 = FoFiType1::make(buf, len);
     }
-    if (buf) {
-      if (type == fontType1C && !strncmp(buf, "%!", 2)) {
-	// various tools (including Adobe's) occasionally embed Type 1
-	// fonts but label them Type 1C
-	type = fontType1;
-      }
-      if (type == fontType1) {
-	fontFile = new Type1FontFile(buf, len);
-      } else {
-	fontFile = new Type1CFontFile(buf, len);
-	if (!((Type1CFontFile *)fontFile)->isOk()) {
-	  delete fontFile;
-	  fontFile = NULL;
-	}
-      }
-      if (fontFile && fontFile->getName()) {
+    if (ffT1) {
+      if (ffT1->getName()) {
 	if (embFontName) {
 	  delete embFontName;
 	}
-	embFontName = new GString(fontFile->getName());
+	embFontName = new GString(ffT1->getName());
       }
-      if (fontFile && !baseEnc) {
-	baseEnc = fontFile->getEncoding();
+      if (!baseEnc) {
+	baseEnc = ffT1->getEncoding();
 	baseEncFromFontFile = gTrue;
       }
-      gfree(buf);
     }
+  } else if (type == fontType1C && (extFontFile || embFontID.num >= 0)) {
+    if (extFontFile) {
+      ffT1C = FoFiType1C::load(extFontFile->getCString());
+    } else {
+      buf = readEmbFontFile(xref, &len);
+      ffT1C = FoFiType1C::make(buf, len);
+    }
+    if (ffT1C) {
+      if (ffT1C->getName()) {
+	if (embFontName) {
+	  delete embFontName;
+	}
+	embFontName = new GString(ffT1C->getName());
+      }
+      if (!baseEnc) {
+	baseEnc = ffT1C->getEncoding();
+	baseEncFromFontFile = gTrue;
+      }
+    }
+  }
+  if (buf) {
+    gfree(buf);
   }
 
   // get default base encoding
@@ -598,6 +625,20 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
     }
   }
 
+  // some Type 1C font files have empty encodings, which can break the
+  // T1C->T1 conversion (since the 'seac' operator depends on having
+  // the accents in the encoding), so we fill in any gaps from
+  // StandardEncoding
+  if (type == fontType1C && (extFontFile || embFontID.num >= 0) &&
+      baseEncFromFontFile) {
+    for (i = 0; i < 256; ++i) {
+      if (!enc[i] && standardEncoding[i]) {
+	enc[i] = standardEncoding[i];
+	encFree[i] = gFalse;
+      }
+    }
+  }
+
   // merge differences into encoding
   if (obj1.isDict()) {
     obj1.dictLookup("Differences", &obj2);
@@ -609,9 +650,9 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
 	if (obj3.isInt()) {
 	  code = obj3.getInt();
 	} else if (obj3.isName()) {
-	  if (code < 256) {
+	  if (code >= 0 && code < 256) {
 	    if (encFree[code]) {
-	      gfree(enc[code]);
+	      gfree((void*)enc[code]);
 	    }
 	    enc[code] = copyString(obj3.getName());
 	    encFree[code] = gTrue;
@@ -627,82 +668,106 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
     obj2.free();
   }
   obj1.free();
-  if (fontFile) {
-    delete fontFile;
+  if (ffT1) {
+    delete ffT1;
+  }
+  if (ffT1C) {
+    delete ffT1C;
   }
 
   //----- build the mapping to Unicode -----
 
-  // look for a ToUnicode CMap
-  if (!(ctu = readToUnicodeCMap(fontDict, 8))) {
+  // pass 1: use the name-to-Unicode mapping table
+  missing = hex = gFalse;
+  for (code = 0; code < 256; ++code) {
+    if ((charName = enc[code])) {
+      if (!(toUnicode[code] = globalParams->mapNameToUnicode(charName)) &&
+	  strcmp(charName, ".notdef")) {
+	// if it wasn't in the name-to-Unicode table, check for a
+	// name that looks like 'Axx' or 'xx', where 'A' is any letter
+	// and 'xx' is two hex digits
+	if ((strlen(charName) == 3 &&
+	     isalpha(charName[0]) &&
+	     isxdigit(charName[1]) && isxdigit(charName[2]) &&
+	     ((charName[1] >= 'a' && charName[1] <= 'f') ||
+	      (charName[1] >= 'A' && charName[1] <= 'F') ||
+	      (charName[2] >= 'a' && charName[2] <= 'f') ||
+	      (charName[2] >= 'A' && charName[2] <= 'F'))) ||
+	    (strlen(charName) == 2 &&
+	     isxdigit(charName[0]) && isxdigit(charName[1]) &&
+	     ((charName[0] >= 'a' && charName[0] <= 'f') ||
+	      (charName[0] >= 'A' && charName[0] <= 'F') ||
+	      (charName[1] >= 'a' && charName[1] <= 'f') ||
+	      (charName[1] >= 'A' && charName[1] <= 'F')))) {
+	  hex = gTrue;
+	}
+	missing = gTrue;
+      }
+    } else {
+      toUnicode[code] = 0;
+    }
+  }
 
-    // no ToUnicode CMap, so use the char names
-
-    // pass 1: use the name-to-Unicode mapping table
-    missing = hex = gFalse;
+  // pass 2: try to fill in the missing chars, looking for names of
+  // the form 'Axx', 'xx', 'Ann', 'ABnn', or 'nn', where 'A' and 'B'
+  // are any letters, 'xx' is two hex digits, and 'nn' is 2-4
+  // decimal digits
+  if (missing && globalParams->getMapNumericCharNames()) {
     for (code = 0; code < 256; ++code) {
-      if ((charName = enc[code])) {
-	if (!(toUnicode[code] = globalParams->mapNameToUnicode(charName)) &&
-	    strcmp(charName, ".notdef")) {
-	  // if it wasn't in the name-to-Unicode table, check for a
-	  // name that looks like 'Axx' or 'xx', where 'A' is any letter
-	  // and 'xx' is two hex digits
-	  if ((strlen(charName) == 3 &&
-	       isalpha(charName[0]) &&
-	       isxdigit(charName[1]) && isxdigit(charName[2]) &&
-	       ((charName[1] >= 'a' && charName[1] <= 'f') ||
-		(charName[1] >= 'A' && charName[1] <= 'F') ||
-		(charName[2] >= 'a' && charName[2] <= 'f') ||
-		(charName[2] >= 'A' && charName[2] <= 'F'))) ||
-	      (strlen(charName) == 2 &&
-	       isxdigit(charName[0]) && isxdigit(charName[1]) &&
-	       ((charName[0] >= 'a' && charName[0] <= 'f') ||
-		(charName[0] >= 'A' && charName[0] <= 'F') ||
-		(charName[1] >= 'a' && charName[1] <= 'f') ||
-		(charName[1] >= 'A' && charName[1] <= 'F')))) {
-	    hex = gTrue;
-	  }
-	  missing = gTrue;
+      if ((charName = enc[code]) && !toUnicode[code] &&
+	  strcmp(charName, ".notdef")) {
+	n = strlen(charName);
+	code2 = -1;
+	if (hex && n == 3 && isalpha(charName[0]) &&
+	    isxdigit(charName[1]) && isxdigit(charName[2])) {
+	  sscanf(charName+1, "%x", &code2);
+	} else if (hex && n == 2 &&
+		   isxdigit(charName[0]) && isxdigit(charName[1])) {
+	  sscanf(charName, "%x", &code2);
+	} else if (!hex && n >= 2 && n <= 4 &&
+		   isdigit(charName[0]) && isdigit(charName[1])) {
+	  code2 = atoi(charName);
+	} else if (n >= 3 && n <= 5 &&
+		   isdigit(charName[1]) && isdigit(charName[2])) {
+	  code2 = atoi(charName+1);
+	} else if (n >= 4 && n <= 6 &&
+		   isdigit(charName[2]) && isdigit(charName[3])) {
+	  code2 = atoi(charName+2);
 	}
-      } else {
-	toUnicode[code] = 0;
-      }
-    }
-
-    // pass 2: try to fill in the missing chars, looking for names of
-    // the form 'Axx', 'xx', 'Ann', 'ABnn', or 'nn', where 'A' and 'B'
-    // are any letters, 'xx' is two hex digits, and 'nn' is 2-4
-    // decimal digits
-    if (missing && globalParams->getMapNumericCharNames()) {
-      for (code = 0; code < 256; ++code) {
-	if ((charName = enc[code]) && !toUnicode[code] &&
-	    strcmp(charName, ".notdef")) {
-	  n = strlen(charName);
-	  code2 = -1;
-	  if (hex && n == 3 && isalpha(charName[0]) &&
-	      isxdigit(charName[1]) && isxdigit(charName[2])) {
-	    sscanf(charName+1, "%x", &code2);
-	  } else if (hex && n == 2 &&
-		     isxdigit(charName[0]) && isxdigit(charName[1])) {
-	    sscanf(charName, "%x", &code2);
-	  } else if (!hex && n >= 2 && n <= 4 &&
-		     isdigit(charName[0]) && isdigit(charName[1])) {
-	    code2 = atoi(charName);
-	  } else if (n >= 3 && n <= 5 &&
-		     isdigit(charName[1]) && isdigit(charName[2])) {
-	    code2 = atoi(charName+1);
-	  } else if (n >= 4 && n <= 6 &&
-		     isdigit(charName[2]) && isdigit(charName[3])) {
-	    code2 = atoi(charName+2);
-	  }
-	  if (code2 >= 0 && code2 <= 0xff) {
-	    toUnicode[code] = (Unicode)code2;
-	  }
+	if (code2 >= 0 && code2 <= 0xff) {
+	  toUnicode[code] = (Unicode)code2;
 	}
       }
     }
+  }
 
-    ctu = CharCodeToUnicode::make8BitToUnicode(toUnicode);
+  // construct the char code -> Unicode mapping object
+  ctu = CharCodeToUnicode::make8BitToUnicode(toUnicode);
+
+  // merge in a ToUnicode CMap, if there is one -- this overwrites
+  // existing entries in ctu, i.e., the ToUnicode CMap takes
+  // precedence, but the other encoding info is allowed to fill in any
+  // holes
+  readToUnicodeCMap(fontDict, 8, ctu);
+
+  // look for a Unicode-to-Unicode mapping
+  if (name && (utu = globalParams->getUnicodeToUnicode(name))) {
+    for (i = 0; i < 256; ++i) {
+      toUnicode[i] = 0;
+    }
+    ctu2 = CharCodeToUnicode::make8BitToUnicode(toUnicode);
+    for (i = 0; i < 256; ++i) {
+      n = ctu->mapToUnicode((CharCode)i, uBuf, 8);
+      if (n >= 1) {
+	n = utu->mapToUnicode((CharCode)uBuf[0], uBuf, 8);
+	if (n >= 1) {
+	  ctu2->setMapping((CharCode)i, uBuf, n);
+	}
+      }
+    }
+    utu->decRefCnt();
+    delete ctu;
+    ctu = ctu2;
   }
 
   //----- get the character widths -----
@@ -716,9 +781,15 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
   fontDict->lookup("FirstChar", &obj1);
   firstChar = obj1.isInt() ? obj1.getInt() : 0;
   obj1.free();
+  if (firstChar < 0 || firstChar > 255) {
+    firstChar = 0;
+  }
   fontDict->lookup("LastChar", &obj1);
   lastChar = obj1.isInt() ? obj1.getInt() : 255;
   obj1.free();
+  if (lastChar < 0 || lastChar > 255) {
+    lastChar = 255;
+  }
   mul = (type == fontType3) ? fontMat[0] : 0.001;
   fontDict->lookup("Widths", &obj1);
   if (obj1.isArray()) {
@@ -750,7 +821,7 @@ Gfx8BitFont::Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
       }
     }
 
-  // couldn't find widths -- use defaults
+  // couldn't find widths -- use defaults 
   } else {
     // this is technically an error -- the Widths entry is required
     // for all but the Base-14 fonts -- but certain PDF generators
@@ -790,7 +861,7 @@ Gfx8BitFont::~Gfx8BitFont() {
 
   for (i = 0; i < 256; ++i) {
     if (encFree[i] && enc[i]) {
-      gfree(enc[i]);
+      gfree((void*)enc[i]);
     }
   }
   ctu->decRefCnt();
@@ -802,7 +873,7 @@ Gfx8BitFont::~Gfx8BitFont() {
   }
 }
 
-int Gfx8BitFont::getNextChar(char *s, int /* len */, CharCode *code,
+int Gfx8BitFont::getNextChar(char *s, int /*len*/, CharCode *code,
 			     Unicode *u, int uSize, int *uLen,
 			     double *dx, double *dy, double *ox, double *oy) {
   CharCode c;
@@ -819,12 +890,126 @@ CharCodeToUnicode *Gfx8BitFont::getToUnicode() {
   return ctu;
 }
 
+Gushort *Gfx8BitFont::getCodeToGIDMap(FoFiTrueType *ff) {
+  Gushort *map;
+  int cmapPlatform, cmapEncoding;
+  int unicodeCmap, macRomanCmap, msSymbolCmap, cmap;
+  GBool useMacRoman, useUnicode;
+  const char *charName;
+  Unicode u;
+  int code, i, n;
+
+  map = (Gushort *)gmalloc(256 * sizeof(Gushort));
+  for (i = 0; i < 256; ++i) {
+    map[i] = 0;
+  }
+
+  // To match up with the Adobe-defined behaviour, we choose a cmap
+  // like this:
+  // 1. If the PDF font has an encoding:
+  //    1a. If the PDF font specified MacRomanEncoding and the
+  //        TrueType font has a Macintosh Roman cmap, use it, and
+  //        reverse map the char names through MacRomanEncoding to
+  //        get char codes.
+  //    1b. If the TrueType font has a Microsoft Unicode cmap or a
+  //        non-Microsoft Unicode cmap, use it, and use the Unicode
+  //        indexes, not the char codes.
+  //    1c. If the PDF font is symbolic and the TrueType font has a
+  //        Microsoft Symbol cmap, use it, and use char codes
+  //        directly (possibly with an offset of 0xf000).
+  //    1d. If the TrueType font has a Macintosh Roman cmap, use it,
+  //        as in case 1a.
+  // 2. If the PDF font does not have an encoding:
+  //    2a. If the TrueType font has a Macintosh Roman cmap, use it,
+  //        and use char codes directly (possibly with an offset of
+  //        0xf000).
+  //    2b. If the TrueType font has a Microsoft Symbol cmap, use it,
+  //        and use char codes directly (possible with an offset of
+  //        0xf000).
+  // 3. If none of these rules apply, use the first cmap and hope for
+  //    the best (this shouldn't happen).
+  unicodeCmap = macRomanCmap = msSymbolCmap = -1;
+  for (i = 0; i < ff->getNumCmaps(); ++i) {
+    cmapPlatform = ff->getCmapPlatform(i);
+    cmapEncoding = ff->getCmapEncoding(i);
+    if ((cmapPlatform == 3 && cmapEncoding == 1) ||
+	cmapPlatform == 0) {
+      unicodeCmap = i;
+    } else if (cmapPlatform == 1 && cmapEncoding == 0) {
+      macRomanCmap = i;
+    } else if (cmapPlatform == 3 && cmapEncoding == 0) {
+      msSymbolCmap = i;
+    }
+  }
+  cmap = 0;
+  useMacRoman = gFalse;
+  useUnicode = gFalse;
+  if (hasEncoding) {
+    if (usesMacRomanEnc && macRomanCmap >= 0) {
+      cmap = macRomanCmap;
+      useMacRoman = gTrue;
+    } else if (unicodeCmap >= 0) {
+      cmap = unicodeCmap;
+      useUnicode = gTrue;
+    } else if ((flags & fontSymbolic) && msSymbolCmap >= 0) {
+      cmap = msSymbolCmap;
+    } else if (macRomanCmap >= 0) {
+      cmap = macRomanCmap;
+      useMacRoman = gTrue;
+    }
+  } else {
+    if (macRomanCmap >= 0) {
+      cmap = macRomanCmap;
+    } else if (msSymbolCmap >= 0) {
+      cmap = msSymbolCmap;
+    }
+  }
+
+  // reverse map the char names through MacRomanEncoding, then map the
+  // char codes through the cmap
+  if (useMacRoman) {
+    for (i = 0; i < 256; ++i) {
+      if ((charName = enc[i])) {
+	if ((code = globalParams->getMacRomanCharCode(charName))) {
+	  map[i] = ff->mapCodeToGID(cmap, code);
+	}
+      }
+    }
+
+  // map Unicode through the cmap
+  } else if (useUnicode) {
+    for (i = 0; i < 256; ++i) {
+      if ((n = ctu->mapToUnicode((CharCode)i, &u, 1))) {
+	map[i] = ff->mapCodeToGID(cmap, u);
+      }
+    }
+
+  // map the char codes through the cmap, possibly with an offset of
+  // 0xf000
+  } else {
+    for (i = 0; i < 256; ++i) {
+      if (!(map[i] = ff->mapCodeToGID(cmap, i))) {
+	map[i] = ff->mapCodeToGID(cmap, 0xf000 + i);
+      }
+    }
+  }
+
+  // try the TrueType 'post' table to handle any unmapped characters
+  for (i = 0; i < 256; ++i) {
+    if (!map[i] && (charName = enc[i])) {
+      map[i] = (Gushort)(int)ff->mapNameToGID(charName);
+    }
+  }
+
+  return map;
+}
+
 Dict *Gfx8BitFont::getCharProcs() {
   return charProcs.isDict() ? charProcs.getDict() : (Dict *)NULL;
 }
 
 Object *Gfx8BitFont::getCharProc(int code, Object *proc) {
-  if (charProcs.isDict()) {
+  if (enc[code] && charProcs.isDict()) {
     charProcs.dictLookup(enc[code], proc);
   } else {
     proc->initNull();
@@ -930,7 +1115,7 @@ GfxCIDFont::GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
   obj1.free();
 
   // look for a ToUnicode CMap
-  if (!(ctu = readToUnicodeCMap(fontDict, 16))) {
+  if (!(ctu = readToUnicodeCMap(fontDict, 16, NULL))) {
 
     // the "Adobe-Identity" and "Adobe-UCS" collections don't have
     // cidToUnicode files
@@ -1058,11 +1243,11 @@ GfxCIDFont::GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
   if (desFontDict->lookup("DW2", &obj1)->isArray() &&
       obj1.arrayGetLength() == 2) {
     if (obj1.arrayGet(0, &obj2)->isNum()) {
-      widths.defVY = obj1.getNum() * 0.001;
+      widths.defVY = obj2.getNum() * 0.001;
     }
     obj2.free();
     if (obj1.arrayGet(1, &obj2)->isNum()) {
-      widths.defHeight = obj1.getNum() * 0.001;
+      widths.defHeight = obj2.getNum() * 0.001;
     }
     obj2.free();
   }
@@ -1073,8 +1258,8 @@ GfxCIDFont::GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
     excepsSize = 0;
     i = 0;
     while (i + 1 < obj1.arrayGetLength()) {
-      obj1.arrayGet(0, &obj2);
-      obj2.arrayGet(0, &obj3);
+      obj1.arrayGet(i, &obj2);
+      obj1.arrayGet(i+ 1, &obj3);
       if (obj2.isInt() && obj3.isInt() && i + 4 < obj1.arrayGetLength()) {
 	if (obj1.arrayGet(i + 2, &obj4)->isNum() &&
 	    obj1.arrayGet(i + 3, &obj5)->isNum() &&
@@ -1107,10 +1292,10 @@ GfxCIDFont::GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
 		     excepsSize * sizeof(GfxFontCIDWidthExcepV));
 	}
 	j = obj2.getInt();
-	for (k = 0; k < obj3.arrayGetLength(); ++k) {
+	for (k = 0; k < obj3.arrayGetLength(); k += 3) {
 	  if (obj3.arrayGet(k, &obj4)->isNum() &&
-	      obj3.arrayGet(k, &obj5)->isNum() &&
-	      obj3.arrayGet(k, &obj6)->isNum()) {
+	      obj3.arrayGet(k+1, &obj5)->isNum() &&
+	      obj3.arrayGet(k+2, &obj6)->isNum()) {
 	    widths.excepsV[widths.nExceps].first = j;
 	    widths.excepsV[widths.nExceps].last = j;
 	    widths.excepsV[widths.nExceps].height = obj4.getNum() * 0.001;
@@ -1247,7 +1432,9 @@ int GfxCIDFont::getWMode() {
 }
 
 CharCodeToUnicode *GfxCIDFont::getToUnicode() {
-  ctu->incRefCnt();
+  if (ctu) {
+    ctu->incRefCnt();
+  }
   return ctu;
 }
 
@@ -1259,7 +1446,7 @@ GString *GfxCIDFont::getCollection() {
 // GfxFontDict
 //------------------------------------------------------------------------
 
-GfxFontDict::GfxFontDict(XRef *xref, Dict *fontDict) {
+GfxFontDict::GfxFontDict(XRef *xref, Ref *fontDictRef, Dict *fontDict) {
   int i;
   Object obj1, obj2;
   Ref r;
@@ -1277,7 +1464,11 @@ GfxFontDict::GfxFontDict(XRef *xref, Dict *fontDict) {
 	// (legal generation numbers are five digits, so any 6-digit
 	// number would be safe)
 	r.num = i;
-	r.gen = 999999;
+	if (fontDictRef) {
+	  r.gen = 100000 + fontDictRef->num;
+	} else {
+	  r.gen = 999999;
+	}
       }
       fonts[i] = GfxFont::makeFont(xref, fontDict->getKey(i),
 				   r, obj2.getDict());
@@ -1305,7 +1496,7 @@ GfxFontDict::~GfxFontDict() {
   gfree(fonts);
 }
 
-GfxFont *GfxFontDict::lookup(char *tag) {
+GfxFont *GfxFontDict::lookup(const char *tag) {
   int i;
 
   for (i = 0; i < numFonts; ++i) {

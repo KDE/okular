@@ -47,7 +47,8 @@ public:
   OutlineItem(Dict *dict, XRef *xrefA);
   ~OutlineItem();
 
-  static GList *readItemList(Object *itemRef, XRef *xrefA);
+  static GList *readItemList(Object *firstItemRef, Object *lastItemRef,
+			     XRef *xrefA);
 
   void open();
   void close();
@@ -66,6 +67,7 @@ private:
   int titleLen;
   LinkAction *action;
   Object firstRef;
+  Object lastRef;
   Object nextRef;
   GBool startsOpen;
   GList *kids;			// NULL unless this item is open [OutlineItem]

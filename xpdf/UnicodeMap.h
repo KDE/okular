@@ -20,6 +20,10 @@
 #include "gtypes.h"
 #include "CharTypes.h"
 
+#if MULTITHREADED
+#include "GMutex.h"
+#endif
+
 class GString;
 
 //------------------------------------------------------------------------
@@ -49,12 +53,12 @@ public:
   static UnicodeMap *parse(GString *encodingNameA);
 
   // Create a resident UnicodeMap.
-  UnicodeMap(char *encodingNameA, GBool unicodeOutA,
+  UnicodeMap(const char *encodingNameA, GBool unicodeOutA,
 	     UnicodeMapRange *rangesA, int lenA);
 
   // Create a resident UnicodeMap that uses a function instead of a
   // list of ranges.
-  UnicodeMap(char *encodingNameA, GBool unicodeOutA,
+  UnicodeMap(const char *encodingNameA, GBool unicodeOutA,
 	     UnicodeMapFunc funcA);
 
   ~UnicodeMap();
@@ -91,6 +95,9 @@ private:
   UnicodeMapExt *eMaps;		// (user)
   int eMapsLen;			// (user)
   int refCnt;
+#if MULTITHREADED
+  GMutex mutex;
+#endif
 };
 
 //------------------------------------------------------------------------

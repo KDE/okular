@@ -24,11 +24,11 @@ class GString;
 class GList;
 class GfxFont;
 class GfxState;
+class UnicodeMap;
 
 //------------------------------------------------------------------------
 
 typedef void (*TextOutputFunc)(void *stream, char *text, int len);
-
 
 //------------------------------------------------------------------------
 // TextFontInfo
@@ -45,13 +45,9 @@ public:
 private:
 
   GfxFont *gfxFont;
-  double horizScaling;
-
-  double minSpaceWidth;		// min width for inter-word space, as a
-				//   fraction of the font size
-  double maxSpaceWidth;		// max width for inter-word space, as a
-				//   fraction of the font size
-
+#if TEXTOUT_WORD_LIST
+  GString *fontName;
+#endif
 
   friend class TextWord;
   friend class TextPage;
@@ -65,9 +61,8 @@ class TextWord {
 public:
 
   // Constructor.
-  TextWord(GfxState *state, double x0, double y0, int charPosA,
-	   TextFontInfo *fontA, double fontSize);
-
+  TextWord(GfxState *state, int rotA, double x0, double y0,
+	   int charPosA, TextFontInfo *fontA, double fontSize);
 
   // Destructor.
   ~TextWord();
@@ -76,19 +71,44 @@ public:
   void addChar(GfxState *state, double x, double y,
 	       double dx, double dy, Unicode u);
 
+  // Merge <word> onto the end of <this>.
+  void merge(TextWord *word);
+
+  // Compares <this> to <word>, returning -1 (<), 0 (=), or +1 (>),
+  // based on a primary-axis comparison, e.g., x ordering if rot=0.
+  int primaryCmp(TextWord *word);
+
+  // Return the distance along the primary axis between <this> and
+  // <word>.
+  double primaryDelta(TextWord *word);
+
+  static int cmpYX(const void *p1, const void *p2);
+
+#if TEXTOUT_WORD_LIST
+  int getLength() { return len; }
+  Unicode getChar(int idx) { return text[idx]; }
+  GString *getText();
+  GString *getFontName() { return font->fontName; }
+  void getColor(double *r, double *g, double *b)
+    { *r = colorR; *g = colorG; *b = colorB; }
+  void getBBox(double *xMinA, double *yMinA, double *xMaxA, double *yMaxA)
+    { *xMinA = xMin; *yMinA = yMin; *xMaxA = xMax; *yMaxA = yMax; }
+  int getCharPos() { return charPos; }
+  int getCharLen() { return charLen; }
+#endif
 
 private:
 
-  GBool xyBefore(TextWord *word2);
-  void merge(TextWord *word2);
-
+  int rot;			// rotation, multiple of 90 degrees
+				//   (0, 1, 2, or 3)
   double xMin, xMax;		// bounding box x coordinates
   double yMin, yMax;		// bounding box y coordinates
-  double yBase;			// baseline y coordinate
+  double base;			// baseline x or y coordinate
   Unicode *text;		// the text
-  double *xRight;		// right-hand x coord of each char
-  int len;			// length of text and xRight
-  int size;			// size of text and xRight arrays
+  double *edge;			// "near" edge x or y coord of each char
+				//   (plus one extra entry for the last char)
+  int len;			// length of text and edge arrays
+  int size;			// size of text and edge arrays
   int charPos;                  // character position (within content stream)
   int charLen;                  // number of content stream characters in
                                 //   this word
@@ -96,11 +116,49 @@ private:
   double fontSize;		// font size
   GBool spaceAfter;		// set if there is a space between this
 				//   word and the next word on the line
-  TextWord *next;		// next word in line (before lines are
-				//   assembled: next word in xy order)
+  TextWord *next;		// next word in line
 
+#if TEXTOUT_WORD_LIST
+  double colorR,		// word color
+         colorG,
+         colorB;
+#endif
 
+  friend class TextPool;
   friend class TextLine;
+  friend class TextBlock;
+  friend class TextFlow;
+  friend class TextWordList;
+  friend class TextPage;
+};
+
+//------------------------------------------------------------------------
+// TextPool
+//------------------------------------------------------------------------
+
+class TextPool {
+public:
+
+  TextPool();
+  ~TextPool();
+
+  TextWord *getPool(int baseIdx) { return pool[baseIdx - minBaseIdx]; }
+  void setPool(int baseIdx, TextWord *p) { pool[baseIdx - minBaseIdx] = p; }
+
+  int getBaseIdx(double base);
+
+  void addWord(TextWord *word);
+
+private:
+
+  int minBaseIdx;		// min baseline bucket index
+  int maxBaseIdx;		// max baseline bucket index
+  TextWord **pool;		// array of linked lists, one for each
+				//   baseline value (multiple of 4 pts)
+  TextWord *cursor;		// pointer to last-accessed word
+  int cursorBaseIdx;		// baseline bucket index of last-accessed word
+
+  friend class TextBlock;
   friend class TextPage;
 };
 
@@ -111,34 +169,53 @@ private:
 class TextLine {
 public:
 
-  TextLine();
+  TextLine(TextBlock *blkA, int rotA, double baseA);
   ~TextLine();
+
+  void addWord(TextWord *word);
+
+  // Return the distance along the primary axis between <this> and
+  // <line>.
+  double primaryDelta(TextLine *line);
+
+  // Compares <this> to <line>, returning -1 (<), 0 (=), or +1 (>),
+  // based on a primary-axis comparison, e.g., x ordering if rot=0.
+  int primaryCmp(TextLine *line);
+
+  // Compares <this> to <line>, returning -1 (<), 0 (=), or +1 (>),
+  // based on a secondary-axis comparison of the baselines, e.g., y
+  // ordering if rot=0.
+  int secondaryCmp(TextLine *line);
+
+  int cmpYX(TextLine *line);
+
+  static int cmpXY(const void *p1, const void *p2);
+
+  void coalesce(UnicodeMap *uMap);
 
 private:
 
-  GBool yxBefore(TextLine *line2);
-  void merge(TextLine *line2);
-
+  TextBlock *blk;		// parent block
+  int rot;			// text rotation
   double xMin, xMax;		// bounding box x coordinates
   double yMin, yMax;		// bounding box y coordinates
-  double yBase;			// primary baseline y coordinate
-  double xSpaceL, xSpaceR;	// whitespace to left and right of this line
-  TextFontInfo *font;		// primary font
-  double fontSize;		// primary font size
+  double base;			// baseline x or y coordinate
   TextWord *words;		// words in this line
   TextWord *lastWord;		// last word in this line
   Unicode *text;		// Unicode text of the line, including
 				//   spaces between words
-  double *xRight;		// right-hand x coord of each Unicode char
+  double *edge;			// "near" edge x or y coord of each char
+				//   (plus one extra entry for the last char)
   int *col;			// starting column number of each Unicode char
   int len;			// number of Unicode chars
   int convertedLen;		// total number of converted characters
   GBool hyphenated;		// set if last char is a hyphen
-  TextLine *pageNext;		// next line on page
   TextLine *next;		// next line in block
-  TextLine *flowNext;		// next line in flow
 
+  friend class TextLineFrag;
   friend class TextBlock;
+  friend class TextFlow;
+  friend class TextWordList;
   friend class TextPage;
 };
 
@@ -149,25 +226,52 @@ private:
 class TextBlock {
 public:
 
-  TextBlock();
+  TextBlock(TextPage *pageA, int rotA);
   ~TextBlock();
+
+  void addWord(TextWord *word);
+
+  void coalesce(UnicodeMap *uMap);
+
+  // Update this block's priMin and priMax values, looking at <blk>.
+  void updatePriMinMax(TextBlock *blk);
+
+  static int cmpXYPrimaryRot(const void *p1, const void *p2);
+
+  static int cmpYXPrimaryRot(const void *p1, const void *p2);
+
+  int primaryCmp(TextBlock *blk);
+
+  double secondaryDelta(TextBlock *blk);
+
+  // Returns true if <this> is below <blk>, relative to the page's
+  // primary rotation.
+  GBool isBelow(TextBlock *blk);
 
 private:
 
-  GBool yxBefore(TextBlock *blk2);
-  void mergeRight(TextBlock *blk2);
-  void mergeBelow(TextBlock *blk2);
-
+  TextPage *page;		// the parent page
+  int rot;			// text rotation
   double xMin, xMax;		// bounding box x coordinates
   double yMin, yMax;		// bounding box y coordinates
-  double xSpaceL, xSpaceR;	// whitespace to left and right of this block
-  double ySpaceT, ySpaceB;	// whitespace above and below this block
-  double maxFontSize;		// max primary font size
-  TextLine *lines;		// lines in block
-  TextBlock *next;		// next block in flow
-  TextBlock *stackNext;		// next block on traversal stack
+  double priMin, priMax;	// whitespace bounding box along primary axis
 
+  TextPool *pool;		// pool of words (used only until lines
+				//   are built)
+  TextLine *lines;		// linked list of lines
+  TextLine *curLine;		// most recently added line
+  int nLines;			// number of lines
+  int charCount;		// number of characters in the block
+  int col;			// starting column
+  int nColumns;			// number of columns in the block
+
+  TextBlock *next;
+  TextBlock *stackNext;
+
+  friend class TextLine;
+  friend class TextLineFrag;
   friend class TextFlow;
+  friend class TextWordList;
   friend class TextPage;
 };
 
@@ -178,20 +282,61 @@ private:
 class TextFlow {
 public:
 
-  TextFlow();
+  TextFlow(TextPage *pageA, TextBlock *blk);
   ~TextFlow();
+
+  // Add a block to the end of this flow.
+  void addBlock(TextBlock *blk);
+
+  // Returns true if <blk> fits below <prevBlk> in the flow, i.e., (1)
+  // it uses a font no larger than the last block added to the flow,
+  // and (2) it fits within the flow's [priMin, priMax] along the
+  // primary axis.
+  GBool blockFits(TextBlock *blk, TextBlock *prevBlk);
 
 private:
 
+  TextPage *page;		// the parent page
+  double xMin, xMax;		// bounding box x coordinates
   double yMin, yMax;		// bounding box y coordinates
-  double ySpaceT, ySpaceB;	// whitespace above and below this flow
+  double priMin, priMax;	// whitespace bounding box along primary axis
   TextBlock *blocks;		// blocks in flow
-  TextLine *lines;		// lines in flow
-  TextFlow *next;		// next flow on page
+  TextBlock *lastBlk;		// last block in this flow
+  TextFlow *next;
 
+  friend class TextWordList;
   friend class TextPage;
 };
 
+#if TEXTOUT_WORD_LIST
+
+//------------------------------------------------------------------------
+// TextWordList
+//------------------------------------------------------------------------
+
+class TextWordList {
+public:
+
+  // Build a flat word list, in content stream order (if
+  // text->rawOrder is true), physical layout order (if <physLayout>
+  // is true and text->rawOrder is false), or reading order (if both
+  // flags are false).
+  TextWordList(TextPage *text, GBool physLayout);
+
+  ~TextWordList();
+
+  // Return the number of words on the list.
+  int getLength();
+
+  // Return the <idx>th word from the list.
+  TextWord *get(int idx);
+
+private:
+
+  GList *words;
+};
+
+#endif // TEXTOUT_WORD_LIST
 
 //------------------------------------------------------------------------
 // TextPage
@@ -201,14 +346,19 @@ class TextPage {
 public:
 
   // Constructor.
-  TextPage(GBool rawOrder);
+  TextPage(GBool rawOrderA);
 
   // Destructor.
   ~TextPage();
 
+  // Start a new page.
+  void startPage(GfxState *state);
+
+  // End the current page.
+  void endPage();
+
   // Update the current font.
   void updateFont(GfxState *state);
-
 
   // Begin a new word.
   void beginWord(GfxState *state, double x0, double y0);
@@ -224,17 +374,19 @@ public:
   // Add a word, sorting it into the list of words.
   void addWord(TextWord *word);
 
-
   // Coalesce strings that look like parts of the same line.
   void coalesce(GBool physLayout);
 
-  // Find a string.  If <top> is true, starts looking at top of page;
-  // otherwise starts looking at <xMin>,<yMin>.  If <bottom> is true,
-  // stops looking at bottom of page; otherwise stops looking at
-  // <xMax>,<yMax>.  If found, sets the text bounding rectangle and
-  // returns true; otherwise returns false.
+  // Find a string.  If <startAtTop> is true, starts looking at the
+  // top of the page; else if <startAtLast> is true, starts looking
+  // immediately after the last find result; else starts looking at
+  // <xMin>,<yMin>.  If <stopAtBottom> is true, stops looking at the
+  // bottom of the page; else if <stopAtLast> is true, stops looking
+  // just before the last find result; else stops looking at
+  // <xMax>,<yMax>.
   GBool findText(Unicode *s, int len,
-		 GBool top, GBool bottom,
+		 GBool startAtTop, GBool stopAtBottom,
+		 GBool startAtLast, GBool stopAtLast,
 		 double *xMin, double *yMin,
 		 double *xMax, double *yMax);
 
@@ -253,17 +405,19 @@ public:
   void dump(void *outputStream, TextOutputFunc outputFunc,
 	    GBool physLayout);
 
-  // Start a new page.
-  void startPage(GfxState *state);
-  void clear();
+#if TEXTOUT_WORD_LIST
+  // Build a flat word list, in content stream order (if
+  // this->rawOrder is true), physical layout order (if <physLayout>
+  // is true and this->rawOrder is false), or reading order (if both
+  // flags are false).
+  TextWordList *makeWordList(GBool physLayout);
+#endif
 
 private:
 
-  double lineFit(TextLine *line, TextWord *word, double *space);
-  GBool lineFit2(TextLine *line0, TextLine *line1);
-  GBool blockFit(TextBlock *blk, TextLine *line);
-  GBool blockFit2(TextBlock *blk0, TextBlock *blk1);
-  GBool flowFit(TextFlow *flow, TextBlock *blk);
+  void clear();
+  void assignColumns(TextLineFrag *frags, int nFrags, int rot);
+  int dumpFragment(Unicode *text, int len, UnicodeMap *uMap, GString *s);
 
   GBool rawOrder;		// keep text in content stream order
 
@@ -271,22 +425,36 @@ private:
   TextWord *curWord;		// currently active string
   int charPos;			// next character position (within content
 				//   stream)
-  TextFontInfo *font;		// current font
-  double fontSize;		// current font size
+  TextFontInfo *curFont;	// current font
+  double curFontSize;		// current font size
   int nest;			// current nesting level (for Type 3 fonts)
   int nTinyChars;		// number of "tiny" chars seen so far
+  GBool lastCharOverlap;	// set if the last added char overlapped the
+				//   previous char
 
-  TextWord *words;		// words, in xy order (before they're
-				//   sorted into lines)
-  TextWord *wordPtr;		// cursor for the word list
-
-  TextLine *lines;		// lines, in xy order
-  TextFlow *flows;		// flows, in reading order
+  TextPool *pools[4];		// a "pool" of TextWords for each rotation
+  TextFlow *flows;		// linked list of flows
+  TextBlock **blocks;		// array of blocks, in yx order
+  int nBlocks;			// number of blocks
+  int primaryRot;		// primary rotation
+  GBool primaryLR;		// primary direction (true means L-to-R,
+				//   false means R-to-L)
+  TextWord *rawWords;		// list of words, in raw order (only if
+				//   rawOrder is set)
+  TextWord *rawLastWord;	// last word on rawWords list
 
   GList *fonts;			// all font info objects used on this
 				//   page [TextFontInfo]
 
+  double lastFindXMin,		// coordinates of the last "find" result
+         lastFindYMin;
+  GBool haveLastFind;
 
+  friend class TextLine;
+  friend class TextLineFrag;
+  friend class TextBlock;
+  friend class TextFlow;
+  friend class TextWordList;
 };
 
 //------------------------------------------------------------------------
@@ -352,17 +520,18 @@ public:
 			double originX, double originY,
 			CharCode c, Unicode *u, int uLen);
 
-  //----- path painting
-
   //----- special access
 
-  // Find a string.  If <top> is true, starts looking at top of page;
-  // otherwise starts looking at <xMin>,<yMin>.  If <bottom> is true,
-  // stops looking at bottom of page; otherwise stops looking at
-  // <xMax>,<yMax>.  If found, sets the text bounding rectangle and
-  // returns true; otherwise returns false.
+  // Find a string.  If <startAtTop> is true, starts looking at the
+  // top of the page; else if <startAtLast> is true, starts looking
+  // immediately after the last find result; else starts looking at
+  // <xMin>,<yMin>.  If <stopAtBottom> is true, stops looking at the
+  // bottom of the page; else if <stopAtLast> is true, stops looking
+  // just before the last find result; else stops looking at
+  // <xMax>,<yMax>.
   GBool findText(Unicode *s, int len,
-		 GBool top, GBool bottom,
+		 GBool startAtTop, GBool stopAtBottom,
+		 GBool startAtLast, GBool stopAtLast,
 		 double *xMin, double *yMin,
 		 double *xMax, double *yMax);
 
@@ -377,6 +546,13 @@ public:
 		      double *xMin, double *yMin,
 		      double *xMax, double *yMax);
 
+#if TEXTOUT_WORD_LIST
+  // Build a flat word list, in content stream order (if
+  // this->rawOrder is true), physical layout order (if
+  // this->physLayout is true and this->rawOrder is false), or reading
+  // order (if both flags are false).
+  TextWordList *makeWordList();
+#endif
 
 private:
 
@@ -389,7 +565,6 @@ private:
 				//   dumping text
   GBool rawOrder;		// keep text in content stream order
   GBool ok;			// set up ok?
-
 };
 
 #endif

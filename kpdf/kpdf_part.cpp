@@ -64,8 +64,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   m_showScrollBars = new KToggleAction( i18n( "Show &Scrollbars" ), 0,
                                        actionCollection(), "show_scrollbars" );
+  m_showScrollBars->setCheckedState(i18n("Hide &Scrollbars"));
   m_showPageList   = new KToggleAction( i18n( "Show &Page List" ), 0,
                                        actionCollection(), "show_page_list" );
+  m_showPageList->setCheckedState(i18n("Hide &Page List"));
   connect( m_showScrollBars, SIGNAL( toggled( bool ) ),
              SLOT( showScrollBars( bool ) ) );
   connect( m_showPageList, SIGNAL( toggled( bool ) ),
@@ -314,7 +316,7 @@ bool Part::previousPage()
         m_currentPage++;
         return false;
     }
-    
+
     m_outputDev->setPage(m_currentPage+1);
     pdfpartview->setCurrentItem(m_currentPage);
     updateActionPage();
@@ -364,10 +366,10 @@ Part::openFile()
   displayPage(1);
   pdfpartview->setCurrentItem(0);
   m_outputDev->setPDFDocument(m_doc);
-  
+
   m_nextThumbnail=1;
   QTimer::singleShot(10, this, SLOT(nextThumbnail()));
-  
+
   return true;
 }
 
@@ -380,10 +382,10 @@ void Part::nextThumbnail()
   const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
   const float ppp = basePpp * m_zoomFactor; // pixels per point
   QOutputDevPixmap odev;
-  
+
   m_doc->displayPage(&odev, m_nextThumbnail, int(ppp * 72.0), 0, true);
   pdfpartview->setThumbnail(m_nextThumbnail, odev.getPixmap());
-    
+
   m_nextThumbnail++;
   if (m_nextThumbnail <= m_doc->getNumPages())
     QTimer::singleShot(10, this, SLOT(nextThumbnail()));

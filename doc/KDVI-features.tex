@@ -345,7 +345,13 @@ To set the background color of the page, the command
 \begin{verbatim}
 \background{Lavender}
 \end{verbatim}
-was used.
+was used. To switch back to normal, the command
+\begin{verbatim}
+\background{White}
+\end{verbatim}
+was placed somewhere on the following page. As you see, the background
+command does not fit well into \LaTeX's philosophy and should be
+avoided.
 
 
 \section{Source text specials}
@@ -387,6 +393,7 @@ exist. As usual, the \href{help:/kdvi/forward-search.html}{Handbook of
 
 \subsection{Inverse search}
 
+\background{White}
 Inverse search means that you can click into the document in \KDVI,
 and your editor will open, load the source file and jump to the proper
 place. \KDVI\ currently supports the editors Emacs, Kate, NEdit, VI

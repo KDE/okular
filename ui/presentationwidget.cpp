@@ -160,6 +160,11 @@ void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet
     m_metaStrings += i18n( "Click to begin" );
 }
 
+void PresentationWidget::notifyViewportChanged()
+{
+  changePage( m_document->viewport().pageNumber );
+}
+
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 {
     // check if it's the last requested pixmap. if so update the widget.
@@ -321,6 +326,8 @@ void PresentationWidget::changePage( int newPage )
     }
     else
         generatePage();
+
+    m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
 }
 
 void PresentationWidget::generatePage()

@@ -25,6 +25,8 @@
 #include "kpdf_pagewidget.h"
 #include "kpdf_pagewidget.moc"
 #include "QOutputDevPixmap.h"
+#include <qpushbutton.h>
+#include <kiconloader.h>
 
 namespace KPDF
 {
@@ -42,6 +44,10 @@ namespace KPDF
         m_outputdev = new QOutputDevPixmap(paperColor);
         setFocusPolicy( QWidget::StrongFocus );
         viewport()->setFocusPolicy( QWidget::WheelFocus );
+
+	QPushButton * w = new QPushButton( viewport() );
+	w->setPixmap( SmallIcon("up") );
+	setCornerWidget( w );
     }
     PageWidget::~PageWidget()
     {
@@ -232,10 +238,16 @@ namespace KPDF
     {
         switch ( e->key() ) {
         case Key_Up:
-            scrollUp();
+	    if ( atTop() )
+		emit ReadUp();
+	    else
+                scrollUp();
             break;
         case Key_Down:
-            scrollDown();
+	    if ( atBottom() )
+		emit ReadDown();
+	    else
+                scrollDown();
             break;
         case Key_Left:
             scrollLeft();

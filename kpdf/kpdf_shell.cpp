@@ -130,6 +130,8 @@ Shell::setupActions()
   m_popup = new KPopupMenu( this, "rmb popup" );
   m_popup->insertTitle( i18n( "Full Screen Options" ) );
   m_fullScreenAction->plug( m_popup );
+  m_popup->insertTitle( i18n( "Tools" ) );
+  m_showMenuBarAction->plug( m_popup );
 }
 
   void

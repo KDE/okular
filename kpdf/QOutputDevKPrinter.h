@@ -16,6 +16,7 @@
 #include "QOutputDev.h"
 
 class KPrinter;
+class QPainter;
 
 class QOutputDevKPrinter : public QOutputDev
 {

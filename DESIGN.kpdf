@@ -2,6 +2,23 @@ Here are some notes about the inner structure of kpdf for who wants to take
 a look at the project.
 
 
+*** About the 'kpdf_experiments' branch:
+----
+The kpdf_experiments branch has just been created. Architectural changes will
+be described here.
+
+Here are some misc thougths (cut&paste from a mail to Albert):
+- I want to clean up some code. I think that some features are just not 
+implementable in present state. For example multiple pages per sheet or 
+continous scrolling.
+- I think something can be faster if the structure gets cleaned (caching the 
+TextOuputDev pages when searching for example..) or using directly the 
+QOutputDevPixmap in cache since thay implement the search too (and you know 
+it well :-).
+- The only feature I want to add is the one I was telling you before. 
+----
+
+
 *** Rendering:
 
 - The rendering is done by xpdf/splash. xpdf defines 'OutputDev' class that has
@@ -51,7 +68,7 @@ document using the ThumbnailCreator class.
 
 
 *** Last Revisions to this document:
-2004-10-04 : 0.2 - Albert Astals Cid <tsdgeos@terra.es>
+2004-09-04 : 0.2 - Albert Astals Cid <tsdgeos@terra.es>
     - ThumbnailList creates the thumbnails itself
-2004-10-04 : 0.1 - Enrico Ros <eros.kde@email.it>
+2004-09-04 : 0.1 - Enrico Ros <eros.kde@email.it>
     - just read the code and created this file

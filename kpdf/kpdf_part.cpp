@@ -380,6 +380,7 @@ Part::openFile()
   QFile file(m_file);
   if (file.open(IO_ReadOnly) == false)
     return false;
+  file.close();
 
   GString* filename = new GString( QFile::encodeName( m_file ) );
   m_doc = new PDFDoc(filename, 0, 0);

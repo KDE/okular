@@ -12,18 +12,19 @@
 
 class dvifile;
 
-class QVBoxLayout; 
-class QHBoxLayout; 
-class QGridLayout; 
+class QVBoxLayout;
+class QHBoxLayout;
+class QGridLayout;
 class QLabel;
 class KPushButton;
 class QTabWidget;
 class QTable;
 class QTextView;
 class QWidget;
+class fontPool;
 
 class infoDialog : public KDialogBase
-{ 
+{
     Q_OBJECT
 
 public:
@@ -46,7 +47,7 @@ public slots:
     /** This slot is called whenever anything in the fontpool has
         changed. If the infoDialog is shown, the dialog could then
         query the fontpool for more information. */
-    void       setFontInfo(class fontPool *fp);
+    void       setFontInfo(fontPool *fp);
 
     /** Calling this slot clears the text view and stores the
 	headline. The next time output is received via the

@@ -36,7 +36,7 @@ infoDialog::infoDialog( QWidget* parent )
   TextLabel2->setMinimumHeight(fontMetrics().height()*10);
   QToolTip::add( TextLabel2, i18n("Information on currently loaded fonts.") );
   QWhatsThis::add( TextLabel2, i18n("This text field shows detailed information about the currently loaded fonts. "
-				    "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );  
+				    "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );
   topLayout2->addWidget( TextLabel2 );
 
   QFrame *page3 = addPage( i18n("External Programs") );
@@ -59,30 +59,30 @@ void infoDialog::setDVIData(dvifile *dviFile)
 {
   QString text = "";
 
-  if (dviFile == NULL) 
+  if (dviFile == NULL)
     text = i18n("There is no DVI file loaded at the moment.");
   else {
     text.append("<table WIDTH=\"100%\" NOSAVE >");
     text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("Filename")).arg(dviFile->filename));
 
     QFile file(dviFile->filename);
-    if (file.exists()) 
+    if (file.exists())
       text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("File Size")).arg(KIO::convertSize(file.size())));
     else
       text.append(QString("<tr><td><b> </b></td> <td>%1</td></tr>").arg(i18n("The file does no longer exist.")));
-    
+
     text.append(QString("<tr><td><b>  </b></td> <td>  </td></tr>"));
     text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("#Pages")).arg(dviFile->total_pages));
     text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("Generator/Date")).arg(dviFile->generatorString));
   } // else (dviFile == NULL)
-  
-  TextLabel1->setText( text ); 
+
+  TextLabel1->setText( text );
 }
 
 
-void infoDialog::setFontInfo(class fontPool *fp)
+void infoDialog::setFontInfo(fontPool *fp)
 {
-  TextLabel2->setText(fp->status()); 
+  TextLabel2->setText(fp->status());
 }
 
 void infoDialog::outputReceiver(QString op)
@@ -112,7 +112,7 @@ void infoDialog::outputReceiver(QString op)
       QString startLine = line.mid(startlineindex,endstartline-startlineindex);
       if (MFOutputReceived)
 	TextLabel3->append("<hr>\n<b>"+startLine+"</b>");
-      else 
+      else
 	TextLabel3->append("<b>"+startLine+"</b>");
     TextLabel3->append(line.mid(endstartline));
     } else

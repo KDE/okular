@@ -236,6 +236,19 @@ void PDFDoc::displayPages(OutputDev *out, int firstPage, int lastPage,
   }
 }
 
+void PDFDoc::displayPages(OutputDev *out, list<int> &pages,
+				  double hDPI, double vDPI, int rotate,
+				  GBool crop, GBool doLinks,
+				  GBool (*abortCheckCbk)(void *data),
+				  void *abortCheckCbkData)
+{
+	list<int>::const_iterator i;
+
+	for(i = pages.begin(); i != pages.end(); ++i)
+		displayPage(out, *i, hDPI, vDPI, rotate, crop, doLinks,
+					abortCheckCbk, abortCheckCbkData);
+}
+
 void PDFDoc::displayPageSlice(OutputDev *out, int page,
 			      double hDPI, double vDPI,
 			      int rotate, GBool crop,

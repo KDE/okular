@@ -366,7 +366,7 @@ void JPXStream::fillReadBuf() {
   } while (readBufLen < 8);
 }
 
-GString *JPXStream::getPSFilter(int /*psLevel*/, char */*indent*/) {
+GString *JPXStream::getPSFilter(int /*psLevel*/, const char */*indent*/) {
   return NULL;
 }
 

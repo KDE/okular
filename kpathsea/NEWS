@@ -1,124 +1,0 @@
-This file records noteworthy changes.
-
-2.6 (9 January 1995)
-* MakeTeXPK installed from kpathsea, instead of each driver.
-* MakeTeXPK.site looked for in texmf/web2c, instead of texmf/dvips.
-* texmf.cnf installed and looked for in texmf/web2c, instead of texmf.
-* If a mode is not explicitly specified, search all subdirectories (this
-  was actually in a previous release).
-* install-sh only looked for in the top-level directory.
-* kpsewhich replaces and generalizes kpsexpand.
-
-2.5 (15 December 1994)
-* Go back to calling db_insert after a successful MakeTeXPK, and check
-  for lack of an ls-R.
-* Handle case of magstep -.5 for MakeTeXPK properly.
-
-2.4 (28 October 1994)
-* Avoid calling db_insert, which caused a segmentation fault.
-
-2.3 (26 October 1994)
-* Extra :'s in an envvar value, referring to the texmf.cnf value, work.
-* Names like dpi600/cmr10.pk can be found in ls-R.
-* KPATHSEA_DEBUG environment variable checked.
-* Directories like pk/ljfour directly under $TEXMF/fonts are found.
-* New standalone program, kpsexpand, optionally compiled and installed,
-  to do variable expansion (not path searching).
-* Debugging output written to stderr instead of stdout.
-* pxlNNN support removed; I never intended to support `pxl1500', and
-  pxl300 is never used.
-
-2.2 (14 October 1994)
-* MakeTeXPK invoked for the any_glyph type; this is for xdvik.
-* MakeTeXPK sources $(psheaderdir)/MakeTeXPK.site if it exists.
-* pxlNNN/cmr10.pk searched for (as well as dpiNNN/cmr10.pk and cmr10.NNNpk)
-
-2.1 (12 September 1994)
-* Manual goes through TeX, and .cps/.aux files are in the distribution.
-* INSTALL* variables set at the top level.
-* Dependency on GNU tr making paths.h and texmf.sed (->texmf.cnf) removed.
-* texmf.cnf installed if it didn't previously exist.
-
-2.0 (8 September 1994)
-* Runtime configuration file support; see the manual.
-* Both dpi600/cmr10.pk and cmr10.600pk are searched for.
-* ls-R matches $TEXMF//latex2e vs. $TEXMF//latex209.
-* $TEXMFLOG, if set, specifies a filename for logging successful searches.
-* All directory entries beginning with `.' are ignored, not just `.' and `..'.
-* Default path for PK and GF fonts includes the mode name.
-* ls-R is in $TEXMFROOT instead of hardwired at compile time.
-* More debugging flags, and they can be set with client program options.
-* If MakeTeX{PK,TFM} fail, or aren't invoked, a file missfont.log is
-  written with the requisite commands, as in dvips.
-* More 328/329/330 fixes, maybe for the last time.
-* The override font paths (XDVIFONTS etc.) apply only to glyph (PK/GF)
-  searches, not TFM or VF.
-* -g is not the default when linking, to avoid unnecessarily large binaries
-  (due to static libraries) under Linux.
-* configure checks for a smart putenv.
-* Stat results are cached to speed up disk searches.
-
-1.8 (2 April 1994)
-* New target install-info, so the documentation can be installed without
-  the headers.
-* Existing but unreadable files are complained about, instead of just ignored.
-* A leading %% in a path element forbids searching the disk for that
-  element; only a db will be searched (if it exists).
-* The db is only used if it might be relevant to a given path element,
-  not searched first regardless.
-
-1.7 (1 March 1994)
-* Searches can use an externally-built ls-R ``database'', for speed.
-* `VPATH = .' lines removed from generated Makefile, for broken Sun make.
-* A path foo//tfm finds foo/tfm as well as foo/*/tfm.
-
-1.6 (3 February 1994)
-* Memory fault in copying long paths fixed.
-* More variables passed down from the top-level Makefile.
-* Mention SMART_PUTENV in the INSTALL file, and fix bug in xputenv.c
-  when one envvar is a proper prefix of another.
-* More attempts at eliminating magstephalf annoyances.
-* Directory name substitutions are done globally when creating paths.h.
-* Various changes for DOS.
-
-1.5 (24 January 1994)
-* Default paths changed.
-* Defining GCC_WCHAR lets GCC define wchar_t.
-* EXIT_FAILURE and EXIT_SUCCESS defined in all cases (if they're not already).
-* str[r]chr never redefined (I hope).
-
-1.4 (3 November 1993)
-* Check closest fallback font size.
-* All default paths (including dvips') in paths.h.in, not the Makefile.
-* Rearrange directory lists so that dirs in which a file is found
-  migrate to the top.
-* Update for Autoconf 1.7.
-
-1.3 (6 October 1993)
-* Fix free of non-malloced memory bug.
-* Fix uninitialized gf path bug.
-* mkdirchain invoked as an absolute filename.
-
-1.2 (27 September 1993)
-* Running MakeTeXPK is tried before the fallback resolutions.
-* The final bitmap name uses a variable spec, so DOS & OS/2 can get
-  dpi300/cmr10.pk.
-* Document TeX-specific features.
-* Dpi passed to MakeTeXPK via the envvar KPATHSEA_DPI instead of MAKETEX_DPI.
-
-1.1 (26 August 1993)
-* Installation fixes.
-
-1.0 (5 August 1993)
-* Routines to look up TeX font files, default path specifications, etc.
-* Sort-of pattern matching: /foo//bar matches subdirectories
-  /foo/a/bar, /foo/b/bar, /foo/a1/a2/bar, etc.
-* $var and ${var} expansion.
-* Support for MakeTeX... scripts.
-* Support for fallback resolutions and font.
-* Lazy evaluation of path elements.
-* Some runtime debugging support.
-
-0.2 (12 May 1993)
-
-First general release as a standalone library.

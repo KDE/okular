@@ -1,3 +1,6 @@
+#ifndef selection_h
+#define selection_h
+
 // selection.h
 //
 // (C) 2001 Stefan Kebekus
@@ -22,3 +25,5 @@ public:
   QString       selectedText;
   KAction *     act;
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef history_h
+#define history_h
+
 // history.h
 //
 // (C) 2001 Stefan Kebekus
@@ -11,7 +14,7 @@
 
 class historyItem
 {
- public: 
+ public:
   Q_UINT32 page;
   Q_UINT32 ypos;
 };
@@ -47,6 +50,8 @@ class history : public QObject
   // be 0.
   Q_INT16       currentItem;
 
-  // Numer of items in use. 
+  // Numer of items in use.
   Q_INT16       numItems;
 };
+
+#endif

@@ -1,5 +1,5 @@
-#define HAVE_FSEEK0 0 // define it to 0, if you have it, config.h will have it defined to 1
-                      // and that will be used
+/* define it to 0, if you have it, config.h will have it defined to 1 and that will be used*/
+#define HAVE_FSEEK0 0 
 
 #include <config.h>
 

@@ -13,15 +13,14 @@ noinst_PROGRAMS = squeeze
 METASOURCES = AUTO
 
 libkdvi_la_SOURCES = kdvi_multipage.cpp \
-	dviwin.cpp print.cpp \
-	printData.cpp printSetup.cpp printSetupData.cpp\
+	dviwin.cpp \
 	optiondialog.cpp infodialog.cpp\
 	psheader.c dviwin_draw.cpp dvi_init.cpp\
 	font.cpp fontpool.cpp fontprogress.cpp pk.cpp psgs.cpp\
 	special.cpp util.cpp vf.cpp glyph.cpp
 
 libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
-libkdvi_la_LIBADD = $(LIB_KFILE) -lkparts \
+libkdvi_la_LIBADD = $(LIB_KPARTS) -lkdeprint \
 			$(top_builddir)/kviewshell/libkmultipage.la
 
 # Which sources should be compiled for squeeze.
@@ -30,7 +29,6 @@ squeeze_SOURCES	= squeeze.c
 
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = c-openmx.h dvi.h dviwin.h oconfig.h\
-	print.h printData.h printSetup.h printSetupData.h\
 	optiondialog.h xdvi.h 
 
 messages: rc.cpp

@@ -518,15 +518,14 @@ void dviWindow::draw_page(void)
 #endif
 
   // Render the PostScript background, if there is one.
+    foreGroundPaint.fillRect(pixmap->rect(), Qt::white );
   if (_postscript) {
     QPixmap *pxm = PS_interface->graphics(current_page);
     if (pxm != NULL) {
       foreGroundPaint.drawPixmap(0, 0, *pxm);
       delete pxm;
-    } else
-      foreGroundPaint.fillRect(pixmap->rect(), Qt::white );
-  } else
-    foreGroundPaint.fillRect(pixmap->rect(), Qt::white );
+    }
+  }
   
   // Step 4: Now really write the text
   (void) lseek(fileno(dviFile->file), dviFile->page_offset[current_page], SEEK_SET);

@@ -81,6 +81,7 @@ public:
   void          special(long nbytes);
   void          bang_special(QString cp);
   void          quote_special(QString cp);
+  void          ps_special(QString cp);
   void          epsf_special(QString cp);
   void          header_special(QString cp);
   void          html_href_special(QString cp);

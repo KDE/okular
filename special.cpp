@@ -4,7 +4,7 @@
 // Methods for dviwin which deal with "\special" commands found in the
 // DVI file
 
-// Copyright 2000, Stefan Kebekus (stefan.kebekus@uni-bayreuth.de).
+// Copyright 2000--2001, Stefan Kebekus (stefan.kebekus@uni-bayreuth.de).
 
 
 #include <qfile.h>
@@ -29,8 +29,8 @@ void dviWindow::html_anchor_special(QString cp)
   if (PostScriptOutPutString != NULL) { // only during scanning, not during rendering
     cp.truncate(cp.find('"'));
 #ifdef DEBUG_SPECIAL
-    kdDebug() << "HTML-special, anchor " << cp.latin1() << endl;
-    kdDebug() << "page " << current_page << endl;
+    kdDebug(4300) << "HTML-special, anchor " << cp.latin1() << endl;
+    kdDebug(4300) << "page " << current_page << endl;
 #endif
     
     AnchorList_String[numAnchors] = cp;
@@ -46,7 +46,7 @@ void dviWindow::html_href_special(QString cp)
   cp.truncate(cp.find('"'));
 
 #ifdef DEBUG_SPECIAL
-  kdDebug() << "HTML-special, href " << cp.latin1() << endl;
+  kdDebug(4300) << "HTML-special, href " << cp.latin1() << endl;
 #endif
 
   if (!PostScriptOutPutString) { // only when rendering really takes place
@@ -57,7 +57,7 @@ void dviWindow::html_href_special(QString cp)
 void dviWindow::html_anchor_end(void)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug() << "HTML-special, anchor-end" << endl;
+  kdDebug(4300) << "HTML-special, anchor-end" << endl;
 #endif
 
   if (HTML_href != NULL) {
@@ -70,7 +70,7 @@ void dviWindow::html_anchor_end(void)
 void dviWindow::header_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug() << "PostScript-special, header " << cp.latin1() << endl;
+  kdDebug(4300) << "PostScript-special, header " << cp.latin1() << endl;
 #endif
 
   if (PostScriptOutPutString && QFile::exists(cp)) {
@@ -92,7 +92,7 @@ static void parse_special_argument(QString strg, const char *argument_name, int 
       *variable = tmp_int;
     else
       // Maybe we should open a dialog here.
-      kdError() << i18n("Malformed parameter in the epsf special command.") << endl;
+      kdError(4300) << i18n("Malformed parameter in the epsf special command.") << endl;
   }
 }
 
@@ -101,7 +101,7 @@ static void parse_special_argument(QString strg, const char *argument_name, int 
 void dviWindow::epsf_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug() << "epsf-special: psfile=" << cp <<endl;
+  kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
 #endif
 
   QString include_command = cp.simplifyWhiteSpace();
@@ -137,6 +137,7 @@ void dviWindow::epsf_special(QString cp)
   int  ury     = 0;
   int  rwi     = 0;
   int  rhi     = 0;
+  int  angle   = 0;
 
   // just to avoid ambiguities; the filename could contain keywords
   include_command = include_command.mid(include_command.find(' '));
@@ -147,6 +148,7 @@ void dviWindow::epsf_special(QString cp)
   parse_special_argument(include_command, "ury=", &ury);
   parse_special_argument(include_command, "rwi=", &rwi);
   parse_special_argument(include_command, "rhi=", &rhi);
+  parse_special_argument(include_command, "angle=", &angle);
 
   if (PostScriptOutPutString) {
     if (QFile::exists(EPSfilename)) {
@@ -162,6 +164,8 @@ void dviWindow::epsf_special(QString cp)
 	PostScriptOutPutString->append( QString(" %1 @rwi").arg(rwi) );
       if (rhi != 0)
 	PostScriptOutPutString->append( QString(" %1 @rhi").arg(rhi) );
+      if (angle != 0)
+	PostScriptOutPutString->append( QString(" %1 @angle").arg(angle) );
       PostScriptOutPutString->append( " @setspecial \n" );
       PostScriptOutPutString->append( QString(" (%1) run\n").arg(EPSfilename) );
       PostScriptOutPutString->append( "@endspecial \n" );
@@ -205,7 +209,7 @@ void dviWindow::epsf_special(QString cp)
 void dviWindow::bang_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug() << "PostScript-special, literal header " << cp.latin1() << endl;
+  kdDebug(4300) << "PostScript-special, literal header " << cp.latin1() << endl;
 #endif
 
   if (currwin.win == mane.win && PostScriptOutPutString) {
@@ -220,7 +224,7 @@ void dviWindow::bang_special(QString cp)
 void dviWindow::quote_special(QString cp)
 {
 #ifdef DEBUG_SPECIAL
-  //  kdError() << "PostScript-special, literal PostScript " << cp.latin1() << endl;
+  kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
 #endif
   
   if (currwin.win == mane.win && PostScriptOutPutString) {
@@ -230,6 +234,35 @@ void dviWindow::quote_special(QString cp)
     PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
     PostScriptOutPutString->append( cp );
     PostScriptOutPutString->append( " @endspecial \n" );
+  }
+}
+
+
+void dviWindow::ps_special(QString cp)
+{
+#ifdef DEBUG_SPECIAL
+  kdError(4300) << "PostScript-special, direct PostScript " << cp.latin1() << endl;
+#endif
+  
+  if (currwin.win == mane.win && PostScriptOutPutString) {
+    double PS_H = (DVI_H*300.0)/(65536*basedpi)-300;
+    double PS_V = (DVI_V*300.0)/(65536*basedpi)-300;
+    
+    if (cp.find("ps::[begin]", 0, false) == 0) {
+      PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
+      PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(11)) );
+    } else {
+      if (cp.find("ps::[end]", 0, false) == 0) {
+	PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(9)) );
+      } else {
+	if (cp.find("ps::", 0, false) == 0) {
+	  PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(4)) );
+	} else {
+	  PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
+	  PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(3)) );
+	}
+      }
+    }
   }
 }
 
@@ -244,6 +277,12 @@ void dviWindow::applicationDoSpecial(char *cp)
     return;
   }
 
+  // PS-Postscript inclusion
+  if (special_command.find("ps:", 0, false) == 0) {
+    ps_special(special_command);
+    return;
+  }
+
   // Literal Postscript Header
   if (special_command[0] == '!') {
     bang_special(special_command.mid(1));
@@ -251,35 +290,35 @@ void dviWindow::applicationDoSpecial(char *cp)
   }
 
   // Encapsulated Postscript File
-  if (special_command.find("PSfile=") == 0 || special_command.find("psfile=") == 0) {
+  if (special_command.find("PSfile=", 0, false) == 0) {
     epsf_special(special_command.mid(7));
     return;
   }
 
   // Postscript Header File
-  if (special_command.find("header=") == 0) {
+  if (special_command.find("header=", 0, false) == 0) {
     header_special(special_command.mid(7));
     return;
   }
 
   // HTML reference
-  if (special_command.find("html:<A href=") == 0) {
+  if (special_command.find("html:<A href=", 0, false) == 0) {
     html_href_special(special_command.mid(14));
     return;
   }
 
   // HTML anchor end
-  if (special_command.find("html:</A>") == 0) {
+  if (special_command.find("html:</A>", 0, false) == 0) {
     html_anchor_end();
     return;
   }
 
   // HTML anchor special
-  if (special_command.find("html:<A name=") == 0) {
+  if (special_command.find("html:<A name=", 0, false) == 0) {
     html_anchor_special(special_command.mid(14));
     return;
   }
 
-  kdError() << i18n("The special command\"") << cp << i18n("\" is not implemented.") << endl;
+  kdError(4300) << i18n("The special command \"") << special_command << i18n("\" is not implemented.") << endl;
   return;
 }

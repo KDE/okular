@@ -582,6 +582,7 @@ Part::print()
   printer.setPageSelection(KPrinter::ApplicationSide);
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setCurrentPage(m_currentPage);
+  printer.setMargins(0, 0, 0, 0);
 
   if (printer.setup(widget()))
   {
@@ -711,6 +712,7 @@ void Part::printPreview()
   KPrinter printer;
   printer.setMinMax(1, m_doc->getNumPages());
   printer.setPreviewOnly( true );
+  printer.setMargins(0, 0, 0, 0);
   doPrint(printer);
 }
 

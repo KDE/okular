@@ -869,79 +869,16 @@ Works only for visiting one buffer at a time."
 
       <variablelist>
         <varlistentry>
-          <term><guilabel>PostScript Type 1 fonts</guilabel> </term>
+          <term><guilabel>Use font hinting for Type 1 fonts, if available</guilabel> </term>
           <listitem>
-	    <variablelist>
-	      <varlistentry>
-		<term><guilabel>Use Type 1 fonts if available</guilabel> </term>
-		<listitem>
-		  <para>
-                   Using these fonts makes &kdvi; faster, and
-                   generally produces higher quality output. You
-                   almost certainly want to enable this option, unless
-                   you exerience problems with the configuration of
-                   your TeX installation, or with buggy fonts.
-                 </para>
-		</listitem>
-	      </varlistentry>
-
-	      <varlistentry>
-		<term><guilabel>Use font hinting</guilabel> </term>
-		<listitem>
-		  <para>
-                   "PostScript Type 1" often contain "font hints",
-                   i.e. additional information that is supposed to
-                   help software producing better quality output on
-                   computer screens. The quality of the font hints
-                   varies from font to font, and you should experiment
-                   to see if enabling this option gives better results.
-                 </para>
-		</listitem>
-	      </varlistentry>
-	    </variablelist>
-          </listitem>
-        </varlistentry>
-
-        <varlistentry>
-          <term><guilabel>PK fonts</guilabel> </term>
-          <listitem>
-	    <variablelist>
-	      <varlistentry>
-		<term><guilabel>Metafont mode</guilabel> </term>
-		<listitem>
-		  <para>
-                   These options specify the fonts which &kdvi; will
-                   use for rendering.  By carefully optimizing the
-                   settings here it is possible to improve on the
-                   display. However, unless you are an expert in
-                   <command>MetaFont</command> and know what you are
-                   doing, it is not a good idea to change these
-                   options. You may want to look at the <link
-                   linkend="mfmodes">Frequently asked questions</link>
-                   section of this manual.
-                  </para>
-                  <para>
-                   Safe values are <guilabel>1200 dpi /
-                   Lexmark</guilabel> for good quality, or
-                   <guilabel>600 dpi / LaserJet 4</guilabel> for
-                   medium quality and faster display.
-                  </para>
-		</listitem>
-	      </varlistentry>
-
-	      <varlistentry>
-		<term><guilabel>Generate missing fonts</guilabel> </term>
-		<listitem>
-		  <para>
-                   Check this if you want &kdvi; to call the
-                   <command>MetaFont</command> program in the likely
-                   case that &kdvi; wants to display documents which
-                   use fonts which are not yet readily made. You most
-                   certainly want to set this option.
-                 </para>
-		</listitem>
-	      </varlistentry>
-	    </variablelist>
+	   <para>
+            PostScript "Type 1" often contain "font hints",
+            i.e. additional information that is supposed to
+            help software produce better quality output on
+            computer screens. The quality of the font hints
+            varies from font to font, and you should experiment
+            to see if enabling this option gives better results.
+           </para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -960,8 +897,8 @@ Works only for visiting one buffer at a time."
       </para>
 
       <para>
-       The &DVI; specials dialog configure support for some specials.
-      </para>
+       The &DVI; specials dialog help you to configure support for
+      some specials.  </para>
 
       <screenshot>
         <screeninfo>The <guilabel>Rendering</guilabel> tab</screeninfo>
@@ -1009,15 +946,6 @@ Works only for visiting one buffer at a time."
           </listitem>
         </varlistentry>
         
-        <varlistentry>
-          <term><guilabel>Show Hyperlinks</guilabel></term>
-          <listitem>
-            <para>Check this if you want &kdvi; to display
-            hyperlinks. The appropriate parts of the text will be
-            underlined in blue. You probably want to set this
-            option.</para>
-          </listitem>
-        </varlistentry>
         
         <varlistentry>
           <term><guilabel>Editor for inverse search</guilabel></term>

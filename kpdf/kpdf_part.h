@@ -74,6 +74,10 @@ namespace KPDF
   protected slots:
     void find()     { /* stub */ };
     void findNext() { /* stub */ };
+    void zoomIn()   { /* stub */ };
+    void zoomOut()  { /* stub */ };
+    void back()     { /* stub */ };
+    void forward()  { /* stub */ };
 
     void displayNextPage();
     void displayPreviousPage();
@@ -87,7 +91,7 @@ namespace KPDF
     PDFDoc*     m_doc;
     XOutputDev* m_outputDev;
 
-    KToggleAction* m_fitWidth;
+    KToggleAction* m_fitToWidth;
 
     int   m_currentPage;
 
@@ -95,7 +99,7 @@ namespace KPDF
     float    m_zoomFactor;
 
   private slots:
-    void fitWidthToggled();
+    void slotFitToWidthToggled();
   };
 
   class BrowserExtension : public KParts::BrowserExtension

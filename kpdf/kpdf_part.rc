@@ -1,14 +1,20 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="3">
+<kpartgui name="kpdf_part" version="4">
 <MenuBar>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>
     <Action name="find_next"/>
   </Menu>
   <Menu name="view"><text>&amp;View</text>
-    <Action name="fit_width"/>
+    <Action name="fit_to_width"/>
+    <Separator/>
+    <Action name="zoom_in"/>
+    <Action name="zoom_out"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
+    <Action name="back"/>
+    <Action name="forward"/>
+    <Separator/>
     <Action name="previous_page"/>
     <Action name="next_page"/>
   </Menu>

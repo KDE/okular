@@ -65,15 +65,22 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   KStdAction::findNext(this, SLOT(findNext()), 
                        actionCollection(), "find_next");
 
-  m_fitWidth = new KToggleAction(i18n("Fit Width"), 0,
-                       this, SLOT(fitWidthToggled()),
-                       actionCollection(), "fit_width");
+  m_fitToWidth = new KToggleAction(i18n("Fit To Page &Width"), 0,
+                       this, SLOT(slotFitToWidthToggled()),
+                       actionCollection(), "fit_to_width");
+  KStdAction::zoomIn  (this, SLOT(zoomIn()),
+                       actionCollection(), "zoom_in");
+  KStdAction::zoomOut (this, SLOT(zoomOut()),
+                       actionCollection(), "zoom_out");
 
-  KStdAction::prior(this, SLOT(displayPreviousPage()), 
-                    actionCollection(), "previous_page");
-  KStdAction::next (this, SLOT(displayNextPage()),
-                    actionCollection(), "next_page" );
-
+  KStdAction::back    (this, SLOT(back()),
+                       actionCollection(), "back");
+  KStdAction::forward (this, SLOT(forward()),
+                       actionCollection(), "forward");
+  KStdAction::prior   (this, SLOT(displayPreviousPage()), 
+                       actionCollection(), "previous_page");
+  KStdAction::next    (this, SLOT(displayNextPage()),
+                       actionCollection(), "next_page" );
 
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");
@@ -383,9 +390,9 @@ Part::executeAction(LinkAction* action)
 }
 
   void
-Part::fitWidthToggled()
+Part::slotFitToWidthToggled()
 {
-  m_zoomMode = m_fitWidth->isChecked() ? FitWidth : FixedFactor;
+  m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
   displayPage(m_currentPage);
 }
 

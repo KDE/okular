@@ -31,6 +31,11 @@ namespace KPDF
         void setPage(int pagenum);
         int getPage() const { return m_currentPage; };
         void enableScrollBars( bool b );
+        /**
+         * Return true if the top resp. bottom of the page is visible.
+         */
+        bool atTop()    const;
+        bool atBottom() const;
     public slots:
         void nextPage();
         void previousPage();
@@ -44,15 +49,20 @@ namespace KPDF
         void scrollLeft();
         void scrollBottom();
         void scrollTop();
+        bool readUp();
+        bool readDown();
     signals:
         void linkClicked(LinkAction*);
-
+        void ReadUp();
+        void ReadDown();
+        void ZoomOut();
+        void ZoomIn();
     protected:
         virtual void keyPressEvent( QKeyEvent* );
         void contentsMousePressEvent(QMouseEvent*);
         void contentsMouseReleaseEvent(QMouseEvent*);
         void contentsMouseMoveEvent(QMouseEvent*);
-
+        virtual void wheelEvent( QWheelEvent * );
         virtual void drawContents ( QPainter *p, int, int, int, int );
 
     private:

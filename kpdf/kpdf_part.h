@@ -98,6 +98,8 @@ namespace KPDF
 
       void showScrollBars( bool );
       void showMarkList( bool );
+      void slotReadUp();
+      void slotReadDown();
 
   private:
     PDFDoc*     m_doc;

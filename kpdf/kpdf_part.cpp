@@ -105,6 +105,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
   // set our XML-UI resource file
   setXMLFile("kpdf_part.rc");
+  connect( m_outputDev, SIGNAL( ZoomIn() ), SLOT( slotZoomIn() ));
+  connect( m_outputDev, SIGNAL( ZoomOut() ), SLOT( slotZoomOut() ));
+  connect( m_outputDev, SIGNAL( ReadUp() ), SLOT( slotReadUp() ));
+  connect( m_outputDev, SIGNAL( ReadDown() ), SLOT( slotReadDown() ));
   readSettings();
 }
 
@@ -114,7 +118,28 @@ Part::~Part()
     writeSettings();
 }
 
+void Part::slotReadUp()
+{
+    if( !m_doc )
+	return;
 
+    if( !m_outputDev->readUp() ) {
+        slotPreviousPage();
+        m_outputDev->scrollBottom();
+    }
+}
+
+void Part::slotReadDown()
+{
+    if( !m_doc )
+	return;
+
+    if( !m_outputDev->readDown() ) {
+        //todo fix if we can "next page" as in kghostview
+        slotNextPage();
+        m_outputDev->scrollTop();
+    }
+}
 
 void Part::writeSettings()
 {

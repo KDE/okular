@@ -181,6 +181,40 @@ namespace KPDF
         }
         e->accept();
     }
+
+    bool PageWidget::atTop() const
+    {
+        return verticalScrollBar()->value() == verticalScrollBar()->minValue();
+    }
+
+    bool PageWidget::atBottom() const
+    {
+        return verticalScrollBar()->value() == verticalScrollBar()->maxValue();
+    }
+
+    void PageWidget::wheelEvent( QWheelEvent *e )
+    {
+        int delta = e->delta();
+        e->accept();
+        if ((e->state() & ShiftButton) == ShiftButton) {
+            if ( e->delta() > 0 )
+                emit ZoomOut();
+            else
+                emit ZoomIn();
+        }
+        else if ( delta <= -120 && atBottom() )
+        {
+            emit ReadDown();
+        }
+        else if ( delta >= 120 && atTop())
+        {
+            emit ReadUp();
+        }
+
+        else
+            QScrollView::wheelEvent( e );
+    }
+
     void PageWidget::updatePixmap()
     {
         if ( m_doc )
@@ -198,6 +232,50 @@ namespace KPDF
             resizeContents ( m_outputdev->getPixmap()->width ( ), m_outputdev->getPixmap()->height ( ));
 
             viewport()->update();
+        }
+    }
+
+    bool PageWidget::readUp()
+    {
+        if( atTop() )
+            return false;
+        else {
+            int newValue = QMAX( verticalScrollBar()->value() - height() + 50,
+                                 verticalScrollBar()->minValue() );
+
+            /*
+              int step = 10;
+              int value = verticalScrollBar()->value();
+              while( value > newValue - step ) {
+              verticalScrollBar()->setValue( value );
+              value -= step;
+              }
+            */
+
+            verticalScrollBar()->setValue( newValue );
+            return true;
+        }
+    }
+
+    bool PageWidget::readDown()
+    {
+        if( atBottom() )
+            return false;
+        else {
+            int newValue = QMIN( verticalScrollBar()->value() + height() - 50,
+                                 verticalScrollBar()->maxValue() );
+
+            /*
+              int step = 10;
+              int value = verticalScrollBar()->value();
+              while( value < newValue + step ) {
+              verticalScrollBar()->setValue( value );
+              value += step;
+              }
+            */
+
+            verticalScrollBar()->setValue( newValue );
+            return true;
         }
     }
 }

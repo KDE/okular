@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
  *   Copyright (C) 2004-2005 by Albert Astals Cid <tsdgeos@terra.es>       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -83,7 +83,7 @@ class KPDFDocument : public QObject
         void requestTextPage( uint page );
         void addPageAnnotation( int page, Annotation * annotation );
 
-        enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleLike };
+        enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleAll, GoogleAny };
         bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
         bool continueSearch( int searchID );

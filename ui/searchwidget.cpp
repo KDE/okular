@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,14 +24,13 @@
 #include "core/document.h"
 #include "conf/settings.h"
 
-// uncomment following to enable the case switching button
-//#define SW_ENABLE_CASE_BUTTON
 #define CLEAR_ID    1
 #define LEDIT_ID    2
 #define FIND_ID     3
 
 SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
-    : KToolBar( parent, "iSearchBar" ), m_document( document ), m_caseSensitive( false )
+    : KToolBar( parent, "iSearchBar" ), m_document( document ),
+    m_searchType( 0 ), m_caseSensitive( false )
 {
     // change toolbar appearance
     setMargin( 3 );
@@ -44,31 +43,31 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     connect( m_inputDelayTimer, SIGNAL( timeout() ),
              this, SLOT( startSearch() ) );
 
-    // line edit
+    // 1. text line
     insertLined( QString::null, LEDIT_ID, SIGNAL( textChanged(const QString &) ),
                  this, SLOT( slotTextChanged(const QString &) ), true,
                  i18n( "Enter at least 3 letters to filter pages" ), 0/*size*/, 1 );
 
-    // clear button (uses a lineEdit slot, so it must be created after)
+    // 2. clear button (uses a lineEdit slot, so it must be created after)
     insertButton( QApplication::reverseLayout() ? "clear_left" : "locationbar_erase",
                   CLEAR_ID, SIGNAL( clicked() ),
                   getLined( LEDIT_ID ), SLOT( clear() ), true,
                   i18n( "Clear filter" ), 0/*index*/ );
 
-#ifdef SW_ENABLE_CASE_BUTTON
-    // create popup menu for change case button
-    m_caseMenu = new KPopupMenu( this );
-    m_caseMenu->insertItem( i18n("Case Insensitive"), 1 );
-    m_caseMenu->insertItem( i18n("Case Sensitive"), 2 );
-    m_caseMenu->setItemChecked( 1, true );
-    connect( m_caseMenu, SIGNAL( activated(int) ), SLOT( slotCaseChanged(int) ) );
+    // 3.1. create the popup menu for changing filtering features
+    m_menu = new KPopupMenu( this );
+    m_menu->insertItem( i18n("Case Sensitive"), 1 );
+    m_menu->insertSeparator( 2 );
+    m_menu->insertItem( i18n("Match Phrase"), 3 );
+    m_menu->insertItem( i18n("Match All Words"), 4 );
+    m_menu->insertItem( i18n("Match Any Word"), 5 );
+    m_menu->setItemChecked( 3, true );
+    connect( m_menu, SIGNAL( activated(int) ), SLOT( slotMenuChaged(int) ) );
 
-    // create the change case button
-    insertButton( "find", FIND_ID, m_caseMenu, true,
-        i18n( "Change Case" ), 2/*index*/ );
-#endif
+    // 3.2. create the toolbar button that spawns the popup menu
+    insertButton( "kpdf", FIND_ID, m_menu, true, i18n( "Filter Options" ), 2/*index*/ );
 
-    // setStretchableWidget( lineEditWidget );
+    // always maximize the text line
     setItemAutoSized( LEDIT_ID );
 }
 
@@ -88,13 +87,40 @@ void SearchWidget::slotTextChanged( const QString & text )
     m_inputDelayTimer->start(333, true);
 }
 
+void SearchWidget::slotMenuChaged( int index )
+{
+    // update internal variables and checked state
+    if ( index == 1 )
+    {
+        m_caseSensitive = !m_caseSensitive;
+        m_menu->setItemChecked( 1, m_caseSensitive );
+    }
+    else if ( index >= 3 && index <= 5 )
+    {
+        m_searchType = index - 3;
+        for ( int i = 0; i < 3; i++ )
+            m_menu->setItemChecked( i + 3, m_searchType == i );
+    }
+    else
+        return;
+
+    // update search
+    slotTextChanged( getLined( LEDIT_ID )->text() );
+}
+
 void SearchWidget::startSearch()
 {
     // search text if have more than 3 chars or else clear search
     QString text = getLined( LEDIT_ID )->text();
     bool ok = true;
     if ( text.length() >= 3 )
-        ok = m_document->searchText( SW_SEARCH_ID, text, true, m_caseSensitive, KPDFDocument::AllDoc, false, qRgb( 0, 183, 255 ) );
+    {
+        KPDFDocument::SearchType type = !m_searchType ? KPDFDocument::AllDoc :
+                                        ( (m_searchType > 1) ? KPDFDocument::GoogleAny :
+                                        KPDFDocument::GoogleAll );
+        ok = m_document->searchText( SW_SEARCH_ID, text, true, m_caseSensitive,
+                                     type, false, qRgb( 0, 183, 255 ) );
+    }
     else
         m_document->resetSearch( SW_SEARCH_ID );
     // if not found, use warning colors
@@ -103,18 +129,6 @@ void SearchWidget::startSearch()
         KLineEdit * lineEdit = getLined( LEDIT_ID );
         lineEdit->setPaletteForegroundColor( Qt::white );
         lineEdit->setPaletteBackgroundColor( Qt::red );
-    }
-}
-
-void SearchWidget::slotCaseChanged( int index )
-{
-    bool newState = (index == 2);
-    if ( newState != m_caseSensitive )
-    {
-        m_caseSensitive = newState;
-        m_caseMenu->setItemChecked( 1, !m_caseSensitive );
-        m_caseMenu->setItemChecked( 2, m_caseSensitive );
-        slotTextChanged( getLined( LEDIT_ID )->text() );
     }
 }
 

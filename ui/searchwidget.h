@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -36,13 +36,14 @@ class SearchWidget : public KToolBar
 
     private:
         KPDFDocument * m_document;
-        KPopupMenu * m_caseMenu;
+        KPopupMenu * m_menu;
         QTimer * m_inputDelayTimer;
+        int m_searchType;
         bool m_caseSensitive;
 
     private slots:
         void slotTextChanged( const QString & text );
-        void slotCaseChanged( int index );
+        void slotMenuChaged( int index );
         void startSearch();
 };
 

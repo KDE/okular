@@ -13,7 +13,6 @@ In progress:
 -> se: check tools not working after a certain time (pretty nice bug :-)
 
 More items (first items will enter 'In progress list' first):
--> search: google search in the page
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc)
 -> bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)
@@ -75,6 +74,7 @@ More items (first items will enter 'In progress list' first):
 -> cleanup code and update README.png
 
 Done (newest features come first):
+-> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files
 -> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]
 -> FIX: trigger redraw on 'filter text' on current page (need new highligh engine first)

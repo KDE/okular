@@ -59,7 +59,485 @@ static inline long int round( float x ) { static_cast<long int>( x + x > 0 ? 0.5
 static inline QColor q_col ( const GfxRGB &rgb )
 {
 	return QColor ( round ( rgb. r * 255 ), round ( rgb. g * 255 ), round ( rgb. b * 255 ));
-convertSubpath ( state, path-> getSubpath ( i ), points );
+}
+#endif
+
+//------------------------------------------------------------------------
+// Font substitutions
+//------------------------------------------------------------------------
+
+struct QOutFontSubst {
+	const char * m_name;
+	const char * m_sname;
+	bool   m_bold;
+	bool   m_italic;
+	QFont::StyleHint m_hint;
+};
+
+static QOutFontSubst qPixmapStdFonts [] = {
+	{ "Helvetica",             "Helvetica", false, false, QFont::Helvetica },
+	{ "Helvetica-Oblique",     "Helvetica", false, true,  QFont::Helvetica },
+	{ "Helvetica-Bold",        "Helvetica", true,  false, QFont::Helvetica },
+	{ "Helvetica-BoldOblique", "Helvetica", true,  true,  QFont::Helvetica },
+	{ "Times-Roman",           "Times",     false, false, QFont::Times },
+	{ "Times-Italic",          "Times",     false, true,  QFont::Times },
+	{ "Times-Bold",            "Times",     true,  false, QFont::Times },
+	{ "Times-BoldItalic",      "Times",     true,  true,  QFont::Times },
+	{ "Courier",               "Courier",   false, false, QFont::Courier },
+	{ "Courier-Oblique",       "Courier",   false, true,  QFont::Courier },
+	{ "Courier-Bold",          "Courier",   true,  false, QFont::Courier },
+	{ "Courier-BoldOblique",   "Courier",   true,  true,  QFont::Courier },
+
+	{ "Symbol",                0,           false, false, QFont::AnyStyle },
+	{ "Zapf-Dingbats",         0,           false, false, QFont::AnyStyle },
+
+	{ 0,                       0,           false, false, QFont::AnyStyle }
+};
+
+QFont QOutputDevPixmap::matchFont ( GfxFont *gfxFont, fp_t m11, fp_t m12, fp_t m21, fp_t m22 )
+{
+	static QDict<QOutFontSubst> stdfonts;
+
+	// build dict for std. fonts on first invocation
+	if ( stdfonts. isEmpty ( )) {
+		for ( QOutFontSubst *ptr = qPixmapStdFonts; ptr-> m_name; ptr++ ) {
+			stdfonts. insert ( QString ( ptr-> m_name ), ptr );
+		}
+	}
+
+	// compute size and normalized transform matrix
+	int size = round ( sqrt ( m21 * m21 + m22 * m22 ));
+
+	QPDFDBG( printf ( "SET FONT: Name=%s, Size=%d, Bold=%d, Italic=%d, Mono=%d, Serif=%d, Symbol=%d, CID=%d, EmbFN=%s, M=(%f,%f,%f,%f)\n",
+	         (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" ),
+	         size,
+	         gfxFont-> isBold ( ),
+	         gfxFont-> isItalic ( ),
+	         gfxFont-> isFixedWidth ( ),
+	         gfxFont-> isSerif ( ),
+	         gfxFont-> isSymbolic ( ),
+	         gfxFont-> isCIDFont ( ),
+	         ( gfxFont-> getEmbeddedFontName ( ) ? gfxFont-> getEmbeddedFontName ( ) : "<n/a>" ),
+	         (double) m11, (double) m12, (double) m21, (double) m22 ));
+
+
+	QString fname (( gfxFont-> getName ( )) ? gfxFont-> getName ( )-> getCString ( ) : "<n/a>" );
+
+	QFont f;
+	f. setPixelSize ( size > 0 ? size : 8 ); // type3 fonts misbehave sometimes
+
+	// fast lookup for std. fonts
+	QOutFontSubst *subst = stdfonts [fname];
+
+	if ( subst ) {
+		if ( subst-> m_sname )
+			f. setFamily ( subst-> m_sname );
+		f. setStyleHint ( subst-> m_hint, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));
+		f. setBold ( subst-> m_bold );
+		f. setItalic ( subst-> m_italic );
+	}
+	else {
+		QFont::StyleHint sty;
+
+		if ( gfxFont-> isSerif ( ))
+			sty = QFont::Serif;
+		else if ( gfxFont-> isFixedWidth ( ))
+			sty = QFont::TypeWriter;
+		else
+			sty = QFont::Helvetica;
+
+		f. setStyleHint ( sty, (QFont::StyleStrategy) ( QFont::PreferOutline | QFont::PreferQuality ));
+		f. setBold ( gfxFont-> isBold ( ) > 0 );
+		f. setItalic ( gfxFont-> isItalic ( ) > 0 );
+		f. setFixedPitch ( gfxFont-> isFixedWidth ( ) > 0 );
+
+		// common specifiers in font names
+		if ( fname. contains ( "Oblique" ) || fname. contains ( "Italic" ))
+			f. setItalic ( true );
+		if ( fname. contains ( "Bold" ))
+			f. setWeight ( QFont::Bold );
+		if ( fname. contains ( "Demi" ))
+			f. setWeight ( QFont::DemiBold );
+		if ( fname. contains ( "Light" ))
+			f. setWeight ( QFont::Light );
+		if ( fname. contains ( "Black" ))
+			f. setWeight ( QFont::Black );
+	}
+	// Treat x-sheared fonts as italic
+	if (( m12 > -0.1 ) && ( m12 < 0.1 ) && ((( m21 > -5.0 ) && ( m21 < -0.1 )) || (( m21 > 0.1 ) && ( m21 < 5.0 )))) {
+		f. setItalic ( true );
+	}
+	return f;
+}
+
+//------------------------------------------------------------------------
+// QOutputDevPixmap
+//------------------------------------------------------------------------
+
+QOutputDevPixmap::QOutputDevPixmap () : m_pixmap(0), m_painter(0)
+{
+	// create text object
+	m_text = new TextPage ( gFalse );
+}
+
+QOutputDevPixmap::~QOutputDevPixmap ( )
+{
+	// could be NULL
+	if (m_pixmap) delete m_pixmap;
+
+	delete m_text;
+}
+
+
+void QOutputDevPixmap::startPage ( int /*pageNum*/, GfxState *state )
+{
+	if (m_painter) delete m_painter;
+	if (m_pixmap) delete m_pixmap;
+
+	m_pixmap = new QPixmap ( round ( state-> getPageWidth ( )), round ( state-> getPageHeight ( )));
+	m_painter = new QPainter ( m_pixmap );
+
+	QPDFDBG( printf ( "NEW PIXMAP (%ld x %ld)\n", round ( state-> getPageWidth ( )),  round ( state-> getPageHeight ( ))));
+
+	m_pixmap-> fill ( Qt::white ); // clear window
+	m_text-> clear ( ); // cleat text object
+}
+
+void QOutputDevPixmap::endPage ( )
+{
+	m_text-> coalesce ( true );
+
+	delete m_painter;
+	m_painter = 0;
+}
+
+void QOutputDevPixmap::drawLink ( Link *link, Catalog /* *catalog */ )
+{
+	fp_t x1, y1, x2, y2, w;
+
+	link-> getBorder ( &x1, &y1, &x2, &y2, &w );
+
+	if ( w > 0 ) {
+		int x, y, dx, dy;
+
+		cvtUserToDev ( x1, y1, &x,  &y );
+		cvtUserToDev ( x2, y2, &dx, &dy );
+
+		QPen oldpen = m_painter-> pen ( );
+		m_painter-> setPen ( Qt::blue );
+		m_painter-> drawRect ( x, y, dx, dy );
+		m_painter-> setPen ( oldpen );
+	}
+}
+
+void QOutputDevPixmap::saveState ( GfxState */*state*/ )
+{
+	QPDFDBG( printf ( "SAVE (CLIP=%d/%d)\n",  m_painter-> hasClipping ( ), !m_painter-> clipRegion ( ). isEmpty ( )));
+
+	m_painter-> save ( );
+}
+
+void QOutputDevPixmap::restoreState ( GfxState */*state*/ )
+{
+    if (! m_painter) return;
+	m_painter-> restore ( );
+
+//	m_painter-> setClipRegion ( QRect ( 0, 0, m_pixmap-> width ( ), m_pixmap-> height ( )));
+//	m_painter-> setClipping ( false );
+	QPDFDBG ( printf ( "RESTORE (CLIP=%d/%d)\n", m_painter-> hasClipping ( ), !m_painter-> clipRegion ( ). isEmpty ( )));
+}
+
+void QOutputDevPixmap::updateAll ( GfxState *state )
+{
+	updateLineAttrs ( state, gTrue );
+//	updateFlatness ( state );
+//	updateMiterLimit ( state );
+	updateFillColor ( state );
+	updateStrokeColor ( state );
+	updateFont ( state );
+}
+
+void QOutputDevPixmap::updateCTM ( GfxState *state, fp_t /*m11*/, fp_t /*m12*/, fp_t /*m21*/, fp_t /*m22*/, fp_t /*m31*/, fp_t /*m32*/ )
+{
+	updateLineAttrs ( state, gTrue );
+}
+
+void QOutputDevPixmap::updateLineDash ( GfxState *state )
+{
+	updateLineAttrs ( state, gTrue );
+}
+
+void QOutputDevPixmap::updateFlatness ( GfxState */*state*/ )
+{
+	// not supported
+	QPDFDBG( printf ( "updateFlatness not supported !\n" ));
+}
+
+void QOutputDevPixmap::updateLineJoin ( GfxState *state )
+{
+	updateLineAttrs ( state, gFalse );
+}
+
+void QOutputDevPixmap::updateLineCap ( GfxState *state )
+{
+	updateLineAttrs ( state, gFalse );
+}
+
+// unimplemented
+void QOutputDevPixmap::updateMiterLimit ( GfxState */*state*/ )
+{
+	QPDFDBG( printf ( "updateMiterLimit not supported !\n" ));
+}
+
+void QOutputDevPixmap::updateLineWidth ( GfxState *state )
+{
+	updateLineAttrs ( state, gFalse );
+}
+
+void QOutputDevPixmap::updateLineAttrs ( GfxState *state, GBool updateDash )
+{
+	fp_t *dashPattern;
+	int dashLength;
+	fp_t dashStart;
+
+	Qt::PenCapStyle  cap;
+	Qt::PenJoinStyle join;
+	int width;
+
+	width = round ( state-> getTransformedLineWidth ( ));
+
+	switch ( state-> getLineCap ( )) {
+		case 0: cap = Qt::FlatCap; break;
+		case 1: cap = Qt::RoundCap; break;
+		case 2: cap = Qt::SquareCap; break;
+		default:
+			qWarning ( "Bad line cap style (%d)\n", state-> getLineCap ( ));
+			cap = Qt::FlatCap;
+			break;
+	}
+
+	switch (state->getLineJoin()) {
+		case 0: join = Qt::MiterJoin; break;
+		case 1: join = Qt::RoundJoin; break;
+		case 2: join = Qt::BevelJoin; break;
+		default:
+			qWarning ( "Bad line join style (%d)\n", state->getLineJoin ( ));
+			join = Qt::MiterJoin;
+			break;
+	}
+
+	state-> getLineDash ( &dashPattern, &dashLength, &dashStart );
+
+	QColor oldcol = m_painter-> pen ( ). color ( );
+	GfxRGB rgb;
+
+	state-> getStrokeRGB ( &rgb );
+	oldcol = q_col ( rgb );
+
+	m_painter-> setPen ( QPen ( oldcol, width, dashLength > 0 ? Qt::DashLine : Qt::SolidLine, cap, join ));
+
+	if ( updateDash && ( dashLength > 0 )) {
+		// Not supported by QT
+/*
+		char dashList[20];
+		if (dashLength > 20)
+			dashLength = 20;
+		for ( int i = 0; i < dashLength; ++i ) {
+			dashList[i] = xoutRound(state->transformWidth(dashPattern[i]));
+			if (dashList[i] == 0)
+				dashList[i] = 1;
+		}
+		XSetDashes(display, strokeGC, xoutRound(dashStart), dashList, dashLength);
+*/
+	}
+}
+
+void QOutputDevPixmap::updateFillColor ( GfxState *state )
+{
+	GfxRGB rgb;
+	state-> getFillRGB ( &rgb );
+
+	m_painter-> setBrush ( q_col ( rgb ));
+}
+
+void QOutputDevPixmap::updateStrokeColor ( GfxState *state )
+{
+	GfxRGB rgb;
+	state-> getStrokeRGB ( &rgb );
+
+	QPen pen = m_painter-> pen ( );
+	pen. setColor ( q_col ( rgb ));
+	m_painter-> setPen ( pen );
+}
+
+void QOutputDevPixmap::updateFont ( GfxState *state )
+{
+	fp_t m11, m12, m21, m22;
+	GfxFont *gfxFont = state-> getFont ( );
+
+	if ( !gfxFont )
+		return;
+
+	state-> getFontTransMat ( &m11, &m12, &m21, &m22 );
+	m11 *= state-> getHorizScaling ( );
+	m12 *= state-> getHorizScaling ( );
+
+	QFont font = matchFont ( gfxFont, m11, m12, m21, m22 );
+
+	m_painter-> setFont ( font );
+	m_text-> updateFont ( state );
+}
+
+void QOutputDevPixmap::stroke ( GfxState *state )
+{
+	QPointArray points;
+	QMemArray<int> lengths;
+
+	// transform points
+	int n = convertPath ( state, points, lengths );
+
+	QPDFDBG( printf ( "DRAWING: %d POLYS\n", n ));
+
+	// draw each subpath
+	int j = 0;
+	for ( int i = 0; i < n; i++ ) {
+		int len = lengths [i];
+
+		if ( len >= 2 ) {
+			QPDFDBG( printf ( " - POLY %d: ", i ));
+			QPDFDBG( for ( int ii = 0; ii < len; ii++ ))
+				QPDFDBG( printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( )));
+			QPDFDBG( printf ( "\n" ));
+
+			m_painter-> drawPolyline ( points, j, len );
+		}
+		j += len;
+	}
+}
+
+void QOutputDevPixmap::fill ( GfxState *state )
+{
+	doFill ( state, true );
+}
+
+void QOutputDevPixmap::eoFill ( GfxState *state )
+{
+	doFill ( state, false );
+}
+
+//
+//  X doesn't color the pixels on the right-most and bottom-most
+//  borders of a polygon.  This means that one-pixel-thick polygons
+//  are not colored at all.  I think this is supposed to be a
+//  feature, but I can't figure out why.  So after it fills a
+//  polygon, it also draws lines around the border.  This is done
+//  only for single-component polygons, since it's not very
+//  compatible with the compound polygon kludge (see convertPath()).
+//
+void QOutputDevPixmap::doFill ( GfxState *state, bool winding )
+{
+	QPointArray points;
+	QMemArray<int> lengths;
+
+	// transform points
+	int n = convertPath ( state, points, lengths );
+
+	QPDFDBG( printf ( "FILLING: %d POLYS\n", n ));
+
+	QPen oldpen = m_painter-> pen ( );
+	m_painter-> setPen ( QPen ( Qt::NoPen ));
+
+	// draw each subpath
+	int j = 0;
+	for ( int i = 0; i < n; i++ ) {
+		int len = lengths [i];
+
+		if ( len >= 3 ) {
+			QPDFDBG( printf ( " - POLY %d: ", i ));
+			QPDFDBG( for ( int ii = 0; ii < len; ii++ ))
+				QPDFDBG( printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( )));
+			QPDFDBG( printf ( "\n" ));
+
+			m_painter-> drawPolygon ( points, winding, j, len );
+		}
+		j += len;
+	}
+	m_painter-> setPen ( oldpen );
+
+}
+
+void QOutputDevPixmap::clip ( GfxState *state )
+{
+	doClip ( state, true );
+}
+
+void QOutputDevPixmap::eoClip ( GfxState *state )
+{
+	doClip ( state, false );
+}
+
+void QOutputDevPixmap::doClip ( GfxState *state, bool winding )
+{
+	QPointArray points;
+	QMemArray<int> lengths;
+
+	// transform points
+	int n = convertPath ( state, points, lengths );
+
+	QRegion region;
+
+	QPDFDBG( printf ( "CLIPPING: %d POLYS\n", n ));
+
+	// draw each subpath
+	int j = 0;
+	for ( int i = 0; i < n; i++ ) {
+		int len = lengths [i];
+
+		if ( len >= 3 ) {
+			QPointArray dummy;
+			dummy. setRawData ( points. data ( ) + j, len );
+
+			QPDFDBG( printf ( " - POLY %d: ", i ));
+			QPDFDBG( for ( int ii = 0; ii < len; ii++ ) printf ( "(%d/%d) ", points [j+ii]. x ( ), points [j+ii]. y ( )));
+			QPDFDBG( printf ( "\n" ));
+
+			region |= QRegion ( dummy, winding );
+
+			dummy. resetRawData ( points. data ( ) + j, len );
+		}
+		j += len;
+	}
+
+	if ( m_painter-> hasClipping ( ))
+		region &= m_painter-> clipRegion ( );
+
+//	m_painter-> setClipRegion ( region );
+//	m_painter-> setClipping ( true );
+
+//	m_painter-> fillRect ( 0, 0, m_pixmap-> width ( ), m_pixmap-> height ( ), red );
+//	m_painter-> drawText ( points [0]. x ( ) + 10, points [0]. y ( ) + 10, "Bla bla" );
+}
+
+//
+// Transform points in the path and convert curves to line segments.
+// Builds a set of subpaths and returns the number of subpaths.
+// If <fillHack> is set, close any unclosed subpaths and activate a
+// kludge for polygon fills:  First, it divides up the subpaths into
+// non-overlapping polygons by simply comparing bounding rectangles.
+// Then it connects subaths within a single compound polygon to a single
+// point so that X can fill the polygon (sort of).
+//
+int QOutputDevPixmap::convertPath ( GfxState *state, QPointArray &points, QMemArray<int> &lengths )
+{
+	GfxPath *path = state-> getPath ( );
+	int n = path-> getNumSubpaths ( );
+
+	lengths. resize ( n );
+
+	// do each subpath
+	for ( int i = 0; i < n; i++ ) {
+		// transform the points
+		lengths [i] = convertSubpath ( state, path-> getSubpath ( i ), points );
 	}
 
 	return n;
@@ -79,18 +557,27 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 	int i = 0;
 
 	while ( i < m ) {
-		if ( i >= 1 && subpath->getCurve ( i )) {
-			state->transform( subpath->getX( i - 1 ), subpath->getY( i - 1 ), &x0, &y0 );
-			state->transform( subpath->getX( i ),     subpath->getY( i ),     &x1, &y1 );
-			state->transform( subpath->getX( i + 1 ), subpath->getY( i + 1 ), &x2, &y2 );
-			state->transform( subpath->getX( i + 2 ), subpath->getY( i + 2 ), &x3, &y3 );
+		if ( i >= 1 && subpath-> getCurve ( i )) {
+			state-> transform ( subpath-> getX ( i - 1 ), subpath-> getY ( i - 1 ), &x0, &y0 );
+			state-> transform ( subpath-> getX ( i ),     subpath-> getY ( i ),     &x1, &y1 );
+			state-> transform ( subpath-> getX ( i + 1 ), subpath-> getY ( i + 1 ), &x2, &y2 );
+			state-> transform ( subpath-> getX ( i + 2 ), subpath-> getY ( i + 2 ), &x3, &y3 );
 
 			QPointArray tmp;
-			tmp.setPoints ( 4, round ( x0 ), round ( y0 ), round ( x1 ), round ( y1 ),
+			tmp. setPoints ( 4, round ( x0 ), round ( y0 ), round ( x1 ), round ( y1 ),
 			                    round ( x2 ), round ( y2 ), round ( x3 ), round ( y3 ));
 
-			tmp = tmp.cubicBezier();
-			points.putPoints ( points.count(), tmp. count(), tmp );
+#if QT_VERSION < 300
+			tmp = tmp. quadBezier ( );
+
+			for ( uint loop = 0; loop < tmp. count ( ); loop++ ) {
+				QPoint p = tmp. point ( loop );
+				points. putPoints ( points. count ( ), 1, p. x ( ), p. y ( ));
+			}
+#else
+			tmp = tmp. cubicBezier ( );
+			points. putPoints ( points. count ( ), tmp. count ( ), tmp );
+#endif
 
 			i += 3;
 		}
@@ -105,7 +592,7 @@ int QOutputDevPixmap::convertSubpath ( GfxState *state, GfxSubpath *subpath, QPo
 }
 
 
-void QOutputDevPixmap::beginString ( GfxState *state, GString * /*s*/ )
+void QOutputDevPixmap::beginString ( GfxState *state, GString */*s*/ )
 {
 	m_text-> beginWord ( state, state->getCurX(), state->getCurY() );
 }

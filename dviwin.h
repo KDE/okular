@@ -203,6 +203,7 @@ private:
  KShellProcess      *proc;
  KPrinter           *export_printer;
  QString             export_fileName;
+ QString             export_tmpFileName;
 };
 
 

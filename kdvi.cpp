@@ -31,6 +31,8 @@
 #include <kglobal.h>
 #include <kconfig.h>
 
+#include <kio/netaccess.h>
+
 #include "kdvi.h"
 #include "scrbox.h"
 #include "print.h"
@@ -433,10 +435,13 @@ void kdvi::fileOpen()
 		dir = QFileInfo( dviName ).dirPath();	
 
 	message( i18n("File open dialog is open") );
-	QString f = KFileDialog::getOpenFileName( dir, "*.dvi");
+	KURL url = KFileDialog::getOpenURL( dir, "*.dvi");
 	message( "" );
 
+	QString f;
+	KIO::NetAccess::download( url, f );
 	openFile( f );
+	KIO::NetAccess::removeTempFile( f );
 }
 
 void kdvi::fileExit()

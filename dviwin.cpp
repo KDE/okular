@@ -212,21 +212,33 @@ void dviWindow::drawPage(documentPage *page)
     colorStack.clear();
     globalColor = Qt::black;
 
-    foreGroundPaint.begin( &(currentlyDrawnPixmap) );
-    QApplication::setOverrideCursor( waitCursor );
-    errorMsg = QString::null;
-    draw_page();
-    foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
-    foreGroundPaint.end();
-    QApplication::restoreOverrideCursor();
-    if (errorMsg.isEmpty() != true) {
-      KMessageBox::detailedError(parentWidget,
-				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
-				      "likely this means that the DVI file is broken.</qt>"),
-				 errorMsg, i18n("DVI File Error"));
+    // Check if all the fonts are loaded. If that is not the case, we
+    // return and do not draw anything. The font_pool will later emit
+    // the signal "fonts_are_loaded" and thus trigger a redraw of the
+    // page.
+    if (font_pool.check_if_fonts_filenames_are_looked_up() == true) {
+      foreGroundPaint.begin( &(currentlyDrawnPixmap) );
+      QApplication::setOverrideCursor( waitCursor );
       errorMsg = QString::null;
-      currentlyDrawnPage = 0;
-      return;
+      draw_page();
+      foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
+      foreGroundPaint.end();
+      QApplication::restoreOverrideCursor();
+      page->isEmpty = false;
+      if (errorMsg.isEmpty() != true) {
+	KMessageBox::detailedError(parentWidget,
+				   i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
+					"likely this means that the DVI file is broken.</qt>"),
+				   errorMsg, i18n("DVI File Error"));
+	errorMsg = QString::null;
+	currentlyDrawnPage = 0;
+	return;
+      }
+    } else {
+      foreGroundPaint.begin( &(currentlyDrawnPixmap) );
+      errorMsg = QString::null;
+      foreGroundPaint.drawRect(0, 0, currentlyDrawnPixmap.width(), currentlyDrawnPixmap.height());
+      foreGroundPaint.end();
     }
     
     // Tell the user (once) if the DVI file contains source specials
@@ -636,7 +648,7 @@ void dviWindow::all_fonts_loaded(fontPool *)
   // means that the document will be drawn twice.
   if (dviFile->suggestedPageSize != 0)
     emit( documentSpecifiedPageSize(*(dviFile->suggestedPageSize)) );
-  emit(needsRepainting());
+  //@@@@  emit(needsRepainting());
 
 
   // case 1: The reference is a number, which we'll interpret as a

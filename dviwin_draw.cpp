@@ -584,13 +584,6 @@ void dviWindow::draw_page(void)
   currentlyDrawnPage->textLinkList.resize(0);
   currentlyDrawnPage->sourceHyperLinkList.resize(0);
 
-  // Check if all the fonts are loaded. If that is not the case, we
-  // return and do not draw anything. The font_pool will later emit
-  // the signal "fonts_are_loaded" and thus trigger a redraw of the
-  // page.
-  if (font_pool.check_if_fonts_filenames_are_looked_up() == false)
-    return;
-
 #ifdef PERFORMANCE_MEASUREMENT
   // If this is the first time a page is drawn, take the time that is
   // elapsed till the kdvi_multipage was constructed, and print

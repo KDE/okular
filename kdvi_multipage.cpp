@@ -103,7 +103,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   connect(window, SIGNAL(prescanDone()), this, SLOT(generateDocumentWidgets()));
   connect(window, SIGNAL(setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   connect(window, SIGNAL(documentSpecifiedPageSize(const pageSize&)), this, SIGNAL( documentSpecifiedPageSize(const pageSize&)) );
-  connect(window, SIGNAL(needsRepainting()), &currentPage, SLOT(clear()));
+  connect(window, SIGNAL(needsRepainting()), this, SLOT(repaintAllVisibleWidgets()));
   docInfoAction    = new KAction(i18n("Document &Info"), 0, window, SLOT(showInfo()), actionCollection(), "info_dvi");
 
 
@@ -160,10 +160,58 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 }
 
 
+void KDVIMultiPage::repaintAllVisibleWidgets(void)
+{
+#ifdef KDVI_MULTIPAGE_DEBUG
+  kdDebug(4300) << "KDVIMultiPage::repaintAllVisibleWidgets(void) called" << endl;
+#endif
+
+  // Clear the page cache
+  currentPage.clear();
+
+  // Go through the list of widgets and resize them, if necessary
+  bool everResized = false;
+  for(Q_UINT16 i=0; i<widgetList.size(); i++) {
+    documentWidget *dviWidget = (documentWidget *)(widgetList[i]);
+    if (dviWidget == 0)
+      continue;
+   
+    // Resize, if necessary
+    QSize sop = window->sizeOfPage(i+1);
+    if (sop != dviWidget->size()) {
+      dviWidget->resize( window->sizeOfPage(i+1) );
+      everResized = true;
+    }
+  }
+
+  // If at least one widget was resized, all widgets should be
+  // re-aligned. This will automatically update all necessary
+  // widget. If no widgets were resized, go through the list of
+  // widgets again, and update those that are visible
+  if (everResized == true)
+    scrollView()->centerContents();
+  else {
+    QRect visiblRect(scrollView()->contentsX(), scrollView()->contentsY(), scrollView()->visibleWidth(), scrollView()->visibleHeight());
+    for(Q_UINT16 i=0; i<widgetList.size(); i++) {
+      documentWidget *dviWidget = (documentWidget *)(widgetList[i]);
+      if (dviWidget == 0)
+	continue;
+    
+      // Check visibility, and update
+      QRect widgetRect(scrollView()->childX(dviWidget), scrollView()->childY(dviWidget), dviWidget->width(), dviWidget->height() );
+      if (widgetRect.intersects(visiblRect))
+	dviWidget->update();
+    }
+  }
+}
+
+
 void KDVIMultiPage::generateDocumentWidgets(void)
 {
+#ifdef KDVI_MULTIPAGE_DEBUG
   kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) called" << endl;
-
+#endif
+  
   widgetList.setAutoDelete(true);
   if (viewModeAction->currentItem() == KVS_SinglePage)
     widgetList.resize(1);
@@ -175,20 +223,23 @@ void KDVIMultiPage::generateDocumentWidgets(void)
   for(Q_UINT16 i=0; i<widgetList.size(); i++) {
     dviWidget = (documentWidget *)(widgetList[i]);
     if (dviWidget == 0) {
-      dviWidget = new documentWidget(scrollView()->viewport(), &currentPage, &userSelection, "singlePageWidget" );
+      dviWidget = new documentWidget(scrollView()->viewport(), scrollView(), window->sizeOfPage(i+1), &currentPage, &userSelection, "singlePageWidget" );
       widgetList.insert(i, dviWidget);
-    }
-    dviWidget->setPageNumber(i+1);
-    dviWidget->show();
-
-    connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
-    connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), window,
-	    SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
-    connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-    connect(window, SIGNAL(needsRepainting()), dviWidget, SLOT(update()));
+      dviWidget->setPageNumber(i+1);
+      dviWidget->show();
+      
+      connect(dviWidget, SIGNAL(localLink(const QString &)), window, SLOT(handleLocalLink(const QString &)));
+      connect(dviWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), window,
+	      SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
+      connect(dviWidget, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+    } else
+      dviWidget->setPageNumber(i+1);
   }
 
   scrollView()->addChild(&widgetList);
+#ifdef KDVI_MULTIPAGE_DEBUG
+  kdDebug(4300) << "KDVIMultiPage::generateDocumentWidgets(void) ended" << endl;
+#endif
 }
 
 
@@ -268,7 +319,6 @@ void KDVIMultiPage::slotSave()
     out.close();
     window->dviFile->isModified = false;
   }
-
   return;
 }
 
@@ -283,7 +333,6 @@ void KDVIMultiPage::slotSave_defaultFilename()
     out.close();
     window->dviFile->isModified = false;
   }
-
   return;
 }
 
@@ -410,6 +459,7 @@ QStringList KDVIMultiPage::fileFormats()
   r << i18n("*.dvi *.DVI|TeX Device Independent Files (*.dvi)");
   return r;
 }
+
 
 bool KDVIMultiPage::gotoPage(int page)
 {

@@ -13,6 +13,7 @@
 #include <qtimer.h> 
 #include <qwidget.h> 
 
+class CenteringScrollview;
 class documentPageCache;
 class QPaintEvent;
 class QMouseEvent;
@@ -23,7 +24,7 @@ class documentWidget : public QWidget
   Q_OBJECT
 
 public:
-  documentWidget(QWidget *parent, documentPageCache *cache, selection *documentSelection, const char *name);
+  documentWidget(QWidget *parent, CenteringScrollview *sv, QSize size, documentPageCache *cache, selection *documentSelection, const char *name);
 
 
   void          setPageNumber(Q_UINT16 pageNr);
@@ -76,6 +77,10 @@ private:
   QPoint       firstSelectedPoint;
   QRect        selectedRectangle;
 
+  /** Pointer to the CenteringScrollview that contains this
+      widget. This pointer is used in the re-implementation of the
+      paintEvent() method ---see the explanation there. */
+  CenteringScrollview *scrollView;
   documentPageCache *documentCache;
   selection *DVIselection;
 };

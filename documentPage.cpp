@@ -8,6 +8,7 @@ documentPage::documentPage()
   textLinkList.reserve(250);
   pageNumber = 0;
   isPixmapSet = false;
+  isEmpty = true;
 }
 
 
@@ -37,8 +38,9 @@ void documentPage::clear()
   hyperLinkList.clear();
   
   isPixmapSet = false;
-  pixmap.isNull();
-  pixmap.resize(0, 0);
+  isEmpty = true;
+  if (!pixmap.isNull())
+    pixmap.resize(0, 0);
 }
 
 

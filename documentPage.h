@@ -67,6 +67,10 @@ class documentPage: public QObject
   QValueVector<DVI_Hyperlink> textLinkList; // List of text in the window
   QValueVector<DVI_Hyperlink> hyperLinkList; // List of ordinary hyperlinks
 
+  // set to 'false' in the constructor, set to 'true' by the renderer,
+  // if something really has been redered
+  bool isEmpty;
+
  public slots:
   /** Clears the contents of the class, but leaves pageNumber intact,
       and does not free the memory for the QValueVectors so the

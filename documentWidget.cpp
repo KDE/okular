@@ -15,6 +15,7 @@
 #include <qcursor.h>
 #include <qpainter.h>
 
+#include "../kviewshell/centeringScrollview.h"
 #include "documentPage.h"
 #include "documentPageCache.h"
 #include "documentWidget.h"
@@ -23,7 +24,7 @@
 //#define DEBUG_DOCUMENTWIDGET
 
 
-documentWidget::documentWidget(QWidget *parent, documentPageCache *cache, selection *documentSelection, const char *name )
+documentWidget::documentWidget(QWidget *parent, CenteringScrollview *sv, QSize size, documentPageCache *cache, selection *documentSelection, const char *name )
   : QWidget( parent, name )
 {
   // Variables used in animation.
@@ -31,9 +32,10 @@ documentWidget::documentWidget(QWidget *parent, documentPageCache *cache, select
   timerIdent       = 0;
   documentCache    = cache;
   DVIselection     = documentSelection;
+  scrollView       = sv;
 
   setMouseTracking(true);
-  resize(100,100);
+  resize(size);
 
   setBackgroundMode(Qt::NoBackground);
 }
@@ -73,6 +75,22 @@ void documentWidget::paintEvent(QPaintEvent *e)
 #ifdef DEBUG_DOCUMENTWIDGET
   kdDebug(4300) << "documentWidget::paintEvent() called" << endl;
 #endif
+
+  // Check if this widget is really visible to the user. If not, there
+  // is nothing to do. Remark: if we don't do this, then under QT
+  // 3.2.3 the following happens: when the user changes the zoom
+  // value, all those widgets are updated which the user has EVER
+  // seen, not just those that are visible at the moment. If the
+  // document contains several thousand pages, it is easily possible
+  // that this means that a few hundred of the are re-painted (which
+  // takes substantial time) although only three widgets are visible
+  // and *should* be upadated. I believe this is some error in QT, but
+  // I am not positive about that ---Stefan Kebekus.
+  QRect visiblRect(scrollView->contentsX(), scrollView->contentsY(), scrollView->visibleWidth(), scrollView->visibleHeight());
+  QRect widgetRect(scrollView->childX(this), scrollView->childY(this), width(), height() );
+  if (!widgetRect.intersects(visiblRect))
+    return;
+
 
   documentPage *pageData = documentCache->getPage(pageNr);
   if (pageData == 0) {

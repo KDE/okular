@@ -4,6 +4,9 @@
 #include "documentPageCache.h"
 #include "dviwin.h"
 
+//#define documentPageCache_DEBUG
+
+
 documentPageCache::documentPageCache() 
 {
   renderer = 0;
@@ -19,13 +22,18 @@ documentPageCache::~documentPageCache()
 
 void documentPageCache::setRenderer(dviWindow *_renderer)
 {
+  clear();
   renderer = _renderer;
 }
 
 
 documentPage *documentPageCache::getPage(Q_UINT16 pageNr)
 {
-  if ((currentPage != 0) && (currentPage->getPageNumber() == pageNr))
+#ifdef documentPageCache_DEBUG
+  kdDebug(4300) << "documentPageCache::getPage( pageNr=" << pageNr << " )" << endl;
+#endif
+
+  if ((currentPage != 0) && (currentPage->getPageNumber() == pageNr) && (currentPage->isEmpty == false))
     return currentPage;
 
   // Allocate a currentPage structure, if necessary
@@ -41,7 +49,7 @@ documentPage *documentPageCache::getPage(Q_UINT16 pageNr)
   currentPage->setPageNumber(pageNr);
   if (renderer != 0)
     renderer->drawPage(currentPage);
-
+  
   return currentPage;
 }
 

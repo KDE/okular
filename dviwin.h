@@ -103,6 +103,8 @@ public:
 
   documentPage  *currentlyDrawnPage;
 
+  QSize         sizeOfPage(Q_UINT16 page) {return currentlyDrawnPixmap.size();};
+
   class dvifile *dviFile;
 
   void          setPrefs(bool flag_showPS, bool flag_showHyperLinks, const QString &editorCommand, 

@@ -273,6 +273,8 @@ void PageView::notifyPixmapChanged( int pageNumber )
 void PageView::drawContents( QPainter * p, int cx, int cy, int cw, int ch )
 {
     QRect r = QRect( cx, cy, cw, ch );
+    if ( !r.isValid() )
+        return;
     //QRegion remaining( r );
 
     //kdDebug() << "repaint: " << r << endl;
@@ -647,7 +649,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
                 // copy text into the clipboard
                 QClipboard *cb = QApplication::clipboard();
-                QRect relativeRect = d->mouseSelectionRect;
+                QRect relativeRect = d->mouseSelectionRect.normalize();
                 relativeRect.moveBy( -d->activeItem->geometry().left(), -d->activeItem->geometry().top() );
                 const QString & selection = kpdfPage->getTextInRect( relativeRect, d->activeItem->zoomFactor() );
 
@@ -658,7 +660,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 // clear widget selection and invalidate rect
                 if ( !d->mouseSelectionRect.isNull() )
                     updateContents( d->mouseSelectionRect.normalize() );
-                d->mouseSelectionRect = QRect();
+                d->mouseSelectionRect.setCoords( 0, 0, -1, -1 );
             }
             break;
 
@@ -855,19 +857,13 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         default:{ //ZoomFixed case
             QString z = d->aZoom->currentText();
             newFactor = KGlobal::locale()->readNumber( z.remove( z.find( '%' ), 1 ) ) / 100.0;
-            if ( newFactor < 0.1 || newFactor > 8.0 )
-                return;
             }break;
         case ZoomIn:
-            newFactor += 0.1;
-            if ( newFactor >= 4.0 )
-                newFactor = 4.0;
+            newFactor += (newFactor > 1.0) ? 0.2 : 0.1;
             newZoomMode = ZoomFixed;
             break;
         case ZoomOut:
-            newFactor -= 0.1;
-            if ( newFactor <= 0.125 )
-                newFactor = 0.125;
+            newFactor -= (newFactor > 1.0) ? 0.2 : 0.1;
             newZoomMode = ZoomFixed;
             break;
         case ZoomFitWidth:
@@ -884,21 +880,26 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             d->zoomFactor = -1;
             break;
     }
+    if ( newFactor > 4.0 )
+        newFactor = 4.0;
+    if ( newFactor < 0.1 )
+        newFactor = 0.1;
 
     if ( newZoomMode != d->zoomMode || (newZoomMode == ZoomFixed && newFactor != d->zoomFactor ) )
     {
-        // rebuild layout and change the zoom selectAction contents
+        // rebuild layout and update the whole viewport
         d->zoomMode = newZoomMode;
         d->zoomFactor = newFactor;
         slotRelayoutPages();
+        // request pixmaps
+        slotRequestVisiblePixmaps();
+        // update zoom text
         updateZoomText();
         // update actions checked state
         d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
         d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
         d->aZoomFitRect->setChecked( false );
-        // request pixmaps
-        slotRequestVisiblePixmaps();
     }
 }
 
@@ -955,7 +956,7 @@ void PageView::slotRelayoutPages()
     int pageCount = d->pages.count();
     if ( pageCount < 1 )
     {
-        resizeContents( 0,0 );
+        resizeContents( 0, 0 );
         return;
     }
 
@@ -1020,7 +1021,7 @@ void PageView::slotRelayoutPages()
                 cIdx = 0;
                 rIdx++;
                 insertX = 0;
-                insertY += rHeight + (int)(5.0 + 15.0 * d->zoomFactor);
+                insertY += rHeight + 15; //(int)(5.0 + 15.0 * d->zoomFactor);
             }
         }
 
@@ -1059,13 +1060,10 @@ void PageView::slotRelayoutPages()
                     fullHeight = item->height();
                 cIdx++;
             }
-            else
-                item->setGeometry( 0,0, -1,-1 );
         }
 
         // 2) hide all widgets except the displayable ones and dispose those
-        int insertX = 0,
-            insertY = 10;   //TODO(int)(2.0 + 4.0 * d->zoomFactor);
+        int insertX = 0;
         cIdx = 0;
         for ( pIt = d->pages.begin(); pIt != pEnd; ++pIt )
         {
@@ -1074,11 +1072,12 @@ void PageView::slotRelayoutPages()
             {
                 // center widget inside 'cells'
                 item->moveTo( insertX + (colWidth[ cIdx ] - item->width()) / 2,
-                              insertY + (fullHeight - item->height()) / 2 );
+                              (fullHeight - item->height()) / 2 );
                 // advance col index
                 insertX += colWidth[ cIdx ];
                 cIdx++;
-            }
+            } else
+                item->setGeometry( 0, 0, -1, -1 );
         }
 
         for ( int i = 0; i < nCols; i++ )
@@ -1099,6 +1098,9 @@ void PageView::slotRelayoutPages()
         else
             center( fullWidth / 2, 0 );
     }
+
+    // 4) update the viewport since a relayout is a big operation
+    updateContents();
 
     // reset dirty state
     d->dirtyLayout = false;

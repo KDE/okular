@@ -752,7 +752,7 @@ action="seq"><keycap>M</keycap><keycap>x</keycap></keycombo>
 
     <para>The <guilabel>Preferences</guilabel> dialog can be reached
     by choosing <menuchoice><guimenu>Settings</guimenu>
-    <guimenuitem>DVI options</guimenuitem></menuchoice> in the
+    <guimenuitem>DVI Options</guimenuitem></menuchoice> in the
     <guimenu>Settings</guimenu> menu.</para>
 
     <para>The dialog consists of two tabs, <guilabel>Fonts</guilabel>

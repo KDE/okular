@@ -28,6 +28,7 @@ kdvipart_la_LIBADD = $(LIBFREETYPE_LIBS) -lkdeprint -lkparts \
 # Which sources should be compiled for squeeze.
 squeeze_SOURCES	= squeeze.c
 
+KDE_OPTIONS = nofinal
 
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = dvi.h dviwin.h optiondialog.h xdvi.h 

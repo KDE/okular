@@ -14,6 +14,8 @@
 #include <kstdaction.h>
 #include <kparts/genericfactory.h>
 
+#include "part.h"
+
 #include <kdebug.h>
 
 #include "GString.h"
@@ -23,9 +25,8 @@
 #include "XOutputDev.h"
 
 // #include "kpdf_canvas.h"
-// #include "kpdf_pagewidget.h"
+#include "kpdf_pagewidget.h"
 
-#include "part.h"
 
 typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory);
@@ -54,6 +55,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 			this, SLOT( pageClicked ( QListBoxItem * ) ));
 	
   m_outputDev = pdfpartview->outputdev;
+
+
   setWidget(pdfpartview);
 
   // create our actions
@@ -65,18 +68,18 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
   m_fitToWidth = new KToggleAction(i18n("Fit to Page &Width"), 0,
                        this, SLOT(slotFitToWidthToggled()),
                        actionCollection(), "fit_to_width");
-  KStdAction::zoomIn  (this, SLOT(zoomIn()),
+  KStdAction::zoomIn  (m_outputDev, SLOT(zoomIn()),
                        actionCollection(), "zoom_in");
-  KStdAction::zoomOut (this, SLOT(zoomOut()),
+  KStdAction::zoomOut (m_outputDev, SLOT(zoomOut()),
                        actionCollection(), "zoom_out");
 
   KStdAction::back    (this, SLOT(back()),
                        actionCollection(), "back");
   KStdAction::forward (this, SLOT(forward()),
                        actionCollection(), "forward");
-  KStdAction::prior   (this, SLOT(displayPreviousPage()), 
+  KStdAction::prior   (m_outputDev, SLOT(previousPage()), 
                        actionCollection(), "previous_page");
-  KStdAction::next    (this, SLOT(displayNextPage()),
+  KStdAction::next    (m_outputDev, SLOT(nextPage()),
                        actionCollection(), "next_page" );
 
   // set our XML-UI resource file
@@ -121,7 +124,7 @@ Part::openFile()
 
   if (!m_doc->isOk())
     return false;
-
+	
   // just for fun, set the status bar
   // emit setStatusBarText( QString::number( m_doc->getNumPages() ) );
 
@@ -136,6 +139,8 @@ Part::openFile()
 	pdfpartview->pagesListBox->update();
 	
   displayPage(1);
+	
+	m_outputDev->setPDFDocument(m_doc);
 
   return true;
 }
@@ -143,25 +148,6 @@ Part::openFile()
   void 
 Part::displayPage(int pageNumber, float /*zoomFactor*/)
 {
-	kdDebug() << "display page" << endl;
-	kdDebug() << "page : " << pageNumber << endl;
-	kdDebug() << "zoom factor : " << m_zoomFactor << endl;
-
-	Page * p = m_doc->getCatalog()->getPage(pageNumber);
-	
-	kdDebug() << "metadata stream : " << endl;
-	char * md = new char[4096];
-	
-	if (p->getMetadata())
-	{
-		while(p->getMetadata()->getLine(md, 4096) != NULL)
-		{
-			kdDebug() << md << endl;
-		}
-	}
-
-	kdDebug() << "------------" << endl;
-		
   if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
     return;
 
@@ -172,48 +158,47 @@ Part::displayPage(int pageNumber, float /*zoomFactor*/)
   const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
 
   switch (m_zoomMode)
-  {
-  case FitWidth:
-  {
-    const double pageAR = pageWidth/pageHeight; // Aspect ratio
+	{
+		case FitWidth:
+			{
+				const double pageAR = pageWidth/pageHeight; // Aspect ratio
 
-    const int canvasWidth    = m_outputDev->contentsRect().width();
-    const int canvasHeight   = m_outputDev->contentsRect().height();
-    const int scrollBarWidth = m_outputDev->verticalScrollBar()->width();
+				const int canvasWidth    = m_outputDev->contentsRect().width();
+				const int canvasHeight   = m_outputDev->contentsRect().height();
+				const int scrollBarWidth = m_outputDev->verticalScrollBar()->width();
 
-    // Calculate the height so that the page fits the viewport width 
-    // assuming that we need a vertical scrollbar.
-    float height = float(canvasWidth - scrollBarWidth) / pageAR;
+				// Calculate the height so that the page fits the viewport width 
+				// assuming that we need a vertical scrollbar.
+				float height = float(canvasWidth - scrollBarWidth) / pageAR;
 
-    // If the vertical scrollbar wasn't needed after all, calculate the page
-    // size so that the page fits the viewport width without the scrollbar.
-    if (ceil(height) <= canvasHeight)
-    {
-      height = float(canvasWidth) / pageAR;
+				// If the vertical scrollbar wasn't needed after all, calculate the page
+				// size so that the page fits the viewport width without the scrollbar.
+				if (ceil(height) <= canvasHeight)
+				{
+					height = float(canvasWidth) / pageAR;
 
-      // Handle the rare case that enlarging the page resulted in the need of 
-      // a vertical scrollbar. We can fit the page to the viewport height in
-      // this case.
-      if (ceil(height) > canvasHeight)
-        height = float(canvasHeight) * pageAR;
-    }
+					// Handle the rare case that enlarging the page resulted in the need of 
+					// a vertical scrollbar. We can fit the page to the viewport height in
+					// this case.
+					if (ceil(height) > canvasHeight)
+						height = float(canvasHeight) * pageAR;
+				}
 
-    m_zoomFactor = (height / pageHeight) / basePpp;
-    break;
-  }
-  case FixedFactor:
-  default:
-    break;
-  }
-
+				m_zoomFactor = (height / pageHeight) / basePpp;
+				break;
+			}
+		case FixedFactor:
+		default:
+			break;
+	}
 
   const float ppp = basePpp * m_zoomFactor; // pixels per point
 
-  m_doc->displayPage(m_outputDev, pageNumber, int(m_zoomFactor * ppp * 72.0), 0, true);
+//  m_doc->displayPage(m_outputDev, pageNumber, int(m_zoomFactor * ppp * 72.0), 0, true);
 
-  m_outputDev->show();
+//  m_outputDev->show();
 
-  m_currentPage = pageNumber;
+//  m_currentPage = pageNumber;
 }
 
   void
@@ -434,8 +419,7 @@ Part::redrawPage()
 void 
 Part::pageClicked ( QListBoxItem * qbi )
 {
-	m_currentPage = pdfpartview->pagesListBox->index(qbi);
-	update();
+	m_outputDev->setPage(pdfpartview->pagesListBox->index(qbi) + 1);
 }
 	
 BrowserExtension::BrowserExtension(Part* parent)

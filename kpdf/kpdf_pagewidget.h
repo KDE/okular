@@ -3,42 +3,65 @@
 
 #include <qpixmap.h>
 #include <qwidget.h>
+#include <qscrollview.h>
 
 class LinkAction;
 class PDFDoc;
 
+class QOutputDevPixmap;
+
 namespace KPDF
 {
-  /**
-   * Widget displaying a pixmap containing a PDF page and Links.
-   */
-  class PageWidget : public QWidget
-  {
-    Q_OBJECT
+	/**
+	 * Widget displaying a pixmap containing a PDF page and Links.
+	 */
+	class PageWidget : public QScrollView
+	{
+		Q_OBJECT
+     
+		enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor };
 
-  public:
-    PageWidget(QWidget* parent = 0, const char* name = 0);
+		public:
+			PageWidget(QWidget* parent = 0, const char* name = 0);
 
-    void setPixmap(const QPixmap&);
-    void setPDFDocument(PDFDoc*);
-    void setPixelsPerPoint(float);
-      // void setLinks();
+			void setPDFDocument(PDFDoc*);
+			void setPixelsPerPoint(float);
+			/* void setLinks(); */
+			
+			void setPage(int pagenum);
+			int getPage() { return m_currentPage; };
 
-  signals:
-    void linkClicked(LinkAction*);
+		public slots:
+			void nextPage();
+			void previousPage();
+			void zoomIn();
+			void zoomOut();
 
-  protected:
-    void mousePressEvent(QMouseEvent*);
-    void mouseReleaseEvent(QMouseEvent*);
-    void mouseMoveEvent(QMouseEvent*);
+			void updatePixmap();
 
-  private:
-    QPixmap m_pixmap;
-    PDFDoc* m_doc;
-    float   m_ppp; // Pixels per point
+		signals:
+			void linkClicked(LinkAction*);
 
-    LinkAction* m_pressedAction;
-  };
+		protected:
+			void contentsMousePressEvent(QMouseEvent*);
+			void contentsMouseReleaseEvent(QMouseEvent*);
+			void contentsMouseMoveEvent(QMouseEvent*);
+
+			virtual void drawContents ( QPainter *p, int, int, int, int );
+
+		private:
+
+			QOutputDevPixmap * m_outputdev;
+			PDFDoc* m_doc;
+			
+			float   m_ppp; // Pixels per point
+			float		m_zoomFactor;
+			ZoomMode m_zoomMode;
+
+			int m_currentPage;
+
+			LinkAction* m_pressedAction;
+	};
 }
 
 #endif

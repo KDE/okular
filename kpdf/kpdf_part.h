@@ -93,7 +93,7 @@ namespace KPDF
 
   private:
     PDFDoc*     m_doc;
-    QOutputDev* m_outputDev;
+    PageWidget* m_outputDev;
 		PDFPartView * pdfpartview;
 
     KToggleAction* m_fitToWidth;

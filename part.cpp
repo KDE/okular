@@ -252,13 +252,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// [SPEECH] check for KTTSD presence and usability
 	Settings::setUseKTTSD( true );
-	DCOPClient * client = DCOPClient::mainClient();
-	// Albert says is this ever necessary?
-	// we already attached on Part constructor
-	if ( !client->isAttached() )
-		client->attach();
-	if ( !client->isApplicationRegistered("kttsd") )
-		if ( KApplication::startServiceByName( "KTTSD" ) )
+	if ( !kapp->dcopClient()->isApplicationRegistered("kttsd") )
+		if ( KApplication::startServiceByDesktopName( "kttsd" ) )
 			Settings::setUseKTTSD( false );
 
 	// set our XML-UI resource file

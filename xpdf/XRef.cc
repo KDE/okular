@@ -111,7 +111,7 @@ ObjectStream::ObjectStream(XRef *xref, int objStrNumA) {
     goto err1;
   }
 
-  if (nObjects >= INT_MAX / (signed) sizeof(int)) {
+  if ((unsigned) nObjects >= INT_MAX / sizeof(int)) {
     error(-1, "Invalid 'nObjects'");
     goto err1;
   }
@@ -394,7 +394,7 @@ GBool XRef::readXRefTable(Parser *parser, Guint *pos) {
       if (newSize < 0) {
 	goto err1;
       }
-      if (newSize >= INT_MAX / (signed) sizeof(XRefEntry)) {
+      if ((unsigned) newSize >= INT_MAX / sizeof(XRefEntry)) {
         error(-1, "Invalid 'obj' parameters'");
         goto err1;
       }
@@ -504,7 +504,7 @@ GBool XRef::readXRefStream(Stream *xrefStr, Guint *pos) {
     goto err1;
   }
   if (newSize > size) {
-    if (newSize >= INT_MAX / (signed) sizeof(XRefEntry)) {
+    if ((unsigned) newSize >= INT_MAX / sizeof(XRefEntry)) {
       error(-1, "Invalid 'size' parameter.");
       return gFalse;
     }
@@ -598,7 +598,7 @@ GBool XRef::readXRefStreamSection(Stream *xrefStr, int *w, int first, int n) {
     if (newSize < 0) {
       return gFalse;
     }
-    if (newSize >= INT_MAX / (signed) sizeof(XRefEntry)) {
+    if ((unsigned) newSize >= INT_MAX / sizeof(XRefEntry)) {
       error(-1, "Invalid 'size' inside xref table.");
       return gFalse;
     }
@@ -737,7 +737,7 @@ GBool XRef::constructXRef() {
 		    error(-1, "Bad object number");
 		    return gFalse;
 		  }
-                  if (newSize >= INT_MAX / (signed) sizeof(XRefEntry)) {
+                  if ((unsigned) newSize >= INT_MAX / sizeof(XRefEntry)) {
                     error(-1, "Invalid 'obj' parameters.");
                     return gFalse;
                   }
@@ -764,7 +764,7 @@ GBool XRef::constructXRef() {
     } else if (!strncmp(p, "endstream", 9)) {
       if (streamEndsLen == streamEndsSize) {
 	streamEndsSize += 64;
-        if (streamEndsSize >= INT_MAX / (signed) sizeof(int)) {
+        if ((unsigned) streamEndsSize >= INT_MAX / sizeof(int)) {
           error(-1, "Invalid 'endstream' parameter.");
           return gFalse;
         }

@@ -259,47 +259,45 @@ bool PDFGenerator::print( KPrinter& printer )
     }
 }
 
-bool PDFGenerator::requestPixmap( int id, KPDFPage * page, int width, int height, bool syncronous )
+void PDFGenerator::requestPixmap( PixmapRequest * request, bool syncronous )
 {
     //kdDebug() << "id: " << id << " is requesting pixmap for page " << page->number() << " [" << width << " x " << height << "]." << endl;
     if ( syncronous )
     {
         // in-place Pixmap generation for syncronous requests
-        if ( !page->hasPixmap( id, width, height ) )
-        {
-            // compute dpi used to get an image with desired width and height
-            double fakeDpiX = width * 72.0 / page->width(),
-                   fakeDpiY = height * 72.0 / page->height();
+        KPDFPage * page = request->page;
+        if ( page->hasPixmap( request->id, request->width, request->height ) )
+            return;
 
-            // setup kpdf output device: text page is generated only if we are at 72dpi.
-            // since we can pre-generate the TextPage at the right res.. why not?
-            bool genTextPage = !page->hasSearchPage() && (width == page->width()) && (height == page->height());
-            // generate links and image rects if rendering pages on pageview
-            bool genRects = id == PAGEVIEW_ID;
-            kpdfOutputDev->setParams( width, height, genTextPage, genRects, genRects );
+        // compute dpi used to get an image with desired width and height
+        double fakeDpiX = request->width * 72.0 / page->width(),
+                fakeDpiY = request->height * 72.0 / page->height();
 
-            docLock.lock();
-            pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
-            docLock.unlock();
+        // setup kpdf output device: text page is generated only if we are at 72dpi.
+        // since we can pre-generate the TextPage at the right res.. why not?
+        bool genTextPage = !page->hasSearchPage() && (request->width == page->width()) &&
+                            (request->height == page->height());
+        // generate links and image rects if rendering pages on pageview
+        bool genRects = request->id == PAGEVIEW_ID;
+        kpdfOutputDev->setParams( request->width, request->height, genTextPage, genRects, genRects );
 
-            page->setPixmap( id, kpdfOutputDev->takePixmap() );
-            if ( genTextPage )
-                page->setSearchPage( kpdfOutputDev->takeTextPage() );
-            if ( genRects )
-                page->setRects( kpdfOutputDev->takeRects() );
+        docLock.lock();
+        pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genRects );
+        docLock.unlock();
 
-            // pixmap generated
-            return true;
-        }
+        page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
+        if ( genTextPage )
+            page->setSearchPage( kpdfOutputDev->takeTextPage() );
+        if ( genRects )
+            page->setRects( kpdfOutputDev->takeRects() );
+
+        // pixmap generated
+        contentsChanged( request->id, request->pageNumber );
     }
     else
     {
-        //TODO asyncronous events queuing
-        return false;
+        // TODO add the pixmaprequest in a queue ...
     }
-
-    // no pixmap generated
-    return false;
 }
 
 void PDFGenerator::requestTextPage( KPDFPage * page )

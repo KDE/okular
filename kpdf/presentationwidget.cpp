@@ -25,6 +25,7 @@
 // local includes
 #include "presentationwidget.h"
 #include "document.h"   // for PRESENTATION_ID
+#include "generator.h"
 #include "page.h"
 
 
@@ -113,7 +114,7 @@ void PresentationWidget::pageSetup( const QValueVector<KPDFPage*> & pageSet, boo
     {
         PresentationFrame * frame = new PresentationFrame();
         frame->page = *setIt;
-        frame->transType = Glitter; //TODO get transition from the document
+        frame->transType = NoTrans; //TODO get transition from the document
         frame->transDir = Left;
         // calculate frame geometry keeping constant aspect ratio
         float pageRatio = frame->page->ratio();
@@ -142,6 +143,12 @@ void PresentationWidget::pageSetup( const QValueVector<KPDFPage*> & pageSet, boo
     }
     m_metaStrings += i18n( "Pages: %1" ).arg( m_document->pages() );
     m_metaStrings += i18n( "Click to begin" );
+}
+
+bool PresentationWidget::canUnloadPixmap( int pageNumber )
+{
+    // can unload all pixmaps except for the currently visible one
+    return pageNumber != m_frameIndex;
 }
 
 void PresentationWidget::notifyPixmapChanged( int pageNumber )
@@ -462,7 +469,11 @@ void PresentationWidget::slotNextPage()
         // if pixmap not inside the KPDFPage we request it and wait for
         // notifyPixmapChanged call or else we proceed to pixmap generation
         if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-            m_document->requestPixmap( PRESENTATION_ID, m_frameIndex, pixW, pixH, true );
+        {
+            QValueList< PixmapRequest * > request;
+            request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
+            m_document->requestPixmaps( request, true );
+        }
         else
             generatePage();
     }
@@ -487,7 +498,11 @@ void PresentationWidget::slotPrevPage()
         // if pixmap not inside the KPDFPage we request it and wait for
         // notifyPixmapChanged call or else we can proceed to pixmap generation
         if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-            m_document->requestPixmap( PRESENTATION_ID, m_frameIndex, pixW, pixH, true );
+        {
+            QValueList< PixmapRequest * > request;
+            request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
+            m_document->requestPixmaps( request, true );
+        }
         else
             generatePage();
     }

@@ -16,6 +16,7 @@
 #include <kactioncollection.h>
 
 #include "thumbnaillist.h"
+#include "generator.h"
 #include "page.h"
 
 // ThumbnailWidget represents a single thumbnail in the ThumbnailList
@@ -76,29 +77,12 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 
 
 //BEGIN KPDFDocumentObserver inherited methods 
-void ThumbnailList::notifyPixmapChanged( int pageNumber )
-{
-    QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin(), thumbEnd = m_thumbnails.end();
-    for (; thumbIt != thumbEnd; ++thumbIt)
-        if ( (*thumbIt)->pageNumber() == pageNumber )
-        {
-            (*thumbIt)->update();
-            break;
-        }
-}
-
-void ThumbnailList::notifyPixmapsCleared()
-{
-    slotRequestPixmaps();
-}
-
 void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*documentChanged*/ )
 {
 	// delete all the Thumbnails
-	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
-	for ( ; thumbIt != thumbEnd; ++thumbIt )
-		delete *thumbIt;
+	QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+	for ( ; tIt != tEnd; ++tIt )
+		delete *tIt;
 	m_thumbnails.clear();
 	m_selected = 0;
 
@@ -118,10 +102,10 @@ void ThumbnailList::pageSetup( const QValueVector<KPDFPage*> & pages, bool /*doc
 	ThumbnailWidget *t;
 	int width = clipper()->width(),
 	    totalHeight = 0;
-	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin();
-	QValueVector<KPDFPage*>::const_iterator pageEnd = pages.end();
+	QValueVector<KPDFPage*>::const_iterator pageIt = pages.begin(), pageEnd = pages.end();
 	for (; pageIt != pageEnd ; ++pageIt)
-        if ( skipCheck || ( (*pageIt)->attributes() & KPDFPage::Highlight ) ) {
+		if ( skipCheck || ( (*pageIt)->attributes() & KPDFPage::Highlight ) )
+		{
 			t = new ThumbnailWidget( viewport(), *pageIt );
 			t->setFocusProxy( this );
 			// add to the scrollview
@@ -150,13 +134,12 @@ void ThumbnailList::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 
 	// select next page
 	m_vectorIndex = 0;
-	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
-	for (; thumbIt != thumbEnd; ++thumbIt)
+	QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+	for ( ; tIt != tEnd; ++tIt )
 	{
-		if ( (*thumbIt)->pageNumber() == pageNumber )
+		if ( (*tIt)->pageNumber() == pageNumber )
 		{
-			m_selected = *thumbIt;
+			m_selected = *tIt;
 			m_selected->setSelected( true );
 			ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, visibleHeight()/2 );
 			//non-centered version: ensureVisible( 0, itemTop + itemHeight/2, 0, itemHeight/2 );
@@ -166,23 +149,49 @@ void ThumbnailList::pageSetCurrent( int pageNumber, const QRect & /*viewport*/ )
 	}
 }
 
+bool ThumbnailList::canUnloadPixmap( int pageNumber )
+{
+    // if the thubnail 'pageNumber' is one of the visible ones, forbid unloading
+    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    for ( ; vIt != vEnd; ++vIt )
+        if ( (*vIt)->pageNumber() == pageNumber )
+            return false;
+    // if hidden permit unloading
+    return true;
+}
+
+void ThumbnailList::notifyPixmapChanged( int pageNumber )
+{
+    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    for ( ; vIt != vEnd; ++vIt )
+        if ( (*vIt)->pageNumber() == pageNumber )
+        {
+            (*vIt)->update();
+            break;
+        }
+}
+
+void ThumbnailList::notifyPixmapsCleared()
+{
+    slotRequestPixmaps();
+}
+
 
 void ThumbnailList::updateWidgets()
 {
     // find all widgets that intersects the viewport and update them
     QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
-    QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
-    for ( ; tIt != tEnd; ++tIt )
+    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    for ( ; vIt != vEnd; ++vIt )
     {
-        ThumbnailWidget * t = *tIt;
+        ThumbnailWidget * t = *vIt;
         QRect widgetRect( childX( t ), childY( t ), t->width(), t->height() );
-        if ( viewportRect.intersects( widgetRect ) )
-        {
-            // update only the exposed area of the widget (saves pixels..)
-            QRect relativeRect = viewportRect.intersect( widgetRect );
-            relativeRect.moveBy( -widgetRect.left(), -widgetRect.top() );
-            t->update( relativeRect );
-        }
+        // update only the exposed area of the widget (saves pixels..)
+        QRect relativeRect = viewportRect.intersect( widgetRect );
+        if ( !relativeRect.isValid() )
+            continue;
+        relativeRect.moveBy( -widgetRect.left(), -widgetRect.top() );
+        t->update( relativeRect );
     }
 }
 
@@ -240,11 +249,10 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 	if ( e->button() != Qt::LeftButton )
 		return;
 	int clickY = e->y();
-	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
-	for ( ; thumbIt != thumbEnd; ++thumbIt )
+	QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+	for ( ; vIt != vEnd; ++vIt )
 	{
-		ThumbnailWidget * t = *thumbIt;
+		ThumbnailWidget * t = *vIt;
 		int childTop = childY(t);
 		if ( clickY > childTop && clickY < (childTop + t->height()) )
 		{
@@ -268,11 +276,10 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 		// resize and reposition items
 		int totalHeight = 0,
 		    newWidth = e->size().width();
-		QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
-		QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
-		for ( ; thumbIt != thumbEnd; ++thumbIt )
+		QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+		for ( ; tIt != tEnd; ++tIt )
 		{
-			ThumbnailWidget *t = *thumbIt;
+			ThumbnailWidget *t = *tIt;
 			moveChild( t, 0, totalHeight );
 			t->resizeFitWidth( newWidth );
 			totalHeight += t->heightHint() + 4;
@@ -302,19 +309,28 @@ void ThumbnailList::slotRequestPixmaps( int /*newContentsX*/, int newContentsY )
 	int vHeight = visibleHeight(),
 	    vOffset = newContentsY == -1 ? contentsY() : newContentsY;
 
-	// scroll from the top to the last visible thumbnail
-	QValueVector<ThumbnailWidget *>::iterator thumbIt = m_thumbnails.begin();
-	QValueVector<ThumbnailWidget *>::iterator thumbEnd = m_thumbnails.end();
-	for ( ; thumbIt != thumbEnd; ++thumbIt )
-	{
-		ThumbnailWidget * t = *thumbIt;
-		int top = childY( t ) - vOffset;
-		if ( top > vHeight )
-			break;
-        else if ( top + t->height() > 0 &&
-                  !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
-            m_document->requestPixmap( THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), true );
-	}
+    // scroll from the top to the last visible thumbnail
+    m_visibleThumbnails.clear();
+    QValueList< PixmapRequest * > requestedPixmaps;
+    QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    for ( ; tIt != tEnd; ++tIt )
+    {
+        ThumbnailWidget * t = *tIt;
+        int top = childY( t ) - vOffset;
+        if ( top > vHeight )
+            break;
+        if ( top + t->height() < 0 )
+            continue;
+        // add ThumbnailWidget to visible list
+        m_visibleThumbnails.push_back( t );
+        // if pixmap not present add it to requests
+        if ( !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
+            requestedPixmaps.push_back( new PixmapRequest( THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight() ) );
+    }
+
+    // actually request pixmaps
+    if ( !requestedPixmaps.isEmpty() )
+        m_document->requestPixmaps( requestedPixmaps, true );
 }
 //END internal SLOTS
 

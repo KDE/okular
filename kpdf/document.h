@@ -21,6 +21,7 @@ class KPDFLink;
 class Generator;
 class DocumentInfo;
 class DocumentSynopsis;
+class PixmapRequest;
 
 /**
  * @short Base class for objects being notified when something changes.
@@ -69,8 +70,9 @@ class KPDFDocumentObserver
  * For a better understanding of hieracies @see README.internals.png
  * @see KPDFDocumentObserver, KPDFPage
  */
-class KPDFDocument
+class KPDFDocument : public QObject // only for a private slot..
 {
+    Q_OBJECT
     public:
         KPDFDocument();
         ~KPDFDocument();
@@ -93,8 +95,7 @@ class KPDFDocument
         bool okToPrint() const;
 
         // perform actions on document / pages
-        //void requestPixmaps( int id, const QValueList<int> & pages, int width, int height, bool syncronous = false );
-        void requestPixmap( int id, int pageNum, int width, int height, bool syncronous = false );
+        void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool syncronous = false );
         void requestTextPage( uint page );
         void setCurrentPage( int page, const QRect & viewport = QRect() );
         void findText( const QString & text = "", bool caseSensitive = false );
@@ -105,6 +106,7 @@ class KPDFDocument
 
     private:
         // memory management related functions
+        void mCleanupMemory( int observerId );
         int mTotalMemory();
         int mFreeMemory();
         // more private functions
@@ -117,6 +119,9 @@ class KPDFDocument
         QString documentFileName;
         QValueVector< KPDFPage * > pages_vector;
         class KPDFDocumentPrivate * d;
+
+    private slots:
+        void slotGeneratedContents( int id, int pageNumber );
 };
 
 /**

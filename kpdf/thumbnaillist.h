@@ -30,20 +30,18 @@ Q_OBJECT
 	public:
 		ThumbnailList(QWidget *parent, KPDFDocument *document);
 
-		// return thumbnails observer id
-		uint observerId() const { return THUMBNAILS_ID; }
-
-        // redraw thumbnail ( inherited as DocumentObserver )
+        // inherited: return thumbnails observer id
+        uint observerId() const { return THUMBNAILS_ID; }
+        // inherited: create thumbnails ( inherited as a DocumentObserver )
+        void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
+        // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
+        void pageSetCurrent( int pageNumber, const QRect & viewport );
+        // inherited: tell if pixmap is hidden and can be unloaded
+        bool canUnloadPixmap( int pageNumber );
+        // inherited: redraw thumbnail ( inherited as DocumentObserver )
         void notifyPixmapChanged( int pageNumber );
-
-        // request all visible pixmap (due to a global shange or so..)
+        // inherited: request all visible pixmap (due to a global shange or so..)
         void notifyPixmapsCleared();
-
-		// create thumbnails ( inherited as a DocumentObserver )
-		void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
-
-		// hilihght current thumbnail ( inherited as DocumentObserver )
-		void pageSetCurrent( int pageNumber, const QRect & viewport );
 
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
@@ -75,6 +73,7 @@ Q_OBJECT
 		ThumbnailWidget *m_selected;
 		QTimer *m_delayTimer;
 		QValueVector<ThumbnailWidget *> m_thumbnails;
+		QValueList<ThumbnailWidget *> m_visibleThumbnails;
 		int m_vectorIndex;
 };
 

@@ -52,7 +52,7 @@ class PDFGenerator : public Generator
 
         // [INHERITED] perform actions on document / pages
         bool print( KPrinter& printer );
-        bool requestPixmap( int id, KPDFPage * page, int width, int height, bool syncronous = false );
+        void requestPixmap( PixmapRequest * request, bool syncronous = false );
         void requestTextPage( KPDFPage * page );
 
         // [INHERITED] reparse configuration
@@ -73,6 +73,8 @@ class PDFGenerator : public Generator
         PDFDoc * pdfdoc;
         KPDFOutputDev * kpdfOutputDev;
         QColor paperColor;
+        //PixmapRequest * currentRequest;
+        //QValueList< PixmapRequest * > requests;
         bool docInfoDirty;
         DocumentInfo docInfo;
         bool docSynopsisDirty;

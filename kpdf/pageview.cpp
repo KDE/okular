@@ -40,6 +40,7 @@
 #include "pageviewutils.h"
 #include "page.h"
 #include "link.h"
+#include "generator.h"
 #include "settings.h"
 
 #define ROUND(x) (int(x + 0.5))
@@ -1311,22 +1312,22 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // for each item, check if it intersects the viewport
     d->visibleItems.clear();
+    QValueList< PixmapRequest * > requestedPixmaps;
     QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
-        PageViewItem * item = *iIt;
-        if ( viewportRect.intersects( item->geometry() ) )
-            d->visibleItems.push_back( item );
+        PageViewItem * i = *iIt;
+        if ( !viewportRect.intersects( i->geometry() ) )
+            continue;
+
+        d->visibleItems.push_back( i );
+        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
+            requestedPixmaps.push_back( new PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->width(), i->height() ) );
     }
 
     // actually request pixmaps
-    QValueList< PageViewItem * >::iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
-    for ( ; vIt != vEnd; ++vIt )
-    {
-        PageViewItem * item = *vIt;
-        if ( !item->page()->hasPixmap( PAGEVIEW_ID, item->width(), item->height() ) )
-            d->document->requestPixmap( PAGEVIEW_ID, item->pageNumber(), item->width(), item->height(), true );
-    }
+    if ( !requestedPixmaps.isEmpty() )
+        d->document->requestPixmaps( requestedPixmaps, true );
 }
 
 void PageView::slotAutoScoll()

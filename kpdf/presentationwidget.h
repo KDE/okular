@@ -40,6 +40,7 @@ class PresentationWidget : public QWidget, public KPDFDocumentObserver
         // inherited from KPDFDocumentObserver
         uint observerId() const { return PRESENTATION_ID; }
         void pageSetup( const QValueVector<KPDFPage*> & pages, bool documentChanged );
+        bool canUnloadPixmap( int pageNumber );
         void notifyPixmapChanged( int pageNumber );
 
     protected:

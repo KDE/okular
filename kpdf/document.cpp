@@ -95,14 +95,18 @@ bool KPDFDocument::openDocument( const QString & docFile )
     QString mimeName = mime->name();
     if ( mimeName == "application/pdf" )
         generator = new PDFGenerator();
-//  else if ( mimeName == "application/postscript" )
-//      generator = new PSGenerator();
+    else if ( mimeName == "application/postscript" )
+        kdError() << "PS generator not available" << endl;
     else
     {
         kdWarning() << "Unknown mimetype '" << mimeName << "'." << endl;
         return false;
     }
+    // get notification of completed jobs
+    connect( generator, SIGNAL( contentsChanged( int, int ) ),
+             this, SLOT( slotGeneratedContents( int, int ) ) );
 
+    // ask generator to open the document and return if unsuccessfull
     documentFileName = docFile;
     bool openOk = generator->loadDocument( docFile, pages_vector );
     if ( !openOk )
@@ -133,6 +137,15 @@ void KPDFDocument::closeDocument()
 
     // send an empty list to observers (to free their data)
     foreachObserver( pageSetup( pages_vector, true ) );
+
+    // clear memory management data
+    QMap< int, ObserverData * >::iterator oIt = d->observers.begin(), oEnd = d->observers.end();
+    for ( ; oIt != oEnd ; ++oIt )
+    {
+        ObserverData * observerData = *oIt;
+        observerData->pageMemory.clear();
+        observerData->totalMemory = 0;
+    }
 
     // delete contents generator
     delete generator;
@@ -215,65 +228,35 @@ bool KPDFDocument::okToPrint() const
 }
 
 
-void KPDFDocument::requestPixmap( int id, int page, int width, int height, bool syn )
+void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests, bool syn )
 {
-    KPDFPage * kp = pages_vector[ page ];
-    if ( !generator || !kp || kp->width() < 1 || kp->height() < 1 )
+    if ( !generator )
         return;
 
-    // 1. Update statistics (pageMemory / totalMemory) adding this pixmap
-    ObserverData * obs = d->observers[ id ];
-    if ( obs->pageMemory.contains( page ) )
-        obs->totalMemory -= obs->pageMemory[ page ];
-    int pixmapMemory = 4 * width * height / 1024;
-    obs->pageMemory[ page ] = pixmapMemory;
-    obs->totalMemory += pixmapMemory;
-
-    // 
-    int memoryToFree;
-    switch ( Settings::memoryLevel() )
+    QValueList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
+    for ( ; rIt != rEnd; ++rIt )
     {
-        case Settings::EnumMemoryLevel::Low:
-            memoryToFree = obs->totalMemory;
-            break;
+        // set the 'page field' (see PixmapRequest) and check if request is valid
+        PixmapRequest * request = *rIt;
+        request->page = pages_vector[ request->pageNumber ];
+        if ( !request->page || request->page->width() < 1 || request->page->height() < 1 )
+            continue;
 
-        case Settings::EnumMemoryLevel::Normal:
-            memoryToFree = obs->totalMemory - mTotalMemory()/4;
-            printf("%d\n",memoryToFree);
-            break;
+        // 1. Update statistics (pageMemory / totalMemory) adding this pixmap
+        int pageNumber = request->pageNumber;
+        ObserverData * obs = d->observers[ request->id ];
+        if ( obs->pageMemory.contains( pageNumber ) )
+            obs->totalMemory -= obs->pageMemory[ pageNumber ];
+        int pixmapMemory = 4 * request->width * request->height / 1024;
+        obs->pageMemory[ pageNumber ] = pixmapMemory;
+        obs->totalMemory += pixmapMemory;
 
-        case Settings::EnumMemoryLevel::Aggressive:
-            memoryToFree = 0;
-            break;
+        // 2. Perform pre-cleaning if needed
+        mCleanupMemory( request->id );
+
+        // 3. Enqueue to Generator (that takes ownership of request)
+        generator->requestPixmap( request, syn );
     }
-
-    // 2. FREE Memory Loop. remove older data first.
-    int freed = 0;
-    if ( memoryToFree > 0 )
-    {
-        QMap< int, int >::iterator it = obs->pageMemory.begin(), end = obs->pageMemory.end();
-        while ( (it != end) && (memoryToFree > 0) )
-        {
-            int freeNumber = it.key();
-            if ( page != freeNumber && obs->observer->canUnloadPixmap( freeNumber ) )
-            {
-                // update mem stats
-                memoryToFree -= it.data();
-                obs->totalMemory -= it.data();
-                obs->pageMemory.remove( it );
-                // delete pixmap
-                pages_vector[ freeNumber ]->deletePixmap( id );
-                freed++;
-            }
-            ++it;
-        }
-    }
-    kdWarning() << "[" << obs->totalMemory << "] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
-
-    // 3. Request next pixmap to generator
-    bool pixChanged = generator->requestPixmap( id, kp, width, height, syn );
-    if ( pixChanged )
-        d->observers[id]->observer->notifyPixmapChanged( page );
 }
 
 void KPDFDocument::requestTextPage( uint page )
@@ -506,13 +489,63 @@ bool KPDFDocument::print( KPrinter &printer )
 }
 
 
+void KPDFDocument::mCleanupMemory( int observerId  )
+{
+    // get observer data for given id
+    ObserverData * obs = d->observers[ observerId ];
+
+    // choose memory parameters based on configuration profile
+    int memoryToFree = 0;
+    switch ( Settings::memoryLevel() )
+    {
+        case Settings::EnumMemoryLevel::Low:
+            memoryToFree = obs->totalMemory;
+            break;
+
+        case Settings::EnumMemoryLevel::Normal:
+            memoryToFree = obs->totalMemory - mTotalMemory()/4;
+            break;
+
+        case Settings::EnumMemoryLevel::Aggressive:
+            memoryToFree = 0;
+            break;
+    }
+
+    // free memory. remove older data until we free enough memory
+    int freed = 0;
+    if ( memoryToFree > 0 )
+    {
+        QMap< int, int >::iterator it = obs->pageMemory.begin(), end = obs->pageMemory.end();
+        while ( (it != end) && (memoryToFree > 0) )
+        {
+            int freeNumber = it.key();
+            if ( obs->observer->canUnloadPixmap( freeNumber ) )
+            {
+                // update mem stats
+                memoryToFree -= it.data();
+                obs->totalMemory -= it.data();
+                obs->pageMemory.remove( it );
+                // delete pixmap
+                pages_vector[ freeNumber ]->deletePixmap( observerId );
+                freed++;
+            }
+            ++it;
+        }
+    }
+    kdWarning() << "[" << obs->totalMemory << "kB] Removed " << freed << " pages. " << obs->pageMemory.count() << " pages kept in memory." << endl;
+}
+
 int KPDFDocument::mTotalMemory()
 {
+    static int cachedValue = 0;
+    if ( cachedValue )
+        return cachedValue;
+
 #ifdef __linux__
     // if /proc/meminfo doesn't exist, return 128MB
     QFile memFile( "/proc/meminfo" );
     if ( !memFile.open( IO_ReadOnly ) )
-        return 131072;
+        return (cachedValue = 131072);
 
     // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
     // and 'Cached' fields. consider swapped memory as used memory.
@@ -521,10 +554,10 @@ int KPDFDocument::mTotalMemory()
     {
         QString entry = readStream.readLine();
         if ( entry.startsWith( "MemTotal:" ) )
-            return entry.section( ' ', -2, -2 ).toInt();
+            return (cachedValue = entry.section( ' ', -2, -2 ).toInt());
     }
 #endif
-    return 131072;
+    return (cachedValue = 131072);
 }
 
 int KPDFDocument::mFreeMemory()
@@ -622,3 +655,11 @@ void KPDFDocument::unHilightPages()
         }
     }
 }
+
+void KPDFDocument::slotGeneratedContents( int id, int pageNumber )
+{
+    if ( d->observers.contains( id ) )
+        d->observers[ id ]->observer->notifyPixmapChanged( pageNumber );
+}
+
+#include "document.moc"

@@ -27,6 +27,7 @@ Higher priority after merge:
 
 More items (first items will enter 'In progress list' first):
 *THIS ITEMS ARE CURRENTLY FROZEN SINCE "HEAD-MERGE" LIST IS CLEARED*
+-> fix: iterate from older pages to newest ones when freeing memory (not randomly)
 -> fix: On continous view mode, if you click to a link that moves you to another
    page, then scroll up and click again on the same link it does not work. (by Albert)
 -> JJ: convert DocumentInfo to a DomTree containing a few common fields (see the current

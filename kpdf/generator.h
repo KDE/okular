@@ -19,6 +19,7 @@ class KPDFLink;
 class KPDFDocument;
 class DocumentSynopsis;
 class DocumentInfo;
+class PixmapRequest;
 
 /* Note: on contents generation and asyncronous queries.
  * Many observers may want to request data syncronously or asyncronously.
@@ -57,15 +58,34 @@ class Generator : public QObject
         virtual bool allowed( int /*permisisons*/ ) { return true; }
 
         // generator core
-        virtual bool print( KPrinter& printer ) { return false; }
-        virtual bool requestPixmap( int id, KPDFPage * page, int width, int height, bool syncronous = false ) = 0;
+        virtual bool print( KPrinter& /*printer*/ ) { return false; }
+        virtual void requestPixmap( PixmapRequest * request, bool syncronous = false ) = 0;
         virtual void requestTextPage( KPDFPage * page ) = 0;
 
         // check configuration and return true if something changed
         virtual bool reparseConfig() { return false; }
 
     signals:
-        void contentsChanged( const KPDFPage * page );
+        void contentsChanged( int id, int pageNumber );
+};
+
+/**
+ * @short Describes a pixmap type request.
+ */
+struct PixmapRequest
+{
+    // public data fields
+    int id;
+    int pageNumber;
+    int width;
+    int height;
+    // this field is set by the document before passing the
+    // request to the generator
+    KPDFPage * page;
+
+    // public constructor: initialize data
+    PixmapRequest( int rId, int n, int w, int h )
+        : id( rId ), pageNumber( n ), width( w ), height( h ), page( 0 )  {};
 };
 
 #endif

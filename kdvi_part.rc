@@ -10,6 +10,11 @@
   </Menu>
  </Menu>
 
+ <Menu name="go_document"><text>Go</text>
+  <Action name="go_back"/>
+  <Action name="go_forward"/>
+ </Menu>
+
  <Menu name="edit"><text>Edit</text>
   <Action name="copy_text"/>
   <Action name="edit_select_all"/>
@@ -28,4 +33,10 @@
   <Action name="bug_dvi" append="options_show_merge"/>
  </Menu>
 </MenuBar>
+
+<ToolBar name="mainToolBar">
+  <Action name="go_back"/>
+  <Action name="go_forward"/>
+</ToolBar>
+
 </kpartgui>

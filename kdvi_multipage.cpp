@@ -73,11 +73,18 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   setInstance(KDVIMultiPageFactory::instance()); 
 
   printer = 0;
+  document_history.clear();
   window = new dviWindow( 1.0, true, scrollView());
   preferencesChanged();
 
   connect( window, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
   docInfoAction    = new KAction(i18n("Document &Info"), 0, this, SLOT(doInfo()), actionCollection(), "info_dvi");
+
+  backAction       = KStdAction::back(this, SLOT(doGoBack()), actionCollection(), "go_back");
+  forwardAction    = KStdAction::forward(this, SLOT(doGoForward()), actionCollection(), "go_forward");
+  document_history.setAction(backAction, forwardAction);
+  document_history.clear();
+
   findTextAction   = KStdAction::find(window, SLOT(showFindTextDialog()), actionCollection(), "find");
   copyTextAction   = KStdAction::copy(window, SLOT(copyText()), actionCollection(), "copy_text");
   window->DVIselection.setAction(copyTextAction);
@@ -159,12 +166,14 @@ QStringList KDVIMultiPage::fileFormats()
 
 bool KDVIMultiPage::gotoPage(int page)
 {
+  document_history.add(page,0);
   window->gotoPage(page+1);
   return true;
 }
 
 void KDVIMultiPage::goto_page(int page, int y)
 {
+  document_history.add(page,y);
   window->gotoPage(page+1, y);
   scrollView()->ensureVisible(scrollView()->width()/2, y );
   emit pageInfo(window->totalPages(), page );
@@ -507,5 +516,26 @@ void KDVIMultiPage::enableActions(bool b)
   exportPDFAction->setEnabled(b);
   exportTextAction->setEnabled(b);
 }
+
+void KDVIMultiPage::doGoBack(void)
+{
+  historyItem *it = document_history.back();
+  if (it != 0) 
+    goto_page(it->page, it->ypos);
+  else
+    kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
+  return;
+}
+
+void KDVIMultiPage::doGoForward(void)
+{
+  historyItem *it = document_history.forward();
+  if (it != 0)
+    goto_page(it->page, it->ypos);
+  else
+    kdDebug(4300) << "Faulty return -- bad history buffer" << endl;
+  return;
+}
+
 
 #include "kdvi_multipage.moc"

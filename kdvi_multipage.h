@@ -17,6 +17,7 @@ class QPainter;
 
 #include "../kviewshell/kmultipage.h"
 #include "dviwin.h"
+#include "history.h"
 
 
 class KDVIMultiPageFactory : public KParts::Factory
@@ -81,6 +82,8 @@ public:
   virtual bool print(const QStringList &pages, int current);
 
 protected:
+  history document_history;
+
   /// For internal use only. See the comments in kdvi_multipage.cpp, right
   //before the timerEvent function.
   int  timer_id;
@@ -110,6 +113,8 @@ protected slots:
   void doExportPDF();
   void doExportText();
   void doSelectAll();
+  void doGoBack();
+  void doGoForward();
   void about();
   void helpme();
   void bugform();
@@ -126,6 +131,8 @@ private:
   /** Pointers to several actions which are disabled if no file is
       loaded. */
   KAction      *docInfoAction;
+  KAction      *backAction;
+  KAction      *forwardAction;
   KAction      *copyTextAction;
   KAction      *selectAllAction;
   KAction      *findTextAction;

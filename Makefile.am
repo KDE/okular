@@ -17,7 +17,7 @@ libkdvi_la_SOURCES = kdvi_multipage.cpp \
 	optiondialog.cpp infodialog.cpp\
 	psheader.c dviwin_draw.cpp dvi_init.cpp\
 	font.cpp fontpool.cpp fontprogress.cpp pk.cpp psgs.cpp\
-	special.cpp util.cpp vf.cpp glyph.cpp selection.cpp
+	special.cpp util.cpp vf.cpp glyph.cpp selection.cpp history.cpp
 
 libkdvi_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 libkdvi_la_LIBADD = $(LIB_KPARTS) -lkdeprint \

@@ -158,7 +158,7 @@ void font::read_VF_index(void)
 	m->pos = avail;
 	avail += len;
       } else {
-	m->free_me = True;
+	m->free_me = true;
 	if (len <= VF_PARM_1) {
 	  m->pos = avail = new unsigned char [VF_PARM_2];
 	  availend = avail + VF_PARM_2;

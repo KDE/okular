@@ -925,11 +925,20 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 kapp->invokeMailer( browse->url() );
             else
             {
+                QString url = browse->url();
+
+                // fix for #100366, documents with relative links that are the form of http:foo.pdf
+                if (url.find("http:") == 0 && url.find("http://") == -1 && url.right(4) == ".pdf")
+                {
+                    openRelativeFile(url.mid(5));
+                    return;
+                }
+
                 // get service for web browsing
                 KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
                 KURL::List lst;
                 // append 'url' parameter to the service and run it
-                lst.append( browse->url() );
+                lst.append( url );
                 KRun::run( *ptr, lst );
             }
             } break;

@@ -71,6 +71,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// xpdf 'extern' global class (m_count is a static instance counter) TODO check for wasted creation
 	globalParams = new GlobalParams("");
+	globalParams->setupBaseFonts(NULL);
 	m_count++;
 
 	// we need an instance

@@ -98,12 +98,21 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc)
       for(int i=0; i<256; i++) 
 	charMap[i] = FT_Get_Char_Index( face, i );
     } else {
-      // As a last resort, we use the identity map.
+      if ((found == 0) && (face->charmap != 0)) {
 #ifdef DEBUG_PFB
-      kdDebug(4300) << "No encoding: using identity charmap." << endl;
+	kdDebug(4300) << "No encoding given: using charmap platform=" << face->charmap->platform_id <<
+	  ", encoding=" << face->charmap->encoding_id << " that is contained in the font." << endl;
 #endif
-      for(int i=0; i<256; i++) 
-	charMap[i] = i;
+	for(int i=0; i<256; i++) 
+	  charMap[i] = FT_Get_Char_Index( face, i );
+      } else {
+	// As a last resort, we use the identity map.
+#ifdef DEBUG_PFB
+	kdDebug(4300) << "No encoding given, no suitable charmaps found in the font: using identity charmap." << endl;
+#endif
+	for(int i=0; i<256; i++) 
+	  charMap[i] = i;
+      }
     }
   }
 }

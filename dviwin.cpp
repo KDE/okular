@@ -314,9 +314,9 @@ void dviWindow::drawPage()
     foreGroundPaint.end();
     QApplication::restoreOverrideCursor();
     if (errorMsg.isEmpty() != true) {
-      KMessageBox::detailedError(this, 
+      KMessageBox::detailedError(this,
 				 i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
-				      "likely this means that the DVI file is broken.</qt>"), 
+				      "likely this means that the DVI file is broken.</qt>"),
 				 errorMsg, i18n("DVI File error"));
       return;
     }
@@ -452,8 +452,8 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   if (!fi.exists() || fi.isDir()) {
     KMessageBox::error( this,
 			i18n("<qt><strong>File error!</strong> The specified file '%1' does not exist. "
-			     "KDVI already tried to add the ending '.dvi'</qt>").arg(filename), 
-			i18n("File error!"));
+			     "KDVI already tried to add the ending '.dvi'</qt>").arg(filename),
+			i18n("File Error!"));
     return false;
   }
 
@@ -476,10 +476,10 @@ bool dviWindow::setFile(QString fname, QString ref, bool sourceMarker)
   if ((dviFile_new->dvi_Data == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
-      KMessageBox::detailedError(this, 
+      KMessageBox::detailedError(this,
 				 i18n("<qt>File corruption! KDVI had trouble interpreting your DVI file. Most "
-				      "likely this means that the DVI file is broken.</qt>"), 
-				 dviFile_new->errorMsg, i18n("DVI File error"));
+				      "likely this means that the DVI file is broken.</qt>"),
+				 dviFile_new->errorMsg, i18n("DVI File Error"));
     delete dviFile_new;
     return false;
   }
@@ -633,7 +633,7 @@ void dviWindow::all_fonts_loaded(void)
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
 				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(fileName),
-			 i18n( "Could not find reference" ));
+			 i18n( "Could not Find EReference" ));
       return;
     }
     if (y >= 0)
@@ -641,7 +641,7 @@ void dviWindow::all_fonts_loaded(void)
     if (y < 0)
       KMessageBox::sorry(this, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
 				    "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(ref.left(i)).arg(fileName),
-			 i18n( "Could not find reference" ));
+			 i18n( "Could not Find Reference" ));
     return;
   }
   reference = QString::null;
@@ -900,7 +900,7 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 	  if ( !fi3.exists() ) {
 	    KMessageBox::sorry(this, i18n("The DVI-file refers to the TeX-file "
 					  "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)),
-			       i18n( "Could not find file" ));
+			       i18n( "Could not Find File" ));
 	    return;
 	  }
 	}
@@ -911,8 +911,8 @@ void dviWindow::mousePressEvent ( QMouseEvent * e )
 								"Please choose your favourite editor in the "
 								"<strong>DVI options dialog</strong> "
 								"which you will find in the <strong>Settings</strong>-menu."),
-						     i18n("Need to specify editor"),
-		                                     i18n("Use KDE's editor Kate for now"));
+						     i18n("Need to Specify Editor"),
+		                                     i18n("Use KDE's Editor Kate for Now"));
 	  if (r == KMessageBox::Continue)
 	    command = "kate %f";
 	  else

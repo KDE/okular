@@ -53,13 +53,13 @@ void dviWindow::exportText(void)
   if (pixmap->paintingActive())
     return;
 
-  if (KMessageBox::warningContinueCancel( this, 
+  if (KMessageBox::warningContinueCancel( this,
 					  i18n("<qt>This function exports the DVI file to a plain text. Unfortunately, this version of "
 					       "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
 					       "formulae, accented characters, and non-english text, such as Russian or Korean, will "
 					       "most likely be messed up completely.</qt>"),
 					  i18n("Function May Not Work as Expected"),
-					  i18n("Continue anyway"),
+					  i18n("Continue Anyway"),
 					  "warning_export_to_text_may_not_work") == KMessageBox::Cancel)
     return;
 
@@ -68,7 +68,7 @@ void dviWindow::exportText(void)
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
+    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName),
 				       i18n("Overwrite file"));
     if (r == KMessageBox::No)
       return;
@@ -168,7 +168,7 @@ void dviWindow::exportPDF(void)
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
+    int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName),
 				       i18n("Overwrite file"));
     if (r == KMessageBox::No)
       return;
@@ -253,8 +253,8 @@ void dviWindow::exportPS(QString fname, QString options, KPrinter *printer)
       return;
     QFileInfo finfo(fileName);
     if (finfo.exists()) {
-      int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName), 
-					 i18n("Overwrite file"));
+      int r = KMessageBox::warningYesNo (this, QString(i18n("The file %1\nexists. Shall I overwrite that file?")).arg(fileName),
+					 i18n("Overwrite File"));
       if (r == KMessageBox::No)
 	return;
     }

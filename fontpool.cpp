@@ -357,8 +357,8 @@ void fontPool::kpsewhich_terminated(KProcess *)
 	KMessageBox::sorry( 0, nokps+body+metaf, title );
       else
 	if (makepk == 0) {
-	  if(KMessageBox::warningYesNo( 0, body+i18n("\nAutomatic font generation is switched off."), title, 
-				   i18n("Generate fonts now"), i18n("Continue without") ) == KMessageBox::Yes) {
+	  if(KMessageBox::warningYesNo( 0, body+i18n("\nAutomatic font generation is switched off."), title,
+				   i18n("Generate Fonts Now"), i18n("Continue Without") ) == KMessageBox::Yes) {
 	    KInstance *instance = new KInstance("kdvi");
 	    KConfig *config = instance->config();
 	    config->setGroup("kdvi");

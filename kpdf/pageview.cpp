@@ -1345,7 +1345,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // actually request pixmaps
     if ( !requestedPixmaps.isEmpty() )
-        d->document->requestPixmaps( requestedPixmaps, true );
+        d->document->requestPixmaps( requestedPixmaps, true /*ASYNC*/  );
 }
 
 void PageView::slotAutoScoll()

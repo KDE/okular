@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>250</width>
-            <height>192</height>
+            <width>252</width>
+            <height>218</height>
         </rect>
     </property>
     <vbox>
@@ -102,7 +102,15 @@
                         <cstring>kcfg_DisableCompositing</cstring>
                     </property>
                     <property name="text">
-                        <string>Disable &amp;transparency (see help)</string>
+                        <string>Disable &amp;transparency effects</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_DisableThreading</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disable &amp;asyncronous generation</string>
                     </property>
                 </widget>
             </vbox>
@@ -119,8 +127,8 @@
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>20</width>
-                    <height>21</height>
+                    <width>21</width>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>

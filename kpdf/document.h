@@ -95,7 +95,7 @@ class KPDFDocument : public QObject // only for a private slot..
         bool okToPrint() const;
 
         // perform actions on document / pages
-        void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool syncronous = false );
+        void requestPixmaps( const QValueList< PixmapRequest * > & requests, bool asyncronous );
         void requestTextPage( uint page );
         void setCurrentPage( int page, const QRect & viewport = QRect() );
         void findText( const QString & text = "", bool caseSensitive = false );

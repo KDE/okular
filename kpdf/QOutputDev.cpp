@@ -62,17 +62,6 @@ void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool
         m_text = new TextPage( gFalse );
 }
 
-bool KPDFOutputDev::generateTextPage() const
-{
-    return m_generateText;
-}
-
-bool KPDFOutputDev::generateRects() const
-{
-    return m_generateLinks;
-}
-
-
 KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
 {
     KPDFLink * link = NULL;
@@ -182,11 +171,6 @@ QValueList< KPDFPageRect * > KPDFOutputDev::takeRects()
     return rectsCopy;
 }
 
-void KPDFOutputDev::freeInternalBitmap()
-{
-    // ### hack: unload memory used by internal SplashOutputDev's bitmap
-    SplashOutputDev::startPage( 0, NULL );
-}
 
 void KPDFOutputDev::startPage( int pageNum, GfxState *state )
 {
@@ -201,10 +185,10 @@ void KPDFOutputDev::endPage()
     if ( m_generateText )
         m_text->coalesce( gTrue );
 
-    // create a QImage over the internally generated pixmap
     int bh = getBitmap()->getHeight(),
         bw = getBitmap()->getWidth();
     SplashColorPtr dataPtr = getBitmap()->getDataPtr();
+    // construct a qimage SHARING the raw bitmap data in memory
     QImage * img = new QImage( (uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian );
 
     // use the QImage or convert it immediately to QPixmap for better
@@ -212,15 +196,12 @@ void KPDFOutputDev::endPage()
     if ( m_qtThreadSafety )
     {
         delete m_image;
-        m_image = img;
         // it may happen (in fact it doesn't) that we need a rescaling
         if ( bw != m_pixmapWidth && bh != m_pixmapHeight )
-        {
             m_image = new QImage( img->smoothScale( m_pixmapWidth, m_pixmapHeight ) );
-            delete img;
-        }
-        m_image->detach();
-        // note: internal bitmap will be freed by PDFGenerator after getting the data
+        else
+            // dereference image from the xpdf memory
+            m_image = new QImage( img->copy() );
     }
     else
     {
@@ -230,10 +211,11 @@ void KPDFOutputDev::endPage()
             m_pixmap = new QPixmap( img->smoothScale( m_pixmapWidth, m_pixmapHeight ) );
         else
             m_pixmap = new QPixmap( *img );
-        delete img;
-        // free internal bitmap immediately
-        freeInternalBitmap();
     }
+
+    // destroy the shared descriptor and ### unload underlying xpdf bitmap
+    delete img;
+    SplashOutputDev::startPage( 0, NULL );
 }
 
 void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )

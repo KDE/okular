@@ -49,8 +49,6 @@ class KPDFOutputDev : public SplashOutputDev
         // @param qtThreadSafety: use a slow QImage and conversions (for threads only)
         void setParams( int pixmapWidth, int pixmapHeight, bool generateTextPage,
                         bool decodeLinks, bool decodeImages, bool qtThreadSafety = false );
-        bool generateTextPage() const;
-        bool generateRects() const;
 
         // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
         KPDFLink * generateLink( LinkAction * );
@@ -60,9 +58,6 @@ class KPDFOutputDev : public SplashOutputDev
         QImage * takeImage();
         TextPage * takeTextPage();
         QValueList< KPDFPageRect * > takeRects();
-
-        // free internal memory used by SplashOutputDev
-        void freeInternalBitmap();
 
         /** inherited from OutputDev */
         // Start a page.

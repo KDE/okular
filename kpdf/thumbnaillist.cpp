@@ -330,7 +330,7 @@ void ThumbnailList::slotRequestPixmaps( int /*newContentsX*/, int newContentsY )
 
     // actually request pixmaps
     if ( !requestedPixmaps.isEmpty() )
-        m_document->requestPixmaps( requestedPixmaps, false /*use threaded gen*/ );
+        m_document->requestPixmaps( requestedPixmaps, true /*ASYNC*/ );
 }
 //END internal SLOTS
 

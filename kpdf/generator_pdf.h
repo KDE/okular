@@ -21,6 +21,8 @@
 
 class PDFDoc;
 class GList;
+class TextPage;
+class KPDFPageRect;
 class KPDFOutputDev;
 class PDFPixmapGeneratorThread;
 
@@ -53,7 +55,7 @@ class PDFGenerator : public Generator
 
         // [INHERITED] perform actions on document / pages
         bool print( KPrinter& printer );
-        void requestPixmap( PixmapRequest * request, bool syncronous = false );
+        void requestPixmap( PixmapRequest * request, bool asyncronous );
         void requestTextPage( KPDFPage * page );
 
         // [INHERITED] reparse configuration
@@ -61,8 +63,6 @@ class PDFGenerator : public Generator
 
         // used by the KPDFOutputDev child
         KPDFLinkGoto::Viewport decodeLinkViewport( class GString * namedDest, class LinkDest * dest );
-
-    protected:
 
     private:
         // friend class to access private document related variables
@@ -116,15 +116,16 @@ class PDFPixmapGeneratorThread : public QThread
         // end generation
         void endGeneration();
 
+        // methods for getting contents from the GUI thread
+        QImage * takeImage() const;
+        TextPage * takeTextPage() const;
+        QValueList< KPDFPageRect * > takeRects() const;
+
     private:
         // can't be called from the outside (but from startGeneration)
         void run();
 
-        // local members
-        PDFGenerator * m_generator;
-        PixmapRequest * m_currentRequest;
-        bool m_genTextPage;
-        bool m_genPageRects;
+        class PPGThreadPrivate * d;
 };
 
 #endif

@@ -472,7 +472,7 @@ void PresentationWidget::slotNextPage()
         {
             QValueList< PixmapRequest * > request;
             request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
-            m_document->requestPixmaps( request, true );
+            m_document->requestPixmaps( request, false );
         }
         else
             generatePage();
@@ -501,7 +501,7 @@ void PresentationWidget::slotPrevPage()
         {
             QValueList< PixmapRequest * > request;
             request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH ) );
-            m_document->requestPixmaps( request, true );
+            m_document->requestPixmaps( request, false );
         }
         else
             generatePage();

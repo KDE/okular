@@ -59,7 +59,7 @@ class Generator : public QObject
 
         // generator core
         virtual bool print( KPrinter& /*printer*/ ) { return false; }
-        virtual void requestPixmap( PixmapRequest * request, bool syncronous = false ) = 0;
+        virtual void requestPixmap( PixmapRequest * request, bool asyncronous ) = 0;
         virtual void requestTextPage( KPDFPage * page ) = 0;
 
         // check configuration and return true if something changed

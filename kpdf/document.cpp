@@ -241,7 +241,7 @@ bool KPDFDocument::okToPrint() const
 }
 
 
-void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests, bool syn )
+void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests, bool async )
 {
     if ( !generator )
         return;
@@ -268,7 +268,7 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
         mCleanupMemory( request->id );
 
         // 3. Enqueue to Generator (that takes ownership of request)
-        generator->requestPixmap( request, syn );
+        generator->requestPixmap( request, Settings::disableThreading() ? false : async );
     }
 }
 

@@ -1,7 +1,6 @@
 SUBDIRS = xpdf conf core ui
 
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../splash -I$(srcdir)/../goo -I$(srcdir)/../xpdf \
-	           -I$(top_builddir)/kpdf/kpdf/conf -I$(srcdir)/conf $(all_includes) $(FREETYPE_CFLAGS)
+INCLUDES = -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo $(all_includes) $(FREETYPE_CFLAGS)
 
 METASOURCES = AUTO
 
@@ -23,7 +22,7 @@ EXTRA_DIST = kpdf.desktop
 xdg_apps_DATA = kpdf.desktop
 
 shellrcdir   = $(kde_datadir)/kpdf
-shellrc_DATA = kpdf_shell.rc
+shellrc_DATA = shell.rc
 
 #########################################################################
 # KPART SECTION
@@ -32,10 +31,12 @@ kde_module_LTLIBRARIES = libkpdfpart.la
 
 libkpdfpart_la_SOURCES = dcop.skel error.cpp part.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-libkpdfpart_la_LIBADD  = ../xpdf/libxpdf.la conf/libconf.la $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS) -lm
+libkpdfpart_la_LIBADD  = xpdf/xpdf/libxpdf.la conf/libkpdfconf.la \
+                         core/libkpdfcore.la ui/libkpdfui.la $(LIB_KPARTS) \
+                         $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS) -lm
 
 partdesktopdir   = $(kde_servicesdir)
 partdesktop_DATA = kpdf_part.desktop
 
 partrcdir   = $(kde_datadir)/kpdfpart
-partrc_DATA = kpdf_part.rc
+partrc_DATA = part.rc

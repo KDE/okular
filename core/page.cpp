@@ -296,11 +296,13 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         p->scale( width / (double)pixmap->width(), height / (double)pixmap->height() );
         p->drawPixmap( 0,0, *pixmap, 0,0, pixmap->width(), pixmap->height() );
         p->restore();
-        // draw a cross (to  that the pixmap has not the right size)
+/*	Code disabled (after HEAD merge). The user can recognize a wrong sized
+        pixmap even without the grey cross..
+        // draw a cross (for telling that the pixmap has not the right size)
         p->setPen( Qt::gray );
         p->drawLine( 0, 0, width-1, height-1 );
         p->drawLine( 0, height-1, width-1, 0 );
-    }
+*/  }
 
     // modify pixmap following accessibility settings
     if ( (flags & Accessibility) && backBuffer )

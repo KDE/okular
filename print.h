@@ -46,7 +46,7 @@ private:
     QString ifile,ofile;
     int	curpage, totalpages, nup, printdest;
     QStringList marklist;
-    QString nupProgram, printMethod, spooler;
+    QString nupProgram, spooler;
 
 };
 #endif // print_included

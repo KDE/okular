@@ -216,9 +216,6 @@ void Print::readConfig()
 			printer->insertItem( p );
 		}
 	nupProgram = config->readEntry( "NupProgram", "psnup" );
-	printMethod = config->readEntry( "PrintMethod", "dvips" );
-	nupCombo->setEnabled( printMethod == "dvips" );
-	colOrder->setEnabled( printMethod == "dvips" );
 	spooler = config->readEntry( "SpoolerCommand", "lpr" );
 	
 	config->setGroup( "kdvi" );

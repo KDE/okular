@@ -57,7 +57,6 @@ void printSetup::okPressed()
   }
   config->writeEntry( "PrinterCount", printers->count() - 2 );
   config->writeEntry( "NupProgram", psnup->isOn() ? "psnup" : "mpage" );
-  config->writeEntry( "PrintMethod", "dvips" );
   config->writeEntry( "SpoolerCommand", spoolerCommand->text() );
   config->setGroup( "kdvi" );
   config->sync();
@@ -83,7 +82,6 @@ void printSetup::readConfig()
 	QString nupProgram = config->readEntry( "NupProgram", "psnup" );
 	if ( nupProgram == "psnup" ) psnup->setChecked( TRUE );
 	if ( nupProgram == "mpage" ) mpage->setChecked( TRUE );
-	QString printMethod = "dvips";
 	spoolerCommand->setText( config->readEntry( "SpoolerCommand", "lpr" ) );
 	
 	config->setGroup( "kdvi" );

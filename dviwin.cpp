@@ -768,7 +768,9 @@ void dviWindow::all_fonts_loaded(fontPool *)
       if (!ref.at(i).isNumber())
 	break;
     Q_UINT32 refLineNumber = ref.left(i).toUInt();
-    QString  refFileName   = QFileInfo(ref.mid(i).stripWhiteSpace()).absFilePath();
+
+    QFileInfo fi1(dviFile->filename);
+    QString  refFileName   = QFileInfo(fi1.dir(), ref.mid(i).stripWhiteSpace()).absFilePath();
 
     if (sourceHyperLinkAnchors.isEmpty()) {
       KMessageBox::sorry(this, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
@@ -776,21 +778,21 @@ void dviWindow::all_fonts_loaded(fontPool *)
 				    "does not contain the necessary source file information. "
 				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
 				    "information. Press the F1 key to open the manual.</qt>").arg(ref.left(i)).arg(refFileName),
-			 i18n( "Could Not Find Reference" ));
+			 i18n("Could Not Find Reference"));
       return;
     }
-
+    
     Q_INT32 page = 0;
     Q_INT32 y    = -1000;
     QValueVector<DVI_SourceFileAnchor>::iterator it;
-    for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
+    for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it ) 
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()) {
 	if (refLineNumber >= it->line) {
 	  page = it->page;
 	  y    = (Q_INT32)(it->vertical_coordinate/shrinkfactor+0.5);
 	}
       }
-
+    
     reference = QString::null;
     if (y >= 0)
       emit(request_goto_page(page, y));

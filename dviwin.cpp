@@ -28,6 +28,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kmimemagic.h>
+#include <kglobal.h>
 #include <kdebug.h>
 #include <keditcl.h>
 #include <kfiledialog.h>
@@ -798,10 +799,10 @@ void dviWindow::mouseMoveEvent ( QMouseEvent * e )
 	int c = selectedTextStart;
 	int d = selectedTextEnd+1;
 
-	int i1 = min(a,c);
-	int i2 = min(max(a,c),min(b,d));
-	int i3 = max(max(a,c),min(b,d));
-	int i4 = max(b,d);
+	int i1 = kMin(a,c);
+	int i2 = kMin(kMax(a,c),kMin(b,d));
+	int i3 = kMax(kMax(a,c),kMin(b,d));
+	int i4 = kMax(b,d);
 	
 	QRect box;
 	int i=i1;

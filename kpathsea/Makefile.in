@@ -1,3 +1,4 @@
+# KDE tags expanded automatically by am_edit
 # Makefile for kpathsea --kb@cs.umb.edu.
 version = 2.52
 
@@ -547,3 +548,20 @@ xstrdup.o: xstrdup.c $(kpathsea_srcdir)/config.h ./c-auto.h $(kpathsea_srcdir)/c
   $(kpathsea_srcdir)/c-limits.h \
   $(kpathsea_srcdir)/c-proto.h \
   $(kpathsea_srcdir)/lib.h $(kpathsea_srcdir)/types.h $(kpathsea_srcdir)/debug.h
+
+#>+ 6
+force-reedit:
+	
+
+	cd $(top_srcdir) && perl admin/am_edit kdvi/kpathsea/Makefile.in
+
+
+#>+ 2
+clean-final:
+
+#>+ 2
+final:
+	$(MAKE) all-am
+#>+ 3
+cvs-clean:
+	$(MAKE) -f $(top_srcdir)/admin/Makefile.common cvs-clean

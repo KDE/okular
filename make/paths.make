@@ -12,7 +12,7 @@
 # a bug, but it's not likely to change soon.
 prefix = @prefix@
 exec_prefix = @exec_prefix@
-platform = $(shell ../config.guess | sed 's/-.*-/-/')
+platform = $(shell $(srcdir)/config.guess | sed 's/-.*-/-/')
 
 # Architecture-dependent executables.
 bindir = $(exec_prefix)/bin/$(platform)

@@ -18,7 +18,7 @@
 config.status: $(srcdir)/configure
 	$(SHELL) $(srcdir)/configure --no-create --verbose
 
-Makefile: $(srcdir)/Makefile.in config.status $(top_srcdir)/../make/*.make
+Makefile: $(srcdir)/Makefile.in config.status 
 	$(SHELL) config.status
 
 # This rule isn't used for web2c or the top-level Makefile, but it

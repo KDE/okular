@@ -16,62 +16,78 @@
 #define _KPDF_PAGEWIDGET_H_
 
 #include <qscrollview.h>
-#include "document.h"
+#include <qvaluevector.h>
 
 #include "CharTypes.h"
+#include "document.h"
 
 class KURL;
 class KActionCollection;
 class KConfigGroup;
 
-class LinkAction;
-class PDFDoc;
-
 class QOutputDev;
-class KPDFDocument;
+class KPDFPage;
+
+//  ### COMMENTED STUFF WILL COME BACK SOON - EROS  ###
+// FIXME COMMENTED STUFF WILL COME BACK SOON - EROS ###
+//  ### COMMENTED STUFF WILL COME BACK SOON - EROS  ###
 
 namespace KPDF
 {
-    /**
-     * Widget displaying a pixmap containing a PDF page and Links.
-     */
-    class PageWidget : public QScrollView, public KPDFDocumentObserver
-    {
-        Q_OBJECT
 
-    public:
-        PageWidget( QWidget *parent, KPDFDocument *document );
-        ~PageWidget();
+class PageWidget : public QScrollView, public KPDFDocumentObserver
+{
+	Q_OBJECT
 
-		// create actions that interact with this widget
-		void setupActions( KActionCollection * collection, KConfigGroup * config );
-		void saveSettings( KConfigGroup * config );
+public:
+	PageWidget( QWidget *parent, KPDFDocument *document );
+	~PageWidget();
 
-		// inherited from KPDFDocumentObserver
-		void pageSetup( const QValueList<int> & pages );
-		void pageSetCurrent( int pageNumber, float position );
+	// create actions that interact with this widget
+	void setupActions( KActionCollection * collection, KConfigGroup * config );
+	void saveSettings( KConfigGroup * config );
 
-        // FIXME what atTop() means if I see 4 tiled pages on screen ?
-        bool atTop()    const;
-        bool atBottom() const;
+	// inherited from KPDFDocumentObserver
+	void pageSetup( const QValueList<int> & pages );
+	void pageSetCurrent( int pageNumber, float position );
+	void notifyPixmapChanged( int pageNumber );
 
         bool find(Unicode *u, int len, bool next);
-        /* void setLinks(); */
 
-    public slots:
-		void slotScrollUp();
-		void slotScrollDown();
+    protected:
+        void contentsMousePressEvent(QMouseEvent*);
+        void contentsMouseReleaseEvent(QMouseEvent*);
+        void contentsMouseMoveEvent(QMouseEvent*);
+        virtual void keyPressEvent( QKeyEvent* );
+        virtual void wheelEvent( QWheelEvent * );
+        virtual void dragEnterEvent( QDragEnterEvent* );
+        virtual void dropEvent( QDropEvent* );
+        virtual void drawContents ( QPainter *p, int, int, int, int );
 
-		// connected to local actions
-		void slotZoom( const QString& );
-		void slotZoomIn();
-		void slotZoomOut();
-		void slotFitToWidthToggled( bool );
-		void slotToggleScrollBars( bool on );
+public slots:
+	// connected to local actions
+	void slotZoom( const QString& );
+	void slotZoomIn();
+	void slotZoomOut();
+	void slotFitToWidthToggled( bool );
+	void slotToggleScrollBars( bool on );
+
+signals:
+	void rightClick();
+	void urlDropped( const KURL& );
 
 private:
-	// the document
+	// the document, current page and pages indices vector
 	KPDFDocument * m_document;
+	// FIXME only for knowing the order of pages.. not useful, change me
+	QValueVector<int> m_pages;
+	int m_vectorIndex;
+	const KPDFPage * m_page;
+
+	enum MouseMode { MouseNormal, MouseSelection, MouseEditing } m_mouseMode;
+	// mouse related vars ...
+	//enum ViewMode { ... } m_viewMode;
+	//int m_viewNumber;
 
 	// zoom related
 	enum ZoomMode { FitInWindow, FitWidth, FitVisible, FixedFactor } m_zoomMode;
@@ -81,38 +97,19 @@ private:
 	KSelectAction *m_aZoom;
 	KToggleAction *m_aZoomFitWidth;
 
-    protected:
-        virtual void keyPressEvent( QKeyEvent* );
-        void contentsMousePressEvent(QMouseEvent*);
-        void contentsMouseReleaseEvent(QMouseEvent*);
-        void contentsMouseMoveEvent(QMouseEvent*);
-        virtual void wheelEvent( QWheelEvent * );
-        virtual void drawContents ( QPainter *p, int, int, int, int );
-        virtual void dragEnterEvent( QDragEnterEvent* );
-        virtual void dropEvent( QDropEvent* );
 
-signals:
-    void zoomChanged( float newZoom );
-
-        void linkClicked(LinkAction*);
-        void rightClick();
-        void urlDropped( const KURL& );
-
-    private:
+        // FIXME what atTop() means if I see 4 tiled pages on screen ?
+        bool atTop()    const;
+        bool atBottom() const;
+        void scrollUp();
+        void scrollDown();
         void updatePixmap();
 
-        QOutputDev *m_outputdev;
-        PDFDoc* m_doc;
         float   m_ppp; // Pixels per point
-
-        // first page is page 1
-        int m_currentPage;
         QPoint   m_dragGrabPos;
-        LinkAction* m_pressedAction;
+        //double m_xMin, m_yMin, m_xMax, m_yMax;
+};
 
-        bool m_selection;
-        double m_xMin, m_yMin, m_xMax, m_yMax;
-    };
 }
 
 #endif

@@ -25,323 +25,36 @@
 #include <klocale.h>
 #include <kconfigbase.h>
 
-#include "PDFDoc.h"
-
 #include "kpdf_pagewidget.h"
-#include "kpdf_pagewidget.moc"
-#include "QOutputDev.h"
-#include <qpushbutton.h>
-#include <kiconloader.h>
+#include "page.h"
 
 namespace KPDF
 {
-    PageWidget::PageWidget(QWidget *parent, KPDFDocument *doc)
-        : QScrollView(parent, "pageWidget", WRepaintNoErase),
-          m_doc(0),
-          m_zoomFactor( 1.0 ),
-          m_document( doc ),
-          m_currentPage( 1 ),
-          m_pressedAction( 0 ),
-          m_selection( false )
-    {
-        SplashColor paperColor;
-        paperColor.rgb8 = splashMakeRGB8(0xff, 0xff, 0xff);
-        m_outputdev = new QOutputDev(paperColor);
-        setFocusPolicy( QWidget::StrongFocus );
-        setAcceptDrops( true );
-        viewport()->setFocusPolicy( QWidget::WheelFocus );
 
-		setMouseTracking( true );
-
-        QPushButton * w = new QPushButton( viewport() );
-        w->setPixmap( SmallIcon("up") );
-        setCornerWidget( w );
-    }
-
-    PageWidget::~PageWidget()
-    {
-        delete m_outputdev;
-    }
-
-void PageWidget::pageSetup( const QValueList<int> & /*pages*/ )
+PageWidget::PageWidget(QWidget *parent, KPDFDocument *document)
+	: QScrollView(parent, "KPDF::pageWidget", WRepaintNoErase),
+	m_document( document ),
+	m_page( 0 ),
+	m_mouseMode( MouseNormal ),
+	m_zoomFactor( 1.0 )
 {
-/*
-	m_doc = doc;
-	m_outputdev -> startDoc(doc->getXRef());
-	m_currentPage = 1;
-	updatePixmap();
-*/
+	// widget setup
+	setMouseTracking( true );
+	setAcceptDrops( true );
+	setFocusPolicy( QWidget::StrongFocus );
+	viewport()->setFocusPolicy( QWidget::WheelFocus );
+
+	//TODO following code will resize the view to page size.. cool!
+	 //#include <qpushbutton.h> and <kiconloader.h>
+	/*QPushButton * w = new QPushButton( viewport() );
+	w->setPixmap( SmallIcon("up") );
+	setCornerWidget( w );*/
 }
 
-void PageWidget::pageSetCurrent( int /*pageNumber*/, float /*position*/ )
+PageWidget::~PageWidget()
 {
-/*
-	// any idea why this mutex is necessary?
-	static QMutex mutex;
-	
-	m_selection = false;
-	Q_ASSERT(mutex.locked() == false);
-	mutex.lock();
-	if (m_doc)
-	{
-		m_currentPage = pageNumber;
-	} else {
-		m_currentPage = 0;
-	}
-	updatePixmap();
-	mutex.unlock();
-*/
+	//TODO delete page(s) (sure ???)
 }
-
-    void
-    PageWidget::contentsMousePressEvent(QMouseEvent* e)
-    {
-        if (m_doc == 0)
-            return;
-        if ( e->button() & LeftButton )
-        {
-            m_dragGrabPos = e -> globalPos();
-            setCursor( sizeAllCursor );
-        }
-        else if ( e->button() & RightButton )
-        {
-            emit rightClick();
-        }
-
-        m_pressedAction = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
-    }
-
-    void
-    PageWidget::contentsMouseReleaseEvent(QMouseEvent* e)
-    {
-        if (m_doc == 0)
-            return;
-
-        if ( e -> button() & LeftButton )
-        {
-            setCursor( arrowCursor );
-        }
-        else
-        {
-            LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
-            if (action == m_pressedAction)
-                emit linkClicked(action);
-
-            m_pressedAction = 0;
-        }
-    }
-
-    void
-    PageWidget::contentsMouseMoveEvent(QMouseEvent* e)
-    {
-        if (m_doc == 0)
-            return;
-        if ( e->state() & LeftButton )
-        {
-            QPoint delta = m_dragGrabPos - e->globalPos();
-            scrollBy( delta.x(), delta.y() );
-            m_dragGrabPos = e->globalPos();
-        }
-        else
-        {
-            LinkAction* action = m_doc->findLink(e->x()/m_ppp, e->y()/m_ppp);
-            setCursor(action != 0 ? Qt::PointingHandCursor : Qt::ArrowCursor);
-        }
-    }
-
-    void PageWidget::drawContents ( QPainter *p, int clipx, int clipy, int clipw, int cliph )
-    {return;
-        QImage im;
-        QColor bc(KGlobalSettings::calculateAlternateBackgroundColor(KGlobalSettings::baseColor()));
-        if (m_outputdev)
-            im = m_outputdev->getImage();
-        if ( !im.isNull() )
-        {
-            p->drawImage ( clipx, clipy, im, clipx, clipy, clipw, cliph );
-            if ((clipw + clipx) > im.width()) 
-                p->fillRect ( im.width(), 
-                        clipy, 
-                        clipw - (im.width() - clipx), 
-                        im.height() - clipy, 
-                        bc );
-            if ((cliph + clipy) > im.height())
-                p->fillRect ( clipx, 
-                        im.height(), 
-                        clipw, 
-                        cliph - (im.height() - clipy), 
-                        bc );
-            if (m_selection)
-            {
-                p->setBrush(Qt::SolidPattern);
-                p->setPen(QPen(Qt::black, 1)); // should not be necessary bug a Qt bug makes it necessary
-                p->setRasterOp(Qt::NotROP);
-                p->drawRect(qRound(m_xMin*m_zoomFactor), qRound(m_yMin*m_zoomFactor), qRound((m_xMax- m_xMin)*m_zoomFactor), qRound((m_yMax- m_yMin)*m_zoomFactor));
-            }
-        }
-        else
-            p->fillRect ( clipx, clipy, clipw, cliph, bc );
-    }
-
-void PageWidget::keyPressEvent( QKeyEvent* e )
-{
-	switch ( e->key() ) {
-	case Key_Up:
-		if ( atTop() )
-			slotScrollUp(); //TODO direct document request to change page
-		else
-			verticalScrollBar()->subtractLine();
-		break;
-	case Key_Down:
-		if ( atBottom() )
-			slotScrollDown(); //TODO direct document request to change 
-		else
-			verticalScrollBar()->addLine();
-		break;
-	case Key_Left:
-		horizontalScrollBar()->subtractLine();
-		break;
-	case Key_Right:
-		horizontalScrollBar()->addLine();
-		break;
-	case Key_Space:
-		if( e->state() != ShiftButton )
-			slotScrollDown(); //TODO direct document request to change 
-		break;
-	default:
-		e->ignore();
-		return;
-	}
-	e->accept();
-}
-
-    bool PageWidget::atTop() const
-    {
-        return verticalScrollBar()->value() == verticalScrollBar()->minValue();
-    }
-
-    bool PageWidget::atBottom() const
-    {
-        return verticalScrollBar()->value() == verticalScrollBar()->maxValue();
-    }
-
-    void PageWidget::wheelEvent( QWheelEvent *e )
-    {
-        int delta = e->delta();
-        e->accept();
-        if ((e->state() & ControlButton) == ControlButton) {
-            if ( e->delta() > 0 )
-                emit slotZoomOut();
-            else
-                emit slotZoomIn();
-        }
-        else if ( delta <= -120 && atBottom() )
-        {
-            slotScrollDown(); //TODO direct document request to change
-        }
-        else if ( delta >= 120 && atTop())
-        {
-            slotScrollUp(); //TODO direct document request to change 
-        }
-
-        else
-            QScrollView::wheelEvent( e );
-    }
-
-    void PageWidget::updatePixmap()
-    {
-        if ( m_doc )
-        {
-            // Pixels per point when the zoomFactor is 1.
-            //const float ppp = (float)QPaintDevice::x11AppDpiX() * m_zoomFactor; // pixels per point
-
-            //m_docMutex->lock();
-            //m_doc->displayPage(m_outputdev, m_currentPage, ppp, ppp, 0, true, true);
-            //m_docMutex->unlock();
-
-            resizeContents ( m_outputdev->getImage().width ( ), m_outputdev->getImage().height ( ));
-
-            viewport()->update();
-        }
-    }
-
-    void PageWidget::dropEvent( QDropEvent* ev )
-    {
-        KURL::List lst;
-        if (  KURLDrag::decode(  ev, lst ) ) {
-            emit urlDropped( lst.first() );
-        }
-    }
-
-    void PageWidget::dragEnterEvent( QDragEnterEvent * ev )
-    {
-        ev->accept();
-    }
-
-    void PageWidget::slotScrollUp()
-    {
-        if( atTop() ) {
-			if ( /*previousPage()*/true )
-			 //TODO direct document request to change 
-				verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
-        } else {
-            int newValue = QMAX( verticalScrollBar()->value() - height() + 50,
-                                 verticalScrollBar()->minValue() );
-
-            /*
-              int step = 10;
-              int value = verticalScrollBar()->value();
-              while( value > newValue - step ) {
-              verticalScrollBar()->setValue( value );
-              value -= step;
-              }
-            */
-
-            verticalScrollBar()->setValue( newValue );
-        }
-    }
-
-    void PageWidget::slotScrollDown()
-    {
-        if( atBottom() ) {
-			if ( true/*nextPage()*/ )
-			 //TODO direct document request to change .. maybe
-				verticalScrollBar()->setValue( verticalScrollBar()->minValue() );
-        } else {
-            int newValue = QMIN( verticalScrollBar()->value() + height() - 50,
-                                 verticalScrollBar()->maxValue() );
-
-            /*
-              int step = 10;
-              int value = verticalScrollBar()->value();
-              while( value < newValue + step ) {
-              verticalScrollBar()->setValue( value );
-              value += step;
-              }
-            */
-
-            verticalScrollBar()->setValue( newValue );
-        }
-    }
-
-    bool PageWidget::find(Unicode *u, int len, bool next)
-    {
-        bool b;
-        if (!next)
-        {
-            // ensure we are searching the whole page
-            m_xMin = 0;
-            m_yMin = 0;
-        }
-
-        b = m_outputdev -> find(u, len, !next, true, next, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
-        m_xMin = m_xMin / m_zoomFactor;
-        m_yMin = m_yMin / m_zoomFactor;
-        m_xMax = m_xMax / m_zoomFactor;
-        m_yMax = m_yMax / m_zoomFactor;
-        m_selection = b;
-        updateContents();
-        return b;
-    }
 
 void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 {
@@ -388,9 +101,245 @@ void PageWidget::setupActions( KActionCollection * ac, KConfigGroup * config )
 
 void PageWidget::saveSettings( KConfigGroup * config )
 {
-	config->writeEntry( "ShowScrollBars", hScrollBarMode() == Auto );
+	config->writeEntry( "ShowScrollBars", hScrollBarMode() == AlwaysOn );
 }
 
+
+    bool PageWidget::find( Unicode * /*u*/, int /*len*/, bool /*next*/ )
+    {return false; /* TODO !!restore!! Enrico
+        bool b;
+        if (!next)
+        {
+            // ensure we are searching the whole page
+            m_xMin = 0;
+            m_yMin = 0;
+        }
+
+        b = m_outputdev -> find(u, len, !next, true, next, false, &m_xMin, &m_yMin, &m_xMax, &m_yMax);
+        m_xMin = m_xMin / m_zoomFactor;
+        m_yMin = m_yMin / m_zoomFactor;
+        m_xMax = m_xMax / m_zoomFactor;
+        m_yMax = m_yMax / m_zoomFactor;
+        m_selection = b;
+        updateContents();
+        return b;
+    */}
+
+
+//BEGIN KPDFDocumentObserver inherited methods 
+void PageWidget::pageSetup( const QValueList<int> & pages )
+{
+	m_pages.clear();
+	m_page = 0;
+
+	if ( pages.count() < 1 )
+	{
+		resizeContents( 0, 0 );
+		return;
+	}
+	
+	// populate internal vector with the list of pages and update
+	QValueList<int>::const_iterator pageIt = pages.begin();
+	QValueList<int>::const_iterator pageEnd = pages.end();
+	for ( ; pageIt != pageEnd ; ++pageIt )
+		m_pages.push_back( *pageIt );
+}
+
+void PageWidget::pageSetCurrent( int pageNumber, float position )
+{
+	// select next page
+	m_vectorIndex = 0;
+	m_page = 0;
+
+	QValueVector<int>::iterator pagesIt = m_pages.begin();
+	QValueVector<int>::iterator pagesEnd = m_pages.end();
+	for ( ; pagesIt != pagesEnd; ++pagesIt )
+	{
+		if ( *pagesIt == pageNumber )
+		{
+			m_page = m_document->page( pageNumber );
+			break;
+		}
+		m_vectorIndex++;
+	}
+
+	if ( !m_page || m_page->width() < 1 || m_page->height() < 1 )
+		return;
+
+	double pageWidth = m_zoomFactor * m_page->width();
+	double pageHeight = m_zoomFactor * m_page->height();
+	updatePixmap();
+	resizeContents( (int)pageWidth, (int)pageHeight );
+	verticalScrollBar()->setValue( (int)(position * verticalScrollBar()->maxValue()) );
+
+	m_document->requestPixmap( pageNumber, (int)pageWidth, (int)pageHeight, true );
+}
+
+void PageWidget::notifyPixmapChanged( int pageNumber )
+{
+	// check if it's the preview we're waiting for
+	if ( !m_page || (int)m_page->number() != pageNumber )
+		return;
+
+	printf("cel'ho\n");
+	updatePixmap();
+}
+//END KPDFDocumentObserver inherited methods
+
+//BEGIN widget events 
+void PageWidget::contentsMousePressEvent(QMouseEvent* /*e*/)
+{/* FIXME Albert
+	if ( e->button() & LeftButton )
+	{
+		m_dragGrabPos = e -> globalPos();
+		setCursor( sizeAllCursor );
+	}
+	else if ( e->button() & RightButton )
+	{
+		emit rightClick();
+	}
+
+	m_pressedAction = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
+*/}
+
+void PageWidget::contentsMouseReleaseEvent(QMouseEvent* /*e*/)
+{/* FIXME Albert
+	if ( e -> button() & LeftButton )
+	{
+		setCursor( arrowCursor );
+	}
+	else
+	{
+		LinkAction* action = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
+		if (action == m_pressedAction)
+			emit linkClicked(action);
+
+		m_pressedAction = 0;
+	}
+*/}
+
+void PageWidget::contentsMouseMoveEvent(QMouseEvent* /*e*/)
+{/* FIXME Albert
+	if ( e->state() & LeftButton )
+	{
+		QPoint delta = m_dragGrabPos - e->globalPos();
+		scrollBy( delta.x(), delta.y() );
+		m_dragGrabPos = e->globalPos();
+	}
+	else
+	{
+		LinkAction* action = *PAGE* ->findLink(e->x()/m_ppp, e->y()/m_ppp);
+		setCursor(action != 0 ? Qt::PointingHandCursor : Qt::ArrowCursor);
+	}
+*/}
+
+void PageWidget::keyPressEvent( QKeyEvent* e )
+{
+	switch ( e->key() ) {
+	case Key_Up:
+		if ( atTop() )
+			scrollUp(); //TODO direct document request to change page
+		else
+			verticalScrollBar()->subtractLine();
+		break;
+	case Key_Down:
+		if ( atBottom() )
+			scrollDown(); //TODO direct document request to change
+		else
+			verticalScrollBar()->addLine();
+		break;
+	case Key_Left:
+		horizontalScrollBar()->subtractLine();
+		break;
+	case Key_Right:
+		horizontalScrollBar()->addLine();
+		break;
+	case Key_Space:
+		if( e->state() != ShiftButton )
+			scrollDown(); //TODO direct document request to change
+		break;
+	default:
+		e->ignore();
+		return;
+	}
+	e->accept();
+}
+
+void PageWidget::wheelEvent( QWheelEvent *e )
+{
+	int delta = e->delta();
+	e->accept();
+	if ((e->state() & ControlButton) == ControlButton) {
+		if ( e->delta() > 0 )
+			emit slotZoomOut();
+		else
+			emit slotZoomIn();
+	}
+	else if ( delta <= -120 && atBottom() )
+	{
+		scrollDown(); //TODO direct document request to change
+	}
+	else if ( delta >= 120 && atTop())
+	{
+		scrollUp(); //TODO direct document request to change
+	}
+
+	else
+		QScrollView::wheelEvent( e );
+}
+
+void PageWidget::dragEnterEvent( QDragEnterEvent * ev )
+{
+	ev->accept();
+}
+
+void PageWidget::dropEvent( QDropEvent* ev )
+{
+	KURL::List lst;
+	if (  KURLDrag::decode(  ev, lst ) ) {
+		emit urlDropped( lst.first() );
+	}
+}
+
+void PageWidget::drawContents ( QPainter *p, int cx, int cy, int cw, int ch )
+{
+	if ( m_page )
+		m_page->drawPixmap( p, QRect( cx,cy,cw,ch ), (int)m_page->width(), (int)m_page->height() );
+/* TODO Enrico
+	QImage im;
+	QColor bc(KGlobalSettings::calculateAlternateBackgroundColor(KGlobalSettings::baseColor()));
+	if (m_outputdev)
+		im = m_outputdev->getImage();
+	if ( !im.isNull() )
+	{
+		p->drawImage ( clipx, clipy, im, clipx, clipy, clipw, cliph );
+		if ((clipw + clipx) > im.width())
+			p->fillRect ( im.width(),
+					clipy,
+					clipw - (im.width() - clipx),
+					im.height() - clipy,
+					bc );
+		if ((cliph + clipy) > im.height())
+			p->fillRect ( clipx,
+					im.height(),
+					clipw,
+					cliph - (im.height() - clipy),
+					bc );
+		if (m_selection)
+		{
+			p->setBrush(Qt::SolidPattern);
+			p->setPen(QPen(Qt::black, 1)); // should not be necessary bug a Qt bug makes it necessary
+			p->setRasterOp(Qt::NotROP);
+			p->drawRect(qRound(m_xMin*m_zoomFactor), qRound(m_yMin*m_zoomFactor), qRound((m_xMax- m_xMin)*m_zoomFactor), qRound((m_yMax- m_yMin)*m_zoomFactor));
+		}
+	}
+	else
+		p->fillRect ( clipx, clipy, clipw, cliph, bc );
+*/
+}
+//END widget events
+
+//BEGIN internal SLOTS
 void PageWidget::slotZoom( const QString & nz )
 {
 	QString z = nz;
@@ -398,8 +347,7 @@ void PageWidget::slotZoom( const QString & nz )
 	bool isNumber = true;
 	double zoom = KGlobal::locale()->readNumber(  z, &isNumber ) / 100;
 	
-zoom = 0;//CUT WARNINGS (but remove me:-)
-	if ( m_zoomFactor != zoom)
+	if ( m_zoomFactor != zoom )
 	{
 		m_zoomFactor = zoom;
 		updatePixmap();
@@ -420,30 +368,78 @@ void PageWidget::slotZoomOut()
 	updatePixmap();
 }
 
-void PageWidget::slotFitToWidthToggled( bool /*fit*/ )
+void PageWidget::slotFitToWidthToggled( bool /*on*/ )
 {
-/*
-	m_zoomMode = m_fitToWidth->isChecked() ? FitWidth : FixedFactor;
-	displayPage(m_currentPage);
-*/
+	//m_zoomMode = on ? FitWidth : FixedFactor;
+	updatePixmap();
 }
-
 
 void PageWidget::slotToggleScrollBars( bool on )
 {
-	setHScrollBarMode( on ? Auto : AlwaysOff );
-	setVScrollBarMode( on ? Auto : AlwaysOff );
+	setHScrollBarMode( on ? AlwaysOn : AlwaysOff );
+	setVScrollBarMode( on ? AlwaysOn : AlwaysOff );
+}
+//END internal SLOTS
+
+bool PageWidget::atTop() const
+{
+	return verticalScrollBar()->value() == verticalScrollBar()->minValue();
 }
 
-} //NAMESPACE
-/** TO BE IMPORTED 
-void Part::displayPage( int pageNumber )
+bool PageWidget::atBottom() const
 {
-    if (pageNumber <= 0 || pageNumber > m_doc->getNumPages())
-        return;
-    updateActions();
-    const double pageWidth  = m_doc->getPageWidth (pageNumber) * m_zoomFactor;
-    const double pageHeight = m_doc->getPageHeight(pageNumber) * m_zoomFactor;
+	return verticalScrollBar()->value() == verticalScrollBar()->maxValue();
+}
+
+void PageWidget::scrollUp()
+{
+	if( atTop() )
+	{
+		if ( m_vectorIndex > 0 )
+		{
+			int nextPage = m_pages[ m_vectorIndex - 1 ];
+			// go the previous page at bottom
+			m_document->slotSetCurrentPagePosition( nextPage, 1.0 );
+		}
+	}
+	else
+	{
+		int newValue = QMAX( verticalScrollBar()->value() - height() + 50,
+		                     verticalScrollBar()->minValue() );
+		verticalScrollBar()->setValue( newValue );
+	}
+}
+
+void PageWidget::scrollDown()
+{
+	if( atBottom() )
+	{
+		if ( m_vectorIndex < (int)m_pages.count() - 1 )
+		{
+			int nextPage = m_pages[ m_vectorIndex + 1 ];
+			// go the previous page at top
+			m_document->slotSetCurrentPagePosition( nextPage, 0.0 );
+		}
+	} else {
+		int newValue = QMIN( verticalScrollBar()->value() + height() - 50,
+		                     verticalScrollBar()->maxValue() );
+		verticalScrollBar()->setValue( newValue );
+	}
+}
+
+void PageWidget::updatePixmap()
+{
+	if ( !m_page )
+		resizeContents( 0, 0 );
+	else
+		resizeContents( (int)(m_page->width() * m_zoomFactor), (int)(m_page->height() * m_zoomFactor) );
+	viewport()->update();
+}
+
+/** TO BE IMPORTED (Zoom code)
+
+	const double pageWidth  = *PAGE* ->getPageWidth (pageNumber) * m_zoomFactor;
+    const double pageHeight = *PAGE* ->getPageHeight(pageNumber) * m_zoomFactor;
 
     // Pixels per point when the zoomFactor is 1.
     const float basePpp  = QPaintDevice::x11AppDpiX() / 72.0;
@@ -481,13 +477,8 @@ void Part::displayPage( int pageNumber )
     case FixedFactor:
     default:
         break;
-    }
-
-//const float ppp = basePpp * m_zoomFactor; // pixels per point
-//  m_doc->displayPage(m_pageWidget, pageNumber, int(m_zoomFactor * ppp * 72.0), 0, true);
-//  m_pageWidget->show();
-//  m_currentPage = pageNumber;
-}
 */
+} //NAMESPACE END!
 
+#include "kpdf_pagewidget.moc"
 // vim:ts=2:sw=2:tw=78:et

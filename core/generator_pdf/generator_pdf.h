@@ -22,6 +22,7 @@
 class PDFDoc;
 class GList;
 class TextPage;
+class Page;
 
 class ObjectRect;
 class KPDFOutputDev;
@@ -81,9 +82,9 @@ class PDFGenerator : public Generator
         // private function for creating the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parent, GList * items );
         // private function for adding annotations read from the pdf file
-        void addAnnotations( int pageNumber, KPDFPage * page );
+        void addAnnotations( Page * xpdfPage, KPDFPage * page );
         // private function for creating the transition information
-        void addTransition( int pageNumber, KPDFPage * page );
+        void addTransition( Page * xpdfPage, KPDFPage * page );
         // (async related) receive data from the generator thread
         void customEvent( QCustomEvent * );
 

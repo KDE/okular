@@ -12,8 +12,15 @@ Author: Enrico Ros - KPDF project - 2005
    partial:
      base{P,AP,AS,A,AA,StructPar,OC}, geom{RD}
    missing:
-     link, caret, fileattachment, sound, movie, screen, widget, printermark,
-     trapnet, watermark, 3d
+     link (handled in another way), caret, {fileattachment, sound, movie},
+     screen, widget, {printermark, trapnet, watermark}, 3d
+
+** Notes on parsing in relation to KPDF:
+ Different Data Structures:
+   To adapt the 'plain' pdf storage to kpdf data structures we use a couple
+   of queues to store cross-dependant objects for each page and then adapt
+   objects to our DSs resolving crossdeps at the end of the loops.
+
 
 ** PDF file structure (annotations section):
 

@@ -183,15 +183,17 @@ void dviWindow::setMakePK( int flag )
 
 void dviWindow::setMetafontMode( unsigned int mode )
 {
-  if (dviFile != NULL)
+  if ((dviFile != NULL) && (mode != font_pool->getMetafontMode()))
     KMessageBox::sorry( this,
 			i18n("The change in Metafont mode will be effective\n"
 			     "only after you start kdvi again!") );
-
+  
   MetafontMode     = font_pool->setMetafontMode(mode);
   basedpi          = MFResolutions[MetafontMode];
   _pixels_per_inch = MFResolutions[MetafontMode];
+#ifdef DEBUG
   kdDebug() << "basedpi " << basedpi << endl;
+#endif
 }
 
 

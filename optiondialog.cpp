@@ -45,15 +45,27 @@ OptionDialog::OptionDialog( QWidget *parent, const char *name, bool modal )
   setHelp("opts", "kdvi");
   makeFontPage();
   makeRenderingPage();
+
+  KConfig *config = _instance->config();
+  config->setGroup("kdvi");
+
+  // Font page
+  // Important! The default values here must be the same as in kdvi_multipage.cpp
+  for(int i=0; i<NumberOfMFModes; i++)
+    mFont.metafontMode->insertItem(QString("%1 dpi / %2").arg(MFResolutions[i]).arg(MFModenames[i]));
+  mFont.metafontMode->setCurrentItem( config->readNumEntry( "MetafontMode" , DefaultMFMode ));
+  mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
+
+  // Rendering page
+  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
+  mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
 }
 
 
 void OptionDialog::show()
 {
-  if( isVisible() == false ) {
-    setup();
+  if( isVisible() == false ) 
     showPage(0);
-  }
   KDialogBase::show();
 }
 
@@ -77,25 +89,6 @@ void OptionDialog::slotApply()
 
   emit preferencesChanged();
 }
-
-
-void OptionDialog::setup()
-{
-  KConfig *config = _instance->config();
-  config->setGroup("kdvi");
-
-  // Font page
-  // Important! The default values here must be the same as in kdvi_multipage.cpp
-  for(int i=0; i<NumberOfMFModes; i++)
-    mFont.metafontMode->insertItem(QString("%1 dpi / %2").arg(MFResolutions[i]).arg(MFModenames[i]));
-  mFont.metafontMode->setCurrentItem( config->readNumEntry( "MetafontMode" , DefaultMFMode ));
-  mFont.fontPathCheck->setChecked( config->readNumEntry( "MakePK" ) );
-
-  // Rendering page
-  mRender.showSpecialCheck->setChecked( config->readNumEntry( "ShowPS", 1 ) );
-  mRender.showHyperLinksCheck->setChecked(config->readNumEntry("ShowHyperLinks", 1)); 
-}
-
 
 
 void OptionDialog::makeFontPage()

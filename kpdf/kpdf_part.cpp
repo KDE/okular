@@ -107,7 +107,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// widgets: [left toolbox] | []
 	m_toolBox = new QToolBox( m_splitter );
 	m_toolBox->setMinimumWidth( 60 );
-	m_toolBox->setMaximumWidth( 200 );
+	m_toolBox->setMaximumWidth( 300 );
 
 	TOC * tocFrame = new TOC( m_toolBox, m_document );
 	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );

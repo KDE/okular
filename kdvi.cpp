@@ -49,6 +49,8 @@ kdvi::kdvi( char *fname, QWidget *, const char *name )
 	hbl = NULL;
 	prefs = NULL;
 
+	keys = new KAccel(this);
+
 	readConfig();
 	setMinimumSize( 400, 60 );
 	setCaption( kapp->getCaption() );
@@ -331,15 +333,13 @@ void kdvi::makeStatusBar( QString )
 	setStatusBar( statusBar );
 }
 
-#include <kkeyconf.h>
-#include <kstdaccel.h>
 
 void kdvi::bindKeys()
 {
-	kKeys->registerWidget("kdvi", this);
+	//kKeys->registerWidget("kdvi", this);
 
-#define AKCF(f,k,o,s)	kKeys->addKey(f, k);\
-			kKeys->connectFunction( "kdvi", f, o, SLOT(s()));
+#define AKCF(f,k,o,s)	keys->insertItem(f, f, k);\
+			keys->connectItem( f, o, SLOT(s()));
 
 	AKCF(translate("New window"),	"CTRL+N",	this,	fileNew		)
 	AKCF(translate("Open file"),	"CTRL+O",	this,	fileOpen	)
@@ -369,6 +369,7 @@ void kdvi::bindKeys()
 	config->setGroup( "kdvi" );
 }
 
+/*
 static void changeMenuAccel ( QPopupMenu *menu, int id,
 	const char *functionName )
 {
@@ -389,36 +390,36 @@ static void changeMenuAccel ( QPopupMenu *menu, int id,
 	
 	menu->changeItem( s, id );
 }
-
+*/
 
 void kdvi::updateMenuAccel()
 {
-	changeMenuAccel( m_f, m_fn, translate("New window") );
-	changeMenuAccel( m_f, m_fo, translate("Open file") );
-	changeMenuAccel( m_f, m_fp, translate("Print dialog") );
-	changeMenuAccel( m_f, m_fx, translate("Quit") );
-	changeMenuAccel( m_v, m_vi, translate("Zoom in") );
-	changeMenuAccel( m_v, m_vo, translate("Zoom out") );
-	changeMenuAccel( m_v, m_vf, translate("Fit window") );
-	changeMenuAccel( m_v, m_vw, translate("Fit width") );
-	changeMenuAccel( m_v, m_vr, translate("Redraw page") );
-	changeMenuAccel( m_p, m_pp, translate("Previous page") );
-	changeMenuAccel( m_p, m_pn, translate("Next page") );
-	changeMenuAccel( m_p, m_pf, translate("First page") );
-	changeMenuAccel( m_p, m_pl, translate("Last page") );
-	changeMenuAccel( m_p, m_pg, translate("Goto page") );
-	changeMenuAccel( m_o, m_o0, translate("Toggle show PS") );
-	changeMenuAccel( m_o, m_om, translate("Toggle menu bar") );
-	changeMenuAccel( m_o, m_ob, translate("Toggle button bar") );
-	changeMenuAccel( m_o, m_ot, translate("Toggle page list") );
-	changeMenuAccel( m_o, m_os, translate("Toggle status bar") );
-	changeMenuAccel( m_o, m_ol, translate("Toggle scroll bars") );
-	changeMenuAccel( m_h, m_hc, translate("Help") );
+	keys->changeMenuAccel( m_f, m_fn, translate("New window") );
+	keys->changeMenuAccel( m_f, m_fo, translate("Open file") );
+	keys->changeMenuAccel( m_f, m_fp, translate("Print dialog") );
+	keys->changeMenuAccel( m_f, m_fx, translate("Quit") );
+	keys->changeMenuAccel( m_v, m_vi, translate("Zoom in") );
+	keys->changeMenuAccel( m_v, m_vo, translate("Zoom out") );
+	keys->changeMenuAccel( m_v, m_vf, translate("Fit window") );
+	keys->changeMenuAccel( m_v, m_vw, translate("Fit width") );
+	keys->changeMenuAccel( m_v, m_vr, translate("Redraw page") );
+	keys->changeMenuAccel( m_p, m_pp, translate("Previous page") );
+	keys->changeMenuAccel( m_p, m_pn, translate("Next page") );
+	keys->changeMenuAccel( m_p, m_pf, translate("First page") );
+	keys->changeMenuAccel( m_p, m_pl, translate("Last page") );
+	keys->changeMenuAccel( m_p, m_pg, translate("Goto page") );
+	keys->changeMenuAccel( m_o, m_o0, translate("Toggle show PS") );
+	keys->changeMenuAccel( m_o, m_om, translate("Toggle menu bar") );
+	keys->changeMenuAccel( m_o, m_ob, translate("Toggle button bar") );
+	keys->changeMenuAccel( m_o, m_ot, translate("Toggle page list") );
+	keys->changeMenuAccel( m_o, m_os, translate("Toggle status bar") );
+	keys->changeMenuAccel( m_o, m_ol, translate("Toggle scroll bars") );
+	keys->changeMenuAccel( m_h, m_hc, translate("Help") );
 }
 
 void kdvi::configKeys()
 {
-	kKeys->configureKeys(this);
+	KKeyDialog::configureKeys(keys);
 	updateMenuAccel();
 	config->setGroup( "kdvi" );
 }

@@ -25,6 +25,8 @@
 #include <ktopwidget.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
+#include <kkeydialog.h>
+#include <kaccel.h>
 
 class KPanner;
 class QToolTipGroup;
@@ -141,6 +143,7 @@ private:
 	int		pannerValue;
 	QToolTipGroup *	tipgroup;
 	kdviprefs* 	prefs;
+	KAccel *	keys;
 };
 
 #include <qgrpbox.h>

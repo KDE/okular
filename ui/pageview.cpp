@@ -44,6 +44,7 @@
 // local includes
 #include "pageview.h"
 #include "pageviewutils.h"
+#include "pageviewtoolbox.h"
 #include "pagepainter.h"
 #include "core/document.h"
 #include "core/page.h"
@@ -94,6 +95,7 @@ public:
     bool blockViewport;                 // prevents changes to viewport
     bool blockPixmapsRequest;           // prevent pixmap requests
     PageViewMessage * messageWindow;    // in pageviewutils.h
+    PageViewEditTools * editToolsWindow;// in pageviewtoolbox.h
 
     // actions
     KToggleAction * aMouseNormal;
@@ -142,6 +144,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->blockViewport = false;
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
+    d->editToolsWindow = 0;
     d->aPrevAction = 0;
 
     // widget setup: setup focus, accept drops and track mouse
@@ -213,9 +216,8 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect = new KRadioAction( i18n("&Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     d->aMouseSelect->setExclusiveGroup( "MouseType" );
 
-    d->aMouseEdit = new KRadioAction( i18n("Draw"), "edit", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_draw" );
+    d->aMouseEdit = new KRadioAction( i18n("&Review"), "pencil", 0, this, SLOT( slotSetMouseDraw() ), ac, "mouse_edit" );
     d->aMouseEdit->setExclusiveGroup("MouseType");
-    d->aMouseEdit->setEnabled( false ); // implement feature before removing this line
 
     // Other actions
     KAction * su = new KAction( i18n("Scroll Up"), 0, this, SLOT( slotScrollUp() ), ac, "view_scroll_up" );
@@ -539,12 +541,18 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
 void PageView::viewportResizeEvent( QResizeEvent * )
 {
     // start a timer that will refresh the pixmap after 0.5s
-    if ( !d->delayResizeTimer )
+    if ( !d->items.isEmpty() )
     {
-        d->delayResizeTimer = new QTimer( this );
-        connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
+        if ( !d->delayResizeTimer )
+        {
+            d->delayResizeTimer = new QTimer( this );
+            connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
+        }
+        d->delayResizeTimer->start( 333, true );
     }
-    d->delayResizeTimer->start( 333, true );
+    // update geometry of tools slider widget (if any)
+    if ( d->editToolsWindow )
+        d->editToolsWindow->anchorChanged();
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -1861,26 +1869,52 @@ void PageView::slotContinousToggled( bool on )
 void PageView::slotSetMouseNormal()
 {
     d->mouseMode = MouseNormal;
+    // hide the messageWindow
     d->messageWindow->hide();
+    // hide the 'tools overlay' if present
+    if ( d->editToolsWindow )
+    {
+        d->editToolsWindow->hideAndDestroy();
+        d->editToolsWindow = 0;
+    }
 }
 
 void PageView::slotSetMouseZoom()
 {
     d->mouseMode = MouseZoom;
+    // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), PageViewMessage::Info, -1 );
+    // hide the 'tools overlay' if present
+    if ( d->editToolsWindow )
+    {
+        d->editToolsWindow->hideAndDestroy();
+        d->editToolsWindow = 0;
+    }
 }
 
 void PageView::slotSetMouseSelect()
 {
     d->mouseMode = MouseSelect;
+    // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), PageViewMessage::Info, -1 );
+    // hide the 'tools overlay' if present
+    if ( d->editToolsWindow )
+    {
+        d->editToolsWindow->hideAndDestroy();
+        d->editToolsWindow = 0;
+    }
 }
 
 void PageView::slotSetMouseDraw()
 {
     d->mouseMode = MouseEdit;
-    d->aMouseEdit->setChecked( true );
+    // hide the messageWindow
     d->messageWindow->hide();
+    // reuse a previous instance if present or create a new one
+    if ( d->editToolsWindow )
+        d->editToolsWindow->show();
+    else
+        d->editToolsWindow = new PageViewEditTools( this, viewport() );
 }
 
 void PageView::slotScrollUp()

@@ -138,7 +138,8 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     // create the generator based on the file's mimetype
     KMimeType::Ptr mime = KMimeType::findByPath( docFile );
     QString mimeName = mime->name();
-    if ( mimeName == "application/pdf" )
+    if ( mimeName == "application/pdf" ||
+         mimeName == "application/x-pdf" )
         generator = new PDFGenerator( this );
 /*    else if ( mimeName == "application/postscript" )
         kdError() << "PS generator not available" << endl;*/

@@ -231,14 +231,14 @@ void KDVIMultiPage::preferencesChanged()
 }
 
 
-bool KDVIMultiPage::print(const QStringList &pages, int current)
+void KDVIMultiPage::print(const QStringList &pages, int current)
 {
   // Make sure the KPrinter is available
   if (printer == 0) {
     printer = new KPrinter();
     if (printer == 0) {
       kdError(4300) << "Could not allocate printer structure" << endl;
-      return false;
+      return;
     }
   }
   
@@ -290,7 +290,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
 
   // Show the printer options requestor
   if (!printer->setup(scrollView(), i18n("Print %1").arg(m_file.section('/', -1))))
-    return false;
+    return;
   // This funny method call is necessary for the KPrinter to return
   // proper results in printer->orientation() below. It seems that
   // KPrinter does some options parsing in that method.
@@ -300,7 +300,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
             i18n("The list of pages you selected was empty.\n"
                  "Maybe you made an error in selecting the pages, "
                  "e.g. by giving an invalid range like '7-2'.") );
-    return false;
+    return;
   }
 
   // Turn the results of the options requestor into a list arguments
@@ -440,7 +440,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   // "True" may be a bit euphemistic. However, since dvips runs
   // concurrently, there is no way of telling the result of the
   // printing command at this stage.
-  return true;
+  return;
 }
 
 

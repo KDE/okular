@@ -11,17 +11,19 @@
   <entry key="HighlightLinks" type="Bool" >
    <default>false</default>
   </entry>
+  <entry key="ChangeColors" type="Bool" >
+   <default>false</default>
+  </entry>
   <entry key="RenderMode" type="Enum" >
-   <default>Normal</default>
+   <default>Inverted</default>
    <choices>
-    <choice name="Normal" />
-    <choice name="pad_paper_color" />
     <choice name="Inverted" />
+    <choice name="Paper" />
+    <choice name="pad_paper_color" />
     <choice name="Recolor" />
     <choice name="pad_fg_color" />
     <choice name="pad_bg_color" />
     <choice name="BlackWhite" />
-    <choice name="pad_contrast" />
    </choices>
   </entry>
   <entry key="RecolorForeground" type="Color" >

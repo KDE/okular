@@ -185,12 +185,17 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
 
     if ( !pixmap )
     {
-        destPainter->fillRect( limits, Settings::paperColor() );
+        if ( Settings::changeColors() &&
+             Settings::renderMode() == Settings::EnumRenderMode::Paper )
+            destPainter->fillRect( limits, Settings::paperColor() );
+        else
+            destPainter->fillRect( limits, Qt::white );
         return;
     }
 
     // we have a pixmap to paint, now let's paint it using a direct or buffered painter
-    bool backBuffer = Settings::renderMode() != Settings::EnumRenderMode::Normal;
+    bool backBuffer = Settings::changeColors() &&
+                      Settings::renderMode() != Settings::EnumRenderMode::Paper;
     // if PagePainter::Accessibility is not in 'flags', disable backBuffer
     backBuffer = backBuffer && (flags & Accessibility);
     QPixmap * backPixmap = 0;

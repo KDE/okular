@@ -225,7 +225,7 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 	if ( m_selected )
 		m_selected->setSelected( false );
 	m_selected = 0;
-	m_document->slotSetCurrentPage( nextPage );
+	m_document->setCurrentPage( nextPage );
 }
 
 void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
@@ -241,7 +241,7 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 		int childTop = childY(t);
 		if ( clickY > childTop && clickY < (childTop + t->height()) )
 		{
-			m_document->slotSetCurrentPage( t->pageNumber() );
+			m_document->setCurrentPage( t->pageNumber() );
 			break;
 		}
 	}

@@ -20,6 +20,7 @@
 #include <kparts/part.h>
 
 #include "kpdf_dcop.h"
+#include "document.h"
 
 class QWidget;
 class QSplitter;
@@ -39,7 +40,6 @@ class LinkDest;
 class ThumbnailList;
 class PageView;
 class SearchWidget;
-class KPDFDocument;
 
 namespace KPDF {
 
@@ -53,7 +53,7 @@ class BrowserExtension;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, virtual public kpdf_dcop
+class Part : public KParts::ReadOnlyPart, public KPDFDocumentObserver, virtual public kpdf_dcop
 {
 Q_OBJECT
 
@@ -65,8 +65,12 @@ public:
 	// Destructor
 	~Part();
 
+    // inherited from KPDFDocumentObserver
+    uint observerId() const { return PART_ID; }
+    void pageSetCurrent( int pageNumber, const QRect & viewport );
+
 	static KAboutData* createAboutData();
-	
+
 	ASYNC goToPage(uint page);
 	ASYNC openDocument(KURL doc);
 	uint pages();
@@ -97,14 +101,14 @@ protected slots:
 public slots:
 	// connected to Shell action (and browserExtension), not local one
 	void slotPrint();
-  void restoreDocument(const KURL &url, int page);
-  void saveDocumentRestoreInfo(KConfig* config);
+    void restoreDocument(const KURL &url, int page);
+    void saveDocumentRestoreInfo(KConfig* config);
 
 private:
 	void doPrint( KPrinter& printer );
 
 	// the document
-	KPDFDocument * document;
+	KPDFDocument * m_document;
 
 	// main widgets
 	QSplitter *m_splitter;

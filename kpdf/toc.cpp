@@ -140,7 +140,7 @@ void TOC::slotExecuted(QListViewItem *i)
 {
 	TOCItem *ti = dynamic_cast<TOCItem*>(i);
 	KPDFLink l( ti->getAction() );
-	m_document->slotProcessLink( &l );
+	m_document->processLink( &l );
 }
 
 #include "toc.moc"

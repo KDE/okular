@@ -57,6 +57,7 @@ public:
     int currentPage;
     QRect currentViewport;
     QValueVector< KPDFPage* > pages;
+    QColor paperColor;
 
     // find related
     QString searchText;
@@ -84,12 +85,9 @@ KPDFDocument::KPDFDocument()
     d->pdfdoc = 0;
     d->currentPage = -1;
     d->searchPage = -1;
-    // load paper color from Settings
-    QColor col = Settings::paperColor();
-    SplashColor paperColor;
-    paperColor.rgb8 = splashMakeRGB8( col.red(), col.green(), col.blue() );
-    // create the output device
-    d->kpdfOutputDev = new KPDFOutputDev( paperColor );
+    d->kpdfOutputDev = 0;
+    // create the outputdev
+    reparseConfig();
 }
 
 KPDFDocument::~KPDFDocument()
@@ -179,7 +177,7 @@ bool KPDFDocument::openDocument( const QString & docFile )
             d->pages[i] = new KPDFPage( i, d->pdfdoc->getPageWidth(i+1), d->pdfdoc->getPageHeight(i+1), d->pdfdoc->getPageRotate(i+1) );
         // filter pages, setup observers and set the first page as current
         processPageList( true );
-        slotSetCurrentPage( 0 );
+        setCurrentPage( 0 );
     }
 
     // check local directory for an overlay xml
@@ -212,6 +210,34 @@ void KPDFDocument::closeDocument()
 }
 
 
+void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
+{
+    d->observers[ pObserver->observerId() ] = pObserver;
+}
+
+void KPDFDocument::reparseConfig()
+{
+    // load paper color from Settings or use the white default color
+    QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
+                     Settings::changeColors() ) ? Settings::paperColor() : Qt::white;
+    if ( color != d->paperColor || !d->kpdfOutputDev )
+    {
+        d->paperColor = color;
+        SplashColor paperColor;
+        paperColor.rgb8 = splashMakeRGB8( d->paperColor.red(), d->paperColor.green(), d->paperColor.blue() );
+        // rebuild the output device using the new paper color
+        d->docLock.lock();
+        delete d->kpdfOutputDev;
+        d->kpdfOutputDev = new KPDFOutputDev( paperColor );
+        if ( d->pdfdoc )
+            d->kpdfOutputDev->startDoc( d->pdfdoc->getXRef() );
+        d->docLock.unlock();
+        // invalidate pixmaps
+        //FIXME missing
+    }
+}
+
+
 uint KPDFDocument::currentPage() const
 {
     return d->currentPage;
@@ -222,19 +248,9 @@ uint KPDFDocument::pages() const
     return d->pdfdoc ? d->pdfdoc->getNumPages() : 0;
 }
 
-bool KPDFDocument::atBegin() const
+bool KPDFDocument::okToPrint() const
 {
-    return d->currentPage < 1;
-}
-
-bool KPDFDocument::atEnd() const
-{
-    return d->currentPage >= ((int)d->pages.count() - 1);
-}
-
-const KPDFPage * KPDFDocument::page( uint n ) const
-{
-    return ( n < d->pages.count() ) ? d->pages[n] : 0;
+    return d->pdfdoc->okToPrint();
 }
 
 Outline * KPDFDocument::outline() const
@@ -242,11 +258,11 @@ Outline * KPDFDocument::outline() const
     return d->pdfdoc ? d->pdfdoc->getOutline() : 0;
 }
 
-
-void KPDFDocument::addObserver( KPDFDocumentObserver * pObserver )
+const KPDFPage * KPDFDocument::page( uint n ) const
 {
-    d->observers[ pObserver->observerId() ] = pObserver;
+    return ( n < d->pages.count() ) ? d->pages[n] : 0;
 }
+
 
 void KPDFDocument::requestPixmap( int id, uint page, int width, int height, bool syn )
 {
@@ -305,51 +321,7 @@ void KPDFDocument::requestTextPage( uint n )
     page->setSearchPage( td.takeTextPage() );
 }
 
-bool KPDFDocument::okToPrint() const
-{
-    return d->pdfdoc->okToPrint();
-}
-
-bool KPDFDocument::print(KPrinter &printer)
-{
-    KTempFile tf( QString::null, ".ps" );
-    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), d->pdfdoc->getXRef(), d->pdfdoc->getCatalog(), 1, d->pdfdoc->getNumPages(), psModePS);
-
-    if (psOut->isOk())
-    {
-        std::list<int> pages;
-
-        if (!printer.previewOnly())
-        {
-            QValueList<int> pageList = printer.pageList();
-            QValueList<int>::const_iterator it;
-
-            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
-        }
-        else
-        {
-            for(int i = 1; i <= d->pdfdoc->getNumPages(); i++) pages.push_back(i);
-        }
-
-        d->docLock.lock();
-        d->pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
-        d->docLock.unlock();
-
-        // needs to be here so that the file is flushed, do not merge with the one
-        // in the else
-        delete psOut;
-        printer.printFiles(tf.name(), true);
-        return true;
-    }
-    else
-    {
-        delete psOut;
-        return false;
-    }
-}
-
-// BEGIN slots
-void KPDFDocument::slotSetCurrentPage( int page, const QRect & viewport )
+void KPDFDocument::setCurrentPage( int page, const QRect & viewport )
 {
     if ( page < 0 )
         page = 0;
@@ -360,27 +332,9 @@ void KPDFDocument::slotSetCurrentPage( int page, const QRect & viewport )
     d->currentPage = page;
     d->currentViewport = viewport;
     foreachObserver( pageSetCurrent( page, viewport ) );
-    pageChanged();
 }
 
-void KPDFDocument::slotSetFilter( const QString & pattern, bool keepCase )
-{
-    d->filterText = pattern;
-    d->filterCase = keepCase;
-    processPageList( false );
-}
-
-void KPDFDocument::slotToggleBookmark( int n )
-{
-    KPDFPage * page = ( n < (int)d->pages.count() ) ? d->pages[ n ] : 0;
-    if ( page )
-    {
-        page->toggleAttribute( KPDFPage::Bookmark );
-        foreachObserver( notifyPixmapChanged( n ) );
-    }
-}
-
-void KPDFDocument::slotFind( const QString & string, bool keepCase )
+void KPDFDocument::findText( const QString & string, bool keepCase )
 {
     // turn selection drawing off on filtered pages
     if ( !d->filterText.isEmpty() )
@@ -435,14 +389,31 @@ void KPDFDocument::slotFind( const QString & string, bool keepCase )
         int pageNumber = foundPage->number();
         d->searchPage = pageNumber;
         foundPage->setAttribute( KPDFPage::Highlight );
-        slotSetCurrentPage( pageNumber );
+        setCurrentPage( pageNumber );
         foreachObserver( notifyPixmapChanged( pageNumber ) );
     }
     else
         KMessageBox::information( 0, i18n("No matches found for '%1'.").arg(d->searchText) );
 }
 
-void KPDFDocument::slotProcessLink( const KPDFLink * link )
+void KPDFDocument::findTextAll( const QString & pattern, bool keepCase )
+{
+    d->filterText = pattern;
+    d->filterCase = keepCase;
+    processPageList( false );
+}
+
+void KPDFDocument::toggleBookmark( int n )
+{
+    KPDFPage * page = ( n < (int)d->pages.count() ) ? d->pages[ n ] : 0;
+    if ( page )
+    {
+        page->toggleAttribute( KPDFPage::Bookmark );
+        foreachObserver( notifyPixmapChanged( n ) );
+    }
+}
+
+void KPDFDocument::processLink( const KPDFLink * link )
 {
     if ( !link )
         return;
@@ -512,7 +483,7 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
             destFitR
                 read and fit left,bottom,right,top
             }*/
-            slotSetCurrentPage( pageNum, r );
+            setCurrentPage( pageNum, r );
         }
         delete namedDest;
         delete dest;
@@ -571,13 +542,13 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
     case KPDFLink::Named: {
         const char * name = link->getName();
         if ( !strcmp( name, "NextPage" ) && (d->currentPage < (int)d->pages.count() - 1) )
-            slotSetCurrentPage( d->currentPage + 1 );
+            setCurrentPage( d->currentPage + 1 );
         else if ( !strcmp( name, "PrevPage" ) && d->currentPage > 0 )
-            slotSetCurrentPage( d->currentPage - 1 );
+            setCurrentPage( d->currentPage - 1 );
         else if ( !strcmp( name, "FirstPage" ) )
-            slotSetCurrentPage( 0 );
+            setCurrentPage( 0 );
         else if ( !strcmp( name, "LastPage" ) )
-            slotSetCurrentPage( d->pages.count() - 1 );
+            setCurrentPage( d->pages.count() - 1 );
         else if ( !strcmp( name, "GoBack" ) )
             {} //TODO
         else if ( !strcmp( name, "GoForward" ) )
@@ -599,6 +570,44 @@ void KPDFDocument::slotProcessLink( const KPDFLink * link )
     case KPDFLink::Unknown:
         // unimplemented cases
         break;
+    }
+}
+
+bool KPDFDocument::print(KPrinter &printer)
+{
+    KTempFile tf( QString::null, ".ps" );
+    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), d->pdfdoc->getXRef(), d->pdfdoc->getCatalog(), 1, d->pdfdoc->getNumPages(), psModePS);
+
+    if (psOut->isOk())
+    {
+        std::list<int> pages;
+
+        if (!printer.previewOnly())
+        {
+            QValueList<int> pageList = printer.pageList();
+            QValueList<int>::const_iterator it;
+
+            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
+        }
+        else
+        {
+            for(int i = 1; i <= d->pdfdoc->getNumPages(); i++) pages.push_back(i);
+        }
+
+        d->docLock.lock();
+        d->pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
+        d->docLock.unlock();
+
+        // needs to be here so that the file is flushed, do not merge with the one
+        // in the else
+        delete psOut;
+        printer.printFiles(tf.name(), true);
+        return true;
+    }
+    else
+    {
+        delete psOut;
+        return false;
     }
 }
 //END slots

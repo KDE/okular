@@ -56,7 +56,7 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
 
 void SearchWidget::hideEvent( QHideEvent * )
 {
-    m_document->slotSetFilter( QString::null, m_caseSensitive );
+    m_document->findTextAll( QString::null, m_caseSensitive );
 }
 
 void SearchWidget::slotTextChanged( const QString & text )
@@ -64,12 +64,12 @@ void SearchWidget::slotTextChanged( const QString & text )
     if ( text.length() > 2 || text.isEmpty() )
     {
         m_lineEdit->setPaletteForegroundColor( palette().active().text() );
-        m_document->slotSetFilter( text, m_caseSensitive );
+        m_document->findTextAll( text, m_caseSensitive );
     }
     else
     {
         m_lineEdit->setPaletteForegroundColor( Qt::red );
-        m_document->slotSetFilter( QString::null, m_caseSensitive );
+        m_document->findTextAll( QString::null, m_caseSensitive );
     }
 }
 

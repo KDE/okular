@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>320</width>
-            <height>362</height>
+            <width>376</width>
+            <height>358</height>
         </rect>
     </property>
     <property name="caption">
@@ -22,9 +22,31 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="QCheckBox">
             <property name="name">
-                <cstring>kcfg_RenderMode</cstring>
+                <cstring>kcfg_HighlightImages</cstring>
+            </property>
+            <property name="text">
+                <string>Draw border around &amp;Images</string>
+            </property>
+            <property name="accel">
+                <string>Alt+I</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_HighlightLinks</cstring>
+            </property>
+            <property name="text">
+                <string>Draw border around &amp;Links</string>
+            </property>
+            <property name="accel">
+                <string>Alt+L</string>
+            </property>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>kcfg_ChangeColors</cstring>
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
@@ -35,453 +57,461 @@
                 </sizepolicy>
             </property>
             <property name="title">
-                <string>Page &amp;Rendering</string>
+                <string>Change &amp;Colors</string>
+            </property>
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="checked">
+                <bool>false</bool>
             </property>
             <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="QLabel">
                     <property name="name">
-                        <cstring>radioNormal</cstring>
+                        <cstring>warn</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>4</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="paletteForegroundColor">
+                        <color>
+                            <red>80</red>
+                            <green>0</green>
+                            <blue>0</blue>
+                        </color>
                     </property>
                     <property name="text">
-                        <string>&amp;Normal (default)</string>
+                        <string>Warning: these options can badly affect drawing speed.</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
+                    <property name="textFormat">
+                        <enum>PlainText</enum>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="QButtonGroup">
                     <property name="name">
-                        <cstring>layout5</cstring>
+                        <cstring>kcfg_RenderMode</cstring>
                     </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer14_3</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Fixed</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>16</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="text">
-                                <string>Paper color:</string>
-                            </property>
-                            <property name="buddy" stdset="0">
-                                <cstring>kcfg_PaperColor</cstring>
-                            </property>
-                        </widget>
-                        <widget class="KColorButton">
-                            <property name="name">
-                                <cstring>kcfg_PaperColor</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="text">
-                                <string></string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="text">
-                                <string>(needs restart)</string>
-                            </property>
-                            <property name="buddy" stdset="0">
-                                <cstring>kcfg_PaperColor</cstring>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer7_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>30</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </hbox>
-                </widget>
-                <widget class="QRadioButton">
-                    <property name="name">
-                        <cstring>radioInverted</cstring>
+                    <property name="enabled">
+                        <bool>false</bool>
                     </property>
-                    <property name="text">
-                        <string>&amp;Invert colors</string>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>4</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
                     </property>
-                    <property name="accel">
-                        <string>Alt+I</string>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
                     </property>
-                </widget>
-                <widget class="QRadioButton">
-                    <property name="name">
-                        <cstring>radioRecolor</cstring>
+                    <property name="lineWidth">
+                        <number>0</number>
                     </property>
-                    <property name="text">
-                        <string>&amp;Change foreground and background colors</string>
+                    <property name="title">
+                        <string></string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout2</cstring>
-                    </property>
-                    <grid>
+                    <vbox>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
                         <property name="margin">
                             <number>0</number>
                         </property>
-                        <spacer row="1" column="3">
+                        <widget class="QRadioButton">
                             <property name="name">
-                                <cstring>spacer12_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>48</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="KColorButton" row="1" column="2">
-                            <property name="name">
-                                <cstring>kcfg_RecolorBackground</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
+                                <cstring>radioInverted</cstring>
                             </property>
                             <property name="text">
-                                <string></string>
+                                <string>&amp;Invert colors</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+I</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
                             </property>
                         </widget>
-                        <spacer row="1" column="0">
+                        <widget class="QRadioButton">
                             <property name="name">
-                                <cstring>spacer14_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Fixed</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>16</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="KColorButton" row="0" column="2">
-                            <property name="name">
-                                <cstring>kcfg_RecolorForeground</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
+                                <cstring>radioNormal</cstring>
                             </property>
                             <property name="text">
-                                <string></string>
+                                <string>Change &amp;paper color</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+P</string>
                             </property>
                         </widget>
-                        <spacer row="0" column="3">
+                        <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>spacer12</cstring>
+                                <cstring>layout5</cstring>
                             </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>48</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="QLabel" row="1" column="1">
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>spacer14_3</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Fixed</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>16</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>textLabel1</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>Paper color:</string>
+                                    </property>
+                                    <property name="buddy" stdset="0">
+                                        <cstring>kcfg_PaperColor</cstring>
+                                    </property>
+                                </widget>
+                                <widget class="KColorButton">
+                                    <property name="name">
+                                        <cstring>kcfg_PaperColor</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                </widget>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>spacer7_2</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>30</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                            </hbox>
+                        </widget>
+                        <widget class="QRadioButton">
                             <property name="name">
-                                <cstring>textLabel3_2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
+                                <cstring>radioRecolor</cstring>
                             </property>
                             <property name="text">
-                                <string>Background color:</string>
+                                <string>&amp;Change dark and light colors</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+C</string>
                             </property>
                         </widget>
-                        <spacer row="0" column="0">
+                        <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>spacer14</cstring>
+                                <cstring>layout2</cstring>
                             </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Fixed</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>16</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="QLabel" row="0" column="1">
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="margin">
+                                    <number>0</number>
+                                </property>
+                                <spacer row="1" column="3">
+                                    <property name="name">
+                                        <cstring>spacer12_2</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>48</width>
+                                            <height>21</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="KColorButton" row="1" column="2">
+                                    <property name="name">
+                                        <cstring>kcfg_RecolorBackground</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                </widget>
+                                <spacer row="1" column="0">
+                                    <property name="name">
+                                        <cstring>spacer14_2</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Fixed</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>16</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="KColorButton" row="0" column="2">
+                                    <property name="name">
+                                        <cstring>kcfg_RecolorForeground</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                </widget>
+                                <spacer row="0" column="3">
+                                    <property name="name">
+                                        <cstring>spacer12</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>48</width>
+                                            <height>21</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QLabel" row="1" column="1">
+                                    <property name="name">
+                                        <cstring>textLabel3_2</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>Dark color:</string>
+                                    </property>
+                                </widget>
+                                <spacer row="0" column="0">
+                                    <property name="name">
+                                        <cstring>spacer14</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Fixed</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>16</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QLabel" row="0" column="1">
+                                    <property name="name">
+                                        <cstring>textLabel3</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>Light color:</string>
+                                    </property>
+                                </widget>
+                            </grid>
+                        </widget>
+                        <widget class="QRadioButton">
                             <property name="name">
-                                <cstring>textLabel3</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
+                                <cstring>radioContrast</cstring>
                             </property>
                             <property name="text">
-                                <string>Foreground color:</string>
+                                <string>Convert to &amp;Black and White</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+B</string>
                             </property>
                         </widget>
-                    </grid>
-                </widget>
-                <widget class="QRadioButton">
-                    <property name="name">
-                        <cstring>radioContrast</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Convert to &amp;Black and White</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+B</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout5</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel" row="1" column="1">
+                        <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>textLabel2_2</cstring>
+                                <cstring>layout5</cstring>
                             </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>Contrast</string>
-                            </property>
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel" row="1" column="1">
+                                    <property name="name">
+                                        <cstring>textLabel2_2</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>Contrast</string>
+                                    </property>
+                                </widget>
+                                <spacer row="1" column="3">
+                                    <property name="name">
+                                        <cstring>spacer10_2</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>48</width>
+                                            <height>21</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <spacer row="1" column="0">
+                                    <property name="name">
+                                        <cstring>spacer11_2</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Fixed</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>16</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <spacer row="0" column="0">
+                                    <property name="name">
+                                        <cstring>spacer11</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Fixed</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>16</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <spacer row="0" column="3">
+                                    <property name="name">
+                                        <cstring>spacer10</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>48</width>
+                                            <height>21</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QSlider" row="1" column="2">
+                                    <property name="name">
+                                        <cstring>kcfg_BWContrast</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="pageStep">
+                                        <number>1</number>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                </widget>
+                                <widget class="QSlider" row="0" column="2">
+                                    <property name="name">
+                                        <cstring>kcfg_BWThreshold</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="pageStep">
+                                        <number>16</number>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" row="0" column="1">
+                                    <property name="name">
+                                        <cstring>textLabel2</cstring>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>Threshold:</string>
+                                    </property>
+                                </widget>
+                            </grid>
                         </widget>
-                        <spacer row="1" column="3">
-                            <property name="name">
-                                <cstring>spacer10_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>48</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <spacer row="1" column="0">
-                            <property name="name">
-                                <cstring>spacer11_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Fixed</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>16</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <spacer row="0" column="0">
-                            <property name="name">
-                                <cstring>spacer11</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Fixed</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>16</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <spacer row="0" column="3">
-                            <property name="name">
-                                <cstring>spacer10</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>48</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="QSlider" row="1" column="2">
-                            <property name="name">
-                                <cstring>kcfg_BWContrast</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>7</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="pageStep">
-                                <number>1</number>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                        </widget>
-                        <widget class="QSlider" row="0" column="2">
-                            <property name="name">
-                                <cstring>kcfg_BWThreshold</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>7</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="pageStep">
-                                <number>16</number>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>textLabel2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>Threshold:</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-            </vbox>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox1</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>4</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="title">
-                <string>&amp;Visual Enhance</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_HighlightImages</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Draw &amp;border around images</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+B</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_HighlightLinks</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Highlight &amp;links</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+L</string>
-                    </property>
+                    </vbox>
                 </widget>
             </vbox>
         </widget>
@@ -537,12 +567,6 @@
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>radioNormal</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>textLabel1_2</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
         <sender>radioContrast</sender>
         <signal>toggled(bool)</signal>
         <receiver>textLabel2_2</receiver>
@@ -552,6 +576,12 @@
         <sender>radioContrast</sender>
         <signal>toggled(bool)</signal>
         <receiver>kcfg_BWContrast</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_ChangeColors</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_RenderMode</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

@@ -430,7 +430,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                     verticalScrollBar()->subtractPage();
             }
             else if ( d->vectorIndex > 0 )
-                d->document->slotSetCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
+                d->document->setCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
             break;
         case Key_Down:
         case Key_PageDown:
@@ -443,7 +443,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                     verticalScrollBar()->addPage();
             }
             else if ( d->vectorIndex < (int)d->items.count() - 1 )
-                d->document->slotSetCurrentPage( d->items[ d->vectorIndex + 1 ]->pageNumber() );
+                d->document->setCurrentPage( d->items[ d->vectorIndex + 1 ]->pageNumber() );
             break;
         case Key_Left:
             horizontalScrollBar()->subtractLine();
@@ -595,13 +595,13 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     // activate link
                     int linkX = e->x() - pageItem->geometry().left(),
                         linkY = e->y() - pageItem->geometry().top();
-                    d->document->slotProcessLink( pageItem->page()->getLink( linkX, linkY ) );
+                    d->document->processLink( pageItem->page()->getLink( linkX, linkY ) );
                 }
                 else
                 {
                     // mouse not moved since press, so we have a click. select the page.
                     if ( e->globalPos() == d->mouseStartPos )
-                        d->document->slotSetCurrentPage( pageItem->pageNumber() );
+                        d->document->setCurrentPage( pageItem->pageNumber() );
                 }
             }
             else if ( rightButton && pageItem )
@@ -625,7 +625,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 switch ( m_popup->exec(e->globalPos()) )
                 {
                     case 1:
-                        d->document->slotToggleBookmark( kpdfPage->number() );
+                        d->document->toggleBookmark( kpdfPage->number() );
                         break;
                     case 2:
                         // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
@@ -639,7 +639,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         slotRelayoutPages();
                         viewport()->setUpdatesEnabled( true );
                         updateContents();
-                        d->document->slotSetCurrentPage( kpdfPage->number() );
+                        d->document->setCurrentPage( kpdfPage->number() );
                         break;
                     case 3: // ToDO switch to edit mode
                         slotSetMouseDraw();
@@ -794,13 +794,13 @@ void PageView::wheelEvent( QWheelEvent *e )
     {
         // go to next page
         if ( d->vectorIndex < (int)d->items.count() - 1 )
-            d->document->slotSetCurrentPage( d->items[ d->vectorIndex + 1 ]->pageNumber() );
+            d->document->setCurrentPage( d->items[ d->vectorIndex + 1 ]->pageNumber() );
     }
     else if ( delta >= 120 && !Settings::viewContinous() && vScroll == verticalScrollBar()->minValue() )
     {
         // go to prev page
         if ( d->vectorIndex > 0 )
-            d->document->slotSetCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
+            d->document->setCurrentPage( d->items[ d->vectorIndex - 1 ]->pageNumber() );
     }
     else
         QScrollView::wheelEvent( e );

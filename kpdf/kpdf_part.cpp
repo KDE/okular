@@ -84,14 +84,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	setInstance(KPDFPartFactory::instance());
 
 	// build the document
-	document = new KPDFDocument();
-	connect( document, SIGNAL( pageChanged() ), this, SLOT( updateActions() ) );
+	m_document = new KPDFDocument();
 
 	// widgets: ^searchbar (toolbar containing label and SearchWidget)
 //	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
 //	m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
 //	QLabel * sLabel = new QLabel( i18n( "&Search:" ), m_searchToolBar, "kde toolbar widget" );
-//	m_searchWidget = new SearchWidget( m_searchToolBar, document );
+//	m_searchWidget = new SearchWidget( m_searchToolBar, m_document );
 //	sLabel->setBuddy( m_searchWidget );
 //	m_searchToolBar->setStretchableWidget( m_searchWidget );
 
@@ -105,14 +104,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->setMinimumWidth( 60 );
 	m_toolBox->setMaximumWidth( 200 );
 
-	TOC * tocFrame = new TOC( m_toolBox, document );
+	TOC * tocFrame = new TOC( m_toolBox, m_document );
 	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	connect(tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
 	enableTOC( false );
 
 	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
-    m_searchWidget = new SearchWidget( thumbsBox, document );
-    m_thumbnailList = new ThumbnailList( thumbsBox, document );
+    m_searchWidget = new SearchWidget( thumbsBox, m_document );
+    m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
@@ -126,14 +125,15 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->setItemEnabled( iIdx, false );
 
 	// widgets: [] | [right 'pageView']
-	m_pageView = new PageView( m_splitter, document );
+	m_pageView = new PageView( m_splitter, m_document );
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	//connect(m_pageView, SIGNAL( rightClick() ), this, SIGNAL( rightClick() ));
 
 	// add document observers
-	document->addObserver( m_thumbnailList );
-	document->addObserver( m_pageView );
-	document->addObserver( tocFrame );
+    m_document->addObserver( this );
+	m_document->addObserver( m_thumbnailList );
+	m_document->addObserver( m_pageView );
+	m_document->addObserver( tocFrame );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -186,15 +186,21 @@ Part::~Part()
     // write to disk config file
     Settings::writeConfig();
 
-    delete document;
+    delete m_document;
     if ( --m_count == 0 )
         delete globalParams;
 }
 
+void Part::pageSetCurrent( int, const QRect & )
+{
+    // document tells that page has changed, so update actions
+    updateActions();
+}
+
 void Part::goToPage(uint i)
 {
-	if (i <= document->pages())
-		document->slotSetCurrentPage( i - 1 );
+    if ( i <= m_document->pages() )
+        m_document->setCurrentPage( i - 1 );
 }
 
 void Part::openDocument(KURL doc)
@@ -204,7 +210,7 @@ void Part::openDocument(KURL doc)
 
 uint Part::pages()
 {
-	return document->pages();
+	return m_document->pages();
 }
 
 //this don't go anywhere but is required by genericfactory.h
@@ -220,7 +226,7 @@ KAboutData* Part::createAboutData()
 
 bool Part::openFile()
 {
-	bool ok = document->openDocument( m_file );
+	bool ok = m_document->openDocument( m_file );
 	m_find->setEnabled( ok );
 	return ok;
 }
@@ -234,28 +240,30 @@ bool Part::openURL(const KURL &url)
 
 bool Part::closeURL()
 {
-	document->closeDocument();
+	m_document->closeDocument();
 	return KParts::ReadOnlyPart::closeURL();
 }
 
 void Part::updateActions()
 {
-	if ( document->pages() > 0 )
-	{
-		m_gotoPage->setEnabled(document->pages()>1);
-		m_firstPage->setEnabled(!document->atBegin());
-		m_prevPage->setEnabled(!document->atBegin());
-		m_lastPage->setEnabled(!document->atEnd());
-		m_nextPage->setEnabled(!document->atEnd());
-	}
-	else
-	{
-		m_gotoPage->setEnabled(false);
-		m_firstPage->setEnabled(false);
-		m_lastPage->setEnabled(false);
-		m_prevPage->setEnabled(false);
-		m_nextPage->setEnabled(false);
-	}
+    if ( m_document->pages() > 0 )
+    {
+        bool atBegin = m_document->currentPage() < 1;
+        bool atEnd = m_document->currentPage() >= (m_document->pages() - 1);
+        m_gotoPage->setEnabled( m_document->pages() > 1 );
+        m_firstPage->setEnabled( !atBegin );
+        m_prevPage->setEnabled( !atBegin );
+        m_lastPage->setEnabled( !atEnd );
+        m_nextPage->setEnabled( !atEnd );
+    }
+    else
+    {
+        m_gotoPage->setEnabled( false );
+        m_firstPage->setEnabled( false );
+        m_lastPage->setEnabled( false );
+        m_prevPage->setEnabled( false );
+        m_nextPage->setEnabled( false );
+    }
 }
 
 void Part::enableTOC(bool enable)
@@ -295,52 +303,52 @@ public:
 
 void Part::slotGoToPage()
 {
-	KPDFGotoPageDialog pageDialog( m_pageView, document->currentPage() + 1, document->pages() );
-	if ( pageDialog.exec() == QDialog::Accepted )
-		document->slotSetCurrentPage( pageDialog.getPage() - 1 );
+    KPDFGotoPageDialog pageDialog( m_pageView, m_document->currentPage() + 1, m_document->pages() );
+    if ( pageDialog.exec() == QDialog::Accepted )
+        m_document->setCurrentPage( pageDialog.getPage() - 1 );
 }
 
 void Part::slotPreviousPage()
 {
-	if ( !document->atBegin() )
-		document->slotSetCurrentPage( document->currentPage() - 1 );
+    if ( !m_document->currentPage() < 1 )
+        m_document->setCurrentPage( m_document->currentPage() - 1 );
 }
 
 void Part::slotNextPage()
 {
-	if ( !document->atEnd() )
-		document->slotSetCurrentPage( document->currentPage() + 1 );
+    if ( m_document->currentPage() < (m_document->pages() - 1) )
+        m_document->setCurrentPage( m_document->currentPage() + 1 );
 }
 
 void Part::slotGotoFirst()
 {
-	document->slotSetCurrentPage( 0 );
+    m_document->setCurrentPage( 0 );
 }
 
 void Part::slotGotoLast()
 {
-	document->slotSetCurrentPage( document->pages() - 1 );
+    m_document->setCurrentPage( m_document->pages() - 1 );
 }
 
 void Part::slotFind()
 {
-	KFindDialog dlg( widget() );
-	dlg.setHasCursor(false);
+    KFindDialog dlg( widget() );
+    dlg.setHasCursor( false );
 #if KDE_IS_VERSION(3,3,90)
-	dlg.setSupportsBackwardsFind(false);
-	dlg.setSupportsWholeWordsFind(false);
-	dlg.setSupportsRegularExpressionFind(false);
+    dlg.setSupportsBackwardsFind( false );
+    dlg.setSupportsWholeWordsFind( false );
+    dlg.setSupportsRegularExpressionFind( false );
 #endif
-	if (dlg.exec() == QDialog::Accepted)
-	{
-		m_findNext->setEnabled( true );
-		document->slotFind( dlg.pattern(), dlg.options() & KFindDialog::CaseSensitive );
-	}
+    if ( dlg.exec() == QDialog::Accepted )
+    {
+        m_findNext->setEnabled( true );
+        m_document->findText( dlg.pattern(), dlg.options() & KFindDialog::CaseSensitive );
+    }
 }
 
 void Part::slotFindNext()
 {
-	document->slotFind();
+    m_document->findText();
 }
 
 void Part::slotSaveFileAs()
@@ -395,6 +403,9 @@ void Part::slotNewConfig()
         m_pageView->setVScrollBarMode( scrollBarMode );
     }
 
+    // update document settings
+    m_document->reparseConfig();
+
     // update Main View and ThumbnailList contents
     // TODO do this only when changing Settings::renderMode()
     m_pageView->updateContents();
@@ -404,14 +415,14 @@ void Part::slotNewConfig()
 
 void Part::slotPrintPreview()
 {
-    if (document->pages() == 0) return;
+    if (m_document->pages() == 0) return;
 
     double width, height;
     int landscape, portrait;
     KPrinter printer;
     const KPDFPage *page;
 
-    printer.setMinMax(1, document->pages());
+    printer.setMinMax(1, m_document->pages());
     printer.setPreviewOnly( true );
     printer.setMargins(0, 0, 0, 0);
 
@@ -419,9 +430,9 @@ void Part::slotPrintPreview()
     // not accept a per page setting
     landscape = 0;
     portrait = 0;
-    for (uint i = 0; i < document->pages(); i++)
+    for (uint i = 0; i < m_document->pages(); i++)
     {
-        page = document->page(i);
+        page = m_document->page(i);
         width = page->width();
         height = page->height();
         if (page->rotation() == 90 || page->rotation() == 270) qSwap(width, height);
@@ -435,7 +446,7 @@ void Part::slotPrintPreview()
 
 void Part::slotPrint()
 {
-    if (document->pages() == 0) return;
+    if (m_document->pages() == 0) return;
 
     double width, height;
     int landscape, portrait;
@@ -443,17 +454,17 @@ void Part::slotPrint()
     const KPDFPage *page;
 
     printer.setPageSelection(KPrinter::ApplicationSide);
-    printer.setMinMax(1, document->pages());
-    printer.setCurrentPage(document->currentPage()+1);
+    printer.setMinMax(1, m_document->pages());
+    printer.setCurrentPage(m_document->currentPage()+1);
     printer.setMargins(0, 0, 0, 0);
 
     // if some pages are landscape and others are not the most common win as kprinter does
     // not accept a per page setting
     landscape = 0;
     portrait = 0;
-    for (uint i = 0; i < document->pages(); i++)
+    for (uint i = 0; i < m_document->pages(); i++)
     {
-        page = document->page(i);
+        page = m_document->page(i);
         width = page->width();
         height = page->height();
         if (page->rotation() == 90 || page->rotation() == 270) qSwap(width, height);
@@ -467,13 +478,13 @@ void Part::slotPrint()
 
 void Part::doPrint(KPrinter &printer)
 {
-    if (!document->okToPrint())
+    if (!m_document->okToPrint())
     {
         KMessageBox::error(widget(), i18n("Printing this document is not allowed."));
         return;
     }
 
-    if (!document->print(printer))
+    if (!m_document->print(printer))
     {
         KMessageBox::error(widget(), i18n("Could not print the document. Please report to bugs.kde.org"));	
     }
@@ -487,7 +498,7 @@ void Part::restoreDocument(const KURL &url, int page)
 void Part::saveDocumentRestoreInfo(KConfig* config)
 {
   config->writePathEntry( "URL", url().url() );
-  if (document->pages() > 0) config->writeEntry( "Page", document->currentPage() + 1);
+  if (m_document->pages() > 0) config->writeEntry( "Page", m_document->currentPage() + 1 );
 }
 
 /*

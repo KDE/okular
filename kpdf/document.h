@@ -15,9 +15,7 @@
 #include <qvaluevector.h>
 
 class KPrinter;
-
 class Outline;
-
 class KPDFPage;
 class KPDFLink;
 
@@ -29,21 +27,22 @@ class KPDFLink;
  */
 class KPDFDocumentObserver
 {
-public:
-    // you must give each observer a unique ID (used for notifications)
-    virtual uint observerId() const = 0;
+    public:
+        // you must give each observer a unique ID (used for notifications)
+        virtual uint observerId() const = 0;
 
-    // monitor changes in pixmaps (generation thread complete)
-    virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
+        // monitor changes in pixmaps (generation thread complete)
+        virtual void notifyPixmapChanged( int /*pageNumber*/ ) {};
 
-    // commands from the Document to all observers
-    virtual void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool /*documentChanged*/ ) {};
-    virtual void pageSetCurrent( int /*pageNumber*/, const QRect & /*viewport*/ = QRect() ) {};
+        // commands from the Document to all observers
+        virtual void pageSetup( const QValueVector<KPDFPage*> & /*pages*/, bool /*documentChanged*/ ) {};
+        virtual void pageSetCurrent( int /*pageNumber*/, const QRect & /*viewport*/ = QRect() ) {};
 };
 
-#define PAGEVIEW_ID 1
-#define THUMBNAILS_ID 2
-#define TOC_ID 3
+#define PART_ID 1
+#define PAGEVIEW_ID 2
+#define THUMBNAILS_ID 3
+#define TOC_ID 4
 
 /**
  * @short The information container. Actions (like open,find) take place here.
@@ -51,54 +50,44 @@ public:
  * xxxxxx
  * yyy.
  */
-class KPDFDocument : public QObject
+class KPDFDocument
 {
-    Q_OBJECT
+    public:
+        KPDFDocument();
+        ~KPDFDocument();
 
-public:
-    KPDFDocument();
-    ~KPDFDocument();
+        // document handling
+        bool openDocument( const QString & docFile );
+        void closeDocument();
 
-    // document handling
-    bool openDocument( const QString & docFile );
-    void closeDocument();
+        // misc methods
+        void addObserver( KPDFDocumentObserver * pObserver );
+        void reparseConfig();
 
-    // query methods
-    uint currentPage() const;
-    uint pages() const;
-    bool atBegin() const;
-    bool atEnd() const;
-    const KPDFPage * page( uint page ) const;
-    Outline * outline() const;
+        // query methods (const ones)
+        uint currentPage() const;
+        uint pages() const;
+        bool okToPrint() const;
+        Outline * outline() const;
+        const KPDFPage * page( uint page ) const;
 
-    // observers related methods
-    void addObserver( KPDFDocumentObserver * pObserver );
-    void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
-    void requestTextPage( uint page );
+        // perform actions on document / pages
+        void requestPixmap( int id, uint page, int width, int height, bool syncronous = false );
+        void requestTextPage( uint page );
+        void setCurrentPage( int page, const QRect & viewport = QRect() );
+        void findText( const QString & text = "", bool caseSensitive = false );
+        void findTextAll( const QString & pattern, bool caseSensitive );
+        void toggleBookmark( int page );
+        void processLink( const KPDFLink * link );
+        bool print( KPrinter &printer );
 
-    bool okToPrint() const;
-    bool print(KPrinter &printer);
+    private:
+        QString giveAbsolutePath( const QString & fileName );
+        bool openRelativeFile( const QString & fileName );
+        void processPageList( bool documentChanged );
+        void unHilightPages();
 
-//public slots: TODO remove me
-    // document commands via slots
-    void slotSetCurrentPage( int page, const QRect & viewport = QRect() );
-    void slotSetFilter( const QString & pattern, bool caseSensitive );
-    void slotToggleBookmark( int page );
-    void slotFind( const QString & text = "", bool caseSensitive = false );
-    void slotProcessLink( const KPDFLink * link );
-
-signals:
-    // notify changes via signals
-    void pageChanged();
-
-private:
-    QString giveAbsolutePath( const QString & fileName );
-    bool openRelativeFile( const QString & fileName );
-    void processPageList( bool documentChanged );
-    void unHilightPages();
-
-    class KPDFDocumentPrivate * d;
+        class KPDFDocumentPrivate * d;
 };
-
 
 #endif

@@ -1190,8 +1190,10 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         XPDFReader::lookupDate( annotDict, "M", annotation->modifyDate );
         if ( annotation->creationDate.isNull() && !annotation->modifyDate.isNull() )
             annotation->creationDate = annotation->modifyDate;
-        // -> flags (set External since annotation is already on file)
-        int flags = Annotation::External;
+        // -> flags: set the external attribute since it's embedded on file
+        annotation->flags |= Annotation::External;
+        // -> flags
+        int flags = 0;
         XPDFReader::lookupInt( annotDict, "F", flags );
         if ( flags & 0x2 )
             annotation->flags |= Annotation::Hidden;
@@ -1366,7 +1368,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
                 kdDebug() << "PDFGenerator: clash for annotations with ID:" << annotID << endl;
             annotationsMap[ annotID ] = annotation;
         }
-    }
+    } // end Annotation/PopupWindow parsing loop
 
     /** 2 - RESOLVE POPUPS (popup.* -> annotation.window) */
     if ( !resolvePopList.isEmpty() && !popupsMap.isEmpty() )
@@ -1441,7 +1443,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             annotationsMap.remove( excludeIDs[ i ] );
     }
 
-    // finally add annotations to the page
+    /** 4 - finally SET ANNOTATIONS to the page */
     QMap< int, Annotation * >::Iterator it = annotationsMap.begin(), end = annotationsMap.end();
     for ( ; it != end; ++it )
         page->addAnnotation( it.data() );

@@ -23,7 +23,7 @@ class Annotation;
  * @short Helper class for (recoursive) annotation retrieval/storage.
  *
  */
-class AnnotationManager
+class AnnotationUtils
 {
     public:
         // restore an annotation (with revisions if needed) from a dom
@@ -33,8 +33,13 @@ class AnnotationManager
 
         // save the 'ann' annotations as a child of parentElement taking
         // care of saving all revisions if 'ann' has any.
-        static void storeAnnotation( const Annotation * ann, QDomNode & parentNode,
-            QDomDocument & document );
+        static void storeAnnotation( const Annotation * ann,
+            QDomElement & annElement, QDomDocument & document );
+
+        // return an element called 'name' from the direct children of
+        // parentNode or a null element if not found
+        static QDomElement findChildElement( const QDomNode & parentNode,
+            const QString & name );
 };
 
 
@@ -50,7 +55,8 @@ class AnnotationManager
 struct Annotation
 {
     // enum definitions
-    enum SubType { AText, ALine, AGeom, AHighlight, AStamp, AInk, A_BASE };
+    enum SubType { AText = 1, ALine = 2, AGeom = 3, AHighlight = 4, AStamp = 5,
+                   AInk = 6, A_BASE = 0 };
     enum Flag { Hidden = 1, FixedSize = 2, FixedRotation = 4, DenyPrint = 8,
                 DenyWrite = 16, DenyDelete = 32, ToggleHidingOnMouse = 64, External = 128 };
     enum LineStyle { Solid, Dashed, Beveled, Inset, Underline };
@@ -83,6 +89,8 @@ struct Annotation
         // pen effects
         LineEffect      effect;             // LineEffect::NoEffect
         double          effectIntensity;    // 1.0
+        // default initializer
+        Style();
     }               style;
 
     /** properties: popup window */
@@ -98,6 +106,8 @@ struct Annotation
         QString         title;              // '' text in the titlebar (overrides author)
         QString         summary;            // '' short description (displayed if not empty)
         QString         text;               // '' text for the window (overrides annot->contents)
+        // default initializer
+        Window();
     }               window;
 
     /** properties: versioning */
@@ -108,6 +118,8 @@ struct Annotation
         // scope and type of revision
         RevScope        scope;              // Reply
         RevType         type;               // None
+        // default initializer
+        Revision();
     };
     QValueList< Revision > revisions;       // empty by default
 
@@ -121,11 +133,10 @@ struct Annotation
 
     // methods: default constructor / virtual destructor
     Annotation();
-    virtual ~Annotation() {};
+    virtual ~Annotation();
 };
 
 
-//BEGIN  Annotations Definition
 // a helper used to shorten the code presented below
 #define AN_COMMONDECL( className, rttiType )\
     className();\
@@ -143,14 +154,14 @@ struct TextAnnotation : public Annotation
     enum InplaceIntent { Unknown, Callout, TypeWriter };
 
     // data fields
-    TextType        textType;
-    QFont           textFont;
-    bool            textOpened;
-    QString         textIcon;
-    int             inplaceAlign;   // 0:left, 1:center, 2:right
-    QString         inplaceText;    // '' overrides contents
-    NormalizedPoint inplaceCallout[3];
-    InplaceIntent   inplaceIntent;
+    TextType        textType;               // Linked
+    QFont           textFont;               // app def font
+    bool            textOpened;             // false
+    QString         textIcon;               // 'Comment'
+    int             inplaceAlign;           // 0:left, 1:center, 2:right
+    QString         inplaceText;            // '' overrides contents
+    NormalizedPoint inplaceCallout[3];      //
+    InplaceIntent   inplaceIntent;          // Unknown
 };
 
 struct LineAnnotation : public Annotation
@@ -165,14 +176,14 @@ struct LineAnnotation : public Annotation
 
     // data fields (note uses border for rendering style)
     QValueList<NormalizedPoint> linePoints;
-    TermStyle       lineStartStyle;
-    TermStyle       lineEndStyle;
-    bool            lineClosed;     // false (if true connect first and last points)
-    QColor          lineInnerColor;
-    double          lineLeadingFwdPt;
-    double          lineLeadingBackPt;
-    bool            lineShowCaption;
-    LineIntent      lineIntent;
+    TermStyle       lineStartStyle;         // None
+    TermStyle       lineEndStyle;           // None
+    bool            lineClosed;             // false (if true draw close shape)
+    QColor          lineInnerColor;         //
+    double          lineLeadingFwdPt;       // 0.0
+    double          lineLeadingBackPt;      // 0.0
+    bool            lineShowCaption;        // false
+    LineIntent      lineIntent;             // Unknown
 };
 
 struct GeomAnnotation : public Annotation
@@ -184,9 +195,9 @@ struct GeomAnnotation : public Annotation
     enum GeomType { InscribedSquare, InscribedCircle };
 
     // data fields (note uses border for rendering style)
-    GeomType        geomType;
-    QColor          geomInnerColor;
-    int             geomWidthPt;    // 18
+    GeomType        geomType;               // InscribedSquare
+    QColor          geomInnerColor;         //
+    int             geomWidthPt;            // 18
 };
 
 struct HighlightAnnotation : public Annotation
@@ -198,7 +209,7 @@ struct HighlightAnnotation : public Annotation
     enum HighlightType { Highlight, Underline, Squiggly, StrikeOut };
 
     // data fields
-    HighlightType   highlightType;
+    HighlightType   highlightType;          // Highlight
     QValueList<NormalizedPoint[4]>  highlightQuads;
 };
 
@@ -208,7 +219,7 @@ struct StampAnnotation : public Annotation
     AN_COMMONDECL( StampAnnotation, AStamp )
 
     // data fields
-    QString         stampIconName;
+    QString         stampIconName;          // 'kpdf'
 };
 
 struct InkAnnotation : public Annotation
@@ -219,6 +230,5 @@ struct InkAnnotation : public Annotation
     // data fields
     QValueList< QValueList<NormalizedPoint> > inkPaths;
 };
-//END  Annotations definition
 
 #endif

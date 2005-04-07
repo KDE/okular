@@ -6,23 +6,21 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress [working on]:
--> annotations: DS refactor (97%)
--> annotations: pdf parser adaptation (95%)
--> annotations: xml storage adaptation (6%)
-
 -> annotations: renderers in PagePainter (for the 6 markup annots)
+
 -> annotations: handlers in PageView for WindowAnnots and others..
 -> annotations: creators in PageViewAnnotator (60% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
+-> (done: 100%) refactor, pdf parser, xml storage
 -> check mouse wrapping not screH / 2
 -> check unscaledwidth/height.. necessary ?
 -> check if fix was applied in head only (pageview.cpp 1676)
--> investigating crash on quit() on the document provided by Mikolaj
 
 More items (first items will enter 'In progress list' first):
 -> merge with head: core/ has no qwidgets around. the head fonts can't make exception!
    use getMetaData for getting the font list instead of 'passing a klistview to the generator'!
+-> pageview: add vp damaging queue and flush function. add coolfx to smoothmove using damaging
 -> annotations: add config option for default name change
 -> annotations: toolbar: display tooltip only the first time
 -> annotations: provide nice wizards. Make it easy to deliver/copy/move the xml files (by Uga)

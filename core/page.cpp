@@ -320,7 +320,7 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
                 annotationNode = annotationNode.nextSibling();
 
                 // get annotation from the dom element
-                Annotation * annotation = AnnotationManager::createAnnotation( annotElement );
+                Annotation * annotation = AnnotationUtils::createAnnotation( annotElement );
 
                 // append annotation to the list or show warning
                 if ( annotation )
@@ -343,56 +343,53 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
 void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
 {
     // only add a node if there is some stuff to write into
-    if ( m_bookmarked || !m_annotations.isEmpty() )
+    if ( !m_bookmarked && m_annotations.isEmpty() )
+        return;
+
+    // create the page node and set the 'number' attribute
+    QDomElement pageElement = document.createElement( "page" );
+    parentNode.appendChild( pageElement );
+    pageElement.setAttribute( "number", m_number );
+
+    // add bookmark info if is bookmarked
+    if ( m_bookmarked )
     {
-        // create the page node and set the 'number' attribute
-        QDomElement pageElement = document.createElement( "page" );
-        parentNode.appendChild( pageElement );
-        pageElement.setAttribute( "number", m_number );
+        // create the pageElement's 'bookmark' child
+        QDomElement bookmarkElement = document.createElement( "bookmark" );
+        pageElement.appendChild( bookmarkElement );
 
-        // add bookmark info if is bookmarked
-        if ( m_bookmarked )
+        // add attributes to the element
+        //bookmarkElement.setAttribute( "name", bookmark name );
+    }
+
+    // add annotations info if has got any
+    if ( !m_annotations.isEmpty() )
+    {
+          struct timeval ts, te;
+          gettimeofday( &ts, NULL );
+        // create the annotationList
+        QDomElement annotListElement = document.createElement( "annotationList" );
+        pageElement.appendChild( annotListElement );
+
+        // add every annotation to the annotationList
+        QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+        for ( ; aIt != aEnd; ++aIt )
         {
-            // create the pageElement's 'bookmark' child
-            QDomElement bookmarkElement = document.createElement( "bookmark" );
-            pageElement.appendChild( bookmarkElement );
-
-            // add attributes to the element
-            //bookmarkElement.setAttribute( "name", bookmark name );
-        }
-
-        // add annotations info if has got any
-        if ( !m_annotations.isEmpty() )
-        {
-             struct timeval ts, te;
-             gettimeofday( &ts, NULL );
-            // create the annotationList
-            QDomElement annotListElement = document.createElement( "annotationList" );
-            pageElement.appendChild( annotListElement );
-
-            // add every annotation to the annotationList
-            int addedAnnotations = 0;
-            QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
-            for ( ; aIt != aEnd; ++aIt )
+            // get annotation
+            const Annotation * a = *aIt;
+            // only save kpdf annotations (not the embedded in file ones)
+            if ( !(a->flags & Annotation::External) )
             {
-                // get annotation
-                const Annotation * a = *aIt;
-                // only save annotations created by us (not loaded from document)
-                if ( !a->flags & Annotation::External )
-                {
-                    AnnotationManager::storeAnnotation( a, annotListElement, document );
-                    addedAnnotations++;
-                }
+                // append an filled-up element called 'annotation' to the list
+                QDomElement annElement = document.createElement( "annotation" );
+                AnnotationUtils::storeAnnotation( a, annElement, document );
+                annotListElement.appendChild( annElement );
             }
-
-            // add number of children annotations as attribute
-            if ( addedAnnotations )
-                annotListElement.setAttribute( "annotations", addedAnnotations );
-             gettimeofday( &te, NULL );
-             double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
-             double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
-             kdDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
         }
+          gettimeofday( &te, NULL );
+          double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
+          double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
+          kdDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
     }
 }
 

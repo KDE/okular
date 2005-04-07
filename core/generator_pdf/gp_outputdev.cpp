@@ -322,6 +322,10 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
                 link = new KPDFLinkAction( KPDFLinkAction::GoToPage );
             else if ( !strcmp( name, "Find" ) )
                 link = new KPDFLinkAction( KPDFLinkAction::Find );
+            else if ( !strcmp( name, "FullScreen" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::Presentation );
+            else if ( !strcmp( name, "Close" ) )
+                link = new KPDFLinkAction( KPDFLinkAction::EndPresentation );
             else
                 kdDebug() << "Unknown named action: '" << name << "'" << endl;
             }

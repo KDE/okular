@@ -101,6 +101,7 @@ protected slots:
 	void slotShowProperties();
 	void slotShowLeftPanel();
 	void slotShowPresentation();
+	void slotHidePresentation();
 	// can be connected to widget elements
 	void updateViewActions();
 	void enableTOC(bool enable);

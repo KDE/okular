@@ -102,6 +102,8 @@ class KPDFDocument : public QObject
     signals:
         void linkFind();
         void linkGoToPage();
+        void linkPresentation();
+        void linkEndPresentation();
         void openURL(const KURL &url);
 
     private:

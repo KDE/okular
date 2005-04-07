@@ -111,6 +111,8 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> FIX: random crash when closing kpdf with kapp->quit() (don't use Settings:: in destructors)
+-> FIX: implement links for starting end exiting from presentation mode (pdf FullScreen, Close actions)
 -> CHG: cursor wraps on screen for dragging the page/dynZooming
 -> FIX: raised scaling performance by 10x times for typ usage, removed odd cases, speedups to viewScroll and dynZoom
 -> ADD: annotations: complete xml storage/retrieval of internal annotations

@@ -111,6 +111,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// widgets: [] splitter []
 	m_splitter = new QSplitter( parentWidget, widgetName );
 	m_splitter->setOpaqueResize( true );
+	m_splitter->setChildrenCollapsible( false );
 	setWidget( m_splitter );
 
 	// widgets: [left panel] | []
@@ -255,6 +256,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 		splitterSizes.push_back( 500 );
 	}
 	m_splitter->setSizes( splitterSizes );
+	// get notified about splitter size changes (HACK that will be removed
+	// by connecting to Qt4::QSplitter's sliderMoved())
+	m_pageView->installEventFilter( this );
+
 	m_watcher = new KDirWatch( this );
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
@@ -273,11 +278,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
-    // save internal settings
-    Settings::setSplitterSizes( m_splitter->sizes() );
-    // write to disk config file
-    Settings::writeConfig();
-
     delete m_document;
     if ( --m_count == 0 )
         delete globalParams;
@@ -383,6 +383,16 @@ bool Part::closeURL()
     m_document->closeDocument();
     m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
+}
+
+bool Part::eventFilter( QObject * watched, QEvent * e )
+{
+    // if pageView has been resized, save splitter sizes
+    if ( watched == m_pageView && e->type() == QEvent::Resize )
+        Settings::setSplitterSizes( m_splitter->sizes() );
+
+    // only intercept events, don't block them
+    return false;
 }
 
 void Part::slotShowLeftPanel()

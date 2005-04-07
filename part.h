@@ -81,6 +81,8 @@ protected:
 	bool openFile();
 	bool openURL(const KURL &url);
 	bool closeURL();
+	// filter that watches for splitter size changes
+	bool eventFilter( QObject * watched, QEvent * e );
 
 protected slots:
 	// connected to actions

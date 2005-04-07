@@ -61,6 +61,7 @@ class KPDFDocumentPrivate
         QValueList< PixmapRequest * > pixmapRequestsStack;
         QValueList< AllocatedPixmap * > allocatedPixmapsFifo;
         int allocatedPixmapsTotalMemory;
+        bool warnedOutOfMemory;
 
         // timers (memory checking / info saver)
         QTimer * memCheckTimer;
@@ -106,6 +107,7 @@ KPDFDocument::KPDFDocument()
     d->allocatedPixmapsTotalMemory = 0;
     d->memCheckTimer = 0;
     d->saveBookmarksTimer = 0;
+    d->warnedOutOfMemory = false;
 }
 
 KPDFDocument::~KPDFDocument()
@@ -1090,10 +1092,21 @@ void KPDFDocument::sendGeneratorRequest()
         PixmapRequest * r = d->pixmapRequestsStack.last();
         d->pixmapRequestsStack.pop_back();
         // request only if page isn't already present
-        if ( !r->page->hasPixmap( r->id, r->width, r->height ) )
-            request = r;
-        else
+        if ( r->page->hasPixmap( r->id, r->width, r->height ) )
             delete r;
+        else if ( (long)r->width * (long)r->height > 20000000L )
+        {
+            delete r;
+            if ( !d->warnedOutOfMemory )
+            {
+                kdWarning() << "Running out of memory on page " << r->pageNumber
+                    << " (" << r->width << "x" << r->height << " px);" << endl;
+                kdWarning() << "this message will be reported only once." << endl;
+                d->warnedOutOfMemory = true;
+            }
+        }
+        else
+            request = r;
     }
 
     // if no request found (or already generated), return

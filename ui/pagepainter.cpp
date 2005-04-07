@@ -51,7 +51,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
 
     /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
     double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
-    if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 )
+    long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
+    if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
+         (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
     {
         if ( Settings::changeColors() &&
              Settings::renderMode() == Settings::EnumRenderMode::Paper )

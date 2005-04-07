@@ -18,6 +18,7 @@ In progress [working on]:
 -> check mouse wrapping not screH / 2
 -> check unscaledwidth/height.. necessary ?
 -> check if fix was applied in head only (pageview.cpp 1676)
+-> investigating crash on quit() on the document provided by Mikolaj
 
 More items (first items will enter 'In progress list' first):
 -> merge with head: core/ has no qwidgets around. the head fonts can't make exception!
@@ -82,9 +83,10 @@ More items (first items will enter 'In progress list' first):
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
+-> presentation: add page counter and a widget to manually set pages on the top bar
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> presentation: implement missing transitions (6/11 done)
--> presentation: add a red pencil that creates ink annotations (author: i18n(presentation)))
+-> presentation: add a red pencil that creates ink annotations (author: i18n(author-presentation)))
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
 -> presentation: link following (now possible with uniform links) (BR98388)
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.

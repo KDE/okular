@@ -71,52 +71,66 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     }
 
     /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
-    bool paintAccessibility = (flags & Accessibility) && Settings::changeColors() && (Settings::renderMode() != Settings::EnumRenderMode::Paper);
-    bool paintHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
-    bool paintAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
+    bool canDrawHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
+    bool canDrawAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
     bool enhanceLinks = (flags & EnhanceLinks) && Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Settings::highlightImages();
-    // check if there are really some highlightRects to paint
-    if ( paintHighlights || paintAnnotations )
+    // vectors containing objects to draw
+    QValueList< HighlightRect * > * bufferedHighlights = 0;
+    QValueList< Annotation * > * bufferedAnnotations = 0;
+    QValueList< Annotation * > * unbufferedAnnotations = 0;
+    // fill up lists with visible annotation/highlight objects
+    if ( canDrawHighlights || canDrawAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
         double nXMin = (double)limits.left() / (double)scaledWidth,
                nXMax = (double)limits.right() / (double)scaledWidth,
                nYMin = (double)limits.top() / (double)scaledHeight,
                nYMax = (double)limits.bottom() / (double)scaledHeight;
-        // if no rect intersects limits, disable paintHighlights
-        if ( paintHighlights )
+        // append all highlights inside limits to their list
+        if ( canDrawHighlights )
         {
-            paintHighlights = false;
             QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
             for ( ; hIt != hEnd; ++hIt )
-            {
                 if ( (*hIt)->intersects( nXMin, nYMin, nXMax, nYMax ) )
                 {
-                    paintHighlights = true;
-                    break;
+                    if ( !bufferedHighlights )
+                        bufferedHighlights = new QValueList< HighlightRect * >();
+                    bufferedHighlights->append( *hIt );
                 }
-            }
         }
-        // if no annotation intersects limits, disable paintAnnotations
-        if ( paintAnnotations )
+        // append annotations inside limits to the un/buffered list
+        if ( canDrawAnnotations )
         {
-            paintAnnotations = false;
             QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
             for ( ; aIt != aEnd; ++aIt )
             {
-                if ( (*aIt)->boundary.intersects( nXMin, nYMin, nXMax, nYMax ) )
+                Annotation * ann = *aIt;
+                if ( ann->boundary.intersects( nXMin, nYMin, nXMax, nYMax ) )
                 {
-                    paintAnnotations = true;
-                    break;
+                    Annotation::SubType type = ann->subType();
+                    if ( type == Annotation::ALine || type == Annotation::AHighlight ||
+                         type == Annotation::AInk  /*|| (type == Annotation::AGeom && ann->style.opacity < 0.99)*/ )
+                    {
+                        if ( !bufferedAnnotations )
+                            bufferedAnnotations = new QValueList< Annotation * >();
+                        bufferedAnnotations->append( ann );
+                    }
+                    else
+                    {
+                        if ( !unbufferedAnnotations )
+                            unbufferedAnnotations = new QValueList< Annotation * >();
+                        unbufferedAnnotations->append( ann );
+                    }
                 }
             }
         }
+        // end of intersections checking
     }
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
-    // FIXME: NOT ALL ANNOTATIONS REQUIRES BACKBUFFER
-    bool useBackBuffer = paintAccessibility || paintHighlights || paintAnnotations;
+    bool bufferAccessibility = (flags & Accessibility) && Settings::changeColors() && (Settings::renderMode() != Settings::EnumRenderMode::Paper);
+    bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
 
@@ -151,7 +165,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limits );
 
         // 4B.2. modify pixmap following accessibility settings
-        if ( paintAccessibility )
+        if ( bufferAccessibility )
         {
             switch ( Settings::renderMode() )
             {
@@ -189,44 +203,40 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             }
         }
         // 4B.3. highlight rects in page
-        if ( paintHighlights )
+        if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+            QValueList< HighlightRect * >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
             for ( ; hIt != hEnd; ++hIt )
             {
                 HighlightRect * r = *hIt;
-                QRect highlightRect = r->geometry( scaledWidth, scaledHeight );
-                if ( highlightRect.isValid() && highlightRect.intersects( limits ) )
-                {
-                    // find out the rect to highlight on pixmap
-                    highlightRect = highlightRect.intersect( limits );
-                    highlightRect.moveBy( -limits.left(), -limits.top() );
+                // find out the rect to highlight on pixmap
+                QRect highlightRect = r->geometry( scaledWidth, scaledHeight ).intersect( limits );
+                highlightRect.moveBy( -limits.left(), -limits.top() );
 
-                    // highlight composition (product: highlight color * destcolor)
-                    unsigned int * data = (unsigned int *)backImage.bits();
-                    int val, newR, newG, newB,
-                        rh = r->color.red(),
-                        gh = r->color.green(),
-                        bh = r->color.blue(),
-                        offset = highlightRect.top() * backImage.width();
-                    for( int y = highlightRect.top(); y <= highlightRect.bottom(); ++y )
+                // highlight composition (product: highlight color * destcolor)
+                unsigned int * data = (unsigned int *)backImage.bits();
+                int val, newR, newG, newB,
+                    rh = r->color.red(),
+                    gh = r->color.green(),
+                    bh = r->color.blue(),
+                    offset = highlightRect.top() * backImage.width();
+                for( int y = highlightRect.top(); y <= highlightRect.bottom(); ++y )
+                {
+                    for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
                     {
-                        for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
-                        {
-                            val = data[ x + offset ];
-                            newR = (qRed(val) * rh) / 255;
-                            newG = (qGreen(val) * gh) / 255;
-                            newB = (qBlue(val) * bh) / 255;
-                            data[ x + offset ] = qRgba( newR, newG, newB, 255 );
-                        }
-                        offset += backImage.width();
+                        val = data[ x + offset ];
+                        newR = (qRed(val) * rh) / 255;
+                        newG = (qGreen(val) * gh) / 255;
+                        newB = (qBlue(val) * bh) / 255;
+                        data[ x + offset ] = qRgba( newR, newG, newB, 255 );
                     }
+                    offset += backImage.width();
                 }
             }
         }
         // 4B.4. paint annotations [COMPOSITED ONES]
-        if ( paintAnnotations )
+        if ( bufferedAnnotations )
         {
             // TODO draw AText(1), AHighlight
         }
@@ -240,41 +250,87 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     }
 
     /** 5 -- MIXED FLOW. Draw ANNOTATIONS [OPAQUE ONES] on ACTIVE PAINTER  **/
-    if ( paintAnnotations )
+    if ( unbufferedAnnotations )
     {
-        // iterate over annotations and paint AText(2), ALine, AGeom, AStamp, AInk
-        QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+        // iterate over annotations and paint AText, AGeom, AStamp
+        QValueList< Annotation * >::const_iterator aIt = unbufferedAnnotations->begin(), aEnd = unbufferedAnnotations->end();
         for ( ; aIt != aEnd; ++aIt )
         {
             Annotation * a = *aIt;
-            QRect annotRect = a->boundary.geometry( scaledWidth, scaledHeight );
 
-            // if annotation doesn't intersect paint region, skip it
-            if ( !annotRect.isValid() || !annotRect.intersects( limits ) )
+            // honour opacity settings on supported types
+            unsigned int opacity = (unsigned int)( 255.0 * a->style.opacity );
+            if ( opacity <= 0 )
                 continue;
+
+            // get annotation boundary and drawn rect
+            QRect annotBoundary = a->boundary.geometry( scaledWidth, scaledHeight );
+            QRect annotRect = annotBoundary.intersect( limits );
+            QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
+                    annotBoundary.top(), annotRect.width(), annotRect.height() );
+
+            Annotation::SubType type = a->subType();
+
+            // draw TextAnnotation (only the 'Linked' variant)
+            if ( type == Annotation::AText )
+            {
+                TextAnnotation * text = (TextAnnotation *)a;
+                if ( text->textType != TextAnnotation::Linked )
+                    continue;
+
+                // get pixmap, colorize and alpha-blend it
+                QPixmap pixmap = DesktopIcon( text->textIcon );
+                QImage scaledImage;
+                scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
+                    annotBoundary.height(), innerRect );
+                colorizeImage( scaledImage, a->style.color, opacity );
+                scaledImage.setAlphaBuffer( true );
+                pixmap.convertFromImage( scaledImage );
+
+                // draw the mangled image to painter
+                mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+            }
+            // draw StampAnnotation
+            else if ( type == Annotation::AStamp )
+            {
+                StampAnnotation * stamp = (StampAnnotation *)a;
+
+                // get pixmap and alpha blend it if needed
+                QPixmap pixmap = DesktopIcon( stamp->stampIconName );
+                QImage scaledImage;
+                scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
+                                    annotBoundary.height(), innerRect );
+                if ( opacity < 255 )
+                    changeImageAlpha( scaledImage, opacity );
+                scaledImage.setAlphaBuffer( true );
+                pixmap.convertFromImage( scaledImage );
+
+                // draw the scaled and al
+                mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+            }
+            // draw GeomAnnotation
+            else
+            {
+                GeomAnnotation * geom = (GeomAnnotation *)a;
+                //if ( geom->geomType == GeomAnnotation::InscribedSquare )
+                //{
+                    QImage rectImage( innerRect.width(), innerRect.height(), 32 );
+                    const QColor & c = a->style.color;
+                    unsigned int color = qRgba( c.red(), c.green(), c.blue(), opacity );
+                    rectImage.fill( color );
+                    rectImage.setAlphaBuffer( true );
+                    QPixmap pixmap( rectImage );
+                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                //}
+                //else if ( geom->geomType == GeomAnnotation::InscribedCircle )
+            }
 
             // draw extents rectangle
             if ( Settings::debugDrawAnnotationRect() )
             {
                 mixedPainter->setPen( a->style.color );
-                mixedPainter->drawRect( annotRect );
+                mixedPainter->drawRect( annotBoundary );
             }
-
-            //
-            //annotRect = annotRect.intersect( limits );
-            Annotation::SubType type = a->subType();
-
-            // stamp annotation TODO
-            if ( type == Annotation::AStamp )
-            {
-                QPixmap pic = DesktopIcon( "kpdf" );
-                //QImage destImage;
-                //scalePixmapOnImage( destImage, &pic, annotRect.width(), annotRect.height(), QRect(0,0,annotRect.width(), annotRect.height()) );
-                //mixedPainter->drawPixmap( annotRect.left(), annotRect.top(), destImage, 0, 0, annotRect.width(), annotRect.height() );
-                pic = pic.convertToImage().scale( annotRect.width(), annotRect.height() );
-                mixedPainter->drawPixmap( annotRect.left(), annotRect.top(), pic, 0, 0, annotRect.width(), annotRect.height() );
-            }
-            //else if ( type == Annotation::AText ) TODO
         }
     }
 
@@ -317,6 +373,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         destPainter->drawPixmap( limits.left(), limits.top(), *backPixmap );
         delete backPixmap;
     }
+
+    // delete object containers
+    delete bufferedHighlights;
+    delete bufferedAnnotations;
+    delete unbufferedAnnotations;
 }
 
 
@@ -372,5 +433,64 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
 }
 
 /** Private Helpers :: Image Drawing **/
-//void image_draw_line( const QImage & img, bool antiAlias = true ) {}
+// from Arthur - qt4
+inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
+void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
+{
+    // iterate over all pixels changing the alpha component value
+    unsigned int * data = (unsigned int *)image.bits();
+    unsigned int pixels = image.width() * image.height();
+
+    int source, sourceAlpha;
+    for( register unsigned int i = 0; i < pixels; ++i )
+    {   // optimize this loop keeping byte order into account
+        source = data[i];
+        if ( (sourceAlpha = qAlpha( source )) == 255 )
+        {
+            // use destAlpha
+            data[i] = qRgba( qRed(source), qGreen(source), qBlue(source), destAlpha );
+        }
+        else
+        {
+            // use destAlpha * sourceAlpha product
+            sourceAlpha = qt_div_255( destAlpha * sourceAlpha );
+            data[i] = qRgba( qRed(source), qGreen(source), qBlue(source), sourceAlpha );
+        }
+    }
+}
+
+void PagePainter::colorizeImage( QImage & grayImage, const QColor & color,
+    unsigned int destAlpha )
+{
+    // iterate over all pixels changing the alpha component value
+    unsigned int * data = (unsigned int *)grayImage.bits();
+    unsigned int pixels = grayImage.width() * grayImage.height();
+    int red = color.red(),
+        green = color.green(),
+        blue = color.blue();
+
+    int source, sourceSat, sourceAlpha;
+    for( register unsigned int i = 0; i < pixels; ++i )
+    {   // optimize this loop keeping byte order into account
+        source = data[i];
+        sourceSat = qRed( source );
+        int newR = qt_div_255( sourceSat * red ),
+            newG = qt_div_255( sourceSat * green ),
+            newB = qt_div_255( sourceSat * blue );
+        if ( (sourceAlpha = qAlpha( source )) == 255 )
+        {
+            // use destAlpha
+            data[i] = qRgba( newR, newG, newB, destAlpha );
+        }
+        else
+        {
+            // use destAlpha * sourceAlpha product
+            if ( destAlpha < 255 )
+                sourceAlpha = qt_div_255( destAlpha * sourceAlpha );
+            data[i] = qRgba( newR, newG, newB, sourceAlpha );
+        }
+    }
+}
+
+//void image_draw_line( const QImage & img, bool antiAlias = true ) {}

@@ -810,6 +810,12 @@ struct ResolveWindow
     Annotation *  annotation;       // annotation having the popup window
 };
 
+struct PostProcessText              // this handles a special pdf case conversion
+{
+    Annotation *  textAnnotation;   // a popup text annotation (not FreeText)
+    bool          opened;           // pdf property to convert to window flags
+};
+
 struct PopupWindow
 {
     Annotation *  dummyAnnotation;  // window properties (in pdf as Annotation)
@@ -830,6 +836,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
     // lists of Windows and Revisions that needs resolution
     QValueList< ResolveRevision > resolveRevList;
     QValueList< ResolveWindow > resolvePopList;
+    QValueList< PostProcessText > ppTextList;
 
     // build a normalized transform matrix for this page at 100% scale
     GfxState * gfxState = new GfxState( 72.0, 72.0, pdfPage->getMediaBox(), pdfPage->getRotate(), gTrue );
@@ -884,13 +891,18 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             {
                 // -> textType
                 t->textType = TextAnnotation::Linked;
-                // -> textOpened
-                XPDFReader::lookupBool( annotDict, "Open", t->textOpened );
                 // -> textIcon
                 XPDFReader::lookupName( annotDict, "Name", t->textIcon );
+                // request for postprocessing window geometry
+                PostProcessText request;
+                request.textAnnotation = t;
+                request.opened = false;
+                XPDFReader::lookupBool( annotDict, "Open", request.opened );
+                ppTextList.append( request );
             }
             else
             {
+                // NOTE: please provide testcases for FreeText (don't have any) - Enrico
                 // -> textType
                 t->textType = TextAnnotation::InPlace;
                 // -> textFont
@@ -1394,7 +1406,8 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
                 Annotation::Window & w = request.annotation->window;
 
                 // transfer properties to Annotation's window
-                w.flags = pa->flags & (Annotation::Hidden | Annotation::FixedRotation);
+                w.flags = pa->flags & (Annotation::Hidden |
+                    Annotation::FixedSize | Annotation::FixedRotation);
                 if ( !pop->shown )
                     w.flags |= Annotation::Hidden;
                 w.topLeft.x = pa->boundary.left;
@@ -1447,7 +1460,38 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             annotationsMap.remove( excludeIDs[ i ] );
     }
 
-    /** 4 - finally SET ANNOTATIONS to the page */
+    /** 4 - POSTPROCESS TextAnnotations (when window geom is embedded) */
+    if ( !ppTextList.isEmpty() )
+    {
+        QValueList< PostProcessText >::const_iterator it = ppTextList.begin(), end = ppTextList.end();
+        for ( ; it != end; ++it )
+        {
+            const PostProcessText & request = *it;
+            Annotation::Window & window = request.textAnnotation->window;
+            // if not present, 'create' the window in-place over the annotation
+            if ( window.flags == -1 )
+            {
+                window.flags = 0;
+                NormalizedRect & geom = request.textAnnotation->boundary;
+                // initialize window geometry to annotation's one
+                int width = (int)( page->width() * ( geom.right - geom.left ) ),
+                    height = (int)( page->height() * ( geom.bottom - geom.top ) );
+                window.topLeft.x = geom.left > 0.0 ? geom.left : 0.0;
+                window.topLeft.y = geom.top > 0.0 ? geom.top : 0.0;
+                window.width = width < 200 ? 200 : width;
+                window.height = height < 120 ? 120 : width;
+                // resize annotation's geometry to an icon
+                geom.right = geom.left + 22.0 / page->width();
+                geom.bottom = geom.top + 22.0 / page->height();
+            }
+            // (pdf) if text is not 'opened', force window hiding. if the window
+            // was parsed from popup, the flag should already be set
+            if ( !request.opened && window.flags != -1 )
+                window.flags |= Annotation::Hidden;
+        }
+    }
+
+    /** 5 - finally SET ANNOTATIONS to the page */
     QMap< int, Annotation * >::Iterator it = annotationsMap.begin(), end = annotationsMap.end();
     for ( ; it != end; ++it )
         page->addAnnotation( it.data() );

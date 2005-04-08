@@ -156,7 +156,6 @@ struct TextAnnotation : public Annotation
     // data fields
     TextType        textType;               // Linked
     QFont           textFont;               // app def font
-    bool            textOpened;             // false
     QString         textIcon;               // 'Comment'
     int             inplaceAlign;           // 0:left, 1:center, 2:right
     QString         inplaceText;            // '' overrides contents

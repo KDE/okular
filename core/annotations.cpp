@@ -88,7 +88,7 @@ Annotation::Style::Style()
     effectIntensity( 1.0 ) {}
 
 Annotation::Window::Window()
-    : flags( 0 ), width( 0 ), height( 0 ) {}
+    : flags( -1 ), width( 0 ), height( 0 ) {}
 
 Annotation::Revision::Revision()
     : annotation( 0 ), scope( Reply ), type( None ) {}
@@ -312,15 +312,13 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 /** TextAnnotation [Annotation] */
 
 TextAnnotation::TextAnnotation()
-    : Annotation(), textType( Linked ), textFont(),
-    textOpened( false ), textIcon( "Comment" ), inplaceAlign( 0 ),
-    inplaceIntent( Unknown )
+    : Annotation(), textType( Linked ), textFont(), textIcon( "Comment" ),
+    inplaceAlign( 0 ), inplaceIntent( Unknown )
 {}
 
 TextAnnotation::TextAnnotation( const QDomNode & node )
-    : Annotation( node ), textType( Linked ), textFont(),
-    textOpened( false ), textIcon( "Comment" ), inplaceAlign( 0 ),
-    inplaceIntent( Unknown )
+    : Annotation( node ), textType( Linked ), textFont(), textIcon( "Comment" ),
+    inplaceAlign( 0 ), inplaceIntent( Unknown )
 {
     // loop through the whole children looking for a 'text' element
     QDomNode subNode = node.firstChild();
@@ -336,8 +334,6 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
             textType = (TextAnnotation::TextType)e.attribute( "type" ).toInt();
         if ( e.hasAttribute( "font" ) )
             textFont.fromString( e.attribute( "font" ) );
-        if ( e.hasAttribute( "opened" ) )
-            textOpened = e.attribute( "opened" ).toInt();
         if ( e.hasAttribute( "icon" ) )
             textIcon = e.attribute( "icon" );
         if ( e.hasAttribute( "align" ) )
@@ -386,8 +382,6 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
         textElement.setAttribute( "type", (int)textType );
     if ( textFont != QApplication::font() )
         textElement.setAttribute( "font", textFont.toString() );
-    if ( textOpened )
-        textElement.setAttribute( "opened", textOpened );
     if ( textIcon != "Comment" )
         textElement.setAttribute( "icon", textIcon );
     if ( inplaceAlign )

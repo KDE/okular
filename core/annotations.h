@@ -40,6 +40,9 @@ class AnnotationUtils
         // parentNode or a null element if not found
         static QDomElement findChildElement( const QDomNode & parentNode,
             const QString & name );
+
+        //static inline QRect annotationGeometry( const Annotation * ann,
+        //    int pageWidth, int pageHeight, int scaledWidth, int scaledHeight ) const;
 };
 
 
@@ -155,8 +158,8 @@ struct TextAnnotation : public Annotation
 
     // data fields
     TextType        textType;               // Linked
-    QFont           textFont;               // app def font
     QString         textIcon;               // 'Comment'
+    QFont           textFont;               // app def font
     int             inplaceAlign;           // 0:left, 1:center, 2:right
     QString         inplaceText;            // '' overrides contents
     NormalizedPoint inplaceCallout[3];      //

@@ -312,12 +312,12 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 /** TextAnnotation [Annotation] */
 
 TextAnnotation::TextAnnotation()
-    : Annotation(), textType( Linked ), textFont(), textIcon( "Comment" ),
+    : Annotation(), textType( Linked ), textIcon( "Comment" ),
     inplaceAlign( 0 ), inplaceIntent( Unknown )
 {}
 
 TextAnnotation::TextAnnotation( const QDomNode & node )
-    : Annotation( node ), textType( Linked ), textFont(), textIcon( "Comment" ),
+    : Annotation( node ), textType( Linked ), textIcon( "Comment" ),
     inplaceAlign( 0 ), inplaceIntent( Unknown )
 {
     // loop through the whole children looking for a 'text' element
@@ -332,10 +332,10 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
         // parse the attributes
         if ( e.hasAttribute( "type" ) )
             textType = (TextAnnotation::TextType)e.attribute( "type" ).toInt();
-        if ( e.hasAttribute( "font" ) )
-            textFont.fromString( e.attribute( "font" ) );
         if ( e.hasAttribute( "icon" ) )
             textIcon = e.attribute( "icon" );
+        if ( e.hasAttribute( "font" ) )
+            textFont.fromString( e.attribute( "font" ) );
         if ( e.hasAttribute( "align" ) )
             inplaceAlign = e.attribute( "align" ).toInt();
         if ( e.hasAttribute( "intent" ) )
@@ -380,10 +380,10 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     // store the optional attributes
     if ( textType != Linked )
         textElement.setAttribute( "type", (int)textType );
-    if ( textFont != QApplication::font() )
-        textElement.setAttribute( "font", textFont.toString() );
     if ( textIcon != "Comment" )
         textElement.setAttribute( "icon", textIcon );
+    if ( textFont != QApplication::font() )
+        textElement.setAttribute( "font", textFont.toString() );
     if ( inplaceAlign )
         textElement.setAttribute( "align", inplaceAlign );
     if ( inplaceIntent != Unknown )

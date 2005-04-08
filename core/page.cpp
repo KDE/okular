@@ -348,7 +348,6 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
 
     // create the page node and set the 'number' attribute
     QDomElement pageElement = document.createElement( "page" );
-    parentNode.appendChild( pageElement );
     pageElement.setAttribute( "number", m_number );
 
     // add bookmark info if is bookmarked
@@ -365,11 +364,12 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
     // add annotations info if has got any
     if ( !m_annotations.isEmpty() )
     {
-          struct timeval ts, te;
-          gettimeofday( &ts, NULL );
+#if 1
+        struct timeval ts, te;
+        gettimeofday( &ts, NULL );
+#endif
         // create the annotationList
         QDomElement annotListElement = document.createElement( "annotationList" );
-        pageElement.appendChild( annotListElement );
 
         // add every annotation to the annotationList
         QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
@@ -386,11 +386,21 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
                 annotListElement.appendChild( annElement );
             }
         }
-          gettimeofday( &te, NULL );
-          double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
-          double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
-          kdDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
+
+        // append the annotationList element if annotations have been set
+        if ( annotListElement.hasChildNodes() )
+            pageElement.appendChild( annotListElement );
+#if 1
+        gettimeofday( &te, NULL );
+        double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
+        double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
+        kdDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
+#endif
     }
+
+    // append the page element only if has children
+    if ( pageElement.hasChildNodes() )
+        parentNode.appendChild( pageElement );
 }
 
 

@@ -1068,12 +1068,16 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
                 annot.free();
                 continue;
             }
-            for ( int p = 0; p < num; p += 8 )
+            for ( int q = 0; q < num; q += 8 )
             {
-                NormalizedPoint quad[4];
-                for ( int q = 0; q < 4; q++ )
-                    XPDFReader::transform( MTX, c[ p + q*2 ], c[ p + q*2 + 1 ], &quad[q].x, &quad[q].y );
-                h->highlightQuads.push_back( quad );
+                HighlightAnnotation::Quad quad;
+                for ( int p = 0; p < 4; p++ )
+                    XPDFReader::transform( MTX, c[ q + p*2 ], c[ q + p*2 + 1 ],
+                        &quad.points[ p ].x, &quad.points[ p ].y );
+                quad.capStart = true;       // unlinked quads are always capped
+                quad.capEnd = true;         // unlinked quads are always capped
+                quad.feather = 0.1;         // default feather
+                h->highlightQuads.append( quad );
             }
         }
         else if ( subType == "Stamp" )

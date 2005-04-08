@@ -210,7 +210,14 @@ struct HighlightAnnotation : public Annotation
 
     // data fields
     HighlightType   highlightType;          // Highlight
-    QValueList<NormalizedPoint[4]>  highlightQuads;
+    struct Quad
+    {
+        NormalizedPoint points[4];          // 8 valid coords
+        bool            capStart;           // false (vtx 1-4) [K]
+        bool            capEnd;             // false (vtx 2-3) [K]
+        double          feather;            // 0.1 (in range 0..1) [K]
+    };
+    QValueList< Quad >  highlightQuads;     // not empty
 };
 
 struct StampAnnotation : public Annotation

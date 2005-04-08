@@ -604,16 +604,19 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
             if ( qe.tagName() != "quad" )
                 continue;
 
-            NormalizedPoint p[4];
-            p[0].x = qe.attribute( "ax", "0.0" ).toDouble();
-            p[0].y = qe.attribute( "ay", "0.0" ).toDouble();
-            p[1].x = qe.attribute( "bx", "0.0" ).toDouble();
-            p[1].y = qe.attribute( "by", "0.0" ).toDouble();
-            p[2].x = qe.attribute( "cx", "0.0" ).toDouble();
-            p[2].y = qe.attribute( "cy", "0.0" ).toDouble();
-            p[3].x = qe.attribute( "dx", "0.0" ).toDouble();
-            p[3].y = qe.attribute( "dy", "0.0" ).toDouble();
-            highlightQuads.append( p );
+            Quad q;
+            q.points[0].x = qe.attribute( "ax", "0.0" ).toDouble();
+            q.points[0].y = qe.attribute( "ay", "0.0" ).toDouble();
+            q.points[1].x = qe.attribute( "bx", "0.0" ).toDouble();
+            q.points[1].y = qe.attribute( "by", "0.0" ).toDouble();
+            q.points[2].x = qe.attribute( "cx", "0.0" ).toDouble();
+            q.points[2].y = qe.attribute( "cy", "0.0" ).toDouble();
+            q.points[3].x = qe.attribute( "dx", "0.0" ).toDouble();
+            q.points[3].y = qe.attribute( "dy", "0.0" ).toDouble();
+            q.capStart = qe.hasAttribute( "start" );
+            q.capEnd = qe.hasAttribute( "end" );
+            q.feather = qe.attribute( "feather", "0.1" ).toDouble();
+            highlightQuads.append( q );
         }
 
         // loading complete
@@ -636,20 +639,25 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
     if ( highlightQuads.count() < 1 )
         return;
     // append highlight quads, all children describe quads
-    QValueList<NormalizedPoint[4]>::const_iterator it = highlightQuads.begin(), end = highlightQuads.end();
+    QValueList< Quad >::const_iterator it = highlightQuads.begin(), end = highlightQuads.end();
     for ( ; it != end; ++it )
     {
         QDomElement quadElement = document.createElement( "quad" );
         hlElement.appendChild( quadElement );
-        const NormalizedPoint * p = *it;
-        quadElement.setAttribute( "ax", p[0].x );
-        quadElement.setAttribute( "ay", p[0].y );
-        quadElement.setAttribute( "bx", p[1].x );
-        quadElement.setAttribute( "by", p[1].y );
-        quadElement.setAttribute( "cx", p[2].x );
-        quadElement.setAttribute( "cy", p[2].y );
-        quadElement.setAttribute( "dx", p[3].x );
-        quadElement.setAttribute( "dy", p[3].y );
+        const Quad & q = *it;
+        quadElement.setAttribute( "ax", q.points[0].x );
+        quadElement.setAttribute( "ay", q.points[0].y );
+        quadElement.setAttribute( "bx", q.points[1].x );
+        quadElement.setAttribute( "by", q.points[1].y );
+        quadElement.setAttribute( "cx", q.points[2].x );
+        quadElement.setAttribute( "cy", q.points[2].y );
+        quadElement.setAttribute( "dx", q.points[3].x );
+        quadElement.setAttribute( "dy", q.points[3].y );
+        if ( q.capStart )
+            quadElement.setAttribute( "start", 1 );
+        if ( q.capEnd )
+            quadElement.setAttribute( "end", 1 );
+        quadElement.setAttribute( "feather", q.feather );
     }
 }
 

@@ -64,6 +64,8 @@ More items (first items will enter 'In progress list' first):
    The Object will reside into the Document and must not be accessible by Oservers in
    a direct way. Dom format, relations to other classes and accessing must be specified
    in a separated diagram or text file.
+   - Plus think at storing xml data to an external shared server.. somthing that
+   has to do with versioning data.. (shared annotations, bookmarks & co.)
 -> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]

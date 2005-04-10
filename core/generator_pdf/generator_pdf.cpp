@@ -1086,6 +1086,12 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
                 for ( int p = 0; p < 4; p++ )
                     XPDFReader::transform( MTX, c[ q + p*2 ], c[ q + p*2 + 1 ],
                         &quad.points[ p ].x, &quad.points[ p ].y );
+                // ### PDF1.6 specs says that point are in ccw order, but in fact
+                // points 3 and 4 are swapped in every PDF around!
+                NormalizedPoint tmpPoint = quad.points[ 2 ];
+                quad.points[ 2 ] = quad.points[ 3 ];
+                quad.points[ 3 ] = tmpPoint;
+                // initialize other oroperties and append quad
                 quad.capStart = true;       // unlinked quads are always capped
                 quad.capEnd = true;         // unlinked quads are always capped
                 quad.feather = 0.1;         // default feather

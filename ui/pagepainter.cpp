@@ -16,6 +16,9 @@
 #include <kimageeffect.h>
 #include <kiconloader.h>
 
+// system includes
+#include <math.h>
+
 // local includes
 #include "pagepainter.h"
 #include "core/page.h"
@@ -238,8 +241,46 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // 4B.4. paint annotations [COMPOSITED ONES]
         if ( bufferedAnnotations )
         {
-            // TODO draw AText(1), AHighlight
-        }
+            // iterate over annotations and paint AText, ALine, AHighlight, AInk
+            QValueList< Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
+            for ( ; aIt != aEnd; ++aIt )
+            {
+                Annotation * a = *aIt;
+                Annotation::SubType type = a->subType();
+
+                // draw HighlightAnnotation
+                if ( type == Annotation::AHighlight )
+                {
+                    // get the annotation
+                    HighlightAnnotation * ha = (HighlightAnnotation *) a;
+
+                    // precalc costants for normalizing the quads to the image
+                    int quads = ha->highlightQuads.size();
+                    double xOffset = (float)limits.left() / (float)scaledWidth,
+                           xScale = (float)scaledWidth / (float)limits.width(),
+                           yOffset = (float)limits.top() / (float)scaledHeight,
+                           yScale = (float)scaledHeight / (float)limits.height();
+
+                    // draw each quad of the annotation
+                    for ( int q = 0; q < quads; q++ )
+                    {
+                        NormalizedPath path;
+                        const HighlightAnnotation::Quad & quad = ha->highlightQuads[ q ];
+                        for ( int i = 0; i < 4; i++ )
+                        {
+                            // normalize page point to image
+                            NormalizedPoint point;
+                            point.x = (quad.points[ i ].x - xOffset) * xScale;
+                            point.y = (quad.points[ i ].y - yOffset) * yScale;
+                            path.append( point );
+                        }
+                        //drawShapeOnImage( backImage, path );
+                    }
+                }
+                // draw InkAnnotation
+                //else if ( type == Annotation::AInk )
+            }
+       }
 
         // 4B.5. create the back pixmap converting from the local image
         backPixmap = new QPixmap( backImage );
@@ -311,7 +352,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             // draw GeomAnnotation
             else
             {
-                GeomAnnotation * geom = (GeomAnnotation *)a;
+                //GeomAnnotation * geom = (GeomAnnotation *)a;
                 //if ( geom->geomType == GeomAnnotation::InscribedSquare )
                 //{
                     QImage rectImage( innerRect.width(), innerRect.height(), 32 );
@@ -493,4 +534,135 @@ void PagePainter::colorizeImage( QImage & grayImage, const QColor & color,
     }
 }
 
-//void image_draw_line( const QImage & img, bool antiAlias = true ) {}
+#define dbl_swap(x, y) { double tmp = (x); (x) = (y); (y) = tmp; }
+void PagePainter::drawShapeOnImage(
+    QImage & image,
+    const NormalizedPath & path,
+    const QPen & pen,
+    const QBrush & brush,
+    float /*antiAliasRadius*/ )
+{
+    // safety checks
+    int points = path.size();
+    if ( points < 2 )
+        return;
+
+    // transform NormalizedPoints inside image
+    struct TPoint {
+        double x;
+        double y;
+    };
+    TPoint point[ points + 1 ];
+    for ( int p = 0; p < points; p++ )
+    {
+        point[ p ].x = path[ p ].x * (double)image.width();
+        point[ p ].y = path[ p ].y * (double)image.height();
+    }
+    point[ points ].x = point[ 0 ].x;
+    point[ points ].y = point[ 0 ].y;
+
+    // create and clear scanline buffers
+    int imageHeight = image.height();
+    int imageWidth = image.width();
+    struct ScanLine
+    {
+        bool haveStart;
+        double start;
+        bool haveStop;
+        double stop;
+        ScanLine() : haveStart( false ), haveStop( false ) {};
+    };
+    ScanLine lines[ imageHeight ];
+
+    // compute scanlines buffers
+    for ( int l = 0; l < points; l++ )
+    {
+        bool downward = point[ l ].y < point[ l + 1 ].y;
+        const TPoint & p1 = downward ? point[ l ] : point[ l + 1 ];
+        const TPoint & p2 = downward ? point[ l + 1 ] : point[ l ];
+
+        // scan vertically from p1 to p2
+        int startY = (int)round( p1.y );
+        int endY = (int)round( p2.y );
+
+        // special horizontal case
+        int deltaY = endY - startY;
+        if ( !deltaY )
+        {
+            if ( startY >= 0 && startY < imageHeight )
+            {
+                ScanLine & line = lines[ startY ];
+                line.start = p1.x;
+                line.haveStart = true;
+                line.stop = p2.x;
+                line.haveStop = true;
+            }
+            continue;
+        }
+
+        // standard case
+        double dX = p2.x - p1.x;
+        for ( int y = startY; y < endY; y ++ )
+        {
+            // only process image area
+            if ( y < 0 || y >= imageHeight )
+                continue;
+
+            double x = p1.x + ((double)(y-startY) / (double)deltaY) * dX;
+            ScanLine & line = lines[ y ];
+            if ( !line.haveStart )
+            {
+                // add start
+                line.start = x;
+                line.haveStart = true;
+            }
+            else if ( !line.haveStop )
+            {
+                // add stop
+                line.stop = x;
+                line.haveStop = true;
+                if ( line.start > line.stop )
+                     dbl_swap( line.start, line.stop );
+            }
+            else
+            {
+                // refine bounds
+                if ( x < line.start )
+                    line.start = x;
+                else if ( x > line.stop )
+                    line.stop = x;
+            }
+        }
+    }
+
+    // fill scanlines NOTE: bottom scanline is not visible? PLEASE CHECK!
+    unsigned int * data = (unsigned int *)image.bits();
+    int src, newR, newG, newB,
+        rh = brush.color().red(),
+        gh = brush.color().green(),
+        bh = brush.color().blue();
+    for ( int i = 0; i < imageHeight; i++ )
+    {
+        // get the current line and check it
+        ScanLine & line = lines[ i ];
+        if ( !line.haveStart || !line.haveStop ||
+             line.start > imageWidth || line.stop < 0 )
+            continue;
+        if ( line.start > line.stop )
+            dbl_swap( line.start, line.stop );
+
+        // fill pixels
+        int lineStart = line.start > 0 ? (int)line.start : 0;
+        int lineStop = line.stop < imageWidth ? (int)line.stop : imageWidth - 1;
+        int dataOffset = i * imageWidth + lineStart;
+        for ( int x = lineStart; x <= lineStop; x++ )
+        {
+            src = data[ dataOffset ];
+            newR = qt_div_255( qRed(src) * rh );
+            newG = qt_div_255( qGreen(src) * gh );
+            newB = qt_div_255( qBlue(src) * bh );
+            data[ dataOffset ] = qRgba( newR, newG, newB, qAlpha(src) );
+            dataOffset++;
+        }
+    }
+}

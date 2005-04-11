@@ -43,6 +43,43 @@ KPDFPage::KPDFPage( uint page, double w, double h, int r )
         m_width = 1;
     if ( m_height <= 0 )
         m_height = 1;
+
+    // ### ### ### create dummy annot for testing
+    HighlightAnnotation * ann = new HighlightAnnotation();
+    HighlightAnnotation::Quad q;
+    q.points[0].x = 0.1;
+    q.points[0].y = 0.1;
+    q.points[1].x = 0.0;
+    q.points[1].y = 0.2;
+    q.points[2].x = 0.1;
+    q.points[2].y = 0.3;
+    q.points[3].x = 0.2;
+    q.points[3].y = 0.2;
+    ann->highlightQuads.append( q );
+
+    q.points[0].x = 0.5;
+    q.points[0].y = 0.2;
+    q.points[1].x = 0.8;
+    q.points[1].y = 0.2;
+    q.points[2].x = 0.8;
+    q.points[2].y = 0.1;
+    q.points[3].x = 0.5;
+    q.points[3].y = 0.1;
+    ann->highlightQuads.append( q );
+
+    q.points[0].x = 0.5;
+    q.points[0].y = 0.1;
+    q.points[1].x = 0.4;
+    q.points[1].y = 0.3;
+    q.points[2].x = 0.7;
+    q.points[2].y = 0.5;
+    q.points[3].x = 0.55;
+    q.points[3].y = 0.75;
+    ann->highlightQuads.append( q );
+
+    ann->boundary = NormalizedRect( 0.0, 0.0, 1.0, 1.0 );
+    ann->flags = Annotation::External;
+    m_annotations.append( ann );
 }
 
 KPDFPage::~KPDFPage()

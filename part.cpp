@@ -741,10 +741,8 @@ void Part::slotShowProperties()
 
 void Part::slotShowPresentation()
 {
-    if ( m_presentationWidget )
-      delete (PresentationWidget*) m_presentationWidget;
-
-    m_presentationWidget = new PresentationWidget( m_document );
+    if ( !m_presentationWidget )
+      m_presentationWidget = new PresentationWidget( m_document );
 }
 
 void Part::slotPrint()

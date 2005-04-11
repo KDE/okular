@@ -176,6 +176,10 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
         slotPrevPage();
     else if ( e->key() == Key_Right || e->key() == Key_Space || e->key() == Key_Next )
         slotNextPage();
+    else if ( e->key() == Key_Home )
+        slotFirstPage();
+    else if ( e->key() == Key_End )
+        slotLastPage();
     else if ( e->key() == Key_Escape )
     {
         if ( m_topBar->isShown() )
@@ -582,6 +586,16 @@ void PresentationWidget::slotPrevPage()
         m_transitionTimer->stop();
         update();
     }
+}
+
+void PresentationWidget::slotFirstPage()
+{
+  changePage( 0 );
+}
+
+void PresentationWidget::slotLastPage()
+{
+  changePage( (int)m_frames.count() - 1 );
 }
 
 void PresentationWidget::slotHideOverlay()

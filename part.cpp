@@ -402,11 +402,11 @@ void Part::slotFileDirty( const QString& fileName )
 
 void Part::slotDoFileDirty()
 {
-  uint p = m_document->currentPage() + 1;
+  DocumentViewport v = m_document->viewport();
   if (openFile())
   {
-    if (p > m_document->pages()) p = m_document->pages();
-    goToPage(p);
+    if (v.pageNumber > m_document->pages()) v.pageNumber = (int)m_document->pages() - 1;
+    m_document->setViewport(v);
   }
 }
 

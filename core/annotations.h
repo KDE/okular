@@ -208,7 +208,7 @@ struct HighlightAnnotation : public Annotation
     AN_COMMONDECL( HighlightAnnotation, AHighlight )
 
     // local enums
-    enum HighlightType { Highlight, Underline, Squiggly, StrikeOut };
+    enum HighlightType { Highlight, Squiggly, Underline, StrikeOut };
 
     // data fields
     HighlightType   highlightType;          // Highlight

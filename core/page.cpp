@@ -401,7 +401,7 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
     // add annotations info if has got any
     if ( !m_annotations.isEmpty() )
     {
-#if 1
+#if 0
         struct timeval ts, te;
         gettimeofday( &ts, NULL );
 #endif
@@ -427,7 +427,7 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
         // append the annotationList element if annotations have been set
         if ( annotListElement.hasChildNodes() )
             pageElement.appendChild( annotListElement );
-#if 1
+#if 0
         gettimeofday( &te, NULL );
         double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
         double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;

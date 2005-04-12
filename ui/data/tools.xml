@@ -1,21 +1,22 @@
-<!DOCTYPE simpleToolsDefinition>
+<!DOCTYPE KPDFAnnotatingTools>
 <!--
-Engine Types [specific attributes]:
+Engine/Annotation Types [specific attributes]:
   [color]
   SmoothLine [lowPassFilter{true,false}]
+    [color]
+    [opacity]
+    Highlight
+    Ink [width]
   PickPoint [hoverIcon{string}]
+    [color]
+    Stamp[icon]
+    Text
   TwoPoints [block{true,false}]
-
-Annotation types:
-  [color]
-  Text
-  Line[width]
-  Geom
-  Highlight
-  Stamp[icon]
-  Ink
+    [color]
+    Line[width]
+    Geom
 -->
-<annotationTools>
+<annotatingTools>
   <tool id="1" name="Yellow Highlighter" pixmap="highlight_yellow">
     <tooltip>this ..</tooltip>
     <engine type="SmoothLine" color="#FFFF00">
@@ -26,7 +27,7 @@ Annotation types:
   <tool id="2" name="Pink Highlighter" pixmap="highlight_pink">
     <tooltip>.. is ..</tooltip>
     <engine type="SmoothLine" color="#FF0080">
-      <annotation type="Highlight" color="#FF0080" />
+      <annotation type="Ink" color="#FF0080" />
     </engine>
     <shortcut>2</shortcut>
   </tool>
@@ -62,4 +63,4 @@ Annotation types:
     </engine>
     <shortcut>7</shortcut>
   </tool>
-</annotationTools>
+</annotatingTools>

@@ -67,51 +67,6 @@ class AnnotatorEngine
         bool m_creationCompleted;
 };
 
-/*
-Annotation * annotation = 0;
-if ( !a.isNull() )
-{
-    // create annotation and apply custom attributes
-    QString aType = a.attribute( "type" );
-    if ( aType == "Text" )
-        annotation = new TextAnnotation();
-    else if ( aType == "Line" )
-    {
-        LineAnnotation * l = new LineAnnotation();
-        if ( a.hasAttribute( "width" ) )
-            l->drawStyle.width = a.attribute( "width" ).toInt();
-        annotation = l;
-    }
-    else if ( aType == "Geom" )
-        annotation = new GeomAnnotation();
-    else if ( aType == "Highlight" )
-        annotation = new HighlightAnnotation();
-    else if ( aType == "Stamp" )
-    {
-        StampAnnotation * s = new StampAnnotation();
-        s->stampIconName = a.attribute( "icon" );
-        annotation = s;
-    }
-    else if ( aType == "Ink" )
-        annotation = new InkAnnotation();
-    else
-        kdWarning() << "tools: annotation '" << aType << "' is not defined!" << endl;
-
-    // parse generic annotation attributes
-    if ( annotation )
-    {
-        annotation->author = Settings::annotationsAuthor();
-        if ( a.hasAttribute( "color" ) )
-            annotation->color = QColor( a.attribute( "color" ) );
-    }
-}
-if ( !annotation )
-{
-    kdWarning() << "tools: can't create annotation for toolID: " << toolID << endl;
-    break;
-}
-*/
-
 /** @short SmoothPathEngine */
 class SmoothPathEngine : public AnnotatorEngine
 {
@@ -138,9 +93,9 @@ class SmoothPathEngine : public AnnotatorEngine
             // add a point to the path
             else if ( type == Move && points.count() > 0 )
             {
-                double dist = hypot( nX - points.last().x, nY - points.last().y );
-                if ( dist > 0.01 )
-                {
+                //double dist = hypot( nX - points.last().x, nY - points.last().y );
+                //if ( dist > 0.0001 )
+                //{
                     // append mouse position (as normalized point) to the list
                     NormalizedPoint nextPoint = NormalizedPoint( nX, nY );
                     points.append( nextPoint );
@@ -153,13 +108,13 @@ class SmoothPathEngine : public AnnotatorEngine
                     totalRect.bottom = QMAX( nY + dY, totalRect.bottom );
                     // paint the difference to previous full rect
                     NormalizedRect incrementalRect;
-                    incrementalRect.left = QMIN( nextPoint.x, lastPoint.x );
-                    incrementalRect.right = QMAX( nextPoint.x, lastPoint.x );
-                    incrementalRect.top = QMIN( nextPoint.y, lastPoint.y );
-                    incrementalRect.bottom = QMAX( nextPoint.y, lastPoint.y );
+                    incrementalRect.left = QMIN( nextPoint.x, lastPoint.x ) - dX;
+                    incrementalRect.right = QMAX( nextPoint.x, lastPoint.x ) + dX;
+                    incrementalRect.top = QMIN( nextPoint.y, lastPoint.y ) - dY;
+                    incrementalRect.bottom = QMAX( nextPoint.y, lastPoint.y ) + dY;
                     lastPoint = nextPoint;
                     return incrementalRect.geometry( (int)xScale, (int)yScale );
-                }
+                //}
             }
             // terminate process
             else if ( type == Release && points.count() > 0 )
@@ -178,8 +133,8 @@ class SmoothPathEngine : public AnnotatorEngine
             // draw SmoothPaths whith at least 2 points
             if ( points.count() > 1 )
             {
-                // use annotation color for painting
-                painter->setPen( QPen( m_engineColor, 3 ) );
+                // use engine's color for painting
+                painter->setPen( QPen( m_engineColor, 1 ) );
 
                 QValueList<NormalizedPoint>::iterator pIt = points.begin(), pEnd = points.end();
                 NormalizedPoint pA = *pIt;
@@ -196,9 +151,47 @@ class SmoothPathEngine : public AnnotatorEngine
 
         Annotation * end()
         {
-            /*switch ( annotation->annotationType() )
-                case Annotation::AHighlight: */
-            return 0;
+            // find out annotation's description node
+            const QDomElement & annElement = m_engineElement.firstChild().toElement();
+            if ( annElement.isNull() || annElement.tagName() != "annotation" )
+                return 0;
+
+            // find out annotation's type
+            Annotation * ann = 0;
+            QString typeString = annElement.attribute( "type" );
+
+            // create HighlightAnnotation from path
+            if ( typeString == "Highlight" )
+            {
+                HighlightAnnotation * ha = new HighlightAnnotation();
+                ann = ha;
+                // TODO
+            }
+            // create InkAnnotation from path
+            else if ( typeString == "Ink" )
+            {
+                InkAnnotation * ia = new InkAnnotation();
+                ann = ia;
+                if ( annElement.hasAttribute( "width" ) )
+                    ann->style.width = annElement.attribute( "width" ).toDouble();
+                // fill points
+                ia->inkPaths.append( points );
+                // set boundaries
+                ia->boundary = totalRect;
+            }
+
+            // safety check
+            if ( !ann )
+                return 0;
+
+            // set common attributes
+            ann->style.color = annElement.hasAttribute( "color" ) ?
+                annElement.attribute( "color" ) : m_engineColor;
+            if ( annElement.hasAttribute( "opacity" ) )
+                ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
+
+            // return annotation
+            return ann;
         }
 
     private:
@@ -220,7 +213,7 @@ class PickPointEngine : public AnnotatorEngine
             if ( pixmapName.isNull() )
                 pixmapName = "kpdf";
 
-            // create annotation objects
+            // create engine objects
             pixmap = new QPixmap( DesktopIcon( "kpdf", 32 ) );
         }
 
@@ -252,7 +245,7 @@ class PickPointEngine : public AnnotatorEngine
             else
                 return QRect();
 
-            // update variable and annotation geometry (zoom invariant rect)
+            // update variables and extents (zoom invariant rect)
             point.x = nX;
             point.y = nY;
             rect.left = nX - (16.0 / (double)xScale);
@@ -376,15 +369,15 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, KPDFDocument * storage 
     QFile infoFile( locate("data", "kpdf/tools.xml") );
     if ( infoFile.exists() && infoFile.open( IO_ReadOnly ) )
     {
-        QDomDocument doc( "annotationTools" );
+        QDomDocument doc( "annotatingTools" );
         if ( doc.setContent( &infoFile ) )
-            m_toolsDefinition = doc.elementsByTagName("annotationTools").item( 0 ).toElement();
+            m_toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
         else
-            kdWarning() << "Annotations XML file seems to be damaged" << endl;
+            kdWarning() << "AnnotatingTools XML file seems to be damaged" << endl;
         infoFile.close();
     }
     else
-        kdWarning() << "Unable to open Annotation Tools XML definition" << endl;
+        kdWarning() << "Unable to open AnnotatingTools XML definition" << endl;
 }
 
 PageViewAnnotator::~PageViewAnnotator()
@@ -491,16 +484,16 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
     double nX = (double)(e->x() - itemRect.left()) / itemWidth;
     double nY = (double)(e->y() - itemRect.top()) / itemHeight;
 
-    // 1. lock annotation to current item
+    // 1. lock engine to current item
     if ( m_lockedItem && item != m_lockedItem )
         return;
     if ( !m_lockedItem && eventType == AnnotatorEngine::Press )
         m_lockedItem = item;
 
-    // 2. use engine for performing operations on annotation
+    // 2. use engine to perform operations
     QRect paintRect = m_engine->event( eventType, button, nX, nY, itemWidth, itemHeight );
 
-    // 3. update absolute annotation rect and send paint event(s)
+    // 3. update absolute extents rect and send paint event(s)
     if ( paintRect.isValid() )
     {
         // 3.1. unite old and new painting regions
@@ -513,16 +506,16 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
             m_pageView->updateContents( rects[i] );
     }
 
-    // 4. if engine has finished, apply annotations to the page
+    // 4. if engine has finished, apply Annotation to the page
     if ( m_engine->creationCompleted() )
     {
-        // apply engine data to annotation and reset engine data
+        // apply engine data to Annotation and reset engine
         Annotation * annotation = m_engine->end();
         // attach the newly filled annotation to the page
         if ( annotation )
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
 
-        // go on creating annotation of the same type
+        // go on creating annotations of the same type
         slotToolSelected( m_lastToolID );
     }
 }
@@ -535,7 +528,7 @@ bool PageViewAnnotator::routePaints( const QRect & wantedRect ) const
 void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect )
 {
 #ifndef NDEBUG
-    // [DEBUG] draw the annotation extension if enabled
+    // [DEBUG] draw the paint region if enabled
     if ( Settings::debugDrawAnnotationRect() )
         painter->drawRect( paintRect );
 #endif
@@ -578,7 +571,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
         return;
     }
 
-    // for the selected tool initialize the Annotation and create the Engine
+    // for the selected tool create the Engine
     QDomNode toolNode = m_toolsDefinition.firstChild();
     while ( toolNode.isElement() )
     {

@@ -241,46 +241,135 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // 4B.4. paint annotations [COMPOSITED ONES]
         if ( bufferedAnnotations )
         {
-            // iterate over annotations and paint AText, ALine, AHighlight, AInk
+            // precalc costants for normalizing the quads to the image
+            double xOffset = (float)limits.left() / (float)scaledWidth,
+                   xScale = (float)scaledWidth / (float)limits.width(),
+                   yOffset = (float)limits.top() / (float)scaledHeight,
+                   yScale = (float)scaledHeight / (float)limits.height();
+
+            // paint all buffered annotations in the page
             QValueList< Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
             for ( ; aIt != aEnd; ++aIt )
             {
                 Annotation * a = *aIt;
                 Annotation::SubType type = a->subType();
 
-                // draw HighlightAnnotation
-                if ( type == Annotation::AHighlight )
+                // draw TextAnnotation (InPlace) MISSING: all
+                if ( type == Annotation::AText )
+                {
+                    // TODO
+                }
+                // draw LineAnnotation MISSING: all
+                else if ( type == Annotation::ALine )
+                {
+                    // TODO
+                    // get the annotation
+                    /*LineAnnotation * la = (LineAnnotation *) a;
+
+                    NormalizedPath path;
+                    // normalize page point to image
+                    const NormalizedPoint & inkPoint = *pIt;
+                    NormalizedPoint point;
+                    point.x = (inkPoint.x - xOffset) * xScale;
+                    point.y = (inkPoint.y - yOffset) * yScale;
+                    path.append( point );
+                    // draw the normalized path into image
+                    drawShapeOnImage( backImage, path, false, QPen( a->style.color ), QBrush(), Blend );
+                    */
+                }
+                // draw GeomAnnotation MISSING: all
+                else if ( type == Annotation::AGeom )
+                {
+                    // TODO
+                }
+                // draw HighlightAnnotation MISSING: under/strike width, feather, capping
+                else if ( type == Annotation::AHighlight )
                 {
                     // get the annotation
                     HighlightAnnotation * ha = (HighlightAnnotation *) a;
-
-                    // precalc costants for normalizing the quads to the image
-                    int quads = ha->highlightQuads.size();
-                    double xOffset = (float)limits.left() / (float)scaledWidth,
-                           xScale = (float)scaledWidth / (float)limits.width(),
-                           yOffset = (float)limits.top() / (float)scaledHeight,
-                           yScale = (float)scaledHeight / (float)limits.height();
+                    HighlightAnnotation::HighlightType type = ha->highlightType;
 
                     // draw each quad of the annotation
+                    int quads = ha->highlightQuads.size();
                     for ( int q = 0; q < quads; q++ )
                     {
                         NormalizedPath path;
                         const HighlightAnnotation::Quad & quad = ha->highlightQuads[ q ];
+                        // normalize page point to image
                         for ( int i = 0; i < 4; i++ )
                         {
-                            // normalize page point to image
                             NormalizedPoint point;
                             point.x = (quad.points[ i ].x - xOffset) * xScale;
                             point.y = (quad.points[ i ].y - yOffset) * yScale;
                             path.append( point );
                         }
-                        //drawShapeOnImage( backImage, path );
+                        // draw the normalized path into image
+                        switch ( type )
+                        {
+                            // highlight the whole rect
+                            case HighlightAnnotation::Highlight:
+                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, Multiply );
+                                break;
+                            // highlight the bottom part of the rect
+                            case HighlightAnnotation::Squiggly:
+                                path[ 0 ].x = ( path[ 0 ].x + path[ 3 ].x ) / 2.0;
+                                path[ 0 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
+                                path[ 1 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
+                                path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
+                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, Multiply );
+                                break;
+                            // make a line at 3/4 of the height
+                            case HighlightAnnotation::Underline:
+                                path[ 0 ].x = ( path[ 0 ].x + 3*path[ 3 ].x ) / 4.0;
+                                path[ 0 ].y = ( path[ 0 ].y + 3*path[ 3 ].y ) / 4.0;
+                                path[ 1 ].x = ( path[ 1 ].x + 3*path[ 2 ].x ) / 4.0;
+                                path[ 1 ].y = ( path[ 1 ].y + 3*path[ 2 ].y ) / 4.0;
+                                path.pop_back();
+                                path.pop_back();
+                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), Blend );
+                                break;
+                            // make a line at 1/2 of the height
+                            case HighlightAnnotation::StrikeOut:
+                                path[ 0 ].x = ( path[ 0 ].x + path[ 3 ].x ) / 2.0;
+                                path[ 0 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
+                                path[ 1 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
+                                path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
+                                path.pop_back();
+                                path.pop_back();
+                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), Blend );
+                                break;
+                        }
                     }
                 }
-                // draw InkAnnotation
-                //else if ( type == Annotation::AInk )
-            }
-       }
+                // draw InkAnnotation MISSING:invar width, PENTRACER
+                else if ( type == Annotation::AInk )
+                {
+                    // get the annotation
+                    InkAnnotation * ia = (InkAnnotation *) a;
+
+                    // draw each ink path
+                    int paths = ia->inkPaths.size();
+                    for ( int p = 0; p < paths; p++ )
+                    {
+                        NormalizedPath path;
+                        const QValueList<NormalizedPoint> & inkPath = ia->inkPaths[ p ];
+
+                        // normalize page point to image
+                        QValueList<NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
+                        for ( ; pIt != pEnd; ++pIt )
+                        {
+                            const NormalizedPoint & inkPoint = *pIt;
+                            NormalizedPoint point;
+                            point.x = (inkPoint.x - xOffset) * xScale;
+                            point.y = (inkPoint.y - yOffset) * yScale;
+                            path.append( point );
+                        }
+                        // draw the normalized path into image
+                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), Blend );
+                    }
+                }
+            } // end current annotation drawing
+        }
 
         // 4B.5. create the back pixmap converting from the local image
         backPixmap = new QPixmap( backImage );
@@ -350,7 +439,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
             }
             // draw GeomAnnotation
-            else
+            else // WARNING: TEMPORARY CODE! migrate everything to AGG
             {
                 //GeomAnnotation * geom = (GeomAnnotation *)a;
                 //if ( geom->geomType == GeomAnnotation::InscribedSquare )
@@ -534,135 +623,93 @@ void PagePainter::colorizeImage( QImage & grayImage, const QColor & color,
     }
 }
 
-#define dbl_swap(x, y) { double tmp = (x); (x) = (y); (y) = tmp; }
+//BEGIN of Anti-Grain dependant code
+/** Shape Drawing using Anti-Grain Geometry library **/
+// The following code uses the AGG2.3 lib imported into the "painter_agg2"
+// directory. This is to be replaced by Arthur calls for drawing antialiased
+// primitives, but until that AGG2 does its job very fast and good-looking.
+
+#include "agg_rendering_buffer.h"
+#include "agg_pixfmt_rgba.h"
+#include "agg_renderer_base.h"
+#include "agg_scanline_u.h"
+#include "agg_rasterizer_scanline_aa.h"
+#include "agg_renderer_scanline.h"
+#include "agg_conv_stroke.h"
+#include "agg_path_storage.h"
+
 void PagePainter::drawShapeOnImage(
     QImage & image,
-    const NormalizedPath & path,
+    const NormalizedPath & normPath,
+    bool closeShape,
     const QPen & pen,
     const QBrush & brush,
-    float /*antiAliasRadius*/ )
+    DrawingOperation op
+    //float antiAliasRadius
+    )
 {
     // safety checks
-    int points = path.size();
-    if ( points < 2 )
+    int pointsNumber = normPath.size();
+    if ( pointsNumber < 2 )
         return;
 
-    // transform NormalizedPoints inside image
-    struct TPoint {
-        double x;
-        double y;
-    };
-    TPoint point[ points + 1 ];
-    for ( int p = 0; p < points; p++ )
-    {
-        point[ p ].x = path[ p ].x * (double)image.width();
-        point[ p ].y = path[ p ].y * (double)image.height();
-    }
-    point[ points ].x = point[ 0 ].x;
-    point[ points ].y = point[ 0 ].y;
-
-    // create and clear scanline buffers
-    int imageHeight = image.height();
     int imageWidth = image.width();
-    struct ScanLine
+    int imageHeight = image.height();
+    double fImageWidth = (double)imageWidth;
+    double fImageHeight = (double)imageHeight;
+
+    // create a 'path'
+    agg::path_storage path;
+    path.move_to( normPath[ 0 ].x * fImageWidth, normPath[ 0 ].y * fImageHeight );
+    for ( int i = 1; i < pointsNumber; i++ )
+        path.line_to( normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
+    if ( closeShape )
+        path.close_polygon();
+
+    // create the 'rendering buffer' over qimage memory
+    agg::rendering_buffer buffer( image.bits(), imageWidth, imageHeight, imageWidth << 2 );
+    // create 'pixel buffer', 'clipped renderer', 'scanline renderer' on bgra32 format
+    typedef agg::pixfmt_bgra32 bgra32;
+    typedef agg::renderer_base< bgra32 > rb_bgra32;
+    bgra32 * pixels = new bgra32( buffer );
+    rb_bgra32 rb( *pixels );
+    agg::renderer_scanline_aa_solid< rb_bgra32 > render( rb );
+    // create rasterizer and scaline
+    agg::rasterizer_scanline_aa<> rasterizer;
+    agg::scanline_u8 scanline;
+
+#if 0
+    //draw RAINBOW
+    agg::rgba8 span[ imageWidth ];
+    for( int x = 0; x < imageWidth; x++ )
     {
-        bool haveStart;
-        double start;
-        bool haveStop;
-        double stop;
-        ScanLine() : haveStart( false ), haveStop( false ) {};
-    };
-    ScanLine lines[ imageHeight ];
+        agg::rgba c( 380.0 + 400.0 * x / imageWidth, 0.8 );
+        span[ x ] = agg::rgba8(c);
+    }
+    for( int y = 0; y < imageHeight; y++ )
+        pixels->blend_color_hspan( 0, y, imageWidth, span, 0, (255*y)/imageHeight );
+#endif
 
-    // compute scanlines buffers
-    for ( int l = 0; l < points; l++ )
+    // fill rect
+    if ( brush.style() != Qt::NoBrush )
     {
-        bool downward = point[ l ].y < point[ l + 1 ].y;
-        const TPoint & p1 = downward ? point[ l ] : point[ l + 1 ];
-        const TPoint & p2 = downward ? point[ l + 1 ] : point[ l ];
-
-        // scan vertically from p1 to p2
-        int startY = (int)round( p1.y );
-        int endY = (int)round( p2.y );
-
-        // special horizontal case
-        int deltaY = endY - startY;
-        if ( !deltaY )
-        {
-            if ( startY >= 0 && startY < imageHeight )
-            {
-                ScanLine & line = lines[ startY ];
-                line.start = p1.x;
-                line.haveStart = true;
-                line.stop = p2.x;
-                line.haveStop = true;
-            }
-            continue;
-        }
-
-        // standard case
-        double dX = p2.x - p1.x;
-        for ( int y = startY; y < endY; y ++ )
-        {
-            // only process image area
-            if ( y < 0 || y >= imageHeight )
-                continue;
-
-            double x = p1.x + ((double)(y-startY) / (double)deltaY) * dX;
-            ScanLine & line = lines[ y ];
-            if ( !line.haveStart )
-            {
-                // add start
-                line.start = x;
-                line.haveStart = true;
-            }
-            else if ( !line.haveStop )
-            {
-                // add stop
-                line.stop = x;
-                line.haveStop = true;
-                if ( line.start > line.stop )
-                     dbl_swap( line.start, line.stop );
-            }
-            else
-            {
-                // refine bounds
-                if ( x < line.start )
-                    line.start = x;
-                else if ( x > line.stop )
-                    line.stop = x;
-            }
-        }
+        const QColor & brushColor = brush.color();
+        render.color( agg::rgba8( brushColor.red(), brushColor.green(), brushColor.blue() ) );
+        rasterizer.add_path( path );
+        agg::render_scanlines( rasterizer, scanline, render );
+        rasterizer.reset();
     }
 
-    // fill scanlines NOTE: bottom scanline is not visible? PLEASE CHECK!
-    unsigned int * data = (unsigned int *)image.bits();
-    int src, newR, newG, newB,
-        rh = brush.color().red(),
-        gh = brush.color().green(),
-        bh = brush.color().blue();
-    for ( int i = 0; i < imageHeight; i++ )
+    // stroke outline
+    if ( pen.width() != 0 )
     {
-        // get the current line and check it
-        ScanLine & line = lines[ i ];
-        if ( !line.haveStart || !line.haveStop ||
-             line.start > imageWidth || line.stop < 0 )
-            continue;
-        if ( line.start > line.stop )
-            dbl_swap( line.start, line.stop );
-
-        // fill pixels
-        int lineStart = line.start > 0 ? (int)line.start : 0;
-        int lineStop = line.stop < imageWidth ? (int)line.stop : imageWidth - 1;
-        int dataOffset = i * imageWidth + lineStart;
-        for ( int x = lineStart; x <= lineStop; x++ )
-        {
-            src = data[ dataOffset ];
-            newR = qt_div_255( qRed(src) * rh );
-            newG = qt_div_255( qGreen(src) * gh );
-            newB = qt_div_255( qBlue(src) * bh );
-            data[ dataOffset ] = qRgba( newR, newG, newB, qAlpha(src) );
-            dataOffset++;
-        }
+        const QColor & penColor = pen.color();
+        render.color( agg::rgba8( penColor.red(), penColor.green(), penColor.blue() ) );
+        agg::conv_stroke< agg::path_storage > strokedPath( path );
+        strokedPath.width( pen.width() );
+        rasterizer.add_path( strokedPath );
+        agg::render_scanlines( rasterizer, scanline, render );
     }
 }
+
+//END of Anti-Grain dependant code

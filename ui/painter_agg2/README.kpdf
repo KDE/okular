@@ -1,0 +1,47 @@
+File: kpdf/ui/painter_agg2/README.kpdf
+Created by: Enrico Ros @ KPDF project 2005
+
+>> Anti-Grain Geometry 2.3
+The files contained in this directory are from the Anti-Grain Geometry library,
+that provides many loosely copuled algorithms and classes for performing fine
+rendering. All files in there are using a good bsd-like licence compatible with
+kpdf development.
+No external dependancies required other than a standard C++ compiler suite.
+
+>> File Naming
+- "agg_" prefixed files are from the Anti-Grain Geometry distribution. Those
+  files are updated to the 2.3 release of that library
+- "kpdf_" prefixed files are made by kpdf developers to extend library
+  capabilities and fit the needs of that project.
+- README.kpdf must be updated to reflect changes happening in that directory.
+
+>> Directory contents
+As AGG is a template based collection of tools, there is no need for the full
+library, we need only a small subset of it. In fact in that directory there
+are mixed Headers (.h) and Implementations (.cpp) files taken respectively
+from:
+  .h:   agg23/include
+  .cpp: agg23/src
+Note that directories "agg23/src/platform" (crossplatform GUI support),
+"agg23/src/ctrl" (GUI widgets), "agg23/gpc" (generic polygon clipper),
+"agg23/svg" (SVG viewer tool) are NOT USED AT ALL in the kpdf project.
+
+>> File inclusion by scope
+< Memory Buffer, RGBA color buffer, ScanLine, ScanLine Renderer,
+  Path Storage, Path Stroker, Rendering >
+agg_array.h, agg_basics.h, agg_bezier_arc.h, agg_clip_liang_barsky.h,
+ agg_color_rgba.h, agg_conv_adaptor_vcgen.h, agg_conv_stroke.h,
+ agg_conv_transform.h, agg_gamma_functions.h, agg_math.h, agg_math_stroke.h,
+ agg_path_storage.h, agg_pixfmt_rgba.h, agg_rasterizer_scanline_aa.h,
+ agg_render_scanlines.h, agg_renderer_base.h, agg_renderer_scanline.h,
+ agg_rendering_buffer.h, agg_scanline_u.h, agg_shorten_path.h,
+ agg_trans_affine.h, agg_vcgen_stroke.h, agg_vertex_iterator.h,
+ agg_vertex_sequence.h
+agg_bezier_arc.cpp, agg_path_storage.cpp, agg_rasterizer_scanline_aa.cpp,
+ agg_trans_affine.cpp, agg_vcgen_stroke.cpp
+
+< ..for every new algo added.. >
+..append added files here..
+
+>> For Maxim Shemanarev
+Thanks for your work - the kpdf team

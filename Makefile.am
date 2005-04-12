@@ -17,8 +17,8 @@ kde_module_LTLIBRARIES = libkpdfpart.la
 
 libkpdfpart_la_SOURCES = dcop.skel error.cpp part.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-libkpdfpart_la_LIBADD  = xpdf/xpdf/libxpdf.la conf/libkpdfconf.la \
-                         core/libkpdfcore.la ui/libkpdfui.la $(LIB_KPARTS) \
+libkpdfpart_la_LIBADD  = xpdf/xpdf/libxpdf.la conf/libkpdfconf.la core/libkpdfcore.la \
+                         ui/libkpdfui.la ui/painter_agg2/libagg2.la $(LIB_KPARTS) \
                          $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS) -lm
 
 partdesktopdir   = $(kde_servicesdir)

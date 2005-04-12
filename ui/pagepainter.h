@@ -53,12 +53,15 @@ class PagePainter
 
         // my pretty dear raster function
         typedef QValueList< NormalizedPoint > NormalizedPath;
+        enum DrawingOperation { Blend, Multiply };
         static void drawShapeOnImage(
             QImage & image,
             const NormalizedPath & imagePoints,
-            const QPen & pen = Qt::yellow,
-            const QBrush & brush = Qt::red,
-            float antiAliasRadius = 1.0
+            bool closeShape = true,
+            const QPen & pen = QPen(),
+            const QBrush & brush = QBrush(),
+            DrawingOperation op = Blend
+            //float antiAliasRadius = 1.0
         );
 };
 

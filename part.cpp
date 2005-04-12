@@ -742,7 +742,7 @@ void Part::slotShowProperties()
 void Part::slotShowPresentation()
 {
     if ( !m_presentationWidget )
-      m_presentationWidget = new PresentationWidget( m_document );
+      m_presentationWidget = new PresentationWidget( widget(), m_document );
 }
 
 void Part::slotPrint()

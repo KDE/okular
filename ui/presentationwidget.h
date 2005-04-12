@@ -10,7 +10,7 @@
 #ifndef _KPDF_PRESENTATIONWIDGET_H_
 #define _KPDF_PRESENTATIONWIDGET_H_
 
-#include <qwidget.h>
+#include <qdialog.h>
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qvaluevector.h>
@@ -29,11 +29,11 @@ class PresentationFrame;
  *
  * This is a fullscreen widget that displays 
  */
-class PresentationWidget : public QWidget, public DocumentObserver
+class PresentationWidget : public QDialog, public DocumentObserver
 {
     Q_OBJECT
     public:
-        PresentationWidget( KPDFDocument * doc );
+        PresentationWidget( QWidget * parent, KPDFDocument * doc );
         ~PresentationWidget();
 
         // inherited from DocumentObserver
@@ -45,6 +45,7 @@ class PresentationWidget : public QWidget, public DocumentObserver
 
     protected:
         // widget events
+        bool event( QEvent * e );
         void keyPressEvent( QKeyEvent * e );
         void wheelEvent( QWheelEvent * e );
         void mousePressEvent( QMouseEvent * e );

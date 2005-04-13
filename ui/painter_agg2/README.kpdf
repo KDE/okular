@@ -40,6 +40,9 @@ agg_array.h, agg_basics.h, agg_bezier_arc.h, agg_clip_liang_barsky.h,
 agg_bezier_arc.cpp, agg_path_storage.cpp, agg_rasterizer_scanline_aa.cpp,
  agg_trans_affine.cpp, agg_vcgen_stroke.cpp
 
+< Raster Ops on RGBA color buffer >
+kpdf_pixfmt_rgba.h (removed: agg_pixfmt_rgba.h)
+
 < ..for every new algo added.. >
 ..append added files here..
 

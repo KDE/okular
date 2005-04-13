@@ -274,7 +274,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     point.y = (inkPoint.y - yOffset) * yScale;
                     path.append( point );
                     // draw the normalized path into image
-                    drawShapeOnImage( backImage, path, false, QPen( a->style.color ), QBrush(), Blend );
+                    drawShapeOnImage( backImage, path, false, QPen( a->style.color ), QBrush() );
                     */
                 }
                 // draw GeomAnnotation MISSING: all
@@ -326,7 +326,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                                 path[ 1 ].y = ( path[ 1 ].y + 3*path[ 2 ].y ) / 4.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), Blend );
+                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush() );
                                 break;
                             // make a line at 1/2 of the height
                             case HighlightAnnotation::StrikeOut:
@@ -336,7 +336,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                                 path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), Blend );
+                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush() );
                                 break;
                         }
                     }
@@ -365,7 +365,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                             path.append( point );
                         }
                         // draw the normalized path into image
-                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), Blend );
+                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush() );
                     }
                 }
             } // end current annotation drawing
@@ -629,8 +629,8 @@ void PagePainter::colorizeImage( QImage & grayImage, const QColor & color,
 // directory. This is to be replaced by Arthur calls for drawing antialiased
 // primitives, but until that AGG2 does its job very fast and good-looking.
 
+#include "kpdf_pixfmt_rgba.h"
 #include "agg_rendering_buffer.h"
-#include "agg_pixfmt_rgba.h"
 #include "agg_renderer_base.h"
 #include "agg_scanline_u.h"
 #include "agg_rasterizer_scanline_aa.h"
@@ -644,7 +644,7 @@ void PagePainter::drawShapeOnImage(
     bool closeShape,
     const QPen & pen,
     const QBrush & brush,
-    DrawingOperation op
+    RasterOperation op
     //float antiAliasRadius
     )
 {
@@ -671,8 +671,8 @@ void PagePainter::drawShapeOnImage(
     // create 'pixel buffer', 'clipped renderer', 'scanline renderer' on bgra32 format
     typedef agg::pixfmt_bgra32 bgra32;
     typedef agg::renderer_base< bgra32 > rb_bgra32;
-    bgra32 * pixels = new bgra32( buffer );
-    rb_bgra32 rb( *pixels );
+    bgra32 pixels( buffer, op == Multiply ? 1 : 0 );
+    rb_bgra32 rb( pixels );
     agg::renderer_scanline_aa_solid< rb_bgra32 > render( rb );
     // create rasterizer and scaline
     agg::rasterizer_scanline_aa<> rasterizer;
@@ -687,7 +687,7 @@ void PagePainter::drawShapeOnImage(
         span[ x ] = agg::rgba8(c);
     }
     for( int y = 0; y < imageHeight; y++ )
-        pixels->blend_color_hspan( 0, y, imageWidth, span, 0, (255*y)/imageHeight );
+        pixels.blend_color_hspan( 0, y, imageWidth, span, 0, (255*y)/imageHeight );
 #endif
 
     // fill rect

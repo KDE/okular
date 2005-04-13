@@ -149,9 +149,9 @@ namespace agg
 
             value_type* p = (value_type*)m_rbuf->row(y) + (x << 2);
 
+            calc_type alpha = (calc_type(c.a) * (cover + 1)) >> 8;
             if ( !m_mode )
             {
-                calc_type alpha = (calc_type(c.a) * (cover + 1)) >> 8;
                 if(alpha == base_mask)
                 {
                     p[order_type::R] = c.r;

@@ -344,7 +344,10 @@ bool Part::openFile()
 
     // if the 'StartFullScreen' flag is set, start presentation
     if ( m_document->getMetaData( "StartFullScreen" ) == "yes" )
+    {
+	KMessageBox::information(m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString::null, "autoPresentationWarning");
         slotShowPresentation();
+    }
 
     return true;
 }

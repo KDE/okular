@@ -242,10 +242,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         if ( bufferedAnnotations )
         {
             // precalc costants for normalizing the quads to the image
-            double xOffset = (float)limits.left() / (float)scaledWidth,
-                   xScale = (float)scaledWidth / (float)limits.width(),
-                   yOffset = (float)limits.top() / (float)scaledHeight,
-                   yScale = (float)scaledHeight / (float)limits.height();
+            double pageScale = (double)scaledWidth / page->width();
+            double xOffset = (double)limits.left() / (double)scaledWidth,
+                   xScale = (double)scaledWidth / (double)limits.width(),
+                   yOffset = (double)limits.top() / (double)scaledHeight,
+                   yScale = (double)scaledHeight / (double)limits.height();
 
             // paint all buffered annotations in the page
             QValueList< Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
@@ -274,7 +275,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     point.y = (inkPoint.y - yOffset) * yScale;
                     path.append( point );
                     // draw the normalized path into image
-                    drawShapeOnImage( backImage, path, false, QPen( a->style.color ), QBrush() );
+                    drawShapeOnImage( backImage, path, false, QPen( a->style.color ), QBrush(), pageScale );
                     */
                 }
                 // draw GeomAnnotation MISSING: all
@@ -308,7 +309,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                         {
                             // highlight the whole rect
                             case HighlightAnnotation::Highlight:
-                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, Multiply );
+                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, pageScale, Multiply );
                                 break;
                             // highlight the bottom part of the rect
                             case HighlightAnnotation::Squiggly:
@@ -316,7 +317,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                                 path[ 0 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
                                 path[ 1 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
                                 path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
-                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, Multiply );
+                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, pageScale, Multiply );
                                 break;
                             // make a line at 3/4 of the height
                             case HighlightAnnotation::Underline:
@@ -326,7 +327,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                                 path[ 1 ].y = ( path[ 1 ].y + 3*path[ 2 ].y ) / 4.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush() );
+                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), pageScale );
                                 break;
                             // make a line at 1/2 of the height
                             case HighlightAnnotation::StrikeOut:
@@ -336,7 +337,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                                 path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush() );
+                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), pageScale );
                                 break;
                         }
                     }
@@ -365,7 +366,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                             path.append( point );
                         }
                         // draw the normalized path into image
-                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush() );
+                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale );
                     }
                 }
             } // end current annotation drawing
@@ -644,6 +645,7 @@ void PagePainter::drawShapeOnImage(
     bool closeShape,
     const QPen & pen,
     const QBrush & brush,
+    double penWidthMultiplier,
     RasterOperation op
     //float antiAliasRadius
     )
@@ -701,12 +703,13 @@ void PagePainter::drawShapeOnImage(
     }
 
     // stroke outline
-    if ( pen.width() != 0 )
+    double penWidth = (double)pen.width() * penWidthMultiplier;
+    if ( penWidth > 0.1 )
     {
         const QColor & penColor = pen.color();
         render.color( agg::rgba8( penColor.red(), penColor.green(), penColor.blue() ) );
         agg::conv_stroke< agg::path_storage > strokedPath( path );
-        strokedPath.width( pen.width() );
+        strokedPath.width( penWidth );
         rasterizer.add_path( strokedPath );
         agg::render_scanlines( rasterizer, scanline, render );
     }

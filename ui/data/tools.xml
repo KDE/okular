@@ -2,7 +2,7 @@
 <!--
 Engine/Annotation Types [specific attributes]:
   [color]
-  SmoothLine [lowPassFilter{true,false}]
+  SmoothLine [lowPassFilter{true,false}] [orthoSnap{true,false}]
     [color]
     [opacity]
     Highlight
@@ -17,38 +17,40 @@ Engine/Annotation Types [specific attributes]:
     Geom
 -->
 <annotatingTools>
-  <tool id="1" name="Yellow Highlighter" pixmap="tool_hl_yellow">
-    <tooltip>this ..</tooltip>
-    <engine type="SmoothLine" color="#FFFF00">
-      <annotation type="Highlight" color="#FFFF00" />
-    </engine>
-    <shortcut>1</shortcut>
+  <tool id="1" name="Pink Highlighter" pixmap="tool_ink_green">
+      <tooltip>.. is ..</tooltip>
+      <engine type="SmoothLine" color="#00FF00">
+          <annotation type="Ink" color="#00FF00" width="2" />
+      </engine>
+      <shortcut>1</shortcut>
   </tool>
-  <tool id="2" name="Pink Highlighter" pixmap="tool_hl_pink">
-    <tooltip>.. is ..</tooltip>
-    <engine type="SmoothLine" color="#FF0080">
-      <annotation type="Ink" color="#FF0080" />
-    </engine>
-    <shortcut>2</shortcut>
+  <tool id="2" name="Pink Highlighter" pixmap="tool_ink_green">
+      <tooltip>.. is ..</tooltip>
+      <engine type="SmoothLine" color="#FF0080">
+          <annotation type="Ink" color="#FF0080" width="4" />
+      </engine>
+      <shortcut>2</shortcut>
   </tool>
-  <tool id="3" name="note" pixmap="pinnote">
+  <tool id="3" name="Yellow Highlighter" pixmap="tool_hl_yellow">
+      <tooltip>this ..</tooltip>
+      <engine type="SmoothLine" color="#FFFF00">
+          <annotation type="Highlight" color="#FFFF00" />
+      </engine>
+      <shortcut>3</shortcut>
+  </tool>
+  <tool id="4" name="note" pixmap="pinnote">
     <tooltip>.. tooltip ..</tooltip>
     <engine type="PickPoint" color="#FF00FF" hoverIcon="too_note">
       <annotation type="Text" color="#FF00FF" />
     </engine>
+    <shortcut>4</shortcut>
   </tool>
-  <tool id="4" name="Straight Yellow Line" pixmap="tool_ink_green">
+  <tool id="5" name="Straight Yellow Line" pixmap="tool_ink_green">
     <tooltip>.. test</tooltip>
     <engine type="TwoPoints" color="#FFE000">
       <annotation type="Line" width="4" color="#FFE000" />
     </engine>
     <shortcut>5</shortcut>
-  </tool>
-  <tool id="5" name="Arrowed Black Line" pixmap="color_line">
-    <engine type="TwoPoints">
-      <annotation type="Line" />
-    </engine>
-    <shortcut>6</shortcut>
   </tool>
   <tool id="6" name="Warning Stamp" pixmap="messagebox_warning">
     <engine type="PickPoint" hoverIcon="messagebox_warning">

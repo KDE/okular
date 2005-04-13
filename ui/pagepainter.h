@@ -60,6 +60,7 @@ class PagePainter
             bool closeShape = true,
             const QPen & pen = QPen(),
             const QBrush & brush = QBrush(),
+            double penWidthMultiplier = 1.0,
             RasterOperation op = Normal
             //float antiAliasRadius = 1.0
         );

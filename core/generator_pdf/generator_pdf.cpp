@@ -893,6 +893,11 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
                 t->textType = TextAnnotation::Linked;
                 // -> textIcon
                 XPDFReader::lookupName( annotDict, "Name", t->textIcon );
+                if ( !t->textIcon.isEmpty() )
+                {
+                    t->textIcon = t->textIcon.lower();
+                    t->textIcon.remove( ' ' );
+                }
                 // request for postprocessing window geometry
                 PostProcessText request;
                 request.textAnnotation = t;

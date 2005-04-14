@@ -1,0 +1,13 @@
+The icons contained in this directory are divided into:
+
+>> Annotations TOOLBAR Icons:
+These icons are displayed only on the annotation toolbar that popups up
+then entering the review mode:
+  tool_eraser, tool_hl_orange, tool_hl_pink, tool_hl_yellow, tool_ink_green,
+  tool_note
+
+>> Annotations PAGE Icons
+The following icons are mandated in the PDF1.6 spec or adopted de facto by
+some programs. The following are used by Text notes (Stamps not yet ready):
+  checkmark, circle, comment, cross, help, insert, key, newparagraph,
+  note, paragraph, rightarrow, rightpointer, star, uparrow, upleftarrow

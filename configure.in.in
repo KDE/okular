@@ -27,7 +27,10 @@ if test -n "$FREETYPE_CONFIG"; then
 	    
   else
     AC_MSG_WARN([You need at least libfreetype 2.0.5])
+    DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
   fi
+else
+  DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
 fi
 
 AC_SUBST(LIBFREETYPE_LIBS)
@@ -48,6 +51,19 @@ AC_SUBST(XFT_LIBS)
 
 if test -z "$XFT_LIBS"; then
         DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
+fi
+
+dnl ##### Check for libjpeg
+AC_CHECK_LIB([jpeg], [jpeg_destroy_decompress],HAVE_LIBJPEG=yes,HAVE_LIBJPEG=no)
+if test HAVE_LIBJPEG = yes; then
+  AC_CHECK_HEADERS([jpeglib.h],,HAVE_LIBJPEG=no)
+fi
+
+if test HAVE_LIBJPEG = yes; then
+  LIBJPEG_LIBS="-ljpeg"
+  AC_SUBST(LIBJPEG_LIBS)
+else
+  DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
 fi
 
 

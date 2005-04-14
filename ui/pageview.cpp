@@ -131,7 +131,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // create and initialize private storage structure
     d = new PageViewPrivate();
     d->document = document;
-    d->zoomMode = ZoomFixed;
+    d->zoomMode = ZoomFitPage;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
@@ -679,7 +679,9 @@ void PageView::keyPressEvent( QKeyEvent * e )
             {
                 // more optimized than document->setPrevPage and then move view to bottom
                 DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber -= 1;
+                newViewport.pageNumber -= Settings::viewColumns();
+                if ( newViewport.pageNumber < 0 )
+                    newViewport.pageNumber = 0;
                 newViewport.reCenter.enabled = true;
                 newViewport.reCenter.normalizedCenterY = 1.0;
                 d->document->setViewport( newViewport );
@@ -699,7 +701,9 @@ void PageView::keyPressEvent( QKeyEvent * e )
             {
                 // more optmized than document->setNextPage and then move view to top
                 DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber += 1;
+                newViewport.pageNumber += d->document->currentPage() ? Settings::viewColumns() : 1;
+                if ( newViewport.pageNumber >= (int)d->items.count() )
+                    newViewport.pageNumber = d->items.count() - 1;
                 newViewport.reCenter.enabled = true;
                 newViewport.reCenter.normalizedCenterY = 0.0;
                 d->document->setViewport( newViewport );
@@ -984,9 +988,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                             break;
                     }
                 }
-                else
+                else if ( pageItem->pageNumber() != (int)d->document->currentPage() )
                 {
-                    // if not on a rect, the click selects the page
+                    // click to select different pages
                     d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
                 }
             }
@@ -1214,7 +1218,9 @@ void PageView::wheelEvent( QWheelEvent *e )
         {
             // more optmized than document->setNextPage and then move view to top
             DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber += 1;
+            newViewport.pageNumber += d->document->currentPage() ? Settings::viewColumns() : 1;
+            if ( newViewport.pageNumber >= (int)d->items.count() )
+                newViewport.pageNumber = d->items.count() - 1;
             newViewport.reCenter.enabled = true;
             newViewport.reCenter.normalizedCenterY = 0.0;
             d->document->setViewport( newViewport );
@@ -1227,7 +1233,9 @@ void PageView::wheelEvent( QWheelEvent *e )
         {
             // more optmized than document->setPrevPage and then move view to bottom
             DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber -= 1;
+            newViewport.pageNumber -= Settings::viewColumns();
+            if ( newViewport.pageNumber < 0 )
+                newViewport.pageNumber = 0;
             newViewport.reCenter.enabled = true;
             newViewport.reCenter.normalizedCenterY = 1.0;
             d->document->setViewport( newViewport );
@@ -1594,13 +1602,19 @@ void PageView::slotRelayoutPages()
         fullHeight = 0;
     QRect viewportRect( contentsX(), contentsY(), viewportWidth, viewportHeight );
 
+    // handle the 'center first page in row' stuff
+    int nCols = Settings::viewColumns();
+    bool centerFirstPage = Settings::centerFirstPageInRow() && nCols > 1;
+
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
     if ( Settings::viewContinuous() )
     {
+        // handle the 'centering on first row' stuff
+        if ( centerFirstPage )
+            pageCount += nCols - 1;
         // Here we find out column's width and row's height to compute a table
         // so we can place widgets 'centered in virtual cells'.
-        int nCols = Settings::viewColumns(),
-            nRows = (int)ceil( (float)pageCount / (float)nCols ),
+        int nRows = (int)ceil( (float)pageCount / (float)nCols ),
             * colWidth = new int[ nCols ],
             * rowHeight = new int[ nRows ],
             cIdx = 0,
@@ -1609,6 +1623,9 @@ void PageView::slotRelayoutPages()
             colWidth[ i ] = viewportWidth / nCols;
         for ( int i = 0; i < nRows; i++ )
             rowHeight[ i ] = 0;
+        // handle the 'centering on first row' stuff
+        if ( centerFirstPage )
+            pageCount -= nCols - 1;
 
         // 1) find the maximum columns width and rows height for a grid in
         // which each page must well-fit inside a cell
@@ -1616,12 +1633,15 @@ void PageView::slotRelayoutPages()
         {
             PageViewItem * item = *iIt;
             // update internal page size (leaving a little margin in case of Fit* modes)
-            updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 8 );
+            updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 12 );
             // find row's maximum height and column's max width
             if ( item->width() + 6 > colWidth[ cIdx ] )
                 colWidth[ cIdx ] = item->width() + 6;
-            if ( item->height() > rowHeight[ rIdx ] )
-                rowHeight[ rIdx ] = item->height();
+            if ( item->height() + 12 > rowHeight[ rIdx ] )
+                rowHeight[ rIdx ] = item->height() + 12;
+            // handle the 'centering on first row' stuff
+            if ( centerFirstPage && !item->pageNumber() )
+                cIdx += nCols - 1;
             // update col/row indices
             if ( ++cIdx == nCols )
             {
@@ -1630,9 +1650,15 @@ void PageView::slotRelayoutPages()
             }
         }
 
-        // 2) arrange widgets inside cells
+        // 2) compute full size
+        for ( int i = 0; i < nCols; i++ )
+            fullWidth += colWidth[ i ];
+        for ( int i = 0; i < nRows; i++ )
+            fullHeight += rowHeight[ i ];
+
+        // 3) arrange widgets inside cells (and refine fullHeight if needed)
         int insertX = 0,
-            insertY = 4; // 2 + 4*d->zoomFactor ?
+            insertY = fullHeight < viewportHeight ? ( viewportHeight - fullHeight ) / 2 : 0;
         cIdx = 0;
         rIdx = 0;
         for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
@@ -1640,9 +1666,19 @@ void PageView::slotRelayoutPages()
             PageViewItem * item = *iIt;
             int cWidth = colWidth[ cIdx ],
                 rHeight = rowHeight[ rIdx ];
-            // center widget inside 'cells'
-            item->moveTo( insertX + (cWidth - item->width()) / 2,
-                          insertY + (rHeight - item->height()) / 2 );
+            if ( centerFirstPage && !rIdx && !cIdx )
+            {
+                // handle the 'centering on first row' stuff
+                item->moveTo( insertX + (fullWidth - item->width()) / 2,
+                              insertY + (rHeight - item->height()) / 2 );
+                cIdx += nCols - 1;
+            }
+            else
+            {
+                // center widget inside 'cells'
+                item->moveTo( insertX + (cWidth - item->width()) / 2,
+                              insertY + (rHeight - item->height()) / 2 );
+            }
             // advance col/row index
             insertX += cWidth;
             if ( ++cIdx == nCols )
@@ -1650,13 +1686,9 @@ void PageView::slotRelayoutPages()
                 cIdx = 0;
                 rIdx++;
                 insertX = 0;
-                insertY += rHeight + 15; // 5 + 15*d->zoomFactor ?
+                insertY += rHeight;
             }
         }
-
-        fullHeight = cIdx ? (insertY + rowHeight[ rIdx ] + 10) : insertY;
-        for ( int i = 0; i < nCols; i++ )
-            fullWidth += colWidth[ i ];
 
         delete [] colWidth;
         delete [] rowHeight;
@@ -1665,9 +1697,11 @@ void PageView::slotRelayoutPages()
     {
         PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
 
+        // handle the 'centering on first row' stuff
+        if ( centerFirstPage && d->document->currentPage() < 1 )
+            nCols = 1;
         // setup varialbles for a 1(row) x N(columns) grid
-        int nCols = Settings::viewColumns(),
-            * colWidth = new int[ nCols ],
+        int * colWidth = new int[ nCols ],
             cIdx = 0;
         fullHeight = viewportHeight;
         for ( int i = 0; i < nCols; i++ )
@@ -1680,17 +1714,21 @@ void PageView::slotRelayoutPages()
             if ( item == currentItem || (cIdx > 0 && cIdx < nCols) )
             {
                 // update internal page size (leaving a little margin in case of Fit* modes)
-                updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 8 );
+                updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 12 );
                 // find row's maximum height and column's max width
                 if ( item->width() + 6 > colWidth[ cIdx ] )
                     colWidth[ cIdx ] = item->width() + 6;
-                if ( item->height() + 8 > fullHeight )
-                    fullHeight = item->height() + 8;
+                if ( item->height() + 12 > fullHeight )
+                    fullHeight = item->height() + 12;
                 cIdx++;
             }
         }
 
-        // 2) hide all widgets except the displayable ones and dispose those
+        // 2) calc full size (fullHeight is alredy ok)
+        for ( int i = 0; i < nCols; i++ )
+            fullWidth += colWidth[ i ];
+
+        // 3) hide all widgets except the displayable ones and dispose those
         int insertX = 0;
         cIdx = 0;
         for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
@@ -1707,9 +1745,6 @@ void PageView::slotRelayoutPages()
             } else
                 item->setGeometry( 0, 0, -1, -1 );
         }
-
-        for ( int i = 0; i < nCols; i++ )
-            fullWidth += colWidth[ i ];
 
         delete [] colWidth;
 
@@ -1804,8 +1839,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         if ( isEvent )
         {
             const QRect & geometry = i->geometry();
-            // compute distance between item center and viewport center
-            double distance = hypot( (geometry.left() + geometry.right()) / 2 - viewportCenterX,
+            // compute distance between item center and viewport center (slightly moved left)
+            double distance = hypot( (geometry.left() + geometry.right()) / 2 - (viewportCenterX - 4),
                                      (geometry.top() + geometry.bottom()) / 2 - viewportCenterY );
             if ( distance >= minDistance && nearPageNumber != -1 )
                 continue;

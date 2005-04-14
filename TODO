@@ -6,16 +6,15 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress [working on]:
--> annotations: renderers in PagePainter (for the 6 markup annots)
-
+-> annotations: renderers in PagePainter (for the 6 annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
--> annotations: creators in PageViewAnnotator (60% done)
+-> annotations: creators in PageViewAnnotator (40% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
 -> (done: 100%) refactor, pdf parser, xml storage
 -> check mouse wrapping not screH / 2
--> check unscaledwidth/height.. necessary ?
 -> check if fix was applied in head only (pageview.cpp 1676)
+-> pageview: update layout when toggling the 'ebook atyle alignment'
 
 More items (first items will enter 'In progress list' first):
 -> merge with head: core/ has no qwidgets around. the head fonts can't make exception!
@@ -48,7 +47,6 @@ More items (first items will enter 'In progress list' first):
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
 -> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)
    than using QScrollView + inserted Widgets and saves 8% on document loading)
--> pageview: layout 2PPV [1 2,3 4,5 6] -> [1,2 3,4 5]. add ebook-friendly alignment option (BR100341)
 -> core: abstract TextPage generation (the last xpdf dependant class!). then go dancing
    in the streets. make it new and easy to use for wp-style selections.
 -> Dom framework to cache document metadata. It should archive those types of data:
@@ -83,8 +81,6 @@ More items (first items will enter 'In progress list' first):
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
--> pageview: investigate some sort of bug I had once: facing-non-continous view
-   locaked on the same 2 pages (swapping them)
 -> presentation: add page counter and a widget to manually set pages on the top bar
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> presentation: implement missing transitions (6/11 done)
@@ -113,6 +109,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: add ebook-friendly alignment option, better layouting (BR100341)
 -> FIX: random crash when closing kpdf with kapp->quit() (don't use Settings:: in destructors)
 -> FIX: implement links for starting end exiting from presentation mode (pdf FullScreen, Close actions)
 -> CHG: cursor wraps on screen for dragging the page/dynZooming

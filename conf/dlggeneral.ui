@@ -76,6 +76,14 @@
                                 <string>Show &amp;hints and info messages</string>
                             </property>
                         </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_CenterFirstPageInRow</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Center &amp;first page in facing mode</string>
+                            </property>
+                        </widget>
                     </vbox>
                 </widget>
                 <widget class="QLayoutWidget">

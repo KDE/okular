@@ -117,6 +117,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
+  int clip=include_command.find(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
 
   // Generate the PostScript commands to be included
   QString PS = QString("ps: @beginspecial %1 @llx %2 @lly %3 @urx %4 @ury").arg(llx).arg(lly).arg(urx).arg(ury);
@@ -126,6 +127,8 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     PS.append( QString(" %1 @rhi").arg(rhi) );
   if (angle != 0)
     PS.append( QString(" %1 @angle").arg(angle) );
+  if (clip != -1)
+    PS.append(" @clip");
   PS.append( " @setspecial\n" );
   
   QFile file( EPSfilename );
@@ -416,6 +419,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
+  int clip=include_command.find(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
 
   if (QFile::exists(EPSfilename)) {
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
@@ -432,6 +436,8 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
       PostScriptOutPutString->append( QString(" %1 @rhi").arg(rhi) );
     if (angle != 0)
       PostScriptOutPutString->append( QString(" %1 @angle").arg(angle) );
+    if (clip != -1)
+      PostScriptOutPutString->append(" @clip");
     PostScriptOutPutString->append( " @setspecial \n" );
     PostScriptOutPutString->append( QString(" (%1) run\n").arg(EPSfilename) );
     PostScriptOutPutString->append( "@endspecial \n" );

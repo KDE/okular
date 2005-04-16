@@ -10,6 +10,10 @@ annpics_DATA = checkmark.png circle.png comment.png cross.png help.png \
                rightarrow.png rightpointer.png star.png uparrow.png \
                upleftarrow.png
 
+# install misc images
+miscpicsdir = $(kde_datadir)/kpdf/pics
+miscpics_DATA = ghns.png ghns_star.png ghns_star_gray.png
+
 # install annotator xml tools description
 xmldir = $(kde_datadir)/kpdf
 xml_DATA = tools.xml

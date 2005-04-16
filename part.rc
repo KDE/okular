@@ -6,6 +6,8 @@
     <Action name="file_print" group="file_print"/>
     <Action name="file_print_preview" group="file_print"/>
     <Action name="properties" group="file_print"/>
+    <Separator/>
+    <Action name="get_new_stuff"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>

@@ -96,6 +96,7 @@ protected slots:
 	void slotFind();
 	void slotFindNext();
 	void slotSaveFileAs();
+	void slotGetNewStuff();
 	void slotPreferences();
 	void slotNewConfig();
 	void slotPrintPreview();

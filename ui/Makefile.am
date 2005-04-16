@@ -8,7 +8,7 @@ noinst_LTLIBRARIES = libkpdfui.la
 libkpdfui_la_SOURCES = pagepainter.cpp pageview.cpp pageviewutils.cpp \
                        pageviewannotator.cpp minibar.cpp thumbnaillist.cpp \
                        searchwidget.cpp toc.cpp propertiesdialog.cpp \
-                       presentationwidget.cpp side_reviews.cpp
+                       presentationwidget.cpp side_reviews.cpp newstuff.cpp
 
 pageview.lo: ../conf/settings.h
 pageviewutils.lo: ../conf/settings.h

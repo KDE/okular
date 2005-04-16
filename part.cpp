@@ -61,6 +61,7 @@
 #include "ui/thumbnaillist.h"
 #include "ui/side_reviews.h"
 #include "ui/minibar.h"
+#include "ui/newstuff.h"
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
 #include "conf/preferencesdialog.h"
@@ -232,11 +233,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
-	m_showLeftPanel = new KToggleAction( i18n( "Show &left panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" ); 
+	m_showLeftPanel = new KToggleAction( i18n( "Show &left panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
 	m_showLeftPanel->setShortcut( "CTRL+L" );
 	m_showLeftPanel->setCheckedState( i18n("Hide &left panel") );
 	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
 	slotShowLeftPanel();
+
+	KAction * ghns = new KAction(i18n("&Get new stuff"), "knewstuff", 0, this, SLOT(slotGetNewStuff()), ac, "get_new_stuff");
+	ghns->setShortcut( "G" );  // TEMP, REMOVE ME!
 
 	m_showProperties = new KAction(i18n("&Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
@@ -563,6 +567,14 @@ void Part::slotSaveFileAs()
         if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
             KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( saveURL.prettyURL() ) );
     }
+}
+
+void Part::slotGetNewStuff()
+{
+    // show the modal dialog over pageview and execute it
+    NewStuffDialog * dialog = new NewStuffDialog( m_pageView );
+    dialog->exec();
+    delete dialog;
 }
 
 void Part::slotPreferences()

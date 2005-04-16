@@ -403,6 +403,11 @@ bool PageView::canUnloadPixmap( int pageNumber )
 }
 //END DocumentObserver inherited methods
 
+void PageView::showText( const QString &text, int ms )
+{
+    d->messageWindow->display(text, PageViewMessage::Info, ms );
+}
+
 //BEGIN widget events
 void PageView::viewportPaintEvent( QPaintEvent * pe )
 {

@@ -356,6 +356,8 @@ bool Part::openURL(const KURL &url)
     bool b = KParts::ReadOnlyPart::openURL(url);
     if ( !b )
         KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
+    else
+        m_viewportDirty.pageNumber = -1;
     return b;
 }
 
@@ -402,11 +404,22 @@ void Part::slotFileDirty( const QString& fileName )
 
 void Part::slotDoFileDirty()
 {
-  DocumentViewport v = m_document->viewport();
-  if (openFile())
+  if (m_viewportDirty.pageNumber == -1)
   {
-    if (v.pageNumber > m_document->pages()) v.pageNumber = (int)m_document->pages() - 1;
-    m_document->setViewport(v);
+    m_viewportDirty = m_document->viewport();
+    m_pageView->showText(i18n("Reloading the document..."), 0);
+  }
+
+  if (KParts::ReadOnlyPart::openURL(m_file))
+  {
+    if (m_viewportDirty.pageNumber >= (int)m_document->pages()) m_viewportDirty.pageNumber = (int)m_document->pages() - 1;
+    m_document->setViewport(m_viewportDirty);
+    m_viewportDirty.pageNumber = -1;
+  }
+  else
+  {
+    m_watcher->addFile(m_file);
+    m_dirtyHandler->start( 750, true );
   }
 }
 

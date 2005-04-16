@@ -534,9 +534,9 @@ bool dviRenderer::setFile(const QString &fname)
 
 anchor dviRenderer::parseReference(const QString &reference)
 {
-  //#ifdef DEBUG_DVIWIN
-  kdError(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
-  //#endif
+#ifdef DEBUG_DVIWIN
+  kdDebug(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
+#endif
   
   if (dviFile == 0)
     return anchor();

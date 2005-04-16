@@ -201,6 +201,9 @@ bool KDVIMultiPage::openFile()
   if (!r)
     emit setStatusBarText(QString::null);
 
+  //############
+  //An dieser Stelle müsste der Zoom-Faktor neu berechnet werden?
+
   generateDocumentWidgets();
   emit numberOfPages(DVIRenderer.totalPages());
   enableActions(r);

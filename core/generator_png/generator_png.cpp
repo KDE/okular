@@ -68,4 +68,5 @@ bool PNGGenerator::print( KPrinter& printer )
 {
     QPainter p(&printer);
     p.drawPixmap(0, 0, *m_pix);
+    return true;
 }

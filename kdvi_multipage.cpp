@@ -190,7 +190,6 @@ KDVIMultiPage::~KDVIMultiPage()
 
 void KDVIMultiPage::setFile(bool r)
 {
-  setEmbedPostScriptAction();
   enableActions(r);
 }
 
@@ -490,7 +489,7 @@ documentWidget* KDVIMultiPage::createDocumentWidget()
 
   // TODO: handle different sizes per page.
   DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(), widgetSize, &pageCache,
-                              &userSelection, "singlePageWidget" );
+                              "singlePageWidget" );
 
   // Handle source links
   connect(documentWidget, SIGNAL(SRCLink(const QString&,QMouseEvent *, documentWidget *)), getRenderer(),

@@ -20,8 +20,8 @@
 #include "selection.h"
 
 DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, documentPageCache* cache, 
-		     textSelection* documentSelection, const char* name)
-  : documentWidget(parent, sv, size, cache, documentSelection, name)
+		     const char* name)
+  : documentWidget(parent, sv, size, cache, name)
 {
 }
 

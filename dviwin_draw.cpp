@@ -138,20 +138,12 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   
   // Code for DVI -> text functions (e.g. marking of text, full text
   // search, etc.). Set up the currentlyDrawnPage->textLinkList.
-  if (line_boundary_encountered == true) {
-    // Set up source hyperlinks
-    Hyperlink link;
-    link.baseline = currinf.data.pxl_v;
-    link.box.setRect(x, y, pix.width(), pix.height());
-    link.linkText = "";
-    
-    currentlyDrawnPage->textLinkList.push_back(link);
-  } else {
-    // line boundary encountered
-    QRect dshunion = currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].box = dshunion;
-  }
-  
+  Hyperlink link;
+  link.baseline = currinf.data.pxl_v;
+  link.box.setRect(x, y, pix.width(), pix.height());
+  link.linkText = "";
+  currentlyDrawnPage->textLinkList.push_back(link);
+
   switch(ch) {
   case 0x0b:
     currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "ff";

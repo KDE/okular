@@ -480,6 +480,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     {
         QColor fillColor = m_selected ? palette().active().highlight() : palette().active().base();
         p.fillRect( 0, m_pixmapHeight + 4, width, m_labelHeight, fillColor );
+        p.setPen( m_selected ? palette().active().highlightedText() : palette().active().text() );
         p.drawText( 0, m_pixmapHeight + 4, width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
     }
 

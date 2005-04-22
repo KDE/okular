@@ -59,6 +59,12 @@ public slots:
 
   virtual void preferencesChanged();
 
+  /** Shows the "text search" dialog, if text search is supported by
+      the renderer. Otherwise, the method returns immediately.
+      We reimplement this slot to show a warning message that informs the
+      user about the currently limited search capabilities of KDVI. */
+  virtual void showFindTextDialog();
+
 protected slots:
   void doExportText();
   void doEnableWarnings();
@@ -71,6 +77,10 @@ private:
   // FIXME: Remove when the API of the Renderer-class is finished.
   dviRenderer     DVIRenderer;
   KPrinter        *printer;
+
+  // Set to true if we used the search function atleast once.
+  // It is used to remember if we already have show the warning message.
+  bool searchUsed;
 
   /*************************************************************
    * Methods and classes concerned with the find functionality *

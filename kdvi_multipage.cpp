@@ -54,6 +54,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   performanceTimer.start();
 #endif
 
+  searchUsed = false;
+
   setInstance(KDVIMultiPageFactory::instance());
 
   printer = 0;
@@ -496,6 +498,34 @@ documentWidget* KDVIMultiPage::createDocumentWidget()
           SLOT(handleSRCLink(const QString &,QMouseEvent *, documentWidget *)));
 
   return documentWidget;
+}
+
+
+void KDVIMultiPage::showFindTextDialog()
+{
+  if ((getRenderer().isNull()) || (getRenderer()->supportsTextSearch() == false))
+    return;
+
+  if (!searchUsed)
+  {
+    // WARNING: This text appears several times in the code. Change
+    // everywhere, or nowhere!
+    if (KMessageBox::warningContinueCancel( scrollView(), 
+					    i18n("<qt>This function searches the DVI file for plain text. Unfortunately, this version of "
+						 "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
+						 "formulae, accented characters, and non-english text, such as Russian or Korean, will "
+						 "most likely be messed up completely. Continue anyway?</qt>"),
+					    i18n("Function May Not Work as Expected"),
+					    KStdGuiItem::cont(),
+					    "warning_search_text_may_not_work") == KMessageBox::Cancel)
+      return;
+
+    // Remember that we don't need to show the warning message again.
+    searchUsed = true;
+  }
+
+  // Now really show the search widget
+  KMultiPage::showFindTextDialog();
 }
 
 #include "kdvi_multipage.moc"

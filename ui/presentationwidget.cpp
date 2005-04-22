@@ -537,13 +537,7 @@ void PresentationWidget::generateOverlay()
     QImage image( doublePixmap.convertToImage().smoothScale( side, side ) );
     image.setAlphaBuffer( true );
 
-    // generate a monochrome pixmap using grey level as alpha channel and
-    // a saturated hilight color as base color
-    int hue, sat, val;
-    palette().active().highlight().getHsv( &hue, &sat, &val );
-    sat = (sat + 255) / 2;
-    const QColor & color = QColor( hue, sat, val, QColor::Hsv );
-    int red = color.red(), green = color.green(), blue = color.blue(),
+    int red = 52, green = 115, blue = 178,
         pixels = image.width() * image.height();
     unsigned int * data = (unsigned int *)image.bits();
     for( int i = 0; i < pixels; ++i )

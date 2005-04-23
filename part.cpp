@@ -131,10 +131,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox = new QToolBox( m_leftPanel );
 	leftPanelLayout->addWidget( m_toolBox );
 
+	int index;
 	// [left toolbox: Table of Contents] | []
 	TOC * tocFrame = new TOC( m_toolBox, m_document );
 	connect(tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
-	m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	index = m_toolBox->addItem( tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	m_toolBox->setItemToolTip(index, i18n("Contents"));
 	enableTOC( false );
 
 	// [left toolbox: Thumbnails and Bookmarks] | []
@@ -148,7 +150,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
 	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
 //	thumbsBox->setStretchFactor( m_tc, 1 );
-	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+	index = m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+	m_toolBox->setItemToolTip(index, i18n("Thumbnails"));
 	m_toolBox->setCurrentItem( thumbsBox );
 
 	slotShowLeftPanel();

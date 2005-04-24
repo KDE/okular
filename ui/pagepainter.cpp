@@ -665,6 +665,8 @@ void PagePainter::drawShapeOnImage(
     path.move_to( normPath[ 0 ].x * fImageWidth, normPath[ 0 ].y * fImageHeight );
     for ( int i = 1; i < pointsNumber; i++ )
         path.line_to( normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
+        //path.curve4( normPath[ i ].x * fImageWidth + 2, normPath[ i ].y * fImageHeight - 2,
+        //             normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
     if ( closeShape )
         path.close_polygon();
 
@@ -689,7 +691,7 @@ void PagePainter::drawShapeOnImage(
         span[ x ] = agg::rgba8(c);
     }
     for( int y = 0; y < imageHeight; y++ )
-        pixels.blend_color_hspan( 0, y, imageWidth, span, 0, (255*y)/imageHeight );
+        pixels.blend_color_hspan( 0, y, imageWidth, span, 0, (123*y)/imageHeight );
 #endif
 
     // fill rect
@@ -708,7 +710,15 @@ void PagePainter::drawShapeOnImage(
     {
         const QColor & penColor = pen.color();
         render.color( agg::rgba8( penColor.red(), penColor.green(), penColor.blue() ) );
+#if 0
+        // BSPLINE curve over path
+        typedef agg::conv_bspline< agg::path_storage > conv_bspline_type;
+        conv_bspline_type bspline( path );
+        bspline.interpolation_step( 0.2 );
+        agg::conv_stroke< conv_bspline_type > strokedPath( bspline );
+#else
         agg::conv_stroke< agg::path_storage > strokedPath( path );
+#fi
         strokedPath.width( penWidth );
         rasterizer.add_path( strokedPath );
         agg::render_scanlines( rasterizer, scanline, render );

@@ -718,7 +718,7 @@ void PagePainter::drawShapeOnImage(
         agg::conv_stroke< conv_bspline_type > strokedPath( bspline );
 #else
         agg::conv_stroke< agg::path_storage > strokedPath( path );
-#fi
+#endif
         strokedPath.width( penWidth );
         rasterizer.add_path( strokedPath );
         agg::render_scanlines( rasterizer, scanline, render );

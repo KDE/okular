@@ -75,6 +75,7 @@ public:
 	ASYNC goToPage(uint page);
 	ASYNC openDocument(KURL doc);
 	uint pages();
+	uint currentPage();
 
 protected:
 	// reimplemented from KParts::ReadOnlyPart

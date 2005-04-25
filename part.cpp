@@ -307,6 +307,12 @@ uint Part::pages()
 	return m_document->pages();
 }
 
+uint Part::currentPage()
+{
+	if ( m_document->pages() == 0 ) return 0;
+	else return m_document->currentPage()+1;
+}
+
 //this don't go anywhere but is required by genericfactory.h
 KAboutData* Part::createAboutData()
 {

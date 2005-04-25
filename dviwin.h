@@ -157,7 +157,7 @@ public slots:
 
 signals:
   /** Passed through to the top-level kpart. */
-  void setStatusBarText( const QString& );
+  //  void setStatusBarText( const QString& );
 
 private slots:
   /** This method shows a dialog that tells the user that source

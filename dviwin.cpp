@@ -557,10 +557,10 @@ bool dviRenderer::setFile(const QString &fname)
 Anchor dviRenderer::parseReference(const QString &reference)
 {
   mutex.lock();
-
-  //#ifdef DEBUG_DVIWIN
+  
+#ifdef DEBUG_DVIWIN
   kdError(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
-  //#endif
+#endif
   
   if (dviFile == 0) {
     mutex.unlock();

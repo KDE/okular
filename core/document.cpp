@@ -898,6 +898,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
         case KPDFLink::Goto: {
             const KPDFLinkGoto * go = static_cast< const KPDFLinkGoto * >( link );
             d->nextDocumentViewport = go->destViewport();
+	    if (d->nextDocumentViewport.pageNumber == -1) return;
 
             // Explanation of why d->nextDocumentViewport is needed
             // all openRelativeFile does is launch a signal telling we

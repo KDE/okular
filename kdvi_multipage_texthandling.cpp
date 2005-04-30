@@ -2,7 +2,7 @@
 // Class: kdvi_multipage
 // Author: Stefan Kebekus
 //
-// (C) 2001-2004, Stefan Kebekus.
+// (C) 2001-2005, Stefan Kebekus.
 //
 // Previewer for TeX DVI files.
 //
@@ -34,9 +34,10 @@
 #include <qapplication.h>
 #include <qprogressdialog.h>
 
-#include "documentPagePixmap.h"
 #include "documentWidget.h"
 #include "kdvi_multipage.h"
+#include "renderedDocumentPagePixmap.h"
+
 
 //#define KDVI_MULTIPAGE_DEBUG
 
@@ -85,7 +86,7 @@ void KDVIMultiPage::doExportText(void)
   QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), DVIRenderer.totalPages(), scrollView(), "export_text_progress", TRUE );
   progress.setMinimumDuration(300);
 
-  documentPagePixmap dummyPage;
+  RenderedDocumentPagePixmap dummyPage;
   dummyPage.resize(1,1);
 
   for(int page=1; page <= DVIRenderer.totalPages(); page++) {
@@ -105,8 +106,8 @@ void KDVIMultiPage::doExportText(void)
     dummyPage.setPageNumber(page);
     DVIRenderer.drawPage(100.0, &dummyPage); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
 
-    for(unsigned int i=0; i<dummyPage.textLinkList.size(); i++)
-      stream << dummyPage.textLinkList[i].linkText << endl;
+    for(unsigned int i=0; i<dummyPage.textBoxList.size(); i++)
+      stream << dummyPage.textBoxList[i].text << endl;
   }
 
   // Switch off the progress dialog, etc.

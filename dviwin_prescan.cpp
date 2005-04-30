@@ -261,7 +261,9 @@ void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
 void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
 {
   cp.truncate(cp.find('"'));
-  anchorList[cp] = Anchor(current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+  Length l;
+  l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+  anchorList[cp] = Anchor(current_page+1, l);
 }
 
 
@@ -333,7 +335,9 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
     if (cp.startsWith("ps:SDict begin [") && cp.endsWith(" pdfmark end")) {  // hyperref definition of link/anchor/bookmark/etc
       if (cp.contains("/DEST")) { // The PostScript code defines an anchor
 	QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
-	anchorList[anchorName] = Anchor(current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+	Length l;
+	l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+	anchorList[anchorName] = Anchor(current_page+1, l);
       }
       return;
     }
@@ -462,7 +466,9 @@ void dviRenderer::prescan_ParseSourceSpecial(QString cp)
   Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
   QFileInfo fi1(dviFile->filename);
   QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).stripWhiteSpace()).absFilePath();
-  DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page+1, currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+  Length l;
+  l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+  DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page+1, l);
   sourceHyperLinkAnchors.push_back(sfa);
 }
 

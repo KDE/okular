@@ -66,10 +66,10 @@
 #include <qpainter.h>
 #include <qbitmap.h> 
 #include <qimage.h> 
-#include <qpaintdevice.h>
+#include <qpainter.h>
 #include <qfileinfo.h>
 
-extern QPainter foreGroundPaint;
+extern QPainter *foreGroundPaint;
 
 
 /** Routine to print characters.  */
@@ -95,7 +95,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   int y = currinf.data.pxl_v - g->y2;
   
   // Draw the character.
-  foreGroundPaint.drawPixmap(x, y, pix);
+  foreGroundPaint->drawPixmap(x, y, pix);
   
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?
@@ -137,51 +137,50 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   }
   
   // Code for DVI -> text functions (e.g. marking of text, full text
-  // search, etc.). Set up the currentlyDrawnPage->textLinkList.
-  Hyperlink link;
-  link.baseline = currinf.data.pxl_v;
+  // search, etc.). Set up the currentlyDrawnPage->textBoxList.
+  TextBox link;
   link.box.setRect(x, y, pix.width(), pix.height());
-  link.linkText = "";
-  currentlyDrawnPage->textLinkList.push_back(link);
+  link.text = "";
+  currentlyDrawnPage->textBoxList.push_back(link);
 
   switch(ch) {
   case 0x0b:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "ff";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ff";
     break;
   case 0x0c:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "fi";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "fi";
     break;
   case 0x0d:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "fl";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "fl";
     break;
   case 0x0e:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "ffi";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ffi";
     break;
   case 0x0f:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "ffl";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ffl";
     break;
     
   case 0x7b:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "-";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "-";
     break;
   case 0x7c:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "---";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "---";
     break;
   case 0x7d:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "\"";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "\"";
     break;
   case 0x7e:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "~";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "~";
     break;
   case 0x7f:
-    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "@@"; // @@@ check!
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "@@"; // @@@ check!
     break;
     
   default:
     if ((ch >= 0x21) && (ch <= 0x7a))
-      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += QChar(ch);
+      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QChar(ch);
     else
-      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += "?";
+      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "?";
     break;
   }
   
@@ -310,10 +309,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	    int w =  ((int) ROUNDUP(b, shrinkfactor * 65536));
 	    
 	    if (colorStack.isEmpty())
-	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
-					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
+	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+					 currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
 	    else
-	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
 					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
 	  }
 	  currinf.data.dvi_h += b;
@@ -332,10 +331,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	    int h = ((int) ROUNDUP(a, shrinkfactor * 65536));
 	    int w = ((int) ROUNDUP(b, shrinkfactor * 65536));
 	    if (colorStack.isEmpty())
-	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
-					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
+	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+					 currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
 	    else
-	      foreGroundPaint.fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
 					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
 	  }
 	  break;
@@ -403,8 +402,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      ((RRtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (RRtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
-	      (currentlyDrawnPage->textLinkList.size() > 0))
-	    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += ' ';
+	      (currentlyDrawnPage->textBoxList.size() > 0))
+	    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
 	  currinf.data.dvi_h += ((long) (RRtmp *  current_dimconv));
 	  break;
 	  
@@ -418,8 +417,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) && 
 	      (currinf.fontp != 0) &&
 	      ((WWtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (WWtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
-	      (currentlyDrawnPage->textLinkList.size() > 0) )
-	    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += ' ';
+	      (currentlyDrawnPage->textBoxList.size() > 0) )
+	    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
 	  currinf.data.dvi_h += currinf.data.w;
 	  break;
 	  
@@ -433,8 +432,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false)  && 
 	      (currinf.fontp != 0) &&
 	      ((XXtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (XXtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) && 
-	      (currentlyDrawnPage->textLinkList.size() > 0))
-	    currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += ' ';
+	      (currentlyDrawnPage->textBoxList.size() > 0))
+	    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
 	  currinf.data.dvi_h += currinf.data.x;
 	  break;
 	  
@@ -447,11 +446,11 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	    if ((is_vfmacro == false) &&
 		(currinf.fontp != 0) &&
 		(abs(DDtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
-		(currentlyDrawnPage->textLinkList.size() > 0)) {
+		(currentlyDrawnPage->textBoxList.size() > 0)) {
 	      word_boundary_encountered = true;
 	      line_boundary_encountered = true;
 	      if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
-		currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += '\n';
+		currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
 	    }
 	    currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
 	    currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -468,11 +467,11 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      (abs(YYtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
-	      (currentlyDrawnPage->textLinkList.size() > 0)) {
+	      (currentlyDrawnPage->textBoxList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
 	    if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
-	      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += '\n';
+	      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.y/65536;
 	  currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
@@ -488,11 +487,11 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	  if ((is_vfmacro == false) &&
 	      (currinf.fontp != 0) &&
 	      (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) && 
-	      (currentlyDrawnPage->textLinkList.size() > 0)) {
+	      (currentlyDrawnPage->textBoxList.size() > 0)) {
 	    word_boundary_encountered = true;
 	    line_boundary_encountered = true;
 	    if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6)) 
-	      currentlyDrawnPage->textLinkList[currentlyDrawnPage->textLinkList.size()-1].linkText += '\n';
+	      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
 	  }
 	  currinf.data.dvi_v += currinf.data.z/65536;
 	  currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -573,7 +572,7 @@ void dviRenderer::draw_page(void)
   // Calling resize() here rather than clear() means that the memory
   // taken up by the vector is not freed. This is faster than
   // constantly allocating/freeing memory.
-  currentlyDrawnPage->textLinkList.resize(0);
+  currentlyDrawnPage->textBoxList.resize(0);
   currentlyDrawnPage->sourceHyperLinkList.resize(0);
 
 #ifdef PERFORMANCE_MEASUREMENT
@@ -593,12 +592,12 @@ void dviRenderer::draw_page(void)
 
   if (!accessibilityBackground)
   {
-    foreGroundPaint.fillRect( foreGroundPaint.viewport(), PS_interface->getBackgroundColor(current_page) );
+    foreGroundPaint->fillRect( foreGroundPaint->viewport(), PS_interface->getBackgroundColor(current_page) );
   }
   else
   {
     // In accessiblity mode use the custom background color
-    foreGroundPaint.fillRect( foreGroundPaint.viewport(), accessibilityBackgroundColor );
+    foreGroundPaint->fillRect( foreGroundPaint->viewport(), accessibilityBackgroundColor );
   }
 
   // Render the PostScript background, if there is one.

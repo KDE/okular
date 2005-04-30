@@ -268,15 +268,20 @@ void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QSt
 }
 
 
-void ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter &paint) {
+void ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
 #endif
 
+  if (paint == 0) {
+    kdError(4300) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with paint == 0" << endl;
+    return;
+  }
+
   resolution   = dpi;
 
-  pixel_page_w = paint.viewport().width();
-  pixel_page_h = paint.viewport().height();
+  pixel_page_w = paint->viewport().width();
+  pixel_page_h = paint->viewport().height();
 
   pageInfo *info = pageList.find(page);
 
@@ -295,7 +300,7 @@ void ghostscript_interface::graphics(PageNumber page, double dpi, long magnifica
   gs_generate_graphics_file(page, GfxFile->name(), magnification);
   
   QPixmap MemoryCopy(GfxFile->name());
-  paint.drawPixmap(0, 0, MemoryCopy);
+  paint->drawPixmap(0, 0, MemoryCopy);
   return;
 }
 

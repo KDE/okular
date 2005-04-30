@@ -53,13 +53,13 @@
 
 //#define DEBUG_DVIWIN
 
-QPainter foreGroundPaint; // QPainter used for text
+QPainter *foreGroundPaint; // QPainter used for text
 
 
 //------ now comes the dviRenderer class implementation ----------
 
 dviRenderer::dviRenderer(QWidget *par)
-  : documentRenderer(par), info(new infoDialog(par))
+  : DocumentRenderer(par), info(new infoDialog(par))
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviRenderer( parent=" << par << " )" << endl;
@@ -139,7 +139,7 @@ void dviRenderer::showInfo(void)
 //------ this function calls the dvi interpreter ----------
 
 
-void dviRenderer::drawPage(double resolution, documentPage *page)
+void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
 {
 #ifdef DEBUG_DVIWIN
   kdDebug(4300) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
@@ -187,11 +187,13 @@ void dviRenderer::drawPage(double resolution, documentPage *page)
   colorStack.clear();
   globalColor = Qt::black;
   
-  foreGroundPaint.begin( page->getPaintDevice() );
   QApplication::setOverrideCursor( waitCursor );
-  errorMsg = QString::null;
-  draw_page();
-  foreGroundPaint.end();
+  foreGroundPaint = page->getPainter();
+  if (foreGroundPaint != 0) {
+    errorMsg = QString::null;
+    draw_page();
+    delete foreGroundPaint;
+  }
   QApplication::restoreOverrideCursor();
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
@@ -578,7 +580,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
       page = dviFile->total_pages;
 
     mutex.unlock();
-    return Anchor(page, 0.0);
+    return Anchor(page, Length() );
   }
   
   // case 2: The reference is of form "src:1111Filename", where "1111"
@@ -633,7 +635,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
     
     if (bestMatch != sourceHyperLinkAnchors.end()) {
       mutex.unlock();
-      return Anchor(bestMatch->page, bestMatch->distance_from_top_in_inch);
+      return Anchor(bestMatch->page, bestMatch->distance_from_top);
     } else
       if (anchorForRefFileFound == false)
 	KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "

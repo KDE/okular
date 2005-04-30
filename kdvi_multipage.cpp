@@ -19,18 +19,19 @@
 
 #include "../config.h"
 #include "../kviewshell/marklist.h"
-#include "documentPagePixmap.h"
 #include "documentWidget.h"
+#include "dviWidget.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"
-#include "kviewpart.h"
-#include "performanceMeasurement.h"
-#include "prefs.h"
 #include "kprinterwrapper.h"
-#include "dviWidget.h"
-
+#include "kviewpart.h"
 #include "optionDialogFontsWidget.h"
 #include "optionDialogSpecialWidget.h"
+#include "performanceMeasurement.h"
+#include "prefs.h"
+#include "renderedDocumentPagePixmap.h"
+
+
 
 #include <qlabel.h>
 

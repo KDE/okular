@@ -22,13 +22,13 @@
 
 #include "anchor.h"
 #include "bigEndianByteReader.h"
-#include "documentPage.h"
 #include "documentRenderer.h"
 #include "dviFile.h"
 #include "fontpool.h"
 #include "infodialog.h"
 #include "pageSize.h"
 #include "psgs.h"
+#include "renderedDocumentPage.h"
 
 
 class documentWidget;
@@ -48,13 +48,13 @@ extern const int MFResolutions[];
 class DVI_SourceFileAnchor {
  public:
   DVI_SourceFileAnchor() {}
-  DVI_SourceFileAnchor(QString &name, Q_UINT32 ln, Q_UINT32 pg, double _distance_from_top_in_inch): fileName(name), line(ln), page(pg), 
-    distance_from_top_in_inch(_distance_from_top_in_inch) {}
+  DVI_SourceFileAnchor(QString &name, Q_UINT32 ln, Q_UINT32 pg, Length _distance_from_top): fileName(name), line(ln), page(pg), 
+    distance_from_top(_distance_from_top) {}
 
   QString    fileName;
   Q_UINT32   line;
   Q_UINT32   page;
-  double     distance_from_top_in_inch;
+  Length     distance_from_top;
 };
 
 /** Compound of registers, as defined in section 2.6.2 of the DVI
@@ -88,7 +88,7 @@ struct drawinf {
 
 
 
-class dviRenderer : public documentRenderer, bigEndianByteReader
+class dviRenderer : public DocumentRenderer, bigEndianByteReader
 {
   Q_OBJECT
 
@@ -148,7 +148,7 @@ public slots:
 
 
 
-  void		drawPage(double res, documentPage *page);
+  void		drawPage(double res, RenderedDocumentPage *page);
  
   /** Slots used in conjunction with external programs */
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
@@ -274,7 +274,7 @@ private:
   Q_UINT16    number_of_elements_in_path;
   
   struct drawinf	currinf;
-  documentPage* currentlyDrawnPage;
+  RenderedDocumentPage* currentlyDrawnPage;
 };
 
 

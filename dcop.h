@@ -21,6 +21,7 @@ K_DCOP
 		virtual ASYNC openDocument(KURL doc) = 0;
 		virtual uint pages() = 0;
 		virtual uint currentPage() = 0;
+		virtual KURL currentDocument() = 0;
     virtual void slotPreferences() = 0;
     virtual void slotFind() = 0;
     virtual void slotPrintPreview() = 0;

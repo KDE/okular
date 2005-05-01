@@ -313,6 +313,11 @@ uint Part::currentPage()
 	else return m_document->currentPage()+1;
 }
 
+KURL Part::currentDocument()
+{
+	return m_document->currentDocument();	
+}
+
 //this don't go anywhere but is required by genericfactory.h
 KAboutData* Part::createAboutData()
 {

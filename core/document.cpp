@@ -219,6 +219,8 @@ void KPDFDocument::closeDocument()
     delete generator;
     generator = 0;
 
+    d->url = KURL();
+
     // remove requests left in queue
     QValueList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
     QValueList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
@@ -364,6 +366,11 @@ uint KPDFDocument::currentPage() const
 uint KPDFDocument::pages() const
 {
     return pages_vector.size();
+}
+
+KURL KPDFDocument::currentDocument() const
+{
+    return d->url;
 }
 
 bool KPDFDocument::isAllowed( int flags ) const

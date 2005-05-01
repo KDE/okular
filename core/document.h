@@ -72,6 +72,7 @@ class KPDFDocument : public QObject
         const DocumentViewport & viewport() const;
         uint currentPage() const;
         uint pages() const;
+        KURL currentDocument() const;
         bool isAllowed( int /*Document::Permisison(s)*/ ) const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;

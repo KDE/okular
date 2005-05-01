@@ -76,6 +76,7 @@ public:
 	ASYNC openDocument(KURL doc);
 	uint pages();
 	uint currentPage();
+	KURL currentDocument();
 
 protected:
 	// reimplemented from KParts::ReadOnlyPart

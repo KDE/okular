@@ -44,6 +44,11 @@ namespace KPDF
     Shell();
 
     /**
+     * Open an url
+     */
+    Shell(const KURL &url);
+
+    /**
      * Default Destructor
      */
     virtual ~Shell();
@@ -75,16 +80,18 @@ namespace KPDF
     void slotUpdateFullScreen();
     void slotShowMenubar();
 
-  public slots:
-      void openURL( const KURL & url );
+    void openURL( const KURL & url );
+    void delayedOpen();
 
   signals:
       void restoreDocument(const KURL &url, int page);
       void saveDocumentRestoreInfo(KConfig* config);
-
+     
+     
   private:
     void setupAccel();
     void setupActions();
+    void init();
 
   private:
       KParts::ReadOnlyPart* m_part;
@@ -94,6 +101,7 @@ namespace KPDF
       KToggleAction* m_showMenuBarAction;
       KToggleAction* m_showToolBarAction;
       bool m_menuBarWasShown, m_toolBarWasShown;
+      KURL m_openUrl;
   };
 
 }

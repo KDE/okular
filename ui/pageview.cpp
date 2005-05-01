@@ -774,7 +774,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         case MouseZoom:
         case MouseSelect:
             // set second corner of selection
-            if ( (leftButton || d->aPrevAction) && !d->mouseSelectionRect.isNull() )
+            if ( (leftButton || d->aPrevAction) )
                 selectionEndPoint( e->x(), e->y() );
             break;
 

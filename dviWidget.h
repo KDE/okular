@@ -24,8 +24,7 @@ class DVIWidget : public documentWidget
   Q_OBJECT
 
 public: 
-  DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size,
-            DocumentPageCache* cache, const char* name);
+  DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache* cache, const char* name);
 signals:
   void SRCLink(const QString&, QMouseEvent* e, documentWidget*);
 

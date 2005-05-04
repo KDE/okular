@@ -19,9 +19,8 @@
 #include "renderedDocumentPagePixmap.h"
 #include "selection.h"
 
-DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, QSize size, DocumentPageCache* cache, 
-		     const char* name)
-  : documentWidget(parent, sv, size, cache, name)
+DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache* cache, const char* name)
+  : documentWidget(parent, sv, cache, name)
 {
 }
 

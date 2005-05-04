@@ -481,17 +481,18 @@ void KDVIMultiPage::showTipOnStart(void)
 
 documentWidget* KDVIMultiPage::createDocumentWidget()
 {
-  QSize rendererSuggestedSize = pageCache.sizeOfPageInPixel(/*page+*/1); // FIXME
-  QSize widgetSize;
-  if (rendererSuggestedSize.isEmpty()) {
-    widgetSize.setWidth(100);
-    widgetSize.setHeight(100);
-  } else
-    widgetSize = rendererSuggestedSize;
+
+//  QSize rendererSuggestedSize = pageCache.sizeOfPageInPixel(/*page+*/1); // FIXME
+//  QSize widgetSize;
+//  if (rendererSuggestedSize.isEmpty()) {
+//    widgetSize.setWidth(100);
+//    widgetSize.setHeight(100);
+//  } else
+//    widgetSize = rendererSuggestedSize;
 
 
   // TODO: handle different sizes per page.
-  DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(), widgetSize, &pageCache,
+  DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(), &pageCache,
                               "singlePageWidget" );
 
   // Handle source links

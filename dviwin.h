@@ -31,7 +31,7 @@
 #include "renderedDocumentPage.h"
 
 
-class documentWidget;
+class DocumentWidget;
 class dviRenderer;
 class fontProgressDialog;
 class infoDialog;
@@ -137,7 +137,7 @@ public slots:
   void          exportPDF();
 
   void          showInfo(void);
-  void          handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *widget);
+  void          handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *widget);
 
   void          embedPostScript(void);
   void          abortExternalProgramm(void);

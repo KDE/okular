@@ -20,7 +20,7 @@
 #include "selection.h"
 
 DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache* cache, const char* name)
-  : documentWidget(parent, sv, cache, name)
+  : DocumentWidget(parent, sv, cache, name)
 {
 }
 
@@ -28,7 +28,7 @@ DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache
 void DVIWidget::mousePressEvent(QMouseEvent* e)
 {
   // Call implementation from parent
-  documentWidget::mousePressEvent(e);
+  DocumentWidget::mousePressEvent(e);
 
   // pageNr == 0 indicated an invalid page (e.g. page number not yet set)
   if (pageNr == 0)
@@ -65,7 +65,7 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
     return;
 
   // Call the standard implementation
-  documentWidget::mouseMoveEvent(e);
+  DocumentWidget::mouseMoveEvent(e);
   
   // Analyze the mouse movement only if no mouse button was pressed
   if ( e->state() == 0 ) {

@@ -19,14 +19,15 @@ class QPaintEvent;
 class QMouseEvent;
 class textSelection;
 
-class DVIWidget : public documentWidget
+class DVIWidget : public DocumentWidget
 {
   Q_OBJECT
 
 public: 
   DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache* cache, const char* name);
+
 signals:
-  void SRCLink(const QString&, QMouseEvent* e, documentWidget*);
+  void SRCLink(const QString&, QMouseEvent* e, DocumentWidget*);
 
 private:
   virtual void mousePressEvent(QMouseEvent* e);

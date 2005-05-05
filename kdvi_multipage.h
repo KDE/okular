@@ -39,7 +39,7 @@ public:
   static KAboutData* createAboutData();
 
 private:
-  virtual documentWidget* createDocumentWidget();
+  virtual DocumentWidget* createDocumentWidget();
   
   /** Used to enable the export menu when a file is successfully
       loaded. */

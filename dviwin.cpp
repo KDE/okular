@@ -677,7 +677,7 @@ void dviRenderer::clearStatusBar(void)
 }
 
 
-void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, documentWidget *win)
+void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;

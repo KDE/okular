@@ -12,11 +12,13 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qimage.h>
 #include <qtextstream.h>
 #include <qvaluevector.h>
 #include <qtimer.h>
 #include <qmap.h>
 #include <kdebug.h>
+#include <kimageio.h>
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
@@ -32,7 +34,7 @@
 #include "page.h"
 #include "link.h"
 #include "generator_pdf/generator_pdf.h"  // PDF generator
-#include "generator_png/generator_png.h"  // PDF generator
+#include "generator_kimgio/generator_kimgio.h"  // KIMGIO generator
 #include "conf/settings.h"
 
 // structures used internally by KPDFDocument for local variables storage
@@ -51,6 +53,9 @@ class KPDFDocumentPrivate
         // cached stuff
         QString docFileName;
         QString xmlFileName;
+
+        // a list of the mimetypes qimage can understand
+        QStringList kimgioMimes;
 
         // viewport stuff
         QValueList< DocumentViewport > viewportHistory;
@@ -107,6 +112,14 @@ KPDFDocument::KPDFDocument()
     d->allocatedPixmapsTotalMemory = 0;
     d->memCheckTimer = 0;
     d->saveBookmarksTimer = 0;
+    KImageIO::registerFormats();
+    QStringList list = QImage::inputFormatList();
+    QStringList::Iterator it = list.begin();
+    while( it != list.end() )
+    {
+        d->kimgioMimes << KMimeType::findByPath(QString("foo.%1").arg(*it), 0, true)->name();
+        ++it;
+    }
 }
 
 KPDFDocument::~KPDFDocument()
@@ -138,19 +151,28 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
 
     // create the generator based on the file's mimetype
     KMimeType::Ptr mime = KMimeType::findByPath( docFile );
-    QString mimeName = mime->name();
-    if ( mimeName == "application/pdf" )
+    if ( (*mime).is( "application/pdf" ) )
         generator = new PDFGenerator( this );
 //    else if ( mimeName == "application/postscript" )
 //        kdError() << "PS generator not available" << endl;
-    else if ( mimeName == "image/png" )
-    {
-        generator = new PNGGenerator( this );
-    }
     else
     {
-        kdWarning() << "Unknown mimetype '" << mimeName << "'." << endl;
-        return false;
+        QStringList::Iterator it = d->kimgioMimes.begin();
+        while( it != d->kimgioMimes.end() )
+        {
+            kdDebug() << *it << endl;
+            if ( (*mime).is( *it ) )
+            {
+                generator = new PNGGenerator( this );
+                break;
+            }
+            ++it;
+        }
+        if ( it == d->kimgioMimes.end() )
+        {
+            kdWarning() << "Unknown mimetype '" << mime->name() << "'." << endl;
+            return false;
+        }
     }
 
     // 1. load Document (and set busy cursor while loading)

@@ -163,7 +163,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
             kdDebug() << *it << endl;
             if ( (*mime).is( *it ) )
             {
-                generator = new PNGGenerator( this );
+                generator = new KIMGIOGenerator( this );
                 break;
             }
             ++it;

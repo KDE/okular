@@ -12,18 +12,18 @@
 #include <kprinter.h>
 
 #include "core/page.h"
-#include "generator_png.h"
+#include "generator_kimgio.h"
 
-PNGGenerator::PNGGenerator( KPDFDocument * document ) : Generator( document )
+KIMGIOGenerator::KIMGIOGenerator( KPDFDocument * document ) : Generator( document )
 {
 }
 
-PNGGenerator::~PNGGenerator()
+KIMGIOGenerator::~KIMGIOGenerator()
 {
     delete m_pix;
 }
 
-bool PNGGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
+bool KIMGIOGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
 {
     m_pix = new QPixmap(fileName);
 
@@ -35,36 +35,36 @@ bool PNGGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage
     return true;
 }
 
-bool PNGGenerator::canGeneratePixmap()
+bool KIMGIOGenerator::canGeneratePixmap()
 {
     return true;
 }
 
-void PNGGenerator::generatePixmap( PixmapRequest * request )
+void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
 {
     QPixmap *p = new QPixmap(*m_pix);
     request->page->setPixmap(request->id, p);
 }
 
-void PNGGenerator::generateSyncTextPage( KPDFPage * )
+void KIMGIOGenerator::generateSyncTextPage( KPDFPage * )
 {
 }
 
-bool PNGGenerator::supportsSearching() const
-{
-    return false;
-}
-
-bool PNGGenerator::hasFonts() const
+bool KIMGIOGenerator::supportsSearching() const
 {
     return false;
 }
 
-void PNGGenerator::putFontInfo( KListView * )
+bool KIMGIOGenerator::hasFonts() const
+{
+    return false;
+}
+
+void KIMGIOGenerator::putFontInfo( KListView * )
 {
 }
 
-bool PNGGenerator::print( KPrinter& printer )
+bool KIMGIOGenerator::print( KPrinter& printer )
 {
     QPainter p(&printer);
     p.drawPixmap(0, 0, *m_pix);

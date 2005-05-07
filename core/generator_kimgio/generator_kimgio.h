@@ -12,11 +12,11 @@
 
 #include "core/generator.h"
 
-class PNGGenerator : public Generator
+class KIMGIOGenerator : public Generator
 {
     public:
-        PNGGenerator( KPDFDocument * document );
-        virtual ~PNGGenerator();
+        KIMGIOGenerator( KPDFDocument * document );
+        virtual ~KIMGIOGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );

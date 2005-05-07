@@ -1,6 +1,6 @@
 INCLUDES = -I$(srcdir)/../../ $(all_includes)
 
-libgeneratorpng_la_LDFLAGS = $(all_libraries)
-libgeneratorpng_la_SOURCES = generator_png.cpp
+libgeneratorkimgio_la_LDFLAGS = $(all_libraries)
+libgeneratorkimgio_la_SOURCES = generator_kimgio.cpp
 
-noinst_LTLIBRARIES = libgeneratorpng.la
+noinst_LTLIBRARIES = libgeneratorkimgio.la

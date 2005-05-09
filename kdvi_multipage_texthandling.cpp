@@ -57,7 +57,7 @@ void KDVIMultiPage::doExportText(void)
   if (KMessageBox::warningContinueCancel( scrollView(),
 					  i18n("<qt>This function exports the DVI file to a plain text. Unfortunately, this version of "
 					       "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
-					       "formulae, accented characters, and non-english text, such as Russian or Korean, will "
+					       "formulae, accented characters, and non-English text, such as Russian or Korean, will "
 					       "most likely be messed up completely.</qt>"),
 					  i18n("Function May Not Work as Expected"),
 					  i18n("Continue Anyway"),

@@ -887,22 +887,22 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
-                const ObjectRect * rect;
-                rect = pageItem->page()->hasObject( ObjectRect::Link, nX, nY );
-                if ( rect )
+                const ObjectRect * linkRect, * imageRect;
+                linkRect = pageItem->page()->hasObject( ObjectRect::Link, nX, nY );
+                if ( linkRect )
                 {
                     // handle click over a link
-                    const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
+                    const KPDFLink * link = static_cast< const KPDFLink * >( linkRect->pointer() );
                     d->document->processLink( link );
                 }
 
-                rect = pageItem->page()->hasObject( ObjectRect::Image, nX, nY );
-                if ( rect )
+                imageRect = pageItem->page()->hasObject( ObjectRect::Image, nX, nY );
+                if ( imageRect )
                 {
                     // handle click over a image
                 }
 
-                if (!rect)
+                if (!linkRect && !imageRect)
                 {
                     // if not on a rect, the click selects the page
                     d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );

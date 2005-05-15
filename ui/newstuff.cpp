@@ -35,6 +35,7 @@
 #include <kiconloader.h>
 #include <khtml_part.h>
 #include <kio/job.h>
+#include <kio/netaccess.h>
 #include <knewstuff/provider.h>
 #include <knewstuff/entry.h>
 
@@ -45,6 +46,12 @@
 #define PROVIDERS_URL "http://kpdf.kde.org/newstuff/providers.xml"
 // define the type of the stuff returned by providers (unused)
 #define RES_TYPE "kpdf/stuff"
+
+/* How the whole thing works:
+ - phase 1: fetch the ProvidersList from the PROVIDERS_URL
+ - phase 2: every Provider in it contains some AvailableItem(s)
+ - phase 3: every AvailableItem can be downloaded (aka installed) or deleted
+*/
 
 /** GUI: Internal Widget that displays a ver-stretchable (only) image */
 class ExtendImageWidget : public QWidget
@@ -92,37 +99,47 @@ class AvailableItem : public Entry
 {
     public:
         typedef QValueList< AvailableItem * > List;
-        AvailableItem( const QDomElement & element, const QString & providerName )
-            : Entry( element )
+        enum State { Normal = 0, Installing = 1, Uninstalling = 2 };
+
+        AvailableItem( const QDomElement & element )
+            : Entry( element ), m_state( Normal ), m_progress( 0 )
         {
             QString remoteUrl = payload().url();
             QString fileName = remoteUrl.section( '/', -1, -1 );
             QString extension = fileName.lower().section( '.', -1, -1 );
+            QString typeString = type();
             // place books on the desktop
-            if ( providerName.lower().contains( "book" ) )
+            if ( typeString == "kpdf/book" )
                 m_destinationFile = KGlobalSettings::desktopPath() + "/" + fileName;
             // place kpdf data on the local share/apps/kpdf/stuff
-            else if ( providerName.lower().contains( "kpdf" ) )
+            else if ( typeString == "kpdf/tool" )
                 m_destinationFile = locateLocal( "data", "kpdf/stuff/" + fileName );
-            // warn about unrecognized provider
-            else
-                kdDebug() << "NewStuffDialog: AvailableItem: unrecognized provider name." << endl;
+            // warn about unrecognized type
+            else kdDebug() << "NewStuffDialog: AvailableItem: unrecognized provider name: '"
+                << typeString << "'." << endl;
         }
+
+        // returns the source url
+        QString url() const { return payload().url(); }
 
         // returns local destination path for the item
-        const QString & destinationPath()
-        {
-            return m_destinationFile;
-        }
+        const QString & destinationPath() { return m_destinationFile; }
 
         // checks if the item is already installed
-        bool installed()
-        {
-            return QFile::exists( m_destinationFile );
-        }
+        bool installed() { return QFile::exists( m_destinationFile ); }
+
+        // state
+        void setState( State s ) { m_state = s; }
+        State state() { return m_state; }
+
+        // progress (state dependant)
+        void setProgress( float p ) { m_progress = p; }
+        float progress() { return m_progress; }
 
     private:
         QString m_destinationFile;
+        State m_state;
+        float m_progress;
 };
 
 
@@ -130,8 +147,9 @@ class AvailableItem : public Entry
 class ItemsView : public KHTMLPart
 {
     public:
-        ItemsView( QWidget * parent )
-            : KHTMLPart( parent, "newStuffHTMLView" ), m_sorting( 0 )
+        ItemsView( NewStuffDialog * newStuffDialog, QWidget * parentWidget )
+            : KHTMLPart( parentWidget, "newStuffHTMLView" ),
+            m_newStuffDialog( newStuffDialog ), m_sorting( 0 )
         {
             // customize functionality
             setJScriptEnabled( true );
@@ -161,6 +179,24 @@ class ItemsView : public KHTMLPart
             buildContents();
         }
 
+        void updateItem( AvailableItem * item )
+        {
+            // get item id string and iformations
+            QString idString = QString::number( (unsigned long)item );
+            AvailableItem::State state = item->state();
+            bool showProgress = state != AvailableItem::Normal;
+            int pixelProgress = showProgress ? (int)(item->progress() * 80.0) : 0;
+
+            // perform internal scripting operations over the element
+            executeScript( "document.getElementById('" + idString + "').style.color='red'" );
+            executeScript( "document.getElementById('bar" + idString + "').style.width='" +
+                           QString::number( pixelProgress ) + "px'" );
+            executeScript( "document.getElementById('bc" + idString + "').style.backgroundColor='" +
+                           (showProgress ? "gray" : "transparent") + "'" );
+            executeScript( "document.getElementById('btn" + idString + "').value='" +
+                           (item->installed() ? i18n( "Uninstall" ) : i18n( "Install" )) + "'" );
+        }
+
     private:
         // generate the HTML contents to be displayed by the class itself
         void buildContents()
@@ -168,9 +204,9 @@ class ItemsView : public KHTMLPart
             // try to get informations in current locale
             QString preferredLanguage = KGlobal::locale()->language();
 
-            // write the html code to be rendered
             begin();
             setTheAaronnesqueStyle();
+            // write the html header and contents manipulation scripts
             write( "<html><body>" );
 
             AvailableItem::List::iterator it = m_items.begin(), iEnd = m_items.end();
@@ -181,12 +217,19 @@ class ItemsView : public KHTMLPart
                 // precalc the image string
                 QString imageString = item->preview( preferredLanguage ).url();
                 if ( imageString.length() > 1 )
-                    imageString = "<div class='leftImage'><img src='" + imageString + "' border='0'></div><br />";
+                    imageString = "<div class='leftImage'><img src='" + imageString + "' border='0'></div>";
 
                 // precalc the title string
                 QString titleString = item->name();
                 if ( item->version().length() > 0 )
                     titleString += " v." + item->version();
+
+                // precalc button's text
+                QString buttonText = item->installed() ? i18n( "Uninstall" ) : i18n( "Install" );
+
+                // precalc item's dynamic strings
+                QString idString = QString::number( (unsigned long)item );
+                QString clickString = "window.location.href=\"item:" + idString + "\";";
 
                 // precalc the string for displaying stars (normal+grayed)
                 int starPixels = 11 + 11 * (item->rating() / 10);
@@ -206,15 +249,17 @@ class ItemsView : public KHTMLPart
 
                 // write the HTML code for the current item
                 write( QString(
-                      "<table class='itemBox'><tr>"
+                      "<table class='itemBox' id='" + idString + "'><tr>"
                          "<td class='leftColumn'>"
                             // image
                               + imageString +
+                            // progress bar (initially transparent)
+                            "<div class='leftProgressContainer' id='bc" + idString + "'>"
+                              "<div id='bar" + idString + "' class='leftProgressBar'></div>"
+                            "</div>"
                             // button
                             "<div class='leftButton'>"
-                              "<input type='button' onClick='window.location.href=\"item:"
-                              + QString::number( (unsigned long)item ) + "\";' value='" +
-                              i18n( "Install" ) + "'>"
+                              "<input type='button' id='btn" + idString + "' onClick='" + clickString + "' value='" + buttonText + "'>"
                             "</div>"
                          "</td>"
                          "<td class='contentsColumn'>"
@@ -263,6 +308,8 @@ class ItemsView : public KHTMLPart
             style += ".leftColumn { width: 100px; height:100%; text-align: center; }";
             style += ".leftImage {}";
             style += ".leftButton {}";
+            style += ".leftProgressContainer { width: 82px; height: 10px; background-color: transparent; }";
+            style += ".leftProgressBar { left: 1px; width: 0px; top: 1px; height: 8px; background-color: red; }";
             style += ".contentsColumn { vertical-align: top; }";
             style += ".contentsHeader { width: 100%; font-size: 120%; font-weight: bold; border-bottom: 1px solid #c8c8c8; }";
             style += ".contentsBody {}";
@@ -294,6 +341,7 @@ class ItemsView : public KHTMLPart
                     kdWarning() << "ItemsView: error converting item pointer." << endl;
                     return;
                 }
+
                 // I love to cast pointers
                 AvailableItem * item = (AvailableItem *)itemPointer;
                 if ( !m_items.contains( item ) )
@@ -301,9 +349,12 @@ class ItemsView : public KHTMLPart
                     kdWarning() << "ItemsView: error retrieving item pointer." << endl;
                     return;
                 }
-                // perform operations on the AvailableItem (maybe already installed)
-                bool itemInstalled = item->installed();
-                kdDebug() << itemInstalled << endl;
+
+                // install/uninstall the item
+                if ( item->installed() )
+                    m_newStuffDialog->removeItem( item );   // synchronous
+                else
+                    m_newStuffDialog->installItem( item );  // asynchronous
             }
         }
 
@@ -318,6 +369,7 @@ class ItemsView : public KHTMLPart
         }
 
     private:
+        NewStuffDialog * m_newStuffDialog;
         AvailableItem::List m_items;
         int m_sorting;
 };
@@ -325,18 +377,28 @@ class ItemsView : public KHTMLPart
 
 /** CORE/GUI: The main dialog that performs GHNS low level operations **/
 /* internal storage structures to be used by NewStuffDialog */
-struct ProviderJobInfo
+struct ProvidersListJobInfo // -> Provider(s)
 {
-    const Provider * provider;
+    KIO::Job * job;
     QString receivedData;
+};
+struct ProviderJobInfo      // -> AvailableItem(s)
+{
+    QString receivedData;
+};
+struct ItemTransferInfo          // -> download files
+{
+    AvailableItem * item;
 };
 struct NewStuffDialogPrivate
 {
-    // network classes for providers/items/files
-    ProviderLoader * providerLoader;
-    Provider::List * providersList;
+    // Jobs (1 for fetching the list, unlimited for providers / items)
+    ProvidersListJobInfo providersListJob;
     QMap< KIO::Job *, ProviderJobInfo > providerJobs;
-    QMap< KIO::Job *, QString > transferJobs;
+    QMap< KIO::Job *, ItemTransferInfo > transferJobs;
+
+    // Contents
+    QValueList< Provider * > providers;
 
     // gui related vars
     QWidget * parentWidget;
@@ -355,8 +417,8 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     : QDialog( parentWidget, "kpdfNewStuff" ), d( new NewStuffDialogPrivate )
 {
     // initialize the private classes
-    d->providerLoader = 0;
-    d->providersList = 0;
+    d->providersListJob.job = 0;
+
     d->parentWidget = parentWidget;
 
     d->messageTimer = new QTimer( this );
@@ -381,7 +443,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     horLay->addWidget( rightLayouter );
 
       // create upper label
-      QLabel * mainLabel = new QLabel( i18n("All you ever wanted, in a click!"), rightLayouter);
+      QLabel * mainLabel = new QLabel( i18n("All you ever wanted, in one click!"), rightLayouter);
       QFont mainFont = mainLabel->font();
       mainFont.setBold( true );
       mainLabel->setFont( mainFont );
@@ -418,7 +480,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         d->searchLine->setEnabled( false );
 
       // create the ItemsView used to display available items
-      d->itemsView = new ItemsView( rightLayouter );
+      d->itemsView = new ItemsView( this, rightLayouter );
 
       // create bottom buttons
       QHBox * bottomLine = new QHBox( rightLayouter );
@@ -436,12 +498,30 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     slotResetMessageColors();
 
     // start loading providers list
-    QTimer::singleShot( 100, this, SLOT( slotLoadProviders() ) );
+    QTimer::singleShot( 100, this, SLOT( slotLoadProvidersList() ) );
 }
 
 NewStuffDialog::~NewStuffDialog()
 {
-    delete d->providerLoader;
+    // cancel pending KIO::Job(s) (don't like to leave orphaned threads alone)
+    if ( d->providersListJob.job )
+        d->providersListJob.job->kill();
+
+    QMap< KIO::Job *, ProviderJobInfo >::iterator pIt = d->providerJobs.begin(), pEnd = d->providerJobs.end();
+    for ( ; pIt != pEnd; ++pIt )
+        pIt.key()->kill();
+
+    QMap< KIO::Job *, ItemTransferInfo >::iterator tIt = d->transferJobs.begin(), tEnd = d->transferJobs.end();
+    for ( ; tIt != tEnd; ++tIt )
+        tIt.key()->kill();
+
+    // delete all Provider descriptors
+    QValueList< Provider * >::iterator it = d->providers.begin(), iEnd = d->providers.end();
+    for ( ; it != iEnd; ++it )
+        delete *it;
+    d->providers.clear();
+
+    // delete the private storage structure
     delete d;
 }
 
@@ -474,6 +554,39 @@ void NewStuffDialog::displayMessage( const QString & msg, MessageType type, int 
     d->messageTimer->start( timeOutMs, true );
 }
 
+void NewStuffDialog::installItem( AvailableItem * item )
+{
+    // safety check
+    if ( item->url().isEmpty() || item->destinationPath().isEmpty() )
+    {
+        displayMessage( i18n("I don't know how to install this. Sorry, my fault."), Info );
+        return;
+    }
+
+    //TODO check for AvailableItem deletion! (avoid broken pointers) -> cancel old jobs
+    slotDownloadItem( item );
+}
+
+void NewStuffDialog::removeItem( AvailableItem * item )
+{
+    // safety check
+    if ( item->destinationPath().isEmpty() )
+    {
+        displayMessage( i18n("I don't know how to uninstall this. Sorry, my fault."), Info );
+        return;
+    }
+
+    // delete file and update item state
+    KIO::NetAccess::del( item->destinationPath(), 0 );
+    item->setState( AvailableItem::Normal );
+    d->itemsView->updateItem( item );
+
+    // inform the user ...
+    displayMessage( i18n("%1 is no more installed.").arg( item->name() ) );
+
+    // ... and any listening object
+    emit removedFile( item->name() );
+}
 
 void NewStuffDialog::slotResetMessageColors() // SLOT
 {
@@ -492,47 +605,102 @@ void NewStuffDialog::slotSortingSelected( int sortType ) // SLOT
 }
 
 
-//BEGIN Providers Loading
-void NewStuffDialog::slotLoadProviders()
+//BEGIN ProvidersList Loading
+void NewStuffDialog::slotLoadProvidersList()
 {
-    // create the helpful loader class (may be done internally in future)
-    if ( !d->providerLoader )
-    {
-        d->providerLoader = new ProviderLoader( d->parentWidget );
-        connect( d->providerLoader, SIGNAL( providersLoaded( Provider::List* ) ),
-            this, SLOT( slotProvidersLoaded( Provider::List* ) ) );
-    }
+    // delete an eventually pending job. note that this method should be called once!
+    if ( d->providersListJob.job )
+        d->providersListJob.job->kill();
 
-    // start loading
-    d->providersList = 0;
-    d->providerLoader->load( RES_TYPE, PROVIDERS_URL );
+    // create a job that will feed providersList data
+    KIO::TransferJob * job = KIO::get( KURL( PROVIDERS_URL ), false /*refetch*/, false /*progress*/ );
+    connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
+             this, SLOT( slotProvidersListInfoData( KIO::Job *, const QByteArray & ) ) );
+    connect( job, SIGNAL( result( KIO::Job * ) ),
+             this, SLOT( slotProvidersListResult( KIO::Job * ) ) );
+
+    // create a job description and data holder
+    d->providersListJob.job = job;
+    d->providersListJob.receivedData = "";
 
     // start the 'network watchdog timer'
-    d->networkTimer->start( 20*1000, true /*single shot*/ );
+    d->networkTimer->start( 10*1000, true /*single shot*/ );
 
     // inform the user
     displayMessage( i18n("Loading providers list...") );
 }
 
-void NewStuffDialog::slotProvidersLoaded( Provider::List * list )
+void NewStuffDialog::slotProvidersListInfoData( KIO::Job * job, const QByteArray & data )
 {
+    // safety checks
+    if ( job != d->providersListJob.job || data.isEmpty() )
+        return;
+
+    // append the data buffer to the 'receivedData' string
+    QCString str( data, data.size() + 1 );
+    d->providersListJob.receivedData.append( QString::fromUtf8( str ) );
+}
+
+void NewStuffDialog::slotProvidersListResult( KIO::Job * job )
+{
+    // discard contents from older jobs
+    if ( d->providersListJob.job != job )
+        return;
+
     // stop network watchdog
     d->networkTimer->stop();
 
-    // safety check
-    d->providersList = list;
-    if ( !list || !list->count() )
+    // discard job pointer (will be deleted by itself)
+    d->providersListJob.job = 0;
+
+    // if there are no errors parse dom from xml data
+    QDomDocument doc;
+    if ( job->error() || d->providersListJob.receivedData.isEmpty() )
     {
-        displayMessage( i18n("Problems loading providers. Please retry later."), Error );
+        displayMessage( i18n("Network: Error loading the list of providers!"), Error );
+        return;
+    }
+    else if ( d->providersListJob.receivedData.contains("404 Not Found") )
+    {
+        displayMessage( i18n("Network: Can't find the list of providers!"), Error );
+        return;
+    }
+    else if ( !doc.setContent( d->providersListJob.receivedData ) )
+    {
+        displayMessage( i18n("Problems reading the list of providers. Please retry later."), Info );
         return;
     }
 
-    // update and PopUp the providers ComboBox
+    // clear the current list of providers
+    QValueList< Provider * >::iterator it = d->providers.begin(), iEnd = d->providers.end();
+    for ( ; it != iEnd; ++it )
+        delete *it;
+    d->providers.clear();
     d->typeCombo->clear();
-    int providersNumber = list->count();
-    for ( int i = 0; i < providersNumber; i++ )
+
+    // fill in the list of providers
+    QDomNode providerNode = doc.documentElement().firstChild();
+    while ( !providerNode.isNull() )
     {
-        const Provider * provider = list->at( i );
+        QDomElement elem = providerNode.toElement();
+        providerNode = providerNode.nextSibling();
+        if ( elem.tagName() == "provider" )
+            d->providers.append( new Provider( elem ) );
+    }
+
+    // inform user about providers in the list
+    if ( d->providers.count() < 1 )
+    {
+        displayMessage( i18n("No providers available at the moment. Please retry later."), Info );
+        return;
+    }
+    else
+        displayMessage( i18n("Loaded %1 providers").arg( d->providers.count() ) );
+
+    // update the providers ComboBox
+    for ( it = d->providers.begin(), iEnd = d->providers.end(); it != iEnd; ++it )
+    {
+        const Provider * provider =  *it;
         // provider icon: using local KIconLoader, not loading from remote url
         QPixmap icon = DesktopIcon( provider->icon().url(), 16 );
         QString name = provider->name();
@@ -540,29 +708,25 @@ void NewStuffDialog::slotProvidersLoaded( Provider::List * list )
         d->typeCombo->insertItem( icon, name );
     }
 
-    // inform the user
-    displayMessage( i18n("Loaded %1 providers").arg( providersNumber ), Info );
-
     // automatically load the first provider
     d->typeCombo->setEnabled( true );
     d->typeCombo->setCurrentItem( 0 );
     QTimer::singleShot( 500, this, SLOT( slotLoadProvider() ) );
 }
-//END Providers Loading
+//END ProvidersList Loading
 
-//BEGIN AvailableItem(s) Loading
+//BEGIN Provider contents Loading
 void NewStuffDialog::slotLoadProvider( int pNumber )
 {
     // safety check
-    if ( !d->providersList || !d->typeCombo->isEnabled() ||
-         pNumber < 0 || pNumber >= (int)d->providersList->count() )
+    if ( !d->typeCombo->isEnabled() || pNumber < 0 || pNumber >= (int)d->providers.count() )
     {
         displayMessage( i18n("Error with this provider"), Error );
         return;
     }
 
     // create a job that will feed provider data
-    const Provider * provider = d->providersList->at( pNumber );
+    const Provider * provider = d->providers[ pNumber ];
     KIO::TransferJob * job = KIO::get( provider->downloadUrl(), false /*refetch*/, false /*progress*/ );
     connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
              this, SLOT( slotProviderInfoData( KIO::Job *, const QByteArray & ) ) );
@@ -571,7 +735,6 @@ void NewStuffDialog::slotLoadProvider( int pNumber )
 
     // create a job description and data holder
     ProviderJobInfo info;
-    info.provider = provider;
     d->providerJobs[ job ] = info;
 
     // inform the user
@@ -586,7 +749,7 @@ void NewStuffDialog::slotLoadProvider( int pNumber )
 
 void NewStuffDialog::slotProviderInfoData( KIO::Job * job, const QByteArray & data )
 {
-    // safety check
+    // safety checks
     if ( data.isEmpty() || !d->providerJobs.contains( job ) )
         return;
 
@@ -609,6 +772,7 @@ void NewStuffDialog::slotProviderInfoResult( KIO::Job * job )
          d->providerJobs[ job ].receivedData.isEmpty() ||
          d->providerJobs[ job ].receivedData.contains("404 Not Found") )
     {
+        d->providerJobs.remove( job );
         displayMessage( i18n("Error loading provider description!"), Error );
         return;
     }
@@ -616,7 +780,6 @@ void NewStuffDialog::slotProviderInfoResult( KIO::Job * job )
     // build XML DOM from the received data
     QDomDocument doc;
     bool docOk = doc.setContent( d->providerJobs[ job ].receivedData );
-    QString providerName = d->providerJobs[ job ].provider->name();
     d->providerJobs.remove( job );
     if ( !docOk )
     {
@@ -633,54 +796,116 @@ void NewStuffDialog::slotProviderInfoResult( KIO::Job * job )
         stuffNode = stuffNode.nextSibling();
         // WARNING: disabled the stuff type checking (use only in kate afaik)
         if ( elem.tagName() == "stuff" /*&& elem.attribute( "type", RES_TYPE ) == RES_TYPE*/ )
-            itemList.append( new AvailableItem( elem, providerName ) );
+            itemList.append( new AvailableItem( elem ) );
     }
 
     // update the control widget and inform user about the current operation
     d->itemsView->setItems( itemList );
     if ( itemList.count() )
-        displayMessage( i18n("You have %1 resources available.").arg( itemList.count() ) );
+        displayMessage( i18n("There are %1 resources available.").arg( itemList.count() ) );
     else
         displayMessage( i18n("No resources available on this provider." ) );
 }
-//END AvailableItem(s) loading
+//END Provider contents loading
 
-/* UNCOMPRESS (specify uncompression method)
-KTar tar( fileName, "application/x-gzip" );
-tar.open( IO_ReadOnly );
-const KArchiveDirectory *dir = tar.directory();
-dir->copyTo( "somedir" );
-tar.close();
-QFile::remove( fileName );
-*/
+//BEGIN File(s) Transferring
+void NewStuffDialog::slotDownloadItem( AvailableItem * item )
+{
+    // create a job that will download the file
+    KIO::FileCopyJob * job = KIO::file_copy( item->url(), item->destinationPath(),
+        -1 /*perms*/, true /*overwrite*/, false /*resume*/, false /*showProgressInfo*/ );
+    connect( job, SIGNAL( infoMessage( KIO::Job *, const QString & ) ),
+             this, SLOT( slotItemMessage( KIO::Job *, const QString & ) ) );
+    connect( job, SIGNAL( percent ( KIO::Job *, unsigned long ) ),
+             this, SLOT( slotItemPercentage( KIO::Job *, unsigned long ) ) );
+    connect( job, SIGNAL( result( KIO::Job * ) ),
+             this, SLOT( slotItemResult( KIO::Job * ) ) );
 
-/* EXECUTE (specify the 'cmd' command)
-QStringList list = QStringList::split( " ", cmd ),
-            list2;
-for ( QStringList::iterator it = list.begin(); it != list.end(); it++ )
-    list2 << (*it).replace("%f", fileName);
-KProcess proc;
-proc << list2;
-proc.start( KProcess::Block );
-*/
+    // create a job description and data holder
+    ItemTransferInfo info;
+    info.item = item;
+    d->transferJobs[ job ] = info;
 
-/* callbacks
-emit something();
-*/
+    // update item status
+    item->setState( AvailableItem::Installing );
+    item->setProgress( 0.0 );
+    d->itemsView->updateItem( item );
 
-/*
-QString target = item ? item->fullName() : "/";
-QString path = "/tmp"; //locateLocal( resourceString.utf8(), target)
-QString file = path + "/" + target;
+    // inform the user
+    displayMessage( i18n("Installing '%1', this could take some time ...").arg( item->name() ) );
+}
 
-if ( KStandardDirs::exists( file ) )
-    if ( KMessageBox::questionYesNo( d->parentWidget,
-            i18n("The file '%1' already exists. Do you want to override it?")
-            .arg( file ),
-            QString::null, i18n("Overwrite") ) == KMessageBox::No )
-        return QString();
-*/
+void NewStuffDialog::slotItemMessage( KIO::Job * job, const QString & message )
+{
+    // safety check
+    if ( !d->transferJobs.contains( job ) )
+        return;
 
-//END of the NewStuffDialog
+    // update item state
+    AvailableItem * item = d->transferJobs[ job ].item;
+    kdDebug() << "Name: " << item->name() << " msg: '" << message << "'." << endl;
+    d->itemsView->updateItem( item );
+}
+
+void NewStuffDialog::slotItemPercentage( KIO::Job * job, unsigned long percent )
+{
+    // safety check
+    if ( !d->transferJobs.contains( job ) )
+        return;
+
+    // update item state
+    AvailableItem * item = d->transferJobs[ job ].item;
+    item->setProgress( (float)percent / 100.0 );
+    d->itemsView->updateItem( item );
+}
+
+void NewStuffDialog::slotItemResult( KIO::Job * job )
+{
+    // safety check
+    if ( !d->transferJobs.contains( job ) )
+        return;
+
+    // get item and remove job
+    AvailableItem * item = d->transferJobs[ job ].item;
+    d->transferJobs.remove( job );
+
+    // error handling
+    if ( job->error() )
+    {
+        displayMessage( i18n("Network error while retrieving %1. Installation cancelled.").arg( item->name() ), Error );
+        return;
+    }
+
+    // update item state
+    item->setState( AvailableItem::Normal );
+    item->setProgress( 100.0 );
+    d->itemsView->updateItem( item );
+
+    /* UNCOMPRESS (specify uncompression method)
+    KTar tar( fileName, "application/x-gzip" );
+    tar.open( IO_ReadOnly );
+    const KArchiveDirectory *dir = tar.directory();
+    dir->copyTo( "somedir" );
+    tar.close();
+    QFile::remove( fileName );
+    */
+
+    /* EXECUTE (specify the 'cmd' command)
+    QStringList list = QStringList::split( " ", cmd ),
+                list2;
+    for ( QStringList::iterator it = list.begin(); it != list.end(); it++ )
+        list2 << (*it).replace("%f", fileName);
+    KProcess proc;
+    proc << list2;
+    proc.start( KProcess::Block );
+    */
+
+    // inform the user ...
+    displayMessage( i18n("Installed! %1 is yours now.").arg( item->name() ), Info );
+
+    // ... and any listening object
+    emit installedFile( item->name(), item->type() );
+}
+//END File(s) Transferring
 
 #include "newstuff.moc"

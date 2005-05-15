@@ -26,8 +26,20 @@ class NewStuffDialog : public QDialog
 
         // show a message in the bottom bar
         enum MessageType { Normal, Info, Error };
-        void displayMessage( const QString & msg, MessageType type = Normal,
-                             int timeOutMs = 3000 );
+        void displayMessage( const QString & msg,
+            MessageType type = Normal, int timeOutMs = 3000 );
+
+        // begin installing that item
+        void installItem( AvailableItem * item );
+
+        // remove an already installed item
+        void removeItem( AvailableItem * item );
+
+    signals:
+        // tells that a file has been installed
+        void installedFile( QString fileName, QString type );
+        // tells that a file has been removed
+        void removedFile( QString oldFileName );
 
     private:
         // private storage class
@@ -37,16 +49,19 @@ class NewStuffDialog : public QDialog
         void slotResetMessageColors();
         void slotNetworkTimeout();
         void slotSortingSelected( int sortType );
-        // providers loading related
-        void slotLoadProviders();
-        void slotProvidersLoaded( Provider::List * list );
-        // items loading related
+        // providersList loading
+        void slotLoadProvidersList();
+        void slotProvidersListInfoData( KIO::Job *, const QByteArray & );
+        void slotProvidersListResult( KIO::Job * );
+        // provider loading
         void slotLoadProvider( int provider = 0 );
         void slotProviderInfoData( KIO::Job *, const QByteArray & );
         void slotProviderInfoResult( KIO::Job * );
-        // files downloading related
-        //void slotDownloadItem( AvailableItem * );
-        //void slotItemDownloaded( KIO::Job * );
+        // file downloading
+        void slotDownloadItem( AvailableItem * );
+        void slotItemMessage( KIO::Job *, const QString & );
+        void slotItemPercentage( KIO::Job *, unsigned long );
+        void slotItemResult( KIO::Job * );
 };
 
 #endif

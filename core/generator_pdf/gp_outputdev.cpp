@@ -112,7 +112,10 @@ void KPDFOutputDev::endPage()
 {
     SplashOutputDev::endPage();
     if ( m_generateText )
+    {
+        m_text->endPage();
         m_text->coalesce( gTrue );
+    }
 
     int bh = getBitmap()->getHeight(),
         bw = getBitmap()->getWidth();

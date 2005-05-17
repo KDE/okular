@@ -29,7 +29,7 @@ kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 kde_kcfg_DATA = kdvi.kcfg
 
 kdvipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-kdvipart_la_LIBADD = $(LIBFREETYPE_LIBS) -lkdeprint -lkparts \
+kdvipart_la_LIBADD = $(LIBFREETYPE_LIBS) -lkparts \
 			$(top_builddir)/kviewshell/libkmultipage.la
 
 # Which sources should be compiled for squeeze.

@@ -56,7 +56,7 @@ public:
   virtual void reset();
   virtual int getChar();
   virtual int lookChar();
-  virtual GString *getPSFilter(int psLevel, char *indent);
+  virtual GString *getPSFilter(int psLevel, const char *indent);
   virtual GBool isBinary(GBool last = gTrue);
   Stream *getRawStream() { return str; }
 

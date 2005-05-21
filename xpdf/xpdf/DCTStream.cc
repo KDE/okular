@@ -92,7 +92,7 @@ int DCTStream::lookChar() {
   return c;
 }
 
-GString *DCTStream::getPSFilter(int psLevel, char *indent) {
+GString *DCTStream::getPSFilter(int psLevel, const char *indent) {
   GString *s;
 
   if (psLevel < 2) {

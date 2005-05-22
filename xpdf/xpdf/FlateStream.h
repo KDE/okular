@@ -50,7 +50,7 @@ public:
   virtual int getChar();
   virtual int lookChar();
   virtual int getRawChar();
-  virtual GString *getPSFilter(int psLevel, char *indent);
+  virtual GString *getPSFilter(int psLevel, const char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:

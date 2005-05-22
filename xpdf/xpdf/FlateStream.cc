@@ -89,7 +89,7 @@ int FlateStream::fill_buffer() {
   return 0;
 }
 
-GString *FlateStream::getPSFilter(int psLevel, char *indent) {
+GString *FlateStream::getPSFilter(int psLevel, const char *indent) {
   GString *s;
 
   if (psLevel < 3 || pred) {

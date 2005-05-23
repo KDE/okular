@@ -53,20 +53,6 @@ if test -z "$XFT_LIBS"; then
         DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
 fi
 
-dnl ##### Check for libjpeg
-AC_CHECK_LIB([jpeg], [jpeg_destroy_decompress],HAVE_LIBJPEG=yes,HAVE_LIBJPEG=no)
-if test "$HAVE_LIBJPEG" = "yes"; then
-  AC_CHECK_HEADERS([jpeglib.h],,HAVE_LIBJPEG=no)
-fi
-
-if test "$HAVE_LIBJPEG" = "yes"; then
-  LIBJPEG_LIBS="-ljpeg"
-  AC_SUBST(LIBJPEG_LIBS)
-else
-  DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
-fi
-
-
 dnl ##### Check for libpaper (Debian).
 LIBPAPER_LIBS=
 KDE_CHECK_HEADER(paper.h, [

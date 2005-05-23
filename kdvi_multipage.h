@@ -40,7 +40,9 @@ public:
 
 private:
   virtual DocumentWidget* createDocumentWidget();
-  
+
+  virtual void initializePageCache();
+
   /** Used to enable the export menu when a file is successfully
       loaded. */
   virtual void enableActions(bool);

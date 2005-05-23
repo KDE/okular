@@ -30,7 +30,7 @@
 #include "performanceMeasurement.h"
 #include "prefs.h"
 #include "renderedDocumentPagePixmap.h"
-
+#include "dviPageCache.h"
 
 
 #include <qlabel.h>
@@ -489,6 +489,12 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget()
           SLOT(handleSRCLink(const QString& ,QMouseEvent*, DocumentWidget*)));
 
   return documentWidget;
+}
+
+
+void KDVIMultiPage::initializePageCache()
+{
+  pageCache = new DVIPageCache();
 }
 
 

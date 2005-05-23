@@ -14,7 +14,8 @@ noinst_PROGRAMS = squeeze
 # just to make sure, automake makes them
 METASOURCES = AUTO
 
-kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
+kdvipart_la_SOURCES = renderedDviPagePixmap.cpp dviPageCache.cpp \
+	kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 	dviwin.cpp bigEndianByteReader.cpp infodialog.cpp \
 	psheader.c dviwin_draw.cpp dviwin_prescan.cpp dviwin_export.cpp \
 	dviFile.cpp fontpool.cpp fontprogress.cpp psgs.cpp \
@@ -24,7 +25,7 @@ kdvipart_la_SOURCES = kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
 	optionDialogSpecialWidget.cpp optionDialogSpecialWidget_base.ui \
 	TeXFont.cpp TeXFont_PK.cpp TeXFont_PFB.cpp TeXFont_TFM.cpp \
 	TeXFontDefinition.cpp dviWidget.cpp dvisourcesplitter.cpp \
-	prefs.kcfgc
+	prefs.kcfgc 
 
 kde_kcfg_DATA = kdvi.kcfg
 

@@ -50,6 +50,7 @@
 #include "xdvi.h"
 #include "zoomlimits.h"
 #include "dvisourcesplitter.h"
+#include "renderedDviPagePixmap.h"
 
 //#define DEBUG_DVIWIN
 
@@ -209,11 +210,15 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
   
   // Tell the user (once) if the DVI file contains source specials
   // ... we don't want our great feature to go unnoticed.
-  if ((dviFile->sourceSpecialMarker == true) && (currentlyDrawnPage->sourceHyperLinkList.size() > 0)) {
-    dviFile->sourceSpecialMarker = false;
-    // Show the dialog as soon as event processing is finished, and
-    // the program is idle
-    QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
+  RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
+  if (currentDVIPage)
+  {
+    if ((dviFile->sourceSpecialMarker == true) && (currentDVIPage->sourceHyperLinkList.size() > 0)) {
+      dviFile->sourceSpecialMarker = false;
+      // Show the dialog as soon as event processing is finished, and
+      // the program is idle
+      QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
+    }
   }
   
   currentlyDrawnPage = 0;
@@ -680,7 +685,11 @@ void dviRenderer::clearStatusBar(void)
 void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "Source hyperlink to " << currentlyDrawnPage->sourceHyperLinkList[i].linkText << endl;
+  RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*> currentlyDrawnPage;
+  if (currentDVIPage)
+  {
+    kdDebug(4300) << "Source hyperlink to " << currentDVIPage->sourceHyperLinkList[i].linkText << endl;
+  }
 #endif
   
 //   QString cp = linkText;

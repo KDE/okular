@@ -16,7 +16,7 @@
 #include "centeringScrollview.h"
 #include "documentPageCache.h"
 #include "documentWidget.h"
-#include "renderedDocumentPagePixmap.h"
+#include "renderedDviPagePixmap.h"
 #include "selection.h"
 
 DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache* cache, const char* name)
@@ -35,7 +35,7 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
     return;
 
   // Get a pointer to the page contents
-  RenderedDocumentPage* pageData = documentCache->getPage(pageNr);
+  RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNr));
   if (pageData == 0)
   {
     kdDebug(4300) << "DVIWidget::mousePressEvent(...) pageData for page #" << pageNr << " is empty" << endl;
@@ -70,7 +70,7 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
   // Analyze the mouse movement only if no mouse button was pressed
   if ( e->state() == 0 ) {
     // Get a pointer to the page contents
-    RenderedDocumentPage* pageData = documentCache->getPage(pageNr);
+    RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNr));
     if (pageData == 0) {
       kdDebug(4300) << "DVIWidget::mouseMoveEvent(...) pageData for page #" << pageNr << " is empty" << endl;
       return;

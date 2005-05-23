@@ -58,6 +58,7 @@
 #include "performanceMeasurement.h"
 #include "TeXFont.h"
 #include "xdvi.h"
+#include "renderedDviPagePixmap.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -117,7 +118,10 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   
   // Are we drawing text for a source hyperlink? And are source
   // hyperlinks enabled?
-  if (source_href != 0) {
+  // If we are printing source hyperlinks are irrelevant, otherwise we
+  // actually got a pointer to a RenderedDviPagePixmap.
+  RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
+  if (source_href != 0 && currentDVIPage) {
     // Now set up a rectangle which is checked against every mouse
     // event.
     if (line_boundary_encountered == true) {
@@ -126,13 +130,13 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       dhl.baseline = currinf.data.pxl_v;
       dhl.box.setRect(x, y, pix.width(), pix.height());
       if (source_href != NULL) 
-	dhl.linkText = *source_href;
+        dhl.linkText = *source_href;
       else
-	dhl.linkText = "";
-      currentlyDrawnPage->sourceHyperLinkList.push_back(dhl);
+        dhl.linkText = "";
+      currentDVIPage->sourceHyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentlyDrawnPage->sourceHyperLinkList[currentlyDrawnPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
-      currentlyDrawnPage->sourceHyperLinkList[currentlyDrawnPage->sourceHyperLinkList.size()-1].box = dshunion;
+      QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box = dshunion;
     }
   }
   
@@ -566,14 +570,17 @@ void dviRenderer::draw_page(void)
   HTML_href         = 0;
   source_href       = 0;
   penWidth_in_mInch = 0.0;
-  currentlyDrawnPage->hyperLinkList.clear();
-
 
   // Calling resize() here rather than clear() means that the memory
   // taken up by the vector is not freed. This is faster than
   // constantly allocating/freeing memory.
   currentlyDrawnPage->textBoxList.resize(0);
-  currentlyDrawnPage->sourceHyperLinkList.resize(0);
+
+  RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
+  if (currentDVIPage)
+  {
+    currentDVIPage->sourceHyperLinkList.resize(0);
+  }
 
 #ifdef PERFORMANCE_MEASUREMENT
   // If this is the first time a page is drawn, take the time that is

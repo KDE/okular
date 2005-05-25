@@ -59,8 +59,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   setInstance(KDVIMultiPageFactory::instance());
 
-  printer = 0;
-
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.
   DVIRenderer.setName("DVI renderer");
@@ -187,7 +185,6 @@ KDVIMultiPage::~KDVIMultiPage()
 {
   writeSettings();
   Prefs::writeConfig();
-  delete printer;
 }
 
 
@@ -233,66 +230,22 @@ void KDVIMultiPage::preferencesChanged()
 }
 
 
-void KDVIMultiPage::print(const QStringList &pages, int current)
+void KDVIMultiPage::print()
 {
-  // Make sure the KPrinter is available
+  // Obtain a fully initialized KPrinter structure, and disable all
+  // entries in the "Page Size & Placement" tab of the printer dialog.
+  KPrinter *printer = getPrinter(false);
+  // Abort with an error message if no KPrinter could be initialized
   if (printer == 0) {
-    printer = new KPrinter();
-    if (printer == 0) {
-      kdError(4300) << "Could not allocate printer structure" << endl;
-      return;
-    }
-  }
-  
-  // Feed the printer with useful defaults and information.
-  printer->setPageSelection( KPrinter::ApplicationSide );
-  printer->setCurrentPage( current+1 );
-  printer->setMinMax( 1, DVIRenderer.totalPages() );
-  printer->setFullPage( true );
-
-
-  // If pages are marked, give a list of marked pages to the
-  // printer. We try to be smart and optimize the list by using ranges
-  // ("5-11") wherever possible. The user will be tankful for
-  // that. Complicated? Yeah, but that's life.
-  if (pages.isEmpty() == true)
-    printer->setOption( "kde-range", "" );
-  else {
-    int commaflag = 0;
-    QString range;
-    QStringList::ConstIterator it = pages.begin();
-    do{
-      int val = (*it).toUInt()+1;
-      if (commaflag == 1)
-    range +=  QString(", ");
-      else
-    commaflag = 1;
-      int endval = val;
-      if (it != pages.end()) {
-    QStringList::ConstIterator jt = it;
-    jt++;
-    do{
-      int val2 = (*jt).toUInt()+1;
-      if (val2 == endval+1)
-        endval++;
-      else
-        break;
-      jt++;
-    } while( jt != pages.end() );
-    it = jt;
-      } else
-    it++;
-      if (endval == val)
-    range +=  QString("%1").arg(val);
-      else
-    range +=  QString("%1-%2").arg(val).arg(endval);
-    } while (it != pages.end() );
-    printer->setOption( "kde-range", range );
-  }
-
-  // Show the printer options requestor
-  if (!printer->setup(scrollView(), i18n("Print %1").arg(m_file.section('/', -1))))
+    kdError(4300) << "KPrinter not available" << endl;
     return;
+  }
+
+  // Show the printer options dialog. Return immediately if the user
+  // aborts.
+  if (!printer->setup(parentWdg, i18n("Print %1").arg(m_file.section('/', -1)) ))
+    return;
+
   // This funny method call is necessary for the KPrinter to return
   // proper results in printer->orientation() below. It seems that
   // KPrinter does some options parsing in that method.

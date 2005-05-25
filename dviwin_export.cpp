@@ -341,7 +341,8 @@ void dviRenderer::dvips_terminated(KProcess *sproc)
 
   if (export_printer != 0)
     export_printer->printFiles( QStringList(export_fileName), true );
-  // Kill and delete the remaining process, reset the printer, etc.
+
+  // Kill and delete the remaining process, delete the printer, etc.
   abortExternalProgramm();
 }
 
@@ -381,6 +382,7 @@ void dviRenderer::abortExternalProgramm(void)
     progress = 0;
   }
   
+  delete export_printer;
   export_printer  = 0;
   export_fileName = "";
 }

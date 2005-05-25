@@ -24,7 +24,7 @@ public:
   
   virtual void setFile(bool r);
 
-  virtual void print(const QStringList &pages, int current);
+  virtual void print();
   
   /// KDVI offers read- and write functionality must re-implement this
   /// method and return true here.
@@ -78,7 +78,6 @@ private:
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.
   dviRenderer     DVIRenderer;
-  KPrinter        *printer;
 
   // Set to true if we used the search function atleast once.
   // It is used to remember if we already have show the warning message.

@@ -1102,5 +1102,4 @@ void PDFPixmapGeneratorThread::run()
     QCustomEvent * readyEvent = new QCustomEvent( TGE_DATAREADY_ID );
     readyEvent->setData( d->currentRequest );
     QApplication::postEvent( d->generator, readyEvent );
-    kdDebug() << "UEEEEEE GENERATED" << endl;
 }

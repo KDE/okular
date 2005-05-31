@@ -1218,7 +1218,9 @@ int KPDFDocument::getTotalMemory()
 
 int KPDFDocument::getFreeMemory()
 {
-#ifdef __linux__
+#warning this hangs, check why
+#if 0
+//#ifdef __linux__
     // if /proc/meminfo doesn't exist, return MEMORY FULL
     QFile memFile( "/proc/meminfo" );
     if ( !memFile.open( IO_ReadOnly ) )

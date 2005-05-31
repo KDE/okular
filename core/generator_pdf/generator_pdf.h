@@ -97,7 +97,7 @@ class PDFGenerator : public Generator
         // private function for creating the transition information
         void addTransition( int pageNumber, KPDFPage * page );
         // (async related) receive data from the generator thread
-        void customEvent( QCustomEvent * );
+        void customEvent( QEvent * );
 
         // xpdf dependant stuff
         QMutex docLock;

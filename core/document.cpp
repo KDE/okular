@@ -1436,9 +1436,10 @@ void KPDFDocument::saveDocumentInfo() const
 void KPDFDocument::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
-    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+#warning commented because makes it crash
+/*    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
          d->allocatedPixmapsTotalMemory > 1024*1024 )
-        cleanupPixmapMemory();
+        cleanupPixmapMemory();*/
 }
 
 

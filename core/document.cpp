@@ -58,14 +58,14 @@ class KPDFDocumentPrivate
         QStringList kimgioMimes;
 
         // viewport stuff
-        QList< DocumentViewport > viewportHistory;
-        QList< DocumentViewport >::iterator viewportIterator;
+        QLinkedList< DocumentViewport > viewportHistory;
+        QLinkedList< DocumentViewport >::iterator viewportIterator;
         DocumentViewport nextDocumentViewport; // see KPDFLink::Goto for an explanation
 
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > observers;
-        QList< PixmapRequest * > pixmapRequestsStack;
-        QList< AllocatedPixmap * > allocatedPixmapsFifo;
+        QLinkedList< PixmapRequest * > pixmapRequestsStack;
+        QLinkedList< AllocatedPixmap * > allocatedPixmapsFifo;
         int allocatedPixmapsTotalMemory;
 
         // timers (memory checking / info saver)
@@ -88,7 +88,7 @@ struct RunningSearch
     // store search properties
     int continueOnPage;
     NormalizedRect continueOnMatch;
-    QList< int > highlightedPages;
+    QLinkedList< int > highlightedPages;
 
     // fields related to previous searches (used for 'continueSearch')
     QString cachedString;
@@ -245,8 +245,8 @@ void KPDFDocument::closeDocument()
     d->url = KURL();
 
     // remove requests left in queue
-    QList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
-    QList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
+    QLinkedList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
+    QLinkedList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
     for ( ; sIt != sEnd; ++sIt )
         delete *sIt;
     d->pixmapRequestsStack.clear();
@@ -262,8 +262,8 @@ void KPDFDocument::closeDocument()
     pages_vector.clear();
 
     // clear 'memory allocation' descriptors
-    QList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-    QList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
         delete *aIt;
     d->allocatedPixmapsFifo.clear();
@@ -308,8 +308,8 @@ void KPDFDocument::removeObserver( DocumentObserver * pObserver )
             (*it)->deletePixmap( observerId );
 
         // [MEM] free observer's allocation descriptors
-        QList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
         while ( aIt != aEnd )
         {
             AllocatedPixmap * p = *aIt;
@@ -338,8 +338,8 @@ void KPDFDocument::reparseConfig()
             (*it)->deletePixmapsAndRects();
 
         // [MEM] remove allocation descriptors
-        QList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
         for ( ; aIt != aEnd; ++aIt )
             delete *aIt;
         d->allocatedPixmapsFifo.clear();
@@ -445,7 +445,7 @@ void KPDFDocument::requestPixmaps( const QList< PixmapRequest * > & requests )
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
     int requesterID = requests.first()->id;
-    QList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin(), sEnd = d->pixmapRequestsStack.end();
+    QLinkedList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin(), sEnd = d->pixmapRequestsStack.end();
     while ( sIt != sEnd )
     {
         if ( (*sIt)->id == requesterID )
@@ -573,9 +573,9 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
     if ( d->allocatedPixmapsFifo.count() > 1 )
     {
         const int page = viewport.pageNumber;
-        QList< AllocatedPixmap * > viewportPixmaps;
-        QList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * > viewportPixmaps;
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
         while ( aIt != aEnd )
         {
             if ( (*aIt)->page == page )
@@ -605,7 +605,7 @@ void KPDFDocument::setPrevViewport()
 void KPDFDocument::setNextViewport()
 // restore next viewport from the history
 {
-    QList< DocumentViewport >::iterator nextIterator = d->viewportIterator;
+    QLinkedList< DocumentViewport >::iterator nextIterator = d->viewportIterator;
     ++nextIterator;
     if ( nextIterator != d->viewportHistory.end() )
     {
@@ -643,11 +643,11 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
 
     // global data for search
     bool foundAMatch = false;
-    QList< int > pagesToNotify;
+    QLinkedList< int > pagesToNotify;
 
     // remove highlights from pages and queue them for notifying changes
     pagesToNotify += s->highlightedPages;
-    QList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
+    QLinkedList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
         pages_vector[ *it ]->deleteHighlights( searchID );
     s->highlightedPages.clear();
@@ -859,7 +859,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
     }
 
     // notify observers about highlights changes
-    QList< int >::iterator nIt = pagesToNotify.begin(), nEnd = pagesToNotify.end();
+    QLinkedList< int >::iterator nIt = pagesToNotify.begin(), nEnd = pagesToNotify.end();
     for ( ; nIt != nEnd; ++nIt )
         foreachObserver( notifyPageChanged( *nIt, DocumentObserver::Highlights ) );
 
@@ -890,7 +890,7 @@ void KPDFDocument::resetSearch( int searchID )
     RunningSearch * s = d->searches[ searchID ];
 
     // unhighlight pages and inform observers about that
-    QList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
+    QLinkedList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
     {
         int pageNumber = *it;
@@ -1082,8 +1082,8 @@ void KPDFDocument::requestDone( PixmapRequest * req )
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
-    QList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-    QList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
         if ( (*aIt)->page == req->pageNumber && (*aIt)->id == req->id )
         {
@@ -1168,8 +1168,8 @@ void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
     {
         // [MEM] free memory starting from older pixmaps
         int pagesFreed = 0;
-        QList< AllocatedPixmap * >::iterator pIt = d->allocatedPixmapsFifo.begin();
-        QList< AllocatedPixmap * >::iterator pEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator pIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator pEnd = d->allocatedPixmapsFifo.end();
         while ( (pIt != pEnd) && (memoryToFree > 0) )
         {
             AllocatedPixmap * p = *pIt;
@@ -1400,7 +1400,7 @@ void KPDFDocument::saveDocumentInfo() const
         root.appendChild( generalInfo );
 
         // <general info><history> ... </history> saves history up to 10 viewports
-        QList< DocumentViewport >::iterator backIterator = d->viewportIterator;
+        QLinkedList< DocumentViewport >::iterator backIterator = d->viewportIterator;
         if ( backIterator != d->viewportHistory.end() )
         {
             // go back up to 10 steps from the current viewportIterator
@@ -1413,7 +1413,7 @@ void KPDFDocument::saveDocumentInfo() const
             generalInfo.appendChild( historyNode );
 
             // add old[backIterator] and present[viewportIterator] items
-            QList< DocumentViewport >::iterator endIt = d->viewportIterator;
+            QLinkedList< DocumentViewport >::iterator endIt = d->viewportIterator;
             ++endIt;
             while ( backIterator != endIt )
             {

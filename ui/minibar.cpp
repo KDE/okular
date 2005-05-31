@@ -86,6 +86,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
 {
     // left spacer
     QHBoxLayout * horLayout = new QHBoxLayout( this );
+    horLayout->setMargin(0);
     QSpacerItem * spacerL = new QSpacerItem( 20, 10, QSizePolicy::Expanding );
     horLayout->addItem( spacerL );
 

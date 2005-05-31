@@ -1173,10 +1173,6 @@ void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
         while ( (pIt != pEnd) && (memoryToFree > 0) )
         {
             AllocatedPixmap * p = *pIt;
-#warning this should NOT be needed
-	    // TODO quick way to avoid crashes
-	    if (!d->observers[ p->id ]) return;
-	    
             if ( d->observers[ p->id ]->canUnloadPixmap( p->page ) )
             {
                 // update internal variables
@@ -1436,10 +1432,9 @@ void KPDFDocument::saveDocumentInfo() const
 void KPDFDocument::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
-#warning commented because makes it crash
-/*    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
          d->allocatedPixmapsTotalMemory > 1024*1024 )
-        cleanupPixmapMemory();*/
+        cleanupPixmapMemory();
 }
 
 

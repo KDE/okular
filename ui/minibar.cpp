@@ -366,9 +366,14 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
     // call default handler
     QLineEdit::focusInEvent( e );
 }
-
+#include <kdebug.h>
 void PagesEdit::focusOutEvent( QFocusEvent * e )
 {
+    if (!e)
+    {
+         kdDebug() << "Got a null QFocusEvent, investigate" << endl;
+         return;
+    }
     // change background color to a dark tone
 #warning setLineWidth does not exists in Qt4
 //    setLineWidth( 1 );

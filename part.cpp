@@ -790,8 +790,6 @@ void Part::slotPrint()
         if (width > height) landscape++;
         else portrait++;
     }
-#warning whoever ported Kprinter messed, setOrientation is QPrinted::Orientation not Qt::Orientation
-#warning change it
 //    if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
 
     if (printer.setup(widget())) doPrint( printer );

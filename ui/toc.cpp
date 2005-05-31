@@ -8,7 +8,7 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qheader.h>
+#include <q3header.h>
 #include <klocale.h>
 
 // local includes
@@ -63,7 +63,7 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_documen
     setRootIsDecorated(true);
     setResizeMode(AllColumns);
     setAllColumnsShowFocus(true);
-    connect(this, SIGNAL(executed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
+    connect(this, SIGNAL(executed(Q3ListViewItem *)), this, SLOT(slotExecuted(Q3ListViewItem *)));
 }
 
 uint TOC::observerId() const
@@ -71,7 +71,7 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged )
+void TOC::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
 {
     if ( !documentChanged || pages.size() < 1 )
         return;
@@ -117,7 +117,7 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
     }
 }
 
-void TOC::slotExecuted( QListViewItem *i )
+void TOC::slotExecuted( Q3ListViewItem *i )
 {
     const QDomElement & e = static_cast< TOCItem* >( i )->element();
     if ( e.hasAttribute( "Viewport" ) )

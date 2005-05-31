@@ -19,8 +19,8 @@
 #ifndef _KPDF_PAGEVIEW_H_
 #define _KPDF_PAGEVIEW_H_
 
-#include <qscrollview.h>
-#include <qvaluevector.h>
+#include <q3scrollview.h>
+#include <qvector.h>
 #include "core/observer.h"
 
 class KURL;
@@ -35,7 +35,7 @@ class PageViewPrivate;
  * @short display of course :-)
  * ...
  */
-class PageView : public QScrollView, public DocumentObserver
+class PageView : public Q3ScrollView, public DocumentObserver
 {
     Q_OBJECT
 
@@ -57,7 +57,7 @@ class PageView : public QScrollView, public DocumentObserver
 
         // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
-        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         void notifyContentsCleared( int changedFlags );

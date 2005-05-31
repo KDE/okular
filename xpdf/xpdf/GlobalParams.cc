@@ -17,7 +17,7 @@
 // KPDF: additional includes for Qt and Xft
 #include <qstring.h>
 #include <qregexp.h>
-#include <qwindowdefs.h>
+#include <QX11Info>
 // -- gentoo compile fix (XFree 4.3.0, FC 2.2.3, FreeType 2.1.9) --
 // on other distros these 2 lines should't harm
 #include <ft2build.h>
@@ -1093,7 +1093,7 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
 		FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight,
 		FC_WIDTH, FcTypeInteger, width, FC_LANG, FcTypeString, "xx", (char*)0);
 	if (!p) goto fin;
-	m = XftFontMatch(qt_xdisplay(),qt_xscreen(),p,&res);
+	m = XftFontMatch(QX11Info::display(),QX11Info::appScreen(),p,&res);
 	if (!m) goto fin;
 	res = FcPatternGetString (m, FC_FILE, 0, &s);
 	if (res != FcResultMatch || !s)  goto fin; 

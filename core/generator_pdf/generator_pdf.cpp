@@ -13,7 +13,7 @@
 #include <qevent.h>
 #include <qimage.h>
 #include <qapplication.h>
-#include <qpaintdevicemetrics.h>
+#include <q3paintdevicemetrics.h>
 #include <qregexp.h>
 #include <kapplication.h>
 #include <klistview.h>
@@ -92,7 +92,7 @@ PDFGenerator::~PDFGenerator()
 
 
 //BEGIN Generator inherited functions
-bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage*> & pagesVector )
+bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & pagesVector )
 {
 #ifndef NDEBUG
     if ( pdfdoc )
@@ -110,7 +110,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     KWallet::Wallet * wallet = 0;
     while ( !pdfdoc->isOk() && pdfdoc->getErrorCode() == errEncrypted )
     {
-        QCString password;
+        Q3CString password;
 
         // 1.A. try to retrieve the first password from the kde wallet system
         if ( !triedWallet )
@@ -421,7 +421,7 @@ bool PDFGenerator::print( KPrinter& printer )
         dummy.setFullPage(true);
         dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
 
-        QPaintDeviceMetrics metrics(&dummy);
+        Q3PaintDeviceMetrics metrics(&dummy);
         globalParams->setPSPaperWidth(metrics.width());
         globalParams->setPSPaperHeight(metrics.height());
     }
@@ -435,8 +435,8 @@ bool PDFGenerator::print( KPrinter& printer )
 
         if (!printer.previewOnly())
         {
-            QValueList<int> pageList = printer.pageList();
-            QValueList<int>::const_iterator it;
+            QList<int> pageList = printer.pageList();
+            QList<int>::const_iterator it;
 
             for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
         }
@@ -452,7 +452,8 @@ bool PDFGenerator::print( KPrinter& printer )
         // needs to be here so that the file is flushed, do not merge with the one
         // in the else
         delete psOut;
-        printer.printFiles(tf.name(), true);
+#warning K/QPrinter changed
+        //printer.printFiles(tf.name(), true);
         return true;
     }
     else
@@ -893,7 +894,7 @@ void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
 }
 
 
-
+/*
 void PDFGenerator::customEvent( QCustomEvent * event )
 {
     // catch generator 'ready events' only
@@ -905,7 +906,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     if ( generatorThread->running() )
     {
         // if so, wait for effective thread termination
-        if ( !generatorThread->wait( 9999 /*10s timeout*/ ) )
+        if ( !generatorThread->wait( 9999 /*10s timeout*/ /*) )
         {
             kdWarning() << "PDFGenerator: thread sent 'data available' "
                         << "signal but had problems ending." << endl;
@@ -928,7 +929,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     PixmapRequest * request = static_cast< PixmapRequest * >( event->data() );
     QImage * outImage = generatorThread->takeImage();
     TextPage * outTextPage = generatorThread->takeTextPage();
-    QValueList< ObjectRect * > outRects = generatorThread->takeObjectRects();
+    QList< ObjectRect * > outRects = generatorThread->takeObjectRects();
 
     request->page->setPixmap( request->id, new QPixmap( *outImage ) );
     delete outImage;
@@ -944,7 +945,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     ready = true;
     // notify the new generation
     signalRequestDone( request );
-}
+}*/
 
 
 
@@ -959,7 +960,7 @@ struct PPGThreadPrivate
     // internal temp stored items. don't delete this.
     QImage * m_image;
     TextPage * m_textPage;
-    QValueList< ObjectRect * > m_rects;
+    QList< ObjectRect * > m_rects;
     bool m_rectsTaken;
 };
 
@@ -981,7 +982,7 @@ PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
     delete d->m_textPage;
     if ( !d->m_rectsTaken && d->m_rects.count() )
     {
-        QValueList< ObjectRect * >::iterator it = d->m_rects.begin(), end = d->m_rects.end();
+        QList< ObjectRect * >::iterator it = d->m_rects.begin(), end = d->m_rects.end();
         for ( ; it != end; ++it )
             delete *it;
     }
@@ -1045,7 +1046,7 @@ TextPage * PDFPixmapGeneratorThread::takeTextPage() const
     return tp;
 }
 
-QValueList< ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
+QList< ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
 {
     d->m_rectsTaken = true;
     return d->m_rects;

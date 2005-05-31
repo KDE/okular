@@ -8,6 +8,8 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <q3memarray.h>
+#include <qevent.h>
 #include <qtimer.h>
 #include <qimage.h>
 #include <qpainter.h>
@@ -49,7 +51,7 @@ struct PresentationFrame
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
-    : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder), m_document( doc ), m_frameIndex( -1 )
+    : QDialog( parent, "presentationWidget", true, Qt::WDestructiveClose | Qt::WStyle_NoBorder), m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
@@ -88,16 +90,16 @@ PresentationWidget::~PresentationWidget()
         m_document->setViewportPage( m_frameIndex/*, PRESENTATION_ID*/ );
 
     // delete frames
-    QValueVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
+    QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
 }
 
 
-void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )
+void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )
 {
     // delete previous frames (if any (shouldn't be))
-    QValueVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
+    QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
     if ( !m_frames.isEmpty() )
@@ -105,7 +107,7 @@ void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet
     m_frames.clear();
 
     // create the new frames
-    QValueVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
+    QVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     float screenRatio = (float)m_height / (float)m_width;
     for ( ; setIt != setEnd; ++setIt )
     {
@@ -180,15 +182,15 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 	
-    if ( e->key() == Key_Left || e->key() == Key_Backspace || e->key() == Key_Prior )
+    if ( e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Prior )
         slotPrevPage();
-    else if ( e->key() == Key_Right || e->key() == Key_Space || e->key() == Key_Next )
+    else if ( e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_Next )
         slotNextPage();
-    else if ( e->key() == Key_Home )
+    else if ( e->key() == Qt::Key_Home )
         slotFirstPage();
-    else if ( e->key() == Key_End )
+    else if ( e->key() == Qt::Key_End )
         slotLastPage();
-    else if ( e->key() == Key_Escape )
+    else if ( e->key() == Qt::Key_Escape )
     {
         if ( m_topBar->isShown() )
             m_topBar->hide();
@@ -290,7 +292,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         return;
 
     // blit the pixmap to the screen
-    QMemArray<QRect> allRects = pe->region().rects();
+    Q3MemArray<QRect> allRects = pe->region().rects();
     uint numRects = allRects.count();
     for ( uint i = 0; i < numRects; i++ )
     {
@@ -356,7 +358,7 @@ void PresentationWidget::changePage( int newPage )
     // notifyPixmapChanged call or else we can proceed to pixmap generation
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
-        QValueList< PixmapRequest * > request;
+        QList< PixmapRequest * > request;
         request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO ) );
         m_document->requestPixmaps( request );
     }
@@ -402,7 +404,7 @@ void PresentationWidget::generateIntroPage( QPainter & p )
     // use a vertical gray gradient background
     int blend1 = m_height / 10,
         blend2 = 9 * m_height / 10;
-    int baseTint = Qt::gray.red();
+    int baseTint = QColor(Qt::gray).red();
     for ( int i = 0; i < m_height; i++ )
     {
         int k = baseTint;
@@ -442,11 +444,11 @@ void PresentationWidget::generateIntroPage( QPainter & p )
         // text shadow
         p.setPen( Qt::darkGray );
         p.drawText( 2, m_height / 4 + strHeight * i + 2, m_width, strHeight,
-                    AlignHCenter | AlignVCenter, m_metaStrings[i] );
+                    Qt::AlignHCenter | Qt::AlignVCenter, m_metaStrings[i] );
         // text body
         p.setPen( 128 + (127 * i) / strNum );
         p.drawText( 0, m_height / 4 + strHeight * i, m_width, strHeight,
-                    AlignHCenter | AlignVCenter, m_metaStrings[i] );
+                    Qt::AlignHCenter | Qt::AlignVCenter, m_metaStrings[i] );
     }
 }
 
@@ -469,7 +471,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
 
     // fill unpainted areas with background color
     QRegion unpainted( QRect( 0, 0, m_width, m_height ) );
-    QMemArray<QRect> rects = unpainted.subtract( frame->geometry ).rects();
+    Q3MemArray<QRect> rects = unpainted.subtract( frame->geometry ).rects();
     for ( uint i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
@@ -500,9 +502,11 @@ void PresentationWidget::generateOverlay()
     {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
         pixmapPainter.setPen( 0x20 );
-        pixmapPainter.setBrush( 0x10 );
+#warning QPainter.setBtush(0x10) ???? port this
+//        pixmapPainter.setBrush( 0x10 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
-        pixmapPainter.setBrush( 0xC0 );
+#warning QPainter.setBtush(0xC0) ???? port this
+//        pixmapPainter.setBrush( 0xC0 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
     else
@@ -512,7 +516,8 @@ void PresentationWidget::generateOverlay()
         {
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
-            pixmapPainter.setBrush( i <= m_frameIndex ? 0xC0 : 0x10 );
+#warning QPainter.setBtush(0xC0) ???? port this
+//            pixmapPainter.setBrush( i <= m_frameIndex ? 0xC0 : 0x10 );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );
             oldCoord = newCoord;

@@ -11,7 +11,7 @@
 #define _KPDF_GENERATOR_H_
 
 #include <qobject.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 #include <qstring.h>
 #include "core/document.h"
 class KListView;
@@ -45,7 +45,7 @@ class Generator : public QObject
     public:
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
-        virtual bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector ) = 0;
+        virtual bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector ) = 0;
 
         // Document description and Table of contents
         virtual const DocumentInfo * generateDocumentInfo() { return 0L; }

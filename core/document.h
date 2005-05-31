@@ -12,9 +12,11 @@
 #define _KPDF_DOCUMENT_H_
 
 #include <qobject.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 #include <qstring.h>
 #include <qdom.h>
+
+class QColor;
 
 class KPDFPage;
 class KPDFLink;
@@ -68,7 +70,7 @@ class KPDFDocument : public QObject
         bool isOpened() const;
         const DocumentInfo * documentInfo() const;
         const DocumentSynopsis * documentSynopsis() const;
-        const KPDFPage * page( uint page ) const;
+        const KPDFPage * page( int page ) const;
         const DocumentViewport & viewport() const;
         uint currentPage() const;
         uint pages() const;
@@ -86,7 +88,7 @@ class KPDFDocument : public QObject
         void setViewport( const DocumentViewport & viewport, int excludeId = -1, bool smoothMove = false );
         void setPrevViewport();
         void setNextViewport();
-        void requestPixmaps( const QValueList< PixmapRequest * > & requests );
+        void requestPixmaps( const QList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
 
         enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleAll, GoogleAny };
@@ -118,7 +120,7 @@ class KPDFDocument : public QObject
         bool openRelativeFile( const QString & fileName );
 
         Generator * generator;
-        QValueVector< KPDFPage * > pages_vector;
+        QVector< KPDFPage * > pages_vector;
         class KPDFDocumentPrivate * d;
 
     private slots:

@@ -79,7 +79,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
                nYMax = (double)limits.bottom() / (double)height;
         // if no rect intersects limits, disable paintHighlights
         paintHighlights = false;
-        QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+        QList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
         for ( ; hIt != hEnd; ++hIt )
         {
             if ( (*hIt)->intersects( nXMin, nYMin, nXMax, nYMax ) )
@@ -161,7 +161,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         if ( paintHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+            QList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
             for ( ; hIt != hEnd; ++hIt )
             {
                 HighlightRect * r = *hIt;
@@ -206,7 +206,7 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         QRect limitsEnlarged = limits;
         limitsEnlarged.addCoords( -2, -2, 2, 2 );
         // draw rects that are inside the 'limits' paint region as opaque rects
-        QValueList< ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
+        QList< ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
         for ( ; lIt != lEnd; ++lIt )
         {
             ObjectRect * rect = *lIt;

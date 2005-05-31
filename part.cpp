@@ -26,7 +26,7 @@
 #include <qpainter.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qtoolbox.h>
 #include <qpushbutton.h>
 #include <dcopobject.h>
@@ -141,7 +141,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	enableTOC( false );
 
 	// [left toolbox: Thumbnails and Bookmarks] | []
-	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
+	Q3VBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
@@ -244,7 +244,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_pageView->setupActions( ac );
 
 	// apply configuration (both internal settings and GUI configured items)
-	QValueList<int> splitterSizes = Settings::splitterSizes();
+	QList<int> splitterSizes = Settings::splitterSizes();
 	if ( !splitterSizes.count() )
 	{
 		// the first time use 1/10 for the panel and 9/10 for the pageView
@@ -620,8 +620,8 @@ void Part::slotNewConfig()
         m_searchWidget->setShown( showSearch );
 
     // Main View (pageView)
-    QScrollView::ScrollBarMode scrollBarMode = Settings::showScrollBars() ?
-        QScrollView::AlwaysOn : QScrollView::AlwaysOff;
+    Q3ScrollView::ScrollBarMode scrollBarMode = Settings::showScrollBars() ?
+        Q3ScrollView::AlwaysOn : Q3ScrollView::AlwaysOff;
     if ( m_pageView->hScrollBarMode() != scrollBarMode )
     {
         m_pageView->setHScrollBarMode( scrollBarMode );
@@ -682,8 +682,8 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		
 		if (factory())
 		{
-			QPtrList<KXMLGUIClient> clients(factory()->clients());
-			QPtrListIterator<KXMLGUIClient> clientsIt( clients );
+			Q3PtrList<KXMLGUIClient> clients(factory()->clients());
+			Q3PtrListIterator<KXMLGUIClient> clientsIt( clients );
 			for( ; (!m_showMenuBarAction || !m_showFullScreenAction) && clientsIt.current(); ++clientsIt)
 			{
 				client = clientsIt.current();
@@ -707,11 +707,11 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	{
 		popup->insertTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
         if ( page->hasBookmark() )
-			popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
+			popup->insertItem( QIcon(SmallIcon("bookmark")), i18n("Remove Bookmark"), 1 );
 		else
-			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
+			popup->insertItem( QIcon(SmallIcon("bookmark_add")), i18n("Add Bookmark"), 1 );
 		if ( m_pageView->canFitPageWidth() )
-			popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
+			popup->insertItem( QIcon(SmallIcon("viewmagfit")), i18n("Fit Width"), 2 );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
 		reallyShow = true;
@@ -790,7 +790,9 @@ void Part::slotPrint()
         if (width > height) landscape++;
         else portrait++;
     }
-    if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
+#warning whoever ported Kprinter messed, setOrientation is QPrinted::Orientation not Qt::Orientation
+#warning change it
+//    if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
 
     if (printer.setup(widget())) doPrint( printer );
 }

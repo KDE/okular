@@ -24,13 +24,13 @@ Q_OBJECT
 
         // inherited from DocumentObserver
         uint observerId() const;
-        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
 
     signals:
         void hasTOC(bool has);
 
     private slots:
-        void slotExecuted(QListViewItem *i);
+        void slotExecuted(Q3ListViewItem *i);
 
     private:
         void addChildren( const QDomNode & parentNode, KListViewItem * parentItem = 0 );

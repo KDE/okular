@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 // qt / kde includes
+#include <qevent.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -131,7 +132,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
     parent->hide();
 }
 
-void MiniBar::notifySetup( const QValueVector< KPDFPage * > & pageVector, bool changed )
+void MiniBar::notifySetup( const QVector< KPDFPage * > & pageVector, bool changed )
 {
     // only process data when document changes
     if ( !changed )
@@ -257,7 +258,7 @@ void MiniBar::slotEmitPrevPage()
 /** ProgressWidget **/
 
 ProgressWidget::ProgressWidget( MiniBar * parent )
-    : QWidget( parent, "progress", WNoAutoErase ),
+    : QWidget( parent, "progress", Qt::WNoAutoErase ),
     m_miniBar( parent ), m_progressPercentage( -1 )
 {
     setFixedHeight( 4 );
@@ -325,7 +326,8 @@ PagesEdit::PagesEdit( MiniBar * parent )
     : QLineEdit( parent ), m_miniBar( parent ), m_eatClick( false )
 {
     // customize look
-    setFrameShadow( QFrame::Raised );
+#warning setFrameShadow does not exists in Qt4
+    //setFrameShadow( QFrame::Raised );
     focusOutEvent( 0 );
 
     // use an integer validator
@@ -355,10 +357,11 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
 {
     // select all text
     selectAll();
-    if ( e->reason() == QFocusEvent::Mouse )
+    if ( e->reason() == Qt::MouseFocusReason )
         m_eatClick = true;
     // change background color to the default 'edit' color
-    setLineWidth( 2 );
+#warning setLineWidth does not exists in Qt4
+//    setLineWidth( 2 );
     setPaletteBackgroundColor( Qt::white );
     // call default handler
     QLineEdit::focusInEvent( e );
@@ -367,7 +370,8 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
 void PagesEdit::focusOutEvent( QFocusEvent * e )
 {
     // change background color to a dark tone
-    setLineWidth( 1 );
+#warning setLineWidth does not exists in Qt4
+//    setLineWidth( 1 );
     setPaletteBackgroundColor( palette().active().background().light( 105 ) );
     // restore text
     QLineEdit::setText( backString );
@@ -445,7 +449,8 @@ void HoverButton::paintEvent( QPaintEvent * e )
         // custom drawing of unhovered button
         QPainter p( this );
         setPaletteBackgroundColor( palette().active().background() );
-        drawButtonLabel( &p );
+#warning drawButtonLabel does not exists in Qt4
+//        drawButtonLabel( &p );
     }
 }
 

@@ -18,7 +18,7 @@
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
-#include <qguardedptr.h>
+#include <QPointer>
 #include "core/document.h"
 #include "core/observer.h"
 #include "dcop.h"
@@ -128,7 +128,7 @@ private:
 	SearchWidget *m_searchWidget;
 	ThumbnailList *m_thumbnailList;
 	PageView *m_pageView;
-	QGuardedPtr<PresentationWidget> m_presentationWidget;
+	QPointer<PresentationWidget> m_presentationWidget;
 
 	// static instances counter
 	static unsigned int m_count;

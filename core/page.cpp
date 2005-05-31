@@ -11,6 +11,7 @@
 #include <qpixmap.h>
 #include <qstring.h>
 #include <qmap.h>
+#include <q3memarray.h>
 #include <kdebug.h>
 
 // local includes
@@ -73,7 +74,7 @@ bool KPDFPage::hasObjectRect( double x, double y ) const
 {
     if ( m_rects.count() < 1 )
         return false;
-    QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    QList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y ) )
             return true;
@@ -89,7 +90,7 @@ bool KPDFPage::hasHighlights( int s_id ) const
     if ( s_id == -1 )
         return true;
     // iterate on the highlights list to find an entry by id
-    QValueList< HighlightRect * >::const_iterator it = m_highlights.begin(), end = m_highlights.end();
+    QList< HighlightRect * >::const_iterator it = m_highlights.begin(), end = m_highlights.end();
     for ( ; it != end; ++it )
         if ( (*it)->s_id == s_id )
             return true;
@@ -110,7 +111,7 @@ NormalizedRect * KPDFPage::findText( const QString & text, bool strictCase, Norm
     // create a xpf's Unicode (unsigned int) array for the given text
     const QChar * str = text.unicode();
     int len = text.length();
-    QMemArray<Unicode> u(len);
+    Q3MemArray<Unicode> u(len);
     for (int i = 0; i < len; ++i)
         u[i] = str[i].unicode();
 
@@ -175,7 +176,7 @@ const QString KPDFPage::getText( const NormalizedRect & rect ) const
 
 const ObjectRect * KPDFPage::hasObject( ObjectRect::ObjectType type, double x, double y ) const
 {
-    QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    QList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y ) )
             if ((*it)->objectType() == type) return *it;
@@ -206,9 +207,9 @@ void KPDFPage::setBookmark( bool state )
     m_bookmarked = state;
 }
 
-void KPDFPage::setObjectRects( const QValueList< ObjectRect * > rects )
+void KPDFPage::setObjectRects( const QList< ObjectRect * > rects )
 {
-    QValueList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+    QList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
@@ -254,7 +255,7 @@ void KPDFPage::deletePixmapsAndRects()
         delete *it;
     m_pixmaps.clear();
     // delete ObjectRects
-    QValueList< ObjectRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
+    QList< ObjectRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
     for ( ; rIt != rEnd; ++rIt )
         delete *rIt;
     m_rects.clear();
@@ -263,7 +264,7 @@ void KPDFPage::deletePixmapsAndRects()
 void KPDFPage::deleteHighlights( int s_id )
 {
     // delete highlights by ID
-    QValueList< HighlightRect * >::iterator it = m_highlights.begin(), end = m_highlights.end();
+    QList< HighlightRect * >::iterator it = m_highlights.begin(), end = m_highlights.end();
     while ( it != end )
     {
         HighlightRect * highlight = *it;

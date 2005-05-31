@@ -9,6 +9,7 @@
 
 // qt/kde includes
 #include <qbitmap.h>
+#include <qevent.h>
 #include <qpainter.h>
 #include <qimage.h>
 #include <qtimer.h>
@@ -23,8 +24,8 @@
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent, "pageViewMessage" ), m_timer( 0 )
 {
-    setFocusPolicy( NoFocus );
-    setBackgroundMode( NoBackground );
+    setFocusPolicy( Qt::NoFocus );
+    setBackgroundMode( Qt::NoBackground );
     move( 10, 10 );
     resize( 0, 0 );
     hide();

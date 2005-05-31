@@ -19,7 +19,7 @@
 #pragma interface
 #endif
 
-#include <qvaluelist.h>
+#include <qlist.h>
 #include "xpdf/PDFDoc.h" // for 'Object'
 #include "xpdf/SplashOutputDev.h"
 
@@ -56,7 +56,7 @@ class KPDFOutputDev : public SplashOutputDev
         QPixmap * takePixmap();
         QImage * takeImage();
         TextPage * takeTextPage();
-        QValueList< ObjectRect * > takeObjectRects();
+        QList< ObjectRect * > takeObjectRects();
 
         /** inherited from OutputDev */
         // Start a page.
@@ -95,7 +95,7 @@ class KPDFOutputDev : public SplashOutputDev
         QPixmap * m_pixmap;
         QImage * m_image;
         TextPage * m_text;  // text page generated on demand
-        QValueList< ObjectRect * > m_rects; // objectRects (links/images)
+        QList< ObjectRect * > m_rects; // objectRects (links/images)
 };
 
 

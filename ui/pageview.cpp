@@ -434,7 +434,8 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     // create the screen painter. a pixel painted ar contentsX,contentsY
     // appears to the top-left corner of the scrollview.
     QPainter screenPainter( viewport() );
-    screenPainter.setClipping( true );
+// TODO seems we don't need that in Qt4
+//    screenPainter.setClipping( true );
     screenPainter.translate( -contentsX(), -contentsY() );
 
     // selectionRect is the normalized mouse selection rect
@@ -676,7 +677,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 else
                     verticalScrollBar()->addPage();
             }
-            else if ( d->document->currentPage() < d->items.count() - 1 )
+            else if ( (int)d->document->currentPage() < d->items.count() - 1 )
             {
                 // more optmized than document->setNextPage and then move view to top
                 DocumentViewport newViewport = d->document->viewport();
@@ -1136,7 +1137,7 @@ void PageView::wheelEvent( QWheelEvent *e )
     else if ( delta <= -120 && !Settings::viewContinuous() && vScroll == verticalScrollBar()->maxValue() )
     {
         // go to next page
-        if ( d->document->currentPage() < d->items.count() - 1 )
+        if ( (int)d->document->currentPage() < d->items.count() - 1 )
         {
             // more optmized than document->setNextPage and then move view to top
             DocumentViewport newViewport = d->document->viewport();

@@ -1173,6 +1173,10 @@ void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
         while ( (pIt != pEnd) && (memoryToFree > 0) )
         {
             AllocatedPixmap * p = *pIt;
+#warning this should NOT be needed
+	    // TODO quick way to avoid crashes
+	    if (!d->observers[ p->id ]) return;
+	    
             if ( d->observers[ p->id ]->canUnloadPixmap( p->page ) )
             {
                 // update internal variables
@@ -1380,7 +1384,7 @@ void KPDFDocument::saveDocumentInfo() const
         QDomElement bookmarkList = doc.createElement( "bookmarkList" );
         root.appendChild( bookmarkList );
 
-        for ( uint i = 0; i < pages_vector.count() ; i++ )
+        for ( int i = 0; i < pages_vector.count() ; i++ )
         {
             if ( pages_vector[i]->hasBookmark() )
             {

@@ -289,6 +289,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     if ( request->async )
     {
         // start the generation into the thread
+	generatorThread->wait();
         generatorThread->startGeneration( request );
         return;
     }

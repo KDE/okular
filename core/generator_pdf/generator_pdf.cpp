@@ -894,7 +894,7 @@ void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
 }
 
 
-/*
+
 void PDFGenerator::customEvent( QCustomEvent * event )
 {
     // catch generator 'ready events' only
@@ -906,7 +906,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     if ( generatorThread->running() )
     {
         // if so, wait for effective thread termination
-        if ( !generatorThread->wait( 9999 /*10s timeout*/ /*) )
+        if ( !generatorThread->wait( 9999 /*10s timeout*/ ) )
         {
             kdWarning() << "PDFGenerator: thread sent 'data available' "
                         << "signal but had problems ending." << endl;
@@ -945,7 +945,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     ready = true;
     // notify the new generation
     signalRequestDone( request );
-}*/
+}
 
 
 

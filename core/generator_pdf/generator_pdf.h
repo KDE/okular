@@ -12,6 +12,7 @@
 #define _KPDF_GENERATOR_PDF_H_
 
 #include <qmutex.h>
+#include <qcoreevent.h>
 #include <qcolor.h>
 #include <qstring.h>
 #include <qthread.h>
@@ -96,8 +97,7 @@ class PDFGenerator : public Generator
         // private function for creating the transition information
         void addTransition( int pageNumber, KPDFPage * page );
         // (async related) receive data from the generator thread
-#warning QCustomEvent is gone :-/
-//        void customEvent( QCustomEvent * );
+        void customEvent( QCustomEvent * );
 
         // xpdf dependant stuff
         QMutex docLock;

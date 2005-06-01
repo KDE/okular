@@ -143,7 +143,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
             firstInput = false;
 
             // if the user presses cancel, abort opening
-            if ( KPasswordDialog::getPassword( password, prompt ) != KPasswordDialog::Accepted )
+            if ( KPasswordDialog::getPassword(0, password, prompt ) != KPasswordDialog::Accepted )
             break;
         }
 

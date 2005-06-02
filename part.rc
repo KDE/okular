@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kpdf_part" version="16">
+<kpartgui name="kpdf_part" version="17">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="save" group="file_save"/>

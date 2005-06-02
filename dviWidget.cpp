@@ -13,7 +13,7 @@
 
 #include "dviWidget.h"
 
-#include "centeringScrollview.h"
+#include "pageView.h"
 #include "documentPageCache.h"
 #include "documentWidget.h"
 #include "renderedDviPagePixmap.h"

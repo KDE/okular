@@ -7,8 +7,8 @@
 // (C) 2001-2004 Stefan Kebekus. Distributed under the GPL.
 
 
-#ifndef _dviwin_h_
-#define _dviwin_h_
+#ifndef _dvirenderer_h_
+#define _dvirenderer_h_
 
 
 #include <qevent.h>

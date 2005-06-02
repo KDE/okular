@@ -1,11 +1,11 @@
-// dviwin_prescan.cpp
+// dviRenderer_prescan.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
 //
 // (C) 2003--2004 Stefan Kebekus
 // Distributed under the GPL
 
-#include "dviwin.h"
+#include "dviRenderer.h"
 #include "dvi.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"

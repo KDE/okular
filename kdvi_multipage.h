@@ -6,7 +6,7 @@
 class KPrinter;
 
 #include "../kviewshell/kmultipage.h"
-#include "dviwin.h"
+#include "dviRenderer.h"
 
 class KDVIMultiPage : public KMultiPage
 {

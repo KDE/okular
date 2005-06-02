@@ -1,7 +1,7 @@
 
 // special.cpp
 
-// Methods for dviwin which deal with "\special" commands found in the
+// Methods for dviRenderer which deal with "\special" commands found in the
 // DVI file
 
 // Copyright 2000--2004, Stefan Kebekus (kebekus@kde.org).
@@ -17,7 +17,7 @@
 #include <qimage.h>
 #include <qstringlist.h>
 
-#include "dviwin.h"
+#include "dviRenderer.h"
 #include "kdvi.h"
 #include "kdvi_multipage.h"
 #include "xdvi.h"

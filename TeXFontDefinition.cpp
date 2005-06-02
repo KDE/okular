@@ -5,7 +5,7 @@
 #include <qfile.h>
 
 #include "../config.h"
-#include "dviwin.h"
+#include "dviRenderer.h"
 #include "fontpool.h"
 #include "kdvi.h"
 #ifdef HAVE_FREETYPE

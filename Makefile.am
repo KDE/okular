@@ -16,8 +16,8 @@ METASOURCES = AUTO
 
 kdvipart_la_SOURCES = renderedDviPagePixmap.cpp dviPageCache.cpp \
 	kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
-	dviwin.cpp bigEndianByteReader.cpp infodialog.cpp \
-	psheader.c dviwin_draw.cpp dviwin_prescan.cpp dviwin_export.cpp \
+	dviRenderer.cpp bigEndianByteReader.cpp infodialog.cpp \
+	psheader.c dviRenderer_draw.cpp dviRenderer_prescan.cpp dviRenderer_export.cpp \
 	dviFile.cpp fontpool.cpp fontprogress.cpp psgs.cpp \
 	fontMap.cpp fontEncoding.cpp fontEncodingPool.cpp \
 	special.cpp util.cpp vf.cpp glyph.cpp \
@@ -43,7 +43,7 @@ kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kdvi_LDADD = ../kviewshell/libifaces.la ../kviewshell/libkviewshell.la -lkparts
 
 ## this option you can leave out. Just, if you use "make dist", you need it
-noinst_HEADERS = dvi.h dviwin.h xdvi.h
+noinst_HEADERS = dvi.h dviRenderer.h xdvi.h
 
 messages: rc.cpp
 	$(PREPARETIPS) > tips.cpp

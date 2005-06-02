@@ -38,7 +38,7 @@
 #include <qpainter.h>
 
 
-#include "dviwin.h"
+#include "dviRenderer.h"
 #include "fontprogress.h"
 #include "kdvi_multipage.h"
 

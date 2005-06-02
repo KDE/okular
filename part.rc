@@ -14,8 +14,8 @@
   <Menu name="view"><text>&amp;View</text>
     <Action name="presentation"/>
     <Separator/>
-    <Action name="zoom_out"/>
     <Action name="zoom_in"/>
+    <Action name="zoom_out"/>
     <Action name="zoom_fit_width"/>
     <Action name="zoom_fit_page"/>
     <Action name="zoom_fit_rect"/>
@@ -24,9 +24,10 @@
     <Action name="view_twopages"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
-    <Action name="first_page"/>
     <Action name="previous_page"/>
     <Action name="next_page"/>
+    <Separator/>
+    <Action name="first_page"/>
     <Action name="last_page"/>
     <Separator/>
     <Action name="history_back"/>
@@ -34,7 +35,7 @@
     <Separator/>
     <Action name="goto_page"/>
   </Menu>
-  <Menu name="mouseMode"><text>&amp;Mouse Mode</text>
+  <Menu name="mouseMode"><text>&amp;Tools</text>
     <Action name="mouse_drag"/>
     <Action name="mouse_zoom"/>
     <Action name="mouse_select"/>
@@ -54,9 +55,6 @@
   <Action name="zoom_out"/>
   <!--Action name="zoom_fit_width"/-->
   <!--Action name="zoom_fit_page"/-->
-  <Separator/>
-  <Action name="view_continuous"/>
-  <Action name="view_twopages"/>
   <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_zoom"/>

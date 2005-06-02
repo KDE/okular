@@ -588,12 +588,12 @@ void PageView::keyPressEvent( QKeyEvent * e )
         {
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
-            releaseKeyboard();
+            //releaseKeyboard();
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
                 d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
-            grabKeyboard();
+            // grabKeyboard();
         }
         // esc and return: end search
         else if( e->key() == Key_Escape || e->key() == Key_Return )
@@ -632,7 +632,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             connect( d->findTimeoutTimer, SIGNAL( timeout() ), this, SLOT( findAheadStop() ) );
         }
         d->findTimeoutTimer->start( 3000, true );
-        grabKeyboard();
+        // grabKeyboard();
         return;
     }
 
@@ -1845,7 +1845,7 @@ void PageView::findAheadStop()
     d->typeAheadActive = false;
     d->typeAheadString = "";
     d->messageWindow->display( i18n("Find stopped."), PageViewMessage::Find, 1000 );
-    releaseKeyboard();
+    //releaseKeyboard();
 }
 
 void PageView::slotZoom()

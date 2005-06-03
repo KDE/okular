@@ -591,14 +591,18 @@ void PageView::keyPressEvent( QKeyEvent * e )
         {
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
-            //commenting as seems to cause bug 106546 and does not seem to give anything
-            //releaseKeyboard();
+            // it is needed to grab the keyboard becase people may have Space assigned to a
+            // accel and without grabbing the keyboard you can not vim-search for space
+            // because it activates the accel
+            releaseKeyboard();
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
                 d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
-            //commenting as seems to cause bug 106546 and does not seem to give anything
-            // grabKeyboard();
+            // it is needed to grab the keyboard becase people may have Space assigned to a
+            // accel and without grabbing the keyboard you can not vim-search for space
+            // because it activates the accel
+            grabKeyboard();
         }
         // esc and return: end search
         else if( e->key() == Qt::Key_Escape || e->key() == Qt::Key_Return )
@@ -637,8 +641,10 @@ void PageView::keyPressEvent( QKeyEvent * e )
             connect( d->findTimeoutTimer, SIGNAL( timeout() ), this, SLOT( findAheadStop() ) );
         }
         d->findTimeoutTimer->start( 3000, true );
-        //commenting as seems to cause bug 106546 and does not seem to give anything
-        // grabKeyboard();
+        // it is needed to grab the keyboard becase people may have Space assigned to a
+        // accel and without grabbing the keyboard you can not vim-search for space
+        // because it activates the accel
+        grabKeyboard();
         return;
     }
 
@@ -1852,8 +1858,10 @@ void PageView::findAheadStop()
     d->typeAheadActive = false;
     d->typeAheadString = "";
     d->messageWindow->display( i18n("Find stopped."), PageViewMessage::Find, 1000 );
-    //commenting as seems to cause bug 106546 and does not seem to give anything
-    //releaseKeyboard();
+    // it is needed to grab the keyboard becase people may have Space assigned to a
+    // accel and without grabbing the keyboard you can not vim-search for space
+    // because it activates the accel
+    releaseKeyboard();
 }
 
 void PageView::slotZoom()

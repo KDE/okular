@@ -8,9 +8,9 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <q3memarray.h>
 #include <qevent.h>
 #include <qtimer.h>
+#include <qtoolbar.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qapplication.h>
@@ -51,7 +51,7 @@ struct PresentationFrame
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
-    : QDialog( parent, "presentationWidget", true, Qt::WDestructiveClose | Qt::WStyle_NoBorder), m_document( doc ), m_frameIndex( -1 )
+    : QDialog( parent, "presentationWidget", true, Qt::WDestructiveClose), m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
@@ -260,15 +260,17 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_width = d.width();
         m_height = d.height();
 
+	KIconLoader *il = KGlobal::iconLoader();
+
         // create top toolbar
-        m_topBar = new KToolBar( this, "presentationBar" );
-        m_topBar->setIconSize( 32 );
-        m_topBar->setMovingEnabled( false );
-        m_topBar->insertButton( "1leftarrow", 2, SIGNAL( clicked() ), this, SLOT( slotPrevPage() ) );
-        m_topBar->insertButton( "1rightarrow", 3, SIGNAL( clicked() ), this, SLOT( slotNextPage() ) );
-        m_topBar->insertButton( "exit", 1, SIGNAL( clicked() ), this, SLOT( close() ) );
+        m_topBar = new QToolBar( this );
+        m_topBar->addAction( QIcon(il->loadIcon("1leftarrow", KIcon::Toolbar)), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
+        m_topBar->addAction( QIcon(il->loadIcon("1rightarrow", KIcon::Toolbar)), i18n("Next Page"), this, SLOT( slotNextPage() ) );
+	QWidget *spacer = new QWidget(m_topBar);
+	spacer->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+	m_topBar->addWidget( spacer );
+        m_topBar->addAction( QIcon(il->loadIcon("exit", KIcon::Toolbar)), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
-        m_topBar->alignItemRight( 1 );
         m_topBar->hide();
         // change topbar background color
         QPalette p = m_topBar->palette();
@@ -292,7 +294,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         return;
 
     // blit the pixmap to the screen
-    Q3MemArray<QRect> allRects = pe->region().rects();
+    QVector<QRect> allRects = pe->region().rects();
     uint numRects = allRects.count();
     for ( uint i = 0; i < numRects; i++ )
     {
@@ -317,11 +319,15 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 
             // finally blit the pixmap to the screen
             pixPainter.end();
-            bitBlt( this, r.topLeft(), &backPixmap, backPixmap.rect() );
+	    QPainter p(this);
+	    p.drawPixmap(r.topLeft(), backPixmap );
         } else
 #endif
+	{
         // copy the rendered pixmap to the screen
-        bitBlt( this, r.topLeft(), &m_lastRenderedPixmap, r );
+	    QPainter p(this);
+	    p.drawPixmap(r.topLeft(), m_lastRenderedPixmap, r );
+	}
     }
 }
 // </widget events>
@@ -471,7 +477,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
 
     // fill unpainted areas with background color
     QRegion unpainted( QRect( 0, 0, m_width, m_height ) );
-    Q3MemArray<QRect> rects = unpainted.subtract( frame->geometry ).rects();
+    QVector<QRect> rects = unpainted.subtract( frame->geometry ).rects();
     for ( uint i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
@@ -502,10 +508,10 @@ void PresentationWidget::generateOverlay()
     {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
         pixmapPainter.setPen( 0x20 );
-#warning QPainter.setBtush(0x10) ???? port this
+#warning QPainter.setBrush(0x10) ???? port this
 //        pixmapPainter.setBrush( 0x10 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
-#warning QPainter.setBtush(0xC0) ???? port this
+#warning QPainter.setBrush(0xC0) ???? port this
 //        pixmapPainter.setBrush( 0xC0 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
@@ -516,7 +522,7 @@ void PresentationWidget::generateOverlay()
         {
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
-#warning QPainter.setBtush(0xC0) ???? port this
+#warning QPainter.setBrush(0xC0) ???? port this
 //            pixmapPainter.setBrush( i <= m_frameIndex ? 0xC0 : 0x10 );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );

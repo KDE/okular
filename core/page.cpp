@@ -11,7 +11,6 @@
 #include <qpixmap.h>
 #include <qstring.h>
 #include <qmap.h>
-#include <q3memarray.h>
 #include <kdebug.h>
 
 // local includes
@@ -111,7 +110,7 @@ NormalizedRect * KPDFPage::findText( const QString & text, bool strictCase, Norm
     // create a xpf's Unicode (unsigned int) array for the given text
     const QChar * str = text.unicode();
     int len = text.length();
-    Q3MemArray<Unicode> u(len);
+    QVector<Unicode> u(len);
     for (int i = 0; i < len; ++i)
         u[i] = str[i].unicode();
 
@@ -131,12 +130,12 @@ NormalizedRect * KPDFPage::findText( const QString & text, bool strictCase, Norm
     while ( !found )
     {
         if ( dir == FromTop )
-            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gTrue, gTrue, gFalse, gFalse, &sLeft, &sTop, &sRight, &sBottom );
+            found = m_text->findText( u.data(), len, gTrue, gTrue, gFalse, gFalse, &sLeft, &sTop, &sRight, &sBottom );
         else if ( dir == NextMatch )
-            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gFalse, gTrue, gTrue, gFalse, &sLeft, &sTop, &sRight, &sBottom );
+            found = m_text->findText( u.data(), len, gFalse, gTrue, gTrue, gFalse, &sLeft, &sTop, &sRight, &sBottom );
         else if ( dir == PrevMatch )
             // FIXME: this doesn't work as expected (luckily backward search isn't yet used)
-            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gTrue, gFalse, gFalse, gTrue, &sLeft, &sTop, &sRight, &sBottom );
+            found = m_text->findText( u.data(), len, gTrue, gFalse, gFalse, gTrue, &sLeft, &sTop, &sRight, &sBottom );
 
         // if not found (even in case unsensitive search), terminate
         if ( !found )

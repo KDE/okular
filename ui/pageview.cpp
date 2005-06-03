@@ -17,7 +17,6 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <q3memarray.h>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qpainter.h>
@@ -450,7 +449,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
                            d->selectionRectColor : Qt::red;
 
     // subdivide region into rects
-    Q3MemArray<QRect> allRects = pe->region().rects();
+    QVector<QRect> allRects = pe->region().rects();
     uint numRects = allRects.count();
 
     // preprocess rects area to see if it worths or not using subdivision
@@ -1255,7 +1254,7 @@ void PageView::paintItems( QPainter * p, const QRect & contentsRect )
     }
 
     // paint with background color the unpainted area
-    Q3MemArray<QRect> backRects = remainingArea.rects();
+    QVector<QRect> backRects = remainingArea.rects();
     uint backRectsNumber = backRects.count();
     for ( uint jr = 0; jr < backRectsNumber; jr++ )
         p->fillRect( backRects[ jr ], Qt::gray );
@@ -1348,8 +1347,8 @@ void PageView::selectionEndPoint( int x, int y )
                 compoundRegion -= intersection;
         }
         // tassellate region with rects and enqueue paint events
-        Q3MemArray<QRect> rects = compoundRegion.rects();
-        for ( uint i = 0; i < rects.count(); i++ )
+        QVector<QRect> rects = compoundRegion.rects();
+        for ( int i = 0; i < rects.count(); i++ )
             updateContents( rects[i] );
     }
 }

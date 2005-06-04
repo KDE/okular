@@ -263,9 +263,13 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
     for ( ; setIt != setEnd; ++setIt )
         d->items.push_back( new PageViewItem( *setIt ) );
 
-    // invalidate layout so relayout/repaint will happen on next viewport change
     if ( pageSet.count() > 0 )
-        d->dirtyLayout = true;
+        // TODO for Enrico: Check if doing always the slotRelayoutPages() is not
+        // suboptimal in some cases, i'd say it is not but a recheck will not hurt
+        // Need slotRelayoutPages() here instead of d->dirtyLayout = true
+        // because opening a pdf from another pdf will not trigger a viewportchange
+        // so pages are never relayouted
+        slotRelayoutPages();
     else
         resizeContents( 0, 0 );
 
@@ -893,17 +897,19 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     const KPDFLink * link = static_cast< const KPDFLink * >( linkRect->pointer() );
                     d->document->processLink( link );
                 }
-
-                imageRect = pageItem->page()->hasObject( ObjectRect::Image, nX, nY );
-                if ( imageRect )
+                else
                 {
-                    // handle click over a image
-                }
-
-                if (!linkRect && !imageRect)
-                {
-                    // if not on a rect, the click selects the page
-                    d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                    // a link can move us to another page or even to another document, there's no point in trying to process the click on the image once we have processes the click on the link
+                    imageRect = pageItem->page()->hasObject( ObjectRect::Image, nX, nY );
+                    if ( imageRect )
+                    {
+                        // handle click over a image
+                    }
+                    else
+                    {
+                        // if not on a rect, the click selects the page
+                        d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                    }
                 }
             }
             else if ( rightButton )

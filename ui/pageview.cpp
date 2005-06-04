@@ -179,16 +179,17 @@ void PageView::setupActions( KActionCollection * ac )
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, this, SLOT( slotZoom() ), ac, "zoom_to" );
     d->aZoom->setEditable( true );
+    d->aZoom->setMaxComboViewCount( 13 );
     updateZoomText();
 
     KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
 
     KStdAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
 
-    d->aZoomFitWidth = new KToggleAction( i18n("Fit to Page &Width"), "viewmagfit", 0, ac, "zoom_fit_width" );
+    d->aZoomFitWidth = new KToggleAction( i18n("Fit to Page &Width"), "view_fit_width", 0, ac, "zoom_fit_width" );
     connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
-    d->aZoomFitPage = new KToggleAction( i18n("Fit to &Page"), "viewmagfit", 0, ac, "zoom_fit_page" );
+    d->aZoomFitPage = new KToggleAction( i18n("Fit to &Page"), "view_fit_window", 0, ac, "zoom_fit_page" );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
     d->aZoomFitText = new KToggleAction( i18n("Fit to &Text"), "viewmagfit", 0, ac, "zoom_fit_text" );

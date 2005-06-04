@@ -25,6 +25,8 @@ class GList;
 class GfxFont;
 class GfxState;
 class UnicodeMap;
+class TextBlock;
+class TextPage;
 class TextLineFrag;
 
 //------------------------------------------------------------------------
@@ -167,8 +169,6 @@ private:
 // TextLine
 //------------------------------------------------------------------------
 
-class TextBlock;
-
 class TextLine {
 public:
 
@@ -225,8 +225,6 @@ private:
 //------------------------------------------------------------------------
 // TextBlock
 //------------------------------------------------------------------------
-
-class TextPage;
 
 class TextBlock {
 public:

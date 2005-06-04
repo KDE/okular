@@ -15,7 +15,6 @@
     <Action name="presentation"/>
     <Separator/>
     <Action name="zoom_in"/>
-<Action name="zoom_to" />
     <Action name="zoom_out"/>
     <Action name="zoom_fit_width"/>
     <Action name="zoom_fit_page"/>

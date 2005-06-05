@@ -453,8 +453,7 @@ bool PDFGenerator::print( KPrinter& printer )
         // needs to be here so that the file is flushed, do not merge with the one
         // in the else
         delete psOut;
-#warning K/QPrinter changed
-        //printer.printFiles(tf.name(), true);
+        printer.printFiles(QStringList(tf.name()), true);
         return true;
     }
     else

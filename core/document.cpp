@@ -13,6 +13,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qimage.h>
+#include <qimagereader.h>
 #include <qtextstream.h>
 #include <qvector.h>
 #include <qtimer.h>
@@ -34,7 +35,7 @@
 #include "page.h"
 #include "link.h"
 #include "generator_pdf/generator_pdf.h"  // PDF generator
-//#include "generator_kimgio/generator_kimgio.h"  // KIMGIO generator
+#include "generator_kimgio/generator_kimgio.h"  // KIMGIO generator
 #include "conf/settings.h"
 
 // structures used internally by KPDFDocument for local variables storage
@@ -112,15 +113,14 @@ KPDFDocument::KPDFDocument()
     d->allocatedPixmapsTotalMemory = 0;
     d->memCheckTimer = 0;
     d->saveBookmarksTimer = 0;
-#warning kimgio generator disabled ATM
-/*    KImageIO::registerFormats();
-    QStringList list = QImage::inputFormatList();
-    QStringList::Iterator it = list.begin();
+    KImageIO::registerFormats();
+    QList<QByteArray> list = QImageReader::supportedImageFormats();
+    QList<QByteArray>::Iterator it = list.begin();
     while( it != list.end() )
     {
-        d->kimgioMimes << KMimeType::findByPath(QString("foo.%1").arg(*it), 0, true)->name();
+        d->kimgioMimes << KMimeType::findByPath("foo." + QString(*it), 0, true)->name();
         ++it;
-    }*/
+    }
 }
 
 KPDFDocument::~KPDFDocument()
@@ -156,7 +156,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
         generator = new PDFGenerator( this );
 //    else if ( mimeName == "application/postscript" )
 //        kdError() << "PS generator not available" << endl;
-/*    else
+    else
     {
         QStringList::Iterator it = d->kimgioMimes.begin();
         while( it != d->kimgioMimes.end() )
@@ -174,7 +174,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
             kdWarning() << "Unknown mimetype '" << mime->name() << "'." << endl;
             return false;
         }
-    }*/
+    }
 
     // 1. load Document (and set busy cursor while loading)
     QApplication::setOverrideCursor( Qt::waitCursor );

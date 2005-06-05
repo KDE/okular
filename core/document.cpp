@@ -1218,9 +1218,8 @@ int KPDFDocument::getTotalMemory()
 
 int KPDFDocument::getFreeMemory()
 {
-#warning this hangs, check why
-#if 0
-//#ifdef __linux__
+#warning seems this is a bit slow on qt4 check performance vs qt3
+#ifdef __linux__
     // if /proc/meminfo doesn't exist, return MEMORY FULL
     QFile memFile( "/proc/meminfo" );
     if ( !memFile.open( IO_ReadOnly ) )
@@ -1231,9 +1230,10 @@ int KPDFDocument::getFreeMemory()
     int memoryFree = 0;
     QString entry;
     QTextStream readStream( &memFile );
-    while ( !readStream.atEnd() )
+    while ( true )
     {
         entry = readStream.readLine();
+	if ( entry.isNull() ) break;
         if ( entry.startsWith( "MemFree:" ) ||
                 entry.startsWith( "Buffers:" ) ||
                 entry.startsWith( "Cached:" ) ||

@@ -104,6 +104,8 @@ protected slots:
 	// can be connected to widget elements
 	void updateViewActions();
 	void enableTOC(bool enable);
+	
+	void openURLFromDocument(const KURL &url);
 
 public slots:
 	// connected to Shell action (and browserExtension), not local one
@@ -155,6 +157,8 @@ private:
 	KToggleAction* m_showFullScreenAction;
 	bool m_actionsSearched;
 	bool m_searchStarted;
+	BrowserExtension *m_bExtension;
+	bool m_notifyOpening;
 };
 
 

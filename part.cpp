@@ -80,13 +80,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
 	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_showFullScreenAction(0),
-	m_actionsSearched(false), m_searchStarted(false)
+	m_actionsSearched(false), m_searchStarted(false), m_notifyOpening(false)
 {
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("kpdf");
 
 	// create browser extension (for printing when embedded into browser)
-	new BrowserExtension(this);
+	m_bExtension = new BrowserExtension(this);
 
 	// xpdf 'extern' global class (m_count is a static instance counter)
 	//if ( m_count ) TODO check if we need to insert these lines..
@@ -102,7 +102,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document = new KPDFDocument();
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
-	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
+	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURLFromDocument(const KURL &) ) );
 
 	// widgets: ^searchbar (toolbar containing label and SearchWidget)
 //	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
@@ -346,6 +346,12 @@ bool Part::openFile()
     return true;
 }
 
+void Part::openURLFromDocument(const KURL &url)
+{
+    m_notifyOpening = true;
+    openURL(url);
+}
+
 bool Part::openURL(const KURL &url)
 {
     // note: this can be the right place to check the file for gz or bz2 extension
@@ -354,6 +360,12 @@ bool Part::openURL(const KURL &url)
 
     // this calls the above 'openURL' method
     bool b = KParts::ReadOnlyPart::openURL(url);
+    if (m_notifyOpening)
+    {
+        m_bExtension->openURLNotify();
+        m_bExtension->setLocationBarURL(url.prettyURL());
+        m_notifyOpening = false;
+    }
     if ( !b )
         KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
     else

@@ -13,13 +13,13 @@
 
 #include "dviWidget.h"
 
-#include "centeringScrollview.h"
+#include "pageView.h"
 #include "documentPageCache.h"
 #include "documentWidget.h"
 #include "renderedDviPagePixmap.h"
 #include "selection.h"
 
-DVIWidget::DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache* cache, const char* name)
+DVIWidget::DVIWidget(QWidget* parent, PageView* sv, DocumentPageCache* cache, const char* name)
   : DocumentWidget(parent, sv, cache, name)
 {
 }

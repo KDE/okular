@@ -42,7 +42,7 @@
 #include <kstdguiitem.h>
 
 #include "documentWidget.h"
-#include "dviwin.h"
+#include "dviRenderer.h"
 #include "fontpool.h"
 #include "fontprogress.h"
 #include "kdvi_multipage.h"
@@ -52,7 +52,7 @@
 #include "dvisourcesplitter.h"
 #include "renderedDviPagePixmap.h"
 
-//#define DEBUG_DVIWIN
+//#define DEBUG_DVIRENDERER
 
 QPainter *foreGroundPaint; // QPainter used for text
 
@@ -62,7 +62,7 @@ QPainter *foreGroundPaint; // QPainter used for text
 dviRenderer::dviRenderer(QWidget *par)
   : DocumentRenderer(par), info(new infoDialog(par))
 {
-#ifdef DEBUG_DVIWIN
+#ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer( parent=" << par << " )" << endl;
 #endif
 
@@ -101,7 +101,7 @@ dviRenderer::dviRenderer(QWidget *par)
 
 dviRenderer::~dviRenderer()
 {
-#ifdef DEBUG_DVIWIN
+#ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "~dviRenderer" << endl;
 #endif
 
@@ -142,7 +142,7 @@ void dviRenderer::showInfo(void)
 
 void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
 {
-#ifdef DEBUG_DVIWIN
+#ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
 #endif
   
@@ -284,7 +284,7 @@ void dviRenderer::showThatSourceInformationIsPresent(void)
 
 void dviRenderer::embedPostScript(void)
 {
-#ifdef DEBUG_DVIWIN
+#ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer::embedPostScript()" << endl;
 #endif
 
@@ -390,7 +390,7 @@ bool dviRenderer::isValidFile(const QString filename)
 
 bool dviRenderer::setFile(const QString &fname)
 {
-#ifdef DEBUG_DVIWIN
+#ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
 
@@ -565,7 +565,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
 {
   mutex.lock();
   
-#ifdef DEBUG_DVIWIN
+#ifdef DEBUG_DVIRENDERER
   kdError(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
   
@@ -785,4 +785,4 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
 }
 
 
-#include "dviwin.moc"
+#include "dviRenderer.moc"

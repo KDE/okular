@@ -51,7 +51,7 @@
 
 //#define DEBUG_RENDER 0
 
-#include "dviwin.h"
+#include "dviRenderer.h"
 #include "dvi.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"

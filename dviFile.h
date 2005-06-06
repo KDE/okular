@@ -51,12 +51,12 @@ class dvifile : public bigEndianByteReader
 
   /** This field is set to zero when the DVI file is constructed, and
       will be modified during the prescan phase (at this time the
-      prescan code still resides in the dviwin class) */
+      prescan code still resides in the dviRenderer class) */
   Q_UINT16       numberOfExternalPSFiles;
   
   /** This field is set to zero when the DVI file is constructed, and
       will be modified during the prescan phase (at this time the
-      prescan code still resides in the dviwin class) */
+      prescan code still resides in the dviRenderer class) */
   Q_UINT16       numberOfExternalNONPSFiles;
 
   Q_UINT32       beginning_of_postamble;

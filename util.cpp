@@ -53,7 +53,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 
-#include "dviwin.h"
+#include "dviRenderer.h"
 #include "xdvi.h"
 
 

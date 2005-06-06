@@ -13,7 +13,7 @@
 
 #include "documentWidget.h"
 
-class CenteringScrollview;
+class PageView;
 class DocumentPageCache;
 class QPaintEvent;
 class QMouseEvent;
@@ -24,7 +24,7 @@ class DVIWidget : public DocumentWidget
   Q_OBJECT
 
 public: 
-  DVIWidget(QWidget* parent, CenteringScrollview* sv, DocumentPageCache* cache, const char* name);
+  DVIWidget(QWidget* parent, PageView* sv, DocumentPageCache* cache, const char* name);
 
 signals:
   void SRCLink(const QString&, QMouseEvent* e, DocumentWidget*);

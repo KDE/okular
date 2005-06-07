@@ -13,6 +13,8 @@
 #include <kprocio.h>
 #include <qdir.h>
 #include <qpainter.h>
+//Added by qt3to4:
+#include <QPixmap>
 #include <stdio.h>
 
 #include "dviFile.h"

@@ -41,7 +41,7 @@ class RenderedDviPagePixmap : public RenderedDocumentPagePixmap
   List of source-hyperlinks in the current page. This vector is
   generated when the current page is drawn.
   */
-  QValueVector<Hyperlink> sourceHyperLinkList;
+  Q3ValueVector<Hyperlink> sourceHyperLinkList;
 };
 
 #endif

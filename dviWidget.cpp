@@ -18,6 +18,8 @@
 #include "documentWidget.h"
 #include "renderedDviPagePixmap.h"
 #include "selection.h"
+//Added by qt3to4:
+#include <QMouseEvent>
 
 DVIWidget::DVIWidget(QWidget* parent, PageView* sv, DocumentPageCache* cache, const char* name)
   : DocumentWidget(parent, sv, cache, name)

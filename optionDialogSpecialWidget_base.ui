@@ -52,7 +52,7 @@
                         <string>What is 'inverse search'? </string>
                     </property>
                     <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
+                        <set>Qt::AlignVCenter|Qt::AlignRight</set>
                     </property>
                     <property name="url" stdset="0">
                         <string>inv-search</string>
@@ -117,7 +117,7 @@
                         <cstring>spacer1</cstring>
                     </property>
                     <property name="orientation">
-                        <enum>Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                     </property>
                     <property name="sizeType">
                         <enum>Expanding</enum>

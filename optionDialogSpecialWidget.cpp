@@ -23,7 +23,7 @@
 
 // Constructs a optionDialogWidget_base which is a child of 'parent', with
 // the name 'name' and widget flags set to 'f'.
-optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const char* name, WFlags fl )
+optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const char* name, Qt::WFlags fl )
     : optionDialogSpecialWidget_base( parent,  name, fl )
 {
   // Set up the list of known and supported editors

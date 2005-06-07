@@ -8,7 +8,13 @@
 #define FONT_GENERATION_H
 
 #include <kdialogbase.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <QVBoxLayout>
+#include <Q3Frame>
+#include <QHBoxLayout>
+#include <QGridLayout>
 
 class KProcIO;
 class KProgress;
@@ -16,7 +22,7 @@ class KPushButton;
 class QVBoxLayout; 
 class QHBoxLayout; 
 class QGridLayout; 
-class QFrame;
+class Q3Frame;
 class QLabel;
 
 
@@ -65,7 +71,7 @@ private:
    QLabel* TextLabel1;
    KProgress* ProgressBar1;
    int progress;
-   QGuardedPtr<KProcIO> procIO;
+   QPointer<KProcIO> procIO;
 };
 
 #endif // FONT_GENERATION_H

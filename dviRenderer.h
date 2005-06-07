@@ -12,12 +12,15 @@
 
 
 #include <qevent.h>
-#include <qintdict.h>
+#include <q3intdict.h>
 #include <qpainter.h> 
-#include <qptrvector.h>
-#include <qvaluestack.h>
-#include <qvaluevector.h>
+#include <q3ptrvector.h>
+#include <q3valuestack.h>
+#include <q3valuevector.h>
 #include <qwidget.h> 
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <Q3PointArray>
 #include <kviewpart.h>
 
 #include "anchor.h"
@@ -82,7 +85,7 @@ struct drawinf {
   TeXFontDefinition          *fontp;
   set_char_proc	              set_char_p;
 
-  QIntDict<TeXFontDefinition> *fonttable;
+  Q3IntDict<TeXFontDefinition> *fonttable;
   TeXFontDefinition	      *_virtual;
 };
 
@@ -217,7 +220,7 @@ private:
   // List of source-hyperlinks on all pages. This vector is generated
   // when the DVI-file is first loaded, i.e. when draw_part is called
   // with PostScriptOutPutString != NULL
-  QValueVector<DVI_SourceFileAnchor>  sourceHyperLinkAnchors;
+  Q3ValueVector<DVI_SourceFileAnchor>  sourceHyperLinkAnchors;
   
   // If not NULL, the text currently drawn represents a source
   // hyperlink to the (relative) URL given in the string;
@@ -232,11 +235,11 @@ private:
   /** Stack for register compounds, used for the DVI-commands PUSH/POP
       as explained in section 2.5 and 2.6.2 of the DVI driver standard,
       Level 0, published by the TUG DVI driver standards committee. */
-  QValueStack<struct framedata> stack;
+  Q3ValueStack<struct framedata> stack;
   
   /** A stack where color are stored, according to the documentation of
       DVIPS */
-  QValueStack<QColor> colorStack;
+  Q3ValueStack<QColor> colorStack;
   
   /** The global color is to be used when the color stack is empty */
   QColor              globalColor;
@@ -270,7 +273,7 @@ private:
   
   /** Data required for handling TPIC specials */ 
   float       penWidth_in_mInch;
-  QPointArray TPIC_path;
+  Q3PointArray TPIC_path;
   Q_UINT16    number_of_elements_in_path;
   
   struct drawinf	currinf;

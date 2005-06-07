@@ -11,6 +11,8 @@
 #include <kdebug.h>
 #include <kprocio.h>
 #include <qfile.h>
+//Added by qt3to4:
+#include <QTextStream>
 
 #include "fontMap.h"
 
@@ -60,7 +62,7 @@ fontMap::fontMap()
   }
   
   QFile file( map_fileName );
-  if ( file.open( IO_ReadOnly ) ) {
+  if ( file.open( QIODevice::ReadOnly ) ) {
     QTextStream stream( &file );
     QString line;
     while ( !stream.atEnd() ) {

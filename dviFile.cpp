@@ -282,7 +282,7 @@ dvifile::dvifile(QString fname, fontPool *pool)
   
   QFile file(fname);
   filename = file.name();
-  file.open( IO_ReadOnly );
+  file.open( QIODevice::ReadOnly );
   size_of_file = file.size();
   dviData.resize(size_of_file);
   // Sets the end pointer for the bigEndianByteReader so that the
@@ -359,7 +359,7 @@ bool dvifile::saveAs(const QString &filename)
     return false;
 
   QFile out(filename);
-  if (out.open( IO_Raw|IO_WriteOnly ) == false)
+  if (out.open( IO_Raw|QIODevice::WriteOnly ) == false)
     return false;
   if (out.writeBlock ( (char *)(dvi_Data()), size_of_file ) == -1)
     return false;

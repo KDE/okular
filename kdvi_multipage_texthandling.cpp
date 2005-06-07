@@ -32,7 +32,9 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <qapplication.h>
-#include <qprogressdialog.h>
+#include <q3progressdialog.h>
+//Added by qt3to4:
+#include <QTextStream>
 
 #include "documentWidget.h"
 #include "kdvi_multipage.h"
@@ -80,10 +82,10 @@ void KDVIMultiPage::doExportText(void)
   }
 
   QFile textFile(fileName);
-  textFile.open( IO_WriteOnly );
+  textFile.open( QIODevice::WriteOnly );
   QTextStream stream( &textFile );
 
-  QProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), DVIRenderer.totalPages(), scrollView(), "export_text_progress", TRUE );
+  Q3ProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), DVIRenderer.totalPages(), scrollView(), "export_text_progress", TRUE );
   progress.setMinimumDuration(300);
 
   RenderedDocumentPagePixmap dummyPage;

@@ -17,7 +17,7 @@ class optionDialogSpecialWidget : public optionDialogSpecialWidget_base
   Q_OBJECT
     
  public:
-  optionDialogSpecialWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+  optionDialogSpecialWidget( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
   ~optionDialogSpecialWidget();
   
  public slots:

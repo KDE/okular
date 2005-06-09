@@ -102,7 +102,7 @@ void KDVIMultiPage::doExportText(void)
 
     // qApp->processEvents();
 
-    if ( progress.wasCancelled() )
+    if ( progress.wasCanceled() )
       break;
 
     dummyPage.setPageNumber(page);

@@ -45,9 +45,9 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
   }
 
   // Check if the mouse is pressed on a source-hyperlink
-  if ((e->button() == MidButton) && (pageData->sourceHyperLinkList.size() > 0))
+  if ((e->button() == Qt::MidButton) && (pageData->sourceHyperLinkList.size() > 0))
   {
-    for(unsigned int i=0; i<pageData->sourceHyperLinkList.size(); i++)
+    for(int i=0; i<pageData->sourceHyperLinkList.size(); i++)
     {
       if (pageData->sourceHyperLinkList[i].box.contains(e->pos()))
       {
@@ -79,7 +79,7 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
     }
     
     // Check if the cursor hovers over a sourceHyperlink.
-    for(unsigned int i=0; i<pageData->sourceHyperLinkList.size(); i++) {
+    for(int i=0; i<pageData->sourceHyperLinkList.size(); i++) {
       if (pageData->sourceHyperLinkList[i].box.contains(e->pos())) {
 	clearStatusBarTimer.stop();
 	

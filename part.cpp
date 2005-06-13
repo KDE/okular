@@ -232,13 +232,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_saveAs = KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
 	m_saveAs->setEnabled( false );
 	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
-	prefs->setText( i18n( "Configure PDF Viewer..." ) );
+	prefs->setText( i18n( "Configure KPDF..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
-	m_showLeftPanel = new KToggleAction( i18n( "Show &left panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
+	m_showLeftPanel = new KToggleAction( i18n( "Show &Navigation panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
 	m_showLeftPanel->setShortcut( "CTRL+L" );
-	m_showLeftPanel->setCheckedState( i18n("Hide &left panel") );
+	m_showLeftPanel->setCheckedState( i18n( "Hide &Navigation Panel" ) );
 	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
 	slotShowLeftPanel();
 

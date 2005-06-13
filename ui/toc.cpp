@@ -62,6 +62,7 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_documen
     setSorting(-1);
     setRootIsDecorated(true);
     setResizeMode(AllColumns);
+    setAllColumnsShowFocus(true);
     connect(this, SIGNAL(executed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
 }
 

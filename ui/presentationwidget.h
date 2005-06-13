@@ -86,6 +86,8 @@ class PresentationWidget : public QWidget, public DocumentObserver
     private slots:
         void slotNextPage();
         void slotPrevPage();
+        void slotFirstPage();
+        void slotLastPage();
         void slotHideOverlay();
         void slotTransitionStep();
 };

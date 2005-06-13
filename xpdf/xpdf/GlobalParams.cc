@@ -27,6 +27,7 @@
 #include <X11/Xft/XftCompat.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <sys/stat.h>
 #if HAVE_PAPER_H
 #include <paper.h>
 #endif
@@ -610,6 +611,7 @@ void GlobalParams::parseDisplayFont(GList *tokens, GHash *fontHash,
 				    DisplayFontParamKind kind,
 				    GString *fileName, int line) {
   DisplayFontParam *param, *old;
+  struct stat statbuf;
 
   if (tokens->getLength() < 2) {
     goto err1;
@@ -622,12 +624,24 @@ void GlobalParams::parseDisplayFont(GList *tokens, GHash *fontHash,
       goto err2;
     }
     param->t1.fileName = ((GString *)tokens->get(2))->copy();
+    if (stat((param->t1.fileName->getCString)(), &statbuf)) {
+      delete param; // silently ignore non-existing files
+      return;
+    }    
     break;
   case displayFontTT:
-    if (tokens->getLength() != 3) {
+    if (tokens->getLength() < 3) {
       goto err2;
     }
     param->tt.fileName = ((GString *)tokens->get(2))->copy();
+    if (stat((param->tt.fileName->getCString)(), &statbuf)) {
+      delete param; // silently ignore non-existing files
+      return;
+    }
+    if (tokens->getLength() > 3)
+      param->tt.faceIndex = atoi(((GString *)tokens->get(3))->getCString());
+    else
+      param->tt.faceIndex = 0;
     break;
   }
 
@@ -1083,7 +1097,7 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
 	if (res != FcResultMatch || !s)  goto fin; 
 	ext = rindex((char*)s,'.');
 	if (!ext) goto fin;
-	if (!strncasecmp(ext,".ttf",4)) {
+	if (!strncasecmp(ext,".ttf",4) || !strncasecmp(ext,".ttc",4)) {
 	  dfp = new DisplayFontParam(fontName->copy(), displayFontTT);  
    	  dfp->tt.fileName = new GString((char*)s);
 	 }  else if (!strncasecmp(ext,".pfa",4) || !strncasecmp(ext,".pfb",4)) {

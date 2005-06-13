@@ -206,9 +206,10 @@ private:
   void setupExternalType1Font(GString *fileName, GString *psName);
   void setupEmbeddedType1CFont(GfxFont *font, Ref *id, GString *psName);
   void setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id, GString *psName);
-  void setupExternalTrueTypeFont(GfxFont *font, GString *psName);
+  GString *setupExternalTrueTypeFont(GfxFont *font);
   void setupEmbeddedCIDType0Font(GfxFont *font, Ref *id, GString *psName);
   void setupEmbeddedCIDTrueTypeFont(GfxFont *font, Ref *id, GString *psName);
+  GString *setupExternalCIDTrueTypeFont(GfxFont *font, GString *fileName, int faceIndex=0);
   void setupType3Font(GfxFont *font, GString *psName, Dict *parentResDict);
   void setupImages(Dict *resDict);
   void setupImage(Ref id, Stream *str);
@@ -265,6 +266,7 @@ private:
   int fontFileIDLen;		// number of entries in fontFileIDs array
   int fontFileIDSize;		// size of fontFileIDs array
   GString **fontFileNames;	// list of names of all embedded external fonts
+  GString **psFileNames;	// list of names of all embedded external ps names
   int fontFileNameLen;		// number of entries in fontFileNames array
   int fontFileNameSize;		// size of fontFileNames array
   int nextTrueTypeNum;		// next unique number to append to a TrueType

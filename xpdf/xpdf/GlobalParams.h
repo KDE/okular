@@ -60,6 +60,7 @@ public:
     } t1;
     struct {
       GString *fileName;
+      int faceIndex;
     } tt;
   };
 

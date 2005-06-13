@@ -598,7 +598,7 @@ void Part::slotNewConfig()
     // changed before applying changes.
 
     // Watch File
-    bool watchFile = Settings::watchFile();  
+    bool watchFile = Settings::watchFile();
     if ( watchFile && m_watcher->isStopped() )
         m_watcher->startScan();
     if ( !watchFile && !m_watcher->isStopped() )

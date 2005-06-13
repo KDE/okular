@@ -7,6 +7,7 @@
 //========================================================================
 
 #include <aconf.h>
+#include <locale.h>
 
 #ifdef USE_GCC_PRAGMAS
 #pragma implementation
@@ -749,6 +750,7 @@ void PSOutputDev::init(PSOutputFunc outputFuncA, void *outputStreamA,
   Page *page;
   PDFRectangle *box;
 
+  setlocale(LC_NUMERIC,"POSIX");
   // initialize
   ok = gTrue;
   outputFunc = outputFuncA;
@@ -809,6 +811,7 @@ void PSOutputDev::init(PSOutputFunc outputFuncA, void *outputStreamA,
   fontFileNameSize = 64;
   fontFileNameLen = 0;
   fontFileNames = (GString **)gmalloc(fontFileNameSize * sizeof(GString *));
+  psFileNames = (GString **)gmalloc(fontFileNameSize * sizeof(GString *));
   nextTrueTypeNum = 0;
   font16EncLen = 0;
   font16EncSize = 0;
@@ -889,6 +892,13 @@ PSOutputDev::~PSOutputDev() {
       delete fontFileNames[i];
     }
     gfree(fontFileNames);
+  }
+  if (psFileNames) {
+    for (i = 0; i < fontFileNameLen; ++i) {
+      if (psFileNames[i])
+        delete psFileNames[i];
+    }
+    gfree(psFileNames);
   }
   if (font16Enc) {
     for (i = 0; i < font16EncLen; ++i) {
@@ -1189,6 +1199,7 @@ void PSOutputDev::setupFont(GfxFont *font, Dict *parentResDict) {
   double w1, w2;
   double *fm;
   int i, j;
+  DisplayFontParam *dfp;
 
   // check if font is already set up
   for (i = 0; i < fontIDLen; ++i) {
@@ -1246,8 +1257,7 @@ void PSOutputDev::setupFont(GfxFont *font, Dict *parentResDict) {
   } else if (globalParams->getPSEmbedTrueType() &&
 	     font->getType() == fontTrueType &&
 	     font->getExtFontFile()) {
-    psName = filterPSName(font->getName());
-    setupExternalTrueTypeFont(font, psName);
+    psName = setupExternalTrueTypeFont(font);
 
   // check for embedded CID PostScript font
   } else if (globalParams->getPSEmbedCIDPostScript() &&
@@ -1268,6 +1278,12 @@ void PSOutputDev::setupFont(GfxFont *font, Dict *parentResDict) {
 	    font->getID()->num, font->getID()->gen);
     psName = new GString(type3Name);
     setupType3Font(font, psName, parentResDict);
+
+  // check for external CID TrueType font file
+  } else if (globalParams->getPSEmbedCIDTrueType() &&
+	     font->getType() == fontCIDType2 &&
+	     font->getExtFontFile()) {
+    psName = setupExternalCIDTrueTypeFont(font, font->getExtFontFile());
 
   // do 8-bit font substitution
   } else if (!font->isCIDFont()) {
@@ -1349,6 +1365,15 @@ void PSOutputDev::setupFont(GfxFont *font, Dict *parentResDict) {
       error(-1, "Couldn't find Unicode map for 16-bit font encoding '%s'",
 	    font16Enc[font16EncLen].enc->getCString());
     }
+
+  // try the display font for embedding
+  } else if (globalParams->getPSEmbedCIDTrueType() &&
+	     ((GfxCIDFont *)font)->getCollection() &&
+	     (dfp = globalParams->
+	      getDisplayCIDFont(font->getName(),
+				((GfxCIDFont *)font)->getCollection())) &&
+	     dfp->kind == displayFontTT) {
+    psName = setupExternalCIDTrueTypeFont(font, dfp->tt.fileName, dfp->tt.faceIndex);
 
   // give up - can't do anything with this font
   } else {
@@ -1551,8 +1576,12 @@ void PSOutputDev::setupExternalType1Font(GString *fileName, GString *psName) {
     fontFileNameSize += 64;
     fontFileNames = (GString **)grealloc(fontFileNames,
 					 fontFileNameSize * sizeof(GString *));
+    psFileNames = (GString **)grealloc(psFileNames,
+				       fontFileNameSize * sizeof(GString *));
   }
-  fontFileNames[fontFileNameLen++] = fileName->copy();
+  fontFileNames[fontFileNameLen] = fileName->copy();
+  psFileNames[fontFileNameLen] = psName->copy();
+  fontFileNameLen++;
 
   // beginning comment
   writePSFmt("%%%%BeginResource: font %s\n", psName->getCString());
@@ -1665,25 +1694,24 @@ void PSOutputDev::setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id,
   writePS("%%EndResource\n");
 }
 
-void PSOutputDev::setupExternalTrueTypeFont(GfxFont *font, GString *psName) {
-  char unique[32];
+GString *PSOutputDev::setupExternalTrueTypeFont(GfxFont *font) {
   GString *fileName;
   char *fontBuf;
   int fontLen;
   FoFiTrueType *ffTT;
   Gushort *codeToGID;
+  GString *psName;
   int i;
 
   // check if font is already embedded
   fileName = font->getExtFontFile();
   for (i = 0; i < fontFileNameLen; ++i) {
     if (!fontFileNames[i]->cmp(fileName)) {
-      sprintf(unique, "_%d", nextTrueTypeNum++);
-      psName->append(unique);
-      break;
+      return psFileNames[i]->copy();
     }
   }
 
+  psName = filterPSName(font->getName());
   // add entry to fontFileNames list
   if (i == fontFileNameLen) {
     if (fontFileNameLen >= fontFileNameSize) {
@@ -1691,9 +1719,14 @@ void PSOutputDev::setupExternalTrueTypeFont(GfxFont *font, GString *psName) {
       fontFileNames =
 	(GString **)grealloc(fontFileNames,
 			     fontFileNameSize * sizeof(GString *));
+      psFileNames =
+	(GString **)grealloc(psFileNames,
+			     fontFileNameSize * sizeof(GString *));
     }
   }
-  fontFileNames[fontFileNameLen++] = fileName->copy();
+  fontFileNames[fontFileNameLen] = fileName->copy();
+  psFileNames[fontFileNameLen] = psName->copy();
+  fontFileNameLen++;
 
   // beginning comment
   writePSFmt("%%%%BeginResource: font %s\n", psName->getCString());
@@ -1716,6 +1749,82 @@ void PSOutputDev::setupExternalTrueTypeFont(GfxFont *font, GString *psName) {
 
   // ending comment
   writePS("%%EndResource\n");
+  return psName;
+}
+
+GString *PSOutputDev::setupExternalCIDTrueTypeFont(GfxFont *font, GString *fileName, int faceIndex) {
+//   char *fontBuf;
+//   int fontLen;
+  FoFiTrueType *ffTT;
+  Gushort *codeToGID;
+  GString *psName;
+  int i;
+  GString *myFileName;
+
+  myFileName = fileName->copy();
+  if (faceIndex > 0) {
+    char tmp[32];
+    sprintf(tmp, ",%d", faceIndex);
+    myFileName->append(tmp);
+  }
+  // check if font is already embedded
+  for (i = 0; i < fontFileNameLen; ++i) {
+    if (!fontFileNames[i]->cmp(myFileName)) {
+      delete myFileName;
+      return psFileNames[i]->copy();
+    }
+  }
+
+  psName = filterPSName(font->getName());
+  // add entry to fontFileNames list
+  if (i == fontFileNameLen) {
+    if (fontFileNameLen >= fontFileNameSize) {
+      fontFileNameSize += 64;
+      fontFileNames =
+	(GString **)grealloc(fontFileNames,
+			     fontFileNameSize * sizeof(GString *));
+      psFileNames =
+	(GString **)grealloc(psFileNames,
+			     fontFileNameSize * sizeof(GString *));
+    }
+  }
+  fontFileNames[fontFileNameLen] = myFileName;
+  psFileNames[fontFileNameLen] = psName->copy();
+  fontFileNameLen++;
+
+  // beginning comment
+  writePSFmt("%%%%BeginResource: font %s\n", psName->getCString());
+  embFontList->append("%%+ font ");
+  embFontList->append(psName->getCString());
+  embFontList->append("\n");
+
+  // convert it to a CID type2 font
+  if ((ffTT = FoFiTrueType::load(fileName->getCString(), faceIndex))) {
+      int n = ((GfxCIDFont *)font)->getCIDToGIDLen();
+      if (n) {
+	codeToGID = (Gushort *)gmalloc(n * sizeof(Gushort));
+	memcpy(codeToGID, ((GfxCIDFont *)font)->getCIDToGID(), n * sizeof(Gushort));
+      } else {
+	codeToGID = ((GfxCIDFont *)font)->getCodeToGIDMap(ffTT, &n);
+      }
+      if (globalParams->getPSLevel() >= psLevel3) {
+	// Level 3: use a CID font
+	ffTT->convertToCIDType2(psName->getCString(),
+				codeToGID, n,
+				outputFunc, outputStream);
+      } else {
+	// otherwise: use a non-CID composite font
+	ffTT->convertToType0(psName->getCString(),
+			     codeToGID, n,
+			     outputFunc, outputStream);
+      }
+      gfree(codeToGID);
+      delete ffTT;
+  }
+
+  // ending comment
+  writePS("%%EndResource\n");
+  return psName;
 }
 
 void PSOutputDev::setupEmbeddedCIDType0Font(GfxFont *font, Ref *id,

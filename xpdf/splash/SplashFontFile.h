@@ -25,6 +25,25 @@ class SplashFontFileID;
 // SplashFontFile
 //------------------------------------------------------------------------
 
+struct SplashFontSrc {
+  SplashFontSrc();
+  ~SplashFontSrc();
+
+  void setFile(GString *file, GBool del);
+  void setFile(const char *file, GBool del);
+  void setBuf(char *bufA, int buflenA, GBool del);
+
+  void ref();
+  void unref();
+
+  GBool isFile;
+  GString *fileName;
+  char *buf;
+  int bufLen;
+  GBool deleteSrc;
+  int refcnt;
+};
+
 class SplashFontFile {
 public:
 
@@ -46,12 +65,10 @@ public:
 
 protected:
 
-  SplashFontFile(SplashFontFileID *idA, char *fileNameA,
-		 GBool deleteFileA);
+  SplashFontFile(SplashFontFileID *idA, SplashFontSrc *srcA);
 
   SplashFontFileID *id;
-  GString *fileName;
-  GBool deleteFile;
+  SplashFontSrc *src;
   int refCnt;
 
   friend class SplashFontEngine;

@@ -490,11 +490,14 @@ void SplashOutputDev::updateFont(GfxState *state) {
   GfxFontType fontType;
   SplashOutFontFileID *id;
   SplashFontFile *fontFile;
+  SplashFontSrc *fontsrc;
   FoFiTrueType *ff;
   Ref embRef;
   Object refObj, strObj;
-  GString *tmpFileName, *fileName, *substName;
-  FILE *tmpFile;
+  GString *fileName, *substName;
+  char *tmpBuf;
+  int tmpBufLen;
+//   FILE *tmpFile;
   Gushort *codeToGID;
   DisplayFontParam *dfp;
   CharCodeToUnicode *ctu;
@@ -502,11 +505,13 @@ void SplashOutputDev::updateFont(GfxState *state) {
   SplashCoord mat[4];
   const char *name;
   Unicode uBuf[8];
-  int c, substIdx, n, code, cmap;
+  int /*c, */substIdx, n, code, cmap;
+  int faceIndex = 0;
 
   needFontUpdate = gFalse;
   font = NULL;
-  tmpFileName = NULL;
+  fileName = NULL;
+  tmpBuf = NULL;
   substIdx = -1;
   dfp =  NULL;
 
@@ -527,22 +532,9 @@ void SplashOutputDev::updateFont(GfxState *state) {
 
     // if there is an embedded font, write it to disk
     if (gfxFont->getEmbeddedFontID(&embRef)) {
-      if (!openTempFile(&tmpFileName, &tmpFile, "wb", NULL)) {
-	error(-1, "Couldn't create temporary font file");
+      tmpBuf = gfxFont->readEmbFontFile(xref, &tmpBufLen);
+      if (! tmpBuf)
 	goto err2;
-      }
-      refObj.initRef(embRef.num, embRef.gen);
-      refObj.fetch(xref, &strObj);
-      refObj.free();
-      strObj.streamReset();
-      while ((c = strObj.streamGetChar()) != EOF) {
-	fputc(c, tmpFile);
-      }
-      strObj.streamClose();
-      strObj.free();
-      fclose(tmpFile);
-      fileName = tmpFileName;
-
     // if there is an external font file, use it
     } else if (!(fileName = gfxFont->getExtFontFile())) {
 
@@ -588,6 +580,7 @@ void SplashOutputDev::updateFont(GfxState *state) {
       case displayFontT1:
 	fileName = dfp->t1.fileName;
 	fontType = gfxFont->isCIDFont() ? fontCIDType0 : fontType1;
+	faceIndex = dfp->tt.faceIndex;
 	break;
       case displayFontTT:
 	fileName = dfp->tt.fileName;
@@ -596,14 +589,18 @@ void SplashOutputDev::updateFont(GfxState *state) {
       }
     }
 
+    fontsrc = new SplashFontSrc;
+    if (fileName)
+      fontsrc->setFile(fileName, gFalse);
+    else
+      fontsrc->setBuf(tmpBuf, tmpBufLen, gFalse);
+
     // load the font file
     switch (fontType) {
     case fontType1:
-      if (!(fontFile = fontEngine->loadType1Font(
-			   id,
-			   fileName->getCString(),
-			   fileName == tmpFileName,
-			   ((Gfx8BitFont *)gfxFont)->getEncoding()))) {
+      fontFile = fontEngine->loadType1Font(id, fontsrc, 
+					   ((Gfx8BitFont *)gfxFont)->getEncoding());
+      if (! fontFile) {
 	error(-1, "Couldn't create a font for '%s'",
 	      gfxFont->getName() ? gfxFont->getName()->getCString()
 	                         : "(unnamed)");
@@ -611,11 +608,9 @@ void SplashOutputDev::updateFont(GfxState *state) {
       }
       break;
     case fontType1C:
-      if (!(fontFile = fontEngine->loadType1CFont(
-			   id,
-			   fileName->getCString(),
-			   fileName == tmpFileName,
-			   ((Gfx8BitFont *)gfxFont)->getEncoding()))) {
+      fontFile = fontEngine->loadType1CFont(id, fontsrc,
+					    ((Gfx8BitFont *)gfxFont)->getEncoding());
+      if (! fontFile) {
 	error(-1, "Couldn't create a font for '%s'",
 	      gfxFont->getName() ? gfxFont->getName()->getCString()
 	                         : "(unnamed)");
@@ -623,16 +618,16 @@ void SplashOutputDev::updateFont(GfxState *state) {
       }
       break;
     case fontTrueType:
-      if (!(ff = FoFiTrueType::load(fileName->getCString()))) {
+      if (fileName)
+	ff = FoFiTrueType::load(fileName->getCString());
+      else
+	ff = new FoFiTrueType(tmpBuf, tmpBufLen, gFalse);
+      if (! ff)
 	goto err2;
-      }
       codeToGID = ((Gfx8BitFont *)gfxFont)->getCodeToGIDMap(ff);
       delete ff;
-      if (!(fontFile = fontEngine->loadTrueTypeFont(
-			   id,
-			   fileName->getCString(),
-			   fileName == tmpFileName,
-			   codeToGID, 256))) {
+      fontFile = fontEngine->loadTrueTypeFont(id, fontsrc, codeToGID, 256);
+      if (! fontFile) {
 	error(-1, "Couldn't create a font for '%s'",
 	      gfxFont->getName() ? gfxFont->getName()->getCString()
 	                         : "(unnamed)");
@@ -641,10 +636,8 @@ void SplashOutputDev::updateFont(GfxState *state) {
       break;
     case fontCIDType0:
     case fontCIDType0C:
-      if (!(fontFile = fontEngine->loadCIDFont(
-			   id,
-			   fileName->getCString(),
-			   fileName == tmpFileName))) {
+      fontFile = fontEngine->loadCIDFont(id, fontsrc);
+      if (! fontFile) {
 	error(-1, "Couldn't create a font for '%s'",
 	      gfxFont->getName() ? gfxFont->getName()->getCString()
 	                         : "(unnamed)");
@@ -692,13 +685,19 @@ void SplashOutputDev::updateFont(GfxState *state) {
 	  codeToGID = (Gushort *)gmalloc(n * sizeof(Gushort));
 	  memcpy(codeToGID, ((GfxCIDFont *)gfxFont)->getCIDToGID(),
 		 n * sizeof(Gushort));
+	} else {
+	  if (fileName)
+		ff = FoFiTrueType::load(fileName->getCString());
+	  else
+		ff = new FoFiTrueType(tmpBuf, tmpBufLen, gFalse);
+	  if (! ff)
+		goto err2;
+	  codeToGID = ((GfxCIDFont *)gfxFont)->getCodeToGIDMap(ff, &n);
+	  delete ff;
 	}
       }
-      if (!(fontFile = fontEngine->loadTrueTypeFont(
-			   id,
-			   fileName->getCString(),
-			   fileName == tmpFileName,
-			   codeToGID, n))) {
+      fontFile = fontEngine->loadTrueTypeFont(id, fontsrc, codeToGID, n, faceIndex);
+      if (!fontFile) {
 	error(-1, "Couldn't create a font for '%s'",
 	      gfxFont->getName() ? gfxFont->getName()->getCString()
 	                         : "(unnamed)");
@@ -746,17 +745,11 @@ void SplashOutputDev::updateFont(GfxState *state) {
   mat[2] = m21;  mat[3] = -m22;
   font = fontEngine->getFont(fontFile, mat);
 
-  if (tmpFileName) {
-    delete tmpFileName;
-  }
   return;
 
  err2:
   delete id;
  err1:
-  if (tmpFileName) {
-    delete tmpFileName;
-  }
   return;
 }
 
@@ -1374,8 +1367,9 @@ SplashFont *SplashOutputDev::getFont(GString *name, double *mat) {
     if (dfp->kind != displayFontT1) {
       return NULL;
     }
-    fontFile = fontEngine->loadType1Font(id, dfp->t1.fileName->getCString(),
-					 gFalse, winAnsiEncoding);
+    SplashFontSrc *fontsrc = new SplashFontSrc;
+    fontsrc->setFile(dfp->t1.fileName, gFalse);
+    fontFile = fontEngine->loadType1Font(id, fontsrc, winAnsiEncoding);
   }
 
   // create the scaled font

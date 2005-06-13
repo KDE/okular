@@ -1,0 +1,20 @@
+if test -z "$FREETYPE_CONFIG"; then
+  echo ""
+  echo "You're missing freetype development libs."
+  echo "KPDF will not be build without them"
+  echo ""
+fi
+
+if test -z "$XFT_LIBS"; then
+  echo ""
+  echo "You're missing XFT development libs."
+  echo "KPDF will not be build without them"
+  echo ""
+fi
+
+if test "$HAVE_LIBJPEG" = "no"; then
+  echo ""
+  echo "You're missing libjpeg development libs."
+  echo "KPDF will not be build without them"
+  echo ""
+fi

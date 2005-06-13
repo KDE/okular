@@ -399,13 +399,20 @@ GBool NameTree::lookup(GString *name, Object *obj)
 {
   Entry *entry;
 
-  entry = *(Entry **) bsearch(name, entries,
+  Entry **e = (Entry **) bsearch(name, entries,
 			      length, sizeof(Entry *), Entry::cmp);
+  if (e) entry = *e;
+  else
+  {
+      error(-1, "failed to look up %s\n", name->getCString());
+      obj->initNull();
+      return gFalse;
+  }
   if (entry != NULL) {
     entry->value.fetch(xref, obj);
     return gTrue;
   } else {
-    printf("failed to look up %s\n", name->getCString());
+    error(-1, "failed to look up %s\n", name->getCString());
 
     obj->initNull();
 

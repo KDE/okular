@@ -23,6 +23,36 @@ struct Ref;
 class LinkDest;
 
 //------------------------------------------------------------------------
+// NameTree
+//------------------------------------------------------------------------
+
+class NameTree {
+public:
+  NameTree();
+  void init(XRef *xref, Object *tree);
+  void parse(Object *tree);
+  GBool lookup(GString *name, Object *obj);
+  void free();
+
+private:
+  struct Entry {
+    Entry(Array *array, int index);
+    ~Entry();
+    GString name;
+    Object value;
+    void free();
+    static int cmp(const void *key, const void *entry);
+  };
+
+  void addEntry(Entry *entry);
+
+  XRef *xref;
+  Object *root;
+  Entry **entries;
+  int size, length;
+};
+
+//------------------------------------------------------------------------
 // Catalog
 //------------------------------------------------------------------------
 
@@ -86,7 +116,7 @@ private:
   int numPages;			// number of pages
   int pagesSize;		// size of pages array
   Object dests;			// named destination dictionary
-  Object nameTree;		// name tree
+  NameTree destNameTree;	// name tree
   GString *baseURI;		// base URI for URI-type links
   PageMode pageMode;  // page mode
   Object metadata;		// metadata stream

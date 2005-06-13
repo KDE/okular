@@ -45,6 +45,7 @@ public:
   // Accessors.
   Object *get(int i, Object *obj);
   Object *getNF(int i, Object *obj);
+  GBool getString(int i, GString *string);
 
 private:
 

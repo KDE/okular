@@ -74,7 +74,7 @@ namespace agg
 
     //---------------------------------------------------------------pod_array
     // A simple class template to store Plain Old Data, a vector
-    // of a fixed size. The data is continous in memory
+    // of a fixed size. The data is continuous in memory
     //------------------------------------------------------------------------
     template<class T> class pod_array
     {

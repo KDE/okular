@@ -170,7 +170,7 @@ Done (newest features come first):
 -> ADD: Presentation View (only the 'glitter' transition implemented for now)
 -> FIX: FixPack1 [dyn_zoom repaints, initial panel width, zoom_lineedit focus proxy, searchwidget refactor{thumbs restoring on clear, buttons size, less code}, hilight bookmarked thumbnails]
 -> FIX: Some fullScreen loving, if we are on fullscreen put an action on RMB menu ti get out of it, if we were on fullScreen mode on exit bring back correctly if we were also seeing toolbar or menubar
--> FIX: When in non continous mode and scrolling up a page, set the viewport at the bottom of the page (Albert)
+-> FIX: When in non continuous mode and scrolling up a page, set the viewport at the bottom of the page (Albert)
 -> ADD: Show the window maximized when the user opens the program for the very first time (Albert)
 -> ADD: Use 'Generators' as providers for contents generation
 -> ADD: Add properties dialog (Albert)
@@ -196,7 +196,7 @@ Done (newest features come first):
 -> ADD: autoscroll page with Shift+Up/Dn keys (exact konqueror's behavior)
 -> CHG: remake single page mode
 -> FIX: zoom buttons in sync with text
--> ADD: continous mode
+-> ADD: continuous mode
 -> ADD: multiple pages per view (gui selects 1 or 2 ppv)
 -> MRG: the option to open password protected files (from head)
 -> MRG: the Table Of Contents (from head)

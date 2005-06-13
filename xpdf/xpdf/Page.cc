@@ -436,6 +436,8 @@ void Page::displaySlice(OutputDev *out, double hDPI, double vDPI,
   }
 
   // draw non-link annotations
+  /** FIXME - eros - 60ms @400MHz for fetching annotations each time and not
+      displaying them at all.. Half a Second wasted for 8 thumbnails!
   annotList = new Annots(xref, annots.fetch(xref, &obj));
   obj.free();
   if (annotList->getNumAnnots() > 0) {
@@ -447,7 +449,7 @@ void Page::displaySlice(OutputDev *out, double hDPI, double vDPI,
     }
     out->dump();
   }
-  delete annotList;
+  delete annotList; **/
 
   delete gfx;
 #endif

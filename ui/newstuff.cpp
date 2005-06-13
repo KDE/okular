@@ -209,6 +209,8 @@ class ItemsView : public KHTMLPart
             // write the html header and contents manipulation scripts
             write( "<html><body>" );
 
+            write( "<div style='font-size:2em; border-bottom: 1px solid blue; background-color: #808080;'>Updated</div>" );
+
             AvailableItem::List::iterator it = m_items.begin(), iEnd = m_items.end();
             for ( ; it != iEnd; ++it )
             {
@@ -470,6 +472,9 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         d->sortCombo->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
         d->sortCombo->setMinimumWidth( 100 );
         d->sortCombo->setEnabled( false );
+        d->sortCombo->insertItem( SmallIcon( "fonts" ), i18n("Name") );
+        d->sortCombo->insertItem( SmallIcon( "knewstuff" ), i18n("Rating") );
+        d->sortCombo->insertItem( SmallIcon( "favorites" ), i18n("Downloads") );
         connect( d->sortCombo, SIGNAL( activated(int) ),
                  this, SLOT( slotSortingSelected(int) ) );
 

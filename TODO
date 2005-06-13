@@ -124,6 +124,7 @@ Done (newest features come first):
 -> ADD: use kde wallet for storing passwords of protected files
 *> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]
 -> FIX: trigger redraw on 'filter text' on current page (need new highligh engine first)
+-> ADD: Obey DRM is now a configuration option
 -> FIX: fixed viewport saving/restoring (+performance fix) on presentation mode
 -> FIX: leakfix when closing document while thread was running (no more leaks now)
 -> FIX: direct hi-performance pixels manipulation for highlighting (instead of the obsoleted setRasterOp)

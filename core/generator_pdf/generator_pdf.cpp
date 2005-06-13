@@ -303,7 +303,6 @@ const DocumentFonts * PDFGenerator::generateDocumentFonts()
         }
         delete annots;
     }
-    kdWarning() << docFonts.toString() << endl;
     // empty the font list and release mutex
     gfree( fonts );
     docLock.unlock();

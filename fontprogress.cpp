@@ -16,7 +16,7 @@
 #include <qlayout.h>
 #include <qvariant.h>
 #include <qtooltip.h>
-#include <q3whatsthis.h>
+
 
 #include <q3vbox.h>
 
@@ -42,20 +42,20 @@ fontProgressDialog::fontProgressDialog( QString helpIndex, QString label, QStrin
 
   TextLabel1   = new QLabel( label, page, "TextLabel2" );
   TextLabel1->setAlignment( int( Qt::AlignCenter ) );
-  Q3WhatsThis::add( TextLabel1, whatsThis );
+  TextLabel1->setWhatsThis( whatsThis );
   QToolTip::add( TextLabel1, ttip );
 
   if (progressbar) {
     ProgressBar1 = new KProgress( page, "ProgressBar1" );
     ProgressBar1->setFormat(i18n("%v of %m"));
-    Q3WhatsThis::add( ProgressBar1, whatsThis );
+    ProgressBar1->setWhatsThis( whatsThis );
     QToolTip::add( ProgressBar1, ttip );
   } else 
     ProgressBar1 = NULL;
   
   TextLabel2   = new QLabel( "", page, "TextLabel2" );
   TextLabel2->setAlignment( int( Qt::AlignCenter ) );
-  Q3WhatsThis::add( TextLabel2, whatsThis );
+  TextLabel2->setWhatsThis( whatsThis );
   QToolTip::add( TextLabel2, ttip );
 
   progress = 0;

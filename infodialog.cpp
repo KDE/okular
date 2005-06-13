@@ -14,7 +14,7 @@
 #include <q3textview.h>
 #include <qtooltip.h>
 #include <qvariant.h>
-#include <q3whatsthis.h>
+
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <Q3Frame>
@@ -38,7 +38,7 @@ infoDialog::infoDialog( QWidget* parent )
   TextLabel2->setMinimumWidth(fontMetrics().maxWidth()*40);
   TextLabel2->setMinimumHeight(fontMetrics().height()*10);
   QToolTip::add( TextLabel2, i18n("Information on currently loaded fonts.") );
-  Q3WhatsThis::add( TextLabel2, i18n("This text field shows detailed information about the currently loaded fonts. "
+  TextLabel2->setWhatsThis( i18n("This text field shows detailed information about the currently loaded fonts. "
 				    "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );
   topLayout2->addWidget( TextLabel2 );
 
@@ -47,7 +47,7 @@ infoDialog::infoDialog( QWidget* parent )
   TextLabel3 = new Q3TextView( page3, "TextLabel1" );
   TextLabel3->setText( i18n("No output from any external program received.") );
   QToolTip::add( TextLabel3, i18n("Output of external programs.") );
-  Q3WhatsThis::add( TextLabel3, i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
+  TextLabel3->setWhatsThis( i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
 				    "This text field shows the output of these programs. "
 				    "That is useful for experts who want to find problems in the setup of TeX or KDVI.") );
   topLayout3->addWidget( TextLabel3 );

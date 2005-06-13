@@ -249,6 +249,7 @@ void KPDFDocument::closeDocument()
     d->searches.clear();
 
     // reset internal variables
+    d->url = KURL();
     d->viewportHistory.clear();
     d->viewportHistory.append( DocumentViewport() );
     d->viewportIterator = d->viewportHistory.begin();
@@ -367,6 +368,11 @@ uint KPDFDocument::currentPage() const
 uint KPDFDocument::pages() const
 {
     return pages_vector.size();
+}
+
+KURL KPDFDocument::currentDocument() const
+{
+    return d->url;
 }
 
 bool KPDFDocument::isAllowed( int flags ) const

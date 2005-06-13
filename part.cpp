@@ -310,12 +310,22 @@ void Part::goToPage(uint i)
 
 void Part::openDocument(KURL doc)
 {
-	openURL(doc);
+    openURL(doc);
 }
 
 uint Part::pages()
 {
-	return m_document->pages();
+    return m_document->pages();
+}
+
+uint Part::currentPage()
+{
+    return m_document->pages() ? m_document->currentPage() + 1 : 0;
+}
+
+KURL Part::currentDocument()
+{
+    return m_document->currentDocument();
 }
 
 //this don't go anywhere but is required by genericfactory.h

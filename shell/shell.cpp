@@ -30,7 +30,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmenubar.h>
-#include <kpopupmenu.h>
 #include <kparts/componentfactory.h>
 #include <kio/netaccess.h>
 #include <kmainwindowiface.h>

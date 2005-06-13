@@ -23,6 +23,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 // -- ---------------------------------------------------------- --
+#include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 #include <X11/Xft/XftCompat.h>
 #include <stdio.h>
@@ -99,6 +100,7 @@ static const char *displayFontDirs[] = {
   "/usr/share/fonts/default/Type1",
   "/usr/share/fonts/type1/gsfonts",
   "/usr/share/fonts/default/ghostscript/",
+  "/usr/share/fonts/Type1",
   NULL
 };
 

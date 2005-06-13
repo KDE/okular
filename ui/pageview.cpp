@@ -1748,12 +1748,6 @@ void PageView::slotRelayoutPages()
         }
 
         delete [] colWidth;
-
-        // this can cause a little overhead
-        // FIXME A FIX FOR THAT HAS ALREADY BEEN COMMITTED! WHY IS THAT LINE HERE??? TODO
-        // Note: the fix was a slotRequestVisiblePixmaps if center() calls don't call it
-        // ~20 lines below
-        slotRequestVisiblePixmaps();
     }
 
     // 3) reset dirty state
@@ -1773,11 +1767,17 @@ void PageView::slotRelayoutPages()
             const DocumentViewport & vp = d->document->viewport();
             if ( vp.pageNumber >= 0 )
             {
+                int prevX = contentsX(),
+                    prevY = contentsY();
                 const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
                 double nX = vp.reCenter.enabled ? vp.reCenter.normalizedCenterX : 0.5,
                        nY = vp.reCenter.enabled ? vp.reCenter.normalizedCenterY : 0.0;
                 center( geometry.left() + ROUND( nX * (double)geometry.width() ),
                         geometry.top() + ROUND( nY * (double)geometry.height() ) );
+                // center() usually moves the viewport, that requests pixmaps too.
+                // if that doesn't happen we have to request them by hand
+                if ( prevX == contentsX() && prevY == contentsY() )
+                    slotRequestVisiblePixmaps();
             }
             // or else go to center page
             else

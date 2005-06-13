@@ -125,6 +125,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox = new QToolBox( m_leftPanel );
 	leftPanelLayout->addWidget( m_toolBox );
 
+	int tbIndex;
 	// [left toolbox: Table of Contents] | []
 	//QFrame * tocFrame = new QFrame( m_toolBox );
 	//QVBoxLayout * tocFrameLayout = new QVBoxLayout( tocFrame );
@@ -133,7 +134,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	//KListViewSearchLine * tocSearchLine = new KListViewSearchLine( tocFrame, toc );
 	//tocFrameLayout->addWidget( tocSearchLine );
 	//tocFrameLayout->addWidget( toc );
-	m_toolBox->addItem( toc/*tocFrame*/, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	tbIndex = m_toolBox->addItem( toc/*tocFrame*/, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
 	enableTOC( false );
 
 	// [left toolbox: Thumbnails and Bookmarks] | []
@@ -148,7 +150,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
 	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
 //	thumbsBox->setStretchFactor( m_tc, 1 );
-	m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+	tbIndex = m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
 	m_toolBox->setCurrentItem( thumbsBox );
 
 	// [left toolbox: Reviews] | []

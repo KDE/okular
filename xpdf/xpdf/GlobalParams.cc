@@ -1058,7 +1058,7 @@ FILE *GlobalParams::findToUnicodeFile(GString *name) {
 // KPDF: parse xpdf font name into family and style
 // Helvetica-BoldOblique => name=Helvetica, weight=Bold, slant=Oblique
 
-void parseStyle(QString& name, int& weight, int& slant)
+void parseStyle(QString& name, int& weight, int& slant, int& width)
 {
   if (name.find("MS-") == 0) name = "MS " + name.remove(0,3);
 
@@ -1068,9 +1068,9 @@ void parseStyle(QString& name, int& weight, int& slant)
   if (type.contains("Oblique")) slant=FC_SLANT_OBLIQUE;
   if (type.contains("Italic")) slant=FC_SLANT_ITALIC;
   if (type.contains("Bold")) weight=FC_WEIGHT_BOLD;
+  if (type.contains("Light")) weight=FC_WEIGHT_LIGHT;
+  if (type.contains("Condensed")) width=FC_WIDTH_CONDENSED;
 }
-
-
 
 DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
   DisplayFontParam *dfp;
@@ -1078,21 +1078,21 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
   FcChar8* s;
   char * ext;
   FcResult res;
- 
 
   lockGlobalParams;
   dfp = (DisplayFontParam *)displayFonts->lookup(fontName);
   // KPDF: try to find font using Xft
   if (!dfp) {
-  	int weight=FC_WEIGHT_MEDIUM, slant=FC_SLANT_ROMAN;
+  	int weight=FC_WEIGHT_MEDIUM, slant=FC_SLANT_ROMAN, width=FC_WIDTH_NORMAL;
 	QString name(fontName->getCString());
-	parseStyle(name,weight,slant);
+	
+	parseStyle(name,weight,slant,width);
 	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), 
 		FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight,
-		FC_LANG, FcTypeString, "xx", (char*)0);
+		FC_WIDTH, FcTypeInteger, width, FC_LANG, FcTypeString, "xx", (char*)0);
 	if (!p) goto fin;
 	m = XftFontMatch(qt_xdisplay(),qt_xscreen(),p,&res);
-	if (!m) goto fin; 
+	if (!m) goto fin;
 	res = FcPatternGetString (m, FC_FILE, 0, &s);
 	if (res != FcResultMatch || !s)  goto fin; 
 	ext = rindex((char*)s,'.');
@@ -1100,6 +1100,7 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
 	if (!strncasecmp(ext,".ttf",4) || !strncasecmp(ext,".ttc",4)) {
 	  dfp = new DisplayFontParam(fontName->copy(), displayFontTT);  
    	  dfp->tt.fileName = new GString((char*)s);
+   	  FcPatternGetInteger(m, FC_INDEX, 0, &(dfp->tt.faceIndex));
 	 }  else if (!strncasecmp(ext,".pfa",4) || !strncasecmp(ext,".pfb",4)) {
 	   dfp = new DisplayFontParam(fontName->copy(), displayFontT1);  
 	   dfp->t1.fileName = new GString((char*)s);

@@ -344,10 +344,19 @@ void PageView::notifyViewportChanged( bool smoothMove )
     const QRect & r = item->geometry();
     int newCenterX = r.left(),
         newCenterY = r.top();
-    if ( vp.reCenter.enabled )
+    if ( vp.rePos.enabled )
     {
-        newCenterX += (int)( vp.reCenter.normalizedCenterX * (double)r.width() );
-        newCenterY += (int)( vp.reCenter.normalizedCenterY * (double)r.height() );
+        if ( vp.rePos.pos == DocumentViewport::Center )
+        {
+            newCenterX += (int)( vp.rePos.normalizedX * (double)r.width() );
+            newCenterY += (int)( vp.rePos.normalizedY * (double)r.height() );
+        }
+        else
+        {
+            // TopLeft
+            newCenterX += (int)( vp.rePos.normalizedX * (double)r.width() + viewport()->width() / 2 );
+            newCenterY += (int)( vp.rePos.normalizedY * (double)r.height() + viewport()->height() / 2 );
+        }
     }
     else
     {
@@ -683,8 +692,8 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 newViewport.pageNumber -= Settings::viewColumns();
                 if ( newViewport.pageNumber < 0 )
                     newViewport.pageNumber = 0;
-                newViewport.reCenter.enabled = true;
-                newViewport.reCenter.normalizedCenterY = 1.0;
+                newViewport.rePos.enabled = true;
+                newViewport.rePos.normalizedY = 1.0;
                 d->document->setViewport( newViewport );
             }
             break;
@@ -700,13 +709,13 @@ void PageView::keyPressEvent( QKeyEvent * e )
             }
             else if ( d->document->currentPage() < d->items.count() - 1 )
             {
-                // more optmized than document->setNextPage and then move view to top
+                // more optimized than document->setNextPage and then move view to top
                 DocumentViewport newViewport = d->document->viewport();
                 newViewport.pageNumber += d->document->currentPage() ? Settings::viewColumns() : 1;
                 if ( newViewport.pageNumber >= (int)d->items.count() )
                     newViewport.pageNumber = d->items.count() - 1;
-                newViewport.reCenter.enabled = true;
-                newViewport.reCenter.normalizedCenterY = 0.0;
+                newViewport.rePos.enabled = true;
+                newViewport.rePos.normalizedY = 0.0;
                 d->document->setViewport( newViewport );
             }
             break;
@@ -1220,13 +1229,13 @@ void PageView::wheelEvent( QWheelEvent *e )
         // go to next page
         if ( d->document->currentPage() < d->items.count() - 1 )
         {
-            // more optmized than document->setNextPage and then move view to top
+            // more optimized than document->setNextPage and then move view to top
             DocumentViewport newViewport = d->document->viewport();
             newViewport.pageNumber += d->document->currentPage() ? Settings::viewColumns() : 1;
             if ( newViewport.pageNumber >= (int)d->items.count() )
                 newViewport.pageNumber = d->items.count() - 1;
-            newViewport.reCenter.enabled = true;
-            newViewport.reCenter.normalizedCenterY = 0.0;
+            newViewport.rePos.enabled = true;
+            newViewport.rePos.normalizedY = 0.0;
             d->document->setViewport( newViewport );
         }
     }
@@ -1235,13 +1244,13 @@ void PageView::wheelEvent( QWheelEvent *e )
         // go to prev page
         if ( d->document->currentPage() > 0 )
         {
-            // more optmized than document->setPrevPage and then move view to bottom
+            // more optimized than document->setPrevPage and then move view to bottom
             DocumentViewport newViewport = d->document->viewport();
             newViewport.pageNumber -= Settings::viewColumns();
             if ( newViewport.pageNumber < 0 )
                 newViewport.pageNumber = 0;
-            newViewport.reCenter.enabled = true;
-            newViewport.reCenter.normalizedCenterY = 1.0;
+            newViewport.rePos.enabled = true;
+            newViewport.rePos.normalizedY = 1.0;
             d->document->setViewport( newViewport );
         }
     }
@@ -1773,8 +1782,8 @@ void PageView::slotRelayoutPages()
                 int prevX = contentsX(),
                     prevY = contentsY();
                 const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
-                double nX = vp.reCenter.enabled ? vp.reCenter.normalizedCenterX : 0.5,
-                       nY = vp.reCenter.enabled ? vp.reCenter.normalizedCenterY : 0.0;
+                double nX = vp.rePos.enabled ? vp.rePos.normalizedX : 0.5,
+                       nY = vp.rePos.enabled ? vp.rePos.normalizedY : 0.0;
                 center( geometry.left() + ROUND( nX * (double)geometry.width() ),
                         geometry.top() + ROUND( nY * (double)geometry.height() ) );
                 // center() usually moves the viewport, that requests pixmaps too.
@@ -1895,9 +1904,9 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
     {
         // determine the document viewport
         DocumentViewport newViewport( nearPageNumber );
-        newViewport.reCenter.enabled = true;
-        newViewport.reCenter.normalizedCenterX = focusedX;
-        newViewport.reCenter.normalizedCenterY = focusedY;
+        newViewport.rePos.enabled = true;
+        newViewport.rePos.normalizedX = focusedX;
+        newViewport.rePos.normalizedY = focusedY;
         // set the viewport to other observers
         d->document->setViewport( newViewport , PAGEVIEW_ID);
     }

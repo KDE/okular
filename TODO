@@ -121,6 +121,7 @@ Done (newest features come first):
 -> ADD: annotations: PDF1.6 reader (PDF's annotations -> our data structures)
 -> ADD: Internal data structures for annotations handling.
 -> FIX: rmb when no doc displayed to restore menu
+-> ADD: partial implementation of XYZ links
 -> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files
 *> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]

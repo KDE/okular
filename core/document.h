@@ -141,12 +141,16 @@ class DocumentViewport
         // the page nearest the center of the viewport
         int pageNumber;
 
+        // enum definitions
+        enum Position { Center = 1, TopLeft = 2};
+
         // if reCenter.enabled, this contains the viewport center
         struct {
             bool enabled;
-            double normalizedCenterX;
-            double normalizedCenterY;
-        } reCenter;
+            double normalizedX;
+            double normalizedY;
+            Position pos;
+        } rePos;
 
         // if autoFit.enabled, page must be autofitted in the viewport
         struct {

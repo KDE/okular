@@ -251,6 +251,7 @@ void PageView::fitPageWidth( int page )
     viewport()->setUpdatesEnabled( true );
     d->document->setViewportPage( page );
     updateZoomText();
+    setFocus();
 }
 
 void PageView::displayMessage( const QString & message )

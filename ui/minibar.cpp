@@ -98,7 +98,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
      gridLayout->addMultiCellWidget( m_progressWidget, 0, 0, 0, 4 );
      // bottom: left prev_page button
      m_prevButton = new HoverButton( this );
-     m_prevButton->setPixmap( SmallIcon("1leftarrow") );
+     m_prevButton->setIconSet( SmallIconSet("1leftarrow") );
      gridLayout->addWidget( m_prevButton, 1, 0 );
      // bottom: left lineEdit (current page box)
      m_pagesEdit = new PagesEdit( this );
@@ -110,7 +110,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
      gridLayout->addWidget( m_pagesButton, 1, 3 );
      // bottom: right next_page button
      m_nextButton = new HoverButton( this );
-     m_nextButton->setPixmap( SmallIcon("1rightarrow") );
+     m_nextButton->setIconSet( SmallIconSet("1rightarrow") );
      gridLayout->addWidget( m_nextButton, 1, 4 );
     horLayout->addLayout( gridLayout );
 

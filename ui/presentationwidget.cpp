@@ -20,6 +20,8 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
+#include <kmessagebox.h>
+#include <kwin.h>
 
 // system includes
 #include <stdlib.h>
@@ -46,9 +48,8 @@ struct PresentationFrame
 };
 
 
-PresentationWidget::PresentationWidget( KPDFDocument * doc )
-    : QWidget( 0, "presentationWidget", WDestructiveClose | WStyle_NoBorder |
-    WStyle_StaysOnTop | WShowModal ), m_document( doc ), m_frameIndex( -1 )
+PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
+    : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder), m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
@@ -168,6 +169,13 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber )
 
 
 // <widget events>
+bool PresentationWidget::event ( QEvent * e )
+{
+    if (e -> type() == QEvent::WindowDeactivate) KWin::clearState(winId(), NET::StaysOnTop);
+    else if (e -> type() == QEvent::WindowActivate) KWin::setState(winId(), NET::StaysOnTop);
+    return QDialog::event(e);
+}
+
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
@@ -272,6 +280,9 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         // show summary if requested
         if ( Settings::slidesShowSummary() )
             generatePage();
+
+        // inform user on how to exit from presentation mode
+        KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo" );
     }
 
     // check painting rect consistancy

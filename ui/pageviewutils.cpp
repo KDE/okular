@@ -445,13 +445,13 @@ void PageViewToolBar::buildToolBar()
     {
         myCols = 1 + (buttonsNumber * toolBarGridSize) /
                  (parentHeight - toolBarGridSize);
-        myRows = (int)ceilf( (float)buttonsNumber / (float)myCols );
+        myRows = (int)ceil( (float)buttonsNumber / (float)myCols );
     }
     else
     {
         myRows = 1 + (buttonsNumber * toolBarGridSize) /
                  (parentWidth - toolBarGridSize);
-        myCols = (int)ceilf( (float)buttonsNumber / (float)myRows );
+        myCols = (int)ceil( (float)buttonsNumber / (float)myRows );
     }
 
     // 2. compute widget size (from rows/cols)

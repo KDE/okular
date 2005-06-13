@@ -17,6 +17,9 @@
 #include <kiconloader.h>
 #include <kactioncollection.h>
 
+// system includes
+#include <math.h>
+
 // local includes
 #include "thumbnaillist.h"
 #include "pagepainter.h"
@@ -38,7 +41,7 @@ class ThumbnailWidget : public QWidget
         void setSelected( bool selected );
 
         // query methods
-        int heightHint() const { return m_pixmapHeight + m_labelHeight + 4; }
+        int heightHint() const { return m_pixmapHeight + m_labelHeight + m_margin; }
         int pixmapWidth() const { return m_pixmapWidth; }
         int pixmapHeight() const { return m_pixmapHeight; }
         int pageNumber() const { return m_page->number(); }
@@ -49,6 +52,9 @@ class ThumbnailWidget : public QWidget
         void paintEvent(QPaintEvent *);
 
     private:
+        // the margin around the widget
+        static int const m_margin = 16;
+
         // used to access 'forwardRightClick( .. )' and 'getBookmarkOverlay()'
         ThumbnailList * m_tl;
         const KPDFPage * m_page;
@@ -444,8 +450,8 @@ ThumbnailWidget::ThumbnailWidget( QWidget * parent, const KPDFPage * kp, Thumbna
 
 void ThumbnailWidget::resizeFitWidth( int width )
 {
-    m_pixmapWidth = width - 4;
-    m_pixmapHeight = (int)(m_page->ratio() * m_pixmapWidth);
+    m_pixmapWidth = width - m_margin;
+    m_pixmapHeight = (int)round( m_page->ratio() * (double)m_pixmapWidth );
     resize( width, heightHint() );
 }
 
@@ -455,7 +461,7 @@ void ThumbnailWidget::setSelected( bool selected )
     if ( m_selected != selected )
     {
         m_selected = selected;
-        update( 0, m_pixmapHeight + 4, width(), m_labelHeight );
+        update( 0, 0, width(), height() );
     }
 }
 
@@ -469,42 +475,43 @@ void ThumbnailWidget::mouseReleaseEvent( QMouseEvent * e )
 
 void ThumbnailWidget::paintEvent( QPaintEvent * e )
 {
-    int width = m_pixmapWidth + 4;
+    int width = m_pixmapWidth + m_margin;
     QRect clipRect = e->rect();
     if ( !clipRect.isValid() )
         return;
     QPainter p( this );
 
-    // draw the bottom label
-    if ( clipRect.bottom() > m_pixmapHeight + 3 )
-    {
-        QColor fillColor = m_selected ? palette().active().highlight() : palette().active().base();
-        p.fillRect( 0, m_pixmapHeight + 4, width, m_labelHeight, fillColor );
-        p.drawText( 0, m_pixmapHeight + 4, width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
-    }
+    // draw the bottom label + highlight mark
+    QColor fillColor = m_selected ? palette().active().highlight() : palette().active().base();
+    p.fillRect( clipRect, fillColor );
+    p.drawText( 0, m_pixmapHeight + m_margin, width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
 
     // draw page outline and pixmap
-    if ( clipRect.top() < m_pixmapHeight + 4 )
+    if ( clipRect.top() < m_pixmapHeight + m_margin )
     {
         // if page is bookmarked draw a colored border
         bool isBookmarked = m_page->hasBookmark();
         // draw the inner rect
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
-        p.drawRect( 1, 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );
+        p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );
         // draw the clear rect
         p.setPen( isBookmarked ? QColor( 0x804000 ) : palette().active().base() );
-        p.drawRect( 0, 0, m_pixmapWidth + 4, m_pixmapHeight + 4 );
         // draw the bottom and right shadow edges
         if ( !isBookmarked )
         {
+            int left, right, bottom, top;
+            left = m_margin/2 + 1;
+            right = m_margin/2 + m_pixmapWidth + 1;
+            bottom = m_pixmapHeight + m_margin/2 + 1;
+            top = m_margin/2 + 1;
             p.setPen( Qt::gray );
-            p.drawLine( 5, m_pixmapHeight + 3, m_pixmapWidth + 3, m_pixmapHeight + 3 );
-            p.drawLine( m_pixmapWidth + 3, 5, m_pixmapWidth + 3, m_pixmapHeight + 3 );
+            p.drawLine( left, bottom, right, bottom );
+            p.drawLine( right, top, right, bottom );
         }
 
         // draw the page using the shared PagePainter class
-        p.translate( 2, 2 );
-        clipRect.moveBy( -2, -2 );
+        p.translate( m_margin/2, m_margin/2 );
+        clipRect.moveBy( -m_margin/2, -m_margin/2 );
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
         if ( clipRect.isValid() )
         {

@@ -32,6 +32,7 @@
 #include "xpdf/UnicodeMap.h"
 #include "xpdf/Outline.h"
 #include "xpdf/GfxState.h"
+#include "xpdf/Annot.h" // for retrieving fonts only
 #include "goo/GList.h"
 
 // local includes
@@ -65,7 +66,8 @@
 
 PDFGenerator::PDFGenerator( KPDFDocument * doc )
     : Generator( doc ), pdfdoc( 0 ), kpdfOutputDev( 0 ), ready( true ),
-    pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true )
+    pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
+    docFontsDirty( true )
 {
     // generate kpdfOutputDev and cache page color
     reparseConfig();
@@ -254,6 +256,58 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 
     docSynopsisDirty = false;
     return &docSyn;
+}
+
+const DocumentFonts * PDFGenerator::generateDocumentFonts()
+{
+    if ( !docFontsDirty )
+        return &docFonts;
+
+    // initialize fonts dom
+    docFonts = DocumentFonts();
+    docFonts.appendChild( docFonts.createElement( "Fonts" ) );
+
+    // fonts repository to check for duplicates
+    Ref * fonts = NULL;
+    int fontsLen = 0;
+    int fontsSize = 0;
+
+    // temporary inner-loop xpdf objects
+    Object objAnn, objAnnStr, objAnnRes;
+
+    // loop on all pages
+    docLock.lock();
+    int pagesNumber = pdfdoc->getNumPages();
+    for ( int pg = 0; pg < pagesNumber; pg++ )
+    {
+        // look for fonts in page's resources
+        Page * page = pdfdoc->getCatalog()->getPage( pg + 1 );
+        Dict * resDict = page->getResourceDict();
+        if ( resDict )
+            addFonts( resDict, &fonts, fontsLen, fontsSize );
+
+        // look for fonts in annotation's resources
+        Annots * annots = new Annots( pdfdoc->getXRef(), page->getAnnots( &objAnn ) );
+        objAnn.free();
+        int annotsNumber = annots->getNumAnnots();
+        for ( int i = 0; i < annotsNumber; i++ )
+        {
+            if ( annots->getAnnot(i)->getAppearance( &objAnnStr )->isStream() )
+            {
+                objAnnStr.streamGetDict()->lookup( "Resources", &objAnnRes );
+                if ( objAnnRes.isDict() )
+                    addFonts( objAnnRes.getDict(), &fonts, fontsLen, fontsSize );
+                objAnnRes.free();
+            }
+            objAnnStr.free();
+        }
+        delete annots;
+    }
+    kdWarning() << docFonts.toString() << endl;
+    // empty the font list and release mutex
+    gfree( fonts );
+    docLock.unlock();
+    return &docFonts;
 }
 
 bool PDFGenerator::isAllowed( int permissions )
@@ -631,6 +685,117 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
         if ( children )
             addSynopsisChildren( &item, children );
     }
+}
+
+void PDFGenerator::addFonts( Dict *resDict, Ref **fonts, int &fontsLen, int &fontsSize )
+{
+    Object obj1, obj2;
+
+    // get the Font dictionary in current resource dictionary
+    GfxFontDict * gfxFontDict = NULL;
+    resDict->lookupNF( "Font", &obj1 );
+    if ( obj1.isRef() )
+    {
+        obj1.fetch( pdfdoc->getXRef(), &obj2 );
+        if ( obj2.isDict() )
+        {
+            Ref r = obj1.getRef();
+            gfxFontDict = new GfxFontDict( pdfdoc->getXRef(), &r, obj2.getDict() );
+        }
+        obj2.free();
+    }
+    else if ( obj1.isDict() )
+        gfxFontDict = new GfxFontDict( pdfdoc->getXRef(), NULL, obj1.getDict() );
+
+    // add all fonts in the Font dictionary
+    if ( gfxFontDict )
+    {
+        for ( int i = 0; i < gfxFontDict->getNumFonts(); i++ )
+        {
+            GfxFont * font = gfxFontDict->getFont( i );
+            if ( !font )
+                continue;
+
+            // skip already added fonts
+            Ref fontRef = *font->getID();
+            bool alreadyIn = false;
+            for ( int j = 0; j < fontsLen && !alreadyIn; j++ )
+                if ( fontRef.num == (*fonts)[j].num && fontRef.gen == (*fonts)[j].gen )
+                    alreadyIn = true;
+            if ( alreadyIn )
+                continue;
+
+            // 0. add font element
+            QDomElement fontElem = docFonts.createElement( "font" );
+            docFonts.firstChild().appendChild( fontElem );
+
+            // 1. set Name
+            GString * name = font->getOrigName();
+            fontElem.setAttribute( "Name", name ? name->getCString() : i18n("[none]") );
+
+            // 2. set Type
+            const QString fontTypeNames[8] = {
+                i18n("unknown"),
+                i18n("Type 1"),
+                i18n("Type 1C"),
+                i18n("Type 3"),
+                i18n("TrueType"),
+                i18n("CID Type 0"),
+                i18n("CID Type 0C"),
+                i18n("CID TrueType")
+            };
+            fontElem.setAttribute( "Type", fontTypeNames[ font->getType() ] );
+
+            // 3. set Embedded
+            Ref embRef;
+            bool emb = font->getType() == fontType3 ? true : font->getEmbeddedFontID( &embRef );
+            fontElem.setAttribute( "Embedded", emb ? i18n("Yes") : i18n("No") );
+
+            // 4. set Path
+            QString sPath = i18n("-");
+            if ( name && !emb  )
+            {
+                DisplayFontParam *dfp = globalParams->getDisplayFont( name );
+                if ( dfp )
+                {
+                    if ( dfp -> kind == displayFontT1 ) sPath = dfp->t1.fileName->getCString();
+                    else sPath = dfp->tt.fileName->getCString();
+                }
+            }
+            fontElem.setAttribute( "File", sPath );
+
+            // enlarge font list if needed
+            if ( fontsLen == fontsSize )
+            {
+                fontsSize += 32;
+                *fonts = (Ref *)grealloc( *fonts, fontsSize * sizeof(Ref) );
+            }
+            // add this font to the list
+            (*fonts)[fontsLen++] = fontRef;
+        }
+        delete gfxFontDict;
+    }
+    obj1.free();
+
+    // recursively scan any resource dictionaries in objects in this dictionary
+    Object xObjDict, xObj, resObj;
+    resDict->lookup( "XObject", &xObjDict );
+    if ( xObjDict.isDict() )
+    {
+        for ( int i = 0; i < xObjDict.dictGetLength(); i++ )
+        {
+            xObjDict.dictGetVal(i, &xObj);
+            if ( xObj.isStream() )
+            {
+                xObj.streamGetDict()->lookup( "Resources", &resObj );
+                if ( resObj.isDict() )
+                    addFonts( resObj.getDict(), fonts, fontsLen, fontsSize );
+                resObj.free();
+            }
+            xObj.free();
+        }
+    }
+    xObjDict.free();
 }
 
 

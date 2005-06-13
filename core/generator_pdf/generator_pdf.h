@@ -23,6 +23,8 @@ class PDFDoc;
 class GList;
 class TextPage;
 class Page;
+class Dict;
+class Ref;
 
 class ObjectRect;
 class KPDFOutputDev;
@@ -54,6 +56,7 @@ class PDFGenerator : public Generator
         // [INHERITED] document informations
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
+        const DocumentFonts * generateDocumentFonts();
 
         // [INHERITED] document informations
         bool isAllowed( int permissions );
@@ -76,15 +79,18 @@ class PDFGenerator : public Generator
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
 
-        // private functions for accessing document informations via PDFDoc
+        // access document informations
         QString getDocumentInfo( const QString & data ) const;
         QString getDocumentDate( const QString & data ) const;
-        // private function for creating the document synopsis hieracy
+        // create the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parent, GList * items );
-        // private function for adding annotations read from the pdf file
+        // add fonts (in resDict) to the private 'docFonts' class
+        void addFonts( Dict * resDict, Ref ** fonts, int &fontsLen, int &fontsSize );
+        // fetch annotations from the pdf file and add they to the page
         void addAnnotations( Page * xpdfPage, KPDFPage * page );
-        // private function for creating the transition information
+        // fetch the transition information and add it to the page
         void addTransition( Page * xpdfPage, KPDFPage * page );
+
         // (async related) receive data from the generator thread
         void customEvent( QCustomEvent * );
 
@@ -104,6 +110,8 @@ class PDFGenerator : public Generator
         DocumentInfo docInfo;
         bool docSynopsisDirty;
         DocumentSynopsis docSyn;
+        bool docFontsDirty;
+        DocumentFonts docFonts;
 };
 
 

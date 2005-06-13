@@ -49,6 +49,7 @@ class Generator : public QObject
         // Document description and Table of contents
         virtual const DocumentInfo * generateDocumentInfo() { return 0L; }
         virtual const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
+        virtual const DocumentFonts * generateDocumentFonts() { return 0L; }
 
         // DRM handling
         virtual bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }

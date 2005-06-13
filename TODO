@@ -30,6 +30,7 @@ More items (first items will enter 'In progress list' first):
 -> evaluate completely handling links internally instead of asking xpdf structs
 -> pageview: change document viewport after mouse scrolling ended (not every scroll frame)
    this will give better mvc consistancy
+-> other info on pdfs properties: number of accessed times, time spent on pdf, ...
 -> part: collapsing the left panel will hide it (activate hiding action)
 -> preload: add a delay when forward loading pages
 -> toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
@@ -121,6 +122,7 @@ Done (newest features come first):
 -> ADD: annotations: PDF1.6 reader (PDF's annotations -> our data structures)
 -> ADD: Internal data structures for annotations handling.
 -> FIX: rmb when no doc displayed to restore menu
+-> ADD: Put fonts used by the document on the properties dialog
 -> ADD: partial implementation of XYZ links
 -> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files

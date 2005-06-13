@@ -11,6 +11,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <klocale.h>
+#include <klistview.h>
 #include <ksqueezedtextlabel.h>
 #include <kglobalsettings.h>
 
@@ -19,9 +20,10 @@
 #include "core/document.h"
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
-  : KDialogBase( Plain, i18n( "Unknown File" ), Ok, Ok, parent, 0, true, true )
+  : KDialogBase( Tabbed, i18n( "Unknown File" ), Ok, Ok, parent, 0, true, true )
 {
-  QWidget *page = plainPage();
+  // PROPERTIES
+  QFrame *page = addPage(i18n("Properties"));
   QGridLayout *layout = new QGridLayout( page, 2, 2, marginHint(), spacingHint() );
 
   // get document info, if not present display blank data and a warning
@@ -68,10 +70,34 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     layout->addWidget( value, row, 1 );
   }
 
+  // FONTS
+  QVBoxLayout *page2Layout = 0;
+  const DocumentFonts * fonts = doc->documentFonts();
+  if ( fonts ) {
+    // create fonts tab and layout it
+    QFrame *page2 = addPage(i18n("Fonts"));
+    page2Layout = new QVBoxLayout(page2, 0, KDialog::spacingHint());
+    // add a klistview with 4 columns
+    KListView *lv = new KListView(page2);
+    lv->addColumn( i18n("Name") );
+    lv->addColumn( i18n("Type") );
+    lv->addColumn( i18n("Embedded") );
+    lv->addColumn( i18n("File") );
+    page2Layout->add(lv);
+    // populate the klistview
+    for ( QDomNode node = fonts->documentElement().firstChild(); !node.isNull(); node = node.nextSibling() ) {
+      QDomElement e = node.toElement();
+      new KListViewItem( lv, e.attribute( "Name" ), e.attribute( "Type" ),
+                         e.attribute( "Embedded" ), e.attribute( "File" ) );
+    }
+  }
+
   // current width: left columnt + right column + dialog borders
-  int width = layout->minimumSize().width() + valMaxWidth + 30;
+  int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
+  if ( page2Layout )
+    width = QMAX( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
   // stay inside the 2/3 of the screen width
   QRect screenContainer = KGlobalSettings::desktopGeometry( this );
   width = QMIN( width, 2*screenContainer.width()/3 );
-  resize( width, 1 );
+  resize(width, 1);
 }

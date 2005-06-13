@@ -22,6 +22,7 @@ class DocumentObserver;
 class DocumentViewport;
 class DocumentInfo;
 class DocumentSynopsis;
+class DocumentFonts;
 class Generator;
 class PixmapRequest;
 class Annotation;
@@ -68,6 +69,7 @@ class KPDFDocument : public QObject
         bool isOpened() const;
         const DocumentInfo * documentInfo() const;
         const DocumentSynopsis * documentSynopsis() const;
+        const DocumentFonts * documentFonts() const;
         const KPDFPage * page( uint page ) const;
         const DocumentViewport & viewport() const;
         uint currentPage() const;
@@ -168,7 +170,7 @@ class DocumentViewport
 };
 
 /**
- * @short A dom tree containing informations about the document.
+ * @short A DOM tree containing informations about the document.
  *
  * The Info structure can be filled in by generators to display metadata
  * about the currently opened file.
@@ -193,10 +195,10 @@ class DocumentInfo : public QDomDocument
 };
 
 /**
- * @short A Dom tree that describes the Table of Contents.
+ * @short A DOM tree that describes the Table of Contents.
  *
  * The Synopsis (TOC or Table Of Contents for friends) is represented via
- * a dom tree where each nod has an internal name (displayed in the listview)
+ * a dom tree where each node has an internal name (displayed in the listview)
  * and one or more attributes.
  *
  * In the tree the tag name is the 'screen' name of the entry. A tag can have
@@ -209,6 +211,21 @@ class DocumentSynopsis : public QDomDocument
 {
     public:
         DocumentSynopsis();
+};
+
+/**
+ * @short A DOM thee describing fonts used in document.
+ *
+ * Root's childrend (if any) are font nodes with the following attributes:
+ * - Name
+ * - Type
+ * - Embedded (if font is shipped inside the document)
+ * - File (system's file that provides this font
+ */
+class DocumentFonts : public QDomDocument
+{
+    public:
+        DocumentFonts();
 };
 
 #endif

@@ -344,6 +344,11 @@ const DocumentSynopsis * KPDFDocument::documentSynopsis() const
     return generator ? generator->generateDocumentSynopsis() : NULL;
 }
 
+const DocumentFonts * KPDFDocument::documentFonts() const
+{
+    return generator ? generator->generateDocumentFonts() : NULL;
+}
+
 const KPDFPage * KPDFDocument::page( uint n ) const
 {
     return ( n < pages_vector.count() ) ? pages_vector[n] : 0;
@@ -1566,6 +1571,15 @@ QString DocumentInfo::get( const QString &key ) const
 
 DocumentSynopsis::DocumentSynopsis()
   : QDomDocument( "DocumentSynopsis" )
+{
+    // void implementation, only subclassed for naming
+}
+
+
+/** DocumentFonts **/
+
+DocumentFonts::DocumentFonts()
+  : QDomDocument( "DocumentFonts" )
 {
     // void implementation, only subclassed for naming
 }

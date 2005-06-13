@@ -484,6 +484,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     // draw the bottom label + highlight mark
     QColor fillColor = m_selected ? palette().active().highlight() : palette().active().base();
     p.fillRect( clipRect, fillColor );
+    p.setPen( m_selected ? palette().active().highlightedText() : palette().active().text() );
     p.drawText( 0, m_pixmapHeight + m_margin, width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
 
     // draw page outline and pixmap

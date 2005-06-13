@@ -564,8 +564,14 @@ void Part::slotSaveFileAs()
     KURL saveURL = KFileDialog::getSaveURL( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
     if ( saveURL.isValid() && !saveURL.isEmpty() )
     {
+        if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
+        {
+            if ( KMessageBox::questionYesNo( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.filename())) != KMessageBox::Yes )
+                return;
+        }
+
         if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
-            KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( saveURL.prettyURL() ) );
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.").arg( saveURL.prettyURL() ) );
     }
 }
 

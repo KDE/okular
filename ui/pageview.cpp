@@ -623,11 +623,17 @@ void PageView::keyPressEvent( QKeyEvent * e )
         {
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
+            // (1/4) it is needed to grab the keyboard becase people may have Space assigned
+            // to a accel and without grabbing the keyboard you can not vim-search for space
+            // because it activates the accel
             releaseKeyboard();
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
                 d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
+            // (2/4) it is needed to grab the keyboard becase people may have Space assigned
+            // to a accel and without grabbing the keyboard you can not vim-search for space
+            // because it activates the accel
             grabKeyboard();
         }
         // esc and return: end search
@@ -667,6 +673,9 @@ void PageView::keyPressEvent( QKeyEvent * e )
             connect( d->findTimeoutTimer, SIGNAL( timeout() ), this, SLOT( slotStopFindAhead() ) );
         }
         d->findTimeoutTimer->start( 3000, true );
+        // (3/4) it is needed to grab the keyboard becase people may have Space assigned
+        // to a accel and without grabbing the keyboard you can not vim-search for space
+        // because it activates the accel
         grabKeyboard();
         return;
     }
@@ -1970,6 +1979,9 @@ void PageView::slotStopFindAhead()
     d->typeAheadActive = false;
     d->typeAheadString = "";
     d->messageWindow->display( i18n("Find stopped."), PageViewMessage::Find, 1000 );
+    // (4/4) it is needed to grab the keyboard becase people may have Space assigned
+    // to a accel and without grabbing the keyboard you can not vim-search for space
+    // because it activates the accel
     releaseKeyboard();
 }
 

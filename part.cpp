@@ -242,7 +242,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
 	slotShowLeftPanel();
 
-	KAction * ghns = new KAction(i18n("&Get books from internet..."), "knewstuff", 0, this, SLOT(slotGetNewStuff()), ac, "get_new_stuff");
+	KAction * ghns = new KAction(i18n("&Get Books From internet..."), "knewstuff", 0, this, SLOT(slotGetNewStuff()), ac, "get_new_stuff");
 	ghns->setShortcut( "G" );  // TEMP, REMOVE ME!
 
 	m_showProperties = new KAction(i18n("&Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");

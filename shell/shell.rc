@@ -2,6 +2,7 @@
 <kpartgui version="7" name="kpdf_shell" >
  <MenuBar>
   <Menu name="file" >
+   <DefineGroup append="open_merge" name="file_open" />
    <DefineGroup append="save_merge" name="file_save" />
    <DefineGroup append="print_merge" name="file_print" />
   </Menu>

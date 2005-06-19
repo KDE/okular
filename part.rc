@@ -2,12 +2,11 @@
 <kpartgui name="kpdf_part" version="19">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
+    <Action name="get_new_stuff" group="file_open"/>
     <Action name="save" group="file_save"/>
     <Action name="file_print" group="file_print"/>
     <Action name="file_print_preview" group="file_print"/>
     <Action name="properties" group="file_print"/>
-    <Separator/>
-    <Action name="get_new_stuff"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>

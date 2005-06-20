@@ -1,7 +1,7 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="kdvi_part" version="2">
+<kpartgui name="kdvi_part" version="3">
 <MenuBar>
- <Menu name="file"><text>File</text>
+ <Menu name="file"><text>&amp;File</text>
   <Action name="info_dvi" group="file_print"/>
   <Menu name="export" group="file_save" ><text>Export As</text>
    <Action name="export_postscript"/>
@@ -10,23 +10,15 @@
   </Menu>
  </Menu>
 
- <Menu name="edit"><text>Edit</text>
-  <Action name="embed_postscript"/>
-  <Separator/>
-  <Action name="copy_text"/>
-  <Action name="edit_select_all"/>
-  <Action name="edit_deselect_all"/>
-  <Separator/>
-  <Action name="find"/>
-  <Action name="findnext"/>
-  <Action name="findprev"/>
+ <Menu name="edit"><text>&amp;Edit</text>
+   <Action name="embed_postscript"/>
  </Menu>
 
  <Menu name="settings"><text>&amp;Settings</text>
   <Action name="enable_msgs" group="settings_top"/>
  </Menu>
 
- <Menu name="help"><text>Help</text>
+ <Menu name="help"><text>&amp;Help</text>
   <Action name="help_tipofday" group="help_top"/>
  </Menu>
 </MenuBar>

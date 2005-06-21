@@ -339,6 +339,16 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
 	l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
 	anchorList[anchorName] = Anchor(current_page+1, l);
       }
+      if (cp.contains("/Dest") && cp.contains("/Title")) { // The PostScript code defines a bookmark
+	QString bookmarkTitle = cp.section('(', 1, 1).section(')', 0, 0);
+	QString bookmarkDest = cp.section('(', 2, 2).section(')', 0, 0);
+	
+	Length l;
+	l.setLength_in_inch(0);
+	Bookmark *bmk = new Bookmark(bookmarkDest, 1, l);
+	bookmarks.append(bmk);
+	kdError() << bookmarkDest << endl;
+      }
       return;
     }
   }

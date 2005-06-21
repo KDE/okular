@@ -21,7 +21,7 @@
 static const char description[] =
 I18N_NOOP("kpdf, a kde pdf viewer based on xpdf");
 
-static const char version[] = "0.4.1";
+static const char version[] = "0.4.2";
 
 static KCmdLineOptions options[] =
 {
@@ -69,9 +69,8 @@ int main(int argc, char** argv)
         {
             for (int i = 0; i < args->count(); ++i)
             {
-                KPDF::Shell* widget = new KPDF::Shell;
+                KPDF::Shell* widget = new KPDF::Shell(args->url(i));
                 widget->show();
-                widget->openURL(args->url(i));
             }
         }
         args->clear();

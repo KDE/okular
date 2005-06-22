@@ -340,20 +340,13 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
 	anchorList[anchorName] = Anchor(current_page+1, l);
       }
       if (cp.contains("/Dest") && cp.contains("/Title")) { // The PostScript code defines a bookmark
-	QString bookmarkTitle = cp.section('(', 1, 1).section(')', 0, 0);
-	QString bookmarkDest = cp.section('(', 2, 2).section(')', 0, 0);
-	
-	Length l;
-	l.setLength_in_inch(0);
-	Bookmark *bmk = new Bookmark(bookmarkDest, 1, l);
-	bookmarks.append(bmk);
-	kdError() << bookmarkDest << endl;
+	bookMarkAnchors += cp.section('(', 1, 1).section(')', 0, 0);
+	bookMarkTitles  += cp.section('(', 2, 2).section(')', 0, 0);
       }
       return;
     }
   }
-  
-  
+    
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
   

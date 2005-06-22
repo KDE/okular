@@ -188,7 +188,12 @@ private:
   void          prescan_ParsePSFileSpecial(QString cp);
   void          prescan_ParseSourceSpecial(QString cp);
   void          prescan_setChar(unsigned int ch);
-  
+
+  /* */
+  QStringList bookMarkTitles;
+  QStringList bookMarkAnchors;
+
+
   /** Utility fields used by the embedPostScript method*/
   KProgressDialog *embedPS_progress;
   Q_UINT16         embedPS_numOfProgressedFiles;

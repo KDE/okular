@@ -24,7 +24,7 @@
 
 //#define DEBUG_SPECIAL
 
-extern QPainter foreGroundPaint;
+extern QPainter *foreGroundPainter;
 
 void dviRenderer::printErrorMsgForSpecials(QString msg)
 {
@@ -304,7 +304,7 @@ void dviRenderer::epsf_special(QString cp)
     
     QImage image(EPSfilename);
     image = image.smoothScale((int)(bbox_width), (int)(bbox_height));
-    foreGroundPaint.drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
+    foreGroundPainter->drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
     return;
   }
 
@@ -330,19 +330,21 @@ void dviRenderer::epsf_special(QString cp)
     
     QRect bbox(((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height,
 	       (int)bbox_width, (int)bbox_height);
-    foreGroundPaint.save();
+
+    foreGroundPainter->save();
+
     if (QFile::exists(EPSfilename))
-      foreGroundPaint.setBrush(Qt::lightGray);
+      foreGroundPainter->setBrush(Qt::lightGray);
     else
-      foreGroundPaint.setBrush(Qt::red);
-    foreGroundPaint.setPen(Qt::black);
-    foreGroundPaint.drawRoundRect(bbox, 2, 2);
+      foreGroundPainter->setBrush(Qt::red);
+    foreGroundPainter->setPen(Qt::black);
+    foreGroundPainter->drawRoundRect(bbox, 2, 2);
     if (QFile::exists(EPSfilename))
-      foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
+      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
     else
-      foreGroundPaint.drawText (bbox, (int)(Qt::AlignCenter), 
+      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), 
 				i18n("File not found: \n %1").arg(EPSfilename), -1);
-    foreGroundPaint.restore();
+    foreGroundPainter->restore();
   }
   
   return;
@@ -361,8 +363,8 @@ void dviRenderer::TPIC_flushPath_special(void)
   }
 
   QPen pen(Qt::black, (int)(penWidth_in_mInch*resolutionInDPI/1000.0 + 0.5));  // Sets the pen size in milli-inches
-  foreGroundPaint.setPen(pen);
-  foreGroundPaint.drawPolyline(TPIC_path, 0, number_of_elements_in_path);
+  foreGroundPainter->setPen(pen);
+  foreGroundPainter->drawPolyline(TPIC_path, 0, number_of_elements_in_path);
   number_of_elements_in_path = 0;
 }
 
@@ -581,11 +583,11 @@ void dviRenderer::applicationDoSpecial(char *cp)
       int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536)));
       int y = currinf.data.pxl_v;
       
-      foreGroundPaint.save();
+      foreGroundPainter->save();
       // Rotate about the current point
-      foreGroundPaint.translate(x,y);
-      foreGroundPaint.rotate(-angle);
-      foreGroundPaint.translate(-x,-y);
+      foreGroundPainter->translate(x,y);
+      foreGroundPainter->rotate(-angle);
+      foreGroundPainter->translate(-x,-y);
     } else
       printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Could not interpret angle in text rotation special." ).
 				arg(dviFile->filename).arg(current_page));
@@ -594,7 +596,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
   // The graphicx package marks the end of rotated text with this
   // special. The state of the painter is restored.
   if (special_command == "ps: currentpoint grestore moveto") {
-    foreGroundPaint.restore();
+    foreGroundPainter->restore();
   }
   
   // The following special commands are not used here; they are of

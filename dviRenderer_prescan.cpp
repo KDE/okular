@@ -342,11 +342,16 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
 	l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
 	anchorList[anchorName] = Anchor(current_page+1, l);
       }
+      // The PostScript code defines a bookmark
+      if (cp.contains("/Dest") && cp.contains("/Title"))
+	prebookmarks.append(PreBookmark(cp.section('(', 2, 2).section(')', 0, 0),
+					cp.section('(', 1, 1).section(')', 0, 0), 
+					cp.section('-', 1, 1).section(' ', 0, 0).toUInt()
+					));
       return;
     }
   }
-  
-  
+    
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
   

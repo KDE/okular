@@ -72,7 +72,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 
-extern QPainter *foreGroundPaint;
+extern QPainter *foreGroundPainter;
 
 
 /** Routine to print characters.  */
@@ -98,7 +98,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   int y = currinf.data.pxl_v - g->y2;
   
   // Draw the character.
-  foreGroundPaint->drawPixmap(x, y, pix);
+  foreGroundPainter->drawPixmap(x, y, pix);
   
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?
@@ -315,10 +315,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	    int w =  ((int) ROUNDUP(b, shrinkfactor * 65536));
 	    
 	    if (colorStack.isEmpty())
-	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+	      foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
 					 currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
 	    else
-	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+	      foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
 					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
 	  }
 	  currinf.data.dvi_h += b;
@@ -337,10 +337,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	    int h = ((int) ROUNDUP(a, shrinkfactor * 65536));
 	    int w = ((int) ROUNDUP(b, shrinkfactor * 65536));
 	    if (colorStack.isEmpty())
-	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+	      foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
 					 currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
 	    else
-	      foreGroundPaint->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+	      foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
 					currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
 	  }
 	  break;
@@ -601,12 +601,12 @@ void dviRenderer::draw_page(void)
 
   if (!accessibilityBackground)
   {
-    foreGroundPaint->fillRect( foreGroundPaint->viewport(), PS_interface->getBackgroundColor(current_page) );
+    foreGroundPainter->fillRect( foreGroundPainter->viewport(), PS_interface->getBackgroundColor(current_page) );
   }
   else
   {
     // In accessiblity mode use the custom background color
-    foreGroundPaint->fillRect( foreGroundPaint->viewport(), accessibilityBackgroundColor );
+    foreGroundPainter->fillRect( foreGroundPainter->viewport(), accessibilityBackgroundColor );
   }
 
   // Render the PostScript background, if there is one.
@@ -622,7 +622,7 @@ void dviRenderer::draw_page(void)
     else
       PS_interface->restoreBackgroundColor(current_page);
 
-    PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPaint);
+    PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPainter);
   }
 
   // Now really write the text

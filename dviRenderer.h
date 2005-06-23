@@ -30,6 +30,7 @@
 #include "fontpool.h"
 #include "infodialog.h"
 #include "pageSize.h"
+#include "prebookmark.h"
 #include "psgs.h"
 #include "renderedDocumentPage.h"
 
@@ -191,7 +192,12 @@ private:
   void          prescan_ParsePSFileSpecial(QString cp);
   void          prescan_ParseSourceSpecial(QString cp);
   void          prescan_setChar(unsigned int ch);
-  
+
+  /* */
+  QValueVector<PreBookmark> prebookmarks;
+
+
+
   /** Utility fields used by the embedPostScript method*/
   KProgressDialog *embedPS_progress;
   Q_UINT16         embedPS_numOfProgressedFiles;

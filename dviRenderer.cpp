@@ -26,6 +26,7 @@
 //Added by qt3to4:
 #include <QHBoxLayout>
 #include <QMouseEvent>
+#include <qptrstack.h>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -57,7 +58,7 @@
 
 //#define DEBUG_DVIRENDERER
 
-QPainter *foreGroundPaint; // QPainter used for text
+QPainter *foreGroundPainter; // QPainter used for text
 
 
 //------ now comes the dviRenderer class implementation ----------
@@ -192,11 +193,11 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
   globalColor = Qt::black;
   
   QApplication::setOverrideCursor( Qt::WaitCursor );
-  foreGroundPaint = page->getPainter();
-  if (foreGroundPaint != 0) {
+  foreGroundPainter = page->getPainter();
+  if (foreGroundPainter != 0) {
     errorMsg = QString::null;
     draw_page();
-    page->returnPainter(foreGroundPaint);
+    page->returnPainter(foreGroundPainter);
   }
   QApplication::restoreOverrideCursor();
   page->isEmpty = false;
@@ -340,6 +341,7 @@ void dviRenderer::embedPostScript(void)
   preScanTimer.start();
 #endif
   dviFile->numberOfExternalPSFiles = 0;
+  prebookmarks.clear();
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
 
@@ -352,6 +354,7 @@ void dviRenderer::embedPostScript(void)
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
+
     prescan(&dviRenderer::prescan_parseSpecials);
 
     if (!PostScriptOutPutString->isEmpty())
@@ -359,6 +362,7 @@ void dviRenderer::embedPostScript(void)
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
+
 
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
@@ -523,6 +527,7 @@ bool dviRenderer::setFile(const QString &fname)
 #endif
   dviFile->numberOfExternalPSFiles = 0;
   Q_UINT16 currPageSav = current_page;
+  prebookmarks.clear();
   
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
@@ -543,6 +548,30 @@ bool dviRenderer::setFile(const QString &fname)
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
+  
+
+  // Generate the list of bookmarks
+  kdError() << "========================================================" <<    endl;
+
+  QPtrStack<Bookmark> stack;
+  stack.setAutoDelete (false);
+
+  QValueVector<PreBookmark>::iterator it;
+  for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
+    kdError() <<  (*it).title << " has an count " << (*it).noOfChildren << endl;
+    Bookmark *bmk = new Bookmark((*it).title, findAnchor((*it).anchorName));
+    if (stack.isEmpty())
+      bookmarks.append(bmk);
+    else {
+      stack.top()->subordinateBookmarks.append(bmk);
+      stack.remove();
+    }
+    for(int i=0; i<(*it).noOfChildren; i++)
+      stack.push(bmk);
+  
+  }
+  prebookmarks.clear();
+  
   
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;

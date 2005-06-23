@@ -27,6 +27,7 @@
 #include "fontpool.h"
 #include "infodialog.h"
 #include "pageSize.h"
+#include "prebookmark.h"
 #include "psgs.h"
 #include "renderedDocumentPage.h"
 
@@ -190,8 +191,8 @@ private:
   void          prescan_setChar(unsigned int ch);
 
   /* */
-  QStringList bookMarkTitles;
-  QStringList bookMarkAnchors;
+  QValueVector<PreBookmark> prebookmarks;
+
 
 
   /** Utility fields used by the embedPostScript method*/

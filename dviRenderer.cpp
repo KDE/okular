@@ -21,6 +21,7 @@
 #include <qmessagebox.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
+#include <qptrstack.h>
 #include <qurl.h>
 #include <qvbox.h>
 
@@ -337,8 +338,7 @@ void dviRenderer::embedPostScript(void)
   preScanTimer.start();
 #endif
   dviFile->numberOfExternalPSFiles = 0;
-  bookMarkTitles.clear();
-  bookMarkAnchors.clear();
+  prebookmarks.clear();
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
 
@@ -524,8 +524,7 @@ bool dviRenderer::setFile(const QString &fname)
 #endif
   dviFile->numberOfExternalPSFiles = 0;
   Q_UINT16 currPageSav = current_page;
-  bookMarkAnchors.clear();
-  bookMarkTitles.clear();
+  prebookmarks.clear();
   
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
@@ -549,24 +548,28 @@ bool dviRenderer::setFile(const QString &fname)
   
 
   // Generate the list of bookmarks
-  kdError() << "========================================================" << endl;
-  kdError() << "bookMarkTitles.size() " << bookMarkTitles.size() << endl;
-  if (bookMarkTitles.size() != bookMarkAnchors.size())
-    kdError(4330) << "dviRenderer::setFile(..): Internal corruption in bookmark structures. Disregarding all bookmarks." << endl;
-  else
-    for(unsigned int i=0; i<bookMarkTitles.size(); i++) {
-      Anchor anc = findAnchor(bookMarkAnchors[i]);
-      if (anc.isValid()) {
-	Bookmark *bmk = new Bookmark(bookMarkTitles[i], anc);
-	bookmarks.append(bmk);
-      } else
-	kdError() <<  bookMarkTitles[i] << " has an invalicd anchor" << endl;
-    }
-  bookMarkAnchors.clear();
-  bookMarkTitles.clear();
-  
-  
+  kdError() << "========================================================" <<    endl;
 
+  QPtrStack<Bookmark> stack;
+  stack.setAutoDelete (false);
+
+  QValueVector<PreBookmark>::iterator it;
+  for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
+    kdError() <<  (*it).title << " has an count " << (*it).noOfChildren << endl;
+    Bookmark *bmk = new Bookmark((*it).title, findAnchor((*it).anchorName));
+    if (stack.isEmpty())
+      bookmarks.append(bmk);
+    else {
+      stack.top()->subordinateBookmarks.append(bmk);
+      stack.remove();
+    }
+    for(int i=0; i<(*it).noOfChildren; i++)
+      stack.push(bmk);
+  
+  }
+  prebookmarks.clear();
+  
+  
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif

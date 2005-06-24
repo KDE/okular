@@ -19,6 +19,7 @@
 
 // qt/kde includes
 #include <qcursor.h>
+#include <qtimer.h>
 #include <kaction.h>
 #include <kapplication.h>
 #include <kedittoolbar.h>
@@ -41,6 +42,18 @@ using namespace KPDF;
 
 Shell::Shell()
   : KParts::MainWindow(0, "KPDF::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+{
+  init();
+}
+
+Shell::Shell(const KURL &url)
+  : KParts::MainWindow(0, "KPDF::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+{
+  m_openUrl = url;
+  init();
+}
+
+void Shell::init()
 {
   // set the shell's ui resource file
   setXMLFile("shell.rc");
@@ -83,6 +96,14 @@ Shell::Shell()
     KMainWindowInterface kmwi(this);
     kmwi.maximize();
   }
+  setAutoSaveSettings();
+
+  if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
+}
+
+void Shell::delayedOpen()
+{
+   openURL(m_openUrl);
 }
 
 Shell::~Shell()
@@ -140,7 +161,6 @@ void Shell::readSettings()
 
 void Shell::writeSettings()
 {
-    saveMainWindowSettings(KGlobal::config(), "MainWindow");
     m_recent->saveEntries( KGlobal::config() );
     KGlobal::config()->setDesktopGroup();
     KGlobal::config()->writeEntry( "FullScreen", m_fullScreenAction->isChecked());
@@ -200,7 +220,6 @@ Shell::fileOpen()
   void
 Shell::optionsConfigureToolbars()
 {
-  saveMainWindowSettings(KGlobal::config(), "MainWindow");
   KEditToolbar dlg(factory());
   connect(&dlg, SIGNAL(newToolbarConfig()), this, SLOT(applyNewToolbarConfig()));
   dlg.exec();

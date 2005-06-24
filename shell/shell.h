@@ -24,7 +24,6 @@
 
 namespace KPDF
 {
-    class Part;
   /**
    * This is the application "Shell".  It has a menubar and a toolbar
    * but relies on the "Part" to do all the real work.
@@ -42,6 +41,11 @@ namespace KPDF
      * Default Constructor
      */
     Shell();
+
+    /**
+     * Open an url
+     */
+    Shell(const KURL &url);
 
     /**
      * Default Destructor
@@ -67,7 +71,6 @@ namespace KPDF
 
   private slots:
     void fileOpen();
-
     void slotQuit();
 
     void optionsConfigureToolbars();
@@ -75,27 +78,28 @@ namespace KPDF
     void slotUpdateFullScreen();
     void slotShowMenubar();
 
-  public slots:
-      void openURL( const KURL & url );
+    void openURL( const KURL & url );
+    void delayedOpen();
 
   signals:
-      void restoreDocument(const KURL &url, int page);
-      void saveDocumentRestoreInfo(KConfig* config);
+    void restoreDocument(const KURL &url, int page);
+    void saveDocumentRestoreInfo(KConfig* config);
 
   private:
     void setupAccel();
     void setupActions();
+    void init();
 
   private:
-      KParts::ReadOnlyPart* m_part;
-      KRecentFilesAction* m_recent;
-      KAction* m_printAction;
-      KToggleAction* m_fullScreenAction;
-      KToggleAction* m_showMenuBarAction;
-      KToggleAction* m_showToolBarAction;
-      bool m_menuBarWasShown, m_toolBarWasShown;
+    KParts::ReadOnlyPart* m_part;
+    KRecentFilesAction* m_recent;
+    KAction* m_printAction;
+    KToggleAction* m_fullScreenAction;
+    KToggleAction* m_showMenuBarAction;
+    KToggleAction* m_showToolBarAction;
+    bool m_menuBarWasShown, m_toolBarWasShown;
+    KURL m_openUrl;
   };
-
 }
 
 #endif

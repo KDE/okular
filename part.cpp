@@ -82,8 +82,8 @@ unsigned int Part::m_count = 0;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_showFullScreenAction(0),
-	m_actionsSearched(false), m_searchStarted(false)
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_dirtyViewport( 0 ),
+	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false), m_searchStarted(false)
 {
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("kpdf");
@@ -267,6 +267,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// by connecting to Qt4::QSplitter's sliderMoved())
 	m_pageView->installEventFilter( this );
 
+	// document watcher and reloader
 	m_watcher = new KDirWatch( this );
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
@@ -382,11 +383,16 @@ bool Part::openURL(const KURL &url)
     // if it matches then: download it (if not local) extract to a temp file using
     // KTar and proceed with the URL of the temporary file
 
-    // this calls the above 'openURL' method
-    bool b = KParts::ReadOnlyPart::openURL(url);
-    if ( !b )
+    // this calls in sequence the 'closeURL' and 'openFile' methods
+    bool openOk = KParts::ReadOnlyPart::openURL(url);
+    if ( openOk )
+    {
+        delete m_dirtyViewport;
+        m_dirtyViewport = 0;
+    }
+    else
         KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
-    return b;
+    return openOk;
 }
 
 bool Part::closeURL()
@@ -430,8 +436,8 @@ void Part::slotFileDirty( const QString& fileName )
   // The beauty of this is that each start cancels the previous one.
   // This means that timeout() is only fired when there have
   // no changes to the file for the last 750 milisecs.
-  // This is supposed to ensure that we don't update on every other byte
-  // that gets written to the file.
+  // This ensures that we don't update on every other byte that gets
+  // written to the file.
   if ( fileName == m_file )
   {
     m_dirtyHandler->start( 750, true );
@@ -440,12 +446,34 @@ void Part::slotFileDirty( const QString& fileName )
 
 void Part::slotDoFileDirty()
 {
-  uint p = m_document->currentPage() + 1;
-  if (openFile())
-  {
-    if (p > m_document->pages()) p = m_document->pages();
-    goToPage(p);
-  }
+    // do the following the first time the file is reloaded
+    if ( !m_dirtyViewport )
+    {
+        // store the current viewport
+        m_dirtyViewport = new DocumentViewport( m_document->viewport() );
+
+        // inform the user about the operation in progress
+        m_pageView->displayMessage( i18n("Reloading the document...") );
+    }
+
+    // close and (try to) reopen the document
+    if ( KParts::ReadOnlyPart::openURL(m_file) )
+    {
+        // on successfull opening, restore the previous viewport
+        if ( m_dirtyViewport->pageNumber >= (int)m_document->pages() )
+            m_dirtyViewport->pageNumber = m_document->pages() - 1;
+        m_document->setViewport( *m_dirtyViewport );
+
+        // delete the stored viewport
+        delete m_dirtyViewport;
+        m_dirtyViewport = 0;
+    }
+    else
+    {
+        // start watching the file again (since we dropped it on close)
+        m_watcher->addFile(m_file);
+        m_dirtyHandler->start( 750, true );
+    }
 }
 
 void Part::updateViewActions()

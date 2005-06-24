@@ -171,7 +171,11 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     // 4. set initial page (restoring the page saved in xml if loaded)
     DocumentViewport loadedViewport = (*d->viewportIterator);
     if ( loadedViewport.pageNumber != -1 )
+    {
         (*d->viewportIterator) = DocumentViewport();
+        if ( loadedViewport.pageNumber >= (int)pages_vector.size() )
+            loadedViewport.pageNumber = pages_vector.size() - 1;
+    }
     else
         loadedViewport.pageNumber = 0;
     setViewport( loadedViewport );

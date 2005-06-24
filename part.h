@@ -36,6 +36,7 @@ class KAboutData;
 class KPrinter;
 
 class KPDFDocument;
+class DocumentViewport;
 class ThumbnailList;
 class ThumbnailController;
 class PageView;
@@ -137,8 +138,10 @@ private:
 	// static instances counter
 	static unsigned int m_count;
 
+	// document watcher (and reloader) variables
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;
+	DocumentViewport *m_dirtyViewport;
 
 	// actions
 	KAction *m_gotoPage;

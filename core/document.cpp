@@ -638,8 +638,8 @@ void KPDFDocument::setNextViewport()
 bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
 {
-    // don't perform searches on empty docs
-    if ( !generator || pages_vector.isEmpty() )
+    // safety checks: don't perform searches on empty or unsearchable docs
+    if ( !generator || !generator->canGenerateTextPage() || pages_vector.isEmpty() )
         return false;
 
     // if searchID search not recorded, create new descriptor and init params

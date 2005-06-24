@@ -83,13 +83,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
 	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_dirtyViewport( 0 ),
-	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false), m_searchStarted(false)
+	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
+	m_searchStarted(false), m_notifyOpening(false)
 {
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("kpdf");
 
 	// create browser extension (for printing when embedded into browser)
-	new BrowserExtension(this);
+	m_bExtension = new BrowserExtension(this);
 
 	// xpdf 'extern' global class (m_count is a static instance counter)
 	//if ( m_count ) TODO check if we need to insert these lines..
@@ -107,7 +108,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
+	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURLFromDocument(const KURL &) ) );
 
 	// widgets: [] splitter []
 	m_splitter = new QSplitter( parentWidget, widgetName );
@@ -377,6 +378,12 @@ bool Part::openFile()
     return true;
 }
 
+void Part::openURLFromDocument(const KURL &url)
+{
+    m_notifyOpening = true;
+    openURL(url);
+}
+
 bool Part::openURL(const KURL &url)
 {
     // note: this can be the right place to check the file for gz or bz2 extension
@@ -385,6 +392,12 @@ bool Part::openURL(const KURL &url)
 
     // this calls in sequence the 'closeURL' and 'openFile' methods
     bool openOk = KParts::ReadOnlyPart::openURL(url);
+    if ( m_notifyOpening )
+    {
+        m_bExtension->openURLNotify();
+        m_bExtension->setLocationBarURL( url.prettyURL() );
+        m_notifyOpening = false;
+    }
     if ( openOk )
     {
         delete m_dirtyViewport;

@@ -143,6 +143,26 @@
   </entry>
   <entry key="SplitterSizes" type="IntList" />
  </group>
+ <group name="Nav Panel" >
+  <entry key="CurrentPageOnly" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="GroupByAuthor" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="GroupByPage" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="FilterBookmarks" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="ShowSearchBar" type="Bool" >
+   <default>true</default>
+  </entry>
+  <entry key="SyncThumbnailsViewport" type="Bool" >
+   <default>true</default>
+  </entry>
+ </group>
  <group name="PageView" >
   <entry key="CenterFirstPageInRow" type="Bool" >
    <default>false</default>
@@ -161,25 +181,14 @@
   <entry key="ViewContinuous" type="Bool" >
    <default>true</default>
   </entry>
- </group>
- <group name="SideView" >
-  <entry key="CurrentPageOnly" type="Bool" >
-   <default>false</default>
+  <entry key="ZoomMode" type="UInt" >
+    <default>2</default>
+    <max>2</max>
   </entry>
-  <entry key="GroupByAuthor" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="GroupByPage" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="FilterBookmarks" type="Bool" >
-   <default>false</default>
-  </entry>
-  <entry key="ShowSearchBar" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="SyncThumbnailsViewport" type="Bool" >
-   <default>true</default>
+  <entry key="ZoomFactor" type="Double" >
+    <default>1.0</default>
+    <min>0.1</min>
+    <max>4.0</max>
   </entry>
  </group>
 </kcfg>

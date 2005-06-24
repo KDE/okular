@@ -122,6 +122,7 @@ Done (newest features come first):
 -> ADD: annotations: PDF1.6 reader (PDF's annotations -> our data structures)
 -> ADD: Internal data structures for annotations handling.
 -> FIX: rmb when no doc displayed to restore menu
+-> ADD: Save zoom setting on exit
 -> ADD: Put fonts used by the document on the properties dialog
 -> ADD: partial implementation of XYZ links
 -> ADD: google-like search on thumbnails

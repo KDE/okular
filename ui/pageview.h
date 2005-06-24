@@ -44,7 +44,7 @@ class PageView : public QScrollView, public DocumentObserver
         ~PageView();
 
         // Zoom mode ( last 4 are internally used only! )
-        enum ZoomMode { ZoomFixed, ZoomFitWidth, ZoomFitPage, ZoomFitText,
+        enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
         enum MouseMode { MouseNormal, MouseZoom, MouseSelect };
 

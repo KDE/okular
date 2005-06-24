@@ -132,8 +132,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // create and initialize private storage structure
     d = new PageViewPrivate();
     d->document = document;
-    d->zoomMode = ZoomFitPage;
-    d->zoomFactor = 1.0;
+    d->zoomMode = (PageView::ZoomMode) Settings::zoomMode();
+    d->zoomFactor = Settings::zoomFactor();
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
     d->mouseSelecting = false;
@@ -1528,6 +1528,9 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
         d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
+        // store zoom settings
+        Settings::setZoomMode( newZoomMode );
+        Settings::setZoomFactor( newFactor );
     }
 }
 

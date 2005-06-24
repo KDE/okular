@@ -656,7 +656,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
         }
         return;
     }
-    else if( e->key() == '/' && d->document->isOpened() )
+    else if( e->key() == '/' && d->document->isOpened() && d->document->supportsSearching() )
     {
         // stop scrolling the page (if doing it)
         if ( d->autoScrollTimer )

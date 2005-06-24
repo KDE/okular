@@ -12,11 +12,13 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qimage.h>
 #include <qtextstream.h>
 #include <qvaluevector.h>
 #include <qtimer.h>
 #include <qmap.h>
 #include <kdebug.h>
+#include <kimageio.h>
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
@@ -31,7 +33,8 @@
 #include "observer.h"
 #include "page.h"
 #include "link.h"
-#include "generator_pdf/generator_pdf.h"  // PDF generator
+#include "generator_pdf/generator_pdf.h"        // PDF generator
+#include "generator_kimgio/generator_kimgio.h"  // Images generator
 #include "conf/settings.h"
 
 // structures used internally by KPDFDocument for local variables storage
@@ -50,6 +53,9 @@ class KPDFDocumentPrivate
         // cached stuff
         QString docFileName;
         QString xmlFileName;
+
+        // list of the mimetypes 'generator_kimgio' can understand
+        QStringList kimgioMimes;
 
         // viewport stuff
         QValueList< DocumentViewport > viewportHistory;
@@ -139,15 +145,40 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
 
     // create the generator based on the file's mimetype
     KMimeType::Ptr mime = KMimeType::findByPath( docFile );
-    QString mimeName = mime->name();
-    if ( mimeName == "application/pdf" ||
-         mimeName == "application/x-pdf" )
+    // a.1. check for mimetypes supported by generator_pdf
+    if ( (*mime).is( "application/pdf" ) || (*mime).is( "application/x-pdf" ) )
         generator = new PDFGenerator( this );
-/*    else if ( mimeName == "application/postscript" )
-        kdError() << "PS generator not available" << endl;*/
-    else
+    // a.2. check for mimetypes supported by generator_kimgio
+    if ( !generator )
     {
-        kdWarning() << "Unknown mimetype '" << mimeName << "'." << endl;
+        // build the mimetypes list the first time
+        if ( d->kimgioMimes.isEmpty() )
+        {
+            KImageIO::registerFormats();
+            QStringList list = QImage::inputFormatList();
+            QStringList::Iterator it = list.begin(), end = list.end();
+            for ( ; it != end; ++it )
+                d->kimgioMimes << KMimeType::findByPath( QString("foo.%1").arg(*it), 0, true )->name();
+        }
+        // scan over the list
+        QStringList::Iterator it = d->kimgioMimes.begin(), end = d->kimgioMimes.end();
+        for ( ; it != end; ++it )
+        {
+            kdDebug() << *it << endl;
+            if ( (*mime).is( *it ) )
+            {
+                generator = new KIMGIOGenerator( this );
+                break;
+            }
+        }
+    }
+    // a.3. no supported mimetype
+    if ( !generator )
+    {
+        if ( (*mime).is( "application/postscript" ) )
+            kdWarning() << "PS generator not available" << endl;
+        else
+            kdWarning() << "Unknown mimetype '" << mime->name() << "'." << endl;
         return false;
     }
 
@@ -382,6 +413,11 @@ KURL KPDFDocument::currentDocument() const
 bool KPDFDocument::isAllowed( int flags ) const
 {
     return generator ? generator->isAllowed( flags ) : false;
+}
+
+bool KPDFDocument::supportsSearching() const
+{
+    return generator ? generator->canGenerateTextPage() : false;
 }
 
 bool KPDFDocument::historyAtBegin() const

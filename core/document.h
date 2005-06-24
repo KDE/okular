@@ -76,6 +76,7 @@ class KPDFDocument : public QObject
         uint pages() const;
         KURL currentDocument() const;
         bool isAllowed( int /*Document::Permisison(s)*/ ) const;
+        bool supportsSearching() const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;

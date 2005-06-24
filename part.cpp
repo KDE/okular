@@ -344,10 +344,11 @@ KAboutData* Part::createAboutData()
 bool Part::openFile()
 {
     bool ok = m_document->openDocument( m_file, url() );
+    bool canSearch = m_document->supportsSearching();
 
     // update one-time actions
-    m_find->setEnabled( ok );
-    m_findNext->setEnabled( ok );
+    m_find->setEnabled( ok && canSearch );
+    m_findNext->setEnabled( ok && canSearch );
     m_saveAs->setEnabled( ok );
     m_printPreview->setEnabled( ok );
     m_showProperties->setEnabled( ok );

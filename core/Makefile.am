@@ -1,10 +1,10 @@
-SUBDIRS = generator_pdf
+SUBDIRS = generator_pdf generator_kimgio
 
 INCLUDES = -I$(srcdir)/generator_pdf -I$(srcdir)/.. -I$(srcdir)/../xpdf -I$(srcdir)/../xpdf/goo -I$(top_builddir)/kpdf $(all_includes)
 
 METASOURCES = AUTO
 
-libkpdfcore_la_LIBADD = ./generator_pdf/libgeneratorpdf.la
+libkpdfcore_la_LIBADD = ./generator_pdf/libgeneratorpdf.la ./generator_kimgio/libgeneratorkimgio.la
 libkpdfcore_la_SOURCES = page.cpp document.cpp link.cpp annotations.cpp \
                          pagetransition.cpp
 

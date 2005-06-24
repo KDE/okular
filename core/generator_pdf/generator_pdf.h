@@ -64,6 +64,7 @@ class PDFGenerator : public Generator
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap();
         void generatePixmap( PixmapRequest * request );
+        bool canGenerateTextPage();
         void generateSyncTextPage( KPDFPage * page );
 
         // [INHERITED] print page using an already configured kprinter

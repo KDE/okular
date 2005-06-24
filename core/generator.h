@@ -57,6 +57,7 @@ class Generator : public QObject
         // page contents generation
         virtual bool canGeneratePixmap() = 0;
         virtual void generatePixmap( PixmapRequest * request ) = 0;
+        virtual bool canGenerateTextPage() = 0;
         virtual void generateSyncTextPage( KPDFPage * page ) = 0;
 
         // print document using already configured kprinter

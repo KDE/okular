@@ -387,6 +387,11 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     signalRequestDone( request );
 }
 
+bool PDFGenerator::canGenerateTextPage()
+{
+    return true;
+}
+
 void PDFGenerator::generateSyncTextPage( KPDFPage * page )
 {
     // build a TextPage using the lightweight KPDFTextDev generator..

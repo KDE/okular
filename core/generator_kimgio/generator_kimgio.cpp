@@ -9,6 +9,7 @@
 
 #include <qpainter.h>
 #include <qpixmap.h>
+#include <qimage.h>
 #include <kprinter.h>
 
 #include "core/page.h"
@@ -42,8 +43,12 @@ bool KIMGIOGenerator::canGeneratePixmap()
 
 void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
 {
-    QPixmap *p = new QPixmap(*m_pix);
+    // perform a smooth scaled generation
+    QImage smoothImage = m_pix->convertToImage().smoothScale( request->width, request->height );
+    QPixmap * p = new QPixmap( smoothImage );
     request->page->setPixmap(request->id, p);
+
+    // signal that the request has been accomplished
     signalRequestDone(request);
 }
 

@@ -213,14 +213,14 @@ void PageView::setupActions( KActionCollection * ac )
     d->aViewContinuous->setChecked( Settings::viewContinuous() );
 
     // Mouse-Mode actions
-    d->aMouseNormal = new KRadioAction( i18n("&Normal"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+    d->aMouseNormal = new KRadioAction( i18n("&Browse Tool"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
     d->aMouseNormal->setExclusiveGroup( "MouseType" );
     d->aMouseNormal->setChecked( true );
 
     KToggleAction * mz = new KRadioAction( i18n("&Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
     mz->setExclusiveGroup( "MouseType" );
 
-    d->aMouseSelect = new KRadioAction( i18n("&Select"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    d->aMouseSelect = new KRadioAction( i18n("&Select Tool"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
     d->aMouseSelect->setExclusiveGroup( "MouseType" );
 
     d->aToggleAnnotator = new KToggleAction( i18n("&Review"), "pencil", 0, ac, "mouse_toggle_annotate" );

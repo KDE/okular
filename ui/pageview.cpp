@@ -75,9 +75,10 @@ public:
     QPoint mousePressPos;
     bool mouseMidZooming;
     int mouseMidLastY;
-    bool mouseOnRect;
+    bool mouseSelecting;
     QRect mouseSelectionRect;
-    QColor selectionRectColor;
+    QColor mouseSelectionColor;
+    bool mouseOnRect;
 
     // type ahead find
     bool typeAheadActive;
@@ -135,6 +136,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
+    d->mouseSelecting = false;
     d->mouseOnRect = false;
     d->typeAheadActive = false;
     d->findTimeoutTimer = 0;
@@ -471,7 +473,7 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
     selectionRectInternal.addCoords( 1, 1, -1, -1 );
     // color for blending
     QColor selBlendColor = (selectionRect.width() > 8 || selectionRect.height() > 8) ?
-                           d->selectionRectColor : Qt::red;
+                           d->mouseSelectionColor : Qt::red;
 
     // subdivide region into rects
     QMemArray<QRect> allRects = pe->region().rects();
@@ -593,7 +595,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
     e->accept();
 
     // if performing a selection or dyn zooming, disable keys handling
-    if ( !d->mouseSelectionRect.isNull() || d->mouseMidZooming )
+    if ( d->mouseSelecting || d->mouseMidZooming )
         return;
 
     // handle 'find as you type' (based on khtml/khtmlview.cpp)
@@ -871,7 +873,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         case MouseZoom:
         case MouseSelect:
             // set second corner of selection
-            if ( (leftButton || d->aPrevAction) && !d->mouseSelectionRect.isNull() )
+            if ( d->mouseSelecting && (leftButton || d->aPrevAction) )
                 selectionEndPoint( e->x(), e->y() );
             break;
     }
@@ -884,8 +886,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
         return;
 
     // if performing a selection or dyn zooming, disable mouse press
-    if ( !d->mouseSelectionRect.isNull() || d->mouseMidZooming ||
-         d->viewportMoveActive )
+    if ( d->mouseSelecting || d->mouseMidZooming || d->viewportMoveActive )
         return;
 
     // if the page is scrolling, stop it
@@ -1026,7 +1027,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
         case MouseZoom:
             // if a selection rect has been defined, zoom into it
-            if ( leftButton && !d->mouseSelectionRect.isNull() )
+            if ( leftButton && d->mouseSelecting )
             {
                 QRect selRect = d->mouseSelectionRect.normalize();
                 if ( selRect.width() <= 8 && selRect.height() <= 8 )
@@ -1060,7 +1061,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
         case MouseSelect:{
             // if mouse is released and selection is null this is a rightClick
-            if ( rightButton && d->mouseSelectionRect.isNull() )
+            if ( rightButton && !d->mouseSelecting )
             {
                 PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
                 emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
@@ -1069,7 +1070,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 
             // if a selection is defined, display a popup
             if ( (!leftButton && !d->aPrevAction) || (!rightButton && d->aPrevAction) ||
-                 d->mouseSelectionRect.isNull() )
+                 !d->mouseSelecting )
                 break;
 
             QRect selectionRect = d->mouseSelectionRect.normalize();
@@ -1415,8 +1416,9 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
 
 void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveAll*/ )
 {
+    d->mouseSelecting = true;
     d->mouseSelectionRect.setRect( x, y, 1, 1 );
-    d->selectionRectColor = color;
+    d->mouseSelectionColor = color;
     // ensures page doesn't scroll
     if ( d->autoScrollTimer )
     {
@@ -1457,8 +1459,10 @@ void PageView::selectionEndPoint( int x, int y )
 
 void PageView::selectionClear()
 {
-    updateContents( d->mouseSelectionRect.normalize() );
+    QRect updatedRect = d->mouseSelectionRect.normalize();
+    d->mouseSelecting = false;
     d->mouseSelectionRect.setCoords( 0, 0, -1, -1 );
+    updateContents( updatedRect );
 }
 
 void PageView::updateZoom( ZoomMode newZoomMode )

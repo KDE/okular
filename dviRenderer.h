@@ -167,6 +167,11 @@ private slots:
   void          showThatSourceInformationIsPresent(void);
 
 private:
+  /* This method locates special PDF characters in a string and
+     replaces them by UTF8. See Section 3.2.3 of the PDF reference
+     guide for information */
+  QString PDFencodingToQString(QString pdfstring); 
+
   void  setResolution(double resolution_in_DPI);
 
   fontPool      font_pool;

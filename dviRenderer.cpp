@@ -548,14 +548,10 @@ bool dviRenderer::setFile(const QString &fname)
   
 
   // Generate the list of bookmarks
-  kdError() << "========================================================" <<    endl;
-
   QPtrStack<Bookmark> stack;
   stack.setAutoDelete (false);
-
   QValueVector<PreBookmark>::iterator it;
   for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
-    kdError() <<  (*it).title << " has an count " << (*it).noOfChildren << endl;
     Bookmark *bmk = new Bookmark((*it).title, findAnchor((*it).anchorName));
     if (stack.isEmpty())
       bookmarks.append(bmk);
@@ -565,7 +561,6 @@ bool dviRenderer::setFile(const QString &fname)
     }
     for(int i=0; i<(*it).noOfChildren; i++)
       stack.push(bmk);
-  
   }
   prebookmarks.clear();
   
@@ -720,24 +715,6 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
     kdDebug(4300) << "Source hyperlink to " << currentDVIPage->sourceHyperLinkList[i].linkText << endl;
   }
 #endif
-  
-//   QString cp = linkText;
-//   int max = cp.length();
-//   int i;
-//   for(i=0; i<max; i++)
-//     if (cp[i].isDigit() == false)
-//       break;
-//   
-//   // The macro-package srcltx gives a special like "src:99 test.tex"
-//   // while MikTeX gives "src:99test.tex". KDVI tries
-//   // to understand both.
-//   QFileInfo fi1(dviFile->filename);
-//   QFileInfo fi2(fi1.dir(),cp.mid(i+1));
-// 
-//   //Sometimes the filename is passed without the .tex extension,
-//   //better add it when necessary.
-//   if ( !fi2.exists() )
-//     fi2.setFile(fi2.absFilePath() + ".tex");
 
   DVI_SourceFileSplitter splitter(linkText, dviFile->filename);
   QString TeXfile = splitter.filePath();
@@ -811,6 +788,37 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
     kdError(4300) << "Editor failed to start" << endl;
     return;
   }
+}
+
+
+QString dviRenderer::PDFencodingToQString(QString pdfstring)
+{
+  // This method locates special PDF characters in a string and
+  // replaces them by UTF8. See Section 3.2.3 of the PDF reference
+  // guide for information.
+  pdfstring = pdfstring.replace("\\n", "\n");
+  pdfstring = pdfstring.replace("\\r", "\n");
+  pdfstring = pdfstring.replace("\\t", "\t");
+  pdfstring = pdfstring.replace("\\f", "\f");
+  pdfstring = pdfstring.replace("\\(", "(");
+  pdfstring = pdfstring.replace("\\)", ")");
+  pdfstring = pdfstring.replace("\\\\", "\\");
+  
+  // Now replace octal character codes with the characters they encode
+  int pos;
+  QRegExp rx( "(\\\\)(\\d\\d\\d)" );  // matches "\xyz" where x,y,z are numbers
+  while((pos = rx.search( pdfstring )) != -1) {
+    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
+  }
+  rx.setPattern( "(\\\\)(\\d\\d)" );  // matches "\xy" where x,y are numbers
+  while((pos = rx.search( pdfstring )) != -1) {
+    pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(0,8)));
+  }
+  rx.setPattern( "(\\\\)(\\d)" );  // matches "\x" where x is a number
+  while((pos = rx.search( pdfstring )) != -1) {
+    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
+  }
+  return pdfstring;
 }
 
 

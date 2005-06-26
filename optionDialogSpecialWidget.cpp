@@ -36,7 +36,7 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorDescriptionString += i18n("Click 'Help' to learn how to set up Emacs.");
   
   editorNameString        += "Kate";
-  editorCommandString     += "kate --line %l %f";
+  editorCommandString     += "kate --use --line %l %f";
   editorDescriptionString += i18n("Kate perfectly supports inverse search.");
   
   editorNameString        += "Kile";

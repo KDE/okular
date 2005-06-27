@@ -806,6 +806,17 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 item.setAttribute( "Viewport", DocumentViewport( pageNumber ).toString() );
             }
         }
+        else if ( a && a->getKind() == actionGoToR )
+        {
+            LinkGoToR * g = static_cast< LinkGoToR * >( a );
+            LinkDest * destination = g->getDest();
+            if ( !destination && g->getNamedDest() )
+            {
+                item.setAttribute( "ViewportName", g->getNamedDest()->getCString() );
+            }
+
+            item.setAttribute( "ExternalFileName", g->getFileName()->getCString() );
+        }
 
         // 3. recursively descend over children
         outlineItem->open();

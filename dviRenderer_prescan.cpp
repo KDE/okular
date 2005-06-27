@@ -344,7 +344,7 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
       }
       // The PostScript code defines a bookmark
       if (cp.contains("/Dest") && cp.contains("/Title"))
-	prebookmarks.append(PreBookmark(cp.section('(', 2, 2).section(')', 0, 0),
+	prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section('(', 2, 2).section(')', 0, 0)),
 					cp.section('(', 1, 1).section(')', 0, 0), 
 					cp.section('-', 1, 1).section(' ', 0, 0).toUInt()
 					));

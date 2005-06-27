@@ -12,6 +12,7 @@
 #include <qpainter.h>
 #include <qimage.h>
 #include <qtimer.h>
+#include <kapplication.h>
 #include <kimageeffect.h>
 #include <kiconloader.h>
 
@@ -25,6 +26,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 {
     setFocusPolicy( NoFocus );
     setBackgroundMode( NoBackground );
+    setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QColorGroup::Background));
     move( 10, 10 );
     resize( 0, 0 );
     hide();
@@ -32,6 +34,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 
 void PageViewMessage::display( const QString & message, Icon icon, int durationMs )
 // give to Caesar what Caesar owns: code taken from Amarok's osd.h/.cpp
+// "redde (reddite, pl.) cesari quae sunt cesaris", just btw. ;)
 {
     if ( !Settings::showOSD() )
     {
@@ -89,7 +92,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     // draw background
     QPainter bufferPainter( &m_pixmap );
     bufferPainter.setPen( Qt::black );
-    bufferPainter.setBrush( backgroundColor() );
+    bufferPainter.setBrush( paletteBackgroundColor() );
     bufferPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
 
     // draw icon if present
@@ -98,7 +101,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // draw shadow and text
     int yText = geometry.height() - height / 2;
-    bufferPainter.setPen( backgroundColor().dark( 115 ) );
+    bufferPainter.setPen( paletteBackgroundColor().dark( 115 ) );
     bufferPainter.drawText( 5 + textXOffset + shadowOffset, yText + 1, message );
     bufferPainter.setPen( foregroundColor() );
     bufferPainter.drawText( 5 + textXOffset, yText, message );

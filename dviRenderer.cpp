@@ -499,6 +499,8 @@ bool dviRenderer::setFile(const QString &fname)
   // anchors in the document. So declare the existing lists empty.
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
+  bookmarks.clear();
+  prebookmarks.clear();
 
   if (dviFile->page_offset.isEmpty() == true) {
     mutex.unlock();
@@ -548,6 +550,7 @@ bool dviRenderer::setFile(const QString &fname)
   
 
   // Generate the list of bookmarks
+  bookmarks.clear();
   QPtrStack<Bookmark> stack;
   stack.setAutoDelete (false);
   QValueVector<PreBookmark>::iterator it;

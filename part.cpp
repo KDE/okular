@@ -358,7 +358,7 @@ bool Part::openFile()
         }
         else
         {
-            KMessageBox::error(widget(), i18n("You don't have ps2pdf installed so kpdf can not open postscript files."));
+            KMessageBox::error(widget(), i18n("You do not have ps2pdf installed, so kpdf cannot open postscript files."));
             return false;
         }
     }

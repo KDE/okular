@@ -128,7 +128,7 @@ GBool PDFDoc::setup(GString *ownerPassword, GString *userPassword) {
   eof[7] = '\0';
   if (strstr(eof, "%%EOF") == NULL)
   {
-    error(-1, "Document does not has ending %%EOF");	      
+    error(-1, "Document does not have ending %%EOF");	      
     errCode = errDamaged;
     return gFalse;
   }

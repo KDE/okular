@@ -284,6 +284,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 
   for (;;) {
     ch = readUINT8();
+
     if (ch <= (unsigned char) (SETCHAR0 + 127)) {
       (this->*currinf.set_char_p)(ch, ch);
     } else
@@ -550,7 +551,15 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	case FNTDEF3:
 	case FNTDEF4:
 	  command_pointer += 12 + ch - FNTDEF1 + 1;
-	  command_pointer += readUINT8() + readUINT8();
+	  
+	  // The variables _A_ and _L_, which are not used any
+	  // further, are there as a temporary workaround for a bug in
+	  // the C++ compiler that RedHat uses for Fedora Core 4.
+	  {
+	    Q_UINT8 _A_ = readUINT8();
+	    Q_UINT8 _L_ = readUINT8();
+	    command_pointer += _A_ + _L_ ;
+	  }
 	  break;
 	  
 	case PRE:

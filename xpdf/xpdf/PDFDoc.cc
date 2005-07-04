@@ -114,7 +114,27 @@ PDFDoc::PDFDoc(BaseStream *strA, GString *ownerPassword,
 
 GBool PDFDoc::setup(GString *ownerPassword, GString *userPassword) {
   str->reset();
-
+  
+  char eof[8];
+  int pos = str->getPos();
+  str->setPos(7, -1);
+  eof[0] = str->getChar();
+  eof[1] = str->getChar();
+  eof[2] = str->getChar();
+  eof[3] = str->getChar();
+  eof[4] = str->getChar();
+  eof[5] = str->getChar();
+  eof[6] = str->getChar();
+  eof[7] = '\0';
+  if (strstr(eof, "%%EOF") == NULL)
+  {
+    error(-1, "Document does not has ending %%EOF");	      
+    errCode = errDamaged;
+    return gFalse;
+  }
+  
+  str->setPos(pos);
+  
   // check header
   checkHeader();
 

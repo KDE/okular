@@ -29,6 +29,7 @@
 #endif // WIN32
 #include "GString.h"
 #include "gfile.h"
+#include "config.h"
 
 // Some systems don't define this, so just make it something reasonably
 // large.
@@ -481,7 +482,7 @@ GBool openTempFile(GString **name, FILE **f, const char *mode, char *ext) {
   int fd;
 
   if (ext) {
-#if HAVE_MKSTEMPS
+#ifdef HAVE_MKSTEMPS
     if ((s = getenv("TMPDIR"))) {
       *name = new GString(s);
     } else {
@@ -498,7 +499,7 @@ GBool openTempFile(GString **name, FILE **f, const char *mode, char *ext) {
     fd = open((*name)->getCString(), O_WRONLY | O_CREAT | O_EXCL, 0600);
 #endif
   } else {
-#if HAVE_MKSTEMP
+#ifdef HAVE_MKSTEMP
     if ((s = getenv("TMPDIR"))) {
       *name = new GString(s);
     } else {

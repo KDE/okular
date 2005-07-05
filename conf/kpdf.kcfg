@@ -162,6 +162,9 @@
   <entry key="SyncThumbnailsViewport" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="TocPageColumn" type="Bool" >
+   <default>false</default>
+  </entry>
  </group>
  <group name="PageView" >
   <entry key="CenterFirstPageInRow" type="Bool" >

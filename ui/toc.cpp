@@ -15,11 +15,12 @@
 #include "toc.h"
 #include "core/document.h"
 #include "core/page.h"
+#include "conf/settings.h"
 
 // uncomment following to enable a 2nd column showing the page referred
 // by each tree entry note: PDF uses often references to viewports and
 // they're slow when converted to page number. drop the 2nd column idea.
-//#define TOC_ENABLE_PAGE_COLUMN
+// to enable set TocPageColumn=true in [Nav Panel]
 
 class TOCItem : public KListViewItem
 {
@@ -27,19 +28,15 @@ class TOCItem : public KListViewItem
         TOCItem( KListView *parent, TOCItem *after, const QDomElement & e )
             : KListViewItem( parent, after, e.tagName() ), m_element( e )
         {
-#ifdef TOC_ENABLE_PAGE_COLUMN
-            if ( e.hasAttribute( "Page" ) )
+            if ( Settings::tocPageColumn() && e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
-#endif
         }
 
         TOCItem( KListViewItem *parent, TOCItem *after, const QDomElement & e )
             : KListViewItem( parent, after, e.tagName() ), m_element( e )
         {
-#ifdef TOC_ENABLE_PAGE_COLUMN
-            if ( e.hasAttribute( "Page" ) )
+            if ( Settings::tocPageColumn() && e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
-#endif
         }
 
         const QDomElement & element() const
@@ -54,11 +51,8 @@ class TOCItem : public KListViewItem
 TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_document(document)
 {
     addColumn( i18n("Topic") );
-#ifdef TOC_ENABLE_PAGE_COLUMN
-    addColumn( i18n("Page") );
-#else
-    header() -> hide();
-#endif
+    if (Settings::tocPageColumn())
+    	addColumn( i18n("Page") );
     setSorting(-1);
     setRootIsDecorated(true);
     setResizeMode(AllColumns);

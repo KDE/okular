@@ -92,6 +92,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// create browser extension (for printing when embedded into browser)
 	m_bExtension = new BrowserExtension(this);
 
+
+	/* NIEDAKH: this will need to be moved out of here, to the generator? */
 	// xpdf 'extern' global class (m_count is a static instance counter)
 	//if ( m_count ) TODO check if we need to insert these lines..
 	//	delete globalParams;

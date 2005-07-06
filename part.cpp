@@ -47,9 +47,12 @@
 #include <kiconloader.h>
 #include <kio/netaccess.h>
 #include <kpopupmenu.h>
+#include <kprocess.h>
+#include <kstandarddirs.h>
+#include <ktempfile.h>
+#include <ktrader.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
-#include <ktrader.h>
 
 // local includes
 #include "xpdf/GlobalParams.h"
@@ -336,6 +339,36 @@ KAboutData* Part::createAboutData()
 
 bool Part::openFile()
 {
+    KMimeType::Ptr mime = KMimeType::findByPath( m_file );
+    if ( (*mime).is( "application/postscript" ) )
+    {
+        QString app = KStandardDirs::findExe( "ps2pdf" );
+        if ( !app.isNull() )
+        {
+            KTempFile tf( QString::null, ".pdf" );
+            if ( tf.status() == 0 )
+            {
+                tf.close();
+                m_temporaryLocalFile = tf.name();
+
+                KProcess *p = new KProcess;
+                *p << app;
+                *p << m_file << m_temporaryLocalFile;
+                m_pageView->showText(i18n("Transforming from ps to pdf..."), 0);
+                connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
+                p -> start();
+                return true;
+            }
+        }
+        else
+        {
+            KMessageBox::error(widget(), i18n("You do not have ps2pdf installed, so kpdf cannot open postscript files."));
+            return false;
+        }
+    }
+
+    m_temporaryLocalFile = QString::null;
+
     bool ok = m_document->openDocument( m_file, url() );
 
     // update one-time actions
@@ -390,6 +423,12 @@ bool Part::openURL(const KURL &url)
 
 bool Part::closeURL()
 {
+    if (!m_temporaryLocalFile.isNull())
+    {
+        QFile::remove( m_temporaryLocalFile );
+        m_temporaryLocalFile = QString::null;
+    }
+
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_saveAs->setEnabled( false );
@@ -478,6 +517,12 @@ void Part::updateViewActions()
 void Part::enableTOC(bool enable)
 {
 	m_toolBox->setItemEnabled(0, enable);
+}
+
+void Part::psTransformEnded()
+{
+	m_file = m_temporaryLocalFile;
+	openFile();
 }
 
 //BEGIN go to page dialog

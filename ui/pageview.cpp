@@ -920,11 +920,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     {
                         // handle click over a image
                     }
-                    else
-                    {
+                    // Enrico and me have decided this is not worth the trouble it generates
+                    // else
+                    // {
                         // if not on a rect, the click selects the page
-                        d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
-                    }
+                        // d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                    // }
                 }
             }
             else if ( rightButton )

@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>324</width>
-            <height>167</height>
+            <width>519</width>
+            <height>201</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>optionDialogSpecialWidget_base</string>
     </property>
     <vbox>
         <property name="name">
@@ -44,23 +47,17 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KURLLabel" row="0" column="1">
-                    <property name="name">
-                        <cstring>urll</cstring>
-                    </property>
-                    <property name="text">
-                        <string>What is 'inverse search'? </string>
-                    </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
-                    </property>
-                    <property name="url" stdset="0">
-                        <string>inv-search</string>
-                    </property>
-                </widget>
-                <widget class="KComboBox" row="1" column="1">
+                <widget class="KComboBox" row="1" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>editorChoice</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>3</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Choose an editor which is used in inverse search.</string>
@@ -74,6 +71,14 @@
                     <property name="name">
                         <cstring>textLabel3</cstring>
                     </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>4</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
                     <property name="text">
                         <string>Description:</string>
                     </property>
@@ -82,13 +87,29 @@
                     <property name="name">
                         <cstring>textLabel4</cstring>
                     </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>4</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
                     <property name="text">
                         <string>Shell command:</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="1">
+                <widget class="QLabel" row="2" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>editorDescription</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>3</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
                     </property>
                     <property name="text">
                         <string></string>
@@ -101,9 +122,17 @@
 &lt;p&gt;If you feel that KDVI's support for a certain editor is inadequate, please write to kebekus@kde.org.&lt;/p&gt;</string>
                     </property>
                 </widget>
-                <widget class="KLineEdit" row="3" column="1">
+                <widget class="KLineEdit" row="3" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_EditorCommand</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>3</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Shell-command line used to start the editor.</string>
@@ -112,9 +141,47 @@
                         <string>If you are using inverse search, KDVI uses this command line to start the editor. The field '%f' is replaced with the filename, and '%l' is replaced with the line number.</string>
                     </property>
                 </widget>
-                <spacer row="0" column="0">
+                <widget class="QLabel" row="1" column="0">
                     <property name="name">
-                        <cstring>spacer1</cstring>
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>4</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>Editor:</string>
+                    </property>
+                </widget>
+                <widget class="KURLLabel" row="0" column="2">
+                    <property name="name">
+                        <cstring>urll</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>4</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>What is 'inverse search'? </string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignVCenter|AlignRight</set>
+                    </property>
+                    <property name="url" stdset="0">
+                        <string>inv-search</string>
+                    </property>
+                </widget>
+                <spacer row="0" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>spacer3</cstring>
                     </property>
                     <property name="orientation">
                         <enum>Horizontal</enum>
@@ -124,19 +191,11 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>40</width>
-                            <height>20</height>
+                            <width>390</width>
+                            <height>21</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>textLabel2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Editor:</string>
-                    </property>
-                </widget>
             </grid>
         </widget>
     </vbox>
@@ -145,7 +204,8 @@
 </customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kurllabel.h</includehint>
+    <includehint>kcombobox.h</includehint>
     <includehint>klineedit.h</includehint>
+    <includehint>kurllabel.h</includehint>
 </includehints>
 </UI>

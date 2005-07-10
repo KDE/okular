@@ -350,7 +350,7 @@ bool Part::openFile()
                 KProcess *p = new KProcess;
                 *p << app;
                 *p << m_file << m_temporaryLocalFile;
-                m_pageView->showText(i18n("Transforming from ps to pdf..."), 0);
+                m_pageView->showText(i18n("Converting from ps to pdf..."), 0);
                 connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
                 p -> start();
                 return true;

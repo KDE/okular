@@ -81,6 +81,7 @@ More items (first items will enter 'In progress list' first):
 -> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
+-> support OCR via RMB if 'gocr' or 'ocrad' present. OCR -> save to file, copy to clipboard
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
    Have a look at the fifth parameter of displayPage, it is the rotation, so it should not be THAT hard to implement
 -> presentation: add page counter and a widget to manually set pages on the top bar

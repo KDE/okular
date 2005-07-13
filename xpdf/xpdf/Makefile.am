@@ -12,3 +12,7 @@ libxpdf_la_SOURCES = Annot.cc Array.cc BuiltinFont.cc BuiltinFontTables.cc \
      TextOutputDev.cc UnicodeMap.cc UnicodeTypeTable.cc XRef.cc
 
 noinst_LTLIBRARIES = libxpdf.la
+# This fixes crash in Bug 109015 which i assume is a compiler bug
+# as adding some correctly placed printf in SplashOutputDev::convertPath() makes this 
+# option unneeded
+KDE_CXXFLAGS=-fno-regmove

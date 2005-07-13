@@ -1,0 +1,179 @@
+OCR support on selection. Enrico. Version 1.1.
+
+Adds runtime support for recognizing characters in gfx using an
+available ocr (gocr and ocrad supported).
+
+BUGS:
+The 'Recognition i progress ...' message gets overridden by the
+hiding of the messagewindow upon release of the right mouse button,
+when the original mouse action is restored (if entering selection
+mode from the drag one).
+
+TODO:
+Cache results of the runtime check (once per run? / session?)
+
+
+Index: ui/pageview.cpp
+===================================================================
+--- ui/pageview.cpp	(revision 434094)
++++ ui/pageview.cpp	(working copy)
+@@ -35,6 +35,8 @@
+ #include <kfiledialog.h>
+ #include <kimageeffect.h>
+ #include <kimageio.h>
++#include <kstandarddirs.h>
++#include <kprocess.h>
+ #include <kapplication.h>
+ #include <kdebug.h>
+ 
+@@ -94,6 +96,8 @@
+     QTimer * autoScrollTimer;
+     // annotations
+     PageViewAnnotator * annotator;
++    // ocr
++    QString ocrText;
+     // other stuff
+     QTimer * delayResizeTimer;
+     bool dirtyLayout;
+@@ -947,6 +951,7 @@
+     }
+ }
+ 
++
+ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
+ {
+     // don't perform any mouse action when no document is shown..
+@@ -1120,11 +1125,20 @@
+             menu.insertTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+             menu.insertItem( SmallIcon("image"), i18n( "Copy to Clipboard" ), 3 );
+             menu.insertItem( SmallIcon("filesave"), i18n( "Save to File..." ), 4 );
++            //TODO cache results between runs!
++            bool hasGocr = !KStandardDirs::findExe( "gocr" ).isNull(),
++                 hasOcrad = !KStandardDirs::findExe( "ocrad" ).isNull();
++            if ( hasGocr || hasOcrad )
++                menu.insertTitle( i18n( "Text Recognition" ) );
++            if ( hasGocr )
++                menu.insertItem( SmallIcon("fonts"), i18n( "GOCR to Clipboard" ), 5 );
++            if ( hasOcrad )
++                menu.insertItem( SmallIcon("fonts"), i18n( "OCRAD to Clipboard" ), 6 );
+             int choice = menu.exec( e->globalPos() );
+             // IMAGE operation choosen
+-            if ( choice > 2 )
++            if ( choice > 2 && choice < 5 )
+             {
+-                // renders page into a pixmap
++                // renders selection into a pixmap
+                 QPixmap copyPix( selectionRect.width(), selectionRect.height() );
+                 QPainter copyPainter( &copyPix );
+                 copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
+@@ -1132,7 +1146,7 @@
+ 
+                 if ( choice == 3 )
+                 {
+-                    // [2] copy pixmap to clipboard
++                    // [3] copy pixmap to clipboard
+                     QClipboard *cb = QApplication::clipboard();
+                     cb->setPixmap( copyPix, QClipboard::Clipboard );
+                     if ( cb->supportsSelection() )
+@@ -1141,7 +1155,7 @@
+                 }
+                 else if ( choice == 4 )
+                 {
+-                    // [3] save pixmap to file
++                    // [4] save pixmap to file
+                     QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
+                     if ( fileName.isNull() )
+                         d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
+@@ -1155,6 +1169,41 @@
+                     }
+                 }
+             }
++            // OCR operation choosen
++            else if ( choice > 4 )
++            {
++                // renders selection into a pixmap
++                QPixmap copyPix( selectionRect.width(), selectionRect.height() );
++                QPainter copyPainter( &copyPix );
++                copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
++                drawDocumentOnPainter( selectionRect, &copyPainter );
++
++                // create process to run the ocr executable
++                d->ocrText = QString();
++                KProcess * process = new KProcess( this );
++                if ( choice == 5 )
++                {
++                    // [5] handle scanning with 'gocr'
++                    copyPix.save( "/tmp/kpdf_to_ocr.ppm", "PPM" );
++                    *process << "gocr" << "-f" << "UTF8" << "/tmp/kpdf_to_ocr.ppm";
++                }
++                else
++                {
++                    // [6] handle scanning with 'ocrad'
++                    copyPix.save( "/tmp/kpdf_to_ocr.pbm", "PBM" );
++                    *process << "ocrad" << "--format=utf8" << "/tmp/kpdf_to_ocr.pbm";
++                }
++
++                // run process (results are handled in the slots)
++                connect( process, SIGNAL( receivedStdout( KProcess *, char *, int) ),
++                         this, SLOT( slotReceiveOcrStdout( KProcess *, char *, int) ) );
++                connect( process, SIGNAL( processExited( KProcess * ) ),
++                         this, SLOT( slotOcrJobEnded( KProcess * ) ) );
++                process->start( KProcess::NotifyOnExit, KProcess::Stdout );
++
++                // inform the user about the operation being done
++                d->messageWindow->display( i18n("Recognition in progress..."), PageViewMessage::Find );
++            }
+             // TEXT operation choosen
+             else
+             {
+@@ -1992,6 +2041,27 @@
+     releaseKeyboard();
+ }
+ 
++void PageView::slotReceiveOcrStdout( KProcess *, char * utf8data, int len )
++{
++    // copy the len bytes of UTF8 data to the clipboard(s)
++    QString partialData = QString::fromUtf8( utf8data, len );
++    d->ocrText += partialData;
++}
++
++void PageView::slotOcrJobEnded( KProcess * )
++{
++    // copy the text recognized till now to the clipboard
++    QClipboard *cb = QApplication::clipboard();
++    cb->setText( d->ocrText, QClipboard::Clipboard );
++    if ( cb->supportsSelection() )
++        cb->setText( d->ocrText, QClipboard::Selection );
++    // inform user about the results
++    if ( !d->ocrText.isEmpty() )
++        d->messageWindow->display( i18n( "Recognized %1 characters." ).arg( d->ocrText.length() ) );
++    else
++        d->messageWindow->display( i18n( "No text recognized." ) );
++}
++
+ void PageView::slotZoom()
+ {
+     setFocus();
+Index: ui/pageview.h
+===================================================================
+--- ui/pageview.h	(revision 434094)
++++ ui/pageview.h	(working copy)
+@@ -25,6 +25,7 @@
+ 
+ class KURL;
+ class KActionCollection;
++class KProcess;
+ 
+ class KPDFDocument;
+ class PageViewItem;
+@@ -116,6 +117,10 @@
+         void slotAutoScoll();
+         // type-ahead find timeout
+         void slotStopFindAhead();
++        // ocr result pending
++        void slotReceiveOcrStdout( KProcess *, char * data, int len );
++        // ocr finished its job
++        void slotOcrJobEnded( KProcess * );
+ 
+         // connected to local actions (toolbar, menu, ..)
+         void slotZoom();

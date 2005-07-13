@@ -1,0 +1,2014 @@
+TabBar. Amarok style sidepanel. Enrico. Version 1.0.
+Looks good / For usability testing.
+
+Changes the QToolBox to the amaroK reworked MultiTabBar, holded
+inside a container. Full credit if given for imported files :-).
+Adapted the Part layout code to reflect the changes.
+
+TODO:
+Not all the previous functionality is restored. Tabs can't be
+disabled as of now, so TOC can't be disabled if not present.
+Port the 'minibar', the small panel that shows page number and co.
+
+Index: part.cpp
+===================================================================
+--- part.cpp	(revision 434116)
++++ part.cpp	(working copy)
+@@ -55,6 +55,7 @@
+ // local includes
+ #include "xpdf/GlobalParams.h"
+ #include "part.h"
++#include "ui/amarok_browserbar.h"
+ #include "ui/pageview.h"
+ #include "ui/toc.h"
+ #include "ui/searchwidget.h"
+@@ -110,14 +111,13 @@
+ 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
+ 	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURLFromDocument(const KURL &) ) );
+ 
+-	// widgets: [] splitter []
+-	m_splitter = new QSplitter( parentWidget, widgetName );
+-	m_splitter->setOpaqueResize( true );
+-	m_splitter->setChildrenCollapsible( false );
+-	setWidget( m_splitter );
+-
++    // widgets: [] splitted layout []
++    m_mainLayout = new BrowserBar( parentWidget, widgetName );
++    setWidget( m_mainLayout );
++    /*
+ 	// widgets: [left panel] | []
+-	m_leftPanel = new QWidget( m_splitter );
++	m_leftPanel = new QWidget( bb );
++    m_mainLayout->addBrowser( m_leftPanel, "Ciao", "konqueror" );
+ 	m_leftPanel->setMinimumWidth( 90 );
+ 	m_leftPanel->setMaximumWidth( 300 );
+ 	QVBoxLayout * leftPanelLayout = new QVBoxLayout( m_leftPanel );
+@@ -125,40 +125,38 @@
+ 	// widgets: [left toolbox/..] | []
+ 	m_toolBox = new QToolBox( m_leftPanel );
+ 	leftPanelLayout->addWidget( m_toolBox );
++*/
+ 
+-	int tbIndex;
+-	// [left toolbox: Table of Contents] | []
+-	//QFrame * tocFrame = new QFrame( m_toolBox );
+-	//QVBoxLayout * tocFrameLayout = new QVBoxLayout( tocFrame );
+-	TOC * toc = new TOC( m_toolBox/*tocFrame*/, m_document );
+-	connect( toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
+-	//KListViewSearchLine * tocSearchLine = new KListViewSearchLine( tocFrame, toc );
+-	//tocFrameLayout->addWidget( tocSearchLine );
+-	//tocFrameLayout->addWidget( toc );
+-	tbIndex = m_toolBox->addItem( toc/*tocFrame*/, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+-	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
+-	enableTOC( false );
++    // [left toolbox: Table of Contents] | []
++    QFrame * tocBrowser = new QFrame( m_mainLayout );
++    m_mainLayout->addBrowser( tocBrowser, i18n("Contents"), "text_left" );
++    QVBoxLayout * tocFrameLayout = new QVBoxLayout( tocBrowser );
++    TOC * toc = new TOC( tocBrowser, m_document );
++    //HACK connect( toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
++    KListViewSearchLine * tocSearchLine = new KListViewSearchLine( tocBrowser, toc );
++    tocFrameLayout->addWidget( tocSearchLine );
++    tocFrameLayout->addWidget( toc );
++    //HACK enableTOC( false );
+ 
+-	// [left toolbox: Thumbnails and Bookmarks] | []
+-	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
+-	thumbsBox->setSpacing( 4 );
+-	m_searchWidget = new SearchWidget( thumbsBox, m_document );
+-	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
+-//	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
+-	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )) );
+-	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
+-	// shrink the bottom controller toolbar (too hackish..)
+-	thumbsBox->setStretchFactor( m_searchWidget, 100 );
+-	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
+-//	thumbsBox->setStretchFactor( m_tc, 1 );
+-	tbIndex = m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+-	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
+-	m_toolBox->setCurrentItem( thumbsBox );
++    // [left toolbox: Thumbnails and Bookmarks] | []
++    QVBox * thumbsBrowser = new ThumbnailsBox( m_mainLayout );
++    m_mainLayout->addBrowser( thumbsBrowser, i18n("Thumbnails"), "thumbnail" );
++    thumbsBrowser->setSpacing( 4 );
++    m_searchWidget = new SearchWidget( thumbsBrowser, m_document );
++    m_thumbnailList = new ThumbnailList( thumbsBrowser, m_document );
++//  ThumbnailController * m_tc = new ThumbnailController( thumbsBrowser, m_thumbnailList );
++    connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )) );
++    connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
++    // shrink the bottom controller toolbar (too hackish..)
++    thumbsBrowser->setStretchFactor( m_searchWidget, 100 );
++    thumbsBrowser->setStretchFactor( m_thumbnailList, 100 );
++//  thumbsBrowser->setStretchFactor( m_tc, 1 );
+ 
+-	// [left toolbox: Reviews] | []
+-	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
+-	m_toolBox->addItem( reviewsWidget, QIconSet(SmallIcon("pencil")), i18n("Reviews") );
++    // [left toolbox: Reviews] | []
++    Reviews * reviewsBrowser = new Reviews( m_mainLayout, m_document );
++    m_mainLayout->addBrowser( reviewsBrowser, i18n("Reviews"), "pencil" );
+ 
++/* FIXME removed minibar
+ 	// widgets: [../miniBarContainer] | []
+ 	QWidget * miniBarContainer = new QWidget( m_leftPanel );
+ 	leftPanelLayout->addWidget( miniBarContainer );
+@@ -170,25 +168,22 @@
+ 	// widgets: [../[../MiniBar]] | []
+ 	MiniBar * miniBar = new MiniBar( miniBarContainer, m_document );
+ 	miniBarLayout->addWidget( miniBar );
++*/
+ 
+-	// widgets: [] | [right 'pageView']
+-//	QWidget * rightContainer = new QWidget( m_splitter );
+-//	QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
+-//	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
+-//	rightLayout->addWidget( rtb );
+-	m_pageView = new PageView( m_splitter, m_document );
+-	m_pageView->setFocus(); //usability setting
+-	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
+-	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
+-//	rightLayout->addWidget( m_pageView );
++    // widgets: [] | [PageView]
++    m_pageView = new PageView( m_mainLayout, m_document );
++    m_mainLayout->setMainWidget( m_pageView );
++    m_pageView->setFocus(); // keep usability happy
++    connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
++    connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
+ 
+ 	// add document observers
+ 	m_document->addObserver( this );
+ 	m_document->addObserver( m_thumbnailList );
+ 	m_document->addObserver( m_pageView );
+ 	m_document->addObserver( toc );
+-	m_document->addObserver( miniBar );
+-	m_document->addObserver( reviewsWidget );
++//	m_document->addObserver( miniBar );
++	m_document->addObserver( reviewsBrowser );
+ 
+ 	// ACTIONS
+ 	KActionCollection * ac = actionCollection();
+@@ -197,19 +192,19 @@
+ 	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
+ 	m_gotoPage->setShortcut( "CTRL+G" );
+ 	// dirty way to activate gotopage when pressing miniBar's button
+-	connect( miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( activate() ) );
++	//connect( miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( activate() ) );
+ 
+ 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
+ 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
+ 	m_prevPage->setShortcut( "Backspace" );
+ 	// dirty way to activate prev page when pressing miniBar's button
+-	connect( miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( activate() ) );
++	//connect( miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( activate() ) );
+ 
+ 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
+ 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
+ 	m_nextPage->setShortcut( "Space" );
+ 	// dirty way to activate next page when pressing miniBar's button
+-	connect( miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( activate() ) );
++	//connect( miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( activate() ) );
+ 
+ 	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
+ 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
+@@ -263,7 +258,9 @@
+ 		splitterSizes.push_back( 50 );
+ 		splitterSizes.push_back( 500 );
+ 	}
+-	m_splitter->setSizes( splitterSizes );
++ 
++	//HACK m_splitter->setSizes( splitterSizes );
++  
+ 	// get notified about splitter size changes (HACK that will be removed
+ 	// by connecting to Qt4::QSplitter's sliderMoved())
+ 	m_pageView->installEventFilter( this );
+@@ -428,8 +425,8 @@
+ bool Part::eventFilter( QObject * watched, QEvent * e )
+ {
+     // if pageView has been resized, save splitter sizes
+-    if ( watched == m_pageView && e->type() == QEvent::Resize )
+-        Settings::setSplitterSizes( m_splitter->sizes() );
++//HACK    if ( watched == m_pageView && e->type() == QEvent::Resize )
++//        Settings::setSplitterSizes( m_splitter->sizes() );
+ 
+     // only intercept events, don't block them
+     return false;
+@@ -440,7 +437,7 @@
+     bool showLeft = m_showLeftPanel->isChecked();
+     Settings::setShowLeftPanel( showLeft );
+     // show/hide left panel
+-    m_leftPanel->setShown( showLeft );
++    //HACK m_leftPanel->setShown( showLeft );
+     // this needs to be hidden explicitly to disable thumbnails gen
+     m_thumbnailList->setShown( showLeft );
+ }
+@@ -519,7 +516,7 @@
+ 
+ void Part::enableTOC(bool enable)
+ {
+-	m_toolBox->setItemEnabled(0, enable);
++	//m_toolBox->setItemEnabled(0, enable);
+ }
+ 
+ //BEGIN go to page dialog
+Index: part.h
+===================================================================
+--- part.h	(revision 434116)
++++ part.h	(working copy)
+@@ -37,6 +37,7 @@
+ 
+ class KPDFDocument;
+ class DocumentViewport;
++class BrowserBar;
+ class ThumbnailList;
+ class ThumbnailController;
+ class PageView;
+@@ -129,7 +130,7 @@
+ 	KPDFDocument * m_document;
+ 
+ 	// main widgets
+-	QSplitter *m_splitter;
++	BrowserBar *m_mainLayout;
+ 	QWidget *m_leftPanel;
+ 	QToolBox *m_toolBox;
+ 	SearchWidget *m_searchWidget;
+Index: ui/Makefile.am
+===================================================================
+--- ui/Makefile.am	(revision 434116)
++++ ui/Makefile.am	(working copy)
+@@ -8,7 +8,8 @@
+ libkpdfui_la_SOURCES = pagepainter.cpp pageview.cpp pageviewutils.cpp \
+                        pageviewannotator.cpp minibar.cpp thumbnaillist.cpp \
+                        searchwidget.cpp toc.cpp propertiesdialog.cpp \
+-                       presentationwidget.cpp side_reviews.cpp newstuff.cpp
++                       presentationwidget.cpp side_reviews.cpp newstuff.cpp \
++                       amarok_browserbar.cpp amarok_multitabbar.cpp
+ 
+ pageview.lo: ../conf/settings.h
+ pageviewutils.lo: ../conf/settings.h
+diff -uNr uiold/amarok_browserbar.cpp ui/amarok_browserbar.cpp
+--- ui/amarok_browserbar.cpp	1970-01-01 01:00:00.000000000 +0100
++++ ui/amarok_browserbar.cpp	2005-07-13 02:28:11.502785384 +0200
+@@ -0,0 +1,261 @@
++/***************************************************************************
++ *   Copyright (C) 2004, 2005 Max Howell <max.howell@methylblue.com>       *
++ *                                                                         *
++ *   This program is free software; you can redistribute it and/or modify  *
++ *   it under the terms of the GNU General Public License as published by  *
++ *   the Free Software Foundation; either version 2 of the License, or     *
++ *   (at your option) any later version.                                   *
++ *                                                                         *
++ ***************************************************************************/
++
++#include "amarok_browserbar.h"
++#include "amarok_multitabbar.h"
++
++#include <kapplication.h>  //kapp
++#include <kconfig.h>
++#include <kiconloader.h>   //multiTabBar icons
++#include <klocale.h>
++
++#include <qcursor.h>       //for resize cursor
++#include <qpainter.h>
++#include <qsignalmapper.h> //m_mapper
++#include <qstyle.h>        //amaroK::Splitter
++
++
++// we emulate a qsplitter, mostly for historic reasons, but there are still a few advantages
++// mostly we can stop the browserbar getting resized too small so that switching browser looks wrong
++
++class AmaSplitter : public QWidget
++{
++    public:
++        AmaSplitter( BrowserBar *w ) : QWidget( w, "divider" )
++        {
++            setCursor( QCursor(SplitHCursor) );
++            styleChange( style() );
++        }
++
++        virtual void paintEvent( QPaintEvent* )
++        {
++            QPainter p( this );
++            parentWidget()->style().drawPrimitive( QStyle::PE_Splitter, &p, rect(), colorGroup(), QStyle::Style_Horizontal );
++        }
++
++        virtual void styleChange( QStyle& )
++        {
++            setFixedWidth( style().pixelMetric( QStyle::PM_SplitterWidth, this ) );
++        }
++
++        virtual void mouseMoveEvent( QMouseEvent *e )
++        {
++            static_cast<BrowserBar*>(parent())->mouseMovedOverSplitter( e );
++        }
++};
++
++BrowserBar::BrowserBar( QWidget *parent, const char * name )
++        : QWidget( parent, name )
++        , m_mainWidget( 0L )
++        , m_browserBox( new QWidget( this ) )
++        , m_divider( new AmaSplitter( this ) )
++        , m_tabBar( new MultiTabBar( MultiTabBar::Vertical, this ) )
++        , m_currentIndex( -1 )
++        , m_mapper( new QSignalMapper( this ) )
++{
++    m_pos = m_tabBar->sizeHint().width() + 5; //5 = aesthetic spacing
++
++    m_tabBar->setStyle( MultiTabBar::AMAROK );
++    m_tabBar->setPosition( MultiTabBar::Left );
++    m_tabBar->showActiveTabTexts( true );
++    m_tabBar->setFixedWidth( m_pos );
++    m_tabBar->move( 0, 3 );
++
++    QVBoxLayout *layout = new QVBoxLayout( m_browserBox );
++    layout->addSpacing( 3 ); // aesthetics
++    layout->setAutoAdd( true );
++
++    m_browserBox->move( m_pos, 0 );
++    m_browserBox->hide();
++    m_divider->hide();
++
++    connect( m_mapper, SIGNAL(mapped( int )), SLOT(showHideBrowser( int )) );
++}
++
++#define foreachType( Type, x ) \
++    for( Type::ConstIterator it = x.begin(), end = x.end(); it != end; ++it )
++
++void BrowserBar::polish()
++{
++    QWidget::polish();
++
++    // compute minimum width for the browsers container (and cap it to 250)
++    uint M = 0;
++    foreachType( BrowserList, m_browsers ) {
++        const uint m = (*it)->minimumWidth();
++        if( m > M ) M = m;
++    }
++    if( M > 250 )
++        M = 250;
++    m_browserBox->setMinimumWidth( M );
++
++    // TODO read width
++    // readNumEntry( "Width", browser( index )->sizeHint().width() );
++    const int width = 300;
++    m_browserBox->resize( width, height() );
++
++    // TODO read previous tab index
++    // indexForName( config->readEntry( "CurrentPane" ) );
++    const int prevIndex = -1;
++    if( prevIndex != -1 )
++        showHideBrowser( prevIndex );
++}
++
++void BrowserBar::adjustWidgetSizes()
++{
++    const uint w   = width();
++    const uint h   = height();
++    const uint mxW = maxBrowserWidth();
++    const uint p   = (m_pos < mxW) ? m_pos : mxW;
++    const uint ppw = p + m_divider->width();
++    const uint tbw = m_tabBar->width();
++
++    m_divider->move( p, 0 );
++
++    const uint offset = !m_divider->isHidden() ? ppw : tbw;
++
++    m_browserBox->resize( p - tbw, h );
++    if ( m_mainWidget )
++        m_mainWidget->setGeometry( offset, 0, w - offset, h );
++}
++
++void BrowserBar::mouseMovedOverSplitter( QMouseEvent *e )
++{
++    const uint oldPos   = m_pos;
++    const uint newPos   = mapFromGlobal( e->globalPos() ).x();
++    const uint minWidth = m_tabBar->width() + m_browserBox->minimumWidth();
++    const uint maxWidth = maxBrowserWidth();
++
++    if( newPos < minWidth )
++        m_pos = minWidth;
++    else if( newPos > maxWidth )
++        m_pos = maxWidth;
++    else
++        m_pos = newPos;
++
++    if( m_pos != oldPos )
++        adjustWidgetSizes();
++}
++
++bool BrowserBar::event( QEvent *e )
++{
++    switch( e->type() )
++    {
++    case QEvent::LayoutHint:
++        //FIXME include browserholder width
++        setMinimumWidth(
++                m_tabBar->minimumWidth() +
++                m_divider->minimumWidth() +
++                m_browserBox->width() +
++                (m_mainWidget ? m_mainWidget->minimumWidth() : 0) );
++        break;
++
++    case QEvent::Resize:
++        m_divider->resize( 0, height() ); //Qt will set width
++        m_tabBar->resize( 0, height() ); //Qt will set width
++
++        adjustWidgetSizes();
++
++        return true;
++
++    default:
++        ;
++    }
++
++    return QWidget::event( e );
++}
++
++void BrowserBar::addBrowser( QWidget *widget, const QString &title, const QString& icon )
++{
++    const int id = m_tabBar->tabs()->count(); // the next available id
++    const QString name( widget->name() );
++    QWidget *tab;
++
++    widget->reparent( m_browserBox, QPoint() );
++    widget->hide();
++
++    m_tabBar->appendTab( SmallIcon( icon ), id, title );
++    tab = m_tabBar->tab( id );
++    tab->setFocusPolicy( QWidget::NoFocus ); //FIXME you can focus on the tab, but they respond to no input!
++
++    //we use a SignalMapper to show/hide the corresponding browser when tabs are clicked
++    connect( tab, SIGNAL(clicked()), m_mapper, SLOT(map()) );
++    m_mapper->setMapping( tab, id );
++
++    m_browsers.push_back( widget );
++}
++
++void BrowserBar::showHideBrowser( int index )
++{
++    const int prevIndex = m_currentIndex;
++
++    if( m_currentIndex != -1 ) {
++        ///first we need to hide the currentBrowser
++
++        m_currentIndex = -1; //to prevent race condition, see CVS history
++
++        m_browsers[prevIndex]->hide();
++        m_tabBar->setTab( prevIndex, false );
++    }
++
++    if( index == prevIndex ) {
++        ///close the BrowserBar
++
++        m_browserBox->hide();
++        m_divider->hide();
++
++        adjustWidgetSizes();
++    }
++
++    else if( (uint)index < m_browsers.count() ) {
++        ///open up target
++
++        QWidget* const target = m_browsers[index];
++        m_currentIndex = index;
++
++        m_divider->show();
++        target->show();
++        target->setFocus();
++        m_browserBox->show();
++        m_tabBar->setTab( index, true );
++
++        if( prevIndex == -1 ) {
++            // we need to show the browserBox
++            // m_pos dictates how everything will be sized in adjustWidgetSizes()
++            m_pos = m_browserBox->width() + m_tabBar->width();
++            adjustWidgetSizes();
++        }
++    }
++}
++
++int BrowserBar::indexForName( const QString &name ) const
++{
++    for( uint x = 0; x < m_browsers.count(); ++x )
++        if ( name == m_browsers[x]->name() )
++            return x;
++    return -1;
++}
++
++QWidget * BrowserBar::browserForName( const QString &name ) const
++{
++    for( uint x = 0; x < m_browsers.count(); ++x )
++        if ( name == m_browsers[x]->name() )
++            return m_browsers[x];
++    return 0;
++}
++
++QWidget * BrowserBar::browserForIndex( int index ) const
++{
++    if ( index < 0 )
++        index = 0;
++    return m_browsers[index];
++}
++
++#include "amarok_browserbar.moc"
+diff -uNr uiold/amarok_browserbar.h ui/amarok_browserbar.h
+--- ui/amarok_browserbar.h	1970-01-01 01:00:00.000000000 +0100
++++ ui/amarok_browserbar.h	2005-07-13 02:28:11.504785080 +0200
+@@ -0,0 +1,68 @@
++/***************************************************************************
++ *   Copyright (C) 2004, 2005 Max Howell <max.howell@methylblue.com>       *
++ *                                                                         *
++ *   This program is free software; you can redistribute it and/or modify  *
++ *   it under the terms of the GNU General Public License as published by  *
++ *   the Free Software Foundation; either version 2 of the License, or     *
++ *   (at your option) any later version.                                   *
++ *                                                                         *
++ ***************************************************************************/
++
++#ifndef AMAROK_BROWSERBAR_H__KPDF_MOD
++#define AMAROK_BROWSERBAR_H__KPDF_MOD
++
++#include <qwidget.h>        //baseclass
++#include <qvaluevector.h>   //stack allocated
++
++class MultiTabBar;
++class KURL;
++class QSignalMapper;
++typedef QValueVector<QWidget*> BrowserList;
++
++class BrowserBar : public QWidget
++{
++    Q_OBJECT
++
++public:
++    BrowserBar( QWidget * parent, const char * name );
++
++    // populate the widget
++    void addBrowser( QWidget * browser, const QString & title, const QString & icon );
++    void setMainWidget( QWidget * mainWidget ) { m_mainWidget = mainWidget; }
++
++    // query methods
++    QWidget *currentBrowser() const { return browserForIndex( m_currentIndex ); }
++
++    /// for internal use
++    void mouseMovedOverSplitter( QMouseEvent* );
++
++protected:
++    virtual bool event( QEvent* );
++    virtual void polish();
++
++public slots:
++    //void showBrowser( const QString& name ) { showBrowser( indexForName( name ) ); }
++    //void showBrowser( int index ) { if( index != m_currentIndex ) showHideBrowser( index ); }
++    void showHideBrowser( int );
++    //void closeCurrentBrowser() { showHideBrowser( m_currentIndex ); }
++
++private:
++    int indexForName( const QString & ) const;
++    QWidget *browserForName( const QString & ) const;
++    QWidget *browserForIndex( int index ) const;
++
++    void adjustWidgetSizes();
++    uint maxBrowserWidth() const { return width() / 2; }
++
++    QWidget * m_mainWidget; // the widget on right
++    QWidget * m_browserBox; // parent widget to the browsers
++    uint m_pos;             // the x-coordinate of m_divider
++    QWidget * m_divider;    // a qsplitter like widget
++
++    MultiTabBar * m_tabBar;
++    BrowserList m_browsers;
++    int m_currentIndex;
++    QSignalMapper *m_mapper; // maps tab clicks to browsers
++};
++
++#endif
+diff -uNr uiold/amarok_multitabbar.cpp ui/amarok_multitabbar.cpp
+--- ui/amarok_multitabbar.cpp	1970-01-01 01:00:00.000000000 +0100
++++ ui/amarok_multitabbar.cpp	2005-07-13 02:28:11.507784624 +0200
+@@ -0,0 +1,1090 @@
++/***************************************************************************
++                       kmultitabbar.cpp -  description
++                           -------------------
++   begin                :  2001
++   copyright            : (C) 2001,2002,2003 by Joseph Wenninger <jowenn@kde.org>
++                          (C) 2005           by Mark Kretschmann <markey@web.de>
++***************************************************************************/
++
++/***************************************************************************
++    This library is free software; you can redistribute it and/or
++    modify it under the terms of the GNU Library General Public
++    License as published by the Free Software Foundation; either
++    version 2 of the License, or (at your option) any later version.
++
++    This library is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++    Library General Public License for more details.
++
++    You should have received a copy of the GNU Library General Public License
++    along with this library; see the file COPYING.LIB.  If not, write to
++    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++    Boston, MA 02111-1307, USA.
++***************************************************************************/
++
++#include "amarok_multitabbar.h"
++#include "amarok_multitabbar.moc"
++#include "amarok_multitabbar_p.h"
++#include "amarok_multitabbar_p.moc"
++
++#include <math.h>
++
++#include <qapplication.h>
++#include <qbutton.h>
++#include <qfontmetrics.h>
++#include <qlayout.h>
++#include <qpainter.h>
++#include <qpopupmenu.h>
++#include <qstyle.h>
++#include <qtimer.h>
++
++#include <kdebug.h>
++#include <kiconloader.h>
++#include <kstringhandler.h>
++
++#define NEARBYINT(i) ((int(float(i) + 0.5)))
++
++class MultiTabBarTabPrivate
++{
++    public:
++        QPixmap pix;
++};
++
++
++MultiTabBarInternal::MultiTabBarInternal( QWidget *parent, MultiTabBar::MultiTabBarMode bm ) : QScrollView( parent )
++{
++    m_expandedTabSize = -1;
++    m_showActiveTabTexts = false;
++    m_tabs.setAutoDelete( true );
++    m_barMode = bm;
++    setHScrollBarMode( AlwaysOff );
++    setVScrollBarMode( AlwaysOff );
++    if ( bm == MultiTabBar::Vertical ) {
++        box = new QWidget( viewport() );
++        mainLayout = new QVBoxLayout( box );
++        mainLayout->setAutoAdd( true );
++        box->setFixedWidth( 24 );
++        setFixedWidth( 24 );
++    } else {
++        box = new QWidget( viewport() );
++        mainLayout = new QHBoxLayout( box );
++        mainLayout->setAutoAdd( true );
++        box->setFixedHeight( 24 );
++        setFixedHeight( 24 );
++    }
++    addChild( box );
++    setFrameStyle( NoFrame );
++    viewport() ->setBackgroundMode( Qt::PaletteBackground );
++    /*	box->setPaletteBackgroundColor(Qt::red);
++        setPaletteBackgroundColor(Qt::green);*/
++}
++
++void MultiTabBarInternal::setStyle( enum MultiTabBar::MultiTabBarStyle style )
++{
++    m_style = style;
++    for ( uint i = 0;i < m_tabs.count();i++ )
++        m_tabs.at( i ) ->setStyle( m_style );
++
++    if ( ( m_style == MultiTabBar::KDEV3 ) ||
++            ( m_style == MultiTabBar::KDEV3ICON ) ||
++            ( m_style == MultiTabBar::AMAROK ) ) {
++        delete mainLayout;
++        mainLayout = 0;
++        resizeEvent( 0 );
++    } else if ( mainLayout == 0 ) {
++        if ( m_barMode == MultiTabBar::Vertical ) {
++            box = new QWidget( viewport() );
++            mainLayout = new QVBoxLayout( box );
++            box->setFixedWidth( 24 );
++            setFixedWidth( 24 );
++        } else {
++            box = new QWidget( viewport() );
++            mainLayout = new QHBoxLayout( box );
++            box->setFixedHeight( 24 );
++            setFixedHeight( 24 );
++        }
++        addChild( box );
++        for ( uint i = 0;i < m_tabs.count();i++ )
++            mainLayout->add( m_tabs.at( i ) );
++        mainLayout->setAutoAdd( true );
++
++    }
++    viewport() ->repaint();
++}
++
++void MultiTabBarInternal::drawContents ( QPainter * paint, int clipx, int clipy, int clipw, int cliph )
++{
++    QScrollView::drawContents ( paint , clipx, clipy, clipw, cliph );
++
++    if ( m_position == MultiTabBar::Right ) {
++
++        paint->setPen( colorGroup().shadow() );
++        paint->drawLine( 0, 0, 0, viewport() ->height() );
++        paint->setPen( colorGroup().background().dark( 120 ) );
++        paint->drawLine( 1, 0, 1, viewport() ->height() );
++
++
++    } else
++        if ( m_position == MultiTabBar::Left ) {
++            paint->setPen( colorGroup().light() );
++            paint->drawLine( 23, 0, 23, viewport() ->height() );
++            paint->drawLine( 22, 0, 22, viewport() ->height() );
++
++            paint->setPen( colorGroup().shadow() );
++            paint->drawLine( 0, 0, 0, viewport() ->height() );
++        } else
++            if ( m_position == MultiTabBar::Bottom ) {
++                paint->setPen( colorGroup().shadow() );
++                paint->drawLine( 0, 0, viewport() ->width(), 0 );
++                paint->setPen( colorGroup().background().dark( 120 ) );
++                paint->drawLine( 0, 1, viewport() ->width(), 1 );
++            } else {
++                paint->setPen( colorGroup().light() );
++                paint->drawLine( 0, 23, viewport() ->width(), 23 );
++                paint->drawLine( 0, 22, viewport() ->width(), 22 );
++
++                /*                paint->setPen(colorGroup().shadow());
++                                paint->drawLine(0,0,0,viewport()->height());*/
++
++            }
++
++
++}
++
++void MultiTabBarInternal::contentsMousePressEvent( QMouseEvent *ev )
++{
++    ev->ignore();
++}
++
++void MultiTabBarInternal::mousePressEvent( QMouseEvent *ev )
++{
++    ev->ignore();
++}
++
++
++#define CALCDIFF(m_tabs,diff,i) if (m_lines>(int)lines) {\
++                    /*kdDebug()<<"i="<<i<<" tabCount="<<tabCount<<" space="<<space<<endl;*/ \
++                    uint ulen=0;\
++                    diff=0; \
++                    for (uint i2=i;i2<tabCount;i2++) {\
++                        uint l1=m_tabs.at(i2)->neededSize();\
++                        if ((ulen+l1)>space){\
++                            if (ulen==0) diff=0;\
++                            else diff=((float)(space-ulen))/(i2-i);\
++                            break;\
++                        }\
++                        ulen+=l1;\
++                    }\
++                } else {diff=0; }
++
++
++void MultiTabBarInternal::resizeEvent( QResizeEvent *ev )
++{
++    /*	kdDebug()<<"MultiTabBarInternal::resizeEvent"<<endl;
++        kdDebug()<<"MultiTabBarInternal::resizeEvent - box geometry"<<box->geometry()<<endl;
++        kdDebug()<<"MultiTabBarInternal::resizeEvent - geometry"<<geometry()<<endl;*/
++    if ( ev ) QScrollView::resizeEvent( ev );
++
++    if ( ( m_style == MultiTabBar::KDEV3 ) ||
++            ( m_style == MultiTabBar::KDEV3ICON ) ||
++            ( m_style == MultiTabBar::AMAROK ) ) {
++        box->setGeometry( 0, 0, width(), height() );
++        int lines = 1;
++        uint space;
++        float tmp = 0;
++        if ( ( m_position == MultiTabBar::Bottom ) || ( m_position == MultiTabBar::Top ) )
++            space = width();
++        else
++            space = height();
++
++        int cnt = 0;
++        //CALCULATE LINES
++        const uint tabCount = m_tabs.count();
++        for ( uint i = 0;i < tabCount;i++ ) {
++            cnt++;
++            tmp += m_tabs.at( i ) ->neededSize();
++            if ( tmp > space ) {
++                if ( cnt > 1 ) i--;
++                else if ( i == ( tabCount - 1 ) ) break;
++                cnt = 0;
++                tmp = 0;
++                lines++;
++            }
++        }
++        //SET SIZE & PLACE
++        float diff = 0;
++        cnt = 0;
++
++        if ( ( m_position == MultiTabBar::Bottom ) || ( m_position == MultiTabBar::Top ) ) {
++
++            setFixedHeight( lines * 24 );
++            box->setFixedHeight( lines * 24 );
++            m_lines = height() / 24 - 1;
++            lines = 0;
++            CALCDIFF( m_tabs, diff, 0 )
++            tmp = -diff;
++
++            //kdDebug()<<"m_lines recalculated="<<m_lines<<endl;
++            for ( uint i = 0;i < tabCount;i++ ) {
++                MultiTabBarTab *tab = m_tabs.at( i );
++                cnt++;
++                tmp += tab->neededSize() + diff;
++                if ( tmp > space ) {
++                    //kdDebug()<<"about to start new line"<<endl;
++                    if ( cnt > 1 ) {
++                        CALCDIFF( m_tabs, diff, i )
++                        i--;
++                    } else {
++                        //kdDebug()<<"placing line on old line"<<endl;
++                        kdDebug() << "diff=" << diff << endl;
++                        tab->removeEventFilter( this );
++                        tab->move( NEARBYINT( tmp - tab->neededSize() ), lines * 24 );
++                        //						tab->setFixedWidth(tab->neededSize()+diff);
++                        tab->setFixedWidth( NEARBYINT( tmp + diff ) - tab->x() );;
++                        tab->installEventFilter( this );
++                        CALCDIFF( m_tabs, diff, ( i + 1 ) )
++
++                    }
++                    tmp = -diff;
++                    cnt = 0;
++                    lines++;
++                    //kdDebug()<<"starting new line:"<<lines<<endl;
++
++                } else {
++                    //kdDebug()<<"Placing line on line:"<<lines<<" pos: (x/y)=("<<tmp-m_tabs.at(i)->neededSize()<<"/"<<lines*24<<")"<<endl;
++                    //kdDebug()<<"diff="<<diff<<endl;
++                    tab->removeEventFilter( this );
++                    tab->move( NEARBYINT( tmp - tab->neededSize() ), lines * 24 );
++                    tab->setFixedWidth( NEARBYINT( tmp + diff ) - tab->x() );;
++
++                    //tab->setFixedWidth(tab->neededSize()+diff);
++                    tab->installEventFilter( this );
++
++                }
++            }
++        } else {
++            setFixedWidth( lines * 24 );
++            box->setFixedWidth( lines * 24 );
++            m_lines = lines = width() / 24;
++            lines = 0;
++            CALCDIFF( m_tabs, diff, 0 )
++            tmp = -diff;
++
++            for ( uint i = 0;i < tabCount;i++ ) {
++                MultiTabBarTab *tab = m_tabs.at( i );
++                cnt++;
++                tmp += tab->neededSize() + diff;
++                if ( tmp > space ) {
++                    if ( cnt > 1 ) {
++                        CALCDIFF( m_tabs, diff, i );
++                        tmp = -diff;
++                        i--;
++                    } else {
++                        tab->removeEventFilter( this );
++                        tab->move( lines * 24, NEARBYINT( tmp - tab->neededSize() ) );
++                        tab->setFixedHeight( NEARBYINT( tmp + diff ) - tab->y() );;
++                        tab->installEventFilter( this );
++                    }
++                    cnt = 0;
++                    tmp = -diff;
++                    lines++;
++                } else {
++                    tab->removeEventFilter( this );
++                    tab->move( lines * 24, NEARBYINT( tmp - tab->neededSize() ) );
++                    tab->setFixedHeight( NEARBYINT( tmp + diff ) - tab->y() );;
++                    tab->installEventFilter( this );
++                }
++            }
++        }
++
++
++        //kdDebug()<<"needed lines:"<<m_lines<<endl;
++    } else {
++        int size = 0; /*move the calculation into another function and call it only on add tab and tab click events*/
++        for ( int i = 0;i < ( int ) m_tabs.count();i++ )
++            size += ( m_barMode == MultiTabBar::Vertical ? m_tabs.at( i ) ->height() : m_tabs.at( i ) ->width() );
++        if ( ( m_position == MultiTabBar::Bottom ) || ( m_position == MultiTabBar::Top ) )
++            box->setGeometry( 0, 0, size, height() );
++        else box->setGeometry( 0, 0, width(), size );
++
++    }
++}
++
++
++void MultiTabBarInternal::showActiveTabTexts( bool show )
++{
++    m_showActiveTabTexts = show;
++}
++
++
++MultiTabBarTab* MultiTabBarInternal::tab( int id ) const
++{
++    for ( QPtrListIterator<MultiTabBarTab> it( m_tabs );it.current();++it ) {
++        if ( it.current() ->id() == id ) return it.current();
++    }
++    return 0;
++}
++
++bool MultiTabBarInternal::eventFilter( QObject *, QEvent *e )
++{
++    if ( e->type() == QEvent::Resize )
++        resizeEvent( 0 );
++
++    //PATCH by markey: Allow switching of tabs with mouse wheel
++    if ( e->type() == QEvent::Wheel ) {
++        QWheelEvent* event = static_cast<QWheelEvent*>( e );
++        const int delta = event->delta() / 120;
++
++        // Determine which tab is currently active
++        uint i;
++        for( i = 0; i < m_tabs.count(); i++ )
++            if ( m_tabs.at( i )->isOn() ) break;
++
++        // Calculate index of the new tab to activate
++        int newTab = i - delta;
++        if ( newTab < 0 ) newTab = 0;
++        if ( newTab > (int)m_tabs.count() - 1 ) newTab = m_tabs.count() - 1;
++
++        if ( i < m_tabs.count() && newTab != (int)i )
++            m_tabs.at( newTab )->animateClick();
++
++        // Must return true here for the wheel to work properly
++        return true;
++    }
++
++    return false;
++}
++
++int MultiTabBarInternal::appendTab( const QPixmap &pic , int id, const QString& text )
++{
++    MultiTabBarTab * tab;
++    m_tabs.append( tab = new MultiTabBarTab( pic, text, id, box, m_position, m_style ) );
++    tab->installEventFilter( this );
++    tab->showActiveTabText( m_showActiveTabTexts );
++
++    if ( m_style == MultiTabBar::KONQSBC ) {
++        if ( m_expandedTabSize < tab->neededSize() ) {
++            m_expandedTabSize = tab->neededSize();
++            for ( uint i = 0;i < m_tabs.count();i++ )
++                m_tabs.at( i ) ->setSize( m_expandedTabSize );
++
++        } else tab->setSize( m_expandedTabSize );
++    } else tab->updateState();
++    tab->show();
++    resizeEvent( 0 );
++    return 0;
++}
++
++void MultiTabBarInternal::removeTab( int id )
++{
++    for ( uint pos = 0;pos < m_tabs.count();pos++ ) {
++        if ( m_tabs.at( pos ) ->id() == id ) {
++            m_tabs.remove( pos );
++            resizeEvent( 0 );
++            break;
++        }
++    }
++}
++
++void MultiTabBarInternal::setPosition( enum MultiTabBar::MultiTabBarPosition pos )
++{
++    m_position = pos;
++    for ( uint i = 0;i < m_tabs.count();i++ )
++        m_tabs.at( i ) ->setTabsPosition( m_position );
++    viewport() ->repaint();
++}
++
++
++MultiTabBarButton::MultiTabBarButton( const QPixmap& pic, const QString& text, QPopupMenu *popup,
++                                      int id, QWidget *parent, MultiTabBar::MultiTabBarPosition pos, MultiTabBar::MultiTabBarStyle style )
++        : QPushButton( QIconSet(), text, parent ), m_style( style )
++        , m_animCount( 0 )
++        , m_animTimer( new QTimer( this ) )
++{
++    setIconSet( pic );
++    setText( text );
++    m_position = pos;
++    if ( popup ) setPopup( popup );
++    setFlat( true );
++    setFixedHeight( 24 );
++    setFixedWidth( 24 );
++    m_id = id;
++//     QToolTip::add( this, text );
++    connect( this, SIGNAL( clicked() ), this, SLOT( slotClicked() ) );
++    connect( m_animTimer, SIGNAL( timeout() ), this, SLOT( slotAnimTimer() ) );
++}
++
++MultiTabBarButton::MultiTabBarButton( const QString& text, QPopupMenu *popup,
++                                      int id, QWidget *parent, MultiTabBar::MultiTabBarPosition pos, MultiTabBar::MultiTabBarStyle style )
++        : QPushButton( QIconSet(), text, parent ), m_style( style )
++        , m_animCount( 0 )
++        , m_animTimer( new QTimer( this ) )
++{
++    setText( text );
++    m_position = pos;
++    if ( popup ) setPopup( popup );
++    setFlat( true );
++    setFixedHeight( 24 );
++    setFixedWidth( 24 );
++    m_id = id;
++//     QToolTip::add( this, text );
++    connect( this, SIGNAL( clicked() ), this, SLOT( slotClicked() ) );
++    connect( m_animTimer, SIGNAL( timeout() ), this, SLOT( slotAnimTimer() ) );
++}
++
++MultiTabBarButton::~MultiTabBarButton()
++{}
++
++int MultiTabBarButton::id() const
++{
++    return m_id;
++}
++
++void MultiTabBarButton::setText( const QString& text )
++{
++    QPushButton::setText( text );
++    m_text = text;
++//     QToolTip::add( this, text );
++}
++
++void MultiTabBarButton::slotClicked()
++{
++    emit clicked( m_id );
++}
++
++void MultiTabBarButton::setPosition( MultiTabBar::MultiTabBarPosition pos )
++{
++    m_position = pos;
++    repaint();
++}
++
++void MultiTabBarButton::setStyle( MultiTabBar::MultiTabBarStyle style )
++{
++    m_style = style;
++    repaint();
++}
++
++void MultiTabBarButton::hideEvent( QHideEvent* he )
++{
++    QPushButton::hideEvent( he );
++    MultiTabBar *tb = dynamic_cast<MultiTabBar*>( parentWidget() );
++    if ( tb ) tb->updateSeparator();
++}
++
++void MultiTabBarButton::showEvent( QShowEvent* he )
++{
++    QPushButton::showEvent( he );
++    MultiTabBar *tb = dynamic_cast<MultiTabBar*>( parentWidget() );
++    if ( tb ) tb->updateSeparator();
++}
++
++void MultiTabBarButton::enterEvent( QEvent* )
++{
++    m_animEnter = true;
++    m_animCount = 0;
++
++    m_animTimer->start( ANIM_INTERVAL );
++}
++
++void MultiTabBarButton::leaveEvent( QEvent* )
++{
++    // This can happen if you enter and leave the tab quickly
++    if ( m_animCount == 0 )
++        m_animCount = 1;
++
++    m_animEnter = false;
++    m_animTimer->start( ANIM_INTERVAL );
++}
++
++void MultiTabBarButton::slotAnimTimer()
++{
++    if ( m_animEnter ) {
++        m_animCount += 1;
++        repaint( false );
++        if ( m_animCount >= ANIM_MAX )
++            m_animTimer->stop();
++    } else {
++        m_animCount -= 1;
++        repaint( false );
++        if ( m_animCount <= 0 )
++            m_animTimer->stop();
++    }
++}
++
++QSize MultiTabBarButton::sizeHint() const
++{
++    constPolish();
++
++    int w = 0, h = 0;
++
++    // calculate contents size...
++#ifndef QT_NO_ICONSET
++    if ( iconSet() && !iconSet() ->isNull() ) {
++        int iw = iconSet() ->pixmap( QIconSet::Small, QIconSet::Normal ).width() + 4;
++        int ih = iconSet() ->pixmap( QIconSet::Small, QIconSet::Normal ).height();
++        w += iw;
++        h = QMAX( h, ih );
++    }
++#endif
++    if ( isMenuButton() )
++        w += style().pixelMetric( QStyle::PM_MenuButtonIndicator, this );
++
++    if ( pixmap() ) {
++        QPixmap * pm = ( QPixmap * ) pixmap();
++        w += pm->width();
++        h += pm->height();
++    } else {
++        QString s( text() );
++        bool empty = s.isEmpty();
++        if ( empty )
++            s = QString::fromLatin1( "XXXX" );
++        QFontMetrics fm = fontMetrics();
++        QSize sz = fm.size( ShowPrefix, s );
++        if ( !empty || !w )
++            w += sz.width();
++        if ( !empty || !h )
++            h = QMAX( h, sz.height() );
++    }
++
++    //PATCH by markey
++    if ( ( m_style == MultiTabBar::AMAROK ) )
++        w = ( parentWidget()->height() - 3 ) / NUM_TABS;
++
++    return ( style().sizeFromContents( QStyle::CT_ToolButton, this, QSize( w, h ) ).
++             expandedTo( QApplication::globalStrut() ) );
++}
++
++
++MultiTabBarTab::MultiTabBarTab( const QPixmap& pic, const QString& text,
++                                int id, QWidget *parent, MultiTabBar::MultiTabBarPosition pos,
++                                MultiTabBar::MultiTabBarStyle style )
++        : MultiTabBarButton( text, 0, id, parent, pos, style ),
++        m_showActiveTabText( false )
++{
++    d = new MultiTabBarTabPrivate();
++    setIcon( pic );
++    m_expandedSize = 24;
++    setToggleButton( true );
++
++    // Prevent flicker on redraw
++    setWFlags( getWFlags() | Qt::WNoAutoErase );
++}
++
++MultiTabBarTab::~MultiTabBarTab()
++{
++    delete d;
++}
++
++
++void MultiTabBarTab::setTabsPosition( MultiTabBar::MultiTabBarPosition pos )
++{
++    if ( ( pos != m_position ) && ( ( pos == MultiTabBar::Left ) || ( pos == MultiTabBar::Right ) ) ) {
++        if ( !d->pix.isNull() ) {
++            QWMatrix temp; // (1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F);
++            temp.rotate( 180 );
++            d->pix = d->pix.xForm( temp );
++            setIconSet( d->pix );
++        }
++    }
++
++    setPosition( pos );
++    //	repaint();
++}
++
++void MultiTabBarTab::setIcon( const QString& icon )
++{
++    QPixmap pic = SmallIcon( icon );
++    setIcon( pic );
++}
++
++void MultiTabBarTab::setIcon( const QPixmap& icon )
++{
++
++    if ( m_style != MultiTabBar::KDEV3 ) {
++        if ( ( m_position == MultiTabBar::Left ) || ( m_position == MultiTabBar::Right ) ) {
++            QWMatrix rotateMatrix;
++            if ( m_position == MultiTabBar::Left )
++                rotateMatrix.rotate( 90 );
++            else
++                rotateMatrix.rotate( -90 );
++            QPixmap pic = icon.xForm( rotateMatrix ); //TODO FIX THIS, THIS SHOWS WINDOW
++            d->pix = pic;
++            setIconSet( pic );
++        } else setIconSet( icon );
++    }
++}
++
++void MultiTabBarTab::slotClicked()
++{
++    if ( m_animTimer->isActive() ) {
++        m_animCount = ANIM_MAX;
++        m_animTimer->stop();
++        repaint();
++    }
++
++    updateState();
++    MultiTabBarButton::slotClicked();
++}
++
++void MultiTabBarTab::setState( bool b )
++{
++    setOn( b );
++    updateState();
++}
++
++void MultiTabBarTab::updateState()
++{
++
++    if ( m_style != MultiTabBar::KONQSBC ) {
++        if ( ( m_style == MultiTabBar::KDEV3 ) || ( m_style == MultiTabBar::KDEV3ICON ) || ( m_style == MultiTabBar::AMAROK ) || ( isOn() ) ) {
++            QPushButton::setText( m_text );
++        } else {
++            kdDebug() << "MultiTabBarTab::updateState(): setting text to an empty QString***************" << endl;
++            QPushButton::setText( QString::null );
++        }
++
++        if ( ( m_position == MultiTabBar::Right || m_position == MultiTabBar::Left ) ) {
++            setFixedWidth( 24 );
++            if ( ( m_style == MultiTabBar::KDEV3 ) || ( m_style == MultiTabBar::KDEV3ICON ) || ( m_style == MultiTabBar::AMAROK ) || ( isOn() ) ) {
++                setFixedHeight( MultiTabBarButton::sizeHint().width() );
++            } else setFixedHeight( 36 );
++        } else {
++            setFixedHeight( 24 );
++            if ( ( m_style == MultiTabBar::KDEV3 ) || ( m_style == MultiTabBar::KDEV3ICON ) || ( m_style == MultiTabBar::AMAROK ) || ( isOn() ) ) {
++                setFixedWidth( MultiTabBarButton::sizeHint().width() );
++            } else setFixedWidth( 36 );
++        }
++    } else {
++        if ( ( !isOn() ) || ( !m_showActiveTabText ) ) {
++            setFixedWidth( 24 );
++            setFixedHeight( 24 );
++            return ;
++        }
++        if ( ( m_position == MultiTabBar::Right || m_position == MultiTabBar::Left ) )
++            setFixedHeight( m_expandedSize );
++        else
++            setFixedWidth( m_expandedSize );
++    }
++    QApplication::sendPostedEvents( 0, QEvent::Paint | QEvent::Move | QEvent::Resize | QEvent::LayoutHint );
++    QApplication::flush();
++}
++
++int MultiTabBarTab::neededSize()
++{
++    //PATCH by markey
++    if ( m_style == MultiTabBar::AMAROK )
++        return ( parentWidget() ->height() - 3 ) / NUM_TABS;
++    else
++        return ( ( ( m_style != MultiTabBar::KDEV3 ) ? 24 : 0 ) + QFontMetrics( QFont() ).width( m_text ) + 6 );
++}
++
++void MultiTabBarTab::setSize( int size )
++{
++    m_expandedSize = size;
++    updateState();
++}
++
++void MultiTabBarTab::showActiveTabText( bool show )
++{
++    m_showActiveTabText = show;
++}
++
++void MultiTabBarTab::drawButtonLabel( QPainter *p )
++{
++    drawButton( p );
++}
++void MultiTabBarTab::drawButton( QPainter *paint )
++{
++    if ( m_style == MultiTabBar::AMAROK ) drawButtonAmarok( paint );
++    else if ( m_style != MultiTabBar::KONQSBC ) drawButtonStyled( paint );
++    else drawButtonClassic( paint );
++}
++
++void MultiTabBarTab::drawButtonStyled( QPainter *paint )
++{
++
++    QSize sh;
++    const int width = 36; // rotated
++    const int height = 24;
++    if ( ( m_style == MultiTabBar::KDEV3 ) || ( m_style == MultiTabBar::KDEV3ICON ) || ( m_style == MultiTabBar::AMAROK ) || ( isOn() ) ) {
++        if ( ( m_position == MultiTabBar::Left ) || ( m_position == MultiTabBar::Right ) )
++            sh = QSize( this->height(), this->width() ); //MultiTabBarButton::sizeHint();
++        else sh = QSize( this->width(), this->height() );
++    } else
++        sh = QSize( width, height );
++
++    QPixmap pixmap( sh.width(), height ); ///,sh.height());
++    pixmap.fill( eraseColor() );
++    QPainter painter( &pixmap );
++
++
++    QStyle::SFlags st = QStyle::Style_Default;
++
++    st |= QStyle::Style_Enabled;
++
++    if ( isOn() ) st |= QStyle::Style_On;
++
++    style().drawControl( QStyle::CE_PushButton, &painter, this, QRect( 0, 0, pixmap.width(), pixmap.height() ), colorGroup(), st );
++    style().drawControl( QStyle::CE_PushButtonLabel, &painter, this, QRect( 0, 0, pixmap.width(), pixmap.height() ), colorGroup(), st );
++
++    switch ( m_position ) {
++    case MultiTabBar::Left:
++        paint->rotate( -90 );
++        paint->drawPixmap( 1 - pixmap.width(), 0, pixmap );
++        break;
++    case MultiTabBar::Right:
++        paint->rotate( 90 );
++        paint->drawPixmap( 0, 1 - pixmap.height(), pixmap );
++        break;
++
++    default:
++        paint->drawPixmap( 0, 0, pixmap );
++        break;
++    }
++    //	style().drawControl(QStyle::CE_PushButtonLabel,painter,this, QRect(0,0,pixmap.width(),pixmap.height()),
++    //		colorGroup(),QStyle::Style_Enabled);
++
++
++}
++
++void MultiTabBarTab::drawButtonClassic( QPainter *paint )
++{
++    QPixmap pixmap;
++    if ( iconSet() )
++        pixmap = iconSet() ->pixmap( QIconSet::Small, QIconSet::Normal );
++    paint->fillRect( 0, 0, 24, 24, colorGroup().background() );
++
++    if ( !isOn() ) {
++
++        if ( m_position == MultiTabBar::Right ) {
++            paint->fillRect( 0, 0, 21, 21, QBrush( colorGroup().background() ) );
++
++            paint->setPen( colorGroup().background().dark( 150 ) );
++            paint->drawLine( 0, 22, 23, 22 );
++
++            paint->drawPixmap( 12 - pixmap.width() / 2, 12 - pixmap.height() / 2, pixmap );
++
++            paint->setPen( colorGroup().shadow() );
++            paint->drawLine( 0, 0, 0, 23 );
++            paint->setPen( colorGroup().background().dark( 120 ) );
++            paint->drawLine( 1, 0, 1, 23 );
++
++        } else
++            if ( ( m_position == MultiTabBar::Bottom ) || ( m_position == MultiTabBar::Top ) ) {
++                paint->fillRect( 0, 1, 23, 22, QBrush( colorGroup().background() ) );
++
++                paint->drawPixmap( 12 - pixmap.width() / 2, 12 - pixmap.height() / 2, pixmap );
++
++                paint->setPen( colorGroup().background().dark( 120 ) );
++                paint->drawLine( 23, 0, 23, 23 );
++
++
++                paint->setPen( colorGroup().light() );
++                paint->drawLine( 0, 22, 23, 22 );
++                paint->drawLine( 0, 23, 23, 23 );
++                paint->setPen( colorGroup().shadow() );
++                paint->drawLine( 0, 0, 23, 0 );
++                paint->setPen( colorGroup().background().dark( 120 ) );
++                paint->drawLine( 0, 1, 23, 1 );
++
++            } else {
++                paint->setPen( colorGroup().background().dark( 120 ) );
++                paint->drawLine( 0, 23, 23, 23 );
++                paint->fillRect( 0, 0, 23, 21, QBrush( colorGroup().background() ) );
++                paint->drawPixmap( 12 - pixmap.width() / 2, 12 - pixmap.height() / 2, pixmap );
++
++                paint->setPen( colorGroup().light() );
++                paint->drawLine( 23, 0, 23, 23 );
++                paint->drawLine( 22, 0, 22, 23 );
++
++                paint->setPen( colorGroup().shadow() );
++                paint->drawLine( 0, 0, 0, 23 );
++
++            }
++
++
++    } else {
++        if ( m_position == MultiTabBar::Right ) {
++            paint->setPen( colorGroup().shadow() );
++            paint->drawLine( 0, height() - 1, 23, height() - 1 );
++            paint->drawLine( 0, height() - 2, 23, height() - 2 );
++            paint->drawLine( 23, 0, 23, height() - 1 );
++            paint->drawLine( 22, 0, 22, height() - 1 );
++            paint->fillRect( 0, 0, 21, height() - 3, QBrush( colorGroup().light() ) );
++            paint->drawPixmap( 10 - pixmap.width() / 2, 10 - pixmap.height() / 2, pixmap );
++
++            if ( m_showActiveTabText ) {
++                if ( height() < 25 + 4 ) return ;
++
++                QPixmap tpixmap( height() - 25 - 3, width() - 2 );
++                QPainter painter( &tpixmap );
++
++                painter.fillRect( 0, 0, tpixmap.width(), tpixmap.height(), QBrush( colorGroup().light() ) );
++
++                painter.setPen( colorGroup().text() );
++                painter.drawText( 0, + width() / 2 + QFontMetrics( QFont() ).height() / 2, m_text );
++
++                paint->rotate( 90 );
++                kdDebug() << "tpixmap.width:" << tpixmap.width() << endl;
++                paint->drawPixmap( 25, -tpixmap.height() + 1, tpixmap );
++            }
++
++        } else
++            if ( m_position == MultiTabBar::Top ) {
++                paint->fillRect( 0, 0, width() - 1, 23, QBrush( colorGroup().light() ) );
++                paint->drawPixmap( 10 - pixmap.width() / 2, 10 - pixmap.height() / 2, pixmap );
++                if ( m_showActiveTabText ) {
++                    paint->setPen( colorGroup().text() );
++                    paint->drawText( 25, height() / 2 + QFontMetrics( QFont() ).height() / 2, m_text );
++                }
++            } else
++                if ( m_position == MultiTabBar::Bottom ) {
++                    paint->setPen( colorGroup().shadow() );
++                    paint->drawLine( 0, 23, width() - 1, 23 );
++                    paint->drawLine( 0, 22, width() - 1, 22 );
++                    paint->fillRect( 0, 0, width() - 1, 21, QBrush( colorGroup().light() ) );
++                    paint->drawPixmap( 10 - pixmap.width() / 2, 10 - pixmap.height() / 2, pixmap );
++                    if ( m_showActiveTabText ) {
++                        paint->setPen( colorGroup().text() );
++                        paint->drawText( 25, height() / 2 + QFontMetrics( QFont() ).height() / 2, m_text );
++                    }
++
++                } else {
++
++
++                    paint->setPen( colorGroup().shadow() );
++                    paint->drawLine( 0, height() - 1, 23, height() - 1 );
++                    paint->drawLine( 0, height() - 2, 23, height() - 2 );
++                    paint->fillRect( 0, 0, 23, height() - 3, QBrush( colorGroup().light() ) );
++                    paint->drawPixmap( 10 - pixmap.width() / 2, 10 - pixmap.height() / 2, pixmap );
++                    if ( m_showActiveTabText ) {
++
++                        if ( height() < 25 + 4 ) return ;
++
++                        QPixmap tpixmap( height() - 25 - 3, width() - 2 );
++                        QPainter painter( &tpixmap );
++
++                        painter.fillRect( 0, 0, tpixmap.width(), tpixmap.height(), QBrush( colorGroup().light() ) );
++
++                        painter.setPen( colorGroup().text() );
++                        painter.drawText( tpixmap.width() - QFontMetrics( QFont() ).width( m_text ), + width() / 2 + QFontMetrics( QFont() ).height() / 2, m_text );
++
++                        paint->rotate( -90 );
++                        kdDebug() << "tpixmap.width:" << tpixmap.width() << endl;
++
++                        paint->drawPixmap( -24 - tpixmap.width(), 2, tpixmap );
++
++                    }
++
++                }
++
++    }
++}
++
++void MultiTabBarTab::drawButtonAmarok( QPainter *paint )
++{
++    QColor fillColor, textColor;
++    if ( isOn() ) {
++        fillColor = blendColors( colorGroup().highlight(), colorGroup().background(), static_cast<int>( m_animCount * 3.5 ) );
++        textColor = blendColors( colorGroup().highlightedText(), colorGroup().text(), static_cast<int>( m_animCount * 4.5 ) );
++    } else {
++        fillColor = blendColors( colorGroup().background(), colorGroup().highlight(), static_cast<int>( m_animCount * 3.5 ) );
++        textColor = blendColors( colorGroup().text(), colorGroup().highlightedText(), static_cast<int>( m_animCount * 4.5 ) );
++    }
++
++    QPixmap pixmap( height(), width() );
++    pixmap.fill( fillColor );
++    QPainter painter( &pixmap );
++
++    const QPixmap icon = iconSet() ->pixmap( QIconSet::Small, QIconSet::Normal );
++
++    // Draw the frame
++    painter.setPen( colorGroup().mid() );
++    if ( m_id != NUM_TABS - 1 ) painter.drawLine( 0, 0, 0, pixmap.height() - 1 );
++    painter.drawLine( 0, pixmap.height() - 1, pixmap.width() - 1, pixmap.height() - 1 );
++
++    // Draw the text
++    QFont font;
++    font.setBold( isOn() );
++    painter.setFont( font );
++    QString text = KStringHandler::rPixelSqueeze( m_text, QFontMetrics( font ), pixmap.width() - icon.width() - 3 );
++    text.replace( "...", ".." );
++    const int textX = pixmap.width() / 2 - QFontMetrics( font ).width( text ) / 2;
++    painter.setPen( textColor );
++    const QRect rect( textX + icon.width() / 2 + 2, 0, pixmap.width(), pixmap.height() );
++    painter.drawText( rect, Qt::AlignLeft | Qt::AlignVCenter, text );
++
++    // Draw the icon
++    painter.drawPixmap( textX - icon.width() / 2 - 2, pixmap.height() / 2 - icon.height() / 2, icon );
++
++    // Paint to widget
++    paint->rotate( -90 );
++    paint->drawPixmap( 1 - pixmap.width(), 0, pixmap );
++}
++
++QColor MultiTabBarTab::blendColors( const QColor& color1, const QColor& color2, int percent )
++{
++    const float factor1 = ( 100 - ( float ) percent ) / 100;
++    const float factor2 = ( float ) percent / 100;
++
++    const int r = static_cast<int>( color1.red() * factor1 + color2.red() * factor2 );
++    const int g = static_cast<int>( color1.green() * factor1 + color2.green() * factor2 );
++    const int b = static_cast<int>( color1.blue() * factor1 + color2.blue() * factor2 );
++
++    QColor result;
++    result.setRgb( r, g, b );
++
++    return result;
++}
++
++
++
++
++MultiTabBar::MultiTabBar( MultiTabBarMode bm, QWidget *parent, const char *name ) : QWidget( parent, name )
++{
++    m_buttons.setAutoDelete( false );
++    if ( bm == Vertical ) {
++        m_l = new QVBoxLayout( this );
++        setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding, true );
++        //		setFixedWidth(24);
++    } else {
++        m_l = new QHBoxLayout( this );
++        setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed, true );
++        //		setFixedHeight(24);
++    }
++    m_l->setMargin( 0 );
++    m_l->setAutoAdd( false );
++
++    m_internal = new MultiTabBarInternal( this, bm );
++    setPosition( ( bm == MultiTabBar::Vertical ) ? MultiTabBar::Right : MultiTabBar::Bottom );
++    setStyle( VSNET );
++    //	setStyle(KDEV3);
++    //setStyle(KONQSBC);
++    m_l->insertWidget( 0, m_internal );
++    m_l->insertWidget( 0, m_btnTabSep = new QFrame( this ) );
++    m_btnTabSep->setFixedHeight( 4 );
++    m_btnTabSep->setFrameStyle( QFrame::Panel | QFrame::Sunken );
++    m_btnTabSep->setLineWidth( 2 );
++    m_btnTabSep->hide();
++
++    updateGeometry();
++}
++
++MultiTabBar::~MultiTabBar()
++{}
++
++/*int MultiTabBar::insertButton(QPixmap pic,int id ,const QString&)
++{
++(new KToolbarButton(pic,id,m_internal))->show();
++return 0;
++}*/
++
++int MultiTabBar::appendButton( const QPixmap &pic , int id, QPopupMenu *popup, const QString& )
++{
++    MultiTabBarButton * btn;
++    m_buttons.append( btn = new MultiTabBarButton( pic, QString::null,
++                            popup, id, this, m_position, m_internal->m_style ) );
++    m_l->insertWidget( 0, btn );
++    btn->show();
++    m_btnTabSep->show();
++    return 0;
++}
++
++void MultiTabBar::updateSeparator()
++{
++    bool hideSep = true;
++    for ( QPtrListIterator<MultiTabBarButton> it( m_buttons );it.current();++it ) {
++        if ( it.current() ->isVisibleTo( this ) ) {
++            hideSep = false;
++            break;
++        }
++    }
++    if ( hideSep ) m_btnTabSep->hide();
++    else m_btnTabSep->show();
++
++}
++
++int MultiTabBar::appendTab( const QPixmap &pic , int id , const QString& text )
++{
++    m_internal->appendTab( pic, id, text );
++    return 0;
++}
++
++MultiTabBarButton* MultiTabBar::button( int id ) const
++{
++    for ( QPtrListIterator<MultiTabBarButton> it( m_buttons );it.current();++it ) {
++        if ( it.current() ->id() == id ) return it.current();
++    }
++    return 0;
++}
++
++MultiTabBarTab* MultiTabBar::tab( int id ) const
++{
++    return m_internal->tab( id );
++}
++
++
++
++void MultiTabBar::removeButton( int id )
++{
++    for ( uint pos = 0;pos < m_buttons.count();pos++ ) {
++        if ( m_buttons.at( pos ) ->id() == id ) {
++            m_buttons.take( pos ) ->deleteLater();
++            break;
++        }
++    }
++    if ( m_buttons.count() == 0 ) m_btnTabSep->hide();
++}
++
++void MultiTabBar::removeTab( int id )
++{
++    m_internal->removeTab( id );
++}
++
++void MultiTabBar::setTab( int id, bool state )
++{
++    MultiTabBarTab * ttab = tab( id );
++    if ( ttab ) {
++        ttab->setState( state );
++    }
++}
++
++bool MultiTabBar::isTabRaised( int id ) const
++{
++    MultiTabBarTab * ttab = tab( id );
++    if ( ttab ) {
++        return ttab->isOn();
++    }
++
++    return false;
++}
++
++
++void MultiTabBar::showActiveTabTexts( bool show )
++{
++    m_internal->showActiveTabTexts( show );
++}
++
++void MultiTabBar::setStyle( MultiTabBarStyle style )
++{
++    m_internal->setStyle( style );
++}
++
++void MultiTabBar::setPosition( MultiTabBarPosition pos )
++{
++    m_position = pos;
++    m_internal->setPosition( pos );
++    for ( uint i = 0;i < m_buttons.count();i++ )
++        m_buttons.at( i ) ->setPosition( pos );
++}
++void MultiTabBar::fontChange( const QFont& /* oldFont */ )
++{
++    for ( uint i = 0;i < tabs() ->count();i++ )
++        tabs() ->at( i ) ->resize();
++    repaint();
++}
++
++QPtrList<MultiTabBarTab>* MultiTabBar::tabs() { return m_internal->tabs();}
++QPtrList<MultiTabBarButton>* MultiTabBar::buttons() { return & m_buttons;}
++
+diff -uNr uiold/amarok_multitabbar.h ui/amarok_multitabbar.h
+--- ui/amarok_multitabbar.h	1970-01-01 01:00:00.000000000 +0100
++++ ui/amarok_multitabbar.h	2005-07-13 02:28:11.510784168 +0200
+@@ -0,0 +1,259 @@
++/***************************************************************************
++                       kmultitabbar.h -  description
++                           -------------------
++   begin                :  2001
++   copyright            : (C) 2001,2002,2003 by Joseph Wenninger <jowenn@kde.org>
++                          (C) 2005           by Mark Kretschmann <markey@web.de>
++***************************************************************************/
++
++/***************************************************************************
++    This library is free software; you can redistribute it and/or
++    modify it under the terms of the GNU Library General Public
++    License as published by the Free Software Foundation; either
++    version 2 of the License, or (at your option) any later version.
++
++    This library is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++    Library General Public License for more details.
++
++    You should have received a copy of the GNU Library General Public License
++    along with this library; see the file COPYING.LIB.  If not, write to
++    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++    Boston, MA 02111-1307, USA.
++***************************************************************************/
++
++#ifndef _AMAROK_Multitabbar_h_
++#define _AMAROK_Multitabbar_h_
++
++#include <qscrollview.h>
++#include <qvbox.h>
++#include <qhbox.h>
++#include <qlayout.h>
++#include <qstring.h>
++#include <qptrlist.h>
++#include <qpushbutton.h>
++
++class QPixmap;
++class QPainter;
++class QFrame;
++
++class MultiTabBarPrivate;
++class MultiTabBarTabPrivate;
++class MultiTabBarButtonPrivate;
++class MultiTabBarInternal;
++
++/**
++* A Widget for horizontal and vertical tabs.
++* It is possible to add normal buttons to the top/left
++* The handling if only one tab at a time or multiple tabs
++* should be raisable is left to the "user".
++*@author Joseph Wenninger
++*/
++class MultiTabBar: public QWidget
++{
++        Q_OBJECT
++    public:
++        enum MultiTabBarMode{Horizontal, Vertical};
++        enum MultiTabBarPosition{Left, Right, Top, Bottom};
++
++        /**
++        * VSNET == Visual Studio .Net like (only show the text of active tabs
++        * KDEV3 == Kdevelop 3 like (always show the text)
++        * KONQSBC == konqy's classic sidebar style (unthemed), this one is disabled
++        * 	at the moment, but will be renabled soon too
++        */
++        enum MultiTabBarStyle{VSNET = 0, KDEV3 = 1, KONQSBC = 2, KDEV3ICON = 3, AMAROK = 4, STYLELAST = 0xffff};
++
++        MultiTabBar( MultiTabBarMode bm, QWidget *parent = 0, const char *name = 0 );
++        virtual ~MultiTabBar();
++
++        /**
++        * append  a new button to the button area. The button can later on be accessed with button(ID)
++        * eg for connecting signals to it
++        * @param pic a pixmap for the button
++        * @param id an arbitraty ID value. It will be emitted in the clicked signal for identifying the button
++        *	if more than one button is connected to a signals.
++        * @param popup A popup menu which should be displayed if the button is clicked
++        * @param not_used_yet will be used for a popup text in the future
++        */
++        int appendButton( const QPixmap &pic, int id = -1, QPopupMenu* popup = 0, const QString& not_used_yet = QString::null );
++        /**
++            * remove a button with the given ID
++        */
++        void removeButton( int id );
++        /**
++        * append a new tab to the tab area. It can be accessed lateron with tabb(id);
++        * @param pic a bitmap for the tab
++        * @param id an arbitrary ID which can be used later on to identify the tab
++        * @param text if a mode with text is used it will be the tab text, otherwise a mouse over hint
++        */
++        int appendTab( const QPixmap &pic, int id = -1, const QString& text = QString::null );
++        /**
++        * remove a tab with a given ID
++        */
++        void removeTab( int id );
++        /**
++        * set a tab to "raised"
++        * @param id The ID of the tab to manipulate
++        * @param state true == activated/raised, false == not active
++        */
++        void setTab( int id , bool state );
++        /**
++        * return the state of a tab, identified by it's ID
++        */
++        bool isTabRaised( int id ) const;
++        /**
++        * get a pointer to a button within the button area identified by its ID
++        */
++        class MultiTabBarButton *button( int id ) const;
++
++        /**
++        * get a pointer to a tab within the tab area, identiifed by its ID
++        */
++        class MultiTabBarTab *tab( int id ) const;
++        /**
++        * set the real position of the widget.
++        * @param pos if the mode is horizontal, only use top, bottom, if it is vertical use left or right
++        */
++        void setPosition( MultiTabBarPosition pos );
++        /**
++        * set the display style of the tabs
++        */
++        void setStyle( MultiTabBarStyle style );
++        /**
++        * be carefull, don't delete tabs yourself and don't delete the list itself
++        */
++        QPtrList<MultiTabBarTab>* tabs();
++        /**
++        * be carefull, don't delete buttons yourself and don't delete the list itself
++        */
++        QPtrList<MultiTabBarButton>* buttons();
++
++        /**
++        * might vanish, not sure yet
++        */
++        void showActiveTabTexts( bool show = true );
++    protected:
++        friend class MultiTabBarButton;
++        virtual void fontChange( const QFont& );
++        void updateSeparator();
++    private:
++        class MultiTabBarInternal *m_internal;
++        QBoxLayout *m_l;
++        QFrame *m_btnTabSep;
++        QPtrList<MultiTabBarButton> m_buttons;
++        MultiTabBarPosition m_position;
++        MultiTabBarPrivate *d;
++};
++
++/**
++* This class should never be created except with the appendButton call of MultiTabBar
++*/
++class MultiTabBarButton: public QPushButton
++{
++        Q_OBJECT
++    public:
++        MultiTabBarButton( const QPixmap& pic, const QString&, QPopupMenu *popup,
++                           int id, QWidget *parent, MultiTabBar::MultiTabBarPosition pos, MultiTabBar::MultiTabBarStyle style );
++        MultiTabBarButton( const QString&, QPopupMenu *popup,
++                           int id, QWidget *parent, MultiTabBar::MultiTabBarPosition pos, MultiTabBar::MultiTabBarStyle style );
++        virtual ~MultiTabBarButton();
++        int id() const;
++
++    public slots:
++        /**
++        * this is used internaly, but can be used by the user, if (s)he wants to
++        * It the according call of MultiTabBar is invoked though this modifications will be overwritten
++        */
++        void setPosition( MultiTabBar::MultiTabBarPosition );
++        /**
++        * this is used internaly, but can be used by the user, if (s)he wants to
++        * It the according call of MultiTabBar is invoked though this modifications will be overwritten
++        */
++        void setStyle( MultiTabBar::MultiTabBarStyle );
++
++        /**
++        * modify the text of the button
++        */
++        void setText( const QString & );
++
++        QSize sizeHint() const;
++
++    protected:
++        static const int NUM_TABS = 4; //HACK
++        static const int ANIM_INTERVAL = 18;
++        static const int ANIM_MAX = 20;
++
++        MultiTabBar::MultiTabBarPosition m_position;
++        MultiTabBar::MultiTabBarStyle m_style;
++        QString m_text;
++        int m_id;
++
++        bool m_animEnter;
++        int m_animCount;
++        class QTimer* m_animTimer;
++
++        virtual void hideEvent( class QHideEvent* );
++        virtual void showEvent( class QShowEvent* );
++        virtual void enterEvent( class QEvent* );
++        virtual void leaveEvent( class QEvent* );
++    private:
++        MultiTabBarButtonPrivate *d;
++    signals:
++        /**
++        * this is emitted if  the button is clicked
++        * @param id	the ID identifying the button
++        */
++        void clicked( int id );
++    protected slots:
++        virtual void slotClicked();
++        virtual void slotAnimTimer();
++};
++
++/**
++* This class should never be created except with the appendTab call of MultiTabBar
++*/
++class MultiTabBarTab: public MultiTabBarButton
++{
++        Q_OBJECT
++    public:
++        MultiTabBarTab( const QPixmap& pic, const QString&, int id, QWidget *parent,
++                        MultiTabBar::MultiTabBarPosition pos, MultiTabBar::MultiTabBarStyle style );
++        virtual ~MultiTabBarTab();
++        /**
++        * set the active state of the tab
++        * @param  state true==active false==not active
++        */
++        void setState( bool state );
++        /**
++        * choose if the text should always be displayed
++        * this is only used in classic mode if at all
++        */
++        void showActiveTabText( bool show );
++        void resize() { setSize( neededSize() ); }
++    private:
++        bool m_showActiveTabText;
++        int m_expandedSize;
++        MultiTabBarTabPrivate *d;
++    protected:
++        friend class MultiTabBarInternal;
++        void setSize( int );
++        int neededSize();
++        void updateState();
++        virtual void drawButton( QPainter * );
++        virtual void drawButtonLabel( QPainter * );
++        void drawButtonStyled( QPainter * );
++        void drawButtonClassic( QPainter * );
++        void drawButtonAmarok( QPainter * );
++        QColor blendColors( const QColor& color1, const QColor& color2, int percent );
++    protected slots:
++        virtual void slotClicked();
++        void setTabsPosition( MultiTabBar::MultiTabBarPosition );
++
++    public slots:
++        virtual void setIcon( const QString& );
++        virtual void setIcon( const QPixmap& );
++};
++
++#endif
+diff -uNr uiold/amarok_multitabbar_p.h ui/amarok_multitabbar_p.h
+--- ui/amarok_multitabbar_p.h	1970-01-01 01:00:00.000000000 +0100
++++ ui/amarok_multitabbar_p.h	2005-07-13 02:28:11.513783712 +0200
+@@ -0,0 +1,69 @@
++/***************************************************************************
++                        kmultitabbar_p.h -  description
++                            -------------------
++    begin                :  2003
++    copyright            : (C) 2003 by Joseph Wenninger <jowenn@kde.org>
++***************************************************************************/
++
++/***************************************************************************
++    This library is free software; you can redistribute it and/or
++    modify it under the terms of the GNU Library General Public
++    License as published by the Free Software Foundation; either
++    version 2 of the License, or (at your option) any later version.
++
++    This library is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++    Library General Public License for more details.
++
++    You should have received a copy of the GNU Library General Public License
++    along with this library; see the file COPYING.LIB.  If not, write to
++    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++    Boston, MA 02111-1307, USA.
++***************************************************************************/
++
++#ifndef AMAROK_MULTI_TAB_BAR_P_H
++#define AMAROK_MULTI_TAB_BAR_P_H
++#include <qscrollview.h>
++#include "amarok_multitabbar.h"
++
++class MultiTabBarInternal: public QScrollView
++{
++        Q_OBJECT
++public:
++        MultiTabBarInternal(QWidget *parent,MultiTabBar::MultiTabBarMode bm);
++        int appendTab(const QPixmap &,int=-1,const QString& =QString::null);
++        MultiTabBarTab *tab(int) const;
++        void removeTab(int);
++        void setPosition(enum MultiTabBar::MultiTabBarPosition pos);
++        void setStyle(enum MultiTabBar::MultiTabBarStyle style);
++        void showActiveTabTexts(bool show);
++        QPtrList<MultiTabBarTab>* tabs(){return &m_tabs;}
++
++private:
++        friend class MultiTabBar;
++        QWidget *box;
++        QBoxLayout *mainLayout;
++        QPtrList<MultiTabBarTab> m_tabs;
++        enum MultiTabBar::MultiTabBarPosition m_position;
++        bool m_showActiveTabTexts;
++        enum  MultiTabBar::MultiTabBarStyle m_style;
++        int m_expandedTabSize;
++        int m_lines;
++        MultiTabBar::MultiTabBarMode m_barMode;
++
++protected:
++        virtual bool eventFilter(QObject *,QEvent*);
++        virtual void drawContents ( QPainter *, int, int, int, int);
++
++        /**
++        * [contentsM|m]ousePressEvent are reimplemented from QScrollView
++        * in order to ignore all mouseEvents on the viewport, so that the
++        * parent can handle them.
++        */
++        virtual void contentsMousePressEvent(QMouseEvent *);
++        virtual void mousePressEvent(QMouseEvent *);
++        virtual void resizeEvent(QResizeEvent *);
++};
++#endif
++

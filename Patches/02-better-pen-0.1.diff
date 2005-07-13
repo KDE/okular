@@ -1,0 +1,90 @@
+Better pen: initial mods. Enrico. Version 0.1.
+
+Blending pen drawings. Mouse sampled every X move-events, so lines
+are much smoother, no more one-point-per-pixel or mouse aliasing.
+Note: will integrate the pen handling code from inkscape in future
+(file is 'ctx..something.*' and handling is easy with vector gfx)
+
+Index: ui/pagepainter.cpp
+===================================================================
+--- ui/pagepainter.cpp	(revision 434116)
++++ ui/pagepainter.cpp	(working copy)
+@@ -366,7 +366,8 @@
+                             path.append( point );
+                         }
+                         // draw the normalized path into image
+-                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale );
++                        //FIXME just added multiply here, but this won't go there!
++                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale, Multiply );
+                     }
+                 }
+             } // end current annotation drawing
+Index: ui/pageviewannotator.cpp
+===================================================================
+--- ui/pageviewannotator.cpp	(revision 434116)
++++ ui/pageviewannotator.cpp	(working copy)
+@@ -72,7 +72,7 @@
+ {
+     public:
+         SmoothPathEngine( const QDomElement & engineElement )
+-            : AnnotatorEngine( engineElement )
++            : AnnotatorEngine( engineElement ), skipPoint( -1 )
+         {
+             // parse engine specific attributes
+         }
+@@ -89,6 +89,7 @@
+                 totalRect.left = totalRect.right = lastPoint.x = nX;
+                 totalRect.top = totalRect.bottom = lastPoint.y = nY;
+                 points.append( lastPoint );
++                skipPoint = 0;
+             }
+             // add a point to the path
+             else if ( type == Move && points.count() > 0 )
+@@ -96,6 +97,11 @@
+                 //double dist = hypot( nX - points.last().x, nY - points.last().y );
+                 //if ( dist > 0.0001 )
+                 //{
++                skipPoint++;
++                if ( skipPoint == 6 )
++                {
++                    // reset the skip factor
++                    skipPoint = 0;
+                     // append mouse position (as normalized point) to the list
+                     NormalizedPoint nextPoint = NormalizedPoint( nX, nY );
+                     points.append( nextPoint );
+@@ -114,11 +120,26 @@
+                     incrementalRect.bottom = QMAX( nextPoint.y, lastPoint.y ) + dY;
+                     lastPoint = nextPoint;
+                     return incrementalRect.geometry( (int)xScale, (int)yScale );
+-                //}
++                }
+             }
+             // terminate process
+             else if ( type == Release && points.count() > 0 )
+             {
++                // always add the last point of the path
++                if ( skipPoint > 0 )
++                {
++                    // append mouse position (as normalized point) to the list
++                    NormalizedPoint nextPoint = NormalizedPoint( nX, nY );
++                    points.append( nextPoint );
++                    // update total rect
++                    double dX = 2.0 / (double)xScale;
++                    double dY = 2.0 / (double)yScale;
++                    totalRect.left = QMIN( totalRect.left, nX - dX );
++                    totalRect.top = QMIN( totalRect.top, nY - dY );
++                    totalRect.right = QMAX( nX + dX, totalRect.right );
++                    totalRect.bottom = QMAX( nY + dY, totalRect.bottom );
++                }
++                // safety check
+                 if ( points.count() < 2 )
+                     points.clear();
+                 else
+@@ -196,6 +217,7 @@
+ 
+     private:
+         // data
++        int skipPoint;
+         QValueList<NormalizedPoint> points;
+         NormalizedRect totalRect;
+         NormalizedPoint lastPoint;

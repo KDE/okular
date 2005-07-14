@@ -144,7 +144,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   PS = PS.simplifyWhiteSpace();
   
   
-  dviFile->isModified = true;
+  _isModified = true;
   Q_UINT32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
   Q_UINT32 lengthOfNewSpecial = PS.length()+5;
   
@@ -204,7 +204,6 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   // Modify all pointers to point to the newly allocated memory
   command_pointer = newDVI.data() + (command_pointer - dviFile->dvi_Data()) + lengthOfNewSpecial-lengthOfOldSpecial;
   end_pointer = newDVI.data() + (end_pointer - dviFile->dvi_Data())  + lengthOfNewSpecial-lengthOfOldSpecial;
-  
   
   dviFile->setNewData(newDVI);
   

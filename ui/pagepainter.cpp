@@ -25,6 +25,30 @@
 #include "core/annotations.h"
 #include "conf/settings.h"
 
+/** Little explaination of the UN/BUFFERED flow. Given to DjUrban on #kpdf:
+ *
+ * ok, so the while function is given an opened painter and a rectangle, the ID
+ * of the pixmap to paint, its scale and the Rect on the page to paint
+ *
+ * - if the paint is trivial: no transparency, no accessibility fx, etc, we use
+ *   directly the  given opened Painter
+ *
+ * - if we have to perform pixel operations on the image (like for example invert
+ *   colors or drawing annots) -> 4B: BUFFERED FLOW
+ *    
+ * ==== 4B:
+ *   In 4B we create a pixmap with the size of the rectangle,
+ *   open a SECOND painter over the pixmap
+ *   so we can 1) draw stuff with the painter 2) manipulate PIXMAP directly
+ *   then at the end of 4B we tell the rest of the code to use this painter
+ *
+ * ==== After 4B:
+ *   All functions use "mixedPainter" without knowing if they're painting on the
+ *   GIVEN painter, or the SECOND one (opened on internal pixmap)
+ *
+ * ==== At the end of all:
+ *   If we were painting on pixmap, copy it back over the GIVEN PAINTER !
+ */
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )
 {

@@ -359,7 +359,7 @@ bool dvifile::saveAs(const QString &filename)
     return false;
 
   QFile out(filename);
-  if (out.open( IO_Raw|QIODevice::WriteOnly ) == false)
+  if (out.open( QIODevice::WriteOnly ) == false)
     return false;
   if (out.writeBlock ( (char *)(dvi_Data()), size_of_file ) == -1)
     return false;

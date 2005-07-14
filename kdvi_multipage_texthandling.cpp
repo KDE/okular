@@ -108,7 +108,7 @@ void KDVIMultiPage::doExportText(void)
     dummyPage.setPageNumber(page);
     DVIRenderer.drawPage(100.0, &dummyPage); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
 
-    for(unsigned int i=0; i<dummyPage.textBoxList.size(); i++)
+    for(int i=0; i<dummyPage.textBoxList.size(); i++)
       stream << dummyPage.textBoxList[i].text << endl;
   }
 

@@ -199,7 +199,7 @@ private:
   void          prescan_setChar(unsigned int ch);
 
   /* */
-  QValueVector<PreBookmark> prebookmarks;
+  Q3ValueVector<PreBookmark> prebookmarks;
 
 
 

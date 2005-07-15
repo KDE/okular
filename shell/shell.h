@@ -6,6 +6,7 @@
  *   Copyright (C) 2004 by Christophe Devriese                             *
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2005 by Piotr Szymanski <niedakh@gmail.com>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,9 +22,11 @@
 #endif
 
 #include <kparts/mainwindow.h>
+#include <kmimetype.h>
 
 namespace KPDF
 {
+class Part;
   /**
    * This is the application "Shell".  It has a menubar and a toolbar
    * but relies on the "Part" to do all the real work.
@@ -68,7 +71,7 @@ namespace KPDF
     void readSettings();
     void writeSettings();
     void setFullScreen( bool );
-
+    
   private slots:
     void fileOpen();
     void slotQuit();
@@ -89,10 +92,13 @@ namespace KPDF
     void setupAccel();
     void setupActions();
     void init();
+    bool handleCompressed(KURL & url, const QString &path, const KMimeType::Ptr mimetype);
+    QStringList* fileFormats();
 
   private:
     KParts::ReadOnlyPart* m_part;
     KRecentFilesAction* m_recent;
+    QStringList* m_fileformats;
     KAction* m_printAction;
     KToggleAction* m_fullScreenAction;
     KToggleAction* m_showMenuBarAction;

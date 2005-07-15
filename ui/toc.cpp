@@ -15,6 +15,7 @@
 #include "toc.h"
 #include "core/document.h"
 #include "core/page.h"
+#include "core/link.h"
 
 // uncomment following to enable a 2nd column showing the page referred
 // by each tree entry note: PDF uses often references to viewports and
@@ -125,18 +126,28 @@ void TOC::slotExecuted( QListViewItem *i )
     if (tocItem == NULL)
         return;
     const QDomElement & e = tocItem->element();
-    if ( e.hasAttribute( "Viewport" ) )
+
+    QString externalFileName = e.attribute( "ExternalFileName" );
+    if ( !externalFileName.isEmpty() )
     {
-        // if the node has a viewport, set it
-        m_document->setViewport( DocumentViewport( e.attribute( "Viewport" ) ), TOC_ID );
+        KPDFLinkGoto link( externalFileName, DocumentViewport() );
+        m_document->processLink( &link );
     }
-    else if ( e.hasAttribute( "ViewportName" ) )
+    else
     {
-        // if the node references a viewport, get the reference and set it
-        const QString & page = e.attribute( "ViewportName" );
-        const QString & viewport = m_document->getMetaData( "NamedViewport", page );
-        if ( !viewport.isNull() )
-            m_document->setViewport( DocumentViewport( viewport ), TOC_ID );
+        if ( e.hasAttribute( "Viewport" ) )
+        {
+            // if the node has a viewport, set it
+            m_document->setViewport( DocumentViewport( e.attribute( "Viewport" ) ), TOC_ID );
+        }
+        else if ( e.hasAttribute( "ViewportName" ) )
+        {
+            // if the node references a viewport, get the reference and set it
+            const QString & page = e.attribute( "ViewportName" );
+            const QString & viewport = m_document->getMetaData( "NamedViewport", page );
+            if ( !viewport.isNull() )
+                m_document->setViewport( DocumentViewport( viewport ), TOC_ID );
+        }
     }
 }
 

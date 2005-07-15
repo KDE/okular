@@ -281,7 +281,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
         case actionGoTo:
             {
             LinkGoTo * g = (LinkGoTo *) a;
-            // ceate link: no ext file, namedDest, object pointer
+            // create link: no ext file, namedDest, object pointer
             link = new KPDFLinkGoto( QString::null, decodeViewport( g->getNamedDest(), g->getDest() ) );
             }
             break;

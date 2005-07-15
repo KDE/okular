@@ -1,6 +1,10 @@
+kde_module_LTLIBRARIES = \
+    libokularGenerator_kimgio.la
+
 INCLUDES = -I$(srcdir)/../../ $(all_includes)
 
-libgeneratorkimgio_la_LDFLAGS = $(all_libraries)
-libgeneratorkimgio_la_SOURCES = generator_kimgio.cpp
+libokularGenerator_kimgio_la_LIBADD = $(top_builddir)/kpdf/core/libkpdfcore.la $(top_builddir)/kpdf/conf/libkpdfconf.la -lkdeui
+libokularGenerator_kimgio_la_LDFLAGS = -module -avoid-version $(KDE_PLUGIN) $(all_libraries)
+libokularGenerator_kimgio_la_SOURCES = generator_kimgio.cpp
 
-noinst_LTLIBRARIES = libgeneratorkimgio.la
+kde_services_DATA = libokularGenerator_kimgio.desktop

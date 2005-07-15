@@ -51,9 +51,11 @@
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 #include <ktrader.h>
+#include <kprocess.h>
+#include <kstandarddirs.h>
+#include <ktempfile.h>
 
 // local includes
-#include "xpdf/GlobalParams.h"
 #include "part.h"
 #include "ui/pageview.h"
 #include "ui/toc.h"
@@ -77,29 +79,18 @@ K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
 
 using namespace KPDF;
 
-unsigned int Part::m_count = 0;
-
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_dirtyViewport( 0 ),
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_viewportDirty( 0 ),
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
-	m_searchStarted(false), m_notifyOpening(false)
+	m_searchStarted(false)
 {
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("kpdf");
 
 	// create browser extension (for printing when embedded into browser)
 	m_bExtension = new BrowserExtension(this);
-
-
-	/* NIEDAKH: this will need to be moved out of here, to the generator? */
-	// xpdf 'extern' global class (m_count is a static instance counter)
-	//if ( m_count ) TODO check if we need to insert these lines..
-	//	delete globalParams;
-	globalParams = new GlobalParams("");
-	globalParams->setupBaseFonts(NULL);
-	m_count++;
 
 	// we need an instance
 	setInstance(KPDFPartFactory::instance());
@@ -110,7 +101,16 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURLFromDocument(const KURL &) ) );
+	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
+
+        // widgets: ^searchbar (toolbar containing label and SearchWidget)
+//      m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
+//      m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
+//      QLabel * sLabel = new QLabel( i18n( "&Search:" ), m_searchToolBar, "kde toolbar widget" );
+//      m_searchWidget = new SearchWidget( m_searchToolBar, m_document );
+//      sLabel->setBuddy( m_searchWidget );
+//      m_searchToolBar->setStretchableWidget( m_searchWidget );
+
 
 	// widgets: [] splitter []
 	m_splitter = new QSplitter( parentWidget, widgetName );
@@ -245,6 +245,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
 	slotShowLeftPanel();
 
+        QString app = KStandardDirs::findExe( "ps2pdf" );
+        if ( !app.isNull() )
+		KAction * importPS= new KAction(i18n("&Import Postscript as PDF..."), "psimport", 0, this, SLOT(slotImportPSFile()), ac, "import_ps");
 	KAction * ghns = new KAction(i18n("&Get Books From Internet..."), "knewstuff", 0, this, SLOT(slotGetNewStuff()), ac, "get_new_stuff");
 	ghns->setShortcut( "G" );  // TEMP, REMOVE ME!
 
@@ -289,9 +292,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
+    // save internal settings
+    Settings::setSplitterSizes( m_splitter->sizes() );
+    // write to disk config file
+    Settings::writeConfig();
+
     delete m_document;
-    if ( --m_count == 0 )
-        delete globalParams;
 }
 
 void Part::notifyViewportChanged( bool /*smoothMove*/ )
@@ -343,6 +349,28 @@ KAboutData* Part::createAboutData()
 	return aboutData;
 }
 
+bool Part::slotImportPSFile()
+{
+    KURL url = KFileDialog::getOpenURL( QString::null, "application/postscript" );
+    KTempFile tf( QString::null, ".pdf" );
+    if ( tf.status() == 0 && url.isLocalFile())
+    {
+        tf.close();
+        m_file = url.path();
+        m_temporaryLocalFile = tf.name();
+        QString app = KStandardDirs::findExe( "ps2pdf" );
+        KProcess *p = new KProcess;
+        *p << app;
+        *p << m_file << m_temporaryLocalFile;
+        m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)..."));
+        connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
+        connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
+        p -> start();
+        
+        return true;
+    }
+    m_temporaryLocalFile = QString::null;
+}
 bool Part::openFile()
 {
     bool ok = m_document->openDocument( m_file, url() );
@@ -381,12 +409,6 @@ bool Part::openFile()
     return true;
 }
 
-void Part::openURLFromDocument(const KURL &url)
-{
-    m_notifyOpening = true;
-    openURL(url);
-}
-
 bool Part::openURL(const KURL &url)
 {
     // note: this can be the right place to check the file for gz or bz2 extension
@@ -395,16 +417,12 @@ bool Part::openURL(const KURL &url)
 
     // this calls in sequence the 'closeURL' and 'openFile' methods
     bool openOk = KParts::ReadOnlyPart::openURL(url);
-    if ( m_notifyOpening )
-    {
-        m_bExtension->openURLNotify();
-        m_bExtension->setLocationBarURL( url.prettyURL() );
-        m_notifyOpening = false;
-    }
+    m_bExtension->openURLNotify();
+    m_bExtension->setLocationBarURL( url.prettyURL() );
+
     if ( openOk )
     {
-        delete m_dirtyViewport;
-        m_dirtyViewport = 0;
+        m_viewportDirty = 0;
     }
     else
         KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
@@ -413,6 +431,12 @@ bool Part::openURL(const KURL &url)
 
 bool Part::closeURL()
 {
+    if (!m_temporaryLocalFile.isNull())
+    {
+        QFile::remove( m_temporaryLocalFile );
+        m_temporaryLocalFile = QString::null;
+    }
+
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_saveAs->setEnabled( false );
@@ -463,10 +487,10 @@ void Part::slotFileDirty( const QString& fileName )
 void Part::slotDoFileDirty()
 {
     // do the following the first time the file is reloaded
-    if ( !m_dirtyViewport )
+    if ( m_viewportDirty.pageNumber == -1 )
     {
         // store the current viewport
-        m_dirtyViewport = new DocumentViewport( m_document->viewport() );
+        m_viewportDirty = DocumentViewport( m_document->viewport() );
 
         // inform the user about the operation in progress
         m_pageView->displayMessage( i18n("Reloading the document...") );
@@ -476,13 +500,11 @@ void Part::slotDoFileDirty()
     if ( KParts::ReadOnlyPart::openURL(m_file) )
     {
         // on successfull opening, restore the previous viewport
-        if ( m_dirtyViewport->pageNumber >= (int)m_document->pages() )
-            m_dirtyViewport->pageNumber = m_document->pages() - 1;
-        m_document->setViewport( *m_dirtyViewport );
+        if ( m_viewportDirty.pageNumber >= (int) m_document->pages() ) 
+            m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
+        m_document->setViewport( m_viewportDirty );
+        m_viewportDirty.pageNumber = -1;
 
-        // delete the stored viewport
-        delete m_dirtyViewport;
-        m_dirtyViewport = 0;
     }
     else
     {
@@ -769,7 +791,8 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		else
 			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
 		if ( m_pageView->canFitPageWidth() )
-			popup->insertItem( SmallIcon("view_fit_width"), i18n("Zoom this"), 2 );
+			popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
+		//popup->insertItem( SmallIcon("view_fit_width"), i18n("Zoom this"), 2 );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
 		reallyShow = true;
@@ -882,6 +905,12 @@ void Part::saveDocumentRestoreInfo(KConfig* config)
 {
   config->writePathEntry( "URL", url().url() );
   if (m_document->pages() > 0) config->writeEntry( "Page", m_document->currentPage() + 1 );
+}
+
+void Part::psTransformEnded()
+{
+       m_file = m_temporaryLocalFile;
+       openFile();
 }
 
 /*

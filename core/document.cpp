@@ -27,14 +27,16 @@
 #include <kmimetype.h>
 #include <krun.h>
 #include <kstandarddirs.h>
+#include <klibloader.h>
+#include <ktrader.h>
 
 // local includes
 #include "document.h"
+#include "generator.h"
 #include "observer.h"
 #include "page.h"
 #include "link.h"
-#include "generator_pdf/generator_pdf.h"        // PDF generator
-#include "generator_kimgio/generator_kimgio.h"  // Images generator
+
 #include "conf/settings.h"
 
 // structures used internally by KPDFDocument for local variables storage
@@ -88,7 +90,7 @@ struct RunningSearch
 {
     // store search properties
     int continueOnPage;
-    NormalizedRect continueOnMatch;
+    RegularAreaRect continueOnMatch;
     QValueList< int > highlightedPages;
 
     // fields related to previous searches (used for 'continueSearch')
@@ -145,43 +147,48 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
 
     // create the generator based on the file's mimetype
     KMimeType::Ptr mime = KMimeType::findByPath( docFile );
-    // a.1. check for mimetypes supported by generator_pdf
-    if ( (*mime).is( "application/pdf" ) || (*mime).is( "application/x-pdf" ) )
-        generator = new PDFGenerator( this );
-    // a.2. check for mimetypes supported by generator_kimgio
+    if (mime.count()<=0)
+	return false;
+    
+    // 0. load Generator
+    // request only valid non-disabled plugins suitable for the mimetype
+    QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
+    KTrader::OfferList offers=KTrader::self()->query(mime->name(),"oKular/Generator",constraint, QString::null);
+    
+    if (offers.isEmpty())
+    {
+	kdWarning() << "No plugin for '" << mime->name() << "' mimetype." << endl;
+	return false;
+    }
+    
+    // best ranked offer search
+    int hRank=0;
+    for (short i=0;i<offers.count();i++)
+	if (offers[hRank]->property("[X-KDE-Priority]").toInt() <  offers[i]->property("[X-KDE-Priority])").toInt())
+	    hRank=i;
+    
+    KLibLoader *loader = KLibLoader::self();
+    if (!loader)
+    {
+	kdWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
+	return false;
+    }
+    KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[hRank]->library() ) );
+    if (!lib) 
+    {
+	kdWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
+	return false;
+    }
+    
+    Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );
+    generator=create_plugin(this);
+    
     if ( !generator )
     {
-        // build the mimetypes list the first time
-        if ( d->kimgioMimes.isEmpty() )
-        {
-            KImageIO::registerFormats();
-            QStringList list = QImage::inputFormatList();
-            QStringList::Iterator it = list.begin(), end = list.end();
-            for ( ; it != end; ++it )
-                d->kimgioMimes << KMimeType::findByPath( QString("foo.%1").arg(*it), 0, true )->name();
-        }
-        // scan over the list
-        QStringList::Iterator it = d->kimgioMimes.begin(), end = d->kimgioMimes.end();
-        for ( ; it != end; ++it )
-        {
-            kdDebug() << *it << endl;
-            if ( (*mime).is( *it ) )
-            {
-                generator = new KIMGIOGenerator( this );
-                break;
-            }
-        }
+	kdWarning() << "Sth broke." << endl;
+	return false;	
     }
-    // a.3. no supported mimetype
-    if ( !generator )
-    {
-        if ( (*mime).is( "application/postscript" ) )
-            kdWarning() << "PS generator not available" << endl;
-        else
-            kdWarning() << "Unknown mimetype '" << mime->name() << "'." << endl;
-        return false;
-    }
-
+    // end 
     // 1. load Document (and set busy cursor while loading)
     QApplication::setOverrideCursor( waitCursor );
     bool openOk = generator->loadDocument( docFile, pages_vector );
@@ -251,7 +258,7 @@ void KPDFDocument::closeDocument()
     // delete contents generator
     delete generator;
     generator = 0;
-
+    d->url = KURL();
     // remove requests left in queue
     QValueList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
     QValueList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
@@ -284,13 +291,12 @@ void KPDFDocument::closeDocument()
     d->searches.clear();
 
     // reset internal variables
-    d->url = KURL();
+
     d->viewportHistory.clear();
     d->viewportHistory.append( DocumentViewport() );
     d->viewportIterator = d->viewportHistory.begin();
     d->allocatedPixmapsTotalMemory = 0;
 }
-
 
 void KPDFDocument::addObserver( DocumentObserver * pObserver )
 {
@@ -417,7 +423,7 @@ bool KPDFDocument::isAllowed( int flags ) const
 
 bool KPDFDocument::supportsSearching() const
 {
-    return generator ? generator->canGenerateTextPage() : false;
+    return generator ? generator->supportsSearching() : false;
 }
 
 bool KPDFDocument::historyAtBegin() const
@@ -639,7 +645,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
 {
     // safety checks: don't perform searches on empty or unsearchable docs
-    if ( !generator || !generator->canGenerateTextPage() || pages_vector.isEmpty() )
+    if ( !generator || !generator->supportsSearching() || pages_vector.isEmpty() )
         return false;
 
     // if searchID search not recorded, create new descriptor and init params
@@ -691,13 +697,13 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
 
             // loop on a page adding highlights for all found items
             bool addedHighlights = false;
-            NormalizedRect * lastMatch = 0;
+            RegularAreaRect * lastMatch = 0;
             while ( 1 )
             {
                 if ( lastMatch )
-                    lastMatch = page->findText( text, caseSensitive, lastMatch );
+                    lastMatch = page->findText( text, NextRes , caseSensitive, lastMatch);
                 else
-                    lastMatch = page->findText( text, caseSensitive );
+                    lastMatch = page->findText( text, FromTop, caseSensitive);
 
                 if ( !lastMatch )
                     break;
@@ -720,7 +726,8 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
         // reset cursor to previous shape
         QApplication::restoreOverrideCursor();
 
-        // send page lists to update observers (since some filter on bookmarks)
+        // send page lists if found anything new
+	//if ( foundAMatch ) ?maybe?
         foreachObserver( notifySetup( pages_vector, false ) );
     }
     // 2. NEXTMATCH - find next matching item (or start from top)
@@ -732,13 +739,13 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
         KPDFPage * lastPage = fromStart ? 0 : pages_vector[ currentPage ];
 
         // continue checking last SearchPage first (if it is the current page)
-        NormalizedRect * match = 0;
+        RegularAreaRect * match = 0;
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
             if ( newText )
-                match = lastPage->findText( text, caseSensitive );
+                match = lastPage->findText( text, FromTop , caseSensitive);
             else
-                match = lastPage->findText( text, caseSensitive, &s->continueOnMatch );
+                match = lastPage->findText( text, NextRes, caseSensitive,&s->continueOnMatch );
             if ( !match )
                 currentPage++;
         }
@@ -762,7 +769,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                 if ( !page->hasSearchPage() )
                     requestTextPage( page->number() );
                 // if found a match on the current page, end the loop
-                if ( (match = page->findText( text, caseSensitive )) )
+                if ( (match = page->findText( text, FromTop, caseSensitive )) )
                     break;
                 currentPage++;
             }
@@ -786,13 +793,13 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             if ( !pagesToNotify.contains( currentPage ) )
                 pagesToNotify.append( currentPage );
 
-            // ..move the viewport to show the searched word centered
+            // ..move the viewport to show the first of the searched word sequence centered
             if ( moveViewport )
             {
                 DocumentViewport searchViewport( currentPage );
                 searchViewport.rePos.enabled = true;
-                searchViewport.rePos.normalizedX = (match->left + match->right) / 2.0;
-                searchViewport.rePos.normalizedY = (match->top + match->bottom) / 2.0;
+                searchViewport.rePos.normalizedX = (match->first()->left + match->first()->right) / 2.0;
+                searchViewport.rePos.normalizedY = (match->first()->top + match->first()->bottom) / 2.0;
                 setViewport( searchViewport, -1, true );
             }
         }
@@ -834,15 +841,15 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                 if ( newHue < 0 )
                     newHue += 360;
                 QColor wordColor = QColor( newHue, baseSat, baseVal, QColor::Hsv );
-                NormalizedRect * lastMatch = 0;
+                RegularAreaRect * lastMatch = 0;
                 // add all highlights for current word
                 bool wordMatched = false;
                 while ( 1 )
                 {
                     if ( lastMatch )
-                        lastMatch = page->findText( word, caseSensitive, lastMatch );
+                        lastMatch = page->findText( word, NextRes, caseSensitive, lastMatch );
                     else
-                        lastMatch = page->findText( word, caseSensitive );
+                        lastMatch = page->findText( word, FromTop, caseSensitive);
 
                     if ( !lastMatch )
                         break;

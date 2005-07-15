@@ -9,8 +9,8 @@
 
 #ifndef _KPDF_GENERATOR_PNG_H_
 #define _KPDF_GENERATOR_PNG_H_
-
 #include "core/generator.h"
+
 
 class KIMGIOGenerator : public Generator
 {
@@ -24,9 +24,19 @@ class KIMGIOGenerator : public Generator
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap();
         void generatePixmap( PixmapRequest * request );
-        bool canGenerateTextPage();
-        void generateSyncTextPage( KPDFPage * page );
+        void generateSyncTextPage( KPDFPage * page ) {;};
+	// [INHERITED] capability querying
+        bool supportsSearching() const;
+        bool hasFonts() const;
+        bool canGenerateTextPage() { return false; };
+        bool supportsSearching()  { return false; };
+        bool prefersInternalSearching()  { return false; };
+        RegularAreaRect* findText(const QString&, SearchDir, bool, const RegularAreaRect*, KPDFPage*)
+             { return 0; };
+        QString * getText(const RegularAreaRect*, KPDFPage*) { return 0; };
 
+        // font related
+	
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 

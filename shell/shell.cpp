@@ -10,7 +10,6 @@
  *   Copyright (C) 2003 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004 by Dirk Mueller <mueller@kde.org>                  *
- *   Copyright (C) 2005 by Piotr Szymanski <niedakh@gmail.com>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -104,6 +103,7 @@ void Shell::init()
   setAutoSaveSettings();
 
   if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
+
 }
 
 void Shell::delayedOpen()

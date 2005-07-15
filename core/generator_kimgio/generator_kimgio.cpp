@@ -15,6 +15,8 @@
 #include "core/page.h"
 #include "generator_kimgio.h"
 
+KPDF_EXPORT_PLUGIN(KIMGIOGenerator)
+
 KIMGIOGenerator::KIMGIOGenerator( KPDFDocument * document ) : Generator( document )
 {
 }
@@ -52,18 +54,20 @@ void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
     signalRequestDone(request);
 }
 
-bool KIMGIOGenerator::canGenerateTextPage()
+bool KIMGIOGenerator::hasFonts() const
 {
     return false;
 }
 
-void KIMGIOGenerator::generateSyncTextPage( KPDFPage * /*page*/ )
-{
-}
 
 bool KIMGIOGenerator::print( KPrinter& printer )
 {
     QPainter p(&printer);
     p.drawPixmap(0, 0, *m_pix);
     return true;
+}
+
+bool KIMGIOGenerator::supportsSearching() const
+{
+    return false;
 }

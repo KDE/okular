@@ -16,6 +16,7 @@
 #include "core/document.h"
 #include "core/page.h"
 #include "conf/settings.h"
+#include "core/link.h"
 
 // uncomment following to enable a 2nd column showing the page referred
 // by each tree entry note: PDF uses often references to viewports and
@@ -120,14 +121,6 @@ void TOC::slotExecuted( QListViewItem *i )
         return;
     const QDomElement & e = tocItem->element();
 
-    QString externalFileName = e.attribute( "ExternalFileName" );
-    if ( !externalFileName.isEmpty() )
-    {
-        KPDFLinkGoto link( externalFileName, DocumentViewport() );
-        m_document->processLink( &link );
-    }
-    else
-    {
     QString externalFileName = e.attribute( "ExternalFileName" );
     if ( !externalFileName.isEmpty() )
     {

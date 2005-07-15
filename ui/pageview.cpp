@@ -302,7 +302,12 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
 
     // invalidate layout so relayout/repaint will happen on next viewport change
     if ( pageSet.count() > 0 )
-        d->dirtyLayout = true;
+        // TODO for Enrico: Check if doing always the slotRelayoutPages() is not
+        // suboptimal in some cases, i'd say it is not but a recheck will not hurt
+        // Need slotRelayoutPages() here instead of d->dirtyLayout = true
+        // because opening a pdf from another pdf will not trigger a viewportchange
+        // so pages are never relayouted
+        slotRelayoutPages();
     else
         resizeContents( 0, 0 );
 
@@ -997,24 +1002,30 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
-                const ObjectRect * rect = pageItem->page()->getObjectRect( nX, nY );
+                const ObjectRect * rect;
+                rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
                 if ( rect )
                 {
-                    // handle click over a link/image
-                    switch ( rect->objectType() )
-                    {
-                        case ObjectRect::Link:{
-                            const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
-                            d->document->processLink( link );
-                            }break;
-                        case ObjectRect::Image:
-                            break;
-                    }
+                    // handle click over a link
+                    const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
+                    d->document->processLink( link );
                 }
-                else if ( pageItem->pageNumber() != (int)d->document->currentPage() )
+                else
                 {
-                    // click to select different pages
-                    d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                    // a link can move us to another page or even to another document, there's no point in trying to
+                    //  process the click on the image once we have processes the click on the link
+                    rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY );
+                    if ( rect )
+                    {
+                        // handle click over a image
+                    }
+/*		Enrico and me have decided this is not worth the trouble it generates
+                    else
+                    {
+                        // if not on a rect, the click selects the page
+                        // if ( pageItem->pageNumber() != (int)d->document->currentPage() )
+                        d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                    }*/
                 }
             }
             else if ( rightButton )
@@ -1086,7 +1097,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             }
 
             // grab text in selection by extracting it from all intersected pages
-            QString selectedText;
+            QString* selectedText;
+            RegularAreaRect * rects=new RegularAreaRect;
+            const KPDFPage * kpdfPage=0;
             QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
             for ( ; iIt != iEnd; ++iIt )
             {
@@ -1095,22 +1108,22 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 if ( selectionRect.intersects( itemRect ) )
                 {
                     // request the textpage if there isn't one
-                    const KPDFPage * kpdfPage = item->page();
+                     kpdfPage= item->page();
                     if ( !kpdfPage->hasSearchPage() )
                         d->document->requestTextPage( kpdfPage->number() );
                     // grab text in the rect that intersects itemRect
                     QRect relativeRect = selectionRect.intersect( itemRect );
                     relativeRect.moveBy( -itemRect.left(), -itemRect.top() );
-                    NormalizedRect normRect( relativeRect, item->width(), item->height() );
-                    selectedText += kpdfPage->getText( normRect );
+                    rects->append(new NormalizedRect( relativeRect, item->width(), item->height() ));
                 }
             }
+            selectedText = kpdfPage->getText( rects );
 
             // popup that ask to copy:text and copy/save:image
             KPopupMenu menu( this );
-            if ( !selectedText.isEmpty() )
+            if ( !selectedText->isEmpty() )
             {
-                menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
+                menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
                 menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                     menu.setItemEnabled( 1, false );
@@ -1162,9 +1175,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     // [1] copy text to clipboard
                     QClipboard *cb = QApplication::clipboard();
-                    cb->setText( selectedText, QClipboard::Clipboard );
+                    cb->setText( *selectedText, QClipboard::Clipboard );
                     if ( cb->supportsSelection() )
-                        cb->setText( selectedText, QClipboard::Selection );
+                        cb->setText( *selectedText, QClipboard::Selection );
                 }
                 else if ( choice == 2 )
                 {
@@ -1205,7 +1218,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     }
                 }
             }
-
+            delete selectedText;
             // clear widget selection and invalidate rect
             selectionClear();
 
@@ -1382,6 +1395,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     {
         height = kpdfPage->ratio() * colWidth;
         item->setWHZ( colWidth, (int)height, (double)colWidth / width );
+        d->zoomFactor = (double)colWidth / width;
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
@@ -1389,6 +1403,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         double scaleH = (double)rowHeight / (double)height;
         zoom = QMIN( scaleW, scaleH );
         item->setWHZ( (int)(zoom * width), (int)(zoom * height), zoom );
+        d->zoomFactor = zoom;
     }
 #ifndef NDEBUG
     else
@@ -1589,8 +1604,7 @@ void PageView::updateCursor( const QPoint &p )
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        const ObjectRect * r = pageItem->page()->getObjectRect( nX, nY );
-        d->mouseOnRect = r && r->objectType() == ObjectRect::Link;
+        d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
         if ( d->mouseOnRect )
             setCursor( pointingHandCursor );
         else

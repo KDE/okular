@@ -15,12 +15,14 @@
 #include <qapplication.h>
 #include <kimageeffect.h>
 #include <kiconloader.h>
+#include <kdebug.h>
 
 // system includes
 #include <math.h>
 
 // local includes
 #include "pagepainter.h"
+#include "core/area.h"
 #include "core/page.h"
 #include "core/annotations.h"
 #include "conf/settings.h"
@@ -79,7 +81,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     bool enhanceLinks = (flags & EnhanceLinks) && Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Settings::highlightImages();
     // vectors containing objects to draw
-    QValueList< HighlightRect * > * bufferedHighlights = 0;
+    // make this a qcolor, rect map, since we dont need 
+    // to know s_id here! we are only drawing this right?
+    QValueList< QPair<QColor, NormalizedRect *> > * bufferedHighlights = 0;
     QValueList< Annotation * > * bufferedAnnotations = 0;
     QValueList< Annotation * > * unbufferedAnnotations = 0;
     // fill up lists with visible annotation/highlight objects
@@ -93,14 +97,29 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // append all highlights inside limits to their list
         if ( canDrawHighlights )
         {
-            QValueList< HighlightRect * >::const_iterator hIt = page->m_highlights.begin(), hEnd = page->m_highlights.end();
-            for ( ; hIt != hEnd; ++hIt )
-                if ( (*hIt)->intersects( nXMin, nYMin, nXMax, nYMax ) )
-                {
-                    if ( !bufferedHighlights )
-                        bufferedHighlights = new QValueList< HighlightRect * >();
-                    bufferedHighlights->append( *hIt );
-                }
+            kdDebug(1223) << "Hello there" <<endl;
+            if ( !bufferedHighlights )
+                 bufferedHighlights = new QValueList< QPair<QColor, NormalizedRect *>  >();
+/*            else
+            {*/
+                
+                NormalizedRect* limitRect = new NormalizedRect(nXMin, nYMin, nXMax, nYMax );
+                kdDebug(1223) << "The limit coords:" << limitRect->left
+                        << " " << limitRect->top << " " << limitRect->right
+                        << " " << limitRect->bottom << endl;
+                QValueList< HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+                QValueList< NormalizedRect * >::const_iterator hIt;
+                for ( ; h2It != hEnd; ++h2It )
+                    for (hIt=(*h2It)->begin(); hIt!=(*h2It)->end(); ++hIt)
+                    {
+                        kdDebug(1223) << "The coords:" << (*hIt)->left
+                        << " " << (*hIt)->top << " " << (*hIt)->right
+                        << " " << (*hIt)->bottom << endl;
+                        if ((*hIt)->intersects(limitRect))
+                            bufferedHighlights->append( qMakePair((*h2It)->color,*hIt) );
+                    }
+                delete limitRect;
+            //}
         }
         // append annotations inside limits to the un/buffered list
         if ( canDrawAnnotations )
@@ -209,10 +228,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QValueList< HighlightRect * >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
+            QValueList< QPair<QColor, NormalizedRect *> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
             for ( ; hIt != hEnd; ++hIt )
             {
-                HighlightRect * r = *hIt;
+                NormalizedRect * r = (*hIt).second;
                 // find out the rect to highlight on pixmap
                 QRect highlightRect = r->geometry( scaledWidth, scaledHeight ).intersect( limits );
                 highlightRect.moveBy( -limits.left(), -limits.top() );
@@ -220,9 +239,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 // highlight composition (product: highlight color * destcolor)
                 unsigned int * data = (unsigned int *)backImage.bits();
                 int val, newR, newG, newB,
-                    rh = r->color.red(),
-                    gh = r->color.green(),
-                    bh = r->color.blue(),
+                    rh = (*hIt).first.red(),
+                    gh = (*hIt).first.green(),
+                    bh = (*hIt).first.blue(),
                     offset = highlightRect.top() * backImage.width();
                 for( int y = highlightRect.top(); y <= highlightRect.bottom(); ++y )
                 {

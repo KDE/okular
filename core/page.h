@@ -13,16 +13,26 @@
 #include <qmap.h>
 #include <qvaluelist.h>
 
+
 class QPixmap;
 class QRect;
 class QDomNode;
 class QDomDocument;
-class TextPage;
 class KPDFPageTransition;
-class NormalizedRect;
-class ObjectRect;
-class HighlightRect;
 class Annotation;
+class KPDFTextPage;
+
+// didnt work with forward declarations
+#include "area.h"
+#include "textpage.h"
+/*
+class NormalizedRect;
+class NormalizedPoint;
+class RegularAreaRect;
+class HighlightRect;
+class HighlightAreaRect;
+class ObjectRect;
+*/
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -56,9 +66,10 @@ class KPDFPage
         //bool hasAnnotation( double x, double y ) const;
         bool hasTransition() const;
 
-        NormalizedRect * findText( const QString & text, bool keepCase, NormalizedRect * last = 0 ) const;
-        const QString getText( const NormalizedRect & rect ) const;
-        const ObjectRect * getObjectRect( double x, double y ) const;
+        RegularAreaRect * findText( const QString & text, SearchDir dir, bool strictCase, const RegularAreaRect * lastRect=0) const;
+        QString * getText( const RegularAreaRect * rect ) const;
+//	const ObjectRect * getObjectRect( double x, double y ) const;
+        const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y ) const;
         //const Annotation * getAnnotation( double x, double y ) const;
         const KPDFPageTransition * getTransition() const;
         //FIXME TEMP:
@@ -67,10 +78,10 @@ class KPDFPage
 
         // operations: set contents (by KPDFDocument)
         void setPixmap( int p_id, QPixmap * pixmap );
-        void setSearchPage( TextPage * text );
+        void setSearchPage( KPDFTextPage * text );
         void setBookmark( bool state );
         void setObjectRects( const QValueList< ObjectRect * > rects );
-        void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
+        void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
         void addAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
         // operations: delete contents (by KPDFDocument)
@@ -91,87 +102,11 @@ class KPDFPage
         bool m_bookmarked;
 
         QMap< int, QPixmap * > m_pixmaps;
-        TextPage * m_text;
+        KPDFTextPage * m_text;
         QValueList< ObjectRect * > m_rects;
-        QValueList< HighlightRect * > m_highlights;
+        QValueList< HighlightAreaRect * > m_highlights;
         QValueList< Annotation * > m_annotations;
         KPDFPageTransition * m_transition;
-};
-
-
-/**
- * @short A point in [0,1] coordinates (only used in annotations atm)
- */
-class NormalizedPoint
-{
-    public:
-        double x, y;
-
-        NormalizedPoint();
-        NormalizedPoint( double dX, double dY );
-        NormalizedPoint( int ix, int iy, int xScale, int yScale );
-};
-
-/**
- * @short A rect in normalized [0,1] coordinates.
- */
-class NormalizedRect
-{
-    public:
-        double left, top, right, bottom;
-
-        NormalizedRect();
-        NormalizedRect( double l, double t, double r, double b );
-        NormalizedRect( const QRect & r, double xScale, double yScale );
-
-        bool isNull() const;
-        bool contains( double x, double y ) const;
-        bool intersects( const NormalizedRect & normRect ) const;
-        bool intersects( double l, double t, double r, double b ) const;
-
-        QRect geometry( int xScale, int yScale ) const;
-};
-
-/**
- * @short NormalizedRect that contains a reference to an object.
- *
- * These rects contains a pointer to a kpdf object (such as a link or something
- * like that). The pointer is read and stored as 'void pointer' so cast is
- * performed by accessors based on the value returned by objectType(). Objects
- * are reparented to this class.
- *
- * Type / Class correspondency tab:
- *  - Link      : class KPDFLink  : description of a link
- *  - Image     : class KPDFImage : description of an image (n/a)
- */
-class ObjectRect : public NormalizedRect
-{
-    public:
-        // definition of the types of storable objects
-        enum ObjectType { Link, Image };
-
-        // default constructor: initialize all parameters
-        ObjectRect( double l, double t, double r, double b, ObjectType typ, void * obj );
-        ~ObjectRect();
-
-        // query type and get a const pointer to the stored object
-        inline ObjectType objectType() const { return m_objectType; }
-        inline const void * pointer() const { return m_pointer; }
-
-    private:
-        ObjectType m_objectType;
-        void * m_pointer;
-};
-
-/**
- * Internal Storage: normalized colored highlight owned by id
- */
-struct HighlightRect : public NormalizedRect
-{
-    // searchID of the highlight owner
-    int s_id;
-    // color of the highlight
-    QColor color;
 };
 
 #endif

@@ -1,14 +1,14 @@
-SUBDIRS = generator_pdf generator_kimgio
+kde_module_LTLIBRARIES = \
+    libokularGenerator_xpdf.la
 
-INCLUDES = -I$(srcdir)/generator_pdf -I$(srcdir)/.. -I$(srcdir)/../xpdf -I$(srcdir)/../xpdf/goo -I$(top_builddir)/kpdf $(all_includes)
+INCLUDES = -I$(srcdir)/../.. -I$(srcdir)/../../xpdf -I$(srcdir)/../../xpdf/goo -I$(srcdir)/../../xpdf/splash -I$(top_builddir)/kpdf $(all_includes)
 
-METASOURCES = AUTO
+libokularGenerator_xpdf_la_LIBADD = $(top_builddir)/kpdf/core/libkpdfcore.la $(top_builddir)/kpdf/conf/libkpdfconf.la $(top_builddir)/kpdf/xpdf/xpdf/libxpdf.la -lkdeui -lkdeprint
+libokularGenerator_xpdf_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+libokularGenerator_xpdf_la_SOURCES = generator_pdf.cpp gp_outputdev.cpp
 
-libkpdfcore_la_LIBADD = ./generator_pdf/libgeneratorpdf.la ./generator_kimgio/libgeneratorkimgio.la
-libkpdfcore_la_SOURCES = page.cpp document.cpp link.cpp annotations.cpp \
-                         pagetransition.cpp
+KDE_OPTIONS = nofinal
 
-noinst_LTLIBRARIES = libkpdfcore.la
+kde_services_DATA = libokularGenerator_xpdf.desktop
 
-document.lo: ../conf/settings.h
-page.lo: ../conf/settings.h
+generator_pdf.lo: ../../conf/settings.h

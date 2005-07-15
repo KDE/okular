@@ -10,10 +10,17 @@
 #ifndef _KPDF_GENERATOR_H_
 #define _KPDF_GENERATOR_H_
 
+#define KPDF_EXPORT_PLUGIN( classname ) \
+    extern "C" { \
+         Generator* create_plugin(KPDFDocument* doc) { return new classname(doc); } \
+    }
+
+
 #include <qobject.h>
 #include <qvaluevector.h>
 #include <qstring.h>
 #include "core/document.h"
+#include "core/textpage.h"
 class KPrinter;
 class KPDFPage;
 class KPDFLink;
@@ -57,8 +64,19 @@ class Generator : public QObject
         // page contents generation
         virtual bool canGeneratePixmap() = 0;
         virtual void generatePixmap( PixmapRequest * request ) = 0;
+        // can generate a KPDFText Page
         virtual bool canGenerateTextPage() = 0;
         virtual void generateSyncTextPage( KPDFPage * page ) = 0;
+        // capability querying
+        // provides internal search 
+        virtual bool supportsSearching() = 0;
+        virtual bool prefersInternalSearching() = 0;
+        // internal search and gettext
+        virtual RegularAreaRect * findText( const QString & text, SearchDir dir, const bool strictCase,
+                    const RegularAreaRect * lastRect, KPDFPage * page) = 0;
+        virtual QString* getText( const RegularAreaRect * area, KPDFPage * page ) = 0;
+	// may come useful later
+        //virtual bool hasFonts() const = 0;
 
         // print document using already configured kprinter
         virtual bool print( KPrinter& /*printer*/ ) { return false; }

@@ -20,6 +20,7 @@
 #include <kparts/part.h>
 #include <qguardedptr.h>
 #include "core/observer.h"
+#include "core/document.h"
 #include "dcop.h"
 
 class QWidget;
@@ -36,7 +37,6 @@ class KAboutData;
 class KPrinter;
 
 class KPDFDocument;
-class DocumentViewport;
 class ThumbnailList;
 class ThumbnailController;
 class PageView;
@@ -108,11 +108,10 @@ protected slots:
 	void slotShowLeftPanel();
 	void slotShowPresentation();
 	void slotHidePresentation();
+	bool slotImportPSFile();
 	// can be connected to widget elements
 	void updateViewActions();
 	void enableTOC(bool enable);
-	
-	void openURLFromDocument(const KURL &url);
 
 public slots:
 	// connected to Shell action (and browserExtension), not local one
@@ -121,12 +120,14 @@ public slots:
 	void saveDocumentRestoreInfo(KConfig* config);
 	void slotFileDirty( const QString& );
 	void slotDoFileDirty();
+	void psTransformEnded();
 
 private:
 	void doPrint( KPrinter& printer );
 
 	// the document
 	KPDFDocument * m_document;
+	QString m_temporaryLocalFile;
 
 	// main widgets
 	QSplitter *m_splitter;
@@ -143,7 +144,7 @@ private:
 	// document watcher (and reloader) variables
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;
-	DocumentViewport *m_dirtyViewport;
+  DocumentViewport m_viewportDirty;
 
 	// actions
 	KAction *m_gotoPage;
@@ -165,7 +166,6 @@ private:
 	bool m_actionsSearched;
 	bool m_searchStarted;
 	BrowserExtension *m_bExtension;
-	bool m_notifyOpening;
 };
 
 

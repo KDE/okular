@@ -97,24 +97,17 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // append all highlights inside limits to their list
         if ( canDrawHighlights )
         {
-            kdDebug(1223) << "Hello there" <<endl;
             if ( !bufferedHighlights )
                  bufferedHighlights = new QValueList< QPair<QColor, NormalizedRect *>  >();
 /*            else
             {*/
                 
                 NormalizedRect* limitRect = new NormalizedRect(nXMin, nYMin, nXMax, nYMax );
-                kdDebug(1223) << "The limit coords:" << limitRect->left
-                        << " " << limitRect->top << " " << limitRect->right
-                        << " " << limitRect->bottom << endl;
                 QValueList< HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
                 QValueList< NormalizedRect * >::const_iterator hIt;
                 for ( ; h2It != hEnd; ++h2It )
                     for (hIt=(*h2It)->begin(); hIt!=(*h2It)->end(); ++hIt)
                     {
-                        kdDebug(1223) << "The coords:" << (*hIt)->left
-                        << " " << (*hIt)->top << " " << (*hIt)->right
-                        << " " << (*hIt)->bottom << endl;
                         if ((*hIt)->intersects(limitRect))
                             bufferedHighlights->append( qMakePair((*h2It)->color,*hIt) );
                     }

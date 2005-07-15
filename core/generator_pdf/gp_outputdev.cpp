@@ -291,7 +291,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
             LinkGoToR * g = (LinkGoToR *) a;
             // copy link file
             const char * fileName = g->getFileName()->getCString();
-            // ceate link: fileName, namedDest, object pointer
+            // create link: fileName, namedDest, object pointer
             link = new KPDFLinkGoto( (QString)fileName, decodeViewport( g->getNamedDest(), g->getDest() ) );
             }
             break;

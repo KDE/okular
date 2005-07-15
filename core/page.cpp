@@ -179,12 +179,12 @@ const QString KPDFPage::getText( const NormalizedRect & rect ) const
     return result; 
 }
 
-const ObjectRect * KPDFPage::getObjectRect( double x, double y ) const
+const ObjectRect * KPDFPage::getObjectRect( ObjectRect::ObjectType type, double x, double y ) const
 {
     QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y ) )
-            return *it;
+            if ((*it)->objectType() == type) return *it;
     return 0;
 }
 

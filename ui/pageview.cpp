@@ -302,7 +302,12 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
 
     // invalidate layout so relayout/repaint will happen on next viewport change
     if ( pageSet.count() > 0 )
-        d->dirtyLayout = true;
+        // TODO for Enrico: Check if doing always the slotRelayoutPages() is not
+        // suboptimal in some cases, i'd say it is not but a recheck will not hurt
+        // Need slotRelayoutPages() here instead of d->dirtyLayout = true
+        // because opening a pdf from another pdf will not trigger a viewportchange
+        // so pages are never relayouted
+        slotRelayoutPages();
     else
         resizeContents( 0, 0 );
 
@@ -997,24 +1002,30 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
-                const ObjectRect * rect = pageItem->page()->getObjectRect( nX, nY );
+                const ObjectRect * rect;
+                rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
                 if ( rect )
                 {
-                    // handle click over a link/image
-                    switch ( rect->objectType() )
-                    {
-                        case ObjectRect::Link:{
-                            const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
-                            d->document->processLink( link );
-                            }break;
-                        case ObjectRect::Image:
-                            break;
-                    }
+                    // handle click over a link
+                    const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
+                    d->document->processLink( link );
                 }
-                else if ( pageItem->pageNumber() != (int)d->document->currentPage() )
+                else
                 {
-                    // click to select different pages
-                    d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                    // a link can move us to another page or even to another document, there's no point in trying to
+                    //  process the click on the image once we have processes the click on the link
+                    rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY );
+                    if ( rect )
+                    {
+                        // handle click over a image
+                    }
+/*		Enrico and me have decided this is not worth the trouble it generates
+                    else
+                    {
+                        // if not on a rect, the click selects the page
+                        // if ( pageItem->pageNumber() != (int)d->document->currentPage() )
+                        d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                    }*/
                 }
             }
             else if ( rightButton )
@@ -1382,6 +1393,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     {
         height = kpdfPage->ratio() * colWidth;
         item->setWHZ( colWidth, (int)height, (double)colWidth / width );
+        d->zoomFactor = (double)colWidth / width;
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
@@ -1389,6 +1401,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         double scaleH = (double)rowHeight / (double)height;
         zoom = QMIN( scaleW, scaleH );
         item->setWHZ( (int)(zoom * width), (int)(zoom * height), zoom );
+        d->zoomFactor = zoom;
     }
 #ifndef NDEBUG
     else
@@ -1589,8 +1602,7 @@ void PageView::updateCursor( const QPoint &p )
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        const ObjectRect * r = pageItem->page()->getObjectRect( nX, nY );
-        d->mouseOnRect = r && r->objectType() == ObjectRect::Link;
+        d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
         if ( d->mouseOnRect )
             setCursor( pointingHandCursor );
         else

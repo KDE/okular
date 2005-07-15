@@ -58,7 +58,7 @@ class KPDFPage
 
         NormalizedRect * findText( const QString & text, bool keepCase, NormalizedRect * last = 0 ) const;
         const QString getText( const NormalizedRect & rect ) const;
-        const ObjectRect * getObjectRect( double x, double y ) const;
+        const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y ) const;
         //const Annotation * getAnnotation( double x, double y ) const;
         const KPDFPageTransition * getTransition() const;
         //FIXME TEMP:

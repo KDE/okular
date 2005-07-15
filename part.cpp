@@ -377,7 +377,6 @@ bool Part::slotImportPSFile()
         *p << m_file << m_temporaryLocalFile;
         m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)..."));
         connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
-        connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
         p -> start();
         
         return true;

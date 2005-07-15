@@ -187,6 +187,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = pdfdoc->getNumPages();
     pagesVector.resize( pageCount );
+    KPDFTextDev td;
     for ( uint i = 0; i < pageCount ; i++ )
     {
         // get xpdf page
@@ -197,6 +198,13 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
         addTransition( p, page );
         if ( true ) //TODO real check
             addAnnotations( p, page );
+
+	docLock.lock();
+	pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+	TextPage * textPage = td.takeTextPage();
+	docLock.unlock();
+
+	page->setSearchPage(abstractTextPage(textPage,page->height(),page->width()));
 
         // set the kpdfpage at the right position in document's pages vector
         pagesVector[i] = page;

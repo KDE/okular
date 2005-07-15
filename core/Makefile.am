@@ -1,4 +1,4 @@
-SUBDIRS = generator_pdf generator_kimgio
+SUBDIRS = . generator_pdf generator_kimgio
 
 INCLUDES = -I$(srcdir)/generator_pdf -I$(srcdir)/.. -I$(srcdir)/../xpdf -I$(srcdir)/../xpdf/goo -I$(top_builddir)/kpdf $(all_includes)
 

@@ -99,7 +99,11 @@ public:
   int getCharPos() { return charPos; }
   int getCharLen() { return charLen; }
 #endif
-
+  int getRotation() { return rot ; }
+  double getEdge(int i) { return edge[i]; }
+  double getBaseline () { return base; }
+  GBool hasSpaceAfter  () { return spaceAfter; }
+  TextWord* nextWord () { return next; };
 private:
 
   int rot;			// rotation, multiple of 90 degrees

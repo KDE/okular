@@ -7,5 +7,5 @@
 #define HAVE_FREETYPE_H HAVE_FREETYPE
 #define HAVE_FREETYPE_FREETYPE_H HAVE_FREETYPE
 #define OPI_SUPPORT 0
-#define TEXTOUT_WORD_LIST 0
-#define HAVE_MKSTEMPS 1 //libkdefakes provides it
+#define TEXTOUT_WORD_LIST 1
+

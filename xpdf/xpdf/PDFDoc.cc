@@ -135,7 +135,6 @@ GBool PDFDoc::setup(GString *ownerPassword, GString *userPassword) {
 
   str->setPos(pos);
 
-
   // check header
   checkHeader();
 

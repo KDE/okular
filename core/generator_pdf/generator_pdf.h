@@ -18,6 +18,7 @@
 #include "core/generator.h"
 #include "core/document.h"
 #include "core/link.h"
+#include "core/textpage.h"
 
 class PDFDoc;
 class GList;
@@ -66,7 +67,13 @@ class PDFGenerator : public Generator
         void generatePixmap( PixmapRequest * request );
         bool canGenerateTextPage();
         void generateSyncTextPage( KPDFPage * page );
-
+        bool supportsSearching() { return true; };
+        bool prefersInternalSearching() { return false; };
+    
+        RegularAreaRect * findText (const QString & text, SearchDir dir, 
+            const bool strictCase, const RegularAreaRect * lastRect, 
+            KPDFPage * page );
+        QString * getText( const RegularAreaRect * area, KPDFPage * page );
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 
@@ -91,6 +98,9 @@ class PDFGenerator : public Generator
         void addAnnotations( Page * xpdfPage, KPDFPage * page );
         // fetch the transition information and add it to the page
         void addTransition( Page * xpdfPage, KPDFPage * page );
+        
+        static KPDFTextPage * abstractTextPage(TextPage *tp, double height, double width);
+        TextPage * fastTextPage (KPDFPage * page);
 
         // (async related) receive data from the generator thread
         void customEvent( QCustomEvent * );
@@ -113,6 +123,9 @@ class PDFGenerator : public Generator
         DocumentSynopsis docSyn;
         bool docFontsDirty;
         DocumentFonts docFonts;
+	
+	// static instances counter
+	static unsigned int m_count;
 };
 
 

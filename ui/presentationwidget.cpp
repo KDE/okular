@@ -11,12 +11,12 @@
 #include <qtimer.h>
 #include <qimage.h>
 #include <qpainter.h>
+#include <qtooltip.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
 #include <kapplication.h>
 #include <kcursor.h>
 #include <ktoolbar.h>
-#include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
@@ -32,6 +32,7 @@
 #include "pagepainter.h"
 #include "core/generator.h"
 #include "core/page.h"
+#include "core/link.h"
 #include "conf/settings.h"
 
 
@@ -49,7 +50,8 @@ struct PresentationFrame
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
-    : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder), m_document( doc ), m_frameIndex( -1 )
+    : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder),
+    m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
@@ -222,32 +224,62 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
     // pressing left button
     if ( e->button() == Qt::LeftButton )
     {
+        // if pressing on a link, skip other checks
+        if ( ( m_pressedLink = getLink( e->x(), e->y() ) ) )
+            return;
+
+        // handle clicking on top-right overlay
         if ( m_overlayGeometry.contains( e->pos() ) )
+        {
             overlayClick( e->pos() );
-        else
-            slotNextPage();
+            return;
+        }
+
+        // if no other actions, go to next page
+        slotNextPage();
     }
     // pressing right button
     else if ( e->button() == Qt::RightButton )
         slotPrevPage();
 }
 
+void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
+{
+    // if releasing on the same link we pressed over, execute it
+    if ( m_pressedLink && e->button() == Qt::LeftButton )
+    {
+        const KPDFLink * link = getLink( e->x(), e->y() );
+        if ( link == m_pressedLink )
+            m_document->processLink( link );
+        m_pressedLink = 0;
+    }
+}
+
 void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 {
-    if (m_width == -1) return;
-	
-    // hide a shown bar when exiting the area
+    // safety check
+    if ( m_width == -1 )
+        return;
+
+    // update cursor and tooltip if hovering a link
+    if ( Settings::slidesCursor() != Settings::EnumSlidesCursor::Hidden )
+        testCursorOnLink( e->x(), e->y() );
+
     if ( m_topBar->isShown() )
     {
+        // hide a shown bar when exiting the area
         if ( e->y() > ( m_topBar->height() + 1 ) )
             m_topBar->hide();
     }
-    // show a hidden bar if mouse reaches the top of the screen
-    else if ( !e->y() )
-        m_topBar->show();
-    // change page if dragging the mouse over the 'wheel'
-    else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
+    else
+    {
+        // show the bar if reaching top 2 pixels
+        if ( e->y() <= (geometry().top() + 1) )
+            m_topBar->show();
+        // handle "dragging the wheel" if clicking on its geometry
+        else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
             overlayClick( e->pos() );
+    }
 }
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
@@ -326,6 +358,63 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 // </widget events>
 
 
+const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
+{
+    // no links on invalid pages
+    if ( geometry && !geometry->isNull() )
+        geometry->setRect( 0, 0, -1, -1 );
+    if ( m_frameIndex < 0 || m_frameIndex >= (int)m_frames.size() )
+        return 0;
+
+    // get frame, page and geometry
+    const PresentationFrame * frame = m_frames[ m_frameIndex ];
+    const KPDFPage * page = frame->page;
+    const QRect & frameGeometry = frame->geometry;
+
+    // compute normalized x and y
+    double nx = (double)(x - frameGeometry.left()) / (double)frameGeometry.width();
+    double ny = (double)(y - frameGeometry.top()) / (double)frameGeometry.height();
+
+    // no links outside the pages
+    if ( nx < 0 || nx > 1 || ny < 0 || ny > 1 )
+        return 0;
+
+    // check if 1) there is an object and 2) it's a link
+    const ObjectRect * object = page->getObjectRect( ObjectRect::Link, nx, ny );
+    if ( !object )
+        return 0;
+
+    // compute link geometry if destination rect present
+    if ( geometry )
+    {
+        *geometry = object->geometry( frameGeometry.width(), frameGeometry.height() );
+        geometry->moveBy( frameGeometry.left(), frameGeometry.top() );
+    }
+
+    // return the link pointer
+    return (KPDFLink *)object->pointer();
+}
+
+void PresentationWidget::testCursorOnLink( int x, int y )
+{
+    // get rect
+    QRect linkRect;
+    const KPDFLink * link = getLink( x, y, &linkRect );
+
+    // only react on changes (in/out from a link)
+    if ( (link && !m_handCursor) || (!link && m_handCursor) )
+    {
+        // change cursor shape
+        m_handCursor = link != 0;
+        setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor() );
+
+        // set tooltip over link's rect
+        QString tip = link ? link->linkTip() : "";
+        if ( m_handCursor && !tip.isEmpty() )
+            QToolTip::add( this, linkRect, tip );
+    }
+}
+
 void PresentationWidget::overlayClick( const QPoint & position )
 {
     // clicking the progress indicator
@@ -362,7 +451,10 @@ void PresentationWidget::changePage( int newPage )
         m_document->requestPixmaps( request );
     }
     else
+    {
+        // make the background pixmap
         generatePage();
+    }
 }
 
 void PresentationWidget::generatePage()
@@ -395,6 +487,13 @@ void PresentationWidget::generatePage()
     else {
         KPDFPageTransition trans = defaultTransition();
         initTransition( &trans );
+    }
+
+    // update cursor + tooltip
+    if ( Settings::slidesCursor() != Settings::EnumSlidesCursor::Hidden )
+    {
+        QPoint p = mapFromGlobal( QCursor::pos() );
+        testCursorOnLink( p.x(), p.y() );
     }
 }
 

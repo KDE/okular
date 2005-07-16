@@ -106,6 +106,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
+	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
+	
+	if (parent && parent->metaObject()->slotNames(true).contains("slotQuit()"))
+		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
+	else
+		connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
 
 	// widgets: ^searchbar (toolbar containing label and SearchWidget)
 //	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
@@ -431,10 +437,12 @@ bool Part::closeURL()
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     m_showPresentation->setEnabled( false );
-    updateViewActions();
+    emit setWindowCaption("");
+    emit enablePrintAction(false);
     m_searchStarted = false;
     if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
     m_document->closeDocument();
+    updateViewActions();
     m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
 }
@@ -483,6 +491,15 @@ void Part::slotDoFileDirty()
   }
 }
 
+void Part::close()
+{
+  if (parent() && strcmp(parent()->name(), "KPDF::Shell") == 0)
+  {
+    closeURL();
+  }
+  else KMessageBox::information(widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInKPDF");
+}
+
 void Part::updateViewActions()
 {
     bool opened = m_document->pages() > 0;
@@ -519,6 +536,11 @@ void Part::psTransformEnded()
 {
 	m_file = m_temporaryLocalFile;
 	openFile();
+}
+
+void Part::cannotQuit()
+{
+	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInKPDF");
 }
 
 //BEGIN go to page dialog

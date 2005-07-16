@@ -1025,13 +1025,16 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     setNextViewport();
                     break;
                 case KPDFLinkAction::Quit:
-                    kapp->quit();
+                    emit quit();
                     break;
                 case KPDFLinkAction::Find:
                     emit linkFind();
                     break;
                 case KPDFLinkAction::GoToPage:
                     emit linkGoToPage();
+                    break;
+                case KPDFLinkAction::Close:
+                    emit close();
                     break;
             }
             } break;

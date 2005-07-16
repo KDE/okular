@@ -70,10 +70,11 @@ namespace KPDF
     void writeSettings();
     void setFullScreen( bool );
 
+  public slots:
+    void slotQuit();
+
   private slots:
     void fileOpen();
-
-    void slotQuit();
 
     void optionsConfigureToolbars();
     void applyNewToolbarConfig();

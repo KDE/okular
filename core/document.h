@@ -102,6 +102,8 @@ class KPDFDocument : public QObject
         void requestDone( PixmapRequest * request );
 
     signals:
+	void close();
+	void quit();
         void linkFind();
         void linkGoToPage();
         void openURL(const KURL &url);

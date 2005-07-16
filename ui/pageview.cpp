@@ -272,7 +272,12 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
         // so pages are never relayouted
         slotRelayoutPages();
     else
+    {
+        // update the mouse cursor when closing because we may have close through a link and
+        // want the cursor to come back to the normal cursor
+        updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
         resizeContents( 0, 0 );
+    }
 
     // OSD to display pages
     if ( documentChanged && pageSet.count() > 0 && Settings::showOSD() )

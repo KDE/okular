@@ -21,6 +21,7 @@ class SplashDTFontEngine;
 class SplashFontFile;
 class SplashFontFileID;
 class SplashFont;
+class SplashFontSrc;
 
 //------------------------------------------------------------------------
 
@@ -50,15 +51,12 @@ public:
   SplashFontFile *getFontFile(SplashFontFileID *id);
 
   // Load fonts - these create new SplashFontFile objects.
-  SplashFontFile *loadType1Font(SplashFontFileID *idA, char *fileName,
-				GBool deleteFile, const char **enc);
-  SplashFontFile *loadType1CFont(SplashFontFileID *idA, char *fileName,
-				 GBool deleteFile, const char **enc);
-  SplashFontFile *loadCIDFont(SplashFontFileID *idA, char *fileName,
-			      GBool deleteFile);
-  SplashFontFile *loadTrueTypeFont(SplashFontFileID *idA, char *fileName,
-				   GBool deleteFile,
-				   Gushort *codeToGID, int codeToGIDLen);
+  SplashFontFile *loadType1Font(SplashFontFileID *idA, SplashFontSrc *src, const char **enc);
+  SplashFontFile *loadType1CFont(SplashFontFileID *idA, SplashFontSrc *src, const char **enc);
+  SplashFontFile *loadCIDFont(SplashFontFileID *idA, SplashFontSrc *src);
+  SplashFontFile *loadTrueTypeFont(SplashFontFileID *idA, SplashFontSrc *src,
+				   Gushort *codeToGID, int codeToGIDLen,
+				   int faceIndex=0);
 
   // Get a font - this does a cache lookup first, and if not found,
   // creates a new SplashFont object and adds it to the cache.  The

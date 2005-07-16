@@ -276,6 +276,8 @@ public:
   Gushort *getCIDToGID() { return cidToGID; }
   int getCIDToGIDLen() { return cidToGIDLen; }
 
+  Gushort *getCodeToGIDMap(FoFiTrueType *ff, int *length);
+
 private:
 
   CMap *cMap;			// char code --> CID

@@ -25,8 +25,7 @@
 
 SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
 						SplashFontFileID *idA,
-						char *fileNameA,
-						GBool deleteFileA,
+						SplashFontSrc *src,
 						const char **encA) {
   int t1libIDA;
   const char **encTmp;
@@ -34,9 +33,27 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
   int encStrSize;
   char *encPtr;
   int i;
+  GString *fileNameA;
+  SplashFontSrc *newsrc = NULL;
+  SplashFontFile *ff;
 
+  if (! src->isFile) {
+    GString *tmpFileName;
+    FILE *tmpFile;
+    if (!openTempFile(&tmpFileName, &tmpFile, "wb", NULL))
+      return NULL;
+    fwrite(src->buf, 1, src->bufLen, tmpFile);
+    fclose(tmpFile);
+    newsrc = new SplashFontSrc;
+    newsrc->setFile(tmpFileName, gTrue);
+    src = newsrc;
+    delete tmpFileName;
+  }
+  fileNameA = src->fileName;
   // load the font file
   if ((t1libIDA = T1_AddFont(fileNameA)) < 0) {
+    if (newsrc)
+      delete newsrc;
     return NULL;
   }
   T1_LoadFont(t1libIDA);
@@ -63,15 +80,18 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
   encTmp[256] = "custom";
   T1_ReencodeFont(t1libIDA, (char**)encTmp);
 
-  return new SplashT1FontFile(engineA, idA, fileNameA, deleteFileA,
+  ff = new SplashT1FontFile(engineA, idA, src,
 			      t1libIDA, encTmp, encStrTmp);
+  if (newsrc)
+    newsrc->unref();
+  return ff;
 }
 
 SplashT1FontFile::SplashT1FontFile(SplashT1FontEngine *engineA,
 				   SplashFontFileID *idA,
-				   char *fileNameA, GBool deleteFileA,
+				   SplashFontSrc *srcA,
 				   int t1libIDA, const char **encA, char *encStrA):
-  SplashFontFile(idA, fileNameA, deleteFileA)
+  SplashFontFile(idA, srcA)
 {
   engine = engineA;
   t1libID = t1libIDA;

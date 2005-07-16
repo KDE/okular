@@ -16,6 +16,7 @@
 #include "SplashFTFontEngine.h"
 #include "SplashFTFont.h"
 #include "SplashFTFontFile.h"
+#include "GString.h"
 
 //------------------------------------------------------------------------
 // SplashFTFontFile
@@ -23,16 +24,19 @@
 
 SplashFontFile *SplashFTFontFile::loadType1Font(SplashFTFontEngine *engineA,
 						SplashFontFileID *idA,
-						char *fileNameA,
-						GBool deleteFileA,
+						SplashFontSrc *src,
 						const char **encA) {
   FT_Face faceA;
   Gushort *codeToGIDA;
   const char *name;
   int i;
 
-  if (FT_New_Face(engineA->lib, fileNameA, 0, &faceA)) {
-    return NULL;
+  if (src->isFile) {
+    if (FT_New_Face(engineA->lib, src->fileName->getCString(), 0, &faceA))
+      return NULL;
+  } else {
+    if (FT_New_Memory_Face(engineA->lib, (const FT_Byte *)src->buf, src->bufLen, 0, &faceA))
+      return NULL;
   }
   codeToGIDA = (Gushort *)gmalloc(256 * sizeof(int));
   for (i = 0; i < 256; ++i) {
@@ -42,48 +46,55 @@ SplashFontFile *SplashFTFontFile::loadType1Font(SplashFTFontEngine *engineA,
     }
   }
 
-  return new SplashFTFontFile(engineA, idA, fileNameA, deleteFileA,
+  return new SplashFTFontFile(engineA, idA, src,
 			      faceA, codeToGIDA, 256);
 }
 
 SplashFontFile *SplashFTFontFile::loadCIDFont(SplashFTFontEngine *engineA,
 					      SplashFontFileID *idA,
-					      char *fileNameA,
-					      GBool deleteFileA,
+					      SplashFontSrc *src,
 					      Gushort *codeToGIDA,
 					      int codeToGIDLenA) {
   FT_Face faceA;
 
-  if (FT_New_Face(engineA->lib, fileNameA, 0, &faceA)) {
-    return NULL;
+  if (src->isFile) {
+    if (FT_New_Face(engineA->lib, src->fileName->getCString(), 0, &faceA))
+      return NULL;
+  } else {
+    if (FT_New_Memory_Face(engineA->lib, (const FT_Byte *)src->buf, src->bufLen, 0, &faceA))
+      return NULL;
   }
 
-  return new SplashFTFontFile(engineA, idA, fileNameA, deleteFileA,
+  return new SplashFTFontFile(engineA, idA, src,
 			      faceA, codeToGIDA, codeToGIDLenA);
 }
 
 SplashFontFile *SplashFTFontFile::loadTrueTypeFont(SplashFTFontEngine *engineA,
 						   SplashFontFileID *idA,
-						   char *fileNameA,
-						   GBool deleteFileA,
+						   SplashFontSrc *src,
 						   Gushort *codeToGIDA,
-						   int codeToGIDLenA) {
+						   int codeToGIDLenA,
+						   int faceIndexA) {
   FT_Face faceA;
 
-  if (FT_New_Face(engineA->lib, fileNameA, 0, &faceA)) {
-    return NULL;
+  if (src->isFile) {
+    if (FT_New_Face(engineA->lib, src->fileName->getCString(), faceIndexA, &faceA))
+      return NULL;
+  } else {
+    if (FT_New_Memory_Face(engineA->lib, (const FT_Byte *)src->buf, src->bufLen, faceIndexA, &faceA))
+      return NULL;
   }
 
-  return new SplashFTFontFile(engineA, idA, fileNameA, deleteFileA,
+  return new SplashFTFontFile(engineA, idA, src,
 			      faceA, codeToGIDA, codeToGIDLenA);
 }
 
 SplashFTFontFile::SplashFTFontFile(SplashFTFontEngine *engineA,
 				   SplashFontFileID *idA,
-				   char *fileNameA, GBool deleteFileA,
+				   SplashFontSrc *srcA,
 				   FT_Face faceA,
 				   Gushort *codeToGIDA, int codeToGIDLenA):
-  SplashFontFile(idA, fileNameA, deleteFileA)
+  SplashFontFile(idA, srcA)
 {
   engine = engineA;
   face = faceA;

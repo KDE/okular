@@ -14,6 +14,7 @@
 
 #include <limits.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include "gmem.h"
 #include "Object.h"
 #include "XRef.h"
@@ -91,10 +92,11 @@ Catalog::Catalog(XRef *xrefA) {
   catDict.dictLookup("Dests", &dests);
 
   // read root of named destination tree
-  if (catDict.dictLookup("Names", &obj)->isDict())
-    obj.dictLookup("Dests", &nameTree);
-  else
-    nameTree.initNull();
+  if (catDict.dictLookup("Names", &obj)->isDict()) {
+    obj.dictLookup("Dests", &obj2);
+    destNameTree.init(xref, &obj2);
+    obj2.free();
+  }
   obj.free();
 
   // read base URI
@@ -142,7 +144,6 @@ Catalog::Catalog(XRef *xrefA) {
  err1:
   catDict.free();
   dests.initNull();
-  nameTree.initNull();
   ok = gFalse;
 }
 
@@ -159,7 +160,7 @@ Catalog::~Catalog() {
     gfree(pageRefs);
   }
   dests.free();
-  nameTree.free();
+  destNameTree.free();
   if (baseURI) {
     delete baseURI;
   }
@@ -290,8 +291,8 @@ LinkDest *Catalog::findDest(GString *name) {
     else
       obj1.free();
   }
-  if (!found && nameTree.isDict()) {
-    if (!findDestInTree(&nameTree, name, &obj1)->isNull())
+  if (!found) {
+    if (destNameTree.lookup(name, &obj1))
       found = gTrue;
     else
       obj1.free();
@@ -321,62 +322,110 @@ LinkDest *Catalog::findDest(GString *name) {
   return dest;
 }
 
-Object *Catalog::findDestInTree(Object *tree, GString *name, Object *obj) {
-  Object names, name1;
-  Object kids, kid, limits, low, high;
-  GBool done, found;
-  int cmp, i;
+NameTree::NameTree(void)
+{
+  size = 0;
+  length = 0;
+  entries = NULL;
+}
+
+NameTree::Entry::Entry(Array *array, int index) {
+  if (!array->getString(index, &name) || !array->getNF(index + 1, &value))
+    error(-1, "Invalid page tree");
+}
+
+NameTree::Entry::~Entry() {
+  value.free();
+}
+
+void NameTree::addEntry(Entry *entry)
+{
+  if (length == size) {
+    if (length == 0) {
+      size = 8;
+    } else {
+      size *= 2;
+    }
+    entries = (Entry **) grealloc (entries, sizeof (Entry *) * size);
+  }
+
+  entries[length] = entry;
+  ++length;
+}
+
+void NameTree::init(XRef *xrefA, Object *tree) {
+  xref = xrefA;
+  parse(tree);
+}
+
+void NameTree::parse(Object *tree) {
+  Object names;
+  Object kids, kid;
+  int i;
+
+  if (!tree->isDict())
+    return;
 
   // leaf node
   if (tree->dictLookup("Names", &names)->isArray()) {
-    done = found = gFalse;
-    for (i = 0; !done && i < names.arrayGetLength(); i += 2) {
-      if (names.arrayGet(i, &name1)->isString()) {
-	cmp = name->cmp(name1.getString());
-	if (cmp == 0) {
-	  names.arrayGet(i+1, obj);
-	  found = gTrue;
-	  done = gTrue;
-	} else if (cmp < 0) {
-	  done = gTrue;
-	}
-      }
-      name1.free();
+    for (i = 0; i < names.arrayGetLength(); i += 2) {
+      NameTree::Entry *entry;
+
+      entry = new Entry(names.getArray(), i);
+      addEntry(entry);
     }
-    names.free();
-    if (!found)
-      obj->initNull();
-    return obj;
   }
-  names.free();
 
   // root or intermediate node
-  done = gFalse;
   if (tree->dictLookup("Kids", &kids)->isArray()) {
-    for (i = 0; !done && i < kids.arrayGetLength(); ++i) {
-      if (kids.arrayGet(i, &kid)->isDict()) {
-	if (kid.dictLookup("Limits", &limits)->isArray()) {
-	  if (limits.arrayGet(0, &low)->isString() &&
-	      name->cmp(low.getString()) >= 0) {
-	    if (limits.arrayGet(1, &high)->isString() &&
-		name->cmp(high.getString()) <= 0) {
-	      findDestInTree(&kid, name, obj);
-	      done = gTrue;
-	    }
-	    high.free();
-	  }
-	  low.free();
-	}
-	limits.free();
-      }
+    for (i = 0; i < kids.arrayGetLength(); ++i) {
+      if (kids.arrayGet(i, &kid)->isDict())
+	parse(&kid);
       kid.free();
     }
   }
   kids.free();
+}
 
-  // name was outside of ranges of all kids
-  if (!done)
+int NameTree::Entry::cmp(const void *voidKey, const void *voidEntry)
+{
+  GString *key = (GString *) voidKey;
+  Entry *entry = *(NameTree::Entry **) voidEntry;
+
+  return key->cmp(&entry->name);
+}
+
+GBool NameTree::lookup(GString *name, Object *obj)
+{
+  Entry *entry;
+
+  Entry **e = (Entry **) bsearch(name, entries,
+			      length, sizeof(Entry *), Entry::cmp);
+  if (e) entry = *e;
+  else
+  {
+      error(-1, "failed to look up %s\n", name->getCString());
+      obj->initNull();
+      return gFalse;
+  }
+  if (entry != NULL) {
+    entry->value.fetch(xref, obj);
+    return gTrue;
+  } else {
+    error(-1, "failed to look up %s\n", name->getCString());
+
     obj->initNull();
 
-  return obj;
+    return gFalse;
+  }
+}
+
+void NameTree::free()
+{
+  int i;
+
+  for (i = 0; i < length; i++)
+    delete entries[i];
+
+  gfree(entries);
 }

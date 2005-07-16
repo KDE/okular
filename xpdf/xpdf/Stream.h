@@ -534,6 +534,9 @@ private:
   void eatBits(int n) { inputBits -= n; }
 };
 
+
+#if 0
+
 //------------------------------------------------------------------------
 // DCTStream
 //------------------------------------------------------------------------
@@ -709,6 +712,7 @@ private:
   int getHuffmanCodeWord(FlateHuffmanTab *tab);
   int getCodeWord(int bits);
 };
+#endif
 
 //------------------------------------------------------------------------
 // EOFStream

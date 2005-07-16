@@ -105,19 +105,19 @@ SplashFontFile *SplashFontEngine::getFontFile(SplashFontFileID *id) {
 }
 
 SplashFontFile *SplashFontEngine::loadType1Font(SplashFontFileID *idA,
-						char *fileName,
-						GBool deleteFile, const char **enc) {
+						SplashFontSrc *src,
+						const char **enc) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
 #if HAVE_T1LIB_H
   if (!fontFile && t1Engine) {
-    fontFile = t1Engine->loadType1Font(idA, fileName, deleteFile, enc);
+    fontFile = t1Engine->loadType1Font(idA, src, enc);
   }
 #endif
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
   if (!fontFile && ftEngine) {
-    fontFile = ftEngine->loadType1Font(idA, fileName, deleteFile, enc);
+    fontFile = ftEngine->loadType1Font(idA, src, enc);
   }
 #endif
 
@@ -125,28 +125,25 @@ SplashFontFile *SplashFontEngine::loadType1Font(SplashFontFileID *idA,
   // semantics, this will remove the last link; otherwise it will
   // return an error, leaving the file to be deleted later (if
   // loadXYZFont failed, the file will always be deleted)
-  if (deleteFile) {
-    unlink(fontFile ? fontFile->fileName->getCString() : fileName);
-  }
+  src->unref();
 
   return fontFile;
 }
 
 SplashFontFile *SplashFontEngine::loadType1CFont(SplashFontFileID *idA,
-						 char *fileName,
-						 GBool deleteFile,
+						 SplashFontSrc *src,
 						 const char **enc) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
 #if HAVE_T1LIB_H
   if (!fontFile && t1Engine) {
-    fontFile = t1Engine->loadType1CFont(idA, fileName, deleteFile, enc);
+    fontFile = t1Engine->loadType1CFont(idA, src, enc);
   }
 #endif
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
   if (!fontFile && ftEngine) {
-    fontFile = ftEngine->loadType1CFont(idA, fileName, deleteFile, enc);
+    fontFile = ftEngine->loadType1CFont(idA, src, enc);
   }
 #endif
 
@@ -154,22 +151,19 @@ SplashFontFile *SplashFontEngine::loadType1CFont(SplashFontFileID *idA,
   // semantics, this will remove the last link; otherwise it will
   // return an error, leaving the file to be deleted later (if
   // loadXYZFont failed, the file will always be deleted)
-  if (deleteFile) {
-    unlink(fontFile ? fontFile->fileName->getCString() : fileName);
-  }
+  src->unref();
 
   return fontFile;
 }
 
 SplashFontFile *SplashFontEngine::loadCIDFont(SplashFontFileID *idA,
-					      char *fileName,
-					      GBool deleteFile) {
+					      SplashFontSrc *src) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
   if (!fontFile && ftEngine) {
-    fontFile = ftEngine->loadCIDFont(idA, fileName, deleteFile);
+    fontFile = ftEngine->loadCIDFont(idA, src);
   }
 #endif
 
@@ -177,25 +171,23 @@ SplashFontFile *SplashFontEngine::loadCIDFont(SplashFontFileID *idA,
   // semantics, this will remove the last link; otherwise it will
   // return an error, leaving the file to be deleted later (if
   // loadXYZFont failed, the file will always be deleted)
-  if (deleteFile) {
-    unlink(fontFile ? fontFile->fileName->getCString() : fileName);
-  }
+  src->unref();
 
   return fontFile;
 }
 
 SplashFontFile *SplashFontEngine::loadTrueTypeFont(SplashFontFileID *idA,
-						   char *fileName,
-						   GBool deleteFile,
+						   SplashFontSrc *src,
 						   Gushort *codeToGID,
-						   int codeToGIDLen) {
+						   int codeToGIDLen,
+						   int faceIndex) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
   if (!fontFile && ftEngine) {
-    fontFile = ftEngine->loadTrueTypeFont(idA, fileName, deleteFile,
-					  codeToGID, codeToGIDLen);
+    fontFile = ftEngine->loadTrueTypeFont(idA, src,
+					  codeToGID, codeToGIDLen, faceIndex);
   }
 #endif
 
@@ -207,9 +199,7 @@ SplashFontFile *SplashFontEngine::loadTrueTypeFont(SplashFontFileID *idA,
   // semantics, this will remove the last link; otherwise it will
   // return an error, leaving the file to be deleted later (if
   // loadXYZFont failed, the file will always be deleted)
-  if (deleteFile) {
-    unlink(fontFile ? fontFile->fileName->getCString() : fileName);
-  }
+  src->unref();
 
   return fontFile;
 }

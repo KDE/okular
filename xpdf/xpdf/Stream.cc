@@ -32,6 +32,8 @@
 #include "JBIG2Stream.h"
 #include "JPXStream.h"
 #include "Stream-CCITT.h"
+#include "DCTStream.h"
+#include "FlateStream.h"
 
 #ifdef __DJGPP__
 static GBool setDJSYSFLAGS = gFalse;
@@ -1786,6 +1788,7 @@ GBool CCITTFaxStream::isBinary(GBool /*last*/) {
   return str->isBinary(gTrue);
 }
 
+#if 0
 //------------------------------------------------------------------------
 // DCTStream
 //------------------------------------------------------------------------
@@ -3707,6 +3710,7 @@ int FlateStream::getCodeWord(int bits) {
   codeSize -= bits;
   return c;
 }
+#endif
 
 //------------------------------------------------------------------------
 // EOFStream

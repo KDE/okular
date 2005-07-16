@@ -28,6 +28,7 @@
 #include <X11/Xft/XftCompat.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <sys/stat.h>
 #if HAVE_PAPER_H
 #include <paper.h>
 #endif
@@ -612,6 +613,7 @@ void GlobalParams::parseDisplayFont(GList *tokens, GHash *fontHash,
 				    DisplayFontParamKind kind,
 				    GString *fileName, int line) {
   DisplayFontParam *param, *old;
+  struct stat statbuf;
 
   if (tokens->getLength() < 2) {
     goto err1;
@@ -624,12 +626,24 @@ void GlobalParams::parseDisplayFont(GList *tokens, GHash *fontHash,
       goto err2;
     }
     param->t1.fileName = ((GString *)tokens->get(2))->copy();
+    if (stat((param->t1.fileName->getCString)(), &statbuf)) {
+      delete param; // silently ignore non-existing files
+      return;
+    }    
     break;
   case displayFontTT:
-    if (tokens->getLength() != 3) {
+    if (tokens->getLength() < 3) {
       goto err2;
     }
     param->tt.fileName = ((GString *)tokens->get(2))->copy();
+    if (stat((param->tt.fileName->getCString)(), &statbuf)) {
+      delete param; // silently ignore non-existing files
+      return;
+    }
+    if (tokens->getLength() > 3)
+      param->tt.faceIndex = atoi(((GString *)tokens->get(3))->getCString());
+    else
+      param->tt.faceIndex = 0;
     break;
   }
 
@@ -1048,6 +1062,8 @@ FILE *GlobalParams::findToUnicodeFile(GString *name) {
 
 void parseStyle(QString& name, int& weight, int& slant, int& width)
 {
+  if (name.find("MS-") == 0) name = "MS " + name.remove(0,3);
+
   if (!name.contains('-') && !name.contains(',')) return;
   QString type = name.section(QRegExp("[-,]"),-1);
   name = name.section(QRegExp("[-,]"),0,-2);
@@ -1058,15 +1074,12 @@ void parseStyle(QString& name, int& weight, int& slant, int& width)
   if (type.contains("Condensed")) width=FC_WIDTH_CONDENSED;
 }
 
-
-
 DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
   DisplayFontParam *dfp;
   FcPattern *p=0,*m=0;
   FcChar8* s;
   char * ext;
   FcResult res;
- 
 
   lockGlobalParams;
   dfp = (DisplayFontParam *)displayFonts->lookup(fontName);
@@ -1074,18 +1087,22 @@ DisplayFontParam *GlobalParams::getDisplayFont(GString *fontName) {
   if (!dfp) {
   	int weight=FC_WEIGHT_MEDIUM, slant=FC_SLANT_ROMAN, width=FC_WIDTH_NORMAL;
 	QString name(fontName->getCString());
+	
 	parseStyle(name,weight,slant,width);
-	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight, FC_WIDTH, FcTypeInteger, width, (char*)0);
+	p = FcPatternBuild(0,FC_FAMILY,FcTypeString, name.ascii(), 
+		FC_SLANT, FcTypeInteger, slant, FC_WEIGHT, FcTypeInteger, weight,
+		FC_WIDTH, FcTypeInteger, width, FC_LANG, FcTypeString, "xx", (char*)0);
 	if (!p) goto fin;
 	m = XftFontMatch(qt_xdisplay(),qt_xscreen(),p,&res);
-	if (!m) goto fin; 
+	if (!m) goto fin;
 	res = FcPatternGetString (m, FC_FILE, 0, &s);
 	if (res != FcResultMatch || !s)  goto fin; 
 	ext = rindex((char*)s,'.');
 	if (!ext) goto fin;
-	if (!strncasecmp(ext,".ttf",4)) {
+	if (!strncasecmp(ext,".ttf",4) || !strncasecmp(ext,".ttc",4)) {
 	  dfp = new DisplayFontParam(fontName->copy(), displayFontTT);  
    	  dfp->tt.fileName = new GString((char*)s);
+   	  FcPatternGetInteger(m, FC_INDEX, 0, &(dfp->tt.faceIndex));
 	 }  else if (!strncasecmp(ext,".pfa",4) || !strncasecmp(ext,".pfb",4)) {
 	   dfp = new DisplayFontParam(fontName->copy(), displayFontT1);  
 	   dfp->t1.fileName = new GString((char*)s);
@@ -1108,6 +1125,7 @@ DisplayFontParam *GlobalParams::getDisplayCIDFont(GString *fontName,
     dfp = (DisplayFontParam *)displayCIDFonts->lookup(collection);
   }
   unlockGlobalParams;
+  if (!dfp) dfp = getDisplayFont(fontName);
   return dfp;
 }
 

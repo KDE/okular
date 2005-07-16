@@ -19,85 +19,7 @@ class QDomNode;
 class QDomDocument;
 class TextPage;
 class KPDFPageTransition;
-class NormalizedRect;
-class ObjectRect;
-class HighlightRect;
 class Annotation;
-
-/**
- * @short Collector for all the data belonging to a page.
- *
- * The KPDFPage class contains pixmaps (referenced using observers id as key),
- * a search page (a class used internally for retrieving text), rect classes
- * (that describe links or other active areas in the current page) and more.
- *
- * All coordinates are normalized to the page, so {x,y} are valid in [0,1]
- * range as long as NormalizedRect components.
- *
- * Note: The class takes ownership of all objects.
- */
-class KPDFPage
-{
-    public:
-        KPDFPage( uint number, double width, double height, int rotation );
-        ~KPDFPage();
-
-        // query properties (const read-only methods)
-        inline int number() const { return m_number; }
-        inline int rotation() const { return m_rotation; }
-        inline double width() const { return m_width; }
-        inline double height() const { return m_height; }
-        inline double ratio() const { return m_height / m_width; }
-        bool hasPixmap( int p_id, int width = -1, int height = -1 ) const;
-        bool hasSearchPage() const;
-        bool hasBookmark() const;
-        bool hasObjectRect( double x, double y ) const;
-        bool hasHighlights( int s_id = -1 ) const;
-        //bool hasAnnotation( double x, double y ) const;
-        bool hasTransition() const;
-
-        NormalizedRect * findText( const QString & text, bool keepCase, NormalizedRect * last = 0 ) const;
-        const QString getText( const NormalizedRect & rect ) const;
-        const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y ) const;
-        //const Annotation * getAnnotation( double x, double y ) const;
-        const KPDFPageTransition * getTransition() const;
-        //FIXME TEMP:
-        bool hasAnnotations() const { return !m_annotations.isEmpty(); }
-        const QValueList< Annotation * > getAnnotations() const { return m_annotations; }
-
-        // operations: set contents (by KPDFDocument)
-        void setPixmap( int p_id, QPixmap * pixmap );
-        void setSearchPage( TextPage * text );
-        void setBookmark( bool state );
-        void setObjectRects( const QValueList< ObjectRect * > rects );
-        void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
-        void addAnnotation( Annotation * annotation );
-        void setTransition( KPDFPageTransition * transition );
-        // operations: delete contents (by KPDFDocument)
-        void deletePixmap( int p_id );
-        void deletePixmapsAndRects();
-        void deleteHighlights( int s_id = -1 );
-        void deleteAnnotations();
-
-        // operations to save/restore page state (by KPDFDocument)
-        void restoreLocalContents( const QDomNode & pageNode );
-        void saveLocalContents( QDomNode & parentNode, QDomDocument & document );
-
-    private:
-        friend class PagePainter;
-        int m_number;
-        int m_rotation;
-        double m_width, m_height;
-        bool m_bookmarked;
-
-        QMap< int, QPixmap * > m_pixmaps;
-        TextPage * m_text;
-        QValueList< ObjectRect * > m_rects;
-        QValueList< HighlightRect * > m_highlights;
-        QValueList< Annotation * > m_annotations;
-        KPDFPageTransition * m_transition;
-};
-
 
 /**
  * @short A point in [0,1] coordinates (only used in annotations atm)
@@ -173,5 +95,81 @@ struct HighlightRect : public NormalizedRect
     // color of the highlight
     QColor color;
 };
+
+
+/**
+ * @short Collector for all the data belonging to a page.
+ *
+ * The KPDFPage class contains pixmaps (referenced using observers id as key),
+ * a search page (a class used internally for retrieving text), rect classes
+ * (that describe links or other active areas in the current page) and more.
+ *
+ * All coordinates are normalized to the page, so {x,y} are valid in [0,1]
+ * range as long as NormalizedRect components.
+ *
+ * Note: The class takes ownership of all objects.
+ */
+class KPDFPage
+{
+    public:
+        KPDFPage( uint number, double width, double height, int rotation );
+        ~KPDFPage();
+
+        // query properties (const read-only methods)
+        inline int number() const { return m_number; }
+        inline int rotation() const { return m_rotation; }
+        inline double width() const { return m_width; }
+        inline double height() const { return m_height; }
+        inline double ratio() const { return m_height / m_width; }
+        bool hasPixmap( int p_id, int width = -1, int height = -1 ) const;
+        bool hasSearchPage() const;
+        bool hasBookmark() const;
+        bool hasObjectRect( double x, double y ) const;
+        bool hasHighlights( int s_id = -1 ) const;
+        //bool hasAnnotation( double x, double y ) const;
+        bool hasTransition() const;
+
+        NormalizedRect * findText( const QString & text, bool keepCase, NormalizedRect * last = 0 ) const;
+        const QString getText( const NormalizedRect & rect ) const;
+        const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y ) const;
+        //const Annotation * getAnnotation( double x, double y ) const;
+        const KPDFPageTransition * getTransition() const;
+        //FIXME TEMP:
+        bool hasAnnotations() const { return !m_annotations.isEmpty(); }
+        const QValueList< Annotation * > getAnnotations() const { return m_annotations; }
+
+        // operations: set contents (by KPDFDocument)
+        void setPixmap( int p_id, QPixmap * pixmap );
+        void setSearchPage( TextPage * text );
+        void setBookmark( bool state );
+        void setObjectRects( const QValueList< ObjectRect * > rects );
+        void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
+        void addAnnotation( Annotation * annotation );
+        void setTransition( KPDFPageTransition * transition );
+        // operations: delete contents (by KPDFDocument)
+        void deletePixmap( int p_id );
+        void deletePixmapsAndRects();
+        void deleteHighlights( int s_id = -1 );
+        void deleteAnnotations();
+
+        // operations to save/restore page state (by KPDFDocument)
+        void restoreLocalContents( const QDomNode & pageNode );
+        void saveLocalContents( QDomNode & parentNode, QDomDocument & document );
+
+    private:
+        friend class PagePainter;
+        int m_number;
+        int m_rotation;
+        double m_width, m_height;
+        bool m_bookmarked;
+
+        QMap< int, QPixmap * > m_pixmaps;
+        TextPage * m_text;
+        QValueList< ObjectRect * > m_rects;
+        QValueList< HighlightRect * > m_highlights;
+        QValueList< Annotation * > m_annotations;
+        KPDFPageTransition * m_transition;
+};
+
 
 #endif

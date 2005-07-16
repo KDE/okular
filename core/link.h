@@ -27,6 +27,7 @@ class KPDFLink
         // get link type (inherited classes mustreturn an unique identifier)
         enum LinkType { Goto, Execute, Browse, Action, Movie };
         virtual LinkType linkType() const = 0;
+        virtual QString linkTip() const;
 
         // virtual destructor (remove warnings)
         virtual ~KPDFLink();
@@ -45,6 +46,7 @@ class KPDFLinkGoto : public KPDFLink
         // create a KPDFLink_Goto
         KPDFLinkGoto( QString extFileName, const DocumentViewport & vp ) { m_extFileName = extFileName; m_vp = vp; }
         LinkType linkType() const { return Goto; }
+        QString linkTip() const;
 
     private:
         QString m_extFileName;
@@ -62,6 +64,7 @@ class KPDFLinkExecute : public KPDFLink
         // create a KPDFLink_Execute
         KPDFLinkExecute( const QString & file, const QString & params ) { m_fileName = file; m_parameters = params; }
         LinkType linkType() const { return Execute; }
+        QString linkTip() const;
 
     private:
         QString m_fileName;
@@ -78,6 +81,7 @@ class KPDFLinkBrowse : public KPDFLink
         // create a KPDFLink_Browse
         KPDFLinkBrowse( const QString &url ) { m_url = url; }
         LinkType linkType() const { return Browse; }
+        QString linkTip() const;
 
     private:
         QString m_url;
@@ -97,6 +101,7 @@ class KPDFLinkAction : public KPDFLink
         // create a KPDFLink_Action
         KPDFLinkAction( enum ActionType actionType ) { m_type = actionType; }
         LinkType linkType() const { return Action; }
+        QString linkTip() const;
 
     private:
         ActionType m_type;

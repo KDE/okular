@@ -30,10 +30,6 @@ public:
   /// method and return true here.
   virtual bool isReadWrite() {return true;};
 
-  /// multipage implementations that offer read- and write
-  /// functionality should re-implement this method.
-  virtual bool isModified();
-
   virtual void addConfigDialogs(KConfigDialog* configDialog);
 
   static KAboutData* createAboutData();

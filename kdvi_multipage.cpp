@@ -49,6 +49,8 @@ int  performanceFlag = 0;
 typedef KParts::GenericFactory<KDVIMultiPage> KDVIMultiPageFactory;
 K_EXPORT_COMPONENT_FACTORY(kdvipart, KDVIMultiPageFactory)
 
+
+
 KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent,
                              const char *name, const QStringList& args)
   : KMultiPage(parentWidget, widgetName, parent, name), DVIRenderer(parentWidget)
@@ -68,13 +70,11 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   setRenderer(&DVIRenderer);
 
   docInfoAction    = new KAction(i18n("Document &Info"), 0, &DVIRenderer, SLOT(showInfo()), actionCollection(), "info_dvi");
-
-  embedPSAction      = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
-
+  embedPSAction    = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
   new KAction(i18n("Enable All Warnings && Messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
-  exportPSAction     = new KAction(i18n("PostScript..."), 0, &DVIRenderer, SLOT(exportPS()), actionCollection(), "export_postscript");
-  exportPDFAction    = new KAction(i18n("PDF..."), 0, &DVIRenderer, SLOT(exportPDF()), actionCollection(), "export_pdf");
-  exportTextAction   = new KAction(i18n("Text..."), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
+  exportPSAction   = new KAction(i18n("PostScript..."), 0, &DVIRenderer, SLOT(exportPS()), actionCollection(), "export_postscript");
+  exportPDFAction  = new KAction(i18n("PDF..."), 0, &DVIRenderer, SLOT(exportPDF()), actionCollection(), "export_pdf");
+  exportTextAction = new KAction(i18n("Text..."), 0, this, SLOT(doExportText()), actionCollection(), "export_text");
 
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
 
@@ -87,6 +87,20 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   // Show tip of the day, when the first main window is shown.
   QTimer::singleShot(0,this,SLOT(showTipOnStart()));
 }
+
+
+KDVIMultiPage::~KDVIMultiPage()
+{
+  delete docInfoAction;
+  delete embedPSAction;
+  delete exportPSAction;
+  delete exportPDFAction;
+  delete exportTextAction;
+
+  writeSettings();
+  Prefs::writeConfig();
+}
+
 
 KAboutData* KDVIMultiPage::createAboutData()
 {
@@ -110,6 +124,7 @@ KAboutData* KDVIMultiPage::createAboutData()
 
   return about;
 }
+
 
 void KDVIMultiPage::slotEmbedPostScript(void)
 {
@@ -172,22 +187,6 @@ void KDVIMultiPage::slotSave_defaultFilename()
   if (DVIRenderer.dviFile != 0)
     DVIRenderer.dviFile->saveAs(m_file);
   return;
-}
-
-
-bool KDVIMultiPage::isModified()
-{
-  if ((DVIRenderer.dviFile == 0) || (DVIRenderer.dviFile->dvi_Data() == 0))
-    return false;
-  else
-    return DVIRenderer.dviFile->isModified;
-}
-
-
-KDVIMultiPage::~KDVIMultiPage()
-{
-  writeSettings();
-  Prefs::writeConfig();
 }
 
 

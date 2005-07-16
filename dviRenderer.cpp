@@ -123,12 +123,11 @@ dviRenderer::~dviRenderer()
 
 void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, bool useFontHints )
 {
-  mutex.lock();
+  QMutexLocker locker(&mutex);
   _postscript = flag_showPS;
   editorCommand = str_editorCommand;
   font_pool.setParameters( useFontHints );
-  mutex.unlock();
-  emit(needsRepainting());
+  emit(documentIsChanged());
 }
 
 
@@ -307,7 +306,6 @@ void dviRenderer::embedPostScript(void)
   embedPS_numOfProgressedFiles = 0;
 
 
-
   Q_UINT16 currPageSav = current_page;
   errorMsg = QString::null;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
@@ -368,6 +366,7 @@ void dviRenderer::embedPostScript(void)
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
   current_page = currPageSav;
+  _isModified = true;
 }
 
 
@@ -401,7 +400,7 @@ bool dviRenderer::setFile(const QString &fname)
   kdDebug(4300) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
 
-  mutex.lock();
+  QMutexLocker lock(&mutex);
 
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();
@@ -413,22 +412,19 @@ bool dviRenderer::setFile(const QString &fname)
     info->setDVIData(0);
     delete dviFile;
     dviFile = 0;
-
-    mutex.unlock();    
     return true;
   }
-
-
+  
+  
   // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
     KMessageBox::error( parentWidget,
 			i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
 			     "KDVI already tried to add the ending '.dvi'.</qt>").arg(filename),
 			i18n("File Error!"));
-    mutex.unlock();
     return false;
   }
-
+  
   // Check if we are really loading a DVI file, and complain about the
   // mime type, if the file is not DVI. Perhaps we should move the
   // procedure later to the kviewpart, instead of the implementaton in
@@ -440,19 +436,17 @@ bool dviRenderer::setFile(const QString &fname)
 			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
 			.arg( fname )
 			.arg( mimetype ) );
-    mutex.unlock();
     return false;
   }
-
+  
   QApplication::setOverrideCursor( Qt::waitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
-
+  
   if ((dviFile == 0) || (dviFile->filename != filename))
     dviFile_new->sourceSpecialMarker = true;
   else
     dviFile_new->sourceSpecialMarker = false;
-
-
+  
   if ((dviFile_new->dvi_Data() == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
@@ -461,23 +455,24 @@ bool dviRenderer::setFile(const QString &fname)
 				      "likely this means that the DVI file is broken.</qt>"),
 				 dviFile_new->errorMsg, i18n("DVI File Error"));
     delete dviFile_new;
-    mutex.unlock();
     return false;
   }
-
+  
   delete dviFile;
   dviFile = dviFile_new;
   numPages = dviFile->total_pages;
   info->setDVIData(dviFile);
+  _isModified = false;
 
+  
   font_pool.setExtraSearchPath( fi.dirPath(true) );
   font_pool.setCMperDVIunit( dviFile->getCmPerDVIunit() );
-
+  
   // Extract PostScript from the DVI file, and store the PostScript
   // specials in PostScriptDirectory, and the headers in the
   // PostScriptHeaderString.
   PS_interface->clear();
-
+  
   // Files that reside under "tmp" or under the "data" resource are most
   // likely remote files. We limit the files they are able to read to
   // the directory they are in in order to limit the possibilities of a
@@ -489,35 +484,32 @@ bool dviRenderer::setFile(const QString &fname)
     if (!filename.startsWith(tmp))
       restrictIncludePath = false;
   }
-
+  
   QString includePath;
   if (restrictIncludePath) {
     includePath = filename;
     includePath.truncate(includePath.findRev('/'));
   }
-
+  
   PS_interface->setIncludePath(includePath);
-
+  
   // We will also generate a list of hyperlink-anchors and source-file
   // anchors in the document. So declare the existing lists empty.
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
   bookmarks.clear();
   prebookmarks.clear();
-
-  if (dviFile->page_offset.isEmpty() == true) {
-    mutex.unlock();
+  
+  if (dviFile->page_offset.isEmpty() == true)
     return false;
-  }
-
+  
   // Locate fonts.
   font_pool.locateFonts();
   
   // Update the list of fonts in the info window
   if (info != 0)
     info->setFontInfo(&font_pool);
-
-
+  
   // We should pre-scan the document now (to extract embedded,
   // PostScript, Hyperlinks, ets).
   
@@ -551,7 +543,6 @@ bool dviRenderer::setFile(const QString &fname)
   }
   PostScriptOutPutString = NULL;
   
-
   // Generate the list of bookmarks
   bookmarks.clear();
   QPtrStack<Bookmark> stack;
@@ -577,16 +568,14 @@ bool dviRenderer::setFile(const QString &fname)
   current_page = currPageSav;
   // PRESCAN ENDS HERE
   
- 
+  
   pageSizes.resize(0);
   if (dviFile->suggestedPageSize != 0) {
     // Fill the vector pageSizes with total_pages identical entries
     pageSizes.resize(dviFile->total_pages, *(dviFile->suggestedPageSize));
   }
-  emit(needsRepainting());
   
   QApplication::restoreOverrideCursor();
-  mutex.unlock();
   return true;
 }
 

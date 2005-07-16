@@ -34,7 +34,6 @@ class dvifile : public bigEndianByteReader
 
   ~dvifile();
 
-  bool           isModified;
   fontPool     * font_pool;
   QString        filename;
   QString        generatorString;
@@ -92,7 +91,7 @@ class dvifile : public bigEndianByteReader
   
   /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
       with care. */
-  void           setNewData(Q3MemArray<Q_UINT8> newData) {dviData = newData; isModified=true;};
+  void           setNewData(Q3MemArray<Q_UINT8> newData) {dviData = newData;};
 
   /** Page numbers that appear in a DVI document need not be
       ordered. Worse, page numbers need not be unique. This method

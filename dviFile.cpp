@@ -97,7 +97,6 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   find_postamble();
   read_postamble();
   prepare_pages();
-  isModified = false;
 }
 
 
@@ -305,7 +304,6 @@ dvifile::dvifile(QString fname, fontPool *pool)
   find_postamble();
   read_postamble();
   prepare_pages();
-  isModified = false;
 
   return;
 }
@@ -364,6 +362,5 @@ bool dvifile::saveAs(const QString &filename)
   if (out.writeBlock ( (char *)(dvi_Data()), size_of_file ) == -1)
     return false;
   out.close();
-  isModified = false;
   return true;
 }

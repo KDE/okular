@@ -66,7 +66,7 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   DVIRenderer.setName("DVI renderer");
   setRenderer(&DVIRenderer);
 
-  docInfoAction    = new KAction(i18n("Document &Info"), 0, &DVIRenderer, SLOT(showInfo()), actionCollection(), "info_dvi");
+  docInfoAction    = new KAction(i18n("Document &Info"), "info", 0, &DVIRenderer, SLOT(showInfo()), actionCollection(), "info_dvi");
   embedPSAction    = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
   new KAction(i18n("Enable All Warnings && Messages"), 0, this, SLOT(doEnableWarnings()), actionCollection(), "enable_msgs");
   exportPSAction   = new KAction(i18n("PostScript..."), 0, &DVIRenderer, SLOT(exportPS()), actionCollection(), "export_postscript");
@@ -364,6 +364,8 @@ void KDVIMultiPage::print()
     break;
   case KPrinter::Tabloid:
     dvips_options += "-t tabloid ";
+    break;
+  default:
     break;
   }
   // Orientation

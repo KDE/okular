@@ -582,12 +582,14 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     }
 }
 
+// from Arthur - Qt4
+inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 void PresentationWidget::generateOverlay()
 {
 #ifdef ENABLE_PROGRESS_OVERLAY
     // calculate overlay geometry and resize pixmap if needed
     int side = m_width / 16;
-    m_overlayGeometry.setRect( m_width - side, 0, side, side );
+    m_overlayGeometry.setRect( m_width - side - 4, 4, side, side );
     if ( m_lastRenderedOverlay.width() != side )
         m_lastRenderedOverlay.resize( side, side );
 
@@ -601,13 +603,14 @@ void PresentationWidget::generateOverlay()
 
     // draw PIE SLICES in blue levels (the levels will then be the alpha component)
     int pages = m_document->pages();
-    if ( pages > 36 )
+    if ( pages > 28 )
     {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
-        pixmapPainter.setPen( 0x20 );
-        pixmapPainter.setBrush( 0x10 );
+        pixmapPainter.setPen( 0x05 );
+        pixmapPainter.setBrush( 0x40 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
-        pixmapPainter.setBrush( 0xC0 );
+        pixmapPainter.setPen( 0x40 );
+        pixmapPainter.setBrush( 0xF0 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
     else
@@ -617,7 +620,7 @@ void PresentationWidget::generateOverlay()
         {
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
-            pixmapPainter.setBrush( i <= m_frameIndex ? 0xC0 : 0x10 );
+            pixmapPainter.setBrush( i <= m_frameIndex ? 0xF0 : 0x40 );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );
             oldCoord = newCoord;
@@ -638,17 +641,52 @@ void PresentationWidget::generateOverlay()
 
     // end drawing pixmap and halve image
     pixmapPainter.end();
-    side /= 2;
-    QImage image( doublePixmap.convertToImage().smoothScale( side, side ) );
+    QImage image( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );
     image.setAlphaBuffer( true );
 
-    // FIXME: obey palette (highlighe colors), but only after dropping an
-    // inverse shadow that will make contrast with the wheel
-    int red = 52, green = 115, blue = 178,
-        pixels = image.width() * image.height();
-    unsigned int * data = (unsigned int *)image.bits();
-    for( int i = 0; i < pixels; ++i )
-        data[i] = qRgba( red, green, blue, data[i] & 0xFF );
+    // draw circular shadow using the same technique
+    doublePixmap.fill( Qt::black );
+    pixmapPainter.begin( &doublePixmap );
+    pixmapPainter.setPen( 0x40 );
+    pixmapPainter.setBrush( 0x80 );
+    pixmapPainter.drawEllipse( 0, 0, side, side );
+    pixmapPainter.end();
+    QImage shadow( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );
+
+    // generate a 2 colors pixmap using mixing shadow (made with highlight color)
+    // and image (made with highlightedText color)
+    QColor color = palette().active().highlightedText();
+    int red = color.red(), green = color.green(), blue = color.blue();
+    color = palette().active().highlight();
+    int sRed = color.red(), sGreen = color.green(), sBlue = color.blue();
+    // pointers
+    unsigned int * data = (unsigned int *)image.bits(),
+                 * shadowData = (unsigned int *)shadow.bits(),
+                 pixels = image.width() * image.height();
+    // cache data (reduce computation time to 26%!)
+    int c1 = -1, c2 = -1, cR = 0, cG = 0, cB = 0, cA = 0;
+    // foreach pixel
+    for( unsigned int i = 0; i < pixels; ++i )
+    {
+        // alpha for shadow and image
+        int shadowAlpha = shadowData[i] & 0xFF,
+            srcAlpha = data[i] & 0xFF;
+        // cache values
+        if ( srcAlpha != c1 || shadowAlpha != c2 )
+        {
+            c1 = srcAlpha;
+            c2 = shadowAlpha;
+            // fuse color components and alpha value of image over shadow
+            data[i] = qRgba(
+                cR = qt_div_255( srcAlpha * red   + (255 - srcAlpha) * sRed ),
+                cG = qt_div_255( srcAlpha * green + (255 - srcAlpha) * sGreen ),
+                cB = qt_div_255( srcAlpha * blue  + (255 - srcAlpha) * sBlue ),
+                cA = qt_div_255( srcAlpha * srcAlpha + (255 - srcAlpha) * shadowAlpha )
+            );
+        }
+        else
+            data[i] = qRgba( cR, cG, cB, cA );
+    }
     m_lastRenderedOverlay.convertFromImage( image );
 
     // start the autohide timer

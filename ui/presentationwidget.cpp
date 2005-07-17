@@ -446,9 +446,14 @@ void PresentationWidget::changePage( int newPage )
     // notifyPixmapChanged call or else we can proceed to pixmap generation
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
+        // operation will take long: set busy cursor
+        QApplication::setOverrideCursor( KCursor::workingCursor() );
+        // request the pixmap
         QValueList< PixmapRequest * > request;
         request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO ) );
         m_document->requestPixmaps( request );
+        // restore cursor
+        QApplication::restoreOverrideCursor();
     }
     else
     {

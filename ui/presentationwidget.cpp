@@ -18,6 +18,7 @@
 #include <kcursor.h>
 #include <ktoolbar.h>
 #include <klocale.h>
+#include <kdebug.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
 #include <kmessagebox.h>

@@ -91,6 +91,7 @@ More items (first items will enter 'In progress list' first):
 -> presentation: add a red pencil that creates ink annotations (author: i18n(author-presentation)))
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
+-> presentation: 2 pages per view, for users reading ebooks with wide screens.
 -> splash(xpdf): check lack of smoothness at low resolutions and antialiasing (BR94231)
 -> kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)

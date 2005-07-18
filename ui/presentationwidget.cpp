@@ -583,8 +583,8 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     }
 }
 
-// from Arthur - Qt4
-inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
+// from Arthur - Qt4 - (is defined elsewhere as 'qt_div_255' to not break final compilation)
+inline int qt_div255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 void PresentationWidget::generateOverlay()
 {
 #ifdef ENABLE_PROGRESS_OVERLAY
@@ -679,10 +679,10 @@ void PresentationWidget::generateOverlay()
             c2 = shadowAlpha;
             // fuse color components and alpha value of image over shadow
             data[i] = qRgba(
-                cR = qt_div_255( srcAlpha * red   + (255 - srcAlpha) * sRed ),
-                cG = qt_div_255( srcAlpha * green + (255 - srcAlpha) * sGreen ),
-                cB = qt_div_255( srcAlpha * blue  + (255 - srcAlpha) * sBlue ),
-                cA = qt_div_255( srcAlpha * srcAlpha + (255 - srcAlpha) * shadowAlpha )
+                cR = qt_div255( srcAlpha * red   + (255 - srcAlpha) * sRed ),
+                cG = qt_div255( srcAlpha * green + (255 - srcAlpha) * sGreen ),
+                cB = qt_div255( srcAlpha * blue  + (255 - srcAlpha) * sBlue ),
+                cA = qt_div255( srcAlpha * srcAlpha + (255 - srcAlpha) * shadowAlpha )
             );
         }
         else

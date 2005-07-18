@@ -256,7 +256,7 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 bool PDFGenerator::isAllowed( int permissions )
 {
 #if !KPDF_FORCE_DRM
-    if (kapp->authorize("skip_drm") && !Settings::obeyDRM()) return true;
+    if (kapp->authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
 #endif
 
     bool b = true;
@@ -499,8 +499,8 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
 bool PDFGenerator::reparseConfig()
 {
     // load paper color from Settings or use the white default color
-    QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
-                     Settings::changeColors() ) ? Settings::paperColor() : Qt::white;
+    QColor color = ( (KpdfSettings::renderMode() == KpdfSettings::EnumRenderMode::Paper ) &&
+                     KpdfSettings::changeColors() ) ? KpdfSettings::paperColor() : Qt::white;
     // if paper color is changed we have to rebuild every visible pixmap in addition
     // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
     // over the page rendered on 'standard' white background.

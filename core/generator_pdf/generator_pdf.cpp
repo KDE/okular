@@ -470,7 +470,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     bool genTextPage = !page->hasSearchPage() && (request->width == page->width()) &&
                        (request->height == page->height());
     // generate links and image rects if rendering pages on pageview
-    bool genObjectRects = request->id == PAGEVIEW_ID;
+    bool genObjectRects = request->id & (PAGEVIEW_ID | PRESENTATION_ID);
 
     // 0. LOCK [waits for the thread end]
     docLock.lock();
@@ -2225,7 +2225,7 @@ void PDFPixmapGeneratorThread::run()
                        ( height == page->height() );
 
     // generate links and image rects if rendering pages on pageview
-    bool genObjectRects = d->currentRequest->id == PAGEVIEW_ID;
+    bool genObjectRects = d->currentRequest->id & (PAGEVIEW_ID | PRESENTATION_ID);
 
     // 0. LOCK s[tart locking XPDF thread unsafe classes]
     d->generator->docLock.lock();

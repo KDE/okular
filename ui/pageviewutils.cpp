@@ -36,7 +36,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 // give to Caesar what Caesar owns: code taken from Amarok's osd.h/.cpp
 // "redde (reddite, pl.) cesari quae sunt cesaris", just btw. ;)
 {
-    if ( !Settings::showOSD() )
+    if ( !KpdfSettings::showOSD() )
     {
         hide();
         return;

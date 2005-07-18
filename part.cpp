@@ -117,7 +117,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_splitter->setOpaqueResize( true );
 	setWidget( m_splitter );
 	m_watchFile = new KToggleAction( i18n( "&Watch File" ), 0, this, SLOT( slotWatchFile() ), actionCollection(), "watch_file" );
-	m_watchFile->setChecked( Settings::watchFile() );
+	m_watchFile->setChecked( KpdfSettings::watchFile() );
 
 	// widgets: [left panel] | []
 	m_leftPanel = new QWidget( m_splitter );
@@ -236,7 +236,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_pageView->setupActions( ac );
 
 	// apply configuration (both internal settings and GUI configured items)
-	QValueList<int> splitterSizes = Settings::splitterSizes();
+	QValueList<int> splitterSizes = KpdfSettings::splitterSizes();
 	if ( !splitterSizes.count() )
 	{
 		// the first time use 1/10 for the panel and 9/10 for the pageView
@@ -253,7 +253,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// [SPEECH] check for KTTSD presence and usability
 	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
-	Settings::setUseKTTSD( (offers.count() > 0) );
+	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
@@ -264,9 +264,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 Part::~Part()
 {
     // save internal settings
-    Settings::setSplitterSizes( m_splitter->sizes() );
+    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
     // write to disk config file
-    Settings::writeConfig();
+    KpdfSettings::writeConfig();
 
     delete m_document;
     if ( --m_count == 0 )
@@ -381,7 +381,7 @@ bool Part::closeURL()
 
 void Part::slotWatchFile()
 {
-  Settings::setWatchFile(m_watchFile->isChecked());
+  KpdfSettings::setWatchFile(m_watchFile->isChecked());
   if( m_watchFile->isChecked() )
     m_watcher->startScan();
   else
@@ -576,7 +576,7 @@ void Part::slotPreferences()
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Settings::self() );
+    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, KpdfSettings::self() );
     // keep us informed when the user changes settings
     connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
 
@@ -589,7 +589,7 @@ void Part::slotNewConfig()
     // changed before applying changes.
 
     // Left Panel and search Widget
-    bool showLeft = Settings::showLeftPanel();
+    bool showLeft = KpdfSettings::showLeftPanel();
     if ( m_leftPanel->isShown() != showLeft )
     {
         // show/hide left qtoolbox
@@ -597,12 +597,12 @@ void Part::slotNewConfig()
         // this needs to be hidden explicitly to disable thumbnails gen
         m_thumbnailList->setShown( showLeft );
     }
-    bool showSearch = Settings::showSearchBar();
+    bool showSearch = KpdfSettings::showSearchBar();
     if ( m_searchWidget->isShown() != showSearch )
         m_searchWidget->setShown( showSearch );
 
     // Main View (pageView)
-    QScrollView::ScrollBarMode scrollBarMode = Settings::showScrollBars() ?
+    QScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?
         QScrollView::AlwaysOn : QScrollView::AlwaysOff;
     if ( m_pageView->hScrollBarMode() != scrollBarMode )
     {
@@ -614,7 +614,7 @@ void Part::slotNewConfig()
     m_document->reparseConfig();
 
     // update Main View and ThumbnailList contents
-    // TODO do this only when changing Settings::renderMode()
+    // TODO do this only when changing KpdfSettings::renderMode()
     m_pageView->updateContents();
     if ( showLeft && m_thumbnailList->isShown() )
         m_thumbnailList->updateWidgets();

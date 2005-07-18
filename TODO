@@ -59,7 +59,6 @@ More items (first items will enter 'In progress list' first):
 -> presentation: implement missing transitions (6/11 done)
 -> presentation: add some gfx tools (like a red pencil)
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
--> presentation: link following (difficult due to pagerects related to pageview pixmap only)
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
 -> investigate 'Splash' lack of smoothness at low resolutions (see lines in thumbnails)
 -> add search on the toc widget (a 'prune on type' lineedit like in thumbnails widget)
@@ -73,6 +72,7 @@ More items (first items will enter 'In progress list' first):
 
 Done (newest features come first):
 -- merging from kdpf_annotations branch --
+-> ADD: presentation: link following (BR98388)
 -> ADD: Save zoom setting on exit
 -> ADD: Put fonts used by the document on the properties dialog
 -> ADD: partial implementation of XYZ links

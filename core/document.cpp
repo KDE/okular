@@ -1027,6 +1027,12 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 case KPDFLinkAction::Quit:
                     emit quit();
                     break;
+                case KPDFLinkAction::Presentation:
+                    emit linkPresentation();
+                    break;
+                case KPDFLinkAction::EndPresentation:
+                    emit linkEndPresentation();
+                    break;
                 case KPDFLinkAction::Find:
                     emit linkFind();
                     break;

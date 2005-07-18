@@ -106,6 +106,7 @@ protected slots:
 	void slotShowProperties();
 	void slotShowLeftPanel();
 	void slotShowPresentation();
+	void slotHidePresentation();
 	void close();
 	// can be connected to widget elements
 	void updateViewActions();

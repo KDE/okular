@@ -32,6 +32,7 @@
 #include "pagepainter.h"
 #include "core/generator.h"
 #include "core/page.h"
+#include "core/link.h"
 #include "conf/settings.h"
 
 
@@ -49,7 +50,8 @@ struct PresentationFrame
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
-    : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder), m_document( doc ), m_frameIndex( -1 )
+    : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder),
+    m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
@@ -222,32 +224,62 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
     // pressing left button
     if ( e->button() == Qt::LeftButton )
     {
+        // if pressing on a link, skip other checks
+        if ( ( m_pressedLink = getLink( e->x(), e->y() ) ) )
+            return;
+
+        // handle clicking on top-right overlay
         if ( m_overlayGeometry.contains( e->pos() ) )
+        {
             overlayClick( e->pos() );
-        else
-            slotNextPage();
+            return;
+        }
+
+        // if no other actions, go to next page
+        slotNextPage();
     }
     // pressing right button
     else if ( e->button() == Qt::RightButton )
         slotPrevPage();
 }
 
+void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
+{
+    // if releasing on the same link we pressed over, execute it
+    if ( m_pressedLink && e->button() == Qt::LeftButton )
+    {
+        const KPDFLink * link = getLink( e->x(), e->y() );
+        if ( link == m_pressedLink )
+            m_document->processLink( link );
+        m_pressedLink = 0;
+    }
+}
+
 void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 {
-    if (m_width == -1) return;
-	
-    // hide a shown bar when exiting the area
+    // safety check
+    if ( m_width == -1 )
+        return;
+
+    // update cursor and tooltip if hovering a link
+    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
+        testCursorOnLink( e->x(), e->y() );
+
     if ( m_topBar->isShown() )
     {
+        // hide a shown bar when exiting the area
         if ( e->y() > ( m_topBar->height() + 1 ) )
             m_topBar->hide();
     }
-    // show a hidden bar if mouse reaches the top of the screen
-    else if ( !e->y() )
-        m_topBar->show();
-    // change page if dragging the mouse over the 'wheel'
-    else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
+    else
+    {
+        // show the bar if reaching top 2 pixels
+        if ( e->y() <= (geometry().top() + 1) )
+            m_topBar->show();
+        // handle "dragging the wheel" if clicking on its geometry
+        else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
             overlayClick( e->pos() );
+    }
 }
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
@@ -325,6 +357,58 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 // </widget events>
 
 
+const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
+{
+    // no links on invalid pages
+    if ( geometry && !geometry->isNull() )
+        geometry->setRect( 0, 0, -1, -1 );
+    if ( m_frameIndex < 0 || m_frameIndex >= (int)m_frames.size() )
+        return 0;
+
+    // get frame, page and geometry
+    const PresentationFrame * frame = m_frames[ m_frameIndex ];
+    const KPDFPage * page = frame->page;
+    const QRect & frameGeometry = frame->geometry;
+
+    // compute normalized x and y
+    double nx = (double)(x - frameGeometry.left()) / (double)frameGeometry.width();
+    double ny = (double)(y - frameGeometry.top()) / (double)frameGeometry.height();
+
+    // no links outside the pages
+    if ( nx < 0 || nx > 1 || ny < 0 || ny > 1 )
+        return 0;
+
+    // check if 1) there is an object and 2) it's a link
+    const ObjectRect * object = page->hasObject( ObjectRect::Link, nx, ny );
+    if ( !object )
+        return 0;
+
+    // compute link geometry if destination rect present
+    if ( geometry )
+    {
+        *geometry = object->geometry( frameGeometry.width(), frameGeometry.height() );
+        geometry->moveBy( frameGeometry.left(), frameGeometry.top() );
+    }
+
+    // return the link pointer
+    return (KPDFLink *)object->pointer();
+}
+
+void PresentationWidget::testCursorOnLink( int x, int y )
+{
+    // get rect
+    QRect linkRect;
+    const KPDFLink * link = getLink( x, y, &linkRect );
+
+    // only react on changes (in/out from a link)
+    if ( (link && !m_handCursor) || (!link && m_handCursor) )
+    {
+        // change cursor shape
+        m_handCursor = link != 0;
+        setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor());
+    }
+}
+
 void PresentationWidget::overlayClick( const QPoint & position )
 {
     // clicking the progress indicator
@@ -356,12 +440,20 @@ void PresentationWidget::changePage( int newPage )
     // notifyPixmapChanged call or else we can proceed to pixmap generation
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
+        // operation will take long: set busy cursor
+        QApplication::setOverrideCursor( KCursor::workingCursor() );
+        // request the pixmap
         QValueList< PixmapRequest * > request;
         request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO ) );
         m_document->requestPixmaps( request );
+        // restore cursor
+        QApplication::restoreOverrideCursor();
     }
     else
+    {
+        // make the background pixmap
         generatePage();
+    }
 }
 
 void PresentationWidget::generatePage()
@@ -394,6 +486,13 @@ void PresentationWidget::generatePage()
     else {
         KPDFPageTransition trans = defaultTransition();
         initTransition( &trans );
+    }
+
+    // update cursor + tooltip
+    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
+    {
+        QPoint p = mapFromGlobal( QCursor::pos() );
+        testCursorOnLink( p.x(), p.y() );
     }
 }
 
@@ -477,12 +576,14 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     }
 }
 
+// from Arthur - Qt4 - (is defined elsewhere as 'qt_div_255' to not break final compilation)
+inline int qt_div255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 void PresentationWidget::generateOverlay()
 {
 #ifdef ENABLE_PROGRESS_OVERLAY
     // calculate overlay geometry and resize pixmap if needed
     int side = m_width / 16;
-    m_overlayGeometry.setRect( m_width - side, 0, side, side );
+    m_overlayGeometry.setRect( m_width - side - 4, 4, side, side );
     if ( m_lastRenderedOverlay.width() != side )
         m_lastRenderedOverlay.resize( side, side );
 
@@ -496,13 +597,14 @@ void PresentationWidget::generateOverlay()
 
     // draw PIE SLICES in blue levels (the levels will then be the alpha component)
     int pages = m_document->pages();
-    if ( pages > 36 )
+    if ( pages > 28 )
     {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
-        pixmapPainter.setPen( 0x20 );
-        pixmapPainter.setBrush( 0x10 );
+        pixmapPainter.setPen( 0x05 );
+        pixmapPainter.setBrush( 0x40 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
-        pixmapPainter.setBrush( 0xC0 );
+        pixmapPainter.setPen( 0x40 );
+        pixmapPainter.setBrush( 0xF0 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
     else
@@ -512,7 +614,7 @@ void PresentationWidget::generateOverlay()
         {
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
-            pixmapPainter.setBrush( i <= m_frameIndex ? 0xC0 : 0x10 );
+            pixmapPainter.setBrush( i <= m_frameIndex ? 0xF0 : 0x40 );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );
             oldCoord = newCoord;
@@ -533,15 +635,52 @@ void PresentationWidget::generateOverlay()
 
     // end drawing pixmap and halve image
     pixmapPainter.end();
-    side /= 2;
-    QImage image( doublePixmap.convertToImage().smoothScale( side, side ) );
+    QImage image( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );
     image.setAlphaBuffer( true );
 
-    int red = 52, green = 115, blue = 178,
-        pixels = image.width() * image.height();
-    unsigned int * data = (unsigned int *)image.bits();
-    for( int i = 0; i < pixels; ++i )
-        data[i] = qRgba( red, green, blue, data[i] & 0xFF );
+    // draw circular shadow using the same technique
+    doublePixmap.fill( Qt::black );
+    pixmapPainter.begin( &doublePixmap );
+    pixmapPainter.setPen( 0x40 );
+    pixmapPainter.setBrush( 0x80 );
+    pixmapPainter.drawEllipse( 0, 0, side, side );
+    pixmapPainter.end();
+    QImage shadow( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );
+
+    // generate a 2 colors pixmap using mixing shadow (made with highlight color)
+    // and image (made with highlightedText color)
+    QColor color = palette().active().highlightedText();
+    int red = color.red(), green = color.green(), blue = color.blue();
+    color = palette().active().highlight();
+    int sRed = color.red(), sGreen = color.green(), sBlue = color.blue();
+    // pointers
+    unsigned int * data = (unsigned int *)image.bits(),
+                 * shadowData = (unsigned int *)shadow.bits(),
+                 pixels = image.width() * image.height();
+    // cache data (reduce computation time to 26%!)
+    int c1 = -1, c2 = -1, cR = 0, cG = 0, cB = 0, cA = 0;
+    // foreach pixel
+    for( unsigned int i = 0; i < pixels; ++i )
+    {
+        // alpha for shadow and image
+        int shadowAlpha = shadowData[i] & 0xFF,
+            srcAlpha = data[i] & 0xFF;
+        // cache values
+        if ( srcAlpha != c1 || shadowAlpha != c2 )
+        {
+            c1 = srcAlpha;
+            c2 = shadowAlpha;
+            // fuse color components and alpha value of image over shadow
+            data[i] = qRgba(
+                cR = qt_div255( srcAlpha * red   + (255 - srcAlpha) * sRed ),
+                cG = qt_div255( srcAlpha * green + (255 - srcAlpha) * sGreen ),
+                cB = qt_div255( srcAlpha * blue  + (255 - srcAlpha) * sBlue ),
+                cA = qt_div255( srcAlpha * srcAlpha + (255 - srcAlpha) * shadowAlpha )
+            );
+        }
+        else
+            data[i] = qRgba( cR, cG, cB, cA );
+    }
     m_lastRenderedOverlay.convertFromImage( image );
 
     // start the autohide timer

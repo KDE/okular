@@ -105,6 +105,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document = new KPDFDocument();
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
+	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
+	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
 	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 	
@@ -431,6 +433,7 @@ bool Part::closeURL()
         m_temporaryLocalFile = QString::null;
     }
 
+    slotHidePresentation();
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_saveAs->setEnabled( false );
@@ -830,6 +833,12 @@ void Part::slotShowPresentation()
 {
     if ( !m_presentationWidget )
       m_presentationWidget = new PresentationWidget( widget(), m_document );
+}
+
+void Part::slotHidePresentation()
+{
+    if ( m_presentationWidget )
+        delete (PresentationWidget*) m_presentationWidget;
 }
 
 void Part::slotPrint()

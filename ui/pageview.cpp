@@ -1105,6 +1105,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         // preferred reader ("" is the default voice) ...
                         QByteArray data;
                         QDataStream arg( &data, IO_WriteOnly );
+
+                        arg.setVersion(QDataStream::Qt_3_1);
                         arg << selectedText;
                         arg << QString();
                         DCOPCString replyType;
@@ -1114,6 +1116,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         {
                             QByteArray  data2;
                             QDataStream arg2(&data2, IO_WriteOnly);
+
+                            arg2.setVersion(QDataStream::Qt_3_1);
                             arg2 << 0;
                             client->send("kttsd", "KSpeech", "startText(uint)", data2 );
                         }

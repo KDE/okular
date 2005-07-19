@@ -26,7 +26,7 @@
 //Added by qt3to4:
 #include <QHBoxLayout>
 #include <QMouseEvent>
-#include <qptrstack.h>
+#include <q3ptrstack.h>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -545,9 +545,9 @@ bool dviRenderer::setFile(const QString &fname)
   
   // Generate the list of bookmarks
   bookmarks.clear();
-  QPtrStack<Bookmark> stack;
+  Q3PtrStack<Bookmark> stack;
   stack.setAutoDelete (false);
-  QValueVector<PreBookmark>::iterator it;
+  Q3ValueVector<PreBookmark>::iterator it;
   for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
     Bookmark *bmk = new Bookmark((*it).title, findAnchor((*it).anchorName));
     if (stack.isEmpty())

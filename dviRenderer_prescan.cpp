@@ -466,7 +466,7 @@ void dviRenderer::prescan_ParseSourceSpecial(QString cp)
   // "src:123file.tex" to positions in the DVI file
   
   // extract the file name and the numeral part from the string
-  Q_UINT32 j;
+  Q_INT32 j;
   for(j=0;j<cp.length();j++)
     if (!cp.at(j).isNumber())
       break;

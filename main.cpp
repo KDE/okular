@@ -101,6 +101,8 @@ int main(int argc, char** argv)
           QByteArray data, replyData;
           Q3CString replyType;
           QDataStream arg(&data, QIODevice::WriteOnly);
+
+          arg.setVersion(QDataStream::Qt_3_1);
           bool result;
           arg << qualPath.stripWhiteSpace();
           if (!app.dcopClient()->call( *it, "kmultipage", "is_file_loaded(QString)", data, replyType, replyData))
@@ -108,6 +110,8 @@ int main(int argc, char** argv)
           else 
           {
             QDataStream reply(&replyData, QIODevice::ReadOnly);
+
+            reply.setVersion(QDataStream::Qt_3_1);
             if (replyType == "bool") 
             {
               reply >> result;

@@ -73,7 +73,11 @@ class PresentationWidget : public QDialog, public DocumentObserver
         QPixmap m_lastRenderedPixmap;
         QPixmap m_lastRenderedOverlay;
         QRect m_overlayGeometry;
+
+        // mouse-on-links related stuff
         const KPDFLink * m_pressedLink;
+        const KPDFLink * m_lastHoveredLink;
+        QRect m_highlightedRect;
         bool m_handCursor;
 
         // transition related

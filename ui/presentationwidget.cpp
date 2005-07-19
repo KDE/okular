@@ -37,10 +37,6 @@
 #include "conf/settings.h"
 
 
-// comment this to disable the top-right progress indicator
-#define ENABLE_PROGRESS_OVERLAY
-
-
 // a frame contains a pointer to the page object, its geometry and the
 // transition effect to the next frame
 struct PresentationFrame
@@ -52,7 +48,8 @@ struct PresentationFrame
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder),
-    m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 )
+    m_pressedLink( 0 ), m_lastHoveredLink( 0 ), m_handCursor( false ),
+    m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
@@ -331,29 +328,72 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         const QRect & r = allRects[i];
         if ( !r.isValid() )
             continue;
-#ifdef ENABLE_PROGRESS_OVERLAY
-        if ( Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
+
+        bool paintOverlay = Settings::slidesShowProgress() && r.intersects( m_overlayGeometry );
+        bool paintHighlight = r.intersects( m_highlightedRect );
+
+        if ( paintOverlay || paintHighlight )
         {
-            // backbuffer the overlay operation
+            // backbuffer for compositing operation
             QPixmap backPixmap( r.size() );
-            QPainter pixPainter( &backPixmap );
+            QPainter pixmapPainter( &backPixmap );
 
-            // first draw the background on the backbuffer
-            pixPainter.drawPixmap( QPoint(0,0), m_lastRenderedPixmap, r );
+            // 1) draw the background on the backbuffer
+            pixmapPainter.drawPixmap( QPoint(0,0), m_lastRenderedPixmap, r );
 
-            // then blend the overlay (a piece of) over the background
-            QRect ovr = m_overlayGeometry.intersect( r );
-            pixPainter.drawPixmap( ovr.left() - r.left(), ovr.top() - r.top(),
-                m_lastRenderedOverlay, ovr.left() - m_overlayGeometry.left(),
-                ovr.top() - m_overlayGeometry.top(), ovr.width(), ovr.height() );
+            // 2) blend the highlight rectangle over the buffer
+            if ( paintHighlight )
+            {
+                // get the relative coords of the cropped highlight inside r
+                QRect ovr = m_highlightedRect.intersect( r );
+                ovr.moveBy( -r.left(), -r.top() );
 
-            // finally blit the pixmap to the screen
-            pixPainter.end();
+                // create the image (that will hold the gradient)
+                int imWidth = ovr.width(),
+                    imHeight = ovr.height(),
+                    imYOffset = r.top() - m_highlightedRect.top();
+                QImage hlImage( imWidth, imHeight, 32 );
+                hlImage.setAlphaBuffer( true );
+
+                // fill image with a vertical gradient (with alpha that decreases too)
+                QColor color = palette().active().highlight();
+                int R = color.red(), G = color.green(), B = color.blue();
+                float gradScale = 1.0 / (float)m_highlightedRect.height(),
+                      gradBase = imYOffset > 0 ? gradScale * imYOffset : 0.0;
+                unsigned int * data = (unsigned int *)hlImage.bits();
+                for ( int y = 0; y < imHeight; y++ )
+                {
+                    unsigned int * pixels = data + y * imWidth;
+                    unsigned int color = qRgba( R, G, B, 200 - (int)(200.0 * gradBase) );
+                    gradBase += gradScale;
+                    for ( int x = 0; x < imWidth; x++ )
+                        *pixels++ = color;
+                }
+
+                // do the blending (painting the alphaed gradient over the buffer)
+                QPixmap blendedPixmap( hlImage );
+                pixmapPainter.drawPixmap( ovr.topLeft(), blendedPixmap );
+            }
+
+            // 3) blend the overlay (a piece of) over the background
+            if ( paintOverlay )
+            {
+                // crop the overlay with r
+                QRect ovr = m_overlayGeometry.intersect( r );
+
+                // do the blending
+                pixmapPainter.drawPixmap( ovr.left() - r.left(), ovr.top() - r.top(),
+                    m_lastRenderedOverlay, ovr.left() - m_overlayGeometry.left(),
+                    ovr.top() - m_overlayGeometry.top(), ovr.width(), ovr.height() );
+            }
+
+            // 4) blit the pixmap to the screen
+            pixmapPainter.end();
             bitBlt( this, r.topLeft(), &backPixmap, backPixmap.rect() );
-        } else
-#endif
-        // copy the rendered pixmap to the screen
-        bitBlt( this, r.topLeft(), &m_lastRenderedPixmap, r );
+        }
+        else
+            // copy the rendered pixmap to the screen
+            bitBlt( this, r.topLeft(), &m_lastRenderedPixmap, r );
     }
 }
 // </widget events>
@@ -401,18 +441,28 @@ void PresentationWidget::testCursorOnLink( int x, int y )
     // get rect
     QRect linkRect;
     const KPDFLink * link = getLink( x, y, &linkRect );
+    bool linkChanged = link && link != m_lastHoveredLink;
+    m_lastHoveredLink = link;
 
     // only react on changes (in/out from a link)
-    if ( (link && !m_handCursor) || (!link && m_handCursor) )
+    if ( (link && !m_handCursor) || (!link && m_handCursor) || linkChanged )
     {
         // change cursor shape
         m_handCursor = link != 0;
         setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor() );
 
         // set tooltip over link's rect
+        QToolTip::remove( this, m_highlightedRect );
         QString tip = link ? link->linkTip() : "";
         if ( m_handCursor && !tip.isEmpty() )
             QToolTip::add( this, linkRect, tip );
+
+        // repaint old rect (for hiding) and new one (for showing highlight)
+        if ( !m_highlightedRect.isNull() )
+            update( m_highlightedRect );
+        m_highlightedRect = m_handCursor ? linkRect : QRect();
+        if ( !m_highlightedRect.isNull() )
+            update( m_highlightedRect );
     }
 }
 
@@ -480,10 +530,8 @@ void PresentationWidget::generatePage()
     pixmapPainter.end();
 
     // generate the top-right corner overlay
-#ifdef ENABLE_PROGRESS_OVERLAY
     if ( Settings::slidesShowProgress() && m_frameIndex != -1 )
         generateOverlay();
-#endif
 
     // start transition on pages that have one
     const KPDFPageTransition * transition = m_frameIndex != -1 ?
@@ -587,7 +635,6 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
 inline int qt_div255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 void PresentationWidget::generateOverlay()
 {
-#ifdef ENABLE_PROGRESS_OVERLAY
     // calculate overlay geometry and resize pixmap if needed
     int side = m_width / 16;
     m_overlayGeometry.setRect( m_width - side - 4, 4, side, side );
@@ -694,7 +741,6 @@ void PresentationWidget::generateOverlay()
     repaint( m_overlayGeometry, false /*clear*/ ); // toggle with next line
     //update( m_overlayGeometry );
     m_overlayHideTimer->start( 2500, true );
-#endif
 }
 
 

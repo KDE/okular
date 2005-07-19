@@ -350,7 +350,7 @@ void KPDFDocument::reparseConfig()
     }
 
     // free memory if in 'low' profile
-    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+    if ( KpdfSettings::memoryLevel() == KpdfSettings::EnumMemoryLevel::Low &&
          !d->allocatedPixmapsFifo.isEmpty() && !pages_vector.isEmpty() )
         cleanupPixmapMemory();
 }
@@ -459,7 +459,7 @@ void KPDFDocument::requestPixmaps( const QList< PixmapRequest * > & requests )
     }
 
     // 2. [ADD TO STACK] add requests to stack
-    bool threadingDisabled = !Settings::enableThreading();
+    bool threadingDisabled = !KpdfSettings::enableThreading();
     QList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
     for ( ; rIt != rEnd; ++rIt )
     {
@@ -1026,13 +1026,22 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     setNextViewport();
                     break;
                 case KPDFLinkAction::Quit:
-                    kapp->quit();
+                    emit quit();
+                    break;
+                case KPDFLinkAction::Presentation:
+                    emit linkPresentation();
+                    break;
+                case KPDFLinkAction::EndPresentation:
+                    emit linkEndPresentation();
                     break;
                 case KPDFLinkAction::Find:
                     emit linkFind();
                     break;
                 case KPDFLinkAction::GoToPage:
                     emit linkGoToPage();
+                    break;
+                case KPDFLinkAction::Close:
+                    emit close();
                     break;
             }
             } break;
@@ -1145,18 +1154,18 @@ void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
     // [MEM] choose memory parameters based on configuration profile
     int clipValue = -1;
     int memoryToFree = -1;
-    switch ( Settings::memoryLevel() )
+    switch ( KpdfSettings::memoryLevel() )
     {
-        case Settings::EnumMemoryLevel::Low:
+        case KpdfSettings::EnumMemoryLevel::Low:
             memoryToFree = d->allocatedPixmapsTotalMemory;
             break;
 
-        case Settings::EnumMemoryLevel::Normal:
+        case KpdfSettings::EnumMemoryLevel::Normal:
             memoryToFree = d->allocatedPixmapsTotalMemory - getTotalMemory() / 3;
             clipValue = (d->allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
             break;
 
-        case Settings::EnumMemoryLevel::Aggressive:
+        case KpdfSettings::EnumMemoryLevel::Aggressive:
             clipValue = (d->allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
             break;
     }
@@ -1432,7 +1441,7 @@ void KPDFDocument::saveDocumentInfo() const
 void KPDFDocument::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
-    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+    if ( KpdfSettings::memoryLevel() != KpdfSettings::EnumMemoryLevel::Low &&
          d->allocatedPixmapsTotalMemory > 1024*1024 )
         cleanupPixmapMemory();
 }

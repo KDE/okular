@@ -34,6 +34,7 @@
 #include "pagepainter.h"
 #include "core/generator.h"
 #include "core/page.h"
+#include "core/link.h"
 #include "conf/settings.h"
 
 
@@ -51,7 +52,8 @@ struct PresentationFrame
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
-    : QDialog( parent, "presentationWidget", true, Qt::WDestructiveClose), m_document( doc ), m_frameIndex( -1 )
+    : QDialog( parent, "presentationWidget", true, Qt::WDestructiveClose | Qt::WStyle_NoBorder),
+    m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
     setBackgroundMode( Qt::NoBackground );
@@ -69,12 +71,12 @@ PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
 
     // handle cursor appearance as specified in configuration
-    if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::HiddenDelay )
+    if ( KpdfSettings::slidesCursor() == KpdfSettings::EnumSlidesCursor::HiddenDelay )
     {
         KCursor::setAutoHideCursor( this, true );
         KCursor::setHideCursorDelay( 3000 );
     }
-    else if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::Hidden )
+    else if ( KpdfSettings::slidesCursor() == KpdfSettings::EnumSlidesCursor::Hidden )
     {
         setCursor( KCursor::blankCursor() );
     }
@@ -145,15 +147,15 @@ void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, boo
 void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // discard notifications if displaying the summary
-    if ( m_frameIndex == -1 && Settings::slidesShowSummary() )
+    if ( m_frameIndex == -1 && KpdfSettings::slidesShowSummary() )
         return;
 
     // display the current page
     changePage( m_document->viewport().pageNumber );
 
     // auto advance to the next page if set
-    if ( Settings::slidesAdvance() )
-        QTimer::singleShot( Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+    if ( KpdfSettings::slidesAdvance() )
+        QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
@@ -224,32 +226,62 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
     // pressing left button
     if ( e->button() == Qt::LeftButton )
     {
+        // if pressing on a link, skip other checks
+        if ( ( m_pressedLink = getLink( e->x(), e->y() ) ) )
+            return;
+
+        // handle clicking on top-right overlay
         if ( m_overlayGeometry.contains( e->pos() ) )
+        {
             overlayClick( e->pos() );
-        else
-            slotNextPage();
+            return;
+        }
+
+        // if no other actions, go to next page
+        slotNextPage();
     }
     // pressing right button
     else if ( e->button() == Qt::RightButton )
         slotPrevPage();
 }
 
+void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
+{
+    // if releasing on the same link we pressed over, execute it
+    if ( m_pressedLink && e->button() == Qt::LeftButton )
+    {
+        const KPDFLink * link = getLink( e->x(), e->y() );
+        if ( link == m_pressedLink )
+            m_document->processLink( link );
+        m_pressedLink = 0;
+    }
+}
+
 void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 {
-    if (m_width == -1) return;
-	
-    // hide a shown bar when exiting the area
+    // safety check
+    if ( m_width == -1 )
+        return;
+
+    // update cursor and tooltip if hovering a link
+    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
+        testCursorOnLink( e->x(), e->y() );
+
     if ( m_topBar->isShown() )
     {
+        // hide a shown bar when exiting the area
         if ( e->y() > ( m_topBar->height() + 1 ) )
             m_topBar->hide();
     }
-    // show a hidden bar if mouse reaches the top of the screen
-    else if ( !e->y() )
-        m_topBar->show();
-    // change page if dragging the mouse over the 'wheel'
-    else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
+    else
+    {
+        // show the bar if reaching top 2 pixels
+        if ( e->y() <= (geometry().top() + 1) )
+            m_topBar->show();
+        // handle "dragging the wheel" if clicking on its geometry
+        else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
             overlayClick( e->pos() );
+    }
 }
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
@@ -282,7 +314,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_document->addObserver( this );
 
         // show summary if requested
-        if ( Settings::slidesShowSummary() )
+        if ( KpdfSettings::slidesShowSummary() )
             generatePage();
 
         KMessageBox::information(this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo");
@@ -302,7 +334,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         if ( !r.isValid() )
             continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
-        if ( Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
+        if ( KpdfSettings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
         {
             // backbuffer the overlay operation
             QPixmap backPixmap( r.size() );
@@ -332,6 +364,58 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 }
 // </widget events>
 
+
+const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
+{
+    // no links on invalid pages
+    if ( geometry && !geometry->isNull() )
+        geometry->setRect( 0, 0, -1, -1 );
+    if ( m_frameIndex < 0 || m_frameIndex >= (int)m_frames.size() )
+        return 0;
+
+    // get frame, page and geometry
+    const PresentationFrame * frame = m_frames[ m_frameIndex ];
+    const KPDFPage * page = frame->page;
+    const QRect & frameGeometry = frame->geometry;
+
+    // compute normalized x and y
+    double nx = (double)(x - frameGeometry.left()) / (double)frameGeometry.width();
+    double ny = (double)(y - frameGeometry.top()) / (double)frameGeometry.height();
+
+    // no links outside the pages
+    if ( nx < 0 || nx > 1 || ny < 0 || ny > 1 )
+        return 0;
+
+    // check if 1) there is an object and 2) it's a link
+    const ObjectRect * object = page->hasObject( ObjectRect::Link, nx, ny );
+    if ( !object )
+        return 0;
+
+    // compute link geometry if destination rect present
+    if ( geometry )
+    {
+        *geometry = object->geometry( frameGeometry.width(), frameGeometry.height() );
+        geometry->moveBy( frameGeometry.left(), frameGeometry.top() );
+    }
+
+    // return the link pointer
+    return (KPDFLink *)object->pointer();
+}
+
+void PresentationWidget::testCursorOnLink( int x, int y )
+{
+    // get rect
+    QRect linkRect;
+    const KPDFLink * link = getLink( x, y, &linkRect );
+
+    // only react on changes (in/out from a link)
+    if ( (link && !m_handCursor) || (!link && m_handCursor) )
+    {
+        // change cursor shape
+        m_handCursor = link != 0;
+        setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor());
+    }
+}
 
 void PresentationWidget::overlayClick( const QPoint & position )
 {
@@ -364,12 +448,20 @@ void PresentationWidget::changePage( int newPage )
     // notifyPixmapChanged call or else we can proceed to pixmap generation
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
+        // operation will take long: set busy cursor
+        QApplication::setOverrideCursor( KCursor::workingCursor() );
+        // request the pixmap
         QList< PixmapRequest * > request;
         request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO ) );
         m_document->requestPixmaps( request );
+        // restore cursor
+        QApplication::restoreOverrideCursor();
     }
     else
+    {
+        // make the background pixmap
         generatePage();
+    }
 }
 
 void PresentationWidget::generatePage()
@@ -390,7 +482,7 @@ void PresentationWidget::generatePage()
 
     // generate the top-right corner overlay
 #ifdef ENABLE_PROGRESS_OVERLAY
-    if ( Settings::slidesShowProgress() && m_frameIndex != -1 )
+    if ( KpdfSettings::slidesShowProgress() && m_frameIndex != -1 )
         generateOverlay();
 #endif
 
@@ -402,6 +494,13 @@ void PresentationWidget::generatePage()
     else {
         KPDFPageTransition trans = defaultTransition();
         initTransition( &trans );
+    }
+
+    // update cursor + tooltip
+    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
+    {
+        QPoint p = mapFromGlobal( QCursor::pos() );
+        testCursorOnLink( p.x(), p.y() );
     }
 }
 
@@ -481,16 +580,18 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     for ( uint i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
-        p.fillRect( r, Settings::slidesBackgroundColor() );
+        p.fillRect( r, KpdfSettings::slidesBackgroundColor() );
     }
 }
 
+// from Arthur - Qt4 - (is defined elsewhere as 'qt_div_255' to not break final compilation)
+inline int qt_div255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 void PresentationWidget::generateOverlay()
 {
 #ifdef ENABLE_PROGRESS_OVERLAY
     // calculate overlay geometry and resize pixmap if needed
     int side = m_width / 16;
-    m_overlayGeometry.setRect( m_width - side, 0, side, side );
+    m_overlayGeometry.setRect( m_width - side - 4, 4, side, side );
     if ( m_lastRenderedOverlay.width() != side )
         m_lastRenderedOverlay.resize( side, side );
 
@@ -504,15 +605,17 @@ void PresentationWidget::generateOverlay()
 
     // draw PIE SLICES in blue levels (the levels will then be the alpha component)
     int pages = m_document->pages();
-    if ( pages > 36 )
+    if ( pages > 28 )
     {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
-        pixmapPainter.setPen( 0x20 );
-#warning QPainter.setBrush(0x10) ???? port this
-//        pixmapPainter.setBrush( 0x10 );
+        pixmapPainter.setPen( 0x05 );
+#warning QPainter.setBrush(0x40) ???? port this
+//        pixmapPainter.setBrush( 0x40 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
-#warning QPainter.setBrush(0xC0) ???? port this
-//        pixmapPainter.setBrush( 0xC0 );
+
+        pixmapPainter.setPen( 0x40 );
+#warning QPainter.setBrush(0xF0) ???? port this
+//        pixmapPainter.setBrush( 0xF0 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
     else
@@ -522,8 +625,8 @@ void PresentationWidget::generateOverlay()
         {
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
-#warning QPainter.setBrush(0xC0) ???? port this
-//            pixmapPainter.setBrush( i <= m_frameIndex ? 0xC0 : 0x10 );
+#warning QPainter.setBrush(0xF0) ???? port this
+//            pixmapPainter.setBrush( i <= m_frameIndex ? 0xF0 : 0x40 );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );
             oldCoord = newCoord;
@@ -544,15 +647,52 @@ void PresentationWidget::generateOverlay()
 
     // end drawing pixmap and halve image
     pixmapPainter.end();
-    side /= 2;
-    QImage image( doublePixmap.convertToImage().smoothScale( side, side ) );
+    QImage image( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );
     image.setAlphaBuffer( true );
 
-    int red = 52, green = 115, blue = 178,
-        pixels = image.width() * image.height();
-    unsigned int * data = (unsigned int *)image.bits();
-    for( int i = 0; i < pixels; ++i )
-        data[i] = qRgba( red, green, blue, data[i] & 0xFF );
+    // draw circular shadow using the same technique
+    doublePixmap.fill( Qt::black );
+    pixmapPainter.begin( &doublePixmap );
+    pixmapPainter.setPen( 0x40 );
+    pixmapPainter.setBrush( 0x80 );
+    pixmapPainter.drawEllipse( 0, 0, side, side );
+    pixmapPainter.end();
+    QImage shadow( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );
+
+    // generate a 2 colors pixmap using mixing shadow (made with highlight color)
+    // and image (made with highlightedText color)
+    QColor color = palette().active().highlightedText();
+    int red = color.red(), green = color.green(), blue = color.blue();
+    color = palette().active().highlight();
+    int sRed = color.red(), sGreen = color.green(), sBlue = color.blue();
+    // pointers
+    unsigned int * data = (unsigned int *)image.bits(),
+                 * shadowData = (unsigned int *)shadow.bits(),
+                 pixels = image.width() * image.height();
+    // cache data (reduce computation time to 26%!)
+    int c1 = -1, c2 = -1, cR = 0, cG = 0, cB = 0, cA = 0;
+    // foreach pixel
+    for( unsigned int i = 0; i < pixels; ++i )
+    {
+        // alpha for shadow and image
+        int shadowAlpha = shadowData[i] & 0xFF,
+            srcAlpha = data[i] & 0xFF;
+        // cache values
+        if ( srcAlpha != c1 || shadowAlpha != c2 )
+        {
+            c1 = srcAlpha;
+            c2 = shadowAlpha;
+            // fuse color components and alpha value of image over shadow
+            data[i] = qRgba(
+                cR = qt_div255( srcAlpha * red   + (255 - srcAlpha) * sRed ),
+                cG = qt_div255( srcAlpha * green + (255 - srcAlpha) * sGreen ),
+                cB = qt_div255( srcAlpha * blue  + (255 - srcAlpha) * sBlue ),
+                cA = qt_div255( srcAlpha * srcAlpha + (255 - srcAlpha) * shadowAlpha )
+            );
+        }
+        else
+            data[i] = qRgba( cR, cG, cB, cA );
+    }
     m_lastRenderedOverlay.convertFromImage( image );
 
     // start the autohide timer
@@ -567,7 +707,7 @@ void PresentationWidget::generateOverlay()
 void PresentationWidget::slotNextPage()
 {
     // loop when configured
-    if ( m_frameIndex == (int)m_frames.count() - 1 && Settings::slidesLoop() )
+    if ( m_frameIndex == (int)m_frames.count() - 1 && KpdfSettings::slidesLoop() )
         m_frameIndex = -1;
 
     if ( m_frameIndex < (int)m_frames.count() - 1 )
@@ -585,8 +725,8 @@ void PresentationWidget::slotNextPage()
     setFocus();
 
     // auto advance to the next page if set
-    if ( Settings::slidesAdvance() )
-        QTimer::singleShot( Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+    if ( KpdfSettings::slidesAdvance() )
+        QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::slotPrevPage()
@@ -640,73 +780,73 @@ void PresentationWidget::slotTransitionStep()
 
 const KPDFPageTransition PresentationWidget::defaultTransition() const
 {
-    return defaultTransition( Settings::slidesTransition() );
+    return defaultTransition( KpdfSettings::slidesTransition() );
 }
 
 const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
 {
     switch ( type )
     {
-        case Settings::EnumSlidesTransition::BlindsHorizontal:
+        case KpdfSettings::EnumSlidesTransition::BlindsHorizontal:
         {
             KPDFPageTransition transition( KPDFPageTransition::Blinds );
             transition.setAlignment( KPDFPageTransition::Horizontal );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::BlindsVertical:
+        case KpdfSettings::EnumSlidesTransition::BlindsVertical:
         {
             KPDFPageTransition transition( KPDFPageTransition::Blinds );
             transition.setAlignment( KPDFPageTransition::Vertical );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::BoxIn:
+        case KpdfSettings::EnumSlidesTransition::BoxIn:
         {
             KPDFPageTransition transition( KPDFPageTransition::Box );
             transition.setDirection( KPDFPageTransition::Inward );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::BoxOut:
+        case KpdfSettings::EnumSlidesTransition::BoxOut:
         {
             KPDFPageTransition transition( KPDFPageTransition::Box );
             transition.setDirection( KPDFPageTransition::Outward );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::Dissolve:
+        case KpdfSettings::EnumSlidesTransition::Dissolve:
         {
             return KPDFPageTransition( KPDFPageTransition::Dissolve );
             break;
         }
-        case Settings::EnumSlidesTransition::GlitterDown:
+        case KpdfSettings::EnumSlidesTransition::GlitterDown:
         {
             KPDFPageTransition transition( KPDFPageTransition::Glitter );
             transition.setAngle( 270 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::GlitterRight:
+        case KpdfSettings::EnumSlidesTransition::GlitterRight:
         {
             KPDFPageTransition transition( KPDFPageTransition::Glitter );
             transition.setAngle( 0 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::GlitterRightDown:
+        case KpdfSettings::EnumSlidesTransition::GlitterRightDown:
         {
             KPDFPageTransition transition( KPDFPageTransition::Glitter );
             transition.setAngle( 315 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::Random:
+        case KpdfSettings::EnumSlidesTransition::Random:
         {
             return defaultTransition( KApplication::random() % 18 );
             break;
         }
-        case Settings::EnumSlidesTransition::SplitHorizontalIn:
+        case KpdfSettings::EnumSlidesTransition::SplitHorizontalIn:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Horizontal );
@@ -714,7 +854,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::SplitHorizontalOut:
+        case KpdfSettings::EnumSlidesTransition::SplitHorizontalOut:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Horizontal );
@@ -722,7 +862,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::SplitVerticalIn:
+        case KpdfSettings::EnumSlidesTransition::SplitVerticalIn:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Vertical );
@@ -730,7 +870,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::SplitVerticalOut:
+        case KpdfSettings::EnumSlidesTransition::SplitVerticalOut:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Vertical );
@@ -738,35 +878,35 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeDown:
+        case KpdfSettings::EnumSlidesTransition::WipeDown:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 270 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeRight:
+        case KpdfSettings::EnumSlidesTransition::WipeRight:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 0 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeLeft:
+        case KpdfSettings::EnumSlidesTransition::WipeLeft:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 180 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeUp:
+        case KpdfSettings::EnumSlidesTransition::WipeUp:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 90 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::Replace:
+        case KpdfSettings::EnumSlidesTransition::Replace:
         default:
             return KPDFPageTransition( KPDFPageTransition::Replace );
             break;

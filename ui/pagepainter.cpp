@@ -49,9 +49,9 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     // if have no pixmap, draw blank page with gray cross and exit
     if ( !pixmap )
     {
-        if ( Settings::changeColors() &&
-             Settings::renderMode() == Settings::EnumRenderMode::Paper )
-            destPainter->fillRect( limits, Settings::paperColor() );
+        if ( KpdfSettings::changeColors() &&
+             KpdfSettings::renderMode() == KpdfSettings::EnumRenderMode::Paper )
+            destPainter->fillRect( limits, KpdfSettings::paperColor() );
         else
             destPainter->fillRect( limits, Qt::white );
 
@@ -65,10 +65,10 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     }
 
     // find out what to paint over the pixmap (manipulations / overlays)
-    bool paintAccessibility = (flags & Accessibility) && Settings::changeColors() && (Settings::renderMode() != Settings::EnumRenderMode::Paper);
+    bool paintAccessibility = (flags & Accessibility) && KpdfSettings::changeColors() && (KpdfSettings::renderMode() != KpdfSettings::EnumRenderMode::Paper);
     bool paintHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
-    bool enhanceLinks = (flags & EnhanceLinks) && Settings::highlightLinks();
-    bool enhanceImages = (flags & EnhanceImages) && Settings::highlightImages();
+    bool enhanceLinks = (flags & EnhanceLinks) && KpdfSettings::highlightLinks();
+    bool enhanceImages = (flags & EnhanceImages) && KpdfSettings::highlightImages();
     // check if there are really some highlightRects to paint
     if ( paintHighlights )
     {
@@ -122,21 +122,21 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
         // 2.1. modify pixmap following accessibility settings
         if ( paintAccessibility )
         {
-            switch ( Settings::renderMode() )
+            switch ( KpdfSettings::renderMode() )
             {
-                case Settings::EnumRenderMode::Inverted:
+                case KpdfSettings::EnumRenderMode::Inverted:
                     // Invert image pixels using QImage internal function
                     backImage.invertPixels(false);
                     break;
-                case Settings::EnumRenderMode::Recolor:
+                case KpdfSettings::EnumRenderMode::Recolor:
                     // Recolor image using KImageEffect::flatten with dither:0
-                    KImageEffect::flatten( backImage, Settings::recolorForeground(), Settings::recolorBackground() );
+                    KImageEffect::flatten( backImage, KpdfSettings::recolorForeground(), KpdfSettings::recolorBackground() );
                     break;
-                case Settings::EnumRenderMode::BlackWhite:
+                case KpdfSettings::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast
                     unsigned int * data = (unsigned int *)backImage.bits();
                     int val, pixels = backImage.width() * backImage.height(),
-                        con = Settings::bWContrast(), thr = 255 - Settings::bWThreshold();
+                        con = KpdfSettings::bWContrast(), thr = 255 - KpdfSettings::bWThreshold();
                     for( int i = 0; i < pixels; ++i )
                     {
                         val = qGray( data[i] );

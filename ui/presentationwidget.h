@@ -22,6 +22,7 @@ class QTimer;
 
 class KPDFDocument;
 class KPDFPage;
+class KPDFLink;
 class PresentationFrame;
 
 /**
@@ -49,10 +50,13 @@ class PresentationWidget : public QDialog, public DocumentObserver
         void keyPressEvent( QKeyEvent * e );
         void wheelEvent( QWheelEvent * e );
         void mousePressEvent( QMouseEvent * e );
+        void mouseReleaseEvent( QMouseEvent * e );
         void mouseMoveEvent( QMouseEvent * e );
         void paintEvent( QPaintEvent * e );
 
     private:
+        const KPDFLink * getLink( int x, int y, QRect * geometry = 0 ) const;
+        void testCursorOnLink( int x, int y );
         void overlayClick( const QPoint & position );
         void changePage( int newPage );
         void generatePage();
@@ -69,6 +73,8 @@ class PresentationWidget : public QDialog, public DocumentObserver
         QPixmap m_lastRenderedPixmap;
         QPixmap m_lastRenderedOverlay;
         QRect m_overlayGeometry;
+        const KPDFLink * m_pressedLink;
+        bool m_handCursor;
 
         // transition related
         QTimer * m_transitionTimer;

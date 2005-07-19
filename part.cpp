@@ -105,7 +105,15 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document = new KPDFDocument();
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
+	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
+	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
 	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
+	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
+	
+	if (parent && parent->metaObject()->slotNames(true).contains("slotQuit()"))
+		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
+	else
+		connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
 
 	// widgets: ^searchbar (toolbar containing label and SearchWidget)
 //	m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
@@ -123,7 +131,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showLeftPanel = new KToggleAction( i18n( "Show &Navigation Panel"), 0, this, SLOT( slotShowLeftPanel() ), actionCollection(), "show_leftpanel" );
 	m_showLeftPanel->setCheckedState( i18n( "Hide &Navigation Panel") );
 	m_showLeftPanel->setShortcut( "CTRL+L" );
-	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
+	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
 
 	// widgets: [left panel] | []
 	m_leftPanel = new QWidget( m_splitter );
@@ -251,7 +259,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_pageView->setupActions( ac );
 
 	// apply configuration (both internal settings and GUI configured items)
-	QList<int> splitterSizes = Settings::splitterSizes();
+	QList<int> splitterSizes = KpdfSettings::splitterSizes();
 	if ( !splitterSizes.count() )
 	{
 		// the first time use 1/10 for the panel and 9/10 for the pageView
@@ -268,7 +276,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// [SPEECH] check for KTTSD presence and usability
 	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
-	Settings::setUseKTTSD( (offers.count() > 0) );
+	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
@@ -278,9 +286,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 Part::~Part()
 {
     // save internal settings
-    Settings::setSplitterSizes( m_splitter->sizes() );
+    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
     // write to disk config file
-    Settings::writeConfig();
+    KpdfSettings::writeConfig();
 
     delete m_document;
     if ( --m_count == 0 )
@@ -429,16 +437,19 @@ bool Part::closeURL()
         m_temporaryLocalFile = QString::null;
     }
 
+    slotHidePresentation();
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_saveAs->setEnabled( false );
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     m_showPresentation->setEnabled( false );
-    updateViewActions();
+    emit setWindowCaption("");
+    emit enablePrintAction(false);
     m_searchStarted = false;
     if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
     m_document->closeDocument();
+    updateViewActions();
     m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
 }
@@ -446,7 +457,7 @@ bool Part::closeURL()
 void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
-    Settings::setShowLeftPanel(showLeft);
+    KpdfSettings::setShowLeftPanel(showLeft);
     // show/hide left qtoolbox
     m_leftPanel->setShown( showLeft );
     // this needs to be hidden explicitly to disable thumbnails gen
@@ -487,6 +498,15 @@ void Part::slotDoFileDirty()
   }
 }
 
+void Part::close()
+{
+  if (parent() && strcmp(parent()->name(), "KPDF::Shell") == 0)
+  {
+    closeURL();
+  }
+  else KMessageBox::information(widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInKPDF");
+}
+
 void Part::updateViewActions()
 {
     bool opened = m_document->pages() > 0;
@@ -523,6 +543,11 @@ void Part::psTransformEnded()
 {
 	m_file = m_temporaryLocalFile;
 	openFile();
+}
+
+void Part::cannotQuit()
+{
+	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInKPDF");
 }
 
 //BEGIN go to page dialog
@@ -644,7 +669,7 @@ void Part::slotPreferences()
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Settings::self() );
+    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, KpdfSettings::self() );
     // keep us informed when the user changes settings
     connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
 
@@ -657,7 +682,7 @@ void Part::slotNewConfig()
     // changed before applying changes.
 
     // Watch File
-    bool watchFile = Settings::watchFile();  
+    bool watchFile = KpdfSettings::watchFile();  
     if ( watchFile && m_watcher->isStopped() )
         m_watcher->startScan();
     if ( !watchFile && !m_watcher->isStopped() )
@@ -666,12 +691,12 @@ void Part::slotNewConfig()
         m_watcher->stopScan();
     }
 
-    bool showSearch = Settings::showSearchBar();
+    bool showSearch = KpdfSettings::showSearchBar();
     if ( m_searchWidget->isShown() != showSearch )
         m_searchWidget->setShown( showSearch );
 
     // Main View (pageView)
-    Q3ScrollView::ScrollBarMode scrollBarMode = Settings::showScrollBars() ?
+    Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?
         Q3ScrollView::AlwaysOn : Q3ScrollView::AlwaysOff;
     if ( m_pageView->hScrollBarMode() != scrollBarMode )
     {
@@ -683,9 +708,9 @@ void Part::slotNewConfig()
     m_document->reparseConfig();
 
     // update Main View and ThumbnailList contents
-    // TODO do this only when changing Settings::renderMode()
+    // TODO do this only when changing KpdfSettings::renderMode()
     m_pageView->updateContents();
-    if ( Settings::showLeftPanel() && m_thumbnailList->isShown() )
+    if ( KpdfSettings::showLeftPanel() && m_thumbnailList->isShown() )
         m_thumbnailList->updateWidgets();
 }
 
@@ -812,6 +837,12 @@ void Part::slotShowPresentation()
 {
     if ( !m_presentationWidget )
       m_presentationWidget = new PresentationWidget( widget(), m_document );
+}
+
+void Part::slotHidePresentation()
+{
+    if ( m_presentationWidget )
+        delete (PresentationWidget*) m_presentationWidget;
 }
 
 void Part::slotPrint()

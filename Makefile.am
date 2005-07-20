@@ -1,4 +1,4 @@
-SUBDIRS = xpdf conf core ui shell
+SUBDIRS = conf core ui shell generator
 
 INCLUDES = -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo -I$(top_builddir)/kpdf $(all_includes) $(FREETYPE_CFLAGS)
 

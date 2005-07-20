@@ -1,0 +1,1 @@
+SUBDIRS = ghostview xpdf kimgio

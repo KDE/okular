@@ -1,6 +1,6 @@
-SUBDIRS = . generator_pdf generator_kimgio
+SUBDIRS = .
 
-INCLUDES = -I$(srcdir)/generator_pdf -I$(srcdir)/.. -I$(srcdir)/../xpdf -I$(srcdir)/../xpdf/goo -I$(top_builddir)/kpdf $(all_includes)
+INCLUDES = -I$(srcdir)/.. -I$(top_builddir)/kpdf $(all_includes)
 
 METASOURCES = AUTO
 

@@ -53,7 +53,7 @@ class PDFGenerator : public Generator
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
-
+        void loadPages(QValueVector<KPDFPage*> & pagesVector, int rotation, bool clear=false);
         // [INHERITED] document informations
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
@@ -68,12 +68,16 @@ class PDFGenerator : public Generator
         bool canGenerateTextPage();
         void generateSyncTextPage( KPDFPage * page );
         bool supportsSearching() { return true; };
+        bool supportsRotation() { return true; };
         bool prefersInternalSearching() { return false; };
-    
+
         RegularAreaRect * findText (const QString & text, SearchDir dir, 
             const bool strictCase, const RegularAreaRect * lastRect, 
             KPDFPage * page );
         QString * getText( const RegularAreaRect * area, KPDFPage * page );
+
+        void setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation);
+
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 

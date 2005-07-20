@@ -48,6 +48,11 @@ int PageViewItem::pageNumber() const
     return m_page->number();
 }
 
+int PageViewItem::rotation() const
+{
+    return m_page->rotation();
+}
+
 const QRect& PageViewItem::geometry() const
 {
     return m_geometry;

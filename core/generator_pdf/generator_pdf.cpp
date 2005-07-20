@@ -105,6 +105,11 @@ PDFGenerator::~PDFGenerator()
         delete globalParams;
 }
 
+void PDFGenerator::setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation)
+{
+    loadPages(pagesVector,orientation,true);
+}
+
 //BEGIN Generator inherited functions
 bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage*> & pagesVector )
 {
@@ -187,31 +192,40 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = pdfdoc->getNumPages();
     pagesVector.resize( pageCount );
+
+    loadPages(pagesVector,0);
+
+    // the file has been loaded correctly
+    return true;
+}
+
+void PDFGenerator::loadPages(QValueVector<KPDFPage*> & pagesVector, int rotation, bool clear)
+{
     KPDFTextDev td;
-    for ( uint i = 0; i < pageCount ; i++ )
+    int count=pagesVector.count();
+    for ( uint i = 0; i < count ; i++ )
     {
         // get xpdf page
         Page * p = pdfdoc->getCatalog()->getPage( i + 1 );
 
         // init a kpdfpage, add transition and annotations informations
-        KPDFPage * page = new KPDFPage( i, p->getWidth(), p->getHeight(), p->getRotate() );
+        KPDFPage * page = new KPDFPage( i, p->getWidth(), p->getHeight(), rotation );
         addTransition( p, page );
         if ( true ) //TODO real check
             addAnnotations( p, page );
 
 	docLock.lock();
-	pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+	pdfdoc->displayPage( &td, page->number()+1, 72, 72, rotation, true, false );
 	TextPage * textPage = td.takeTextPage();
 	docLock.unlock();
 
 	page->setSearchPage(abstractTextPage(textPage,page->height(),page->width()));
 
+        if (clear && pagesVector[i])
+            delete pagesVector[i];
         // set the kpdfpage at the right position in document's pages vector
         pagesVector[i] = page;
     }
-
-    // the file has been loaded correctly
-    return true;
 }
 
 TextPage * PDFGenerator::fastTextPage (KPDFPage * page)
@@ -2234,7 +2248,8 @@ void PDFPixmapGeneratorThread::run()
     d->generator->kpdfOutputDev->setParams( width, height, genTextPage,
                                             genObjectRects, genObjectRects, TRUE /*thread safety*/ );
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
-                                       fakeDpiX, fakeDpiY, 0, true, genObjectRects );
+                                       fakeDpiX, fakeDpiY,
+                                       d->currentRequest->rotation , true, genObjectRects );
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG

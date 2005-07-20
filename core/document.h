@@ -77,11 +77,17 @@ class KPDFDocument : public QObject
         KURL currentDocument() const;
         bool isAllowed( int /*Document::Permisison(s)*/ ) const;
         bool supportsSearching() const;
+        bool supportsRotation()  const;
 // might be useful later
 //	bool hasFonts() const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
+
+        // gui altering stuff
+        bool altersGUI ();
+        QString& getXMLFile();
+        void setupActions(KActionCollection *ac);
 
         // perform actions on document / pages
         void setViewportPage( int page, int excludeId = -1, bool smoothMove = false );
@@ -104,6 +110,9 @@ class KPDFDocument : public QObject
 
         // notifications sent by generator
         void requestDone( PixmapRequest * request );
+
+    public slots:
+        void slotOrientation( int orientation );
 
     signals:
         void linkFind();

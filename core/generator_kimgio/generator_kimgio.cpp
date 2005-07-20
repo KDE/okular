@@ -67,7 +67,3 @@ bool KIMGIOGenerator::print( KPrinter& printer )
     return true;
 }
 
-bool KIMGIOGenerator::supportsSearching() const
-{
-    return false;
-}

@@ -442,6 +442,7 @@ void PresentationWidget::changePage( int newPage )
     PresentationFrame * frame = m_frames[ m_frameIndex ];
     int pixW = frame->geometry.width();
     int pixH = frame->geometry.height();
+    int rot = frame->page->rotation();
 
     // if pixmap not inside the KPDFPage we request it and wait for
     // notifyPixmapChanged call or else we can proceed to pixmap generation
@@ -451,7 +452,7 @@ void PresentationWidget::changePage( int newPage )
         QApplication::setOverrideCursor( KCursor::workingCursor() );
         // request the pixmap
         QValueList< PixmapRequest * > request;
-        request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO ) );
+        request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, rot, PRESENTATION_PRIO ) );
         m_document->requestPixmaps( request );
         // restore cursor
         QApplication::restoreOverrideCursor();

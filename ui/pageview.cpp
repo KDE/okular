@@ -102,6 +102,7 @@ public:
     PageViewMessage * messageWindow;    // in pageviewutils.h
 
     // actions
+    KSelectAction * aOrientation;
     KToggleAction * aMouseNormal;
     KToggleAction * aMouseSelect;
     KToggleAction * aToggleAnnotator;
@@ -132,6 +133,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // create and initialize private storage structure
     d = new PageViewPrivate();
     d->document = document;
+    d->aOrientation = 0;
     d->zoomMode = (PageView::ZoomMode) Settings::zoomMode();
     d->zoomFactor = Settings::zoomFactor();
     d->mouseMode = MouseNormal;
@@ -184,6 +186,20 @@ PageView::~PageView()
 
 void PageView::setupActions( KActionCollection * ac )
 {
+    d->aOrientation=new KSelectAction( i18n( "&Orientation" ), 0, this, 0, ac, "orientation_menu" );
+
+    QStringList orientations;
+    orientations.append( i18n( "Portrait" ) );
+    orientations.append( i18n( "Landscape" ) );
+    orientations.append( i18n( "Upside Down" ) );
+    orientations.append( i18n( "Seascape" ) );
+    d->aOrientation->setItems( orientations );
+
+    connect( d->aOrientation , SIGNAL( activated( int ) ),
+         d->document , SLOT( slotOrientation( int ) ) );
+
+    d->aOrientation->setEnabled(d->document->supportsRotation());
+
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, this, SLOT( slotZoom() ), ac, "zoom_to" );
     d->aZoom->setEditable( true );
@@ -318,6 +334,8 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
                  " Loaded a %n-page document.",
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
+
+    d->aOrientation->setEnabled(d->document->supportsRotation());
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )
@@ -1876,7 +1894,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
         {
             PixmapRequest * p = new PixmapRequest(
-                    PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRIO, true );
+                    PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRIO, true );
             requestedPixmaps.push_back( p );
         }
 

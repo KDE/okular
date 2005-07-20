@@ -287,6 +287,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
+    // 
 	updateViewActions();
 }
 
@@ -406,6 +407,11 @@ bool Part::openFile()
         slotShowPresentation();
     }
 
+    if (m_document->altersGUI())
+    {
+        setXMLFile(m_document->getXMLFile(),true);
+        m_document->setupActions(actionCollection());
+    }
     return true;
 }
 

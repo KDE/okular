@@ -26,11 +26,12 @@ class KIMGIOGenerator : public Generator
         void generatePixmap( PixmapRequest * request );
         void generateSyncTextPage( KPDFPage * page ) {;};
 	// [INHERITED] capability querying
-        bool supportsSearching() const;
         bool hasFonts() const;
         bool canGenerateTextPage() { return false; };
         bool supportsSearching()  { return false; };
+        bool supportsRotation() { return false; };
         bool prefersInternalSearching()  { return false; };
+        void setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation) {;};
         RegularAreaRect* findText(const QString&, SearchDir, bool, const RegularAreaRect*, KPDFPage*)
              { return 0; };
         QString * getText(const RegularAreaRect*, KPDFPage*) { return 0; };

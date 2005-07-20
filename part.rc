@@ -15,6 +15,7 @@
   </Menu>
   <Menu name="view"><text>&amp;View</text>
     <Action name="presentation"/>
+    <Action name="orientation_menu"/>
     <Separator/>
     <Action name="zoom_in"/>
     <Action name="zoom_out"/>

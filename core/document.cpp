@@ -311,6 +311,17 @@ void KPDFDocument::addObserver( DocumentObserver * pObserver )
     }
 }
 
+void KPDFDocument::slotOrientation( int orientation )
+{
+    if (generator->supportsRotation())
+    {
+        generator->setOrientation(pages_vector,orientation);
+        foreachObserver( notifySetup( pages_vector, true ) );
+        kdDebug() << "Oreint: " << orientation << endl;
+    }
+}
+
+
 void KPDFDocument::removeObserver( DocumentObserver * pObserver )
 {
     // remove observer from the map. it won't receive notifications anymore
@@ -424,6 +435,11 @@ bool KPDFDocument::isAllowed( int flags ) const
 bool KPDFDocument::supportsSearching() const
 {
     return generator ? generator->supportsSearching() : false;
+}
+
+bool KPDFDocument::supportsRotation() const
+{
+    return generator ? generator->supportsRotation() : false;
 }
 
 bool KPDFDocument::historyAtBegin() const

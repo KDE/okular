@@ -240,6 +240,11 @@ SplashError Splash::stroke(SplashPath *path) {
     return splashErrEmptyPath;
   }
   xPath = new SplashXPath(path, state->flatness, gFalse);
+  if (!xPath->segs)
+  {
+    delete xPath;
+    return splashErrEmptyPath;
+  }
   if (state->lineDashLength > 0) {
     xPath2 = makeDashedPath(xPath);
     delete xPath;

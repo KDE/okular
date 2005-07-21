@@ -240,6 +240,11 @@ SplashError Splash::stroke(SplashPath *path) {
     return splashErrEmptyPath;
   }
   xPath = new SplashXPath(path, state->flatness, gFalse);
+  if (!xPath->segs)
+  {
+    delete xPath;
+    return splashErrEmptyPath;
+  }
   if (state->lineDashLength > 0) {
     xPath2 = makeDashedPath(xPath);
     delete xPath;
@@ -633,6 +638,11 @@ SplashError Splash::fillWithPattern(SplashPath *path, GBool eo,
   }
   xPath = new SplashXPath(path, state->flatness, gTrue);
   xPath->sort();
+  if (!&xPath->segs[0])
+  {
+    delete xPath;
+    return splashErrEmptyPath;
+  }
   scanner = new SplashXPathScanner(xPath, eo);
 
   // get the min and max x and y values

@@ -180,7 +180,9 @@ void PageView::setupActions( KActionCollection * ac )
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, this, SLOT( slotZoom() ), ac, "zoom_to" );
     d->aZoom->setEditable( true );
+#if KDE_IS_VERSION(3,4,89)
     d->aZoom->setMaxComboViewCount( 13 );
+#endif
     updateZoomText();
 
     KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );

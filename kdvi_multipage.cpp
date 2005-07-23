@@ -164,9 +164,9 @@ void KDVIMultiPage::slotSave()
     fileName = fileName+ending;
 
   if (QFile(fileName).exists()) {
-    int r = KMessageBox::warningYesNo (0, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
-                       i18n("Overwrite File"));
-    if (r == KMessageBox::No)
+    int r = KMessageBox::warningContinueCancel (0, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+                       i18n("Overwrite File"), i18n("Overwrite"));
+    if (r == KMessageBox::Cancel)
       return;
   }
 

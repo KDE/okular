@@ -97,9 +97,9 @@ void dviRenderer::exportPDF(void)
     return;
   QFileInfo finfo(fileName);
   if (finfo.exists()) {
-    int r = KMessageBox::warningYesNo (parentWidget, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
-				       i18n("Overwrite File"));
-    if (r == KMessageBox::No)
+    int r = KMessageBox::warningContinueCancel (parentWidget, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
+				       i18n("Overwrite File"), i18n("Overwrite"));
+    if (r == KMessageBox::Cancel)
       return;
   }
 

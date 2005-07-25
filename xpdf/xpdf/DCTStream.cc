@@ -64,6 +64,44 @@ void DCTStream::reset() {
   int row_stride;
 
   str->reset();
+  
+  // JPEG data has to start with 0xFF 0xD8
+  // but some pdf like the one on 
+  // https://bugs.freedesktop.org/show_bug.cgi?id=3299
+  // does have some garbage before that this seeks for
+  // the start marker...
+  bool startFound = false;
+  int c = 0, c2 = 0;
+  int n = 0;
+  while (!startFound)
+  {
+    if (!c)
+    {
+      c = str->getChar();
+      if (c != 0xFF) c = 0;
+      if (c == -1)
+      {
+        error(-1, "Could not find start of jpeg data");
+        exit(1);
+      }
+    }
+    else
+    {
+      c2 = str->getChar();
+      if (c2 != 0xD8)
+      {
+        c = 0;
+        c2 = 0;
+      }
+      else startFound = true;
+    }
+    n++;
+  }
+
+  // ...and this skips the garbage
+  str->reset();
+  for (n = n - 2; n > 0; n--) str->getChar();
+  
   jpeg_read_header(&cinfo, TRUE);
   jpeg_start_decompress(&cinfo);
 

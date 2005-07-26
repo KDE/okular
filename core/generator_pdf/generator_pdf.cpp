@@ -823,6 +823,7 @@ class XPDFReader
         static void lookupBool( Dict *, const char *, bool & dest );
         static void lookupInt( Dict *, const char *, int & dest );
         static void lookupNum( Dict *, const char *, double & dest );
+        static int lookupArraySize( Dict *, const char * );
         static int lookupNumArray( Dict *, const char *, double * dest, int len );
         static void lookupColor( Dict *, const char *, QColor & color );
         static void lookupIntRef( Dict *, const char *, int & dest );
@@ -894,6 +895,18 @@ void XPDFReader::lookupNum( Dict * dict, const char * type, double & dest )
     else
         kdDebug() << type << " is not Num." << endl;
     numObj.free();
+}
+
+int XPDFReader::lookupArraySize( Dict * dict, const char * type )
+{
+    int size = 0;
+    Object arrObj;
+    dict->lookup( type, &arrObj );
+    if ( arrObj.isArray() )
+        size = arrObj.arrayGetLength();
+    if ( !arrObj.isNull() )
+        arrObj.free();
+    return size;
 }
 
 int XPDFReader::lookupNumArray( Dict * dict, const char * type, double * dest, int len )
@@ -1126,8 +1139,9 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             annotation = l;
 
             // -> linePoints
-            double c[100];
-            int num = XPDFReader::lookupNumArray( annotDict, (subType == "Line") ? "L" : "Vertices", c, 100 );
+            int num = XPDFReader::lookupArraySize( annotDict, (subType == "Line") ? "L" : "Vertices" );
+            double c[ num ];   // its size is a multiple of 8 (2coords per every point)
+            num = XPDFReader::lookupNumArray( annotDict, (subType == "Line") ? "L" : "Vertices", c, num );
             if ( num < 4 || (num % 2) != 0 )
             {
                 kdDebug() << "L/Vertices wrong fol Line/Poly." << endl;
@@ -1256,8 +1270,9 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
                 h->highlightType = HighlightAnnotation::StrikeOut;
 
             // -> highlightQuads
-            double c[80];
-            int num = XPDFReader::lookupNumArray( annotDict, "QuadPoints", c, 80 );
+            int num = XPDFReader::lookupArraySize( annotDict, "QuadPoints" );
+            double c[ num ];   // its size is a multiple of 8 (2coords per 4points per Highlight rect)
+            num = XPDFReader::lookupNumArray( annotDict, "QuadPoints", c, num );
             if ( num < 8 || (num % 8) != 0 )
             {
                 kdDebug() << "Wrong QuadPoints for a Highlight annotation." << endl;

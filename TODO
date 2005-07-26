@@ -31,6 +31,7 @@ More items (first items will enter 'In progress list' first):
 -> evaluate completely handling links internally instead of asking xpdf structs
 -> pageview: change document viewport after mouse scrolling ended (not every scroll frame)
    this will give better mvc consistancy
+-> send current file as attachment by mail
 -> other info on pdfs properties: number of accessed times, time spent on pdf, ...
 -> part: collapsing the left panel will hide it (activate hiding action)
 -> preload: add a delay when forward loading pages

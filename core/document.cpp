@@ -751,7 +751,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             {
                 if ( currentPage >= pageCount )
                 {
-                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
+                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?"), QString::null, KStdGuiItem::cont(), KStdGuiItem::cancel()) == KMessageBox::Yes )
                         currentPage = 0;
                     else
                         break;

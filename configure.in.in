@@ -119,3 +119,8 @@ AC_ARG_ENABLE(force-kpdf-drm,
 , AC_DEFINE(KPDF_FORCE_DRM, 0, [Defines if force the use DRM in kpdf])
 )
 
+KDE_CHECK_COMPILER_FLAG([fno-regmove], SUPPORTS_NOREGMOVE=true, SUPPORTS_NOREGMOVE=false)
+if test "x$SUPPORTS_NOREGMOVE" = xtrue; then
+	NOREGMOVE="-fno-regmove"
+fi
+AC_SUBST(NOREGMOVE)

@@ -186,17 +186,13 @@ void FoFiType1::parse() {
 	      }
 	    }
 	  }
-	} else {
-	  p = strtok(buf, " \t\n\r");
-	  if (p)
-	  {
-	    if (!strcmp(p, "def")) break;
-	    if (!strcmp(p, "readonly")) break;
-	    // the spec does not says this but i'm mantaining old xpdf behaviour that accepts "foo def" as end of the encoding array
-	    p = strtok(buf, " \t\n\r");
-	    if (p && !strcmp(p, "def")) break;
-	  }
 	}
+	
+	// Any line that begins with "def" or contains " def"
+	// terminates the encoding array.
+	if (!strcmp (p, "def") || strstr (buf, " def"))
+	  break;
+	
 	line = line1;
       }
       //~ check for getinterval/putinterval junk

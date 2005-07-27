@@ -82,9 +82,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
          (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
     {
-        if ( Settings::changeColors() &&
-             Settings::renderMode() == Settings::EnumRenderMode::Paper )
-            destPainter->fillRect( limits, Settings::paperColor() );
+        if ( KpdfSettings::changeColors() &&
+             KpdfSettings::renderMode() == KpdfSettings::EnumRenderMode::Paper )
+            destPainter->fillRect( limits, KpdfSettings::paperColor() );
         else
             destPainter->fillRect( limits, Qt::white );
 
@@ -100,8 +100,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
     bool canDrawHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
     bool canDrawAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
-    bool enhanceLinks = (flags & EnhanceLinks) && Settings::highlightLinks();
-    bool enhanceImages = (flags & EnhanceImages) && Settings::highlightImages();
+    bool enhanceLinks = (flags & EnhanceLinks) && KpdfSettings::highlightLinks();
+    bool enhanceImages = (flags & EnhanceImages) && KpdfSettings::highlightImages();
     // vectors containing objects to draw
     QValueList< HighlightRect * > * bufferedHighlights = 0;
     QValueList< Annotation * > * bufferedAnnotations = 0;
@@ -156,7 +156,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     }
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
-    bool bufferAccessibility = (flags & Accessibility) && Settings::changeColors() && (Settings::renderMode() != Settings::EnumRenderMode::Paper);
+    bool bufferAccessibility = (flags & Accessibility) && KpdfSettings::changeColors() && (KpdfSettings::renderMode() != KpdfSettings::EnumRenderMode::Paper);
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
@@ -194,21 +194,21 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
         {
-            switch ( Settings::renderMode() )
+            switch ( KpdfSettings::renderMode() )
             {
-                case Settings::EnumRenderMode::Inverted:
+                case KpdfSettings::EnumRenderMode::Inverted:
                     // Invert image pixels using QImage internal function
                     backImage.invertPixels(false);
                     break;
-                case Settings::EnumRenderMode::Recolor:
+                case KpdfSettings::EnumRenderMode::Recolor:
                     // Recolor image using KImageEffect::flatten with dither:0
-                    KImageEffect::flatten( backImage, Settings::recolorForeground(), Settings::recolorBackground() );
+                    KImageEffect::flatten( backImage, KpdfSettings::recolorForeground(), KpdfSettings::recolorBackground() );
                     break;
-                case Settings::EnumRenderMode::BlackWhite:
+                case KpdfSettings::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast
                     unsigned int * data = (unsigned int *)backImage.bits();
                     int val, pixels = backImage.width() * backImage.height(),
-                        con = Settings::bWContrast(), thr = 255 - Settings::bWThreshold();
+                        con = KpdfSettings::bWContrast(), thr = 255 - KpdfSettings::bWThreshold();
                     for( int i = 0; i < pixels; ++i )
                     {
                         val = qGray( data[i] );
@@ -481,7 +481,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             }
 
             // draw extents rectangle
-            if ( Settings::debugDrawAnnotationRect() )
+            if ( KpdfSettings::debugDrawAnnotationRect() )
             {
                 mixedPainter->setPen( a->style.color );
                 mixedPainter->drawRect( annotBoundary );

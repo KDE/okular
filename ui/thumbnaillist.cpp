@@ -114,7 +114,7 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
 	}
 
     // show pages containing hilighted text or bookmarked ones
-    //RESTORE THIS int flags = Settings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
+    //RESTORE THIS int flags = KpdfSettings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
 
     // if no page matches filter rule, then display all pages
     QValueVector< KPDFPage * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
@@ -171,7 +171,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 		{
 			m_selected = *tIt;
 			m_selected->setSelected( true );
-			if ( Settings::syncThumbnailsViewport() )
+			if ( KpdfSettings::syncThumbnailsViewport() )
 			{
 				int yOffset = QMAX( visibleHeight() / 4, m_selected->height() / 2 );
 				ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, yOffset );
@@ -249,7 +249,7 @@ const QPixmap * ThumbnailList::getBookmarkOverlay() const
 void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
     // save state
-    Settings::setFilterBookmarks( filterOn );
+    KpdfSettings::setFilterBookmarks( filterOn );
     // ask for the 'notifySetup' with a little trick (on reinsertion the
     // document sends the list again)
     m_document->removeObserver( this );
@@ -555,7 +555,7 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
                   list, SLOT( slotFilterBookmarks( bool ) ),
                   true, i18n( "Show bookmarked pages only" ) );
     setToggle( FILTERB_ID );
-    setButton( FILTERB_ID, Settings::filterBookmarks() );
+    setButton( FILTERB_ID, KpdfSettings::filterBookmarks() );
     //insertLineSeparator();
 }
 

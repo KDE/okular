@@ -1047,7 +1047,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     setNextViewport();
                     break;
                 case KPDFLinkAction::Quit:
-                    kapp->quit();
+                    emit linkQuit();
                     break;
                 case KPDFLinkAction::Presentation:
                     emit linkPresentation();

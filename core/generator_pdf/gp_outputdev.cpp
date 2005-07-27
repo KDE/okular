@@ -174,7 +174,7 @@ void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )
             // create the rect using normalized coords and attach the KPDFLink to it
             ObjectRect * rect = new ObjectRect( nl, nt, nr, nb, ObjectRect::Link, l );
             // add the ObjectRect to the vector container
-            m_rects.push_back( rect );
+            m_rects.push_front( rect );
         }
     }
     SplashOutputDev::drawLink( link, catalog );

@@ -79,6 +79,9 @@ public:
 	uint currentPage();
 	KURL currentDocument();
 
+signals:
+	void enablePrintAction( bool enable );
+
 protected:
 	// reimplemented from KParts::ReadOnlyPart
 	bool openFile();
@@ -112,6 +115,7 @@ protected slots:
 	// can be connected to widget elements
 	void updateViewActions();
 	void enableTOC(bool enable);
+	void cannotQuitMessage();
 
 public slots:
 	// connected to Shell action (and browserExtension), not local one

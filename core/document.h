@@ -104,6 +104,7 @@ class KPDFDocument : public QObject
         void requestDone( PixmapRequest * request );
 
     signals:
+        void linkQuit();
         void linkFind();
         void linkGoToPage();
         void linkPresentation();

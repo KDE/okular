@@ -112,6 +112,11 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
 	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
+	bool inShell = parent && parent->metaObject()->slotNames( true ).contains( "slotQuit()" );
+	if ( inShell )
+		connect( m_document, SIGNAL( linkQuit() ), parent, SLOT( slotQuit() ) );
+	else
+		connect( m_document, SIGNAL( linkQuit() ), this, SLOT( cannotQuitMessage() ) );
 
         // widgets: ^searchbar (toolbar containing label and SearchWidget)
 //      m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
@@ -455,10 +460,12 @@ bool Part::closeURL()
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     m_showPresentation->setEnabled( false );
-    updateViewActions();
     m_searchStarted = false;
+    emit setWindowCaption("");
+    emit enablePrintAction(false);
     if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
     m_document->closeDocument();
+    updateViewActions();
     m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
 }
@@ -556,6 +563,11 @@ void Part::updateViewActions()
 void Part::enableTOC(bool enable)
 {
 	m_toolBox->setItemEnabled(0, enable);
+}
+
+void Part::cannotQuitMessage()
+{
+	KMessageBox::information( widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInKPDF" );
 }
 
 //BEGIN go to page dialog
@@ -859,7 +871,16 @@ void Part::slotShowPresentation()
 void Part::slotHidePresentation()
 {
     if ( m_presentationWidget )
+    {
         delete (PresentationWidget*) m_presentationWidget;
+        return;
+    }
+
+    // if no presentation to hide, do it on the document itself
+    if ( parent() && !strcmp(parent()->name(), "KPDF::Shell") )
+        closeURL();
+    else
+        KMessageBox::information( widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInKPDF" );
 }
 
 void Part::slotPrint()

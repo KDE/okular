@@ -110,7 +110,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 	
-	if (parent && parent->metaObject()->slotNames(true).contains("slotQuit()"))
+	if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
 		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
 	else
 		connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );

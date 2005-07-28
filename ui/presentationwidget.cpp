@@ -654,7 +654,8 @@ void PresentationWidget::generateOverlay()
     doublePixmap.fill( Qt::black );
     pixmapPainter.begin( &doublePixmap );
     pixmapPainter.setPen( 0x40 );
-    pixmapPainter.setBrush( 0x80 );
+#warning QPainter.setBrush(0x80) ???? port this
+//    pixmapPainter.setBrush( 0x80 );
     pixmapPainter.drawEllipse( 0, 0, side, side );
     pixmapPainter.end();
     QImage shadow( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );

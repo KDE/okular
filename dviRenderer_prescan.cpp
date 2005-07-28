@@ -26,6 +26,9 @@
 #include <qimage.h> 
 #include <qpainter.h>
 #include <qpaintdevice.h>
+//Added by qt3to4:
+#include <QTextStream>
+#include <Q3MemArray>
 
 
 extern QPainter foreGroundPaint;
@@ -132,7 +135,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   PS.append( " @setspecial\n" );
   
   QFile file( EPSfilename );
-  if ( file.open( IO_ReadOnly ) ) {
+  if ( file.open( QIODevice::ReadOnly ) ) {
     QTextStream stream( &file );
     while ( !stream.atEnd() ) {
       PS += stream.readLine().section( '%', 0, 0);
@@ -148,7 +151,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   Q_UINT32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
   Q_UINT32 lengthOfNewSpecial = PS.length()+5;
   
-  QMemArray<Q_UINT8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
+  Q3MemArray<Q_UINT8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
   
   Q_UINT8 *commandPtrSav = command_pointer;
   Q_UINT8 *endPtrSav = end_pointer;
@@ -463,7 +466,7 @@ void dviRenderer::prescan_ParseSourceSpecial(QString cp)
   // "src:123file.tex" to positions in the DVI file
   
   // extract the file name and the numeral part from the string
-  Q_UINT32 j;
+  Q_INT32 j;
   for(j=0;j<cp.length();j++)
     if (!cp.at(j).isNumber())
       break;

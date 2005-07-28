@@ -11,10 +11,13 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qregexp.h>
-#include <qtextview.h>
+#include <q3textview.h>
 #include <qtooltip.h>
 #include <qvariant.h>
-#include <qwhatsthis.h>
+
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <Q3Frame>
 
 #include "dviFile.h"
 #include "fontpool.h"
@@ -25,26 +28,26 @@ infoDialog::infoDialog( QWidget* parent )
 {
   QFrame *page1 = addPage( i18n("DVI File") );
   QVBoxLayout *topLayout1 = new QVBoxLayout( page1, 0, 6 );
-  TextLabel1 = new QTextView( page1, "TextLabel1" );
+  TextLabel1 = new Q3TextView( page1, "TextLabel1" );
   QToolTip::add( TextLabel1, i18n("Information on the currently loaded DVI-file.") );
   topLayout1->addWidget( TextLabel1 );
 
   QFrame *page2 = addPage( i18n("Fonts") );
   QVBoxLayout *topLayout2 = new QVBoxLayout( page2, 0, 6 );
-  TextLabel2 = new QTextView( page2, "TextLabel1" );
+  TextLabel2 = new Q3TextView( page2, "TextLabel1" );
   TextLabel2->setMinimumWidth(fontMetrics().maxWidth()*40);
   TextLabel2->setMinimumHeight(fontMetrics().height()*10);
   QToolTip::add( TextLabel2, i18n("Information on currently loaded fonts.") );
-  QWhatsThis::add( TextLabel2, i18n("This text field shows detailed information about the currently loaded fonts. "
+  TextLabel2->setWhatsThis( i18n("This text field shows detailed information about the currently loaded fonts. "
 				    "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );
   topLayout2->addWidget( TextLabel2 );
 
   QFrame *page3 = addPage( i18n("External Programs") );
   QVBoxLayout *topLayout3 = new QVBoxLayout( page3, 0, 6 );
-  TextLabel3 = new QTextView( page3, "TextLabel1" );
+  TextLabel3 = new Q3TextView( page3, "TextLabel1" );
   TextLabel3->setText( i18n("No output from any external program received.") );
   QToolTip::add( TextLabel3, i18n("Output of external programs.") );
-  QWhatsThis::add( TextLabel3, i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
+  TextLabel3->setWhatsThis( i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
 				    "This text field shows the output of these programs. "
 				    "That is useful for experts who want to find problems in the setup of TeX or KDVI.") );
   topLayout3->addWidget( TextLabel3 );

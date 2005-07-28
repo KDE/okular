@@ -13,7 +13,7 @@
 #define _FONTENCODINGPOOL_H
 
 #include <kprocio.h>
-#include <qdict.h>
+#include <q3dict.h>
 #include <qstring.h>
 
 #include "fontEncoding.h"
@@ -26,7 +26,7 @@ class fontEncodingPool {
   fontEncoding *findByName(const QString &name);
 
  private:
-  QDict<fontEncoding> dictionary;
+  Q3Dict<fontEncoding> dictionary;
 };
 
 #endif

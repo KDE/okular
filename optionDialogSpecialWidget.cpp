@@ -23,7 +23,7 @@
 
 // Constructs a optionDialogWidget_base which is a child of 'parent', with
 // the name 'name' and widget flags set to 'f'.
-optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const char* name, WFlags fl )
+optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const char* name, Qt::WFlags fl )
     : optionDialogSpecialWidget_base( parent,  name, fl )
 {
   // Set up the list of known and supported editors
@@ -55,7 +55,7 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorCommandString     += "gnuclient -q +%l %f || xemacs  +%l %f";
   editorDescriptionString += i18n("Click 'Help' to learn how to set up XEmacs.");
 
-  for(unsigned int i=0; i<editorNameString.count(); i++)
+  for(int i=0; i<editorNameString.count(); i++)
     editorChoice->insertItem(editorNameString[i]);
   // Set the proper editor on the "Rendering-Page", try to recognize
   // the editor command from the config-file. If the editor command is

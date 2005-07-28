@@ -562,7 +562,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
     if (special_command.startsWith("ps:SDict begin [") && special_command.endsWith(" pdfmark end")) {
       if (!currentlyDrawnPage->hyperLinkList.isEmpty()) {
 	QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
-	QValueVector<Hyperlink>::iterator it;
+	Q3ValueVector<Hyperlink>::iterator it;
         for( it = currentlyDrawnPage->hyperLinkList.begin(); it != currentlyDrawnPage->hyperLinkList.end(); ++it ) 
 	  if (it->linkText == "glopglyph")
 	    it->linkText = targetName;

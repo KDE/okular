@@ -13,8 +13,10 @@
 #include <stdio.h>
 #include <qdatastream.h>
 #include <qfile.h>
-#include <qintdict.h>
+#include <q3intdict.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3MemArray>
 
 #include "bigEndianByteReader.h"
 
@@ -36,7 +38,7 @@ class dvifile : public bigEndianByteReader
   QString        filename;
   QString        generatorString;
   Q_UINT16       total_pages;
-  QMemArray<Q_UINT32> page_offset;
+  Q3MemArray<Q_UINT32> page_offset;
 
   /** Saves the DVI file. Returns true on success. */
   bool           saveAs(const QString &filename);
@@ -68,7 +70,7 @@ class dvifile : public bigEndianByteReader
       KDVI ensures that the user is only informed once. */
   bool           sourceSpecialMarker;
   
-  QIntDict<TeXFontDefinition> tn_table;
+  Q3IntDict<TeXFontDefinition> tn_table;
 
   /** Returns the number of centimeters per DVI unit in this DVI
       file. */
@@ -89,7 +91,7 @@ class dvifile : public bigEndianByteReader
   
   /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
       with care. */
-  void           setNewData(QMemArray<Q_UINT8> newData) {dviData = newData;};
+  void           setNewData(Q3MemArray<Q_UINT8> newData) {dviData = newData;};
 
   /** Page numbers that appear in a DVI document need not be
       ordered. Worse, page numbers need not be unique. This method
@@ -114,7 +116,7 @@ class dvifile : public bigEndianByteReader
 
   double         cmPerDVIunit;
 
-  QMemArray<Q_UINT8>  dviData;
+  Q3MemArray<Q_UINT8>  dviData;
 };
 
 #endif //ifndef _DVIFILE_H

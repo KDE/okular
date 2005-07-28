@@ -27,7 +27,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 #endif
 
   QFile file( parent->filename );
-  if ( !file.open( IO_ReadOnly ) ) {
+  if ( !file.open( QIODevice::ReadOnly ) ) {
     kdError(4300) << "TeXFont_TFM::TeXFont_TFM(): Could not read TFM file" << endl;
     return;
   }

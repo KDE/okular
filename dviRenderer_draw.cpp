@@ -69,6 +69,8 @@
 #include <qimage.h> 
 #include <qpainter.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 extern QPainter *foreGroundPainter;
 

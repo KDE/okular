@@ -12,6 +12,8 @@
 #include <kprocio.h>
 #include <qfile.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QTextStream>
 
 #include "fontEncoding.h"
 
@@ -45,7 +47,7 @@ fontEncoding::fontEncoding(const QString &encName)
 #endif  
 
   QFile file( encFileName );
-  if ( file.open( IO_ReadOnly ) ) {
+  if ( file.open( QIODevice::ReadOnly ) ) {
     // Read the file (excluding comments) into the QString variable
     // 'fileContent'
     QTextStream stream( &file );

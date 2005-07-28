@@ -8,6 +8,11 @@
 
 #include <qstring.h>
 #include <qvariant.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
 #include <kdialogbase.h>
 
 class dvifile;
@@ -18,8 +23,8 @@ class QGridLayout;
 class QLabel;
 class KPushButton;
 class QTabWidget;
-class QTable;
-class QTextView;
+class Q3Table;
+class Q3TextView;
 class QWidget;
 class fontPool;
 
@@ -35,9 +40,9 @@ public:
         "no file loaded" */
     void setDVIData(dvifile *dviFile);
 
-    QTextView* TextLabel1;
-    QTextView* TextLabel2;
-    QTextView* TextLabel3;
+    Q3TextView* TextLabel1;
+    Q3TextView* TextLabel2;
+    Q3TextView* TextLabel3;
 
 public slots:
     /** This slot is called when Output from the MetaFont programm

@@ -21,9 +21,12 @@
 #include <qmessagebox.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
-#include <qptrstack.h>
-#include <qurl.h>
-#include <qvbox.h>
+#include <q3url.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <QHBoxLayout>
+#include <QMouseEvent>
+#include <q3ptrstack.h>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -188,7 +191,7 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
   colorStack.clear();
   globalColor = Qt::black;
   
-  QApplication::setOverrideCursor( waitCursor );
+  QApplication::setOverrideCursor( Qt::WaitCursor );
   foreGroundPainter = page->getPainter();
   if (foreGroundPainter != 0) {
     errorMsg = QString::null;
@@ -242,7 +245,7 @@ void dviRenderer::showThatSourceInformationIsPresent(void)
     KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
 					 parentWidget, "information", true, true,KStdGuiItem::ok() );
     
-    QVBox *topcontents = new QVBox (dialog);
+    Q3VBox *topcontents = new Q3VBox (dialog);
     topcontents->setSpacing(KDialog::spacingHint()*2);
     topcontents->setMargin(KDialog::marginHint()*2);
     
@@ -370,7 +373,7 @@ void dviRenderer::embedPostScript(void)
 bool dviRenderer::isValidFile(const QString filename)
 {
   QFile f(filename);
-  if (!f.open(IO_ReadOnly))
+  if (!f.open(QIODevice::ReadOnly))
     return FALSE;
 
   unsigned char test[4];
@@ -436,7 +439,7 @@ bool dviRenderer::setFile(const QString &fname)
     return false;
   }
   
-  QApplication::setOverrideCursor( waitCursor );
+  QApplication::setOverrideCursor( Qt::waitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
   
   if ((dviFile == 0) || (dviFile->filename != filename))
@@ -542,9 +545,9 @@ bool dviRenderer::setFile(const QString &fname)
   
   // Generate the list of bookmarks
   bookmarks.clear();
-  QPtrStack<Bookmark> stack;
+  Q3PtrStack<Bookmark> stack;
   stack.setAutoDelete (false);
-  QValueVector<PreBookmark>::iterator it;
+  Q3ValueVector<PreBookmark>::iterator it;
   for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
     Bookmark *bmk = new Bookmark((*it).title, findAnchor((*it).anchorName));
     if (stack.isEmpty())
@@ -641,8 +644,8 @@ Anchor dviRenderer::parseReference(const QString &reference)
     // document.
     bool anchorForRefFileFound = false; // Flag that is set if source file anchors for the refFileName could be found at all
     
-    QValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
-    QValueVector<DVI_SourceFileAnchor>::iterator it;
+    Q3ValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
+    Q3ValueVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()
       || refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace() + ".tex"

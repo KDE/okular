@@ -13,6 +13,9 @@
 #include <kstdaction.h>
 #include <ktip.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <Q3ValueList>
 
 #include <kparts/part.h>
 #include <kparts/genericfactory.h>
@@ -374,10 +377,10 @@ void KDVIMultiPage::print()
 
 
   // List of pages to print.
-  QValueList<int> pageList = printer->pageList();
+  Q3ValueList<int> pageList = printer->pageList();
   dvips_options += "-pp ";
   int commaflag = 0;
-  for( QValueList<int>::ConstIterator it = pageList.begin(); it != pageList.end(); ++it ) {
+  for( Q3ValueList<int>::ConstIterator it = pageList.begin(); it != pageList.end(); ++it ) {
     if (commaflag == 1)
       dvips_options +=  QString(",");
     else

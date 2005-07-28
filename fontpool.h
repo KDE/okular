@@ -9,7 +9,7 @@
 #include <../config.h>
 
 #include <qmap.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qstringlist.h>
 #include <qobject.h>
 
@@ -88,7 +88,7 @@ public:
  QString status();
   
   // This is the list which actually holds pointers to the fonts
-  QPtrList<TeXFontDefinition> fontList;
+  Q3PtrList<TeXFontDefinition> fontList;
 
   // This method marks all fonts in the fontpool as "not in use". The
   // fonts are, however, not removed from memory until the method

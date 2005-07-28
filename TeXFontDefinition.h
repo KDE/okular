@@ -19,7 +19,7 @@ class dviRenderer;
 typedef	void	(dviRenderer::*set_char_proc)(unsigned int, unsigned int);
 
 #include <kprocess.h>
-#include <qintdict.h>
+#include <q3intdict.h>
 #include <qstring.h>
 #include <stdio.h>
 
@@ -90,7 +90,7 @@ class TeXFontDefinition {
   
   TeXFont       *font;
   macro         *macrotable;    // used by (loaded) virtual fonts
-  QIntDict<TeXFontDefinition> vf_table;      // used by (loaded) virtual fonts, list of fonts used by this vf, 
+  Q3IntDict<TeXFontDefinition> vf_table;      // used by (loaded) virtual fonts, list of fonts used by this vf, 
   // acessible by number
   TeXFontDefinition  *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
 

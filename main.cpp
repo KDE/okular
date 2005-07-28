@@ -7,6 +7,8 @@
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <qdir.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <stdlib.h>
 
@@ -88,24 +90,28 @@ int main(int argc, char** argv)
 
       app.dcopClient()->attach();
       // We need to register as "kviewshell" to stay compatible with existing DCOP-skripts.
-      QCString id = app.dcopClient()->registerAs("unique-kviewshell");
+      Q3CString id = app.dcopClient()->registerAs("unique-kviewshell");
       if (id.isNull())
         kdError(4300) << "There was an error using dcopClient()->registerAs()." << endl;
-      QCStringList apps = app.dcopClient()->registeredApplications();
-      for ( QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it ) 
+      DCOPCStringList apps = app.dcopClient()->registeredApplications();
+      for ( DCOPCStringList::Iterator it = apps.begin(); it != apps.end(); ++it ) 
       {
         if ((*it).find("kviewshell") == 0) 
         {
           QByteArray data, replyData;
-          QCString replyType;
-          QDataStream arg(data, IO_WriteOnly);
+          Q3CString replyType;
+          QDataStream arg(&data, QIODevice::WriteOnly);
+
+          arg.setVersion(QDataStream::Qt_3_1);
           bool result;
           arg << qualPath.stripWhiteSpace();
           if (!app.dcopClient()->call( *it, "kmultipage", "is_file_loaded(QString)", data, replyType, replyData))
             kdError(4300) << "There was an error using DCOP." << endl;
           else 
           {
-            QDataStream reply(replyData, IO_ReadOnly);
+            QDataStream reply(&replyData, QIODevice::ReadOnly);
+
+            reply.setVersion(QDataStream::Qt_3_1);
             if (replyType == "bool") 
             {
               reply >> result;

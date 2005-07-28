@@ -12,7 +12,7 @@
 
 #include <ktempfile.h>
 #include <qstring.h>
-#include <qintdict.h>
+#include <q3intdict.h>
 
 #include "../kviewshell/pageNumber.h"
 
@@ -78,7 +78,7 @@ public:
 
 private:
   void                  gs_generate_graphics_file(PageNumber page, const QString &filename, long magnification);
-  QIntDict<pageInfo>    pageList;
+  Q3IntDict<pageInfo>    pageList;
 
   double                resolution;   // in dots per inch
   int                   pixel_page_w; // in pixels
@@ -92,7 +92,7 @@ private:
   // device can be found, something is badly wrong. In that case,
   // "gsDevice" is set to an empty string, and
   // gs_generate_graphics_file will return immediately.
-  QValueListIterator<QString> gsDevice;
+  Q3ValueListIterator<QString> gsDevice;
 
   // A list of known devices, set by the constructor. This includes
   // "png256", "pnm". If a device is found to not work, its name is

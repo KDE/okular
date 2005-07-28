@@ -12,6 +12,7 @@
 #define _KPDF_GENERATOR_PDF_H_
 
 #include <qmutex.h>
+#include <qcoreevent.h>
 #include <qcolor.h>
 #include <qstring.h>
 #include <qthread.h>
@@ -51,7 +52,7 @@ class PDFGenerator : public Generator
         virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
 
         // [INHERITED] document informations
         const DocumentInfo * generateDocumentInfo();
@@ -96,7 +97,7 @@ class PDFGenerator : public Generator
         // private function for creating the transition information
         void addTransition( int pageNumber, KPDFPage * page );
         // (async related) receive data from the generator thread
-        void customEvent( QCustomEvent * );
+        void customEvent( QEvent * );
 
         // xpdf dependant stuff
         QMutex docLock;
@@ -135,7 +136,7 @@ class PDFPixmapGeneratorThread : public QThread
         // methods for getting contents from the GUI thread
         QImage * takeImage() const;
         TextPage * takeTextPage() const;
-        QValueList< ObjectRect * > takeObjectRects() const;
+        QList< ObjectRect * > takeObjectRects() const;
 
     private:
         // can't be called from the outside (but from startGeneration)

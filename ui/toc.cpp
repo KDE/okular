@@ -8,7 +8,7 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qheader.h>
+#include <q3header.h>
 #include <klocale.h>
 
 // local includes
@@ -64,8 +64,8 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_documen
     setRootIsDecorated(true);
     setResizeMode(AllColumns);
     setAllColumnsShowFocus(true);
-    connect(this, SIGNAL(clicked(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
-    connect(this, SIGNAL(returnPressed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
+    connect(this, SIGNAL(clicked(Q3ListViewItem *)), this, SLOT(slotExecuted(Q3ListViewItem *)));
+    connect(this, SIGNAL(returnPressed(Q3ListViewItem *)), this, SLOT(slotExecuted(Q3ListViewItem *)));
 }
 
 uint TOC::observerId() const
@@ -73,7 +73,7 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged )
+void TOC::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
 {
     if ( !documentChanged || pages.size() < 1 )
         return;
@@ -119,7 +119,7 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
     }
 }
 
-void TOC::slotExecuted( QListViewItem *i )
+void TOC::slotExecuted( Q3ListViewItem *i )
 {
     TOCItem* tocItem = dynamic_cast<TOCItem*>( i );
     // that filters clicks on [+] that for a strange reason don't seem to be TOCItem*

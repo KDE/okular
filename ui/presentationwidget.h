@@ -13,11 +13,11 @@
 #include <qdialog.h>
 #include <qpixmap.h>
 #include <qstringlist.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
-class KToolBar;
+class QToolBar;
 class QTimer;
 
 class KPDFDocument;
@@ -39,7 +39,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
 
         // inherited from DocumentObserver
         uint observerId() const { return PRESENTATION_ID; }
-        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber );
@@ -81,14 +81,14 @@ class PresentationWidget : public QDialog, public DocumentObserver
         QTimer * m_overlayHideTimer;
         int m_transitionDelay;
         int m_transitionMul;
-        QValueList< QRect > m_transitionRects;
+        QList< QRect > m_transitionRects;
 
         // misc stuff
         KPDFDocument * m_document;
-        QValueVector< PresentationFrame * > m_frames;
+        QVector< PresentationFrame * > m_frames;
         int m_frameIndex;
         QStringList m_metaStrings;
-        KToolBar * m_topBar;
+        QToolBar * m_topBar;
 
     private slots:
         void slotNextPage();

@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qevent.h>
 #include <qtimer.h>
 #include <qpainter.h>
 #include <klocale.h>
@@ -64,19 +65,19 @@ class ThumbnailWidget : public QWidget
 /** ThumbnailList implementation **/
 
 ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
-	: QScrollView( parent, "KPDF::Thumbnails", WNoAutoErase | WStaticContents ),
+	: Q3ScrollView( parent, "KPDF::Thumbnails", Qt::WNoAutoErase | Qt::WStaticContents ),
 	m_document( document ), m_selected( 0 ), m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
 {
 	// set scrollbars
-	setHScrollBarMode( QScrollView::AlwaysOff );
-	setVScrollBarMode( QScrollView::AlwaysOn );
+	setHScrollBarMode( Q3ScrollView::AlwaysOff );
+	setVScrollBarMode( Q3ScrollView::AlwaysOn );
 
 	// dealing with large areas so enable clipper
 	enableClipper( true );
 
 	// widget setup: can be focused by tab and mouse click (not wheel)
 	viewport()->setFocusProxy( this );
-	viewport()->setFocusPolicy( StrongFocus );
+	viewport()->setFocusPolicy( Qt::StrongFocus );
 	setResizePolicy( Manual );
 	setAcceptDrops( true );
 	setDragAutoScroll( false );
@@ -94,10 +95,10 @@ ThumbnailList::~ThumbnailList()
 }
 
 //BEGIN DocumentObserver inherited methods 
-void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool /*documentChanged*/ )
+void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool /*documentChanged*/ )
 {
 	// delete all the Thumbnails
-	QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+	QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 	for ( ; tIt != tEnd; ++tIt )
 		delete *tIt;
 	m_thumbnails.clear();
@@ -114,7 +115,7 @@ void ThumbnailList::notifySetup( const QValueVector< KPDFPage * > & pages, bool 
     //RESTORE THIS int flags = Settings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
 
     // if no page matches filter rule, then display all pages
-    QValueVector< KPDFPage * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
+    QVector< KPDFPage * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
     bool skipCheck = true;
     for ( ; pIt != pEnd ; ++pIt )
         //if ( (*pIt)->attributes() & flags )
@@ -161,7 +162,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 
 	// select the page with viewport and ensure it's centered in the view
 	m_vectorIndex = 0;
-	QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+	QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 	for ( ; tIt != tEnd; ++tIt )
 	{
 		if ( (*tIt)->pageNumber() == newPage )
@@ -186,7 +187,7 @@ void ThumbnailList::notifyPageChanged( int pageNumber, int /*changedFlags*/ )
     //    return;
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
-    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
         {
@@ -205,7 +206,7 @@ void ThumbnailList::notifyContentsCleared( int changedFlags )
 bool ThumbnailList::canUnloadPixmap( int pageNumber )
 {
     // if the thubnail 'pageNumber' is one of the visible ones, forbid unloading
-    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
             return false;
@@ -219,7 +220,7 @@ void ThumbnailList::updateWidgets()
 {
     // find all widgets that intersects the viewport and update them
     QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
-    QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
     {
         ThumbnailWidget * t = *vIt;
@@ -261,27 +262,27 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 		return keyEvent->ignore();
 
 	int nextPage = -1;
-	if ( keyEvent->key() == Key_Up )
+	if ( keyEvent->key() == Qt::Key_Up )
 	{
 		if ( !m_selected )
 			nextPage = 0;
 		else if ( m_vectorIndex > 0 )
 			nextPage = m_thumbnails[ m_vectorIndex - 1 ]->pageNumber();
 	}
-	else if ( keyEvent->key() == Key_Down )
+	else if ( keyEvent->key() == Qt::Key_Down )
 	{
 		if ( !m_selected )
 			nextPage = 0;
 		else if ( m_vectorIndex < (int)m_thumbnails.count() - 1 )
 			nextPage = m_thumbnails[ m_vectorIndex + 1 ]->pageNumber();
 	}
-	else if ( keyEvent->key() == Key_PageUp )
+	else if ( keyEvent->key() == Qt::Key_PageUp )
 		verticalScrollBar()->subtractPage();
-	else if ( keyEvent->key() == Key_PageDown )
+	else if ( keyEvent->key() == Qt::Key_PageDown )
 		verticalScrollBar()->addPage();
-	else if ( keyEvent->key() == Key_Home )
+	else if ( keyEvent->key() == Qt::Key_Home )
 		nextPage = m_thumbnails[ 0 ]->pageNumber();
-	else if ( keyEvent->key() == Key_End )
+	else if ( keyEvent->key() == Qt::Key_End )
 		nextPage = m_thumbnails[ m_thumbnails.count() - 1 ]->pageNumber();
 
 	if ( nextPage == -1 )
@@ -299,7 +300,7 @@ void ThumbnailList::contentsMousePressEvent( QMouseEvent * e )
 	if ( e->button() != Qt::LeftButton )
 		return;
 	int clickY = e->y();
-	QValueList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+	QList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
 	for ( ; vIt != vEnd; ++vIt )
 	{
 		ThumbnailWidget * t = *vIt;
@@ -328,7 +329,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 		// resize and reposition items
 		int totalHeight = 0,
 		    newWidth = e->size().width();
-		QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+		QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 		for ( ; tIt != tEnd; ++tIt )
 		{
 			ThumbnailWidget *t = *tIt;
@@ -383,8 +384,8 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsX*/, int newCont
 
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
-    QValueList< PixmapRequest * > requestedPixmaps;
-    QValueVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QList< PixmapRequest * > requestedPixmaps;
+    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
     for ( ; tIt != tEnd; ++tIt )
     {
         ThumbnailWidget * t = *tIt;
@@ -438,7 +439,7 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 /** ThumbnailWidget implementation **/
 
 ThumbnailWidget::ThumbnailWidget( QWidget * parent, const KPDFPage * kp, ThumbnailList * tl )
-    : QWidget( parent, 0, WNoAutoErase ), m_tl( tl ), m_page( kp ),
+    : QWidget( parent, 0, Qt::WNoAutoErase ), m_tl( tl ), m_page( kp ),
     m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
 {
     m_labelNumber = m_page->number() + 1;

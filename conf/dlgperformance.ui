@@ -262,7 +262,7 @@
 </connections>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
-    <include location="global" impldecl="in implementation">kiconloader.h</include>
+    <include location="global" impldecl="in declaration">kiconloader.h</include>
     <include location="local" impldecl="in implementation">dlgperformance.ui.h</include>
 </includes>
 <slots>

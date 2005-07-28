@@ -11,7 +11,7 @@
 #define _KPDF_PAGE_H_
 
 #include <qmap.h>
-#include <qvaluelist.h>
+#include <qlist.h>
 
 class QPixmap;
 class QRect;
@@ -112,7 +112,7 @@ class KPDFPage
         void setPixmap( int p_id, QPixmap * pixmap );
         void setSearchPage( TextPage * text );
         void setBookmark( bool state );
-        void setObjectRects( const QValueList< ObjectRect * > rects );
+        void setObjectRects( const QList< ObjectRect * > rects );
         void setHighlight( int s_id, NormalizedRect * &r, const QColor & color );
         //void setAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
@@ -128,9 +128,9 @@ class KPDFPage
 
         QMap< int, QPixmap * > m_pixmaps;
         TextPage * m_text;
-        QValueList< ObjectRect * > m_rects;
-        QValueList< HighlightRect * > m_highlights;
-        //QValueList< Annotation * > m_annotations;
+        QList< ObjectRect * > m_rects;
+        QList< HighlightRect * > m_highlights;
+        //QList< Annotation * > m_annotations;
         KPDFPageTransition * m_transition;
 };
 

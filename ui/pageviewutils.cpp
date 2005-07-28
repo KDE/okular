@@ -9,6 +9,7 @@
 
 // qt/kde includes
 #include <qbitmap.h>
+#include <qevent.h>
 #include <qpainter.h>
 #include <qimage.h>
 #include <qtimer.h>
@@ -24,8 +25,8 @@
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent, "pageViewMessage" ), m_timer( 0 )
 {
-    setFocusPolicy( NoFocus );
-    setBackgroundMode( NoBackground );
+    setFocusPolicy( Qt::NoFocus );
+    setBackgroundMode( Qt::NoBackground );
     setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QColorGroup::Background));
     move( 10, 10 );
     resize( 0, 0 );
@@ -75,6 +76,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         height = QMAX( height, symbol.height() );
     }
     QRect geometry( 0, 0, width + 10, height + 8 );
+    QRect geometry2( 0, 0, width + 9, height + 7 );
 
     // resize pixmap, mask and widget
     static QBitmap mask;
@@ -83,17 +85,17 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     resize( geometry.size() );
 
     // create and set transparency mask
-    QPainter maskPainter( &mask);
-    mask.fill( Qt::black );
-    maskPainter.setBrush( Qt::white );
-    maskPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
+    QPainter maskPainter(&mask);
+    mask.fill( Qt::white );
+    maskPainter.setBrush( Qt::black );
+    maskPainter.drawRoundRect( geometry2, 1600 / geometry2.width(), 1600 / geometry2.height() );
     setMask( mask );
 
     // draw background
     QPainter bufferPainter( &m_pixmap );
     bufferPainter.setPen( Qt::black );
     bufferPainter.setBrush( paletteBackgroundColor() );
-    bufferPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
+    bufferPainter.drawRoundRect( geometry2, 1600 / geometry2.width(), 1600 / geometry2.height() );
 
     // draw icon if present
     if ( !symbol.isNull() )

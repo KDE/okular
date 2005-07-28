@@ -1,0 +1,42 @@
+Hi,
+  this file lists the merge status between this branch (kpdf/annotations)
+and the other ones, such as trunk/, 3.5/, Piotr Szymanski, Isaac Clerencia,
+and Brad Hards's ones.
+
+
+-= HIGH-PRIORITY MERGES =-
+
+** branches/KDE/3.5/kdegraphics/kpdf (was trunk/.../kpdf since 2005-07-26)
+ Desc: The main developent tree. Annotations/ branched from it on 2005-Feb-12.
+
+ Merged: 2005-02-12 -> 2005-07-27 [enrico does the merges]
+ 
+ Missing: 2005-07-27 -> TODAY [on branches/KDE/3.5/kdegraphics/kpdf]
+
+ Merge op: All changes in 3.5 branch must be foreported to annotations/ till
+   3.5 branch will lose the status of 'main branch'. When synced, annotations/,
+   *contains properly* 3.5.
+   @see "http://robotics.dei.unipd.it/~koral/KPDF_HEAD 2005-02-16 ..." folder.
+
+
+** branches/work/kde4/kdegraphics/kpdf
+ Desc: KDE4 changes happened here.
+
+ Missing:  ... all kde4 changes ...
+
+ Merge op: Isolate all the changes to make it compile and create patches to
+   apply to Annotations/ to do the qt4 port.
+
+
+
+-= TO BE MERGED WHEN THEY'LL BE FINISHED =-
+
+** branches/kpdf/forms
+ Desc: Aiming at adding forms support in kpdf. Branched from ?? on ??.
+
+** branches/kpdf/multitiff
+ Desc: Aiming at providing multitiff support. Branched from ?? on ??.
+
+** trunk/playground/graphics/oKular
+ Desc: Unified KDE doc viewer. Branched from Annotations/ on ??.
+

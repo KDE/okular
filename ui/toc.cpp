@@ -75,7 +75,7 @@ uint TOC::observerId() const
 
 void TOC::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
 {
-    if ( !documentChanged || pages.size() < 1 )
+    if ( !documentChanged )
         return;
 
     // clear contents

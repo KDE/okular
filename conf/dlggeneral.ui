@@ -89,7 +89,7 @@
                                 <cstring>kcfg_WatchFile</cstring>
                             </property>
                             <property name="text">
-                                <string>&amp;Watch File</string>
+                                <string>&amp;Watch file</string>
                             </property>
                         </widget>
                     </vbox>

@@ -26,6 +26,8 @@ class KIMGIOGenerator : public Generator
         void generatePixmap( PixmapRequest * request );
         void generateSyncTextPage( KPDFPage * page ) {;};
 	// [INHERITED] capability querying
+        QString getXMLFile() { return QString::null; };
+        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) { ; };
         bool hasFonts() const;
         bool canGenerateTextPage() { return false; };
         bool supportsSearching()  { return false; };

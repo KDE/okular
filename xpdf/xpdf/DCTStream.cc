@@ -15,7 +15,15 @@ static void str_init_source(j_decompress_ptr /*cinfo*/)
 static boolean str_fill_input_buffer(j_decompress_ptr cinfo)
 {
   struct str_src_mgr * src = (struct str_src_mgr *)cinfo->src;
-  src->buffer = src->str->getChar();
+  if (src->index == 0) {
+    src->buffer = 0xFF;
+    src->index++;
+  }
+  else if (src->index == 1) {
+    src->buffer = 0xD8;
+    src->index++;
+  }
+  else src->buffer = src->str->getChar();
   src->pub.next_input_byte = &src->buffer;
   src->pub.bytes_in_buffer = 1;
   return TRUE;
@@ -50,6 +58,7 @@ DCTStream::DCTStream(Stream *strA):
   src.pub.bytes_in_buffer = 0;
   src.pub.next_input_byte = NULL;
   src.str = str;
+  src.index = 0;
   cinfo.src = (jpeg_source_mgr *)&src;
   cinfo.err = jpeg_std_error(&jerr);
   x = 0;
@@ -98,10 +107,6 @@ void DCTStream::reset() {
     n++;
   }
 
-  // ...and this skips the garbage
-  str->reset();
-  for (n = n - 2; n > 0; n--) str->getChar();
-  
   jpeg_read_header(&cinfo, TRUE);
   jpeg_start_decompress(&cinfo);
 

@@ -67,6 +67,11 @@ class PDFGenerator : public Generator
         void generatePixmap( PixmapRequest * request );
         bool canGenerateTextPage();
         void generateSyncTextPage( KPDFPage * page );
+
+        // bah
+        QString getXMLFile() { return QString::null; };
+        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) { ; };
+
         bool supportsSearching() { return true; };
         bool supportsRotation() { return true; };
         bool prefersInternalSearching() { return false; };

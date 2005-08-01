@@ -233,7 +233,7 @@ TextPage * PDFGenerator::fastTextPage (KPDFPage * page)
     // fetch ourselves a textpage
     KPDFTextDev td;
     docLock.lock();
-    pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), true, false );
     TextPage * textPage = td.takeTextPage();
     docLock.unlock();
     return textPage;
@@ -492,7 +492,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     // 1. Set OutputDev parameters and Generate contents
     // note: thread safety is set on 'false' for the GUI (this) thread
     kpdfOutputDev->setParams( request->width, request->height, genTextPage, genObjectRects, genObjectRects, false );
-    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genObjectRects );
+    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, page->rotation(), true, genObjectRects );
 
     // 2. Take data from outputdev and attach it to the Page
     page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
@@ -521,7 +521,7 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
     // build a TextPage using the lightweight KPDFTextDev generator..
     KPDFTextDev td;
     docLock.lock();
-    pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), true, false );
     // ..and attach it to the page
     page->setSearchPage( abstractTextPage(td.takeTextPage(), page->height(), page->width()) );
     docLock.unlock();

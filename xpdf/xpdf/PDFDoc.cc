@@ -115,7 +115,7 @@ PDFDoc::PDFDoc(BaseStream *strA, GString *ownerPassword,
 GBool PDFDoc::setup(GString *ownerPassword, GString *userPassword) {
   str->reset();
   
-  char *eof = new char[1024];
+  char *eof = new char[1025];
   int pos = str->getPos();
   str->setPos(1024, -1);
   for (int i = 0; i < 1024; i++) eof[i] = str->getChar();

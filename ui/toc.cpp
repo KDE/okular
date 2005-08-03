@@ -121,7 +121,12 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
 
 void TOC::slotExecuted( QListViewItem *i )
 {
-    const QDomElement & e = static_cast< TOCItem* >( i )->element();
+    TOCItem* tocItem = dynamic_cast<TOCItem*>( i );
+    // that filters clicks on [+] that for a strange reason don't seem to be TOCItem*
+    if (tocItem == NULL)
+        return;
+    const QDomElement & e = tocItem->element();
+
     QString externalFileName = e.attribute( "ExternalFileName" );
     if ( !externalFileName.isEmpty() )
     {

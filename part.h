@@ -84,6 +84,7 @@ protected:
 	bool closeURL();
 
 protected slots:
+	void openURLFromDocument(const KURL &url);
 	// connected to actions
 	void slotGoToPage();
 	void slotPreviousPage();

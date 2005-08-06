@@ -1,12 +1,11 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="kdvi_part" version="3">
+<kpartgui name="kdvi_part" version="4">
 <MenuBar>
  <Menu name="file"><text>&amp;File</text>
-  <Action name="info_dvi" group="file_print"/>
-  <Menu name="export" group="file_save" ><text>Export As</text>
-   <Action name="export_postscript"/>
-   <Action name="export_pdf"/>
-   <Action name="export_text"/>
+  <Action name="info_dvi" group="info_merge"/>
+  <Menu name="export" group="print_merge" ><text>Export As</text>
+   <Action name="export_postscript" group="export_merge"/>
+   <Action name="export_pdf" group="export_merge"/>
   </Menu>
  </Menu>
 

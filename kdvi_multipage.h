@@ -88,7 +88,6 @@ private:
   KAction      *docInfoAction;
   KAction      *embedPSAction;
   KAction      *exportPDFAction;
-  KAction      *exportTextAction;
   KAction      *exportPSAction;
 };
 

@@ -66,53 +66,5 @@ void KDVIMultiPage::doExportText(void)
 					  "warning_export_to_text_may_not_work") == KMessageBox::Cancel)
     return;
 
-  // Generate a suggestion for a reasonable file name
-  QString suggestedName = DVIRenderer.dviFile->filename;
-  suggestedName = suggestedName.left(suggestedName.find(".")) + ".txt";
-
-  QString fileName = KFileDialog::getSaveFileName(suggestedName, i18n("*.txt|Plain Text (Latin 1) (*.txt)"), scrollView(), i18n("Export File As"));
-  if (fileName.isEmpty())
-    return;
-  QFileInfo finfo(fileName);
-  if (finfo.exists()) {
-    int r = KMessageBox::warningContinueCancel (scrollView(), i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
-				       i18n("Overwrite File"), i18n("Overwrite"));
-    if (r == KMessageBox::Cancel)
-      return;
-  }
-
-  QFile textFile(fileName);
-  textFile.open( QIODevice::WriteOnly );
-  QTextStream stream( &textFile );
-
-  Q3ProgressDialog progress( i18n("Exporting to text..."), i18n("Abort"), DVIRenderer.totalPages(), scrollView(), "export_text_progress", TRUE );
-  progress.setMinimumDuration(300);
-
-  RenderedDocumentPagePixmap dummyPage;
-  dummyPage.resize(1,1);
-
-  for(int page=1; page <= DVIRenderer.totalPages(); page++) {
-    progress.setProgress( page );
-    // Funny. The manual to QT tells us that we need to call
-    // qApp->processEvents() regularly to keep the application from
-    // freezing. However, the application crashes immediately if we
-    // uncomment the following line and works just fine as it is. Wild
-    // guess: Could that be related to the fact that we are linking
-    // agains qt-mt?
-
-    // qApp->processEvents();
-
-    if ( progress.wasCanceled() )
-      break;
-
-    dummyPage.setPageNumber(page);
-    DVIRenderer.drawPage(100.0, &dummyPage); // We gracefully ingore any errors (bad dvi-file, etc.) which may occur during draw_page()
-
-    for(int i=0; i<dummyPage.textBoxList.size(); i++)
-      stream << dummyPage.textBoxList[i].text << endl;
-  }
-
-  // Switch off the progress dialog, etc.
-  progress.setProgress( DVIRenderer.totalPages() );
-  return;
+  KMultiPage::doExportText();
 }

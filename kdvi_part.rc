@@ -15,7 +15,7 @@
  </Menu>
 
  <Menu name="settings"><text>&amp;Settings</text>
-  <Action name="enable_msgs" group="settings_top"/>
+  <Action name="enable_msgs" group="additional_settings_merge"/>
  </Menu>
 
  <Menu name="help"><text>&amp;Help</text>

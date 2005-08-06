@@ -118,8 +118,15 @@ GBool PDFDoc::setup(GString *ownerPassword, GString *userPassword) {
   char *eof = new char[1025];
   int pos = str->getPos();
   str->setPos(1024, -1);
-  for (int i = 0; i < 1024; i++) eof[i] = str->getChar();
-  eof[1024] = '\0';
+  int i, ch;
+  for (i = 0; i < 1024; i++)
+  {
+    ch = str->getChar();
+    if (ch == EOF)
+      break;
+    eof[i] = ch;
+  }
+  eof[i] = '\0';
   if (strstr(eof, "%%EOF") == NULL)
   {
     error(-1, "Document does not have ending %%EOF");

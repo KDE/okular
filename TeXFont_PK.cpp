@@ -313,7 +313,8 @@ glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor co
     }
     
     g->shrunkenCharacter.convertFromImage(im32,0);
-    g->shrunkenCharacter.setOptimization(QPixmap::BestOptim);
+    //FIXME: KDE4 porting
+    //g->shrunkenCharacter.setOptimization(QPixmap::BestOptim);
   }
   return g;
 }

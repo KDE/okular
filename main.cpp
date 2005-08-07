@@ -99,7 +99,7 @@ int main(int argc, char** argv)
         if ((*it).find("kviewshell") == 0) 
         {
           QByteArray data, replyData;
-          Q3CString replyType;
+          DCOPCString replyType;
           QDataStream arg(&data, QIODevice::WriteOnly);
 
           arg.setVersion(QDataStream::Qt_3_1);

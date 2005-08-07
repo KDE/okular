@@ -92,7 +92,7 @@ private:
   // device can be found, something is badly wrong. In that case,
   // "gsDevice" is set to an empty string, and
   // gs_generate_graphics_file will return immediately.
-  Q3ValueListIterator<QString> gsDevice;
+  QList<QString>::iterator gsDevice;
 
   // A list of known devices, set by the constructor. This includes
   // "png256", "pnm". If a device is found to not work, its name is

@@ -47,8 +47,8 @@ void PixHandler::slotPixmap(PixmapRequest *req)
         pix->height(),
         0,
         0);
-// is this necessary to make it work??
-//    XSync(qt_xdisplay(), false);
+
+    XSync(qt_xdisplay(), false);
     int x=3;
     write (anwser,&x,sizeof(int));
 }

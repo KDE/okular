@@ -1,0 +1,12 @@
+if test -z "$LIB_GS"; then
+echo ""
+echo "The Ghostscript library was not found in your system. ."
+echo "The Ghostscript backend will not be available."
+echo "If you need it, install Ghostscript with shared library,"
+echo "by using 'make so' instead of 'make' when building from"
+echo "sources. For more information check: "
+echo "http://kpdf.kde.org/ghostscript.php"
+echo "or contact your package provider."
+echo ""
+fi
+

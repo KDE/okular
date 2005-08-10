@@ -15,8 +15,9 @@
 
 static KCmdLineOptions options[] =
 {
-  { "unique", I18N_NOOP("Check if the file is loaded in another KDVI. If it is, bring up the other KDVI. Otherwise, load the file."), 0 },
+  { "unique", I18N_NOOP("Check if the file is loaded in another KDVI.\nIf it is, bring up the other KDVI. Otherwise, load the file."), 0 },
   { "paper ", I18N_NOOP("Sets paper size (not implemented at the moment, only for compatibility with lyx)"), 0 },
+  { "goto <pagenumber>", I18N_NOOP("Navigate to this page"), 0 },
   { "+file(s)", I18N_NOOP("Files to load"), 0 },
   KCmdLineLastOption
 };
@@ -132,7 +133,18 @@ int main(int argc, char** argv)
     app.processEvents();
 
     if (args->count() > 0)
-      shell->openURL(args->url(0));
+    {
+      KURL url = args->url(0);
+      if (!url.hasRef() && args->isSet("goto"))
+      {
+        // If the url doesn't already has a reference part, add the
+        // argument of --goto to the url as reference, to make the
+        // KViewShell jump to this page.
+        QString reference = args->getOption("goto");
+        url.setHTMLRef(reference);
+      }
+      shell->openURL(url);
+    }
   }
 
   return app.exec();

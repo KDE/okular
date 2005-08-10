@@ -8,258 +8,287 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>296</width>
-            <height>311</height>
+            <width>351</width>
+            <height>416</height>
         </rect>
     </property>
-    <vbox>
+    <widget class="QLayoutWidget">
         <property name="name">
-            <cstring>unnamed</cstring>
+            <cstring>layout7</cstring>
         </property>
-        <property name="margin">
-            <number>0</number>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>1</y>
+                <width>348</width>
+                <height>408</height>
+            </rect>
         </property>
-        <widget class="QGroupBox">
+        <grid>
             <property name="name">
-                <cstring>groupBox2</cstring>
+                <cstring>unnamed</cstring>
             </property>
-            <property name="title">
-                <string>Program Look</string>
-            </property>
-            <hbox>
+            <widget class="QGroupBox" row="2" column="0">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>groupBox2_2</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <property name="title">
+                    <string>Temporary DEBUG Options</string>
+                </property>
+                <vbox>
                     <property name="name">
-                        <cstring>layout6</cstring>
+                        <cstring>unnamed</cstring>
                     </property>
-                    <vbox>
+                    <widget class="QCheckBox">
                         <property name="name">
-                            <cstring>unnamed</cstring>
+                            <cstring>kcfg_DebugDrawBoundaries</cstring>
                         </property>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_ShowScrollBars</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Show scroll&amp;bars</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_ShowSearchBar</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="text">
-                                <string>Show &amp;search bar in thumbnails list</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_SyncThumbnailsViewport</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="text">
-                                <string>Link the &amp;thumbnails with the page</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_ShowOSD</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Show &amp;hints and info messages</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_CenterFirstPageInRow</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Center &amp;first page in facing mode</string>
-                            </property>
-                        </widget>
-                    </vbox>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout3_2</cstring>
-                    </property>
-                    <vbox>
+                        <property name="text">
+                            <string>DebugDrawBoundaries</string>
+                        </property>
+                    </widget>
+                    <widget class="QCheckBox">
                         <property name="name">
-                            <cstring>unnamed</cstring>
+                            <cstring>kcfg_DebugDrawAnnotationRect</cstring>
                         </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>pixmapLabel1_2</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>0</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="pixmap">
-                                <pixmap>"kpdf", 32</pixmap>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacerV1</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Vertical</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Minimum</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>20</width>
-                                    <height>1</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </vbox>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox3</cstring>
-            </property>
-            <property name="title">
-                <string>Program Features</string>
-            </property>
-            <hbox>
+                        <property name="text">
+                            <string>DebugDrawAnnotationRect</string>
+                        </property>
+                    </widget>
+                </vbox>
+            </widget>
+            <widget class="QGroupBox" row="1" column="0">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>groupBox3</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <property name="title">
+                    <string>Program Features</string>
+                </property>
+                <grid>
                     <property name="name">
-                        <cstring>layout4</cstring>
+                        <cstring>unnamed</cstring>
                     </property>
-                    <vbox>
+                    <widget class="QLayoutWidget" row="0" column="1">
                         <property name="name">
-                            <cstring>unnamed</cstring>
+                            <cstring>layout3_2_2</cstring>
                         </property>
-                        <widget class="QCheckBox">
+                        <vbox>
                             <property name="name">
-                                <cstring>kcfg_ObeyDRM</cstring>
+                                <cstring>unnamed</cstring>
                             </property>
-                            <property name="text">
-                                <string>&amp;Obey DRM limitations</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_WatchFile</cstring>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Watch File</string>
-                            </property>
-                        </widget>
-                    </vbox>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout3_2_2</cstring>
-                    </property>
-                    <vbox>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>pixmapLabel1_2_2</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="pixmap">
+                                    <pixmap>"exec", 32</pixmap>
+                                </property>
+                            </widget>
+                            <spacer>
+                                <property name="name">
+                                    <cstring>spacerV1_2</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Minimum</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>1</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </vbox>
+                    </widget>
+                    <widget class="QLayoutWidget" row="0" column="0">
                         <property name="name">
-                            <cstring>unnamed</cstring>
+                            <cstring>layout5</cstring>
                         </property>
-                        <widget class="QLabel">
+                        <vbox>
                             <property name="name">
-                                <cstring>pixmapLabel1_2_2</cstring>
+                                <cstring>unnamed</cstring>
                             </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>0</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="pixmap">
-                                <pixmap>"exec", 32</pixmap>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacerV1_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Vertical</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Minimum</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>20</width>
-                                    <height>1</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </vbox>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox2_2</cstring>
-            </property>
-            <property name="title">
-                <string>Temporary DEBUG Options</string>
-            </property>
-            <vbox>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_ObeyDRM</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Obey DRM limitations</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_WatchFile</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Watch File</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_ChooseGenerators</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Show generator selection dialog</string>
+                                </property>
+                                <property name="accel">
+                                    <string></string>
+                                </property>
+                            </widget>
+                        </vbox>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QGroupBox" row="0" column="0">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>groupBox2</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <property name="title">
+                    <string>Program Look</string>
+                </property>
+                <hbox>
                     <property name="name">
-                        <cstring>kcfg_DebugDrawBoundaries</cstring>
+                        <cstring>unnamed</cstring>
                     </property>
-                    <property name="text">
-                        <string>DebugDrawBoundaries</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_DebugDrawAnnotationRect</cstring>
-                    </property>
-                    <property name="text">
-                        <string>DebugDrawAnnotationRect</string>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer3</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-    </vbox>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout6</cstring>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_ShowScrollBars</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Show scroll&amp;bars</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_ShowSearchBar</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="text">
+                                    <string>Show &amp;search bar in thumbnails list</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_SyncThumbnailsViewport</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="text">
+                                    <string>Link the &amp;thumbnails with the page</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_ShowOSD</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Show &amp;hints and info messages</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>kcfg_CenterFirstPageInRow</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Center &amp;first page in facing mode</string>
+                                </property>
+                            </widget>
+                        </vbox>
+                    </widget>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout3_2</cstring>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>pixmapLabel1_2</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="pixmap">
+                                    <pixmap>"kpdf", 32</pixmap>
+                                </property>
+                            </widget>
+                            <spacer>
+                                <property name="name">
+                                    <cstring>spacerV1</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Minimum</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>1</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </vbox>
+                    </widget>
+                </hbox>
+            </widget>
+        </grid>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer3</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>20</width>
+                <height>40</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>160</x>
+                <y>410</y>
+                <width>20</width>
+                <height>40</height>
+            </rect>
+        </property>
+    </spacer>
 </widget>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>

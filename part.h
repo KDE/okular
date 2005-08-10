@@ -124,6 +124,7 @@ public slots:
 
 private:
 	void doPrint( KPrinter& printer );
+    void fillGenerators();
 
 	// the document
 	KPDFDocument * m_document;
@@ -163,6 +164,15 @@ private:
 	bool m_actionsSearched;
 	bool m_searchStarted;
 	BrowserExtension *m_bExtension;
+
+    // QDict: key is the name of the generator
+    QDict<Generator> m_loadedGenerators;
+    // list of names of the generators that have settings
+    QStringList m_generatorsWithSettings;
+    KSelectAction * m_confGens;
+
+    private slots:
+    void slotGeneratorPreferences();
 };
 
 

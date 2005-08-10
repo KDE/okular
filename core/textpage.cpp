@@ -19,6 +19,8 @@ KPDFTextPage::~KPDFTextPage()
     }
 }
 
+
+
 RegularAreaRect* KPDFTextPage::findText(const QString &query, SearchDir & direct, 
 const bool &strictCase, const RegularAreaRect *area)
 {
@@ -99,8 +101,8 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
         const QValueList<KPDFTextEntity*>::Iterator &end)
 {
 
-	RegularAreaRect* ret=new RegularAreaRect;
-    
+    RegularAreaRect* ret=new RegularAreaRect;
+
     // j is the current position in our query
     // len is the length of the string in kpdftextentity
     // queryLeft is the length of the query we have left
@@ -133,7 +135,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             //kdDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
-    
+
             if ((strictCase)
                 ? (str.left(min) != query.mid(j,min))
                 : (str.left(min).lower() != query.mid(j,min).lower())
@@ -170,9 +172,32 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             kdDebug(1223) << "\t\tENDOFLINE"  << endl;*/
         if (haveMatch && queryLeft==0 && j==query.length())
         {
-            if (!ret) kdDebug(1223) << "\t\tempty return area, sth very wrong here"  << endl;
-            if (ret->isEmpty()) kdDebug(1223) << "\t\tempty return area"  << endl;
-            if (ret->isNull()) kdDebug(1223) << "\t\tinvalid return area"  << endl;
+//            RegularAreaRect::ConstIterator i=ret->begin(), end=ret->end;
+            int end=ret->count(),i=0,x=0;
+            QValueList <NormalizedRect*> m_remove;
+            for (;i<end;i++)
+            {
+                if ( i < (end-1) )
+                {
+                    if ( (*ret)[x]->intersects( (*ret)[i+1] ) )
+                    {
+                        (*ret)[x]->left=(QMIN((*ret)[x]->left,(*ret)[i+1]->left));
+                        (*ret)[x]->top=(QMIN((*ret)[x]->top,(*ret)[i+1]->top));
+                        (*ret)[x]->bottom=(QMAX((*ret)[x]->bottom,(*ret)[i+1]->bottom));
+                        (*ret)[x]->right=(QMAX((*ret)[x]->right,(*ret)[i+1]->right));
+                        m_remove.append( (*ret)[i+1] );
+                    }
+                    else
+                    {
+                        x=i;
+                   }
+                }
+            }
+            while (!m_remove.isEmpty())
+            {
+                ret->remove( m_remove.last() );
+                m_remove.pop_back();
+            }
             return ret;
         }
 	}
@@ -185,11 +210,11 @@ QString * KPDFTextPage::getText(const RegularAreaRect *area)
         return 0;
 
     QString* ret = new QString;
-    QValueList<KPDFTextEntity*>::Iterator it;
+    QValueList<KPDFTextEntity*>::Iterator it,end = m_words.end();
     KPDFTextEntity * last=0;
-	for( it=m_words.begin() ; it != m_words.end();  ++it )
+	for( it=m_words.begin() ; it != end;  ++it )
 	{
-        // provide the string FIXME: newline handling
+        // provide the string FIXME?: newline handling
         if (area->intersects((*it)->area))
         {
             *ret += ((*it)->txt);

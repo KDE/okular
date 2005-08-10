@@ -48,6 +48,7 @@
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_leftpanel" group="show_merge"/>
     <Action name="preferences"/>
+    <Action name="generator_prefs"/>
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>

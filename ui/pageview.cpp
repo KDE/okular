@@ -37,6 +37,7 @@
 #include <kimageio.h>
 #include <kapplication.h>
 #include <kdebug.h>
+#include <kmessagebox.h>
 
 // system includes
 #include <math.h>
@@ -275,20 +276,25 @@ void PageView::fitPageWidth( int page )
     setFocus();
 }
 
-void PageView::displayMessage( const QString & message )
+void PageView::displayMessage( const QString & message,PageViewMessage::Icon icon,int duration )
 {
     if ( !Settings::showOSD() )
-        return;
+    {
+        if (icon == PageViewMessage::Error)
+            KMessageBox::error( this, message );
+        else
+            return;
+    }
 
     // hide messageWindow if string is empty
     if ( message.isEmpty() )
         return d->messageWindow->hide();
 
     // display message (duration is length dependant)
-    int duration = 500 + 100 * message.length();
-    d->messageWindow->display( message, PageViewMessage::Info, duration );
+    if (duration==-1)
+        duration = 500 + 100 * message.length();
+    d->messageWindow->display( message, icon, duration );
 }
-
 
 //BEGIN DocumentObserver inherited methods
 void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool documentChanged )
@@ -475,6 +481,9 @@ bool PageView::canUnloadPixmap( int pageNumber )
 //BEGIN widget events
 void PageView::viewportPaintEvent( QPaintEvent * pe )
 {
+
+if ( d->document->handleEvent( pe ) )
+{
     // create the rect into contents from the clipped screen rect
     QRect viewportRect = viewport()->rect();
     QRect contentsRect = pe->rect().intersect( viewportRect );
@@ -598,8 +607,11 @@ void PageView::viewportPaintEvent( QPaintEvent * pe )
         }
     }
 }
+}
 
-void PageView::viewportResizeEvent( QResizeEvent * )
+void PageView::viewportResizeEvent( QResizeEvent * event)
+{
+if (d->document->handleEvent( event ) )
 {
     if ( d->items.isEmpty() )
         return;
@@ -612,8 +624,11 @@ void PageView::viewportResizeEvent( QResizeEvent * )
     }
     d->delayResizeTimer->start( 200, true );
 }
+}
 
 void PageView::keyPressEvent( QKeyEvent * e )
+{
+if (d->document->handleEvent( e ) )
 {
     e->accept();
 
@@ -783,8 +798,11 @@ void PageView::keyPressEvent( QKeyEvent * e )
         d->autoScrollTimer->stop();
     }
 }
+}
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
+{
+if (d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
@@ -901,8 +919,11 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
             break;
     }
 }
+}
 
 void PageView::contentsMousePressEvent( QMouseEvent * e )
+{
+if (d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
@@ -969,8 +990,11 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             break;
     }
 }
+}
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
+{
+if (d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
@@ -1114,8 +1138,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 break;
             }
 
+            // if we support text generation 
+            QString* selectedText=0;
+            if (d->document->supportsSearching())
+            {
+
             // grab text in selection by extracting it from all intersected pages
-            QString* selectedText;
             RegularAreaRect * rects=new RegularAreaRect;
             const KPDFPage * kpdfPage=0;
             QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
@@ -1136,10 +1164,11 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 }
             }
             selectedText = kpdfPage->getText( rects );
+            }
 
             // popup that ask to copy:text and copy/save:image
             KPopupMenu menu( this );
-            if ( !selectedText->isEmpty() )
+            if ( d->document->supportsSearching() && !selectedText->isEmpty() )
             {
                 menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
                 menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
@@ -1252,8 +1281,11 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
     // reset mouse press / 'drag start' position
     d->mousePressPos = QPoint();
 }
+}
 
 void PageView::wheelEvent( QWheelEvent *e )
+{
+if (d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when viewport is autoscrolling
     if ( d->viewportMoveActive )
@@ -1304,17 +1336,24 @@ void PageView::wheelEvent( QWheelEvent *e )
     QPoint cp = viewportToContents(e->pos());
     updateCursor(cp);
 }
+}
 
 void PageView::dragEnterEvent( QDragEnterEvent * ev )
 {
+if (d->document->handleEvent( ev ) )
+{
     ev->accept();
+}
 }
 
 void PageView::dropEvent( QDropEvent * ev )
 {
+if (d->document->handleEvent( ev ) )
+{
     KURL::List lst;
     if (  KURLDrag::decode(  ev, lst ) )
         emit urlDropped( lst.first() );
+}
 }
 //END widget events
 

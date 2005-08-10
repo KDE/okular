@@ -21,13 +21,13 @@
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
+#include "ui/pageviewutils.h"
 #include "core/observer.h"
 
 class KURL;
 class KActionCollection;
 
 class KPDFDocument;
-class PageViewItem;
 class PageViewPrivate;
 
 /**
@@ -54,7 +54,8 @@ class PageView : public QScrollView, public DocumentObserver
         // misc methods (from RMB menu/children)
         bool canFitPageWidth();
         void fitPageWidth( int page );
-        void displayMessage( const QString & message );
+        // keep in sync with pageviewutils
+        void displayMessage( const QString & message , PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );
 
         // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
@@ -63,6 +64,22 @@ class PageView : public QScrollView, public DocumentObserver
         void notifyPageChanged( int pageNumber, int changedFlags );
         void notifyContentsCleared( int changedFlags );
         bool canUnloadPixmap( int pageNum );
+
+    public slots:
+        void errorMessage( QString &message,int duration )
+        {
+            displayMessage( message, PageViewMessage::Error, duration );
+        }
+
+        void noticeMessage( QString & message,int duration )
+        {
+            displayMessage( message, PageViewMessage::Info, duration );
+        }
+
+        void warningMessage( QString & message,int duration )
+        {
+            displayMessage( message, PageViewMessage::Warning, duration );
+        }
 
     signals:
         void urlDropped( const KURL& );

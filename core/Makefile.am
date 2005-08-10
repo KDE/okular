@@ -4,7 +4,7 @@ INCLUDES = -I$(srcdir)/.. -I$(top_builddir)/kpdf $(all_includes)
 
 METASOURCES = AUTO
 
-libkpdfcore_la_SOURCES = area.cpp textpage.cpp page.cpp document.cpp link.cpp annotations.cpp \
+libkpdfcore_la_SOURCES = chooseenginedialog.ui area.cpp textpage.cpp page.cpp document.cpp link.cpp annotations.cpp \
                          pagetransition.cpp
 libkpdfcore_la_LIBADD = -lkio 
 

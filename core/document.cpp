@@ -17,6 +17,7 @@
 #include <qvaluevector.h>
 #include <qtimer.h>
 #include <qmap.h>
+#include <kconfigdialog.h>
 #include <kdebug.h>
 #include <kimageio.h>
 #include <klocale.h>
@@ -29,6 +30,8 @@
 #include <kstandarddirs.h>
 #include <klibloader.h>
 #include <ktrader.h>
+#include <qcombobox.h>
+#include <qlabel.h>
 
 // local includes
 #include "document.h"
@@ -36,6 +39,7 @@
 #include "observer.h"
 #include "page.h"
 #include "link.h"
+#include "chooseenginedialog.h"
 
 #include "conf/settings.h"
 
@@ -109,8 +113,8 @@ struct RunningSearch
 
 /** KPDFDocument **/
 
-KPDFDocument::KPDFDocument()
-    : generator( 0 ), d( new KPDFDocumentPrivate )
+KPDFDocument::KPDFDocument( QDict<Generator> * genList )
+    : m_loadedGenerators ( genList ), generator( 0 ),  d( new KPDFDocumentPrivate )
 {
     d->allocatedPixmapsTotalMemory = 0;
     d->memCheckTimer = 0;
@@ -153,49 +157,94 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
-    KTrader::OfferList offers=KTrader::self()->query(mime->name(),"oKular/Generator",constraint, QString::null);
+    KTrader::OfferList offers=KTrader::self()->query(mime->name(),"oKular/Generator",constraint, "[X-KDE-Priority]");
     
     if (offers.isEmpty())
     {
 	kdWarning() << "No plugin for '" << mime->name() << "' mimetype." << endl;
-	return false;
+	   return false;
     }
-    
-    // best ranked offer search
     int hRank=0;
-    for (short i=0;i<offers.count();i++)
-	if (offers[hRank]->property("[X-KDE-Priority]").toInt() <  offers[i]->property("[X-KDE-Priority])").toInt())
-	    hRank=i;
-    
-    KLibLoader *loader = KLibLoader::self();
-    if (!loader)
+
+    // best ranked offer search
+    if (offers.count() > 1 && Settings::chooseGenerators() )
     {
-	kdWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
-	return false;
+        ChooseEngineDialog * choose = new ChooseEngineDialog (0,0);
+        int count=offers.count();
+        int i;
+        for (i=0;i<count;i++)
+        {
+            choose->engineList->insertItem( offers[i]->property("Name").toString() , i );
+        }
+
+        choose -> description-> setText(
+        QString("More then one generator found for %1 mimetype, please select which one to use:").arg(mime->name())
+        );
+
+        switch( choose->exec() )
+        {
+            case QDialog::Accepted:
+                hRank=choose->engineList->currentItem();
+                break;
+            case QDialog::Rejected:
+                return false;
+                break;
+        }
     }
-    KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[hRank]->library() ) );
-    if (!lib) 
+
+    QString propName=offers[hRank]->property("Name").toString();
+    bool cached=false;
+    generator=m_loadedGenerators->take(propName);
+    if (!generator)
     {
-	kdWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
-	return false;
+        KLibLoader *loader = KLibLoader::self();
+        if (!loader)
+        {
+            kdWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
+            return false;
+        }
+        KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[hRank]->library() ) );
+        if (!lib) 
+        {
+            kdWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
+            return false;
+        }
+
+        Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );
+        generator=create_plugin(this);
+
+        if ( !generator )
+        {
+            kdWarning() << "Sth broke." << endl;
+            return false;
+        }
+        if ( offers[hRank]->property("[X-KDE-oKularHasInternalSettings]").toBool() )
+        {
+            m_loadedGenerators->insert(propName,generator);
+            cached=true;
+        }
+        // end 
     }
-    
-    Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );
-    generator=create_plugin(this);
-    
-    if ( !generator )
+    else
     {
-	kdWarning() << "Sth broke." << endl;
-	return false;	
+        generator -> setDocument( this );
+        cached=true;
     }
-    // end 
+    // connect error reporting signals
+    connect (generator,SIGNAL(error(QString&,int )),this,SIGNAL(error(QString&,int )));
+    connect (generator,SIGNAL(warning(QString&,int )),this,SIGNAL(warning(QString&,int )));
+    connect (generator,SIGNAL(notice(QString&,int )),this,SIGNAL(notice(QString&,int )));
+
     // 1. load Document (and set busy cursor while loading)
     QApplication::setOverrideCursor( waitCursor );
     bool openOk = generator->loadDocument( docFile, pages_vector );
     QApplication::restoreOverrideCursor();
     if ( !openOk || pages_vector.size() <= 0 )
     {
-        delete generator;
+        if (!cached)
+        {
+            delete generator;
+        }
         generator = 0;
         return openOk;
     }
@@ -241,6 +290,21 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     }
 
     return true;
+}
+
+
+QString KPDFDocument::getXMLFile()
+{
+    if (generator)
+        return generator->getXMLFile();
+   
+    return QString::null;
+}
+
+void KPDFDocument::setupGUI(KActionCollection* ac, QToolBox* tBox )
+{
+    if (generator)
+        generator->setupGUI(ac,tBox);
 }
 
 void KPDFDocument::closeDocument()
@@ -387,6 +451,16 @@ bool KPDFDocument::isOpened() const
     return generator;
 }
 
+bool KPDFDocument::handleEvent( QEvent * event )
+{
+    return generator ? generator->handleEvent( event ) : true;
+}
+
+bool KPDFDocument::canConfigurePrinter( ) const
+{
+    return generator ? generator->canConfigurePrinter() : false;
+}
+
 const DocumentInfo * KPDFDocument::documentInfo() const
 {
     return generator ? generator->generateDocumentInfo() : NULL;
@@ -519,10 +593,11 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
         }
     }
 
-    // 3. [START FIRST GENERATION] if generator is ready, start a new generation,
+    // 3. [START FIRST GENERATION] if <NO>generator is ready, start a new generation,
     // or else (if gen is running) it will be started when the new contents will
-    //come from generator (in requestDone())
-    if ( generator->canGeneratePixmap() )
+    //come from generator (in requestDone())</NO>
+    // all handling of requests put into sendGeneratorRequest
+    //    if ( generator->canGeneratePixmap() )
         sendGeneratorRequest();
 }
 
@@ -1126,7 +1201,7 @@ bool KPDFDocument::print( KPrinter &printer )
 void KPDFDocument::requestDone( PixmapRequest * req )
 {
 #ifndef NDEBUG
-    if ( !generator->canGeneratePixmap() )
+    if ( !generator->canGeneratePixmap( req->async ) )
         kdDebug() << "requestDone with generator not in READY state." << endl;
 #endif
 
@@ -1168,12 +1243,15 @@ void KPDFDocument::sendGeneratorRequest()
     while ( !d->pixmapRequestsStack.isEmpty() && !request )
     {
         PixmapRequest * r = d->pixmapRequestsStack.last();
-        d->pixmapRequestsStack.pop_back();
         // request only if page isn't already present
         if ( r->page->hasPixmap( r->id, r->width, r->height ) )
+        {
+            d->pixmapRequestsStack.pop_back();
             delete r;
+        }
         else if ( (long)r->width * (long)r->height > 20000000L )
         {
+            d->pixmapRequestsStack.pop_back();
             delete r;
             if ( !d->warnedOutOfMemory )
             {
@@ -1182,6 +1260,10 @@ void KPDFDocument::sendGeneratorRequest()
                 kdWarning() << "this message will be reported only once." << endl;
                 d->warnedOutOfMemory = true;
             }
+        }
+        else if (!r)
+        {
+            d->pixmapRequestsStack.pop_back();
         }
         else
             request = r;
@@ -1197,7 +1279,13 @@ void KPDFDocument::sendGeneratorRequest()
         cleanupPixmapMemory( pixmapBytes );
 
     // submit the request to the generator
-    generator->generatePixmap( request );
+    if ( generator->canGeneratePixmap( request->async ) )
+    {
+        d->pixmapRequestsStack.remove ( request );
+        generator->generatePixmap ( request );
+    }
+    else
+        QTimer::singleShot( 20, this, SLOT(sendGeneratorRequest()) );
 }
 
 void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )

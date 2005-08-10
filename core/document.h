@@ -15,6 +15,7 @@
 #include <qvaluevector.h>
 #include <qstring.h>
 #include <qdom.h>
+#include <qdict.h>
 
 class KPDFPage;
 class KPDFLink;
@@ -28,6 +29,9 @@ class PixmapRequest;
 class Annotation;
 class KPrinter;
 class KURL;
+class KActionCollection;
+class QToolBox;
+
 
 /**
  * @short The Document. Heart of everything. Actions take place here.
@@ -50,7 +54,7 @@ class KPDFDocument : public QObject
 {
     Q_OBJECT
     public:
-        KPDFDocument();
+        KPDFDocument( QDict<Generator> * genList );
         ~KPDFDocument();
 
         // document handling
@@ -85,9 +89,8 @@ class KPDFDocument : public QObject
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
 
         // gui altering stuff
-        bool altersGUI ();
-        QString& getXMLFile();
-        void setupActions(KActionCollection *ac);
+        QString getXMLFile();
+        void setupGUI(KActionCollection  * ac , QToolBox * tBox );
 
         // perform actions on document / pages
         void setViewportPage( int page, int excludeId = -1, bool smoothMove = false );
@@ -106,8 +109,9 @@ class KPDFDocument : public QObject
 
         void toggleBookmark( int page );
         void processLink( const KPDFLink * link );
+        bool canConfigurePrinter() const;
         bool print( KPrinter &printer );
-
+        bool handleEvent (QEvent * event);
         // notifications sent by generator
         void requestDone( PixmapRequest * request );
 
@@ -120,9 +124,11 @@ class KPDFDocument : public QObject
         void linkPresentation();
         void linkEndPresentation();
         void openURL(const KURL &url);
+        void error(QString & string, int duration);
+        void warning(QString & string, int duration);
+        void notice(QString & string, int duration);
 
     private:
-        void sendGeneratorRequest();
         // memory management related functions
         void cleanupPixmapMemory( int bytesOffset = 0 );
         int getTotalMemory();
@@ -131,7 +137,7 @@ class KPDFDocument : public QObject
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
-
+        QDict<Generator>* m_loadedGenerators ;
         Generator * generator;
         QValueVector< KPDFPage * > pages_vector;
         class KPDFDocumentPrivate * d;
@@ -139,6 +145,7 @@ class KPDFDocument : public QObject
     private slots:
         void saveDocumentInfo() const;
         void slotTimedMemoryCheck();
+        void sendGeneratorRequest();
 };
 
 

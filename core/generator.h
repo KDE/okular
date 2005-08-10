@@ -25,6 +25,7 @@ class KPrinter;
 class KPDFPage;
 class KPDFLink;
 class PixmapRequest;
+class KConfigDialog;
 
 /* Note: on contents generation and asyncronous queries.
  * Many observers may want to request data syncronously or asyncronously.
@@ -62,28 +63,41 @@ class Generator : public QObject
         virtual bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
 
         // page contents generation
-        virtual bool canGeneratePixmap() = 0;
+        virtual bool canGeneratePixmap( bool async ) = 0;
         virtual void generatePixmap( PixmapRequest * request ) = 0;
+
         // can generate a KPDFText Page
         virtual bool canGenerateTextPage() = 0;
         virtual void generateSyncTextPage( KPDFPage * page ) = 0;
+        // gui stuff
+        virtual QString getXMLFile() = 0;
+        virtual void setupGUI(KActionCollection  * ac , QToolBox * tBox ) = 0;
+
         // capability querying
         // provides internal search 
         virtual bool supportsSearching() = 0;
         virtual bool prefersInternalSearching() = 0;
+        virtual bool supportsRotation() = 0;
+
         // internal search and gettext
         virtual RegularAreaRect * findText( const QString & text, SearchDir dir, const bool strictCase,
                     const RegularAreaRect * lastRect, KPDFPage * page) = 0;
         virtual QString* getText( const RegularAreaRect * area, KPDFPage * page ) = 0;
-	// may come useful later
+        virtual void setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation) = 0;
+        // may come useful later
         //virtual bool hasFonts() const = 0;
 
-        // print document using already configured kprinter
+        // return true if wanting to configure the printer yourself in backend
+        virtual bool canConfigurePrinter( ) { return false; }
+        // print the document (using a printer configured or not depending on the above function)
+        // note, if we are only asking for a preview this will be preconfigured
         virtual bool print( KPrinter& /*printer*/ ) { return false; }
         // access meta data of the generator
         virtual QString getMetaData( const QString &/*key*/, const QString &/*option*/ ) { return QString(); }
         // tell generator to re-parse configuration and return true if something changed
         virtual bool reparseConfig() { return false; }
+
+        void setDocument( KPDFDocument * doc ) { m_document=doc; };
 
         /** 'signals' to send events the KPDFDocument **/
         // tell the document that the job has been completed
@@ -91,6 +105,28 @@ class Generator : public QObject
 
         /** constructor: takes the Document as a parameter **/
         Generator( KPDFDocument * doc ) : m_document( doc ) {};
+
+        // add support for settings
+        virtual void addPages( KConfigDialog* /*dlg*/) { ; } ;
+
+        // capture events
+        // return false if you don't wish kpdf to use its event handlers
+        // in the pageview after your handling (use with caution)
+        virtual bool handleEvent (QEvent * /*event*/ ) { return true; } ;
+
+        // podner if not making separate handlers for every event type (clutters the api though)
+        /*virtual bool mouseEvent ( QMouseEvent* event ) { return false; };
+        virtual bool wheelEvent ( QWheelEvent* event ) { return false; };
+        virtual bool keyEvent ( QKeyEvent* event ) { return false; };
+        virtual bool resizeEvent ( QResizeEvent* event ) { return false; };
+        virtual bool dragEnterEvent ( QDragEnterEvent* event ) { return false; };
+        virtual bool dropEvent ( QDropEvent* event ) { return false; };
+        virtual bool paintEvent ( QKeyEvent* event ) { return false; };*/
+
+    signals:
+        void error(QString & string, int duration);
+        void warning(QString & string, int duration);
+        void notice(QString & string, int duration);
 
     private:
         Generator();
@@ -102,16 +138,19 @@ class Generator : public QObject
  */
 struct PixmapRequest
 {
-    PixmapRequest( int rId, int n, int w, int h, int p, bool a = false )
-        : id( rId ), pageNumber( n ), width( w ), height( h ),
-        priority( p ), async( a ), page( 0 )  {};
+    PixmapRequest( int rId, int n, int w, int h, /*double z,*/ int r, int p, bool a = false )
+        : id( rId ), pageNumber( n ), width( w ), height( h ), /*zoom(z),*/
+        rotation(r) , priority( p ), async( a ), page( 0 )  {};
 
+    PixmapRequest() {;};
     // observer id
     int id;
     // page number and size
     int pageNumber;
     int width;
     int height;
+//    double zoom;
+    int rotation;
     // asyncronous request priority (less is better, 0 is max)
     int priority;
     // generate the pixmap in a thread and notify observer when done

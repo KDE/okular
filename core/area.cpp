@@ -69,8 +69,6 @@ QRect NormalizedRect::geometry( int xScale, int yScale ) const
     return QRect( l, t, r - l + 1, b - t + 1 );
 }
 
-
-
 HighlightAreaRect::HighlightAreaRect(RegularAreaRect *area)
 {
 	RegularAreaRect::Iterator i;

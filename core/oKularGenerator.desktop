@@ -9,3 +9,8 @@ Type=int
 # Version of the API.
 [PropertyDef::X-KDE-oKularAPIVersion]
 Type=int
+
+# Has configuration option
+[PropertyDef::X-KDE-oKularHasInternalSettings]
+Type=bool
+

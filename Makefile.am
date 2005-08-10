@@ -1,6 +1,6 @@
 SUBDIRS = conf core ui shell generators
 
-INCLUDES = -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo -I$(top_builddir)/kpdf $(all_includes) $(FREETYPE_CFLAGS)
+INCLUDES =  -I$(top_builddir)/kpdf $(all_includes) $(FREETYPE_CFLAGS)
 
 METASOURCES = AUTO
 
@@ -17,7 +17,7 @@ kde_module_LTLIBRARIES = libkpdfpart.la
 
 libkpdfpart_la_SOURCES = dcop.skel part.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-libkpdfpart_la_LIBADD  = xpdf/xpdf/libxpdf.la conf/libkpdfconf.la core/libkpdfcore.la \
+libkpdfpart_la_LIBADD  = conf/libkpdfconf.la core/libkpdfcore.la \
                          ui/libkpdfui.la ui/painter_agg2/libagg2.la $(LIB_KPARTS) \
                          $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS) $(LIB_KNEWSTUFF) \
                          $(LIB_KHTML) -lm

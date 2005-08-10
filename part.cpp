@@ -69,6 +69,7 @@
 #include "conf/preferencesdialog.h"
 #include "conf/settings.h"
 #include "core/document.h"
+#include "core/generator.h"
 #include "core/page.h"
 
 // definition of searchID for this class
@@ -96,7 +97,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	setInstance(KPDFPartFactory::instance());
 
 	// build the document
-	m_document = new KPDFDocument();
+	m_document = new KPDFDocument(&m_loadedGenerators);
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
@@ -182,6 +183,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
+    connect( m_document, SIGNAL(error(QString&,int )),m_pageView,SLOT(errorMessage(QString&,int )));
+    connect( m_document, SIGNAL(warning(QString&,int )),m_pageView,SLOT(warningMessage(QString&,int )));
+    connect( m_document, SIGNAL(notice(QString&,int )),m_pageView,SLOT(noticeMessage(QString&,int )));
 //	rightLayout->addWidget( m_pageView );
 
 	// add document observers
@@ -235,7 +239,16 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_saveAs = KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
 	m_saveAs->setEnabled( false );
 	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
-	prefs->setText( i18n( "Configure KPDF..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
+	prefs->setText( i18n( "Configure oKular..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
+
+    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
+    KTrader::OfferList gens=KTrader::self()->query("oKular/Generator",constraint);
+    if (gens.count() > 0)
+    {
+        KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
+        genPrefs->setText( i18n( "Configure backends..." ) );
+    }
+
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
@@ -301,6 +314,67 @@ Part::~Part()
     delete m_document;
 }
 
+void Part::fillGenerators()
+{
+    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
+    KTrader::OfferList offers=KTrader::self()->query("oKular/Generator",constraint);
+    QString propName;
+    int count=offers.count();
+    if (count > 0)
+    {
+        for (int i=0;i<count;i++)
+        {
+          propName=offers[i]->property("Name").toString();
+          // dont load already loaded generators
+          if (! m_loadedGenerators.take( propName ) )
+          {
+            KLibLoader *loader = KLibLoader::self();
+            if (!loader)
+            {
+                kdWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
+                return;
+            }
+            KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
+            if (!lib) 
+            {
+                kdWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
+            }
+
+            Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );
+            // the generator should do anything with the document if we are only configuring
+            m_loadedGenerators.insert(propName,create_plugin(m_document));
+            m_generatorsWithSettings << propName;
+          }
+        }
+
+        m_loadedGenerators.setAutoDelete(true);
+    }
+}
+
+void Part::slotGeneratorPreferences( )
+{
+    fillGenerators();
+    //Generator* gen= m_loadedGenerators[m_generatorsWithSettings[number]];
+
+    // an instance the dialog could be already created and could be cached,
+    // in which case you want to display the cached dialog
+    if ( KConfigDialog::showDialog( "generator_prefs" ) )
+        return;
+
+    // we didn't find an instance of this dialog, so lets create it
+    KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Settings::self() );
+
+    QDictIterator<Generator> it(m_loadedGenerators);
+    for( ; it.current(); ++it )
+    {
+        it.current()->addPages(dialog);
+    }
+
+    // (for now dont FIXME) keep us informed when the user changes settings
+    // connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
+    dialog->show();
+}
+
 void Part::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // update actions if the page is changed
@@ -354,6 +428,7 @@ bool Part::slotImportPSFile()
 {
     KURL url = KFileDialog::getOpenURL( QString::null, "application/postscript" );
     KTempFile tf( QString::null, ".pdf" );
+
     if ( tf.status() == 0 && url.isLocalFile())
     {
         tf.close();
@@ -367,10 +442,12 @@ bool Part::slotImportPSFile()
         connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
         connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
         p -> start();
-        
         return true;
     }
+
     m_temporaryLocalFile = QString::null;
+    return false;
+
 }
 bool Part::openFile()
 {
@@ -406,12 +483,9 @@ bool Part::openFile()
         KMessageBox::information( m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString::null, "autoPresentationWarning" );
         slotShowPresentation();
     }
-
-    if (m_document->altersGUI())
-    {
-        setXMLFile(m_document->getXMLFile(),true);
-        m_document->setupActions(actionCollection());
-    }
+/*    if (m_document->getXMLFile() != QString::null)
+        setXMLFile(m_document->getXMLFile(),true);*/
+    m_document->setupGUI(actionCollection(),m_toolBox);
     return true;
 }
 
@@ -885,7 +959,9 @@ void Part::slotPrint()
     }
     if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
 
-    if (printer.setup(widget())) doPrint( printer );
+    if ( m_document->canConfigurePrinter() )
+        doPrint( printer );
+    else if (printer.setup(widget())) doPrint( printer );
 }
 
 void Part::doPrint(KPrinter &printer)

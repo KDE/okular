@@ -163,6 +163,7 @@ bool GSInterpreterLib::startInterpreter(bool setStdio)
 
 
     m_running = handleExit ( exit_i ) ;
+    kdDebug(4655) <<  "Before setting : "  << m_running << " call " << call <<  endl;
 /*    if ( m_running && setMore )
     {
         QString set;

@@ -1,0 +1,109 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Piotr Szymanski <niedakh@gmail.com>             *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
+
+#ifndef _KPDF_GSGENERATOR_H_
+#define _KPDF_GSGENERATOR_H_
+
+#include "core/generator.h"
+
+class GSInterpreterCMD;
+class GSLogWindow;
+class GSInterpreterLib;
+class GSInternalDocument;
+class KTempFile;
+
+class GSGenerator : public Generator
+{
+    Q_OBJECT
+    public:
+        /** virtual methods to reimplement **/
+        // load a document and fill up the pagesVector
+        bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector );
+
+        // Document description and Table of contents
+        const DocumentInfo * generateDocumentInfo();
+        const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
+        const DocumentFonts * generateDocumentFonts() { return 0L; }
+
+        // DRM handling
+        bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
+
+        // page contents generation
+        bool canGeneratePixmap( bool async ) ;
+        void generatePixmap( PixmapRequest * request ) ;
+
+        // can generate a KPDFText Page
+        bool canGenerateTextPage() { return false; } ;
+        void generateSyncTextPage( KPDFPage * /*page*/ ) { ; } ;
+
+        // capability querying
+        // provides internal search 
+        bool supportsSearching() { return false; } ;
+        bool prefersInternalSearching() { return false; } ;
+
+        bool supportsRotation() { return true; } ;
+        void setOrientation(QValueVector<KPDFPage*>&, int);
+
+        QString getXMLFile() { return QString::null; };
+        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) ;
+
+        // internal search and gettext
+        RegularAreaRect * findText( const QString & /* text*/, SearchDir /* dir*/, const bool /* strictCase*/,
+                    const RegularAreaRect  * /*lastRect*/, KPDFPage  * /* page*/) { return 0L;} ;
+        QString* getText( const RegularAreaRect * /*area*/, KPDFPage  * /*page */) {return 0L;} ;
+    	// may come useful later
+        //virtual bool hasFonts() const ;
+
+        // print document using already configured kprinter
+        bool print( KPrinter& /*printer*/ );
+        // access meta data of the generator
+        QString getMetaData( const QString &/*key*/, const QString &/*option*/ ) { return QString(); }
+        // tell generator to re-parse configuration and return true if something changed
+        bool reparseConfig() { return false; }
+        QString fileName();
+
+        void addPages( KConfigDialog* dlg );
+        /** constructor: takes the Document as a parameter **/
+        GSGenerator( KPDFDocument * doc );
+        ~GSGenerator();
+
+    public slots:
+        void slotPixmapGenerated(PixmapRequest * request);
+        void slotAsyncPixmapGenerated(PixmapRequest * request );
+
+    signals:
+        void error(QString & string, int duration);
+        void warning(QString & string, int duration);
+        void notice(QString & string, int duration);
+
+    private:
+        // conversion handling
+        bool m_converted;
+        KTempFile * dscForPDF;
+        QMutex convertLock;
+        GSInterpreterLib* m_convert;
+
+        bool loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * > & pagesVector , bool ps );
+        bool loadPages( QValueVector< KPDFPage * > & pagesVector );
+        bool initInterpreter();
+        int rotation( CDSC_ORIENTATION_ENUM orientation );
+        int angle( CDSC_ORIENTATION_ENUM orientation );
+        CDSC_ORIENTATION_ENUM orientation( int rot );
+        QMutex docLock;
+
+        // backendish stuff
+        GSInterpreterLib* pixGenerator;
+        GSInterpreterCMD* asyncGenerator;
+        GSInternalDocument* internalDoc;
+        GSLogWindow * m_logWindow ;
+        bool m_asyncBusy;
+        QToolBox * m_box;
+};
+
+#endif

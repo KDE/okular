@@ -40,6 +40,9 @@
  * %%PaperSize: 
  * %%PaperWeight:  (ignored)
  *
+ * DSC 3.0 additions
+ * %%Copyright
+ * 
  * Other additions for defaults or page section
  % %%ViewingOrientation: xx xy yx yy
 */
@@ -1982,6 +1985,12 @@ dsc_scan_comments(CDSC *dsc)
 	dsc->id = CDSC_TITLE;
 	dsc->dsc_title = dsc_add_line(dsc, dsc->line+8, dsc->line_length-8);
 	if (dsc->dsc_title==NULL)
+	    return CDSC_ERROR;
+    }
+    else if (IS_DSC(line, "%%Copyright:")) {
+	dsc->id = CDSC_COPYRIGHT;
+	dsc->dsc_copyright = dsc_add_line(dsc, dsc->line+12, dsc->line_length-12);
+	if (dsc->dsc_copyright == NULL)
 	    return CDSC_ERROR;
     }
     else if (IS_DSC(line, "%%For:")) {

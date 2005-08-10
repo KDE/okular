@@ -1,5 +1,5 @@
 /** 
- * Copyright (C) 2001 the KGhostView authors. See file AUTHORS.
+ * Copyright (C) 2001 the KGhostView authors. See file GVAUTHORS.
  * 	
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -320,6 +320,7 @@ public:
     QString dsc_creator() const;
     QString dsc_date()    const;
     QString dsc_for()     const;
+    QString dsc_copyright()     const;
 
     // unsigned int max_error
    

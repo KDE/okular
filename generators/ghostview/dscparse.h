@@ -115,6 +115,8 @@ typedef enum {
   CDSC_DOCUMENTSUPPLIEDFONTS = 220,	/* IGNORED %%DocumentSuppliedFonts: */
   CDSC_HIRESBOUNDINGBOX	     = 221,	/* %%HiResBoundingBox: */
   CDSC_CROPBOX	     	     = 222,	/* %%CropBox: */
+// added 02 August 2005
+  CDSC_COPYRIGHT             = 223, /* %%Copyright: */
 
 /* Preview section */
   CDSC_BEGINPREVIEW	= 301,	/* %%BeginPreview */
@@ -357,6 +359,8 @@ struct CDSC_S {
     char *dsc_creator;
     char *dsc_date;
     char *dsc_for;
+    // added 02 August 2005
+    char *dsc_copyright;
 
     unsigned int max_error;	/* highest error number that will be reported */
     const int *severity;	/* array of severity values, one per error */

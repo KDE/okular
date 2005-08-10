@@ -1,5 +1,5 @@
 /** 
- * Copyright (C) 2001 the KGhostView authors. See file AUTHORS.
+ * Copyright (C) 2001 the KGhostView authors. See file GVAUTHORS.
  * 	
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,7 +134,12 @@ KDSC::~KDSC()
 
 QString KDSC::dsc_version() const
 {
-    return QString( _cdsc->dsc_version );   
+    return QString( _cdsc->dsc_version );
+}
+
+QString KDSC::dsc_copyright() const
+{
+    return QString( _cdsc->dsc_copyright );
 }
 
 bool KDSC::dsc() const

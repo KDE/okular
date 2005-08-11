@@ -1,4 +1,4 @@
-SUBDIRS = . conf
+SUBDIRS = conf .
 
 INCLUDES = -I$(srcdir)/../.. -I$(top_builddir)/kpdf $(all_includes) 
 

@@ -7,23 +7,25 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <interpreter_lib.h>
-#include <kpdflibgsasyncgenerator.h>
+#include "interpreter_lib.h"
+#include "kpdflibgsasyncgenerator.h"
+
+#include "gsapi/iapi.h"
+#include "gsapi/gdevdsp.h"
 
 #include <qpixmap.h>
 #include <qimage.h>
-
-#include <kdebug.h>
-#include <gdevdsp.h>
-#include <iapi.h>
 #include <kapplication.h>
-
-#include <X11/Xlib.h>
-#include <fixx11h.h>
+#include <kdebug.h>
 
 #include <fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <X11/Xlib.h>
+#include <fixx11h.h>
+
+
 
 GSInterpreterLib *interpreter;
 int mem;

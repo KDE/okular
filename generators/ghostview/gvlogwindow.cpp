@@ -1,8 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 1997-2005 the KGhostView authors. See file GV_AUTHORS.  *
  *   Copyright (C) 2005 by Piotr Szymanski <niedakh@gmail.com>             *
- *                                                                         *
- *   Many portions of this file are based on kghostview's kpswidget code   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,67 +9,135 @@
 
 #include <qtextedit.h>
 #include <qlabel.h>
-#include <qvbox.h>
+#include <kdebug.h>
 
+#include <klistview.h>
+#include <qstringlist.h>
+#include <qstring.h>
 #include <kglobalsettings.h>
+#include <kiconloader.h>
 #include <kurllabel.h>
 #include <klocale.h>
 
 #include "gvlogwindow.h"
 
-GVLogWindow::GVLogWindow( const QString& caption, 
+GSLogWindow::GSLogWindow( const QString& caption, 
                       QWidget* parent, const char* name) :
-    KDialogBase( parent, name, false, caption, User1|Close, Close, false, 
-                 KStdGuiItem::clear() )
+    QVBox ( parent, name )
 {
-    QVBox * display = makeVBoxMainWidget();
+    kdDebug() << "Starting logwindow" <<endl;
+    m_searchLine = new KListViewSearchLine(this);
+    m_msgList = new KListView(this);
 
-    m_errorIndication = new QLabel( "", display, "logview-label" );
-    m_errorIndication->hide();
+    QValueList< int > searchCols;
+    searchCols.append(0);
+    m_searchLine -> setSearchColumns (searchCols);
 
-    m_configureGS = new KURLLabel( i18n( "Configure Ghostscript" ), QString::null, display );
-    m_configureGS->hide();
+    m_searchLine -> setListView(m_msgList);
+    // width will be fixed later
+    m_tCol=m_msgList -> addColumn ("Text",10);
+    m_msgList -> addColumn ("InternalType",0);
 
-    m_logView = new QTextEdit( display, "logview" );
-    m_logView->setTextFormat( Qt::PlainText );
-    m_logView->setReadOnly( true );
-    m_logView->setWordWrap( QTextEdit::NoWrap );
-    m_logView->setFont( KGlobalSettings::fixedFont() );
-    m_logView->setMinimumWidth( 80 * fontMetrics().width( " " ) );
-
-    connect( this, SIGNAL( user1Clicked() ), SLOT( clear() ) );
-    connect( m_configureGS, SIGNAL( leftClickedURL() ), SLOT( emitConfigureGS() ) );
+    connect( this, SIGNAL( user1Clicked() ),this, SLOT( clear() ) );
+    connect( &m_clearTimer, SIGNAL(timeout()), this, SLOT(appendBuffered()));
 }
 
-void GVLogWindow::emitConfigureGS() {
-	emit configureGS();
+bool GSLogWindow::event( QEvent * event )
+{
+    QVBox ::event(event);
+    if ( event->type() == QEvent::Reparent && ( m_msgList->childCount() ) )
+    {
+        int w=( m_msgList->firstChild() ) -> width(  m_msgList->fontMetrics() , m_msgList, m_tCol);
+        kdDebug() << "new width = " << w << endl;
+        m_msgList->setColumnWidth(m_tCol, w);
+    }
+    return true;
 }
 
-void GVLogWindow::append( const QString& message )
+void GSLogWindow::append( MessageType t, const QString &text)
 {
-    m_logView->append( message );
-    this->show();
+    //kdDebug() << "Appending: " << text <<endl;
+    kdDebug() << "last int: " << m_lastInt << endl;
+    QStringList l=QStringList::split("\n",text.stripWhiteSpace());
+    QStringList::Iterator it=l.begin(), end=l.end();
+    while (it!=end)
+    {
+
+    KListViewItem* tmp;
+    switch(t)
+    {
+        case Error:
+            tmp=new KListViewItem( m_msgList , *it, "Error" );
+            tmp->setPixmap(m_tCol,SmallIcon( "messagsebox_critical" ));
+            break;
+        case Input:
+            tmp=new KListViewItem( m_msgList , *it, "Input" );
+            tmp->setPixmap(m_tCol,SmallIcon( "1leftarrow" ));
+            break;
+        case Output:
+            tmp=new KListViewItem( m_msgList , *it, "Output" );
+            tmp->setPixmap(m_tCol,SmallIcon( "1rightarrow" ));
+            break;
+    }
+    ++it;
+    }
 }
 
-void GVLogWindow::append( char* buf, int num )
+void GSLogWindow::append( MessageType t, const char* buf, int num )
 {
-    m_logView->append( QString::fromLocal8Bit( buf, num ) );
-//    if( _showLogWindow )
-    this->show();
+    // ghostscript splits messages longer then 128 to chunks, handle this properly
+    if (m_lastInt == 128)
+    {
+        kdDebug() << "last was full line" << endl;
+        if (t==m_buffer.first)
+        {
+            kdDebug() << "appending to buffer" << endl;
+            m_buffer.second +=QString::fromLocal8Bit( buf, num );
+        }
+        else
+        {
+            kdDebug() << "appending from buffer" << endl;
+            // sets m_lastInt to 0
+            appendBuffered();
+        }
+    }
+
+    if (num==128)
+    {
+        kdDebug() << "this is full line" << endl;
+        if (m_lastInt != 128)
+        {
+            kdDebug() << "appending to buffer" << endl;
+            m_buffer.first=t;
+            m_buffer.second=QString::fromLocal8Bit( buf, num );
+        }
+        m_clearTimer.stop();
+        m_clearTimer.start(20,FALSE);
+    }
+    else
+    {
+        kdDebug() << "this is normal line" << endl;
+        if (m_lastInt == 128)
+        {
+            kdDebug() << "appending from buffer" << endl;
+            appendBuffered();
+        }
+        else
+        {
+            kdDebug() << "appending directly" << endl;
+            append(t,QString::fromLocal8Bit( buf, num ));
+            m_clearTimer.stop();
+        }
+    }
+    m_lastInt=num;
+
+    //    kdDebug()<< "LogWindow before split: " << msgString << " lenght" << num << endl;    
+
 }
 
-void GVLogWindow::clear()
+void GSLogWindow::clear()
 {
-    m_logView->clear();
-    m_errorIndication->clear();
-}
-
-void GVLogWindow::setLabel( const QString& text, bool showConfigureGS )
-{
-	m_errorIndication->setText( text );
-	m_errorIndication->show();
-	if ( showConfigureGS ) m_configureGS->show();
-	else m_configureGS->hide();
+    m_msgList ->clear();
 }
 
 #include "gvlogwindow.moc"

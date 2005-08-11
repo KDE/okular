@@ -45,14 +45,18 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
     dscForPDF = 0;
     m_asyncBusy = false;
     if ( GSSettings::messages() )
+    {
         m_logWindow = new GSLogWindow(QString ("Logwindow"));
+    }
+    else
+        m_logWindow = 0;
 }
 
 GSGenerator::~GSGenerator()
 {
     delete asyncGenerator;
     delete pixGenerator;
-    delete m_logWindow;
+    docLock.unlock();
 }
 
 void GSGenerator::addPages( KConfigDialog *dlg )
@@ -210,8 +214,11 @@ void GSGenerator::slotAsyncPixmapGenerated(PixmapRequest * request )
 
 void GSGenerator::setupGUI(KActionCollection  * /*ac*/ , QToolBox * tBox )
 {
-    m_box=tBox;
-    m_box->addItem( m_logWindow, QIconSet(SmallIcon("queue")), i18n("GhostScript Messages") );
+    if ( GSSettings::messages() )
+    {
+        m_box=tBox;
+        m_box->addItem( m_logWindow, QIconSet(SmallIcon("queue")), i18n("GhostScript Messages") );
+    }
 }
 
 bool GSGenerator::loadPages( QValueVector< KPDFPage * > & pagesVector )

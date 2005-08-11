@@ -82,13 +82,22 @@ GSInterpreterCMD::~GSInterpreterCMD()
     if (!m_pixmap)
         delete m_pixmap;
     if ( running() )
-        stopInterpreter();
-    // remove 
-    while ( ! m_stoppingPids.isEmpty() )
+        stopInterpreter(false);
+    // remove (crashes kpdf somehow, probably because 
+    // the destuction thread does the same a line higher
+    /* this should not be needed!
+    if (m_stoppingPids.count() > 0)
     {
-        delete m_stoppingPids.last();
-        m_stoppingPids.pop_back();
-    }
+        QMapIterator<pid_t,ProcessData*> it, end=m_stoppingPids.end();
+        while ( it != end )
+        {
+            ProcessData *p=it.data();
+            ++it;
+            delete p;
+        }
+    }*/
+    m_stoppingPids.clear();
+    unlock();
 }
 
 void GSInterpreterCMD::destroyInternalProcess(KProcess * stop)
@@ -137,7 +146,7 @@ void GSInterpreterCMD::setStructure(PagePosition *prolog, PagePosition *setup)
     m_data[1]=setup;
 }
 
-bool GSInterpreterCMD::stopInterpreter()
+bool GSInterpreterCMD::stopInterpreter(bool async)
 {
     kdDebug(4655) << "stopInterpreter()" << endl;
     // if( !_interpreterBusy ) return;
@@ -150,18 +159,23 @@ bool GSInterpreterCMD::stopInterpreter()
         m_stoppingPids.insert ( stop->pid(), m_processData );
         m_process=0;
         kdDebug(4655) << "Launching destroy thread" << endl;
-        switch ( fork() )
+        if (!async)
+            destroyInternalProcess(stop);
+        else
         {
-            case -1:
-                // we cant kill it in a fork, kill it outside a fork
-                destroyInternalProcess(stop);
-                break;
-            case 0:
-                destroyInternalProcess(stop);
-                _exit(0);
-                break;
-            default:
-                break;
+            switch ( fork() )
+            {
+                case -1:
+                    // we cant kill it in a fork, kill it outside a fork
+                    destroyInternalProcess(stop);
+                    break;
+                case 0:
+                    destroyInternalProcess(stop);
+                    _exit(0);
+                    break;
+                default:
+                    break;
+            }
         }
     }
     return true;

@@ -18,6 +18,7 @@
 
 #include "interpreter.h"
 #include "core/generator.h"
+#include "gsapi/iapi.h"
 
 class GSInterpreterLib : public QObject
 {
@@ -104,7 +105,7 @@ class GSInterpreterLib : public QObject
         void  argsToChar();
 
         // instance
-        void * ghostScriptInstance;
+        gs_main_instance *ghostScriptInstance;
         QMutex interpreterLock;
 };
 #endif

@@ -1,13 +1,13 @@
 SUBDIRS = . conf
 
-INCLUDES = -I$(srcdir)/../.. -I$(top_builddir)/kpdf $(all_includes) -I$(GSINCLUDES) 
+INCLUDES = -I$(srcdir)/../.. -I$(top_builddir)/kpdf $(all_includes) 
 
 METASOURCES = AUTO
 KDE_CXXFLAGS=-Wall
 
 noinst_LTLIBRARIES = libgsinterpreter.la
-libgsinterpreter_la_LDFLAGS = $(all_libraries) -no-undefined
-libgsinterpreter_la_LIBADD = $(LIB_QT) $(LIB_KDECORE) conf/libgssettings.la $(LIB_GS)
+libgsinterpreter_la_LDFLAGS = $(all_libraries) -no-undefined $(GSLIBDIR)
+libgsinterpreter_la_LIBADD = $(LIB_QT) $(LIB_KDECORE) conf/libgssettings.la -lgs
 libgsinterpreter_la_SOURCES = interpreter_lib.cpp 
 
 bin_PROGRAMS = kpdflibgsasyncgenerator

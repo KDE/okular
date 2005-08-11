@@ -11,15 +11,17 @@
  ***************************************************************************/
 
 #include <math.h>
-#include <iapi.h>
-#include <ierrors.h>
-#include <gdevdsp.h>
 
 #include <qpixmap.h>
 #include <qpainter.h>
 #include <qstring.h>
 
 #include <kdebug.h>
+
+
+#include "gsapi/iapi.h"
+#include "gsapi/ierrors.h"
+#include "gsapi/gdevdsp.h"
 
 #include "interpreter_lib.h"
 #include "conf/gssettings.h"
@@ -443,7 +445,7 @@ void GSInterpreterLib::argsToChar()
     }
     m_args.clear();
     m_args  << " "
-        << "-q"
+//        << "-q"
         <<"-dMaxBitmap=10000000 "
         << "-dDELAYSAFER"
         << "-dNOPAUSE"

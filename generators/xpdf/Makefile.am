@@ -13,6 +13,8 @@ libokularGenerator_xpdf_la_SOURCES = generator_pdf.cpp gp_outputdev.cpp
 
 KDE_OPTIONS = nofinal
 
+METASOURCES = AUTO
+
 kde_services_DATA = libokularGenerator_xpdf.desktop
 
 generator_pdf.lo: ../../conf/settings.h

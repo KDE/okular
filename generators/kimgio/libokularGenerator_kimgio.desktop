@@ -1,10 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Service
-Name=Kimgio Generator
+Name=KDE Image libraries
 Comment=Image backend for oKular
 ServiceTypes=oKular/Generator
 MimeType=image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/gif;image/x-hdr;image/x-ico;image/jp2;image/jpeg;video/x-mng;image/x-portable-bitmap;image/x-pcx;image/x-portable-greymap;image/png;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-targa;image/tiff;image/x-xbm;image/x-xcf-gimp;image/x-xpm;
 X-KDE-Library=libokularGenerator_kimgio.la
 X-KDE-Priority=1
-X-KDE-oKularAPIVersion=5
+X-KDE-oKularAPIVersion=1
+X-KDE-oKularHasInternalSettings=false

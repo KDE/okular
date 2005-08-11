@@ -2272,3 +2272,5 @@ void PDFPixmapGeneratorThread::run()
     readyEvent->setData( d->currentRequest );
     QApplication::postEvent( d->generator, readyEvent );
 }
+#include "generator_pdf.moc"
+

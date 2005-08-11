@@ -47,6 +47,7 @@ class PDFPixmapGeneratorThread;
  */
 class PDFGenerator : public Generator
 {
+    Q_OBJECT
     public:
         PDFGenerator( KPDFDocument * document );
         virtual ~PDFGenerator();
@@ -91,6 +92,10 @@ class PDFGenerator : public Generator
 
         // [INHERITED] reparse configuration
         bool reparseConfig();
+    signals:
+        void error(QString & string, int duration);
+        void warning(QString & string, int duration);
+        void notice(QString & string, int duration);
 
     private:
         // friend class to access private document related variables

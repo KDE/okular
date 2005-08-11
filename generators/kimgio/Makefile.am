@@ -7,4 +7,6 @@ libokularGenerator_kimgio_la_LIBADD = $(top_builddir)/kpdf/core/libkpdfcore.la $
 libokularGenerator_kimgio_la_LDFLAGS = -module -avoid-version  $(KDE_PLUGIN)  $(all_libraries)
 libokularGenerator_kimgio_la_SOURCES = generator_kimgio.cpp
 
+METASOURCES = AUTO 
+
 kde_services_DATA = libokularGenerator_kimgio.desktop

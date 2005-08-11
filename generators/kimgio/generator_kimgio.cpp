@@ -38,7 +38,7 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QValueVector<KPDFP
     return true;
 }
 
-bool KIMGIOGenerator::canGeneratePixmap()
+bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ )
 {
     return true;
 }
@@ -66,4 +66,6 @@ bool KIMGIOGenerator::print( KPrinter& printer )
     p.drawPixmap(0, 0, *m_pix);
     return true;
 }
+
+#include "generator_kimgio.moc"
 

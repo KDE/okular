@@ -14,6 +14,7 @@
 
 class KIMGIOGenerator : public Generator
 {
+    Q_OBJECT
     public:
         KIMGIOGenerator( KPDFDocument * document );
         virtual ~KIMGIOGenerator();
@@ -22,10 +23,10 @@ class KIMGIOGenerator : public Generator
         bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
 
         // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap();
+        bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );
         void generateSyncTextPage( KPDFPage * page ) {;};
-	// [INHERITED] capability querying
+        // [INHERITED] capability querying
         QString getXMLFile() { return QString::null; };
         void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) { ; };
         bool hasFonts() const;
@@ -39,9 +40,13 @@ class KIMGIOGenerator : public Generator
         QString * getText(const RegularAreaRect*, KPDFPage*) { return 0; };
 
         // font related
-	
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
+
+    signals:
+        void error(QString & string, int duration);
+        void warning(QString & string, int duration);
+        void notice(QString & string, int duration);
 
     private:
         QPixmap *m_pix;

@@ -22,6 +22,7 @@
 
 #include <kparts/mainwindow.h>
 #include <kmimetype.h>
+class KTempFile;
 
 namespace KPDF
 {
@@ -96,6 +97,7 @@ class Part;
 
   private:
     KParts::ReadOnlyPart* m_part;
+    KTempFile* m_tempfile;
     KRecentFilesAction* m_recent;
     QStringList* m_fileformats;
     KAction* m_printAction;

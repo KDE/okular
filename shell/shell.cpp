@@ -61,7 +61,8 @@ void Shell::init()
 {
   // set the shell's ui resource file
   setXMLFile("shell.rc");
-  m_fileformats=0; 
+  m_fileformats=0L;
+  m_tempfile=0L;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
@@ -113,8 +114,9 @@ void Shell::delayedOpen()
 
 Shell::~Shell()
 {
-    if(m_part) writeSettings();
-    if (m_fileformats) delete m_fileformats;
+    if ( m_part ) writeSettings();
+    if ( m_fileformats ) delete m_fileformats;
+    if ( m_tempfile ) delete m_tempfile; 
 }
 
 void Shell::openURL( const KURL & url )
@@ -276,8 +278,8 @@ bool Shell::handleCompressed(KURL & url, const QString &path, const KMimeType::P
 
     // we are working with a compressed file, decompressing
     // temporary file for decompressing
-    KTempFile* tmpUnzipped = new KTempFile;
-    if ( !tmpUnzipped )
+    m_tempfile = new KTempFile;
+    if ( !m_tempfile )
     {
         KMessageBox::error(this, 
             i18n("<qt><strong>File Error!</strong> Could not create "
@@ -285,16 +287,16 @@ bool Shell::handleCompressed(KURL & url, const QString &path, const KMimeType::P
         return false;
     }
 
-    tmpUnzipped->setAutoDelete(true);
+    m_tempfile->setAutoDelete(true);
 
     // something failed while creating the tempfile
-    if ( tmpUnzipped->status() != 0 )
+    if ( m_tempfile->status() != 0 )
     {
         KMessageBox::error( this, 
             i18n("<qt><strong>File Error!</strong> Could not create temporary file "
                 "<nobr><strong>%1</strong></nobr>.</qt>").arg(
-                strerror(tmpUnzipped->status())));
-                delete tmpUnzipped;
+                strerror(m_tempfile->status())));
+                delete m_tempfile;
                 return false;
     }
 
@@ -308,7 +310,7 @@ bool Shell::handleCompressed(KURL & url, const QString &path, const KMimeType::P
 
     if (!filterDev)
     {
-        delete tmpUnzipped;
+        delete m_tempfile;
         return false;
     }
 
@@ -325,7 +327,7 @@ bool Shell::handleCompressed(KURL & url, const QString &path, const KMimeType::P
             "file manager and then choose the 'Properties' menu.</qt>"));
 
             delete filterDev;
-            delete tmpUnzipped;
+            delete m_tempfile;
             return false;
     }
 
@@ -334,12 +336,12 @@ bool Shell::handleCompressed(KURL & url, const QString &path, const KMimeType::P
 
     while ((read = filterDev->readBlock(buf.data(), buf.size())) > 0)
     {
-        wrtn = tmpUnzipped->file()->writeBlock(buf.data(), read);
+        wrtn = m_tempfile->file()->writeBlock(buf.data(), read);
         if ( read != wrtn )
             break;
     }
     delete filterDev;
-    if ((read != 0) || (tmpUnzipped->file()->size() == 0))
+    if ((read != 0) || (m_tempfile->file()->size() == 0))
     {
         KMessageBox::detailedError(this, 
             i18n("<qt><strong>File Error!</strong> Could not uncompress "
@@ -348,11 +350,11 @@ bool Shell::handleCompressed(KURL & url, const QString &path, const KMimeType::P
             i18n("<qt>This error typically occurs if the file is corrupt. "
             "If you want to be sure, try to decompress the file manually "
             "using command-line tools.</qt>"));
-        delete tmpUnzipped;
+        delete m_tempfile;
         return false;
     }
-    tmpUnzipped->close();
-    url=tmpUnzipped->name();
+    m_tempfile->close();
+    url=m_tempfile->name();
 }
 
 void Shell::fileOpen()

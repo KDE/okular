@@ -214,12 +214,13 @@ void PDFGenerator::loadPages(QValueVector<KPDFPage*> & pagesVector, int rotation
         if ( true ) //TODO real check
             addAnnotations( p, page );
 
-	docLock.lock();
+// need a way to find efficient (maybe background textpage generation)
+/*	docLock.lock();
 	pdfdoc->displayPage( &td, page->number()+1, 72, 72, rotation, true, false );
 	TextPage * textPage = td.takeTextPage();
 	docLock.unlock();
 
-	page->setSearchPage(abstractTextPage(textPage,page->height(),page->width()));
+	page->setSearchPage(abstractTextPage(textPage,page->height(),page->width()));*/
 
         if (clear && pagesVector[i])
             delete pagesVector[i];
@@ -447,7 +448,7 @@ bool PDFGenerator::isAllowed( int permissions )
     return b;
 }
 
-bool PDFGenerator::canGeneratePixmap()
+bool PDFGenerator::canGeneratePixmap( bool /* async */)
 {
     return ready;
 }

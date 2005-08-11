@@ -63,7 +63,7 @@ class PDFGenerator : public Generator
         bool isAllowed( int permissions );
 
         // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap();
+        bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );
         bool canGenerateTextPage();
         void generateSyncTextPage( KPDFPage * page );

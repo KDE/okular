@@ -40,8 +40,80 @@ void dviRenderer::printErrorMsgForSpecials(QString msg)
 // dvips. If the spec could not be parsed, an invalid color will be
 // returned.
 
-QColor parseColorSpecification(QString colorSpec)
+QColor dviRenderer::parseColorSpecification(QString colorSpec)
 {
+  // Initialize the map of known colors, if that is not done yet.
+  if (namedColors.isEmpty()) {
+    namedColors["Red"] = QColor( (int)(255.0*1), (int)(255.0*0), (int)(255.0*0));
+    namedColors["Tan"] = QColor( (int)(255.0*0.86), (int)(255.0*0.58), (int)(255.0*0.44));
+    namedColors["Blue"] = QColor( (int)(255.0*0), (int)(255.0*0), (int)(255.0*1));
+    namedColors["Cyan"] = QColor( (int)(255.0*0), (int)(255.0*1), (int)(255.0*1));
+    namedColors["Gray"] = QColor( (int)(255.0*0.5), (int)(255.0*0.5), (int)(255.0*0.5));
+    namedColors["Plum"] = QColor( (int)(255.0*0.5), (int)(255.0*0), (int)(255.0*1));
+    namedColors["Black"] = QColor( (int)(255.0*0), (int)(255.0*0), (int)(255.0*0));
+    namedColors["Brown"] = QColor( (int)(255.0*0.4), (int)(255.0*0), (int)(255.0*0));
+    namedColors["Green"] = QColor( (int)(255.0*0), (int)(255.0*1), (int)(255.0*0));
+    namedColors["Melon"] = QColor( (int)(255.0*1), (int)(255.0*0.54), (int)(255.0*0.5));
+    namedColors["Peach"] = QColor( (int)(255.0*1), (int)(255.0*0.5), (int)(255.0*0.3));
+    namedColors["Sepia"] = QColor( (int)(255.0*0.3), (int)(255.0*0), (int)(255.0*0));
+    namedColors["White"] = QColor( (int)(255.0*1), (int)(255.0*1), (int)(255.0*1));
+    namedColors["Maroon"] = QColor( (int)(255.0*0.68), (int)(255.0*0), (int)(255.0*0));
+    namedColors["Orange"] = QColor( (int)(255.0*1), (int)(255.0*0.39), (int)(255.0*0.13));
+    namedColors["Orchid"] = QColor( (int)(255.0*0.68), (int)(255.0*0.36), (int)(255.0*1));
+    namedColors["Purple"] = QColor( (int)(255.0*0.55), (int)(255.0*0.14), (int)(255.0*1));
+    namedColors["Salmon"] = QColor( (int)(255.0*1), (int)(255.0*0.47), (int)(255.0*0.62));
+    namedColors["Violet"] = QColor( (int)(255.0*0.21), (int)(255.0*0.12), (int)(255.0*1));
+    namedColors["Yellow"] = QColor( (int)(255.0*1), (int)(255.0*1), (int)(255.0*0));
+    namedColors["Apricot"] = QColor( (int)(255.0*1), (int)(255.0*0.68), (int)(255.0*0.48));
+    namedColors["Emerald"] = QColor( (int)(255.0*0), (int)(255.0*1), (int)(255.0*0.5));
+    namedColors["Fuchsia"] = QColor( (int)(255.0*0.45), (int)(255.0*0.01), (int)(255.0*0.92));
+    namedColors["Magenta"] = QColor( (int)(255.0*1), (int)(255.0*0), (int)(255.0*1));
+    namedColors["SkyBlue"] = QColor( (int)(255.0*0.38), (int)(255.0*1), (int)(255.0*0.88));
+    namedColors["Thistle"] = QColor( (int)(255.0*0.88), (int)(255.0*0.41), (int)(255.0*1));
+    namedColors["BrickRed"] = QColor( (int)(255.0*0.72), (int)(255.0*0), (int)(255.0*0));
+    namedColors["Cerulean"] = QColor( (int)(255.0*0.06), (int)(255.0*0.89), (int)(255.0*1));
+    namedColors["Lavender"] = QColor( (int)(255.0*1), (int)(255.0*0.52), (int)(255.0*1));
+    namedColors["Mahogany"] = QColor( (int)(255.0*0.65), (int)(255.0*0), (int)(255.0*0));
+    namedColors["Mulberry"] = QColor( (int)(255.0*0.64), (int)(255.0*0.08), (int)(255.0*0.98));
+    namedColors["NavyBlue"] = QColor( (int)(255.0*0.06), (int)(255.0*0.46), (int)(255.0*1));
+    namedColors["SeaGreen"] = QColor( (int)(255.0*0.31), (int)(255.0*1), (int)(255.0*0.5));
+    namedColors["TealBlue"] = QColor( (int)(255.0*0.12), (int)(255.0*0.98), (int)(255.0*0.64));
+    namedColors["BlueGreen"] = QColor( (int)(255.0*0.15), (int)(255.0*1), (int)(255.0*0.67));
+    namedColors["CadetBlue"] = QColor( (int)(255.0*0.38), (int)(255.0*0.43), (int)(255.0*0.77));
+    namedColors["Dandelion"] = QColor( (int)(255.0*1), (int)(255.0*0.71), (int)(255.0*0.16));
+    namedColors["Goldenrod"] = QColor( (int)(255.0*1), (int)(255.0*0.9), (int)(255.0*0.16));
+    namedColors["LimeGreen"] = QColor( (int)(255.0*0.5), (int)(255.0*1), (int)(255.0*0));
+    namedColors["OrangeRed"] = QColor( (int)(255.0*1), (int)(255.0*0), (int)(255.0*0.5));
+    namedColors["PineGreen"] = QColor( (int)(255.0*0), (int)(255.0*0.75), (int)(255.0*0.16));
+    namedColors["RawSienna"] = QColor( (int)(255.0*0.55), (int)(255.0*0), (int)(255.0*0));
+    namedColors["RedOrange"] = QColor( (int)(255.0*1), (int)(255.0*0.23), (int)(255.0*0.13));
+    namedColors["RedViolet"] = QColor( (int)(255.0*0.59), (int)(255.0*0), (int)(255.0*0.66));
+    namedColors["Rhodamine"] = QColor( (int)(255.0*1), (int)(255.0*0.18), (int)(255.0*1));
+    namedColors["RoyalBlue"] = QColor( (int)(255.0*0), (int)(255.0*0.5), (int)(255.0*1));
+    namedColors["RubineRed"] = QColor( (int)(255.0*1), (int)(255.0*0), (int)(255.0*0.87));
+    namedColors["Turquoise"] = QColor( (int)(255.0*0.15), (int)(255.0*1), (int)(255.0*0.8));
+    namedColors["VioletRed"] = QColor( (int)(255.0*1), (int)(255.0*0.19), (int)(255.0*1));
+    namedColors["Aquamarine"] = QColor( (int)(255.0*0.18), (int)(255.0*1), (int)(255.0*0.7));
+    namedColors["BlueViolet"] = QColor( (int)(255.0*0.1), (int)(255.0*0.05), (int)(255.0*0.96));
+    namedColors["DarkOrchid"] = QColor( (int)(255.0*0.6), (int)(255.0*0.2), (int)(255.0*0.8));
+    namedColors["OliveGreen"] = QColor( (int)(255.0*0), (int)(255.0*0.6), (int)(255.0*0));
+    namedColors["Periwinkle"] = QColor( (int)(255.0*0.43), (int)(255.0*0.45), (int)(255.0*1));
+    namedColors["Bittersweet"] = QColor( (int)(255.0*0.76), (int)(255.0*0.01), (int)(255.0*0));
+    namedColors["BurntOrange"] = QColor( (int)(255.0*1), (int)(255.0*0.49), (int)(255.0*0));
+    namedColors["ForestGreen"] = QColor( (int)(255.0*0), (int)(255.0*0.88), (int)(255.0*0));
+    namedColors["GreenYellow"] = QColor( (int)(255.0*0.85), (int)(255.0*1), (int)(255.0*0.31));
+    namedColors["JungleGreen"] = QColor( (int)(255.0*0.01), (int)(255.0*1), (int)(255.0*0.48));
+    namedColors["ProcessBlue"] = QColor( (int)(255.0*0.04), (int)(255.0*1), (int)(255.0*1));
+    namedColors["RoyalPurple"] = QColor( (int)(255.0*0.25), (int)(255.0*0.1), (int)(255.0*1));
+    namedColors["SpringGreen"] = QColor( (int)(255.0*0.74), (int)(255.0*1), (int)(255.0*0.24));
+    namedColors["YellowGreen"] = QColor( (int)(255.0*0.56), (int)(255.0*1), (int)(255.0*0.26));
+    namedColors["MidnightBlue"] = QColor( (int)(255.0*0), (int)(255.0*0.44), (int)(255.0*0.57));
+    namedColors["YellowOrange"] = QColor( (int)(255.0*1), (int)(255.0*0.58), (int)(255.0*0));
+    namedColors["CarnationPink"] = QColor( (int)(255.0*1), (int)(255.0*0.37), (int)(255.0*1));
+    namedColors["CornflowerBlue"] = QColor( (int)(255.0*0.35), (int)(255.0*0.87), (int)(255.0*1));
+    namedColors["WildStrawberry"] = QColor( (int)(255.0*1), (int)(255.0*0.04), (int)(255.0*0.61));
+  }
+  
   QString specType = colorSpec.section(' ', 0, 0);
 
   if (specType.find("rgb", false) == 0) {
@@ -122,6 +194,11 @@ QColor parseColorSpecification(QString colorSpec)
     
     return QColor((int)(g*255.0+0.5), (int)(g*255.0+0.5), (int)(g*255.0+0.5));
   }
+
+  // Check if the color is one of the known named colors.
+  QMap<QString, QColor>::Iterator f = namedColors.find(specType);
+  if (f != namedColors.end())
+    return *f;
 
   return QColor(specType);
 }

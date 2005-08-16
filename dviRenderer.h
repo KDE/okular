@@ -170,9 +170,19 @@ private slots:
   void          showThatSourceInformationIsPresent(void);
 
 private:
-  /* This method locates special PDF characters in a string and
-     replaces them by UTF8. See Section 3.2.3 of the PDF reference
-     guide for information */
+  /** This method parses a color specification of type "gray 0.5", "rgb
+      0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source
+      code for details. */
+  QColor parseColorSpecification(QString colorSpec);
+ 
+  /** This map contains the colors which are known by name. This field
+      is initialized in the method parseColorSpecification() as soon as
+      it is needed. */
+  QMap<QString, QColor> namedColors;
+
+  /** This method locates special PDF characters in a string and
+      replaces them by UTF8. See Section 3.2.3 of the PDF reference
+      guide for information */
   QString PDFencodingToQString(QString pdfstring); 
 
   void  setResolution(double resolution_in_DPI);

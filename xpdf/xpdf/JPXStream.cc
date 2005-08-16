@@ -1995,7 +1995,7 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		  horizSign += (coeff[-1].flags & jpxCoeffSign) ? -1 : 1;
 		}
 		if (y0+y1 > cb->y0) {
-		  diag += (coeff[-tileComp->cbW - 1].flags
+		  diag += (coeff[-(int)tileComp->cbW - 1].flags
 			   >> jpxCoeffSignificantB) & 1;
 		}
 		if (y0+y1 < cb->y1 - 1) {
@@ -2009,7 +2009,7 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		  horizSign += (coeff[1].flags & jpxCoeffSign) ? -1 : 1;
 		}
 		if (y0+y1 > cb->y0) {
-		  diag += (coeff[-tileComp->cbW + 1].flags
+		  diag += (coeff[-(int)tileComp->cbW + 1].flags
 			   >> jpxCoeffSignificantB) & 1;
 		}
 		if (y0+y1 < cb->y1 - 1) {
@@ -2018,9 +2018,9 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		}
 	      }
 	      if (y0+y1 > cb->y0) {
-		if (coeff[-tileComp->cbW].flags & jpxCoeffSignificant) {
+		if (coeff[-(int)tileComp->cbW].flags & jpxCoeffSignificant) {
 		  ++vert;
-		  vertSign += (coeff[-tileComp->cbW].flags & jpxCoeffSign)
+		  vertSign += (coeff[-(int)tileComp->cbW].flags & jpxCoeffSign)
 		              ? -1 : 1;
 		}
 	      }
@@ -2070,7 +2070,7 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		if (x > cb->x0) {
 		  all += (coeff[-1].flags >> jpxCoeffSignificantB) & 1;
 		  if (y0+y1 > cb->y0) {
-		    all += (coeff[-tileComp->cbW - 1].flags
+		    all += (coeff[-(int)tileComp->cbW - 1].flags
 			    >> jpxCoeffSignificantB) & 1;
 		  }
 		  if (y0+y1 < cb->y1 - 1) {
@@ -2081,7 +2081,7 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		if (x < cb->x1 - 1) {
 		  all += (coeff[1].flags >> jpxCoeffSignificantB) & 1;
 		  if (y0+y1 > cb->y0) {
-		    all += (coeff[-tileComp->cbW + 1].flags
+		    all += (coeff[-(int)tileComp->cbW + 1].flags
 			    >> jpxCoeffSignificantB) & 1;
 		  }
 		  if (y0+y1 < cb->y1 - 1) {
@@ -2090,7 +2090,7 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		  }
 		}
 		if (y0+y1 > cb->y0) {
-		  all += (coeff[-tileComp->cbW].flags
+		  all += (coeff[-(int)tileComp->cbW].flags
 			  >> jpxCoeffSignificantB) & 1;
 		}
 		if (y0+y1 < cb->y1 - 1) {
@@ -2128,12 +2128,12 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 	      !(coeff1[2 * tileComp->cbW].flags & jpxCoeffTouched) &&
 	      !(coeff1[3 * tileComp->cbW].flags & jpxCoeffTouched) &&
 	      (x == cb->x0 || y0 == cb->y0 ||
-	       !(coeff1[-tileComp->cbW - 1].flags
+	       !(coeff1[-(int)tileComp->cbW - 1].flags
 		 & jpxCoeffSignificant)) &&
 	      (y0 == cb->y0 ||
-	       !(coeff1[-tileComp->cbW].flags & jpxCoeffSignificant)) &&
+	       !(coeff1[-(int)tileComp->cbW].flags & jpxCoeffSignificant)) &&
 	      (x == cb->x1 - 1 || y0 == cb->y0 ||
-	       !(coeff1[-tileComp->cbW + 1].flags & jpxCoeffSignificant)) &&
+	       !(coeff1[-(int)tileComp->cbW + 1].flags & jpxCoeffSignificant)) &&
 	      (x == cb->x0 ||
 	       (!(coeff1[-1].flags & jpxCoeffSignificant) &&
 		!(coeff1[tileComp->cbW - 1].flags
@@ -2196,7 +2196,7 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		  horizSign += (coeff[-1].flags & jpxCoeffSign) ? -1 : 1;
 		}
 		if (y0+y1 > cb->y0) {
-		  diag += (coeff[-tileComp->cbW - 1].flags
+		  diag += (coeff[-(int)tileComp->cbW - 1].flags
 			   >> jpxCoeffSignificantB) & 1;
 		}
 		if (y0+y1 < cb->y1 - 1) {
@@ -2210,7 +2210,7 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		  horizSign += (coeff[1].flags & jpxCoeffSign) ? -1 : 1;
 		}
 		if (y0+y1 > cb->y0) {
-		  diag += (coeff[-tileComp->cbW + 1].flags
+		  diag += (coeff[-(int)tileComp->cbW + 1].flags
 			   >> jpxCoeffSignificantB) & 1;
 		}
 		if (y0+y1 < cb->y1 - 1) {
@@ -2219,9 +2219,9 @@ GBool JPXStream::readCodeBlockData(JPXTileComp *tileComp,
 		}
 	      }
 	      if (y0+y1 > cb->y0) {
-		if (coeff[-tileComp->cbW].flags & jpxCoeffSignificant) {
+		if (coeff[-(int)tileComp->cbW].flags & jpxCoeffSignificant) {
 		  ++vert;
-		  vertSign += (coeff[-tileComp->cbW].flags & jpxCoeffSign)
+		  vertSign += (coeff[-(int)tileComp->cbW].flags & jpxCoeffSign)
 		              ? -1 : 1;
 		}
 	      }

@@ -637,6 +637,7 @@ private:
   int readMarker();
   int read16();
 };
+#endif
 
 //------------------------------------------------------------------------
 // FlateStream
@@ -712,7 +713,6 @@ private:
   int getHuffmanCodeWord(FlateHuffmanTab *tab);
   int getCodeWord(int bits);
 };
-#endif
 
 //------------------------------------------------------------------------
 // EOFStream

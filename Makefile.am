@@ -29,3 +29,6 @@ partrcdir   = $(kde_datadir)/kpdfpart
 partrc_DATA = part.rc
 
 part.lo: conf/settings.h
+
+include $(top_srcdir)/admin/Doxyfile.am
+

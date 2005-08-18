@@ -19,9 +19,7 @@
 #include "Parser.h"
 #include "XRef.h"
 #include "Error.h"
-#ifndef NO_DECRYPTION
 #include "Decrypt.h"
-#endif
 
 Parser::Parser(XRef *xrefA, Lexer *lexerA) {
   xref = xrefA;
@@ -37,23 +35,17 @@ Parser::~Parser() {
   delete lexer;
 }
 
-#ifndef NO_DECRYPTION
 Object *Parser::getObj(Object *obj,
 		       Guchar *fileKey, int keyLength,
 		       int objNum, int objGen) {
-#else
-Object *Parser::getObj(Object *obj) {
-#endif
   const char *key;
   Stream *str;
   Object obj2;
   int num;
-#ifndef NO_DECRYPTION
   Decrypt *decrypt;
   GString *s;
   char *p;
   int i;
-#endif
 
   // refill buffer after inline image data
   if (inlineImg == 2) {
@@ -69,11 +61,7 @@ Object *Parser::getObj(Object *obj) {
     shift();
     obj->initArray(xref);
     while (!buf1.isCmd("]") && !buf1.isEOF())
-#ifndef NO_DECRYPTION
       obj->arrayAdd(getObj(&obj2, fileKey, keyLength, objNum, objGen));
-#else
-      obj->arrayAdd(getObj(&obj2));
-#endif
     if (buf1.isEOF())
       error(getPos(), "End of file inside array");
     shift();
@@ -93,11 +81,7 @@ Object *Parser::getObj(Object *obj) {
 	  gfree((void*)key);
 	  break;
 	}
-#ifndef NO_DECRYPTION
 	obj->dictAdd(key, getObj(&obj2, fileKey, keyLength, objNum, objGen));
-#else
-	obj->dictAdd(key, getObj(&obj2));
-#endif
       }
     }
     if (buf1.isEOF())
@@ -105,12 +89,10 @@ Object *Parser::getObj(Object *obj) {
     if (buf2.isCmd("stream")) {
       if ((str = makeStream(obj))) {
 	obj->initStream(str);
-#ifndef NO_DECRYPTION
 	if (fileKey) {
 	  str->getBaseStream()->doDecryption(fileKey, keyLength,
 					     objNum, objGen);
 	}
-#endif
       } else {
 	obj->free();
 	obj->initError();
@@ -131,7 +113,6 @@ Object *Parser::getObj(Object *obj) {
       obj->initInt(num);
     }
 
-#ifndef NO_DECRYPTION
   // string
   } else if (buf1.isString() && fileKey) {
     buf1.copy(obj);
@@ -144,7 +125,6 @@ Object *Parser::getObj(Object *obj) {
     }
     delete decrypt;
     shift();
-#endif
 
   // simple object
   } else {
@@ -157,6 +137,7 @@ Object *Parser::getObj(Object *obj) {
 
 Stream *Parser::makeStream(Object *dict) {
   Object obj;
+  BaseStream *baseStr;
   Stream *str;
   Guint pos, endPos, length;
 
@@ -185,13 +166,7 @@ Stream *Parser::makeStream(Object *dict) {
   if (!lexer->getStream()) {
     return NULL;
   }
-
-  // make base stream
-  str = lexer->getStream()->getBaseStream()->makeSubStream(pos, gTrue,
-							   length, dict);
-
-  // get filters
-  str = str->addFilters(dict);
+  baseStr = lexer->getStream()->getBaseStream();
 
   // skip over stream data
   lexer->setPos(pos + length);
@@ -203,8 +178,16 @@ Stream *Parser::makeStream(Object *dict) {
     shift();
   } else {
     error(getPos(), "Missing 'endstream'");
-    str->ignoreLength();
+    // kludge for broken PDF files: just add 5k to the length, and
+    // hope its enough
+    length += 5000;
   }
+
+  // make base stream
+  str = baseStr->makeSubStream(pos, gTrue, length, dict);
+
+  // get filters
+  str = str->addFilters(dict);
 
   return str;
 }

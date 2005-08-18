@@ -108,6 +108,8 @@ public:
 
   Object *getOutline() { return &outline; }
 
+  Object *getAcroForm() { return &acroForm; }
+
 private:
 
   XRef *xref;			// the xref table for this PDF file
@@ -122,6 +124,7 @@ private:
   Object metadata;		// metadata stream
   Object structTreeRoot;	// structure tree root dictionary
   Object outline;		// outline dictionary
+  Object acroForm;		// AcroForm dictionary
   GBool ok;			// true if catalog is valid
 
   int readPageTree(Dict *pages, PageAttrs *attrs, int start);

@@ -58,6 +58,11 @@ public:
   // Assumes 0 <= i < length.
   void *del(int i);
 
+  // Sort the list accoring to the given comparison function.
+  // NB: this sorts an array of pointers, so the pointer args need to
+  // be double-dereferenced.
+  void sort(int (*cmp)(const void *ptr1, const void *ptr2));
+
   //----- control
 
   // Set allocation increment to <inc>.  If inc > 0, that many

@@ -50,6 +50,7 @@ static GMemHdr *gMemList[gMemNLists] = {
 
 static int gMemIndex = 0;
 static int gMemAlloc = 0;
+static int gMemInUse = 0;
 
 #endif /* DEBUG_MEM */
 
@@ -78,6 +79,7 @@ void *gmalloc(size_t size) {
   hdr->next = gMemList[lst];
   gMemList[lst] = hdr;
   ++gMemAlloc;
+  gMemInUse += size;
   for (p = (unsigned long *)data; p <= trl; ++p)
     *p = gMemDeadVal;
   return data;
@@ -135,6 +137,28 @@ void *grealloc(void *p, size_t size) {
 #endif
 }
 
+void *gmallocn(int nObjs, int objSize) {
+  int n;
+
+  n = nObjs * objSize;
+  if (objSize == 0 || n / objSize != nObjs) {
+    fprintf(stderr, "Bogus memory allocation size\n");
+    exit(1);
+  }
+  return gmalloc(n);
+}
+
+void *greallocn(void *p, int nObjs, int objSize) {
+  int n;
+
+  n = nObjs * objSize;
+  if (objSize == 0 || n / objSize != nObjs) {
+    fprintf(stderr, "Bogus memory allocation size\n");
+    exit(1);
+  }
+  return grealloc(p, n);
+}
+
 void gfree(void *p) {
 #ifdef DEBUG_MEM
   size_t size;
@@ -156,6 +180,7 @@ void gfree(void *p) {
       else
 	gMemList[lst] = hdr->next;
       --gMemAlloc;
+      gMemInUse -= hdr->size;
       size = gMemDataSize(hdr->size);
       trl = (unsigned long *)((char *)hdr + gMemHdrSize + size);
       if (*trl != gMemDeadVal) {

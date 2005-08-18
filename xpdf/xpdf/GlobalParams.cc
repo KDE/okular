@@ -44,6 +44,9 @@
 #include "CMap.h"
 #include "BuiltinFontTables.h"
 #include "FontEncodingTables.h"
+#ifdef ENABLE_PLUGINS
+#  include "XpdfPluginAPI.h"
+#endif
 #include "GlobalParams.h"
 
 #if MULTITHREADED
@@ -66,6 +69,12 @@
 #include "UnicodeMapTables.h"
 #include "UTF8.h"
 
+#ifdef ENABLE_PLUGINS
+#  ifdef WIN32
+extern XpdfPluginVecTable xpdfPluginVecTable;
+#  endif
+#endif
+
 //------------------------------------------------------------------------
 
 #define cidToUnicodeCacheSize     4
@@ -75,35 +84,42 @@
 
 static struct {
   const char *name;
-  const char *fileName;
+  const char *t1FileName;
+  const char *ttFileName;
 } displayFontTab[] = {
-  {"Courier",               "n022003l.pfb"},
-  {"Courier-Bold",          "n022004l.pfb"},
-  {"Courier-BoldOblique",   "n022024l.pfb"},
-  {"Courier-Oblique",       "n022023l.pfb"},
-  {"Helvetica",             "n019003l.pfb"},
-  {"Helvetica-Bold",        "n019004l.pfb"},
-  {"Helvetica-BoldOblique", "n019024l.pfb"},
-  {"Helvetica-Oblique",     "n019023l.pfb"},
-  {"Symbol",                "s050000l.pfb"},
-  {"Times-Bold",            "n021004l.pfb"},
-  {"Times-BoldItalic",      "n021024l.pfb"},
-  {"Times-Italic",          "n021023l.pfb"},
-  {"Times-Roman",           "n021003l.pfb"},
-  {"ZapfDingbats",          "d050000l.pfb"},
-  {NULL, NULL}
+  {"Courier",               "n022003l.pfb", "cour.ttf"},
+  {"Courier-Bold",          "n022004l.pfb", "courbd.ttf"},
+  {"Courier-BoldOblique",   "n022024l.pfb", "courbi.ttf"},
+  {"Courier-Oblique",       "n022023l.pfb", "couri.ttf"},
+  {"Helvetica",             "n019003l.pfb", "arial.ttf"},
+  {"Helvetica-Bold",        "n019004l.pfb", "arialbd.ttf"},
+  {"Helvetica-BoldOblique", "n019024l.pfb", "arialbi.ttf"},
+  {"Helvetica-Oblique",     "n019023l.pfb", "ariali.ttf"},
+  {"Symbol",                "s050000l.pfb", NULL},
+  {"Times-Bold",            "n021004l.pfb", "timesbd.ttf"},
+  {"Times-BoldItalic",      "n021024l.pfb", "timesbi.ttf"},
+  {"Times-Italic",          "n021023l.pfb", "timesi.ttf"},
+  {"Times-Roman",           "n021003l.pfb", "times.ttf"},
+  {"ZapfDingbats",          "d050000l.pfb", NULL},
+  {NULL, NULL, NULL}
 };
 
+#ifdef WIN32
+static const char *displayFontDirs[] = {
+  "c:/windows/fonts",
+  "c:/winnt/fonts",
+  NULL
+};
+#else
 static const char *displayFontDirs[] = {
   "/usr/share/ghostscript/fonts",
   "/usr/local/share/ghostscript/fonts",
   "/usr/share/fonts/default/Type1",
+  "/usr/share/fonts/default/ghostscript",
   "/usr/share/fonts/type1/gsfonts",
-  "/usr/share/fonts/default/ghostscript/",
-  "/usr/share/fonts/Type1",
   NULL
 };
-
+#endif
 
 //------------------------------------------------------------------------
 
@@ -163,6 +179,148 @@ PSFontParam::~PSFontParam() {
   }
 }
 
+#ifdef ENABLE_PLUGINS
+//------------------------------------------------------------------------
+// Plugin
+//------------------------------------------------------------------------
+
+class Plugin {
+public:
+
+  static Plugin *load(char *type, char *name);
+  ~Plugin();
+
+private:
+
+#ifdef WIN32
+  Plugin(HMODULE libA);
+  HMODULE lib;
+#else
+  Plugin(void *dlA);
+  void *dl;
+#endif
+};
+
+Plugin *Plugin::load(char *type, char *name) {
+  GString *path;
+  Plugin *plugin;
+  XpdfPluginVecTable *vt;
+  XpdfBool (*xpdfInitPlugin)(void);
+#ifdef WIN32
+  HMODULE libA;
+#else
+  void *dlA;
+#endif
+
+  path = globalParams->getBaseDir();
+  appendToPath(path, "plugins");
+  appendToPath(path, type);
+  appendToPath(path, name);
+
+#ifdef WIN32
+  path->append(".dll");
+  if (!(libA = LoadLibrary(path->getCString()))) {
+    error(-1, "Failed to load plugin '%s'",
+	  path->getCString());
+    goto err1;
+  }
+  if (!(vt = (XpdfPluginVecTable *)
+	         GetProcAddress(libA, "xpdfPluginVecTable"))) {
+    error(-1, "Failed to find xpdfPluginVecTable in plugin '%s'",
+	  path->getCString());
+    goto err2;
+  }
+#else
+  //~ need to deal with other extensions here
+  path->append(".so");
+  if (!(dlA = dlopen(path->getCString(), RTLD_NOW))) {
+    error(-1, "Failed to load plugin '%s': %s",
+	  path->getCString(), dlerror());
+    goto err1;
+  }
+  if (!(vt = (XpdfPluginVecTable *)dlsym(dlA, "xpdfPluginVecTable"))) {
+    error(-1, "Failed to find xpdfPluginVecTable in plugin '%s'",
+	  path->getCString());
+    goto err2;
+  }
+#endif
+
+  if (vt->version != xpdfPluginVecTable.version) {
+    error(-1, "Plugin '%s' is wrong version", path->getCString());
+    goto err2;
+  }
+  memcpy(vt, &xpdfPluginVecTable, sizeof(xpdfPluginVecTable));
+
+#ifdef WIN32
+  if (!(xpdfInitPlugin = (XpdfBool (*)(void))
+	                     GetProcAddress(libA, "xpdfInitPlugin"))) {
+    error(-1, "Failed to find xpdfInitPlugin in plugin '%s'",
+	  path->getCString());
+    goto err2;
+  }
+#else
+  if (!(xpdfInitPlugin = (XpdfBool (*)(void))dlsym(dlA, "xpdfInitPlugin"))) {
+    error(-1, "Failed to find xpdfInitPlugin in plugin '%s'",
+	  path->getCString());
+    goto err2;
+  }
+#endif
+
+  if (!(*xpdfInitPlugin)()) {
+    error(-1, "Initialization of plugin '%s' failed",
+	  path->getCString());
+    goto err2;
+  }
+
+#ifdef WIN32
+  plugin = new Plugin(libA);
+#else
+  plugin = new Plugin(dlA);
+#endif
+
+  delete path;
+  return plugin;
+
+ err2:
+#ifdef WIN32
+  FreeLibrary(libA);
+#else
+  dlclose(dlA);
+#endif
+ err1:
+  delete path;
+  return NULL;
+}
+
+#ifdef WIN32
+Plugin::Plugin(HMODULE libA) {
+  lib = libA;
+}
+#else
+Plugin::Plugin(void *dlA) {
+  dl = dlA;
+}
+#endif
+
+Plugin::~Plugin() {
+  void (*xpdfFreePlugin)(void);
+
+#ifdef WIN32
+  if ((xpdfFreePlugin = (void (*)(void))
+                            GetProcAddress(lib, "xpdfFreePlugin"))) {
+    (*xpdfFreePlugin)();
+  }
+  FreeLibrary(lib);
+#else
+  if ((xpdfFreePlugin = (void (*)(void))dlsym(dl, "xpdfFreePlugin"))) {
+    (*xpdfFreePlugin)();
+  }
+  dlclose(dl);
+#endif
+}
+
+#endif // ENABLE_PLUGINS
+
 //------------------------------------------------------------------------
 // parsing
 //------------------------------------------------------------------------
@@ -190,6 +348,12 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
     }
   }
 
+#ifdef WIN32
+  // baseDir will be set by a call to setBaseDir
+  baseDir = new GString();
+#else
+  baseDir = appendToPath(getHomeDir(), ".xpdf");
+#endif
   nameToUnicode = new NameToCharCode();
   cidToUnicodes = new GHash(gTrue);
   unicodeToUnicodes = new GHash(gTrue);
@@ -250,6 +414,7 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
   textKeepTinyChars = gFalse;
   fontDirs = new GList();
   initialZoom = new GString("125");
+  continuousView = gFalse;
   enableT1lib = gTrue;
   enableFreeType = gTrue;
   antialias = gTrue;
@@ -264,6 +429,11 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
       new CharCodeToUnicodeCache(unicodeToUnicodeCacheSize);
   unicodeMapCache = new UnicodeMapCache();
   cMapCache = new CMapCache();
+
+#ifdef ENABLE_PLUGINS
+  plugins = new GList();
+  securityHandlers = new GList();
+#endif
 
   // set up the initial nameToUnicode table
   for (i = 0; nameToUnicodeTab[i].name; ++i) {
@@ -457,6 +627,8 @@ void GlobalParams::parseFile(GString *fileName, FILE *f) {
 	parseFontDir(tokens, fileName, line);
       } else if (!cmd->cmp("initialZoom")) {
 	parseInitialZoom(tokens, fileName, line);
+      } else if (!cmd->cmp("continuousView")) {
+	parseYesNo("continuousView", &continuousView, tokens, fileName, line);
       } else if (!cmd->cmp("enableT1lib")) {
 	parseYesNo("enableT1lib", &enableT1lib, tokens, fileName, line);
       } else if (!cmd->cmp("enableFreeType")) {
@@ -878,6 +1050,7 @@ GlobalParams::~GlobalParams() {
 
   delete macRomanReverseMap;
 
+  delete baseDir;
   delete nameToUnicode;
   deleteGHash(cidToUnicodes, GString);
   deleteGHash(unicodeToUnicodes, GString);
@@ -914,6 +1087,11 @@ GlobalParams::~GlobalParams() {
   delete unicodeMapCache;
   delete cMapCache;
 
+#ifdef ENABLE_PLUGINS
+  delete securityHandlers;
+  deleteGList(plugins, Plugin);
+#endif
+
 #if MULTITHREADED
   gDestroyMutex(&mutex);
   gDestroyMutex(&unicodeMapCacheMutex);
@@ -923,13 +1101,43 @@ GlobalParams::~GlobalParams() {
 
 //------------------------------------------------------------------------
 
+void GlobalParams::setBaseDir(char *dir) {
+  delete baseDir;
+  baseDir = new GString(dir);
+}
+
 void GlobalParams::setupBaseFonts(char *dir) {
   GString *fontName;
   GString *fileName;
+#ifdef WIN32
+  HMODULE shell32Lib;
+  BOOL (__stdcall *SHGetSpecialFolderPathFunc)(HWND hwndOwner,
+					       LPTSTR lpszPath,
+					       int nFolder,
+					       BOOL fCreate);
+  char winFontDir[MAX_PATH];
+#endif
   FILE *f;
+  DisplayFontParamKind kind;
   DisplayFontParam *dfp;
   int i, j;
 
+#ifdef WIN32
+  // SHGetSpecialFolderPath isn't available in older versions of
+  // shell32.dll (Win95 and WinNT4), so do a dynamic load
+  winFontDir[0] = '\0';
+  if ((shell32Lib = LoadLibrary("shell32.dll"))) {
+    if ((SHGetSpecialFolderPathFunc = 
+	 (BOOL (__stdcall *)(HWND hwndOwner, LPTSTR lpszPath,
+			     int nFolder, BOOL fCreate))
+	 GetProcAddress(shell32Lib, "SHGetSpecialFolderPath"))) {
+      if (!(*SHGetSpecialFolderPathFunc)(NULL, winFontDir,
+					 CSIDL_FONTS, FALSE)) {
+	winFontDir[0] = '\0';
+      }
+    }
+  }
+#endif
   for (i = 0; displayFontTab[i].name; ++i) {
     fontName = new GString(displayFontTab[i].name);
     if (getDisplayFont(fontName)) {
@@ -937,8 +1145,10 @@ void GlobalParams::setupBaseFonts(char *dir) {
       continue;
     }
     fileName = NULL;
+    kind = displayFontT1; // make gcc happy
     if (dir) {
-      fileName = appendToPath(new GString(dir), displayFontTab[i].fileName);
+      fileName = appendToPath(new GString(dir), displayFontTab[i].t1FileName);
+      kind = displayFontT1;
       if ((f = fopen(fileName->getCString(), "rb"))) {
 	fclose(f);
       } else {
@@ -946,11 +1156,39 @@ void GlobalParams::setupBaseFonts(char *dir) {
 	fileName = NULL;
       }
     }
-
-#ifndef WIN32
+#ifdef WIN32
+    if (!fileName && winFontDir[0] && displayFontTab[i].ttFileName) {
+      fileName = appendToPath(new GString(winFontDir),
+			      displayFontTab[i].ttFileName);
+      kind = displayFontTT;
+      if ((f = fopen(fileName->getCString(), "rb"))) {
+	fclose(f);
+      } else {
+	delete fileName;
+	fileName = NULL;
+      }
+    }
+    // SHGetSpecialFolderPath(CSIDL_FONTS) doesn't work on Win 2k Server
+    // or Win2003 Server, or with older versions of shell32.dll, so check
+    // the "standard" directories
+    if (displayFontTab[i].ttFileName) {
+      for (j = 0; !fileName && displayFontDirs[j]; ++j) {
+	fileName = appendToPath(new GString(displayFontDirs[j]),
+				displayFontTab[i].ttFileName);
+	kind = displayFontTT;
+	if ((f = fopen(fileName->getCString(), "rb"))) {
+	  fclose(f);
+	} else {
+	  delete fileName;
+	  fileName = NULL;
+	}
+      }
+    }
+#else
     for (j = 0; !fileName && displayFontDirs[j]; ++j) {
       fileName = appendToPath(new GString(displayFontDirs[j]),
-			      displayFontTab[i].fileName);
+			      displayFontTab[i].t1FileName);
+      kind = displayFontT1;
       if ((f = fopen(fileName->getCString(), "rb"))) {
 	fclose(f);
       } else {
@@ -959,13 +1197,12 @@ void GlobalParams::setupBaseFonts(char *dir) {
       }
     }
 #endif
-
     if (!fileName) {
       error(-1, "No display font for '%s'", displayFontTab[i].name);
       delete fontName;
       continue;
     }
-    dfp = new DisplayFontParam(fontName, displayFontT1);
+    dfp = new DisplayFontParam(fontName, kind);
     dfp->t1.fileName = fileName;
     globalParams->addDisplayFont(dfp);
   }
@@ -978,6 +1215,15 @@ void GlobalParams::setupBaseFonts(char *dir) {
 CharCode GlobalParams::getMacRomanCharCode(const char *charName) {
   // no need to lock - macRomanReverseMap is constant
   return macRomanReverseMap->lookup(charName);
+}
+
+GString *GlobalParams::getBaseDir() {
+  GString *s;
+
+  lockGlobalParams;
+  s = baseDir->copy();
+  unlockGlobalParams;
+  return s;
 }
 
 Unicode GlobalParams::mapNameToUnicode(const char *charName) {
@@ -1382,6 +1628,15 @@ GString *GlobalParams::getInitialZoom() {
   return s;
 }
 
+GBool GlobalParams::getContinuousView() {
+  GBool f;
+
+  lockGlobalParams;
+  f = continuousView;
+  unlockGlobalParams;
+  return f;
+}
+
 GBool GlobalParams::getEnableT1lib() {
   GBool f;
 
@@ -1698,6 +1953,12 @@ void GlobalParams::setInitialZoom(char *s) {
   unlockGlobalParams;
 }
 
+void GlobalParams::setContinuousView(GBool cont) {
+  lockGlobalParams;
+  continuousView = cont;
+  unlockGlobalParams;
+}
+
 GBool GlobalParams::setEnableT1lib(char *s) {
   GBool ok;
 
@@ -1743,3 +2004,63 @@ void GlobalParams::setErrQuiet(GBool errQuietA) {
   errQuiet = errQuietA;
   unlockGlobalParams;
 }
+
+void GlobalParams::addSecurityHandler(XpdfSecurityHandler */*handler**/) {
+#ifdef ENABLE_PLUGINS
+  lockGlobalParams;
+  securityHandlers->append(handler);
+  unlockGlobalParams;
+#endif
+}
+
+XpdfSecurityHandler *GlobalParams::getSecurityHandler(char */*name*/) {
+#ifdef ENABLE_PLUGINS
+  XpdfSecurityHandler *hdlr;
+  int i;
+
+  lockGlobalParams;
+  for (i = 0; i < securityHandlers->getLength(); ++i) {
+    hdlr = (XpdfSecurityHandler *)securityHandlers->get(i);
+    if (!stricmp(hdlr->name, name)) {
+      unlockGlobalParams;
+      return hdlr;
+    }
+  }
+  unlockGlobalParams;
+
+  if (!loadPlugin("security", name)) {
+    return NULL;
+  }
+
+  lockGlobalParams;
+  for (i = 0; i < securityHandlers->getLength(); ++i) {
+    hdlr = (XpdfSecurityHandler *)securityHandlers->get(i);
+    if (!strcmp(hdlr->name, name)) {
+      unlockGlobalParams;
+      return hdlr;
+    }
+  }
+  unlockGlobalParams;
+#endif
+
+  return NULL;
+}
+
+#ifdef ENABLE_PLUGINS
+//------------------------------------------------------------------------
+// plugins
+//------------------------------------------------------------------------
+
+GBool GlobalParams::loadPlugin(char *type, char *name) {
+  Plugin *plugin;
+
+  if (!(plugin = Plugin::load(type, name))) {
+    return gFalse;
+  }
+  lockGlobalParams;
+  plugins->append(plugin);
+  unlockGlobalParams;
+  return gTrue;
+}
+
+#endif // ENABLE_PLUGINS

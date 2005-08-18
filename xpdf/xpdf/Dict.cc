@@ -47,7 +47,7 @@ void Dict::add(const char *key, Object *val) {
     } else {
       size *= 2;
     }
-    entries = (DictEntry *)grealloc(entries, size * sizeof(DictEntry));
+    entries = (DictEntry *)greallocn(entries, size, sizeof(DictEntry));
   }
   entries[length].key = key;
   entries[length].val = *val;

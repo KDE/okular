@@ -171,6 +171,13 @@ Object *Lexer::getObj(Object *obj) {
     scale = 0.1;
     while (1) {
       c = lookChar();
+      if (c == '-') {
+	// ignore minus signs in the middle of numbers to match
+	// Adobe's behavior
+	error(getPos(), "Badly formatted number");
+	getChar();
+	continue;
+      }
       if (!isdigit(c)) {
 	break;
       }
@@ -471,4 +478,8 @@ void Lexer::skipToNextLine() {
       return;
     }
   }
+}
+
+GBool Lexer::isSpace(int c) {
+  return c >= 0 && c <= 0xff && Lexer_specialChars[c] == 1;
 }

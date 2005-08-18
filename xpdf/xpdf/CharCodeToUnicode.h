@@ -71,8 +71,6 @@ public:
   // code supported by the mapping.
   CharCode getLength() { return mapLen; }
 
-  CharCode getMapLen() { return mapLen; }
-
 private:
 
   void parseCMap1(int (*getCharFunc)(void *), void *data, int nBits);

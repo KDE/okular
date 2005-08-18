@@ -43,14 +43,16 @@ public:
 			   GString *ownerKey, GString *userKey,
 			   int permissions, GString *fileID,
 			   GString *ownerPassword, GString *userPassword,
-			   Guchar *fileKey, GBool *ownerPasswordOk);
+			   Guchar *fileKey, GBool encryptMetadata,
+			   GBool *ownerPasswordOk);
 
 private:
 
   static GBool makeFileKey2(int encVersion, int encRevision, int keyLength,
 			    GString *ownerKey, GString *userKey,
 			    int permissions, GString *fileID,
-			    GString *userPassword, Guchar *fileKey);
+			    GString *userPassword, Guchar *fileKey,
+			    GBool encryptMetadata);
 
   int objKeyLength;
   Guchar objKey[21];

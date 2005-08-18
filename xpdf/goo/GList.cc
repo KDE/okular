@@ -12,6 +12,7 @@
 #pragma implementation
 #endif
 
+#include <stdlib.h>
 #include <string.h>
 #include "gmem.h"
 #include "GList.h"
@@ -22,14 +23,14 @@
 
 GList::GList() {
   size = 8;
-  data = (void **)gmalloc(size * sizeof(void*));
+  data = (void **)gmallocn(size, sizeof(void*));
   length = 0;
   inc = 0;
 }
 
 GList::GList(int sizeA) {
   size = sizeA;
-  data = (void **)gmalloc(size * sizeof(void*));
+  data = (void **)gmallocn(size, sizeof(void*));
   length = 0;
   inc = 0;
 }
@@ -81,12 +82,16 @@ void *GList::del(int i) {
   return p;
 }
 
+void GList::sort(int (*cmp)(const void *obj1, const void *obj2)) {
+  qsort(data, length, sizeof(void *), cmp);
+}
+
 void GList::expand() {
   size += (inc > 0) ? inc : size;
-  data = (void **)grealloc(data, size * sizeof(void*));
+  data = (void **)greallocn(data, size, sizeof(void*));
 }
 
 void GList::shrink() {
   size -= (inc > 0) ? inc : size/2;
-  data = (void **)grealloc(data, size * sizeof(void*));
+  data = (void **)greallocn(data, size, sizeof(void*));
 }

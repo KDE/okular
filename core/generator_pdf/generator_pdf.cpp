@@ -175,8 +175,8 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     pagesVector.resize( pageCount );
     for ( uint i = 0; i < pageCount ; i++ )
     {
-        KPDFPage * page = new KPDFPage( i, pdfdoc->getPageWidth(i+1),
-                                        pdfdoc->getPageHeight(i+1),
+        KPDFPage * page = new KPDFPage( i, pdfdoc->getPageMediaWidth(i+1),
+                                        pdfdoc->getPageMediaHeight(i+1),
                                         pdfdoc->getPageRotate(i+1) );
         addTransition( i, page );
         pagesVector[i] = page;
@@ -311,18 +311,19 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
 
     // 1. Set OutputDev parameters and Generate contents
     // note: thread safety is set on 'false' for the GUI (this) thread
-    kpdfOutputDev->setParams( request->width, request->height, genTextPage, genObjectRects, genObjectRects, false );
-    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, true, genObjectRects );
+    kpdfOutputDev->setParams( request->width, request->height, genObjectRects, genObjectRects, false );
+    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, false, true, genObjectRects );
 
     // 2. Take data from outputdev and attach it to the Page
     page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
-    if ( genTextPage )
-        page->setSearchPage( kpdfOutputDev->takeTextPage() );
     if ( genObjectRects )
         page->setObjectRects( kpdfOutputDev->takeObjectRects() );
 
     // 3. UNLOCK [re-enables shared access]
     docLock.unlock();
+
+    if ( genTextPage )
+        generateSyncTextPage( page );
 
     // update ready state
     ready = true;
@@ -333,12 +334,12 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
 
 void PDFGenerator::generateSyncTextPage( KPDFPage * page )
 {
-    // build a TextPage using the lightweight KPDFTextDev generator..
-    KPDFTextDev td;
+    // build a TextPage...
+    TextOutputDev td(NULL, gTrue, gFalse, gFalse);
     docLock.lock();
-    pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, true, false );
+    pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, false, true, false );
     // ..and attach it to the page
-    page->setSearchPage( td.takeTextPage() );
+    page->setSearchPage( td.takeText() );
     docLock.unlock();
 }
 
@@ -380,7 +381,7 @@ void PDFGenerator::putFontInfo(KListView *list)
         {
             scanFonts(resDict, list, &fonts, fontsLen, fontsSize);
         }
-        annots = new Annots(pdfdoc->getXRef(), page->getAnnots(&obj1));
+        annots = new Annots(pdfdoc->getXRef(), pdfdoc->getCatalog(), page->getAnnots(&obj1));
         obj1.free();
         for (i = 0; i < annots->getNumAnnots(); ++i)
         {
@@ -446,7 +447,7 @@ bool PDFGenerator::print( KPrinter& printer )
         }
 
         docLock.lock();
-        pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
+        pdfdoc->displayPages(psOut, pages, 72, 72, 0, false, globalParams->getPSCrop(), gFalse);
         docLock.unlock();
 
         // needs to be here so that the file is flushed, do not merge with the one
@@ -508,7 +509,9 @@ bool PDFGenerator::reparseConfig()
     {
         paperColor = color;
         SplashColor splashCol;
-        splashCol.rgb8 = splashMakeRGB8( paperColor.red(), paperColor.green(), paperColor.blue() );
+        splashCol[0] = paperColor.red();
+	splashCol[1] = paperColor.green();
+	splashCol[2] = paperColor.blue();
         // rebuild the output device using the new paper color and initialize it
         docLock.lock();
         delete kpdfOutputDev;
@@ -1086,10 +1089,10 @@ void PDFPixmapGeneratorThread::run()
     d->generator->docLock.lock();
 
     // 1. set OutputDev parameters and Generate contents
-    d->generator->kpdfOutputDev->setParams( width, height, genTextPage,
+    d->generator->kpdfOutputDev->setParams( width, height, 
                                             genObjectRects, genObjectRects, TRUE /*thread safety*/ );
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
-                                       fakeDpiX, fakeDpiY, 0, true, genObjectRects );
+                                       fakeDpiX, fakeDpiY, 0, false, true, genObjectRects );
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
@@ -1099,10 +1102,17 @@ void PDFPixmapGeneratorThread::run()
         kdDebug() << "PDFPixmapGeneratorThread: previous textpage not taken" << endl;
 #endif
     d->m_image = d->generator->kpdfOutputDev->takeImage();
-    d->m_textPage = d->generator->kpdfOutputDev->takeTextPage();
     d->m_rects = d->generator->kpdfOutputDev->takeObjectRects();
     d->m_rectsTaken = false;
 
+    if ( genTextPage )
+    {
+        TextOutputDev td(NULL, gTrue, gFalse, gFalse);
+        d->generator->pdfdoc->displayPage( &td, page->number()+1, 72, 72, 0, false, true, false );
+        // ..and attach it to the page
+        d->m_textPage = td.takeText();
+    }
+    
     // 3. [UNLOCK] mutex
     d->generator->docLock.unlock();
 

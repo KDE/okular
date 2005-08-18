@@ -16,6 +16,7 @@
 #endif
 
 class XRef;
+class Catalog;
 class Gfx;
 
 //------------------------------------------------------------------------
@@ -25,7 +26,7 @@ class Gfx;
 class Annot {
 public:
 
-  Annot(XRef *xrefA, Dict *dict);
+  Annot(XRef *xrefA, Dict *acroForm, Dict *dict);
   ~Annot();
   GBool isOk() { return ok; }
 
@@ -36,9 +37,12 @@ public:
 
 private:
 
+  void generateAppearance(Dict *acroForm, Dict *dict);
+
   XRef *xref;			// the xref table for this PDF file
   Object appearance;		// a reference to the Form XObject stream
 				//   for the normal appearance
+  GString *appearBuf;
   double xMin, yMin,		// annotation rectangle
          xMax, yMax;
   GBool ok;
@@ -52,7 +56,7 @@ class Annots {
 public:
 
   // Extract non-link annotations from array of annotations.
-  Annots(XRef *xref, Object *annotsObj);
+  Annots(XRef *xref, Catalog *catalog, Object *annotsObj);
 
   ~Annots();
 

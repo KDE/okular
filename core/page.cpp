@@ -130,27 +130,17 @@ NormalizedRect * KPDFPage::findText( const QString & text, bool strictCase, Norm
     while ( !found )
     {
         if ( dir == FromTop )
-            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gTrue, gTrue, gFalse, gFalse, &sLeft, &sTop, &sRight, &sBottom );
+            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gTrue, gTrue, gFalse, gFalse, strictCase, gFalse, &sLeft, &sTop, &sRight, &sBottom );
         else if ( dir == NextMatch )
-            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gFalse, gTrue, gTrue, gFalse, &sLeft, &sTop, &sRight, &sBottom );
+            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gFalse, gTrue, gTrue, gFalse, strictCase, gFalse, &sLeft, &sTop, &sRight, &sBottom );
         else if ( dir == PrevMatch )
             // FIXME: this doesn't work as expected (luckily backward search isn't yet used)
-            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gTrue, gFalse, gFalse, gTrue, &sLeft, &sTop, &sRight, &sBottom );
+	    // TODO: check if the new xpdf 3.01 code is able of searching backwards
+            found = m_text->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, gTrue, gFalse, gFalse, gTrue, strictCase, gTrue, &sLeft, &sTop, &sRight, &sBottom );
 
         // if not found (even in case unsensitive search), terminate
         if ( !found )
             break;
-
-        // check for case sensitivity
-        if ( strictCase )
-        {
-            // since we're in 'Case sensitive' mode, check if words are identical
-            GString * realText = m_text->getText( sLeft, sTop, sRight, sBottom );
-            found = QString::fromUtf8( realText->getCString() ) == text;
-            if ( !found && dir == FromTop )
-                dir = NextMatch;
-            delete realText;
-        }
     }
 
     // if the page was found, return a new normalizedRect

@@ -40,9 +40,13 @@ class PDFDoc {
 public:
 
   PDFDoc(GString *fileNameA, GString *ownerPassword = NULL,
-	 GString *userPassword = NULL);
+	 GString *userPassword = NULL, void *guiDataA = NULL);
+#ifdef WIN32
+  PDFDoc(wchar_t *fileNameA, int fileNameLen, GString *ownerPassword = NULL,
+	 GString *userPassword = NULL, void *guiDataA = NULL);
+#endif
   PDFDoc(BaseStream *strA, GString *ownerPassword = NULL,
-	 GString *userPassword = NULL);
+	 GString *userPassword = NULL, void *guiDataA = NULL);
   ~PDFDoc();
 
   // Was PDF document successfully opened?
@@ -64,10 +68,14 @@ public:
   BaseStream *getBaseStream() { return str; }
 
   // Get page parameters.
-  double getPageWidth(int page)
-    { return catalog->getPage(page)->getWidth(); }
-  double getPageHeight(int page)
-    { return catalog->getPage(page)->getHeight(); }
+  double getPageMediaWidth(int page)
+    { return catalog->getPage(page)->getMediaWidth(); }
+  double getPageMediaHeight(int page)
+    { return catalog->getPage(page)->getMediaHeight(); }
+  double getPageCropWidth(int page)
+    { return catalog->getPage(page)->getCropWidth(); }
+  double getPageCropHeight(int page)
+    { return catalog->getPage(page)->getCropHeight(); }
   int getPageRotate(int page)
     { return catalog->getPage(page)->getRotate(); }
 
@@ -83,14 +91,15 @@ public:
 
   // Display a page.
   void displayPage(OutputDev *out, int page, double hDPI, double vDPI,
-		   int rotate, GBool crop, GBool doLinks,
+		   int rotate, GBool useMediaBox, GBool crop,
+		   GBool doLinks,
 		   GBool (*abortCheckCbk)(void *data) = NULL,
 		   void *abortCheckCbkData = NULL);
 
   // Display a range of pages.
   void displayPages(OutputDev *out, int firstPage, int lastPage,
 		    double hDPI, double vDPI, int rotate,
-		    GBool crop, GBool doLinks,
+		    GBool useMediaBox, GBool crop, GBool doLinks,
 		    GBool (*abortCheckCbk)(void *data) = NULL,
 		    void *abortCheckCbkData = NULL);
 
@@ -98,15 +107,15 @@ public:
   // Display some pages
   void displayPages(OutputDev *out, list<int> &pages,
 		    double hDPI, double vDPI, int rotate,
-		    GBool crop, GBool doLinks,
+		    GBool useMediaBox, GBool crop, GBool doLinks,
 		    GBool (*abortCheckCbk)(void *data) = NULL,
 		    void *abortCheckCbkData = NULL);
 
 
   // Display part of a page.
   void displayPageSlice(OutputDev *out, int page,
-			double hDPI, double vDPI,
-			int rotate, GBool crop,
+			double hDPI, double vDPI, int rotate,
+			GBool useMediaBox, GBool crop, GBool doLinks,
 			int sliceX, int sliceY, int sliceW, int sliceH,
 			GBool (*abortCheckCbk)(void *data) = NULL,
 			void *abortCheckCbkData = NULL);
@@ -115,13 +124,9 @@ public:
   // not found.
   int findPage(int num, int gen) { return catalog->findPage(num, gen); }
 
-  // If point <x>,<y> is in a link, return the associated action;
-  // else return NULL.
-  LinkAction *findLink(double x, double y)
-    { return links ? links->find(x, y) : (LinkAction *)NULL; }
-
-  // Return true if <x>,<y> is in a link.
-  GBool onLink(double x, double y) { return links->onLink(x, y); }
+  // Returns the links for the current page, transferring ownership to
+  // the caller.
+  Links *takeLinks();
 
   // Find a named destination.  Returns the link destination, or
   // NULL if <name> is not a destination.
@@ -159,16 +164,21 @@ public:
   // Save this file with another name.
   GBool saveAs(GString *name);
 
+  // Return a pointer to the GUI (XPDFCore or WinPDFCore object).
+  void *getGUIData() { return guiData; }
+
 
 private:
 
   GBool setup(GString *ownerPassword, GString *userPassword);
   void checkHeader();
+  GBool checkEncryption(GString *ownerPassword, GString *userPassword);
   void getLinks(Page *page);
 
   GString *fileName;
   FILE *file;
   BaseStream *str;
+  void *guiData;
   double pdfVersion;
   XRef *xref;
   Catalog *catalog;

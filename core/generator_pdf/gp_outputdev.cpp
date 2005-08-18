@@ -38,8 +38,8 @@
 /** KPDFOutputDev implementation **/
 
 KPDFOutputDev::KPDFOutputDev( SplashColor paperColor )
-    : SplashOutputDev( splashModeRGB8, false, paperColor ),
-    m_doc( 0 ), m_pixmap( 0 ), m_image( 0 ), m_text( 0 )
+    : SplashOutputDev( splashModeRGB8, 4, false, paperColor ),
+    m_doc( 0 ), m_pixmap( 0 ), m_image( 0 )
 {
 }
 
@@ -54,7 +54,7 @@ void KPDFOutputDev::initDevice( PDFDoc * pdfDoc )
     startDoc( pdfDoc->getXRef() );
 }
 
-void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool genI, bool safe )
+void KPDFOutputDev::setParams( int width, int height, bool genL, bool genI, bool safe )
 {
     clear();
 
@@ -62,12 +62,8 @@ void KPDFOutputDev::setParams( int width, int height, bool genT, bool genL, bool
     m_pixmapHeight = height;
 
     m_qtThreadSafety = safe;
-    m_generateText = genT;
     m_generateLinks = genL;
     m_generateImages = genI;
-
-    if ( m_generateText )
-        m_text = new TextPage( gFalse );
 }
 
 QPixmap * KPDFOutputDev::takePixmap()
@@ -84,13 +80,6 @@ QImage * KPDFOutputDev::takeImage()
     return img;
 }
 
-TextPage * KPDFOutputDev::takeTextPage()
-{
-    TextPage * text = m_text;
-    m_text = 0;
-    return text;
-}
-
 QValueList< ObjectRect * > KPDFOutputDev::takeObjectRects()
 {
     if ( m_rects.isEmpty() )
@@ -101,27 +90,29 @@ QValueList< ObjectRect * > KPDFOutputDev::takeObjectRects()
 }
 
 //BEGIN - OutputDev hooked calls
-void KPDFOutputDev::startPage( int pageNum, GfxState *state )
-{
-    if ( m_generateText )
-        m_text->startPage( state );
-    SplashOutputDev::startPage( pageNum, state );
-}
-
 void KPDFOutputDev::endPage()
 {
     SplashOutputDev::endPage();
-    if ( m_generateText )
-    {
-        m_text->endPage();
-        m_text->coalesce( gTrue );
-    }
 
     int bh = getBitmap()->getHeight(),
         bw = getBitmap()->getWidth();
-    SplashColorPtr dataPtr = getBitmap()->getDataPtr();
+    // TODO The below loop can be avoided if using the code that is commented here and
+    // we change splashModeRGB8 to splashModeARGB8 the problem is that then bug101800.pdf
+    // does not work
+/*    SplashColorPtr dataPtr = getBitmap()->getDataPtr();
     // construct a qimage SHARING the raw bitmap data in memory
-    QImage * img = new QImage( (uchar*)dataPtr.rgb8, bw, bh, 32, 0, 0, QImage::IgnoreEndian );
+    QImage * img = new QImage( dataPtr, bw, bh, 32, 0, 0, QImage::IgnoreEndian );*/
+    QImage * img = new QImage( bw, bh, 32 );
+    SplashColorPtr pixel = new Guchar[4];
+    for (int i = 0; i < bw; i++)
+    {
+        for (int j = 0; j < bh; j++)
+	{
+           getBitmap()->getPixel(i, j, pixel);
+           img->setPixel( i, j, qRgb( pixel[0], pixel[1], pixel[2] ) );
+	}
+    }
+    delete pixel;
 
     // use the QImage or convert it immediately to QPixmap for better
     // handling and memory unloading
@@ -178,27 +169,6 @@ void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )
         }
     }
     SplashOutputDev::drawLink( link, catalog );
-}
-
-void KPDFOutputDev::updateFont( GfxState *state )
-{
-    if ( m_generateText )
-        m_text->updateFont( state );
-    SplashOutputDev::updateFont( state );
-}
-
-void KPDFOutputDev::drawChar( GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, Unicode *u, int uLen )
-{
-    if ( m_generateText )
-        m_text->addChar( state, x, y, dx, dy, code, u, uLen );
-    SplashOutputDev::drawChar( state, x, y, dx, dy, originX, originY, code, u, uLen );
-}
-
-GBool KPDFOutputDev::beginType3Char( GfxState *state, double x, double y, double dx, double dy, CharCode code, Unicode *u, int uLen )
-{
-    if ( m_generateText )
-        m_text->addChar( state, x, y, dx, dy, code, u, uLen );
-    return SplashOutputDev::beginType3Char( state, x, y, dx, dy, code, u, uLen );
 }
 
 void KPDFOutputDev::drawImage( GfxState *state, Object *ref, Stream *str,
@@ -263,12 +233,6 @@ void KPDFOutputDev::clear()
     {
         delete m_image;
         m_image = 0;
-    }
-    // delete text
-    if ( m_text )
-    {
-        delete m_text;
-        m_text = 0;
     }
 }
 
@@ -423,45 +387,3 @@ DocumentViewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkDest * 
 }
 //END - private helpers
 
-
-/** KPDFTextDev implementation **/
-
-KPDFTextDev::KPDFTextDev()
-{
-    m_text = new TextPage( gFalse );
-}
-
-KPDFTextDev::~KPDFTextDev()
-{
-    delete m_text;
-}
-
-TextPage * KPDFTextDev::takeTextPage()
-{
-    TextPage * t = m_text;
-    m_text = 0;
-    return t;
-}
-
-void KPDFTextDev::startPage( int, GfxState *state )
-{
-    if ( !m_text )
-        m_text = new TextPage( gFalse );
-    m_text->startPage( state );
-}
-
-void KPDFTextDev::endPage()
-{
-    m_text->endPage();
-    m_text->coalesce( gTrue );
-}
-
-void KPDFTextDev::updateFont( GfxState *state )
-{
-    m_text->updateFont( state );
-}
-
-void KPDFTextDev::drawChar( GfxState *state, double x, double y, double dx, double dy, double /*originX*/, double /*originY*/, CharCode code, Unicode *u, int uLen )
-{
-    m_text->addChar( state, x, y, dx, dy, code, u, uLen );
-}

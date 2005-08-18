@@ -24,7 +24,7 @@ BuiltinFontWidths::BuiltinFontWidths(BuiltinFontWidth *widths, int sizeA) {
   int i, h;
 
   size = sizeA;
-  tab = (BuiltinFontWidth **)gmalloc(size * sizeof(BuiltinFontWidth *));
+  tab = (BuiltinFontWidth **)gmallocn(size, sizeof(BuiltinFontWidth *));
   for (i = 0; i < size; ++i) {
     tab[i] = NULL;
   }

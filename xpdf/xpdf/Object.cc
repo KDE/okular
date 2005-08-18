@@ -161,7 +161,7 @@ void Object::print(FILE *f) {
     break;
   case objString:
     fprintf(f, "(");
-    fwrite(string->getCString(), 1, string->getLength(), stdout);
+    fwrite(string->getCString(), 1, string->getLength(), f);
     fprintf(f, ")");
     break;
   case objName:

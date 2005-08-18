@@ -19,9 +19,7 @@
 #include "gtypes.h"
 #include "Object.h"
 
-#ifndef NO_DECRYPTION
 class Decrypt;
-#endif
 class BaseStream;
 
 //------------------------------------------------------------------------
@@ -38,6 +36,13 @@ enum StreamKind {
   strJBIG2,
   strJPX,
   strWeird			// internal-use stream types
+};
+
+enum StreamColorSpaceMode {
+  streamCSNone,
+  streamCSDeviceGray,
+  streamCSDeviceRGB,
+  streamCSDeviceCMYK
 };
 
 //------------------------------------------------------------------------
@@ -102,14 +107,13 @@ public:
   // Is this an encoding filter?
   virtual GBool isEncoder() { return gFalse; }
 
+  // Get image parameters which are defined by the stream contents.
+  virtual void getImageParams(int */*bitsPerComponent*/,
+			      StreamColorSpaceMode */*csMode*/) {}
+
   // Add filters to this stream according to the parameters in <dict>.
   // Returns the new stream.
   Stream *addFilters(Object *dict);
-
-  // Tell this stream to ignore any length limitation -- this only
-  // applies to BaseStream subclasses, and is used as a hack to work
-  // around broken PDF files with incorrect stream lengths.
-  virtual void ignoreLength() {}
 
 private:
 
@@ -140,17 +144,13 @@ public:
   virtual Guint getStart() = 0;
   virtual void moveStart(int delta) = 0;
 
-#ifndef NO_DECRYPTION
   // Set decryption for this stream.
   virtual void doDecryption(Guchar *fileKey, int keyLength,
 			    int objNum, int objGen);
-#endif
 
-#ifndef NO_DECRYPTION
 protected:
 
   Decrypt *decrypt;
-#endif
 
 private:
 
@@ -173,7 +173,6 @@ public:
   virtual void setPos(Guint pos, int dir = 0);
   virtual BaseStream *getBaseStream() { return str->getBaseStream(); }
   virtual Dict *getDict() { return str->getDict(); }
-  virtual void ignoreLength() { str->ignoreLength(); }
 
 protected:
 
@@ -275,7 +274,6 @@ public:
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr & 0xff); }
   virtual int getPos() { return bufPos + (bufPtr - buf); }
   virtual void setPos(Guint pos, int dir = 0);
-  virtual void ignoreLength() { limited = gFalse; }
   virtual Guint getStart() { return start; }
   virtual void moveStart(int delta);
 
@@ -317,10 +315,8 @@ public:
   virtual void setPos(Guint pos, int dir = 0);
   virtual Guint getStart() { return start; }
   virtual void moveStart(int delta);
-#ifndef NO_DECRYPTION
   virtual void doDecryption(Guchar *fileKey, int keyLength,
 			    int objNum, int objGen);
-#endif
 
 private:
 
@@ -594,7 +590,7 @@ private:
   GBool gotJFIFMarker;		// set if APP0 JFIF marker was present
   GBool gotAdobeMarker;		// set if APP14 Adobe marker was present
   int restartInterval;		// restart interval, in MCUs
-  Guchar quantTables[4][64];	// quantization tables
+  Gushort quantTables[4][64];	// quantization tables
   int numQuantTables;		// number of quantization tables
   DCTHuffTable dcHuffTables[4];	// DC Huffman tables
   DCTHuffTable acHuffTables[4];	// AC Huffman tables
@@ -619,7 +615,7 @@ private:
 				DCTHuffTable *acHuffTable,
 				int *prevDC, int data[64]);
   void decodeImage();
-  void transformDataUnit(Guchar *quantTable,
+  void transformDataUnit(Gushort *quantTable,
 			 int dataIn[64], Guchar dataOut[64]);
   int readHuffSym(DCTHuffTable *table);
   int readAmp(int size);
@@ -704,6 +700,10 @@ private:
     lengthDecode[flateMaxLitCodes-257];
   static FlateDecode		// distance decoding info
     distDecode[flateMaxDistCodes];
+  static FlateHuffmanTab	// fixed literal code table
+    fixedLitCodeTab;
+  static FlateHuffmanTab	// fixed distance code table
+    fixedDistCodeTab;
 
   void readSome();
   GBool startBlock();

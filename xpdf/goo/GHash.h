@@ -30,6 +30,8 @@ public:
   ~GHash();
   void add(GString *key, void *val);
   void add(GString *key, int val);
+  void replace(GString *key, void *val);
+  void replace(GString *key, int val);
   void *lookup(GString *key);
   int lookupInt(GString *key);
   void *lookup(char *key);

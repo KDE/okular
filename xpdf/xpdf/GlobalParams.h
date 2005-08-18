@@ -33,6 +33,7 @@ class UnicodeMap;
 class UnicodeMapCache;
 class CMap;
 class CMapCache;
+struct XpdfSecurityHandler;
 class GlobalParams;
 
 //------------------------------------------------------------------------
@@ -47,6 +48,15 @@ enum DisplayFontParamKind {
   displayFontTT
 };
 
+struct DisplayFontParamT1 {
+  GString *fileName;
+};
+
+struct DisplayFontParamTT {
+  GString *fileName;
+  int faceIndex;
+};
+
 class DisplayFontParam {
 public:
 
@@ -55,13 +65,8 @@ public:
 				//   generic CID fonts
   DisplayFontParamKind kind;
   union {
-    struct {
-      GString *fileName;
-    } t1;
-    struct {
-      GString *fileName;
-      int faceIndex;
-    } tt;
+    DisplayFontParamT1 t1;
+    DisplayFontParamTT tt;
   };
 
   DisplayFontParam(GString *nameA, DisplayFontParamKind kindA);
@@ -116,12 +121,14 @@ public:
 
   ~GlobalParams();
 
+  void setBaseDir(char *dir);
   void setupBaseFonts(char *dir);
 
   //----- accessors
 
   CharCode getMacRomanCharCode(const char *charName);
 
+  GString *getBaseDir();
   Unicode mapNameToUnicode(const char *charName);
   UnicodeMap *getResidentUnicodeMap(GString *encodingName);
   FILE *getUnicodeMapFile(GString *encodingName);
@@ -153,6 +160,7 @@ public:
   GBool getTextKeepTinyChars();
   GString *findFontFile(GString *fontName, const char **exts);
   GString *getInitialZoom();
+  GBool getContinuousView();
   GBool getEnableT1lib();
   GBool getEnableFreeType();
   GBool getAntialias();
@@ -193,12 +201,18 @@ public:
   void setTextPageBreaks(GBool pageBreaks);
   void setTextKeepTinyChars(GBool keep);
   void setInitialZoom(char *s);
+  void setContinuousView(GBool cont);
   GBool setEnableT1lib(char *s);
   GBool setEnableFreeType(char *s);
   GBool setAntialias(char *s);
   void setMapNumericCharNames(GBool map);
   void setPrintCommands(GBool printCommandsA);
   void setErrQuiet(GBool errQuietA);
+
+  //----- security handlers
+
+  void addSecurityHandler(XpdfSecurityHandler *handler);
+  XpdfSecurityHandler *getSecurityHandler(char *name);
 
 private:
 
@@ -229,6 +243,9 @@ private:
 		  GList *tokens, GString *fileName, int line);
   GBool parseYesNo2(char *token, GBool *flag);
   UnicodeMap *getUnicodeMap2(GString *encodingName);
+#ifdef ENABLE_PLUGINS
+  GBool loadPlugin(char *type, char *name);
+#endif
 
   //----- static tables
 
@@ -237,6 +254,7 @@ private:
 
   //----- user-modifiable settings
 
+  GString *baseDir;		// base directory - for plugins, etc.
   NameToCharCode *		// mapping from char name to Unicode
     nameToUnicode;
   GHash *cidToUnicodes;		// files for mappings from char collections
@@ -288,6 +306,7 @@ private:
   GBool textKeepTinyChars;	// keep all characters in text output
   GList *fontDirs;		// list of font dirs [GString]
   GString *initialZoom;		// initial zoom level
+  GBool continuousView;		// continuous view mode
   GBool enableT1lib;		// t1lib enable flag
   GBool enableFreeType;		// FreeType enable flag
   GBool antialias;		// anti-aliasing enable flag
@@ -301,6 +320,12 @@ private:
   CharCodeToUnicodeCache *unicodeToUnicodeCache;
   UnicodeMapCache *unicodeMapCache;
   CMapCache *cMapCache;
+
+#ifdef ENABLE_PLUGINS
+  GList *plugins;		// list of plugins [Plugin]
+  GList *securityHandlers;	// list of loaded security handlers
+				//   [XpdfSecurityHandler]
+#endif
 
 #if MULTITHREADED
   GMutex mutex;

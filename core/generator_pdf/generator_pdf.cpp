@@ -175,8 +175,8 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     pagesVector.resize( pageCount );
     for ( uint i = 0; i < pageCount ; i++ )
     {
-        KPDFPage * page = new KPDFPage( i, pdfdoc->getPageMediaWidth(i+1),
-                                        pdfdoc->getPageMediaHeight(i+1),
+        KPDFPage * page = new KPDFPage( i, pdfdoc->getPageCropWidth(i+1),
+                                        pdfdoc->getPageCropHeight(i+1),
                                         pdfdoc->getPageRotate(i+1) );
         addTransition( i, page );
         pagesVector[i] = page;

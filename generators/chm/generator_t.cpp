@@ -172,7 +172,7 @@ void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
         int vWidth=m_syncGen->view()->contentsWidth();
         int vHeight=m_syncGen->view()->contentsHeight();
         NormalizedRect *nodeNormRect;
-#define NOEXP
+// #define NOEXP
 #ifndef NOEXP
         int x,y,height;
         int x_next,y_next,height_next;

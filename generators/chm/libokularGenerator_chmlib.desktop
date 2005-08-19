@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+Name=chmlib
+Comment=Windows HTMLHelp backend for oKular
+ServiceTypes=oKular/Generator
+MimeType=application/chm
+X-KDE-Library=libokularGenerator_chmlib.la
+X-KDE-Priority=2
+X-KDE-oKularAPIVersion=1
+X-KDE-oKularHasInternalSettings=false

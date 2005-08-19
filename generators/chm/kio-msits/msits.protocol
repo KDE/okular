@@ -1,0 +1,24 @@
+[Protocol]
+exec=kio_msits
+protocol=ms-its
+input=none
+output=filesystem
+reading=true
+listing=Name,Type,Size
+defaultMimetype=text/html
+Description=A kioslave for displaying WinHelp files
+Description[da]=En kioslave til visning af Windows hjælpefiler
+Description[de]=Ein Ein-/Ausgabemodul zur Anzeige von WinHelp-Dateien
+Description[es]=Un kioslave para mostrar archivos WinHelp
+Description[et]=WinHelp-failide kuvamise IO-moodul
+Description[fr]=Un module d'entrée / sortie pour l'affichage des fichiers WinHelp
+Description[hu]=KDE-protokoll WinHelp-fájlok megjelenítéséhez
+Description[it]=Un kioslave per mostrare i file WinHelp
+Description[nl]=Een kioslave voor het weergeven van WinHelp-bestanden
+Description[pl]=kioslave do pokazywania plików WinHelp
+Description[pt]=A 'kioslave' para mostrar ficheiros WinHelp
+Description[pt_BR]=Um kioslave para exibir arquivos WinHelp
+Description[ru]=Обработчик ввода-вывода для файлов WinHelp
+Description[sv]=En I/O-slav för att visa WinHelp-filer
+Description[xx]=xxA kioslave for displaying WinHelp filesxx
+Icon=help

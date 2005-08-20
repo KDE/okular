@@ -17,7 +17,6 @@ static KCmdLineOptions options[] =
 {
   { "u", 0, 0 },
   { "unique", I18N_NOOP("Check if the file is loaded in another KDVI.\nIf it is, bring up the other KDVI. Otherwise, load the file."), 0 },
-  { "paper ", I18N_NOOP("Sets paper size (not implemented at the moment,\nonly for compatibility with lyx)"), 0 },
   { "g", 0, 0 },
   { "goto <pagenumber>", I18N_NOOP("Navigate to this page"), 0 },
   { "+file(s)", I18N_NOOP("Files to load"), 0 },

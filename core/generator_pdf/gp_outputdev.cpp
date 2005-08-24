@@ -112,7 +112,7 @@ void KPDFOutputDev::endPage()
            img->setPixel( i, j, qRgb( pixel[0], pixel[1], pixel[2] ) );
 	}
     }
-    delete pixel;
+    delete [] pixel;
 
     // use the QImage or convert it immediately to QPixmap for better
     // handling and memory unloading

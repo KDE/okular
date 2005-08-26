@@ -44,10 +44,10 @@
 //#define KDVI_MULTIPAGE_DEBUG
 
 
-void KDVIMultiPage::doExportText(void)
+void KDVIMultiPage::doExportText()
 {
 #ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "KDVIMultiPage::doExportText(void) called" << endl;
+  kdDebug(4300) << "KDVIMultiPage::doExportText() called" << endl;
 #endif
 
   // Paranoid safety checks

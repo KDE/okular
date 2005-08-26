@@ -124,14 +124,14 @@ KAboutData* KDVIMultiPage::createAboutData()
 }
 
 
-void KDVIMultiPage::slotEmbedPostScript(void)
+void KDVIMultiPage::slotEmbedPostScript()
 {
   DVIRenderer.embedPostScript();
   emit askingToCheckActions();
 }
 
 
-void KDVIMultiPage::setEmbedPostScriptAction(void)
+void KDVIMultiPage::setEmbedPostScriptAction()
 {
   if ((DVIRenderer.dviFile == 0) || (DVIRenderer.dviFile->numberOfExternalPSFiles == 0))
     embedPSAction->setEnabled(false);
@@ -413,7 +413,7 @@ void KDVIMultiPage::enableActions(bool b)
 }
 
 
-void KDVIMultiPage::doEnableWarnings(void)
+void KDVIMultiPage::doEnableWarnings()
 {
   KMessageBox::information (scrollView(), i18n("All messages and warnings will now be shown."));
   KMessageBox::enableAllMessages();
@@ -421,13 +421,13 @@ void KDVIMultiPage::doEnableWarnings(void)
 }
 
 
-void KDVIMultiPage::showTip(void)
+void KDVIMultiPage::showTip()
 {
   KTipDialog::showTip(scrollView(), "kdvi/tips", true);
 }
 
 
-void KDVIMultiPage::showTipOnStart(void)
+void KDVIMultiPage::showTipOnStart()
 {
   KTipDialog::showTip(scrollView(), "kdvi/tips");
 }

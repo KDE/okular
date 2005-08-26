@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 #ifndef _GLYPH_H
 #define _GLYPH_H

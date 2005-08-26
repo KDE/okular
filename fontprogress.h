@@ -1,3 +1,4 @@
+// -*- C++ -*-
 //
 // fontprogress.h
 //
@@ -65,7 +66,7 @@ public:
 private slots:
     /** Calling this slot does nothing than to kill the process that is
 	pointed to be procIO, if procIO is not zero.*/
-  void killProcIO(void);
+  void killProcIO();
 
 private:
    QLabel* TextLabel1;

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /* This file is part of KDVI (C) 2001 by Stefan Kebekus (kebekus@kde.org)
 
    This library is free software; you can redistribute it and/or
@@ -35,15 +36,15 @@ class bigEndianByteReader {
   /** If command_pointer >= end_pointer, this method return EOP (=140)
       and exists. Otherwise, the method returns the unsigned byte
       and increases the command_pointer by one. */
-  Q_UINT8        readUINT8(void);
+  Q_UINT8        readUINT8();
 
   /** Similar to the method above, only that the method reads a big
       endian 2-byte word and increases the pointer by two. */
-  Q_UINT16       readUINT16(void);
+  Q_UINT16       readUINT16();
 
   /** Similar to the method above, only that the method reads a big
       endian 4-byte word and increases the pointer by four. */
-  Q_UINT32       readUINT32(void);
+  Q_UINT32       readUINT32();
 
   void writeUINT32(Q_UINT32 a);
 

@@ -46,7 +46,7 @@ extern QPainter foreGroundPaint; // QPainter used for text
 
 
 
-void dviRenderer::exportPDF(void)
+void dviRenderer::exportPDF()
 {
   // It could perhaps happen that a kShellProcess, which runs an
   // editor for inverse search, is still running. In that case, we
@@ -116,7 +116,7 @@ void dviRenderer::exportPDF(void)
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
     progress->setTotalSteps( dviFile->total_pages );
-    qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortExternalProgramm(void)));
+    qApp->connect(progress, SIGNAL(finished()), this, SLOT(abortExternalProgramm()));
   }
 
   proc = new KShellProcess();
@@ -219,7 +219,7 @@ void dviRenderer::exportPS(QString fname, QString options, KPrinter *printer)
   if (progress != 0) {
     progress->TextLabel2->setText( i18n("Please be patient") );
     progress->setTotalSteps( dviFile->total_pages );
-    qApp->connect(progress, SIGNAL(finished(void)), this, SLOT(abortExternalProgramm(void)));
+    qApp->connect(progress, SIGNAL(finished()), this, SLOT(abortExternalProgramm()));
   }
 
   // There is a major problem with dvips, at least 5.86 and lower: the
@@ -366,7 +366,7 @@ void dviRenderer::editorCommand_terminated(KProcess *sproc)
 }
 
 
-void dviRenderer::abortExternalProgramm(void)
+void dviRenderer::abortExternalProgramm()
 {
   delete proc; // Deleting the KProcess kills the child.
   proc = 0;

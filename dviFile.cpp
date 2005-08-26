@@ -100,7 +100,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
 }
 
 
-void dvifile::process_preamble(void)
+void dvifile::process_preamble()
 {
   command_pointer = dvi_Data();
   
@@ -142,7 +142,7 @@ void dvifile::process_preamble(void)
 /** find_postamble locates the beginning of the postamble and leaves
     the file ready to start reading at that location. */
 
-void dvifile::find_postamble(void)
+void dvifile::find_postamble()
 {
   // Move backwards through the TRAILER bytes
   command_pointer = dvi_Data() + size_of_file - 1;
@@ -160,7 +160,7 @@ void dvifile::find_postamble(void)
 }
 
 
-void dvifile::read_postamble(void)
+void dvifile::read_postamble()
 {
   Q_UINT8 magic_byte = readUINT8();
   if (magic_byte != POST) {

@@ -258,7 +258,7 @@ void dviRenderer::html_href_special(QString cp)
 }
 
 
-void dviRenderer::html_anchor_end(void)
+void dviRenderer::html_anchor_end()
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "HTML-special, anchor-end" << endl;
@@ -428,7 +428,7 @@ void dviRenderer::epsf_special(QString cp)
 }
 
 
-void dviRenderer::TPIC_flushPath_special(void)
+void dviRenderer::TPIC_flushPath_special()
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "TPIC special flushPath" << endl;

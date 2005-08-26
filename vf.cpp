@@ -63,10 +63,10 @@ extern void oops(QString message);
  *	The main routine
  */
 
-void TeXFontDefinition::read_VF_index(void)
+void TeXFontDefinition::read_VF_index()
 {
 #ifdef DEBUG_FONTS
-  kdDebug(4300) << "font::read_VF_index(void)" << endl;
+  kdDebug(4300) << "font::read_VF_index()" << endl;
 #endif
   FILE *VF_file = file;
   unsigned char	cmnd;

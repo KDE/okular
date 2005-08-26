@@ -130,7 +130,7 @@ QColor ghostscript_interface::getBackgroundColor(PageNumber page) {
 }
 
 
-void ghostscript_interface::clear(void) {
+void ghostscript_interface::clear() {
   PostScriptHeaderString->truncate(0);
   
   // Deletes all items, removes temporary files, etc.

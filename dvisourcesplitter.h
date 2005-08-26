@@ -1,3 +1,4 @@
+// -*- C++ -*-
 //
 // C++ Interface: dvisourcesplitter
 //

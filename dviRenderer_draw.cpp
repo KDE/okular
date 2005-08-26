@@ -566,7 +566,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 }
 
 
-void dviRenderer::draw_page(void)
+void dviRenderer::draw_page()
 {
   // Reset a couple of variables
   HTML_href         = 0;

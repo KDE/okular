@@ -60,7 +60,7 @@ fontProgressDialog::fontProgressDialog( QString helpIndex, QString label, QStrin
 
   progress = 0;
   procIO = 0;
-  qApp->connect(this, SIGNAL(finished(void)), this, SLOT(killProcIO(void)));
+  qApp->connect(this, SIGNAL(finished()), this, SLOT(killProcIO()));
 }
 
 
@@ -93,7 +93,7 @@ void fontProgressDialog::setTotalSteps(int steps, KProcIO *proc)
 }
 
 
-void fontProgressDialog::killProcIO(void)
+void fontProgressDialog::killProcIO()
 {
   if (!procIO.isNull())
     procIO->kill();

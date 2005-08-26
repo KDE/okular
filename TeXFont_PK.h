@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 #ifndef _TEXFONT_PK_H
 #define _TEXFONT_PK_H
@@ -33,8 +34,8 @@ class TeXFont_PK : public TeXFont {
   inline void read_PK_char(unsigned int ch);
   inline int  PK_get_nyb(FILE *fp);
   inline int  PK_packed_num(FILE *fp);
-  inline void read_PK_index(void);
-  inline void PK_skip_specials(void);
+  inline void read_PK_index();
+  inline void PK_skip_specials();
 };
 
 #endif

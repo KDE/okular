@@ -131,7 +131,7 @@ void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, b
 }
 
 
-void dviRenderer::showInfo(void)
+void dviRenderer::showInfo()
 {
   mutex.lock();
   info->setDVIData(dviFile);
@@ -229,7 +229,7 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
 }
 
 
-void dviRenderer::showThatSourceInformationIsPresent(void)
+void dviRenderer::showThatSourceInformationIsPresent()
 {
   // In principle, we should use a KMessagebox here, but we want to
   // add a button "Explain in more detail..." which opens the
@@ -285,7 +285,7 @@ void dviRenderer::showThatSourceInformationIsPresent(void)
 }
 
 
-void dviRenderer::embedPostScript(void)
+void dviRenderer::embedPostScript()
 {
 #ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer::embedPostScript()" << endl;
@@ -695,7 +695,7 @@ void dviRenderer::setResolution(double resolution_in_DPI)
 }
 
 
-void dviRenderer::clearStatusBar(void)
+void dviRenderer::clearStatusBar()
 {
   emit setStatusBarText( QString::null );
 }

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // TeXFont_PFB.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 

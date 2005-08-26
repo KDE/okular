@@ -11,7 +11,7 @@
 
 #include "fontEncodingPool.h"
 
-fontEncodingPool::fontEncodingPool(void)
+fontEncodingPool::fontEncodingPool()
 {
 }
 

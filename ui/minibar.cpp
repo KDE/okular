@@ -165,7 +165,6 @@ void MiniBar::notifySetup( const QVector< KPDFPage * > & pageVector, bool change
     m_nextButton->setFixedHeight( fixedHeight );
 
     // update child widgets
-    m_pagesEdit->setText( "" );
     m_pagesEdit->setPagesNumber( pages );
     m_pagesButton->setText( QString::number( pages ) );
     m_prevButton->setEnabled( false );

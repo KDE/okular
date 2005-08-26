@@ -1,3 +1,4 @@
+// -*- C++ -*-
 #ifndef __KDVIMULTIPAGE_H
 #define __KDVIMULTIPAGE_H
 
@@ -28,7 +29,7 @@ public:
   
   /// KDVI offers read- and write functionality must re-implement this
   /// method and return true here.
-  virtual bool isReadWrite() {return true;};
+  virtual bool isReadWrite() {return true;}
 
   virtual void addConfigDialogs(KConfigDialog* configDialog);
 
@@ -51,9 +52,9 @@ public slots:
   /** Similar to slotSave, but does not ask for a filename. */
   virtual void slotSave_defaultFilename();
 
-  void setEmbedPostScriptAction(void);
+  void setEmbedPostScriptAction();
 
-  void slotEmbedPostScript(void);
+  void slotEmbedPostScript();
 
   virtual void preferencesChanged();
 
@@ -67,8 +68,8 @@ protected slots:
   void doExportText();
   void doEnableWarnings();
 
-  void showTip(void);
-  void showTipOnStart(void);
+  void showTip();
+  void showTipOnStart();
 
 private:
   // Points to the same object as renderer to avoid downcasting.

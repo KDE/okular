@@ -1,3 +1,4 @@
+// -*- C++ -*-
 //
 // Class: dviRenderer
 //
@@ -103,10 +104,10 @@ public:
 
   void          setPrefs(bool flag_showPS, const QString &editorCommand, bool useFontHints );
 
-  virtual bool  supportsTextSearch(void) {return true;};
+  virtual bool  supportsTextSearch() {return true;}
 
-  bool		showPS(void) { return _postscript; };
-  int		curr_page(void) { return current_page+1; };
+  bool		showPS() { return _postscript; };
+  int		curr_page() { return current_page+1; };
   virtual bool  isValidFile(const QString fileName);
 
 
@@ -118,7 +119,7 @@ public:
   virtual Anchor        parseReference(const QString &reference);
   
   // These should not be public... only for the moment
-  void          read_postamble(void);
+  void          read_postamble();
   void          draw_part(double current_dimconv, bool is_vfmacro);
   void          set_vf_char(unsigned int cmd, unsigned int ch);
   void          set_char(unsigned int cmd, unsigned int ch);
@@ -130,22 +131,22 @@ public:
   void          printErrorMsgForSpecials(QString msg);
   void          color_special(QString cp);
   void          html_href_special(QString cp);
-  void          html_anchor_end(void);
-  void          draw_page(void);
+  void          html_anchor_end();
+  void          draw_page();
 
 public slots:
   void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
   void          exportPDF();
 
-  void          showInfo(void);
+  void          showInfo();
   void          handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *widget);
 
-  void          embedPostScript(void);
-  void          abortExternalProgramm(void);
+  void          embedPostScript();
+  void          abortExternalProgramm();
 
   /** simply emits "setStatusBarText( QString::null )". This is used
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
-  void          clearStatusBar(void);
+  void          clearStatusBar();
 
 
 
@@ -164,7 +165,7 @@ private slots:
   /** This method shows a dialog that tells the user that source
       information is present, and gives the opportunity to open the
       manual and learn more about forward and inverse search */
-  void          showThatSourceInformationIsPresent(void);
+  void          showThatSourceInformationIsPresent();
 
 private:
  /** This method parses a color specification of type "gray 0.5", "rgb
@@ -226,7 +227,7 @@ private:
   /** TPIC specials */
   void TPIC_setPen_special(QString cp);
   void TPIC_addPath_special(QString cp);
-  void TPIC_flushPath_special(void);
+  void TPIC_flushPath_special();
   
   /** This timer is used to delay clearing of the statusbar. Clearing
       the statusbar is delayed to avoid awful flickering when the

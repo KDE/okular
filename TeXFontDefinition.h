@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /*
  * The layout of a font information block.
  * There is one of these for every loaded font or magnification thereof.
@@ -34,8 +35,8 @@ class TeXFont;
 
 class macro {
  public:
-  macro(void);
-  ~macro(void);
+  macro();
+  ~macro();
 
   unsigned char	*pos;		/* address of first byte of macro */
   unsigned char	*end;		/* address of last+1 byte */
@@ -64,16 +65,16 @@ class TeXFontDefinition {
        class fontPool *pool, double _enlargement);
   ~TeXFontDefinition();
 
-  void reset(void);
+  void reset();
   void fontNameReceiver(QString);
 
   // Members for character fonts
   void           setDisplayResolution(double _displayResolution_in_dpi);
 
-  bool           isLocated(void) const {return ((flags & FONT_KPSE_NAME) != 0);}
-  void           markAsLocated(void) {flags |= FONT_KPSE_NAME;}
+  bool           isLocated() const {return ((flags & FONT_KPSE_NAME) != 0);}
+  void           markAsLocated() {flags |= FONT_KPSE_NAME;}
 
-  void           mark_as_used(void);
+  void           mark_as_used();
   class fontPool *font_pool;    // Pointer to the pool that contains this font.
   QString        fontname;	// name of font, such as "cmr10"
   unsigned char  flags;		// flags byte (see values below)
@@ -95,10 +96,10 @@ class TeXFontDefinition {
   TeXFontDefinition  *first_font;	// used by (loaded) virtual fonts, list of fonts used by this vf
 
 #ifdef HAVE_FREETYPE
-  const QString &getFullFontName(void) const {return fullFontName;};
-  const QString &getFullEncodingName(void) const {return fullEncodingName;};
+  const QString &getFullFontName() const {return fullFontName;}
+  const QString &getFullEncodingName() const {return fullEncodingName;}
 #endif
-  const QString &getFontTypeName(void) const {return fontTypeName;};
+  const QString &getFontTypeName() const {return fontTypeName;}
 
 #ifdef HAVE_FREETYPE
   /** For FREETYPE fonts, which use a map file, this field will

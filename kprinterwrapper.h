@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // kprinterwrapper.h
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
@@ -14,7 +15,7 @@
 class KDVIPrinterWrapper : public KPrinter
 {
 public:
-  KDVIPrinterWrapper(void) : KPrinter(true, QPrinter::ScreenResolution) {; };
+  KDVIPrinterWrapper() : KPrinter(true, QPrinter::ScreenResolution) {; };
 
   void doPreparePrinting() { preparePrinting(); };
 };

@@ -13,7 +13,7 @@
 
 //#define DEBUG_ENDIANREADER
 
-Q_UINT8 bigEndianByteReader::readUINT8(void)
+Q_UINT8 bigEndianByteReader::readUINT8()
 {
   // This check saveguards us against segmentation fault. It is also
   // necessary for virtual fonts, which do not end whith EOP.
@@ -29,7 +29,7 @@ Q_UINT8 bigEndianByteReader::readUINT8(void)
   return *(command_pointer++);
 }
 
-Q_UINT16 bigEndianByteReader::readUINT16(void)
+Q_UINT16 bigEndianByteReader::readUINT16()
 {
   // This check saveguards us against segmentation fault. It is also
   // necessary for virtual fonts, which do not end whith EOP.
@@ -42,7 +42,7 @@ Q_UINT16 bigEndianByteReader::readUINT16(void)
   return a;
 }
 
-Q_UINT32 bigEndianByteReader::readUINT32(void)
+Q_UINT32 bigEndianByteReader::readUINT32()
 {
   // This check saveguards us against segmentation fault. It is also
   // necessary for virtual fonts, which do not end whith EOP.

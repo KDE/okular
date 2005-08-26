@@ -419,7 +419,7 @@ int TeXFont_PK::PK_packed_num(FILE *fp)
 }
 
 
-void TeXFont_PK::PK_skip_specials(void)
+void TeXFont_PK::PK_skip_specials()
 {
 #ifdef DEBUG_PK
   kdDebug(4300) << "TeXFont_PK::PK_skip_specials() called" << endl;
@@ -718,7 +718,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 }
 
 
-void TeXFont_PK::read_PK_index(void)
+void TeXFont_PK::read_PK_index()
 {
 #ifdef DEBUG_PK
   kdDebug(4300) << "TeXFont_PK::read_PK_index() called" << endl;

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // TeXFont_TFM.h
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
@@ -19,9 +20,9 @@ class glyph;
 
 class fix_word {
  public:
-  void fromINT32(Q_INT32 val) {value = val;}; 
-  void fromDouble(double val) {value = (Q_INT32)(val * (1<<20) + 0.5);};
-  double toDouble(void) {return (double(value)) / (double(1<<20));};
+  void fromINT32(Q_INT32 val) {value = val;} 
+  void fromDouble(double val) {value = (Q_INT32)(val * (1<<20) + 0.5);}
+  double toDouble() {return (double(value)) / (double(1<<20));}
 
   Q_INT32 value;
 };

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // fontEncodingPool.h
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
@@ -21,7 +22,7 @@
 
 class fontEncodingPool {
  public:
-  fontEncodingPool(void);
+  fontEncodingPool();
 
   fontEncoding *findByName(const QString &name);
 

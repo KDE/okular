@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // TeXFont.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
@@ -25,7 +26,7 @@ class TeXFont {
   
   virtual ~TeXFont();
   
-  void setDisplayResolution(void)
+  void setDisplayResolution()
     {
       for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
 	glyphtable[i].shrunkenCharacter.resize(0, 0);

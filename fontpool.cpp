@@ -40,7 +40,7 @@ bool fontPoolTimerFlag;
 
 //#define DEBUG_FONTPOOL
 
-fontPool::fontPool(void)
+fontPool::fontPool()
   :  progress( "fontgen",  // Chapter in the documentation for help.
 	       i18n( "KDVI is currently generating bitmap fonts..." ),
 	       i18n( "Aborts the font generation. Don't do this." ),
@@ -51,7 +51,7 @@ fontPool::fontPool(void)
 	       0 )
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::fontPool(void) called" << endl;
+  kdDebug(4300) << "fontPool::fontPool() called" << endl;
 #endif
 
   setName("Font Pool");
@@ -104,10 +104,10 @@ fontPool::fontPool(void)
 }
 
 
-fontPool::~fontPool(void)
+fontPool::~fontPool()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::~fontPool(void) called" << endl;
+  kdDebug(4300) << "fontPool::~fontPool() called" << endl;
 #endif
 
 #ifdef HAVE_FREETYPE
@@ -169,7 +169,7 @@ class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, 
 }
 
 
-QString fontPool::status(void)
+QString fontPool::status()
 {
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "fontPool::status() called" << endl;
@@ -225,10 +225,10 @@ QString fontPool::status(void)
 }
 
 
-bool fontPool::areFontsLocated(void)
+bool fontPool::areFontsLocated()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::areFontsLocated(void) called" << endl;
+  kdDebug(4300) << "fontPool::areFontsLocated() called" << endl;
 #endif
 
   // Is there a font whose name we did not try to find out yet?
@@ -246,7 +246,7 @@ bool fontPool::areFontsLocated(void)
 }
 
 
-void fontPool::locateFonts(void)
+void fontPool::locateFonts()
 {
   kpsewhichOutput = QString::null;
 
@@ -498,7 +498,7 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 }
 
 
-void fontPool::markFontsAsLocated(void)
+void fontPool::markFontsAsLocated()
 {
   TeXFontDefinition *fontp=fontList.first();
   while ( fontp != 0 ) {
@@ -509,10 +509,10 @@ void fontPool::markFontsAsLocated(void)
 
 
 
-void fontPool::mark_fonts_as_unused(void)
+void fontPool::mark_fonts_as_unused()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::mark_fonts_as_unused(void) called" << endl;
+  kdDebug(4300) << "fontPool::mark_fonts_as_unused() called" << endl;
 #endif
   
   TeXFontDefinition  *fontp = fontList.first();
@@ -523,7 +523,7 @@ void fontPool::mark_fonts_as_unused(void)
 }
 
 
-void fontPool::release_fonts(void)
+void fontPool::release_fonts()
 {
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "Release_fonts" << endl;

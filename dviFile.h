@@ -1,3 +1,4 @@
+// -*- C++ -*-
 //
 // Class: dviFile
 //
@@ -43,7 +44,7 @@ class dvifile : public bigEndianByteReader
 
   // Returns a pointer to the DVI file's data, or 0 if no data has yet
   // been allocated.
-  Q_UINT8      * dvi_Data() {return dviData.data();};
+  Q_UINT8      * dvi_Data() {return dviData.data();}
 
   QIODevice::Offset size_of_file;
   QString        errorMsg;
@@ -72,7 +73,7 @@ class dvifile : public bigEndianByteReader
 
   /** Returns the number of centimeters per DVI unit in this DVI
       file. */
-  double         getCmPerDVIunit(void) const {return cmPerDVIunit;}
+  double         getCmPerDVIunit() const {return cmPerDVIunit;}
 
   /** Returns the magnification of the DVI file, as described in the
       DVI Standard. */
@@ -89,7 +90,7 @@ class dvifile : public bigEndianByteReader
   
   /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
       with care. */
-  void           setNewData(QMemArray<Q_UINT8> newData) {dviData = newData;};
+  void           setNewData(QMemArray<Q_UINT8> newData) {dviData = newData;}
 
   /** Page numbers that appear in a DVI document need not be
       ordered. Worse, page numbers need not be unique. This method
@@ -99,13 +100,13 @@ class dvifile : public bigEndianByteReader
  private:
   /** process_preamble reads the information in the preamble and
       stores it into global variables for later use. */
-  void           process_preamble(void);
-  void           find_postamble(void);
+  void           process_preamble();
+  void           find_postamble();
   /** read_postamble reads the information in the postamble, storing
       it into global variables. It also takes care of reading in all
       of the pixel files for the fonts used in the job. */
-  void           read_postamble(void);
-  void           prepare_pages(void);
+  void           read_postamble();
+  void           prepare_pages();
 
 
   /** Offset in DVI file of last page, set in read_postamble(). */

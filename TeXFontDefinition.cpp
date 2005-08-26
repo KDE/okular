@@ -174,7 +174,7 @@ void TeXFontDefinition::fontNameReceiver(QString fname)
 }
 
 
-void TeXFontDefinition::reset(void)
+void TeXFontDefinition::reset()
 {
   if (font != 0) {
     delete font;
@@ -212,10 +212,10 @@ void TeXFontDefinition::setDisplayResolution(double _displayResolution_in_dpi)
 /** mark_as_used marks the font, and all the fonts it referrs to, as
     used, i.e. their FONT_IN_USE-flag is set. */
 
-void TeXFontDefinition::mark_as_used(void)
+void TeXFontDefinition::mark_as_used()
 {
 #ifdef DEBUG_FONT
-  kdDebug(4300) << "TeXFontDefinition::mark_as_used(void)" << endl;
+  kdDebug(4300) << "TeXFontDefinition::mark_as_used()" << endl;
 #endif
 
   if (flags & TeXFontDefinition::FONT_IN_USE)

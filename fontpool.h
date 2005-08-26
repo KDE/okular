@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // fontpool.h
 //
 // (C) 2001-2004 Stefan Kebekus
@@ -59,22 +60,22 @@ public:
      current working directory for the kpsewhich command, so that
      kpsewhich will find fonts that are stored in the DVI file's
      directory. */ 
- void setExtraSearchPath( const QString &path ) {extraSearchPath = path;};
+ void setExtraSearchPath( const QString &path ) {extraSearchPath = path;}
  
  /** Returns the path that is set as the current working directory
      for the kpsewhich command, so that kpsewhich will find fonts
      that are stored in the DVI file's directory. */ 
- QString getExtraSearchPath( ) const {return extraSearchPath;};
+ QString getExtraSearchPath( ) const {return extraSearchPath;}
  
  /** Sets the resolution of the output device. */
  void setDisplayResolution( double _displayResolution_in_dpi );
  
  /** Sets the number of centimeters per DVI unit. */
  void setCMperDVIunit( double CMperDVI );
- double getCMperDVIunit(void) const {return CMperDVIunit;}
+ double getCMperDVIunit() const {return CMperDVIunit;}
  
  // If return value is true, font hinting should be used if possible
- bool getUseFontHints(void) const {return useFontHints;}
+ bool getUseFontHints() const {return useFontHints;}
  
  // This method adds a font to the list. If the font is not currently
  // loaded, it's file will be located and font::load_font will be
@@ -96,12 +97,12 @@ public:
   // is closed. Because the next dvi-file which will be loaded is
   // likely to use most of the fonts again, this method implements a
   // convenient way of re-using fonts without loading them repeatedly.
-  void mark_fonts_as_unused(void);
+  void mark_fonts_as_unused();
 
   /** This methods removes all fonts from the fontpool (and thus from
       memory) which are labeled "not in use". For explanation, see the
       mark_fonts_as_unused method. */
-  void release_fonts(void);
+  void release_fonts();
 
 #ifdef HAVE_FREETYPE
   /** A handle to the FreeType library, which is used by TeXFont_PFM
@@ -145,17 +146,17 @@ public slots:
  // characters. If not null, the bool pointed at by virtualFontsFound
  // is set to true if one of the fonts found is a virtual font. If no
  // virtual font is found, the variable remains untouched.
- void locateFonts(void);
+ void locateFonts();
  
 private:
  // This method goes through the list of fonts, and marks each of them
  // as 'located'. Used, e.g. after a fatal error in the font lookup
  // process to ensure that the problematic kpsewhich is not used again
- void markFontsAsLocated(void);
+ void markFontsAsLocated();
 
  // Checks if all the fonts file names have been located, and returns
  // true if that is so.
- bool areFontsLocated(void);
+ bool areFontsLocated();
 
  // This flag is used by PFB fonts to determine if the FREETYPE engine
  // should use hinted fonts or not
@@ -196,7 +197,7 @@ private:
  // This string is set to the DVI file's path. It is used to set the
  // current working directory for the kpsewhich command, so that
  // kpsewhich will find fonts that are stored in the DVI file's
- // directory. Used by the locateFonts(void) and the locateFonts(bool,
+ // directory. Used by the locateFonts() and the locateFonts(bool,
  // bool, bool *) method. Values are set by the
  // setExtraSearchPath(...) method
  QString        extraSearchPath;

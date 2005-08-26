@@ -124,7 +124,7 @@ void optionDialogSpecialWidget::slotExtraHelpButton( const QString & )
   kapp->invokeHelp( "inv-search", "kdvi" );
 }
 
-void optionDialogSpecialWidget::apply(void)
+void optionDialogSpecialWidget::apply()
 {
   Prefs::setEditorCommand(EditorCommand);
 }

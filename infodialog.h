@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // infodialog.h
 //
 // (C) 2001 Stefan Kebekus

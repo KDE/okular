@@ -11,7 +11,7 @@
 // kdvi_multipage.cpp.
 extern QTime performanceTimer;
 
-// A flag that is set to TRUE once the first page of the document was
+// A flag that is set to true once the first page of the document was
 // successfully drawn. This object is statically defined in
 // kdvi_multipage.cpp.
 // 0 = initial value

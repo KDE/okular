@@ -273,7 +273,7 @@ private:
   
   ghostscript_interface *PS_interface;
   
-  /** TRUE, if gs should be used, otherwise, only bounding boxes are
+  /** true, if gs should be used, otherwise, only bounding boxes are
       drawn. */
   bool    	   _postscript;
   

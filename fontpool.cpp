@@ -62,7 +62,7 @@ fontPool::fontPool()
   useFontHints             = true;
   CMperDVIunit             = 0;
   extraSearchPath          = QString::null;
-  fontList.setAutoDelete(TRUE);
+  fontList.setAutoDelete(true);
 
 
 #ifdef HAVE_FREETYPE

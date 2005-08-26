@@ -39,7 +39,7 @@ pageInfo::~pageInfo() {
 // ======================================================
 
 ghostscript_interface::ghostscript_interface() {
-  pageList.setAutoDelete(TRUE);
+  pageList.setAutoDelete(true);
 
   PostScriptHeaderString = new QString();
 

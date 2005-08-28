@@ -12,6 +12,7 @@
 
 #include <qdom.h>
 #include <klistview.h>
+#include "core/document.h"
 #include "core/observer.h"
 
 class KPDFDocument;
@@ -34,6 +35,7 @@ Q_OBJECT
 
     private:
         void addChildren( const QDomNode & parentNode, KListViewItem * parentItem = 0 );
+        DocumentViewport getViewport( const QDomElement &e ) const;
         KPDFDocument *m_document;
 };
 

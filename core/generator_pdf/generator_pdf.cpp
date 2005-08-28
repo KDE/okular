@@ -481,13 +481,7 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         LinkDest * destination = pdfdoc->findDest( namedDest );
         if ( destination )
         {
-            if ( !destination->isPageRef() )
-                viewport.pageNumber = destination->getPageNum() - 1;
-            else
-            {
-                Ref ref = destination->getPageRef();
-                viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
-            }
+            fillViewportFromLink( viewport, destination );
         }
         docLock.unlock();
         delete namedDest;
@@ -782,7 +776,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
 
         // 2. find the page the link refers to
         LinkAction * a = outlineItem->getAction();
-        if ( a && a->getKind() == actionGoTo )
+        if ( a && ( a->getKind() == actionGoTo || a->getKind() == actionGoToR ) )
         {
             // page number is contained/referenced in a LinkGoTo
             LinkGoTo * g = static_cast< LinkGoTo * >( a );
@@ -797,28 +791,12 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
             }
             else if ( destination->isOk() )
             {
-                // we have valid 'destination' -> get page number
-                int pageNumber = destination->getPageNum() - 1;
-                if ( destination->isPageRef() )
-                {
-                    Ref ref = destination->getPageRef();
-                    pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
-                }
-                // set page as attribute to node
-                // TODO add other attributes to the viewport (taken from link)
-                item.setAttribute( "Viewport", DocumentViewport( pageNumber ).toString() );
+                DocumentViewport vp;
+                fillViewportFromLink( vp, destination );
+                item.setAttribute( "Viewport", vp.toString() );
             }
-        }
-        else if ( a && a->getKind() == actionGoToR )
-        {
-            LinkGoToR * g = static_cast< LinkGoToR * >( a );
-            LinkDest * destination = g->getDest();
-            if ( !destination && g->getNamedDest() )
-            {
-                item.setAttribute( "ViewportName", g->getNamedDest()->getCString() );
-            }
-
-            item.setAttribute( "ExternalFileName", g->getFileName()->getCString() );
+            if ( a->getKind() == actionGoToR )
+                item.setAttribute( "ExternalFileName", g->getFileName()->getCString() );
         }
 
         // 3. recursively descend over children
@@ -826,6 +804,49 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
         GList * children = outlineItem->getKids();
         if ( children )
             addSynopsisChildren( &item, children );
+    }
+}
+
+void PDFGenerator::fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination )
+{
+    if ( !destination->isPageRef() )
+        viewport.pageNumber = destination->getPageNum() - 1;
+    else
+    {
+        Ref ref = destination->getPageRef();
+        viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
+    }
+
+    // get destination position
+    // TODO add other attributes to the viewport (taken from link)
+    switch ( destination->getKind() )
+    {
+        case destXYZ:
+            if (destination->getChangeLeft() || destination->getChangeTop())
+            {
+                double CTM[6];
+                Page *page = pdfdoc->getCatalog()->getPage( viewport.pageNumber + 1 );
+                // TODO remember to change this if we implement DPI and/or rotation
+                page->getDefaultCTM(CTM, 72.0, 72.0, 0, gTrue);
+
+                int left, top;
+                // this is OutputDev::cvtUserToDev
+                left = (int)(CTM[0] * destination->getLeft() + CTM[2] * destination->getTop() + CTM[4] + 0.5);
+                top = (int)(CTM[1] * destination->getLeft() + CTM[3] * destination->getTop() + CTM[5] + 0.5);
+
+                viewport.rePos.normalizedX = (double)left / (double)page->getCropWidth();
+                viewport.rePos.normalizedY = (double)top / (double)page->getCropHeight();
+                viewport.rePos.enabled = true;
+                viewport.rePos.pos = DocumentViewport::TopLeft;
+            }
+            /* TODO
+            if ( dest->getChangeZoom() )
+                make zoom change*/
+        break;
+
+        default:
+            // implement the others cases
+        break;
     }
 }
 

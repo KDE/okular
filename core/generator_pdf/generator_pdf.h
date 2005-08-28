@@ -21,6 +21,7 @@
 
 class Dict;
 class GfxFont;
+class LinkDest;
 class Ref;
 class PDFDoc;
 class GList;
@@ -87,6 +88,8 @@ class PDFGenerator : public Generator
 
         void scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
         void scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
+
+        void fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination );
 
         // private functions for accessing document informations via PDFDoc
         QString getDocumentInfo( const QString & data ) const;

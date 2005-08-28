@@ -797,7 +797,10 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 item.setAttribute( "Viewport", vp.toString() );
             }
             if ( a->getKind() == actionGoToR )
-                item.setAttribute( "ExternalFileName", g->getFileName()->getCString() );
+            {
+                LinkGoToR * g2 = static_cast< LinkGoToR * >( a );
+                item.setAttribute( "ExternalFileName", g2->getFileName()->getCString() );
+            }
         }
 
         // 3. recursively descend over children

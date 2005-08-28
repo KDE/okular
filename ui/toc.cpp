@@ -13,7 +13,6 @@
 
 // local includes
 #include "toc.h"
-#include "core/document.h"
 #include "core/link.h"
 #include "core/page.h"
 
@@ -73,7 +72,7 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
+void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentChanged )
 {
     if ( !documentChanged )
         return;
@@ -130,25 +129,31 @@ void TOC::slotExecuted( Q3ListViewItem *i )
     QString externalFileName = e.attribute( "ExternalFileName" );
     if ( !externalFileName.isEmpty() )
     {
-        KPDFLinkGoto link( externalFileName, DocumentViewport() );
+        KPDFLinkGoto link( externalFileName, getViewport( e ) );
         m_document->processLink( &link );
     }
     else
     {
-        if ( e.hasAttribute( "Viewport" ) )
-        {
-            // if the node has a viewport, set it
-            m_document->setViewport( DocumentViewport( e.attribute( "Viewport" ) ), TOC_ID );
-        }
-        else if ( e.hasAttribute( "ViewportName" ) )
-        {
-            // if the node references a viewport, get the reference and set it
-            const QString & page = e.attribute( "ViewportName" );
-            const QString & viewport = m_document->getMetaData( "NamedViewport", page );
-            if ( !viewport.isNull() )
-                m_document->setViewport( DocumentViewport( viewport ), TOC_ID );
-        }
+        m_document->setViewport( getViewport( e ), TOC_ID );
     }
+}
+
+DocumentViewport TOC::getViewport( const QDomElement &e ) const
+{
+    if ( e.hasAttribute( "Viewport" ) )
+    {
+        // if the node has a viewport, set it
+        return DocumentViewport( e.attribute( "Viewport" ) );
+    }
+    else if ( e.hasAttribute( "ViewportName" ) )
+    {
+        // if the node references a viewport, get the reference and set it
+        const QString & page = e.attribute( "ViewportName" );
+        const QString & viewport = m_document->getMetaData( "NamedViewport", page );
+        if ( !viewport.isNull() )
+            return DocumentViewport( viewport );
+    }
+    return DocumentViewport();
 }
 
 #include "toc.moc"

@@ -67,6 +67,7 @@ class ObjectRect : public NormalizedRect
 
         // default constructor: initialize all parameters
         ObjectRect( double l, double t, double r, double b, ObjectType typ, void * obj );
+        ObjectRect( NormalizedRect x, ObjectType type, void * pnt ) ;
         ~ObjectRect();
 
         // query type and get a const pointer to the stored object

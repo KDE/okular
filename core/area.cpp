@@ -89,6 +89,12 @@ ObjectRect::ObjectRect( double l, double t, double r, double b, ObjectType type,
 {
 }
 
+ObjectRect::ObjectRect( NormalizedRect x, ObjectType type, void * pnt )
+    : NormalizedRect( x ),
+    m_objectType( type ), m_pointer( pnt )
+{
+}
+
 ObjectRect::~ObjectRect()
 {
     if ( !m_pointer )

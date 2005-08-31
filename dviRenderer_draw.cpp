@@ -545,7 +545,11 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 	case FNTDEF3:
 	case FNTDEF4:
 	  command_pointer += 12 + ch - FNTDEF1 + 1;
-	  command_pointer += readUINT8() + readUINT8();
+          {
+            Q_UINT8 tempa = readUINT8();
+            Q_UINT8 tempb = readUINT8();
+	    command_pointer += tempa + tempb;
+          }
 	  break;
 	  
 	case PRE:

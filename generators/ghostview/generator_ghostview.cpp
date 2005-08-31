@@ -221,6 +221,14 @@ void GSGenerator::setupGUI(KActionCollection  * /*ac*/ , QToolBox * tBox )
     }
 }
 
+void GSGenerator::freeGUI()
+{
+    if ( GSSettings::messages() )
+    {
+        m_box->removeItem(m_logWindow);
+    }
+}
+
 bool GSGenerator::loadPages( QValueVector< KPDFPage * > & pagesVector )
 {
     unsigned int i, end=internalDoc->dsc() -> page_count();

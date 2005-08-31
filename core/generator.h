@@ -71,8 +71,8 @@ class Generator : public QObject
         virtual void generateSyncTextPage( KPDFPage * page ) = 0;
         // gui stuff
         virtual QString getXMLFile() = 0;
-        virtual void setupGUI(KActionCollection  * ac , QToolBox * tBox ) = 0;
-
+        virtual void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /*tBox*/ ) {;};
+        virtual void freeGUI( ) {;};
         // capability querying
         // provides internal search 
         virtual bool supportsSearching() = 0;

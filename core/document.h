@@ -139,6 +139,7 @@ class KPDFDocument : public QObject
         bool openRelativeFile( const QString & fileName );
         QDict<Generator>* m_loadedGenerators ;
         Generator * generator;
+        bool m_usingCachedGenerator;
         QValueVector< KPDFPage * > pages_vector;
         class KPDFDocumentPrivate * d;
 
@@ -223,6 +224,7 @@ class DocumentInfo : public QDomDocument
  *
  * In the tree the tag name is the 'screen' name of the entry. A tag can have
  * attributes. Here follows the list of tag attributes with meaning:
+ * - Icon: An icon to be set in the Lisview for the node
  * - Viewport: A string description of the referred viewport
  * - ViewportName: A 'named reference' to the viewport that must be converted
  *      using getMetaData( "NamedViewport", *viewport_name* )

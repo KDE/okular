@@ -193,7 +193,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     }
 
     QString propName=offers[hRank]->property("Name").toString();
-    bool cached=false;
+    bool m_usingCachedGenerator=false;
     generator=m_loadedGenerators->take(propName);
     if (!generator)
     {
@@ -221,14 +221,14 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
         if ( offers[hRank]->property("[X-KDE-oKularHasInternalSettings]").toBool() )
         {
             m_loadedGenerators->insert(propName,generator);
-            cached=true;
+            m_usingCachedGenerator=true;
         }
         // end 
     }
     else
     {
         generator -> setDocument( this );
-        cached=true;
+        m_usingCachedGenerator=true;
     }
     // connect error reporting signals
     connect (generator,SIGNAL(error(QString&,int )),this,SIGNAL(error(QString&,int )));
@@ -241,7 +241,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     QApplication::restoreOverrideCursor();
     if ( !openOk || pages_vector.size() <= 0 )
     {
-        if (!cached)
+        if (!m_usingCachedGenerator)
         {
             delete generator;
         }
@@ -319,8 +319,12 @@ void KPDFDocument::closeDocument()
     if ( d->saveBookmarksTimer )
         d->saveBookmarksTimer->stop();
 
-    // delete contents generator
-    delete generator;
+    generator->freeGUI();
+    if (!m_usingCachedGenerator)
+    {
+        // delete contents generator
+        delete generator;
+    }
     generator = 0;
     d->url = KURL();
     // remove requests left in queue

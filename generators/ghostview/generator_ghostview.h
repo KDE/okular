@@ -52,7 +52,7 @@ class GSGenerator : public Generator
 
         QString getXMLFile() { return QString::null; };
         void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) ;
-
+        void freeGUI() ;
         // internal search and gettext
         RegularAreaRect * findText( const QString & /* text*/, SearchDir /* dir*/, const bool /* strictCase*/,
                     const RegularAreaRect  * /*lastRect*/, KPDFPage  * /* page*/) { return 0L;} ;

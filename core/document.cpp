@@ -193,7 +193,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     }
 
     QString propName=offers[hRank]->property("Name").toString();
-    bool m_usingCachedGenerator=false;
+    m_usingCachedGenerator=false;
     generator=m_loadedGenerators->take(propName);
     if (!generator)
     {

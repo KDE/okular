@@ -339,7 +339,9 @@ QPixmap* GSInterpreterLib::takePixmap()
 
 GSInterpreterLib::~GSInterpreterLib()
 {
-    gsapi_exit(ghostScriptInstance);
+    if (running())
+        gsapi_exit(ghostScriptInstance);
+
     gsapi_delete_instance(ghostScriptInstance);
 }
 

@@ -54,8 +54,10 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
 
 GSGenerator::~GSGenerator()
 {
-    delete asyncGenerator;
-    delete pixGenerator;
+    if (asyncGenerator)
+        delete asyncGenerator;
+    if (pixGenerator)
+        delete pixGenerator;
     docLock.unlock();
 }
 

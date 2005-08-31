@@ -319,7 +319,8 @@ void KPDFDocument::closeDocument()
     if ( d->saveBookmarksTimer )
         d->saveBookmarksTimer->stop();
 
-    generator->freeGUI();
+    if (generator)
+        generator->freeGUI();
     if (!m_usingCachedGenerator)
     {
         // delete contents generator

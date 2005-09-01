@@ -307,6 +307,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
+#warning check bug 109764
     // save internal settings
     KpdfSettings::setSplitterSizes( m_splitter->sizes() );
     // write to disk config file

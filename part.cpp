@@ -499,6 +499,7 @@ void Part::slotDoFileDirty()
     if (m_viewportDirty.pageNumber >= (int)m_document->pages()) m_viewportDirty.pageNumber = (int)m_document->pages() - 1;
     m_document->setViewport(m_viewportDirty);
     m_viewportDirty.pageNumber = -1;
+    emit enablePrintAction(true);
   }
   else
   {

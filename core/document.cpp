@@ -22,7 +22,6 @@
 #include <kmessagebox.h>
 #include <kapplication.h>
 #include <kuserprofile.h>
-#include <kmimetype.h>
 #include <krun.h>
 #include <kstandarddirs.h>
 
@@ -118,7 +117,7 @@ KPDFDocument::~KPDFDocument()
 }
 
 
-bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
+bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime )
 {
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
@@ -136,7 +135,6 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     d->xmlFileName = locateLocal( "data", fn );
 
     // create the generator based on the file's mimetype
-    KMimeType::Ptr mime = KMimeType::findByPath( docFile );
     QString mimeName = mime->name();
     if ( mimeName == "application/pdf" )
         generator = new PDFGenerator( this );

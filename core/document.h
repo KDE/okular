@@ -16,6 +16,8 @@
 #include <qstring.h>
 #include <qdom.h>
 
+#include <kmimetype.h>
+
 class KPDFPage;
 class KPDFLink;
 class DocumentObserver;
@@ -52,7 +54,7 @@ class KPDFDocument : public QObject
         ~KPDFDocument();
 
         // document handling
-        bool openDocument( const QString & docFile, const KURL & url );
+        bool openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime );
         void closeDocument();
 
         // misc methods

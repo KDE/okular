@@ -314,7 +314,16 @@ KAboutData* Part::createAboutData()
 
 bool Part::openFile()
 {
-    bool ok = m_document->openDocument( m_file, url() );
+    KMimeType::Ptr mime;
+    if ( m_bExtension->urlArgs().serviceType.isEmpty() )
+    {
+        mime = KMimeType::findByPath( m_file );
+    }
+    else
+    {
+        mime = KMimeType::mimeType( m_bExtension->urlArgs().serviceType );
+    }
+    bool ok = m_document->openDocument( m_file, url(), mime );
 
     // update one-time actions
     m_find->setEnabled( ok );

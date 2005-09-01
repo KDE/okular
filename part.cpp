@@ -343,7 +343,15 @@ KAboutData* Part::createAboutData()
 
 bool Part::openFile()
 {
-    KMimeType::Ptr mime = KMimeType::findByPath( m_file );
+    KMimeType::Ptr mime;
+    if ( m_bExtension->urlArgs().serviceType.isEmpty() )
+    {
+        mime = KMimeType::findByPath( m_file );
+    }
+    else
+    {
+        mime = KMimeType::mimeType( m_bExtension->urlArgs().serviceType );
+    }
     if ( (*mime).is( "application/postscript" ) )
     {
         QString app = KStandardDirs::findExe( "ps2pdf" );
@@ -373,7 +381,7 @@ bool Part::openFile()
 
     m_temporaryLocalFile = QString::null;
 
-    bool ok = m_document->openDocument( m_file, url() );
+    bool ok = m_document->openDocument( m_file, url(), mime );
 
     // update one-time actions
     m_find->setEnabled( ok && m_document-> supportsSearching());

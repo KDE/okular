@@ -35,7 +35,7 @@ void GSInternalDocument::scanDSC()
     m_dsc->fixup();
 }
 
-GSInternalDocument::GSInternalDocument(QString fname, Format form) : m_format (form), m_fileName(fname)
+GSInternalDocument::GSInternalDocument(QString fname, Format form) : m_format (form), m_fileName(fname), m_error(false)
 {
     m_internalFile = fopen(QFile::encodeName(fname),"r");
     if( m_internalFile == 0 )
@@ -56,13 +56,11 @@ GSInternalDocument::GSInternalDocument(QString fname, Format form) : m_format (f
         {
             m_error=true;
             m_errorString="Failed to construct KDSC";
-            return;
         }
         if ( !m_error && ! m_dsc->dsc() )
         {
             m_error=true;
             m_errorString="Document has no DSC.";
-            return;
         }
     }
 

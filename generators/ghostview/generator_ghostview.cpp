@@ -30,7 +30,7 @@
 #include "interpreter_cmd.h"
 #include "interpreter_lib.h"
 #include "internaldocument.h"
-
+#include "interpreter.h"
 #include "generator_ghostview.h"
 
 KPDF_EXPORT_PLUGIN(GSGenerator)
@@ -233,32 +233,46 @@ void GSGenerator::freeGUI()
 
 bool GSGenerator::loadPages( QValueVector< KPDFPage * > & pagesVector )
 {
-    unsigned int i, end=internalDoc->dsc() -> page_count();
+    QSize pSize;
+bool atLeastOne=false;
     if( internalDoc->dsc()->isStructured() )
     {
+        unsigned int i, end=internalDoc->dsc() -> page_count();
         internalDoc->setProlog(qMakePair (internalDoc->dsc()->beginprolog(),
                 internalDoc->dsc()->endprolog()));
         internalDoc->setSetup(qMakePair (internalDoc->dsc()->beginsetup(),
              internalDoc->dsc()->endsetup()));
+        CDSCPAGE * tmpPage;
+        for ( i=0 ;i < end ; i++ )
+        {
+            tmpPage=(internalDoc->dsc() -> page() + i);
+            if (!tmpPage)
+            {
+                kdDebug() << "no tmpPage for page nr " << i << endl;
+                continue;
+            }
+            pSize = internalDoc -> computePageSize( internalDoc -> pageMedia( i ) );
+            pSize.setHeight((int)ceil(pSize.height()*DPIMod::Y));
+            pSize.setWidth((int)ceil(pSize.width()*DPIMod::X));
+            pagesVector[i]=new KPDFPage( i, pSize.width(),
+                pSize.height() , rotation (internalDoc ->  orientation(i) ) );
+            internalDoc -> insertPageData (i,qMakePair(tmpPage->begin, tmpPage->end));
+            atLeastOne=true;
+        }
     }
-
-    QSize pSize;
-    CDSCPAGE * tmpPage;
-    bool atLeastOne=false;
-    for ( i=0 ;i < end ; i++ )
+    else
     {
-        tmpPage=(internalDoc->dsc() -> page() + i);
-        if (!tmpPage)
-            continue;
-        pSize = internalDoc -> computePageSize( internalDoc -> pageMedia( i ) );
+        pSize = internalDoc -> computePageSize( internalDoc -> pageMedia() );
         pSize.setHeight((int)ceil(pSize.height()*DPIMod::Y));
         pSize.setWidth((int)ceil(pSize.width()*DPIMod::X));
-        pagesVector[i]=new KPDFPage( i, pSize.width(),
-            pSize.height() , rotation (internalDoc ->  orientation(i) ) );
-        internalDoc -> insertPageData (i,qMakePair(tmpPage->begin, tmpPage->end));
+        QFile f(internalDoc->fileName());
+        unsigned long end = f.size();
+        internalDoc -> insertPageData (0,qMakePair((unsigned long) 0, end));
+        pagesVector.resize(1);
+        pagesVector[0]=new KPDFPage( 0, pSize.width(),
+            pSize.height() , rotation (internalDoc ->  orientation() ) );
         atLeastOne=true;
     }
-
     return atLeastOne;
 }
 
@@ -282,6 +296,7 @@ bool GSGenerator::loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * 
 {
     internalDoc = new GSInternalDocument (name, ps ? GSInternalDocument::PS : GSInternalDocument::PDF);
     pagesVector.resize( internalDoc->dsc()->page_count() );
+    kdDebug() << "Page count: " << internalDoc->dsc()->page_count() << endl;
     return loadPages (pagesVector);
 }
 
@@ -306,11 +321,15 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
         asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( i )) );
         asyncGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
                 static_cast<double>(req->height)/req->page->height()));
-
+        PagePosition* u=internalDoc->pagePos(i);
+        kdDebug() << "Page pos is " << i << ":"<< u->first << "/" << u->second << endl;
         if (!asyncGenerator->running())
         {
             if ( internalDoc->dsc()->isStructured() )
+            {
                 asyncGenerator->setStructure( internalDoc->prolog() , internalDoc->setup() );
+                kdDebug () << "sending init" << endl;
+            }
             asyncGenerator->startInterpreter();
         }
         asyncGenerator->run ( internalDoc->pagePos(i) , req);
@@ -323,6 +342,7 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
     pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( i )) );
     pixGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
             static_cast<double>(req->height)/req->page->height()));
+
     if (!pixGenerator->running())
         initInterpreter();
     pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(i) , req, true);

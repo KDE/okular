@@ -60,6 +60,7 @@ GSInternalDocument::GSInternalDocument(QString fname, Format form) : m_format (f
         if ( !m_error && ! m_dsc->dsc() )
         {
             m_error=true;
+            // note this is not a fatal error, just a notice, we support docs without dsc
             m_errorString="Document has no DSC.";
         }
     }

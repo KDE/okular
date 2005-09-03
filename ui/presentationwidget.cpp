@@ -715,19 +715,26 @@ void PresentationWidget::slotNextPage()
     {
         // go to next page
         changePage( m_frameIndex + 1 );
+    
+        // auto advance to the next page if set
+        if ( KpdfSettings::slidesAdvance() )
+            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
     }
-    else if ( m_transitionTimer->isActive() )
+    else
     {
-        m_transitionTimer->stop();
-        update();
+#ifdef ENABLE_PROGRESS_OVERLAY
+        if ( KpdfSettings::slidesShowProgress() )
+            generateOverlay();
+#endif
+        if ( m_transitionTimer->isActive() )
+        {
+            m_transitionTimer->stop();
+            update();
+	}
     }
 
     // we need the setFocus() call here to let KCursor::autoHide() work correctly
     setFocus();
-
-    // auto advance to the next page if set
-    if ( KpdfSettings::slidesAdvance() )
-        QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::slotPrevPage()
@@ -736,11 +743,22 @@ void PresentationWidget::slotPrevPage()
     {
         // go to previous page
         changePage( m_frameIndex - 1 );
+    
+        // auto advance to the next page if set
+        if ( KpdfSettings::slidesAdvance() )
+            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
     }
-    else if ( m_transitionTimer->isActive() )
+    else
     {
-        m_transitionTimer->stop();
-        update();
+#ifdef ENABLE_PROGRESS_OVERLAY
+        if ( KpdfSettings::slidesShowProgress() )
+            generateOverlay();
+#endif
+        if ( m_transitionTimer->isActive() )
+        {
+            m_transitionTimer->stop();
+            update();
+        }
     }
 }
 

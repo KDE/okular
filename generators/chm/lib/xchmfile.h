@@ -183,9 +183,9 @@ public:
 
 	/*!
 	  \brief Attempts to fill a QListView by parsing the index file.
-	  \param toBuild Pointer to the QListView list to be filled.
+	  \param indexlist Pointer to the document to be filled.
 	  If the index file is not available, the list control
-	  is unmodified. The lost must be empty before passing it
+	  is unmodified. The document must be empty before passing it
 	  to this function.
 	  \return true if it's possible to build the tree, false otherwise.
 	 */
@@ -193,7 +193,7 @@ public:
 
 	/*!
 	  \brief Fast search using the $FIftiMain file in the .chm.
-	  \param text The text we're looking for.
+	  \param word The text we're looking for.
 	  \param wholeWords Are we looking for whole words only?
 	  \param titlesOnly Are we looking for titles only?
 	  \param results A string-string hashmap that will hold
@@ -209,6 +209,7 @@ public:
 	\param tempres Temporary search results from SearchWord.
 	\param results A string-string hashmap that will hold the results in case of successful search.
 			The keys are the URLs and the values are the page titles.
+	\param limit_results Maximum number of results to return.
 	*/
 	void GetSearchResults ( const KCHMSearchProgressResults_t& tempres, KCHMSearchResults_t& results, unsigned int limit_results = 500 );
 

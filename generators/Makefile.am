@@ -1,4 +1,9 @@
 if include_ghostscript
 GSPLUGINDIR = ghostview
 endif
-SUBDIRS = $(GSPLUGINDIR) xpdf kimgio chm
+
+if include_chm
+CHMPLUGINDIR = chm
+endif
+
+SUBDIRS = $(GSPLUGINDIR) xpdf kimgio $(CHMPLUGINDIR)

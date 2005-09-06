@@ -8,17 +8,16 @@ if test "x$with_libgs" != xno; then
 	LDFLAGS="-L$withval $LDFLAGS"
 	KDE_CHECK_LIB(gs, gsapi_new_instance, 
 		      LIB_GS=-lgs
-		      if test "x$with_libgs != xcheck"; then
+		      if test "x$with_libgs" != "xcheck"; then
 			      LIB_GS_PATH="$withval"
 		      fi)
-	if test "x$with_libgs" != xcheck && test -z "$LIB_GS"; then
-		AC_MSG_ERROR([--with-libgs was given, but test for libgs failed])
-	fi
 	LDFLAGS="$AUX"
 fi
 AC_SUBST(LIB_GS)
 AC_SUBST(LIB_GS_PATH)
 		    
 AM_CONDITIONAL(include_ghostscript, test -n "$LIB_GS")
-   
-	      
+
+HAVE_CHMLIB=no
+KDE_CHECK_HEADER(chm_lib.h, HAVE_CHMLIB=yes)
+AM_CONDITIONAL(include_chm, test "x$HAVE_CHMLIB" = "xyes")

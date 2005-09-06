@@ -10,3 +10,10 @@ echo "or contact your package provider."
 echo ""
 fi
 
+if test "$HAVE_CHM_LIB != yes"; then
+echo ""
+echo "The chm library was not found in your system."
+echo "The chm backend will not be available."
+echo ""
+fi
+

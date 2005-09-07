@@ -40,6 +40,7 @@ class KPDFPage;
 class DocumentObserver
 {
     public:
+		virtual ~DocumentObserver(){}
         // you must give each observer a unique ID (used for notifications)
         virtual uint observerId() const = 0;
 

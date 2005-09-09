@@ -23,6 +23,7 @@
 #include "Page.h"
 #include "Error.h"
 #include "Link.h"
+#include "UGString.h"
 #include "Catalog.h"
 
 //------------------------------------------------------------------------
@@ -269,7 +270,7 @@ int Catalog::findPage(int num, int gen) {
   return 0;
 }
 
-LinkDest *Catalog::findDest(GString *name) {
+LinkDest *Catalog::findDest(UGString *name) {
   LinkDest *dest;
   Object obj1, obj2;
   GBool found;
@@ -277,7 +278,7 @@ LinkDest *Catalog::findDest(GString *name) {
   // try named destination dictionary then name tree
   found = gFalse;
   if (dests.isDict()) {
-    if (!dests.dictLookup(name->getCString(), &obj1)->isNull())
+    if (!dests.dictLookup(*name, &obj1)->isNull())
       found = gTrue;
     else
       obj1.free();
@@ -321,12 +322,15 @@ NameTree::NameTree(void)
 }
 
 NameTree::Entry::Entry(Array *array, int index) {
-  if (!array->getString(index, &name) || !array->getNF(index + 1, &value))
+  GString n;
+  if (!array->getString(index, &n) || !array->getNF(index + 1, &value))
     error(-1, "Invalid page tree");
+  name = new UGString(n);
 }
 
 NameTree::Entry::~Entry() {
   value.free();
+  delete name;
 }
 
 void NameTree::addEntry(Entry *entry)
@@ -380,13 +384,13 @@ void NameTree::parse(Object *tree) {
 
 int NameTree::Entry::cmp(const void *voidKey, const void *voidEntry)
 {
-  GString *key = (GString *) voidKey;
+  UGString *key = (UGString *) voidKey;
   Entry *entry = *(NameTree::Entry **) voidEntry;
 
-  return key->cmp(&entry->name);
+  return key->cmp(entry->name);
 }
 
-GBool NameTree::lookup(GString *name, Object *obj)
+GBool NameTree::lookup(UGString *name, Object *obj)
 {
   Entry *entry;
 

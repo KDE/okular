@@ -33,6 +33,7 @@
 #include "JPXStream.h"
 #include "Stream-CCITT.h"
 #include "DCTStream.h"
+#include "UGString.h"
 
 #ifdef __DJGPP__
 static GBool setDJSYSFLAGS = gFalse;

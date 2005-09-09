@@ -33,6 +33,7 @@
 #ifndef DISABLE_OUTLINE
 #include "Outline.h"
 #endif
+#include "UGString.h"
 #include "PDFDoc.h"
 
 //------------------------------------------------------------------------

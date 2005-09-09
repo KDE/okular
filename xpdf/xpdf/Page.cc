@@ -26,6 +26,7 @@
 #include "Annot.h"
 #endif
 #include "Error.h"
+#include "UGString.h"
 #include "Page.h"
 
 //------------------------------------------------------------------------

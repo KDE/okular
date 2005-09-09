@@ -32,6 +32,7 @@
 #include "Page.h"
 #include "Error.h"
 #include "Gfx.h"
+#include "UGString.h"
 
 // the MSVC math.h doesn't define this
 #ifndef M_PI
@@ -3489,6 +3490,7 @@ Stream *Gfx::buildImageStream() {
 	break;
       }
       dict.dictAdd(key, &obj);
+      gfree((void*)key);
     }
     parser->getObj(&obj);
   }

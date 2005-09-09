@@ -16,6 +16,7 @@
 #include <string.h>
 #include "gmem.h"
 #include "GString.h"
+#include "UGString.h"
 #include "Error.h"
 #include "Object.h"
 #include "Array.h"
@@ -419,9 +420,9 @@ LinkGoTo::LinkGoTo(Object *destObj) {
 
   // named destination
   if (destObj->isName()) {
-    namedDest = new GString(destObj->getName());
+    namedDest = new UGString(destObj->getName());
   } else if (destObj->isString()) {
-    namedDest = destObj->getString()->copy();
+    namedDest = new UGString(*destObj->getString());
 
   // destination dictionary
   } else if (destObj->isArray()) {
@@ -457,9 +458,9 @@ LinkGoToR::LinkGoToR(Object *fileSpecObj, Object *destObj) {
 
   // named destination
   if (destObj->isName()) {
-    namedDest = new GString(destObj->getName());
+    namedDest = new UGString(destObj->getName());
   } else if (destObj->isString()) {
-    namedDest = destObj->getString()->copy();
+    namedDest = new UGString(*destObj->getString());
 
   // destination dictionary
   } else if (destObj->isArray()) {

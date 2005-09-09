@@ -17,6 +17,7 @@
 #include "GList.h"
 #include "Link.h"
 #include "PDFDocEncoding.h"
+#include "UGString.h"
 #include "Outline.h"
 
 //------------------------------------------------------------------------

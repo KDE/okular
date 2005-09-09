@@ -25,6 +25,7 @@
 #ifdef ENABLE_PLUGINS
 #  include "XpdfPluginAPI.h"
 #endif
+#include "UGString.h"
 #include "SecurityHandler.h"
 
 //------------------------------------------------------------------------

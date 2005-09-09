@@ -71,7 +71,7 @@ class KPDFOutputDev : public SplashOutputDev
         // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
         KPDFLink * generateLink( LinkAction * a );
         // fills up a Viewport structure out of a given LinkGoto link
-        DocumentViewport decodeViewport( GString *, class LinkDest * );
+        DocumentViewport decodeViewport( UGString *, class LinkDest * );
 
         // generator switches and parameters
         bool m_qtThreadSafety;

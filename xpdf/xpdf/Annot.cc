@@ -19,6 +19,7 @@
 #include "Gfx.h"
 #include "Lexer.h"
 #include "Annot.h"
+#include "UGString.h"
 
 //------------------------------------------------------------------------
 // Annot
@@ -210,15 +211,15 @@ void Annot::generateAppearance(Dict *acroForm, Dict *dict) {
 
     // build the appearance stream dictionary
     appearDict.initDict(xref);
-    appearDict.dictAdd(copyString("Length"),
+    appearDict.dictAdd("Length",
 		       obj1.initInt(appearBuf->getLength()));
-    appearDict.dictAdd(copyString("Subtype"), obj1.initName("Form"));
+    appearDict.dictAdd("Subtype", obj1.initName("Form"));
     obj1.initArray(xref);
     obj1.arrayAdd(obj2.initReal(0));
     obj1.arrayAdd(obj2.initReal(0));
     obj1.arrayAdd(obj2.initReal(xMax - xMin));
     obj1.arrayAdd(obj2.initReal(yMax - yMin));
-    appearDict.dictAdd(copyString("BBox"), &obj1);
+    appearDict.dictAdd("BBox", &obj1);
 
     // find the resource dictionary
     dict->lookup("DR", &drObj);
@@ -243,7 +244,7 @@ void Annot::generateAppearance(Dict *acroForm, Dict *dict) {
       }
     }
     if (drObj.isDict()) {
-      appearDict.dictAdd(copyString("Resources"), drObj.copy(&obj1));
+      appearDict.dictAdd("Resources", drObj.copy(&obj1));
     }
     drObj.free();
 

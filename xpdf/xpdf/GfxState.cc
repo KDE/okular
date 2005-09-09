@@ -20,6 +20,7 @@
 #include "Object.h"
 #include "Array.h"
 #include "Page.h"
+#include "UGString.h"
 #include "GfxState.h"
 
 //------------------------------------------------------------------------

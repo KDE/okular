@@ -321,7 +321,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
     return link;
 }
 
-DocumentViewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkDest * dest )
+DocumentViewport KPDFOutputDev::decodeViewport( UGString * namedDest, LinkDest * dest )
 // note: this function is called when processing a page, when the MUTEX is already LOCKED
 {
     DocumentViewport vp( -1 );

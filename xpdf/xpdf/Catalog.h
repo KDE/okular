@@ -21,6 +21,7 @@ class Page;
 class PageAttrs;
 struct Ref;
 class LinkDest;
+class UGString;
 
 //------------------------------------------------------------------------
 // NameTree
@@ -31,14 +32,14 @@ public:
   NameTree();
   void init(XRef *xref, Object *tree);
   void parse(Object *tree);
-  GBool lookup(GString *name, Object *obj);
+  GBool lookup(UGString *name, Object *obj);
   void free();
 
 private:
   struct Entry {
     Entry(Array *array, int index);
     ~Entry();
-    GString name;
+    UGString *name;
     Object value;
     void free();
     static int cmp(const void *key, const void *entry);
@@ -104,7 +105,7 @@ public:
 
   // Find a named destination.  Returns the link destination, or
   // NULL if <name> is not a destination.
-  LinkDest *findDest(GString *name);
+  LinkDest *findDest(UGString *name);
 
   Object *getOutline() { return &outline; }
 

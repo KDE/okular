@@ -22,6 +22,7 @@
 #include "Stream.h"
 #include "Error.h"
 #include "Function.h"
+#include "UGString.h"
 
 //------------------------------------------------------------------------
 // Function

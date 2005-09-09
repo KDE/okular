@@ -20,6 +20,7 @@
 #include "XRef.h"
 #include "Error.h"
 #include "Decrypt.h"
+#include "UGString.h"
 
 Parser::Parser(XRef *xrefA, Lexer *lexerA) {
   xref = xrefA;
@@ -75,6 +76,7 @@ Object *Parser::getObj(Object *obj,
 	error(getPos(), "Dictionary key must be a name object");
 	shift();
       } else {
+	// this copyString is necessary if not the shift changes the value of key
 	key = copyString(buf1.getName());
 	shift();
 	if (buf1.isEOF() || buf1.isError()) {
@@ -82,6 +84,7 @@ Object *Parser::getObj(Object *obj,
 	  break;
 	}
 	obj->dictAdd(key, getObj(&obj2, fileKey, keyLength, objNum, objGen));
+	gfree((void*)key);
       }
     }
     if (buf1.isEOF())

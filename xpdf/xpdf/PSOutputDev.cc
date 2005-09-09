@@ -35,6 +35,7 @@
 #include "Page.h"
 #include "Stream.h"
 #include "Annot.h"
+#include "UGString.h"
 #include "PSOutputDev.h"
 
 #ifdef MACOS
@@ -2293,7 +2294,9 @@ void PSOutputDev::setupType3Font(GfxFont *font, GString *psName,
     t3Cacheable = gFalse;
     for (i = 0; i < charProcs->getLength(); ++i) {
       writePS("/");
-      writePSName(charProcs->getKey(i));
+      const char *aux = charProcs->getKey(i)->getCString();
+      writePSName(aux);
+      delete[] aux;
       writePS(" {\n");
       gfx->display(charProcs->getVal(i, &charProc));
       charProc.free();

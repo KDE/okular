@@ -35,6 +35,7 @@
 #include "xpdf/ErrorCodes.h"
 #include "xpdf/UnicodeMap.h"
 #include "xpdf/Outline.h"
+#include "xpdf/UGString.h"
 #include "goo/GList.h"
 
 // local includes
@@ -463,6 +464,14 @@ bool PDFGenerator::print( KPrinter& printer )
     }
 }
 
+static UGString *QStringToUGString(const QString &s) {
+    int len = s.length();
+    Unicode *u = (Unicode *)gmallocn(s.length(), sizeof(Unicode));
+    for (int i = 0; i < len; ++i)
+      u[i] = s.at(i).unicode();
+    return new UGString(u, len);
+}
+
 QString PDFGenerator::getMetaData( const QString & key, const QString & option )
 {
     if ( key == "StartFullScreen" )
@@ -476,7 +485,7 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
         DocumentViewport viewport;
-        GString * namedDest = new GString( option.latin1() );
+        UGString * namedDest = QStringToUGString( option );
         docLock.lock();
         LinkDest * destination = pdfdoc->findDest( namedDest );
         if ( destination )
@@ -787,7 +796,9 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 // get the destination for the page now, but it's VERY time consuming,
                 // so better storing the reference and provide the viewport as metadata
                 // on demand
-                item.setAttribute( "ViewportName", g->getNamedDest()->getCString() );
+                UGString *s = g->getNamedDest();
+                QString aux = unicodeToQString( s->unicode(), s->getLength() );
+                item.setAttribute( "ViewportName", aux );
             }
             else if ( destination->isOk() )
             {
@@ -822,9 +833,9 @@ void PDFGenerator::fillViewportFromLink( DocumentViewport &viewport, LinkDest *d
 
     // get destination position
     // TODO add other attributes to the viewport (taken from link)
-    switch ( destination->getKind() )
-    {
-        case destXYZ:
+//     switch ( destination->getKind() )
+//     {
+//         case destXYZ:
             if (destination->getChangeLeft() || destination->getChangeTop())
             {
                 double CTM[6];
@@ -845,12 +856,12 @@ void PDFGenerator::fillViewportFromLink( DocumentViewport &viewport, LinkDest *d
             /* TODO
             if ( dest->getChangeZoom() )
                 make zoom change*/
-        break;
+/*        break;
 
         default:
             // implement the others cases
-        break;
-    }
+        break;*/
+//     }
 }
 
 void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )

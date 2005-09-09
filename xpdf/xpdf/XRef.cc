@@ -24,6 +24,7 @@
 #include "Dict.h"
 #include "Error.h"
 #include "ErrorCodes.h"
+#include "UGString.h"
 #include "XRef.h"
 
 //------------------------------------------------------------------------

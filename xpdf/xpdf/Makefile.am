@@ -9,7 +9,7 @@ libxpdf_la_SOURCES = Annot.cc Array.cc BuiltinFont.cc BuiltinFontTables.cc \
      JBIG2Stream.cc Lexer.cc Link.cc NameToCharCode.cc Object.cc Outline.cc \
      OutputDev.cc PDFDoc.cc PDFDocEncoding.cc PSTokenizer.cc \
      Page.cc Parser.cc PSOutputDev.cc SecurityHandler.cc SplashOutputDev.cc Stream.cc JPXStream.cc \
-     TextOutputDev.cc UnicodeMap.cc UnicodeTypeTable.cc XRef.cc
+     TextOutputDev.cc UnicodeMap.cc UnicodeTypeTable.cc UGString.cc XRef.cc
 
 noinst_LTLIBRARIES = libxpdf.la
 

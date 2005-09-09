@@ -18,6 +18,7 @@
 #include "Object.h"
 
 class GString;
+class UGString;
 class Array;
 class Dict;
 
@@ -136,13 +137,13 @@ public:
   // Accessors.
   virtual LinkActionKind getKind() { return actionGoTo; }
   LinkDest *getDest() { return dest; }
-  GString *getNamedDest() { return namedDest; }
+  UGString *getNamedDest() { return namedDest; }
 
 private:
 
   LinkDest *dest;		// regular destination (NULL for remote
 				//   link with bad destination)
-  GString *namedDest;		// named destination (only one of dest and
+  UGString *namedDest;		// named destination (only one of dest and
 				//   and namedDest may be non-NULL)
 };
 
@@ -167,14 +168,14 @@ public:
   virtual LinkActionKind getKind() { return actionGoToR; }
   GString *getFileName() { return fileName; }
   LinkDest *getDest() { return dest; }
-  GString *getNamedDest() { return namedDest; }
+  UGString *getNamedDest() { return namedDest; }
 
 private:
 
   GString *fileName;		// file name
   LinkDest *dest;		// regular destination (NULL for remote
 				//   link with bad destination)
-  GString *namedDest;		// named destination (only one of dest and
+  UGString *namedDest;		// named destination (only one of dest and
 				//   and namedDest may be non-NULL)
 };
 

@@ -313,6 +313,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
     if ( !item )
     {
         kdDebug() << "viewport has no matching item!" << endl;
+        d->blockViewport = false;
         return;
     }
 

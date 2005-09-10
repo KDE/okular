@@ -69,12 +69,7 @@ class HoverButton : public QPushButton
         HoverButton( QWidget * parent );
 
     protected:
-        void mouseMoveEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
         void paintEvent( QPaintEvent * e );
-
-    private:
-        bool m_hovering;
 };
 
 
@@ -404,7 +399,7 @@ void PagesEdit::wheelEvent( QWheelEvent * e )
 /** HoverButton **/
 
 HoverButton::HoverButton( QWidget * parent )
-    : QPushButton( parent ), m_hovering( false )
+    : QPushButton( parent )
 {
     setMouseTracking( true );
 #if KDE_IS_VERSION(3,3,90)
@@ -412,48 +407,16 @@ HoverButton::HoverButton( QWidget * parent )
 #endif
 }
 
-void HoverButton::mouseMoveEvent( QMouseEvent * e )
-{
-    // check for mouse hovering
-    const QRect myGeom( 0,0, width(), height() );
-    bool hover = myGeom.contains( e->pos() );
-
-    // if hover state changed update gfx
-    if ( m_hovering != hover )
-    {
-        m_hovering = hover;
-        update();
-    }
-}
-
-void HoverButton::mouseReleaseEvent( QMouseEvent * e )
-{
-    // call default handler
-    QPushButton::mouseReleaseEvent( e );
-
-    // reset hover state when clicking
-    m_hovering = false;
-    update();
-}
-
 void HoverButton::paintEvent( QPaintEvent * e )
 {
-    // always not hovering in disabled state
-    if ( !isEnabled() )
-        m_hovering = false;
-
-    // paint button in different flavours
-    if ( m_hovering )
+    if ( hasMouse() )
     {
-        // if we're hovering the button, draw it using QPushButton style
-        setPaletteBackgroundColor( palette().active().button() );
         QPushButton::paintEvent( e );
     }
     else
     {
-        // custom drawing of unhovered button
         QPainter p( this );
-        setPaletteBackgroundColor( palette().active().background() );
+        p.fillRect(e->rect(), parentWidget() ? parentWidget()->palette().brush(QPalette::Active, QColorGroup::Background) : paletteBackgroundColor());
 #warning drawButtonLabel does not exists in Qt4
 //        drawButtonLabel( &p );
     }

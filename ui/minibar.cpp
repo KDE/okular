@@ -416,7 +416,7 @@ void HoverButton::paintEvent( QPaintEvent * e )
     else
     {
         QPainter p( this );
-        p.fillRect(e->rect(), parentWidget() ? parentWidget()->palette().brush(QPalette::Active, QColorGroup::Background) : paletteBackgroundColor());
+        p.fillRect(e->rect(), parentWidget() ? parentWidget()->palette().brush(QPalette::Active, QColorGroup::Background) : QBrush(paletteBackgroundColor()));
 #warning drawButtonLabel does not exists in Qt4
 //        drawButtonLabel( &p );
     }

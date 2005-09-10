@@ -272,7 +272,7 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
         // Need slotRelayoutPages() here instead of d->dirtyLayout = true
         // because opening a pdf from another pdf will not trigger a viewportchange
         // so pages are never relayouted
-        slotRelayoutPages();
+        QTimer::singleShot(0, this, SLOT(slotRelayoutPages()));
     else
     {
         // update the mouse cursor when closing because we may have close through a link and

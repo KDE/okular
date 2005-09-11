@@ -69,6 +69,8 @@ class HoverButton : public QPushButton
 
     protected:
         void paintEvent( QPaintEvent * e );
+        void enterEvent( QPaintEvent * e );
+        void leaveEvent( QPaintEvent * e );
 };
 
 
@@ -395,6 +397,18 @@ HoverButton::HoverButton( QWidget * parent )
 #if KDE_IS_VERSION(3,3,90)
     KAcceleratorManager::setNoAccel( this );
 #endif
+}
+
+void HoverButton::enterEvent( QPaintEvent * e )
+{
+	update();
+	QPushButton::enterEvent( e );
+}
+
+void HoverButton::leaveEvent( QPaintEvent * e )
+{
+	update();
+	QPushButton::leaveEvent( e );
 }
 
 void HoverButton::paintEvent( QPaintEvent * e )

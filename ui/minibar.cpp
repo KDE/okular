@@ -70,6 +70,8 @@ class HoverButton : public QPushButton
 
     protected:
         void paintEvent( QPaintEvent * e );
+        void enterEvent( QPaintEvent * e );
+        void leaveEvent( QPaintEvent * e );
 };
 
 
@@ -403,6 +405,18 @@ HoverButton::HoverButton( QWidget * parent )
 {
     setMouseTracking( true );
     KAcceleratorManager::setNoAccel( this );
+}
+
+void HoverButton::enterEvent( QPaintEvent * e )
+{
+	update();
+	QPushButton::enterEvent( e );
+}
+
+void HoverButton::leaveEvent( QPaintEvent * e )
+{
+	update();
+	QPushButton::leaveEvent( e );
 }
 
 void HoverButton::paintEvent( QPaintEvent * e )

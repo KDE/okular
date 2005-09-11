@@ -315,7 +315,7 @@ void CHMFile::CloseCHM()
 	m_detectedLCID = 0;
 	m_currentEncoding = 0;
 
-	for ( chm_loaded_files_t::iterator it = m_chmLoadedFiles.begin(); it != m_chmLoadedFiles.end(); it++ )
+	for ( chm_loaded_files_t::iterator it = m_chmLoadedFiles.begin(); it != m_chmLoadedFiles.end(); ++it )
 		delete it.data();
 }
 

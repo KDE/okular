@@ -402,9 +402,7 @@ HoverButton::HoverButton( QWidget * parent )
     : QPushButton( parent )
 {
     setMouseTracking( true );
-#if KDE_IS_VERSION(3,3,90)
     KAcceleratorManager::setNoAccel( this );
-#endif
 }
 
 void HoverButton::paintEvent( QPaintEvent * e )

@@ -615,24 +615,26 @@ void Part::slotGoToPage()
 
 void Part::slotPreviousPage()
 {
-    if ( !m_document->currentPage() < 1 )
+    if ( m_document->isOpened() && !m_document->currentPage() < 1 )
         m_document->setViewportPage( m_document->currentPage() - 1 );
 }
 
 void Part::slotNextPage()
 {
-    if ( m_document->currentPage() < (m_document->pages() - 1) )
+    if ( m_document->isOpened() && m_document->currentPage() < (m_document->pages() - 1) )
         m_document->setViewportPage( m_document->currentPage() + 1 );
 }
 
 void Part::slotGotoFirst()
 {
-    m_document->setViewportPage( 0 );
+    if ( m_document->isOpened() )
+        m_document->setViewportPage( 0 );
 }
 
 void Part::slotGotoLast()
 {
-    m_document->setViewportPage( m_document->pages() - 1 );
+    if ( m_document->isOpened() )
+        m_document->setViewportPage( m_document->pages() - 1 );
 }
 
 void Part::slotHistoryBack()

@@ -15,6 +15,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kprocess.h>
 #include <kprocio.h>
@@ -84,7 +85,11 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   
   // Now locate the Gfx file on the hard disk...
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
-  
+
+  // If the EPSfilename really points to a PDF file, convert that file now.
+  if (ending == "pdf")
+    EPSfilename = dviFile->convertPDFtoPS(EPSfilename);
+
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
     Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
@@ -92,7 +97,10 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     for(page=0; page < dviFile->total_pages; page++) 
       if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
 	break;
-    errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>").arg(page+1).arg(originalFName);
+    if (ending == "pdf") 
+      errorMsg += i18n("Page %1: The PDF file <strong>%2</strong> could not be converted to PostScript.<br>").arg(page+1).arg(originalFName);
+    else
+      errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>").arg(page+1).arg(originalFName);
     embedPS_progress->progressBar()->advance(1);
     qApp->processEvents();
     return;
@@ -408,6 +416,22 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   
   // Now locate the Gfx file on the hard disk...
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
+
+  // If the EPSfilename really points to a PDF file, convert that file now.
+  if (ending == "pdf") {
+    QString convErrorMsg;
+    QString oEPSfilename = EPSfilename;
+    emit setStatusBarText( i18n("Converting PDF-file %1...").arg(EPSfilename) );
+    EPSfilename = dviFile->convertPDFtoPS(EPSfilename, &convErrorMsg);
+    emit setStatusBarText( QString::null );
+    if (convErrorMsg.isEmpty() != true) {
+      KMessageBox::detailedError(parentWidget,
+				 i18n("<qt><strong>File conversion error!</strong> KDVI was not able to convert the external "
+				      "PDF-file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>").arg(oEPSfilename),
+				 convErrorMsg, i18n("PDF/PS conversion error"));
+      return;
+    }
+  }
   
   // Now parse the arguments. 
   int  llx     = 0; 

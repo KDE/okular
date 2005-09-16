@@ -5,7 +5,7 @@
 // Class that represents a DVI file. Part of KDVI - A DVI previewing
 // plugin for kviewshell.
 //
-// (C) 2004 Stefan Kebekus. Distributed under the GPL.
+// (C) 2004--2005 Stefan Kebekus. Distributed under the GPL.
 //
 
 #ifndef _DVIFILE_H
@@ -96,6 +96,26 @@ class dvifile : public bigEndianByteReader
       ordered. Worse, page numbers need not be unique. This method
       renumbers the pages. */
   void           renumber();
+  
+  /** PDF to PS file conversion 
+
+  This utility method takes the name of a PDF-file, and attempts to
+  convert it to a PS file. The dvifile internally keeps a list of
+  converted files, to do two thigs:
+
+  - convert files only once.
+
+  - delete all converted files on destruction
+
+  @warning The internal buffer can lead to difficulties if filenames
+    of PDF-files are not unique: if the content of a PDF file is
+    changed and this method is called a second time with the same file
+    name, the method will then NOT convert the file, but simply return
+    the name from the buffer
+
+  @returns The name of the PS file, or QString::null on failure.
+  */
+  QString convertPDFtoPS(const QString &PDFFilename);
 
  private:
   /** process_preamble reads the information in the preamble and
@@ -116,6 +136,16 @@ class dvifile : public bigEndianByteReader
   double         cmPerDVIunit;
 
   QMemArray<Q_UINT8>  dviData;
+
+
+  /** Map of filenames for converted PDF files
+
+  This map contains names of PDF files that were converted to
+  PostScript. The key is the name of the PDF file, the data the name
+  of the associated PS file, or QString::null, if the file could not
+  be converted. The PS files are deleted when the DVI-file is
+  destructed. */
+  QMap<QString, QString> convertedFiles;
 };
 
 #endif //ifndef _DVIFILE_H

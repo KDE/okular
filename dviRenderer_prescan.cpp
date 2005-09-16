@@ -81,7 +81,11 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   
   // Now locate the Gfx file on the hard disk...
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
-  
+
+  // If the EPSfilename really points to a PDF file, convert that file now.
+  if (ending == "pdf")
+    EPSfilename = dviFile->convertPDFtoPS(EPSfilename);
+
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
     Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
@@ -94,7 +98,6 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     qApp->processEvents();
     return;
   }
-  
 
   // Now parse the arguments. 
   int  llx     = 0; 
@@ -406,6 +409,10 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   // Now locate the Gfx file on the hard disk...
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
   
+  // If the EPSfilename really points to a PDF file, convert that file now.
+  if (ending == "pdf")
+    EPSfilename = dviFile->convertPDFtoPS(EPSfilename);
+  
   // Now parse the arguments. 
   int  llx     = 0; 
   int  lly     = 0;
@@ -414,7 +421,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   int  rwi     = 0;
   int  rhi     = 0;
   int  angle   = 0;
-
+  
   // just to avoid ambiguities; the filename could contain keywords
   include_command = include_command.mid(include_command.find(' '));
   
@@ -425,9 +432,9 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   parse_special_argument(include_command, "rwi=", &rwi);
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
-
+  
   int clip=include_command.find(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
-
+  
   if (QFile::exists(EPSfilename)) {
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
     double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;

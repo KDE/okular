@@ -52,6 +52,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <ktempfile.h>
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <stdlib.h>
@@ -315,6 +316,11 @@ dvifile::~dvifile()
   kdDebug(4300) << "destroy dvi-file" << endl;
 #endif
 
+  // Delete converted PDF files
+  QMap<QString, QString>::Iterator it;
+  for ( it = convertedFiles.begin(); it != convertedFiles.end(); ++it ) 
+    QFile::remove(it.data());
+
   if (suggestedPageSize != 0)
     delete suggestedPageSize;
   if (font_pool != 0)
@@ -348,6 +354,38 @@ void dvifile::renumber()
 	*(ptr++) = num[0];
       }
   }
+}
+
+
+QString dvifile::convertPDFtoPS(const QString &PDFFilename)
+{
+  // Check if the PDFFile is known
+  QMap<QString, QString>::Iterator it =  convertedFiles.find(PDFFilename);
+  if (it != convertedFiles.end()) {
+    // PDF-File is known. Good.
+    return it.data();
+  }
+
+  // Get the name of a temporary file
+  KTempFile tmpfile(QString::null, ".ps");
+  QString convertedFileName = tmpfile.name();
+  tmpfile.close();
+  tmpfile.unlink();
+
+  // Use pdf2ps to do the conversion
+  KProcIO proc;
+  proc << "pdf2ps" << PDFFilename << convertedFileName;
+  if (proc.start(KProcess::Block) == false) 
+    convertedFileName = QString::null; // Indicates that conversion failed, won't try again.
+  if (!QFile::exists(convertedFileName))
+    convertedFileName = QString::null; // Indicates that conversion failed, won't try again.
+
+  // Save name of converted file to buffer, so PDF file won't be
+  // converted again, and files can be deleted when *this is
+  // deconstructed.
+  convertedFiles[PDFFilename] = convertedFileName;
+
+  return convertedFileName;
 }
 
 

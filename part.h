@@ -114,6 +114,7 @@ protected slots:
 	void enableTOC(bool enable);
 	void psTransformEnded();
 	void cannotQuit();
+	void setMimeTypes(KIO::Job *job);
 
 public slots:
 	// connected to Shell action (and browserExtension), not local one

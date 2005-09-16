@@ -46,6 +46,7 @@
 #include <knuminput.h>
 #include <kiconloader.h>
 #include <kio/netaccess.h>
+#include <kio/job.h>
 #include <kpopupmenu.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
@@ -85,6 +86,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_showFullScreenAction(0),
 	m_actionsSearched(false), m_searchStarted(false)
 {
+	// connect the started signal to tell the job the mimetypes we like
+	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
+	
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("kpdf");
 
@@ -440,6 +444,14 @@ bool Part::openURL(const KURL &url)
     else
         m_viewportDirty.pageNumber = -1;
     return b;
+}
+
+void Part::setMimeTypes(KIO::Job *job)
+{
+    if (job)
+    {
+        job->addMetaData("accept", "application/pdf, */*;q=0.5");
+    }
 }
 
 bool Part::closeURL()

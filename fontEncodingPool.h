@@ -9,15 +9,14 @@
 #include <../config.h>
 #ifdef HAVE_FREETYPE
 
-
 #ifndef _FONTENCODINGPOOL_H
 #define _FONTENCODINGPOOL_H
 
-#include <kprocio.h>
-#include <qdict.h>
-#include <qstring.h>
-
 #include "fontEncoding.h"
+
+#include <qdict.h>
+
+class QString;
 
 
 class fontEncodingPool {

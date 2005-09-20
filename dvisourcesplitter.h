@@ -11,7 +11,9 @@
 #define DVI_SOURCEFILESPLITTER_H
 
 #include <qfileinfo.h>
-#include <qstring.h>
+
+class QString;
+
 
 class DVI_SourceFileSplitter 
 {

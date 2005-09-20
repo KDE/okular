@@ -7,35 +7,24 @@
 //
 // (C) 2001-2004 Stefan Kebekus. Distributed under the GPL.
 
-
 #ifndef _dvirenderer_h_
 #define _dvirenderer_h_
 
-
-#include <qevent.h>
-#include <qintdict.h>
-#include <qpainter.h> 
-#include <qptrvector.h>
-#include <qvaluestack.h>
-#include <qvaluevector.h>
-#include <qwidget.h> 
-#include <kviewpart.h>
-
-#include "anchor.h"
 #include "bigEndianByteReader.h"
 #include "documentRenderer.h"
-#include "dviFile.h"
 #include "fontpool.h"
-#include "infodialog.h"
-#include "pageSize.h"
-#include "prebookmark.h"
-#include "psgs.h"
-#include "renderedDocumentPage.h"
 
+#include <qintdict.h>
+#include <qpointarray.h>
+#include <qtimer.h>
+#include <qvaluestack.h>
+#include <qvaluevector.h>
 
+class Anchor;
 class DocumentWidget;
 class dviRenderer;
 class fontProgressDialog;
+class ghostscript_interface;
 class infoDialog;
 class KAction;
 class KDVIMultiPage;
@@ -43,6 +32,7 @@ class KPrinter;
 class KProcess;
 class KProgressDialog;
 class KShellProcess;
+class PreBookmark;
 class TeXFontDefinition;
 
 extern const int MFResolutions[];

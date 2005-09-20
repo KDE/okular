@@ -13,9 +13,7 @@
 #ifndef _FONTENCODING_H
 #define _FONTENCODING_H
 
-class QString;
-
-#include <qglobal.h>
+#include <qstring.h>
 
 
 /**

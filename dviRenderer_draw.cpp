@@ -53,12 +53,16 @@
 
 #include "dviRenderer.h"
 #include "dvi.h"
+#include "dviFile.h"
 #include "fontpool.h"
+#include "hyperlink.h"
 #include "kdvi_multipage.h"
 #include "performanceMeasurement.h"
-#include "TeXFont.h"
-#include "xdvi.h"
+#include "psgs.h"
 #include "renderedDviPagePixmap.h"
+#include "TeXFont.h"
+#include "textBox.h"
+#include "xdvi.h"
 
 #include <kdebug.h>
 #include <klocale.h>

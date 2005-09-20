@@ -15,15 +15,14 @@
 #ifndef _TEXFONT_PFB_H
 #define _TEXFONT_PFB_H
 
-// Add header files alphabetically
+#include "TeXFont.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include <qstring.h>
 
-#include "TeXFont.h"
-
+class fontEncoding;
 class glyph;
+
 
 class TeXFont_PFB : public TeXFont {
  public:

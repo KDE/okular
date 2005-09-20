@@ -56,6 +56,7 @@
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <stdlib.h>
+#include <kprocio.h>
 
 extern "C" {
 #include "dvi.h"

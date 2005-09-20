@@ -19,6 +19,8 @@
  ***************************************************************************/
 
 #include "renderedDviPagePixmap.h"
+#include "hyperlink.h"
+
 
 RenderedDviPagePixmap::RenderedDviPagePixmap()
   : RenderedDocumentPagePixmap()

@@ -2,6 +2,8 @@
 #ifndef _xdvi_h
 #define _xdvi_h
 
+#include <stdio.h>
+
 /*
  *	Written by Eric C. Cooper, CMU
  */

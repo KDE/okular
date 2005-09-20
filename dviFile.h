@@ -11,18 +11,17 @@
 #ifndef _DVIFILE_H
 #define _DVIFILE_H
 
-#include <stdio.h>
-#include <qdatastream.h>
-#include <qfile.h>
-#include <qintdict.h>
-#include <qstring.h>
-
 #include "bigEndianByteReader.h"
 
+#include <qintdict.h>
+#include <qiodevice.h>
+#include <qmemarray.h>
+#include <qstring.h>
 
 class fontPool;
 class pageSize;
 class TeXFontDefinition;
+
 
 class dvifile : public bigEndianByteReader
 {

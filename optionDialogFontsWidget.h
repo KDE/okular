@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// optionDiologWidget.h
+// optionDialogFontsWidget.h
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
 //
@@ -9,9 +9,8 @@
 #ifndef OPTIONDIALOGFONTSWIDGET_H
 #define OPTIONDIALOGFONTSWIDGET_H
 
-// Add header files alphabetically
-
 #include "optionDialogFontsWidget_base.h"
+
 
 class optionDialogFontsWidget : public optionDialogFontsWidget_base
 { 

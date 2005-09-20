@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// TeXFont.cpp
+// TeXFont.h
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environemt 
 //
@@ -9,11 +9,7 @@
 #ifndef _TEXFONT_H
 #define _TEXFONT_H
 
-// Add header files alphabetically
-
 #include "TeXFontDefinition.h"
-
-class glyph;
 
 
 class TeXFont {

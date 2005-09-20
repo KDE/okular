@@ -13,9 +13,10 @@
 
 #include "dviWidget.h"
 
-#include "pageView.h"
 #include "documentPageCache.h"
 #include "documentWidget.h"
+#include "hyperlink.h"
+#include "pageView.h"
 #include "renderedDviPagePixmap.h"
 #include "selection.h"
 

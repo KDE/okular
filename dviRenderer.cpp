@@ -43,11 +43,16 @@
 #include <kstdguiitem.h>
 
 #include "documentWidget.h"
+#include "dviFile.h"
 #include "dviRenderer.h"
 #include "fontpool.h"
 #include "fontprogress.h"
+#include "hyperlink.h"
+#include "infodialog.h"
 #include "kdvi_multipage.h"
 #include "performanceMeasurement.h"
+#include "prebookmark.h"
+#include "psgs.h"
 #include "xdvi.h"
 #include "zoomlimits.h"
 #include "dvisourcesplitter.h"

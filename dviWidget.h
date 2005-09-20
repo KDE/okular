@@ -10,15 +10,15 @@
 #ifndef _DVIWIDGET_H_
 #define _DVIWIDGET_H_
 
-#include <qwidget.h> 
-
 #include "documentWidget.h"
 
 class PageView;
 class DocumentPageCache;
 class QPaintEvent;
 class QMouseEvent;
+class QWidget;
 class textSelection;
+
 
 class DVIWidget : public DocumentWidget
 {

@@ -7,22 +7,21 @@
 #ifndef INFO_KDVI_H
 #define INFO_KDVI_H
 
-#include <qstring.h>
-#include <qvariant.h>
 #include <kdialogbase.h>
+#include <qstring.h>
 
 class dvifile;
-
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
-class QLabel;
-class KPushButton;
-class QTabWidget;
-class QTable;
-class QTextView;
-class QWidget;
 class fontPool;
+class KPushButton;
+class QGridLayout;
+class QHBoxLayout;
+class QLabel;
+class QTable;
+class QTabWidget;
+class QTextView;
+class QVBoxLayout;
+class QWidget;
+
 
 class infoDialog : public KDialogBase
 {

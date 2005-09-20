@@ -34,8 +34,9 @@
 #include <qapplication.h>
 #include <qprogressdialog.h>
 
-#include "documentWidget.h"
 #include "kdvi_multipage.h"
+#include "dviFile.h"
+#include "documentWidget.h"
 #include "renderedDocumentPagePixmap.h"
 
 

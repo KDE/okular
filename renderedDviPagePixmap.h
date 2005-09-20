@@ -22,9 +22,10 @@
 #ifndef _RENDEREDDVIPAGEPIXMAP_H_
 #define _RENDEREDDVIPAGEPIXMAP_H_
 
+#include "renderedDocumentPagePixmap.h"
+
 #include <qobject.h>
 
-#include "renderedDocumentPagePixmap.h"
 
 class RenderedDviPagePixmap : public RenderedDocumentPagePixmap
 {

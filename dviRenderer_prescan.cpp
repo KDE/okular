@@ -7,9 +7,12 @@
 
 #include "dviRenderer.h"
 #include "dvi.h"
+#include "dviFile.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"
 #include "performanceMeasurement.h"
+#include "prebookmark.h"
+#include "psgs.h"
 #include "TeXFont.h"
 #include "xdvi.h"
 

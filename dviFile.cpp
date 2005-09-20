@@ -52,6 +52,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <ktempfile.h>
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <stdlib.h>
@@ -75,6 +76,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   numberOfExternalPSFiles = 0;
   numberOfExternalNONPSFiles = 0;
   sourceSpecialMarker = old->sourceSpecialMarker;
+  have_complainedAboutMissingPDF2PS = false;
 
   dviData = old->dviData.copy();
 
@@ -279,7 +281,8 @@ dvifile::dvifile(QString fname, fontPool *pool)
   numberOfExternalNONPSFiles = 0;
   font_pool    = pool;
   sourceSpecialMarker = true;
-  
+  have_complainedAboutMissingPDF2PS = false;
+
   QFile file(fname);
   filename = file.name();
   file.open( IO_ReadOnly );
@@ -317,6 +320,11 @@ dvifile::~dvifile()
   kdDebug(4300) << "destroy dvi-file" << endl;
 #endif
 
+  // Delete converted PDF files
+  QMap<QString, QString>::iterator it;
+  for ( it = convertedFiles.begin(); it != convertedFiles.end(); ++it )
+    QFile::remove(it.data());
+  
   if (suggestedPageSize != 0)
     delete suggestedPageSize;
   if (font_pool != 0)
@@ -350,6 +358,65 @@ void dvifile::renumber()
 	*(ptr++) = num[0];
       }
   }
+}
+
+
+QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms)
+{
+  // Check if the PDFFile is known
+  QMap<QString, QString>::Iterator it =  convertedFiles.find(PDFFilename);
+  if (it != convertedFiles.end()) {
+    // PDF-File is known. Good.
+    return it.data();
+  }
+
+  // Get the name of a temporary file
+  KTempFile tmpfile(QString::null, ".ps");
+  QString convertedFileName = tmpfile.name();
+  tmpfile.close();
+  tmpfile.unlink();
+
+  // Use pdf2ps to do the conversion
+  KProcIO proc;
+  proc << "pdf2ps" << PDFFilename << convertedFileName;
+  if (proc.start(KProcess::Block, true) == false) {
+    convertedFiles[PDFFilename] = QString::null; // Indicates that conversion failed, won't try again.
+    if ((converrorms != 0) && (have_complainedAboutMissingPDF2PS == false)) {
+      *converrorms = i18n("<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
+			  "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
+			  "document will therefore not be displayed.</p>"
+			  "<p><b>Possible reason:</b> The program <strong>pdf2ps</strong> is perhaps not installed "
+			  "on your system, or it cannot be found in the current search path.</p>"
+			  "<p><b>What you can do:</b> The program <strong>pdf2ps</strong> program is normally "
+			  "contained in distributions of the ghostscript PostScript interpreter system. If "
+			  "ghostscipt is not installed on your system, you could install it now. " 
+			  "If you are sure that ghostscript is installed, please try to use <strong>pdf2ps</strong> "
+			  "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>").arg(PDFFilename).arg(getenv("PATH"));
+      have_complainedAboutMissingPDF2PS = true;
+    }
+    return QString::null;
+  }
+  if ( !QFile::exists(convertedFileName) || !proc.normalExit() || (proc.exitStatus() != 0) ) {
+    convertedFiles[PDFFilename] = QString::null; // Indicates that conversion failed, won't try again.
+    if (converrorms != 0) {
+      QString outp, outl;
+      while(proc.readln(outl) != -1)
+	outp += outl;
+
+      *converrorms = i18n("<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
+			  "document will therefore not be displayed.</p>"
+			  "<p><b>Possible reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
+			  "This is the output of the <strong>pdf2ps</strong> program that KDVI used:</p>"
+			  "<p><strong>%2</strong></p></qt>").arg(PDFFilename).arg(outp);
+    }
+    return QString::null;
+  }
+  // Save name of converted file to buffer, so PDF file won't be
+  // converted again, and files can be deleted when *this is
+  // deconstructed.
+  convertedFiles[PDFFilename] = convertedFileName;
+
+  return convertedFileName;
 }
 
 

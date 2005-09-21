@@ -10,8 +10,10 @@
 #ifndef DVI_SOURCEFILESPLITTER_H
 #define DVI_SOURCEFILESPLITTER_H
 
-#include <qfileinfo.h>
-#include <qstring.h>
+#include <QFileInfo>
+
+class QString;
+
 
 class DVI_SourceFileSplitter 
 {

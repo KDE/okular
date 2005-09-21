@@ -3,8 +3,8 @@
 #ifndef _GLYPH_H
 #define _GLYPH_H
 
-#include <qcolor.h>
-#include <qpixmap.h>
+#include <QColor>
+#include <QPixmap>
 
 
 struct bitmap {

@@ -9,21 +9,11 @@
 #define FONT_GENERATION_H
 
 #include <kdialogbase.h>
-#include <qpointer.h>
-//Added by qt3to4:
-#include <QLabel>
-#include <QVBoxLayout>
-#include <Q3Frame>
-#include <QHBoxLayout>
-#include <QGridLayout>
+
+#include <QPointer>
 
 class KProcIO;
 class KProgress;
-class KPushButton;
-class QVBoxLayout; 
-class QHBoxLayout; 
-class QGridLayout; 
-class Q3Frame;
 class QLabel;
 
 

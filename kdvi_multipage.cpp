@@ -11,6 +11,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstdaction.h>
+#include <ktempfile.h>
 #include <ktip.h>
 #include <qtimer.h>
 //Added by qt3to4:
@@ -23,6 +24,7 @@
 #include "../config.h"
 #include "../kviewshell/marklist.h"
 #include "documentWidget.h"
+#include "dviFile.h"
 #include "dviWidget.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"

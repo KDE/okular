@@ -52,6 +52,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kprocio.h>
 #include <ktempfile.h>
 #include <qdir.h>
 #include <qfileinfo.h>

@@ -9,9 +9,8 @@
 #ifndef OPTIONDIALOGSPECIALWIDGET_H
 #define OPTIONDIALOGSPECIALWIDGET_H
 
-// Add header files alphabetically
-
 #include "optionDialogSpecialWidget_base.h"
+
 
 class optionDialogSpecialWidget : public optionDialogSpecialWidget_base
 { 

@@ -12,23 +12,21 @@
  * We then change the sizes to SPELL units (unshrunk pixel / 2^16).
  */
 
-
 #ifndef _FONT_H
 #define _FONT_H
 
-class dviRenderer;
-typedef	void	(dviRenderer::*set_char_proc)(unsigned int, unsigned int);
+#include <../config.h>
 
-#include <kprocess.h>
-#include <q3intdict.h>
-#include <qstring.h>
+#include <Q3IntDict>
+#include <QString>
+
 #include <stdio.h>
 
-#include <../config.h>
-#include "glyph.h"
-
+class dviRenderer;
 class TeXFont;
 
+
+typedef	void	(dviRenderer::*set_char_proc)(unsigned int, unsigned int);
 
 
 // Per character information for virtual fonts

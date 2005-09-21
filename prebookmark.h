@@ -23,7 +23,8 @@
 #ifndef _PREBOOKMARK_H_
 #define _PREBOOKMARK_H_
 
-#include <qstring.h>
+#include <QString>
+
 
 /*! \brief Bookmark representation
   

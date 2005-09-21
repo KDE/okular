@@ -11,13 +11,10 @@
 #ifndef _DVIFILE_H
 #define _DVIFILE_H
 
-#include <stdio.h>
-#include <qdatastream.h>
-#include <qfile.h>
-#include <q3intdict.h>
-#include <qstring.h>
-//Added by qt3to4:
+#include <Q3IntDict>
 #include <Q3MemArray>
+#include <QIODevice>
+#include <QString>
 #include <qmap.h>
 
 #include "bigEndianByteReader.h"

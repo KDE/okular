@@ -36,8 +36,9 @@
 //Added by qt3to4:
 #include <QTextStream>
 
-#include "documentWidget.h"
 #include "kdvi_multipage.h"
+#include "dviFile.h"
+#include "documentWidget.h"
 #include "renderedDocumentPagePixmap.h"
 
 

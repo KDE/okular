@@ -10,15 +10,14 @@
 #ifndef _PSGS_H_
 #define _PSGS_H_
 
+#include <QColor>
+#include <QObject>
+#include <QString>
+#include <Q3IntDict>
 
-#include <ktempfile.h>
-#include <qstring.h>
-#include <q3intdict.h>
-
-#include "../kviewshell/pageNumber.h"
-
-
+class PageNumber;
 class QPainter;
+
 
 class pageInfo
 {

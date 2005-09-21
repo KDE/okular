@@ -17,9 +17,12 @@
 #include <qimage.h>
 #include <qstringlist.h>
 
+#include "dviFile.h"
 #include "dviRenderer.h"
+#include "hyperlink.h"
 #include "kdvi.h"
 #include "kdvi_multipage.h"
+#include "psgs.h"
 #include "xdvi.h"
 
 //#define DEBUG_SPECIAL

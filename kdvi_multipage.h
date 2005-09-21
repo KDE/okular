@@ -2,12 +2,13 @@
 #ifndef __KDVIMULTIPAGE_H
 #define __KDVIMULTIPAGE_H
 
-#include <qstringlist.h>
+#include "kmultipage.h"
+#include "dviRenderer.h"
+
+#include <QStringList>
 
 class KPrinter;
 
-#include "../kviewshell/kmultipage.h"
-#include "dviRenderer.h"
 
 class KDVIMultiPage : public KMultiPage
 {

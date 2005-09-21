@@ -1,9 +1,9 @@
 // -*- C++ -*-
 
 //#define PERFORMANCE_MEASUREMENT
-
 #ifdef PERFORMANCE_MEASUREMENT
-#include <qdatetime.h>
+
+#include <QDateTime>
 
 // This is the central timer used for performance measurement. It is
 // set to zero and started when the kdvi_multipage is

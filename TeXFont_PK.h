@@ -3,12 +3,10 @@
 #ifndef _TEXFONT_PK_H
 #define _TEXFONT_PK_H
 
-#include <qstring.h>
-#include <stdio.h>
-
 #include "TeXFont.h"
 
 class glyph;
+
 
 class TeXFont_PK : public TeXFont {
  public:

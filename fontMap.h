@@ -12,8 +12,8 @@
 #include <../config.h>
 #ifdef HAVE_FREETYPE
 
-#include <qmap.h>
-#include <qstring.h>
+#include <QMap>
+#include <QString>
 
 /**
  * This class represents one line of a font map file, and contains

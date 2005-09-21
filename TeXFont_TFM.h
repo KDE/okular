@@ -9,13 +9,7 @@
 #ifndef _TEXFONT_TFM_H
 #define _TEXFONT_TFM_H
 
-// Add header files alphabetically
-
-#include <qstring.h>
-
 #include "TeXFont.h"
-
-class glyph;
 
 
 class fix_word {

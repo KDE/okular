@@ -34,12 +34,15 @@
 #include <klocale.h>
 #include <kprinter.h>
 #include <kprocess.h>
+#include <ktempfile.h>
 #include <qlabel.h>
 #include <qpainter.h>
 
 
 #include "dviRenderer.h"
+#include "dviFile.h"
 #include "fontprogress.h"
+#include "infodialog.h"
 #include "kdvi_multipage.h"
 
 extern QPainter foreGroundPaint; // QPainter used for text

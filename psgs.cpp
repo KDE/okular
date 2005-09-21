@@ -11,14 +11,16 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocio.h>
+#include <ktempfile.h>
 #include <qdir.h>
 #include <qpainter.h>
 //Added by qt3to4:
 #include <QPixmap>
 #include <stdio.h>
 
-#include "dviFile.h"
 #include "psgs.h"
+#include "dviFile.h"
+#include "pageNumber.h"
 
 extern const char psheader[];
 

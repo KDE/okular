@@ -18,7 +18,8 @@
 #ifndef _bigEndianByteReader_H
 #define _bigEndianByteReader_H
 
-#include <qglobal.h>
+#include <QGlobalStatic>
+
 
 class bigEndianByteReader {
  public:

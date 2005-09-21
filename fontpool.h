@@ -9,15 +9,13 @@
 
 #include <../config.h>
 
-#include <qmap.h>
-#include <q3ptrlist.h>
-#include <qstringlist.h>
-#include <qobject.h>
-
 #include "fontEncodingPool.h"
 #include "fontMap.h"
 #include "fontprogress.h"
 #include "TeXFontDefinition.h"
+
+#include <Q3PtrList>
+#include <QObject>
 
 #ifdef HAVE_FREETYPE
 #include <ft2build.h>

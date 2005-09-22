@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Stefan Kebekus                                  *
- *   kebekus@kde.org                                                       *
+ *   Copyright (C) 2005 by Stefan Kebekus <kebekus@kde.org>                *
+ *   Copyright (C) 2005 by Piotr Szymañski <niedakh@gmail.com>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,22 +21,17 @@
 #ifndef _FAXRENDERER_H_
 #define _FAXRENDERER_H_
 
-
-#include "documentRenderer.h"
 #include "kfaximage.h"
 
-class documentPage;
-
-/*! \brief Well-documented minimal implementation of a documentRenderer for reading FAX files
+/*! \brief Well-documented minimal implementation of a Generator for reading FAX files
   
 This class provides a well-documented reference implementation of a
-documentRenderer, suitable as a starting point for a real-world
-implementation. This class is responsible for document loading and
-rendering. Apart from the constructor and the descructor, it
-implements only the necessary methods setFile() and drawPage().
+Generator, suitable as a starting point for a real-world
+implementation. This class is responsible for providing abstract layer of oKular
+with all the needed document information.
 */
 
-class FaxRenderer : public DocumentRenderer
+class FaxRenderer : public Generator
 {
   Q_OBJECT
 
@@ -58,29 +53,27 @@ public:
 
   /** Opening a file
 
-      This implementation does the necessary consistency checks and
-      complains, e.g. if the file does not exist. It then uses the
-      member 'fax' to load the fax file and initializes the
-      appropriate data structures. The code for loading and rendering
-      is contained in the class "KFaxImage", to keep this reference
-      implementation short.
+      This function does what is needed to parse the file, which 
+      was already checked for consistency and complains. It populates
+      the pages vector with relevant information.
 
-      @param fname the name of the file that should be opened. 
+      @param fileName the name of the file that should be opened. 
+      @param pagesVector the vector of pages with information about their sizes and rotation
+      @return returns true if the document was loaded, false if not
   */
-  virtual bool setFile(const QString& fname);
+  bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector );
 
   /** Rendering a page
 
-      This implementation first checks if the arguments are in a
-      reasonable range, and error messages are printed if this is not
-      so. Secondly, the page is rendered by the KFaxImage class and
-      the drawn.
+      This implementation takes care of generating a page requested in PixmapRequest.
 
-      @param res resolution at which drawing should take place
+      The code for loading and rendering is contained in the class "KFaxImage", 
+      to keep this reference implementation short.
 
-      @param page pointer to a page structur on which we should draw
+      @param request pointer to the request which contains information about the page that is to be rendered
+
   */
-  void drawPage(double res, RenderedDocumentPage* page);
+  void generatePixmap( PixmapRequest * request );
 
 private:
   /** This class holds the fax file */

@@ -138,10 +138,9 @@ public slots:
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar();
 
+  virtual void  drawPage(double res, RenderedDocumentPage *page);
+  virtual void  getText(RenderedDocumentPage* page);
 
-
-  void		drawPage(double res, RenderedDocumentPage *page);
- 
   /** Slots used in conjunction with external programs */
   void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
   void          dvips_terminated(KProcess *);

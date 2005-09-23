@@ -231,6 +231,18 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
 }
 
 
+void dviRenderer::getText(RenderedDocumentPage* page)
+{
+  bool postscriptBackup = _postscript;
+  // Disable postscript-specials temporarely to speed up text extraction.
+  _postscript = false;
+
+  drawPage(100.0, page);
+
+  _postscript = postscriptBackup;
+}
+
+
 void dviRenderer::showThatSourceInformationIsPresent()
 {
   // In principle, we should use a KMessagebox here, but we want to

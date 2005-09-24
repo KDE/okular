@@ -213,7 +213,7 @@ QColor dviRenderer::parseColorSpecification(QString colorSpec)
 
 void dviRenderer::color_special(QString cp)
 {
-  cp = cp.stripWhiteSpace();
+  cp = cp.trimmed();
   
   QString command = cp.section(' ', 0, 0);
   
@@ -312,12 +312,12 @@ void dviRenderer::epsf_special(QString cp)
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
 #endif
 
-  QString include_command = cp.simplifyWhiteSpace();
+  QString include_command = cp.simplified();
 
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away. Of
   // course, this does not work if the filename contains spaces
-  // (already the simplifyWhiteSpace() above is wrong). If you have
+  // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename = include_command;
   EPSfilename.truncate(EPSfilename.find(' '));
@@ -456,7 +456,7 @@ void dviRenderer::TPIC_addPath_special(QString cp)
 #endif
 
   // Adds a point to the path list
-  QString cp_noWhiteSpace = cp.stripWhiteSpace();
+  QString cp_noWhiteSpace = cp.trimmed();
   bool ok;
   float xKoord = cp_noWhiteSpace.section(' ', 0, 0).toFloat(&ok);
   if (ok == false) {
@@ -491,7 +491,7 @@ void dviRenderer::TPIC_setPen_special(QString cp)
   
   // Sets the pen size in milli-inches
   bool ok;
-  penWidth_in_mInch = cp.stripWhiteSpace().toFloat(&ok);
+  penWidth_in_mInch = cp.trimmed().toFloat(&ok);
   if (ok == false) {
     printErrorMsgForSpecials( QString("TPIC special; cannot parse argument in 'pn %1'.").arg(cp) );
     penWidth_in_mInch = 0.0;

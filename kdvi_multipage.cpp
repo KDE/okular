@@ -147,7 +147,7 @@ void KDVIMultiPage::slotSave()
   // Try to guess the proper ending...
   QString formats;
   QString ending;
-  int rindex = m_file.findRev(".");
+  int rindex = m_file.lastIndexOf(".");
   if (rindex == -1) {
     ending = QString::null;
     formats = QString::null;

@@ -38,8 +38,8 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   if ( filepart[0] != ' ' && (linepart.length() != 1) ) possibleNumberMixUp = true;
 
   //remove a spaces  
-  filepart = filepart.stripWhiteSpace();
-  linepart = linepart.stripWhiteSpace();
+  filepart = filepart.trimmed();
+  linepart = linepart.trimmed();
   
 #ifdef DEBUG_SOURCESPLITTER
   kdDebug() << "DVI_SourceSplitter: filepart " << filepart << " linepart " << linepart << endl;

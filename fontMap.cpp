@@ -42,7 +42,7 @@ fontMap::fontMap()
 
   QString map_fileName;
   proc.readln(map_fileName);
-  map_fileName = map_fileName.stripWhiteSpace();
+  map_fileName = map_fileName.trimmed();
   if (map_fileName.isEmpty()) {
     // Map file not found? Then we try the teTeX < 3.0 way of finding
     // the file.
@@ -52,7 +52,7 @@ fontMap::fontMap()
       return;
     }
     proc.readln(map_fileName);
-    map_fileName = map_fileName.stripWhiteSpace();
+    map_fileName = map_fileName.trimmed();
     
     // If both versions fail, then there is nothing left to do.
     if (map_fileName.isEmpty()) {
@@ -66,14 +66,14 @@ fontMap::fontMap()
     QTextStream stream( &file );
     QString line;
     while ( !stream.atEnd() ) {
-      line = stream.readLine().simplifyWhiteSpace();
+      line = stream.readLine().simplified();
       if (line.at(0) == '%')
 	continue;
       
       QString TeXName  = line.section(' ', 0, 0);
       QString FullName = line.section(' ', 1, 1);
-      QString fontFileName = line.section('<', -1).stripWhiteSpace().section(' ', 0, 0);
-      QString encodingName = line.section('<', -2, -2).stripWhiteSpace().section(' ', 0, 0);
+      QString fontFileName = line.section('<', -1).trimmed().section(' ', 0, 0);
+      QString encodingName = line.section('<', -2, -2).trimmed().section(' ', 0, 0);
       
       double slant = 0.0;
       int i = line.find("SlantFont");

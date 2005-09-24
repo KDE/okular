@@ -505,7 +505,7 @@ bool dviRenderer::setFile(const QString &fname)
   QString includePath;
   if (restrictIncludePath) {
     includePath = filename;
-    includePath.truncate(includePath.findRev('/'));
+    includePath.truncate(includePath.lastIndexOf('/'));
   }
   
   PS_interface->setIncludePath(includePath);
@@ -664,8 +664,8 @@ Anchor dviRenderer::parseReference(const QString &reference)
     Q3ValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
     Q3ValueVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
-      if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()
-      || refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace() + ".tex"
+      if (refFileName.trimmed() == it->fileName.trimmed()
+      || refFileName.trimmed() == it->fileName.trimmed() + ".tex"
       ) {
 	anchorForRefFileFound = true;
 	

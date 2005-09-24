@@ -56,12 +56,12 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 
   QString command(cp+7);
   
-  QString include_command = command.simplifyWhiteSpace();
+  QString include_command = command.simplified();
   
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away. Of
   // course, this does not work if the filename contains spaces
-  // (already the simplifyWhiteSpace() above is wrong). If you have
+  // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename = include_command;
   EPSfilename.truncate(EPSfilename.find(' '));
@@ -154,7 +154,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     file.close();
   }
   PS.append( "@endspecial" );
-  PS = PS.simplifyWhiteSpace();
+  PS = PS.simplified();
   
   
   _isModified = true;
@@ -247,7 +247,7 @@ void dviRenderer::prescan_ParsePapersizeSpecial(QString cp)
   kdDebug(4300) << "Papersize-Special : papersize" << cp << endl;
 #endif
 
-  cp = cp.simplifyWhiteSpace();
+  cp = cp.simplified();
 
   if (cp[0] == '=') {
     cp = cp.mid(1);
@@ -262,7 +262,7 @@ void dviRenderer::prescan_ParsePapersizeSpecial(QString cp)
 
 void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
 {
-  QColor col = parseColorSpecification(cp.stripWhiteSpace());
+  QColor col = parseColorSpecification(cp.trimmed());
   if (col.isValid())
     for(Q_UINT16 page=current_page; page < dviFile->total_pages; page++)
       PS_interface->setBackgroundColor(page, col);
@@ -388,12 +388,12 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
 #endif
 
-  QString include_command = cp.simplifyWhiteSpace();
+  QString include_command = cp.simplified();
 
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away. Of
   // course, this does not work if the filename contains spaces
-  // (already the simplifyWhiteSpace() above is wrong). If you have
+  // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename = include_command;
   EPSfilename.truncate(EPSfilename.find(' '));
@@ -498,7 +498,7 @@ void dviRenderer::prescan_ParseSourceSpecial(QString cp)
       break;
   Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
   QFileInfo fi1(dviFile->filename);
-  QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).stripWhiteSpace()).absFilePath();
+  QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).trimmed()).absFilePath();
   Length l;
   l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
   DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page+1, l);

@@ -104,7 +104,7 @@ int main(int argc, char** argv)
 
           arg.setVersion(QDataStream::Qt_3_1);
           bool result;
-          arg << qualPath.stripWhiteSpace();
+          arg << qualPath.trimmed();
           if (!app.dcopClient()->call( *it, "kmultipage", "is_file_loaded(QString)", data, replyType, replyData))
             kdError(4300) << "There was an error using DCOP." << endl;
           else 

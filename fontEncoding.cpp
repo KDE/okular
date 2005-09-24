@@ -35,7 +35,7 @@ fontEncoding::fontEncoding(const QString &encName)
     return;
   }
   proc.readln(encFileName);
-  encFileName = encFileName.stripWhiteSpace();
+  encFileName = encFileName.trimmed();
 
   if (encFileName.isEmpty()) {
     kdError(4300) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
@@ -56,20 +56,20 @@ fontEncoding::fontEncoding(const QString &encName)
       fileContent += stream.readLine().section('%', 0, 0); // line of text excluding '\n' until first '%'-sign
     file.close();
     
-    fileContent = fileContent.stripWhiteSpace();
+    fileContent = fileContent.trimmed();
     
     // Find the name of the encoding
-    encodingFullName = fileContent.section('[', 0, 0).simplifyWhiteSpace().mid(1);
+    encodingFullName = fileContent.section('[', 0, 0).simplified().mid(1);
 #ifdef DEBUG_FONTENC
     kdDebug(4300) << "encodingFullName: " << encodingFullName << endl;
 #endif
     
-    fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplifyWhiteSpace();
+    fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
     QStringList glyphNameList = QStringList::split( '/', fileContent );
     
     int i = 0;
     for ( QStringList::Iterator it = glyphNameList.begin(); (it != glyphNameList.end())&&(i<256); ++it ) {
-      glyphNameVector[i] = (*it).simplifyWhiteSpace();
+      glyphNameVector[i] = (*it).simplified();
 #ifdef DEBUG_FONTENC
       kdDebug(4300) << i << ": " << glyphNameVector[i] << endl;
 #endif

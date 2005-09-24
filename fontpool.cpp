@@ -579,9 +579,9 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
       // are generating. The second-to-last word is the resolution in
       // dots per inch. Display this info in the text label below the
       // progress bar.
-      int lastblank     = startLine.findRev(' ');
+      int lastblank     = startLine.lastIndexOf(' ');
       QString fontName  = startLine.mid(lastblank+1);
-      int secondblank   = startLine.findRev(' ',lastblank-1);
+      int secondblank   = startLine.lastIndexOf(' ',lastblank-1);
       QString dpi       = startLine.mid(secondblank+1,lastblank-secondblank-1);
 
       progress.show();

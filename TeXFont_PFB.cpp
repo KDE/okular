@@ -36,7 +36,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
 
   fatalErrorInFontLoading = false;
 
-  int error = FT_New_Face( parent->font_pool->FreeType_library, parent->filename.local8Bit(), 0, &face );
+  int error = FT_New_Face( parent->font_pool->FreeType_library, parent->filename.toLocal8Bit(), 0, &face );
   
   if ( error == FT_Err_Unknown_File_Format ) {
     errorMessage = i18n("The font file %1 could be opened and read, but its font format is unsupported.").arg(parent->filename);

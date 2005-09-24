@@ -100,7 +100,7 @@ void infoDialog::outputReceiver(QString op)
   // It seems that the QTextView wants that we append only full lines.
   // We see to that.
   pool = pool+op;
-  int idx = pool.findRev("\n");
+  int idx = pool.lastIndexOf("\n");
 
   while(idx != -1) {
     QString line = pool.left(idx);
@@ -120,7 +120,7 @@ void infoDialog::outputReceiver(QString op)
     TextLabel3->append(line.mid(endstartline));
     } else
       TextLabel3->append(line);
-    idx = pool.findRev("\n");
+    idx = pool.lastIndexOf("\n");
   }
 
   MFOutputReceived = true;

@@ -328,7 +328,7 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, class dvif
     proc << "kpsewhich" << EPSfilename;
     proc.start(KProcess::Block);
     proc.readln(EPSfilename);
-    EPSfilename = EPSfilename.stripWhiteSpace();
+    EPSfilename = EPSfilename.trimmed();
   }
 
   return EPSfilename;

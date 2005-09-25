@@ -22,20 +22,20 @@
 #include <kparts/genericfactory.h>
 
 #include "../config.h"
-#include "../kviewshell/marklist.h"
+#include "kdvi_multipage.h"
 #include "documentWidget.h"
 #include "dviFile.h"
+#include "dviPageCache.h"
 #include "dviWidget.h"
 #include "fontpool.h"
-#include "kdvi_multipage.h"
 #include "kprinterwrapper.h"
 #include "kviewpart.h"
+#include "marklist.h"
 #include "optionDialogFontsWidget.h"
 #include "optionDialogSpecialWidget.h"
 #include "performanceMeasurement.h"
 #include "prefs.h"
 #include "renderedDocumentPagePixmap.h"
-#include "dviPageCache.h"
 
 
 #include <qlabel.h>

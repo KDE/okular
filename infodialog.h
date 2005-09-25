@@ -13,10 +13,6 @@
 
 class dvifile;
 class fontPool;
-class KPushButton;
-class QGridLayout;
-class QLabel;
-class Q3Table;
 class Q3TextView;
 class QWidget;
 

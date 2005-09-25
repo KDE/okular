@@ -21,6 +21,7 @@
 #include <qmessagebox.h>
 #include <qpaintdevice.h>
 #include <qpainter.h>
+#include <QRegExp>
 #include <q3url.h>
 #include <q3vbox.h>
 //Added by qt3to4:
@@ -42,7 +43,6 @@
 #include <kprocess.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
-#include <kstringhandler.h>
 #include <kstdguiitem.h>
 
 #include "documentWidget.h"

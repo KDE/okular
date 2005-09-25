@@ -9,7 +9,6 @@
 #define FONT_GENERATION_H
 
 #include <kdialogbase.h>
-
 #include <QPointer>
 
 class KProcIO;
@@ -29,9 +28,6 @@ class QLabel;
  *
  *
  **/
-
-
-
 class fontProgressDialog : public KDialogBase
 { 
     Q_OBJECT

@@ -25,8 +25,7 @@
 class dviRenderer;
 class TeXFont;
 
-
-typedef	void	(dviRenderer::*set_char_proc)(unsigned int, unsigned int);
+typedef void (dviRenderer::*set_char_proc)(unsigned int, unsigned int);
 
 
 // Per character information for virtual fonts

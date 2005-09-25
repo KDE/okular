@@ -10,7 +10,6 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <kprocio.h>
-#include <kstringhandler.h>
 #include <math.h>
 #include <qapplication.h>
 #include <qfile.h>

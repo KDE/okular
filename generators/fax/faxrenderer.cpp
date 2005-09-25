@@ -24,46 +24,23 @@
 #include <qfileinfo.h>
 #include <qpainter.h>
 
-#include "documentWidget.h"
 #include "faxrenderer.h"
-#include "faxmultipage.h"
+#include "core/page.h"
 
 //#define KF_DEBUG
 
-FaxRenderer::FaxRenderer(QWidget* par)
-  : DocumentRenderer(par)
-{
-#ifdef KF_DEBUG
-  kdError() << "FaxRenderer( parent=" << par << " )" << endl;
-#endif
-}
-
-
-
-FaxRenderer::~FaxRenderer()
-{
-#ifdef KF_DEBUG
-  kdDebug() << "~FaxRenderer" << endl;
-#endif
-
-  // Wait for all access to this documentRenderer to finish
-  mutex.lock();
-  mutex.unlock();
-}
-
-
-void FaxRenderer::drawPage(double resolution, RenderedDocumentPage* page)
+void FaxRenderer::generatePixmap( PixmapRequest * request )
 {
 #ifdef KF_DEBUG
   kdDebug() << "FaxRenderer::drawPage(documentPage*) called, page number " << page->getPageNumber() << endl;
 #endif
 
   // Paranoid safety checks
-  if (page == 0) {
+  if (request == 0) {
     kdError() << "FaxRenderer::drawPage(documentPage*) called with argument == 0" << endl;
     return;
   }
-  if (page->getPageNumber() == 0) {
+  if (request->pageNumber == 0) {
     kdError() << "FaxRenderer::drawPage(documentPage*) called for a documentPage with page number 0" << endl;
     return;
   }
@@ -72,15 +49,16 @@ void FaxRenderer::drawPage(double resolution, RenderedDocumentPage* page)
   mutex.lock();
 
   // more paranoid safety checks
-  if (page->getPageNumber() > numPages) {
-    kdError() << "FaxRenderer::drawPage(documentPage*) called for a documentPage with page number " << page->getPageNumber()
-	      << " but the current fax file has only " << numPages << " pages." << endl;
+  if (request->pageNumber > fax.numPages()) {
+    kdError() << "FaxRenderer::drawPage(documentPage*) called for a documentPage with page number " << request->pageNumber
+	      << " but the current fax file has only " << fax.numPages() << " pages." << endl;
     mutex.unlock();
     return;
   }
 
-  QImage img = fax.page(page->getPageNumber() - 1);
-
+    QPixmap* pix = new QPixmap( fax.page(request->pageNumber - 1) );
+    
+/*
   SimplePageSize psize = pageSizes[page->getPageNumber() - 1];
   if (psize.isValid()) {
     QPainter *foreGroundPaint = page->getPainter();
@@ -106,44 +84,26 @@ void FaxRenderer::drawPage(double resolution, RenderedDocumentPage* page)
   
   // To indicate that the page was drawn, we set the appropriate flas in the page structure
   page->isEmpty = false;
-  
-  mutex.unlock();
+  */
+
+    mutex.unlock();
+    request->page->setPixmap( request->id, pix );
+    signalRequestDone( request );
 }
 
 
-bool FaxRenderer::setFile(const QString &fname)
+bool FaxRenderer::loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector )
 {
 #ifdef KF_DEBUG
   kdDebug() << "FaxRenderer::setFile(" << fname << ") called" << endl;
 #endif
-  
+
   // Wait for all access to this documentRenderer to finish
   mutex.lock();
-  
-  // If fname is the empty string, then this means: "close".
-  if (fname.isEmpty()) {
-    kdDebug() << "FaxRenderer::setFile( ... ) called with empty filename. Closing the file." << endl;
-    mutex.unlock();
-    return true;
-  }
-  
-  // Paranoid saftey checks: make sure the file actually exists, and
-  // that it is a file, not a directory. Otherwise, show an error
-  // message and exit..
-  QFileInfo fi(fname);
-  QString   filename = fi.absFilePath();
-  if (!fi.exists() || fi.isDir()) {
-    KMessageBox::error( parentWidget,
-			i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist.</qt>").arg(filename),
-			i18n("File Error"));
-    // the return value 'false' indicates that this operation was not successful.
-    mutex.unlock();
-    return false;
-  }
 
   // Now we assume that the file is fine and load the file into the
   // fax member. We abort on error and give an error message.
-  bool ok = fax.loadImage(filename);
+  bool ok = fax.loadImage(fileName);
 
   // It can happen that fax.loadImage() returns with 'ok == true', but
   // still the file could NOT be loaded. This happens, e.g. for TIFF
@@ -153,31 +113,31 @@ bool FaxRenderer::setFile(const QString &fname)
     // Unfortunately, it can happen that fax.loadImage() fails WITHOUT
     // leaving an error message in fax.errorString(). We try to handle
     // this case gracefully.
+    QString temp;
     if (fax.errorString().isEmpty())
-      KMessageBox::error( parentWidget,
-			  i18n("<qt><strong>File error.</strong> The specified file '%1' could not be loaded.</qt>").arg(filename),
-			  i18n("File Error"));
+    {
+        temp=i18n("The specified file '%1' could not be opened.").arg(fileName);
+        emit error (temp,-1);
+    }
     else
-      KMessageBox::detailedError( parentWidget,
-				  i18n("<qt><strong>File error.</strong> The specified file '%1' could not be loaded.</qt>").arg(filename),
-				  fax.errorString(),
-				  i18n("File Error"));
-    clear();
+    {
+        temp=i18n("Error while opening file: %1.").arg(fax.errorString());
+        emit error (temp,-1);
+    }
     mutex.unlock();
     return false;
   }
 
   // Set the number of pages page sizes
-  numPages = fax.numPages();
+  Q_UINT16 pages = fax.numPages();
+  pagesVector.resize(pages);
 
-  // Set the page size for the first page in the pageSizes array.
-  // The rest of the page sizes will be calculated on demand by the drawPage function.
-  pageSizes.resize(numPages);
-  Length w,h;
-
-  if (numPages != 0) {
-    for(Q_UINT16 pg=0; pg < numPages; pg++) {
+    for(Q_UINT16 pg=0; pg < pages; pg++) 
+    {
       QSize pageSize = fax.page_size(pg);
+      // how about rotation?
+      pagesVector[pg] = new KPDFPage(pg, pageSize.width(), pageSize.height(),0);
+/*
       QPoint dpi = fax.page_dpi(pg);
       double dpix = dpi.x();
       double dpiy = dpi.y();
@@ -189,8 +149,7 @@ bool FaxRenderer::setFile(const QString &fname)
 
       w.setLength_in_inch(pageSize.width() / dpix);
       h.setLength_in_inch(pageSize.height() / dpiy);
-      pageSizes[pg].setPageSize(w, h);
-    }
+      pageSizes[pg].setPageSize(w, h);*/
   }
 
   // the return value 'true' indicates that this operation was not successful.

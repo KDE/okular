@@ -21,6 +21,8 @@
 #ifndef _FAXRENDERER_H_
 #define _FAXRENDERER_H_
 
+#include <qmutex.h>
+#include "core/generator.h"
 #include "kfaximage.h"
 
 /*! \brief Well-documented minimal implementation of a Generator for reading FAX files
@@ -41,7 +43,7 @@ public:
        This constructor simply prints a message (if debugging is
        enabled) and calls the default constructor.
    */
-   FaxRenderer(QWidget* parent);
+//    FaxRenderer(QWidget* parent);
 
    /** Destructor
 
@@ -49,7 +51,7 @@ public:
        enabled. It uses the mutex to ensure that this class is not
        destructed while another thread is currently using it.
    */
-  ~FaxRenderer();
+//   ~FaxRenderer();
 
   /** Opening a file
 
@@ -74,10 +76,13 @@ public:
 
   */
   void generatePixmap( PixmapRequest * request );
-
+  bool canGeneratePixmap( bool async ) { return mutex.locked(); };
+    signals:
+        void error(QString & string, int duration);
 private:
   /** This class holds the fax file */
-  KFaxImage fax;
+    KFaxImage fax;
+    QMutex mutex;
 };
 
 #endif

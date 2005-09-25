@@ -9,7 +9,6 @@
 #include <klocale.h>
 #include <kprocio.h>
 #include <kprogress.h>
-#include <kpushbutton.h>
 #include <qapplication.h>
 #include <qframe.h>
 #include <qlabel.h>

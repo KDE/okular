@@ -8,18 +8,12 @@
 #define INFO_KDVI_H
 
 #include <kdialogbase.h>
+
 #include <qstring.h>
 
 class dvifile;
 class fontPool;
-class KPushButton;
-class QGridLayout;
-class QHBoxLayout;
-class QLabel;
-class QTable;
-class QTabWidget;
 class QTextView;
-class QVBoxLayout;
 class QWidget;
 
 

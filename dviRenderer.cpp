@@ -22,6 +22,7 @@
 #include <qpaintdevice.h>
 #include <qpainter.h>
 #include <qptrstack.h>
+#include <qregexp.h>
 #include <qurl.h>
 #include <qvbox.h>
 
@@ -39,7 +40,6 @@
 #include <kprocess.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
-#include <kstringhandler.h>
 #include <kstdguiitem.h>
 
 #include "documentWidget.h"

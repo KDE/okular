@@ -6,7 +6,6 @@
 #include <kdebug.h>
 #include <kio/global.h>
 #include <klocale.h>
-#include <kpushbutton.h>
 #include <qfile.h>
 #include <qlabel.h>
 #include <qlayout.h>

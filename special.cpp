@@ -10,7 +10,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocio.h>
-#include <kstringhandler.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
@@ -229,7 +228,7 @@ void dviRenderer::color_special(QString cp)
   
   if (command == "push") {
     // Get color specification
-    QColor col = parseColorSpecification(KStringHandler::word(cp, "1:"));
+    QColor const col = parseColorSpecification(cp.section(' ', 1));
     // Set color
     if (col.isValid()) 
       colorStack.push(col); 

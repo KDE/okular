@@ -12,6 +12,7 @@
 
 #include "kprinter.h"
 
+
 class KDVIPrinterWrapper : public KPrinter
 {
 public:

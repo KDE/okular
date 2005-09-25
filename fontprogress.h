@@ -13,11 +13,6 @@
 
 class KProcIO;
 class KProgress;
-class KPushButton;
-class QVBoxLayout; 
-class QHBoxLayout; 
-class QGridLayout; 
-class QFrame;
 class QLabel;
 
 
@@ -33,9 +28,6 @@ class QLabel;
  *
  *
  **/
-
-
-
 class fontProgressDialog : public KDialogBase
 { 
     Q_OBJECT

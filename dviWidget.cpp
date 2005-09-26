@@ -48,6 +48,9 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
   // Check if the mouse is pressed on a source-hyperlink
   if ((e->button() == Qt::MidButton) && (pageData->sourceHyperLinkList.size() > 0))
   {
+    int minIndex = 0;
+    int minimum = 0;
+
     for(int i=0; i<pageData->sourceHyperLinkList.size(); i++)
     {
       if (pageData->sourceHyperLinkList[i].box.contains(e->pos()))
@@ -56,7 +59,19 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
         e->accept();
         return;
       }
+      // Remember the closest source link
+      QPoint center = pageData->sourceHyperLinkList[i].box.center();
+      int dx = center.x() - e->pos().x();
+      int dy = center.y() - e->pos().y();
+      if (dx*dx + dy*dy < minimum || i == 0)
+      {
+        minIndex = i;
+        minimum = dx*dx + dy*dy;
+      }
     }
+    // If the mouse pointer is not exactly inside a source link, jump to the closest target.
+    emit(SRCLink(pageData->sourceHyperLinkList[minIndex].linkText, e, this));
+    e->accept();
   }
 }
 

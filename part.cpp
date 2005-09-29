@@ -267,6 +267,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 		splitterSizes.push_back( 500 );
 	}
 	m_splitter->setSizes( splitterSizes );
+	// get notified about splitter size changes (HACK that will be removed
+	// by connecting to Qt4::QSplitter's sliderMoved())
+	m_pageView->installEventFilter( this );
 	m_watcher = new KDirWatch( this );
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
@@ -277,6 +280,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// [SPEECH] check for KTTSD presence and usability
 	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
 	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
+	KpdfSettings::writeConfig();
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
@@ -285,11 +289,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
-    // save internal settings
-    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
-    // write to disk config file
-    KpdfSettings::writeConfig();
-
     delete m_document;
     if ( --m_count == 0 )
         delete globalParams;
@@ -475,10 +474,21 @@ bool Part::closeURL()
     return KParts::ReadOnlyPart::closeURL();
 }
 
+bool Part::eventFilter( QObject * watched, QEvent * e )
+{
+    // if pageView has been resized, save splitter sizes
+    if ( watched == m_pageView && e->type() == QEvent::Resize )
+        saveSplitterSize();
+
+    // only intercept events, don't block them
+    return false;
+}
+
 void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
     KpdfSettings::setShowLeftPanel(showLeft);
+    KpdfSettings::writeConfig();
     // show/hide left qtoolbox
     m_leftPanel->setShown( showLeft );
     // this needs to be hidden explicitly to disable thumbnails gen
@@ -571,6 +581,12 @@ void Part::cannotQuit()
 {
 	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInKPDF");
 }
+
+void Part::saveSplitterSize()
+{
+    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
+    KpdfSettings::writeConfig();
+} 
 
 //BEGIN go to page dialog
 class KPDFGotoPageDialog : public KDialogBase

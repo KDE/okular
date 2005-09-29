@@ -86,6 +86,8 @@ protected:
 	bool openFile();
 	bool openURL(const KURL &url);
 	bool closeURL();
+  // filter that watches for splitter size changes
+  bool eventFilter( QObject * watched, QEvent * e );
 
 protected slots:
 	void openURLFromDocument(const KURL &url);
@@ -114,6 +116,7 @@ protected slots:
 	void enableTOC(bool enable);
 	void psTransformEnded();
 	void cannotQuit();
+  void saveSplitterSize();
 	void setMimeTypes(KIO::Job *job);
 
 public slots:

@@ -1098,6 +1098,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         {
                             d->messageWindow->display( i18n("Starting KTTSD Failed: %1").arg(error) );
                             KpdfSettings::setUseKTTSD(false);
+                            KpdfSettings::writeConfig();
                         }
                     }
                     if ( KpdfSettings::useKTTSD() )
@@ -1450,6 +1451,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         // save selected zoom factor
         KpdfSettings::setZoomMode(newZoomMode);
         KpdfSettings::setZoomFactor(newFactor);
+        KpdfSettings::writeConfig();
     }
 }
 
@@ -1919,6 +1921,7 @@ void PageView::slotTwoPagesToggled( bool on )
     if ( KpdfSettings::viewColumns() != newColumns )
     {
         KpdfSettings::setViewColumns( newColumns );
+        KpdfSettings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -1929,6 +1932,7 @@ void PageView::slotContinuousToggled( bool on )
     if ( KpdfSettings::viewContinuous() != on )
     {
         KpdfSettings::setViewContinuous( on );
+        KpdfSettings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }

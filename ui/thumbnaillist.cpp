@@ -244,6 +244,7 @@ void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
     // save state
     KpdfSettings::setFilterBookmarks( filterOn );
+    KpdfSettings::writeConfig();
     // ask for the 'notifySetup' with a little trick (on reinsertion the
     // document sends the list again)
     m_document->removeObserver( this );

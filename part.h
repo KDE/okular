@@ -82,6 +82,8 @@ protected:
 	bool openFile();
 	bool openURL(const KURL &url);
 	bool closeURL();
+  // filter that watches for splitter size changes
+  bool eventFilter( QObject * watched, QEvent * e );
 
 protected slots:
 	void openURLFromDocument(const KURL &url);
@@ -105,6 +107,7 @@ protected slots:
 	// can be connected to widget elements
 	void updateViewActions();
 	void enableTOC(bool enable);
+  void saveSplitterSize();
 
 public slots:
 	// connected to Shell action (and browserExtension), not local one

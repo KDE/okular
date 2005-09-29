@@ -244,6 +244,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 		splitterSizes.push_back( 500 );
 	}
 	m_splitter->setSizes( splitterSizes );
+	// get notified about splitter size changes (HACK that will be removed
+	// by connecting to Qt4::QSplitter's sliderMoved())
+	m_pageView->installEventFilter( this );
 	slotNewConfig();
 
 	m_watcher = new KDirWatch( this );
@@ -254,6 +257,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// [SPEECH] check for KTTSD presence and usability
 	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
 	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
+	KpdfSettings::writeConfig();
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
@@ -263,11 +267,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
-    // save internal settings
-    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
-    // write to disk config file
-    KpdfSettings::writeConfig();
-
     delete m_document;
     if ( --m_count == 0 )
         delete globalParams;
@@ -393,6 +392,16 @@ bool Part::closeURL()
     return KParts::ReadOnlyPart::closeURL();
 }
 
+bool Part::eventFilter( QObject * watched, QEvent * e )
+{
+    // if pageView has been resized, save splitter sizes
+    if ( watched == m_pageView && e->type() == QEvent::Resize )
+        saveSplitterSize();
+
+    // only intercept events, don't block them
+    return false;
+}
+
 void Part::slotWatchFile()
 {
   KpdfSettings::setWatchFile(m_watchFile->isChecked());
@@ -470,6 +479,12 @@ void Part::enableTOC(bool enable)
 {
 	m_toolBox->setItemEnabled(0, enable);
 }
+
+void Part::saveSplitterSize()
+{
+    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
+    KpdfSettings::writeConfig();
+} 
 
 //BEGIN go to page dialog
 class KPDFGotoPageDialog : public KDialogBase

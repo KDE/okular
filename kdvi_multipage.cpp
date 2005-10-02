@@ -264,7 +264,7 @@ bool KDVIMultiPage::print(const QStringList &pages, int current)
   
   // Feed the printer with useful defaults and information.
   printer->setPageSelection( KPrinter::ApplicationSide );
-  printer->setCurrentPage( current+1 );
+  printer->setCurrentPage( current );
   printer->setMinMax( 1, DVIRenderer.totalPages() );
   printer->setFullPage( true );
 

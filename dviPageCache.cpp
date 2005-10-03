@@ -32,7 +32,7 @@ DVIPageCache::~DVIPageCache()
 {
 }
 
-RenderedDocumentPagePixmap* DVIPageCache::createDocumentPagePixmap()
+RenderedDocumentPagePixmap* DVIPageCache::createDocumentPagePixmap() const
 {
   return new RenderedDviPagePixmap();
 }

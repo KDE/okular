@@ -28,7 +28,7 @@ class dvifile : public bigEndianByteReader
  public:
   /** Makes a deep copy of the old DVI file. */
   dvifile(const dvifile *old, fontPool *fp );
-  dvifile(QString fname, class fontPool *pool);
+  dvifile(const QString& fname, class fontPool* pool);
 
   ~dvifile();
 
@@ -89,7 +89,7 @@ class dvifile : public bigEndianByteReader
   
   /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
       with care. */
-  void           setNewData(QMemArray<Q_UINT8> newData) {dviData = newData;}
+  void           setNewData(const QMemArray<Q_UINT8>& newData) {dviData = newData;}
 
   /** Page numbers that appear in a DVI document need not be
       ordered. Worse, page numbers need not be unique. This method

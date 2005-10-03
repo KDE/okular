@@ -25,7 +25,7 @@ extern const char psheader[];
 //#define DEBUG_PSGS
 
 
-pageInfo::pageInfo(QString _PostScriptString) {
+pageInfo::pageInfo(const QString& _PostScriptString) {
   PostScriptString = new QString(_PostScriptString);
   background  = Qt::white;
   permanentBackground = Qt::white;
@@ -58,7 +58,7 @@ ghostscript_interface::~ghostscript_interface() {
 }
 
 
-void ghostscript_interface::setPostScript(PageNumber page, QString PostScript) {
+void ghostscript_interface::setPostScript(const PageNumber& page, const QString& PostScript) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::setPostScript( " << page << ", ... )" << endl;
 #endif
@@ -82,7 +82,7 @@ void ghostscript_interface::setIncludePath(const QString &_includePath) {
 }
 
 
-void ghostscript_interface::setBackgroundColor(PageNumber page, QColor background_color, bool permanent) {
+void ghostscript_interface::setBackgroundColor(const PageNumber& page, const QColor& background_color, bool permanent) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::setBackgroundColor( " << page << ", " << background_color << " )" << endl;
 #endif
@@ -103,7 +103,7 @@ void ghostscript_interface::setBackgroundColor(PageNumber page, QColor backgroun
   }
 }
 
-void ghostscript_interface::restoreBackgroundColor(PageNumber page)
+void ghostscript_interface::restoreBackgroundColor(const PageNumber& page)
 {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::restoreBackgroundColor( " << page << " )" << endl;
@@ -118,7 +118,7 @@ void ghostscript_interface::restoreBackgroundColor(PageNumber page)
 // Returns the background color for a certain page. This color is
 // always guaranteed to be valid
 
-QColor ghostscript_interface::getBackgroundColor(PageNumber page) {
+QColor ghostscript_interface::getBackgroundColor(const PageNumber& page) const {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::getBackgroundColor( " << page << " )" << endl;
 #endif
@@ -138,7 +138,7 @@ void ghostscript_interface::clear() {
 }
 
 
-void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QString &filename, long magnification) {
+void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
 #endif
@@ -270,7 +270,7 @@ void ghostscript_interface::gs_generate_graphics_file(PageNumber page, const QSt
 }
 
 
-void ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) {
+void ghostscript_interface::graphics(const PageNumber& page, double dpi, long magnification, QPainter* paint) {
 #ifdef DEBUG_PSGS
   kdDebug(4300) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
 #endif

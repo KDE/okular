@@ -384,7 +384,7 @@ void dviRenderer::embedPostScript()
 }
 
 
-bool dviRenderer::isValidFile(const QString filename)
+bool dviRenderer::isValidFile(const QString& filename) const
 {
   QFile f(filename);
   if (!f.open(IO_ReadOnly))
@@ -800,11 +800,12 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
 }
 
 
-QString dviRenderer::PDFencodingToQString(QString pdfstring)
+QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
 {
   // This method locates special PDF characters in a string and
   // replaces them by UTF8. See Section 3.2.3 of the PDF reference
   // guide for information.
+  QString pdfstring = _pdfstring;
   pdfstring = pdfstring.replace("\\n", "\n");
   pdfstring = pdfstring.replace("\\r", "\n");
   pdfstring = pdfstring.replace("\\t", "\t");

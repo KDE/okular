@@ -136,7 +136,7 @@ TeXFont_PFB::~TeXFont_PFB()
 }
 
 
-glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor color)
+glyph *TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PFB
   kdDebug(4300) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;

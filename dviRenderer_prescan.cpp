@@ -32,7 +32,7 @@
 
 
 extern QPainter foreGroundPaint;
-extern void parse_special_argument(QString strg, const char *argument_name, int *variable);
+extern void parse_special_argument(const QString& strg, const char* argument_name, int* variable);
 
 
 //#define DEBUG_PRESCAN
@@ -233,13 +233,13 @@ void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpeci
 }
 
 
-void dviRenderer::prescan_ParsePapersizeSpecial(QString cp)
+void dviRenderer::prescan_ParsePapersizeSpecial(const QString& _cp)
 {
 #ifdef DEBUG_PRESCAN
   kdDebug(4300) << "Papersize-Special : papersize" << cp << endl;
 #endif
 
-  cp = cp.simplifyWhiteSpace();
+  QString cp = _cp.simplifyWhiteSpace();
 
   if (cp[0] == '=') {
     cp = cp.mid(1);
@@ -252,7 +252,7 @@ void dviRenderer::prescan_ParsePapersizeSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
+void dviRenderer::prescan_ParseBackgroundSpecial(const QString& cp)
 {
   QColor col = parseColorSpecification(cp.stripWhiteSpace());
   if (col.isValid())
@@ -262,8 +262,9 @@ void dviRenderer::prescan_ParseBackgroundSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
+void dviRenderer::prescan_ParseHTMLAnchorSpecial(const QString& _cp)
 {
+  QString cp = _cp;
   cp.truncate(cp.find('"'));
   Length l;
   l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
@@ -271,7 +272,7 @@ void dviRenderer::prescan_ParseHTMLAnchorSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParsePSHeaderSpecial(QString cp)
+void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
   kdDebug(4300) << "PostScript-special, header " << cp.latin1() << endl;
@@ -282,7 +283,7 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParsePSBangSpecial(QString cp)
+void dviRenderer::prescan_ParsePSBangSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
   kdDebug(4300) << "PostScript-special, literal header " << cp.latin1() << endl;
@@ -294,7 +295,7 @@ void dviRenderer::prescan_ParsePSBangSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParsePSQuoteSpecial(QString cp)
+void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
   kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
@@ -310,7 +311,7 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParsePSSpecial(QString cp)
+void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
   kdDebug(4300) << "PostScript-special, direct PostScript " << cp << endl;
@@ -374,7 +375,7 @@ void dviRenderer::prescan_ParsePSSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
+void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
@@ -464,7 +465,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(QString cp)
 }
 
 
-void dviRenderer::prescan_ParseSourceSpecial(QString cp)
+void dviRenderer::prescan_ParseSourceSpecial(const QString& cp)
 {
   // if no rendering takes place, i.e. when the DVI file is first
   // loaded, generate a DVI_SourceFileAnchor. These anchors are used

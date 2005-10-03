@@ -84,8 +84,9 @@ void infoDialog::setFontInfo(fontPool *fp)
   TextLabel2->setText(fp->status());
 }
 
-void infoDialog::outputReceiver(QString op)
+void infoDialog::outputReceiver(const QString& _op)
 {
+  QString op = _op;
   op = op.replace( QRegExp("<"), "&lt;" );
 
   if (MFOutputReceived == false) {
@@ -122,7 +123,7 @@ void infoDialog::outputReceiver(QString op)
   MFOutputReceived = true;
 }
 
-void infoDialog::clear(QString op)
+void infoDialog::clear(const QString& op)
 {
   headline         = op;
   pool             = QString::null;

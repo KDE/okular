@@ -63,7 +63,7 @@ class TeXFontDefinition {
   ~TeXFontDefinition();
 
   void reset();
-  void fontNameReceiver(QString);
+  void fontNameReceiver(const QString&);
 
   // Members for character fonts
   void           setDisplayResolution(double _displayResolution_in_dpi);

@@ -21,7 +21,7 @@ public:
 // Interface definition start ------------------------------------------------
 
   /// returns the list of supported file formats
-  virtual QStringList fileFormats();
+  virtual QStringList fileFormats() const;
   
   virtual void setFile(bool r);
 

@@ -114,7 +114,7 @@ TeXFont_PK::~TeXFont_PK()
 }
 
 
-glyph *TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, QColor color)
+glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PK
   kdDebug(4300) << "TeXFont_PK::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;

@@ -36,7 +36,7 @@ public:
 public slots:
     /** This slot is called when Output from the MetaFont programm
         is received via the fontpool/kpsewhich */
-    void       outputReceiver(QString);
+    void       outputReceiver(const QString&);
 
     /** This slot is called whenever anything in the fontpool has
         changed. If the infoDialog is shown, the dialog could then
@@ -47,7 +47,7 @@ public slots:
 	headline. The next time output is received via the
 	outputReceiver, the headline is displayed in bold on top of
 	the text view. */
-    void       clear(QString);
+    void       clear(const QString&);
 
 protected:
  bool     MFOutputReceived;

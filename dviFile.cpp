@@ -266,7 +266,7 @@ void dvifile::prepare_pages()
 }
 
 
-dvifile::dvifile(QString fname, fontPool *pool)
+dvifile::dvifile(const QString& fname, fontPool* pool)
 {
 #ifdef DEBUG_DVIFILE
   kdDebug(4300) << "init_dvi_file: " << fname << endl;

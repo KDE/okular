@@ -84,7 +84,7 @@ TeXFontDefinition::~TeXFontDefinition()
 }
 
 
-void TeXFontDefinition::fontNameReceiver(QString fname)
+void TeXFontDefinition::fontNameReceiver(const QString& fname)
 {
 #ifdef DEBUG_FONT
   kdDebug(4300) << "void TeXFontDefinition::fontNameReceiver( " << fname << " )" << endl;

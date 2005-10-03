@@ -26,7 +26,7 @@ class TeXFont_TFM : public TeXFont {
   TeXFont_TFM(TeXFontDefinition *parent);
   ~TeXFont_TFM();
   
-  glyph *getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, QColor color=Qt::black);
+  glyph* getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black);
 
  private:
   fix_word characterWidth_in_units_of_design_size[256];

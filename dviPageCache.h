@@ -34,7 +34,7 @@ class DVIPageCache : public DocumentPageCache
   virtual ~DVIPageCache();
 
  private:
-  virtual RenderedDocumentPagePixmap* createDocumentPagePixmap();
+  virtual RenderedDocumentPagePixmap* createDocumentPagePixmap() const;
 };
 
 #endif

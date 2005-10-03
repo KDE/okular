@@ -28,7 +28,7 @@
 
 extern QPainter *foreGroundPainter;
 
-void dviRenderer::printErrorMsgForSpecials(QString msg)
+void dviRenderer::printErrorMsgForSpecials(const QString& msg)
 {
   if (dviFile->errorCounter < 25) {
     kdError(4300) << msg << endl;
@@ -42,7 +42,7 @@ void dviRenderer::printErrorMsgForSpecials(QString msg)
 // dvips. If the spec could not be parsed, an invalid color will be
 // returned.
 
-QColor dviRenderer::parseColorSpecification(QString colorSpec)
+QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
 {
   // Initialize the map of known colors, if that is not done yet.
   if (namedColors.isEmpty()) {
@@ -210,9 +210,9 @@ QColor dviRenderer::parseColorSpecification(QString colorSpec)
 
 
 
-void dviRenderer::color_special(QString cp)
+void dviRenderer::color_special(const QString& _cp)
 {
-  cp = cp.trimmed();
+  QString const cp = _cp.trimmed();
   
   QString command = cp.section(' ', 0, 0);
   
@@ -249,8 +249,9 @@ void dviRenderer::color_special(QString cp)
 }
 
 
-void dviRenderer::html_href_special(QString cp)
+void dviRenderer::html_href_special(const QString& _cp)
 {
+  QString cp = _cp;
   cp.truncate(cp.find('"'));
   
 #ifdef DEBUG_SPECIAL
@@ -273,7 +274,7 @@ void dviRenderer::html_anchor_end()
 }
 
 
-void dviRenderer::source_special(QString cp)
+void dviRenderer::source_special(const QString& cp)
 {
   // only when rendering really takes place: set source_href to the
   // current special string. When characters are rendered, the
@@ -287,7 +288,7 @@ void dviRenderer::source_special(QString cp)
 }
 
 
-void parse_special_argument(QString strg, const char *argument_name, int *variable)
+void parse_special_argument(const QString& strg, const char* argument_name, int* variable)
 {
   bool    OK;
   
@@ -305,7 +306,7 @@ void parse_special_argument(QString strg, const char *argument_name, int *variab
 }
 
 
-void dviRenderer::epsf_special(QString cp)
+void dviRenderer::epsf_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
@@ -448,7 +449,7 @@ void dviRenderer::TPIC_flushPath_special()
 }
 
 
-void dviRenderer::TPIC_addPath_special(QString cp)
+void dviRenderer::TPIC_addPath_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "TPIC special addPath: " << cp << endl;
@@ -482,7 +483,7 @@ void dviRenderer::TPIC_addPath_special(QString cp)
 }
 
 
-void dviRenderer::TPIC_setPen_special(QString cp)
+void dviRenderer::TPIC_setPen_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "TPIC special setPen: " << cp << endl;

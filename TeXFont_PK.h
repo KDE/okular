@@ -13,7 +13,7 @@ class TeXFont_PK : public TeXFont {
   TeXFont_PK(TeXFontDefinition *parent);
   ~TeXFont_PK();
   
-  glyph *getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, QColor color=Qt::black);
+  glyph* getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black);
 
  private:
   FILE         *file;		// open font file or NULL

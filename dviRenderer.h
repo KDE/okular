@@ -40,8 +40,9 @@ extern const int MFResolutions[];
 class DVI_SourceFileAnchor {
  public:
   DVI_SourceFileAnchor() {}
-  DVI_SourceFileAnchor(QString &name, Q_UINT32 ln, Q_UINT32 pg, Length _distance_from_top): fileName(name), line(ln), page(pg), 
-    distance_from_top(_distance_from_top) {}
+  DVI_SourceFileAnchor(const QString& name, Q_UINT32 ln, Q_UINT32 pg, const Length& _distance_from_top)
+    : fileName(name), line(ln), page(pg),
+      distance_from_top(_distance_from_top) {}
 
   QString    fileName;
   Q_UINT32   line;
@@ -94,11 +95,11 @@ public:
 
   void          setPrefs(bool flag_showPS, const QString &editorCommand, bool useFontHints );
 
-  virtual bool  supportsTextSearch() {return true;}
+  virtual bool  supportsTextSearch() const {return true;}
 
-  bool		showPS() { return _postscript; };
-  int		curr_page() { return current_page+1; };
-  virtual bool  isValidFile(const QString fileName);
+  bool		showPS() { return _postscript; }
+  int		curr_page() { return current_page+1; }
+  virtual bool  isValidFile(const QString& fileName) const;
 
 
   /** This method will try to parse the reference part of the DVI
@@ -118,14 +119,14 @@ public:
   void          applicationDoSpecial(char * cp);
 
   void          special(long nbytes);
-  void          printErrorMsgForSpecials(QString msg);
-  void          color_special(QString cp);
-  void          html_href_special(QString cp);
+  void          printErrorMsgForSpecials(const QString& msg);
+  void          color_special(const QString& msg);
+  void          html_href_special(const QString& msg);
   void          html_anchor_end();
   void          draw_page();
 
 public slots:
-  void          exportPS(QString fname = QString::null, QString options = QString::null, KPrinter *printer = 0);
+  void          exportPS(const QString& fname = QString::null, const QString& options = QString::null, KPrinter* printer = 0);
   void          exportPDF();
 
   void          showInfo();
@@ -160,7 +161,7 @@ private:
   /** This method parses a color specification of type "gray 0.5", "rgb
       0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source
       code for details. */
-  QColor parseColorSpecification(QString colorSpec);
+  QColor parseColorSpecification(const QString& colorSpec);
  
   /** This map contains the colors which are known by name. This field
       is initialized in the method parseColorSpecification() as soon as
@@ -170,7 +171,7 @@ private:
   /** This method locates special PDF characters in a string and
       replaces them by UTF8. See Section 3.2.3 of the PDF reference
       guide for information */
-  QString PDFencodingToQString(QString pdfstring); 
+  QString PDFencodingToQString(const QString& pdfstring);
 
   void  setResolution(double resolution_in_DPI);
 
@@ -184,15 +185,15 @@ private:
   void          prescan_embedPS(char *cp, Q_UINT8 *);
   void          prescan_removePageSizeInfo(char *cp, Q_UINT8 *);
   void          prescan_parseSpecials(char *cp, Q_UINT8 *);
-  void          prescan_ParsePapersizeSpecial(QString cp);
-  void          prescan_ParseBackgroundSpecial(QString cp);
-  void          prescan_ParseHTMLAnchorSpecial(QString cp);
-  void          prescan_ParsePSHeaderSpecial(QString cp);
-  void          prescan_ParsePSBangSpecial(QString cp);
-  void          prescan_ParsePSQuoteSpecial(QString cp);
-  void          prescan_ParsePSSpecial(QString cp);
-  void          prescan_ParsePSFileSpecial(QString cp);
-  void          prescan_ParseSourceSpecial(QString cp);
+  void          prescan_ParsePapersizeSpecial(const QString& cp);
+  void          prescan_ParseBackgroundSpecial(const QString& cp);
+  void          prescan_ParseHTMLAnchorSpecial(const QString& cp);
+  void          prescan_ParsePSHeaderSpecial(const QString& cp);
+  void          prescan_ParsePSBangSpecial(const QString& cp);
+  void          prescan_ParsePSQuoteSpecial(const QString& cp);
+  void          prescan_ParsePSSpecial(const QString& cp);
+  void          prescan_ParsePSFileSpecial(const QString& cp);
+  void          prescan_ParseSourceSpecial(const QString& cp);
   void          prescan_setChar(unsigned int ch);
 
   /* */
@@ -210,12 +211,12 @@ private:
   QString       errorMsg;
   
   /** Methods which handle certain special commands. */
-  void epsf_special(QString cp);
-  void source_special(QString cp);
+  void epsf_special(const QString& cp);
+  void source_special(const QString& cp);
   
   /** TPIC specials */
-  void TPIC_setPen_special(QString cp);
-  void TPIC_addPath_special(QString cp);
+  void TPIC_setPen_special(const QString& cp);
+  void TPIC_addPath_special(const QString& cp);
   void TPIC_flushPath_special();
   
   /** This timer is used to delay clearing of the statusbar. Clearing
@@ -287,7 +288,5 @@ private:
   struct drawinf	currinf;
   RenderedDocumentPage* currentlyDrawnPage;
 };
-
-
 
 #endif

@@ -134,7 +134,7 @@ void fontPool::setParameters( bool _useFontHints )
 }
 
 
-class TeXFontDefinition *fontPool::appendx(QString fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement)
+TeXFontDefinition* fontPool::appendx(const QString& fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement)
 {
   // Reuse font if possible: check if a font with that name and
   // natural resolution is already in the fontpool, and use that, if

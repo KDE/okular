@@ -22,7 +22,7 @@ class QPainter;
 class pageInfo
 {
 public:
-  pageInfo(QString _PostScriptString);
+  pageInfo(const QString& _PostScriptString);
   ~pageInfo();
 
   QColor    background;
@@ -42,7 +42,7 @@ public:
   void clear();
 
   // sets the PostScript which is used on a certain page
-  void setPostScript(PageNumber page, QString PostScript);
+  void setPostScript(const PageNumber& page, const QString& PostScript);
 
   // sets path from additional postscript files may be read
   void setIncludePath(const QString &_includePath);
@@ -51,19 +51,19 @@ public:
   // background color can be restored by calling restoreBackground(page).
   // The Option permanent = false is used when we want to display a different paper 
   // color as the one specified in the dvi file.
-  void setBackgroundColor(PageNumber page, QColor background_color, bool permanent = true);
+  void setBackgroundColor(const PageNumber& page, const QColor& background_color, bool permanent = true);
 
   // Restore the background to the color which was specified by the last call to setBackgroundColor()
   // With option permanent = true.
-  void restoreBackgroundColor(PageNumber page);
+  void restoreBackgroundColor(const PageNumber& page);
 
   // Draws the graphics of the page into the painter, if possible. If
   // the page does not contain any graphics, nothing happens
-  void     graphics(PageNumber page, double dpi, long magnification, QPainter *paint );
+  void     graphics(const PageNumber& page, double dpi, long magnification, QPainter* paint);
 
   // Returns the background color for a certain page. If no color was
   // set, Qt::white is returned.
-  QColor   getBackgroundColor(PageNumber page);
+  QColor   getBackgroundColor(const PageNumber& page) const;
 
   QString  *PostScriptHeaderString;
 
@@ -77,7 +77,7 @@ public:
   static  QString locateEPSfile(const QString &filename, class dvifile *dvi);
 
 private:
-  void                  gs_generate_graphics_file(PageNumber page, const QString &filename, long magnification);
+  void                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);
   Q3IntDict<pageInfo>    pageList;
 
   double                resolution;   // in dots per inch

@@ -152,7 +152,7 @@ void dviRenderer::exportPDF()
 }
 
 
-void dviRenderer::exportPS(QString fname, QString options, KPrinter *printer)
+void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinter* printer)
 {
   // Safety check.
   if (dviFile->page_offset.isEmpty() == true)

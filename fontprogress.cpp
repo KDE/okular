@@ -23,7 +23,7 @@
  *  Constructs a fontProgressDialog which is a child of 'parent', with the 
  *  name 'name' and widget flags set to 'f' 
  */
-fontProgressDialog::fontProgressDialog( QString helpIndex, QString label, QString abortTip, QString whatsThis, QString ttip, QWidget* parent, const QString &name, bool progressbar )
+fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip, QWidget* parent, const QString& name, bool progressbar)
   : KDialogBase( parent, "Font Generation Progress Dialog", true, name, Cancel, Cancel, true )
 {
   setCursor( QCursor( 3 ) );
@@ -73,7 +73,7 @@ fontProgressDialog::~fontProgressDialog()
 }
 
 
-void fontProgressDialog::increaseNumSteps( const QString explanation)
+void fontProgressDialog::increaseNumSteps(const QString& explanation)
 {
   if (ProgressBar1 != 0)
     ProgressBar1->setProgress(progress++);

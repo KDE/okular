@@ -196,7 +196,7 @@ void KDVIMultiPage::setFile(bool r)
 }
 
 
-QStringList KDVIMultiPage::fileFormats()
+QStringList KDVIMultiPage::fileFormats() const
 {
   QStringList r;
   r << i18n("*.dvi *.DVI|TeX Device Independent Files (*.dvi)");

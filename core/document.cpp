@@ -9,6 +9,7 @@
  ***************************************************************************/
 
 // qt/kde/system includes
+#include <qapplication.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
@@ -23,7 +24,7 @@
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <ktoolinvocation.h>
 #include <kuserprofile.h>
 #include <krun.h>
 #include <kstandarddirs.h>
@@ -1048,7 +1049,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             const KPDFLinkBrowse * browse = static_cast< const KPDFLinkBrowse * >( link );
             // if the url is a mailto one, invoke mailer
             if ( browse->url().startsWith( "mailto:", false ) )
-                kapp->invokeMailer( browse->url() );
+                KToolInvocation::invokeMailer( browse->url() );
             else
             {
                 QString url = browse->url();

@@ -15,7 +15,7 @@
 #include <qapplication.h>
 #include <q3paintdevicemetrics.h>
 #include <qregexp.h>
-#include <kapplication.h>
+#include <kauthorized.h>
 #include <klistview.h>
 #include <klocale.h>
 #include <kpassdlg.h>
@@ -257,7 +257,7 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 bool PDFGenerator::isAllowed( int permissions )
 {
 #if !KPDF_FORCE_DRM
-    if (kapp->authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
+    if (KAuthorized::authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
 #endif
 
     bool b = true;

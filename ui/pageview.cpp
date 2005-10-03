@@ -36,7 +36,7 @@
 #include <kfiledialog.h>
 #include <kimageeffect.h>
 #include <kimageio.h>
-#include <kapplication.h>
+#include <ktoolinvocation.h>
 #include <kdebug.h>
 
 // system includes
@@ -1094,7 +1094,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     if (!client->isApplicationRegistered("kttsd"))
                     {
                         QString error;
-                        if (KApplication::startServiceByDesktopName("kttsd", QStringList(), &error))
+                        if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
                         {
                             d->messageWindow->display( i18n("Starting KTTSD Failed: %1").arg(error) );
                             KpdfSettings::setUseKTTSD(false);

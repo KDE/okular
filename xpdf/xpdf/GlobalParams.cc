@@ -113,8 +113,10 @@ static const char *displayFontDirs[] = {
 #else
 static const char *displayFontDirs[] = {
   "/usr/share/ghostscript/fonts",
+  "/usr/pkg/share/ghostscript/fonts",
   "/usr/local/share/ghostscript/fonts",
   "/usr/share/fonts/default/Type1",
+  "/usr/X11R6/lib/X11/fonts/Type1",
   "/usr/share/fonts/default/ghostscript",
   "/usr/share/fonts/type1/gsfonts",
   NULL

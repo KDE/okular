@@ -16,7 +16,7 @@
 #include <qvalidator.h>
 #include <qpainter.h>
 #include <kiconloader.h>
-#include <kaccelmanager.h>
+#include <kacceleratormanager.h>
 #include <kdeversion.h>
 
 // local includes

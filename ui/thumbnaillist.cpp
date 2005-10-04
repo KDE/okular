@@ -13,7 +13,6 @@
 #include <qpainter.h>
 #include <klocale.h>
 #include <kurl.h>
-#include <kurldrag.h>
 #include <kaction.h>
 #include <kiconloader.h>
 #include <kactioncollection.h>
@@ -367,9 +366,8 @@ void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
 
 void ThumbnailList::dropEvent( QDropEvent * ev )
 {
-    KURL::List lst;
-    if (  KURLDrag::decode(  ev, lst ) )
-        emit urlDropped( lst.first() );
+    if (  KURL::List::canDecode(  ev->mimeData() ) )
+        emit urlDropped( KURL::List::fromMimeData( ev->mimeData() ).first() );
 }
 //END widget events
 

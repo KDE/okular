@@ -19,6 +19,7 @@
 // qt/kde includes
 #include <qcursor.h>
 #include <qevent.h>
+#include <q3popupmenu.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qdatetime.h>
@@ -27,11 +28,9 @@
 #include <qclipboard.h>
 #include <dcopclient.h>
 #include <kiconloader.h>
-#include <kurldrag.h>
 #include <kaction.h>
 #include <kstdaccel.h>
 #include <kactioncollection.h>
-#include <kpopupmenu.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kimageeffect.h>
@@ -1023,17 +1022,18 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             }
 
             // popup that ask to copy:text and copy/save:image
-            KPopupMenu menu( this );
+            Q3PopupMenu menu( this );
             if ( !selectedText.isEmpty() )
             {
-                menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
+                menu.setTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 menu.insertItem( QIcon(SmallIcon("editcopy")), i18n( "Copy to Clipboard" ), 1 );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                     menu.setItemEnabled( 1, false );
                 if ( KpdfSettings::useKTTSD() )
                     menu.insertItem( QIcon(SmallIcon("kttsd")), i18n( "Speak Text" ), 2 );
             }
-            menu.insertTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+#warning this is not going to work KPopupMenu supported multiple titles and now it's gone :-/
+            menu.setTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
             menu.insertItem( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ), 3 );
             menu.insertItem( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ), 4 );
             int choice = menu.exec( e->globalPos() );
@@ -1201,9 +1201,8 @@ void PageView::dragEnterEvent( QDragEnterEvent * ev )
 
 void PageView::dropEvent( QDropEvent * ev )
 {
-    KURL::List lst;
-    if (  KURLDrag::decode(  ev, lst ) )
-        emit urlDropped( lst.first() );
+    if (  KURL::List::canDecode(  ev->mimeData() ) )
+        emit urlDropped( KURL::List::fromMimeData( ev->mimeData() ).first() );
 }
 //END widget events
 

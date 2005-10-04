@@ -12,7 +12,6 @@
 
 #include <ktoolbar.h>
 
-class KPopupMenu;
 class KPDFDocument;
 class m_inputDelayTimer;
 
@@ -36,7 +35,7 @@ class SearchWidget : public KToolBar
 
     private:
         KPDFDocument * m_document;
-        KPopupMenu * m_menu;
+        QMenu * m_menu;
         QTimer * m_inputDelayTimer;
         int m_searchType;
         bool m_caseSensitive;

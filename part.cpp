@@ -22,6 +22,7 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <q3popupmenu.h>
 #include <qsplitter.h>
 #include <qpainter.h>
 #include <qlayout.h>
@@ -39,15 +40,14 @@
 #include <kstdaction.h>
 #include <kdeversion.h>
 #include <kparts/genericfactory.h>
-#include <kurldrag.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <kfind.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
 #include <kio/netaccess.h>
 #include <kio/job.h>
-#include <kpopupmenu.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
@@ -83,14 +83,14 @@ unsigned int Part::m_count = 0;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_showMenuBarAction(0), m_showFullScreenAction(0),
+	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent), m_showMenuBarAction(0), m_showFullScreenAction(0),
 	m_actionsSearched(false), m_searchStarted(false)
 {
 	// connect the started signal to tell the job the mimetypes we like
 	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
 	
 	// load catalog for translation
-	KGlobal::locale()->insertCatalogue("kpdf");
+	KGlobal::locale()->insertCatalog("kpdf");
 
 	// create browser extension (for printing when embedded into browser)
 	m_bExtension = new BrowserExtension(this);
@@ -662,7 +662,7 @@ void Part::slotFind()
     {
         m_searchStarted = true;
         m_document->resetSearch( PART_SEARCH_ID );
-        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFindDialog::CaseSensitive,
+        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFind::CaseSensitive,
                                 KPDFDocument::NextMatch, true, qRgb( 255, 255, 64 ) );
     }
 }
@@ -682,7 +682,7 @@ void Part::slotSaveFileAs()
     {
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.filename(), QString::null, i18n("Overwrite"))) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.fileName(), QString::null, i18n("Overwrite"))) != KMessageBox::Continue)
                 return;
         }
 
@@ -808,10 +808,10 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	}
 	
 	
-	KPopupMenu *popup = new KPopupMenu( widget(), "rmb popup" );
+	Q3PopupMenu *popup = new Q3PopupMenu( widget() );
 	if (page)
 	{
-		popup->insertTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
+		popup->setTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
         if ( page->hasBookmark() )
 			popup->insertItem( QIcon(SmallIcon("bookmark")), i18n("Remove Bookmark"), 1 );
 		else
@@ -832,7 +832,8 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	
 	if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
 	{
-		popup->insertTitle( i18n( "Tools" ) );
+#warning this is not going to work KPopupMenu supported multiple titles and now it's gone :-/
+		popup->setTitle( i18n( "Tools" ) );
 		if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) m_showMenuBarAction->plug(popup);
 		if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) m_showFullScreenAction->plug(popup);
 		reallyShow = true;
@@ -936,7 +937,7 @@ void Part::saveDocumentRestoreInfo(KConfig* config)
 * BrowserExtension class
 */
 BrowserExtension::BrowserExtension(Part* parent)
-  : KParts::BrowserExtension( parent, "KPDF::BrowserExtension" )
+  : KParts::BrowserExtension( parent )
 {
 	emit enableAction("print", true);
 	setURLDropHandlingEnabled(true);

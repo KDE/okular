@@ -61,7 +61,7 @@ Q_OBJECT
 public:
 	// Default constructor
 	Part(QWidget* parentWidget, const char* widgetName,
-	     QObject* parent, const char* name, const QStringList& args);
+	     QObject* parent, const char *name, const QStringList& args);
 
 	// Destructor
 	~Part();

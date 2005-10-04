@@ -22,7 +22,6 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <q3popupmenu.h>
 #include <qsplitter.h>
 #include <qpainter.h>
 #include <qlayout.h>
@@ -36,6 +35,7 @@
 #include <kaction.h>
 #include <kdirwatch.h>
 #include <kinstance.h>
+#include <kmenu.h>
 #include <kprinter.h>
 #include <kstdaction.h>
 #include <kdeversion.h>
@@ -808,16 +808,19 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	}
 	
 	
-	Q3PopupMenu *popup = new Q3PopupMenu( widget() );
+	KMenu *popup = new KMenu( widget() );
+	QAction *toggleBookmark, *fitPageWidth;
+	toggleBookmark = 0;
+	fitPageWidth = 0;
 	if (page)
 	{
-		popup->setTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
-        if ( page->hasBookmark() )
-			popup->insertItem( QIcon(SmallIcon("bookmark")), i18n("Remove Bookmark"), 1 );
+		popup->addTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
+		if ( page->hasBookmark() )
+			toggleBookmark = popup->addAction( QIcon(SmallIcon("bookmark")), i18n("Remove Bookmark") );
 		else
-			popup->insertItem( QIcon(SmallIcon("bookmark_add")), i18n("Add Bookmark"), 1 );
+			toggleBookmark = popup->addAction( QIcon(SmallIcon("bookmark_add")), i18n("Add Bookmark") );
 		if ( m_pageView->canFitPageWidth() )
-			popup->insertItem( QIcon(SmallIcon("viewmagfit")), i18n("Fit Width"), 2 );
+			fitPageWidth = popup->addAction( QIcon(SmallIcon("viewmagfit")), i18n("Fit Width") );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
 		reallyShow = true;
@@ -832,8 +835,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	
 	if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
 	{
-#warning this is not going to work KPopupMenu supported multiple titles and now it's gone :-/
-		popup->setTitle( i18n( "Tools" ) );
+		popup->addTitle( i18n( "Tools" ) );
 		if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) m_showMenuBarAction->plug(popup);
 		if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) m_showFullScreenAction->plug(popup);
 		reallyShow = true;
@@ -842,17 +844,9 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	
 	if (reallyShow)
 	{
-		switch ( popup->exec(point) )
-		{
-			case 1:
-				m_document->toggleBookmark( page->number() );
-				break;
-			case 2:
-				m_pageView->fitPageWidth( page->number() );
-				break;
-	//		case 3: // switch to edit mode
-	//			break;
-		}
+		QAction *res = popup->exec(point);
+		if (res == toggleBookmark) m_document->toggleBookmark( page->number() );
+		else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
 	}
 	delete popup;
 }

@@ -19,7 +19,6 @@
 // qt/kde includes
 #include <qcursor.h>
 #include <qevent.h>
-#include <q3popupmenu.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qdatetime.h>
@@ -29,6 +28,7 @@
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <kaction.h>
+#include <kmenu.h>
 #include <kstdaccel.h>
 #include <kactioncollection.h>
 #include <klocale.h>
@@ -1022,23 +1022,23 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             }
 
             // popup that ask to copy:text and copy/save:image
-            Q3PopupMenu menu( this );
+            KMenu menu( this );
+	    QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
             if ( !selectedText.isEmpty() )
             {
-                menu.setTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
-                menu.insertItem( QIcon(SmallIcon("editcopy")), i18n( "Copy to Clipboard" ), 1 );
+                menu.addTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
+                textToClipboard = menu.addAction( QIcon(SmallIcon("editcopy")), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                     menu.setItemEnabled( 1, false );
                 if ( KpdfSettings::useKTTSD() )
-                    menu.insertItem( QIcon(SmallIcon("kttsd")), i18n( "Speak Text" ), 2 );
+                    speakText = menu.addAction( QIcon(SmallIcon("kttsd")), i18n( "Speak Text" ) );
             }
-#warning this is not going to work KPopupMenu supported multiple titles and now it's gone :-/
-            menu.setTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
-            menu.insertItem( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ), 3 );
-            menu.insertItem( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ), 4 );
-            int choice = menu.exec( e->globalPos() );
+            menu.addTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+            imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );
+            imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
+            QAction *choice = menu.exec( e->globalPos() );
             // IMAGE operation choosen
-            if ( choice > 2 )
+            if ( choice == imageToClipboard || choice == imageToFile )
             {
                 // renders page into a pixmap
                 QPixmap copyPix( selectionRect.width(), selectionRect.height() );
@@ -1046,7 +1046,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
                 paintItems( &copyPainter, selectionRect );
 
-                if ( choice == 3 )
+                if ( choice == imageToClipboard )
                 {
                     // [2] copy pixmap to clipboard
                     QClipboard *cb = QApplication::clipboard();
@@ -1055,7 +1055,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         cb->setPixmap( copyPix, QClipboard::Selection );
                     d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard." ).arg( copyPix.width() ).arg( copyPix.height() ) );
                 }
-                else if ( choice == 4 )
+                else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
                     QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
@@ -1074,7 +1074,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             // TEXT operation choosen
             else
             {
-                if ( choice == 1 )
+                if ( choice == textToClipboard )
                 {
                     // [1] copy text to clipboard
                     QClipboard *cb = QApplication::clipboard();
@@ -1082,7 +1082,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     if ( cb->supportsSelection() )
                         cb->setText( selectedText, QClipboard::Selection );
                 }
-                else if ( choice == 2 )
+                else if ( choice == speakText )
                 {
                     // [2] speech selection using KTTSD
                     DCOPClient * client = DCOPClient::mainClient();

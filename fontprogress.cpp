@@ -9,6 +9,7 @@
 #include <klocale.h>
 #include <kprocio.h>
 #include <kprogress.h>
+#include <kvbox.h>
 #include <qapplication.h>
 #include <q3frame.h>
 #include <qlabel.h>
@@ -37,7 +38,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   } else
     enableLinkedHelp(false);
 
-  Q3VBox *page = makeVBoxMainWidget();
+  KVBox *page = makeVBoxMainWidget();
 
   TextLabel1   = new QLabel( label, page, "TextLabel2" );
   TextLabel1->setAlignment( int( Qt::AlignCenter ) );

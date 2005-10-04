@@ -9,10 +9,10 @@
 
 #include <kdebug.h>
 
-#include <kapplication.h>
 #include <kcombobox.h>
 #include <klineedit.h>
 #include <klocale.h>
+#include <ktoolinvocation.h>
 #include <kurllabel.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
@@ -121,7 +121,7 @@ void optionDialogSpecialWidget::slotComboBox(int item)
 
 void optionDialogSpecialWidget::slotExtraHelpButton( const QString & )
 {
-  kapp->invokeHelp( "inv-search", "kdvi" );
+  KToolInvocation::invokeHelp("inv-search", "kdvi");
 }
 
 void optionDialogSpecialWidget::apply()

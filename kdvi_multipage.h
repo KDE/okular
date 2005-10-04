@@ -7,6 +7,7 @@
 
 #include <QStringList>
 
+class KAboutData;
 class KPrinter;
 
 

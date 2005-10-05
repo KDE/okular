@@ -28,6 +28,7 @@
 // system includes
 #include <stdlib.h>
 #include <math.h>
+#include <krandom.h>
 
 // local includes
 #include "presentationwidget.h"
@@ -862,7 +863,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
         }
         case KpdfSettings::EnumSlidesTransition::Random:
         {
-            return defaultTransition( KApplication::random() % 18 );
+            return defaultTransition( KRandom::random() % 18 );
             break;
         }
         case KpdfSettings::EnumSlidesTransition::SplitHorizontalIn:

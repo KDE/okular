@@ -14,7 +14,6 @@
 #include <ktempfile.h>
 #include <qdir.h>
 #include <qpainter.h>
-#include <stdio.h>
 
 #include "psgs.h"
 #include "dviFile.h"
@@ -155,46 +154,53 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   // Generate a PNG-file
   // Step 1: Write the PostScriptString to a File
   KTempFile PSfile(QString::null,".ps");
-  FILE *f = PSfile.fstream();
 
-  fputs("%!PS-Adobe-2.0\n",f);
-  fputs("%%Creator: kdvi\n",f);
-  fputs("%%Title: KDVI temporary PostScript\n",f);
-  fputs("%%Pages: 1\n",f);
-  fputs("%%PageOrder: Ascend\n",f);
-  fprintf(f,"%%BoundingBox: 0 0 %ld %ld\n", 
-	  (long)(72*(pixel_page_w/resolution)), 
-	  (long)(72*(pixel_page_h/resolution)));  // HSize and VSize in 1/72 inch
-  fputs("%%EndComments\n",f);
-  fputs("%!\n",f);
+  QTextStream& os = *PSfile.textStream();
+  os << "%!PS-Adobe-2.0\n"
+     << "%%Creator: kdvi\n"
+     << "%%Title: KDVI temporary PostScript\n"
+     << "%%Pages: 1\n"
+     << "%%PageOrder: Ascend\n"
+        // HSize and VSize in 1/72 inch
+     << "%%BoundingBox: 0 0 "
+     << (Q_INT32)(72*(pixel_page_w/resolution)) << ' '
+     << (Q_INT32)(72*(pixel_page_h/resolution)) << '\n'
+     << "%%EndComments\n"
+     << "%!\n"
+     << psheader
+     << "TeXDict begin "
+        // HSize in (1/(65781.76*72))inch
+     << (Q_INT32)(72*65781*(pixel_page_w/resolution)) << ' '
+        // VSize in (1/(65781.76*72))inch 
+     << (Q_INT32)(72*65781*(pixel_page_h/resolution)) << ' '
+        // Magnification
+     << (Q_INT32)(magnification)
+        // dpi and vdpi
+     << " 300 300"
+        // Name
+     << " (test.dvi)"
+     << " @start end\n"
+     << "TeXDict begin\n"
+        // Start page
+     << "1 0 bop 0 0 a \n";
 
-  fputs(psheader,f);
-  fputs("TeXDict begin",f);
-
-  fprintf(f," %ld", (long)(72*65781*(pixel_page_w/resolution)) );  // HSize in (1/(65781.76*72))inch @@@
-  fprintf(f," %ld", (long)(72*65781*(pixel_page_h/resolution)) );  // VSize in (1/(65781.76*72))inch 
-  fprintf(f," %ld", magnification );  // Magnification
-  fputs(" 300 300",f);                        // dpi and vdpi
-  fputs(" (test.dvi)",f);                     // Name
-  fputs(" @start end\n",f);
-  fputs("TeXDict begin\n",f);
-
-  fputs("1 0 bop 0 0 a \n",f);                // Start page
   if (PostScriptHeaderString->latin1() != NULL)
-    fputs(PostScriptHeaderString->latin1(),f);
+    os << PostScriptHeaderString->latin1();
 
   if (info->background != Qt::white) {
     QString colorCommand = QString("gsave %1 %2 %3 setrgbcolor clippath fill grestore\n").
       arg(info->background.red()/255.0).
       arg(info->background.green()/255.0).
       arg(info->background.blue()/255.0);
-    fputs(colorCommand.latin1(),f);
+    os << colorCommand.latin1();
   }
 
   if (info->PostScriptString->latin1() != NULL)
-    fputs(info->PostScriptString->latin1(),f);
-  fputs("end\n",f);
-  fputs("showpage \n",f);
+    os << info->PostScriptString->latin1();
+
+  os << "end\n"
+     << "showpage \n";
+
   PSfile.close();
 
   // Step 2: Call GS with the File

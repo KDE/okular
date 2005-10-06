@@ -300,14 +300,14 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
 #endif
     return;
   }
-  
-  KTempFile *GfxFile = new KTempFile(QString::null,".png");
-  GfxFile->setAutoDelete(1);
-  GfxFile->close(); // we are want the filename, not the file
-  
-  gs_generate_graphics_file(page, GfxFile->name(), magnification);
-  
-  QPixmap MemoryCopy(GfxFile->name());
+
+  KTempFile gfxFile(QString::null, ".png");
+  gfxFile.setAutoDelete(1);
+  gfxFile.close(); // we are want the filename, not the file
+
+  gs_generate_graphics_file(page, gfxFile.name(), magnification);
+
+  QPixmap MemoryCopy(gfxFile.name());
   paint->drawPixmap(0, 0, MemoryCopy);
   return;
 }

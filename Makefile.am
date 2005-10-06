@@ -40,7 +40,7 @@ KDE_OPTIONS = nofinal
 
 kdvi_SOURCES = main.cpp 
 kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kdvi_LDADD = ../kviewshell/libifaces.la ../kviewshell/libkviewshell.la -lkparts
+kdvi_LDADD = ../kviewshell/libifaces.la ../kviewshell/libkviewshell.la -lkparts -lkde3support
 
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = dvi.h dviRenderer.h xdvi.h

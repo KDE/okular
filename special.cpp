@@ -9,12 +9,13 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmimetype.h>
 #include <kprocio.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qstringlist.h>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QImage>
+#include <QStringList>
 
 #include "dviFile.h"
 #include "dviRenderer.h"
@@ -356,14 +357,13 @@ void dviRenderer::epsf_special(const QString& cp)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
-
-  // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
-  // that this is NOT a PostScript file, and we need to draw that
-  // here.
-  QString ending = EPSfilename.section('.', -1).lower();
-  bool isGFX = false;
-  if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg") || (ending == "mng"))
-    isGFX = true;
+  // If we have a png, gif, jpeg or mng file, we need to draw it here.
+  KMimeType::Ptr const mime_type = KMimeType::findByFileContent(EPSfilename);
+  QString const & mime_type_name = mime_type->name();
+  bool const isGFX = (mime_type_name == "image/png" ||
+                      mime_type_name == "image/gif" ||
+                      mime_type_name == "image/jpeg" ||
+                      mime_type_name == "video/x-mng");
 
   // So, if we do not have a PostScript file, but a graphics file, and
   // if that file exists, we draw it here.

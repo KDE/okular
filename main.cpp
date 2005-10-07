@@ -33,7 +33,7 @@ int main(int argc, char** argv)
                     description, KAboutData::License_GPL,
                     "Markku Hinhala, Stephan Kebekus",
                     I18N_NOOP("This program displays Device Independent (DVI) files which are produced by the TeX typesetting system.\n"
-                    "KDVI 1.4 is based on original code from KDVI version 0.43 and xdvik."));
+                    "This KDVI version is based on original code from KDVI version 0.43 and xdvik."));
 
   about.addAuthor ("Stefan Kebekus",
                    I18N_NOOP("Current Maintainer."),

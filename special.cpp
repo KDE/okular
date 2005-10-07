@@ -290,18 +290,23 @@ void dviRenderer::source_special(const QString& cp)
 
 void parse_special_argument(const QString& strg, const char* argument_name, int* variable)
 {
-  bool    OK;
-  
   int index = strg.find(argument_name);
   if (index >= 0) {
-    QString tmp     = strg.mid(index + strlen(argument_name));
-    tmp.truncate(tmp.find(' '));
-    float tmp_float = tmp.toFloat(&OK);
+    QString tmp = strg.mid(index + strlen(argument_name));
+    index = tmp.find(' ');
+    if (index >= 0)
+      tmp.truncate(index);
+
+    bool OK;
+    float const tmp_float = tmp.toFloat(&OK);
+
     if (OK)
-      *variable = (int)(tmp_float+0.5);
+      *variable = int(tmp_float+0.5);
     else
       // Maybe we should open a dialog here.
-      kdError(4300) << i18n("Malformed parameter in the epsf special command.") << endl;
+      kdError(4300) << i18n("Malformed parameter in the epsf special command.\n"
+                            "Expected a float to follow %1 in %2")
+                       .arg(argument_name).arg(strg) << endl;
   }
 }
 

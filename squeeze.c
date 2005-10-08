@@ -44,6 +44,11 @@ FILE *in, *out ;
 static int linepos = 0 ;
 static int lastspecial = 1 ;
 static int stringlen = 0;
+
+void specialout(char);
+void strout(char *);
+void cmdout(char *);
+
 /*
  *   This next routine writes out a `special' character.  In this case,
  *   we simply put it out, since any special character terminates the

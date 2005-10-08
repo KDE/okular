@@ -79,7 +79,7 @@ void TeXFontDefinition::read_VF_index()
 #endif
   // Read preamble.
   fseek(VF_file, (long) one(VF_file), 1);	/* skip comment */
-  long file_checksum = four(VF_file);
+  Q_UINT32 const file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
     kdError(4300) << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum << 
@@ -93,6 +93,7 @@ void TeXFontDefinition::read_VF_index()
     Q_UINT32 checksum  = four(VF_file);
     Q_UINT32 scale     = four(VF_file);
     Q_UINT32 design    = four(VF_file);
+    Q_UNUSED(design);
     Q_UINT16 len       = one(VF_file) + one(VF_file); /* sequence point in the middle */
     char *fontname  = new char[len + 1];
     fread(fontname, sizeof(char), len, VF_file);

@@ -297,7 +297,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   }
   file.readBlock((char *)dvi_Data(), size_of_file);
   file.close();
-  if (file.status() != IO_Ok) {
+  if (file.status() != QFile::Status(IO_Ok)) {
     kdError() << i18n("Could not load the DVI-file.");
     return;
   }

@@ -3,6 +3,9 @@
  *	Mnemonics for bytes in dvi file.
  */
 
+#ifndef DVI_H
+#define DVI_H
+
 #define	SETCHAR0	0
 #define	SET1		128
 #define	SETRULE		132
@@ -61,3 +64,5 @@
 #define	EREFL		251
 
 #define	TRAILER		223	/* Trailing bytes at end of file */
+
+#endif

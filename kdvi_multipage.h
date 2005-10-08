@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#ifndef __KDVIMULTIPAGE_H
-#define __KDVIMULTIPAGE_H
+#ifndef KDVIMULTIPAGE_H
+#define KDVIMULTIPAGE_H
 
 #include "kmultipage.h"
 #include "dviRenderer.h"

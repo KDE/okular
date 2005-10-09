@@ -38,8 +38,6 @@ extern void parse_special_argument(const QString& strg, const char* argument_nam
 //#define DEBUG_PRESCAN
 
 
-
-
 void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 {
 #ifdef  DEBUG_PRESCAN
@@ -69,11 +67,17 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"'))
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
 
-  // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
-  // that this is NOT a PostScript file, and we exit here. The graphic
-  // file is later read when the page is rendered.
-  QString ending = EPSfilename.section('.', -1).lower();
-  if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg") || (ending == "mng"))
+  // If the file is neither a PostScript not a PDF file, we exit here.
+  // The graphic file is later read when the page is rendered.
+  KMimeType::Ptr const mime_type =
+    KMimeType::findByFileContent(EPSfilename);
+  QString const & mime_type_name = mime_type->name();
+
+  bool const is_ps_file  = (mime_type_name == "application/postscript" ||
+                            mime_type_name == "image/x-eps");
+  bool const is_pdf_file = (!is_ps_file &&
+                            mime_type_name == "application/pdf");
+  if (!(is_ps_file || is_pdf_file))
     return;
 
   QString originalFName = EPSfilename;
@@ -86,7 +90,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
 
   // If the EPSfilename really points to a PDF file, convert that file now.
-  if (ending == "pdf")
+  if (is_pdf_file)
     EPSfilename = dviFile->convertPDFtoPS(EPSfilename);
 
   if (!QFile::exists(EPSfilename)) {

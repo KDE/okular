@@ -4,7 +4,7 @@
 #include <klocale.h>
 #include <qfile.h>
 
-#include "../config.h"
+#include "config.h"
 #include "dviRenderer.h"
 #include "fontpool.h"
 #include "kdvi.h"

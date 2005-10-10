@@ -62,7 +62,7 @@ extern "C" {
 #include "dvi.h"
 }
 
-#include "../kviewshell/pageSize.h"
+#include "pageSize.h"
 #include "dviFile.h"
 #include "fontpool.h"
 #include "xdvi.h"

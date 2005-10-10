@@ -15,7 +15,7 @@
 #include <qtooltip.h>
 #include <qwhatsthis.h>
 
-#include "../config.h"
+#include "config.h"
 #include "fontpool.h"
 #include "optionDialogFontsWidget.h"
 

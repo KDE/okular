@@ -7,7 +7,7 @@
 #ifndef _FONTPOOL_H
 #define _FONTPOOL_H
 
-#include <../config.h>
+#include "config.h"
 
 #include "fontEncodingPool.h"
 #include "fontMap.h"

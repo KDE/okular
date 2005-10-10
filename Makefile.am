@@ -5,8 +5,6 @@ INCLUDES= -I$(top_srcdir)/kviewshell \
 # claim, which subdirectories you want to install
 SUBDIRS = . pix
 
-bin_PROGRAMS = kdvi
-
 # you can add here more. This one gets installed
 kde_module_LTLIBRARIES= kdvipart.la
 noinst_PROGRAMS = squeeze
@@ -38,10 +36,6 @@ squeeze_SOURCES	= squeeze.c
 
 KDE_OPTIONS = nofinal
 
-kdvi_SOURCES = main.cpp 
-kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kdvi_LDADD = ../kviewshell/libifaces.la ../kviewshell/libkviewshell.la -lkparts
-
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = dvi.h dviRenderer.h xdvi.h
 
@@ -55,8 +49,8 @@ xdg_apps_DATA = kdvi.desktop
 tip_DATA = tips
 tipdir = $(kde_datadir)/kdvi
 
-partdir = $(kde_datadir)/kdvi
-part_DATA = ../kviewshell/kviewshell.rc kdvi_part.rc
+plugindir = $(kde_datadir)
+plugin_DATA = kdvi_part.rc
 
 kde_services_DATA = kdvimultipage.desktop
 

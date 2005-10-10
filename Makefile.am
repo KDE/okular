@@ -44,8 +44,6 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
 	rm -f tips.cpp
 
-xdg_apps_DATA = kdvi.desktop
-
 tip_DATA = tips
 tipdir = $(kde_datadir)/kdvi
 

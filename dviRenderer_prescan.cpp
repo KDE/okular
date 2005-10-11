@@ -67,6 +67,9 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"'))
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
 
+  // Now locate the Gfx file on the hard disk...
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
+
   // If the file is neither a PostScript not a PDF file, we exit here.
   // The graphic file is later read when the page is rendered.
   KMimeType::Ptr const mime_type =
@@ -84,10 +87,6 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 
   embedPS_progress->setLabel(i18n("Embedding %1").arg(EPSfilename));  
   qApp->processEvents();
-
-  
-  // Now locate the Gfx file on the hard disk...
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
 
   // If the EPSfilename really points to a PDF file, convert that file now.
   if (is_pdf_file)

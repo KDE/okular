@@ -1,11 +1,9 @@
 # set the include path for X, qt and KDE
-INCLUDES= -I$(top_srcdir)/kviewshell \
-	-I$(top_builddir)/kviewshell \
+INCLUDES= -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/kviewshell/shell \
+	-I$(top_builddir)/kviewshell/shell \
 	$(all_includes) $(LIBFREETYPE_CFLAGS)
 # claim, which subdirectories you want to install
 SUBDIRS = . pix
-
-bin_PROGRAMS = kdvi
 
 # you can add here more. This one gets installed
 kde_module_LTLIBRARIES= kdvipart.la
@@ -31,16 +29,12 @@ kde_kcfg_DATA = kdvi.kcfg
 
 kdvipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
 kdvipart_la_LIBADD = $(LIBFREETYPE_LIBS) -lkparts \
-			$(top_builddir)/kviewshell/libkmultipage.la
+			$(top_builddir)/kviewshell/shell/libkmultipage.la
 
 # Which sources should be compiled for squeeze.
 squeeze_SOURCES	= squeeze.c
 
 KDE_OPTIONS = nofinal
-
-kdvi_SOURCES = main.cpp 
-kdvi_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kdvi_LDADD = ../kviewshell/libifaces.la ../kviewshell/libkviewshell.la -lkparts -lkde3support
 
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = dvi.h dviRenderer.h xdvi.h
@@ -50,13 +44,11 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
 	rm -f tips.cpp
 
-xdg_apps_DATA = kdvi.desktop
-
 tip_DATA = tips
 tipdir = $(kde_datadir)/kdvi
 
-partdir = $(kde_datadir)/kdvi
-part_DATA = ../kviewshell/kviewshell.rc kdvi_part.rc
+plugindir = $(kde_datadir)
+plugin_DATA = kdvi_part.rc
 
 kde_services_DATA = kdvimultipage.desktop
 

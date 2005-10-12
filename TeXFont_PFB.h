@@ -9,7 +9,7 @@
 // This file is compiled only if the FreeType library is present on
 // the system
 
-#include <../config.h>
+#include "config.h"
 #ifdef HAVE_FREETYPE
 
 #ifndef _TEXFONT_PFB_H

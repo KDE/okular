@@ -9,7 +9,7 @@
 #ifndef _FONTMAP_H
 #define _FONTMAP_H
 
-#include <../config.h>
+#include "config.h"
 #ifdef HAVE_FREETYPE
 
 #include <QMap>

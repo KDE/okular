@@ -21,7 +21,7 @@
 #include <kparts/part.h>
 #include <kparts/genericfactory.h>
 
-#include "../config.h"
+#include "config.h"
 #include "kdvi_multipage.h"
 #include "documentWidget.h"
 #include "dviFile.h"

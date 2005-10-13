@@ -22,6 +22,7 @@
 
 class Anchor;
 class DocumentWidget;
+class dvifile;
 class dviRenderer;
 class fontProgressDialog;
 class ghostscript_interface;
@@ -91,7 +92,7 @@ public:
 
   virtual bool	setFile(const QString &fname);
 
-  class dvifile *dviFile;
+  dvifile* dviFile;
 
   void          setPrefs(bool flag_showPS, const QString &editorCommand, bool useFontHints );
 
@@ -285,7 +286,7 @@ private:
   QPointArray TPIC_path;
   Q_UINT16    number_of_elements_in_path;
   
-  struct drawinf	currinf;
+  drawinf currinf;
   RenderedDocumentPage* currentlyDrawnPage;
 };
 

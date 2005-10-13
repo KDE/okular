@@ -2,8 +2,8 @@
 #ifndef KDVIMULTIPAGE_H
 #define KDVIMULTIPAGE_H
 
-#include "kmultipage.h"
 #include "dviRenderer.h"
+#include "kmultipage.h"
 
 #include <QStringList>
 
@@ -93,6 +93,5 @@ private:
   KAction      *exportPDFAction;
   KAction      *exportPSAction;
 };
-
 
 #endif

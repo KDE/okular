@@ -23,6 +23,7 @@
  * SUCH DAMAGE.
  */
 
+#include <config.h>
 
 #include <kdebug.h>
 #include <klocale.h>

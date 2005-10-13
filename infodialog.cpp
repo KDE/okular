@@ -3,6 +3,8 @@
 // (C) 2001-2003 Stefan Kebekus
 // Distributed under the GPL
 
+#include <config.h>
+
 #include <kdebug.h>
 #include <kio/global.h>
 #include <klocale.h>

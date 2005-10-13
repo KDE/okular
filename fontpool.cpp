@@ -4,6 +4,8 @@
 // (C) 2001-2004 Stefan Kebekus
 // Distributed under the GPL
 
+#include <config.h>
+
 #include <kdebug.h>
 #include <kinstance.h>
 #include <klocale.h>

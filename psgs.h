@@ -10,10 +10,10 @@
 #ifndef _PSGS_H_
 #define _PSGS_H_
 
+#include <Q3IntDict>
 #include <QColor>
 #include <QObject>
 #include <QString>
-#include <Q3IntDict>
 
 class PageNumber;
 class QPainter;

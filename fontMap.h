@@ -9,9 +9,6 @@
 #ifndef _FONTMAP_H
 #define _FONTMAP_H
 
-#include "config.h"
-#ifdef HAVE_FREETYPE
-
 #include <QMap>
 #include <QString>
 
@@ -118,5 +115,4 @@ class fontMap {
   QMap<QString, fontMapEntry> fontMapEntries;
 };
 
-#endif // ifdef HAVE_FREETYPE
 #endif // ifndef _FONTMAP_H

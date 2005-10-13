@@ -5,6 +5,8 @@
 // (C) 2003--2004 Stefan Kebekus
 // Distributed under the GPL
 
+#include <config.h>
+
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"

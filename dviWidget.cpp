@@ -8,6 +8,8 @@
 // Distributed under the GPL
 //
 
+#include <config.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 

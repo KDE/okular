@@ -51,6 +51,8 @@
 
 //#define DEBUG_RENDER 0
 
+#include <config.h>
+
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"
@@ -77,7 +79,6 @@
 #include <QPixmap>
 
 extern QPainter *foreGroundPainter;
-
 
 /** Routine to print characters.  */
 

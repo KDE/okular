@@ -40,11 +40,12 @@ public:
     /** The number of steps already done is increased, the text received
 	here is analyzed and presented to the user. */
     void increaseNumSteps(const QString& explanation);
-    
-    /** Used to initialize the progress bar. If the argument proc is
-	non-zero, the associated process will be killed when the "abort"
-	button is pressed. The FontProgress uses a QGuarderPtr
-	internally, so it is save to delete the KProcIO anytime. */
+
+    /** Used to initialize the progress bar. If the argument @c proc is
+        non-zero, the associated process will be killed when the "abort"
+        button is pressed. The pointer is stored internally inside a
+        QPointer, so it is safe to delete the real KProcIO instance
+        at any time. */
     void setTotalSteps(int, KProcIO *proc=0);
     
    QLabel* TextLabel2;

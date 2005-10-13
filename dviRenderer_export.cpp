@@ -25,6 +25,8 @@
 // of kdvi.
 
 
+#include <config.h>
+
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kdebug.h>

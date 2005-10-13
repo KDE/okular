@@ -15,12 +15,10 @@
 #ifndef _FONT_H
 #define _FONT_H
 
-#include "config.h"
-
 #include <Q3IntDict>
 #include <QString>
 
-#include <stdio.h>
+#include <cstdio>
 
 class dviRenderer;
 class TeXFont;

@@ -14,7 +14,8 @@
 
 #include <ft2build.h>
 #include FT_OUTLINE_H
-#include FT_INTERNAL_OBJECTS_H // needed for FT_New_Size decl
+#include FT_SIZES_H
+#include FT_GLYPH_H
 #include "gmem.h"
 #include "SplashMath.h"
 #include "SplashGlyphBitmap.h"

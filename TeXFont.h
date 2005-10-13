@@ -9,8 +9,8 @@
 #ifndef _TEXFONT_H
 #define _TEXFONT_H
 
-#include "TeXFontDefinition.h"
 #include "glyph.h"
+#include "TeXFontDefinition.h"
 
 
 class TeXFont {

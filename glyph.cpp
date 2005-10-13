@@ -6,6 +6,8 @@
  * written by Stefan Kebekus, originally based on code by Paul Vojta
  * and a large number of co-authors */
 
+#include <config.h>
+
 #include <kdebug.h>
 
 #include "glyph.h"

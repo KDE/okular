@@ -15,6 +15,7 @@
 
 #include <qintdict.h>
 #include <qiodevice.h>
+#include <qmap.h>
 #include <qmemarray.h>
 #include <qstring.h>
 

@@ -24,6 +24,7 @@
 // Please report bugs or improvements, etc. via the "Report bug"-Menu
 // of kdvi.
 
+#include <config.h>
 
 #include <kaction.h>
 #include <kdebug.h>

@@ -6,10 +6,6 @@
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
 
-#include "config.h"
-#ifdef HAVE_FREETYPE
-
-
 #ifndef _FONTENCODING_H
 #define _FONTENCODING_H
 
@@ -88,4 +84,3 @@ class fontEncoding {
 };
 
 #endif
-#endif // HAVE_FREETYPE

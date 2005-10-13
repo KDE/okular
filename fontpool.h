@@ -7,15 +7,13 @@
 #ifndef _FONTPOOL_H
 #define _FONTPOOL_H
 
-#include "config.h"
-
 #include "fontEncodingPool.h"
 #include "fontMap.h"
 #include "fontprogress.h"
 #include "TeXFontDefinition.h"
 
-#include <qptrlist.h>
 #include <qobject.h>
+#include <qptrlist.h>
 
 #ifdef HAVE_FREETYPE
 #include <ft2build.h>
@@ -23,7 +21,6 @@
 #endif
 
 class KProcess;
-class KShellProcess;
 
 
 /**
@@ -42,50 +39,50 @@ class fontPool : public QObject {
  Q_OBJECT
 
 public:
- // Default constructor. 
+ // Default constructor.
  fontPool();
 
  // Default destructor.
  ~fontPool();
- 
+
  /** Method used to set the MetafontMode for the PK font files. This
      data is used when loading fonts. Currently, a change here will be
      applied only to those font which were not yet loaded ---expect
      funny results when changing the data in the mid-work. */
  void setParameters( bool useFontHints );
- 
+
  /** Sets the DVI file's path. This information is used to set the
      current working directory for the kpsewhich command, so that
      kpsewhich will find fonts that are stored in the DVI file's
-     directory. */ 
+     directory. */
  void setExtraSearchPath( const QString &path ) {extraSearchPath = path;}
- 
+
  /** Returns the path that is set as the current working directory
      for the kpsewhich command, so that kpsewhich will find fonts
-     that are stored in the DVI file's directory. */ 
+     that are stored in the DVI file's directory. */
  QString getExtraSearchPath( ) const {return extraSearchPath;}
- 
+
  /** Sets the resolution of the output device. */
  void setDisplayResolution( double _displayResolution_in_dpi );
- 
+
  /** Sets the number of centimeters per DVI unit. */
  void setCMperDVIunit( double CMperDVI );
  double getCMperDVIunit() const {return CMperDVIunit;}
- 
+
  // If return value is true, font hinting should be used if possible
  bool getUseFontHints() const {return useFontHints;}
- 
+
  // This method adds a font to the list. If the font is not currently
  // loaded, it's file will be located and font::load_font will be
  // called. Since this is done using a concurrently running process,
  // there is no guarantee that the loading is already performed when
  // the method returns.
  TeXFontDefinition* appendx(const QString& fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement);
- 
+
  // Returns a string in a very basic HTML format which describes the
  // fonts in the pool.
  QString status();
-  
+
   // This is the list which actually holds pointers to the fonts
   QPtrList<TeXFontDefinition> fontList;
 
@@ -106,7 +103,7 @@ public:
   /** A handle to the FreeType library, which is used by TeXFont_PFM
       font objects, if KDVI is compiled with FreeType support.  */
   FT_Library FreeType_library;
-  
+
   /** Simple marker. Set to 'true', if the FreeType library was loaded
       successfully */
   bool FreeType_could_be_loaded;
@@ -136,76 +133,76 @@ signals:
   void setStatusBarText( const QString& );
 
 public slots:
- // Locates font files on the disk using the kpsewhich program.  If
- // 'locateTFMonly' is true, the method does not look for PFB- or
- // PK-fonts. Instead, only TFM-files are searched. This option can be
- // used as a 'last resort': if a found cannot be found, one can at
- // least use the TFM file to draw filled rectangles for the
- // characters. If not null, the bool pointed at by virtualFontsFound
- // is set to true if one of the fonts found is a virtual font. If no
- // virtual font is found, the variable remains untouched.
- void locateFonts();
- 
+  // Locates font files on the disk using the kpsewhich program.  If
+  // 'locateTFMonly' is true, the method does not look for PFB- or
+  // PK-fonts. Instead, only TFM-files are searched. This option can be
+  // used as a 'last resort': if a found cannot be found, one can at
+  // least use the TFM file to draw filled rectangles for the
+  // characters. If not null, the bool pointed at by virtualFontsFound
+  // is set to true if one of the fonts found is a virtual font. If no
+  // virtual font is found, the variable remains untouched.
+  void locateFonts();
+
 private:
- // This method goes through the list of fonts, and marks each of them
- // as 'located'. Used, e.g. after a fatal error in the font lookup
- // process to ensure that the problematic kpsewhich is not used again
- void markFontsAsLocated();
+  // This method goes through the list of fonts, and marks each of them
+  // as 'located'. Used, e.g. after a fatal error in the font lookup
+  // process to ensure that the problematic kpsewhich is not used again
+  void markFontsAsLocated();
 
- // Checks if all the fonts file names have been located, and returns
- // true if that is so.
- bool areFontsLocated();
+  // Checks if all the fonts file names have been located, and returns
+  // true if that is so.
+  bool areFontsLocated();
 
- // This flag is used by PFB fonts to determine if the FREETYPE engine
- // should use hinted fonts or not
- bool           useFontHints; 
- 
- // Resolution of the output device.
- double         displayResolution_in_dpi;
- 
- // Number of centimeters per DVI unit
- double         CMperDVIunit; 
+  // This flag is used by PFB fonts to determine if the FREETYPE engine
+  // should use hinted fonts or not
+  bool useFontHints;
+
+  // Resolution of the output device.
+  double displayResolution_in_dpi;
+
+  // Number of centimeters per DVI unit
+  double CMperDVIunit;
 
 
- /** Members used for font location */
- 
- // Locates font files on the disk using the kpsewhich program.  If
- // 'locateTFMonly' is true, the method does not look for PFB- or
- // PK-fonts. Instead, only TFM-files are searched. This option can be
- // used as a 'last resort': if a found cannot be found, one can at
- // least use the TFM file to draw filled rectangles for the
- // characters. If not null, the bool pointed at by virtualFontsFound
- // is set to true if one of the fonts found is a virtual font. If no
- // virtual font is found, the variable remains untouched.
- void locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound=0);
+  /** Members used for font location */
 
- // This QString is used internally by the mf_output_receiver()
- // method.  This string is set to QString::null in locateFonts(bool,
- // bool, bool *). Values are set and read by the
- // mf_output_receiver(...)  method
- QString        MetafontOutput;
+  // Locates font files on the disk using the kpsewhich program.  If
+  // 'locateTFMonly' is true, the method does not look for PFB- or
+  // PK-fonts. Instead, only TFM-files are searched. This option can be
+  // used as a 'last resort': if a found cannot be found, one can at
+  // least use the TFM file to draw filled rectangles for the
+  // characters. If not null, the bool pointed at by virtualFontsFound
+  // is set to true if one of the fonts found is a virtual font. If no
+  // virtual font is found, the variable remains untouched.
+  void locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound=0);
 
- // This QString is used to collect the output of kpsewhich and
- // MetaFont. The string is set to QString::null in the
- // locateFonts()-method, and content is gathered by the
- // mf_output_receiver(). This string is used by locateFonts() and
- // locateFonts(bool, bool, bool *) to display error messages.
- QString        kpsewhichOutput;
- 
- // This string is set to the DVI file's path. It is used to set the
- // current working directory for the kpsewhich command, so that
- // kpsewhich will find fonts that are stored in the DVI file's
- // directory. Used by the locateFonts() and the locateFonts(bool,
- // bool, bool *) method. Values are set by the
- // setExtraSearchPath(...) method
- QString        extraSearchPath;
- 
- // FontProgress; the progress dialog used when generating fonts.
- fontProgressDialog progress;
- 
+  // This QString is used internally by the mf_output_receiver()
+  // method.  This string is set to QString::null in locateFonts(bool,
+  // bool, bool *). Values are set and read by the
+  // mf_output_receiver(...)  method
+  QString MetafontOutput;
+
+  // This QString is used to collect the output of kpsewhich and
+  // MetaFont. The string is set to QString::null in the
+  // locateFonts()-method, and content is gathered by the
+  // mf_output_receiver(). This string is used by locateFonts() and
+  // locateFonts(bool, bool, bool *) to display error messages.
+  QString kpsewhichOutput;
+
+  // This string is set to the DVI file's path. It is used to set the
+  // current working directory for the kpsewhich command, so that
+  // kpsewhich will find fonts that are stored in the DVI file's
+  // directory. Used by the locateFonts() and the locateFonts(bool,
+  // bool, bool *) method. Values are set by the
+  // setExtraSearchPath(...) method
+  QString extraSearchPath;
+
+  // FontProgress; the progress dialog used when generating fonts.
+  fontProgressDialog progress;
+
 private slots:
   /** Members used for font location */
-   
+
   // For internal purposess only. This slot is called when MetaFont is
   // run via the kpsewhich programm. The MetaFont output is
   // transmitted to the fontpool via this slot. This method calles

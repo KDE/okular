@@ -2,7 +2,7 @@
 #ifndef _xdvi_h
 #define _xdvi_h
 
-#include <stdio.h>
+#include <cstdio>
 
 /*
  *	Written by Eric C. Cooper, CMU

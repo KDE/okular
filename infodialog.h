@@ -8,7 +8,6 @@
 #define INFO_KDVI_H
 
 #include <kdialogbase.h>
-
 #include <qstring.h>
 
 class dvifile;

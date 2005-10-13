@@ -11,9 +11,9 @@
 #define _PSGS_H_
 
 #include <qcolor.h>
+#include <qintdict.h>
 #include <qobject.h>
 #include <qstring.h>
-#include <qintdict.h>
 
 class PageNumber;
 class QPainter;

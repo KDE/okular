@@ -6,9 +6,6 @@
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
 
-#include "config.h"
-#ifdef HAVE_FREETYPE
-
 #ifndef _FONTENCODINGPOOL_H
 #define _FONTENCODINGPOOL_H
 
@@ -30,4 +27,3 @@ class fontEncodingPool {
 };
 
 #endif
-#endif // HAVE_FREETYPE

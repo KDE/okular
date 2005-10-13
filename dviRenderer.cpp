@@ -69,40 +69,38 @@ QPainter *foreGroundPainter; // QPainter used for text
 //------ now comes the dviRenderer class implementation ----------
 
 dviRenderer::dviRenderer(QWidget *par)
-  : DocumentRenderer(par), info(new infoDialog(par))
+  : DocumentRenderer(par),
+    dviFile(0),
+    info(new infoDialog(par)),
+    resolutionInDPI(0),
+    embedPS_progress(0),
+    embedPS_numOfProgressedFiles(0),
+    shrinkfactor(3),
+    source_href(0),
+    HTML_href(0),
+    editorCommand(""),
+    PostScriptOutPutString(0),
+    PS_interface(new ghostscript_interface),
+    _postscript(false),
+    line_boundary_encountered(false),
+    word_boundary_encountered(false),
+    current_page(0),
+    progress(0),
+    proc(0),
+    export_printer(0),
+    export_fileName(""),
+    export_tmpFileName(""),
+    export_errorString(""),
+    penWidth_in_mInch(0),
+    number_of_elements_in_path(0),
+    currentlyDrawnPage(0)
 {
 #ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer( parent=" << par << " )" << endl;
 #endif
 
-  // initialize the dvi machinery
-  dviFile                = 0;
-
   connect(&font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
-
-  parentWidget = par;
-  shrinkfactor = 3;
-  current_page = 0;
-  resolutionInDPI = 0.0;
-
   connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
-
-  currentlyDrawnPage = 0;
-  editorCommand         = "";
-
-  PostScriptOutPutString = NULL;
-  HTML_href              = NULL;
-  _postscript            = 0;
-
-  // Storage used for dvips and friends, i.e. for the "export" functions.
-  proc                   = 0;
-  progress               = 0;
-  export_printer         = 0;
-  export_fileName        = "";
-  export_tmpFileName     = "";
-  export_errorString     = "";
-
-  PS_interface           = new ghostscript_interface();
   // pass status bar messages through
   connect(PS_interface, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
 }
@@ -339,6 +337,7 @@ void dviRenderer::embedPostScript()
   }
 
   delete embedPS_progress;
+  embedPS_progress = 0;
 
   if (!errorMsg.isEmpty()) {
     errorMsg = "<qt>" + errorMsg + "</qt>";

@@ -31,7 +31,7 @@ public:
 };
 
 
-class ghostscript_interface  : public QObject 
+class ghostscript_interface  : public QObject
 {
  Q_OBJECT
 
@@ -47,9 +47,9 @@ public:
   // sets path from additional postscript files may be read
   void setIncludePath(const QString &_includePath);
 
-  // Sets the background color for a certain page. If permanent is false then the original 
+  // Sets the background color for a certain page. If permanent is false then the original
   // background color can be restored by calling restoreBackground(page).
-  // The Option permanent = false is used when we want to display a different paper 
+  // The Option permanent = false is used when we want to display a different paper
   // color as the one specified in the dvi file.
   void setBackgroundColor(const PageNumber& page, const QColor& background_color, bool permanent = true);
 

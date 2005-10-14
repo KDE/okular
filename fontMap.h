@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // fontMap.h
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -50,7 +50,7 @@ class fontMapEntry {
  *
  * A font map file is part of the machinery that make it possible to
  * access PostScript (and possibly also TrueType and OpenType) fonts
- * from a DVI file. 
+ * from a DVI file.
  *
  * Long time ago, when TeX was only used with MetaFont fonts, the DVI
  * file would specify a font by giving an 8-character name, such as
@@ -89,17 +89,17 @@ class fontMap {
       (partially) in an improper format, an error message is printed
       to stderr using the kdDebug() stream. */
   fontMap( void );
-  
+
   /** find the name of a font file (e.g. 'ubkd8a.pfb') from a TeX font
       name (e.g. 'rpbkd'). This method return a reference to
       QString::null if the font could not be found. */
   const QString &findFileName(const QString &TeXName);
-  
+
   /** find the name of a font (e.g. 'URWBookmanL-DemiBold') from a TeX
       font name (e.g. 'rpbkd'). This method return a reference to
       QString::null if the font could not be found. */
   const QString &findFontName(const QString &TeXName);
-  
+
   /** find the name of an encoding file for a font (e.g. '8r') from a
       TeX font name (e.g. 'rpbkd'). This method return a reference to
       QString::null if the font could not be found. */
@@ -108,7 +108,7 @@ class fontMap {
   /** This method finds the slant of a font. Returns 0.0 if no slant
       was defined. */
   double findSlant(const QString &TeXName);
-  
+
  private:
   /** This member maps TeX font names mapEntry classes that contain
       the font's filenames, full font names and encodings. */

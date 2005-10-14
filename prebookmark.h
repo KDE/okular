@@ -26,7 +26,7 @@
 #include <qstring.h>
 
 /*! \brief Bookmark representation
-  
+
 This class presents a bookmark in a format that is used internally by
 the DVI prescan routines.
 */

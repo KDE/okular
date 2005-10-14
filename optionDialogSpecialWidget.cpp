@@ -1,6 +1,6 @@
 // optionDialogSpecialWidget.cpp
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -32,23 +32,23 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorNameString        += i18n("User-Defined Editor");
   editorCommandString     += "";
   editorDescriptionString += i18n("Enter the command line below.");
-  
+
   editorNameString        += "Emacs / emacsclient";
   editorCommandString     += "emacsclient --no-wait +%l %f || emacs +%l %f";
   editorDescriptionString += i18n("Click 'Help' to learn how to set up Emacs.");
-  
+
   editorNameString        += "Kate";
   editorCommandString     += "kate --use --line %l %f";
   editorDescriptionString += i18n("Kate perfectly supports inverse search.");
-  
+
   editorNameString        += "Kile";
   editorCommandString     += "kile %f --line %l";
   editorDescriptionString += i18n("Kile works very well");
-  
+
   editorNameString        += "NEdit";
   editorCommandString     += "ncl -noask -line %l %f || nc -noask -line %l %f";
   editorDescriptionString += i18n("NEdit perfectly supports inverse search.");
-  
+
   editorNameString        += "VIM - Vi IMproved / GUI";
   editorCommandString     += "gvim --servername KDVI --remote-silent +%l %f";
   editorDescriptionString += i18n("VIM version 6.0 or greater works just fine.");

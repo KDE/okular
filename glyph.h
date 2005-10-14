@@ -8,9 +8,9 @@
 
 
 struct bitmap {
-  Q_UINT16	w, h;	/* width and height in pixels */
-  Q_UINT16	bytes_wide;	/* scan-line width in bytes */
-  char		*bits;		/* pointer to the bits */
+  Q_UINT16        w, h;        /* width and height in pixels */
+  Q_UINT16        bytes_wide;        /* scan-line width in bytes */
+  char                *bits;                /* pointer to the bits */
 };
 
 class glyph {
@@ -26,12 +26,12 @@ class glyph {
   // DVI units to move reference point
   Q_INT32 dvi_advance_in_units_of_design_size_by_2e20;
 
-  // x and y offset in pixels 
+  // x and y offset in pixels
   short   x, y;
 
   QPixmap shrunkenCharacter;
 
-  short   x2, y2;	/* x and y offset in pixels (shrunken bitmap) */
+  short   x2, y2;        /* x and y offset in pixels (shrunken bitmap) */
 };
 
 #endif //ifndef _GLYPH_H

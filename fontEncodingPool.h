@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // fontEncodingPool.h
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL

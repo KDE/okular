@@ -21,9 +21,9 @@
 
 #include <qvbox.h>
 
-/* 
- *  Constructs a fontProgressDialog which is a child of 'parent', with the 
- *  name 'name' and widget flags set to 'f' 
+/*
+ *  Constructs a fontProgressDialog which is a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'
  */
 fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip, QWidget* parent, const QString& name, bool progressbar)
   : KDialogBase( parent, "Font Generation Progress Dialog", true, name, Cancel, Cancel, true )
@@ -34,7 +34,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
 
   if (helpIndex.isEmpty() == false) {
     setHelp(helpIndex, "kdvi");
-    setHelpLinkText( i18n( "What's going on here?") ); 
+    setHelpLinkText( i18n( "What's going on here?") );
     enableLinkedHelp(true);
   } else
     enableLinkedHelp(false);
@@ -51,9 +51,9 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
     ProgressBar1->setFormat(i18n("%v of %m"));
     QWhatsThis::add( ProgressBar1, whatsThis );
     QToolTip::add( ProgressBar1, ttip );
-  } else 
+  } else
     ProgressBar1 = NULL;
-  
+
   TextLabel2   = new QLabel( "", page, "TextLabel2" );
   TextLabel2->setAlignment( int( QLabel::AlignCenter ) );
   QWhatsThis::add( TextLabel2, whatsThis );
@@ -65,7 +65,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
 }
 
 
-/*  
+/*
  *  Destroys the object and frees any allocated resources
  */
 

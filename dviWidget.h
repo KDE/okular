@@ -24,7 +24,7 @@ class DVIWidget : public DocumentWidget
 {
   Q_OBJECT
 
-public: 
+public:
   DVIWidget(QWidget* parent, PageView* sv, DocumentPageCache* cache, const char* name);
 
 signals:

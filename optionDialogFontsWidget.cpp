@@ -1,6 +1,6 @@
 // optionDiologWidget.cpp
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -32,10 +32,10 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
   kcfg_UseFontHints->setChecked(false);
   QToolTip::add(PFB_ButtonGroup, i18n("This version of KDVI does not support type 1 fonts."));
   QWhatsThis::add(PFB_ButtonGroup, i18n("KDVI needs the FreeType library to access type 1 fonts. This library "
-					"was not present when KDVI was compiled. If you want to use type 1 "
-					"fonts, you must either install the FreeType library and recompile KDVI "
-					"yourself, or find a precompiled software package for your operating "
-					"system."));
+                                        "was not present when KDVI was compiled. If you want to use type 1 "
+                                        "fonts, you must either install the FreeType library and recompile KDVI "
+                                        "yourself, or find a precompiled software package for your operating "
+                                        "system."));
 #endif
 }
 

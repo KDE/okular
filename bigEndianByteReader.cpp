@@ -1,6 +1,6 @@
 // bigEndianByteReader.cpp
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -85,7 +85,7 @@ Q_UINT32 bigEndianByteReader::readUINT(Q_UINT8 size)
     return EOP;
 
   Q_UINT32 a = 0;
-  while (size > 0) { 
+  while (size > 0) {
     a = (a << 8) + *(command_pointer++);
     size--;
   }

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // optionDialogSpecialWidget.h
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -13,13 +13,13 @@
 
 
 class optionDialogSpecialWidget : public optionDialogSpecialWidget_base
-{ 
+{
   Q_OBJECT
-    
+
  public:
   optionDialogSpecialWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
   ~optionDialogSpecialWidget();
-  
+
  public slots:
   void apply();
   void slotComboBox(int item);

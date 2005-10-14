@@ -12,7 +12,7 @@
 
 #include "glyph.h"
 
-glyph::glyph() 
+glyph::glyph()
 {
 #ifdef DEBUG_GLYPH
   kdDebug(4300) << "glyph::glyph()" << endl;

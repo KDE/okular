@@ -173,7 +173,7 @@ void KDVIMultiPage::slotSave()
   // TODO: error handling...
   if ((DVIRenderer.dviFile != 0) && (DVIRenderer.dviFile->dvi_Data() != 0))
     DVIRenderer.dviFile->saveAs(fileName);
-  
+
   return;
 }
 
@@ -204,10 +204,10 @@ QStringList KDVIMultiPage::fileFormats() const
 void KDVIMultiPage::addConfigDialogs(KConfigDialog* configDialog)
 {
   static optionDialogFontsWidget* fontConfigWidget = 0;
-  
+
   fontConfigWidget = new optionDialogFontsWidget(scrollView());
   optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(scrollView());
-  
+
   configDialog->addPage(fontConfigWidget, Prefs::self(), i18n("TeX Fonts"), "fonts");
   configDialog->addPage(specialConfigWidget, Prefs::self(), i18n("DVI Specials"), "dvi");
   configDialog->setHelp("preferences", "kdvi");
@@ -464,14 +464,14 @@ void KDVIMultiPage::showFindTextDialog()
   {
     // WARNING: This text appears several times in the code. Change
     // everywhere, or nowhere!
-    if (KMessageBox::warningContinueCancel( scrollView(), 
-					    i18n("<qt>This function searches the DVI file for plain text. Unfortunately, this version of "
-						 "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
-						 "formulae, accented characters, and non-English text, such as Russian or Korean, will "
-						 "most likely be messed up completely. Continue anyway?</qt>"),
-					    i18n("Function May Not Work as Expected"),
-					    KStdGuiItem::cont(),
-					    "warning_search_text_may_not_work") == KMessageBox::Cancel)
+    if (KMessageBox::warningContinueCancel( scrollView(),
+                                            i18n("<qt>This function searches the DVI file for plain text. Unfortunately, this version of "
+                                                 "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
+                                                 "formulae, accented characters, and non-English text, such as Russian or Korean, will "
+                                                 "most likely be messed up completely. Continue anyway?</qt>"),
+                                            i18n("Function May Not Work as Expected"),
+                                            KStdGuiItem::cont(),
+                                            "warning_search_text_may_not_work") == KMessageBox::Cancel)
       return;
 
     // Remember that we don't need to show the warning message again.

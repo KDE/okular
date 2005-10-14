@@ -150,10 +150,10 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
 #ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
 #endif
-  
+
   // Paranoid safety checks
   if (page == 0) {
-    kdError(4300) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl; 
+    kdError(4300) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
     return;
   }
   if (page->getPageNumber() == 0) {
@@ -169,8 +169,8 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
     return;
   }
   if (page->getPageNumber() > dviFile->total_pages) {
-    kdError(4300) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber() 
-		  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
+    kdError(4300) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber()
+                  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     mutex.unlock();
     return;
   }
@@ -180,19 +180,19 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
     mutex.unlock();
     return;
   }
- 
+
   if (resolution != resolutionInDPI)
     setResolution(resolution);
-  
+
   currentlyDrawnPage     = page;
   shrinkfactor           = 1200/resolutionInDPI;
   current_page           = page->getPageNumber()-1;
-  
-  
+
+
   // Reset colors
   colorStack.clear();
   globalColor = Qt::black;
-  
+
   QApplication::setOverrideCursor( waitCursor );
   foreGroundPainter = page->getPainter();
   if (foreGroundPainter != 0) {
@@ -204,15 +204,15 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
     KMessageBox::detailedError(parentWidget,
-			       i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
-				    "likely this means that the DVI file is broken.</qt>"),
-			       errorMsg, i18n("DVI File Error"));
+                               i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
+                                    "likely this means that the DVI file is broken.</qt>"),
+                               errorMsg, i18n("DVI File Error"));
     errorMsg = QString::null;
     currentlyDrawnPage = 0;
     mutex.unlock();
     return;
   }
-  
+
   // Tell the user (once) if the DVI file contains source specials
   // ... we don't want our great feature to go unnoticed.
   RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
@@ -225,7 +225,7 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
       QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
     }
   }
-  
+
   currentlyDrawnPage = 0;
   mutex.unlock();
 }
@@ -249,31 +249,31 @@ void dviRenderer::showThatSourceInformationIsPresent()
   // add a button "Explain in more detail..." which opens the
   // Helpcenter. Thus, we practically re-implement the KMessagebox
   // here. Most of the code is stolen from there.
-  
+
   // Check if the 'Don't show again' feature was used
   KConfig *config = kapp->config();
   KConfigGroupSaver saver( config, "Notification Messages" );
   bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
-  
+
   if (showMsg) {
     KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-					 parentWidget, "information", true, true,KStdGuiItem::ok() );
-    
+                                         parentWidget, "information", true, true,KStdGuiItem::ok() );
+
     QVBox *topcontents = new QVBox (dialog);
     topcontents->setSpacing(KDialog::spacingHint()*2);
     topcontents->setMargin(KDialog::marginHint()*2);
-    
+
     QWidget *contents = new QWidget(topcontents);
     QHBoxLayout * lay = new QHBoxLayout(contents);
     lay->setSpacing(KDialog::spacingHint()*2);
-    
+
     lay->addStretch(1);
     QLabel *label1 = new QLabel( contents);
     label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
     lay->add( label1 );
     QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
-				      "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
-				 contents);
+                                      "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
+                                 contents);
     label2->setMinimumSize(label2->sizeHint());
     lay->add( label2 );
     lay->addStretch(1);
@@ -288,7 +288,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
     dialog->incInitialSize( extraSize );
     dialog->exec();
     delete dialog;
-    
+
     showMsg = !checkbox->isChecked();
     if (!showMsg) {
       KConfigGroupSaver saver( config, "Notification Messages" );
@@ -309,7 +309,7 @@ void dviRenderer::embedPostScript()
     return;
 
   embedPS_progress = new KProgressDialog(parentWidget, "embedPSProgressDialog",
-					 i18n("Embedding PostScript Files"), QString::null, true);
+                                         i18n("Embedding PostScript Files"), QString::null, true);
   if (!embedPS_progress)
     return;
   embedPS_progress->setAllowCancel(false);
@@ -344,8 +344,8 @@ void dviRenderer::embedPostScript()
     errorMsg = QString::null;
   } else
     KMessageBox::information(parentWidget, "<qt>" + i18n("All external PostScript files were embedded into your document. You "
-						 "will probably want to save the DVI file now.") + "</qt>",
-			     QString::null, "embeddingDone");
+                                                 "will probably want to save the DVI file now.") + "</qt>",
+                             QString::null, "embeddingDone");
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
@@ -396,7 +396,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
     return false;
 
   int n = f.size();
-  if ( n < 134 )	// Too short for a dvi file
+  if ( n < 134 )        // Too short for a dvi file
     return false;
   f.at( n-4 );
 
@@ -429,17 +429,17 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
     dviFile = 0;
     return true;
   }
-  
-  
+
+
   // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
     KMessageBox::error( parentWidget,
-			i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
-			     "KDVI already tried to add the ending '.dvi'.</qt>").arg(filename),
-			i18n("File Error!"));
+                        i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
+                             "KDVI already tried to add the ending '.dvi'.</qt>").arg(filename),
+                        i18n("File Error!"));
     return false;
   }
-  
+
   // Check if we are really loading a DVI file, and complain about the
   // mime type, if the file is not DVI. Perhaps we should move the
   // procedure later to the kviewpart, instead of the implementaton in
@@ -447,47 +447,47 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
   QString mimetype( KMimeMagic::self()->findFileType( fname )->mimeType() );
   if (mimetype != "application/x-dvi") {
     KMessageBox::sorry( parentWidget,
-			i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has "
-			      "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
-			.arg( fname )
-			.arg( mimetype ) );
+                        i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has "
+                              "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
+                        .arg( fname )
+                        .arg( mimetype ) );
     return false;
   }
-  
+
   QApplication::setOverrideCursor( waitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
-  
+
   if ((dviFile == 0) || (dviFile->filename != filename))
     dviFile_new->sourceSpecialMarker = true;
   else
     dviFile_new->sourceSpecialMarker = false;
-  
+
   if ((dviFile_new->dvi_Data() == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
       KMessageBox::detailedError(parentWidget,
-				 i18n("<qt>File corruption! KDVI had trouble interpreting your DVI file. Most "
-				      "likely this means that the DVI file is broken.</qt>"),
-				 dviFile_new->errorMsg, i18n("DVI File Error"));
+                                 i18n("<qt>File corruption! KDVI had trouble interpreting your DVI file. Most "
+                                      "likely this means that the DVI file is broken.</qt>"),
+                                 dviFile_new->errorMsg, i18n("DVI File Error"));
     delete dviFile_new;
     return false;
   }
-  
+
   delete dviFile;
   dviFile = dviFile_new;
   numPages = dviFile->total_pages;
   info->setDVIData(dviFile);
   _isModified = false;
   baseURL = base;
-  
+
   font_pool.setExtraSearchPath( fi.dirPath(true) );
   font_pool.setCMperDVIunit( dviFile->getCmPerDVIunit() );
-  
+
   // Extract PostScript from the DVI file, and store the PostScript
   // specials in PostScriptDirectory, and the headers in the
   // PostScriptHeaderString.
   PS_interface->clear();
-  
+
   // If the DVI file comes from a remote URL (e.g. downloaded from a
   // web server), we limit the PostScript files that can be accessed
   // by this file to the download directory, in order to limit the
@@ -498,27 +498,27 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
     includePath.truncate(includePath.findRev('/'));
   }
   PS_interface->setIncludePath(includePath);
-  
+
   // We will also generate a list of hyperlink-anchors and source-file
   // anchors in the document. So declare the existing lists empty.
   anchorList.clear();
   sourceHyperLinkAnchors.clear();
   bookmarks.clear();
   prebookmarks.clear();
-  
+
   if (dviFile->page_offset.isEmpty() == true)
     return false;
-  
+
   // Locate fonts.
   font_pool.locateFonts();
-  
+
   // Update the list of fonts in the info window
   if (info != 0)
     info->setFontInfo(&font_pool);
-  
+
   // We should pre-scan the document now (to extract embedded,
   // PostScript, Hyperlinks, ets).
-  
+
   // PRESCAN STARTS HERE
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
@@ -528,27 +528,27 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
   dviFile->numberOfExternalPSFiles = 0;
   Q_UINT16 currPageSav = current_page;
   prebookmarks.clear();
-  
+
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     PostScriptOutPutString = new QString();
-    
+
     if (current_page < dviFile->total_pages) {
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
       end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
     } else
       command_pointer = end_pointer = 0;
-    
+
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
     currinf._virtual  = NULL;
     prescan(&dviRenderer::prescan_parseSpecials);
-    
+
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
     delete PostScriptOutPutString;
   }
   PostScriptOutPutString = NULL;
-  
+
   // Generate the list of bookmarks
   bookmarks.clear();
   QPtrStack<Bookmark> stack;
@@ -566,21 +566,21 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
       stack.push(bmk);
   }
   prebookmarks.clear();
-  
-  
+
+
 #ifdef PERFORMANCE_MEASUREMENT
   kdDebug(4300) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
   current_page = currPageSav;
   // PRESCAN ENDS HERE
-  
-  
+
+
   pageSizes.resize(0);
   if (dviFile->suggestedPageSize != 0) {
     // Fill the vector pageSizes with total_pages identical entries
     pageSizes.resize(dviFile->total_pages, *(dviFile->suggestedPageSize));
   }
-  
+
   QApplication::restoreOverrideCursor();
   return true;
 }
@@ -589,15 +589,15 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
 Anchor dviRenderer::parseReference(const QString &reference)
 {
   mutex.lock();
-  
+
 #ifdef DEBUG_DVIRENDERER
   kdError(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
-  
+
   if (dviFile == 0) {
     mutex.unlock();
     return Anchor();
-  }    
+  }
 
   // case 1: The reference is a number, which we'll interpret as a
   // page number.
@@ -612,25 +612,25 @@ Anchor dviRenderer::parseReference(const QString &reference)
     mutex.unlock();
     return Anchor(page, Length() );
   }
-  
+
   // case 2: The reference is of form "src:1111Filename", where "1111"
   // points to line number 1111 in the file "Filename". KDVI then
   // looks for source specials of the form "src:xxxxFilename", and
   // tries to find the special with the biggest xxxx
   if (reference.find("src:",0,false) == 0) {
-  
+
     // Extract the file name and the numeral part from the reference string
     DVI_SourceFileSplitter splitter(reference, dviFile->filename);
     Q_UINT32 refLineNumber = splitter.line();
     QString  refFileName   = splitter.filePath();
-    
+
     if (sourceHyperLinkAnchors.isEmpty()) {
       KMessageBox::sorry(parentWidget, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
-				    "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
-				    "does not contain the necessary source file information. "
-				    "We refer to the manual of KDVI for a detailed explanation on how to include this "
-				    "information. Press the F1 key to open the manual.</qt>").arg(refLineNumber).arg(refFileName),
-			 i18n("Could Not Find Reference"));
+                                    "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
+                                    "does not contain the necessary source file information. "
+                                    "We refer to the manual of KDVI for a detailed explanation on how to include this "
+                                    "information. Press the F1 key to open the manual.</qt>").arg(refLineNumber).arg(refFileName),
+                         i18n("Could Not Find Reference"));
       mutex.unlock();
       return Anchor();
     }
@@ -649,31 +649,31 @@ Anchor dviRenderer::parseReference(const QString &reference)
     // the LaTeX file. In that case, we jump to the beginning of the
     // document.
     bool anchorForRefFileFound = false; // Flag that is set if source file anchors for the refFileName could be found at all
-    
+
     QValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
     QValueVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
       if (refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace()
       || refFileName.stripWhiteSpace() == it->fileName.stripWhiteSpace() + ".tex"
       ) {
-	anchorForRefFileFound = true;
-	
-	if ( (it->line <= refLineNumber) &&
-	     ( (bestMatch == sourceHyperLinkAnchors.end()) || (it->line > bestMatch->line) ) )
-	  bestMatch = it;
+        anchorForRefFileFound = true;
+
+        if ( (it->line <= refLineNumber) &&
+             ( (bestMatch == sourceHyperLinkAnchors.end()) || (it->line > bestMatch->line) ) )
+          bestMatch = it;
       }
-    
+
     if (bestMatch != sourceHyperLinkAnchors.end()) {
       mutex.unlock();
       return Anchor(bestMatch->page, bestMatch->distance_from_top);
     } else
       if (anchorForRefFileFound == false)
-	KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
-					      "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(refLineNumber).arg(refFileName),
-			   i18n( "Could Not Find Reference" ));
+        KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
+                                              "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(refLineNumber).arg(refFileName),
+                           i18n( "Could Not Find Reference" ));
       else {
-	mutex.unlock();
-	return Anchor();
+        mutex.unlock();
+        return Anchor();
       }
     mutex.unlock();
     return Anchor();
@@ -693,8 +693,8 @@ void dviRenderer::setResolution(double resolution_in_DPI)
     return;
 
   resolutionInDPI = resolution_in_DPI;
-  
-  // Pass the information on to the font pool. 
+
+  // Pass the information on to the font pool.
   font_pool.setDisplayResolution( resolutionInDPI );
   shrinkfactor = 1200/resolutionInDPI;
   return;
@@ -722,34 +722,34 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
   if ( ! splitter.fileExists() )
   {
       KMessageBox::sorry(parentWidget, QString("<qt>") +
-			 i18n("The DVI-file refers to the TeX-file "
-			      "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
-			 QString("</qt>"),
-			 i18n( "Could Not Find File" ));
+                         i18n("The DVI-file refers to the TeX-file "
+                              "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
+                         QString("</qt>"),
+                         i18n( "Could Not Find File" ));
       return;
   }
-  
+
   QString command = editorCommand;
   if (command.isEmpty() == true) {
     int r = KMessageBox::warningContinueCancel(parentWidget, QString("<qt>") +
-					       i18n("You have not yet specified an editor for inverse search. "
-						    "Please choose your favorite editor in the "
-						    "<strong>DVI options dialog</strong> "
-						    "which you will find in the <strong>Settings</strong>-menu.") +
-					       QString("</qt>"),
-					       i18n("Need to Specify Editor"),
-					       i18n("Use KDE's Editor Kate for Now"));
+                                               i18n("You have not yet specified an editor for inverse search. "
+                                                    "Please choose your favorite editor in the "
+                                                    "<strong>DVI options dialog</strong> "
+                                                    "which you will find in the <strong>Settings</strong>-menu.") +
+                                               QString("</qt>"),
+                                               i18n("Need to Specify Editor"),
+                                               i18n("Use KDE's Editor Kate for Now"));
     if (r == KMessageBox::Continue)
       command = "kate %f";
     else
       return;
   }
   command = command.replace( "%l", QString::number(splitter.line()) ).replace( "%f", KShellProcess::quote(TeXfile) );
-  
+
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "Calling program: " << command << endl;
 #endif
-  
+
   // There may still be another program running. Since we don't
   // want to mix the output of several programs, we will
   // henceforth dimiss the output of the older programm. "If it
@@ -759,7 +759,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
     qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
     proc = 0;
   }
-  
+
   // Set up a shell process with the editor command.
   proc = new KShellProcess();
   if (proc == 0) {
@@ -771,17 +771,17 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
   qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(editorCommand_terminated(KProcess *)));
   // Merge the editor-specific editor message here.
   export_errorString = i18n("<qt>The external program<br><br><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
-			    "for inverse search, reported an error. You might wish to look at the <strong>document info "
-			    "dialog</strong> which you will find in the File-Menu for a precise error report. The "
-			    "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
-			    "and a list of common problems.</qt>").arg(command);
-  
+                            "for inverse search, reported an error. You might wish to look at the <strong>document info "
+                            "dialog</strong> which you will find in the File-Menu for a precise error report. The "
+                            "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
+                            "and a list of common problems.</qt>").arg(command);
+
   info->clear(i18n("Starting the editor..."));
-  
+
   int flashOffset      = e->y(); // Heuristic correction. Looks better.
   win->flash(flashOffset);
-  
-  
+
+
   proc->clearArguments();
   *proc << command;
   proc->closeStdin();
@@ -805,7 +805,7 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
   pdfstring = pdfstring.replace("\\(", "(");
   pdfstring = pdfstring.replace("\\)", ")");
   pdfstring = pdfstring.replace("\\\\", "\\");
-  
+
   // Now replace octal character codes with the characters they encode
   int pos;
   QRegExp rx( "(\\\\)(\\d\\d\\d)" );  // matches "\xyz" where x,y,z are numbers

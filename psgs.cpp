@@ -70,7 +70,7 @@ void ghostscript_interface::setPostScript(const PageNumber& page, const QString&
     if (pageList.count() > pageList.size() -2)
       pageList.resize(pageList.size()*2);
     pageList.insert(page, info);
-  } else 
+  } else
     *(pageList.find(page)->PostScriptString) = PostScript;
 }
 
@@ -124,16 +124,16 @@ QColor ghostscript_interface::getBackgroundColor(const PageNumber& page) const {
   kdDebug(4300) << "ghostscript_interface::getBackgroundColor( " << page << " )" << endl;
 #endif
 
-  if (pageList.find(page) == 0) 
+  if (pageList.find(page) == 0)
     return Qt::white;
-  else 
+  else
     return pageList.find(page)->background;
 }
 
 
 void ghostscript_interface::clear() {
   PostScriptHeaderString->truncate(0);
-  
+
   // Deletes all items, removes temporary files, etc.
   pageList.clear();
 }
@@ -150,7 +150,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   }
 
   emit(setStatusBarText(i18n("Generating PostScript graphics...")));
-  
+
   pageInfo *info = pageList.find(page);
 
   // Generate a PNG-file
@@ -173,7 +173,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
      << "TeXDict begin "
         // HSize in (1/(65781.76*72))inch
      << (Q_INT32)(72*65781*(pixel_page_w/resolution)) << ' '
-        // VSize in (1/(65781.76*72))inch 
+        // VSize in (1/(65781.76*72))inch
      << (Q_INT32)(72*65781*(pixel_page_h/resolution)) << ' '
         // Magnification
      << (Q_INT32)(magnification)
@@ -218,14 +218,14 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   argus << QString("-r%1").arg(resolution);                       // resolution in dpi
   argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
   argus << "-f" << PSfile.name();
-  
+
 #ifdef DEBUG_PSGS
   kdDebug(4300) << argus.join(" ") << endl;
 #endif
 
   proc << argus;
   if (proc.start(KProcess::Block) == false) {
-    // Starting ghostscript did not work. 
+    // Starting ghostscript did not work.
     // TODO: Issue error message, switch PS support off.
     kdError(4300) << "ghostview could not be started" << endl;
   }
@@ -240,37 +240,37 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     QString GSoutput;
     while(proc.readln(GSoutput) != -1) {
       if (GSoutput.contains("Unknown device")) {
-	kdDebug(4300) << QString("The version of ghostview installed on this computer does not support "
-				   "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
-	knownDevices.remove(gsDevice);
-	gsDevice = knownDevices.begin();
-	if (knownDevices.isEmpty())
-	  // TODO: show a requestor of some sort.
-	  KMessageBox::detailedError(0, 
-				     i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
-					  "any of the Ghostview device drivers that are known to KDVI. PostScript "
-					  "support has therefore been turned off in KDVI.</qt>"), 
-				     i18n("<qt><p>The Ghostview program, which KDVI uses internally to display the "
-					  "PostScript graphics that is included in this DVI file, is generally able to "
-					  "write its output in a variety of formats. The sub-programs that Ghostview uses "
-					  "for these tasks are called 'device drivers'; there is one device driver for "
-					  "each format that Ghostview is able to write. Different versions of Ghostview "
-					  "often have different sets of device drivers available. It seems that the "
-					  "version of Ghostview that is installed on this computer does not contain "
-					  "<strong>any</strong> of the device drivers that are known to KDVI.</p>"
-					  "<p>It seems unlikely that a regular installation of Ghostview would not contain "
-					  "these drivers. This error may therefore point to a serious misconfiguration of "
-					  "the Ghostview installation on your computer.</p>"
-					  "<p>If you want to fix the problems with Ghostview, you can use the command "
-					  "<strong>gs --help</strong> to display the list of device drivers contained in "
-					  "Ghostview. Among others, KDVI can use the 'png256', 'jpeg' and 'pnm' "
-					  "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
-					  "</p></qt>"));
-	else {
-	  kdDebug(4300) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
-	  gs_generate_graphics_file(page, filename, magnification);
-	}
-	return;
+        kdDebug(4300) << QString("The version of ghostview installed on this computer does not support "
+                                   "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
+        knownDevices.remove(gsDevice);
+        gsDevice = knownDevices.begin();
+        if (knownDevices.isEmpty())
+          // TODO: show a requestor of some sort.
+          KMessageBox::detailedError(0,
+                                     i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
+                                          "any of the Ghostview device drivers that are known to KDVI. PostScript "
+                                          "support has therefore been turned off in KDVI.</qt>"),
+                                     i18n("<qt><p>The Ghostview program, which KDVI uses internally to display the "
+                                          "PostScript graphics that is included in this DVI file, is generally able to "
+                                          "write its output in a variety of formats. The sub-programs that Ghostview uses "
+                                          "for these tasks are called 'device drivers'; there is one device driver for "
+                                          "each format that Ghostview is able to write. Different versions of Ghostview "
+                                          "often have different sets of device drivers available. It seems that the "
+                                          "version of Ghostview that is installed on this computer does not contain "
+                                          "<strong>any</strong> of the device drivers that are known to KDVI.</p>"
+                                          "<p>It seems unlikely that a regular installation of Ghostview would not contain "
+                                          "these drivers. This error may therefore point to a serious misconfiguration of "
+                                          "the Ghostview installation on your computer.</p>"
+                                          "<p>If you want to fix the problems with Ghostview, you can use the command "
+                                          "<strong>gs --help</strong> to display the list of device drivers contained in "
+                                          "Ghostview. Among others, KDVI can use the 'png256', 'jpeg' and 'pnm' "
+                                          "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
+                                          "</p></qt>"));
+        else {
+          kdDebug(4300) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
+          gs_generate_graphics_file(page, filename, magnification);
+        }
+        return;
       }
     }
   }

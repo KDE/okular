@@ -43,9 +43,9 @@ public slots:
     void       setFontInfo(fontPool *fp);
 
     /** Calling this slot clears the text view and stores the
-	headline. The next time output is received via the
-	outputReceiver, the headline is displayed in bold on top of
-	the text view. */
+        headline. The next time output is received via the
+        outputReceiver, the headline is displayed in bold on top of
+        the text view. */
     void       clear(const QString&);
 
 protected:

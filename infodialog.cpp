@@ -40,7 +40,7 @@ infoDialog::infoDialog( QWidget* parent )
   TextLabel2->setMinimumHeight(fontMetrics().height()*10);
   QToolTip::add( TextLabel2, i18n("Information on currently loaded fonts.") );
   TextLabel2->setWhatsThis( i18n("This text field shows detailed information about the currently loaded fonts. "
-				    "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );
+                                    "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );
   topLayout2->addWidget( TextLabel2 );
 
   QFrame *page3 = addPage( i18n("External Programs") );
@@ -49,8 +49,8 @@ infoDialog::infoDialog( QWidget* parent )
   TextLabel3->setText( i18n("No output from any external program received.") );
   QToolTip::add( TextLabel3, i18n("Output of external programs.") );
   TextLabel3->setWhatsThis( i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
-				    "This text field shows the output of these programs. "
-				    "That is useful for experts who want to find problems in the setup of TeX or KDVI.") );
+                                    "This text field shows the output of these programs. "
+                                    "That is useful for experts who want to find problems in the setup of TeX or KDVI.") );
   topLayout3->addWidget( TextLabel3 );
 
   MFOutputReceived = false;
@@ -116,9 +116,9 @@ void infoDialog::outputReceiver(const QString& _op)
       int endstartline  = line.find("\n",startlineindex);
       QString startLine = line.mid(startlineindex,endstartline-startlineindex);
       if (MFOutputReceived)
-	TextLabel3->append("<hr>\n<b>"+startLine+"</b>");
+        TextLabel3->append("<hr>\n<b>"+startLine+"</b>");
       else
-	TextLabel3->append("<b>"+startLine+"</b>");
+        TextLabel3->append("<b>"+startLine+"</b>");
     TextLabel3->append(line.mid(endstartline));
     } else
       TextLabel3->append(line);

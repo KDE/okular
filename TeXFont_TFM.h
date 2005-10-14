@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // TeXFont_TFM.h
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -14,7 +14,7 @@
 
 class fix_word {
  public:
-  void fromINT32(Q_INT32 val) {value = val;} 
+  void fromINT32(Q_INT32 val) {value = val;}
   void fromDouble(double val) {value = (Q_INT32)(val * (1<<20) + 0.5);}
   double toDouble() {return (double(value)) / (double(1<<20));}
 
@@ -25,7 +25,7 @@ class TeXFont_TFM : public TeXFont {
  public:
   TeXFont_TFM(TeXFontDefinition *parent);
   ~TeXFont_TFM();
-  
+
   glyph* getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black);
 
  private:

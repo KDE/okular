@@ -24,11 +24,11 @@ public:
 
   /// returns the list of supported file formats
   virtual QStringList fileFormats() const;
-  
+
   virtual void setFile(bool r);
 
   virtual void print();
-  
+
   /// KDVI offers read- and write functionality must re-implement this
   /// method and return true here.
   virtual bool isReadWrite() {return true;}
@@ -45,12 +45,12 @@ private:
   /** Used to enable the export menu when a file is successfully
       loaded. */
   virtual void enableActions(bool);
-  
+
 public slots:
   /** Opens a file requestor and saves. This really saves the content
       of the DVI-file, and does not just start a copy job */
   virtual void slotSave();
- 
+
   /** Similar to slotSave, but does not ask for a filename. */
   virtual void slotSave_defaultFilename();
 

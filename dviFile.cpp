@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  *
  * NOTE:
- *	xdvi is based on prior work as noted in the modification history, below.
+ *        xdvi is based on prior work as noted in the modification history, below.
  */
 
 /*
@@ -34,19 +34,19 @@
  * Code derived from dvi-imagen.c.
  *
  * Modification history:
- * 1/1986	Modified for X.10	--Bob Scheifler, MIT LCS.
- * 7/1988	Modified for X.11	--Mark Eichin, MIT
- * 12/1988	Added 'R' option, toolkit, magnifying glass
- *					--Paul Vojta, UC Berkeley.
- * 2/1989	Added tpic support	--Jeffrey Lee, U of Toronto
- * 4/1989	Modified for System V	--Donald Richardson, Clarkson Univ.
- * 3/1990	Added VMS support	--Scott Allendorf, U of Iowa
- * 7/1990	Added reflection mode	--Michael Pak, Hebrew U of Jerusalem
- * 1/1992	Added greyscale code	--Till Brychcy, Techn. Univ. Muenchen
- *					  and Lee Hetherington, MIT
- * 4/1994	Added DPS support, bounding box
- *					--Ricardo Telichevesky
- *					  and Luis Miguel Silveira, MIT RLE.
+ * 1/1986        Modified for X.10        --Bob Scheifler, MIT LCS.
+ * 7/1988        Modified for X.11        --Mark Eichin, MIT
+ * 12/1988        Added 'R' option, toolkit, magnifying glass
+ *                                        --Paul Vojta, UC Berkeley.
+ * 2/1989        Added tpic support       --Jeffrey Lee, U of Toronto
+ * 4/1989        Modified for System V    --Donald Richardson, Clarkson Univ.
+ * 3/1990        Added VMS support        --Scott Allendorf, U of Iowa
+ * 7/1990        Added reflection mode    --Michael Pak, Hebrew U of Jerusalem
+ * 1/1992        Added greyscale code     --Till Brychcy, Techn. Univ. Muenchen
+ *                                          and Lee Hetherington, MIT
+ * 4/1994        Added DPS support, bounding box
+ *                                        --Ricardo Telichevesky
+ *                                          and Luis Miguel Silveira, MIT RLE.
  */
 
 #include <config.h>
@@ -69,7 +69,7 @@ extern "C" {
 #include "xdvi.h"
 
 
-dvifile::dvifile(const dvifile *old, fontPool *fp) 
+dvifile::dvifile(const dvifile *old, fontPool *fp)
 {
   errorMsg     = QString::null;
   errorCounter = 0;
@@ -84,7 +84,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
 
   filename = old->filename;
   size_of_file = old->size_of_file;
-  end_pointer = dvi_Data()+size_of_file; 
+  end_pointer = dvi_Data()+size_of_file;
   if (dvi_Data() == 0) {
     kdError(4300) << "Not enough memory to copy the DVI-file." << endl;
     return;
@@ -107,7 +107,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
 void dvifile::process_preamble()
 {
   command_pointer = dvi_Data();
-  
+
   Q_UINT8 magic_number = readUINT8();
   if (magic_number != PRE) {
     errorMsg = i18n("The DVI file does not start with the preamble.");
@@ -116,11 +116,11 @@ void dvifile::process_preamble()
   magic_number =  readUINT8();
   if (magic_number != 2) {
     errorMsg = i18n("The DVI file contains the wrong version of DVI output for this program. "
-		    "Hint: If you use the typesetting system Omega, you have to use a special "
-		    "program, such as oxdvi.");
+                    "Hint: If you use the typesetting system Omega, you have to use a special "
+                    "program, such as oxdvi.");
     return;
   }
-  
+
   /** numerator, denominator and the magnification value that describe
       how many centimeters there are in one TeX unit, as explained in
       section A.3 of the DVI driver standard, Level 0, published by
@@ -128,14 +128,14 @@ void dvifile::process_preamble()
   Q_UINT32 numerator     = readUINT32();
   Q_UINT32 denominator   = readUINT32();
   _magnification = readUINT32();
-  
+
   cmPerDVIunit =  (double(numerator) / double(denominator)) * (double(_magnification) / 1000.0) * (1.0 / 1e5);
-  
-  
+
+
   // Read the generatorString (such as "TeX output ..." from the
   // DVI-File). The variable "magic_number" holds the length of the
   // string.
-  char	job_id[300];
+  char        job_id[300];
   magic_number = readUINT8();
   strncpy(job_id, (char *)command_pointer, magic_number);
   job_id[magic_number] = '\0';
@@ -190,38 +190,38 @@ void dvifile::read_postamble()
     // Read scale and design factor, and the name of the font. All
     // these are explained in section A.4 of the DVI driver standard,
     // Level 0, published by the TUG DVI driver standards committee
-    Q_UINT32 scale     = readUINT32(); 
-    Q_UINT32 design    = readUINT32(); 
+    Q_UINT32 scale     = readUINT32();
+    Q_UINT32 design    = readUINT32();
     Q_UINT16 len       = readUINT8() + readUINT8(); // Length of the font name, including the directory name
     char *fontname  = new char[len + 1];
     strncpy(fontname, (char *)command_pointer, len );
     fontname[len] = '\0';
     command_pointer += len;
-    
+
 #ifdef DEBUG_FONTS
     kdDebug(4300) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
-    
+
     // According to section A.4 of the DVI driver standard, this font
     // shall be enlarged by the following factor before it is used.
     double enlargement_factor = (double(scale) * double(_magnification))/(double(design) * 1000.0);
-    
+
     if (font_pool != 0) {
       TeXFontDefinition *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
-      
+
       // Insert font in dictionary and make sure the dictionary is big
       // enough.
       if (tn_table.size()-2 <= tn_table.count())
-	// Not quite optimal. The size of the dictionary should be a
-	// prime for optimal performance. I don't care.
-	tn_table.resize(tn_table.size()*2); 
+        // Not quite optimal. The size of the dictionary should be a
+        // prime for optimal performance. I don't care.
+        tn_table.resize(tn_table.size()*2);
       tn_table.insert(TeXnumber, fontp);
     }
-    
+
     // Read the next command
     cmnd = readUINT8();
   }
-  
+
   if (cmnd != POSTPOST) {
     errorMsg = i18n("The postamble contained a command other than FNTDEF.");
     return;
@@ -246,7 +246,7 @@ void dvifile::prepare_pages()
   }
   for(int i=0; i<=total_pages; i++)
     page_offset[i] = 0;
-  
+
 
   page_offset[total_pages] = beginning_of_postamble;
   Q_UINT16 i               = total_pages-1;
@@ -291,7 +291,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   dviData.resize(size_of_file);
   // Sets the end pointer for the bigEndianByteReader so that the
   // whole memory buffer is readable
-  end_pointer = dvi_Data()+size_of_file; 
+  end_pointer = dvi_Data()+size_of_file;
   if (dvi_Data() == 0) {
     kdError() << i18n("Not enough memory to load the DVI-file.");
     return;
@@ -304,7 +304,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   }
 
   tn_table.clear();
-  
+
   process_preamble();
   find_postamble();
   read_postamble();
@@ -349,15 +349,15 @@ void dvifile::renumber()
     Q_UINT8 *num = (Q_UINT8 *)&i;
     for(Q_UINT8 j=0; j<4; j++)
       if (bigEndian) {
-	*(ptr++) = num[0];
-	*(ptr++) = num[1];
-	*(ptr++) = num[2];
-	*(ptr++) = num[3];
+        *(ptr++) = num[0];
+        *(ptr++) = num[1];
+        *(ptr++) = num[2];
+        *(ptr++) = num[3];
       } else {
-	*(ptr++) = num[3];
-	*(ptr++) = num[2];
-	*(ptr++) = num[1];
-	*(ptr++) = num[0];
+        *(ptr++) = num[3];
+        *(ptr++) = num[2];
+        *(ptr++) = num[1];
+        *(ptr++) = num[0];
       }
   }
 }
@@ -385,15 +385,15 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     convertedFiles[PDFFilename] = QString::null; // Indicates that conversion failed, won't try again.
     if ((converrorms != 0) && (have_complainedAboutMissingPDF2PS == false)) {
       *converrorms = i18n("<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
-			  "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
-			  "document will therefore not be displayed.</p>"
-			  "<p><b>Possible reason:</b> The program <strong>pdf2ps</strong> is perhaps not installed "
-			  "on your system, or it cannot be found in the current search path.</p>"
-			  "<p><b>What you can do:</b> The program <strong>pdf2ps</strong> program is normally "
-			  "contained in distributions of the ghostscript PostScript interpreter system. If "
-			  "ghostscipt is not installed on your system, you could install it now. " 
-			  "If you are sure that ghostscript is installed, please try to use <strong>pdf2ps</strong> "
-			  "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>").arg(PDFFilename).arg(getenv("PATH"));
+                          "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
+                          "document will therefore not be displayed.</p>"
+                          "<p><b>Possible reason:</b> The program <strong>pdf2ps</strong> is perhaps not installed "
+                          "on your system, or it cannot be found in the current search path.</p>"
+                          "<p><b>What you can do:</b> The program <strong>pdf2ps</strong> program is normally "
+                          "contained in distributions of the ghostscript PostScript interpreter system. If "
+                          "ghostscipt is not installed on your system, you could install it now. "
+                          "If you are sure that ghostscript is installed, please try to use <strong>pdf2ps</strong> "
+                          "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>").arg(PDFFilename).arg(getenv("PATH"));
       have_complainedAboutMissingPDF2PS = true;
     }
     return QString::null;
@@ -403,13 +403,13 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     if (converrorms != 0) {
       QString outp, outl;
       while(proc.readln(outl) != -1)
-	outp += outl;
+        outp += outl;
 
       *converrorms = i18n("<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
-			  "document will therefore not be displayed.</p>"
-			  "<p><b>Possible reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
-			  "This is the output of the <strong>pdf2ps</strong> program that KDVI used:</p>"
-			  "<p><strong>%2</strong></p></qt>").arg(PDFFilename).arg(outp);
+                          "document will therefore not be displayed.</p>"
+                          "<p><b>Possible reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
+                          "This is the output of the <strong>pdf2ps</strong> program that KDVI used:</p>"
+                          "<p><strong>%2</strong></p></qt>").arg(PDFFilename).arg(outp);
     }
     return QString::null;
   }

@@ -1,6 +1,6 @@
 // fontEncodingPool.cpp
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -19,7 +19,7 @@ fontEncodingPool::fontEncodingPool()
 fontEncoding *fontEncodingPool::findByName(const QString &name)
 {
   fontEncoding *ptr = dictionary.find( name );
-  
+
   if (ptr == 0) {
     ptr = new fontEncoding(name);
     if (ptr->isValid())
@@ -28,8 +28,8 @@ fontEncoding *fontEncodingPool::findByName(const QString &name)
       delete ptr;
       ptr = 0;
     }
-  } 
-  
+  }
+
   return ptr;
 }
 

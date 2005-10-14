@@ -11,7 +11,7 @@ clean:: mostlyclean
 
 distclean:: clean
 	rm -f Makefile MakeTeXPK *.pool
-	rm -f config.status config.log config.cache c-auto.h 
+	rm -f config.status config.log config.cache c-auto.h
 
 # Although we can remake configure and c-auto.h.in, we don't remove
 # them, since many people may lack Autoconf.  Use configclean for that.

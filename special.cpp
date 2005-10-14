@@ -117,7 +117,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     namedColors["CornflowerBlue"] = QColor( (int)(255.0*0.35), (int)(255.0*0.87), (int)(255.0*1));
     namedColors["WildStrawberry"] = QColor( (int)(255.0*1), (int)(255.0*0.04), (int)(255.0*0.61));
   }
-  
+
   QString specType = colorSpec.section(' ', 0, 0);
 
   if (specType.find("rgb", false) == 0) {
@@ -126,11 +126,11 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     double r = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (r < 0.0) || (r > 1.0))
       return QColor();
-    
+
     double g = colorSpec.section(' ', 2, 2).toDouble(&ok);
     if ((ok == false) || (g < 0.0) || (g > 1.0))
       return QColor();
-    
+
     double b = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (b < 0.0) || (b > 1.0))
       return QColor();
@@ -144,11 +144,11 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     double h = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (h < 0.0) || (h > 1.0))
       return QColor();
-    
+
     double s = colorSpec.section(' ', 2, 2).toDouble(&ok);
     if ((ok == false) || (s < 0.0) || (s > 1.0))
       return QColor();
-    
+
     double b = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (b < 0.0) || (b > 1.0))
       return QColor();
@@ -162,15 +162,15 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     double c = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (c < 0.0) || (c > 1.0))
       return QColor();
-    
+
     double m = colorSpec.section(' ', 2, 2).toDouble(&ok);
     if ((ok == false) || (m < 0.0) || (m > 1.0))
       return QColor();
-    
+
     double y = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (y < 0.0) || (y > 1.0))
       return QColor();
-    
+
     double k = colorSpec.section(' ', 3, 3).toDouble(&ok);
     if ((ok == false) || (k < 0.0) || (k > 1.0))
       return QColor();
@@ -195,7 +195,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     double g = colorSpec.section(' ', 1, 1).toDouble(&ok);
     if ((ok == false) || (g < 0.0) || (g > 1.0))
       return QColor();
-    
+
     return QColor((int)(g*255.0+0.5), (int)(g*255.0+0.5), (int)(g*255.0+0.5));
   }
 
@@ -215,35 +215,35 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
 void dviRenderer::color_special(const QString& _cp)
 {
   QString const cp = _cp.trimmed();
-  
+
   QString command = cp.section(' ', 0, 0);
-  
+
   if (command == "pop") {
     // Take color off the stack
     if (colorStack.isEmpty())
       printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Color pop command issued when the color stack is empty." ).
-				arg(dviFile->filename).arg(current_page));
+                                arg(dviFile->filename).arg(current_page));
     else
       colorStack.pop();
     return;
   }
-  
+
   if (command == "push") {
     // Get color specification
     QColor col = parseColorSpecification(cp.section(' ', 1));
     // Set color
-    if (col.isValid()) 
-      colorStack.push(col); 
+    if (col.isValid())
+      colorStack.push(col);
     else
-      colorStack.push(Qt::black); 
+      colorStack.push(Qt::black);
     return;
   }
-  
+
   // Get color specification and set the color for the rest of this
   // page
   QColor col = parseColorSpecification(cp);
   // Set color
-  if (col.isValid()) 
+  if (col.isValid())
     globalColor = col;
   else
     globalColor = Qt::black;
@@ -255,7 +255,7 @@ void dviRenderer::html_href_special(const QString& _cp)
 {
   QString cp = _cp;
   cp.truncate(cp.find('"'));
-  
+
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "HTML-special, href " << cp.latin1() << endl;
 #endif
@@ -337,9 +337,9 @@ void dviRenderer::epsf_special(const QString& cp)
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
-  
-  // Now parse the arguments. 
-  int  llx     = 0; 
+
+  // Now parse the arguments.
+  int  llx     = 0;
   int  lly     = 0;
   int  urx     = 0;
   int  ury     = 0;
@@ -349,7 +349,7 @@ void dviRenderer::epsf_special(const QString& cp)
 
   // just to avoid ambiguities; the filename could contain keywords
   include_command = include_command.mid(include_command.find(' '));
-  
+
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
   parse_special_argument(include_command, "urx=", &urx);
@@ -370,10 +370,10 @@ void dviRenderer::epsf_special(const QString& cp)
   // if that file exists, we draw it here.
   if (isGFX && QFile::exists(EPSfilename)) {
     // Don't show PostScript, just draw the bounding box. For this,
-    // calculate the size of the bounding box in Pixels. 
+    // calculate the size of the bounding box in Pixels.
     double bbox_width  = urx - llx;
     double bbox_height = ury - lly;
-    
+
     if ((rwi != 0)&&(bbox_width != 0)) {
       bbox_height *= rwi/bbox_width;
       bbox_width  = rwi;
@@ -384,10 +384,10 @@ void dviRenderer::epsf_special(const QString& cp)
     }
 
     double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
-    
+
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
-    
+
     QImage image(EPSfilename);
     image = image.smoothScale((int)(bbox_width), (int)(bbox_height));
     foreGroundPainter->drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
@@ -396,10 +396,10 @@ void dviRenderer::epsf_special(const QString& cp)
 
   if (!_postscript || !QFile::exists(EPSfilename)) {
     // Don't show PostScript, just draw the bounding box. For this,
-    // calculate the size of the bounding box in Pixels. 
+    // calculate the size of the bounding box in Pixels.
     double bbox_width  = urx - llx;
     double bbox_height = ury - lly;
-    
+
     if ((rwi != 0)&&(bbox_width != 0)) {
       bbox_height *= rwi/bbox_width;
       bbox_width  = rwi;
@@ -410,12 +410,12 @@ void dviRenderer::epsf_special(const QString& cp)
     }
 
     double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
-    
+
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
-    
+
     QRect bbox(((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height,
-	       (int)bbox_width, (int)bbox_height);
+               (int)bbox_width, (int)bbox_height);
 
     foreGroundPainter->save();
 
@@ -428,11 +428,11 @@ void dviRenderer::epsf_special(const QString& cp)
     if (QFile::exists(EPSfilename))
       foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
     else
-      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), 
-				i18n("File not found: \n %1").arg(EPSfilename), -1);
+      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter),
+                                i18n("File not found: \n %1").arg(EPSfilename), -1);
     foreGroundPainter->restore();
   }
-  
+
   return;
 }
 
@@ -474,16 +474,16 @@ void dviRenderer::TPIC_addPath_special(const QString& cp)
     printErrorMsgForSpecials( QString("TPIC special; cannot parse second argument in 'pn %1'.").arg(cp) );
     return;
   }
-  
+
   float mag = dviFile->getMagnification()/1000.0;
 
   int x = (int)( currinf.data.dvi_h/(shrinkfactor*65536.0) + mag*xKoord*resolutionInDPI/1000.0 + 0.5 );
   int y = (int)( currinf.data.pxl_v + mag*yKoord*resolutionInDPI/1000.0 + 0.5 );
-  
+
   // Initialize the point array used to store the path
-  if (TPIC_path.size() == 0) 
+  if (TPIC_path.size() == 0)
     number_of_elements_in_path = 0;
-  if (TPIC_path.size() == number_of_elements_in_path) 
+  if (TPIC_path.size() == number_of_elements_in_path)
     TPIC_path.resize(number_of_elements_in_path+100);
   TPIC_path.setPoint(number_of_elements_in_path++, x, y);
 }
@@ -494,7 +494,7 @@ void dviRenderer::TPIC_setPen_special(const QString& cp)
 #ifdef DEBUG_SPECIAL
   kdDebug(4300) << "TPIC special setPen: " << cp << endl;
 #endif
-  
+
   // Sets the pen size in milli-inches
   bool ok;
   penWidth_in_mInch = cp.trimmed().toFloat(&ok);
@@ -518,13 +518,13 @@ void dviRenderer::applicationDoSpecial(char *cp)
     color_special(special_command.mid(5));
     return;
   }
-  
+
   // HTML reference
   if (strncasecmp(cp, "html:<A href=", 13) == 0) {
     html_href_special(special_command.mid(14));
     return;
   }
-  
+
   // HTML anchor end
   if (strncasecmp(cp, "html:</A>", 9) == 0) {
     html_anchor_end();
@@ -550,7 +550,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
     epsf_special(special_command.mid(7));
     return;
   }
-  
+
   // source special
   if (strncasecmp(cp, "src:", 4) == 0) {
     source_special(special_command.mid(4));
@@ -587,15 +587,15 @@ void dviRenderer::applicationDoSpecial(char *cp)
       // sure to remove all link rectangles which point to
       // 'glopglyph'.
       while (!currentlyDrawnPage->hyperLinkList.isEmpty())
-	if (currentlyDrawnPage->hyperLinkList.last().linkText == "glopglyph")
-	  currentlyDrawnPage->hyperLinkList.pop_back();
-	else
-	  break;
+        if (currentlyDrawnPage->hyperLinkList.last().linkText == "glopglyph")
+          currentlyDrawnPage->hyperLinkList.pop_back();
+        else
+          break;
 
       HTML_href = new QString("glopglyph");
       return;
     }
-    
+
     // Hyperref: end of hyperref rectangle of unknown type or hyperref
     // link rectangle. In these cases we set HTML_href to NULL, which
     // causes the character drawing routines to stop drawing
@@ -606,12 +606,12 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // treated below.
     if ((special_command == "ps:SDict begin H.R end") || special_command.endsWith("H.L end")) {
       if (HTML_href != NULL) {
-	delete HTML_href;
-	HTML_href = NULL;
+        delete HTML_href;
+        HTML_href = NULL;
       }
       return; // end of hyperref rectangle
     }
-    
+
     // Hyperref: end of anchor rectangle. If this special is
     // encountered, the rectangle, which was started with "ps:SDict
     // begin H.S end" does not contain a link, but an anchor for a
@@ -625,17 +625,17 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // so no character will by accidentally underlined in blue.
     if (special_command.endsWith("H.A end")) {
       if (HTML_href != NULL) {
-	delete HTML_href;
-	HTML_href = NULL;
+        delete HTML_href;
+        HTML_href = NULL;
       }
       while (!currentlyDrawnPage->hyperLinkList.isEmpty())
-	if (currentlyDrawnPage->hyperLinkList.last().linkText == "glopglyph")
-	  currentlyDrawnPage->hyperLinkList.pop_back();
-	else
-	  break;
+        if (currentlyDrawnPage->hyperLinkList.last().linkText == "glopglyph")
+          currentlyDrawnPage->hyperLinkList.pop_back();
+        else
+          break;
       return; // end of hyperref anchor
     }
-    
+
     // Hyperref: specification of a hyperref link rectangle's
     // destination. As mentioned above, the destination of a hyperlink
     // is specified only AFTER the rectangle has been specified. We
@@ -644,31 +644,31 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // is open and fill in the value found here. NOTE: the character
     // drawing routines sometimes split a single hyperlink rectangle
     // into several rectangles (e.g. if the font changes, or when a
-    // line break is encountered) 
+    // line break is encountered)
     if (special_command.startsWith("ps:SDict begin [") && special_command.endsWith(" pdfmark end")) {
       if (!currentlyDrawnPage->hyperLinkList.isEmpty()) {
-	QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
-	Q3ValueVector<Hyperlink>::iterator it;
-        for( it = currentlyDrawnPage->hyperLinkList.begin(); it != currentlyDrawnPage->hyperLinkList.end(); ++it ) 
-	  if (it->linkText == "glopglyph")
-	    it->linkText = targetName;
+        QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
+        Q3ValueVector<Hyperlink>::iterator it;
+        for( it = currentlyDrawnPage->hyperLinkList.begin(); it != currentlyDrawnPage->hyperLinkList.end(); ++it )
+          if (it->linkText == "glopglyph")
+            it->linkText = targetName;
       }
       return; // hyperref definition of link/anchor/bookmark/etc
     }
   }
-  
+
   // Detect text rotation specials that are included by the graphicx
   // package. If one of these specials is found, the state of the
   // painter is saved, and the coordinate system is rotated
   // accordingly
-  if (special_command.startsWith("ps: gsave currentpoint currentpoint translate ") && 
+  if (special_command.startsWith("ps: gsave currentpoint currentpoint translate ") &&
       special_command.endsWith(" neg rotate neg exch neg exch translate") ) {
     bool ok;
     double angle = special_command.section(' ', 5, 5).toDouble(&ok);
     if (ok == true) {
       int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536)));
       int y = currinf.data.pxl_v;
-      
+
       foreGroundPainter->save();
       // Rotate about the current point
       foreGroundPainter->translate(x,y);
@@ -676,7 +676,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
       foreGroundPainter->translate(-x,-y);
     } else
       printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Could not interpret angle in text rotation special." ).
-				arg(dviFile->filename).arg(current_page));
+                                arg(dviFile->filename).arg(current_page));
   }
 
   // The graphicx package marks the end of rotated text with this
@@ -684,19 +684,19 @@ void dviRenderer::applicationDoSpecial(char *cp)
   if (special_command == "ps: currentpoint grestore moveto") {
     foreGroundPainter->restore();
   }
-  
+
   // The following special commands are not used here; they are of
   // interest only during the prescan phase. We recognize them here
   // anyway, to make sure that KDVI doesn't complain about
   // unrecognized special commands.
-  if ((cp[0] == '!') || 
-      (cp[0] == '"') || 
+  if ((cp[0] == '!') ||
+      (cp[0] == '"') ||
       (strncasecmp(cp, "html:<A name=", 13) == 0) ||
       (strncasecmp(cp, "ps:", 3) == 0) ||
       (strncasecmp(cp, "papersize", 9) == 0) ||
       (strncasecmp(cp, "background", 10) == 0) )
     return;
-  
+
   printErrorMsgForSpecials(i18n("The special command '%1' is not implemented.").arg(special_command));
   return;
 }

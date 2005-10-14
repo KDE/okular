@@ -23,7 +23,7 @@ kdvipart_la_SOURCES = renderedDviPagePixmap.cpp dviPageCache.cpp \
 	optionDialogSpecialWidget.cpp optionDialogSpecialWidget_base.ui \
 	TeXFont.cpp TeXFont_PK.cpp TeXFont_PFB.cpp TeXFont_TFM.cpp \
 	TeXFontDefinition.cpp dviWidget.cpp dvisourcesplitter.cpp \
-	prefs.kcfgc 
+	prefs.kcfgc
 
 kde_kcfg_DATA = kdvi.kcfg
 

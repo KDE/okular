@@ -1,6 +1,6 @@
 // dviRenderer_prescan.cpp
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003--2004 Stefan Kebekus
 // Distributed under the GPL
@@ -27,9 +27,9 @@
 #include <kprogress.h>
 #include <qapplication.h>
 #include <qbitmap.h>
-#include <qdir.h> 
+#include <qdir.h>
 #include <qfileinfo.h>
-#include <qimage.h> 
+#include <qimage.h>
 #include <qpainter.h>
 #include <qpaintdevice.h>
 //Added by qt3to4:
@@ -51,13 +51,13 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 #endif
 
   // Encapsulated Postscript File
-  if (strncasecmp(cp, "PSfile=", 7) != 0) 
+  if (strncasecmp(cp, "PSfile=", 7) != 0)
     return;
 
   QString command(cp+7);
-  
+
   QString include_command = command.simplified();
-  
+
   // The line is supposed to start with "..ile=", and then comes the
   // filename. Figure out what the filename is and stow it away. Of
   // course, this does not work if the filename contains spaces
@@ -91,7 +91,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 
   QString originalFName = EPSfilename;
 
-  embedPS_progress->setLabel(i18n("Embedding %1").arg(EPSfilename));  
+  embedPS_progress->setLabel(i18n("Embedding %1").arg(EPSfilename));
   qApp->processEvents();
 
   // If the EPSfilename really points to a PDF file, convert that file now.
@@ -102,9 +102,9 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     // Find the number of the page
     Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
     Q_UINT16 page;
-    for(page=0; page < dviFile->total_pages; page++) 
+    for(page=0; page < dviFile->total_pages; page++)
       if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
-	break;
+        break;
     if (is_pdf_file)
       errorMsg += i18n("Page %1: The PDF file <strong>%2</strong> could not be converted to PostScript.<br>").arg(page+1).arg(originalFName);
     else
@@ -113,10 +113,10 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     qApp->processEvents();
     return;
   }
-  
 
-  // Now parse the arguments. 
-  int  llx     = 0; 
+
+  // Now parse the arguments.
+  int  llx     = 0;
   int  lly     = 0;
   int  urx     = 0;
   int  ury     = 0;
@@ -126,7 +126,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 
   // just to avoid ambiguities; the filename could contain keywords
   include_command = include_command.mid(include_command.find(' '));
-  
+
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
   parse_special_argument(include_command, "urx=", &urx);
@@ -148,7 +148,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   if (clip != -1)
     PS.append(" @clip");
   PS.append( " @setspecial\n" );
-  
+
   QFile file( EPSfilename );
   if ( file.open( QIODevice::ReadOnly ) ) {
     QTextStream stream( &file );
@@ -160,14 +160,14 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   }
   PS.append( "@endspecial" );
   PS = PS.simplified();
-  
-  
+
+
   _isModified = true;
   Q_UINT32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
   Q_UINT32 lengthOfNewSpecial = PS.length()+5;
-  
+
   Q3MemArray<Q_UINT8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
-  
+
   Q_UINT8 *commandPtrSav = command_pointer;
   Q_UINT8 *endPtrSav = end_pointer;
   end_pointer = newDVI.data() + dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
@@ -178,8 +178,8 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   writeUINT32(PS.length());
   memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+5, PS.latin1(), PS.length() );
   memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
-	 dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data())-lengthOfOldSpecial );
-  
+         dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data())-lengthOfOldSpecial );
+
   // Adjust page pointers in the DVI file
   dviFile->size_of_file = dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
   end_pointer = newDVI.data() + dviFile->size_of_file;
@@ -190,17 +190,17 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
       command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
       Q_UINT32 a = readUINT32();
       if (a > currentOffset) {
-	a = a + lengthOfNewSpecial-lengthOfOldSpecial;
-	command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
-	writeUINT32(a);
+        a = a + lengthOfNewSpecial-lengthOfOldSpecial;
+        command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
+        writeUINT32(a);
       }
     }
   }
-  
-  
+
+
   dviFile->beginning_of_postamble            = dviFile->beginning_of_postamble + lengthOfNewSpecial - lengthOfOldSpecial;
   dviFile->page_offset[dviFile->total_pages] = dviFile->beginning_of_postamble;
-  
+
   command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
   Q_UINT32 a = readUINT32();
   if (a > currentOffset) {
@@ -208,23 +208,23 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
     writeUINT32(a);
   }
-  
+
   command_pointer = newDVI.data() + dviFile->size_of_file - 1;
   while((*command_pointer == TRAILER) && (command_pointer > newDVI.data()))
     command_pointer--;
   command_pointer -= 4;
   writeUINT32(dviFile->beginning_of_postamble);
   command_pointer -= 4;
-  
+
   command_pointer = commandPtrSav;
   end_pointer     = endPtrSav;
-  
+
   // Modify all pointers to point to the newly allocated memory
   command_pointer = newDVI.data() + (command_pointer - dviFile->dvi_Data()) + lengthOfNewSpecial-lengthOfOldSpecial;
   end_pointer = newDVI.data() + (end_pointer - dviFile->dvi_Data())  + lengthOfNewSpecial-lengthOfOldSpecial;
-  
+
   dviFile->setNewData(newDVI);
-  
+
   embedPS_progress->progressBar()->advance(1);
   qApp->processEvents();
   return;
@@ -236,12 +236,12 @@ void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpeci
 #ifdef  DEBUG_PRESCAN
   kdDebug(4300) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
 #endif
-  
+
   // Encapsulated Postscript File
-  if (strncasecmp(cp, "papersize=", 10) != 0) 
+  if (strncasecmp(cp, "papersize=", 10) != 0)
     return;
-  
-  for (Q_UINT8 *ptr=beginningOfSpecialCommand; ptr<command_pointer; ptr++) 
+
+  for (Q_UINT8 *ptr=beginningOfSpecialCommand; ptr<command_pointer; ptr++)
     *ptr = NOP;
 }
 
@@ -258,7 +258,7 @@ void dviRenderer::prescan_ParsePapersizeSpecial(const QString& _cp)
     cp = cp.mid(1);
     dviFile->suggestedPageSize = new pageSize;
     dviFile->suggestedPageSize->setPageSize(cp);
-  } else 
+  } else
     printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.").arg(cp));
 
   return;
@@ -291,7 +291,7 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
   kdDebug(4300) << "PostScript-special, header " << cp.latin1() << endl;
 #endif
 
-  if (QFile::exists(cp)) 
+  if (QFile::exists(cp))
     PS_interface->PostScriptHeaderString->append( QString(" (%1) run\n").arg(cp) );
 }
 
@@ -301,7 +301,7 @@ void dviRenderer::prescan_ParsePSBangSpecial(const QString& cp)
 #ifdef DEBUG_PRESCAN
   kdDebug(4300) << "PostScript-special, literal header " << cp.latin1() << endl;
 #endif
-  
+
   PS_interface->PostScriptHeaderString->append( " @defspecial \n" );
   PS_interface->PostScriptHeaderString->append( cp );
   PS_interface->PostScriptHeaderString->append( " @fedspecial \n" );
@@ -314,7 +314,7 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
   kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
 
 #endif
-  
+
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
   PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
@@ -340,9 +340,9 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
   if (cp.startsWith("ps:SDict begin")) {
     // We suspect this may be hyperref generated nonsense. Let's check
     // for some known code that hyperref generates.
-    if (cp == "ps:SDict begin H.S end") 
+    if (cp == "ps:SDict begin H.S end")
       return; // start of hyperref rectangle
-    if (cp == "ps:SDict begin H.R end") 
+    if (cp == "ps:SDict begin H.R end")
       return; // end of hyperref rectangle
     if (cp.endsWith("H.A end"))
       return; // end of hyperref anchor
@@ -352,24 +352,24 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
       return; // hyperref tries to work around Distiller bug
     if (cp.startsWith("ps:SDict begin [") && cp.endsWith(" pdfmark end")) {  // hyperref definition of link/anchor/bookmark/etc
       if (cp.contains("/DEST")) { // The PostScript code defines an anchor
-	QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
-	Length l;
-	l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
-	anchorList[anchorName] = Anchor(current_page+1, l);
+        QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
+        Length l;
+        l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
+        anchorList[anchorName] = Anchor(current_page+1, l);
       }
       // The PostScript code defines a bookmark
       if (cp.contains("/Dest") && cp.contains("/Title"))
-	prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section('(', 2, 2).section(')', 0, 0)),
-					cp.section('(', 1, 1).section(')', 0, 0), 
-					cp.section('-', 1, 1).section(' ', 0, 0).toUInt()
-					));
+        prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section('(', 2, 2).section(')', 0, 0)),
+                                        cp.section('(', 1, 1).section(')', 0, 0),
+                                        cp.section('-', 1, 1).section(' ', 0, 0).toUInt()
+                                        ));
       return;
     }
   }
-    
+
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
-  
+
   if (cp.find("ps::[begin]", 0, false) == 0) {
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(11)) );
@@ -378,10 +378,10 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
       PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(9)) );
     } else {
       if (cp.find("ps::", 0, false) == 0) {
-	PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(4)) );
+        PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(4)) );
       } else {
-	PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
-	PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(3)) );
+        PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
+        PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(3)) );
       }
     }
   }
@@ -416,13 +416,13 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   // that this is NOT a PostScript file, and we exit here.
   QString ending = EPSfilename.section('.', -1).lower();
   if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg")) {
-    dviFile->numberOfExternalNONPSFiles++;  
+    dviFile->numberOfExternalNONPSFiles++;
     return;
   }
-  
+
   // Now assume that the graphics file *is* a PostScript file
-  dviFile->numberOfExternalPSFiles++;  
-  
+  dviFile->numberOfExternalPSFiles++;
+
   // Now locate the Gfx file on the hard disk...
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
 
@@ -435,15 +435,15 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
     emit setStatusBarText( QString::null );
     if (convErrorMsg.isEmpty() != true) {
       KMessageBox::detailedError(parentWidget,
-				 i18n("<qt><strong>File conversion error!</strong> KDVI was not able to convert the external "
-				      "PDF-file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>").arg(oEPSfilename),
-				 convErrorMsg, i18n("PDF/PS conversion error"));
+                                 i18n("<qt><strong>File conversion error!</strong> KDVI was not able to convert the external "
+                                      "PDF-file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>").arg(oEPSfilename),
+                                 convErrorMsg, i18n("PDF/PS conversion error"));
       return;
     }
   }
-  
-  // Now parse the arguments. 
-  int  llx     = 0; 
+
+  // Now parse the arguments.
+  int  llx     = 0;
   int  lly     = 0;
   int  urx     = 0;
   int  ury     = 0;
@@ -453,7 +453,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
 
   // just to avoid ambiguities; the filename could contain keywords
   include_command = include_command.mid(include_command.find(' '));
-  
+
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
   parse_special_argument(include_command, "urx=", &urx);
@@ -485,7 +485,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
     PostScriptOutPutString->append( QString(" (%1) run\n").arg(EPSfilename) );
     PostScriptOutPutString->append( "@endspecial \n" );
   }
-  
+
   return;
 }
 
@@ -496,7 +496,7 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString& cp)
   // loaded, generate a DVI_SourceFileAnchor. These anchors are used
   // in forward search, i.e. to relate references line
   // "src:123file.tex" to positions in the DVI file
-  
+
   // extract the file name and the numeral part from the string
   Q_INT32 j;
   for(j=0;j<cp.length();j++)
@@ -518,70 +518,70 @@ void dviRenderer::prescan_parseSpecials(char *cp, Q_UINT8 *)
 
   // Now to those specials which are only interpreted during the
   // prescan phase, and NOT during rendering.
-  
+
   // PaperSize special
   if (strncasecmp(cp, "papersize", 9) == 0) {
     prescan_ParsePapersizeSpecial(special_command.mid(9));
     return;
   }
-  
+
   // color special for background color
   if (strncasecmp(cp, "background", 10) == 0) {
     prescan_ParseBackgroundSpecial(special_command.mid(10));
     return;
   }
-  
+
   // HTML anchor special
   if (strncasecmp(cp, "html:<A name=", 13) == 0) {
     prescan_ParseHTMLAnchorSpecial(special_command.mid(14));
     return;
   }
-  
+
   // Postscript Header File
   if (strncasecmp(cp, "header=", 7) == 0) {
     prescan_ParsePSHeaderSpecial(special_command.mid(7));
     return;
   }
-  
+
   // Literal Postscript Header
   if (cp[0] == '!') {
     prescan_ParsePSBangSpecial(special_command.mid(1));
     return;
   }
-  
+
   // Literal Postscript inclusion
   if (cp[0] == '"') {
     prescan_ParsePSQuoteSpecial(special_command.mid(1));
     return;
   }
-  
+
   // PS-Postscript inclusion
   if (strncasecmp(cp, "ps:", 3) == 0) {
     prescan_ParsePSSpecial(special_command);
     return;
   }
-  
+
   // Encapsulated Postscript File
   if (strncasecmp(cp, "PSfile=", 7) == 0) {
     prescan_ParsePSFileSpecial(special_command.mid(7));
     return;
   }
-  
+
   // source special
   if (strncasecmp(cp, "src:", 4) == 0) {
     prescan_ParseSourceSpecial(special_command.mid(4));
     return;
   }
-  
+
   // Finally there are those special commands which must be considered
   // both during rendering and during the pre-scan phase
-  
+
   // HTML anchor end
   if (strncasecmp(cp, "html:</A>", 9) == 0) {
     html_anchor_end();
     return;
   }
-  
+
   return;
 }
 
@@ -596,17 +596,17 @@ void dviRenderer::prescan_setChar(unsigned int ch)
     glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
     if (g == NULL)
       return;
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
-				(1200.0 / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() *
+                                (1200.0 / 2.54)/16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
     return;
   }
- 
+
   if (currinf.set_char_p == &dviRenderer::set_vf_char) {
     macro *m = &currinf.fontp->macrotable[ch];
-    if (m->pos == NULL) 
+    if (m->pos == NULL)
       return;
-    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * 
-				(1200.0 / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() *
+                                (1200.0 / 2.54)/16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
     return;
   }
 }
@@ -632,7 +632,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
 
   for (;;) {
     ch = readUINT8();
-    
+
     if (ch <= (unsigned char) (SETCHAR0 + 127)) {
       prescan_setChar(ch);
       continue;
@@ -641,39 +641,39 @@ void dviRenderer::prescan(parseSpecials specialParser)
     if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63)) {
       currinf.fontp = currinf.fonttable->find(ch - FNTNUM0);
       if (currinf.fontp == NULL) {
-	errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.").arg(ch - FNTNUM0);
-	return;
+        errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.").arg(ch - FNTNUM0);
+        return;
       }
       currinf.set_char_p = currinf.fontp->set_char_p;
       continue;
     }
-    
-    
+
+
     Q_INT32 a, b;
-    
+
     switch (ch) {
     case SET1:
       prescan_setChar(readUINT8());
       break;
-      
+
     case SETRULE:
       /* Be careful, dvicopy outputs rules with height =
-	 0x80000000. We don't want any SIGFPE here. */
+         0x80000000. We don't want any SIGFPE here. */
       a = readUINT32();
       b = readUINT32();
       b = ((long) (b *  65536.0*fontPixelPerDVIunit));
       currinf.data.dvi_h += b;
       break;
-      
+
     case PUTRULE:
       a = readUINT32();
       b = readUINT32();
       break;
-      
+
     case PUT1:
     case NOP:
       break;
-      
+
     case BOP:
       command_pointer += 11 * 4;
       currinf.data.dvi_h = 1200 << 16; // Reminder: DVI-coordinates start at (1",1") from top of page
@@ -681,18 +681,18 @@ void dviRenderer::prescan(parseSpecials specialParser)
       currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
       currinf.data.w = currinf.data.x = currinf.data.y = currinf.data.z = 0;
       break;
-      
+
     case PUSH:
       stack.push(currinf.data);
       break;
-      
+
     case POP:
       if (stack.isEmpty())
-	return;
+        return;
       else
-	currinf.data = stack.pop();
+        currinf.data = stack.pop();
       break;
-      
+
     case RIGHT1:
     case RIGHT2:
     case RIGHT3:
@@ -700,7 +700,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
       RRtmp = readINT(ch - RIGHT1 + 1);
       currinf.data.dvi_h += ((long) (RRtmp *  65536.0*fontPixelPerDVIunit));
       break;
-      
+
     case W1:
     case W2:
     case W3:
@@ -710,7 +710,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
     case W0:
       currinf.data.dvi_h += currinf.data.w;
       break;
-      
+
     case X1:
     case X2:
     case X3:
@@ -720,18 +720,18 @@ void dviRenderer::prescan(parseSpecials specialParser)
     case X0:
       currinf.data.dvi_h += currinf.data.x;
       break;
-      
+
     case DOWN1:
     case DOWN2:
     case DOWN3:
     case DOWN4:
       {
-	Q_INT32 DDtmp = readINT(ch - DOWN1 + 1);
-	currinf.data.dvi_v += ((long) (DDtmp *  65536.0*fontPixelPerDVIunit))/65536;
-	currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
+        Q_INT32 DDtmp = readINT(ch - DOWN1 + 1);
+        currinf.data.dvi_v += ((long) (DDtmp *  65536.0*fontPixelPerDVIunit))/65536;
+        currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
       }
       break;
-      
+
     case Y1:
     case Y2:
     case Y3:
@@ -742,7 +742,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
       currinf.data.dvi_v += currinf.data.y/65536;
       currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
       break;
-      
+
     case Z1:
     case Z2:
     case Z3:
@@ -753,35 +753,35 @@ void dviRenderer::prescan(parseSpecials specialParser)
       currinf.data.dvi_v += currinf.data.z/65536;
       currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
       break;
-      
+
     case FNT1:
     case FNT2:
     case FNT3:
     case FNT4:
       currinf.fontp = currinf.fonttable->find(readUINT(ch - FNT1 + 1));
-      if (currinf.fontp == NULL) 
-	return;
+      if (currinf.fontp == NULL)
+        return;
       currinf.set_char_p = currinf.fontp->set_char_p;
       break;
-      
+
     case XXX1:
     case XXX2:
     case XXX3:
     case XXX4:
       {
-	Q_UINT8 *beginningOfSpecialCommand = command_pointer-1;
-	a = readUINT(ch - XXX1 + 1);
-	if (a > 0) {
-	  char	*cmd	= new char[a+1];
-	  strncpy(cmd, (char *)command_pointer, a);
-	  command_pointer += a;
-	  cmd[a] = '\0';
-	  (this->*specialParser)(cmd, beginningOfSpecialCommand);
-	  delete [] cmd;
-	}
+        Q_UINT8 *beginningOfSpecialCommand = command_pointer-1;
+        a = readUINT(ch - XXX1 + 1);
+        if (a > 0) {
+          char        *cmd        = new char[a+1];
+          strncpy(cmd, (char *)command_pointer, a);
+          command_pointer += a;
+          cmd[a] = '\0';
+          (this->*specialParser)(cmd, beginningOfSpecialCommand);
+          delete [] cmd;
+        }
       }
       break;
-      
+
     case FNTDEF1:
     case FNTDEF2:
     case FNTDEF3:
@@ -789,7 +789,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
       command_pointer += 12 + ch - FNTDEF1 + 1;
       command_pointer += readUINT8() + readUINT8();
       break;
-      
+
     default:
       return;
     } /* end switch */

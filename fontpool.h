@@ -39,50 +39,50 @@ class fontPool : public QObject {
  Q_OBJECT
 
 public:
- // Default constructor. 
+ // Default constructor.
  fontPool();
 
  // Default destructor.
  ~fontPool();
- 
+
  /** Method used to set the MetafontMode for the PK font files. This
      data is used when loading fonts. Currently, a change here will be
      applied only to those font which were not yet loaded ---expect
      funny results when changing the data in the mid-work. */
  void setParameters( bool useFontHints );
- 
+
  /** Sets the DVI file's path. This information is used to set the
      current working directory for the kpsewhich command, so that
      kpsewhich will find fonts that are stored in the DVI file's
-     directory. */ 
+     directory. */
  void setExtraSearchPath( const QString &path ) {extraSearchPath = path;}
- 
+
  /** Returns the path that is set as the current working directory
      for the kpsewhich command, so that kpsewhich will find fonts
-     that are stored in the DVI file's directory. */ 
+     that are stored in the DVI file's directory. */
  QString getExtraSearchPath( ) const {return extraSearchPath;}
- 
+
  /** Sets the resolution of the output device. */
  void setDisplayResolution( double _displayResolution_in_dpi );
- 
+
  /** Sets the number of centimeters per DVI unit. */
  void setCMperDVIunit( double CMperDVI );
  double getCMperDVIunit() const {return CMperDVIunit;}
- 
+
  // If return value is true, font hinting should be used if possible
  bool getUseFontHints() const {return useFontHints;}
- 
+
  // This method adds a font to the list. If the font is not currently
  // loaded, it's file will be located and font::load_font will be
  // called. Since this is done using a concurrently running process,
  // there is no guarantee that the loading is already performed when
  // the method returns.
  TeXFontDefinition* appendx(const QString& fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement);
- 
+
  // Returns a string in a very basic HTML format which describes the
  // fonts in the pool.
  QString status();
-  
+
   // This is the list which actually holds pointers to the fonts
   Q3PtrList<TeXFontDefinition> fontList;
 
@@ -103,7 +103,7 @@ public:
   /** A handle to the FreeType library, which is used by TeXFont_PFM
       font objects, if KDVI is compiled with FreeType support.  */
   FT_Library FreeType_library;
-  
+
   /** Simple marker. Set to 'true', if the FreeType library was loaded
       successfully */
   bool FreeType_could_be_loaded;
@@ -142,7 +142,7 @@ public slots:
   // is set to true if one of the fonts found is a virtual font. If no
   // virtual font is found, the variable remains untouched.
   void locateFonts();
-  
+
 private:
   // This method goes through the list of fonts, and marks each of them
   // as 'located'. Used, e.g. after a fatal error in the font lookup

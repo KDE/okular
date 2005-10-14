@@ -53,14 +53,14 @@ class dvifile : public bigEndianByteReader
       will be modified during the prescan phase (at this time the
       prescan code still resides in the dviRenderer class) */
   Q_UINT16       numberOfExternalPSFiles;
-  
+
   /** This field is set to zero when the DVI file is constructed, and
       will be modified during the prescan phase (at this time the
       prescan code still resides in the dviRenderer class) */
   Q_UINT16       numberOfExternalNONPSFiles;
 
   Q_UINT32       beginning_of_postamble;
-  
+
   /** This flag is set to "true" during the construction of the
       dvifile, and is never changed afterwards by the dvifile
       class. It is used in kdvi in conjuction with source-specials:
@@ -68,7 +68,7 @@ class dvifile : public bigEndianByteReader
       shows an info dialog, and the flag is set to false. That way
       KDVI ensures that the user is only informed once. */
   bool           sourceSpecialMarker;
-  
+
   Q3IntDict<TeXFontDefinition> tn_table;
 
   /** Returns the number of centimeters per DVI unit in this DVI
@@ -87,7 +87,7 @@ class dvifile : public bigEndianByteReader
 
   /** Papersize information read from the dvi-File */
   pageSize       *suggestedPageSize;
-  
+
   /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
       with care. */
   void           setNewData(const Q3MemArray<Q_UINT8>& newData) {dviData = newData;}
@@ -98,15 +98,15 @@ class dvifile : public bigEndianByteReader
   void           renumber();
 
   /** PDF to PS file conversion
-      
+
   This utility method takes the name of a PDF-file, and attempts to
   convert it to a PS file. The dvifile internally keeps a list of
   converted files, to do two thigs:
-  
+
   - convert files only once.
-  
+
   - delete all converted files on destruction
-  
+
   @warning The internal buffer can lead to difficulties if filenames
     of PDF-files are not unique: if the content of a PDF file is
     changed and this method is called a second time with the same file

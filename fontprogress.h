@@ -29,16 +29,16 @@ class QLabel;
  *
  **/
 class fontProgressDialog : public KDialogBase
-{ 
+{
     Q_OBJECT
 
 public:
     fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip,
-			QWidget* parent = 0, const QString &name = 0, bool progressbar=true );
+                       QWidget* parent = 0, const QString &name = 0, bool progressbar=true );
     ~fontProgressDialog();
-    
+
     /** The number of steps already done is increased, the text received
-	here is analyzed and presented to the user. */
+        here is analyzed and presented to the user. */
     void increaseNumSteps(const QString& explanation);
 
     /** Used to initialize the progress bar. If the argument @c proc is
@@ -47,12 +47,12 @@ public:
         QPointer, so it is safe to delete the real KProcIO instance
         at any time. */
     void setTotalSteps(int, KProcIO *proc=0);
-    
+
    QLabel* TextLabel2;
 
 private slots:
     /** Calling this slot does nothing than to kill the process that is
-	pointed to be procIO, if procIO is not zero.*/
+        pointed to be procIO, if procIO is not zero.*/
   void killProcIO();
 
 private:

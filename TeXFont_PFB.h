@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // TeXFont_PFB.cpp
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -25,7 +25,7 @@ class TeXFont_PFB : public TeXFont {
  public:
   TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc=0, double slant=0.0 );
   ~TeXFont_PFB();
-  
+
   glyph* getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black);
 
  private:

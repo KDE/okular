@@ -86,7 +86,7 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
 
   // Call the standard implementation
   DocumentWidget::mouseMoveEvent(e);
-  
+
   // Analyze the mouse movement only if no mouse button was pressed
   if ( e->state() == 0 ) {
     // Get a pointer to the page contents
@@ -95,24 +95,24 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
       kdDebug(4300) << "DVIWidget::mouseMoveEvent(...) pageData for page #" << pageNr << " is empty" << endl;
       return;
     }
-    
+
     // Check if the cursor hovers over a sourceHyperlink.
     for(int i=0; i<pageData->sourceHyperLinkList.size(); i++) {
       if (pageData->sourceHyperLinkList[i].box.contains(e->pos())) {
-	clearStatusBarTimer.stop();
-	
-	// The macro-package srcltx gives a special like "src:99 test.tex"
-	// while MikTeX gives "src:99test.tex". KDVI tries
-	// to understand both.
-	QString cp = pageData->sourceHyperLinkList[i].linkText;
-	int max = cp.length();
-	int i;
-	for(i=0; i<max; i++)
-	  if (cp[i].isDigit() == false)
-	    break;
-	
-	emit setStatusBarText( i18n("line %1 of %2").arg(cp.left(i)).arg(cp.mid(i).simplified()) );
-	return;
+        clearStatusBarTimer.stop();
+
+        // The macro-package srcltx gives a special like "src:99 test.tex"
+        // while MikTeX gives "src:99test.tex". KDVI tries
+        // to understand both.
+        QString cp = pageData->sourceHyperLinkList[i].linkText;
+        int max = cp.length();
+        int i;
+        for(i=0; i<max; i++)
+          if (cp[i].isDigit() == false)
+            break;
+
+        emit setStatusBarText( i18n("line %1 of %2").arg(cp.left(i)).arg(cp.mid(i).simplified()) );
+        return;
       }
     }
   }

@@ -18,21 +18,21 @@
 
 extern const int MFResolutions[];
 
-#define	PK_PRE		247
-#define	PK_ID		89
-#define	PK_MAGIC	(PK_PRE << 8) + PK_ID
-#define	GF_PRE		247
-#define	GF_ID		131
-#define	GF_MAGIC	(GF_PRE << 8) + GF_ID
-#define	VF_PRE		247
-#define	VF_ID_BYTE	202
-#define	VF_MAGIC	(VF_PRE << 8) + VF_ID_BYTE
+#define        PK_PRE          247
+#define        PK_ID           89
+#define        PK_MAGIC        (PK_PRE << 8) + PK_ID
+#define        GF_PRE          247
+#define        GF_ID           131
+#define        GF_MAGIC        (GF_PRE << 8) + GF_ID
+#define        VF_PRE          247
+#define        VF_ID_BYTE      202
+#define        VF_MAGIC        (VF_PRE << 8) + VF_ID_BYTE
 
 // #define DEBUG_FONT
 
 
 TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
-	   class fontPool *pool, double _enlargement)
+           class fontPool *pool, double _enlargement)
 {
 #ifdef DEBUG_FONT
   kdDebug(4300) << "TeXFontDefinition::TeXFontDefinition(...); fontname=" << nfontname << ", enlargement=" << _enlargement << endl;
@@ -45,12 +45,12 @@ TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolutio
   displayResolution_in_dpi = _displayResolution_in_dpi;
   checksum                 = chk;
   flags                    = TeXFontDefinition::FONT_IN_USE;
-  file                     = 0; 
+  file                     = 0;
   filename                 = QString::null;
   scaled_size_in_DVI_units = _scaled_size_in_DVI_units;
-  
+
   macrotable               = 0;
-  
+
   // By default, this font contains only empty characters. After the
   // font has been loaded, this function pointer will be replaced by
   // another one.
@@ -63,7 +63,7 @@ TeXFontDefinition::~TeXFontDefinition()
 #ifdef DEBUG_FONT
   kdDebug(4300) << "discarding font " << fontname << " at " << (int)(enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi" << endl;
 #endif
-  
+
   if (font != 0) {
     delete font;
     font = 0;
@@ -110,23 +110,23 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
     } else
       filename = filename_test;
   }
-  
+
   set_char_p = &dviRenderer::set_char;
   int magic      = two(file);
-  
+
   if (fname.endsWith("pk"))
     if (magic == PK_MAGIC) {
       fclose(file);
       file = 0;
       font = new TeXFont_PK(this);
       set_char_p = &dviRenderer::set_char;
-      if ((checksum != 0) && (checksum != font->checksum)) 
-	kdWarning(4300) << i18n("Checksum mismatch for font file %1").arg(filename) << endl;
+      if ((checksum != 0) && (checksum != font->checksum))
+        kdWarning(4300) << i18n("Checksum mismatch for font file %1").arg(filename) << endl;
       fontTypeName = "TeX PK";
       return;
     }
-  
-  if (fname.endsWith(".vf"))  
+
+  if (fname.endsWith(".vf"))
     if (magic == VF_MAGIC) {
       read_VF_index();
       set_char_p = &dviRenderer::set_vf_char;
@@ -150,7 +150,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
 #ifdef HAVE_FREETYPE
   // Find the encoding for that font
   const QString &enc = font_pool->fontsByTeXName.findEncoding(fontname);
-  
+
   if (enc.isEmpty() == false) {
 #ifdef DEBUG_FONT
     kdDebug(4300) << "Font " << fontname << " uses encoding " << enc << endl;
@@ -185,7 +185,7 @@ void TeXFontDefinition::reset()
     delete [] macrotable;
     macrotable = 0;
   }
-  
+
   if (flags & FONT_LOADED) {
     if (file != 0) {
       fclose(file);
@@ -194,7 +194,7 @@ void TeXFontDefinition::reset()
     if (flags & FONT_VIRTUAL)
       vf_table.clear();
   }
-  
+
   filename   = QString::null;
   flags      = TeXFontDefinition::FONT_IN_USE;
   set_char_p = &dviRenderer::set_empty_char;
@@ -236,9 +236,9 @@ void TeXFontDefinition::mark_as_used()
 
 macro::macro()
 {
-  pos     = 0;		/* address of first byte of macro */
-  end     = 0;		/* address of last+1 byte */
-  dvi_advance_in_units_of_design_size_by_2e20 = 0;	/* DVI units to move reference point */
+  pos     = 0;                /* address of first byte of macro */
+  end     = 0;                /* address of last+1 byte */
+  dvi_advance_in_units_of_design_size_by_2e20 = 0;        /* DVI units to move reference point */
   free_me = false;
 }
 

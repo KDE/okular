@@ -1,6 +1,6 @@
 // fontEncoding.cpp
 //
-// Part of KDVI - A DVI previewer for the KDE desktop environemt 
+// Part of KDVI - A DVI previewer for the KDE desktop environemt
 //
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
@@ -44,7 +44,7 @@ fontEncoding::fontEncoding(const QString &encName)
 
 #ifdef DEBUG_FONTENC
   kdDebug(4300) << "FileName of the encoding: " << encFileName << endl;
-#endif  
+#endif
 
   QFile file( encFileName );
   if ( file.open( QIODevice::ReadOnly ) ) {
@@ -52,21 +52,21 @@ fontEncoding::fontEncoding(const QString &encName)
     // 'fileContent'
     QTextStream stream( &file );
     QString fileContent;
-    while ( !stream.atEnd() ) 
+    while ( !stream.atEnd() )
       fileContent += stream.readLine().section('%', 0, 0); // line of text excluding '\n' until first '%'-sign
     file.close();
-    
+
     fileContent = fileContent.trimmed();
-    
+
     // Find the name of the encoding
     encodingFullName = fileContent.section('[', 0, 0).simplified().mid(1);
 #ifdef DEBUG_FONTENC
     kdDebug(4300) << "encodingFullName: " << encodingFullName << endl;
 #endif
-    
+
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
     QStringList glyphNameList = QStringList::split( '/', fileContent );
-    
+
     int i = 0;
     for ( QStringList::Iterator it = glyphNameList.begin(); (it != glyphNameList.end())&&(i<256); ++it ) {
       glyphNameVector[i] = (*it).simplified();

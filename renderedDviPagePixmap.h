@@ -39,7 +39,7 @@ class RenderedDviPagePixmap : public RenderedDocumentPagePixmap
   virtual void clear();
 
   /** \brief List of source hyperlinks
-      
+
   List of source-hyperlinks in the current page. This vector is
   generated when the current page is drawn.
   */

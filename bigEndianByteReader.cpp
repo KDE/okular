@@ -5,6 +5,7 @@
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
 
+#include <config.h>
 
 #include <kdebug.h>
 

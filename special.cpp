@@ -6,6 +6,7 @@
 
 // Copyright 2000--2004, Stefan Kebekus (kebekus@kde.org).
 
+#include <config.h>
 
 #include <kdebug.h>
 #include <klocale.h>

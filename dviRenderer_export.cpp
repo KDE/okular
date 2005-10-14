@@ -24,6 +24,7 @@
 // Please report bugs or improvements, etc. via the "Report bug"-Menu
 // of kdvi.
 
+#include <config.h>
 
 #include <kapplication.h>
 #include <kmessagebox.h>

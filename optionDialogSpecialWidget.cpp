@@ -7,6 +7,8 @@
 
 // Add header files alphabetically
 
+#include <config.h>
+
 #include <kdebug.h>
 
 #include <kapplication.h>

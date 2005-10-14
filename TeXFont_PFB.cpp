@@ -10,6 +10,8 @@
 
 // Add header files alphabetically
 
+#include <config.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <qimage.h>

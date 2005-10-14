@@ -7,6 +7,8 @@
 
 // Add header files alphabetically
 
+#include <config.h>
+
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -15,7 +17,6 @@
 #include <qtooltip.h>
 #include <qwhatsthis.h>
 
-#include "../config.h"
 #include "fontpool.h"
 #include "optionDialogFontsWidget.h"
 

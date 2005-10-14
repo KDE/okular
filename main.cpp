@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <kapplication.h>

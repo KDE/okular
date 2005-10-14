@@ -15,8 +15,6 @@
 #ifndef _FONT_H
 #define _FONT_H
 
-#include <../config.h>
-
 #include <qintdict.h>
 #include <qstring.h>
 

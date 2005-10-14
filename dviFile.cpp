@@ -49,6 +49,7 @@
  *					  and Luis Miguel Silveira, MIT RLE.
  */
 
+#include <config.h>
 
 #include <kdebug.h>
 #include <klocale.h>

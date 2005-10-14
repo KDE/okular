@@ -442,7 +442,7 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget()
 
   // Lets not forget the connections we make in the KMultiPage
   connect(documentWidget, SIGNAL(clearSelection()), this, SLOT(clearSelection()));
-  connect(this, SIGNAL(enableMoveTool(bool)), documentWidget, SLOT(slotEnableMoveTool(bool)));
+  connect(this, SIGNAL(switchTool()), documentWidget, SLOT(slotSwitchTool()));
 
   // Handle source links
   connect(documentWidget, SIGNAL(SRCLink(const QString&, QMouseEvent*, DocumentWidget*)), getRenderer(),

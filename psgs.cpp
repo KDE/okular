@@ -13,6 +13,7 @@
 #include <kmessagebox.h>
 #include <kprocio.h>
 #include <ktempfile.h>
+#include <kurl.h>
 #include <qdir.h>
 #include <qpainter.h>
 //Added by qt3to4:
@@ -317,29 +318,26 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
 }
 
 
-QString ghostscript_interface::locateEPSfile(const QString &filename, class dvifile *dvi)
+QString ghostscript_interface::locateEPSfile(const QString &filename, const KURL &base)
 {
-  QString EPSfilename(filename);
-
-  if (dvi == 0) {
-    kdError(4300) << "ghostscript_interface::locateEPSfile called with second argument == 0" << endl;
-    return EPSfilename;
+  // If the base URL indicates that the DVI file is local, try to find
+  // the graphics file in the directory where the DVI file resides
+  if (base.isLocalFile()) {
+    QString path = base.path();       // -> "/bar/foo.dvi"
+    QFileInfo fi1(path);
+    QFileInfo fi2(fi1.dir(),filename);
+    if (fi2.exists())
+      return fi2.absFilePath();
   }
+  
+  // Otherwise, use kpsewhich to find the eps file.
+  QString EPSfilename;
 
-  QFileInfo fi1(dvi->filename);
-  QFileInfo fi2(fi1.dir(),EPSfilename);
-  if (fi2.exists())
-    EPSfilename = fi2.absFilePath();
-  else {
-    // Use kpsewhich to find the eps file.
-    KProcIO proc;
-    proc << "kpsewhich" << EPSfilename;
-    proc.start(KProcess::Block);
-    proc.readln(EPSfilename);
-    EPSfilename = EPSfilename.trimmed();
-  }
-
-  return EPSfilename;
+  KProcIO proc;
+  proc << "kpsewhich" << EPSfilename;
+  proc.start(KProcess::Block);
+  proc.readln(EPSfilename);
+  return EPSfilename.trimmed();
 }
 
 #include "psgs.moc"

@@ -4,7 +4,7 @@
 // Class for rendering TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2001-2004 Stefan Kebekus
+// (C) 2001-2005 Stefan Kebekus
 // Distributed under the GPL
 //
 
@@ -412,7 +412,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
 }
 
 
-bool dviRenderer::setFile(const QString &fname)
+bool dviRenderer::setFile(const QString &fname, const KURL &base)
 {
 #ifdef DEBUG_DVIRENDERER
   kdDebug(4300) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
@@ -481,7 +481,7 @@ bool dviRenderer::setFile(const QString &fname)
   numPages = dviFile->total_pages;
   info->setDVIData(dviFile);
   _isModified = false;
-
+  baseURL = base;
   
   font_pool.setExtraSearchPath( fi.dirPath(true) );
   font_pool.setCMperDVIunit( dviFile->getCmPerDVIunit() );
@@ -491,24 +491,15 @@ bool dviRenderer::setFile(const QString &fname)
   // PostScriptHeaderString.
   PS_interface->clear();
   
-  // Files that reside under "tmp" or under the "data" resource are most
-  // likely remote files. We limit the files they are able to read to
-  // the directory they are in in order to limit the possibilities of a
-  // denial of service attack.
-  bool restrictIncludePath = true;
-  QString tmp = KGlobal::dirs()->saveLocation("tmp", QString::null);
-  if (!filename.startsWith(tmp)) {
-    tmp = KGlobal::dirs()->saveLocation("data", QString::null);
-    if (!filename.startsWith(tmp))
-      restrictIncludePath = false;
-  }
-  
+  // If the DVI file comes from a remote URL (e.g. downloaded from a
+  // web server), we limit the PostScript files that can be accessed
+  // by this file to the download directory, in order to limit the
+  // possibilities of a denial of service attack.
   QString includePath;
-  if (restrictIncludePath) {
+  if (!baseURL.isLocalFile()) {
     includePath = filename;
     includePath.truncate(includePath.lastIndexOf('/'));
   }
-  
   PS_interface->setIncludePath(includePath);
   
   // We will also generate a list of hyperlink-anchors and source-file

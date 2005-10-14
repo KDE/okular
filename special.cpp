@@ -336,7 +336,7 @@ void dviRenderer::epsf_special(const QString& cp)
   if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
   
   // Now parse the arguments. 
   int  llx     = 0; 

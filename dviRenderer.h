@@ -5,7 +5,7 @@
 // Class for rendering TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2001-2004 Stefan Kebekus. Distributed under the GPL.
+// (C) 2001-2005 Stefan Kebekus. Distributed under the GPL.
 
 #ifndef _dvirenderer_h_
 #define _dvirenderer_h_
@@ -14,6 +14,7 @@
 #include "documentRenderer.h"
 #include "fontpool.h"
 
+#include <kurl.h>
 #include <qintdict.h>
 #include <qpointarray.h>
 #include <qtimer.h>
@@ -89,7 +90,7 @@ public:
   dviRenderer(QWidget *parent);
   ~dviRenderer();
 
-  virtual bool	setFile(const QString &fname);
+  virtual bool	setFile(const QString &fname, const KURL &base);
 
   class dvifile *dviFile;
 
@@ -158,6 +159,13 @@ private slots:
   void          showThatSourceInformationIsPresent();
 
 private:
+  /** URL to the DVI file
+
+  This field is initialized by the setFile() method. See the
+  explanation there.  */
+  KURL baseURL;
+
+
  /** This method parses a color specification of type "gray 0.5", "rgb
      0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source
      code for details. */

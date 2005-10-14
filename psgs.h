@@ -68,13 +68,13 @@ public:
   QString  *PostScriptHeaderString;
 
   /** This method tries to find the PostScript file 'filename' in the
-   DVI file's directory, and, if that fails, uses kpsewhich to find
-   the file. If the file is found, the full path (including file name)
-   is returned. Otherwise, the method returns the first
-   argument. TODO: use the DVI file's baseURL, once this is
-   implemented.
+   DVI file's directory (if the base-URL indicates that the DVI file
+   is local), and, if that fails, uses kpsewhich to find the file. If
+   the file is found, the full path (including file name) is
+   returned. Otherwise, the method returns the first argument. TODO:
+   use the DVI file's baseURL, once this is implemented.
   */
-  static  QString locateEPSfile(const QString &filename, class dvifile *dvi);
+  static  QString locateEPSfile(const QString &filename, const KURL &base);
 
 private:
   void                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);

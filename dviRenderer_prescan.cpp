@@ -70,7 +70,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
 
   // Now locate the Gfx file on the hard disk...
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
 
   // If the file is neither a PostScript not a PDF file, we exit here.
   // The graphic file is later read when the page is rendered.
@@ -416,7 +416,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   dviFile->numberOfExternalPSFiles++;  
   
   // Now locate the Gfx file on the hard disk...
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, dviFile);
+  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
   
   // If the EPSfilename really points to a PDF file, convert that file now.
   if (ending == "pdf")

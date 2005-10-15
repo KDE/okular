@@ -33,15 +33,15 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
   // Call implementation from parent
   DocumentWidget::mousePressEvent(e);
 
-  // pageNr == 0 indicated an invalid page (e.g. page number not yet set)
-  if (pageNr == 0)
+  // Safety check
+  if (!pageNumber.isValid())
     return;
 
   // Get a pointer to the page contents
-  RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNr));
+  RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNumber));
   if (pageData == 0)
   {
-    kdDebug(4300) << "DVIWidget::mousePressEvent(...) pageData for page #" << pageNr << " is empty" << endl;
+    kdDebug(4300) << "DVIWidget::mousePressEvent(...) pageData for page #" << pageNumber << " is empty" << endl;
     return;
   }
 
@@ -78,8 +78,8 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
 
 void DVIWidget::mouseMoveEvent(QMouseEvent* e)
 {
-  // pageNr == 0 indicated an invalid page (e.g. page number not yet set)
-  if (pageNr == 0)
+  // Safety check
+  if (!pageNumber.isValid())
     return;
 
   // Call the standard implementation
@@ -88,9 +88,9 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
   // Analyze the mouse movement only if no mouse button was pressed
   if ( e->state() == 0 ) {
     // Get a pointer to the page contents
-    RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNr));
+    RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNumber));
     if (pageData == 0) {
-      kdDebug(4300) << "DVIWidget::mouseMoveEvent(...) pageData for page #" << pageNr << " is empty" << endl;
+      kdDebug(4300) << "DVIWidget::mouseMoveEvent(...) pageData for page #" << pageNumber << " is empty" << endl;
       return;
     }
 

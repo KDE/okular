@@ -2,14 +2,14 @@ INCLUDES = -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo -I$(top_builddir)/kpdf $(all_in
 
 METASOURCES = AUTO
 
-bin_PROGRAMS = kpdf
+bin_PROGRAMS = oKular
 
-kpdf_SOURCES = main.cpp shell.cpp
-kpdf_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-kpdf_LDADD   = $(LIB_KPARTS)
+oKular_SOURCES = main.cpp shell.cpp
+oKular_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+oKular_LDADD   = $(LIB_KPARTS)
 
-EXTRA_DIST = kpdf.desktop
-xdg_apps_DATA = kpdf.desktop
+EXTRA_DIST = oKular.desktop
+xdg_apps_DATA = oKular.desktop
 
-shellrcdir   = $(kde_datadir)/kpdf
+shellrcdir   = $(kde_datadir)/oKular
 shellrc_DATA = shell.rc

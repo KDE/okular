@@ -2,12 +2,12 @@ INCLUDES = -I$(srcdir)/.. -I$(top_builddir)/kpdf $(all_includes)
 
 METASOURCES = AUTO
 
-libkpdfconf_la_SOURCES = dlggeneral.ui dlgperformance.ui dlgaccessibility.ui \
+liboKularconf_la_SOURCES = dlggeneral.ui dlgperformance.ui dlgaccessibility.ui \
                          dlgpresentation.ui \
                          preferencesdialog.cpp settings.kcfgc
 
-noinst_LTLIBRARIES = libkpdfconf.la
+noinst_LTLIBRARIES = liboKularconf.la
 
-kde_kcfg_DATA = kpdf.kcfg
+kde_kcfg_DATA = oKular.kcfg
 
 preferencesdialog.lo: settings.h

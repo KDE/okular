@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = \
 
 INCLUDES = -I$(srcdir)/../.. -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo -I$(srcdir)/xpdf/splash -I$(top_builddir)/kpdf $(all_includes)
 
-libokularGenerator_xpdf_la_LIBADD = $(top_builddir)/kpdf/core/libkpdfcore.la $(top_builddir)/kpdf/conf/libkpdfconf.la \
+libokularGenerator_xpdf_la_LIBADD = $(top_builddir)/kpdf/core/liboKularcore.la $(top_builddir)/kpdf/conf/liboKularconf.la \
 				    $(top_builddir)/kpdf/generators/xpdf/xpdf/xpdf/libxpdf.la \
 				    $(LIB_KDEPRINT) $(LIB_KDEUI)
 libokularGenerator_xpdf_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)

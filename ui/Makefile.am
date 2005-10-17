@@ -4,8 +4,8 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/painter_agg2 -I$(top_builddir)/kpdf $(all_
 
 METASOURCES = AUTO
 
-noinst_LTLIBRARIES = libkpdfui.la
-libkpdfui_la_SOURCES = pagepainter.cpp pageview.cpp pageviewutils.cpp \
+noinst_LTLIBRARIES = liboKularui.la
+liboKularui_la_SOURCES = pagepainter.cpp pageview.cpp pageviewutils.cpp \
                        pageviewannotator.cpp minibar.cpp thumbnaillist.cpp \
                        searchwidget.cpp toc.cpp propertiesdialog.cpp \
                        presentationwidget.cpp side_reviews.cpp newstuff.cpp

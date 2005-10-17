@@ -3,7 +3,8 @@ kde_module_LTLIBRARIES = \
 
 INCLUDES = -I$(srcdir)/../../ $(all_includes)
 
-libokularGenerator_kimgio_la_LIBADD = $(top_builddir)/kpdf/core/libkpdfcore.la $(top_builddir)/kpdf/conf/libkpdfconf.la $(LIB_KDEUI)
+libokularGenerator_kimgio_la_LIBADD = $(top_builddir)/kpdf/core/liboKularcore.la \
+	$(top_builddir)/kpdf/conf/liboKularconf.la $(LIB_KDEUI)
 libokularGenerator_kimgio_la_LDFLAGS = -module -avoid-version  $(KDE_PLUGIN)  $(all_libraries)
 libokularGenerator_kimgio_la_SOURCES = generator_kimgio.cpp
 

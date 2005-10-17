@@ -1,4 +1,4 @@
 ClassName=Settings
-File=kpdf.kcfg
+File=oKular.kcfg
 Mutators=true
 Singleton=true

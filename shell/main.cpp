@@ -32,8 +32,8 @@ static KCmdLineOptions options[] =
 int main(int argc, char** argv)
 {
     KAboutData about(
-        "kpdf",
-        I18N_NOOP("KPDF"),
+        "oKular",
+        I18N_NOOP("oKular"),
         version,
         description,
         KAboutData::License_GPL,
@@ -55,21 +55,21 @@ int main(int argc, char** argv)
     // see if we are starting with session management
     if (app.isRestored())
     {
-        RESTORE(KPDF::Shell);
+        RESTORE(oKular::Shell);
     } else {
         // no session.. just start up normally
         KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
         if (args->count() == 0)
         {
-            KPDF::Shell* widget = new KPDF::Shell;
+            oKular::Shell* widget = new oKular::Shell;
             widget->show();
         }
         else
         {
             for (int i = 0; i < args->count(); ++i)
             {
-                KPDF::Shell* widget = new KPDF::Shell(args->url(i));
+                oKular::Shell* widget = new oKular::Shell(args->url(i));
                 widget->show();
             }
         }

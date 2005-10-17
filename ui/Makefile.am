@@ -1,6 +1,6 @@
 SUBDIRS = data painter_agg2 .
 
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/painter_agg2 -I$(top_builddir)/kpdf $(all_includes)
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/painter_agg2 -I.. $(all_includes)
 
 METASOURCES = AUTO
 

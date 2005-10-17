@@ -24,7 +24,7 @@
 #include <kmimetype.h>
 class KTempFile;
 
-namespace KPDF
+namespace oKular
 {
 class Part;
   /**

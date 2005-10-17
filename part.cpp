@@ -75,26 +75,26 @@
 // definition of searchID for this class
 #define PART_SEARCH_ID 1
 
-typedef KParts::GenericFactory<KPDF::Part> KPDFPartFactory;
-K_EXPORT_COMPONENT_FACTORY(libkpdfpart, KPDFPartFactory)
+typedef KParts::GenericFactory<oKular::Part> oKularPartFactory;
+K_EXPORT_COMPONENT_FACTORY(liboKularpart, oKularPartFactory)
 
-using namespace KPDF;
+using namespace oKular;
 
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("kpdf"), KParts::ReadOnlyPart(parent, name), m_viewportDirty( 0 ),
+	: DCOPObject("oKular"), KParts::ReadOnlyPart(parent, name), m_viewportDirty( 0 ),
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false)
 {
 	// load catalog for translation
-	KGlobal::locale()->insertCatalogue("kpdf");
+	KGlobal::locale()->insertCatalogue("oKular");
 
 	// create browser extension (for printing when embedded into browser)
 	m_bExtension = new BrowserExtension(this);
 
 	// we need an instance
-	setInstance(KPDFPartFactory::instance());
+	setInstance(oKularPartFactory::instance());
 
 	// build the document
 	m_document = new KPDFDocument(&m_loadedGenerators);
@@ -419,7 +419,7 @@ KAboutData* Part::createAboutData()
 	// the non-i18n name here must be the same as the directory in
 	// which the part's rc file is installed ('partrcdir' in the
 	// Makefile)
-	KAboutData* aboutData = new KAboutData("kpdfpart", I18N_NOOP("KPDF::Part"), "0.1");
+	KAboutData* aboutData = new KAboutData("oKularpart", I18N_NOOP("oKular::Part"), "0.1");
 	aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
 	return aboutData;
 }

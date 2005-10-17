@@ -42,16 +42,16 @@
 // local includes
 #include "shell.h"
 
-using namespace KPDF;
+using namespace oKular;
 
 Shell::Shell()
-  : KParts::MainWindow(0, "KPDF::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+  : KParts::MainWindow(0, "oKular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   init();
 }
 
 Shell::Shell(const KURL &url)
-  : KParts::MainWindow(0, "KPDF::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+  : KParts::MainWindow(0, "oKular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   m_openUrl = url;
   init();
@@ -66,12 +66,12 @@ void Shell::init()
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  KParts::Factory *factory = (KParts::Factory *) KLibLoader::self()->factory("libkpdfpart");
+  KParts::Factory *factory = (KParts::Factory *) KLibLoader::self()->factory("liboKularpart");
   if (factory)
   {
     // now that the Part is loaded, we cast it to a Part to get
     // our hands on it
-    m_part = (KParts::ReadOnlyPart*) factory->createPart(this, "kpdf_part", this, 0, "KParts::ReadOnlyPart");
+    m_part = (KParts::ReadOnlyPart*) factory->createPart(this, "oKular_part", this, 0, "KParts::ReadOnlyPart");
     if (m_part)
     {
       // then, setup our actions
@@ -88,7 +88,7 @@ void Shell::init()
   {
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
-    KMessageBox::error(this, i18n("Unable to find kpdf part."));
+    KMessageBox::error(this, i18n("Unable to find oKular part."));
     m_part = 0;
     return;
   }

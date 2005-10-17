@@ -43,7 +43,7 @@ class PageView;
 class PresentationWidget;
 class SearchWidget;
 
-namespace KPDF {
+namespace oKular {
 
 class BrowserExtension;
 

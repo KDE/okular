@@ -13,7 +13,7 @@
 #include <dcopobject.h>
 #include <kurl.h>
 
-class kpdf_dcop : virtual public DCOPObject
+class okular_dcop : virtual public DCOPObject
 {
     K_DCOP
     k_dcop:

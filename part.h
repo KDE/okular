@@ -55,7 +55,7 @@ class BrowserExtension;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public DocumentObserver, virtual public kpdf_dcop
+class Part : public KParts::ReadOnlyPart, public DocumentObserver, virtual public okular_dcop
 {
 Q_OBJECT
 

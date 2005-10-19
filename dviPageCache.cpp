@@ -36,7 +36,7 @@ DVIPageCache::~DVIPageCache()
 
 RenderedDocumentPagePixmap* DVIPageCache::createDocumentPagePixmap() const
 {
-  return new RenderedDviPagePixmap();
+  return new RenderedDviPagePixmap;
 }
 
 #include "dviPageCache.moc"

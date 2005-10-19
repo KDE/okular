@@ -71,8 +71,8 @@
 
 //#define DEBUG_PK
 
-#define        PK_PRE                247
-#define        PK_ID                89
+#define        PK_PRE          247
+#define        PK_ID           89
 #define        PK_MAGIC        (PK_PRE << 8) + PK_ID
 
 
@@ -395,7 +395,7 @@ int TeXFont_PK::PK_packed_num(FILE *fp)
   kdDebug(4300) << "PK_packed_num" << endl;
 #endif
 
-  int        i,j;
+  int i, j;
 
   if ((i = PK_get_nyb(fp)) == 0) {
     do {
@@ -476,12 +476,12 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   int        i, j;
   int        n;
   int        row_bit_pos;
-  bool        paint_switch;
-  Q_UINT32        *cp;
+  bool       paint_switch;
+  Q_UINT32*  cp;
   register struct glyph *g;
   register FILE *fp = file;
-  long        fpwidth;
-  Q_UINT32        word = 0;
+  long       fpwidth;
+  Q_UINT32   word = 0;
   int        word_weight, bytes_wide;
   int        rows_left, h_bit, count;
 

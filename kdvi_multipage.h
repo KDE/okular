@@ -7,6 +7,7 @@
 
 #include <qstringlist.h>
 
+class KAboutData;
 class KPrinter;
 
 
@@ -92,6 +93,5 @@ private:
   KAction      *exportPDFAction;
   KAction      *exportPSAction;
 };
-
 
 #endif

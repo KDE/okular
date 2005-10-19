@@ -208,10 +208,6 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
 }
 
 
-
-
-
-
 void dviRenderer::color_special(const QString& _cp)
 {
   QString const cp = _cp.stripWhiteSpace();

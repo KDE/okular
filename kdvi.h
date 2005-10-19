@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// kdvi.h 
+// kdvi.h
 //
 // global variables and definitions for kdvi.
 //

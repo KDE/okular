@@ -1,6 +1,6 @@
 // -*- C++ -*-
 /*
- *        Mnemonics for bytes in dvi file.
+ *  Mnemonics for bytes in dvi file.
  */
 
 #ifndef DVI_H
@@ -62,7 +62,7 @@
 #define        POSTPOST        249
 #define        SREFL           250
 #define        EREFL           251
-
-#define        TRAILER         223        /* Trailing bytes at end of file */
+// Trailing bytes at end of file
+#define        TRAILER         223
 
 #endif

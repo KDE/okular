@@ -69,16 +69,16 @@ struct framedata {
 
 /* this information is saved when using virtual fonts */
 
-typedef        void        (dviRenderer::*set_char_proc)(unsigned int, unsigned int);
-typedef void    (dviRenderer::*parseSpecials)(char *, Q_UINT8 *);
+typedef void (dviRenderer::*set_char_proc)(unsigned int, unsigned int);
+typedef void (dviRenderer::*parseSpecials)(char *, Q_UINT8 *);
 
 struct drawinf {
-  struct framedata            data;
-  TeXFontDefinition          *fontp;
-  set_char_proc                      set_char_p;
+  struct framedata data;
+  TeXFontDefinition* fontp;
+  set_char_proc set_char_p;
 
-  QIntDict<TeXFontDefinition> *fonttable;
-  TeXFontDefinition              *_virtual;
+  QIntDict<TeXFontDefinition>* fonttable;
+  TeXFontDefinition* _virtual;
 };
 
 
@@ -91,7 +91,7 @@ public:
   dviRenderer(QWidget *parent);
   ~dviRenderer();
 
-  virtual bool setFile(const QString &fname, const KURL &base);
+  virtual bool  setFile(const QString &fname, const KURL &base);
 
   dvifile* dviFile;
 
@@ -99,8 +99,8 @@ public:
 
   virtual bool  supportsTextSearch() const {return true;}
 
-  bool                showPS() { return _postscript; }
-  int                curr_page() { return current_page+1; }
+  bool          showPS() { return _postscript; }
+  int           curr_page() { return current_page+1; }
   virtual bool  isValidFile(const QString& fileName) const;
 
 
@@ -109,7 +109,7 @@ public:
       number, or src:<line><filename>) and see if a corresponding
       section of the DVI file can be found. If so, it returns an
       anchor to that section. If not, it returns an invalid anchor. */
-  virtual Anchor        parseReference(const QString &reference);
+  virtual Anchor parseReference(const QString &reference);
 
   // These should not be public... only for the moment
   void          read_postamble();
@@ -122,8 +122,8 @@ public:
 
   void          special(long nbytes);
   void          printErrorMsgForSpecials(const QString& msg);
-  void          color_special(const QString& cp);
-  void          html_href_special(const QString& cp);
+  void          color_special(const QString& msg);
+  void          html_href_special(const QString& msg);
   void          html_anchor_end();
   void          draw_page();
 
@@ -166,20 +166,19 @@ private:
   explanation there.  */
   KURL baseURL;
 
+  /** This method parses a color specification of type "gray 0.5", "rgb
+      0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source
+      code for details. */
+  QColor parseColorSpecification(const QString& colorSpec);
 
- /** This method parses a color specification of type "gray 0.5", "rgb
-     0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source
-     code for details. */
- QColor parseColorSpecification(const QString& colorSpec);
+  /** This map contains the colors which are known by name. This field
+      is initialized in the method parseColorSpecification() as soon as
+      it is needed. */
+  QMap<QString, QColor> namedColors;
 
- /** This map contains the colors which are known by name. This field
-     is initialized in the method parseColorSpecification() as soon as
-     it is needed. */
- QMap<QString, QColor> namedColors;
-
-  /* This method locates special PDF characters in a string and
-     replaces them by UTF8. See Section 3.2.3 of the PDF reference
-     guide for information */
+  /** This method locates special PDF characters in a string and
+      replaces them by UTF8. See Section 3.2.3 of the PDF reference
+      guide for information */
   QString PDFencodingToQString(const QString& pdfstring);
 
   void  setResolution(double resolution_in_DPI);

@@ -114,7 +114,6 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     return;
   }
 
-
   // Now parse the arguments.
   int  llx     = 0;
   int  lly     = 0;

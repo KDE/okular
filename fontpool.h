@@ -155,13 +155,13 @@ private:
 
   // This flag is used by PFB fonts to determine if the FREETYPE engine
   // should use hinted fonts or not
-  bool           useFontHints;
+  bool useFontHints;
 
   // Resolution of the output device.
-  double         displayResolution_in_dpi;
+  double displayResolution_in_dpi;
 
   // Number of centimeters per DVI unit
-  double         CMperDVIunit;
+  double CMperDVIunit;
 
 
   /** Members used for font location */
@@ -180,14 +180,14 @@ private:
   // method.  This string is set to QString::null in locateFonts(bool,
   // bool, bool *). Values are set and read by the
   // mf_output_receiver(...)  method
-  QString        MetafontOutput;
+  QString MetafontOutput;
 
   // This QString is used to collect the output of kpsewhich and
   // MetaFont. The string is set to QString::null in the
   // locateFonts()-method, and content is gathered by the
   // mf_output_receiver(). This string is used by locateFonts() and
   // locateFonts(bool, bool, bool *) to display error messages.
-  QString        kpsewhichOutput;
+  QString kpsewhichOutput;
 
   // This string is set to the DVI file's path. It is used to set the
   // current working directory for the kpsewhich command, so that
@@ -195,7 +195,7 @@ private:
   // directory. Used by the locateFonts() and the locateFonts(bool,
   // bool, bool *) method. Values are set by the
   // setExtraSearchPath(...) method
-  QString        extraSearchPath;
+  QString extraSearchPath;
 
   // FontProgress; the progress dialog used when generating fonts.
   fontProgressDialog progress;

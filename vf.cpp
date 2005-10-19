@@ -39,10 +39,10 @@
 extern void oops(QString message);
 
 /***
- *** VF font reading routines.
- *** Public routine is read_index---because virtual characters are presumed
- *** to be short, we read the whole virtual font in at once, instead of
- *** faulting in characters as needed.
+ ***   VF font reading routines.
+ ***   Public routine is read_index---because virtual characters are presumed
+ ***   to be short, we read the whole virtual font in at once, instead of
+ ***   faulting in characters as needed.
  ***/
 
 #define        LONG_CHAR        242

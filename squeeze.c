@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 #if __STDC__\n\
 #define _Xconst const\n\
 #else\n\
-#define        _Xconst\n\
+#define _Xconst\n\
 #endif\n\
 #endif\n\n\
 _Xconst char psheader[] = \"\\\n", out);

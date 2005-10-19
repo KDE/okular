@@ -62,7 +62,6 @@ fontPool::fontPool()
   extraSearchPath          = QString::null;
   fontList.setAutoDelete(true);
 
-
 #ifdef HAVE_FREETYPE
   // Initialize the Freetype Library
   if ( FT_Init_FreeType( &FreeType_library ) != 0 ) {
@@ -272,7 +271,7 @@ void fontPool::locateFonts()
     locateFonts(false, true);
 
   // If still not all fonts are found, we give up. We mark all fonts
-  // as 'located', so that wee won't look for them any more, and
+  // as 'located', so that we won't look for them any more, and
   // present an error message to the user.
   if (!areFontsLocated()) {
     markFontsAsLocated();
@@ -579,6 +578,5 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
     MetafontOutput = MetafontOutput.remove(0,numleft+1);
   }
 }
-
 
 #include "fontpool.moc"

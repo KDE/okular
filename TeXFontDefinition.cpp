@@ -1,5 +1,3 @@
-// $Id$
-
 #include <kdebug.h>
 #include <klocale.h>
 #include <qfile.h>

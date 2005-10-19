@@ -48,7 +48,7 @@ public:
         at any time. */
     void setTotalSteps(int, KProcIO *proc=0);
 
-   QLabel* TextLabel2;
+    QLabel* TextLabel2;
 
 private slots:
     /** Calling this slot does nothing than to kill the process that is

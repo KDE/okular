@@ -269,7 +269,6 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
     dviFile = &newFile;
     errorMsg = QString::null;
 
-
     for(current_page=0; current_page < newFile.total_pages; current_page++) {
       if (current_page < newFile.total_pages) {
         command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];

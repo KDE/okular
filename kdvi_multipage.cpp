@@ -205,8 +205,8 @@ void KDVIMultiPage::addConfigDialogs(KConfigDialog* configDialog)
 {
   static optionDialogFontsWidget* fontConfigWidget = 0;
 
-  fontConfigWidget = new optionDialogFontsWidget(scrollView());
-  optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(scrollView());
+  fontConfigWidget = new optionDialogFontsWidget(pageView());
+  optionDialogSpecialWidget* specialConfigWidget = new optionDialogSpecialWidget(pageView());
 
   configDialog->addPage(fontConfigWidget, Prefs::self(), i18n("TeX Fonts"), "fonts");
   configDialog->addPage(specialConfigWidget, Prefs::self(), i18n("DVI Specials"), "dvi");
@@ -250,7 +250,7 @@ void KDVIMultiPage::print()
   // KPrinter does some options parsing in that method.
   ((KDVIPrinterWrapper *)printer)->doPreparePrinting();
   if (printer->pageList().isEmpty()) {
-    KMessageBox::error( scrollView(),
+    KMessageBox::error( pageView(),
             i18n("The list of pages you selected was empty.\n"
                  "Maybe you made an error in selecting the pages, "
                  "e.g. by giving an invalid range like '7-2'.") );
@@ -414,7 +414,7 @@ void KDVIMultiPage::enableActions(bool b)
 
 void KDVIMultiPage::doEnableWarnings()
 {
-  KMessageBox::information (scrollView(), i18n("All messages and warnings will now be shown."));
+  KMessageBox::information (pageView(), i18n("All messages and warnings will now be shown."));
   KMessageBox::enableAllMessages();
   KTipDialog::setShowOnStart(true);
 }
@@ -422,19 +422,19 @@ void KDVIMultiPage::doEnableWarnings()
 
 void KDVIMultiPage::showTip()
 {
-  KTipDialog::showTip(scrollView(), "kdvi/tips", true);
+  KTipDialog::showTip(pageView(), "kdvi/tips", true);
 }
 
 
 void KDVIMultiPage::showTipOnStart()
 {
-  KTipDialog::showTip(scrollView(), "kdvi/tips");
+  KTipDialog::showTip(pageView(), "kdvi/tips");
 }
 
 
 DocumentWidget* KDVIMultiPage::createDocumentWidget()
 {
-  DVIWidget* documentWidget = new DVIWidget(scrollView(), pageCache, "singlePageWidget");
+  DVIWidget* documentWidget = new DVIWidget(pageView(), pageCache, "singlePageWidget");
 
   // Handle source links
   connect(documentWidget, SIGNAL(SRCLink(const QString&, QMouseEvent*, DocumentWidget*)), getRenderer(),
@@ -459,7 +459,7 @@ void KDVIMultiPage::showFindTextDialog()
   {
     // WARNING: This text appears several times in the code. Change
     // everywhere, or nowhere!
-    if (KMessageBox::warningContinueCancel( scrollView(),
+    if (KMessageBox::warningContinueCancel( pageView(),
                                             i18n("<qt>This function searches the DVI file for plain text. Unfortunately, this version of "
                                                  "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
                                                  "formulae, accented characters, and non-English text, such as Russian or Korean, will "

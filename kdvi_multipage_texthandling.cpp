@@ -56,7 +56,7 @@ void KDVIMultiPage::doExportText()
   if (DVIRenderer.dviFile->dvi_Data() == 0 )
     return;
 
-  if (KMessageBox::warningContinueCancel( scrollView(),
+  if (KMessageBox::warningContinueCancel( pageView(),
                                           i18n("<qt>This function exports the DVI file to a plain text. Unfortunately, this version of "
                                                "KDVI treats only plain ASCII characters properly. Symbols, ligatures, mathematical "
                                                "formulae, accented characters, and non-English text, such as Russian or Korean, will "

@@ -434,8 +434,7 @@ void KDVIMultiPage::showTipOnStart()
 
 DocumentWidget* KDVIMultiPage::createDocumentWidget()
 {
-  DVIWidget* documentWidget = new DVIWidget(scrollView()->viewport(), scrollView(), pageCache,
-                              "singlePageWidget" );
+  DVIWidget* documentWidget = new DVIWidget(scrollView(), pageCache, "singlePageWidget");
 
   // Handle source links
   connect(documentWidget, SIGNAL(SRCLink(const QString&, QMouseEvent*, DocumentWidget*)), getRenderer(),

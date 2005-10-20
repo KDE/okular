@@ -4,7 +4,7 @@
 // Widget for displaying TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2004 Wilfried Huss, Stefan Kebekus
+// (C) 2004-2005 Wilfried Huss, Stefan Kebekus
 // Distributed under the GPL
 //
 
@@ -24,8 +24,8 @@
 //Added by qt3to4:
 #include <QMouseEvent>
 
-DVIWidget::DVIWidget(QWidget* parent, PageView* sv, DocumentPageCache* cache, const char* name)
-  : DocumentWidget(parent, sv, cache, name)
+DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name)
+  : DocumentWidget(sv, cache, name)
 {
 }
 

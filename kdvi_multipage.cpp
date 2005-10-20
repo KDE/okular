@@ -129,7 +129,7 @@ KAboutData* KDVIMultiPage::createAboutData()
 void KDVIMultiPage::slotEmbedPostScript()
 {
   DVIRenderer.embedPostScript();
-  emit askingToCheckActions();
+  setEmbedPostScriptAction();
 }
 
 

@@ -1142,10 +1142,6 @@ void GlobalParams::setupBaseFonts(char *dir) {
 #endif
   for (i = 0; displayFontTab[i].name; ++i) {
     fontName = new GString(displayFontTab[i].name);
-    if (getDisplayFont(fontName)) {
-      delete fontName;
-      continue;
-    }
     fileName = NULL;
     kind = displayFontT1; // make gcc happy
     if (dir) {

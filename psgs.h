@@ -15,6 +15,7 @@
 #include <qobject.h>
 #include <qstring.h>
 
+class KURL;
 class PageNumber;
 class QPainter;
 

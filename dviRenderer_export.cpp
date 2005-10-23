@@ -26,24 +26,25 @@
 
 #include <config.h>
 
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <klocale.h>
-#include <kprinter.h>
-#include <kprocess.h>
-#include <ktempfile.h>
-#include <qlabel.h>
-#include <qpainter.h>
-
 #include "dviRenderer.h"
 #include "dviFile.h"
 #include "fontprogress.h"
 #include "infodialog.h"
 #include "kdvi_multipage.h"
+
+#include <kapplication.h>
+#include <kdebug.h>
+#include <kfiledialog.h>
+#include <kio/job.h>
+#include <kio/netaccess.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kprinter.h>
+#include <kprocess.h>
+#include <ktempfile.h>
+
+#include <qlabel.h>
+#include <qpainter.h>
 
 extern QPainter foreGroundPaint; // QPainter used for text
 

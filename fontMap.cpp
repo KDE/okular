@@ -6,15 +6,18 @@
 // Distributed under the GPL
 
 #include "config.h"
-#ifdef HAVE_FREETYPE
 
-#include <kdebug.h>
-#include <kprocio.h>
-#include <qfile.h>
+#ifdef HAVE_FREETYPE
 
 #include "fontMap.h"
 
+#include <kdebug.h>
+#include <kprocio.h>
+
+#include <qfile.h>
+
 //#define DEBUG_FONTMAP
+
 
 fontMap::fontMap()
 {

@@ -11,15 +11,16 @@
 #include <klocale.h>
 #include <kprocio.h>
 #include <kprogress.h>
+
 #include <qapplication.h>
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qvariant.h>
 #include <qtooltip.h>
+#include <qvbox.h>
 #include <qwhatsthis.h>
 
-#include <qvbox.h>
 
 /*
  *  Constructs a fontProgressDialog which is a child of 'parent', with the

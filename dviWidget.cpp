@@ -10,17 +10,17 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-#include <klocale.h>
-
 #include "dviWidget.h"
-
 #include "documentPageCache.h"
 #include "documentWidget.h"
 #include "hyperlink.h"
 #include "pageView.h"
 #include "renderedDviPagePixmap.h"
 #include "selection.h"
+
+#include <kdebug.h>
+#include <klocale.h>
+
 
 DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name)
   : DocumentWidget(sv, cache, name)

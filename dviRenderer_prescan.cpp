@@ -24,6 +24,7 @@
 #include <kprocess.h>
 #include <kprocio.h>
 #include <kprogress.h>
+
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qdir.h>

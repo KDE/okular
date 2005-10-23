@@ -6,14 +6,14 @@
 // Distributed under the GPL
 
 #include "config.h"
-#ifdef HAVE_FREETYPE
 
+#ifdef HAVE_FREETYPE
 
 #include "fontEncodingPool.h"
 
+
 fontEncodingPool::fontEncodingPool()
-{
-}
+{}
 
 
 fontEncoding *fontEncodingPool::findByName(const QString &name)

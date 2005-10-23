@@ -6,16 +6,19 @@
 // Distributed under the GPL
 
 #include "config.h"
-#ifdef HAVE_FREETYPE
 
-#include <kdebug.h>
-#include <kprocio.h>
-#include <qfile.h>
-#include <qstringlist.h>
+#ifdef HAVE_FREETYPE
 
 #include "fontEncoding.h"
 
+#include <kdebug.h>
+#include <kprocio.h>
+
+#include <qfile.h>
+#include <qstringlist.h>
+
 //#define DEBUG_FONTENC
+
 
 fontEncoding::fontEncoding(const QString &encName)
 {

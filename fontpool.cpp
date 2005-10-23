@@ -6,23 +6,25 @@
 
 #include <config.h>
 
+#include "fontpool.h"
+#include "performanceMeasurement.h"
+#include "prefs.h"
+#include "TeXFont.h"
+
 #include <kdebug.h>
 #include <kinstance.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <kprocio.h>
-#include <math.h>
+
 #include <qapplication.h>
 #include <qfile.h>
 #include <qimage.h>
 #include <qpainter.h>
-#include <stdlib.h>
 
-#include "fontpool.h"
-#include "performanceMeasurement.h"
-#include "prefs.h"
-#include "TeXFont.h"
+#include <cmath>
+#include <cstdlib>
 
 #define DEBUG_FONTPOOL
 

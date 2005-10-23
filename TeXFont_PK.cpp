@@ -51,23 +51,24 @@
 
 #include <config.h>
 
+#include "TeXFont_PK.h"
+#include "fontpool.h"
+#include "glyph.h"
+#include "TeXFontDefinition.h"
+#include "xdvi.h"
+
 #include <kdebug.h>
 #include <klocale.h>
-#include <math.h>
+
 #include <qbitmap.h>
 #include <qfile.h>
 #include <qimage.h>
 #include <qpainter.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#include "fontpool.h"
-#include "glyph.h"
-#include "xdvi.h"
-#include "TeXFontDefinition.h"
-#include "TeXFont_PK.h"
-
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 //#define DEBUG_PK
 

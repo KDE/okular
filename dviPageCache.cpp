@@ -20,19 +20,18 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-
 #include "dviPageCache.h"
 #include "renderedDviPagePixmap.h"
 
+#include <kdebug.h>
+
+
 DVIPageCache::DVIPageCache()
   : DocumentPageCache()
-{
-}
+{}
 
 DVIPageCache::~DVIPageCache()
-{
-}
+{}
 
 RenderedDocumentPagePixmap* DVIPageCache::createDocumentPagePixmap() const
 {

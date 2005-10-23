@@ -51,13 +51,12 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-
 #include "dviRenderer.h"
 #include "xdvi.h"
 
+#include <kdebug.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 
 
 /*

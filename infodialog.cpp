@@ -5,9 +5,14 @@
 
 #include <config.h>
 
+#include "infodialog.h"
+#include "dviFile.h"
+#include "fontpool.h"
+
 #include <kdebug.h>
 #include <kio/global.h>
 #include <klocale.h>
+
 #include <qfile.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -17,9 +22,6 @@
 #include <qvariant.h>
 #include <qwhatsthis.h>
 
-#include "dviFile.h"
-#include "fontpool.h"
-#include "infodialog.h"
 
 infoDialog::infoDialog( QWidget* parent )
   : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false)

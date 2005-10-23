@@ -8,10 +8,11 @@
 
 #include <config.h>
 
-#include <qdir.h>
+#include "dvisourcesplitter.h"
+
 #include <kdebug.h>
 
-#include "dvisourcesplitter.h"
+#include <qdir.h>
 
 //#define DEBUG_SOURCESPLITTER
 

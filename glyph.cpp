@@ -8,9 +8,10 @@
 
 #include <config.h>
 
+#include "glyph.h"
+
 #include <kdebug.h>
 
-#include "glyph.h"
 
 glyph::glyph()
 {
@@ -25,6 +26,4 @@ glyph::glyph()
 }
 
 glyph::~glyph()
-{
-  ;
-}
+{}

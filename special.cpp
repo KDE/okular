@@ -1,4 +1,3 @@
-
 // special.cpp
 
 // Methods for dviRenderer which deal with "\special" commands found in the
@@ -8,16 +7,6 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <kmimetype.h>
-#include <kprocio.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qstringlist.h>
-
 #include "dviFile.h"
 #include "dviRenderer.h"
 #include "hyperlink.h"
@@ -25,6 +14,17 @@
 #include "kdvi_multipage.h"
 #include "psgs.h"
 #include "xdvi.h"
+
+#include <kdebug.h>
+#include <klocale.h>
+#include <kmimetype.h>
+#include <kprocio.h>
+
+#include <qdir.h>
+#include <qfile.h>
+#include <qfileinfo.h>
+#include <qimage.h>
+#include <qstringlist.h>
 
 //#define DEBUG_SPECIAL
 

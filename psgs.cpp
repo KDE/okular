@@ -8,18 +8,19 @@
 
 #include <config.h>
 
+#include "psgs.h"
+#include "dviFile.h"
+#include "pageNumber.h"
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocio.h>
 #include <ktempfile.h>
 #include <kurl.h>
+
 #include <qdir.h>
 #include <qpainter.h>
-
-#include "psgs.h"
-#include "dviFile.h"
-#include "pageNumber.h"
 
 extern const char psheader[];
 

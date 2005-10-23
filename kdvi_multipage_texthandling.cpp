@@ -26,19 +26,20 @@
 
 #include <config.h>
 
+#include "kdvi_multipage.h"
+#include "dviFile.h"
+#include "documentWidget.h"
+#include "renderedDocumentPagePixmap.h"
+
 #include <kaction.h>
 #include <kdebug.h>
 #include <keditcl.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+
 #include <qapplication.h>
 #include <qprogressdialog.h>
-
-#include "kdvi_multipage.h"
-#include "dviFile.h"
-#include "documentWidget.h"
-#include "renderedDocumentPagePixmap.h"
 
 
 //#define KDVI_MULTIPAGE_DEBUG

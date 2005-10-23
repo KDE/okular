@@ -70,11 +70,11 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <qpainter.h>
+
 #include <qbitmap.h>
+#include <qfileinfo.h>
 #include <qimage.h>
 #include <qpainter.h>
-#include <qfileinfo.h>
 
 extern QPainter *foreGroundPainter;
 

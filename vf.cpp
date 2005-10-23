@@ -25,16 +25,18 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "dvi.h"
 #include "dviRenderer.h"
 #include "fontpool.h"
 #include "xdvi.h"
+
+#include <kdebug.h>
+#include <klocale.h>
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+
 
 extern void oops(QString message);
 

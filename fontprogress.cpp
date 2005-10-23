@@ -12,15 +12,15 @@
 #include <kprocio.h>
 #include <kprogress.h>
 #include <kvbox.h>
-#include <qapplication.h>
-#include <q3frame.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvariant.h>
-#include <qtooltip.h>
 
+#include <Q3Frame>
+#include <Q3VBox>
+#include <QApplication>
+#include <QLabel>
+#include <QLayout>
+#include <QToolTip>
+#include <QVariant>
 
-#include <q3vbox.h>
 
 /*
  *  Constructs a fontProgressDialog which is a child of 'parent', with the

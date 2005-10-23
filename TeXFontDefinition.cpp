@@ -1,18 +1,20 @@
-#include <kdebug.h>
-#include <klocale.h>
-#include <qfile.h>
+#include <config.h>
 
-#include "config.h"
+#include "TeXFontDefinition.h"
 #include "dviRenderer.h"
 #include "fontpool.h"
 #include "kdvi.h"
 #ifdef HAVE_FREETYPE
-#include "TeXFont_PFB.h"
+# include "TeXFont_PFB.h"
 #endif
 #include "TeXFont_PK.h"
 #include "TeXFont_TFM.h"
-#include "TeXFontDefinition.h"
 #include "xdvi.h"
+
+#include <kdebug.h>
+#include <klocale.h>
+
+#include <QFile>
 
 extern const int MFResolutions[];
 

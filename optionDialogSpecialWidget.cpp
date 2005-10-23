@@ -5,22 +5,20 @@
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
 
-// Add header files alphabetically
-
 #include <config.h>
 
-#include <kdebug.h>
+#include "optionDialogSpecialWidget.h"
+#include "prefs.h"
 
 #include <kcombobox.h>
+#include <kdebug.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
 
-#include "optionDialogSpecialWidget.h"
-#include "prefs.h"
+#include <QCheckBox>
+#include <QLabel>
 
 
 // Constructs a optionDialogWidget_base which is a child of 'parent', with

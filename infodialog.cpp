@@ -5,24 +5,24 @@
 
 #include <config.h>
 
+#include "infodialog.h"
+#include "dviFile.h"
+#include "fontpool.h"
+
 #include <kdebug.h>
 #include <kio/global.h>
 #include <klocale.h>
-#include <qfile.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qregexp.h>
-#include <q3textview.h>
-#include <qtooltip.h>
-#include <qvariant.h>
 
-//Added by qt3to4:
-#include <QVBoxLayout>
 #include <Q3Frame>
+#include <Q3TextView>
+#include <QFile>
+#include <QLabel>
+#include <QLayout>
+#include <QRegExp>
+#include <QToolTip>
+#include <QVariant>
+#include <QVBoxLayout>
 
-#include "dviFile.h"
-#include "fontpool.h"
-#include "infodialog.h"
 
 infoDialog::infoDialog( QWidget* parent )
   : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false)

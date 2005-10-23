@@ -8,20 +8,18 @@
 // This file is compiled only if the FreeType library is present on
 // the system
 
-// Add header files alphabetically
-
 #include <config.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-#include <qimage.h>
-
-#include "fontpool.h"
 
 #ifdef HAVE_FREETYPE
 
-#include "glyph.h"
 #include "TeXFont_PFB.h"
+#include "fontpool.h"
+#include "glyph.h"
+
+#include <kdebug.h>
+#include <klocale.h>
+
+#include <QImage>
 
 //#define DEBUG_PFB 1
 

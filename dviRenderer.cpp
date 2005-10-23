@@ -10,46 +10,10 @@
 
 #include <config.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <qcheckbox.h>
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qlabel.h>
-#include <qfileinfo.h>
-#include <qlayout.h>
-#include <qmessagebox.h>
-#include <qpaintdevice.h>
-#include <qpainter.h>
-#include <QRegExp>
-#include <q3url.h>
-#include <q3vbox.h>
-//Added by qt3to4:
-#include <QHBoxLayout>
-#include <QMouseEvent>
-#include <q3ptrstack.h>
-
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <kmimemagic.h>
-#include <kglobal.h>
-#include <kdebug.h>
-#include <keditcl.h>
-#include <kfiledialog.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <klocale.h>
-#include <kprinter.h>
-#include <kprocess.h>
-#include <kprogress.h>
-#include <kstandarddirs.h>
-#include <kstdguiitem.h>
-
+#include "dviRenderer.h"
 #include "documentWidget.h"
 #include "dviFile.h"
-#include "dviRenderer.h"
+#include "dvisourcesplitter.h"
 #include "fontpool.h"
 #include "fontprogress.h"
 #include "hyperlink.h"
@@ -58,10 +22,45 @@
 #include "performanceMeasurement.h"
 #include "prebookmark.h"
 #include "psgs.h"
+#include "renderedDviPagePixmap.h"
 #include "xdvi.h"
 #include "zoomlimits.h"
-#include "dvisourcesplitter.h"
-#include "renderedDviPagePixmap.h"
+
+#include <kapplication.h>
+#include <kdebug.h>
+#include <keditcl.h>
+#include <kfiledialog.h>
+#include <kglobal.h>
+#include <kio/job.h>
+#include <kio/netaccess.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kmimemagic.h>
+#include <kprinter.h>
+#include <kprocess.h>
+#include <kprogress.h>
+#include <kstandarddirs.h>
+#include <kstdguiitem.h>
+
+#include <q3ptrstack.h>
+#include <Q3Url>
+#include <Q3VBox>
+#include <QCheckBox>
+#include <QClipboard>
+#include <QCursor>
+#include <QFileInfo>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLayout>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QPaintDevice>
+#include <QPainter>
+#include <QRegExp>
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 //#define DEBUG_DVIRENDERER
 

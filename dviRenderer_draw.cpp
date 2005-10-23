@@ -70,12 +70,11 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qfileinfo.h>
-//Added by qt3to4:
+
+#include <QBitmap>
+#include <QFileInfo>
+#include <QImage>
+#include <QPainter>
 #include <QPixmap>
 
 extern QPainter *foreGroundPainter;

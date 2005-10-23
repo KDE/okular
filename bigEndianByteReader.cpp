@@ -7,10 +7,10 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-
 #include "bigEndianByteReader.h"
 #include "dvi.h"
+
+#include <kdebug.h>
 
 //#define DEBUG_ENDIANREADER
 

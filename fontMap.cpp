@@ -6,17 +6,19 @@
 // Distributed under the GPL
 
 #include "config.h"
-#ifdef HAVE_FREETYPE
 
-#include <kdebug.h>
-#include <kprocio.h>
-#include <qfile.h>
-//Added by qt3to4:
-#include <QTextStream>
+#ifdef HAVE_FREETYPE
 
 #include "fontMap.h"
 
+#include <kdebug.h>
+#include <kprocio.h>
+
+#include <QFile>
+#include <QTextStream>
+
 //#define DEBUG_FONTMAP
+
 
 fontMap::fontMap()
 {

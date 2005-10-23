@@ -10,19 +10,19 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-#include <klocale.h>
-
 #include "dviWidget.h"
-
 #include "documentPageCache.h"
 #include "documentWidget.h"
 #include "hyperlink.h"
 #include "pageView.h"
 #include "renderedDviPagePixmap.h"
 #include "selection.h"
-//Added by qt3to4:
+
+#include <kdebug.h>
+#include <klocale.h>
+
 #include <QMouseEvent>
+
 
 DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name)
   : DocumentWidget(sv, cache, name)

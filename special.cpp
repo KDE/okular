@@ -8,16 +8,6 @@
 
 #include <config.h>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <kmimetype.h>
-#include <kprocio.h>
-#include <QDir>
-#include <QFile>
-#include <QFileInfo>
-#include <QImage>
-#include <QStringList>
-
 #include "dviFile.h"
 #include "dviRenderer.h"
 #include "hyperlink.h"
@@ -26,9 +16,21 @@
 #include "psgs.h"
 #include "xdvi.h"
 
+#include <kdebug.h>
+#include <klocale.h>
+#include <kmimetype.h>
+#include <kprocio.h>
+
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QImage>
+#include <QStringList>
+
 //#define DEBUG_SPECIAL
 
 extern QPainter *foreGroundPainter;
+
 
 void dviRenderer::printErrorMsgForSpecials(const QString& msg)
 {

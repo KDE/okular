@@ -24,22 +24,7 @@
 // Please report bugs or improvements, etc. via the "Report bug"-Menu
 // of kdvi.
 
-
 #include <config.h>
-
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <klocale.h>
-#include <kprinter.h>
-#include <kprocess.h>
-#include <ktempfile.h>
-#include <qlabel.h>
-#include <qpainter.h>
-
 
 #include "dviRenderer.h"
 #include "dviFile.h"
@@ -47,8 +32,21 @@
 #include "infodialog.h"
 #include "kdvi_multipage.h"
 
-extern QPainter foreGroundPaint; // QPainter used for text
+#include <kapplication.h>
+#include <kdebug.h>
+#include <kfiledialog.h>
+#include <kio/job.h>
+#include <kio/netaccess.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kprinter.h>
+#include <kprocess.h>
+#include <ktempfile.h>
 
+#include <QLabel>
+#include <QPainter>
+
+extern QPainter foreGroundPaint; // QPainter used for text
 
 
 void dviRenderer::exportPDF()

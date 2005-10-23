@@ -5,19 +5,18 @@
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
 
-// Add header files alphabetically
+#include <config.h>
+
+#include "optionDialogFontsWidget.h"
+#include "fontpool.h"
 
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <q3buttongroup.h>
-#include <qcheckbox.h>
-#include <qtooltip.h>
 
-
-#include "config.h"
-#include "fontpool.h"
-#include "optionDialogFontsWidget.h"
+#include <Q3ButtonGroup>
+#include <QCheckBox>
+#include <QToolTip>
 
 
 // Constructs a optionDialogWidget_base which is a child of 'parent', with

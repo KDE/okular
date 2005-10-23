@@ -51,22 +51,21 @@
 
 #include <config.h>
 
+#include "dviFile.h"
+#include "dvi.h"
+#include "fontpool.h"
+#include "pageSize.h"
+#include "xdvi.h"
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocio.h>
 #include <ktempfile.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <stdlib.h>
 
-extern "C" {
-#include "dvi.h"
-}
+#include <QDir>
+#include <QFileInfo>
 
-#include "pageSize.h"
-#include "dviFile.h"
-#include "fontpool.h"
-#include "xdvi.h"
+#include <cstdlib>
 
 
 dvifile::dvifile(const dvifile *old, fontPool *fp)

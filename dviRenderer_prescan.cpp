@@ -25,16 +25,16 @@
 #include <kprocess.h>
 #include <kprocio.h>
 #include <kprogress.h>
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qpaintdevice.h>
-//Added by qt3to4:
-#include <QTextStream>
+
 #include <Q3MemArray>
+#include <QApplication>
+#include <QBitmap>
+#include <QDir>
+#include <QFileInfo>
+#include <QImage>
+#include <QPainter>
+#include <QPaintDevice>
+#include <QTextStream>
 
 
 extern QPainter foreGroundPaint;

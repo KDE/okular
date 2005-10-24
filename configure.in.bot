@@ -5,6 +5,15 @@ if test -z "$FREETYPE_CONFIG"; then
   echo ""
 fi
 
+if test x$FREETYPE_VERSION != x; then
+  if test $FREETYPE_VERSION -lt 9008003; then
+    echo ""
+    echo "You're are using freetype older than 2.1.10, it is not mandatory"
+    echo "to use 2.1.10 but kpdf improves its rendering in some pdf with it"
+    echo ""
+  fi
+fi
+
 if test -z "$XFT_LIBS"; then
   echo ""
   echo "You're missing XFT development libs."
@@ -18,3 +27,4 @@ if test "$HAVE_LIBJPEG" = "no"; then
   echo "KPDF will not be build without them"
   echo ""
 fi
+

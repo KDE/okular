@@ -7,8 +7,8 @@ KDE_FIND_PATH(freetype-config, FREETYPE_CONFIG, [${prefix}/bin ${exec_prefix}/bi
 ])
 
 if test -n "$FREETYPE_CONFIG"; then
-  vers=`$FREETYPE_CONFIG --version 2>/dev/null | sed -e 's/libfreetype //' | awk 'BEGIN { FS = "."; } { printf "%d", ($1 * 1000 + $2) * 1000 + $3;}'`
-  if test -n "$vers" && test "$vers" -ge 9000000; then
+  FREETYPE_VERSION=`$FREETYPE_CONFIG --version 2>/dev/null | sed -e 's/libfreetype //' | awk 'BEGIN { FS = "."; } { printf "%d", ($1 * 1000 + $2) * 1000 + $3;}'`
+  if test -n "$FREETYPE_VERSION" && test "$FREETYPE_VERSION" -ge 9000000; then
     LIBFREETYPE_LIBS="`$FREETYPE_CONFIG --libs`"
     LIBFREETYPE_RPATH=
     for args in $LIBFREETYPE_LIBS; do
@@ -19,12 +19,6 @@ if test -n "$FREETYPE_CONFIG"; then
     LIBFREETYPE_RPATH=`echo $LIBFREETYPE_RPATH | sed -e "s/-L/-R/g"`
     LIBFREETYPE_CFLAGS="`$FREETYPE_CONFIG --cflags`"
     AC_DEFINE_UNQUOTED(HAVE_FREETYPE, 1, [Defines if your system has the freetype library])
-    if test -n "$vers" && test "$vers" -le 9005003; then
-	    AC_DEFINE_UNQUOTED(HAVE_FREETYPE_217_OR_OLDER, 1, [Defines if your system has the freetype library 2.1.7 or older])
-    else
-	    AC_DEFINE_UNQUOTED(HAVE_FREETYPE_217_OR_OLDER, 0, [Defines if your system has the freetype library 2.1.7 or older])
-    fi
-	    
   else
     AC_MSG_WARN([You need at least libfreetype 2.0.5])
     DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
@@ -33,6 +27,7 @@ else
   DO_NOT_COMPILE="$DO_NOT_COMPILE kpdf"
 fi
 
+AC_SUBST(FREETYPE_VERSION)
 AC_SUBST(LIBFREETYPE_LIBS)
 AC_SUBST(LIBFREETYPE_CFLAGS)
 AC_SUBST(LIBFREETYPE_RPATH)

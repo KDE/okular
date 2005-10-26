@@ -13,11 +13,8 @@
 #include <kprogress.h>
 #include <kvbox.h>
 
-#include <Q3Frame>
-#include <Q3VBox>
 #include <QApplication>
 #include <QLabel>
-#include <QLayout>
 #include <QToolTip>
 #include <QVariant>
 

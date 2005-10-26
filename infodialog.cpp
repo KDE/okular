@@ -9,33 +9,37 @@
 #include "dviFile.h"
 #include "fontpool.h"
 
-#include <kdebug.h>
 #include <kio/global.h>
 #include <klocale.h>
 
-#include <Q3Frame>
-#include <Q3TextView>
 #include <QFile>
-#include <QLabel>
-#include <QLayout>
+#include <QFrame>
 #include <QRegExp>
+#include <QTextEdit>
 #include <QToolTip>
-#include <QVariant>
 #include <QVBoxLayout>
 
 
 infoDialog::infoDialog( QWidget* parent )
-  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false)
+  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false),
+    TextLabel1(0),
+    TextLabel2(0),
+    TextLabel3(0),
+    MFOutputReceived(false),
+    headline(QString::null),
+    pool(QString::null)
 {
   QFrame *page1 = addPage( i18n("DVI File") );
   QVBoxLayout *topLayout1 = new QVBoxLayout( page1, 0, 6 );
-  TextLabel1 = new Q3TextView( page1, "TextLabel1" );
+  TextLabel1 = new QTextEdit(page1);
+  TextLabel1->setReadOnly(true);
   QToolTip::add( TextLabel1, i18n("Information on the currently loaded DVI-file.") );
   topLayout1->addWidget( TextLabel1 );
 
   QFrame *page2 = addPage( i18n("Fonts") );
   QVBoxLayout *topLayout2 = new QVBoxLayout( page2, 0, 6 );
-  TextLabel2 = new Q3TextView( page2, "TextLabel1" );
+  TextLabel2 = new QTextEdit(page2);
+  TextLabel2->setReadOnly(true);
   TextLabel2->setMinimumWidth(fontMetrics().maxWidth()*40);
   TextLabel2->setMinimumHeight(fontMetrics().height()*10);
   QToolTip::add( TextLabel2, i18n("Information on currently loaded fonts.") );
@@ -45,17 +49,14 @@ infoDialog::infoDialog( QWidget* parent )
 
   QFrame *page3 = addPage( i18n("External Programs") );
   QVBoxLayout *topLayout3 = new QVBoxLayout( page3, 0, 6 );
-  TextLabel3 = new Q3TextView( page3, "TextLabel1" );
+  TextLabel3 = new QTextEdit(page3);
+  TextLabel3->setReadOnly(true);
   TextLabel3->setText( i18n("No output from any external program received.") );
   QToolTip::add( TextLabel3, i18n("Output of external programs.") );
   TextLabel3->setWhatsThis( i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
                                     "This text field shows the output of these programs. "
                                     "That is useful for experts who want to find problems in the setup of TeX or KDVI.") );
   topLayout3->addWidget( TextLabel3 );
-
-  MFOutputReceived = false;
-  headline         = QString::null;
-  pool             = QString::null;
 }
 
 
@@ -80,7 +81,7 @@ void infoDialog::setDVIData(dvifile *dviFile)
     text.append(QString("<tr><td><b>%1</b></td> <td>%2</td></tr>").arg(i18n("Generator/Date")).arg(dviFile->generatorString));
   } // else (dviFile == NULL)
 
-  TextLabel1->setText( text );
+  TextLabel1->setHtml( text );
 }
 
 
@@ -89,13 +90,14 @@ void infoDialog::setFontInfo(fontPool *fp)
   TextLabel2->setText(fp->status());
 }
 
+
 void infoDialog::outputReceiver(const QString& _op)
 {
   QString op = _op;
   op = op.replace( QRegExp("<"), "&lt;" );
 
   if (MFOutputReceived == false) {
-    TextLabel3->setText("<b>"+headline+"</b><br>");
+    TextLabel3->setHtml("<b>"+headline+"</b><br>");
     headline = QString::null;
   }
 
@@ -128,10 +130,12 @@ void infoDialog::outputReceiver(const QString& _op)
   MFOutputReceived = true;
 }
 
+
 void infoDialog::clear(const QString& op)
 {
   headline         = op;
   pool             = QString::null;
   MFOutputReceived = false;
 }
+
 #include "infodialog.moc"

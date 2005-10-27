@@ -176,7 +176,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, cons
     }
 
     // 1. load Document (and set busy cursor while loading)
-    QApplication::setOverrideCursor( Qt::waitCursor );
+    QApplication::setOverrideCursor( Qt::WaitCursor );
     bool openOk = generator->loadDocument( docFile, pages_vector );
     QApplication::restoreOverrideCursor();
     if ( !openOk || pages_vector.size() <= 0 )
@@ -652,7 +652,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
     s->highlightedPages.clear();
 
     // set hourglass cursor
-    QApplication::setOverrideCursor( Qt::waitCursor );
+    QApplication::setOverrideCursor( Qt::WaitCursor );
 
     // 1. ALLDOC - proces all document marking pages
     if ( type == AllDoc )

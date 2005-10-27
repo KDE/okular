@@ -578,7 +578,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
     if( d->typeAheadActive )
     {
         // backspace: remove a char and search or terminates search
-        if( e->key() == Qt::Key_BackSpace )
+        if( e->key() == Qt::Key_Backspace )
         {
             if( d->typeAheadString.length() > 1 )
             {
@@ -827,7 +827,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     if ( e->button() & Qt::MidButton )
     {
         d->mouseMidStartY = e->globalPos().y();
-        setCursor( Qt::sizeVerCursor );
+        setCursor( Qt::SizeHorCursor );
         return;
     }
 
@@ -844,7 +844,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             {
                 d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
                 if ( !d->mouseOnRect )
-                    setCursor( Qt::sizeAllCursor );
+                    setCursor( Qt::SizeAllCursor );
             }
             break;
 
@@ -1511,16 +1511,16 @@ void PageView::updateCursor( const QPoint &p )
         // if over a ObjectRect (of type Link) change cursor to hand
         d->mouseOnRect = pageItem->page()->hasObject( ObjectRect::Link, nX, nY );
         if ( d->mouseOnRect )
-            setCursor( Qt::pointingHandCursor );
+            setCursor( Qt::PointingHandCursor );
         else
-            setCursor( Qt::arrowCursor );
+            setCursor( Qt::ArrowCursor );
     }
     else
     {
         // if there's no page over the cursor and we were showing the pointingHandCursor
         // go back to the normal one
         d->mouseOnRect = false;
-        setCursor( Qt::arrowCursor );
+        setCursor( Qt::ArrowCursor );
     }
 }
 

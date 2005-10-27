@@ -456,7 +456,7 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
     return false;
   }
 
-  QApplication::setOverrideCursor( Qt::waitCursor );
+  QApplication::setOverrideCursor( Qt::WaitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
 
   if ((dviFile == 0) || (dviFile->filename != filename))

@@ -682,7 +682,7 @@ void Part::slotSaveFileAs()
     {
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.fileName(), QString::null, i18n("Overwrite"))) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
                 return;
         }
 

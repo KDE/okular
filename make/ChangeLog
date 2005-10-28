@@ -222,7 +222,7 @@ Tue Jun 14 12:41:33 1994  Karl Berry  (karl@cs.umb.edu)
 
 Mon May 30 13:50:34 1994  Karl Berry  (karl@cs.umb.edu)
 
-        * common.make (LDFLAGS): Don't include $(CFLAGS), for Linux's sake. 
+        * common.make (LDFLAGS): Don't include $(CFLAGS), for Linux's sake.
 
 Tue May 24 13:26:05 1994  Karl Berry  (karl@cs.umb.edu)
 
@@ -354,7 +354,7 @@ Thu Sep 23 17:42:42 1993  Karl Berry  (karl@cs.umb.edu)
 
 	* common.make (autoconf): Toss aclocal.m4.
 	* dist.make (top_files): Ditto.
-	
+
 	* common.make (autoheader): New variable, split off from autoconf.
 
 Sun Aug 29 11:30:39 1993  Karl Berry  (karl@cs.umb.edu)

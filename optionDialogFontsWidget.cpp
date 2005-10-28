@@ -7,8 +7,8 @@
 
 #include <config.h>
 
-#include "fontpool.h"
 #include "optionDialogFontsWidget.h"
+#include "fontpool.h"
 
 #include <kcombobox.h>
 #include <kdebug.h>

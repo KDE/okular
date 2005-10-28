@@ -8,9 +8,12 @@
 
 
 struct bitmap {
-  Q_UINT16        w, h;        /* width and height in pixels */
-  Q_UINT16        bytes_wide;        /* scan-line width in bytes */
-  char                *bits;                /* pointer to the bits */
+  // width and height in pixels
+  Q_UINT16 w, h;
+  // scan-line width in bytes
+  Q_UINT16 bytes_wide;
+  // pointer to the bits
+  char* bits;
 };
 
 class glyph {
@@ -30,8 +33,8 @@ class glyph {
   short   x, y;
 
   QPixmap shrunkenCharacter;
-
-  short   x2, y2;        /* x and y offset in pixels (shrunken bitmap) */
+  // x and y offset in pixels (shrunken bitmap)
+  short   x2, y2;
 };
 
 #endif //ifndef _GLYPH_H

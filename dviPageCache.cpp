@@ -30,8 +30,10 @@ DVIPageCache::DVIPageCache()
   : DocumentPageCache()
 {}
 
+
 DVIPageCache::~DVIPageCache()
 {}
+
 
 RenderedDocumentPagePixmap* DVIPageCache::createDocumentPagePixmap() const
 {

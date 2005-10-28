@@ -60,11 +60,11 @@
 
 
 /*
- *        General utility routines.
+ *   General utility routines.
  */
 
 /*
- *        Print error message and quit.
+ *   Print error message and quit.
  */
 
 void oops(QString message)
@@ -86,29 +86,29 @@ please report the problem."));
 
 /*
  *
- *      Read size bytes from the FILE fp, constructing them into a
- *      signed/unsigned integer.
+ *   Read size bytes from the FILE fp, constructing them into a
+ *   signed/unsigned integer.
  *
  */
 
 unsigned long num(FILE *fp, int size)
 {
-        register long x = 0;
+  register long x = 0;
 
-        while (size--) x = (x << 8) | one(fp);
-        return x;
+  while (size--) x = (x << 8) | one(fp);
+  return x;
 }
 
 long snum(FILE *fp, int size)
 {
-        register long x;
+  register long x;
 
 #ifdef        __STDC__
-        x = (signed char) getc(fp);
+  x = (signed char) getc(fp);
 #else
-        x = (unsigned char) getc(fp);
-        if (x & 0x80) x -= 0x100;
+  x = (unsigned char) getc(fp);
+  if (x & 0x80) x -= 0x100;
 #endif
-        while (--size) x = (x << 8) | one(fp);
-        return x;
+  while (--size) x = (x << 8) | one(fp);
+  return x;
 }

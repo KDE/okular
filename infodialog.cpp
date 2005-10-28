@@ -24,7 +24,13 @@
 
 
 infoDialog::infoDialog( QWidget* parent )
-  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false)
+  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false),
+    TextLabel1(0),
+    TextLabel2(0),
+    TextLabel3(0),
+    MFOutputReceived(false),
+    headline(QString::null),
+    pool(QString::null)
 {
   QFrame *page1 = addPage( i18n("DVI File") );
   QVBoxLayout *topLayout1 = new QVBoxLayout( page1, 0, 6 );
@@ -51,10 +57,6 @@ infoDialog::infoDialog( QWidget* parent )
                                     "This text field shows the output of these programs. "
                                     "That is useful for experts who want to find problems in the setup of TeX or KDVI.") );
   topLayout3->addWidget( TextLabel3 );
-
-  MFOutputReceived = false;
-  headline         = QString::null;
-  pool             = QString::null;
 }
 
 
@@ -87,6 +89,7 @@ void infoDialog::setFontInfo(fontPool *fp)
 {
   TextLabel2->setText(fp->status());
 }
+
 
 void infoDialog::outputReceiver(const QString& _op)
 {
@@ -127,10 +130,12 @@ void infoDialog::outputReceiver(const QString& _op)
   MFOutputReceived = true;
 }
 
+
 void infoDialog::clear(const QString& op)
 {
   headline         = op;
   pool             = QString::null;
   MFOutputReceived = false;
 }
+
 #include "infodialog.moc"

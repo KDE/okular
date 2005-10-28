@@ -49,7 +49,6 @@
 extern QPainter foreGroundPaint; // QPainter used for text
 
 
-
 void dviRenderer::exportPDF()
 {
   // It could perhaps happen that a kShellProcess, which runs an

@@ -20,9 +20,10 @@
 DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QString &dviFile)
 {
   QString filepart = srclink, linepart;
-  bool possibleNumberMixUp = false; //if sourcefilename starts with a number
-                                    //then there could be a mix up, i.e. src:123file.tex
-                                    //line 123 and file.tex or line 12 and 3file.tex?
+  // if sourcefilename starts with a number
+  // then there could be a mix up, i.e. src:123file.tex
+  // line 123 and file.tex or line 12 and 3file.tex?
+  bool possibleNumberMixUp = false;
 
 #ifdef DEBUG_SOURCESPLITTER
   kdDebug(4300) << "DVI_SourceSplitter: srclink " << srclink << endl;

@@ -30,6 +30,7 @@
 
 extern QPainter *foreGroundPainter;
 
+
 void dviRenderer::printErrorMsgForSpecials(const QString& msg)
 {
   if (dviFile->errorCounter < 25) {
@@ -226,7 +227,7 @@ void dviRenderer::color_special(const QString& _cp)
 
   if (command == "push") {
     // Get color specification
-    QColor const col = parseColorSpecification(cp.section(' ', 1));
+    const QColor col = parseColorSpecification(cp.section(' ', 1));
     // Set color
     if (col.isValid())
       colorStack.push(col);

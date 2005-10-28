@@ -12,7 +12,7 @@ CFLAGS = @CFLAGS@ $(XCFLAGS)
 # Do not override CPPFLAGS; change XCPPFLAGS, CFLAGS, XCFLAGS, or DEFS instead.
 CPPFLAGS = $(XCPPFLAGS) -I. -I$(srcdir) \
 	   -I$(kpathsea_parent) -I$(kpathsea_srcdir_parent) \
-	   $(prog_cflags) @CPPFLAGS@ $(DEFS) 
+	   $(prog_cflags) @CPPFLAGS@ $(DEFS)
 .c.o:
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $<
 .SUFFIXES: .c .o

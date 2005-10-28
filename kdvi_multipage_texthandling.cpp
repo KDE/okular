@@ -27,8 +27,8 @@
 #include <config.h>
 
 #include "kdvi_multipage.h"
-#include "dviFile.h"
 #include "documentWidget.h"
+#include "dviFile.h"
 #include "renderedDocumentPagePixmap.h"
 
 #include <kaction.h>
@@ -40,7 +40,6 @@
 
 #include <qapplication.h>
 #include <qprogressdialog.h>
-
 
 //#define KDVI_MULTIPAGE_DEBUG
 

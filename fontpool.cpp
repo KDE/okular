@@ -1,7 +1,7 @@
 //
 // fontpool.cpp
 //
-// (C) 2001-2004 Stefan Kebekus
+// (C) 2001-2005 Stefan Kebekus
 // Distributed under the GPL
 
 #include <config.h>
@@ -347,11 +347,11 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // This string is not going to be quoted, as it might be were it
   // a real command line, but who cares?
   kpsewhichOutput += "<p><b>" + kpsewhich_args.join(" ") + "</b></p>";
-  
+
   const QString importanceOfKPSEWHICH =
     i18n("<p>KDVI relies on the <b>kpsewhich</b> program to locate font files "
 	 "on your hard disc and to generate PK fonts, if necessary.</p>");
-  
+
   kpsewhich_ << kpsewhich_args;
   if (kpsewhich_.start(KProcess::NotifyOnExit, false) == false) {
     const QString msg =
@@ -365,12 +365,12 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 	   "really works.</p>");
     const QString details =
       QString("<qt><p><b>PATH:</b> %1</p>%2</qt>").arg(getenv("PATH")).arg(kpsewhichOutput);
-    
+
     KMessageBox::detailedError(0,
 			       QString("<qt>%1%2</qt>").arg(importanceOfKPSEWHICH).arg(msg),
 			       details,
 			       i18n("Problem locating fonts - KDVI"));
-    
+
     // This makes sure the we don't try to run kpsewhich again
     markFontsAsLocated();
     return;

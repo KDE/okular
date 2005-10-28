@@ -33,10 +33,14 @@ class macro {
   macro();
   ~macro();
 
-  unsigned char        *pos;                /* address of first byte of macro */
-  unsigned char        *end;                /* address of last+1 byte */
-  Q_INT32        dvi_advance_in_units_of_design_size_by_2e20;        /* DVI units to move reference point */
-  bool          free_me;        // if memory at pos should be returned on destruction
+  // address of first byte of macro
+  unsigned char* pos;
+  // address of last+1 byte
+  unsigned char* end;
+  // DVI units to move reference point
+  Q_INT32 dvi_advance_in_units_of_design_size_by_2e20;
+  // if memory at pos should be returned on destruction
+  bool free_me;
 };
 
 
@@ -49,10 +53,14 @@ class TeXFontDefinition {
   // unsigned chars.
   static const unsigned int max_num_of_chars_in_font = 256;
   enum font_flags {
-    FONT_IN_USE  = 1,        // used for housekeeping
-    FONT_LOADED  = 2,        // if font file has been read
-    FONT_VIRTUAL = 4,        // if font is virtual
-    FONT_KPSE_NAME = 8 // if kpathsea has already tried to find the font name
+    // used for housekeeping
+    FONT_IN_USE = 1,
+    // if font file has been read
+    FONT_LOADED = 2,
+    // if font is virtual
+    FONT_VIRTUAL = 4,
+    // if kpathsea has already tried to find the font name
+    FONT_KPSE_NAME = 8
   };
 
 
@@ -70,25 +78,35 @@ class TeXFontDefinition {
   void           markAsLocated() {flags |= FONT_KPSE_NAME;}
 
   void           mark_as_used();
-  class fontPool *font_pool;    // Pointer to the pool that contains this font.
-  QString        fontname;        // name of font, such as "cmr10"
-  unsigned char  flags;                // flags byte (see values below)
+  // Pointer to the pool that contains this font.
+  class fontPool *font_pool;
+  // name of font, such as "cmr10"
+  QString        fontname;
+  // flags byte (see values below)
+  unsigned char  flags;
   double         enlargement;
-  Q_INT32        scaled_size_in_DVI_units;   // Scaled size from the font definition command; in DVI units
-  set_char_proc  set_char_p;        // proc used to set char
+  // Scaled size from the font definition command; in DVI units
+  Q_INT32        scaled_size_in_DVI_units;
+  // proc used to set char
+  set_char_proc  set_char_p;
 
   // Resolution of the display device (resolution will usually be
   // scaled, according to the zoom)
   double         displayResolution_in_dpi;
 
-  FILE          *file;                // open font file or NULL
-  QString        filename;        // name of font file
+  // open font file or NULL
+  FILE* file;
+  // name of font file
+  QString filename;
 
-  TeXFont       *font;
-  macro         *macrotable;    // used by (loaded) virtual fonts
-  QIntDict<TeXFontDefinition> vf_table;      // used by (loaded) virtual fonts, list of fonts used by this vf,
+  TeXFont* font;
+  // used by (loaded) virtual fonts
+  macro* macrotable;
+  // used by (loaded) virtual fonts, list of fonts used by this vf,
+  QIntDict<TeXFontDefinition> vf_table;
   // acessible by number
-  TeXFontDefinition  *first_font;        // used by (loaded) virtual fonts, list of fonts used by this vf
+  // used by (loaded) virtual fonts, list of fonts used by this vf
+  TeXFontDefinition* first_font;
 
 #ifdef HAVE_FREETYPE
   const QString &getFullFontName() const {return fullFontName;}

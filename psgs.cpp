@@ -327,7 +327,7 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KURL
     if (fi2.exists())
       return fi2.absFilePath();
   }
-  
+
   // Otherwise, use kpsewhich to find the eps file.
   QString EPSfilename;
 

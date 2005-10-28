@@ -50,9 +50,9 @@ extern void oops(QString message);
 #define        LONG_CHAR        242
 
 /*
- *        These are parameters which determine whether macros are combined for
- *        storage allocation purposes.  Small macros ( <= VF_PARM_1 bytes) are
- *        combined into chunks of size VF_PARM_2.
+ *  These are parameters which determine whether macros are combined for
+ *  storage allocation purposes.  Small macros ( <= VF_PARM_1 bytes) are
+ *  combined into chunks of size VF_PARM_2.
  */
 
 #ifndef        VF_PARM_1
@@ -63,7 +63,7 @@ extern void oops(QString message);
 #endif
 
 /*
- *        The main routine
+ *  The main routine
  */
 
 void TeXFontDefinition::read_VF_index()
@@ -73,7 +73,8 @@ void TeXFontDefinition::read_VF_index()
 #endif
   FILE *VF_file = file;
   unsigned char        cmnd;
-  unsigned char        *avail, *availend;        /* available space for macros */
+  // available space for macros
+  unsigned char        *avail, *availend;
 
   flags      |= FONT_VIRTUAL;
   set_char_p  = &dviRenderer::set_vf_char;
@@ -82,7 +83,7 @@ void TeXFontDefinition::read_VF_index()
 #endif
   // Read preamble.
   fseek(VF_file, (long) one(VF_file), 1);        /* skip comment */
-  Q_UINT32 file_checksum = four(VF_file);
+  Q_UINT32 const file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
     kdError(4300) << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum <<

@@ -62,8 +62,8 @@
 #include "performanceMeasurement.h"
 #include "psgs.h"
 #include "renderedDviPagePixmap.h"
-#include "textBox.h"
 #include "TeXFont.h"
+#include "textBox.h"
 #include "xdvi.h"
 
 #include <kdebug.h>
@@ -78,6 +78,7 @@
 #include <QPixmap>
 
 extern QPainter *foreGroundPainter;
+
 
 /** Routine to print characters.  */
 

@@ -17,16 +17,16 @@ class TeXFont_PK : public TeXFont {
 
  private:
   // open font file or NULL
-  FILE         *file;
+  FILE* file;
   class bitmap *characterBitmaps[TeXFontDefinition::max_num_of_chars_in_font];
 
   // For use by PK-decryption routines. I don't understand what these
   // are good for -- Stefan Kebekus
-  int            PK_flag_byte;
-  unsigned       PK_input_byte;
-  int            PK_bitpos;
-  int            PK_dyn_f;
-  int            PK_repeat_count;
+  int          PK_flag_byte;
+  unsigned int PK_input_byte;
+  int          PK_bitpos;
+  int          PK_dyn_f;
+  int          PK_repeat_count;
 
   // PK-internal routines which were taken from xdvi. Again, I do not
   // really know what they are good for -- Stefan Kebekus

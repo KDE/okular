@@ -5,8 +5,6 @@
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
 
-// Add header files alphabetically
-
 #include <config.h>
 
 #include "TeXFont_TFM.h"

@@ -295,6 +295,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   emit setStatusBarText(i18n("Locating fonts..."));
 
   KProcIO kpsewhich_;
+
   // If PK fonts are generated, the kpsewhich command will re-route
   // the output of MetaFont into its stderr. Here we make sure this
   // output is intercepted and parsed.
@@ -370,7 +371,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 			       QString("<qt>%1%2</qt>").arg(importanceOfKPSEWHICH).arg(msg),
 			       details,
 			       i18n("Problem locating fonts - KDVI"));
- 
+
     // This makes sure the we don't try to run kpsewhich again
     markFontsAsLocated();
     return;

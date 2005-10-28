@@ -228,7 +228,7 @@ void dviRenderer::color_special(const QString& _cp)
 
   if (command == "push") {
     // Get color specification
-    QColor col = parseColorSpecification(cp.section(' ', 1));
+    const QColor col = parseColorSpecification(cp.section(' ', 1));
     // Set color
     if (col.isValid())
       colorStack.push(col);

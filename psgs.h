@@ -79,7 +79,7 @@ public:
 
 private:
   void                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);
-  Q3IntDict<pageInfo>    pageList;
+  Q3IntDict<pageInfo>   pageList;
 
   double                resolution;   // in dots per inch
   int                   pixel_page_w; // in pixels

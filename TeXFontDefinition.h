@@ -38,9 +38,9 @@ class macro {
   // address of last+1 byte
   unsigned char* end;
   // DVI units to move reference point
-  Q_INT32        dvi_advance_in_units_of_design_size_by_2e20;
+  Q_INT32 dvi_advance_in_units_of_design_size_by_2e20;
   // if memory at pos should be returned on destruction
-  bool           free_me;
+  bool free_me;
 };
 
 
@@ -54,9 +54,9 @@ class TeXFontDefinition {
   static const unsigned int max_num_of_chars_in_font = 256;
   enum font_flags {
     // used for housekeeping
-    FONT_IN_USE  = 1,
+    FONT_IN_USE = 1,
     // if font file has been read
-    FONT_LOADED  = 2,
+    FONT_LOADED = 2,
     // if font is virtual
     FONT_VIRTUAL = 4,
     // if kpathsea has already tried to find the font name
@@ -95,19 +95,18 @@ class TeXFontDefinition {
   double         displayResolution_in_dpi;
 
   // open font file or NULL
-  FILE          *file;
+  FILE* file;
   // name of font file
-  QString        filename;
+  QString filename;
 
-  TeXFont       *font;
+  TeXFont* font;
   // used by (loaded) virtual fonts
-  macro         *macrotable;
+  macro* macrotable;
   // used by (loaded) virtual fonts, list of fonts used by this vf,
   Q3IntDict<TeXFontDefinition> vf_table;
   // acessible by number
   // used by (loaded) virtual fonts, list of fonts used by this vf
-  TeXFontDefinition  *first_font;
-
+  TeXFontDefinition* first_font;
 
 #ifdef HAVE_FREETYPE
   const QString &getFullFontName() const {return fullFontName;}

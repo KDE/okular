@@ -56,10 +56,7 @@
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"
-#include "fontpool.h"
 #include "hyperlink.h"
-#include "kdvi_multipage.h"
-#include "performanceMeasurement.h"
 #include "psgs.h"
 #include "renderedDviPagePixmap.h"
 #include "TeXFont.h"
@@ -68,12 +65,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <kprocess.h>
 
-#include <QBitmap>
-#include <QFileInfo>
-#include <QImage>
 #include <QPainter>
 #include <QPixmap>
 

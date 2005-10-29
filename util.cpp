@@ -51,12 +51,13 @@
 
 #include <config.h>
 
-#include "dviRenderer.h"
 #include "xdvi.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+
+#include <cstdlib>
 
 
 /*
@@ -67,7 +68,7 @@
  *   Print error message and quit.
  */
 
-void oops(QString message)
+void oops(const QString& message)
 {
   kdError() << i18n("Fatal Error! ") << message << endl;
 
@@ -85,12 +86,10 @@ please report the problem."));
 }
 
 /*
- *
- *   Read size bytes from the FILE fp, constructing them into a
- *   signed/unsigned integer.
+ * Read size bytes from the FILE fp, constructing them into a
+ * signed/unsigned integer.
  *
  */
-
 unsigned long num(FILE *fp, int size)
 {
   register long x = 0;

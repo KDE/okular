@@ -211,22 +211,30 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   // Step 2: Call GS with the File
   QFile::remove(filename.ascii());
   KProcIO proc;
-  QStringList argus;
-  argus << "gs";
-  argus << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
-  argus << QString("-sDEVICE=%1").arg(*gsDevice);
-  argus << QString("-sOutputFile=%1").arg(filename);
-  argus << QString("-sExtraIncludePath=%1").arg(includePath);
-  argus << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
-  argus << QString("-r%1").arg(resolution);                       // resolution in dpi
-  argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
-  argus << "-f" << PSfile.name();
+  QStringList gs_args;
+  gs_args << "gs"
+	  << "-dSAFER"
+          << "-dPARANOIDSAFER"
+          << "-dDELAYSAFER"
+          << "-dNOPAUSE"
+          << "-dBATCH"
+          << QString("-sDEVICE=%1").arg(*gsDevice)
+          << QString("-sOutputFile=%1").arg(filename)
+          << QString("-sExtraIncludePath=%1").arg(includePath)
+          // page size in pixels
+          << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h)
+          // resolution in dpi
+          << QString("-r%1").arg(resolution)
+          << "-c"
+          << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe"
+          << "-f"
+          << PSfile.name();
 
 #ifdef DEBUG_PSGS
-  kdDebug(4300) << argus.join(" ") << endl;
+  kdDebug(4300) << gs_args.join(" ") << endl;
 #endif
 
-  proc << argus;
+  proc << gs_args;
   if (proc.start(KProcess::Block) == false) {
     // Starting ghostscript did not work.
     // TODO: Issue error message, switch PS support off.

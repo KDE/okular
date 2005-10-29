@@ -27,7 +27,6 @@
 
 #include "dvi.h"
 #include "dviRenderer.h"
-#include "fontpool.h"
 #include "xdvi.h"
 
 #include <kdebug.h>
@@ -37,8 +36,7 @@
 #include <cstdlib>
 #include <cstring>
 
-
-extern void oops(QString message);
+extern void oops(const QString& message);
 
 /***
  ***   VF font reading routines.

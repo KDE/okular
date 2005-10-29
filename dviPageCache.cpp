@@ -23,8 +23,6 @@
 #include "dviPageCache.h"
 #include "renderedDviPagePixmap.h"
 
-#include <kdebug.h>
-
 
 DVIPageCache::DVIPageCache()
   : DocumentPageCache()

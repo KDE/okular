@@ -55,15 +55,13 @@
 #include "dvi.h"
 #include "fontpool.h"
 #include "pageSize.h"
-#include "xdvi.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocio.h>
 #include <ktempfile.h>
 
-#include <QDir>
-#include <QFileInfo>
+#include <QFile>
 
 #include <cstdlib>
 

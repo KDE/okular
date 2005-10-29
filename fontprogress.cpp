@@ -7,7 +7,6 @@
 
 #include "fontprogress.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kprocio.h>
 #include <kprogress.h>
@@ -16,7 +15,6 @@
 #include <QApplication>
 #include <QLabel>
 #include <QToolTip>
-#include <QVariant>
 
 
 /*

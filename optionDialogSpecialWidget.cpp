@@ -18,7 +18,6 @@
 #include <kurllabel.h>
 
 #include <QCheckBox>
-#include <QLabel>
 
 
 // Constructs a optionDialogWidget_base which is a child of 'parent', with

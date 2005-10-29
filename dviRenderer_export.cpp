@@ -30,19 +30,16 @@
 #include "dviFile.h"
 #include "fontprogress.h"
 #include "infodialog.h"
-#include "kdvi_multipage.h"
 
-#include <kapplication.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprinter.h>
 #include <kprocess.h>
 #include <ktempfile.h>
 
+#include <QApplication>
 #include <QLabel>
 #include <QPainter>
 
@@ -253,7 +250,7 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
     export_tmpFileName = export_tmpFile.name();
     export_tmpFile.unlink();
 
-    sourceFileName     = export_tmpFileName;
+    sourceFileName = export_tmpFileName;
 
     fontPool fp;
     dvifile newFile(dviFile, &fp);

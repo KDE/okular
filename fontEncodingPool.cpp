@@ -5,7 +5,7 @@
 // (C) 2003 Stefan Kebekus
 // Distributed under the GPL
 
-#include "config.h"
+#include <config.h>
 
 #ifdef HAVE_FREETYPE
 
@@ -32,6 +32,5 @@ fontEncoding *fontEncodingPool::findByName(const QString &name)
 
   return ptr;
 }
-
 
 #endif // HAVE_FREETYPE

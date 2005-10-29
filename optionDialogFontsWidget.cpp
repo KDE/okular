@@ -8,13 +8,9 @@
 #include <config.h>
 
 #include "optionDialogFontsWidget.h"
-#include "fontpool.h"
 
-#include <kcombobox.h>
-#include <kdebug.h>
 #include <klocale.h>
 
-#include <Q3ButtonGroup>
 #include <QCheckBox>
 #include <QToolTip>
 
@@ -39,7 +35,6 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
 }
 
 optionDialogFontsWidget::~optionDialogFontsWidget()
-{
-}
+{}
 
 #include "optionDialogFontsWidget.moc"

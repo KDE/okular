@@ -2,8 +2,6 @@
 
 #include "TeXFontDefinition.h"
 #include "dviRenderer.h"
-#include "fontpool.h"
-#include "kdvi.h"
 #ifdef HAVE_FREETYPE
 # include "TeXFont_PFB.h"
 #endif

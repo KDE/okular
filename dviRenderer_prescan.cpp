@@ -10,29 +10,21 @@
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"
-#include "fontpool.h"
-#include "kdvi_multipage.h"
-#include "performanceMeasurement.h"
 #include "prebookmark.h"
 #include "psgs.h"
 #include "TeXFont.h"
-#include "xdvi.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kprocess.h>
-#include <kprocio.h>
 #include <kprogress.h>
 
 #include <Q3MemArray>
 #include <QApplication>
-#include <QBitmap>
 #include <QDir>
 #include <QFileInfo>
 #include <QImage>
-#include <QPainter>
 #include <QPaintDevice>
 #include <QTextStream>
 

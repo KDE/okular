@@ -8,11 +8,8 @@
 #include <config.h>
 
 #include "TeXFont_TFM.h"
-#include "glyph.h"
-#include "TeXFontDefinition.h"
 
 #include <kdebug.h>
-#include <klocale.h>
 
 #include <QDataStream>
 #include <QFile>

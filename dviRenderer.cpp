@@ -14,53 +14,32 @@
 #include "documentWidget.h"
 #include "dviFile.h"
 #include "dvisourcesplitter.h"
-#include "fontpool.h"
-#include "fontprogress.h"
 #include "hyperlink.h"
 #include "infodialog.h"
-#include "kdvi_multipage.h"
-#include "performanceMeasurement.h"
 #include "prebookmark.h"
 #include "psgs.h"
 #include "renderedDviPagePixmap.h"
-#include "xdvi.h"
-#include "zoomlimits.h"
 
 #include <kapplication.h>
+#include <kconfig.h>
 #include <kdebug.h>
-#include <keditcl.h>
-#include <kfiledialog.h>
-#include <kglobal.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimemagic.h>
-#include <kprinter.h>
 #include <kprocess.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
-#include <kstdguiitem.h>
 
 #include <q3ptrstack.h>
-#include <Q3Url>
 #include <Q3VBox>
 #include <QCheckBox>
-#include <QClipboard>
-#include <QCursor>
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QLayout>
-#include <QMessageBox>
 #include <QMouseEvent>
-#include <QPaintDevice>
 #include <QPainter>
 #include <QRegExp>
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 
 //#define DEBUG_DVIRENDERER
 

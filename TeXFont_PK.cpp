@@ -53,23 +53,16 @@
 
 #include "TeXFont_PK.h"
 #include "fontpool.h"
-#include "glyph.h"
-#include "TeXFontDefinition.h"
 #include "xdvi.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <QBitmap>
 #include <QFile>
 #include <QImage>
-#include <QPainter>
 #include <QPixmap>
 
 #include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 
 //#define DEBUG_PK
 
@@ -78,7 +71,7 @@
 #define        PK_MAGIC        (PK_PRE << 8) + PK_ID
 
 
-extern void oops(QString message);
+extern void oops(const QString& message);
 
 
 

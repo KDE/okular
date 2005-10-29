@@ -11,20 +11,16 @@
 #include "dviFile.h"
 #include "dviRenderer.h"
 #include "hyperlink.h"
-#include "kdvi.h"
-#include "kdvi_multipage.h"
 #include "psgs.h"
-#include "xdvi.h"
+#include "renderedDocumentPage.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmimetype.h>
-#include <kprocio.h>
 
-#include <QDir>
 #include <QFile>
-#include <QFileInfo>
 #include <QImage>
+#include <QPainter>
 #include <QStringList>
 
 //#define DEBUG_SPECIAL

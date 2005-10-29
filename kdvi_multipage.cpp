@@ -1,32 +1,23 @@
 #include <config.h>
 
 #include "kdvi_multipage.h"
-#include "documentWidget.h"
 #include "dviFile.h"
 #include "dviPageCache.h"
 #include "dviWidget.h"
-#include "fontpool.h"
 #include "kprinterwrapper.h"
-#include "kviewpart.h"
-#include "marklist.h"
 #include "optionDialogFontsWidget.h"
 #include "optionDialogSpecialWidget.h"
 #include "performanceMeasurement.h"
 #include "prefs.h"
-#include "renderedDocumentPagePixmap.h"
 
 #include <kaction.h>
 #include <kaboutdata.h>
-#include <kaboutdialog.h>
-#include <kapplication.h>
-#include <kbugreport.h>
 #include <kconfigdialog.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kparts/part.h>
 #include <kparts/genericfactory.h>
 #include <kstdaction.h>
 #include <ktempfile.h>
@@ -34,7 +25,6 @@
 
 #include <Q3ValueList>
 #include <QLabel>
-#include <QMouseEvent>
 #include <QTimer>
 
 

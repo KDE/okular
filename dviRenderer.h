@@ -14,13 +14,13 @@
 #include "documentRenderer.h"
 #include "fontpool.h"
 
+#include <kurl.h>
+
 #include <Q3IntDict>
 #include <Q3PointArray>
 #include <Q3ValueStack>
 #include <Q3ValueVector>
 #include <QTimer>
-
-#include <kurl.h>
 
 class Anchor;
 class DocumentWidget;
@@ -162,9 +162,8 @@ private slots:
 
 private:
   /** URL to the DVI file
-
-  This field is initialized by the setFile() method. See the
-  explanation there.  */
+      This field is initialized by the setFile() method. See the
+      explanation there. */
   KURL baseURL;
 
   /** This method parses a color specification of type "gray 0.5", "rgb

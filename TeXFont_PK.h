@@ -18,6 +18,7 @@ class TeXFont_PK : public TeXFont {
  private:
   // open font file or NULL
   FILE* file;
+
   class bitmap *characterBitmaps[TeXFontDefinition::max_num_of_chars_in_font];
 
   // For use by PK-decryption routines. I don't understand what these

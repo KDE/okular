@@ -35,14 +35,14 @@ bool fontPoolTimerFlag;
 #endif
 
 fontPool::fontPool()
-  :  progress( "fontgen",  // Chapter in the documentation for help.
-               i18n( "KDVI is currently generating bitmap fonts..." ),
-               i18n( "Aborts the font generation. Don't do this." ),
-               i18n( "KDVI is currently generating bitmap fonts which are needed to display your document. "
-                     "For this, KDVI uses a number of external programs, such as MetaFont. You can find "
-                     "the output of these programs later in the document info dialog." ),
-               i18n( "KDVI is generating fonts. Please wait." ),
-               0 )
+  :  progress("fontgen",  // Chapter in the documentation for help.
+              i18n("KDVI is currently generating bitmap fonts..."),
+              i18n("Aborts the font generation. Don't do this."),
+              i18n("KDVI is currently generating bitmap fonts which are needed to display your document. "
+                   "For this, KDVI uses a number of external programs, such as MetaFont. You can find "
+                   "the output of these programs later in the document info dialog."),
+              i18n("KDVI is generating fonts. Please wait."),
+              0)
 {
 #ifdef DEBUG_FONTPOOL
   kdDebug(4300) << "fontPool::fontPool() called" << endl;

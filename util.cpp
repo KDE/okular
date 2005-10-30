@@ -85,10 +85,10 @@ please report the problem."));
   exit(1);
 }
 
+
 /*
  * Read size bytes from the FILE fp, constructing them into a
  * signed/unsigned integer.
- *
  */
 unsigned long num(FILE *fp, int size)
 {

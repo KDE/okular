@@ -45,7 +45,7 @@ public slots:
       the text view. */
   void clear(const QString&);
 
-protected:
+private:
   QTextView* TextLabel1;
   QTextView* TextLabel2;
   QTextView* TextLabel3;

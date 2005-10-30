@@ -9,6 +9,7 @@
 #define FONT_GENERATION_H
 
 #include <kdialogbase.h>
+
 #include <qguardedptr.h>
 
 class KProcIO;

@@ -20,6 +20,7 @@
 
 #include <qglobal.h>
 
+
 class bigEndianByteReader {
  public:
   /** Set this pointer to the location where the number resides which

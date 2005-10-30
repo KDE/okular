@@ -33,6 +33,7 @@ class glyph {
   short   x, y;
 
   QPixmap shrunkenCharacter;
+
   // x and y offset in pixels (shrunken bitmap)
   short   x2, y2;
 };

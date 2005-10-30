@@ -137,7 +137,6 @@ class dvifile : public bigEndianByteReader
 
   QMemArray<Q_UINT8>  dviData;
 
-
   /** Map of filenames for converted PDF files
 
   This map contains names of PDF files that were converted to

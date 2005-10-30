@@ -77,7 +77,7 @@
 #define        PK_MAGIC        (PK_PRE << 8) + PK_ID
 
 
-extern void oops(QString message);
+extern void oops(const QString& message);
 
 
 

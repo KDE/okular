@@ -38,7 +38,7 @@
 #include <cstring>
 
 
-extern void oops(QString message);
+extern void oops(const QString& message);
 
 /***
  ***   VF font reading routines.

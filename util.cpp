@@ -84,13 +84,11 @@ please report the problem."));
   exit(1);
 }
 
-/*
- *
- *   Read size bytes from the FILE fp, constructing them into a
- *   signed/unsigned integer.
- *
- */
 
+/*
+ * Read size bytes from the FILE fp, constructing them into a
+ * signed/unsigned integer.
+ */
 unsigned long num(FILE *fp, int size)
 {
   register long x = 0;
@@ -103,7 +101,7 @@ long snum(FILE *fp, int size)
 {
   register long x;
 
-#ifdef        __STDC__
+#ifdef __STDC__
   x = (signed char) getc(fp);
 #else
   x = (unsigned char) getc(fp);

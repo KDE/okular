@@ -213,7 +213,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   KProcIO proc;
   QStringList gs_args;
   gs_args << "gs"
-	  << "-dSAFER"
+          << "-dSAFER"
           << "-dPARANOIDSAFER"
           << "-dDELAYSAFER"
           << "-dNOPAUSE"

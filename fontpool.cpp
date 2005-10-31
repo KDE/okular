@@ -304,8 +304,8 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // program. Unfortunately, this can be rather long and involved...
   QStringList kpsewhich_args;
   kpsewhich_args << "kpsewhich"
-		 << "--dpi" << "1200"
-		 << "--mode" << "lexmarks";
+                 << "--dpi" << "1200"
+                 << "--mode" << "lexmarks";
 
   // Disable automatic pk-font generation.
   if (makePK == true)
@@ -321,17 +321,17 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
       numFontsInJob++;
 
       if (locateTFMonly == true)
-	kpsewhich_args << QString("%1.tfm").arg(fontp->fontname);
+        kpsewhich_args << QString("%1.tfm").arg(fontp->fontname);
       else {
 #ifdef HAVE_FREETYPE
         if (FreeType_could_be_loaded == true) {
           const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
           if (!filename.isEmpty())
-	    kpsewhich_args << QString("%1").arg(filename);
+            kpsewhich_args << QString("%1").arg(filename);
         }
 #endif
-	kpsewhich_args << QString("%1.vf").arg(fontp->fontname)
-		       << QString("%1.1200pk").arg(fontp->fontname);
+        kpsewhich_args << QString("%1.vf").arg(fontp->fontname)
+                       << QString("%1.1200pk").arg(fontp->fontname);
       }
     }
     fontp=fontList.next();
@@ -349,26 +349,26 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
   const QString importanceOfKPSEWHICH =
     i18n("<p>KDVI relies on the <b>kpsewhich</b> program to locate font files "
-	 "on your hard disc and to generate PK fonts, if necessary.</p>");
+         "on your hard disc and to generate PK fonts, if necessary.</p>");
 
   kpsewhich_ << kpsewhich_args;
   if (kpsewhich_.start(KProcess::NotifyOnExit, false) == false) {
     const QString msg =
       i18n("<p>There were problems running <b>kpsewhich</b>. As a result, "
-	   "some font files could not be located, and your document might be unreadable.</p>"
-	   "<p><b>Possible reason:</b> The kpsewhich program is perhaps not installed on your system, or it "
-	   "cannot be found in the current search path.</p>"
-	   "<p><b>What you can do:</b> The kpsewhich program is normally contained in distributions of the TeX "
-	   "typesetting system. If TeX is not installed on your system, you could install the TeTeX distribution (www.tetex.org). "
-	   "If you are sure that TeX is installed, please try to use the kpsewhich program from the command line to check if it "
-	   "really works.</p>");
+           "some font files could not be located, and your document might be unreadable.</p>"
+           "<p><b>Possible reason:</b> The kpsewhich program is perhaps not installed on your system, or it "
+           "cannot be found in the current search path.</p>"
+           "<p><b>What you can do:</b> The kpsewhich program is normally contained in distributions of the TeX "
+           "typesetting system. If TeX is not installed on your system, you could install the TeTeX distribution (www.tetex.org). "
+           "If you are sure that TeX is installed, please try to use the kpsewhich program from the command line to check if it "
+           "really works.</p>");
     const QString details =
       QString("<qt><p><b>PATH:</b> %1</p>%2</qt>").arg(getenv("PATH")).arg(kpsewhichOutput);
 
     KMessageBox::detailedError(0,
-			       QString("<qt>%1%2</qt>").arg(importanceOfKPSEWHICH).arg(msg),
-			       details,
-			       i18n("Problem locating fonts - KDVI"));
+                               QString("<qt>%1%2</qt>").arg(importanceOfKPSEWHICH).arg(msg),
+                               details,
+                               i18n("Problem locating fonts - KDVI"));
 
     // This makes sure the we don't try to run kpsewhich again
     markFontsAsLocated();

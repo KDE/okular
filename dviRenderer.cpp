@@ -39,6 +39,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QRegExp>
+#include <kglobal.h>
 
 
 //#define DEBUG_DVIRENDERER
@@ -232,7 +233,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
   // here. Most of the code is stolen from there.
 
   // Check if the 'Don't show again' feature was used
-  KConfig *config = kapp->config();
+  KConfig *config = KGlobal::config();
   KConfigGroupSaver saver( config, "Notification Messages" );
   bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
 

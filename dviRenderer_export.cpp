@@ -31,9 +31,9 @@
 #include "fontprogress.h"
 #include "infodialog.h"
 #include "kdvi_multipage.h"
+#include "kvs_debug.h"
 
 #include <kapplication.h>
-#include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
@@ -124,7 +124,7 @@ void dviRenderer::exportPDF()
 
   proc = new KShellProcess();
   if (proc == 0) {
-    kdError(4300) << "Could not allocate ShellProcess for the dvipdfm command." << endl;
+    kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvipdfm command." << endl;
     return;
   }
   qApp->disconnect( this, SIGNAL(mySignal()), 0, 0 );
@@ -145,7 +145,7 @@ void dviRenderer::exportPDF()
   *proc << KShellProcess::quote(dviFile->filename);
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
-    kdError(4300) << "dvipdfm failed to start" << endl;
+    kdError(kvs::dvi) << "dvipdfm failed to start" << endl;
     return;
   }
   return;
@@ -288,7 +288,7 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   // Allocate and initialize the shell process.
   proc = new KShellProcess();
   if (proc == 0) {
-    kdError(4300) << "Could not allocate ShellProcess for the dvips command." << endl;
+    kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvips command." << endl;
     return;
   }
 
@@ -311,7 +311,7 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::Stderr) == false) {
-    kdError(4300) << "dvips failed to start" << endl;
+    kdError(kvs::dvi) << "dvips failed to start" << endl;
     return;
   }
   return;

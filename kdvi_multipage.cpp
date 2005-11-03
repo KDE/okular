@@ -8,6 +8,7 @@
 #include "fontpool.h"
 #include "kprinterwrapper.h"
 #include "kviewpart.h"
+#include "kvs_debug.h"
 #include "marklist.h"
 #include "optionDialogFontsWidget.h"
 #include "optionDialogSpecialWidget.h"
@@ -21,7 +22,6 @@
 #include <kapplication.h>
 #include <kbugreport.h>
 #include <kconfigdialog.h>
-#include <kdebug.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -218,7 +218,7 @@ void KDVIMultiPage::preferencesChanged()
   // Call method from parent class
   KMultiPage::preferencesChanged();
 #ifdef  KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "preferencesChanged" << endl;
+  kdDebug(kvs::dvi) << "preferencesChanged" << endl;
 #endif
 
   bool showPS = Prefs::showPS();
@@ -235,7 +235,7 @@ void KDVIMultiPage::print()
   KPrinter *printer = getPrinter(false);
   // Abort with an error message if no KPrinter could be initialized
   if (printer == 0) {
-    kdError(4300) << "KPrinter not available" << endl;
+    kdError(kvs::dvi) << "KPrinter not available" << endl;
     return;
   }
 

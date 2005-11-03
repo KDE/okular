@@ -12,13 +12,13 @@
 #include "dviFile.h"
 #include "fontpool.h"
 #include "kdvi_multipage.h"
+#include "kvs_debug.h"
 #include "performanceMeasurement.h"
 #include "prebookmark.h"
 #include "psgs.h"
 #include "TeXFont.h"
 #include "xdvi.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kprocess.h>
@@ -44,7 +44,7 @@ extern void parse_special_argument(const QString& strg, const char* argument_nam
 void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 {
 #ifdef  DEBUG_PRESCAN
-  kdDebug(4300) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
+  kdDebug(kvs::dvi) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
 #endif
 
   // Encapsulated Postscript File
@@ -227,7 +227,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 {
 #ifdef  DEBUG_PRESCAN
-  kdDebug(4300) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
+  kdDebug(kvs::dvi) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
 #endif
 
   // Encapsulated Postscript File
@@ -242,7 +242,7 @@ void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpeci
 void dviRenderer::prescan_ParsePapersizeSpecial(const QString& _cp)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "Papersize-Special : papersize" << cp << endl;
+  kdDebug(kvs::dvi) << "Papersize-Special : papersize" << _cp << endl;
 #endif
 
   QString cp = _cp.simplifyWhiteSpace();
@@ -281,7 +281,7 @@ void dviRenderer::prescan_ParseHTMLAnchorSpecial(const QString& _cp)
 void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "PostScript-special, header " << cp.latin1() << endl;
+  kdDebug(kvs::dvi) << "PostScript-special, header " << cp.latin1() << endl;
 #endif
 
   if (QFile::exists(cp))
@@ -292,7 +292,7 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
 void dviRenderer::prescan_ParsePSBangSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "PostScript-special, literal header " << cp.latin1() << endl;
+  kdDebug(kvs::dvi) << "PostScript-special, literal header " << cp.latin1() << endl;
 #endif
 
   PS_interface->PostScriptHeaderString->append( " @defspecial \n" );
@@ -304,7 +304,7 @@ void dviRenderer::prescan_ParsePSBangSpecial(const QString& cp)
 void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kdError(4300) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
+  kdError(kvs::dvi) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
 
 #endif
 
@@ -320,7 +320,7 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
 void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "PostScript-special, direct PostScript " << cp << endl;
+  kdDebug(kvs::dvi) << "PostScript-special, direct PostScript " << cp << endl;
 #endif
 
   // Unfortunately, in some TeX distribution the hyperref package uses
@@ -384,7 +384,7 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
 void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
+  kdDebug(kvs::dvi) << "epsf-special: psfile=" << cp <<endl;
 #endif
 
   QString include_command = cp.simplifyWhiteSpace();
@@ -596,7 +596,7 @@ void dviRenderer::prescan_setChar(unsigned int ch)
 void dviRenderer::prescan(parseSpecials specialParser)
 {
 #ifdef DEBUG_PRESCAN
-  kdDebug(4300) << "dviRenderer::prescan( ... )" << endl;
+  kdDebug(kvs::dvi) << "dviRenderer::prescan( ... )" << endl;
 #endif
 
   if (resolutionInDPI == 0.0)

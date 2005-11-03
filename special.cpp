@@ -12,10 +12,10 @@
 #include "hyperlink.h"
 #include "kdvi.h"
 #include "kdvi_multipage.h"
+#include "kvs_debug.h"
 #include "psgs.h"
 #include "xdvi.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kprocio.h>
@@ -34,10 +34,10 @@ extern QPainter *foreGroundPainter;
 void dviRenderer::printErrorMsgForSpecials(const QString& msg)
 {
   if (dviFile->errorCounter < 25) {
-    kdError(4300) << msg << endl;
+    kdError(kvs::dvi) << msg << endl;
     dviFile->errorCounter++;
     if (dviFile->errorCounter == 25)
-      kdError(4300) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
+      kdError(kvs::dvi) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
   }
 }
 
@@ -254,7 +254,7 @@ void dviRenderer::html_href_special(const QString& _cp)
   cp.truncate(cp.find('"'));
 
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "HTML-special, href " << cp.latin1() << endl;
+  kdDebug(kvs::dvi) << "HTML-special, href " << cp.latin1() << endl;
 #endif
   HTML_href = new QString(cp);
 }
@@ -263,7 +263,7 @@ void dviRenderer::html_href_special(const QString& _cp)
 void dviRenderer::html_anchor_end()
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "HTML-special, anchor-end" << endl;
+  kdDebug(kvs::dvi) << "HTML-special, anchor-end" << endl;
 #endif
 
   if (HTML_href != NULL) {
@@ -303,9 +303,9 @@ void parse_special_argument(const QString& strg, const char* argument_name, int*
       *variable = int(tmp_float+0.5);
     else
       // Maybe we should open a dialog here.
-      kdError(4300) << i18n("Malformed parameter in the epsf special command.\n"
-                            "Expected a float to follow %1 in %2")
-                       .arg(argument_name).arg(strg) << endl;
+      kdError(kvs::dvi) << i18n("Malformed parameter in the epsf special command.\n"
+                                "Expected a float to follow %1 in %2")
+                           .arg(argument_name).arg(strg) << endl;
   }
 }
 
@@ -313,7 +313,7 @@ void parse_special_argument(const QString& strg, const char* argument_name, int*
 void dviRenderer::epsf_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "epsf-special: psfile=" << cp <<endl;
+  kdDebug(kvs::dvi) << "epsf-special: psfile=" << cp <<endl;
 #endif
 
   QString include_command = cp.simplifyWhiteSpace();
@@ -437,7 +437,7 @@ void dviRenderer::epsf_special(const QString& cp)
 void dviRenderer::TPIC_flushPath_special()
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "TPIC special flushPath" << endl;
+  kdDebug(kvs::dvi) << "TPIC special flushPath" << endl;
 #endif
 
   if (number_of_elements_in_path == 0) {
@@ -455,7 +455,7 @@ void dviRenderer::TPIC_flushPath_special()
 void dviRenderer::TPIC_addPath_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "TPIC special addPath: " << cp << endl;
+  kdDebug(kvs::dvi) << "TPIC special addPath: " << cp << endl;
 #endif
 
   // Adds a point to the path list
@@ -489,7 +489,7 @@ void dviRenderer::TPIC_addPath_special(const QString& cp)
 void dviRenderer::TPIC_setPen_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
-  kdDebug(4300) << "TPIC special setPen: " << cp << endl;
+  kdDebug(kvs::dvi) << "TPIC special setPen: " << cp << endl;
 #endif
 
   // Sets the pen size in milli-inches

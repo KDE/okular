@@ -54,10 +54,10 @@
 #include "dviFile.h"
 #include "dvi.h"
 #include "fontpool.h"
+#include "kvs_debug.h"
 #include "pageSize.h"
 #include "xdvi.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kprocio.h>
 #include <ktempfile.h>
@@ -84,7 +84,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   size_of_file = old->size_of_file;
   end_pointer = dvi_Data()+size_of_file;
   if (dvi_Data() == 0) {
-    kdError(4300) << "Not enough memory to copy the DVI-file." << endl;
+    kdError(kvs::dvi) << "Not enough memory to copy the DVI-file." << endl;
     return;
   }
 
@@ -197,7 +197,7 @@ void dvifile::read_postamble()
     command_pointer += len;
 
 #ifdef DEBUG_FONTS
-    kdDebug(4300) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+    kdDebug(kvs::dvi) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
 
     // According to section A.4 of the DVI driver standard, this font
@@ -235,11 +235,11 @@ void dvifile::read_postamble()
 void dvifile::prepare_pages()
 {
 #ifdef DEBUG_DVIFILE
-  kdDebug(4300) << "prepare_pages" << endl;
+  kdDebug(kvs::dvi) << "prepare_pages" << endl;
 #endif
 
   if (page_offset.resize(total_pages+1) == false) {
-    kdError(4300) << "No memory for page list!" << endl;
+    kdError(kvs::dvi) << "No memory for page list!" << endl;
     return;
   }
   for(int i=0; i<=total_pages; i++)
@@ -269,7 +269,7 @@ void dvifile::prepare_pages()
 dvifile::dvifile(const QString& fname, fontPool* pool)
 {
 #ifdef DEBUG_DVIFILE
-  kdDebug(4300) << "init_dvi_file: " << fname << endl;
+  kdDebug(kvs::dvi) << "init_dvi_file: " << fname << endl;
 #endif
 
   errorMsg     = QString::null;
@@ -290,13 +290,13 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   // whole memory buffer is readable
   end_pointer = dvi_Data()+size_of_file;
   if (dvi_Data() == 0) {
-    kdError() << i18n("Not enough memory to load the DVI-file.");
+    kdError(kvs::dvi) << i18n("Not enough memory to load the DVI-file.");
     return;
   }
   file.readBlock((char *)dvi_Data(), size_of_file);
   file.close();
   if (file.status() != IO_Ok) {
-    kdError() << i18n("Could not load the DVI-file.");
+    kdError(kvs::dvi) << i18n("Could not load the DVI-file.");
     return;
   }
 
@@ -314,7 +314,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
 dvifile::~dvifile()
 {
 #ifdef DEBUG_DVIFILE
-  kdDebug(4300) << "destroy dvi-file" << endl;
+  kdDebug(kvs::dvi) << "destroy dvi-file" << endl;
 #endif
 
   // Delete converted PDF files

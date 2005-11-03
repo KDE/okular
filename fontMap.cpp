@@ -10,8 +10,8 @@
 #ifdef HAVE_FREETYPE
 
 #include "fontMap.h"
+#include "kvs_debug.h"
 
-#include <kdebug.h>
 #include <kprocio.h>
 
 #include <qfile.h>
@@ -37,7 +37,7 @@ fontMap::fontMap()
   KProcIO proc;
   proc << "kpsewhich" << "--format=map" << "ps2pk.map";
   if (proc.start(KProcess::Block) == false) {
-    kdError(4700) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+    kdError(kvs::dvi) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
     return;
   }
 
@@ -49,7 +49,7 @@ fontMap::fontMap()
     // the file.
     proc << "kpsewhich" << "--format=dvips config" << "ps2pk.map";
     if (proc.start(KProcess::Block) == false) {
-      kdError(4700) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+      kdError(kvs::dvi) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
       return;
     }
     proc.readln(map_fileName);
@@ -57,7 +57,7 @@ fontMap::fontMap()
 
     // If both versions fail, then there is nothing left to do.
     if (map_fileName.isEmpty()) {
-      kdError(4700) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
+      kdError(kvs::dvi) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
       return;
     }
   }
@@ -97,13 +97,13 @@ fontMap::fontMap()
     }
     file.close();
   } else
-    kdError(4300) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
+    kdError(kvs::dvi) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
 
 #ifdef DEBUG_FONTMAP
-  kdDebug(4300) << "FontMap file parsed. Results:" << endl;
+  kdDebug(kvs::dvi) << "FontMap file parsed. Results:" << endl;
   QMap<QString, fontMapEntry>::Iterator it;
   for ( it = fontMapEntries.begin(); it != fontMapEntries.end(); ++it )
-    kdDebug(4300) << "TeXName: " << it.key()
+    kdDebug(kvs::dvi) << "TeXName: " << it.key()
                   << ", FontFileName=" << it.data().fontFileName
                   << ", FullName=" << it.data().fullFontName
                   << ", Encoding=" << it.data().fontEncoding

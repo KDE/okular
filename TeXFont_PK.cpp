@@ -54,10 +54,10 @@
 #include "TeXFont_PK.h"
 #include "fontpool.h"
 #include "glyph.h"
+#include "kvs_debug.h"
 #include "TeXFontDefinition.h"
 #include "xdvi.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 
 #include <qbitmap.h>
@@ -85,23 +85,23 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
   : TeXFont(parent)
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::TeXFont_PK( parent=" << parent << ")" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PK::TeXFont_PK( parent=" << parent << ")" << endl;
 #endif
 
   for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
     characterBitmaps[i] = 0;
   file = fopen(QFile::encodeName(parent->filename), "r");
   if (file == 0)
-    kdError(4300) << i18n("Cannot open font file %1.").arg(parent->filename) << endl;
+    kdError(kvs::dvi) << i18n("Cannot open font file %1.").arg(parent->filename) << endl;
 #ifdef DEBUG_PK
   else
-    kdDebug(4300) << "TeXFont_PK::TeXFont_PK(): file opened successfully" << endl;
+    kdDebug(kvs::dvi) << "TeXFont_PK::TeXFont_PK(): file opened successfully" << endl;
 #endif
 
   read_PK_index();
 
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::TeXFont_PK() ended" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PK::TeXFont_PK() ended" << endl;
 #endif
 }
 
@@ -120,12 +120,12 @@ TeXFont_PK::~TeXFont_PK()
 glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PK::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
 #endif
 
   // Paranoia checks
   if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
-    kdError(4300) << "TeXFont_PK::getGlyph(): Argument is too big." << endl;
+    kdError(kvs::dvi) << "TeXFont_PK::getGlyph(): Argument is too big." << endl;
     return glyphtable;
   }
 
@@ -137,7 +137,7 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
     // If the character is not defined in the PK file, mark the
     // character as missing, and print an error message
     if (g->addr == 0) {
-      kdError(4300) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2").arg(ch).arg(parent->filename) << endl;
+      kdError(kvs::dvi) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2").arg(ch).arg(parent->filename) << endl;
       g->addr = -1;
       return g;
     }
@@ -376,7 +376,7 @@ static Q_UINT32        bit_masks[33] = {
 int TeXFont_PK::PK_get_nyb(FILE *fp)
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "PK_get_nyb" << endl;
+  kdDebug(kvs::dvi) << "PK_get_nyb" << endl;
 #endif
 
   unsigned temp;
@@ -393,7 +393,7 @@ int TeXFont_PK::PK_get_nyb(FILE *fp)
 int TeXFont_PK::PK_packed_num(FILE *fp)
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "PK_packed_num" << endl;
+  kdDebug(kvs::dvi) << "PK_packed_num" << endl;
 #endif
 
   int i, j;
@@ -425,7 +425,7 @@ int TeXFont_PK::PK_packed_num(FILE *fp)
 void TeXFont_PK::PK_skip_specials()
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::PK_skip_specials() called" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PK::PK_skip_specials() called" << endl;
 #endif
 
   int i,j;
@@ -433,7 +433,7 @@ void TeXFont_PK::PK_skip_specials()
 
 #ifdef DEBUG_PK
   if (fp == 0)
-    kdDebug(4300) << "TeXFont_PK::PK_skip_specials(): file == 0" << endl;
+    kdDebug(kvs::dvi) << "TeXFont_PK::PK_skip_specials(): file == 0" << endl;
 #endif
 
   do {
@@ -463,7 +463,7 @@ void TeXFont_PK::PK_skip_specials()
   while (PK_flag_byte != PK_POST && PK_flag_byte >= PK_CMD_START);
 
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::PK_skip_specials() ended" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PK::PK_skip_specials() ended" << endl;
 #endif
 }
 
@@ -471,7 +471,7 @@ void TeXFont_PK::PK_skip_specials()
 void TeXFont_PK::read_PK_char(unsigned int ch)
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "read_PK_char" << endl;
+  kdDebug(kvs::dvi) << "read_PK_char" << endl;
 #endif
 
   int        i, j;
@@ -500,7 +500,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
       n = 1;
 
 #ifdef DEBUG_PK
-  kdDebug(4300) << "loading pk char " << ch << ", char type " << n << endl;
+  kdDebug(kvs::dvi) << "loading pk char " << ch << ", char type " << n << endl;
 #endif
 
   if (characterBitmaps[ch] == 0)
@@ -562,7 +562,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     // (Ultra-)Sparc processors.
 
 #ifdef DEBUG_PK
-    kdDebug(4300) << "big Endian byte ordering" << endl;
+    kdDebug(kvs::dvi) << "big Endian byte ordering" << endl;
 #endif
 
     if (PK_dyn_f == 14) {        /* get raster by bits */
@@ -648,7 +648,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     // Intel and Alpha processors.
 
 #ifdef DEBUG_PK
-    kdDebug(4300) << "small Endian byte ordering" << endl;
+    kdDebug(kvs::dvi) << "small Endian byte ordering" << endl;
 #endif
 
     if (PK_dyn_f == 14) {        /* get raster by bits */
@@ -724,17 +724,17 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 void TeXFont_PK::read_PK_index()
 {
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::read_PK_index() called" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PK::read_PK_index() called" << endl;
 #endif
 
   if (file == 0) {
-    kdError(4300) << "TeXFont_PK::read_PK_index(): file == 0" << endl;
+    kdError(kvs::dvi) << "TeXFont_PK::read_PK_index(): file == 0" << endl;
     return;
   }
 
   int magic      = two(file);
   if (magic != PK_MAGIC) {
-    kdError(4300) << "TeXFont_PK::read_PK_index(): file is not a PK file" << endl;
+    kdError(kvs::dvi) << "TeXFont_PK::read_PK_index(): file is not a PK file" << endl;
     return;
   }
 
@@ -746,7 +746,7 @@ void TeXFont_PK::read_PK_index()
   int hppp = sfour(file);
   int vppp = sfour(file);
   if (hppp != vppp)
-    kdWarning(4300) << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp << endl;
+    kdWarning(kvs::dvi) << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp << endl;
 
   // Read glyph directory (really a whole pass over the file).
   for (;;) {
@@ -773,10 +773,10 @@ void TeXFont_PK::read_PK_index()
     glyphtable[ch].x2 = PK_flag_byte;
     fseek(file, (long) bytes_left, SEEK_CUR);
 #ifdef DEBUG_PK
-    kdDebug(4300) << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
+    kdDebug(kvs::dvi) << "Scanning pk char " << ch << "at " << glyphtable[ch].addr << endl;
 #endif
   }
 #ifdef DEBUG_PK
-  kdDebug(4300) << "TeXFont_PK::read_PK_index() called" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PK::read_PK_index() called" << endl;
 #endif
 }

@@ -52,9 +52,9 @@
 #include <config.h>
 
 #include "dviRenderer.h"
+#include "kvs_debug.h"
 #include "xdvi.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -69,7 +69,7 @@
 
 void oops(const QString& message)
 {
-  kdError() << i18n("Fatal Error! ") << message << endl;
+  kdError(kvs::dvi) << i18n("Fatal Error! ") << message << endl;
 
   KMessageBox::error( NULL,
                       i18n("Fatal error.\n\n") +

@@ -12,7 +12,6 @@
 
 #include <kapplication.h>
 #include <kcombobox.h>
-#include <kdebug.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kurllabel.h>

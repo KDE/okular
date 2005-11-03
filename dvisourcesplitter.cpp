@@ -9,8 +9,7 @@
 #include <config.h>
 
 #include "dvisourcesplitter.h"
-
-#include <kdebug.h>
+#include "kvs_debug.h"
 
 #include <qdir.h>
 
@@ -26,7 +25,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   bool possibleNumberMixUp = false;
 
 #ifdef DEBUG_SOURCESPLITTER
-  kdDebug(4300) << "DVI_SourceSplitter: srclink " << srclink << endl;
+  kdDebug(kvs::dvi) << "DVI_SourceSplitter: srclink " << srclink << endl;
 #endif
 
   //remove src: if necessary
@@ -46,7 +45,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   linepart = linepart.stripWhiteSpace();
 
 #ifdef DEBUG_SOURCESPLITTER
-  kdDebug() << "DVI_SourceSplitter: filepart " << filepart << " linepart " << linepart << endl;
+  kdDebug(kvs::dvi) << "DVI_SourceSplitter: filepart " << filepart << " linepart " << linepart << endl;
 #endif
 
   //test if the file exists
@@ -70,12 +69,12 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
     {
       tempInfo.setFile(linepart.right(index) + tempFileName);
 #ifdef DEBUG_SOURCESPLITTER
-      kdDebug() << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
+      kdDebug(kvs::dvi) << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
 #endif
       if ( tempInfo.exists() ) { found = true; break;}
       tempInfo.setFile(linepart.right(index) + tempFileName + ".tex");
 #ifdef DEBUG_SOURCESPLITTER
-      kdDebug() << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
+      kdDebug(kvs::dvi) << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
 #endif
       if ( tempInfo.exists() ) { found = true; break;}
     }
@@ -92,6 +91,6 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   if (!ok) m_line = 0;
 
 #ifdef DEBUG_SOURCESPLITTER
-  kdDebug() << "DVI_SourceSplitter: result: file " << m_fileInfo.absFilePath() << " line " << m_line << endl;
+  kdDebug(kvs::dvi) << "DVI_SourceSplitter: result: file " << m_fileInfo.absFilePath() << " line " << m_line << endl;
 #endif
 }

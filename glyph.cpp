@@ -9,14 +9,13 @@
 #include <config.h>
 
 #include "glyph.h"
-
-#include <kdebug.h>
+#include "kvs_debug.h"
 
 
 glyph::glyph()
 {
 #ifdef DEBUG_GLYPH
-  kdDebug(4300) << "glyph::glyph()" << endl;
+  kdDebug(kvs::dvi) << "glyph::glyph()" << endl;
 #endif
 
   addr                     = 0;

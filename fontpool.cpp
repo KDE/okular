@@ -7,9 +7,9 @@
 #include <config.h>
 
 #include "fontpool.h"
+#include "kvs_debug.h"
 #include "TeXFont.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
@@ -45,7 +45,7 @@ fontPool::fontPool()
               0)
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::fontPool() called" << endl;
+  kdDebug(kvs::dvi) << "fontPool::fontPool() called" << endl;
 #endif
 
   setName("Font Pool");
@@ -59,7 +59,7 @@ fontPool::fontPool()
 #ifdef HAVE_FREETYPE
   // Initialize the Freetype Library
   if ( FT_Init_FreeType( &FreeType_library ) != 0 ) {
-    kdError(4300) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
+    kdError(kvs::dvi) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
     FreeType_could_be_loaded = false;
   } else
     FreeType_could_be_loaded = true;
@@ -85,12 +85,12 @@ fontPool::fontPool()
 
   if ((result == 0xff) || (result == 0x00)) {
 #ifdef DEBUG_FONTPOOL
-    kdDebug(4300) << "fontPool::fontPool(): QPixmap does not support the alpha channel" << endl;
+    kdDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap does not support the alpha channel" << endl;
 #endif
     QPixmapSupportsAlpha = false;
   } else {
 #ifdef DEBUG_FONTPOOL
-    kdDebug(4300) << "fontPool::fontPool(): QPixmap supports the alpha channel" << endl;
+    kdDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap supports the alpha channel" << endl;
 #endif
     QPixmapSupportsAlpha = true;
   }
@@ -100,7 +100,7 @@ fontPool::fontPool()
 fontPool::~fontPool()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::~fontPool() called" << endl;
+  kdDebug(kvs::dvi) << "fontPool::~fontPool() called" << endl;
 #endif
 
 #ifdef HAVE_FREETYPE
@@ -147,7 +147,7 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, Q_UINT32 checksum,
 
   fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
   if (fontp == 0) {
-    kdError(4300) << i18n("Could not allocate memory for a font structure!") << endl;
+    kdError(kvs::dvi) << i18n("Could not allocate memory for a font structure!") << endl;
     exit(0);
   }
   fontList.append(fontp);
@@ -165,7 +165,7 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, Q_UINT32 checksum,
 QString fontPool::status()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::status() called" << endl;
+  kdDebug(kvs::dvi) << "fontPool::status() called" << endl;
 #endif
 
   QString       text;
@@ -221,7 +221,7 @@ QString fontPool::status()
 bool fontPool::areFontsLocated()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::areFontsLocated() called" << endl;
+  kdDebug(kvs::dvi) << "fontPool::areFontsLocated() called" << endl;
 #endif
 
   // Is there a font whose name we did not try to find out yet?
@@ -233,7 +233,7 @@ bool fontPool::areFontsLocated()
   }
 
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "... yes, all fonts are located (but not necessarily loaded)." << endl;
+  kdDebug(kvs::dvi) << "... yes, all fonts are located (but not necessarily loaded)." << endl;
 #endif
   return true; // That says that all fonts are located.
 }
@@ -407,7 +407,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
-        kdDebug(4300) << "Associated " << fontp->fontname << " to " << matchingFiles.first() << endl;
+        kdDebug(kvs::dvi) << "Associated " << fontp->fontname << " to " << matchingFiles.first() << endl;
 #endif
         QString fname = matchingFiles.first();
         fontp->fontNameReceiver(fname);
@@ -431,7 +431,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 void fontPool::setCMperDVIunit( double _CMperDVI )
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )" << endl;
+  kdDebug(kvs::dvi) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )" << endl;
 #endif
 
   if (CMperDVIunit == _CMperDVI)
@@ -450,7 +450,7 @@ void fontPool::setCMperDVIunit( double _CMperDVI )
 void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called" << endl;
+  kdDebug(kvs::dvi) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called" << endl;
 #endif
 
   // Ignore minute changes by less than 2 DPI. The difference would
@@ -459,7 +459,7 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
   // changes the window size by 1 pixel all the time.
   if ( fabs(displayResolution_in_dpi - _displayResolution_in_dpi) <= 2.0 ) {
 #ifdef DEBUG_FONTPOOL
-    kdDebug(4300) << "fontPool::setDisplayResolution(...): resolution wasn't changed. Aborting." << endl;
+    kdDebug(kvs::dvi) << "fontPool::setDisplayResolution(...): resolution wasn't changed. Aborting." << endl;
 #endif
     return;
   }
@@ -494,7 +494,7 @@ void fontPool::markFontsAsLocated()
 void fontPool::mark_fonts_as_unused()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "fontPool::mark_fonts_as_unused() called" << endl;
+  kdDebug(kvs::dvi) << "fontPool::mark_fonts_as_unused() called" << endl;
 #endif
 
   TeXFontDefinition  *fontp = fontList.first();
@@ -508,7 +508,7 @@ void fontPool::mark_fonts_as_unused()
 void fontPool::release_fonts()
 {
 #ifdef DEBUG_FONTPOOL
-  kdDebug(4300) << "Release_fonts" << endl;
+  kdDebug(kvs::dvi) << "Release_fonts" << endl;
 #endif
 
   TeXFontDefinition  *fontp = fontList.first();
@@ -539,7 +539,7 @@ void fontPool::mf_output_receiver(KProcess *, char *buffer, int buflen)
   while( (numleft = MetafontOutput.find('\n')) != -1) {
     QString line = MetafontOutput.left(numleft+1);
 #ifdef DEBUG_FONTPOOL
-    kdDebug(4300) << "MF OUTPUT RECEIVED: " << line;
+    kdDebug(kvs::dvi) << "MF OUTPUT RECEIVED: " << line;
 #endif
     // Search for a line which marks the beginning of a MetaFont run
     // and show the progress dialog at the end of this method.

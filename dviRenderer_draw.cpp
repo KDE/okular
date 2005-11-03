@@ -57,13 +57,13 @@
 #include "dvi.h"
 #include "dviFile.h"
 #include "hyperlink.h"
+#include "kvs_debug.h"
 #include "psgs.h"
 #include "renderedDviPagePixmap.h"
 #include "TeXFont.h"
 #include "textBox.h"
 #include "xdvi.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 
 #include <QPainter>
@@ -77,7 +77,7 @@ extern QPainter *foreGroundPainter;
 void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug(4300) << "set_char #" << ch << endl;
+  kdDebug(kvs::dvi) << "set_char #" << ch << endl;
 #endif
 
   glyph *g;
@@ -206,13 +206,13 @@ void dviRenderer::set_empty_char(unsigned int, unsigned int)
 void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug(4300) << "dviRenderer::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )" << endl;
+  kdDebug(kvs::dvi) << "dviRenderer::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )" << endl;
 #endif
 
   static unsigned char   c;
   macro *m = &currinf.fontp->macrotable[ch];
   if (m->pos == NULL) {
-    kdError(4300) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
+    kdError(kvs::dvi) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
     m->pos = m->end = &c;
     return;
   }
@@ -247,7 +247,7 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kdDebug(4300) << "dviRenderer::set_no_char( cmd=" << cmd << ", ch =" << ch << " )"  << endl;
+  kdDebug(kvs::dvi) << "dviRenderer::set_no_char( cmd=" << cmd << ", ch =" << ch << " )"  << endl;
 #endif
 
   if (currinf._virtual) {
@@ -267,7 +267,7 @@ void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 {
 #ifdef DEBUG_RENDER
-  kdDebug(4300) << "draw_part" << endl;
+  kdDebug(kvs::dvi) << "draw_part" << endl;
 #endif
 
   Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
@@ -368,7 +368,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             // that at the end of a page, the stack should always be
             // empty.
             if (!stack.isEmpty()) {
-              kdDebug(4300) << "DRAW: The stack was not empty when the EOP command was encountered." << endl;
+              kdDebug(kvs::dvi) << "DRAW: The stack was not empty when the EOP command was encountered." << endl;
               errorMsg = i18n("The stack was not empty when the EOP command was encountered.");
               return;
             }
@@ -590,14 +590,14 @@ void dviRenderer::draw_page()
   // elapsed till the kdvi_multipage was constructed, and print
   // it. Set the flag so that is message will not be printed again.
   if (performanceFlag == 0) {
-    kdDebug(4300) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms" << endl;
+    kdDebug(kvs::dvi) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms" << endl;
     performanceFlag = 1;
   }
 #endif
 
 
 #ifdef DEBUG_RENDER
-  kdDebug(4300) <<"draw_page" << endl;
+  kdDebug(kvs::dvi) <<"draw_page" << endl;
 #endif
 
   if (!accessibilityBackground)

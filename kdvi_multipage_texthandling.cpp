@@ -28,8 +28,8 @@
 
 #include "kdvi_multipage.h"
 #include "dviFile.h"
+#include "kvs_debug.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -39,7 +39,7 @@
 void KDVIMultiPage::doExportText()
 {
 #ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(4300) << "KDVIMultiPage::doExportText() called" << endl;
+  kdDebug(kvs::dvi) << "KDVIMultiPage::doExportText() called" << endl;
 #endif
 
   // Paranoid safety checks

@@ -14,8 +14,8 @@
 
 #include "TeXFont_PFB.h"
 #include "fontpool.h"
+#include "kvs_debug.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 
 #include <QImage>
@@ -28,9 +28,9 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
 {
 #ifdef DEBUG_PFB
   if (enc != 0)
-    kdDebug(4300) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=" << enc->encodingFullName << " )" << endl;
+    kdDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=" << enc->encodingFullName << " )" << endl;
   else
-    kdDebug(4300) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=0 )" << endl;
+    kdDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=0 )" << endl;
 #endif
 
   fatalErrorInFontLoading = false;
@@ -39,13 +39,13 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
 
   if ( error == FT_Err_Unknown_File_Format ) {
     errorMessage = i18n("The font file %1 could be opened and read, but its font format is unsupported.").arg(parent->filename);
-    kdError(4300) << errorMessage << endl;
+    kdError(kvs::dvi) << errorMessage << endl;
     fatalErrorInFontLoading = true;
     return;
   } else
     if ( error ) {
       errorMessage = i18n("The font file %1 is broken, or it could not be opened or read.").arg(parent->filename);
-      kdError(4300) << errorMessage << endl;
+      kdError(kvs::dvi) << errorMessage << endl;
       fatalErrorInFontLoading = true;
       return;
     }
@@ -79,12 +79,12 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
     // the FreeType library function 'FT_Get_Name_Index()' to
     // associate glyph indices to those names.
 #ifdef DEBUG_PFB
-    kdDebug(4300) << "Trying to associate glyph indices to names from the encoding vector." << endl;
+    kdDebug(kvs::dvi) << "Trying to associate glyph indices to names from the encoding vector." << endl;
 #endif
     for(int i=0; i<256; i++) {
       charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].ascii()) );
 #ifdef DEBUG_PFB
-      kdDebug(4300) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i] << endl;
+      kdDebug(kvs::dvi) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i] << endl;
 #endif
     }
   } else {
@@ -104,14 +104,14 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       // Feed the charMap array with the charmap data found in the
       // previous step.
 #ifdef DEBUG_PFB
-      kdDebug(4300) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font." << endl;
+      kdDebug(kvs::dvi) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font." << endl;
 #endif
       for(int i=0; i<256; i++)
         charMap[i] = FT_Get_Char_Index( face, i );
     } else {
       if ((found == 0) && (face->charmap != 0)) {
 #ifdef DEBUG_PFB
-        kdDebug(4300) << "No encoding given: using charmap platform=" << face->charmap->platform_id <<
+        kdDebug(kvs::dvi) << "No encoding given: using charmap platform=" << face->charmap->platform_id <<
           ", encoding=" << face->charmap->encoding_id << " that is contained in the font." << endl;
 #endif
         for(int i=0; i<256; i++)
@@ -119,7 +119,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       } else {
         // As a last resort, we use the identity map.
 #ifdef DEBUG_PFB
-        kdDebug(4300) << "No encoding given, no suitable charmaps found in the font: using identity charmap." << endl;
+        kdDebug(kvs::dvi) << "No encoding given, no suitable charmaps found in the font: using identity charmap." << endl;
 #endif
         for(int i=0; i<256; i++)
           charMap[i] = i;
@@ -138,12 +138,12 @@ TeXFont_PFB::~TeXFont_PFB()
 glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PFB
-  kdDebug(4300) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
+  kdDebug(kvs::dvi) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
 #endif
 
   // Paranoia checks
   if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
-    kdError(4300) << "TeXFont_PFB::getGlyph(): Argument is too big." << endl;
+    kdError(kvs::dvi) << "TeXFont_PFB::getGlyph(): Argument is too big." << endl;
     return glyphtable;
   }
 
@@ -168,7 +168,7 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       QString msg = i18n("FreeType reported an error when setting the character size for font file %1.").arg(parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kdError(4300) << msg << endl;
+      kdError(kvs::dvi) << msg << endl;
       g->shrunkenCharacter.resize(1,1);
       g->shrunkenCharacter.fill(QColor(255, 255, 255));
       return g;
@@ -184,7 +184,7 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       QString msg = i18n("FreeType is unable to load glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kdError(4300) << msg << endl;
+      kdError(kvs::dvi) << msg << endl;
       g->shrunkenCharacter.resize(1,1);
       g->shrunkenCharacter.fill(QColor(255, 255, 255));
       return g;
@@ -196,7 +196,7 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       QString msg = i18n("FreeType is unable to render glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kdError(4300) << msg << endl;
+      kdError(kvs::dvi) << msg << endl;
       g->shrunkenCharacter.resize(1,1);
       g->shrunkenCharacter.fill(QColor(255, 255, 255));
       return g;
@@ -207,7 +207,7 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
     if ((slot->bitmap.width == 0) || (slot->bitmap.rows == 0)) {
       if (errorMessage.isEmpty())
         errorMessage = i18n("Glyph #%1 is empty.").arg(ch);
-      kdError(4300) << i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename) << endl;
+      kdError(kvs::dvi) << i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename) << endl;
       g->shrunkenCharacter.resize( 15, 15 );
       g->shrunkenCharacter.fill(QColor(255, 0, 0));
       g->x2 = 0;
@@ -279,7 +279,7 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       QString msg = i18n("FreeType is unable to load metric for glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kdError(4300) << msg << endl;
+      kdError(kvs::dvi) << msg << endl;
       g->dvi_advance_in_units_of_design_size_by_2e20 =  1;
     }
     g->dvi_advance_in_units_of_design_size_by_2e20 =  (Q_INT32)(((Q_INT64)(1<<20) * (Q_INT64)face->glyph->metrics.horiAdvance) / (Q_INT64)face->units_per_EM);

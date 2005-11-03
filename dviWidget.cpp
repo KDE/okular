@@ -13,9 +13,9 @@
 #include "dviWidget.h"
 #include "documentPageCache.h"
 #include "hyperlink.h"
+#include "kvs_debug.h"
 #include "renderedDviPagePixmap.h"
 
-#include <kdebug.h>
 #include <klocale.h>
 
 #include <QMouseEvent>
@@ -40,7 +40,7 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
   RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNumber));
   if (pageData == 0)
   {
-    kdDebug(4300) << "DVIWidget::mousePressEvent(...) pageData for page #" << pageNumber << " is empty" << endl;
+    kdDebug(kvs::dvi) << "DVIWidget::mousePressEvent(...) pageData for page #" << pageNumber << " is empty" << endl;
     return;
   }
 
@@ -89,7 +89,7 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
     // Get a pointer to the page contents
     RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNumber));
     if (pageData == 0) {
-      kdDebug(4300) << "DVIWidget::mouseMoveEvent(...) pageData for page #" << pageNumber << " is empty" << endl;
+      kdDebug(kvs::dvi) << "DVIWidget::mouseMoveEvent(...) pageData for page #" << pageNumber << " is empty" << endl;
       return;
     }
 

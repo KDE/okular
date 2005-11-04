@@ -431,10 +431,10 @@ void PageViewAnnotator::setEnabled( bool on )
     }
 
     // show the toolBar
-    m_toolBar->showItems( (PageViewToolBar::Side)Settings::editToolBarPlacement(), items );
+    m_toolBar->showItems( (PageViewToolBar::Side)KpdfSettings::editToolBarPlacement(), items );
 
     // ask for Author's name if not already set
-    if ( Settings::annotationsAuthor().isEmpty() )
+    if ( KpdfSettings::annotationsAuthor().isEmpty() )
     {
         // get default username from the kdelibs/kdecore/KUser
         KUser currentUser;
@@ -449,7 +449,7 @@ void PageViewAnnotator::setEnabled( bool on )
             firstTry = false;
         }
         // save the name
-        Settings::setAnnotationsAuthor( userName );
+        KpdfSettings::setAnnotationsAuthor( userName );
     }
 }
 
@@ -529,7 +529,7 @@ void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect 
 {
 #ifndef NDEBUG
     // [DEBUG] draw the paint region if enabled
-    if ( Settings::debugDrawAnnotationRect() )
+    if ( KpdfSettings::debugDrawAnnotationRect() )
         painter->drawRect( paintRect );
 #endif
     // move painter to current itemGeometry rect
@@ -618,7 +618,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 
 void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
-    Settings::setEditToolBarPlacement( (int)side );
+    KpdfSettings::setEditToolBarPlacement( (int)side );
 }
 
 #include "pageviewannotator.moc"

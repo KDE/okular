@@ -29,9 +29,11 @@
 #include "ErrorCodes.h"
 #include "Lexer.h"
 #include "Parser.h"
+#include "SecurityHandler.h"
 #ifndef DISABLE_OUTLINE
 #include "Outline.h"
 #endif
+#include "UGString.h"
 #include "PDFDoc.h"
 
 //------------------------------------------------------------------------
@@ -44,12 +46,14 @@
 //------------------------------------------------------------------------
 
 PDFDoc::PDFDoc(GString *fileNameA, GString *ownerPassword,
-	       GString *userPassword) {
+	       GString *userPassword, void *guiDataA) {
   Object obj;
   GString *fileName1, *fileName2;
 
   ok = gFalse;
   errCode = errNone;
+
+  guiData = guiDataA;
 
   file = NULL;
   str = NULL;
@@ -96,10 +100,68 @@ PDFDoc::PDFDoc(GString *fileNameA, GString *ownerPassword,
   ok = setup(ownerPassword, userPassword);
 }
 
-PDFDoc::PDFDoc(BaseStream *strA, GString *ownerPassword,
-	       GString *userPassword) {
+#ifdef WIN32
+PDFDoc::PDFDoc(wchar_t *fileNameA, int fileNameLen, GString *ownerPassword,
+	       GString *userPassword, void *guiDataA) {
+  OSVERSIONINFO version;
+  wchar_t fileName2[_MAX_PATH + 1];
+  Object obj;
+  int i;
+
   ok = gFalse;
   errCode = errNone;
+
+  guiData = guiDataA;
+
+  file = NULL;
+  str = NULL;
+  xref = NULL;
+  catalog = NULL;
+  links = NULL;
+#ifndef DISABLE_OUTLINE
+  outline = NULL;
+#endif
+
+  //~ file name should be stored in Unicode (?)
+  fileName = new GString();
+  for (i = 0; i < fileNameLen; ++i) {
+    fileName->append((char)fileNameA[i]);
+  }
+
+  // zero-terminate the file name string
+  for (i = 0; i < fileNameLen && i < _MAX_PATH; ++i) {
+    fileName2[i] = fileNameA[i];
+  }
+  fileName2[i] = 0;
+
+  // try to open file
+  // NB: _wfopen is only available in NT
+  version.dwOSVersionInfoSize = sizeof(version);
+  GetVersionEx(&version);
+  if (version.dwPlatformId == VER_PLATFORM_WIN32_NT) {
+    file = _wfopen(fileName2, L"rb");
+  } else {
+    file = fopen(fileName->getCString(), "rb");
+  }
+  if (!file) {
+    error(-1, "Couldn't open file '%s'", fileName->getCString());
+    errCode = errOpenFile;
+    return;
+  }
+
+  // create stream
+  obj.initNull();
+  str = new FileStream(file, 0, gFalse, 0, &obj);
+
+  ok = setup(ownerPassword, userPassword);
+}
+#endif
+
+PDFDoc::PDFDoc(BaseStream *strA, GString *ownerPassword,
+	       GString *userPassword, void *guiDataA) {
+  ok = gFalse;
+  errCode = errNone;
+  guiData = guiDataA;
   fileName = NULL;
   file = NULL;
   str = strA;
@@ -114,35 +176,50 @@ PDFDoc::PDFDoc(BaseStream *strA, GString *ownerPassword,
 
 GBool PDFDoc::setup(GString *ownerPassword, GString *userPassword) {
   str->reset();
-
-  char eof[8];
+  char *eof = new char[1025];
   int pos = str->getPos();
-  str->setPos(7, -1);
-  eof[0] = str->getChar();
-  eof[1] = str->getChar();
-  eof[2] = str->getChar();
-  eof[3] = str->getChar();
-  eof[4] = str->getChar();
-  eof[5] = str->getChar();
-  eof[6] = str->getChar();
-  eof[7] = '\0';
-  if (strstr(eof, "%%EOF") == NULL)
+  str->setPos(1024, -1);
+  int i, ch;
+  for (i = 0; i < 1024; i++)
+  {
+    ch = str->getChar();
+    if (ch == EOF)
+      break;
+    eof[i] = ch;
+  }
+  eof[i] = '\0';
+
+  bool found = false;
+  for (i = i - 5; i >= 0; i--) {
+    if (strncmp (&eof[i], "%%EOF", 5) == 0) {
+      found = true;
+      break;
+    }
+  }
+  if (!found)
   {
     error(-1, "Document does not have ending %%EOF");
     errCode = errDamaged;
+    delete[] eof;
     return gFalse;
   }
-
+  delete[] eof;
   str->setPos(pos);
 
   // check header
   checkHeader();
 
   // read xref table
-  xref = new XRef(str, ownerPassword, userPassword);
+  xref = new XRef(str);
   if (!xref->isOk()) {
     error(-1, "Couldn't read xref table");
     errCode = xref->getErrorCode();
+    return gFalse;
+  }
+
+  // check for encryption
+  if (!checkEncryption(ownerPassword, userPassword)) {
+    errCode = errEncrypted;
     return gFalse;
   }
 
@@ -211,7 +288,10 @@ void PDFDoc::checkHeader() {
     return;
   }
   str->moveStart(i);
-  p = strtok(&hdrBuf[i+5], " \t\n\r");
+  if (!(p = strtok(&hdrBuf[i+5], " \t\n\r"))) {
+    error(-1, "May not be a PDF file (continuing anyway)");
+    return;
+  }
   pdfVersion = atof(p);
   if (!(hdrBuf[i+5] >= '0' && hdrBuf[i+5] <= '9') ||
       pdfVersion > supportedPDFVersionNum + 0.0001) {
@@ -220,8 +300,43 @@ void PDFDoc::checkHeader() {
   }
 }
 
+GBool PDFDoc::checkEncryption(GString *ownerPassword, GString *userPassword) {
+  Object encrypt;
+  GBool encrypted;
+  SecurityHandler *secHdlr;
+  GBool ret;
+
+  xref->getTrailerDict()->dictLookup("Encrypt", &encrypt);
+  if ((encrypted = encrypt.isDict())) {
+    if ((secHdlr = SecurityHandler::make(this, &encrypt))) {
+      if (secHdlr->checkEncryption(ownerPassword, userPassword)) {
+	// authorization succeeded
+       	xref->setEncryption(secHdlr->getPermissionFlags(),
+			    secHdlr->getOwnerPasswordOk(),
+			    secHdlr->getFileKey(),
+			    secHdlr->getFileKeyLength(),
+			    secHdlr->getEncVersion());
+	ret = gTrue;
+      } else {
+	// authorization failed
+	ret = gFalse;
+      }
+      delete secHdlr;
+    } else {
+      // couldn't find the matching security handler
+      ret = gFalse;
+    }
+  } else {
+    // document is not encrypted
+    ret = gTrue;
+  }
+  encrypt.free();
+  return ret;
+}
+
 void PDFDoc::displayPage(OutputDev *out, int page, double hDPI, double vDPI,
-			 int rotate, GBool crop, GBool doLinks,
+			 int rotate, GBool useMediaBox, GBool crop,
+			 GBool doLinks,
 			 GBool (*abortCheckCbk)(void *data),
 			 void *abortCheckCbkData) {
   Page *p;
@@ -235,52 +350,70 @@ void PDFDoc::displayPage(OutputDev *out, int page, double hDPI, double vDPI,
       delete links;
     }
     getLinks(p);
-    p->display(out, hDPI, vDPI, rotate, crop, links, catalog,
+    p->display(out, hDPI, vDPI, rotate, useMediaBox, crop, links, catalog,
 	       abortCheckCbk, abortCheckCbkData);
   } else {
-    p->display(out, hDPI, vDPI, rotate, crop, NULL, catalog,
+    p->display(out, hDPI, vDPI, rotate, useMediaBox, crop, NULL, catalog,
 	       abortCheckCbk, abortCheckCbkData);
   }
 }
 
 void PDFDoc::displayPages(OutputDev *out, int firstPage, int lastPage,
 			  double hDPI, double vDPI, int rotate,
-			  GBool crop, GBool doLinks,
+			  GBool useMediaBox, GBool crop, GBool doLinks,
 			  GBool (*abortCheckCbk)(void *data),
 			  void *abortCheckCbkData) {
   int page;
 
   for (page = firstPage; page <= lastPage; ++page) {
-    displayPage(out, page, hDPI, vDPI, rotate, crop, doLinks,
+    displayPage(out, page, hDPI, vDPI, rotate, useMediaBox, crop, doLinks,
 		abortCheckCbk, abortCheckCbkData);
   }
 }
 
 void PDFDoc::displayPages(OutputDev *out, list<int> &pages,
 				  double hDPI, double vDPI, int rotate,
-				  GBool crop, GBool doLinks,
+				  GBool useMediaBox, GBool crop, GBool doLinks,
 				  GBool (*abortCheckCbk)(void *data),
 				  void *abortCheckCbkData)
 {
 	list<int>::const_iterator i;
 
 	for(i = pages.begin(); i != pages.end(); ++i)
-		displayPage(out, *i, hDPI, vDPI, rotate, crop, doLinks,
+		displayPage(out, *i, hDPI, vDPI, rotate, useMediaBox, crop, doLinks,
 					abortCheckCbk, abortCheckCbkData);
 }
 
 void PDFDoc::displayPageSlice(OutputDev *out, int page,
-			      double hDPI, double vDPI,
-			      int rotate, GBool crop,
+			      double hDPI, double vDPI, int rotate,
+			      GBool useMediaBox, GBool crop, GBool doLinks,
 			      int sliceX, int sliceY, int sliceW, int sliceH,
 			      GBool (*abortCheckCbk)(void *data),
 			      void *abortCheckCbkData) {
   Page *p;
 
   p = catalog->getPage(page);
-  p->displaySlice(out, hDPI, vDPI, rotate, crop,
+  if (doLinks) {
+    if (links) {
+      delete links;
+    }
+    getLinks(p);
+    p->displaySlice(out, hDPI, vDPI, rotate, useMediaBox, crop,
+                   sliceX, sliceY, sliceW, sliceH,
+                   links, catalog, abortCheckCbk, abortCheckCbkData);
+  } else {
+    p->displaySlice(out, hDPI, vDPI, rotate, useMediaBox, crop,
 		  sliceX, sliceY, sliceW, sliceH,
 		  NULL, catalog, abortCheckCbk, abortCheckCbkData);
+  }
+}
+
+Links *PDFDoc::takeLinks() {
+  Links *ret;
+
+  ret = links;
+  links = NULL;
+  return ret;
 }
 
 GBool PDFDoc::isLinearized() {

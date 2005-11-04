@@ -23,6 +23,7 @@
 
 #include "core/page.h"
 #include "core/generator.h"
+#include "core/observer.h"
 #include "conf/gssettingswidget.h"
 #include "conf/gssettings.h"
 
@@ -42,6 +43,7 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
     pixGenerator = 0;
     asyncGenerator = 0;
     internalDoc = 0;
+    m_paperSize = 0;
     dscForPDF = 0;
     m_asyncBusy = false;
     if ( GSSettings::messages() )
@@ -118,12 +120,6 @@ int GSGenerator::angle( CDSC_ORIENTATION_ENUM orientation )
     return angle;
 }
 
-void GSGenerator::setOrientation(QValueVector<KPDFPage*>& pages, int rot) 
-{
-    internalDoc->setOrientation(orientation(rot));
-    loadPages (pages);
-}
-
 inline QString GSGenerator::fileName() { return internalDoc->fileName(); };
 
 bool GSGenerator::print( KPrinter& printer ) 
@@ -148,7 +144,6 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
     if (mime->name().contains("pdf"))
     {
         ps=false;
-        //m_convertSuccess=false;
         dscForPDF=new KTempFile( QString::null, ".ps" );
         Q_CHECK_PTR( dscForPDF );
         dscForPDF->setAutoDelete(true);
@@ -165,12 +160,12 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
         << "-dDELAYSAFER"
         << "-dNODISPLAY"
         << "-dQUIET"
-        << QString("-sPDFname=%1").arg(name)
+        << QString("-sPDFname=%1").arg(fileName)
         << QString("-sDSCname=%1").arg(dscForPDF->name())
-        << "-c '/PermitFileReading [ PDFname ] /PermitFileWriting [ DSCname ] /PermitFileControl []'"
+        << "-c '<< /PermitFileReading [ InputFile ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe'"
         << "-f pdf2dsc.ps"
         << "-c quit";
-        m_convert=new GSInterpreterLib();
+        GSInterpreterLib * m_convert=new GSInterpreterLib();
         m_convert->setGhostscriptArguments(arg);
         m_convert->startInterpreter();
         delete m_convert;
@@ -178,7 +173,12 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
         arg.clear();
         name=dscForPDF->name();
     }
-
+    if (! asyncGenerator )
+    {
+        asyncGenerator= new GSInterpreterCMD ( fileName );
+        connect (asyncGenerator, SIGNAL (newPageImage(PixmapRequest *)),
+         this, SLOT(slotAsyncPixmapGenerated (PixmapRequest *)));
+    }
     if( !pixGenerator )
     {
         pixGenerator = new GSInterpreterLib ();
@@ -191,12 +191,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
                 m_logWindow, SLOT (append(MessageType , const char*,int)));
         }
     }
-    if (! asyncGenerator )
-    {
-        asyncGenerator= new GSInterpreterCMD ( fileName );
-        connect (asyncGenerator, SIGNAL (newPageImage(PixmapRequest *)),
-         this, SLOT(slotAsyncPixmapGenerated (PixmapRequest *)));
-    }
+    m_pages=pagesVector;
     return loadDocumentWithDSC(name,pagesVector,ps);
 }
 
@@ -214,13 +209,35 @@ void GSGenerator::slotAsyncPixmapGenerated(PixmapRequest * request )
     signalRequestDone( request );
 }
 
-void GSGenerator::setupGUI(KActionCollection  * /*ac*/ , QToolBox * tBox )
+void GSGenerator::setOrientation(QValueVector<KPDFPage*>& pages, int rot) 
+{
+    internalDoc->setOrientation(orientation(rot));
+    loadPages (pages);
+    NotifyRequest r(DocumentObserver::Setup, false);
+    m_document->notifyObservers( &r );
+}
+
+void GSGenerator::slotPaperSize (const QString &  p)
+{
+    internalDoc->setMedia(p);
+    loadPages(m_pages);
+    NotifyRequest r(DocumentObserver::Setup, false);
+    m_document->notifyObservers( &r );
+}
+
+void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )
 {
     if ( GSSettings::messages() )
     {
         m_box=tBox;
         m_box->addItem( m_logWindow, QIconSet(SmallIcon("queue")), i18n("GhostScript Messages") );
     }
+    m_actionCollection = ac;
+
+    m_paperSize = new KSelectAction (i18n( "Paper Size" ), "viewmag", ac, "papersize");
+    m_paperSize->setItems (GSInternalDocument::paperSizes());
+    connect( m_paperSize , SIGNAL( activated( const QString & ) ),
+         this , SLOT( slotPaperSize ( const QString & ) ) );
 }
 
 void GSGenerator::freeGUI()
@@ -229,12 +246,14 @@ void GSGenerator::freeGUI()
     {
         m_box->removeItem(m_logWindow);
     }
+    m_actionCollection->remove (m_paperSize);
+    m_paperSize = 0;
 }
 
 bool GSGenerator::loadPages( QValueVector< KPDFPage * > & pagesVector )
 {
     QSize pSize;
-bool atLeastOne=false;
+    bool atLeastOne=false;
     if( internalDoc->dsc()->isStructured() )
     {
         unsigned int i, end=internalDoc->dsc() -> page_count();

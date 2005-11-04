@@ -70,12 +70,12 @@ PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
 
     // handle cursor appearance as specified in configuration
-    if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::HiddenDelay )
+    if ( KpdfSettings::slidesCursor() == KpdfSettings::EnumSlidesCursor::HiddenDelay )
     {
         KCursor::setAutoHideCursor( this, true );
         KCursor::setHideCursorDelay( 3000 );
     }
-    else if ( Settings::slidesCursor() == Settings::EnumSlidesCursor::Hidden )
+    else if ( KpdfSettings::slidesCursor() == KpdfSettings::EnumSlidesCursor::Hidden )
     {
         setCursor( KCursor::blankCursor() );
     }
@@ -146,15 +146,15 @@ void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet
 void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // discard notifications if displaying the summary
-    if ( m_frameIndex == -1 && Settings::slidesShowSummary() )
+    if ( m_frameIndex == -1 && KpdfSettings::slidesShowSummary() )
         return;
 
     // display the current page
     changePage( m_document->viewport().pageNumber );
 
     // auto advance to the next page if set
-    if ( Settings::slidesAdvance() )
-        QTimer::singleShot( Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+    if ( KpdfSettings::slidesAdvance() )
+        QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
@@ -263,7 +263,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         return;
 
     // update cursor and tooltip if hovering a link
-    if ( Settings::slidesCursor() != Settings::EnumSlidesCursor::Hidden )
+    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
         testCursorOnLink( e->x(), e->y() );
 
     if ( m_topBar->isShown() )
@@ -311,7 +311,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_document->addObserver( this );
 
         // show summary if requested
-        if ( Settings::slidesShowSummary() )
+        if ( KpdfSettings::slidesShowSummary() )
             generatePage();
 
         // inform user on how to exit from presentation mode
@@ -332,7 +332,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         if ( !r.isValid() )
             continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
-        if ( Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
+        if ( KpdfSettings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
         {
             // backbuffer the overlay operation
             QPixmap backPixmap( r.size() );
@@ -482,7 +482,7 @@ void PresentationWidget::generatePage()
 
     // generate the top-right corner overlay
 #ifdef ENABLE_PROGRESS_OVERLAY
-    if ( Settings::slidesShowProgress() && m_frameIndex != -1 )
+    if ( KpdfSettings::slidesShowProgress() && m_frameIndex != -1 )
         generateOverlay();
 #endif
 
@@ -497,7 +497,7 @@ void PresentationWidget::generatePage()
     }
 
     // update cursor + tooltip
-    if ( Settings::slidesCursor() != Settings::EnumSlidesCursor::Hidden )
+    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
     {
         QPoint p = mapFromGlobal( QCursor::pos() );
         testCursorOnLink( p.x(), p.y() );
@@ -580,7 +580,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     for ( uint i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
-        p.fillRect( r, Settings::slidesBackgroundColor() );
+        p.fillRect( r, KpdfSettings::slidesBackgroundColor() );
     }
 }
 
@@ -703,26 +703,31 @@ void PresentationWidget::generateOverlay()
 void PresentationWidget::slotNextPage()
 {
     // loop when configured
-    if ( m_frameIndex == (int)m_frames.count() - 1 && Settings::slidesLoop() )
+    if ( m_frameIndex == (int)m_frames.count() - 1 && KpdfSettings::slidesLoop() )
         m_frameIndex = -1;
 
     if ( m_frameIndex < (int)m_frames.count() - 1 )
     {
         // go to next page
         changePage( m_frameIndex + 1 );
+        // auto advance to the next page if set
+        if ( KpdfSettings::slidesAdvance() )
+            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
     }
-    else if ( m_transitionTimer->isActive() )
+    else
     {
-        m_transitionTimer->stop();
-        update();
+#ifdef ENABLE_PROGRESS_OVERLAY
+        if ( KpdfSettings::slidesShowProgress() )
+            generateOverlay();
+#endif
+        if ( m_transitionTimer->isActive() )
+        {
+            m_transitionTimer->stop();
+            update();
+        }
     }
-
     // we need the setFocus() call here to let KCursor::autoHide() work correctly
     setFocus();
-
-    // auto advance to the next page if set
-    if ( Settings::slidesAdvance() )
-        QTimer::singleShot( Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::slotPrevPage()
@@ -731,11 +736,22 @@ void PresentationWidget::slotPrevPage()
     {
         // go to previous page
         changePage( m_frameIndex - 1 );
+
+        // auto advance to the next page if set
+        if ( KpdfSettings::slidesAdvance() )
+            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
     }
-    else if ( m_transitionTimer->isActive() )
+    else
     {
-        m_transitionTimer->stop();
-        update();
+#ifdef ENABLE_PROGRESS_OVERLAY
+        if ( KpdfSettings::slidesShowProgress() )
+            generateOverlay();
+#endif
+        if ( m_transitionTimer->isActive() )
+        {
+            m_transitionTimer->stop();
+            update();
+        }
     }
 }
 
@@ -776,73 +792,73 @@ void PresentationWidget::slotTransitionStep()
 
 const KPDFPageTransition PresentationWidget::defaultTransition() const
 {
-    return defaultTransition( Settings::slidesTransition() );
+    return defaultTransition( KpdfSettings::slidesTransition() );
 }
 
 const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
 {
     switch ( type )
     {
-        case Settings::EnumSlidesTransition::BlindsHorizontal:
+        case KpdfSettings::EnumSlidesTransition::BlindsHorizontal:
         {
             KPDFPageTransition transition( KPDFPageTransition::Blinds );
             transition.setAlignment( KPDFPageTransition::Horizontal );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::BlindsVertical:
+        case KpdfSettings::EnumSlidesTransition::BlindsVertical:
         {
             KPDFPageTransition transition( KPDFPageTransition::Blinds );
             transition.setAlignment( KPDFPageTransition::Vertical );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::BoxIn:
+        case KpdfSettings::EnumSlidesTransition::BoxIn:
         {
             KPDFPageTransition transition( KPDFPageTransition::Box );
             transition.setDirection( KPDFPageTransition::Inward );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::BoxOut:
+        case KpdfSettings::EnumSlidesTransition::BoxOut:
         {
             KPDFPageTransition transition( KPDFPageTransition::Box );
             transition.setDirection( KPDFPageTransition::Outward );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::Dissolve:
+        case KpdfSettings::EnumSlidesTransition::Dissolve:
         {
             return KPDFPageTransition( KPDFPageTransition::Dissolve );
             break;
         }
-        case Settings::EnumSlidesTransition::GlitterDown:
+        case KpdfSettings::EnumSlidesTransition::GlitterDown:
         {
             KPDFPageTransition transition( KPDFPageTransition::Glitter );
             transition.setAngle( 270 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::GlitterRight:
+        case KpdfSettings::EnumSlidesTransition::GlitterRight:
         {
             KPDFPageTransition transition( KPDFPageTransition::Glitter );
             transition.setAngle( 0 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::GlitterRightDown:
+        case KpdfSettings::EnumSlidesTransition::GlitterRightDown:
         {
             KPDFPageTransition transition( KPDFPageTransition::Glitter );
             transition.setAngle( 315 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::Random:
+        case KpdfSettings::EnumSlidesTransition::Random:
         {
             return defaultTransition( KApplication::random() % 18 );
             break;
         }
-        case Settings::EnumSlidesTransition::SplitHorizontalIn:
+        case KpdfSettings::EnumSlidesTransition::SplitHorizontalIn:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Horizontal );
@@ -850,7 +866,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::SplitHorizontalOut:
+        case KpdfSettings::EnumSlidesTransition::SplitHorizontalOut:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Horizontal );
@@ -858,7 +874,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::SplitVerticalIn:
+        case KpdfSettings::EnumSlidesTransition::SplitVerticalIn:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Vertical );
@@ -866,7 +882,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::SplitVerticalOut:
+        case KpdfSettings::EnumSlidesTransition::SplitVerticalOut:
         {
             KPDFPageTransition transition( KPDFPageTransition::Split );
             transition.setAlignment( KPDFPageTransition::Vertical );
@@ -874,35 +890,35 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeDown:
+        case KpdfSettings::EnumSlidesTransition::WipeDown:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 270 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeRight:
+        case KpdfSettings::EnumSlidesTransition::WipeRight:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 0 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeLeft:
+        case KpdfSettings::EnumSlidesTransition::WipeLeft:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 180 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::WipeUp:
+        case KpdfSettings::EnumSlidesTransition::WipeUp:
         {
             KPDFPageTransition transition( KPDFPageTransition::Wipe );
             transition.setAngle( 90 );
             return transition;
             break;
         }
-        case Settings::EnumSlidesTransition::Replace:
+        case KpdfSettings::EnumSlidesTransition::Replace:
         default:
             return KPDFPageTransition( KPDFPageTransition::Replace );
             break;

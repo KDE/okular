@@ -172,7 +172,7 @@ void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
         int vWidth=m_syncGen->view()->contentsWidth();
         int vHeight=m_syncGen->view()->contentsHeight();
         NormalizedRect *nodeNormRect;
-// #define NOEXP
+#define NOEXP
 #ifndef NOEXP
         int x,y,height;
         int x_next,y_next,height_next;
@@ -196,21 +196,21 @@ void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
 //                     if (nodeType[i+1]
                     node.getCursor(i+1,x_next,y_next,height_next);
                     kdDebug() << "DL/L/R " << r.left() << "/" << x << "/" << x_next << endl;
-                    nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x,height),vWidth,vHeight);
+                    nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else if ( i <nodeTextLength -1 )
                 // i is between zero and the last element
                 {
                     node.getCursor(i+1,x_next,y_next,height_next);
                     kdDebug() << "L/R" << x << "/" << x_next << endl;
-                    nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x,height),vWidth,vHeight);
+                    nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else
                 // the last element use right rect boundary
                 {
                     node.getCursor(i-1,x_next,y_next,height_next);
                     kdDebug() << "L/R" << x_next << "/" << r.right() << endl;
-                    nodeNormRect=new NormalizedRect (QRect(x,y,r.right()-x,height),vWidth,vHeight);
+                    nodeNormRect=new NormalizedRect (QRect(x,y,r.right()-x-1,height),vWidth,vHeight);
                 }
                 tp->append(QString(nodeText[i]),nodeNormRect,nodeNormRect->bottom,0,(nodeText[i]=='\n'));
                 kdDebug () << "Working with offset : " << i << endl;
@@ -324,7 +324,7 @@ bool TGenerator::canGenerateTextPage()
 void TGenerator::generateSyncTextPage( KPDFPage * page )
 {
     syncLock.lock();
-    double zoomP=Settings::zoomFactor();
+    double zoomP=KpdfSettings::zoomFactor();
     int zoom = zoomP * 100;
     m_syncGen->view()->resize(page->width() * zoomP , page->height() * zoomP);
     preparePageForSyncOperation(zoom, m_file->getUrlForPage ( page->number() + 1 ));

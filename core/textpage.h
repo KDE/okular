@@ -15,29 +15,41 @@
 #include <qstringlist.h>
 #include "area.h"
 
+/*! @enum SearchDir
+ *  The enum holding the direction of searching.
+ *! @enum SearchDir FromTop
+ *  Searching from top of the page, next result is to be found,
+ *  there was no earlier search result.
+ *! @enum SearchDir NextRes
+ *  Searching for the next result on the page, earlier result should be 
+ *  located so we search from the last result not from the beginning of the 
+ *  page.
+ *! @enum SearchDir PrevRes
+ *  Searching for the previous result on the page, earlier result should be 
+ *  located so we search from the last result not from the beginning of the 
+ *  page.
+ */
 typedef enum SearchDir{ FromTop, NextRes, PrevRes };
 
-/*
- * @short Abstractet Entity of KPDF
- * The idea:
- * Document can provide one of the following information about text areas
- * 1.) provide information for every character  (best)
-
+/*! @struct  KPDFTextEntity
+ * @short Abstract textentity of KPDF
+ * @par The context
+ * A document can provide different forms of information about textual representation
+ * of its contents. It can include information about positions of every character on the 
+ * page, this is the best possibility. 
  * 
- * 2.) provide information for every word 
- * We will use type Word for this kind of entity. It will store the 
- * word and should be followed by a type glyph which will contain some 
- * punctuation marks.
- 
- 
- * 3.) provide information for every textline
+ * But also it can provide information only about positions of every word on the page (not the character). 
+ * Furthermore it can provide information only about the position of the whole page's text on the page.
+ * 
+ * Also some document types have glyphes - sets of characters rendered as one, so in search they should 
+ * appear as a text but are only one character when drawn on screen. We need to allow this.
+ * @par The idea
+ * We need several
  */
 
 struct KPDFTextEntity
 {
-// not sure used now might be useful in the future
-//    typedef enum Type{ Glyph, Word, Line };
-//    Type type;
+    // 
     QString txt;
     NormalizedRect* area;
     double baseline;

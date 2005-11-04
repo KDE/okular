@@ -6,4 +6,5 @@ if include_chm
 CHMPLUGINDIR = chm
 endif
 
-SUBDIRS = $(GSPLUGINDIR) xpdf kimgio $(CHMPLUGINDIR)
+SUBDIRS = $(GSPLUGINDIR) xpdf fax kimgio $(CHMPLUGINDIR)
+

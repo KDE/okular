@@ -23,6 +23,7 @@
 #include "Page.h"
 #include "Error.h"
 #include "Link.h"
+#include "UGString.h"
 #include "Catalog.h"
 
 //------------------------------------------------------------------------
@@ -67,16 +68,9 @@ Catalog::Catalog(XRef *xrefA) {
   }
   pagesSize = numPages0 = (int)obj.getNum();
   obj.free();
-  if (((unsigned) pagesSize >= INT_MAX / sizeof(Page *)) ||
-      ((unsigned) pagesSize >= INT_MAX / sizeof(Ref)))
-  {
-    error(-1, "Invalid 'pagesSize'");
-    ok = gFalse;
-    return;
-  }
 
-  pages = (Page **)gmalloc(pagesSize * sizeof(Page *));
-  pageRefs = (Ref *)gmalloc(pagesSize * sizeof(Ref));
+  pages = (Page **)gmallocn(pagesSize, sizeof(Page *));
+  pageRefs = (Ref *)gmallocn(pagesSize, sizeof(Ref));
   for (i = 0; i < pagesSize; ++i) {
     pages[i] = NULL;
     pageRefs[i].num = -1;
@@ -134,6 +128,9 @@ Catalog::Catalog(XRef *xrefA) {
   // get the outline dictionary
   catDict.dictLookup("Outlines", &outline);
 
+  // get the AcroForm dictionary
+  catDict.dictLookup("AcroForm", &acroForm);
+
   catDict.free();
   return;
 
@@ -167,6 +164,7 @@ Catalog::~Catalog() {
   metadata.free();
   structTreeRoot.free();
   outline.free();
+  acroForm.free();
 }
 
 GString *Catalog::readMetadata() {
@@ -219,13 +217,8 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
       }
       if (start >= pagesSize) {
 	pagesSize += 32;
-        if ((unsigned) pagesSize >= INT_MAX / sizeof(Page*) ||
-            (unsigned) pagesSize >= INT_MAX / sizeof(Ref)) {
-          error(-1, "Invalid 'pagesSize' parameter.");
-          goto err3;
-        }
-	pages = (Page **)grealloc(pages, pagesSize * sizeof(Page *));
-	pageRefs = (Ref *)grealloc(pageRefs, pagesSize * sizeof(Ref));
+	pages = (Page **)greallocn(pages, pagesSize, sizeof(Page *));
+	pageRefs = (Ref *)greallocn(pageRefs, pagesSize, sizeof(Ref));
 	for (j = pagesSize - 32; j < pagesSize; ++j) {
 	  pages[j] = NULL;
 	  pageRefs[j].num = -1;
@@ -249,7 +242,6 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
     } else {
       error(-1, "Kid object (page %d) is wrong type (%s)",
 	    start+1, kid.getTypeName());
-      goto err2;
     }
     kid.free();
   }
@@ -278,7 +270,7 @@ int Catalog::findPage(int num, int gen) {
   return 0;
 }
 
-LinkDest *Catalog::findDest(GString *name) {
+LinkDest *Catalog::findDest(UGString *name) {
   LinkDest *dest;
   Object obj1, obj2;
   GBool found;
@@ -286,7 +278,7 @@ LinkDest *Catalog::findDest(GString *name) {
   // try named destination dictionary then name tree
   found = gFalse;
   if (dests.isDict()) {
-    if (!dests.dictLookup(name->getCString(), &obj1)->isNull())
+    if (!dests.dictLookup(*name, &obj1)->isNull())
       found = gTrue;
     else
       obj1.free();
@@ -330,12 +322,15 @@ NameTree::NameTree(void)
 }
 
 NameTree::Entry::Entry(Array *array, int index) {
-  if (!array->getString(index, &name) || !array->getNF(index + 1, &value))
+  GString n;
+  if (!array->getString(index, &n) || !array->getNF(index + 1, &value))
     error(-1, "Invalid page tree");
+  name = new UGString(n);
 }
 
 NameTree::Entry::~Entry() {
   value.free();
+  delete name;
 }
 
 void NameTree::addEntry(Entry *entry)
@@ -389,13 +384,13 @@ void NameTree::parse(Object *tree) {
 
 int NameTree::Entry::cmp(const void *voidKey, const void *voidEntry)
 {
-  GString *key = (GString *) voidKey;
+  UGString *key = (UGString *) voidKey;
   Entry *entry = *(NameTree::Entry **) voidEntry;
 
-  return key->cmp(&entry->name);
+  return key->cmp(entry->name);
 }
 
-GBool NameTree::lookup(GString *name, Object *obj)
+GBool NameTree::lookup(UGString *name, Object *obj)
 {
   Entry *entry;
 

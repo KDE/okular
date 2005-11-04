@@ -41,7 +41,7 @@
 // #include 
 
 class TGenerator;
-
+class KListView;
 class KCHMSearchResult
 {
 	public:
@@ -189,7 +189,7 @@ public:
 	  to this function.
 	  \return true if it's possible to build the tree, false otherwise.
 	 */
-	bool ParseAndFillIndex (QDomDocument*indexlist);
+	bool ParseAndFillIndex (KListView *indexlist);
 
 	/*!
 	  \brief Fast search using the $FIftiMain file in the .chm.
@@ -278,7 +278,7 @@ public:
 private:
 	//! Parse the HHC or HHS file, and fill the context (asIndex is false) or index (asIndex is true) tree.
 	bool  ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool asIndex);
-
+    bool  ParseHhcAndFillTree (const QString& file, KListView *tree, bool asIndex);
 	//! Parse the HHC or HHS file, and fill the data.
 	bool ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedIndexEntry_t & cont );
 
@@ -295,7 +295,7 @@ private:
 	}
 	
 	//! Helper. Translates from Win32 encodings to generic wxWidgets ones.
-	const char * CHMFile::GetFontEncFromCharSet (const QString& font) const;
+	const char * GetFontEncFromCharSet (const QString& font) const;
 
 	//! Helper. Returns the $FIftiMain offset of leaf node or 0.
 	u_int32_t GetLeafNodeOffset(const QString& text,

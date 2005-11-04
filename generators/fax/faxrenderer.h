@@ -43,7 +43,7 @@ public:
        This constructor simply prints a message (if debugging is
        enabled) and calls the default constructor.
    */
-//    FaxRenderer(QWidget* parent);
+   FaxRenderer(KPDFDocument * doc);
 
    /** Destructor
 
@@ -76,9 +76,9 @@ public:
 
   */
   void generatePixmap( PixmapRequest * request );
-  bool canGeneratePixmap( bool async ) { return mutex.locked(); };
-    signals:
-        void error(QString & string, int duration);
+  bool canGeneratePixmap( bool async ) { return !mutex.locked(); };
+  signals:
+      void error(QString & string, int duration);
 private:
   /** This class holds the fax file */
     KFaxImage fax;

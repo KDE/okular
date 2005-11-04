@@ -1,12 +1,6 @@
-
 #ifndef _KPDF_INTERPETER_H_
 #define _KPDF_INTERPETER_H_
-
-#include <qpair.h>
 #include <qpaintdevice.h>
-// include "dscparse_adapter.h"
-typedef QPair<unsigned long , unsigned long > PagePosition;
-typedef enum MessageType{Input, Output, Error};
 
 namespace DPIMod
 {

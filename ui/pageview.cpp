@@ -135,8 +135,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d = new PageViewPrivate();
     d->document = document;
     d->aOrientation = 0;
-    d->zoomMode = (PageView::ZoomMode) Settings::zoomMode();
-    d->zoomFactor = Settings::zoomFactor();
+    d->zoomMode = (PageView::ZoomMode) KpdfSettings::zoomMode();
+    d->zoomFactor = KpdfSettings::zoomFactor();
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
     d->mouseSelecting = false;
@@ -225,11 +225,11 @@ void PageView::setupActions( KActionCollection * ac )
     // View-Layout actions
     d->aViewTwoPages = new KToggleAction( i18n("&Two Pages"), "view_left_right", 0, ac, "view_twopages" );
     connect( d->aViewTwoPages, SIGNAL( toggled( bool ) ), SLOT( slotTwoPagesToggled( bool ) ) );
-    d->aViewTwoPages->setChecked( Settings::viewColumns() > 1 );
+    d->aViewTwoPages->setChecked( KpdfSettings::viewColumns() > 1 );
 
     d->aViewContinuous = new KToggleAction( i18n("&Continuous"), "view_text", 0, ac, "view_continuous" );
     connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
-    d->aViewContinuous->setChecked( Settings::viewContinuous() );
+    d->aViewContinuous->setChecked( KpdfSettings::viewContinuous() );
 
     // Mouse-Mode actions
     d->aMouseNormal = new KRadioAction( i18n("&Browse Tool"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
@@ -256,14 +256,14 @@ void PageView::setupActions( KActionCollection * ac )
 
 bool PageView::canFitPageWidth()
 {
-    return Settings::viewColumns() != 1 || d->zoomMode != ZoomFitWidth;
+    return KpdfSettings::viewColumns() != 1 || d->zoomMode != ZoomFitWidth;
 }
 
 void PageView::fitPageWidth( int page )
 {
     // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
     d->zoomMode = ZoomFitWidth;
-    Settings::setViewColumns( 1 );
+    KpdfSettings::setViewColumns( 1 );
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
     d->aZoomFitText->setChecked( false );
@@ -278,7 +278,7 @@ void PageView::fitPageWidth( int page )
 
 void PageView::displayMessage( const QString & message,PageViewMessage::Icon icon,int duration )
 {
-    if ( !Settings::showOSD() )
+    if ( !KpdfSettings::showOSD() )
     {
         if (icon == PageViewMessage::Error)
             KMessageBox::error( this, message );
@@ -329,12 +329,17 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
         // Need slotRelayoutPages() here instead of d->dirtyLayout = true
         // because opening a pdf from another pdf will not trigger a viewportchange
         // so pages are never relayouted
-        slotRelayoutPages();
+        QTimer::singleShot(0, this, SLOT(slotRelayoutPages()));
     else
+    {
+        // update the mouse cursor when closing because we may have close through a link and
+        // want the cursor to come back to the normal cursor
+        updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
         resizeContents( 0, 0 );
+    }
 
     // OSD to display pages
-    if ( documentChanged && pageSet.count() > 0 && Settings::showOSD() )
+    if ( documentChanged && pageSet.count() > 0 && KpdfSettings::showOSD() )
         d->messageWindow->display(
             i18n(" Loaded a one-page document.",
                  " Loaded a %n-page document.",
@@ -366,12 +371,13 @@ void PageView::notifyViewportChanged( bool smoothMove )
     if ( !item )
     {
         kdDebug() << "viewport has no matching item!" << endl;
+        d->blockViewport = false;
         return;
     }
 
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
-    if ( !Settings::viewContinuous() || d->dirtyLayout )
+    if ( !KpdfSettings::viewContinuous() || d->dirtyLayout )
         slotRelayoutPages();
 
     // restore viewport center or use default {x-center,v-top} alignment
@@ -538,7 +544,7 @@ if ( d->document->handleEvent( pe ) )
         // note: this check will take care of all things requiring alpha blending (not only selection)
         bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
 
-        if ( wantCompositing && Settings::enableCompositing() )
+        if ( wantCompositing && KpdfSettings::enableCompositing() )
         {
             // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
             QPixmap doubleBuffer( contentsRect.size() );
@@ -574,7 +580,7 @@ if ( d->document->handleEvent( pe ) )
             if ( d->annotator && d->annotator->routePaints( contentsRect ) )
                 d->annotator->routePaint( &pixmapPainter, contentsRect );
             // 4) Layer 2: overlays
-            if ( Settings::debugDrawBoundaries() )
+            if ( KpdfSettings::debugDrawBoundaries() )
             {
                 pixmapPainter.setPen( Qt::blue );
                 pixmapPainter.drawRect( contentsRect );
@@ -599,7 +605,7 @@ if ( d->document->handleEvent( pe ) )
             if ( d->annotator && d->annotator->routePaints( contentsRect ) )
                 d->annotator->routePaint( &screenPainter, contentsRect );
             // 4) Layer 2: overlays
-            if ( Settings::debugDrawBoundaries() )
+            if ( KpdfSettings::debugDrawBoundaries() )
             {
                 screenPainter.setPen( Qt::red );
                 screenPainter.drawRect( contentsRect );
@@ -730,7 +736,7 @@ if (d->document->handleEvent( e ) )
         case Key_Up:
         case Key_PageUp:
             // if in single page mode and at the top of the screen, go to previous page
-            if ( Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
+            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
             {
                 if ( e->key() == Key_Up )
                     verticalScrollBar()->subtractLine();
@@ -741,7 +747,7 @@ if (d->document->handleEvent( e ) )
             {
                 // more optimized than document->setPrevPage and then move view to bottom
                 DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber -= Settings::viewColumns();
+                newViewport.pageNumber -= KpdfSettings::viewColumns();
                 if ( newViewport.pageNumber < 0 )
                     newViewport.pageNumber = 0;
                 newViewport.rePos.enabled = true;
@@ -752,7 +758,7 @@ if (d->document->handleEvent( e ) )
         case Key_Down:
         case Key_PageDown:
             // if in single page mode and at the bottom of the screen, go to next page
-            if ( Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
+            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
             {
                 if ( e->key() == Key_Down )
                     verticalScrollBar()->addLine();
@@ -763,7 +769,7 @@ if (d->document->handleEvent( e ) )
             {
                 // more optimized than document->setNextPage and then move view to top
                 DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber += d->document->currentPage() ? Settings::viewColumns() : 1;
+                newViewport.pageNumber += d->document->currentPage() ? KpdfSettings::viewColumns() : 1;
                 if ( newViewport.pageNumber >= (int)d->items.count() )
                     newViewport.pageNumber = d->items.count() - 1;
                 newViewport.rePos.enabled = true;
@@ -1174,7 +1180,7 @@ if (d->document->handleEvent( e ) )
                 menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                     menu.setItemEnabled( 1, false );
-                if ( Settings::useKTTSD() )
+                if ( KpdfSettings::useKTTSD() )
                     menu.insertItem( SmallIcon("kttsd"), i18n( "Speak Text" ), 2 );
             }
             menu.insertTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
@@ -1241,10 +1247,11 @@ if (d->document->handleEvent( e ) )
                         if (KApplication::startServiceByDesktopName("kttsd", QStringList(), &error))
                         {
                             d->messageWindow->display( i18n("Starting KTTSD Failed: %1").arg(error) );
-                            Settings::setUseKTTSD(false);
+                            KpdfSettings::setUseKTTSD(false);
+                            KpdfSettings::writeConfig();
                         }
                     }
-                    if ( Settings::useKTTSD() )
+                    if ( KpdfSettings::useKTTSD() )
                     {
                         // serialize the text to speech (selectedText) and the
                         // preferred reader ("" is the default voice) ...
@@ -1300,14 +1307,14 @@ if (d->document->handleEvent( e ) )
         else
             slotZoomIn();
     }
-    else if ( delta <= -120 && !Settings::viewContinuous() && vScroll == verticalScrollBar()->maxValue() )
+    else if ( delta <= -120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->maxValue() )
     {
         // go to next page
         if ( d->document->currentPage() < d->items.count() - 1 )
         {
             // more optimized than document->setNextPage and then move view to top
             DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber += d->document->currentPage() ? Settings::viewColumns() : 1;
+            newViewport.pageNumber += d->document->currentPage() ? KpdfSettings::viewColumns() : 1;
             if ( newViewport.pageNumber >= (int)d->items.count() )
                 newViewport.pageNumber = d->items.count() - 1;
             newViewport.rePos.enabled = true;
@@ -1315,14 +1322,14 @@ if (d->document->handleEvent( e ) )
             d->document->setViewport( newViewport );
         }
     }
-    else if ( delta >= 120 && !Settings::viewContinuous() && vScroll == verticalScrollBar()->minValue() )
+    else if ( delta >= 120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->minValue() )
     {
         // go to prev page
         if ( d->document->currentPage() > 0 )
         {
             // more optimized than document->setPrevPage and then move view to bottom
             DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber -= Settings::viewColumns();
+            newViewport.pageNumber -= KpdfSettings::viewColumns();
             if ( newViewport.pageNumber < 0 )
                 newViewport.pageNumber = 0;
             newViewport.rePos.enabled = true;
@@ -1601,8 +1608,9 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
         d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
         // store zoom settings
-        Settings::setZoomMode( newZoomMode );
-        Settings::setZoomFactor( newFactor );
+        KpdfSettings::setZoomMode( newZoomMode );
+        KpdfSettings::setZoomFactor( newFactor );
+        KpdfSettings::writeConfig();
     }
 }
 
@@ -1706,11 +1714,11 @@ void PageView::slotRelayoutPages()
     QRect viewportRect( contentsX(), contentsY(), viewportWidth, viewportHeight );
 
     // handle the 'center first page in row' stuff
-    int nCols = Settings::viewColumns();
-    bool centerFirstPage = Settings::centerFirstPageInRow() && nCols > 1;
+    int nCols = KpdfSettings::viewColumns();
+    bool centerFirstPage = KpdfSettings::centerFirstPageInRow() && nCols > 1;
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
-    if ( Settings::viewContinuous() )
+    if ( KpdfSettings::viewContinuous() )
     {
         // handle the 'centering on first row' stuff
         if ( centerFirstPage )
@@ -1959,8 +1967,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // if preloading is enabled, add the pages before and after in preloading
     if ( !d->visibleItems.isEmpty() &&
-         Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
-         Settings::enableThreading() )
+         KpdfSettings::memoryLevel() != KpdfSettings::EnumMemoryLevel::Low &&
+         KpdfSettings::enableThreading() )
     {
         // add the page before the 'visible series' in preload
         int headRequest = d->visibleItems.first()->pageNumber() - 1;
@@ -2097,9 +2105,10 @@ void PageView::slotFitToTextToggled( bool on )
 void PageView::slotTwoPagesToggled( bool on )
 {
     uint newColumns = on ? 2 : 1;
-    if ( Settings::viewColumns() != newColumns )
+    if ( KpdfSettings::viewColumns() != newColumns )
     {
-        Settings::setViewColumns( newColumns );
+        KpdfSettings::setViewColumns( newColumns );
+        KpdfSettings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -2107,9 +2116,10 @@ void PageView::slotTwoPagesToggled( bool on )
 
 void PageView::slotContinuousToggled( bool on )
 {
-    if ( Settings::viewContinuous() != on )
+    if ( KpdfSettings::viewContinuous() != on )
     {
-        Settings::setViewContinuous( on );
+        KpdfSettings::setViewContinuous( on );
+        KpdfSettings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }

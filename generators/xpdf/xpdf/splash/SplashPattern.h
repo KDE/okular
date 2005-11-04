@@ -30,7 +30,12 @@ public:
 
   virtual ~SplashPattern();
 
-  virtual SplashColor getColor(int x, int y) = 0;
+  // Return the color value for a specific pixel.
+  virtual void getColor(int x, int y, SplashColorPtr c) = 0;
+
+  // Returns true if this pattern object will return the same color
+  // value for all pixels.
+  virtual GBool isStatic() = 0;
 
 private:
 };
@@ -42,13 +47,15 @@ private:
 class SplashSolidColor: public SplashPattern {
 public:
 
-  SplashSolidColor(SplashColor colorA);
+  SplashSolidColor(SplashColorPtr colorA);
 
   virtual SplashPattern *copy() { return new SplashSolidColor(color); }
 
   virtual ~SplashSolidColor();
 
-  virtual SplashColor getColor(int x, int y);
+  virtual void getColor(int x, int y, SplashColorPtr c);
+
+  virtual GBool isStatic() { return gTrue; }
 
 private:
 
@@ -62,14 +69,16 @@ private:
 class SplashHalftone: public SplashPattern {
 public:
 
-  SplashHalftone(SplashColor color0A, SplashColor color1A,
+  SplashHalftone(SplashColorPtr color0A, SplashColorPtr color1A,
 		 SplashScreen *screenA, SplashCoord valueA);
 
   virtual SplashPattern *copy();
 
   virtual ~SplashHalftone();
 
-  virtual SplashColor getColor(int x, int y);
+  virtual void getColor(int x, int y, SplashColorPtr c);
+
+  virtual GBool isStatic();
 
 private:
 

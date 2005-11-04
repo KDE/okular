@@ -21,6 +21,7 @@
 #include "GlobalParams.h"
 #include "OutputDev.h"
 
+class Function;
 class GfxPath;
 class GfxFont;
 class GfxColorSpace;
@@ -81,6 +82,17 @@ public:
   // Does this device use drawChar() or drawString()?
   virtual GBool useDrawChar() { return gFalse; }
 
+  // Does this device use tilingPatternFill()?  If this returns false,
+  // tiling pattern fills will be reduced to a series of other drawing
+  // operations.
+  virtual GBool useTilingPatternFill() { return gTrue; }
+
+  // Does this device use functionShadedFill(), axialShadedFill(), and
+  // radialShadedFill()?  If this returns false, these shaded fills
+  // will be reduced to a series of other drawing operations.
+  virtual GBool useShadedFills()
+    { return level == psLevel2 || level == psLevel3; }
+
   // Does this device use beginType3Char/endType3Char?  Otherwise,
   // text in Type 3 fonts will be drawn with drawChar/drawString.
   virtual GBool interpretType3Chars() { return gFalse; }
@@ -89,16 +101,14 @@ public:
 
   // Write the document-level header.
   void writeHeader(int firstPage, int lastPage,
-		   PDFRectangle *mediaBox, PDFRectangle *cropBox);
+		   PDFRectangle *mediaBox, PDFRectangle *cropBox,
+		   int pageRotate);
 
   // Write the Xpdf procset.
   void writeXpdfProcset();
 
   // Write the document-level setup.
   void writeDocSetup(Catalog *catalog, int firstPage, int lastPage);
-
-  // Write the setup for the current page.
-  void writePageSetup();
 
   // Write the trailer for the current page.
   void writePageTrailer();
@@ -127,8 +137,12 @@ public:
   virtual void updateLineCap(GfxState *state);
   virtual void updateMiterLimit(GfxState *state);
   virtual void updateLineWidth(GfxState *state);
+  virtual void updateFillColorSpace(GfxState *state);
+  virtual void updateStrokeColorSpace(GfxState *state);
   virtual void updateFillColor(GfxState *state);
   virtual void updateStrokeColor(GfxState *state);
+  virtual void updateFillOverprint(GfxState *state);
+  virtual void updateStrokeOverprint(GfxState *state);
 
   //----- update text state
   virtual void updateFont(GfxState *state);
@@ -145,6 +159,15 @@ public:
   virtual void stroke(GfxState *state);
   virtual void fill(GfxState *state);
   virtual void eoFill(GfxState *state);
+  virtual void tilingPatternFill(GfxState *state, Object *str,
+				 int paintType, Dict *resDict,
+				 double *mat, double *bbox,
+				 int x0, int y0, int x1, int y1,
+				 double xStep, double yStep);
+  virtual void functionShadedFill(GfxState *state,
+				  GfxFunctionShading *shading);
+  virtual void axialShadedFill(GfxState *state, GfxAxialShading *shading);
+  virtual void radialShadedFill(GfxState *state, GfxRadialShading *shading);
 
   //----- path clipping
   virtual void clip(GfxState *state);
@@ -161,6 +184,11 @@ public:
   virtual void drawImage(GfxState *state, Object *ref, Stream *str,
 			 int width, int height, GfxImageColorMap *colorMap,
 			 int *maskColors, GBool inlineImg);
+  virtual void drawMaskedImage(GfxState *state, Object *ref, Stream *str,
+			       int width, int height,
+			       GfxImageColorMap *colorMap,
+			       Stream *maskStr, int maskWidth, int maskHeight,
+			       GBool maskInvert);
 
 #if OPI_SUPPORT
   //----- OPI functions
@@ -208,7 +236,8 @@ private:
   void setupEmbeddedTrueTypeFont(GfxFont *font, Ref *id, GString *psName);
   GString *setupExternalTrueTypeFont(GfxFont *font);
   void setupEmbeddedCIDType0Font(GfxFont *font, Ref *id, GString *psName);
-  void setupEmbeddedCIDTrueTypeFont(GfxFont *font, Ref *id, GString *psName);
+  void setupEmbeddedCIDTrueTypeFont(GfxFont *font, Ref *id, GString *psName,
+				   GBool needsVerticalMetrics);
   GString *setupExternalCIDTrueTypeFont(GfxFont *font, GString *fileName, int faceIndex=0);
   void setupType3Font(GfxFont *font, GString *psName, Dict *parentResDict);
   void setupImages(Dict *resDict);
@@ -224,8 +253,11 @@ private:
 		    Stream *str, int width, int height, int len);
   void doImageL2(Object *ref, GfxImageColorMap *colorMap,
 		 GBool invert, GBool inlineImg,
-		 Stream *str, int width, int height, int len);
-  void dumpColorSpaceL2(GfxColorSpace *colorSpace);
+		 Stream *str, int width, int height, int len,
+		 int *maskColors, Stream *maskStr,
+		 int maskWidth, int maskHeight, GBool maskInvert);
+  void dumpColorSpaceL2(GfxColorSpace *colorSpace,
+			GBool genXform, GBool updateColors);
 #if OPI_SUPPORT
   void opiBegin20(GfxState *state, Dict *dict);
   void opiBegin13(GfxState *state, Dict *dict);
@@ -233,6 +265,7 @@ private:
 		    double *x1, double *y1);
   GBool getFileSpec(Object *fileSpec, Object *fileName);
 #endif
+  void cvtFunction(Function *func);
   void writePSChar(char c);
   void writePS(const char *s);
   void writePSFmt(const char *fmt, ...);
@@ -277,6 +310,8 @@ private:
   GList *xobjStack;		// stack of XObject dicts currently being
 				//   processed
   int numSaves;			// current number of gsaves
+  int numTilingPatterns;	// current number of nested tiling patterns
+  int nextFunc;			// next unique number to use for a function
 
   double tx0, ty0;		// global translation
   double xScale0, yScale0;	// global scaling
@@ -286,6 +321,8 @@ private:
   double tx, ty;		// global translation for current page
   double xScale, yScale;	// global scaling for current page
   int rotate;			// rotation angle for current page
+  double epsX1, epsY1,		// EPS bounding box (unrotated)
+         epsX2, epsY2;
 
   GString *embFontList;		// resource comments for embedded fonts
 

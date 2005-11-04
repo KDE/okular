@@ -45,7 +45,7 @@ public:
 private:
 
   void readSegments();
-  void readSymbolDictSeg(Guint segNum, Guint length,
+  GBool readSymbolDictSeg(Guint segNum, Guint length,
 			 Guint *refSegs, Guint nRefSegs);
   void readTextRegionSeg(Guint segNum, GBool imm,
 			 GBool lossless, Guint length,

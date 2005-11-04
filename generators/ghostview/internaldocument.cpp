@@ -15,12 +15,25 @@
 #include <klocale.h>
 #include <qfile.h>
 #include <qstring.h>
+#include <qstringlist.h>
 extern "C" {
 #include "ps.h"
 }
 
 #include "internaldocument.h"
 
+QStringList GSInternalDocument::paperSizes()
+{
+    QStringList list;
+    int i=0;
+    for (;i<CDSC_KNOWN_MEDIA;i++)
+    {
+        if ( ! dsc_known_media[i].name )
+            break;
+        list << QString ( dsc_known_media[i].name );
+    }
+    return list;
+}
 
 void GSInternalDocument::scanDSC()
 {

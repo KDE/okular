@@ -29,11 +29,13 @@
 #include <qeventloop.h>
 #include <qdom.h>
 #include <qfile.h>
+#include <klistview.h>
 
 #include "xchmfile.h"
 #include "iconstorage.h"
 #include "bitfiddle.h"
 #include "kchmurl.h"
+#include "kchmtreeviewitem.h"
 
 // Big-enough buffer size for use with various routines.
 #define BUF_SIZE 4096
@@ -45,13 +47,6 @@
 // A little helper to show wait cursor
 #include <qcursor.h>
 #include <qapplication.h>
-
-namespace KCHMImageType
-{
-	const int IMAGE_NONE = -1;
-	const int IMAGE_AUTO = -2;
-	const int IMAGE_INDEX = -3;
-};
 
 
 class KCHMShowWaitCursor
@@ -512,13 +507,189 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 	return true;
 }
 
+bool CHMFile::ParseHhcAndFillTree (const QString& file, KListView *tree, bool asIndex)
+{
+	chmUnitInfo ui;
+	const int MAX_NEST_DEPTH = 256;
+
+	if(file.isEmpty() || !ResolveObject(file, &ui))
+		return false;
+
+	QString src;
+	GetFileContentAsString(src, &ui);
+
+	if(src.isEmpty())
+		return false;
+
+	unsigned int defaultimagenum = asIndex ? KCHMImageType::IMAGE_INDEX : KCHMImageType::IMAGE_AUTO;
+	unsigned int imagenum = defaultimagenum;
+	int pos = 0, indent = 0;
+	bool in_object = false, root_created = false;
+	QString name;
+	QStringList urls;
+	KCHMMainTreeViewItem * rootentry[MAX_NEST_DEPTH];
+	KCHMMainTreeViewItem * lastchild[MAX_NEST_DEPTH];
+	
+	memset (lastchild, 0, sizeof(*lastchild));
+	memset (rootentry, 0, sizeof(*rootentry));
+	
+	// Split the HHC file by HTML tags
+	int stringlen = src.length();
+	
+	while ( pos < stringlen 
+	&& (pos = src.find ('<', pos)) != -1 )
+	{
+		int i, word_end = 0;
+		
+		for ( i = ++pos; i < stringlen; i++ )
+		{
+			// If a " or ' is found, skip to the next one.
+			if ( (src[i] == '"' || src[i] == '\'') )
+			{
+				// find where quote ends, either by another quote, or by '>' symbol (some people don't know HTML)
+				int nextpos = src.find (src[i], i+1);
+				if ( nextpos == -1 	&& (nextpos = src.find ('>', i+1)) == -1 )
+				{
+					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).ascii());
+					return false;
+				}
+
+				i =  nextpos;
+			}
+			else if ( src[i] == '>'  )
+				break;
+			else if ( !src[i].isLetterOrNumber() && src[i] != '/' && !word_end )
+				word_end = i;
+		}
+		
+		QString tagword, tag = src.mid (pos, i - pos);
+		 
+		if ( word_end )
+			tagword = src.mid (pos, word_end - pos).lower();
+		else
+			tagword = tag.lower();
+
+//qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
+						
+		// <OBJECT type="text/sitemap"> - a topic entry
+		if ( tagword == "object" && tag.find ("text/sitemap", 0, false) != -1 )
+			in_object = true;
+		else if ( tagword == "/object" && in_object ) 
+		{
+			// a topic entry closed. Add a tree item
+			if ( name )
+			{
+				KCHMMainTreeViewItem * item;
+
+				if ( !root_created )
+					indent = 0;
+
+				QString url = urls.join ("|");
+
+				// Add item into the tree
+				if ( !indent )
+				{
+					item = new KCHMMainTreeViewItem (tree, lastchild[indent], name, url, imagenum);
+				}
+				else
+				{
+					if ( !rootentry[indent-1] )
+						qFatal("CHMFile::ParseAndFillTopicsTree: child entry %d with no root entry!", indent-1);
+
+					item = new KCHMMainTreeViewItem (rootentry[indent-1], lastchild[indent], name, url,  imagenum);
+				}
+
+				lastchild[indent] = item;
+
+				if ( indent == 0 || !rootentry[indent] )
+				{
+					rootentry[indent] = item;
+					root_created = true;
+
+					if ( asIndex  )
+						rootentry[indent]->setOpen(true);
+				}
+			}
+			else
+			{
+				if ( !urls.isEmpty() )
+					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag with url \"%s\" is parsed, but name is empty.", urls[0].ascii());
+				else
+					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag is parsed, but both name and url are empty.");	
+			}
+
+			name = QString::null;
+			urls.clear();
+			in_object = false;
+			imagenum = defaultimagenum;
+		}
+		else if ( tagword == "param" && in_object )
+		{
+			// <param name="Name" value="First Page">
+			int offset; // strlen("param ")
+			QString name_pattern = "name=", value_pattern = "value=";
+			QString pname, pvalue;
+
+			if ( (offset = tag.find (name_pattern, 0, FALSE)) == -1 )
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.ascii());
+
+			// offset+5 skips 'name='
+			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
+			pname = pname.lower();
+
+			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
+
+			// offset+6 skips 'value='
+			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
+
+//qDebug ("<param>: name '%s', value '%s'", pname.ascii(), pvalue.ascii());
+
+			if ( pname == "name" )
+				name = pvalue;
+			else if ( pname == "local" )
+				urls.push_back (KCHMUrl::makeURLabsoluteIfNeeded (pvalue));
+			else if ( pname == "see also" && asIndex && name != pvalue )
+				urls.push_back (":" + pvalue);
+			else if ( pname == "imagenumber" )
+			{
+				bool bok;
+				int imgnum = pvalue.toInt (&bok);
+	
+				if ( bok && imgnum >= 0 && (unsigned) imgnum < MAX_BUILTIN_ICONS )
+					imagenum = imgnum;
+			}
+		}
+		else if ( tagword == "ul" ) // increase indent level
+		{
+			// Fix for buggy help files		
+			if ( ++indent >= MAX_NEST_DEPTH )
+				qFatal("CHMFile::ParseAndFillTopicsTree: max nest depth (%d) is reached, error in help file", MAX_NEST_DEPTH);
+				
+			lastchild[indent] = 0;
+			rootentry[indent] = 0;
+		}
+		else if ( tagword == "/ul" ) // decrease indent level
+		{
+			if ( --indent < 0 )
+				indent = 0;
+				
+			rootentry[indent] = 0;
+		}
+
+		pos = i;	
+	}
+	
+	return true;
+}
+
+
 bool CHMFile::ParseAndFillTopicsTree(QDomDocument *tree)
 {
 	return ParseHhcAndFillTree (m_topicsFile, tree, false);
 }
 
-
-bool CHMFile::ParseAndFillIndex(QDomDocument *indexlist)
+bool CHMFile::ParseAndFillIndex(KListView *indexlist)
 {
 	return ParseHhcAndFillTree (m_indexFile, indexlist, true);
 }

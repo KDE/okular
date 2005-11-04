@@ -79,6 +79,9 @@ public:
 	uint currentPage();
 	KURL currentDocument();
 
+signals:
+	void enablePrintAction(bool enable);
+
 protected:
 	// reimplemented from KParts::ReadOnlyPart
 	bool openFile();
@@ -89,6 +92,7 @@ protected:
 
 protected slots:
 	// connected to actions
+	void openURLFromDocument(const KURL &url);
 	void slotGoToPage();
 	void slotPreviousPage();
 	void slotNextPage();
@@ -109,6 +113,10 @@ protected slots:
 	void slotShowPresentation();
 	void slotHidePresentation();
 	bool slotImportPSFile();
+	void close();
+	void cannotQuit();
+	void setMimeTypes(KIO::Job *job);
+    void saveSplitterSize();
 	// can be connected to widget elements
 	void updateViewActions();
 	void enableTOC(bool enable);
@@ -169,6 +177,7 @@ private:
     QDict<Generator> m_loadedGenerators;
     // list of names of the generators that have settings
     QStringList m_generatorsWithSettings;
+    QStringList m_supportedMimeTypes;
     KSelectAction * m_confGens;
 
     private slots:

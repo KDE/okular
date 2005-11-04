@@ -93,7 +93,7 @@ class KPDFLinkAction : public KPDFLink
     public:
         // define types of actions
         enum ActionType { PageFirst, PagePrev, PageNext, PageLast, HistoryBack, HistoryForward,
-                          Quit, Presentation, EndPresentation, Find, GoToPage };
+                          Quit, Presentation, EndPresentation, Find, GoToPage, Close };
 
         // query for action type
         ActionType actionType() const { return m_type; }

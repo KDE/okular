@@ -60,19 +60,19 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_toolBar2->insertButton( "txt", 1, SIGNAL( toggled( bool ) ),
         this, SLOT( slotPageEnabled( bool ) ), true, i18n( "Group by Page" ) );
     m_toolBar2->setToggle( 1 );
-    m_toolBar2->setButton( 1, Settings::groupByPage() );
+    m_toolBar2->setButton( 1, KpdfSettings::groupByPage() );
     // - add Author button
     m_toolBar2->insertButton( "personal", 2, SIGNAL( toggled( bool ) ),
         this, SLOT( slotAuthorEnabled( bool ) ), true, i18n( "Group by Author" ) );
     m_toolBar2->setToggle( 2 );
-    m_toolBar2->setButton( 2, Settings::groupByAuthor() );
+    m_toolBar2->setButton( 2, KpdfSettings::groupByAuthor() );
     // - add separator
     m_toolBar2->insertLineSeparator();
     // - add Current Page Only button
     m_toolBar2->insertButton( "1downarrow", 3, SIGNAL( toggled( bool ) ),
         this, SLOT( slotCurrentPageOnly( bool ) ), true, i18n( "Show reviews for current page only" ) );
     m_toolBar2->setToggle( 3 );
-    m_toolBar2->setButton( 3, Settings::currentPageOnly() );
+    m_toolBar2->setButton( 3, KpdfSettings::currentPageOnly() );
 
     // customize listview appearance
     m_listView->addColumn( i18n("Annotation") );
@@ -103,7 +103,7 @@ void Reviews::notifyViewportChanged( bool /*smoothMove*/ )
     if ( page != m_currentPage )
     {
         m_currentPage = page;
-        if ( Settings::currentPageOnly() )
+        if ( KpdfSettings::currentPageOnly() )
             requestListViewUpdate();
     }
 }
@@ -114,7 +114,7 @@ void Reviews::notifyPageChanged( int pageNumber, int changedFlags )
     if ( changedFlags & DocumentObserver::Annotations )
     {
         // if filtering-on-page and the page is not the active one, return
-        if ( Settings::currentPageOnly() && pageNumber != m_currentPage )
+        if ( KpdfSettings::currentPageOnly() && pageNumber != m_currentPage )
             return;
         // request an update to the listview
         // TODO selective update on modified page only
@@ -131,21 +131,21 @@ void Reviews::notifyPageChanged( int pageNumber, int changedFlags )
 void Reviews::slotPageEnabled( bool on )
 {
     // store toggle state in Settings and update the listview
-    Settings::setGroupByPage( on );
+    KpdfSettings::setGroupByPage( on );
     requestListViewUpdate();
 }
 
 void Reviews::slotAuthorEnabled( bool on )
 {
     // store toggle state in Settings and update the listview
-    Settings::setGroupByAuthor( on );
+    KpdfSettings::setGroupByAuthor( on );
     requestListViewUpdate();
 }
 
 void Reviews::slotCurrentPageOnly( bool on )
 {
     // store toggle state in Settings and update the listview
-    Settings::setCurrentPageOnly( on );
+    KpdfSettings::setCurrentPageOnly( on );
     requestListViewUpdate();
 }
 //END GUI Slots
@@ -175,7 +175,7 @@ void Reviews::slotUpdateListView()
     m_listView->setRootIsDecorated( true );
     m_listView->setSelectionMode( QListView::Single );
 
-    if ( Settings::currentPageOnly() )
+    if ( KpdfSettings::currentPageOnly() )
     {
         // handle the 'filter on current page'
         if ( m_currentPage >= 0 && m_currentPage < (int)m_pages.count() )
@@ -210,12 +210,12 @@ void Reviews::addContents( const KPDFPage * page )
 {
     // if page-grouping -> create Page subnode
     QListViewItem * pageItem = 0;
-    if ( Settings::groupByPage() )
+    if ( KpdfSettings::groupByPage() )
     {
         QString pageText = i18n( "page %1" ).arg( page->number() + 1 );
         pageItem = new QListViewItem( m_listView, pageText );
         pageItem->setPixmap( 0, SmallIcon( "txt" ) );
-        pageItem->setOpen( Settings::groupByAuthor() );
+        pageItem->setOpen( KpdfSettings::groupByAuthor() );
     }
 
     // iterate over all annotations in this page
@@ -228,7 +228,7 @@ void Reviews::addContents( const KPDFPage * page )
 
         // if page-grouping -> create Author subnode
         QListViewItem * authorItem = pageItem;
-        if ( Settings::groupByAuthor() )
+        if ( KpdfSettings::groupByAuthor() )
         {
             // get author's name
             QString author = annotation->author;

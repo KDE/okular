@@ -334,7 +334,7 @@ void GSInterpreterCMD::run()
         }
         m_structurePending=false;
     }
-
+    kdDebug(4655)<< "sending page request" << endl;
     // Communication with the helper looks like this
     // 1. Sendign a 0 to helper telling it to start a function that processes the request
     x=0;
@@ -345,8 +345,10 @@ void GSInterpreterCMD::run()
     // the helper will copy the pixmap using XCopyArea
     read ( m_processData->fds[1], &x, sizeof(int) );
     unlock();
+    kdDebug(4655)<< "pximap ready" << endl;
     if (x==3)
     {
+	kdDebug(4655)<< "sending the pximap to generator" << endl;
         // inform interpreter about PixmaRequest being done
         QCustomEvent * readyEvent = new QCustomEvent( GS_DATAREADY_ID );
         readyEvent->setData(m_req);

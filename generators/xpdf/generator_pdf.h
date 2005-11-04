@@ -23,6 +23,7 @@
 class PDFDoc;
 class GList;
 class TextPage;
+class LinkDest;
 class Page;
 class Dict;
 class Ref;
@@ -59,7 +60,7 @@ class PDFGenerator : public Generator
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
         const DocumentFonts * generateDocumentFonts();
-
+        
         // [INHERITED] document informations
         bool isAllowed( int permissions );
 
@@ -100,6 +101,7 @@ class PDFGenerator : public Generator
     private:
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
+        void fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination );
 
         // access document informations
         QString getDocumentInfo( const QString & data ) const;

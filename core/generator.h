@@ -54,6 +54,14 @@ class Generator : public QObject
         // load a document and fill up the pagesVector
         virtual bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector ) = 0;
 
+        // page contents generation
+        virtual bool canGeneratePixmap( bool async ) = 0;
+        virtual void generatePixmap( PixmapRequest * request ) = 0;
+
+        // can generate a KPDFText Page
+        virtual bool canGenerateTextPage() { return false; };
+        virtual void generateSyncTextPage( KPDFPage * /*page*/ ) {;};
+
         // Document description and Table of contents
         virtual const DocumentInfo * generateDocumentInfo() { return 0L; }
         virtual const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
@@ -62,28 +70,25 @@ class Generator : public QObject
         // DRM handling
         virtual bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
 
-        // page contents generation
-        virtual bool canGeneratePixmap( bool async ) = 0;
-        virtual void generatePixmap( PixmapRequest * request ) = 0;
-
-        // can generate a KPDFText Page
-        virtual bool canGenerateTextPage() = 0;
-        virtual void generateSyncTextPage( KPDFPage * page ) = 0;
         // gui stuff
-        virtual QString getXMLFile() = 0;
+        virtual QString getXMLFile() { return QString::null; } ;
         virtual void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /*tBox*/ ) {;};
         virtual void freeGUI( ) {;};
         // capability querying
+
         // provides internal search 
-        virtual bool supportsSearching() = 0;
-        virtual bool prefersInternalSearching() = 0;
-        virtual bool supportsRotation() = 0;
+        virtual bool supportsSearching() { return false; };
+        virtual bool prefersInternalSearching() { return false; };
+
+        // rotation
+        virtual bool supportsRotation() { return false; };
+        virtual void setOrientation(QValueVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/) { ; };
 
         // internal search and gettext
-        virtual RegularAreaRect * findText( const QString & text, SearchDir dir, const bool strictCase,
-                    const RegularAreaRect * lastRect, KPDFPage * page) = 0;
-        virtual QString* getText( const RegularAreaRect * area, KPDFPage * page ) = 0;
-        virtual void setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation) = 0;
+        virtual RegularAreaRect * findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
+                    const RegularAreaRect * /*lastRect*/, KPDFPage * /*page*/) { return 0L; };
+        virtual QString* getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ ) { return 0L; }
+
         // may come useful later
         //virtual bool hasFonts() const = 0;
 
@@ -97,6 +102,15 @@ class Generator : public QObject
         // tell generator to re-parse configuration and return true if something changed
         virtual bool reparseConfig() { return false; }
 
+        // add support for settings
+        virtual void addPages( KConfigDialog* /*dlg*/ ) {;};
+//         virtual void setConfigurationPointer( KConfigDialog* /*dlg*/) { ; } ;
+
+        // capture events
+        // return false if you don't wish kpdf to use its event handlers
+        // in the pageview after your handling (use with caution)
+        virtual bool handleEvent (QEvent * /*event*/ ) { return true; } ;
+
         void setDocument( KPDFDocument * doc ) { m_document=doc; };
 
         /** 'signals' to send events the KPDFDocument **/
@@ -106,31 +120,15 @@ class Generator : public QObject
         /** constructor: takes the Document as a parameter **/
         Generator( KPDFDocument * doc ) : m_document( doc ) {};
 
-        // add support for settings
-        virtual void addPages( KConfigDialog* /*dlg*/) { ; } ;
-
-        // capture events
-        // return false if you don't wish kpdf to use its event handlers
-        // in the pageview after your handling (use with caution)
-        virtual bool handleEvent (QEvent * /*event*/ ) { return true; } ;
-
-        // podner if not making separate handlers for every event type (clutters the api though)
-        /*virtual bool mouseEvent ( QMouseEvent* event ) { return false; };
-        virtual bool wheelEvent ( QWheelEvent* event ) { return false; };
-        virtual bool keyEvent ( QKeyEvent* event ) { return false; };
-        virtual bool resizeEvent ( QResizeEvent* event ) { return false; };
-        virtual bool dragEnterEvent ( QDragEnterEvent* event ) { return false; };
-        virtual bool dropEvent ( QDropEvent* event ) { return false; };
-        virtual bool paintEvent ( QKeyEvent* event ) { return false; };*/
-
     signals:
         void error(QString & string, int duration);
         void warning(QString & string, int duration);
         void notice(QString & string, int duration);
 
+    protected:
+        KPDFDocument * m_document;
     private:
         Generator();
-        KPDFDocument * m_document;
 };
 
 /**

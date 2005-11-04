@@ -69,7 +69,7 @@ class TGenerator : public Generator
         void notice(QString & string, int duration);
 
     private:
-        void additionalRequestData( );
+        void additionalRequestData ();
         void recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp);
         void preparePageForSyncOperation( int zoom , const QString & url);
 //         void customEvent( QCustomEvent * e );

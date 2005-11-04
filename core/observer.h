@@ -46,6 +46,7 @@ class DocumentObserver
 
         // commands from the Document to all observers
         enum ChangedFlags { Pixmap = 1, Bookmark = 2, Highlights = 4, Annotations = 8 };
+        enum NotifyType { Setup = 1, Viewport = 2, Page = 4, Contents = 8 };
         virtual void notifySetup( const QValueVector< KPDFPage * > & /*pages*/, bool /*documentChanged*/ ) {};
         virtual void notifyViewportChanged( bool /*smoothMove*/ ) {};
         virtual void notifyPageChanged( int /*pageNumber*/, int /*changedFlags*/ ) {};
@@ -53,6 +54,20 @@ class DocumentObserver
 
         // queries to observers
         virtual bool canUnloadPixmap( int /*pageNum*/ ) { return true; }
+};
+
+struct NotifyRequest
+{
+    DocumentObserver::NotifyType type;
+    bool toggle;
+    int page;
+    int flags;
+    NotifyRequest (DocumentObserver::NotifyType t, bool to=false)
+        : type(t), toggle(to) { ; };
+    NotifyRequest (DocumentObserver::NotifyType t, int p, int f)
+        : type(t), page(p), flags (f) { ; };
+    NotifyRequest (DocumentObserver::NotifyType t, int p)
+        : type(t), page(p) { ; };
 };
 
 #endif

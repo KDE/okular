@@ -16,6 +16,7 @@
 #include <qstring.h>
 #include <qdom.h>
 #include <qdict.h>
+#include <kmimetype.h>
 
 class KPDFPage;
 class KPDFLink;
@@ -31,7 +32,7 @@ class KPrinter;
 class KURL;
 class KActionCollection;
 class QToolBox;
-
+class NotifyRequest;
 
 /**
  * @short The Document. Heart of everything. Actions take place here.
@@ -57,13 +58,16 @@ class KPDFDocument : public QObject
         KPDFDocument( QDict<Generator> * genList );
         ~KPDFDocument();
 
+        // communication with the part
+
         // document handling
-        bool openDocument( const QString & docFile, const KURL & url );
+        bool openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime );
         void closeDocument();
 
-        // misc methods
+        // observer stuff
         void addObserver( DocumentObserver * pObserver );
         void removeObserver( DocumentObserver * pObserver );
+        void notifyObservers (NotifyRequest * request);
         void reparseConfig();
 
         // enum definitions
@@ -114,11 +118,14 @@ class KPDFDocument : public QObject
         bool handleEvent (QEvent * event);
         // notifications sent by generator
         void requestDone( PixmapRequest * request );
+//         inline pagesVector() { return pages_vector; };
 
     public slots:
         void slotOrientation( int orientation );
 
     signals:
+        void close();
+        void quit();
         void linkFind();
         void linkGoToPage();
         void linkPresentation();

@@ -54,6 +54,7 @@
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
+#include <kio/job.h>
 
 // local includes
 #include "part.h"
@@ -87,6 +88,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false)
 {
+	// connect the started signal to tell the job the mimetypes we like
+	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("oKular");
 
@@ -102,8 +105,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURL(const KURL &) ) );
-
+	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURLFromDocument(const KURL &) ) );
+	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
+	
+	if (parent && parent->metaObject()->slotNames(true).contains("slotQuit()"))
+		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
+	else
+		connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
         // widgets: ^searchbar (toolbar containing label and SearchWidget)
 //      m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
 //      m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
@@ -148,7 +156,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
-	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )) );
+	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURLFromDocument( const KURL & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 	// shrink the bottom controller toolbar (too hackish..)
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
@@ -181,7 +189,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	rightLayout->addWidget( rtb );
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
-	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURL( const KURL & )));
+	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURLFromDocument( const KURL & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
     connect( m_document, SIGNAL(error(QString&,int )),m_pageView,SLOT(errorMessage(QString&,int )));
     connect( m_document, SIGNAL(warning(QString&,int )),m_pageView,SLOT(warningMessage(QString&,int )));
@@ -255,7 +263,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showLeftPanel = new KToggleAction( i18n( "Show &Navigation panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
 	m_showLeftPanel->setShortcut( "CTRL+L" );
 	m_showLeftPanel->setCheckedState( i18n( "Hide &Navigation Panel" ) );
-	m_showLeftPanel->setChecked( Settings::showLeftPanel() );
+	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
 	slotShowLeftPanel();
 
         QString app = KStandardDirs::findExe( "ps2pdf" );
@@ -274,7 +282,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_pageView->setupActions( ac );
 
 	// apply configuration (both internal settings and GUI configured items)
-	QValueList<int> splitterSizes = Settings::splitterSizes();
+	QValueList<int> splitterSizes = KpdfSettings::splitterSizes();
 	if ( !splitterSizes.count() )
 	{
 		// the first time use 1/10 for the panel and 9/10 for the pageView
@@ -296,7 +304,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// [SPEECH] check for KTTSD presence and usability
 	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
-	Settings::setUseKTTSD( (offers.count() > 0) );
+	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
+    KpdfSettings::writeConfig();
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
@@ -306,12 +315,43 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
-    // save internal settings
-    Settings::setSplitterSizes( m_splitter->sizes() );
-    // write to disk config file
-    Settings::writeConfig();
-
     delete m_document;
+}
+
+void Part::openURLFromDocument(const KURL &url)
+{
+    m_bExtension->openURLNotify();
+    m_bExtension->setLocationBarURL(url.prettyURL());
+    openURL(url);
+}
+
+void Part::supportedMimetypes()
+{
+    m_supportedMimeTypes.clear();
+    QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
+    KTrader::OfferList offers=KTrader::self()->query("oKular/Generator",QString::null,constraint, QString::null);
+    KTrader::OfferList::ConstIterator iterator = offers.begin();
+    KTrader::OfferList::ConstIterator end = offers.end();
+    QStringList::Iterator mimeType;
+
+    for (; iterator != end; ++iterator)
+    {
+        KService::Ptr service = *iterator;
+        mimeTypes = service->serviceTypes();
+        for (mimeType=mimeTypes.begin();mimeType!=mimeTypes.end();++mimeType)
+            if (! (*mimeType).contains("oKular"))
+                m_supportedMimeTypes << *mimeType;
+    }
+}
+
+void Part::setMimeTypes(KIO::Job *job)
+{
+    if (job)
+    {
+        if (m_supportedMimeTypes.count() <= 0)
+            supportedMimetypes();
+        job->addMetaData("accept", m_supportedMimeTypes.join(", ") + ", */*;q=0.5");
+    }
 }
 
 void Part::fillGenerators()
@@ -362,7 +402,7 @@ void Part::slotGeneratorPreferences( )
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Settings::self() );
+    KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", KpdfSettings::self() );
 
     QDictIterator<Generator> it(m_loadedGenerators);
     for( ; it.current(); ++it )
@@ -447,11 +487,20 @@ bool Part::slotImportPSFile()
 
     m_temporaryLocalFile = QString::null;
     return false;
-
 }
+
 bool Part::openFile()
 {
-    bool ok = m_document->openDocument( m_file, url() );
+    KMimeType::Ptr mime;
+    if ( m_bExtension->urlArgs().serviceType.isEmpty() )
+    {
+        mime = KMimeType::findByPath( m_file );
+    }
+    else
+    {
+        mime = KMimeType::mimeType( m_bExtension->urlArgs().serviceType );
+    }
+    bool ok = m_document->openDocument( m_file, url(), mime );
     bool canSearch = m_document->supportsSearching();
 
     // update one-time actions
@@ -497,13 +546,9 @@ bool Part::openURL(const KURL &url)
 
     // this calls in sequence the 'closeURL' and 'openFile' methods
     bool openOk = KParts::ReadOnlyPart::openURL(url);
-    m_bExtension->openURLNotify();
-    m_bExtension->setLocationBarURL( url.prettyURL() );
 
     if ( openOk )
-    {
         m_viewportDirty = 0;
-    }
     else
         KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
     return openOk;
@@ -517,25 +562,42 @@ bool Part::closeURL()
         m_temporaryLocalFile = QString::null;
     }
 
+    slotHidePresentation();
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_saveAs->setEnabled( false );
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     m_showPresentation->setEnabled( false );
-    updateViewActions();
+    emit setWindowCaption("");
+    emit enablePrintAction(false);
     m_searchStarted = false;
     if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
     m_document->closeDocument();
+    updateViewActions();
     m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
+}
+
+void Part::close()
+{
+  if (parent() && strcmp(parent()->name(), "KPDF::Shell") == 0)
+  {
+    closeURL();
+  }
+  else KMessageBox::information(widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInKPDF");
+}
+
+void Part::cannotQuit()
+{
+	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInKPDF");
 }
 
 bool Part::eventFilter( QObject * watched, QEvent * e )
 {
     // if pageView has been resized, save splitter sizes
     if ( watched == m_pageView && e->type() == QEvent::Resize )
-        Settings::setSplitterSizes( m_splitter->sizes() );
+        saveSplitterSize();
 
     // only intercept events, don't block them
     return false;
@@ -544,11 +606,18 @@ bool Part::eventFilter( QObject * watched, QEvent * e )
 void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
-    Settings::setShowLeftPanel( showLeft );
+    KpdfSettings::setShowLeftPanel( showLeft );
+    KpdfSettings::writeConfig();
     // show/hide left panel
     m_leftPanel->setShown( showLeft );
     // this needs to be hidden explicitly to disable thumbnails gen
     m_thumbnailList->setShown( showLeft );
+}
+
+void Part::saveSplitterSize()
+{
+    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
+    KpdfSettings::writeConfig();
 }
 
 void Part::slotFileDirty( const QString& fileName )
@@ -584,7 +653,7 @@ void Part::slotDoFileDirty()
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
         m_viewportDirty.pageNumber = -1;
-
+        emit enablePrintAction(true);
     }
     else
     {
@@ -665,24 +734,26 @@ void Part::slotGoToPage()
 
 void Part::slotPreviousPage()
 {
-    if ( !m_document->currentPage() < 1 )
+    if ( m_document->isOpened() && !m_document->currentPage() < 1 )
         m_document->setViewportPage( m_document->currentPage() - 1 );
 }
 
 void Part::slotNextPage()
 {
-    if ( m_document->currentPage() < (m_document->pages() - 1) )
+    if ( m_document->isOpened() && m_document->currentPage() < (m_document->pages() - 1) )
         m_document->setViewportPage( m_document->currentPage() + 1 );
 }
 
 void Part::slotGotoFirst()
 {
-    m_document->setViewportPage( 0 );
+    if ( m_document->isOpened() )
+        m_document->setViewportPage( 0 );
 }
 
 void Part::slotGotoLast()
 {
-    m_document->setViewportPage( m_document->pages() - 1 );
+    if ( m_document->isOpened() )
+        m_document->setViewportPage( m_document->pages() - 1 );
 }
 
 void Part::slotHistoryBack()
@@ -728,7 +799,7 @@ void Part::slotSaveFileAs()
     {
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
         {
-            if ( KMessageBox::questionYesNo( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.filename())) != KMessageBox::Yes )
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.filename()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
                 return;
         }
 
@@ -753,7 +824,7 @@ void Part::slotPreferences()
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Settings::self() );
+    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, KpdfSettings::self() );
     // keep us informed when the user changes settings
     connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
 
@@ -766,7 +837,7 @@ void Part::slotNewConfig()
     // changed before applying changes.
 
     // Watch File
-    bool watchFile = Settings::watchFile();
+    bool watchFile = KpdfSettings::watchFile();
     if ( watchFile && m_watcher->isStopped() )
         m_watcher->startScan();
     if ( !watchFile && !m_watcher->isStopped() )
@@ -775,12 +846,12 @@ void Part::slotNewConfig()
         m_watcher->stopScan();
     }
 
-    bool showSearch = Settings::showSearchBar();
+    bool showSearch = KpdfSettings::showSearchBar();
     if ( m_searchWidget->isShown() != showSearch )
         m_searchWidget->setShown( showSearch );
 
     // Main View (pageView)
-    QScrollView::ScrollBarMode scrollBarMode = Settings::showScrollBars() ?
+    QScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?
         QScrollView::AlwaysOn : QScrollView::AlwaysOff;
     if ( m_pageView->hScrollBarMode() != scrollBarMode )
     {
@@ -792,9 +863,9 @@ void Part::slotNewConfig()
     m_document->reparseConfig();
 
     // update Main View and ThumbnailList contents
-    // TODO do this only when changing Settings::renderMode()
+    // TODO do this only when changing KpdfSettings::renderMode()
     m_pageView->updateContents();
-    if ( Settings::showLeftPanel() && m_thumbnailList->isShown() )
+    if ( KpdfSettings::showLeftPanel() && m_thumbnailList->isShown() )
         m_thumbnailList->updateWidgets();
 }
 

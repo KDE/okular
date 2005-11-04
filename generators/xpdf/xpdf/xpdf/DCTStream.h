@@ -44,6 +44,7 @@ struct str_src_mgr {
     struct jpeg_source_mgr pub;
     JOCTET buffer;
     Stream *str;
+    int index;
 };
 
 

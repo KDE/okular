@@ -15,7 +15,15 @@ static void str_init_source(j_decompress_ptr /*cinfo*/)
 static boolean str_fill_input_buffer(j_decompress_ptr cinfo)
 {
   struct str_src_mgr * src = (struct str_src_mgr *)cinfo->src;
-  src->buffer = src->str->getChar();
+  if (src->index == 0) {
+    src->buffer = 0xFF;
+    src->index++;
+  }
+  else if (src->index == 1) {
+    src->buffer = 0xD8;
+    src->index++;
+  }
+  else src->buffer = src->str->getChar();
   src->pub.next_input_byte = &src->buffer;
   src->pub.bytes_in_buffer = 1;
   return TRUE;
@@ -50,6 +58,7 @@ DCTStream::DCTStream(Stream *strA):
   src.pub.bytes_in_buffer = 0;
   src.pub.next_input_byte = NULL;
   src.str = str;
+  src.index = 0;
   cinfo.src = (jpeg_source_mgr *)&src;
   cinfo.err = jpeg_std_error(&jerr);
   x = 0;
@@ -64,6 +73,39 @@ void DCTStream::reset() {
   int row_stride;
 
   str->reset();
+  // JPEG data has to start with 0xFF 0xD8
+  // but some pdf like the one on 
+  // https://bugs.freedesktop.org/show_bug.cgi?id=3299
+  // does have some garbage before that this seeks for
+  // the start marker...
+  bool startFound = false;
+  int c = 0, c2 = 0;
+  int n = 0;
+  while (!startFound)
+  {
+    if (!c)
+    {
+      c = str->getChar();
+      if (c != 0xFF) c = 0;
+     if (c == -1)
+      {
+        error(-1, "Could not find start of jpeg data");
+        exit(1);
+      }
+    }
+    else
+    {
+      c2 = str->getChar();
+      if (c2 != 0xD8)
+      {
+        c = 0;
+        c2 = 0;
+      }
+      else startFound = true;
+    }
+    n++;
+  }
+
   jpeg_read_header(&cinfo, TRUE);
   jpeg_start_decompress(&cinfo);
 

@@ -28,36 +28,30 @@
 #include "core/page.h"
 
 //#define KF_DEBUG
+KPDF_EXPORT_PLUGIN(FaxRenderer)
+
+FaxRenderer::FaxRenderer(KPDFDocument * doc) 
+    :   Generator( doc )
+{
+    ;
+}
 
 void FaxRenderer::generatePixmap( PixmapRequest * request )
 {
-#ifdef KF_DEBUG
-  kdDebug() << "FaxRenderer::drawPage(documentPage*) called, page number " << page->getPageNumber() << endl;
-#endif
+    mutex.lock();
+    QString a="S";
+    if (request->async) a="As";
 
-  // Paranoid safety checks
-  if (request == 0) {
-    kdError() << "FaxRenderer::drawPage(documentPage*) called with argument == 0" << endl;
-    return;
-  }
-  if (request->pageNumber == 0) {
-    kdError() << "FaxRenderer::drawPage(documentPage*) called for a documentPage with page number 0" << endl;
-    return;
-  }
+    kdWarning() << a << "ync Pixmaprequestuest of " << request->width << "x" 
+    << request->height << " size, pageNo " << request->pageNumber 
+    << ", priority: " << request->priority << " pageaddress " << (unsigned long long int) request->page
+    <<  endl;
 
-  // Wait for all access to this documentRenderer to finish
-  mutex.lock();
+    // Wait for all access to this documentRenderer to finish
 
-  // more paranoid safety checks
-  if (request->pageNumber > fax.numPages()) {
-    kdError() << "FaxRenderer::drawPage(documentPage*) called for a documentPage with page number " << request->pageNumber
-	      << " but the current fax file has only " << fax.numPages() << " pages." << endl;
-    mutex.unlock();
-    return;
-  }
-
-    QPixmap* pix = new QPixmap( fax.page(request->pageNumber - 1) );
-    
+    QPixmap* pix = new QPixmap();
+	QImage img = fax.page(request->pageNumber-1);
+    pix->drawPixmap( 0,0, img, 0,0,img.width(),img.height());
 /*
   SimplePageSize psize = pageSizes[page->getPageNumber() - 1];
   if (psize.isValid()) {

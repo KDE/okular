@@ -33,6 +33,7 @@
 #include "xpdf/Outline.h"
 #include "xpdf/GfxState.h"
 #include "xpdf/Annot.h" // for retrieving fonts only
+#include "xpdf/UGString.h"
 #include "xpdf/GlobalParams.h"
 #include "goo/GList.h"
 
@@ -193,14 +194,15 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     uint pageCount = pdfdoc->getNumPages();
     pagesVector.resize( pageCount );
 
-    loadPages(pagesVector,0);
+    loadPages(pagesVector);
 
     // the file has been loaded correctly
     return true;
 }
 
-void PDFGenerator::loadPages(QValueVector<KPDFPage*> & pagesVector, int rotation, bool clear)
+void PDFGenerator::loadPages(QValueVector<KPDFPage*> & pagesVector, int rotation==-1, bool clear)
 {
+    // TODO XPDF 3.01 check
     KPDFTextDev td;
     int count=pagesVector.count();
     for ( uint i = 0; i < count ; i++ )
@@ -209,7 +211,9 @@ void PDFGenerator::loadPages(QValueVector<KPDFPage*> & pagesVector, int rotation
         Page * p = pdfdoc->getCatalog()->getPage( i + 1 );
 
         // init a kpdfpage, add transition and annotations informations
-        KPDFPage * page = new KPDFPage( i, p->getWidth(), p->getHeight(), rotation );
+        KPDFPage * page = new KPDFPage( i, pdfdoc->getPageCropWidth(i+1),
+                                        pdfdoc->getPageCropHeight(i+1),
+                                        (rotation==-1) ? pdfdoc->getPageRotate(i+1) : 0 );
         addTransition( p, page );
         if ( true ) //TODO real check
             addAnnotations( p, page );
@@ -231,6 +235,7 @@ void PDFGenerator::loadPages(QValueVector<KPDFPage*> & pagesVector, int rotation
 
 TextPage * PDFGenerator::fastTextPage (KPDFPage * page)
 {
+    // TODO XPDF 3.01 check
     // fetch ourselves a textpage
     KPDFTextDev td;
     docLock.lock();
@@ -412,7 +417,7 @@ const DocumentFonts * PDFGenerator::generateDocumentFonts()
             addFonts( resDict, &fonts, fontsLen, fontsSize );
 
         // look for fonts in annotation's resources
-        Annots * annots = new Annots( pdfdoc->getXRef(), page->getAnnots( &objAnn ) );
+        Annots * annots = new Annots( pdfdoc->getXRef(), pdfdoc->getCatalog(), page->getAnnots( &objAnn ) );
         objAnn.free();
         int annotsNumber = annots->getNumAnnots();
         for ( int i = 0; i < annotsNumber; i++ )
@@ -437,7 +442,7 @@ const DocumentFonts * PDFGenerator::generateDocumentFonts()
 bool PDFGenerator::isAllowed( int permissions )
 {
 #if !KPDF_FORCE_DRM
-    if (kapp->authorize("skip_drm") && !Settings::obeyDRM()) return true;
+    if (kapp->authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
 #endif
 
     bool b = true;
@@ -492,19 +497,20 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
 
     // 1. Set OutputDev parameters and Generate contents
     // note: thread safety is set on 'false' for the GUI (this) thread
-    kpdfOutputDev->setParams( request->width, request->height, genTextPage, genObjectRects, genObjectRects, false );
-    pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, page->rotation(), true, genObjectRects );
+     kpdfOutputDev->setParams( request->width, request->height, genObjectRects, genObjectRects, false );
+    // TODO: check if this should not get a rotation parameter
+     pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, page->rotation(), false, true, genObjectRects );
 
     // 2. Take data from outputdev and attach it to the Page
     page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
-    if ( genTextPage )
-        page->setSearchPage( abstractTextPage(kpdfOutputDev->takeTextPage(), page->height(), page->width()));
+
     if ( genObjectRects )
         page->setObjectRects( kpdfOutputDev->takeObjectRects() );
 
     // 3. UNLOCK [re-enables shared access]
     docLock.unlock();
-
+    if ( genTextPage )
+        generateSyncTextPage( page );
     // update ready state
     ready = true;
 
@@ -519,12 +525,12 @@ bool PDFGenerator::canGenerateTextPage()
 
 void PDFGenerator::generateSyncTextPage( KPDFPage * page )
 {
-    // build a TextPage using the lightweight KPDFTextDev generator..
-    KPDFTextDev td;
+    // build a TextPage...
+    TextOutputDev td(NULL, gTrue, gFalse, gFalse);
     docLock.lock();
-    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), true, false );
+    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), false, true, false );
     // ..and attach it to the page
-    page->setSearchPage( abstractTextPage(td.takeTextPage(), page->height(), page->width()) );
+    page->setSearchPage( abstractTextPage(td.takeText(), page->height(), page->width()) );
     docLock.unlock();
 }
 
@@ -572,7 +578,8 @@ bool PDFGenerator::print( KPrinter& printer )
         }
 
         docLock.lock();
-        pdfdoc->displayPages(psOut, pages, 72, 72, 0, globalParams->getPSCrop(), gFalse);
+        // TODO rotation
+        pdfdoc->displayPages(psOut, pages, 72, 72, 0, false, globalParams->getPSCrop(), gFalse);
         docLock.unlock();
 
         // needs to be here so that the file is flushed, do not merge with the one
@@ -588,8 +595,17 @@ bool PDFGenerator::print( KPrinter& printer )
     }
 }
 
+static UGString *QStringToUGString(const QString &s) {
+    int len = s.length();
+    Unicode *u = (Unicode *)gmallocn(s.length(), sizeof(Unicode));
+    for (int i = 0; i < len; ++i)
+      u[i] = s.at(i).unicode();
+    return new UGString(u, len);
+}
+
 QString PDFGenerator::getMetaData( const QString & key, const QString & option )
 {
+
     if ( key == "StartFullScreen" )
     {
         // asking for the 'start in fullscreen mode' (pdf property)
@@ -601,18 +617,12 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
         DocumentViewport viewport;
-        GString * namedDest = new GString( option.latin1() );
+        UGString * namedDest = QStringToUGString( option );
         docLock.lock();
         LinkDest * destination = pdfdoc->findDest( namedDest );
         if ( destination )
         {
-            if ( !destination->isPageRef() )
-                viewport.pageNumber = destination->getPageNum() - 1;
-            else
-            {
-                Ref ref = destination->getPageRef();
-                viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
-            }
+            fillViewportFromLink( viewport, destination );
         }
         docLock.unlock();
         delete namedDest;
@@ -625,8 +635,8 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
 bool PDFGenerator::reparseConfig()
 {
     // load paper color from Settings or use the white default color
-    QColor color = ( (Settings::renderMode() == Settings::EnumRenderMode::Paper ) &&
-                     Settings::changeColors() ) ? Settings::paperColor() : Qt::white;
+    QColor color = ( (Settings::renderMode() == KpdfSettings::EnumRenderMode::Paper ) &&
+                     KpdfSettings::changeColors() ) ? KpdfSettings::paperColor() : Qt::white;
     // if paper color is changed we have to rebuild every visible pixmap in addition
     // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
     // over the page rendered on 'standard' white background.
@@ -634,7 +644,9 @@ bool PDFGenerator::reparseConfig()
     {
         paperColor = color;
         SplashColor splashCol;
-        splashCol.rgb8 = splashMakeRGB8( paperColor.red(), paperColor.green(), paperColor.blue() );
+        splashCol[0] = paperColor.red();
+	splashCol[1] = paperColor.green();
+	splashCol[2] = paperColor.blue();
         // rebuild the output device using the new paper color and initialize it
         docLock.lock();
         delete kpdfOutputDev;
@@ -955,7 +967,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
 
         // 2. find the page the link refers to
         LinkAction * a = outlineItem->getAction();
-        if ( a && a->getKind() == actionGoTo )
+        if ( a && ( a->getKind() == actionGoTo || a->getKind() == actionGoToR ) )
         {
             // page number is contained/referenced in a LinkGoTo
             LinkGoTo * g = static_cast< LinkGoTo * >( a );
@@ -966,32 +978,21 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 // get the destination for the page now, but it's VERY time consuming,
                 // so better storing the reference and provide the viewport as metadata
                 // on demand
-                item.setAttribute( "ViewportName", g->getNamedDest()->getCString() );
+                UGString *s = g->getNamedDest();
+                QString aux = unicodeToQString( s->unicode(), s->getLength() );
+                item.setAttribute( "ViewportName", aux );
             }
             else if ( destination->isOk() )
             {
-                // we have valid 'destination' -> get page number
-                int pageNumber = destination->getPageNum() - 1;
-                if ( destination->isPageRef() )
-                {
-                    Ref ref = destination->getPageRef();
-                    pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
-                }
-                // set page as attribute to node
-                // TODO add other attributes to the viewport (taken from link)
-                item.setAttribute( "Viewport", DocumentViewport( pageNumber ).toString() );
+                DocumentViewport vp;
+                fillViewportFromLink( vp, destination );
+                item.setAttribute( "Viewport", vp.toString() );
             }
-	    }
-	    else if ( a && a->getKind() == actionGoToR )
-        {
-            LinkGoToR * g = static_cast< LinkGoToR * >( a );
-            LinkDest * destination = g->getDest();
-            if ( !destination && g->getNamedDest() )
+            if ( a->getKind() == actionGoToR )
             {
-                item.setAttribute( "ViewportName", g->getNamedDest()->getCString() );
+                LinkGoToR * g2 = static_cast< LinkGoToR * >( a );
+                item.setAttribute( "ExternalFileName", g2->getFileName()->getCString() );
             }
- 
-            item.setAttribute( "ExternalFileName", g->getFileName()->getCString() );
         }
 
         // 3. recursively descend over children
@@ -1988,6 +1989,52 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         page->addAnnotation( it.data() );
 }
 
+void PDFGenerator::fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination )
+{
+    if ( !destination->isPageRef() )
+        viewport.pageNumber = destination->getPageNum() - 1;
+    else
+    {
+        Ref ref = destination->getPageRef();
+        viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
+    }
+
+    if (viewport.pageNumber == -1) return;
+
+    // get destination position
+    // TODO add other attributes to the viewport (taken from link)
+//     switch ( destination->getKind() )
+//     {
+//         case destXYZ:
+            if (destination->getChangeLeft() || destination->getChangeTop())
+            {
+                double CTM[6];
+                Page *page = pdfdoc->getCatalog()->getPage( viewport.pageNumber + 1 );
+                // TODO remember to change this if we implement DPI and/or rotation
+                page->getDefaultCTM(CTM, 72.0, 72.0, 0, gTrue);
+
+                int left, top;
+                // this is OutputDev::cvtUserToDev
+                left = (int)(CTM[0] * destination->getLeft() + CTM[2] * destination->getTop() + CTM[4] + 0.5);
+                top = (int)(CTM[1] * destination->getLeft() + CTM[3] * destination->getTop() + CTM[5] + 0.5);
+
+                viewport.rePos.normalizedX = (double)left / (double)page->getCropWidth();
+                viewport.rePos.normalizedY = (double)top / (double)page->getCropHeight();
+                viewport.rePos.enabled = true;
+                viewport.rePos.pos = DocumentViewport::TopLeft;
+            }
+            /* TODO
+            if ( dest->getChangeZoom() )
+                make zoom change*/
+/*        break;
+
+        default:
+            // implement the others cases
+        break;*/
+//     }
+}
+
+
 void PDFGenerator::addTransition( Page * pdfPage, KPDFPage * page )
 // called on opening when MUTEX is not used
 {
@@ -2246,11 +2293,10 @@ void PDFPixmapGeneratorThread::run()
     d->generator->docLock.lock();
 
     // 1. set OutputDev parameters and Generate contents
-    d->generator->kpdfOutputDev->setParams( width, height, genTextPage,
+    d->generator->kpdfOutputDev->setParams( width, height, 
                                             genObjectRects, genObjectRects, TRUE /*thread safety*/ );
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
-                                       fakeDpiX, fakeDpiY,
-                                       d->currentRequest->rotation , true, genObjectRects );
+                                       fakeDpiX, fakeDpiY, d->currentRequest->rotation , true, genObjectRects );
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
@@ -2260,10 +2306,17 @@ void PDFPixmapGeneratorThread::run()
         kdDebug() << "PDFPixmapGeneratorThread: previous textpage not taken" << endl;
 #endif
     d->m_image = d->generator->kpdfOutputDev->takeImage();
-    d->m_textPage = d->generator->kpdfOutputDev->takeTextPage();
     d->m_rects = d->generator->kpdfOutputDev->takeObjectRects();
     d->m_rectsTaken = false;
 
+    if ( genTextPage )
+    {
+        TextOutputDev td(NULL, gTrue, gFalse, gFalse);
+        d->generator->pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), false, true, false );
+        // ..and attach it to the page
+        d->m_textPage = td.takeText();
+    }
+    
     // 3. [UNLOCK] mutex
     d->generator->docLock.unlock();
 

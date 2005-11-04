@@ -48,6 +48,7 @@ private:
 
   GBool aa;
   FT_Library lib;
+  GBool useCIDs;
 
   friend class SplashFTFontFile;
   friend class SplashFTFont;

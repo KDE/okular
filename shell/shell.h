@@ -54,6 +54,8 @@ class Part;
      * Default Destructor
      */
     virtual ~Shell();
+  public slots:
+    void slotQuit();
 
   protected:
     /**
@@ -71,10 +73,9 @@ class Part;
     void readSettings();
     void writeSettings();
     void setFullScreen( bool );
-    
+
   private slots:
     void fileOpen();
-    void slotQuit();
 
     void optionsConfigureToolbars();
     void applyNewToolbarConfig();

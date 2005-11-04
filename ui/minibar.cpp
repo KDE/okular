@@ -68,12 +68,9 @@ class HoverButton : public QPushButton
         HoverButton( QWidget * parent );
 
     protected:
-        void mouseMoveEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
         void paintEvent( QPaintEvent * e );
-
-    private:
-        bool m_hovering;
+        void enterEvent( QPaintEvent * e );
+        void leaveEvent( QPaintEvent * e );
 };
 
 
@@ -163,7 +160,6 @@ void MiniBar::notifySetup( const QValueVector< KPDFPage * > & pageVector, bool c
     m_nextButton->setFixedHeight( fixedHeight );
 
     // update child widgets
-    m_pagesEdit->setText( "" );
     m_pagesEdit->setPagesNumber( pages );
     m_pagesButton->setText( QString::number( pages ) );
     m_prevButton->setEnabled( false );
@@ -396,7 +392,7 @@ void PagesEdit::wheelEvent( QWheelEvent * e )
 /** HoverButton **/
 
 HoverButton::HoverButton( QWidget * parent )
-    : QPushButton( parent ), m_hovering( false )
+    : QPushButton( parent )
 {
     setMouseTracking( true );
 #if KDE_IS_VERSION(3,3,90)
@@ -404,48 +400,28 @@ HoverButton::HoverButton( QWidget * parent )
 #endif
 }
 
-void HoverButton::mouseMoveEvent( QMouseEvent * e )
+void HoverButton::enterEvent( QPaintEvent * e )
 {
-    // check for mouse hovering
-    const QRect myGeom( 0,0, width(), height() );
-    bool hover = myGeom.contains( e->pos() );
-
-    // if hover state changed update gfx
-    if ( m_hovering != hover )
-    {
-        m_hovering = hover;
-        update();
-    }
+	update();
+	QPushButton::enterEvent( e );
 }
 
-void HoverButton::mouseReleaseEvent( QMouseEvent * e )
+void HoverButton::leaveEvent( QPaintEvent * e )
 {
-    // call default handler
-    QPushButton::mouseReleaseEvent( e );
-
-    // reset hover state when clicking
-    m_hovering = false;
-    update();
+	update();
+	QPushButton::leaveEvent( e );
 }
 
 void HoverButton::paintEvent( QPaintEvent * e )
 {
-    // always not hovering in disabled state
-    if ( !isEnabled() )
-        m_hovering = false;
-
-    // paint button in different flavours
-    if ( m_hovering )
+    if ( hasMouse() )
     {
-        // if we're hovering the button, draw it using QPushButton style
-        setPaletteBackgroundColor( palette().active().button() );
         QPushButton::paintEvent( e );
     }
     else
     {
-        // custom drawing of unhovered button
         QPainter p( this );
-        setPaletteBackgroundColor( palette().active().background() );
+        p.fillRect(e->rect(), parentWidget() ? parentWidget()->palette().brush(QPalette::Active, QColorGroup::Background) : paletteBackgroundColor());
         drawButtonLabel( &p );
     }
 }

@@ -25,7 +25,6 @@
 #include <kmessagebox.h>
 #include <kapplication.h>
 #include <kuserprofile.h>
-#include <kmimetype.h>
 #include <krun.h>
 #include <kstandarddirs.h>
 #include <klibloader.h>
@@ -132,7 +131,7 @@ KPDFDocument::~KPDFDocument()
 }
 
 
-bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
+bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime )
 {
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
@@ -149,8 +148,6 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     fileReadTest.close();
     d->xmlFileName = locateLocal( "data", fn );
 
-    // create the generator based on the file's mimetype
-    KMimeType::Ptr mime = KMimeType::findByPath( docFile );
     if (mime.count()<=0)
 	return false;
     
@@ -167,7 +164,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url )
     int hRank=0;
 
     // best ranked offer search
-    if (offers.count() > 1 && Settings::chooseGenerators() )
+    if (offers.count() > 1 && KpdfSettings::chooseGenerators() )
     {
         ChooseEngineDialog * choose = new ChooseEngineDialog (0,0);
         int count=offers.count();
@@ -380,16 +377,24 @@ void KPDFDocument::addObserver( DocumentObserver * pObserver )
     }
 }
 
-void KPDFDocument::slotOrientation( int orientation )
+void KPDFDocument::notifyObservers (NotifyRequest * request)
 {
-    if (generator->supportsRotation())
+    switch (request->type)
     {
-        generator->setOrientation(pages_vector,orientation);
-        foreachObserver( notifySetup( pages_vector, true ) );
-        kdDebug() << "Oreint: " << orientation << endl;
+        case DocumentObserver::Setup:
+            foreachObserver( notifySetup( pages_vector, request->toggle ) );
+            break;
+        case DocumentObserver::Viewport:
+            foreachObserver( notifyViewportChanged( request->toggle ) );
+            break;
+        case DocumentObserver::Page:
+            foreachObserver( notifyPageChanged( request->page, request->flags ) );
+            break;
+        case DocumentObserver::Contents:
+            foreachObserver( notifyContentsCleared( request->flags ) );
+            break;
     }
 }
-
 
 void KPDFDocument::removeObserver( DocumentObserver * pObserver )
 {
@@ -445,7 +450,7 @@ void KPDFDocument::reparseConfig()
     }
 
     // free memory if in 'low' profile
-    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+    if ( KpdfSettings::memoryLevel() == KpdfSettings::EnumMemoryLevel::Low &&
          !d->allocatedPixmapsFifo.isEmpty() && !pages_vector.isEmpty() )
         cleanupPixmapMemory();
 }
@@ -564,7 +569,7 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
     }
 
     // 2. [ADD TO STACK] add requests to stack
-    bool threadingDisabled = !Settings::enableThreading();
+    bool threadingDisabled = !KpdfSettings::enableThreading();
     QValueList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
     for ( ; rIt != rEnd; ++rIt )
     {
@@ -854,7 +859,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             {
                 if ( currentPage >= pageCount )
                 {
-                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?")) == KMessageBox::Yes )
+                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?"), QString::null, KStdGuiItem::cont(), KStdGuiItem::cancel()) == KMessageBox::Yes )
                         currentPage = 0;
                     else
                         break;
@@ -1150,7 +1155,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     setNextViewport();
                     break;
                 case KPDFLinkAction::Quit:
-                    kapp->quit();
+                    emit quit();
                     break;
                 case KPDFLinkAction::Presentation:
                     emit linkPresentation();
@@ -1163,6 +1168,9 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     break;
                 case KPDFLinkAction::GoToPage:
                     emit linkGoToPage();
+                    break;
+                case KPDFLinkAction::Close:
+                    emit close();
                     break;
             }
             } break;
@@ -1298,18 +1306,18 @@ void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
     // [MEM] choose memory parameters based on configuration profile
     int clipValue = -1;
     int memoryToFree = -1;
-    switch ( Settings::memoryLevel() )
+    switch ( KpdfSettings::memoryLevel() )
     {
-        case Settings::EnumMemoryLevel::Low:
+        case KpdfSettings::EnumMemoryLevel::Low:
             memoryToFree = d->allocatedPixmapsTotalMemory;
             break;
 
-        case Settings::EnumMemoryLevel::Normal:
+        case KpdfSettings::EnumMemoryLevel::Normal:
             memoryToFree = d->allocatedPixmapsTotalMemory - getTotalMemory() / 3;
             clipValue = (d->allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
             break;
 
-        case Settings::EnumMemoryLevel::Aggressive:
+        case KpdfSettings::EnumMemoryLevel::Aggressive:
             clipValue = (d->allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
             break;
     }
@@ -1578,11 +1586,20 @@ void KPDFDocument::saveDocumentInfo() const
 void KPDFDocument::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
-    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+    if ( KpdfSettings::memoryLevel() != KpdfSettings::EnumMemoryLevel::Low &&
          d->allocatedPixmapsTotalMemory > 1024*1024 )
         cleanupPixmapMemory();
 }
 
+void KPDFDocument::slotOrientation( int orientation )
+{
+    if (generator->supportsRotation())
+    {
+        generator->setOrientation(pages_vector,orientation);
+        foreachObserver( notifySetup( pages_vector, true ) );
+        kdDebug() << "Oreint: " << orientation << endl;
+    }
+}
 
 /** DocumentViewport **/
 

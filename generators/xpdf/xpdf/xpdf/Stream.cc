@@ -25,15 +25,15 @@
 #include "xpdf_config.h"
 #include "Error.h"
 #include "Object.h"
-#ifndef NO_DECRYPTION
+#include "Lexer.h"
 #include "Decrypt.h"
-#endif
+#include "GfxState.h"
 #include "Stream.h"
 #include "JBIG2Stream.h"
 #include "JPXStream.h"
 #include "Stream-CCITT.h"
 #include "DCTStream.h"
-#include "FlateStream.h"
+#include "UGString.h"
 
 #ifdef __DJGPP__
 static GBool setDJSYSFLAGS = gFalse;
@@ -274,25 +274,19 @@ Stream *Stream::makeFilter(const char *name, Stream *str, Object *params) {
 
 BaseStream::BaseStream(Object *dictA) {
   dict = *dictA;
-#ifndef NO_DECRYPTION
   decrypt = NULL;
-#endif
 }
 
 BaseStream::~BaseStream() {
   dict.free();
-#ifndef NO_DECRYPTION
   if (decrypt)
     delete decrypt;
-#endif
 }
 
-#ifndef NO_DECRYPTION
 void BaseStream::doDecryption(Guchar *fileKey, int keyLength,
 			      int objNum, int objGen) {
   decrypt = new Decrypt(fileKey, keyLength, objNum, objGen);
 }
-#endif
 
 //------------------------------------------------------------------------
 // FilterStream
@@ -331,7 +325,7 @@ ImageStream::ImageStream(Stream *strA, int widthA, int nCompsA, int nBitsA) {
   } else {
     imgLineSize = nVals;
   }
-  imgLine = (Guchar *)gmalloc(imgLineSize * sizeof(Guchar));
+  imgLine = (Guchar *)gmallocn(imgLineSize, sizeof(Guchar));
   imgIdx = nVals;
 }
 
@@ -447,12 +441,12 @@ int StreamPredictor::getChar() {
 
 GBool StreamPredictor::getNextLine() {
   int curPred;
-  Guchar upLeftBuf[4];
+  Guchar upLeftBuf[gfxColorMaxComps * 2 + 1];
   int left, up, upLeft, p, pa, pb, pc;
   int c;
   Gulong inBuf, outBuf, bitMask;
   int inBits, outBits;
-  int i, j, k;
+  int i, j, k, kk;
 
   // get PNG optimum predictor number
   if (predictor >= 10) {
@@ -465,13 +459,19 @@ GBool StreamPredictor::getNextLine() {
   }
 
   // read the raw line, apply PNG (byte) predictor
-  upLeftBuf[0] = upLeftBuf[1] = upLeftBuf[2] = upLeftBuf[3] = 0;
+  memset(upLeftBuf, 0, pixBytes + 1);
   for (i = pixBytes; i < rowBytes; ++i) {
-    upLeftBuf[3] = upLeftBuf[2];
-    upLeftBuf[2] = upLeftBuf[1];
-    upLeftBuf[1] = upLeftBuf[0];
+    for (j = pixBytes; j > 0; --j) {
+      upLeftBuf[j] = upLeftBuf[j-1];
+    }
     upLeftBuf[0] = predLine[i];
     if ((c = str->getRawChar()) == EOF) {
+      if (i > pixBytes) {
+	// this ought to return false, but some (broken) PDF files
+	// contain truncated image data, and Adobe apparently reads the
+	// last partial line
+	break;
+      }
       return gFalse;
     }
     switch (curPred) {
@@ -524,30 +524,31 @@ GBool StreamPredictor::getNextLine() {
 	predLine[i] += predLine[i - nComps];
       }
     } else {
-      upLeftBuf[0] = upLeftBuf[1] = upLeftBuf[2] = upLeftBuf[3] = 0;
+      memset(upLeftBuf, 0, nComps + 1);
       bitMask = (1 << nBits) - 1;
       inBuf = outBuf = 0;
       inBits = outBits = 0;
       j = k = pixBytes;
-      for (i = 0; i < nVals; ++i) {
+      for (i = 0; i < width; ++i) {
+	for (kk = 0; kk < nComps; ++kk) {
 	if (inBits < nBits) {
 	  inBuf = (inBuf << 8) | (predLine[j++] & 0xff);
 	  inBits += 8;
 	}
-	upLeftBuf[3] = upLeftBuf[2];
-	upLeftBuf[2] = upLeftBuf[1];
-	upLeftBuf[1] = upLeftBuf[0];
-	upLeftBuf[0] = (upLeftBuf[nComps] +
+	  upLeftBuf[kk] = (upLeftBuf[kk] +
 			(inBuf >> (inBits - nBits))) & bitMask;
-	outBuf = (outBuf << nBits) | upLeftBuf[0];
 	inBits -= nBits;
+	  outBuf = (outBuf << nBits) | upLeftBuf[kk];
 	outBits += nBits;
-	if (outBits > 8) {
+	  if (outBits >= 8) {
 	  predLine[k++] = (Guchar)(outBuf >> (outBits - 8));
+	    outBits -= 8;
+	  }
 	}
       }
       if (outBits > 0) {
-	predLine[k++] = (Guchar)(outBuf << (8 - outBits));
+	predLine[k++] = (Guchar)((outBuf << (8 - outBits)) +
+				 (inBuf & ((1 << (8 - outBits)) - 1)));
       }
     }
   }
@@ -598,10 +599,8 @@ void FileStream::reset() {
   saved = gTrue;
   bufPtr = bufEnd = buf;
   bufPos = start;
-#ifndef NO_DECRYPTION
   if (decrypt)
     decrypt->reset();
-#endif
 }
 
 void FileStream::close() {
@@ -619,9 +618,7 @@ void FileStream::close() {
 
 GBool FileStream::fillBuf() {
   int n;
-#ifndef NO_DECRYPTION
   char *p;
-#endif
 
   bufPos += bufEnd - buf;
   bufPtr = bufEnd = buf;
@@ -638,13 +635,11 @@ GBool FileStream::fillBuf() {
   if (bufPtr >= bufEnd) {
     return gFalse;
   }
-#ifndef NO_DECRYPTION
   if (decrypt) {
     for (p = buf; p < bufEnd; ++p) {
       *p = (char)decrypt->decryptByte((Guchar)*p);
     }
   }
-#endif
   return gTrue;
 }
 
@@ -733,11 +728,9 @@ Stream *MemStream::makeSubStream(Guint startA, GBool limited,
 
 void MemStream::reset() {
   bufPtr = buf + start;
-#ifndef NO_DECRYPTION
   if (decrypt) {
     decrypt->reset();
   }
-#endif
 }
 
 void MemStream::close() {
@@ -761,10 +754,10 @@ void MemStream::setPos(Guint pos, int dir) {
 
 void MemStream::moveStart(int delta) {
   start += delta;
+  length -= delta;
   bufPtr = buf + start;
 }
 
-#ifndef NO_DECRYPTION
 void MemStream::doDecryption(Guchar *fileKey, int keyLength,
 			     int objNum, int objGen) {
   char *newBuf;
@@ -783,7 +776,6 @@ void MemStream::doDecryption(Guchar *fileKey, int keyLength,
     needFree = gTrue;
   }
 }
-#endif
 
 //------------------------------------------------------------------------
 // EmbedStream
@@ -954,7 +946,7 @@ int ASCII85Stream::lookChar() {
     index = 0;
     do {
       c[0] = str->getChar();
-    } while (c[0] == '\n' || c[0] == '\r');
+    } while (Lexer::isSpace(c[0]));
     if (c[0] == '~' || c[0] == EOF) {
       eof = gTrue;
       n = 0;
@@ -966,7 +958,7 @@ int ASCII85Stream::lookChar() {
       for (k = 1; k < 5; ++k) {
 	do {
 	  c[k] = str->getChar();
-	} while (c[k] == '\n' || c[k] == '\r');
+	} while (Lexer::isSpace(c[k]));
 	if (c[k] == '~' || c[k] == EOF)
 	  break;
       }
@@ -1179,7 +1171,11 @@ GString *LZWStream::getPSFilter(int psLevel, const char *indent) {
   if (!(s = str->getPSFilter(psLevel, indent))) {
     return NULL;
   }
-  s->append(indent)->append("/LZWDecode filter\n");
+  s->append(indent)->append("<< ");
+  if (!early) {
+    s->append("/EarlyChange 0 ");
+  }
+  s->append(">> /LZWDecode filter\n");
   return s;
 }
 
@@ -1262,11 +1258,14 @@ CCITTFaxStream::CCITTFaxStream(Stream *strA, int encodingA, GBool endOfLineA,
   endOfLine = endOfLineA;
   byteAlign = byteAlignA;
   columns = columnsA;
+  if (columns < 1) {
+    columns = 1;
+  }
   rows = rowsA;
   endOfBlock = endOfBlockA;
   black = blackA;
-  refLine = (short *)gmalloc((columns + 3) * sizeof(short));
-  codingLine = (short *)gmalloc((columns + 2) * sizeof(short));
+  refLine = (short *)gmallocn(columns + 4, sizeof(short));
+  codingLine = (short *)gmallocn(columns + 3, sizeof(short));
 
   eof = gFalse;
   row = 0;
@@ -1388,10 +1387,12 @@ int CCITTFaxStream::lookChar() {
 	  }
 	  break;
 	case twoDimVertL1:
+	  if (a0 == 0 || refLine[b1] - 1 > a0New) {
 	  a0New = codingLine[++a0] = refLine[b1] - 1;
 	  --b1;
 	  while (refLine[b1] <= codingLine[a0] && refLine[b1] < columns)
 	    b1 += 2;
+	  }
 	  break;
 	case twoDimVertR2:
 	  a0New = codingLine[++a0] = refLine[b1] + 2;
@@ -1402,10 +1403,12 @@ int CCITTFaxStream::lookChar() {
 	  }
 	  break;
 	case twoDimVertL2:
+	  if (a0 == 0 || refLine[b1] - 2 > a0New) {
 	  a0New = codingLine[++a0] = refLine[b1] - 2;
 	  --b1;
 	  while (refLine[b1] <= codingLine[a0] && refLine[b1] < columns)
 	    b1 += 2;
+	  }
 	  break;
 	case twoDimVertR3:
 	  a0New = codingLine[++a0] = refLine[b1] + 3;
@@ -1416,10 +1419,12 @@ int CCITTFaxStream::lookChar() {
 	  }
 	  break;
 	case twoDimVertL3:
+	  if (a0 == 0 || refLine[b1] - 3 > a0New) {
 	  a0New = codingLine[++a0] = refLine[b1] - 3;
 	  --b1;
 	  while (refLine[b1] <= codingLine[a0] && refLine[b1] < columns)
 	    b1 += 2;
+	  }
 	  break;
 	case EOF:
 	  eof = gTrue;
@@ -1789,6 +1794,7 @@ GBool CCITTFaxStream::isBinary(GBool /*last*/) {
 }
 
 #if 0
+
 //------------------------------------------------------------------------
 // DCTStream
 //------------------------------------------------------------------------
@@ -1879,7 +1885,6 @@ DCTStream::~DCTStream() {
 }
 
 void DCTStream::reset() {
-  int minHSample, minVSample;
   int i, j;
 
   str->reset();
@@ -1901,24 +1906,21 @@ void DCTStream::reset() {
   }
 
   // compute MCU size
-  mcuWidth = minHSample = compInfo[0].hSample;
-  mcuHeight = minVSample = compInfo[0].vSample;
+  if (numComps == 1) {
+    compInfo[0].hSample = compInfo[0].vSample = 1;
+  }
+  mcuWidth = compInfo[0].hSample;
+  mcuHeight = compInfo[0].vSample;
   for (i = 1; i < numComps; ++i) {
-    if (compInfo[i].hSample < minHSample)
-      minHSample = compInfo[i].hSample;
-    if (compInfo[i].vSample < minVSample)
-      minVSample = compInfo[i].vSample;
-    if (compInfo[i].hSample > mcuWidth)
+    if (compInfo[i].hSample > mcuWidth) {
       mcuWidth = compInfo[i].hSample;
-    if (compInfo[i].vSample > mcuHeight)
+    }
+    if (compInfo[i].vSample > mcuHeight) {
       mcuHeight = compInfo[i].vSample;
   }
-  for (i = 0; i < numComps; ++i) {
-    compInfo[i].hSample /= minHSample;
-    compInfo[i].vSample /= minVSample;
   }
-  mcuWidth = (mcuWidth / minHSample) * 8;
-  mcuHeight = (mcuHeight / minVSample) * 8;
+  mcuWidth *= 8;
+  mcuHeight *= 8;
 
   // figure out color transform
   if (!gotAdobeMarker && numComps == 3) {
@@ -1938,7 +1940,7 @@ void DCTStream::reset() {
     bufWidth = ((width + mcuWidth - 1) / mcuWidth) * mcuWidth;
     bufHeight = ((height + mcuHeight - 1) / mcuHeight) * mcuHeight;
     for (i = 0; i < numComps; ++i) {
-      frameBuf[i] = (int *)gmalloc(bufWidth * bufHeight * sizeof(int));
+      frameBuf[i] = (int *)gmallocn(bufWidth * bufHeight, sizeof(int));
       memset(frameBuf[i], 0, bufWidth * bufHeight * sizeof(int));
     }
 
@@ -1963,7 +1965,7 @@ void DCTStream::reset() {
     bufWidth = ((width + mcuWidth - 1) / mcuWidth) * mcuWidth;
     for (i = 0; i < numComps; ++i) {
       for (j = 0; j < mcuHeight; ++j) {
-	rowBuf[i][j] = (Guchar *)gmalloc(bufWidth * sizeof(Guchar));
+	rowBuf[i][j] = (Guchar *)gmallocn(bufWidth, sizeof(Guchar));
       }
     }
 
@@ -2456,7 +2458,7 @@ GBool DCTStream::readProgressiveDataUnit(DCTHuffTable *dcHuffTable,
 void DCTStream::decodeImage() {
   int dataIn[64];
   Guchar dataOut[64];
-  Guchar *quantTable;
+  Gushort *quantTable;
   int pY, pCb, pCr, pR, pG, pB;
   int x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, cc, i;
   int h, v, horiz, vert, hSub, vSub;
@@ -2595,7 +2597,7 @@ void DCTStream::decodeImage() {
 //   988-991.
 // The stage numbers mentioned in the comments refer to Figure 1 in this
 // paper.
-void DCTStream::transformDataUnit(Guchar *quantTable,
+void DCTStream::transformDataUnit(Gushort *quantTable,
 				  int dataIn[64], Guchar dataOut[64]) {
   int v0, v1, v2, v3, v4, v5, v6, v7, t;
   int *p;
@@ -2823,12 +2825,13 @@ GBool DCTStream::readHeader() {
   while (!doScan) {
     c = readMarker();
     switch (c) {
-    case 0xc0:			// SOF0
+    case 0xc0:			// SOF0 (sequential)
+    case 0xc1:			// SOF1 (extended sequential)
       if (!readBaselineSOF()) {
 	return gFalse;
       }
       break;
-    case 0xc2:			// SOF2
+    case 0xc2:			// SOF2 (progressive)
       if (!readProgressiveSOF()) {
 	return gFalse;
       }
@@ -2989,22 +2992,32 @@ GBool DCTStream::readScanInfo() {
 }
 
 GBool DCTStream::readQuantTables() {
-  int length;
-  int i;
-  int index;
+  int length, prec, i, index;
 
   length = read16() - 2;
   while (length > 0) {
     index = str->getChar();
-    if ((index & 0xf0) || index >= 4) {
+    prec = (index >> 4) & 0x0f;
+    index &= 0x0f;
+    if (prec > 1 || index >= 4) {
       error(getPos(), "Bad DCT quantization table");
       return gFalse;
     }
-    if (index == numQuantTables)
+    if (index == numQuantTables) {
       numQuantTables = index + 1;
-    for (i = 0; i < 64; ++i)
+    }
+    for (i = 0; i < 64; ++i) {
+      if (prec) {
+	quantTables[index][dctZigZag[i]] = read16();
+      } else {
       quantTables[index][dctZigZag[i]] = str->getChar();
+      }
+    }
+    if (prec) {
+      length -= 129;
+    } else {
     length -= 65;
+  }
   }
   return gTrue;
 }
@@ -3145,7 +3158,7 @@ int DCTStream::readMarker() {
   do {
     do {
       c = str->getChar();
-    } while (c != 0xff);
+    } while (c != 0xff && c != EOF);
     do {
       c = str->getChar();
     } while (c == 0xff);
@@ -3176,9 +3189,11 @@ GString *DCTStream::getPSFilter(int psLevel, const char *indent) {
   return s;
 }
 
-GBool DCTStream::isBinary(GBool /*last*/) {
+GBool DCTStream::isBinary(GBool last) {
   return str->isBinary(gTrue);
 }
+
+#endif
 
 //------------------------------------------------------------------------
 // FlateStream
@@ -3217,6 +3232,8 @@ FlateDecode FlateStream::lengthDecode[flateMaxLitCodes-257] = {
   {5, 163},
   {5, 195},
   {5, 227},
+  {0, 258},
+  {0, 258},
   {0, 258}
 };
 
@@ -3253,6 +3270,564 @@ FlateDecode FlateStream::distDecode[flateMaxDistCodes] = {
   {13, 24577}
 };
 
+static FlateCode flateFixedLitCodeTabCodes[512] = {
+  {7, 0x0100},
+  {8, 0x0050},
+  {8, 0x0010},
+  {8, 0x0118},
+  {7, 0x0110},
+  {8, 0x0070},
+  {8, 0x0030},
+  {9, 0x00c0},
+  {7, 0x0108},
+  {8, 0x0060},
+  {8, 0x0020},
+  {9, 0x00a0},
+  {8, 0x0000},
+  {8, 0x0080},
+  {8, 0x0040},
+  {9, 0x00e0},
+  {7, 0x0104},
+  {8, 0x0058},
+  {8, 0x0018},
+  {9, 0x0090},
+  {7, 0x0114},
+  {8, 0x0078},
+  {8, 0x0038},
+  {9, 0x00d0},
+  {7, 0x010c},
+  {8, 0x0068},
+  {8, 0x0028},
+  {9, 0x00b0},
+  {8, 0x0008},
+  {8, 0x0088},
+  {8, 0x0048},
+  {9, 0x00f0},
+  {7, 0x0102},
+  {8, 0x0054},
+  {8, 0x0014},
+  {8, 0x011c},
+  {7, 0x0112},
+  {8, 0x0074},
+  {8, 0x0034},
+  {9, 0x00c8},
+  {7, 0x010a},
+  {8, 0x0064},
+  {8, 0x0024},
+  {9, 0x00a8},
+  {8, 0x0004},
+  {8, 0x0084},
+  {8, 0x0044},
+  {9, 0x00e8},
+  {7, 0x0106},
+  {8, 0x005c},
+  {8, 0x001c},
+  {9, 0x0098},
+  {7, 0x0116},
+  {8, 0x007c},
+  {8, 0x003c},
+  {9, 0x00d8},
+  {7, 0x010e},
+  {8, 0x006c},
+  {8, 0x002c},
+  {9, 0x00b8},
+  {8, 0x000c},
+  {8, 0x008c},
+  {8, 0x004c},
+  {9, 0x00f8},
+  {7, 0x0101},
+  {8, 0x0052},
+  {8, 0x0012},
+  {8, 0x011a},
+  {7, 0x0111},
+  {8, 0x0072},
+  {8, 0x0032},
+  {9, 0x00c4},
+  {7, 0x0109},
+  {8, 0x0062},
+  {8, 0x0022},
+  {9, 0x00a4},
+  {8, 0x0002},
+  {8, 0x0082},
+  {8, 0x0042},
+  {9, 0x00e4},
+  {7, 0x0105},
+  {8, 0x005a},
+  {8, 0x001a},
+  {9, 0x0094},
+  {7, 0x0115},
+  {8, 0x007a},
+  {8, 0x003a},
+  {9, 0x00d4},
+  {7, 0x010d},
+  {8, 0x006a},
+  {8, 0x002a},
+  {9, 0x00b4},
+  {8, 0x000a},
+  {8, 0x008a},
+  {8, 0x004a},
+  {9, 0x00f4},
+  {7, 0x0103},
+  {8, 0x0056},
+  {8, 0x0016},
+  {8, 0x011e},
+  {7, 0x0113},
+  {8, 0x0076},
+  {8, 0x0036},
+  {9, 0x00cc},
+  {7, 0x010b},
+  {8, 0x0066},
+  {8, 0x0026},
+  {9, 0x00ac},
+  {8, 0x0006},
+  {8, 0x0086},
+  {8, 0x0046},
+  {9, 0x00ec},
+  {7, 0x0107},
+  {8, 0x005e},
+  {8, 0x001e},
+  {9, 0x009c},
+  {7, 0x0117},
+  {8, 0x007e},
+  {8, 0x003e},
+  {9, 0x00dc},
+  {7, 0x010f},
+  {8, 0x006e},
+  {8, 0x002e},
+  {9, 0x00bc},
+  {8, 0x000e},
+  {8, 0x008e},
+  {8, 0x004e},
+  {9, 0x00fc},
+  {7, 0x0100},
+  {8, 0x0051},
+  {8, 0x0011},
+  {8, 0x0119},
+  {7, 0x0110},
+  {8, 0x0071},
+  {8, 0x0031},
+  {9, 0x00c2},
+  {7, 0x0108},
+  {8, 0x0061},
+  {8, 0x0021},
+  {9, 0x00a2},
+  {8, 0x0001},
+  {8, 0x0081},
+  {8, 0x0041},
+  {9, 0x00e2},
+  {7, 0x0104},
+  {8, 0x0059},
+  {8, 0x0019},
+  {9, 0x0092},
+  {7, 0x0114},
+  {8, 0x0079},
+  {8, 0x0039},
+  {9, 0x00d2},
+  {7, 0x010c},
+  {8, 0x0069},
+  {8, 0x0029},
+  {9, 0x00b2},
+  {8, 0x0009},
+  {8, 0x0089},
+  {8, 0x0049},
+  {9, 0x00f2},
+  {7, 0x0102},
+  {8, 0x0055},
+  {8, 0x0015},
+  {8, 0x011d},
+  {7, 0x0112},
+  {8, 0x0075},
+  {8, 0x0035},
+  {9, 0x00ca},
+  {7, 0x010a},
+  {8, 0x0065},
+  {8, 0x0025},
+  {9, 0x00aa},
+  {8, 0x0005},
+  {8, 0x0085},
+  {8, 0x0045},
+  {9, 0x00ea},
+  {7, 0x0106},
+  {8, 0x005d},
+  {8, 0x001d},
+  {9, 0x009a},
+  {7, 0x0116},
+  {8, 0x007d},
+  {8, 0x003d},
+  {9, 0x00da},
+  {7, 0x010e},
+  {8, 0x006d},
+  {8, 0x002d},
+  {9, 0x00ba},
+  {8, 0x000d},
+  {8, 0x008d},
+  {8, 0x004d},
+  {9, 0x00fa},
+  {7, 0x0101},
+  {8, 0x0053},
+  {8, 0x0013},
+  {8, 0x011b},
+  {7, 0x0111},
+  {8, 0x0073},
+  {8, 0x0033},
+  {9, 0x00c6},
+  {7, 0x0109},
+  {8, 0x0063},
+  {8, 0x0023},
+  {9, 0x00a6},
+  {8, 0x0003},
+  {8, 0x0083},
+  {8, 0x0043},
+  {9, 0x00e6},
+  {7, 0x0105},
+  {8, 0x005b},
+  {8, 0x001b},
+  {9, 0x0096},
+  {7, 0x0115},
+  {8, 0x007b},
+  {8, 0x003b},
+  {9, 0x00d6},
+  {7, 0x010d},
+  {8, 0x006b},
+  {8, 0x002b},
+  {9, 0x00b6},
+  {8, 0x000b},
+  {8, 0x008b},
+  {8, 0x004b},
+  {9, 0x00f6},
+  {7, 0x0103},
+  {8, 0x0057},
+  {8, 0x0017},
+  {8, 0x011f},
+  {7, 0x0113},
+  {8, 0x0077},
+  {8, 0x0037},
+  {9, 0x00ce},
+  {7, 0x010b},
+  {8, 0x0067},
+  {8, 0x0027},
+  {9, 0x00ae},
+  {8, 0x0007},
+  {8, 0x0087},
+  {8, 0x0047},
+  {9, 0x00ee},
+  {7, 0x0107},
+  {8, 0x005f},
+  {8, 0x001f},
+  {9, 0x009e},
+  {7, 0x0117},
+  {8, 0x007f},
+  {8, 0x003f},
+  {9, 0x00de},
+  {7, 0x010f},
+  {8, 0x006f},
+  {8, 0x002f},
+  {9, 0x00be},
+  {8, 0x000f},
+  {8, 0x008f},
+  {8, 0x004f},
+  {9, 0x00fe},
+  {7, 0x0100},
+  {8, 0x0050},
+  {8, 0x0010},
+  {8, 0x0118},
+  {7, 0x0110},
+  {8, 0x0070},
+  {8, 0x0030},
+  {9, 0x00c1},
+  {7, 0x0108},
+  {8, 0x0060},
+  {8, 0x0020},
+  {9, 0x00a1},
+  {8, 0x0000},
+  {8, 0x0080},
+  {8, 0x0040},
+  {9, 0x00e1},
+  {7, 0x0104},
+  {8, 0x0058},
+  {8, 0x0018},
+  {9, 0x0091},
+  {7, 0x0114},
+  {8, 0x0078},
+  {8, 0x0038},
+  {9, 0x00d1},
+  {7, 0x010c},
+  {8, 0x0068},
+  {8, 0x0028},
+  {9, 0x00b1},
+  {8, 0x0008},
+  {8, 0x0088},
+  {8, 0x0048},
+  {9, 0x00f1},
+  {7, 0x0102},
+  {8, 0x0054},
+  {8, 0x0014},
+  {8, 0x011c},
+  {7, 0x0112},
+  {8, 0x0074},
+  {8, 0x0034},
+  {9, 0x00c9},
+  {7, 0x010a},
+  {8, 0x0064},
+  {8, 0x0024},
+  {9, 0x00a9},
+  {8, 0x0004},
+  {8, 0x0084},
+  {8, 0x0044},
+  {9, 0x00e9},
+  {7, 0x0106},
+  {8, 0x005c},
+  {8, 0x001c},
+  {9, 0x0099},
+  {7, 0x0116},
+  {8, 0x007c},
+  {8, 0x003c},
+  {9, 0x00d9},
+  {7, 0x010e},
+  {8, 0x006c},
+  {8, 0x002c},
+  {9, 0x00b9},
+  {8, 0x000c},
+  {8, 0x008c},
+  {8, 0x004c},
+  {9, 0x00f9},
+  {7, 0x0101},
+  {8, 0x0052},
+  {8, 0x0012},
+  {8, 0x011a},
+  {7, 0x0111},
+  {8, 0x0072},
+  {8, 0x0032},
+  {9, 0x00c5},
+  {7, 0x0109},
+  {8, 0x0062},
+  {8, 0x0022},
+  {9, 0x00a5},
+  {8, 0x0002},
+  {8, 0x0082},
+  {8, 0x0042},
+  {9, 0x00e5},
+  {7, 0x0105},
+  {8, 0x005a},
+  {8, 0x001a},
+  {9, 0x0095},
+  {7, 0x0115},
+  {8, 0x007a},
+  {8, 0x003a},
+  {9, 0x00d5},
+  {7, 0x010d},
+  {8, 0x006a},
+  {8, 0x002a},
+  {9, 0x00b5},
+  {8, 0x000a},
+  {8, 0x008a},
+  {8, 0x004a},
+  {9, 0x00f5},
+  {7, 0x0103},
+  {8, 0x0056},
+  {8, 0x0016},
+  {8, 0x011e},
+  {7, 0x0113},
+  {8, 0x0076},
+  {8, 0x0036},
+  {9, 0x00cd},
+  {7, 0x010b},
+  {8, 0x0066},
+  {8, 0x0026},
+  {9, 0x00ad},
+  {8, 0x0006},
+  {8, 0x0086},
+  {8, 0x0046},
+  {9, 0x00ed},
+  {7, 0x0107},
+  {8, 0x005e},
+  {8, 0x001e},
+  {9, 0x009d},
+  {7, 0x0117},
+  {8, 0x007e},
+  {8, 0x003e},
+  {9, 0x00dd},
+  {7, 0x010f},
+  {8, 0x006e},
+  {8, 0x002e},
+  {9, 0x00bd},
+  {8, 0x000e},
+  {8, 0x008e},
+  {8, 0x004e},
+  {9, 0x00fd},
+  {7, 0x0100},
+  {8, 0x0051},
+  {8, 0x0011},
+  {8, 0x0119},
+  {7, 0x0110},
+  {8, 0x0071},
+  {8, 0x0031},
+  {9, 0x00c3},
+  {7, 0x0108},
+  {8, 0x0061},
+  {8, 0x0021},
+  {9, 0x00a3},
+  {8, 0x0001},
+  {8, 0x0081},
+  {8, 0x0041},
+  {9, 0x00e3},
+  {7, 0x0104},
+  {8, 0x0059},
+  {8, 0x0019},
+  {9, 0x0093},
+  {7, 0x0114},
+  {8, 0x0079},
+  {8, 0x0039},
+  {9, 0x00d3},
+  {7, 0x010c},
+  {8, 0x0069},
+  {8, 0x0029},
+  {9, 0x00b3},
+  {8, 0x0009},
+  {8, 0x0089},
+  {8, 0x0049},
+  {9, 0x00f3},
+  {7, 0x0102},
+  {8, 0x0055},
+  {8, 0x0015},
+  {8, 0x011d},
+  {7, 0x0112},
+  {8, 0x0075},
+  {8, 0x0035},
+  {9, 0x00cb},
+  {7, 0x010a},
+  {8, 0x0065},
+  {8, 0x0025},
+  {9, 0x00ab},
+  {8, 0x0005},
+  {8, 0x0085},
+  {8, 0x0045},
+  {9, 0x00eb},
+  {7, 0x0106},
+  {8, 0x005d},
+  {8, 0x001d},
+  {9, 0x009b},
+  {7, 0x0116},
+  {8, 0x007d},
+  {8, 0x003d},
+  {9, 0x00db},
+  {7, 0x010e},
+  {8, 0x006d},
+  {8, 0x002d},
+  {9, 0x00bb},
+  {8, 0x000d},
+  {8, 0x008d},
+  {8, 0x004d},
+  {9, 0x00fb},
+  {7, 0x0101},
+  {8, 0x0053},
+  {8, 0x0013},
+  {8, 0x011b},
+  {7, 0x0111},
+  {8, 0x0073},
+  {8, 0x0033},
+  {9, 0x00c7},
+  {7, 0x0109},
+  {8, 0x0063},
+  {8, 0x0023},
+  {9, 0x00a7},
+  {8, 0x0003},
+  {8, 0x0083},
+  {8, 0x0043},
+  {9, 0x00e7},
+  {7, 0x0105},
+  {8, 0x005b},
+  {8, 0x001b},
+  {9, 0x0097},
+  {7, 0x0115},
+  {8, 0x007b},
+  {8, 0x003b},
+  {9, 0x00d7},
+  {7, 0x010d},
+  {8, 0x006b},
+  {8, 0x002b},
+  {9, 0x00b7},
+  {8, 0x000b},
+  {8, 0x008b},
+  {8, 0x004b},
+  {9, 0x00f7},
+  {7, 0x0103},
+  {8, 0x0057},
+  {8, 0x0017},
+  {8, 0x011f},
+  {7, 0x0113},
+  {8, 0x0077},
+  {8, 0x0037},
+  {9, 0x00cf},
+  {7, 0x010b},
+  {8, 0x0067},
+  {8, 0x0027},
+  {9, 0x00af},
+  {8, 0x0007},
+  {8, 0x0087},
+  {8, 0x0047},
+  {9, 0x00ef},
+  {7, 0x0107},
+  {8, 0x005f},
+  {8, 0x001f},
+  {9, 0x009f},
+  {7, 0x0117},
+  {8, 0x007f},
+  {8, 0x003f},
+  {9, 0x00df},
+  {7, 0x010f},
+  {8, 0x006f},
+  {8, 0x002f},
+  {9, 0x00bf},
+  {8, 0x000f},
+  {8, 0x008f},
+  {8, 0x004f},
+  {9, 0x00ff}
+};
+
+FlateHuffmanTab FlateStream::fixedLitCodeTab = {
+  flateFixedLitCodeTabCodes, 9
+};
+
+static FlateCode flateFixedDistCodeTabCodes[32] = {
+  {5, 0x0000},
+  {5, 0x0010},
+  {5, 0x0008},
+  {5, 0x0018},
+  {5, 0x0004},
+  {5, 0x0014},
+  {5, 0x000c},
+  {5, 0x001c},
+  {5, 0x0002},
+  {5, 0x0012},
+  {5, 0x000a},
+  {5, 0x001a},
+  {5, 0x0006},
+  {5, 0x0016},
+  {5, 0x000e},
+  {0, 0x0000},
+  {5, 0x0001},
+  {5, 0x0011},
+  {5, 0x0009},
+  {5, 0x0019},
+  {5, 0x0005},
+  {5, 0x0015},
+  {5, 0x000d},
+  {5, 0x001d},
+  {5, 0x0003},
+  {5, 0x0013},
+  {5, 0x000b},
+  {5, 0x001b},
+  {5, 0x0007},
+  {5, 0x0017},
+  {5, 0x000f},
+  {0, 0x0000}
+};
+
+FlateHuffmanTab FlateStream::fixedDistCodeTab = {
+  flateFixedDistCodeTabCodes, 5
+};
+
 FlateStream::FlateStream(Stream *strA, int predictor, int columns,
 			 int colors, int bits):
     FilterStream(strA) {
@@ -3266,8 +3841,12 @@ FlateStream::FlateStream(Stream *strA, int predictor, int columns,
 }
 
 FlateStream::~FlateStream() {
+  if (litCodeTab.codes != fixedLitCodeTab.codes) {
   gfree(litCodeTab.codes);
+  }
+  if (distCodeTab.codes != fixedDistCodeTab.codes) {
   gfree(distCodeTab.codes);
+  }
   if (pred) {
     delete pred;
   }
@@ -3444,9 +4023,13 @@ GBool FlateStream::startBlock() {
   int check;
 
   // free the code tables from the previous block
+  if (litCodeTab.codes != fixedLitCodeTab.codes) {
   gfree(litCodeTab.codes);
+  }
   litCodeTab.codes = NULL;
+  if (distCodeTab.codes != fixedDistCodeTab.codes) {
   gfree(distCodeTab.codes);
+  }
   distCodeTab.codes = NULL;
 
   // read block header
@@ -3502,28 +4085,10 @@ err:
 }
 
 void FlateStream::loadFixedCodes() {
-  int i;
-
-  // build the literal code table
-  for (i = 0; i <= 143; ++i) {
-    codeLengths[i] = 8;
-  }
-  for (i = 144; i <= 255; ++i) {
-    codeLengths[i] = 9;
-  }
-  for (i = 256; i <= 279; ++i) {
-    codeLengths[i] = 7;
-  }
-  for (i = 280; i <= 287; ++i) {
-    codeLengths[i] = 8;
-  }
-  compHuffmanCodes(codeLengths, flateMaxLitCodes, &litCodeTab);
-
-  // build the distance code table
-  for (i = 0; i < flateMaxDistCodes; ++i) {
-    codeLengths[i] = 5;
-  }
-  compHuffmanCodes(codeLengths, flateMaxDistCodes, &distCodeTab);
+  litCodeTab.codes = fixedLitCodeTab.codes;
+  litCodeTab.maxLen = fixedLitCodeTab.maxLen;
+  distCodeTab.codes = fixedDistCodeTab.codes;
+  distCodeTab.maxLen = fixedDistCodeTab.maxLen;
 }
 
 GBool FlateStream::readDynamicCodes() {
@@ -3641,7 +4206,7 @@ void FlateStream::compHuffmanCodes(int *lengths, int n, FlateHuffmanTab *tab) {
 
   // allocate the table
   tabSize = 1 << tab->maxLen;
-  tab->codes = (FlateCode *)gmalloc(tabSize * sizeof(FlateCode));
+  tab->codes = (FlateCode *)gmallocn(tabSize, sizeof(FlateCode));
 
   // clear the table
   for (i = 0; i < tabSize; ++i) {
@@ -3710,7 +4275,6 @@ int FlateStream::getCodeWord(int bits) {
   codeSize -= bits;
   return c;
 }
-#endif
 
 //------------------------------------------------------------------------
 // EOFStream

@@ -34,27 +34,36 @@ class GSInternalDocument
         typedef enum Format{ PS, PDF };
         GSInternalDocument(QString fname, GSInternalDocument::Format f);
         static QString pageSizeToString( QPrinter::PageSize pSize );
-
-        const CDSCMEDIA* findMediaByName( const QString& mediaName ) const;
+        static QStringList paperSizes();
         void scanDSC();
+        const CDSCMEDIA* findMediaByName( const QString& mediaName ) const;
+
         QString getPaperSize( const QString& mediaName ) const;
         QString pageMedia( int pagenumber ) const;
         QString pageMedia() const;
+        void setMedia(const QString & m) { m_overrideMedia=m; };
+
         CDSC_ORIENTATION_ENUM orientation() const;
         CDSC_ORIENTATION_ENUM orientation( int pagenumber ) const;
+
         void setOrientation(CDSC_ORIENTATION_ENUM ori) { m_overrideOrientation=ori; };
         void insertPageData (int n, PagePosition p) { pagesInternalData.insert(n,p); };
+
         FILE * file () { return m_internalFile; };
         PagePosition * pagePos (int i) { return &pagesInternalData[i]; };
         const QString & fileName () { return m_fileName ; };
+
         const KDSC* dsc () { return m_dsc; };
+
         QSize computePageSize( const QString& mediaName ) const;
         KDSCBBOX boundingBox( int pageNo ) const;
         KDSCBBOX boundingBox() const;
+
         void setProlog( PagePosition p )   { m_prolog=p; };
         PagePosition * prolog() { return &m_prolog ; }
         void setSetup( PagePosition p) { m_setup=p; };
         PagePosition * setup() { return &m_setup; }
+
         Format format() { return m_format; };
         const DocumentInfo * generateDocumentInfo();
         bool psCopyDoc( const QString& inputFile,

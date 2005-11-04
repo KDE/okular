@@ -119,7 +119,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
         if (query.mid(j,1)==" " && wasEol )
         {
             // lets match newline as a space
-            //kdDebug(1223) << "Matched, space after eol " << endl;
+            kdDebug(1223) << "Matched, space after eol " << endl;
             j++;
             queryLeft--;
             // since we dont really need to increment this after this
@@ -132,7 +132,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             dontIncrement=false;
             int min=QMIN(queryLeft,len);
             len=str.length();
-            //kdDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
+            kdDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
 
@@ -148,7 +148,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     haveMatch=false;
                     delete ret;
                     ret=new RegularAreaRect;
-                   // kdDebug(1223) << "\tNotmatched" << endl;
+                    kdDebug(1223) << "\tNotmatched" << endl;
                     j=0;
                     queryLeft=query.length();
             }
@@ -160,7 +160,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     // we matched
                     // substract the length of the current entity from 
                     // the left length of the query
-                  //  kdDebug(1223) << "\tMatched" << endl;
+                    kdDebug(1223) << "\tMatched" << endl;
                     haveMatch=true;
                     ret->append( (*it)->area );
                     j+=min;
@@ -168,8 +168,8 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             }
         }
         wasEol=(*it)->eol;
-        /*if (wasEol)
-            kdDebug(1223) << "\t\tENDOFLINE"  << endl;*/
+        if (wasEol)
+            kdDebug(1223) << "\t\tENDOFLINE"  << endl;
         if (haveMatch && queryLeft==0 && j==query.length())
         {
 //            RegularAreaRect::ConstIterator i=ret->begin(), end=ret->end;

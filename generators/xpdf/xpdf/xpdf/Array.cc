@@ -44,7 +44,7 @@ void Array::add(Object *elem) {
     } else {
       size *= 2;
     }
-    elems = (Object *)grealloc(elems, size * sizeof(Object));
+    elems = (Object *)greallocn(elems, size, sizeof(Object));
   }
   elems[length] = *elem;
   ++length;

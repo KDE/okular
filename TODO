@@ -27,6 +27,7 @@ More items (first items will enter 'In progress list' first):
 -> popup context menu when using right button in selection mode (BR99315)
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> evaluate changing KPDFLink to KPDFAction
+-> evaluate changing KPDFLinkMovie to KPDFLinkResource (any kind)
 -> evaluate completely handling links internally instead of asking xpdf structs
 -> pageview: change document viewport after mouse scrolling ended (not every scroll frame)
    this will give better mvc consistancy
@@ -88,8 +89,8 @@ More items (first items will enter 'In progress list' first):
 -> presentation: implement missing transitions (6/11 done)
 -> presentation: add a red pencil that creates ink annotations (author: i18n(author-presentation)))
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
--> presentation: link following (now possible with uniform links) (BR98388)
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
+-> presentation: 2 pages per view, for users reading ebooks with wide screens.
 -> splash(xpdf): check lack of smoothness at low resolutions and antialiasing (BR94231)
 -> kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
@@ -111,6 +112,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: presentation: link following (BR98388)
 -> ADD: add ebook-friendly alignment option, better layouting (BR100341)
 -> FIX: random crash when closing kpdf with kapp->quit() (don't use Settings:: in destructors)
 -> FIX: implement links for starting end exiting from presentation mode (pdf FullScreen, Close actions)

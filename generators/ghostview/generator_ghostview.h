@@ -11,12 +11,16 @@
 #define _KPDF_GSGENERATOR_H_
 
 #include "core/generator.h"
+#include <kstdaction.h>
+#include <kactioncollection.h>
 
 class GSInterpreterCMD;
 class GSLogWindow;
 class GSInterpreterLib;
 class GSInternalDocument;
 class KTempFile;
+class KSelectAction;
+class KActionCollection;
 
 class GSGenerator : public Generator
 {
@@ -31,9 +35,6 @@ class GSGenerator : public Generator
         const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
         const DocumentFonts * generateDocumentFonts() { return 0L; }
 
-        // DRM handling
-        bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
-
         // page contents generation
         bool canGeneratePixmap( bool async ) ;
         void generatePixmap( PixmapRequest * request ) ;
@@ -41,11 +42,6 @@ class GSGenerator : public Generator
         // can generate a KPDFText Page
         bool canGenerateTextPage() { return false; } ;
         void generateSyncTextPage( KPDFPage * /*page*/ ) { ; } ;
-
-        // capability querying
-        // provides internal search 
-        bool supportsSearching() { return false; } ;
-        bool prefersInternalSearching() { return false; } ;
 
         bool supportsRotation() { return true; } ;
         void setOrientation(QValueVector<KPDFPage*>&, int);
@@ -76,6 +72,7 @@ class GSGenerator : public Generator
     public slots:
         void slotPixmapGenerated(PixmapRequest * request);
         void slotAsyncPixmapGenerated(PixmapRequest * request );
+        void slotPaperSize (const QString & );
 
     signals:
         void error(QString & string, int duration);
@@ -88,6 +85,7 @@ class GSGenerator : public Generator
         KTempFile * dscForPDF;
         QMutex convertLock;
         GSInterpreterLib* m_convert;
+        QValueVector<KPDFPage*> m_pages;
 
         bool loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * > & pagesVector , bool ps );
         bool loadPages( QValueVector< KPDFPage * > & pagesVector );
@@ -96,13 +94,17 @@ class GSGenerator : public Generator
         int angle( CDSC_ORIENTATION_ENUM orientation );
         CDSC_ORIENTATION_ENUM orientation( int rot );
         QMutex docLock;
+        bool m_asyncBusy;
 
         // backendish stuff
         GSInterpreterLib* pixGenerator;
         GSInterpreterCMD* asyncGenerator;
         GSInternalDocument* internalDoc;
+
+        // gui stuff
         GSLogWindow * m_logWindow ;
-        bool m_asyncBusy;
+        KSelectAction* m_paperSize;
+        KActionCollection* m_actionCollection;
         QToolBox * m_box;
 };
 

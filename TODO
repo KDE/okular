@@ -11,6 +11,7 @@ In progress [working on]:
 -> annotations: creators in PageViewAnnotator (40% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
+-> link: add a KPDFAnchor link class
 -> (done: 100%) refactor, pdf parser, xml storage
 -> check mouse wrapping not screH / 2
 -> check if fix was applied in head only (pageview.cpp 1676)

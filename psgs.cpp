@@ -16,12 +16,12 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocio.h>
-#include <ktempfile.h>
 #include <kurl.h>
 
 #include <QDir>
 #include <QPainter>
 #include <QPixmap>
+#include <QTemporaryFile>
 #include <QTextStream>
 
 extern const char psheader[];
@@ -158,9 +158,11 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
   // Generate a PNG-file
   // Step 1: Write the PostScriptString to a File
-  KTempFile PSfile(QString::null,".ps");
+  QTemporaryFile PSfile;
+  PSfile.open();
+  const QString PSfileName = PSfile.fileName();
 
-  QTextStream& os = *PSfile.textStream();
+  QTextStream os(&PSfile);
   os << "%!PS-Adobe-2.0\n"
      << "%%Creator: kdvi\n"
      << "%%Title: KDVI temporary PostScript\n"
@@ -228,7 +230,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
           << "-c"
           << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe"
           << "-f"
-          << PSfile.name();
+          << PSfileName;
 
 #ifdef DEBUG_PSGS
   kdDebug(kvs::dvi) << gs_args.join(" ") << endl;
@@ -240,7 +242,10 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     // TODO: Issue error message, switch PS support off.
     kdError(kvs::dvi) << "ghostscript could not be started" << endl;
   }
-  PSfile.unlink();
+
+  // In the event of the function being called recursively, don't build
+  // up temporary files.
+  PSfile.remove();
 
   // Check if gs has indeed produced a file.
   if (QFile::exists(filename) == false) {
@@ -314,13 +319,15 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
     return;
   }
 
-  KTempFile gfxFile(QString::null, ".png");
-  gfxFile.setAutoDelete(1);
-  gfxFile.close(); // we are want the filename, not the file
+  QTemporaryFile gfxFile;
+  gfxFile.open();
+  const QString gfxFileName = gfxFile.fileName();
+  // We are want the filename, not the file.
+  gfxFile.close();
 
-  gs_generate_graphics_file(page, gfxFile.name(), magnification);
+  gs_generate_graphics_file(page, gfxFileName, magnification);
 
-  QPixmap MemoryCopy(gfxFile.name());
+  QPixmap MemoryCopy(gfxFileName);
   paint->drawPixmap(0, 0, MemoryCopy);
   return;
 }

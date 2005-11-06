@@ -37,11 +37,11 @@
 #include <kmessagebox.h>
 #include <kprinter.h>
 #include <kprocess.h>
-#include <ktempfile.h>
 
 #include <QApplication>
 #include <QLabel>
 #include <QPainter>
+#include <QTemporaryFile>
 
 extern QPainter foreGroundPaint; // QPainter used for text
 
@@ -246,9 +246,11 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   QString sourceFileName = dviFile->filename;
   if ((options.isEmpty() == false) || (dviFile->suggestedPageSize != 0) ) {
     // Get a name for a temporary file.
-    KTempFile export_tmpFile;
-    export_tmpFileName = export_tmpFile.name();
-    export_tmpFile.unlink();
+    // Must open the QTemporaryFile to access the name.
+    QTemporaryFile export_tmpFile;
+    export_tmpFile.open();
+    export_tmpFileName = export_tmpFile.fileName();
+    export_tmpFile.close();
 
     sourceFileName = export_tmpFileName;
 

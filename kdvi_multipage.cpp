@@ -20,11 +20,11 @@
 #include <kmessagebox.h>
 #include <kparts/genericfactory.h>
 #include <kstdaction.h>
-#include <ktempfile.h>
 #include <ktip.h>
 
 #include <Q3ValueList>
 #include <QLabel>
+#include <QTemporaryFile>
 #include <QTimer>
 
 
@@ -381,8 +381,11 @@ void KDVIMultiPage::print()
   // of dvips and allow abort. Giving a non-zero printer argument
   // means that the dvi-widget will print the file when dvips
   // terminates, and then delete the output file.
-  KTempFile tf;
-  DVIRenderer.exportPS(tf.name(), dvips_options, printer);
+  QTemporaryFile tf;
+  // Must open the QTemporaryFile to access the file name.
+  tf.setAutoRemove(false);
+  tf.open();
+  DVIRenderer.exportPS(tf.fileName(), dvips_options, printer);
 
   // "True" may be a bit euphemistic. However, since dvips runs
   // concurrently, there is no way of telling the result of the

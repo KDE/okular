@@ -59,9 +59,9 @@
 
 #include <klocale.h>
 #include <kprocio.h>
-#include <ktempfile.h>
 
 #include <QFile>
+#include <QTemporaryFile>
 
 #include <cstdlib>
 
@@ -369,11 +369,12 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     return it.data();
   }
 
-  // Get the name of a temporary file
-  KTempFile tmpfile(QString::null, ".ps");
-  QString convertedFileName = tmpfile.name();
+  // Get the name of a temporary file.
+  // Must open the QTemporaryFile to access the name.
+  QTemporaryFile tmpfile;
+  tmpfile.open();
+  const QString convertedFileName = tmpfile.fileName();
   tmpfile.close();
-  tmpfile.unlink();
 
   // Use pdf2ps to do the conversion
   KProcIO proc;
@@ -415,6 +416,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
   // deconstructed.
   convertedFiles[PDFFilename] = convertedFileName;
 
+  tmpfile.setAutoRemove(false);
   return convertedFileName;
 }
 

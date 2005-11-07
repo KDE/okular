@@ -1155,7 +1155,7 @@ void PageView::wheelEvent( QWheelEvent *e )
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();
-    if ( (e->state() & Qt::ControlButton) == Qt::ControlButton ) {
+    if ( (e->state() & Qt::ControlModifier) == Qt::ControlButton ) {
         if ( e->delta() < 0 )
             slotZoomOut();
         else
@@ -1868,7 +1868,7 @@ void PageView::slotAutoScoll()
     int index = abs( d->scrollIncrement ) - 1;  // 0..9
     const int scrollDelay[10] =  { 200, 100, 50, 30, 20, 30, 25, 20, 30, 20 };
     const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
-    d->autoScrollTimer->changeInterval( scrollDelay[ index ] );
+    d->autoScrollTimer->start( scrollDelay[ index ] );
     scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
 }
 

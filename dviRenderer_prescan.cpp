@@ -495,7 +495,7 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString& cp)
       break;
   Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
   QFileInfo fi1(dviFile->filename);
-  QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).trimmed()).absFilePath();
+  QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).trimmed()).absoluteFilePath();
   Length l;
   l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
   DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page+1, l);

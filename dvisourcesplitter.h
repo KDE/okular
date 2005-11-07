@@ -21,7 +21,7 @@ public:
   DVI_SourceFileSplitter(const QString & scrlink, const QString & dviFile);
 
   QString  fileName() { return m_fileInfo.fileName(); }
-  QString  filePath() { return m_fileInfo.absFilePath(); }
+  QString  filePath() { return m_fileInfo.absoluteFilePath(); }
   bool     fileExists() { return m_fileInfo.exists(); }
 
   Q_UINT32 line()     { return m_line; }

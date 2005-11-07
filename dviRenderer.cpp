@@ -400,7 +400,7 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
   QMutexLocker lock(&mutex);
 
   QFileInfo fi(fname);
-  QString   filename = fi.absFilePath();
+  QString   filename = fi.absoluteFilePath();
 
   // If fname is the empty string, then this means: "close". Delete
   // the dvifile and the pixmap.

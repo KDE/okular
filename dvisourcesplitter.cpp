@@ -53,8 +53,8 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   bool fiExists = m_fileInfo.exists();
 
   //if it doesn't exist, but adding ".tex"
-  if ( !fiExists && QFileInfo(m_fileInfo.absFilePath() + ".tex").exists() )
-    m_fileInfo.setFile(m_fileInfo.absFilePath() + ".tex");
+  if ( !fiExists && QFileInfo(m_fileInfo.absoluteFilePath() + ".tex").exists() )
+    m_fileInfo.setFile(m_fileInfo.absoluteFilePath() + ".tex");
 
   //if that doesn't help either, perhaps the file started with a
   //number: move the numbers from the sourceline to the filename
@@ -91,6 +91,6 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   if (!ok) m_line = 0;
 
 #ifdef DEBUG_SOURCESPLITTER
-  kdDebug(kvs::dvi) << "DVI_SourceSplitter: result: file " << m_fileInfo.absFilePath() << " line " << m_line << endl;
+  kdDebug(kvs::dvi) << "DVI_SourceSplitter: result: file " << m_fileInfo.absoluteFilePath() << " line " << m_line << endl;
 #endif
 }

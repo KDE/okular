@@ -1106,7 +1106,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         // serialize the text to speech (selectedText) and the
                         // preferred reader ("" is the default voice) ...
                         QByteArray data;
-                        QDataStream arg( &data, IO_WriteOnly );
+                        QDataStream arg( &data, QIODevice::WriteOnly );
 
                         arg.setVersion(QDataStream::Qt_3_1);
                         arg << selectedText;
@@ -1117,7 +1117,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         if (client->call( "kttsd", "KSpeech", "setText(QString,QString)", data, replyType, replyData, true ))
                         {
                             QByteArray  data2;
-                            QDataStream arg2(&data2, IO_WriteOnly);
+                            QDataStream arg2(&data2, QIODevice::WriteOnly);
 
                             arg2.setVersion(QDataStream::Qt_3_1);
                             arg2 << 0;
@@ -1155,7 +1155,7 @@ void PageView::wheelEvent( QWheelEvent *e )
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();
-    if ( (e->state() & Qt::ControlModifier) == Qt::ControlButton ) {
+    if ( (e->state() & Qt::ControlModifier) == Qt::ControlModifier ) {
         if ( e->delta() < 0 )
             slotZoomOut();
         else

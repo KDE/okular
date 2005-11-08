@@ -137,7 +137,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, cons
 {
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
-    if ( !fileReadTest.open( IO_ReadOnly ) )
+    if ( !fileReadTest.open( QIODevice::ReadOnly ) )
     {
         d->docFileName = QString::null;
         return false;
@@ -1208,7 +1208,7 @@ int KPDFDocument::getTotalMemory()
 #ifdef __linux__
     // if /proc/meminfo doesn't exist, return 128MB
     QFile memFile( "/proc/meminfo" );
-    if ( !memFile.open( IO_ReadOnly ) )
+    if ( !memFile.open( QIODevice::ReadOnly ) )
         return (cachedValue = 134217728);
 
     // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
@@ -1230,7 +1230,7 @@ int KPDFDocument::getFreeMemory()
 #ifdef __linux__
     // if /proc/meminfo doesn't exist, return MEMORY FULL
     QFile memFile( "/proc/meminfo" );
-    if ( !memFile.open( IO_ReadOnly ) )
+    if ( !memFile.open( QIODevice::ReadOnly ) )
         return 0;
 
     // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
@@ -1264,7 +1264,7 @@ void KPDFDocument::loadDocumentInfo()
 {
     //kdDebug() << "Using '" << d->xmlFileName << "' as document info file." << endl;
     QFile infoFile( d->xmlFileName );
-    if ( !infoFile.exists() || !infoFile.open( IO_ReadOnly ) )
+    if ( !infoFile.exists() || !infoFile.open( QIODevice::ReadOnly ) )
         return;
 
     // Load DOM from XML file
@@ -1377,7 +1377,7 @@ void KPDFDocument::saveDocumentInfo() const
         return;
 
     QFile infoFile( d->xmlFileName );
-    if (infoFile.open( IO_WriteOnly | IO_Truncate) )
+    if (infoFile.open( QIODevice::WriteOnly | QIODevice::Truncate) )
     {
         // Create DOM
         QDomDocument doc( "documentInfo" );

@@ -25,7 +25,7 @@
 
 #include <cmath>
 
-#define DEBUG_FONTPOOL
+//#define DEBUG_FONTPOOL
 
 
 // List of permissible MetaFontModes which are supported by kdvi.

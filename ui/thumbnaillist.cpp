@@ -170,7 +170,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 			m_selected->setSelected( true );
 			if ( KpdfSettings::syncThumbnailsViewport() )
 			{
-				int yOffset = QMAX( visibleHeight() / 4, m_selected->height() / 2 );
+				int yOffset = qMax( visibleHeight() / 4, m_selected->height() / 2 );
 				ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, yOffset );
 			}
 			break;

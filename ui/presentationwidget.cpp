@@ -578,7 +578,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     // fill unpainted areas with background color
     QRegion unpainted( QRect( 0, 0, m_width, m_height ) );
     QVector<QRect> rects = unpainted.subtract( frame->geometry ).rects();
-    for ( uint i = 0; i < rects.count(); i++ )
+    for ( int i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
         p.fillRect( r, KpdfSettings::slidesBackgroundColor() );

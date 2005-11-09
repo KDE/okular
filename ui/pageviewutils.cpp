@@ -73,7 +73,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         }
         textXOffset = 2 + symbol.width();
         width += textXOffset;
-        height = QMAX( height, symbol.height() );
+        height = qMax( height, symbol.height() );
     }
     QRect geometry( 0, 0, width + 10, height + 8 );
     QRect geometry2( 0, 0, width + 9, height + 7 );

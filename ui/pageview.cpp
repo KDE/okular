@@ -586,7 +586,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
                         KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
                 QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-                d->messageWindow->display( status.arg(d->typeAheadString.lower()),
+                d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
                 d->findTimeoutTimer->start( 3000, true );
             }
@@ -606,7 +606,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             // because it activates the accel
             releaseKeyboard();
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
-                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
+                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.toLower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
             // it is needed to grab the keyboard becase people may have Space assigned to a
@@ -626,7 +626,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
                     KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
             QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-            d->messageWindow->display( status.arg(d->typeAheadString.lower()),
+            d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
                                        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
             d->findTimeoutTimer->start( 3000, true );
         }
@@ -953,7 +953,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 }
 
                 // find out new zoom ratio and normalized view center (relative to the contentsRect)
-                double zoom = QMIN( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
+                double zoom = qMin( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
                 double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentsWidth());
                 double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentsHeight());
 
@@ -1066,7 +1066,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         QString type( KImageIO::type( fileName ) );
                         if ( type.isNull() )
                             type = "PNG";
-                        copyPix.save( fileName, type.latin1() );
+                        copyPix.save( fileName, type.toLatin1() );
                         d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file." ).arg( copyPix.width() ).arg( copyPix.height() ).arg( type ) );
                     }
                 }
@@ -1307,7 +1307,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     {
         double scaleW = (double)colWidth / (double)width;
         double scaleH = (double)rowHeight / (double)height;
-        zoom = QMIN( scaleW, scaleH );
+        zoom = qMin( scaleW, scaleH );
         item->setWHZ( (int)(zoom * width), (int)(zoom * height), zoom );
         d->zoomFactor = zoom;
     }
@@ -1351,8 +1351,8 @@ void PageView::selectionEndPoint( int x, int y )
 {
     // clip selection to the viewport
     QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
-    x = QMAX( QMIN( x, viewportRect.right() ), viewportRect.left() );
-    y = QMAX( QMIN( y, viewportRect.bottom() ), viewportRect.top() );
+    x = qMax( qMin( x, viewportRect.right() ), viewportRect.left() );
+    y = qMax( qMin( y, viewportRect.bottom() ), viewportRect.top() );
     // if selection changed update rect
     if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
     {
@@ -1458,7 +1458,7 @@ void PageView::updateZoomText()
 {
     // use current page zoom as zoomFactor if in ZoomFit/* mode
     if ( d->zoomMode != ZoomFixed && d->items.count() > 0 )
-        d->zoomFactor = d->items[ QMAX( 0, (int)d->document->currentPage() ) ]->zoomFactor();
+        d->zoomFactor = d->items[ qMax( 0, (int)d->document->currentPage() ) ]->zoomFactor();
     float newFactor = d->zoomFactor;
     d->aZoom->clear();
 
@@ -1622,7 +1622,7 @@ void PageView::slotRelayoutPages()
     }
     else // viewContinuous is FALSE
     {
-        PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
+        PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 
         // setup varialbles for a 1(row) x N(columns) grid
         int nCols = KpdfSettings::viewColumns(),

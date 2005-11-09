@@ -34,7 +34,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   }
 
   // mime name based on mimetype id
-  QString mimeName = info->get( "mimeType" ).section( '/', -1 ).upper();
+  QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
   setCaption( i18n("%1 Properties").arg( mimeName ) );
 
   QDomElement docElement = info->documentElement();
@@ -57,7 +57,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     row++;
 
     // refine maximum width of 'value' labels
-    valMaxWidth = QMAX( valMaxWidth, fontMetrics().width( valueString ) );
+    valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
   }
 
   // add the number of pages if the generator hasn't done it already
@@ -85,10 +85,10 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   int width = layout->minimumSize().width() + valMaxWidth + marginHint() + spacingHint() + marginHint() + 30;
   if (page2Layout)
   {
-    width = QMAX( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
+    width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
   }
   // stay inside the 2/3 of the screen width
   QRect screenContainer = KGlobalSettings::desktopGeometry( this );
-  width = QMIN( width, 2*screenContainer.width()/3 );
+  width = qMin( width, 2*screenContainer.width()/3 );
   resize(width, 1);
 }

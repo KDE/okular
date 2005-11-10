@@ -31,7 +31,7 @@
 #include <kstandarddirs.h>
 
 #include <q3ptrstack.h>
-#include <Q3VBox>
+#include <kvbox.h>
 #include <QCheckBox>
 #include <QFileInfo>
 #include <QHBoxLayout>
@@ -40,6 +40,7 @@
 #include <QPainter>
 #include <QRegExp>
 #include <kglobal.h>
+#include <kvbox.h>
 
 
 //#define DEBUG_DVIRENDERER
@@ -241,7 +242,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
     KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
                                          parentWidget, "information", true, true,KStdGuiItem::ok() );
 
-    Q3VBox *topcontents = new Q3VBox (dialog);
+    KVBox *topcontents = new KVBox (dialog);
     topcontents->setSpacing(KDialog::spacingHint()*2);
     topcontents->setMargin(KDialog::marginHint()*2);
 

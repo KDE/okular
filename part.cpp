@@ -26,7 +26,7 @@
 #include <qpainter.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <q3vbox.h>
+#include <kvbox.h>
 #include <qtoolbox.h>
 #include <qpushbutton.h>
 #include <dcopobject.h>
@@ -158,7 +158,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	enableTOC( false );
 
 	// [left toolbox: Thumbnails and Bookmarks] | []
-	Q3VBox * thumbsBox = new ThumbnailsBox( m_toolBox );
+	KVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );

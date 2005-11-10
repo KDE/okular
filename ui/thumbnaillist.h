@@ -12,8 +12,9 @@
 
 #include <q3scrollview.h>
 #include <qvector.h>
-#include <q3vbox.h>
+
 #include <ktoolbar.h>
+#include <kvbox.h>
 #include "core/observer.h"
 
 class QTimer;
@@ -97,10 +98,10 @@ Q_OBJECT
 /**
  * @short A vertical boxed container with zero size hint (for insertion on left toolbox)
  */
-class ThumbnailsBox : public Q3VBox
+class ThumbnailsBox : public KVBox
 {
 	public:
-		ThumbnailsBox( QWidget * parent ) : Q3VBox( parent ) {};
+		ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {};
 		QSize sizeHint() const { return QSize(); }
 };
 

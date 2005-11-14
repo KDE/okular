@@ -111,7 +111,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
     KWallet::Wallet * wallet = 0;
     while ( !pdfdoc->isOk() && pdfdoc->getErrorCode() == errEncrypted )
     {
-        Q3CString password;
+        QByteArray password;
 
         // 1.A. try to retrieve the first password from the kde wallet system
         if ( !triedWallet )

@@ -13,7 +13,6 @@
 #include <qevent.h>
 #include <qimage.h>
 #include <qapplication.h>
-#include <q3paintdevicemetrics.h>
 #include <qregexp.h>
 #include <kauthorized.h>
 #include <klistview.h>
@@ -424,9 +423,8 @@ bool PDFGenerator::print( KPrinter& printer )
         dummy.setFullPage(true);
         dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
 
-        Q3PaintDeviceMetrics metrics(&dummy);
-        globalParams->setPSPaperWidth(metrics.width());
-        globalParams->setPSPaperHeight(metrics.height());
+        globalParams->setPSPaperWidth(dummy.width());
+        globalParams->setPSPaperHeight(dummy.height());
     }
 
     KTempFile tf( QString::null, ".ps" );

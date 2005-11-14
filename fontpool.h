@@ -14,13 +14,12 @@
 
 #include <Q3PtrList>
 #include <QObject>
+#include <QProcess>
 
 #ifdef HAVE_FREETYPE
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #endif
-
-class KProcess;
 
 
 /**
@@ -200,15 +199,16 @@ private:
   // FontProgress; the progress dialog used when generating fonts.
   fontProgressDialog progress;
 
-private slots:
-  /** Members used for font location */
+  // The handle on the external process.
+  QProcess kpsewhich_;
 
-  // For internal purposess only. This slot is called when MetaFont is
-  // run via the kpsewhich programm. The MetaFont output is
-  // transmitted to the fontpool via this slot. This method calles
-  // suitable methods in the fontProgres Dialog, and collects the
-  // output of MetaFontt int the "MetafontOutput" member
- void mf_output_receiver(KProcess *, char *, int);
+private slots:
+  // This slot is called when MetaFont is run via the kpsewhich program.
+  // The MetaFont output is transmitted to the fontpool via the @c kpsewhich_
+  // member variable. This method passes on progress information to the
+  // fontProgress Dialog  and collects the output of MetaFont in the
+  // @c MetafontOutput member variable.
+  void mf_output_receiver();
 };
 
 #endif //ifndef _FONTPOOL_H

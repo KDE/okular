@@ -9,11 +9,12 @@
 #define FONT_GENERATION_H
 
 #include <kdialogbase.h>
+
 #include <QPointer>
 
-class KProcIO;
 class KProgress;
 class QLabel;
+class QProcess;
 
 
 /**
@@ -44,22 +45,22 @@ public:
     /** Used to initialize the progress bar. If the argument @c proc is
         non-zero, the associated process will be killed when the "abort"
         button is pressed. The pointer is stored internally inside a
-        QPointer, so it is safe to delete the real KProcIO instance
+        QPointer, so it is safe to delete the real QProcess instance
         at any time. */
-    void setTotalSteps(int, KProcIO *proc=0);
+    void setTotalSteps(int, QProcess* proc=0);
 
     QLabel* TextLabel2;
 
 private slots:
     /** Calling this slot does nothing than to kill the process that is
         pointed to be procIO, if procIO is not zero.*/
-  void killProcIO();
+  void killProcess();
 
 private:
    QLabel* TextLabel1;
    KProgress* ProgressBar1;
    int progress;
-   QPointer<KProcIO> procIO;
+   QPointer<QProcess> process;
 };
 
 #endif // FONT_GENERATION_H

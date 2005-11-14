@@ -8,12 +8,12 @@
 #include "fontprogress.h"
 
 #include <klocale.h>
-#include <kprocio.h>
 #include <kprogress.h>
 #include <kvbox.h>
 
 #include <QApplication>
 #include <QLabel>
+#include <QProcess>
 #include <QToolTip>
 
 
@@ -22,7 +22,12 @@
  *  name 'name' and widget flags set to 'f'
  */
 fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip, QWidget* parent, const QString& name, bool progressbar)
-  : KDialogBase( parent, "Font Generation Progress Dialog", true, name, Cancel, Cancel, true )
+  : KDialogBase( parent, "Font Generation Progress Dialog", true, name, Cancel, Cancel, true ),
+    TextLabel2(0),
+    TextLabel1(0),
+    ProgressBar1(0),
+    progress(0),
+    process(0)
 {
   setCursor( QCursor( 3 ) );
 
@@ -55,9 +60,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   TextLabel2->setWhatsThis( whatsThis );
   QToolTip::add( TextLabel2, ttip );
 
-  progress = 0;
-  procIO = 0;
-  qApp->connect(this, SIGNAL(finished()), this, SLOT(killProcIO()));
+  qApp->connect(this, SIGNAL(finished()), this, SLOT(killProcess()));
 }
 
 
@@ -79,9 +82,9 @@ void fontProgressDialog::increaseNumSteps(const QString& explanation)
 }
 
 
-void fontProgressDialog::setTotalSteps(int steps, KProcIO *proc)
+void fontProgressDialog::setTotalSteps(int steps, QProcess* proc)
 {
-  procIO = proc;
+  process = proc;
   if (ProgressBar1 != 0) {
     ProgressBar1->setTotalSteps(steps);
     ProgressBar1->setProgress(0);
@@ -90,11 +93,12 @@ void fontProgressDialog::setTotalSteps(int steps, KProcIO *proc)
 }
 
 
-void fontProgressDialog::killProcIO()
+void fontProgressDialog::killProcess()
 {
-  if (!procIO.isNull())
-    procIO->kill();
+  if (!process.isNull()) {
+    process->kill();
+    process = 0;
+  }
 }
-
 
 #include "fontprogress.moc"

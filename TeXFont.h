@@ -29,12 +29,12 @@ class TeXFont {
         glyphtable[i].shrunkenCharacter.resize(0, 0);
     };
 
-  virtual glyph* getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) = 0;
+  virtual glyph* getGlyph(quint16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) = 0;
 
   // Checksum of the font. Used e.g. by PK fonts. This field is filled
   // in by the constructor, or set to 0.0, if the font format does not
   // contain checksums.
-  Q_UINT32           checksum;
+  quint32           checksum;
 
   // If the font or if some glyphs could not be loaded, error messages
   // will be put here.

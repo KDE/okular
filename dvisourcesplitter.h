@@ -24,11 +24,11 @@ public:
   QString  filePath() { return m_fileInfo.absoluteFilePath(); }
   bool     fileExists() { return m_fileInfo.exists(); }
 
-  Q_UINT32 line()     { return m_line; }
+  quint32 line()     { return m_line; }
 
 private:
   QFileInfo m_fileInfo;
-  Q_UINT32  m_line;
+  quint32  m_line;
   bool      m_exists;
 };
 #endif

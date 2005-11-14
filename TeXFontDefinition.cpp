@@ -29,7 +29,7 @@ extern const int MFResolutions[];
 // #define DEBUG_FONT
 
 
-TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
+TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
            class fontPool *pool, double _enlargement)
 {
 #ifdef DEBUG_FONT

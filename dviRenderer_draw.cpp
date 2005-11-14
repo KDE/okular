@@ -227,8 +227,8 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 
   currinf.fonttable         = &(currinf.fontp->vf_table);
   currinf._virtual          = currinf.fontp;
-  Q_UINT8 *command_ptr_sav  = command_pointer;
-  Q_UINT8 *end_ptr_sav      = end_pointer;
+  quint8 *command_ptr_sav  = command_pointer;
+  quint8 *end_ptr_sav      = end_pointer;
   command_pointer           = m->pos;
   end_pointer               = m->end;
   draw_part(currinf.fontp->scaled_size_in_DVI_units*(dviFile->getCmPerDVIunit() * 1200.0 / 2.54)/16.0, true);
@@ -270,8 +270,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
   kdDebug(kvs::dvi) << "draw_part" << endl;
 #endif
 
-  Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
-  Q_UINT8 ch;
+  qint32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
+  quint8 ch;
 
   currinf.fontp        = NULL;
   currinf.set_char_p   = &dviRenderer::set_no_char;
@@ -289,7 +289,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         }
         currinf.set_char_p = currinf.fontp->set_char_p;
       } else {
-        Q_INT32 a, b;
+        qint32 a, b;
 
         switch (ch) {
         case SET1:
@@ -445,7 +445,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case DOWN3:
         case DOWN4:
           {
-            Q_INT32 DDtmp = readINT(ch - DOWN1 + 1);
+            qint32 DDtmp = readINT(ch - DOWN1 + 1);
             if ((is_vfmacro == false) &&
                 (currinf.fontp != 0) &&
                 (abs(DDtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) &&
@@ -545,8 +545,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case FNTDEF4:
           command_pointer += 12 + ch - FNTDEF1 + 1;
           {
-            Q_UINT8 tempa = readUINT8();
-            Q_UINT8 tempb = readUINT8();
+            quint8 tempa = readUINT8();
+            quint8 tempb = readUINT8();
             command_pointer += tempa + tempb;
           }
           break;

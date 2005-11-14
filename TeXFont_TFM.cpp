@@ -32,7 +32,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 
   // Data from the very beginning of the TFM file, as specified in
   // "The DVI Driver Standard, Level 0", section D.2.1
-  Q_UINT16 lf, lh, bc, ec, nw, nh, nd;
+  quint16 lf, lh, bc, ec, nw, nh, nd;
   stream >> lf >> lh >> bc >> ec >> nw >> nh >> nd;
 #ifdef DEBUG_TFM
   kdDebug(kvs::dvi) << "lf= " << lf << endl
@@ -89,7 +89,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   for(unsigned int characterCode=bc; characterCode<ec; characterCode++) {
     glyph *g = glyphtable+characterCode;
 
-    Q_UINT8 byte;
+    quint8 byte;
     stream >> byte;
     if (byte >= nw)
       kdError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid Char-Info table." << endl;
@@ -117,7 +117,7 @@ TeXFont_TFM::~TeXFont_TFM()
 }
 
 
-glyph* TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixmap, const QColor& color)
+glyph* TeXFont_TFM::getGlyph(quint16 characterCode, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_TFM
   kdDebug(kvs::dvi) << "TeXFont_TFM::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
@@ -134,10 +134,10 @@ glyph* TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixma
 
   if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter.isNull()) || (color != g->color)) ) {
     g->color = color;
-    Q_UINT16 pixelWidth = (Q_UINT16)(parent->displayResolution_in_dpi *
+    quint16 pixelWidth = (quint16)(parent->displayResolution_in_dpi *
                                      design_size_in_TeX_points.toDouble() *
                                      characterWidth_in_units_of_design_size[characterCode].toDouble() * 100.0/7227.0 + 0.5);
-    Q_UINT16 pixelHeight = (Q_UINT16)(parent->displayResolution_in_dpi *
+    quint16 pixelHeight = (quint16)(parent->displayResolution_in_dpi *
                                       design_size_in_TeX_points.toDouble() *
                                       characterHeight_in_units_of_design_size[characterCode].toDouble() * 100.0/7227.0 + 0.5);
 

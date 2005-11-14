@@ -38,7 +38,7 @@ class macro {
   // address of last+1 byte
   unsigned char* end;
   // DVI units to move reference point
-  Q_INT32 dvi_advance_in_units_of_design_size_by_2e20;
+  qint32 dvi_advance_in_units_of_design_size_by_2e20;
   // if memory at pos should be returned on destruction
   bool free_me;
 };
@@ -64,7 +64,7 @@ class TeXFontDefinition {
   };
 
 
-  TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, Q_UINT32 chk, Q_INT32 _scaled_size_in_DVI_units,
+  TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
        class fontPool *pool, double _enlargement);
   ~TeXFontDefinition();
 
@@ -86,7 +86,7 @@ class TeXFontDefinition {
   unsigned char  flags;
   double         enlargement;
   // Scaled size from the font definition command; in DVI units
-  Q_INT32        scaled_size_in_DVI_units;
+  qint32        scaled_size_in_DVI_units;
   // proc used to set char
   set_char_proc  set_char_p;
 
@@ -131,7 +131,7 @@ class TeXFontDefinition {
 #endif
 
  private:
-  Q_UINT32       checksum;
+  quint32       checksum;
 
   /** This will be set to a human-readable description of the font,
       e.g. "virtual" or "TeX PK", or "Type 1" */

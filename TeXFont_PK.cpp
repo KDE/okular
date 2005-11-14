@@ -111,7 +111,7 @@ TeXFont_PK::~TeXFont_PK()
 }
 
 
-glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QColor& color)
+glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PK
   kdDebug(kvs::dvi) << "TeXFont_PK::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
@@ -204,10 +204,10 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
 
     // Turn the image into 8 bit
     QByteArray translated(characterBitmaps[ch]->w * characterBitmaps[ch]->h);
-    Q_UINT8 *data = (Q_UINT8 *)translated.data();
+    quint8 *data = (quint8 *)translated.data();
     for(int x=0; x<characterBitmaps[ch]->w; x++)
       for(int y=0; y<characterBitmaps[ch]->h; y++) {
-        Q_UINT8 bit = *(characterBitmaps[ch]->bits + characterBitmaps[ch]->bytes_wide*y + (x >> 3));
+        quint8 bit = *(characterBitmaps[ch]->bits + characterBitmaps[ch]->bytes_wide*y + (x >> 3));
         bit = bit >> (x & 7);
         bit = bit & 1;
         data[characterBitmaps[ch]->w*y + x] = bit;
@@ -215,7 +215,7 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
 
     // Now shrink the image. We shrink the X-direction first
     QByteArray xshrunk(shrunk_width*characterBitmaps[ch]->h);
-    Q_UINT8 *xdata = (Q_UINT8 *)xshrunk.data();
+    quint8 *xdata = (quint8 *)xshrunk.data();
 
     // Do the shrinking. The pixel (x,y) that we want to calculate
     // corresponds to the line segment from
@@ -226,7 +226,7 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
 
     for(int y=0; y<characterBitmaps[ch]->h; y++)
       for(int x=0; x<shrunk_width; x++) {
-        Q_UINT32 value = 0;
+        quint32 value = 0;
         double destStartX = shrinkFactor*x+srcXTrans;
         double destEndX   = shrinkFactor*(x+1)+srcXTrans;
         for(int srcX=(int)ceil(destStartX); srcX<floor(destEndX); srcX++)
@@ -234,19 +234,19 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
             value += data[characterBitmaps[ch]->w*y + srcX] * 255;
 
         if (destStartX >= 0.0)
-          value += (Q_UINT32) (255.0*(ceil(destStartX)-destStartX) * data[characterBitmaps[ch]->w*y + (int)floor(destStartX)]);
+          value += (quint32) (255.0*(ceil(destStartX)-destStartX) * data[characterBitmaps[ch]->w*y + (int)floor(destStartX)]);
         if (floor(destEndX) < characterBitmaps[ch]->w)
-          value += (Q_UINT32) (255.0*(destEndX-floor(destEndX)) * data[characterBitmaps[ch]->w*y + (int)floor(destEndX)]);
+          value += (quint32) (255.0*(destEndX-floor(destEndX)) * data[characterBitmaps[ch]->w*y + (int)floor(destEndX)]);
 
         xdata[shrunk_width*y + x] = (int)(value/shrinkFactor + 0.5);
       }
 
     // Now shrink the Y-direction
     QByteArray xyshrunk(shrunk_width*shrunk_height);
-    Q_UINT8 *xydata = (Q_UINT8 *)xyshrunk.data();
+    quint8 *xydata = (quint8 *)xyshrunk.data();
     for(int x=0; x<shrunk_width; x++)
       for(int y=0; y<shrunk_height; y++) {
-        Q_UINT32 value = 0;
+        quint32 value = 0;
         double destStartY = shrinkFactor*y+srcYTrans;
         double destEndY   = shrinkFactor*(y+1)+srcYTrans;
         for(int srcY=(int)ceil(destStartY); srcY<floor(destEndY); srcY++)
@@ -254,9 +254,9 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
             value += xdata[shrunk_width*srcY + x];
 
         if (destStartY >= 0.0)
-          value += (Q_UINT32) ((ceil(destStartY)-destStartY) * xdata[shrunk_width*(int)floor(destStartY) + x]);
+          value += (quint32) ((ceil(destStartY)-destStartY) * xdata[shrunk_width*(int)floor(destStartY) + x]);
         if (floor(destEndY) < characterBitmaps[ch]->h)
-          value += (Q_UINT32) ((destEndY-floor(destEndY)) * xdata[shrunk_width*(int)floor(destEndY) + x]);
+          value += (quint32) ((destEndY-floor(destEndY)) * xdata[shrunk_width*(int)floor(destEndY) + x]);
 
         xydata[shrunk_width*y + x] = (int)(value/shrinkFactor);
       }
@@ -271,9 +271,9 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
       // character outline only using the alpha channel. That ensures
       // good quality rendering for overlapping characters.
       im32.fill(qRgb(color.red(), color.green(), color.blue()));
-      for(Q_UINT16 y=0; y<shrunk_height; y++) {
-        Q_UINT8 *destScanLine = (Q_UINT8 *)im32.scanLine(y);
-        for(Q_UINT16 col=0; col<shrunk_width; col++)
+      for(quint16 y=0; y<shrunk_height; y++) {
+        quint8 *destScanLine = (quint8 *)im32.scanLine(y);
+        for(quint16 col=0; col<shrunk_width; col++)
           destScanLine[4*col+3] = xydata[shrunk_width*y + col];
       }
     } else {
@@ -286,15 +286,15 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
       // are no longer correctly drawn, but quality is still
       // sufficient for most purposes. One notable exception is output
       // from the gftodvi program, which will be partially unreadable.
-      Q_UINT16 rInv = 0xFF - color.red();
-      Q_UINT16 gInv = 0xFF - color.green();
-      Q_UINT16 bInv = 0xFF - color.blue();
+      quint16 rInv = 0xFF - color.red();
+      quint16 gInv = 0xFF - color.green();
+      quint16 bInv = 0xFF - color.blue();
 
-      Q_UINT8 *srcScanLine = xydata;
-      for(Q_UINT16 y=0; y<shrunk_height; y++) {
+      quint8 *srcScanLine = xydata;
+      for(quint16 y=0; y<shrunk_height; y++) {
         unsigned int *destScanLine = (unsigned int *)im32.scanLine(y);
-        for(Q_UINT16 col=0; col<shrunk_width; col++) {
-          Q_UINT16 data =  *srcScanLine;
+        for(quint16 col=0; col<shrunk_width; col++) {
+          quint16 data =  *srcScanLine;
           // The value stored in "data" now has the following meaning:
           // data = 0 -> white; data = 0xff -> use "color"
           *destScanLine = qRgba(0xFF - (rInv*data + 0x7F) / 0xFF,
@@ -316,8 +316,8 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
 
 
 
-#define        ADD(a, b)        ((Q_UINT32 *) (((char *) a) + b))
-#define        SUB(a, b)        ((Q_UINT32 *) (((char *) a) - b))
+#define        ADD(a, b)        ((quint32 *) (((char *) a) + b))
+#define        SUB(a, b)        ((quint32 *) (((char *) a) - b))
 
 
 
@@ -343,7 +343,7 @@ static const uchar bitflip[256] = {
   15, 143, 79, 207, 47, 175, 111, 239, 31, 159, 95, 223, 63, 191, 127, 255
 };
 
-static Q_UINT32        bit_masks[33] = {
+static quint32        bit_masks[33] = {
         0x0,           0x1,            0x3,            0x7,
         0xf,           0x1f,           0x3f,           0x7f,
         0xff,          0x1ff,          0x3ff,          0x7ff,
@@ -473,11 +473,11 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   int        n;
   int        row_bit_pos;
   bool       paint_switch;
-  Q_UINT32*  cp;
+  quint32*  cp;
   register struct glyph *g;
   register FILE *fp = file;
   long       fpwidth;
-  Q_UINT32   word = 0;
+  quint32   word = 0;
   int        word_weight, bytes_wide;
   int        rows_left, h_bit, count;
 
@@ -533,7 +533,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     characterBitmaps[ch]->bits = new char[size != 0 ? size : 1];
   }
 
-  cp = (Q_UINT32 *) characterBitmaps[ch]->bits;
+  cp = (quint32 *) characterBitmaps[ch]->bits;
 
   /*
    * read character data into *cp
@@ -621,7 +621,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         }
         paint_switch = 1 - paint_switch;
       }
-      if (cp != ((Q_UINT32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+      if (cp != ((quint32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
         oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
         oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));
@@ -707,7 +707,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         }
         paint_switch = 1 - paint_switch;
       }
-      if (cp != ((Q_UINT32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+      if (cp != ((quint32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
         oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
         oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));

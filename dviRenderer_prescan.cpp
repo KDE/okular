@@ -36,7 +36,7 @@ extern void parse_special_argument(const QString& strg, const char* argument_nam
 //#define DEBUG_PRESCAN
 
 
-void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
+void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 {
 #ifdef  DEBUG_PRESCAN
   kdDebug(kvs::dvi) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
@@ -92,8 +92,8 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
-    Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
-    Q_UINT16 page;
+    quint32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
+    quint16 page;
     for(page=0; page < dviFile->total_pages; page++)
       if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
         break;
@@ -154,13 +154,13 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 
 
   _isModified = true;
-  Q_UINT32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
-  Q_UINT32 lengthOfNewSpecial = PS.length()+5;
+  quint32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
+  quint32 lengthOfNewSpecial = PS.length()+5;
 
-  Q3MemArray<Q_UINT8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
+  Q3MemArray<quint8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
 
-  Q_UINT8 *commandPtrSav = command_pointer;
-  Q_UINT8 *endPtrSav = end_pointer;
+  quint8 *commandPtrSav = command_pointer;
+  quint8 *endPtrSav = end_pointer;
   end_pointer = newDVI.data() + dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
   memcpy(newDVI.data(), dviFile->dvi_Data(), beginningOfSpecialCommand-dviFile->dvi_Data());
   command_pointer = newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data());
@@ -174,12 +174,12 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   // Adjust page pointers in the DVI file
   dviFile->size_of_file = dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
   end_pointer = newDVI.data() + dviFile->size_of_file;
-  Q_UINT32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data();
-  for(Q_UINT16 i=0; i < dviFile->total_pages; i++) {
+  quint32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data();
+  for(quint16 i=0; i < dviFile->total_pages; i++) {
     if (dviFile->page_offset[i] > currentOffset) {
       dviFile->page_offset[i] = dviFile->page_offset[i] + lengthOfNewSpecial-lengthOfOldSpecial;
       command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
-      Q_UINT32 a = readUINT32();
+      quint32 a = readUINT32();
       if (a > currentOffset) {
         a = a + lengthOfNewSpecial-lengthOfOldSpecial;
         command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
@@ -193,7 +193,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   dviFile->page_offset[dviFile->total_pages] = dviFile->beginning_of_postamble;
 
   command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
-  Q_UINT32 a = readUINT32();
+  quint32 a = readUINT32();
   if (a > currentOffset) {
     a = a + lengthOfNewSpecial - lengthOfOldSpecial;
     command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
@@ -222,7 +222,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
 }
 
 
-void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpecialCommand)
+void dviRenderer::prescan_removePageSizeInfo(char *cp, quint8 *beginningOfSpecialCommand)
 {
 #ifdef  DEBUG_PRESCAN
   kdDebug(kvs::dvi) << "dviRenderer::prescan_embedPS( cp = " << cp << " ) " << endl;
@@ -232,7 +232,7 @@ void dviRenderer::prescan_removePageSizeInfo(char *cp, Q_UINT8 *beginningOfSpeci
   if (strncasecmp(cp, "papersize=", 10) != 0)
     return;
 
-  for (Q_UINT8 *ptr=beginningOfSpecialCommand; ptr<command_pointer; ptr++)
+  for (quint8 *ptr=beginningOfSpecialCommand; ptr<command_pointer; ptr++)
     *ptr = NOP;
 }
 
@@ -260,7 +260,7 @@ void dviRenderer::prescan_ParseBackgroundSpecial(const QString& cp)
 {
   QColor col = parseColorSpecification(cp.trimmed());
   if (col.isValid())
-    for(Q_UINT16 page=current_page; page < dviFile->total_pages; page++)
+    for(quint16 page=current_page; page < dviFile->total_pages; page++)
       PS_interface->setBackgroundColor(page, col);
   return;
 }
@@ -489,11 +489,11 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString& cp)
   // "src:123file.tex" to positions in the DVI file
 
   // extract the file name and the numeral part from the string
-  Q_INT32 j;
+  qint32 j;
   for(j=0;j<cp.length();j++)
     if (!cp.at(j).isNumber())
       break;
-  Q_UINT32 sourceLineNumber = cp.left(j).toUInt();
+  quint32 sourceLineNumber = cp.left(j).toUInt();
   QFileInfo fi1(dviFile->filename);
   QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).trimmed()).absoluteFilePath();
   Length l;
@@ -503,7 +503,7 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString& cp)
 }
 
 
-void dviRenderer::prescan_parseSpecials(char *cp, Q_UINT8 *)
+void dviRenderer::prescan_parseSpecials(char *cp, quint8 *)
 {
   QString special_command(cp);
 
@@ -612,8 +612,8 @@ void dviRenderer::prescan(parseSpecials specialParser)
   if (resolutionInDPI == 0.0)
     setResolution(100);
 
-  Q_INT32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
-  Q_UINT8 ch;
+  qint32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
+  quint8 ch;
   double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
 
   stack.clear();
@@ -640,7 +640,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
     }
 
 
-    Q_INT32 a, b;
+    qint32 a, b;
 
     switch (ch) {
     case SET1:
@@ -717,7 +717,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
     case DOWN3:
     case DOWN4:
       {
-        Q_INT32 DDtmp = readINT(ch - DOWN1 + 1);
+        qint32 DDtmp = readINT(ch - DOWN1 + 1);
         currinf.data.dvi_v += ((long) (DDtmp *  65536.0*fontPixelPerDVIunit))/65536;
         currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
       }
@@ -760,7 +760,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
     case XXX3:
     case XXX4:
       {
-        Q_UINT8 *beginningOfSpecialCommand = command_pointer-1;
+        quint8 *beginningOfSpecialCommand = command_pointer-1;
         a = readUINT(ch - XXX1 + 1);
         if (a > 0) {
           char        *cmd        = new char[a+1];

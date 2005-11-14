@@ -77,7 +77,7 @@ public:
  // called. Since this is done using a concurrently running process,
  // there is no guarantee that the loading is already performed when
  // the method returns.
- TeXFontDefinition* appendx(const QString& fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement);
+ TeXFontDefinition* appendx(const QString& fontname, quint32 checksum, quint32 scale, double enlargement);
 
  // Returns a string in a very basic HTML format which describes the
  // fonts in the pool.

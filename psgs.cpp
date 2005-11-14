@@ -170,18 +170,18 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
      << "%%PageOrder: Ascend\n"
         // HSize and VSize in 1/72 inch
      << "%%BoundingBox: 0 0 "
-     << (Q_INT32)(72*(pixel_page_w/resolution)) << ' '
-     << (Q_INT32)(72*(pixel_page_h/resolution)) << '\n'
+     << (qint32)(72*(pixel_page_w/resolution)) << ' '
+     << (qint32)(72*(pixel_page_h/resolution)) << '\n'
      << "%%EndComments\n"
      << "%!\n"
      << psheader
      << "TeXDict begin "
         // HSize in (1/(65781.76*72))inch
-     << (Q_INT32)(72*65781*(pixel_page_w/resolution)) << ' '
+     << (qint32)(72*65781*(pixel_page_w/resolution)) << ' '
         // VSize in (1/(65781.76*72))inch
-     << (Q_INT32)(72*65781*(pixel_page_h/resolution)) << ' '
+     << (qint32)(72*65781*(pixel_page_h/resolution)) << ' '
         // Magnification
-     << (Q_INT32)(magnification)
+     << (qint32)(magnification)
         // dpi and vdpi
      << " 300 300"
         // Name

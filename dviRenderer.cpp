@@ -303,7 +303,7 @@ void dviRenderer::embedPostScript()
   embedPS_numOfProgressedFiles = 0;
 
 
-  Q_UINT16 currPageSav = current_page;
+  quint16 currPageSav = current_page;
   errorMsg = QString::null;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     if (current_page < dviFile->total_pages) {
@@ -509,7 +509,7 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
   preScanTimer.start();
 #endif
   dviFile->numberOfExternalPSFiles = 0;
-  Q_UINT16 currPageSav = current_page;
+  quint16 currPageSav = current_page;
   prebookmarks.clear();
 
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
@@ -604,7 +604,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
 
     // Extract the file name and the numeral part from the reference string
     DVI_SourceFileSplitter splitter(reference, dviFile->filename);
-    Q_UINT32 refLineNumber = splitter.line();
+    quint32 refLineNumber = splitter.line();
     QString  refFileName   = splitter.filePath();
 
     if (sourceHyperLinkAnchors.isEmpty()) {

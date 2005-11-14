@@ -261,7 +261,7 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
     newFile.renumber();
 
     // Remove any page size information from the file
-    Q_UINT16 currPageSav = current_page;
+    quint16 currPageSav = current_page;
     dvifile *dvsav =  dviFile;
     dviFile = &newFile;
     errorMsg = QString::null;

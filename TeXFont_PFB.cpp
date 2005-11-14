@@ -135,7 +135,7 @@ TeXFont_PFB::~TeXFont_PFB()
 }
 
 
-glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QColor& color)
+glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PFB
   kdDebug(kvs::dvi) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
@@ -245,15 +245,15 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
         // quality is still sufficient for most purposes. One notable
         // exception is output from the gftodvi program, which will be
         // partially unreadable.
-        Q_UINT16 rInv = 0xFF - color.red();
-        Q_UINT16 gInv = 0xFF - color.green();
-        Q_UINT16 bInv = 0xFF - color.blue();
+        quint16 rInv = 0xFF - color.red();
+        quint16 gInv = 0xFF - color.green();
+        quint16 bInv = 0xFF - color.blue();
 
-        for(Q_UINT16 y=0; y<slot->bitmap.rows; y++) {
-          Q_UINT8 *srcScanLine = slot->bitmap.buffer + y*slot->bitmap.pitch;
+        for(quint16 y=0; y<slot->bitmap.rows; y++) {
+          quint8 *srcScanLine = slot->bitmap.buffer + y*slot->bitmap.pitch;
           unsigned int *destScanLine = (unsigned int *)imgi.scanLine(y);
-          for(Q_UINT16 col=0; col<slot->bitmap.width; col++) {
-            Q_UINT16 data =  *srcScanLine;
+          for(quint16 col=0; col<slot->bitmap.width; col++) {
+            quint16 data =  *srcScanLine;
             // The value stored in "data" now has the following meaning:
             // data = 0 -> white; data = 0xff -> use "color"
             *destScanLine = qRgba(0xFF - (rInv*data + 0x7F) / 0xFF,
@@ -282,7 +282,7 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       kdError(kvs::dvi) << msg << endl;
       g->dvi_advance_in_units_of_design_size_by_2e20 =  1;
     }
-    g->dvi_advance_in_units_of_design_size_by_2e20 =  (Q_INT32)(((Q_INT64)(1<<20) * (Q_INT64)face->glyph->metrics.horiAdvance) / (Q_INT64)face->units_per_EM);
+    g->dvi_advance_in_units_of_design_size_by_2e20 =  (qint32)(((qint64)(1<<20) * (qint64)face->glyph->metrics.horiAdvance) / (qint64)face->units_per_EM);
   }
 
   return g;

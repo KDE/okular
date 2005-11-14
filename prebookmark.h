@@ -35,7 +35,7 @@ class PreBookmark
 {
  public:
   PreBookmark() {title=QString::null; anchorName=QString::null; noOfChildren=0;}
-  PreBookmark(const QString& t, const QString& a, Q_UINT16 n) {title=t; anchorName=a; noOfChildren=n;}
+  PreBookmark(const QString& t, const QString& a, quint16 n) {title=t; anchorName=a; noOfChildren=n;}
 
   // Title of the bookmark
   QString title;
@@ -44,7 +44,7 @@ class PreBookmark
   QString anchorName;
 
   // Number of subordinate bookmarks
-  Q_UINT16 noOfChildren;
+  quint16 noOfChildren;
 };
 
 #endif

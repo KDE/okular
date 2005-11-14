@@ -32,7 +32,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   if ( filepart.left(4) == "src:" ) filepart = srclink.mid(4);
 
   //split first
-  Q_UINT32 max = filepart.length(), i = 0;
+  quint32 max = filepart.length(), i = 0;
   for(i=0; i<max; ++i) if ( !filepart[i].isDigit()) break;
   linepart = filepart.left(i);
   filepart = filepart.mid(i);
@@ -63,7 +63,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   {
     QFileInfo tempInfo(m_fileInfo);
     QString tempFileName = tempInfo.fileName();
-    Q_UINT32 index, maxindex = linepart.length();
+    quint32 index, maxindex = linepart.length();
     bool found = false;
     for ( index = 1; index < maxindex; ++index)
     {

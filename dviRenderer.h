@@ -43,13 +43,13 @@ extern const int MFResolutions[];
 class DVI_SourceFileAnchor {
  public:
   DVI_SourceFileAnchor() {}
-  DVI_SourceFileAnchor(const QString& name, Q_UINT32 ln, Q_UINT32 pg, const Length& _distance_from_top)
+  DVI_SourceFileAnchor(const QString& name, quint32 ln, quint32 pg, const Length& _distance_from_top)
     : fileName(name), line(ln), page(pg),
       distance_from_top(_distance_from_top) {}
 
   QString    fileName;
-  Q_UINT32   line;
-  Q_UINT32   page;
+  quint32   line;
+  quint32   page;
   Length     distance_from_top;
 };
 
@@ -71,7 +71,7 @@ struct framedata {
 /* this information is saved when using virtual fonts */
 
 typedef void (dviRenderer::*set_char_proc)(unsigned int, unsigned int);
-typedef void (dviRenderer::*parseSpecials)(char *, Q_UINT8 *);
+typedef void (dviRenderer::*parseSpecials)(char *, quint8 *);
 
 struct drawinf {
   struct framedata data;
@@ -190,9 +190,9 @@ private:
 
   // @@@ explanation
   void          prescan(parseSpecials specialParser);
-  void          prescan_embedPS(char *cp, Q_UINT8 *);
-  void          prescan_removePageSizeInfo(char *cp, Q_UINT8 *);
-  void          prescan_parseSpecials(char *cp, Q_UINT8 *);
+  void          prescan_embedPS(char *cp, quint8 *);
+  void          prescan_removePageSizeInfo(char *cp, quint8 *);
+  void          prescan_parseSpecials(char *cp, quint8 *);
   void          prescan_ParsePapersizeSpecial(const QString& cp);
   void          prescan_ParseBackgroundSpecial(const QString& cp);
   void          prescan_ParseHTMLAnchorSpecial(const QString& cp);
@@ -211,7 +211,7 @@ private:
 
   /** Utility fields used by the embedPostScript method*/
   KProgressDialog *embedPS_progress;
-  Q_UINT16         embedPS_numOfProgressedFiles;
+  quint16         embedPS_numOfProgressedFiles;
 
   /** Shrink factor. Units are not quite clear */
   double        shrinkfactor;
@@ -291,7 +291,7 @@ private:
   /** Data required for handling TPIC specials */
   float       penWidth_in_mInch;
   Q3PointArray TPIC_path;
-  Q_UINT16    number_of_elements_in_path;
+  quint16    number_of_elements_in_path;
 
   drawinf currinf;
   RenderedDocumentPage* currentlyDrawnPage;

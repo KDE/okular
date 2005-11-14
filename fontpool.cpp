@@ -72,7 +72,7 @@ fontPool::fontPool()
   // converted to 1-bit masks.
   QImage start(1, 1, 32); // Generate a 1x1 image, black with alpha=0x10
   start.setAlphaBuffer(true);
-  Q_UINT32 *destScanLine = (Q_UINT32 *)start.scanLine(0);
+  quint32 *destScanLine = (quint32 *)start.scanLine(0);
   *destScanLine = 0x80000000;
   QPixmap intermediate(start);
   QPixmap dest(1,1);
@@ -81,7 +81,7 @@ fontPool::fontPool()
   paint.drawPixmap(0, 0, intermediate);
   paint.end();
   start = dest.convertToImage().convertDepth(32);
-  Q_UINT8 result = *(start.scanLine(0)) & 0xff;
+  quint8 result = *(start.scanLine(0)) & 0xff;
 
   if ((result == 0xff) || (result == 0x00)) {
 #ifdef DEBUG_FONTPOOL
@@ -126,7 +126,7 @@ void fontPool::setParameters( bool _useFontHints )
 }
 
 
-TeXFontDefinition* fontPool::appendx(const QString& fontname, Q_UINT32 checksum, Q_UINT32 scale, double enlargement)
+TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, quint32 scale, double enlargement)
 {
   // Reuse font if possible: check if a font with that name and
   // natural resolution is already in the fontpool, and use that, if
@@ -306,7 +306,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   kpsewhich_args << (makePK ? "--mktex" : "--no-mktex") << "pk";
 
   // Names of fonts that shall be located
-  Q_UINT16 numFontsInJob = 0;
+  quint16 numFontsInJob = 0;
   TeXFontDefinition *fontp = fontList.first();
   while ( fontp != 0 ) {
     if (!fontp->isLocated()) {

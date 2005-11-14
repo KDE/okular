@@ -22,7 +22,6 @@
 #include <kstdaction.h>
 #include <ktip.h>
 
-#include <Q3ValueList>
 #include <QLabel>
 #include <QTemporaryFile>
 #include <QTimer>
@@ -365,10 +364,10 @@ void KDVIMultiPage::print()
 
 
   // List of pages to print.
-  Q3ValueList<int> pageList = printer->pageList();
+  QList<int> pageList = printer->pageList();
   dvips_options += "-pp ";
   int commaflag = 0;
-  for( Q3ValueList<int>::ConstIterator it = pageList.begin(); it != pageList.end(); ++it ) {
+  for( QList<int>::ConstIterator it = pageList.begin(); it != pageList.end(); ++it ) {
     if (commaflag == 1)
       dvips_options +=  QString(",");
     else

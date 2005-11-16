@@ -330,11 +330,11 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KURL
 
   // Otherwise, use kpsewhich to find the eps file.
   QString EPSfilename;
-
   KProcIO proc;
-  proc << "kpsewhich" << EPSfilename;
+  proc << "kpsewhich" << filename;
   proc.start(KProcess::Block);
   proc.readln(EPSfilename);
+
   return EPSfilename.stripWhiteSpace();
 }
 

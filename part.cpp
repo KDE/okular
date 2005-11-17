@@ -788,11 +788,11 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		
 		if (factory())
 		{
-			Q3PtrList<KXMLGUIClient> clients(factory()->clients());
-			Q3PtrListIterator<KXMLGUIClient> clientsIt( clients );
-			for( ; (!m_showMenuBarAction || !m_showFullScreenAction) && clientsIt.current(); ++clientsIt)
+			QList<KXMLGUIClient*> clients(factory()->clients());
+			for (int i = 0; (!m_showMenuBarAction || !m_showFullScreenAction) && i < clients.size() ; ++i)
 			{
-				client = clientsIt.current();
+				
+				client = clients.at(i);
 				ac = client->actionCollection();
 				actions = ac->actions();
 				end = actions.end();

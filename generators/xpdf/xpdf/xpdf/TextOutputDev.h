@@ -95,7 +95,7 @@ public:
 
 #if TEXTOUT_WORD_LIST
   int getLength() { return len; }
-  Unicode getChar(int idx) { return text[idx]; }
+  const Unicode* getChar(int idx) { return &text[idx]; }
   GString *getText();
   GString *getFontName() { return font->fontName; }
   void getColor(double *r, double *g, double *b)
@@ -103,7 +103,6 @@ public:
   void getBBox(double *xMinA, double *yMinA, double *xMaxA, double *yMaxA)
     { *xMinA = xMin; *yMinA = yMin; *xMaxA = xMax; *yMaxA = yMax; }
   double getFontSize() { return fontSize; }
-  int getRotation() { return rot; }
   int getCharPos() { return charPos; }
   int getCharLen() { return charLen; }
 #endif

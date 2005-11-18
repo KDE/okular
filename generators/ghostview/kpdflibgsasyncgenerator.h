@@ -23,10 +23,9 @@ class PixHandler : public QObject
 
 struct PageInfo
 {
-    PagePosition pos;
+    GSInterpreterLib::Position pos;
     bool sync;
     Qt::HANDLE handle;
-    PixmapRequest req;
 };
 
 

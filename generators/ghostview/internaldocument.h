@@ -47,10 +47,10 @@ class GSInternalDocument
         CDSC_ORIENTATION_ENUM orientation( int pagenumber ) const;
 
         void setOrientation(CDSC_ORIENTATION_ENUM ori) { m_overrideOrientation=ori; };
-        void insertPageData (int n, PagePosition p) { pagesInternalData.insert(n,p); };
+        void insertPageData (int n, GSInterpreterLib::Position p) { pagesInternalData.insert(n,p); };
 
         FILE * file () { return m_internalFile; };
-        PagePosition * pagePos (int i) { return &pagesInternalData[i]; };
+        GSInterpreterLib::Position pagePos (int i) { return pagesInternalData[i]; };
         const QString & fileName () { return m_fileName ; };
 
         const KDSC* dsc () { return m_dsc; };
@@ -59,10 +59,10 @@ class GSInternalDocument
         KDSCBBOX boundingBox( int pageNo ) const;
         KDSCBBOX boundingBox() const;
 
-        void setProlog( PagePosition p )   { m_prolog=p; };
-        PagePosition * prolog() { return &m_prolog ; }
-        void setSetup( PagePosition p) { m_setup=p; };
-        PagePosition * setup() { return &m_setup; }
+        void setProlog( GSInterpreterLib::Position p )   { m_prolog=p; };
+        GSInterpreterLib::Position prolog() { return m_prolog ; }
+        void setSetup( GSInterpreterLib::Position p) { m_setup=p; };
+        GSInterpreterLib::Position setup() { return m_setup; }
 
         Format format() { return m_format; };
         const DocumentInfo * generateDocumentInfo();
@@ -85,8 +85,8 @@ class GSInternalDocument
         FILE* m_internalFile;
         KDSC* m_dsc;
         Format m_format;
-        PagePosition m_prolog;
-        PagePosition m_setup;
-        QMap<int, PagePosition > pagesInternalData;
+        GSInterpreterLib::Position m_prolog;
+        GSInterpreterLib::Position m_setup;
+        QMap<int, GSInterpreterLib::Position > pagesInternalData;
 };
 #endif

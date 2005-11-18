@@ -1298,7 +1298,7 @@ void KPDFDocument::sendGeneratorRequest()
         generator->generatePixmap ( request );
     }
     else
-        QTimer::singleShot( 20, this, SLOT(sendGeneratorRequest()) );
+        QTimer::singleShot( 10, this, SLOT(sendGeneratorRequest()) );
 }
 
 void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )

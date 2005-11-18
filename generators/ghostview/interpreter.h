@@ -1,6 +1,7 @@
 #ifndef _KPDF_INTERPETER_H_
 #define _KPDF_INTERPETER_H_
 #include <qpaintdevice.h>
+#include <qgs.h>
 
 namespace DPIMod
 {

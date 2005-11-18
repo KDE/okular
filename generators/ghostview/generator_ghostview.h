@@ -70,8 +70,8 @@ class GSGenerator : public Generator
         ~GSGenerator();
 
     public slots:
-        void slotPixmapGenerated(PixmapRequest * request);
-        void slotAsyncPixmapGenerated(PixmapRequest * request );
+        void slotPixmapGenerated(const QImage* img);
+        void slotAsyncPixmapGenerated(QPixmap * img);
         void slotPaperSize (const QString & );
 
     signals:
@@ -85,7 +85,7 @@ class GSGenerator : public Generator
         KTempFile * dscForPDF;
         QMutex convertLock;
         GSInterpreterLib* m_convert;
-        QValueVector<KPDFPage*> m_pages;
+//         QValueVector<KPDFPage*> m_pages;
 
         bool loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * > & pagesVector , bool ps );
         bool loadPages( QValueVector< KPDFPage * > & pagesVector );
@@ -95,6 +95,10 @@ class GSGenerator : public Generator
         CDSC_ORIENTATION_ENUM orientation( int rot );
         QMutex docLock;
         bool m_asyncBusy;
+
+        // pixmap requests
+        PixmapRequest* m_asRequest;
+        PixmapRequest* m_sRequest;
 
         // backendish stuff
         GSInterpreterLib* pixGenerator;

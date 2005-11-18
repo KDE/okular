@@ -10,6 +10,7 @@
 #include <math.h>
 
 #include <qfile.h>
+#include <qpainter.h>
 #include <qsize.h>
 #include <qtoolbox.h>
 
@@ -29,7 +30,6 @@
 
 #include "gvlogwindow.h"
 #include "interpreter_cmd.h"
-#include "interpreter_lib.h"
 #include "internaldocument.h"
 #include "interpreter.h"
 #include "generator_ghostview.h"
@@ -167,7 +167,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
         << "-c quit";
         GSInterpreterLib * m_convert=new GSInterpreterLib();
         m_convert->setGhostscriptArguments(arg);
-        m_convert->startInterpreter();
+        m_convert->start();
         delete m_convert;
         m_convert=0;
         arg.clear();
@@ -176,37 +176,59 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
     if (! asyncGenerator )
     {
         asyncGenerator= new GSInterpreterCMD ( fileName );
-        connect (asyncGenerator, SIGNAL (newPageImage(PixmapRequest *)),
-         this, SLOT(slotAsyncPixmapGenerated (PixmapRequest *)));
+        connect (asyncGenerator, SIGNAL (Finished(QPixmap *)),
+         this, SLOT(slotAsyncPixmapGenerated (QPixmap *));
     }
     if( !pixGenerator )
     {
         pixGenerator = new GSInterpreterLib ();
-        connect (pixGenerator, SIGNAL (newPageImage(PixmapRequest *)),
-         this, SLOT(slotPixmapGenerated (PixmapRequest *)));
+        connect (pixGenerator, SIGNAL (Finished(const QImage* img)),
+         this, SLOT(slotPixmapGenerated (const QImage* img)));
 
         if ( GSSettings::messages() )
         {
+            pixGenerator->setBuffered(true);
             connect (pixGenerator, SIGNAL (io( MessageType , const  char*, int )),
                 m_logWindow, SLOT (append(MessageType , const char*,int)));
         }
     }
-    m_pages=pagesVector;
+
+    if ( GSSettings::platformFonts() )
+    {
+        pixGenerator->setPlatformFonts(false);
+        asyncGenerator->setPlatformFonts(false);
+    }
+
+    if ( GSSettings::antialiasing())
+    {
+        pixGenerator->setAABits(4,2);
+        asyncGenerator->setAABits(4,2);
+    }
+    else
+    {
+        pixGenerator->setAABits(1,1);
+        asyncGenerator->setAABits(1,1);
+    }
+       pixGenerator->setProgressive(false);
+//     m_pages=pagesVector;
     return loadDocumentWithDSC(name,pagesVector,ps);
 }
 
-void GSGenerator::slotPixmapGenerated(PixmapRequest * request )
+void GSGenerator::slotPixmapGenerated(const QImage* img)
 {
-    request->page->setPixmap( request->id, pixGenerator->takePixmap() );
-    signalRequestDone( request );
+    QPixmap *pix=new QPixmap(m_sRequest->width, m_asRequest->height);
+    QPainter p(pix);
+    p.drawImage(0,0,*img,0,0,img->width(),img->height());
+    docLock.unlock();
+    m_sRequest->page->setPixmap( m_sRequest->id, pix );
+    signalRequestDone( m_sRequest );
 }
 
-void GSGenerator::slotAsyncPixmapGenerated(PixmapRequest * request )
+void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
 {
-    QPixmap *pix=asyncGenerator->takePixmap();
     docLock.unlock();
-    request->page->setPixmap( request->id, pix );
-    signalRequestDone( request );
+    m_asRequest->page->setPixmap( m_asRequest->id, pix );
+    signalRequestDone( m_asRequest );
 }
 
 void GSGenerator::setOrientation(QValueVector<KPDFPage*>& pages, int rot) 
@@ -220,7 +242,8 @@ void GSGenerator::setOrientation(QValueVector<KPDFPage*>& pages, int rot)
 void GSGenerator::slotPaperSize (const QString &  p)
 {
     internalDoc->setMedia(p);
-    loadPages(m_pages);
+// TODO: global papersize
+//     loadPages(m_pages);
     NotifyRequest r(DocumentObserver::Setup, false);
     m_document->notifyObservers( &r );
 }
@@ -299,12 +322,12 @@ bool GSGenerator::initInterpreter()
 {
     if (! pixGenerator->running())
     {
-        if( pixGenerator->startInterpreter() && internalDoc->dsc()->isStructured() )
+        if( pixGenerator->start() && internalDoc->dsc()->isStructured() )
         {
             // this 0 is ok here, we will not be getting a PAGE anwser from those
-            pixGenerator->run ( internalDoc->file() , internalDoc->prolog(), static_cast<PixmapRequest*>(0x0),false);
+            pixGenerator->run ( internalDoc->file() , internalDoc->prolog(), false);
             pixGenerator->unlock();
-            pixGenerator->run ( internalDoc->file() , internalDoc->setup(), static_cast<PixmapRequest*>(0x0),false );
+            pixGenerator->run ( internalDoc->file() , internalDoc->setup(), false );
             pixGenerator->unlock();
         }
     }
@@ -321,27 +344,21 @@ bool GSGenerator::loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * 
 
 void GSGenerator::generatePixmap( PixmapRequest * req )
 {
-    QString a="S";
-    if (req->async) a="As";
 
-    kdDebug() << a << "ync PixmapRequest of " << req->width << "x" 
-    << req->height << " size, pageNo " << req->pageNumber 
-    << ", priority: " << req->priority << " pageaddress " << (unsigned long long int) req->page
-    <<  endl;
-
-    int i=req->pageNumber;
-
+    kdDebug() << req <<  endl;
+    int pgNo=req->pageNumber;
     if ( req->async )
     {
         docLock.lock();
-        asyncGenerator->setOrientation(rotation (internalDoc->orientation(i)));
+        m_asRequest=req;
+        asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
 //         asyncGenerator->setBoundingBox( internalDoc->boundingBox(i));
         asyncGenerator->setSize(req->width ,req->height);
-        asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( i )) );
+        asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
         asyncGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
                 static_cast<double>(req->height)/req->page->height()));
-        PagePosition* u=internalDoc->pagePos(i);
-        kdDebug() << "Page pos is " << i << ":"<< u->first << "/" << u->second << endl;
+        GSInterpreterLib::Position u=internalDoc->pagePos(pgNo);
+        kdDebug() << "Page pos is " << pgNo << ":"<< u.first << "/" << u.second << endl;
         if (!asyncGenerator->running())
         {
             if ( internalDoc->dsc()->isStructured() )
@@ -349,22 +366,22 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
                 asyncGenerator->setStructure( internalDoc->prolog() , internalDoc->setup() );
                 kdDebug () << "sending init" << endl;
             }
-            asyncGenerator->startInterpreter();
+            asyncGenerator->start();
         }
-        asyncGenerator->run ( internalDoc->pagePos(i) , req);
+        asyncGenerator->run (internalDoc->pagePos(pgNo));
         return;
     }
-
-    pixGenerator->setOrientation(rotation (internalDoc->orientation(i)));
+    m_sRequest=req;
+    pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
 //     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
     pixGenerator->setSize(req->width ,req->height);
-    pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( i )) );
+    pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
     pixGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
             static_cast<double>(req->height)/req->page->height()));
 
     if (!pixGenerator->running())
         initInterpreter();
-    pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(i) , req, true);
+    pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo));
 }
 
 

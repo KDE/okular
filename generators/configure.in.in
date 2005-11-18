@@ -1,22 +1,22 @@
-AC_ARG_WITH(libgs,
-	[AC_HELP_STRING(--with-libgs, [Where the Ghostscript library is installed])],
+AC_ARG_WITH(libqgs,
+	[AC_HELP_STRING(--with-libqgs, [Where the Qt Ghostscript library is installed])],
 	[],
-	with_libgs=check)
-LIB_GS=
-if test "x$with_libgs" != xno; then
+	with_libqgs=check)
+LIB_QGS=
+if test "x$with_libqgs" != xno; then
 	AUX="$LDFLAGS"
 	LDFLAGS="-L$withval $LDFLAGS"
-	KDE_CHECK_LIB(gs, gsapi_new_instance, 
-		      LIB_GS=-lgs
-		      if test "x$with_libgs" != "xcheck"; then
-			      LIB_GS_PATH="$withval"
+	KDE_CHECK_LIB(qgs, main,
+		      LIB_QGS=-lqgs
+		      if test "x$with_libqgs" != "xcheck"; then
+			      LIB_QGS_PATH="$withval"
 		      fi)
 	LDFLAGS="$AUX"
 fi
-AC_SUBST(LIB_GS)
-AC_SUBST(LIB_GS_PATH)
+AC_SUBST(LIB_QGS)
+AC_SUBST(LIB_QGS_PATH)
 		    
-AM_CONDITIONAL(include_ghostscript, test -n "$LIB_GS")
+AM_CONDITIONAL(include_ghostscript, test -n "$LIB_QGS")
 
 HAVE_CHMLIB=no
 KDE_CHECK_HEADER(chm_lib.h, HAVE_CHMLIB=yes)

@@ -54,7 +54,7 @@ bool GSLogWindow::event( QEvent * event )
     return true;
 }
 
-void GSLogWindow::append( MessageType t, const QString &text)
+void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
 {
     //kdDebug() << "Appending: " << text <<endl;
     kdDebug() << "last int: " << m_lastInt << endl;
@@ -83,7 +83,7 @@ void GSLogWindow::append( MessageType t, const QString &text)
     }
 }
 
-void GSLogWindow::append( MessageType t, const char* buf, int num )
+void GSLogWindow::append( GSInterpreterLib::MessageType t, const char* buf, int num )
 {
     // ghostscript splits messages longer then 128 to chunks, handle this properly
     if (m_lastInt == 128)

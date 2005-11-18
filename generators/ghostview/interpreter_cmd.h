@@ -44,8 +44,8 @@ class GSInterpreterCMD : public QObject , public QThread
         GSInterpreterCMD( const QString & fileName);
         ~GSInterpreterCMD();
         QPixmap* takePixmap();
-        bool startInterpreter();
-        bool stopInterpreter(bool async=true);
+        bool start();
+        bool stop(bool async=true);
         bool ready() { return !interpreterLock.locked() ; } ;
         bool running ();
         void lock() { kdDebug() << "locking async\n"; interpreterLock.lock() ; } ;
@@ -57,8 +57,8 @@ class GSInterpreterCMD : public QObject , public QThread
         void setMagnify( double magnify );
         void setMedia (QString media) ;
 //         void setBoundingBox( const KDSCBBOX& boundingBox );
-        void setStructure(PagePosition *prolog, PagePosition *setup);
-        bool run( const PagePosition *pos, PixmapRequest * req);
+        void setStructure(GSInterpreterLib::Position prolog, GSInterpreterLib::Position setup);
+        bool run( GSInterpreterLib::Position pos );
         void customEvent( QCustomEvent * e );
     signals:
     /**
@@ -67,7 +67,7 @@ class GSInterpreterCMD : public QObject , public QThread
      *
      * Don't change the pixmap or bad things will happen. This is the backing pixmap of the display.
      */
-        void newPageImage( PixmapRequest *req );
+        void Finished( QPixmap *);
         void error (const QString&, int duration);
 
     private:
@@ -94,7 +94,7 @@ class GSInterpreterCMD : public QObject , public QThread
         bool m_structurePending;
         double m_magnify;
         // prolog/setup positions
-        PagePosition* m_data[2];
+        GSInterpreterLib::Position m_data[2];
         bool m_haveStructure;
         // we have to send structure info
         int m_orientation;

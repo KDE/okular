@@ -108,7 +108,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
     // queryLeft is the length of the query we have left
     QString str;
     int j=0, len=0, queryLeft=query.length();
-    bool haveMatch=false,wasEol=false;
+    bool haveMatch=false;
     bool dontIncrement=false;
     QValueList<KPDFTextEntity*>::Iterator it;
     // we dont support backward search yet
@@ -116,10 +116,12 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
 	{
         // a static cast would be faster?
         str=(*it)->txt;
-        if (query.mid(j,1)==" " && wasEol )
+        if (query.mid(j,1)==" " && query.mid(j,1)=="\n")
         {
             // lets match newline as a space
-            kdDebug(1223) << "Matched, space after eol " << endl;
+#ifdef DEBUG_TEXTPAGE
+            kdDebug(1223) << "newline or space" << endl;
+#endif
             j++;
             queryLeft--;
             // since we dont really need to increment this after this
@@ -148,7 +150,9 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     haveMatch=false;
                     delete ret;
                     ret=new RegularAreaRect;
-                    kdDebug(1223) << "\tNotmatched" << endl;
+#ifdef DEBUG_TEXTPAGE
+            kdDebug(1223) << "\tnot matched" << endl;
+#endif
                     j=0;
                     queryLeft=query.length();
             }
@@ -160,16 +164,15 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     // we matched
                     // substract the length of the current entity from 
                     // the left length of the query
-                    kdDebug(1223) << "\tMatched" << endl;
+#ifdef DEBUG_TEXTPAGE
+            kdDebug(1223) << "\tmatched" << endl;
+#endif
                     haveMatch=true;
                     ret->append( (*it)->area );
                     j+=min;
                     queryLeft-=min;
             }
         }
-        wasEol=(*it)->eol;
-        if (wasEol)
-            kdDebug(1223) << "\t\tENDOFLINE"  << endl;
         if (haveMatch && queryLeft==0 && j==query.length())
         {
 //            RegularAreaRect::ConstIterator i=ret->begin(), end=ret->end;
@@ -218,27 +221,6 @@ QString * KPDFTextPage::getText(const RegularAreaRect *area)
         if (area->intersects((*it)->area))
         {
             *ret += ((*it)->txt);
-            if (last)
-            {
-                if ( (last -> baseline != (*it)-> baseline )
-                     && ((*it)->rotation % 2 == 0)
-                     && ((*it)->rotation == last->rotation)
-                   )
-                {
-                    // on different  baseline, on a vertical rotation (0 or 180)
-                        *ret+='\n';
-                }
-                // what if horizontal? how do i determine end of line?
-                /*if (((*it)->rotation == (*last)->rotation)
-                    && ((*it)->rotation % 2 == 1)
-                    && ((*
-                    {
-                        // 90 or 270 degrees rotation
-                        // maybe add a tabulation?
-                    }
-
-                }*/
-            }
             last=*it;
         }
 	}

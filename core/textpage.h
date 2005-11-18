@@ -52,12 +52,8 @@ struct KPDFTextEntity
     // 
     QString txt;
     NormalizedRect* area;
-    double baseline;
     int rotation;
-    // after this entity we have an end of line
-    bool eol;
-    KPDFTextEntity(QString text, NormalizedRect* ar, double base,
-        int rot,bool eoline) : txt(text),baseline(base),rotation(rot),eol(eoline)
+    KPDFTextEntity(QString text, NormalizedRect* ar, int rot) : txt(text), rotation(rot)
         { area=ar; };
     ~KPDFTextEntity() { delete area; };
 };
@@ -69,9 +65,8 @@ class KPDFTextPage {
     QString * getText(const RegularAreaRect *rect);
     KPDFTextPage(QValueList<KPDFTextEntity*> words) : m_words(words) {};
     KPDFTextPage() : m_words() {};
-    void append(QString txt, NormalizedRect*  area, 
-                double bline, int rot, bool eoline) 
-        { m_words.append(new KPDFTextEntity(txt,area,bline,rot,eoline) ); };
+    void append(QString txt, NormalizedRect*  area, int rot) 
+        { m_words.append(new KPDFTextEntity(txt,area,rot) ); };
     ~KPDFTextPage();
   private:
     RegularAreaRect * findTextInternal(const QString &query, bool forward,

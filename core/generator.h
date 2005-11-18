@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2004-5 by Enrico Ros <eros.kde@email.it>                *
+ *   Copyright (C) 2005   by Piotr Szymañski <niedakh@gmail.com>           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,6 +20,7 @@
 #include <qobject.h>
 #include <qvaluevector.h>
 #include <qstring.h>
+#include <ostream>
 #include "core/document.h"
 #include "core/textpage.h"
 class KPrinter;
@@ -157,6 +159,9 @@ struct PixmapRequest
     // this field is set by the Docuemnt prior passing the
     // request to the generator
     KPDFPage * page;
+
 };
+
+std::ostream& operator<< (std::ostream& str, const PixmapRequest *req);
 
 #endif

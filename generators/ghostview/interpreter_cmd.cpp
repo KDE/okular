@@ -82,7 +82,7 @@ GSInterpreterCMD::~GSInterpreterCMD()
     if (!m_pixmap)
         delete m_pixmap;
     if ( running() )
-        stopInterpreter(false);
+        stop(false);
     // remove (crashes kpdf somehow, probably because 
     // the destuction thread does the same a line higher
     /* this should not be needed!
@@ -138,7 +138,7 @@ bool GSInterpreterCMD::running ()
     }
 }
 
-void GSInterpreterCMD::setStructure(PagePosition *prolog, PagePosition *setup)
+void GSInterpreterCMD::setStructure(GSInterpreterLib::Position prolog, GSInterpreterLib::Position setup)
 {
     kdDebug(4655) << "setStructure()" << endl;
     m_structurePending=true;
@@ -146,9 +146,9 @@ void GSInterpreterCMD::setStructure(PagePosition *prolog, PagePosition *setup)
     m_data[1]=setup;
 }
 
-bool GSInterpreterCMD::stopInterpreter(bool async)
+bool GSInterpreterCMD::stop(bool async)
 {
-    kdDebug(4655) << "stopInterpreter()" << endl;
+    kdDebug(4655) << "stop()" << endl;
     // if( !_interpreterBusy ) return;
 
     if ( running() )
@@ -181,9 +181,9 @@ bool GSInterpreterCMD::stopInterpreter(bool async)
     return true;
 }
 
-bool GSInterpreterCMD::startInterpreter()
+bool GSInterpreterCMD::start()
 {
-    kdDebug(4655) << "startInterpreter()" << endl;
+    kdDebug(4655) << "start()" << endl;
     if ( m_process && m_process->isRunning() )
     {
         kdDebug(4655) << "ERROR: starting an interpreter while one is running" << endl;
@@ -241,7 +241,7 @@ void GSInterpreterCMD::setOrientation( int orientation )
     if( m_orientation != orientation )
     {
         m_orientation = orientation;
-        stopInterpreter();
+        stop();
     }
     unlock();
 }
@@ -252,7 +252,7 @@ void GSInterpreterCMD::setMagnify( double magnify )
     if( m_magnify != magnify )
     {
         m_magnify = magnify;
-        stopInterpreter();
+        stop();
     }
     unlock();
 }
@@ -263,7 +263,7 @@ void GSInterpreterCMD::setMedia( QString media )
     if( m_media != media )
     {
         m_media = media;
-        stopInterpreter();
+        stop();
     }
     unlock();
 }
@@ -274,18 +274,18 @@ void GSInterpreterCMD::setSize( int w, int h )
     if ( m_width != w ) 
     {
         m_width=w;
-        stopInterpreter();
+        stop();
 
     }
     if ( m_height != h )
     {
         m_height=h;
-        stopInterpreter();
+        stop();
     }
     unlock();
 }
 
-bool GSInterpreterCMD::run( const PagePosition *pos, PixmapRequest * req )
+bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
 {
     kdDebug(4655) << "Running request with size: " << m_width << "x" << m_height << endl;
 
@@ -301,11 +301,8 @@ bool GSInterpreterCMD::run( const PagePosition *pos, PixmapRequest * req )
     // the pixmap to which the generated image will be copied
     m_pixmap = new QPixmap (m_width, m_height);
 
-    m_info.pos=*pos;
+    m_info.pos=pos;
     m_info.sync=true;
-    m_info.req=*req;
-    m_req = req;
-
     m_info.handle=m_pixmap->handle();
     start();
     return true;
@@ -327,7 +324,7 @@ void GSInterpreterCMD::run()
             x=0;
             write ( m_processData->fds[0] , &x, sizeof(int) );
             pageInf.sync=false;
-            pageInf.pos=*(m_data[i]);
+            pageInf.pos=m_data[i];
             pageInf.handle=m_info.handle;
             write( m_processData->fds[0], &pageInf, sizeof(pageInf));
             read( m_processData->fds[1],&x,sizeof(int));
@@ -351,7 +348,8 @@ void GSInterpreterCMD::run()
 	kdDebug(4655)<< "sending the pximap to generator" << endl;
         // inform interpreter about PixmaRequest being done
         QCustomEvent * readyEvent = new QCustomEvent( GS_DATAREADY_ID );
-        readyEvent->setData(m_req);
+        // set sth just to send nonempty
+        readyEvent->setData(&x);
         QApplication::postEvent( this , readyEvent );
     }
 }
@@ -360,9 +358,8 @@ void GSInterpreterCMD::customEvent( QCustomEvent * e )
 {
     if (e->type() == GS_DATAREADY_ID )
     {
-        PixmapRequest* x=(PixmapRequest*) e->data();
         kdDebug(4655) << "emitting signal" << endl;
-        emit newPageImage( x );
+        emit Finished(m_pixmap);
     }
 }
 

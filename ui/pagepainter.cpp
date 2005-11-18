@@ -144,7 +144,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     }
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
-    bool bufferAccessibility = (flags & Accessibility) && KpdfSettings::changeColors() && (Settings::renderMode() != KpdfSettings::EnumRenderMode::Paper);
+    bool bufferAccessibility = (flags & Accessibility) && KpdfSettings::changeColors() && (KpdfSettings::renderMode() != KpdfSettings::EnumRenderMode::Paper);
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;

@@ -50,8 +50,9 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
     // Wait for all access to this documentRenderer to finish
 
     QPixmap* pix = new QPixmap();
+    QPainter p(pix);
 	QImage img = fax.page(request->pageNumber-1);
-    pix->drawPixmap( 0,0, img, 0,0,img.width(),img.height());
+    p.drawImage( 0,0, img, 0,0,img.width(),img.height());
 /*
   SimplePageSize psize = pageSizes[page->getPageNumber() - 1];
   if (psize.isValid()) {

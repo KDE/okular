@@ -27,16 +27,16 @@ public:
                QWidget* parent = 0, const char* name = 0 );
 
 public slots:
-    void append( MessageType t, const char* buf, int num );
+    void append( GSInterpreterLib::MessageType t, const char* buf, int num );
     void appendBuffered() { m_lastInt=0; m_clearTimer.stop(); append(m_buffer.first,m_buffer.second); };
-    void append( MessageType t, const QString &text);
+    void append( GSInterpreterLib::MessageType t, const QString &text);
     void clear();
     bool event( QEvent * event );
 
 private:
     KListView*   m_msgList;
     KListViewSearchLine* m_searchLine;
-    QPair <MessageType, QString> m_buffer;
+    QPair <GSInterpreterLib::MessageType, QString> m_buffer;
     int m_tCol;
     int m_lastInt;
     QTimer m_clearTimer;

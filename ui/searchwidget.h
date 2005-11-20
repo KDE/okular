@@ -14,6 +14,7 @@
 
 class KPDFDocument;
 class m_inputDelayTimer;
+class QAction;
 
 // definition of searchID for this class (publicly available to ThumbnailsList)
 #define SW_SEARCH_ID 3
@@ -39,10 +40,10 @@ class SearchWidget : public KToolBar
         QTimer * m_inputDelayTimer;
         int m_searchType;
         bool m_caseSensitive;
-
+    QAction *m_matchPhraseAction, *m_caseSensitiveAction, * m_marchAllWordsAction, *m_marchAnyWordsAction;
     private slots:
         void slotTextChanged( const QString & text );
-        void slotMenuChaged( int index );
+        void slotMenuChaged( QAction * );
         void startSearch();
 };
 

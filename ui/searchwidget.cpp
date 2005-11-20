@@ -56,13 +56,19 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
 
     // 3.1. create the popup menu for changing filtering features
     m_menu = new QMenu( this );
-    m_menu->insertItem( i18n("Case Sensitive"), 1 );
-    m_menu->insertSeparator( 2 );
-    m_menu->insertItem( i18n("Match Phrase"), 3 );
-    m_menu->insertItem( i18n("Match All Words"), 4 );
-    m_menu->insertItem( i18n("Match Any Word"), 5 );
-    m_menu->setItemChecked( 3, true );
-    connect( m_menu, SIGNAL( activated(int) ), SLOT( slotMenuChaged(int) ) );
+    m_caseSensitiveAction = m_menu->addAction( i18n("Case Sensitive") );
+    m_menu->insertSeparator( );
+    m_matchPhraseAction = m_menu->addAction( i18n("Match Phrase") );
+    m_marchAllWordsAction = m_menu->addAction( i18n("Match All Words") );
+    m_marchAnyWordsAction = m_menu->addAction( i18n("Match Any Word") );
+
+    m_caseSensitiveAction->setCheckable( true );
+    m_matchPhraseAction->setCheckable( true );
+    m_marchAllWordsAction->setCheckable( true );
+    m_marchAnyWordsAction->setCheckable( true );
+
+    m_marchAllWordsAction->setChecked( true );
+    connect( m_menu, SIGNAL( triggered(QAction *) ), SLOT( slotMenuChaged(QAction*) ) );
 
     // 3.2. create the toolbar button that spawns the popup menu
     insertButton( "kpdf", FIND_ID, m_menu, true, i18n( "Filter Options" ), 2/*index*/ );
@@ -87,19 +93,34 @@ void SearchWidget::slotTextChanged( const QString & text )
     m_inputDelayTimer->start(333, true);
 }
 
-void SearchWidget::slotMenuChaged( int index )
+void SearchWidget::slotMenuChaged( QAction * act )
 {
     // update internal variables and checked state
-    if ( index == 1 )
+    if ( act == m_caseSensitiveAction )
     {
         m_caseSensitive = !m_caseSensitive;
-        m_menu->setItemChecked( 1, m_caseSensitive );
+        m_caseSensitiveAction->setChecked( m_caseSensitive );
     }
-    else if ( index >= 3 && index <= 5 )
+    else if ( act == m_matchPhraseAction )
     {
-        m_searchType = index - 3;
-        for ( int i = 0; i < 3; i++ )
-            m_menu->setItemChecked( i + 3, m_searchType == i );
+        m_searchType = 0;
+        m_matchPhraseAction->setChecked( true );
+        m_marchAllWordsAction->setChecked( false );
+        m_marchAnyWordsAction->setChecked( false );
+    }
+    else if ( act == m_marchAllWordsAction )
+    {
+        m_searchType = 1;
+        m_matchPhraseAction->setChecked( false );
+        m_marchAllWordsAction->setChecked( true );
+        m_marchAnyWordsAction->setChecked( false );
+    }
+    else if ( act == m_marchAnyWordsAction )
+    {
+        m_searchType = 2;
+        m_matchPhraseAction->setChecked( false );
+        m_marchAllWordsAction->setChecked( false );
+        m_marchAnyWordsAction->setChecked( true );
     }
     else
         return;

@@ -65,7 +65,7 @@ GSGenerator::~GSGenerator()
 
 void GSGenerator::addPages( KConfigDialog *dlg )
 {
-    dlg->addPage(new GSSettingsWidget(0), GSSettings::self() , i18n ("Ghostscript backend"), "kghostview" );
+    dlg->addPage(new GSSettingsWidget(0), GSSettings::self() , i18n ("Ghostscript Backend"), "kghostview" );
 }
 
 CDSC_ORIENTATION_ENUM GSGenerator::orientation( int  rot )

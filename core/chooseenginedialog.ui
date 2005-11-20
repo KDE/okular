@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>Generator selection</string>
+        <string>Generator Selection</string>
     </property>
     <property name="sizeGripEnabled">
         <bool>false</bool>

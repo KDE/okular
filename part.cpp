@@ -260,7 +260,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
-	m_showLeftPanel = new KToggleAction( i18n( "Show &Navigation panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
+	m_showLeftPanel = new KToggleAction( i18n( "Show &Navigation Panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
 	m_showLeftPanel->setShortcut( "CTRL+L" );
 	m_showLeftPanel->setCheckedState( i18n( "Hide &Navigation Panel" ) );
 	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
@@ -943,7 +943,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
 		if ( m_pageView->canFitPageWidth() )
 			popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
-		//popup->insertItem( SmallIcon("view_fit_width"), i18n("Zoom this"), 2 );
+		//popup->insertItem( SmallIcon("view_fit_width"), i18n("Zoom This"), 2 );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
 		reallyShow = true;

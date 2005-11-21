@@ -13,7 +13,6 @@
 		<authorgroup>
 			<author>
 				<firstname>Albert</firstname>
-				<othername></othername>
 				<surname>Astals Cid</surname>
 				<affiliation>
 					<address><email>tsdgeos@yahoo.es</email></address>
@@ -148,7 +147,7 @@
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a file selected from a drop-down list of
+							<action>Open</action> a file selected from a combo box list of
 							recently opened files. If a file is currently being displayed it
 							will be	closed.
 						</para>
@@ -255,51 +254,13 @@
 			</variablelist>
 		</sect1>
 		
-		<sect1 id="menumoude">
-			<title>The <guimenu>Mouse mode</guimenu> Menu</title>
-			<variablelist>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Mouse mode</guimenu>
-							<guimenuitem>Normal</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>The mouse will have its normal behaviour, &LMB; for dragging the document and following links and &RMB; for adding bookmarks and fit to width.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Mouse mode</guimenu>
-							<guimenuitem>Zoom tool</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>The mouse will work as a zoom tool. Clicking &LMB; and dragging will zoom the view to the selected area, clicking &RMB; will bring the document back to the previous zoom.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Mouse mode</guimenu>
-							<guimenuitem>Select</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current the selected area to the clipboard, images can be saved to a file too.</para>
-					</listitem>
-				</varlistentry>
-			</variablelist>
-		</sect1>
-
 		<sect1 id="menuview">
 			<title>The <guimenu>View</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>P</keycap></keycombo></shortcut>
 							<guimenu>View</guimenu>
 							<guimenuitem>Presentation</guimenuitem>
 						</menuchoice>
@@ -389,18 +350,6 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl; <keycap>Home</keycap></keycombo></shortcut>
-							<guimenu>Go</guimenu>
-							<guimenuitem>First Page</guimenuitem>
-					  </menuchoice>
-					</term>
-					<listitem>
-						<para><action>Go to the first page</action> of the document.</para>
-				  </listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
 							<shortcut><keycap>Backspace</keycap></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Previous Page</guimenuitem>
@@ -425,6 +374,18 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl; <keycap>Home</keycap></keycombo></shortcut>
+							<guimenu>Go</guimenu>
+							<guimenuitem>First Page</guimenuitem>
+					  </menuchoice>
+					</term>
+					<listitem>
+						<para><action>Go to the first page</action> of the document.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;	<keycap>End</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Last Page</guimenuitem>
@@ -432,6 +393,81 @@
 					</term>
 					<listitem>
 						<para><action>Go to the last page</action> of the document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Alt;	<keycap>Left</keycap></keycombo></shortcut>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Back</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Go to the page</action> displayed before.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Alt;<keycap>Right</keycap></keycombo></shortcut>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Forward</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Go to the page</action> of the document where you were after.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>G</keycap></keycombo></shortcut>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Go to Page</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Go to a selected page</action> of the document.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title>The <guimenu>Tools</guimenu> Menu</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Browse Tool</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>The mouse will have its normal behaviour, &LMB; for dragging the document and following links and &RMB; for adding bookmarks and fit to width.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Zoom Tool</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>The mouse will work as a zoom tool. Clicking &LMB; and dragging will zoom the view to the selected area, clicking &RMB; will bring the document back to the previous zoom.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Select Tool</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current the selected area to the clipboard, images can be saved to a file too.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -443,8 +479,9 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Show Menubar</guimenuitem>
+							<guimenuitem>Show/Hide Menubar</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -456,7 +493,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Show Toolbar</guimenuitem>
+							<guimenuitem>Show/Hide Toolbar</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -466,18 +503,19 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Watch File</guimenuitem>
+							<guimenuitem>Show/Hide Navigation Panel</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>If this is selected the display will <action>automatically
-								updated</action> if the document file	changes.</para>
+						<para><action>Toggle the Navigation Panel display</action> on and off.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>F</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Full Screen Mode</guimenuitem>
 						</menuchoice>
@@ -600,7 +638,7 @@
 				<varlistentry>
 					<term>Invert colors</term>
 					<listitem>
-						<para><action>Inverts</action> colors on the view, i.e. black things will be shown white.</para>
+						<para><action>Inverts</action> colors on the view, &ie; black things will be shown white.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -638,7 +676,7 @@
 					<term>Enable background generation</term>
 					<listitem>
 						<para>Use a background thread to generate the pages. By disabling
-							this option the GUI will become less reactive (will be blocked
+							this option the &GUI; will become less reactive (will be blocked
 							if necessary), but pages will be displayed a bit faster.</para>
 					</listitem>
 				</varlistentry>
@@ -708,10 +746,11 @@
 			<title>Program Copyright:</title>
 			<listitem><para>Albert Astals Cid<email>tsdgeos@yahoo.es</email> Current maintainer</para></listitem>
 			<listitem><para>Christophe Devriese<email>oelewapperke@ulyssis.org</email></para></listitem>
-			<listitem><para>Wilco Greven <email>greven@kde.org</email> Original author</para></listitem>
+			<listitem><para>&Wilco.Greven; Wilco.Greven.mail; Original author</para></listitem>
 			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> Refactoring for 3.4</para></listitem>
 		</itemizedlist>
 		
+		<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 		&underFDL;
 		&underGPL;
 	</chapter>

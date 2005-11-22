@@ -53,17 +53,13 @@
 
 #include "TeXFont_PK.h"
 #include "fontpool.h"
-#include "glyph.h"
 #include "kvs_debug.h"
-#include "TeXFontDefinition.h"
 #include "xdvi.h"
 
 #include <klocale.h>
 
-#include <qbitmap.h>
 #include <qfile.h>
 #include <qimage.h>
-#include <qpainter.h>
 
 #include <cmath>
 #include <cstdio>

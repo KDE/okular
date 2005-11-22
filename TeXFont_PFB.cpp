@@ -14,7 +14,6 @@
 
 #include "TeXFont_PFB.h"
 #include "fontpool.h"
-#include "glyph.h"
 #include "kvs_debug.h"
 
 #include <klocale.h>

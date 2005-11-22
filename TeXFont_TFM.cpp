@@ -8,13 +8,8 @@
 #include <config.h>
 
 #include "TeXFont_TFM.h"
-#include "glyph.h"
 #include "kvs_debug.h"
-#include "TeXFontDefinition.h"
 
-#include <klocale.h>
-
-#include <qdatastream.h>
 #include <qfile.h>
 
 //#define DEBUG_TFM

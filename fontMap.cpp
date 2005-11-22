@@ -12,9 +12,8 @@
 #include "fontMap.h"
 #include "kvs_debug.h"
 
-#include <kprocio.h>
-
 #include <QFile>
+#include <QProcess>
 #include <QTextStream>
 
 //#define DEBUG_FONTMAP
@@ -35,27 +34,34 @@ fontMap::fontMap()
   // way to give both options at the same time, there is seemingly no
   // other way than to try both options one after another. We use the
   // teTeX 3.0 format first.
-  KProcIO proc;
-  proc << "kpsewhich" << "--format=map" << "ps2pk.map";
-  if (proc.start(KProcess::Block) == false) {
+  QProcess kpsewhich;
+  kpsewhich.start("kpsewhich",
+                  QStringList() << "--format=map" << "ps2pk.map",
+                  QIODevice::ReadOnly|QIODevice::Text);
+
+  if (!kpsewhich.waitForStarted()) {
     kdError(kvs::dvi) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
     return;
   }
 
-  QString map_fileName;
-  proc.readln(map_fileName);
-  map_fileName = map_fileName.trimmed();
+  // We wait here while the external program runs concurrently.
+  kpsewhich.waitForFinished(-1);
+
+  QString map_fileName = QString(kpsewhich.readAll()).trimmed();
   if (map_fileName.isEmpty()) {
     // Map file not found? Then we try the teTeX < 3.0 way of finding
     // the file.
-    proc << "kpsewhich" << "--format=dvips config" << "ps2pk.map";
-    if (proc.start(KProcess::Block) == false) {
+    kpsewhich.start("kpsewhich",
+                    QStringList() << "--format=dvips config" << "ps2pk.map",
+                    QIODevice::ReadOnly|QIODevice::Text);
+    if (!kpsewhich.waitForStarted()) {
       kdError(kvs::dvi) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
       return;
     }
-    proc.readln(map_fileName);
-    map_fileName = map_fileName.trimmed();
 
+    kpsewhich.waitForFinished(-1);
+
+    map_fileName = QString(kpsewhich.readAll()).trimmed();
     // If both versions fail, then there is nothing left to do.
     if (map_fileName.isEmpty()) {
       kdError(kvs::dvi) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;

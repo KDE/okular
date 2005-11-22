@@ -12,9 +12,8 @@
 #include "fontEncoding.h"
 #include "kvs_debug.h"
 
-#include <kprocio.h>
-
 #include <QFile>
+#include <QProcess>
 #include <QStringList>
 #include <QTextStream>
 
@@ -29,16 +28,22 @@ fontEncoding::fontEncoding(const QString &encName)
 
   _isValid = false;
   // Use kpsewhich to find the encoding file.
-  KProcIO proc;
-  QString encFileName;
-  proc << "kpsewhich" << encName;
-  if (proc.start(KProcess::Block) == false) {
+  QProcess kpsewhich;
+  kpsewhich.setReadChannelMode(QProcess::MergedChannels);
+
+  kpsewhich.start("kpsewhich",
+                  QStringList() << encName,
+                  QIODevice::ReadOnly|QIODevice::Text);
+
+  if (!kpsewhich.waitForStarted()) {
     kdError(kvs::dvi) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
     return;
   }
-  proc.readln(encFileName);
-  encFileName = encFileName.trimmed();
 
+  // We wait here while the external program runs concurrently.
+  kpsewhich.waitForFinished(-1);
+
+  const QString encFileName = QString(kpsewhich.readAll()).trimmed();
   if (encFileName.isEmpty()) {
     kdError(kvs::dvi) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
     return;

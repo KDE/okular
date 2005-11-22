@@ -9,10 +9,12 @@
 
 #include "optionDialogFontsWidget.h"
 
-#include <klocale.h>
+#ifndef HAVE_FREETYPE
+# include <klocale.h>
 
-#include <QCheckBox>
-#include <QToolTip>
+# include <QCheckBox>
+# include <QToolTip>
+#endif // HAVE_FREETYPE
 
 
 // Constructs a optionDialogWidget_base which is a child of 'parent', with
@@ -23,14 +25,12 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
 #ifndef HAVE_FREETYPE
   kcfg_UseType1Fonts->setChecked(false);
   kcfg_UseType1Fonts->setEnabled(false);
-  kcfg_UseFontHints->setEnabled(false);
-  kcfg_UseFontHints->setChecked(false);
-  QToolTip::add(PFB_ButtonGroup, i18n("This version of KDVI does not support type 1 fonts."));
-  PFB_ButtonGroup->setWhatsThis( i18n("KDVI needs the FreeType library to access type 1 fonts. This library "
-                                      "was not present when KDVI was compiled. If you want to use type 1 "
-                                      "fonts, you must either install the FreeType library and recompile KDVI "
-                                      "yourself, or find a precompiled software package for your operating "
-                                      "system."));
+  QToolTip::add(UseType1Fonts, i18n("This version of KDVI does not support type 1 fonts."));
+  UseType1Fonts->setWhatsThis( i18n("KDVI needs the FreeType library to access type 1 fonts. This library "
+                                    "was not present when KDVI was compiled. If you want to use type 1 "
+                                    "fonts, you must either install the FreeType library and recompile KDVI "
+                                    "yourself, or find a precompiled software package for your operating "
+                                    "system."));
 #endif
 }
 

@@ -174,12 +174,14 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber )
 
 
 // <widget events>
+/* This hack was here to fix 103718 but it's no longer necessary on KDE 3.5 and Lubos asked me to remove it
 bool PresentationWidget::event ( QEvent * e )
 {
     if (e -> type() == QEvent::WindowDeactivate) KWin::clearState(winId(), NET::StaysOnTop);
     else if (e -> type() == QEvent::WindowActivate) KWin::setState(winId(), NET::StaysOnTop);
     return QDialog::event(e);
 }
+*/
 
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {

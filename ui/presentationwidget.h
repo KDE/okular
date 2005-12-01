@@ -46,7 +46,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
 
     protected:
         // widget events
-        bool event( QEvent * e );
+//        bool event( QEvent * e );
         void keyPressEvent( QKeyEvent * e );
         void wheelEvent( QWheelEvent * e );
         void mousePressEvent( QMouseEvent * e );

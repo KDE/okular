@@ -77,7 +77,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 
   setXMLFile("kdvi_part.rc");
 
-  readSettings();
   preferencesChanged();
 
   enableActions(false);
@@ -93,7 +92,6 @@ KDVIMultiPage::~KDVIMultiPage()
   delete exportPSAction;
   delete exportPDFAction;
 
-  writeSettings();
   Prefs::writeConfig();
 }
 

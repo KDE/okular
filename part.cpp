@@ -276,6 +276,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
 	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+	m_saveSplitterSizeTimer = new QTimer( this );
+	connect( m_saveSplitterSizeTimer, SIGNAL( timeout() ),this, SLOT( reallySaveSplitterSize() ) );
 
 	slotNewConfig();
 
@@ -576,9 +578,14 @@ void Part::cannotQuit()
 
 void Part::saveSplitterSize()
 {
+    m_saveSplitterSizeTimer->start(500, true);
+}
+
+void Part::reallySaveSplitterSize()
+{
     KpdfSettings::setSplitterSizes( m_splitter->sizes() );
     KpdfSettings::writeConfig();
-} 
+}
 
 //BEGIN go to page dialog
 class KPDFGotoPageDialog : public KDialogBase

@@ -114,7 +114,8 @@ protected slots:
 	void enableTOC(bool enable);
 	void psTransformEnded();
 	void cannotQuit();
-  void saveSplitterSize();
+	void saveSplitterSize();
+	void reallySaveSplitterSize();
 	void setMimeTypes(KIO::Job *job);
 
 public slots:
@@ -143,6 +144,11 @@ private:
 
 	// static instances counter
 	static unsigned int m_count;
+	
+	// this is a hack because we can not use writeConfig on part destructor
+	// and we don't want to writeconfig every time someone moves the splitter
+	// so we use a QTimer each 500 ms
+	QTimer *m_saveSplitterSizeTimer;
 
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;

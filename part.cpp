@@ -274,6 +274,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
 	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+	m_saveSplitterSizeTimer = new QTimer( this );
+	connect( m_saveSplitterSizeTimer, SIGNAL( timeout() ),this, SLOT( saveSplitterSize() ) );
 
 	slotNewConfig();
 
@@ -478,7 +480,7 @@ bool Part::eventFilter( QObject * watched, QEvent * e )
 {
     // if pageView has been resized, save splitter sizes
     if ( watched == m_pageView && e->type() == QEvent::Resize )
-        saveSplitterSize();
+        m_saveSplitterSizeTimer->start(500, true);
 
     // only intercept events, don't block them
     return false;

@@ -825,8 +825,6 @@ GBool JPXStream::readCodestream(Guint /*len*/) {
 	return gFalse;
       }
       img.tiles = (JPXTile *)gmallocn(nTiles, sizeof(JPXTile));
-      img.tiles = (JPXTile *)gmallocn(img.nXTiles * img.nYTiles,
-				     sizeof(JPXTile));
       for (i = 0; i < img.nXTiles * img.nYTiles; ++i) {
 	img.tiles[i].tileComps = (JPXTileComp *)gmallocn(img.nComps,
 							sizeof(JPXTileComp));

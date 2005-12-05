@@ -326,17 +326,17 @@ void dviRenderer::epsf_special(const QString& cp)
   // course, this does not work if the filename contains spaces
   // (already the simplifyWhiteSpace() above is wrong). If you have
   // files like this, go away.
-  QString EPSfilename = include_command;
-  EPSfilename.truncate(EPSfilename.find(' '));
+  QString EPSfilename_orig = include_command;
+  EPSfilename_orig.truncate(EPSfilename_orig.find(' '));
 
   // Strip enclosing quotation marks which are included by some LaTeX
   // macro packages (but not by others). This probably means that
   // graphic files are no longer found if the filename really does
   // contain quotes, but we don't really care that much.
-  if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
-    EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
+  if ((EPSfilename_orig.at(0) == '\"') && (EPSfilename_orig.at(EPSfilename_orig.length()-1) == '\"')) {
+    EPSfilename_orig = EPSfilename_orig.mid(1,EPSfilename_orig.length()-2);
   }
-  EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
+  QString EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename_orig, baseURL);
   
   // Now parse the arguments. 
   int  llx     = 0; 
@@ -425,11 +425,14 @@ void dviRenderer::epsf_special(const QString& cp)
       foreGroundPainter->setBrush(Qt::red);
     foreGroundPainter->setPen(Qt::black);
     foreGroundPainter->drawRoundRect(bbox, 2, 2);
+    QFont f = foreGroundPainter->font();
+    f.setPointSize(8);
+    foreGroundPainter->setFont(f);
     if (QFile::exists(EPSfilename))
-      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
+      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename_orig, -1);
     else
       foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), 
-				i18n("File not found: \n %1").arg(EPSfilename), -1);
+				i18n("File not found: \n %1").arg(EPSfilename_orig), -1);
     foreGroundPainter->restore();
   }
   

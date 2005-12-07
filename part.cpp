@@ -337,7 +337,7 @@ void Part::supportedMimetypes()
     for (; iterator != end; ++iterator)
     {
         KService::Ptr service = *iterator;
-        mimeTypes = service->serviceTypes();
+        QStringList mimeTypes = service->serviceTypes();
         for (mimeType=mimeTypes.begin();mimeType!=mimeTypes.end();++mimeType)
             if (! (*mimeType).contains("oKular"))
                 m_supportedMimeTypes << *mimeType;

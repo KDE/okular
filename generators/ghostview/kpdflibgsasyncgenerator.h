@@ -13,12 +13,12 @@
 #include <qpixmap.h>
 #include <interpreter.h>
 #include <core/generator.h>
-
+class QImage;
 class PixHandler : public QObject
 {
     Q_OBJECT
     public slots:
-        void slotPixmap(PixmapRequest *req);
+        void slotPixmap(const QImage* img);
 };
 
 struct PageInfo

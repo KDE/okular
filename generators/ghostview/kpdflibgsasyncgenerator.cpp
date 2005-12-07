@@ -7,12 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "interpreter_lib.h"
+
 #include "kpdflibgsasyncgenerator.h"
 
-#include "gsapi/iapi.h"
-#include "gsapi/gdevdsp.h"
+#include <qgs.h>
 
+#include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
 #include <kapplication.h>
@@ -33,11 +33,14 @@ int anwser;
 PageInfo pData;
 FILE * f;
 
-void PixHandler::slotPixmap(PixmapRequest *req)
+void PixHandler::slotPixmap(const QImage* img)
 {
-    QPixmap *pix=interpreter->takePixmap();
-
+    QPixmap *pix=new QPixmap(img->size(), img->depth());
     kdDebug() << "Handles: " << pix->handle() << " " << pData.handle <<endl;
+    QPainter p;
+    p.begin(pix);
+    p.drawImage(0,0,*img, 0,0,img->width(),img->height());
+    p.end();
     XCopyArea
         (qt_xdisplay(),
         pix->handle(),
@@ -60,15 +63,10 @@ void process()
 
     read ( mem, &pData, sizeof(pData) );
     if ( !interpreter->running() )
-        interpreter->startInterpreter();
+        interpreter->start(false);
 
-    kdDebug() << "Processing: " <<  pData.sync << endl;
-    if (pData.sync)
-    {
-        kdDebug()  << "Request: " << pData.req.width << " " << pData.req.height << endl;
-    }
-
-    interpreter-> run ( f, &pData.pos, (pData.sync ? &pData.req : static_cast<PixmapRequest*>(0L) ), pData.sync );
+//     kdDebug() << "Processing: " <<  pData.sync << endl;
+    interpreter-> run ( f, pData.pos, pData.sync );
     if (! pData.sync )
     {
         int x=3;
@@ -91,7 +89,8 @@ int main (int argc, char* argv[])
     interpreter->setSize ( QString(argv[7]).toInt(), QString(argv[8]).toInt() );
     KApplication app(argc,argv,QCString("kpdflibgsasyncgenerator"));
     PixHandler pxHandler;
-    QObject::connect(interpreter,SIGNAL(newPageImage(PixmapRequest*)),&pxHandler,SLOT(slotPixmap(PixmapRequest *)));
+
+    QObject::connect(interpreter,SIGNAL(Finished(const QImage* img)),&pxHandler,SLOT(slotPixmap(const QImage* img)));
 
     int request;
     anwser = open( argv[3] , O_RDWR );

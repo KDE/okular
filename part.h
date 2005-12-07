@@ -89,6 +89,7 @@ protected:
 	bool closeURL();
 	// filter that watches for splitter size changes
 	bool eventFilter( QObject * watched, QEvent * e );
+	void supportedMimetypes();
 
 protected slots:
 	// connected to actions

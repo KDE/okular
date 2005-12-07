@@ -68,8 +68,6 @@ public:
   // Get next char from stream.
   virtual int getChar() = 0;
 
-  GBool isOk() { return ok; }
-
   // Peek at next char in stream.
   virtual int lookChar() = 0;
 
@@ -229,6 +227,7 @@ public:
 
   int lookChar();
   int getChar();
+  GBool isOk() { return ok; }
 
 private:
 

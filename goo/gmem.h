@@ -28,6 +28,15 @@ extern void *gmalloc(int size);
 extern void *grealloc(void *p, int size);
 
 /*
+ * These are similar to gmalloc and grealloc, but take an object count
+ * and size.  The result is similar to allocating nObjs * objSize
+ * bytes, but there is an additional error check that the total size
+ * doesn't overflow an int.
+ */
+extern void *gmallocn(int nObjs, int objSize);
+extern void *greallocn(void *p, int nObjs, int objSize);
+
+/*
  * Same as free, but checks for and ignores NULL pointers.
  */
 extern void gfree(void *p);

@@ -135,6 +135,28 @@ void *grealloc(void *p, int size) {
 #endif
 }
 
+void *gmallocn(int nObjs, int objSize) {
+  int n;
+
+  n = nObjs * objSize;
+  if (objSize == 0 || n / objSize != nObjs) {
+    fprintf(stderr, "Bogus memory allocation size\n");
+    exit(1);
+  }
+  return gmalloc(n);
+}
+
+void *greallocn(void *p, int nObjs, int objSize) {
+  int n;
+
+  n = nObjs * objSize;
+  if (objSize == 0 || n / objSize != nObjs) {
+    fprintf(stderr, "Bogus memory allocation size\n");
+    exit(1);
+  }
+  return grealloc(p, n);
+}
+
 void gfree(void *p) {
 #ifdef DEBUG_MEM
   int size;

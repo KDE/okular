@@ -6,7 +6,7 @@ METASOURCES = AUTO
 
 liboKularcore_la_SOURCES = chooseenginedialog.ui generator.cpp area.cpp textpage.cpp page.cpp document.cpp link.cpp annotations.cpp \
                          pagetransition.cpp
-liboKularcore_la_LIBADD = -lkio 
+liboKularcore_la_LIBADD = $(KDE_LDFLAGS) $(LIB_KIO)
 
 kde_servicetypes_DATA = \
     oKularGenerator.desktop

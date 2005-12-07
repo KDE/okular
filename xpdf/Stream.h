@@ -68,6 +68,8 @@ public:
   // Get next char from stream.
   virtual int getChar() = 0;
 
+  GBool isOk() { return ok; }
+
   // Peek at next char in stream.
   virtual int lookChar() = 0;
 
@@ -242,6 +244,7 @@ private:
   int rowBytes;			// bytes per line
   Guchar *predLine;		// line buffer
   int predIdx;			// current index in predLine
+  GBool ok;
 };
 
 //------------------------------------------------------------------------

@@ -66,15 +66,15 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
     KListViewItem* tmp;
     switch(t)
     {
-        case Error:
+        case GSInterpreterLib::Error:
             tmp=new KListViewItem( m_msgList , *it, "Error" );
             tmp->setPixmap(m_tCol,SmallIcon( "messagsebox_critical" ));
             break;
-        case Input:
+        case GSInterpreterLib::Input:
             tmp=new KListViewItem( m_msgList , *it, "Input" );
             tmp->setPixmap(m_tCol,SmallIcon( "1leftarrow" ));
             break;
-        case Output:
+        case GSInterpreterLib::Output:
             tmp=new KListViewItem( m_msgList , *it, "Output" );
             tmp->setPixmap(m_tCol,SmallIcon( "1rightarrow" ));
             break;

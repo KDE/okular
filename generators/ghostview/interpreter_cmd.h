@@ -54,6 +54,8 @@ class GSInterpreterCMD : public QObject , public QThread
 //         void setGhostscriptArguments( const QStringList& arguments );
         void setOrientation( int orientation );
         void setSize( int w, int h );
+	void setPlatformFonts(bool pfonts=true);
+	void setAABits(int text=1, int graphics=1);
         void setMagnify( double magnify );
         void setMedia (QString media) ;
 //         void setBoundingBox( const KDSCBBOX& boundingBox );
@@ -93,6 +95,8 @@ class GSInterpreterCMD : public QObject , public QThread
         // change everytime new request is done
         bool m_structurePending;
         double m_magnify;
+	int m_aaText,m_aaGfx;
+	bool m_pfonts;
         // prolog/setup positions
         GSInterpreterLib::Position m_data[2];
         bool m_haveStructure;

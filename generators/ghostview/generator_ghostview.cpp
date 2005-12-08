@@ -177,7 +177,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
     {
         asyncGenerator= new GSInterpreterCMD ( fileName );
         connect (asyncGenerator, SIGNAL (Finished(QPixmap *)),
-         this, SLOT(slotAsyncPixmapGenerated (QPixmap *));
+         this, SLOT(slotAsyncPixmapGenerated (QPixmap *)));
     }
     if( !pixGenerator )
     {

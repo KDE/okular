@@ -87,6 +87,8 @@ int main (int argc, char* argv[])
     interpreter->setMagnify ( QString(argv[5]).toDouble() );
     interpreter->setOrientation ( QString(argv[6]).toInt() );
     interpreter->setSize ( QString(argv[7]).toInt(), QString(argv[8]).toInt() );
+    interpreter->setPlatformFonts ( QString(argv[9]).toInt()  !=0 );
+    interpreter->setAABits(QString(argv[10]).toInt(), QString(argv[11]).toInt() );
     KApplication app(argc,argv,QCString("kpdflibgsasyncgenerator"));
     PixHandler pxHandler;
 

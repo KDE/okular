@@ -71,7 +71,10 @@ GSInterpreterCMD::GSInterpreterCMD( const QString & fileName ) :
     m_structurePending( false ),
     m_magnify         ( 1 ),
     m_orientation     ( CDSC_PORTRAIT ),
-    m_name            ( fileName )
+    m_name            ( fileName ),
+    m_aaGfx            (1),
+    m_aaText           (1),
+    m_pfonts            (false)
 {
     kdDebug(4655) << "Constructing async interpreter!" << endl;
     m_pixmap=0;
@@ -203,7 +206,10 @@ bool GSInterpreterCMD::start()
         << QString::number ( m_magnify )
         << QString::number ( m_orientation )
         << QString::number ( m_width )
-        << QString::number ( m_height );
+        << QString::number ( m_height )
+        << QString::number ( m_pfonts ? 1 : 0 )
+        << QString::number (m_aaText)
+        << QString::number (m_aaGfx);
 
     kdDebug(4655) << "Argument count: " << list.count() << endl;
     (*m_process) << list;
@@ -268,6 +274,18 @@ void GSInterpreterCMD::setMedia( QString media )
     unlock();
 }
 
+void GSInterpreterCMD::setPlatformFonts(bool pfonts)
+{
+    lock();
+    if( m_pfonts != pfonts )
+    {
+        m_pfonts = pfonts;
+        stop();
+    }
+    unlock();
+}
+
+
 void GSInterpreterCMD::setSize( int w, int h )
 {
     lock();
@@ -280,6 +298,23 @@ void GSInterpreterCMD::setSize( int w, int h )
     if ( m_height != h )
     {
         m_height=h;
+        stop();
+    }
+    unlock();
+}
+
+void GSInterpreterCMD::setAABits(int text, int graphics)
+{
+    lock();
+    if ( m_aaText!= text ) 
+    {
+        m_aaText=text;
+        stop();
+
+    }
+    if ( m_aaGfx != graphics )
+    {
+        m_aaGfx=graphics;
         stop();
     }
     unlock();

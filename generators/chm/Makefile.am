@@ -13,7 +13,7 @@ INCLUDES = -I$(srcdir)/../.. -I$(top_builddir)/kpdf $(all_includes)
 libokularGenerator_chmlib_la_LIBADD = $(top_builddir)/kpdf/core/liboKularcore.la \
 	$(top_builddir)/kpdf/conf/liboKularconf.la \
 	lib/libchmfile.la \
-	$(LIB_KDEPRINT) $(LIB_KDEUI) $(LIB_KHTML)
+	$(LIB_KDEPRINT) $(LIB_KDEUI) $(LIB_KHTML) -lchm
 libokularGenerator_chmlib_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 libokularGenerator_chmlib_la_SOURCES = generator_t.cpp
 METASOURCES = AUTO

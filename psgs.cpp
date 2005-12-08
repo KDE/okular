@@ -16,12 +16,12 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprocio.h>
 #include <kurl.h>
 
 #include <QDir>
 #include <QPainter>
 #include <QPixmap>
+#include <QProcess>
 #include <QTemporaryFile>
 #include <QTextStream>
 
@@ -213,10 +213,10 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
   // Step 2: Call GS with the File
   QFile::remove(filename.ascii());
-  KProcIO proc;
+
+  const QString gs_exe = "gs";
   QStringList gs_args;
-  gs_args << "gs"
-          << "-dSAFER"
+  gs_args << "-dSAFER"
           << "-dPARANOIDSAFER"
           << "-dDELAYSAFER"
           << "-dNOPAUSE"
@@ -234,63 +234,72 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
           << PSfileName;
 
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << gs_args.join(" ") << endl;
+  kdDebug(kvs::dvi) << gs_exe + " " + gs_args.join(" ") << endl;
 #endif
 
-  proc << gs_args;
-  if (proc.start(KProcess::Block) == false) {
+  QProcess gs;
+  gs.setReadChannelMode(QProcess::MergedChannels);
+  gs.start(gs_exe, gs_args);
+
+  if (!gs.waitForStarted()) {
     // Starting ghostscript did not work.
     // TODO: Issue error message, switch PS support off.
     kdError(kvs::dvi) << "ghostscript could not be started" << endl;
+    return;
   }
+
+  // We wait here while the external program runs concurrently.
+  gs.waitForFinished(-1);
 
   // In the event of the function being called recursively, don't build
   // up temporary files.
   PSfile.remove();
 
-  // Check if gs has indeed produced a file.
-  if (QFile::exists(filename) == false) {
-    kdError(kvs::dvi) << "GS did not produce output." << endl;
+  // Check that gs has indeed produced a file.
+  if (!QFile::exists(filename)) {
+    kdError(kvs::dvi) << "GS did not generate file " << filename
+               << ", gs exit code " << gs.exitCode() << endl;
 
-    // No. Check is the reason is that the device is not compiled into
+    // It didn't. Check if the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
-    QString GSoutput;
-    while(proc.readln(GSoutput) != -1) {
-      if (GSoutput.contains("Unknown device")) {
-        kdDebug(kvs::dvi) << QString("The version of ghostview installed on this computer does not support "
-                                   "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
-        knownDevices.remove(gsDevice);
-        gsDevice = knownDevices.begin();
-        if (knownDevices.isEmpty())
-          // TODO: show a requestor of some sort.
-          KMessageBox::detailedError(0,
-                                     i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
-                                          "any of the Ghostview device drivers that are known to KDVI. PostScript "
-                                          "support has therefore been turned off in KDVI.</qt>"),
-                                     i18n("<qt><p>The Ghostview program, which KDVI uses internally to display the "
-                                          "PostScript graphics that is included in this DVI file, is generally able to "
-                                          "write its output in a variety of formats. The sub-programs that Ghostview uses "
-                                          "for these tasks are called 'device drivers'; there is one device driver for "
-                                          "each format that Ghostview is able to write. Different versions of Ghostview "
-                                          "often have different sets of device drivers available. It seems that the "
-                                          "version of Ghostview that is installed on this computer does not contain "
-                                          "<strong>any</strong> of the device drivers that are known to KDVI.</p>"
-                                          "<p>It seems unlikely that a regular installation of Ghostview would not contain "
-                                          "these drivers. This error may therefore point to a serious misconfiguration of "
-                                          "the Ghostview installation on your computer.</p>"
-                                          "<p>If you want to fix the problems with Ghostview, you can use the command "
-                                          "<strong>gs --help</strong> to display the list of device drivers contained in "
-                                          "Ghostview. Among others, KDVI can use the 'png256', 'jpeg' and 'pnm' "
-                                          "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
-                                          "</p></qt>"));
-        else {
-          kdDebug(kvs::dvi) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
-          gs_generate_graphics_file(page, filename, magnification);
-        }
-        return;
+    const QString gs_output = gs.readAll();
+    if (gs_output.contains("Unknown device")) {
+      kdDebug(kvs::dvi) << QString("The version of ghostscript installed on this computer does not support "
+                          "the '%1' device driver.").arg(*gsDevice) << endl;
+      knownDevices.remove(gsDevice);
+      gsDevice = knownDevices.begin();
+      if (knownDevices.isEmpty())
+        // TODO: show a requestor of some sort.
+        KMessageBox::detailedError(0,
+                                   i18n("<qt>The version of Ghostscript that is installed on this computer does not contain "
+                                        "any of the Ghostscript device drivers that are known to KDVI. PostScript "
+                                        "support has therefore been turned off in KDVI.</qt>"),
+                                   i18n("<qt><p>The Ghostscript program, which KDVI uses internally to display the "
+                                        "PostScript graphics that is included in this DVI file, is generally able to "
+                                        "write its output in a variety of formats. The sub-programs that Ghostscript uses "
+                                        "for these tasks are called 'device drivers'; there is one device driver for "
+                                        "each format that Ghostscript is able to write. Different versions of Ghostscript "
+                                        "often have different sets of device drivers available. It seems that the "
+                                        "version of Ghostscript that is installed on this computer does not contain "
+                                        "<strong>any</strong> of the device drivers that are known to KDVI.</p>"
+                                        "<p>It seems unlikely that a regular installation of Ghostscript would not contain "
+                                        "these drivers. This error may therefore point to a serious misconfiguration of "
+                                        "the Ghostscript installation on your computer.</p>"
+                                        "<p>If you want to fix the problems with Ghostscript, you can use the command "
+                                        "<strong>gs --help</strong> to display the list of device drivers contained in "
+                                        "Ghostscript. Among others, KDVI can use the 'png256', 'jpeg' and 'pnm' "
+                                        "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
+                                        "</p></qt>"));
+      else {
+        kdDebug(kvs::dvi) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
+        // The function calls itself recursively until there are no
+        // devices left to try.
+        gs_generate_graphics_file(page, filename, magnification);
       }
+      return;
     }
   }
+
   emit(setStatusBarText(QString::null));
 }
 
@@ -349,11 +358,19 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KURL
   // Otherwise, use kpsewhich to find the eps file.
   QString EPSfilename;
 
-  KProcIO proc;
-  proc << "kpsewhich" << filename;
-  proc.start(KProcess::Block);
-  proc.readln(EPSfilename);
-  return EPSfilename.trimmed();
+  QProcess kpsewhich;
+  kpsewhich.setReadChannelMode(QProcess::MergedChannels);
+  kpsewhich.start("kpsewhich",
+                  QStringList() << filename,
+                  QIODevice::ReadOnly|QIODevice::Text);
+
+  if (kpsewhich.waitForStarted()) {
+    // We wait here while the external program runs concurrently.
+    kpsewhich.waitForFinished(-1);
+    EPSfilename = QString(kpsewhich.readAll()).trimmed();
+  }
+
+  return EPSfilename;
 }
 
 #include "psgs.moc"

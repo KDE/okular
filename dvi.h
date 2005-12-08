@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 /*
  *  Mnemonics for bytes in dvi file.
  */

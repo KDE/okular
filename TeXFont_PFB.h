@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 // TeXFont_PFB.h
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 // fontpool.h
 //
 // (C) 2001-2004 Stefan Kebekus

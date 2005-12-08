@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 #ifndef _xdvi_h
 #define _xdvi_h
 

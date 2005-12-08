@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 /*
  * Copyright (c) 1994 Paul Vojta.  All rights reserved.
  *

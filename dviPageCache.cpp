@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 /***************************************************************************
  *   Copyright (C) 2005 by Wilfried Huss                                   *
  *   Wilfried.Huss@gmx.at                                                  *

@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 // dviRenderer_prescan.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment

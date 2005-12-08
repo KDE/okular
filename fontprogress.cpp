@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 // fontprogress.cpp
 //
 // (C) 2001--2004 Stefan Kebekus

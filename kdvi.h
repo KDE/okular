@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 // kdvi.h
 //
 // global variables and definitions for kdvi.

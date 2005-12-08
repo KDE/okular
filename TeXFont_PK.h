@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 
 #ifndef _TEXFONT_PK_H
 #define _TEXFONT_PK_H

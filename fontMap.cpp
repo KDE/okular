@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 // fontMap.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 
 //#define PERFORMANCE_MEASUREMENT
 #ifdef PERFORMANCE_MEASUREMENT

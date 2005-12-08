@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 // infodialog.cpp
 //
 // (C) 2001-2003 Stefan Kebekus

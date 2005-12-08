@@ -11,8 +11,8 @@
 #include "performanceMeasurement.h"
 #include "prefs.h"
 
-#include <kaction.h>
 #include <kaboutdata.h>
+#include <kaction.h>
 #include <kconfigdialog.h>
 #include <kfiledialog.h>
 #include <kglobal.h>

@@ -58,9 +58,8 @@
 #include "pageSize.h"
 
 #include <klocale.h>
-#include <kprocio.h>
 
-#include <QFile>
+#include <QProcess>
 #include <QTemporaryFile>
 
 #include <cstdlib>
@@ -377,11 +376,16 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
   tmpfile.close();
 
   // Use pdf2ps to do the conversion
-  KProcIO proc;
-  proc << "pdf2ps" << PDFFilename << convertedFileName;
-  if (proc.start(KProcess::Block, true) == false) {
-    convertedFiles[PDFFilename] = QString::null; // Indicates that conversion failed, won't try again.
-    if ((converrorms != 0) && (have_complainedAboutMissingPDF2PS == false)) {
+  QProcess pdf2ps;
+  pdf2ps.setReadChannelMode(QProcess::MergedChannels);
+  pdf2ps.start("pdf2ps",
+               QStringList() << PDFFilename << convertedFileName,
+               QIODevice::ReadOnly|QIODevice::Text);
+
+  if (!pdf2ps.waitForStarted()) {
+    // Indicates that conversion failed, won't try again.
+    convertedFiles[PDFFilename] = QString::null;
+    if (converrorms != 0 && !have_complainedAboutMissingPDF2PS) {
       *converrorms = i18n("<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
                           "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
                           "document will therefore not be displayed.</p>"
@@ -396,18 +400,21 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     }
     return QString::null;
   }
-  if ( !QFile::exists(convertedFileName) || !proc.normalExit() || (proc.exitStatus() != 0) ) {
-    convertedFiles[PDFFilename] = QString::null; // Indicates that conversion failed, won't try again.
+
+  // We wait here while the external program runs concurrently.
+  pdf2ps.waitForFinished(-1);
+
+  if (!QFile::exists(convertedFileName) || pdf2ps.exitCode() != 0) {
+    // Indicates that conversion failed, won't try again.
+    convertedFiles[PDFFilename] = QString::null;
     if (converrorms != 0) {
-      QString outp, outl;
-      while(proc.readln(outl) != -1)
-        outp += outl;
+      const QString output = pdf2ps.readAll();
 
       *converrorms = i18n("<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
                           "document will therefore not be displayed.</p>"
                           "<p><b>Possible reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
                           "This is the output of the <strong>pdf2ps</strong> program that KDVI used:</p>"
-                          "<p><strong>%2</strong></p></qt>").arg(PDFFilename).arg(outp);
+                          "<p><strong>%2</strong></p></qt>").arg(PDFFilename).arg(output);
     }
     return QString::null;
   }

@@ -422,14 +422,8 @@ StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
   if (nVals + 7 <= 0)
     return;
 
-  totalBits = nVals * nBits;
-  if ( totalBits == 0 ||
-     (totalBits / nBits) / nComps != width ||
-     totalBits + 7 < 0) {
-    return;
-  }
   pixBytes = (nComps * nBits + 7) >> 3;
-  rowBytes = ((totalBits + 7) >> 3) + pixBytes;
+  rowBytes = ((nVals * nBits + 7) >> 3) + pixBytes;
   if (rowBytes < 0)
     return;
 

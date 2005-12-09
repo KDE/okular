@@ -2946,6 +2946,10 @@ GBool DCTStream::readProgressiveSOF() {
   height = read16();
   width = read16();
   numComps = str->getChar();
+  if (numComps <= 0 || numComps > 4) {
+     error(getPos(), "Bad number of components in DCT stream");
+     return gFalse;
+  }
   if (prec != 8) {
     error(getPos(), "Bad DCT precision %d", prec);
     return gFalse;
@@ -2968,6 +2972,10 @@ GBool DCTStream::readScanInfo() {
 
   length = read16() - 2;
   scanInfo.numComps = str->getChar();
+  if (scanInfo.numComps <= 0 || scanInfo.numComps > 4) {
+     error(getPos(), "Bad number of components in DCT stream");
+     return gFalse;
+  }
   --length;
   if (length != 2 * scanInfo.numComps + 3) {
     error(getPos(), "Bad DCT scan info block");

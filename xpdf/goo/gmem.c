@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
+#include <limits.h>
 #include "gmem.h"
 
 #ifdef DEBUG_MEM
@@ -141,7 +142,7 @@ void *gmallocn(int nObjs, int objSize) {
   int n;
 
   n = nObjs * objSize;
-  if (objSize == 0 || n / objSize != nObjs) {
+  if (objSize <= 0 || nObjs < 0 || nObjs >= INT_MAX / objSize) {
     fprintf(stderr, "Bogus memory allocation size\n");
     exit(1);
   }
@@ -152,7 +153,7 @@ void *greallocn(void *p, int nObjs, int objSize) {
   int n;
 
   n = nObjs * objSize;
-  if (objSize == 0 || n / objSize != nObjs) {
+  if (objSize <= 0 || nObjs < 0 || nObjs >= INT_MAX / objSize) {
     fprintf(stderr, "Bogus memory allocation size\n");
     exit(1);
   }

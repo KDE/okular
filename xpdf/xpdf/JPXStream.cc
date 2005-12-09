@@ -7,6 +7,7 @@
 //========================================================================
 
 #include <aconf.h>
+#include <limits.h>
 
 #ifdef USE_GCC_PRAGMAS
 #pragma implementation
@@ -702,7 +703,7 @@ GBool JPXStream::readCodestream(Guint /*len*/) {
       img.nYTiles = (img.ySize - img.yTileOffset + img.yTileSize - 1)
 	            / img.yTileSize;
       nTiles = img.nXTiles * img.nYTiles;
-      if (img.nXTiles == 0 || nTiles / img.nXTiles != img.nYTiles) {
+      if (img.nXTiles <= 0 || img.nYTiles <= 0 || img.nXTiles >= INT_MAX / img.nYTiles) {
         error(getPos(), "Bad tile count in JPX SIZ marker segment");  
         return gFalse;
       }

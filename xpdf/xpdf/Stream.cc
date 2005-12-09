@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <limits.h>
 #ifndef WIN32
 #include <unistd.h>
 #endif
@@ -408,8 +409,6 @@ void ImageStream::skipLine() {
 
 StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
 				 int widthA, int nCompsA, int nBitsA) {
-  int totalBits;
-
   str = strA;
   predictor = predictorA;
   width = widthA;
@@ -418,18 +417,19 @@ StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
   predLine = NULL;
   ok = gFalse;
 
+  if (width <= 0 || nComps <= 0 || nBits <= 0 ||
+      nComps >= INT_MAX / nBits ||
+      width >= INT_MAX / nComps / nBits)
+    return;
+
   nVals = width * nComps;
-  totalBits = nVals * nBits;
-  if (totalBits == 0 ||
-      (totalBits / nBits) / nComps != width ||
-      totalBits + 7 < 0) {
+  if (nVals + 7 <= 0)
     return;
-  }
   pixBytes = (nComps * nBits + 7) >> 3;
-  rowBytes = ((totalBits + 7) >> 3) + pixBytes;
-  if (rowBytes < 0) {
+  rowBytes = ((nVals * nBits + 7) >> 3) + pixBytes;
+  if (rowBytes < 0)
     return;
-  }
+
   predLine = (Guchar *)gmalloc(rowBytes);
   memset(predLine, 0, rowBytes);
   predIdx = rowBytes;

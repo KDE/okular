@@ -66,6 +66,13 @@ PageAttrs::PageAttrs(PageAttrs *attrs, Dict *dict) {
   if (!haveCropBox) {
     cropBox = mediaBox;
   }
+  else
+  {
+    // cropBox can not be bigger than mediaBox
+    if (cropBox.x2 - cropBox.x1 > mediaBox.x2 - mediaBox.x1 ||
+        cropBox.y2 - cropBox.y1 > mediaBox.y2 - mediaBox.y1)
+	    cropBox = mediaBox;
+  }
 
   // other boxes
   bleedBox = cropBox;

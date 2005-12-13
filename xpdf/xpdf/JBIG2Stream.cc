@@ -7,6 +7,7 @@
 //========================================================================
 
 #include <aconf.h>
+#include <limits.h>
 
 #ifdef USE_GCC_PRAGMAS
 #pragma implementation
@@ -681,9 +682,15 @@ JBIG2Bitmap::JBIG2Bitmap(Guint segNumA, int wA, int hA):
   w = wA;
   h = hA;
   line = (wA + 7) >> 3;
-  // need to allocate one extra guard byte for use in combine()
-  data = (Guchar *)gmalloc(h * line + 1);
-  data[h * line] = 0;
+
+  if (h < 0 || line <= 0 || h >= INT_MAX / line) {
+    data = NULL;
+  }
+  else {
+    // need to allocate one extra guard byte for use in combine()
+    data = (Guchar *)gmalloc(h * line + 1);
+    data[h * line] = 0;
+  }
 }
 
 JBIG2Bitmap::JBIG2Bitmap(Guint segNumA, JBIG2Bitmap *bitmap):
@@ -692,6 +699,12 @@ JBIG2Bitmap::JBIG2Bitmap(Guint segNumA, JBIG2Bitmap *bitmap):
   w = bitmap->w;
   h = bitmap->h;
   line = bitmap->line;
+
+  if (h < 0 || line <= 0 || h >= INT_MAX / line) {
+    data = NULL;
+    return;
+  }
+ 
   // need to allocate one extra guard byte for use in combine()
   data = (Guchar *)gmalloc(h * line + 1);
   memcpy(data, bitmap->data, h * line);
@@ -720,7 +733,7 @@ JBIG2Bitmap *JBIG2Bitmap::getSlice(Guint x, Guint y, Guint wA, Guint hA) {
 }
 
 void JBIG2Bitmap::expand(int newH, Guint pixel) {
-  if (newH <= h) {
+  if (newH <= h || line <= 0 || newH >= INT_MAX / line) {
     return;
   }
   // need to allocate one extra guard byte for use in combine()
@@ -2305,6 +2318,15 @@ void JBIG2Stream::readHalftoneRegionSeg(Guint segNum, GBool imm,
     error(getPos(), "Bad symbol dictionary reference in JBIG2 halftone segment");
     return;
   }
+  if (gridH == 0 || gridW >= INT_MAX / gridH) {
+    error(getPos(), "Bad size in JBIG2 halftone segment");
+    return;
+  }
+  if (w == 0 || h >= INT_MAX / w) {
+     error(getPos(), "Bad size in JBIG2 bitmap segment");
+    return;
+  }
+
   patternDict = (JBIG2PatternDict *)seg;
   bpp = 0;
   i = 1;
@@ -2935,6 +2957,9 @@ JBIG2Bitmap *JBIG2Stream::readGenericRefinementRegion(int w, int h,
   JBIG2BitmapPtr cxPtr0, cxPtr1, cxPtr2, cxPtr3, cxPtr4, cxPtr5, cxPtr6;
   JBIG2BitmapPtr tpgrCXPtr0, tpgrCXPtr1, tpgrCXPtr2;
   int x, y, pix;
+
+  if (w < 0 || h <= 0 || w >= INT_MAX / h)
+    return NULL;
 
   bitmap = new JBIG2Bitmap(0, w, h);
   bitmap->clearToZero();

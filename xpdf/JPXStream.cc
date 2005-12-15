@@ -708,7 +708,7 @@ GBool JPXStream::readCodestream(Guint /*len*/) {
 	error(getPos(), "Bad tile count in JPX SIZ marker segment");
 	return gFalse;
       }
-      img.tiles = (JPXTile *)gmalloc(nTiles, sizeof(JPXTile));
+      img.tiles = (JPXTile *)gmalloc(nTiles * sizeof(JPXTile));
       for (i = 0; i < img.nXTiles * img.nYTiles; ++i) {
 	img.tiles[i].tileComps = (JPXTileComp *)gmalloc(img.nComps *
 							sizeof(JPXTileComp));

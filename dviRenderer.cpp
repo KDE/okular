@@ -22,17 +22,18 @@
 #include "psgs.h"
 #include "renderedDviPagePixmap.h"
 
-#include <kapplication.h>
 #include <kconfig.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimemagic.h>
+#include <kmimetype.h>
 #include <kprocess.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
+#include <kvbox.h>
 
 #include <q3ptrstack.h>
-#include <kvbox.h>
+#include <QApplication>
 #include <QCheckBox>
 #include <QFileInfo>
 #include <QHBoxLayout>
@@ -40,8 +41,6 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QRegExp>
-#include <kglobal.h>
-#include <kvbox.h>
 
 
 //#define DEBUG_DVIRENDERER
@@ -428,7 +427,7 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
   // mime type, if the file is not DVI. Perhaps we should move the
   // procedure later to the kviewpart, instead of the implementaton in
   // the multipage.
-  QString mimetype( KMimeMagic::self()->findFileType( fname )->mimeType() );
+  const QString mimetype = KMimeType::findByFileContent(fname)->name();
   if (mimetype != "application/x-dvi") {
     KMessageBox::sorry( parentWidget,
                         i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has "

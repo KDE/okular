@@ -55,7 +55,7 @@ class PDFGenerator : public Generator
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
-        void loadPages(QValueVector<KPDFPage*> pagesVector, int rotation=-1, bool clear=false);
+        void loadPages(QValueVector<KPDFPage*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document informations
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();

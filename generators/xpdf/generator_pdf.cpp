@@ -192,15 +192,15 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
 
     // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = pdfdoc->getNumPages();
-    pagesVector.resize( pageCount );
+    pagesVector.resize(pageCount );
 
-    loadPages(pagesVector);
+    loadPages(pagesVector,-1,false);
 
     // the file has been loaded correctly
     return true;
 }
 
-void PDFGenerator::loadPages(QValueVector<KPDFPage*> pagesVector, int rotation, bool clear)
+void PDFGenerator::loadPages(QValueVector<KPDFPage*> &pagesVector, int rotation, bool clear)
 {
     // TODO XPDF 3.01 check
     //     KPDFTextDev td;
@@ -217,7 +217,7 @@ void PDFGenerator::loadPages(QValueVector<KPDFPage*> pagesVector, int rotation, 
         addTransition( p, page );
         if ( true ) //TODO real check
             addAnnotations( p, page );
-
+// 	    kdWarning() << page->width() << "x" << page->height() << endl;
 // need a way to find efficient (maybe background textpage generation)
 /*	docLock.lock();
 	pdfdoc->displayPage( &td, page->number()+1, 72, 72, rotation, true, false );
@@ -230,6 +230,7 @@ void PDFGenerator::loadPages(QValueVector<KPDFPage*> pagesVector, int rotation, 
             delete pagesVector[i];
         // set the kpdfpage at the right position in document's pages vector
         pagesVector[i] = page;
+// 	kdWarning() << page->width() << "x" << page->height() << endl;
     }
 }
 

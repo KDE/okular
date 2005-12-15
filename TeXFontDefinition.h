@@ -1,4 +1,4 @@
-// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 /*
  * The layout of a font information block.
  * There is one of these for every loaded font or magnification thereof.

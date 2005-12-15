@@ -1,4 +1,4 @@
-// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // fontEncodingPool.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment

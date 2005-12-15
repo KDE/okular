@@ -41,7 +41,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   } else
     enableLinkedHelp(false);
 
-  KVBox *page = makeVBoxMainWidget();
+  KVBox* page = makeVBoxMainWidget();
 
   TextLabel1   = new QLabel( label, page, "TextLabel2" );
   TextLabel1->setAlignment( int( Qt::AlignCenter ) );

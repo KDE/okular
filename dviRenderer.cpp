@@ -744,7 +744,8 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
   }
 
   // Set up a shell process with the editor command.
-  proc = new KProcess();
+  proc = new KProcess;
+  
   if (proc == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the editor command." << endl;
     return;
@@ -766,6 +767,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
 
 
   proc->clearArguments();
+  proc->setUseShell(true, getenv("SHELL"));
   *proc << command;
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {

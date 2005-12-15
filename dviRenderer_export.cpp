@@ -120,7 +120,7 @@ void dviRenderer::exportPDF()
     qApp->connect(progress, SIGNAL(finished()), this, SLOT(abortExternalProgramm()));
   }
 
-  proc = new KProcess();
+  proc = new KProcess;
   if (proc == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvipdfm command." << endl;
     return;
@@ -137,6 +137,8 @@ void dviRenderer::exportPDF()
   info->clear(i18n("Export: %1 to PDF").arg(KProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
+  proc->setUseShell(true, getenv("SHELL"));
+
   finfo.setFile(dviFile->filename);
   *proc << QString("cd %1; dvipdfm").arg(KProcess::quote(finfo.dirPath(true)));
   *proc << QString("-o %1").arg(KProcess::quote(fileName));
@@ -286,7 +288,7 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   }
 
   // Allocate and initialize the shell process.
-  proc = new KProcess();
+  proc = new KProcess;
   if (proc == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvips command." << endl;
     return;
@@ -301,6 +303,8 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   info->clear(i18n("Export: %1 to PostScript").arg(KProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
+  proc->setUseShell(true, getenv("SHELL"));
+
   QFileInfo finfo(dviFile->filename);
   *proc << QString("cd %1; dvips").arg(KProcess::quote(finfo.dirPath(true)));
   if (printer == 0)

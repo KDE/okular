@@ -422,7 +422,7 @@ StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
     return;
 
   nVals = width * nComps;
-  if (nVals + 7 <= 0)
+  if (nVals * nBits + 7 <= 0)
     return;
   pixBytes = (nComps * nBits + 7) >> 3;
   rowBytes = ((nVals * nBits + 7) >> 3) + pixBytes;
@@ -1279,8 +1279,7 @@ CCITTFaxStream::CCITTFaxStream(Stream *strA, int encodingA, GBool endOfLineA,
   endOfLine = endOfLineA;
   byteAlign = byteAlignA;
   columns = columnsA;
-  if (columns < 1 || columns + 2 < 0 || columns + 3 < 0 ||
-	  (columns + 2) >= INT_MAX / sizeof(short) || (columns + 3) >= INT_MAX / sizeof(short)) {
+  if (columns < 1 || columns >= INT_MAX / sizeof(short)) {
     error(-1, "invalid number of columns");
     exit(1);
   }

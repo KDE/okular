@@ -706,7 +706,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
   {
       KMessageBox::sorry(parentWidget, QString("<qt>") +
                          i18n("The DVI-file refers to the TeX-file "
-                              "<strong>%1</strong> which could not be found.").arg(KShellProcess::quote(TeXfile)) +
+                              "<strong>%1</strong> which could not be found.").arg(KProcess::quote(TeXfile)) +
                          QString("</qt>"),
                          i18n( "Could Not Find File" ));
       return;
@@ -727,7 +727,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
     else
       return;
   }
-  command = command.replace( "%l", QString::number(splitter.line()) ).replace( "%f", KShellProcess::quote(TeXfile) );
+  command = command.replace( "%l", QString::number(splitter.line()) ).replace( "%f", KProcess::quote(TeXfile) );
 
 #ifdef DEBUG_SPECIAL
   kdDebug(kvs::dvi) << "Calling program: " << command << endl;
@@ -744,7 +744,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
   }
 
   // Set up a shell process with the editor command.
-  proc = new KShellProcess();
+  proc = new KProcess();
   if (proc == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the editor command." << endl;
     return;

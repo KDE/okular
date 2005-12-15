@@ -120,7 +120,7 @@ void dviRenderer::exportPDF()
     qApp->connect(progress, SIGNAL(finished()), this, SLOT(abortExternalProgramm()));
   }
 
-  proc = new KShellProcess();
+  proc = new KProcess();
   if (proc == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvipdfm command." << endl;
     return;
@@ -134,13 +134,13 @@ void dviRenderer::exportPDF()
   export_errorString = i18n("<qt>The external program 'dvipdf', which was used to export the file, reported an error. "
                             "You might wish to look at the <strong>document info dialog</strong> which you will "
                             "find in the File-Menu for a precise error report.</qt>") ;
-  info->clear(i18n("Export: %1 to PDF").arg(KShellProcess::quote(dviFile->filename)));
+  info->clear(i18n("Export: %1 to PDF").arg(KProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
   finfo.setFile(dviFile->filename);
-  *proc << QString("cd %1; dvipdfm").arg(KShellProcess::quote(finfo.dirPath(true)));
-  *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
-  *proc << KShellProcess::quote(dviFile->filename);
+  *proc << QString("cd %1; dvipdfm").arg(KProcess::quote(finfo.dirPath(true)));
+  *proc << QString("-o %1").arg(KProcess::quote(fileName));
+  *proc << KProcess::quote(dviFile->filename);
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
     kdError(kvs::dvi) << "dvipdfm failed to start" << endl;
@@ -286,7 +286,7 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   }
 
   // Allocate and initialize the shell process.
-  proc = new KShellProcess();
+  proc = new KProcess();
   if (proc == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvips command." << endl;
     return;
@@ -298,17 +298,17 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   export_errorString = i18n("<qt>The external program 'dvips', which was used to export the file, reported an error. "
                             "You might wish to look at the <strong>document info dialog</strong> which you will "
                             "find in the File-Menu for a precise error report.</qt>") ;
-  info->clear(i18n("Export: %1 to PostScript").arg(KShellProcess::quote(dviFile->filename)));
+  info->clear(i18n("Export: %1 to PostScript").arg(KProcess::quote(dviFile->filename)));
 
   proc->clearArguments();
   QFileInfo finfo(dviFile->filename);
-  *proc << QString("cd %1; dvips").arg(KShellProcess::quote(finfo.dirPath(true)));
+  *proc << QString("cd %1; dvips").arg(KProcess::quote(finfo.dirPath(true)));
   if (printer == 0)
     *proc << "-z"; // export Hyperlinks
   if (options.isEmpty() == false)
     *proc << options;
-  *proc << QString("%1").arg(KShellProcess::quote(sourceFileName));
-  *proc << QString("-o %1").arg(KShellProcess::quote(fileName));
+  *proc << QString("%1").arg(KProcess::quote(sourceFileName));
+  *proc << QString("-o %1").arg(KProcess::quote(fileName));
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::Stderr) == false) {
     kdError(kvs::dvi) << "dvips failed to start" << endl;
@@ -360,7 +360,7 @@ void dviRenderer::editorCommand_terminated(KProcess *sproc)
     KMessageBox::error( parentWidget, export_errorString );
 
   // Let's hope that this is not all too nasty... killing a
-  // KShellProcess from a slot that was called from the KShellProcess
+  // KProcess from a slot that was called from the KShellProcess
   // itself. Until now, there weren't any problems.
 
   // Perhaps it was a bad idea, after all.

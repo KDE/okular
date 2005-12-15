@@ -33,7 +33,6 @@ class KDVIMultiPage;
 class KPrinter;
 class KProcess;
 class KProgressDialog;
-class KShellProcess;
 class PreBookmark;
 class TeXFontDefinition;
 
@@ -281,7 +280,7 @@ private:
 
   /** Used to run and to show the progress of dvips and friends. */
   fontProgressDialog *progress;
-  KShellProcess      *proc;
+  KProcess           *proc;
   KPrinter           *export_printer;
   QString             export_fileName;
   QString             export_tmpFileName;

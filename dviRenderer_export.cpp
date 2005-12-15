@@ -136,13 +136,13 @@ void dviRenderer::exportPDF()
                             "find in the File-Menu for a precise error report.</qt>") ;
   info->clear(i18n("Export: %1 to PDF").arg(KProcess::quote(dviFile->filename)));
 
-  proc->clearArguments();
-  proc->setUseShell(true, getenv("SHELL"));
-
   finfo.setFile(dviFile->filename);
-  *proc << QString("cd %1; dvipdfm").arg(KProcess::quote(finfo.dirPath(true)));
-  *proc << QString("-o %1").arg(KProcess::quote(fileName));
-  *proc << KProcess::quote(dviFile->filename);
+
+  proc->setWorkingDirectory(finfo.dirPath(true));
+  *proc << "dvipdfm"
+        << "-o"
+        << fileName
+        << dviFile->filename;
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
     kdError(kvs::dvi) << "dvipdfm failed to start" << endl;
@@ -302,17 +302,16 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
                             "find in the File-Menu for a precise error report.</qt>") ;
   info->clear(i18n("Export: %1 to PostScript").arg(KProcess::quote(dviFile->filename)));
 
-  proc->clearArguments();
-  proc->setUseShell(true, getenv("SHELL"));
-
   QFileInfo finfo(dviFile->filename);
-  *proc << QString("cd %1; dvips").arg(KProcess::quote(finfo.dirPath(true)));
+  proc->setWorkingDirectory(finfo.dirPath(true));
+  *proc << "dvips";
   if (printer == 0)
     *proc << "-z"; // export Hyperlinks
-  if (options.isEmpty() == false)
+  if (!options.isEmpty())
     *proc << options;
-  *proc << QString("%1").arg(KProcess::quote(sourceFileName));
-  *proc << QString("-o %1").arg(KProcess::quote(fileName));
+  *proc << sourceFileName
+        << "-o"
+        << fileName;
   proc->closeStdin();
   if (proc->start(KProcess::NotifyOnExit, KProcess::Stderr) == false) {
     kdError(kvs::dvi) << "dvips failed to start" << endl;

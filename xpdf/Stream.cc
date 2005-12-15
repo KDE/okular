@@ -419,7 +419,7 @@ StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
     return;
 
   nVals = width * nComps;
-  if (nVals + 7 <= 0)
+  if (nVals * nBits + 7 <= 0)
     return;
 
   pixBytes = (nComps * nBits + 7) >> 3;

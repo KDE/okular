@@ -1277,8 +1277,9 @@ CCITTFaxStream::CCITTFaxStream(Stream *strA, int encodingA, GBool endOfLineA,
   endOfLine = endOfLineA;
   byteAlign = byteAlignA;
   columns = columnsA;
-  if (columns + 3 < 1 || columns + 4 < 1 || columns < 1) {
-    columns = 1;
+  if (columns < 1 || columns >= INT_MAX / sizeof(short)) {
+     error(getPos(), "Bad number of columns in CCITTFaxStream");
+     exit(1);
   }
   rows = rowsA;
   endOfBlock = endOfBlockA;

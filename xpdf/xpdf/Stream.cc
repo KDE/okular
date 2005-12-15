@@ -419,8 +419,8 @@ StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
 
   nVals = width * nComps;
   if (nVals * nBits + 7 <= 0)
-    return;
-  pixBytes = (nComps * nBits + 7) >> 3;
+    return
+  ixBytes = (nComps * nBits + 7) >> 3;
   rowBytes = ((nVals * nBits + 7) >> 3) + pixBytes;
   if (rowBytes < 0)
     return;
@@ -1277,8 +1277,9 @@ CCITTFaxStream::CCITTFaxStream(Stream *strA, int encodingA, GBool endOfLineA,
   endOfLine = endOfLineA;
   byteAlign = byteAlignA;
   columns = columnsA;
-  if (columns + 3 < 1 || columns + 4 < 1 || columns < 1) {
-    columns = 1;
+  if (columns < 1 || columns >= INT_MAX / sizeof(short)) {
+    error(getPos(), "Bad number of columns in CCITTFaxStream");
+    exit(1);
   }
   rows = rowsA;
   endOfBlock = endOfBlockA;
@@ -2924,7 +2925,7 @@ GBool DCTStream::readBaselineSOF() {
   numComps = str->getChar();
   if (numComps <= 0 || numComps > 4) {
     numComps = 0;
-    error(getPos(), "Bad number of components in DCT stream", prec);
+    error(getPos(), "Bad number of components in DCT stream");
     return gFalse;
   }
   if (prec != 8) {

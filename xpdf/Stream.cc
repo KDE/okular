@@ -997,7 +997,7 @@ LZWStream::LZWStream(Stream *strA, int predictor, int columns, int colors,
     FilterStream(strA) {
   if (predictor != 1) {
     pred = new StreamPredictor(this, predictor, columns, colors, bits);
-    if ( !pred->isO()) {
+    if ( !pred->isOk()) {
        delete pred;
        pred = NULL;
     }

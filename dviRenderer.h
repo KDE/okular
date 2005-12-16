@@ -34,7 +34,6 @@ class KDVIMultiPage;
 class KPrinter;
 class KProcess;
 class KProgressDialog;
-class KShellProcess;
 class PreBookmark;
 class QMouseEvent;
 class TeXFontDefinition;
@@ -147,9 +146,9 @@ public slots:
   virtual void  getText(RenderedDocumentPage* page);
 
   /** Slots used in conjunction with external programs */
-  void          dvips_output_receiver(KProcess *, char *buffer, int buflen);
-  void          dvips_terminated(KProcess *);
-  void          editorCommand_terminated(KProcess *);
+  void          output_receiver(KProcess *, char *buffer, int buflen);
+  void          export_terminated(KProcess *);
+  void          editor_terminated(KProcess *);
 
 signals:
   /** Passed through to the top-level kpart. */
@@ -283,7 +282,8 @@ private:
 
   /** Used to run and to show the progress of dvips and friends. */
   fontProgressDialog *progress;
-  KShellProcess      *proc;
+  KProcess           *editor_;
+  KProcess           *export_;
   KPrinter           *export_printer;
   QString             export_fileName;
   QString             export_tmpFileName;

@@ -256,10 +256,10 @@ void dviRenderer::showThatSourceInformationIsPresent()
   bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
 
   if (showMsg) {
-    KDialogBase *dialog= new KDialogBase(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
+    KDialogBase dialog(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
                                          parentWidget, "information", true, true,KStdGuiItem::ok() );
 
-    QVBox *topcontents = new QVBox (dialog);
+    QVBox *topcontents = new QVBox (&dialog);
     topcontents->setSpacing(KDialog::spacingHint()*2);
     topcontents->setMargin(KDialog::marginHint()*2);
 
@@ -280,14 +280,13 @@ void dviRenderer::showThatSourceInformationIsPresent()
     QSize extraSize = QSize(50,30);
     QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
     extraSize = QSize(50,0);
-    dialog->setHelpLinkText(i18n("Explain in more detail..."));
-    dialog->setHelp("inverse-search", "kdvi");
-    dialog->enableLinkedHelp(true);
-    dialog->setMainWidget(topcontents);
-    dialog->enableButtonSeparator(false);
-    dialog->incInitialSize( extraSize );
-    dialog->exec();
-    delete dialog;
+    dialog.setHelpLinkText(i18n("Explain in more detail..."));
+    dialog.setHelp("inverse-search", "kdvi");
+    dialog.enableLinkedHelp(true);
+    dialog.setMainWidget(topcontents);
+    dialog.enableButtonSeparator(false);
+    dialog.incInitialSize( extraSize );
+    dialog.exec();
 
     showMsg = !checkbox->isChecked();
     if (!showMsg) {

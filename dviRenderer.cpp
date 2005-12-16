@@ -68,7 +68,8 @@ dviRenderer::dviRenderer(QWidget *par)
     word_boundary_encountered(false),
     current_page(0),
     progress(0),
-    proc(0),
+    editor_(0),
+    export_(0),
     export_printer(0),
     export_fileName(""),
     export_tmpFileName(""),
@@ -98,7 +99,8 @@ dviRenderer::~dviRenderer()
   mutex.unlock();
 
   delete PS_interface;
-  delete proc;
+  delete editor_;
+  delete export_;
   delete dviFile;
   // Don't delete the export printer. This is owned by the
   // kdvi_multipage.
@@ -736,22 +738,22 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
   // want to mix the output of several programs, we will
   // henceforth dimiss the output of the older programm. "If it
   // hasn't failed until now, we don't care."
-  if (proc != 0) {
-    qApp->disconnect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
-    qApp->disconnect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
-    proc = 0;
+  if (editor_ != 0) {
+    qApp->disconnect(editor_, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
+    qApp->disconnect(editor_, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
+    delete editor_;
+    editor_ = 0;
   }
 
   // Set up a shell process with the editor command.
-  proc = new KProcess;
-  
-  if (proc == 0) {
+  editor_ = new KProcess;
+  if (editor_ == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the editor command." << endl;
     return;
   }
-  qApp->connect(proc, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
-  qApp->connect(proc, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(dvips_output_receiver(KProcess *, char *, int)));
-  qApp->connect(proc, SIGNAL(processExited(KProcess *)), this, SLOT(editorCommand_terminated(KProcess *)));
+  qApp->connect(editor_, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(output_receiver(KProcess *, char *, int)));
+  qApp->connect(editor_, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(output_receiver(KProcess *, char *, int)));
+  qApp->connect(editor_, SIGNAL(processExited(KProcess *)), this, SLOT(editor_terminated(KProcess *)));
   // Merge the editor-specific editor message here.
   export_errorString = i18n("<qt>The external program<br><br><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
                             "for inverse search, reported an error. You might wish to look at the <strong>document info "
@@ -764,12 +766,10 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
   int flashOffset      = e->y(); // Heuristic correction. Looks better.
   win->flash(flashOffset);
 
-
-  proc->clearArguments();
-  proc->setUseShell(true, getenv("SHELL"));
-  *proc << command;
-  proc->closeStdin();
-  if (proc->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
+  editor_->setUseShell(true, getenv("SHELL"));
+  *editor_ << command;
+  editor_->closeStdin();
+  if (!editor_->start(KProcess::NotifyOnExit, KProcess::AllOutput)) {
     kdError(kvs::dvi) << "Editor failed to start" << endl;
     return;
   }

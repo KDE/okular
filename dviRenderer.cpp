@@ -708,7 +708,7 @@ void dviRenderer::clearStatusBar()
 }
 
 
-void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *win)
+void dviRenderer::handleSRCLink(const QString &linkText, QPoint point, DocumentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
   RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*> currentlyDrawnPage;
@@ -780,7 +780,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, QMouseEvent *e, Documen
 
   info->clear(i18n("Starting the editor..."));
 
-  int flashOffset      = e->y(); // Heuristic correction. Looks better.
+  int flashOffset = point.y(); // Heuristic correction. Looks better.
   win->flash(flashOffset);
 
   editor_->setUseShell(true, getenv("SHELL"));

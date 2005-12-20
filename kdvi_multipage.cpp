@@ -434,8 +434,8 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget()
   DVIWidget* documentWidget = new DVIWidget(pageView(), pageCache, "singlePageWidget");
 
   // Handle source links
-  connect(documentWidget, SIGNAL(SRCLink(const QString&, QMouseEvent*, DocumentWidget*)), getRenderer(),
-          SLOT(handleSRCLink(const QString& ,QMouseEvent*, DocumentWidget*)));
+  connect(documentWidget, SIGNAL(SRCLink(const QString&, QPoint, DocumentWidget*)), getRenderer(),
+          SLOT(handleSRCLink(const QString& , QPoint, DocumentWidget*)));
 
   return documentWidget;
 }

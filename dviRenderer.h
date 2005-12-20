@@ -35,7 +35,6 @@ class KPrinter;
 class KProcess;
 class KProgressDialog;
 class PreBookmark;
-class QMouseEvent;
 class TeXFontDefinition;
 
 extern const int MFResolutions[];
@@ -133,7 +132,7 @@ public slots:
   void          exportPDF();
 
   void          showInfo();
-  void          handleSRCLink(const QString &linkText, QMouseEvent *e, DocumentWidget *widget);
+  void          handleSRCLink(const QString &linkText, QPoint point, DocumentWidget *widget);
 
   void          embedPostScript();
   void          abortExternalProgramm();

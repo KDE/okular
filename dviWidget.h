@@ -28,7 +28,7 @@ public:
   DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name);
 
 signals:
-  void SRCLink(const QString&, QMouseEvent* e, DocumentWidget*);
+  void SRCLink(const QString&, QPoint point, DocumentWidget*);
 
 private:
   virtual void mousePressEvent(QMouseEvent* e);

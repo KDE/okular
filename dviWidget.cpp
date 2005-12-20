@@ -53,9 +53,9 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
 
     for(int i=0; i<pageData->sourceHyperLinkList.size(); i++)
     {
-      if (pageData->sourceHyperLinkList[i].box.contains(e->pos()))
+      if (pageData->sourceHyperLinkList[i].box.contains(inverseMap(e->pos())))
       {
-        emit(SRCLink(pageData->sourceHyperLinkList[i].linkText, e, this));
+        emit(SRCLink(pageData->sourceHyperLinkList[i].linkText, inverseMap(e->pos()), this));
         e->accept();
         return;
       }
@@ -70,7 +70,7 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
       }
     }
     // If the mouse pointer is not exactly inside a source link, jump to the closest target.
-    emit(SRCLink(pageData->sourceHyperLinkList[minIndex].linkText, e, this));
+    emit(SRCLink(pageData->sourceHyperLinkList[minIndex].linkText, inverseMap(e->pos()), this));
     e->accept();
   }
 }

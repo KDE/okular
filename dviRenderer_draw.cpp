@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 /*
  * Copyright (c) 1994 Paul Vojta.  All rights reserved.
  *
@@ -56,11 +57,8 @@
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"
-#include "fontpool.h"
 #include "hyperlink.h"
-#include "kdvi_multipage.h"
 #include "kvs_debug.h"
-#include "performanceMeasurement.h"
 #include "psgs.h"
 #include "renderedDviPagePixmap.h"
 #include "TeXFont.h"
@@ -68,13 +66,9 @@
 #include "xdvi.h"
 
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <kprocess.h>
 
-#include <qbitmap.h>
-#include <qfileinfo.h>
-#include <qimage.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 
 extern QPainter *foreGroundPainter;
 

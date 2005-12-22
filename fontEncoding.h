@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // fontEncoding.h
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment

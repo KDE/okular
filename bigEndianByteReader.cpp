@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // bigEndianByteReader.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment
@@ -10,6 +11,7 @@
 #include "bigEndianByteReader.h"
 #include "dvi.h"
 #include "kvs_debug.h"
+
 
 //#define DEBUG_ENDIANREADER
 

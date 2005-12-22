@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 /*
  * Copyright (c) 1994 Paul Vojta.  All rights reserved.
  *
@@ -51,12 +52,13 @@
 
 #include <config.h>
 
-#include "dviRenderer.h"
 #include "kvs_debug.h"
 #include "xdvi.h"
 
 #include <klocale.h>
 #include <kmessagebox.h>
+
+#include <cstdlib>
 
 
 /*

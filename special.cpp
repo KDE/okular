@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // special.cpp
 
 // Methods for dviRenderer which deal with "\special" commands found in the
@@ -10,20 +11,16 @@
 #include "dviFile.h"
 #include "dviRenderer.h"
 #include "hyperlink.h"
-#include "kdvi.h"
-#include "kdvi_multipage.h"
 #include "kvs_debug.h"
 #include "psgs.h"
-#include "xdvi.h"
+#include "renderedDocumentPagePixmap.h"
 
 #include <klocale.h>
 #include <kmimetype.h>
-#include <kprocio.h>
 
-#include <qdir.h>
 #include <qfile.h>
-#include <qfileinfo.h>
 #include <qimage.h>
+#include <qpainter.h>
 #include <qstringlist.h>
 
 //#define DEBUG_SPECIAL

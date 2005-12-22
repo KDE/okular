@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 //
 // fontpool.cpp
 //
@@ -8,18 +9,13 @@
 
 #include "fontpool.h"
 #include "kvs_debug.h"
-#include "performanceMeasurement.h"
-#include "prefs.h"
 #include "TeXFont.h"
 
-#include <kinstance.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprocess.h>
 #include <kprocio.h>
 
 #include <qapplication.h>
-#include <qfile.h>
 #include <qimage.h>
 #include <qpainter.h>
 

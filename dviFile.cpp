@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 /*
  * Copyright (c) 1994 Paul Vojta.  All rights reserved.
  *
@@ -56,14 +57,12 @@
 #include "fontpool.h"
 #include "kvs_debug.h"
 #include "pageSize.h"
-#include "xdvi.h"
 
 #include <klocale.h>
 #include <kprocio.h>
 #include <ktempfile.h>
 
-#include <qdir.h>
-#include <qfileinfo.h>
+#include <qfile.h>
 
 #include <cstdlib>
 

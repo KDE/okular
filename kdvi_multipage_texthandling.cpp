@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 //
 // Class: kdvi_multipage
 // Author: Stefan Kebekus
@@ -27,19 +28,11 @@
 #include <config.h>
 
 #include "kdvi_multipage.h"
-#include "documentWidget.h"
 #include "dviFile.h"
 #include "kvs_debug.h"
-#include "renderedDocumentPagePixmap.h"
 
-#include <kaction.h>
-#include <keditcl.h>
-#include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-
-#include <qapplication.h>
-#include <qprogressdialog.h>
 
 //#define KDVI_MULTIPAGE_DEBUG
 

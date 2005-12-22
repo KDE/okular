@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // dviRenderer_prescan.cpp
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment
@@ -10,27 +11,19 @@
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"
-#include "fontpool.h"
-#include "kdvi_multipage.h"
 #include "kvs_debug.h"
-#include "performanceMeasurement.h"
 #include "prebookmark.h"
 #include "psgs.h"
 #include "TeXFont.h"
-#include "xdvi.h"
 
 #include <klocale.h>
 #include <kmimetype.h>
-#include <kprocess.h>
-#include <kprocio.h>
 #include <kprogress.h>
 
 #include <qapplication.h>
-#include <qbitmap.h>
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <qimage.h>
-#include <qpainter.h>
 #include <qpaintdevice.h>
 
 

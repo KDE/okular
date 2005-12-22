@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 //
 // Class: DVIWidget
 //
@@ -12,12 +13,9 @@
 
 #include "dviWidget.h"
 #include "documentPageCache.h"
-#include "documentWidget.h"
 #include "hyperlink.h"
 #include "kvs_debug.h"
-#include "pageView.h"
 #include "renderedDviPagePixmap.h"
-#include "selection.h"
 
 #include <klocale.h>
 

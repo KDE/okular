@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // infodialog.cpp
 //
 // (C) 2001-2003 Stefan Kebekus
@@ -13,12 +14,10 @@
 #include <klocale.h>
 
 #include <qfile.h>
-#include <qlabel.h>
 #include <qlayout.h>
 #include <qregexp.h>
 #include <qtextview.h>
 #include <qtooltip.h>
-#include <qvariant.h>
 #include <qwhatsthis.h>
 
 

@@ -1,32 +1,24 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 #include <config.h>
 
 #include "kdvi_multipage.h"
-#include "documentWidget.h"
 #include "dviFile.h"
 #include "dviPageCache.h"
 #include "dviWidget.h"
-#include "fontpool.h"
 #include "kprinterwrapper.h"
-#include "kviewpart.h"
 #include "kvs_debug.h"
-#include "marklist.h"
 #include "optionDialogFontsWidget.h"
 #include "optionDialogSpecialWidget.h"
 #include "performanceMeasurement.h"
 #include "prefs.h"
-#include "renderedDocumentPagePixmap.h"
 
-#include <kaction.h>
 #include <kaboutdata.h>
-#include <kaboutdialog.h>
-#include <kapplication.h>
-#include <kbugreport.h>
+#include <kaction.h>
 #include <kconfigdialog.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kparts/part.h>
 #include <kparts/genericfactory.h>
 #include <kstdaction.h>
 #include <ktempfile.h>
@@ -434,8 +426,8 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget()
   DVIWidget* documentWidget = new DVIWidget(pageView(), pageCache, "singlePageWidget");
 
   // Handle source links
-  connect(documentWidget, SIGNAL(SRCLink(const QString&, QPoint, DocumentWidget*)), getRenderer(),
-          SLOT(handleSRCLink(const QString& , QPoint, DocumentWidget*)));
+  connect(documentWidget, SIGNAL(SRCLink(const QString&, const QPoint&, DocumentWidget*)), getRenderer(),
+          SLOT(handleSRCLink(const QString& , const QPoint&, DocumentWidget*)));
 
   return documentWidget;
 }

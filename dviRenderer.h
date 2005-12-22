@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 //
 // Class: dviRenderer
 //
@@ -132,7 +132,7 @@ public slots:
   void          exportPDF();
 
   void          showInfo();
-  void          handleSRCLink(const QString &linkText, QPoint point, DocumentWidget *widget);
+  void          handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget);
 
   void          embedPostScript();
   void          abortExternalProgramm();

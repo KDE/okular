@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 /*
  * Copyright (c) 1994 Paul Vojta.  All rights reserved.
  *
@@ -62,9 +63,6 @@
 #include <qimage.h>
 
 #include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 
 //#define DEBUG_PK
 

@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // fontprogress.cpp
 //
 // (C) 2001--2004 Stefan Kebekus
@@ -12,10 +13,7 @@
 #include <kprogress.h>
 
 #include <qapplication.h>
-#include <qframe.h>
 #include <qlabel.h>
-#include <qlayout.h>
-#include <qvariant.h>
 #include <qtooltip.h>
 #include <qvbox.h>
 #include <qwhatsthis.h>

@@ -691,7 +691,7 @@ void dviRenderer::clearStatusBar()
 }
 
 
-void dviRenderer::handleSRCLink(const QString &linkText, QPoint point, DocumentWidget *win)
+void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *win)
 {
 #ifdef DEBUG_SPECIAL
   RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*> currentlyDrawnPage;

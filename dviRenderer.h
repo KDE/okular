@@ -131,7 +131,7 @@ public slots:
   void          exportPDF();
 
   void          showInfo();
-  void          handleSRCLink(const QString &linkText, QPoint point, DocumentWidget *widget);
+  void          handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget);
 
   void          embedPostScript();
   void          abortExternalProgramm();

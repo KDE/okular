@@ -20,11 +20,10 @@ class DVI_SourceFileSplitter
 public:
   DVI_SourceFileSplitter(const QString & scrlink, const QString & dviFile);
 
-  QString  fileName() { return m_fileInfo.fileName(); }
-  QString  filePath() { return m_fileInfo.absoluteFilePath(); }
-  bool     fileExists() { return m_fileInfo.exists(); }
-
-  quint32 line()     { return m_line; }
+  QString  fileName() const { return m_fileInfo.fileName(); }
+  QString  filePath() const { return m_fileInfo.absoluteFilePath(); }
+  bool     fileExists() const { return m_fileInfo.exists(); }
+  quint32 line() const { return m_line; }
 
 private:
   QFileInfo m_fileInfo;

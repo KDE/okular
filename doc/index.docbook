@@ -18,11 +18,18 @@
 					<address><email>tsdgeos@yahoo.es</email></address>
 				</affiliation>
 			</author>
+			<author>
+				<firstname>Titus</firstname>
+				<surname>Laska</surname>
+				<affiliation>
+					<address><email>titus.laska@gmx.de</email></address>
+				</affiliation>
+			</author>
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2005-02-20</date>
-		<releaseinfo>1.0</releaseinfo>
+		<date>2005-12-10</date>
+		<releaseinfo>0.5</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&kpdf; is a &kde; PDF viewer based on xpdf code.</para>
@@ -35,91 +42,162 @@
 	</bookinfo>
 	<chapter id="introduction">
 		<title>Introduction</title>
-		<para>&kpdf; is a &kde; PDF viewer based on xpdf code. Although being
-			based on xpdf code, &kpdf; has some unique features like continuous
-			mode, presentation support, etc.</para>
-	</chapter>
-	<chapter id="navigating">
-		<title>Navigating</title>
-		<para>This section describes how you can navigate a document in &kpdf;.</para>
-		<para>
-			You can scroll up and down the viewing area with the 
-			<keycap>Up Arrow</keycap> and <keycap>Down Arrow</keycap>	keys, using the 
-			mouse wheel, pressing &LMB;	and dragging while in normal mode or using 
-			<keycap>Page Up</keycap> and <keycap>Page Down</keycap> keys.
+		<para>&kpdf; is a &kde; <firstterm>PDF</firstterm> (Portable Document Format) viewer
+			based on the code of the xpdf application. Although being based on xpdf code, &kpdf;
+			has some unique features such as continuous mode and presentation support.
 		</para>
 		<para>
-			If you click on a page thumbnail the viewing area will be brought to
-			that page.
-		</para>
-		<para>
-			If the document has a table of contents, clicking on a table
-			of contents item will bring the document to to the page linked to that
-			item.
-		</para>
-		<para>
-			If the document has links in it, you can click on them and the view will
-			change to the page it links to. If the link is to a web page the default
-			browser will be invoked.
-		</para>
-		<para>
-			You can go to the first page of the document using 
-			<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
-			using 
-			<menuchoice>
-				<guimenu>Go</guimenu>
-				<guimenuitem>First Page</guimenuitem>
-			</menuchoice>.
-		</para>
-		<para>
-			You can go to the last page of the document using 
-			<keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo> or
-			using 
-			<menuchoice>
-				<guimenu>Go</guimenu>
-				<guimenuitem>Last Page</guimenuitem>
-			</menuchoice>.
-		</para>
-		<para>
-			You can go to the next page of the document using 
-			<keycap>Space</keycap>, the <guibutton>Next Page</guibutton> Toolbar
-			button or	using 
-			<menuchoice>
-				<guimenu>Go</guimenu>
-				<guimenuitem>Next Page</guimenuitem>
-			</menuchoice>.
-		</para>
-		<para>
-			You can go to the previous page of the document using 
-			<keycap>Backspace</keycap>, the <guibutton>Previous Page</guibutton> Toolbar
-			button or	using 
-			<menuchoice>
-				<guimenu>Go</guimenu>
-				<guimenuitem>Previous Page</guimenuitem>
-			</menuchoice>.
+			The PDF format is widely used for publishing documents that are
+			mostly not meant to be edited again. &kpdf; is only a viewer
+			for these files and therefore it doesn't provide any functionality
+			to edit or create PDF documents.
 		</para>
 	</chapter>
-	<chapter id="presentationMode">
-		<title>Presentation Mode</title>
-		<para>
-			Presentation mode can be enabled in
-			<menuchoice><guimenu>View</guimenu><guimenuitem>Presentation</guimenuitem></menuchoice>.
-			It shows the document in a page per page basis. The pages are shown with
-			zoom to page, that means all the page is visible. To navigate between
-			pages you have to use &LMB; (next page) and &RMB; (previous page). You
-			can exit presentation mode using <keycap>ESC</keycap> key.
-		</para>
-		<para>
-			Presentation mode has a few configuration options, you can find their
-			meaning at <link linkend="configuring">Configuring &kpdf;</link>
-		</para>
+	<chapter id="use">
+		<title>Using &kpdf;</title>
+		<sect1 id="opening">
+			<title>Opening Files</title>
+			<para>
+				To view a PDF file in &kpdf;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...
+				</guimenuitem></menuchoice>, choose a file in the dialogue and click <guibutton>Open</guibutton>.
+				As long as you selected a valid PDF file, your file should know be displayed in the main window.
+			</para>
+			<para>
+				If you have already opened files in &kpdf; before, you can quickly access them by selecting them in
+				the <menuchoice><guimenu>File</guimenu><guisubmenu>Open Recent</guisubmenu></menuchoice> menu.
+			</para>
+			<para>
+				After having a file opened you probably want to read it and therefore navigate through it. Click
+				Next to learn more about this.
+			</para>
+		</sect1>
+		<sect1 id="navigating">
+			<title>Navigating</title>
+			<para>This section describes how you can navigate through a document in &kpdf;.</para>
+			<para>
+				There are multiple ways of scrolling the viewing area. One is to use the 
+				<keycap>Up Arrow</keycap> and <keycap>Down Arrow</keycap> keys. You may also use
+				the scrollbar, your <!--TODO: insert entity, if any-->mousewheel or the <keycap>Page Up</keycap> and <keycap>Page Down</keycap>
+				keys.
+			</para>
+			<para>
+				Another way is to hold the &LMB; down at any place on the document while dragging the mouse in the
+				opposite direction of where you want to move. This procedure only works if the Browse Tool is
+				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse Tool
+				</guimenuitem></menuchoice>.
+			</para>
+			<para>
+				The navigation panel on the left side of the screen enables two more ways of navigating
+				through a document:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						If you click on a page thumbnail the viewing area will be brought to
+						that page.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						If the document has a table of contents, clicking on a table
+						of contents item will bring the document to to the page linked to that
+						item.
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				Some documents have links. In this case you can click on them and the view will
+				change to the page it links to. If the link is to a web page the default
+				browser will be invoked.
+			</para>
+			<para>
+				Additionally, you may use the following functionality to quickly move to specific places
+				in the document:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						You can go to the first page of the document using 
+						<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
+						using 
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>First Page</guimenuitem>
+						</menuchoice>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						You can go to the last page of the document using 
+						<keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo> or
+						using 
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Last Page</guimenuitem>
+						</menuchoice>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						You can go to the next page of the document using 
+						<keycap>Space</keycap>, the <guibutton>Next Page</guibutton> Toolbar
+						button or	using 
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Next Page</guimenuitem>
+						</menuchoice>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						You can go to the previous page of the document using 
+						<keycap>Backspace</keycap>, the <guibutton>Previous Page</guibutton> Toolbar
+						button or	using 
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Previous Page</guimenuitem>
+						</menuchoice>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title>Presentation Mode</title>
+			<para>
+				The Presentation mode represents another way to view PDF documents in &kpdf;. It can be
+				enabled in
+				<menuchoice><guimenu>View</guimenu><guimenuitem>Presentation</guimenuitem></menuchoice>.
+				It shows the document on a page per page basis. The pages are shown with
+				zoom to page, that means all the page is visible. 
+			</para>
+			<note>
+				<para>
+					PDF documents can even specify that they are always opened in presentation mode.
+				</para>
+			</note>
+			<para>
+				To navigate between
+				pages you may use the &LMB; (next page) and the &RMB; (previous page), the mouse
+				wheel, the arrow icons that appear as soon as you move the mouse to the top of the screen,
+				or the keys specified in the <link linkend="navigating">Navigating</link>
+				section. 
+			</para>
+			<para>
+				You can exit presentation mode at any time by pressing the <keycap>ESC</keycap> key or clicking
+				the <guiicon>Quit</guiicon> icon appearing if you move the mouse to the top of the 
+				screen.
+			</para>
+			<para>
+				Presentation mode has some configuration options, you can find their
+				description at <link linkend="configpresentation">Configuring &kpdf;</link>.
+			</para>
+		</sect1>
 	</chapter>
 			
 	<chapter id="primary-menu-items">
 		<title>The Menubar</title>
-
 		<sect1 id="menufile">
-			<title>The <guimenu>File</guimenu> Menu</title>
+			<title><guimenu>File</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -133,7 +211,8 @@
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a file. If a file	is currently being displayed it will be closed.
+							<action>Open</action> a PDF file. If there is already an opened file it will be closed.
+							For more information, see the section about <link linkend="opening">Opening Files</link>.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -147,9 +226,10 @@
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a file selected from a combo box list of
-							recently opened files. If a file is currently being displayed it
-							will be	closed.
+							<action>Open</action> a file which was used previously from a
+							submenu. If a file is currently being displayed it
+							will be	closed. For more information, see the section about 
+							<link linkend="opening">Opening Files</link>.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -162,7 +242,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Save</action> the currently open file.</para>
+						<para><action>Save</action> the currently open file under a different name.</para>
 					</listitem>
 				</varlistentry>
 
@@ -190,8 +270,8 @@
 					</term>
 					<listitem>
 						<para>
-							<action>Shows</action> a preview of how the currently displayed
-							document will print with the default options.
+							<action>Show a preview</action> of how the currently displayed
+							document would be printed with the default options.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -204,7 +284,8 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Display</action> some basic information about	the document.</para>
+						<para><action>Display some basic information</action> about the document, such as
+							title, author, creation date, and details about the fonts used.</para>
 					</listitem>
 				</varlistentry>
 
@@ -222,9 +303,8 @@
 				</varlistentry>
 			</variablelist>
 		</sect1>
-
 		<sect1 id="menuedit">
-			<title>The <guimenu>Edit</guimenu> Menu</title>
+			<title><guimenu>Edit</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -235,7 +315,8 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Finds</action> a string in the document text.</para>
+						<para>Open a dialogue that allows you to <action>search for a string in
+							the document</action>.</para>
 					</listitem>
 				</varlistentry>
 
@@ -248,14 +329,13 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Finds</action> the previous searched string again.</para>
+						<para>Try to <action>find the previous searched string again</action> in the document.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
 		</sect1>
-		
 		<sect1 id="menuview">
-			<title>The <guimenu>View</guimenu> Menu</title>
+			<title><guimenu>View</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -266,8 +346,8 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Activates</action> the <link
-								linkend="presentationMode">presentation mode</link>.</para>
+						<para><action>Activates</action> the Presentation Mode. For more information, see the
+							section about <link linkend="presentationMode">Presentation Mode</link>.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -303,8 +383,9 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Changes the magnification</action> of the document
-							view so that the pages width fill all the view space.</para>
+						<para><action>Change the magnification</action> of the document
+							view to a value that makes the pages' width equal to the document
+							view's width.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -315,8 +396,8 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Changes the magnification</action> of the document view
-							so that the pages fits completely on the view space.</para>
+						<para><action>Change the magnification</action> of the document view
+							to a value that makes at least one whole page visible.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -327,7 +408,12 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Enables</action> the continuous page mode.</para>
+						<para><action>Enable the continuous page mode</action>. In continuos mode,
+							all pages of the document are shown, and you can scroll through
+							them without having to use the <menuchoice><guimenu>Go</guimenu>
+							<guimenuitem>Previous Page</guimenuitem></menuchoice> and
+							<menuchoice><guimenu>Go</guimenu><guimenuitem>Next Page</guimenuitem>
+							</menuchoice> options.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -338,14 +424,14 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Enables</action> the two page mode.</para>
+						<para><action>Enable the two page mode</action>, which shows two pages of
+							the document next to each other..</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
 		</sect1>
-
 		<sect1 id="menugo">
-			<title>The <guimenu>Go</guimenu> Menu</title>
+			<title><guimenu>Go</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -356,7 +442,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>View the <action>previous page</action> of the document.</para>
+						<para><action>View the previous page</action> of the document.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -368,8 +454,8 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>View the <action>next page</action> of the document.</para>
-		 			</listitem>
+						<para><action>View the next page</action> of the document.</para>
+					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>
@@ -404,38 +490,37 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Go to the page</action> displayed before.</para>
+						<para><action>Go back to the previous view</action> of the document.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;<keycap>Right</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Alt;	<keycap>Right</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Forward</guimenuitem>
-						</menuchoice>
+					  </menuchoice>
 					</term>
 					<listitem>
-						<para><action>Go to the page</action> of the document where you were after.</para>
+						<para><action>Move forward to the next view</action> of the document. This only works if you have already moved back before.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>G</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;	<keycap>G</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Go to Page</guimenuitem>
-						</menuchoice>
+							<guimenuitem>Go to Page...</guimenuitem>
+					  </menuchoice>
 					</term>
 					<listitem>
-						<para><action>Go to a selected page</action> of the document.</para>
+						<para>Open a dialog which allows you to <action>go to any page</action> of the document.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
 		</sect1>
-
 		<sect1 id="menutools">
-			<title>The <guimenu>Tools</guimenu> Menu</title>
+			<title><guimenu>Tools</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -467,19 +552,18 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current the selected area to the clipboard, images can be saved to a file too.</para>
+						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current the selected area to the clipboard, or to save it to a file.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
 		</sect1>
-
 		<sect1 id="settings-menu">
-			<title>The <guimenu>Settings</guimenu> Menu</title>
+			<title><guimenu>Settings</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;	<keycap>M</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Show/Hide Menubar</guimenuitem>
 						</menuchoice>
@@ -503,27 +587,27 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;	<keycap>L</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Show/Hide Navigation Panel</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Toggle the Navigation Panel display</action> on and off.</para>
+						<para><action>Toggle the navigation panel</action> on and off.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>F</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;	&Shift;	<keycap>F</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Full Screen Mode</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Enables</action> the full screen mode. Note that
+						<para><action>Enables the full screen mode</action>. Note that
 							full screen mode is different from <link
-								linkend="presentationMode">presentation mode</link> as the
+								linkend="presentationMode">presentation mode</link> insofar as the
 							only peculiarity of full screen mode is that it hides the window
 							decorations, the menubar and the toolbar.</para>
 					</listitem>
@@ -536,8 +620,8 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Opens a window that lets you configure the keyboard
-							shortcuts for many menu commands.</para>
+						<para>Opens a window that lets you <action>configure the keyboard
+							shortcuts</action> for many menu commands.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -560,7 +644,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Opens the <link linkend="configuring">Configure</link>
+						<para>Opens the <link linkend="configure">Configure</link>
 							window.</para>
 					</listitem>
 				</varlistentry>
@@ -571,23 +655,50 @@
 			<title><guimenu>Help</guimenu> Menu</title>
 			&help.menu.documentation;
 		</sect1>
-		
 	</chapter>
-	<chapter id="configuring">
+	<chapter id="configure">
 		<title>Configuring &kpdf;</title>
-		<sect1 id="general">
+		<sect1 id="configindex">
+			<title>Overview</title>
+			<para>
+				You can configure &kpdf; by choosing <menuchoice><guimenu>Settings</guimenu>
+				<guimenuitem>Configure &kpdf;...</guimenuitem></menuchoice>.
+				The configuration dialogue is split into four sections. This chapter describes the available
+				options in detail.
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para><link linkend="configgeneral">General</link></para>
+				</listitem>
+				<listitem>
+					<para><link linkend="configaccessibility">Accessibility</link></para>
+				</listitem>
+				<listitem>
+					<para><link linkend="configperformance">Performance</link></para>
+				</listitem>
+				<listitem>
+					<para><link linkend="configpresentation">Presentation</link></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo>The configuration dialogue</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="./configure.png" format="PNG" />
+					</imageobject>
+					<textobject>
+						<phrase>The configuration dialogue</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+		</sect1>
+		<sect1 id="configgeneral">
 			<title>General</title>
 			<variablelist>
 				<varlistentry>
-					<term>Show left panel</term>
+					<term>Show search bar in thumbnails list</term>
 					<listitem>
-						<para>Whether to show the left panel.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>Show search bar in thumbnails view</term>
-					<listitem>
-						<para>Whether to show search bar in thumbnails view or not. That
+						<para>Whether to the show a search bar in the thumbnails view or not. That
 							search bar is useful for filtering pages that contain a given
 							string.</para>
 					</listitem>
@@ -595,14 +706,14 @@
 				<varlistentry>
 					<term>Link thumbnails list with the page</term>
 					<listitem>
-						<para>Whether the thumbnails view will always show the current
+						<para>Whether the thumbnails view should always display the current
 							page or not.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>Show scrollbars</term>
 					<listitem>
-						<para>Whether to show scrollbars.</para>
+						<para>Whether to show scrollbars for the document view.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -612,9 +723,22 @@
 							load, etc.</para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term>Obey DRM limitations</term>
+					<listitem>
+						<para>Whether &kpdf; should obey <firstterm>DRM</firstterm> (Digital Rights Management) restrictions. DRM limitations are used to make it impossible to perform certain actions with PDF documents, such as copying content to the clipboard. Note that in some configurations of &kpdf;, this option is not available.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Watch file</term>
+					<listitem>
+						<para>Whether opened files should be automatically checked for
+							changes and updated, if necessary.</para>
+					</listitem>
+				</varlistentry>
 			</variablelist>
 		</sect1>
-		<sect1 id="accessibility">
+		<sect1 id="configaccessibility">
 			<title>Accessibility</title>
 			<variablelist>
 				<varlistentry>
@@ -638,30 +762,34 @@
 				<varlistentry>
 					<term>Invert colors</term>
 					<listitem>
-						<para><action>Inverts</action> colors on the view, &ie; black things will be shown white.</para>
+						<para><action>Inverts</action> colors on the view, &ie; black objects will be shown white.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>Change paper color</term>
 					<listitem>
-						<para><action>Changes</action> paper color.</para>
+						<para><action>Changes</action> the paper's color, &ie; the document's background.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>Change dark and light colors</term>
 					<listitem>
-						<para><action>Changes</action> the dark and light color, that means black will not be rendered as black but as the dark color and the same for white.</para>
+						<para><action>Changes</action> the dark and light color to your preference, that means 
+							black will not be rendered as black but as the selected dark color and white
+							will not be rendered as white but as the selected light color.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>Convert to black and white</term>
 					<listitem>
-						<para><action>Converts</action> the document to black and white.</para>
+						<para><action>Converts</action> the document to black and white. You can set the
+							threshold and the contrast. Setting the threshold to a higher value
+							will result in darker grays used.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
 		</sect1>
-		<sect1 id="performance">
+		<sect1 id="configperformance">
 			<title>Performance</title>
 			<variablelist>
 				<varlistentry>
@@ -676,7 +804,7 @@
 					<term>Enable background generation</term>
 					<listitem>
 						<para>Use a background thread to generate the pages. By disabling
-							this option the &GUI; will become less reactive (will be blocked
+							this option the user interface will become less reactive (will be blocked
 							if necessary), but pages will be displayed a bit faster.</para>
 					</listitem>
 				</varlistentry>
@@ -691,13 +819,13 @@
 				</varlistentry>
 			</variablelist>
 		</sect1>
-		<sect1 id="presentation">
+		<sect1 id="configpresentation">
 			<title>Presentation</title>
 			<variablelist>
 				<varlistentry>
 					<term>Advance every</term>
 					<listitem>
-						<para>Enables auto advancing of pages given a time period.</para>
+						<para>Enables automatic advancing of pages given a time period.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -715,7 +843,8 @@
 				<varlistentry>
 					<term>Default transition</term>
 					<listitem>
-						<para>The transition between page and page if the document does not specify one.</para>
+						<para>The transition effect between page and page if the document does not specify one. Set this to Random
+							Transition to make &kpdf; randomly choose one of the available effects.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -727,7 +856,8 @@
 				<varlistentry>
 					<term>Show progress indicator</term>
 					<listitem>
-						<para>Whether to show a progress circle that shows the current page and the total number of pages on the upper right corner.</para>
+						<para>Whether to show a progress circle that shows the current page and the total number of pages on the upper
+							right corner of the presentation screen everytime you change the page.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -748,14 +878,40 @@
 			<listitem><para>Christophe Devriese<email>oelewapperke@ulyssis.org</email></para></listitem>
 			<listitem><para>&Wilco.Greven; Wilco.Greven.mail; Original author</para></listitem>
 			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> Refactoring for 3.4</para></listitem>
+			<listitem><para>Laurent Montel<email>montel@kde.org</email></para></listitem>
 		</itemizedlist>
-		
+		&underGPL;
+
+		<itemizedlist>
+			<title>Documentation Copyright:</title>
+			<listitem><para>Albert Astals Cid<email>tsdgeos@yahoo.es</email> Author</para></listitem>
+			<listitem><para>Titus Laska<email>titus.laska@gmx.de</email> Some updates and additions</para></listitem>
+		</itemizedlist>
 		<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 		&underFDL;
 		&underGPL;
 	</chapter>
+
+	<appendix id="installation">
+		<title>Installation</title>
+		<sect1 id="getting-kapp">
+			<title>How to obtain &kpdf;</title>
+			&install.intro.documentation;
+		</sect1>
+		<sect1 id="compilation">
+			<title>Compilation and Installation</title>
+			<note>
+				<para>
+					If you are reading this help in the &khelpcenter;, &kpdf; has already been
+					installed on this system and you do not need install it anymore.
+				</para>
+			</note>
+			&install.compile.documentation;
+		</sect1>
+	</appendix>
 	&documentation.index; 
 </book>
+
 
 <!--
 Local Variables:

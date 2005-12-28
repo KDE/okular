@@ -115,6 +115,8 @@ KAboutData* KDVIMultiPage::createAboutData()
 void KDVIMultiPage::slotEmbedPostScript()
 {
   DVIRenderer.embedPostScript();
+  if (DVIRenderer.isModified())
+    emit(documentIsModified());
   setEmbedPostScriptAction();
 }
 
@@ -128,51 +130,21 @@ void KDVIMultiPage::setEmbedPostScriptAction()
 }
 
 
-void KDVIMultiPage::slotSave()
+bool KDVIMultiPage::slotSave(const QString &fileName)
 {
-  // Try to guess the proper ending...
-  QString formats;
-  QString ending;
-  int rindex = m_file.findRev(".");
-  if (rindex == -1) {
-    ending = QString::null;
-    formats = QString::null;
-  } else {
-    ending = m_file.mid(rindex); // e.g. ".dvi"
-    formats = fileFormats().grep(ending).join("\n");
-  }
-
-  QString fileName = KFileDialog::getSaveFileName(QString::null, formats, 0, i18n("Save File As"));
-
+  // Paranoid safety checks
+  if (DVIRenderer.dviFile == 0)
+    return false;
+  if (DVIRenderer.dviFile->dvi_Data() == 0)
+    return false;
   if (fileName.isEmpty())
-    return;
-
-  // Add the ending to the filename. I hope the user likes it that
-  // way.
-  if (!ending.isEmpty() && fileName.find(ending) == -1)
-    fileName = fileName+ending;
-
-  if (QFile(fileName).exists()) {
-    int r = KMessageBox::warningContinueCancel (0, i18n("The file %1\nexists. Do you want to overwrite that file?").arg(fileName),
-                       i18n("Overwrite File"), i18n("Overwrite"));
-    if (r == KMessageBox::Cancel)
-      return;
-  }
-
-  // TODO: error handling...
-  if ((DVIRenderer.dviFile != 0) && (DVIRenderer.dviFile->dvi_Data() != 0))
-    DVIRenderer.dviFile->saveAs(fileName);
-
-  return;
-}
-
-
-void KDVIMultiPage::slotSave_defaultFilename()
-{
-  // TODO: error handling...
-  if (DVIRenderer.dviFile != 0)
-    DVIRenderer.dviFile->saveAs(m_file);
-  return;
+    return false;
+  
+  bool r = DVIRenderer.dviFile->saveAs(fileName);
+  if (r == false)
+    KMessageBox::error(parentWdg, i18n("<qt>Error saving the document to the file <strong>%1</strong>. The document is <strong>not</strong> saved.</qt>").arg(fileName),
+                       i18n("Error saving document"));
+  return r;
 }
 
 

@@ -95,6 +95,8 @@ public:
 
   dvifile* dviFile;
 
+  bool isModified() const {return _isModified;};
+
   void          setPrefs(bool flag_showPS, const QString &editorCommand, bool useFontHints );
 
   virtual bool  supportsTextSearch() const {return true;}
@@ -295,6 +297,16 @@ private:
 
   drawinf currinf;
   RenderedDocumentPage* currentlyDrawnPage;
+
+  /** Flag if document is modified
+
+  This flag indicates if the document was modified after it was
+  loaded. It is set to 'false' in the constructor, in the clear() and
+  setFile() method. It can be set to 'true' be methods that modify the
+  document (e.g. the deletePages() method of the djvu implementation
+  of this class).
+   */
+  bool _isModified;
 };
 
 #endif

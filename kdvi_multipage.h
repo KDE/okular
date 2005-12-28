@@ -47,12 +47,9 @@ private:
   virtual void enableActions(bool);
 
 public slots:
-  /** Opens a file requestor and saves. This really saves the content
-      of the DVI-file, and does not just start a copy job */
-  virtual void slotSave();
-
-  /** Similar to slotSave, but does not ask for a filename. */
-  virtual void slotSave_defaultFilename();
+  /** This really saves the content of the DVI-file, and does not just
+      start a copy job */
+  virtual bool slotSave(const QString &filename);
 
   void setEmbedPostScriptAction();
 

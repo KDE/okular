@@ -121,7 +121,7 @@ void dviRenderer::exportPDF()
     qApp->connect(progress, SIGNAL(finished()), this, SLOT(abortExternalProgramm()));
   }
 
-  export_ = new KProcess;
+  export_ = new KShellProcess;
   if (export_ == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvipdfm command." << endl;
     return;
@@ -142,10 +142,10 @@ void dviRenderer::exportPDF()
   export_->setWorkingDirectory(finfo.dirPath(true));
   *export_ << "dvipdfm"
            << "-o"
-           << fileName
-           << dviFile->filename;
+           << KProcess::quote(fileName)
+           << KProcess::quote(dviFile->filename);
   export_->closeStdin();
-  if (export_->start(KProcess::NotifyOnExit, KProcess::AllOutput) == false) {
+  if (!export_->start(KProcess::NotifyOnExit, KProcess::AllOutput)) {
     kdError(kvs::dvi) << "dvipdfm failed to start" << endl;
     return;
   }
@@ -290,7 +290,7 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   }
 
   // Allocate and initialize the shell process.
-  export_ = new KProcess;
+  export_ = new KShellProcess;
   if (export_ == 0) {
     kdError(kvs::dvi) << "Could not allocate ShellProcess for the dvips command." << endl;
     return;
@@ -305,17 +305,18 @@ void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinte
   info->clear(i18n("Export: %1 to PostScript").arg(KProcess::quote(dviFile->filename)));
 
   QFileInfo finfo(dviFile->filename);
+
   export_->setWorkingDirectory(finfo.dirPath(true));
   *export_ << "dvips";
   if (printer == 0)
     *export_ << "-z"; // export Hyperlinks
   if (!options.isEmpty())
     *export_ << options;
-  *export_ << sourceFileName
+  *export_ << KProcess::quote(sourceFileName)
            << "-o"
-           << fileName;
+           << KProcess::quote(fileName);
   export_->closeStdin();
-  if (export_->start(KProcess::NotifyOnExit, KProcess::Stderr) == false) {
+  if (!export_->start(KProcess::NotifyOnExit, KProcess::Stderr)) {
     kdError(kvs::dvi) << "dvips failed to start" << endl;
     return;
   }

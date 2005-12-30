@@ -15,51 +15,32 @@
 #include "documentWidget.h"
 #include "dviFile.h"
 #include "dvisourcesplitter.h"
-#include "fontpool.h"
-#include "fontprogress.h"
 #include "hyperlink.h"
 #include "infodialog.h"
-#include "kdvi_multipage.h"
 #include "kvs_debug.h"
-#include "performanceMeasurement.h"
 #include "prebookmark.h"
 #include "psgs.h"
 #include "renderedDviPagePixmap.h"
-#include "xdvi.h"
-#include "zoomlimits.h"
 
-#include <kapplication.h>
-#include <keditcl.h>
-#include <kfiledialog.h>
+#include <kconfig.h>
 #include <kglobal.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kprinter.h>
 #include <kprocess.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
-#include <kstdguiitem.h>
 
+#include <qapplication.h>
 #include <qcheckbox.h>
 #include <qclipboard.h>
-#include <qcursor.h>
 #include <qfileinfo.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qmessagebox.h>
-#include <qpaintdevice.h>
 #include <qpainter.h>
 #include <qptrstack.h>
 #include <qregexp.h>
-#include <qurl.h>
 #include <qvbox.h>
-
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 
 //#define DEBUG_DVIRENDERER
 
@@ -254,7 +235,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
   // here. Most of the code is stolen from there.
 
   // Check if the 'Don't show again' feature was used
-  KConfig *config = kapp->config();
+  KConfig *config = KGlobal::config();
   KConfigGroupSaver saver( config, "Notification Messages" );
   bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
 

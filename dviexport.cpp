@@ -86,7 +86,7 @@ void DVIExport::start(const QString& command,
 {
   assert(!process_);
 
-  process_ = new KShellProcess;
+  process_ = new KProcess;
   connect(process_, SIGNAL(receivedStderr(KProcess* , char* , int)), this, SLOT(output_receiver(KProcess* , char* , int)));
   connect(process_, SIGNAL(receivedStdout(KProcess* , char* , int)), this, SLOT(output_receiver(KProcess* , char* , int)));
   connect(process_, SIGNAL(processExited(KProcess* )), this, SLOT(finished(KProcess*)));
@@ -268,8 +268,8 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
 
   start("dvipdfm",
         QStringList() << "-o"
-                      << KProcess::quote(output_name)
-                      << KProcess::quote(dvi.filename),
+                      << output_name
+                      << dvi.filename,
         QFileInfo(dvi.filename).dirPath(true),
         i18n("<qt>The external program 'dvipdfm', which was used to export the file, reported an error. "
              "You might wish to look at the <strong>document info dialog</strong> which you will "
@@ -280,7 +280,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
 DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                              QWidget* parent_widget,
                              const QString& output_name,
-                             const QString& options,
+                             const QStringList& options,
                              KPrinter* printer)
   : DVIExport(parent, parent_widget),
     printer_(printer)
@@ -426,11 +426,11 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     args << "-z";
 
   if (!options.isEmpty())
-    args << options;
+    args += options;
 
-  args << KProcess::quote(input_name)
+  args << input_name
        << "-o"
-       << KProcess::quote(output_name_);
+       << output_name_;
 
   start("dvips",
         args,

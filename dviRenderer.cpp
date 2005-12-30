@@ -723,7 +723,7 @@ void dviRenderer::exportPDF()
 }
 
 
-void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinter* printer)
+void dviRenderer::exportPS(const QString& fname, const QStringList& options, KPrinter* printer)
 {
   KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer));
   if (exporter->started())

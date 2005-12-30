@@ -136,7 +136,7 @@ public:
   void          editor_finished(const DVISourceEditor*);
 
 public slots:
-  void          exportPS(const QString& fname = QString::null, const QString& options = QString::null, KPrinter* printer = 0);
+  void          exportPS(const QString& fname = QString::null, const QStringList& options = QStringList(), KPrinter* printer = 0);
   void          exportPDF();
 
   void          showInfo();

@@ -220,16 +220,16 @@ void KDVIMultiPage::print()
 
   // Turn the results of the options requestor into a list arguments
   // which are used by dvips.
-  QString dvips_options = QString::null;
+  QStringList dvips_options;
   // Print in reverse order.
   if ( printer->pageOrder() == KPrinter::LastPageFirst )
-    dvips_options += "-r ";
+    dvips_options << "-r";
   // Print only odd pages.
   if ( printer->pageSet() == KPrinter::OddPages )
-    dvips_options += "-A ";
+    dvips_options << "-A";
   // Print only even pages.
   if ( printer->pageSet() == KPrinter::EvenPages )
-    dvips_options += "-B ";
+    dvips_options << "-B";
   // We use the printer->pageSize() method to find the printer page
   // size, and pass that information on to dvips. Unfortunately, dvips
   // does not understand all of these; what exactly dvips understands,
@@ -237,114 +237,116 @@ void KDVIMultiPage::print()
   // with unusual paper sizes.
   switch( printer->pageSize() ) {
   case KPrinter::A4:
-    dvips_options += "-t a4 ";
+    dvips_options << "-t" << "a4";
     break;
   case KPrinter::B5:
-    dvips_options += "-t b5 ";
+    dvips_options << "-t" << "b5";
     break;
     case KPrinter::Letter:
-      dvips_options += "-t letter ";
+      dvips_options << "-t" << "letter";
       break;
   case KPrinter::Legal:
-    dvips_options += "-t legal ";
+    dvips_options << "-t" << "legal";
     break;
     case KPrinter::Executive:
-      dvips_options += "-t executive ";
+      dvips_options << "-t" << "executive";
       break;
   case KPrinter::A0:
-    dvips_options += "-t a0 ";
+    dvips_options << "-t" << "a0";
     break;
   case KPrinter::A1:
-    dvips_options += "-t a1 ";
+    dvips_options << "-t" << "a1";
     break;
   case KPrinter::A2:
-    dvips_options += "-t a2 ";
+    dvips_options << "-t" << "a2";
     break;
   case KPrinter::A3:
-    dvips_options += "-t a3 ";
+    dvips_options << "-t" << "a3";
     break;
   case KPrinter::A5:
-    dvips_options += "-t a5 ";
+    dvips_options << "-t" << "a5";
     break;
   case KPrinter::A6:
-    dvips_options += "-t a6 ";
+    dvips_options << "-t" << "a6";
     break;
   case KPrinter::A7:
-    dvips_options += "-t a7 ";
+    dvips_options << "-t" << "a7";
     break;
   case KPrinter::A8:
-    dvips_options += "-t a8 ";
+    dvips_options << "-t" << "a8";
       break;
   case KPrinter::A9:
-    dvips_options += "-t a9 ";
+    dvips_options << "-t" << "a9";
     break;
   case KPrinter::B0:
-    dvips_options += "-t b0 ";
+    dvips_options << "-t" << "b0";
     break;
   case KPrinter::B1:
-    dvips_options += "-t b1 ";
+    dvips_options << "-t" << "b1";
     break;
   case KPrinter::B10:
-    dvips_options += "-t b10 ";
+    dvips_options << "-t" << "b10";
     break;
   case KPrinter::B2:
-    dvips_options += "-t b2 ";
+    dvips_options << "-t" << "b2";
     break;
   case KPrinter::B3:
-    dvips_options += "-t b3 ";
+    dvips_options << "-t" << "b3";
     break;
   case KPrinter::B4:
-    dvips_options += "-t b4 ";
+    dvips_options << "-t" << "b4";
     break;
   case KPrinter::B6:
-    dvips_options += "-t b6 ";
+    dvips_options << "-t" << "b6";
     break;
   case KPrinter::B7:
-    dvips_options += "-t b7 ";
+    dvips_options << "-t" << "b7";
     break;
   case KPrinter::B8:
-    dvips_options += "-t b8 ";
+    dvips_options << "-t" << "b8";
     break;
   case KPrinter::B9:
-    dvips_options += "-t b9 ";
+    dvips_options << "-t" << "b9";
     break;
   case KPrinter::C5E:
-    dvips_options += "-t c5e ";
+    dvips_options << "-t" << "c5e";
     break;
   case KPrinter::Comm10E:
-    dvips_options += "-t comm10e ";
+    dvips_options << "-t" << "comm10e";
     break;
   case KPrinter::DLE:
-    dvips_options += "-t dle ";
+    dvips_options << "-t" << "dle";
     break;
   case KPrinter::Folio:
-    dvips_options += "-t folio ";
+    dvips_options << "-t" << "folio";
     break;
   case KPrinter::Ledger:
-    dvips_options += "-t ledger ";
+    dvips_options << "-t" << "ledger";
     break;
   case KPrinter::Tabloid:
-    dvips_options += "-t tabloid ";
+    dvips_options << "-t" << "tabloid";
     break;
   default:
     break;
   }
   // Orientation
   if ( printer->orientation() == KPrinter::Landscape )
-    dvips_options += "-t landscape ";
+    dvips_options << "-t" << "landscape";
 
 
   // List of pages to print.
   QList<int> pageList = printer->pageList();
-  dvips_options += "-pp ";
+  QString pages;
   int commaflag = 0;
   for( QList<int>::ConstIterator it = pageList.begin(); it != pageList.end(); ++it ) {
     if (commaflag == 1)
-      dvips_options +=  QString(",");
+      pages +=  QString(",");
     else
       commaflag = 1;
-    dvips_options += QString("%1").arg(*it);
+    pages += QString("%1").arg(*it);
   }
+  if (!pages.isEmpty())
+    dvips_options << "-pp" << pages;
 
   // Now print. For that, export the DVI-File to PostScript. Note that
   // dvips will run concurrently to keep the GUI responsive, keep log

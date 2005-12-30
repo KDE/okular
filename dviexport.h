@@ -132,7 +132,7 @@ public:
   DVIExportToPS(dviRenderer& parent,
                 QWidget* parent_widget,
                 const QString& output_name,
-                const QString& options,
+                const QStringList& options,
                 KPrinter* printer);
 
 private:

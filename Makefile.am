@@ -12,18 +12,42 @@ noinst_PROGRAMS = squeeze
 # just to make sure, automake makes them
 METASOURCES = AUTO
 
-kdvipart_la_SOURCES = renderedDviPagePixmap.cpp dviPageCache.cpp \
-	kdvi_multipage.cpp kdvi_multipage_texthandling.cpp \
-	dviRenderer.cpp bigEndianByteReader.cpp infodialog.cpp \
-	psheader.c dviRenderer_draw.cpp dviRenderer_prescan.cpp dviRenderer_export.cpp \
-	dviFile.cpp fontpool.cpp fontprogress.cpp psgs.cpp \
-	fontMap.cpp fontEncoding.cpp fontEncodingPool.cpp \
-	special.cpp util.cpp vf.cpp glyph.cpp \
-	optionDialogFontsWidget.cpp optionDialogFontsWidget_base.ui \
-	optionDialogSpecialWidget.cpp optionDialogSpecialWidget_base.ui \
-	TeXFont.cpp TeXFont_PK.cpp TeXFont_PFB.cpp TeXFont_TFM.cpp \
-	TeXFontDefinition.cpp dviWidget.cpp dvisourcesplitter.cpp \
-	prefs.kcfgc
+kdvipart_la_SOURCES = \
+	bigEndianByteReader.cpp \
+	dviexport.cpp \
+	dviFile.cpp \
+	dviPageCache.cpp \
+	dviRenderer.cpp \
+	dviRenderer_draw.cpp \
+	dviRenderer_prescan.cpp \
+	dvisourceeditor.cpp \
+	dvisourcesplitter.cpp \
+	dviWidget.cpp \
+	fontEncoding.cpp \
+	fontEncodingPool.cpp \
+	fontMap.cpp \
+	fontpool.cpp \
+	fontprogress.cpp \
+	glyph.cpp \
+	infodialog.cpp \
+	kdvi_multipage.cpp \
+	kdvi_multipage_texthandling.cpp \
+	optionDialogFontsWidget.cpp \
+	optionDialogFontsWidget_base.ui \
+	optionDialogSpecialWidget.cpp \
+	optionDialogSpecialWidget_base.ui \
+	prefs.kcfgc \
+	psgs.cpp \
+	psheader.c \
+	renderedDviPagePixmap.cpp \
+	special.cpp \
+	TeXFont.cpp \
+	TeXFont_PFB.cpp \
+	TeXFont_PK.cpp \
+	TeXFont_TFM.cpp \
+	TeXFontDefinition.cpp \
+	util.cpp \
+	vf.cpp
 
 kde_kcfg_DATA = kdvi.kcfg
 

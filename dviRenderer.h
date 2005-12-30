@@ -12,8 +12,11 @@
 
 #include "bigEndianByteReader.h"
 #include "documentRenderer.h"
+#include "dviexport.h"
+#include "dvisourceeditor.h"
 #include "fontpool.h"
 
+#include <ksharedptr.h>
 #include <kurl.h>
 
 #include <Q3IntDict>
@@ -26,12 +29,9 @@ class Anchor;
 class DocumentWidget;
 class dvifile;
 class dviRenderer;
-class fontProgressDialog;
 class ghostscript_interface;
 class infoDialog;
-class KDVIMultiPage;
 class KPrinter;
-class KProcess;
 class KProgressDialog;
 class PreBookmark;
 class TeXFontDefinition;
@@ -112,6 +112,11 @@ public:
       anchor to that section. If not, it returns an invalid anchor. */
   virtual Anchor parseReference(const QString &reference);
 
+  /** Called by the exporter or editor in order to update the
+   *  contents of the global info dialog with @c text.
+   */
+  void update_info_dialog(const QString& text, bool clear = false);
+
   // These should not be public... only for the moment
   void          read_postamble();
   void          draw_part(double current_dimconv, bool is_vfmacro);
@@ -127,6 +132,8 @@ public:
   void          html_href_special(const QString& msg);
   void          html_anchor_end();
   void          draw_page();
+  void          export_finished(const DVIExport*);
+  void          editor_finished(const DVISourceEditor*);
 
 public slots:
   void          exportPS(const QString& fname = QString::null, const QString& options = QString::null, KPrinter* printer = 0);
@@ -136,7 +143,6 @@ public slots:
   void          handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget);
 
   void          embedPostScript();
-  void          abortExternalProgramm();
 
   /** simply emits "setStatusBarText( QString::null )". This is used
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
@@ -145,15 +151,6 @@ public slots:
   virtual void  drawPage(double res, RenderedDocumentPage *page);
   virtual void  getText(RenderedDocumentPage* page);
 
-  /** Slots used in conjunction with external programs */
-  void          output_receiver(KProcess *, char *buffer, int buflen);
-  void          export_terminated(KProcess *);
-  void          editor_terminated(KProcess *);
-
-signals:
-  /** Passed through to the top-level kpart. */
-  //  void setStatusBarText( const QString& );
-
 private slots:
   /** This method shows a dialog that tells the user that source
       information is present, and gives the opportunity to open the
@@ -161,6 +158,9 @@ private slots:
   void          showThatSourceInformationIsPresent();
 
 private:
+  friend class DVIExportToPS;
+  friend class DVISourceEditor;
+
   /** URL to the DVI file
       This field is initialized by the setFile() method. See the
       explanation there. */
@@ -280,15 +280,6 @@ private:
 
   unsigned int           current_page;
 
-  /** Used to run and to show the progress of dvips and friends. */
-  fontProgressDialog *progress;
-  KProcess           *editor_;
-  KProcess           *export_;
-  KPrinter           *export_printer;
-  QString             export_fileName;
-  QString             export_tmpFileName;
-  QString             export_errorString;
-
   /** Data required for handling TPIC specials */
   float       penWidth_in_mInch;
   Q3PointArray TPIC_path;
@@ -296,6 +287,8 @@ private:
 
   drawinf currinf;
   RenderedDocumentPage* currentlyDrawnPage;
+  QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
+  KSharedPtr<DVISourceEditor> editor_;
 
   /** Flag if document is modified
 

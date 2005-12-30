@@ -12,7 +12,6 @@
 #include <config.h>
 
 #include "dviRenderer.h"
-#include "documentWidget.h"
 #include "dviFile.h"
 #include "dvisourcesplitter.h"
 #include "hyperlink.h"
@@ -27,7 +26,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kprocess.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
@@ -38,7 +36,6 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QMouseEvent>
 #include <QPainter>
 #include <QRegExp>
 
@@ -67,13 +64,6 @@ dviRenderer::dviRenderer(QWidget *par)
     line_boundary_encountered(false),
     word_boundary_encountered(false),
     current_page(0),
-    progress(0),
-    editor_(0),
-    export_(0),
-    export_printer(0),
-    export_fileName(""),
-    export_tmpFileName(""),
-    export_errorString(""),
     penWidth_in_mInch(0),
     number_of_elements_in_path(0),
     currentlyDrawnPage(0)
@@ -99,12 +89,7 @@ dviRenderer::~dviRenderer()
   mutex.unlock();
 
   delete PS_interface;
-  delete editor_;
-  delete export_;
   delete dviFile;
-  // Don't delete the export printer. This is owned by the
-  // kdvi_multipage.
-  export_printer = 0;
 }
 
 
@@ -693,86 +678,9 @@ void dviRenderer::clearStatusBar()
 
 void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *win)
 {
-#ifdef DEBUG_SPECIAL
-  RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*> currentlyDrawnPage;
-  if (currentDVIPage)
-  {
-    kdDebug(kvs::dvi) << "Source hyperlink to " << currentDVIPage->sourceHyperLinkList[i].linkText << endl;
-  }
-#endif
-
-  DVI_SourceFileSplitter splitter(linkText, dviFile->filename);
-  QString TeXfile = splitter.filePath();
-  if ( ! splitter.fileExists() )
-  {
-      KMessageBox::sorry(parentWidget, QString("<qt>") +
-                         i18n("The DVI-file refers to the TeX-file "
-                              "<strong>%1</strong> which could not be found.").arg(KProcess::quote(TeXfile)) +
-                         QString("</qt>"),
-                         i18n( "Could Not Find File" ));
-      return;
-  }
-
-  QString command = editorCommand;
-  if (command.isEmpty() == true) {
-    int r = KMessageBox::warningContinueCancel(parentWidget, QString("<qt>") +
-                                               i18n("You have not yet specified an editor for inverse search. "
-                                                    "Please choose your favorite editor in the "
-                                                    "<strong>DVI options dialog</strong> "
-                                                    "which you will find in the <strong>Settings</strong>-menu.") +
-                                               QString("</qt>"),
-                                               i18n("Need to Specify Editor"),
-                                               i18n("Use KDE's Editor Kate for Now"));
-    if (r == KMessageBox::Continue)
-      command = "kate %f";
-    else
-      return;
-  }
-  command = command.replace( "%l", QString::number(splitter.line()) ).replace( "%f", KProcess::quote(TeXfile) );
-
-#ifdef DEBUG_SPECIAL
-  kdDebug(kvs::dvi) << "Calling program: " << command << endl;
-#endif
-
-  // There may still be another program running. Since we don't
-  // want to mix the output of several programs, we will
-  // henceforth dimiss the output of the older programm. "If it
-  // hasn't failed until now, we don't care."
-  if (editor_ != 0) {
-    qApp->disconnect(editor_, SIGNAL(receivedStderr(KProcess *, char *, int)), 0, 0);
-    qApp->disconnect(editor_, SIGNAL(receivedStdout(KProcess *, char *, int)), 0, 0);
-    delete editor_;
-    editor_ = 0;
-  }
-
-  // Set up a shell process with the editor command.
-  editor_ = new KProcess;
-  if (editor_ == 0) {
-    kdError(kvs::dvi) << "Could not allocate ShellProcess for the editor command." << endl;
-    return;
-  }
-  qApp->connect(editor_, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(output_receiver(KProcess *, char *, int)));
-  qApp->connect(editor_, SIGNAL(receivedStdout(KProcess *, char *, int)), this, SLOT(output_receiver(KProcess *, char *, int)));
-  qApp->connect(editor_, SIGNAL(processExited(KProcess *)), this, SLOT(editor_terminated(KProcess *)));
-  // Merge the editor-specific editor message here.
-  export_errorString = i18n("<qt>The external program<br><br><tt><strong>%1</strong></tt><br/><br/>which was used to call the editor "
-                            "for inverse search, reported an error. You might wish to look at the <strong>document info "
-                            "dialog</strong> which you will find in the File-Menu for a precise error report. The "
-                            "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
-                            "and a list of common problems.</qt>").arg(command);
-
-  info->clear(i18n("Starting the editor..."));
-
-  int flashOffset = point.y(); // Heuristic correction. Looks better.
-  win->flash(flashOffset);
-
-  editor_->setUseShell(true, getenv("SHELL"));
-  *editor_ << command;
-  editor_->closeStdin();
-  if (!editor_->start(KProcess::NotifyOnExit, KProcess::AllOutput)) {
-    kdError(kvs::dvi) << "Editor failed to start" << endl;
-    return;
-  }
+  KSharedPtr<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
+  if (editor->started())
+    editor_ = editor;
 }
 
 
@@ -807,5 +715,44 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
   return pdfstring;
 }
 
+
+void dviRenderer::exportPDF()
+{
+  KSharedPtr<DVIExport> exporter(new DVIExportToPDF(*this, parentWidget));
+  if (exporter->started())
+    all_exports_[exporter.data()] = exporter;
+}
+
+
+void dviRenderer::exportPS(const QString& fname, const QString& options, KPrinter* printer)
+{
+  KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer));
+  if (exporter->started())
+    all_exports_[exporter.data()] = exporter;
+}
+
+
+void dviRenderer::update_info_dialog(const QString& text, bool clear)
+{
+  if (clear)
+    info->clear(text);
+  else
+    info->outputReceiver(text);
+}
+
+
+void dviRenderer::editor_finished(const DVISourceEditor*)
+{
+  editor_.attach(0);
+}
+
+
+void dviRenderer::export_finished(const DVIExport* key)
+{
+  typedef QMap<const DVIExport*, KSharedPtr<DVIExport> > ExportMap;
+  ExportMap::iterator it = all_exports_.find(key);
+  if (it != all_exports_.end())
+    all_exports_.erase(key);
+}
 
 #include "dviRenderer.moc"

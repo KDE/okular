@@ -100,6 +100,10 @@ public:
 
   virtual bool  supportsTextSearch() const {return true;}
 
+  /** The DVI plugin is not multithreaded because it uses
+      the QPainter API. */
+  virtual bool isMultiThreaded() const { return false; }
+
   bool          showPS() { return _postscript; }
   int           curr_page() { return current_page+1; }
   virtual bool  isValidFile(const QString& fileName) const;
@@ -148,8 +152,8 @@ public slots:
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar();
 
-  virtual void  drawPage(double res, RenderedDocumentPage *page);
-  virtual void  getText(RenderedDocumentPage* page);
+  virtual void  drawPage(double res, RenderedDocumentPagePixmap* page);
+  virtual void  getText(RenderedDocumentPagePixmap* page);
 
 private slots:
   /** This method shows a dialog that tells the user that source
@@ -286,7 +290,7 @@ private:
   Q_UINT16    number_of_elements_in_path;
 
   drawinf currinf;
-  RenderedDocumentPage* currentlyDrawnPage;
+  RenderedDocumentPagePixmap* currentlyDrawnPage;
   QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
   KSharedPtr<DVISourceEditor> editor_;
 

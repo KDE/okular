@@ -94,7 +94,7 @@ dviRenderer::~dviRenderer()
 
 void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, bool useFontHints )
 {
-  QMutexLocker locker(&mutex);
+  //QMutexLocker locker(&mutex);
   _postscript = flag_showPS;
   editorCommand = str_editorCommand;
   font_pool.setParameters( useFontHints );
@@ -114,7 +114,7 @@ void dviRenderer::showInfo()
 //------ this function calls the dvi interpreter ----------
 
 
-void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
+void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
 {
 #ifdef DEBUG_DVIRENDERER
   kdDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
@@ -152,6 +152,11 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
 
   if (resolution != resolutionInDPI)
     setResolution(resolution);
+
+  SimplePageSize ps = sizeOfPage(page->getPageNumber());
+  int pageHeight = ps.sizeInPixel(resolution).height();
+  int pageWidth = ps.sizeInPixel(resolution).width();
+  page->resize(pageWidth, pageHeight);
 
   currentlyDrawnPage     = page;
   shrinkfactor           = 1200/resolutionInDPI;
@@ -200,7 +205,7 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
 }
 
 
-void dviRenderer::getText(RenderedDocumentPage* page)
+void dviRenderer::getText(RenderedDocumentPagePixmap* page)
 {
   bool postscriptBackup = _postscript;
   // Disable postscript-specials temporarely to speed up text extraction.
@@ -383,7 +388,7 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
   kdDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
 
-  QMutexLocker lock(&mutex);
+  //QMutexLocker lock(&mutex);
 
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();

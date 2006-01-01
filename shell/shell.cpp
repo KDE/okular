@@ -141,31 +141,6 @@ void Shell::readSettings()
     KGlobal::config()->setDesktopGroup();
     bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
     setFullScreen( fullScreen );
-
-    // necessary to make fullscreen mode obey the last showmenubar /  showtoolbarsettings
-    KGlobal::config()->setGroup("MainWindow");
-    if (KGlobal::config()->readBoolEntry( "MenuBar", true ))
-    {
-      m_showMenuBarAction->setChecked(true);
-      menuBar()->show();
-    }
-    else
-    {
-      m_showMenuBarAction->setChecked(false);
-      menuBar()->hide();
-    }
-
-    KGlobal::config()->setGroup("MainWindow Toolbar mainToolBar");
-    if (KGlobal::config()->readBoolEntry("Hidden", false))
-    {
-      m_showToolBarAction->setChecked(true);
-      toolBar()->hide();
-    }
-    else
-    {
-      m_showToolBarAction->setChecked(false);
-      toolBar()->show();
-    }
 }
 
 void Shell::writeSettings()

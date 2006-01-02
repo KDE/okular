@@ -196,8 +196,9 @@
 			
 	<chapter id="primary-menu-items">
 		<title>The Menubar</title>
+
 		<sect1 id="menufile">
-			<title><guimenu>File</guimenu> Menu</title>
+			<title>The <guimenu>File</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -303,8 +304,9 @@
 				</varlistentry>
 			</variablelist>
 		</sect1>
+
 		<sect1 id="menuedit">
-			<title><guimenu>Edit</guimenu> Menu</title>
+			<title>The <guimenu>Edit</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -334,8 +336,9 @@
 				</varlistentry>
 			</variablelist>
 		</sect1>
+		
 		<sect1 id="menuview">
-			<title><guimenu>View</guimenu> Menu</title>
+			<title>The <guimenu>View</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -430,8 +433,9 @@
 				</varlistentry>
 			</variablelist>
 		</sect1>
+
 		<sect1 id="menugo">
-			<title><guimenu>Go</guimenu> Menu</title>
+			<title>The <guimenu>Go</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -496,10 +500,10 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;	<keycap>Right</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Alt;<keycap>Right</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Forward</guimenuitem>
-					  </menuchoice>
+						</menuchoice>
 					</term>
 					<listitem>
 						<para><action>Move forward to the next view</action> of the document. This only works if you have already moved back before.</para>
@@ -508,10 +512,10 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;	<keycap>G</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>G</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Go to Page...</guimenuitem>
-					  </menuchoice>
+							<guimenuitem>Go to Page</guimenuitem>
+						</menuchoice>
 					</term>
 					<listitem>
 						<para>Open a dialog which allows you to <action>go to any page</action> of the document.</para>
@@ -519,8 +523,9 @@
 				</varlistentry>
 			</variablelist>
 		</sect1>
+
 		<sect1 id="menutools">
-			<title><guimenu>Tools</guimenu> Menu</title>
+			<title>The <guimenu>Tools</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -557,13 +562,14 @@
 				</varlistentry>
 			</variablelist>
 		</sect1>
+
 		<sect1 id="settings-menu">
-			<title><guimenu>Settings</guimenu> Menu</title>
+			<title>The <guimenu>Settings</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;	<keycap>M</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Show/Hide Menubar</guimenuitem>
 						</menuchoice>
@@ -587,7 +593,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;	<keycap>L</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Show/Hide Navigation Panel</guimenuitem>
 						</menuchoice>
@@ -599,7 +605,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;	&Shift;	<keycap>F</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>F</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Full Screen Mode</guimenuitem>
 						</menuchoice>
@@ -652,9 +658,10 @@
 			</variablelist>
 		</sect1>
 		<sect1 id="menuhelp">
-			<title><guimenu>Help</guimenu> Menu</title>
+			<title>The <guimenu>Help</guimenu> Menu</title>
 			&help.menu.documentation;
 		</sect1>
+		
 	</chapter>
 	<chapter id="configure">
 		<title>Configuring &kpdf;</title>

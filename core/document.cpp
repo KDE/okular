@@ -19,6 +19,7 @@
 #include <qvector.h>
 #include <qtimer.h>
 #include <qmap.h>
+#include <qlinkedlist.h>
 #include <kdebug.h>
 #include <kimageio.h>
 #include <klocale.h>

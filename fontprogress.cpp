@@ -30,7 +30,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
     progress(0),
     process(0)
 {
-  setCursor( QCursor( 3 ) );
+  setCursor(QCursor(Qt::WaitCursor));
 
   setButtonCancel(KGuiItem(i18n("Abort"), "stop", abortTip));
 

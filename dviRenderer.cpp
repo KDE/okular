@@ -232,7 +232,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
 
   if (showMsg) {
     KDialogBase dialog(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-                       parentWidget, "information", true, true, KStdGuiItem::ok());
+                                         parentWidget, "information", true, true,KStdGuiItem::ok() );
 
     KVBox *topcontents = new KVBox (&dialog);
     topcontents->setSpacing(KDialog::spacingHint()*2);

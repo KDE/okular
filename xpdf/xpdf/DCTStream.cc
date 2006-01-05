@@ -14,19 +14,25 @@ static void str_init_source(j_decompress_ptr /*cinfo*/)
 
 static boolean str_fill_input_buffer(j_decompress_ptr cinfo)
 {
+  int c;
   struct str_src_mgr * src = (struct str_src_mgr *)cinfo->src;
   if (src->index == 0) {
-    src->buffer = 0xFF;
+    c = 0xFF;
     src->index++;
   }
   else if (src->index == 1) {
-    src->buffer = 0xD8;
+    c = 0xD8;
     src->index++;
   }
-  else src->buffer = src->str->getChar();
-  src->pub.next_input_byte = &src->buffer;
-  src->pub.bytes_in_buffer = 1;
-  return TRUE;
+  else c = src->str->getChar();
+  if (c != EOF)
+  {
+    src->buffer = c;
+    src->pub.next_input_byte = &src->buffer;
+    src->pub.bytes_in_buffer = 1;
+    return TRUE;
+  }
+  else return FALSE;
 }
 
 static void str_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
@@ -81,18 +87,17 @@ void DCTStream::reset() {
   // the start marker...
   bool startFound = false;
   int c = 0, c2 = 0;
-  int n = 0;
   while (!startFound)
   {
     if (!c)
     {
       c = str->getChar();
-      if (c != 0xFF) c = 0;
       if (c == -1)
       {
         error(-1, "Could not find start of jpeg data");
         exit(1);
       }
+      if (c != 0xFF) c = 0;
     }
     else
     {
@@ -104,7 +109,6 @@ void DCTStream::reset() {
       }
       else startFound = true;
     }
-    n++;
   }
 
   jpeg_read_header(&cinfo, TRUE);
@@ -119,7 +123,9 @@ int DCTStream::getChar() {
 
   if (x == 0) {
     if (cinfo.output_scanline < cinfo.output_height)
-      jpeg_read_scanlines(&cinfo, row_buffer, 1);
+    {
+      if (!jpeg_read_scanlines(&cinfo, row_buffer, 1)) return EOF;
+    }
     else return EOF;
   }
   c = row_buffer[0][x];

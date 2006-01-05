@@ -231,7 +231,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
 
   if (showMsg) {
     KDialogBase dialog(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-                                         parentWidget, "information", true, true,KStdGuiItem::ok() );
+                       parentWidget, "information", true, true,KStdGuiItem::ok() );
 
     QVBox *topcontents = new QVBox (&dialog);
     topcontents->setSpacing(KDialog::spacingHint()*2);
@@ -291,7 +291,6 @@ void dviRenderer::embedPostScript()
   embedPS_progress->progressBar()->setTotalSteps(dviFile->numberOfExternalPSFiles);
   embedPS_progress->progressBar()->setProgress(0);
   embedPS_numOfProgressedFiles = 0;
-
 
   Q_UINT16 currPageSav = current_page;
   errorMsg = QString::null;

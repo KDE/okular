@@ -411,7 +411,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Enable the continuous page mode</action>. In continuos mode,
+						<para><action>Enable the continuous page mode</action>. In continuous mode,
 							all pages of the document are shown, and you can scroll through
 							them without having to use the <menuchoice><guimenu>Go</guimenu>
 							<guimenuitem>Previous Page</guimenuitem></menuchoice> and
@@ -887,7 +887,6 @@
 			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> Refactoring for 3.4</para></listitem>
 			<listitem><para>Laurent Montel<email>montel@kde.org</email></para></listitem>
 		</itemizedlist>
-		&underGPL;
 
 		<itemizedlist>
 			<title>Documentation Copyright:</title>

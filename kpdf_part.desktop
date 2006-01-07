@@ -2,9 +2,7 @@
 Encoding=UTF-8
 Icon=kpdf
 Name=KPDF
-Name[ar]=برنامج KPDF
-Name[hi]=के-पीडीएफ
-Name[xx]=xxKPDFxx
+Name[x-test]=xxKPDFxx
 MimeType=application/pdf
 InitialPreference=7
 ServiceTypes=KParts/ReadOnlyPart

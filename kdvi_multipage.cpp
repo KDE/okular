@@ -139,7 +139,7 @@ bool KDVIMultiPage::slotSave(const QString &fileName)
     return false;
   if (fileName.isEmpty())
     return false;
-  
+
   bool r = DVIRenderer.dviFile->saveAs(fileName);
   if (r == false)
     KMessageBox::error(parentWdg, i18n("<qt>Error saving the document to the file <strong>%1</strong>. The document is <strong>not</strong> saved.</qt>").arg(fileName),

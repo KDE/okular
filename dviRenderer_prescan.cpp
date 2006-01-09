@@ -91,8 +91,8 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
     Q_UINT32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
-    Q_UINT16 page;
-    for(page=0; page < dviFile->total_pages; page++)
+    int page=0;
+    for(; page < dviFile->total_pages; page++)
       if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
         break;
     errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>").arg(page+1).arg(originalFName);
@@ -170,7 +170,7 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
   dviFile->size_of_file = dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
   end_pointer = newDVI.data() + dviFile->size_of_file;
   Q_UINT32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data();
-  for(Q_UINT16 i=0; i < dviFile->total_pages; i++) {
+  for(int i=0; i < dviFile->total_pages; i++) {
     if (dviFile->page_offset[i] > currentOffset) {
       dviFile->page_offset[i] = dviFile->page_offset[i] + lengthOfNewSpecial-lengthOfOldSpecial;
       command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
@@ -183,9 +183,8 @@ void dviRenderer::prescan_embedPS(char *cp, Q_UINT8 *beginningOfSpecialCommand)
     }
   }
 
-
   dviFile->beginning_of_postamble            = dviFile->beginning_of_postamble + lengthOfNewSpecial - lengthOfOldSpecial;
-  dviFile->page_offset[dviFile->total_pages] = dviFile->beginning_of_postamble;
+  dviFile->page_offset[int(dviFile->total_pages)] = dviFile->beginning_of_postamble;
 
   command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
   Q_UINT32 a = readUINT32();

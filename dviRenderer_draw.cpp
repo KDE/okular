@@ -631,8 +631,8 @@ void dviRenderer::draw_page()
   if (dviFile->page_offset.isEmpty() == true)
     return;
   if (current_page < dviFile->total_pages) {
-    command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
-    end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
+    command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
+    end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
   } else
     command_pointer = end_pointer = 0;
 

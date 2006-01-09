@@ -94,8 +94,8 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   if (!QFile::exists(EPSfilename)) {
     // Find the number of the page
     quint32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
-    quint16 page;
-    for(page=0; page < dviFile->total_pages; page++)
+    int page=0;
+    for(; page < dviFile->total_pages; page++)
       if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
         break;
     if (is_pdf_file)
@@ -176,7 +176,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   dviFile->size_of_file = dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial;
   end_pointer = newDVI.data() + dviFile->size_of_file;
   quint32 currentOffset = beginningOfSpecialCommand-dviFile->dvi_Data();
-  for(quint16 i=0; i < dviFile->total_pages; i++) {
+  for(int i=0; i < dviFile->total_pages; i++) {
     if (dviFile->page_offset[i] > currentOffset) {
       dviFile->page_offset[i] = dviFile->page_offset[i] + lengthOfNewSpecial-lengthOfOldSpecial;
       command_pointer = dviFile->page_offset[i] + newDVI.data() + 4*10 + 1;
@@ -189,9 +189,8 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
     }
   }
 
-
   dviFile->beginning_of_postamble            = dviFile->beginning_of_postamble + lengthOfNewSpecial - lengthOfOldSpecial;
-  dviFile->page_offset[dviFile->total_pages] = dviFile->beginning_of_postamble;
+  dviFile->page_offset[int(dviFile->total_pages)] = dviFile->beginning_of_postamble;
 
   command_pointer = newDVI.data() + dviFile->beginning_of_postamble + 1;
   quint32 a = readUINT32();

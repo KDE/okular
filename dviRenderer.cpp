@@ -297,8 +297,8 @@ void dviRenderer::embedPostScript()
   errorMsg = QString::null;
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
+      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
+      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
       command_pointer = end_pointer = 0;
 
@@ -332,8 +332,8 @@ void dviRenderer::embedPostScript()
     PostScriptOutPutString = new QString();
 
     if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
+      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
+      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
       command_pointer = end_pointer = 0;
 
@@ -506,8 +506,8 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
     PostScriptOutPutString = new QString();
 
     if (current_page < dviFile->total_pages) {
-      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[current_page];
-      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[current_page+1];
+      command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
+      end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
       command_pointer = end_pointer = 0;
 

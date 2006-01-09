@@ -244,22 +244,21 @@ void dvifile::prepare_pages()
   for(int i=0; i<=total_pages; i++)
     page_offset[i] = 0;
 
-
-  page_offset[total_pages] = beginning_of_postamble;
-  quint16 i               = total_pages-1;
-  page_offset[i]           = last_page_offset;
+  page_offset[int(total_pages)] = beginning_of_postamble;
+  int j = total_pages-1;
+  page_offset[j] = last_page_offset;
 
   // Follow back pointers through pages in the DVI file, storing the
   // offsets in the page_offset table.
-   while (i > 0) {
-    command_pointer  = dvi_Data() + page_offset[i--];
+   while (j > 0) {
+    command_pointer  = dvi_Data() + page_offset[j--];
     if (readUINT8() != BOP) {
-      errorMsg = i18n("The page %1 does not start with the BOP command.").arg(i+1);
+      errorMsg = i18n("The page %1 does not start with the BOP command.").arg(j+1);
       return;
     }
     command_pointer += 10 * 4;
-    page_offset[i] = readUINT32();
-    if ((dvi_Data()+page_offset[i] < dvi_Data())||(dvi_Data()+page_offset[i] > dvi_Data()+size_of_file))
+    page_offset[j] = readUINT32();
+    if ((dvi_Data()+page_offset[j] < dvi_Data())||(dvi_Data()+page_offset[j] > dvi_Data()+size_of_file))
       break;
   }
 }
@@ -341,7 +340,7 @@ void dvifile::renumber()
   bool bigEndian;
   qSysInfo (&wordSize, &bigEndian);
 
-  for(quint32 i=1; i<=total_pages; i++) {
+  for(int i=1; i<=total_pages; i++) {
     quint8 *ptr = dviData.data() + page_offset[i-1]+1;
     quint8 *num = (quint8 *)&i;
     for(quint8 j=0; j<4; j++)

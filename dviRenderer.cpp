@@ -154,11 +154,6 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
   if (resolution != resolutionInDPI)
     setResolution(resolution);
 
-  SimplePageSize ps = sizeOfPage(page->getPageNumber());
-  int pageHeight = ps.sizeInPixel(resolution).height();
-  int pageWidth = ps.sizeInPixel(resolution).width();
-  page->resize(pageWidth, pageHeight);
-
   currentlyDrawnPage     = page;
   shrinkfactor           = 1200/resolutionInDPI;
   current_page           = page->getPageNumber()-1;

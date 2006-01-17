@@ -49,7 +49,7 @@ private:
   int inlineImg;		// set when inline image data is encountered
 
   Stream *makeStream(Object *dict);
-  void shift();
+  void shift(int objNum = -1);
 };
 
 #endif

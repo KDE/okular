@@ -243,8 +243,18 @@ void CharCodeToUnicode::parseCMap1(int (*getCharFunc)(void *), void *data,
 	}
 	if (!(n1 == 2 + nDigits && tok1[0] == '<' && tok1[n1 - 1] == '>' &&
 	      tok2[0] == '<' && tok2[n2 - 1] == '>')) {
-	  error(-1, "Illegal entry in bfchar block in ToUnicode CMap");
-	  continue;
+	  
+	  // check there was no line jump inside the token and so the length is 
+	  // longer than it should be
+	  int countAux = 0;
+	  for (int k = 0; k < n1; k++)
+	    if (tok1[k] != '\n' && tok1[k] != '\r') countAux++;
+	
+	  if (!(countAux == 2 + nDigits && tok1[0] == '<' && tok1[n1 - 1] == '>' &&
+	      tok2[0] == '<' && tok2[n2 - 1] == '>')) {
+	    error(-1, "Illegal entry in bfchar block in ToUnicode CMap");
+	    continue;
+	  }
 	}
 	tok1[n1 - 1] = tok2[n2 - 1] = '\0';
 	if (sscanf(tok1 + 1, "%x", &code1) != 1) {
@@ -268,8 +278,21 @@ void CharCodeToUnicode::parseCMap1(int (*getCharFunc)(void *), void *data,
 	}
 	if (!(n1 == 2 + nDigits && tok1[0] == '<' && tok1[n1 - 1] == '>' &&
 	      n2 == 2 + nDigits && tok2[0] == '<' && tok2[n2 - 1] == '>')) {
-	  error(-1, "Illegal entry in bfrange block in ToUnicode CMap");
-	  continue;
+	  // check there was no line jump inside the token and so the length is 
+	  // longer than it should be
+	  int countAux = 0;
+	  for (int k = 0; k < n1; k++)
+	    if (tok1[k] != '\n' && tok1[k] != '\r') countAux++;
+	  
+	  int countAux2 = 0;
+	  for (int k = 0; k < n1; k++)
+	    if (tok2[k] != '\n' && tok2[k] != '\r') countAux++;
+	  
+	  if (!(countAux == 2 + nDigits && tok1[0] == '<' && tok1[n1 - 1] == '>' &&
+	      countAux2 == 2 + nDigits && tok2[0] == '<' && tok2[n2 - 1] == '>')) {
+	    error(-1, "Illegal entry in bfrange block in ToUnicode CMap");
+	    continue;
+	  }
 	}
 	tok1[n1 - 1] = tok2[n2 - 1] = '\0';
 	if (sscanf(tok1 + 1, "%x", &code1) != 1 ||

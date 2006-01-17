@@ -91,6 +91,9 @@ public:
   // Returns false if unknown or file is not damaged.
   GBool getStreamEnd(Guint streamStart, Guint *streamEnd);
 
+  // Retuns the entry that belongs to the offset
+  int getNumEntry(int offset) const;
+
   // Direct access.
   int getSize() { return size; }
   XRefEntry *getEntry(int i) { return &entries[i]; }

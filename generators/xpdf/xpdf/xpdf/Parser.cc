@@ -69,7 +69,7 @@ Object *Parser::getObj(Object *obj,
 
   // dictionary or stream
   } else if (buf1.isCmd("<<")) {
-    shift();
+    shift(objNum);
     obj->initDict(xref);
     while (!buf1.isCmd(">>") && !buf1.isEOF()) {
       if (!buf1.isName()) {
@@ -195,7 +195,7 @@ Stream *Parser::makeStream(Object *dict) {
   return str;
 }
 
-void Parser::shift() {
+void Parser::shift(int objNum) {
   if (inlineImg > 0) {
     if (inlineImg < 2) {
       ++inlineImg;
@@ -213,5 +213,5 @@ void Parser::shift() {
   if (inlineImg > 0)		// don't buffer inline image data
     buf2.initNull();
   else
-    lexer->getObj(&buf2);
+    lexer->getObj(&buf2, objNum);
 }

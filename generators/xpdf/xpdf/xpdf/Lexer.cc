@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include "Lexer.h"
 #include "Error.h"
+#include "XRef.h"
 
 //------------------------------------------------------------------------
 
@@ -46,8 +47,10 @@ static char Lexer_specialChars[256] = {
 // Lexer
 //------------------------------------------------------------------------
 
-Lexer::Lexer(XRef *xref, Stream *str) {
+Lexer::Lexer(XRef *xrefA, Stream *str) {
   Object obj;
+
+  xref = xrefA;
 
   curStr.initStream(str);
   streams = new Array(xref);
@@ -57,8 +60,10 @@ Lexer::Lexer(XRef *xref, Stream *str) {
   curStr.streamReset();
 }
 
-Lexer::Lexer(XRef *xref, Object *obj) {
+Lexer::Lexer(XRef *xrefA, Object *obj) {
   Object obj2;
+
+  xref = xrefA;
 
   if (obj->isStream()) {
     streams = new Array(xref);
@@ -108,7 +113,7 @@ int Lexer::lookChar() {
   return curStr.streamLookChar();
 }
 
-Object *Lexer::getObj(Object *obj) {
+Object *Lexer::getObj(Object *obj, int objNum) {
   char *p;
   int c, c2;
   GBool comment, neg, done;
@@ -291,6 +296,17 @@ Object *Lexer::getObj(Object *obj) {
 	    s->append(tokBuf, tokBufSize);
 	  p = tokBuf;
 	  n = 0;
+	  
+	  // we are growing see if the document is not malformed and we are growing too much
+	  if (objNum != -1)
+	  {
+	    int newObjNum = xref->getNumEntry(getPos());
+	    if (newObjNum != objNum)
+	    {
+	      error(getPos(), "Unterminated string");
+	      done = gTrue;
+	    }
+	  }
 	}
 	*p++ = (char)c2;
 	++n;

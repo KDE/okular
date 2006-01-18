@@ -364,20 +364,25 @@ bool Part::openFile()
         QString app = KStandardDirs::findExe( "ps2pdf" );
         if ( !app.isNull() )
         {
-            KTempFile tf( QString::null, ".pdf" );
-            if ( tf.status() == 0 )
-            {
-                tf.close();
-                m_temporaryLocalFile = tf.name();
+            if ( QFile::exists(m_file) )
+	    {
+                KTempFile tf( QString::null, ".pdf" );
+                if ( tf.status() == 0 )
+                {
+                    tf.close();
+                    m_temporaryLocalFile = tf.name();
 
-                KProcess *p = new KProcess;
-                *p << app;
-                *p << m_file << m_temporaryLocalFile;
-                m_pageView->showText(i18n("Converting from ps to pdf..."), 0);
-                connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
-                p -> start();
-                return true;
+                    KProcess *p = new KProcess;
+                    *p << app;
+                    *p << m_file << m_temporaryLocalFile;
+                    m_pageView->showText(i18n("Converting from ps to pdf..."), 0);
+                    connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
+                    p -> start();
+                    return true;
+                }
+                else return false;
             }
+            else return false;
         }
         else
         {

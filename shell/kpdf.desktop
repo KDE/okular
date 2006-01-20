@@ -63,6 +63,7 @@ GenericName[uz]=PDF кўрувчи
 GenericName[ven]=Tshivhoni tsha PDF
 GenericName[xh]=Umboniseli we PDF
 GenericName[zh_CN]=PDF 查看器
+GenericName[zh_HK]=PDF 檢視器
 GenericName[zu]=Umboniseli we PDF
 Exec=kpdf %U %i %m -caption "%c"
 Icon=kpdf

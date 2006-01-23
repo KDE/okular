@@ -10,6 +10,7 @@
 #include <config.h>
 
 #include "psgs.h"
+#include "psheader.h"
 #include "dviFile.h"
 #include "kvs_debug.h"
 #include "pageNumber.h"
@@ -24,8 +25,6 @@
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QTextStream>
-
-extern const char psheader[];
 
 //#define DEBUG_PSGS
 
@@ -175,7 +174,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
      << (qint32)(72*(pixel_page_h/resolution)) << '\n'
      << "%%EndComments\n"
      << "%!\n"
-     << psheader
+     << psheader()
      << "TeXDict begin "
         // HSize in (1/(65781.76*72))inch
      << (qint32)(72*65781*(pixel_page_w/resolution)) << ' '

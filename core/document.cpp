@@ -50,7 +50,7 @@ class KPDFDocumentPrivate
 
         // needed because for remote documents docFileName is a local file and
         // we want the remote url when the document refers to relativeNames
-        KURL url;
+        KUrl url;
 
         // cached stuff
         QString docFileName;
@@ -114,7 +114,7 @@ KPDFDocument::KPDFDocument()
     d->allocatedPixmapsTotalMemory = 0;
     d->memCheckTimer = 0;
     d->saveBookmarksTimer = 0;
-    KImageIO::registerFormats();
+    
     QList<QByteArray> list = QImageReader::supportedImageFormats();
     QList<QByteArray>::Iterator it = list.begin();
     while( it != list.end() )
@@ -134,7 +134,7 @@ KPDFDocument::~KPDFDocument()
 }
 
 
-bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime )
+bool KPDFDocument::openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime )
 {
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
@@ -391,7 +391,7 @@ uint KPDFDocument::pages() const
     return pages_vector.size();
 }
 
-KURL KPDFDocument::currentDocument() const
+KUrl KPDFDocument::currentDocument() const
 {
     return d->url;
 }
@@ -993,7 +993,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             KService::Ptr ptr = KServiceTypeProfile::preferredService( mime->name(), "Application" );
             if ( ptr )
             {
-                KURL::List lst;
+                KUrl::List lst;
                 lst.append( fileName );
                 KRun::run( *ptr, lst );
             }
@@ -1064,7 +1064,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
 
                 // get service for web browsing
                 KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
-                KURL::List lst;
+                KUrl::List lst;
                 // append 'url' parameter to the service and run it
                 lst.append( url );
                 KRun::run( *ptr, lst );

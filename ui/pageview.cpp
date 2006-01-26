@@ -1063,9 +1063,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
                     else
                     {
-                        QString type( KImageIO::type( fileName ) );
-                        if ( type.isNull() )
+						KMimeType::Ptr mime = KMimeType::findByURL( fileName );
+						QString type;
+                        if ( !mime )
                             type = "PNG";
+						else
+							type = mime->name();
                         copyPix.save( fileName, type.toLatin1() );
                         d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file." ).arg( copyPix.width() ).arg( copyPix.height() ).arg( type ) );
                     }
@@ -1201,8 +1204,8 @@ void PageView::dragEnterEvent( QDragEnterEvent * ev )
 
 void PageView::dropEvent( QDropEvent * ev )
 {
-    if (  KURL::List::canDecode(  ev->mimeData() ) )
-        emit urlDropped( KURL::List::fromMimeData( ev->mimeData() ).first() );
+    if (  KUrl::List::canDecode(  ev->mimeData() ) )
+        emit urlDropped( KUrl::List::fromMimeData( ev->mimeData() ).first() );
 }
 //END widget events
 

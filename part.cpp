@@ -111,7 +111,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURLFromDocument(const KURL &) ) );
+	connect( m_document, SIGNAL( openURL(const KUrl &) ), this, SLOT( openURLFromDocument(const KUrl &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 	
 	if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
@@ -162,7 +162,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
-	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURLFromDocument( const KURL & )) );
+	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 	// shrink the bottom controller toolbar (too hackish..)
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
@@ -196,7 +196,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
-	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURLFromDocument( const KURL & )));
+	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 
 	// add document observers
@@ -316,7 +316,7 @@ void Part::goToPage(uint i)
         m_document->setViewportPage( i - 1 );
 }
 
-void Part::openDocument(KURL doc)
+void Part::openDocument(KUrl doc)
 {
 	openURL(doc);
 }
@@ -332,7 +332,7 @@ uint Part::currentPage()
 	else return m_document->currentPage()+1;
 }
 
-KURL Part::currentDocument()
+KUrl Part::currentDocument()
 {
 	return m_document->currentDocument();	
 }
@@ -428,14 +428,14 @@ bool Part::openFile()
     return true;
 }
 
-void Part::openURLFromDocument(const KURL &url)
+void Part::openURLFromDocument(const KUrl &url)
 {
     m_bExtension->openURLNotify();
     m_bExtension->setLocationBarURL(url.prettyURL());
     openURL(url);
 }
 
-bool Part::openURL(const KURL &url)
+bool Part::openURL(const KUrl &url)
 {
     // note: this can be the right place to check the file for gz or bz2 extension
     // if it matches then: download it (if not local) extract to a temp file using
@@ -689,12 +689,12 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
-    KURL saveURL = KFileDialog::getSaveURL( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
+    KUrl saveURL = KFileDialog::getSaveURL( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
     if ( saveURL.isValid() && !saveURL.isEmpty() )
     {
         if (saveURL == url())
         {
-            KMessageBox::information( widget(), i18n("You are trying to overwrite \"%1\" with itself. This is not allowed. Please save it in another location.").arg(saveURL.filename()) );
+            KMessageBox::information( widget(), i18n("You are trying to overwrite \"%1\" with itself. This is not allowed. Please save it in another location.").arg(saveURL.fileName()) );
             return;
         }
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
@@ -933,7 +933,7 @@ void Part::doPrint(KPrinter &printer)
     }
 }
 
-void Part::restoreDocument(const KURL &url, int page)
+void Part::restoreDocument(const KUrl &url, int page)
 {
   if (openURL(url)) goToPage(page);
 }

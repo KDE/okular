@@ -18,10 +18,10 @@ class kpdf_dcop : virtual public DCOPObject
 K_DCOP
 	k_dcop:
 		virtual ASYNC goToPage(uint page) = 0;
-		virtual ASYNC openDocument(KURL doc) = 0;
+		virtual ASYNC openDocument(KUrl doc) = 0;
 		virtual uint pages() = 0;
 		virtual uint currentPage() = 0;
-		virtual KURL currentDocument() = 0;
+		virtual KUrl currentDocument() = 0;
     virtual void slotPreferences() = 0;
     virtual void slotFind() = 0;
     virtual void slotPrintPreview() = 0;

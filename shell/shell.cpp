@@ -46,7 +46,7 @@ Shell::Shell()
   init();
 }
 
-Shell::Shell(const KURL &url)
+Shell::Shell(const KUrl &url)
 {
   m_openUrl = url;
   init();
@@ -86,7 +86,7 @@ void Shell::init()
     m_part = 0;
     return;
   }
-  connect( this, SIGNAL( restoreDocument(const KURL &, int) ),m_part, SLOT( restoreDocument(const KURL &, int)));
+  connect( this, SIGNAL( restoreDocument(const KUrl &, int) ),m_part, SLOT( restoreDocument(const KUrl &, int)));
   connect( this, SIGNAL( saveDocumentRestoreInfo(KConfig*) ), m_part, SLOT( saveDocumentRestoreInfo(KConfig*)));
   connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
   
@@ -111,7 +111,7 @@ Shell::~Shell()
     if(m_part) writeSettings();
 }
 
-void Shell::openURL( const KURL & url )
+void Shell::openURL( const KUrl & url )
 {
     if ( m_part )
     {
@@ -145,7 +145,7 @@ void Shell::writeSettings()
 void Shell::setupActions()
 {
   KAction * openAction = KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-  m_recent = KStdAction::openRecent( this, SLOT( openURL( const KURL& ) ), actionCollection() );
+  m_recent = KStdAction::openRecent( this, SLOT( openURL( const KUrl& ) ), actionCollection() );
   connect( m_recent, SIGNAL( activated() ), openAction, SLOT( activate() ) );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStdAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
@@ -175,7 +175,7 @@ void Shell::readProperties(KConfig* config)
   // in 'saveProperties'
   if(m_part)
   {
-    KURL url ( config->readPathEntry( "URL" ) );
+    KUrl url ( config->readPathEntry( "URL" ) );
     if ( url.isValid() ) emit restoreDocument(url, config->readNumEntry( "Page", 1 ));
   }
 }
@@ -186,7 +186,7 @@ Shell::fileOpen()
   // this slot is called whenever the File->Open menu is selected,
   // the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
   // button is clicked
-    KURL url = KFileDialog::getOpenURL( QString::null, "application/pdf application/postscript" );//getOpenFileName();
+    KUrl url = KFileDialog::getOpenURL( QString::null, "application/pdf application/postscript" );//getOpenFileName();
 
   if (!url.isEmpty())
     openURL(url);

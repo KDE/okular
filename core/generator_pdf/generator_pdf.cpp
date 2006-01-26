@@ -17,7 +17,7 @@
 #include <kauthorized.h>
 #include <klistview.h>
 #include <klocale.h>
-#include <kpassdlg.h>
+#include <kpassworddialog.h>
 #include <kwallet.h>
 #include <kprinter.h>
 #include <ktempfile.h>

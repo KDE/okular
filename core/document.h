@@ -30,7 +30,7 @@ class Generator;
 class PixmapRequest;
 class KListView;
 class KPrinter;
-class KURL;
+class KUrl;
 
 /**
  * @short The Document. Heart of everything. Actions take place here.
@@ -57,7 +57,7 @@ class KPDFDocument : public QObject
         ~KPDFDocument();
 
         // document handling
-        bool openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime );
+        bool openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime );
         void closeDocument();
 
         // misc methods
@@ -76,7 +76,7 @@ class KPDFDocument : public QObject
         const DocumentViewport & viewport() const;
         uint currentPage() const;
         uint pages() const;
-        KURL currentDocument() const;
+        KUrl currentDocument() const;
         bool isAllowed( int /*Document::Permisison(s)*/ ) const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;
@@ -110,7 +110,7 @@ class KPDFDocument : public QObject
         void quit();
         void linkFind();
         void linkGoToPage();
-        void openURL(const KURL &url);
+        void openURL(const KUrl &url);
         void linkPresentation();
         void linkEndPresentation();
 

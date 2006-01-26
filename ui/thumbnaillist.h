@@ -75,7 +75,7 @@ Q_OBJECT
 		void dropEvent( QDropEvent* );
 
 	signals:
-		void urlDropped( const KURL& );
+		void urlDropped( const KUrl& );
 		void rightClick( const KPDFPage *, const QPoint & );
 
 	private:

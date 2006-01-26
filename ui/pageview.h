@@ -23,7 +23,7 @@
 #include <qvector.h>
 #include "core/observer.h"
 
-class KURL;
+class KUrl;
 class KActionCollection;
 
 class KPDFDocument;
@@ -66,7 +66,7 @@ class PageView : public Q3ScrollView, public DocumentObserver
         void showText( const QString &text, int ms );
 
     signals:
-        void urlDropped( const KURL& );
+        void urlDropped( const KUrl& );
         void rightClick( const KPDFPage *, const QPoint & );
 
     protected:

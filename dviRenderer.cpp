@@ -26,7 +26,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kprogress.h>
+#include <kprogressbar.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
 
@@ -377,7 +377,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
 }
 
 
-bool dviRenderer::setFile(const QString &fname, const KURL &base)
+bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 {
 #ifdef DEBUG_DVIRENDERER
   kdDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;

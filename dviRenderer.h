@@ -90,7 +90,7 @@ public:
   dviRenderer(QWidget *parent);
   ~dviRenderer();
 
-  virtual bool  setFile(const QString &fname, const KURL &base);
+  virtual bool  setFile(const QString &fname, const KUrl &base);
 
   dvifile* dviFile;
 
@@ -168,7 +168,7 @@ private:
   /** URL to the DVI file
       This field is initialized by the setFile() method. See the
       explanation there. */
-  KURL baseURL;
+  KUrl baseURL;
 
   /** This method parses a color specification of type "gray 0.5", "rgb
       0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source

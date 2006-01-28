@@ -342,7 +342,7 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
 }
 
 
-QString ghostscript_interface::locateEPSfile(const QString &filename, const KURL &base)
+QString ghostscript_interface::locateEPSfile(const QString &filename, const KUrl &base)
 {
   // If the base URL indicates that the DVI file is local, try to find
   // the graphics file in the directory where the DVI file resides

@@ -154,7 +154,7 @@
                         <string>Editor:</string>
                     </property>
                 </widget>
-                <widget class="KURLLabel" row="0" column="2">
+                <widget class="KUrlLabel" row="0" column="2">
                     <property name="name">
                         <cstring>urll</cstring>
                     </property>

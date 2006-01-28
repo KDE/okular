@@ -15,7 +15,7 @@
 #include <QObject>
 #include <QString>
 
-class KURL;
+class KUrl;
 class PageNumber;
 class QPainter;
 
@@ -75,7 +75,7 @@ public:
       returned. Otherwise, the method returns the first argument. TODO:
       use the DVI file's baseURL, once this is implemented.
   */
-  static  QString locateEPSfile(const QString &filename, const KURL &base);
+  static  QString locateEPSfile(const QString &filename, const KUrl &base);
 
 private:
   void                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);

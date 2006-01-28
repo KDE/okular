@@ -9,7 +9,7 @@
 #include "fontprogress.h"
 
 #include <klocale.h>
-#include <kprogress.h>
+#include <kprogressbar.h>
 #include <kvbox.h>
 
 #include <QApplication>

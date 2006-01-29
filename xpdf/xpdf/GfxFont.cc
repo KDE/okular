@@ -1493,6 +1493,7 @@ Gushort *GfxCIDFont::getCodeToGIDMap(FoFiTrueType *ff, int *mapsizep) {
   unsigned int cidlen;
 
   *mapsizep = 0;
+  if (!ctu) return NULL;
 
   /* we use only unicode cmap */
   cmap = -1;

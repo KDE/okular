@@ -49,7 +49,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   QToolTip::add( TextLabel1, ttip );
 
   if (progressbar) {
-    ProgressBar1 = new KProgress( page, "ProgressBar1" );
+    ProgressBar1 = new KProgressBar( page );
     ProgressBar1->setFormat(i18n("%v of %m"));
     ProgressBar1->setWhatsThis( whatsThis );
     QToolTip::add( ProgressBar1, ttip );
@@ -78,7 +78,7 @@ fontProgressDialog::~fontProgressDialog()
 void fontProgressDialog::increaseNumSteps(const QString& explanation)
 {
   if (ProgressBar1 != 0)
-    ProgressBar1->setProgress(progress++);
+    ProgressBar1->setValue(progress++);
   TextLabel2->setText( explanation );
 }
 
@@ -87,8 +87,8 @@ void fontProgressDialog::setTotalSteps(int steps, QProcess* proc)
 {
   process = proc;
   if (ProgressBar1 != 0) {
-    ProgressBar1->setTotalSteps(steps);
-    ProgressBar1->setProgress(0);
+    ProgressBar1->setMaximum(steps);
+    ProgressBar1->setValue(0);
   }
   progress = 0;
 }

@@ -18,7 +18,7 @@
 
 #include <ksharedptr.h>
 #include <kurl.h>
-
+#include <kprogressdialog.h>
 #include <Q3IntDict>
 #include <Q3PointArray>
 #include <Q3ValueStack>

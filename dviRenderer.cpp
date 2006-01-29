@@ -223,7 +223,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
   // Check if the 'Don't show again' feature was used
   KConfig *config = KGlobal::config();
   KConfigGroup saver(config, "Notification Messages");
-  bool showMsg = config->readBoolEntry( "KDVI-info_on_source_specials", true);
+  bool showMsg = config->readEntry( "KDVI-info_on_source_specials", true);
 
   if (showMsg) {
     KDialogBase dialog(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
@@ -277,15 +277,15 @@ void dviRenderer::embedPostScript()
   if (!dviFile)
     return;
 
-  embedPS_progress = new KProgressDialog(parentWidget, "embedPSProgressDialog",
+  embedPS_progress = new KProgressDialog(parentWidget,
                                          i18n("Embedding PostScript Files"), QString::null, true);
   if (!embedPS_progress)
     return;
   embedPS_progress->setAllowCancel(false);
   embedPS_progress->showCancelButton(false);
   embedPS_progress->setMinimumDuration(400);
-  embedPS_progress->progressBar()->setTotalSteps(dviFile->numberOfExternalPSFiles);
-  embedPS_progress->progressBar()->setProgress(0);
+  embedPS_progress->progressBar()->setMaximum(dviFile->numberOfExternalPSFiles);
+  embedPS_progress->progressBar()->setValue(0);
   embedPS_numOfProgressedFiles = 0;
 
   quint16 currPageSav = current_page;

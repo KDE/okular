@@ -697,6 +697,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
       (strncasecmp(cp, "html:<A name=", 13) == 0) ||
       (strncasecmp(cp, "ps:", 3) == 0) ||
       (strncasecmp(cp, "papersize", 9) == 0) ||
+      (strncasecmp(cp, "header", 6) == 0) ||
       (strncasecmp(cp, "background", 10) == 0) )
     return;
   

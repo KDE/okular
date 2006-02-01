@@ -18,6 +18,7 @@
 
 #include <klocale.h>
 #include <kmimetype.h>
+#include <kprocio.h>
 #include <kprogress.h>
 
 #include <qapplication.h>
@@ -276,8 +277,20 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
   kdDebug(kvs::dvi) << "PostScript-special, header " << cp.latin1() << endl;
 #endif
 
-  if (QFile::exists(cp))
-    PS_interface->PostScriptHeaderString->append( QString(" (%1) run\n").arg(cp) );
+  QString _file = cp;
+
+  // If the file is not found in the current directory, use kpsewhich
+  // to find it.
+  if (!QFile::exists(_file)) {
+    // Otherwise, use kpsewhich to find the eps file.
+    KProcIO proc;
+    proc << "kpsewhich" << cp;
+    proc.start(KProcess::Block);
+    proc.readln(_file);
+  }
+
+  if (QFile::exists(_file))
+    PS_interface->PostScriptHeaderString->append( QString(" (%1) run\n").arg(_file) );
 }
 
 
@@ -297,7 +310,6 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
   kdError(kvs::dvi) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
-
 #endif
 
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;

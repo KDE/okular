@@ -182,7 +182,7 @@ GBool SplashXPathScanner::getNextSpan(int y, int *x0, int *x1) {
 }
 
 void SplashXPathScanner::computeIntersections(int y) {
-  SplashCoord ySegMin, ySegMax, xx0, xx1;
+  SplashCoord xSegMin, xSegMax, ySegMin, ySegMax, xx0, xx1;
   SplashXPathSeg *seg;
   int i, j;
 

@@ -106,7 +106,7 @@ void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, boo
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
     if ( !m_frames.isEmpty() )
-        kdWarning() << "Frames setup changed while a Presentation is in progress." << endl;
+        kWarning() << "Frames setup changed while a Presentation is in progress." << endl;
     m_frames.clear();
 
     // create the new frames

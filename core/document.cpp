@@ -155,13 +155,13 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl & url, cons
     if ( (*mime).is( "application/pdf" ) )
         generator = new PDFGenerator( this );
 //    else if ( mimeName == "application/postscript" )
-//        kdError() << "PS generator not available" << endl;
+//        kError() << "PS generator not available" << endl;
     else
     {
         QStringList::Iterator it = d->kimgioMimes.begin();
         while( it != d->kimgioMimes.end() )
         {
-            kdDebug() << *it << endl;
+            kDebug() << *it << endl;
             if ( (*mime).is( *it ) )
             {
                 generator = new KIMGIOGenerator( this );
@@ -171,7 +171,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl & url, cons
         }
         if ( it == d->kimgioMimes.end() )
         {
-            kdWarning() << "Unknown mimetype '" << mime->name() << "'." << endl;
+            kWarning() << "Unknown mimetype '" << mime->name() << "'." << endl;
             return false;
         }
     }
@@ -542,7 +542,7 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
     // if already broadcasted, don't redo it
     DocumentViewport & oldViewport = *d->viewportIterator;
     if ( viewport == oldViewport )
-        kdDebug() << "setViewport with the same viewport." << endl;
+        kDebug() << "setViewport with the same viewport." << endl;
 
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || oldViewport.pageNumber == -1 )
@@ -940,7 +940,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !openRelativeFile( go->fileName() ) )
             {
-                kdWarning() << "Link: Error opening '" << go->fileName() << "'." << endl;
+                kWarning() << "Link: Error opening '" << go->fileName() << "'." << endl;
                 return;
             }
             else
@@ -1087,7 +1087,7 @@ void KPDFDocument::requestDone( PixmapRequest * req )
 {
 #ifndef NDEBUG
     if ( !generator->canGeneratePixmap() )
-        kdDebug() << "requestDone with generator not in READY state." << endl;
+        kDebug() << "requestDone with generator not in READY state." << endl;
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
@@ -1263,7 +1263,7 @@ void KPDFDocument::loadDocumentInfo()
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
-    //kdDebug() << "Using '" << d->xmlFileName << "' as document info file." << endl;
+    //kDebug() << "Using '" << d->xmlFileName << "' as document info file." << endl;
     QFile infoFile( d->xmlFileName );
     if ( !infoFile.exists() || !infoFile.open( QIODevice::ReadOnly ) )
         return;
@@ -1272,7 +1272,7 @@ void KPDFDocument::loadDocumentInfo()
     QDomDocument doc( "documentInfo" );
     if ( !doc.setContent( &infoFile ) )
     {
-        kdDebug() << "Could not set content" << endl;
+        kDebug() << "Could not set content" << endl;
         infoFile.close();
         return;
     }
@@ -1365,7 +1365,7 @@ bool KPDFDocument::openRelativeFile( const QString & fileName )
     if ( absFileName.isNull() )
         return false;
 
-    kdDebug() << "openDocument: '" << absFileName << "'" << endl;
+    kDebug() << "openDocument: '" << absFileName << "'" << endl;
 
     emit openURL( absFileName );
     return true;

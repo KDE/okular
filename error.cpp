@@ -40,5 +40,5 @@ void CDECL error(int pos, const char *msg, ...) {
   vsprintf(buffer, msg, args);
   va_end(args);
   emsg += buffer;
-  kdDebug() << emsg << endl;
+  kDebug() << emsg << endl;
 }

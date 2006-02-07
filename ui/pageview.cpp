@@ -309,7 +309,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        kdDebug() << "viewport has no matching item!" << endl;
+        kDebug() << "viewport has no matching item!" << endl;
         d->blockViewport = false;
         return;
     }
@@ -1316,7 +1316,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
 #ifndef NDEBUG
     else
-        kdDebug() << "calling updateItemSize with unrecognized d->zoomMode!" << endl;
+        kDebug() << "calling updateItemSize with unrecognized d->zoomMode!" << endl;
 #endif
 }
 

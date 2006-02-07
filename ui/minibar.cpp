@@ -368,7 +368,7 @@ void PagesEdit::focusOutEvent( QFocusEvent * e )
 {
     if (!e)
     {
-         kdDebug() << "Got a null QFocusEvent, investigate" << endl;
+         kDebug() << "Got a null QFocusEvent, investigate" << endl;
          return;
     }
     // change background color to a dark tone

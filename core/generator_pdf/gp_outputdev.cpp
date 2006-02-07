@@ -292,7 +292,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
             else if ( !strcmp( name, "Close" ) )
                 link = new KPDFLinkAction( KPDFLinkAction::Close );
             else
-                kdDebug() << "Unknown named action: '" << name << "'" << endl;
+                kDebug() << "Unknown named action: '" << name << "'" << endl;
             }
             break;
 
@@ -313,7 +313,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
 */          break;
 
         case actionUnknown:
-            kdDebug() << "Unknown link." << endl;
+            kDebug() << "Unknown link." << endl;
             break;
     }
 

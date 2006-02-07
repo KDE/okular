@@ -97,7 +97,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
 #ifndef NDEBUG
     if ( pdfdoc )
     {
-        kdDebug() << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
+        kDebug() << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
         return false;
     }
 #endif
@@ -276,14 +276,14 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
 {
 #ifndef NDEBUG
     if ( !ready )
-        kdDebug() << "calling generatePixmap() when not in READY state!" << endl;
+        kDebug() << "calling generatePixmap() when not in READY state!" << endl;
 #endif
     // update busy state (not really needed here, because the flag needs to
     // be set only to prevent asking a pixmap while the thread is running)
     ready = false;
 
     // debug requests to this (xpdf) generator
-    //kdDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
+    //kDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
 
     /** asyncronous requests (generation in PDFPixmapGeneratorThread::run() **/
     if ( request->async )
@@ -959,7 +959,7 @@ void PDFGenerator::customEvent( QEvent * e )
         // if so, wait for effective thread termination
         if ( !generatorThread->wait( 9999 /*10s timeout*/ ) )
         {
-            kdWarning() << "PDFGenerator: thread sent 'data available' "
+            kWarning() << "PDFGenerator: thread sent 'data available' "
                         << "signal but had problems ending." << endl;
             return;
         }
@@ -969,7 +969,7 @@ void PDFGenerator::customEvent( QEvent * e )
     // 1. the mutex must be unlocked now
     if ( docLock.locked() )
     {
-        kdWarning() << "PDFGenerator: 'data available' but mutex still "
+        kWarning() << "PDFGenerator: 'data available' but mutex still "
                     << "held. Recovering." << endl;
         // syncronize GUI thread (must not happen)
         docLock.lock();
@@ -1048,7 +1048,7 @@ void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
     // check if a generation is already running
     if ( d->currentRequest )
     {
-        kdDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
+        kDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
                   << "when another is being generated." << endl;
         delete request;
         return;
@@ -1057,7 +1057,7 @@ void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
     // check if the mutex is already held
     if ( d->generator->docLock.locked() )
     {
-        kdDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
+        kDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
                   << "with the mutex already held." << endl;
         delete request;
         return;
@@ -1074,7 +1074,7 @@ void PDFPixmapGeneratorThread::endGeneration()
     // check if a generation is already running
     if ( !d->currentRequest )
     {
-        kdDebug() << "PDFPixmapGeneratorThread: 'end generation' called "
+        kDebug() << "PDFPixmapGeneratorThread: 'end generation' called "
                   << "but generation was not started." << endl;
         return;
     }
@@ -1135,9 +1135,9 @@ void PDFPixmapGeneratorThread::run()
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
     if ( d->m_image )
-        kdDebug() << "PDFPixmapGeneratorThread: previous image not taken" << endl;
+        kDebug() << "PDFPixmapGeneratorThread: previous image not taken" << endl;
     if ( d->m_textPage )
-        kdDebug() << "PDFPixmapGeneratorThread: previous textpage not taken" << endl;
+        kDebug() << "PDFPixmapGeneratorThread: previous textpage not taken" << endl;
 #endif
     d->m_image = d->generator->kpdfOutputDev->takeImage();
     d->m_rects = d->generator->kpdfOutputDev->takeObjectRects();

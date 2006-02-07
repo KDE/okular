@@ -60,7 +60,7 @@ class fontEncoding {
   // The constructor takes the name of an encoding file, such as
   // '8r.enc', locate the file on the hard disk using the 'kpsewhich'
   // command, reads it in and parses it. If the file cannot be
-  // located, opened or parsed, errors are printed using the kdError()
+  // located, opened or parsed, errors are printed using the kError()
   // channel, and the array glyphNameVector will contain empty
   // strings.
   fontEncoding(const QString &encName);

@@ -26,7 +26,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   bool possibleNumberMixUp = false;
 
 #ifdef DEBUG_SOURCESPLITTER
-  kdDebug(kvs::dvi) << "DVI_SourceSplitter: srclink " << srclink << endl;
+  kDebug(kvs::dvi) << "DVI_SourceSplitter: srclink " << srclink << endl;
 #endif
 
   //remove src: if necessary
@@ -46,7 +46,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   linepart = linepart.trimmed();
 
 #ifdef DEBUG_SOURCESPLITTER
-  kdDebug(kvs::dvi) << "DVI_SourceSplitter: filepart " << filepart << " linepart " << linepart << endl;
+  kDebug(kvs::dvi) << "DVI_SourceSplitter: filepart " << filepart << " linepart " << linepart << endl;
 #endif
 
   //test if the file exists
@@ -70,12 +70,12 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
     {
       tempInfo.setFile(linepart.right(index) + tempFileName);
 #ifdef DEBUG_SOURCESPLITTER
-      kdDebug(kvs::dvi) << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
+      kDebug(kvs::dvi) << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
 #endif
       if ( tempInfo.exists() ) { found = true; break;}
       tempInfo.setFile(linepart.right(index) + tempFileName + ".tex");
 #ifdef DEBUG_SOURCESPLITTER
-      kdDebug(kvs::dvi) << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
+      kDebug(kvs::dvi) << "DVI_SourceSplitter: trying " << tempInfo.fileName() << endl;
 #endif
       if ( tempInfo.exists() ) { found = true; break;}
     }
@@ -92,6 +92,6 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   if (!ok) m_line = 0;
 
 #ifdef DEBUG_SOURCESPLITTER
-  kdDebug(kvs::dvi) << "DVI_SourceSplitter: result: file " << m_fileInfo.absoluteFilePath() << " line " << m_line << endl;
+  kDebug(kvs::dvi) << "DVI_SourceSplitter: result: file " << m_fileInfo.absoluteFilePath() << " line " << m_line << endl;
 #endif
 }

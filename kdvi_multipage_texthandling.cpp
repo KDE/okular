@@ -40,7 +40,7 @@
 void KDVIMultiPage::doExportText()
 {
 #ifdef KDVI_MULTIPAGE_DEBUG
-  kdDebug(kvs::dvi) << "KDVIMultiPage::doExportText() called" << endl;
+  kDebug(kvs::dvi) << "KDVIMultiPage::doExportText() called" << endl;
 #endif
 
   // Paranoid safety checks

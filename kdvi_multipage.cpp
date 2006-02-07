@@ -180,7 +180,7 @@ void KDVIMultiPage::preferencesChanged()
   // Call method from parent class
   KMultiPage::preferencesChanged();
 #ifdef  KDVI_MULTIPAGE_DEBUG
-  kdDebug(kvs::dvi) << "preferencesChanged" << endl;
+  kDebug(kvs::dvi) << "preferencesChanged" << endl;
 #endif
 
   bool showPS = Prefs::showPS();
@@ -197,7 +197,7 @@ void KDVIMultiPage::print()
   KPrinter *printer = getPrinter(false);
   // Abort with an error message if no KPrinter could be initialized
   if (printer == 0) {
-    kdError(kvs::dvi) << "KPrinter not available" << endl;
+    kError(kvs::dvi) << "KPrinter not available" << endl;
     return;
   }
 

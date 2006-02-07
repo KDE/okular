@@ -24,7 +24,7 @@
 fontEncoding::fontEncoding(const QString &encName)
 {
 #ifdef DEBUG_FONTENC
-  kdDebug(kvs::dvi) << "fontEncoding( " << encName << " )" << endl;
+  kDebug(kvs::dvi) << "fontEncoding( " << encName << " )" << endl;
 #endif
 
   _isValid = false;
@@ -37,7 +37,7 @@ fontEncoding::fontEncoding(const QString &encName)
                   QIODevice::ReadOnly|QIODevice::Text);
 
   if (!kpsewhich.waitForStarted()) {
-    kdError(kvs::dvi) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
+    kError(kvs::dvi) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
     return;
   }
 
@@ -46,12 +46,12 @@ fontEncoding::fontEncoding(const QString &encName)
 
   const QString encFileName = QString(kpsewhich.readAll()).trimmed();
   if (encFileName.isEmpty()) {
-    kdError(kvs::dvi) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
+    kError(kvs::dvi) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
     return;
   }
 
 #ifdef DEBUG_FONTENC
-  kdDebug(kvs::dvi) << "FileName of the encoding: " << encFileName << endl;
+  kDebug(kvs::dvi) << "FileName of the encoding: " << encFileName << endl;
 #endif
 
   QFile file( encFileName );
@@ -69,7 +69,7 @@ fontEncoding::fontEncoding(const QString &encName)
     // Find the name of the encoding
     encodingFullName = fileContent.section('[', 0, 0).simplified().mid(1);
 #ifdef DEBUG_FONTENC
-    kdDebug(kvs::dvi) << "encodingFullName: " << encodingFullName << endl;
+    kDebug(kvs::dvi) << "encodingFullName: " << encodingFullName << endl;
 #endif
 
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
@@ -79,14 +79,14 @@ fontEncoding::fontEncoding(const QString &encName)
     for ( QStringList::Iterator it = glyphNameList.begin(); (it != glyphNameList.end())&&(i<256); ++it ) {
       glyphNameVector[i] = (*it).simplified();
 #ifdef DEBUG_FONTENC
-      kdDebug(kvs::dvi) << i << ": " << glyphNameVector[i] << endl;
+      kDebug(kvs::dvi) << i << ": " << glyphNameVector[i] << endl;
 #endif
       i++;
     }
     for(; i<256; i++)
       glyphNameVector[i] = ".notdef";
   } else {
-    kdError(kvs::dvi) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
+    kError(kvs::dvi) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
     return;
   }
 

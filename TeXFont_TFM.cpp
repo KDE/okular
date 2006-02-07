@@ -21,12 +21,12 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   : TeXFont(parent)
 {
 #ifdef DEBUG_TFM
-  kdDebug(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( parent=" << parent << " )" << endl;
+  kDebug(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( parent=" << parent << " )" << endl;
 #endif
 
   QFile file( parent->filename );
   if ( !file.open( QIODevice::ReadOnly ) ) {
-    kdError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM(): Could not read TFM file" << endl;
+    kError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM(): Could not read TFM file" << endl;
     return;
   }
   QDataStream stream( &file );
@@ -36,7 +36,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   quint16 lf, lh, bc, ec, nw, nh, nd;
   stream >> lf >> lh >> bc >> ec >> nw >> nh >> nd;
 #ifdef DEBUG_TFM
-  kdDebug(kvs::dvi) << "lf= " << lf << endl
+  kDebug(kvs::dvi) << "lf= " << lf << endl
                 << "lh= " << lh << endl
                 << "bc= " << bc << endl
                 << "ec= " << ec << endl
@@ -45,7 +45,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
                 << "nd= " << nd << endl;
 #endif
   if ((bc > ec) || (ec >= TeXFontDefinition::max_num_of_chars_in_font)) {
-    kdError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid bc and ec entries." << endl;
+    kError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid bc and ec entries." << endl;
     file.close();
     return;
   }
@@ -54,7 +54,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   file.at(24);
   stream >> checksum >> design_size_in_TeX_points.value;
 #ifdef DEBUG_TFM
-  kdDebug(kvs::dvi) << "checksum    = " << checksum << endl
+  kDebug(kvs::dvi) << "checksum    = " << checksum << endl
                 << "design_size = " << design_size_in_TeX_points.toDouble() << " TeX Points" << endl
                 << "            = " << design_size_in_TeX_points.toDouble()*254.0/7227.0 << " cm" << endl;
 #endif
@@ -93,7 +93,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
     quint8 byte;
     stream >> byte;
     if (byte >= nw)
-      kdError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid Char-Info table." << endl;
+      kError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid Char-Info table." << endl;
     else {
       characterWidth_in_units_of_design_size[characterCode] = widthTable_in_units_of_design_size[byte];
       g->dvi_advance_in_units_of_design_size_by_2e20 = widthTable_in_units_of_design_size[byte].value;
@@ -102,7 +102,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
     stream >> byte;
     byte = byte >> 4;
     if (byte >= nh)
-      kdError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid Char-Info table." << endl;
+      kError(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid Char-Info table." << endl;
     else
       characterHeight_in_units_of_design_size[characterCode] = heightTable_in_units_of_design_size[byte];
 
@@ -121,12 +121,12 @@ TeXFont_TFM::~TeXFont_TFM()
 glyph* TeXFont_TFM::getGlyph(quint16 characterCode, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_TFM
-  kdDebug(kvs::dvi) << "TeXFont_TFM::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
+  kDebug(kvs::dvi) << "TeXFont_TFM::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
 #endif
 
   // Paranoia checks
   if (characterCode >= TeXFontDefinition::max_num_of_chars_in_font) {
-    kdError(kvs::dvi) << "TeXFont_TFM::getGlyph(): Argument is too big." << endl;
+    kError(kvs::dvi) << "TeXFont_TFM::getGlyph(): Argument is too big." << endl;
     return glyphtable;
   }
 

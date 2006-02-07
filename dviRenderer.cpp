@@ -69,7 +69,7 @@ dviRenderer::dviRenderer(QWidget *par)
     currentlyDrawnPage(0)
 {
 #ifdef DEBUG_DVIRENDERER
-  kdDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )" << endl;
+  kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )" << endl;
 #endif
 
   connect(&font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
@@ -82,7 +82,7 @@ dviRenderer::dviRenderer(QWidget *par)
 dviRenderer::~dviRenderer()
 {
 #ifdef DEBUG_DVIRENDERER
-  kdDebug(kvs::dvi) << "~dviRenderer" << endl;
+  kDebug(kvs::dvi) << "~dviRenderer" << endl;
 #endif
 
   mutex.lock();
@@ -118,34 +118,34 @@ void dviRenderer::showInfo()
 void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
 {
 #ifdef DEBUG_DVIRENDERER
-  kdDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
+  kDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
 #endif
 
   // Paranoid safety checks
   if (page == 0) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
+    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
     return;
   }
   if (page->getPageNumber() == 0) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
+    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
     return;
   }
 
   mutex.lock();
   if ( dviFile == 0 ) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
+    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
     mutex.unlock();
     return;
   }
   if (page->getPageNumber() > dviFile->total_pages) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber()
+    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber()
                   << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     mutex.unlock();
     return;
   }
   if ( dviFile->dvi_Data() == 0 ) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
+    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     mutex.unlock();
     return;
@@ -271,7 +271,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
 void dviRenderer::embedPostScript()
 {
 #ifdef DEBUG_DVIRENDERER
-  kdDebug(kvs::dvi) << "dviRenderer::embedPostScript()" << endl;
+  kDebug(kvs::dvi) << "dviRenderer::embedPostScript()" << endl;
 #endif
 
   if (!dviFile)
@@ -317,7 +317,7 @@ void dviRenderer::embedPostScript()
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
-  kdDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+  kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
   QTime preScanTimer;
   preScanTimer.start();
 #endif
@@ -346,7 +346,7 @@ void dviRenderer::embedPostScript()
 
 
 #ifdef PERFORMANCE_MEASUREMENT
-  kdDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+  kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
   current_page = currPageSav;
   _isModified = true;
@@ -380,7 +380,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
 bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 {
 #ifdef DEBUG_DVIRENDERER
-  kdDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
+  kDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
 #endif
 
   //QMutexLocker lock(&mutex);
@@ -489,7 +489,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   // PRESCAN STARTS HERE
 #ifdef PERFORMANCE_MEASUREMENT
-  kdDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+  kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
   QTime preScanTimer;
   preScanTimer.start();
 #endif
@@ -537,7 +537,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
 
 #ifdef PERFORMANCE_MEASUREMENT
-  kdDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+  kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
 #endif
   current_page = currPageSav;
   // PRESCAN ENDS HERE
@@ -559,7 +559,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
   mutex.lock();
 
 #ifdef DEBUG_DVIRENDERER
-  kdError(kvs::dvi) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
+  kError(kvs::dvi) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
 
   if (dviFile == 0) {

@@ -21,9 +21,9 @@ quint8 bigEndianByteReader::readUINT8()
   // necessary for virtual fonts, which do not end whith EOP.
   if (command_pointer >= end_pointer) {
 #ifdef DEBUG_ENDIANREADER
-    kdError(kvs::dvi) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
-    kdError(kvs::dvi) << "end_pointer     = " << end_pointer << endl;
-    kdError(kvs::dvi) << "command_pointer = " << command_pointer << endl;
+    kError(kvs::dvi) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
+    kError(kvs::dvi) << "end_pointer     = " << end_pointer << endl;
+    kError(kvs::dvi) << "command_pointer = " << command_pointer << endl;
 #endif
     return EOP;
   }

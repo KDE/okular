@@ -64,7 +64,7 @@ ghostscript_interface::~ghostscript_interface() {
 
 void ghostscript_interface::setPostScript(const PageNumber& page, const QString& PostScript) {
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << "ghostscript_interface::setPostScript( " << page << ", ... )" << endl;
+  kDebug(kvs::dvi) << "ghostscript_interface::setPostScript( " << page << ", ... )" << endl;
 #endif
 
   if (pageList.find(page) == 0) {
@@ -88,7 +88,7 @@ void ghostscript_interface::setIncludePath(const QString &_includePath) {
 
 void ghostscript_interface::setBackgroundColor(const PageNumber& page, const QColor& background_color, bool permanent) {
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << "ghostscript_interface::setBackgroundColor( " << page << ", " << background_color << " )" << endl;
+  kDebug(kvs::dvi) << "ghostscript_interface::setBackgroundColor( " << page << ", " << background_color << " )" << endl;
 #endif
 
   if (pageList.find(page) == 0) {
@@ -110,7 +110,7 @@ void ghostscript_interface::setBackgroundColor(const PageNumber& page, const QCo
 void ghostscript_interface::restoreBackgroundColor(const PageNumber& page)
 {
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << "ghostscript_interface::restoreBackgroundColor( " << page << " )" << endl;
+  kDebug(kvs::dvi) << "ghostscript_interface::restoreBackgroundColor( " << page << " )" << endl;
 #endif
   if (pageList.find(page) == 0)
     return;
@@ -124,7 +124,7 @@ void ghostscript_interface::restoreBackgroundColor(const PageNumber& page)
 
 QColor ghostscript_interface::getBackgroundColor(const PageNumber& page) const {
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << "ghostscript_interface::getBackgroundColor( " << page << " )" << endl;
+  kDebug(kvs::dvi) << "ghostscript_interface::getBackgroundColor( " << page << " )" << endl;
 #endif
 
   if (pageList.find(page) == 0)
@@ -144,11 +144,11 @@ void ghostscript_interface::clear() {
 
 void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification) {
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
+  kDebug(kvs::dvi) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
 #endif
 
   if (knownDevices.isEmpty()) {
-    kdError(kvs::dvi) << "No known devices found" << endl;
+    kError(kvs::dvi) << "No known devices found" << endl;
     return;
   }
 
@@ -233,7 +233,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
           << PSfileName;
 
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << gs_exe + " " + gs_args.join(" ") << endl;
+  kDebug(kvs::dvi) << gs_exe + " " + gs_args.join(" ") << endl;
 #endif
 
   QProcess gs;
@@ -243,7 +243,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   if (!gs.waitForStarted()) {
     // Starting ghostscript did not work.
     // TODO: Issue error message, switch PS support off.
-    kdError(kvs::dvi) << "ghostscript could not be started" << endl;
+    kError(kvs::dvi) << "ghostscript could not be started" << endl;
     return;
   }
 
@@ -256,14 +256,14 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
   // Check that gs has indeed produced a file.
   if (!QFile::exists(filename)) {
-    kdError(kvs::dvi) << "GS did not generate file " << filename
+    kError(kvs::dvi) << "GS did not generate file " << filename
                << ", gs exit code " << gs.exitCode() << endl;
 
     // It didn't. Check if the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
     const QString gs_output = gs.readAll();
     if (gs_output.contains("Unknown device")) {
-      kdDebug(kvs::dvi) << QString("The version of ghostscript installed on this computer does not support "
+      kDebug(kvs::dvi) << QString("The version of ghostscript installed on this computer does not support "
                           "the '%1' device driver.").arg(*gsDevice) << endl;
       knownDevices.remove(gsDevice);
       gsDevice = knownDevices.begin();
@@ -290,7 +290,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
                                         "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
                                         "</p></qt>"));
       else {
-        kdDebug(kvs::dvi) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
+        kDebug(kvs::dvi) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
         // The function calls itself recursively until there are no
         // devices left to try.
         gs_generate_graphics_file(page, filename, magnification);
@@ -305,11 +305,11 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
 void ghostscript_interface::graphics(const PageNumber& page, double dpi, long magnification, QPainter* paint) {
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
+  kDebug(kvs::dvi) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
 #endif
 
   if (paint == 0) {
-    kdError(kvs::dvi) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with paint == 0" << endl;
+    kError(kvs::dvi) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with paint == 0" << endl;
     return;
   }
 
@@ -323,7 +323,7 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
   // No PostScript? Then return immediately.
   if ((info == 0) || (info->PostScriptString->isEmpty())) {
 #ifdef DEBUG_PSGS
-    kdDebug(kvs::dvi) << "No PostScript found. Not drawing anything." << endl;
+    kDebug(kvs::dvi) << "No PostScript found. Not drawing anything." << endl;
 #endif
     return;
   }

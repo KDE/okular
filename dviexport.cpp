@@ -111,7 +111,7 @@ void DVIExport::start(const QString& command,
   process_->start(command, args, QIODevice::ReadOnly);
   if (!process_->waitForStarted(-1))
 #endif
-    kdError(kvs::dvi) << command << " failed to start" << endl;
+    kError(kvs::dvi) << command << " failed to start" << endl;
   else
     started_ = true;
 }

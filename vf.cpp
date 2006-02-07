@@ -68,7 +68,7 @@ extern void oops(const QString& message);
 void TeXFontDefinition::read_VF_index()
 {
 #ifdef DEBUG_FONTS
-  kdDebug(kvs::dvi) << "font::read_VF_index()" << endl;
+  kDebug(kvs::dvi) << "font::read_VF_index()" << endl;
 #endif
   FILE *VF_file = file;
   unsigned char        cmnd;
@@ -78,14 +78,14 @@ void TeXFontDefinition::read_VF_index()
   flags      |= FONT_VIRTUAL;
   set_char_p  = &dviRenderer::set_vf_char;
 #ifdef DEBUG_FONTS
-  kdDebug(kvs::dvi) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename << endl;
+  kDebug(kvs::dvi) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename << endl;
 #endif
   // Read preamble.
   fseek(VF_file, (long) one(VF_file), 1);        /* skip comment */
   quint32 const file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
-    kdError(kvs::dvi) << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum <<
+    kError(kvs::dvi) << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum <<
       "u)" << i18n(" in font file ") << filename << endl;
   (void) four(VF_file);                /* skip design size */
 
@@ -103,7 +103,7 @@ void TeXFontDefinition::read_VF_index()
     fontname[len] = '\0';
 
 #ifdef DEBUG_FONTS
-    kdDebug(kvs::dvi) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+    kDebug(kvs::dvi) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
 #endif
 
     // According to Knuth's documentation found in the web source code
@@ -131,7 +131,7 @@ void TeXFontDefinition::read_VF_index()
   // Prepare macro array.
   macrotable = new macro[max_num_of_chars_in_font];
   if (macrotable == 0) {
-    kdError(kvs::dvi) << i18n("Could not allocate memory for a macro table.") << endl;
+    kError(kvs::dvi) << i18n("Could not allocate memory for a macro table.") << endl;
     exit(0);
   }
 
@@ -148,7 +148,7 @@ void TeXFontDefinition::read_VF_index()
       cc = four(VF_file);
       width = four(VF_file);
       if (cc >= 256) {
-        kdError(kvs::dvi) << i18n("Virtual character ") << cc << i18n(" in font ")
+        kError(kvs::dvi) << i18n("Virtual character ") << cc << i18n(" in font ")
                   << fontname << i18n(" ignored.") << endl;
         fseek(VF_file, (long) len, 1);
         continue;

@@ -41,7 +41,7 @@ DVISourceEditor::DVISourceEditor(dviRenderer& parent,
     dynamic_cast<const RenderedDviPagePixmap*> parent->currentlyDrawnPage;
   if (currentDVIPage)
   {
-    kdDebug(kvs::dvi) << "Source hyperlink to " << currentDVIPage->sourceHyperLinkList[i].linkText << endl;
+    kDebug(kvs::dvi) << "Source hyperlink to " << currentDVIPage->sourceHyperLinkList[i].linkText << endl;
   }
 #endif
 
@@ -76,13 +76,13 @@ DVISourceEditor::DVISourceEditor(dviRenderer& parent,
   command = command.replace( "%l", QString::number(splitter.line()) ).replace( "%f", KProcess::quote(TeXfile) );
 
 #ifdef DEBUG_SPECIAL
-  kdDebug(kvs::dvi) << "Calling program: " << command << endl;
+  kDebug(kvs::dvi) << "Calling program: " << command << endl;
 #endif
 
   // Set up a shell process with the editor command.
   process_ = new KShellProcess;
   if (process_ == 0) {
-    kdError(kvs::dvi) << "Could not allocate ShellProcess for the editor command." << endl;
+    kError(kvs::dvi) << "Could not allocate ShellProcess for the editor command." << endl;
     return;
   }
   connect(process_, SIGNAL(receivedStderr(KProcess *, char *, int)), this, SLOT(output_receiver(KProcess *, char *, int)));
@@ -104,7 +104,7 @@ DVISourceEditor::DVISourceEditor(dviRenderer& parent,
   *process_ << command;
   process_->closeStdin();
   if (!process_->start(KProcess::NotifyOnExit, KProcess::AllOutput))
-    kdError(kvs::dvi) << "Editor failed to start" << endl;
+    kError(kvs::dvi) << "Editor failed to start" << endl;
   else
     started_ = true;
 }

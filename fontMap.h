@@ -87,7 +87,7 @@ class fontMap {
       and read its contents. If the file 'ps2pk.map' cannot be found
       using the kpsewhich command, or if it cannot be read, or is
       (partially) in an improper format, an error message is printed
-      to stderr using the kdDebug() stream. */
+      to stderr using the kDebug() stream. */
   fontMap( void );
 
   /** find the name of a font file (e.g. 'ubkd8a.pfb') from a TeX font

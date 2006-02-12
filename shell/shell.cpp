@@ -130,7 +130,7 @@ void Shell::readSettings()
     m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
 
     KGlobal::config()->setDesktopGroup();
-    bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
+    bool fullScreen = KGlobal::config()->readEntry( "FullScreen", false );
     setFullScreen( fullScreen );
 }
 
@@ -176,7 +176,7 @@ void Shell::readProperties(KConfig* config)
   if(m_part)
   {
     KUrl url ( config->readPathEntry( "URL" ) );
-    if ( url.isValid() ) emit restoreDocument(url, config->readNumEntry( "Page", 1 ));
+    if ( url.isValid() ) emit restoreDocument(url, config->readEntry( "Page", 1 ));
   }
 }
 

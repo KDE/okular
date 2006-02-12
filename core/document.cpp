@@ -242,7 +242,7 @@ void KPDFDocument::closeDocument()
     delete generator;
     generator = 0;
 
-    d->url = KURL();
+    d->url = KUrl();
 
     // remove requests left in queue
     QLinkedList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();

@@ -170,6 +170,7 @@ private:
 	KToggleAction* m_showMenuBarAction;
 	KToggleAction* m_showLeftPanel;
 	KToggleAction* m_showFullScreenAction;
+
 	bool m_actionsSearched;
 	bool m_searchStarted;
 	BrowserExtension *m_bExtension;

@@ -85,6 +85,9 @@ class Generator : public QObject
         // rotation
         virtual bool supportsRotation() { return false; };
         virtual void setOrientation(QValueVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/) { ; };
+        virtual bool supportsPaperSizes () { return false; }
+        virtual QStringList paperSizes ()  { return QStringList(); }
+        virtual void setPaperSize (QValueVector<KPDFPage*> & /*pagesVector*/, int /*newsize*/) { ; }
 
         // internal search and gettext
         virtual RegularAreaRect * findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,

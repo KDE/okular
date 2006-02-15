@@ -14,6 +14,7 @@
 #include <qobject.h>
 #include <qvaluevector.h>
 #include <qstring.h>
+#include <qstringlist.h>
 #include <qdom.h>
 #include <qdict.h>
 #include <kmimetype.h>
@@ -86,6 +87,8 @@ class KPDFDocument : public QObject
         bool isAllowed( int /*Document::Permisison(s)*/ ) const;
         bool supportsSearching() const;
         bool supportsRotation()  const;
+        bool supportsPaperSizes() const;
+        QStringList paperSizes() const;
 // might be useful later
 //	bool hasFonts() const;
         bool historyAtBegin() const;
@@ -122,6 +125,7 @@ class KPDFDocument : public QObject
 
     public slots:
         void slotOrientation( int orientation );
+        void slotPaperSizes( int );
 
     signals:
         void close();

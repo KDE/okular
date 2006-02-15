@@ -24,7 +24,7 @@
 
 // temp includes
 #include <sys/time.h>
-
+class TextSelection;
 
 /** class KPDFPage **/
 
@@ -73,6 +73,13 @@ bool KPDFPage::hasSearchPage() const
 bool KPDFPage::hasBookmark() const
 {
     return m_bookmarked;
+}
+
+RegularAreaRect * KPDFPage::getTextArea ( TextSelection * sel ) const
+{
+    if (m_text)
+	return m_text->getTextArea (sel);
+    return 0;
 }
 
 bool KPDFPage::hasObjectRect( double x, double y ) const

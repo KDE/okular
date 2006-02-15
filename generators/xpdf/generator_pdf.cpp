@@ -15,6 +15,7 @@
 #include <qapplication.h>
 #include <qpaintdevicemetrics.h>
 #include <qregexp.h>
+#include <qpoint.h>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kpassdlg.h>
@@ -204,16 +205,19 @@ void PDFGenerator::loadPages(QValueVector<KPDFPage*> &pagesVector, int rotation,
 {
     // TODO XPDF 3.01 check
     //     KPDFTextDev td;
-    int count=pagesVector.count();
+    int count=pagesVector.count(),w=0,h=0;
     for ( int i = 0; i < count ; i++ )
     {
         // get xpdf page
         Page * p = pdfdoc->getCatalog()->getPage( i + 1 );
-
+        w=pdfdoc->getPageCropWidth(i+1);
+        h=pdfdoc->getPageCropHeight(i+1);
+        if (rotation==-1)
+          rotation=pdfdoc->getPageRotate(i+1)/90;
+        if (rotation%2==1)
+          qSwap(w,h);
         // init a kpdfpage, add transition and annotations informations
-        KPDFPage * page = new KPDFPage( i, pdfdoc->getPageCropWidth(i+1),
-                                        pdfdoc->getPageCropHeight(i+1),
-                                        (rotation==-1) ? pdfdoc->getPageRotate(i+1) : 0 );
+        KPDFPage * page = new KPDFPage( i, w, h, rotation );
         addTransition( p, page );
         if ( true ) //TODO real check
             addAnnotations( p, page );
@@ -239,11 +243,11 @@ TextPage * PDFGenerator::fastTextPage (KPDFPage * page)
     // fetch ourselves a textpage
     TextOutputDev td(NULL, gTrue, gFalse, gFalse);
     docLock.lock();
-    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), false, true, false );
+    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation()*90, false, true, false );
     // ..and attach it to the page
     TextPage *p=td.takeText();
     if (prefersInternalSearching())
-        page->setSearchPage( abstractTextPage(p, page->height(), page->width()) );
+        page->setSearchPage( abstractTextPage(p, page->height(), page->width(),page->rotation()) );
     docLock.unlock();
     return p;
 }
@@ -252,15 +256,11 @@ QString * PDFGenerator::getText( const RegularAreaRect * area, KPDFPage * page  
 {
     TextPage* textPage=fastTextPage (page);
 
-    int left,right,bottom,top;
+//     int left,right,bottom,top;
     QString * text = new QString;
     // when using internal stuff we just have 
-    NormalizedRect * rect = area->first();
-    left = (int)( rect->left * page->width() );
-    top = (int)( rect->top * page->height() );
-    right = (int)( rect->right * page->width() );
-    bottom = (int)( rect->bottom * page->height() );
-    *text= textPage->getText( left, top, right, bottom )->getCString();
+    QRect rect = area->first()->geometry(page->width(),page->height());
+    *text= textPage->getText( rect.left(), rect.top(), rect.right(), rect.bottom() )->getCString();
     return text;
 }
 
@@ -496,7 +496,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     // note: thread safety is set on 'false' for the GUI (this) thread
      kpdfOutputDev->setParams( request->width, request->height, genObjectRects, genObjectRects, false );
     // TODO: check if this should not get a rotation parameter
-     pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, page->rotation(), 
+     pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, page->rotation()*90, 
         false, true, genObjectRects );
 
     // 2. Take data from outputdev and attach it to the Page
@@ -510,7 +510,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     if ( genTextPage )
     {
         TextOutputDev td(NULL, gTrue, gFalse, gFalse);
-        page->setSearchPage( abstractTextPage(td.takeText(), page->height(), page->width()) );
+        page->setSearchPage( abstractTextPage(td.takeText(), page->height(), page->width(),page->rotation()) );
     }
     // update ready state
     ready = true;
@@ -529,9 +529,9 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
     // build a TextPage...
     TextOutputDev td(NULL, gTrue, gFalse, gFalse);
     docLock.lock();
-    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), false, true, false );
+    pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation()*90, false, true, false );
     // ..and attach it to the page
-    page->setSearchPage( abstractTextPage(td.takeText(), page->height(), page->width()) );
+    page->setSearchPage( abstractTextPage(td.takeText(), page->height(), page->width(),page->rotation()) );
     docLock.unlock();
 }
 
@@ -672,43 +672,36 @@ static QString unicodeToQString(const Unicode* u, int len) {
 }
 
 inline void append (KPDFTextPage* ktp,
-    QString s, double l, double b, double r, double t, double rot)
+    QString s, double l, double b, double r, double t)
 {
+//       kdWarning() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")" << endl;
                 ktp->append( s ,
                     new NormalizedRect(
                     l,
                     b,
                     r,
                     t
-                    ),
-                    static_cast<int>(rot));
+                    ));
 }
 
 
-KPDFTextPage * PDFGenerator::abstractTextPage(TextPage *tp, double height, double width)
-{
+KPDFTextPage * PDFGenerator::abstractTextPage(TextPage *tp, double height, double width,int rot)
+{    
     KPDFTextPage* ktp=new KPDFTextPage;
     TextWordList *list = tp->makeWordList(true);
     TextWord * word, *next; 
     int wordCount=list->getLength();
+    kdWarning() << "getting text page in generator pdf - rotation: " << rot << endl;
     int charCount=0;
-    int i,j,rot;
-    QString s,t;
+    int i,j;
+    QString s;
     NormalizedRect * wordRect = new NormalizedRect;
     for (i=0;i<wordCount;i++)
     {
         word=list->get(i);
         word->getBBox(&wordRect->left,&wordRect->bottom,&wordRect->right,&wordRect->top);
         charCount=word->getLength();
-        rot=word->getRotation();
         next=word->nextWord();
-
-        if ( word->hasSpaceAfter() == gTrue && next )
-            t=" ";
-        else if ( !next )
-            t="\n";
-        else
-            t="";
         switch (rot)
         {
             case 0:
@@ -717,15 +710,23 @@ KPDFTextPage * PDFGenerator::abstractTextPage(TextPage *tp, double height, doubl
             for (j=0;j<charCount;j++)
             {
                 s=unicodeToQString( word->getChar(j),1);
-                append(ktp, s+t,
+                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
                     // this letters boundary
                     word->getEdge(j)/width,
                     wordRect->bottom/height,
                     // next letters boundary
                     word->getEdge(j+1)/width,
-                    wordRect->top/height,
-                    rot);
+                    wordRect->top/height);
             }
+            
+            if ( word->hasSpaceAfter() == gTrue && next )
+              append(ktp, " ",
+                    // this letters boundary
+                     word->getEdge(charCount)/width,
+                     wordRect->bottom/height,
+                    // next letters boundary
+                     next->getEdge(0)/width,
+                     wordRect->top/height);
             break;
 
             case 1:
@@ -734,13 +735,21 @@ KPDFTextPage * PDFGenerator::abstractTextPage(TextPage *tp, double height, doubl
             for (j=0;j<charCount;j++)
             {
                 s=unicodeToQString( word->getChar(j),1);
-                append(ktp, s+t,
+                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
                     wordRect->left/width,
                     word->getEdge(j)/height,
                     wordRect->right/width,
-                    word->getEdge(j+1)/height,
-                    rot);
+                    word->getEdge(j+1)/height);
             }
+            
+            if ( word->hasSpaceAfter() == gTrue && next )
+              append(ktp, " ",
+                    // this letters boundary
+                     wordRect->left/width,
+                     word->getEdge(charCount)/height,
+                    // next letters boundary
+                     wordRect->right/width,
+                     next->getEdge(0)/height);
             break;
 
             case 2:
@@ -748,27 +757,44 @@ KPDFTextPage * PDFGenerator::abstractTextPage(TextPage *tp, double height, doubl
             for (j=0;j<charCount;j++)
             {
                 s=unicodeToQString( word->getChar(j),1);
-                append(ktp, s+t,
+                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
                     word->getEdge(j+1)/width,
                     wordRect->bottom/height,
                     word->getEdge(j)/width,
-                    wordRect->top/height,
-                    rot);
+                    wordRect->top/height);
 
             }
+            
+            if ( word->hasSpaceAfter() == gTrue && next )
+              append(ktp, " ",
+                    // this letters boundary
+                     next->getEdge(0)/width,
+                     wordRect->bottom/height,
+                    // next letters boundary
+                     word->getEdge(charCount)/width,
+                     wordRect->top/height);
+           
             break;
 
             case 3:
             for (j=0;j<charCount;j++)
             {
                 s=unicodeToQString( word->getChar(j),1);
-                append(ktp, s+t,
+                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
                     wordRect->left/width,
                     word->getEdge(j+1)/height,
                     wordRect->right/width,
-                    word->getEdge(j)/height,
-                    rot);
+                    word->getEdge(j)/height);
             }
+            
+            if ( word->hasSpaceAfter() == gTrue && next )
+              append(ktp, " ",
+                    // this letters boundary
+                     wordRect->left/width,
+                     next->getEdge(0)/height,
+                    // next letters boundary
+                     wordRect->right/width,
+                     word->getEdge(charCount)/height);
             break;
         }
     }
@@ -2084,7 +2110,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     delete outImage;
     if ( outTextPage )
         request->page->setSearchPage( abstractTextPage( outTextPage , 
-            request->page->height(), request->page->width()));
+            request->page->height(), request->page->width(),request->page->rotation()));
     if ( !outRects.isEmpty() )
         request->page->setObjectRects( outRects );
 
@@ -2229,7 +2255,7 @@ void PDFPixmapGeneratorThread::run()
     d->generator->kpdfOutputDev->setParams( width, height, 
                                             genObjectRects, genObjectRects, TRUE /*thread safety*/ );
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
-                                       fakeDpiX, fakeDpiY, d->currentRequest->rotation , false,true, genObjectRects );
+                                       fakeDpiX, fakeDpiY, d->currentRequest->rotation*90 , false,true, genObjectRects );
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
@@ -2245,7 +2271,7 @@ void PDFPixmapGeneratorThread::run()
     if ( genTextPage )
     {
         TextOutputDev td(NULL, gTrue, gFalse, gFalse);
-        d->generator->pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation(), false, true, false );
+        d->generator->pdfdoc->displayPage( &td, page->number()+1, 72, 72, page->rotation()*90, false, true, false );
         // ..and attach it to the page
         d->m_textPage = td.takeText();
     }

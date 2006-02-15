@@ -21,7 +21,7 @@ class QDomDocument;
 class KPDFPageTransition;
 class Annotation;
 class KPDFTextPage;
-
+class TextSelection;
 // didnt work with forward declarations
 #include "area.h"
 #include "textpage.h"
@@ -33,6 +33,7 @@ class HighlightRect;
 class HighlightAreaRect;
 class ObjectRect;
 */
+
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -68,6 +69,7 @@ class KPDFPage
 
         RegularAreaRect * findText( const QString & text, SearchDir dir, bool strictCase, const RegularAreaRect * lastRect=0) const;
         QString * getText( const RegularAreaRect * rect ) const;
+	RegularAreaRect * getTextArea ( TextSelection * ) const;
 //	const ObjectRect * getObjectRect( double x, double y ) const;
         const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y ) const;
         //const Annotation * getAnnotation( double x, double y ) const;

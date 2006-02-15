@@ -184,7 +184,7 @@ bool GSInterpreterCMD::stop(bool async)
     return true;
 }
 
-bool GSInterpreterCMD::start()
+bool GSInterpreterCMD::startInterpreter()
 {
     kdDebug(4655) << "start()" << endl;
     if ( m_process && m_process->isRunning() )
@@ -335,6 +335,7 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
     }
     // the pixmap to which the generated image will be copied
     m_pixmap = new QPixmap (m_width, m_height);
+    m_pixmap -> fill();
 
     m_info.pos=pos;
     m_info.sync=true;
@@ -389,12 +390,17 @@ void GSInterpreterCMD::run()
     }
 }
 
+#include <qdialog.h>
+#include <qpainter.h>
+
 void GSInterpreterCMD::customEvent( QCustomEvent * e )
 {
     if (e->type() == GS_DATAREADY_ID )
     {
         kdDebug(4655) << "emitting signal" << endl;
-        emit Finished(m_pixmap);
+        QPixmap *pix=takePixmap();
+  
+        emit Finished(pix);
     }
 }
 

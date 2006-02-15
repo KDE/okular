@@ -14,6 +14,7 @@
 #include <qvaluelist.h>
 #include <qstringlist.h>
 #include "area.h"
+class TextSelection;
 
 /*! @enum SearchDir
  *  The enum holding the direction of searching.
@@ -52,8 +53,7 @@ struct KPDFTextEntity
     // 
     QString txt;
     NormalizedRect* area;
-    int rotation;
-    KPDFTextEntity(QString text, NormalizedRect* ar, int rot) : txt(text), rotation(rot)
+    KPDFTextEntity(QString text, NormalizedRect* ar) : txt(text) 
         { area=ar; };
     ~KPDFTextEntity() { delete area; };
 };
@@ -63,15 +63,18 @@ class KPDFTextPage {
     RegularAreaRect* findText(const QString &query, SearchDir & direct, 
         const bool &strictCase, const RegularAreaRect *area);
     QString * getText(const RegularAreaRect *rect);
+    RegularAreaRect * getTextArea ( TextSelection* ) const;
     KPDFTextPage(QValueList<KPDFTextEntity*> words) : m_words(words) {};
     KPDFTextPage() : m_words() {};
-    void append(QString txt, NormalizedRect*  area, int rot) 
-        { m_words.append(new KPDFTextEntity(txt,area,rot) ); };
+    void append(QString txt, NormalizedRect*  area) 
+        { m_words.append(new KPDFTextEntity(txt,area) ); };
     ~KPDFTextPage();
   private:
     RegularAreaRect * findTextInternal(const QString &query, bool forward,
         bool strictCase, const QValueList<KPDFTextEntity*>::Iterator &start, const QValueList<KPDFTextEntity*>::Iterator &end);
     QValueList<KPDFTextEntity*>  m_words;
   };
+
+
 
 #endif 

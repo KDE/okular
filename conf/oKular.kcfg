@@ -184,6 +184,11 @@
    <min>1</min>
    <max>8</max>
   </entry>
+  <entry key="ViewRows" type="UInt" >
+   <default>1</default>
+   <min>1</min>
+   <max>5</max>
+  </entry>
   <entry key="ViewContinuous" type="Bool" >
    <default>true</default>
   </entry>

@@ -6,6 +6,6 @@ Comment=Fax backend for oKular
 ServiceTypes=oKular/Generator
 MimeType=image/fax-g3;image/tiff;
 X-KDE-Library=libokularGenerator_fax.la
-X-KDE-Priority=1
+X-KDE-Priority=4
 X-KDE-oKularAPIVersion=1
 X-KDE-oKularHasInternalSettings=false

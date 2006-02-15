@@ -115,7 +115,7 @@ class PDFGenerator : public Generator
         // fetch the transition information and add it to the page
         void addTransition( Page * xpdfPage, KPDFPage * page );
         
-        static KPDFTextPage * abstractTextPage(TextPage *tp, double height, double width);
+        static KPDFTextPage * abstractTextPage(TextPage *tp, double height, double width, int rot);
         TextPage * fastTextPage (KPDFPage * page);
 
         // (async related) receive data from the generator thread

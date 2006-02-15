@@ -8,6 +8,7 @@
  ***************************************************************************/
 #include "textpage.h"
 #include "area.h"
+#include "misc.h"
 #include <kdebug.h>
 
 KPDFTextPage::~KPDFTextPage()
@@ -19,6 +20,122 @@ KPDFTextPage::~KPDFTextPage()
     }
 }
 
+RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
+{
+/**
+  It works like this:
+  There are two cursors, we need to select all the text between them. The coordinates are normalised, leftTop is (0,0)
+  rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those 
+  points, if not we search for the first that is to the right to it in the same baseline, if none found, then we search
+  for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both 
+  of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a 
+  1. (rx,ry)x(1,ty)
+  2. (0,ty)x(1,uy)
+  3. (0,uy)x(vx,vy)
+
+  To find the closest rectangle to cursor (cx,cy) we search for a rectangle that either contains the cursor
+  or that has a left border >= cx and bottom border >= cy. 
+*/
+	RegularAreaRect * ret= new RegularAreaRect;
+	int it=-1,itB=-1,itE=-1;
+//         if (sel->itB==-1)
+          
+        // ending cursor is higher then start cursor, we need to find positions in reverse
+        NormalizedRect *tmp=0,*start=0,*end=0;
+        const NormalizedPoint * startC=sel->start();
+        const NormalizedPoint * endC=sel->end();
+        if (sel->dir() == 1 || (sel->itB()==-1 && sel->dir()==0))
+        {
+          kdWarning() << "running first loop\n";
+          for (it=0;it<m_words.count();it++)
+          {
+              tmp=m_words[it]->area;
+              if (tmp->contains(startC->x,startC->y) 
+                  || ( tmp->top <= startC->y && tmp->bottom >= startC->y && tmp->left >= startC->x )
+                  || ( tmp->top >= startC->y))
+              {
+                  /// we have found the (rx,ry)x(tx,ty)   
+                  itB=it;
+                  kdWarning() << "start is " << itB << " count is " << m_words.count() << endl;
+                  break;
+              }
+  
+          }
+          sel->itB(itB);
+        }
+        itB=sel->itB();
+        kdWarning() << "direction is " << sel->dir() << endl;
+        kdWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
+        if (sel->dir() == 0 || (sel->itE() == -1 && sel->dir()==1))
+        {
+          kdWarning() << "running second loop\n";
+          for (it=m_words.count()-1; it>=itB;it--)
+          {
+              tmp=m_words[it]->area;
+              if (tmp->contains(endC->x,endC->y) 
+                  || ( tmp->top <= endC->y && tmp->bottom >= endC->y && tmp->right <= endC->x )
+                  || ( tmp->bottom <= endC->y))
+              {
+                  /// we have found the (ux,uy)x(vx,vy)   
+                  itE=it;
+                  kdWarning() << "ending is " << itE << " count is " << m_words.count() << endl;
+                  kdWarning () << "conditions " << tmp->contains(endC->x,endC->y) << " " 
+                    << ( tmp->top <= endC->y && tmp->bottom >= endC->y && tmp->right <= endC->x ) << " " <<
+                    ( tmp->top >= endC->y) << endl;
+
+                  break;
+              }
+          }
+          sel->itE(itE);
+        }
+        kdWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
+
+        if (sel->itB()!=-1 && sel->itE()!=-1)
+        {
+          start=m_words[sel->itB()]->area;
+          end=m_words[sel->itE()]->area;
+
+          NormalizedRect first,second,third;/*
+          first.right=1;
+          /// if (rx,ry)x(1,ty) intersects the end cursor, there is only one line
+          bool sameBaseline=end->intersects(first);
+          kdWarning() << "sameBaseline : " << sameBaseline << endl;
+          if (sameBaseline)
+          {
+              first=*start;
+              first.right=end->right;
+              first.bottom=end->bottom;
+              for (it=QMIN(sel->itB(),sel->itE()); it<=QMAX(sel->itB(),sel->itE());it++)
+              {
+                tmp=m_words[it]->area;
+                if (tmp->intersects(&first))
+                  ret->append(tmp);
+              }
+          }
+          else*/
+          /// finding out if there are more then one baseline between them is a hard and discussable task
+          /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
+          /// areas, if more than one -> we have a three or over line selection
+//           {
+            first=*start;
+            second.top=start->bottom;
+            first.right=second.right=1;
+            third=*end;
+            third.left=second.left=0;
+            second.bottom=end->top;
+            for (it=QMIN(sel->itB(),sel->itE()); it<=QMAX(sel->itB(),sel->itE());it++)
+            {
+                tmp=m_words[it]->area;
+                if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
+                  ret->append(tmp);
+            }
+
+//           }
+        }
+
+        ret->simplify();
+	return ret;
+}
 
 
 RegularAreaRect* KPDFTextPage::findText(const QString &query, SearchDir & direct, 
@@ -173,36 +290,13 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     queryLeft-=min;
             }
         }
-        if (haveMatch && queryLeft==0 && j==query.length())
+
+	if (haveMatch && queryLeft==0 && j==query.length())
         {
-//            RegularAreaRect::ConstIterator i=ret->begin(), end=ret->end;
-            int end=ret->count(),i=0,x=0;
-            QValueList <NormalizedRect*> m_remove;
-            for (;i<end;i++)
-            {
-                if ( i < (end-1) )
-                {
-                    if ( (*ret)[x]->intersects( (*ret)[i+1] ) )
-                    {
-                        (*ret)[x]->left=(QMIN((*ret)[x]->left,(*ret)[i+1]->left));
-                        (*ret)[x]->top=(QMIN((*ret)[x]->top,(*ret)[i+1]->top));
-                        (*ret)[x]->bottom=(QMAX((*ret)[x]->bottom,(*ret)[i+1]->bottom));
-                        (*ret)[x]->right=(QMAX((*ret)[x]->right,(*ret)[i+1]->right));
-                        m_remove.append( (*ret)[i+1] );
-                    }
-                    else
-                    {
-                        x=i;
-                   }
-                }
-            }
-            while (!m_remove.isEmpty())
-            {
-                ret->remove( m_remove.last() );
-                m_remove.pop_back();
-            }
+            ret->simplify();
             return ret;
         }
+
 	}
     return 0;
 }
@@ -220,6 +314,7 @@ QString * KPDFTextPage::getText(const RegularAreaRect *area)
         // provide the string FIXME?: newline handling
         if (area->intersects((*it)->area))
         {
+//           kdDebug()<< "[" << (*it)->area->left << "," << (*it)->area->top << "]x["<< (*it)->area->right << "," << (*it)->area->bottom << "]\n";
             *ret += ((*it)->txt);
             last=*it;
         }

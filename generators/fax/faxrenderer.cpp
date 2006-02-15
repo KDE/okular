@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <qfileinfo.h>
 #include <qpainter.h>
+#include <qpaintdevice.h>
 
 #include "faxrenderer.h"
 #include "core/page.h"
@@ -33,7 +34,7 @@ KPDF_EXPORT_PLUGIN(FaxRenderer)
 FaxRenderer::FaxRenderer(KPDFDocument * doc) 
     :   Generator( doc )
 {
-    ;
+    kdWarning() << "fax generator has landed" <<endl;
 }
 
 void FaxRenderer::generatePixmap( PixmapRequest * request )
@@ -49,9 +50,10 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
 
     // Wait for all access to this documentRenderer to finish
 
-    QPixmap* pix = new QPixmap();
+    QPixmap* pix = new QPixmap(request->width,request->height);
+    pix->fill();
     QPainter p(pix);
-	QImage img = fax.page(request->pageNumber-1);
+    QImage img = fax.page(request->pageNumber).smoothScale(request->width,request->height);
     p.drawImage( 0,0, img, 0,0,img.width(),img.height());
 /*
   SimplePageSize psize = pageSizes[page->getPageNumber() - 1];
@@ -94,12 +96,12 @@ bool FaxRenderer::loadDocument( const QString & fileName, QValueVector< KPDFPage
 #endif
 
   // Wait for all access to this documentRenderer to finish
-  mutex.lock();
+//   mutex.lock();
 
   // Now we assume that the file is fine and load the file into the
   // fax member. We abort on error and give an error message.
   bool ok = fax.loadImage(fileName);
-
+  kdWarning(1000) << "fax " << fileName << " loaded ok: " << ok <<endl;
   // It can happen that fax.loadImage() returns with 'ok == true', but
   // still the file could NOT be loaded. This happens, e.g. for TIFF
   // file that do NOT contain FAX, but other image formats. We handle
@@ -119,7 +121,7 @@ bool FaxRenderer::loadDocument( const QString & fileName, QValueVector< KPDFPage
         temp=i18n("Error while opening file: %1.").arg(fax.errorString());
         emit error (temp,-1);
     }
-    mutex.unlock();
+//     mutex.unlock();
     return false;
   }
 
@@ -131,8 +133,7 @@ bool FaxRenderer::loadDocument( const QString & fileName, QValueVector< KPDFPage
     {
       QSize pageSize = fax.page_size(pg);
       // how about rotation?
-      pagesVector[pg] = new KPDFPage(pg, pageSize.width(), pageSize.height(),0);
-/*
+
       QPoint dpi = fax.page_dpi(pg);
       double dpix = dpi.x();
       double dpiy = dpi.y();
@@ -141,14 +142,12 @@ bool FaxRenderer::loadDocument( const QString & fileName, QValueVector< KPDFPage
         kdError() << "File invalid resolutions, dpi x = " << dpix << ", dpi y = "  << dpiy << ". This information will be ignored and 75 DPI assumed." << endl;
         dpix = dpiy = 75.0;
       }
-
-      w.setLength_in_inch(pageSize.width() / dpix);
-      h.setLength_in_inch(pageSize.height() / dpiy);
-      pageSizes[pg].setPageSize(w, h);*/
+      pagesVector[pg] = new KPDFPage(pg, QPaintDevice::x11AppDpiX () * pageSize.width() / dpix, 
+        QPaintDevice::x11AppDpiX () * pageSize.height()/dpiy,0);
   }
 
   // the return value 'true' indicates that this operation was not successful.
-  mutex.unlock();
+//   mutex.unlock();
   return true;
 }
 

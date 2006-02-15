@@ -25,7 +25,7 @@
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
-
+// #include <qdialog.h>
 
 GSInterpreterLib *interpreter;
 int mem;
@@ -35,12 +35,17 @@ FILE * f;
 
 void PixHandler::slotPixmap(const QImage* img)
 {
-    QPixmap *pix=new QPixmap(img->size(), img->depth());
-    kdDebug() << "Handles: " << pix->handle() << " " << pData.handle <<endl;
-    QPainter p;
-    p.begin(pix);
-    p.drawImage(0,0,*img, 0,0,img->width(),img->height());
-    p.end();
+    QPixmap *pix=new QPixmap();
+    kdWarning() << "img size/depth " << img->size() << "/" <<img->depth() << endl;
+    bool done=pix->convertFromImage(*img);
+    kdWarning () << "Conversion from qimage " << done << endl;
+//         QDialog t;
+//         t.resize(pix->width(),pix->height());
+//         t.setBackgroundPixmap(*pix);
+//         t.update();
+//         t.exec();
+    
+              
     XCopyArea
         (qt_xdisplay(),
         pix->handle(),
@@ -62,7 +67,7 @@ void process()
 {
 
     read ( mem, &pData, sizeof(pData) );
-    if ( !interpreter->running() )
+    if ( ! ( interpreter->running() ) )
         interpreter->start(false);
 
 //     kdDebug() << "Processing: " <<  pData.sync << endl;
@@ -76,6 +81,7 @@ void process()
 
 int main (int argc, char* argv[])
 {
+    KApplication app(argc,argv,QCString("kpdflibgsasyncgenerator"));
     // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
 
     for (int i=0;i<argc;i++)
@@ -89,10 +95,12 @@ int main (int argc, char* argv[])
     interpreter->setSize ( QString(argv[7]).toInt(), QString(argv[8]).toInt() );
     interpreter->setPlatformFonts ( QString(argv[9]).toInt()  !=0 );
     interpreter->setAABits(QString(argv[10]).toInt(), QString(argv[11]).toInt() );
-    KApplication app(argc,argv,QCString("kpdflibgsasyncgenerator"));
+    interpreter->setProgressive(false);
+    interpreter->start(false);
+    
     PixHandler pxHandler;
 
-    QObject::connect(interpreter,SIGNAL(Finished(const QImage* img)),&pxHandler,SLOT(slotPixmap(const QImage* img)));
+    QObject::connect(interpreter,SIGNAL(Finished(const QImage* )),&pxHandler,SLOT(slotPixmap(const QImage* )));
 
     int request;
     anwser = open( argv[3] , O_RDWR );

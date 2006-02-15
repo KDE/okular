@@ -44,7 +44,7 @@ class GSInterpreterCMD : public QObject , public QThread
         GSInterpreterCMD( const QString & fileName);
         ~GSInterpreterCMD();
         QPixmap* takePixmap();
-        bool start();
+        bool startInterpreter();
         bool stop(bool async=true);
         bool ready() { return !interpreterLock.locked() ; } ;
         bool running ();

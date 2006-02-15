@@ -11,6 +11,7 @@
 #define _KPDF_AREA_H_
 #include <qvaluelist.h>
 #include <qcolor.h>
+#include <kdebug.h>
 class QRect;
 class KPDFLink;
 
@@ -44,8 +45,11 @@ class NormalizedRect
         bool intersects( double l, double t, double r, double b ) const;
         bool intersects( const NormalizedRect * r ) const;
         QRect geometry( int xScale, int yScale ) const;
+	NormalizedRect operator| (const NormalizedRect & r) const;
+	NormalizedRect& operator|= (const NormalizedRect & r);
 };
 
+// kdbgstream& operator << (kdbgstream &, const NormalizedRect &);
 
 /**
  * @short NormalizedRect that contains a reference to an object.
@@ -98,6 +102,7 @@ struct HighlightRect : public NormalizedRect
  * intersects(NormalizedShape)
  * isNull()
  * geometry(int,int)
+ * operator | and |= which unite two NormalizedShapes
  */
 
 template <class NormalizedShape, class Shape> class RegularArea : 
@@ -109,12 +114,42 @@ public  QValueList<NormalizedShape*>
 //        RegularArea<NormalizedShape,Shape> (NormalizedShape* x)  { QValueList(x) ; } ;
 // 		class Iterator : public QValueListIterator<NormalizedShape*> {};
 		bool contains( double x, double y ) const;
+                bool contains( NormalizedShape * ) const;
 		bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
 		bool intersects (const NormalizedShape * shape) const;
 		void appendArea (const RegularArea<NormalizedShape,Shape> *area);
+		void simplify ();
 		bool isNull() const;
-		QValueList<Shape>* geometry( int xScale, int yScale ) const;
+		QValueList<Shape>* geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
 };
+
+template <class NormalizedShape, class Shape>
+void RegularArea<NormalizedShape, Shape>::simplify()
+{
+            int end=this->count(),i=0,x=0;
+            QValueList <NormalizedShape*> m_remove;
+            for (;i<end;i++)
+            {
+                if ( i < (end-1) )
+                {
+                    if ( (*this)[x]->intersects( (*this)[i+1] ) )
+                    {
+                        *((*this)[x]) |= *((*this)[i+1]);
+                        m_remove.append( (*this)[i+1] );
+                    }
+                    else
+                    {
+                        x=i+1;
+                   }
+                }
+            }
+            while (!m_remove.isEmpty())
+            {
+                this->remove( m_remove.last() );
+                m_remove.pop_back();
+            }
+            kdDebug() << "from " << end << " to " << this->count() << endl;
+}
 
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::isNull() const
@@ -205,8 +240,20 @@ bool RegularArea<NormalizedShape, Shape>::contains (double x, double y) const
 }
 
 template <class NormalizedShape, class Shape>
+bool RegularArea<NormalizedShape, Shape>::contains (NormalizedShape * shape) const
+{
+        if (!this)
+                return false;
+        if (this->isEmpty())
+                return false;
+
+        const QValueList<NormalizedShape*> * const lista=dynamic_cast<const QValueList<NormalizedShape*> * const >(this);
+        return lista->contains(shape);
+}
+
+template <class NormalizedShape, class Shape>
 QValueList<Shape> *
-RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale ) const
+RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, int dy ) const
 {
 	if (!this)
 		return false;
@@ -214,11 +261,13 @@ RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale ) const
 		return 0;
 
 	ConstIterator i;
-	QValueList<Shape>* ret=0;
-
+	QValueList<Shape>* ret=new QValueList<Shape>;
+        Shape t;
 	for (i=this->begin();i!=this->end();++i)
 	{
-		ret.append((*i)->geometry(xScale,yScale));
+            t=(*i)->geometry(xScale,yScale);
+            t.moveBy(dx,dy); 
+            ret->append(t);
 	}
 
 	return ret;

@@ -86,8 +86,10 @@ class SmoothPathEngine : public AnnotatorEngine
             // start operation
             if ( type == Press && points.isEmpty() )
             {
-                totalRect.left = totalRect.right = lastPoint.x = nX;
-                totalRect.top = totalRect.bottom = lastPoint.y = nY;
+                lastPoint.x = nX;
+                lastPoint.y = nY;
+                totalRect.left = totalRect.right = lastPoint.x;
+                totalRect.top = totalRect.bottom = lastPoint.y;
                 points.append( lastPoint );
             }
             // add a point to the path
@@ -248,10 +250,10 @@ class PickPointEngine : public AnnotatorEngine
             // update variables and extents (zoom invariant rect)
             point.x = nX;
             point.y = nY;
-            rect.left = nX - (16.0 / (double)xScale);
-            rect.right = nX + (17.0 / (double)xScale);
-            rect.top = nY - (16.0 / (double)yScale);
-            rect.bottom = nY + (17.0 / (double)yScale);
+            rect.left = nX - (16.0 / (double)xScale) ;
+            rect.right = nX + (17.0 / (double)xScale) ;
+            rect.top = nY - (16.0 / (double)yScale) ;
+            rect.bottom = nY + (17.0 / (double)yScale) ;
             return rect.geometry( (int)xScale, (int)yScale );
         }
 
@@ -296,8 +298,10 @@ class TwoPointsEngine : public AnnotatorEngine
             if ( type == Press && points.isEmpty() )
             {
                 NormalizedPoint newPoint;
-                rect.left = rect.right = newPoint.x = nX;
-                rect.top = rect.bottom = newPoint.y = nY;
+                newPoint.x = nX;
+                newPoint.y = nY;
+                rect.left = rect.right =newPoint.x;
+                rect.top = rect.bottom =newPoint.y;
                 points.append( newPoint );
                 return QRect();
             }
@@ -366,7 +370,7 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, KPDFDocument * storage 
     m_toolBar( 0 ), m_engine( 0 ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
-    QFile infoFile( locate("data", "kpdf/tools.xml") );
+    QFile infoFile( locate("data", "oKular/tools.xml") );
     if ( infoFile.exists() && infoFile.open( IO_ReadOnly ) )
     {
         QDomDocument doc( "annotatingTools" );

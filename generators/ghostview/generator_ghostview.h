@@ -94,6 +94,7 @@ class GSGenerator : public Generator
         int angle( CDSC_ORIENTATION_ENUM orientation );
         CDSC_ORIENTATION_ENUM orientation( int rot );
         QMutex docLock;
+        QMutex syncLock;
         bool m_asyncBusy;
 
         // pixmap requests

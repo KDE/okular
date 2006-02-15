@@ -11,6 +11,7 @@
 
 #include <qfile.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 #include <qsize.h>
 #include <qtoolbox.h>
 
@@ -182,8 +183,8 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
     if( !pixGenerator )
     {
         pixGenerator = new GSInterpreterLib ();
-        connect (pixGenerator, SIGNAL (Finished(const QImage* img)),
-         this, SLOT(slotPixmapGenerated (const QImage* img)));
+        connect (pixGenerator, SIGNAL (Finished(const QImage*)),
+         this, SLOT(slotPixmapGenerated (const QImage*)));
 
         if ( GSSettings::messages() )
         {
@@ -216,17 +217,22 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
 
 void GSGenerator::slotPixmapGenerated(const QImage* img)
 {
-    QPixmap *pix=new QPixmap(m_sRequest->width, m_asRequest->height);
-    QPainter p(pix);
+    syncLock.unlock();
+    kdWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id << " " <<m_sRequest->width << "x" << m_sRequest->height << "@" << m_sRequest->pageNumber << " async == " << m_sRequest->async << endl;
+    QPixmap * rPix;
+    rPix = new QPixmap(img->size());
+    rPix->fill();
+    QPainter p(rPix);
     p.drawImage(0,0,*img,0,0,img->width(),img->height());
-    docLock.unlock();
-    m_sRequest->page->setPixmap( m_sRequest->id, pix );
+    p.end();
+    m_sRequest->page->setPixmap( m_sRequest->id, rPix );
     signalRequestDone( m_sRequest );
 }
 
 void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
 {
     docLock.unlock();
+    kdWarning() << "SlotASyncGenerated!\n";
     m_asRequest->page->setPixmap( m_asRequest->id, pix );
     signalRequestDone( m_asRequest );
 }
@@ -324,6 +330,7 @@ bool GSGenerator::initInterpreter()
     {
         if( pixGenerator->start() && internalDoc->dsc()->isStructured() )
         {
+            
             // this 0 is ok here, we will not be getting a PAGE anwser from those
             pixGenerator->run ( internalDoc->file() , internalDoc->prolog(), false);
             pixGenerator->unlock();
@@ -344,51 +351,69 @@ bool GSGenerator::loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * 
 
 void GSGenerator::generatePixmap( PixmapRequest * req )
 {
-
-    kdDebug() << req <<  endl;
+    kdWarning() << "receiving req id=" << req->id << " " <<req->width << "x" << req->height << "@" << req->pageNumber << " async == " << req->async << endl;
     int pgNo=req->pageNumber;
-    if ( req->async )
+    if ( false )
     {
         docLock.lock();
+        return ;
         m_asRequest=req;
+        kdWarning() << "setOrientation\n";
         asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
 //         asyncGenerator->setBoundingBox( internalDoc->boundingBox(i));
+        kdWarning() << "setSize\n";
         asyncGenerator->setSize(req->width ,req->height);
+        kdWarning() << "setMedia\n";
         asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
+        kdWarning() << "setMagnify\n";
         asyncGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
                 static_cast<double>(req->height)/req->page->height()));
         GSInterpreterLib::Position u=internalDoc->pagePos(pgNo);
-        kdDebug() << "Page pos is " << pgNo << ":"<< u.first << "/" << u.second << endl;
+//         kdWarning ()  << "Page pos is " << pgNo << ":"<< u.first << "/" << u.second << endl;
         if (!asyncGenerator->running())
         {
             if ( internalDoc->dsc()->isStructured() )
             {
+                kdWarning() << "setStructure\n";
                 asyncGenerator->setStructure( internalDoc->prolog() , internalDoc->setup() );
-                kdDebug () << "sending init" << endl;
             }
-            asyncGenerator->start();
+            if (!asyncGenerator->running())
+            {
+              kdWarning() << "start after structure\n";
+              asyncGenerator->startInterpreter();
+            }
         }
+        kdWarning() << "run pagepos\n";
         asyncGenerator->run (internalDoc->pagePos(pgNo));
-        return;
     }
-    m_sRequest=req;
-    pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
-//     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
-    pixGenerator->setSize(req->width ,req->height);
-    pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
-    pixGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
-            static_cast<double>(req->height)/req->page->height()));
-
-    if (!pixGenerator->running())
+    else
+    {
+      syncLock.lock();
+       disconnect (pixGenerator, SIGNAL (Finished(const QImage*)),
+         this, SLOT(slotPixmapGenerated (const QImage*)));
+      m_sRequest=req;
+      pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
+  //     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
+      pixGenerator->setSize(req->width ,req->height);
+      pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
+      pixGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
+              static_cast<double>(req->height)/req->page->height()));
+      if (!pixGenerator->running())
+      {
         initInterpreter();
-    pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo));
+      }
+       connect (pixGenerator, SIGNAL (Finished(const QImage*)),
+         this, SLOT(slotPixmapGenerated (const QImage*)));
+      pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo));
+    }
 }
 
 
 bool GSGenerator::canGeneratePixmap( bool async )
 {
-    if (async) return ! docLock.locked();
-    return ( pixGenerator ) ? pixGenerator->ready() : true;
+//     kdWarning () << "ready Async/Sync " << (! docLock.locked()) << "/ " << (( pixGenerator ) ? !syncLock.locked() : true) << " asking for async: " << async << endl;
+//     if (async) return false;
+    return ( pixGenerator ) ? ! syncLock.locked() : true;
 }
 
 const DocumentInfo * GSGenerator::generateDocumentInfo()

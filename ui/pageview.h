@@ -21,6 +21,7 @@
 
 #include <qscrollview.h>
 #include <qvaluevector.h>
+#include <qvaluelist.h>
 #include "ui/pageviewutils.h"
 #include "core/observer.h"
 
@@ -116,8 +117,12 @@ class PageView : public QScrollView, public DocumentObserver
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
+	void textSelection( QValueList<QRect> * , const QColor & );
+	void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );
+	int viewColumns();
+	int viewRows();
 
         // don't want to expose classes in here
         class PageViewPrivate * d;
@@ -141,7 +146,7 @@ class PageView : public QScrollView, public DocumentObserver
         void slotFitToWidthToggled( bool );
         void slotFitToPageToggled( bool );
         void slotFitToTextToggled( bool );
-        void slotTwoPagesToggled( bool );
+        void slotRenderMode( int );
         void slotContinuousToggled( bool );
         void slotSetMouseNormal();
         void slotSetMouseZoom();

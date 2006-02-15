@@ -16,6 +16,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <X11/Xlib.h>
+#include <X11/extensions/Xrender.h>
+#include <fixx11h.h>
+
 // qt/kde includes
 #include <qcursor.h>
 #include <qpainter.h>
@@ -50,6 +54,7 @@
 #include "pageviewannotator.h"
 #include "core/document.h"
 #include "core/page.h"
+#include "core/misc.h"
 #include "core/link.h"
 #include "core/generator.h"
 #include "conf/settings.h"
@@ -74,13 +79,19 @@ public:
     PageView::MouseMode mouseMode;
     QPoint mouseGrabPos;
     QPoint mousePressPos;
+    QPoint mouseSelectPos;
     bool mouseMidZooming;
     int mouseMidLastY;
     bool mouseSelecting;
     QRect mouseSelectionRect;
     QColor mouseSelectionColor;
+    bool mouseTextSelecting;
+    bool mouseTextSelectionPainted;
+    QValueList<QRect>* mouseTextSelectionRect;
+    QColor mouseTextSelectionColor;
+    TextSelection * mouseTextSelectionInfo;
     bool mouseOnRect;
-
+                             
     // type ahead find
     bool typeAheadActive;
     QString typeAheadString;
@@ -104,6 +115,7 @@ public:
 
     // actions
     KSelectAction * aOrientation;
+    KSelectAction * aPaperSizes;
     KToggleAction * aMouseNormal;
     KToggleAction * aMouseSelect;
     KToggleAction * aToggleAnnotator;
@@ -111,7 +123,7 @@ public:
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomFitText;
-    KToggleAction * aViewTwoPages;
+    KSelectAction * aRenderMode;
     KToggleAction * aViewContinuous;
     KAction * aPrevAction;
 };
@@ -135,11 +147,13 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d = new PageViewPrivate();
     d->document = document;
     d->aOrientation = 0;
+    d->aRenderMode = 0;
     d->zoomMode = (PageView::ZoomMode) KpdfSettings::zoomMode();
     d->zoomFactor = KpdfSettings::zoomFactor();
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
     d->mouseSelecting = false;
+    d->mouseTextSelecting = false;
     d->mouseOnRect = false;
     d->typeAheadActive = false;
     d->findTimeoutTimer = 0;
@@ -154,6 +168,10 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
     d->aPrevAction = 0;
+    d->mouseTextSelectionRect=0;
+    d->mouseTextSelectionInfo=0;
+    d->mouseTextSelectionPainted=0;
+    d->aPaperSizes=0;
 
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );
@@ -187,8 +205,8 @@ PageView::~PageView()
 
 void PageView::setupActions( KActionCollection * ac )
 {
-    d->aOrientation=new KSelectAction( i18n( "&Orientation" ), 0, this, 0, ac, "orientation_menu" );
-
+    d->aOrientation=new KSelectAction( i18n( "&Orientation" ), 0, this, 0, ac, "view_orientation" );
+    d->aPaperSizes=new KSelectAction( i18n( "&Paper sizes" ), 0, this, 0, ac, "view_papersizes" );
     QStringList orientations;
     orientations.append( i18n( "Portrait" ) );
     orientations.append( i18n( "Landscape" ) );
@@ -198,8 +216,14 @@ void PageView::setupActions( KActionCollection * ac )
 
     connect( d->aOrientation , SIGNAL( activated( int ) ),
          d->document , SLOT( slotOrientation( int ) ) );
+    connect( d->aPaperSizes , SIGNAL( activated( int ) ),
+         d->document , SLOT( slotPaperSizes( int ) ) );
 
     d->aOrientation->setEnabled(d->document->supportsRotation());
+    bool paperSizes=d->document->supportsPaperSizes();
+    d->aPaperSizes->setEnabled(paperSizes);
+    if (paperSizes)
+      d->aPaperSizes->setItems(d->document->paperSizes());
 
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, this, SLOT( slotZoom() ), ac, "zoom_to" );
@@ -223,9 +247,15 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions
-    d->aViewTwoPages = new KToggleAction( i18n("&Two Pages"), "view_left_right", 0, ac, "view_twopages" );
-    connect( d->aViewTwoPages, SIGNAL( toggled( bool ) ), SLOT( slotTwoPagesToggled( bool ) ) );
-    d->aViewTwoPages->setChecked( KpdfSettings::viewColumns() > 1 );
+    QStringList renderModes;
+    renderModes.append( i18n( "Single" ) );
+    renderModes.append( i18n( "Facing" ) );
+    renderModes.append( i18n( "Overview" ) );
+
+    d->aRenderMode = new KSelectAction( i18n("&Render Mode"), "view_left_right", 0, ac, "view_render_mode" );
+    connect( d->aRenderMode, SIGNAL( activated( int ) ), SLOT( slotRenderMode( int ) ) );
+    d->aRenderMode->setItems( renderModes );
+    d->aRenderMode->setCurrentItem( KpdfSettings::renderMode() );
 
     d->aViewContinuous = new KToggleAction( i18n("&Continuous"), "view_text", 0, ac, "view_continuous" );
     connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
@@ -256,18 +286,18 @@ void PageView::setupActions( KActionCollection * ac )
 
 bool PageView::canFitPageWidth()
 {
-    return KpdfSettings::viewColumns() != 1 || d->zoomMode != ZoomFitWidth;
+    return KpdfSettings::renderMode() != 0 || d->zoomMode != ZoomFitWidth;
 }
 
 void PageView::fitPageWidth( int page )
 {
     // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
     d->zoomMode = ZoomFitWidth;
-    KpdfSettings::setViewColumns( 1 );
+    KpdfSettings::setRenderMode( 0 );
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
     d->aZoomFitText->setChecked( false );
-    d->aViewTwoPages->setChecked( false );
+    d->aRenderMode->setCurrentItem( 0 );
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
     viewport()->setUpdatesEnabled( true );
@@ -309,7 +339,7 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
         if ( !documentChanged )
             return;
     }
-
+ 
     // delete all widgets (one for each page in pageSet)
     QValueVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
     for ( ; dIt != dEnd; ++dIt )
@@ -320,7 +350,12 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
     // create children widgets
     QValueVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
+    {
         d->items.push_back( new PageViewItem( *setIt ) );
+#ifdef PAGEVIEW_DEBUG
+        kdDebug() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry() << endl;
+#endif
+    }
 
     // invalidate layout so relayout/repaint will happen on next viewport change
     if ( pageSet.count() > 0 )
@@ -329,7 +364,7 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
         // Need slotRelayoutPages() here instead of d->dirtyLayout = true
         // because opening a pdf from another pdf will not trigger a viewportchange
         // so pages are never relayouted
-        QTimer::singleShot(0, this, SLOT(slotRelayoutPages()));
+        QTimer::singleShot(0, this, SLOT(slotRelayoutPages())); // was used
     else
     {
         // update the mouse cursor when closing because we may have close through a link and
@@ -347,6 +382,10 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
             PageViewMessage::Info, 4000 );
 
     d->aOrientation->setEnabled(d->document->supportsRotation());
+    bool paperSizes=d->document->supportsPaperSizes();
+    d->aPaperSizes->setEnabled(paperSizes);
+    if (paperSizes)
+      d->aPaperSizes->setItems(d->document->paperSizes());
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )
@@ -374,7 +413,9 @@ void PageView::notifyViewportChanged( bool smoothMove )
         d->blockViewport = false;
         return;
     }
-
+#ifdef PAGEVIEW_DEBUG
+    kdDebug() << "document viewport changed\n";
+#endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
     if ( !KpdfSettings::viewContinuous() || d->dirtyLayout )
@@ -542,7 +583,8 @@ if ( d->document->handleEvent( pe ) )
         }
 
         // note: this check will take care of all things requiring alpha blending (not only selection)
-        bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
+        bool wantCompositing = ( !selectionRect.isNull() && contentsRect.intersects( selectionRect ) )
+            || d->mouseTextSelecting;
 
         if ( wantCompositing && KpdfSettings::enableCompositing() )
         {
@@ -551,9 +593,18 @@ if ( d->document->handleEvent( pe ) )
             QPainter pixmapPainter( &doubleBuffer );
             pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
+            // calculate the color
+            XRenderColor col;
+            float alpha=0.2f;
+            QColor blCol=selBlendColor.dark(140);
+            col.red=( (blCol.red() << 8) | blCol.red() ) * alpha;
+            col.green=( (blCol.green() << 8) | blCol.green() )*alpha;
+            col.blue=( (blCol.blue() << 8) | blCol.blue())*alpha;
+            col.alpha=alpha*0xffff;
+
             // 1) Layer 0: paint items and clear bg on unpainted rects
             drawDocumentOnPainter( contentsRect, &pixmapPainter );
-            // 2) Layer 1: paint (blend) transparent selection
+            // 2) Layer 1a: paint (blend) transparent selection
             if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
                  !selectionRectInternal.contains( contentsRect ) )
             {
@@ -567,14 +618,55 @@ if ( d->document->handleEvent( pe ) )
                                 blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                                 blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
-                    QImage blendedImage = blendedPixmap.convertToImage();
-                    KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
+//                     QImage blendedImage = blendedPixmap.convertToImage();
+//                     KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
+                    XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.x11RenderHandle(), &col, 
+                      0,0, blendRect.width(), blendRect.height());
                     // copy the blended pixmap back to its place
-                    pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedImage );
+                    pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
                 }
                 // draw border (red if the selection is too small)
                 pixmapPainter.setPen( selBlendColor );
                 pixmapPainter.drawRect( selectionRect );
+            }
+            if ( d->mouseTextSelecting )
+            {
+              QRect blendRect;
+              QValueList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
+              end=d->mouseTextSelectionRect->end();
+              XRenderColor col;
+              float alpha=0.2f;
+              QColor blCol=d->mouseTextSelectionColor.dark(140);
+              col.red=( (blCol.red() << 8) | blCol.red() ) * alpha;
+              col.green=( (blCol.green() << 8) | blCol.green() )*alpha;
+              col.blue=( (blCol.blue() << 8) | blCol.blue())*alpha;
+              col.alpha=alpha*0xffff;
+
+              for (;it!=end;++it)
+              {
+                if (! ((*it).intersects( contentsRect )))
+                  continue;
+                blendRect = (*it).intersect(contentsRect);
+                QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                copyBlt( &blendedPixmap, 0,0, &doubleBuffer,
+                          blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
+                          blendRect.width(), blendRect.height() );
+                    // blend selBlendColor into the background pixmap
+//                 QImage blendedImage = blendedPixmap.convertToImage();
+                XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.x11RenderHandle(), &col, 
+                  0,0, blendRect.width(), blendRect.height());
+
+//                 KImageEffect::blend( d->mouseTextSelectionColor.dark(140), blendedImage, 0.2 );
+
+                // copy the blended pixmap back to its place
+                pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
+              
+                // draw border (red if the selection is too small)
+                pixmapPainter.setPen( d->mouseTextSelectionColor );
+                pixmapPainter.drawRect( selectionRect );
+              }
+                 
+              
             }
             // 3) Layer 1: give annotator painting control
             if ( d->annotator && d->annotator->routePaints( contentsRect ) )
@@ -735,7 +827,7 @@ if (d->document->handleEvent( e ) )
     {
         case Key_Up:
         case Key_PageUp:
-            // if in single page mode and at the top of the screen, go to previous page
+            // if in single page mode and at the top of the screen, go to \ page
             if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
             {
                 if ( e->key() == Key_Up )
@@ -747,7 +839,7 @@ if (d->document->handleEvent( e ) )
             {
                 // more optimized than document->setPrevPage and then move view to bottom
                 DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber -= KpdfSettings::viewColumns();
+                newViewport.pageNumber -= viewColumns();
                 if ( newViewport.pageNumber < 0 )
                     newViewport.pageNumber = 0;
                 newViewport.rePos.enabled = true;
@@ -769,7 +861,7 @@ if (d->document->handleEvent( e ) )
             {
                 // more optimized than document->setNextPage and then move view to top
                 DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber += d->document->currentPage() ? KpdfSettings::viewColumns() : 1;
+                newViewport.pageNumber += d->document->currentPage() ? viewColumns() : 1;
                 if ( newViewport.pageNumber >= (int)d->items.count() )
                     newViewport.pageNumber = d->items.count() - 1;
                 newViewport.rePos.enabled = true;
@@ -897,16 +989,49 @@ if (d->document->handleEvent( e ) )
             }
             else if ( rightButton && !d->mousePressPos.isNull() )
             {
-                // if mouse moves 5 px away from the press point, switch to 'selection'
-                int deltaX = d->mousePressPos.x() - e->globalPos().x(),
-                    deltaY = d->mousePressPos.y() - e->globalPos().y();
-                if ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 )
+                // if mouse moves 5 px away from the press point, do 'textselection'
+                int deltaX = e->x() - d->mouseSelectPos.x(),
+                  deltaY = e->y() - d->mouseSelectPos.y();
+                if ( d->document->supportsSearching() && ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 ) )
                 {
-                    d->aPrevAction = d->aMouseNormal;
-                    d->aMouseSelect->activate();
-                    QColor selColor = palette().active().highlight().light( 120 );
-                    selectionStart( e->x() + deltaX, e->y() + deltaY, selColor, false );
-                    selectionEndPoint( e->x(), e->y() );
+                    PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
+//                     PageViewItem* item=pickItemOnPoint(e->x(),e->y());
+                    const KPDFPage * kpdfPage = currentItem->page();
+                    // build a proper rectangle (make sure left/top is to the left of right/bottom)
+//                     QRect rect (d->mouseSelectPos,e->pos());
+//                     rect=rect.normalize();
+//                     
+                    QRect vRect = currentItem->geometry();
+//                     kdDebug() << "viewport " << vRect << endl;
+//                     kdDebug() << "selection (UN) " << rect << endl;
+//                     // move selection area over to relevant viewport
+//                     rect.moveBy(-vRect.left(),-vRect.top()); 
+//                     kdDebug() << "selection (MV) " << rect << endl;
+                    // clip to viewport
+//                     rect &= vRect;
+//                     kdDebug() << "selection (CL) " << rect << endl;
+//                     FIXME: width and height are greater by 1 then the selection.
+//                     rect.addCoords(1,1,-1,-1);
+                                        
+                    if ( !kpdfPage->hasSearchPage() )
+                    	 d->document->requestTextPage( kpdfPage->number() );
+                    NormalizedPoint startCursor(d->mouseSelectPos.x()-vRect.left(),d->mouseSelectPos.y()-vRect.top(),
+                                vRect.width(), vRect.height());
+                    NormalizedPoint endCursor(e->x()-vRect.left(),e->y()-vRect.top(),vRect.width(), vRect.height());
+
+                    if ( ! d->mouseTextSelectionInfo )
+                      d->mouseTextSelectionInfo=new TextSelection(startCursor,endCursor);
+                    else
+                      d->mouseTextSelectionInfo->end(endCursor);
+		    RegularAreaRect * selectionArea=kpdfPage->getTextArea(d->mouseTextSelectionInfo);
+                    kdWarning () << "text areas: " << selectionArea->count() << endl;
+                    if ( selectionArea->count() > 0 )
+                    { 
+                      QColor selColor = palette().active().highlight();
+                      textSelection(selectionArea->geometry(vRect.width(),vRect.height(),vRect.left(),vRect.top())
+                          ,selColor);
+                    }                    
+                    delete selectionArea;
                     break;
                 }
             }
@@ -920,7 +1045,8 @@ if (d->document->handleEvent( e ) )
         case MouseZoom:
         case MouseSelect:
             // set second corner of selection
-            if ( d->mouseSelecting && (leftButton || d->aPrevAction) )
+            // TODO: does this condition make sense?
+            if ( d->mouseSelecting || (d->mouseSelecting && d->aPrevAction) )
                 selectionEndPoint( e->x(), e->y() );
             break;
     }
@@ -929,7 +1055,7 @@ if (d->document->handleEvent( e ) )
 
 void PageView::contentsMousePressEvent( QMouseEvent * e )
 {
-if (d->document->handleEvent( e ) )
+if ( d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
@@ -969,6 +1095,11 @@ if (d->document->handleEvent( e ) )
     // handle mode dependant mouse press actions
     bool leftButton = e->button() & LeftButton,
          rightButton = e->button() & RightButton;
+        
+//   Not sure we should erase the selection when clicking with left.
+//     if ( !(rightButton && d->mouseMode==MouseNormal) && d->mouseTextSelectionPainted )
+//       textSelectionClear();
+    
     switch ( d->mouseMode )
     {
         case MouseNormal:   // drag start / click / link following
@@ -978,6 +1109,8 @@ if (d->document->handleEvent( e ) )
                 if ( !d->mouseOnRect )
                     setCursor( sizeAllCursor );
             }
+            else if (rightButton)
+              d->mouseSelectPos=e->pos() ; // just check
             break;
 
         case MouseZoom:     // set first corner of the zoom rect
@@ -988,11 +1121,11 @@ if (d->document->handleEvent( e ) )
             break;
 
         case MouseSelect:   // set first corner of the selection rect
-            if ( leftButton )
-            {
+//             if ( leftButton )
+//             {
                 QColor selColor = palette().active().highlight().light( 120 );
                 selectionStart( e->x(), e->y(), selColor, false );
-            }
+//             }
             break;
     }
 }
@@ -1078,6 +1211,15 @@ if (d->document->handleEvent( e ) )
             }
             else if ( rightButton )
             {
+              if ( d->mouseTextSelecting )
+              {
+                d->mouseTextSelecting = false;
+                delete d->mouseTextSelectionInfo;
+                d->mouseTextSelectionInfo=0;
+                textSelectionClear();
+//                 textSelectionToClipboard();
+              }
+              else    
                 // right click (if not within 5 px of the press point, the mode
                 // had been already changed to 'Selection' instead of 'Normal')
                 emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
@@ -1148,7 +1290,7 @@ if (d->document->handleEvent( e ) )
             QString* selectedText=0;
             if (d->document->supportsSearching())
             {
-
+            
             // grab text in selection by extracting it from all intersected pages
             RegularAreaRect * rects=new RegularAreaRect;
             const KPDFPage * kpdfPage=0;
@@ -1161,6 +1303,7 @@ if (d->document->handleEvent( e ) )
                 {
                     // request the textpage if there isn't one
                      kpdfPage= item->page();
+                     kdWarning() << "checking if page " << item->pageNumber() << " has text " << kpdfPage->hasSearchPage() << endl;
                     if ( !kpdfPage->hasSearchPage() )
                         d->document->requestTextPage( kpdfPage->number() );
                     // grab text in the rect that intersects itemRect
@@ -1314,7 +1457,7 @@ if (d->document->handleEvent( e ) )
         {
             // more optimized than document->setNextPage and then move view to top
             DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber += d->document->currentPage() ? KpdfSettings::viewColumns() : 1;
+            newViewport.pageNumber += d->document->currentPage() ? viewColumns() : 1;
             if ( newViewport.pageNumber >= (int)d->items.count() )
                 newViewport.pageNumber = d->items.count() - 1;
             newViewport.rePos.enabled = true;
@@ -1329,7 +1472,7 @@ if (d->document->handleEvent( e ) )
         {
             // more optimized than document->setPrevPage and then move view to bottom
             DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber -= KpdfSettings::viewColumns();
+            newViewport.pageNumber -= viewColumns();
             if ( newViewport.pageNumber < 0 )
                 newViewport.pageNumber = 0;
             newViewport.rePos.enabled = true;
@@ -1493,6 +1636,50 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     return item;
 }
 
+void PageView::textSelection( QValueList<QRect> * area, const QColor & color )
+{
+    setCursor( Qt::IbeamCursor );
+    QValueList<QRect> toUpdate;
+    if ( d->mouseTextSelectionRect && d->mouseTextSelectionRect )
+    {
+      toUpdate+=*(d->mouseTextSelectionRect);
+      delete d->mouseTextSelectionRect;
+      d->mouseTextSelectionRect=0;
+    }
+    
+    if (area)
+      toUpdate+=*(area);
+    
+    d->mouseTextSelecting = true;
+    d->mouseTextSelectionRect = area;
+    d->mouseTextSelectionColor = color;
+    // ensures page doesn't scroll
+    if ( d->autoScrollTimer )
+    {
+        d->scrollIncrement = 0;
+        d->autoScrollTimer->stop();
+    }
+    QValueList<QRect>::Iterator it=toUpdate.begin(), end=toUpdate.end();
+    for (;it!=end;++it)
+    {
+        updateContents( *it );
+    }
+    d->mouseTextSelectionPainted=true;
+}
+    
+void PageView::textSelectionClear()
+{
+  setCursor( Qt::ArrowCursor  );
+  QValueList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
+    end=d->mouseTextSelectionRect->end();
+ for (;it!=end;++it)
+  {
+    updateContents( *it );
+  }
+  delete d->mouseTextSelectionRect;
+  d->mouseTextSelectionRect=0;
+}
+
 void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveAll*/ )
 {
     d->mouseSelecting = true;
@@ -1624,7 +1811,7 @@ void PageView::updateZoomText()
 
     // add items that describe fit actions
     QStringList translated;
-    translated << i18n("Fit Width") << i18n("Fit Page"); // << i18n("Fit Text");
+    translated << i18n("Fit Width") << i18n("Fit Page") /*<< i18n("Fit Text")*/;
 
     // add percent items
     QString double_oh( "00" );
@@ -1684,9 +1871,24 @@ void PageView::updateCursor( const QPoint &p )
     }
 }
 
+int PageView::viewColumns()
+{
+    int nr=KpdfSettings::renderMode();
+    if (nr<2)
+	return nr+1;
+    return KpdfSettings::viewColumns();
+}
+
+int PageView::viewRows()
+{
+    if (KpdfSettings::renderMode()<2)
+	return 1;
+    return KpdfSettings::viewRows();
+}
+
 //BEGIN private SLOTS
 void PageView::slotRelayoutPages()
-// called by: notifySetup, viewportResizeEvent, slotTwoPagesToggled, slotContinuousToggled, updateZoom
+// called by: notifySetup, viewportResizeEvent, slotRenderMode, slotContinuousToggled, updateZoom
 {
     // set an empty container if we have no pages
     int pageCount = d->items.count();
@@ -1714,7 +1916,7 @@ void PageView::slotRelayoutPages()
     QRect viewportRect( contentsX(), contentsY(), viewportWidth, viewportHeight );
 
     // handle the 'center first page in row' stuff
-    int nCols = KpdfSettings::viewColumns();
+    int nCols = viewColumns();
     bool centerFirstPage = KpdfSettings::centerFirstPageInRow() && nCols > 1;
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
@@ -1725,8 +1927,15 @@ void PageView::slotRelayoutPages()
             pageCount += nCols - 1;
         // Here we find out column's width and row's height to compute a table
         // so we can place widgets 'centered in virtual cells'.
-        int nRows = (int)ceil( (float)pageCount / (float)nCols ),
-            * colWidth = new int[ nCols ],
+	int nRows;
+
+// 	if ( KpdfSettings::renderMode() < 2 )
+        	nRows = (int)ceil( (float)pageCount / (float)nCols );
+// 		nRows=(int)ceil( (float)pageCount / (float) KpdfSettings::viewRows() );
+// 	else
+// 		nRows = KpdfSettings::viewRows();
+
+        int * colWidth = new int[ nCols ],
             * rowHeight = new int[ nRows ],
             cIdx = 0,
             rIdx = 0;
@@ -1799,6 +2008,9 @@ void PageView::slotRelayoutPages()
                 insertX = 0;
                 insertY += rHeight;
             }
+#ifdef PAGEVIEW_DEBUG
+            kdWarning() << "updating size for pageno " << item->pageNumber() << " to " << item->geometry() << endl;
+#endif
         }
 
         delete [] colWidth;
@@ -1807,31 +2019,51 @@ void PageView::slotRelayoutPages()
     else // viewContinuous is FALSE
     {
         PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
+	
+	int nRows=viewRows();
 
         // handle the 'centering on first row' stuff
-        if ( centerFirstPage && d->document->currentPage() < 1 )
-            nCols = 1;
-        // setup varialbles for a 1(row) x N(columns) grid
+        if ( centerFirstPage && d->document->currentPage() < 1 && KpdfSettings::renderMode() == 1 )
+            nCols = 1, nRows=1;
+
+        // setup varialbles for a M(row) x N(columns) grid
         int * colWidth = new int[ nCols ],
             cIdx = 0;
-        fullHeight = viewportHeight;
+
+        int * rowHeight = new int[ nRows ],
+            rIdx = 0;
+
         for ( int i = 0; i < nCols; i++ )
             colWidth[ i ] = viewportWidth / nCols;
 
+        for ( int i = 0; i < nRows; i++ )
+            rowHeight[ i ] = viewportHeight / nRows;
+
         // 1) find out maximum area extension for the pages
+	bool wasCurrent = false;
         for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
         {
             PageViewItem * item = *iIt;
-            if ( item == currentItem || (cIdx > 0 && cIdx < nCols) )
+            if ( rIdx >= 0 && rIdx < nRows )
             {
-                // update internal page size (leaving a little margin in case of Fit* modes)
-                updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 12 );
-                // find row's maximum height and column's max width
-                if ( item->width() + 6 > colWidth[ cIdx ] )
-                    colWidth[ cIdx ] = item->width() + 6;
-                if ( item->height() + 12 > fullHeight )
-                    fullHeight = item->height() + 12;
-                cIdx++;
+            	if ( item == currentItem )
+			wasCurrent=true;
+		if ( wasCurrent && cIdx >= 0 && cIdx < nCols )
+            	{
+			// update internal page size (leaving a little margin in case of Fit* modes)
+			updateItemSize( item, colWidth[ cIdx ] - 6, rowHeight[ rIdx ] - 12 );
+			// find row's maximum height and column's max width
+			if ( item->width() + 6 > colWidth[ cIdx ] )
+			colWidth[ cIdx ] = item->width() + 6;
+			if ( item->height() + 12 > rowHeight[ rIdx ] )
+			rowHeight[ rIdx ] = item->height() + 12;
+			cIdx++;
+		}
+		if( cIdx>=nCols )
+		{
+            		rIdx++;
+            		cIdx=0;
+            	}
             }
         }
 
@@ -1839,25 +2071,47 @@ void PageView::slotRelayoutPages()
         for ( int i = 0; i < nCols; i++ )
             fullWidth += colWidth[ i ];
 
+         for ( int i = 0; i < nRows; i++ )
+            fullHeight += rowHeight[ i ];
+
         // 3) hide all widgets except the displayable ones and dispose those
         int insertX = 0;
+	int insertY = 0;
         cIdx = 0;
+	rIdx = 0;
+	wasCurrent=false;
         for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
         {
             PageViewItem * item = *iIt;
-            if ( item == currentItem || (cIdx > 0 && cIdx < nCols) )
+            if ( rIdx >= 0 && rIdx < nRows )
             {
-                // center widget inside 'cells'
-                item->moveTo( insertX + (colWidth[ cIdx ] - item->width()) / 2,
-                              (fullHeight - item->height()) / 2 );
-                // advance col index
-                insertX += colWidth[ cIdx ];
-                cIdx++;
-            } else
-                item->setGeometry( 0, 0, -1, -1 );
+            	if ( item == currentItem )
+			wasCurrent=true;
+		if ( wasCurrent && cIdx >= 0 && cIdx < nCols )
+		{
+			// center widget inside 'cells'
+			item->moveTo( insertX + (colWidth[ cIdx ] - item->width()) / 2,
+				insertY + ( rowHeight[ rIdx ] - item->height() ) / 2 );
+			// advance col index
+			insertX += colWidth[ cIdx ];
+			cIdx++;
+		} else
+			item->setGeometry( 0, 0, -1, -1 );
+
+		if( cIdx>=nCols)
+		{
+			insertY += rowHeight[ rIdx ];
+            		rIdx++;
+			insertX = 0;
+            		cIdx=0;
+            	}
+            }
+            else
+		item->setGeometry( 0, 0, -1, -1 );
         }
 
         delete [] colWidth;
+	delete [] rowHeight;
     }
 
     // 3) reset dirty state
@@ -1929,17 +2183,26 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;
-
+#ifdef PAGEVIEW_DEBUG
+        kdWarning() << "checking page " << i->pageNumber() << endl;
+        kdWarning() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() ) << endl;
+#endif
         // if the item doesn't intersect the viewport, skip it
         if ( !viewportRect.intersects( i->geometry() ) )
             continue;
 
         // add the item to the 'visible list'
         d->visibleItems.push_back( i );
-
+#ifdef PAGEVIEW_DEBUG
+        kdWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
+#endif
+        kdWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasSearchPage() << "\n";
         // if the item has not the right pixmap, add a request for it
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
         {
+#ifdef PAGEVIEW_DEBUG
+            kdWarning() << "rerequesting visible pixmaps for page " << i->pageNumber() <<  " !\n";
+#endif
             PixmapRequest * p = new PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRIO, true );
             requestedPixmaps.push_back( p );
@@ -1995,8 +2258,9 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // send requests to the document
     if ( !requestedPixmaps.isEmpty() )
+    {
         d->document->requestPixmaps( requestedPixmaps );
-
+    }
     // if this functions was invoked by viewport events, send update to document
     if ( isEvent && nearPageNumber != -1 )
     {
@@ -2102,12 +2366,17 @@ void PageView::slotFitToTextToggled( bool on )
     if ( on ) updateZoom( ZoomFitText );
 }
 
-void PageView::slotTwoPagesToggled( bool on )
+void PageView::slotRenderMode( int nr )
 {
-    uint newColumns = on ? 2 : 1;
-    if ( KpdfSettings::viewColumns() != newColumns )
+    uint newColumns;
+    if (nr<2)
+	newColumns = nr+1;
+    else
+	newColumns = KpdfSettings::viewColumns();
+
+    if ( KpdfSettings::renderMode() != nr )
     {
-        KpdfSettings::setViewColumns( newColumns );
+        KpdfSettings::setRenderMode( nr );
         KpdfSettings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();

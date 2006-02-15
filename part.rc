@@ -24,7 +24,10 @@
     <Action name="zoom_fit_rect"/>
     <Separator/>
     <Action name="view_continuous"/>
-    <Action name="view_twopages"/>
+    <Action name="view_render_mode"/>
+    <Separator/>
+    <Action name="view_orientation"/>
+    <Action name="view_papersizes"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
     <Action name="previous_page"/>

@@ -37,7 +37,7 @@ NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale )
 
 bool NormalizedRect::isNull() const
 {
-    return left == 0 && top == 0 && right == 0 && bottom == 0;
+    return left == 0 && top== 0 && right == 0 && bottom == 0;
 }
 
 bool NormalizedRect::contains( double x, double y ) const
@@ -59,6 +59,28 @@ bool NormalizedRect::intersects( double l, double t, double r, double b ) const
 {
     return (l <= right) && (r >= left) && (t <= bottom) && (b >= top);
 }
+
+NormalizedRect NormalizedRect::operator| (const NormalizedRect & r) const
+{
+	NormalizedRect ret;
+ // todo !       
+	ret.left=QMIN(left,r.left);
+        ret.top=QMIN(top,r.top);
+        ret.bottom=QMAX(bottom,r.bottom);
+        ret.right=QMAX(right,r.right);
+	return ret;
+}
+
+NormalizedRect& NormalizedRect::operator|= (const NormalizedRect & r)
+{
+	return ((*this) = (*this) | r );
+}
+/*
+kdbgstream& operator << (kdbgstream& str , const NormalizedRect &r)
+{
+    str << "[" <<r.left() << "," << r.top() << "] x "<< "[" <<r.right() << "," << r.bottom() << "]";
+    return str;
+}*/
 
 QRect NormalizedRect::geometry( int xScale, int yScale ) const
 {

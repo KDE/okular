@@ -526,6 +526,16 @@ bool KPDFDocument::supportsRotation() const
     return generator ? generator->supportsRotation() : false;
 }
 
+bool KPDFDocument::supportsPaperSizes() const
+{
+    return generator ? generator->supportsPaperSizes() : false;
+}
+
+QStringList KPDFDocument::paperSizes() const
+{
+    return generator ? generator->paperSizes() : QStringList();
+}
+
 bool KPDFDocument::historyAtBegin() const
 {
     return d->viewportIterator == d->viewportHistory.begin();
@@ -575,6 +585,7 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
+        kdWarning() << "request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << endl;
         if ( !(request->page = pages_vector[ request->pageNumber ]) )
         {
             // skip requests referencing an invalid page (must not happen)
@@ -1294,6 +1305,7 @@ void KPDFDocument::sendGeneratorRequest()
     // submit the request to the generator
     if ( generator->canGeneratePixmap( request->async ) )
     {
+        kdWarning() << "sending request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << " async == " << request->async << endl;
         d->pixmapRequestsStack.remove ( request );
         generator->generatePixmap ( request );
     }
@@ -1593,11 +1605,24 @@ void KPDFDocument::slotTimedMemoryCheck()
 
 void KPDFDocument::slotOrientation( int orientation )
 {
-    if (generator->supportsRotation())
+    if ( generator->supportsRotation() )
     {
         generator->setOrientation(pages_vector,orientation);
         foreachObserver( notifySetup( pages_vector, true ) );
+        foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
+//         foreachObserver( notifyViewportChanged( false /*disables smoothMove*/ ));
+//         foreachObserver( notifyPageChanged( ) );
         kdDebug() << "Oreint: " << orientation << endl;
+    }
+}
+
+void KPDFDocument::slotPaperSizes( int newsize )
+{
+    if (generator->supportsPaperSizes())
+    {
+        generator->setPaperSize(pages_vector,newsize);
+        foreachObserver( notifySetup( pages_vector, true ) );
+        kdDebug() << "PaperSize no: " << newsize << endl;
     }
 }
 

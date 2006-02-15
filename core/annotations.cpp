@@ -145,10 +145,10 @@ Annotation::Annotation( const QDomNode & annNode )
         // parse boundary
         if ( ee.tagName() == "boundary" )
         {
-            boundary.left = ee.attribute( "l" ).toDouble();
-            boundary.top = ee.attribute( "t" ).toDouble();
-            boundary.right = ee.attribute( "r" ).toDouble();
-            boundary.bottom = ee.attribute( "b" ).toDouble();
+            boundary=NormalizedRect(ee.attribute( "l" ).toDouble(),
+                ee.attribute( "t" ).toDouble(),
+                ee.attribute( "r" ).toDouble(),
+                ee.attribute( "b" ).toDouble());
         }
         // parse penStyle if not default
         else if ( ee.tagName() == "penStyle" )

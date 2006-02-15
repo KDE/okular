@@ -397,7 +397,7 @@ void GSInterpreterCMD::customEvent( QCustomEvent * e )
 {
     if (e->type() == GS_DATAREADY_ID )
     {
-        kdDebug(4655) << "emitting signal" << endl;
+        kdWarning() << "emitting signal" << endl;
         QPixmap *pix=takePixmap();
   
         emit Finished(pix);

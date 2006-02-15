@@ -23,6 +23,8 @@
 #define MINIBAR_ID 6
 #define REVIEWS_ID 7
 
+// the biggest ide, useful for ignoring wrong id request
+#define MAX_OBSERVER_ID 8
 /** PRIORITIES for requests. Globally defined here. **/
 #define PAGEVIEW_PRIO 1
 #define PAGEVIEW_PRELOAD_PRIO 3

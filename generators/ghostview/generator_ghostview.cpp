@@ -47,6 +47,10 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
     m_paperSize = 0;
     dscForPDF = 0;
     m_asyncBusy = false;
+    m_sRequest=0;
+    m_asRequest=0;
+    syncLock.unlock();
+    docLock.unlock();
     if ( GSSettings::messages() )
     {
         m_logWindow = new GSLogWindow(QString ("Logwindow"));
@@ -217,14 +221,16 @@ bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage
 
 void GSGenerator::slotPixmapGenerated(const QImage* img)
 {
-    syncLock.unlock();
     kdWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id << " " <<m_sRequest->width << "x" << m_sRequest->height << "@" << m_sRequest->pageNumber << " async == " << m_sRequest->async << endl;
+    kdWarning() << "sync gen is ready:" << pixGenerator->ready() << endl;
     QPixmap * rPix;
     rPix = new QPixmap(img->size());
     rPix->fill();
     QPainter p(rPix);
     p.drawImage(0,0,*img,0,0,img->width(),img->height());
     p.end();
+    kdWarning() << "unlocking \n";
+    syncLock.unlock();
     m_sRequest->page->setPixmap( m_sRequest->id, rPix );
     signalRequestDone( m_sRequest );
 }
@@ -328,14 +334,12 @@ bool GSGenerator::initInterpreter()
 {
     if (! pixGenerator->running())
     {
-        if( pixGenerator->start() && internalDoc->dsc()->isStructured() )
+        if( pixGenerator->start(true) && internalDoc->dsc()->isStructured() )
         {
-            
+            kdWarning() << "setStructure\n";
             // this 0 is ok here, we will not be getting a PAGE anwser from those
             pixGenerator->run ( internalDoc->file() , internalDoc->prolog(), false);
-            pixGenerator->unlock();
             pixGenerator->run ( internalDoc->file() , internalDoc->setup(), false );
-            pixGenerator->unlock();
         }
     }
     return pixGenerator->running();
@@ -353,10 +357,11 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
 {
     kdWarning() << "receiving req id=" << req->id << " " <<req->width << "x" << req->height << "@" << req->pageNumber << " async == " << req->async << endl;
     int pgNo=req->pageNumber;
-    if ( false )
+    if (!req->async)
+      return;
+    if ( req->async )
     {
         docLock.lock();
-        return ;
         m_asRequest=req;
         kdWarning() << "setOrientation\n";
         asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
@@ -388,23 +393,31 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
     }
     else
     {
+
       syncLock.lock();
-       disconnect (pixGenerator, SIGNAL (Finished(const QImage*)),
-         this, SLOT(slotPixmapGenerated (const QImage*)));
-      m_sRequest=req;
-      pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
-  //     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
-      pixGenerator->setSize(req->width ,req->height);
+//        disconnect (pixGenerator, SIGNAL (Finished(const QImage*)),
+//          this, SLOT(slotPixmapGenerated (const QImage*)));
+
       pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
       pixGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
               static_cast<double>(req->height)/req->page->height()));
+      pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
+      pixGenerator->setSize(req->width ,req->height);
+  //     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
+      
+      
+      
       if (!pixGenerator->running())
       {
         initInterpreter();
       }
-       connect (pixGenerator, SIGNAL (Finished(const QImage*)),
-         this, SLOT(slotPixmapGenerated (const QImage*)));
-      pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo));
+/*       connect (pixGenerator, SIGNAL (Finished(const QImage*)),
+         this, SLOT(slotPixmapGenerated (const QImage*)));*/
+      this->m_sRequest=req;
+kdWarning() << "checking req id=" << req->id << " " <<req->width << "x" << req->height << "@" << req->pageNumber << " async == " << req->async << endl;
+kdWarning() << "generator running : " << pixGenerator->running() << endl;
+      pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo),true);
+      
     }
 }
 
@@ -412,8 +425,8 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
 bool GSGenerator::canGeneratePixmap( bool async )
 {
 //     kdWarning () << "ready Async/Sync " << (! docLock.locked()) << "/ " << (( pixGenerator ) ? !syncLock.locked() : true) << " asking for async: " << async << endl;
-//     if (async) return false;
-    return ( pixGenerator ) ? ! syncLock.locked() : true;
+    if (async) return !docLock.locked();
+    return ( pixGenerator ) ?  pixGenerator->ready() && !syncLock.locked() : true;
 }
 
 const DocumentInfo * GSGenerator::generateDocumentInfo()

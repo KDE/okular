@@ -221,7 +221,7 @@ void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
         }
 #else
         nodeNormRect=new NormalizedRect (r,vWidth,vHeight);
-        tp->append(nodeText,nodeNormRect,0);
+        tp->append(nodeText,nodeNormRect/*,0*/);
 #endif
     }
     DOM::Node child = node.firstChild();

@@ -9,7 +9,7 @@
 
 class KAboutData;
 class KPrinter;
-
+class PageView;
 
 class KDVIMultiPage : public KMultiPage
 {
@@ -38,7 +38,7 @@ public:
   static KAboutData* createAboutData();
 
 private:
-  virtual DocumentWidget* createDocumentWidget();
+  virtual DocumentWidget* createDocumentWidget(PageView *parent, DocumentPageCache *cache);
 
   virtual void initializePageCache();
 

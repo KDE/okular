@@ -83,6 +83,10 @@ fontMap::fontMap()
       QString FullName = line.section(' ', 1, 1);
       QString fontFileName = line.section('<', -1).trimmed().section(' ', 0, 0);
       QString encodingName = line.section('<', -2, -2).trimmed().section(' ', 0, 0);
+      // It seems that sometimes the encoding is prepended by the
+      // letter '[', which we ignore
+      if ((!encodingName.isEmpty()) && (encodingName[0] == '['))
+        encodingName = encodingName.mid(1);
 
       double slant = 0.0;
       int i = line.find("SlantFont");

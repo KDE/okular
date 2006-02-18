@@ -5,7 +5,7 @@
  *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -42,6 +42,8 @@ class ThumbnailController;
 class PageView;
 class PresentationWidget;
 class SearchWidget;
+class TOC;
+class MiniBar;
 
 namespace oKular {
 
@@ -144,8 +146,10 @@ private:
 	QWidget *m_leftPanel;
 	QToolBox *m_toolBox;
 	SearchWidget *m_searchWidget;
-	ThumbnailList *m_thumbnailList;
-	PageView *m_pageView;
+	QGuardedPtr<ThumbnailList> m_thumbnailList;
+	QGuardedPtr<PageView> m_pageView;
+	QGuardedPtr<TOC> m_toc;
+	QGuardedPtr<MiniBar> m_miniBar;
 	QGuardedPtr<PresentationWidget> m_presentationWidget;
 
 	// document watcher (and reloader) variables

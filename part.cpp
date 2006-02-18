@@ -12,7 +12,7 @@
  *   Copyright (C) 2004 by Christoph Cullmann <crossfire@babylon2k.de>     *
  *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
  *   Copyright (C) 2004 by Antti Markus <antti.markus@starman.ee>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -141,12 +141,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// [left toolbox: Table of Contents] | []
 	//QFrame * tocFrame = new QFrame( m_toolBox );
 	//QVBoxLayout * tocFrameLayout = new QVBoxLayout( tocFrame );
-	TOC * toc = new TOC( m_toolBox/*tocFrame*/, m_document );
-	connect( toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
+	m_toc = new TOC( m_toolBox/*tocFrame*/, m_document );
+	connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
 	//KListViewSearchLine * tocSearchLine = new KListViewSearchLine( tocFrame, toc );
 	//tocFrameLayout->addWidget( tocSearchLine );
 	//tocFrameLayout->addWidget( toc );
-	tbIndex = m_toolBox->addItem( toc/*tocFrame*/, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	tbIndex = m_toolBox->addItem( m_toc/*tocFrame*/, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
 	enableTOC( false );
 
@@ -179,8 +179,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	miniSpacer->setFixedHeight( 6 );
 	miniBarLayout->addWidget( miniSpacer );
 	// widgets: [../[../MiniBar]] | []
-	MiniBar * miniBar = new MiniBar( miniBarContainer, m_document );
-	miniBarLayout->addWidget( miniBar );
+	m_miniBar = new MiniBar( miniBarContainer, m_document );
+	miniBarLayout->addWidget( m_miniBar );
 
 	// widgets: [] | [right 'pageView']
 //	QWidget * rightContainer = new QWidget( m_splitter );
@@ -200,8 +200,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document->addObserver( this );
 	m_document->addObserver( m_thumbnailList );
 	m_document->addObserver( m_pageView );
-	m_document->addObserver( toc );
-	m_document->addObserver( miniBar );
+	m_document->addObserver( m_toc );
+	m_document->addObserver( m_miniBar );
 	m_document->addObserver( reviewsWidget );
 
 	// ACTIONS
@@ -211,19 +211,19 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
 	m_gotoPage->setShortcut( "CTRL+G" );
 	// dirty way to activate gotopage when pressing miniBar's button
-	connect( miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( activate() ) );
+	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( activate() ) );
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
 	m_prevPage->setShortcut( "Backspace" );
 	// dirty way to activate prev page when pressing miniBar's button
-	connect( miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( activate() ) );
+	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( activate() ) );
 
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 	m_nextPage->setShortcut( "Space" );
 	// dirty way to activate next page when pressing miniBar's button
-	connect( miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( activate() ) );
+	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( activate() ) );
 
 	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
@@ -315,6 +315,11 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 Part::~Part()
 {
+    delete m_toc;
+    delete m_pageView;
+    delete m_thumbnailList;
+    delete m_miniBar;
+
     delete m_document;
 }
 

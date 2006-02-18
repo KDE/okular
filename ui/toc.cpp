@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -65,6 +65,11 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_documen
     setAllColumnsShowFocus(true);
     connect(this, SIGNAL(clicked(Q3ListViewItem *)), this, SLOT(slotExecuted(Q3ListViewItem *)));
     connect(this, SIGNAL(returnPressed(Q3ListViewItem *)), this, SLOT(slotExecuted(Q3ListViewItem *)));
+}
+
+TOC::~TOC()
+{
+    m_document->removeObserver( this );
 }
 
 uint TOC::observerId() const

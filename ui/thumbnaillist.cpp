@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -90,6 +90,7 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 
 ThumbnailList::~ThumbnailList()
 {
+    m_document->removeObserver( this );
     delete m_bookmarkOverlay;
 }
 

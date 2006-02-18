@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2006 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -126,6 +127,11 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
 
     // widget starts hidden (will be shown after opening a document)
     parent->hide();
+}
+
+MiniBar::~MiniBar()
+{
+    m_document->removeObserver( this );
 }
 
 void MiniBar::notifySetup( const QValueVector< KPDFPage * > & pageVector, bool changed )

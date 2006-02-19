@@ -5,6 +5,7 @@ Terminal=false
 Name=KPDF
 Name[x-test]=xxKPDFxx
 GenericName=PDF Viewer
+GenericName[fr]=Afficheur PDF
 GenericName[x-test]=xxPDF Viewerxx
 Exec=kpdf %U -caption "%c"
 Icon=kpdf

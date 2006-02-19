@@ -31,7 +31,8 @@ class TOCItem : public KListViewItem
             if ( e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
 #endif
-        }
+            setMultiLinesEnabled( true );
+	}
 
         TOCItem( KListViewItem *parent, TOCItem *after, const QDomElement & e )
             : KListViewItem( parent, after, e.tagName() ), m_element( e )
@@ -40,6 +41,7 @@ class TOCItem : public KListViewItem
             if ( e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
 #endif
+            setMultiLinesEnabled( true );
         }
 
         const QDomElement & element() const

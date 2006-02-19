@@ -3,6 +3,7 @@ Type=Service
 Comment=DVI
 Comment[x-test]=xxDVIxx
 Name=KDVIMultiPage
+Name[fr]=Multi-page KDVI
 Name[x-test]=xxKDVIMultiPagexx
 ServiceTypes=KViewShell/MultiPage
 X-KDE-Library=kdvipart

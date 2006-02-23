@@ -38,7 +38,7 @@ kdvipart_la_SOURCES = \
 	optionDialogSpecialWidget_base.ui \
 	prefs.kcfgc \
 	psgs.cpp \
-	psheader.cpp \
+	psheader.c \
 	renderedDviPagePixmap.cpp \
 	special.cpp \
 	TeXFont.cpp \
@@ -76,9 +76,7 @@ plugin_DATA = kdvi_part.rc
 
 kde_services_DATA = kdvimultipage.desktop
 
-psheader.h: psheader.cpp
+psheader.c: psheader.txt squeeze
+	./squeeze $(srcdir)/psheader.txt $@
 
-psheader.cpp: psheader.txt squeeze$(EXEEXT)
-	./squeeze$(EXEEXT) $(srcdir)/psheader.txt psheader.h psheader.cpp
-
-CLEANFILES = psheader.cpp psheader.h
+CLEANFILES = psheader.c

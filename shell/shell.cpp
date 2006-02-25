@@ -34,6 +34,7 @@
 #include <kparts/componentfactory.h>
 #include <kio/netaccess.h>
 #include <kmainwindowiface.h>
+#include <ktoolbar.h>
 
 // local includes
 #include "shell.h"

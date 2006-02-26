@@ -28,7 +28,7 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2005-12-10</date>
+		<date>2006-01-14</date>
 		<releaseinfo>0.5</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -60,7 +60,7 @@
 			<para>
 				To view a PDF file in &kpdf;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...
 				</guimenuitem></menuchoice>, choose a file in the dialogue and click <guibutton>Open</guibutton>.
-				As long as you selected a valid PDF file, your file should know be displayed in the main window.
+				As long as you selected a valid PDF file, your file should now be displayed in the main window.
 			</para>
 			<para>
 				If you have already opened files in &kpdf; before, you can quickly access them by selecting them in
@@ -411,7 +411,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Enable the continuous page mode</action>. In continuos mode,
+						<para><action>Enable the continuous page mode</action>. In continuous mode,
 							all pages of the document are shown, and you can scroll through
 							them without having to use the <menuchoice><guimenu>Go</guimenu>
 							<guimenuitem>Previous Page</guimenuitem></menuchoice> and
@@ -850,8 +850,8 @@
 				<varlistentry>
 					<term>Default transition</term>
 					<listitem>
-						<para>The transition effect between page and page if the document does not specify one. Set this to Random
-							Transition to make &kpdf; randomly choose one of the available effects.</para>
+						<para>The transition effect between page and page if the document does not specify one. Set this to <guilabel>Random
+							Transition</guilabel> to make &kpdf; randomly choose one of the available effects.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -883,11 +883,10 @@
 			<title>Program Copyright:</title>
 			<listitem><para>Albert Astals Cid<email>tsdgeos@yahoo.es</email> Current maintainer</para></listitem>
 			<listitem><para>Christophe Devriese<email>oelewapperke@ulyssis.org</email></para></listitem>
-			<listitem><para>&Wilco.Greven; Wilco.Greven.mail; Original author</para></listitem>
+			<listitem><para>&Wilco.Greven; &Wilco.Greven.mail; Original author</para></listitem>
 			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> Refactoring for 3.4</para></listitem>
 			<listitem><para>Laurent Montel<email>montel@kde.org</email></para></listitem>
 		</itemizedlist>
-		&underGPL;
 
 		<itemizedlist>
 			<title>Documentation Copyright:</title>

@@ -20,6 +20,7 @@
 #include <ktempfile.h>
 #include <kurl.h>
 
+#include <qapplication.h>
 #include <qdir.h>
 #include <qpainter.h>
 
@@ -280,20 +281,20 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 }
 
 
-void ghostscript_interface::graphics(const PageNumber& page, double dpi, long magnification, QPainter* paint) {
+void ghostscript_interface::graphics(const PageNumber& page, double dpi, long magnification, QPixmap* pixmap) {
 #ifdef DEBUG_PSGS
   kdDebug(kvs::dvi) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
 #endif
 
-  if (paint == 0) {
-    kdError(kvs::dvi) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with paint == 0" << endl;
+  if (pixmap == 0) {
+    kdError(kvs::dvi) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with pixmap == 0" << endl;
     return;
   }
 
   resolution   = dpi;
 
-  pixel_page_w = paint->viewport().width();
-  pixel_page_h = paint->viewport().height();
+  pixel_page_w = pixmap->width();
+  pixel_page_h = pixmap->height();
 
   pageInfo *info = pageList.find(page);
 
@@ -311,8 +312,12 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
 
   gs_generate_graphics_file(page, gfxFile.name(), magnification);
 
+  qApp->lock();
   QPixmap MemoryCopy(gfxFile.name());
-  paint->drawPixmap(0, 0, MemoryCopy);
+  QPainter paint(pixmap);
+  paint.drawPixmap(0, 0, MemoryCopy);
+  paint.end();
+  qApp->unlock();
   return;
 }
 

@@ -20,6 +20,7 @@
 #include <klocale.h>
 
 #include <qimage.h>
+#include <qapplication.h>
 
 //#define DEBUG_PFB 1
 
@@ -170,8 +171,10 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kdError(kvs::dvi) << msg << endl;
+      qApp->lock();
       g->shrunkenCharacter.resize(1,1);
       g->shrunkenCharacter.fill(QColor(255, 255, 255));
+      qApp->unlock();
       return g;
     }
 
@@ -186,8 +189,10 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kdError(kvs::dvi) << msg << endl;
+      qApp->lock();
       g->shrunkenCharacter.resize(1,1);
       g->shrunkenCharacter.fill(QColor(255, 255, 255));
+      qApp->unlock();
       return g;
     }
 
@@ -198,8 +203,10 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kdError(kvs::dvi) << msg << endl;
+      //qApp->lock();
       g->shrunkenCharacter.resize(1,1);
       g->shrunkenCharacter.fill(QColor(255, 255, 255));
+      //qApp->unlock();
       return g;
     }
 
@@ -209,8 +216,10 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = i18n("Glyph #%1 is empty.").arg(ch);
       kdError(kvs::dvi) << i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename) << endl;
+      qApp->lock();
       g->shrunkenCharacter.resize( 15, 15 );
       g->shrunkenCharacter.fill(QColor(255, 0, 0));
+      qApp->unlock();
       g->x2 = 0;
       g->y2 = 15;
     } else {
@@ -267,7 +276,9 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
         }
       }
 
+      qApp->lock();
       g->shrunkenCharacter.convertFromImage (imgi, 0);
+      qApp->unlock();
       g->x2 = -slot->bitmap_left;
       g->y2 = slot->bitmap_top;
     }

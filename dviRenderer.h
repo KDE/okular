@@ -102,7 +102,7 @@ public:
 
   /** The DVI plugin is not multithreaded because it uses
       the QPainter API. */
-  virtual bool isMultiThreaded() const { return false; }
+  virtual bool isMultiThreaded() const { return true; }
 
   bool          showPS() { return _postscript; }
   int           curr_page() { return current_page+1; }
@@ -303,6 +303,12 @@ private:
   of this class).
    */
   bool _isModified;
+
+  /** On this pixmap the page is drawn.
+
+      @warning Every access to a QPixmap and QPainter has to be guarded
+               by qApp->lock(). Otherwise the program will definitely crash. */
+  QPixmap* foreGroundPixmap;
 };
 
 #endif

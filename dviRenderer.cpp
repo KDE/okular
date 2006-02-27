@@ -41,9 +41,6 @@
 
 //#define DEBUG_DVIRENDERER
 
-QPainter *foreGroundPainter; // QPainter used for text
-
-
 //------ now comes the dviRenderer class implementation ----------
 
 dviRenderer::dviRenderer(QWidget *par)
@@ -162,15 +159,32 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
   colorStack.clear();
   globalColor = Qt::black;
 
-  QApplication::setOverrideCursor( waitCursor );
-  foreGroundPainter = page->getPainter();
-  if (foreGroundPainter != 0) {
-    errorMsg = QString::null;
-    draw_page();
-    page->returnPainter(foreGroundPainter);
+  SimplePageSize ps = sizeOfPage(page->getPageNumber());
+  if (!ps.isValid())
+  {
+    ps = sizeOfPage(1);
   }
-  QApplication::restoreOverrideCursor();
+  int pageHeight = ps.sizeInPixel(resolution).height();
+  int pageWidth = ps.sizeInPixel(resolution).width();
+
+  qApp->lock();
+  foreGroundPixmap = new QPixmap(pageWidth, pageHeight);
+  qApp->unlock();
+
+  errorMsg = QString::null;
+
+  draw_page();
+
+  qApp->lock();;
+  page->setPixmap(*foreGroundPixmap);
+  delete foreGroundPixmap;
+  foreGroundPixmap = 0;
+  qApp->unlock();
+
   page->isEmpty = false;
+  //FIXME: We cannot open a KMessageBox outside the main thread.
+  //TODO: Provide an API to allow the renderer to show error and warning messages.
+  /**
   if (errorMsg.isEmpty() != true) {
     KMessageBox::detailedError(parentWidget,
                                i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
@@ -181,17 +195,20 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
     mutex.unlock();
     return;
   }
-
+  */
   // Tell the user (once) if the DVI file contains source specials
   // ... we don't want our great feature to go unnoticed.
   RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
+
   if (currentDVIPage)
   {
     if ((dviFile->sourceSpecialMarker == true) && (currentDVIPage->sourceHyperLinkList.size() > 0)) {
       dviFile->sourceSpecialMarker = false;
       // Show the dialog as soon as event processing is finished, and
       // the program is idle
-      QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
+      //FIXME: We cannot fire an QTimer outside the main thread.
+      //TODO: Provide an API to allow the renderer to show error and warning messages.
+      //QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
     }
   }
 

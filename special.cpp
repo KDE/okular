@@ -18,15 +18,13 @@
 #include <klocale.h>
 #include <kmimetype.h>
 
+#include <qapplication.h>
 #include <qfile.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qstringlist.h>
 
 //#define DEBUG_SPECIAL
-
-extern QPainter *foreGroundPainter;
-
 
 void dviRenderer::printErrorMsgForSpecials(const QString& msg)
 {
@@ -384,7 +382,12 @@ void dviRenderer::epsf_special(const QString& cp)
 
     QImage image(EPSfilename);
     image = image.smoothScale((int)(bbox_width), (int)(bbox_height));
+
+    qApp->lock();
+    QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
     foreGroundPainter->drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
+    delete foreGroundPainter;
+    qApp->unlock();
     return;
   }
 
@@ -411,6 +414,8 @@ void dviRenderer::epsf_special(const QString& cp)
     QRect bbox(((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height,
                (int)bbox_width, (int)bbox_height);
 
+    qApp->lock();
+    QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
     foreGroundPainter->save();
 
     if (QFile::exists(EPSfilename))
@@ -428,6 +433,8 @@ void dviRenderer::epsf_special(const QString& cp)
       foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter),
                                 i18n("File not found: \n %1").arg(EPSfilename_orig), -1);
     foreGroundPainter->restore();
+    delete foreGroundPainter;
+    qApp->unlock();
   }
 
   return;
@@ -446,8 +453,14 @@ void dviRenderer::TPIC_flushPath_special()
   }
 
   QPen pen(Qt::black, (int)(penWidth_in_mInch*resolutionInDPI/1000.0 + 0.5));  // Sets the pen size in milli-inches
+
+  qApp->lock();
+  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
   foreGroundPainter->setPen(pen);
   foreGroundPainter->drawPolyline(TPIC_path, 0, number_of_elements_in_path);
+  delete foreGroundPainter;
+  qApp->unlock();
+
   number_of_elements_in_path = 0;
 }
 
@@ -654,6 +667,8 @@ void dviRenderer::applicationDoSpecial(char *cp)
     }
   }
 
+  qApp->lock();
+  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
   // Detect text rotation specials that are included by the graphicx
   // package. If one of these specials is found, the state of the
   // painter is saved, and the coordinate system is rotated
@@ -681,6 +696,8 @@ void dviRenderer::applicationDoSpecial(char *cp)
   if (special_command == "ps: currentpoint grestore moveto") {
     foreGroundPainter->restore();
   }
+  delete foreGroundPainter;
+  qApp->unlock();
 
   // The following special commands are not used here; they are of
   // interest only during the prescan phase. We recognize them here

@@ -67,11 +67,9 @@
 
 #include <klocale.h>
 
+#include <qapplication.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-
-extern QPainter *foreGroundPainter;
-
 
 /** Routine to print characters.  */
 
@@ -91,12 +89,16 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 
   long dvi_h_sav = currinf.data.dvi_h;
 
+  qApp->lock();
   QPixmap pix = g->shrunkenCharacter;
   int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))) - g->x2;
   int y = currinf.data.pxl_v - g->y2;
 
   // Draw the character.
+  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
   foreGroundPainter->drawPixmap(x, y, pix);
+  delete foreGroundPainter;
+  qApp->unlock();
 
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?
@@ -312,12 +314,17 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             int h = ((int) ROUNDUP(((long) (a *  current_dimconv)), shrinkfactor * 65536));
             int w =  ((int) ROUNDUP(b, shrinkfactor * 65536));
 
+            qApp->lock();
+            QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
             if (colorStack.isEmpty())
               foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                          currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
             else
               foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                         currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
+
+            delete foreGroundPainter;
+            qApp->unlock();
           }
           currinf.data.dvi_h += b;
           break;
@@ -334,12 +341,17 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           if (a > 0 && b > 0) {
             int h = ((int) ROUNDUP(a, shrinkfactor * 65536));
             int w = ((int) ROUNDUP(b, shrinkfactor * 65536));
+
+            qApp->lock();
+            QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
             if (colorStack.isEmpty())
               foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                          currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
             else
               foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                         currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
+            delete foreGroundPainter;
+            qApp->unlock();
           }
           break;
 
@@ -601,6 +613,8 @@ void dviRenderer::draw_page()
   kdDebug(kvs::dvi) <<"draw_page" << endl;
 #endif
 
+  qApp->lock();
+  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
   if (!accessibilityBackground)
   {
     foreGroundPainter->fillRect( foreGroundPainter->viewport(), PS_interface->getBackgroundColor(current_page) );
@@ -610,6 +624,8 @@ void dviRenderer::draw_page()
     // In accessiblity mode use the custom background color
     foreGroundPainter->fillRect( foreGroundPainter->viewport(), accessibilityBackgroundColor );
   }
+  delete foreGroundPainter;
+  qApp->unlock();
 
   // Render the PostScript background, if there is one.
   if (_postscript)
@@ -624,7 +640,7 @@ void dviRenderer::draw_page()
     else
       PS_interface->restoreBackgroundColor(current_page);
 
-    PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPainter);
+    PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPixmap);
   }
 
   // Now really write the text

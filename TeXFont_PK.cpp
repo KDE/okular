@@ -59,6 +59,7 @@
 
 #include <klocale.h>
 
+#include <qapplication.h>
 #include <qfile.h>
 #include <qimage.h>
 
@@ -307,8 +308,10 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
       }
     }
 
+    qApp->lock();
     g->shrunkenCharacter.convertFromImage(im32,0);
     g->shrunkenCharacter.setOptimization(QPixmap::BestOptim);
+    qApp->unlock();
   }
   return g;
 }

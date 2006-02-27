@@ -75,6 +75,8 @@ fontPool::fontPool()
   start.setAlphaBuffer(true);
   Q_UINT32 *destScanLine = (Q_UINT32 *)start.scanLine(0);
   *destScanLine = 0x80000000;
+
+  qApp->lock();
   QPixmap intermediate(start);
   QPixmap dest(1,1);
   dest.fill(Qt::white);
@@ -82,6 +84,8 @@ fontPool::fontPool()
   paint.drawPixmap(0, 0, intermediate);
   paint.end();
   start = dest.convertToImage().convertDepth(32);
+  qApp->unlock();
+
   Q_UINT8 result = *(start.scanLine(0)) & 0xff;
 
   if ((result == 0xff) || (result == 0x00)) {

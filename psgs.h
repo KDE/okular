@@ -58,9 +58,9 @@ public:
   // With option permanent = true.
   void restoreBackgroundColor(const PageNumber& page);
 
-  // Draws the graphics of the page into the painter, if possible. If
+  // Draws the graphics of the page into the pixmap, if possible. If
   // the page does not contain any graphics, nothing happens
-  void     graphics(const PageNumber& page, double dpi, long magnification, QPainter* paint);
+  void     graphics(const PageNumber& page, double dpi, long magnification, QPixmap* pixmap);
 
   // Returns the background color for a certain page. If no color was
   // set, Qt::white is returned.

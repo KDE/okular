@@ -11,6 +11,7 @@
 #include "TeXFont_TFM.h"
 #include "kvs_debug.h"
 
+#include <qapplication.h>
 #include <qfile.h>
 
 //#define DEBUG_TFM
@@ -148,8 +149,10 @@ glyph* TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixma
     if (pixelHeight > 50)
       pixelHeight = 50;
 
+    qApp->lock();
     g->shrunkenCharacter.resize( pixelWidth, pixelHeight );
     g->shrunkenCharacter.fill(color);
+    qApp->unlock();
     g->x2 = 0;
     g->y2 = pixelHeight;
   }

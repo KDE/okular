@@ -28,9 +28,6 @@ DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name)
 
 void DVIWidget::mousePressEvent(QMouseEvent* e)
 {
-  // Call implementation from parent
-  DocumentWidget::mousePressEvent(e);
-
   // Safety check
   if (!pageNumber.isValid())
     return;
@@ -44,7 +41,10 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
   }
 
   // Check if the mouse is pressed on a source-hyperlink
-  if ((e->button() == MidButton) && (pageData->sourceHyperLinkList.size() > 0))
+  // source hyperlinks can be invoked with the Middle Mousebutton or alternatively
+  // with Control+Left Mousebutton
+  if ((e->button() == MidButton || (e->button() == LeftButton && (e->state() & ControlButton)))
+      && (pageData->sourceHyperLinkList.size() > 0))
   {
     int minIndex = 0;
     int minimum = 0;
@@ -71,6 +71,9 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
     emit(SRCLink(pageData->sourceHyperLinkList[minIndex].linkText, inverseMap(e->pos()), this));
     e->accept();
   }
+
+  // Call implementation from parent
+  DocumentWidget::mousePressEvent(e);
 }
 
 

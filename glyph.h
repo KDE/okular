@@ -4,7 +4,7 @@
 #define _GLYPH_H
 
 #include <QColor>
-#include <QPixmap>
+#include <QImage>
 
 
 struct bitmap {
@@ -32,7 +32,7 @@ class glyph {
   // x and y offset in pixels
   short   x, y;
 
-  QPixmap shrunkenCharacter;
+  QImage shrunkenCharacter;
 
   // x and y offset in pixels (shrunken bitmap)
   short   x2, y2;

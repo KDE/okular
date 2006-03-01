@@ -68,7 +68,6 @@
 #include <klocale.h>
 
 #include <QPainter>
-#include <QPixmap>
 
 extern QPainter *foreGroundPainter;
 
@@ -91,12 +90,12 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 
   long dvi_h_sav = currinf.data.dvi_h;
 
-  QPixmap pix = g->shrunkenCharacter;
+  QImage pix = g->shrunkenCharacter;
   int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))) - g->x2;
   int y = currinf.data.pxl_v - g->y2;
 
   // Draw the character.
-  foreGroundPainter->drawPixmap(x, y, pix);
+  foreGroundPainter->drawImage(x, y, pix);
 
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?

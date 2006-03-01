@@ -170,8 +170,8 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kError(kvs::dvi) << msg << endl;
-      g->shrunkenCharacter.resize(1,1);
-      g->shrunkenCharacter.fill(QColor(255, 255, 255));
+      g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
+      g->shrunkenCharacter.fill(qRgb(255, 255, 255));
       return g;
     }
 
@@ -186,8 +186,8 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kError(kvs::dvi) << msg << endl;
-      g->shrunkenCharacter.resize(1,1);
-      g->shrunkenCharacter.fill(QColor(255, 255, 255));
+      g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
+      g->shrunkenCharacter.fill(qRgb(255, 255, 255));
       return g;
     }
 
@@ -198,8 +198,8 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kError(kvs::dvi) << msg << endl;
-      g->shrunkenCharacter.resize(1,1);
-      g->shrunkenCharacter.fill(QColor(255, 255, 255));
+      g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
+      g->shrunkenCharacter.fill(qRgb(255, 255, 255));
       return g;
     }
 
@@ -209,8 +209,8 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       if (errorMessage.isEmpty())
         errorMessage = i18n("Glyph #%1 is empty.").arg(ch);
       kError(kvs::dvi) << i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename) << endl;
-      g->shrunkenCharacter.resize( 15, 15 );
-      g->shrunkenCharacter.fill(QColor(255, 0, 0));
+      g->shrunkenCharacter = QImage(15, 15 , QImage::Format_RGB32);
+      g->shrunkenCharacter.fill(qRgb(255, 0, 0));
       g->x2 = 0;
       g->y2 = 15;
     } else {
@@ -267,7 +267,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         }
       }
 
-      g->shrunkenCharacter.convertFromImage (imgi, 0);
+      g->shrunkenCharacter = imgi;
       g->x2 = -slot->bitmap_left;
       g->y2 = slot->bitmap_top;
     }

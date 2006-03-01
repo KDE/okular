@@ -163,14 +163,28 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
   colorStack.clear();
   globalColor = Qt::black;
 
-  QApplication::setOverrideCursor( Qt::WaitCursor );
-  foreGroundPainter = page->getPainter();
+  SimplePageSize ps = sizeOfPage(page->getPageNumber());
+  if (!ps.isValid())
+  {
+    ps = sizeOfPage(1);
+  }
+  int pageHeight = ps.sizeInPixel(resolution).height();
+  int pageWidth = ps.sizeInPixel(resolution).width();
+ 
+  QImage img(pageWidth, pageHeight, QImage::Format_RGB32);
+  foreGroundPainter = new QPainter(&img); 
   if (foreGroundPainter != 0) {
     errorMsg = QString::null;
     draw_page();
-    page->returnPainter(foreGroundPainter);
+    delete foreGroundPainter;
+    foreGroundPainter = 0;
   }
-  QApplication::restoreOverrideCursor();
+  else
+  {
+    kDebug(kvs::dvi) << "painter creation failed." << endl;
+  }
+  page->setImage(img);
+  
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
     KMessageBox::detailedError(parentWidget,
@@ -192,7 +206,8 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
       dviFile->sourceSpecialMarker = false;
       // Show the dialog as soon as event processing is finished, and
       // the program is idle
-      QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
+      //FIXME
+      //QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
     }
   }
 

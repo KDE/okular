@@ -70,6 +70,7 @@ fontPool::fontPool()
   connect(&kpsewhich_, SIGNAL(readyReadStandardError()),
           this, SLOT(mf_output_receiver()));
 
+  /*
   // Check if the QT library supports the alpha channel of
   // pixmaps. Experiments show that --depending of the configuration
   // of QT at compile and runtime or the availability of the XFt
@@ -98,7 +99,8 @@ fontPool::fontPool()
     kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap supports the alpha channel" << endl;
 #endif
     QPixmapSupportsAlpha = true;
-  }
+  }*/
+  QPixmapSupportsAlpha = true;
 }
 
 

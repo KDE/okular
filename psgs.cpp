@@ -25,6 +25,7 @@
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QTextStream>
+#include <QTimer>
 
 //#define DEBUG_PSGS
 
@@ -235,11 +236,15 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 #ifdef DEBUG_PSGS
   kDebug(kvs::dvi) << gs_exe + " " + gs_args.join(" ") << endl;
 #endif
-
+  
   QProcess gs;
   gs.setReadChannelMode(QProcess::MergedChannels);
-  gs.start(gs_exe, gs_args);
 
+  // FIXME Investigate why the QProcess can not be started in a Thread.
+  // This works in Qt3, and according the Qt4 Documentation should still work.
+  return;
+  gs.start(gs_exe, gs_args);
+  
   if (!gs.waitForStarted()) {
     // Starting ghostscript did not work.
     // TODO: Issue error message, switch PS support off.
@@ -336,8 +341,9 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
 
   gs_generate_graphics_file(page, gfxFileName, magnification);
 
-  QPixmap MemoryCopy(gfxFileName);
-  paint->drawPixmap(0, 0, MemoryCopy);
+  //FIXME
+  //QPixmap MemoryCopy(gfxFileName);
+  //paint->drawPixmap(0, 0, MemoryCopy);
   return;
 }
 

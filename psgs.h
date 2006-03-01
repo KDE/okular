@@ -11,9 +11,12 @@
 #define _PSGS_H_
 
 #include <Q3IntDict>
+#include <QApplication>
 #include <QColor>
+#include <QCustomEvent>
 #include <QObject>
 #include <QString>
+#include <QThread>
 
 class KUrl;
 class PageNumber;

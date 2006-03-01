@@ -149,8 +149,8 @@ glyph* TeXFont_TFM::getGlyph(quint16 characterCode, bool generateCharacterPixmap
     if (pixelHeight > 50)
       pixelHeight = 50;
 
-    g->shrunkenCharacter.resize( pixelWidth, pixelHeight );
-    g->shrunkenCharacter.fill(color);
+    g->shrunkenCharacter = QImage(pixelWidth, pixelHeight, QImage::Format_RGB32);
+    g->shrunkenCharacter.fill(color.rgba());
     g->x2 = 0;
     g->y2 = pixelHeight;
   }

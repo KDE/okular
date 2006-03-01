@@ -61,7 +61,6 @@
 
 #include <QFile>
 #include <QImage>
-#include <QPixmap>
 
 #include <cmath>
 
@@ -308,9 +307,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
       }
     }
 
-    g->shrunkenCharacter.convertFromImage(im32,0);
-    //FIXME: KDE4 porting
-    //g->shrunkenCharacter.setOptimization(QPixmap::BestOptim);
+    g->shrunkenCharacter = im32;
   }
   return g;
 }

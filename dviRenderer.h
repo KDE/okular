@@ -100,9 +100,7 @@ public:
 
   virtual bool  supportsTextSearch() const {return true;}
 
-  /** The DVI plugin is not multithreaded because it uses
-      the QPainter API. */
-  virtual bool isMultiThreaded() const { return false; }
+  virtual bool isMultiThreaded() const { return true; }
 
   bool          showPS() { return _postscript; }
   int           curr_page() { return current_page+1; }

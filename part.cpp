@@ -55,9 +55,13 @@
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 
+// poppler includes
+#include "GlobalParams.h"
+#include "Error.h"
+
 // local includes
-#include "xpdf/GlobalParams.h"
 #include "part.h"
+#include "error.h"
 #include "ui/pageview.h"
 #include "ui/thumbnaillist.h"
 #include "ui/searchwidget.h"
@@ -99,9 +103,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	//if ( m_count ) TODO check if we need to insert these lines..
 	//	delete globalParams;
 	globalParams = new GlobalParams("");
-	globalParams->setupBaseFonts(NULL);
 	m_count++;
 
+	setErrorFunction(kpdf_error);
+	
 	// we need an instance
 	setInstance(KPDFPartFactory::instance());
 

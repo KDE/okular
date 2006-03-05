@@ -25,7 +25,7 @@ class GfxFont;
 class LinkDest;
 class Ref;
 class PDFDoc;
-class GList;
+class GooList;
 class TextPage;
 
 class ObjectRect;
@@ -96,7 +96,7 @@ class PDFGenerator : public Generator
         QString getDocumentInfo( const QString & data ) const;
         QString getDocumentDate( const QString & data ) const;
         // private function for creating the document synopsis hieracy
-        void addSynopsisChildren( QDomNode * parent, GList * items );
+        void addSynopsisChildren( QDomNode * parent, GooList * items );
         // private function for creating the transition information
         void addTransition( int pageNumber, KPDFPage * page );
         // (async related) receive data from the generator thread

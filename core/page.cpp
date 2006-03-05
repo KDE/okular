@@ -18,7 +18,7 @@
 #include "pagetransition.h"
 #include "link.h"
 #include "conf/settings.h"
-#include "xpdf/TextOutputDev.h"
+#include "TextOutputDev.h"
 
 
 /** class KPDFPage **/
@@ -157,7 +157,7 @@ const QString KPDFPage::getText( const NormalizedRect & rect ) const
         top = (int)( rect.top * m_height ),
         right = (int)( rect.right * m_width ),
         bottom = (int)( rect.bottom * m_height );
-    GString * text = m_text->getText( left, top, right, bottom );
+    GooString * text = m_text->getText( left, top, right, bottom );
     QString result = QString::fromUtf8( text->getCString() );
     delete text;
     return result; 

@@ -15,15 +15,13 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdarg.h>
-#include "xpdf/GlobalParams.h"
-#include "xpdf/Error.h"
+#include "GlobalParams.h"
 
 #include <qstring.h>
 
 #include <kdebug.h>
 
-void CDECL error(int pos, const char *msg, ...) {
-  va_list args;
+static void CDECL kpdf_error(int pos, char *msg, va_list args) {
   QString emsg, tmsg;
   char buffer[1024]; // should be big enough
 
@@ -36,9 +34,7 @@ void CDECL error(int pos, const char *msg, ...) {
   } else {
     emsg = "Error: ";
   }
-  va_start(args, msg);
   vsprintf(buffer, msg, args);
-  va_end(args);
   emsg += buffer;
   kDebug() << emsg << endl;
 }

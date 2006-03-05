@@ -25,21 +25,22 @@
 #include <kdebug.h>
 
 // xpdf includes
-#include "xpdf/Object.h"
-#include "xpdf/Dict.h"
-#include "xpdf/Annot.h"
-#include "xpdf/PSOutputDev.h"
-#include "xpdf/TextOutputDev.h"
-#include "xpdf/Link.h"
-#include "xpdf/ErrorCodes.h"
-#include "xpdf/UnicodeMap.h"
-#include "xpdf/Outline.h"
-#include "xpdf/UGString.h"
-#include "goo/GList.h"
+#include "Object.h"
+#include "Dict.h"
+#include "Annot.h"
+#include "PSOutputDev.h"
+#include "TextOutputDev.h"
+#include "Link.h"
+#include "ErrorCodes.h"
+#include "UnicodeMap.h"
+#include "Outline.h"
+#include "UGooString.h"
+#include "goo/GooList.h"
 
 // local includes
 #include "generator_pdf.h"
 #include "gp_outputdev.h"
+#include "pagetransition.h"
 #include "core/observer.h" //for PAGEVIEW_ID
 #include "core/page.h"
 #include "core/pagetransition.h"
@@ -102,7 +103,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
     }
 #endif
     // create PDFDoc for the given file
-    pdfdoc = new PDFDoc( new GString( QFile::encodeName( filePath ) ), 0, 0 );
+    pdfdoc = new PDFDoc( new GooString( QFile::encodeName( filePath ) ), 0, 0 );
 
     // if the file didn't open correctly it might be encrypted, so ask for a pass
     bool firstInput = true;
@@ -148,9 +149,9 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
         }
 
         // 2. reopen the document using the password
-        GString * pwd2 = new GString( password.data() );
+        GooString * pwd2 = new GooString( password.data() );
             delete pdfdoc;
-        pdfdoc = new PDFDoc( new GString( QFile::encodeName( filePath ) ), pwd2, pwd2 );
+        pdfdoc = new PDFDoc( new GooString( QFile::encodeName( filePath ) ), pwd2, pwd2 );
             delete pwd2;
 
         // 3. if the password is correct, store it to the wallet
@@ -239,7 +240,7 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
     if ( !outline )
         return NULL;
 
-    GList * items = outline->getItems();
+    GooList * items = outline->getItems();
     if ( !items || items->getLength() < 1 )
         return NULL;
 
@@ -428,26 +429,26 @@ bool PDFGenerator::print( KPrinter& printer )
     }
 
     KTempFile tf( QString::null, ".ps" );
-    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
+    PSOutputDev *psOut = new PSOutputDev((char*)tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
 
     if (psOut->isOk())
     {
-        std::list<int> pages;
+        QList<int> pageList;
 
         if (!printer.previewOnly())
         {
-            QList<int> pageList = printer.pageList();
-            QList<int>::const_iterator it;
-
-            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
+            pageList = printer.pageList();
         }
         else
         {
-            for(int i = 1; i <= pdfdoc->getNumPages(); i++) pages.push_back(i);
+            for(int i = 1; i <= pdfdoc->getNumPages(); i++) pageList.push_back(i);
         }
 
         docLock.lock();
-        pdfdoc->displayPages(psOut, pages, 72, 72, 0, false, globalParams->getPSCrop(), gFalse);
+	foreach(int page, pageList)
+	{
+		pdfdoc->displayPage(psOut, page, 72, 72, 0, false, globalParams->getPSCrop(), gFalse);
+	}
         docLock.unlock();
 
         // needs to be here so that the file is flushed, do not merge with the one
@@ -463,12 +464,12 @@ bool PDFGenerator::print( KPrinter& printer )
     }
 }
 
-static UGString *QStringToUGString(const QString &s) {
+static UGooString *QStringToUGooString(const QString &s) {
     int len = s.length();
     Unicode *u = (Unicode *)gmallocn(s.length(), sizeof(Unicode));
     for (int i = 0; i < len; ++i)
       u[i] = s.at(i).unicode();
-    return new UGString(u, len);
+    return new UGooString(u, len);
 }
 
 QString PDFGenerator::getMetaData( const QString & key, const QString & option )
@@ -476,7 +477,7 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
     if ( key == "StartFullScreen" )
     {
         // asking for the 'start in fullscreen mode' (pdf property)
-        if ( pdfdoc->getCatalog()->getPageMode() == Catalog::FullScreen )
+        if ( pdfdoc->getCatalog()->getPageMode() == Catalog::pageModeFullScreen )
             return "yes";
     }
     else if ( key == "NamedViewport" && !option.isEmpty() )
@@ -484,7 +485,7 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
         DocumentViewport viewport;
-        UGString * namedDest = QStringToUGString( option );
+        UGooString * namedDest = QStringToUGooString( option );
         docLock.lock();
         LinkDest * destination = pdfdoc->findDest( namedDest );
         if ( destination )
@@ -595,7 +596,7 @@ void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fo
 {
     Ref fontRef, embRef;
     Object fontObj, toUnicodeObj;
-    GString *name;
+    GooString *name;
     GBool emb;
     int i;
 
@@ -634,7 +635,7 @@ void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fo
         sName = name->getCString();
         if (!emb)
         {
-            DisplayFontParam *dfp = globalParams->getDisplayFont(name);
+            DisplayFontParam *dfp = globalParams->getDisplayFont(font);
             if (dfp)
             {
                 if (dfp -> kind == displayFontT1) sPath = dfp->t1.fileName->getCString();
@@ -675,7 +676,7 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
 
     QString result;
     Object obj;
-    GString *s1;
+    GooString *s1;
     GBool isUnicode;
     Unicode u;
     int i;
@@ -764,7 +765,7 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
     return result;
 }
 
-void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
+void PDFGenerator::addSynopsisChildren( QDomNode * parent, GooList * items )
 {
     int numItems = items->getLength();
     for ( int i = 0; i < numItems; ++i )
@@ -795,7 +796,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 // get the destination for the page now, but it's VERY time consuming,
                 // so better storing the reference and provide the viewport as metadata
                 // on demand
-                UGString *s = g->getNamedDest();
+                UGooString *s = g->getNamedDest();
                 QString aux = unicodeToQString( s->unicode(), s->getLength() );
                 item.setAttribute( "ViewportName", aux );
             }
@@ -814,7 +815,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
 
         // 3. recursively descend over children
         outlineItem->open();
-        GList * children = outlineItem->getKids();
+        GooList * children = outlineItem->getKids();
         if ( children )
             addSynopsisChildren( &item, children );
     }
@@ -871,12 +872,14 @@ void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
     if ( !pdfPage )
         return;
 
-    PageTransition *pdfTransition = pdfPage->getTransition();
-    if ( !pdfTransition || pdfTransition->getType() == PageTransition::Replace )
+    Object o;
+    PageTransition *pdfTransition = new PageTransition(pdfPage->getTrans(&o));
+    o.free();
+    if ( !pdfTransition || pdfTransition->type() == PageTransition::Replace )
         return;
 
     KPDFPageTransition *transition = new KPDFPageTransition();
-    switch ( pdfTransition->getType() ) {
+    switch ( pdfTransition->type() ) {
         case PageTransition::Replace:
             // won't get here, added to avoid warning
             break;
@@ -915,9 +918,9 @@ void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
             break;
     }
 
-    transition->setDuration( pdfTransition->getDuration() );
+    transition->setDuration( pdfTransition->duration() );
 
-    switch ( pdfTransition->getAlignment() ) {
+    switch ( pdfTransition->alignment() ) {
         case PageTransition::Horizontal:
             transition->setAlignment( KPDFPageTransition::Horizontal );
             break;
@@ -926,7 +929,7 @@ void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
             break;
     }
 
-    switch ( pdfTransition->getDirection() ) {
+    switch ( pdfTransition->direction() ) {
         case PageTransition::Inward:
             transition->setDirection( KPDFPageTransition::Inward );
             break;
@@ -935,8 +938,8 @@ void PDFGenerator::addTransition( int pageNumber, KPDFPage * page )
             break;
     }
 
-    transition->setAngle( pdfTransition->getAngle() );
-    transition->setScale( pdfTransition->getScale() );
+    transition->setAngle( pdfTransition->angle() );
+    transition->setScale( pdfTransition->scale() );
     transition->setIsRectangular( pdfTransition->isRectangular() == gTrue );
 
     page->setTransition( transition );

@@ -1,7 +1,7 @@
-INCLUDES = -I$(srcdir)/../.. -I$(srcdir)/../../xpdf -I$(srcdir)/../../xpdf/goo -I$(srcdir)/../../xpdf/splash -I$(top_builddir)/kpdf $(all_includes)
+INCLUDES = -I$(srcdir)/../.. -I$(top_builddir)/kpdf $(POPPLER_CFLAGS)  $(all_includes)
 
 libgeneratorpdf_la_LDFLAGS = $(all_libraries)
-libgeneratorpdf_la_SOURCES = generator_pdf.cpp gp_outputdev.cpp
+libgeneratorpdf_la_SOURCES = generator_pdf.cpp gp_outputdev.cpp pagetransition.cpp
 
 noinst_LTLIBRARIES = libgeneratorpdf.la
 

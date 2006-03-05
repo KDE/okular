@@ -19,7 +19,7 @@
 #include <klocale.h>
 
 static const char description[] =
-I18N_NOOP("kpdf, a kde pdf viewer based on xpdf");
+I18N_NOOP("kpdf, a kde pdf viewer based on poppler");
 
 static const char version[] = "0.5";
 
@@ -45,7 +45,6 @@ int main(int argc, char** argv)
     about.addAuthor("Albert Astals Cid", I18N_NOOP("Current mantainer"), "astals11@terra.es");
     about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
 
-    about.addCredit("Derek Noonburg", I18N_NOOP("Xpdf author"), 0, "http://www.foolabs.com/xpdf/");
     about.addCredit("Marco Martin", I18N_NOOP("Icon"), 0, "m4rt@libero.it");
 
     KCmdLineArgs::init(argc, argv, &about);

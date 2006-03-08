@@ -423,7 +423,7 @@ void Splash::strokeNarrow(SplashXPath *xPath) {
   int x0, x1, x2, x3, y0, y1, x, y, t;
   SplashCoord dx, dy, dxdy;
   SplashClipResult clipRes;
-  int nClipRes[3];
+  int nClipRes[3] = {0, 0, 0};
   int i;
 
   for (i = 0, seg = xPath->segs; i < xPath->length; ++i, ++seg) {

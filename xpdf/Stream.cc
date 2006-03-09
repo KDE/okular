@@ -2922,6 +2922,7 @@ GBool DCTStream::readBaselineSOF() {
   numComps = str->getChar();
   if (numComps <= 0 || numComps > 4) {
     error(getPos(), "Bad number of components in DCT stream", prec);
+    numComps = 0;
     return gFalse;
   }
   if (prec != 8) {
@@ -2951,7 +2952,6 @@ GBool DCTStream::readProgressiveSOF() {
   width = read16();
   numComps = str->getChar();
   if (numComps <= 0 || numComps > 4) {
-     numComps = 0;
      numComps = 0;
      error(getPos(), "Bad number of components in DCT stream");
      return gFalse;

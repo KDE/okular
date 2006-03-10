@@ -163,13 +163,8 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
   colorStack.clear();
   globalColor = Qt::black;
 
-  SimplePageSize ps = sizeOfPage(page->getPageNumber());
-  if (!ps.isValid())
-  {
-    ps = sizeOfPage(1);
-  }
-  int pageHeight = ps.sizeInPixel(resolution).height();
-  int pageWidth = ps.sizeInPixel(resolution).width();
+  int pageWidth = page->width();
+  int pageHeight = page->height();
  
   QImage img(pageWidth, pageHeight, QImage::Format_RGB32);
   foreGroundPainter = new QPainter(&img); 

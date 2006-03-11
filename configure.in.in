@@ -34,11 +34,23 @@ AC_SUBST(LIBFREETYPE_RPATH)
 
 
 # Check for xft
-KDE_FIND_PATH(xft-config, XFT_CONFIG, [${prefix}/bin ${exec_prefix}/bin /usr/local/bin /opt/local/bin],)
+KDE_FIND_PATH(xft-config, XFT_CONFIG, [${prefix}/bin ${exec_prefix}/bin /usr/local/bin /opt/local/bin], [
+  KDE_FIND_PATH( pkg-config, PKG_CONFIG, [${prefix}/bin ${exec_prefix}/bin /usr/local/bin /opt/local/bin /usr/bin],)
+  if test -n "$PKG_CONFIG"; then
+        if ! $PKG_CONFIG --exists xft; then
+                unset PKG_CONFIG
+        fi
+  fi
+])
 
-if test -n "$XFT_CONFIG"; then
-  XFT_CFLAGS="`$XFT_CONFIG --cflags`"
-  XFT_LIBS="`$XFT_CONFIG --libs`"
+if test -n "$PKG_CONFIG" -o -n "$XFT_CONFIG"; then
+        if test -n "$PKG_CONFIG"; then
+                XFT_CFLAGS="`$PKG_CONFIG --cflags xft`"
+                XFT_LIBS="`$PKG_CONFIG --libs xft`"
+        else
+                XFT_CFLAGS="`$XFT_CONFIG --cflags`"
+                XFT_LIBS="`$XFT_CONFIG --libs`"
+        fi
 fi
 
 AC_SUBST(XFT_CFLAGS)

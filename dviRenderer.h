@@ -100,8 +100,6 @@ public:
 
   virtual bool  supportsTextSearch() const {return true;}
 
-  virtual bool isMultiThreaded() const { return true; }
-
   bool          showPS() { return _postscript; }
   int           curr_page() { return current_page+1; }
   virtual bool  isValidFile(const QString& fileName) const;

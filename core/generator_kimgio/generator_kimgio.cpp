@@ -60,7 +60,7 @@ bool KIMGIOGenerator::hasFonts() const
     return false;
 }
 
-void KIMGIOGenerator::putFontInfo( KListView * )
+void KIMGIOGenerator::putFontInfo( K3ListView * )
 {
 }
 

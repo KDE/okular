@@ -10,7 +10,7 @@
 // qt/kde includes
 #include <qlayout.h>
 #include <qlabel.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 #include <ksqueezedtextlabel.h>
 #include <kglobalsettings.h>
@@ -76,7 +76,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   {
     QFrame *page2 = addPage(i18n("Fonts"));
     page2Layout = new QVBoxLayout(page2, 0, KDialog::spacingHint());
-    KListView *lv = new KListView(page2);
+    K3ListView *lv = new K3ListView(page2);
     page2Layout->add(lv);
     doc->putFontInfo(lv);
   }

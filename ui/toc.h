@@ -11,13 +11,13 @@
 #define _KPDF_TOC_H_
 
 #include <qdom.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include "core/document.h"
 #include "core/observer.h"
 
 class KPDFDocument;
 
-class TOC : public KListView, public DocumentObserver
+class TOC : public K3ListView, public DocumentObserver
 {
 Q_OBJECT
     public:
@@ -35,7 +35,7 @@ Q_OBJECT
         void slotExecuted(Q3ListViewItem *i);
 
     private:
-        void addChildren( const QDomNode & parentNode, KListViewItem * parentItem = 0 );
+        void addChildren( const QDomNode & parentNode, K3ListViewItem * parentItem = 0 );
         DocumentViewport getViewport( const QDomElement &e ) const;
         KPDFDocument *m_document;
 };

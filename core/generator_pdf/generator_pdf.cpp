@@ -15,7 +15,7 @@
 #include <qapplication.h>
 #include <qregexp.h>
 #include <kauthorized.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 #include <kpassworddialog.h>
 #include <kwallet.h>
@@ -355,7 +355,7 @@ bool PDFGenerator::hasFonts() const
     return true;
 }
 
-void PDFGenerator::putFontInfo(KListView *list)
+void PDFGenerator::putFontInfo(K3ListView *list)
 {
     Page *page;
     Dict *resDict;
@@ -537,7 +537,7 @@ static QString unicodeToQString(Unicode* u, int len) {
     return ret;
 }
 
-void PDFGenerator::scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
+void PDFGenerator::scanFonts(Dict *resDict, K3ListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
 {
     Object obj1, obj2, xObjDict, xObj, resObj;
     Ref r;
@@ -592,7 +592,7 @@ void PDFGenerator::scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &f
     xObjDict.free();
 }
 
-void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
+void PDFGenerator::scanFont(GfxFont *font, K3ListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
 {
     Ref fontRef, embRef;
     Object fontObj, toUnicodeObj;
@@ -651,7 +651,7 @@ void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fo
         sPath = i18n("-");
     }
     sEmb = emb ? i18n("Yes") : i18n("No");
-    new KListViewItem(list, sName, fontTypeNames[font->getType()], sEmb, sPath);
+    new K3ListViewItem(list, sName, fontTypeNames[font->getType()], sEmb, sPath);
 
     // add this font to the list
     if (fontsLen == fontsSize)

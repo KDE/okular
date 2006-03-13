@@ -28,7 +28,7 @@ class DocumentInfo;
 class DocumentSynopsis;
 class Generator;
 class PixmapRequest;
-class KListView;
+class K3ListView;
 class KPrinter;
 class KUrl;
 
@@ -83,7 +83,7 @@ class KPDFDocument : public QObject
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
         bool supportsSearching() const;
         bool hasFonts() const;
-        void putFontInfo(KListView *list);
+        void putFontInfo(K3ListView *list);
 
         // perform actions on document / pages
         void setViewportPage( int page, int excludeId = -1, bool smoothMove = false );

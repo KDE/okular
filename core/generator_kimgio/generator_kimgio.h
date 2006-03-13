@@ -31,7 +31,7 @@ class KIMGIOGenerator : public Generator
         bool hasFonts() const;
 
         // font related
-        void putFontInfo(KListView *list);
+        void putFontInfo(K3ListView *list);
 
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );

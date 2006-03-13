@@ -14,7 +14,7 @@
 #include <qvector.h>
 #include <qstring.h>
 #include "core/document.h"
-class KListView;
+class K3ListView;
 class KPrinter;
 class KPDFPage;
 class KPDFLink;
@@ -64,7 +64,7 @@ class Generator : public QObject
         virtual bool hasFonts() const = 0;
 
         // font related
-        virtual void putFontInfo(KListView *list) = 0;
+        virtual void putFontInfo(K3ListView *list) = 0;
 
         // print document using already configured kprinter
         virtual bool print( KPrinter& /*printer*/ ) { return false; }

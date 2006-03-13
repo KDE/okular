@@ -72,7 +72,7 @@ class PDFGenerator : public Generator
         bool hasFonts() const;
 
         // [INHERITED] font related
-        void putFontInfo(KListView *list);
+        void putFontInfo(K3ListView *list);
 
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
@@ -87,8 +87,8 @@ class PDFGenerator : public Generator
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
 
-        void scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
-        void scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
+        void scanFonts(Dict *resDict, K3ListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
+        void scanFont(GfxFont *font, K3ListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
 
         void fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination );
 

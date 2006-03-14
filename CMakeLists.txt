@@ -9,9 +9,40 @@ include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_D
 
 macro_optional_find_package(KPDF)
 
+set(libkpdfconf_SRCS ${CMAKE_SOURCE_DIR}/kpdf/conf/preferencesdialog.cpp )
+
+kde4_add_ui3_files(libkpdfconf_SRCS 
+	${CMAKE_SOURCE_DIR}/kpdf/conf/dlggeneral.ui
+	${CMAKE_SOURCE_DIR}/kpdf/conf/dlgperformance.ui
+	${CMAKE_SOURCE_DIR}/kpdf/conf/dlgaccessibility.ui
+	${CMAKE_SOURCE_DIR}/kpdf/conf/dlgpresentation.ui
+	)
+
+kde4_add_kcfg_files(libkpdfconf_SRCS ${CMAKE_SOURCE_DIR}/kpdf/conf/settings.kcfgc)
+
+
+set(libkpdfui_SRCS 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/pagepainter.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/pageview.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/pageviewutils.cpp
+	${CMAKE_SOURCE_DIR}/kpdf/ui/minibar.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/thumbnaillist.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/searchwidget.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/toc.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/propertiesdialog.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/ui/presentationwidget.cpp
+)
+
+set(libkpdfcore_SRCS
+	${CMAKE_SOURCE_DIR}/kpdf/core/document.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/core/link.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/core/page.cpp 
+	${CMAKE_SOURCE_DIR}/kpdf/core/pagetransition.cpp
+	)
+
 ########### next target ###############
 
-set(kpdfpart_PART_SRCS part.cpp )
+set(kpdfpart_PART_SRCS part.cpp ${libkpdfconf_SRCS} ${libkpdfui_SRCS} ${libkpdfcore_SRCS})
 
 kde4_automoc(${kpdfpart_PART_SRCS})
 
@@ -21,7 +52,7 @@ kde4_add_plugin(kpdfpart WITH_PREFIX ${kpdfpart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kpdfpart )
 
-target_link_libraries(kpdfpart  ${QT_AND_KDECORE_LIBS} kpdfconf kpdfcore kpdfui kparts kdeprint kutils m )
+target_link_libraries(kpdfpart  ${LIB_KDE3SUPPORT} kpdfcore kpdfui kdeprint m )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 kpdfpart )
 

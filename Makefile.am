@@ -15,7 +15,7 @@ KDE_ICON = kpdf
 #########################################################################
 kde_module_LTLIBRARIES = libkpdfpart.la
 
-libkpdfpart_la_SOURCES = dcop.skel error.cpp part.cpp
+libkpdfpart_la_SOURCES = dcop.skel  part.cpp
 libkpdfpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 libkpdfpart_la_LIBADD  = $(POPPLER_LIBS) conf/libkpdfconf.la \
                          core/libkpdfcore.la ui/libkpdfui.la $(LIB_KPARTS) \

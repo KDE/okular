@@ -7,10 +7,11 @@ add_subdirectory( shell )
 
 include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
 
+macro_optional_find_package(KPDF)
 
 ########### next target ###############
 
-set(kpdfpart_PART_SRCS error.cpp part.cpp )
+set(kpdfpart_PART_SRCS part.cpp )
 
 kde4_automoc(${kpdfpart_PART_SRCS})
 

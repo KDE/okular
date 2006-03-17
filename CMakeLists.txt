@@ -1,4 +1,5 @@
 kde4_header()
+project(kpdf)
 
 add_subdirectory( conf ) 
 add_subdirectory( core ) 

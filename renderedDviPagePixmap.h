@@ -32,7 +32,7 @@ class RenderedDviPagePixmap : public RenderedDocumentPagePixmap
   Q_OBJECT
 
  public:
-  RenderedDviPagePixmap();
+  RenderedDviPagePixmap(JobId);
 
   virtual ~RenderedDviPagePixmap();
 

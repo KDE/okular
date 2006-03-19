@@ -34,9 +34,9 @@ DVIPageCache::~DVIPageCache()
 {}
 
 
-RenderedDocumentPagePixmap* DVIPageCache::createDocumentPagePixmap() const
+RenderedDocumentPagePixmap* DVIPageCache::createDocumentPagePixmap(JobId id) const
 {
-  return new RenderedDviPagePixmap;
+  return new RenderedDviPagePixmap(id);
 }
 
 #include "dviPageCache.moc"

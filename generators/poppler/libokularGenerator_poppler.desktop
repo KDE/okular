@@ -1,11 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Service
-Name=Xpdf
-Comment=PDF backend for oKular using xpdf
+Name=Poppler
+Comment=PDF backend for oKular using poppler
 ServiceTypes=oKular/Generator
 MimeType=application/x-pdf;application/pdf
-X-KDE-Library=libokularGenerator_xpdf.la
+X-KDE-Library=libokularGenerator_poppler.la
 X-KDE-Priority=1
 X-KDE-oKularAPIVersion=1
 X-KDE-oKularHasInternalSettings=false

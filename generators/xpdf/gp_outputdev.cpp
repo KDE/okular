@@ -28,9 +28,9 @@
 #include "core/document.h" // for DocumentViewport
 #include "core/page.h"
 #include "core/link.h"
-#include "xpdf/Link.h"
-#include "xpdf/GfxState.h"
-#include "xpdf/TextOutputDev.h"
+#include "Link.h"
+#include "GfxState.h"
+#include "TextOutputDev.h"
 #include "splash/SplashBitmap.h"
 
 //NOTE: XPDF/Splash *implementation dependant* code is marked with '###'
@@ -263,7 +263,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
         case actionLaunch:
             {
             LinkLaunch * e = (LinkLaunch *)a;
-            GString * p = e->getParams();
+            GooString * p = e->getParams();
             link = new KPDFLinkExecute( e->getFileName()->getCString(), p ? p->getCString() : 0 );
             }
             break;
@@ -328,7 +328,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
     return link;
 }
 
-DocumentViewport KPDFOutputDev::decodeViewport( UGString * namedDest, LinkDest * dest )
+DocumentViewport KPDFOutputDev::decodeViewport( UGooString * namedDest, LinkDest * dest )
 // note: this function is called when processing a page, when the MUTEX is already LOCKED
 {
     DocumentViewport vp( -1 );

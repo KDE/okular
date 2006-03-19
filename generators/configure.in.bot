@@ -18,3 +18,11 @@ echo "The chm backend will not be available."
 echo ""
 fi
 
+if test "x$have_poppler_051" != "xyes"; then
+echo ""
+echo "You're missing poppler-qt >= 0.5.1"
+echo "The pdf backend won't be compiled without poppler >= 0.5.1"
+echo "You can download poppler from http://poppler.freedesktop.org/"
+echo ""
+fi
+

@@ -1,4 +1,4 @@
-INCLUDES = -I$(srcdir)/xpdf -I$(srcdir)/xpdf/goo -I$(top_builddir)/kpdf $(all_includes) $(FREETYPE_CFLAGS)
+INCLUDES = -I$(top_builddir)/kpdf $(all_includes)
 
 METASOURCES = AUTO
 

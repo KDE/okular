@@ -20,7 +20,6 @@
 #include "annotations.h"
 #include "conf/settings.h"
 #include "area.h"
-//include "xpdf/TextOutputDev.h"
 
 // temp includes
 #include <sys/time.h>

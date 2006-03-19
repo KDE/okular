@@ -19,9 +19,12 @@
 #pragma interface
 #endif
 
+#define USE_FIXEDPOINT 0
+#define SPLASH_CMYK 0
+
 #include <qvaluelist.h>
-#include "xpdf/PDFDoc.h" // for 'Object'
-#include "xpdf/SplashOutputDev.h"
+#include "PDFDoc.h" // for 'Object'
+#include "SplashOutputDev.h"
 
 class QPixmap;
 class KPDFLink;
@@ -71,7 +74,7 @@ class KPDFOutputDev : public SplashOutputDev
         // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
         KPDFLink * generateLink( LinkAction * a );
         // fills up a Viewport structure out of a given LinkGoto link
-        DocumentViewport decodeViewport( UGString *, class LinkDest * );
+        DocumentViewport decodeViewport( UGooString *, class LinkDest * );
 
         // generator switches and parameters
         bool m_qtThreadSafety;

@@ -21,3 +21,14 @@ AM_CONDITIONAL(include_ghostscript, test -n "$LIB_QGS")
 HAVE_CHMLIB=no
 KDE_CHECK_HEADER(chm_lib.h, HAVE_CHMLIB=yes)
 AM_CONDITIONAL(include_chm, test "x$HAVE_CHMLIB" = "xyes")
+
+AC_ARG_WITH([poppler],
+  [AS_HELP_STRING([--with-poppler],
+    [Enable PDF support through poppler  @<:@default=check@:>@])],
+  [], with_poppler=check)
+
+if test "x$with_poppler" != xno; then
+  PKG_CHECK_MODULES(POPPLER, poppler >= 0.5.1, have_poppler_051=yes, have_poppler_051=no)
+fi
+
+AM_CONDITIONAL(include_pdf, test "x$have_poppler_051" = xyes)

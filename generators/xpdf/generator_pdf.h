@@ -21,7 +21,7 @@
 #include "core/textpage.h"
 
 class PDFDoc;
-class GList;
+class GooList;
 class TextPage;
 class LinkDest;
 class Page;
@@ -107,7 +107,7 @@ class PDFGenerator : public Generator
         QString getDocumentInfo( const QString & data ) const;
         QString getDocumentDate( const QString & data ) const;
         // create the document synopsis hieracy
-        void addSynopsisChildren( QDomNode * parent, GList * items );
+        void addSynopsisChildren( QDomNode * parent, GooList * items );
         // add fonts (in resDict) to the private 'docFonts' class
         void addFonts( Dict * resDict, Ref ** fonts, int &fontsLen, int &fontsSize );
         // fetch annotations from the pdf file and add they to the page

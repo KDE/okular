@@ -25,8 +25,8 @@
 #include "hyperlink.h"
 
 
-RenderedDviPagePixmap::RenderedDviPagePixmap()
-  : RenderedDocumentPagePixmap()
+RenderedDviPagePixmap::RenderedDviPagePixmap(JobId _id)
+  : RenderedDocumentPagePixmap(_id)
 {
   sourceHyperLinkList.reserve(200);
 }

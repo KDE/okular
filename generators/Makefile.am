@@ -7,8 +7,8 @@ CHMPLUGINDIR = chm
 endif
 
 if include_pdf
-PDFPLUGINDIR = xpdf
+PDFPLUGINDIR = poppler
 endif
 
-SUBDIRS = $(GSPLUGINDIR) xpdf fax kimgio $(CHMPLUGINDIR)
+SUBDIRS = $(GSPLUGINDIR) poppler fax kimgio $(CHMPLUGINDIR)
 

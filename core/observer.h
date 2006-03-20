@@ -11,7 +11,7 @@
 #ifndef _KPDF_DOCUMENTOBSERVER_H_
 #define _KPDF_DOCUMENTOBSERVER_H_
 
-#include <qvaluevector.h>
+#include <qvector.h>
 #include <qrect.h>
 
 /** IDs for observers. Globally defined here. **/
@@ -43,13 +43,15 @@ class KPDFPage;
 class DocumentObserver
 {
     public:
+        virtual ~DocumentObserver() {};
+
         // you must give each observer a unique ID (used for notifications)
         virtual uint observerId() const = 0;
 
         // commands from the Document to all observers
         enum ChangedFlags { Pixmap = 1, Bookmark = 2, Highlights = 4, Annotations = 8 };
         enum NotifyType { Setup = 1, Viewport = 2, Page = 4, Contents = 8 };
-        virtual void notifySetup( const QValueVector< KPDFPage * > & /*pages*/, bool /*documentChanged*/ ) {};
+        virtual void notifySetup( const QVector< KPDFPage * > & /*pages*/, bool /*documentChanged*/ ) {};
         virtual void notifyViewportChanged( bool /*smoothMove*/ ) {};
         virtual void notifyPageChanged( int /*pageNumber*/, int /*changedFlags*/ ) {};
         virtual void notifyContentsCleared( int /*changedFlags*/ ) {};

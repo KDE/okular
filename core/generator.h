@@ -21,8 +21,8 @@
 #include <qvector.h>
 #include <qstring.h>
 #include <ostream>
-#include "core/document.h"
-#include "core/textpage.h"
+#include "document.h"
+#include "textpage.h"
 class KPrinter;
 class KPDFPage;
 class KPDFLink;

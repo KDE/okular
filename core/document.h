@@ -30,7 +30,7 @@ class Generator;
 class PixmapRequest;
 class Annotation;
 class KPrinter;
-class KURL;
+class KUrl;
 class KActionCollection;
 class QToolBox;
 class NotifyRequest;
@@ -56,13 +56,13 @@ class KPDFDocument : public QObject
 {
     Q_OBJECT
     public:
-        KPDFDocument( QHash<QString, Generator> * genList );
+        KPDFDocument( QHash<QString, Generator*> * genList );
         ~KPDFDocument();
 
         // communication with the part
 
         // document handling
-        bool openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime );
+        bool openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime );
         void closeDocument();
 
         // observer stuff
@@ -79,11 +79,11 @@ class KPDFDocument : public QObject
         const DocumentInfo * documentInfo() const;
         const DocumentSynopsis * documentSynopsis() const;
         const DocumentFonts * documentFonts() const;
-        const KPDFPage * page( uint page ) const;
+        const KPDFPage * page( int page ) const;
         const DocumentViewport & viewport() const;
         uint currentPage() const;
         uint pages() const;
-        KURL currentDocument() const;
+        KUrl currentDocument() const;
         bool isAllowed( int /*Document::Permisison(s)*/ ) const;
         bool supportsSearching() const;
         bool supportsRotation()  const;
@@ -134,7 +134,7 @@ class KPDFDocument : public QObject
         void linkGoToPage();
         void linkPresentation();
         void linkEndPresentation();
-        void openURL(const KURL &url);
+        void openURL(const KUrl &url);
         void error(QString & string, int duration);
         void warning(QString & string, int duration);
         void notice(QString & string, int duration);
@@ -148,7 +148,7 @@ class KPDFDocument : public QObject
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
-        QHash<QString, Generator>* m_loadedGenerators ;
+        QHash<QString, Generator*>* m_loadedGenerators ;
         Generator * generator;
         bool m_usingCachedGenerator;
         QVector< KPDFPage * > pages_vector;

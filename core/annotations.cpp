@@ -101,7 +101,7 @@ Annotation::~Annotation()
     // delete all children revisions
     if ( revisions.isEmpty() )
         return;
-    QValueList< Revision >::iterator it = revisions.begin(), end = revisions.end();
+    QLinkedList< Revision >::iterator it = revisions.begin(), end = revisions.end();
     for ( ; it != end; ++it )
         delete (*it).annotation;
 }
@@ -292,7 +292,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         return;
 
     // add all revisions as children of revisions element
-    QValueList< Revision >::const_iterator it = revisions.begin(), end = revisions.end();
+    QLinkedList< Revision >::const_iterator it = revisions.begin(), end = revisions.end();
     for ( ; it != end; ++it )
     {
         // create revision element
@@ -505,7 +505,7 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
     int points = linePoints.count();
     if ( points > 1 )
     {
-        QValueList<NormalizedPoint>::const_iterator it = linePoints.begin(), end = linePoints.end();
+        QLinkedList<NormalizedPoint>::const_iterator it = linePoints.begin(), end = linePoints.end();
         while ( it != end )
         {
             const NormalizedPoint & p = *it;
@@ -633,7 +633,7 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
     if ( highlightQuads.count() < 1 )
         return;
     // append highlight quads, all children describe quads
-    QValueList< Quad >::const_iterator it = highlightQuads.begin(), end = highlightQuads.end();
+    QLinkedList< Quad >::const_iterator it = highlightQuads.begin(), end = highlightQuads.end();
     for ( ; it != end; ++it )
     {
         QDomElement quadElement = document.createElement( "quad" );
@@ -727,7 +727,7 @@ InkAnnotation::InkAnnotation( const QDomNode & node )
                 continue;
 
             // build each path parsing 'point' subnodes
-            QValueList<NormalizedPoint> path;
+            QLinkedList<NormalizedPoint> path;
             QDomNode pointNode = pathElement.firstChild();
             while ( pointNode.isElement() )
             {
@@ -765,13 +765,13 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
     // append the optional attributes
     if ( inkPaths.count() < 1 )
         return;
-    QValueList< QValueList<NormalizedPoint> >::const_iterator pIt = inkPaths.begin(), pEnd = inkPaths.end();
+    QLinkedList< QLinkedList<NormalizedPoint> >::const_iterator pIt = inkPaths.begin(), pEnd = inkPaths.end();
     for ( ; pIt != pEnd; ++pIt )
     {
         QDomElement pathElement = document.createElement( "path" );
         inkElement.appendChild( pathElement );
-        const QValueList<NormalizedPoint> & path = *pIt;
-        QValueList<NormalizedPoint>::const_iterator iIt = path.begin(), iEnd = path.end();
+        const QLinkedList<NormalizedPoint> & path = *pIt;
+        QLinkedList<NormalizedPoint>::const_iterator iIt = path.begin(), iEnd = path.end();
         for ( ; iIt != iEnd; ++iIt )
         {
             const NormalizedPoint & point = *iIt;

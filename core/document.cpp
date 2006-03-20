@@ -14,7 +14,7 @@
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qtextstream.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 #include <qtimer.h>
 #include <qmap.h>
 #include <kconfigdialog.h>
@@ -53,7 +53,7 @@ class KPDFDocumentPrivate
 
         // needed because for remote documents docFileName is a local file and
         // we want the remote url when the document refers to relativeNames
-        KURL url;
+        KUrl url;
 
         // cached stuff
         QString docFileName;
@@ -63,14 +63,14 @@ class KPDFDocumentPrivate
         QStringList kimgioMimes;
 
         // viewport stuff
-        QValueList< DocumentViewport > viewportHistory;
-        QValueList< DocumentViewport >::iterator viewportIterator;
+        QLinkedList< DocumentViewport > viewportHistory;
+        QLinkedList< DocumentViewport >::iterator viewportIterator;
         DocumentViewport nextDocumentViewport; // see KPDFLink::Goto for an explanation
 
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > observers;
-        QValueList< PixmapRequest * > pixmapRequestsStack;
-        QValueList< AllocatedPixmap * > allocatedPixmapsFifo;
+        QLinkedList< PixmapRequest * > pixmapRequestsStack;
+        QLinkedList< AllocatedPixmap * > allocatedPixmapsFifo;
         int allocatedPixmapsTotalMemory;
         bool warnedOutOfMemory;
 
@@ -94,7 +94,7 @@ struct RunningSearch
     // store search properties
     int continueOnPage;
     RegularAreaRect continueOnMatch;
-    QValueList< int > highlightedPages;
+    QLinkedList< int > highlightedPages;
 
     // fields related to previous searches (used for 'continueSearch')
     QString cachedString;
@@ -112,7 +112,7 @@ struct RunningSearch
 
 /** KPDFDocument **/
 
-KPDFDocument::KPDFDocument( QDict<Generator> * genList )
+KPDFDocument::KPDFDocument( QHash<QString, Generator*> * genList )
     : m_loadedGenerators ( genList ), generator( 0 ),  d( new KPDFDocumentPrivate )
 {
     d->allocatedPixmapsTotalMemory = 0;
@@ -131,7 +131,7 @@ KPDFDocument::~KPDFDocument()
 }
 
 
-bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, const KMimeType::Ptr &mime )
+bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &mime )
 {
     // docFile is always local so we can use QFile on it
     QFile fileReadTest( docFile );
@@ -158,7 +158,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, cons
     
     if (offers.isEmpty())
     {
-	kdWarning() << "No plugin for '" << mime->name() << "' mimetype." << endl;
+	kWarning() << "No plugin for '" << mime->name() << "' mimetype." << endl;
 	   return false;
     }
     int hRank=0;
@@ -197,13 +197,13 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, cons
         KLibLoader *loader = KLibLoader::self();
         if (!loader)
         {
-            kdWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
+            kWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
             return false;
         }
         KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[hRank]->library() ) );
         if (!lib) 
         {
-            kdWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
+            kWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
             return false;
         }
 
@@ -212,7 +212,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, cons
 
         if ( !generator )
         {
-            kdWarning() << "Sth broke." << endl;
+            kWarning() << "Sth broke." << endl;
             return false;
         }
         if ( offers[hRank]->property("[X-KDE-oKularHasInternalSettings]").toBool() )
@@ -233,7 +233,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, cons
     connect (generator,SIGNAL(notice(QString&,int )),this,SIGNAL(notice(QString&,int )));
 
     // 1. load Document (and set busy cursor while loading)
-    QApplication::setOverrideCursor( waitCursor );
+    QApplication::setOverrideCursor( Qt::waitCursor );
     bool openOk = generator->loadDocument( docFile, pages_vector );
     QApplication::restoreOverrideCursor();
     if ( !openOk || pages_vector.size() <= 0 )
@@ -324,27 +324,27 @@ void KPDFDocument::closeDocument()
         delete generator;
     }
     generator = 0;
-    d->url = KURL();
+    d->url = KUrl();
     // remove requests left in queue
-    QValueList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
-    QValueList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
+    QLinkedList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
+    QLinkedList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
     for ( ; sIt != sEnd; ++sIt )
         delete *sIt;
     d->pixmapRequestsStack.clear();
 
     // send an empty list to observers (to free their data)
-    foreachObserver( notifySetup( QValueVector< KPDFPage * >(), true ) );
+    foreachObserver( notifySetup( QVector< KPDFPage * >(), true ) );
 
     // delete pages and clear 'pages_vector' container
-    QValueVector< KPDFPage * >::iterator pIt = pages_vector.begin();
-    QValueVector< KPDFPage * >::iterator pEnd = pages_vector.end();
+    QVector< KPDFPage * >::iterator pIt = pages_vector.begin();
+    QVector< KPDFPage * >::iterator pEnd = pages_vector.end();
     for ( ; pIt != pEnd; ++pIt )
         delete *pIt;
     pages_vector.clear();
 
     // clear 'memory allocation' descriptors
-    QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-    QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
         delete *aIt;
     d->allocatedPixmapsFifo.clear();
@@ -403,13 +403,13 @@ void KPDFDocument::removeObserver( DocumentObserver * pObserver )
     {
         // free observer's pixmap data
         int observerId = pObserver->observerId();
-        QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
             (*it)->deletePixmap( observerId );
 
         // [MEM] free observer's allocation descriptors
-        QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
         while ( aIt != aEnd )
         {
             AllocatedPixmap * p = *aIt;
@@ -433,13 +433,13 @@ void KPDFDocument::reparseConfig()
     if ( generator && generator->reparseConfig() )
     {
         // invalidate pixmaps
-        QValueVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector<KPDFPage*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
             (*it)->deletePixmapsAndRects();
 
         // [MEM] remove allocation descriptors
-        QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
         for ( ; aIt != aEnd; ++aIt )
             delete *aIt;
         d->allocatedPixmapsFifo.clear();
@@ -486,7 +486,7 @@ const DocumentFonts * KPDFDocument::documentFonts() const
     return generator ? generator->generateDocumentFonts() : NULL;
 }
 
-const KPDFPage * KPDFDocument::page( uint n ) const
+const KPDFPage * KPDFDocument::page( int n ) const
 {
     return ( n < pages_vector.count() ) ? pages_vector[n] : 0;
 }
@@ -506,7 +506,7 @@ uint KPDFDocument::pages() const
     return pages_vector.size();
 }
 
-KURL KPDFDocument::currentDocument() const
+KUrl KPDFDocument::currentDocument() const
 {
     return d->url;
 }
@@ -551,12 +551,12 @@ QString KPDFDocument::getMetaData( const QString & key, const QString & option )
     return generator ? generator->getMetaData( key, option ) : QString();
 }
 
-void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & requests )
+void KPDFDocument::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
 {
     if ( !generator )
     {
         // delete requests..
-        QValueList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
+        QLinkedList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
         for ( ; rIt != rEnd; ++rIt )
             delete *rIt;
         // ..and return
@@ -565,7 +565,7 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
     int requesterID = requests.first()->id;
-    QValueList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin(), sEnd = d->pixmapRequestsStack.end();
+    QLinkedList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin(), sEnd = d->pixmapRequestsStack.end();
     while ( sIt != sEnd )
     {
         if ( (*sIt)->id == requesterID )
@@ -580,12 +580,12 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
 
     // 2. [ADD TO STACK] add requests to stack
     bool threadingDisabled = !KpdfSettings::enableThreading();
-    QValueList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
+    QLinkedList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
     for ( ; rIt != rEnd; ++rIt )
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        kdWarning() << "request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << endl;
+        kWarning() << "request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << endl;
         if ( !(request->page = pages_vector[ request->pageNumber ]) )
         {
             // skip requests referencing an invalid page (must not happen)
@@ -679,7 +679,7 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
     DocumentViewport & oldViewport = *d->viewportIterator;
     // disabled by enrico on 2005-03-18 (less debug output)
     //if ( viewport == oldViewport )
-    //    kdDebug() << "setViewport with the same viewport." << endl;
+    //    kDebug() << "setViewport with the same viewport." << endl;
 
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || oldViewport.pageNumber == -1 )
@@ -710,9 +710,9 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
     if ( d->allocatedPixmapsFifo.count() > 1 )
     {
         const int page = viewport.pageNumber;
-        QValueList< AllocatedPixmap * > viewportPixmaps;
-        QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * > viewportPixmaps;
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
         while ( aIt != aEnd )
         {
             if ( (*aIt)->page == page )
@@ -742,7 +742,7 @@ void KPDFDocument::setPrevViewport()
 void KPDFDocument::setNextViewport()
 // restore next viewport from the history
 {
-    QValueList< DocumentViewport >::iterator nextIterator = d->viewportIterator;
+    QLinkedList< DocumentViewport >::iterator nextIterator = d->viewportIterator;
     ++nextIterator;
     if ( nextIterator != d->viewportHistory.end() )
     {
@@ -780,23 +780,23 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
 
     // global data for search
     bool foundAMatch = false;
-    QValueList< int > pagesToNotify;
+    QLinkedList< int > pagesToNotify;
 
     // remove highlights from pages and queue them for notifying changes
     pagesToNotify += s->highlightedPages;
-    QValueList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
+    QLinkedList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
         pages_vector[ *it ]->deleteHighlights( searchID );
     s->highlightedPages.clear();
 
     // set hourglass cursor
-    QApplication::setOverrideCursor( waitCursor );
+    QApplication::setOverrideCursor( Qt::waitCursor );
 
     // 1. ALLDOC - proces all document marking pages
     if ( type == AllDoc )
     {
         // search and highlight 'text' (as a solid phrase) on all pages
-        QValueVector< KPDFPage * >::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector< KPDFPage * >::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
         {
             // get page (from the first to the last)
@@ -932,7 +932,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             hueStep = (wordsCount > 1) ? (60 / (wordsCount - 1)) : 60,
             baseHue, baseSat, baseVal;
         color.getHsv( &baseHue, &baseSat, &baseVal );
-        QValueVector< KPDFPage * >::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector< KPDFPage * >::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
         {
             // get page (from the first to the last)
@@ -996,7 +996,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
     }
 
     // notify observers about highlights changes
-    QValueList< int >::iterator nIt = pagesToNotify.begin(), nEnd = pagesToNotify.end();
+    QLinkedList< int >::iterator nIt = pagesToNotify.begin(), nEnd = pagesToNotify.end();
     for ( ; nIt != nEnd; ++nIt )
         foreachObserver( notifyPageChanged( *nIt, DocumentObserver::Highlights ) );
 
@@ -1027,7 +1027,7 @@ void KPDFDocument::resetSearch( int searchID )
     RunningSearch * s = d->searches[ searchID ];
 
     // unhighlight pages and inform observers about that
-    QValueList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
+    QLinkedList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
     {
         int pageNumber = *it;
@@ -1077,7 +1077,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !openRelativeFile( go->fileName() ) )
             {
-                kdWarning() << "Link: Error opening '" << go->fileName() << "'." << endl;
+                kWarning() << "Link: Error opening '" << go->fileName() << "'." << endl;
                 return;
             }
             else
@@ -1133,7 +1133,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             KService::Ptr ptr = KServiceTypeProfile::preferredService( mime->name(), "Application" );
             if ( ptr )
             {
-                KURL::List lst;
+                KUrl::List lst;
                 lst.append( fileName );
                 KRun::run( *ptr, lst );
             }
@@ -1203,7 +1203,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 }
                 // get service for web browsing
                 KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
-                KURL::List lst;
+                KUrl::List lst;
                 // append 'url' parameter to the service and run it
                 lst.append( url );
                 KRun::run( *ptr, lst );
@@ -1226,12 +1226,12 @@ void KPDFDocument::requestDone( PixmapRequest * req )
 {
 #ifndef NDEBUG
     if ( !generator->canGeneratePixmap( req->async ) )
-        kdDebug() << "requestDone with generator not in READY state." << endl;
+        kDebug() << "requestDone with generator not in READY state." << endl;
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
-    QValueList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-    QValueList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
         if ( (*aIt)->page == req->pageNumber && (*aIt)->id == req->id )
         {
@@ -1279,9 +1279,9 @@ void KPDFDocument::sendGeneratorRequest()
             delete r;
             if ( !d->warnedOutOfMemory )
             {
-                kdWarning() << "Running out of memory on page " << r->pageNumber
+                kWarning() << "Running out of memory on page " << r->pageNumber
                     << " (" << r->width << "x" << r->height << " px);" << endl;
-                kdWarning() << "this message will be reported only once." << endl;
+                kWarning() << "this message will be reported only once." << endl;
                 d->warnedOutOfMemory = true;
             }
         }
@@ -1305,7 +1305,7 @@ void KPDFDocument::sendGeneratorRequest()
     // submit the request to the generator
     if ( generator->canGeneratePixmap( request->async ) )
     {
-        kdWarning() << "sending request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << " async == " << request->async << endl;
+        kWarning() << "sending request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << " async == " << request->async << endl;
         d->pixmapRequestsStack.remove ( request );
         generator->generatePixmap ( request );
     }
@@ -1341,8 +1341,8 @@ void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
     {
         // [MEM] free memory starting from older pixmaps
         int pagesFreed = 0;
-        QValueList< AllocatedPixmap * >::iterator pIt = d->allocatedPixmapsFifo.begin();
-        QValueList< AllocatedPixmap * >::iterator pEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator pIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator pEnd = d->allocatedPixmapsFifo.end();
         while ( (pIt != pEnd) && (memoryToFree > 0) )
         {
             AllocatedPixmap * p = *pIt;
@@ -1425,7 +1425,7 @@ void KPDFDocument::loadDocumentInfo()
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
-    //kdDebug() << "Using '" << d->xmlFileName << "' as document info file." << endl;
+    //kDebug() << "Using '" << d->xmlFileName << "' as document info file." << endl;
     QFile infoFile( d->xmlFileName );
     if ( !infoFile.exists() || !infoFile.open( IO_ReadOnly ) )
         return;
@@ -1434,7 +1434,7 @@ void KPDFDocument::loadDocumentInfo()
     QDomDocument doc( "documentInfo" );
     if ( !doc.setContent( &infoFile ) )
     {
-        kdDebug() << "Can't load XML pair! Check for broken xml." << endl;
+        kDebug() << "Can't load XML pair! Check for broken xml." << endl;
         infoFile.close();
         return;
     }
@@ -1530,7 +1530,7 @@ bool KPDFDocument::openRelativeFile( const QString & fileName )
     if ( absFileName.isNull() )
         return false;
 
-    kdDebug() << "openDocument: '" << absFileName << "'" << endl;
+    kDebug() << "openDocument: '" << absFileName << "'" << endl;
 
     emit openURL( absFileName );
     return true;
@@ -1554,7 +1554,7 @@ void KPDFDocument::saveDocumentInfo() const
         QDomElement pageList = doc.createElement( "pageList" );
         root.appendChild( pageList );
         // <page list><page number='x'>.... </page> save pages that hold data
-        QValueVector< KPDFPage * >::const_iterator pIt = pages_vector.begin(), pEnd = pages_vector.end();
+        QVector< KPDFPage * >::const_iterator pIt = pages_vector.begin(), pEnd = pages_vector.end();
         for ( ; pIt != pEnd; ++pIt )
             (*pIt)->saveLocalContents( pageList, doc );
 
@@ -1562,7 +1562,7 @@ void KPDFDocument::saveDocumentInfo() const
         QDomElement generalInfo = doc.createElement( "generalInfo" );
         root.appendChild( generalInfo );
         // <general info><history> ... </history> save history up to 10 viewports
-        QValueList< DocumentViewport >::iterator backIterator = d->viewportIterator;
+        QLinkedList< DocumentViewport >::iterator backIterator = d->viewportIterator;
         if ( backIterator != d->viewportHistory.end() )
         {
             // go back up to 10 steps from the current viewportIterator
@@ -1575,7 +1575,7 @@ void KPDFDocument::saveDocumentInfo() const
             generalInfo.appendChild( historyNode );
 
             // add old[backIterator] and present[viewportIterator] items
-            QValueList< DocumentViewport >::iterator endIt = d->viewportIterator;
+            QLinkedList< DocumentViewport >::iterator endIt = d->viewportIterator;
             ++endIt;
             while ( backIterator != endIt )
             {
@@ -1612,7 +1612,7 @@ void KPDFDocument::slotOrientation( int orientation )
         foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
 //         foreachObserver( notifyViewportChanged( false /*disables smoothMove*/ ));
 //         foreachObserver( notifyPageChanged( ) );
-        kdDebug() << "Oreint: " << orientation << endl;
+        kDebug() << "Oreint: " << orientation << endl;
     }
 }
 
@@ -1622,7 +1622,7 @@ void KPDFDocument::slotPaperSizes( int newsize )
     {
         generator->setPaperSize(pages_vector,newsize);
         foreachObserver( notifySetup( pages_vector, true ) );
-        kdDebug() << "PaperSize no: " << newsize << endl;
+        kDebug() << "PaperSize no: " << newsize << endl;
     }
 }
 

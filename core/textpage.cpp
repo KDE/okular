@@ -13,11 +13,7 @@
 
 KPDFTextPage::~KPDFTextPage()
 {
-    QLinkedList<KPDFTextEntity*>::Iterator it;
-    for (it=m_words.begin();it!=m_words.end();++it)
-    {
-        delete (*it);
-    }
+    qDeleteAll(m_words);
 }
 
 RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
@@ -145,7 +141,7 @@ const bool &strictCase, const RegularAreaRect *area)
     // invalid search request
     if (query.isEmpty() || (area->isNull() && dir!=FromTop))
         return 0;
-    QLinkedList<KPDFTextEntity*>::Iterator start;
+    QList<KPDFTextEntity*>::Iterator start;
     if (dir == FromTop)
     {
         start=m_words.begin();
@@ -158,7 +154,7 @@ const bool &strictCase, const RegularAreaRect *area)
         QString * str=0;
         int j=0, len=0, queryLeft=query.length()-1;
         bool haveMatch=false;
-        QLinkedList<KPDFTextEntity*>::Iterator  it;
+        QList<KPDFTextEntity*>::Iterator  it;
         for( it=m_words.begin() ; it != m_words.end();  ++it )
         {
             str= &((*it)->txt);
@@ -214,8 +210,8 @@ const bool &strictCase, const RegularAreaRect *area)
 
 
 RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forward,
-        bool strictCase, const QLinkedList<KPDFTextEntity*>::Iterator &start, 
-        const QLinkedList<KPDFTextEntity*>::Iterator &end)
+        bool strictCase, const QList<KPDFTextEntity*>::Iterator &start, 
+        const QList<KPDFTextEntity*>::Iterator &end)
 {
 
     RegularAreaRect* ret=new RegularAreaRect;
@@ -227,7 +223,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
     int j=0, len=0, queryLeft=query.length();
     bool haveMatch=false;
     bool dontIncrement=false;
-    QLinkedList<KPDFTextEntity*>::Iterator it;
+    QList<KPDFTextEntity*>::Iterator it;
     // we dont support backward search yet
 	for( it=start ; it != end;  (!dontIncrement) ? (++it) : it )
 	{
@@ -307,7 +303,7 @@ QString * KPDFTextPage::getText(const RegularAreaRect *area)
         return 0;
 
     QString* ret = new QString;
-    QLinkedList<KPDFTextEntity*>::Iterator it,end = m_words.end();
+    QList<KPDFTextEntity*>::Iterator it,end = m_words.end();
     KPDFTextEntity * last=0;
 	for( it=m_words.begin() ; it != end;  ++it )
 	{

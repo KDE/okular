@@ -9,7 +9,7 @@
 
 #ifndef _KPDF_AREA_H_
 #define _KPDF_AREA_H_
-#include <qlinkedlist.h>
+#include <qlist.h>
 #include <qcolor.h>
 #include <kdebug.h>
 class QRect;
@@ -108,13 +108,9 @@ struct HighlightRect : public NormalizedRect
  */
 
 template <class NormalizedShape, class Shape> class RegularArea : 
-public  QLinkedList<NormalizedShape*>
+public  QList<NormalizedShape*>
 {
 	public:
-		typedef QValueListIterator<NormalizedShape*> Iterator;
-		typedef QValueListConstIterator<NormalizedShape*> ConstIterator;
-//        RegularArea<NormalizedShape,Shape> (NormalizedShape* x)  { QLinkedList(x) ; } ;
-// 		class Iterator : public QLinkedListIterator<NormalizedShape*> {};
 		bool contains( double x, double y ) const;
                 bool contains( NormalizedShape * ) const;
 		bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
@@ -122,14 +118,14 @@ public  QLinkedList<NormalizedShape*>
 		void appendArea (const RegularArea<NormalizedShape,Shape> *area);
 		void simplify ();
 		bool isNull() const;
-		QLinkedList<Shape>* geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
+		QList<Shape>* geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
 };
 
 template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::simplify()
 {
             int end=this->count(),i=0,x=0;
-            QLinkedList <NormalizedShape*> m_remove;
+            QList <NormalizedShape*> m_remove;
             for (;i<end;i++)
             {
                 if ( i < (end-1) )
@@ -162,9 +158,8 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
 	if (this->isEmpty())
 		return false;
 
-	ConstIterator i;
-	for (i=this->begin();i!=this->end();++i)
-		if (!((*i)->isNull()))
+	foreach(const NormalizedShape *ns, this)
+		if (!(ns->isNull()))
 			return false;
 	return true;
 
@@ -179,10 +174,9 @@ bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape *rec
 	if (this->isEmpty())
 		return false;
 
-	ConstIterator i;
-	for (i=this->begin();i!=this->end();++i)
+	foreach(const NormalizedShape *ns, this)
 	{
-		if(!((*i)->isNull()) && (*i)->intersects (rect))
+		if(!(ns->isNull()) && ns->intersects (rect))
 			return true;
 	}
 	return false;
@@ -197,12 +191,11 @@ bool RegularArea<NormalizedShape, Shape>::intersects
 	if (this->isEmpty())
 		return false;
 
-	Iterator i,j;
-	for (i=this->begin();i!=this->end();++i)
+	foreach(const NormalizedShape ns, this)
 	{
-		for (j=area->begin();j!=area->end();++j)
+		foreach(const Shape s, area)
 		{
-			if(!((*i)->isNull) && (*i)->intersects (j))
+			if(!(ns->isNull) && ns->intersects (s))
 				return true;
 		}
 	}
@@ -216,10 +209,9 @@ void RegularArea<NormalizedShape, Shape>::appendArea
 	if (!this)
 		return false;
 
-	ConstIterator j;
-	for (j=area->begin();j!=area->end();++j)
+	foreach(const Shape s, area)
 	{
-        this->append(*j);
+		this->append(s);
 	}
 }
 
@@ -232,10 +224,9 @@ bool RegularArea<NormalizedShape, Shape>::contains (double x, double y) const
 	if (this->isEmpty())
 		return false;
 
-	ConstIterator i;
-	for (i=this->begin();i!=this->end();++i)
+	foreach(const NormalizedShape ns, this)
 	{
-		if((*i)->contains (x,y))
+		if(ns->contains (x,y))
 			return true;
 	}
 	return false;
@@ -249,12 +240,12 @@ bool RegularArea<NormalizedShape, Shape>::contains (NormalizedShape * shape) con
         if (this->isEmpty())
                 return false;
 
-        const QLinkedList<NormalizedShape*> * const lista=dynamic_cast<const QLinkedList<NormalizedShape*> * const >(this);
+        const QList<NormalizedShape*> * const lista=dynamic_cast<const QList<NormalizedShape*> * const >(this);
         return lista->contains(shape);
 }
 
 template <class NormalizedShape, class Shape>
-QLinkedList<Shape> *
+QList<Shape> *
 RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, int dy ) const
 {
 	if (!this)
@@ -262,13 +253,12 @@ RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, i
 	if (this->isEmpty()) 
 		return 0;
 
-	ConstIterator i;
-	QLinkedList<Shape>* ret=new QLinkedList<Shape>;
+	QList<Shape>* ret=new QList<Shape>;
         Shape t;
-	for (i=this->begin();i!=this->end();++i)
+	foreach(const NormalizedShape ns, this)
 	{
-            t=(*i)->geometry(xScale,yScale);
-            t.moveBy(dx,dy); 
+            t=ns->geometry(xScale,yScale);
+            t.moveBy(dx,dy);
             ret->append(t);
 	}
 

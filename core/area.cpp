@@ -125,5 +125,5 @@ ObjectRect::~ObjectRect()
     if ( m_objectType == Link )
         delete static_cast<KPDFLink*>( m_pointer );
     else
-        kdDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
+        kDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
 }

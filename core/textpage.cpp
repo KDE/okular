@@ -13,7 +13,7 @@
 
 KPDFTextPage::~KPDFTextPage()
 {
-    QValueList<KPDFTextEntity*>::Iterator it;
+    QLinkedList<KPDFTextEntity*>::Iterator it;
     for (it=m_words.begin();it!=m_words.end();++it)
     {
         delete (*it);
@@ -46,7 +46,7 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
         const NormalizedPoint * endC=sel->end();
         if (sel->dir() == 1 || (sel->itB()==-1 && sel->dir()==0))
         {
-          kdWarning() << "running first loop\n";
+          kWarning() << "running first loop\n";
           for (it=0;it<m_words.count();it++)
           {
               tmp=m_words[it]->area;
@@ -56,7 +56,7 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
               {
                   /// we have found the (rx,ry)x(tx,ty)   
                   itB=it;
-                  kdWarning() << "start is " << itB << " count is " << m_words.count() << endl;
+                  kWarning() << "start is " << itB << " count is " << m_words.count() << endl;
                   break;
               }
   
@@ -64,11 +64,11 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
           sel->itB(itB);
         }
         itB=sel->itB();
-        kdWarning() << "direction is " << sel->dir() << endl;
-        kdWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
+        kWarning() << "direction is " << sel->dir() << endl;
+        kWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
         if (sel->dir() == 0 || (sel->itE() == -1 && sel->dir()==1))
         {
-          kdWarning() << "running second loop\n";
+          kWarning() << "running second loop\n";
           for (it=m_words.count()-1; it>=itB;it--)
           {
               tmp=m_words[it]->area;
@@ -78,8 +78,8 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
               {
                   /// we have found the (ux,uy)x(vx,vy)   
                   itE=it;
-                  kdWarning() << "ending is " << itE << " count is " << m_words.count() << endl;
-                  kdWarning () << "conditions " << tmp->contains(endC->x,endC->y) << " " 
+                  kWarning() << "ending is " << itE << " count is " << m_words.count() << endl;
+                  kWarning () << "conditions " << tmp->contains(endC->x,endC->y) << " " 
                     << ( tmp->top <= endC->y && tmp->bottom >= endC->y && tmp->right <= endC->x ) << " " <<
                     ( tmp->top >= endC->y) << endl;
 
@@ -88,7 +88,7 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
           }
           sel->itE(itE);
         }
-        kdWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
+        kWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
 
         if (sel->itB()!=-1 && sel->itE()!=-1)
         {
@@ -99,7 +99,7 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
           first.right=1;
           /// if (rx,ry)x(1,ty) intersects the end cursor, there is only one line
           bool sameBaseline=end->intersects(first);
-          kdWarning() << "sameBaseline : " << sameBaseline << endl;
+          kWarning() << "sameBaseline : " << sameBaseline << endl;
           if (sameBaseline)
           {
               first=*start;
@@ -145,7 +145,7 @@ const bool &strictCase, const RegularAreaRect *area)
     // invalid search request
     if (query.isEmpty() || (area->isNull() && dir!=FromTop))
         return 0;
-    QValueList<KPDFTextEntity*>::Iterator start;
+    QLinkedList<KPDFTextEntity*>::Iterator start;
     if (dir == FromTop)
     {
         start=m_words.begin();
@@ -158,7 +158,7 @@ const bool &strictCase, const RegularAreaRect *area)
         QString * str=0;
         int j=0, len=0, queryLeft=query.length()-1;
         bool haveMatch=false;
-        QValueList<KPDFTextEntity*>::Iterator  it;
+        QLinkedList<KPDFTextEntity*>::Iterator  it;
         for( it=m_words.begin() ; it != m_words.end();  ++it )
         {
             str= &((*it)->txt);
@@ -214,8 +214,8 @@ const bool &strictCase, const RegularAreaRect *area)
 
 
 RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forward,
-        bool strictCase, const QValueList<KPDFTextEntity*>::Iterator &start, 
-        const QValueList<KPDFTextEntity*>::Iterator &end)
+        bool strictCase, const QLinkedList<KPDFTextEntity*>::Iterator &start, 
+        const QLinkedList<KPDFTextEntity*>::Iterator &end)
 {
 
     RegularAreaRect* ret=new RegularAreaRect;
@@ -227,7 +227,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
     int j=0, len=0, queryLeft=query.length();
     bool haveMatch=false;
     bool dontIncrement=false;
-    QValueList<KPDFTextEntity*>::Iterator it;
+    QLinkedList<KPDFTextEntity*>::Iterator it;
     // we dont support backward search yet
 	for( it=start ; it != end;  (!dontIncrement) ? (++it) : it )
 	{
@@ -237,7 +237,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
         {
             // lets match newline as a space
 #ifdef DEBUG_TEXTPAGE
-            kdDebug(1223) << "newline or space" << endl;
+            kDebug(1223) << "newline or space" << endl;
 #endif
             j++;
             queryLeft--;
@@ -251,7 +251,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             dontIncrement=false;
             int min=QMIN(queryLeft,len);
             len=str.length();
-            kdDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
+            kDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
 
@@ -268,7 +268,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     delete ret;
                     ret=new RegularAreaRect;
 #ifdef DEBUG_TEXTPAGE
-            kdDebug(1223) << "\tnot matched" << endl;
+            kDebug(1223) << "\tnot matched" << endl;
 #endif
                     j=0;
                     queryLeft=query.length();
@@ -282,7 +282,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     // substract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-            kdDebug(1223) << "\tmatched" << endl;
+            kDebug(1223) << "\tmatched" << endl;
 #endif
                     haveMatch=true;
                     ret->append( (*it)->area );
@@ -307,14 +307,14 @@ QString * KPDFTextPage::getText(const RegularAreaRect *area)
         return 0;
 
     QString* ret = new QString;
-    QValueList<KPDFTextEntity*>::Iterator it,end = m_words.end();
+    QLinkedList<KPDFTextEntity*>::Iterator it,end = m_words.end();
     KPDFTextEntity * last=0;
 	for( it=m_words.begin() ; it != end;  ++it )
 	{
         // provide the string FIXME?: newline handling
         if (area->intersects((*it)->area))
         {
-//           kdDebug()<< "[" << (*it)->area->left << "," << (*it)->area->top << "]x["<< (*it)->area->right << "," << (*it)->area->bottom << "]\n";
+//           kDebug()<< "[" << (*it)->area->left << "," << (*it)->area->top << "]x["<< (*it)->area->right << "," << (*it)->area->bottom << "]\n";
             *ret += ((*it)->txt);
             last=*it;
         }

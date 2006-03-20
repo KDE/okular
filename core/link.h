@@ -12,7 +12,7 @@
 
 #include <qstring.h>
 #include <qrect.h>
-#include "core/document.h" // for DocumentViewport
+#include "document.h" // for DocumentViewport
 
 /**
  * @short Encapsulates data that describes a link.

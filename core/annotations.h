@@ -12,7 +12,7 @@
 
 #include <qstring.h>
 #include <qdatetime.h>
-#include <qvaluelist.h>
+#include <qlinkedlist.h>
 #include <qdom.h>
 #include <qfont.h>
 #include "page.h"
@@ -124,7 +124,7 @@ struct Annotation
         // default initializer
         Revision();
     };
-    QValueList< Revision > revisions;       // empty by default
+    QLinkedList< Revision > revisions;       // empty by default
 
     // methods: query annotation's type for runtime type identification
     virtual SubType subType() const { return A_BASE; }
@@ -177,7 +177,7 @@ struct LineAnnotation : public Annotation
     enum LineIntent { Unknown, Arrow, Dimension, PolygonCloud };
 
     // data fields (note uses border for rendering style)
-    QValueList<NormalizedPoint> linePoints;
+    QLinkedList<NormalizedPoint> linePoints;
     TermStyle       lineStartStyle;         // None
     TermStyle       lineEndStyle;           // None
     bool            lineClosed;             // false (if true draw close shape)
@@ -219,7 +219,7 @@ struct HighlightAnnotation : public Annotation
         bool            capEnd;             // false (vtx 2-3) [K]
         double          feather;            // 0.1 (in range 0..1) [K]
     };
-    QValueList< Quad >  highlightQuads;     // not empty
+    QLinkedList< Quad >  highlightQuads;     // not empty
 };
 
 struct StampAnnotation : public Annotation
@@ -237,7 +237,7 @@ struct InkAnnotation : public Annotation
     AN_COMMONDECL( InkAnnotation, AInk )
 
     // data fields
-    QValueList< QValueList<NormalizedPoint> > inkPaths;
+    QLinkedList< QLinkedList<NormalizedPoint> > inkPaths;
 };
 
 #endif

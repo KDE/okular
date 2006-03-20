@@ -1,6 +1,6 @@
 SUBDIRS = .
 
-INCLUDES = -I$(srcdir)/.. -I$(top_builddir)/kpdf $(all_includes)
+INCLUDES = -I.. -I$(builddir)/../conf $(all_includes)
 
 METASOURCES = AUTO
 

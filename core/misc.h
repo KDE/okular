@@ -37,7 +37,7 @@ class TextSelection
       int dir1=direction;
       direction = (p.y-cur[0].y<0 || (p.y-cur[0].y==0 && p.x-cur[0].x <0));
       if (direction!=dir1)
-        kdDebug() << "changing direction in selection\n";
+        kDebug() << "changing direction in selection\n";
       cur[1]=p;
     }
     void itE (int p) { it[(direction+1)%2]=p; }

@@ -12,11 +12,11 @@
 #define _KPDF_DOCUMENT_H_
 
 #include <qobject.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qdom.h>
-#include <qdict.h>
+#include <qhash.h>
 #include <kmimetype.h>
 
 class KPDFPage;
@@ -56,7 +56,7 @@ class KPDFDocument : public QObject
 {
     Q_OBJECT
     public:
-        KPDFDocument( QDict<Generator> * genList );
+        KPDFDocument( QHash<QString, Generator> * genList );
         ~KPDFDocument();
 
         // communication with the part
@@ -104,7 +104,7 @@ class KPDFDocument : public QObject
         void setViewport( const DocumentViewport & viewport, int excludeId = -1, bool smoothMove = false );
         void setPrevViewport();
         void setNextViewport();
-        void requestPixmaps( const QValueList< PixmapRequest * > & requests );
+        void requestPixmaps( const QLinkedList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
         void addPageAnnotation( int page, Annotation * annotation );
 
@@ -148,10 +148,10 @@ class KPDFDocument : public QObject
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
-        QDict<Generator>* m_loadedGenerators ;
+        QHash<QString, Generator>* m_loadedGenerators ;
         Generator * generator;
         bool m_usingCachedGenerator;
-        QValueVector< KPDFPage * > pages_vector;
+        QVector< KPDFPage * > pages_vector;
         class KPDFDocumentPrivate * d;
 
     private slots:

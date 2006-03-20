@@ -11,7 +11,7 @@
 #define _KPDF_PAGE_H_
 
 #include <qmap.h>
-#include <qvaluelist.h>
+#include <qlinkedlist.h>
 
 
 class QPixmap;
@@ -76,13 +76,13 @@ class KPDFPage
         const KPDFPageTransition * getTransition() const;
         //FIXME TEMP:
         bool hasAnnotations() const { return !m_annotations.isEmpty(); }
-        const QValueList< Annotation * > getAnnotations() const { return m_annotations; }
+        const QLinkedList< Annotation * > getAnnotations() const { return m_annotations; }
 
         // operations: set contents (by KPDFDocument)
         void setPixmap( int p_id, QPixmap * pixmap );
         void setSearchPage( KPDFTextPage * text );
         void setBookmark( bool state );
-        void setObjectRects( const QValueList< ObjectRect * > rects );
+        void setObjectRects( const QLinkedList< ObjectRect * > rects );
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
         void addAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
@@ -105,9 +105,9 @@ class KPDFPage
 
         QMap< int, QPixmap * > m_pixmaps;
         KPDFTextPage * m_text;
-        QValueList< ObjectRect * > m_rects;
-        QValueList< HighlightAreaRect * > m_highlights;
-        QValueList< Annotation * > m_annotations;
+        QLinkedList< ObjectRect * > m_rects;
+        QLinkedList< HighlightAreaRect * > m_highlights;
+        QLinkedList< Annotation * > m_annotations;
         KPDFPageTransition * m_transition;
 };
 

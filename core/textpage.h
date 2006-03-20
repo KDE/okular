@@ -11,7 +11,7 @@
 #define _KPDF_TETXTPAGE_H_
 
 
-#include <qvaluelist.h>
+#include <qlinkedlist.h>
 #include <qstringlist.h>
 #include "area.h"
 class TextSelection;
@@ -64,15 +64,15 @@ class KPDFTextPage {
         const bool &strictCase, const RegularAreaRect *area);
     QString * getText(const RegularAreaRect *rect);
     RegularAreaRect * getTextArea ( TextSelection* ) const;
-    KPDFTextPage(QValueList<KPDFTextEntity*> words) : m_words(words) {};
+    KPDFTextPage(QLinkedList<KPDFTextEntity*> words) : m_words(words) {};
     KPDFTextPage() : m_words() {};
     void append(QString txt, NormalizedRect*  area) 
         { m_words.append(new KPDFTextEntity(txt,area) ); };
     ~KPDFTextPage();
   private:
     RegularAreaRect * findTextInternal(const QString &query, bool forward,
-        bool strictCase, const QValueList<KPDFTextEntity*>::Iterator &start, const QValueList<KPDFTextEntity*>::Iterator &end);
-    QValueList<KPDFTextEntity*>  m_words;
+        bool strictCase, const QLinkedList<KPDFTextEntity*>::Iterator &start, const QLinkedList<KPDFTextEntity*>::Iterator &end);
+    QLinkedList<KPDFTextEntity*>  m_words;
   };
 
 

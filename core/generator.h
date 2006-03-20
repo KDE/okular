@@ -18,7 +18,7 @@
 
 
 #include <qobject.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 #include <qstring.h>
 #include <ostream>
 #include "core/document.h"
@@ -54,7 +54,7 @@ class Generator : public QObject
     public:
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
-        virtual bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector ) = 0;
+        virtual bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector ) = 0;
 
         // page contents generation
         virtual bool canGeneratePixmap( bool async ) = 0;
@@ -84,10 +84,10 @@ class Generator : public QObject
 
         // rotation
         virtual bool supportsRotation() { return false; };
-        virtual void setOrientation(QValueVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/) { ; };
+        virtual void setOrientation(QVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/) { ; };
         virtual bool supportsPaperSizes () { return false; }
         virtual QStringList paperSizes ()  { return QStringList(); }
-        virtual void setPaperSize (QValueVector<KPDFPage*> & /*pagesVector*/, int /*newsize*/) { ; }
+        virtual void setPaperSize (QVector<KPDFPage*> & /*pagesVector*/, int /*newsize*/) { ; }
 
         // internal search and gettext
         virtual RegularAreaRect * findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,

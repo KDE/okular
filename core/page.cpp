@@ -85,7 +85,7 @@ bool KPDFPage::hasObjectRect( double x, double y ) const
 {
     if ( m_rects.count() < 1 )
         return false;
-    QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y ) )
             return true;
@@ -101,7 +101,7 @@ bool KPDFPage::hasHighlights( int s_id ) const
     if ( s_id == -1 )
         return true;
     // iterate on the highlights list to find an entry by id
-    QValueList< HighlightAreaRect * >::const_iterator it = m_highlights.begin(), end = m_highlights.end();
+    QLinkedList< HighlightAreaRect * >::const_iterator it = m_highlights.begin(), end = m_highlights.end();
     for ( ; it != end; ++it )
         if ( (*it)->s_id == s_id )
             return true;
@@ -145,7 +145,7 @@ QString * KPDFPage::getText( const RegularAreaRect * area ) const
 
 const ObjectRect * KPDFPage::getObjectRect( ObjectRect::ObjectType type, double x, double y ) const
 {
-    QValueList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y ) && ((*it)->objectType() == type) )
             return *it;
@@ -176,9 +176,9 @@ void KPDFPage::setBookmark( bool state )
     m_bookmarked = state;
 }
 
-void KPDFPage::setObjectRects( const QValueList< ObjectRect * > rects )
+void KPDFPage::setObjectRects( const QLinkedList< ObjectRect * > rects )
 {
-    QValueList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+    QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         delete *it;
     m_rects = rects;
@@ -187,7 +187,7 @@ void KPDFPage::setObjectRects( const QValueList< ObjectRect * > rects )
 /*
 void KPDFPage::setHighlight( int s_id, const QColor & color )
 {
-	QValueList<HighlightAreaRect*>::Iterator it=m_highlights.begin();
+	QLinkedList<HighlightAreaRect*>::Iterator it=m_highlights.begin();
 	HighlightAreaRect* tmp;
 	while(it!=m_highlights.end())
 	{
@@ -251,7 +251,7 @@ void KPDFPage::deletePixmapsAndRects()
         delete *it;
     m_pixmaps.clear();
     // delete ObjectRects
-    QValueList< ObjectRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
+    QLinkedList< ObjectRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
     for ( ; rIt != rEnd; ++rIt )
         delete *rIt;
     m_rects.clear();
@@ -260,7 +260,7 @@ void KPDFPage::deletePixmapsAndRects()
 void KPDFPage::deleteHighlights( int s_id )
 {
     // delete highlights by ID
-    QValueList< HighlightAreaRect* >::iterator it = m_highlights.begin(), end = m_highlights.end();
+    QLinkedList< HighlightAreaRect* >::iterator it = m_highlights.begin(), end = m_highlights.end();
     while ( it != end )
     {
         HighlightAreaRect* highlight = *it;
@@ -277,7 +277,7 @@ void KPDFPage::deleteHighlights( int s_id )
 void KPDFPage::deleteAnnotations()
 {
     // delete all stored annotations
-    QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+    QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
         delete *aIt;
     m_annotations.clear();
@@ -312,12 +312,12 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
                 if ( annotation )
                     m_annotations.append( annotation );
                 else
-                    kdWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
+                    kWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
             }
              gettimeofday( &te, NULL );
              double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
              double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
-             kdDebug() << "annots: XML Load time: " << (endTime-startTime)*1000.0 << "ms" << endl;
+             kDebug() << "annots: XML Load time: " << (endTime-startTime)*1000.0 << "ms" << endl;
         }
 
         // parse bookmark child element
@@ -358,7 +358,7 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
         QDomElement annotListElement = document.createElement( "annotationList" );
 
         // add every annotation to the annotationList
-        QValueList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+        QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
         for ( ; aIt != aEnd; ++aIt )
         {
             // get annotation

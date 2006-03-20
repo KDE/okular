@@ -8,10 +8,10 @@ SUBDIRS = lib . kio-msits
 kde_module_LTLIBRARIES = \
   libokularGenerator_chmlib.la
 
-INCLUDES = -I$(srcdir)/../.. -I$(top_builddir)/kpdf $(all_includes)
+INCLUDES = -I../.. $(all_includes)
 
-libokularGenerator_chmlib_la_LIBADD = $(top_builddir)/kpdf/core/liboKularcore.la \
-	$(top_builddir)/kpdf/conf/liboKularconf.la \
+libokularGenerator_chmlib_la_LIBADD = ../../core/liboKularcore.la \
+	../../conf/liboKularconf.la \
 	lib/libchmfile.la \
 	$(LIB_KDEPRINT) $(LIB_KDEUI) $(LIB_KHTML) -lchm
 libokularGenerator_chmlib_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)

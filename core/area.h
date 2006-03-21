@@ -108,13 +108,13 @@ struct HighlightRect : public NormalizedRect
  */
 
 template <class NormalizedShape, class Shape> class RegularArea : 
-public  QList<NormalizedShape*>
+public  QList<NormalizedShape>
 {
 	public:
 		bool contains( double x, double y ) const;
-                bool contains( NormalizedShape * ) const;
+                bool contains( NormalizedShape ) const;
 		bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
-		bool intersects (const NormalizedShape * shape) const;
+		bool intersects (const NormalizedShape shape) const;
 		void appendArea (const RegularArea<NormalizedShape,Shape> *area);
 		void simplify ();
 		bool isNull() const;
@@ -125,7 +125,7 @@ template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::simplify()
 {
             int end=this->count(),i=0,x=0;
-            QList <NormalizedShape*> m_remove;
+            QList <NormalizedShape> m_remove;
             for (;i<end;i++)
             {
                 if ( i < (end-1) )
@@ -158,7 +158,7 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
 	if (this->isEmpty())
 		return false;
 
-	foreach(const NormalizedShape *ns, this)
+	foreach(const NormalizedShape ns, *this)
 		if (!(ns->isNull()))
 			return false;
 	return true;
@@ -166,7 +166,7 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape *rect) const
+bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape rect) const
 {
 	if (!this)
 		return false;
@@ -174,7 +174,7 @@ bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape *rec
 	if (this->isEmpty())
 		return false;
 
-	foreach(const NormalizedShape *ns, this)
+	foreach(const NormalizedShape ns, *this)
 	{
 		if(!(ns->isNull()) && ns->intersects (rect))
 			return true;
@@ -233,7 +233,7 @@ bool RegularArea<NormalizedShape, Shape>::contains (double x, double y) const
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::contains (NormalizedShape * shape) const
+bool RegularArea<NormalizedShape, Shape>::contains (NormalizedShape shape) const
 {
         if (!this)
                 return false;
@@ -265,7 +265,7 @@ RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, i
 	return ret;
 }
 
-typedef RegularArea<NormalizedRect,QRect> RegularAreaRect;
+typedef RegularArea<NormalizedRect*,QRect> RegularAreaRect;
 
 
 class HighlightAreaRect : public RegularAreaRect {

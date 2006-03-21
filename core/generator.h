@@ -165,6 +165,6 @@ struct PixmapRequest
 
 };
 
-std::ostream& operator<< (std::ostream& str, const PixmapRequest *req);
+QTextStream& operator<< (QTextStream& str, const PixmapRequest *req);
 
 #endif

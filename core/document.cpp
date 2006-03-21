@@ -23,7 +23,7 @@
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <ktoolinvocation.h>
 #include <kuserprofile.h>
 #include <krun.h>
 #include <kstandarddirs.h>
@@ -697,7 +697,7 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
             d->viewportHistory.pop_front();
 
         // add the item at the end of the queue
-        d->viewportIterator = d->viewportHistory.append( viewport );
+        d->viewportIterator = d->viewportHistory.insert( d->viewportHistory.end(), viewport );
     }
 
     // notify change to all other (different from id) observers
@@ -1190,7 +1190,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
             const KPDFLinkBrowse * browse = static_cast< const KPDFLinkBrowse * >( link );
             // if the url is a mailto one, invoke mailer
             if ( browse->url().startsWith( "mailto:", false ) )
-                kapp->invokeMailer( browse->url() );
+                KToolInvocation::invokeMailer( browse->url() );
             else
             {
                 QString url = browse->url();
@@ -1306,7 +1306,7 @@ void KPDFDocument::sendGeneratorRequest()
     if ( generator->canGeneratePixmap( request->async ) )
     {
         kWarning() << "sending request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << " async == " << request->async << endl;
-        d->pixmapRequestsStack.remove ( request );
+        d->pixmapRequestsStack.removeAll ( request );
         generator->generatePixmap ( request );
     }
     else
@@ -1499,14 +1499,14 @@ void KPDFDocument::loadDocumentInfo()
                         if ( historyElement.hasAttribute( "viewport" ) )
                         {
                             QString vpString = historyElement.attribute( "viewport" );
-                            d->viewportIterator = d->viewportHistory.append(
+                            d->viewportIterator = d->viewportHistory.insert( d->viewportHistory.end(), 
                                     DocumentViewport( vpString ) );
                         }
                         historyNode = historyNode.nextSibling();
                     }
                     // consistancy check
                     if ( d->viewportHistory.isEmpty() )
-                        d->viewportIterator = d->viewportHistory.append( DocumentViewport() );
+                        d->viewportIterator = d->viewportHistory.insert( d->viewportHistory.end(), DocumentViewport() );
                 }
                 infoNode = infoNode.nextSibling();
             }

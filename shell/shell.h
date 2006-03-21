@@ -48,7 +48,7 @@ class Part;
     /**
      * Open an url
      */
-    Shell(const KURL &url);
+    Shell(const KUrl &url);
 
     /**
      * Default Destructor
@@ -82,18 +82,18 @@ class Part;
     void slotUpdateFullScreen();
     void slotShowMenubar();
 
-    void openURL( const KURL & url );
+    void openURL( const KUrl & url );
     void delayedOpen();
 
   signals:
-    void restoreDocument(const KURL &url, int page);
+    void restoreDocument(const KUrl &url, int page);
     void saveDocumentRestoreInfo(KConfig* config);
 
   private:
     void setupAccel();
     void setupActions();
     void init();
-    bool handleCompressed(KURL & url, const QString &path, const KMimeType::Ptr mimetype);
+    bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
     QStringList* fileFormats();
 
   private:
@@ -106,7 +106,7 @@ class Part;
     KToggleAction* m_showMenuBarAction;
     KToggleAction* m_showToolBarAction;
     bool m_menuBarWasShown, m_toolBarWasShown;
-    KURL m_openUrl;
+    KUrl m_openUrl;
   };
 }
 

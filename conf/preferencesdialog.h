@@ -11,7 +11,7 @@
 #define _PREFERENCESDIALOG_H
 
 #include <kconfigdialog.h>
-#include "conf/settings.h"
+#include "settings.h"
 
 class QWidget;
 class KConfigSkeleton;

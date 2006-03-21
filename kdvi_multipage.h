@@ -38,7 +38,7 @@ public:
   static KAboutData* createAboutData();
 
 private:
-  virtual DocumentWidget* createDocumentWidget();
+  virtual DocumentWidget* createDocumentWidget(PageView *parent, DocumentPageCache *cache);
 
   virtual void initializePageCache();
 

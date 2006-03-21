@@ -37,11 +37,11 @@ public:
 
   static KAboutData* createAboutData();
 
-private:
+  virtual DocumentPageCache* initializePageCache();
+
   virtual DocumentWidget* createDocumentWidget(PageView *parent, DocumentPageCache *cache);
 
-  virtual void initializePageCache();
-
+private:
   /** Used to enable the export menu when a file is successfully
       loaded. */
   virtual void enableActions(bool);

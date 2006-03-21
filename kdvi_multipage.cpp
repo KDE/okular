@@ -406,9 +406,10 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget(PageView *parent, DocumentPa
 }
 
 
-void KDVIMultiPage::initializePageCache()
+DocumentPageCache* KDVIMultiPage::initializePageCache()
 {
-  //@@@@@@@@@@@  pageCache = new DVIPageCache();
+  DocumentPageCache* pageCache = new DVIPageCache();
+  return pageCache;
 }
 
 

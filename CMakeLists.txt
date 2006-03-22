@@ -51,7 +51,7 @@ kde4_add_plugin(kdvipart ${kdvipart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kdvipart )
 
-target_link_libraries(kdvipart  ${QT_AND_KDECORE_LIBS} kparts kmultipage )
+target_link_libraries(kdvipart  ${KDE4_KDECORE_LIBS} kparts kmultipage )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 kdvipart )
 
@@ -64,7 +64,7 @@ kde4_automoc(${squeeze_SRCS})
 
 kde4_add_executable(squeeze ${squeeze_SRCS})
 
-target_link_libraries(squeeze  ${QT_AND_KDECORE_LIBS} )
+target_link_libraries(squeeze  ${KDE4_KDECORE_LIBS} )
 
 
 ########### install files ###############

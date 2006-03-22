@@ -299,12 +299,12 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 
         // create top toolbar
         m_topBar = new QToolBar( this );
-        m_topBar->addAction( QIcon(il->loadIcon("1leftarrow", KIcon::Toolbar)), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
-        m_topBar->addAction( QIcon(il->loadIcon("1rightarrow", KIcon::Toolbar)), i18n("Next Page"), this, SLOT( slotNextPage() ) );
+        m_topBar->addAction( QIcon(il->loadIcon("1leftarrow", K3Icon::Toolbar)), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
+        m_topBar->addAction( QIcon(il->loadIcon("1rightarrow", K3Icon::Toolbar)), i18n("Next Page"), this, SLOT( slotNextPage() ) );
 	QWidget *spacer = new QWidget(m_topBar);
 	spacer->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
 	m_topBar->addWidget( spacer );
-        m_topBar->addAction( QIcon(il->loadIcon("exit", KIcon::Toolbar)), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
+        m_topBar->addAction( QIcon(il->loadIcon("exit", K3Icon::Toolbar)), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
         m_topBar->hide();
         // change topbar background color

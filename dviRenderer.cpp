@@ -95,7 +95,6 @@ void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, b
   _postscript = flag_showPS;
   editorCommand = str_editorCommand;
   font_pool.setParameters( useFontHints );
-  emit(documentIsChanged());
 }
 
 

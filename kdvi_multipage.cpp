@@ -116,7 +116,7 @@ void KDVIMultiPage::slotEmbedPostScript()
 {
   DVIRenderer.embedPostScript();
   if (DVIRenderer.isModified())
-    emit(documentIsModified());
+    emit renderModeChanged();
   setEmbedPostScriptAction();
 }
 
@@ -187,6 +187,7 @@ void KDVIMultiPage::preferencesChanged()
   bool useFontHints = Prefs::useFontHints();
 
   DVIRenderer.setPrefs( showPS, Prefs::editorCommand(), useFontHints);
+  emit renderModeChanged();
 }
 
 

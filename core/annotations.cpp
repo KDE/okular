@@ -633,7 +633,7 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
     if ( highlightQuads.count() < 1 )
         return;
     // append highlight quads, all children describe quads
-    QLinkedList< Quad >::const_iterator it = highlightQuads.begin(), end = highlightQuads.end();
+    QList< Quad >::const_iterator it = highlightQuads.begin(), end = highlightQuads.end();
     for ( ; it != end; ++it )
     {
         QDomElement quadElement = document.createElement( "quad" );
@@ -765,7 +765,7 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
     // append the optional attributes
     if ( inkPaths.count() < 1 )
         return;
-    QLinkedList< QLinkedList<NormalizedPoint> >::const_iterator pIt = inkPaths.begin(), pEnd = inkPaths.end();
+    QList< QLinkedList<NormalizedPoint> >::const_iterator pIt = inkPaths.begin(), pEnd = inkPaths.end();
     for ( ; pIt != pEnd; ++pIt )
     {
         QDomElement pathElement = document.createElement( "path" );

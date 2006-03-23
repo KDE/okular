@@ -52,7 +52,7 @@ class PagePainter
             unsigned int alpha = 255 );
 
         // my pretty dear raster function
-        typedef QValueList< NormalizedPoint > NormalizedPath;
+        typedef QList< NormalizedPoint > NormalizedPath;
         enum RasterOperation { Normal, Multiply };
         static void drawShapeOnImage(
             QImage & image,

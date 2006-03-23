@@ -219,7 +219,7 @@ struct HighlightAnnotation : public Annotation
         bool            capEnd;             // false (vtx 2-3) [K]
         double          feather;            // 0.1 (in range 0..1) [K]
     };
-    QLinkedList< Quad >  highlightQuads;     // not empty
+    QList< Quad >  highlightQuads;     // not empty
 };
 
 struct StampAnnotation : public Annotation
@@ -237,7 +237,7 @@ struct InkAnnotation : public Annotation
     AN_COMMONDECL( InkAnnotation, AInk )
 
     // data fields
-    QLinkedList< QLinkedList<NormalizedPoint> > inkPaths;
+    QList< QLinkedList<NormalizedPoint> > inkPaths;
 };
 
 #endif

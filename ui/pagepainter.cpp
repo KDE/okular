@@ -83,9 +83,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     // vectors containing objects to draw
     // make this a qcolor, rect map, since we dont need 
     // to know s_id here! we are only drawing this right?
-    QValueList< QPair<QColor, NormalizedRect *> > * bufferedHighlights = 0;
-    QValueList< Annotation * > * bufferedAnnotations = 0;
-    QValueList< Annotation * > * unbufferedAnnotations = 0;
+    QList< QPair<QColor, NormalizedRect *> > * bufferedHighlights = 0;
+    QList< Annotation * > * bufferedAnnotations = 0;
+    QList< Annotation * > * unbufferedAnnotations = 0;
     // fill up lists with visible annotation/highlight objects
     if ( canDrawHighlights || canDrawAnnotations )
     {
@@ -98,13 +98,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         if ( canDrawHighlights )
         {
             if ( !bufferedHighlights )
-                 bufferedHighlights = new QValueList< QPair<QColor, NormalizedRect *>  >();
+                 bufferedHighlights = new QList< QPair<QColor, NormalizedRect *>  >();
 /*            else
             {*/
                 
                 NormalizedRect* limitRect = new NormalizedRect(nXMin, nYMin, nXMax, nYMax );
-                QValueList< HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
-                QValueList< NormalizedRect * >::const_iterator hIt;
+                QLinkedList< HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+                QList< NormalizedRect * >::const_iterator hIt;
                 for ( ; h2It != hEnd; ++h2It )
                     for (hIt=(*h2It)->begin(); hIt!=(*h2It)->end(); ++hIt)
                     {
@@ -117,7 +117,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // append annotations inside limits to the un/buffered list
         if ( canDrawAnnotations )
         {
-            QValueList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+            QLinkedList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
             for ( ; aIt != aEnd; ++aIt )
             {
                 Annotation * ann = *aIt;
@@ -128,13 +128,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                          type == Annotation::AInk  /*|| (type == Annotation::AGeom && ann->style.opacity < 0.99)*/ )
                     {
                         if ( !bufferedAnnotations )
-                            bufferedAnnotations = new QValueList< Annotation * >();
+                            bufferedAnnotations = new QList< Annotation * >();
                         bufferedAnnotations->append( ann );
                     }
                     else
                     {
                         if ( !unbufferedAnnotations )
-                            unbufferedAnnotations = new QValueList< Annotation * >();
+                            unbufferedAnnotations = new QList< Annotation * >();
                         unbufferedAnnotations->append( ann );
                     }
                 }
@@ -160,7 +160,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         {
             QImage destImage;
             scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limits );
-            destPainter->drawPixmap( limits.left(), limits.top(), destImage, 0, 0,
+            destPainter->drawImage( limits.left(), limits.top(), destImage, 0, 0,
                                      limits.width(),limits.height() );
         }
 
@@ -221,7 +221,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QValueList< QPair<QColor, NormalizedRect *> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
+            QList< QPair<QColor, NormalizedRect *> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
             for ( ; hIt != hEnd; ++hIt )
             {
                 NormalizedRect * r = (*hIt).second;
@@ -261,7 +261,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                    yScale = (double)scaledHeight / (double)limits.height();
 
             // paint all buffered annotations in the page
-            QValueList< Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
+            QList< Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
             for ( ; aIt != aEnd; ++aIt )
             {
                 Annotation * a = *aIt;
@@ -365,10 +365,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     for ( int p = 0; p < paths; p++ )
                     {
                         NormalizedPath path;
-                        const QValueList<NormalizedPoint> & inkPath = ia->inkPaths[ p ];
+                        const QLinkedList<NormalizedPoint> & inkPath = ia->inkPaths[ p ];
 
                         // normalize page point to image
-                        QValueList<NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
+                        QLinkedList<NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
                         for ( ; pIt != pEnd; ++pIt )
                         {
                             const NormalizedPoint & inkPoint = *pIt;
@@ -396,7 +396,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     if ( unbufferedAnnotations )
     {
         // iterate over annotations and paint AText, AGeom, AStamp
-        QValueList< Annotation * >::const_iterator aIt = unbufferedAnnotations->begin(), aEnd = unbufferedAnnotations->end();
+        QList< Annotation * >::const_iterator aIt = unbufferedAnnotations->begin(), aEnd = unbufferedAnnotations->end();
         for ( ; aIt != aEnd; ++aIt )
         {
             Annotation * a = *aIt;
@@ -486,7 +486,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         QRect limitsEnlarged = limits;
         limitsEnlarged.addCoords( -2, -2, 2, 2 );
         // draw rects that are inside the 'limits' paint region as opaque rects
-        QValueList< ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
+        QLinkedList< ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
         for ( ; lIt != lEnd; ++lIt )
         {
             ObjectRect * rect = *lIt;

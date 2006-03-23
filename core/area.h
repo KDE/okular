@@ -255,7 +255,7 @@ RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, i
 
 	QList<Shape>* ret=new QList<Shape>;
         Shape t;
-	foreach(const NormalizedShape ns, this)
+	foreach(const NormalizedShape ns, *this)
 	{
             t=ns->geometry(xScale,yScale);
             t.moveBy(dx,dy);

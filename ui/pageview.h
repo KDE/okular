@@ -20,8 +20,8 @@
 #define _KPDF_PAGEVIEW_H_
 
 #include <qscrollview.h>
-#include <qvaluevector.h>
-#include <qvaluelist.h>
+#include <qvector.h>
+#include <qlinkedlist.h>
 #include "ui/pageviewutils.h"
 #include "core/observer.h"
 
@@ -60,7 +60,7 @@ class PageView : public QScrollView, public DocumentObserver
 
         // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
-        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         void notifyContentsCleared( int changedFlags );
@@ -117,7 +117,7 @@ class PageView : public QScrollView, public DocumentObserver
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
-	void textSelection( QValueList<QRect> * , const QColor & );
+	void textSelection( QLinkedList<QRect> * , const QColor & );
 	void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );

@@ -97,7 +97,7 @@ class PageViewToolBar : public QWidget
 
         // animated widget controls
         enum Side { Left = 0, Top = 1, Right = 2, Bottom = 3 };
-        void showItems( Side side, const QValueList<ToolBarItem> & items );
+        void showItems( Side side, const QLinkedList<ToolBarItem> & items );
         void hideAndDestroy();
 
         // query properties

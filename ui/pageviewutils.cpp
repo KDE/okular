@@ -11,14 +11,14 @@
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
+#include <qevent.h>
 #include <qtimer.h>
 #include <qtooltip.h>
 #include <qpushbutton.h>
-#include <kiconloader.h>
+#include <kacceleratormanager.h>
 #include <kapplication.h>
+#include <kiconloader.h>
 #include <kimageeffect.h>
-#include <kaccelmanager.h>
-#include <kdeversion.h>
 #include <klocale.h>
 
 // system includes
@@ -99,8 +99,8 @@ void PageViewItem::moveTo( int x, int y )
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent, "pageViewMessage" ), m_timer( 0 )
 {
-    setFocusPolicy( NoFocus );
-    setBackgroundMode( NoBackground );
+    setFocusPolicy( Qt::NoFocus );
+    setBackgroundMode( Qt::NoBackground );
     setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QColorGroup::Background));
     move( 10, 10 );
     resize( 0, 0 );
@@ -245,14 +245,13 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const 
     setToggleButton( true );
     resize( buttonSize, buttonSize );
     setPixmap( DesktopIcon( item.pixmap, iconSize ) );
-    setWFlags( Qt::WNoAutoErase );
+    setWindowFlags( Qt::WNoAutoErase );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )
         setAccel( item.shortcut );
-#if KDE_IS_VERSION(3,3,90)
     else
         KAcceleratorManager::setNoAccel( this );
-#endif
+
     // if accel is set display it along name
     QString accelString = (QString)accel();
     if ( !accelString.isEmpty() )
@@ -286,7 +285,8 @@ void ToolBarButton::paintEvent( QPaintEvent * e )
     QRect backRect = e->rect();
     backRect.moveBy( x(), y() );
     p.drawPixmap( e->rect().topLeft(), m_background, backRect );
-    drawButtonLabel( &p );
+#warning don't know how to port drawButtonLabel
+    // drawButtonLabel( &p );
 }
 
 /* PageViewToolBar */
@@ -308,7 +308,7 @@ struct ToolBarPrivate
 
     // background pixmap and buttons
     QPixmap backgroundPixmap;
-    QValueList< ToolBarButton * > buttons;
+    QLinkedList< ToolBarButton * > buttons;
 };
 
 PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
@@ -333,7 +333,7 @@ PageViewToolBar::~PageViewToolBar()
     delete d;
 }
 
-void PageViewToolBar::showItems( Side side, const QValueList<ToolBarItem> & items )
+void PageViewToolBar::showItems( Side side, const QLinkedList<ToolBarItem> & items )
 {
     // set parameters for sliding in
     d->anchorSide = side;
@@ -342,14 +342,14 @@ void PageViewToolBar::showItems( Side side, const QValueList<ToolBarItem> & item
     // delete buttons if already present
     if ( !d->buttons.isEmpty() )
     {
-        QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+        QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
         for ( ; it != end; ++it )
             delete *it;
         d->buttons.clear();
     }
 
     // create new buttons for given items
-    QValueList<ToolBarItem>::const_iterator it = items.begin(), end = items.end();
+    QLinkedList<ToolBarItem>::const_iterator it = items.begin(), end = items.end();
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = new ToolBarButton( this, *it, d->backgroundPixmap );
@@ -404,7 +404,7 @@ void PageViewToolBar::mousePressEvent( QMouseEvent * e )
 {
     // set 'dragging' cursor
     if ( e->button() == Qt::LeftButton )
-        setCursor( sizeAllCursor );
+        setCursor( Qt::sizeAllCursor );
 }
 
 void PageViewToolBar::mouseMoveEvent( QMouseEvent * e )
@@ -435,7 +435,7 @@ void PageViewToolBar::mouseReleaseEvent( QMouseEvent * e )
 {
     // set normal cursor
     if ( e->button() == Qt::LeftButton )
-        setCursor( arrowCursor );
+        setCursor( Qt::arrowCursor );
 }
 
 void PageViewToolBar::buildToolBar()
@@ -506,10 +506,10 @@ void PageViewToolBar::buildToolBar()
     // 5.1. draw horizontal/vertical gradient
     QColor fromColor = topLeft ? palette().active().button() : palette().active().light();
     QColor toColor = topLeft ? palette().active().light() : palette().active().button();
-    QPixmap gradientPattern = KImageEffect::gradient(
+    QImage gradientPattern = KImageEffect::gradient(
             vertical ? QSize( myWidth, 1) : QSize( 1, myHeight ), fromColor, toColor,
             vertical ? KImageEffect::HorizontalGradient : KImageEffect::VerticalGradient );
-    bufferPainter.drawTiledPixmap( 0, 0, myWidth, myHeight, gradientPattern );
+    bufferPainter.drawTiledPixmap( 0, 0, myWidth, myHeight, QPixmap::fromImage(gradientPattern) );
     // 5.2. draw rounded border
     bufferPainter.setPen( palette().active().dark() );
     if ( vertical )
@@ -540,7 +540,7 @@ void PageViewToolBar::buildToolBar()
     // 6. reposition buttons (in rows/col grid)
     int gridX = 0,
         gridY = 0;
-    QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = *it;
@@ -563,7 +563,7 @@ void PageViewToolBar::reposition()
     move( d->currentPosition );
 
     // repaint all buttons (to update background)
-    QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
     for ( ; it != end; ++it )
         (*it)->update();
 }
@@ -620,7 +620,7 @@ void PageViewToolBar::slotButtonClicked()
     if ( button )
     {
         // deselect other buttons
-        QValueList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+        QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
         for ( ; it != end; ++it )
             if ( *it != button )
                 (*it)->setOn( false );

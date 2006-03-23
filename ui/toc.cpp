@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qheader.h>
 #include <klocale.h>
 
 // local includes
@@ -74,7 +73,7 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::notifySetup( const QValueVector< KPDFPage * > & /*pages*/, bool documentChanged )
+void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentChanged )
 {
     if ( !documentChanged )
         return;
@@ -120,7 +119,7 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
     }
 }
 
-void TOC::slotExecuted( QListViewItem *i )
+void TOC::slotExecuted( Q3ListViewItem *i )
 {
     TOCItem* tocItem = dynamic_cast<TOCItem*>( i );
     // that filters clicks on [+] that for a strange reason don't seem to be TOCItem*

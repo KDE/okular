@@ -52,7 +52,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     // create labels and layout them
     QLabel *key = new QLabel( i18n( "%1:" ).arg( titleString ), page );
     QLabel *value = new KSqueezedTextLabel( valueString, page );
-    layout->addWidget( key, row, 0, AlignRight );
+    layout->addWidget( key, row, 0, Qt::AlignRight );
     layout->addWidget( value, row, 1 );
     row++;
 

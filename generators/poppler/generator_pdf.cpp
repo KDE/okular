@@ -13,12 +13,11 @@
 #include <qevent.h>
 #include <qimage.h>
 #include <qapplication.h>
-#include <qpaintdevicemetrics.h>
 #include <qregexp.h>
 #include <qpoint.h>
-#include <kapplication.h>
+#include <kauthorized.h>
 #include <klocale.h>
-#include <kpassdlg.h>
+#include <kpassworddialog.h>
 #include <kwallet.h>
 #include <kprinter.h>
 #include <ktempfile.h>
@@ -108,13 +107,13 @@ PDFGenerator::~PDFGenerator()
         delete globalParams;
 }
 
-void PDFGenerator::setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation)
+void PDFGenerator::setOrientation(QVector<KPDFPage*> & pagesVector, int orientation)
 {
     loadPages(pagesVector,orientation,true);
 }
 
 //BEGIN Generator inherited functions
-bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage*> & pagesVector )
+bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & pagesVector )
 {
 #ifndef NDEBUG
     if ( pdfdoc )
@@ -132,7 +131,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     KWallet::Wallet * wallet = 0;
     while ( !pdfdoc->isOk() && pdfdoc->getErrorCode() == errEncrypted )
     {
-        QCString password;
+        QByteArray password;
 
         // 1.A. try to retrieve the first password from the kde wallet system
         if ( !triedWallet )
@@ -165,7 +164,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
             firstInput = false;
 
             // if the user presses cancel, abort opening
-            if ( KPasswordDialog::getPassword( password, prompt ) != KPasswordDialog::Accepted )
+            if ( KPasswordDialog::getPassword( 0, password, prompt ) != KPasswordDialog::Accepted )
                 break;
         }
 
@@ -202,7 +201,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     return true;
 }
 
-void PDFGenerator::loadPages(QValueVector<KPDFPage*> &pagesVector, int rotation, bool clear)
+void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool clear)
 {
     // TODO XPDF 3.01 check
     //     KPDFTextDev td;
@@ -271,7 +270,7 @@ RegularAreaRect * PDFGenerator::findText (const QString & text, SearchDir dir,
 // create a xpf's Unicode (unsigned int) array for the given text
     const QChar * str = text.unicode();
     int len = text.length();
-    QMemArray<Unicode> u(len);
+    QVector<Unicode> u(len);
     for (int i = 0; i < len; ++i)
         u[i] = str[i].unicode();
 
@@ -295,13 +294,13 @@ RegularAreaRect * PDFGenerator::findText (const QString & text, SearchDir dir,
     while ( !found )
     {
         if ( dir == FromTop )
-            found = textPage->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, 
+            found = textPage->findText( u.data(), len, 
                 gTrue, gTrue, gFalse, gFalse, sCase, gFalse, &sLeft, &sTop, &sRight, &sBottom );
         else if ( dir == NextRes )
-            found = textPage->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, 
+            found = textPage->findText( u.data(), len, 
             gFalse, gTrue, gTrue, gFalse, sCase, gFalse, &sLeft, &sTop, &sRight, &sBottom );
         else if ( dir == PrevRes )
-            found = textPage->findText( const_cast<Unicode*>(static_cast<const Unicode*>(u)), len, 
+            found = textPage->findText( u.data(), len, 
             gTrue, gFalse, gFalse, gTrue, sCase, gFalse, &sLeft, &sTop, &sRight, &sBottom );
 
         // if not found (even in case unsensitive search), terminate
@@ -440,7 +439,7 @@ const DocumentFonts * PDFGenerator::generateDocumentFonts()
 bool PDFGenerator::isAllowed( int permissions )
 {
 #if !KPDF_FORCE_DRM
-    if (kapp->authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
+    if (KAuthorized::authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
 #endif
 
     bool b = true;
@@ -555,9 +554,8 @@ bool PDFGenerator::print( KPrinter& printer )
         dummy.setFullPage(true);
         dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
 
-        QPaintDeviceMetrics metrics(&dummy);
-        globalParams->setPSPaperWidth(metrics.width());
-        globalParams->setPSPaperHeight(metrics.height());
+        globalParams->setPSPaperWidth(dummy.width());
+        globalParams->setPSPaperHeight(dummy.height());
     }
 
     KTempFile tf( QString::null, ".ps" );
@@ -565,7 +563,7 @@ bool PDFGenerator::print( KPrinter& printer )
 
     if (psOut->isOk())
     {
-        QValueList<int> pageList;
+        QList<int> pageList;
 
         if (!printer.previewOnly())
         {
@@ -587,7 +585,7 @@ bool PDFGenerator::print( KPrinter& printer )
         // needs to be here so that the file is flushed, do not merge with the one
         // in the else
         delete psOut;
-        printer.printFiles(tf.name(), true);
+        printer.printFiles(QStringList(tf.name()), true);
         return true;
     }
     else
@@ -1275,9 +1273,9 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
     QMap< int, Annotation * > annotationsMap;
     QMap< int, PopupWindow * > popupsMap;
     // lists of Windows and Revisions that needs resolution
-    QValueList< ResolveRevision > resolveRevList;
-    QValueList< ResolveWindow > resolvePopList;
-    QValueList< PostProcessText > ppTextList;
+    QLinkedList< ResolveRevision > resolveRevList;
+    QLinkedList< ResolveWindow > resolvePopList;
+    QLinkedList< PostProcessText > ppTextList;
 
     // build a normalized transform matrix for this page at 100% scale
     GfxState * gfxState = new GfxState( 72.0, 72.0, pdfPage->getMediaBox(), pdfPage->getRotate(), gTrue );
@@ -1573,7 +1571,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             for ( int m = 0; m < pathsNumber; m++ )
             {
                 // transform each path in a list of normalized points ..
-                QValueList<NormalizedPoint> localList;
+                QLinkedList<NormalizedPoint> localList;
                 Object pointsArray;
                 pathsArray.arrayGet( m, &pointsArray );
                 if ( pointsArray.isArray() )
@@ -1841,7 +1839,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
     /** 2 - RESOLVE POPUPS (popup.* -> annotation.window) */
     if ( !resolvePopList.isEmpty() && !popupsMap.isEmpty() )
     {
-        QValueList< ResolveWindow >::iterator it = resolvePopList.begin(),
+        QLinkedList< ResolveWindow >::iterator it = resolvePopList.begin(),
                                               end = resolvePopList.end();
         for ( ; it != end; ++it )
         {
@@ -1885,7 +1883,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         // append children to parents
         int excludeIDs[ resolveRevList.count() ];   // can't even reach this size
         int excludeIndex = 0;                       // index in excludeIDs array
-        QValueList< ResolveRevision >::iterator it = resolveRevList.begin(), end = resolveRevList.end();
+        QLinkedList< ResolveRevision >::iterator it = resolveRevList.begin(), end = resolveRevList.end();
         for ( ; it != end; ++it )
         {
             const ResolveRevision & request = *it;
@@ -1915,7 +1913,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
     /** 4 - POSTPROCESS TextAnnotations (when window geom is embedded) */
     if ( !ppTextList.isEmpty() )
     {
-        QValueList< PostProcessText >::const_iterator it = ppTextList.begin(), end = ppTextList.end();
+        QLinkedList< PostProcessText >::const_iterator it = ppTextList.begin(), end = ppTextList.end();
         for ( ; it != end; ++it )
         {
             const PostProcessText & request = *it;
@@ -2107,7 +2105,7 @@ void PDFGenerator::customEvent( QCustomEvent * event )
     PixmapRequest * request = static_cast< PixmapRequest * >( event->data() );
     QImage * outImage = generatorThread->takeImage();
     TextPage * outTextPage = generatorThread->takeTextPage();
-    QValueList< ObjectRect * > outRects = generatorThread->takeObjectRects();
+    QLinkedList< ObjectRect * > outRects = generatorThread->takeObjectRects();
 
     request->page->setPixmap( request->id, new QPixmap( *outImage ) );
     delete outImage;
@@ -2139,7 +2137,7 @@ struct PPGThreadPrivate
     // internal temp stored items. don't delete this.
     QImage * m_image;
     TextPage * m_textPage;
-    QValueList< ObjectRect * > m_rects;
+    QLinkedList< ObjectRect * > m_rects;
     bool m_rectsTaken;
 };
 
@@ -2161,7 +2159,7 @@ PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
     delete d->m_textPage;
     if ( !d->m_rectsTaken && d->m_rects.count() )
     {
-        QValueList< ObjectRect * >::iterator it = d->m_rects.begin(), end = d->m_rects.end();
+        QLinkedList< ObjectRect * >::iterator it = d->m_rects.begin(), end = d->m_rects.end();
         for ( ; it != end; ++it )
             delete *it;
     }
@@ -2225,7 +2223,7 @@ TextPage * PDFPixmapGeneratorThread::takeTextPage() const
     return tp;
 }
 
-QValueList< ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
+QLinkedList< ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
 {
     d->m_rectsTaken = true;
     return d->m_rects;

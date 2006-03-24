@@ -22,7 +22,7 @@
 #define USE_FIXEDPOINT 0
 #define SPLASH_CMYK 0
 
-#include <qvaluelist.h>
+#include <qlinkedlist.h>
 #include "PDFDoc.h" // for 'Object'
 #include "SplashOutputDev.h"
 
@@ -57,7 +57,7 @@ class KPDFOutputDev : public SplashOutputDev
         // takes pointers out of the class (so deletion it's up to others)
         QPixmap * takePixmap();
         QImage * takeImage();
-        QValueList< ObjectRect * > takeObjectRects();
+        QLinkedList< ObjectRect * > takeObjectRects();
 
         /** inherited from OutputDev */
         // End a page.
@@ -87,7 +87,7 @@ class KPDFOutputDev : public SplashOutputDev
         PDFDoc * m_doc;
         QPixmap * m_pixmap;
         QImage * m_image;
-        QValueList< ObjectRect * > m_rects; // objectRects (links/images)
+        QLinkedList< ObjectRect * > m_rects; // objectRects (links/images)
 };
 
 #endif

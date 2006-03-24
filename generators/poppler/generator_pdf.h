@@ -11,6 +11,7 @@
 #ifndef _KPDF_GENERATOR_PDF_H_
 #define _KPDF_GENERATOR_PDF_H_
 
+#include <qevent.h>
 #include <qmutex.h>
 #include <qcolor.h>
 #include <qstring.h>
@@ -54,8 +55,8 @@ class PDFGenerator : public Generator
         virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
-        void loadPages(QValueVector<KPDFPage*> &pagesVector, int rotation=-1, bool clear=false);
+        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        void loadPages(QVector<KPDFPage*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document informations
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
@@ -83,7 +84,7 @@ class PDFGenerator : public Generator
             KPDFPage * page );
         QString * getText( const RegularAreaRect * area, KPDFPage * page );
 
-        void setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation);
+        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
 
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
@@ -163,7 +164,7 @@ class PDFPixmapGeneratorThread : public QThread
         // methods for getting contents from the GUI thread
         QImage * takeImage() const;
         TextPage * takeTextPage() const;
-        QValueList< ObjectRect * > takeObjectRects() const;
+        QLinkedList< ObjectRect * > takeObjectRects() const;
 
     private:
         // can't be called from the outside (but from startGeneration)

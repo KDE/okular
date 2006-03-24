@@ -1,7 +1,7 @@
 kde_module_LTLIBRARIES = \
     libokularGenerator_poppler.la
 
-INCLUDES = -I$(srcdir)/../.. $(POPPLER_CFLAGS) $(all_includes) 
+INCLUDES = -I$(srcdir)/../.. -I../.. $(POPPLER_CFLAGS) $(all_includes) 
 
 libokularGenerator_poppler_la_LIBADD = ../../core/liboKularcore.la ../../conf/liboKularconf.la \
 				    $(POPPLER_LIBS) $(LIB_KDEPRINT) $(LIB_KDEUI) -lm

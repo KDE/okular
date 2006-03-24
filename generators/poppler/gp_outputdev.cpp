@@ -80,11 +80,11 @@ QImage * KPDFOutputDev::takeImage()
     return img;
 }
 
-QValueList< ObjectRect * > KPDFOutputDev::takeObjectRects()
+QLinkedList< ObjectRect * > KPDFOutputDev::takeObjectRects()
 {
     if ( m_rects.isEmpty() )
         return m_rects;
-    QValueList< ObjectRect * > rectsCopy( m_rects );
+    QLinkedList< ObjectRect * > rectsCopy( m_rects );
     m_rects.clear();
     return rectsCopy;
 }
@@ -217,7 +217,7 @@ void KPDFOutputDev::clear()
     // delete rects
     if ( m_rects.count() )
     {
-        QValueList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+        QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
         for ( ; it != end; ++it )
             delete *it;
         m_rects.clear();

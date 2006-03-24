@@ -29,11 +29,11 @@
 #include <sys/types.h>
 
 #include <qstring.h>
-#include <qcstring.h>
-#include <qlistbox.h>
+#include <q3cstring.h>
+#include <q3listbox.h>
 #include <qmap.h>
-#include <qvaluevector.h>
-#include <qtextcodec.h> 
+#include <qvector.h>
+#include <qtextcodec.h>
 
 #include "kchmtextencoding.h"
 
@@ -58,13 +58,13 @@ class KCHMSearchProgressResult
 		inline KCHMSearchProgressResult() {}
 		inline KCHMSearchProgressResult( u_int32_t t, u_int32_t u ) : titleoff(t),urloff(u) {}
 		
-		QValueVector<u_int64_t>		offsets;
+		QVector<u_int64_t>		offsets;
 		u_int32_t					titleoff;
 		u_int32_t					urloff;
 };
 
-typedef QValueVector<KCHMSearchProgressResult>	KCHMSearchProgressResults_t;
-typedef QValueVector<KCHMSearchResult> 			KCHMSearchResults_t;
+typedef QVector<KCHMSearchProgressResult>	KCHMSearchProgressResults_t;
+typedef QVector<KCHMSearchResult> 			KCHMSearchResults_t;
 
 
 class KCHMParsedIndexEntry
@@ -80,7 +80,7 @@ class KCHMParsedIndexEntry
 		int							m_imagenum;
 };
 
-typedef QValueVector<KCHMParsedIndexEntry> 		KCHMParsedIndexEntry_t;
+typedef QVector<KCHMParsedIndexEntry> 		KCHMParsedIndexEntry_t;
 class QDomDocument;
 
 //! Maximum allowed number of search-returned items.
@@ -251,7 +251,7 @@ public:
 	/*! 
 	 * Enumerate every file in the CHM archive, and store its path into the supplied vector.
 	 */
-	bool enumerateArchive (QValueVector<QString>& files);
+	bool enumerateArchive (QVector<QString>& files);
 	
 	/*! 
 	 * Find the tree item specified by URL.
@@ -285,7 +285,7 @@ private:
 	//! Encode the string with the currently selected text codec, if possible. Or return as-is, if not.
 	inline QString encodeWithCurrentCodec (const QString& str) const
 	{
-		return (m_textCodec ? m_textCodec->toUnicode (str) : str);
+		return (m_textCodec ? m_textCodec->toUnicode (str.toLocal8Bit()) : str);
 	}
 
 	//! Encode the string with the currently selected text codec, if possible. Or return as-is, if not.
@@ -327,7 +327,7 @@ private:
 	bool  changeFileEncoding (const char *qtencoding);
 
 	//! Convert the word, so it has an appropriate encoding
-	QCString convertSearchWord ( const QString &src );
+	Q3CString convertSearchWord ( const QString &src );
 
 	/*!
 	 * Helper procedure in TOC parsing, decodes the string between the quotes (first or last) with decoding HTML

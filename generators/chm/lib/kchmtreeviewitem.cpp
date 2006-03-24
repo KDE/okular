@@ -21,6 +21,7 @@
 
 #include <qstringlist.h>
 #include <qstyle.h>
+#include <qstyleoption.h>
 
 #include "kchmtreeviewitem.h"
 #include "xchmfile.h"
@@ -97,13 +98,8 @@ void KCHMMainTreeViewItem::paintBranches( QPainter * p, const QColorGroup & cg, 
 	{
 		// Too bad that listView()->paintEmptyArea( p, QRect( 0, 0, w, h ) ) is protected. 
 		// Taken from qt-x11-free-3.0.4/src/widgets/qlistview.cpp
-    	QStyleOption opt( 0, 0 );
-    	QStyle::SFlags how = QStyle::Style_Default | QStyle::Style_Enabled;
-
-    	listView()->style().drawComplexControl( QStyle::CC_ListView,
-				p, listView(), QRect( 0, 0, w, h ), cg,
-				how, QStyle::SC_ListView, QStyle::SC_None,
-				opt );
+    	QStyleOptionQ3ListView opt;
+    	listView()->style()->drawComplexControl( QStyle::CC_Q3ListView, &opt, p, listView());
 	}
 }
 

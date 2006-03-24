@@ -390,7 +390,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 		else if ( tagword == "/object" && in_object ) 
 		{
 			// a topic entry closed. Add a tree item
-			if ( name )
+			if ( !name.isNull() )
 			{
 				QDomElement * item = new QDomElement();
 
@@ -577,7 +577,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, KListView *tree, bool as
 		else if ( tagword == "/object" && in_object ) 
 		{
 			// a topic entry closed. Add a tree item
-			if ( name )
+			if ( !name.isNull() )
 			{
 				KCHMMainTreeViewItem * item;
 
@@ -733,7 +733,7 @@ bool CHMFile::SearchWord (const QString& text, bool wholeWords, bool titlesOnly,
 	u_int32_t i = sizeof(u_int16_t);
 	u_int16_t free_space;
 
-	QMemArray<unsigned char> buffer(node_len);
+	QVector<unsigned char> buffer(node_len);
 
 	node_offset = GetLeafNodeOffset (searchword, node_offset, node_len, tree_depth);
 
@@ -845,7 +845,7 @@ inline u_int32_t CHMFile::GetLeafNodeOffset(const QString& text,
 	unsigned char* cursor16, *cursor32;
 	unsigned char word_len, pos;
 	u_int32_t i = sizeof(u_int16_t);
-	QMemArray<unsigned char> buffer(buffSize);
+	QVector<unsigned char> buffer(buffSize);
 	QString word;
 	
 	while(--treeDepth)
@@ -906,7 +906,7 @@ inline bool CHMFile::ProcessWLC (u_int64_t wlc_count, u_int64_t wlc_size,
 	int wlc_bit = 7;
 	u_int64_t index = 0, count;
 	size_t length, off = 0;
-	QMemArray<unsigned char> buffer (wlc_size);
+	QVector<unsigned char> buffer (wlc_size);
 	unsigned char *cursor32;
 
 	unsigned char entry[TOPICS_ENTRY_LEN];
@@ -1159,7 +1159,7 @@ inline bool CHMFile::InfoFromSystem()
 
 int CHMFile::getPageNum( const QString & str ) const
 {
-	QMapConstIterator<QString,int> i=m_UrlPage.find (str);
+	QMap<QString,int>::const_iterator i=m_UrlPage.find (str);
 	if ( i == m_UrlPage.end() )
 		return 0;
 	return i.data();
@@ -1167,7 +1167,7 @@ int CHMFile::getPageNum( const QString & str ) const
 
 QString CHMFile::getUrlForPage( int p ) const
 {
-	QMapConstIterator<int,QString> i=m_PageUrl.find (p);
+	QMap<int,QString>::const_iterator i=m_PageUrl.find (p);
 	if ( i == m_PageUrl.end() )
 		return 0;
 	return i.data();
@@ -1237,7 +1237,7 @@ bool CHMFile::GetFileContentAsString(QString& str, chmUnitInfo *ui)
 			
 	if ( RetrieveObject (ui, (unsigned char*) buf.data(), 0, ui->length) )
 	{
-		buf [ui->length] = '\0';
+		buf [(int)ui->length] = '\0';
 		str = encodeWithCurrentCodec((const char*) buf);
 		return true;
 	}
@@ -1302,17 +1302,17 @@ CHMFile * CHMFile::getCHMfilePointer( const QString & filename )
 
 static int chm_enumerator_callback (struct chmFile*, struct chmUnitInfo *ui, void *context)
 {
-	((QValueVector<QString> *) context)->push_back (ui->path);
+	((QVector<QString> *) context)->push_back (ui->path);
     return CHM_ENUMERATOR_CONTINUE;
 }
 
-bool CHMFile::enumerateArchive( QValueVector< QString > & files )
+bool CHMFile::enumerateArchive( QVector< QString > & files )
 {
 	files.clear();
 	return chm_enumerate (m_chmFile, CHM_ENUMERATE_ALL, chm_enumerator_callback, &files);
 }
 
-QCString CHMFile::convertSearchWord( const QString & src )
+Q3CString CHMFile::convertSearchWord( const QString & src )
 {
 	static const char * searchwordtable[128] =
 	{
@@ -1327,11 +1327,11 @@ QCString CHMFile::convertSearchWord( const QString & src )
 	};
 
 	if ( !m_textCodec )
-		return (QCString) src.lower();
+		return (Q3CString) src.lower().toLocal8Bit();
 
-	QCString dest = m_textCodec->fromUnicode (src);
+	Q3CString dest = m_textCodec->fromUnicode (src);
 
-	for ( unsigned int i = 0; i < dest.size(); i++ )
+	for ( int i = 0; i < dest.size(); i++ )
 	{
 		if ( dest[i] & 0x80 )
 		{
@@ -1404,7 +1404,7 @@ void CHMFile::GetSearchResults( const KCHMSearchProgressResults_t & tempres, KCH
 	unsigned char combuf [COMMON_BUF_LEN];
 	QMap<u_int32_t, u_int32_t> urlsmap;  // used to prevent duplicated urls
 	
-	for ( unsigned int i = 0; i < tempres.size(); i++ )
+	for ( int i = 0; i < tempres.size(); i++ )
 	{
 		if ( urlsmap.find (tempres[i].urloff) != urlsmap.end() )
 			continue;

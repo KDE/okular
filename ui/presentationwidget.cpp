@@ -8,14 +8,16 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qevent.h>
+#include <qicon.h>
 #include <qtimer.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qtooltip.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
-#include <kapplication.h>
 #include <kcursor.h>
+#include <krandom.h>
 #include <ktoolbar.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -51,7 +53,7 @@ struct PresentationFrame
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
-    : QDialog( parent, "presentationWidget", true, WDestructiveClose | WStyle_NoBorder),
+    : QDialog( parent, "presentationWidget", true, Qt::WDestructiveClose | Qt::WStyle_NoBorder),
     m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 )
 {
     // set look and geometry
@@ -91,16 +93,16 @@ PresentationWidget::~PresentationWidget()
         m_document->setViewportPage( m_frameIndex/*, PRESENTATION_ID*/ );
 
     // delete frames
-    QValueVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
+    QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
 }
 
 
-void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )
+void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )
 {
     // delete previous frames (if any (shouldn't be))
-    QValueVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
+    QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
     if ( !m_frames.isEmpty() )
@@ -108,7 +110,7 @@ void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet
     m_frames.clear();
 
     // create the new frames
-    QValueVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
+    QVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     float screenRatio = (float)m_height / (float)m_width;
     for ( ; setIt != setEnd; ++setIt )
     {
@@ -183,15 +185,15 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 
-    if ( e->key() == Key_Left || e->key() == Key_Backspace || e->key() == Key_Prior )
+    if ( e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Prior )
         slotPrevPage();
-    else if ( e->key() == Key_Right || e->key() == Key_Space || e->key() == Key_Next )
+    else if ( e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_Next )
         slotNextPage();
-    else if ( e->key() == Key_Home )
+    else if ( e->key() == Qt::Key_Home )
         slotFirstPage();
-    else if ( e->key() == Key_End )
+    else if ( e->key() == Qt::Key_End )
         slotLastPage();
-    else if ( e->key() == Key_Escape )
+    else if ( e->key() == Qt::Key_Escape )
     {
         if ( m_topBar->isShown() )
             m_topBar->hide();
@@ -291,15 +293,18 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_width = d.width();
         m_height = d.height();
 
+#warning this is ugly find another way to fix it
+        KIconLoader *il = KGlobal::iconLoader();
+
         // create top toolbar
         m_topBar = new KToolBar( this, "presentationBar" );
-        m_topBar->setIconSize( 32 );
-        m_topBar->setMovingEnabled( false );
-        m_topBar->insertButton( "1leftarrow", 2, SIGNAL( clicked() ), this, SLOT( slotPrevPage() ) );
-        m_topBar->insertButton( "1rightarrow", 3, SIGNAL( clicked() ), this, SLOT( slotNextPage() ) );
-        m_topBar->insertButton( "exit", 1, SIGNAL( clicked() ), this, SLOT( close() ) );
+        m_topBar->addAction( QIcon(il->loadIcon("1leftarrow", K3Icon::Toolbar)), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
+        m_topBar->addAction( QIcon(il->loadIcon("1rightarrow", K3Icon::Toolbar)), i18n("Next Page"), this, SLOT( slotNextPage() ) );
+        QWidget *spacer = new QWidget(m_topBar);
+        spacer->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+        m_topBar->addWidget( spacer );
+        m_topBar->addAction( QIcon(il->loadIcon("exit", K3Icon::Toolbar)), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
-        m_topBar->alignItemRight( 1 );
         m_topBar->hide();
         // change topbar background color
         QPalette p = m_topBar->palette();
@@ -324,7 +329,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         return;
 
     // blit the pixmap to the screen
-    QMemArray<QRect> allRects = pe->region().rects();
+    QVector<QRect> allRects = pe->region().rects();
     uint numRects = allRects.count();
     for ( uint i = 0; i < numRects; i++ )
     {
@@ -451,7 +456,7 @@ void PresentationWidget::changePage( int newPage )
         // operation will take long: set busy cursor
         QApplication::setOverrideCursor( KCursor::workingCursor() );
         // request the pixmap
-        QValueList< PixmapRequest * > request;
+        QLinkedList< PixmapRequest * > request;
         request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, rot, PRESENTATION_PRIO ) );
         m_document->requestPixmaps( request );
         // restore cursor
@@ -509,7 +514,7 @@ void PresentationWidget::generateIntroPage( QPainter & p )
     // use a vertical gray gradient background
     int blend1 = m_height / 10,
         blend2 = 9 * m_height / 10;
-    int baseTint = Qt::gray.red();
+    int baseTint = QColor(Qt::gray).red();
     for ( int i = 0; i < m_height; i++ )
     {
         int k = baseTint;
@@ -549,11 +554,11 @@ void PresentationWidget::generateIntroPage( QPainter & p )
         // text shadow
         p.setPen( Qt::darkGray );
         p.drawText( 2, m_height / 4 + strHeight * i + 2, m_width, strHeight,
-                    AlignHCenter | AlignVCenter, m_metaStrings[i] );
+                    Qt::AlignHCenter | Qt::AlignVCenter, m_metaStrings[i] );
         // text body
         p.setPen( 128 + (127 * i) / strNum );
         p.drawText( 0, m_height / 4 + strHeight * i, m_width, strHeight,
-                    AlignHCenter | AlignVCenter, m_metaStrings[i] );
+                    Qt::AlignHCenter | Qt::AlignVCenter, m_metaStrings[i] );
     }
 }
 
@@ -576,8 +581,8 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
 
     // fill unpainted areas with background color
     QRegion unpainted( QRect( 0, 0, m_width, m_height ) );
-    QMemArray<QRect> rects = unpainted.subtract( frame->geometry ).rects();
-    for ( uint i = 0; i < rects.count(); i++ )
+    QVector<QRect> rects = unpainted.subtract( frame->geometry ).rects();
+    for ( int i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
         p.fillRect( r, KpdfSettings::slidesBackgroundColor() );
@@ -609,10 +614,12 @@ void PresentationWidget::generateOverlay()
     {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
         pixmapPainter.setPen( 0x05 );
-        pixmapPainter.setBrush( 0x40 );
+#warning QPainter.setBrush(0x40) ???? port this
+ //       pixmapPainter.setBrush( 0x40 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
         pixmapPainter.setPen( 0x40 );
-        pixmapPainter.setBrush( 0xF0 );
+#warning QPainter.setBrush(0xF0) ???? port this
+//      pixmapPainter.setBrush( 0xF0 );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
     else
@@ -622,7 +629,8 @@ void PresentationWidget::generateOverlay()
         {
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
-            pixmapPainter.setBrush( i <= m_frameIndex ? 0xF0 : 0x40 );
+#warning QPainter.setBrush(0xF0) ???? port this
+//          pixmapPainter.setBrush( i <= m_frameIndex ? 0xF0 : 0x40 );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );
             oldCoord = newCoord;
@@ -650,7 +658,8 @@ void PresentationWidget::generateOverlay()
     doublePixmap.fill( Qt::black );
     pixmapPainter.begin( &doublePixmap );
     pixmapPainter.setPen( 0x40 );
-    pixmapPainter.setBrush( 0x80 );
+#warning QPainter.setBrush(0x80) ???? port this
+//  pixmapPainter.setBrush( 0x80 );
     pixmapPainter.drawEllipse( 0, 0, side, side );
     pixmapPainter.end();
     QImage shadow( doublePixmap.convertToImage().smoothScale( side / 2, side / 2 ) );
@@ -855,7 +864,7 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
         }
         case KpdfSettings::EnumSlidesTransition::Random:
         {
-            return defaultTransition( KApplication::random() % 18 );
+            return defaultTransition( KRandom::random() % 18 );
             break;
         }
         case KpdfSettings::EnumSlidesTransition::SplitHorizontalIn:

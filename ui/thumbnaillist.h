@@ -10,10 +10,11 @@
 #ifndef _KPDF_THUMBNAILLIST_H_
 #define _KPDF_THUMBNAILLIST_H_
 
-#include <qscrollview.h>
-#include <qvaluevector.h>
-#include <qvbox.h>
+#include <q3scrollview.h>
+
+#include <kvbox.h>
 #include <ktoolbar.h>
+
 #include "core/observer.h"
 
 class QTimer;
@@ -27,7 +28,7 @@ class ThumbnailWidget;
  *
  * ...
  */
-class ThumbnailList : public QScrollView, public DocumentObserver
+class ThumbnailList : public Q3ScrollView, public DocumentObserver
 {
 Q_OBJECT
 	public:
@@ -37,7 +38,7 @@ Q_OBJECT
         // inherited: return thumbnails observer id
         uint observerId() const { return THUMBNAILS_ID; }
         // inherited: create thumbnails ( inherited as a DocumentObserver )
-        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
         void notifyViewportChanged( bool smoothMove );
         // inherited: redraw thumbnail ( inherited as DocumentObserver )
@@ -74,7 +75,7 @@ Q_OBJECT
 		void dropEvent( QDropEvent* );
 
 	signals:
-		void urlDropped( const KURL& );
+		void urlDropped( const KUrl& );
 		void rightClick( const KPDFPage *, const QPoint & );
 
 	private:
@@ -83,8 +84,8 @@ Q_OBJECT
 		ThumbnailWidget *m_selected;
 		QTimer *m_delayTimer;
 		QPixmap *m_bookmarkOverlay;
-		QValueVector<ThumbnailWidget *> m_thumbnails;
-		QValueList<ThumbnailWidget *> m_visibleThumbnails;
+		QVector<ThumbnailWidget *> m_thumbnails;
+		QList<ThumbnailWidget *> m_visibleThumbnails;
 		int m_vectorIndex;
 
 	private slots:
@@ -97,10 +98,10 @@ Q_OBJECT
 /**
  * @short A vertical boxed container with zero size hint (for insertion on left toolbox)
  */
-class ThumbnailsBox : public QVBox
+class ThumbnailsBox : public KVBox
 {
 	public:
-		ThumbnailsBox( QWidget * parent ) : QVBox( parent ) {};
+		ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {};
 		QSize sizeHint() const { return QSize(); }
 };
 

@@ -11,9 +11,9 @@
 #define _KPDF_PRESENTATIONWIDGET_H_
 
 #include <qdialog.h>
+#include <qlist.h>
 #include <qpixmap.h>
 #include <qstringlist.h>
-#include <qvaluevector.h>
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
@@ -39,7 +39,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
 
         // inherited from DocumentObserver
         uint observerId() const { return PRESENTATION_ID; }
-        void notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber );
@@ -81,11 +81,11 @@ class PresentationWidget : public QDialog, public DocumentObserver
         QTimer * m_overlayHideTimer;
         int m_transitionDelay;
         int m_transitionMul;
-        QValueList< QRect > m_transitionRects;
+        QList< QRect > m_transitionRects;
 
         // misc stuff
         KPDFDocument * m_document;
-        QValueVector< PresentationFrame * > m_frames;
+        QVector< PresentationFrame * > m_frames;
         int m_frameIndex;
         QStringList m_metaStrings;
         KToolBar * m_topBar;

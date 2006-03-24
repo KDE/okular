@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
+ *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,9 +12,9 @@
 
 #include <ktoolbar.h>
 
-class KPopupMenu;
 class KPDFDocument;
 class m_inputDelayTimer;
+class QAction;
 
 // definition of searchID for this class (publicly available to ThumbnailsList)
 #define SW_SEARCH_ID 3
@@ -36,14 +36,16 @@ class SearchWidget : public KToolBar
 
     private:
         KPDFDocument * m_document;
-        KPopupMenu * m_menu;
+        QMenu * m_menu;
         QTimer * m_inputDelayTimer;
         int m_searchType;
         bool m_caseSensitive;
+        QAction *m_matchPhraseAction, *m_caseSensitiveAction, * m_marchAllWordsAction, *m_marchAnyWordsAction;
+        KLineEdit *m_lineEdit;
 
     private slots:
         void slotTextChanged( const QString & text );
-        void slotMenuChaged( int index );
+        void slotMenuChaged( QAction * );
         void startSearch();
 };
 

@@ -1,6 +1,6 @@
 SUBDIRS = conf core ui shell generators
  
-INCLUDES = -I conf $(all_includes) $(FREETYPE_CFLAGS)
+INCLUDES = -Iconf $(all_includes) $(FREETYPE_CFLAGS)
 
 METASOURCES = AUTO
 

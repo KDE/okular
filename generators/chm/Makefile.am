@@ -8,7 +8,7 @@ SUBDIRS = lib . kio-msits
 kde_module_LTLIBRARIES = \
   libokularGenerator_chmlib.la
 
-INCLUDES = -I../.. $(all_includes)
+INCLUDES = -I$(srcdir)/../.. -I../.. $(all_includes)
 
 libokularGenerator_chmlib_la_LIBADD = ../../core/liboKularcore.la \
 	../../conf/liboKularconf.la \

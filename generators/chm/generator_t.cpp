@@ -23,7 +23,6 @@
 #include <qevent.h>
 #include <qapplication.h>
 #include <qpainter.h>
-#include <qpaintdevicemetrics.h>
 #include <qprinter.h>
 #include <qstring.h>
 
@@ -38,7 +37,7 @@ TGenerator::TGenerator( KPDFDocument * doc ) : Generator ( doc )
 //     px=0;
 }
 
-bool TGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector )
+bool TGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
 {
     m_fileName=fileName;
     m_file=new CHMFile (fileName);
@@ -47,7 +46,6 @@ bool TGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage 
     QPrinter p; 
     p.setPageSize(static_cast< QPrinter::PageSize >( KGlobal::locale()->pageSize() ));
     p.setFullPage(true);
-    QPaintDeviceMetrics m(&p);
 
     kdDebug () << "UrlPage count " << m_file->m_UrlPage.count() << endl;
     pagesVector.resize(m_file->m_UrlPage.count());
@@ -72,14 +70,14 @@ bool TGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage 
 
 void TGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
-    KURL pAddress= "ms-its:" + m_fileName + "::" + url;
+    KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
     m_state=0;
     kdDebug() << "Url: " << pAddress  << endl;
     m_syncGen->setZoomFactor(zoom);
     m_doneFlagSet=false;
     m_syncGen->openURL(pAddress);
     m_syncGen->view()->layout();
-    while (!m_doneFlagSet) { qApp->processEvents(50); }
+    while (!m_doneFlagSet) { qApp->processEvents(QEventLoop::AllEvents, 50); }
 }
 
 void TGenerator::slotCompleted()
@@ -152,7 +150,7 @@ void TGenerator::generatePixmap( PixmapRequest * request )
         , static_cast<double>(request->height)/static_cast<double>(request->page->height())
         ) * 100;
 
-    KURL pAddress= "ms-its:" + m_fileName + "::" + url;
+    KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
     kdDebug() << "Page asked is: " << pAddress << " zoom is " << zoom << endl;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(request->width,request->height);
@@ -246,7 +244,7 @@ void TGenerator::additionalRequestData()
     if ( genObjectRects )
     {
         kdDebug() << "Generating ObjRects - start" << endl;
-        QValueList< ObjectRect * > objRects;
+        QLinkedList< ObjectRect * > objRects;
         int xScale=m_request->width;
         int yScale=m_request->height;
         // getting links
@@ -368,7 +366,7 @@ QString* TGenerator::getText( const RegularAreaRect * area, KPDFPage * page )
     return new QString();
 }
 
-void TGenerator::setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation)
+void TGenerator::setOrientation(QVector<KPDFPage*> & pagesVector, int orientation)
 { ; }
 
 bool TGenerator::canConfigurePrinter( )

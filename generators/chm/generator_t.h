@@ -27,7 +27,7 @@ class TGenerator : public Generator
     Q_OBJECT
     public:
         TGenerator(KPDFDocument * doc );
-        bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector );
+        bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
 
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
@@ -52,7 +52,7 @@ class TGenerator : public Generator
         RegularAreaRect * findText( const QString & text, SearchDir dir, const bool strictCase,
                     const RegularAreaRect * lastRect, KPDFPage * page);
         QString* getText( const RegularAreaRect * area, KPDFPage * page );
-        void setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation);
+        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
 
         bool canConfigurePrinter( ) ;
         bool print( KPrinter& /*printer*/ ) ;

@@ -29,7 +29,7 @@
 #include <qeventloop.h>
 #include <qdom.h>
 #include <qfile.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 #include "xchmfile.h"
 #include "iconstorage.h"
@@ -507,7 +507,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 	return true;
 }
 
-bool CHMFile::ParseHhcAndFillTree (const QString& file, KListView *tree, bool asIndex)
+bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool asIndex)
 {
 	chmUnitInfo ui;
 	const int MAX_NEST_DEPTH = 256;
@@ -689,7 +689,7 @@ bool CHMFile::ParseAndFillTopicsTree(QDomDocument *tree)
 	return ParseHhcAndFillTree (m_topicsFile, tree, false);
 }
 
-bool CHMFile::ParseAndFillIndex(KListView *indexlist)
+bool CHMFile::ParseAndFillIndex(K3ListView *indexlist)
 {
 	return ParseHhcAndFillTree (m_indexFile, indexlist, true);
 }

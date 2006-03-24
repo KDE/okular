@@ -41,7 +41,7 @@
 // #include 
 
 class TGenerator;
-class KListView;
+class K3ListView;
 class KCHMSearchResult
 {
 	public:
@@ -189,7 +189,7 @@ public:
 	  to this function.
 	  \return true if it's possible to build the tree, false otherwise.
 	 */
-	bool ParseAndFillIndex (KListView *indexlist);
+	bool ParseAndFillIndex (K3ListView *indexlist);
 
 	/*!
 	  \brief Fast search using the $FIftiMain file in the .chm.
@@ -278,7 +278,7 @@ public:
 private:
 	//! Parse the HHC or HHS file, and fill the context (asIndex is false) or index (asIndex is true) tree.
 	bool  ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool asIndex);
-    bool  ParseHhcAndFillTree (const QString& file, KListView *tree, bool asIndex);
+    bool  ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool asIndex);
 	//! Parse the HHC or HHS file, and fill the data.
 	bool ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedIndexEntry_t & cont );
 

@@ -20,7 +20,7 @@
 #ifndef CTREEVIEWITEM_H
 #define CTREEVIEWITEM_H
 
-#include <klistview.h>
+#include <k3listview.h>
 
 namespace KCHMImageType
 {
@@ -32,17 +32,17 @@ namespace KCHMImageType
 /**
 @author Georgy Yunaev
 */
-class KCHMMainTreeViewItem : public KListViewItem
+class KCHMMainTreeViewItem : public K3ListViewItem
 {
 public:
-    KCHMMainTreeViewItem(KListViewItem* parent, KListViewItem* after, QString name, QString aurl, int image);
-	KCHMMainTreeViewItem(KListView* parent, KListViewItem* after, QString name, QString url, int image);
+    KCHMMainTreeViewItem(K3ListViewItem* parent, K3ListViewItem* after, QString name, QString aurl, int image);
+	KCHMMainTreeViewItem(K3ListView* parent, K3ListViewItem* after, QString name, QString url, int image);
 	
 	QString		getUrl() const;
 	virtual void setOpen ( bool open );
 	
 private:
-//	virtual int width ( const QFontMetrics & fm, const KListView * lv, int c ) const;
+//	virtual int width ( const QFontMetrics & fm, const K3ListView * lv, int c ) const;
 	virtual void paintBranches ( QPainter * p, const QColorGroup & cg, int w, int y, int h );
 	virtual void paintCell ( QPainter * p, const QColorGroup & cg, int column, int width, int align );
 	virtual const QPixmap * pixmap( int i ) const;

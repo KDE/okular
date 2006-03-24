@@ -28,13 +28,13 @@
 #include "iconstorage.h"
 
 
-KCHMMainTreeViewItem::KCHMMainTreeViewItem( KListViewItem * parent, KListViewItem * after, QString name, QString aurl, int image) :
-    KListViewItem (parent, after, name), url(aurl), image_number(image)
+KCHMMainTreeViewItem::KCHMMainTreeViewItem( K3ListViewItem * parent, K3ListViewItem * after, QString name, QString aurl, int image) :
+    K3ListViewItem (parent, after, name), url(aurl), image_number(image)
 {
 }
 
-KCHMMainTreeViewItem::KCHMMainTreeViewItem( KListView * parent, KListViewItem * after, QString name, QString aurl, int image) :
-    KListViewItem (parent, after, name), url(aurl), image_number(image)
+KCHMMainTreeViewItem::KCHMMainTreeViewItem( K3ListView * parent, K3ListViewItem * after, QString name, QString aurl, int image) :
+    K3ListViewItem (parent, after, name), url(aurl), image_number(image)
 {
 }
 
@@ -93,7 +93,7 @@ QString KCHMMainTreeViewItem::getUrl( ) const
 void KCHMMainTreeViewItem::paintBranches( QPainter * p, const QColorGroup & cg, int w, int y, int h )
 {
 	if ( image_number != KCHMImageType::IMAGE_INDEX )
-		KListViewItem::paintBranches(p, cg, w, y, h);
+		K3ListViewItem::paintBranches(p, cg, w, y, h);
 	else
 	{
 		// Too bad that listView()->paintEmptyArea( p, QRect( 0, 0, w, h ) ) is protected. 
@@ -115,22 +115,22 @@ void KCHMMainTreeViewItem::paintCell( QPainter * p, const QColorGroup & cg, int 
         newcg.setColor( QColorGroup::Text, Qt::lightGray );
 	else
 	{
-		KListViewItem::paintCell( p, cg, column, width, align );
+		K3ListViewItem::paintCell( p, cg, column, width, align );
 		return;
 	}
 
-    KListViewItem::paintCell( p, newcg, column, width, align );
+    K3ListViewItem::paintCell( p, newcg, column, width, align );
 	newcg.setColor( QColorGroup::Text, c );
 }
 
 void KCHMMainTreeViewItem::setOpen( bool open )
 {
 	if ( image_number != KCHMImageType::IMAGE_INDEX || open )
-		KListViewItem::setOpen (open);
+		K3ListViewItem::setOpen (open);
 }
 
 /*
-int KCHMMainTreeViewItem::width( const QFontMetrics & fm, const QListView * lv, int c ) const
+int KCHMMainTreeViewItem::width( const QFontMetrics & fm, const Q3ListView * lv, int c ) const
 {
         return (QListViewItem::width
             (QFontMetrics (myFont), lv, c));

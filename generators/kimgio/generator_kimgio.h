@@ -20,7 +20,7 @@ class KIMGIOGenerator : public Generator
         virtual ~KIMGIOGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async );
@@ -34,7 +34,7 @@ class KIMGIOGenerator : public Generator
         bool supportsSearching()  { return false; };
         bool supportsRotation() { return false; };
         bool prefersInternalSearching()  { return false; };
-        void setOrientation(QValueVector<KPDFPage*> & pagesVector, int orientation) {;};
+        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation) {;};
         RegularAreaRect* findText(const QString&, SearchDir, bool, const RegularAreaRect*, KPDFPage*)
              { return 0; };
         QString * getText(const RegularAreaRect*, KPDFPage*) { return 0; };

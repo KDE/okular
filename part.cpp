@@ -42,12 +42,13 @@
 #include <kparts/genericfactory.h>
 #include <k3urldrag.h>
 #include <kfiledialog.h>
+#include <kfind.h>
 #include <kmessagebox.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
 #include <kio/netaccess.h>
-#include <k3popupmenu.h>
+#include <kmenu.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 #include <ktrader.h>
@@ -84,14 +85,14 @@ using namespace oKular;
 Part::Part(QWidget *parentWidget, const char *widgetName,
            QObject *parent, const char *name,
            const QStringList & /*args*/ )
-	: DCOPObject("oKular"), KParts::ReadOnlyPart(parent, name), m_viewportDirty( 0 ),
+	: DCOPObject("oKular"), KParts::ReadOnlyPart(parent), m_viewportDirty( 0 ),
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false)
 {
 	// connect the started signal to tell the job the mimetypes we like
 	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
 	// load catalog for translation
-	KGlobal::locale()->insertCatalogue("oKular");
+	KGlobal::locale()->insertCatalog("oKular");
 
 	// create browser extension (for printing when embedded into browser)
 	m_bExtension = new BrowserExtension(this);
@@ -108,7 +109,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( openURL(const KUrl &) ), this, SLOT( openURLFromDocument(const KUrl &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 	
-	if (parent && parent->metaObject()->slotNames(true).contains("slotQuit()"))
+	if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
 		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
 	else
 		connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
@@ -282,7 +283,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_pageView->setupActions( ac );
 
 	// apply configuration (both internal settings and GUI configured items)
-	QValueList<int> splitterSizes = KpdfSettings::splitterSizes();
+	QList<int> splitterSizes = KpdfSettings::splitterSizes();
 	if ( !splitterSizes.count() )
 	{
 		// the first time use 1/10 for the panel and 9/10 for the pageView
@@ -391,8 +392,6 @@ void Part::fillGenerators()
             m_generatorsWithSettings << propName;
           }
         }
-
-        m_loadedGenerators.setAutoDelete(true);
     }
 }
 
@@ -409,10 +408,11 @@ void Part::slotGeneratorPreferences( )
     // we didn't find an instance of this dialog, so lets create it
     KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", KpdfSettings::self() );
 
-    QDictIterator<Generator> it(m_loadedGenerators);
-    for( ; it.current(); ++it )
+    QHashIterator<QString, Generator*> it(m_loadedGenerators);
+    while(it.hasNext())
     {
-        it.current()->addPages(dialog);
+        it.next();
+        it.value()->addPages(dialog);
     }
 
     // (for now dont FIXME) keep us informed when the user changes settings
@@ -784,7 +784,7 @@ void Part::slotFind()
     {
         m_searchStarted = true;
         m_document->resetSearch( PART_SEARCH_ID );
-        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFindDialog::CaseSensitive,
+        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFind::CaseSensitive,
                                 KPDFDocument::NextMatch, true, qRgb( 255, 255, 64 ) );
     }
 }
@@ -804,7 +804,7 @@ void Part::slotSaveFileAs()
     {
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.filename()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
                 return;
         }
 
@@ -856,8 +856,8 @@ void Part::slotNewConfig()
         m_searchWidget->setShown( showSearch );
 
     // Main View (pageView)
-    QScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?
-        QScrollView::AlwaysOn : QScrollView::AlwaysOff;
+    Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?
+        Q3ScrollView::AlwaysOn : Q3ScrollView::AlwaysOff;
     if ( m_pageView->hScrollBarMode() != scrollBarMode )
     {
         m_pageView->setHScrollBarMode( scrollBarMode );
@@ -911,18 +911,18 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	if (!m_actionsSearched)
 	{
 		// the quest for options_show_menubar
-		KXMLGUIClient *client;
+#warning need to port the quest for options_show_menubar
+/*		KXMLGUIClient *client;
 		KActionCollection *ac;
 		KActionPtrList::const_iterator it, end, begin;
 		KActionPtrList actions;
 		
 		if (factory())
 		{
-			QPtrList<KXMLGUIClient> clients(factory()->clients());
-			QPtrListIterator<KXMLGUIClient> clientsIt( clients );
-			for( ; (!m_showMenuBarAction || !m_showFullScreenAction) && clientsIt.current(); ++clientsIt)
+			QList<KXMLGUIClient*> clients(factory()->clients());
+			for(int i = 0 ; (!m_showMenuBarAction || !m_showFullScreenAction) && i < clients.size(); ++i)
 			{
-				client = clientsIt.current();
+				client = clients.at(i);
 				ac = client->actionCollection();
 				actions = ac->actions();
 				end = actions.end();
@@ -933,26 +933,27 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 					if (QString((*it)->name()) == "fullscreen") m_showFullScreenAction = (KToggleAction*)(*it);
 				}
 			}
-		}
+		}*/
 		m_actionsSearched = true;
 	}
 	
-	
-	KPopupMenu *popup = new KPopupMenu( widget(), "rmb popup" );
+	KMenu *popup = new KMenu( widget() );
+	QAction *toggleBookmark, *fitPageWidth;
+	toggleBookmark = 0;
+	fitPageWidth = 0;
 	if (page)
 	{
-		popup->insertTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
-        if ( page->hasBookmark() )
-			popup->insertItem( SmallIcon("bookmark"), i18n("Remove Bookmark"), 1 );
+		popup->addTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
+		if ( page->hasBookmark() )
+			toggleBookmark = popup->addAction( QIcon(SmallIcon("bookmark")), i18n("Remove Bookmark") );
 		else
-			popup->insertItem( SmallIcon("bookmark_add"), i18n("Add Bookmark"), 1 );
+			toggleBookmark = popup->addAction( QIcon(SmallIcon("bookmark_add")), i18n("Add Bookmark") );
 		if ( m_pageView->canFitPageWidth() )
-			popup->insertItem( SmallIcon("viewmagfit"), i18n("Fit Width"), 2 );
-		//popup->insertItem( SmallIcon("view_fit_width"), i18n("Zoom This"), 2 );
+			fitPageWidth = popup->addAction( QIcon(SmallIcon("viewmagfit")), i18n("Fit Width") );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
 		reallyShow = true;
-	}
+        }
 /*
 	//Albert says: I have not ported this as i don't see it does anything
     if ( d->mouseOnRect ) // and rect->objectType() == ObjectRect::Image ...
@@ -963,7 +964,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	
 	if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
 	{
-		popup->insertTitle( i18n( "Tools" ) );
+		popup->addTitle( i18n( "Tools" ) );
 		if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) m_showMenuBarAction->plug(popup);
 		if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) m_showFullScreenAction->plug(popup);
 		reallyShow = true;
@@ -972,17 +973,9 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	
 	if (reallyShow)
 	{
-		switch ( popup->exec(point) )
-		{
-			case 1:
-				m_document->toggleBookmark( page->number() );
-				break;
-			case 2:
-				m_pageView->fitPageWidth( page->number() );
-				break;
-	//		case 3: // switch to edit mode
-	//			break;
-		}
+		QAction *res = popup->exec(point);
+		if (res == toggleBookmark) m_document->toggleBookmark( page->number() );
+		else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
 	}
 	delete popup;
 }
@@ -1075,7 +1068,7 @@ void Part::psTransformEnded()
 * BrowserExtension class
 */
 BrowserExtension::BrowserExtension(Part* parent)
-  : KParts::BrowserExtension( parent, "KPDF::BrowserExtension" )
+  : KParts::BrowserExtension( parent )
 {
 	emit enableAction("print", true);
 	setURLDropHandlingEnabled(true);

@@ -18,7 +18,7 @@
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
 #include "core/observer.h"
 #include "core/document.h"
 #include "dcop.h"
@@ -146,11 +146,11 @@ private:
 	QWidget *m_leftPanel;
 	QToolBox *m_toolBox;
 	SearchWidget *m_searchWidget;
-	QGuardedPtr<ThumbnailList> m_thumbnailList;
-	QGuardedPtr<PageView> m_pageView;
-	QGuardedPtr<TOC> m_toc;
-	QGuardedPtr<MiniBar> m_miniBar;
-	QGuardedPtr<PresentationWidget> m_presentationWidget;
+	QPointer<ThumbnailList> m_thumbnailList;
+	QPointer<PageView> m_pageView;
+	QPointer<TOC> m_toc;
+	QPointer<MiniBar> m_miniBar;
+	QPointer<PresentationWidget> m_presentationWidget;
 
 	// document watcher (and reloader) variables
 	KDirWatch *m_watcher;
@@ -179,8 +179,8 @@ private:
 	bool m_searchStarted;
 	BrowserExtension *m_bExtension;
 
-    // QDict: key is the name of the generator
-    QDict<Generator> m_loadedGenerators;
+    // QHash: key is the name of the generator
+   QHash<QString, Generator*> m_loadedGenerators;
     // list of names of the generators that have settings
     QStringList m_generatorsWithSettings;
     QStringList m_supportedMimeTypes;

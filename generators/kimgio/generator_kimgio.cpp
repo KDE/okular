@@ -26,7 +26,7 @@ KIMGIOGenerator::~KIMGIOGenerator()
     delete m_pix;
 }
 
-bool KIMGIOGenerator::loadDocument( const QString & fileName, QValueVector<KPDFPage*> & pagesVector )
+bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
 {
     m_pix = new QPixmap(fileName);
 

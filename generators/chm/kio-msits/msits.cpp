@@ -26,7 +26,7 @@
 
 #include <qfile.h>
 #include <qbitarray.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 
 #include "msits.h"
 
@@ -55,7 +55,7 @@ extern "C"
     }
 }
 
-ProtocolMSITS::ProtocolMSITS (const QCString &pool_socket, const QCString &app_socket)
+ProtocolMSITS::ProtocolMSITS (const Q3CString &pool_socket, const Q3CString &app_socket)
 	: SlaveBase ("kio_msits", pool_socket, app_socket)
 {
 	m_chmFile = 0;
@@ -77,7 +77,7 @@ static bool isDirectory ( const QString & filename )
 }
 
 
-void ProtocolMSITS::get( const KURL& url )
+void ProtocolMSITS::get( const KUrl& url )
 {
 	QString fileName;
 	chmUnitInfo ui;
@@ -123,9 +123,9 @@ void ProtocolMSITS::get( const KURL& url )
 }
 
 
-bool ProtocolMSITS::parseLoadAndLookup ( const KURL& url, QString& abspath )
+bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 {
-	kdDebug() << "ProtocolMSITS::parseLoadAndLookup (const KURL&) " << url.path() << endl;
+	kdDebug() << "ProtocolMSITS::parseLoadAndLookup (const KUrl&) " << url.path() << endl;
 
 	int pos = url.path().find ("::");
 
@@ -177,19 +177,13 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KURL& url, QString& abspath )
  */
 static void app_entry(UDSEntry& e, unsigned int uds, const QString& str)
 {
-	UDSAtom a;
-	a.m_uds = uds;
-	a.m_str = str;
-	e.append(a);
+	e.insert(uds, str);
 }
 
  // appends an int with the UDS-ID uds
  static void app_entry(UDSEntry& e, unsigned int uds, long l)
  {
- 	UDSAtom a;
- 	a.m_uds = uds;
- 	a.m_long = l;
-	e.append(a);
+	e.insert(uds, l);
 }
 
 // internal function
@@ -212,12 +206,12 @@ static void app_file(UDSEntry& e, const QString & name, size_t size)
 	app_entry(e, KIO::UDS_SIZE, size);
 }
 
-void ProtocolMSITS::stat (const KURL & url)
+void ProtocolMSITS::stat (const KUrl & url)
 {
 	QString fileName;
 	chmUnitInfo ui;
 
-    kdDebug() << "kio_msits::stat (const KURL& url) " << url.path() << endl;
+    kdDebug() << "kio_msits::stat (const KUrl& url) " << url.path() << endl;
 
 	if ( !parseLoadAndLookup ( url, fileName ) )
 		return;	// error() has been called by parseLoadAndLookup
@@ -245,16 +239,16 @@ void ProtocolMSITS::stat (const KURL & url)
 // A local CHMLIB enumerator
 static int chmlib_enumerator (struct chmFile *, struct chmUnitInfo *ui, void *context)
 {
-	((QValueVector<QString> *) context)->push_back (QString::fromLocal8Bit (ui->path));
+	((QVector<QString> *) context)->push_back (QString::fromLocal8Bit (ui->path));
 	return CHM_ENUMERATOR_CONTINUE;
 }
 
 
-void ProtocolMSITS::listDir (const KURL & url)
+void ProtocolMSITS::listDir (const KUrl & url)
 {
 	QString filepath;
 
-    kdDebug() << "kio_msits::listDir (const KURL& url) " << url.path() << endl;
+    kdDebug() << "kio_msits::listDir (const KUrl& url) " << url.path() << endl;
 
 	if ( !parseLoadAndLookup ( url, filepath ) )
 		return;	// error() has been called by parseLoadAndLookup
@@ -269,7 +263,7 @@ void ProtocolMSITS::listDir (const KURL & url)
 
     kdDebug() << "kio_msits::listDir: enumerating directory " << filepath << endl;
 
-	QValueVector<QString> listing;
+	QVector<QString> listing;
 
 	if ( chm_enumerate_dir ( m_chmFile,
 							filepath.local8Bit(),

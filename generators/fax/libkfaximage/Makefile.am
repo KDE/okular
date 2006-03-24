@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir) $(all_includes)
+INCLUDES = -I$(top_srcdir) $(all_includes) 
 
 lib_LTLIBRARIES = libkfaximage.la
 libkfaximage_la_LDFLAGS = $(all_libraries) -no-undefined -avoid-version

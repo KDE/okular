@@ -1,11 +1,9 @@
-INCLUDES = libkfaximage $(all_includes) 
+INCLUDES = -I$(srcdir)/../../ -I$(srcdir)/libkfaximage $(all_includes) 
 
 SUBDIRS = libkfaximage .
 
 kde_module_LTLIBRARIES = \
     libokularGenerator_fax.la
-
-#INCLUDES = -I$(srcdir)/../../ $(all_includes)
 
 libokularGenerator_fax_la_LIBADD = ../../core/liboKularcore.la \
 	../../conf/liboKularconf.la $(LIB_KDEUI) \

@@ -63,7 +63,7 @@ public:
       @param pagesVector the vector of pages with information about their sizes and rotation
       @return returns true if the document was loaded, false if not
   */
-  bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector );
+  bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
 
   /** Rendering a page
 

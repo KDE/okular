@@ -89,7 +89,7 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
 }
 
 
-bool FaxRenderer::loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector )
+bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
 {
 #ifdef KF_DEBUG
   kdDebug() << "FaxRenderer::setFile(" << fname << ") called" << endl;

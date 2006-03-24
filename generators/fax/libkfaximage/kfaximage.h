@@ -13,7 +13,7 @@
    
    You should have received a copy of the GNU Library General Public License
    along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Steet, Fifth Floor,
+   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
 
@@ -23,7 +23,7 @@
 #include <qobject.h>
 #include <qstring.h>
 #include <qimage.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <kdelibs_export.h>
 
 class pagenode;
@@ -138,7 +138,7 @@ public:
     QString m_filename;
     QString m_errorString;
 
-    typedef QPtrList<pagenode> t_PageNodeList;
+    typedef Q3PtrList<pagenode> t_PageNodeList;
     t_PageNodeList m_pagenodes;
 
     /**

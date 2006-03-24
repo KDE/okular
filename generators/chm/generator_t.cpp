@@ -424,3 +424,5 @@ void TGenerator::customEvent( QCustomEvent * e )
         signalRequestDone( request );
     }
 }*/
+
+#include "generator_t.moc"

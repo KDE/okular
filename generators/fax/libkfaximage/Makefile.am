@@ -2,7 +2,7 @@ INCLUDES = -I$(top_srcdir) $(all_includes)
 
 lib_LTLIBRARIES = libkfaximage.la
 libkfaximage_la_LDFLAGS = $(all_libraries) -no-undefined -avoid-version
-libkfaximage_la_LIBADD  = $(LIB_KDECORE)
+libkfaximage_la_LIBADD  = $(LIB_QTCORE) $(LIB_QT) $(LIB_KDECORE)
 libkfaximage_la_SOURCES = kfaximage.cpp faxexpand.cpp faxinit.cpp
 
 include_HEADERS = kfaximage.h

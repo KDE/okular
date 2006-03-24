@@ -22,6 +22,7 @@
 
 // qt/kde includes
 #include <qcursor.h>
+#include <qevent.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qdatetime.h>
@@ -30,16 +31,15 @@
 #include <qclipboard.h>
 #include <dcopclient.h>
 #include <kiconloader.h>
-#include <kurldrag.h>
 #include <kaction.h>
 #include <kstdaccel.h>
 #include <kactioncollection.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kimageeffect.h>
 #include <kimageio.h>
-#include <kapplication.h>
+#include <ktoolinvocation.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 
@@ -70,8 +70,8 @@ class PageViewPrivate
 public:
     // the document, pageviewItems and the 'visible cache'
     KPDFDocument * document;
-    QValueVector< PageViewItem * > items;
-    QValueList< PageViewItem * > visibleItems;
+    QVector< PageViewItem * > items;
+    QLinkedList< PageViewItem * > visibleItems;
 
     // view layout (columns and continuous in Settings), zoom and mouse
     PageView::ZoomMode zoomMode;
@@ -87,7 +87,7 @@ public:
     QColor mouseSelectionColor;
     bool mouseTextSelecting;
     bool mouseTextSelectionPainted;
-    QValueList<QRect>* mouseTextSelectionRect;
+    QList<QRect>* mouseTextSelectionRect;
     QColor mouseTextSelectionColor;
     TextSelection * mouseTextSelectionInfo;
     bool mouseOnRect;
@@ -141,7 +141,7 @@ public:
  * and many insignificant stuff like this comment :-)
  */
 PageView::PageView( QWidget *parent, KPDFDocument *document )
-    : QScrollView( parent, "KPDF::pageView", WStaticContents | WNoAutoErase )
+    : Q3ScrollView( parent, "KPDF::pageView", Qt::WStaticContents | Qt::WNoAutoErase )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate();
@@ -175,7 +175,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );
-    viewport()->setFocusPolicy( StrongFocus );
+    viewport()->setFocusPolicy( Qt::StrongFocus );
     //viewport()->setPaletteBackgroundColor( Qt::white );
     viewport()->setBackgroundMode( Qt::NoBackground );
     setResizePolicy( Manual );
@@ -328,7 +328,7 @@ void PageView::displayMessage( const QString & message,PageViewMessage::Icon ico
 }
 
 //BEGIN DocumentObserver inherited methods
-void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool documentChanged )
+void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool documentChanged )
 {
     // reuse current pages if nothing new
     if ( ( pageSet.count() == d->items.count() ) && !documentChanged )
@@ -342,14 +342,14 @@ void PageView::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool doc
     }
  
     // delete all widgets (one for each page in pageSet)
-    QValueVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
+    QVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
     for ( ; dIt != dEnd; ++dIt )
         delete *dIt;
     d->items.clear();
     d->visibleItems.clear();
 
     // create children widgets
-    QValueVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
+    QVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
     {
         d->items.push_back( new PageViewItem( *setIt ) );
@@ -401,7 +401,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
     // find PageViewItem matching the viewport description
     const DocumentViewport & vp = d->document->viewport();
     PageViewItem * item = 0;
-    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+    QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
         if ( (*iIt)->pageNumber() == vp.pageNumber )
         {
@@ -488,7 +488,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
         return;
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
-    QValueList< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
+    QLinkedList< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     for ( ; iIt != iEnd; ++iIt )
         if ( (*iIt)->pageNumber() == pageNumber )
         {
@@ -517,7 +517,7 @@ void PageView::notifyContentsCleared( int changedFlags )
 bool PageView::canUnloadPixmap( int pageNumber )
 {
     // if the item is visible, forbid unloading
-    QValueList< PageViewItem * >::iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
+    QLinkedList< PageViewItem * >::iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
             return false;
@@ -541,7 +541,7 @@ if ( d->document->handleEvent( pe ) )
 
     // create the screen painter. a pixel painted at contentsX,contentsY
     // appears to the top-left corner of the scrollview.
-    QPainter screenPainter( viewport(), true );
+    QPainter screenPainter( viewport() );
     screenPainter.translate( -contentsX(), -contentsY() );
 
     // selectionRect is the normalized mouse selection rect
@@ -556,12 +556,12 @@ if ( d->document->handleEvent( pe ) )
                            d->mouseSelectionColor : Qt::red;
 
     // subdivide region into rects
-    QMemArray<QRect> allRects = pe->region().rects();
-    uint numRects = allRects.count();
+    QVector<QRect> allRects = pe->region().rects();
+    int numRects = allRects.count();
 
     // preprocess rects area to see if it worths or not using subdivision
     uint summedArea = 0;
-    for ( uint i = 0; i < numRects; i++ )
+    for ( int i = 0; i < numRects; i++ )
     {
         const QRect & r = allRects[i];
         summedArea += r.width() * r.height();
@@ -621,7 +621,7 @@ if ( d->document->handleEvent( pe ) )
                     // blend selBlendColor into the background pixmap
 //                     QImage blendedImage = blendedPixmap.convertToImage();
 //                     KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
-                    XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.x11RenderHandle(), &col, 
+                    XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.handle(), &col, 
                       0,0, blendRect.width(), blendRect.height());
                     // copy the blended pixmap back to its place
                     pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
@@ -633,7 +633,7 @@ if ( d->document->handleEvent( pe ) )
             if ( d->mouseTextSelecting )
             {
               QRect blendRect;
-              QValueList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
+              QLinkedList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
               end=d->mouseTextSelectionRect->end();
               XRenderColor col;
               float alpha=0.2f;
@@ -654,7 +654,7 @@ if ( d->document->handleEvent( pe ) )
                           blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
 //                 QImage blendedImage = blendedPixmap.convertToImage();
-                XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.x11RenderHandle(), &col, 
+                XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.handle(), &col, 
                   0,0, blendRect.width(), blendRect.height());
 
 //                 KImageEffect::blend( d->mouseTextSelectionColor.dark(140), blendedImage, 0.2 );
@@ -739,7 +739,7 @@ if (d->document->handleEvent( e ) )
     if( d->typeAheadActive )
     {
         // backspace: remove a char and search or terminates search
-        if( e->key() == Key_BackSpace )
+        if( e->key() == Qt::Key_BackSpace )
         {
             if( d->typeAheadString.length() > 1 )
             {
@@ -776,7 +776,7 @@ if (d->document->handleEvent( e ) )
             grabKeyboard();
         }
         // esc and return: end search
-        else if( e->key() == Key_Escape || e->key() == Key_Return )
+        else if( e->key() == Qt::Key_Escape || e->key() == Qt::Key_Return )
         {
             slotStopFindAhead();
         }
@@ -826,12 +826,12 @@ if (d->document->handleEvent( e ) )
     // move/scroll page by using keys
     switch ( e->key() )
     {
-        case Key_Up:
-        case Key_PageUp:
+        case Qt::Key_Up:
+        case Qt::Key_PageUp:
             // if in single page mode and at the top of the screen, go to \ page
             if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
             {
-                if ( e->key() == Key_Up )
+                if ( e->key() == Qt::Key_Up )
                     verticalScrollBar()->subtractLine();
                 else
                     verticalScrollBar()->subtractPage();
@@ -848,12 +848,12 @@ if (d->document->handleEvent( e ) )
                 d->document->setViewport( newViewport );
             }
             break;
-        case Key_Down:
-        case Key_PageDown:
+        case Qt::Key_Down:
+        case Qt::Key_PageDown:
             // if in single page mode and at the bottom of the screen, go to next page
             if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
             {
-                if ( e->key() == Key_Down )
+                if ( e->key() == Qt::Key_Down )
                     verticalScrollBar()->addLine();
                 else
                     verticalScrollBar()->addPage();
@@ -870,14 +870,14 @@ if (d->document->handleEvent( e ) )
                 d->document->setViewport( newViewport );
             }
             break;
-        case Key_Left:
+        case Qt::Key_Left:
             horizontalScrollBar()->subtractLine();
             break;
-        case Key_Right:
+        case Qt::Key_Right:
             horizontalScrollBar()->addLine();
             break;
-        case Key_Shift:
-        case Key_Control:
+        case Qt::Key_Shift:
+        case Qt::Key_Control:
             if ( d->autoScrollTimer )
             {
                 if ( d->autoScrollTimer->isActive() )
@@ -912,7 +912,7 @@ if (d->document->handleEvent( e ) )
         return;
 
     // if holding mouse mid button, perform zoom
-    if ( d->mouseMidZooming && (e->state() & MidButton) )
+    if ( d->mouseMidZooming && (e->state() & Qt::MidButton) )
     {
         int mouseY = e->globalPos().y();
         int deltaY = d->mouseMidLastY - mouseY;
@@ -953,8 +953,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->state() & LeftButton,
-         rightButton = e->state() & RightButton;
+    bool leftButton = e->state() & Qt::RightButton,
+         rightButton = e->state() & Qt::RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -1074,11 +1074,11 @@ if ( d->document->handleEvent( e ) )
     }
 
     // if pressing mid mouse button while not doing other things, begin 'continuous zoom' mode
-    if ( e->button() & MidButton )
+    if ( e->button() & Qt::MidButton )
     {
         d->mouseMidZooming = true;
         d->mouseMidLastY = e->globalPos().y();
-        setCursor( sizeVerCursor );
+        setCursor( Qt::sizeVerCursor );
         return;
     }
 
@@ -1094,8 +1094,8 @@ if ( d->document->handleEvent( e ) )
     d->mousePressPos = e->globalPos();
 
     // handle mode dependant mouse press actions
-    bool leftButton = e->button() & LeftButton,
-         rightButton = e->button() & RightButton;
+    bool leftButton = e->button() & Qt::RightButton,
+         rightButton = e->button() & Qt::RightButton;
         
 //   Not sure we should erase the selection when clicking with left.
 //     if ( !(rightButton && d->mouseMode==MouseNormal) && d->mouseTextSelectionPainted )
@@ -1108,7 +1108,7 @@ if ( d->document->handleEvent( e ) )
             {
                 d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
                 if ( !d->mouseOnRect )
-                    setCursor( sizeAllCursor );
+                    setCursor( Qt::sizeAllCursor );
             }
             else if (rightButton)
               d->mouseSelectPos=e->pos() ; // just check
@@ -1140,7 +1140,7 @@ if (d->document->handleEvent( e ) )
     if ( d->items.isEmpty() )
     {
         // ..except for right Clicks (emitted even it viewport is empty)
-        if ( e->button() == RightButton )
+        if ( e->button() == Qt::RightButton )
             emit rightClick( 0, e->globalPos() );
         return;
     }
@@ -1150,7 +1150,7 @@ if (d->document->handleEvent( e ) )
         return;
 
     // handle mode indepent mid buttom zoom
-    if ( d->mouseMidZooming && (e->state() & MidButton) )
+    if ( d->mouseMidZooming && (e->state() & Qt::MidButton) )
     {
         d->mouseMidZooming = false;
         // request pixmaps since it was disabled during drag
@@ -1168,8 +1168,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->button() & LeftButton,
-         rightButton = e->button() & RightButton;
+    bool leftButton = e->button() & Qt::RightButton,
+         rightButton = e->button() & Qt::RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:{
@@ -1281,7 +1281,7 @@ if (d->document->handleEvent( e ) )
                 selectionClear();
                 if ( d->aPrevAction )
                 {
-                    d->aPrevAction->activate();
+                    d->aPrevAction->trigger();
                     d->aPrevAction = 0;
                 }
                 break;
@@ -1295,7 +1295,7 @@ if (d->document->handleEvent( e ) )
             // grab text in selection by extracting it from all intersected pages
             RegularAreaRect * rects=new RegularAreaRect;
             const KPDFPage * kpdfPage=0;
-            QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+            QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
             for ( ; iIt != iEnd; ++iIt )
             {
                 PageViewItem * item = *iIt;
@@ -1317,22 +1317,23 @@ if (d->document->handleEvent( e ) )
             }
 
             // popup that ask to copy:text and copy/save:image
-            KPopupMenu menu( this );
+            KMenu menu( this );
+            QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
             if ( d->document->supportsSearching() && !selectedText->isEmpty() )
             {
-                menu.insertTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
-                menu.insertItem( SmallIcon("editcopy"), i18n( "Copy to Clipboard" ), 1 );
+                menu.addTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
+                textToClipboard = menu.addAction( QIcon(SmallIcon("editcopy")), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                     menu.setItemEnabled( 1, false );
                 if ( KpdfSettings::useKTTSD() )
-                    menu.insertItem( SmallIcon("kttsd"), i18n( "Speak Text" ), 2 );
+                    speakText = menu.addAction( QIcon(SmallIcon("kttsd")), i18n( "Speak Text" ) );
             }
-            menu.insertTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
-            menu.insertItem( SmallIcon("image"), i18n( "Copy to Clipboard" ), 3 );
-            menu.insertItem( SmallIcon("filesave"), i18n( "Save to File..." ), 4 );
-            int choice = menu.exec( e->globalPos() );
+            menu.addTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+            imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );
+            imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
+            QAction *choice = menu.exec( e->globalPos() );
             // IMAGE operation choosen
-            if ( choice > 2 )
+            if ( choice == imageToClipboard || choice == imageToFile )
             {
                 // renders page into a pixmap
                 QPixmap copyPix( selectionRect.width(), selectionRect.height() );
@@ -1340,7 +1341,7 @@ if (d->document->handleEvent( e ) )
                 copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
                 drawDocumentOnPainter( selectionRect, &copyPainter );
 
-                if ( choice == 3 )
+                if ( choice == imageToClipboard )
                 {
                     // [2] copy pixmap to clipboard
                     QClipboard *cb = QApplication::clipboard();
@@ -1349,7 +1350,7 @@ if (d->document->handleEvent( e ) )
                         cb->setPixmap( copyPix, QClipboard::Selection );
                     d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard." ).arg( copyPix.width() ).arg( copyPix.height() ) );
                 }
-                else if ( choice == 4 )
+                else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
                     QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
@@ -1357,9 +1358,12 @@ if (d->document->handleEvent( e ) )
                         d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
                     else
                     {
-                        QString type( KImageIO::type( fileName ) );
-                        if ( type.isNull() )
+                        KMimeType::Ptr mime = KMimeType::findByURL( fileName );
+                        QString type;
+                        if ( !mime )
                             type = "PNG";
+                        else
+                            type = mime->name();
                         copyPix.save( fileName, type.latin1() );
                         d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file." ).arg( copyPix.width() ).arg( copyPix.height() ).arg( type ) );
                     }
@@ -1368,7 +1372,7 @@ if (d->document->handleEvent( e ) )
             // TEXT operation choosen
             else
             {
-                if ( choice == 1 )
+                if ( choice == textToClipboard )
                 {
                     // [1] copy text to clipboard
                     QClipboard *cb = QApplication::clipboard();
@@ -1376,7 +1380,7 @@ if (d->document->handleEvent( e ) )
                     if ( cb->supportsSelection() )
                         cb->setText( *selectedText, QClipboard::Selection );
                 }
-                else if ( choice == 2 )
+                else if ( choice == speakText )
                 {
                     // [2] speech selection using KTTSD
                     DCOPClient * client = DCOPClient::mainClient();
@@ -1388,7 +1392,7 @@ if (d->document->handleEvent( e ) )
                     if (!client->isApplicationRegistered("kttsd"))
                     {
                         QString error;
-                        if (KApplication::startServiceByDesktopName("kttsd", QStringList(), &error))
+                        if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
                         {
                             d->messageWindow->display( i18n("Starting KTTSD Failed: %1").arg(error) );
                             KpdfSettings::setUseKTTSD(false);
@@ -1400,16 +1404,17 @@ if (d->document->handleEvent( e ) )
                         // serialize the text to speech (selectedText) and the
                         // preferred reader ("" is the default voice) ...
                         QByteArray data;
-                        QDataStream arg( data, IO_WriteOnly );
+                        QDataStream arg( &data, IO_WriteOnly );
+                        arg.setVersion(QDataStream::Qt_3_1);
                         arg << selectedText;
                         arg << QString();
-                        QCString replyType;
+                        DCOPCString replyType;
                         QByteArray replyData;
                         // ..and send it to KTTSD
                         if (client->call( "kttsd", "KSpeech", "setText(QString,QString)", data, replyType, replyData, true ))
                         {
                             QByteArray  data2;
-                            QDataStream arg2(data2, IO_WriteOnly);
+                            QDataStream arg2(&data2, IO_WriteOnly);
                             arg2 << 0;
                             client->send("kttsd", "KSpeech", "startText(uint)", data2 );
                         }
@@ -1423,7 +1428,7 @@ if (d->document->handleEvent( e ) )
             // restore previous action if came from it using right button
             if ( d->aPrevAction )
             {
-                d->aPrevAction->activate();
+                d->aPrevAction->trigger();
                 d->aPrevAction = 0;
             }
             }break;
@@ -1445,7 +1450,7 @@ if (d->document->handleEvent( e ) )
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();
-    if ( (e->state() & ControlButton) == ControlButton ) {
+    if ( (e->state() & Qt::ControlButton) == Qt::ControlButton ) {
         if ( e->delta() < 0 )
             slotZoomOut();
         else
@@ -1482,7 +1487,7 @@ if (d->document->handleEvent( e ) )
         }
     }
     else
-        QScrollView::wheelEvent( e );
+        Q3ScrollView::wheelEvent( e );
 
     QPoint cp = viewportToContents(e->pos());
     updateCursor(cp);
@@ -1501,9 +1506,8 @@ void PageView::dropEvent( QDropEvent * ev )
 {
 if (d->document->handleEvent( ev ) )
 {
-    KURL::List lst;
-    if (  KURLDrag::decode(  ev, lst ) )
-        emit urlDropped( lst.first() );
+    if (  KUrl::List::canDecode(  ev->mimeData() ) )
+        emit urlDropped( KUrl::List::fromMimeData( ev->mimeData() ).first() );
 }
 }
 //END widget events
@@ -1520,7 +1524,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     QRegion remainingArea( contentsRect );
 
     // iterate over all items painting the ones intersecting contentsRect
-    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+    QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
         // check if a piece of the page intersects the contents rect
@@ -1547,9 +1551,9 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             p->drawRect( -1, -1, itemWidth + 2, itemHeight + 2 );
             // draw bottom/right gradient
             int levels = 2;
-            int r = Qt::gray.red() / (levels + 2),
-                g = Qt::gray.green() / (levels + 2),
-                b = Qt::gray.blue() / (levels + 2);
+            int r = QColor(Qt::gray).red() / (levels + 2),
+                g = QColor(Qt::gray).green() / (levels + 2),
+                b = QColor(Qt::gray).blue() / (levels + 2);
             for ( int i = 0; i < levels; i++ )
             {
                 p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
@@ -1579,10 +1583,10 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     }
 
     // fill with background color the unpainted area
-    QMemArray<QRect> backRects = remainingArea.rects();
-    uint backRectsNumber = backRects.count();
+    QVector<QRect> backRects = remainingArea.rects();
+    int backRectsNumber = backRects.count();
     QColor backColor = /*d->items.isEmpty() ? Qt::lightGray :*/ Qt::gray;
-    for ( uint jr = 0; jr < backRectsNumber; jr++ )
+    for ( int jr = 0; jr < backRectsNumber; jr++ )
         p->fillRect( backRects[ jr ], backColor );
 }
 
@@ -1622,7 +1626,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
 PageViewItem * PageView::pickItemOnPoint( int x, int y )
 {
     PageViewItem * item = 0;
-    QValueList< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
+    QLinkedList< PageViewItem * >::iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;
@@ -1637,10 +1641,11 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     return item;
 }
 
-void PageView::textSelection( QValueList<QRect> * area, const QColor & color )
+void PageView::textSelection( QList<QRect> * area, const QColor & color )
 {
-    setCursor( Qt::IbeamCursor );
-    QValueList<QRect> toUpdate;
+#warning Qt::IbeamCursor does not exist, port
+    //setCursor( Qt::IbeamCursor );
+    QList<QRect> toUpdate;
     if ( d->mouseTextSelectionRect && d->mouseTextSelectionRect )
     {
       toUpdate+=*(d->mouseTextSelectionRect);
@@ -1660,7 +1665,7 @@ void PageView::textSelection( QValueList<QRect> * area, const QColor & color )
         d->scrollIncrement = 0;
         d->autoScrollTimer->stop();
     }
-    QValueList<QRect>::Iterator it=toUpdate.begin(), end=toUpdate.end();
+    QList<QRect>::Iterator it=toUpdate.begin(), end=toUpdate.end();
     for (;it!=end;++it)
     {
         updateContents( *it );
@@ -1671,7 +1676,7 @@ void PageView::textSelection( QValueList<QRect> * area, const QColor & color )
 void PageView::textSelectionClear()
 {
   setCursor( Qt::ArrowCursor  );
-  QValueList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
+  QList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
     end=d->mouseTextSelectionRect->end();
  for (;it!=end;++it)
   {
@@ -1718,8 +1723,8 @@ void PageView::selectionEndPoint( int x, int y )
                 compoundRegion -= intersection;
         }
         // tassellate region with rects and enqueue paint events
-        QMemArray<QRect> rects = compoundRegion.rects();
-        for ( uint i = 0; i < rects.count(); i++ )
+        QVector<QRect> rects = compoundRegion.rects();
+        for ( int i = 0; i < rects.count(); i++ )
             updateContents( rects[i] );
     }
 }
@@ -1859,16 +1864,16 @@ void PageView::updateCursor( const QPoint &p )
         // if over a ObjectRect (of type Link) change cursor to hand
         d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
         if ( d->mouseOnRect )
-            setCursor( pointingHandCursor );
+            setCursor( Qt::pointingHandCursor );
         else
-            setCursor( arrowCursor );
+            setCursor( Qt::arrowCursor );
     }
     else
     {
         // if there's no page over the cursor and we were showing the pointingHandCursor
         // go back to the normal one
         d->mouseOnRect = false;
-        setCursor( arrowCursor );
+        setCursor( Qt::arrowCursor );
     }
 }
 
@@ -1909,7 +1914,7 @@ void PageView::slotRelayoutPages()
     }
 
     // common iterator used in this method and viewport parameters
-    QValueVector< PageViewItem * >::iterator iIt, iEnd = d->items.end();
+    QVector< PageViewItem * >::iterator iIt, iEnd = d->items.end();
     int viewportWidth = visibleWidth(),
         viewportHeight = visibleHeight(),
         fullWidth = 0,
@@ -2179,8 +2184,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // iterate over all items
     d->visibleItems.clear();
-    QValueList< PixmapRequest * > requestedPixmaps;
-    QValueVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+    QLinkedList< PixmapRequest * > requestedPixmaps;
+    QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;

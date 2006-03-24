@@ -13,6 +13,7 @@
 #include <ktoolbar.h>
 
 class KPDFDocument;
+class KLineEdit;
 class m_inputDelayTimer;
 class QAction;
 

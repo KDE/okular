@@ -19,13 +19,12 @@
 #ifndef _KPDF_PAGEVIEW_H_
 #define _KPDF_PAGEVIEW_H_
 
-#include <qscrollview.h>
+#include <q3scrollview.h>
 #include <qvector.h>
 #include <qlinkedlist.h>
 #include "ui/pageviewutils.h"
 #include "core/observer.h"
 
-class KURL;
 class KActionCollection;
 
 class KPDFDocument;
@@ -36,7 +35,7 @@ class PageViewPrivate;
  * @short display of course :-)
  * ...
  */
-class PageView : public QScrollView, public DocumentObserver
+class PageView : public Q3ScrollView, public DocumentObserver
 {
     Q_OBJECT
 
@@ -83,7 +82,7 @@ class PageView : public QScrollView, public DocumentObserver
         }
 
     signals:
-        void urlDropped( const KURL& );
+        void urlDropped( const KUrl& );
         void rightClick( const KPDFPage *, const QPoint & );
 
     protected:
@@ -117,7 +116,7 @@ class PageView : public QScrollView, public DocumentObserver
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
-	void textSelection( QLinkedList<QRect> * , const QColor & );
+	void textSelection( QList<QRect> * , const QColor & );
 	void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );

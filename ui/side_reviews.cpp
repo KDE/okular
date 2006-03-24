@@ -8,7 +8,7 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qheader.h>
+#include <q3header.h>
 #include <qlayout.h>
 #include <qtimer.h>
 #include <ktoolbar.h>
@@ -42,11 +42,12 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
 
     // setup 1-UPPER toolbar and searchLine
     m_searchLine = new KListViewSearchLine( m_toolBar1, m_listView );
-    m_toolBar1->setIconSize( 16 );
-    m_toolBar1->setMovingEnabled( false );
+    m_toolBar1->setIconDimensions( 16 );
+    m_toolBar1->setMovable( false );
     // - add Clear button
     QString clearIconName = KApplication::reverseLayout() ? "clear_left" : "locationbar_erase";
-    m_toolBar1->insertButton( clearIconName, 1, SIGNAL( clicked() ),
+#warning lots of KToolBar code to port
+/*    m_toolBar1->insertButton( clearIconName, 1, SIGNAL( clicked() ),
         m_searchLine, SLOT( clear() ), true, i18n( "Clear Filter" ) );
     // - add Search line
     m_toolBar1->insertWidget( 2, 0, m_searchLine );
@@ -54,8 +55,8 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_toolBar1->getWidget( 2 )->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
 
     // setup 2-LOWER toolbar
-    m_toolBar2->setIconSize( 16 );
-    m_toolBar2->setMovingEnabled( false );
+    m_toolBar2->setIconDimensions( 16 );
+    m_toolBar2->setMovable( false );
     // - add Page button
     m_toolBar2->insertButton( "txt", 1, SIGNAL( toggled( bool ) ),
         this, SLOT( slotPageEnabled( bool ) ), true, i18n( "Group by Page" ) );
@@ -72,7 +73,7 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_toolBar2->insertButton( "1downarrow", 3, SIGNAL( toggled( bool ) ),
         this, SLOT( slotCurrentPageOnly( bool ) ), true, i18n( "Show reviews for current page only" ) );
     m_toolBar2->setToggle( 3 );
-    m_toolBar2->setButton( 3, KpdfSettings::currentPageOnly() );
+    m_toolBar2->setButton( 3, KpdfSettings::currentPageOnly() );*/
 
     // customize listview appearance
     m_listView->addColumn( i18n("Annotation") );
@@ -82,7 +83,7 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate
-void Reviews::notifySetup( const QValueVector< KPDFPage * > & pages, bool documentChanged )
+void Reviews::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
 {
     // grab the page array when document changes
     if ( documentChanged )
@@ -151,17 +152,17 @@ void Reviews::slotCurrentPageOnly( bool on )
 //END GUI Slots
 
 
-class ReviewItem : public QListViewItem
+class ReviewItem : public Q3ListViewItem
 {
     public:
-        ReviewItem( QListView * parent, const QString & text )
-            : QListViewItem( parent, text ) {}
+        ReviewItem( Q3ListView * parent, const QString & text )
+            : Q3ListViewItem( parent, text ) {}
 
         void paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int align )
         {
             QColorGroup myCg = cg;
             myCg.setColor( QColorGroup::Text, Qt::red );
-            QListViewItem::paintCell( p, myCg, column, width, align );
+            Q3ListViewItem::paintCell( p, myCg, column, width, align );
         }
         void paintFocus( QPainter *, const QColorGroup &, const QRect & )
         {
@@ -173,7 +174,7 @@ void Reviews::slotUpdateListView()
     // reset listview to default
     m_listView->clear();
     m_listView->setRootIsDecorated( true );
-    m_listView->setSelectionMode( QListView::Single );
+    m_listView->setSelectionMode( Q3ListView::Single );
 
     if ( KpdfSettings::currentPageOnly() )
     {
@@ -188,7 +189,7 @@ void Reviews::slotUpdateListView()
     else
     {
         // grab all annotations from pages
-        QValueVector< KPDFPage * >::iterator it = m_pages.begin(), end = m_pages.end();
+        QVector< KPDFPage * >::iterator it = m_pages.begin(), end = m_pages.end();
         for ( ; it != end; ++it )
         {
             const KPDFPage * page = *it;
@@ -201,7 +202,7 @@ void Reviews::slotUpdateListView()
     if ( !m_listView->firstChild() )
     {
         m_listView->setRootIsDecorated( false );
-        m_listView->setSelectionMode( QListView::NoSelection );
+        m_listView->setSelectionMode( Q3ListView::NoSelection );
         new ReviewItem( m_listView, i18n("<No Items>") );
     }
 }
@@ -209,25 +210,25 @@ void Reviews::slotUpdateListView()
 void Reviews::addContents( const KPDFPage * page )
 {
     // if page-grouping -> create Page subnode
-    QListViewItem * pageItem = 0;
+    Q3ListViewItem * pageItem = 0;
     if ( KpdfSettings::groupByPage() )
     {
         QString pageText = i18n( "page %1" ).arg( page->number() + 1 );
-        pageItem = new QListViewItem( m_listView, pageText );
+        pageItem = new Q3ListViewItem( m_listView, pageText );
         pageItem->setPixmap( 0, SmallIcon( "txt" ) );
         pageItem->setOpen( KpdfSettings::groupByAuthor() );
     }
 
     // iterate over all annotations in this page
-    const QValueList< Annotation * > & annots = page->getAnnotations();
-    QValueList< Annotation * >::const_iterator aIt = annots.begin(), aEnd = annots.end();
+    const QLinkedList< Annotation * > & annots = page->getAnnotations();
+    QLinkedList< Annotation * >::const_iterator aIt = annots.begin(), aEnd = annots.end();
     for ( ; aIt != aEnd; ++aIt )
     {
         // get annotation
         Annotation * annotation = *aIt;
 
         // if page-grouping -> create Author subnode
-        QListViewItem * authorItem = pageItem;
+        Q3ListViewItem * authorItem = pageItem;
         if ( KpdfSettings::groupByAuthor() )
         {
             // get author's name
@@ -244,18 +245,18 @@ void Reviews::addContents( const KPDFPage * page )
             if ( !authorItem )
             {
                 if ( pageItem )
-                    authorItem = new QListViewItem( pageItem, author );
+                    authorItem = new Q3ListViewItem( pageItem, author );
                 else
-                    authorItem = new QListViewItem( m_listView, author );
+                    authorItem = new Q3ListViewItem( m_listView, author );
                 QString icon = author != i18n( "Unknown" ) ? "personal" : "presence_away";
                 authorItem->setPixmap( 0, SmallIcon( icon ) );
             }
         }
 
         // create Annotation subnode
-        QListViewItem * singleItem = authorItem ?
-            new QListViewItem( authorItem, annotation->contents ) :
-            new QListViewItem( m_listView, annotation->contents );
+        Q3ListViewItem * singleItem = authorItem ?
+            new Q3ListViewItem( authorItem, annotation->contents ) :
+            new Q3ListViewItem( m_listView, annotation->contents );
         singleItem->setPixmap( 0, SmallIcon( "kpdf" ) );
     }
 }

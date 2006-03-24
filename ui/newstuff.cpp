@@ -12,20 +12,20 @@
 #include <qwidget.h>
 #include <qtimer.h>
 #include <qlayout.h>
-#include <qhbox.h>
-#include <qvbox.h>
+#include <khbox.h>
+#include <kvbox.h>
 #include <qpixmap.h>
 #include <qfont.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
-#include <qmemarray.h>
 #include <qrect.h>
 #include <qpainter.h>
-#include <qscrollview.h>
+#include <q3scrollview.h>
+#include <q3cstring.h>
 #include <qapplication.h>
-#include <kapplication.h>
+#include <ktoolinvocation.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <kconfig.h>
@@ -58,7 +58,7 @@ class ExtendImageWidget : public QWidget
 {
     public:
         ExtendImageWidget( const QPixmap & pix, QWidget * parent )
-            : QWidget( parent, "", WNoAutoErase ), m_pixmap( pix )
+            : QWidget( parent, "", Qt::WNoAutoErase ), m_pixmap( pix )
         {
             // adjust size hint
             setFixedWidth( pix.width() );
@@ -80,8 +80,8 @@ class ExtendImageWidget : public QWidget
             QPainter p( this );
             p.drawPixmap( pixmapRect.topLeft(), m_pixmap, pixmapRect );
             // paint the tiled bottom part
-            QMemArray<QRect> rects = paintRegion.subtract( pixmapRect ).rects();
-            for ( unsigned int i = 0; i < rects.count(); i++ )
+            QVector<QRect> rects = paintRegion.subtract( pixmapRect ).rects();
+            for ( int i = 0; i < rects.count(); i++ )
             {
                 const QRect & tileRect = rects[ i ];
                 p.drawTiledPixmap( tileRect, m_tile, QPoint(tileRect.left(), 0) );
@@ -98,7 +98,7 @@ class ExtendImageWidget : public QWidget
 class AvailableItem : public Entry
 {
     public:
-        typedef QValueList< AvailableItem * > List;
+        typedef QList< AvailableItem * > List;
         enum State { Normal = 0, Installing = 1, Uninstalling = 2 };
 
         AvailableItem( const QDomElement & element )
@@ -324,14 +324,14 @@ class ItemsView : public KHTMLPart
         // handle clicks on page links/buttons
         void urlSelected( const QString & link, int, int, const QString &, KParts::URLArgs )
         {
-            KURL url( link );
+            KUrl url( link );
             QString urlProtocol = url.protocol();
             QString urlPath = url.path();
 
             if ( urlProtocol == "mailto" )
             {
                 // clicked over a mail address
-                kapp->invokeMailer( url );
+                KToolInvocation::invokeMailer( url );
             }
             else if ( urlProtocol == "item" )
             {
@@ -400,7 +400,7 @@ struct NewStuffDialogPrivate
     QMap< KIO::Job *, ItemTransferInfo > transferJobs;
 
     // Contents
-    QValueList< Provider * > providers;
+    QList< Provider * > providers;
 
     // gui related vars
     QWidget * parentWidget;
@@ -440,7 +440,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
        horLay->addWidget( new ExtendImageWidget( p, this ) );
 
     // create right 'main' widget
-    QVBox * rightLayouter = new QVBox( this );
+    KVBox * rightLayouter = new KVBox( this );
     rightLayouter->setSpacing( 6 );
     horLay->addWidget( rightLayouter );
 
@@ -488,7 +488,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
       d->itemsView = new ItemsView( this, rightLayouter );
 
       // create bottom buttons
-      QHBox * bottomLine = new QHBox( rightLayouter );
+      KHBox * bottomLine = new KHBox( rightLayouter );
         // create info label
         d->messageLabel = new QLabel( bottomLine );
         d->messageLabel->setFrameStyle( QFrame::StyledPanel | QFrame::Raised );
@@ -521,7 +521,7 @@ NewStuffDialog::~NewStuffDialog()
         tIt.key()->kill();
 
     // delete all Provider descriptors
-    QValueList< Provider * >::iterator it = d->providers.begin(), iEnd = d->providers.end();
+    QList< Provider * >::iterator it = d->providers.begin(), iEnd = d->providers.end();
     for ( ; it != iEnd; ++it )
         delete *it;
     d->providers.clear();
@@ -618,7 +618,7 @@ void NewStuffDialog::slotLoadProvidersList()
         d->providersListJob.job->kill();
 
     // create a job that will feed providersList data
-    KIO::TransferJob * job = KIO::get( KURL( PROVIDERS_URL ), false /*refetch*/, false /*progress*/ );
+    KIO::TransferJob * job = KIO::get( KUrl( PROVIDERS_URL ), false /*refetch*/, false /*progress*/ );
     connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
              this, SLOT( slotProvidersListInfoData( KIO::Job *, const QByteArray & ) ) );
     connect( job, SIGNAL( result( KIO::Job * ) ),
@@ -642,7 +642,7 @@ void NewStuffDialog::slotProvidersListInfoData( KIO::Job * job, const QByteArray
         return;
 
     // append the data buffer to the 'receivedData' string
-    QCString str( data, data.size() + 1 );
+    Q3CString str( data, data.size() + 1 );
     d->providersListJob.receivedData.append( QString::fromUtf8( str ) );
 }
 
@@ -677,7 +677,7 @@ void NewStuffDialog::slotProvidersListResult( KIO::Job * job )
     }
 
     // clear the current list of providers
-    QValueList< Provider * >::iterator it = d->providers.begin(), iEnd = d->providers.end();
+    QList< Provider * >::iterator it = d->providers.begin(), iEnd = d->providers.end();
     for ( ; it != iEnd; ++it )
         delete *it;
     d->providers.clear();
@@ -759,7 +759,7 @@ void NewStuffDialog::slotProviderInfoData( KIO::Job * job, const QByteArray & da
         return;
 
     // append the data buffer to the 'receivedData' string
-    QCString str( data, data.size() + 1 );
+    Q3CString str( data, data.size() + 1 );
     d->providerJobs[ job ].receivedData.append( QString::fromUtf8( str ) );
 }
 

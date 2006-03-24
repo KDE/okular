@@ -138,7 +138,7 @@ class SmoothPathEngine : public AnnotatorEngine
                 // use engine's color for painting
                 painter->setPen( QPen( m_engineColor, 1 ) );
 
-                QValueList<NormalizedPoint>::iterator pIt = points.begin(), pEnd = points.end();
+                QLinkedList<NormalizedPoint>::iterator pIt = points.begin(), pEnd = points.end();
                 NormalizedPoint pA = *pIt;
                 ++pIt;
                 for ( ; pIt != pEnd; ++pIt )
@@ -198,7 +198,7 @@ class SmoothPathEngine : public AnnotatorEngine
 
     private:
         // data
-        QValueList<NormalizedPoint> points;
+        QLinkedList<NormalizedPoint> points;
         NormalizedRect totalRect;
         NormalizedPoint lastPoint;
 };
@@ -357,7 +357,7 @@ class TwoPointsEngine : public AnnotatorEngine
         }
 
     private:
-        QValueList<NormalizedPoint> points;
+        QList<NormalizedPoint> points;
         NormalizedRect rect;
         bool m_block;
 };
@@ -415,7 +415,7 @@ void PageViewAnnotator::setEnabled( bool on )
     }
 
     // create the ToolBarItems from the XML dom tree
-    QValueList<ToolBarItem> items;
+    QLinkedList<ToolBarItem> items;
     QDomNode toolDescription = m_toolsDefinition.firstChild();
     while ( toolDescription.isElement() )
     {
@@ -505,8 +505,8 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         m_lastDrawnRect = paintRect;
         m_lastDrawnRect.moveBy( itemRect.left(), itemRect.top() );
         // 3.2. decompose paint region in rects and send paint events
-        QMemArray<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
-        for ( uint i = 0; i < rects.count(); i++ )
+        QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
+        for ( int i = 0; i < rects.count(); i++ )
             m_pageView->updateContents( rects[i] );
     }
 

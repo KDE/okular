@@ -11,7 +11,7 @@
 #define _KPDF_SIDE_REVIEWS_H_
 
 #include <qwidget.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 #include "core/observer.h"
 
 class KPDFDocument;
@@ -32,7 +32,7 @@ class Reviews : public QWidget, public DocumentObserver
 
         // [INHERITED] from DocumentObserver
         uint observerId() const { return REVIEWS_ID; }
-        void notifySetup( const QValueVector< KPDFPage * > & pages, bool );
+        void notifySetup( const QVector< KPDFPage * > & pages, bool );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
 
@@ -55,7 +55,7 @@ class Reviews : public QWidget, public DocumentObserver
         KListViewSearchLine * m_searchLine;
         // internal storage
         KPDFDocument * m_document;
-        QValueVector< KPDFPage * > m_pages;
+        QVector< KPDFPage * > m_pages;
         QTimer * m_delayTimer;
         int m_currentPage;
 };

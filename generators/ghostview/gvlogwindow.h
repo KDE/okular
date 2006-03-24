@@ -17,7 +17,7 @@
 #include <qtimer.h>
 
 class QTextEdit;
-class KURLLabel;
+class KUrlLabel;
 class GSLogWindow : public QVBox
 {
     Q_OBJECT

@@ -18,7 +18,6 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <ktoolbarbutton.h>
 
 // local includes
 #include "searchwidget.h"

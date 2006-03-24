@@ -11,7 +11,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <klocale.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <ksqueezedtextlabel.h>
 #include <kglobalsettings.h>
 
@@ -78,7 +78,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     QFrame *page2 = addPage(i18n("Fonts"));
     page2Layout = new QVBoxLayout(page2, 0, KDialog::spacingHint());
     // add a klistview with 4 columns
-    KListView *lv = new KListView(page2);
+    K3ListView *lv = new K3ListView(page2);
     lv->addColumn( i18n("Name") );
     lv->addColumn( i18n("Type") );
     lv->addColumn( i18n("Embedded") );
@@ -87,7 +87,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     // populate the klistview
     for ( QDomNode node = fonts->documentElement().firstChild(); !node.isNull(); node = node.nextSibling() ) {
       QDomElement e = node.toElement();
-      new KListViewItem( lv, e.attribute( "Name" ), e.attribute( "Type" ),
+      new K3ListViewItem( lv, e.attribute( "Name" ), e.attribute( "Type" ),
                          e.attribute( "Embedded" ), e.attribute( "File" ) );
     }
   }
@@ -95,9 +95,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   // current width: left columnt + right column + dialog borders
   int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
   if ( page2Layout )
-    width = QMAX( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
+    width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
   // stay inside the 2/3 of the screen width
   QRect screenContainer = KGlobalSettings::desktopGeometry( this );
-  width = QMIN( width, 2*screenContainer.width()/3 );
+  width = qMin( width, 2*screenContainer.width()/3 );
   resize(width, 1);
 }

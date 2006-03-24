@@ -27,7 +27,7 @@ class QWidget;
 class QSplitter;
 class QToolBox;
 
-class KURL;
+class KUrl;
 class KAction;
 class KConfig;
 class KDirWatch;
@@ -76,10 +76,10 @@ public:
 	static KAboutData* createAboutData();
 
 	ASYNC goToPage(uint page);
-	ASYNC openDocument(KURL doc);
+	ASYNC openDocument(KUrl doc);
 	uint pages();
 	uint currentPage();
-	KURL currentDocument();
+	KUrl currentDocument();
 
 signals:
 	void enablePrintAction(bool enable);
@@ -87,7 +87,7 @@ signals:
 protected:
 	// reimplemented from KParts::ReadOnlyPart
 	bool openFile();
-	bool openURL(const KURL &url);
+	bool openURL(const KUrl &url);
 	bool closeURL();
 	// filter that watches for splitter size changes
 	bool eventFilter( QObject * watched, QEvent * e );
@@ -95,7 +95,7 @@ protected:
 
 protected slots:
 	// connected to actions
-	void openURLFromDocument(const KURL &url);
+	void openURLFromDocument(const KUrl &url);
 	void slotGoToPage();
 	void slotPreviousPage();
 	void slotNextPage();
@@ -127,7 +127,7 @@ protected slots:
 public slots:
 	// connected to Shell action (and browserExtension), not local one
 	void slotPrint();
-	void restoreDocument(const KURL &url, int page);
+	void restoreDocument(const KUrl &url, int page);
 	void saveDocumentRestoreInfo(KConfig* config);
 	void slotFileDirty( const QString& );
 	void slotDoFileDirty();

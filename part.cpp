@@ -26,13 +26,13 @@
 #include <qpainter.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qvbox.h>
+#include <kvbox.h>
 #include <qtoolbox.h>
 #include <qpushbutton.h>
 #include <dcopobject.h>
 #include <dcopclient.h>
 #include <kapplication.h>
-#include <klistviewsearchline.h>
+#include <k3listviewsearchline.h>
 #include <kaction.h>
 #include <kdirwatch.h>
 #include <kinstance.h>
@@ -40,14 +40,14 @@
 #include <kstdaction.h>
 #include <kdeversion.h>
 #include <kparts/genericfactory.h>
-#include <kurldrag.h>
+#include <k3urldrag.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
 #include <kio/netaccess.h>
-#include <kpopupmenu.h>
+#include <k3popupmenu.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 #include <ktrader.h>
@@ -105,7 +105,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-	connect( m_document, SIGNAL( openURL(const KURL &) ), this, SLOT( openURLFromDocument(const KURL &) ) );
+	connect( m_document, SIGNAL( openURL(const KUrl &) ), this, SLOT( openURLFromDocument(const KUrl &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 	
 	if (parent && parent->metaObject()->slotNames(true).contains("slotQuit()"))
@@ -151,12 +151,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	enableTOC( false );
 
 	// [left toolbox: Thumbnails and Bookmarks] | []
-	QVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
+	KVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	thumbsBox->setSpacing( 4 );
 	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
-	connect( m_thumbnailList, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURLFromDocument( const KURL & )) );
+	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 	// shrink the bottom controller toolbar (too hackish..)
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
@@ -189,7 +189,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	rightLayout->addWidget( rtb );
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
-	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURLFromDocument( const KURL & )));
+	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
     connect( m_document, SIGNAL(error(QString&,int )),m_pageView,SLOT(errorMessage(QString&,int )));
     connect( m_document, SIGNAL(warning(QString&,int )),m_pageView,SLOT(warningMessage(QString&,int )));
@@ -323,7 +323,7 @@ Part::~Part()
     delete m_document;
 }
 
-void Part::openURLFromDocument(const KURL &url)
+void Part::openURLFromDocument(const KUrl &url)
 {
     m_bExtension->openURLNotify();
     m_bExtension->setLocationBarURL(url.prettyURL());
@@ -438,7 +438,7 @@ void Part::goToPage(uint i)
         m_document->setViewportPage( i - 1 );
 }
 
-void Part::openDocument(KURL doc)
+void Part::openDocument(KUrl doc)
 {
     openURL(doc);
 }
@@ -453,7 +453,7 @@ uint Part::currentPage()
     return m_document->pages() ? m_document->currentPage() + 1 : 0;
 }
 
-KURL Part::currentDocument()
+KUrl Part::currentDocument()
 {
     return m_document->currentDocument();
 }
@@ -471,7 +471,7 @@ KAboutData* Part::createAboutData()
 
 bool Part::slotImportPSFile()
 {
-    KURL url = KFileDialog::getOpenURL( QString::null, "application/postscript" );
+    KUrl url = KFileDialog::getOpenURL( QString::null, "application/postscript" );
     KTempFile tf( QString::null, ".pdf" );
 
     if ( tf.status() == 0 && url.isLocalFile())
@@ -543,7 +543,7 @@ bool Part::openFile()
     return true;
 }
 
-bool Part::openURL(const KURL &url)
+bool Part::openURL(const KUrl &url)
 {
     // note: this can be the right place to check the file for gz or bz2 extension
     // if it matches then: download it (if not local) extract to a temp file using
@@ -799,7 +799,7 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
-    KURL saveURL = KFileDialog::getSaveURL( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
+    KUrl saveURL = KFileDialog::getSaveURL( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
     if ( saveURL.isValid() && !saveURL.isEmpty() )
     {
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
@@ -1054,7 +1054,7 @@ void Part::doPrint(KPrinter &printer)
     }
 }
 
-void Part::restoreDocument(const KURL &url, int page)
+void Part::restoreDocument(const KUrl &url, int page)
 {
   if (openURL(url)) goToPage(page);
 }

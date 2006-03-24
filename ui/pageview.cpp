@@ -116,8 +116,8 @@ public:
     // actions
     KSelectAction * aOrientation;
     KSelectAction * aPaperSizes;
-    KToggleAction * aMouseNormal;
-    KToggleAction * aMouseSelect;
+    KAction * aMouseNormal;
+    KAction * aMouseSelect;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     KToggleAction * aZoomFitWidth;
@@ -263,15 +263,17 @@ void PageView::setupActions( KActionCollection * ac )
     d->aViewContinuous->setChecked( KpdfSettings::viewContinuous() );
 
     // Mouse-Mode actions
-    d->aMouseNormal = new KRadioAction( i18n("&Browse Tool"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
-    d->aMouseNormal->setExclusiveGroup( "MouseType" );
+    QActionGroup * actGroup = new QActionGroup( this );
+    actGroup->setExclusive( true );
+    d->aMouseNormal = new KAction( i18n("&Browse Tool"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+    d->aMouseNormal->setActionGroup( actGroup );
     d->aMouseNormal->setChecked( true );
 
-    KToggleAction * mz = new KRadioAction( i18n("&Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
-    mz->setExclusiveGroup( "MouseType" );
+    KAction * mz = new KAction( i18n("&Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
+    mz->setActionGroup( actGroup );
 
-    d->aMouseSelect = new KRadioAction( i18n("&Select Tool"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
-    d->aMouseSelect->setExclusiveGroup( "MouseType" );
+    d->aMouseSelect = new KAction( i18n("&Select Tool"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    d->aMouseSelect->setActionGroup( actGroup );
 
     d->aToggleAnnotator = new KToggleAction( i18n("&Review"), "pencil", 0, ac, "mouse_toggle_annotate" );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
@@ -633,7 +635,7 @@ if ( d->document->handleEvent( pe ) )
             if ( d->mouseTextSelecting )
             {
               QRect blendRect;
-              QLinkedList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
+              QList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
               end=d->mouseTextSelectionRect->end();
               XRenderColor col;
               float alpha=0.2f;

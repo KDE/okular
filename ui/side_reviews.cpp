@@ -12,8 +12,8 @@
 #include <qlayout.h>
 #include <qtimer.h>
 #include <ktoolbar.h>
-#include <klistview.h>
-#include <klistviewsearchline.h>
+#include <k3listview.h>
+#include <k3listviewsearchline.h>
 #include <kaction.h>
 #include <kactionclasses.h>
 #include <klocale.h>
@@ -35,13 +35,13 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     QVBoxLayout * vLayout = new QVBoxLayout( this, 0, 4 );
     m_toolBar1 = new KToolBar( this, "reviewSearchBar" );
     vLayout->addWidget( m_toolBar1 );
-    m_listView = new KListView( this );
+    m_listView = new K3ListView( this );
     vLayout->addWidget( m_listView );
     m_toolBar2 = new KToolBar( this, "reviewOptsBar" );
     vLayout->addWidget( m_toolBar2 );
 
     // setup 1-UPPER toolbar and searchLine
-    m_searchLine = new KListViewSearchLine( m_toolBar1, m_listView );
+    m_searchLine = new K3ListViewSearchLine( m_toolBar1, m_listView );
     m_toolBar1->setIconDimensions( 16 );
     m_toolBar1->setMovable( false );
     // - add Clear button
@@ -79,7 +79,7 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_listView->addColumn( i18n("Annotation") );
     m_listView->header()->hide();
     m_listView->setTreeStepSize( 16 );
-    m_listView->setResizeMode( KListView::AllColumns );
+    m_listView->setResizeMode( K3ListView::AllColumns );
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate

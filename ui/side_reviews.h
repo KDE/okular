@@ -17,8 +17,8 @@
 class KPDFDocument;
 class KPDFPage;
 class KToolBar;
-class KListView;
-class KListViewSearchLine;
+class K3ListView;
+class K3ListViewSearchLine;
 class QTimer;
 
 /**
@@ -51,8 +51,8 @@ class Reviews : public QWidget, public DocumentObserver
         // data fields (GUI)
         KToolBar * m_toolBar1;
         KToolBar * m_toolBar2;
-        KListView * m_listView;
-        KListViewSearchLine * m_searchLine;
+        K3ListView * m_listView;
+        K3ListViewSearchLine * m_searchLine;
         // internal storage
         KPDFDocument * m_document;
         QVector< KPDFPage * > m_pages;

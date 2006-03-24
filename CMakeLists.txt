@@ -21,7 +21,6 @@ kde4_add_ui3_files(libkpdfconf_SRCS
 
 kde4_add_kcfg_files(libkpdfconf_SRCS ${CMAKE_SOURCE_DIR}/kpdf/conf/settings.kcfgc)
 
-
 set(libkpdfui_SRCS 
 	${CMAKE_SOURCE_DIR}/kpdf/ui/pagepainter.cpp 
 	${CMAKE_SOURCE_DIR}/kpdf/ui/pageview.cpp 

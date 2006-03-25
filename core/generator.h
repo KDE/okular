@@ -13,7 +13,7 @@
 
 #define KPDF_EXPORT_PLUGIN( classname ) \
     extern "C" { \
-         Generator* create_plugin(KPDFDocument* doc) { return new classname(doc); } \
+         KDE_EXPORT Generator* create_plugin(KPDFDocument* doc) { return new classname(doc); } \
     }
 
 

@@ -154,7 +154,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// [left toolbox: Thumbnails and Bookmarks] | []
 	KVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	thumbsBox->setSpacing( 4 );
-	m_searchWidget = new SearchWidget( thumbsBox, m_document );
+#warning this is making it crash
+//	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )) );
@@ -168,8 +169,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_toolBox->setCurrentItem( thumbsBox );
 
 	// [left toolbox: Reviews] | []
-	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
-	m_toolBox->addItem( reviewsWidget, QIconSet(SmallIcon("pencil")), i18n("Reviews") );
+#warning this is making it crash
+//	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
+//	m_toolBox->addItem( reviewsWidget, QIconSet(SmallIcon("pencil")), i18n("Reviews") );
 
 	// widgets: [../miniBarContainer] | []
 	QWidget * miniBarContainer = new QWidget( m_leftPanel );
@@ -203,7 +205,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document->addObserver( m_pageView );
 	m_document->addObserver( m_toc );
 	m_document->addObserver( m_miniBar );
-	m_document->addObserver( reviewsWidget );
+//	m_document->addObserver( reviewsWidget );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -249,14 +251,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_saveAs->setEnabled( false );
 	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	prefs->setText( i18n( "Configure oKular..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
-
-    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
-    KTrader::OfferList gens=KTrader::self()->query("oKular/Generator",constraint);
-    if (gens.count() > 0)
-    {
-        KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
-        genPrefs->setText( i18n( "Configure backends..." ) );
-    }
+	
+	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
+	KTrader::OfferList gens=KTrader::self()->query("oKular/Generator",constraint);
+	if (gens.count() > 0)
+	{
+		KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
+		genPrefs->setText( i18n( "Configure backends..." ) );
+	}
 
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
@@ -306,7 +308,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// [SPEECH] check for KTTSD presence and usability
 	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
 	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
-    KpdfSettings::writeConfig();
+	KpdfSettings::writeConfig();
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
@@ -580,7 +582,8 @@ bool Part::closeURL()
     if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
     m_document->closeDocument();
     updateViewActions();
-    m_searchWidget->clearText();
+#warning this is commented because m_searchWidget is commented
+    //m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
 }
 
@@ -852,8 +855,9 @@ void Part::slotNewConfig()
     }
 
     bool showSearch = KpdfSettings::showSearchBar();
-    if ( m_searchWidget->isShown() != showSearch )
-        m_searchWidget->setShown( showSearch );
+#warning this is commented because m_searchWidget is commented
+/*    if ( m_searchWidget->isShown() != showSearch )
+        m_searchWidget->setShown( showSearch );*/
 
     // Main View (pageView)
     Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?

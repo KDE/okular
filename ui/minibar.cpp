@@ -331,7 +331,8 @@ PagesEdit::PagesEdit( MiniBar * parent )
     // customize look
 #warning don't know how to port setFrameShadow
 //    setFrameShadow( QFrame::Raised );
-    focusOutEvent( 0 );
+#warning that's making it crash
+//    focusOutEvent( 0 );
 
     // use an integer validator
     m_validator = new QIntValidator( 1, 1, this );

@@ -2071,11 +2071,13 @@ void PDFGenerator::addTransition( Page * pdfPage, KPDFPage * page )
 
 
 
-void PDFGenerator::customEvent( QCustomEvent * event )
+void PDFGenerator::customEvent( QEvent * e )
 {
     // catch generator 'ready events' only
-    if ( event->type() != TGE_DATAREADY_ID )
+    if ( e->type() != TGE_DATAREADY_ID )
         return;
+
+    QCustomEvent *event = static_cast<QCustomEvent *>(e);
 
 #if 0
     // check if thread is running (has to be stopped now)

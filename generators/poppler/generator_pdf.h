@@ -120,7 +120,7 @@ class PDFGenerator : public Generator
         TextPage * fastTextPage (KPDFPage * page);
 
         // (async related) receive data from the generator thread
-        void customEvent( QCustomEvent * );
+        void customEvent( QEvent * );
 
         // xpdf dependant stuff
         QMutex docLock;

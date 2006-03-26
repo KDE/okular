@@ -1,4 +1,5 @@
 kde4_header()
+project(oKular)
 
 add_subdirectory( conf ) 
 add_subdirectory( core ) 
@@ -6,12 +7,55 @@ add_subdirectory( ui )
 add_subdirectory( shell ) 
 add_subdirectory( generators ) 
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
 
 ########### next target ###############
 
-set(oKularpart_PART_SRCS part.cpp )
+set(oKularconf_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/conf/preferencesdialog.cpp
+)
+
+kde4_add_ui3_files(oKularconf_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlgaccessibility.ui
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlggeneral.ui
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlgperformance.ui
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlgpresentation.ui
+)
+
+set(oKularcore_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/core/annotations.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/area.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/document.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/generator.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/link.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/page.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/pagetransition.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/textpage.cpp
+)
+
+kde4_add_ui3_files(oKularcore_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/core/chooseenginedialog.ui
+)
+
+set(oKularui_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/ui/minibar.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/newstuff.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/pagepainter.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/pageviewannotator.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/pageview.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/pageviewutils.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/presentationwidget.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/propertiesdialog.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/searchwidget.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/side_reviews.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/thumbnaillist.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/toc.cpp
+)
+
+kde4_add_kcfg_files(oKularconf_SRCS ${CMAKE_SOURCE_DIR}/okular/conf/settings.kcfgc )
+
+set(oKularpart_PART_SRCS part.cpp ${oKularconf_SRCS} ${oKularcore_SRCS} ${oKularui_SRCS} )
 
 kde4_automoc(${oKularpart_PART_SRCS})
 
@@ -21,7 +65,7 @@ kde4_add_plugin(oKularpart WITH_PREFIX ${oKularpart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} oKularpart )
 
-target_link_libraries(oKularpart  ${KDE4_KDECORE_LIBS} oKularconf oKularcore oKularui agg2 ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m )
+target_link_libraries(oKularpart  ${KDE4_KDECORE_LIBS} agg2 ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 oKularpart )
 

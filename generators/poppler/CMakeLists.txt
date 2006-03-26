@@ -1,6 +1,6 @@
 kde4_header()
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular  )
 
 
 ########### next target ###############
@@ -13,7 +13,7 @@ kde4_add_plugin(okularGenerator_poppler WITH_PREFIX ${okularGenerator_poppler_PA
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_poppler )
 
-target_link_libraries(okularGenerator_poppler  ${KDE4_KDECORE_LIBS} oKularcore oKularconf ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} m )
+target_link_libraries(okularGenerator_poppler  ${KDE4_KDECORE_LIBS} oKular ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} m )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_poppler )
 

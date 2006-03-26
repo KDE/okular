@@ -7,7 +7,7 @@ add_subdirectory( ui )
 add_subdirectory( shell ) 
 add_subdirectory( generators ) 
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/ )
 
 
 ########### next target ###############
@@ -53,9 +53,16 @@ set(oKularui_SRCS
    ${CMAKE_SOURCE_DIR}/okular/ui/toc.cpp
 )
 
+set(oKularagg2_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_bezier_arc.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_path_storage.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_rasterizer_scanline_aa.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_trans_affine.cpp
+   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_vcgen_stroke.cpp
+)
 kde4_add_kcfg_files(oKularconf_SRCS ${CMAKE_SOURCE_DIR}/okular/conf/settings.kcfgc )
 
-set(oKularpart_PART_SRCS part.cpp ${oKularconf_SRCS} ${oKularcore_SRCS} ${oKularui_SRCS} )
+set(oKularpart_PART_SRCS part.cpp ${oKularconf_SRCS} ${oKularcore_SRCS} ${oKularui_SRCS} ${oKularagg2_SRCS} )
 
 kde4_automoc(${oKularpart_PART_SRCS})
 
@@ -65,7 +72,7 @@ kde4_add_plugin(oKularpart WITH_PREFIX ${oKularpart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} oKularpart )
 
-target_link_libraries(oKularpart  ${KDE4_KDECORE_LIBS} agg2 ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m )
+target_link_libraries(oKularpart  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 oKularpart )
 

@@ -1,11 +1,19 @@
 kde4_header()
 
-add_subdirectory( poppler ) 
+# let's enable the generators properly configured
+
+if(POPPLER_FOUND)
+  add_subdirectory(poppler)
+endif(POPPLER_FOUND)
+if(QGS_FOUND)
+  add_subdirectory(ghostview)
+endif(QGS_FOUND)
 add_subdirectory( fax ) 
 add_subdirectory( kimgio ) 
+if(CHM_FOUND)
+  add_subdirectory( chm )
+endif(CHM_FOUND)
 
-message(STATUS "${CMAKE_CURRENT_SOURCE_DIR}: skipped subdir $(GSPLUGINDIR)")
-message(STATUS "${CMAKE_CURRENT_SOURCE_DIR}: skipped subdir $(CHMPLUGINDIR)")
 include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
 
 

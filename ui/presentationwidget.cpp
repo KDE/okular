@@ -36,7 +36,7 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/link.h"
-#include "conf/settings.h"
+#include "settings.h"
 
 
 // comment this to disable the top-right progress indicator

@@ -22,7 +22,7 @@
 // local includes
 #include "searchwidget.h"
 #include "core/document.h"
-#include "conf/settings.h"
+#include "settings.h"
 
 SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     : KToolBar( parent, "iSearchBar" ), m_document( document ),

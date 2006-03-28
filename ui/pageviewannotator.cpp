@@ -26,7 +26,7 @@
 #include "core/document.h"
 #include "core/page.h"
 #include "core/annotations.h"
-#include "conf/settings.h"
+#include "settings.h"
 #include "pageview.h"
 #include "pageviewutils.h"
 #include "pageviewannotator.h"

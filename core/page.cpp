@@ -18,7 +18,7 @@
 #include "pagetransition.h"
 #include "link.h"
 #include "annotations.h"
-#include "conf/settings.h"
+#include "settings.h"
 #include "area.h"
 
 // temp includes

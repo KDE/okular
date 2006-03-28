@@ -24,7 +24,7 @@
 #include "core/annotations.h"
 #include "core/document.h"
 #include "core/page.h"
-#include "conf/settings.h"
+#include "settings.h"
 #include "side_reviews.h"
 
 

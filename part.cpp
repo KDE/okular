@@ -69,7 +69,7 @@
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
 #include "conf/preferencesdialog.h"
-#include "conf/settings.h"
+#include "settings.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"

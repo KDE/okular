@@ -57,7 +57,7 @@
 #include "core/misc.h"
 #include "core/link.h"
 #include "core/generator.h"
-#include "conf/settings.h"
+#include "settings.h"
 
 #define ROUND(x) (int(x + 0.5))
 

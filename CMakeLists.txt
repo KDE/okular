@@ -62,7 +62,17 @@ set(oKularagg2_SRCS
 )
 kde4_add_kcfg_files(oKularconf_SRCS ${CMAKE_SOURCE_DIR}/okular/conf/settings.kcfgc )
 
-set(oKularpart_PART_SRCS part.cpp ${oKularconf_SRCS} ${oKularcore_SRCS} ${oKularui_SRCS} ${oKularagg2_SRCS} )
+set(oKularcore_SRCS ${oKularconf_SRCS} ${oKularcore_SRCS} )
+
+kde4_automoc(${oKularcore_SRCS})
+
+kde4_add_plugin(oKularcore WITH_PREFIX ${oKularcore_SRCS})
+
+target_link_libraries(oKularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
+
+install_targets(${LIB_INSTALL_DIR} oKularcore )
+
+set(oKularpart_PART_SRCS part.cpp ${oKularui_SRCS} ${oKularagg2_SRCS} )
 
 kde4_automoc(${oKularpart_PART_SRCS})
 
@@ -72,7 +82,7 @@ kde4_add_plugin(oKularpart WITH_PREFIX ${oKularpart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} oKularpart )
 
-target_link_libraries(oKularpart  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
+target_link_libraries(oKularpart  oKularcore ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 oKularpart )
 

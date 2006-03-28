@@ -27,7 +27,7 @@
 // local includes
 #include "pageviewutils.h"
 #include "core/page.h"
-#include "conf/settings.h"
+#include "settings.h"
 
 /*********************/
 /** PageViewItem     */

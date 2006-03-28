@@ -40,7 +40,7 @@
 #include "link.h"
 #include "chooseenginedialog.h"
 
-#include "conf/settings.h"
+#include "settings.h"
 
 // structures used internally by KPDFDocument for local variables storage
 class AllocatedPixmap;

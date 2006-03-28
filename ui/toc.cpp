@@ -14,7 +14,7 @@
 #include "toc.h"
 #include "core/document.h"
 #include "core/page.h"
-#include "conf/settings.h"
+#include "settings.h"
 #include "core/link.h"
 
 // uncomment following to enable a 2nd column showing the page referred

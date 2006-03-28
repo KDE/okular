@@ -25,7 +25,7 @@
 #include "core/area.h"
 #include "core/page.h"
 #include "core/annotations.h"
-#include "conf/settings.h"
+#include "settings.h"
 
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )

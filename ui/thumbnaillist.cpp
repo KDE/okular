@@ -27,7 +27,7 @@
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
-#include "conf/settings.h"
+#include "settings.h"
 
 // ThumbnailWidget represents a single thumbnail in the ThumbnailList
 class ThumbnailWidget : public QWidget

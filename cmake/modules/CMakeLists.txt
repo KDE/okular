@@ -1,3 +1,5 @@
+# install the cmake files
 
-add_subdirectory(modules)
+#set(cmakeFiles)
+#install_files(/share/apps/cmake/modules FILES  ${cmakeFiles} )
 

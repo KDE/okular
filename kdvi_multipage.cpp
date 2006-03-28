@@ -116,7 +116,7 @@ void KDVIMultiPage::slotEmbedPostScript()
 {
   DVIRenderer.embedPostScript();
   if (DVIRenderer.isModified())
-    emit(documentIsModified());
+    emit renderModeChanged();
   setEmbedPostScriptAction();
 }
 

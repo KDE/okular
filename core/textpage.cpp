@@ -101,7 +101,7 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
               first=*start;
               first.right=end->right;
               first.bottom=end->bottom;
-              for (it=QMIN(sel->itB(),sel->itE()); it<=QMAX(sel->itB(),sel->itE());it++)
+              for (it=qMin(sel->itB(),sel->itE()); it<=qMax(sel->itB(),sel->itE());it++)
               {
                 tmp=m_words[it]->area;
                 if (tmp->intersects(&first))
@@ -119,7 +119,7 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
             third=*end;
             third.left=second.left=0;
             second.bottom=end->top;
-            for (it=QMIN(sel->itB(),sel->itE()); it<=QMAX(sel->itB(),sel->itE());it++)
+            for (it=qMin(sel->itB(),sel->itE()); it<=qMax(sel->itB(),sel->itE());it++)
             {
                 tmp=m_words[it]->area;
                 if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
@@ -186,8 +186,8 @@ const bool &strictCase, const RegularAreaRect *area)
                     // substract the length of the current entity from 
                     // the left length of the query
                     haveMatch=true;
-                    j+=QMIN(queryLeft,len);
-                    queryLeft-=QMIN(queryLeft,len);
+                    j+=qMin(queryLeft,len);
+                    queryLeft-=qMin(queryLeft,len);
                 }
             }
             if (haveMatch && queryLeft==0 && j==query.length()-1)
@@ -245,7 +245,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
         else
         {
             dontIncrement=false;
-            int min=QMIN(queryLeft,len);
+            int min=qMin(queryLeft,len);
             len=str.length();
             kDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
             // we have equal (or less then) area of the query left as the lengt of the current 

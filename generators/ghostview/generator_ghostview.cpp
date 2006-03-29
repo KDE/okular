@@ -371,7 +371,7 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
         kdWarning() << "setMedia\n";
         asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
         kdWarning() << "setMagnify\n";
-        asyncGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
+        asyncGenerator->setMagnify(qMax(static_cast<double>(req->width)/req->page->width() ,
                 static_cast<double>(req->height)/req->page->height()));
         GSInterpreterLib::Position u=internalDoc->pagePos(pgNo);
 //         kdWarning ()  << "Page pos is " << pgNo << ":"<< u.first << "/" << u.second << endl;
@@ -399,7 +399,7 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
 //          this, SLOT(slotPixmapGenerated (const QImage*)));
 
       pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
-      pixGenerator->setMagnify(QMAX(static_cast<double>(req->width)/req->page->width() ,
+      pixGenerator->setMagnify(qMax(static_cast<double>(req->width)/req->page->width() ,
               static_cast<double>(req->height)/req->page->height()));
       pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
       pixGenerator->setSize(req->width ,req->height);

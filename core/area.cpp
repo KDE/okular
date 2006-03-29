@@ -64,10 +64,10 @@ NormalizedRect NormalizedRect::operator| (const NormalizedRect & r) const
 {
 	NormalizedRect ret;
  // todo !       
-	ret.left=QMIN(left,r.left);
-        ret.top=QMIN(top,r.top);
-        ret.bottom=QMAX(bottom,r.bottom);
-        ret.right=QMAX(right,r.right);
+	ret.left=qMin(left,r.left);
+        ret.top=qMin(top,r.top);
+        ret.bottom=qMax(bottom,r.bottom);
+        ret.right=qMax(right,r.right);
 	return ret;
 }
 

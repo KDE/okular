@@ -227,7 +227,7 @@ QStringList* Shell::fileFormats()
                extensions.clear();
                while(!pattern.isEmpty())
                {
-                    tmp=pattern.front().stripWhiteSpace();
+                    tmp=pattern.front().trimmed();
                     extensions.append(tmp);
                     if (tmp.find(".gz", -3) == -1)
                         extensions.append(tmp+".gz");

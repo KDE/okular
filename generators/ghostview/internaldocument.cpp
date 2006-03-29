@@ -344,8 +344,8 @@ bool GSInternalDocument::savePages( const QString& saveFileName,
 	for( PageList::const_iterator ci = pageList.begin();
 	     ci != pageList.end(); ++ci )
 	{
-	    minPage = QMIN( *ci, minPage );
-	    maxPage = QMAX( *ci, maxPage );
+	    minPage = qMin( *ci, minPage );
+	    maxPage = qMax( *ci, maxPage );
 	}
 	
 

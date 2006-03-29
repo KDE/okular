@@ -97,8 +97,9 @@ void PageViewItem::moveTo( int x, int y )
 /*********************/
 
 PageViewMessage::PageViewMessage( QWidget * parent )
-    : QWidget( parent, "pageViewMessage" ), m_timer( 0 )
+    : QWidget( parent ), m_timer( 0 )
 {
+    setObjectName( "pageViewMessage" );
     setFocusPolicy( Qt::NoFocus );
     setBackgroundMode( Qt::NoBackground );
     setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QColorGroup::Background));
@@ -119,8 +120,8 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // determine text rectangle
     QRect textRect = fontMetrics().boundingRect( message );
-    textRect.moveBy( -textRect.left(), -textRect.top() );
-    textRect.addCoords( 0, 0, 2, 2 );
+    textRect.translate( -textRect.left(), -textRect.top() );
+    textRect.adjust( 0, 0, 2, 2 );
     int width = textRect.width(),
         height = textRect.height(),
         textXOffset = 0,
@@ -150,7 +151,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         }
         textXOffset = 2 + symbol.width();
         width += textXOffset;
-        height = QMAX( height, symbol.height() );
+        height = qMax( height, symbol.height() );
     }
     QRect geometry( 0, 0, width + 10, height + 8 );
 
@@ -283,7 +284,7 @@ void ToolBarButton::paintEvent( QPaintEvent * e )
     // draw button's pixmap over the parent's background (fake transparency)
     QPainter p( this );
     QRect backRect = e->rect();
-    backRect.moveBy( x(), y() );
+    backRect.translate( x(), y() );
     p.drawPixmap( e->rect().topLeft(), m_background, backRect );
 #warning don't know how to port drawButtonLabel
     // drawButtonLabel( &p );
@@ -597,8 +598,8 @@ void PageViewToolBar::slotAnimate()
     // move currentPosition towards endPosition
     int dX = d->endPosition.x() - d->currentPosition.x(),
         dY = d->endPosition.y() - d->currentPosition.y();
-    dX = dX / 6 + QMAX( -1, QMIN( 1, dX) );
-    dY = dY / 6 + QMAX( -1, QMIN( 1, dY) );
+    dX = dX / 6 + qMax( -1, qMin( 1, dX) );
+    dY = dY / 6 + qMax( -1, qMin( 1, dY) );
     d->currentPosition.setX( d->currentPosition.x() + dX );
     d->currentPosition.setY( d->currentPosition.y() + dY );
 

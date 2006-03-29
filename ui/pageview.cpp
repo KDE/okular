@@ -997,7 +997,7 @@ if (d->document->handleEvent( e ) )
                   deltaY = e->y() - d->mouseSelectPos.y();
                 if ( d->document->supportsSearching() && ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 ) )
                 {
-                    PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
+                    PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 //                     PageViewItem* item=pickItemOnPoint(e->x(),e->y());
                     const KPDFPage * kpdfPage = currentItem->page();
                     // build a proper rectangle (make sure left/top is to the left of right/bottom)
@@ -1615,7 +1615,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     {
         double scaleW = (double)colWidth / (double)width;
         double scaleH = (double)rowHeight / (double)height;
-        zoom = QMIN( scaleW, scaleH );
+        zoom = qMin( scaleW, scaleH );
         item->setWHZ( (int)(zoom * width), (int)(zoom * height), zoom );
         d->zoomFactor = zoom;
     }
@@ -1705,8 +1705,8 @@ void PageView::selectionEndPoint( int x, int y )
 {
     // clip selection to the viewport
     QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
-    x = QMAX( QMIN( x, viewportRect.right() ), viewportRect.left() );
-    y = QMAX( QMIN( y, viewportRect.bottom() ), viewportRect.top() );
+    x = qMax( qMin( x, viewportRect.right() ), viewportRect.left() );
+    y = qMax( qMin( y, viewportRect.bottom() ), viewportRect.top() );
     // if selection changed update rect
     if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
     {
@@ -1813,7 +1813,7 @@ void PageView::updateZoomText()
 {
     // use current page zoom as zoomFactor if in ZoomFit/* mode
     if ( d->zoomMode != ZoomFixed && d->items.count() > 0 )
-        d->zoomFactor = d->items[ QMAX( 0, (int)d->document->currentPage() ) ]->zoomFactor();
+        d->zoomFactor = d->items[ qMax( 0, (int)d->document->currentPage() ) ]->zoomFactor();
     float newFactor = d->zoomFactor;
     d->aZoom->clear();
 
@@ -2026,7 +2026,7 @@ void PageView::slotRelayoutPages()
     }
     else // viewContinuous is FALSE
     {
-        PageViewItem * currentItem = d->items[ QMAX( 0, (int)d->document->currentPage() ) ];
+        PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 	
 	int nRows=viewRows();
 

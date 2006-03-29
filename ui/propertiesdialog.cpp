@@ -57,7 +57,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     row++;
 
     // refine maximum width of 'value' labels
-    valMaxWidth = QMAX( valMaxWidth, fontMetrics().width( valueString ) );
+    valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
   }
 
   // add the number of pages if the generator hasn't done it already
@@ -76,14 +76,16 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   if ( fonts ) {
     // create fonts tab and layout it
     QFrame *page2 = addPage(i18n("Fonts"));
-    page2Layout = new QVBoxLayout(page2, 0, KDialog::spacingHint());
+    page2Layout = new QVBoxLayout(page2);
+    page2Layout->setMargin(0);
+    page2Layout->setSpacing(KDialog::spacingHint());
     // add a klistview with 4 columns
     K3ListView *lv = new K3ListView(page2);
     lv->addColumn( i18n("Name") );
     lv->addColumn( i18n("Type") );
     lv->addColumn( i18n("Embedded") );
     lv->addColumn( i18n("File") );
-    page2Layout->add(lv);
+    page2Layout->addWidget(lv);
     // populate the klistview
     for ( QDomNode node = fonts->documentElement().firstChild(); !node.isNull(); node = node.nextSibling() ) {
       QDomElement e = node.toElement();

@@ -1164,7 +1164,7 @@ int XPDFReader::lookupNumArray( Dict * dict, const char * type, double * dest, i
     Object numObj;
     if ( arrObj.isArray() )
     {
-        len = QMIN( len, arrObj.arrayGetLength() );
+        len = qMin( len, arrObj.arrayGetLength() );
         for ( int i = 0; i < len; i++ )
         {
             dest[i] = arrObj.arrayGet( i, &numObj )->getNum();

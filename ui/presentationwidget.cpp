@@ -394,7 +394,7 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
     if ( geometry )
     {
         *geometry = object->geometry( frameGeometry.width(), frameGeometry.height() );
-        geometry->moveBy( frameGeometry.left(), frameGeometry.top() );
+        geometry->translate( frameGeometry.left(), frameGeometry.top() );
     }
 
     // return the link pointer
@@ -569,7 +569,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     // translate painter and contents rect
     QRect geom( frame->geometry );
     p.translate( geom.left(), geom.top() );
-    geom.moveBy( -geom.left(), -geom.top() );
+    geom.translate( -geom.left(), -geom.top() );
 
     // draw the page using the shared PagePainter class
     int flags = PagePainter::Accessibility;

@@ -32,7 +32,9 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     : QWidget( parent ), m_document( document ), m_delayTimer( 0 ), m_currentPage( -1 )
 {
     // create widgets and layout them vertically
-    QVBoxLayout * vLayout = new QVBoxLayout( this, 0, 4 );
+    QVBoxLayout * vLayout = new QVBoxLayout( this );
+    vLayout->setMargin( 0 );
+    vLayout->setSpacing( 4 );
     m_toolBar1 = new KToolBar( this, "reviewSearchBar" );
     vLayout->addWidget( m_toolBar1 );
     m_listView = new K3ListView( this );

@@ -174,7 +174,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 			m_selected->setSelected( true );
 			if ( KpdfSettings::syncThumbnailsViewport() )
 			{
-				int yOffset = QMAX( visibleHeight() / 4, m_selected->height() / 2 );
+				int yOffset = qMax( visibleHeight() / 4, m_selected->height() / 2 );
 				ensureVisible( 0, childY( m_selected ) + m_selected->height()/2, 0, yOffset );
 			}
 			break;
@@ -232,7 +232,7 @@ void ThumbnailList::updateWidgets()
         QRect relativeRect = viewportRect.intersect( widgetRect );
         if ( !relativeRect.isValid() )
             continue;
-        relativeRect.moveBy( -widgetRect.left(), -widgetRect.top() );
+        relativeRect.translate( -widgetRect.left(), -widgetRect.top() );
         t->update( relativeRect );
     }
 }
@@ -514,7 +514,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
 
         // draw the page using the shared PagePainter class
         p.translate( m_margin/2, m_margin/2 );
-        clipRect.moveBy( -m_margin/2, -m_margin/2 );
+        clipRect.translate( -m_margin/2, -m_margin/2 );
         clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
         if ( clipRect.isValid() )
         {

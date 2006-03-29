@@ -146,7 +146,7 @@ void TGenerator::generatePixmap( PixmapRequest * request )
 
     syncLock.lock();
     QString url= m_file->getUrlForPage ( request->pageNumber + 1 );
-    int zoom = QMAX( static_cast<double>(request->width)/static_cast<double>(request->page->width())
+    int zoom = qMax( static_cast<double>(request->width)/static_cast<double>(request->page->width())
         , static_cast<double>(request->height)/static_cast<double>(request->page->height())
         ) * 100;
 

@@ -104,16 +104,16 @@ class SmoothPathEngine : public AnnotatorEngine
                     // update total rect
                     double dX = 2.0 / (double)xScale;
                     double dY = 2.0 / (double)yScale;
-                    totalRect.left = QMIN( totalRect.left, nX - dX );
-                    totalRect.top = QMIN( totalRect.top, nY - dY );
-                    totalRect.right = QMAX( nX + dX, totalRect.right );
-                    totalRect.bottom = QMAX( nY + dY, totalRect.bottom );
+                    totalRect.left = qMin( totalRect.left, nX - dX );
+                    totalRect.top = qMin( totalRect.top, nY - dY );
+                    totalRect.right = qMax( nX + dX, totalRect.right );
+                    totalRect.bottom = qMax( nY + dY, totalRect.bottom );
                     // paint the difference to previous full rect
                     NormalizedRect incrementalRect;
-                    incrementalRect.left = QMIN( nextPoint.x, lastPoint.x ) - dX;
-                    incrementalRect.right = QMAX( nextPoint.x, lastPoint.x ) + dX;
-                    incrementalRect.top = QMIN( nextPoint.y, lastPoint.y ) - dY;
-                    incrementalRect.bottom = QMAX( nextPoint.y, lastPoint.y ) + dY;
+                    incrementalRect.left = qMin( nextPoint.x, lastPoint.x ) - dX;
+                    incrementalRect.right = qMax( nextPoint.x, lastPoint.x ) + dX;
+                    incrementalRect.top = qMin( nextPoint.y, lastPoint.y ) - dY;
+                    incrementalRect.bottom = qMax( nextPoint.y, lastPoint.y ) + dY;
                     lastPoint = nextPoint;
                     return incrementalRect.geometry( (int)xScale, (int)yScale );
                 //}
@@ -315,10 +315,10 @@ class TwoPointsEngine : public AnnotatorEngine
                 newPoint.y = nY;
                 points.append( newPoint );
                 NormalizedPoint firstPoint = points.front();
-                rect.left = QMIN( firstPoint.x, nX ) - 2.0 / (double)xScale;
-                rect.right = QMAX( firstPoint.x, nX ) + 2.0 / (double)xScale;
-                rect.top = QMIN( firstPoint.y, nY ) - 2.0 / (double)yScale;
-                rect.bottom = QMAX( firstPoint.y, nY ) + 2.0 / (double)yScale;
+                rect.left = qMin( firstPoint.x, nX ) - 2.0 / (double)xScale;
+                rect.right = qMax( firstPoint.x, nX ) + 2.0 / (double)xScale;
+                rect.top = qMin( firstPoint.y, nY ) - 2.0 / (double)yScale;
+                rect.bottom = qMax( firstPoint.y, nY ) + 2.0 / (double)yScale;
             }
             // end creation if we have 2 points
             else if ( type == Release && points.count() == 2 )

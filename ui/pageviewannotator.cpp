@@ -377,11 +377,11 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, KPDFDocument * storage 
         if ( doc.setContent( &infoFile ) )
             m_toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
         else
-            kdWarning() << "AnnotatingTools XML file seems to be damaged" << endl;
+            kWarning() << "AnnotatingTools XML file seems to be damaged" << endl;
         infoFile.close();
     }
     else
-        kdWarning() << "Unable to open AnnotatingTools XML definition" << endl;
+        kWarning() << "Unable to open AnnotatingTools XML definition" << endl;
 }
 
 PageViewAnnotator::~PageViewAnnotator()
@@ -604,7 +604,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 else if ( type == "TwoPoints" )
                     m_engine = new TwoPointsEngine( toolSubElement );
                 else
-                    kdWarning() << "tools.xml: engine type:'" << type << "' is not defined!" << endl;
+                    kWarning() << "tools.xml: engine type:'" << type << "' is not defined!" << endl;
             }
             // display the tooltip
             else if ( toolSubElement.tagName() == "tooltip" )
@@ -613,7 +613,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 
         // consistancy warning
         if ( !m_engine )
-            kdWarning() << "tools.xml: couldn't find good engine description. check xml." << endl;
+            kWarning() << "tools.xml: couldn't find good engine description. check xml." << endl;
 
         // stop after parsing selected tool's node
         break;

@@ -379,13 +379,13 @@ void Part::fillGenerators()
             KLibLoader *loader = KLibLoader::self();
             if (!loader)
             {
-                kdWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
+                kWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
                 return;
             }
             KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
             if (!lib) 
             {
-                kdWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
+                kWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
             }
 
             Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );

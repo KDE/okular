@@ -166,7 +166,7 @@ const bool &strictCase, const RegularAreaRect *area)
             {
                 if (((strictCase) 
                 ? (*str != query) 
-                : (str->lower() != query.lower() ))
+                : (str->toLower() != query.toLower() ))
                 || (!(area->intersects((*it)->area))))
                 {
                     // we not have matched
@@ -253,7 +253,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
 
             if ((strictCase)
                 ? (str.left(min) != query.mid(j,min))
-                : (str.left(min).lower() != query.mid(j,min).lower())
+                : (str.left(min).toLower() != query.mid(j,min).toLower())
                 )
             {
                     // we not have matched

@@ -106,7 +106,7 @@ class AvailableItem : public Entry
         {
             QString remoteUrl = payload().url();
             QString fileName = remoteUrl.section( '/', -1, -1 );
-            QString extension = fileName.lower().section( '.', -1, -1 );
+            QString extension = fileName.toLower().section( '.', -1, -1 );
             QString typeString = type();
             // place books on the desktop
             if ( typeString == "kpdf/book" )
@@ -115,7 +115,7 @@ class AvailableItem : public Entry
             else if ( typeString == "kpdf/tool" )
                 m_destinationFile = locateLocal( "data", "kpdf/stuff/" + fileName );
             // warn about unrecognized type
-            else kdDebug() << "NewStuffDialog: AvailableItem: unrecognized provider name: '"
+            else kDebug() << "NewStuffDialog: AvailableItem: unrecognized provider name: '"
                 << typeString << "'." << endl;
         }
 
@@ -340,7 +340,7 @@ class ItemsView : public KHTMLPart
                 unsigned long itemPointer = urlPath.toULong( &ok );
                 if ( !ok )
                 {
-                    kdWarning() << "ItemsView: error converting item pointer." << endl;
+                    kWarning() << "ItemsView: error converting item pointer." << endl;
                     return;
                 }
 
@@ -348,7 +348,7 @@ class ItemsView : public KHTMLPart
                 AvailableItem * item = (AvailableItem *)itemPointer;
                 if ( !m_items.contains( item ) )
                 {
-                    kdWarning() << "ItemsView: error retrieving item pointer." << endl;
+                    kWarning() << "ItemsView: error retrieving item pointer." << endl;
                     return;
                 }
 
@@ -848,7 +848,7 @@ void NewStuffDialog::slotItemMessage( KIO::Job * job, const QString & message )
 
     // update item state
     AvailableItem * item = d->transferJobs[ job ].item;
-    kdDebug() << "Name: " << item->name() << " msg: '" << message << "'." << endl;
+    kDebug() << "Name: " << item->name() << " msg: '" << message << "'." << endl;
     d->itemsView->updateItem( item );
 }
 

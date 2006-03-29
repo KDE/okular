@@ -356,7 +356,7 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     {
         d->items.push_back( new PageViewItem( *setIt ) );
 #ifdef PAGEVIEW_DEBUG
-        kdDebug() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry() << endl;
+        kDebug() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry() << endl;
 #endif
     }
 
@@ -412,12 +412,12 @@ void PageView::notifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        kdDebug() << "viewport has no matching item!" << endl;
+        kDebug() << "viewport has no matching item!" << endl;
         d->blockViewport = false;
         return;
     }
 #ifdef PAGEVIEW_DEBUG
-    kdDebug() << "document viewport changed\n";
+    kDebug() << "document viewport changed\n";
 #endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
@@ -749,7 +749,7 @@ if (d->document->handleEvent( e ) )
                 bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
                         KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
                 QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-                d->messageWindow->display( status.arg(d->typeAheadString.lower()),
+                d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
                 d->findTimeoutTimer->start( 3000, true );
             }
@@ -769,7 +769,7 @@ if (d->document->handleEvent( e ) )
             // because it activates the accel
             releaseKeyboard();
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
-                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.lower()),
+                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.toLower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
             // (2/4) it is needed to grab the keyboard becase people may have Space assigned
@@ -789,7 +789,7 @@ if (d->document->handleEvent( e ) )
             bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
                     KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
             QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-            d->messageWindow->display( status.arg(d->typeAheadString.lower()),
+            d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
                                        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
             d->findTimeoutTimer->start( 3000, true );
         }
@@ -831,7 +831,7 @@ if (d->document->handleEvent( e ) )
         case Qt::Key_Up:
         case Qt::Key_PageUp:
             // if in single page mode and at the top of the screen, go to \ page
-            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minValue() )
+            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
             {
                 if ( e->key() == Qt::Key_Up )
                     verticalScrollBar()->subtractLine();
@@ -853,7 +853,7 @@ if (d->document->handleEvent( e ) )
         case Qt::Key_Down:
         case Qt::Key_PageDown:
             // if in single page mode and at the bottom of the screen, go to next page
-            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maxValue() )
+            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
             {
                 if ( e->key() == Qt::Key_Down )
                     verticalScrollBar()->addLine();
@@ -971,7 +971,7 @@ if (d->document->handleEvent( e ) )
                     // wrap mouse from top to bottom
                     QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
                     if ( mousePos.y() <= mouseContainer.top() + 4 &&
-                         verticalScrollBar()->value() < verticalScrollBar()->maxValue() - 10 )
+                         verticalScrollBar()->value() < verticalScrollBar()->maximum() - 10 )
                     {
                         mousePos.setY( mouseContainer.bottom() - 5 );
                         QCursor::setPos( mousePos );
@@ -1005,14 +1005,14 @@ if (d->document->handleEvent( e ) )
 //                     rect=rect.normalize();
 //                     
                     QRect vRect = currentItem->geometry();
-//                     kdDebug() << "viewport " << vRect << endl;
-//                     kdDebug() << "selection (UN) " << rect << endl;
+//                     kDebug() << "viewport " << vRect << endl;
+//                     kDebug() << "selection (UN) " << rect << endl;
 //                     // move selection area over to relevant viewport
 //                     rect.moveBy(-vRect.left(),-vRect.top()); 
-//                     kdDebug() << "selection (MV) " << rect << endl;
+//                     kDebug() << "selection (MV) " << rect << endl;
                     // clip to viewport
 //                     rect &= vRect;
-//                     kdDebug() << "selection (CL) " << rect << endl;
+//                     kDebug() << "selection (CL) " << rect << endl;
 //                     FIXME: width and height are greater by 1 then the selection.
 //                     rect.addCoords(1,1,-1,-1);
                                         
@@ -1027,7 +1027,7 @@ if (d->document->handleEvent( e ) )
                     else
                       d->mouseTextSelectionInfo->end(endCursor);
 		    RegularAreaRect * selectionArea=kpdfPage->getTextArea(d->mouseTextSelectionInfo);
-                    kdWarning () << "text areas: " << selectionArea->count() << endl;
+                    kWarning () << "text areas: " << selectionArea->count() << endl;
                     if ( selectionArea->count() > 0 )
                     { 
                       QColor selColor = palette().active().highlight();
@@ -1306,7 +1306,7 @@ if (d->document->handleEvent( e ) )
                 {
                     // request the textpage if there isn't one
                      kpdfPage= item->page();
-                     kdWarning() << "checking if page " << item->pageNumber() << " has text " << kpdfPage->hasSearchPage() << endl;
+                     kWarning() << "checking if page " << item->pageNumber() << " has text " << kpdfPage->hasSearchPage() << endl;
                     if ( !kpdfPage->hasSearchPage() )
                         d->document->requestTextPage( kpdfPage->number() );
                     // grab text in the rect that intersects itemRect
@@ -1458,7 +1458,7 @@ if (d->document->handleEvent( e ) )
         else
             slotZoomIn();
     }
-    else if ( delta <= -120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->maxValue() )
+    else if ( delta <= -120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->maximum() )
     {
         // go to next page
         if ( d->document->currentPage() < d->items.count() - 1 )
@@ -1473,7 +1473,7 @@ if (d->document->handleEvent( e ) )
             d->document->setViewport( newViewport );
         }
     }
-    else if ( delta >= 120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->minValue() )
+    else if ( delta >= 120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->minimum() )
     {
         // go to prev page
         if ( d->document->currentPage() > 0 )
@@ -1621,7 +1621,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
 #ifndef NDEBUG
     else
-        kdDebug() << "calling updateItemSize with unrecognized d->zoomMode!" << endl;
+        kDebug() << "calling updateItemSize with unrecognized d->zoomMode!" << endl;
 #endif
 }
 
@@ -2017,7 +2017,7 @@ void PageView::slotRelayoutPages()
                 insertY += rHeight;
             }
 #ifdef PAGEVIEW_DEBUG
-            kdWarning() << "updating size for pageno " << item->pageNumber() << " to " << item->geometry() << endl;
+            kWarning() << "updating size for pageno " << item->pageNumber() << " to " << item->geometry() << endl;
 #endif
         }
 
@@ -2192,8 +2192,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
     {
         PageViewItem * i = *iIt;
 #ifdef PAGEVIEW_DEBUG
-        kdWarning() << "checking page " << i->pageNumber() << endl;
-        kdWarning() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() ) << endl;
+        kWarning() << "checking page " << i->pageNumber() << endl;
+        kWarning() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() ) << endl;
 #endif
         // if the item doesn't intersect the viewport, skip it
         if ( !viewportRect.intersects( i->geometry() ) )
@@ -2202,14 +2202,14 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         // add the item to the 'visible list'
         d->visibleItems.push_back( i );
 #ifdef PAGEVIEW_DEBUG
-        kdWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
+        kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
 #endif
-        kdWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasSearchPage() << "\n";
+        kWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasSearchPage() << "\n";
         // if the item has not the right pixmap, add a request for it
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
         {
 #ifdef PAGEVIEW_DEBUG
-            kdWarning() << "rerequesting visible pixmaps for page " << i->pageNumber() <<  " !\n";
+            kWarning() << "rerequesting visible pixmaps for page " << i->pageNumber() <<  " !\n";
 #endif
             PixmapRequest * p = new PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRIO, true );

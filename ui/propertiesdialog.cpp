@@ -34,7 +34,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   }
 
   // mime name based on mimetype id
-  QString mimeName = info->get( "mimeType" ).section( '/', -1 ).upper();
+  QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
   setCaption( i18n("%1 Properties").arg( mimeName ) );
 
   QDomElement docElement = info->documentElement();

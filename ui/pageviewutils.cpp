@@ -255,9 +255,9 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const 
     // if accel is set display it along name
     QString accelString = (QString)accel();
     if ( !accelString.isEmpty() )
-        QToolTip::add( this, QString("%1 [%2]").arg( item.text ).arg( item.shortcut ) );
+        setToolTip( QString("%1 [%2]").arg( item.text ).arg( item.shortcut ) );
     else
-        QToolTip::add( this, item.text );
+        setToolTip( item.text );
 }
 
 void ToolBarButton::mouseMoveEvent( QMouseEvent * e )

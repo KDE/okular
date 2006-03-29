@@ -66,7 +66,7 @@ set(oKularcore_SRCS ${oKularconf_SRCS} ${oKularcore_SRCS} )
 
 kde4_automoc(${oKularcore_SRCS})
 
-kde4_add_plugin(oKularcore WITH_PREFIX ${oKularcore_SRCS})
+kde4_add_library(oKularcore SHARED ${oKularcore_SRCS})
 
 target_link_libraries(oKularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
 

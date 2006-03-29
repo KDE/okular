@@ -2,7 +2,7 @@ kde4_header()
 
 add_subdirectory( libkfaximage ) 
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular ${CMAKE_BINARY_DIR}/okular ${CMAKE_SOURCE_DIR}/okular/generators/fax/libkfaximage )
 
 
 ########### next target ###############
@@ -15,7 +15,7 @@ kde4_add_plugin(okularGenerator_fax WITH_PREFIX ${okularGenerator_fax_PART_SRCS}
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_fax )
 
-target_link_libraries(okularGenerator_fax  ${KDE4_KDECORE_LIBS} oKularcore oKularconf ${KDE4_KDEUI_LIBS} kfaximage )
+target_link_libraries(okularGenerator_fax  ${KDE4_KDECORE_LIBS} oKularcore ${KDE4_KDEUI_LIBS} kfaximage )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_fax )
 

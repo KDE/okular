@@ -34,7 +34,7 @@ KPDF_EXPORT_PLUGIN(FaxRenderer)
 FaxRenderer::FaxRenderer(KPDFDocument * doc) 
     :   Generator( doc )
 {
-    kdWarning() << "fax generator has landed" <<endl;
+    kWarning() << "fax generator has landed" <<endl;
 }
 
 void FaxRenderer::generatePixmap( PixmapRequest * request )
@@ -43,7 +43,7 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
     QString a="S";
     if (request->async) a="As";
 
-    kdWarning() << a << "ync Pixmaprequestuest of " << request->width << "x" 
+    kWarning() << a << "ync Pixmaprequestuest of " << request->width << "x" 
     << request->height << " size, pageNo " << request->pageNumber 
     << ", priority: " << request->priority << " pageaddress " << (unsigned long long int) request->page
     <<  endl;
@@ -77,7 +77,7 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
       page->returnPainter(foreGroundPaint);
     }
   } else
-    kdError() << "FaxRenderer::drawPage() called, but page size for page " << page->getPageNumber() << " is invalid." << endl;
+    kError() << "FaxRenderer::drawPage() called, but page size for page " << page->getPageNumber() << " is invalid." << endl;
   
   // To indicate that the page was drawn, we set the appropriate flas in the page structure
   page->isEmpty = false;
@@ -92,7 +92,7 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
 bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
 {
 #ifdef KF_DEBUG
-  kdDebug() << "FaxRenderer::setFile(" << fname << ") called" << endl;
+  kDebug() << "FaxRenderer::setFile(" << fname << ") called" << endl;
 #endif
 
   // Wait for all access to this documentRenderer to finish
@@ -101,7 +101,7 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
   // Now we assume that the file is fine and load the file into the
   // fax member. We abort on error and give an error message.
   bool ok = fax.loadImage(fileName);
-  kdWarning(1000) << "fax " << fileName << " loaded ok: " << ok <<endl;
+  kWarning(1000) << "fax " << fileName << " loaded ok: " << ok <<endl;
   // It can happen that fax.loadImage() returns with 'ok == true', but
   // still the file could NOT be loaded. This happens, e.g. for TIFF
   // file that do NOT contain FAX, but other image formats. We handle
@@ -139,7 +139,7 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
       double dpiy = dpi.y();
 
       if (dpix*dpiy < 1.0) {
-        kdError() << "File invalid resolutions, dpi x = " << dpix << ", dpi y = "  << dpiy << ". This information will be ignored and 75 DPI assumed." << endl;
+        kError() << "File invalid resolutions, dpi x = " << dpix << ", dpi y = "  << dpiy << ". This information will be ignored and 75 DPI assumed." << endl;
         dpix = dpiy = 75.0;
       }
       pagesVector[pg] = new KPDFPage(pg, QPaintDevice::x11AppDpiX () * pageSize.width() / dpix, 

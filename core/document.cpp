@@ -171,7 +171,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
         int i;
         for (i=0;i<count;i++)
         {
-            choose->engineList->insertItem( offers[i]->property("Name").toString() , i );
+            choose->engineList->insertItem( i, offers[i]->property("Name").toString() );
         }
 
         choose -> description-> setText(
@@ -181,7 +181,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
         switch( choose->exec() )
         {
             case QDialog::Accepted:
-                hRank=choose->engineList->currentItem();
+                hRank=choose->engineList->currentIndex();
                 break;
             case QDialog::Rejected:
                 return false;
@@ -952,7 +952,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                 int newHue = baseHue - w * hueStep;
                 if ( newHue < 0 )
                     newHue += 360;
-                QColor wordColor = QColor( newHue, baseSat, baseVal, QColor::Hsv );
+                QColor wordColor = QColor::fromHsv( newHue, baseSat, baseVal );
                 RegularAreaRect * lastMatch = 0;
                 // add all highlights for current word
                 bool wordMatched = false;
@@ -1196,7 +1196,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 QString url = browse->url();
 
                 // fix for #100366, documents with relative links that are the form of http:foo.pdf
-                if (url.find("http:") == 0 && url.find("http://") == -1 && url.right(4) == ".pdf")
+                if (url.indexOf("http:") == 0 && url.indexOf("http://") == -1 && url.right(4) == ".pdf")
                 {
                     openRelativeFile(url.mid(5));
                     return;

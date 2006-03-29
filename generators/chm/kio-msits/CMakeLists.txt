@@ -1,6 +1,6 @@
 kde4_header()
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular ${CHM_INCLUDE_DIR} )
 
 
 ########### next target ###############
@@ -13,7 +13,7 @@ kde4_add_plugin(kio_msits ${kio_msits_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kio_msits )
 
-target_link_libraries(kio_msits  ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBS} chm )
+target_link_libraries(kio_msits  ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBS} ${CHM_LIBRARY} )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 kio_msits )
 

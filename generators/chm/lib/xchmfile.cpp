@@ -378,9 +378,9 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 		QString tagword, tag = src.mid (pos, i - pos);
 		 
 		if ( word_end )
-			tagword = src.mid (pos, word_end - pos).lower();
+			tagword = src.mid (pos, word_end - pos).toLower();
 		else
-			tagword = tag.lower();
+			tagword = tag.toLower();
 
 // qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
 	 					
@@ -459,7 +459,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
-			pname = pname.lower();
+			pname = pname.toLower();
 
 			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
@@ -565,9 +565,9 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 		QString tagword, tag = src.mid (pos, i - pos);
 		 
 		if ( word_end )
-			tagword = src.mid (pos, word_end - pos).lower();
+			tagword = src.mid (pos, word_end - pos).toLower();
 		else
-			tagword = tag.lower();
+			tagword = tag.toLower();
 
 //qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
 						
@@ -635,7 +635,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
-			pname = pname.lower();
+			pname = pname.toLower();
 
 			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
@@ -1327,7 +1327,7 @@ Q3CString CHMFile::convertSearchWord( const QString & src )
 	};
 
 	if ( !m_textCodec )
-		return (Q3CString) src.lower().toLocal8Bit();
+		return (Q3CString) src.toLower().toLocal8Bit();
 
 	Q3CString dest = m_textCodec->fromUnicode (src);
 
@@ -1343,7 +1343,7 @@ Q3CString CHMFile::convertSearchWord( const QString & src )
 		}
 	}
 
-	return dest.lower();
+	return dest.toLower();
 }
 
 
@@ -1484,9 +1484,9 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 		QString tagword, tag = src.mid (pos, i - pos);
 		 
 		if ( word_end )
-			tagword = src.mid (pos, word_end - pos).lower();
+			tagword = src.mid (pos, word_end - pos).toLower();
 		else
-			tagword = tag.lower();
+			tagword = tag.toLower();
 
 //qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
 						
@@ -1549,7 +1549,7 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
-			pname = pname.lower();
+			pname = pname.toLower();
 
 			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());

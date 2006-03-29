@@ -11,7 +11,7 @@ namespace KCHMUrl
 
         if ( uriregex.search ( url ) != -1 )
         {
-            QString proto = uriregex.cap ( 1 ).lower();
+            QString proto = uriregex.cap ( 1 ).toLower();
 
             // Filter the URLs which need to be opened by a browser
             if ( proto == "http" 

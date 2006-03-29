@@ -9,7 +9,7 @@
 
 #include "generator_t.h"
 #include "lib/xchmfile.h"
-#include "conf/settings.h"
+#include "settings.h"
 #include "core/page.h"
 #include "core/link.h"
 #include "core/observer.h" //for PAGEVIEW_ID
@@ -47,7 +47,7 @@ bool TGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > &
     p.setPageSize(static_cast< QPrinter::PageSize >( KGlobal::locale()->pageSize() ));
     p.setFullPage(true);
 
-    kdDebug () << "UrlPage count " << m_file->m_UrlPage.count() << endl;
+    kDebug () << "UrlPage count " << m_file->m_UrlPage.count() << endl;
     pagesVector.resize(m_file->m_UrlPage.count());
 
     if (!m_syncGen)
@@ -63,7 +63,7 @@ bool TGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > &
         int i= it.data() - 1;
         pagesVector[ i ] = new KPDFPage (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(),0);
-        kdDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;
+        kDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;
     }
     return true;
 }
@@ -72,7 +72,7 @@ void TGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
     m_state=0;
-    kdDebug() << "Url: " << pAddress  << endl;
+    kDebug() << "Url: " << pAddress  << endl;
     m_syncGen->setZoomFactor(zoom);
     m_doneFlagSet=false;
     m_syncGen->openURL(pAddress);
@@ -82,14 +82,14 @@ void TGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 
 void TGenerator::slotCompleted()
 {
-    kdDebug() << "completed() " << m_state << endl;
+    kDebug() << "completed() " << m_state << endl;
     if (m_state==0)
     {
         m_doneFlagSet=true;
     }
     else if (m_state==1)
     {
-//         kdDebug() << "completed(1) " << m_request->id << endl;
+//         kDebug() << "completed(1) " << m_request->id << endl;
         QPixmap* pix=new QPixmap (m_request->width,m_request->height);
         pix->fill();
         QPainter p (pix);
@@ -128,7 +128,7 @@ bool TGenerator::canGeneratePixmap ( bool /*async*/ )
 {
 /*    if (async)
     {
-        kdDebug() << "async is locked " << asyncLock.locked() << endl;
+        kDebug() << "async is locked " << asyncLock.locked() << endl;
         return !asyncLock.locked();
     }*/
     return !syncLock.locked();
@@ -139,7 +139,7 @@ void TGenerator::generatePixmap( PixmapRequest * request )
     QString a="S";
     if (request->async) a="As";
 
-    kdDebug() << a << "ync PixmapRequest of " << request->width << "x" 
+    kDebug() << a << "ync PixmapRequest of " << request->width << "x" 
     << request->height << " size, pageNo " << request->pageNumber 
     << ", priority: " << request->priority << " id: " << request->id
     <<  endl;
@@ -151,7 +151,7 @@ void TGenerator::generatePixmap( PixmapRequest * request )
         ) * 100;
 
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
-    kdDebug() << "Page asked is: " << pAddress << " zoom is " << zoom << endl;
+    kDebug() << "Page asked is: " << pAddress << " zoom is " << zoom << endl;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(request->width,request->height);
     m_request=request;
@@ -179,9 +179,9 @@ void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
         {
             nodeNormRect=new NormalizedRect (r,vWidth,vHeight);
             tp->append(nodeText,nodeNormRect,nodeNormRect->bottom,0,(nodeText=="\n"));
-            kdDebug() << "Norm Rect is [" << nodeNormRect->left << "x" << nodeNormRect->top
+            kDebug() << "Norm Rect is [" << nodeNormRect->left << "x" << nodeNormRect->top
                 << "] [" << nodeNormRect->right << "x" << nodeNormRect->bottom << "]" << endl;
-            kdDebug() << "Node Dom text(" << nodeText.length() << "): " << nodeText << endl;
+            kDebug() << "Node Dom text(" << nodeText.length() << "): " << nodeText << endl;
         }
         else
         {
@@ -193,28 +193,28 @@ void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
                 {
 //                     if (nodeType[i+1]
                     node.getCursor(i+1,x_next,y_next,height_next);
-                    kdDebug() << "DL/L/R " << r.left() << "/" << x << "/" << x_next << endl;
+                    kDebug() << "DL/L/R " << r.left() << "/" << x << "/" << x_next << endl;
                     nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else if ( i <nodeTextLength -1 )
                 // i is between zero and the last element
                 {
                     node.getCursor(i+1,x_next,y_next,height_next);
-                    kdDebug() << "L/R" << x << "/" << x_next << endl;
+                    kDebug() << "L/R" << x << "/" << x_next << endl;
                     nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else
                 // the last element use right rect boundary
                 {
                     node.getCursor(i-1,x_next,y_next,height_next);
-                    kdDebug() << "L/R" << x_next << "/" << r.right() << endl;
+                    kDebug() << "L/R" << x_next << "/" << r.right() << endl;
                     nodeNormRect=new NormalizedRect (QRect(x,y,r.right()-x-1,height),vWidth,vHeight);
                 }
                 tp->append(QString(nodeText[i]),nodeNormRect,nodeNormRect->bottom,0,(nodeText[i]=='\n'));
-                kdDebug () << "Working with offset : " << i << endl;
-                kdDebug() << "Norm Rect is [" << nodeNormRect->left << "x" << nodeNormRect->top
+                kDebug () << "Working with offset : " << i << endl;
+                kDebug() << "Norm Rect is [" << nodeNormRect->left << "x" << nodeNormRect->top
                     << "] [" << nodeNormRect->right << "x" << nodeNormRect->bottom << "]" << endl;
-                kdDebug() << "Node Dom text(1): " << nodeText[i] << endl;
+                kDebug() << "Node Dom text(1): " << nodeText[i] << endl;
             }
         }
 #else
@@ -243,7 +243,7 @@ void TGenerator::additionalRequestData()
     // only generate object info when generating a full page not a thumbnail
     if ( genObjectRects )
     {
-        kdDebug() << "Generating ObjRects - start" << endl;
+        kDebug() << "Generating ObjRects - start" << endl;
         QLinkedList< ObjectRect * > objRects;
         int xScale=m_request->width;
         int yScale=m_request->height;
@@ -262,7 +262,7 @@ void TGenerator::additionalRequestData()
                     QString url = n.attributes().getNamedItem("href").nodeValue().string();
                     DocumentViewport viewport(getMetaData( url, QString::number(page->number() - 1) ));
                     r=n.getRect();
-                    kdDebug() << "Adding rect: " << url << " "  << r << endl;
+                    kDebug() << "Adding rect: " << url << " "  << r << endl;
                     // there is no way for us to support javascript properly
                     if (url.startsWith("JavaScript:"))
                         continue;
@@ -306,7 +306,7 @@ void TGenerator::additionalRequestData()
 
     if ( genTextPage )
     {
-        kdDebug() << "Generating text page - start" << endl;
+        kDebug() << "Generating text page - start" << endl;
         KPDFTextPage *tp=new KPDFTextPage();
         recursiveExploreNodes(domDoc,tp);
         page->setSearchPage (tp);
@@ -406,7 +406,7 @@ bool TGenerator::handleEvent (QEvent * /*event*/ )
 /*
 void PixmapThreader::run()
 {
-    kdDebug() << "starting thread\n";
+    kDebug() << "starting thread\n";
     m_pix = m_gen->renderPixmap(m_req);
     QCustomEvent * readyEvent = new QCustomEvent( CHM_DATAREADY_ID );
     readyEvent->setData(m_req);
@@ -419,7 +419,7 @@ void TGenerator::customEvent( QCustomEvent * e )
     {
         PixmapRequest* request=(PixmapRequest*) e->data();
         asyncLock.unlock();
-        kdDebug() << "got pixmap\n";
+        kDebug() << "got pixmap\n";
         request->page->setPixmap( request->id, px->takePixmap() );
         signalRequestDone( request );
     }

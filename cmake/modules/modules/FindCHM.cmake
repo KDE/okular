@@ -17,11 +17,16 @@ FIND_PATH(CHM_INCLUDE_DIR chm_lib.h
   ${GNUWIN32_DIR}/include
 )
 
-#check_library_exists(chm ??? "" CHM_LIBRARY)
+find_library(CHM_LIBRARY NAMES chm
+  PATHS
+  /usr/lib
+  /usr/local/lib
+  ${GNUWIN32_DIR}/lib
+)
 
-if(CHM_INCLUDE_DIR)
+if(CHM_INCLUDE_DIR AND CHM_LIBRARY)
   set(CHM_FOUND TRUE)
-endif(CHM_INCLUDE_DIR)
+endif(CHM_INCLUDE_DIR AND CHM_LIBRARY)
 
 if (CHM_FOUND)
   if (NOT CHM_FIND_QUIETLY)

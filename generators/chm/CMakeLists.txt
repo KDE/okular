@@ -3,12 +3,24 @@ kde4_header()
 add_subdirectory( lib ) 
 add_subdirectory( kio-msits ) 
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular ${CMAKE_BINARY_DIR}/okular ${CHM_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib )
 
 
 ########### next target ###############
 
-set(okularGenerator_chmlib_PART_SRCS generator_t.cpp )
+set(chmlib_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib/iconstorage.cpp
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib/kchmtextencoding.cpp
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib/kchmtreeviewitem.cpp
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib/kchmurl.cpp
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib/xchmfile.cpp
+)
+
+set(okularGenerator_chmlib_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/generator_t.cpp
+)
+
+set(okularGenerator_chmlib_PART_SRCS ${chmlib_SRCS} ${okularGenerator_chmlib_SRCS} )
 
 kde4_automoc(${okularGenerator_chmlib_PART_SRCS})
 
@@ -16,7 +28,7 @@ kde4_add_plugin(okularGenerator_chmlib WITH_PREFIX ${okularGenerator_chmlib_PART
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_chmlib )
 
-target_link_libraries(okularGenerator_chmlib  ${KDE4_KDECORE_LIBS} oKularcore oKularconf chmfile ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KHTML_LIBS} chm )
+target_link_libraries(okularGenerator_chmlib  ${KDE4_KDECORE_LIBS} oKularcore ${CHM_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KHTML_LIBS} )
 
 install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_chmlib )
 

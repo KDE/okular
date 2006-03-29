@@ -46,7 +46,7 @@
 #include "core/page.h"
 #include "core/annotations.h"
 #include "core/pagetransition.h"
-#include "conf/settings.h"
+#include "settings.h"
 
 #include <config.h>
 

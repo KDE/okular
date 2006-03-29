@@ -118,7 +118,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
 #ifndef NDEBUG
     if ( pdfdoc )
     {
-        kdDebug() << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
+        kDebug() << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
         return false;
     }
 #endif
@@ -221,7 +221,7 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
         addTransition( p, page );
         if ( true ) //TODO real check
             addAnnotations( p, page );
-// 	    kdWarning() << page->width() << "x" << page->height() << endl;
+// 	    kWarning() << page->width() << "x" << page->height() << endl;
 // need a way to find efficient (maybe background textpage generation)
 /*	docLock.lock();
 	pdfdoc->displayPage( &td, page->number()+1, 72, 72, rotation, true, false );
@@ -234,7 +234,7 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
             delete pagesVector[i];
         // set the kpdfpage at the right position in document's pages vector
         pagesVector[i] = page;
-// 	kdWarning() << page->width() << "x" << page->height() << endl;
+// 	kWarning() << page->width() << "x" << page->height() << endl;
     }
 }
 
@@ -459,14 +459,14 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
 {
 #ifndef NDEBUG
     if ( !ready )
-        kdDebug() << "calling generatePixmap() when not in READY state!" << endl;
+        kDebug() << "calling generatePixmap() when not in READY state!" << endl;
 #endif
     // update busy state (not really needed here, because the flag needs to
     // be set only to prevent asking a pixmap while the thread is running)
     ready = false;
 
     // debug requests to this (xpdf) generator
-    //kdDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
+    //kDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
 
     /** asyncronous requests (generation in PDFPixmapGeneratorThread::run() **/
     if ( request->async )
@@ -538,7 +538,7 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
 bool PDFGenerator::print( KPrinter& printer )
 {
     QString ps = printer.option("PageSize");
-    if (ps.find(QRegExp("w\\d+h\\d+")) == 0)
+    if (ps.indexOf(QRegExp("w\\d+h\\d+")) == 0)
     {
         // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
         // remove the w
@@ -673,7 +673,7 @@ static QString unicodeToQString(const Unicode* u, int len) {
 inline void append (KPDFTextPage* ktp,
     QString s, double l, double b, double r, double t)
 {
-//       kdWarning() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")" << endl;
+//       kWarning() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")" << endl;
                 ktp->append( s ,
                     new NormalizedRect(
                     l,
@@ -690,7 +690,7 @@ KPDFTextPage * PDFGenerator::abstractTextPage(TextPage *tp, double height, doubl
     TextWordList *list = tp->makeWordList(true);
     TextWord * word, *next; 
     int wordCount=list->getLength();
-    kdWarning() << "getting text page in generator pdf - rotation: " << rot << endl;
+    kWarning() << "getting text page in generator pdf - rotation: " << rot << endl;
     int charCount=0;
     int i,j;
     QString s;
@@ -1099,7 +1099,7 @@ void XPDFReader::lookupName( Dict * dict, const char * type, QString & dest )
     if ( nameObj.isName() )
         dest = nameObj.getName();
     else
-        kdDebug() << type << " is not Name." << endl;
+        kDebug() << type << " is not Name." << endl;
     nameObj.free();
 }
 
@@ -1112,7 +1112,7 @@ void XPDFReader::lookupString( Dict * dict, const char * type, QString & dest )
     if ( stringObj.isString() )
         dest = stringObj.getString()->getCString();
     else
-        kdDebug() << type << " is not String." << endl;
+        kDebug() << type << " is not String." << endl;
     stringObj.free();
 }
 
@@ -1125,7 +1125,7 @@ void XPDFReader::lookupBool( Dict * dict, const char * type, bool & dest )
     if ( boolObj.isBool() )
         dest = boolObj.getBool() == gTrue;
     else
-        kdDebug() << type << " is not Bool." << endl;
+        kDebug() << type << " is not Bool." << endl;
     boolObj.free();
 }
 
@@ -1138,7 +1138,7 @@ void XPDFReader::lookupInt( Dict * dict, const char * type, int & dest )
     if ( intObj.isInt() )
         dest = intObj.getInt();
     else
-        kdDebug() << type << " is not Int." << endl;
+        kDebug() << type << " is not Int." << endl;
     intObj.free();
 }
 
@@ -1151,7 +1151,7 @@ void XPDFReader::lookupNum( Dict * dict, const char * type, double & dest )
     if ( numObj.isNum() )
         dest = numObj.getNum();
     else
-        kdDebug() << type << " is not Num." << endl;
+        kDebug() << type << " is not Num." << endl;
     numObj.free();
 }
 
@@ -1174,7 +1174,7 @@ int XPDFReader::lookupNumArray( Dict * dict, const char * type, double * dest, i
     else
     {
         len = 0;
-        kdDebug() << type << "is not Array." << endl;
+        kDebug() << type << "is not Array." << endl;
     }
     arrObj.free();
     return len;
@@ -1196,7 +1196,7 @@ void XPDFReader::lookupIntRef( Dict * dict, const char * type, int & dest )
     if ( refObj.isRef() )
         dest = refObj.getRefNum();
     else
-        kdDebug() << type << " is not Ref." << endl;
+        kDebug() << type << " is not Ref." << endl;
     refObj.free();
 }
 
@@ -1220,10 +1220,10 @@ void XPDFReader::lookupDate( Dict * dict, const char * type, QDateTime & dest )
                 dest = QDateTime(d, t);
         }
         else
-            kdDebug() << "Wrong Date format '" << s << "' for '" << type << "'." << endl;
+            kDebug() << "Wrong Date format '" << s << "' for '" << type << "'." << endl;
     }
     else
-        kdDebug() << type << " is not Date" << endl;
+        kDebug() << type << " is not Date" << endl;
     dateObj.free();
 }
 
@@ -1298,7 +1298,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         annotArray.arrayGet( j, &annot );
         if ( !annot.isDict() )
         {
-            kdDebug() << "PDFGenerator: annot not dictionary." << endl;
+            kDebug() << "PDFGenerator: annot not dictionary." << endl;
             annot.free();
             continue;
         }
@@ -1314,7 +1314,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         XPDFReader::lookupName( annotDict, "Subtype", subType );
         if ( subType.isEmpty() )
         {
-            kdDebug() << "annot has no Subtype" << endl;
+            kDebug() << "annot has no Subtype" << endl;
             annot.free();
             continue;
         }
@@ -1389,7 +1389,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             int num = XPDFReader::lookupNumArray( annotDict, (subType == "Line") ? "L" : "Vertices", c, 100 );
             if ( num < 4 || (num % 2) != 0 )
             {
-                kdDebug() << "L/Vertices wrong fol Line/Poly." << endl;
+                kDebug() << "L/Vertices wrong fol Line/Poly." << endl;
                 delete annotation;
                 annot.free();
                 continue;
@@ -1519,7 +1519,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             int num = XPDFReader::lookupNumArray( annotDict, "QuadPoints", c, 80 );
             if ( num < 8 || (num % 8) != 0 )
             {
-                kdDebug() << "Wrong QuadPoints for a Highlight annotation." << endl;
+                kDebug() << "Wrong QuadPoints for a Highlight annotation." << endl;
                 delete annotation;
                 annot.free();
                 continue;
@@ -1562,7 +1562,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             annotDict->lookup( "InkList", &pathsArray );
             if ( !pathsArray.isArray() || pathsArray.arrayGetLength() < 1 )
             {
-                kdDebug() << "InkList not present for ink annot" << endl;
+                kDebug() << "InkList not present for ink annot" << endl;
                 delete annotation;
                 annot.free();
                 continue;
@@ -1625,7 +1625,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         {
             // MISSING: Caret, FileAttachment, Sound, Movie, Widget,
             //          Screen, PrinterMark, TrapNet, Watermark, 3D
-            kdDebug() << "annotation '" << subType << "' not supported" << endl;
+            kDebug() << "annotation '" << subType << "' not supported" << endl;
             annot.free();
             continue;
         }
@@ -1635,7 +1635,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         double r[4];
         if ( XPDFReader::lookupNumArray( annotDict, "Rect", r, 4 ) != 4 )
         {
-            kdDebug() << "Rect is missing for annotation." << endl;
+            kDebug() << "Rect is missing for annotation." << endl;
             annot.free();
             continue;
         }
@@ -1831,7 +1831,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
         if ( addToPage )
         {
             if ( annotationsMap.contains( annotID ) )
-                kdDebug() << "PDFGenerator: clash for annotations with ID:" << annotID << endl;
+                kDebug() << "PDFGenerator: clash for annotations with ID:" << annotID << endl;
             annotationsMap[ annotID ] = annotation;
         }
     } // end Annotation/PopupWindow parsing loop
@@ -1846,7 +1846,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             const ResolveWindow & request = *it;
             if ( !popupsMap.contains( request.popupWindowID ) )
                 // warn aboud problems in popup resolving logic
-                kdDebug() << "PDFGenerator: can't resolve popup "
+                kDebug() << "PDFGenerator: can't resolve popup "
                           << request.popupWindowID << "." << endl;
             else
             {
@@ -1890,7 +1890,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
             int parentID = request.prevAnnotationID;
             if ( !annotationsMap.contains( parentID ) )
                 // warn about problems in reparenting logic
-                kdDebug() << "PDFGenerator: can't reparent annotation to "
+                kDebug() << "PDFGenerator: can't reparent annotation to "
                           << parentID << "." << endl;
             else
             {
@@ -2086,7 +2086,7 @@ void PDFGenerator::customEvent( QEvent * e )
         // if so, wait for effective thread termination
         if ( !generatorThread->wait( 9999 /*10s timeout*/ ) )
         {
-            kdWarning() << "PDFGenerator: thread sent 'data available' "
+            kWarning() << "PDFGenerator: thread sent 'data available' "
                         << "signal but had problems ending." << endl;
             return;
         }
@@ -2096,7 +2096,7 @@ void PDFGenerator::customEvent( QEvent * e )
     // 1. the mutex must be unlocked now
     if ( docLock.locked() )
     {
-        kdWarning() << "PDFGenerator: 'data available' but mutex still "
+        kWarning() << "PDFGenerator: 'data available' but mutex still "
                     << "held. Recovering." << endl;
         // syncronize GUI thread (must not happen)
         docLock.lock();
@@ -2176,7 +2176,7 @@ void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
     // check if a generation is already running
     if ( d->currentRequest )
     {
-        kdDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
+        kDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
                   << "when another is being generated." << endl;
         delete request;
         return;
@@ -2185,7 +2185,7 @@ void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
     // check if the mutex is already held
     if ( d->generator->docLock.locked() )
     {
-        kdDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
+        kDebug() << "PDFPixmapGeneratorThread: requesting a pixmap "
                   << "with the mutex already held." << endl;
         delete request;
         return;
@@ -2202,7 +2202,7 @@ void PDFPixmapGeneratorThread::endGeneration()
     // check if a generation is already running
     if ( !d->currentRequest )
     {
-        kdDebug() << "PDFPixmapGeneratorThread: 'end generation' called "
+        kDebug() << "PDFPixmapGeneratorThread: 'end generation' called "
                   << "but generation was not started." << endl;
         return;
     }
@@ -2263,9 +2263,9 @@ void PDFPixmapGeneratorThread::run()
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
     if ( d->m_image )
-        kdDebug() << "PDFPixmapGeneratorThread: previous image not taken" << endl;
+        kDebug() << "PDFPixmapGeneratorThread: previous image not taken" << endl;
     if ( d->m_textPage )
-        kdDebug() << "PDFPixmapGeneratorThread: previous textpage not taken" << endl;
+        kDebug() << "PDFPixmapGeneratorThread: previous textpage not taken" << endl;
 #endif
     d->m_image = d->generator->kpdfOutputDev->takeImage();
     d->m_rects = d->generator->kpdfOutputDev->takeObjectRects();

@@ -266,7 +266,7 @@ void KPDFPage::deleteHighlights( int s_id )
         HighlightAreaRect* highlight = *it;
         if ( s_id == -1 || highlight->s_id == s_id )
         {
-            it = m_highlights.remove( it );
+            it = m_highlights.erase( it );
             delete highlight;
         }
         else

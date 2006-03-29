@@ -79,9 +79,10 @@ class HoverButton : public QPushButton
 /** MiniBar **/
 
 MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
-    : QFrame( parent, "miniBar" ), m_document( document ),
+    : QFrame( parent ), m_document( document ),
     m_currentPage( -1 )
 {
+    setObjectName( "miniBar" );
     // left spacer
     QHBoxLayout * horLayout = new QHBoxLayout( this );
     QSpacerItem * spacerL = new QSpacerItem( 20, 10, QSizePolicy::Expanding );

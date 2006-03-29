@@ -244,8 +244,8 @@ class ItemsView : public KHTMLPart
                 QString emailString = authorString.section( '(', 1, 1 );
                 if ( emailString.contains( '@' ) && emailString.contains( ')' ) )
                 {
-                    emailString = emailString.remove( ')' ).stripWhiteSpace();
-                    authorString = authorString.section( '(', 0, 0 ).stripWhiteSpace();
+                    emailString = emailString.remove( ')' ).trimmed();
+                    authorString = authorString.section( '(', 0, 0 ).trimmed();
                     authorString = "<a href='mailto:" + emailString + "'>" + authorString + "</a>";
                 }
 
@@ -416,8 +416,9 @@ struct NewStuffDialogPrivate
 };
 
 NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
-    : QDialog( parentWidget, "kpdfNewStuff" ), d( new NewStuffDialogPrivate )
+    : QDialog( parentWidget ), d( new NewStuffDialogPrivate )
 {
+    setObjectName( "kpdfNewStuff" );
     // initialize the private classes
     d->providersListJob.job = 0;
 
@@ -432,7 +433,8 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
              this, SLOT( slotNetworkTimeout() ) );
 
     // popuplate dialog with stuff
-    QBoxLayout * horLay = new QHBoxLayout( this, 11 );
+    QBoxLayout * horLay = new QHBoxLayout( this );
+    horLay->setMargin( 11 );
 
     // create left picture widget (if picture found)
     QPixmap p( locate( "data", "kpdf/pics/ghns.png" ) );

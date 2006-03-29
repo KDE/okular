@@ -503,7 +503,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         // 3.1. unite old and new painting regions
         QRegion compoundRegion( m_lastDrawnRect );
         m_lastDrawnRect = paintRect;
-        m_lastDrawnRect.moveBy( itemRect.left(), itemRect.top() );
+        m_lastDrawnRect.translate( itemRect.left(), itemRect.top() );
         // 3.2. decompose paint region in rects and send paint events
         QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
         for ( int i = 0; i < rects.count(); i++ )
@@ -543,7 +543,7 @@ void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect 
 
     // transform cliprect from absolute to item relative coords
     QRect annotRect = paintRect.intersect( m_lastDrawnRect );
-    annotRect.moveBy( itemGeometry.left(), itemGeometry.top() );
+    annotRect.translate( itemGeometry.left(), itemGeometry.top() );
 
     // use current engine for painting
     m_engine->paint( painter, m_lockedItem->width(), m_lockedItem->height(), annotRect );

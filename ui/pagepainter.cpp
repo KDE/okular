@@ -227,7 +227,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 NormalizedRect * r = (*hIt).second;
                 // find out the rect to highlight on pixmap
                 QRect highlightRect = r->geometry( scaledWidth, scaledHeight ).intersect( limits );
-                highlightRect.moveBy( -limits.left(), -limits.top() );
+                highlightRect.translate( -limits.left(), -limits.top() );
 
                 // highlight composition (product: highlight color * destcolor)
                 unsigned int * data = (unsigned int *)backImage.bits();
@@ -484,7 +484,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         QColor lightColor = normalColor.light( 140 );
         // enlarging limits for intersection is like growing the 'rectGeometry' below
         QRect limitsEnlarged = limits;
-        limitsEnlarged.addCoords( -2, -2, 2, 2 );
+        limitsEnlarged.adjust( -2, -2, 2, 2 );
         // draw rects that are inside the 'limits' paint region as opaque rects
         QLinkedList< ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
         for ( ; lIt != lEnd; ++lIt )
@@ -497,11 +497,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 if ( rectGeometry.intersects( limitsEnlarged ) )
                 {
                     // expand rect and draw inner border
-                    rectGeometry.addCoords( -1,-1,1,1 );
+                    rectGeometry.adjust( -1,-1,1,1 );
                     mixedPainter->setPen( lightColor );
                     mixedPainter->drawRect( rectGeometry );
                     // expand rect to draw outer border
-                    rectGeometry.addCoords( -1,-1,1,1 );
+                    rectGeometry.adjust( -1,-1,1,1 );
                     mixedPainter->setPen( normalColor );
                     mixedPainter->drawRect( rectGeometry );
                 }

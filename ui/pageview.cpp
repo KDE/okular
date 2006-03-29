@@ -496,7 +496,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
         {
             // update item's rectangle plus the little outline
             QRect expandedRect = (*iIt)->geometry();
-            expandedRect.addCoords( -1, -1, 3, 3 );
+            expandedRect.adjust( -1, -1, 3, 3 );
             updateContents( expandedRect );
 
             // if we were "zoom-dragging" do not overwrite the "zoom-drag" cursor
@@ -537,7 +537,7 @@ if ( d->document->handleEvent( pe ) )
     // create the rect into contents from the clipped screen rect
     QRect viewportRect = viewport()->rect();
     QRect contentsRect = pe->rect().intersect( viewportRect );
-    contentsRect.moveBy( contentsX(), contentsY() );
+    contentsRect.translate( contentsX(), contentsY() );
     if ( !contentsRect.isValid() )
         return;
 
@@ -549,10 +549,10 @@ if ( d->document->handleEvent( pe ) )
     // selectionRect is the normalized mouse selection rect
     QRect selectionRect = d->mouseSelectionRect;
     if ( !selectionRect.isNull() )
-        selectionRect = selectionRect.normalize();
+        selectionRect = selectionRect.normalized();
     // selectionRectInternal without the border
     QRect selectionRectInternal = selectionRect;
-    selectionRectInternal.addCoords( 1, 1, -1, -1 );
+    selectionRectInternal.adjust( 1, 1, -1, -1 );
     // color for blending
     QColor selBlendColor = (selectionRect.width() > 8 || selectionRect.height() > 8) ?
                            d->mouseSelectionColor : Qt::red;
@@ -579,8 +579,8 @@ if ( d->document->handleEvent( pe ) )
         if ( useSubdivision )
         {
             // set 'contentsRect' to a part of the sub-divided region
-            contentsRect = allRects[i].normalize().intersect( viewportRect );
-            contentsRect.moveBy( contentsX(), contentsY() );
+            contentsRect = allRects[i].normalized().intersect( viewportRect );
+            contentsRect.translate( contentsX(), contentsY() );
             if ( !contentsRect.isValid() )
                 continue;
         }
@@ -1233,7 +1233,7 @@ if (d->document->handleEvent( e ) )
             // if a selection rect has been defined, zoom into it
             if ( leftButton && d->mouseSelecting )
             {
-                QRect selRect = d->mouseSelectionRect.normalize();
+                QRect selRect = d->mouseSelectionRect.normalized();
                 if ( selRect.width() <= 8 && selRect.height() <= 8 )
                 {
                     selectionClear();
@@ -1241,7 +1241,7 @@ if (d->document->handleEvent( e ) )
                 }
 
                 // find out new zoom ratio and normalized view center (relative to the contentsRect)
-                double zoom = QMIN( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
+                double zoom = qMin( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
                 double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentsWidth());
                 double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentsHeight());
 
@@ -1277,7 +1277,7 @@ if (d->document->handleEvent( e ) )
                  !d->mouseSelecting )
                 break;
 
-            QRect selectionRect = d->mouseSelectionRect.normalize();
+            QRect selectionRect = d->mouseSelectionRect.normalized();
             if ( selectionRect.width() <= 8 && selectionRect.height() <= 8 )
             {
                 selectionClear();
@@ -1311,7 +1311,7 @@ if (d->document->handleEvent( e ) )
                         d->document->requestTextPage( kpdfPage->number() );
                     // grab text in the rect that intersects itemRect
                     QRect relativeRect = selectionRect.intersect( itemRect );
-                    relativeRect.moveBy( -itemRect.left(), -itemRect.top() );
+                    relativeRect.translate( -itemRect.left(), -itemRect.top() );
                     rects->append(new NormalizedRect( relativeRect, item->width(), item->height() ));
                 }
             }
@@ -1520,7 +1520,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     // growing PageViewItems rects (for keeping outline into account), we
     // grow the contentsRect
     QRect checkRect = contentsRect;
-    checkRect.addCoords( -3, -3, 1, 1 );
+    checkRect.adjust( -3, -3, 1, 1 );
 
     // create a region from wich we'll subtract painted rects
     QRegion remainingArea( contentsRect );
@@ -1537,7 +1537,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         PageViewItem * item = *iIt;
         QRect itemGeometry = item->geometry(),
               outlineGeometry = itemGeometry;
-        outlineGeometry.addCoords( -1, -1, 3, 3 );
+        outlineGeometry.adjust( -1, -1, 3, 3 );
 
         // move the painter to the top-left corner of the page
         p->save();
@@ -1571,7 +1571,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         if ( contentsRect.intersects( itemGeometry ) )
         {
             QRect pixmapRect = contentsRect.intersect( itemGeometry );
-            pixmapRect.moveBy( -itemGeometry.left(), -itemGeometry.top() );
+            pixmapRect.translate( -itemGeometry.left(), -itemGeometry.top() );
             int flags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                         PagePainter::EnhanceImages | PagePainter::Highlights |
                         PagePainter::Annotations;
@@ -1711,16 +1711,16 @@ void PageView::selectionEndPoint( int x, int y )
     if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
     {
         // send incremental paint events
-        QRect oldRect = d->mouseSelectionRect.normalize();
+        QRect oldRect = d->mouseSelectionRect.normalized();
         d->mouseSelectionRect.setRight( x );
         d->mouseSelectionRect.setBottom( y );
-        QRect newRect = d->mouseSelectionRect.normalize();
+        QRect newRect = d->mouseSelectionRect.normalized();
         // generate diff region: [ OLD.unite(NEW) - OLD.intersect(NEW) ]
         QRegion compoundRegion = QRegion( oldRect ).unite( newRect );
         if ( oldRect.intersects( newRect ) )
         {
             QRect intersection = oldRect.intersect( newRect );
-            intersection.addCoords( 1, 1, -1, -1 );
+            intersection.adjust( 1, 1, -1, -1 );
             if ( intersection.width() > 20 && intersection.height() > 20 )
                 compoundRegion -= intersection;
         }
@@ -1733,7 +1733,7 @@ void PageView::selectionEndPoint( int x, int y )
 
 void PageView::selectionClear()
 {
-    QRect updatedRect = d->mouseSelectionRect.normalize();
+    QRect updatedRect = d->mouseSelectionRect.normalized();
     d->mouseSelecting = false;
     d->mouseSelectionRect.setCoords( 0, 0, -1, -1 );
     updateContents( updatedRect );

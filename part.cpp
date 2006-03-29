@@ -617,9 +617,9 @@ void Part::slotShowLeftPanel()
     KpdfSettings::setShowLeftPanel( showLeft );
     KpdfSettings::writeConfig();
     // show/hide left panel
-    m_leftPanel->setShown( showLeft );
+    m_leftPanel->setVisible( showLeft );
     // this needs to be hidden explicitly to disable thumbnails gen
-    m_thumbnailList->setShown( showLeft );
+    m_thumbnailList->setVisible( showLeft );
 }
 
 void Part::saveSplitterSize()
@@ -711,12 +711,15 @@ public:
 		QWidget *w = new QWidget(this);
 		setMainWidget(w);
 
-		QVBoxLayout *topLayout = new QVBoxLayout( w, 0, spacingHint() );
+		QVBoxLayout *topLayout = new QVBoxLayout(w);
+		topLayout->setMargin(0);
+		topLayout->setSpacing(spacingHint());
 		e1 = new KIntNumInput(current, w);
 		e1->setRange(1, max);
 		e1->setEditFocus(true);
 
-		QLabel *label = new QLabel( e1,i18n("&Page:"), w );
+		QLabel *label = new QLabel(i18n("&Page:"), w);
+		label->setBuddy(e1);
 		topLayout->addWidget(label);
 		topLayout->addWidget(e1);
 		topLayout->addSpacing(spacingHint()); // A little bit extra space

@@ -415,7 +415,7 @@ void KPDFDocument::removeObserver( DocumentObserver * pObserver )
             AllocatedPixmap * p = *aIt;
             if ( p->id == observerId )
             {
-                aIt = d->allocatedPixmapsFifo.remove( aIt );
+                aIt = d->allocatedPixmapsFifo.erase( aIt );
                 delete p;
             }
             else
@@ -572,7 +572,7 @@ void KPDFDocument::requestPixmaps( const QLinkedList< PixmapRequest * > & reques
         {
             // delete request and remove it from stack
             delete *sIt;
-            sIt = d->pixmapRequestsStack.remove( sIt );
+            sIt = d->pixmapRequestsStack.erase( sIt );
         }
         else
             ++sIt;
@@ -718,7 +718,7 @@ void KPDFDocument::setViewport( const DocumentViewport & viewport, int excludeId
             if ( (*aIt)->page == page )
             {
                 viewportPixmaps.append( *aIt );
-                aIt = d->allocatedPixmapsFifo.remove( aIt );
+                aIt = d->allocatedPixmapsFifo.erase( aIt );
                 continue;
             }
             ++aIt;
@@ -927,7 +927,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
     {
         // search and highlight every word in 'text' on all pages
         bool matchAll = type == GoogleAll;
-        QStringList words = QStringList::split( " ", text );
+        QStringList words = text.split( " ", QString::SkipEmptyParts );
         int wordsCount = words.count(),
             hueStep = (wordsCount > 1) ? (60 / (wordsCount - 1)) : 60,
             baseHue, baseSat, baseVal;
@@ -1189,7 +1189,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
         case KPDFLink::Browse: {
             const KPDFLinkBrowse * browse = static_cast< const KPDFLinkBrowse * >( link );
             // if the url is a mailto one, invoke mailer
-            if ( browse->url().startsWith( "mailto:", false ) )
+            if ( browse->url().startsWith( "mailto:", Qt::CaseInsensitive ) )
                 KToolInvocation::invokeMailer( browse->url() );
             else
             {
@@ -1236,7 +1236,7 @@ void KPDFDocument::requestDone( PixmapRequest * req )
         if ( (*aIt)->page == req->pageNumber && (*aIt)->id == req->id )
         {
             AllocatedPixmap * p = *aIt;
-            d->allocatedPixmapsFifo.remove( aIt );
+            d->allocatedPixmapsFifo.erase( aIt );
             d->allocatedPixmapsTotalMemory -= p->memory;
             delete p;
             break;
@@ -1349,7 +1349,7 @@ void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
             if ( d->observers[ p->id ]->canUnloadPixmap( p->page ) )
             {
                 // update internal variables
-                pIt = d->allocatedPixmapsFifo.remove( pIt );
+                pIt = d->allocatedPixmapsFifo.erase( pIt );
                 d->allocatedPixmapsTotalMemory -= p->memory;
                 memoryToFree -= p->memory;
                 pagesFreed++;

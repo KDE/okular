@@ -258,7 +258,7 @@ RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, i
 	foreach(const NormalizedShape ns, *this)
 	{
             t=ns->geometry(xScale,yScale);
-            t.moveBy(dx,dy);
+            t.translate(dx,dy);
             ret->append(t);
 	}
 

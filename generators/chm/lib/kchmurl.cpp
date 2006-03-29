@@ -9,7 +9,7 @@ namespace KCHMUrl
         // Check whether the URL is external
         QRegExp uriregex ( "^(\\w+):\\/\\/" );
 
-        if ( uriregex.search ( url ) != -1 )
+        if ( uriregex.indexIn ( url ) != -1 )
         {
             QString proto = uriregex.cap ( 1 ).toLower();
 
@@ -34,7 +34,7 @@ namespace KCHMUrl
     {
         QRegExp uriregex ( "^ms-its:(.*)::(.*)$" );
 
-        if ( uriregex.search ( url ) != -1 )
+        if ( uriregex.indexIn ( url ) != -1 )
         {
             chmfile = uriregex.cap ( 1 );
             page = uriregex.cap ( 2 );

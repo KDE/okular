@@ -58,13 +58,13 @@ class ExtendImageWidget : public QWidget
 {
     public:
         ExtendImageWidget( const QPixmap & pix, QWidget * parent )
-            : QWidget( parent, "", Qt::WNoAutoErase ), m_pixmap( pix )
+            : QWidget( parent ), m_pixmap( pix )
         {
             // adjust size hint
             setFixedWidth( pix.width() );
             setMinimumHeight( pix.height() );
             // paint all own pixels
-            setBackgroundMode( Qt::NoBackground );
+            setAttribute( Qt::WA_OpaquePaintEvent, true );
             // create the tile image from last line of pixmap
             m_tile.resize( pix.width(), 1 );
             copyBlt( &m_tile, 0,0, &pix, 0,pix.height()-2, pix.width(),1 );
@@ -459,7 +459,8 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         // add widgets to the control panel
         QLabel * label1 = new QLabel( i18n("Show:"), panelFrame );
         panelLayout->addWidget( label1, 0, 0 );
-        d->typeCombo = new QComboBox( false, panelFrame );
+        d->typeCombo = new QComboBox( panelFrame );
+        d->typeCombo->setEditable( false );
         panelLayout->addWidget( d->typeCombo, 0, 1 );
         d->typeCombo->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
         d->typeCombo->setMinimumWidth( 150 );
@@ -469,7 +470,8 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
 
         QLabel * label2 = new QLabel( i18n("Order by:"), panelFrame );
         panelLayout->addWidget( label2, 0, 2 );
-        d->sortCombo = new QComboBox( false, panelFrame );
+        d->sortCombo = new QComboBox( panelFrame );
+        d->sortCombo->setEditable( false );
         panelLayout->addWidget( d->sortCombo, 0, 3 );
         d->sortCombo->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
         d->sortCombo->setMinimumWidth( 100 );

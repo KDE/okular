@@ -109,7 +109,7 @@ void KCHMMainTreeViewItem::paintCell( QPainter * p, const QColorGroup & cg, int 
     QColorGroup newcg ( cg );
     QColor c = newcg.text();
 
-	if ( url.find ('|') != -1 )
+	if ( url.indexOf ('|') != -1 )
         newcg.setColor( QColorGroup::Text, Qt::red );
 	else if ( url[0] == ':' )
         newcg.setColor( QColorGroup::Text, Qt::lightGray );

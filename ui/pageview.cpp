@@ -1755,7 +1755,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
     {
         case ZoomFixed:{ //ZoomFixed case
             QString z = d->aZoom->currentText();
-            newFactor = KGlobal::locale()->readNumber( z.remove( z.find( '%' ), 1 ) ) / 100.0;
+            newFactor = KGlobal::locale()->readNumber( z.remove( z.indexOf( '%' ), 1 ) ) / 100.0;
             }break;
         case ZoomIn:
             newFactor += (newFactor > 0.99) ? ( newFactor > 1.99 ? 0.5 : 0.2 ) : 0.1;

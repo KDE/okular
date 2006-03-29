@@ -229,9 +229,9 @@ QStringList* Shell::fileFormats()
                {
                     tmp=pattern.front().trimmed();
                     extensions.append(tmp);
-                    if (tmp.find(".gz", -3) == -1)
+                    if (tmp.indexOf(".gz", -3) == -1)
                         extensions.append(tmp+".gz");
-                    if ((bzip2Available) && (tmp.find(".bz2", -4) == -1)) 
+                    if ((bzip2Available) && (tmp.indexOf(".bz2", -4) == -1)) 
                         extensions.append(tmp+".bz2");
 		    pattern.pop_front();
                 }

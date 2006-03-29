@@ -123,7 +123,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 
 	// widgets: [] splitter []
-	m_splitter = new QSplitter( parentWidget, widgetName );
+	m_splitter = new QSplitter( parentWidget );
+	m_splitter->setObjectName( QLatin1String( widgetName ) );
 	m_splitter->setOpaqueResize( true );
 	m_splitter->setChildrenCollapsible( false );
 	setWidget( m_splitter );

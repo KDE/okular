@@ -275,7 +275,7 @@ void ToolBarButton::mouseMoveEvent( QMouseEvent * e )
 void ToolBarButton::paintEvent( QPaintEvent * e )
 {
     // if the button is pressed or we're hovering it, use QPushButton style
-    if ( isOn() || m_hovering )
+    if ( isChecked() || m_hovering )
     {
         QPushButton::paintEvent( e );
         return;
@@ -624,9 +624,9 @@ void PageViewToolBar::slotButtonClicked()
         QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
         for ( ; it != end; ++it )
             if ( *it != button )
-                (*it)->setOn( false );
+                (*it)->setChecked( false );
         // emit signal (-1 if button has been unselected)
-        emit toolSelected( button->isOn() ? button->buttonID() : -1 );
+        emit toolSelected( button->isChecked() ? button->buttonID() : -1 );
     }
 }
 

@@ -127,7 +127,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 {
 	kDebug() << "ProtocolMSITS::parseLoadAndLookup (const KUrl&) " << url.path() << endl;
 
-	int pos = url.path().find ("::");
+	int pos = url.path().indexOf ("::");
 
 	if ( pos == -1 )
 	{

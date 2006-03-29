@@ -175,11 +175,11 @@ inline int CHMFile::findStringInQuotes (const QString& tag, int offset, QString&
 		m_entityDecodeMap["quot"] = "\""; // double quote
 		m_entityDecodeMap["apos"] = "'"; 	// single quote
 	}
-	int qbegin = tag.find ('"', offset);
+	int qbegin = tag.indexOf ('"', offset);
 	if ( qbegin == -1 )
 		qFatal ("CHMFile::findStringInQuotes: cannot find first quote in <param> tag: '%s'", tag.ascii());
 
-	int qend = firstquote ? tag.find ('"', qbegin + 1) : tag.findRev ('"');
+	int qend = firstquote ? tag.indexOf ('"', qbegin + 1) : tag.lastIndexOf ('"');
 
 	if ( qend == -1 || qend <= qbegin )
 		qFatal ("CHMFile::findStringInQuotes: cannot find last quote in <param> tag: '%s'", tag.ascii());
@@ -350,7 +350,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 	int stringlen = src.length();
 	
 	while ( pos < stringlen 
-	&& (pos = src.find ('<', pos)) != -1 )
+	&& (pos = src.indexOf ('<', pos)) != -1 )
 	{
 		int i, word_end = 0;
 		
@@ -360,8 +360,8 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 			if ( (src[i] == '"' || src[i] == '\'') )
 			{
 				// find where quote ends, either by another quote, or by '>' symbol (some people don't know HTML)
-				int nextpos = src.find (src[i], i+1);
-				if ( nextpos == -1 	&& (nextpos = src.find ('>', i+1)) == -1 )
+				int nextpos = src.indexOf (src[i], i+1);
+				if ( nextpos == -1 	&& (nextpos = src.indexOf ('>', i+1)) == -1 )
 				{
 					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).ascii());
 					return false;
@@ -385,7 +385,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 // qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
 	 					
 		// <OBJECT type="text/sitemap"> - a topic entry
-		if ( tagword == "object" && tag.find ("text/sitemap", 0, false) != -1 )
+		if ( tagword == "object" && tag.indexOf ("text/sitemap", 0, Qt::CaseInsensitive) != -1 )
 			in_object = true;
 		else if ( tagword == "/object" && in_object ) 
 		{
@@ -454,14 +454,14 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 			QString name_pattern = "name=", value_pattern = "value=";
 			QString pname, pvalue;
 
-			if ( (offset = tag.find (name_pattern, 0, FALSE)) == -1 )
+			if ( (offset = tag.indexOf (name_pattern, 0, Qt::CaseInsensitive)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.ascii());
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
 			pname = pname.toLower();
 
-			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
+			if ( (offset = tag.indexOf (value_pattern, offset, Qt::CaseInsensitive)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
 
 			// offset+6 skips 'value='
@@ -537,7 +537,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 	int stringlen = src.length();
 	
 	while ( pos < stringlen 
-	&& (pos = src.find ('<', pos)) != -1 )
+	&& (pos = src.indexOf ('<', pos)) != -1 )
 	{
 		int i, word_end = 0;
 		
@@ -547,8 +547,8 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 			if ( (src[i] == '"' || src[i] == '\'') )
 			{
 				// find where quote ends, either by another quote, or by '>' symbol (some people don't know HTML)
-				int nextpos = src.find (src[i], i+1);
-				if ( nextpos == -1 	&& (nextpos = src.find ('>', i+1)) == -1 )
+				int nextpos = src.indexOf (src[i], i+1);
+				if ( nextpos == -1 	&& (nextpos = src.indexOf ('>', i+1)) == -1 )
 				{
 					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).ascii());
 					return false;
@@ -572,7 +572,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 //qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
 						
 		// <OBJECT type="text/sitemap"> - a topic entry
-		if ( tagword == "object" && tag.find ("text/sitemap", 0, false) != -1 )
+		if ( tagword == "object" && tag.indexOf ("text/sitemap", 0, Qt::CaseInsensitive) != -1 )
 			in_object = true;
 		else if ( tagword == "/object" && in_object ) 
 		{
@@ -630,14 +630,14 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 			QString name_pattern = "name=", value_pattern = "value=";
 			QString pname, pvalue;
 
-			if ( (offset = tag.find (name_pattern, 0, FALSE)) == -1 )
+			if ( (offset = tag.indexOf (name_pattern, 0, Qt::CaseInsensitive)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.ascii());
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
 			pname = pname.toLower();
 
-			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
+			if ( (offset = tag.indexOf (value_pattern, offset, Qt::CaseInsensitive)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
 
 			// offset+6 skips 'value='
@@ -1354,7 +1354,7 @@ QString CHMFile::getTopicByUrl( const QString & search_url )
 		return QString::null;
 
 	unsigned char buf[COMMON_BUF_LEN];
-	int pos = search_url.find ('#');
+	int pos = search_url.indexOf ('#');
 	QString fixedurl = pos == -1 ? search_url : search_url.left (pos);
 
 	for ( unsigned int i = 0; i < m_chmTOPICS.length; i += TOPICS_ENTRY_LEN )

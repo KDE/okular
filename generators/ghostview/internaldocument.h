@@ -16,6 +16,8 @@
 #include <errno.h>
 #include <qmap.h>
 #include <qprinter.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include "interpreter.h"
 #include "dscparse_adapter.h"
@@ -26,7 +28,7 @@ class KDSC;
 class QString;
 class QStringList;
 
-typedef QValueList<int> PageList;
+typedef Q3ValueList<int> PageList;
 
 class GSInternalDocument
 {

@@ -16,6 +16,7 @@
 #include <qpixmap.h>
 #include <qimage.h>
 #include <kapplication.h>
+#include <kcmdlineargs.h>
 #include <kdebug.h>
 
 #include <fcntl.h>
@@ -26,6 +27,9 @@
 #include <fixx11h.h>
 
 // #include <qdialog.h>
+#include <QX11Info>
+
+extern GC kde_xget_temp_gc( int scrn, bool monochrome );                // get temporary GC
 
 GSInterpreterLib *interpreter;
 int mem;
@@ -47,10 +51,10 @@ void PixHandler::slotPixmap(const QImage* img)
     
               
     XCopyArea
-        (qt_xdisplay(),
+        (QX11Info::display(),
         pix->handle(),
         pData.handle,
-        qt_xget_temp_gc( pix->x11Screen(), false ),
+        kde_xget_temp_gc( pix->x11Screen(), false ),
         0,
         0,
         pix->width(),
@@ -58,7 +62,7 @@ void PixHandler::slotPixmap(const QImage* img)
         0,
         0);
 
-    XSync(qt_xdisplay(), false);
+    XSync(QX11Info::display(), false);
     int x=3;
     write (anwser,&x,sizeof(int));
 }
@@ -81,11 +85,12 @@ void process()
 
 int main (int argc, char* argv[])
 {
-    KApplication app(argc,argv,QCString("kpdflibgsasyncgenerator"));
+    KCmdLineArgs::init(argc, argv, "kpdflibgsasyncgenerator", "kpdflibgsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
+    KApplication app(false);
     // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
 
     for (int i=0;i<argc;i++)
-        kDebug() << "arg nr " << i << " : " <<  QCString(argv[i]) << endl;
+        kDebug() << "arg nr " << i << " : " <<  QString(argv[i]) << endl;
 
     f = fopen ( argv[1] , "r");
     interpreter=new GSInterpreterLib();

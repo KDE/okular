@@ -2,7 +2,7 @@ kde4_header()
 
 add_subdirectory( conf ) 
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_SOURCE_DIR}/okular ${CMAKE_CURRENT_BINARY_DIR}/../..  )
 
 
 ########### next target ###############

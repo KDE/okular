@@ -26,7 +26,7 @@
 #include <ktempfile.h>
 
 
-#include "conf/settings.h"
+#include "settings.h"
 #include "interpreter_cmd.h"
 
 ProcessData :: ProcessData ()

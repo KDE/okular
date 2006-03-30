@@ -59,7 +59,7 @@ ProcessData :: ~ProcessData()
 
 QPixmap* GSInterpreterCMD::takePixmap()
 {
-    kdDebug(4655) << "taking pixmap" << endl;
+    kDebug(4655) << "taking pixmap" << endl;
     QPixmap * x=m_pixmap;
     m_pixmap=0;
     return x;
@@ -76,7 +76,7 @@ GSInterpreterCMD::GSInterpreterCMD( const QString & fileName ) :
     m_aaText           (1),
     m_pfonts            (false)
 {
-    kdDebug(4655) << "Constructing async interpreter!" << endl;
+    kDebug(4655) << "Constructing async interpreter!" << endl;
     m_pixmap=0;
 }
 
@@ -106,18 +106,18 @@ GSInterpreterCMD::~GSInterpreterCMD()
 void GSInterpreterCMD::destroyInternalProcess(KProcess * stop)
 {
     pid_t pId=stop->pid();
-    kdDebug(4655) << "Destroy thread pid " << getpid() << " of " << pId << endl;
+    kDebug(4655) << "Destroy thread pid " << getpid() << " of " << pId << endl;
     int x=1;
     ProcessData *mem=m_stoppingPids[pId];
     write(mem->fds[0],&x,sizeof(int));
     stop->wait();
-    kdDebug(4655) << "Normal exit : " << !stop->isRunning() << endl;
+    kDebug(4655) << "Normal exit : " << !stop->isRunning() << endl;
     // give it the time to close the interpreter before we kill it
     if( stop->isRunning() )
     {
         stop->kill();
         stop->wait(5);
-        kdDebug(4655) << "after stopping, the proces running: "
+        kDebug(4655) << "after stopping, the proces running: "
             << stop->isRunning() << endl;
         if( stop->isRunning() )
             stop->kill( SIGKILL );
@@ -131,19 +131,19 @@ bool GSInterpreterCMD::running ()
 {
     if (m_process==0)
     {
-        kdDebug (4655) << "no process\n";
+        kDebug (4655) << "no process\n";
         return false;
     }
     else
     {
-        kdDebug(4655) << "running " << m_process->isRunning() << endl;
+        kDebug(4655) << "running " << m_process->isRunning() << endl;
         return m_process->isRunning();
     }
 }
 
 void GSInterpreterCMD::setStructure(GSInterpreterLib::Position prolog, GSInterpreterLib::Position setup)
 {
-    kdDebug(4655) << "setStructure()" << endl;
+    kDebug(4655) << "setStructure()" << endl;
     m_structurePending=true;
     m_data[0]=prolog;
     m_data[1]=setup;
@@ -151,7 +151,7 @@ void GSInterpreterCMD::setStructure(GSInterpreterLib::Position prolog, GSInterpr
 
 bool GSInterpreterCMD::stop(bool async)
 {
-    kdDebug(4655) << "stop()" << endl;
+    kDebug(4655) << "stop()" << endl;
     // if( !_interpreterBusy ) return;
 
     if ( running() )
@@ -161,7 +161,7 @@ bool GSInterpreterCMD::stop(bool async)
         KProcess * stop=m_process;
         m_stoppingPids.insert ( stop->pid(), m_processData );
         m_process=0;
-        kdDebug(4655) << "Launching destroy thread" << endl;
+        kDebug(4655) << "Launching destroy thread" << endl;
         if (!async)
             destroyInternalProcess(stop);
         else
@@ -186,10 +186,10 @@ bool GSInterpreterCMD::stop(bool async)
 
 bool GSInterpreterCMD::startInterpreter()
 {
-    kdDebug(4655) << "start()" << endl;
+    kDebug(4655) << "start()" << endl;
     if ( m_process && m_process->isRunning() )
     {
-        kdDebug(4655) << "ERROR: starting an interpreter while one is running" << endl;
+        kDebug(4655) << "ERROR: starting an interpreter while one is running" << endl;
         return false;
     }
 
@@ -211,7 +211,7 @@ bool GSInterpreterCMD::startInterpreter()
         << QString::number (m_aaText)
         << QString::number (m_aaGfx);
 
-    kdDebug(4655) << "Argument count: " << list.count() << endl;
+    kDebug(4655) << "Argument count: " << list.count() << endl;
     (*m_process) << list;
     /*connect( m_process, SIGNAL( processExited( KProcess* ) ),
              this, SLOT( slotProcessExited( KProcess* ) ) );
@@ -223,12 +223,12 @@ bool GSInterpreterCMD::startInterpreter()
              this, SLOT( gs_input( KProcess* ) ) );*/
 
     // Finally fire up the interpreter.
-//    kdDebug(4500) << "KPSWidget: starting interpreter" << endl;
+//    kDebug(4500) << "KPSWidget: starting interpreter" << endl;
 
     if( m_process->start( KProcess::NotifyOnExit,
               /*m_usePipe ?*/ KProcess::All /*: KProcess::AllOutput*/ ) )
     {
-        kdDebug(4655) << "Starting async! " << m_process->pid() << endl;
+        kDebug(4655) << "Starting async! " << m_process->pid() << endl;
         return true;
     }
     else
@@ -236,7 +236,7 @@ bool GSInterpreterCMD::startInterpreter()
         emit error(i18n( "Could not start kpdf's libgs helper application. This is most likely "
             "caused by kpdflibgsasyncgenerator not being installed, or installed to a "
             "directory not listed in the environment PATH variable."),0);
-        kdDebug(4655) << "Could not start helper" << endl;
+        kDebug(4655) << "Could not start helper" << endl;
         return false;
     }
 }
@@ -322,7 +322,7 @@ void GSInterpreterCMD::setAABits(int text, int graphics)
 
 bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
 {
-    kdDebug(4655) << "Running request with size: " << m_width << "x" << m_height << endl;
+    kDebug(4655) << "Running request with size: " << m_width << "x" << m_height << endl;
 
     if( !running() )
         return false;
@@ -330,7 +330,7 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
     lock();
     if ( m_pixmap != 0 )
     {
-        kdDebug(4655) << "ERROR DELETING PIXMAP, THIS SHOULD NOT HAPPEN" << endl;
+        kDebug(4655) << "ERROR DELETING PIXMAP, THIS SHOULD NOT HAPPEN" << endl;
         delete m_pixmap;
     }
     // the pixmap to which the generated image will be copied
@@ -347,13 +347,13 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
 void GSInterpreterCMD::run()
 {
     // we are inside a thread
-    kdDebug(4655)<< "Generation thread started " << getpid() << endl;
+    kDebug(4655)<< "Generation thread started " << getpid() << endl;
     int x;
 
     // pending structural information -> send them
     if (m_structurePending)
     {
-        kdDebug(4655) << "sending structural data" << endl;
+        kDebug(4655) << "sending structural data" << endl;
         PageInfo pageInf;
         for (int i=0;i<2;i++)
         {
@@ -367,7 +367,7 @@ void GSInterpreterCMD::run()
         }
         m_structurePending=false;
     }
-    kdDebug(4655)<< "sending page request" << endl;
+    kDebug(4655)<< "sending page request" << endl;
     // Communication with the helper looks like this
     // 1. Sendign a 0 to helper telling it to start a function that processes the request
     x=0;
@@ -378,10 +378,10 @@ void GSInterpreterCMD::run()
     // the helper will copy the pixmap using XCopyArea
     read ( m_processData->fds[1], &x, sizeof(int) );
     unlock();
-    kdDebug(4655)<< "pximap ready" << endl;
+    kDebug(4655)<< "pximap ready" << endl;
     if (x==3)
     {
-	kdDebug(4655)<< "sending the pximap to generator" << endl;
+	kDebug(4655)<< "sending the pximap to generator" << endl;
         // inform interpreter about PixmaRequest being done
         QCustomEvent * readyEvent = new QCustomEvent( GS_DATAREADY_ID );
         // set sth just to send nonempty
@@ -397,7 +397,7 @@ void GSInterpreterCMD::customEvent( QCustomEvent * e )
 {
     if (e->type() == GS_DATAREADY_ID )
     {
-        kdWarning() << "emitting signal" << endl;
+        kWarning() << "emitting signal" << endl;
         QPixmap *pix=takePixmap();
   
         emit Finished(pix);

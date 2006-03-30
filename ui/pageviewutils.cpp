@@ -243,9 +243,9 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const 
     : QPushButton( parent ), m_id( item.id ), m_hovering( false ), m_background( pix )
 {
     setMouseTracking( true );
-    setToggleButton( true );
+    setCheckable( true );
     resize( buttonSize, buttonSize );
-    setPixmap( DesktopIcon( item.pixmap, iconSize ) );
+    setIcon( DesktopIconSet( item.pixmap, iconSize ) );
     setWindowFlags( Qt::WNoAutoErase );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )

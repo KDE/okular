@@ -102,7 +102,7 @@ GSInternalDocument::GSInternalDocument(QString fname, Format form) : m_format (f
     }
 
     if (m_error)
-        kdDebug(4656) << m_errorString << endl;
+        kDebug(4656) << m_errorString << endl;
 }
 
 
@@ -239,7 +239,7 @@ QString GSInternalDocument::getPaperSize( const QString& mediaName ) const
             m++;
         }
         // should never happen as we have fallback
-        kdDebug(4656) << "UNABLE TO FIND PAPER SIZE FOR MEDIA NAME: " << mediaName << endl;
+        kDebug(4656) << "UNABLE TO FIND PAPER SIZE FOR MEDIA NAME: " << mediaName << endl;
         return QString("a4");
     }
     return QString(r->name);
@@ -406,7 +406,7 @@ bool GSInternalDocument::psCopyDoc( const QString& inputFile,
     unsigned int pages = 0;
     long here;
 
-    kdDebug(4656) << "Copying pages from " << inputFile << " to "
+    kDebug(4656) << "Copying pages from " << inputFile << " to "
     << outputFile << endl;
 
     from = fopen( QFile::encodeName( inputFile ), "r" );

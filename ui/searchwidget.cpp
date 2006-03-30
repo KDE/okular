@@ -44,14 +44,15 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     addWidget(m_lineEdit);
 
     // 2. clear button (uses a lineEdit slot, so it must be created after)
-    QAction *clearAction = addAction( KIcon(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"),
+    QAction *clearAction = addAction( KIcon(layoutDirection() ==
+ Qt::RightToLeft ? "clear_left" : "locationbar_erase"),
                   QString::null, m_lineEdit, SLOT( clear() ));
     clearAction->setToolTip(i18n( "Clear filter" ));
 
     // 3.1. create the popup menu for changing filtering features
     m_menu = new QMenu( this );
     m_caseSensitiveAction = m_menu->addAction( i18n("Case Sensitive") );
-    m_menu->insertSeparator( );
+    m_menu->addSeparator();
     m_matchPhraseAction = m_menu->addAction( i18n("Match Phrase") );
     m_marchAllWordsAction = m_menu->addAction( i18n("Match All Words") );
     m_marchAnyWordsAction = m_menu->addAction( i18n("Match Any Word") );

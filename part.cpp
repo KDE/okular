@@ -31,7 +31,6 @@
 #include <qpushbutton.h>
 #include <dcopobject.h>
 #include <dcopclient.h>
-#include <kapplication.h>
 #include <k3listviewsearchline.h>
 #include <kaction.h>
 #include <kdirwatch.h>
@@ -167,7 +166,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	thumbsBox->setStretchFactor( m_tc, 1 );
 	tbIndex = m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
-	m_toolBox->setCurrentItem( thumbsBox );
+	m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
 
 	// [left toolbox: Reviews] | []
 #warning this is making it crash
@@ -215,7 +214,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
 	m_gotoPage->setShortcut( "CTRL+G" );
 	// dirty way to activate gotopage when pressing miniBar's button
-	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( activate() ) );
+	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
@@ -590,7 +589,7 @@ bool Part::closeURL()
 
 void Part::close()
 {
-  if (parent() && strcmp(parent()->name(), "KPDF::Shell") == 0)
+  if (parent() && (parent()->objectName() == QLatin1String("oKular::Shell")))
   {
     closeURL();
   }
@@ -705,10 +704,10 @@ void Part::enableTOC(bool enable)
 }
 
 //BEGIN go to page dialog
-class KPDFGotoPageDialog : public KDialogBase
+class KPDFGotoPageDialog : public KDialog
 {
 public:
-	KPDFGotoPageDialog(QWidget *p, int current, int max) : KDialogBase(p, 0L, true, i18n("Go to Page"), Ok | Cancel, Ok) {
+	KPDFGotoPageDialog(QWidget *p, int current, int max) : KDialog(p, i18n("Go to Page"), Ok | Cancel) {
 		QWidget *w = new QWidget(this);
 		setMainWidget(w);
 

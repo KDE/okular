@@ -53,7 +53,7 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
     QPixmap* pix = new QPixmap(request->width,request->height);
     pix->fill();
     QPainter p(pix);
-    QImage img = fax.page(request->pageNumber).smoothScale(request->width,request->height);
+    QImage img = fax.page(request->pageNumber).scaled(request->width,request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     p.drawImage( 0,0, img, 0,0,img.width(),img.height());
 /*
   SimplePageSize psize = pageSizes[page->getPageNumber() - 1];
@@ -72,7 +72,7 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
       int width_in_pixel = qRound(resolution * psize.width().getLength_in_inch());
       int height_in_pixel = qRound(resolution * psize.height().getLength_in_inch());
 
-      img = img.smoothScale(width_in_pixel, height_in_pixel);
+      img = img.scaled(width_in_pixel, height_in_pixel, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
       foreGroundPaint->drawImage(0, 0, img);
       page->returnPainter(foreGroundPaint);
     }

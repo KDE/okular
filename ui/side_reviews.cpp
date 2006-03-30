@@ -17,7 +17,7 @@
 #include <kaction.h>
 #include <kactionclasses.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <qapplication.h>
 #include <kiconloader.h>
 
 // local includes
@@ -47,7 +47,8 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_toolBar1->setIconDimensions( 16 );
     m_toolBar1->setMovable( false );
     // - add Clear button
-    QString clearIconName = KApplication::reverseLayout() ? "clear_left" : "locationbar_erase";
+    QString clearIconName = QApplication::layoutDirection() ==
+ Qt::RightToLeft ? "clear_left" : "locationbar_erase";
 #warning lots of KToolBar code to port
 /*    m_toolBar1->insertButton( clearIconName, 1, SIGNAL( clicked() ),
         m_searchLine, SLOT( clear() ), true, i18n( "Clear Filter" ) );

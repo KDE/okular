@@ -380,7 +380,7 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
         gettimeofday( &te, NULL );
         double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
         double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
-        kdDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
+        kDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
 #endif
     }
 

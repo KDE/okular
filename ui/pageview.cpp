@@ -29,6 +29,7 @@
 #include <qpushbutton.h>
 #include <qapplication.h>
 #include <qclipboard.h>
+#include <QX11Info>
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <kaction.h>
@@ -623,7 +624,7 @@ if ( d->document->handleEvent( pe ) )
                     // blend selBlendColor into the background pixmap
 //                     QImage blendedImage = blendedPixmap.convertToImage();
 //                     KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
-                    XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.handle(), &col, 
+                    XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.handle(), &col, 
                       0,0, blendRect.width(), blendRect.height());
                     // copy the blended pixmap back to its place
                     pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
@@ -656,7 +657,7 @@ if ( d->document->handleEvent( pe ) )
                           blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
 //                 QImage blendedImage = blendedPixmap.convertToImage();
-                XRenderFillRectangle(x11Display(), PictOpOver, blendedPixmap.handle(), &col, 
+                XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.handle(), &col, 
                   0,0, blendRect.width(), blendRect.height());
 
 //                 KImageEffect::blend( d->mouseTextSelectionColor.dark(140), blendedImage, 0.2 );
@@ -2126,7 +2127,7 @@ void PageView::slotRelayoutPages()
     d->dirtyLayout = false;
 
     // 4) update scrollview's contents size and recenter view
-    bool wasUpdatesEnabled = viewport()->isUpdatesEnabled();
+    bool wasUpdatesEnabled = viewport()->updatesEnabled();
     if ( fullWidth != contentsWidth() || fullHeight != contentsHeight() )
     {
         // disable updates and resize the viewportContents

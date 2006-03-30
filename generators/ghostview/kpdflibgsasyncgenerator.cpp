@@ -36,9 +36,9 @@ FILE * f;
 void PixHandler::slotPixmap(const QImage* img)
 {
     QPixmap *pix=new QPixmap();
-    kdWarning() << "img size/depth " << img->size() << "/" <<img->depth() << endl;
+    kWarning() << "img size/depth " << img->size() << "/" <<img->depth() << endl;
     bool done=pix->convertFromImage(*img);
-    kdWarning () << "Conversion from qimage " << done << endl;
+    kWarning () << "Conversion from qimage " << done << endl;
 //         QDialog t;
 //         t.resize(pix->width(),pix->height());
 //         t.setBackgroundPixmap(*pix);
@@ -70,7 +70,7 @@ void process()
     if ( ! ( interpreter->running() ) )
         interpreter->start(false);
 
-//     kdDebug() << "Processing: " <<  pData.sync << endl;
+//     kDebug() << "Processing: " <<  pData.sync << endl;
     interpreter-> run ( f, pData.pos, pData.sync );
     if (! pData.sync )
     {
@@ -85,7 +85,7 @@ int main (int argc, char* argv[])
     // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
 
     for (int i=0;i<argc;i++)
-        kdDebug() << "arg nr " << i << " : " <<  QCString(argv[i]) << endl;
+        kDebug() << "arg nr " << i << " : " <<  QCString(argv[i]) << endl;
 
     f = fopen ( argv[1] , "r");
     interpreter=new GSInterpreterLib();

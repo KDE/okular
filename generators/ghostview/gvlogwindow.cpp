@@ -25,7 +25,7 @@ GSLogWindow::GSLogWindow( const QString& caption,
                       QWidget* parent, const char* name) :
     QVBox ( parent, name )
 {
-    kdDebug() << "Starting logwindow" <<endl;
+    kDebug() << "Starting logwindow" <<endl;
     m_searchLine = new KListViewSearchLine(this);
     m_msgList = new KListView(this);
 
@@ -48,7 +48,7 @@ bool GSLogWindow::event( QEvent * event )
     if ( event->type() == QEvent::Reparent && ( m_msgList->childCount() ) )
     {
         int w=( m_msgList->firstChild() ) -> width(  m_msgList->fontMetrics() , m_msgList, m_tCol);
-        kdDebug() << "new width = " << w << endl;
+        kDebug() << "new width = " << w << endl;
         m_msgList->setColumnWidth(m_tCol, w);
     }
     return true;
@@ -56,8 +56,8 @@ bool GSLogWindow::event( QEvent * event )
 
 void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
 {
-    //kdDebug() << "Appending: " << text <<endl;
-    kdDebug() << "last int: " << m_lastInt << endl;
+    //kDebug() << "Appending: " << text <<endl;
+    kDebug() << "last int: " << m_lastInt << endl;
     QStringList l=QStringList::split("\n",text.stripWhiteSpace());
     QStringList::Iterator it=l.begin(), end=l.end();
     while (it!=end)
@@ -88,15 +88,15 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const char* buf, int 
     // ghostscript splits messages longer then 128 to chunks, handle this properly
     if (m_lastInt == 128)
     {
-        kdDebug() << "last was full line" << endl;
+        kDebug() << "last was full line" << endl;
         if (t==m_buffer.first)
         {
-            kdDebug() << "appending to buffer" << endl;
+            kDebug() << "appending to buffer" << endl;
             m_buffer.second +=QString::fromLocal8Bit( buf, num );
         }
         else
         {
-            kdDebug() << "appending from buffer" << endl;
+            kDebug() << "appending from buffer" << endl;
             // sets m_lastInt to 0
             appendBuffered();
         }
@@ -104,10 +104,10 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const char* buf, int 
 
     if (num==128)
     {
-        kdDebug() << "this is full line" << endl;
+        kDebug() << "this is full line" << endl;
         if (m_lastInt != 128)
         {
-            kdDebug() << "appending to buffer" << endl;
+            kDebug() << "appending to buffer" << endl;
             m_buffer.first=t;
             m_buffer.second=QString::fromLocal8Bit( buf, num );
         }
@@ -116,22 +116,22 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const char* buf, int 
     }
     else
     {
-        kdDebug() << "this is normal line" << endl;
+        kDebug() << "this is normal line" << endl;
         if (m_lastInt == 128)
         {
-            kdDebug() << "appending from buffer" << endl;
+            kDebug() << "appending from buffer" << endl;
             appendBuffered();
         }
         else
         {
-            kdDebug() << "appending directly" << endl;
+            kDebug() << "appending directly" << endl;
             append(t,QString::fromLocal8Bit( buf, num ));
             m_clearTimer.stop();
         }
     }
     m_lastInt=num;
 
-    //    kdDebug()<< "LogWindow before split: " << msgString << " lenght" << num << endl;    
+    //    kDebug()<< "LogWindow before split: " << msgString << " lenght" << num << endl;    
 
 }
 

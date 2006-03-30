@@ -543,7 +543,7 @@ bool PDFGenerator::print( KPrinter& printer )
         // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
         // remove the w
         ps = ps.mid(1);
-        int hPos = ps.find("h");
+        int hPos = ps.indexOf("h");
         globalParams->setPSPaperWidth(ps.left(hPos).toInt());
         globalParams->setPSPaperHeight(ps.mid(hPos+1).toInt());
     }
@@ -1334,7 +1334,7 @@ void PDFGenerator::addAnnotations( Page * pdfPage, KPDFPage * page )
                 XPDFReader::lookupName( annotDict, "Name", t->textIcon );
                 if ( !t->textIcon.isEmpty() )
                 {
-                    t->textIcon = t->textIcon.lower();
+                    t->textIcon = t->textIcon.toLower();
                     t->textIcon.remove( ' ' );
                 }
                 // request for postprocessing window geometry

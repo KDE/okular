@@ -48,8 +48,8 @@ class GSInterpreterCMD : public QObject , public QThread
         bool stop(bool async=true);
         bool ready() { return !interpreterLock.locked() ; } ;
         bool running ();
-        void lock() { kdDebug() << "locking async\n"; interpreterLock.lock() ; } ;
-        void unlock() { kdDebug() << "unlocking async\n"; interpreterLock.unlock() ; } ;
+        void lock() { kDebug() << "locking async\n"; interpreterLock.lock() ; } ;
+        void unlock() { kDebug() << "unlocking async\n"; interpreterLock.unlock() ; } ;
 
 //         void setGhostscriptArguments( const QStringList& arguments );
         void setOrientation( int orientation );

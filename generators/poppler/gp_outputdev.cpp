@@ -3,7 +3,7 @@
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
  *   Copyright (C) 2003 by Scott Wheeler <wheeler@kde.org>                 *
- *   Copyright (C) 2003 by Ingo Klöcker <kloecker@kde.org>                 *
+ *   Copyright (C) 2003 by Ingo Klï¿½ker <kloecker@kde.org>                 *
  *   Copyright (C) 2003 by Will Andrews <will@csociety.org>                *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
@@ -121,7 +121,7 @@ void KPDFOutputDev::endPage()
         delete m_image;
         // it may happen (in fact it doesn't) that we need a rescaling
         if ( bw != m_pixmapWidth && bh != m_pixmapHeight )
-            m_image = new QImage( img->smoothScale( m_pixmapWidth, m_pixmapHeight ) );
+            m_image = new QImage( img->scaled( m_pixmapWidth, m_pixmapHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
         else
             // dereference image from the xpdf memory
             m_image = new QImage( img->copy() );
@@ -131,7 +131,7 @@ void KPDFOutputDev::endPage()
         delete m_pixmap;
         // it may happen (in fact it doesn't) that we need a rescaling
         if ( bw != m_pixmapWidth || bh != m_pixmapHeight )
-            m_pixmap = new QPixmap( img->smoothScale( m_pixmapWidth, m_pixmapHeight ) );
+            m_pixmap = new QPixmap( img->scaled( m_pixmapWidth, m_pixmapHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
         else
             m_pixmap = new QPixmap( *img );
     }
@@ -299,7 +299,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
                 link = new KPDFLinkAction( KPDFLinkAction::Close );
             }
             else
-                kdDebug() << "Unknown named action: '" << name << "'" << endl;
+                kDebug() << "Unknown named action: '" << name << "'" << endl;
             }
             break;
 
@@ -320,7 +320,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
 */          break;
 
         case actionUnknown:
-            kdDebug() << "Unknown link." << endl;
+            kDebug() << "Unknown link." << endl;
             break;
     }
 

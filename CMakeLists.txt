@@ -31,6 +31,7 @@ kde4_add_ui_files(oKularconf_SRCS
 set(oKularcore_SRCS
    ${CMAKE_SOURCE_DIR}/okular/core/annotations.cpp
    ${CMAKE_SOURCE_DIR}/okular/core/area.cpp
+   ${CMAKE_SOURCE_DIR}/okular/core/chooseenginedialog.cpp
    ${CMAKE_SOURCE_DIR}/okular/core/document.cpp
    ${CMAKE_SOURCE_DIR}/okular/core/generator.cpp
    ${CMAKE_SOURCE_DIR}/okular/core/link.cpp
@@ -39,8 +40,8 @@ set(oKularcore_SRCS
    ${CMAKE_SOURCE_DIR}/okular/core/textpage.cpp
 )
 
-kde4_add_ui3_files(oKularcore_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/core/chooseenginedialog.ui
+kde4_add_ui_files(oKularcore_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/core/chooseenginewidget.ui
 )
 
 set(oKularui_SRCS

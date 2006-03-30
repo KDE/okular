@@ -9,6 +9,7 @@
  ***************************************************************************/
 
 // qt/kde/system includes
+#include <qapplication.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
@@ -166,22 +167,21 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
     // best ranked offer search
     if (offers.count() > 1 && KpdfSettings::chooseGenerators() )
     {
-        ChooseEngineDialog * choose = new ChooseEngineDialog (0,0);
+        QStringList list;
         int count=offers.count();
-        int i;
-        for (i=0;i<count;i++)
+        for (int i=0;i<count;++i)
         {
-            choose->engineList->insertItem( i, offers[i]->property("Name").toString() );
+            list << offers[i]->property("Name").toString();
         }
+        ChooseEngineDialog * choose = new ChooseEngineDialog (list, mime->name(), 0);
 
-        choose -> description-> setText(
-        QString("More then one generator found for %1 mimetype, please select which one to use:").arg(mime->name())
-        );
-
-        switch( choose->exec() )
+        int retval=choose->exec();
+        int index=choose->selectedGenerator();
+        delete choose;
+        switch( retval )
         {
             case QDialog::Accepted:
-                hRank=choose->engineList->currentIndex();
+                hRank=index;
                 break;
             case QDialog::Rejected:
                 return false;

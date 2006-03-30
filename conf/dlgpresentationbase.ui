@@ -1,0 +1,301 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>DlgPresentationBase</class>
+ <widget class="QWidget" name="DlgPresentationBase" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>318</width>
+    <height>275</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Navigation</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QCheckBox" name="kcfg_SlidesAdvance" >
+          <property name="text" >
+           <string>Advance every:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="kcfg_SlidesAdvanceTime" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="suffix" >
+           <string> sec.</string>
+          </property>
+          <property name="value" >
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_SlidesLoop" >
+        <property name="text" >
+         <string>Loop after last page</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>Appearance</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="textLabel3" >
+          <property name="text" >
+           <string>Background color:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="KColorButton" name="kcfg_SlidesBackgroundColor" />
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="textLabel1" >
+          <property name="text" >
+           <string>Default transition:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="kcfg_SlidesTransition" >
+          <item>
+           <property name="text" >
+            <string>Blinds Vertical</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Blinds Horizontal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Box In</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Box Out</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Dissolve</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Glitter Down</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Glitter Right</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Glitter Right-Down</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Random Transition</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Replace</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Split Horizontal In</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Split Horizontal Out</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Split Vertical In</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Split Vertical Out</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Wipe Down</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Wipe Right</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Wipe Left</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Wipe Up</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="textLabel2" >
+          <property name="text" >
+           <string>Mouse cursor:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="kcfg_SlidesCursor" >
+          <item>
+           <property name="text" >
+            <string>Hidden After Delay</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Always Visible</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Always Hidden</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_SlidesShowProgress" >
+        <property name="text" >
+         <string>Show &amp;progress indicator</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_SlidesShowSummary" >
+        <property name="text" >
+         <string>Show s&amp;ummary page</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>31</width>
+       <height>4</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KColorButton</class>
+   <extends>QWidget</extends>
+   <header>kcolorbutton.h</header>
+   <container>1</container>
+   <pixmap></pixmap>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

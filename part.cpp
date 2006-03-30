@@ -838,7 +838,7 @@ void Part::slotPreferences()
     // we didn't find an instance of this dialog, so lets create it
     PreferencesDialog * dialog = new PreferencesDialog( m_pageView, KpdfSettings::self() );
     // keep us informed when the user changes settings
-    connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
+    connect( dialog, SIGNAL( settingsChanged( const QString & ) ), this, SLOT( slotNewConfig() ) );
 
     dialog->show();
 }

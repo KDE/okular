@@ -14,13 +14,18 @@ include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_D
 
 set(oKularconf_SRCS
    ${CMAKE_SOURCE_DIR}/okular/conf/preferencesdialog.cpp
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlggeneral.cpp
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlgpresentation.cpp
 )
 
 kde4_add_ui3_files(oKularconf_SRCS
    ${CMAKE_SOURCE_DIR}/okular/conf/dlgaccessibility.ui
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlggeneral.ui
    ${CMAKE_SOURCE_DIR}/okular/conf/dlgperformance.ui
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlgpresentation.ui
+)
+
+kde4_add_ui_files(oKularconf_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlggeneralbase.ui
+   ${CMAKE_SOURCE_DIR}/okular/conf/dlgpresentationbase.ui
 )
 
 set(oKularcore_SRCS

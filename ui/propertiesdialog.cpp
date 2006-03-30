@@ -10,8 +10,10 @@
 // qt/kde includes
 #include <qlayout.h>
 #include <qlabel.h>
+#include <qheaderview.h>
+#include <qsortfilterproxymodel.h>
+#include <qtreeview.h>
 #include <klocale.h>
-#include <k3listview.h>
 #include <ksqueezedtextlabel.h>
 #include <kglobalsettings.h>
 
@@ -79,18 +81,23 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     page2Layout = new QVBoxLayout(page2);
     page2Layout->setMargin(0);
     page2Layout->setSpacing(KDialog::spacingHint());
-    // add a klistview with 4 columns
-    K3ListView *lv = new K3ListView(page2);
-    lv->addColumn( i18n("Name") );
-    lv->addColumn( i18n("Type") );
-    lv->addColumn( i18n("Embedded") );
-    lv->addColumn( i18n("File") );
-    page2Layout->addWidget(lv);
+    // add a tree view
+    QTreeView *view = new QTreeView(page2);
+    page2Layout->addWidget(view);
+    view->setRootIsDecorated(false);
+    view->setAlternatingRowColors(true);
+    view->header()->setClickable(true);
+    view->header()->setSortIndicatorShown(true);
+    // creating a proxy model so we can sort the data
+    QSortFilterProxyModel *proxymodel = new QSortFilterProxyModel(view);
+    FontsListModel *model = new FontsListModel(view);
+    proxymodel->setSourceModel(model);
+    view->setModel(proxymodel);
     // populate the klistview
     for ( QDomNode node = fonts->documentElement().firstChild(); !node.isNull(); node = node.nextSibling() ) {
       QDomElement e = node.toElement();
-      new K3ListViewItem( lv, e.attribute( "Name" ), e.attribute( "Type" ),
-                         e.attribute( "Embedded" ), e.attribute( "File" ) );
+      model->addFont( e.attribute( "Name" ), e.attribute( "Type" ),
+                      e.attribute( "Embedded" ), e.attribute( "File" ) );
     }
   }
 
@@ -103,3 +110,92 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   width = qMin( width, 2*screenContainer.width()/3 );
   resize(width, 1);
 }
+
+class LocalFontInfoStruct
+{
+  public:
+    QString name;
+    QString type;
+    QString embedded;
+    QString file;
+};
+
+FontsListModel::FontsListModel( QObject * parent )
+  : QAbstractTableModel( parent )
+{
+}
+
+FontsListModel::~FontsListModel()
+{
+  qDeleteAll(m_fonts);
+}
+
+void FontsListModel::addFont( const QString &name, const QString &type, const QString &embedded, const QString &file )
+{
+  beginInsertRows( QModelIndex(), m_fonts.size() + 1, m_fonts.size() + 1 );
+
+  LocalFontInfoStruct *info = new LocalFontInfoStruct();
+  info->name = name;
+  info->type = type;
+  info->embedded = embedded;
+  info->file = file;
+  m_fonts << info;
+
+  endInsertRows();
+}
+
+int FontsListModel::columnCount( const QModelIndex & ) const
+{
+  return 4;
+}
+
+QVariant FontsListModel::data( const QModelIndex &index, int role ) const
+{
+  if ( !index.isValid() )
+    return QVariant();
+
+  if ( ( index.row() < 0 ) || ( index.row() >= m_fonts.size() ) )
+    return QVariant();
+
+  if ( role != Qt::DisplayRole )
+    return QVariant();
+
+  switch ( index.column() )
+  {
+    case 0: return m_fonts.at(index.row())->name; break;
+    case 1: return m_fonts.at(index.row())->type; break;
+    case 2: return m_fonts.at(index.row())->embedded; break;
+    case 3: return m_fonts.at(index.row())->file; break;
+    default:
+       return QVariant();
+  }
+}
+
+QVariant FontsListModel::headerData( int section, Qt::Orientation orientation, int role ) const
+{
+  if ( orientation != Qt::Horizontal )
+    return QVariant();
+
+  if ( role == Qt::TextAlignmentRole )
+    return QVariant( Qt::AlignLeft );
+
+  if ( role != Qt::DisplayRole )
+    return QVariant();
+
+  switch ( section )
+  {
+    case 0: return i18n( "Name" ); break;
+    case 1: return i18n( "Type" ); break;
+    case 2: return i18n( "Embedded" ); break;
+    case 3: return i18n( "File" ); break;
+    default:
+      return QVariant();
+  }
+}
+
+int FontsListModel::rowCount( const QModelIndex & ) const
+{
+  return m_fonts.size();
+}
+
+#include "propertiesdialog.moc"

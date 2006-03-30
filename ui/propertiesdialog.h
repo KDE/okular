@@ -10,6 +10,9 @@
 #ifndef _PROPERTIESDIALOG_H_
 #define _PROPERTIESDIALOG_H_
 
+#include <qabstractitemmodel.h>
+#include <qlist.h>
+
 #include <kdialogbase.h>
 
 class KPDFDocument;
@@ -18,6 +21,29 @@ class PropertiesDialog : public KDialogBase
 {
   public:
   	PropertiesDialog( QWidget *parent, KPDFDocument *doc );
+};
+
+class LocalFontInfoStruct;
+
+class FontsListModel
+  : public QAbstractTableModel
+{
+  Q_OBJECT
+
+  public:
+    FontsListModel( QObject * parent = 0 );
+    virtual ~FontsListModel();
+
+    void addFont( const QString &name, const QString &type, const QString &embedded, const QString &file );
+
+    // reimplementations from QAbstractTableModel
+    virtual int columnCount( const QModelIndex &parent = QModelIndex() ) const;
+    virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
+    virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+    virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
+
+  private:
+    QList<LocalFontInfoStruct*> m_fonts;
 };
 
 #endif

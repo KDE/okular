@@ -10,6 +10,7 @@ include(CheckLibraryExists)
 # reset vars
 set(QGS_INCLUDE_DIR)
 set(QGS_LIBRARY)
+set(QGS_HAVE_MAIN FALSE)
 
 FIND_PATH(QGS_INCLUDE_DIR qgs.h
   /usr/local/include
@@ -17,11 +18,20 @@ FIND_PATH(QGS_INCLUDE_DIR qgs.h
   ${GNUWIN32_DIR}/include
 )
 
-check_library_exists(qgs main "" QGS_LIBRARY)
+find_library(QGS_LIBRARY NAMES qgs
+  PATHS
+  /usr/lib
+  /usr/local/lib
+  ${GNUWIN32_DIR}/lib
+)
 
-if(QGS_INCLUDE_DIR AND QGS_LIBRARY)
+if (QGS_LIBRARY)
+  check_library_exists(qgs main "" QGS_HAVE_MAIN)
+endif (QGS_LIBRARY)
+
+if(QGS_INCLUDE_DIR AND QGS_LIBRARY AND QGS_HAVE_MAIN)
   set(QGS_FOUND TRUE)
-endif(QGS_INCLUDE_DIR AND QGS_LIBRARY)
+endif(QGS_INCLUDE_DIR AND QGS_LIBRARY AND QGS_HAVE_MAIN)
 
 if (QGS_FOUND)
   if (NOT QGS_FIND_QUIETLY)

@@ -153,14 +153,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// [left toolbox: Thumbnails and Bookmarks] | []
 	KVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
 	thumbsBox->setSpacing( 4 );
-#warning this is making it crash
-//	m_searchWidget = new SearchWidget( thumbsBox, m_document );
+	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 	// shrink the bottom controller toolbar (too hackish..)
-	thumbsBox->setStretchFactor( m_searchWidget, 100 );
 	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
 //	thumbsBox->setStretchFactor( m_tc, 1 );
 	tbIndex = m_toolBox->addItem( thumbsBox, SmallIconSet("thumbnail"), i18n("Thumbnails") );
@@ -581,8 +579,7 @@ bool Part::closeURL()
     if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
     m_document->closeDocument();
     updateViewActions();
-#warning this is commented because m_searchWidget is commented
-    //m_searchWidget->clearText();
+    m_searchWidget->clearText();
     return KParts::ReadOnlyPart::closeURL();
 }
 
@@ -857,9 +854,8 @@ void Part::slotNewConfig()
     }
 
     bool showSearch = KpdfSettings::showSearchBar();
-#warning this is commented because m_searchWidget is commented
-/*    if ( m_searchWidget->isShown() != showSearch )
-        m_searchWidget->setShown( showSearch );*/
+    if ( m_searchWidget->isShown() != showSearch )
+        m_searchWidget->setShown( showSearch );
 
     // Main View (pageView)
     Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?

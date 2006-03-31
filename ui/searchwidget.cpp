@@ -25,11 +25,12 @@
 #include "settings.h"
 
 SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
-    : KToolBar( parent, "iSearchBar" ), m_document( document ),
+    : QToolBar( parent ), m_document( document ),
     m_searchType( 0 ), m_caseSensitive( false )
 {
+    setObjectName( "iSearchBar" );
     // change toolbar appearance
-    setIconDimensions( 16 );
+    setIconSize(QSize(16, 16));
     setMovable( false );
 
     // a timer to ensure that we don't flood the document with requests to search
@@ -37,17 +38,18 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     connect( m_inputDelayTimer, SIGNAL( timeout() ),
              this, SLOT( startSearch() ) );
 
-    // 1. text line
+    // 1. clear button
+    QAction *clearAction = addAction( KIcon(layoutDirection() ==
+ Qt::RightToLeft ? "clear_left" : "locationbar_erase"),
+                  QString::null);
+    clearAction->setToolTip(i18n( "Clear filter" ));
+
+    // 2. text line
     m_lineEdit = new KLineEdit(this);
     m_lineEdit->setToolTip(i18n( "Enter at least 3 letters to filter pages" ));
     connect(m_lineEdit, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
+    connect(clearAction, SIGNAL( triggered() ), m_lineEdit, SLOT( clear() ));
     addWidget(m_lineEdit);
-
-    // 2. clear button (uses a lineEdit slot, so it must be created after)
-    QAction *clearAction = addAction( KIcon(layoutDirection() ==
- Qt::RightToLeft ? "clear_left" : "locationbar_erase"),
-                  QString::null, m_lineEdit, SLOT( clear() ));
-    clearAction->setToolTip(i18n( "Clear filter" ));
 
     // 3.1. create the popup menu for changing filtering features
     m_menu = new QMenu( this );
@@ -58,20 +60,21 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     m_marchAnyWordsAction = m_menu->addAction( i18n("Match Any Word") );
 
     m_caseSensitiveAction->setCheckable( true );
+    QActionGroup *actgrp = new QActionGroup( this );
     m_matchPhraseAction->setCheckable( true );
+    m_matchPhraseAction->setActionGroup( actgrp );
     m_marchAllWordsAction->setCheckable( true );
+    m_marchAllWordsAction->setActionGroup( actgrp );
     m_marchAnyWordsAction->setCheckable( true );
+    m_marchAnyWordsAction->setActionGroup( actgrp );
 
     m_marchAllWordsAction->setChecked( true );
     connect( m_menu, SIGNAL( triggered(QAction *) ), SLOT( slotMenuChaged(QAction*) ) );
 
     // 3.2. create the toolbar button that spawns the popup menu
-#warning still have to connect that to the menu
-    //insertButton( "kpdf", FIND_ID, m_menu, true, i18n( "Filter Options" ), 2/*index*/ );
-
-    // always maximize the text line
-#warning port setItemAutoSized
-    //setItemAutoSized( LEDIT_ID );
+    QAction *optionsMenuAction = addAction( KIcon( "oKular" ), QString::null);
+    optionsMenuAction->setToolTip( i18n("Filter Options") );
+    optionsMenuAction->setMenu( m_menu );
 }
 
 void SearchWidget::clearText()
@@ -101,23 +104,14 @@ void SearchWidget::slotMenuChaged( QAction * act )
     else if ( act == m_matchPhraseAction )
     {
         m_searchType = 0;
-        m_matchPhraseAction->setChecked( true );
-        m_marchAllWordsAction->setChecked( false );
-        m_marchAnyWordsAction->setChecked( false );
     }
     else if ( act == m_marchAllWordsAction )
     {
         m_searchType = 1;
-        m_matchPhraseAction->setChecked( false );
-        m_marchAllWordsAction->setChecked( true );
-        m_marchAnyWordsAction->setChecked( false );
     }
     else if ( act == m_marchAnyWordsAction )
     {
         m_searchType = 2;
-        m_matchPhraseAction->setChecked( false );
-        m_marchAllWordsAction->setChecked( false );
-        m_marchAnyWordsAction->setChecked( true );
     }
     else
         return;
@@ -144,9 +138,8 @@ void SearchWidget::startSearch()
     // if not found, use warning colors
     if ( !ok )
     {
-        KLineEdit * lineEdit = m_lineEdit;
-        lineEdit->setPaletteForegroundColor( Qt::white );
-        lineEdit->setPaletteBackgroundColor( Qt::red );
+        m_lineEdit->setPaletteForegroundColor( Qt::white );
+        m_lineEdit->setPaletteBackgroundColor( Qt::red );
     }
 }
 

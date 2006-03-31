@@ -10,12 +10,12 @@
 #ifndef _KPDF_SEARCHWIDGET_H_
 #define _KPDF_SEARCHWIDGET_H_
 
-#include <ktoolbar.h>
+#include <qtoolbar.h>
 
 class KPDFDocument;
 class KLineEdit;
-class m_inputDelayTimer;
 class QAction;
+class QTimer;
 
 // definition of searchID for this class (publicly available to ThumbnailsList)
 #define SW_SEARCH_ID 3
@@ -28,7 +28,7 @@ class QAction;
  * It supports case sensitive/unsensitive(default) and provieds a button
  * for switching between the 2 modes.
  */
-class SearchWidget : public KToolBar
+class SearchWidget : public QToolBar
 {
     Q_OBJECT
     public:

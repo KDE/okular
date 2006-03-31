@@ -14,6 +14,8 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qlayout.h>
+#include <QStyleOptionButton>
+#include <QStylePainter>
 #include <qvalidator.h>
 #include <qpainter.h>
 #include <kiconloader.h>
@@ -434,10 +436,14 @@ void HoverButton::paintEvent( QPaintEvent * e )
     }
     else
     {
-        QPainter p( this );
-        p.fillRect(e->rect(), parentWidget() ? parentWidget()->palette().brush(QPalette::Active, QColorGroup::Background) : QBrush(paletteBackgroundColor()));
-        #warning don't know how to port drawButtonLabel
-//      drawButtonLabel( &p );
+        QStylePainter p( this );
+        QStyleOptionButton opt;
+        opt.initFrom( this );
+        opt.features = QStyleOptionButton::Flat;
+        opt.icon = icon();
+        opt.iconSize = iconSize();
+        opt.text = text();
+        p.drawControl( QStyle::CE_PushButton, opt );
     }
 }
 

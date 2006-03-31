@@ -156,7 +156,7 @@ void Shell::setupActions()
 {
   KAction * openAction = KStdAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStdAction::openRecent( this, SLOT( openURL( const KUrl& ) ), actionCollection() );
-  connect( m_recent, SIGNAL( activated() ), openAction, SLOT( activate() ) );
+  connect( m_recent, SIGNAL( activated() ), openAction, SLOT( trigger() ) );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStdAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
   m_printAction->setEnabled( false );

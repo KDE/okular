@@ -265,7 +265,7 @@ void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )
     if ( GSSettings::messages() )
     {
         m_box=tBox;
-        m_box->addItem( m_logWindow, QIconSet(SmallIcon("queue")), i18n("GhostScript Messages") );
+        m_box->addItem( m_logWindow, SmallIconSet("queue"), i18n("GhostScript Messages") );
     }
     m_actionCollection = ac;
 

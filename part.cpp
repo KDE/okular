@@ -39,7 +39,6 @@
 #include <kstdaction.h>
 #include <kdeversion.h>
 #include <kparts/genericfactory.h>
-#include <k3urldrag.h>
 #include <kfiledialog.h>
 #include <kfind.h>
 #include <kmessagebox.h>
@@ -147,7 +146,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	//KListViewSearchLine * tocSearchLine = new KListViewSearchLine( tocFrame, toc );
 	//tocFrameLayout->addWidget( tocSearchLine );
 	//tocFrameLayout->addWidget( toc );
-	tbIndex = m_toolBox->addItem( m_toc/*tocFrame*/, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	tbIndex = m_toolBox->addItem( m_toc/*tocFrame*/, SmallIconSet("text_left"), i18n("Contents") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
 	enableTOC( false );
 
@@ -164,14 +163,14 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	thumbsBox->setStretchFactor( m_searchWidget, 100 );
 	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
 //	thumbsBox->setStretchFactor( m_tc, 1 );
-	tbIndex = m_toolBox->addItem( thumbsBox, QIconSet(SmallIcon("thumbnail")), i18n("Thumbnails") );
+	tbIndex = m_toolBox->addItem( thumbsBox, SmallIconSet("thumbnail"), i18n("Thumbnails") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
 	m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
 
 	// [left toolbox: Reviews] | []
 #warning this is making it crash
 //	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
-//	m_toolBox->addItem( reviewsWidget, QIconSet(SmallIcon("pencil")), i18n("Reviews") );
+//	m_toolBox->addItem( reviewsWidget, SmallIconSet("pencil"), i18n("Reviews") );
 
 	// widgets: [../miniBarContainer] | []
 	QWidget * miniBarContainer = new QWidget( m_leftPanel );
@@ -220,13 +219,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
 	m_prevPage->setShortcut( "Backspace" );
 	// dirty way to activate prev page when pressing miniBar's button
-	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( activate() ) );
+	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 	m_nextPage->setShortcut( "Space" );
 	// dirty way to activate next page when pressing miniBar's button
-	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( activate() ) );
+	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 
 	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );

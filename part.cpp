@@ -31,7 +31,6 @@
 #include <qpushbutton.h>
 #include <dcopobject.h>
 #include <dcopclient.h>
-#include <k3listviewsearchline.h>
 #include <kaction.h>
 #include <kdirwatch.h>
 #include <kinstance.h>

@@ -13,7 +13,6 @@
 #include <qpainter.h>
 #include <qevent.h>
 #include <qtimer.h>
-#include <qtooltip.h>
 #include <qpushbutton.h>
 #include <kacceleratormanager.h>
 #include <kapplication.h>

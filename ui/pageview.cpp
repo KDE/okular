@@ -39,7 +39,6 @@
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kimageeffect.h>
-#include <kimageio.h>
 #include <ktoolinvocation.h>
 #include <kdebug.h>
 #include <kmessagebox.h>

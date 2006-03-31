@@ -20,7 +20,6 @@
 #include <qmap.h>
 #include <kconfigdialog.h>
 #include <kdebug.h>
-#include <kimageio.h>
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>

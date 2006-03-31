@@ -9,12 +9,9 @@
 
 // qt/kde includes
 #include <qmenu.h>
-#include <qtooltip.h>
 #include <qaction.h>
-#include <qapplication.h>
 #include <qtimer.h>
-#include <kaction.h>
-#include <kactioncollection.h>
+#include <kicon.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <klineedit.h>

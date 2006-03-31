@@ -266,7 +266,7 @@ void ProtocolMSITS::listDir (const KUrl & url)
 	QVector<QString> listing;
 
 	if ( chm_enumerate_dir ( m_chmFile,
-							filepath.local8Bit(),
+							filepath.toLocal8Bit(),
 							CHM_ENUMERATE_NORMAL | CHM_ENUMERATE_FILES | CHM_ENUMERATE_DIRS,
 							chmlib_enumerator,
 							&listing ) != 1 )

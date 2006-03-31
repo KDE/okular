@@ -476,9 +476,9 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         d->sortCombo->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
         d->sortCombo->setMinimumWidth( 100 );
         d->sortCombo->setEnabled( false );
-        d->sortCombo->insertItem( SmallIcon( "fonts" ), i18n("Name") );
-        d->sortCombo->insertItem( SmallIcon( "knewstuff" ), i18n("Rating") );
-        d->sortCombo->insertItem( SmallIcon( "favorites" ), i18n("Downloads") );
+        d->sortCombo->addItem( SmallIconSet( "fonts" ), i18n("Name") );
+        d->sortCombo->addItem( SmallIconSet( "knewstuff" ), i18n("Rating") );
+        d->sortCombo->addItem( SmallIconSet( "favorites" ), i18n("Downloads") );
         connect( d->sortCombo, SIGNAL( activated(int) ),
                  this, SLOT( slotSortingSelected(int) ) );
 
@@ -711,10 +711,10 @@ void NewStuffDialog::slotProvidersListResult( KIO::Job * job )
     {
         const Provider * provider =  *it;
         // provider icon: using local KIconLoader, not loading from remote url
-        QPixmap icon = DesktopIcon( provider->icon().url(), 16 );
+        QIcon icon = DesktopIconSet( provider->icon().url(), 16 );
         QString name = provider->name();
         // insert provider in combo
-        d->typeCombo->insertItem( icon, name );
+        d->typeCombo->addItem( icon, name );
     }
 
     // automatically load the first provider

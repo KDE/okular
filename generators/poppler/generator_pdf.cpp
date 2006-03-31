@@ -148,7 +148,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
                 // look for the pass in that folder
                 QString retrievedPass;
                 if ( !wallet->readPassword( filePath.section('/', -1, -1), retrievedPass ) )
-                    password = retrievedPass.local8Bit();
+                    password = retrievedPass.toLocal8Bit();
             }
             triedWallet = true;
         }

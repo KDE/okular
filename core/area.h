@@ -143,7 +143,7 @@ void RegularArea<NormalizedShape, Shape>::simplify()
             }
             while (!m_remove.isEmpty())
             {
-                this->remove( m_remove.last() );
+                this->removeAll( m_remove.last() );
                 m_remove.pop_back();
             }
             kDebug() << "from " << end << " to " << this->count() << endl;

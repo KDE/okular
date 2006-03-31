@@ -39,8 +39,9 @@ static const char littleTIFF[] = "\x49\x49\x2a\x00";
 static const char bigTIFF[]    = "\x4d\x4d\x00\x2a";
 
 KFaxImage::KFaxImage( const QString &filename, QObject *parent, const char *name )
-   : QObject(parent,name)
+   : QObject(parent)
 {
+  setObjectName(QLatin1String(name));
   KGlobal::locale()->insertCatalog( QString::fromLatin1("libkfaximage") );
   loadImage(filename);
 }
@@ -190,7 +191,7 @@ KFaxImage::notetiff()
 	return 0;
     }
 
-    if (file.readBlock(SC(header), 8) != 8) {
+    if (file.read(SC(header), 8) != 8) {
 	kfaxerror(i18n("Unable to read file header (file too short)."));
 	return 0;
     }
@@ -234,12 +235,12 @@ KFaxImage::notetiff()
 	    file.close();
 	    return 1;
 	}
-	if (file.readBlock(SC(buf), 2) != 2)
+	if (file.read(SC(buf), 2) != 2)
 	    goto realbad;
 	ndirent = get2(buf, endian);
         int len = 12*ndirent+4;
 	dir = (unsigned char *) malloc(len);
-	if (file.readBlock(SC(dir), len) != len)
+	if (file.read(SC(dir), len) != len)
 	    goto realbad;
 	for (dp = dir; ndirent; ndirent--, dp += 12) {
 	    /* for each directory entry */
@@ -287,7 +288,7 @@ KFaxImage::notetiff()
 		if (!file.at(value))
 		    goto realbad;
 		for (count = 0; count < nstrips; count++) {
-		    if (file.readBlock(SC(buf), (ftype == 3) ? 2 : 4) <= 0)
+		    if (file.read(SC(buf), (ftype == 3) ? 2 : 4) <= 0)
 			goto realbad;
 		    strips[count].offset = (ftype == 3) ?
 			get2(buf, endian) : get4(buf, endian);
@@ -340,7 +341,7 @@ KFaxImage::notetiff()
 		if (!file.at(value))
 		    goto realbad;
 		for (count = 0; count < nstrips; count++) {
-		    if (file.readBlock(SC(buf), (ftype == 3) ? 2 : 4) <= 0)
+		    if (file.read(SC(buf), (ftype == 3) ? 2 : 4) <= 0)
 			goto realbad;
 		    strips[count].size = (ftype == 3) ?
 			get2(buf, endian) : get4(buf, endian);
@@ -348,7 +349,7 @@ KFaxImage::notetiff()
 		break;
 	    case 283:		/* YResolution */
 		if (!file.at(value) ||
-		    file.readBlock(SC(buf), 8) != 8)
+		    file.read(SC(buf), 8) != 8)
 		    goto realbad;
 		yres = get4(buf, endian) / get4(buf+4, endian);
 		break;
@@ -484,7 +485,7 @@ KFaxImage::getstrip(pagenode *pn, int strip)
 
     /* we expect to get it in one gulp... */
     if (!file.at(offset) ||
-	(size_t) file.readBlock((char *)Data, pn->length) != pn->length) { 
+	(size_t) file.read((char *)Data, pn->length) != pn->length) { 
 	badfile(pn);
 	free(Data);
 	return NULL;

@@ -311,9 +311,9 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
     QByteArray buf(1024);
     int read = 0, wrtn = 0;
 
-    while ((read = filterDev->readBlock(buf.data(), buf.size())) > 0)
+    while ((read = filterDev->read(buf.data(), buf.size())) > 0)
     {
-        wrtn = m_tempfile->file()->writeBlock(buf.data(), read);
+        wrtn = m_tempfile->file()->write(buf.data(), read);
         if ( read != wrtn )
             break;
     }

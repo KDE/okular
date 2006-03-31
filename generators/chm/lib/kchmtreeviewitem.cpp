@@ -61,7 +61,7 @@ const QPixmap * KCHMMainTreeViewItem::pixmap( int i ) const
 
 QString KCHMMainTreeViewItem::getUrl( ) const
 {
-	if ( url.find ('|') == -1 )
+	if ( url.indexOf ('|') == -1 )
 		return url;
 /*
 	// Create a dialog with URLs, and show it, so user can select an URL he/she wants.

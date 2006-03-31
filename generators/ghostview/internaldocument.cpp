@@ -207,7 +207,7 @@ const CDSCMEDIA* GSInternalDocument::findMediaByName( const QString& mediaName )
         for( unsigned int i = 0; i < m_dsc->media_count(); i++ ) 
         {
             if( m_dsc->media()[i] && m_dsc->media()[i]->name
-                && qstricmp( mediaName.local8Bit(), m_dsc->media()[i]->name ) == 0 ) 
+                && qstricmp( mediaName.toLocal8Bit(), m_dsc->media()[i]->name ) == 0 ) 
             {
                 return m_dsc->media()[i];
             }
@@ -218,7 +218,7 @@ const CDSCMEDIA* GSInternalDocument::findMediaByName( const QString& mediaName )
     const CDSCMEDIA *m = dsc_known_media;
     while( m->name ) 
     {
-        if( qstricmp( mediaName.local8Bit(), m->name ) == 0 ) 
+        if( qstricmp( mediaName.toLocal8Bit(), m->name ) == 0 ) 
             return m;
         m++;
     }
@@ -234,7 +234,7 @@ QString GSInternalDocument::getPaperSize( const QString& mediaName ) const
         const CDSCMEDIA *m = dsc_known_media;
         while( m->name ) 
         {
-            if( qstricmp( m_fallbackMedia.local8Bit(), m->name ) == 0 ) 
+            if( qstricmp( m_fallbackMedia.toLocal8Bit(), m->name ) == 0 ) 
                 return QString(m->name);
             m++;
         }

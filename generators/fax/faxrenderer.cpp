@@ -24,6 +24,7 @@
 #include <qfileinfo.h>
 #include <qpainter.h>
 #include <qpaintdevice.h>
+#include <QX11Info>
 
 #include "faxrenderer.h"
 #include "core/page.h"
@@ -142,8 +143,8 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
         kError() << "File invalid resolutions, dpi x = " << dpix << ", dpi y = "  << dpiy << ". This information will be ignored and 75 DPI assumed." << endl;
         dpix = dpiy = 75.0;
       }
-      pagesVector[pg] = new KPDFPage(pg, QPaintDevice::x11AppDpiX () * pageSize.width() / dpix, 
-        QPaintDevice::x11AppDpiX () * pageSize.height()/dpiy,0);
+      pagesVector[pg] = new KPDFPage(pg, QX11Info::appDpiX () * pageSize.width() / dpix, 
+        QX11Info::appDpiX () * pageSize.height()/dpiy,0);
   }
 
   // the return value 'true' indicates that this operation was not successful.

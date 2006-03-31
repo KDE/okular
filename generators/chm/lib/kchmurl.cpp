@@ -53,13 +53,13 @@ namespace KCHMUrl
         && !isJavascriptURL (url)
         && !isNewChmURL (url, p1, p2) )
         {
-            newurl = QDir::cleanDirPath (url);
+            newurl = QDir::cleanPath (url);
 
             // Normalize url, so it becomes absolute
             if ( newurl[0] != '/' )
                 newurl = "/" + newurl;
 
-            newurl = QDir::cleanDirPath (newurl);
+            newurl = QDir::cleanPath (newurl);
         }
 
     //qDebug ("KCHMViewWindow::makeURLabsolute (%s) -> (%s)", url.ascii(), newurl.ascii());
@@ -75,7 +75,7 @@ namespace KCHMUrl
         && !isJavascriptURL (url)
         && !isNewChmURL (url, p1, p2) )
         {
-            newurl = QDir::cleanDirPath (url);
+            newurl = QDir::cleanPath (url);
 
             // Normalize url, so it becomes absolute
             if ( newurl[0] != '/' )

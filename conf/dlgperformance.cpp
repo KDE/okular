@@ -7,6 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <qfont.h>
+#include <kiconloader.h>
+
 #include "dlgperformancebase.h"
 
 #include "dlgperformance.h"
@@ -16,6 +19,13 @@ DlgPerformance::DlgPerformance( QWidget * parent )
 {
     m_dlg = new Ui_DlgPerformanceBase();
     m_dlg->setupUi( this );
+
+    QFont labelFont = m_dlg->descLabel->font();
+    labelFont.setBold( true );
+    m_dlg->descLabel->setFont( labelFont );
+
+    m_dlg->cpuLabel->setPixmap( BarIcon( "kcmprocessor", 32 ) );
+    m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) );
 
     connect( m_dlg->lowRadio, SIGNAL( toggled( bool ) ), this, SLOT( lowRadio_toggled( bool ) ) );
     connect( m_dlg->normalRadio, SIGNAL( toggled( bool ) ), this, SLOT( normalRadio_toggled( bool ) ) );

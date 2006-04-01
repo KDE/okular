@@ -17,7 +17,7 @@
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
-class KToolBar;
+class QToolBar;
 class QTimer;
 
 class KPDFDocument;
@@ -88,7 +88,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         QVector< PresentationFrame * > m_frames;
         int m_frameIndex;
         QStringList m_metaStrings;
-        KToolBar * m_topBar;
+        QToolBar * m_topBar;
 
     private slots:
         void slotNextPage();

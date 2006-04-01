@@ -18,7 +18,7 @@
 #include <qdesktopwidget.h>
 #include <kcursor.h>
 #include <krandom.h>
-#include <ktoolbar.h>
+#include <qtoolbar.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -178,6 +178,7 @@ bool PresentationWidget::event ( QEvent * e )
 {
     if (e -> type() == QEvent::WindowDeactivate) KWin::clearState(winId(), NET::StaysOnTop);
     else if (e -> type() == QEvent::WindowActivate) KWin::setState(winId(), NET::StaysOnTop);
+#warning this is making the presentation mode crash
     return QDialog::event(e);
 }
 
@@ -297,7 +298,9 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         KIconLoader *il = KGlobal::iconLoader();
 
         // create top toolbar
-        m_topBar = new KToolBar( this, "presentationBar" );
+        m_topBar = new QToolBar( this );
+        m_topBar->setObjectName( "presentationBar" );
+        m_topBar->setIconSize( QSize( 32, 32 ) );
         m_topBar->addAction( QIcon(il->loadIcon("1leftarrow", K3Icon::Toolbar)), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
         m_topBar->addAction( QIcon(il->loadIcon("1rightarrow", K3Icon::Toolbar)), i18n("Next Page"), this, SLOT( slotNextPage() ) );
         QWidget *spacer = new QWidget(m_topBar);
@@ -525,8 +528,8 @@ void PresentationWidget::generateIntroPage( QPainter & p )
         p.fillRect( 0, i, m_width, 1, QColor( k, k, k ) );
     }
 
-    // draw kpdf logo in the four corners
-    QPixmap logo = DesktopIcon( "kpdf", 64 );
+    // draw oKular logo in the four corners
+    QPixmap logo = DesktopIcon( "oKular", 64 );
     if ( !logo.isNull() )
     {
         p.drawPixmap( 5, 5, logo );

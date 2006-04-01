@@ -16,7 +16,7 @@
 
 class KPDFDocument;
 class KPDFPage;
-class KToolBar;
+class QToolBar;
 class K3ListView;
 class K3ListViewSearchLine;
 class QTimer;
@@ -49,8 +49,8 @@ class Reviews : public QWidget, public DocumentObserver
         void requestListViewUpdate( int delayms = 200 );
 
         // data fields (GUI)
-        KToolBar * m_toolBar1;
-        KToolBar * m_toolBar2;
+        QToolBar * m_toolBar1;
+        QToolBar * m_toolBar2;
         K3ListView * m_listView;
         K3ListViewSearchLine * m_searchLine;
         // internal storage

@@ -11,7 +11,7 @@
 #include <q3header.h>
 #include <qlayout.h>
 #include <qtimer.h>
-#include <ktoolbar.h>
+#include <qtoolbar.h>
 #include <k3listview.h>
 #include <k3listviewsearchline.h>
 #include <kaction.h>
@@ -35,48 +35,47 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     QVBoxLayout * vLayout = new QVBoxLayout( this );
     vLayout->setMargin( 0 );
     vLayout->setSpacing( 4 );
-    m_toolBar1 = new KToolBar( this, "reviewSearchBar" );
+    m_toolBar1 = new QToolBar( this );
+    m_toolBar1->setObjectName( "reviewSearchBar" );
     vLayout->addWidget( m_toolBar1 );
     m_listView = new K3ListView( this );
     vLayout->addWidget( m_listView );
-    m_toolBar2 = new KToolBar( this, "reviewOptsBar" );
+    m_toolBar2 = new QToolBar( this );
+    m_toolBar2->setObjectName( "reviewOptsBar" );
     vLayout->addWidget( m_toolBar2 );
 
     // setup 1-UPPER toolbar and searchLine
     m_searchLine = new K3ListViewSearchLine( m_toolBar1, m_listView );
-    m_toolBar1->setIconDimensions( 16 );
+    m_toolBar1->setIconSize( QSize( 16, 16 ) );
     m_toolBar1->setMovable( false );
     // - add Clear button
     QString clearIconName = QApplication::layoutDirection() ==
  Qt::RightToLeft ? "clear_left" : "locationbar_erase";
-#warning lots of KToolBar code to port
-/*    m_toolBar1->insertButton( clearIconName, 1, SIGNAL( clicked() ),
-        m_searchLine, SLOT( clear() ), true, i18n( "Clear Filter" ) );
+    QAction * clearAction = m_toolBar1->addAction(
+        KIcon( clearIconName ), i18n( "Clear Filter" ), m_searchLine, SLOT( clear() ) );
     // - add Search line
-    m_toolBar1->insertWidget( 2, 0, m_searchLine );
-    m_toolBar1->setItemAutoSized( 2 );
-    m_toolBar1->getWidget( 2 )->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    m_toolBar1->addWidget(m_searchLine);
 
     // setup 2-LOWER toolbar
-    m_toolBar2->setIconDimensions( 16 );
+    m_toolBar2->setIconSize( QSize( 16, 16 ) );
     m_toolBar2->setMovable( false );
     // - add Page button
-    m_toolBar2->insertButton( "txt", 1, SIGNAL( toggled( bool ) ),
-        this, SLOT( slotPageEnabled( bool ) ), true, i18n( "Group by Page" ) );
-    m_toolBar2->setToggle( 1 );
-    m_toolBar2->setButton( 1, KpdfSettings::groupByPage() );
+    QAction * groupByPageAction = m_toolBar2->addAction( KIcon( "txt" ), i18n( "Group by Page" ) );
+    groupByPageAction->setCheckable( true );
+    connect( groupByPageAction, SIGNAL( toggled( bool ) ), this, SLOT( slotPageEnabled( bool ) ) );
+    groupByPageAction->setChecked( KpdfSettings::groupByPage() );
     // - add Author button
-    m_toolBar2->insertButton( "personal", 2, SIGNAL( toggled( bool ) ),
-        this, SLOT( slotAuthorEnabled( bool ) ), true, i18n( "Group by Author" ) );
-    m_toolBar2->setToggle( 2 );
-    m_toolBar2->setButton( 2, KpdfSettings::groupByAuthor() );
+    QAction * groupByAuthorAction = m_toolBar2->addAction( KIcon( "personal" ), i18n( "Group by Author" ) );
+    groupByAuthorAction->setCheckable( true );
+    connect( groupByAuthorAction, SIGNAL( toggled( bool ) ), this, SLOT( slotAuthorEnabled( bool ) ) );
+    groupByAuthorAction->setChecked( KpdfSettings::groupByAuthor() );
     // - add separator
-    m_toolBar2->insertLineSeparator();
+    m_toolBar2->addSeparator();
     // - add Current Page Only button
-    m_toolBar2->insertButton( "1downarrow", 3, SIGNAL( toggled( bool ) ),
-        this, SLOT( slotCurrentPageOnly( bool ) ), true, i18n( "Show reviews for current page only" ) );
-    m_toolBar2->setToggle( 3 );
-    m_toolBar2->setButton( 3, KpdfSettings::currentPageOnly() );*/
+    QAction * curPageOnlyAction = m_toolBar2->addAction( KIcon( "1downarrow" ), i18n( "Show reviews for current page only" ) );
+    curPageOnlyAction->setCheckable( true );
+    connect( curPageOnlyAction, SIGNAL( toggled( bool ) ), this, SLOT( slotCurrentPageOnly( bool ) ) );
+    curPageOnlyAction->setChecked( KpdfSettings::currentPageOnly() );
 
     // customize listview appearance
     m_listView->addColumn( i18n("Annotation") );

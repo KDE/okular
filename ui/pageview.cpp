@@ -266,16 +266,20 @@ void PageView::setupActions( KActionCollection * ac )
     QActionGroup * actGroup = new QActionGroup( this );
     actGroup->setExclusive( true );
     d->aMouseNormal = new KAction( i18n("&Browse Tool"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+    d->aMouseNormal->setCheckable( true );
     d->aMouseNormal->setActionGroup( actGroup );
     d->aMouseNormal->setChecked( true );
 
     KAction * mz = new KAction( i18n("&Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
+    mz->setCheckable( true );
     mz->setActionGroup( actGroup );
 
     d->aMouseSelect = new KAction( i18n("&Select Tool"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setActionGroup( actGroup );
 
     d->aToggleAnnotator = new KToggleAction( i18n("&Review"), "pencil", 0, ac, "mouse_toggle_annotate" );
+    d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
     d->aToggleAnnotator->setShortcut( "F6" );
 

@@ -878,19 +878,23 @@ GBool XRef::getStreamEnd(Guint streamStart, Guint *streamEnd) {
 
 int XRef::getNumEntry(int offset) const
 {
-  int res = -1;
-  int resOffset = -1;
-  XRefEntry e;
-  for (int i = 0; i < size; ++i)
+  if (size > 0)
   {
-    e = entries[i];
-    if (e.offset < offset && e.offset > resOffset)
+    int res = 0;
+    Guint resOffset = entries[0].offset;
+    XRefEntry e;
+    for (int i = 1; i < size; ++i)
     {
-      res = i;
-      resOffset = e.offset;
+      e = entries[i];
+      if (e.offset < offset && e.offset >= resOffset)
+      {
+        res = i;
+        resOffset = e.offset;
+      }
     }
+    return res;
   }
-  return res;
+  else return -1;
 }
 
 Guint XRef::strToUnsigned(char *s) {

@@ -87,6 +87,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
     setObjectName( "miniBar" );
     // left spacer
     QHBoxLayout * horLayout = new QHBoxLayout( this );
+    horLayout->setMargin( 2 );
     QSpacerItem * spacerL = new QSpacerItem( 20, 10, QSizePolicy::Expanding );
     horLayout->addItem( spacerL );
 
@@ -430,7 +431,7 @@ void HoverButton::leaveEvent( QPaintEvent * e )
 
 void HoverButton::paintEvent( QPaintEvent * e )
 {
-    if ( testAttribute( Qt::WA_UnderMouse ) )
+    if ( testAttribute( Qt::WA_UnderMouse ) && isEnabled() )
     {
         QPushButton::paintEvent( e );
     }

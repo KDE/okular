@@ -543,21 +543,20 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
 #define FILTERB_ID  1
 
 ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list )
-    : KToolBar( parent, "ThumbsControlBar" )
+    : QToolBar( parent )
 {
+    setObjectName( "ThumbsControlBar" );
     // change toolbar appearance
-    setIconDimensions( 16 );
+    setIconSize( QSize( 16, 16 ) );
     setMovable( false );
 
     // insert a togglebutton [show only bookmarked pages]
     //insertSeparator();
-#warning port that
-/*
-    insertButton( "bookmark", FILTERB_ID, SIGNAL( toggled( bool ) ),
-                  list, SLOT( slotFilterBookmarks( bool ) ),
-                  true, i18n( "Show bookmarked pages only" ) );
-    setToggle( FILTERB_ID );
-    setButton( FILTERB_ID, KpdfSettings::filterBookmarks() );*/
+    QAction * showBoomarkOnlyAction = addAction(
+        KIcon( "bookmark" ), i18n( "Show bookmarked pages only" ) );
+    showBoomarkOnlyAction->setCheckable( true );
+    connect( showBoomarkOnlyAction, SIGNAL( toggled( bool ) ), list, SLOT( slotFilterBookmarks( bool ) ) );
+    showBoomarkOnlyAction->setChecked( KpdfSettings::filterBookmarks() );
     //insertLineSeparator();
 }
 

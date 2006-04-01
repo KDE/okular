@@ -131,6 +131,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_leftPanel->setMinimumWidth( 90 );
 	m_leftPanel->setMaximumWidth( 300 );
 	QVBoxLayout * leftPanelLayout = new QVBoxLayout( m_leftPanel );
+	leftPanelLayout->setMargin( 0 );
 
 	// widgets: [left toolbox/..] | []
 	m_toolBox = new QToolBox( m_leftPanel );
@@ -173,6 +174,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	QWidget * miniBarContainer = new QWidget( m_leftPanel );
 	leftPanelLayout->addWidget( miniBarContainer );
 	QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
+	miniBarLayout->setMargin( 0 );
 	// widgets: [../[spacer/..]] | []
 	QWidget * miniSpacer = new QWidget( miniBarContainer );
 	miniSpacer->setFixedHeight( 6 );

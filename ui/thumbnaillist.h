@@ -13,7 +13,7 @@
 #include <q3scrollview.h>
 
 #include <kvbox.h>
-#include <ktoolbar.h>
+#include <qtoolbar.h>
 
 #include "core/observer.h"
 
@@ -113,7 +113,7 @@ class ThumbnailsBox : public KVBox
  * emits signals whenever a button is pressed. A click action results
  * in invoking some method (or slot) in ThumbnailList.
  */
-class ThumbnailController : public KToolBar
+class ThumbnailController : public QToolBar
 {
     public:
         ThumbnailController( QWidget * parent, ThumbnailList * thumbnailList );

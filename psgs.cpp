@@ -17,6 +17,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kprocio.h>
 #include <kurl.h>
 
 #include <QDir>
@@ -240,8 +241,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   QProcess gs;
   gs.setReadChannelMode(QProcess::MergedChannels);
 
-  // FIXME Investigate why the QProcess can not be started in a Thread.
-  // This works in Qt3, and according the Qt4 Documentation should still work.
+#warning Investigate why the QProcess can not be started in a Thread. This works in Qt3, and according the Qt4 Documentation should still work.
   return;
   gs.start(gs_exe, gs_args);
   
@@ -362,19 +362,11 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KUrl
 
   // Otherwise, use kpsewhich to find the eps file.
   QString EPSfilename;
-
-  QProcess kpsewhich;
-  kpsewhich.setReadChannelMode(QProcess::MergedChannels);
-  kpsewhich.start("kpsewhich",
-                  QStringList() << filename,
-                  QIODevice::ReadOnly|QIODevice::Text);
-
-  if (kpsewhich.waitForStarted()) {
-    // We wait here while the external program runs concurrently.
-    kpsewhich.waitForFinished(-1);
-    EPSfilename = QString(kpsewhich.readAll()).trimmed();
-  }
-
+  KProcIO proc;
+  proc << "kpsewhich" << filename;
+  proc.start(KProcess::Block);
+  proc.readln(EPSfilename);
+  
   return EPSfilename;
 }
 

@@ -70,12 +70,11 @@ fontPool::fontPool()
   connect(&kpsewhich_, SIGNAL(readyReadStandardError()),
           this, SLOT(mf_output_receiver()));
 
-  /*
   // Check if the QT library supports the alpha channel of
-  // pixmaps. Experiments show that --depending of the configuration
+  // QImages. Experiments show that --depending of the configuration
   // of QT at compile and runtime or the availability of the XFt
   // extension, alpha channels are either supported, or silently
-  // converted to 1-bit masks.
+  // ignored.
   QImage start(1, 1, 32); // Generate a 1x1 image, black with alpha=0x10
   start.setAlphaBuffer(true);
   quint32 *destScanLine = (quint32 *)start.scanLine(0);
@@ -99,8 +98,7 @@ fontPool::fontPool()
     kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap supports the alpha channel" << endl;
 #endif
     QPixmapSupportsAlpha = true;
-  }*/
-  QPixmapSupportsAlpha = true;
+  }
 }
 
 

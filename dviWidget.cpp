@@ -30,31 +30,31 @@ DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name)
 
 void DVIWidget::mousePressEvent(QMouseEvent* e)
 {
-  // Safety check
-  if (!pageNumber.isValid())
-    return;
+  // Call implementation from parent
+  DocumentWidget::mousePressEvent(e);
 
+  // Safety check
+  if (!pageNumber.isValid()) {
+    return;
+  }
+  
   // Get a pointer to the page contents
   RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNumber));
-  if (pageData == 0)
-  {
+  if (pageData == 0) {
     kDebug(kvs::dvi) << "DVIWidget::mousePressEvent(...) pageData for page #" << pageNumber << " is empty" << endl;
     return;
   }
-
+  
   // Check if the mouse is pressed on a source-hyperlink
   // source hyperlinks can be invoked with the Middle Mousebutton or alternatively
   // with Control+Left Mousebutton
   if ((e->button() == Qt::MidButton || (e->button() == Qt::LeftButton && (e->state() & Qt::ControlButton)))
-      && (pageData->sourceHyperLinkList.size() > 0))
-  {
+      && (pageData->sourceHyperLinkList.size() > 0)) {
     int minIndex = 0;
     int minimum = 0;
-
-    for(int i=0; i<pageData->sourceHyperLinkList.size(); i++)
-    {
-      if (pageData->sourceHyperLinkList[i].box.contains(inverseMap(e->pos())))
-      {
+    
+    for(int i=0; i<pageData->sourceHyperLinkList.size(); i++) {
+      if (pageData->sourceHyperLinkList[i].box.contains(inverseMap(e->pos()))) {
         emit(SRCLink(pageData->sourceHyperLinkList[i].linkText, inverseMap(e->pos()), this));
         e->accept();
         return;
@@ -63,8 +63,7 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
       QPoint center = pageData->sourceHyperLinkList[i].box.center();
       int dx = center.x() - e->pos().x();
       int dy = center.y() - e->pos().y();
-      if (dx*dx + dy*dy < minimum || i == 0)
-      {
+      if (dx*dx + dy*dy < minimum || i == 0) {
         minIndex = i;
         minimum = dx*dx + dy*dy;
       }
@@ -73,9 +72,6 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
     emit(SRCLink(pageData->sourceHyperLinkList[minIndex].linkText, inverseMap(e->pos()), this));
     e->accept();
   }
-
-  // Call implementation from parent
-  DocumentWidget::mousePressEvent(e);
 }
 
 

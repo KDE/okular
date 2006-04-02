@@ -281,9 +281,9 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 			nextPage = m_thumbnails[ m_vectorIndex + 1 ]->pageNumber();
 	}
 	else if ( keyEvent->key() == Qt::Key_PageUp )
-		verticalScrollBar()->subtractPage();
+		verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
 	else if ( keyEvent->key() == Qt::Key_PageDown )
-		verticalScrollBar()->addPage();
+		verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
 	else if ( keyEvent->key() == Qt::Key_Home )
 		nextPage = m_thumbnails[ 0 ]->pageNumber();
 	else if ( keyEvent->key() == Qt::Key_End )

@@ -140,7 +140,7 @@ void Shell::readSettings()
     m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
 
     KGlobal::config()->setDesktopGroup();
-    bool fullScreen = KGlobal::config()->readBoolEntry( "FullScreen", false );
+    bool fullScreen = KGlobal::config()->readEntry( "FullScreen", false );
     setFullScreen( fullScreen );
 }
 
@@ -332,6 +332,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
     }
     m_tempfile->close();
     url=m_tempfile->name();
+    return true;
 }
 
 void Shell::fileOpen()

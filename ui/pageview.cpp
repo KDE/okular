@@ -838,9 +838,9 @@ if (d->document->handleEvent( e ) )
             if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
             {
                 if ( e->key() == Qt::Key_Up )
-                    verticalScrollBar()->subtractLine();
+                    verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
                 else
-                    verticalScrollBar()->subtractPage();
+                    verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
             }
             else if ( d->document->currentPage() > 0 )
             {
@@ -860,9 +860,9 @@ if (d->document->handleEvent( e ) )
             if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
             {
                 if ( e->key() == Qt::Key_Down )
-                    verticalScrollBar()->addLine();
+                    verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
                 else
-                    verticalScrollBar()->addPage();
+                    verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
             }
             else if ( d->document->currentPage() < d->items.count() - 1 )
             {
@@ -877,10 +877,10 @@ if (d->document->handleEvent( e ) )
             }
             break;
         case Qt::Key_Left:
-            horizontalScrollBar()->subtractLine();
+            horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
             break;
         case Qt::Key_Right:
-            horizontalScrollBar()->addLine();
+            horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
             break;
         case Qt::Key_Shift:
         case Qt::Key_Control:

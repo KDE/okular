@@ -53,11 +53,13 @@ struct PresentationFrame
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
-    : QDialog( parent, "presentationWidget", true, Qt::WDestructiveClose | Qt::WStyle_NoBorder),
+    : QDialog( parent, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 )
 {
-    // set look and geometry
-    setBackgroundMode( Qt::NoBackground );
+    setModal( true );
+    setAttribute( Qt::WA_DeleteOnClose );
+    setAttribute( Qt::WA_OpaquePaintEvent );
+    setObjectName( "presentationWidget" );
 
     m_width = -1;
 

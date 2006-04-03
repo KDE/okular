@@ -719,7 +719,7 @@ void NewStuffDialog::slotProvidersListResult( KIO::Job * job )
 
     // automatically load the first provider
     d->typeCombo->setEnabled( true );
-    d->typeCombo->setCurrentItem( 0 );
+    d->typeCombo->setCurrentIndex( 0 );
     QTimer::singleShot( 500, this, SLOT( slotLoadProvider() ) );
 }
 //END ProvidersList Loading

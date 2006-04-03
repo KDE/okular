@@ -10,6 +10,7 @@
 // qt/kde includes
 #include <q3header.h>
 #include <qlayout.h>
+#include <qsizepolicy.h>
 #include <qtimer.h>
 #include <qtoolbar.h>
 #include <k3listview.h>
@@ -38,11 +39,17 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_toolBar1 = new QToolBar( this );
     m_toolBar1->setObjectName( "reviewSearchBar" );
     vLayout->addWidget( m_toolBar1 );
+    QSizePolicy sp = m_toolBar1->sizePolicy();
+    sp.setVerticalPolicy( QSizePolicy::Minimum );
+    m_toolBar1->setSizePolicy( sp );
     m_listView = new K3ListView( this );
     vLayout->addWidget( m_listView );
     m_toolBar2 = new QToolBar( this );
     m_toolBar2->setObjectName( "reviewOptsBar" );
     vLayout->addWidget( m_toolBar2 );
+    sp = m_toolBar2->sizePolicy();
+    sp.setVerticalPolicy( QSizePolicy::Minimum );
+    m_toolBar2->setSizePolicy( sp );
 
     // setup 1-UPPER toolbar and searchLine
     m_searchLine = new K3ListViewSearchLine( m_toolBar1, m_listView );

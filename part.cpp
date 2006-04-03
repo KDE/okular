@@ -158,17 +158,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
-	// shrink the bottom controller toolbar (too hackish..)
-	thumbsBox->setStretchFactor( m_thumbnailList, 100 );
-//	thumbsBox->setStretchFactor( m_tc, 1 );
 	tbIndex = m_toolBox->addItem( thumbsBox, SmallIconSet("thumbnail"), i18n("Thumbnails") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
 	m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
 
 	// [left toolbox: Reviews] | []
-#warning this is making it crash
-//	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
-//	m_toolBox->addItem( reviewsWidget, SmallIconSet("pencil"), i18n("Reviews") );
+	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
+	m_toolBox->addItem( reviewsWidget, SmallIconSet("pencil"), i18n("Reviews") );
 
 	// widgets: [../miniBarContainer] | []
 	QWidget * miniBarContainer = new QWidget( m_leftPanel );
@@ -203,7 +199,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_document->addObserver( m_pageView );
 	m_document->addObserver( m_toc );
 	m_document->addObserver( m_miniBar );
-//	m_document->addObserver( reviewsWidget );
+	m_document->addObserver( reviewsWidget );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -856,7 +852,7 @@ void Part::slotNewConfig()
 
     bool showSearch = KpdfSettings::showSearchBar();
     if ( m_searchWidget->isShown() != showSearch )
-        m_searchWidget->setShown( showSearch );
+        m_searchWidget->setVisible( showSearch );
 
     // Main View (pageView)
     Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?

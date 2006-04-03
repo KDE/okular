@@ -10,6 +10,7 @@
 // qt/kde includes
 #include <qmenu.h>
 #include <qaction.h>
+#include <qsizepolicy.h>
 #include <qtimer.h>
 #include <kicon.h>
 #include <klocale.h>
@@ -29,6 +30,9 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     // change toolbar appearance
     setIconSize(QSize(16, 16));
     setMovable( false );
+    QSizePolicy sp = sizePolicy();
+    sp.setVerticalPolicy( QSizePolicy::Minimum );
+    setSizePolicy( sp );
 
     // a timer to ensure that we don't flood the document with requests to search
     m_inputDelayTimer = new QTimer(this);

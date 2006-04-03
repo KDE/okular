@@ -26,7 +26,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
 {
   // PROPERTIES
   QFrame *page = addPage(i18n("Properties"));
-  QGridLayout *layout = new QGridLayout( page, 2, 2, marginHint(), spacingHint() );
+  QGridLayout *layout = new QGridLayout( page );
+  layout->setMargin( marginHint() );
+  layout->setSpacing( spacingHint() );
 
   // get document info, if not present display blank data and a warning
   const DocumentInfo * info = doc->documentInfo();

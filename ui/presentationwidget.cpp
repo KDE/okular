@@ -656,7 +656,7 @@ void PresentationWidget::generateOverlay()
 
     // end drawing pixmap and halve image
     pixmapPainter.end();
-    QImage image( doublePixmap.convertToImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
+    QImage image( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
     image.setAlphaBuffer( true );
 
     // draw circular shadow using the same technique
@@ -667,7 +667,7 @@ void PresentationWidget::generateOverlay()
 //  pixmapPainter.setBrush( 0x80 );
     pixmapPainter.drawEllipse( 0, 0, side, side );
     pixmapPainter.end();
-    QImage shadow( doublePixmap.convertToImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
+    QImage shadow( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
 
     // generate a 2 colors pixmap using mixing shadow (made with highlight color)
     // and image (made with highlightedText color)

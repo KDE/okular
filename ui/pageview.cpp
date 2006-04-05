@@ -1328,11 +1328,11 @@ if (d->document->handleEvent( e ) )
             if ( d->document->supportsSearching() && !selectedText->isEmpty() )
             {
                 menu.addTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
-                textToClipboard = menu.addAction( QIcon(SmallIcon("editcopy")), i18n( "Copy to Clipboard" ) );
+                textToClipboard = menu.addAction( SmallIconSet("editcopy"), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
-                    menu.setItemEnabled( 1, false );
+                    textToClipboard->setEnabled( false );
                 if ( KpdfSettings::useKTTSD() )
-                    speakText = menu.addAction( QIcon(SmallIcon("kttsd")), i18n( "Speak Text" ) );
+                    speakText = menu.addAction( SmallIconSet("kttsd"), i18n( "Speak Text" ) );
             }
             menu.addTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
             imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );

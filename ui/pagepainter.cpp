@@ -186,7 +186,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             {
                 case KpdfSettings::EnumRenderMode::Inverted:
                     // Invert image pixels using QImage internal function
-                    backImage.invertPixels(false);
+                    backImage.invertPixels(QImage::InvertRgb);
                     break;
                 case KpdfSettings::EnumRenderMode::Recolor:
                     // Recolor image using KImageEffect::flatten with dither:0
@@ -530,14 +530,14 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
     // handle quickly the case in which the whole pixmap has to be converted
     if ( r == QRect( 0, 0, src->width(), src->height() ) )
     {
-        dest = src->convertToImage();
+        dest = src->toImage();
     }
     // else copy a portion of the src to an internal pixmap (smaller) and convert it
     else
     {
         QPixmap croppedPixmap( r.width(), r.height() );
         copyBlt( &croppedPixmap, 0, 0, src, r.left(), r.top(), r.width(), r.height() );
-        dest = croppedPixmap.convertToImage();
+        dest = croppedPixmap.toImage();
     }
 }
 
@@ -557,7 +557,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     unsigned int * destData = (unsigned int *)dest.bits();
 
     // source image (1:1 conversion from pixmap)
-    QImage srcImage = src->convertToImage();
+    QImage srcImage = src->toImage();
     unsigned int * srcData = (unsigned int *)srcImage.bits();
 
     // precalc the x correspondancy conversion in a lookup table

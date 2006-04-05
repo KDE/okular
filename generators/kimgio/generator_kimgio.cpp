@@ -46,7 +46,7 @@ bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ )
 void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
 {
     // perform a smooth scaled generation
-    QImage smoothImage = m_pix->convertToImage().scaled( request->width, request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    QImage smoothImage = m_pix->toImage().scaled( request->width, request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
     QPixmap * p = new QPixmap( smoothImage );
     request->page->setPixmap(request->id, p);
 

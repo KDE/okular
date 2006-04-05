@@ -266,7 +266,7 @@ void Reviews::addContents( const KPDFPage * page )
         Q3ListViewItem * singleItem = authorItem ?
             new Q3ListViewItem( authorItem, annotation->contents ) :
             new Q3ListViewItem( m_listView, annotation->contents );
-        singleItem->setPixmap( 0, SmallIcon( "kpdf" ) );
+        singleItem->setPixmap( 0, SmallIcon( "oKular" ) );
     }
 }
 

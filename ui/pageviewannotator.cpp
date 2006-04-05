@@ -213,10 +213,10 @@ class PickPointEngine : public AnnotatorEngine
             // parse engine specific attributes
             QString pixmapName = engineElement.attribute( "hoverIcon" );
             if ( pixmapName.isNull() )
-                pixmapName = "kpdf";
+                pixmapName = "oKular";
 
             // create engine objects
-            pixmap = new QPixmap( DesktopIcon( "kpdf", 32 ) );
+            pixmap = new QPixmap( DesktopIcon( "oKular", 32 ) );
         }
 
         ~PickPointEngine()

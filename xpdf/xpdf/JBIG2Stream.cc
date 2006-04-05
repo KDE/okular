@@ -1227,6 +1227,7 @@ void JBIG2Stream::readSegments() {
   Guint segNum, segFlags, segType, page, segLength;
   Guint refFlags, nRefSegs;
   Guint *refSegs;
+  int segDataPos;
   int c1, c2, c3;
   Guint i;
 
@@ -1293,6 +1294,9 @@ void JBIG2Stream::readSegments() {
     if (!readULong(&segLength)) {
       goto eofError2;
     }
+
+    // keep track of the start of the segment data 
+    segDataPos = getPos();
 
     // read the segment data
     switch (segType) {
@@ -1371,6 +1375,45 @@ void JBIG2Stream::readSegments() {
       break;
     }
 
+    // Make sure the segment handler read all of the bytes in the 
+    // segment data, unless this segment is marked as having an
+    // unknown length (section 7.2.7 of the JBIG2 Final Committee Draft)
+
+    if (segLength != 0xffffffff) {
+
+      int segExtraBytes = segDataPos + segLength - getPos();
+      if (segExtraBytes > 0) {
+
+	// If we didn't read all of the bytes in the segment data,
+	// indicate an error, and throw away the rest of the data.
+	
+	// v.3.1.01.13 of the LuraTech PDF Compressor Server will
+	// sometimes generate an extraneous NULL byte at the end of
+	// arithmetic-coded symbol dictionary segments when numNewSyms
+	// == 0.  Segments like this often occur for blank pages.
+	
+	error(getPos(), "%d extraneous byte%s after segment",
+	      segExtraBytes, (segExtraBytes > 1) ? "s" : "");
+	
+	// Burn through the remaining bytes -- inefficient, but
+	// hopefully we're not doing this much
+	
+	int trash;
+	for (int i = segExtraBytes; i > 0; i--) {
+	  readByte(&trash);
+	}
+	
+      } else if (segExtraBytes < 0) {
+	
+	// If we read more bytes than we should have, according to the 
+	// segment length field, note an error.
+	
+	error(getPos(), "Previous segment handler read too many bytes");
+	
+      }
+
+    }
+    
     gfree(refSegs);
   }
 

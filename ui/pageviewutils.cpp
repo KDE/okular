@@ -14,6 +14,7 @@
 #include <qevent.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
+#include <QStyleOptionButton>
 #include <kacceleratormanager.h>
 #include <kapplication.h>
 #include <kiconloader.h>
@@ -285,8 +286,13 @@ void ToolBarButton::paintEvent( QPaintEvent * e )
     QRect backRect = e->rect();
     backRect.translate( x(), y() );
     p.drawPixmap( e->rect().topLeft(), m_background, backRect );
-#warning don't know how to port drawButtonLabel
-    // drawButtonLabel( &p );
+    QStyleOptionButton opt;
+    opt.initFrom( this );
+    opt.features = QStyleOptionButton::Flat;
+    opt.icon = icon();
+    opt.iconSize = QSize( iconSize, iconSize );
+    opt.text = text();
+    style()->drawControl( QStyle::CE_PushButton, &opt, &p, this );
 }
 
 /* PageViewToolBar */
@@ -616,7 +622,7 @@ void PageViewToolBar::slotAnimate()
 
 void PageViewToolBar::slotButtonClicked()
 {
-    ToolBarButton * button = (ToolBarButton *)sender();
+    ToolBarButton * button = qobject_cast<ToolBarButton *>( sender() );
     if ( button )
     {
         // deselect other buttons

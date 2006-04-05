@@ -9,7 +9,7 @@
 
 // qt/kde includes
 #include <qevent.h>
-#include <qicon.h>
+#include <kicon.h>
 #include <qtimer.h>
 #include <qimage.h>
 #include <qpainter.h>
@@ -296,19 +296,16 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_width = d.width();
         m_height = d.height();
 
-#warning this is ugly find another way to fix it
-        KIconLoader *il = KGlobal::iconLoader();
-
         // create top toolbar
         m_topBar = new QToolBar( this );
         m_topBar->setObjectName( "presentationBar" );
         m_topBar->setIconSize( QSize( 32, 32 ) );
-        m_topBar->addAction( QIcon(il->loadIcon("1leftarrow", K3Icon::Toolbar)), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
-        m_topBar->addAction( QIcon(il->loadIcon("1rightarrow", K3Icon::Toolbar)), i18n("Next Page"), this, SLOT( slotNextPage() ) );
+        m_topBar->addAction( KIcon("1leftarrow"), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
+        m_topBar->addAction( KIcon("1rightarrow"), i18n("Next Page"), this, SLOT( slotNextPage() ) );
         QWidget *spacer = new QWidget(m_topBar);
         spacer->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
         m_topBar->addWidget( spacer );
-        m_topBar->addAction( QIcon(il->loadIcon("exit", K3Icon::Toolbar)), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
+        m_topBar->addAction( KIcon("exit"), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
         m_topBar->hide();
         // change topbar background color

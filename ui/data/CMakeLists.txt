@@ -1,18 +1,44 @@
 kde4_header()
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
-
-
-########### install files ###############
-
-install_files( ${DATA_INSTALL_DIR}/oKular FILES  tools.xml )
-install_files( ${DATA_INSTALL_DIR}/oKular/pics FILES  tool_eraser.png tool_hl_orange.png tool_hl_pink.png                  tool_hl_yellow.png tool_ink_green.png tool_note.png )
-install_files( ${DATA_INSTALL_DIR}/oKular/pics FILES  ghns.png ghns_star.png ghns_star_gray.png )
-install_files( ${DATA_INSTALL_DIR}/oKular/pics FILES  checkmark.png circle.png comment.png cross.png help.png                 insert.png key.png newparagraph.png note.png paragraph.png                 rightarrow.png rightpointer.png star.png uparrow.png                 upleftarrow.png )
+# install annotator xml tools description
+install_files(${DATA_INSTALL_DIR}/oKular FILES
+   tools.xml
+)
+# install annotation tool images
+install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
+   tool_eraser.png
+   tool_hl_orange.png
+   tool_hl_pink.png
+   tool_hl_yellow.png
+   tool_ink_green.png
+   tool_note.png
+)
+# install annotation page images
+install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
+   checkmark.png
+   circle.png
+   comment.png
+   cross.png
+   help.png
+   insert.png
+   key.png
+   newparagraph.png
+   note.png
+   paragraph.png
+   rightarrow.png
+   rightpointer.png
+   star.png
+   uparrow.png
+   upleftarrow.png
+)
+# install misc images
+install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
+   ghns.png
+   ghns_star.png
+   ghns_star_gray.png
+)
 
 kde4_footer()
-
-
 
 #original Makefile.am contents follow:
 

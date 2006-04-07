@@ -1,7 +1,7 @@
 kde4_header()
 
-add_subdirectory( lib ) 
-add_subdirectory( kio-msits ) 
+#add_subdirectory( lib )
+add_subdirectory( kio-msits )
 
 include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular ${CMAKE_BINARY_DIR}/okular ${CHM_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib )
 

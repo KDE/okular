@@ -8,21 +8,13 @@ endif(POPPLER_FOUND)
 if(QGS_FOUND)
   add_subdirectory(ghostview)
 endif(QGS_FOUND)
-add_subdirectory( fax ) 
-add_subdirectory( kimgio ) 
+add_subdirectory( fax )
+add_subdirectory( kimgio )
 if(CHM_FOUND)
   add_subdirectory( chm )
 endif(CHM_FOUND)
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
-
-
-########### install files ###############
-
-
 kde4_footer()
-
-
 
 #original Makefile.am contents follow:
 

@@ -3,7 +3,6 @@
 
 #include "kdvi_multipage.h"
 #include "dviFile.h"
-#include "dviPageCache.h"
 #include "dviWidget.h"
 #include "kprinterwrapper.h"
 #include "kvs_debug.h"
@@ -407,15 +406,9 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget(PageView *parent, DocumentPa
 }
 
 
-DocumentPageCache* KDVIMultiPage::initializePageCache()
-{
-  DocumentPageCache* pageCache = new DVIPageCache();
-  return pageCache;
-}
-
-
 void KDVIMultiPage::showFindTextDialog()
 {
+#warning FIXME
   /*
   if ((getRenderer().isNull()) || (getRenderer()->supportsTextSearch() == false))
     return;

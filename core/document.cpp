@@ -779,7 +779,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             }
         }
         else if ( !noDialogs )
-            KMessageBox::information( 0, i18n("No matches found for '%1'.").arg( text ) );
+            KMessageBox::information( 0, i18n("No matches found for '%1'.", text ) );
     }
     // 3. PREVMATCH //TODO
     else if ( type == PrevMatch )
@@ -998,7 +998,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 KRun::run( *ptr, lst );
             }
             else
-                KMessageBox::information( 0, i18n( "No application found for opening file of mimetype %1." ).arg( mime->name() ) );
+                KMessageBox::information( 0, i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
             } break;
 
         case KPDFLink::Action: {

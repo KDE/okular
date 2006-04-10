@@ -283,7 +283,7 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     // OSD to display pages
     if ( documentChanged && pageSet.count() > 0 && KpdfSettings::showOSD() )
         d->messageWindow->display(
-            i18n(" Loaded a one-page document.",
+            i18np(" Loaded a one-page document.",
                  " Loaded a %n-page document.",
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
@@ -586,8 +586,9 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
                 bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
                         KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
-                QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-                d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
+                QString text = d->typeAheadString.toLower();
+                QString status = found ? i18n("Text found: \"%1\".", text) : i18n("Text not found: \"%1\".", text);
+                d->messageWindow->display( status,
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
                 d->findTimeoutTimer->start( 3000, true );
             }
@@ -607,7 +608,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             // because it activates the accel
             releaseKeyboard();
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
-                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.toLower()),
+                d->messageWindow->display( i18n("Text found: \"%1\".", d->typeAheadString.toLower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
             // it is needed to grab the keyboard becase people may have Space assigned to a
@@ -626,8 +627,9 @@ void PageView::keyPressEvent( QKeyEvent * e )
             d->typeAheadString += e->text();
             bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
                     KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
-            QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-            d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
+            QString text = d->typeAheadString.toLower();
+            QString status = found ? i18n("Text found: \"%1\".", text) : i18n("Text not found: \"%1\".", text);
+            d->messageWindow->display( status,
                                        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
             d->findTimeoutTimer->start( 3000, true );
         }
@@ -1027,14 +1029,14 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 	    QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
             if ( !selectedText.isEmpty() )
             {
-                menu.addTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
+                menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 textToClipboard = menu.addAction( QIcon(SmallIcon("editcopy")), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                     menu.setItemEnabled( 1, false );
                 if ( KpdfSettings::useKTTSD() )
                     speakText = menu.addAction( QIcon(SmallIcon("kttsd")), i18n( "Speak Text" ) );
             }
-            menu.addTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+            menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
             imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
@@ -1054,7 +1056,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     cb->setPixmap( copyPix, QClipboard::Clipboard );
                     if ( cb->supportsSelection() )
                         cb->setPixmap( copyPix, QClipboard::Selection );
-                    d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard." ).arg( copyPix.width() ).arg( copyPix.height() ) );
+                    d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard.", copyPix.width(), copyPix.height() ) );
                 }
                 else if ( choice == imageToFile )
                 {
@@ -1071,7 +1073,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 						else
 							type = mime->name();
                         copyPix.save( fileName, type.toLatin1() );
-                        d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file." ).arg( copyPix.width() ).arg( copyPix.height() ).arg( type ) );
+                        d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height(), type ) );
                     }
                 }
             }
@@ -1100,7 +1102,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         QString error;
                         if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
                         {
-                            d->messageWindow->display( i18n("Starting KTTSD Failed: %1").arg(error) );
+                            d->messageWindow->display( i18n("Starting KTTSD Failed: %1", error) );
                             KpdfSettings::setUseKTTSD(false);
                             KpdfSettings::writeConfig();
                         }

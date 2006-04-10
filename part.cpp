@@ -454,7 +454,7 @@ bool Part::openURL(const KUrl &url)
     // this calls the above 'openURL' method
     bool b = KParts::ReadOnlyPart::openURL(url);
     if ( !b )
-        KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
+        KMessageBox::error( widget(), i18n("Could not open %1", url.prettyURL() ) );
     else
         m_viewportDirty.pageNumber = -1;
     return b;
@@ -704,17 +704,17 @@ void Part::slotSaveFileAs()
     {
         if (saveURL == url())
         {
-            KMessageBox::information( widget(), i18n("You are trying to overwrite \"%1\" with itself. This is not allowed. Please save it in another location.").arg(saveURL.fileName()) );
+            KMessageBox::information( widget(), i18n("You are trying to overwrite \"%1\" with itself. This is not allowed. Please save it in another location.", saveURL.fileName()) );
             return;
         }
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveURL.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
                 return;
         }
 
         if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
-            KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( saveURL.prettyURL() ) );
+            KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.", saveURL.prettyURL() ) );
     }
 }
 
@@ -841,7 +841,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	fitPageWidth = 0;
 	if (page)
 	{
-		popup->addTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
+		popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
 		if ( page->hasBookmark() )
 			toggleBookmark = popup->addAction( QIcon(SmallIcon("bookmark")), i18n("Remove Bookmark") );
 		else

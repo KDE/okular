@@ -35,7 +35,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
 
   // mime name based on mimetype id
   QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
-  setCaption( i18n("%1 Properties").arg( mimeName ) );
+  setCaption( i18n("%1 Properties", mimeName ) );
 
   QDomElement docElement = info->documentElement();
 
@@ -50,7 +50,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
         continue;
 
     // create labels and layout them
-    QLabel *key = new QLabel( i18n( "%1:" ).arg( titleString ), page );
+    QLabel *key = new QLabel( i18n( "%1:", titleString ), page );
     QLabel *value = new KSqueezedTextLabel( valueString, page );
     layout->addWidget( key, row, 0, Qt::AlignRight );
     layout->addWidget( value, row, 1 );

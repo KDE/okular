@@ -137,11 +137,11 @@ void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, boo
     if ( info )
     {
         if ( !info->get( "title" ).isNull() )
-            m_metaStrings += i18n( "Title: %1" ).arg( info->get( "title" ) );
+            m_metaStrings += i18n( "Title: %1", info->get( "title" ) );
         if ( !info->get( "author" ).isNull() )
-            m_metaStrings += i18n( "Author: %1" ).arg( info->get( "author" ) );
+            m_metaStrings += i18n( "Author: %1", info->get( "author" ) );
     }
-    m_metaStrings += i18n( "Pages: %1" ).arg( m_document->pages() );
+    m_metaStrings += i18n( "Pages: %1", m_document->pages() );
     m_metaStrings += i18n( "Click to begin" );
 }
 

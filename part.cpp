@@ -206,19 +206,19 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// Page Traversal actions
 	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
-	m_gotoPage->setShortcut( "CTRL+G" );
+	m_gotoPage->setShortcut( QKeySequence(Qt::CTRL, Qt::Key_G) );
 	// dirty way to activate gotopage when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
-	m_prevPage->setShortcut( "Backspace" );
+	m_prevPage->setShortcut( Qt::Key_Backspace );
 	// dirty way to activate prev page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
-	m_nextPage->setShortcut( "Space" );
+	m_nextPage->setShortcut( Qt::Key_Space );
 	// dirty way to activate next page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 
@@ -258,7 +258,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_printPreview->setEnabled( false );
 
 	m_showLeftPanel = new KToggleAction( i18n( "Show &Navigation Panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
-	m_showLeftPanel->setShortcut( "CTRL+L" );
+	m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL, Qt::Key_L) );
 	m_showLeftPanel->setCheckedState( i18n( "Hide &Navigation Panel" ) );
 	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
 	slotShowLeftPanel();
@@ -267,12 +267,12 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
         if ( !app.isNull() )
 		KAction * importPS= new KAction(i18n("&Import Postscript as PDF..."), "psimport", 0, this, SLOT(slotImportPSFile()), ac, "import_ps");
 	KAction * ghns = new KAction(i18n("&Get Books From Internet..."), "knewstuff", 0, this, SLOT(slotGetNewStuff()), ac, "get_new_stuff");
-	ghns->setShortcut( "G" );  // TEMP, REMOVE ME!
+	ghns->setShortcut( Qt::Key_G );  // TEMP, REMOVE ME!
 
 	m_showProperties = new KAction(i18n("&Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
 	m_showProperties->setEnabled( false );
 
-	m_showPresentation = new KAction( i18n("P&resentation"), "kpresenter_kpr", "Ctrl+Shift+P", this, SLOT(slotShowPresentation()), ac, "presentation");
+	m_showPresentation = new KAction( i18n("P&resentation"), "kpresenter_kpr", QKeySequence(Qt::CTRL, Qt::SHIFT, Qt::Key_P), this, SLOT(slotShowPresentation()), ac, "presentation");
 	m_showPresentation->setEnabled( false );
 
 	// attach the actions of the children widgets too

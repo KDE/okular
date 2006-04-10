@@ -107,7 +107,7 @@ class AvailableItem : public Entry
             QString remoteUrl = payload().url();
             QString fileName = remoteUrl.section( '/', -1, -1 );
             QString extension = fileName.toLower().section( '.', -1, -1 );
-            QString typeString = type();
+            QString typeString = category();
             // place books on the desktop
             if ( typeString == "kpdf/book" )
                 m_destinationFile = KGlobalSettings::desktopPath() + "/" + fileName;
@@ -913,7 +913,7 @@ void NewStuffDialog::slotItemResult( KIO::Job * job )
     displayMessage( i18n("Installed! %1 is yours now.").arg( item->name() ), Info );
 
     // ... and any listening object
-    emit installedFile( item->name(), item->type() );
+    emit installedFile( item->name(), item->category() );
 }
 //END File(s) Transferring
 

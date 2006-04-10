@@ -281,14 +281,14 @@ void PageView::setupActions( KActionCollection * ac )
     d->aToggleAnnotator = new KToggleAction( i18n("&Review"), "pencil", 0, ac, "mouse_toggle_annotate" );
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
-    d->aToggleAnnotator->setShortcut( "F6" );
+    d->aToggleAnnotator->setShortcut( Qt::Key_F6 );
 
     // Other actions
     KAction * su = new KAction( i18n("Scroll Up"), 0, this, SLOT( slotScrollUp() ), ac, "view_scroll_up" );
-    su->setShortcut( "Shift+Up" );
+    su->setShortcut( QKeySequence(Qt::SHIFT, Qt::Key_Up) );
 
     KAction * sd = new KAction( i18n("Scroll Down"), 0, this, SLOT( slotScrollDown() ), ac, "view_scroll_down" );
-    sd->setShortcut( "Shift+Down" );
+    sd->setShortcut( QKeySequence(Qt::SHIFT, Qt::Key_Down) );
 }
 
 bool PageView::canFitPageWidth()
@@ -383,7 +383,7 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     // OSD to display pages
     if ( documentChanged && pageSet.count() > 0 && KpdfSettings::showOSD() )
         d->messageWindow->display(
-            i18n(" Loaded a one-page document.",
+            i18np(" Loaded a one-page document.",
                  " Loaded a %n-page document.",
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
@@ -764,7 +764,7 @@ if (d->document->handleEvent( e ) )
             }
         }
         // F3: go to next occurrency
-        else if( e->key() == KStdAccel::findNext() )
+        else if( e->key() == KStdAccel::findNext().keyQt() )
         {
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
@@ -1327,7 +1327,7 @@ if (d->document->handleEvent( e ) )
             QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
             if ( d->document->supportsSearching() && !selectedText->isEmpty() )
             {
-                menu.addTitle( i18n( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
+                menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
                 textToClipboard = menu.addAction( SmallIconSet("editcopy"), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                     textToClipboard->setEnabled( false );

@@ -296,7 +296,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
         KMessageBox::detailedError( this, 
             i18n("<qt><strong>File Error!</strong> Could not open the file "
             "<nobr><strong>%1</strong></nobr> for uncompression. "
-            "The file will not be loaded.</qt>").arg(path),
+            "The file will not be loaded.</qt>", path),
             i18n("<qt>This error typically occurs if you do "
             "not have enough permissions to read the file. " 
             "You can check ownership and permissions if you "
@@ -323,7 +323,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
         KMessageBox::detailedError(this, 
             i18n("<qt><strong>File Error!</strong> Could not uncompress "
             "the file <nobr><strong>%1</strong></nobr>. "
-            "The file will not be loaded.</qt>").arg( path ),
+            "The file will not be loaded.</qt>", path ),
             i18n("<qt>This error typically occurs if the file is corrupt. "
             "If you want to be sure, try to decompress the file manually "
             "using command-line tools.</qt>"));

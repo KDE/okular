@@ -327,8 +327,8 @@ KFaxImage::notetiff()
 		break;
 	    case 279:		/* StripByteCounts */
 		if (count != nstrips) {
-		  str = i18n("In file %1\nStripsPerImage tag 273=%2,tag279=%3\n")
-			      .arg(filename()).arg(nstrips).arg(count);
+		  str = i18n("In file %1\nStripsPerImage tag 273=%2,tag279=%3\n",
+			      filename(), nstrips, count);
 		  kfaxerror(str);
 		  goto realbad;
 		}
@@ -404,7 +404,7 @@ KFaxImage::notetiff()
 void
 KFaxImage::badfile(pagenode *pn)
 {
-  kfaxerror(i18n("%1: Bad Fax File").arg(filename()));
+  kfaxerror(i18n("%1: Bad Fax File", filename()));
   FreeImage(pn);
 }
 

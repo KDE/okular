@@ -30,7 +30,7 @@ QString KPDFLinkGoto::linkTip() const
 
 QString KPDFLinkExecute::linkTip() const
 {
-    return i18n( "Execute '%1'..." ).arg( m_fileName );
+    return i18n( "Execute '%1'...", m_fileName );
 }
 
 QString KPDFLinkBrowse::linkTip() const

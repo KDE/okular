@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "dlgpresentationbase.h"
+#include "ui_dlgpresentationbase.h"
 
 #include "dlgpresentation.h"
 

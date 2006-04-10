@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "dlggeneralbase.h"
+#include "ui_dlggeneralbase.h"
 
 #include "dlggeneral.h"
 

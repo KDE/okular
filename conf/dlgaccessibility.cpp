@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "dlgaccessibilitybase.h"
+#include "ui_dlgaccessibilitybase.h"
 
 #include "dlgaccessibility.h"
 

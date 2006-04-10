@@ -752,8 +752,8 @@ if (d->document->handleEvent( e ) )
                 d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
                 bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
                         KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
-                QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-                d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
+                KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
+                d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
                 d->findTimeoutTimer->start( 3000, true );
             }
@@ -773,7 +773,7 @@ if (d->document->handleEvent( e ) )
             // because it activates the accel
             releaseKeyboard();
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
-                d->messageWindow->display( i18n("Text found: \"%1\".").arg(d->typeAheadString.toLower()),
+                d->messageWindow->display( i18n("Text found: \"%1\".", d->typeAheadString.toLower()),
                                            PageViewMessage::Find, 3000 );
             d->findTimeoutTimer->start( 3000, true );
             // (2/4) it is needed to grab the keyboard becase people may have Space assigned
@@ -792,8 +792,8 @@ if (d->document->handleEvent( e ) )
             d->typeAheadString += e->text();
             bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
                     KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
-            QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-            d->messageWindow->display( status.arg(d->typeAheadString.toLower()),
+            KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
+            d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
                                        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
             d->findTimeoutTimer->start( 3000, true );
         }
@@ -1334,7 +1334,7 @@ if (d->document->handleEvent( e ) )
                 if ( KpdfSettings::useKTTSD() )
                     speakText = menu.addAction( SmallIconSet("kttsd"), i18n( "Speak Text" ) );
             }
-            menu.addTitle( i18n( "Image (%1 by %2 pixels)" ).arg( selectionRect.width() ).arg( selectionRect.height() ) );
+            menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
             imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
@@ -1354,7 +1354,7 @@ if (d->document->handleEvent( e ) )
                     cb->setPixmap( copyPix, QClipboard::Clipboard );
                     if ( cb->supportsSelection() )
                         cb->setPixmap( copyPix, QClipboard::Selection );
-                    d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard." ).arg( copyPix.width() ).arg( copyPix.height() ) );
+                    d->messageWindow->display( i18n( "Image [%1x%2] copied to clipboard.", copyPix.width(), copyPix.height() ) );
                 }
                 else if ( choice == imageToFile )
                 {
@@ -1371,7 +1371,7 @@ if (d->document->handleEvent( e ) )
                         else
                             type = mime->name();
                         copyPix.save( fileName, type.latin1() );
-                        d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file." ).arg( copyPix.width() ).arg( copyPix.height() ).arg( type ) );
+                        d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height() ).arg( type ) );
                     }
                 }
             }
@@ -1400,7 +1400,7 @@ if (d->document->handleEvent( e ) )
                         QString error;
                         if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
                         {
-                            d->messageWindow->display( i18n("Starting KTTSD Failed: %1").arg(error) );
+                            d->messageWindow->display( i18n("Starting KTTSD Failed: %1", error) );
                             KpdfSettings::setUseKTTSD(false);
                             KpdfSettings::writeConfig();
                         }

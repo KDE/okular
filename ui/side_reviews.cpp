@@ -222,7 +222,7 @@ void Reviews::addContents( const KPDFPage * page )
     Q3ListViewItem * pageItem = 0;
     if ( KpdfSettings::groupByPage() )
     {
-        QString pageText = i18n( "page %1" ).arg( page->number() + 1 );
+        QString pageText = i18n( "page %1", page->number() + 1 );
         pageItem = new Q3ListViewItem( m_listView, pageText );
         pageItem->setPixmap( 0, SmallIcon( "txt" ) );
         pageItem->setOpen( KpdfSettings::groupByAuthor() );

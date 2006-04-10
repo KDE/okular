@@ -551,7 +551,7 @@ bool Part::openURL(const KUrl &url)
     if ( openOk )
         m_viewportDirty = 0;
     else
-        KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
+        KMessageBox::error( widget(), i18n( "Could not open %1", url.prettyURL() ) );
     return openOk;
 }
 
@@ -803,12 +803,12 @@ void Part::slotSaveFileAs()
     {
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?").arg(saveURL.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveURL.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
                 return;
         }
 
         if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.").arg( saveURL.prettyURL() ) );
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveURL.prettyURL() ) );
     }
 }
 

@@ -114,12 +114,12 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
     QString temp;
     if (fax.errorString().isEmpty())
     {
-        temp=i18n("The specified file '%1' could not be opened.").arg(fileName);
+        temp=i18n("The specified file '%1' could not be opened.", fileName);
         emit error (temp,-1);
     }
     else
     {
-        temp=i18n("Error while opening file: %1.").arg(fax.errorString());
+        temp=i18n("Error while opening file: %1.", fax.errorString());
         emit error (temp,-1);
     }
 //     mutex.unlock();

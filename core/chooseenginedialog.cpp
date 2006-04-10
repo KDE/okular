@@ -11,7 +11,7 @@
 #include <qlabel.h>
 #include <klocale.h>
 
-#include "chooseenginewidget.h"
+#include "ui_chooseenginewidget.h"
 
 #include "chooseenginedialog.h"
 
@@ -26,7 +26,7 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QSt
     m_widget->engineList->addItems(generators);
 
     m_widget->description->setText(
-        i18n("More than one generator found for mimetype \"%1\", please select which one to use:").arg(mime)
+        i18n("More than one generator found for mimetype \"%1\", please select which one to use:", mime)
         );
 }
 

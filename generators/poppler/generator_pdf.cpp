@@ -336,8 +336,8 @@ const DocumentInfo * PDFGenerator::generateDocumentInfo()
         docInfo.set( "mimeType", "application/pdf" );
         if ( pdfdoc )
         {
-            docInfo.set( "format", i18n( "PDF v. <version>", "PDF v. %1" )
-                         .arg( QString::number( pdfdoc->getPDFVersion() ) ), i18n( "Format" ) );
+            docInfo.set( "format", i18n( "PDF v. <version>", "PDF v. %1",
+                         QString::number( pdfdoc->getPDFVersion() ) ), i18n( "Format" ) );
             docInfo.set( "encryption", pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ),
                          i18n("Security") );
             docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ),

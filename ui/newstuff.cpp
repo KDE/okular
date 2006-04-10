@@ -591,7 +591,7 @@ void NewStuffDialog::removeItem( AvailableItem * item )
     d->itemsView->updateItem( item );
 
     // inform the user ...
-    displayMessage( i18n("%1 is no more installed.").arg( item->name() ) );
+    displayMessage( i18n("%1 is no more installed.", item->name() ) );
 
     // ... and any listening object
     emit removedFile( item->name() );
@@ -704,7 +704,7 @@ void NewStuffDialog::slotProvidersListResult( KIO::Job * job )
         return;
     }
     else
-        displayMessage( i18n("Loaded %1 providers").arg( d->providers.count() ) );
+        displayMessage( i18n("Loaded %1 providers", d->providers.count() ) );
 
     // update the providers ComboBox
     for ( it = d->providers.begin(), iEnd = d->providers.end(); it != iEnd; ++it )
@@ -747,7 +747,7 @@ void NewStuffDialog::slotLoadProvider( int pNumber )
     d->providerJobs[ job ] = info;
 
     // inform the user
-    displayMessage( i18n("Loading %1...").arg( provider->name() ) );
+    displayMessage( i18n( "Loading %1...", provider->name() ) );
 
     // start the 'network watchdog timer'
     d->networkTimer->start( 30*1000, true /*single shot*/ );
@@ -811,7 +811,7 @@ void NewStuffDialog::slotProviderInfoResult( KIO::Job * job )
     // update the control widget and inform user about the current operation
     d->itemsView->setItems( itemList );
     if ( itemList.count() )
-        displayMessage( i18n("There are %1 resources available.").arg( itemList.count() ) );
+        displayMessage( i18n("There are %1 resources available.", itemList.count() ) );
     else
         displayMessage( i18n("No resources available on this provider." ) );
 }
@@ -841,7 +841,7 @@ void NewStuffDialog::slotDownloadItem( AvailableItem * item )
     d->itemsView->updateItem( item );
 
     // inform the user
-    displayMessage( i18n("Installing '%1', this could take some time ...").arg( item->name() ) );
+    displayMessage( i18n( "Installing '%1', this could take some time ...", item->name() ) );
 }
 
 void NewStuffDialog::slotItemMessage( KIO::Job * job, const QString & message )
@@ -881,7 +881,7 @@ void NewStuffDialog::slotItemResult( KIO::Job * job )
     // error handling
     if ( job->error() )
     {
-        displayMessage( i18n("Network error while retrieving %1. Installation cancelled.").arg( item->name() ), Error );
+        displayMessage( i18n( "Network error while retrieving %1. Installation cancelled.", item->name() ), Error );
         return;
     }
 
@@ -910,7 +910,7 @@ void NewStuffDialog::slotItemResult( KIO::Job * job )
     */
 
     // inform the user ...
-    displayMessage( i18n("Installed! %1 is yours now.").arg( item->name() ), Info );
+    displayMessage( i18n( "Installed! %1 is yours now.", item->name() ), Info );
 
     // ... and any listening object
     emit installedFile( item->name(), item->category() );

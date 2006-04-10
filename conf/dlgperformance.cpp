@@ -10,7 +10,7 @@
 #include <qfont.h>
 #include <kiconloader.h>
 
-#include "dlgperformancebase.h"
+#include "ui_dlgperformancebase.h"
 
 #include "dlgperformance.h"
 

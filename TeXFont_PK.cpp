@@ -86,7 +86,7 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
     characterBitmaps[i] = 0;
   file = fopen(QFile::encodeName(parent->filename), "r");
   if (file == 0)
-    kError(kvs::dvi) << i18n("Cannot open font file %1.").arg(parent->filename) << endl;
+    kError(kvs::dvi) << i18n("Cannot open font file %1.", parent->filename) << endl;
 #ifdef DEBUG_PK
   else
     kDebug(kvs::dvi) << "TeXFont_PK::TeXFont_PK(): file opened successfully" << endl;
@@ -131,7 +131,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
     // If the character is not defined in the PK file, mark the
     // character as missing, and print an error message
     if (g->addr == 0) {
-      kError(kvs::dvi) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2").arg(ch).arg(parent->filename) << endl;
+      kError(kvs::dvi) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2", ch, parent->filename) << endl;
       g->addr = -1;
       return g;
     }
@@ -448,7 +448,7 @@ void TeXFont_PK::PK_skip_specials()
       case PK_NOOP :
         break;
       default :
-        oops(i18n("Unexpected %1 in PK file %2").arg(PK_flag_byte).arg(parent->filename) );
+        oops(i18n("Unexpected %1 in PK file %2", PK_flag_byte, parent->filename) );
         break;
       }
     }
@@ -515,7 +515,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     w = num(fp, n);
     h = num(fp, n);
     if (w > 0x7fff || h > 0x7fff)
-      oops(i18n("The character %1 is too large in file %2").arg(ch).arg(parent->filename));
+      oops(i18n("The character %1 is too large in file %2", ch, parent->filename));
     characterBitmaps[ch]->w = w;
     characterBitmaps[ch]->h = h;
   }
@@ -620,9 +620,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         paint_switch = 1 - paint_switch;
       }
       if (cp != ((quint32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
-        oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
+        oops(i18n("Wrong number of bits stored:  char. %1, font %2", ch, parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
-        oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));
+        oops(i18n("Bad pk file (%1), too many bits", parent->filename));
     }
 
     // The data in the bitmap is now in the processor's bit order,
@@ -706,9 +706,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         paint_switch = 1 - paint_switch;
       }
       if (cp != ((quint32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
-        oops(i18n("Wrong number of bits stored:  char. %1, font %2").arg(ch).arg(parent->filename));
+        oops(i18n("Wrong number of bits stored:  char. %1, font %2", ch, parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
-        oops(i18n("Bad pk file (%1), too many bits").arg(parent->filename));
+        oops(i18n("Bad pk file (%1), too many bits", parent->filename));
     }
   } // endif: big or small Endian?
 }

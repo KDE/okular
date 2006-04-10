@@ -253,7 +253,7 @@ void dvifile::prepare_pages()
    while (j > 0) {
     command_pointer  = dvi_Data() + page_offset[j--];
     if (readUINT8() != BOP) {
-      errorMsg = i18n("The page %1 does not start with the BOP command.").arg(j+1);
+      errorMsg = i18n("The page %1 does not start with the BOP command.", j+1);
       return;
     }
     command_pointer += 10 * 4;
@@ -395,7 +395,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
                           "contained in distributions of the ghostscript PostScript interpreter system. If "
                           "ghostscipt is not installed on your system, you could install it now. "
                           "If you are sure that ghostscript is installed, please try to use <strong>pdf2ps</strong> "
-                          "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>").arg(PDFFilename).arg(getenv("PATH"));
+                          "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>", PDFFilename, getenv("PATH"));
       have_complainedAboutMissingPDF2PS = true;
     }
     return QString::null;
@@ -414,7 +414,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
                           "document will therefore not be displayed.</p>"
                           "<p><b>Possible reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
                           "This is the output of the <strong>pdf2ps</strong> program that KDVI used:</p>"
-                          "<p><strong>%2</strong></p></qt>").arg(PDFFilename).arg(output);
+                          "<p><strong>%2</strong></p></qt>", PDFFilename, output);
     }
     return QString::null;
   }

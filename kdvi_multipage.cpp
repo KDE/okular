@@ -142,7 +142,7 @@ bool KDVIMultiPage::slotSave(const QString &fileName)
 
   bool r = DVIRenderer.dviFile->saveAs(fileName);
   if (r == false)
-    KMessageBox::error(parentWdg, i18n("<qt>Error saving the document to the file <strong>%1</strong>. The document is <strong>not</strong> saved.</qt>").arg(fileName),
+    KMessageBox::error(parentWdg, i18n("<qt>Error saving the document to the file <strong>%1</strong>. The document is <strong>not</strong> saved.</qt>", fileName),
                        i18n("Error saving document"));
   return r;
 }
@@ -203,7 +203,7 @@ void KDVIMultiPage::print()
 
   // Show the printer options dialog. Return immediately if the user
   // aborts.
-  if (!printer->setup(parentWdg, i18n("Print %1").arg(m_file.section('/', -1)) ))
+  if (!printer->setup(parentWdg, i18n("Print %1", m_file.section('/', -1)) ))
     return;
 
   // This funny method call is necessary for the KPrinter to return

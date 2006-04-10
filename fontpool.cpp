@@ -562,7 +562,7 @@ void fontPool::mf_output_receiver()
       QString dpi       = startLine.mid(secondblank+1,lastblank-secondblank-1);
 
       progress.show();
-      progress.increaseNumSteps( i18n("Currently generating %1 at %2 dpi").arg(fontName).arg(dpi) );
+      progress.increaseNumSteps( i18n("Currently generating %1 at %2 dpi", fontName, dpi) );
     }
     MetafontOutput = MetafontOutput.remove(0,numleft+1);
   }

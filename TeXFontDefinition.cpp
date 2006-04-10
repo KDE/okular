@@ -104,7 +104,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
     QString filename_test(font_pool->getExtraSearchPath() + "/" + filename);
     file = fopen( QFile::encodeName(filename_test), "r");
     if (file == 0) {
-      kError(kvs::dvi) << i18n("Cannot find font %1, file %2.").arg(fontname).arg(filename) << endl;
+      kError(kvs::dvi) << i18n("Cannot find font %1, file %2.", fontname, filename) << endl;
       return;
     } else
       filename = filename_test;
@@ -120,7 +120,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
       font = new TeXFont_PK(this);
       set_char_p = &dviRenderer::set_char;
       if ((checksum != 0) && (checksum != font->checksum))
-        kWarning(kvs::dvi) << i18n("Checksum mismatch for font file %1").arg(filename) << endl;
+        kWarning(kvs::dvi) << i18n("Checksum mismatch for font file %1", filename) << endl;
       fontTypeName = "TeX PK";
       return;
     }
@@ -168,7 +168,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
 #else
   // If we don't have the FreeType library, we should never have
   // reached this point. Complain, and leave this font blank
-  kError(kvs::dvi) << i18n("Cannot recognize format for font file %1").arg(filename) << endl;
+  kError(kvs::dvi) << i18n("Cannot recognize format for font file %1", filename) << endl;
 #endif
 }
 

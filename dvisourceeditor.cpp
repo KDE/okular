@@ -51,7 +51,7 @@ DVISourceEditor::DVISourceEditor(dviRenderer& parent,
   {
       KMessageBox::sorry(parentWidget, QString("<qt>") +
                          i18n("The DVI-file refers to the TeX-file "
-                              "<strong>%1</strong> which could not be found.").arg(KProcess::quote(TeXfile)) +
+                              "<strong>%1</strong> which could not be found.", KProcess::quote(TeXfile)) +
                          QString("</qt>"),
                          i18n( "Could Not Find File" ));
       return;
@@ -94,7 +94,7 @@ DVISourceEditor::DVISourceEditor(dviRenderer& parent,
                         "for inverse search, reported an error. You might wish to look at the <strong>document info "
                         "dialog</strong> which you will find in the File-Menu for a precise error report. The "
                         "manual for KDVI contains a detailed explanation how to set up your editor for use with KDVI, "
-                        "and a list of common problems.</qt>").arg(command);
+                        "and a list of common problems.</qt>", command);
 
   parent.update_info_dialog(i18n("Starting the editor..."), true);
 

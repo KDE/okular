@@ -179,7 +179,7 @@ void TeXFontDefinition::read_VF_index()
     }
   }
   if (cmnd != POST)
-    oops(i18n("Wrong command byte found in VF macro list: %1").arg(cmnd));
+    oops(i18n("Wrong command byte found in VF macro list: %1", cmnd));
 
   fclose (VF_file);
   file = NULL;

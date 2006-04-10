@@ -412,7 +412,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   if (!fi.exists() || fi.isDir()) {
     KMessageBox::error( parentWidget,
                         i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
-                             "KDVI already tried to add the ending '.dvi'.</qt>").arg(filename),
+                             "KDVI already tried to add the ending '.dvi'.</qt>", filename),
                         i18n("File Error!"));
     return false;
   }
@@ -425,9 +425,9 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   if (mimetype != "application/x-dvi") {
     KMessageBox::sorry( parentWidget,
                         i18n( "<qt>Could not open file <nobr><strong>%1</strong></nobr> which has "
-                              "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" )
-                        .arg( fname )
-                        .arg( mimetype ) );
+                              "type <strong>%2</strong>. KDVI can only load DVI (.dvi) files.</qt>" ,
+                          fname ,
+                          mimetype ) );
     return false;
   }
 
@@ -606,7 +606,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
                                     "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
                                     "does not contain the necessary source file information. "
                                     "We refer to the manual of KDVI for a detailed explanation on how to include this "
-                                    "information. Press the F1 key to open the manual.</qt>").arg(refLineNumber).arg(refFileName),
+                                    "information. Press the F1 key to open the manual.</qt>", refLineNumber, refFileName),
                          i18n("Could Not Find Reference"));
       mutex.unlock();
       return Anchor();
@@ -646,7 +646,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
     } else
       if (anchorForRefFileFound == false)
         KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
-                                              "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(refLineNumber).arg(refFileName),
+                                              "line %1 in the TeX-file <strong>%2</strong>.</qt>", refLineNumber, refFileName),
                            i18n( "Could Not Find Reference" ));
       else {
         mutex.unlock();

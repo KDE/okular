@@ -277,7 +277,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
   if (!output.exists()) {
     const int result =
       KMessageBox::warningContinueCancel(parent_widget,
-                                         i18n("The file %1\nexists. Do you want to overwrite that file?").arg(output_name),
+                                         i18n("The file %1\nexists. Do you want to overwrite that file?", output_name),
                                          i18n("Overwrite File"),
                                          i18n("Overwrite"));
     if (result == KMessageBox::Cancel)
@@ -293,7 +293,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
                              i18n("Waiting for dvipdfm to finish..."),
                              i18n("dvipdfm progress dialog"));
 
-  parent.update_info_dialog(i18n("Export: %1 to PDF").arg(dvi.filename),
+  parent.update_info_dialog(i18n("Export: %1 to PDF", dvi.filename),
                               true);
 
   start("dvipdfm",
@@ -362,7 +362,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     if (!output.exists()) {
       const int result =
         KMessageBox::warningContinueCancel(parent_widget,
-                                           i18n("The file %1\nexists. Do you want to overwrite that file?").arg(output_name_),
+                                           i18n("The file %1\nexists. Do you want to overwrite that file?", output_name_),
                                            i18n("Overwrite File"),
                                            i18n("Overwrite"));
       if (result == KMessageBox::Cancel)
@@ -448,7 +448,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                              i18n("Waiting for dvips to finish..."),
                              i18n("dvips progress dialog"));
 
-  parent.update_info_dialog(i18n("Export: %1 to PostScript").arg(dvi.filename),
+  parent.update_info_dialog(i18n("Export: %1 to PostScript", dvi.filename),
                               true);
 
   QStringList args;

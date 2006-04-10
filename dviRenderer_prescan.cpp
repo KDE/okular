@@ -85,7 +85,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 
   QString originalFName = EPSfilename;
 
-  embedPS_progress->setLabel(i18n("Embedding %1").arg(EPSfilename));
+  embedPS_progress->setLabel(i18n("Embedding %1", EPSfilename));
   qApp->processEvents();
 
   // If the EPSfilename really points to a PDF file, convert that file now.
@@ -100,9 +100,9 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
       if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page+1]))
         break;
     if (is_pdf_file)
-      errorMsg += i18n("Page %1: The PDF file <strong>%2</strong> could not be converted to PostScript.<br>").arg(page+1).arg(originalFName);
+      errorMsg += i18n("Page %1: The PDF file <strong>%2</strong> could not be converted to PostScript.<br>", page+1, originalFName);
     else
-      errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>").arg(page+1).arg(originalFName);
+      errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>", page+1, originalFName);
     embedPS_progress->progressBar()->advance(1);
     qApp->processEvents();
     return;
@@ -251,7 +251,7 @@ void dviRenderer::prescan_ParsePapersizeSpecial(const QString& _cp)
     dviFile->suggestedPageSize = new pageSize;
     dviFile->suggestedPageSize->setPageSize(cp);
   } else
-    printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.").arg(cp));
+    printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.", cp));
 
   return;
 }
@@ -433,13 +433,13 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   if (ending == "pdf") {
     QString convErrorMsg;
     QString oEPSfilename = EPSfilename;
-    emit setStatusBarText( i18n("Converting PDF-file %1...").arg(EPSfilename) );
+    emit setStatusBarText( i18n("Converting PDF-file %1...", EPSfilename) );
     EPSfilename = dviFile->convertPDFtoPS(EPSfilename, &convErrorMsg);
     emit setStatusBarText( QString::null );
     if (convErrorMsg.isEmpty() != true) {
       KMessageBox::detailedError(parentWidget,
                                  i18n("<qt><strong>File conversion error!</strong> KDVI was not able to convert the external "
-                                      "PDF-file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>").arg(oEPSfilename),
+                                      "PDF-file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>", oEPSfilename),
                                  convErrorMsg, i18n("PDF/PS conversion error"));
       return;
     }
@@ -644,7 +644,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
     if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63)) {
       currinf.fontp = currinf.fonttable->find(ch - FNTNUM0);
       if (currinf.fontp == NULL) {
-        errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.").arg(ch - FNTNUM0);
+        errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.", ch - FNTNUM0);
         return;
       }
       currinf.set_char_p = currinf.fontp->set_char_p;

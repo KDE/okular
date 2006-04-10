@@ -39,13 +39,13 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
   int error = FT_New_Face( parent->font_pool->FreeType_library, parent->filename.toLocal8Bit(), 0, &face );
 
   if ( error == FT_Err_Unknown_File_Format ) {
-    errorMessage = i18n("The font file %1 could be opened and read, but its font format is unsupported.").arg(parent->filename);
+    errorMessage = i18n("The font file %1 could be opened and read, but its font format is unsupported.", parent->filename);
     kError(kvs::dvi) << errorMessage << endl;
     fatalErrorInFontLoading = true;
     return;
   } else
     if ( error ) {
-      errorMessage = i18n("The font file %1 is broken, or it could not be opened or read.").arg(parent->filename);
+      errorMessage = i18n("The font file %1 is broken, or it could not be opened or read.", parent->filename);
       kError(kvs::dvi) << errorMessage << endl;
       fatalErrorInFontLoading = true;
       return;
@@ -166,7 +166,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
     long int characterSize_in_printers_points_by_64 = (long int)((64.0*72.0*parent->scaled_size_in_DVI_units*parent->font_pool->getCMperDVIunit())/2.54 + 0.5 );
     error = FT_Set_Char_Size(face, 0, characterSize_in_printers_points_by_64, res, res );
     if (error) {
-      QString msg = i18n("FreeType reported an error when setting the character size for font file %1.").arg(parent->filename);
+      QString msg = i18n("FreeType reported an error when setting the character size for font file %1.", parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kError(kvs::dvi) << msg << endl;
@@ -182,7 +182,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_NO_HINTING );
 
     if (error) {
-      QString msg = i18n("FreeType is unable to load glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
+      QString msg = i18n("FreeType is unable to load glyph #%1 from font file %2.", ch, parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kError(kvs::dvi) << msg << endl;
@@ -194,7 +194,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
     // convert to an anti-aliased bitmap
     error = FT_Render_Glyph( face->glyph, ft_render_mode_normal );
     if (error) {
-      QString msg = i18n("FreeType is unable to render glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
+      QString msg = i18n("FreeType is unable to render glyph #%1 from font file %2.", ch, parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kError(kvs::dvi) << msg << endl;
@@ -207,8 +207,8 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
 
     if ((slot->bitmap.width == 0) || (slot->bitmap.rows == 0)) {
       if (errorMessage.isEmpty())
-        errorMessage = i18n("Glyph #%1 is empty.").arg(ch);
-      kError(kvs::dvi) << i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename) << endl;
+        errorMessage = i18n("Glyph #%1 is empty.", ch);
+      kError(kvs::dvi) << i18n("Glyph #%1 from font file %2 is empty.", ch, parent->filename) << endl;
       g->shrunkenCharacter = QImage(15, 15 , QImage::Format_RGB32);
       g->shrunkenCharacter.fill(qRgb(255, 0, 0));
       g->x2 = 0;
@@ -277,7 +277,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
   if (g->dvi_advance_in_units_of_design_size_by_2e20 == 0) {
     int error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_NO_SCALE);
     if (error) {
-      QString msg = i18n("FreeType is unable to load metric for glyph #%1 from font file %2.").arg(ch).arg(parent->filename);
+      QString msg = i18n("FreeType is unable to load metric for glyph #%1 from font file %2.", ch, parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kError(kvs::dvi) << msg << endl;

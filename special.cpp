@@ -216,8 +216,8 @@ void dviRenderer::color_special(const QString& _cp)
   if (command == "pop") {
     // Take color off the stack
     if (colorStack.isEmpty())
-      printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Color pop command issued when the color stack is empty." ).
-                                arg(dviFile->filename).arg(current_page));
+      printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Color pop command issued when the color stack is empty." , 
+                                dviFile->filename, current_page));
     else
       colorStack.pop();
     return;
@@ -302,8 +302,8 @@ void parse_special_argument(const QString& strg, const char* argument_name, int*
     else
       // Maybe we should open a dialog here.
       kError(kvs::dvi) << i18n("Malformed parameter in the epsf special command.\n"
-                                   "Expected a float to follow %1 in %2")
-                              .arg(argument_name).arg(strg) << endl;
+                                   "Expected a float to follow %1 in %2",
+                               argument_name, strg) << endl;
   }
 }
 
@@ -427,7 +427,7 @@ void dviRenderer::epsf_special(const QString& cp)
       foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
     else
       foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter),
-                                i18n("File not found: \n %1").arg(EPSfilename_orig), -1);
+                                i18n("File not found: \n %1", EPSfilename_orig), -1);
     foreGroundPainter->restore();
   }
 
@@ -673,8 +673,8 @@ void dviRenderer::applicationDoSpecial(char *cp)
       foreGroundPainter->rotate(-angle);
       foreGroundPainter->translate(-x,-y);
     } else
-      printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Could not interpret angle in text rotation special." ).
-                                arg(dviFile->filename).arg(current_page));
+      printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Could not interpret angle in text rotation special." , 
+                                dviFile->filename, current_page));
   }
 
   // The graphicx package marks the end of rotated text with this
@@ -696,6 +696,6 @@ void dviRenderer::applicationDoSpecial(char *cp)
       (strncasecmp(cp, "background", 10) == 0) )
     return;
 
-  printErrorMsgForSpecials(i18n("The special command '%1' is not implemented.").arg(special_command));
+  printErrorMsgForSpecials(i18n("The special command '%1' is not implemented.", special_command));
   return;
 }

@@ -108,7 +108,7 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
           if (cp[i].isDigit() == false)
             break;
 
-        emit setStatusBarText( i18n("line %1 of %2").arg(cp.left(i)).arg(cp.mid(i).simplified()) );
+        emit setStatusBarText( i18n("line %1 of %2", cp.left(i), cp.mid(i).simplified()) );
         return;
       }
     }

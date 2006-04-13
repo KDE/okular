@@ -206,7 +206,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// Page Traversal actions
 	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
-	m_gotoPage->setShortcut( QKeySequence(Qt::CTRL, Qt::Key_G) );
+	m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
 	// dirty way to activate gotopage when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
 

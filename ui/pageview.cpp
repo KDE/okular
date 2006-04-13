@@ -282,17 +282,19 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setActionGroup( actGroup );
 
-    d->aToggleAnnotator = new KToggleAction( i18n("&Review"), "pencil", 0, ac, "mouse_toggle_annotate" );
+    d->aToggleAnnotator = new KToggleAction( KIcon( "pencil" ), i18n("&Review"), ac, "mouse_toggle_annotate" );
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
     d->aToggleAnnotator->setShortcut( Qt::Key_F6 );
 
     // Other actions
-    KAction * su = new KAction( i18n("Scroll Up"), 0, this, SLOT( slotScrollUp() ), ac, "view_scroll_up" );
-    su->setShortcut( QKeySequence(Qt::SHIFT, Qt::Key_Up) );
+    KAction * su = new KAction( i18n("Scroll Up"), ac, "view_scroll_up" );
+    connect( su, SIGNAL( triggered() ), this, SLOT( slotScrollUp() ) );
+    su->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Up) );
 
-    KAction * sd = new KAction( i18n("Scroll Down"), 0, this, SLOT( slotScrollDown() ), ac, "view_scroll_down" );
-    sd->setShortcut( QKeySequence(Qt::SHIFT, Qt::Key_Down) );
+    KAction * sd = new KAction( i18n("Scroll Down"), ac, "view_scroll_down" );
+    connect( sd, SIGNAL( triggered() ), this, SLOT( slotScrollDown() ) );
+    sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
 }
 
 bool PageView::canFitPageWidth()

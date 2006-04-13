@@ -91,14 +91,16 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
     QSpacerItem * spacerL = new QSpacerItem( 20, 10, QSizePolicy::Expanding );
     horLayout->addItem( spacerL );
 
-    // central 2r by 3c grid layout that contains all components
-    QGridLayout * gridLayout = new QGridLayout( 0, 3,5, 2,1 );
+    // central 2r by 5c grid layout that contains all components
+    QGridLayout * gridLayout = new QGridLayout();
+    gridLayout->setMargin( 2 );
+    gridLayout->setSpacing( 1 );
      // top spacer 6x6 px
 //     QSpacerItem * spacerTop = new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed );
 //     gridLayout->addMultiCell( spacerTop, 0, 0, 0, 4 );
      // center progress widget
      m_progressWidget = new ProgressWidget( this );
-     gridLayout->addMultiCellWidget( m_progressWidget, 0, 0, 0, 4 );
+     gridLayout->addWidget( m_progressWidget, 0, 0, 1, 5 );
      // bottom: left prev_page button
      m_prevButton = new HoverButton( this );
      m_prevButton->setIcon( SmallIconSet("1leftarrow") );

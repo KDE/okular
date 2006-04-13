@@ -257,8 +257,9 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
-	m_showLeftPanel = new KToggleAction( i18n( "Show &Navigation Panel"), "show_side_panel", 0, this, SLOT( slotShowLeftPanel() ), ac, "show_leftpanel" );
-	m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL, Qt::Key_L) );
+	m_showLeftPanel = new KToggleAction( KIcon( "show_side_panel" ), i18n( "Show &Navigation Panel"), ac, "show_leftpanel" );
+	connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
+	m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_L) );
 	m_showLeftPanel->setCheckedState( i18n( "Hide &Navigation Panel" ) );
 	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
 	slotShowLeftPanel();
@@ -266,13 +267,17 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
         QString app = KStandardDirs::findExe( "ps2pdf" );
         if ( !app.isNull() )
 		KAction * importPS= new KAction(i18n("&Import Postscript as PDF..."), "psimport", 0, this, SLOT(slotImportPSFile()), ac, "import_ps");
-	KAction * ghns = new KAction(i18n("&Get Books From Internet..."), "knewstuff", 0, this, SLOT(slotGetNewStuff()), ac, "get_new_stuff");
+	KAction * ghns = new KAction(KIcon("knewstuff"), i18n("&Get Books From Internet..."), ac, "get_new_stuff");
+	connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
 	ghns->setShortcut( Qt::Key_G );  // TEMP, REMOVE ME!
 
-	m_showProperties = new KAction(i18n("&Properties"), "info", 0, this, SLOT(slotShowProperties()), ac, "properties");
+	m_showProperties = new KAction(KIcon("info"), i18n("&Properties"), ac, "properties");
+	connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
 	m_showProperties->setEnabled( false );
 
-	m_showPresentation = new KAction( i18n("P&resentation"), "kpresenter_kpr", QKeySequence(Qt::CTRL, Qt::SHIFT, Qt::Key_P), this, SLOT(slotShowPresentation()), ac, "presentation");
+	m_showPresentation = new KAction( KIcon( "kpresenter_kpr" ), i18n("P&resentation"), ac, "presentation");
+	connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
+	m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
 	m_showPresentation->setEnabled( false );
 
 	// attach the actions of the children widgets too

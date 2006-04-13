@@ -206,8 +206,8 @@ PageView::~PageView()
 
 void PageView::setupActions( KActionCollection * ac )
 {
-    d->aOrientation=new KSelectAction( i18n( "&Orientation" ), 0, this, 0, ac, "view_orientation" );
-    d->aPaperSizes=new KSelectAction( i18n( "&Paper sizes" ), 0, this, 0, ac, "view_papersizes" );
+    d->aOrientation=new KSelectAction( i18n( "&Orientation" ), ac, "view_orientation" );
+    d->aPaperSizes=new KSelectAction( i18n( "&Paper sizes" ), ac, "view_papersizes" );
     QStringList orientations;
     orientations.append( i18n( "Portrait" ) );
     orientations.append( i18n( "Landscape" ) );
@@ -215,9 +215,9 @@ void PageView::setupActions( KActionCollection * ac )
     orientations.append( i18n( "Seascape" ) );
     d->aOrientation->setItems( orientations );
 
-    connect( d->aOrientation , SIGNAL( activated( int ) ),
+    connect( d->aOrientation , SIGNAL( triggered( int ) ),
          d->document , SLOT( slotOrientation( int ) ) );
-    connect( d->aPaperSizes , SIGNAL( activated( int ) ),
+    connect( d->aPaperSizes , SIGNAL( triggered( int ) ),
          d->document , SLOT( slotPaperSizes( int ) ) );
 
     d->aOrientation->setEnabled(d->document->supportsRotation());
@@ -227,24 +227,25 @@ void PageView::setupActions( KActionCollection * ac )
       d->aPaperSizes->setItems(d->document->paperSizes());
 
     // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom = new KSelectAction( i18n( "Zoom" ), "viewmag", 0, this, SLOT( slotZoom() ), ac, "zoom_to" );
+    d->aZoom = new KSelectAction( KIcon( "viewmag" ), i18n( "Zoom" ), ac, "zoom_to" );
     d->aZoom->setEditable( true );
 #if KDE_IS_VERSION(3,4,89)
     d->aZoom->setMaxComboViewCount( 13 );
 #endif
+    connect( d->aZoom, SIGNAL( triggered() ), this, SLOT( slotZoom() ) );
     updateZoomText();
 
     KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
 
     KStdAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
 
-    d->aZoomFitWidth = new KToggleAction( i18n("Fit to Page &Width"), "view_fit_width", 0, ac, "zoom_fit_width" );
+    d->aZoomFitWidth = new KToggleAction( KIcon( "view_fit_width" ), i18n("Fit to Page &Width"), ac, "zoom_fit_width" );
     connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
-    d->aZoomFitPage = new KToggleAction( i18n("Fit to &Page"), "view_fit_window", 0, ac, "zoom_fit_page" );
+    d->aZoomFitPage = new KToggleAction( KIcon( "view_fit_window" ), i18n("Fit to &Page"), ac, "zoom_fit_page" );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
-    d->aZoomFitText = new KToggleAction( i18n("Fit to &Text"), "viewmagfit", 0, ac, "zoom_fit_text" );
+    d->aZoomFitText = new KToggleAction( KIcon( "viewmagfit" ), i18n("Fit to &Text"), ac, "zoom_fit_text" );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions
@@ -253,28 +254,31 @@ void PageView::setupActions( KActionCollection * ac )
     renderModes.append( i18n( "Facing" ) );
     renderModes.append( i18n( "Overview" ) );
 
-    d->aRenderMode = new KSelectAction( i18n("&Render Mode"), "view_left_right", 0, ac, "view_render_mode" );
-    connect( d->aRenderMode, SIGNAL( activated( int ) ), SLOT( slotRenderMode( int ) ) );
+    d->aRenderMode = new KSelectAction( KIcon( "view_left_right" ), i18n("&Render Mode"), ac, "view_render_mode" );
+    connect( d->aRenderMode, SIGNAL( triggered( int ) ), SLOT( slotRenderMode( int ) ) );
     d->aRenderMode->setItems( renderModes );
     d->aRenderMode->setCurrentItem( KpdfSettings::renderMode() );
 
-    d->aViewContinuous = new KToggleAction( i18n("&Continuous"), "view_text", 0, ac, "view_continuous" );
+    d->aViewContinuous = new KToggleAction( KIcon( "view_text" ), i18n("&Continuous"), ac, "view_continuous" );
     connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
     d->aViewContinuous->setChecked( KpdfSettings::viewContinuous() );
 
     // Mouse-Mode actions
     QActionGroup * actGroup = new QActionGroup( this );
     actGroup->setExclusive( true );
-    d->aMouseNormal = new KAction( i18n("&Browse Tool"), "mouse", 0, this, SLOT( slotSetMouseNormal() ), ac, "mouse_drag" );
+    d->aMouseNormal = new KAction( KIcon( "mouse" ), i18n("&Browse Tool"), ac, "mouse_drag" );
+    connect( d->aMouseNormal, SIGNAL( triggered() ), this, SLOT( slotSetMouseNormal() ) );
     d->aMouseNormal->setCheckable( true );
     d->aMouseNormal->setActionGroup( actGroup );
     d->aMouseNormal->setChecked( true );
 
-    KAction * mz = new KAction( i18n("&Zoom Tool"), "viewmag", 0, this, SLOT( slotSetMouseZoom() ), ac, "mouse_zoom" );
+    KAction * mz = new KAction( KIcon( "viewmag" ), i18n("&Zoom Tool"), ac, "mouse_zoom" );
+    connect( mz, SIGNAL( triggered() ), this, SLOT( slotSetMouseZoom() ) );
     mz->setCheckable( true );
     mz->setActionGroup( actGroup );
 
-    d->aMouseSelect = new KAction( i18n("&Select Tool"), "frame_edit", 0, this, SLOT( slotSetMouseSelect() ), ac, "mouse_select" );
+    d->aMouseSelect = new KAction( KIcon( "frame_edit" ), i18n("&Select Tool"), ac, "mouse_select" );
+    connect( d->aMouseSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseSelect() ) );
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setActionGroup( actGroup );
 
@@ -1819,7 +1823,7 @@ void PageView::updateZoomText()
     if ( d->zoomMode != ZoomFixed && d->items.count() > 0 )
         d->zoomFactor = d->items[ qMax( 0, (int)d->document->currentPage() ) ]->zoomFactor();
     float newFactor = d->zoomFactor;
-    d->aZoom->clear();
+    d->aZoom->removeAllActions();
 
     // add items that describe fit actions
     QStringList translated;

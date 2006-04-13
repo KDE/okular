@@ -60,7 +60,7 @@ bool TGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > &
     for (;it!=end;++it)
     {
         preparePageForSyncOperation(100,it.key());
-        int i= it.data() - 1;
+        int i= it.value() - 1;
         pagesVector[ i ] = new KPDFPage (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(),0);
         kDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;

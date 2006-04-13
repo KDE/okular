@@ -213,7 +213,7 @@ inline int CHMFile::findStringInQuotes (const QString& tag, int offset, QString&
 						break;
 					}
 	
-					value.append (it.data());
+					value.append (it.value());
 					htmlentity = QString::null;
 					fill_entity = false;
 				}
@@ -311,7 +311,7 @@ void CHMFile::CloseCHM()
 	m_currentEncoding = 0;
 
 	for ( chm_loaded_files_t::iterator it = m_chmLoadedFiles.begin(); it != m_chmLoadedFiles.end(); ++it )
-		delete it.data();
+		delete it.value();
 }
 
 /*
@@ -1162,7 +1162,7 @@ int CHMFile::getPageNum( const QString & str ) const
 	QMap<QString,int>::const_iterator i=m_UrlPage.find (str);
 	if ( i == m_UrlPage.end() )
 		return 0;
-	return i.data();
+	return i.value();
 }
 
 QString CHMFile::getUrlForPage( int p ) const
@@ -1170,7 +1170,7 @@ QString CHMFile::getUrlForPage( int p ) const
 	QMap<int,QString>::const_iterator i=m_PageUrl.find (p);
 	if ( i == m_PageUrl.end() )
 		return 0;
-	return i.data();
+	return i.value();
 }
 
 bool CHMFile::guessTextEncoding( )

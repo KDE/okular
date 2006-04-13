@@ -428,7 +428,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     annotBoundary.height(), innerRect );
                 colorizeImage( scaledImage, a->style.color, opacity );
                 scaledImage.setAlphaBuffer( true );
-                pixmap.convertFromImage( scaledImage );
+                pixmap = QPixmap::fromImage( scaledImage );
 
                 // draw the mangled image to painter
                 mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
@@ -446,7 +446,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 if ( opacity < 255 )
                     changeImageAlpha( scaledImage, opacity );
                 scaledImage.setAlphaBuffer( true );
-                pixmap.convertFromImage( scaledImage );
+                pixmap = QPixmap::fromImage( scaledImage );
 
                 // draw the scaled and al
                 mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );

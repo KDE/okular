@@ -954,13 +954,13 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	fitPageWidth = 0;
 	if (page)
 	{
-		popup->addTitle( i18n( "Page %1" ).arg( page->number() + 1 ) );
+		popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
 		if ( page->hasBookmark() )
-			toggleBookmark = popup->addAction( QIcon(SmallIcon("bookmark")), i18n("Remove Bookmark") );
+			toggleBookmark = popup->addAction( KIcon("bookmark"), i18n("Remove Bookmark") );
 		else
-			toggleBookmark = popup->addAction( QIcon(SmallIcon("bookmark_add")), i18n("Add Bookmark") );
+			toggleBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
 		if ( m_pageView->canFitPageWidth() )
-			fitPageWidth = popup->addAction( QIcon(SmallIcon("viewmagfit")), i18n("Fit Width") );
+			fitPageWidth = popup->addAction( KIcon("viewmagfit"), i18n("Fit Width") );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
 		reallyShow = true;

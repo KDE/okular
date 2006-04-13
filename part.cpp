@@ -264,9 +264,8 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
 	slotShowLeftPanel();
 
-        QString app = KStandardDirs::findExe( "ps2pdf" );
-        if ( !app.isNull() )
-		KAction * importPS= new KAction(i18n("&Import Postscript as PDF..."), "psimport", 0, this, SLOT(slotImportPSFile()), ac, "import_ps");
+	KAction * importPS= new KAction(KIcon("psimport"), i18n("&Import Postscript as PDF..."), ac, "import_ps");
+	connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
 	KAction * ghns = new KAction(KIcon("knewstuff"), i18n("&Get Books From Internet..."), ac, "get_new_stuff");
 	connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
 	ghns->setShortcut( Qt::Key_G );  // TEMP, REMOVE ME!
@@ -472,6 +471,14 @@ KAboutData* Part::createAboutData()
 
 bool Part::slotImportPSFile()
 {
+	QString app = KStandardDirs::findExe( "ps2pdf" );
+	if ( app.isEmpty() )
+	{
+		// TODO point the user to their distro packages?
+		KMessageBox::error( widget(), i18n( "The program \"ps2pdf\" was not found, so oKular can not import PS files using it." ), i18n("ps2pdf not found") );
+		return false;
+	}
+
     KUrl url = KFileDialog::getOpenURL( QString::null, "application/postscript" );
     KTempFile tf( QString::null, ".pdf" );
 

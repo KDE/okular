@@ -11,7 +11,7 @@ kde4_automoc(${kpdf_SRCS})
 
 kde4_add_executable(kpdf ${kpdf_SRCS})
 
-target_link_libraries(kpdf  ${KDE4_KPARTS_LIBRARIES} )
+target_link_libraries(kpdf  ${KDE4_KPARTS_LIBS} )
 
 install_targets(/bin kpdf )
 

@@ -163,8 +163,8 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // create and set transparency mask
     QPainter maskPainter( &mask);
-    mask.fill( Qt::black );
-    maskPainter.setBrush( Qt::white );
+    mask.fill( Qt::white );
+    maskPainter.setBrush( Qt::black );
     maskPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
     setMask( mask );
 

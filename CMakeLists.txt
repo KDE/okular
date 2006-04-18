@@ -53,7 +53,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kdvipart )
 
 target_link_libraries(kdvipart  ${KDE4_KDECORE_LIBS} kparts kmultipage )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 kdvipart )
+install_targets(${PLUGIN_INSTALL_DIR} kdvipart )
 
 
 ########### next target ###############

@@ -54,7 +54,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kpdfpart )
 
 target_link_libraries(kpdfpart  ${KDE4_KDE3SUPPORT_LIBS} kpdfcore kpdfui kdeprint m )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 kpdfpart )
+install_targets(${PLUGIN_INSTALL_DIR} kpdfpart )
 
 
 ########### install files ###############

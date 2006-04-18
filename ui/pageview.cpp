@@ -25,6 +25,7 @@
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <dcopclient.h>
+#include <kcursor.h>
 #include <kiconloader.h>
 #include <kurldrag.h>
 #include <kaction.h>
@@ -828,7 +829,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     if ( e->button() & MidButton )
     {
         d->mouseMidStartY = e->globalPos().y();
-        setCursor( sizeVerCursor );
+        setCursor( KCursor::sizeVerCursor() );
         return;
     }
 
@@ -845,7 +846,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             {
                 d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
                 if ( !d->mouseOnRect )
-                    setCursor( sizeAllCursor );
+                    setCursor( KCursor::sizeAllCursor() );
             }
             break;
 
@@ -1507,16 +1508,16 @@ void PageView::updateCursor( const QPoint &p )
         // if over a ObjectRect (of type Link) change cursor to hand
         d->mouseOnRect = pageItem->page()->hasObject( ObjectRect::Link, nX, nY );
         if ( d->mouseOnRect )
-            setCursor( pointingHandCursor );
+            setCursor( KCursor::handCursor() );
         else
-            setCursor( arrowCursor );
+            setCursor( KCursor::arrowCursor() );
     }
     else
     {
         // if there's no page over the cursor and we were showing the pointingHandCursor
         // go back to the normal one
         d->mouseOnRect = false;
-        setCursor( arrowCursor );
+        setCursor( KCursor::arrowCursor() );
     }
 }
 

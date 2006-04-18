@@ -15,7 +15,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_kimgio )
 
 target_link_libraries(okularGenerator_kimgio  ${KDE4_KDECORE_LIBS} oKularcore ${KDE4_KDEUI_LIBS} )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_kimgio )
+install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_kimgio )
 
 
 ########### install files ###############

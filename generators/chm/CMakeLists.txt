@@ -30,7 +30,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_chmlib )
 
 target_link_libraries(okularGenerator_chmlib  ${KDE4_KDECORE_LIBS} oKularcore ${CHM_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KHTML_LIBS} )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_chmlib )
+install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_chmlib )
 
 
 ########### install files ###############

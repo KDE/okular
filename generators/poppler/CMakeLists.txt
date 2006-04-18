@@ -15,7 +15,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_poppler )
 
 target_link_libraries(okularGenerator_poppler   ${POPPLER_LIBRARY} ${KDE4_KDECORE_LIBS} oKularcore ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} m )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_poppler )
+install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_poppler )
 
 
 ########### install files ###############

@@ -37,7 +37,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 
 target_link_libraries(okularGenerator_ghostview  ${KDE4_KDECORE_LIBS} gssettings oKularcore oKularconf qgs ${KDE4_KDEUI_LIBS} ${KDE4_KDEPRINT_LIBS} )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_ghostview )
+install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 
 
 ########### install files ###############

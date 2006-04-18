@@ -17,7 +17,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_fax )
 
 target_link_libraries(okularGenerator_fax  ${KDE4_KDECORE_LIBS} oKularcore ${KDE4_KDEUI_LIBS} kfaximage )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 okularGenerator_fax )
+install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_fax )
 
 
 ########### install files ###############

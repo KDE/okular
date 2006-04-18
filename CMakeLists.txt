@@ -89,7 +89,7 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} oKularpart )
 
 target_link_libraries(oKularpart  oKularcore ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
 
-install_targets(${LIB_INSTALL_DIR}/kde4 oKularpart )
+install_targets(${PLUGIN_INSTALL_DIR} oKularpart )
 
 
 ########### install files ###############

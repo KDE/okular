@@ -2114,7 +2114,10 @@ void PageView::slotRelayoutPages()
 			insertX += colWidth[ cIdx ];
 			cIdx++;
 		} else
-			item->setGeometry( 0, 0, -1, -1 );
+			// pino: I used invalidate() instead of setGeometry() so
+			// the geometry rect of the item is really invalidated
+			//item->setGeometry( 0, 0, -1, -1 );
+			item->invalidate();
 
 		if( cIdx>=nCols)
 		{
@@ -2125,7 +2128,10 @@ void PageView::slotRelayoutPages()
             	}
             }
             else
-		item->setGeometry( 0, 0, -1, -1 );
+		// pino: I used invalidate() instead of setGeometry() so
+		// the geometry rect of the item is really invalidated
+		//item->setGeometry( 0, 0, -1, -1 );
+		item->invalidate();
         }
 
         delete [] colWidth;

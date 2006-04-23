@@ -39,6 +39,7 @@ class PageViewItem
         void setGeometry( int x, int y, int width, int height );
         void setWHZ( int w, int h, double zoom );
         void moveTo( int x, int y );
+        void invalidate();
 
     private:
         const KPDFPage * m_page;

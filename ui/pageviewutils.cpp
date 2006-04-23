@@ -91,6 +91,10 @@ void PageViewItem::moveTo( int x, int y )
     m_geometry.moveTop( y );
 }
 
+void PageViewItem::invalidate()
+{
+    m_geometry.setRect( 0, 0, 0, 0 );
+}
 
 /*********************/
 /** PageViewMessage  */

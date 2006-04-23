@@ -814,7 +814,8 @@ GfxColorSpace *GfxICCBasedColorSpace::parse(Array *arr) {
   cs = new GfxICCBasedColorSpace(nCompsA, altA, &iccProfileStreamA);
   if (dict->lookup("Range", &obj2)->isArray() &&
       obj2.arrayGetLength() == 2 * nCompsA) {
-    for (i = 0; i < nCompsA; ++i) {
+    // i should never be > 3 as rangeMin/rangeMax is a 4 elements array
+    for (i = 0; i < nCompsA && i < 4; ++i) {
       obj2.arrayGet(2*i, &obj3);
       cs->rangeMin[i] = obj3.getNum();
       obj3.free();

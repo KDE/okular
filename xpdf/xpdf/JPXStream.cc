@@ -1598,6 +1598,7 @@ GBool JPXStream::readTilePart() {
 	}
       }
 #endif
+    // Falling through
     case 0x58:			// PLT - packet length, tile-part header
       // skipped
       for (i = 0; i < segLen - 2; ++i) {

@@ -211,6 +211,7 @@ const DocumentInfo * PDFGenerator::generateDocumentInfo()
                          i18n("Security") );
             docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ),
                          i18n("Optimized") );
+            docInfo.set( "pages", QString::number( pdfdoc->getCatalog()->getNumPages() ), i18n("Pages") );
         }
         else
         {
@@ -218,7 +219,6 @@ const DocumentInfo * PDFGenerator::generateDocumentInfo()
             docInfo.set( "encryption", i18n( "Unknown Encryption" ), i18n( "Security" ) );
             docInfo.set( "optimization", i18n( "Unknown Optimization" ), i18n( "Optimized" ) );
         }
-        docInfo.set( "pages", QString::number( pdfdoc->getCatalog()->getNumPages() ), i18n("Pages") );
         docLock.unlock();
 
         // if pdfdoc is valid then we cached good info -> don't cache them again
@@ -800,7 +800,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 QString aux = unicodeToQString( s->unicode(), s->getLength() );
                 item.setAttribute( "ViewportName", aux );
             }
-            else if ( destination->isOk() )
+            else if ( destination && destination->isOk() )
             {
                 DocumentViewport vp;
                 fillViewportFromLink( vp, destination );

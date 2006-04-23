@@ -593,6 +593,7 @@ bool PDFGenerator::print( KPrinter& printer )
         delete psOut;
         return false;
     }
+	return false;
 }
 
 static UGooString *QStringToUGooString(const QString &s) {

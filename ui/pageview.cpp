@@ -898,6 +898,7 @@ if (d->document->handleEvent( e ) )
                     slotAutoScoll();
                 return;
             }
+            // else fall trhough
         default:
             e->ignore();
             return;

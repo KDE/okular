@@ -26,7 +26,7 @@ optionDialogFontsWidget::optionDialogFontsWidget( QWidget* parent,  const char* 
 #ifndef HAVE_FREETYPE
   kcfg_UseType1Fonts->setChecked(false);
   kcfg_UseType1Fonts->setEnabled(false);
-  QToolTip::add(UseType1Fonts, i18n("This version of KDVI does not support type 1 fonts."));
+  UseType1Fonts->setToolTip( i18n("This version of KDVI does not support type 1 fonts."));
   UseType1Fonts->setWhatsThis( i18n("KDVI needs the FreeType library to access type 1 fonts. This library "
                                     "was not present when KDVI was compiled. If you want to use type 1 "
                                     "fonts, you must either install the FreeType library and recompile KDVI "

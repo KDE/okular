@@ -46,20 +46,20 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   TextLabel1   = new QLabel( label, page, "TextLabel2" );
   TextLabel1->setAlignment( int( Qt::AlignCenter ) );
   TextLabel1->setWhatsThis( whatsThis );
-  QToolTip::add( TextLabel1, ttip );
+  TextLabel1->setToolTip( ttip );
 
   if (progressbar) {
     ProgressBar1 = new KProgressBar( page );
     ProgressBar1->setFormat(i18n("%v of %m"));
     ProgressBar1->setWhatsThis( whatsThis );
-    QToolTip::add( ProgressBar1, ttip );
+    ProgressBar1->setToolTip( ttip );
   } else
     ProgressBar1 = NULL;
 
   TextLabel2   = new QLabel( "", page, "TextLabel2" );
   TextLabel2->setAlignment( int( Qt::AlignCenter ) );
   TextLabel2->setWhatsThis( whatsThis );
-  QToolTip::add( TextLabel2, ttip );
+  TextLabel2->setToolTip( ttip );
 
   qApp->connect(this, SIGNAL(finished()), this, SLOT(killProcess()));
 }

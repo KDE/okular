@@ -2,7 +2,7 @@ kde4_header()
 
 add_subdirectory( pix ) 
 
-include_directories( ${CMAKE_SOURCE_DIR}/kviewshell/shell ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
+include_directories( ${CMAKE_SOURCE_DIR}/kviewshell/shell ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${FreeType2_INCLUDE_DIR} )
 
 
 ########### next target ###############
@@ -43,7 +43,7 @@ set(kdvipart_PART_SRCS
 
 kde4_automoc(${kdvipart_PART_SRCS})
 
-kde4_add_ui_files(kdvipart_PART_SRCS optionDialogFontsWidget_base.ui optionDialogSpecialWidget_base.ui )
+kde4_add_ui3_files(kdvipart_PART_SRCS optionDialogFontsWidget_base.ui optionDialogSpecialWidget_base.ui )
 
 kde4_add_kcfg_files(kdvipart_PART_SRCS prefs.kcfgc )
 
@@ -51,7 +51,7 @@ kde4_add_plugin(kdvipart ${kdvipart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kdvipart )
 
-target_link_libraries(kdvipart  ${KDE4_KDECORE_LIBS} kparts kmultipage )
+target_link_libraries(kdvipart  ${KDE4_KDECORE_LIBS} kparts kmultipage freetype z )
 
 install_targets(${PLUGIN_INSTALL_DIR} kdvipart )
 

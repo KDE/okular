@@ -23,7 +23,7 @@
 
 
 DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name)
-  : DocumentWidget(sv, cache, name)
+  : DocumentWidget(sv, cache)
 {
 }
 

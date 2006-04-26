@@ -10,7 +10,7 @@
 #include <config.h>
 
 #include "psgs.h"
-#include "psheader.h"
+#include "psheader.cpp"
 #include "dviFile.h"
 #include "kvs_debug.h"
 #include "pageNumber.h"
@@ -29,6 +29,7 @@
 
 //#define DEBUG_PSGS
 
+//extern char psheader[];
 
 pageInfo::pageInfo(const QString& _PostScriptString) {
   PostScriptString = new QString(_PostScriptString);
@@ -173,7 +174,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
      << (qint32)(72*(pixel_page_h/resolution)) << '\n'
      << "%%EndComments\n"
      << "%!\n"
-     << psheader()
+     << psheader
      << "TeXDict begin "
         // HSize in (1/(65781.76*72))inch
      << (qint32)(72*65781*(pixel_page_w/resolution)) << ' '

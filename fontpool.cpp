@@ -79,13 +79,13 @@ fontPool::fontPool()
   start.setAlphaBuffer(true);
   quint32 *destScanLine = (quint32 *)start.scanLine(0);
   *destScanLine = 0x80000000;
-  QPixmap intermediate(start);
+  QPixmap intermediate = QPixmap::fromImage(start);
   QPixmap dest(1,1);
   dest.fill(Qt::white);
   QPainter paint( &dest );
   paint.drawPixmap(0, 0, intermediate);
   paint.end();
-  start = dest.convertToImage().convertDepth(32);
+  start = dest.toImage().convertDepth(32);
   quint8 result = *(start.scanLine(0)) & 0xff;
 
   if ((result == 0xff) || (result == 0x00)) {

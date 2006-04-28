@@ -564,6 +564,7 @@ bool Part::openURL(const KUrl &url)
         m_viewportDirty = 0;
     else
         KMessageBox::error( widget(), i18n( "Could not open %1", url.prettyURL() ) );
+    emit enablePrintAction(openOk);
     return openOk;
 }
 

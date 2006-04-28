@@ -128,7 +128,6 @@ void Shell::openURL( const KUrl & url )
         bool openOk = m_part->openURL( url );
         if ( openOk ) m_recent->addUrl( url );
         else m_recent->removeUrl( url );
-        m_printAction->setEnabled( openOk );
     }
 }
 

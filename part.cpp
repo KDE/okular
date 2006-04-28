@@ -457,6 +457,7 @@ bool Part::openURL(const KUrl &url)
         KMessageBox::error( widget(), i18n("Could not open %1", url.prettyURL() ) );
     else
         m_viewportDirty.pageNumber = -1;
+    emit enablePrintAction(b);
     return b;
 }
 

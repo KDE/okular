@@ -238,16 +238,16 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
  // Check if gs has indeed produced a file.
   if (QFile::exists(filename) == false) {
-    kdError(kvs::dvi) << "GS did not produce output." << endl;
+    kError(kvs::dvi) << "GS did not produce output." << endl;
 
     // No. Check is the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
     QString GSoutput;
     while(proc.readln(GSoutput) != -1) {
       if (GSoutput.contains("Unknown device")) {
-	kdDebug(kvs::dvi) << QString("The version of ghostview installed on this computer does not support "
+	kDebug(kvs::dvi) << QString("The version of ghostview installed on this computer does not support "
                                      "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
-	knownDevices.remove(gsDevice);
+	knownDevices.erase(gsDevice);
 	gsDevice = knownDevices.begin();
 	if (knownDevices.isEmpty())
 	  // TODO: show a requestor of some sort.
@@ -272,7 +272,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 					  "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
 					  "</p></qt>"));
 	else {
-	  kdDebug(kvs::dvi) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
+	  kDebug(kvs::dvi) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
 	  gs_generate_graphics_file(page, filename, magnification);
 	}
 	return;

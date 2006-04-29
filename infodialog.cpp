@@ -52,7 +52,7 @@ infoDialog::infoDialog( QWidget* parent )
   QVBoxLayout *topLayout3 = new QVBoxLayout( page3, 0, 6 );
   TextLabel3 = new QTextEdit(page3);
   TextLabel3->setReadOnly(true);
-  TextLabel3->setText( i18n("No output from any external program received.") );
+  TextLabel3->setPlainText( i18n("No output from any external program received.") );
   TextLabel3->setToolTip( i18n("Output of external programs.") );
   TextLabel3->setWhatsThis( i18n("KDVI uses external programs, such as MetaFont, dvipdfm or dvips. "
                                     "This text field shows the output of these programs. "
@@ -88,7 +88,7 @@ void infoDialog::setDVIData(dvifile *dviFile)
 
 void infoDialog::setFontInfo(fontPool *fp)
 {
-  TextLabel2->setText(fp->status());
+  TextLabel2->setPlainText(fp->status());
 }
 
 
@@ -114,9 +114,9 @@ void infoDialog::outputReceiver(const QString& _op)
     // If the Output of the kpsewhich program contains a line starting
     // with "kpathsea:", this means that a new MetaFont-run has been
     // started. We filter these lines out and print them in boldface.
-    int startlineindex = line.find("kpathsea:");
+    int startlineindex = line.indexOf("kpathsea:");
     if (startlineindex != -1) {
-      int endstartline  = line.find("\n",startlineindex);
+      int endstartline  = line.indexOf("\n",startlineindex);
       QString startLine = line.mid(startlineindex,endstartline-startlineindex);
       if (MFOutputReceived)
         TextLabel3->append("<hr>\n<b>"+startLine+"</b>");

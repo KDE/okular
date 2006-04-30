@@ -81,9 +81,8 @@ dviRenderer::~dviRenderer()
   kdDebug(kvs::dvi) << "~dviRenderer" << endl;
 #endif
 
-  mutex.lock();
-  mutex.unlock();
-
+  QMutexLocker lock(&mutex);
+  
   delete PS_interface;
   delete dviFile;
 }
@@ -100,10 +99,9 @@ void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, b
 
 void dviRenderer::showInfo()
 {
-  mutex.lock();
+  QMutexLocker lock(&mutex);
   info->setDVIData(dviFile);
   info->show();
-  mutex.unlock();
 }
 
 
@@ -126,23 +124,20 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
     return;
   }
 
-  mutex.lock();
+  QMutexLocker lock(&mutex);
   if ( dviFile == 0 ) {
     kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
-    mutex.unlock();
     return;
   }
   if (page->getPageNumber() > dviFile->total_pages) {
     kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber()
                   << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
-    mutex.unlock();
     return;
   }
   if ( dviFile->dvi_Data() == 0 ) {
     kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
-    mutex.unlock();
     return;
   }
 
@@ -207,7 +202,6 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
   }
 
   currentlyDrawnPage = 0;
-  mutex.unlock();
 }
 
 
@@ -217,7 +211,7 @@ void dviRenderer::getText(RenderedDocumentPagePixmap* page)
   // Disable postscript-specials temporarely to speed up text extraction.
   _postscript = false;
 
-  drawPage(100.0, page);
+  drawPage(resolutionInDPI, page);
 
   _postscript = postscriptBackup;
 }
@@ -390,7 +384,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
 bool dviRenderer::setFile(const QString &fname, const KURL &base)
 {
 #ifdef DEBUG_DVIRENDERER
-  kdDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "', ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
+  kdDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "', base='" << base << " )" << endl;
 #endif
 
   //QMutexLocker lock(&mutex);
@@ -566,17 +560,15 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
 
 Anchor dviRenderer::parseReference(const QString &reference)
 {
-  mutex.lock();
+  QMutexLocker lock(&mutex);
 
 #ifdef DEBUG_DVIRENDERER
   kdError(kvs::dvi) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
 
-  if (dviFile == 0) {
-    mutex.unlock();
+  if (dviFile == 0)
     return Anchor();
-  }
-
+  
   // case 1: The reference is a number, which we'll interpret as a
   // page number.
   bool ok;
@@ -587,7 +579,6 @@ Anchor dviRenderer::parseReference(const QString &reference)
     if (page > dviFile->total_pages)
       page = dviFile->total_pages;
 
-    mutex.unlock();
     return Anchor(page, Length() );
   }
 
@@ -609,7 +600,6 @@ Anchor dviRenderer::parseReference(const QString &reference)
                                     "We refer to the manual of KDVI for a detailed explanation on how to include this "
                                     "information. Press the F1 key to open the manual.</qt>").arg(refLineNumber).arg(refFileName),
                          i18n("Could Not Find Reference"));
-      mutex.unlock();
       return Anchor();
     }
 
@@ -641,22 +631,17 @@ Anchor dviRenderer::parseReference(const QString &reference)
           bestMatch = it;
       }
 
-    if (bestMatch != sourceHyperLinkAnchors.end()) {
-      mutex.unlock();
+    if (bestMatch != sourceHyperLinkAnchors.end())
       return Anchor(bestMatch->page, bestMatch->distance_from_top);
-    } else
+    else
       if (anchorForRefFileFound == false)
         KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
                                               "line %1 in the TeX-file <strong>%2</strong>.</qt>").arg(refLineNumber).arg(refFileName),
                            i18n( "Could Not Find Reference" ));
-      else {
-        mutex.unlock();
+      else
         return Anchor();
-      }
-    mutex.unlock();
     return Anchor();
   }
-  mutex.unlock();
   return Anchor();
 }
 

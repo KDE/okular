@@ -27,7 +27,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 {
     setFocusPolicy( Qt::NoFocus );
     setBackgroundMode( Qt::NoBackground );
-    setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QColorGroup::Background));
+    setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QPalette::Background));
     move( 10, 10 );
     resize( 0, 0 );
     hide();

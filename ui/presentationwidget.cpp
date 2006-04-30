@@ -309,8 +309,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar->hide();
         // change topbar background color
         QPalette p = m_topBar->palette();
-        p.setColor( QPalette::Active, QColorGroup::Button, Qt::gray );
-        p.setColor( QPalette::Active, QColorGroup::Background, Qt::darkGray );
+        p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
+        p.setColor( QPalette::Active, QPalette::Background, Qt::darkGray );
         m_topBar->setPalette( p );
 
         // register this observer in document. events will come immediately

@@ -63,10 +63,6 @@ KDE_OPTIONS = nofinal
 ## this option you can leave out. Just, if you use "make dist", you need it
 noinst_HEADERS = dvi.h dviRenderer.h xdvi.h
 
-messages: rc.cpp
-	$(PREPARETIPS) > tips.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
-	rm -f tips.cpp
 
 tip_DATA = tips
 tipdir = $(kde_datadir)/kdvi

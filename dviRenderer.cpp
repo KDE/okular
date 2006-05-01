@@ -249,12 +249,12 @@ void dviRenderer::showThatSourceInformationIsPresent()
     lay->addStretch(1);
     QLabel *label1 = new QLabel( contents);
     label1->setPixmap(QMessageBox::standardIcon(QMessageBox::Information));
-    lay->add( label1 );
+    lay->addWidget(label1);
     QLabel *label2 = new QLabel( i18n("<qt>This DVI file contains source file information. You may click into the text with the "
                                       "middle mouse button, and an editor will open the TeX-source file immediately.</qt>"),
                                  contents);
     label2->setMinimumSize(label2->sizeHint());
-    lay->add( label2 );
+    lay->addWidget(label2);
     lay->addStretch(1);
     QSize extraSize = QSize(50,30);
     QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
@@ -369,17 +369,17 @@ bool dviRenderer::isValidFile(const QString& filename) const
     return false;
 
   unsigned char test[4];
-  if ( f.readBlock( (char *)test,2)<2 || test[0] != 247 || test[1] != 2 )
+  if ( f.read( (char *)test,2)<2 || test[0] != 247 || test[1] != 2 )
     return false;
 
   int n = f.size();
   if ( n < 134 )        // Too short for a dvi file
     return false;
-  f.at( n-4 );
+  f.seek( n-4 );
 
   unsigned char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
 
-  if ( f.readBlock( (char *)test, 4 )<4 || strncmp( (char *)test, (char *) trailer, 4 ) )
+  if ( f.read( (char *)test, 4 )<4 || strncmp( (char *)test, (char *) trailer, 4 ) )
     return false;
   // We suppose now that the dvi file is complete and OK
   return true;
@@ -457,7 +457,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   _isModified = false;
   baseURL = base;
 
-  font_pool.setExtraSearchPath( fi.dirPath(true) );
+  font_pool.setExtraSearchPath( fi.absolutePath() );
   font_pool.setCMperDVIunit( dviFile->getCmPerDVIunit() );
 
   // Extract PostScript from the DVI file, and store the PostScript
@@ -594,7 +594,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
   // points to line number 1111 in the file "Filename". KDVI then
   // looks for source specials of the form "src:xxxxFilename", and
   // tries to find the special with the biggest xxxx
-  if (reference.find("src:",0,false) == 0) {
+  if (reference.indexOf("src:", 0, Qt::CaseInsensitive) == 0) {
 
     // Extract the file name and the numeral part from the reference string
     DVI_SourceFileSplitter splitter(reference, dviFile->filename);
@@ -709,15 +709,15 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
   // Now replace octal character codes with the characters they encode
   int pos;
   QRegExp rx( "(\\\\)(\\d\\d\\d)" );  // matches "\xyz" where x,y,z are numbers
-  while((pos = rx.search( pdfstring )) != -1) {
+  while((pos = rx.indexIn( pdfstring )) != -1) {
     pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
   }
   rx.setPattern( "(\\\\)(\\d\\d)" );  // matches "\xy" where x,y are numbers
-  while((pos = rx.search( pdfstring )) != -1) {
+  while((pos = rx.indexIn( pdfstring )) != -1) {
     pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(0,8)));
   }
   rx.setPattern( "(\\\\)(\\d)" );  // matches "\x" where x is a number
-  while((pos = rx.search( pdfstring )) != -1) {
+  while((pos = rx.indexIn( pdfstring )) != -1) {
     pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
   }
   return pdfstring;
@@ -760,7 +760,7 @@ void dviRenderer::export_finished(const DVIExport* key)
   typedef QMap<const DVIExport*, KSharedPtr<DVIExport> > ExportMap;
   ExportMap::iterator it = all_exports_.find(key);
   if (it != all_exports_.end())
-    all_exports_.erase(key);
+    all_exports_.remove(key);
 }
 
 #include "dviRenderer.moc"

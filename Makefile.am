@@ -4,9 +4,6 @@ INCLUDES = -I$(top_builddir)/kpdf $(all_includes) $(POPPLER_CFLAGS)
 
 METASOURCES = AUTO
 
-messages: rc.cpp
-	$(EXTRACTRC) `find . -name "*.rc" -o -name "*.ui"` >> rc.cpp
-	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.cc" -o -name "*.h"` -o $(podir)/kpdf.pot
 
 KDE_ICON = kpdf
 

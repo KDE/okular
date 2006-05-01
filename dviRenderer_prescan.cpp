@@ -58,7 +58,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename = include_command;
-  EPSfilename.truncate(EPSfilename.find(' '));
+  EPSfilename.truncate(EPSfilename.indexOf(' '));
 
   // Strip enclosing quotation marks which are included by some LaTeX
   // macro packages (but not by others). This probably means that
@@ -118,7 +118,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   int  angle   = 0;
 
   // just to avoid ambiguities; the filename could contain keywords
-  include_command = include_command.mid(include_command.find(' '));
+  include_command = include_command.mid(include_command.indexOf(' '));
 
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
@@ -128,7 +128,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
-  int clip=include_command.find(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
+  int clip=include_command.indexOf(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
 
   // Generate the PostScript commands to be included
   QString PS = QString("ps: @beginspecial %1 @llx %2 @lly %3 @urx %4 @ury").arg(llx).arg(lly).arg(urx).arg(ury);
@@ -169,7 +169,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   command_pointer[0] = XXX4;
   command_pointer++;
   writeUINT32(PS.length());
-  memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+5, PS.latin1(), PS.length() );
+  memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+5, PS.toLatin1(), PS.length() );
   memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
          dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data())-lengthOfOldSpecial );
 
@@ -270,7 +270,7 @@ void dviRenderer::prescan_ParseBackgroundSpecial(const QString& cp)
 void dviRenderer::prescan_ParseHTMLAnchorSpecial(const QString& _cp)
 {
   QString cp = _cp;
-  cp.truncate(cp.find('"'));
+  cp.truncate(cp.indexOf('"'));
   Length l;
   l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
   anchorList[cp] = Anchor(current_page+1, l);
@@ -373,14 +373,14 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
 
-  if (cp.find("ps::[begin]", 0, false) == 0) {
+  if (cp.indexOf("ps::[begin]", 0, Qt::CaseInsensitive) == 0) {
     PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(11)) );
   } else {
-    if (cp.find("ps::[end]", 0, false) == 0) {
+    if (cp.indexOf("ps::[end]", 0, Qt::CaseInsensitive) == 0) {
       PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(9)) );
     } else {
-      if (cp.find("ps::", 0, false) == 0) {
+      if (cp.indexOf("ps::", 0, Qt::CaseInsensitive) == 0) {
         PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(4)) );
       } else {
         PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
@@ -405,7 +405,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename = include_command;
-  EPSfilename.truncate(EPSfilename.find(' '));
+  EPSfilename.truncate(EPSfilename.indexOf(' '));
 
   // Strip enclosing quotation marks which are included by some LaTeX
   // macro packages (but not by others). This probably means that
@@ -417,7 +417,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
 
   // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
   // that this is NOT a PostScript file, and we exit here.
-  QString ending = EPSfilename.section('.', -1).lower();
+  QString ending = EPSfilename.section('.', -1).toLower();
   if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg")) {
     dviFile->numberOfExternalNONPSFiles++;
     return;
@@ -455,7 +455,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   int  angle   = 0;
 
   // just to avoid ambiguities; the filename could contain keywords
-  include_command = include_command.mid(include_command.find(' '));
+  include_command = include_command.mid(include_command.indexOf(' '));
 
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
@@ -465,7 +465,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
-  int clip=include_command.find(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
+  int clip=include_command.indexOf(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
 
   if (QFile::exists(EPSfilename)) {
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;

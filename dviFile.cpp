@@ -61,6 +61,7 @@
 #include <klocale.h>
 
 #include <QProcess>
+#include <QSysInfo>
 #include <QTemporaryFile>
 
 #include <cstdlib>
@@ -281,7 +282,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   have_complainedAboutMissingPDF2PS = false;
 
   QFile file(fname);
-  filename = file.name();
+  filename = file.fileName();
   file.open( QIODevice::ReadOnly );
   size_of_file = file.size();
   dviData.resize(size_of_file);
@@ -292,9 +293,9 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
     kError(kvs::dvi) << i18n("Not enough memory to load the DVI-file.");
     return;
   }
-  file.readBlock((char *)dvi_Data(), size_of_file);
+  file.read((char *)dvi_Data(), size_of_file);
   file.close();
-  if (file.status() != QFile::Status(IO_Ok)) {
+  if (file.error() != QFile::NoError) {
     kError(kvs::dvi) << i18n("Could not load the DVI-file.");
     return;
   }
@@ -336,9 +337,7 @@ void dvifile::renumber()
 
   // Write the page number to the file, taking good care of byte
   // orderings.
-  int wordSize;
-  bool bigEndian;
-  qSysInfo (&wordSize, &bigEndian);
+  bool bigEndian = (QSysInfo::ByteOrder == QSysInfo::BigEndian);
 
   for(int i=1; i<=total_pages; i++) {
     quint8 *ptr = dviData.data() + page_offset[i-1]+1;
@@ -365,7 +364,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
   QMap<QString, QString>::Iterator it =  convertedFiles.find(PDFFilename);
   if (it != convertedFiles.end()) {
     // PDF-File is known. Good.
-    return it.data();
+    return it.value();
   }
 
   // Get the name of a temporary file.
@@ -436,7 +435,7 @@ bool dvifile::saveAs(const QString &filename)
   QFile out(filename);
   if (out.open( QIODevice::WriteOnly ) == false)
     return false;
-  if (out.writeBlock ( (char *)(dvi_Data()), size_of_file ) == -1)
+  if (out.write ( (char *)(dvi_Data()), size_of_file ) == -1)
     return false;
   out.close();
   return true;

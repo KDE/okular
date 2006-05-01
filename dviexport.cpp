@@ -268,7 +268,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
   }
 
   // Generate a suggestion for a reasonable file name
-  const QString suggested_name = dvi.filename.left(dvi.filename.find(".")) + ".pdf";
+  const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(".")) + ".pdf";
   const QString output_name = KFileDialog::getSaveFileName(suggested_name, i18n("*.pdf|Portable Document Format (*.pdf)"), parent_widget, i18n("Export File As"));
   if (output_name.isEmpty())
     return;
@@ -300,7 +300,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
         QStringList() << "-o"
                       << output_name
                       << dvi.filename,
-        QFileInfo(dvi.filename).dirPath(true),
+        QFileInfo(dvi.filename).absolutePath(),
         i18n("<qt>The external program 'dvipdfm', which was used to export the file, reported an error. "
              "You might wish to look at the <strong>document info dialog</strong> which you will "
              "find in the File-Menu for a precise error report.</qt>"));
@@ -353,7 +353,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
 
   } else {
     // Generate a suggestion for a reasonable file name
-    const QString suggested_name = dvi.filename.left(dvi.filename.find(".")) + ".ps";
+    const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(".")) + ".ps";
     output_name_ = KFileDialog::getSaveFileName(suggested_name, i18n("*.ps|PostScript (*.ps)"), parent_widget, i18n("Export File As"));
     if (output_name_.isEmpty())
       return;
@@ -465,7 +465,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
 
   start("dvips",
         args,
-        QFileInfo(dvi.filename).dirPath(true),
+        QFileInfo(dvi.filename).absolutePath(),
         i18n("<qt>The external program 'dvips', which was used to export the file, reported an error. "
              "You might wish to look at the <strong>document info dialog</strong> which you will "
              "find in the File-Menu for a precise error report.</qt>"));

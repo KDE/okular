@@ -51,7 +51,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   }
 
   // Data from the HEADER section of the TFM data.
-  file.at(24);
+  file.seek(24);
   stream >> checksum >> design_size_in_TeX_points.value;
 #ifdef DEBUG_TFM
   kDebug(kvs::dvi) << "checksum    = " << checksum << endl
@@ -64,7 +64,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
     widthTable_in_units_of_design_size[i].value = 0;
 
-  file.at( 24 + 4*lh + 4*(ec-bc) );
+  file.seek( 24 + 4*lh + 4*(ec-bc) );
   for(unsigned int i=0; i<nw; i++) {
 
     stream >> widthTable_in_units_of_design_size[i].value;
@@ -86,7 +86,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   }
 
   // Char-Info table
-  file.at( 24 + 4*lh );
+  file.seek( 24 + 4*lh );
   for(unsigned int characterCode=bc; characterCode<ec; characterCode++) {
     glyph *g = glyphtable+characterCode;
 

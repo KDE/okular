@@ -47,7 +47,7 @@ fontPool::fontPool()
   kDebug(kvs::dvi) << "fontPool::fontPool() called" << endl;
 #endif
 
-  setName("Font Pool");
+  setObjectName("Font Pool");
 
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
   useFontHints             = true;
@@ -75,8 +75,7 @@ fontPool::fontPool()
   // of QT at compile and runtime or the availability of the XFt
   // extension, alpha channels are either supported, or silently
   // ignored.
-  QImage start(1, 1, 32); // Generate a 1x1 image, black with alpha=0x10
-  start.setAlphaBuffer(true);
+  QImage start(1, 1, QImage::Format_ARGB32); // Generate a 1x1 image, black with alpha=0x10
   quint32 *destScanLine = (quint32 *)start.scanLine(0);
   *destScanLine = 0x80000000;
   QPixmap intermediate = QPixmap::fromImage(start);
@@ -85,7 +84,7 @@ fontPool::fontPool()
   QPainter paint( &dest );
   paint.drawPixmap(0, 0, intermediate);
   paint.end();
-  start = dest.toImage().convertDepth(32);
+  start = dest.toImage().convertToFormat(QImage::Format_ARGB32);
   quint8 result = *(start.scanLine(0)) & 0xff;
 
   if ((result == 0xff) || (result == 0x00)) {
@@ -400,10 +399,10 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 #ifdef HAVE_FREETYPE
       const QString &fn = fontsByTeXName.findFileName(fontp->fontname);
       if (!fn.isEmpty())
-        matchingFiles = fileNameList.grep(fn);
+        matchingFiles = fileNameList.filter(fn);
 #endif
       if (matchingFiles.isEmpty() == true)
-        matchingFiles += fileNameList.grep(fontp->fontname+".");
+        matchingFiles += fileNameList.filter(fontp->fontname+".");
 
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
@@ -533,23 +532,23 @@ void fontPool::mf_output_receiver()
   // We'd like to print only full lines of text.
   int numleft;
   bool show_prog = false;
-  while( (numleft = MetafontOutput.find('\n')) != -1) {
+  while( (numleft = MetafontOutput.indexOf('\n')) != -1) {
     QString line = MetafontOutput.left(numleft+1);
 #ifdef DEBUG_FONTPOOL
     kDebug(kvs::dvi) << "MF OUTPUT RECEIVED: " << line;
 #endif
     // Search for a line which marks the beginning of a MetaFont run
     // and show the progress dialog at the end of this method.
-    if (line.find("kpathsea:") == 0)
+    if (line.indexOf("kpathsea:") == 0)
       show_prog = true;
 
     // If the Output of the kpsewhich program contains a line starting
     // with "kpathsea:", this means that a new MetaFont-run has been
     // started. We filter these lines out and update the display
     // accordingly.
-    int startlineindex = line.find("kpathsea:");
+    int startlineindex = line.indexOf("kpathsea:");
     if (startlineindex != -1) {
-      int endstartline  = line.find("\n",startlineindex);
+      int endstartline  = line.indexOf("\n",startlineindex);
       QString startLine = line.mid(startlineindex,endstartline-startlineindex);
 
       // The last word in the startline is the name of the font which we

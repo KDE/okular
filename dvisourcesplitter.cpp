@@ -50,7 +50,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
 #endif
 
   //test if the file exists
-  m_fileInfo.setFile(QFileInfo(dviFile).dir(true), filepart);
+  m_fileInfo.setFile(QFileInfo(dviFile).absoluteDir(), filepart);
   bool fiExists = m_fileInfo.exists();
 
   //if it doesn't exist, but adding ".tex"

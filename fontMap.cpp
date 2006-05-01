@@ -89,7 +89,7 @@ fontMap::fontMap()
         encodingName = encodingName.mid(1);
 
       double slant = 0.0;
-      int i = line.find("SlantFont");
+      int i = line.indexOf("SlantFont");
       if (i >= 0) {
         bool ok;
         slant = line.left(i).section(' ', -1, -1 ,QString::SectionSkipEmpty).toDouble(&ok);
@@ -129,7 +129,7 @@ const QString &fontMap::findFileName(const QString &TeXName)
   QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
 
   if (it != fontMapEntries.end())
-    return it.data().fontFileName;
+    return it.value().fontFileName;
 
   static const QString nullstring(QString::null);
   return nullstring;
@@ -141,7 +141,7 @@ const QString &fontMap::findFontName(const QString &TeXName)
   QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
 
   if (it != fontMapEntries.end())
-    return it.data().fullFontName;
+    return it.value().fullFontName;
 
   static const QString nullstring(QString::null);
   return nullstring;
@@ -153,7 +153,7 @@ const QString &fontMap::findEncoding(const QString &TeXName)
   QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
 
   if (it != fontMapEntries.end())
-    return it.data().fontEncoding;
+    return it.value().fontEncoding;
 
   static const QString nullstring(QString::null);
   return nullstring;
@@ -165,7 +165,7 @@ double fontMap::findSlant(const QString &TeXName)
   QMap<QString, fontMapEntry>::Iterator it = fontMapEntries.find(TeXName);
 
   if (it != fontMapEntries.end())
-    return it.data().slant;
+    return it.value().slant;
   else
     return 0.0;
 }

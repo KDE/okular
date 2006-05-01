@@ -192,18 +192,18 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
      << "1 0 bop 0 0 a \n";
 
   if (PostScriptHeaderString->latin1() != NULL)
-    os << PostScriptHeaderString->latin1();
+    os << PostScriptHeaderString->toLatin1();
 
   if (info->background != Qt::white) {
     QString colorCommand = QString("gsave %1 %2 %3 setrgbcolor clippath fill grestore\n").
       arg(info->background.red()/255.0).
       arg(info->background.green()/255.0).
       arg(info->background.blue()/255.0);
-    os << colorCommand.latin1();
+    os << colorCommand.toLatin1();
   }
 
   if (info->PostScriptString->latin1() != NULL)
-    os << info->PostScriptString->latin1();
+    os << info->PostScriptString->toLatin1();
 
   os << "end\n"
      << "showpage \n";
@@ -211,7 +211,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   PSfile.close();
 
   // Step 2: Call GS with the File
-  QFile::remove(filename.ascii());
+  QFile::remove(filename.toAscii());
   KProcIO proc;
   QStringList argus;
   argus << "gs";
@@ -222,7 +222,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   argus << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
   argus << QString("-r%1").arg(resolution);                       // resolution in dpi
   argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
-  argus << "-f" << PSfile.name();
+  argus << "-f" << PSfileName;
  
 #ifdef DEBUG_PSGS
   kdDebug(kvs::dvi) << argus.join(" ") << endl;
@@ -232,7 +232,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   if (proc.start(KProcess::Block) == false) {
     // Starting ghostscript did not work. 
     // TODO: Issue error message, switch PS support off.
-    kdError(kvs::dvi) << "ghostview could not be started" << endl;
+    kError(kvs::dvi) << "ghostview could not be started" << endl;
   }
   PSfile.remove();
 

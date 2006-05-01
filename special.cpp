@@ -119,7 +119,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
 
   QString specType = colorSpec.section(' ', 0, 0);
 
-  if (specType.find("rgb", false) == 0) {
+  if (specType.indexOf("rgb", 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
     double r = colorSpec.section(' ', 1, 1).toDouble(&ok);
@@ -137,7 +137,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     return QColor((int)(r*255.0+0.5), (int)(g*255.0+0.5), (int)(b*255.0+0.5));
   }
 
-  if (specType.find("hsb", false) == 0) {
+  if (specType.indexOf("hsb", 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
     double h = colorSpec.section(' ', 1, 1).toDouble(&ok);
@@ -155,7 +155,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     return QColor((int)(h*359.0+0.5), (int)(s*255.0+0.5), (int)(b*255.0+0.5), QColor::Hsv);
   }
 
-  if (specType.find("cmyk", false) == 0) {
+  if (specType.indexOf("cmyk", 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
     double c = colorSpec.section(' ', 1, 1).toDouble(&ok);
@@ -188,7 +188,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     return QColor((int)(r*255.0+0.5), (int)(g*255.0+0.5), (int)(b*255.0+0.5));
   }
 
-  if (specType.find("gray", false) == 0) {
+  if (specType.indexOf("gray", 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
     double g = colorSpec.section(' ', 1, 1).toDouble(&ok);
@@ -249,10 +249,10 @@ void dviRenderer::color_special(const QString& _cp)
 void dviRenderer::html_href_special(const QString& _cp)
 {
   QString cp = _cp;
-  cp.truncate(cp.find('"'));
+  cp.truncate(cp.indexOf('"'));
 
 #ifdef DEBUG_SPECIAL
-  kDebug(kvs::dvi) << "HTML-special, href " << cp.latin1() << endl;
+  kDebug(kvs::dvi) << "HTML-special, href " << cp.toLatin1() << endl;
 #endif
   HTML_href = new QString(cp);
 }
@@ -287,10 +287,10 @@ void dviRenderer::source_special(const QString& cp)
 
 void parse_special_argument(const QString& strg, const char* argument_name, int* variable)
 {
-  int index = strg.find(argument_name);
+  int index = strg.indexOf(argument_name);
   if (index >= 0) {
     QString tmp = strg.mid(index + strlen(argument_name));
-    index = tmp.find(' ');
+    index = tmp.indexOf(' ');
     if (index >= 0)
       tmp.truncate(index);
 
@@ -322,7 +322,7 @@ void dviRenderer::epsf_special(const QString& cp)
   // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename_orig = include_command;
-  EPSfilename_orig.truncate(EPSfilename_orig.find(' '));
+  EPSfilename_orig.truncate(EPSfilename_orig.indexOf(' '));
 
   // Strip enclosing quotation marks which are included by some LaTeX
   // macro packages (but not by others). This probably means that
@@ -343,7 +343,7 @@ void dviRenderer::epsf_special(const QString& cp)
   int  angle   = 0;
 
   // just to avoid ambiguities; the filename could contain keywords
-  include_command = include_command.mid(include_command.find(' '));
+  include_command = include_command.mid(include_command.indexOf(' '));
 
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);

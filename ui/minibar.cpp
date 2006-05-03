@@ -89,7 +89,9 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
     horLayout->addItem( spacerL );
 
     // central 2r by 3c grid layout that contains all components
-    QGridLayout * gridLayout = new QGridLayout( 0, 3,5, 2,1 );
+    QGridLayout * gridLayout = new QGridLayout();
+    gridLayout->setSpacing( 1 );
+    gridLayout->setMargin( 2 );
      // top spacer 6x6 px
 //     QSpacerItem * spacerTop = new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed );
 //     gridLayout->addMultiCell( spacerTop, 0, 0, 0, 4 );

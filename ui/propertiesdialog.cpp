@@ -24,7 +24,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
 {
   // Properties
   QFrame *page = addPage(i18n("Properties"));
-  QGridLayout *layout = new QGridLayout( page, 2, 2, marginHint(), spacingHint() );
+  QGridLayout *layout = new QGridLayout( page );
+  layout->setSpacing( spacingHint() );
+  layout->setMargin( marginHint() );
 
   // get document info, if not present display blank data and a warning
   const DocumentInfo * info = doc->documentInfo();
@@ -75,7 +77,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   if (doc->hasFonts())
   {
     QFrame *page2 = addPage(i18n("Fonts"));
-    page2Layout = new QVBoxLayout(page2, 0, KDialog::spacingHint());
+    page2Layout = new QVBoxLayout(page2);
+    page2Layout->setSpacing(KDialog::spacingHint());
+    page2Layout->setMargin(0);
     K3ListView *lv = new K3ListView(page2);
     page2Layout->add(lv);
     doc->putFontInfo(lv);

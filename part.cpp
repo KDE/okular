@@ -611,7 +611,9 @@ public:
 		QWidget *w = new QWidget(this);
 		setMainWidget(w);
 
-		QVBoxLayout *topLayout = new QVBoxLayout( w, 0, spacingHint() );
+		QVBoxLayout *topLayout = new QVBoxLayout( w );
+		topLayout->setSpacing( spacingHint() );
+		topLayout->setMargin( 0 );
 		e1 = new KIntNumInput(current, w);
 		e1->setRange(1, max);
 		e1->setEditFocus(true);

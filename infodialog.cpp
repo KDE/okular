@@ -31,14 +31,18 @@ infoDialog::infoDialog( QWidget* parent )
     pool(QString::null)
 {
   QFrame *page1 = addPage( i18n("DVI File") );
-  QVBoxLayout *topLayout1 = new QVBoxLayout( page1, 0, 6 );
+  QVBoxLayout *topLayout1 = new QVBoxLayout( page1 );
+  topLayout1->setSpacing( 6 );
+  topLayout1->setMargin( 0 );
   TextLabel1 = new QTextEdit(page1);
   TextLabel1->setReadOnly(true);
   TextLabel1->setToolTip( i18n("Information on the currently loaded DVI-file.") );
   topLayout1->addWidget( TextLabel1 );
 
   QFrame *page2 = addPage( i18n("Fonts") );
-  QVBoxLayout *topLayout2 = new QVBoxLayout( page2, 0, 6 );
+  QVBoxLayout *topLayout2 = new QVBoxLayout( page2 );
+  topLayout2->setSpacing( 6 );
+  topLayout2->setMargin( 0 );
   TextLabel2 = new QTextEdit(page2);
   TextLabel2->setReadOnly(true);
   TextLabel2->setMinimumWidth(fontMetrics().maxWidth()*40);
@@ -49,7 +53,9 @@ infoDialog::infoDialog( QWidget* parent )
   topLayout2->addWidget( TextLabel2 );
 
   QFrame *page3 = addPage( i18n("External Programs") );
-  QVBoxLayout *topLayout3 = new QVBoxLayout( page3, 0, 6 );
+  QVBoxLayout *topLayout3 = new QVBoxLayout( page3 );
+  topLayout3->setSpacing( 6 );
+  topLayout3->setMargin( 0 );
   TextLabel3 = new QTextEdit(page3);
   TextLabel3->setReadOnly(true);
   TextLabel3->setPlainText( i18n("No output from any external program received.") );

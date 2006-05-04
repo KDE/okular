@@ -5,6 +5,11 @@
 #  SANE_INCLUDE_DIR - the SANE include directory
 #  SANE_LIBRARIES - The libraries needed to use SANE
 
+if (SANE_INCLUDE_DIR)
+  # Already in cache, be silent
+  set(SANE_FIND_QUIETLY TRUE)
+endif (SANE_INCLUDE_DIR)
+
 FIND_PATH(SANE_INCLUDE_DIR sane/sane.h
    /usr/include
    /usr/local/include

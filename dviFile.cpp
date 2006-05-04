@@ -191,9 +191,7 @@ void dvifile::read_postamble()
     quint32 scale     = readUINT32();
     quint32 design    = readUINT32();
     quint16 len       = readUINT8() + readUINT8(); // Length of the font name, including the directory name
-    char *fontname  = new char[len + 1];
-    strncpy(fontname, (char *)command_pointer, len );
-    fontname[len] = '\0';
+    QString fontname((char*)command_pointer);
     command_pointer += len;
 
 #ifdef DEBUG_FONTS

@@ -60,10 +60,12 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   setRenderer(&DVIRenderer);
 
   docInfoAction    = new KAction(i18n("Document &Info"), "info", 0, &DVIRenderer, SLOT(showInfo()), actionCollection(), "info_dvi");
-  embedPSAction    = new KAction(i18n("Embed External PostScript Files..."), 0, this, SLOT(slotEmbedPostScript()), actionCollection(), "embed_postscript");
+  embedPSAction = new KAction(i18n("Embed External PostScript Files..."), actionCollection(), "embed_postscript");
+  connect(embedPSAction, SIGNAL(triggered(bool) ), SLOT(slotEmbedPostScript()));
   KAction *action = new KAction(i18n("Enable All Warnings && Messages"), actionCollection(), "enable_msgs");
   connect(action, SIGNAL(triggered(bool) ), SLOT(doEnableWarnings()));
-  exportPSAction   = new KAction(i18n("PostScript..."), 0, &DVIRenderer, SLOT(exportPS()), actionCollection(), "export_postscript");
+  exportPSAction = new KAction(i18n("PostScript..."), actionCollection(), "export_postscript");
+  connect(exportPSAction, SIGNAL(triggered(bool) ), &DVIRenderer, SLOT(exportPS()));
   exportPDFAction  = new KAction(i18n("PDF..."), 0, &DVIRenderer, SLOT(exportPDF()), actionCollection(), "export_pdf");
 
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");

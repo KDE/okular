@@ -73,8 +73,8 @@ class HoverButton : public QPushButton
 
     protected:
         void paintEvent( QPaintEvent * e );
-        void enterEvent( QPaintEvent * e );
-        void leaveEvent( QPaintEvent * e );
+        void enterEvent( QEvent * e );
+        void leaveEvent( QEvent * e );
 };
 
 
@@ -419,13 +419,13 @@ HoverButton::HoverButton( QWidget * parent )
 #endif
 }
 
-void HoverButton::enterEvent( QPaintEvent * e )
+void HoverButton::enterEvent( QEvent * e )
 {
 	update();
 	QPushButton::enterEvent( e );
 }
 
-void HoverButton::leaveEvent( QPaintEvent * e )
+void HoverButton::leaveEvent( QEvent * e )
 {
 	update();
 	QPushButton::leaveEvent( e );

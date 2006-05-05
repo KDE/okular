@@ -59,7 +59,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   DVIRenderer.setName("DVI renderer");
   setRenderer(&DVIRenderer);
 
-  docInfoAction    = new KAction(i18n("Document &Info"), "info", 0, &DVIRenderer, SLOT(showInfo()), actionCollection(), "info_dvi");
+  docInfoAction = new KAction(KIcon("info"), i18n("Document &Info"), actionCollection(), "info_dvi");
+  connect(docInfoAction, SIGNAL(triggered(bool)), &DVIRenderer, SLOT(showInfo()));
   embedPSAction = new KAction(i18n("Embed External PostScript Files..."), actionCollection(), "embed_postscript");
   connect(embedPSAction, SIGNAL(triggered(bool) ), SLOT(slotEmbedPostScript()));
   KAction *action = new KAction(i18n("Enable All Warnings && Messages"), actionCollection(), "enable_msgs");

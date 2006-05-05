@@ -225,7 +225,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   argus << "-f" << PSfileName;
  
 #ifdef DEBUG_PSGS
-  kdDebug(kvs::dvi) << argus.join(" ") << endl;
+  kDebug(kvs::dvi) << argus.join(" ") << endl;
 #endif
 
   proc << argus;

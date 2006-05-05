@@ -10,7 +10,7 @@
 #ifndef _KPDF_THUMBNAILLIST_H_
 #define _KPDF_THUMBNAILLIST_H_
 
-#include <q3scrollview.h>
+#include <qscrollarea.h>
 
 #include <kvbox.h>
 #include <qtoolbar.h>
@@ -18,6 +18,7 @@
 #include "core/observer.h"
 
 class QTimer;
+class QVBoxLayout;
 class KActionCollection;
 
 class KPDFDocument;
@@ -28,7 +29,7 @@ class ThumbnailWidget;
  *
  * ...
  */
-class ThumbnailList : public Q3ScrollView, public DocumentObserver
+class ThumbnailList : public QScrollArea, public DocumentObserver
 {
 Q_OBJECT
 	public:
@@ -51,8 +52,8 @@ Q_OBJECT
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
 
-        // called by ThumbnailWidgets to send (forward) rightClick signals
-        void forwardRightClick( const KPDFPage *, const QPoint & );
+        // called by ThumbnailWidgets to send (forward) the mouse click signals
+        void forwardClick( const KPDFPage *, const QPoint &, Qt::MouseButton );
         // called by ThumbnailWidgets to get the overlay bookmark pixmap
         const QPixmap * getBookmarkOverlay() const;
 
@@ -64,11 +65,10 @@ Q_OBJECT
 		// scroll up/down the view
 		void keyPressEvent( QKeyEvent * e );
 
-		// select a thumbnail by clicking on it
-		void contentsMousePressEvent( QMouseEvent * );
-
 		// resize thumbnails to fit the width
 		void viewportResizeEvent( QResizeEvent * );
+		// catch the viewport event and filter them if necessary
+		bool viewportEvent( QEvent * );
 
 		// file drop related events (an url may be dropped even here)
 		void dragEnterEvent( QDragEnterEvent* );
@@ -87,10 +87,12 @@ Q_OBJECT
 		QVector<ThumbnailWidget *> m_thumbnails;
 		QList<ThumbnailWidget *> m_visibleThumbnails;
 		int m_vectorIndex;
+		QWidget *m_pagesWidget;
+		QVBoxLayout *m_pagesLayout;
 
 	private slots:
 		// make requests for generating pixmaps for visible thumbnails
-		void slotRequestVisiblePixmaps( int newContentsX = -1, int newContentsY = -1 );
+		void slotRequestVisiblePixmaps( int newContentsY = -1 );
 		// delay timeout: resize overlays and requests pixmaps
 		void slotDelayTimeout();
 };

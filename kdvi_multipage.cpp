@@ -66,7 +66,8 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
   connect(action, SIGNAL(triggered(bool) ), SLOT(doEnableWarnings()));
   exportPSAction = new KAction(i18n("PostScript..."), actionCollection(), "export_postscript");
   connect(exportPSAction, SIGNAL(triggered(bool) ), &DVIRenderer, SLOT(exportPS()));
-  exportPDFAction  = new KAction(i18n("PDF..."), 0, &DVIRenderer, SLOT(exportPDF()), actionCollection(), "export_pdf");
+  exportPDFAction = new KAction(i18n("PDF..."), actionCollection(), "export_pdf");
+  connect(exportPDFAction, SIGNAL(triggered(bool) ), &DVIRenderer, SLOT(exportPDF()));
 
   KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
 

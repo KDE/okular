@@ -390,7 +390,8 @@ void SampledFunction::transform(double *in, double *out) {
       for (k = 0, t = j; k < m; ++k, t >>= 1) {
 	idx += idxMul[k] * (e[k][t & 1]);
       }
-      s[j] = samples[idx];
+      // quick fix for bug 126760
+      if (idx >= 0 && idx < nSamples) s[j] = samples[idx];
     }
 
     // do m sets of interpolations

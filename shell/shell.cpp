@@ -157,6 +157,7 @@ void Shell::setupActions()
   m_recent = KStdAction::openRecent( this, SLOT( openURL( const KUrl& ) ), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
   connect( m_recent, SIGNAL( urlSelected( const KUrl& ) ), this, SLOT( openURL( const KUrl& ) ) );
+  connect( m_recent, SIGNAL( triggered() ), this, SLOT( fileOpen() ) );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStdAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
   m_printAction->setEnabled( false );
@@ -186,7 +187,7 @@ void Shell::readProperties(KConfig* config)
   if(m_part)
   {
     KUrl url ( config->readPathEntry( "URL" ) );
-    if ( url.isValid() ) emit restoreDocument(url, config->readNumEntry( "Page", 1 ));
+    if ( url.isValid() ) emit restoreDocument(url, config->readEntry( "Page", 1 ));
   }
 }
 
@@ -308,7 +309,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
             return false;
     }
 
-    QByteArray buf(1024);
+    QByteArray buf(1024, '\0');
     int read = 0, wrtn = 0;
 
     while ((read = filterDev->read(buf.data(), buf.size())) > 0)

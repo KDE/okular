@@ -224,7 +224,7 @@ KFaxImage::notetiff()
 	unsigned int rowsperstrip = 0;
 	t32bits nstrips = 1;
 
-	if (!file.at(IFDoff)) {
+	if (!file.seek(IFDoff)) {
 	realbad:
 	  kfaxerror( i18n("Invalid or incomplete TIFF file.") );
 	bad:
@@ -285,7 +285,7 @@ KFaxImage::notetiff()
 			strips[1].offset = get2(dp+10, endian);
 		    break;
 		}
-		if (!file.at(value))
+		if (!file.seek(value))
 		    goto realbad;
 		for (count = 0; count < nstrips; count++) {
 		    if (file.read(SC(buf), (ftype == 3) ? 2 : 4) <= 0)
@@ -338,7 +338,7 @@ KFaxImage::notetiff()
 			strips[1].size = get2(dp+10, endian);
 		    break;
 		}
-		if (!file.at(value))
+		if (!file.seek(value))
 		    goto realbad;
 		for (count = 0; count < nstrips; count++) {
 		    if (file.read(SC(buf), (ftype == 3) ? 2 : 4) <= 0)
@@ -348,7 +348,7 @@ KFaxImage::notetiff()
 		}
 		break;
 	    case 283:		/* YResolution */
-		if (!file.at(value) ||
+		if (!file.seek(value) ||
 		    file.read(SC(buf), 8) != 8)
 		    goto realbad;
 		yres = get4(buf, endian) / get4(buf+4, endian);
@@ -484,7 +484,7 @@ KFaxImage::getstrip(pagenode *pn, int strip)
     *((t32bits *) Data + roundup/4 - 1) = 0;
 
     /* we expect to get it in one gulp... */
-    if (!file.at(offset) ||
+    if (!file.seek(offset) ||
 	(size_t) file.read((char *)Data, pn->length) != pn->length) { 
 	badfile(pn);
 	free(Data);

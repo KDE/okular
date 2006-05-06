@@ -177,12 +177,12 @@ inline int CHMFile::findStringInQuotes (const QString& tag, int offset, QString&
 	}
 	int qbegin = tag.indexOf ('"', offset);
 	if ( qbegin == -1 )
-		qFatal ("CHMFile::findStringInQuotes: cannot find first quote in <param> tag: '%s'", tag.ascii());
+		qFatal ("CHMFile::findStringInQuotes: cannot find first quote in <param> tag: '%s'", tag.toAscii().constData());
 
 	int qend = firstquote ? tag.indexOf ('"', qbegin + 1) : tag.lastIndexOf ('"');
 
 	if ( qend == -1 || qend <= qbegin )
-		qFatal ("CHMFile::findStringInQuotes: cannot find last quote in <param> tag: '%s'", tag.ascii());
+		qFatal ("CHMFile::findStringInQuotes: cannot find last quote in <param> tag: '%s'", tag.toAscii().constData());
 
 	// If we do not need to decode HTML entities, just return.
 	if ( decodeentities )
@@ -209,7 +209,7 @@ inline int CHMFile::findStringInQuotes (const QString& tag, int offset, QString&
 					
 					if ( it == m_entityDecodeMap.end() )
 					{
-						qWarning ("CHMFile::DecodeHTMLUnicodeEntity: could not decode HTML entity '%s', abort decoding.", htmlentity.ascii());
+						qWarning ("CHMFile::DecodeHTMLUnicodeEntity: could not decode HTML entity '%s', abort decoding.", htmlentity.toAscii().constData());
 						break;
 					}
 	
@@ -363,7 +363,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 				int nextpos = src.indexOf (src[i], i+1);
 				if ( nextpos == -1 	&& (nextpos = src.indexOf ('>', i+1)) == -1 )
 				{
-					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).ascii());
+					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).toAscii().constData());
 					return false;
 				}
 
@@ -382,7 +382,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 		else
 			tagword = tag.toLower();
 
-// qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
+// qDebug ("tag: '%s', tagword: '%s'\n", tag.toAscii().constData(), tagword.toAscii().constData());
 	 					
 		// <OBJECT type="text/sitemap"> - a topic entry
 		if ( tagword == "object" && tag.indexOf ("text/sitemap", 0, Qt::CaseInsensitive) != -1 )
@@ -437,7 +437,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 			else
 			{
 				if ( !urls.isEmpty() )
-					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag with url \"%s\" is parsed, but name is empty.", urls[0].ascii());
+					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag with url \"%s\" is parsed, but name is empty.", urls[0].toAscii().constData());
 				else
 					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag is parsed, but both name and url are empty.");	
 			}
@@ -455,19 +455,19 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 			QString pname, pvalue;
 
 			if ( (offset = tag.indexOf (name_pattern, 0, Qt::CaseInsensitive)) == -1 )
-				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.ascii());
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.toAscii().constData());
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
 			pname = pname.toLower();
 
 			if ( (offset = tag.indexOf (value_pattern, offset, Qt::CaseInsensitive)) == -1 )
-				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.toAscii().constData());
 
 			// offset+6 skips 'value='
 			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
 
-// qDebug ("<param>: name '%s', value '%s'", pname.ascii(), pvalue.ascii());
+// qDebug ("<param>: name '%s', value '%s'", pname.toAscii().constData(), pvalue.toAscii().constData());
 
 			if ( pname == "name" )
 				name = pvalue;
@@ -550,7 +550,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 				int nextpos = src.indexOf (src[i], i+1);
 				if ( nextpos == -1 	&& (nextpos = src.indexOf ('>', i+1)) == -1 )
 				{
-					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).ascii());
+					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).toAscii().constData());
 					return false;
 				}
 
@@ -569,7 +569,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 		else
 			tagword = tag.toLower();
 
-//qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
+//qDebug ("tag: '%s', tagword: '%s'\n", tag.toAscii().constData(), tagword.toAscii().constData());
 						
 		// <OBJECT type="text/sitemap"> - a topic entry
 		if ( tagword == "object" && tag.indexOf ("text/sitemap", 0, Qt::CaseInsensitive) != -1 )
@@ -613,7 +613,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 			else
 			{
 				if ( !urls.isEmpty() )
-					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag with url \"%s\" is parsed, but name is empty.", urls[0].ascii());
+					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag with url \"%s\" is parsed, but name is empty.", urls[0].toAscii().constData());
 				else
 					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag is parsed, but both name and url are empty.");	
 			}
@@ -631,19 +631,19 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 			QString pname, pvalue;
 
 			if ( (offset = tag.indexOf (name_pattern, 0, Qt::CaseInsensitive)) == -1 )
-				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.ascii());
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.toAscii().constData());
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
 			pname = pname.toLower();
 
 			if ( (offset = tag.indexOf (value_pattern, offset, Qt::CaseInsensitive)) == -1 )
-				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.toAscii().constData());
 
 			// offset+6 skips 'value='
 			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
 
-//qDebug ("<param>: name '%s', value '%s'", pname.ascii(), pvalue.ascii());
+//qDebug ("<param>: name '%s', value '%s'", pname.toAscii().constData(), pvalue.toAscii().constData());
 
 			if ( pname == "name" )
 				name = pvalue;
@@ -823,7 +823,7 @@ bool CHMFile::SearchWord (const QString& text, bool wholeWords, bool titlesOnly,
 bool CHMFile::ResolveObject(const QString& fileName, chmUnitInfo *ui)
 {
 	return m_chmFile != NULL 
-	&& ::chm_resolve_object(m_chmFile, fileName.ascii(), ui) ==
+	&& ::chm_resolve_object(m_chmFile, fileName.toAscii().constData(), ui) ==
 CHM_RESOLVE_SUCCESS;
 }
 
@@ -1127,12 +1127,12 @@ inline bool CHMFile::InfoFromSystem()
 
 				tmp = topicAttempt + ".hhc";
 				
-				if ( ResolveObject (tmp.ascii(), &ui) )
+				if ( ResolveObject (tmp.toAscii().constData(), &ui) )
 					m_topicsFile = tmp;
 
 				tmp = topicAttempt + ".hhk";
 				
-				if ( ResolveObject(tmp.ascii(), &ui) )
+				if ( ResolveObject(tmp.toAscii().constData(), &ui) )
 					m_indexFile = tmp;
 			}
 			break;
@@ -1469,7 +1469,7 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 				int nextpos = src.find ( src[i], i+1 );
 				if ( nextpos == -1 	&& ( nextpos = src.find ('>', i+1) ) == -1 )
 				{
-					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).ascii());
+					qWarning ("CHMFile::ParseHhcAndFillTree: corrupted TOC: %s", src.mid(i).toAscii().constData());
 					return false;
 				}
 
@@ -1488,7 +1488,7 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 		else
 			tagword = tag.toLower();
 
-//qDebug ("tag: '%s', tagword: '%s'\n", tag.ascii(), tagword.ascii());
+//qDebug ("tag: '%s', tagword: '%s'\n", tag.toAscii().constData(), tagword.toAscii().constData());
 						
 		// <OBJECT type="text/sitemap"> - a topic entry
 		if ( tagword == "object" && tag.find ("text/sitemap", 0, false) != -1 )
@@ -1527,7 +1527,7 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 			else
 			{
 				if ( !urls.isEmpty() )
-					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag with url \"%s\" is parsed, but name is empty.", urls[0].ascii());
+					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag with url \"%s\" is parsed, but name is empty.", urls[0].toAscii().constData());
 				else
 					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag is parsed, but both name and url are empty.");	
 			}
@@ -1545,19 +1545,19 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 			QString pname, pvalue;
 
 			if ( (offset = tag.find (name_pattern, 0, FALSE)) == -1 )
-				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.ascii());
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.toAscii().constData());
 
 			// offset+5 skips 'name='
 			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
 			pname = pname.toLower();
 
 			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
-				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.ascii());
+				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.toAscii().constData());
 
 			// offset+6 skips 'value='
 			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
 
-//qDebug ("<param>: name '%s', value '%s'", pname.ascii(), pvalue.ascii());
+//qDebug ("<param>: name '%s', value '%s'", pname.toAscii().constData(), pvalue.toAscii().constData());
 
 			if ( pname == "name" )
 				name = pvalue;

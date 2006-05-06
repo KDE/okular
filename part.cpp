@@ -733,7 +733,7 @@ public:
 		e1->setFocus();
 	}
 
-	int getPage() {
+	int getPage() const {
 		return e1->value();
 	}
 

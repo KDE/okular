@@ -11,6 +11,7 @@
 #include "optionDialogSpecialWidget.h"
 #include "performanceMeasurement.h"
 #include "prefs.h"
+#include "renderedDviPagePixmap.h"
 
 #include <kaboutdata.h>
 #include <kaction.h>
@@ -415,10 +416,9 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget(PageView *parent, DocumentPa
 }
 
 
-void KDVIMultiPage::initializePageCache()
+RenderedDocumentPagePixmap* KDVIMultiPage::createDocumentPagePixmap(JobId id) const
 {
-#warning this method is no longer needed, I guess
-  //  pageCache = new DVIPageCache();
+  return new RenderedDviPagePixmap(id);
 }
 
 

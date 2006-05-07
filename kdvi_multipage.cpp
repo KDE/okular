@@ -10,6 +10,7 @@
 #include "optionDialogSpecialWidget.h"
 #include "performanceMeasurement.h"
 #include "prefs.h"
+#include "renderedDviPagePixmap.h"
 
 #include <kaboutdata.h>
 #include <kaction.h>
@@ -403,6 +404,12 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget(PageView *parent, DocumentPa
           SLOT(handleSRCLink(const QString& , const QPoint&, DocumentWidget*)));
 
   return documentWidget;
+}
+
+
+RenderedDocumentPagePixmap* KDVIMultiPage::createDocumentPagePixmap(JobId id) const
+{
+  return new RenderedDviPagePixmap(id);
 }
 
 

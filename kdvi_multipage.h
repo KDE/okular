@@ -4,6 +4,7 @@
 
 #include "dviRenderer.h"
 #include "kmultipage.h"
+#include "renderedDocumentPagePixmap.h"
 
 #include <qstringlist.h>
 
@@ -38,6 +39,8 @@ public:
   static KAboutData* createAboutData();
 
   virtual DocumentWidget* createDocumentWidget(PageView *parent, DocumentPageCache *cache);
+
+  virtual RenderedDocumentPagePixmap* createDocumentPagePixmap(JobId) const;
 
 private:
   /** Used to enable the export menu when a file is successfully

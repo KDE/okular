@@ -10,6 +10,8 @@
 #ifndef _KPDF_LINK_H_
 #define _KPDF_LINK_H_
 
+#include "okular_export.h"
+
 #include <qstring.h>
 #include <qrect.h>
 #include "document.h" // for DocumentViewport
@@ -21,7 +23,7 @@
  * widgets to reimplement the 'linkType' method and return the type of
  * the link described by the reimplemented class.
  */
-class KPDFLink
+class OKULAR_EXPORT KPDFLink
 {
     public:
         // get link type (inherited classes mustreturn an unique identifier)
@@ -35,7 +37,7 @@ class KPDFLink
 
 
 /** Goto: a viewport and maybe a reference to an external filename **/
-class KPDFLinkGoto : public KPDFLink
+class OKULAR_EXPORT KPDFLinkGoto : public KPDFLink
 {
     public:
         // query for goto parameters
@@ -72,7 +74,7 @@ class KPDFLinkExecute : public KPDFLink
 };
 
 /** Browse: an URL to open, ranging from 'http://' to 'mailto:' etc.. **/
-class KPDFLinkBrowse : public KPDFLink
+class OKULAR_EXPORT KPDFLinkBrowse : public KPDFLink
 {
     public:
         // query for URL

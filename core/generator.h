@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004-5 by Enrico Ros <eros.kde@email.it>                *
- *   Copyright (C) 2005   by Piotr Szymañski <niedakh@gmail.com>           *
+ *   Copyright (C) 2005   by Piotr Szymanski <niedakh@gmail.com>           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,9 +11,11 @@
 #ifndef _KPDF_GENERATOR_H_
 #define _KPDF_GENERATOR_H_
 
+#include "okular_export.h"
+
 #define KPDF_EXPORT_PLUGIN( classname ) \
     extern "C" { \
-         KDE_EXPORT Generator* create_plugin(KPDFDocument* doc) { return new classname(doc); } \
+         OKULAR_EXPORT Generator* create_plugin(KPDFDocument* doc) { return new classname(doc); } \
     }
 
 
@@ -49,7 +51,7 @@ class KConfigDialog;
  * class stores the resulting data into 'KPDFPage's. The data will then be
  * displayed by the GUI components (pageView, thumbnailList, etc..).
  */
-class Generator : public QObject
+class OKULAR_EXPORT Generator : public QObject
 {
     public:
         /** virtual methods to reimplement **/
@@ -139,7 +141,7 @@ class Generator : public QObject
 /**
  * @short Describes a pixmap type request.
  */
-struct PixmapRequest
+struct OKULAR_EXPORT PixmapRequest
 {
     PixmapRequest( int rId, int n, int w, int h, /*double z,*/ int r, int p, bool a = false )
         : id( rId ), pageNumber( n ), width( w ), height( h ), /*zoom(z),*/

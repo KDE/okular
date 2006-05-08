@@ -55,7 +55,7 @@ class AnnotationUtils
  * For current state in relations to pdf embedded annotations:
  * @see generator_pdf/README.Annotations
  */
-struct Annotation
+struct OKULAR_EXPORT Annotation
 {
     // enum definitions
     enum SubType { AText = 1, ALine = 2, AGeom = 3, AHighlight = 4, AStamp = 5,
@@ -147,7 +147,7 @@ struct Annotation
     void store( QDomNode & parentNode, QDomDocument & document ) const;\
     SubType subType() const { return rttiType; }
 
-struct TextAnnotation : public Annotation
+struct OKULAR_EXPORT TextAnnotation : public Annotation
 {
     // common stuff for Annotation derived classes
     AN_COMMONDECL( TextAnnotation, AText );
@@ -166,7 +166,7 @@ struct TextAnnotation : public Annotation
     InplaceIntent   inplaceIntent;          // Unknown
 };
 
-struct LineAnnotation : public Annotation
+struct OKULAR_EXPORT LineAnnotation : public Annotation
 {
     // common stuff for Annotation derived classes
     AN_COMMONDECL( LineAnnotation, ALine )
@@ -188,7 +188,7 @@ struct LineAnnotation : public Annotation
     LineIntent      lineIntent;             // Unknown
 };
 
-struct GeomAnnotation : public Annotation
+struct OKULAR_EXPORT GeomAnnotation : public Annotation
 {
     // common stuff for Annotation derived classes
     AN_COMMONDECL( GeomAnnotation, AGeom )
@@ -202,7 +202,7 @@ struct GeomAnnotation : public Annotation
     int             geomWidthPt;            // 18
 };
 
-struct HighlightAnnotation : public Annotation
+struct OKULAR_EXPORT HighlightAnnotation : public Annotation
 {
     // common stuff for Annotation derived classes
     AN_COMMONDECL( HighlightAnnotation, AHighlight )
@@ -222,7 +222,7 @@ struct HighlightAnnotation : public Annotation
     QList< Quad >  highlightQuads;     // not empty
 };
 
-struct StampAnnotation : public Annotation
+struct OKULAR_EXPORT StampAnnotation : public Annotation
 {
     // common stuff for Annotation derived classes
     AN_COMMONDECL( StampAnnotation, AStamp )
@@ -231,7 +231,7 @@ struct StampAnnotation : public Annotation
     QString         stampIconName;          // 'kpdf'
 };
 
-struct InkAnnotation : public Annotation
+struct OKULAR_EXPORT InkAnnotation : public Annotation
 {
     // common stuff for Annotation derived classes
     AN_COMMONDECL( InkAnnotation, AInk )

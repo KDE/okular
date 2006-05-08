@@ -9,6 +9,7 @@
 
 #ifndef _KPDF_AREA_H_
 #define _KPDF_AREA_H_
+#include "okular_export.h"
 #include <qlist.h>
 #include <qcolor.h>
 #include <kdebug.h>
@@ -20,7 +21,7 @@ class NormalizedShape;
 /**
  * @short A point in [0,1] coordinates (only used in annotations atm)
  */
-class NormalizedPoint
+class OKULAR_EXPORT NormalizedPoint
 {
     public:
         double x, y;
@@ -33,7 +34,7 @@ class NormalizedPoint
 /**
  * @short A rect in normalized [0,1] coordinates.
  */
-class NormalizedRect
+class OKULAR_EXPORT NormalizedRect
 {
     public:
         double left, top, right, bottom;
@@ -65,7 +66,7 @@ class NormalizedRect
  *  - Link      : class KPDFLink  : description of a link
  *  - Image     : class KPDFImage : description of an image (n/a)
  */
-class ObjectRect : public NormalizedRect
+class OKULAR_EXPORT ObjectRect : public NormalizedRect
 {
     public:
         // definition of the types of storable objects

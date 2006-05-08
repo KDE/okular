@@ -2,3 +2,5 @@ ClassName=KpdfSettings
 File=oKular.kcfg
 Mutators=true
 Singleton=true
+Visibility=OKULAR_EXPORT
+IncludeFiles=okular_export.h

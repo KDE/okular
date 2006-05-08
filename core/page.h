@@ -10,6 +10,8 @@
 #ifndef _KPDF_PAGE_H_
 #define _KPDF_PAGE_H_
 
+#include "okular_export.h"
+
 #include <qmap.h>
 #include <qlinkedlist.h>
 
@@ -47,7 +49,7 @@ class ObjectRect;
  *
  * Note: The class takes ownership of all objects.
  */
-class KPDFPage
+class OKULAR_EXPORT KPDFPage
 {
     public:
         KPDFPage( uint number, double width, double height, int rotation );

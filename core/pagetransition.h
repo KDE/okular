@@ -10,10 +10,12 @@
 #ifndef _KPDF_PAGE_TRANSITION_H_
 #define _KPDF_PAGE_TRANSITION_H_
 
+#include "okular_export.h"
+
 /**
  * @short Information object for the transition effect of a page.
  */
-class KPDFPageTransition
+class OKULAR_EXPORT KPDFPageTransition
 {
     public:
         enum Type {

@@ -11,6 +11,8 @@
 #ifndef _KPDF_DOCUMENT_H_
 #define _KPDF_DOCUMENT_H_
 
+#include "okular_export.h"
+
 #include <qobject.h>
 #include <qvector.h>
 #include <qstring.h>
@@ -52,7 +54,7 @@ class NotifyRequest;
  * For a better understanding of hieracies @see README.internals.png
  * @see DocumentObserver, KPDFPage
  */
-class KPDFDocument : public QObject
+class OKULAR_EXPORT KPDFDocument : public QObject
 {
     Q_OBJECT
     public:
@@ -168,7 +170,7 @@ class KPDFDocument : public QObject
  * data is broadcasted between observers to syncronize their viewports to get
  * the 'I scroll one view and others scroll too' views.
  */
-class DocumentViewport
+class OKULAR_EXPORT DocumentViewport
 {
     public:
         /** data fields **/
@@ -207,7 +209,7 @@ class DocumentViewport
  * The Info structure can be filled in by generators to display metadata
  * about the currently opened file.
  */
-class DocumentInfo : public QDomDocument
+class OKULAR_EXPORT DocumentInfo : public QDomDocument
 {
     public:
         DocumentInfo();
@@ -240,7 +242,7 @@ class DocumentInfo : public QDomDocument
  * - ViewportName: A 'named reference' to the viewport that must be converted
  *      using getMetaData( "NamedViewport", *viewport_name* )
  */
-class DocumentSynopsis : public QDomDocument
+class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
 {
     public:
         DocumentSynopsis();
@@ -255,7 +257,7 @@ class DocumentSynopsis : public QDomDocument
  * - Embedded (if font is shipped inside the document)
  * - File (system's file that provides this font
  */
-class DocumentFonts : public QDomDocument
+class OKULAR_EXPORT DocumentFonts : public QDomDocument
 {
     public:
         DocumentFonts();

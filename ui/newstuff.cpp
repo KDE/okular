@@ -148,7 +148,7 @@ class ItemsView : public KHTMLPart
 {
     public:
         ItemsView( NewStuffDialog * newStuffDialog, QWidget * parentWidget )
-            : KHTMLPart( parentWidget, "newStuffHTMLView" ),
+            : KHTMLPart( parentWidget ),
             m_newStuffDialog( newStuffDialog ), m_sorting( 0 )
         {
             // customize functionality
@@ -201,7 +201,7 @@ class ItemsView : public KHTMLPart
         // generate the HTML contents to be displayed by the class itself
         void buildContents()
         {
-            // try to get informations in current locale
+            // try to get information in current locale
             QString preferredLanguage = KGlobal::locale()->language();
 
             begin();

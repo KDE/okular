@@ -52,6 +52,7 @@
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
+#include <ktoggleaction.h>
 #include <kio/job.h>
 
 // local includes
@@ -79,8 +80,8 @@ K_EXPORT_COMPONENT_FACTORY(liboKularpart, oKularPartFactory)
 
 using namespace oKular;
 
-Part::Part(QWidget *parentWidget, const char *widgetName,
-           QObject *parent, const char *name,
+Part::Part(QWidget *parentWidget,
+           QObject *parent,
            const QStringList & /*args*/ )
 	: DCOPObject("oKular"), KParts::ReadOnlyPart(parent), m_viewportDirty( 0 ),
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
@@ -121,7 +122,6 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	// widgets: [] splitter []
 	m_splitter = new QSplitter( parentWidget );
-	m_splitter->setObjectName( QLatin1String( widgetName ) );
 	m_splitter->setOpaqueResize( true );
 	m_splitter->setChildrenCollapsible( false );
 	setWidget( m_splitter );

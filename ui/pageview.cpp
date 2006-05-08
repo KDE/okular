@@ -34,11 +34,14 @@
 #include <kiconloader.h>
 #include <kaction.h>
 #include <kstdaccel.h>
+#include <kstdaction.h>
 #include <kactioncollection.h>
 #include <kmenu.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kimageeffect.h>
+#include <kselectaction.h>
+#include <ktoggleaction.h>
 #include <ktoolinvocation.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
@@ -2035,7 +2038,7 @@ void PageView::slotRelayoutPages()
         delete [] colWidth;
         delete [] rowHeight;
     }
-    else // viewContinuous is FALSE
+    else // viewContinuous is false
     {
         PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 	

@@ -35,6 +35,9 @@
 #include <kparts/componentfactory.h>
 #include <kio/netaccess.h>
 #include <kmainwindowiface.h>
+#include <krecentfilesaction.h>
+#include <ktoggleaction.h>
+#include <ktogglefullscreenaction.h>
 #include <ktrader.h>
 #include <ktempfile.h>
 #include <kfilterbase.h>
@@ -72,7 +75,7 @@ void Shell::init()
   {
     // now that the Part is loaded, we cast it to a Part to get
     // our hands on it
-    m_part = (KParts::ReadOnlyPart*) factory->createPart(this, "oKular_part", this, 0, "KParts::ReadOnlyPart");
+    m_part = (KParts::ReadOnlyPart*) factory->createPart(this, this);
     if (m_part)
     {
       // then, setup our actions

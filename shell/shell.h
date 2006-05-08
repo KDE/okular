@@ -22,7 +22,10 @@
 
 #include <kparts/mainwindow.h>
 #include <kmimetype.h>
+
+class KRecentFilesAction;
 class KTempFile;
+class KToggleAction;
 
 namespace oKular
 {

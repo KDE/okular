@@ -19,7 +19,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-
+#include <krecentfilesaction.h>
 #include <kparts/mainwindow.h>
 
 namespace KPDF

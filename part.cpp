@@ -54,7 +54,7 @@
 #include <ktrader.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
-
+#include <ktoggleaction.h>
 // poppler includes
 #include "GlobalParams.h"
 #include "Error.h"

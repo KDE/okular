@@ -21,7 +21,7 @@
 #endif
 #include <krecentfilesaction.h>
 #include <kparts/mainwindow.h>
-
+class KToggleAction;
 namespace KPDF
 {
     class Part;

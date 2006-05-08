@@ -35,7 +35,7 @@
 #include <kio/netaccess.h>
 #include <kmainwindowiface.h>
 #include <ktoolbar.h>
-
+#include <ktoggleaction.h>
 // local includes
 #include "shell.h"
 

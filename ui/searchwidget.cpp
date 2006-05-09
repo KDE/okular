@@ -40,10 +40,9 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
              this, SLOT( startSearch() ) );
 
     // 1. clear button
-    QAction *clearAction = addAction( KIcon(layoutDirection() ==
- Qt::RightToLeft ? "clear_left" : "locationbar_erase"),
-                  QString::null);
-    clearAction->setToolTip(i18n( "Clear filter" ));
+    QAction *clearAction = addAction(
+        KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase"),
+        i18n( "Clear filter" ) );
 
     // 2. text line
     m_lineEdit = new KLineEdit(this);
@@ -73,8 +72,7 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     connect( m_menu, SIGNAL( triggered(QAction *) ), SLOT( slotMenuChaged(QAction*) ) );
 
     // 3.2. create the toolbar button that spawns the popup menu
-    QAction *optionsMenuAction = addAction( KIcon( "oKular" ), QString::null);
-    optionsMenuAction->setToolTip( i18n("Filter Options") );
+    QAction *optionsMenuAction = addAction( KIcon( "oKular" ), i18n( "Filter Options" ) );
     optionsMenuAction->setMenu( m_menu );
 }
 

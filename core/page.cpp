@@ -178,9 +178,7 @@ void KPDFPage::setBookmark( bool state )
 
 void KPDFPage::setObjectRects( const QLinkedList< ObjectRect * > rects )
 {
-    QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
-    for ( ; it != end; ++it )
-        delete *it;
+    qDeleteAll(m_rects);
     m_rects = rects;
 }
 
@@ -251,9 +249,7 @@ void KPDFPage::deletePixmapsAndRects()
         delete *it;
     m_pixmaps.clear();
     // delete ObjectRects
-    QLinkedList< ObjectRect * >::iterator rIt = m_rects.begin(), rEnd = m_rects.end();
-    for ( ; rIt != rEnd; ++rIt )
-        delete *rIt;
+    qDeleteAll(m_rects);
     m_rects.clear();
 }
 

@@ -42,8 +42,8 @@ K_EXPORT_COMPONENT_FACTORY(kdvipart, KDVIMultiPageFactory)
 
 
 
-KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent,
-                             const char *name, const QStringList& args)
+KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, QObject *parent,
+                             const QStringList& args)
   : KMultiPage(parentWidget, parent), DVIRenderer(parentWidget)
 {
   Q_UNUSED(args);

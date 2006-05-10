@@ -1659,8 +1659,7 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
 
 void PageView::textSelection( QList<QRect> * area, const QColor & color )
 {
-#warning Qt::IbeamCursor does not exist, port
-    //setCursor( Qt::IbeamCursor );
+    setCursor( Qt::IBeamCursor );
     QList<QRect> toUpdate;
     if ( d->mouseTextSelectionRect && d->mouseTextSelectionRect )
     {
@@ -2269,7 +2268,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             // request the pixmap if not already present
             if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
 
         // add the page after the 'visible series' in preload
@@ -2280,7 +2279,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             // request the pixmap if not already present
             if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
     }
 

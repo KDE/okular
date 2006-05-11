@@ -2,7 +2,7 @@ kde4_header()
 
 add_subdirectory( pix ) 
 
-include_directories( ${CMAKE_SOURCE_DIR}/kviewshell/shell ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${FreeType2_INCLUDE_DIR} )
+include_directories( ${CMAKE_SOURCE_DIR}/kviewshell/shell ${FreeType2_INCLUDE_DIR} )
 
 
 ########### next target ###############

@@ -6,7 +6,7 @@ add_subdirectory( core )
 add_subdirectory( ui ) 
 add_subdirectory( shell ) 
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
+
 
 macro_optional_find_package(KPDF)
 

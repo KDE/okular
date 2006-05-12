@@ -1,4 +1,3 @@
-kde4_header()
 
 add_subdirectory( pix ) 
 
@@ -73,7 +72,6 @@ install_files( ${KCFG_INSTALL_DIR} FILES kdvi.kcfg )
 install_files( ${DATA_INSTALL_DIR}/kdvi FILES tips )
 install_files( ${SERVICES_INSTALL_DIR} FILES kdvimultipage.desktop )
 
-kde4_footer()
 
 
 

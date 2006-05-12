@@ -1,2 +1,0 @@
-KDE_ICON = kdvi
-

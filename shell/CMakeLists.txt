@@ -1,4 +1,3 @@
-kde4_header()
 
 
 
@@ -21,7 +20,6 @@ install_targets(/bin kpdf )
 install_files( ${XDG_APPS_DIR} FILES kpdf.desktop )
 install_files( ${DATA_INSTALL_DIR}/kpdf FILES shell.rc )
 
-kde4_footer()
 
 
 

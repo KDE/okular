@@ -1,4 +1,3 @@
-kde4_header()
 
 
 
@@ -6,7 +5,6 @@ kde4_header()
 ########### install files ###############
 
 
-kde4_footer()
 
 
 

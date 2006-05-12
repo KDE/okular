@@ -1,4 +1,3 @@
-kde4_header()
 
 add_subdirectory( generator_pdf ) 
 add_subdirectory( generator_kimgio ) 
@@ -12,7 +11,6 @@ add_subdirectory( generator_kimgio )
 ########### install files ###############
 
 
-kde4_footer()
 
 
 

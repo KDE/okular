@@ -11,7 +11,6 @@ set(kdvipart_PART_SRCS
    bigEndianByteReader.cpp 
    dviexport.cpp 
    dviFile.cpp 
-   dviPageCache.cpp 
    dviRenderer.cpp 
    dviRenderer_draw.cpp 
    dviRenderer_prescan.cpp 
@@ -98,7 +97,6 @@ kde4_footer()
 #	bigEndianByteReader.cpp \
 #	dviexport.cpp \
 #	dviFile.cpp \
-#	dviPageCache.cpp \
 #	dviRenderer.cpp \
 #	dviRenderer_draw.cpp \
 #	dviRenderer_prescan.cpp \

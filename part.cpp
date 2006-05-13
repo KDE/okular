@@ -299,6 +299,7 @@ Part::Part(QWidget *parentWidget,
 	m_watcher = new KDirWatch( this );
 	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
 	m_dirtyHandler = new QTimer( this );
+	m_dirtyHandler->setSingleShot( true );
 	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
 
 	slotNewConfig();
@@ -643,7 +644,7 @@ void Part::slotFileDirty( const QString& fileName )
   // written to the file.
   if ( fileName == m_file )
   {
-    m_dirtyHandler->start( 750, true );
+    m_dirtyHandler->start( 750 );
   }
 }
 
@@ -673,7 +674,7 @@ void Part::slotDoFileDirty()
     {
         // start watching the file again (since we dropped it on close)
         m_watcher->addFile(m_file);
-        m_dirtyHandler->start( 750, true );
+        m_dirtyHandler->start( 750 );
     }
 }
 
@@ -864,7 +865,7 @@ void Part::slotNewConfig()
     }
 
     bool showSearch = KpdfSettings::showSearchBar();
-    if ( m_searchWidget->isShown() != showSearch )
+    if ( !m_searchWidget->isHidden() != showSearch )
         m_searchWidget->setVisible( showSearch );
 
     // Main View (pageView)
@@ -882,7 +883,7 @@ void Part::slotNewConfig()
     // update Main View and ThumbnailList contents
     // TODO do this only when changing KpdfSettings::renderMode()
     m_pageView->updateContents();
-    if ( KpdfSettings::showLeftPanel() && m_thumbnailList->isShown() )
+    if ( KpdfSettings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();
 }
 

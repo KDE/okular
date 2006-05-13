@@ -384,8 +384,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             } // end current annotation drawing
         }
 
-        // 4B.6. create a painter over the image and set it as the active one
-        mixedPainter = new QPainter( &backImage );
+        // 4B.5. create the back pixmap converting from the local image
+        backPixmap = new QPixmap( backImage );
+
+        // 4B.6. create a painter over the pixmap and set it as the active one
+        mixedPainter = new QPainter( backPixmap );
         mixedPainter->translate( -limits.left(), -limits.top() );
     }
 

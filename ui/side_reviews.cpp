@@ -16,7 +16,6 @@
 #include <k3listview.h>
 #include <k3listviewsearchline.h>
 #include <kaction.h>
-#include <kactionclasses.h>
 #include <klocale.h>
 #include <qapplication.h>
 #include <kiconloader.h>
@@ -280,12 +279,13 @@ void Reviews::requestListViewUpdate( int delayms )
     if ( !m_delayTimer )
     {
         m_delayTimer = new QTimer( this );
+        m_delayTimer->setSingleShot( true );
         connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotUpdateListView() ) );
     }
 
     // start timer if not already running
     if ( !m_delayTimer->isActive() )
-        m_delayTimer->start( delayms, true );
+        m_delayTimer->start( delayms );
 }
 
 #include "side_reviews.moc"

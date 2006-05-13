@@ -32,6 +32,7 @@
 #include <dcopobject.h>
 #include <dcopclient.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kdirwatch.h>
 #include <kinstance.h>
 #include <kprinter.h>
@@ -53,6 +54,7 @@
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <ktoggleaction.h>
+#include <ktogglefullscreenaction.h>
 #include <kio/job.h>
 
 // local includes
@@ -924,29 +926,25 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	if (!m_actionsSearched)
 	{
 		// the quest for options_show_menubar
-#warning need to port the quest for options_show_menubar
-/*		KXMLGUIClient *client;
 		KActionCollection *ac;
-		KActionPtrList::const_iterator it, end, begin;
-		KActionPtrList actions;
+		KAction *act;
 		
 		if (factory())
 		{
 			QList<KXMLGUIClient*> clients(factory()->clients());
 			for(int i = 0 ; (!m_showMenuBarAction || !m_showFullScreenAction) && i < clients.size(); ++i)
 			{
-				client = clients.at(i);
-				ac = client->actionCollection();
-				actions = ac->actions();
-				end = actions.end();
-				begin = actions.begin();
-				for ( it = begin; it != end; ++it )
-				{
-					if (QString((*it)->name()) == "options_show_menubar") m_showMenuBarAction = (KToggleAction*)(*it);
-					if (QString((*it)->name()) == "fullscreen") m_showFullScreenAction = (KToggleAction*)(*it);
-				}
+				ac = clients.at(i)->actionCollection();
+				// show_menubar
+				act = ac->action("options_show_menubar");
+				if (act && qobject_cast<KToggleAction*>(act))
+					m_showMenuBarAction = qobject_cast<KToggleAction*>(act);
+				// fullscreen
+				act = ac->action("fullscreen");
+				if (act && qobject_cast<KToggleFullScreenAction*>(act))
+					m_showFullScreenAction = qobject_cast<KToggleFullScreenAction*>(act);
 			}
-		}*/
+		}
 		m_actionsSearched = true;
 	}
 	

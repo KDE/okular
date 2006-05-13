@@ -119,6 +119,7 @@ KPDFDocument::KPDFDocument( QHash<QString, Generator*> * genList )
     d->memCheckTimer = 0;
     d->saveBookmarksTimer = 0;
     d->warnedOutOfMemory = false;
+    m_usingCachedGenerator = false;
 }
 
 KPDFDocument::~KPDFDocument()

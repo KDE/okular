@@ -1,5 +1,5 @@
-/*****************************  **********************************************
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+/***************************************************************************
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -298,6 +298,7 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
 	docLock.unlock();
 	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), rotation));
 	
+	qDeleteAll(textList);
 	delete p;
 
         if (clear && pagesVector[i])
@@ -563,7 +564,9 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     docLock.unlock();
     if ( genTextPage )
     {
-        page->setSearchPage( abstractTextPage(p->textList(), page->height(), page->width(),page->rotation()) );
+        QList<Poppler::TextBox*> textList = p->textList();
+        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(),page->rotation()) );
+        qDeleteAll(textList);
     }
     delete p;
     
@@ -589,6 +592,7 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
     delete pp;
     // ..and attach it to the page
     page->setSearchPage( abstractTextPage(textList, page->height(), page->width(),page->rotation()) );
+    qDeleteAll(textList);
 }
 
 bool PDFGenerator::print( KPrinter& printer )
@@ -696,7 +700,6 @@ inline void append (KPDFTextPage* ktp,
                     ));
 }
 
-// TODO have a look at who should delete what's inside text
 KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width,int rot)
 {    
     KPDFTextPage* ktp=new KPDFTextPage;
@@ -981,8 +984,11 @@ void PDFGenerator::threadFinished()
     request->page->setPixmap( request->id, new QPixmap( *outImage ) );
     delete outImage;
     if ( !outText.isEmpty() )
+    {
         request->page->setSearchPage( abstractTextPage( outText , 
             request->page->height(), request->page->width(),request->page->rotation()));
+        qDeleteAll(outText);
+    }
     bool genObjectRects = request->id & (PAGEVIEW_ID | PRESENTATION_ID);
     if (genObjectRects) request->page->setObjectRects( outRects );
 

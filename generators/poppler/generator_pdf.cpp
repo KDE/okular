@@ -708,10 +708,10 @@ KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &te
     NormalizedRect * wordRect = new NormalizedRect;
     foreach (Poppler::TextBox *word, text)
     {
-	wordRect->left = word->boundingBox().left();
-	wordRect->bottom = word->boundingBox().bottom();
-	wordRect->right = word->boundingBox().right();
-	wordRect->top = word->boundingBox().top();
+        wordRect->left = word->boundingBox().left();
+        wordRect->bottom = word->boundingBox().bottom();
+        wordRect->right = word->boundingBox().right();
+        wordRect->top = word->boundingBox().top();
         charCount=word->text().length();
         next=word->nextWord();
         switch (rot)

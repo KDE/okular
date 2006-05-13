@@ -1,4 +1,3 @@
-kde4_header()
 project(oKular)
 
 add_subdirectory( conf )
@@ -7,7 +6,9 @@ add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/ )
+include_directories(
+   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/
+)
 
 
 ########### next target ###############
@@ -100,8 +101,6 @@ install_files( ${DATA_INSTALL_DIR}/oKularpart FILES  part.rc )
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 
 
-
-kde4_footer()
 
 
 

@@ -1,9 +1,11 @@
-kde4_header()
-
-#add_subdirectory( lib )
 add_subdirectory( kio-msits )
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular ${CMAKE_BINARY_DIR}/okular ${CHM_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib )
+include_directories(
+   ${CMAKE_SOURCE_DIR}/okular
+   ${CMAKE_BINARY_DIR}/okular
+   ${CHM_INCLUDE_DIR}
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/lib
+)
 
 
 ########### next target ###############
@@ -36,8 +38,6 @@ install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_chmlib )
 ########### install files ###############
 
 install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_chmlib.desktop )
-
-kde4_footer()
 
 
 

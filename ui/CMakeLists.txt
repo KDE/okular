@@ -1,9 +1,4 @@
-kde4_header()
-
 add_subdirectory( data )
-#add_subdirectory( painter_agg2 )
-
-kde4_footer()
 
 #original Makefile.am contents follow:
 

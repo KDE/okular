@@ -1,5 +1,3 @@
-kde4_header()
-
 # let's enable the generators properly configured
 
 if(POPPLER_FOUND)
@@ -13,8 +11,6 @@ add_subdirectory( kimgio )
 if(CHM_FOUND)
   add_subdirectory( chm )
 endif(CHM_FOUND)
-
-kde4_footer()
 
 #original Makefile.am contents follow:
 

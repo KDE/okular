@@ -1,6 +1,8 @@
-kde4_header()
-
-include_directories( ${POPPLER_INCLUDE_DIR}/poppler ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../.. ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular )
+include_directories(
+   ${POPPLER_INCLUDE_DIR}/poppler
+   ${CMAKE_BINARY_DIR}/okular
+   ${CMAKE_SOURCE_DIR}/okular
+)
 
 
 ########### next target ###############
@@ -21,8 +23,6 @@ install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_poppler )
 ########### install files ###############
 
 install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_poppler.desktop )
-
-kde4_footer()
 
 
 

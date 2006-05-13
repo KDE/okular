@@ -1,8 +1,4 @@
-kde4_header()
-
 install_files( ${KCFG_INSTALL_DIR} FILES  oKular.kcfg )
-
-kde4_footer()
 
 #original Makefile.am contents follow:
 

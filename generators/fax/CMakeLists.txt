@@ -1,8 +1,10 @@
-kde4_header()
-
 add_subdirectory( libkfaximage )
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular ${CMAKE_BINARY_DIR}/okular ${CMAKE_SOURCE_DIR}/okular/generators/fax/libkfaximage )
+include_directories(
+   ${CMAKE_SOURCE_DIR}/okular
+   ${CMAKE_BINARY_DIR}/okular
+   ${CMAKE_CURRENT_SOURCE_DIR}/libkfaximage
+)
 
 
 ########### next target ###############

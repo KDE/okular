@@ -1,5 +1,3 @@
-kde4_header()
-
 # install annotator xml tools description
 install_files(${DATA_INSTALL_DIR}/oKular FILES
    tools.xml
@@ -37,8 +35,6 @@ install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
    ghns_star.png
    ghns_star_gray.png
 )
-
-kde4_footer()
 
 #original Makefile.am contents follow:
 

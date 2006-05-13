@@ -1,7 +1,3 @@
-kde4_header()
-
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR}  )
-
 
 ########### next target ###############
 
@@ -20,8 +16,6 @@ install_targets(/bin oKular )
 
 install_files( ${XDG_APPS_DIR} FILES  oKular.desktop )
 install_files( ${DATA_INSTALL_DIR}/oKular FILES  shell.rc )
-
-kde4_footer()
 
 
 

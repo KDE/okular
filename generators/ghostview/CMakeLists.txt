@@ -1,8 +1,9 @@
-kde4_header()
-
 add_subdirectory( conf ) 
 
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_SOURCE_DIR}/okular ${CMAKE_CURRENT_BINARY_DIR}/../..  )
+include_directories(
+   ${CMAKE_SOURCE_DIR}/okular
+   ${CMAKE_CURRENT_BINARY_DIR}/../..
+)
 
 
 ########### next target ###############
@@ -43,8 +44,6 @@ install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 ########### install files ###############
 
 install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_ghostview.desktop )
-
-kde4_footer()
 
 
 

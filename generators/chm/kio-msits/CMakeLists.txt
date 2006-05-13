@@ -1,6 +1,7 @@
-kde4_header()
-
-include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/okular ${CHM_INCLUDE_DIR} )
+include_directories(
+   ${CMAKE_SOURCE_DIR}/okular
+   ${CHM_INCLUDE_DIR}
+)
 
 
 ########### next target ###############
@@ -21,8 +22,6 @@ install_targets(${PLUGIN_INSTALL_DIR} kio_msits )
 ########### install files ###############
 
 install_files( ${SERVICES_INSTALL_DIR} FILES  msits.protocol )
-
-kde4_footer()
 
 
 

@@ -81,8 +81,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     // create fonts tab and layout it
     QFrame *page2 = addPage(i18n("Fonts"));
     page2Layout = new QVBoxLayout(page2);
-    page2Layout->setMargin(0);
-    page2Layout->setSpacing(KDialog::spacingHint());
+    page2Layout->setMargin(marginHint());
+    page2Layout->setSpacing(spacingHint());
     // add a tree view
     QTreeView *view = new QTreeView(page2);
     page2Layout->addWidget(view);

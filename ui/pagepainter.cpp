@@ -384,11 +384,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             } // end current annotation drawing
         }
 
-        // 4B.5. create the back pixmap converting from the local image
-        backPixmap = new QPixmap( backImage );
-
-        // 4B.6. create a painter over the pixmap and set it as the active one
-        mixedPainter = new QPainter( backPixmap );
+        // 4B.6. create a painter over the image and set it as the active one
+        mixedPainter = new QPainter( &backImage );
         mixedPainter->translate( -limits.left(), -limits.top() );
     }
 
@@ -462,8 +459,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     unsigned int color = qRgba( c.red(), c.green(), c.blue(), opacity );
                     rectImage.fill( color );
                     rectImage.setAlphaBuffer( true );
-                    QPixmap pixmap( rectImage );
-                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                    mixedPainter->drawImage( annotRect.topLeft(), rectImage );
                 //}
                 //else if ( geom->geomType == GeomAnnotation::InscribedCircle )
             }

@@ -381,7 +381,7 @@ private:
 	//! Map to decode HTML entitles like &acute; based on current encoding
 	QMap<QString, QString>					m_entityDecodeMap;
 
-	//! TRUE if /#TOPICS, /#STRINGS, /#URLTBL and  /#URLSTR are resolved, and the members below are valid
+	//! true if /#TOPICS, /#STRINGS, /#URLTBL and  /#URLSTR are resolved, and the members below are valid
 	bool		m_lookupTablesValid;
 
 	//! pointer to /#TOPICS
@@ -397,7 +397,7 @@ private:
 	chmUnitInfo	m_chmURLSTR;
 
 	//! Indicates whether the built-in search is available. This is true only when m_lookupTablesValid
-	//! is TRUE, and m_chmFIftiMain is resolved.
+	//! is true, and m_chmFIftiMain is resolved.
 	bool			m_searchAvailable;
 
 	//! pointer to /$FIftiMain

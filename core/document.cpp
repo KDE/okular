@@ -137,7 +137,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
     QFile fileReadTest( docFile );
     if ( !fileReadTest.open( IO_ReadOnly ) )
     {
-        d->docFileName = QString::null;
+        d->docFileName.clear();
         return false;
     }
     // determine the related "xml document-info" filename
@@ -1526,7 +1526,7 @@ QString KPDFDocument::giveAbsolutePath( const QString & fileName )
 bool KPDFDocument::openRelativeFile( const QString & fileName )
 {
     QString absFileName = giveAbsolutePath( fileName );
-    if ( absFileName.isNull() )
+    if ( absFileName.isEmpty() )
         return false;
 
     kDebug() << "openDocument: '" << absFileName << "'" << endl;
@@ -1538,7 +1538,7 @@ bool KPDFDocument::openRelativeFile( const QString & fileName )
 
 void KPDFDocument::saveDocumentInfo() const
 {
-    if ( d->docFileName.isNull() )
+    if ( d->docFileName.isEmpty() )
         return;
 
     QFile infoFile( d->xmlFileName );

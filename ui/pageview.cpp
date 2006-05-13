@@ -2037,7 +2037,7 @@ void PageView::slotRelayoutPages()
         delete [] colWidth;
         delete [] rowHeight;
     }
-    else // viewContinuous is false
+    else // viewContinuous is FALSE
     {
         PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 	

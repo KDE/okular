@@ -11,7 +11,10 @@
 #ifndef _KPDF_GENERATOR_PDF_H_
 #define _KPDF_GENERATOR_PDF_H_
 
-#include <qevent.h>
+#define UNSTABLE_POPPLER_QT4
+
+#include <poppler-qt4.h>
+
 #include <qmutex.h>
 #include <qcolor.h>
 #include <qstring.h>
@@ -21,16 +24,7 @@
 #include "core/link.h"
 #include "core/textpage.h"
 
-class PDFDoc;
-class GooList;
-class TextPage;
-class LinkDest;
-class Page;
-class Dict;
-class Ref;
-
 class ObjectRect;
-class KPDFOutputDev;
 class PDFPixmapGeneratorThread;
 
 /**
@@ -44,7 +38,7 @@ class PDFPixmapGeneratorThread;
  * For generating page contents we tell PDFDoc to render a page and grab
  * contents from out OutputDevs when rendering finishes.
  *
- * Background asyncronous contents providing is done via a QThread inherited
+ * Background asynchronous contents providing is done via a QThread inherited
  * class defined at the bottom of the file.
  */
 class PDFGenerator : public Generator
@@ -57,12 +51,12 @@ class PDFGenerator : public Generator
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
         void loadPages(QVector<KPDFPage*> &pagesVector, int rotation=-1, bool clear=false);
-        // [INHERITED] document informations
+        // [INHERITED] document information
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
         const DocumentFonts * generateDocumentFonts();
 
-        // [INHERITED] document informations
+        // [INHERITED] document information
         bool isAllowed( int permissions );
 
         // [INHERITED] perform actions on document / pages
@@ -80,8 +74,9 @@ class PDFGenerator : public Generator
         bool prefersInternalSearching() { return false; };
 
         RegularAreaRect * findText (const QString & text, SearchDir dir, 
-            const bool strictCase, const RegularAreaRect * lastRect, 
-            KPDFPage * page );
+          const bool strictCase, const RegularAreaRect * lastRect, 
+          KPDFPage * page );
+        // TODO does this really need to be a pointer?
         QString * getText( const RegularAreaRect * area, KPDFPage * page );
 
         void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
@@ -99,36 +94,28 @@ class PDFGenerator : public Generator
         void warning(QString & string, int duration);
         void notice(QString & string, int duration);
 
+    private slots:
+        // (async related) receive data from the generator thread
+        void threadFinished();
+
     private:
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
-        void fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination );
-
-        // access document informations
-        QString getDocumentInfo( const QString & data ) const;
-        QString getDocumentDate( const QString & data ) const;
-        // create the document synopsis hieracy
-        void addSynopsisChildren( QDomNode * parent, GooList * items );
-        // add fonts (in resDict) to the private 'docFonts' class
-        void addFonts( Dict * resDict, Ref ** fonts, int &fontsLen, int &fontsSize );
-        // fetch annotations from the pdf file and add they to the page
-        void addAnnotations( Page * xpdfPage, KPDFPage * page );
-        // fetch the transition information and add it to the page
-        void addTransition( Page * xpdfPage, KPDFPage * page );
         
-        static KPDFTextPage * abstractTextPage(TextPage *tp, double height, double width, int rot);
-        TextPage * fastTextPage (KPDFPage * page);
-
-        // (async related) receive data from the generator thread
-        void customEvent( QEvent * );
-
-        // xpdf dependant stuff
+        // create the document synopsis hieracy
+        void addSynopsisChildren( QDomNode * parentSource, QDomNode * parentDestination );
+        // fetch annotations from the pdf file and add they to the page
+        void addAnnotations( Poppler::Page * popplerPage, KPDFPage * page );
+        // fetch the transition information and add it to the page
+        void addTransition( Poppler::Page * popplerPage, KPDFPage * page );
+        
+        static KPDFTextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
+        
+        // poppler dependant stuff
         QMutex docLock;
-        PDFDoc * pdfdoc;
-        KPDFOutputDev * kpdfOutputDev;
-        QColor paperColor;
+        Poppler::Document *pdfdoc;
 
-        // asyncronous generation related stuff
+        // asynchronous generation related stuff
         PDFPixmapGeneratorThread * generatorThread;
 
         // misc variables for document info and synopsis caching
@@ -140,9 +127,6 @@ class PDFGenerator : public Generator
         DocumentSynopsis docSyn;
         bool docFontsDirty;
         DocumentFonts docFonts;
-	
-	// static instances counter
-	static unsigned int m_count;
 };
 
 
@@ -161,9 +145,11 @@ class PDFPixmapGeneratorThread : public QThread
         // end generation
         void endGeneration();
 
+        PixmapRequest *request() const;
+
         // methods for getting contents from the GUI thread
         QImage * takeImage() const;
-        TextPage * takeTextPage() const;
+        QList<Poppler::TextBox*> takeText();
         QLinkedList< ObjectRect * > takeObjectRects() const;
 
     private:

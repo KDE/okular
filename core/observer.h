@@ -38,7 +38,7 @@ class KPDFPage;
  * @short Base class for objects being notified when something changes.
  *
  * Inherit this class and call KPDFDocument->addObserver( yourClass ) to get
- * notified of asyncronous events (new pixmap generated, or changed, etc..).
+ * notified of asynchronous events (new pixmap generated, or changed, etc..).
  */
 class DocumentObserver
 {

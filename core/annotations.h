@@ -58,14 +58,15 @@ class AnnotationUtils
 struct OKULAR_EXPORT Annotation
 {
     // enum definitions
+    // WARNING!!! Get that in sync with poppler enums!
     enum SubType { AText = 1, ALine = 2, AGeom = 3, AHighlight = 4, AStamp = 5,
                    AInk = 6, A_BASE = 0 };
     enum Flag { Hidden = 1, FixedSize = 2, FixedRotation = 4, DenyPrint = 8,
                 DenyWrite = 16, DenyDelete = 32, ToggleHidingOnMouse = 64, External = 128 };
-    enum LineStyle { Solid, Dashed, Beveled, Inset, Underline };
-    enum LineEffect { NoEffect, Cloudy };
-    enum RevScope { Reply, Group, Delete };
-    enum RevType { None,  Marked, Unmarked,  Accepted, Rejected, Cancelled, Completed };
+    enum LineStyle { Solid = 1, Dashed = 2, Beveled = 4, Inset = 8, Underline = 16 };
+    enum LineEffect { NoEffect = 1, Cloudy = 2};
+    enum RevScope { Reply = 1, Group = 2, Delete = 4 };
+    enum RevType { None = 1,  Marked = 2, Unmarked = 4,  Accepted = 8, Rejected = 16, Cancelled = 32, Completed = 64 };
 
     /** properties: contents related */
     QString         author;                 // ''

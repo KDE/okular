@@ -458,14 +458,14 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.toAscii().constData());
 
 			// offset+5 skips 'name='
-			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
+			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, true, false);
 			pname = pname.toLower();
 
 			if ( (offset = tag.indexOf (value_pattern, offset, Qt::CaseInsensitive)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.toAscii().constData());
 
 			// offset+6 skips 'value='
-			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
+			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, false, true);
 
 // qDebug ("<param>: name '%s', value '%s'", pname.toAscii().constData(), pvalue.toAscii().constData());
 
@@ -634,14 +634,14 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.toAscii().constData());
 
 			// offset+5 skips 'name='
-			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
+			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, true, false);
 			pname = pname.toLower();
 
 			if ( (offset = tag.indexOf (value_pattern, offset, Qt::CaseInsensitive)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.toAscii().constData());
 
 			// offset+6 skips 'value='
-			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
+			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, false, true);
 
 //qDebug ("<param>: name '%s', value '%s'", pname.toAscii().constData(), pvalue.toAscii().constData());
 
@@ -1544,18 +1544,18 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 			QString name_pattern = "name=", value_pattern = "value=";
 			QString pname, pvalue;
 
-			if ( (offset = tag.find (name_pattern, 0, FALSE)) == -1 )
+			if ( (offset = tag.find (name_pattern, 0, false)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", tag.toAscii().constData());
 
 			// offset+5 skips 'name='
-			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
+			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, true, false);
 			pname = pname.toLower();
 
-			if ( (offset = tag.find (value_pattern, offset, FALSE)) == -1 )
+			if ( (offset = tag.find (value_pattern, offset, false)) == -1 )
 				qFatal ("CHMFile::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", tag.toAscii().constData());
 
 			// offset+6 skips 'value='
-			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
+			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, false, true);
 
 //qDebug ("<param>: name '%s', value '%s'", pname.toAscii().constData(), pvalue.toAscii().constData());
 

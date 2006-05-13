@@ -176,14 +176,6 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber )
 
 
 // <widget events>
-bool PresentationWidget::event ( QEvent * e )
-{
-    if (e -> type() == QEvent::WindowDeactivate) KWin::clearState(winId(), NET::StaysOnTop);
-    else if (e -> type() == QEvent::WindowActivate) KWin::setState(winId(), NET::StaysOnTop);
-#warning this is making the presentation mode crash
-    return QDialog::event(e);
-}
-
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
@@ -321,8 +313,9 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         if ( KpdfSettings::slidesShowSummary() )
             generatePage();
 
+#warning THIS IS MAKING IT CRASH ARGGGGGGGGG
         // inform user on how to exit from presentation mode
-        KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo" );
+        // KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo" );
     }
 
     // check painting rect consistancy

@@ -83,6 +83,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     {
         setCursor( KCursor::blankCursor() );
     }
+
+    QTimer::singleShot( 0, this, SLOT( slotDelayedEvents() ) );
 }
 
 PresentationWidget::~PresentationWidget()
@@ -312,10 +314,6 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         // show summary if requested
         if ( KpdfSettings::slidesShowSummary() )
             generatePage();
-
-#warning THIS IS MAKING IT CRASH ARGGGGGGGGG
-        // inform user on how to exit from presentation mode
-        // KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo" );
     }
 
     // check painting rect consistancy
@@ -610,11 +608,11 @@ void PresentationWidget::generateOverlay()
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
         pixmapPainter.setPen( 0x05 );
 #warning QPainter.setBrush(0x40) ???? port this
- //       pixmapPainter.setBrush( 0x40 );
+        pixmapPainter.setBrush( QColor( 0x40 ) );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
         pixmapPainter.setPen( 0x40 );
 #warning QPainter.setBrush(0xF0) ???? port this
-//      pixmapPainter.setBrush( 0xF0 );
+        pixmapPainter.setBrush( QColor( 0xF0 ) );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
     else
@@ -625,7 +623,7 @@ void PresentationWidget::generateOverlay()
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
 #warning QPainter.setBrush(0xF0) ???? port this
-//          pixmapPainter.setBrush( i <= m_frameIndex ? 0xF0 : 0x40 );
+            pixmapPainter.setBrush( QColor( i <= m_frameIndex ? 0xF0 : 0x40 ) );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );
             oldCoord = newCoord;
@@ -654,7 +652,7 @@ void PresentationWidget::generateOverlay()
     pixmapPainter.begin( &doublePixmap );
     pixmapPainter.setPen( 0x40 );
 #warning QPainter.setBrush(0x80) ???? port this
-//  pixmapPainter.setBrush( 0x80 );
+    pixmapPainter.setBrush( QColor( 0x80 ) );
     pixmapPainter.drawEllipse( 0, 0, side, side );
     pixmapPainter.end();
     QImage shadow( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
@@ -792,6 +790,12 @@ void PresentationWidget::slotTransitionStep()
         m_transitionRects.pop_front();
     }
     m_transitionTimer->start( m_transitionDelay, true );
+}
+
+void PresentationWidget::slotDelayedEvents()
+{
+  // inform user on how to exit from presentation mode
+  KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo" );
 }
 
 const KPDFPageTransition PresentationWidget::defaultTransition() const

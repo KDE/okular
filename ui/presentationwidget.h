@@ -96,6 +96,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         void slotLastPage();
         void slotHideOverlay();
         void slotTransitionStep();
+        void slotDelayedEvents();
 };
 
 #endif

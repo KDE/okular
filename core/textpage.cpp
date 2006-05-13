@@ -225,10 +225,11 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
     bool dontIncrement=false;
     QList<KPDFTextEntity*>::Iterator it;
     // we dont support backward search yet
-	for( it=start ; it != end;  (!dontIncrement) ? (++it) : it )
-	{
+    for( it=start ; it != end;  (!dontIncrement) ? (++it) : it )
+    {
         // a static cast would be faster?
         str=(*it)->txt;
+        // TODO This is impossible, ask niedakh if he wanted a || ?
         if (query.mid(j,1)==" " && query.mid(j,1)=="\n")
         {
             // lets match newline as a space
@@ -245,8 +246,8 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
         else
         {
             dontIncrement=false;
-            int min=qMin(queryLeft,len);
             len=str.length();
+            int min=qMin(queryLeft,len);
             kDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
@@ -261,8 +262,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
                     // we need to get back to query start
                     // and continue the search from this place
                     haveMatch=false;
-                    delete ret;
-                    ret=new RegularAreaRect;
+                    ret->clear();
 #ifdef DEBUG_TEXTPAGE
             kDebug(1223) << "\tnot matched" << endl;
 #endif
@@ -287,13 +287,13 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             }
         }
 
-	if (haveMatch && queryLeft==0 && j==query.length())
+        if (haveMatch && queryLeft==0 && j==query.length())
         {
             ret->simplify();
             return ret;
         }
 
-	}
+    }
     return 0;
 }
 

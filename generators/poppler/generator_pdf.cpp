@@ -709,8 +709,8 @@ KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &te
     foreach (Poppler::TextBox *word, text)
     {
 	wordRect->left = word->boundingBox().left();
-	wordRect->bottom = word->boundingBox().right();
-	wordRect->right = word->boundingBox().bottom();
+	wordRect->bottom = word->boundingBox().bottom();
+	wordRect->right = word->boundingBox().right();
 	wordRect->top = word->boundingBox().top();
         charCount=word->text().length();
         next=word->nextWord();

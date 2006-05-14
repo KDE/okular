@@ -640,7 +640,7 @@ void Part::slotGoToPage()
 
 void Part::slotPreviousPage()
 {
-    if ( m_document->isOpened() && !m_document->currentPage() < 1 )
+    if ( m_document->isOpened() && !(m_document->currentPage() < 1) )
         m_document->setViewportPage( m_document->currentPage() - 1 );
 }
 

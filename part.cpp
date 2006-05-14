@@ -644,7 +644,7 @@ void Part::slotGoToPage()
 
 void Part::slotPreviousPage()
 {
-    if ( m_document->isOpened() && !m_document->currentPage() < 1 )
+    if ( m_document->isOpened() && !(m_document->currentPage() < 1) )
         m_document->setViewportPage( m_document->currentPage() - 1 );
 }
 
@@ -752,8 +752,8 @@ void Part::slotNewConfig()
     }
 
     bool showSearch = KpdfSettings::showSearchBar();
-    if ( m_searchWidget->isShown() != showSearch )
-        m_searchWidget->setShown( showSearch );
+    if ( !m_searchWidget->isHidden() != showSearch )
+        m_searchWidget->setVisible( showSearch );
 
     // Main View (pageView)
     Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?

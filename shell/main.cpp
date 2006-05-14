@@ -3,7 +3,7 @@
  *   Copyright (C) 2003 by Christophe Devriese                             *
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
- *   Copyright (C) 2003-2004 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2003-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
  *   Copyright (C) 2004 by Andy Goossens <andygoossens@telenet.be>         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -39,12 +39,12 @@ int main(int argc, char** argv)
         KAboutData::License_GPL,
         "(C) 2002 Wilco Greven, Christophe Devriese\n(C) 2004-2005 Albert Astals Cid, Enrico Ros\n(C) 2005 Piotr Szymanski");
 
+    about.addAuthor("Albert Astals Cid", I18N_NOOP("Current mantainer"), "astals11@terra.es");
+    about.addAuthor("Piotr Szymanski", I18N_NOOP("Created oKular from KPDF codebase"), "djurban@pld-dc.org");
+    about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
     about.addAuthor("Laurent Montel", 0, "montel@kde.org");
-    about.addAuthor("Piotr Szymanski", I18N_NOOP("Current mantainer"), "djurban@pld-dc.org");
-    about.addAuthor("Albert Astals Cid", I18N_NOOP("kpdf mantainer"), "astals11@terra.es");
-    about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
 
     about.addCredit("Marco Martin", I18N_NOOP("Icon"), 0, "m4rt@libero.it");
 

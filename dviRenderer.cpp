@@ -396,7 +396,8 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   // the dvifile and the pixmap.
   if (fname.isEmpty()) {
     // Delete DVI file
-    info->setDVIData(0);
+    if(info)
+      info->setDVIData(0);
     delete dviFile;
     dviFile = 0;
     return true;
@@ -448,7 +449,8 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   delete dviFile;
   dviFile = dviFile_new;
   numPages = dviFile->total_pages;
-  info->setDVIData(dviFile);
+  if(info)
+    info->setDVIData(dviFile);
   _isModified = false;
   baseURL = base;
 

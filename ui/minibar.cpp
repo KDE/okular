@@ -152,7 +152,7 @@ void MiniBar::notifySetup( const QVector< KPDFPage * > & pageVector, bool change
     if ( pages < 1 )
     {
         m_currentPage = -1;
-        static_cast<QWidget*>( parent() )->hide();
+        parentWidget()->hide();
         return;
     }
 
@@ -177,7 +177,7 @@ void MiniBar::notifySetup( const QVector< KPDFPage * > & pageVector, bool change
     m_pagesButton->setText( QString::number( pages ) );
     m_prevButton->setEnabled( false );
     m_nextButton->setEnabled( false );
-    static_cast<QWidget*>( parent() )->show();
+    parentWidget()->show();
 }
 
 void MiniBar::notifyViewportChanged( bool /*smoothMove*/ )

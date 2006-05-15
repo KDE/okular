@@ -454,6 +454,7 @@ void PageViewAnnotator::setEnabled( bool on )
         }
         // save the name
         KpdfSettings::setAnnotationsAuthor( userName );
+        KpdfSettings::writeConfig();
     }
 }
 

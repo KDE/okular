@@ -32,6 +32,7 @@ class KAction;
 class KConfig;
 class KDirWatch;
 class KToggleAction;
+class KToggleFullScreenAction;
 class KSelectAction;
 class KAboutData;
 class KPrinter;
@@ -172,7 +173,7 @@ private:
 	KAction *m_showPresentation;
 	KToggleAction* m_showMenuBarAction;
 	KToggleAction* m_showLeftPanel;
-	KToggleAction* m_showFullScreenAction;
+	KToggleFullScreenAction* m_showFullScreenAction;
 
 	bool m_actionsSearched;
 	bool m_searchStarted;

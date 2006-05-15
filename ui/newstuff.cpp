@@ -892,7 +892,7 @@ void NewStuffDialog::slotItemResult( KIO::Job * job )
 
     /* UNCOMPRESS (specify uncompression method)
     KTar tar( fileName, "application/x-gzip" );
-    tar.open( IO_ReadOnly );
+    tar.open( QIODevice::ReadOnly );
     const KArchiveDirectory *dir = tar.directory();
     dir->copyTo( "somedir" );
     tar.close();

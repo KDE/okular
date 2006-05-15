@@ -295,7 +295,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
         return false;
     }
 
-    if ( !filterDev->open(IO_ReadOnly) )
+    if ( !filterDev->open(QIODevice::ReadOnly) )
     {
         KMessageBox::detailedError( this, 
             i18n("<qt><strong>File Error!</strong> Could not open the file "

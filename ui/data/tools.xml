@@ -17,14 +17,14 @@ Engine/Annotation Types [specific attributes]:
     Geom
 -->
 <annotatingTools>
-  <tool id="1" name="Pink Highlighter" pixmap="tool_ink_green">
+  <tool id="1" name="Green Highlighter" pixmap="tool_ink_green">
       <tooltip>.. is ..</tooltip>
       <engine type="SmoothLine" color="#00FF00">
           <annotation type="Ink" color="#00FF00" width="2" />
       </engine>
       <shortcut>1</shortcut>
   </tool>
-  <tool id="2" name="Pink Highlighter" pixmap="tool_ink_green">
+  <tool id="2" name="Pink Highlighter" pixmap="tool_hl_pink">
       <tooltip>.. is ..</tooltip>
       <engine type="SmoothLine" color="#FF0080">
           <annotation type="Ink" color="#FF0080" width="4" />
@@ -40,12 +40,12 @@ Engine/Annotation Types [specific attributes]:
   </tool>
   <tool id="4" name="note" pixmap="pinnote">
     <tooltip>.. tooltip ..</tooltip>
-    <engine type="PickPoint" color="#FF00FF" hoverIcon="too_note">
+    <engine type="PickPoint" color="#FF00FF" hoverIcon="tool_note">
       <annotation type="Text" color="#FF00FF" />
     </engine>
     <shortcut>4</shortcut>
   </tool>
-  <tool id="5" name="Straight Yellow Line" pixmap="tool_ink_green">
+  <tool id="5" name="Straight Yellow Line" pixmap="tool_hl_yellow">
     <tooltip>.. test</tooltip>
     <engine type="TwoPoints" color="#FFE000">
       <annotation type="Line" width="4" color="#FFE000" />

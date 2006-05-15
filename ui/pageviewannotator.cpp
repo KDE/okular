@@ -624,6 +624,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
     KpdfSettings::setEditToolBarPlacement( (int)side );
+    KpdfSettings::writeConfig();
 }
 
 #include "pageviewannotator.moc"

@@ -495,16 +495,19 @@ void PageViewToolBar::buildToolBar()
             yOffset += 4;
     }
 
+    bool prevUpdates = updatesEnabled();
+    setUpdatesEnabled( false );
+
     // 3. resize pixmap, mask and widget
     static QBitmap mask;
-    mask.resize( myWidth, myHeight );
-    d->backgroundPixmap.resize( myWidth, myHeight );
-    resize( myWidth, myHeight );
+    mask.resize( myWidth + 1, myHeight + 1 );
+    d->backgroundPixmap.resize( myWidth + 1, myHeight + 1 );
+    resize( myWidth + 1, myHeight + 1 );
 
     // 4. create and set transparency mask
     QPainter maskPainter( &mask);
-    mask.fill( Qt::black );
-    maskPainter.setBrush( Qt::white );
+    mask.fill( Qt::white );
+    maskPainter.setBrush( Qt::black );
     if ( vertical )
         maskPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
     else
@@ -562,6 +565,8 @@ void PageViewToolBar::buildToolBar()
             gridY++;
         }
     }
+
+    setUpdatesEnabled( prevUpdates );
 }
 
 void PageViewToolBar::reposition()

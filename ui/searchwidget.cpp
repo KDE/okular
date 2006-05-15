@@ -36,6 +36,7 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
 
     // a timer to ensure that we don't flood the document with requests to search
     m_inputDelayTimer = new QTimer(this);
+    m_inputDelayTimer->setSingleShot(true);
     connect( m_inputDelayTimer, SIGNAL( timeout() ),
              this, SLOT( startSearch() ) );
 
@@ -89,7 +90,7 @@ void SearchWidget::slotTextChanged( const QString & text )
     lineEdit->setPaletteForegroundColor( color );
     lineEdit->setPaletteBackgroundColor( palette().active().base() );
     m_inputDelayTimer->stop();
-    m_inputDelayTimer->start(333, true);
+    m_inputDelayTimer->start(333);
 }
 
 void SearchWidget::slotMenuChaged( QAction * act )

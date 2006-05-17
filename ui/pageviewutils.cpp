@@ -161,9 +161,9 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // resize pixmap, mask and widget
     static QBitmap mask;
-    mask.resize( geometry.size() );
-    m_pixmap.resize( geometry.size() );
-    resize( geometry.size() );
+    mask.resize( geometry.size() + QSize( 1, 1 ) );
+    m_pixmap.resize( geometry.size() + QSize( 1, 1 ) );
+    resize( geometry.size() + QSize( 1, 1 ) );
 
     // create and set transparency mask
     QPainter maskPainter( &mask);

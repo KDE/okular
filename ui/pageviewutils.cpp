@@ -323,8 +323,10 @@ struct ToolBarPrivate
 };
 
 PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
-    : QWidget( parent, "", Qt::WNoAutoErase ), d( new ToolBarPrivate )
+    : QWidget( parent ), d( new ToolBarPrivate )
 {
+    setAttribute( Qt::WA_OpaquePaintEvent, true );
+
     // initialize values of the private data storage structure
     d->anchorWidget = anchorWidget;
     d->anchorSide = Left;

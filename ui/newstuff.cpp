@@ -381,7 +381,7 @@ class ItemsView : public KHTMLPart
 /* internal storage structures to be used by NewStuffDialog */
 struct ProvidersListJobInfo // -> Provider(s)
 {
-    KIO::Job * job;
+    KJob * job;
     QString receivedData;
 };
 struct ProviderJobInfo      // -> AvailableItem(s)
@@ -396,8 +396,8 @@ struct NewStuffDialogPrivate
 {
     // Jobs (1 for fetching the list, unlimited for providers / items)
     ProvidersListJobInfo providersListJob;
-    QMap< KIO::Job *, ProviderJobInfo > providerJobs;
-    QMap< KIO::Job *, ItemTransferInfo > transferJobs;
+    QMap< KJob *, ProviderJobInfo > providerJobs;
+    QMap< KJob *, ItemTransferInfo > transferJobs;
 
     // Contents
     QList< Provider * > providers;
@@ -512,15 +512,15 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
 
 NewStuffDialog::~NewStuffDialog()
 {
-    // cancel pending KIO::Job(s) (don't like to leave orphaned threads alone)
+    // cancel pending KJob(s) (don't like to leave orphaned threads alone)
     if ( d->providersListJob.job )
         d->providersListJob.job->kill();
 
-    QMap< KIO::Job *, ProviderJobInfo >::iterator pIt = d->providerJobs.begin(), pEnd = d->providerJobs.end();
+    QMap< KJob *, ProviderJobInfo >::iterator pIt = d->providerJobs.begin(), pEnd = d->providerJobs.end();
     for ( ; pIt != pEnd; ++pIt )
         pIt.key()->kill();
 
-    QMap< KIO::Job *, ItemTransferInfo >::iterator tIt = d->transferJobs.begin(), tEnd = d->transferJobs.end();
+    QMap< KJob *, ItemTransferInfo >::iterator tIt = d->transferJobs.begin(), tEnd = d->transferJobs.end();
     for ( ; tIt != tEnd; ++tIt )
         tIt.key()->kill();
 
@@ -625,8 +625,8 @@ void NewStuffDialog::slotLoadProvidersList()
     KIO::TransferJob * job = KIO::get( KUrl( PROVIDERS_URL ), false /*refetch*/, false /*progress*/ );
     connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
              this, SLOT( slotProvidersListInfoData( KIO::Job *, const QByteArray & ) ) );
-    connect( job, SIGNAL( result( KIO::Job * ) ),
-             this, SLOT( slotProvidersListResult( KIO::Job * ) ) );
+    connect( job, SIGNAL( result( KJob * ) ),
+             this, SLOT( slotProvidersListResult( KJob * ) ) );
 
     // create a job description and data holder
     d->providersListJob.job = job;
@@ -650,7 +650,7 @@ void NewStuffDialog::slotProvidersListInfoData( KIO::Job * job, const QByteArray
     d->providersListJob.receivedData.append( QString::fromUtf8( str ) );
 }
 
-void NewStuffDialog::slotProvidersListResult( KIO::Job * job )
+void NewStuffDialog::slotProvidersListResult( KJob * job )
 {
     // discard contents from older jobs
     if ( d->providersListJob.job != job )
@@ -739,8 +739,8 @@ void NewStuffDialog::slotLoadProvider( int pNumber )
     KIO::TransferJob * job = KIO::get( provider->downloadUrl(), false /*refetch*/, false /*progress*/ );
     connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
              this, SLOT( slotProviderInfoData( KIO::Job *, const QByteArray & ) ) );
-    connect( job, SIGNAL( result( KIO::Job * ) ),
-             this, SLOT( slotProviderInfoResult( KIO::Job * ) ) );
+    connect( job, SIGNAL( result( KJob * ) ),
+             this, SLOT( slotProviderInfoResult( KJob * ) ) );
 
     // create a job description and data holder
     ProviderJobInfo info;
@@ -767,7 +767,7 @@ void NewStuffDialog::slotProviderInfoData( KIO::Job * job, const QByteArray & da
     d->providerJobs[ job ].receivedData.append( QString::fromUtf8( str ) );
 }
 
-void NewStuffDialog::slotProviderInfoResult( KIO::Job * job )
+void NewStuffDialog::slotProviderInfoResult( KJob * job )
 {
     // stop network watchdog
     d->networkTimer->stop();

@@ -13,6 +13,7 @@
 #include <qdialog.h>
 #include <knewstuff/provider.h>
 using namespace KNS;
+class KJob;
 namespace KIO { class JOB; }
 
 class AvailableItem;
@@ -52,11 +53,11 @@ class NewStuffDialog : public QDialog
         // providersList loading
         void slotLoadProvidersList();
         void slotProvidersListInfoData( KIO::Job *, const QByteArray & );
-        void slotProvidersListResult( KIO::Job * );
+        void slotProvidersListResult( KJob * );
         // provider loading
         void slotLoadProvider( int provider = 0 );
         void slotProviderInfoData( KIO::Job *, const QByteArray & );
-        void slotProviderInfoResult( KIO::Job * );
+        void slotProviderInfoResult( KJob * );
         // file downloading
         void slotDownloadItem( AvailableItem * );
         void slotItemMessage( KIO::Job *, const QString & );

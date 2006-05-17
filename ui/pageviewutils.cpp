@@ -249,18 +249,19 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const 
     setMouseTracking( true );
     setCheckable( true );
     resize( buttonSize, buttonSize );
+    setIconSize( QSize( iconSize, iconSize ) );
     setIcon( DesktopIconSet( item.pixmap, iconSize ) );
     setWindowFlags( Qt::WNoAutoErase );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )
-        setAccel( item.shortcut );
+        setShortcut( QKeySequence( item.shortcut ) );
     else
         KAcceleratorManager::setNoAccel( this );
 
     // if accel is set display it along name
-    QString accelString = (QString)accel();
+    QString accelString = shortcut().toString( QKeySequence::NativeText );
     if ( !accelString.isEmpty() )
-        setToolTip( QString("%1 [%2]").arg( item.text ).arg( item.shortcut ) );
+        setToolTip( QString("%1 [%2]").arg( item.text ).arg( accelString ) );
     else
         setToolTip( item.text );
 }

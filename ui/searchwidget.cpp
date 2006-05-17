@@ -12,6 +12,7 @@
 #include <qaction.h>
 #include <qsizepolicy.h>
 #include <qtimer.h>
+#include <qtoolbutton.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -73,7 +74,11 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     connect( m_menu, SIGNAL( triggered(QAction *) ), SLOT( slotMenuChaged(QAction*) ) );
 
     // 3.2. create the toolbar button that spawns the popup menu
-    QAction *optionsMenuAction = addAction( KIcon( "oKular" ), i18n( "Filter Options" ) );
+    QToolButton *optionsMenuAction =  new QToolButton( this );
+    addWidget(optionsMenuAction);
+    optionsMenuAction->setIcon( KIcon( "oKular" ) );
+    optionsMenuAction->setToolTip( i18n( "Filter Options" ) );
+    optionsMenuAction->setPopupMode( QToolButton::InstantPopup );
     optionsMenuAction->setMenu( m_menu );
 }
 

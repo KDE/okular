@@ -179,8 +179,8 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
     KMessageBox::detailedError(parentWidget,
-                               i18n("<qt><strong>File corruption!</strong> KDVI had trouble interpreting your DVI file. Most "
-                                    "likely this means that the DVI file is broken.</qt>"),
+                               i18n("<qt><strong>File corruption</strong> KDVI could not interprete your DVI file. This is "
+                                    "most commonly caused by a corrupted file.</qt>"),
                                errorMsg, i18n("DVI File Error"));
     errorMsg = QString::null;
     currentlyDrawnPage = 0;
@@ -409,7 +409,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
     KMessageBox::error( parentWidget,
                         i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
                              "KDVI already tried to add the ending '.dvi'.</qt>", filename),
-                        i18n("File Error!"));
+                        i18n("File Error"));
     return false;
   }
 
@@ -439,8 +439,8 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
       KMessageBox::detailedError(parentWidget,
-                                 i18n("<qt>File corruption! KDVI had trouble interpreting your DVI file. Most "
-                                      "likely this means that the DVI file is broken.</qt>"),
+                                 i18n("<qt>File corruption. KDVI could not interprete your DVI file. This is "
+                                      "most commonly caused by a corrupted file.</qt>"),
                                  dviFile_new->errorMsg, i18n("DVI File Error"));
     delete dviFile_new;
     return false;

@@ -151,7 +151,7 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, 
 
   fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
   if (fontp == 0) {
-    kError(kvs::dvi) << i18n("Could not allocate memory for a font structure!") << endl;
+    kError(kvs::dvi) << i18n("Could not allocate memory for a font structure") << endl;
     exit(0);
   }
   fontList.append(fontp);

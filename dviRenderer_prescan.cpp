@@ -438,8 +438,8 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
     emit setStatusBarText( QString::null );
     if (convErrorMsg.isEmpty() != true) {
       KMessageBox::detailedError(parentWidget,
-                                 i18n("<qt><strong>File conversion error!</strong> KDVI was not able to convert the external "
-                                      "PDF-file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>", oEPSfilename),
+                                 i18n("<qt><strong>File conversion error</strong> KDVI was not able to convert the external "
+                                      "PDF file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>", oEPSfilename),
                                  convErrorMsg, i18n("PDF/PS conversion error"));
       return;
     }

@@ -320,14 +320,12 @@ bool ThumbnailList::viewportEvent( QEvent * e )
 		case QEvent::Resize:
 		{
 			viewportResizeEvent( (QResizeEvent*)e );
-			e->accept();
-			return true;
 			break;
 		}
 		default:
 			;
 	}
-	return false;
+	return QScrollArea::viewportEvent( e );
 }
 
 void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
@@ -343,7 +341,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 		delayedRequestVisiblePixmaps( 2000 );
 
 		// resize and reposition items
-		int newWidth = e->size().width();
+		int newWidth = contentsRect().width() - verticalScrollBar()->width();
 		QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 		for ( ; tIt != tEnd; ++tIt )
 		{
@@ -352,6 +350,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 		}
 
 		// update scrollview's contents size (sets scrollbars limits)
+		m_pagesLayout->invalidate();
 		m_pagesWidget->resize( m_pagesWidget->sizeHint() );
 
 		// ensure selected item remains visible

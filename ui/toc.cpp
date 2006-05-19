@@ -8,6 +8,8 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qheaderview.h>
+#include <qstringlist.h>
 #include <klocale.h>
 
 // local includes
@@ -22,23 +24,23 @@
 // they're slow when converted to page number. drop the 2nd column idea.
 // to enable set TocPageColumn=true in [Nav Panel]
 
-class TOCItem : public K3ListViewItem
+class TOCItem : public QTreeWidgetItem
 {
     public:
-        TOCItem( K3ListView *parent, TOCItem *after, const QDomElement & e )
-            : K3ListViewItem( parent, after, e.tagName() ), m_element( e )
+        TOCItem( QTreeWidget *parent, TOCItem *after, const QDomElement & e )
+            : QTreeWidgetItem( parent, after ), m_element( e )
         {
+            setText( 0, e.tagName() );
             if ( KpdfSettings::tocPageColumn() && e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
-            setMultiLinesEnabled( true );
         }
 
-        TOCItem( K3ListViewItem *parent, TOCItem *after, const QDomElement & e )
-            : K3ListViewItem( parent, after, e.tagName() ), m_element( e )
+        TOCItem( QTreeWidgetItem *parent, TOCItem *after, const QDomElement & e )
+            : QTreeWidgetItem( parent, after ), m_element( e )
         {
+            setText( 0, e.tagName() );
             if ( KpdfSettings::tocPageColumn() && e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
-            setMultiLinesEnabled( true );
         }
 
         const QDomElement & element() const
@@ -50,17 +52,21 @@ class TOCItem : public K3ListViewItem
         QDomElement m_element;
 };
 
-TOC::TOC(QWidget *parent, KPDFDocument *document) : K3ListView(parent), m_document(document)
+TOC::TOC(QWidget *parent, KPDFDocument *document) : QTreeWidget(parent), m_document(document)
 {
-    addColumn( i18n("Topic") );
+    QStringList cols;
+    cols.append( i18n("Topic") );
     if (KpdfSettings::tocPageColumn())
-    	addColumn( i18n("Page") );
-    setSorting(-1);
+        cols.append( i18n("Page") );
+    setHeaderLabels(cols);
+    setSortingEnabled(false);
     setRootIsDecorated(true);
-    setResizeMode(AllColumns);
-    setAllColumnsShowFocus(true);
-    connect(this, SIGNAL(clicked(Q3ListViewItem *)), this, SLOT(slotExecuted(Q3ListViewItem *)));
-    connect(this, SIGNAL(returnPressed(Q3ListViewItem *)), this, SLOT(slotExecuted(Q3ListViewItem *)));
+    setAlternatingRowColors(true);
+    header()->setResizeMode(QHeaderView::Stretch);
+    header()->hide();
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), SLOT(slotExecuted(QTreeWidgetItem *)));
+    connect(this, SIGNAL(itemActivated(QTreeWidgetItem *, int)), SLOT(slotExecuted(QTreeWidgetItem *)));
 }
 
 TOC::~TOC()
@@ -96,7 +102,7 @@ void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentCha
     emit hasTOC( true );
 }
 
-void TOC::addChildren( const QDomNode & parentNode, K3ListViewItem * parentItem )
+void TOC::addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem )
 {
     // keep track of the current listViewItem
     TOCItem * currentItem = 0;
@@ -119,7 +125,7 @@ void TOC::addChildren( const QDomNode & parentNode, K3ListViewItem * parentItem 
     }
 }
 
-void TOC::slotExecuted( Q3ListViewItem *i )
+void TOC::slotExecuted( QTreeWidgetItem *i )
 {
     TOCItem* tocItem = dynamic_cast<TOCItem*>( i );
     // that filters clicks on [+] that for a strange reason don't seem to be TOCItem*

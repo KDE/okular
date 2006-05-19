@@ -11,13 +11,13 @@
 #define _KPDF_TOC_H_
 
 #include <qdom.h>
-#include <k3listview.h>
+#include <qtreewidget.h>
 #include "core/document.h"
 #include "core/observer.h"
 
 class KPDFDocument;
 
-class TOC : public K3ListView, public DocumentObserver
+class TOC : public QTreeWidget, public DocumentObserver
 {
 Q_OBJECT
     public:
@@ -32,10 +32,10 @@ Q_OBJECT
         void hasTOC(bool has);
 
     private slots:
-        void slotExecuted(Q3ListViewItem *i);
+        void slotExecuted(QTreeWidgetItem *i);
 
     private:
-        void addChildren( const QDomNode & parentNode, K3ListViewItem * parentItem = 0 );
+        void addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem = 0 );
         DocumentViewport getViewport( const QDomElement &e ) const;
         KPDFDocument *m_document;
 };

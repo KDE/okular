@@ -192,7 +192,7 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
         slotLastPage();
     else if ( e->key() == Qt::Key_Escape )
     {
-        if ( m_topBar->isShown() )
+        if ( !m_topBar->isHidden() )
             m_topBar->hide();
         else
             close();
@@ -265,7 +265,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
     if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
         testCursorOnLink( e->x(), e->y() );
 
-    if ( m_topBar->isShown() )
+    if ( !m_topBar->isHidden() )
     {
         // hide a shown bar when exiting the area
         if ( e->y() > ( m_topBar->height() + 1 ) )

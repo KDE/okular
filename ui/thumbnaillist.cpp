@@ -387,7 +387,7 @@ void ThumbnailList::dropEvent( QDropEvent * ev )
 void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
 {
     // if an update is already scheduled or the widget is hidden, don't proceed
-    if ( (m_delayTimer && m_delayTimer->isActive()) || !isShown() )
+    if ( (m_delayTimer && m_delayTimer->isActive()) || isHidden() )
         return;
 
     // scroll from the top to the last visible thumbnail

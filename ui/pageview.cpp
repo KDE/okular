@@ -1340,7 +1340,10 @@ if (d->document->handleEvent( e ) )
                 menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
                 textToClipboard = menu.addAction( SmallIconSet("editcopy"), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
+                {
                     textToClipboard->setEnabled( false );
+                    textToClipboard->setText( i18n("Copy forbidden by DRM") );
+                }
                 if ( KpdfSettings::useKTTSD() )
                     speakText = menu.addAction( SmallIconSet("kttsd"), i18n( "Speak Text" ) );
             }

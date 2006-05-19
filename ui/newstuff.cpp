@@ -22,8 +22,6 @@
 #include <qpushbutton.h>
 #include <qrect.h>
 #include <qpainter.h>
-#include <q3scrollview.h>
-#include <q3cstring.h>
 #include <qapplication.h>
 #include <ktoolinvocation.h>
 #include <kglobalsettings.h>
@@ -646,8 +644,7 @@ void NewStuffDialog::slotProvidersListInfoData( KIO::Job * job, const QByteArray
         return;
 
     // append the data buffer to the 'receivedData' string
-    Q3CString str( data, data.size() + 1 );
-    d->providersListJob.receivedData.append( QString::fromUtf8( str ) );
+    d->providersListJob.receivedData.append( QString::fromUtf8( data ) );
 }
 
 void NewStuffDialog::slotProvidersListResult( KJob * job )
@@ -763,8 +760,7 @@ void NewStuffDialog::slotProviderInfoData( KIO::Job * job, const QByteArray & da
         return;
 
     // append the data buffer to the 'receivedData' string
-    Q3CString str( data, data.size() + 1 );
-    d->providerJobs[ job ].receivedData.append( QString::fromUtf8( str ) );
+    d->providerJobs[ job ].receivedData.append( QString::fromUtf8( data ) );
 }
 
 void NewStuffDialog::slotProviderInfoResult( KJob * job )

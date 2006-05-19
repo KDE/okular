@@ -518,7 +518,10 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         Annotation * annotation = m_engine->end();
         // attach the newly filled annotation to the page
         if ( annotation )
+        {
+            annotation->author = KpdfSettings::annotationsAuthor();
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
+        }
 
         // go on creating annotations of the same type
         slotToolSelected( m_lastToolID );

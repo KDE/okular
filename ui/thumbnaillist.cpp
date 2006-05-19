@@ -13,6 +13,7 @@
 #include <qtimer.h>
 #include <qpainter.h>
 #include <qscrollbar.h>
+#include <qsizepolicy.h>
 #include <klocale.h>
 #include <kurl.h>
 #include <kaction.h>
@@ -561,6 +562,9 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
     // change toolbar appearance
     setIconSize( QSize( 16, 16 ) );
     setMovable( false );
+    QSizePolicy sp = sizePolicy();
+    sp.setVerticalPolicy( QSizePolicy::Minimum );
+    setSizePolicy( sp );
 
     // insert a togglebutton [show only bookmarked pages]
     //insertSeparator();

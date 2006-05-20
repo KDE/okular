@@ -10,6 +10,7 @@
 #include <kauthorized.h>
 
 #include <config.h>
+#include <config-okular.h>
 
 #include "ui_dlggeneralbase.h"
 
@@ -24,7 +25,7 @@ DlgGeneral::DlgGeneral( QWidget * parent )
 
 void DlgGeneral::showEvent( QShowEvent * )
 {
-#if KPDF_FORCE_DRM
+#if OKULAR_FORCE_DRM
     m_dlg->kcfg_ObeyDRM->hide();
 #else
     if ( KAuthorized::authorize( "skip_drm" ) )

@@ -29,6 +29,7 @@
 #include "settings.h"
 
 #include <config.h>
+#include <config-okular.h>
 
 // id for DATA_READY PDFPixmapGeneratorThread Event
 #define TGE_DATAREADY_ID 6969
@@ -491,7 +492,7 @@ const DocumentFonts * PDFGenerator::generateDocumentFonts()
 
 bool PDFGenerator::isAllowed( int permissions )
 {
-#if !KPDF_FORCE_DRM
+#if !OKULAR_FORCE_DRM
     if (KAuthorized::authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
 #endif
 

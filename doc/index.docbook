@@ -28,7 +28,7 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2006-01-14</date>
+		<date>2006-05-20</date>
 		<releaseinfo>0.5</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -59,8 +59,8 @@
 			<title>Opening Files</title>
 			<para>
 				To view a PDF file in &kpdf;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...
-				</guimenuitem></menuchoice>, choose a file in the dialogue and click <guibutton>Open</guibutton>.
-				As long as you selected a valid PDF file, your file should now be displayed in the main window.
+				</guimenuitem></menuchoice>, choose a PDF or PS file in the dialogue and click <guibutton>Open</guibutton>.
+				Your file should now be displayed in the main window.
 			</para>
 			<para>
 				If you have already opened files in &kpdf; before, you can quickly access them by selecting them in
@@ -178,13 +178,13 @@
 			<para>
 				To navigate between
 				pages you may use the &LMB; (next page) and the &RMB; (previous page), the mouse
-				wheel, the arrow icons that appear as soon as you move the mouse to the top of the screen,
+				wheel, the arrow icons that appear as soon as you move the mouse cursor to the top of the screen,
 				or the keys specified in the <link linkend="navigating">Navigating</link>
 				section. 
 			</para>
 			<para>
 				You can exit presentation mode at any time by pressing the <keycap>ESC</keycap> key or clicking
-				the <guiicon>Quit</guiicon> icon appearing if you move the mouse to the top of the 
+				the <guiicon>Quit</guiicon> icon appearing if you move the mouse cursor to the top of the 
 				screen.
 			</para>
 			<para>
@@ -212,7 +212,7 @@
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a PDF file. If there is already an opened file it will be closed.
+							<action>Open</action> a PDF or PS file. If there is already an opened file it will be closed.
 							For more information, see the section about <link linkend="opening">Opening Files</link>.
 						</para>
 					</listitem>
@@ -557,7 +557,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current the selected area to the clipboard, or to save it to a file.</para>
+						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current the selected area to the clipboard, speak a text or to save an image to a file.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -691,7 +691,7 @@
 				<screeninfo>The configuration dialogue</screeninfo>
 				<mediaobject>
 					<imageobject>
-						<imagedata fileref="./configure.png" format="PNG" />
+						<imagedata fileref="configure.png" format="PNG" />
 					</imageobject>
 					<textobject>
 						<phrase>The configuration dialogue</phrase>

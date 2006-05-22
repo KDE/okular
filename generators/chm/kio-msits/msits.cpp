@@ -55,7 +55,7 @@ extern "C"
     }
 }
 
-ProtocolMSITS::ProtocolMSITS (const Q3CString &pool_socket, const Q3CString &app_socket)
+ProtocolMSITS::ProtocolMSITS (const QByteArray &pool_socket, const QByteArray &app_socket)
 	: SlaveBase ("kio_msits", pool_socket, app_socket)
 {
 	m_chmFile = 0;
@@ -102,7 +102,7 @@ void ProtocolMSITS::get( const KUrl& url )
 		return;
 	}
 
-    QByteArray buf (ui.length);
+    QByteArray buf (ui.length, '\0');
 
 	if ( RetrieveObject (&ui, (unsigned char*) buf.data(), 0, ui.length) == 0 )
 	{

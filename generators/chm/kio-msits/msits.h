@@ -26,8 +26,8 @@
 #include <kio/slavebase.h>
 #include <kurl.h>
 
+#include <qbytearray.h>
 #include <qstring.h>
-#include <q3cstring.h>
 
 #include "chm_lib.h"
 
@@ -35,7 +35,7 @@
 class ProtocolMSITS : public KIO::SlaveBase
 {
 public:
-    ProtocolMSITS ( const Q3CString&, const Q3CString& );
+    ProtocolMSITS ( const QByteArray&, const QByteArray& );
     virtual ~ProtocolMSITS();
 
     virtual void	get ( const KUrl& );

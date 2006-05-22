@@ -91,14 +91,14 @@ void ProtocolMSITS::get( const KUrl& url )
 
 	if ( isDirectory (fileName) )
 	{
-		error( KIO::ERR_IS_DIRECTORY, url.prettyURL() );
+		error( KIO::ERR_IS_DIRECTORY, url.prettyUrl() );
 		return;
 	}
 
 	if ( !ResolveObject ( fileName, &ui) )
 	{
 		kDebug() << "kio_msits::get: could not resolve filename " << fileName << endl;
-        error( KIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
+        error( KIO::ERR_DOES_NOT_EXIST, url.prettyUrl() );
 		return;
 	}
 
@@ -107,7 +107,7 @@ void ProtocolMSITS::get( const KUrl& url )
 	if ( RetrieveObject (&ui, (unsigned char*) buf.data(), 0, ui.length) == 0 )
 	{
 		kDebug() << "kio_msits::get: could not retrieve filename " << fileName << endl;
-        error( KIO::ERR_NO_CONTENT, url.prettyURL() );
+        error( KIO::ERR_NO_CONTENT, url.prettyUrl() );
 		return;
 	}
 
@@ -131,7 +131,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 
 	if ( pos == -1 )
 	{
-		error( KIO::ERR_MALFORMED_URL, url.prettyURL() );
+		error( KIO::ERR_MALFORMED_URL, url.prettyUrl() );
 		return false;
 	}
 
@@ -142,7 +142,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 
     if ( filename.isEmpty() )
     {
-		error( KIO::ERR_MALFORMED_URL, url.prettyURL() );
+		error( KIO::ERR_MALFORMED_URL, url.prettyUrl() );
         return false;
     }
 
@@ -157,7 +157,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 
 	if ( (tmpchm = chm_open ( QFile::encodeName (filename))) == 0 )
 	{
-		error( KIO::ERR_COULD_NOT_READ, url.prettyURL() );
+		error( KIO::ERR_COULD_NOT_READ, url.prettyUrl() );
         return false;
 	}
 
@@ -218,7 +218,7 @@ void ProtocolMSITS::stat (const KUrl & url)
 
 	if ( !ResolveObject ( fileName, &ui ) )
 	{
-        error( KIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
+        error( KIO::ERR_DOES_NOT_EXIST, url.prettyUrl() );
 		return;
 	}
 

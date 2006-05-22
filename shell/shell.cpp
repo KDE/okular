@@ -36,9 +36,9 @@
 #include <kio/netaccess.h>
 #include <kmainwindowiface.h>
 #include <krecentfilesaction.h>
+#include <kservicetypetrader.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
-#include <ktrader.h>
 #include <ktempfile.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>
@@ -199,7 +199,7 @@ void Shell::readProperties(KConfig* config)
 QStringList* Shell::fileFormats()
 {
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
-	KTrader::OfferList offers=KTrader::self()->query("oKular/Generator",QString::null,constraint, QString::null);
+    KService::List offers = KServiceTypeTrader::self()->query("oKular/Generator",constraint);
     QStringList supportedMimeTypes;
     QStringList * supportedPattern;
 
@@ -210,8 +210,8 @@ QStringList* Shell::fileFormats()
 
     bool bzip2Available = (KFilterBase::findFilterByMimeType( "application/x-bzip2" ) != 0L);
     supportedPattern = new QStringList;
-    KTrader::OfferList::ConstIterator iterator = offers.begin();
-    KTrader::OfferList::ConstIterator end = offers.end();
+    KService::List::ConstIterator iterator = offers.begin();
+    KService::List::ConstIterator end = offers.end();
     QStringList::Iterator mimeType;
     QString tmp;
     QStringList mimeTypes,pattern,extensions;

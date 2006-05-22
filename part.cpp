@@ -42,6 +42,7 @@
 #include <kfiledialog.h>
 #include <kfind.h>
 #include <kmessagebox.h>
+#include <kmimetypetrader.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
@@ -49,8 +50,8 @@
 #include <kmenu.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
-#include <ktrader.h>
 #include <kprocess.h>
+#include <kservicetypetrader.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <ktoggleaction.h>
@@ -249,7 +250,7 @@ Part::Part(QWidget *parentWidget,
 	prefs->setText( i18n( "Configure oKular..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
 	
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
-	KTrader::OfferList gens=KTrader::self()->query("oKular/Generator",constraint);
+	KService::List gens = KServiceTypeTrader::self()->query("oKular/Generator",constraint);
 	if (gens.count() > 0)
 	{
 		KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
@@ -307,7 +308,7 @@ Part::Part(QWidget *parentWidget,
 	slotNewConfig();
 
 	// [SPEECH] check for KTTSD presence and usability
-	KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
+	KService::List offers = KServiceTypeTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
 	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
 	KpdfSettings::writeConfig();
 
@@ -330,7 +331,7 @@ Part::~Part()
 void Part::openURLFromDocument(const KUrl &url)
 {
     m_bExtension->openURLNotify();
-    m_bExtension->setLocationBarURL(url.prettyURL());
+    m_bExtension->setLocationBarURL(url.prettyUrl());
     openURL(url);
 }
 
@@ -338,9 +339,9 @@ void Part::supportedMimetypes()
 {
     m_supportedMimeTypes.clear();
     QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
-    KTrader::OfferList offers=KTrader::self()->query("oKular/Generator",QString::null,constraint, QString::null);
-    KTrader::OfferList::ConstIterator iterator = offers.begin();
-    KTrader::OfferList::ConstIterator end = offers.end();
+    KService::List offers = KServiceTypeTrader::self()->query("oKular/Generator",constraint);
+    KService::List::ConstIterator iterator = offers.begin();
+    KService::List::ConstIterator end = offers.end();
     QStringList::Iterator mimeType;
 
     for (; iterator != end; ++iterator)
@@ -366,7 +367,7 @@ void Part::setMimeTypes(KIO::Job *job)
 void Part::fillGenerators()
 {
     QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
-    KTrader::OfferList offers=KTrader::self()->query("oKular/Generator",constraint);
+    KService::List offers = KServiceTypeTrader::self()->query("oKular/Generator", constraint);
     QString propName;
     int count=offers.count();
     if (count > 0)
@@ -566,7 +567,7 @@ bool Part::openURL(const KUrl &url)
     if ( openOk )
         m_viewportDirty = 0;
     else
-        KMessageBox::error( widget(), i18n( "Could not open %1", url.prettyURL() ) );
+        KMessageBox::error( widget(), i18n( "Could not open %1", url.prettyUrl() ) );
     emit enablePrintAction(openOk);
     return openOk;
 }
@@ -824,7 +825,7 @@ void Part::slotSaveFileAs()
         }
 
         if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveURL.prettyURL() ) );
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveURL.prettyUrl() ) );
     }
 }
 

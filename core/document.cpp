@@ -23,12 +23,11 @@
 #include <klocale.h>
 #include <kfinddialog.h>
 #include <kmessagebox.h>
+#include <kmimetypetrader.h>
 #include <ktoolinvocation.h>
-#include <kuserprofile.h>
 #include <krun.h>
 #include <kstandarddirs.h>
 #include <klibloader.h>
-#include <ktrader.h>
 #include <qcombobox.h>
 #include <qlabel.h>
 
@@ -155,8 +154,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
-    KTrader::OfferList offers=KTrader::self()->query(mime->name(),"oKular/Generator",constraint, "[X-KDE-Priority]");
-    
+    KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"oKular/Generator",constraint);
     if (offers.isEmpty())
     {
 	kWarning() << "No plugin for '" << mime->name() << "' mimetype." << endl;
@@ -1130,12 +1128,12 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 }
             }
 
-            KService::Ptr ptr = KServiceTypeProfile::preferredService( mime->name(), "Application" );
+            KService::Ptr ptr = KMimeTypeTrader::self()->preferredService( mime->name(), "Application" );
             if ( ptr )
             {
                 KUrl::List lst;
                 lst.append( fileName );
-                KRun::run( *ptr, lst );
+                KRun::run( *ptr, lst, 0 );
             }
             else
                 KMessageBox::information( 0, i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
@@ -1202,11 +1200,11 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     return;
                 }
                 // get service for web browsing
-                KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
+                KService::Ptr ptr = KMimeTypeTrader::self()->preferredService("text/html", "Application");
                 KUrl::List lst;
                 // append 'url' parameter to the service and run it
                 lst.append( url );
-                KRun::run( *ptr, lst );
+                KRun::run( *ptr, lst, 0 );
             }
             } break;
 
@@ -1521,7 +1519,7 @@ QString KPDFDocument::giveAbsolutePath( const QString & fileName )
     if ( !d->url.isValid() )
         return QString::null;
 
-    return d->url.upURL().url() + fileName;
+    return d->url.upUrl().url() + fileName;
 }
 
 bool KPDFDocument::openRelativeFile( const QString & fileName )

@@ -16,8 +16,8 @@ if(_PopplerLinkFlags)
   # find again pkg-config, to query it about poppler version
   FIND_PROGRAM(PKGCONFIG_EXECUTABLE NAMES pkg-config PATHS /usr/bin/ /usr/local/bin )
 
-  # query pkg-config asking for a poppler-qt4 >= 0.5.1
-  EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.5.1 poppler-qt4 RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
+  # query pkg-config asking for a poppler-qt4 >= 0.5.2
+  EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.5.2 poppler-qt4 RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
   if(_return_VALUE STREQUAL "0")
     set(POPPLER_FOUND TRUE)
   endif(_return_VALUE STREQUAL "0")

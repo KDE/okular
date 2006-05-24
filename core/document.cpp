@@ -1265,8 +1265,12 @@ void KPDFDocument::sendGeneratorRequest()
     while ( !d->pixmapRequestsStack.isEmpty() && !request )
     {
         PixmapRequest * r = d->pixmapRequestsStack.last();
+        if (!r)
+        {
+            d->pixmapRequestsStack.pop_back();
+        }
         // request only if page isn't already present or request has invalid id
-        if ( r->page->hasPixmap( r->id, r->width, r->height ) || r->id <= 0 || r->id >= MAX_OBSERVER_ID)
+        else if ( r->page->hasPixmap( r->id, r->width, r->height ) || r->id <= 0 || r->id >= MAX_OBSERVER_ID)
         {
             d->pixmapRequestsStack.pop_back();
             delete r;
@@ -1282,10 +1286,6 @@ void KPDFDocument::sendGeneratorRequest()
                 d->warnedOutOfMemory = true;
             }
 	    delete r;
-        }
-        else if (!r)
-        {
-            d->pixmapRequestsStack.pop_back();
         }
         else
             request = r;

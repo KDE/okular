@@ -387,7 +387,7 @@ void Part::fillGenerators()
             KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
             if (!lib) 
             {
-                kWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
+                kWarning() << "Could not load '" << offers[i]->library() << "' library." << endl;
             }
 
             Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );

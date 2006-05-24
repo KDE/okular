@@ -36,14 +36,11 @@ QTime performanceTimer;
 int  performanceFlag = 0;
 #endif
 
-typedef KParts::GenericFactory<KDVIMultiPage> KDVIMultiPageFactory;
-K_EXPORT_COMPONENT_FACTORY(kdvipart, KDVIMultiPageFactory)
+K_EXPORT_COMPONENT_FACTORY( kdvipart, KGenericFactory<KDVIMultiPage>( "kdvipart" ) )
 
 
-
-KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObject *parent,
-                             const char *name, const QStringList& args)
-  : KMultiPage(parentWidget, widgetName, parent, name), DVIRenderer(parentWidget)
+KDVIMultiPage::KDVIMultiPage(QObject *parent, const char *name, const QStringList& args)
+  : KMultiPage(parent, name)
 {
   Q_UNUSED(args);
 #ifdef PERFORMANCE_MEASUREMENT
@@ -51,8 +48,6 @@ KDVIMultiPage::KDVIMultiPage(QWidget *parentWidget, const char *widgetName, QObj
 #endif
 
   searchUsed = false;
-
-  setInstance(KDVIMultiPageFactory::instance());
 
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.

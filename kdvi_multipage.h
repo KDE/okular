@@ -17,8 +17,7 @@ class KDVIMultiPage : public KMultiPage
   Q_OBJECT
 
 public:
-  KDVIMultiPage(QWidget *parentWidget, QObject *parent,
-                const QStringList& args = QStringList());
+  KDVIMultiPage(QObject *parent, const QStringList& args = QStringList());
   virtual ~KDVIMultiPage();
 
 // Interface definition start ------------------------------------------------

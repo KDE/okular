@@ -47,10 +47,9 @@ QPainter *foreGroundPainter; // QPainter used for text
 
 //------ now comes the dviRenderer class implementation ----------
 
-dviRenderer::dviRenderer(QWidget *par)
-  : DocumentRenderer(par),
-    dviFile(0),
-    info(new infoDialog(par)),
+dviRenderer::dviRenderer()
+  : dviFile(0),
+    info(new infoDialog(0)),
     resolutionInDPI(0),
     embedPS_progress(0),
     embedPS_numOfProgressedFiles(0),

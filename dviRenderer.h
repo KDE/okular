@@ -5,7 +5,7 @@
 // Class for rendering TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2001-2005 Stefan Kebekus. Distributed under the GPL.
+// (C) 2001-2006 Stefan Kebekus. Distributed under the GPL.
 
 #ifndef _dvirenderer_h_
 #define _dvirenderer_h_
@@ -87,7 +87,7 @@ class dviRenderer : public DocumentRenderer, bigEndianByteReader
   Q_OBJECT
 
 public:
-  dviRenderer(QWidget *parent);
+  dviRenderer();
   ~dviRenderer();
 
   virtual bool  setFile(const QString &fname, const KUrl &base);

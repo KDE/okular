@@ -1274,7 +1274,6 @@ void KPDFDocument::sendGeneratorRequest()
         else if ( (long)r->width * (long)r->height > 20000000L )
         {
             d->pixmapRequestsStack.pop_back();
-            delete r;
             if ( !d->warnedOutOfMemory )
             {
                 kWarning() << "Running out of memory on page " << r->pageNumber
@@ -1282,6 +1281,7 @@ void KPDFDocument::sendGeneratorRequest()
                 kWarning() << "this message will be reported only once." << endl;
                 d->warnedOutOfMemory = true;
             }
+	    delete r;
         }
         else if (!r)
         {

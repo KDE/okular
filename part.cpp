@@ -983,7 +983,7 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 		
 	}
 	
-	if (reallyShow)
+	if (page && reallyShow)
 	{
 		QAction *res = popup->exec(point);
 		if (res == toggleBookmark) m_document->toggleBookmark( page->number() );

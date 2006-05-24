@@ -1328,7 +1328,7 @@ if (d->document->handleEvent( e ) )
 			rects->append(new NormalizedRect( relativeRect, item->width(), item->height() ));
 		    }
 		}
-		selectedText = kpdfPage && kpdfPage->getText( rects );
+		selectedText = /*kpdfPage && */kpdfPage->getText( rects );
             }
 
             // popup that ask to copy:text and copy/save:image

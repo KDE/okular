@@ -201,7 +201,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
         KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[hRank]->library() ) );
         if (!lib) 
         {
-            kWarning() << "Could not load '" << lib->fileName() << "' library." << endl;
+            kWarning() << "Could not load '" << offers[hRank]->library() << "' library." << endl;
             return false;
         }
 

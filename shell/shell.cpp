@@ -208,7 +208,9 @@ QStringList* Shell::fileFormats()
         return 0;
 	}
 
-    bool bzip2Available = (KFilterBase::findFilterByMimeType( "application/x-bzip2" ) != 0L);
+    KFilterBase* filter = KFilterBase::findFilterByMimeType( "application/x-bzip2" );
+    bool bzip2Available = (filter != 0L);
+    delete filter;
     supportedPattern = new QStringList;
     KService::List::ConstIterator iterator = offers.begin();
     KService::List::ConstIterator end = offers.end();

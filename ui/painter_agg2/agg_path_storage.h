@@ -16,6 +16,8 @@
 #ifndef AGG_PATH_STORAGE_INCLUDED
 #define AGG_PATH_STORAGE_INCLUDED
 
+#include <assert.h>
+
 #include "agg_basics.h"
 
 namespace agg
@@ -316,6 +318,8 @@ namespace agg
         {
             allocate_block(nb);
         }
+
+        assert(m_coord_blocks);
         *xy_ptr = m_coord_blocks[nb] + ((m_total_vertices & block_mask) << 1);
         return m_cmd_blocks[nb] + (m_total_vertices & block_mask);
     }

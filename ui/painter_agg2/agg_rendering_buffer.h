@@ -20,6 +20,8 @@
 #ifndef AGG_RENDERING_BUFFER_INCLUDED
 #define AGG_RENDERING_BUFFER_INCLUDED
 
+#include <assert.h>
+
 #include "agg_basics.h"
 
 namespace agg
@@ -90,6 +92,7 @@ namespace agg
 
             T** rows = m_rows;
 
+            assert(height == 0 || m_rows);
             while(height--)
             {
                 *rows++ = row_ptr;

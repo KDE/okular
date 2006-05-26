@@ -62,7 +62,7 @@ class KPDFTextPage {
   public:
     RegularAreaRect* findText(const QString &query, SearchDir & direct, 
         const bool &strictCase, const RegularAreaRect *area);
-    QString * getText(const RegularAreaRect *rect);
+    QString getText(const RegularAreaRect *rect) const;
     RegularAreaRect * getTextArea ( TextSelection* ) const;
     KPDFTextPage(QList<KPDFTextEntity*> words) : m_words(words) {};
     KPDFTextPage() : m_words() {};

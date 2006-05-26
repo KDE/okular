@@ -297,13 +297,13 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
     return 0;
 }
 
-QString * KPDFTextPage::getText(const RegularAreaRect *area)
+QString KPDFTextPage::getText(const RegularAreaRect *area) const
 {
-    if (area->isNull())
-        return 0;
+    if (!area || area->isNull())
+        return QString();
 
-    QString* ret = new QString;
-    QList<KPDFTextEntity*>::Iterator it,end = m_words.end();
+    QString ret = "";
+    QList<KPDFTextEntity*>::ConstIterator it,end = m_words.end();
     KPDFTextEntity * last=0;
 	for( it=m_words.begin() ; it != end;  ++it )
 	{
@@ -311,7 +311,7 @@ QString * KPDFTextPage::getText(const RegularAreaRect *area)
         if (area->intersects((*it)->area))
         {
 //           kDebug()<< "[" << (*it)->area->left << "," << (*it)->area->top << "]x["<< (*it)->area->right << "," << (*it)->area->bottom << "]\n";
-            *ret += ((*it)->txt);
+            ret += (*it)->txt;
             last=*it;
         }
 	}

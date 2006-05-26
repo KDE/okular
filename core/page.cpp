@@ -131,9 +131,9 @@ RegularAreaRect * KPDFPage::findText( const QString & text, SearchDir dir, const
     */
 }
 
-QString * KPDFPage::getText( const RegularAreaRect * area ) const
+QString KPDFPage::getText( const RegularAreaRect * area ) const
 {
-	QString *ret= 0;
+	QString ret;
 
 	if ( !m_text )
 		return ret;

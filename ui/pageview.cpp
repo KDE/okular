@@ -1304,7 +1304,7 @@ if (d->document->handleEvent( e ) )
             }
 
             // if we support text generation 
-            QString* selectedText=0;
+            QString selectedText;
             if (d->document->supportsSearching())
             {
 		// grab text in selection by extracting it from all intersected pages
@@ -1334,9 +1334,9 @@ if (d->document->handleEvent( e ) )
             // popup that ask to copy:text and copy/save:image
             KMenu menu( this );
             QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
-            if ( d->document->supportsSearching() && !selectedText->isEmpty() )
+            if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
-                menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText->length() ) );
+                menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 textToClipboard = menu.addAction( SmallIconSet("editcopy"), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
                 {
@@ -1394,9 +1394,9 @@ if (d->document->handleEvent( e ) )
                 {
                     // [1] copy text to clipboard
                     QClipboard *cb = QApplication::clipboard();
-                    cb->setText( *selectedText, QClipboard::Clipboard );
+                    cb->setText( selectedText, QClipboard::Clipboard );
                     if ( cb->supportsSelection() )
-                        cb->setText( *selectedText, QClipboard::Selection );
+                        cb->setText( selectedText, QClipboard::Selection );
                 }
                 else if ( choice == speakText )
                 {
@@ -1439,7 +1439,6 @@ if (d->document->handleEvent( e ) )
                     }
                 }
             }
-            delete selectedText;
             // clear widget selection and invalidate rect
             selectionClear();
 

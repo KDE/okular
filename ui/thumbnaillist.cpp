@@ -84,15 +84,20 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 
 	setAcceptDrops( true );
 
+	QPalette pal = palette();
 	// set contents background to the 'base' color
-	viewport()->setPaletteBackgroundColor( palette().active().base() );
+	QPalette viewportPal = viewport()->palette();
+	viewportPal.setColor( viewport()->backgroundRole(), pal.color( QPalette::Base ) );
+	viewport()->setPalette( viewportPal );
 
 	m_pagesWidget = new QWidget();
 	setWidget( m_pagesWidget );
 	// widget setup: can be focused by tab and mouse click (not wheel)
 	m_pagesWidget->setFocusPolicy( Qt::StrongFocus );
 	m_pagesWidget->show();
-	m_pagesWidget->setPaletteBackgroundColor( palette().active().base() );
+	QPalette widgetPal = m_pagesWidget->palette();
+	widgetPal.setColor( m_pagesWidget->backgroundRole(), pal.color( QPalette::Base ) );
+	m_pagesWidget->setPalette( widgetPal );
 	m_pagesLayout = new QVBoxLayout( m_pagesWidget );
 	m_pagesLayout->setMargin( 0 );
 	m_pagesLayout->setSpacing( 4 );
@@ -438,9 +443,10 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 	if ( !m_delayTimer )
 	{
 		m_delayTimer = new QTimer( this );
+		m_delayTimer->setSingleShot( true );
 		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotDelayTimeout() ) );
 	}
-	m_delayTimer->start( delayMs, true );
+	m_delayTimer->start( delayMs );
 }
 
 
@@ -495,11 +501,12 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     if ( !clipRect.isValid() )
         return;
     QPainter p( this );
+    QPalette pal = palette();
 
     // draw the bottom label + highlight mark
-    QColor fillColor = m_selected ? palette().active().highlight() : palette().active().base();
+    QColor fillColor = m_selected ? pal.color( QPalette::Active, QPalette::Highlight ) : pal.color( QPalette::Active, QPalette::Base );
     p.fillRect( clipRect, fillColor );
-    p.setPen( m_selected ? palette().active().highlightedText() : palette().active().text() );
+    p.setPen( m_selected ? pal.color( QPalette::Active, QPalette::HighlightedText ) : pal.color( QPalette::Active, QPalette::Text ) );
     p.drawText( 0, m_pixmapHeight + m_margin, width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
 
     // draw page outline and pixmap
@@ -511,7 +518,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
         p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );
         // draw the clear rect
-        p.setPen( isBookmarked ? QColor( 0x804000 ) : palette().active().base() );
+        p.setPen( isBookmarked ? QColor( 0x804000 ) : pal.color( QPalette::Active, QPalette::Base ) );
         // draw the bottom and right shadow edges
         if ( !isBookmarked )
         {

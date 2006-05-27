@@ -479,7 +479,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     /** 6 -- MIXED FLOW. Draw LINKS+IMAGES BORDER on ACTIVE PAINTER  **/
     if ( enhanceLinks || enhanceImages )
     {
-        QColor normalColor = QApplication::palette().active().highlight();
+        QColor normalColor = QApplication::palette().color( QPalette::Active, QPalette::Highlight );
         QColor lightColor = normalColor.light( 140 );
         // enlarging limits for intersection is like growing the 'rectGeometry' below
         QRect limitsEnlarged = limits;

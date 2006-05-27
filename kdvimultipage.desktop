@@ -8,4 +8,4 @@ Name[x-test]=xxKDVIMultiPagexx
 ServiceTypes=KViewShell/MultiPage
 X-KDE-Library=kdvipart
 X-KDE-MimeTypes=application/x-dvi
-X-KDE-MultiPageVersion=2
+X-KDE-MultiPageVersion=3

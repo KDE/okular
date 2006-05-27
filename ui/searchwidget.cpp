@@ -10,6 +10,7 @@
 // qt/kde includes
 #include <qmenu.h>
 #include <qaction.h>
+#include <qapplication.h>
 #include <qsizepolicy.h>
 #include <qtimer.h>
 #include <qtoolbutton.h>
@@ -89,11 +90,13 @@ void SearchWidget::clearText()
 
 void SearchWidget::slotTextChanged( const QString & text )
 {
+    QPalette qAppPalette = QApplication::palette();
     // if length<3 set 'red' text and send a blank string to document
-    QColor color = text.length() < 3 ? Qt::darkRed : palette().active().text();
-    KLineEdit * lineEdit = m_lineEdit;
-    lineEdit->setPaletteForegroundColor( color );
-    lineEdit->setPaletteBackgroundColor( palette().active().base() );
+    QColor color = text.length() < 3 ? Qt::darkRed : qAppPalette.color( QPalette::Text );
+    QPalette pal = m_lineEdit->palette();
+    pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
+    pal.setColor( QPalette::Text, color );
+    m_lineEdit->setPalette( pal );
     m_inputDelayTimer->stop();
     m_inputDelayTimer->start(333);
 }
@@ -143,8 +146,10 @@ void SearchWidget::startSearch()
     // if not found, use warning colors
     if ( !ok )
     {
-        m_lineEdit->setPaletteForegroundColor( Qt::white );
-        m_lineEdit->setPaletteBackgroundColor( Qt::red );
+        QPalette pal = m_lineEdit->palette();
+        pal.setColor( QPalette::Base, Qt::red );
+        pal.setColor( QPalette::Text, Qt::white );
+        m_lineEdit->setPalette( pal );
     }
 }
 

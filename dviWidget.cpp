@@ -22,7 +22,7 @@
 #include <QMouseEvent>
 
 
-DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name)
+DVIWidget::DVIWidget(PageView* sv, DocumentPageCache* cache)
   : DocumentWidget(sv, cache)
 {
 }
@@ -48,7 +48,7 @@ void DVIWidget::mousePressEvent(QMouseEvent* e)
   // Check if the mouse is pressed on a source-hyperlink
   // source hyperlinks can be invoked with the Middle Mousebutton or alternatively
   // with Control+Left Mousebutton
-  if ((e->button() == Qt::MidButton || (e->button() == Qt::LeftButton && (e->state() & Qt::ControlModifier)))
+  if ((e->button() == Qt::MidButton || (e->button() == Qt::LeftButton && (e->modifiers() & Qt::ControlModifier)))
       && (pageData->sourceHyperLinkList.size() > 0)) {
     int minIndex = 0;
     int minimum = 0;
@@ -85,7 +85,7 @@ void DVIWidget::mouseMoveEvent(QMouseEvent* e)
   DocumentWidget::mouseMoveEvent(e);
 
   // Analyze the mouse movement only if no mouse button was pressed
-  if ( e->state() == 0 ) {
+  if (e->buttons() == Qt::NoButton) {
     // Get a pointer to the page contents
     RenderedDviPagePixmap* pageData = dynamic_cast<RenderedDviPagePixmap*>(documentCache->getPage(pageNumber));
     if (pageData == 0) {

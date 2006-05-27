@@ -53,7 +53,6 @@ KDVIMultiPage::KDVIMultiPage(QObject *parent, const QStringList& args)
 
   // Points to the same object as renderer to avoid downcasting.
   // FIXME: Remove when the API of the Renderer-class is finished.
-  DVIRenderer.setName("DVI renderer");
   setRenderer(&DVIRenderer);
 
   docInfoAction = new KAction(KIcon("info"), i18n("Document &Info"), actionCollection(), "info_dvi");
@@ -402,7 +401,7 @@ void KDVIMultiPage::showTipOnStart()
 
 DocumentWidget* KDVIMultiPage::createDocumentWidget(PageView *parent, DocumentPageCache *cache)
 {
-  DVIWidget* documentWidget = new DVIWidget(parent, cache, "singlePageWidget");
+  DVIWidget* documentWidget = new DVIWidget(parent, cache);
 
   // Handle source links
   connect(documentWidget, SIGNAL(SRCLink(const QString&, const QPoint&, DocumentWidget*)), getRenderer(),

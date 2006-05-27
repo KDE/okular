@@ -214,8 +214,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       g->x2 = 0;
       g->y2 = 15;
     } else {
-      QImage imgi(slot->bitmap.width, slot->bitmap.rows, 32);
-      imgi.setAlphaBuffer(true);
+      QImage imgi(slot->bitmap.width, slot->bitmap.rows, QImage::Format_ARGB32);
 
       // Do QPixmaps fully support the alpha channel? If yes, we use
       // that. Otherwise, use other routines as a fallback

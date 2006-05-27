@@ -25,7 +25,7 @@ class DVIWidget : public DocumentWidget
   Q_OBJECT
 
 public:
-  DVIWidget(PageView* sv, DocumentPageCache* cache, const char* name);
+  DVIWidget(PageView* sv, DocumentPageCache* cache);
 
 signals:
   void SRCLink(const QString&, const QPoint&, DocumentWidget*);

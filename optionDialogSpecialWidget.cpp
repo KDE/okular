@@ -56,7 +56,7 @@ optionDialogSpecialWidget::optionDialogSpecialWidget( QWidget* parent,  const ch
   editorDescriptionString += i18n("Click 'Help' to learn how to set up XEmacs.");
 
   for(int i=0; i<editorNameString.count(); i++)
-    editorChoice->insertItem(editorNameString[i]);
+    editorChoice->insertItem(i, editorNameString[i]);
   // Set the proper editor on the "Rendering-Page", try to recognize
   // the editor command from the config-file. If the editor command is
   // not recognized, switch to "User defined editor". That way, kdvi
@@ -101,8 +101,8 @@ void optionDialogSpecialWidget::slotUserDefdEditorCommand( const QString &text )
 
 void optionDialogSpecialWidget::slotComboBox(int item)
 {
-  if (item != editorChoice->currentItem())
-    editorChoice->setCurrentItem(item);
+  if (item != editorChoice->currentIndex())
+    editorChoice->setCurrentIndex(item);
 
   editorDescription->setText(editorDescriptionString[item]);
 

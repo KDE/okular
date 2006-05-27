@@ -43,8 +43,8 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
 
   KVBox* page = makeVBoxMainWidget();
 
-  TextLabel1   = new QLabel( label, page, "TextLabel2" );
-  TextLabel1->setAlignment( int( Qt::AlignCenter ) );
+  TextLabel1   = new QLabel(label, page);
+  TextLabel1->setAlignment(Qt::AlignCenter);
   TextLabel1->setWhatsThis( whatsThis );
   TextLabel1->setToolTip( ttip );
 
@@ -56,8 +56,8 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   } else
     ProgressBar1 = NULL;
 
-  TextLabel2   = new QLabel( "", page, "TextLabel2" );
-  TextLabel2->setAlignment( int( Qt::AlignCenter ) );
+  TextLabel2   = new QLabel("", page);
+  TextLabel2->setAlignment(Qt::AlignCenter);
   TextLabel2->setWhatsThis( whatsThis );
   TextLabel2->setToolTip( ttip );
 

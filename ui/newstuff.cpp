@@ -291,8 +291,8 @@ class ItemsView : public KHTMLPart
         {
             QString hoverColor = "#000000"; //QApplication::palette().active().highlightedText().name();
             QString hoverBackground = "#f8f8f8"; //QApplication::palette().active().highlight().name();
-            QString starIconPath = locate( "data", "kpdf/pics/ghns_star.png" );
-            QString starBgIconPath = locate( "data", "kpdf/pics/ghns_star_gray.png" );
+            QString starIconPath = locate( "data", "oKular/pics/ghns_star.png" );
+            QString starBgIconPath = locate( "data", "oKular/pics/ghns_star_gray.png" );
 
             // default elements style
             QString style;
@@ -435,7 +435,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     horLay->setMargin( 11 );
 
     // create left picture widget (if picture found)
-    QPixmap p( locate( "data", "kpdf/pics/ghns.png" ) );
+    QPixmap p( locate( "data", "oKular/pics/ghns.png" ) );
     if ( !p.isNull() )
        horLay->addWidget( new ExtendImageWidget( p, this ) );
 
@@ -453,7 +453,9 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
       // create the control panel
       QFrame * panelFrame = new QFrame( rightLayouter );
       panelFrame->setFrameStyle( QFrame::StyledPanel | QFrame::Raised );
-      QGridLayout * panelLayout = new QGridLayout( panelFrame, 2, 4, 11, 6 );
+      QGridLayout * panelLayout = new QGridLayout( panelFrame );
+      panelLayout->setMargin( 11 );
+      panelLayout->setSpacing( 6 );
         // add widgets to the control panel
         QLabel * label1 = new QLabel( i18n("Show:"), panelFrame );
         panelLayout->addWidget( label1, 0, 0 );
@@ -483,7 +485,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         QLabel * label3 = new QLabel( i18n("Search:"), panelFrame );
         panelLayout->addWidget( label3, 1, 0 );
         d->searchLine = new QLineEdit( panelFrame );
-        panelLayout->addMultiCellWidget( d->searchLine, 1, 1, 1, 3 );
+        panelLayout->addWidget( d->searchLine, 1, 1, 1, 3 );
         d->searchLine->setEnabled( false );
 
       // create the ItemsView used to display available items

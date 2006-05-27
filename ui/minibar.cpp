@@ -284,7 +284,7 @@ void ProgressWidget::setProgress( float percentage )
 
 void ProgressWidget::mouseMoveEvent( QMouseEvent * e )
 {
-    if ( e->state() == Qt::LeftButton && width() > 0 )
+    if ( ( QApplication::mouseButtons() & Qt::LeftButton ) && width() > 0 )
         m_miniBar->slotGotoNormalizedPage( (float)e->x() / (float)width() );
 }
 

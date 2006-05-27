@@ -69,8 +69,10 @@ PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     // misc stuff
     setMouseTracking( true );
     m_transitionTimer = new QTimer( this );
+    m_transitionTimer->setSingleShot( true );
     connect( m_transitionTimer, SIGNAL( timeout() ), this, SLOT( slotTransitionStep() ) );
     m_overlayHideTimer = new QTimer( this );
+    m_overlayHideTimer->setSingleShot( true );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
 
     // handle cursor appearance as specified in configuration
@@ -277,7 +279,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         if ( e->y() <= (geometry().top() + 1) )
             m_topBar->show();
         // handle "dragging the wheel" if clicking on its geometry
-        else if ( e->state() == Qt::LeftButton && m_overlayGeometry.contains( e->pos() ) )
+        else if ( ( QApplication::mouseButtons() & Qt::LeftButton ) && m_overlayGeometry.contains( e->pos() ) )
             overlayClick( e->pos() );
     }
 }
@@ -659,9 +661,10 @@ void PresentationWidget::generateOverlay()
 
     // generate a 2 colors pixmap using mixing shadow (made with highlight color)
     // and image (made with highlightedText color)
-    QColor color = palette().active().highlightedText();
+    QPalette pal = palette();
+    QColor color = pal.color( QPalette::Active, QPalette::HighlightedText );
     int red = color.red(), green = color.green(), blue = color.blue();
-    color = palette().active().highlight();
+    color = pal.color( QPalette::Active, QPalette::Highlight );
     int sRed = color.red(), sGreen = color.green(), sBlue = color.blue();
     // pointers
     unsigned int * data = (unsigned int *)image.bits(),
@@ -696,7 +699,7 @@ void PresentationWidget::generateOverlay()
     // start the autohide timer
     repaint( m_overlayGeometry ); // toggle with next line
     //update( m_overlayGeometry );
-    m_overlayHideTimer->start( 2500, true );
+    m_overlayHideTimer->start( 2500 );
 #endif
 }
 
@@ -789,7 +792,7 @@ void PresentationWidget::slotTransitionStep()
         update( m_transitionRects.first() );
         m_transitionRects.pop_front();
     }
-    m_transitionTimer->start( m_transitionDelay, true );
+    m_transitionTimer->start( m_transitionDelay );
 }
 
 void PresentationWidget::slotDelayedEvents()
@@ -1296,7 +1299,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
     }
 
     // send the first start to the timer
-    m_transitionTimer->start( 0, true );
+    m_transitionTimer->start( 0 );
 }
 
 

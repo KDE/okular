@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qapplication.h>
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
@@ -16,7 +17,6 @@
 #include <qpushbutton.h>
 #include <QStyleOptionButton>
 #include <kacceleratormanager.h>
-#include <kapplication.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
 #include <klocale.h>
@@ -105,8 +105,10 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 {
     setObjectName( "pageViewMessage" );
     setFocusPolicy( Qt::NoFocus );
-    setBackgroundMode( Qt::NoBackground );
-    setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QColorGroup::Background));
+    setAttribute( Qt::WA_OpaquePaintEvent );
+    QPalette pal = palette();
+    pal.setColor( QPalette::Active, QPalette::Window, QApplication::palette().color( QPalette::Active, QPalette::Window ) );
+    setPalette( pal );
     move( 10, 10 );
     resize( 0, 0 );
     hide();
@@ -173,9 +175,10 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     setMask( mask );
 
     // draw background
+    QPalette pal = palette();
     QPainter bufferPainter( &m_pixmap );
     bufferPainter.setPen( Qt::black );
-    bufferPainter.setBrush( paletteBackgroundColor() );
+    bufferPainter.setBrush( pal.color( QPalette::Window ) );
     bufferPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
 
     // draw icon if present
@@ -184,9 +187,9 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // draw shadow and text
     int yText = geometry.height() - height / 2;
-    bufferPainter.setPen( paletteBackgroundColor().dark( 115 ) );
+    bufferPainter.setPen( pal.color( QPalette::Window ).dark( 115 ) );
     bufferPainter.drawText( 5 + textXOffset + shadowOffset, yText + 1, message );
-    bufferPainter.setPen( foregroundColor() );
+    bufferPainter.setPen( pal.color( QPalette::WindowText ) );
     bufferPainter.drawText( 5 + textXOffset, yText, message );
 
     // show widget and schedule a repaint

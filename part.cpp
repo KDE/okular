@@ -388,6 +388,7 @@ void Part::fillGenerators()
             if (!lib) 
             {
                 kWarning() << "Could not load '" << offers[i]->library() << "' library." << endl;
+		return;
             }
 
             Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );

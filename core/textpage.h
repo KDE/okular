@@ -12,6 +12,7 @@
 
 
 #include <qlist.h>
+#include <qmap.h>
 #include <qstringlist.h>
 #include "area.h"
 class TextSelection;
@@ -20,6 +21,9 @@ class TextSelection;
  *  The enum holding the direction of searching.
  *! @enum SearchDir FromTop
  *  Searching from top of the page, next result is to be found,
+ *  there was no earlier search result.
+ *! @enum SearchDir FromBottom
+ *  Searching from bottom of the page, next result is to be found,
  *  there was no earlier search result.
  *! @enum SearchDir NextRes
  *  Searching for the next result on the page, earlier result should be 
@@ -30,7 +34,7 @@ class TextSelection;
  *  located so we search from the last result not from the beginning of the 
  *  page.
  */
-typedef enum SearchDir{ FromTop, NextRes, PrevRes };
+typedef enum SearchDir{ FromTop, FromBottom, NextRes, PrevRes };
 
 /*! @struct  KPDFTextEntity
  * @short Abstract textentity of KPDF
@@ -58,10 +62,12 @@ struct KPDFTextEntity
     ~KPDFTextEntity() { delete area; };
 };
 
+struct SearchPoint;
+
 class KPDFTextPage {
   public:
-    RegularAreaRect* findText(const QString &query, SearchDir & direct, 
-        const bool &strictCase, const RegularAreaRect *area);
+    RegularAreaRect* findText(int searchID, const QString &query, SearchDir & direct,
+        bool strictCase, const RegularAreaRect *area);
     QString getText(const RegularAreaRect *rect) const;
     RegularAreaRect * getTextArea ( TextSelection* ) const;
     KPDFTextPage(QList<KPDFTextEntity*> words) : m_words(words) {};
@@ -70,9 +76,11 @@ class KPDFTextPage {
         { m_words.append(new KPDFTextEntity(txt,area) ); };
     ~KPDFTextPage();
   private:
-    RegularAreaRect * findTextInternal(const QString &query, bool forward,
-        bool strictCase, const QList<KPDFTextEntity*>::Iterator &start, const QList<KPDFTextEntity*>::Iterator &end);
+    RegularAreaRect * findTextInternalForward(int searchID, const QString &query,
+        bool strictCase, const QList<KPDFTextEntity*>::Iterator &start,
+        const QList<KPDFTextEntity*>::Iterator &end);
     QList<KPDFTextEntity*>  m_words;
+    QMap<int, SearchPoint*> m_searchPoints;
   };
 
 

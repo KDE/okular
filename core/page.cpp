@@ -114,7 +114,7 @@ bool KPDFPage::hasTransition() const
 }
 
 
-RegularAreaRect * KPDFPage::findText( const QString & text, SearchDir dir, const bool strictCase, 
+RegularAreaRect * KPDFPage::findText( int searchID, const QString & text, SearchDir dir, bool strictCase,
 	const RegularAreaRect * lastRect/*, const Generator &generator */) const
 {
 	RegularAreaRect* ret=0;
@@ -124,7 +124,7 @@ RegularAreaRect * KPDFPage::findText( const QString & text, SearchDir dir, const
     if (generator->preferInternalSearch())
 	return generator->;*/
 
-	ret=m_text->findText(text, dir, strictCase,lastRect);
+	ret=m_text->findText(searchID, text, dir, strictCase,lastRect);
 	return ret;
 /*
 

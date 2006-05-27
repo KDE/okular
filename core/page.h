@@ -69,7 +69,7 @@ class OKULAR_EXPORT KPDFPage
         //bool hasAnnotation( double x, double y ) const;
         bool hasTransition() const;
 
-        RegularAreaRect * findText( const QString & text, SearchDir dir, bool strictCase, const RegularAreaRect * lastRect=0) const;
+        RegularAreaRect * findText( int searchID, const QString & text, SearchDir dir, bool strictCase, const RegularAreaRect * lastRect=0) const;
         QString getText( const RegularAreaRect * rect ) const;
 	RegularAreaRect * getTextArea ( TextSelection * ) const;
 //	const ObjectRect * getObjectRect( double x, double y ) const;

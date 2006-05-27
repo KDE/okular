@@ -811,9 +811,9 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             while ( 1 )
             {
                 if ( lastMatch )
-                    lastMatch = page->findText( text, NextRes , caseSensitive, lastMatch);
+                    lastMatch = page->findText( searchID, text, NextRes, caseSensitive, lastMatch );
                 else
-                    lastMatch = page->findText( text, FromTop, caseSensitive);
+                    lastMatch = page->findText( searchID, text, FromTop, caseSensitive );
 
                 if ( !lastMatch )
                     break;
@@ -853,9 +853,9 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
             if ( newText )
-                match = lastPage->findText( text, FromTop , caseSensitive);
+                match = lastPage->findText( searchID, text, FromTop, caseSensitive );
             else
-                match = lastPage->findText( text, NextRes, caseSensitive,&s->continueOnMatch );
+                match = lastPage->findText( searchID, text, NextRes, caseSensitive, &s->continueOnMatch );
             if ( !match )
                 currentPage++;
         }
@@ -879,7 +879,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                 if ( !page->hasSearchPage() )
                     requestTextPage( page->number() );
                 // if found a match on the current page, end the loop
-                if ( (match = page->findText( text, FromTop, caseSensitive )) )
+                if ( ( match = page->findText( searchID, text, FromTop, caseSensitive ) ) )
                     break;
                 currentPage++;
             }
@@ -957,9 +957,9 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
                 while ( 1 )
                 {
                     if ( lastMatch )
-                        lastMatch = page->findText( word, NextRes, caseSensitive, lastMatch );
+                        lastMatch = page->findText( searchID, word, NextRes, caseSensitive, lastMatch );
                     else
-                        lastMatch = page->findText( word, FromTop, caseSensitive);
+                        lastMatch = page->findText( searchID, word, FromTop, caseSensitive);
 
                     if ( !lastMatch )
                         break;

@@ -11,9 +11,19 @@
 #include "misc.h"
 #include <kdebug.h>
 
+struct SearchPoint
+{
+    SearchPoint() : theIt( 0 ), offset_begin( -1 ), offset_end( -1 ) {}
+    QList<KPDFTextEntity*>::Iterator theIt;
+    int offset_begin;
+    int offset_end;
+};
+
+
 KPDFTextPage::~KPDFTextPage()
 {
     qDeleteAll(m_words);
+    qDeleteAll(m_searchPoints);
 }
 
 RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
@@ -134,83 +144,68 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
 }
 
 
-RegularAreaRect* KPDFTextPage::findText(const QString &query, SearchDir & direct, 
-const bool &strictCase, const RegularAreaRect *area)
+RegularAreaRect* KPDFTextPage::findText(int searchID, const QString &query, SearchDir & direct,
+    bool strictCase, const RegularAreaRect *area)
 {
     SearchDir dir=direct;
     // invalid search request
-    if (query.isEmpty() || (area->isNull() && dir!=FromTop))
+    if ( query.isEmpty() || area->isNull() )
         return 0;
     QList<KPDFTextEntity*>::Iterator start;
-    if (dir == FromTop)
+    QList<KPDFTextEntity*>::Iterator end;
+    if ( !m_searchPoints.contains( searchID ) )
     {
-        start=m_words.begin();
-        dir=NextRes;
+        // if no previous run of this search is found, then set it to start
+        // from the beginning (respecting the search direction)
+        if ( dir == NextRes )
+            dir = FromTop;
+        else if ( dir == PrevRes )
+            dir = FromBottom;
     }
+    bool forward = true;
+    switch ( dir )
+    {
+        case FromTop:
+            start = m_words.begin();
+            end = m_words.end();
+            break;
+        case FromBottom:
+            start = m_words.end();
+            end = m_words.begin();
+            if ( !m_words.isEmpty() )
+            {
+                --start;
+            }
+            forward = false;
+            break;
+        case NextRes:
+            start = m_searchPoints[ searchID ]->theIt;
+            end = m_words.end();
+            break;
+        case PrevRes:
+            start = m_searchPoints[ searchID ]->theIt;
+            end = m_words.begin();
+            forward = false;
+            break;
+    };
+    RegularAreaRect* ret = 0;
+    if ( forward )
+    {
+        ret = findTextInternalForward( searchID, query, strictCase, start, end );
+    }
+    // TODO implement backward search
+#if 0
     else
     {
-
-        // locate the current search position 
-        QString * str=0;
-        int j=0, len=0, queryLeft=query.length()-1;
-        bool haveMatch=false;
-        QList<KPDFTextEntity*>::Iterator  it;
-        for( it=m_words.begin() ; it != m_words.end();  ++it )
-        {
-            str= &((*it)->txt);
-                continue;
-            len=str->length()-1;
-            // we have equal (or less then) area of the query left as the lengt of the current 
-            // entity
-            if (queryLeft<=len)
-            {
-                if (((strictCase) 
-                ? (*str != query) 
-                : (str->toLower() != query.toLower() ))
-                || (!(area->intersects((*it)->area))))
-                {
-                    // we not have matched
-                    // this means we dont have a complete match
-                    // we need to get back to query start
-                    // and continue the search from this place
-                    haveMatch=false;
-                    j=0;
-                    queryLeft=query.length()-1;
-                }
-                else
-                {
-                    // we have a match
-                    // move the current position in the query
-                    // to the position after the length of this string
-                    // we matched
-                    // substract the length of the current entity from 
-                    // the left length of the query
-                    haveMatch=true;
-                    j+=qMin(queryLeft,len);
-                    queryLeft-=qMin(queryLeft,len);
-                }
-            }
-            if (haveMatch && queryLeft==0 && j==query.length()-1)
-                break;
-        }
-        start=it;
+        ret = findTextInternalBackward( searchID, query, strictCase, start, end );
     }
-    switch (dir)
-    {
-        case PrevRes:
-            return findTextInternal(query,false, strictCase, start,m_words.begin());
-            break;
-        case FromTop:
-        case NextRes:
-            return findTextInternal(query,true, strictCase, start,m_words.end());
-            break;
-    }
-    return 0;
+#endif
+    return ret;
 }
 
 
-RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forward,
-        bool strictCase, const QList<KPDFTextEntity*>::Iterator &start, 
+RegularAreaRect* KPDFTextPage::findTextInternalForward(int searchID, const QString &query,
+        bool strictCase, const QList<KPDFTextEntity*>::Iterator &start,
         const QList<KPDFTextEntity*>::Iterator &end)
 {
 
@@ -220,17 +215,26 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
     // len is the length of the string in kpdftextentity
     // queryLeft is the length of the query we have left
     QString str;
+    KPDFTextEntity* curEntity = 0;
     int j=0, len=0, queryLeft=query.length();
+    int offset = 0;
     bool haveMatch=false;
     bool dontIncrement=false;
-    QList<KPDFTextEntity*>::Iterator it;
-    // we dont support backward search yet
-    for( it=start ; it != end;  (!dontIncrement) ? (++it) : it )
+    bool offsetMoved = false;
+    QList<KPDFTextEntity*>::Iterator it = start;
+    for ( ; it != end; ++it )
     {
-        // a static cast would be faster?
-        str=(*it)->txt;
-        // TODO This is impossible, ask niedakh if he wanted a || ?
-        if (query.mid(j,1)==" " && query.mid(j,1)=="\n")
+        curEntity = *it;
+        str = curEntity->txt;
+        if ( !offsetMoved && ( it == start ) )
+        {
+            if ( m_searchPoints.contains( searchID ) )
+            {
+                offset = qMax( m_searchPoints[ searchID ]->offset_end, 0 );
+            }
+            offsetMoved = true;
+        }
+        if ( query.at(j).isSpace() )
         {
             // lets match newline as a space
 #ifdef DEBUG_TEXTPAGE
@@ -248,13 +252,13 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             dontIncrement=false;
             len=str.length();
             int min=qMin(queryLeft,len);
-            kDebug(1223) << str.left(min) << " : " << query.mid(j,min) << endl;
+            kDebug(1223) << str.mid(offset,min) << " : " << query.mid(j,min) << endl;
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
 
             if ((strictCase)
-                ? (str.left(min) != query.mid(j,min))
-                : (str.left(min).toLower() != query.mid(j,min).toLower())
+                ? (str.mid(offset,min) != query.mid(j,min))
+                : (str.mid(offset,min).toLower() != query.mid(j,min).toLower())
                 )
             {
                     // we not have matched
@@ -267,6 +271,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             kDebug(1223) << "\tnot matched" << endl;
 #endif
                     j=0;
+                    offset = 0;
                     queryLeft=query.length();
             }
             else
@@ -281,7 +286,7 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
             kDebug(1223) << "\tmatched" << endl;
 #endif
                     haveMatch=true;
-                    ret->append( (*it)->area );
+                    ret->append( curEntity->area );
                     j+=min;
                     queryLeft-=min;
             }
@@ -289,11 +294,28 @@ RegularAreaRect* KPDFTextPage::findTextInternal(const QString &query, bool forwa
 
         if (haveMatch && queryLeft==0 && j==query.length())
         {
+            // save or update the search point for the current searchID
+            if ( !m_searchPoints.contains( searchID ) )
+            {
+                SearchPoint* newsp = new SearchPoint;
+                m_searchPoints.insert( searchID, newsp );
+            }
+            SearchPoint* sp = m_searchPoints[ searchID ];
+            sp->theIt = it;
+            sp->offset_begin = j;
+            sp->offset_end = j + qMin( queryLeft, len );
             ret->simplify();
             return ret;
         }
-
     }
+    // end of loop - it means that we've ended the textentities
+    if ( m_searchPoints.contains( searchID ) )
+    {
+        SearchPoint* sp = m_searchPoints[ searchID ];
+        m_searchPoints.remove( searchID );
+        delete sp;
+    }
+    delete ret;
     return 0;
 }
 

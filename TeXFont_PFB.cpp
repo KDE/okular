@@ -83,7 +83,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
     kDebug(kvs::dvi) << "Trying to associate glyph indices to names from the encoding vector." << endl;
 #endif
     for(int i=0; i<256; i++) {
-      charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].ascii()) );
+      charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].toAscii().data()) );
 #ifdef DEBUG_PFB
       kDebug(kvs::dvi) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i] << endl;
 #endif

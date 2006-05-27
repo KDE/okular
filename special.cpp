@@ -384,7 +384,7 @@ void dviRenderer::epsf_special(const QString& cp)
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
 
     QImage image(EPSfilename);
-    image = image.smoothScale((int)(bbox_width), (int)(bbox_height));
+    image = image.scaled((int)(bbox_width), (int)(bbox_height), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     foreGroundPainter->drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
     return;
   }

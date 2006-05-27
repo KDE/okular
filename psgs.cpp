@@ -191,7 +191,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
         // Start page
      << "1 0 bop 0 0 a \n";
 
-  if (PostScriptHeaderString->latin1() != NULL)
+  if (!PostScriptHeaderString->toLatin1().isNull())
     os << PostScriptHeaderString->toLatin1();
 
   if (info->background != Qt::white) {
@@ -202,7 +202,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     os << colorCommand.toLatin1();
   }
 
-  if (info->PostScriptString->latin1() != NULL)
+  if (!info->PostScriptString->toLatin1().isNull())
     os << info->PostScriptString->toLatin1();
 
   os << "end\n"

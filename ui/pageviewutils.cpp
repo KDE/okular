@@ -202,9 +202,10 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         if ( !m_timer )
         {
             m_timer = new QTimer( this );
+            m_timer->setSingleShot( true );
             connect( m_timer, SIGNAL( timeout() ), SLOT( hide() ) );
         }
-        m_timer->start( durationMs, true );
+        m_timer->start( durationMs );
     } else if ( m_timer )
         m_timer->stop();
 }
@@ -522,27 +523,28 @@ void PageViewToolBar::buildToolBar()
 
     // 5. draw background
     QPainter bufferPainter( &d->backgroundPixmap );
+    QPalette pal = palette();
     // 5.1. draw horizontal/vertical gradient
-    QColor fromColor = topLeft ? palette().active().button() : palette().active().light();
-    QColor toColor = topLeft ? palette().active().light() : palette().active().button();
+    QColor fromColor = topLeft ? pal.color( QPalette::Active, QPalette::Button ) : pal.color( QPalette::Active, QPalette::Light );
+    QColor toColor = topLeft ? pal.color( QPalette::Active, QPalette::Light ) : pal.color( QPalette::Active, QPalette::Button );
     QImage gradientPattern = KImageEffect::gradient(
             vertical ? QSize( myWidth, 1) : QSize( 1, myHeight ), fromColor, toColor,
             vertical ? KImageEffect::HorizontalGradient : KImageEffect::VerticalGradient );
     bufferPainter.drawTiledPixmap( 0, 0, myWidth, myHeight, QPixmap::fromImage(gradientPattern) );
     // 5.2. draw rounded border
-    bufferPainter.setPen( palette().active().dark() );
+    bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Dark ) );
     if ( vertical )
         bufferPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
     else
         bufferPainter.drawRoundRect( 0, topLeft ? -10 : 0, myWidth, myHeight + 10, 2000 / myWidth, 2000 / (myHeight + 10) );
     // 5.3. draw handle
-    bufferPainter.setPen( palette().active().mid() );
+    bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Mid ) );
     if ( vertical )
     {
         int dx = d->anchorSide == Left ? 2 : 4;
         bufferPainter.drawLine( dx, 6, dx + myWidth - 8, 6 );
         bufferPainter.drawLine( dx, 9, dx + myWidth - 8, 9 );
-        bufferPainter.setPen( palette().active().light() );
+        bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Light ) );
         bufferPainter.drawLine( dx + 1, 7, dx + myWidth - 7, 7 );
         bufferPainter.drawLine( dx + 1, 10, dx + myWidth - 7, 10 );
     }
@@ -551,7 +553,7 @@ void PageViewToolBar::buildToolBar()
         int dy = d->anchorSide == Top ? 2 : 4;
         bufferPainter.drawLine( 6, dy, 6, dy + myHeight - 8 );
         bufferPainter.drawLine( 9, dy, 9, dy + myHeight - 8 );
-        bufferPainter.setPen( palette().active().light() );
+        bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Light ) );
         bufferPainter.drawLine( 7, dy + 1, 7, dy + myHeight - 7 );
         bufferPainter.drawLine( 10, dy + 1, 10, dy + myHeight - 7 );
     }

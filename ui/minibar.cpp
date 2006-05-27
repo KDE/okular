@@ -9,6 +9,7 @@
  ***************************************************************************/
 
 // qt / kde includes
+#include <qapplication.h>
 #include <qevent.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
@@ -314,18 +315,19 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     QRect fRect = QRect( 0, 0, l, h ).intersect( e->rect() );
     QPainter p( this );
 
+    QPalette pal = palette();
     // paint clear rect
     if ( cRect.isValid() )
-        p.fillRect( cRect, palette().active().highlightedText() );
+        p.fillRect( cRect, pal.color( QPalette::Active, QPalette::HighlightedText ) );
     // draw a frame-like outline
     //p.setPen( palette().active().mid() );
     //p.drawRect( 0,0, w, h );
     // paint fill rect
     if ( fRect.isValid() )
-        p.fillRect( fRect, palette().active().highlight() );
+        p.fillRect( fRect, pal.color( QPalette::Active, QPalette::Highlight ) );
     if ( l && l != w  )
     {
-        p.setPen( palette().active().highlight().dark( 120 ) );
+        p.setPen( pal.color( QPalette::Active, QPalette::Highlight ).dark( 120 ) );
         p.drawLine( l, 0, l, h );
     }
 }
@@ -339,8 +341,6 @@ PagesEdit::PagesEdit( MiniBar * parent )
     // customize look
 #warning don't know how to port setFrameShadow
 //    setFrameShadow( QFrame::Raised );
-#warning that's making it crash
-//    focusOutEvent( 0 );
 
     // use an integer validator
     m_validator = new QIntValidator( 1, 1, this );
@@ -349,6 +349,10 @@ PagesEdit::PagesEdit( MiniBar * parent )
     // customize text properties
     setAlignment( Qt::AlignCenter );
     setMaxLength( 4 );
+
+    // send a focus out event
+    QFocusEvent fe( QEvent::FocusOut );
+    QApplication::sendEvent( this, &fe );
 }
 
 void PagesEdit::setPagesNumber( int pages )
@@ -374,7 +378,9 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
     // change background color to the default 'edit' color
 #warning don't know how to port setLineWidth
 //  setLineWidth( 2 );
-    setPaletteBackgroundColor( Qt::white );
+    QPalette pal = palette();
+    pal.setColor( QPalette::Active, QPalette::Base, QApplication::palette().color( QPalette::Active, QPalette::Base ) );
+    setPalette( pal );
     // call default handler
     QLineEdit::focusInEvent( e );
 }
@@ -384,7 +390,9 @@ void PagesEdit::focusOutEvent( QFocusEvent * e )
     // change background color to a dark tone
 #warning don't know how to port setLineWidth
 //  setLineWidth( 1 );
-    setPaletteBackgroundColor( palette().active().background().light( 105 ) );
+    QPalette pal = palette();
+    pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).dark( 102 ) );
+    setPalette( pal );
     // restore text
     QLineEdit::setText( backString );
     // call default handler

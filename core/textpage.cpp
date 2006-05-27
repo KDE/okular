@@ -252,7 +252,9 @@ RegularAreaRect* KPDFTextPage::findTextInternalForward(int searchID, const QStri
             dontIncrement=false;
             len=str.length();
             int min=qMin(queryLeft,len);
+#ifdef DEBUG_TEXTPAGE
             kDebug(1223) << str.mid(offset,min) << " : " << query.mid(j,min) << endl;
+#endif
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
 

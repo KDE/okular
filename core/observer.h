@@ -67,11 +67,11 @@ struct NotifyRequest
     int page;
     int flags;
     NotifyRequest (DocumentObserver::NotifyType t, bool to=false)
-        : type(t), toggle(to) { ; };
+        : type(t), toggle(to), page(-1), flags(0) { ; };
     NotifyRequest (DocumentObserver::NotifyType t, int p, int f)
-        : type(t), page(p), flags (f) { ; };
+        : type(t), toggle(false), page(p), flags (f) { ; };
     NotifyRequest (DocumentObserver::NotifyType t, int p)
-        : type(t), page(p) { ; };
+        : type(t), toggle(false), page(p), flags(0) { ; };
 };
 
 #endif

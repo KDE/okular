@@ -114,8 +114,16 @@ ThumbnailList::~ThumbnailList()
 }
 
 //BEGIN DocumentObserver inherited methods
-void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool /*documentChanged*/ )
+void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
 {
+	// if there was a widget selected, save its pagenumber to restore
+	// its selection (if available in the new set of pages)
+	int prevPage = -1;
+	if ( !documentChanged && m_selected )
+	{
+		prevPage = m_selected->page()->number();
+	}
+
 	// delete all the Thumbnails
 	QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 	for ( ; tIt != tEnd; ++tIt )
@@ -155,6 +163,12 @@ void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool /*doc
             m_thumbnails.push_back( t );
             // update total height (asking widget its own height)
             t->resizeFitWidth( width );
+            // restoring the previous selected page, if any
+            if ( (*pIt)->number() == prevPage )
+            {
+                m_selected = t;
+                m_selected->setSelected( true );
+            }
             t->show();
         }
 

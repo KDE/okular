@@ -1,4 +1,4 @@
-TODO - KPdf branch: "kpdf_annotations"
+TODO - oKular
 Legend:
     ADD - ADDed (new feature)
     CHG - CHanGed (existing behavior)
@@ -35,7 +35,6 @@ More items (first items will enter 'In progress list' first):
 -> other info on pdfs properties: number of accessed times, time spent on pdf, ...
 -> part: collapsing the left panel will hide it (activate hiding action)
 -> preload: add a delay when forward loading pages
--> toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR
 -> bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
@@ -45,7 +44,7 @@ More items (first items will enter 'In progress list' first):
 -> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
 -> toolbar: move the toolbar to the top of pageview (left panel is really at the left of the toolbar)
--> toc: higlight the row of the current page
+-> toc: higlight the row of the current page (BR127358)
 -> thumbnailslist: show Viewport in(blended/contour)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
 -> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)
@@ -93,7 +92,6 @@ More items (first items will enter 'In progress list' first):
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
 -> presentation: 2 pages per view, for users reading ebooks with wide screens.
 -> splash(xpdf): check lack of smoothness at low resolutions and antialiasing (BR94231)
--> kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
@@ -113,6 +111,8 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
+-> FIX: kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)
 -> ADD: presentation: link following (BR98388)
 -> ADD: add ebook-friendly alignment option, better layouting (BR100341)
 -> FIX: random crash when closing kpdf with kapp->quit() (don't use Settings:: in destructors)

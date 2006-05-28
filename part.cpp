@@ -140,14 +140,9 @@ Part::Part(QWidget *parentWidget,
 
 	int tbIndex;
 	// [left toolbox: Table of Contents] | []
-	//QFrame * tocFrame = new QFrame( m_toolBox );
-	//QVBoxLayout * tocFrameLayout = new QVBoxLayout( tocFrame );
-	m_toc = new TOC( m_toolBox/*tocFrame*/, m_document );
+	m_toc = new TOC( m_toolBox, m_document );
 	connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-	//KListViewSearchLine * tocSearchLine = new KListViewSearchLine( tocFrame, toc );
-	//tocFrameLayout->addWidget( tocSearchLine );
-	//tocFrameLayout->addWidget( toc );
-	tbIndex = m_toolBox->addItem( m_toc/*tocFrame*/, SmallIconSet("text_left"), i18n("Contents") );
+	tbIndex = m_toolBox->addItem( m_toc, SmallIconSet("text_left"), i18n("Contents") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
 	enableTOC( false );
 

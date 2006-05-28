@@ -11,13 +11,15 @@
 #define _KPDF_TOC_H_
 
 #include <qdom.h>
-#include <qtreewidget.h>
+#include <qwidget.h>
 #include "core/document.h"
 #include "core/observer.h"
 
+class QTreeWidget;
+class KTreeWidgetSearchLine;
 class KPDFDocument;
 
-class TOC : public QTreeWidget, public DocumentObserver
+class TOC : public QWidget, public DocumentObserver
 {
 Q_OBJECT
     public:
@@ -38,6 +40,8 @@ Q_OBJECT
         void addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem = 0 );
         DocumentViewport getViewport( const QDomElement &e ) const;
         KPDFDocument *m_document;
+        QTreeWidget *m_treeView;
+        KTreeWidgetSearchLine *m_searchLine;
 };
 
 #endif

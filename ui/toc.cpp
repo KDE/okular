@@ -9,8 +9,13 @@
 
 // qt/kde includes
 #include <qheaderview.h>
+#include <qlayout.h>
 #include <qstringlist.h>
+#include <qtoolbutton.h>
+#include <qtreewidget.h>
+#include <kicon.h>
 #include <klocale.h>
+#include <ktreewidgetsearchline.h>
 
 // local includes
 #include "toc.h"
@@ -52,21 +57,40 @@ class TOCItem : public QTreeWidgetItem
         QDomElement m_element;
 };
 
-TOC::TOC(QWidget *parent, KPDFDocument *document) : QTreeWidget(parent), m_document(document)
+TOC::TOC(QWidget *parent, KPDFDocument *document) : QWidget(parent), m_document(document)
 {
+    QVBoxLayout *mainlay = new QVBoxLayout( this );
+    mainlay->setMargin( 0 );
+
+    QHBoxLayout *searchlay = new QHBoxLayout();
+    searchlay->setSpacing( 2 );
+    mainlay->addLayout( searchlay );
+    QToolButton *clearBtn =  new QToolButton( this );
+    clearBtn->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase" ) );
+    clearBtn->setToolTip( i18n( "Clear filter" ) );
+    clearBtn->setAutoRaise( true );
+    searchlay->addWidget( clearBtn );
+
+    m_searchLine = new KTreeWidgetSearchLine( this );
+    connect( clearBtn, SIGNAL( clicked() ), m_searchLine, SLOT( clear() ) );
+    searchlay->addWidget( m_searchLine );
+
+    m_treeView = new QTreeWidget( this );
+    mainlay->addWidget( m_treeView );
     QStringList cols;
     cols.append( i18n("Topic") );
     if (KpdfSettings::tocPageColumn())
         cols.append( i18n("Page") );
-    setHeaderLabels(cols);
-    setSortingEnabled(false);
-    setRootIsDecorated(true);
-    setAlternatingRowColors(true);
-    header()->setResizeMode(QHeaderView::Stretch);
-    header()->hide();
-    setSelectionBehavior(QAbstractItemView::SelectRows);
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), SLOT(slotExecuted(QTreeWidgetItem *)));
-    connect(this, SIGNAL(itemActivated(QTreeWidgetItem *, int)), SLOT(slotExecuted(QTreeWidgetItem *)));
+    m_treeView->setHeaderLabels( cols );
+    m_treeView->setSortingEnabled( false );
+    m_treeView->setRootIsDecorated( true );
+    m_treeView->setAlternatingRowColors( true );
+    m_treeView->header()->setResizeMode( QHeaderView::Stretch );
+    m_treeView->header()->hide();
+    m_treeView->setSelectionBehavior( QAbstractItemView::SelectRows );
+    connect( m_treeView, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
+    connect( m_treeView, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
+    m_searchLine->addTreeWidget( m_treeView );
 }
 
 TOC::~TOC()
@@ -85,7 +109,8 @@ void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentCha
         return;
 
     // clear contents
-    clear();
+    m_treeView->clear();
+    m_searchLine->clear();
 
     // request synopsis description (is a dom tree)
     const DocumentSynopsis * syn = m_document->documentSynopsis();
@@ -114,7 +139,7 @@ void TOC::addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem
 
         // insert the entry as top level (listview parented) or 2nd+ level
         if ( !parentItem )
-            currentItem = new TOCItem( this, currentItem, e );
+            currentItem = new TOCItem( m_treeView, currentItem, e );
         else
             currentItem = new TOCItem( parentItem, currentItem, e );
 

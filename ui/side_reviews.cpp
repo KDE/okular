@@ -59,7 +59,7 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     QString clearIconName = QApplication::layoutDirection() ==
  Qt::RightToLeft ? "clear_left" : "locationbar_erase";
     QAction * clearAction = m_toolBar1->addAction(
-        KIcon( clearIconName ), i18n( "Clear Filter" ), m_searchLine, SLOT( clear() ) );
+        KIcon( clearIconName ), i18n( "Clear filter" ), m_searchLine, SLOT( clear() ) );
     // - add Search line
     m_toolBar1->addWidget(m_searchLine);
 

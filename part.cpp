@@ -75,9 +75,6 @@
 #include "core/generator.h"
 #include "core/page.h"
 
-// definition of searchID for this class
-#define PART_SEARCH_ID 1
-
 typedef KParts::GenericFactory<oKular::Part> oKularPartFactory;
 K_EXPORT_COMPONENT_FACTORY(liboKularpart, oKularPartFactory)
 

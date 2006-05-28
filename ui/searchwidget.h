@@ -17,9 +17,6 @@ class KLineEdit;
 class QAction;
 class QTimer;
 
-// definition of searchID for this class (publicly available to ThumbnailsList)
-#define SW_SEARCH_ID 3
-
 /**
  * @short A widget for find-as-you-type search. Outputs to the Document.
  *

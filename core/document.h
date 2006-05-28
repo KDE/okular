@@ -37,6 +37,12 @@ class KActionCollection;
 class QToolBox;
 class NotifyRequest;
 
+/** IDs for seaches. Globally defined here. **/
+#define PART_SEARCH_ID 1
+#define PAGEVIEW_SEARCH_ID 2
+#define SW_SEARCH_ID 3
+
+
 /**
  * @short The Document. Heart of everything. Actions take place here.
  *

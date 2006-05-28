@@ -64,9 +64,6 @@
 
 #define ROUND(x) (int(x + 0.5))
 
-// definition of searchID for this class
-#define PAGEVIEW_SEARCH_ID 2
-
 // structure used internally by PageView for data storage
 class PageViewPrivate
 {

@@ -484,6 +484,11 @@ const DocumentFonts * KPDFDocument::documentFonts() const
     return generator ? generator->generateDocumentFonts() : NULL;
 }
 
+const QList<EmbeddedFile*> *KPDFDocument::embeddedFiles() const
+{
+    return generator ? generator->embeddedFiles() : NULL;
+}
+
 const KPDFPage * KPDFDocument::page( int n ) const
 {
     return ( n < pages_vector.count() ) ? pages_vector[n] : 0;
@@ -1788,6 +1793,16 @@ DocumentFonts::DocumentFonts()
   : QDomDocument( "DocumentFonts" )
 {
     // void implementation, only subclassed for naming
+}
+
+/** EmbeddedFile **/
+
+EmbeddedFile::EmbeddedFile()
+{
+}
+
+EmbeddedFile::~EmbeddedFile()
+{
 }
 
 #include "document.moc"

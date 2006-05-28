@@ -28,6 +28,7 @@ class DocumentViewport;
 class DocumentInfo;
 class DocumentSynopsis;
 class DocumentFonts;
+class EmbeddedFile;
 class Generator;
 class PixmapRequest;
 class Annotation;
@@ -87,6 +88,7 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         const DocumentInfo * documentInfo() const;
         const DocumentSynopsis * documentSynopsis() const;
         const DocumentFonts * documentFonts() const;
+        const QList<EmbeddedFile*> *embeddedFiles() const;
         const KPDFPage * page( int page ) const;
         const DocumentViewport & viewport() const;
         uint currentPage() const;
@@ -267,6 +269,24 @@ class OKULAR_EXPORT DocumentFonts : public QDomDocument
 {
     public:
         DocumentFonts();
+};
+
+/**
+ * @short An embedded file into the document, has name, description, dates and the data
+ */
+
+class OKULAR_EXPORT EmbeddedFile
+{
+    public:
+        EmbeddedFile();
+        virtual ~EmbeddedFile();
+        
+        virtual QString name() const = 0;
+        virtual QString description() const = 0;
+        virtual QByteArray data() const = 0;
+        virtual QDateTime modificationDate() const = 0;
+        virtual QDateTime creationDate() const = 0;
+
 };
 
 #endif

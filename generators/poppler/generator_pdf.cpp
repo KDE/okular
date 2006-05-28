@@ -31,8 +31,41 @@
 #include <config.h>
 #include <config-okular.h>
 
-// id for DATA_READY PDFPixmapGeneratorThread Event
-#define TGE_DATAREADY_ID 6969
+class PDFEmbeddedFile : public EmbeddedFile
+{
+    public:
+        PDFEmbeddedFile(Poppler::EmbeddedFile *f) : ef(f)
+        {
+        }
+        
+        QString name() const
+        {
+            return ef->name();
+        }
+        
+        QString description() const
+        {
+            return ef->description();
+        }
+        
+        QByteArray data() const
+        {
+            return ef->data();
+        }
+        
+        QDateTime modificationDate() const
+        {
+            return ef->modDate();
+        }
+        
+        QDateTime creationDate() const
+        {
+            return ef->createDate();
+        }
+    
+    private:
+        Poppler::EmbeddedFile *ef;
+};
 
 static void fillViewportFromLinkDestination( DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
 {
@@ -153,7 +186,7 @@ KPDF_EXPORT_PLUGIN(PDFGenerator)
 PDFGenerator::PDFGenerator( KPDFDocument * doc )
     : Generator( doc ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
-    docFontsDirty( true )
+    docFontsDirty( true ), docEmbeddedFilesDirty( true )
 {
     // generate kpdfOutputDev and cache page color
     reparseConfig();
@@ -488,6 +521,24 @@ const DocumentFonts * PDFGenerator::generateDocumentFonts()
     }
 
     return &docFonts;
+}
+
+const QList<EmbeddedFile*> *PDFGenerator::embeddedFiles()
+{
+    if (docEmbeddedFilesDirty)
+    {
+        docLock.lock();
+        const QList<Poppler::EmbeddedFile*> &popplerFiles = pdfdoc->embeddedFiles();
+        foreach(Poppler::EmbeddedFile* pef, popplerFiles)
+        {
+            docEmbeddedFiles.append(new PDFEmbeddedFile(pef));
+        }
+        docLock.unlock();
+        
+        docEmbeddedFilesDirty = false;
+    }
+    
+    return &docEmbeddedFiles;
 }
 
 bool PDFGenerator::isAllowed( int permissions )

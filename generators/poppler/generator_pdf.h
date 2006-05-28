@@ -55,6 +55,7 @@ class PDFGenerator : public Generator
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();
         const DocumentFonts * generateDocumentFonts();
+        const QList<EmbeddedFile*> * embeddedFiles();
 
         // [INHERITED] document information
         bool isAllowed( int permissions );
@@ -127,6 +128,8 @@ class PDFGenerator : public Generator
         DocumentSynopsis docSyn;
         bool docFontsDirty;
         DocumentFonts docFonts;
+        bool docEmbeddedFilesDirty;
+        QList<EmbeddedFile*> docEmbeddedFiles;
 };
 
 

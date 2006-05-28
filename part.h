@@ -112,6 +112,7 @@ protected slots:
 	void slotPrintPreview();
 	void slotShowMenu(const KPDFPage *page, const QPoint &point);
 	void slotShowProperties();
+	void slotShowEmbeddedFiles();
 	void slotShowLeftPanel();
 	void slotShowPresentation();
 	void slotHidePresentation();
@@ -119,7 +120,7 @@ protected slots:
 	void close();
 	void cannotQuit();
 	void setMimeTypes(KIO::Job *job);
-    void saveSplitterSize();
+	void saveSplitterSize();
 	// can be connected to widget elements
 	void updateViewActions();
 	void enableTOC(bool enable);
@@ -170,6 +171,7 @@ private:
 	KAction *m_saveAs;
 	KAction *m_printPreview;
 	KAction *m_showProperties;
+	KAction *m_showEmbeddedFiles;
 	KAction *m_showPresentation;
 	KToggleAction* m_showMenuBarAction;
 	KToggleAction* m_showLeftPanel;

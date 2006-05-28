@@ -61,6 +61,7 @@ kde4_add_ui_files(oKularcore_SRCS
 )
 
 set(oKularui_SRCS
+   ${CMAKE_SOURCE_DIR}/okular/ui/embeddedfilesdialog.cpp
    ${CMAKE_SOURCE_DIR}/okular/ui/minibar.cpp
    ${CMAKE_SOURCE_DIR}/okular/ui/newstuff.cpp
    ${CMAKE_SOURCE_DIR}/okular/ui/pagepainter.cpp

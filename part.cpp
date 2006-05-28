@@ -67,6 +67,7 @@
 #include "ui/side_reviews.h"
 #include "ui/minibar.h"
 #include "ui/newstuff.h"
+#include "ui/embeddedfilesdialog.h"
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
 #include "conf/preferencesdialog.h"
@@ -273,6 +274,10 @@ Part::Part(QWidget *parentWidget,
 	m_showProperties = new KAction(KIcon("info"), i18n("&Properties"), ac, "properties");
 	connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
 	m_showProperties->setEnabled( false );
+	
+	m_showEmbeddedFiles = new KAction(i18n("&Embedded Files"), ac, "embeddedFiles");
+	connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
+	m_showEmbeddedFiles->setEnabled( false );
 
 	m_showPresentation = new KAction( KIcon( "kpresenter_kpr" ), i18n("P&resentation"), ac, "presentation");
 	connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
@@ -524,6 +529,7 @@ bool Part::openFile()
     m_saveAs->setEnabled( ok );
     m_printPreview->setEnabled( ok );
     m_showProperties->setEnabled( ok );
+    m_showEmbeddedFiles->setEnabled( ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0);
     m_showPresentation->setEnabled( ok );
 
     // update viewing actions
@@ -584,6 +590,7 @@ bool Part::closeURL()
     m_saveAs->setEnabled( false );
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
+    m_showEmbeddedFiles->setEnabled( false );
     m_showPresentation->setEnabled( false );
     emit setWindowCaption("");
     emit enablePrintAction(false);
@@ -993,6 +1000,13 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 void Part::slotShowProperties()
 {
 	PropertiesDialog *d = new PropertiesDialog(widget(), m_document);
+	d->exec();
+	delete d;
+}
+
+void Part::slotShowEmbeddedFiles()
+{
+	EmbeddedFilesDialog *d = new EmbeddedFilesDialog(widget(), m_document);
 	d->exec();
 	delete d;
 }

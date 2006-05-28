@@ -107,7 +107,7 @@ void dviRenderer::showInfo()
 //------ this function calls the dvi interpreter ----------
 
 
-void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
+void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 {
 #ifdef DEBUG_DVIRENDERER
   kdDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
@@ -124,6 +124,7 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
   }
 
   QMutexLocker lock(&mutex);
+
   if ( dviFile == 0 ) {
     kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
@@ -139,6 +140,8 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPagePixmap* page)
     page->clear();
     return;
   }
+
+  double resolution = page->getId().resolution;
 
   if (resolution != resolutionInDPI)
     setResolution(resolution);
@@ -210,7 +213,7 @@ void dviRenderer::getText(RenderedDocumentPagePixmap* page)
   // Disable postscript-specials temporarely to speed up text extraction.
   _postscript = false;
 
-  drawPage(resolutionInDPI, page);
+  drawPage(page);
 
   _postscript = postscriptBackup;
 }

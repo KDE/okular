@@ -19,7 +19,7 @@
 #include "core/document.h"
 #include "embeddedfilesdialog.h"
 
-EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *document) : KDialog(parent, i18n("Embedded Files"), Close | User1, 0, i18n("Save"))
+EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *document) : KDialog(parent, i18n("Embedded Files"), Close | User1, 0, KStdGuiItem::save())
 {
 	m_tw = new QTreeWidget(this);
 	setMainWidget(m_tw);
@@ -30,6 +30,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *do
 	header.append(i18n("Modificated"));
 	m_tw->setHeaderLabels(header);
 	m_tw->setRootIsDecorated(false);
+	m_tw->setSelectionMode(QAbstractItemView::MultiSelection);
 	
 	foreach(EmbeddedFile* ef, *document->embeddedFiles())
 	{

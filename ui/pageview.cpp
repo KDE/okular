@@ -731,9 +731,10 @@ if (d->document->handleEvent( event ) )
     if ( !d->delayResizeTimer )
     {
         d->delayResizeTimer = new QTimer( this );
+        d->delayResizeTimer->setSingleShot( true );
         connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
     }
-    d->delayResizeTimer->start( 200, true );
+    d->delayResizeTimer->start( 200 );
 }
 }
 
@@ -761,7 +762,7 @@ if (d->document->handleEvent( e ) )
                 KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
                 d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
-                d->findTimeoutTimer->start( 3000, true );
+                d->findTimeoutTimer->start( 3000 );
             }
             else
             {
@@ -781,7 +782,7 @@ if (d->document->handleEvent( e ) )
             if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
                 d->messageWindow->display( i18n("Text found: \"%1\".", d->typeAheadString.toLower()),
                                            PageViewMessage::Find, 3000 );
-            d->findTimeoutTimer->start( 3000, true );
+            d->findTimeoutTimer->start( 3000 );
             // (2/4) it is needed to grab the keyboard becase people may have Space assigned
             // to a accel and without grabbing the keyboard you can not vim-search for space
             // because it activates the accel
@@ -801,7 +802,7 @@ if (d->document->handleEvent( e ) )
             KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
             d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
                                        found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
-            d->findTimeoutTimer->start( 3000, true );
+            d->findTimeoutTimer->start( 3000 );
         }
         return;
     }
@@ -821,9 +822,10 @@ if (d->document->handleEvent( e ) )
         {
             // create the timer on demand
             d->findTimeoutTimer = new QTimer( this );
+            d->findTimeoutTimer->setSingleShot( true );
             connect( d->findTimeoutTimer, SIGNAL( timeout() ), this, SLOT( slotStopFindAhead() ) );
         }
-        d->findTimeoutTimer->start( 3000, true );
+        d->findTimeoutTimer->start( 3000 );
         // (3/4) it is needed to grab the keyboard becase people may have Space assigned
         // to a accel and without grabbing the keyboard you can not vim-search for space
         // because it activates the accel
@@ -1379,7 +1381,7 @@ if (d->document->handleEvent( e ) )
                             type = "PNG";
                         else
                             type = mime->name();
-                        copyPix.save( fileName, type.latin1() );
+                        copyPix.save( fileName, type.toLatin1().constData() );
                         d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height() ).arg( type ) );
                     }
                 }
@@ -2331,6 +2333,7 @@ void PageView::slotAutoScoll()
     if ( !d->autoScrollTimer )
     {
         d->autoScrollTimer = new QTimer( this );
+        d->autoScrollTimer->setSingleShot( true );
         connect( d->autoScrollTimer, SIGNAL( timeout() ), this, SLOT( slotAutoScoll() ) );
     }
 
@@ -2345,7 +2348,7 @@ void PageView::slotAutoScoll()
     int index = abs( d->scrollIncrement ) - 1;  // 0..9
     const int scrollDelay[10] =  { 200, 100, 50, 30, 20, 30, 25, 20, 30, 20 };
     const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
-    d->autoScrollTimer->changeInterval( scrollDelay[ index ] );
+    d->autoScrollTimer->start( scrollDelay[ index ] );
     scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
 }
 

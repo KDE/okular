@@ -148,7 +148,7 @@ public slots:
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar();
 
-  virtual void  drawPage(double res, RenderedDocumentPagePixmap* page);
+  virtual void  drawPage(RenderedDocumentPagePixmap* page);
   virtual void  getText(RenderedDocumentPagePixmap* page);
 
 private slots:

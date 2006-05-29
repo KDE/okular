@@ -41,7 +41,6 @@ GSLogWindow::GSLogWindow( const QString& caption,
     m_tCol=m_msgList -> addColumn ("Text",10);
     m_msgList -> addColumn ("InternalType",0);
 
-    connect( this, SIGNAL( user1Clicked() ),this, SLOT( clear() ) );
     connect( &m_clearTimer, SIGNAL(timeout()), this, SLOT(appendBuffered()));
 }
 

@@ -198,8 +198,8 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > 
         if ( GSSettings::messages() )
         {
             pixGenerator->setBuffered(true);
-            connect (pixGenerator, SIGNAL (io( MessageType , const  char*, int )),
-                m_logWindow, SLOT (append(MessageType , const char*,int)));
+            connect (pixGenerator, SIGNAL (io( GSInterpreterLib::MessageType, const char*, int )),
+                m_logWindow, SLOT (append(GSInterpreterLib::MessageType, const char*,int)));
         }
     }
 
@@ -276,7 +276,7 @@ void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )
 
     m_paperSize = new KSelectAction( KIcon("viewmag"), i18n( "Paper Size" ), ac, "papersize");
     m_paperSize->setItems (GSInternalDocument::paperSizes());
-    connect( m_paperSize , SIGNAL( activated( const QString & ) ),
+    connect( m_paperSize , SIGNAL( triggered( const QString & ) ),
          this , SLOT( slotPaperSize ( const QString & ) ) );
 }
 

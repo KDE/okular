@@ -28,7 +28,7 @@ class GSGenerator : public Generator
     public:
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector );
+        bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
 
         // Document description and Table of contents
         const DocumentInfo * generateDocumentInfo();
@@ -44,7 +44,7 @@ class GSGenerator : public Generator
         void generateSyncTextPage( KPDFPage * /*page*/ ) { ; } ;
 
         bool supportsRotation() { return true; } ;
-        void setOrientation(QValueVector<KPDFPage*>&, int);
+        void setOrientation(QVector<KPDFPage*>&, int);
 
         QString getXMLFile() { return QString::null; };
         void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) ;
@@ -85,10 +85,10 @@ class GSGenerator : public Generator
         KTempFile * dscForPDF;
         QMutex convertLock;
         GSInterpreterLib* m_convert;
-//         QValueVector<KPDFPage*> m_pages;
+//         QVector<KPDFPage*> m_pages;
 
-        bool loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * > & pagesVector , bool ps );
-        bool loadPages( QValueVector< KPDFPage * > & pagesVector );
+        bool loadDocumentWithDSC( QString & name, QVector< KPDFPage * > & pagesVector , bool ps );
+        bool loadPages( QVector< KPDFPage * > & pagesVector );
         bool initInterpreter();
         int rotation( CDSC_ORIENTATION_ENUM orientation );
         int angle( CDSC_ORIENTATION_ENUM orientation );

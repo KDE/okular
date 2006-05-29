@@ -78,7 +78,7 @@ ostream& operator << ( ostream& os, const KDSCBBOX& source )
 
 /*-- KDSCError implementation ----------------------------------------------*/
 
-KDSCError::KDSCError( Type type, Severity severity, const QCString& line,
+KDSCError::KDSCError( Type type, Severity severity, const Q3CString& line,
 	              unsigned int lineNumber ) :
     _type( type ),
     _severity( severity ),
@@ -96,7 +96,7 @@ KDSCError::Severity KDSCError::severity() const
     return _severity; 
 }
 
-QCString KDSCError::line() const
+Q3CString KDSCError::line() const
 {
     return _line; 
 }
@@ -111,7 +111,7 @@ unsigned int KDSCError::lineNumber() const
 KDSCErrorHandler::Response KDSCOkErrorHandler::error( const KDSCError& err ) 
 {
     cout << "KDSC: error in line " << err.lineNumber() << endl;
-    cout << err.line() << endl;
+    cout << err.line().constData() << endl;
     return Ok;
 }
 
@@ -383,7 +383,7 @@ int KDSC::errorFunction( void* caller_data, CDSC* dsc,
     KDSCError error( 
 	    static_cast< KDSCError::Type >( explanation ), 
 	    static_cast< KDSCError::Severity >( dsc->severity[explanation] ),
-	    QCString( line, line_len + 1 ),
+	    Q3CString( line, line_len + 1 ),
 	    dsc->line_count
     );
     

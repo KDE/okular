@@ -21,13 +21,14 @@
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kprinter.h>
+#include <kselectaction.h>
 #include <ktempfile.h>
 
 #include "core/page.h"
 #include "core/generator.h"
 #include "core/observer.h"
-#include "conf/gssettingswidget.h"
-#include "conf/gssettings.h"
+#include "gssettingswidget.h"
+#include "gssettings.h"
 
 #include "gvlogwindow.h"
 #include "interpreter_cmd.h"
@@ -140,7 +141,7 @@ bool GSGenerator::print( KPrinter& printer )
     return false; 
 }
 
-bool GSGenerator::loadDocument( const QString & fileName, QValueVector< KPDFPage * > & pagesVector )
+bool GSGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
 {
     QString name=fileName;
 
@@ -243,7 +244,7 @@ void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
     signalRequestDone( m_asRequest );
 }
 
-void GSGenerator::setOrientation(QValueVector<KPDFPage*>& pages, int rot) 
+void GSGenerator::setOrientation(QVector<KPDFPage*>& pages, int rot) 
 {
     internalDoc->setOrientation(orientation(rot));
     loadPages (pages);
@@ -285,7 +286,7 @@ void GSGenerator::freeGUI()
     m_paperSize = 0;
 }
 
-bool GSGenerator::loadPages( QValueVector< KPDFPage * > & pagesVector )
+bool GSGenerator::loadPages( QVector< KPDFPage * > & pagesVector )
 {
     QSize pSize;
     bool atLeastOne=false;
@@ -345,7 +346,7 @@ bool GSGenerator::initInterpreter()
     return pixGenerator->running();
 }
 
-bool GSGenerator::loadDocumentWithDSC( QString & name, QValueVector< KPDFPage * > & pagesVector, bool ps )
+bool GSGenerator::loadDocumentWithDSC( QString & name, QVector< KPDFPage * > & pagesVector, bool ps )
 {
     internalDoc = new GSInternalDocument (name, ps ? GSInternalDocument::PS : GSInternalDocument::PDF);
     pagesVector.resize( internalDoc->dsc()->page_count() );

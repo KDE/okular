@@ -43,10 +43,10 @@ ProcessData :: ProcessData ()
     delete tmp[0];
     delete tmp[1];
 
-    mkfifo( names[0] , S_IRUSR | S_IWUSR );
-    mkfifo( names[1] , S_IRUSR | S_IWUSR );
-    fds[0]=open ( names[0], O_RDWR );
-    fds[1]=open ( names[1], O_RDWR );
+    mkfifo( names[0].toAscii().constData() , S_IRUSR | S_IWUSR );
+    mkfifo( names[1].toAscii().constData() , S_IRUSR | S_IWUSR );
+    fds[0]=open ( names[0].toAscii().constData(), O_RDWR );
+    fds[1]=open ( names[1].toAscii().constData(), O_RDWR );
 }
 
 ProcessData :: ~ProcessData()

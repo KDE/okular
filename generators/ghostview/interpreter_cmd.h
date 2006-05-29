@@ -25,6 +25,7 @@
 
 #define GS_DATAREADY_ID 6989
 
+class QCustomEvent;
 class QString;
 class QStringList;
 class KProcess;
@@ -37,7 +38,7 @@ struct ProcessData
     int fds[2];
 };
 
-class GSInterpreterCMD : public QObject , public QThread
+class GSInterpreterCMD : public QThread
 {
     Q_OBJECT
     public:

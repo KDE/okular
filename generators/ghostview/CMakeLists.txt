@@ -30,13 +30,19 @@ set(okularGenerator_ghostview_PART_SRCS
    ps.c 
    dscparse.cpp )
 
+kde4_add_ui3_files(okularGenerator_ghostview_PART_SRCS
+   conf/gssettingswidget.ui
+)
+
+kde4_add_kcfg_files(okularGenerator_ghostview_PART_SRCS conf/gssettings.kcfgc )
+
 kde4_automoc(${okularGenerator_ghostview_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_ghostview WITH_PREFIX ${okularGenerator_ghostview_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 
-target_link_libraries(okularGenerator_ghostview  ${KDE4_KDECORE_LIBS} gssettings oKularcore oKularconf qgs ${KDE4_KDEUI_LIBS} ${KDE4_KDEPRINT_LIBS} )
+target_link_libraries(okularGenerator_ghostview  ${KDE4_KDECORE_LIBS} oKularcore qgs ${KDE4_KDEUI_LIBRARY} ${KDE4_KDEPRINT_LIBRARY} )
 
 install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 

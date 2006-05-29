@@ -12,13 +12,14 @@
 
 #include "interpreter.h"
 #include <kdialogbase.h>
-#include <klistviewsearchline.h>
-#include <qvbox.h>
+#include <kvbox.h>
 #include <qtimer.h>
 
 class QTextEdit;
+class K3ListView;
+class K3ListViewSearchLine;
 class KUrlLabel;
-class GSLogWindow : public QVBox
+class GSLogWindow : public KVBox
 {
     Q_OBJECT
 
@@ -34,8 +35,8 @@ public slots:
     bool event( QEvent * event );
 
 private:
-    KListView*   m_msgList;
-    KListViewSearchLine* m_searchLine;
+    K3ListView*   m_msgList;
+    K3ListViewSearchLine* m_searchLine;
     QPair <GSInterpreterLib::MessageType, QString> m_buffer;
     int m_tCol;
     int m_lastInt;

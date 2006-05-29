@@ -7,15 +7,17 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <qlist.h>
 #include <qtextedit.h>
 #include <qlabel.h>
 #include <kdebug.h>
 
-#include <klistview.h>
+#include <k3listview.h>
 #include <qstringlist.h>
 #include <qstring.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
+#include <k3listviewsearchline.h>
 #include <kurllabel.h>
 #include <klocale.h>
 
@@ -23,13 +25,14 @@
 
 GSLogWindow::GSLogWindow( const QString& caption, 
                       QWidget* parent, const char* name) :
-    QVBox ( parent, name )
+    KVBox( parent )
 {
     kDebug() << "Starting logwindow" <<endl;
-    m_searchLine = new KListViewSearchLine(this);
-    m_msgList = new KListView(this);
+    setObjectName( QLatin1String( name ) );
+    m_searchLine = new K3ListViewSearchLine(this);
+    m_msgList = new K3ListView(this);
 
-    QValueList< int > searchCols;
+    QList< int > searchCols;
     searchCols.append(0);
     m_searchLine -> setSearchColumns (searchCols);
 
@@ -44,7 +47,7 @@ GSLogWindow::GSLogWindow( const QString& caption,
 
 bool GSLogWindow::event( QEvent * event )
 {
-    QVBox ::event(event);
+    KVBox ::event(event);
     if ( event->type() == QEvent::Reparent && ( m_msgList->childCount() ) )
     {
         int w=( m_msgList->firstChild() ) -> width(  m_msgList->fontMetrics() , m_msgList, m_tCol);
@@ -63,19 +66,19 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
     while (it!=end)
     {
 
-    KListViewItem* tmp;
+    K3ListViewItem* tmp;
     switch(t)
     {
         case GSInterpreterLib::Error:
-            tmp=new KListViewItem( m_msgList , *it, "Error" );
+            tmp=new K3ListViewItem( m_msgList , *it, "Error" );
             tmp->setPixmap(m_tCol,SmallIcon( "messagsebox_critical" ));
             break;
         case GSInterpreterLib::Input:
-            tmp=new KListViewItem( m_msgList , *it, "Input" );
+            tmp=new K3ListViewItem( m_msgList , *it, "Input" );
             tmp->setPixmap(m_tCol,SmallIcon( "1leftarrow" ));
             break;
         case GSInterpreterLib::Output:
-            tmp=new KListViewItem( m_msgList , *it, "Output" );
+            tmp=new K3ListViewItem( m_msgList , *it, "Output" );
             tmp->setPixmap(m_tCol,SmallIcon( "1rightarrow" ));
             break;
     }

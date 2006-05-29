@@ -21,7 +21,6 @@
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kprinter.h>
-#include <kselectaction.h>
 #include <ktempfile.h>
 
 #include "core/page.h"
@@ -45,7 +44,6 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
     pixGenerator = 0;
     asyncGenerator = 0;
     internalDoc = 0;
-    m_paperSize = 0;
     dscForPDF = 0;
     m_asyncBusy = false;
     m_sRequest=0;
@@ -256,11 +254,21 @@ void GSGenerator::setOrientation(QVector<KPDFPage*>& pages, int rot)
     m_document->notifyObservers( &r );
 }
 
-void GSGenerator::slotPaperSize (const QString &  p)
+bool GSGenerator::supportsPaperSizes()
 {
-    internalDoc->setMedia(p);
-// TODO: global papersize
-//     loadPages(m_pages);
+    return true;
+}
+
+QStringList GSGenerator::paperSizes()
+{
+    return GSInternalDocument::paperSizes();
+}
+
+void GSGenerator::setPaperSize( QVector<KPDFPage*> & pagesVector, int newsize )
+{
+    internalDoc->setMedia(paperSizes().at(newsize));
+    loadPages(pagesVector);
+// FIXME: is it needed to notify the observers? doesn't the document do that already?
     NotifyRequest r(DocumentObserver::Setup, false);
     m_document->notifyObservers( &r );
 }
@@ -273,11 +281,6 @@ void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )
         m_box->addItem( m_logWindow, SmallIconSet("queue"), i18n("GhostScript Messages") );
     }
     m_actionCollection = ac;
-
-    m_paperSize = new KSelectAction( KIcon("viewmag"), i18n( "Paper Size" ), ac, "papersize");
-    m_paperSize->setItems (GSInternalDocument::paperSizes());
-    connect( m_paperSize , SIGNAL( triggered( const QString & ) ),
-         this , SLOT( slotPaperSize ( const QString & ) ) );
 }
 
 void GSGenerator::freeGUI()
@@ -286,8 +289,6 @@ void GSGenerator::freeGUI()
     {
         m_box->removeItem(m_logWindow);
     }
-    m_actionCollection->remove (m_paperSize);
-    m_paperSize = 0;
 }
 
 bool GSGenerator::loadPages( QVector< KPDFPage * > & pagesVector )

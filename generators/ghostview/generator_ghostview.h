@@ -46,6 +46,11 @@ class GSGenerator : public Generator
         bool supportsRotation() { return true; } ;
         void setOrientation(QVector<KPDFPage*>&, int);
 
+        // paper size managment
+        bool supportsPaperSizes();
+        QStringList paperSizes();
+        void setPaperSize( QVector<KPDFPage*> & pagesVector, int newsize );
+
         QString getXMLFile() { return QString::null; };
         void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) ;
         void freeGUI() ;
@@ -72,7 +77,6 @@ class GSGenerator : public Generator
     public slots:
         void slotPixmapGenerated(const QImage* img);
         void slotAsyncPixmapGenerated(QPixmap * img);
-        void slotPaperSize (const QString & );
 
     signals:
         void error(QString & string, int duration);
@@ -108,7 +112,6 @@ class GSGenerator : public Generator
 
         // gui stuff
         GSLogWindow * m_logWindow ;
-        KSelectAction* m_paperSize;
         KActionCollection* m_actionCollection;
         QToolBox * m_box;
 };

@@ -61,7 +61,7 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
 {
     //kDebug() << "Appending: " << text <<endl;
     kDebug() << "last int: " << m_lastInt << endl;
-    QStringList l=QStringList::split("\n",text.stripWhiteSpace());
+    QStringList l=text.trimmed().split("\n",QString::SkipEmptyParts);
     QStringList::Iterator it=l.begin(), end=l.end();
     while (it!=end)
     {

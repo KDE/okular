@@ -274,7 +274,7 @@ void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )
     }
     m_actionCollection = ac;
 
-    m_paperSize = new KSelectAction (i18n( "Paper Size" ), "viewmag", ac, "papersize");
+    m_paperSize = new KSelectAction( KIcon("viewmag"), i18n( "Paper Size" ), ac, "papersize");
     m_paperSize->setItems (GSInternalDocument::paperSizes());
     connect( m_paperSize , SIGNAL( activated( const QString & ) ),
          this , SLOT( slotPaperSize ( const QString & ) ) );

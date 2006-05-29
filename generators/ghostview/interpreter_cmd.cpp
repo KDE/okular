@@ -70,11 +70,11 @@ GSInterpreterCMD::GSInterpreterCMD( const QString & fileName ) :
     m_process         ( 0 ),
     m_structurePending( false ),
     m_magnify         ( 1 ),
-    m_orientation     ( CDSC_PORTRAIT ),
-    m_name            ( fileName ),
-    m_aaGfx            (1),
     m_aaText           (1),
-    m_pfonts            (false)
+    m_aaGfx            (1),
+    m_pfonts            (false),
+    m_orientation     ( CDSC_PORTRAIT ),
+    m_name            ( fileName )
 {
     kDebug(4655) << "Constructing async interpreter!" << endl;
     m_pixmap=0;
@@ -202,7 +202,7 @@ bool GSInterpreterCMD::startInterpreter()
     list << m_name
         << m_processData->names[0]
         << m_processData->names[1]
-        << m_media.lower()
+        << m_media.toLower()
         << QString::number ( m_magnify )
         << QString::number ( m_orientation )
         << QString::number ( m_width )

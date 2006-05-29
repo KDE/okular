@@ -54,7 +54,7 @@ void PixHandler::slotPixmap(const QImage* img)
         (QX11Info::display(),
         pix->handle(),
         pData.handle,
-        kde_xget_temp_gc( pix->x11Screen(), false ),
+        kde_xget_temp_gc( pix->x11Info().screen(), false ),
         0,
         0,
         pix->width(),

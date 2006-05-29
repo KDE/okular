@@ -35,7 +35,7 @@ using namespace KIO;
 
 extern "C"
 {
-    int kdemain( int argc, char **argv )
+    int KDE_EXPORT kdemain( int argc, char **argv )
     {
 		kDebug() << "*** kio_msits Init" << endl;
 
@@ -277,9 +277,9 @@ void ProtocolMSITS::listDir (const KUrl & url)
 
 //	totalFiles(listing.size());
 	UDSEntry entry;
-	unsigned int striplength = filepath.length();
+	int striplength = filepath.length();
 
-	for ( unsigned int i = 0; i < listing.size(); i++ )
+	for ( int i = 0; i < listing.size(); i++ )
 	{
 		// Strip the direcroty name
 		QString ename = listing[i].mid (striplength);

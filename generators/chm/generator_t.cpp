@@ -97,6 +97,7 @@ void TGenerator::slotCompleted()
         bool moreToPaint;
 //                 m_syncGen->view()->layout();
         m_syncGen->paint(&p, r,0,&moreToPaint);
+        p.end();
         additionalRequestData();
         syncLock.unlock();
         m_request->page->setPixmap( m_request->id, pix );

@@ -33,7 +33,7 @@ set(okularGenerator_ghostview_SRCS
    dscparse.cpp
 )
 
-kde4_add_ui3_files(okularGenerator_ghostview_SRCS
+kde4_add_ui_files(okularGenerator_ghostview_SRCS
    conf/gssettingswidget.ui
 )
 

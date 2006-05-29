@@ -27,7 +27,7 @@
 #include "core/page.h"
 #include "core/generator.h"
 #include "core/observer.h"
-#include "gssettingswidget.h"
+#include "ui_gssettingswidget.h"
 #include "gssettings.h"
 
 #include "gvlogwindow.h"
@@ -50,8 +50,9 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
     m_asyncBusy = false;
     m_sRequest=0;
     m_asRequest=0;
-    syncLock.unlock();
-    docLock.unlock();
+// FIXME: Pino disabled them as they cause an assertion at runtime
+//    syncLock.unlock();
+//    docLock.unlock();
     if ( GSSettings::messages() )
     {
         m_logWindow = new GSLogWindow(QString ("Logwindow"));
@@ -71,7 +72,10 @@ GSGenerator::~GSGenerator()
 
 void GSGenerator::addPages( KConfigDialog *dlg )
 {
-    dlg->addPage(new GSSettingsWidget(0), GSSettings::self() , i18n ("Ghostscript Backend"), "kghostview" );
+    Ui_GSSettingsWidget gsw;
+    QWidget* w = new QWidget(0);
+    gsw.setupUi(w);
+    dlg->addPage(w, GSSettings::self() , i18n ("Ghostscript Backend"), "kghostview" );
 }
 
 CDSC_ORIENTATION_ENUM GSGenerator::orientation( int  rot )

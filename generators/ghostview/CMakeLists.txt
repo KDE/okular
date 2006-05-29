@@ -8,7 +8,9 @@ include_directories(
 
 ########### next target ###############
 
-set(kpdflibgsasyncgenerator_SRCS kpdflibgsasyncgenerator.cpp )
+set(kpdflibgsasyncgenerator_SRCS
+   kpdflibgsasyncgenerator.cpp
+)
 
 kde4_automoc(${kpdflibgsasyncgenerator_SRCS})
 
@@ -21,24 +23,25 @@ install_targets(/bin kpdflibgsasyncgenerator )
 
 ########### next target ###############
 
-set(okularGenerator_ghostview_PART_SRCS 
-   interpreter_cmd.cpp 
-   internaldocument.cpp 
-   generator_ghostview.cpp 
-   gvlogwindow.cpp 
-   dscparse_adapter.cpp 
-   ps.c 
-   dscparse.cpp )
+set(okularGenerator_ghostview_SRCS
+   interpreter_cmd.cpp
+   internaldocument.cpp
+   generator_ghostview.cpp
+   gvlogwindow.cpp
+   dscparse_adapter.cpp
+   ps.c
+   dscparse.cpp
+)
 
-kde4_add_ui3_files(okularGenerator_ghostview_PART_SRCS
+kde4_add_ui3_files(okularGenerator_ghostview_SRCS
    conf/gssettingswidget.ui
 )
 
-kde4_add_kcfg_files(okularGenerator_ghostview_PART_SRCS conf/gssettings.kcfgc )
+kde4_add_kcfg_files(okularGenerator_ghostview_SRCS conf/gssettings.kcfgc )
 
-kde4_automoc(${okularGenerator_ghostview_PART_SRCS})
+kde4_automoc(${okularGenerator_ghostview_SRCS})
 
-kde4_add_plugin(okularGenerator_ghostview WITH_PREFIX ${okularGenerator_ghostview_PART_SRCS})
+kde4_add_plugin(okularGenerator_ghostview WITH_PREFIX ${okularGenerator_ghostview_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 

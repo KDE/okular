@@ -9,7 +9,8 @@ include(CheckLibraryExists)
 # reset vars
 set(LIBGS_LIBRARY)
 
-find_library(LIBGS_LDFLAGS NAMES gs
+set(CMAKE_LIBRARY_PATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
+find_library(LIBGS_LIBRARY NAMES gs
   PATHS
   /usr/lib
   /usr/local/lib
@@ -17,16 +18,17 @@ find_library(LIBGS_LDFLAGS NAMES gs
 )
 
 if(LIBGS_LIBRARY)
-  check_library_exists(gs gsapi_new_instance "" LIBGS_HAVE_GSAPI_NEW_INSTANCE)
+  check_library_exists(${LIBGS_LIBRARY} gsapi_new_instance "" LIBGS_HAVE_GSAPI_NEW_INSTANCE)
 
   if(LIBGS_HAVE_GSAPI_NEW_INSTANCE)
     set(LIBGS_FOUND TRUE)
   endif(LIBGS_HAVE_GSAPI_NEW_INSTANCE)
 endif(LIBGS_LIBRARY)
+set(CMAKE_LIBRARY_PATH)
 
 if (LIBGS_FOUND)
   if (NOT LIBGS_FIND_QUIETLY)
-    message(STATUS "Found the GS library: ${LIBGS_LDFLAGS}")
+    message(STATUS "Found the GS library: ${LIBGS_LIBRARY}")
   endif (NOT LIBGS_FIND_QUIETLY)
 else (LIBGS_FOUND)
   if (LIBGS_FIND_REQUIRED)

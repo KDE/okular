@@ -3,6 +3,7 @@ add_subdirectory( conf )
 include_directories(
    ${CMAKE_SOURCE_DIR}/okular
    ${CMAKE_CURRENT_BINARY_DIR}/../..
+   ${CMAKE_SOURCE_DIR}/libqgs
 )
 
 

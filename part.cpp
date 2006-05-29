@@ -242,12 +242,13 @@ Part::Part(QWidget *parentWidget,
 	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	prefs->setText( i18n( "Configure oKular..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
 	
+	KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
+	genPrefs->setText( i18n( "Configure backends..." ) );
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
 	KService::List gens = KServiceTypeTrader::self()->query("oKular/Generator",constraint);
-	if (gens.count() > 0)
+	if (gens.count() <= 0)
 	{
-		KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
-		genPrefs->setText( i18n( "Configure backends..." ) );
+		genPrefs->setEnabled( false );
 	}
 
 	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );

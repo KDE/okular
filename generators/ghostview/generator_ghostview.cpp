@@ -80,7 +80,7 @@ void GSGenerator::addPages( KConfigDialog *dlg )
 
 CDSC_ORIENTATION_ENUM GSGenerator::orientation( int  rot )
 {
-    Q_ASSERT( rot > 0 && rot < 4 );
+    Q_ASSERT( rot >= 0 && rot < 4 );
     switch (rot)
     {
         case 0:

@@ -67,6 +67,7 @@ QPixmap* GSInterpreterCMD::takePixmap()
 
 
 GSInterpreterCMD::GSInterpreterCMD( const QString & fileName ) :
+    m_pixmap          ( 0 ),
     m_process         ( 0 ),
     m_structurePending( false ),
     m_magnify         ( 1 ),
@@ -74,10 +75,11 @@ GSInterpreterCMD::GSInterpreterCMD( const QString & fileName ) :
     m_aaGfx            (1),
     m_pfonts            (false),
     m_orientation     ( CDSC_PORTRAIT ),
+    m_width           ( 0 ),
+    m_height          ( 0 ),
     m_name            ( fileName )
 {
     kDebug(4655) << "Constructing async interpreter!" << endl;
-    m_pixmap=0;
 }
 
 GSInterpreterCMD::~GSInterpreterCMD()

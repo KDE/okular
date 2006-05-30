@@ -62,7 +62,7 @@ class GSInterpreterCMD : public QThread
 //         void setBoundingBox( const KDSCBBOX& boundingBox );
         void setStructure(GSInterpreterLib::Position prolog, GSInterpreterLib::Position setup);
         bool run( GSInterpreterLib::Position pos );
-        void customEvent( QCustomEvent * e );
+        void customEvent( QEvent * e );
     signals:
     /**
      * This signal gets emited whenever a page is finished, but contains a reference to the pixmap

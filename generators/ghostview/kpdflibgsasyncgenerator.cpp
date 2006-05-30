@@ -83,10 +83,27 @@ void process()
     }
 }
 
+// TODO Improve ;-)
+static KCmdLineOptions options[] =
+{
+	    { "a", 0, 0 },
+	    { "b", 0, 0 },
+	    { "c", 0, 0 },
+	    { "d", 0, 0 },
+	    { "e", 0, 0 },
+	    { "f", 0, 0 },
+	    { "g", 0, 0 },
+	    { "h", 0, 0 },
+	    { "i", 0, 0 },
+	    { "j", 0, 0 },
+	        KCmdLineLastOption
+};
+
 int main (int argc, char* argv[])
 {
     KCmdLineArgs::init(argc, argv, "kpdflibgsasyncgenerator", "kpdflibgsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
-    KApplication app();
+    KCmdLineArgs::addCmdLineOptions( options );
+    KApplication app;
     // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
 
     for (int i=0;i<argc;i++)

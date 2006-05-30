@@ -226,7 +226,7 @@ bool GSInterpreterCMD::startInterpreter()
 //    kDebug(4500) << "KPSWidget: starting interpreter" << endl;
 
     if( m_process->start( KProcess::NotifyOnExit,
-              /*m_usePipe ?*/ KProcess::All /*: KProcess::AllOutput*/ ) )
+              /*m_usePipe ?*/ KProcess::Stdin | KProcess::Stdout/*KProcess::All*/ /*: KProcess::AllOutput*/ ) )
     {
         kDebug(4655) << "Starting async! " << m_process->pid() << endl;
         return true;
@@ -327,7 +327,6 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
     if( !running() )
         return false;
 
-    lock();
     if ( m_pixmap != 0 )
     {
         kDebug(4655) << "ERROR DELETING PIXMAP, THIS SHOULD NOT HAPPEN" << endl;
@@ -346,6 +345,7 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
 
 void GSInterpreterCMD::run()
 {
+    lock();
     // we are inside a thread
     kDebug(4655)<< "Generation thread started " << getpid() << endl;
     int x;
@@ -393,7 +393,7 @@ void GSInterpreterCMD::run()
 #include <qdialog.h>
 #include <qpainter.h>
 
-void GSInterpreterCMD::customEvent( QCustomEvent * e )
+void GSInterpreterCMD::customEvent( QEvent * e )
 {
     if (e->type() == GS_DATAREADY_ID )
     {

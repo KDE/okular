@@ -86,7 +86,7 @@ void process()
 int main (int argc, char* argv[])
 {
     KCmdLineArgs::init(argc, argv, "kpdflibgsasyncgenerator", "kpdflibgsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
-    KApplication app(false);
+    KApplication app();
     // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
 
     for (int i=0;i<argc;i++)

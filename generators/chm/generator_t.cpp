@@ -33,6 +33,7 @@ TGenerator::TGenerator( KPDFDocument * doc ) : Generator ( doc )
     m_syncGen=0;
     m_file=0;
     m_state=-1;
+    m_docInfo=0;
 //     m_asyncGen=0;
 //     px=0;
 }
@@ -42,6 +43,10 @@ bool TGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > &
     m_fileName=fileName;
     m_file=new CHMFile (fileName);
     m_file->ParseAndFillTopicsTree (&m_docSyn);
+
+    // delete the document information of the old document
+    delete m_docInfo;
+    m_docInfo=0;
 
     QPrinter p; 
     p.setPageSize(static_cast< QPrinter::PageSize >( KGlobal::locale()->pageSize() ));
@@ -107,7 +112,15 @@ void TGenerator::slotCompleted()
 
 const DocumentInfo * TGenerator::generateDocumentInfo() 
 {
-    return 0L;
+    if (!m_docInfo)
+    {
+        m_docInfo=new DocumentInfo();
+
+        m_docInfo->set( "mimeType", "application/x-chm" );
+
+        m_docInfo->set( "title", m_file->Title(), i18n("Title") );
+    }
+    return m_docInfo;
 }
 
 const DocumentSynopsis * TGenerator::generateDocumentSynopsis()

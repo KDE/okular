@@ -90,6 +90,7 @@ class TGenerator : public Generator
         int m_state;
         PixmapRequest* m_request;
         volatile bool m_doneFlagSet;
+        DocumentInfo* m_docInfo;
 };
 
 // for now impossible to use KHTMLPart outside the main app, maybe in KDE4

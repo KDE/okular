@@ -29,7 +29,6 @@
 #include <qeventloop.h>
 #include <qdom.h>
 #include <qfile.h>
-#include <kurl.h>
 #include <k3listview.h>
 
 #include "xchmfile.h"
@@ -241,12 +240,10 @@ static void insertIntoUrlMaps(
 	QMap <QString, int> &UrlPage, QMap <int,QString> &PageUrl,
 	const QString &url, int &num )
 {
-	// url already there, abort insertion
-	if ( UrlPage.contains(url) ) return;
+	int pos = url.indexOf ('#');
+	QString tmpurl = pos == -1 ? url : url.left (pos);
 
-	// check whether the map contains the url, stripped of the #ref part
-	QString tmpurl = url;
-	tmpurl.remove( QLatin1String("#")+KUrl("file:"+url).ref() );
+	// url already there, abort insertion
 	if ( UrlPage.contains(tmpurl) ) return;
 
 	// insert the url into the maps, but insert always the variant without
@@ -1009,7 +1006,7 @@ inline bool CHMFile::InfoFromWindows()
 		u_int32_t entry_size = *(u_int32_t *)(buffer + 0x04);
 		FIXENDIAN32(entry_size);
 		
-		QByteArray uptr(entries * entry_size);
+		QByteArray uptr(entries * entry_size,'\0');
 		unsigned char* raw = (unsigned char*) uptr.data();
 		
 		if ( !RetrieveObject (&ui, raw, 8, entries * entry_size) )
@@ -1259,7 +1256,7 @@ bool CHMFile::setCurrentEncoding( const KCHMTextEncoding::text_encoding_t * enc 
 
 bool CHMFile::GetFileContentAsString(QString& str, chmUnitInfo *ui)
 {
-	QByteArray buf (ui->length + 1);
+	QByteArray buf (ui->length + 1,'\0');
 			
 	if ( RetrieveObject (ui, (unsigned char*) buf.data(), 0, ui->length) )
 	{

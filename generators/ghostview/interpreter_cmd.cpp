@@ -102,7 +102,7 @@ GSInterpreterCMD::~GSInterpreterCMD()
         }
     }*/
     m_stoppingPids.clear();
-    unlock();
+//    unlock();
 }
 
 void GSInterpreterCMD::destroyInternalProcess(KProcess * stop)

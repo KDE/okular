@@ -29,6 +29,7 @@
 #include <qeventloop.h>
 #include <qdom.h>
 #include <qfile.h>
+#include <kurl.h>
 #include <k3listview.h>
 
 #include "xchmfile.h"
@@ -226,6 +227,33 @@ inline int CHMFile::findStringInQuotes (const QString& tag, int offset, QString&
 		value = tag.mid (qbegin + 1, qend - qbegin - 1);
 
 	return qend + 1;
+}
+
+
+/*!
+  Insert the \p url into the two maps \p UrlPage and \p PageUrl , taking care of
+  checking if \p url is already in the maps and if the maps contain \p url
+  without the <tt>#ref</tt> part of the url. Also increment \p num if the
+  insertion is done.
+  \note We suppose the two maps are kept in syncro.
+ */
+static void insertIntoUrlMaps(
+	QMap <QString, int> &UrlPage, QMap <int,QString> &PageUrl,
+	const QString &url, int &num )
+{
+	// url already there, abort insertion
+	if ( UrlPage.contains(url) ) return;
+
+	// check whether the map contains the url, stripped of the #ref part
+	QString tmpurl = url;
+	tmpurl.remove( QLatin1String("#")+KUrl("file:"+url).ref() );
+	if ( UrlPage.contains(tmpurl) ) return;
+
+	// insert the url into the maps, but insert always the variant without
+	// the #ref part
+	UrlPage.insert(tmpurl,num);
+	PageUrl.insert(num,tmpurl);
+	num++;
 }
 
 
@@ -429,9 +457,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 				// There are no 'titles' in index file
 				if ( add2treemap  )
 				{
-                        m_UrlPage.insert(url,pnum,false);
-                        m_PageUrl.insert(pnum,url,false);
-                        pnum++;
+					insertIntoUrlMaps(m_UrlPage,m_PageUrl,url,pnum);
 				}
 			}
 			else

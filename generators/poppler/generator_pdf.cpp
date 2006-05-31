@@ -69,7 +69,7 @@ class PDFEmbeddedFile : public EmbeddedFile
 
 static void fillViewportFromLinkDestination( DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
 {
-    viewport.pageNumber = destination.pageNumber();
+    viewport.pageNumber = destination.pageNumber() - 1;
 
     if (viewport.pageNumber == -1) return;
 

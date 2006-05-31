@@ -1312,7 +1312,7 @@ bool CHMFile::enumerateArchive( QVector< QString > & files )
 	return chm_enumerate (m_chmFile, CHM_ENUMERATE_ALL, chm_enumerator_callback, &files);
 }
 
-Q3CString CHMFile::convertSearchWord( const QString & src )
+QByteArray CHMFile::convertSearchWord( const QString & src )
 {
 	static const char * searchwordtable[128] =
 	{
@@ -1327,9 +1327,9 @@ Q3CString CHMFile::convertSearchWord( const QString & src )
 	};
 
 	if ( !m_textCodec )
-		return (Q3CString) src.toLower().toLocal8Bit();
+		return src.toLower().toLocal8Bit();
 
-	Q3CString dest = m_textCodec->fromUnicode (src);
+	QByteArray dest = m_textCodec->fromUnicode (src);
 
 	for ( int i = 0; i < dest.size(); i++ )
 	{

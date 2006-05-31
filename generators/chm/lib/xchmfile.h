@@ -28,9 +28,8 @@
 
 #include <sys/types.h>
 
+#include <qbytearray.h>
 #include <qstring.h>
-#include <q3cstring.h>
-#include <q3listbox.h>
 #include <qmap.h>
 #include <qvector.h>
 #include <qtextcodec.h>
@@ -327,7 +326,7 @@ private:
 	bool  changeFileEncoding (const char *qtencoding);
 
 	//! Convert the word, so it has an appropriate encoding
-	Q3CString convertSearchWord ( const QString &src );
+	QByteArray convertSearchWord ( const QString &src );
 
 	/*!
 	 * Helper procedure in TOC parsing, decodes the string between the quotes (first or last) with decoding HTML

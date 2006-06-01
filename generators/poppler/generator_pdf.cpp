@@ -328,6 +328,7 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
 
 // need a way to find efficient (maybe background textpage generation)
 	docLock.lock();
+	// TODO we may need the rotation here to pass it to textList?
 	QList<Poppler::TextBox*> textList = p->textList();
 	docLock.unlock();
 	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), rotation));
@@ -602,7 +603,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
-    page->setPixmap( request->id, p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects) );
+    page->setPixmap( request->id, p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)request->rotation) );
     
     if ( genObjectRects )
     {
@@ -616,7 +617,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     docLock.unlock();
     if ( genTextPage )
     {
-        QList<Poppler::TextBox*> textList = p->textList();
+        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->rotation);
         page->setSearchPage( abstractTextPage(textList, page->height(), page->width(),page->rotation()) );
         qDeleteAll(textList);
     }
@@ -639,6 +640,7 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
+    // TODO we may need the rotation here to pass it to textList?
     QList<Poppler::TextBox*> textList = pp->textList();
     docLock.unlock();
     delete pp;
@@ -1198,18 +1200,17 @@ void PDFPixmapGeneratorThread::run()
     if ( !d->m_textList.isEmpty() )
         kDebug() << "PDFPixmapGeneratorThread: previous text not taken" << endl;
 #endif
-    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects ) );
+    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)d->currentRequest->rotation  ) );
     
     if ( genObjectRects )
     {
     	d->m_rects = generateKPDFLinks(pp->links(), width, height, d->generator->pdfdoc);
     }
-    else 
-    d->m_rectsTaken = false;
+    else d->m_rectsTaken = false;
 
     if ( genTextPage )
     {
-        d->m_textList = pp->textList();
+        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->rotation);
     }
     delete pp;
     

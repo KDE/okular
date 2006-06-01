@@ -209,10 +209,10 @@ void PageView::setupActions( KActionCollection * ac )
     d->aOrientation=new KSelectAction( i18n( "&Orientation" ), ac, "view_orientation" );
     d->aPaperSizes=new KSelectAction( i18n( "&Paper sizes" ), ac, "view_papersizes" );
     QStringList orientations;
-    orientations.append( i18n( "Portrait" ) );
-    orientations.append( i18n( "Landscape" ) );
-    orientations.append( i18n( "Upside Down" ) );
-    orientations.append( i18n( "Seascape" ) );
+    orientations.append( i18n( "Default" ) );
+    orientations.append( i18n( "Rotated 90 Degrees" ) );
+    orientations.append( i18n( "Rotated 180 Degrees" ) );
+    orientations.append( i18n( "Rotated 270 Degrees" ) );
     d->aOrientation->setItems( orientations );
 
     connect( d->aOrientation , SIGNAL( triggered( int ) ),
@@ -229,9 +229,7 @@ void PageView::setupActions( KActionCollection * ac )
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( KIcon( "viewmag" ), i18n( "Zoom" ), ac, "zoom_to" );
     d->aZoom->setEditable( true );
-#if KDE_IS_VERSION(3,4,89)
     d->aZoom->setMaxComboViewCount( 13 );
-#endif
     connect( d->aZoom, SIGNAL( triggered() ), this, SLOT( slotZoom() ) );
     updateZoomText();
 

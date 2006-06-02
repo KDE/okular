@@ -144,9 +144,9 @@ class OKULAR_EXPORT Generator : public QObject
  */
 struct OKULAR_EXPORT PixmapRequest
 {
-    PixmapRequest( int rId, int n, int w, int h, /*double z,*/ int r, int p, bool a = false )
+    PixmapRequest( int rId, int n, int w, int h, /*double z,*/ int p, bool a )
         : id( rId ), pageNumber( n ), width( w ), height( h ), /*zoom(z),*/
-        rotation(r) , priority( p ), async( a ), page( 0 )  {};
+        priority( p ), async( a ), page( 0 )  {};
 
     PixmapRequest() {;};
     // observer id
@@ -156,14 +156,14 @@ struct OKULAR_EXPORT PixmapRequest
     int width;
     int height;
 //    double zoom;
-    int rotation;
     // asyncronous request priority (less is better, 0 is max)
     int priority;
     // generate the pixmap in a thread and notify observer when done
     bool async;
 
-    // this field is set by the Docuemnt prior passing the
+    // these fields are set by the Document prior passing the
     // request to the generator
+    int documentRotation;
     KPDFPage * page;
 
 };

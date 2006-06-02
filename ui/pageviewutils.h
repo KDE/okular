@@ -34,7 +34,6 @@ class PageViewItem
         int width() const;
         int height() const;
         double zoomFactor() const;
-        int rotation() const;
 
         void setGeometry( int x, int y, int width, int height );
         void setWHZ( int w, int h, double zoom );

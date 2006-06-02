@@ -425,8 +425,7 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
         if ( !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
         {
             PixmapRequest * p = new PixmapRequest(
-                    THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), 
-                    t->page()->rotation(), THUMBNAILS_PRIO, true );
+                    THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, true );
             requestedPixmaps.push_back( p );
         }
     }

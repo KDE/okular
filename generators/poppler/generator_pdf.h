@@ -110,7 +110,7 @@ class PDFGenerator : public Generator
         // fetch the transition information and add it to the page
         void addTransition( Poppler::Page * popplerPage, KPDFPage * page );
         
-        static KPDFTextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
+        KPDFTextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
         
         // poppler dependant stuff
         QMutex docLock;

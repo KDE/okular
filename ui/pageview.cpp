@@ -208,15 +208,15 @@ void PageView::setupActions( KActionCollection * ac )
 {
     d->aOrientation=new KSelectAction( i18n( "&Orientation" ), ac, "view_orientation" );
     d->aPaperSizes=new KSelectAction( i18n( "&Paper sizes" ), ac, "view_papersizes" );
-    QStringList orientations;
-    orientations.append( i18n( "Default" ) );
-    orientations.append( i18n( "Rotated 90 Degrees" ) );
-    orientations.append( i18n( "Rotated 180 Degrees" ) );
-    orientations.append( i18n( "Rotated 270 Degrees" ) );
-    d->aOrientation->setItems( orientations );
+    QStringList rotations;
+    rotations.append( i18n( "Default" ) );
+    rotations.append( i18n( "Rotated 90 Degrees" ) );
+    rotations.append( i18n( "Rotated 180 Degrees" ) );
+    rotations.append( i18n( "Rotated 270 Degrees" ) );
+    d->aOrientation->setItems( rotations );
 
     connect( d->aOrientation , SIGNAL( triggered( int ) ),
-         d->document , SLOT( slotOrientation( int ) ) );
+         d->document , SLOT( slotRotation( int ) ) );
     connect( d->aPaperSizes , SIGNAL( triggered( int ) ),
          d->document , SLOT( slotPaperSizes( int ) ) );
 
@@ -2236,7 +2236,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             kWarning() << "rerequesting visible pixmaps for page " << i->pageNumber() <<  " !\n";
 #endif
             PixmapRequest * p = new PixmapRequest(
-                    PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRIO, true );
+                    PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRIO, true );
             requestedPixmaps.push_back( p );
         }
 
@@ -2273,7 +2273,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             // request the pixmap if not already present
             if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
 
         // add the page after the 'visible series' in preload
@@ -2284,7 +2284,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             // request the pixmap if not already present
             if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), i->rotation(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
     }
 

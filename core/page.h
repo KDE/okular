@@ -52,12 +52,12 @@ class ObjectRect;
 class OKULAR_EXPORT KPDFPage
 {
     public:
-        KPDFPage( uint number, double width, double height, int rotation );
+        KPDFPage( uint number, double width, double height, int orientation );
         ~KPDFPage();
 
         // query properties (const read-only methods)
         inline int number() const { return m_number; }
-        inline int rotation() const { return m_rotation; }
+        inline int orientation() const { return m_orientation; }
         inline double width() const { return m_width; }
         inline double height() const { return m_height; }
         inline double ratio() const { return m_height / m_width; }
@@ -101,7 +101,7 @@ class OKULAR_EXPORT KPDFPage
     private:
         friend class PagePainter;
         int m_number;
-        int m_rotation;
+        int m_orientation;
         double m_width, m_height;
         bool m_bookmarked;
 

@@ -104,6 +104,7 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
+        int rotation() const;
 
         // gui altering stuff
         QString getXMLFile();
@@ -134,7 +135,7 @@ class OKULAR_EXPORT KPDFDocument : public QObject
 //         inline pagesVector() { return pages_vector; };
 
     public slots:
-        void slotOrientation( int orientation );
+        void slotRotation( int rotation );
         void slotPaperSizes( int );
 
     signals:

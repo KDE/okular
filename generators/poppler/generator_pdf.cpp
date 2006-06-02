@@ -290,7 +290,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
     uint pageCount = pdfdoc->numPages();
     pagesVector.resize(pageCount);
 
-    loadPages(pagesVector, -1, false);
+    loadPages(pagesVector, 0, false);
 
     // the file has been loaded correctly
     return true;
@@ -307,30 +307,29 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
         QSize pSize = p->pageSize();
         w = pSize.width();
         h = pSize.height();
-        if (rotation==-1)
+        int orientation;
+        switch (p->orientation())
         {
-          switch (p->orientation())
-          {
-            case Poppler::Page::Landscape: rotation = 1; break;
-            case Poppler::Page::UpsideDown: rotation = 2; break;
-            case Poppler::Page::Seascape: rotation = 3; break;
-            case Poppler::Page::Portrait: rotation = 0; break;
-          }
+          case Poppler::Page::Landscape: orientation = 1; break;
+          case Poppler::Page::UpsideDown: orientation = 2; break;
+          case Poppler::Page::Seascape: orientation = 3; break;
+          case Poppler::Page::Portrait: orientation = 0; break;
         }
         if (rotation % 2 == 1)
           qSwap(w,h);
         // init a kpdfpage, add transition and annotation information
-        KPDFPage * page = new KPDFPage( i, w, h, rotation );
+        KPDFPage * page = new KPDFPage( i, w, h, orientation );
         addTransition( p, page );
         if ( true ) //TODO real check
           addAnnotations( p, page );
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
 // need a way to find efficient (maybe background textpage generation)
+	kdDebug() << "loadpages with rotation" << rotation << " and orientation " << orientation << endl;
 	docLock.lock();
 	QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)rotation);
 	docLock.unlock();
-	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), rotation));
+	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), orientation));
 	
 	qDeleteAll(textList);
 	delete p;
@@ -602,7 +601,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
-    page->setPixmap( request->id, p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)request->rotation) );
+    page->setPixmap( request->id, p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)m_document->rotation()) );
     
     if ( genObjectRects )
     {
@@ -616,8 +615,8 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     docLock.unlock();
     if ( genTextPage )
     {
-        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->rotation);
-        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(),page->rotation()) );
+        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)m_document->rotation());
+        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), page->orientation()) );
         qDeleteAll(textList);
     }
     delete p;
@@ -636,14 +635,16 @@ bool PDFGenerator::canGenerateTextPage()
 
 void PDFGenerator::generateSyncTextPage( KPDFPage * page )
 {
+// TODO i think this is wrong because we need the "optative rotation", not the original rotation, but AFAIK it's never called
+    kDebug() << "calling generateSyncTextPage( KPDFPage * page )" << endl;
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
-    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->rotation());
+    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)m_document->rotation());
     docLock.unlock();
     delete pp;
     // ..and attach it to the page
-    page->setSearchPage( abstractTextPage(textList, page->height(), page->width(),page->rotation()) );
+    page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), page->orientation()) );
     qDeleteAll(textList);
 }
 
@@ -761,6 +762,9 @@ KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &te
     int j;
     QString s;
     NormalizedRect * wordRect = new NormalizedRect;
+    
+    rot = (rot + m_document->rotation()) % 4;
+    
     foreach (Poppler::TextBox *word, text)
     {
         wordRect->left = word->boundingBox().left();
@@ -1038,7 +1042,7 @@ void PDFGenerator::threadFinished()
     if ( !outText.isEmpty() )
     {
         request->page->setSearchPage( abstractTextPage( outText , 
-            request->page->height(), request->page->width(),request->page->rotation()));
+            request->page->height(), request->page->width(),request->page->orientation()));
         qDeleteAll(outText);
     }
     bool genObjectRects = request->id & (PAGEVIEW_ID | PRESENTATION_ID);
@@ -1198,7 +1202,7 @@ void PDFPixmapGeneratorThread::run()
     if ( !d->m_textList.isEmpty() )
         kDebug() << "PDFPixmapGeneratorThread: previous text not taken" << endl;
 #endif
-    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)d->currentRequest->rotation  ) );
+    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)d->currentRequest->documentRotation  ) );
     
     if ( genObjectRects )
     {
@@ -1208,7 +1212,7 @@ void PDFPixmapGeneratorThread::run()
 
     if ( genTextPage )
     {
-        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->rotation);
+        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->documentRotation);
     }
     delete pp;
     

@@ -73,6 +73,9 @@ class KPDFDocumentPrivate
         int allocatedPixmapsTotalMemory;
         bool warnedOutOfMemory;
 
+        // the rotation applied to the document, 0,1,2,3 * 90 degrees
+        int rotation;
+
         // timers (memory checking / info saver)
         QTimer * memCheckTimer;
         QTimer * saveBookmarksTimer;
@@ -118,6 +121,7 @@ KPDFDocument::KPDFDocument( QHash<QString, Generator*> * genList )
     d->memCheckTimer = 0;
     d->saveBookmarksTimer = 0;
     d->warnedOutOfMemory = false;
+    d->rotation = 0;
     m_usingCachedGenerator = false;
 }
 
@@ -554,6 +558,11 @@ QString KPDFDocument::getMetaData( const QString & key, const QString & option )
     return generator ? generator->getMetaData( key, option ) : QString();
 }
 
+int KPDFDocument::rotation() const
+{
+    return d->rotation;
+}
+
 void KPDFDocument::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
 {
     if ( !generator )
@@ -595,6 +604,8 @@ void KPDFDocument::requestPixmaps( const QLinkedList< PixmapRequest * > & reques
             delete request;
             continue;
         }
+
+        request->documentRotation = d->rotation;
 
         if ( !request->async )
             request->priority = 0;
@@ -1606,16 +1617,17 @@ void KPDFDocument::slotTimedMemoryCheck()
         cleanupPixmapMemory();
 }
 
-void KPDFDocument::slotOrientation( int orientation )
+void KPDFDocument::slotRotation( int rotation )
 {
     if ( generator->supportsRotation() )
     {
-        generator->setOrientation(pages_vector,orientation);
+        d->rotation = rotation;
+        generator->setOrientation(pages_vector,rotation);
         foreachObserver( notifySetup( pages_vector, true ) );
         foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
 //         foreachObserver( notifyViewportChanged( false /*disables smoothMove*/ ));
 //         foreachObserver( notifyPageChanged( ) );
-        kDebug() << "Oreint: " << orientation << endl;
+        kDebug() << "Rotated: " << rotation << endl;
     }
 }
 

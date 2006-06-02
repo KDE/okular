@@ -911,7 +911,7 @@ void Part::slotPrintPreview()
         page = m_document->page(i);
         width = page->width();
         height = page->height();
-        if (page->rotation() == 90 || page->rotation() == 270) qSwap(width, height);
+        if (page->orientation() == 90 || page->orientation() == 270) qSwap(width, height);
         if (width > height) landscape++;
         else portrait++;
     }
@@ -1040,7 +1040,7 @@ void Part::slotPrint()
         page = m_document->page(i);
         width = page->width();
         height = page->height();
-        if (page->rotation() == 90 || page->rotation() == 270) qSwap(width, height);
+        if (page->orientation() == 90 || page->orientation() == 270) qSwap(width, height);
         if (width > height) landscape++;
         else portrait++;
     }

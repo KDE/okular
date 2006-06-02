@@ -442,7 +442,7 @@ void PresentationWidget::changePage( int newPage )
     PresentationFrame * frame = m_frames[ m_frameIndex ];
     int pixW = frame->geometry.width();
     int pixH = frame->geometry.height();
-    int rot = frame->page->rotation();
+    int rot = frame->page->orientation();
 
     // if pixmap not inside the KPDFPage we request it and wait for
     // notifyPixmapChanged call or else we can proceed to pixmap generation

@@ -10,6 +10,6 @@ QTextStream& operator<< (QTextStream& str, const PixmapRequest *req)
     else
         s += "S";
     s += QString ("ync PixmapRequest (id: %1) (%2x%3) ").arg(req->id,req->width,req->height);
-    s += QString("rot:%4, prio: %5, pageNo: %6) ").arg(req->rotation,req->priority,req->pageNumber);
+    s += QString("prio: %1, pageNo: %2) ").arg(req->priority,req->pageNumber);
     return (str << s);
 }

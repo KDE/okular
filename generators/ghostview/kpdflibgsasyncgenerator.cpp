@@ -101,45 +101,52 @@ static KCmdLineOptions options[] =
 
 int main (int argc, char* argv[])
 {
-    KCmdLineArgs::init(argc, argv, "kpdflibgsasyncgenerator", "kpdflibgsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
-    KCmdLineArgs::addCmdLineOptions( options );
-    KApplication app;
-    // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
-
-    for (int i=0;i<argc;i++)
-        kDebug() << "arg nr " << i << " : " <<  QString(argv[i]) << endl;
-
-    f = fopen ( argv[1] , "r");
-    interpreter=new GSInterpreterLib();
-    interpreter->setMedia ( QString(argv[4]) );
-    interpreter->setMagnify ( QString(argv[5]).toDouble() );
-    interpreter->setOrientation ( QString(argv[6]).toInt() );
-    interpreter->setSize ( QString(argv[7]).toInt(), QString(argv[8]).toInt() );
-    interpreter->setPlatformFonts ( QString(argv[9]).toInt()  !=0 );
-    interpreter->setAABits(QString(argv[10]).toInt(), QString(argv[11]).toInt() );
-    interpreter->setProgressive(false);
-    interpreter->start(false);
-    
-    PixHandler pxHandler;
-
-    QObject::connect(interpreter,SIGNAL(Finished(const QImage* )),&pxHandler,SLOT(slotPixmap(const QImage* )));
-
-    int request;
-    anwser = open( argv[3] , O_RDWR );
-    mem = open( argv[2] , O_RDONLY );
-    while( read ( mem, &request, sizeof(int) ) > 0 )
+    try
     {
-        switch ( request )
+        KCmdLineArgs::init(argc, argv, "kpdflibgsasyncgenerator", "kpdflibgsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
+        KCmdLineArgs::addCmdLineOptions( options );
+        KApplication app;
+        // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
+    
+        for (int i=0;i<argc;i++)
+            kDebug() << "arg nr " << i << " : " <<  QString(argv[i]) << endl;
+    
+        f = fopen ( argv[1] , "r");
+        interpreter=new GSInterpreterLib();
+        interpreter->setMedia ( QString(argv[4]) );
+        interpreter->setMagnify ( QString(argv[5]).toDouble() );
+        interpreter->setOrientation ( QString(argv[6]).toInt() );
+        interpreter->setSize ( QString(argv[7]).toInt(), QString(argv[8]).toInt() );
+        interpreter->setPlatformFonts ( QString(argv[9]).toInt()  !=0 );
+        interpreter->setAABits(QString(argv[10]).toInt(), QString(argv[11]).toInt() );
+        interpreter->setProgressive(false);
+        interpreter->start(false);
+        
+        PixHandler pxHandler;
+    
+        QObject::connect(interpreter,SIGNAL(Finished(const QImage* )),&pxHandler,SLOT(slotPixmap(const QImage* )));
+    
+        int request;
+        anwser = open( argv[3] , O_RDWR );
+        mem = open( argv[2] , O_RDONLY );
+        while( read ( mem, &request, sizeof(int) ) > 0 )
         {
-            // We are giubg to get a page
-            case 0:
-                process();
-                break;
-            case 1:
-                delete interpreter;
-                exit (0);
-                break;
+            switch ( request )
+            {
+                // We are giubg to get a page
+                case 0:
+                    process();
+                    break;
+                case 1:
+                    delete interpreter;
+                    exit (0);
+                    break;
+            }
         }
+    }
+    catch (GSInterpreterLib::GSError ex)
+    {
+        kDebug() << ex.name << endl;
     }
     return 0;
 }

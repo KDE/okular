@@ -6,6 +6,7 @@ include_directories(
    ${CMAKE_SOURCE_DIR}/libqgs
 )
 
+add_definitions(${KDE4_ENABLE_EXCEPTIONS})
 
 ########### next target ###############
 

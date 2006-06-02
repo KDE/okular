@@ -395,7 +395,10 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     d->aOrientation->setEnabled(d->document->supportsRotation());
     bool paperSizes=d->document->supportsPaperSizes();
     d->aPaperSizes->setEnabled(paperSizes);
-    if (paperSizes)
+    // set the new paper sizes:
+    // - if the generator supports them
+    // - if the document changed
+    if (paperSizes && documentChanged)
       d->aPaperSizes->setItems(d->document->paperSizes());
 }
 
@@ -1348,6 +1351,8 @@ if (d->document->handleEvent( e ) )
             imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
             // IMAGE operation choosen
+            if ( choice )
+            {
             if ( choice == imageToClipboard || choice == imageToFile )
             {
                 // renders page into a pixmap
@@ -1435,6 +1440,7 @@ if (d->document->handleEvent( e ) )
                         }
                     }
                 }
+            }
             }
             // clear widget selection and invalidate rect
             selectionClear();

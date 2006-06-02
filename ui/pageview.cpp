@@ -1350,9 +1350,10 @@ if (d->document->handleEvent( e ) )
             imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
-            // IMAGE operation choosen
+            // check if the user really selected an action
             if ( choice )
             {
+            // IMAGE operation choosen
             if ( choice == imageToClipboard || choice == imageToFile )
             {
                 // renders page into a pixmap

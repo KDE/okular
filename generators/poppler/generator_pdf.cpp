@@ -325,7 +325,7 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
 // need a way to find efficient (maybe background textpage generation)
-	kdDebug() << "loadpages with rotation" << rotation << " and orientation " << orientation << endl;
+	kDebug() << "loadpages with rotation" << rotation << " and orientation " << orientation << endl;
 	docLock.lock();
 	QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)rotation);
 	docLock.unlock();

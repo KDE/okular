@@ -328,8 +328,7 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
 
 // need a way to find efficient (maybe background textpage generation)
 	docLock.lock();
-	// TODO we may need the rotation here to pass it to textList?
-	QList<Poppler::TextBox*> textList = p->textList();
+	QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)rotation);
 	docLock.unlock();
 	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), rotation));
 	
@@ -640,8 +639,7 @@ void PDFGenerator::generateSyncTextPage( KPDFPage * page )
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
-    // TODO we may need the rotation here to pass it to textList?
-    QList<Poppler::TextBox*> textList = pp->textList();
+    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->rotation());
     docLock.unlock();
     delete pp;
     // ..and attach it to the page

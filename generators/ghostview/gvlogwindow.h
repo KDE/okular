@@ -24,8 +24,7 @@ class GSLogWindow : public KVBox
     Q_OBJECT
 
 public:
-    GSLogWindow( const QString& caption,
-               QWidget* parent = 0, const char* name = 0 );
+    GSLogWindow( QWidget* parent = 0 );
 
 public slots:
     void append( GSInterpreterLib::MessageType t, const char* buf, int num );

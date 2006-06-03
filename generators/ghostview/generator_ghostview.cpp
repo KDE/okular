@@ -53,7 +53,7 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
 //    docLock.unlock();
     if ( GSSettings::messages() )
     {
-        m_logWindow = new GSLogWindow(QString ("Logwindow"));
+        m_logWindow = new GSLogWindow();
     }
     else
         m_logWindow = 0;

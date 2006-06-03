@@ -18,17 +18,14 @@
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <k3listviewsearchline.h>
-#include <kurllabel.h>
 #include <klocale.h>
 
 #include "gvlogwindow.h"
 
-GSLogWindow::GSLogWindow( const QString& caption, 
-                      QWidget* parent, const char* name) :
-    KVBox( parent )
+GSLogWindow::GSLogWindow( QWidget* parent )
+ : KVBox( parent )
 {
     kDebug() << "Starting logwindow" <<endl;
-    setObjectName( QLatin1String( name ) );
     m_searchLine = new K3ListViewSearchLine(this);
     m_msgList = new K3ListView(this);
 
@@ -41,12 +38,13 @@ GSLogWindow::GSLogWindow( const QString& caption,
     m_tCol=m_msgList -> addColumn ("Text",10);
     m_msgList -> addColumn ("InternalType",0);
 
+    m_clearTimer.setSingleShot( false );
     connect( &m_clearTimer, SIGNAL(timeout()), this, SLOT(appendBuffered()));
 }
 
 bool GSLogWindow::event( QEvent * event )
 {
-    KVBox ::event(event);
+    KVBox::event(event);
     if ( event->type() == QEvent::Reparent && ( m_msgList->childCount() ) )
     {
         int w=( m_msgList->firstChild() ) -> width(  m_msgList->fontMetrics() , m_msgList, m_tCol);
@@ -114,7 +112,7 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const char* buf, int 
             m_buffer.second=QString::fromLocal8Bit( buf, num );
         }
         m_clearTimer.stop();
-        m_clearTimer.start(20,FALSE);
+        m_clearTimer.start(20);
     }
     else
     {

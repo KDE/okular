@@ -10,6 +10,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
+#include <kimageeffect.h>
 #include <kprinter.h>
 
 #include "core/page.h"
@@ -47,18 +48,30 @@ void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
 {
     // perform a smooth scaled generation
     QImage smoothImage = m_pix->toImage().scaled( request->width, request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-    QPixmap * p = new QPixmap( smoothImage );
+    // rotate, if necessary
+    int rotation = m_document->rotation();
+    QImage finalImage = rotation > 0
+        ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
+        : smoothImage;
+    QPixmap * p = new QPixmap( finalImage );
     request->page->setPixmap(request->id, p);
 
     // signal that the request has been accomplished
     signalRequestDone(request);
 }
 
-bool KIMGIOGenerator::hasFonts() const
+void KIMGIOGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
 {
-    return false;
-}
+   int w = m_pix->width();
+   int h = m_pix->height();
+   if ( orientation % 2 == 1 )
+       qSwap( w, h );
 
+    delete pagesVector[0];
+
+    KPDFPage * page = new KPDFPage( 0, w, h, orientation );
+    pagesVector[0] = page;
+}
 
 bool KIMGIOGenerator::print( KPrinter& printer )
 {

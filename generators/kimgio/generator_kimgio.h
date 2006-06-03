@@ -25,16 +25,16 @@ class KIMGIOGenerator : public Generator
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );
-        void generateSyncTextPage( KPDFPage * page ) {;};
+        void generateSyncTextPage( KPDFPage * /*page*/ ) {;};
         // [INHERITED] capability querying
         QString getXMLFile() { return QString::null; };
         void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) { ; };
-        bool hasFonts() const;
+//        bool hasFonts() const;
         bool canGenerateTextPage() { return false; };
         bool supportsSearching()  { return false; };
-        bool supportsRotation() { return false; };
+        bool supportsRotation() { return true; };
         bool prefersInternalSearching()  { return false; };
-        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation) {;};
+        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
         RegularAreaRect* findText(const QString&, SearchDir, bool, const RegularAreaRect*, KPDFPage*)
              { return 0; };
         QString * getText(const RegularAreaRect*, KPDFPage*) { return 0; };

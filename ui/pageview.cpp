@@ -141,7 +141,7 @@ public:
  * and many insignificant stuff like this comment :-)
  */
 PageView::PageView( QWidget *parent, KPDFDocument *document )
-    : Q3ScrollView( parent, "KPDF::pageView", Qt::WStaticContents | Qt::WNoAutoErase )
+    : Q3ScrollView( parent )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate();
@@ -173,11 +173,16 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseTextSelectionPainted=0;
     d->aPaperSizes=0;
 
+    setAttribute( Qt::WA_OpaquePaintEvent );
+    setAttribute( Qt::WA_StaticContents );
+
+    setObjectName( QLatin1String( "oKular::pageView" ) );
+
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );
     viewport()->setFocusPolicy( Qt::StrongFocus );
     //viewport()->setPaletteBackgroundColor( Qt::white );
-    viewport()->setBackgroundMode( Qt::NoBackground );
+    viewport()->setAttribute( Qt::WA_OpaquePaintEvent );
     setResizePolicy( Manual );
     setAcceptDrops( true );
     setDragAutoScroll( false );
@@ -753,7 +758,7 @@ if (d->document->handleEvent( e ) )
     if( d->typeAheadActive )
     {
         // backspace: remove a char and search or terminates search
-        if( e->key() == Qt::Key_BackSpace )
+        if( e->key() == Qt::Key_Backspace )
         {
             if( d->typeAheadString.length() > 1 )
             {
@@ -956,7 +961,7 @@ if (d->document->handleEvent( e ) )
         {
             d->zoomFactor *= ( 1.0 + ( (double)deltaY / 500.0 ) );
             updateZoom( ZoomRefreshCurrent );
-            viewport()->repaint( false );
+            viewport()->repaint();
         }
         return;
     }
@@ -1094,7 +1099,7 @@ if ( d->document->handleEvent( e ) )
     {
         d->mouseMidZooming = true;
         d->mouseMidLastY = e->globalPos().y();
-        setCursor( Qt::sizeVerCursor );
+        setCursor( Qt::SizeVerCursor );
         return;
     }
 
@@ -1124,7 +1129,7 @@ if ( d->document->handleEvent( e ) )
             {
                 d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
                 if ( !d->mouseOnRect )
-                    setCursor( Qt::sizeAllCursor );
+                    setCursor( Qt::SizeAllCursor );
             }
             else if (rightButton)
               d->mouseSelectPos=e->pos() ; // just check
@@ -1884,16 +1889,16 @@ void PageView::updateCursor( const QPoint &p )
         // if over a ObjectRect (of type Link) change cursor to hand
         d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
         if ( d->mouseOnRect )
-            setCursor( Qt::pointingHandCursor );
+            setCursor( Qt::PointingHandCursor );
         else
-            setCursor( Qt::arrowCursor );
+            setCursor( Qt::ArrowCursor );
     }
     else
     {
         // if there's no page over the cursor and we were showing the pointingHandCursor
         // go back to the normal one
         d->mouseOnRect = false;
-        setCursor( Qt::arrowCursor );
+        setCursor( Qt::ArrowCursor );
     }
 }
 

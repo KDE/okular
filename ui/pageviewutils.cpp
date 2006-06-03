@@ -250,7 +250,7 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const 
     resize( buttonSize, buttonSize );
     setIconSize( QSize( iconSize, iconSize ) );
     setIcon( DesktopIconSet( item.pixmap, iconSize ) );
-    setWindowFlags( Qt::WNoAutoErase );
+    setAttribute( Qt::WA_OpaquePaintEvent );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )
         setShortcut( QKeySequence( item.shortcut ) );
@@ -416,7 +416,7 @@ void PageViewToolBar::mousePressEvent( QMouseEvent * e )
 {
     // set 'dragging' cursor
     if ( e->button() == Qt::LeftButton )
-        setCursor( Qt::sizeAllCursor );
+        setCursor( Qt::SizeAllCursor );
 }
 
 void PageViewToolBar::mouseMoveEvent( QMouseEvent * e )
@@ -447,7 +447,7 @@ void PageViewToolBar::mouseReleaseEvent( QMouseEvent * e )
 {
     // set normal cursor
     if ( e->button() == Qt::LeftButton )
-        setCursor( Qt::arrowCursor );
+        setCursor( Qt::ArrowCursor );
 }
 
 void PageViewToolBar::buildToolBar()

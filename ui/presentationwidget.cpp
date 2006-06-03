@@ -184,9 +184,9 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 
-    if ( e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Prior )
+    if ( e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
         slotPrevPage();
-    else if ( e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_Next )
+    else if ( e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
         slotNextPage();
     else if ( e->key() == Qt::Key_Home )
         slotFirstPage();
@@ -306,8 +306,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar->hide();
         // change topbar background color
         QPalette p = m_topBar->palette();
-        p.setColor( QPalette::Active, QColorGroup::Button, Qt::gray );
-        p.setColor( QPalette::Active, QColorGroup::Background, Qt::darkGray );
+        p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
+        p.setColor( QPalette::Active, QPalette::Background, Qt::darkGray );
         m_topBar->setPalette( p );
 
         // register this observer in document. events will come immediately

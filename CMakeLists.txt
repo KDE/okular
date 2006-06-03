@@ -1,6 +1,6 @@
 project(oKular)
 
-OPTION(
+option(
    OKULAR_FORCE_DRM
    "Forces oKular to check for DRM to decide if you can copy/print protected pdf. (default=no)"
    OFF
@@ -30,60 +30,60 @@ include_directories(
 ########### next target ###############
 
 set(oKularconf_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/conf/preferencesdialog.cpp
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlgaccessibility.cpp
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlggeneral.cpp
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlgperformance.cpp
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlgpresentation.cpp
+   conf/preferencesdialog.cpp
+   conf/dlgaccessibility.cpp
+   conf/dlggeneral.cpp
+   conf/dlgperformance.cpp
+   conf/dlgpresentation.cpp
 )
 
 kde4_add_ui_files(oKularconf_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlgaccessibilitybase.ui
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlggeneralbase.ui
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlgperformancebase.ui
-   ${CMAKE_SOURCE_DIR}/okular/conf/dlgpresentationbase.ui
+   conf/dlgaccessibilitybase.ui
+   conf/dlggeneralbase.ui
+   conf/dlgperformancebase.ui
+   conf/dlgpresentationbase.ui
 )
 
 set(oKularcore_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/core/annotations.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/area.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/chooseenginedialog.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/document.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/generator.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/link.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/page.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/pagetransition.cpp
-   ${CMAKE_SOURCE_DIR}/okular/core/textpage.cpp
+   core/annotations.cpp
+   core/area.cpp
+   core/chooseenginedialog.cpp
+   core/document.cpp
+   core/generator.cpp
+   core/link.cpp
+   core/page.cpp
+   core/pagetransition.cpp
+   core/textpage.cpp
 )
 
 kde4_add_ui_files(oKularcore_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/core/chooseenginewidget.ui
+   core/chooseenginewidget.ui
 )
 
 set(oKularui_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/ui/embeddedfilesdialog.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/minibar.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/newstuff.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/pagepainter.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/pageviewannotator.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/pageview.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/pageviewutils.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/presentationwidget.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/propertiesdialog.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/searchwidget.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/side_reviews.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/thumbnaillist.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/toc.cpp
+   ui/embeddedfilesdialog.cpp
+   ui/minibar.cpp
+   ui/newstuff.cpp
+   ui/pagepainter.cpp
+   ui/pageviewannotator.cpp
+   ui/pageview.cpp
+   ui/pageviewutils.cpp
+   ui/presentationwidget.cpp
+   ui/propertiesdialog.cpp
+   ui/searchwidget.cpp
+   ui/side_reviews.cpp
+   ui/thumbnaillist.cpp
+   ui/toc.cpp
 )
 
 set(oKularagg2_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_bezier_arc.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_path_storage.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_rasterizer_scanline_aa.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_trans_affine.cpp
-   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/agg_vcgen_stroke.cpp
+   ui/painter_agg2/agg_bezier_arc.cpp
+   ui/painter_agg2/agg_path_storage.cpp
+   ui/painter_agg2/agg_rasterizer_scanline_aa.cpp
+   ui/painter_agg2/agg_trans_affine.cpp
+   ui/painter_agg2/agg_vcgen_stroke.cpp
 )
-kde4_add_kcfg_files(oKularconf_SRCS ${CMAKE_SOURCE_DIR}/okular/conf/settings.kcfgc )
+kde4_add_kcfg_files(oKularconf_SRCS conf/settings.kcfgc )
 
 set(oKularcore_SRCS ${oKularconf_SRCS} ${oKularcore_SRCS} )
 

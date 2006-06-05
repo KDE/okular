@@ -21,7 +21,8 @@
 #include <qpointer.h>
 #include "core/observer.h"
 #include "core/document.h"
-#include "dcop.h"
+
+#include <dbus/qdbus.h>
 
 class QWidget;
 class QSplitter;
@@ -58,9 +59,10 @@ class BrowserExtension;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public DocumentObserver, virtual public okular_dcop
+class Part : public KParts::ReadOnlyPart, public DocumentObserver
 {
 Q_OBJECT
+Q_CLASSINFO("D-Bus Interface", "org.kde.oKular")
 
 public:
 	// Default constructor
@@ -75,11 +77,19 @@ public:
 
 	static KAboutData* createAboutData();
 
-	ASYNC goToPage(uint page);
-	ASYNC openDocument(KUrl doc);
-	uint pages();
-	uint currentPage();
-	KUrl currentDocument();
+public slots: // dbus
+	Q_SCRIPTABLE Q_ASYNC void goToPage(uint page);
+	Q_SCRIPTABLE Q_ASYNC void openDocument(KUrl doc);
+	Q_SCRIPTABLE uint pages();
+	Q_SCRIPTABLE uint currentPage();
+	Q_SCRIPTABLE KUrl currentDocument();
+	Q_SCRIPTABLE void slotPreferences();
+	Q_SCRIPTABLE void slotFind();
+	Q_SCRIPTABLE void slotPrintPreview();
+	Q_SCRIPTABLE void slotPreviousPage();
+	Q_SCRIPTABLE void slotNextPage();
+	Q_SCRIPTABLE void slotGotoFirst();
+	Q_SCRIPTABLE void slotGotoLast();
 
 signals:
 	void enablePrintAction(bool enable);
@@ -97,19 +107,12 @@ protected slots:
 	// connected to actions
 	void openURLFromDocument(const KUrl &url);
 	void slotGoToPage();
-	void slotPreviousPage();
-	void slotNextPage();
-	void slotGotoFirst();
-	void slotGotoLast();
 	void slotHistoryBack();
 	void slotHistoryNext();
-	void slotFind();
 	void slotFindNext();
 	void slotSaveFileAs();
 	void slotGetNewStuff();
-	void slotPreferences();
 	void slotNewConfig();
-	void slotPrintPreview();
 	void slotShowMenu(const KPDFPage *page, const QPoint &point);
 	void slotShowProperties();
 	void slotShowEmbeddedFiles();

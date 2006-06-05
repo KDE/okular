@@ -29,8 +29,6 @@
 #include <kvbox.h>
 #include <qtoolbox.h>
 #include <qpushbutton.h>
-#include <dcopobject.h>
-#include <dcopclient.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
@@ -84,10 +82,12 @@ using namespace oKular;
 Part::Part(QWidget *parentWidget,
            QObject *parent,
            const QStringList & /*args*/ )
-	: DCOPObject("oKular"), KParts::ReadOnlyPart(parent), m_viewportDirty( 0 ),
+	: KParts::ReadOnlyPart(parent), m_viewportDirty( 0 ),
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false)
 {
+	QDBus::sessionBus().registerObject("", this, QDBusConnection::ExportSlots);
+
 	// connect the started signal to tell the job the mimetypes we like
 	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
 	// load catalog for translation

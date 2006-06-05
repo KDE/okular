@@ -30,7 +30,6 @@
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <QX11Info>
-#include <dcopclient.h>
 #include <kiconloader.h>
 #include <kaction.h>
 #include <kstdaccel.h>
@@ -1409,13 +1408,11 @@ if (d->document->handleEvent( e ) )
                 else if ( choice == speakText )
                 {
                     // [2] speech selection using KTTSD
-                    DCOPClient * client = DCOPClient::mainClient();
                     // Albert says is this ever necessary?
                     // we already attached on Part constructor
-                    // if ( !client->isAttached() )
-                    //    client->attach();
                     // If KTTSD not running, start it.
-                    if (!client->isApplicationRegistered("kttsd"))
+#warning need to check the name the kttsd service gets and fix it here
+                    if (!QDBus::sessionBus().busService()->nameHasOwner("org.kde.kttsd"))
                     {
                         QString error;
                         if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
@@ -1429,6 +1426,8 @@ if (d->document->handleEvent( e ) )
                     {
                         // serialize the text to speech (selectedText) and the
                         // preferred reader ("" is the default voice) ...
+                       /*
+                        OLD DCOP CODE
                         QByteArray data;
                         QDataStream arg( &data, IO_WriteOnly );
                         arg.setVersion(QDataStream::Qt_3_1);
@@ -1443,7 +1442,11 @@ if (d->document->handleEvent( e ) )
                             QDataStream arg2(&data2, IO_WriteOnly);
                             arg2 << 0;
                             client->send("kttsd", "KSpeech", "startText(uint)", data2 );
-                        }
+                        }*/
+#warning this is probably wrong, check when kttsd is dbus ported
+                        QDBusInterfacePtr kspeech("org.kde.kttsd", "/modules/KSpeech", "org.kde.KSpeech");
+                        kspeech->call("setText", selectedText, QString());
+                        kspeech->call("startText", 0);
                     }
                 }
             }

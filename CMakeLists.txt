@@ -99,8 +99,6 @@ set(oKularpart_PART_SRCS part.cpp ${oKularui_SRCS} ${oKularagg2_SRCS} )
 
 kde4_automoc(${oKularpart_PART_SRCS})
 
-kde4_add_dcop_skels(oKularpart_PART_SRCS dcop.h )
-
 kde4_add_plugin(oKularpart WITH_PREFIX ${oKularpart_PART_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} oKularpart )

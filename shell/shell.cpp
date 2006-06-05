@@ -34,7 +34,6 @@
 #include <kmenubar.h>
 #include <kparts/componentfactory.h>
 #include <kio/netaccess.h>
-#include <kmainwindowiface.h>
 #include <krecentfilesaction.h>
 #include <kservicetypetrader.h>
 #include <ktoggleaction.h>
@@ -101,10 +100,10 @@ void Shell::init()
   connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
 
   readSettings();
+
   if (!KGlobal::config()->hasGroup("MainWindow"))
   {
-    KMainWindowInterface kmwi(this);
-    kmwi.maximize();
+    showMaximized();
   }
   setAutoSaveSettings();
 

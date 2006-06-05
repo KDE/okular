@@ -413,7 +413,9 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget(PageView *parent, DocumentPa
 
 RenderedDocumentPagePixmap* KDVIMultiPage::createDocumentPagePixmap(JobId id) const
 {
-  return new RenderedDviPagePixmap(id);
+  RenderedDocumentPagePixmap* page = new RenderedDviPagePixmap(id);
+  page->setupObservers(dataModel);
+  return page;
 }
 
 

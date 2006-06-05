@@ -48,28 +48,32 @@ class GSInterpreterCMD : public QThread
         bool startInterpreter();
         bool stop(bool async=true);
         bool ready() { return !interpreterLock.locked() ; } ;
-        bool running ();
+        bool interpreterRunning();
         void lock() { kDebug() << "locking async\n"; interpreterLock.lock() ; } ;
         void unlock() { kDebug() << "unlocking async\n"; interpreterLock.unlock() ; } ;
 
 //         void setGhostscriptArguments( const QStringList& arguments );
         void setOrientation( int orientation );
         void setSize( int w, int h );
-	void setPlatformFonts(bool pfonts=true);
-	void setAABits(int text=1, int graphics=1);
+        void setPlatformFonts(bool pfonts=true);
+        void setAABits(int text=1, int graphics=1);
         void setMagnify( double magnify );
         void setMedia (QString media) ;
 //         void setBoundingBox( const KDSCBBOX& boundingBox );
         void setStructure(GSInterpreterLib::Position prolog, GSInterpreterLib::Position setup);
         bool run( GSInterpreterLib::Position pos );
-        void customEvent( QEvent * e );
+//        void customEvent( QEvent * e );
+
+    private slots:
+        void threadFinished();
+
     signals:
-    /**
-     * This signal gets emited whenever a page is finished, but contains a reference to the pixmap
-     * used to hold the image.
-     *
-     * Don't change the pixmap or bad things will happen. This is the backing pixmap of the display.
-     */
+        /**
+         * This signal gets emited whenever a page is finished, but contains a reference to the pixmap
+         * used to hold the image.
+         *
+         * Don't change the pixmap or bad things will happen. This is the backing pixmap of the display.
+        */
         void Finished( QPixmap *);
         void error (const QString&, int duration);
 
@@ -96,8 +100,8 @@ class GSInterpreterCMD : public QThread
         // change everytime new request is done
         bool m_structurePending;
         double m_magnify;
-	int m_aaText,m_aaGfx;
-	bool m_pfonts;
+        int m_aaText,m_aaGfx;
+        bool m_pfonts;
         // prolog/setup positions
         GSInterpreterLib::Position m_data[2];
         bool m_haveStructure;

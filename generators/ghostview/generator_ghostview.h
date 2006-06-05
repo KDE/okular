@@ -91,7 +91,7 @@ class GSGenerator : public Generator
         GSInterpreterLib* m_convert;
 //         QVector<KPDFPage*> m_pages;
 
-        bool loadDocumentWithDSC( QString & name, QVector< KPDFPage * > & pagesVector , bool ps );
+        bool loadDocumentWithDSC( const QString & name, QVector< KPDFPage * > & pagesVector , bool ps );
         bool loadPages( QVector< KPDFPage * > & pagesVector );
         bool initInterpreter();
         int rotation( CDSC_ORIENTATION_ENUM orientation );
@@ -106,7 +106,7 @@ class GSGenerator : public Generator
         PixmapRequest* m_sRequest;
 
         // backendish stuff
-        GSInterpreterLib* pixGenerator;
+//        GSInterpreterLib* pixGenerator;
         GSInterpreterCMD* asyncGenerator;
         GSInternalDocument* internalDoc;
 

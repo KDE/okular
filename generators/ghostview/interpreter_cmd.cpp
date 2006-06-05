@@ -80,13 +80,14 @@ GSInterpreterCMD::GSInterpreterCMD( const QString & fileName ) :
     m_name            ( fileName )
 {
     kDebug(4655) << "Constructing async interpreter!" << endl;
+    connect(this, SIGNAL(finished()), this, SLOT(threadFinished()));
 }
 
 GSInterpreterCMD::~GSInterpreterCMD()
 {
     if (!m_pixmap)
         delete m_pixmap;
-    if ( running() )
+    if ( interpreterRunning() )
         stop(false);
     // remove (crashes kpdf somehow, probably because 
     // the destuction thread does the same a line higher
@@ -129,7 +130,7 @@ void GSInterpreterCMD::destroyInternalProcess(KProcess * stop)
     delete mem;
 }
 
-bool GSInterpreterCMD::running () 
+bool GSInterpreterCMD::interpreterRunning () 
 {
     if (m_process==0)
     {
@@ -156,7 +157,7 @@ bool GSInterpreterCMD::stop(bool async)
     kDebug(4655) << "stop()" << endl;
     // if( !_interpreterBusy ) return;
 
-    if ( running() )
+    if ( interpreterRunning() )
     {
         if (m_stoppingPids.contains(m_process->pid()))
             return true;
@@ -326,7 +327,7 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
 {
     kDebug(4655) << "Running request with size: " << m_width << "x" << m_height << endl;
 
-    if( !running() )
+    if( !interpreterRunning() )
         return false;
 
     if ( m_pixmap != 0 )
@@ -341,12 +342,15 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
     m_info.pos=pos;
     m_info.sync=true;
     m_info.handle=m_pixmap->handle();
+	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO1 running:" << running() << endl;
     start();
+	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO2" << endl;
     return true;
 }
 
 void GSInterpreterCMD::run()
 {
+	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO3" << endl;
     lock();
     // we are inside a thread
     kDebug(4655)<< "Generation thread started " << getpid() << endl;
@@ -383,16 +387,25 @@ void GSInterpreterCMD::run()
     kDebug(4655)<< "pximap ready" << endl;
     if (x==3)
     {
-	kDebug(4655)<< "sending the pximap to generator" << endl;
+       /* kDebug(4655)<< "sending the pximap to generator" << endl;
         // inform interpreter about PixmaRequest being done
         QCustomEvent * readyEvent = new QCustomEvent( GS_DATAREADY_ID );
         // set sth just to send nonempty
         readyEvent->setData(&x);
-        QApplication::postEvent( this , readyEvent );
+        QApplication::postEvent( this , readyEvent );*/
+        
     }
+    kDebug() << "ME ACABO" << endl;
 }
 
-#include <qdialog.h>
+void GSInterpreterCMD::threadFinished()
+{
+    // TODO use x==3 in the if above to set a success variable
+    emit Finished(takePixmap());
+}
+
+
+/*#include <qdialog.h>
 #include <qpainter.h>
 
 void GSInterpreterCMD::customEvent( QEvent * e )
@@ -404,6 +417,6 @@ void GSInterpreterCMD::customEvent( QEvent * e )
   
         emit Finished(pix);
     }
-}
+}*/
 
 #include "interpreter_cmd.moc"

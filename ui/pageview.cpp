@@ -45,6 +45,8 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+#include <dbus/qdbus.h>
+
 // system includes
 #include <math.h>
 #include <stdlib.h>

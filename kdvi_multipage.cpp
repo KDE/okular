@@ -64,8 +64,6 @@ KDVIMultiPage::KDVIMultiPage(QObject *parent, const char *name, const QStringLis
 
   setXMLFile("kdvi_part.rc");
 
-  preferencesChanged();
-
   enableActions(false);
   // Show tip of the day, when the first main window is shown.
   QTimer::singleShot(0,this,SLOT(showTipOnStart()));
@@ -80,6 +78,15 @@ KDVIMultiPage::~KDVIMultiPage()
   delete exportPDFAction;
 
   Prefs::writeConfig();
+}
+
+
+void KDVIMultiPage::setupObservers(DataModel* _dataModel)
+{
+  KMultiPage::setupObservers(_dataModel);
+
+  //FIXME: check if this is really needed anymore.
+  preferencesChanged();
 }
 
 

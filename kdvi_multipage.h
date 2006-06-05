@@ -20,6 +20,8 @@ public:
   KDVIMultiPage(QObject *parent, const char *name, const QStringList& args = QStringList());
   virtual ~KDVIMultiPage();
 
+  virtual void setupObservers(DataModel*);
+
 // Interface definition start ------------------------------------------------
 
   /// returns the list of supported file formats

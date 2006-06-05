@@ -150,6 +150,7 @@ void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool docum
 
     // generate Thumbnails for the given set of pages
     int width = viewport()->width();
+    int height = 0;
     for ( pIt = pages.begin(); pIt != pEnd ; ++pIt )
         //if ( skipCheck || (*pIt)->attributes() & flags )
         if ( skipCheck || (*pIt)->hasHighlights( SW_SEARCH_ID ) )
@@ -169,11 +170,12 @@ void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool docum
                 m_selected->setSelected( true );
             }
             t->show();
+            height += t->height() + m_pagesLayout->spacing();
         }
 
     // update scrollview's contents size (sets scrollbars limits)
-    m_pagesWidget->resize( m_pagesWidget->sizeHint() );
-    m_pagesLayout->update();
+    height -= m_pagesLayout->spacing();
+    m_pagesWidget->resize( width, height );
 
     // request for thumbnail generation
     delayedRequestVisiblePixmaps( 200 );
@@ -361,16 +363,18 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 
 		// resize and reposition items
 		int newWidth = contentsRect().width() - verticalScrollBar()->width();
+		int newHeight = 0;
 		QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
 		for ( ; tIt != tEnd; ++tIt )
 		{
 			ThumbnailWidget *t = *tIt;
 			t->resizeFitWidth( newWidth );
+			newHeight += t->height() + m_pagesLayout->spacing();
 		}
 
 		// update scrollview's contents size (sets scrollbars limits)
-		m_pagesLayout->invalidate();
-		m_pagesWidget->resize( m_pagesWidget->sizeHint() );
+		newHeight -= m_pagesLayout->spacing();
+		m_pagesWidget->resize( newWidth, newHeight );
 
 		// ensure selected item remains visible
 		if ( m_selected )

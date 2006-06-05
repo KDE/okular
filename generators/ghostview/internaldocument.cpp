@@ -48,7 +48,7 @@ void GSInternalDocument::scanDSC()
     m_dsc->fixup();
 }
 
-GSInternalDocument::GSInternalDocument(QString fname, Format form) : m_error(false), m_fileName(fname), m_format (form)
+GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_error(false), m_fileName(fname), m_format (form)
 {
     m_internalFile = fopen(QFile::encodeName(fname),"r");
     if( m_internalFile == 0 )

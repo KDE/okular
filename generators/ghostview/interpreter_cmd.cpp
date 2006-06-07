@@ -342,7 +342,7 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
     m_info.pos=pos;
     m_info.sync=true;
     m_info.handle=m_pixmap->handle();
-	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO1 running:" << running() << endl;
+	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO1 running:" << isRunning() << endl;
     start();
 	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO2" << endl;
     return true;

@@ -281,7 +281,7 @@ void GSGenerator::freeGUI()
 {
     if ( GSSettings::messages() )
     {
-        m_box->removeItem(m_logWindow);
+        m_box->removeItem(m_box->indexOf(m_logWindow));
     }
 }
 

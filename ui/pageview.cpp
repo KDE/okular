@@ -710,7 +710,7 @@ if ( d->document->handleEvent( pe ) )
             if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
                  !selectionRectInternal.contains( contentsRect ) )
             {
-                screenPainter.setPen( palette().active().highlight().dark(110) );
+                screenPainter.setPen( palette().color( QPalette::Active, QPalette::Highlight ).dark(110) );
                 screenPainter.drawRect( selectionRect );
             }
             // 3) Layer 1: give annotator painting control
@@ -1050,7 +1050,7 @@ if (d->document->handleEvent( e ) )
                     kWarning () << "text areas: " << selectionArea->count() << endl;
                     if ( selectionArea->count() > 0 )
                     { 
-                      QColor selColor = palette().active().highlight();
+                      QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
                       textSelection(selectionArea->geometry(vRect.width(),vRect.height(),vRect.left(),vRect.top())
                           ,selColor);
                     }                    
@@ -1138,7 +1138,7 @@ if ( d->document->handleEvent( e ) )
 
         case MouseZoom:     // set first corner of the zoom rect
             if ( leftButton )
-                selectionStart( e->x(), e->y(), palette().active().highlight(), false );
+                selectionStart( e->x(), e->y(), palette().color( QPalette::Active, QPalette::Highlight ), false );
             else if ( rightButton )
                 updateZoom( ZoomOut );
             break;
@@ -1146,7 +1146,7 @@ if ( d->document->handleEvent( e ) )
         case MouseSelect:   // set first corner of the selection rect
 //             if ( leftButton )
 //             {
-                QColor selColor = palette().active().highlight().light( 120 );
+                QColor selColor = palette().color( QPalette::Active, QPalette::Highlight ).light( 120 );
                 selectionStart( e->x(), e->y(), selColor, false );
 //             }
             break;

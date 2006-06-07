@@ -23,7 +23,7 @@
 #include <qobject.h>
 #include <qstring.h>
 #include <qimage.h>
-#include <q3ptrlist.h>
+#include <qlist.h>
 #include <kdelibs_export.h>
 
 class pagenode;
@@ -95,7 +95,7 @@ public:
      *  @return page count
      */
 
-    unsigned int numPages() const { return m_pagenodes.count(); };
+    int numPages() const { return m_pagenodes.count(); };
 
     /**
      *  returns a QImage which holds the contents of page pageNr
@@ -103,7 +103,7 @@ public:
      *  @return QImage of the page pageNr
      */
 
-    QImage page( unsigned int pageNr );
+    QImage page( int pageNr );
 
     /**
      *  returns the DPI (dots per inch) of page pageNr
@@ -111,7 +111,7 @@ public:
      *  @return a QPoint value with the DPIs in X- and Y-direction
      */
 
-    QPoint page_dpi( unsigned int pageNr );
+    QPoint page_dpi( int pageNr );
 
     /**
      *  returns the physical pixels of page pageNr
@@ -119,7 +119,7 @@ public:
      *  @return a QSize value with the width and height of the image
      */
 
-    QSize page_size( unsigned int pageNr );
+    QSize page_size( int pageNr );
 
     /**
      *  @return a user-visible, translated error string
@@ -138,7 +138,7 @@ public:
     QString m_filename;
     QString m_errorString;
 
-    typedef Q3PtrList<pagenode> t_PageNodeList;
+    typedef QList<pagenode*> t_PageNodeList;
     t_PageNodeList m_pagenodes;
 
     /**

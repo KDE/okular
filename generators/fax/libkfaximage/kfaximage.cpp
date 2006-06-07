@@ -69,15 +69,15 @@ bool KFaxImage::loadImage( const QString &filename )
 void KFaxImage::reset()
 {
   fax_init_tables();
-  m_pagenodes.setAutoDelete(true);
+  qDeleteAll(m_pagenodes);
   m_pagenodes.clear();
   // do not reset m_errorString and m_filename, since 
   // they may be needed by calling application 
 }
 
-QImage KFaxImage::page( unsigned int pageNr )
+QImage KFaxImage::page( int pageNr )
 {
-  if (pageNr >= numPages()) {
+  if (pageNr < 0 || pageNr >= numPages()) {
     kDebug() << "KFaxImage::page() called with invalid page number\n";
     return QImage();
   }
@@ -86,9 +86,9 @@ QImage KFaxImage::page( unsigned int pageNr )
   return pn->image;
 }
 
-QPoint KFaxImage::page_dpi( unsigned int pageNr )
+QPoint KFaxImage::page_dpi( int pageNr )
 {
-  if (pageNr >= numPages()) {
+  if (pageNr < 0 || pageNr >= numPages()) {
     kDebug() << "KFaxImage::page_dpi() called with invalid page number\n";
     return QPoint(0,0);
   }
@@ -97,9 +97,9 @@ QPoint KFaxImage::page_dpi( unsigned int pageNr )
   return pn->dpi;
 }
 
-QSize KFaxImage::page_size( unsigned int pageNr )
+QSize KFaxImage::page_size( int pageNr )
 {
-  if (pageNr >= numPages()) {
+  if (pageNr < 0 || pageNr >= numPages()) {
     kDebug() << "KFaxImage::page_size() called with invalid page number\n";
     return QSize(0,0);
   }

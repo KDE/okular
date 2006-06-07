@@ -1096,7 +1096,7 @@ if ( d->document->handleEvent( e ) )
     }
 
     // if pressing mid mouse button while not doing other things, begin 'continuous zoom' mode
-    if ( e->button() & Qt::MidButton )
+    if ( e->button() == Qt::MidButton )
     {
         d->mouseMidZooming = true;
         d->mouseMidLastY = e->globalPos().y();
@@ -1172,7 +1172,7 @@ if (d->document->handleEvent( e ) )
         return;
 
     // handle mode indepent mid buttom zoom
-    if ( d->mouseMidZooming && (e->state() & Qt::MidButton) )
+    if ( d->mouseMidZooming && (e->button() == Qt::MidButton) )
     {
         d->mouseMidZooming = false;
         // request pixmaps since it was disabled during drag
@@ -1190,8 +1190,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->button() & Qt::RightButton,
-         rightButton = e->button() & Qt::RightButton;
+    bool leftButton = e->buttons() & Qt::RightButton,
+         rightButton = e->buttons() & Qt::RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:{

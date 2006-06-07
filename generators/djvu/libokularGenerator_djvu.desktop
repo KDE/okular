@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+Name=djvu
+Comment=DjVu backend for oKular
+ServiceTypes=oKular/Generator
+MimeType=image/x-djvu
+X-KDE-Library=libokularGenerator_djvu.la
+X-KDE-Priority=2
+X-KDE-oKularAPIVersion=1
+X-KDE-oKularHasInternalSettings=false

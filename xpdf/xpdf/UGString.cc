@@ -51,8 +51,16 @@ void UGString::initChar(GString &str)
 {
   length = str.getLength();
   s = (Unicode *)gmallocn(length, sizeof(Unicode));
+  bool anyNonEncoded = false;
   for (int j = 0; j < length; ++j) {
     s[j] = pdfDocEncoding[str.getChar(j) & 0xff];
+    if (!s[j]) anyNonEncoded = true;
+  }
+  if ( anyNonEncoded )
+  {
+    for (int j = 0; j < length; ++j) {
+      s[j] = str.getChar(j);
+    }
   }
 }
 

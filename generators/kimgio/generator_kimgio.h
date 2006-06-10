@@ -43,11 +43,6 @@ class KIMGIOGenerator : public Generator
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 
-    signals:
-        void error(QString & string, int duration);
-        void warning(QString & string, int duration);
-        void notice(QString & string, int duration);
-
     private:
         QPixmap *m_pix;
 };

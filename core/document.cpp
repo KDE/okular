@@ -230,9 +230,9 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
         m_usingCachedGenerator=true;
     }
     // connect error reporting signals
-    connect (generator,SIGNAL(error(QString&,int )),this,SIGNAL(error(QString&,int )));
-    connect (generator,SIGNAL(warning(QString&,int )),this,SIGNAL(warning(QString&,int )));
-    connect (generator,SIGNAL(notice(QString&,int )),this,SIGNAL(notice(QString&,int )));
+    connect( generator, SIGNAL( error( const QString&, int ) ), this, SIGNAL( error( const QString&, int ) ) );
+    connect( generator, SIGNAL( warning( const QString&, int ) ), this, SIGNAL( warning( const QString&, int ) ) );
+    connect( generator, SIGNAL( notice( const QString&, int ) ), this, SIGNAL( notice( const QString&, int ) ) );
 
     // 1. load Document (and set busy cursor while loading)
     QApplication::setOverrideCursor( Qt::WaitCursor );

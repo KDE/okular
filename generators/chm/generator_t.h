@@ -63,10 +63,6 @@ class TGenerator : public Generator
         bool handleEvent (QEvent * /*event*/ ) ;
     public slots:
         void slotCompleted();
-    signals:
-        void error(QString & string, int duration);
-        void warning(QString & string, int duration);
-        void notice(QString & string, int duration);
 
     private:
         void additionalRequestData ();

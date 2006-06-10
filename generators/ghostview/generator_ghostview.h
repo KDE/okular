@@ -78,11 +78,6 @@ class GSGenerator : public Generator
         void slotPixmapGenerated(const QImage* img);
         void slotAsyncPixmapGenerated(QPixmap * img);
 
-    signals:
-        void error(QString & string, int duration);
-        void warning(QString & string, int duration);
-        void notice(QString & string, int duration);
-
     private:
         // conversion handling
         bool m_converted;

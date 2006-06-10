@@ -53,6 +53,8 @@ class KConfigDialog;
  */
 class OKULAR_EXPORT Generator : public QObject
 {
+    Q_OBJECT
+
     public:
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
@@ -129,9 +131,9 @@ class OKULAR_EXPORT Generator : public QObject
         Generator( KPDFDocument * doc ) : m_document( doc ) {};
 
     signals:
-        void error(QString & string, int duration);
-        void warning(QString & string, int duration);
-        void notice(QString & string, int duration);
+        void error(const QString & string, int duration);
+        void warning(const QString & string, int duration);
+        void notice(const QString & string, int duration);
 
     protected:
         KPDFDocument * m_document;

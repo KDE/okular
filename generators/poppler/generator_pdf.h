@@ -89,10 +89,6 @@ class PDFGenerator : public Generator
 
         // [INHERITED] reparse configuration
         bool reparseConfig();
-    signals:
-        void error(QString & string, int duration);
-        void warning(QString & string, int duration);
-        void notice(QString & string, int duration);
 
     private slots:
         // (async related) receive data from the generator thread

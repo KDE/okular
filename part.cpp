@@ -184,9 +184,9 @@ Part::Part(QWidget *parentWidget,
 	m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
-    connect( m_document, SIGNAL(error(QString&,int )),m_pageView,SLOT(errorMessage(QString&,int )));
-    connect( m_document, SIGNAL(warning(QString&,int )),m_pageView,SLOT(warningMessage(QString&,int )));
-    connect( m_document, SIGNAL(notice(QString&,int )),m_pageView,SLOT(noticeMessage(QString&,int )));
+	connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
+	connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
+	connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
 //	rightLayout->addWidget( m_pageView );
 
 	// add document observers

@@ -13,3 +13,5 @@ QTextStream& operator<< (QTextStream& str, const PixmapRequest *req)
     s += QString("prio: %1, pageNo: %2) ").arg(req->priority,req->pageNumber);
     return (str << s);
 }
+
+#include "generator.moc"

@@ -146,9 +146,9 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         void linkPresentation();
         void linkEndPresentation();
         void openURL(const KUrl &url);
-        void error(QString & string, int duration);
-        void warning(QString & string, int duration);
-        void notice(QString & string, int duration);
+        void error(const QString & string, int duration);
+        void warning(const QString & string, int duration);
+        void notice(const QString & string, int duration);
 
     private:
         // memory management related functions

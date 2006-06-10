@@ -77,8 +77,7 @@ public:
   */
   void generatePixmap( PixmapRequest * request );
   bool canGeneratePixmap( bool async ) { return !mutex.locked(); };
-  signals:
-      void error(QString & string, int duration);
+
 private:
   /** This class holds the fax file */
     KFaxImage fax;

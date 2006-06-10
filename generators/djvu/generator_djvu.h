@@ -33,11 +33,6 @@ class DjVuGenerator : public Generator
         bool supportsRotation() { return true; };
         void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
 
-    signals:
-        void error(QString & string, int duration);
-        void warning(QString & string, int duration);
-        void notice(QString & string, int duration);
-
     private slots:
         void djvuPixmapGenerated( int page, const QPixmap & pix );
 

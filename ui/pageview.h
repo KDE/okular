@@ -66,17 +66,17 @@ class PageView : public Q3ScrollView, public DocumentObserver
         bool canUnloadPixmap( int pageNum );
 
     public slots:
-        void errorMessage( QString &message,int duration )
+        void errorMessage( const QString & message, int duration )
         {
             displayMessage( message, PageViewMessage::Error, duration );
         }
 
-        void noticeMessage( QString & message,int duration )
+        void noticeMessage( const QString & message, int duration )
         {
             displayMessage( message, PageViewMessage::Info, duration );
         }
 
-        void warningMessage( QString & message,int duration )
+        void warningMessage( const QString & message, int duration )
         {
             displayMessage( message, PageViewMessage::Warning, duration );
         }

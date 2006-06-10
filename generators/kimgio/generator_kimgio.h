@@ -37,7 +37,7 @@ class KIMGIOGenerator : public Generator
         void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
         RegularAreaRect* findText(const QString&, SearchDir, bool, const RegularAreaRect*, KPDFPage*)
              { return 0; };
-        QString * getText(const RegularAreaRect*, KPDFPage*) { return 0; };
+        QString getText(const RegularAreaRect*, KPDFPage*) { return QString(); };
 
         // font related
         // [INHERITED] print document using already configured kprinter

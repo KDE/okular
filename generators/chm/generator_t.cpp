@@ -375,9 +375,9 @@ RegularAreaRect * TGenerator::findText( const QString & /*text*/, SearchDir /*di
     return 0L;
 }
 
-QString* TGenerator::getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ )
+QString TGenerator::getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ )
 {
-    return new QString();
+    return QString();
 }
 
 void TGenerator::setOrientation(QVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/)

@@ -77,8 +77,7 @@ class PDFGenerator : public Generator
         RegularAreaRect * findText (const QString & text, SearchDir dir, 
           const bool strictCase, const RegularAreaRect * lastRect, 
           KPDFPage * page );
-        // TODO does this really need to be a pointer?
-        QString * getText( const RegularAreaRect * area, KPDFPage * page );
+        QString getText( const RegularAreaRect * area, KPDFPage * page );
 
         void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
 

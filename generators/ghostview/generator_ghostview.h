@@ -57,7 +57,7 @@ class GSGenerator : public Generator
         // internal search and gettext
         RegularAreaRect * findText( const QString & /* text*/, SearchDir /* dir*/, const bool /* strictCase*/,
                     const RegularAreaRect  * /*lastRect*/, KPDFPage  * /* page*/) { return 0L;} ;
-        QString* getText( const RegularAreaRect * /*area*/, KPDFPage  * /*page */) {return 0L;} ;
+        QString getText( const RegularAreaRect * /*area*/, KPDFPage  * /*page */) { return QString(); };
     	// may come useful later
         //virtual bool hasFonts() const ;
 

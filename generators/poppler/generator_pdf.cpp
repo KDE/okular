@@ -342,13 +342,13 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
     }
 }
 
-QString * PDFGenerator::getText( const RegularAreaRect * area, KPDFPage * page  )
+QString PDFGenerator::getText( const RegularAreaRect * area, KPDFPage * page  )
 {
     QRect rect = area->first()->geometry((int)page->width(),(int)page->height());
     Poppler::Page *pp = pdfdoc->page( page->number() );
     QString text = pp->text(rect);
     delete pp;
-    return new QString(text);
+    return text;
 }
 
 RegularAreaRect * PDFGenerator::findText (const QString & text, SearchDir dir, 

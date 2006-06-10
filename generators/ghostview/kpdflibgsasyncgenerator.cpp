@@ -41,7 +41,8 @@ void PixHandler::slotPixmap(const QImage* img)
 {
     QPixmap *pix=new QPixmap();
     kWarning() << "img size/depth " << img->size() << "/" <<img->depth() << endl;
-    bool done=pix->convertFromImage(*img);
+    *pix = QPixmap::fromImage(*img);
+    bool done=!pix->isNull();
     kWarning () << "Conversion from qimage " << done << endl;
 //         QDialog t;
 //         t.resize(pix->width(),pix->height());

@@ -53,7 +53,8 @@ void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
     QImage finalImage = rotation > 0
         ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
         : smoothImage;
-    QPixmap * p = new QPixmap( finalImage );
+    QPixmap * p = new QPixmap();
+    *p = QPixmap::fromImage( finalImage );
     request->page->setPixmap(request->id, p);
 
     // signal that the request has been accomplished

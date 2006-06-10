@@ -127,10 +127,10 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
   }
 
   // Set the number of pages page sizes
-  Q_UINT16 pages = fax.numPages();
+  quint16 pages = fax.numPages();
   pagesVector.resize(pages);
 
-    for(Q_UINT16 pg=0; pg < pages; pg++) 
+    for(quint16 pg=0; pg < pages; pg++) 
     {
       QSize pageSize = fax.page_size(pg);
       // how about rotation?

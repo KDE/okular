@@ -56,6 +56,9 @@ class OKULAR_EXPORT Generator : public QObject
     Q_OBJECT
 
     public:
+        /** constructor: takes the Document as a parameter **/
+        Generator( KPDFDocument * doc ) : m_document( doc ) {};
+
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
         virtual bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector ) = 0;
@@ -64,7 +67,7 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool canGeneratePixmap( bool async ) = 0;
         virtual void generatePixmap( PixmapRequest * request ) = 0;
 
-        // can generate a KPDFText Page
+        // can generate a KPDFTextPage
         virtual bool canGenerateTextPage() { return false; };
         virtual void generateSyncTextPage( KPDFPage * /*page*/ ) {;};
 
@@ -81,23 +84,22 @@ class OKULAR_EXPORT Generator : public QObject
         virtual QString getXMLFile() { return QString::null; } ;
         virtual void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /*tBox*/ ) {;};
         virtual void freeGUI( ) {;};
-        // capability querying
 
-        // provides internal search 
+        // search capabilities
         virtual bool supportsSearching() { return false; };
         virtual bool prefersInternalSearching() { return false; };
+        virtual RegularAreaRect * findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
+                    const RegularAreaRect * /*lastRect*/, KPDFPage * /*page*/) { return 0L; };
+        virtual QString getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ ) { return QString(); }
 
         // rotation
         virtual bool supportsRotation() { return false; };
         virtual void setOrientation(QVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/) { ; };
+
+        // paper size
         virtual bool supportsPaperSizes () { return false; }
         virtual QStringList paperSizes ()  { return QStringList(); }
         virtual void setPaperSize (QVector<KPDFPage*> & /*pagesVector*/, int /*newsize*/) { ; }
-
-        // internal search and gettext
-        virtual RegularAreaRect * findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
-                    const RegularAreaRect * /*lastRect*/, KPDFPage * /*page*/) { return 0L; };
-        virtual QString getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ ) { return QString(); }
 
         // may come useful later
         //virtual bool hasFonts() const = 0;
@@ -126,9 +128,6 @@ class OKULAR_EXPORT Generator : public QObject
         /** 'signals' to send events the KPDFDocument **/
         // tell the document that the job has been completed
         void signalRequestDone( PixmapRequest * request ) { m_document->requestDone( request ); }
-
-        /** constructor: takes the Document as a parameter **/
-        Generator( KPDFDocument * doc ) : m_document( doc ) {};
 
     signals:
         void error(const QString & string, int duration);

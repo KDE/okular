@@ -975,7 +975,7 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->state() & Qt::RightButton,
+    bool leftButton = e->state() & Qt::LeftButton,
          rightButton = e->state() & Qt::RightButton;
     switch ( d->mouseMode )
     {
@@ -1116,12 +1116,12 @@ if ( d->document->handleEvent( e ) )
     d->mousePressPos = e->globalPos();
 
     // handle mode dependant mouse press actions
-    bool leftButton = e->button() & Qt::RightButton,
+    bool leftButton = e->button() & Qt::LeftButton,
          rightButton = e->button() & Qt::RightButton;
         
 //   Not sure we should erase the selection when clicking with left.
-//     if ( !(rightButton && d->mouseMode==MouseNormal) && d->mouseTextSelectionPainted )
-//       textSelectionClear();
+     if ( !(rightButton && d->mouseMode==MouseNormal) && d->mouseTextSelectionPainted )
+       textSelectionClear();
     
     switch ( d->mouseMode )
     {
@@ -1190,7 +1190,7 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->buttons() & Qt::RightButton,
+    bool leftButton = e->buttons() & Qt::LeftButton,
          rightButton = e->buttons() & Qt::RightButton;
     switch ( d->mouseMode )
     {
@@ -1239,7 +1239,7 @@ if (d->document->handleEvent( e ) )
                 d->mouseTextSelecting = false;
                 delete d->mouseTextSelectionInfo;
                 d->mouseTextSelectionInfo=0;
-                textSelectionClear();
+//                textSelectionClear();
 //                 textSelectionToClipboard();
               }
               else    
@@ -1705,6 +1705,9 @@ void PageView::textSelection( QList<QRect> * area, const QColor & color )
     
 void PageView::textSelectionClear()
 {
+  // nothing no clear
+  if ( !d->mouseTextSelectionRect ) return;
+
   setCursor( Qt::ArrowCursor  );
   QList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
     end=d->mouseTextSelectionRect->end();
@@ -1732,9 +1735,9 @@ void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveA
 void PageView::selectionEndPoint( int x, int y )
 {
     // clip selection to the viewport
-    QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
-    x = qMax( qMin( x, viewportRect.right() ), viewportRect.left() );
-    y = qMax( qMin( y, viewportRect.bottom() ), viewportRect.top() );
+    QRect viewportRect( viewport()->rect() );
+    x = qBound( viewportRect.left(), x, viewportRect.right() );
+    y = qBound( viewportRect.top(), y, viewportRect.bottom() );
     // if selection changed update rect
     if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
     {

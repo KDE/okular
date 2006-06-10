@@ -144,7 +144,7 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
         dpix = dpiy = 75.0;
       }
       pagesVector[pg] = new KPDFPage(pg, QX11Info::appDpiX () * pageSize.width() / dpix, 
-        QX11Info::appDpiX () * pageSize.height()/dpiy,0);
+        QX11Info::appDpiY () * pageSize.height()/dpiy,0);
   }
 
   // the return value 'true' indicates that this operation was not successful.

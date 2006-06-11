@@ -84,10 +84,13 @@ const DocumentInfo * DjVuGenerator::generateDocumentInfo()
         // compile internal structure reading properties from KDjVu
         QString doctype = m_djvu->getMetaData( "documentType" );
         m_docInfo->set( "documentType", doctype.isEmpty() ? i18n( "Unknown" ) : doctype, i18n( "Type of document" ) );
+        QString numcomponents = m_djvu->getMetaData( "componentFile" );
+        m_docInfo->set( "componentFile", numcomponents.isEmpty() ? i18n( "Unknown" ) : numcomponents, i18n( "Component Files" ) );
     }
     else
     {
         m_docInfo->set( "documentType", i18n( "Unknown" ), i18n( "Type of document" ) );
+        m_docInfo->set( "componentFile", i18n( "Unknown" ), i18n( "Component Files" ) );
     }
 
     return m_docInfo;

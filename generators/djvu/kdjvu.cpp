@@ -256,6 +256,8 @@ bool KDjVu::openFile( const QString & fileName )
     }
     if ( !doctype.isEmpty() )
         d->m_metaData[ "documentType" ] = doctype;
+    // get the number of components
+    d->m_metaData[ "componentFile" ] = QString::number( ddjvu_document_get_filenum( d->m_djvu_document ) );
 
     // read the pages
     for ( int i = 0; i < numofpages; ++i )

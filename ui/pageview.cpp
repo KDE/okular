@@ -640,7 +640,7 @@ if ( d->document->handleEvent( pe ) )
                     // blend selBlendColor into the background pixmap
 //                     QImage blendedImage = blendedPixmap.convertToImage();
 //                     KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
-                    XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.handle(), &col, 
+                    XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.x11PictureHandle(), &col, 
                       0,0, blendRect.width(), blendRect.height());
                     // copy the blended pixmap back to its place
                     pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
@@ -672,8 +672,7 @@ if ( d->document->handleEvent( pe ) )
                           blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                           blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
-//                 QImage blendedImage = blendedPixmap.convertToImage();
-                XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.handle(), &col, 
+                XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.x11PictureHandle(), &col, 
                   0,0, blendRect.width(), blendRect.height());
 
 //                 KImageEffect::blend( d->mouseTextSelectionColor.dark(140), blendedImage, 0.2 );
@@ -1696,10 +1695,15 @@ void PageView::textSelection( QList<QRect> * area, const QColor & color )
         d->autoScrollTimer->stop();
     }
     QList<QRect>::Iterator it=toUpdate.begin(), end=toUpdate.end();
+    QRect r;
+    if ( it != end )
+        r = (*it).adjusted( 0, 0, 1, 1 );
     for (;it!=end;++it)
     {
-        updateContents( *it );
+        r |= (*it).adjusted( 0, 0, 1, 1 );
     }
+    if ( !r.isNull() )
+        updateContents( r );
     d->mouseTextSelectionPainted=true;
 }
     
@@ -1755,18 +1759,25 @@ void PageView::selectionEndPoint( int x, int y )
             if ( intersection.width() > 20 && intersection.height() > 20 )
                 compoundRegion -= intersection;
         }
-        // tassellate region with rects and enqueue paint events
+        // tassellate region with rects and enqueue a global paint event
         QVector<QRect> rects = compoundRegion.rects();
+        QRect r;
+        if ( rects.count() > 0 )
+            r = rects.at(0).adjusted( 0, 0, 1, 1 );
         for ( int i = 0; i < rects.count(); i++ )
-            updateContents( rects[i] );
+        {
+            r |= rects.at(i).adjusted( 0, 0, 1, 1 );
+        }
+        if ( !r.isNull() )
+            updateContents( r );
     }
 }
 
 void PageView::selectionClear()
 {
-    QRect updatedRect = d->mouseSelectionRect.normalized();
+    QRect updatedRect = d->mouseSelectionRect.normalized().adjusted( 0, 0, 1, 1 );
     d->mouseSelecting = false;
-    d->mouseSelectionRect.setCoords( 0, 0, -1, -1 );
+    d->mouseSelectionRect.setCoords( 0, 0, 0, 0 );
     updateContents( updatedRect );
 }
 

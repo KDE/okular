@@ -70,7 +70,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     QLabel *key = new QLabel( i18n( "Pages:" ), page );
     QLabel *value = new QLabel( QString::number( doc->pages() ), page );
 
-    layout->addWidget( key, row, 0 );
+    layout->addWidget( key, row, 0, Qt::AlignRight );
     layout->addWidget( value, row, 1 );
   }
 

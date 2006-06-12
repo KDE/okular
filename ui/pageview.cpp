@@ -1380,7 +1380,7 @@ if (d->document->handleEvent( e ) )
                 {
                     // [3] save pixmap to file
                     QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
-                    if ( fileName.isNull() )
+                    if ( fileName.isEmpty() )
                         d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
                     else
                     {
@@ -1389,9 +1389,9 @@ if (d->document->handleEvent( e ) )
                         if ( !mime )
                             type = "PNG";
                         else
-                            type = mime->name();
-                        copyPix.save( fileName, type.toLatin1().constData() );
-                        d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height() ).arg( type ) );
+                            type = mime->name().section( '/', -1 ).toUpper();
+                        copyPix.save( fileName, qPrintable( type ) );
+                        d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height(), type ) );
                     }
                 }
             }

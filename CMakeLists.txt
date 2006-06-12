@@ -27,24 +27,14 @@ include_directories(
 )
 
 
-########### next target ###############
+# okularcore
 
-set(okularconf_SRCS
+set(okularcore_SRCS
    conf/preferencesdialog.cpp
    conf/dlgaccessibility.cpp
    conf/dlggeneral.cpp
    conf/dlgperformance.cpp
    conf/dlgpresentation.cpp
-)
-
-kde4_add_ui_files(okularconf_SRCS
-   conf/dlgaccessibilitybase.ui
-   conf/dlggeneralbase.ui
-   conf/dlgperformancebase.ui
-   conf/dlgpresentationbase.ui
-)
-
-set(okularcore_SRCS
    core/annotations.cpp
    core/area.cpp
    core/chooseenginedialog.cpp
@@ -57,10 +47,27 @@ set(okularcore_SRCS
 )
 
 kde4_add_ui_files(okularcore_SRCS
+   conf/dlgaccessibilitybase.ui
+   conf/dlggeneralbase.ui
+   conf/dlgperformancebase.ui
+   conf/dlgpresentationbase.ui
    core/chooseenginewidget.ui
 )
 
-set(okularui_SRCS
+kde4_add_kcfg_files(okularcore_SRCS conf/settings.kcfgc )
+
+kde4_automoc(${okularcore_SRCS})
+
+kde4_add_library(okularcore SHARED ${okularcore_SRCS})
+
+target_link_libraries(okularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
+
+install_targets(${LIB_INSTALL_DIR} okularcore )
+
+# okularpart
+
+set(okularpart_SRCS
+   part.cpp
    ui/embeddedfilesdialog.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
@@ -74,32 +81,16 @@ set(okularui_SRCS
    ui/side_reviews.cpp
    ui/thumbnaillist.cpp
    ui/toc.cpp
-)
-
-set(okularagg2_SRCS
    ui/painter_agg2/agg_bezier_arc.cpp
    ui/painter_agg2/agg_path_storage.cpp
    ui/painter_agg2/agg_rasterizer_scanline_aa.cpp
    ui/painter_agg2/agg_trans_affine.cpp
    ui/painter_agg2/agg_vcgen_stroke.cpp
 )
-kde4_add_kcfg_files(okularconf_SRCS conf/settings.kcfgc )
 
-set(okularcore_SRCS ${okularconf_SRCS} ${okularcore_SRCS} )
+kde4_automoc(${okularpart_SRCS})
 
-kde4_automoc(${okularcore_SRCS})
-
-kde4_add_library(okularcore SHARED ${okularcore_SRCS})
-
-target_link_libraries(okularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
-
-install_targets(${LIB_INSTALL_DIR} okularcore )
-
-set(okularpart_PART_SRCS part.cpp ${okularui_SRCS} ${okularagg2_SRCS} )
-
-kde4_automoc(${okularpart_PART_SRCS})
-
-kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_PART_SRCS})
+kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularpart )
 

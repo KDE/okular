@@ -27,7 +27,7 @@ class KRecentFilesAction;
 class KTempFile;
 class KToggleAction;
 
-namespace oKular
+namespace okular
 {
 class Part;
   /**

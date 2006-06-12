@@ -77,7 +77,7 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     // 3.2. create the toolbar button that spawns the popup menu
     QToolButton *optionsMenuAction =  new QToolButton( this );
     addWidget(optionsMenuAction);
-    optionsMenuAction->setIcon( KIcon( "oKular" ) );
+    optionsMenuAction->setIcon( KIcon( "okular" ) );
     optionsMenuAction->setToolTip( i18n( "Filter Options" ) );
     optionsMenuAction->setPopupMode( QToolButton::InstantPopup );
     optionsMenuAction->setMenu( m_menu );

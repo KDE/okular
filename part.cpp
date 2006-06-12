@@ -74,10 +74,10 @@
 #include "core/generator.h"
 #include "core/page.h"
 
-typedef KParts::GenericFactory<oKular::Part> oKularPartFactory;
-K_EXPORT_COMPONENT_FACTORY(liboKularpart, oKularPartFactory)
+typedef KParts::GenericFactory<okular::Part> okularPartFactory;
+K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
 
-using namespace oKular;
+using namespace okular;
 
 Part::Part(QWidget *parentWidget,
            QObject *parent,
@@ -86,18 +86,18 @@ Part::Part(QWidget *parentWidget,
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false)
 {
-	QDBus::sessionBus().registerObject("/oKular", this, QDBusConnection::ExportSlots);
+	QDBus::sessionBus().registerObject("/okular", this, QDBusConnection::ExportSlots);
 
 	// connect the started signal to tell the job the mimetypes we like
 	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
 	// load catalog for translation
-	KGlobal::locale()->insertCatalog("oKular");
+	KGlobal::locale()->insertCatalog("okular");
 
 	// create browser extension (for printing when embedded into browser)
 	m_bExtension = new BrowserExtension(this);
 
 	// we need an instance
-	setInstance(oKularPartFactory::instance());
+	setInstance(okularPartFactory::instance());
 
 	// build the document
 	m_document = new KPDFDocument(&m_loadedGenerators);
@@ -240,12 +240,12 @@ Part::Part(QWidget *parentWidget,
 	m_saveAs = KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
 	m_saveAs->setEnabled( false );
 	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
-	prefs->setText( i18n( "Configure oKular..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
+	prefs->setText( i18n( "Configure okular..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
 	
 	KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
 	genPrefs->setText( i18n( "Configure backends..." ) );
-	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
-	KService::List gens = KServiceTypeTrader::self()->query("oKular/Generator",constraint);
+	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
+	KService::List gens = KServiceTypeTrader::self()->query("okular/Generator",constraint);
 	if (gens.count() <= 0)
 	{
 		genPrefs->setEnabled( false );
@@ -337,7 +337,7 @@ void Part::supportedMimetypes()
 {
     m_supportedMimeTypes.clear();
     QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
-    KService::List offers = KServiceTypeTrader::self()->query("oKular/Generator",constraint);
+    KService::List offers = KServiceTypeTrader::self()->query("okular/Generator",constraint);
     KService::List::ConstIterator iterator = offers.begin();
     KService::List::ConstIterator end = offers.end();
     QStringList::Iterator mimeType;
@@ -347,7 +347,7 @@ void Part::supportedMimetypes()
         KService::Ptr service = *iterator;
         QStringList mimeTypes = service->serviceTypes();
         for (mimeType=mimeTypes.begin();mimeType!=mimeTypes.end();++mimeType)
-            if (! (*mimeType).contains("oKular"))
+            if (! (*mimeType).contains("okular"))
                 m_supportedMimeTypes << *mimeType;
     }
 }
@@ -364,8 +364,8 @@ void Part::setMimeTypes(KIO::Job *job)
 
 void Part::fillGenerators()
 {
-    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-oKularHasInternalSettings])") ;
-    KService::List offers = KServiceTypeTrader::self()->query("oKular/Generator", constraint);
+    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
+    KService::List offers = KServiceTypeTrader::self()->query("okular/Generator", constraint);
     QString propName;
     int count=offers.count();
     if (count > 0)
@@ -467,7 +467,7 @@ KAboutData* Part::createAboutData()
 	// the non-i18n name here must be the same as the directory in
 	// which the part's rc file is installed ('partrcdir' in the
 	// Makefile)
-	KAboutData* aboutData = new KAboutData("oKularpart", I18N_NOOP("oKular::Part"), "0.1");
+	KAboutData* aboutData = new KAboutData("okularpart", I18N_NOOP("okular::Part"), "0.1");
 	aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
 	return aboutData;
 }
@@ -478,7 +478,7 @@ bool Part::slotImportPSFile()
 	if ( app.isEmpty() )
 	{
 		// TODO point the user to their distro packages?
-		KMessageBox::error( widget(), i18n( "The program \"ps2pdf\" was not found, so oKular can not import PS files using it." ), i18n("ps2pdf not found") );
+		KMessageBox::error( widget(), i18n( "The program \"ps2pdf\" was not found, so okular can not import PS files using it." ), i18n("ps2pdf not found") );
 		return false;
 	}
 
@@ -598,7 +598,7 @@ bool Part::closeURL()
 
 void Part::close()
 {
-  if (parent() && (parent()->objectName() == QLatin1String("oKular::Shell")))
+  if (parent() && (parent()->objectName() == QLatin1String("okular::Shell")))
   {
     closeURL();
   }

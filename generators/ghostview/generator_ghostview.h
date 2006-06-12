@@ -101,7 +101,7 @@ class GSGenerator : public Generator
         PixmapRequest* m_sRequest;
 
         // backendish stuff
-//        GSInterpreterLib* pixGenerator;
+        GSInterpreterLib* pixGenerator;
         GSInterpreterCMD* asyncGenerator;
         GSInternalDocument* internalDoc;
 

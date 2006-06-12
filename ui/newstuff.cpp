@@ -291,8 +291,8 @@ class ItemsView : public KHTMLPart
         {
             QString hoverColor = "#000000"; //QApplication::palette().active().highlightedText().name();
             QString hoverBackground = "#f8f8f8"; //QApplication::palette().active().highlight().name();
-            QString starIconPath = locate( "data", "oKular/pics/ghns_star.png" );
-            QString starBgIconPath = locate( "data", "oKular/pics/ghns_star_gray.png" );
+            QString starIconPath = locate( "data", "okular/pics/ghns_star.png" );
+            QString starBgIconPath = locate( "data", "okular/pics/ghns_star_gray.png" );
 
             // default elements style
             QString style;
@@ -435,7 +435,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     horLay->setMargin( 11 );
 
     // create left picture widget (if picture found)
-    QPixmap p( locate( "data", "oKular/pics/ghns.png" ) );
+    QPixmap p( locate( "data", "okular/pics/ghns.png" ) );
     if ( !p.isNull() )
        horLay->addWidget( new ExtendImageWidget( p, this ) );
 

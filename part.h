@@ -47,7 +47,7 @@ class SearchWidget;
 class TOC;
 class MiniBar;
 
-namespace oKular {
+namespace okular {
 
 class BrowserExtension;
 
@@ -62,7 +62,7 @@ class BrowserExtension;
 class Part : public KParts::ReadOnlyPart, public DocumentObserver
 {
 Q_OBJECT
-Q_CLASSINFO("D-Bus Interface", "org.kde.oKular")
+Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
 
 public:
 	// Default constructor

@@ -2,10 +2,10 @@
 Encoding=UTF-8
 Type=Service
 Name=KDE fax libraries
-Comment=Fax backend for oKular
-ServiceTypes=oKular/Generator
+Comment=Fax backend for okular
+ServiceTypes=okular/Generator
 MimeType=image/fax-g3;image/tiff;
 X-KDE-Library=libokularGenerator_fax.la
 X-KDE-Priority=4
-X-KDE-oKularAPIVersion=1
-X-KDE-oKularHasInternalSettings=false
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

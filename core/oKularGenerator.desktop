@@ -1,16 +1,16 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=oKular/Generator
-Comment=File format backend for oKular
+X-KDE-ServiceType=okular/Generator
+Comment=File format backend for okular
 # Priority of the plugin. 0 - disabled
 [PropertyDef::X-KDE-Priority]
 Type=int
 
 # Version of the API.
-[PropertyDef::X-KDE-oKularAPIVersion]
+[PropertyDef::X-KDE-okularAPIVersion]
 Type=int
 
 # Has configuration option
-[PropertyDef::X-KDE-oKularHasInternalSettings]
+[PropertyDef::X-KDE-okularHasInternalSettings]
 Type=bool
 

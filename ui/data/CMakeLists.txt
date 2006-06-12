@@ -1,9 +1,9 @@
 # install annotator xml tools description
-install_files(${DATA_INSTALL_DIR}/oKular FILES
+install_files(${DATA_INSTALL_DIR}/okular FILES
    tools.xml
 )
 # install annotation tool images
-install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
+install_files(${DATA_INSTALL_DIR}/okular/pics FILES
    tool_eraser.png
    tool_hl_orange.png
    tool_hl_pink.png
@@ -12,7 +12,7 @@ install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
    tool_note.png
 )
 # install annotation page images
-install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
+install_files(${DATA_INSTALL_DIR}/okular/pics FILES
    checkmark.png
    circle.png
    comment.png
@@ -30,7 +30,7 @@ install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
    upleftarrow.png
 )
 # install misc images
-install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
+install_files(${DATA_INSTALL_DIR}/okular/pics FILES
    ghns.png
    ghns_star.png
    ghns_star_gray.png
@@ -39,21 +39,21 @@ install_files(${DATA_INSTALL_DIR}/oKular/pics FILES
 #original Makefile.am contents follow:
 
 ## install annotation tool images
-#toolpicsdir = $(kde_datadir)/oKular/pics
+#toolpicsdir = $(kde_datadir)/okular/pics
 #toolpics_DATA = tool_eraser.png tool_hl_orange.png tool_hl_pink.png \
 #                tool_hl_yellow.png tool_ink_green.png tool_note.png
 #
 ## install annotation page images
-#annpicsdir = $(kde_datadir)/oKular/pics
+#annpicsdir = $(kde_datadir)/okular/pics
 #annpics_DATA = checkmark.png circle.png comment.png cross.png help.png \
 #               insert.png key.png newparagraph.png note.png paragraph.png \
 #               rightarrow.png rightpointer.png star.png uparrow.png \
 #               upleftarrow.png
 #
 ## install misc images
-#miscpicsdir = $(kde_datadir)/oKular/pics
+#miscpicsdir = $(kde_datadir)/okular/pics
 #miscpics_DATA = ghns.png ghns_star.png ghns_star_gray.png
 #
 ## install annotator xml tools description
-#xmldir = $(kde_datadir)/oKular
+#xmldir = $(kde_datadir)/okular
 #xml_DATA = tools.xml

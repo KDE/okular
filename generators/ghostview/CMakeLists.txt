@@ -47,7 +47,7 @@ kde4_add_plugin(okularGenerator_ghostview WITH_PREFIX ${okularGenerator_ghostvie
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 
-target_link_libraries(okularGenerator_ghostview  ${KDE4_KDECORE_LIBS} oKularcore qgs ${KDE4_KDEUI_LIBRARY} ${KDE4_KDEPRINT_LIBRARY} )
+target_link_libraries(okularGenerator_ghostview  ${KDE4_KDECORE_LIBS} okularcore qgs ${KDE4_KDEUI_LIBRARY} ${KDE4_KDEPRINT_LIBRARY} )
 
 install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 
@@ -74,7 +74,7 @@ install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_ghostview.deskt
 #kde_module_LTLIBRARIES = libokularGenerator_ghostview.la
 #
 #libokularGenerator_ghostview_la_LIBADD = $(top_builddir)/kpdf/generators/ghostview/conf/libgssettings.la \
-#	$(top_builddir)/kpdf/core/liboKularcore.la $(top_builddir)/kpdf/conf/liboKularconf.la -lqgs $(LIB_KDEUI) $(LIB_KDEPRINT) 
+#	$(top_builddir)/kpdf/core/libokularcore.la $(top_builddir)/kpdf/conf/libokularconf.la -lqgs $(LIB_KDEUI) $(LIB_KDEPRINT) 
 #libokularGenerator_ghostview_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -L$(LIB_GS_PATH)
 #libokularGenerator_ghostview_la_SOURCES = interpreter_cmd.cpp internaldocument.cpp generator_ghostview.cpp gvlogwindow.cpp dscparse_adapter.cpp ps.c dscparse.cpp
 ##libokularGenerator_ghostview_la_METASOURCES = AUTO

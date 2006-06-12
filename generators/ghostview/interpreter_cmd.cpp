@@ -342,15 +342,18 @@ bool GSInterpreterCMD::run( GSInterpreterLib::Position pos)
     m_info.pos=pos;
     m_info.sync=true;
     m_info.handle=m_pixmap->handle();
-	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO1 running:" << isRunning() << endl;
+    if ( isRunning() )
+    {
+	    // in my mind we should never reach here but it seems we do
+	    // so wait a bit until the thread has really ended
+	    wait();
+    }
     start();
-	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO2" << endl;
     return true;
 }
 
 void GSInterpreterCMD::run()
 {
-	kDebug() << "CUNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO3" << endl;
     lock();
     // we are inside a thread
     kDebug(4655)<< "Generation thread started " << getpid() << endl;

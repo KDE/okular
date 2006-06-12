@@ -911,8 +911,8 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, KPDFPage * page 
         //a->window.width = a->window.width < 200 ? 200 : a->window.width;
         // a->window.height = a->window.height < 120 ? 120 : a->window.height;
         // resize annotation's geometry to an icon
-        // TODO oKular geom.right = geom.left + 22.0 / page->width();
-        // TODO oKular geom.bottom = geom.top + 22.0 / page->height();
+        // TODO okular geom.right = geom.left + 22.0 / page->width();
+        // TODO okular geom.bottom = geom.top + 22.0 / page->height();
         
         // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
         QDomDocument doc;

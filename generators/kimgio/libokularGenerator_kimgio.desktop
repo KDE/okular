@@ -2,10 +2,10 @@
 Encoding=UTF-8
 Type=Service
 Name=KDE Image libraries
-Comment=Image backend for oKular
-ServiceTypes=oKular/Generator
+Comment=Image backend for okular
+ServiceTypes=okular/Generator
 MimeType=image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/gif;image/x-hdr;image/x-ico;image/jp2;image/jpeg;video/x-mng;image/x-portable-bitmap;image/x-pcx;image/x-portable-greymap;image/png;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-targa;image/tiff;image/x-xbm;image/x-xcf-gimp;image/x-xpm;
 X-KDE-Library=libokularGenerator_kimgio.la
 X-KDE-Priority=1
-X-KDE-oKularAPIVersion=1
-X-KDE-oKularHasInternalSettings=false
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

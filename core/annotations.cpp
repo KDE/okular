@@ -659,11 +659,11 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
 /** StampAnnotation [Annotation] */
 
 StampAnnotation::StampAnnotation()
-    : Annotation(), stampIconName( "oKular" )
+    : Annotation(), stampIconName( "okular" )
 {}
 
 StampAnnotation::StampAnnotation( const QDomNode & node )
-    : Annotation( node ), stampIconName( "oKular" )
+    : Annotation( node ), stampIconName( "okular" )
 {
     // loop through the whole children looking for a 'stamp' element
     QDomNode subNode = node.firstChild();
@@ -693,7 +693,7 @@ void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
     node.appendChild( stampElement );
 
     // append the optional attributes
-    if ( stampIconName != "oKular" )
+    if ( stampIconName != "okular" )
         stampElement.setAttribute( "icon", stampIconName );
 }
 

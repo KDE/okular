@@ -41,7 +41,7 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
     Generator ( doc ),
     m_converted(false)
 {
-//    pixGenerator = 0;
+    pixGenerator = 0;
     asyncGenerator = 0;
     internalDoc = 0;
     dscForPDF = 0;
@@ -59,7 +59,7 @@ GSGenerator::GSGenerator( KPDFDocument * doc ) :
 GSGenerator::~GSGenerator()
 {
     delete asyncGenerator;
-//     delete pixGenerator;
+    delete pixGenerator;
 }
 
 void GSGenerator::addPages( KConfigDialog *dlg )
@@ -181,45 +181,45 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > 
         connect (asyncGenerator, SIGNAL (Finished(QPixmap *)),
          this, SLOT(slotAsyncPixmapGenerated (QPixmap *)));
     }
-//     if( !pixGenerator )
-//     {
-//         pixGenerator = new GSInterpreterLib ();
-//         connect (pixGenerator, SIGNAL (Finished(const QImage*)),
-//          this, SLOT(slotPixmapGenerated (const QImage*)));
-// 
-//         if ( GSSettings::messages() )
-//         {
-//             pixGenerator->setBuffered(true);
-//             connect (pixGenerator, SIGNAL (io( GSInterpreterLib::MessageType, const char*, int )),
-//                 m_logWindow, SLOT (append(GSInterpreterLib::MessageType, const char*,int)));
-//         }
-//     }
+    if( !pixGenerator )
+    {
+        pixGenerator = new GSInterpreterLib ();
+        connect (pixGenerator, SIGNAL (Finished(const QImage*)),
+         this, SLOT(slotPixmapGenerated (const QImage*)));
+
+        if ( GSSettings::messages() )
+        {
+            pixGenerator->setBuffered(true);
+            connect (pixGenerator, SIGNAL (io( GSInterpreterLib::MessageType, const char*, int )),
+                m_logWindow, SLOT (append(GSInterpreterLib::MessageType, const char*,int)));
+        }
+    }
 
     if ( GSSettings::platformFonts() )
     {
-//         pixGenerator->setPlatformFonts(false);
+        pixGenerator->setPlatformFonts(false);
         asyncGenerator->setPlatformFonts(false);
     }
 
     if ( GSSettings::antialiasing())
     {
-//         pixGenerator->setAABits(4,2);
+        pixGenerator->setAABits(4,2);
         asyncGenerator->setAABits(4,2);
     }
     else
     {
-//         pixGenerator->setAABits(1,1);
+        pixGenerator->setAABits(1,1);
         asyncGenerator->setAABits(1,1);
     }
-//        pixGenerator->setProgressive(false);
+    pixGenerator->setProgressive(false);
 // ESTO YA ESTAVA COMENTADO    m_pages=pagesVector;
     return loadDocumentWithDSC(name,pagesVector,ps);
 }
 
 void GSGenerator::slotPixmapGenerated(const QImage* img)
 {
-/*    kWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id << " " <<m_sRequest->width << "x" << m_sRequest->height << "@" << m_sRequest->pageNumber << " async == " << m_sRequest->async << endl;
-    kWarning() << "sync gen is ready:" << pixGenerator->ready() << endl;
+    kWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id << " " <<m_sRequest->width << "x" << m_sRequest->height << "@" << m_sRequest->pageNumber << " async == " << m_sRequest->async << endl;
+//    kWarning() << "sync gen is ready:" << pixGenerator->ready() << endl;
     QPixmap * rPix;
     rPix = new QPixmap(img->size());
     rPix->fill();
@@ -229,7 +229,7 @@ void GSGenerator::slotPixmapGenerated(const QImage* img)
     kWarning() << "unlocking \n";
     syncLock.unlock();
     m_sRequest->page->setPixmap( m_sRequest->id, rPix );
-    signalRequestDone( m_sRequest );*/
+    signalRequestDone( m_sRequest );
 }
 
 void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
@@ -332,7 +332,7 @@ bool GSGenerator::loadPages( QVector< KPDFPage * > & pagesVector )
 
 bool GSGenerator::initInterpreter()
 {
-/*    if (! pixGenerator->running())
+    if (! pixGenerator->running())
     {
         if( pixGenerator->start(true) && internalDoc->dsc()->isStructured() )
         {
@@ -342,8 +342,7 @@ bool GSGenerator::initInterpreter()
             pixGenerator->run ( internalDoc->file() , internalDoc->setup(), false );
         }
     }
-    return pixGenerator->running();*/
-    return true;
+    return pixGenerator->running();
 }
 
 bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< KPDFPage * > & pagesVector, bool ps )
@@ -392,7 +391,7 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
     }
     else
     {
-/*
+
       syncLock.lock();
 //        disconnect (pixGenerator, SIGNAL (Finished(const QImage*)),
 //          this, SLOT(slotPixmapGenerated (const QImage*)));
@@ -412,11 +411,11 @@ void GSGenerator::generatePixmap( PixmapRequest * req )
       }
 /*       connect (pixGenerator, SIGNAL (Finished(const QImage*)),
          this, SLOT(slotPixmapGenerated (const QImage*)));*/
-/*      this->m_sRequest=req;
+      this->m_sRequest=req;
 kWarning() << "checking req id=" << req->id << " " <<req->width << "x" << req->height << "@" << req->pageNumber << " async == " << req->async << endl;
 kWarning() << "generator running : " << pixGenerator->running() << endl;
       pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo),true);
-*/      
+      
     }
 }
 
@@ -424,8 +423,8 @@ kWarning() << "generator running : " << pixGenerator->running() << endl;
 bool GSGenerator::canGeneratePixmap( bool async )
 {
 //     kWarning () << "ready Async/Sync " << (! docLock.locked()) << "/ " << (( pixGenerator ) ? !syncLock.locked() : true) << " asking for async: " << async << endl;
-    /*if (async)*/ return !docLock.locked();
-//    return ( pixGenerator ) ?  pixGenerator->ready() && !syncLock.locked() : true;
+      if (async) return !docLock.locked();
+      return !syncLock.locked();
 }
 
 const DocumentInfo * GSGenerator::generateDocumentInfo()

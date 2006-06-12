@@ -30,7 +30,7 @@ kde4_add_plugin(okularGenerator_chmlib WITH_PREFIX ${okularGenerator_chmlib_PART
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_chmlib )
 
-target_link_libraries(okularGenerator_chmlib  ${KDE4_KDECORE_LIBS} oKularcore ${CHM_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KHTML_LIBS} )
+target_link_libraries(okularGenerator_chmlib  ${KDE4_KDECORE_LIBS} okularcore ${CHM_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KHTML_LIBS} )
 
 install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_chmlib )
 
@@ -55,8 +55,8 @@ install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_chmlib.desktop 
 #
 #INCLUDES = -I$(srcdir)/../.. -I../.. $(all_includes)
 #
-#libokularGenerator_chmlib_la_LIBADD = ../../core/liboKularcore.la \
-#	../../conf/liboKularconf.la \
+#libokularGenerator_chmlib_la_LIBADD = ../../core/libokularcore.la \
+#	../../conf/libokularconf.la \
 #	lib/libchmfile.la \
 #	$(LIB_KDEPRINT) $(LIB_KDEUI) $(LIB_KHTML) -lchm
 #libokularGenerator_chmlib_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)

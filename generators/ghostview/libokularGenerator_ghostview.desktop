@@ -2,10 +2,10 @@
 Encoding=UTF-8
 Type=Service
 Name=Ghostscript
-Comment=Ghostscript PS/PDF backend for oKular
-ServiceTypes=oKular/Generator
+Comment=Ghostscript PS/PDF backend for okular
+ServiceTypes=okular/Generator
 MimeType=application/postscript;image/x-eps;
 X-KDE-Library=libokularGenerator_ghostview.la
 X-KDE-Priority=2
-X-KDE-oKularAPIVersion=1
-X-KDE-oKularHasInternalSettings=true
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=true

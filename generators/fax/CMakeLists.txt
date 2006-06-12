@@ -17,7 +17,7 @@ kde4_add_plugin(okularGenerator_fax WITH_PREFIX ${okularGenerator_fax_PART_SRCS}
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_fax )
 
-target_link_libraries(okularGenerator_fax  ${KDE4_KDECORE_LIBS} oKularcore ${KDE4_KDEUI_LIBS} kfaximage )
+target_link_libraries(okularGenerator_fax  ${KDE4_KDECORE_LIBS} okularcore ${KDE4_KDEUI_LIBS} kfaximage )
 
 install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_fax )
 
@@ -41,8 +41,8 @@ kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 #kde_module_LTLIBRARIES = \
 #    libokularGenerator_fax.la
 #
-#libokularGenerator_fax_la_LIBADD = ../../core/liboKularcore.la \
-#	../../conf/liboKularconf.la $(LIB_KDEUI) \
+#libokularGenerator_fax_la_LIBADD = ../../core/libokularcore.la \
+#	../../conf/libokularconf.la $(LIB_KDEUI) \
 #	libkfaximage/libkfaximage.la
 #
 #libokularGenerator_fax_la_LDFLAGS = -module -avoid-version  $(KDE_PLUGIN)  $(all_libraries)

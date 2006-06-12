@@ -1,8 +1,8 @@
-project(oKular)
+project(okular)
 
 option(
    OKULAR_FORCE_DRM
-   "Forces oKular to check for DRM to decide if you can copy/print protected pdf. (default=no)"
+   "Forces okular to check for DRM to decide if you can copy/print protected pdf. (default=no)"
    OFF
 )
 if(OKULAR_FORCE_DRM STREQUAL "ON")
@@ -29,7 +29,7 @@ include_directories(
 
 ########### next target ###############
 
-set(oKularconf_SRCS
+set(okularconf_SRCS
    conf/preferencesdialog.cpp
    conf/dlgaccessibility.cpp
    conf/dlggeneral.cpp
@@ -37,14 +37,14 @@ set(oKularconf_SRCS
    conf/dlgpresentation.cpp
 )
 
-kde4_add_ui_files(oKularconf_SRCS
+kde4_add_ui_files(okularconf_SRCS
    conf/dlgaccessibilitybase.ui
    conf/dlggeneralbase.ui
    conf/dlgperformancebase.ui
    conf/dlgpresentationbase.ui
 )
 
-set(oKularcore_SRCS
+set(okularcore_SRCS
    core/annotations.cpp
    core/area.cpp
    core/chooseenginedialog.cpp
@@ -56,11 +56,11 @@ set(oKularcore_SRCS
    core/textpage.cpp
 )
 
-kde4_add_ui_files(oKularcore_SRCS
+kde4_add_ui_files(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
-set(oKularui_SRCS
+set(okularui_SRCS
    ui/embeddedfilesdialog.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
@@ -76,42 +76,42 @@ set(oKularui_SRCS
    ui/toc.cpp
 )
 
-set(oKularagg2_SRCS
+set(okularagg2_SRCS
    ui/painter_agg2/agg_bezier_arc.cpp
    ui/painter_agg2/agg_path_storage.cpp
    ui/painter_agg2/agg_rasterizer_scanline_aa.cpp
    ui/painter_agg2/agg_trans_affine.cpp
    ui/painter_agg2/agg_vcgen_stroke.cpp
 )
-kde4_add_kcfg_files(oKularconf_SRCS conf/settings.kcfgc )
+kde4_add_kcfg_files(okularconf_SRCS conf/settings.kcfgc )
 
-set(oKularcore_SRCS ${oKularconf_SRCS} ${oKularcore_SRCS} )
+set(okularcore_SRCS ${okularconf_SRCS} ${okularcore_SRCS} )
 
-kde4_automoc(${oKularcore_SRCS})
+kde4_automoc(${okularcore_SRCS})
 
-kde4_add_library(oKularcore SHARED ${oKularcore_SRCS})
+kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
-target_link_libraries(oKularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
+target_link_libraries(okularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
 
-install_targets(${LIB_INSTALL_DIR} oKularcore )
+install_targets(${LIB_INSTALL_DIR} okularcore )
 
-set(oKularpart_PART_SRCS part.cpp ${oKularui_SRCS} ${oKularagg2_SRCS} )
+set(okularpart_PART_SRCS part.cpp ${okularui_SRCS} ${okularagg2_SRCS} )
 
-kde4_automoc(${oKularpart_PART_SRCS})
+kde4_automoc(${okularpart_PART_SRCS})
 
-kde4_add_plugin(oKularpart WITH_PREFIX ${oKularpart_PART_SRCS})
+kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_PART_SRCS})
 
-kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} oKularpart )
+kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularpart )
 
-target_link_libraries(oKularpart  oKularcore ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
+target_link_libraries(okularpart  okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
 
-install_targets(${PLUGIN_INSTALL_DIR} oKularpart )
+install_targets(${PLUGIN_INSTALL_DIR} okularpart )
 
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  oKular_part.desktop )
-install_files( ${DATA_INSTALL_DIR}/oKularpart FILES  part.rc )
+install_files( ${SERVICES_INSTALL_DIR} FILES  okular_part.desktop )
+install_files( ${DATA_INSTALL_DIR}/okularpart FILES  part.rc )
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 
@@ -129,26 +129,26 @@ kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 #
 #messages: rc.cpp
 #	$(EXTRACTRC) `find . -name "*.rc" -o -name "*.ui"` >> rc.cpp
-#	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.cc" -o -name "*.h"` -o $(podir)/oKular.pot
+#	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.cc" -o -name "*.h"` -o $(podir)/okular.pot
 #
-#KDE_ICON = oKular
+#KDE_ICON = okular
 #
 ##########################################################################
 ## KPART SECTION
 ##########################################################################
-#kde_module_LTLIBRARIES = liboKularpart.la
+#kde_module_LTLIBRARIES = libokularpart.la
 #
-#liboKularpart_la_SOURCES = dcop.skel part.cpp
-#liboKularpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-#liboKularpart_la_LIBADD  = conf/liboKularconf.la core/liboKularcore.la \
-#                         ui/liboKularui.la ui/painter_agg2/libagg2.la $(LIB_KPARTS) \
+#libokularpart_la_SOURCES = dcop.skel part.cpp
+#libokularpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+#libokularpart_la_LIBADD  = conf/libokularconf.la core/libokularcore.la \
+#                         ui/libokularui.la ui/painter_agg2/libagg2.la $(LIB_KPARTS) \
 #                         $(LIB_KFILE) $(LIB_KDEPRINT) $(LIB_KUTILS) $(LIB_KNEWSTUFF) \
 #                         $(LIB_KHTML) -lm 
 #
 #partdesktopdir   = $(kde_servicesdir)
-#partdesktop_DATA = oKular_part.desktop
+#partdesktop_DATA = okular_part.desktop
 #
-#partrcdir   = $(kde_datadir)/oKularpart
+#partrcdir   = $(kde_datadir)/okularpart
 #partrc_DATA = part.rc
 #
 #part.lo: conf/settings.h

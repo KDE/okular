@@ -177,7 +177,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     setAttribute( Qt::WA_OpaquePaintEvent );
     setAttribute( Qt::WA_StaticContents );
 
-    setObjectName( QLatin1String( "oKular::pageView" ) );
+    setObjectName( QLatin1String( "okular::pageView" ) );
 
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );

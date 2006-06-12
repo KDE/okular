@@ -29,7 +29,7 @@
   
 This class provides a well-documented reference implementation of a
 Generator, suitable as a starting point for a real-world
-implementation. This class is responsible for providing abstract layer of oKular
+implementation. This class is responsible for providing abstract layer of okular
 with all the needed document information.
 */
 

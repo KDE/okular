@@ -18,7 +18,7 @@ kde4_add_plugin(okularGenerator_djvu WITH_PREFIX ${okularGenerator_djvu_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_djvu )
 
-target_link_libraries(okularGenerator_djvu ${KDE4_KDECORE_LIBS} oKularcore ${DJVULIBRE_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} )
+target_link_libraries(okularGenerator_djvu ${KDE4_KDECORE_LIBS} okularcore ${DJVULIBRE_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} )
 
 install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_djvu )
 

@@ -2,10 +2,10 @@
 Encoding=UTF-8
 Type=Service
 Name=Poppler
-Comment=PDF backend for oKular using poppler
-ServiceTypes=oKular/Generator
+Comment=PDF backend for okular using poppler
+ServiceTypes=okular/Generator
 MimeType=application/x-pdf;application/pdf
 X-KDE-Library=libokularGenerator_poppler.la
 X-KDE-Priority=1
-X-KDE-oKularAPIVersion=1
-X-KDE-oKularHasInternalSettings=false
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

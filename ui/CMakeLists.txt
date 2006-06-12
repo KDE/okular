@@ -8,8 +8,8 @@ add_subdirectory( data )
 #
 #METASOURCES = AUTO
 #
-#noinst_LTLIBRARIES = liboKularui.la
-#liboKularui_la_SOURCES = pagepainter.cpp pageview.cpp pageviewutils.cpp \
+#noinst_LTLIBRARIES = libokularui.la
+#libokularui_la_SOURCES = pagepainter.cpp pageview.cpp pageviewutils.cpp \
 #                       pageviewannotator.cpp minibar.cpp thumbnaillist.cpp \
 #                       searchwidget.cpp toc.cpp propertiesdialog.cpp \
 #                       presentationwidget.cpp side_reviews.cpp newstuff.cpp

@@ -19,7 +19,7 @@
 #include <klocale.h>
 
 static const char description[] =
-I18N_NOOP("oKular, a Universal document viewer");
+I18N_NOOP("okular, a Universal document viewer");
 
 static const char version[] = "0.5";
 
@@ -32,15 +32,15 @@ static KCmdLineOptions options[] =
 int main(int argc, char** argv)
 {
     KAboutData about(
-        "oKular",
-        I18N_NOOP("oKular"),
+        "okular",
+        I18N_NOOP("okular"),
         version,
         description,
         KAboutData::License_GPL,
         "(C) 2002 Wilco Greven, Christophe Devriese\n(C) 2004-2005 Albert Astals Cid, Enrico Ros\n(C) 2005 Piotr Szymanski");
 
     about.addAuthor("Albert Astals Cid", I18N_NOOP("Current mantainer"), "astals11@terra.es");
-    about.addAuthor("Piotr Szymanski", I18N_NOOP("Created oKular from KPDF codebase"), "djurban@pld-dc.org");
+    about.addAuthor("Piotr Szymanski", I18N_NOOP("Created okular from KPDF codebase"), "djurban@pld-dc.org");
     about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
@@ -55,21 +55,21 @@ int main(int argc, char** argv)
     // see if we are starting with session management
     if (app.isSessionRestored())
     {
-        RESTORE(oKular::Shell);
+        RESTORE(okular::Shell);
     } else {
         // no session.. just start up normally
         KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
         if (args->count() == 0)
         {
-            oKular::Shell* widget = new oKular::Shell;
+            okular::Shell* widget = new okular::Shell;
             widget->show();
         }
         else
         {
             for (int i = 0; i < args->count(); ++i)
             {
-                oKular::Shell* widget = new oKular::Shell(args->url(i));
+                okular::Shell* widget = new okular::Shell(args->url(i));
                 widget->show();
             }
         }

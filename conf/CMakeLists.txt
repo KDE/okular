@@ -1,4 +1,4 @@
-install_files( ${KCFG_INSTALL_DIR} FILES  oKular.kcfg )
+install_files( ${KCFG_INSTALL_DIR} FILES  okular.kcfg )
 
 #original Makefile.am contents follow:
 
@@ -6,12 +6,12 @@ install_files( ${KCFG_INSTALL_DIR} FILES  oKular.kcfg )
 #
 #METASOURCES = AUTO
 #
-#liboKularconf_la_SOURCES = dlggeneral.ui dlgperformance.ui dlgaccessibility.ui \
+#libokularconf_la_SOURCES = dlggeneral.ui dlgperformance.ui dlgaccessibility.ui \
 #                         dlgpresentation.ui \
 #                         preferencesdialog.cpp settings.kcfgc
 #
-#noinst_LTLIBRARIES = liboKularconf.la
+#noinst_LTLIBRARIES = libokularconf.la
 #
-#kde_kcfg_DATA = oKular.kcfg
+#kde_kcfg_DATA = okular.kcfg
 #
 #preferencesdialog.lo: settings.h

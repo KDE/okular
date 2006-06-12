@@ -158,7 +158,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
-    KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"oKular/Generator",constraint);
+    KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
     if (offers.isEmpty())
     {
 	kWarning() << "No plugin for '" << mime->name() << "' mimetype." << endl;
@@ -217,7 +217,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
             kWarning() << "Sth broke." << endl;
             return false;
         }
-        if ( offers[hRank]->property("[X-KDE-oKularHasInternalSettings]").toBool() )
+        if ( offers[hRank]->property("[X-KDE-okularHasInternalSettings]").toBool() )
         {
             m_loadedGenerators->insert(propName,generator);
             m_usingCachedGenerator=true;
@@ -1131,7 +1131,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
-                        KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety oKular does not allow that.") );
+                        KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
                         return;
                     }
                 }
@@ -1139,7 +1139,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 {
                     // this case is a link pointing to an executable with no parameters
                     // core developers find unacceptable executing it even after asking the user
-                    KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety oKular does not allow that.") );
+                    KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
                     return;
                 }
             }

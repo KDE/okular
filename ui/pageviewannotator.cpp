@@ -213,10 +213,10 @@ class PickPointEngine : public AnnotatorEngine
             // parse engine specific attributes
             QString pixmapName = engineElement.attribute( "hoverIcon" );
             if ( pixmapName.isNull() )
-                pixmapName = "oKular";
+                pixmapName = "okular";
 
             // create engine objects
-            pixmap = new QPixmap( DesktopIcon( "oKular", 32 ) );
+            pixmap = new QPixmap( DesktopIcon( "okular", 32 ) );
         }
 
         ~PickPointEngine()
@@ -370,7 +370,7 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, KPDFDocument * storage 
     m_toolBar( 0 ), m_engine( 0 ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
-    QFile infoFile( locate("data", "oKular/tools.xml") );
+    QFile infoFile( locate("data", "okular/tools.xml") );
     if ( infoFile.exists() && infoFile.open( QIODevice::ReadOnly ) )
     {
         QDomDocument doc( "annotatingTools" );

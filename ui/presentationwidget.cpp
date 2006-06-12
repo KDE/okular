@@ -520,8 +520,8 @@ void PresentationWidget::generateIntroPage( QPainter & p )
         p.fillRect( 0, i, m_width, 1, QColor( k, k, k ) );
     }
 
-    // draw oKular logo in the four corners
-    QPixmap logo = DesktopIcon( "oKular", 64 );
+    // draw okular logo in the four corners
+    QPixmap logo = DesktopIcon( "okular", 64 );
     if ( !logo.isNull() )
     {
         p.drawPixmap( 5, 5, logo );

@@ -45,16 +45,16 @@
 // local includes
 #include "shell.h"
 
-using namespace oKular;
+using namespace okular;
 
 Shell::Shell()
-  : KParts::MainWindow(0, "oKular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+  : KParts::MainWindow(0, "okular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   init();
 }
 
 Shell::Shell(const KUrl &url)
-  : KParts::MainWindow(0, "oKular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+  : KParts::MainWindow(0, "okular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   m_openUrl = url;
   init();
@@ -69,7 +69,7 @@ void Shell::init()
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  KParts::Factory *factory = (KParts::Factory *) KLibLoader::self()->factory("liboKularpart");
+  KParts::Factory *factory = (KParts::Factory *) KLibLoader::self()->factory("libokularpart");
   if (factory)
   {
     // now that the Part is loaded, we cast it to a Part to get
@@ -91,7 +91,7 @@ void Shell::init()
   {
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
-    KMessageBox::error(this, i18n("Unable to find oKular part."));
+    KMessageBox::error(this, i18n("Unable to find okular part."));
     m_part = 0;
     return;
   }
@@ -198,7 +198,7 @@ void Shell::readProperties(KConfig* config)
 QStringList* Shell::fileFormats()
 {
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
-    KService::List offers = KServiceTypeTrader::self()->query("oKular/Generator",constraint);
+    KService::List offers = KServiceTypeTrader::self()->query("okular/Generator",constraint);
     QStringList supportedMimeTypes;
     QStringList * supportedPattern;
 
@@ -224,7 +224,7 @@ QStringList* Shell::fileFormats()
         
         for (mimeType=mimeTypes.begin();mimeType!=mimeTypes.end();++mimeType)
         {
-            if (! (*mimeType).contains("oKular"))
+            if (! (*mimeType).contains("okular"))
             {
                 supportedMimeTypes << *mimeType;
             
@@ -370,7 +370,7 @@ void Shell::fileOpen()
     }
     else
     {
-        KMessageBox::error(this, i18n("No oKular plugins were found."));
+        KMessageBox::error(this, i18n("No okular plugins were found."));
         slotQuit();
     }
 }

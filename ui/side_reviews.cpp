@@ -270,7 +270,7 @@ void Reviews::addContents( const KPDFPage * page )
             new QTreeWidgetItem( authorItem ) :
             new QTreeWidgetItem( m_listView );
         singleItem->setText( 0, annotation->contents );
-        singleItem->setIcon( 0, KIcon( "oKular" ) );
+        singleItem->setIcon( 0, KIcon( "okular" ) );
     }
 }
 

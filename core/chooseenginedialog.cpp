@@ -16,8 +16,10 @@
 #include "chooseenginedialog.h"
 
 ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QString &mime, QWidget * parent )
-    : KDialog(parent, i18n("Generator Selection"), Ok | Cancel)
+    : KDialog( parent )
 {
+    setCaption( i18n( "Generator Selection" ) );
+    setButtons( Ok | Cancel );
     QWidget *main = new QWidget( this );
     setMainWidget( main );
     m_widget = new Ui_ChooseEngineWidget();

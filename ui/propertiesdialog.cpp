@@ -29,7 +29,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   setButtons( Ok );
 
   // PROPERTIES
-  QFrame *page = new QFrame( this );
+  QFrame *page = new QFrame();
   addPage( page, i18n( "Properties" ) );
   QGridLayout *layout = new QGridLayout( page );
   layout->setMargin( marginHint() );
@@ -84,7 +84,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   const DocumentFonts * fonts = doc->documentFonts();
   if ( fonts ) {
     // create fonts tab and layout it
-    QFrame *page2 = new QFrame( this );
+    QFrame *page2 = new QFrame();
     addPage(page2, i18n("Fonts"));
     page2Layout = new QVBoxLayout(page2);
     page2Layout->setMargin(marginHint());

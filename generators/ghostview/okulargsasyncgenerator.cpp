@@ -8,7 +8,7 @@
  ***************************************************************************/
 
 
-#include "kpdflibgsasyncgenerator.h"
+#include "okulargsasyncgenerator.h"
 
 #include <qgs.h>
 
@@ -104,7 +104,7 @@ int main (int argc, char* argv[])
 {
     try
     {
-        KCmdLineArgs::init(argc, argv, "kpdflibgsasyncgenerator", "kpdflibgsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
+        KCmdLineArgs::init(argc, argv, "okulargsasyncgenerator", "okulargsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
         KCmdLineArgs::addCmdLineOptions( options );
         KApplication app;
         // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
@@ -152,5 +152,5 @@ int main (int argc, char* argv[])
     return 0;
 }
 
-#include "kpdflibgsasyncgenerator.moc"
+#include "okulargsasyncgenerator.moc"
 

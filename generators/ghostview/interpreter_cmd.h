@@ -20,7 +20,7 @@
 
 #include "core/generator.h"
 
-#include "kpdflibgsasyncgenerator.h"
+#include "okulargsasyncgenerator.h"
 #include "internaldocument.h"
 
 #define GS_DATAREADY_ID 6989

@@ -199,7 +199,7 @@ bool GSInterpreterCMD::startInterpreter()
     m_processData=new ProcessData();
     m_process = new KProcess;
 
-    (*m_process) << QString("kpdflibgsasyncgenerator");
+    (*m_process) << QString("okulargsasyncgenerator");
     // Order of sending: fileName, msgQueueId, media type, magnify, orientation, expected width, height
     QStringList list;
     list << m_name
@@ -236,8 +236,8 @@ bool GSInterpreterCMD::startInterpreter()
     }
     else
     {
-        emit error(i18n( "Could not start kpdf's libgs helper application. This is most likely "
-            "caused by kpdflibgsasyncgenerator not being installed, or installed to a "
+        emit error(i18n( "Could not start the libgs helper application of okular. This is most likely "
+            "caused by okulargsasyncgenerator not being installed, or installed to a "
             "directory not listed in the environment PATH variable."),0);
         kDebug(4655) << "Could not start helper" << endl;
         return false;

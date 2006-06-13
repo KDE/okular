@@ -10,17 +10,17 @@ add_definitions(${KDE4_ENABLE_EXCEPTIONS})
 
 ########### next target ###############
 
-set(kpdflibgsasyncgenerator_SRCS
-   kpdflibgsasyncgenerator.cpp
+set(okulargsasyncgenerator_SRCS
+   okulargsasyncgenerator.cpp
 )
 
-kde4_automoc(${kpdflibgsasyncgenerator_SRCS})
+kde4_automoc(${okulargsasyncgenerator_SRCS})
 
-kde4_add_executable(kpdflibgsasyncgenerator ${kpdflibgsasyncgenerator_SRCS})
+kde4_add_executable(okulargsasyncgenerator ${okulargsasyncgenerator_SRCS})
 
-target_link_libraries(kpdflibgsasyncgenerator  ${KDE4_KDECORE_LIBS} qgs )
+target_link_libraries(okulargsasyncgenerator  ${KDE4_KDECORE_LIBS} qgs )
 
-install_targets(/bin kpdflibgsasyncgenerator )
+install_targets(/bin okulargsasyncgenerator )
 
 
 ########### next target ###############

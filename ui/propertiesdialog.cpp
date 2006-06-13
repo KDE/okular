@@ -22,10 +22,15 @@
 #include "core/document.h"
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
-  : KDialogBase( Tabbed, i18n( "Unknown File" ), Ok, Ok, parent, 0, true, true )
+  : KPageDialog( parent )
 {
+  setFaceType( Tabbed );
+  setCaption( i18n( "Unknown File" ) );
+  setButtons( Ok );
+
   // PROPERTIES
-  QFrame *page = addPage(i18n("Properties"));
+  QFrame *page = new QFrame( this );
+  addPage( page, i18n( "Properties" ) );
   QGridLayout *layout = new QGridLayout( page );
   layout->setMargin( marginHint() );
   layout->setSpacing( spacingHint() );
@@ -79,7 +84,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   const DocumentFonts * fonts = doc->documentFonts();
   if ( fonts ) {
     // create fonts tab and layout it
-    QFrame *page2 = addPage(i18n("Fonts"));
+    QFrame *page2 = new QFrame( this );
+    addPage(page2, i18n("Fonts"));
     page2Layout = new QVBoxLayout(page2);
     page2Layout->setMargin(marginHint());
     page2Layout->setSpacing(spacingHint());

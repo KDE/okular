@@ -10,6 +10,7 @@
 #include <qlist.h>
 #include <qtextedit.h>
 #include <qlabel.h>
+#include <qpixmap.h>
 #include <kdebug.h>
 
 #include <k3listview.h>

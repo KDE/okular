@@ -13,11 +13,11 @@
 #include <qabstractitemmodel.h>
 #include <qlist.h>
 
-#include <kdialogbase.h>
+#include <kpagedialog.h>
 
 class KPDFDocument;
 
-class PropertiesDialog : public KDialogBase
+class PropertiesDialog : public KPageDialog
 {
   public:
   	PropertiesDialog( QWidget *parent, KPDFDocument *doc );

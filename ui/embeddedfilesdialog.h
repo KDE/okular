@@ -12,6 +12,7 @@
 
 #include <kdialog.h>
 
+class QTreeWidgetItem;
 class KPDFDocument;
 
 class EmbeddedFilesDialog : public KDialog

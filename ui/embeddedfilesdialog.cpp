@@ -19,8 +19,12 @@
 #include "core/document.h"
 #include "embeddedfilesdialog.h"
 
-EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *document) : KDialog(parent, i18n("Embedded Files"), Close | User1, 0, KStdGuiItem::save())
+EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *document) : KDialog(parent)
 {
+	setCaption(i18n("Embedded Files"));
+	setButtons(Close | User1);
+	setButtonGuiItem(User1, KStdGuiItem::save());
+
 	m_tw = new QTreeWidget(this);
 	setMainWidget(m_tw);
 	QStringList header;

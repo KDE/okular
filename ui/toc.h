@@ -16,6 +16,7 @@
 #include "core/observer.h"
 
 class QTreeWidget;
+class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
 class KPDFDocument;
 

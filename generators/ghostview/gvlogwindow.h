@@ -11,7 +11,6 @@
 #define LOGWINDOW_H
 
 #include "interpreter.h"
-#include <kdialogbase.h>
 #include <kvbox.h>
 #include <qtimer.h>
 

@@ -716,7 +716,11 @@ void Part::enableTOC(bool enable)
 class KPDFGotoPageDialog : public KDialog
 {
 public:
-	KPDFGotoPageDialog(QWidget *p, int current, int max) : KDialog(p, i18n("Go to Page"), Ok | Cancel) {
+	KPDFGotoPageDialog(QWidget *p, int current, int max) : KDialog(p) {
+		setCaption(i18n("Go to Page"));
+		setButtons(Ok | Cancel);
+		setDefaultButton(Ok);
+
 		QWidget *w = new QWidget(this);
 		setMainWidget(w);
 

@@ -23,16 +23,20 @@
  *  name 'name' and widget flags set to 'f'
  */
 fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip, QWidget* parent, const QString& name, bool progressbar)
-  : KDialogBase( parent, "Font Generation Progress Dialog", true, name, Cancel, Cancel, true ),
+  : KDialog( parent),
     TextLabel2(0),
     TextLabel1(0),
     ProgressBar1(0),
     progress(0),
     process(0)
 {
+  setCaption( i18n( "Font Generation Progress Dialog" ) );
+  setModal( true );
+  setButtons( Cancel );
+  setDefaultButton( Cancel );
   setCursor(QCursor(Qt::WaitCursor));
 
-  setButtonCancel(KGuiItem(i18n("Abort"), "stop", abortTip));
+  setButtonGuiItem(Cancel, KGuiItem(i18n("Abort"), "stop", abortTip));
 
   if (helpIndex.isEmpty() == false) {
     setHelp(helpIndex, "kdvi");
@@ -41,7 +45,8 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   } else
     enableLinkedHelp(false);
 
-  KVBox* page = makeVBoxMainWidget();
+  KVBox* page = new KVBox( this );
+  setMainWidget( page );
 
   TextLabel1   = new QLabel(label, page);
   TextLabel1->setAlignment(Qt::AlignCenter);

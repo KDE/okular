@@ -22,7 +22,7 @@
 
 
 infoDialog::infoDialog( QWidget* parent )
-  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false),
+  : KPageDialog( parent),
     TextLabel1(0),
     TextLabel2(0),
     TextLabel3(0),
@@ -30,7 +30,12 @@ infoDialog::infoDialog( QWidget* parent )
     headline(QString::null),
     pool(QString::null)
 {
-  QFrame *page1 = addPage( i18n("DVI File") );
+  setCaption( i18n( "Document Info" ) );
+  setButtons( Ok );
+  setModal( false );
+  setFaceType( KPageDialog::Tabbed );
+  QFrame *page1 = new QFrame( this );
+  addPage( page1, i18n("DVI File") );
   QVBoxLayout *topLayout1 = new QVBoxLayout( page1 );
   topLayout1->setSpacing( 6 );
   topLayout1->setMargin( 0 );
@@ -39,7 +44,9 @@ infoDialog::infoDialog( QWidget* parent )
   TextLabel1->setToolTip( i18n("Information on the currently loaded DVI-file.") );
   topLayout1->addWidget( TextLabel1 );
 
-  QFrame *page2 = addPage( i18n("Fonts") );
+
+  QFrame *page2 = new QFrame( this );
+  addPage( page2, i18n("Fonts") );
   QVBoxLayout *topLayout2 = new QVBoxLayout( page2 );
   topLayout2->setSpacing( 6 );
   topLayout2->setMargin( 0 );
@@ -52,7 +59,8 @@ infoDialog::infoDialog( QWidget* parent )
                                     "This is useful for experts who want to locate problems in the setup of TeX or KDVI.") );
   topLayout2->addWidget( TextLabel2 );
 
-  QFrame *page3 = addPage( i18n("External Programs") );
+  QFrame *page3 = new QFrame( this );
+  addPage( page3, i18n("External Programs") );
   QVBoxLayout *topLayout3 = new QVBoxLayout( page3 );
   topLayout3->setSpacing( 6 );
   topLayout3->setMargin( 0 );

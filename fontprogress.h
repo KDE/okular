@@ -8,7 +8,7 @@
 #ifndef FONT_GENERATION_H
 #define FONT_GENERATION_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 #include <QPointer>
 
@@ -29,7 +29,7 @@ class QProcess;
  *
  *
  **/
-class fontProgressDialog : public KDialogBase
+class fontProgressDialog : public KDialog
 {
     Q_OBJECT
 

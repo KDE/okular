@@ -7,7 +7,7 @@
 #ifndef INFO_KDVI_H
 #define INFO_KDVI_H
 
-#include <kdialogbase.h>
+#include <kpagedialog.h>
 
 #include <QString>
 
@@ -17,7 +17,7 @@ class QTextEdit;
 class QWidget;
 
 
-class infoDialog : public KDialogBase
+class infoDialog : public KPageDialog
 {
   Q_OBJECT
 

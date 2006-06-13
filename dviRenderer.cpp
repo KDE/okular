@@ -163,9 +163,9 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 
   int pageWidth = page->width();
   int pageHeight = page->height();
- 
+
   QImage img(pageWidth, pageHeight, QImage::Format_RGB32);
-  foreGroundPainter = new QPainter(&img); 
+  foreGroundPainter = new QPainter(&img);
   if (foreGroundPainter != 0) {
     errorMsg = QString::null;
     draw_page();
@@ -177,7 +177,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
     kDebug(kvs::dvi) << "painter creation failed." << endl;
   }
   page->setImage(img);
-  
+
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
     KMessageBox::detailedError(parentWidget,
@@ -232,9 +232,10 @@ void dviRenderer::showThatSourceInformationIsPresent()
   bool showMsg = config->readEntry( "KDVI-info_on_source_specials", true);
 
   if (showMsg) {
-    KDialogBase dialog(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
-                       parentWidget, "information", true, true, KStdGuiItem::ok());
-
+    KDialog dialog(parentWidget);
+    dialog.setCaption( i18n("KDVI: Information") );
+    dialog.setButtons( KDialog::Yes );
+    dialog.setButtonGuiItem( KDialog::Yes, KStdGuiItem::ok() );
     KVBox *topcontents = new KVBox (&dialog);
     topcontents->setSpacing(KDialog::spacingHint()*2);
     topcontents->setMargin(KDialog::marginHint()*2);
@@ -261,7 +262,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
     dialog.enableLinkedHelp(true);
     dialog.setMainWidget(topcontents);
     dialog.enableButtonSeparator(false);
-    dialog.incInitialSize( extraSize );
+    dialog.setInitialSize( extraSize );
     dialog.exec();
 
     showMsg = !checkbox->isChecked();

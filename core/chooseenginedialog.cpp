@@ -29,8 +29,8 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QSt
     m_widget->engineList->addItems(generators);
 
     m_widget->description->setText(
-        i18n("More than one generator found for mimetype \"%1\", please select which one to use:", mime)
-        );
+        i18n( "More than one generator found for mimetype \"%1\".\n"
+              "Please select which one to use:", mime ) );
 }
 
 int ChooseEngineDialog::selectedGenerator() const

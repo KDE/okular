@@ -20,6 +20,7 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QSt
 {
     setCaption( i18n( "Generator Selection" ) );
     setButtons( Ok | Cancel );
+    setDefaultButton( Ok );
     QWidget *main = new QWidget( this );
     setMainWidget( main );
     m_widget = new Ui_ChooseEngineWidget();

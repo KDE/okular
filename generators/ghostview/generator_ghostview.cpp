@@ -347,6 +347,11 @@ bool GSGenerator::initInterpreter()
 
 bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< KPDFPage * > & pagesVector, bool ps )
 {
+    if ( internalDoc )
+    {
+        // delete the old document to make room for the new one
+        delete internalDoc;
+    }
     internalDoc = new GSInternalDocument (name, ps ? GSInternalDocument::PS : GSInternalDocument::PDF);
     pagesVector.resize( internalDoc->dsc()->page_count() );
     kDebug() << "Page count: " << internalDoc->dsc()->page_count() << endl;

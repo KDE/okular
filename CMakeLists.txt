@@ -94,7 +94,7 @@ kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularpart )
 
-target_link_libraries(okularpart  okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
+target_link_libraries(okularpart  okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
 
 install_targets(${PLUGIN_INSTALL_DIR} okularpart )
 

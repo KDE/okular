@@ -212,7 +212,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > 
         asyncGenerator->setAABits(1,1);
     }
     pixGenerator->setProgressive(false);
-// ESTO YA ESTAVA COMENTADO    m_pages=pagesVector;
+//  m_pages=pagesVector;
     return loadDocumentWithDSC(name,pagesVector,ps);
 }
 

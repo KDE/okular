@@ -19,7 +19,6 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
-#include <qpushbutton.h>
 #include <qrect.h>
 #include <qpainter.h>
 #include <qapplication.h>
@@ -27,7 +26,9 @@
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <kconfig.h>
+#include <kpushbutton.h>
 #include <kstandarddirs.h>
+#include <kstdguiitem.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -423,10 +424,12 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     d->parentWidget = parentWidget;
 
     d->messageTimer = new QTimer( this );
+    d->messageTimer->setSingleShot( true );
     connect( d->messageTimer, SIGNAL( timeout() ),
              this, SLOT( slotResetMessageColors() ) );
 
     d->networkTimer = new QTimer( this );
+    d->networkTimer->setSingleShot( true );
     connect( d->networkTimer, SIGNAL( timeout() ),
              this, SLOT( slotNetworkTimeout() ) );
 
@@ -497,8 +500,10 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         d->messageLabel = new QLabel( bottomLine );
         d->messageLabel->setFrameStyle( QFrame::StyledPanel | QFrame::Raised );
         d->messageLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+        d->messageLabel->setAutoFillBackground( true );
         // close button
-        QPushButton * closeButton = new QPushButton( i18n("Close"), bottomLine );
+        KPushButton * closeButton = new KPushButton( bottomLine );
+        closeButton->setGuiItem( KStdGuiItem::close() );
         //closeButton->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum )
         connect( closeButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
 
@@ -544,13 +549,21 @@ void NewStuffDialog::displayMessage( const QString & msg, MessageType type, int 
     switch ( type )
     {
         case Info:
-            d->messageLabel->setPaletteForegroundColor( palette().active().highlightedText() );
-            d->messageLabel->setPaletteBackgroundColor( palette().active().highlight() );
+        {
+            QPalette pal = d->messageLabel->palette();
+            pal.setColor( QPalette::Window, pal.color( QPalette::Highlight ) );
+            pal.setColor( QPalette::WindowText, pal.color( QPalette::HighlightedText ) );
+            d->messageLabel->setPalette( pal );
             break;
+        }
         case Error:
-            d->messageLabel->setPaletteForegroundColor( Qt::white );
-            d->messageLabel->setPaletteBackgroundColor( Qt::red );
+        {
+            QPalette pal = d->messageLabel->palette();
+            pal.setColor( QPalette::Window, Qt::red );
+            pal.setColor( QPalette::WindowText, Qt::white );
+            d->messageLabel->setPalette( pal );
             break;
+        }
         default:
             slotResetMessageColors();
             break;
@@ -560,7 +573,7 @@ void NewStuffDialog::displayMessage( const QString & msg, MessageType type, int 
     d->messageLabel->setText( msg );
 
     // single shot the resetColors timer (and create it if null)
-    d->messageTimer->start( timeOutMs, true );
+    d->messageTimer->start( timeOutMs );
 }
 
 void NewStuffDialog::installItem( AvailableItem * item )
@@ -599,8 +612,11 @@ void NewStuffDialog::removeItem( AvailableItem * item )
 
 void NewStuffDialog::slotResetMessageColors() // SLOT
 {
-    d->messageLabel->setPaletteForegroundColor( palette().active().text() );
-    d->messageLabel->setPaletteBackgroundColor( palette().active().background() );
+    QPalette pal = d->messageLabel->palette();
+    QPalette qAppPal = QApplication::palette();
+    pal.setColor( QPalette::Window, qAppPal.color( QPalette::Window ) );
+    pal.setColor( QPalette::WindowText, qAppPal.color( QPalette::WindowText ) );
+    d->messageLabel->setPalette( pal );
 }
 
 void NewStuffDialog::slotNetworkTimeout() // SLOT
@@ -633,7 +649,7 @@ void NewStuffDialog::slotLoadProvidersList()
     d->providersListJob.receivedData = "";
 
     // start the 'network watchdog timer'
-    d->networkTimer->start( 10*1000, true /*single shot*/ );
+    d->networkTimer->start( 10*1000 );
 
     // inform the user
     displayMessage( i18n("Loading providers list...") );
@@ -749,7 +765,7 @@ void NewStuffDialog::slotLoadProvider( int pNumber )
     displayMessage( i18n( "Loading %1...", provider->name() ) );
 
     // start the 'network watchdog timer'
-    d->networkTimer->start( 30*1000, true /*single shot*/ );
+    d->networkTimer->start( 30*1000 );
 
     // block any possible recourring calls while we're running
     d->typeCombo->setEnabled( false );

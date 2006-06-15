@@ -188,7 +188,7 @@ PDFGenerator::PDFGenerator( KPDFDocument * doc )
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docFontsDirty( true ), docEmbeddedFilesDirty( true )
 {
-    // generate kpdfOutputDev and cache page color
+    // update the configuration
     reparseConfig();
     // generate the pixmapGeneratorThread
     generatorThread = new PDFPixmapGeneratorThread( this );

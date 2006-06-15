@@ -359,7 +359,7 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
         {
             // get annotation
             const Annotation * a = *aIt;
-            // only save kpdf annotations (not the embedded in file ones)
+            // only save okular annotations (not the embedded in file ones)
             if ( !(a->flags & Annotation::External) )
             {
                 // append an filled-up element called 'annotation' to the list

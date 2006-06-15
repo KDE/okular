@@ -89,7 +89,7 @@ GSInterpreterCMD::~GSInterpreterCMD()
         delete m_pixmap;
     if ( interpreterRunning() )
         stop(false);
-    // remove (crashes kpdf somehow, probably because 
+    // remove (crashes okular somehow, probably because 
     // the destuction thread does the same a line higher
     /* this should not be needed!
     if (m_stoppingPids.count() > 0)

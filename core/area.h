@@ -57,7 +57,7 @@ class OKULAR_EXPORT NormalizedRect
 /**
  * @short NormalizedRect that contains a reference to an object.
  *
- * These rects contains a pointer to a kpdf object (such as a link or something
+ * These rects contains a pointer to a okular object (such as a link or something
  * like that). The pointer is read and stored as 'void pointer' so cast is
  * performed by accessors based on the value returned by objectType(). Objects
  * are reparented to this class.

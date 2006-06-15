@@ -119,7 +119,7 @@ class OKULAR_EXPORT Generator : public QObject
 //         virtual void setConfigurationPointer( KConfigDialog* /*dlg*/) { ; } ;
 
         // capture events
-        // return false if you don't wish kpdf to use its event handlers
+        // return false if you don't wish okular to use its event handlers
         // in the pageview after your handling (use with caution)
         virtual bool handleEvent (QEvent * /*event*/ ) { return true; } ;
 

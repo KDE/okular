@@ -112,7 +112,7 @@ class AvailableItem : public Entry
                 m_destinationFile = KGlobalSettings::desktopPath() + "/" + fileName;
             // place kpdf data on the local share/apps/kpdf/stuff
             else if ( typeString == "kpdf/tool" )
-                m_destinationFile = locateLocal( "data", "kpdf/stuff/" + fileName );
+                m_destinationFile = locateLocal( "data", "okular/stuff/" + fileName );
             // warn about unrecognized type
             else kDebug() << "NewStuffDialog: AvailableItem: unrecognized provider name: '"
                 << typeString << "'." << endl;
@@ -417,7 +417,7 @@ struct NewStuffDialogPrivate
 NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     : QDialog( parentWidget ), d( new NewStuffDialogPrivate )
 {
-    setObjectName( "kpdfNewStuff" );
+    setObjectName( "okularNewStuff" );
     // initialize the private classes
     d->providersListJob.job = 0;
 

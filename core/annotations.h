@@ -229,7 +229,7 @@ struct OKULAR_EXPORT StampAnnotation : public Annotation
     AN_COMMONDECL( StampAnnotation, AStamp )
 
     // data fields
-    QString         stampIconName;          // 'kpdf'
+    QString         stampIconName;          // 'okular'
 };
 
 struct OKULAR_EXPORT InkAnnotation : public Annotation

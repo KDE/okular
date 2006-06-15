@@ -12,11 +12,10 @@
 
 #include <qgs.h>
 
+#include <qapplication.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
 #include <kdebug.h>
 
 #include <fcntl.h>
@@ -84,30 +83,12 @@ void process()
     }
 }
 
-// TODO Improve ;-)
-static KCmdLineOptions options[] =
-{
-	    { "a", 0, 0 },
-	    { "b", 0, 0 },
-	    { "c", 0, 0 },
-	    { "d", 0, 0 },
-	    { "e", 0, 0 },
-	    { "f", 0, 0 },
-	    { "g", 0, 0 },
-	    { "h", 0, 0 },
-	    { "i", 0, 0 },
-	    { "j", 0, 0 },
-	        KCmdLineLastOption
-};
-
 int main (int argc, char* argv[])
 {
     try
     {
-        KCmdLineArgs::init(argc, argv, "okulargsasyncgenerator", "okulargsasyncgenerator", 0, "0.1", KCmdLineArgs::CmdLineArgNone);
-        KCmdLineArgs::addCmdLineOptions( options );
-        KApplication app;
         // Order of argv: fileName, msgQueueId, media type, magnify, orientation 
+	QApplication a(argc, argv);
     
         for (int i=0;i<argc;i++)
             kDebug() << "arg nr " << i << " : " <<  QString(argv[i]) << endl;

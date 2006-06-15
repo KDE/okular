@@ -101,6 +101,7 @@ int GSGenerator::rotation ( CDSC_ORIENTATION_ENUM orientation )
             return 2;
         case CDSC_SEASCAPE:
             return 3;
+        default: ;
     }
 // get rid of warnings, should never happen
     return 0;

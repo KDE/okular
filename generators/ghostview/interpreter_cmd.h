@@ -47,7 +47,7 @@ class GSInterpreterCMD : public QThread
         QPixmap* takePixmap();
         bool startInterpreter();
         bool stop(bool async=true);
-        bool ready() { return !interpreterLock.locked() ; } ;
+        bool ready();
         bool interpreterRunning();
         void lock() { kDebug() << "locking async\n"; interpreterLock.lock() ; } ;
         void unlock() { kDebug() << "unlocking async\n"; interpreterLock.unlock() ; } ;

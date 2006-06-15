@@ -130,6 +130,11 @@ void GSInterpreterCMD::destroyInternalProcess(KProcess * stop)
     delete mem;
 }
 
+bool GSInterpreterCMD::ready()
+{
+    return !interpreterLock.locked();
+}
+
 bool GSInterpreterCMD::interpreterRunning () 
 {
     if (m_process==0)

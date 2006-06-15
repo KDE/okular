@@ -14,10 +14,10 @@
 #define _KPDF_GSINTERNALDOC_H_
 
 #include <errno.h>
+
+#include <qlist.h>
 #include <qmap.h>
 #include <qprinter.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 #include "interpreter.h"
 #include "dscparse_adapter.h"
@@ -28,7 +28,7 @@ class KDSC;
 class QString;
 class QStringList;
 
-typedef Q3ValueList<int> PageList;
+typedef QList<int> PageList;
 
 class GSInternalDocument
 {

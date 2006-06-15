@@ -23,10 +23,9 @@
 #include <map>
 #include <memory>
 
+#include <qbytearray.h>
 #include <qsize.h>
 #include <qstring.h>
-//Added by qt3to4:
-#include <Q3CString>
 
 #include "dscparse.h"
 #undef min
@@ -137,18 +136,18 @@ public:
 	Error       = CDSC_ERROR_ERROR
     };
 
-    KDSCError( Type, Severity, const Q3CString& line, 
+    KDSCError( Type, Severity, const QByteArray& line, 
 	       unsigned int lineNumber );
     
     Type         type()       const;
     Severity     severity()   const;
-    Q3CString     line()       const;
+    QByteArray   line()       const;
     unsigned int lineNumber() const;
     
 private:
     Type         _type;
     Severity     _severity;
-    Q3CString     _line;
+    QByteArray   _line;
     unsigned int _lineNumber;
 };
 

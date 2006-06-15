@@ -7,19 +7,21 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qlist.h>
-#include <qtextedit.h>
+#include <qheaderview.h>
 #include <qlabel.h>
+#include <qlayout.h>
+#include <qlist.h>
 #include <qpixmap.h>
-#include <kdebug.h>
-
-#include <k3listview.h>
 #include <qstringlist.h>
 #include <qstring.h>
+#include <qtoolbutton.h>
+#include <qtreewidget.h>
+
+#include <kdebug.h>
 #include <kglobalsettings.h>
-#include <kiconloader.h>
-#include <k3listviewsearchline.h>
+#include <kicon.h>
 #include <klocale.h>
+#include <ktreewidgetsearchline.h>
 
 #include "gvlogwindow.h"
 
@@ -27,17 +29,35 @@ GSLogWindow::GSLogWindow( QWidget* parent )
  : KVBox( parent )
 {
     kDebug() << "Starting logwindow" <<endl;
-    m_searchLine = new K3ListViewSearchLine(this);
-    m_msgList = new K3ListView(this);
+
+    layout()->setSpacing( 2 );
+    QHBoxLayout *searchlay = new QHBoxLayout( this );
+    searchlay->setSpacing( 2 );
+    layout()->addItem( searchlay );
+    QToolButton *clearBtn =  new QToolButton( this );
+    clearBtn->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase" ) );
+    clearBtn->setToolTip( i18n( "Clear filter" ) );
+    clearBtn->setAutoRaise( true );
+    searchlay->addWidget( clearBtn );
+
+    m_searchLine = new KTreeWidgetSearchLine( this );
+    connect( clearBtn, SIGNAL( clicked() ), m_searchLine, SLOT( clear() ) );
+    searchlay->addWidget( m_searchLine );
+
+    m_msgList = new QTreeWidget( this );
+    QStringList cols;
+    cols.append( i18n("Messages") );
+    m_msgList->setHeaderLabels( cols );
+    m_msgList->setSortingEnabled( false );
+    m_msgList->setRootIsDecorated( false );
+    m_msgList->setAlternatingRowColors( true );
+    m_msgList->header()->resizeSection( 1, 0 );
+    m_msgList->setSelectionBehavior( QAbstractItemView::SelectRows );
+    m_searchLine->addTreeWidget( m_msgList );
 
     QList< int > searchCols;
     searchCols.append(0);
     m_searchLine -> setSearchColumns (searchCols);
-
-    m_searchLine -> setListView(m_msgList);
-    // width will be fixed later
-    m_tCol=m_msgList -> addColumn ("Text",10);
-    m_msgList -> addColumn ("InternalType",0);
 
     m_clearTimer.setSingleShot( false );
     connect( &m_clearTimer, SIGNAL(timeout()), this, SLOT(appendBuffered()));
@@ -45,6 +65,8 @@ GSLogWindow::GSLogWindow( QWidget* parent )
 
 bool GSLogWindow::event( QEvent * event )
 {
+// FIXME: is this stuff needed?
+/*
     KVBox::event(event);
     if ( event->type() == QEvent::Reparent && ( m_msgList->childCount() ) )
     {
@@ -53,6 +75,8 @@ bool GSLogWindow::event( QEvent * event )
         m_msgList->setColumnWidth(m_tCol, w);
     }
     return true;
+*/
+    return KVBox::event(event);
 }
 
 void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
@@ -64,20 +88,23 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
     while (it!=end)
     {
 
-    K3ListViewItem* tmp;
+    QTreeWidgetItem* tmp = 0;
     switch(t)
     {
         case GSInterpreterLib::Error:
-            tmp=new K3ListViewItem( m_msgList , *it, "Error" );
-            tmp->setPixmap(m_tCol,SmallIcon( "messagsebox_critical" ));
+            tmp = new QTreeWidgetItem( m_msgList );
+            tmp->setText( 0, *it );
+            tmp->setIcon( 0, KIcon( "messagebox_critical" ) );
             break;
         case GSInterpreterLib::Input:
-            tmp=new K3ListViewItem( m_msgList , *it, "Input" );
-            tmp->setPixmap(m_tCol,SmallIcon( "1leftarrow" ));
+            tmp = new QTreeWidgetItem( m_msgList );
+            tmp->setText( 0, *it );
+            tmp->setIcon( 0, KIcon( "1leftarrow" ) );
             break;
         case GSInterpreterLib::Output:
-            tmp=new K3ListViewItem( m_msgList , *it, "Output" );
-            tmp->setPixmap(m_tCol,SmallIcon( "1rightarrow" ));
+            tmp = new QTreeWidgetItem( m_msgList );
+            tmp->setText( 0, *it );
+            tmp->setIcon( 0, KIcon( "1rightarrow" ) );
             break;
     }
     ++it;

@@ -14,10 +14,10 @@
 #include <kvbox.h>
 #include <qtimer.h>
 
-class QTextEdit;
-class K3ListView;
-class K3ListViewSearchLine;
+class QTreeWidget;
+class KTreeWidgetSearchLine;
 class KUrlLabel;
+
 class GSLogWindow : public KVBox
 {
     Q_OBJECT
@@ -33,8 +33,8 @@ public slots:
     bool event( QEvent * event );
 
 private:
-    K3ListView*   m_msgList;
-    K3ListViewSearchLine* m_searchLine;
+    QTreeWidget*  m_msgList;
+    KTreeWidgetSearchLine* m_searchLine;
     QPair <GSInterpreterLib::MessageType, QString> m_buffer;
     int m_tCol;
     int m_lastInt;

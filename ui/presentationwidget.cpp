@@ -180,6 +180,28 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber )
 
 
 // <widget events>
+bool PresentationWidget::event( QEvent * e )
+{
+    if ( e->type() == QEvent::ToolTip )
+    {
+        QHelpEvent * he = (QHelpEvent*)e;
+
+        const KPDFLink * link = getLink( he->x(), he->y(), 0 );
+
+        if ( link )
+        {
+            QString tip = link->linkTip();
+            if ( !tip.isEmpty() )
+                QToolTip::showText( he->globalPos(), tip, this );
+        }
+        e->accept();
+        return true;
+    }
+    else
+        // do not stop the event
+        return QDialog::event( e );
+}
+
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
@@ -363,7 +385,7 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
 {
     // no links on invalid pages
     if ( geometry && !geometry->isNull() )
-        geometry->setRect( 0, 0, -1, -1 );
+        geometry->setRect( 0, 0, 0, 0 );
     if ( m_frameIndex < 0 || m_frameIndex >= (int)m_frames.size() )
         return 0;
 
@@ -398,9 +420,7 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
 
 void PresentationWidget::testCursorOnLink( int x, int y )
 {
-    // get rect
-    QRect linkRect;
-    const KPDFLink * link = getLink( x, y, &linkRect );
+    const KPDFLink * link = getLink( x, y, 0 );
 
     // only react on changes (in/out from a link)
     if ( (link && !m_handCursor) || (!link && m_handCursor) )
@@ -408,11 +428,6 @@ void PresentationWidget::testCursorOnLink( int x, int y )
         // change cursor shape
         m_handCursor = link != 0;
         setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor() );
-
-        // set tooltip over link's rect
-        QString tip = link ? link->linkTip() : "";
-        if ( m_handCursor && !tip.isEmpty() )
-            QToolTip::add( this, linkRect, tip );
     }
 }
 

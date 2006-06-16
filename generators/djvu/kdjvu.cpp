@@ -9,6 +9,7 @@
 
 #include "kdjvu.h"
 
+#include <qfile.h>
 #include <qlist.h>
 #include <qmap.h>
 #include <qpainter.h>
@@ -219,7 +220,7 @@ bool KDjVu::openFile( const QString & fileName )
         closeFile();
 
     // load the document...
-    d->m_djvu_document = ddjvu_document_create_by_filename( d->m_djvu_cxt, qPrintable( fileName ), true );
+    d->m_djvu_document = ddjvu_document_create_by_filename( d->m_djvu_cxt, QFile::encodeName( fileName ), true );
     if ( !d->m_djvu_document ) return false;
     // ...and wait for its loading
     wait_for_ddjvu_message( d->m_djvu_cxt, DDJVU_DOCINFO );

@@ -35,6 +35,7 @@ class GSInternalDocument
     public:
         typedef enum Format{ PS, PDF };
         GSInternalDocument(const QString &fname, GSInternalDocument::Format f);
+        ~GSInternalDocument();
         static QString pageSizeToString( QPrinter::PageSize pSize );
         static QStringList paperSizes();
         void scanDSC();
@@ -83,7 +84,7 @@ class GSInternalDocument
         QString m_fileName;
         QStringList m_mediaNames;
 
-        DocumentInfo docInfo;
+        DocumentInfo* docInfo;
         FILE* m_internalFile;
         KDSC* m_dsc;
         Format m_format;

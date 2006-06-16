@@ -48,7 +48,7 @@ void GSInternalDocument::scanDSC()
     m_dsc->fixup();
 }
 
-GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_error(false), m_fileName(fname), m_format (form)
+GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_error(false), m_fileName(fname), m_format (form), docInfo(0)
 {
     m_internalFile = fopen(QFile::encodeName(fname),"r");
     if( m_internalFile == 0 )
@@ -105,43 +105,49 @@ GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_er
         kDebug(4656) << m_errorString << endl;
 }
 
+GSInternalDocument::~GSInternalDocument()
+{
+    delete docInfo;
+}
 
 const DocumentInfo * GSInternalDocument::generateDocumentInfo()
 {
     if (! m_dsc->dsc() )
         return 0L;
 
-    if (docInfo.isNull())
+    if (!docInfo)
     {
-        docInfo.set( "title", m_dsc->dsc_title(), i18n("Title") );
-        docInfo.set( "author", m_dsc->dsc_for(), i18n("Author") );
-        docInfo.set( "creator", m_dsc->dsc_creator(), i18n("Creator") );
-        docInfo.set( "creationDate", m_dsc->dsc_date(), i18n("Created") );
-        docInfo.set( "copyright", m_dsc->dsc_copyright(), i18n("Copyright") );
+        docInfo = new DocumentInfo();
+
+        docInfo->set( "title", m_dsc->dsc_title(), i18n("Title") );
+        docInfo->set( "author", m_dsc->dsc_for(), i18n("Author") );
+        docInfo->set( "creator", m_dsc->dsc_creator(), i18n("Creator") );
+        docInfo->set( "creationDate", m_dsc->dsc_date(), i18n("Created") );
+        docInfo->set( "copyright", m_dsc->dsc_copyright(), i18n("Copyright") );
         QString dscVer=m_dsc->dsc_version();
-        docInfo.set( "dscversion", dscVer, i18n("DSC version") );
+        docInfo->set( "dscversion", dscVer, i18n("DSC version") );
 
         int pages=m_dsc->page_pages();
         if (!pages)
             pages = m_dsc->page_count();
 
-        docInfo.set( "pages", QString::number(pages), i18n("Pages") );
+        docInfo->set( "pages", QString::number(pages), i18n("Pages") );
 
         switch (m_format)
         {
             case PDF:
-                docInfo.set( "mimeType", "application/pdf" );
+                docInfo->set( "mimeType", "application/pdf" );
                 break;
             case PS:
-                docInfo.set( "langlevel", QString::number(m_dsc->language_level()), i18n("Language Level") );
+                docInfo->set( "langlevel", QString::number(m_dsc->language_level()), i18n("Language Level") );
                 if (dscVer.contains ("EPS"))
-                    docInfo.set( "mimeType", "image/x-eps" );
+                    docInfo->set( "mimeType", "image/x-eps" );
                 else
-                    docInfo.set( "mimeType", "application/postscript" );
+                    docInfo->set( "mimeType", "application/postscript" );
                 break;
         }
     }
-    return &docInfo;
+    return docInfo;
 }
 
 

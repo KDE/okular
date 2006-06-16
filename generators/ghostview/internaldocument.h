@@ -54,9 +54,9 @@ class GSInternalDocument
 
         FILE * file () { return m_internalFile; };
         GSInterpreterLib::Position pagePos (int i) { return pagesInternalData[i]; };
-        const QString & fileName () { return m_fileName ; };
+        const QString & fileName () const { return m_fileName ; };
 
-        const KDSC* dsc () { return m_dsc; };
+        const KDSC* dsc () const { return m_dsc; };
 
         QSize computePageSize( const QString& mediaName ) const;
         KDSCBBOX boundingBox( int pageNo ) const;
@@ -67,7 +67,7 @@ class GSInternalDocument
         void setSetup( GSInterpreterLib::Position p) { m_setup=p; };
         GSInterpreterLib::Position setup() { return m_setup; }
 
-        Format format() { return m_format; };
+        Format format() const { return m_format; };
         const DocumentInfo * generateDocumentInfo();
         bool psCopyDoc( const QString& inputFile,
             const QString& outputFile, const PageList& pageList );

@@ -23,6 +23,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *do
 {
 	setCaption(i18n("Embedded Files"));
 	setButtons(Close | User1);
+	setDefaultButton(Close);
 	setButtonGuiItem(User1, KStdGuiItem::save());
 
 	m_tw = new QTreeWidget(this);

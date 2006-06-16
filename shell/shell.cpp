@@ -226,9 +226,12 @@ QStringList* Shell::fileFormats()
         {
             if (! (*mimeType).contains("okular"))
             {
+                KMimeType::Ptr mimePtr = KMimeType::mimeType(*mimeType);
+                if ( mimePtr )
+                {
+                pattern = mimePtr->patterns();
                 supportedMimeTypes << *mimeType;
             
-               pattern = KMimeType::mimeType(*mimeType)->patterns();
                extensions.clear();
                while(!pattern.isEmpty())
                {
@@ -240,10 +243,11 @@ QStringList* Shell::fileFormats()
                         extensions.append(tmp+".bz2");
 		    pattern.pop_front();
                 }
-	       	comment=KMimeType::mimeType(*mimeType)->comment();
+	       	comment=mimePtr->comment();
 		if (! comment.contains("Unknown"))
 	                supportedPattern->append(extensions.join(" ") + "|" + comment);
                 allExt+=extensions.join(" ");
+                }
             }
         }
     }

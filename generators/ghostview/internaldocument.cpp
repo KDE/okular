@@ -48,7 +48,7 @@ void GSInternalDocument::scanDSC()
     m_dsc->fixup();
 }
 
-GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_error(false), m_fileName(fname), m_format (form), docInfo(0)
+GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_error(false), m_fileName(fname), docInfo(0), m_format(form)
 {
     m_internalFile = fopen(QFile::encodeName(fname),"r");
     if( m_internalFile == 0 )
@@ -127,12 +127,6 @@ const DocumentInfo * GSInternalDocument::generateDocumentInfo()
         QString dscVer=m_dsc->dsc_version();
         docInfo->set( "dscversion", dscVer, i18n("DSC version") );
 
-        int pages=m_dsc->page_pages();
-        if (!pages)
-            pages = m_dsc->page_count();
-
-        docInfo->set( "pages", QString::number(pages), i18n("Pages") );
-
         switch (m_format)
         {
             case PDF:
@@ -146,6 +140,11 @@ const DocumentInfo * GSInternalDocument::generateDocumentInfo()
                     docInfo->set( "mimeType", "application/postscript" );
                 break;
         }
+
+        int pages=m_dsc->page_pages();
+        if (!pages)
+            pages = m_dsc->page_count();
+        docInfo->set( "pages", QString::number(pages), i18n("Pages") );
     }
     return docInfo;
 }

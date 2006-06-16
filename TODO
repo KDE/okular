@@ -18,8 +18,6 @@ In progress [working on]:
 -> pageview: update layout when toggling the 'ebook atyle alignment'
 
 More items (first items will enter 'In progress list' first):
--> merge with head: core/ has no qwidgets around. the head fonts can't make exception!
-   use getMetaData for getting the font list instead of 'passing a klistview to the generator'!
 -> pageview: add vp damaging queue and flush function. add coolfx to smoothmove using damaging
 -> annotations: add config option for default name change
 -> annotations: toolbar: display tooltip only the first time
@@ -49,8 +47,6 @@ More items (first items will enter 'In progress list' first):
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
 -> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)
    than using QScrollView + inserted Widgets and saves 8% on document loading)
--> core: abstract TextPage generation (the last xpdf dependant class!). then go dancing
-   in the streets. make it new and easy to use for wp-style selections.
 -> Dom framework to cache document metadata. It should archive those types of data:
    (NOTE: already Dom'ed object is marked with 'X')
    - <X> Synopsis will go there after 1st generation (so we can edit it too)
@@ -113,6 +109,8 @@ Icons needed:
 Done (newest features come first):
 -> ADD: toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
 -> FIX: kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)
+-> CHG: core: abstract TextPage generation (the last xpdf dependant class!)
+-> CHG: create a DocumentInfo structure for passing the font information from generators to the document
 -> ADD: presentation: link following (BR98388)
 -> ADD: add ebook-friendly alignment option, better layouting (BR100341)
 -> FIX: random crash when closing kpdf with kapp->quit() (don't use Settings:: in destructors)

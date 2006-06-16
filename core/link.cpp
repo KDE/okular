@@ -64,6 +64,8 @@ QString KPDFLinkAction::linkTip() const
             return i18n( "Find..." );
         case GoToPage:
             return i18n( "Go To Page..." );
+        case Close:
+        default: ;
     }
     return "";
 }

@@ -11,15 +11,12 @@
 #define _KPDF_GSGENERATOR_H_
 
 #include "core/generator.h"
-#include <kstdaction.h>
-#include <kactioncollection.h>
 
 class GSInterpreterCMD;
 class GSLogWindow;
 class GSInterpreterLib;
 class GSInternalDocument;
 class KTempFile;
-class KSelectAction;
 class KActionCollection;
 
 class GSGenerator : public Generator

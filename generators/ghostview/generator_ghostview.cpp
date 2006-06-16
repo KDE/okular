@@ -15,6 +15,7 @@
 #include <qsize.h>
 #include <qtoolbox.h>
 
+#include <kactioncollection.h>
 #include <kconfigdialog.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -24,7 +25,6 @@
 #include <ktempfile.h>
 
 #include "core/page.h"
-#include "core/generator.h"
 #include "core/observer.h"
 #include "ui_gssettingswidget.h"
 #include "gssettings.h"

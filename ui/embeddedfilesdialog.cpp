@@ -42,7 +42,10 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *do
 		QTreeWidgetItem *twi = new QTreeWidgetItem();
 		twi->setText(0, ef->name());
 		KMimeType::Ptr mime = KMimeType::findByPath( ef->name(), 0, true );
-		twi->setIcon(0, KIcon(mime->icon()));
+		if (mime)
+		{
+			twi->setIcon(0, KIcon(mime->icon()));
+		}
 		twi->setText(1, ef->description());
 		twi->setText(2, KGlobal::locale()->formatDateTime( ef->creationDate(), false, true ));
 		twi->setText(3, KGlobal::locale()->formatDateTime( ef->modificationDate(), false, true ));

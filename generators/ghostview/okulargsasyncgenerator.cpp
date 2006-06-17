@@ -43,6 +43,7 @@ void PixHandler::slotPixmap(const QImage* img)
     *pix = QPixmap::fromImage(*img);
     bool done=!pix->isNull();
     kWarning () << "Conversion from qimage " << done << endl;
+    delete img;
 //         QDialog t;
 //         t.resize(pix->width(),pix->height());
 //         t.setBackgroundPixmap(*pix);

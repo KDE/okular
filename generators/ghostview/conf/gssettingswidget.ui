@@ -9,12 +9,12 @@
     <x>0</x>
     <y>0</y>
     <width>352</width>
-    <height>240</height>
+    <height>221</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="spacing" >
     <number>6</number>
@@ -80,7 +80,7 @@ In case of problems you might want to see its error messages</string>
       <item>
        <widget class="QLabel" name="addParams" >
         <property name="text" >
-         <string>Additional parameters to ghostscript</string>
+         <string>Additional parameters to Ghostscript</string>
         </property>
         <property name="wordWrap" >
          <bool>true</bool>

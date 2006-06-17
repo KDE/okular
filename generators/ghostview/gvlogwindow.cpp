@@ -31,16 +31,20 @@ GSLogWindow::GSLogWindow( QWidget* parent )
     kDebug() << "Starting logwindow" <<endl;
 
     layout()->setSpacing( 2 );
-    QHBoxLayout *searchlay = new QHBoxLayout( this );
+    QWidget *searchWidget = new QWidget( this );
+    QSizePolicy sp = searchWidget->sizePolicy();
+    sp.setVerticalPolicy( QSizePolicy::Minimum );
+    searchWidget->setSizePolicy( sp );
+    QHBoxLayout *searchlay = new QHBoxLayout( searchWidget );
     searchlay->setSpacing( 2 );
-    layout()->addItem( searchlay );
-    QToolButton *clearBtn =  new QToolButton( this );
+    searchlay->setMargin( 0 );
+    QToolButton *clearBtn =  new QToolButton( searchWidget );
     clearBtn->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase" ) );
     clearBtn->setToolTip( i18n( "Clear filter" ) );
     clearBtn->setAutoRaise( true );
     searchlay->addWidget( clearBtn );
 
-    m_searchLine = new KTreeWidgetSearchLine( this );
+    m_searchLine = new KTreeWidgetSearchLine();
     connect( clearBtn, SIGNAL( clicked() ), m_searchLine, SLOT( clear() ) );
     searchlay->addWidget( m_searchLine );
 

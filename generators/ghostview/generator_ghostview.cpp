@@ -221,12 +221,8 @@ void GSGenerator::slotPixmapGenerated(const QImage* img)
 {
     kWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id << " " <<m_sRequest->width << "x" << m_sRequest->height << "@" << m_sRequest->pageNumber << " async == " << m_sRequest->async << endl;
 //    kWarning() << "sync gen is ready:" << pixGenerator->ready() << endl;
-    QPixmap * rPix;
-    rPix = new QPixmap(img->size());
-    rPix->fill();
-    QPainter p(rPix);
-    p.drawImage(0,0,*img,0,0,img->width(),img->height());
-    p.end();
+    QPixmap * rPix = new QPixmap();
+    *rPix = QPixmap::fromImage( *img );
     kWarning() << "unlocking \n";
     syncLock.unlock();
     m_sRequest->page->setPixmap( m_sRequest->id, rPix );

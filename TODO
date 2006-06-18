@@ -74,7 +74,6 @@ More items (first items will enter 'In progress list' first):
 -> kspeech TTS interface. speech {document(missing) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
 -> core: pdf forms support (BR91809)
--> open dialog: switch to directory where the already opened (local) file is
 -> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
@@ -107,6 +106,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> CHG: open dialog: switch to directory where the already opened (local) file is
 -> ADD: toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
 -> FIX: kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)
 -> CHG: core: abstract TextPage generation (the last xpdf dependant class!)

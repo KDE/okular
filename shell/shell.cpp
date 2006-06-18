@@ -354,7 +354,10 @@ void Shell::fileOpen()
 
 	if (m_fileformats)
     {
-        KUrl url = KFileDialog::getOpenURL( QString::null, m_fileformats->join("\n") );//getOpenFileName();
+        QString startDir;
+        if ( m_openUrl.isLocalFile() )
+            startDir = m_openUrl.path();
+        KUrl url = KFileDialog::getOpenURL( startDir, m_fileformats->join("\n") );//getOpenFileName();
         bool reallyOpen=!url.isEmpty();
         if (reallyOpen)
         {

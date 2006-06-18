@@ -6,6 +6,6 @@ Name=KDVIMultiPage
 Name[fr]=Multi-page KDVI
 Name[x-test]=xxKDVIMultiPagexx
 ServiceTypes=KViewShell/MultiPage
+MimeType=application/x-dvi
 X-KDE-Library=kdvipart
-X-KDE-MimeTypes=application/x-dvi
 X-KDE-MultiPageVersion=3

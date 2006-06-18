@@ -37,6 +37,8 @@ class DjVuGenerator : public Generator
         void djvuPixmapGenerated( int page, const QPixmap & pix );
 
     private:
+        void loadPages( QVector<KPDFPage*> & pagesVector, int rotation );
+
         KDjVu *m_djvu;
 
         DocumentInfo *m_docInfo;

@@ -32,16 +32,7 @@ bool DjVuGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * 
     if ( !m_djvu->openFile( fileName ) )
         return false;
 
-    const QVector<KDjVu::Page*> &djvu_pages = m_djvu->pages();
-    int numofpages = djvu_pages.count();
-    pagesVector.resize( numofpages );
-
-    for ( int i = 0; i < numofpages; ++i )
-    {
-        const KDjVu::Page *p = djvu_pages.at( i );
-        KPDFPage *page = new KPDFPage( i, p->width(), p->height(), p->orientation() );
-        pagesVector[i] = page;
-    }
+    loadPages( pagesVector, 0 );
 
     ready = true;
     return true;
@@ -98,21 +89,7 @@ const DocumentInfo * DjVuGenerator::generateDocumentInfo()
 
 void DjVuGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
 {
-    const QVector<KDjVu::Page*> &djvu_pages = m_djvu->pages();
-    int numofpages = djvu_pages.count();
-    pagesVector.resize( numofpages );
-
-    for ( int i = 0; i < numofpages; ++i )
-    {
-        const KDjVu::Page *p = djvu_pages.at( i );
-        delete pagesVector[i];
-        int w = p->width();
-        int h = p->height();
-        if ( orientation % 2 == 1 )
-            qSwap( w, h );
-        KPDFPage *page = new KPDFPage( i, w, h, orientation );
-        pagesVector[i] = page;
-    }
+    loadPages( pagesVector, orientation );
 }
 
 void DjVuGenerator::djvuPixmapGenerated( int /*page*/, const QPixmap & pix )
@@ -121,6 +98,26 @@ void DjVuGenerator::djvuPixmapGenerated( int /*page*/, const QPixmap & pix )
 
     ready = true;
     signalRequestDone( m_request );
+}
+
+void DjVuGenerator::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
+{
+    const QVector<KDjVu::Page*> &djvu_pages = m_djvu->pages();
+    int numofpages = djvu_pages.count();
+    pagesVector.resize( numofpages );
+
+    for ( int i = 0; i < numofpages; ++i )
+    {
+        const KDjVu::Page *p = djvu_pages.at( i );
+        if (pagesVector[i])
+            delete pagesVector[i];
+        int w = p->width();
+        int h = p->height();
+        if ( rotation % 2 == 1 )
+            qSwap( w, h );
+        KPDFPage *page = new KPDFPage( i, w, h, p->orientation() + rotation );
+        pagesVector[i] = page;
+    }
 }
 
 

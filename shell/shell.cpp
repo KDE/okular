@@ -48,13 +48,13 @@
 using namespace okular;
 
 Shell::Shell()
-  : KParts::MainWindow(0, "okular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+  : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   init();
 }
 
 Shell::Shell(const KUrl &url)
-  : KParts::MainWindow(0, "okular::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
+  : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   m_openUrl = url;
   init();
@@ -62,6 +62,7 @@ Shell::Shell(const KUrl &url)
 
 void Shell::init()
 {
+  setObjectName( QLatin1String( "okular::Shell" ) );
   // set the shell's ui resource file
   setXMLFile("shell.rc");
   m_fileformats=0L;

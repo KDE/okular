@@ -22,9 +22,7 @@ class DlgPerformance : public QWidget
         DlgPerformance( QWidget * parent = 0 );
 
     protected slots:
-        void lowRadio_toggled( bool on );
-        void normalRadio_toggled( bool on );
-        void aggressiveRadio_toggled( bool on );
+        void radioGroup_changed( int which );
 
     protected:
         Ui_DlgPerformanceBase * m_dlg;

@@ -8,13 +8,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>305</width>
-    <height>287</height>
+    <width>303</width>
+    <height>256</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="spacing" >
     <number>6</number>
@@ -110,27 +110,16 @@
     </widget>
    </item>
    <item>
-    <widget class="Q3ButtonGroup" name="kcfg_MemoryLevel" >
-     <property name="sizePolicy" >
-      <sizepolicy>
-       <hsizetype>5</hsizetype>
-       <vsizetype>4</vsizetype>
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+    <widget class="KButtonGroup" name="kcfg_MemoryLevel" >
      <property name="title" >
       <string>Memory Usage</string>
      </property>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
      <layout class="QVBoxLayout" >
       <property name="margin" >
-       <number>0</number>
+       <number>9</number>
       </property>
       <property name="spacing" >
-       <number>0</number>
+       <number>6</number>
       </property>
       <item>
        <layout class="QHBoxLayout" >
@@ -243,7 +232,7 @@
      </property>
      <property name="sizeHint" >
       <size>
-       <width>284</width>
+       <width>20</width>
        <height>4</height>
       </size>
      </property>
@@ -255,9 +244,9 @@
  <pixmapfunction>DesktopIcon</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends></extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
+   <class>KButtonGroup</class>
+   <extends>QGroupBox</extends>
+   <header>kbuttongroup.h</header>
    <container>1</container>
    <pixmap></pixmap>
   </customwidget>

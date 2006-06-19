@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>358</height>
+    <width>364</width>
+    <height>408</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -76,27 +76,13 @@
        </widget>
       </item>
       <item>
-       <widget class="Q3ButtonGroup" name="kcfg_RenderMode" >
-        <property name="sizePolicy" >
-         <sizepolicy>
-          <hsizetype>5</hsizetype>
-          <vsizetype>4</vsizetype>
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="title" >
-         <string/>
-        </property>
-        <property name="orientation" >
-         <enum>Qt::Vertical</enum>
-        </property>
+       <widget class="KButtonGroup" name="kcfg_RenderMode" >
         <layout class="QVBoxLayout" >
          <property name="margin" >
-          <number>0</number>
+          <number>9</number>
          </property>
          <property name="spacing" >
-          <number>0</number>
+          <number>6</number>
          </property>
          <item>
           <widget class="QRadioButton" name="radioInverted" >
@@ -378,7 +364,7 @@
      <property name="sizeHint" >
       <size>
        <width>20</width>
-       <height>16</height>
+       <height>187</height>
       </size>
      </property>
     </spacer>
@@ -390,15 +376,15 @@
  <customwidgets>
   <customwidget>
    <class>KColorButton</class>
-   <extends>QWidget</extends>
+   <extends>QPushButton</extends>
    <header>kcolorbutton.h</header>
-   <container>1</container>
+   <container>0</container>
    <pixmap></pixmap>
   </customwidget>
   <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends></extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
+   <class>KButtonGroup</class>
+   <extends>QGroupBox</extends>
+   <header>kbuttongroup.h</header>
    <container>1</container>
    <pixmap></pixmap>
   </customwidget>

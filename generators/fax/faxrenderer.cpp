@@ -30,7 +30,7 @@
 #include "core/page.h"
 
 //#define KF_DEBUG
-KPDF_EXPORT_PLUGIN(FaxRenderer)
+OKULAR_EXPORT_PLUGIN(FaxRenderer)
 
 FaxRenderer::FaxRenderer(KPDFDocument * doc) 
     :   Generator( doc )

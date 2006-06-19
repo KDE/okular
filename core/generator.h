@@ -13,7 +13,7 @@
 
 #include "okular_export.h"
 
-#define KPDF_EXPORT_PLUGIN( classname ) \
+#define OKULAR_EXPORT_PLUGIN( classname ) \
     extern "C" { \
          OKULAR_EXPORT Generator* create_plugin(KPDFDocument* doc) { return new classname(doc); } \
     }
@@ -125,19 +125,17 @@ class OKULAR_EXPORT Generator : public QObject
 
         void setDocument( KPDFDocument * doc ) { m_document=doc; };
 
-        /** 'signals' to send events the KPDFDocument **/
-        // tell the document that the job has been completed
-        void signalRequestDone( PixmapRequest * request ) { m_document->requestDone( request ); }
-
     signals:
         void error(const QString & string, int duration);
         void warning(const QString & string, int duration);
         void notice(const QString & string, int duration);
 
     protected:
+        /** 'signals' to send events the KPDFDocument **/
+        // tell the document that the job has been completed
+        void signalRequestDone( PixmapRequest * request ) { m_document->requestDone( request ); }
+
         KPDFDocument * m_document;
-    private:
-        Generator();
 };
 
 /**

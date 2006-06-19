@@ -16,7 +16,7 @@
 #include "core/page.h"
 #include "generator_kimgio.h"
 
-KPDF_EXPORT_PLUGIN(KIMGIOGenerator)
+OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
 
 KIMGIOGenerator::KIMGIOGenerator( KPDFDocument * document ) : Generator( document )
 {

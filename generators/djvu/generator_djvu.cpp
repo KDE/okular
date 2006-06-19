@@ -15,7 +15,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-KPDF_EXPORT_PLUGIN(DjVuGenerator)
+OKULAR_EXPORT_PLUGIN(DjVuGenerator)
 
 DjVuGenerator::DjVuGenerator( KPDFDocument * doc ) : Generator ( doc ),
   m_docInfo( 0 ), ready( false )

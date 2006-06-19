@@ -26,7 +26,7 @@
 #include <qprinter.h>
 #include <qstring.h>
 
-KPDF_EXPORT_PLUGIN(TGenerator)
+OKULAR_EXPORT_PLUGIN(TGenerator)
 
 TGenerator::TGenerator( KPDFDocument * doc ) : Generator ( doc )
 {

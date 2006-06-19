@@ -181,7 +181,7 @@ static QLinkedList<ObjectRect*> generateKPDFLinks( const QList<Poppler::Link*> &
  * in async thread and 2) doing the 'heavy' print operation.
  */
 
-KPDF_EXPORT_PLUGIN(PDFGenerator)
+OKULAR_EXPORT_PLUGIN(PDFGenerator)
 
 PDFGenerator::PDFGenerator( KPDFDocument * doc )
     : Generator( doc ), pdfdoc( 0 ), ready( true ),

@@ -35,7 +35,7 @@
 #include "interpreter.h"
 #include "generator_ghostview.h"
 
-KPDF_EXPORT_PLUGIN(GSGenerator)
+OKULAR_EXPORT_PLUGIN(GSGenerator)
 
 GSGenerator::GSGenerator( KPDFDocument * doc ) :
     Generator ( doc ),

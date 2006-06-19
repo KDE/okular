@@ -39,7 +39,7 @@ int main(int argc, char** argv)
         KAboutData::License_GPL,
         "(C) 2002 Wilco Greven, Christophe Devriese\n(C) 2004-2005 Albert Astals Cid, Enrico Ros\n(C) 2005 Piotr Szymanski");
 
-    about.addAuthor("Albert Astals Cid", I18N_NOOP("Current mantainer"), "astals11@terra.es");
+    about.addAuthor("Albert Astals Cid", I18N_NOOP("Current mantainer"), "aacid@kde.org");
     about.addAuthor("Piotr Szymanski", I18N_NOOP("Created okular from KPDF codebase"), "djurban@pld-dc.org");
     about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
     about.addAuthor("Pino Toscano", I18N_NOOP("DjVu renderer, porting to KDE4"), "pino.toscano@kdemail.net");

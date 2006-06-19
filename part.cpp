@@ -240,7 +240,14 @@ Part::Part(QWidget *parentWidget,
 	m_saveAs = KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
 	m_saveAs->setEnabled( false );
 	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
-	prefs->setText( i18n( "Configure okular..." ) ); // TODO: use "Configure PDF Viewer..." when used as part (like in konq
+	if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
+	{
+		prefs->setText( i18n( "Configure okular..." ) );
+	}
+	else
+	{
+		prefs->setText( i18n( "Configure Viewer..." ) ); // TODO: improve this message
+	}
 	
 	KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
 	genPrefs->setText( i18n( "Configure Backends..." ) );

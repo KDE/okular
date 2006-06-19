@@ -42,6 +42,7 @@ int main(int argc, char** argv)
     about.addAuthor("Albert Astals Cid", I18N_NOOP("Current mantainer"), "astals11@terra.es");
     about.addAuthor("Piotr Szymanski", I18N_NOOP("Created okular from KPDF codebase"), "djurban@pld-dc.org");
     about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
+    about.addAuthor("Pino Toscano", I18N_NOOP("DjVu renderer, porting to KDE4"), "pino.toscano@kdemail.net");
     about.addAuthor("Wilco Greven", 0, "greven@kde.org");
     about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
     about.addAuthor("Laurent Montel", 0, "montel@kde.org");

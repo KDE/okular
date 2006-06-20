@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qapplication.h>
 #include <qheaderview.h>
 #include <qlayout.h>
 #include <qstringlist.h>
@@ -53,11 +54,16 @@ class TOCItem : public QTreeWidgetItem
             return m_element;
         }
 
+        void setSelected( bool selected )
+        {
+            setIcon( 0, selected ? KIcon( QApplication::layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) : QIcon() );
+        }
+
     private:
         QDomElement m_element;
 };
 
-TOC::TOC(QWidget *parent, KPDFDocument *document) : QWidget(parent), m_document(document)
+TOC::TOC(QWidget *parent, KPDFDocument *document) : QWidget(parent), m_document(document), m_current(0), m_currentPage(-1)
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
@@ -111,6 +117,8 @@ void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentCha
     // clear contents
     m_treeView->clear();
     m_searchLine->clear();
+    m_current = 0;
+    m_currentPage = -1;
 
     // request synopsis description (is a dom tree)
     const DocumentSynopsis * syn = m_document->documentSynopsis();
@@ -126,6 +134,35 @@ void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentCha
     addChildren( *syn );
     emit hasTOC( true );
 }
+
+void TOC::notifyViewportChanged( bool /*smoothMove*/ )
+{
+    int newpage = m_document->viewport().pageNumber;
+    if ( m_currentPage == newpage )
+        return;
+
+    m_currentPage = newpage;
+
+    if ( m_current )
+    {
+        m_current->setSelected( false );
+        m_current = 0;
+    }
+
+    QTreeWidgetItemIterator it( m_treeView );
+    while ( (*it) && !m_current )
+    {
+        TOCItem *tmp = dynamic_cast<TOCItem*>( *it );
+        int p = tmp ? getViewport( tmp->element() ).pageNumber : -1;
+        if ( p == newpage )
+        {
+            m_current = tmp;
+            m_current->setSelected( true );
+        }
+        ++it;
+    }
+}
+
 
 void TOC::addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem )
 {

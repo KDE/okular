@@ -19,6 +19,7 @@ class QTreeWidget;
 class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
 class KPDFDocument;
+class TOCItem;
 
 class TOC : public QWidget, public DocumentObserver
 {
@@ -30,6 +31,7 @@ Q_OBJECT
         // inherited from DocumentObserver
         uint observerId() const;
         void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
+        void notifyViewportChanged( bool smoothMove );
 
     signals:
         void hasTOC(bool has);
@@ -43,6 +45,8 @@ Q_OBJECT
         KPDFDocument *m_document;
         QTreeWidget *m_treeView;
         KTreeWidgetSearchLine *m_searchLine;
+        TOCItem *m_current;
+        int m_currentPage;
 };
 
 #endif

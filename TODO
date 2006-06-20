@@ -6,6 +6,8 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress [working on]:
+-> toc: higlight the row of the current page (BR127358)
+   (check if there's a better way to do the highlighting - in case just edit TOCItem::setSelected())
 -> annotations: renderers in PagePainter (for the 6 annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
 -> annotations: creators in PageViewAnnotator (40% done)
@@ -42,11 +44,10 @@ More items (first items will enter 'In progress list' first):
 -> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
 -> toolbar: move the toolbar to the top of pageview (left panel is really at the left of the toolbar)
--> toc: higlight the row of the current page (BR127358)
 -> thumbnailslist: show Viewport in(blended/contour)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
--> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)
    than using QScrollView + inserted Widgets and saves 8% on document loading)
+-> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)
 -> Dom framework to cache document metadata. It should archive those types of data:
    (NOTE: already Dom'ed object is marked with 'X')
    - <X> Synopsis will go there after 1st generation (so we can edit it too)

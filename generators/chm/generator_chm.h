@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_TGENERATOR_H_
-#define _KPDF_TGENERATOR_H_ 
+#ifndef _OKULAR_CHMGENERATOR_H_
+#define _OKULAR_CHMGENERATOR_H_ 
 
 #include "core/generator.h"
 #include <qsize.h>
@@ -22,11 +22,11 @@ class PixmapThreader;
 class QCustomEvent;
 class KPDFTextPage;
 
-class TGenerator : public Generator
+class CHMGenerator : public Generator
 {
     Q_OBJECT
     public:
-        TGenerator(KPDFDocument * doc );
+        CHMGenerator(KPDFDocument * doc );
         bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
 
         const DocumentInfo * generateDocumentInfo();
@@ -96,7 +96,7 @@ class PixmapThreader : public QObject, public QThread
 {
     Q_OBJECT
     public:
-        PixmapThreader (TGenerator* gen) : m_gen(gen) {;} ;
+        PixmapThreader (CHMGenerator* gen) : m_gen(gen) {;} ;
         QPixmap * takePixmap() { return m_pix; };
         void startGeneration(PixmapRequest * req) { m_req=req; start(); };
     private:
@@ -104,7 +104,7 @@ class PixmapThreader : public QObject, public QThread
         PixmapRequest* m_req;
         QString page;
         QPixmap * m_pix;
-        TGenerator * m_gen;
+        CHMGenerator * m_gen;
 };*/
 
 #endif

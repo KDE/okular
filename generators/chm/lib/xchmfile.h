@@ -39,7 +39,7 @@
 #include "chm_lib.h"
 // #include 
 
-class TGenerator;
+class CHMGenerator;
 class K3ListView;
 class KCHMSearchResult
 {
@@ -89,7 +89,7 @@ class QDomDocument;
 //! Mostly a C++ wrapper around the CHMLIB facilities. Concrete class.
 class CHMFile
 {
-    friend class TGenerator;
+    friend class CHMGenerator;
 public:
 	//! Default constructor.
 	CHMFile();

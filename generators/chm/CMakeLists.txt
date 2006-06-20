@@ -19,7 +19,7 @@ set(chmlib_SRCS
 )
 
 set(okularGenerator_chmlib_SRCS
-   ${CMAKE_SOURCE_DIR}/okular/generators/chm/generator_t.cpp
+   ${CMAKE_SOURCE_DIR}/okular/generators/chm/generator_chm.cpp
 )
 
 set(okularGenerator_chmlib_PART_SRCS ${chmlib_SRCS} ${okularGenerator_chmlib_SRCS} )

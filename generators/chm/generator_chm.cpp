@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "generator_t.h"
+#include "generator_chm.h"
 #include "lib/xchmfile.h"
 #include "settings.h"
 #include "core/page.h"
@@ -26,9 +26,9 @@
 #include <qprinter.h>
 #include <qstring.h>
 
-OKULAR_EXPORT_PLUGIN(TGenerator)
+OKULAR_EXPORT_PLUGIN(CHMGenerator)
 
-TGenerator::TGenerator( KPDFDocument * doc ) : Generator ( doc )
+CHMGenerator::CHMGenerator( KPDFDocument * doc ) : Generator ( doc )
 {
     m_syncGen=0;
     m_file=0;
@@ -38,7 +38,7 @@ TGenerator::TGenerator( KPDFDocument * doc ) : Generator ( doc )
 //     px=0;
 }
 
-bool TGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
+bool CHMGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
 {
     m_fileName=fileName;
     m_file=new CHMFile (fileName);
@@ -73,7 +73,7 @@ bool TGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > &
     return true;
 }
 
-void TGenerator::preparePageForSyncOperation( int zoom , const QString & url)
+void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
     m_state=0;
@@ -85,7 +85,7 @@ void TGenerator::preparePageForSyncOperation( int zoom , const QString & url)
     while (!m_doneFlagSet) { qApp->processEvents(QEventLoop::AllEvents, 50); }
 }
 
-void TGenerator::slotCompleted()
+void CHMGenerator::slotCompleted()
 {
     kDebug() << "completed() " << m_state << endl;
     if (m_state==0)
@@ -110,7 +110,7 @@ void TGenerator::slotCompleted()
     }
 }
 
-const DocumentInfo * TGenerator::generateDocumentInfo() 
+const DocumentInfo * CHMGenerator::generateDocumentInfo() 
 {
     if (!m_docInfo)
     {
@@ -123,22 +123,22 @@ const DocumentInfo * TGenerator::generateDocumentInfo()
     return m_docInfo;
 }
 
-const DocumentSynopsis * TGenerator::generateDocumentSynopsis()
+const DocumentSynopsis * CHMGenerator::generateDocumentSynopsis()
 {
     return &m_docSyn;
 }
 
-const DocumentFonts * TGenerator::generateDocumentFonts() 
+const DocumentFonts * CHMGenerator::generateDocumentFonts() 
 {
     return 0L;
 }
 
-bool TGenerator::isAllowed( int /*Document::Permisison(s)*/ )
+bool CHMGenerator::isAllowed( int /*Document::Permisison(s)*/ )
 {
     return true;
 }
 
-bool TGenerator::canGeneratePixmap ( bool /*async*/ )
+bool CHMGenerator::canGeneratePixmap ( bool /*async*/ )
 {
 /*    if (async)
     {
@@ -148,7 +148,7 @@ bool TGenerator::canGeneratePixmap ( bool /*async*/ )
     return !syncLock.locked();
 }
 
-void TGenerator::generatePixmap( PixmapRequest * request ) 
+void CHMGenerator::generatePixmap( PixmapRequest * request ) 
 {
     QString a="S";
     if (request->async) a="As";
@@ -175,7 +175,7 @@ void TGenerator::generatePixmap( PixmapRequest * request )
 }
 
 
-void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
+void CHMGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
 {
     if (node.nodeType() == DOM::Node::TEXT_NODE)
     {
@@ -245,7 +245,7 @@ void TGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
 
 }
 
-void TGenerator::additionalRequestData() 
+void CHMGenerator::additionalRequestData() 
 {
     KPDFPage * page=m_request->page;
     bool genObjectRects = m_request->id & (PAGEVIEW_ID | PRESENTATION_ID);
@@ -328,12 +328,12 @@ void TGenerator::additionalRequestData()
     }
 }
 
-bool TGenerator::canGenerateTextPage() 
+bool CHMGenerator::canGenerateTextPage() 
 {
     return true;
 }
 
-void TGenerator::generateSyncTextPage( KPDFPage * page )
+void CHMGenerator::generateSyncTextPage( KPDFPage * page )
 {
     syncLock.lock();
     double zoomP=KpdfSettings::zoomFactor();
@@ -346,54 +346,54 @@ void TGenerator::generateSyncTextPage( KPDFPage * page )
     syncLock.unlock();
 }
 
-QString TGenerator::getXMLFile()
+QString CHMGenerator::getXMLFile()
 {
     return QString::null;
 }
 
-void TGenerator::setupGUI(KActionCollection  * /*ac*/ , QToolBox * /*tBox*/ )
+void CHMGenerator::setupGUI(KActionCollection  * /*ac*/ , QToolBox * /*tBox*/ )
 { ; }
 
-bool TGenerator::supportsSearching()
+bool CHMGenerator::supportsSearching()
 {
     return true;
 }
 
-bool TGenerator::prefersInternalSearching()
+bool CHMGenerator::prefersInternalSearching()
 {
     return false;
 }
 
-bool TGenerator::supportsRotation()
+bool CHMGenerator::supportsRotation()
 {
     return false;
 }
 
-RegularAreaRect * TGenerator::findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
+RegularAreaRect * CHMGenerator::findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
     const RegularAreaRect * /*lastRect*/, KPDFPage * /*page*/)
 {
     return 0L;
 }
 
-QString TGenerator::getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ )
+QString CHMGenerator::getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ )
 {
     return QString();
 }
 
-void TGenerator::setOrientation(QVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/)
+void CHMGenerator::setOrientation(QVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/)
 { ; }
 
-bool TGenerator::canConfigurePrinter( )
+bool CHMGenerator::canConfigurePrinter( )
 {
     return false;
 }
 
-bool TGenerator::print( KPrinter& /*printer*/ )
+bool CHMGenerator::print( KPrinter& /*printer*/ )
 {
     return false;
 }
 
-QString TGenerator::getMetaData( const QString &key, const QString &option )
+QString CHMGenerator::getMetaData( const QString &key, const QString &option )
 {
     if ( key == "NamedViewport" && !option.isEmpty() )
     {
@@ -405,15 +405,15 @@ QString TGenerator::getMetaData( const QString &key, const QString &option )
     return QString::null;
 }
 
-bool TGenerator::reparseConfig()
+bool CHMGenerator::reparseConfig()
 {
     return false;
 }
 
-void TGenerator::addPages( KConfigDialog* /*dlg*/)
+void CHMGenerator::addPages( KConfigDialog* /*dlg*/)
 { ; }
 
-bool TGenerator::handleEvent (QEvent * /*event*/ )
+bool CHMGenerator::handleEvent (QEvent * /*event*/ )
 {
     return true;
 }
@@ -427,7 +427,7 @@ void PixmapThreader::run()
     QApplication::postEvent( m_gen , readyEvent );
 }
 
-void TGenerator::customEvent( QCustomEvent * e )
+void CHMGenerator::customEvent( QCustomEvent * e )
 {
     if (e->type() == CHM_DATAREADY_ID )
     {
@@ -439,4 +439,4 @@ void TGenerator::customEvent( QCustomEvent * e )
     }
 }*/
 
-#include "generator_t.moc"
+#include "generator_chm.moc"

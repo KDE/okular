@@ -85,6 +85,7 @@ class CHMGenerator : public Generator
         // -1 is internal error :)
         int m_state;
         PixmapRequest* m_request;
+        int m_pixmapRequestZoom;
         volatile bool m_doneFlagSet;
         DocumentInfo* m_docInfo;
 };

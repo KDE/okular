@@ -36,6 +36,7 @@ CHMGenerator::CHMGenerator( KPDFDocument * doc ) : Generator ( doc )
     m_docInfo=0;
 //     m_asyncGen=0;
 //     px=0;
+    m_pixmapRequestZoom=1;
 }
 
 bool CHMGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
@@ -103,6 +104,14 @@ void CHMGenerator::slotCompleted()
 //                 m_syncGen->view()->layout();
         m_syncGen->paint(&p, r,0,&moreToPaint);
         p.end();
+        if (m_pixmapRequestZoom>1)
+        {
+            QPixmap* newpix=new QPixmap();
+            *newpix=pix->scaled(m_request->width/m_pixmapRequestZoom, m_request->height/m_pixmapRequestZoom);
+            delete pix;
+            pix=newpix;
+            m_pixmapRequestZoom=1;
+        }
         additionalRequestData();
         syncLock.unlock();
         m_request->page->setPixmap( m_request->id, pix );
@@ -157,6 +166,13 @@ void CHMGenerator::generatePixmap( PixmapRequest * request )
     << request->height << " size, pageNo " << request->pageNumber 
     << ", priority: " << request->priority << " id: " << request->id
     <<  endl;
+
+    if (request->width<300)
+    {
+        m_pixmapRequestZoom=900/request->width;
+        request->width*=m_pixmapRequestZoom;
+        request->height*=m_pixmapRequestZoom;
+    }
 
     syncLock.lock();
     QString url= m_file->getUrlForPage ( request->pageNumber + 1 );

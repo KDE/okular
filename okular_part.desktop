@@ -2,11 +2,6 @@
 Encoding=UTF-8
 Icon=okular
 Name=okular
-Name[ar]=برنامج KPDF
-Name[hi]=के-पीडीएफ
-Name[xx]=xxKPDFxx
-MimeType=application/pdf
-InitialPreference=7
 ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service

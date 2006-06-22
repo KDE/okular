@@ -25,8 +25,6 @@
 #include <kprocess.h>
 #include <ktempfile.h>
 
-
-#include "settings.h"
 #include "interpreter_cmd.h"
 
 ProcessData :: ProcessData ()

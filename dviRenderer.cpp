@@ -154,6 +154,12 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
   globalColor = Qt::black;
 
   SimplePageSize ps = sizeOfPage(page->getPageNumber());
+  if (!ps.isValid())
+  {
+    RenderedDviPagePixmap* DVIpage = static_cast<RenderedDviPagePixmap*>(page);
+    ps = DVIpage->customPageSize;
+  }
+
   int pageHeight = ps.sizeInPixel(resolution).height();
   int pageWidth = ps.sizeInPixel(resolution).width();
   page->resize(pageWidth, pageHeight);

@@ -404,8 +404,12 @@ DocumentWidget* KDVIMultiPage::createDocumentWidget(PageView *parent, DocumentPa
 
 RenderedDocumentPagePixmap* KDVIMultiPage::createDocumentPagePixmap(JobId id) const
 {
-  RenderedDocumentPagePixmap* page = new RenderedDviPagePixmap(id);
+  RenderedDviPagePixmap* page = new RenderedDviPagePixmap(id);
   page->setupObservers(dataModel);
+
+  // Needed for DVI files without a papersize-special
+  page->customPageSize = dataModel->userPreferredPageSize();
+
   return page;
 }
 

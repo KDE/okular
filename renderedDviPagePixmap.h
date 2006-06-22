@@ -44,6 +44,8 @@ class RenderedDviPagePixmap : public RenderedDocumentPagePixmap
   generated when the current page is drawn.
   */
   Q3ValueVector<Hyperlink> sourceHyperLinkList;
+
+  SimplePageSize customPageSize;
 };
 
 #endif

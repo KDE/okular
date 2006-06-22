@@ -87,7 +87,7 @@ class dviRenderer : public DocumentRenderer, bigEndianByteReader
   Q_OBJECT
 
 public:
-  dviRenderer();
+  dviRenderer(KMultiPage*);
   ~dviRenderer();
 
   virtual bool  setFile(const QString &fname, const KUrl &base);
@@ -148,8 +148,8 @@ public slots:
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar();
 
-  virtual void  drawPage(RenderedDocumentPagePixmap* page);
-  virtual void  getText(RenderedDocumentPagePixmap* page);
+  virtual RenderedDocumentPagePixmap* drawPage(const JobId& id);
+  virtual RenderedDocumentPagePixmap* getText(const JobId& id);
 
 private slots:
   /** This method shows a dialog that tells the user that source

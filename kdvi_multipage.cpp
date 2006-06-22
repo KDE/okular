@@ -40,7 +40,8 @@ K_EXPORT_COMPONENT_FACTORY( kdvipart, KGenericFactory<KDVIMultiPage>( "kdvipart"
 
 
 KDVIMultiPage::KDVIMultiPage(QObject *parent, const char *name, const QStringList& args)
-  : KMultiPage(parent, name)
+  : KMultiPage(parent, name),
+    DVIRenderer(this)
 {
   Q_UNUSED(args);
 #ifdef PERFORMANCE_MEASUREMENT

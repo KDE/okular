@@ -16,6 +16,7 @@
 #include "dvisourcesplitter.h"
 #include "hyperlink.h"
 #include "infodialog.h"
+#include "kmultipage.h"
 #include "kvs_debug.h"
 #include "prebookmark.h"
 #include "psgs.h"
@@ -43,8 +44,9 @@
 
 //------ now comes the dviRenderer class implementation ----------
 
-dviRenderer::dviRenderer()
-  : dviFile(0),
+dviRenderer::dviRenderer(KMultiPage* _multiPage)
+  : DocumentRenderer(_multiPage),
+    dviFile(0),
     info(new infoDialog(0)),
     resolutionInDPI(0),
     embedPS_progress(0),
@@ -107,45 +109,41 @@ void dviRenderer::showInfo()
 //------ this function calls the dvi interpreter ----------
 
 
-void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
+RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
 {
 #ifdef DEBUG_DVIRENDERER
-  kdDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->getPageNumber() << endl;
+  kdDebug(kvs::djvu) << "dviRenderer::drawPage(JobId) called, page number " << id.pageNumber << endl;
 #endif
 
   // Paranoid safety checks
-  if (page == 0) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
-    return;
-  }
-  if (page->getPageNumber() == 0) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
-    return;
+  if (!id.pageNumber.isValid())
+  {
+    kdDebug(kvs::djvu) << "dviRenderer::drawPage(JobId) called with an invalid pageNumber" << endl;
+    return 0;
   }
 
   QMutexLocker lock(&mutex);
 
   if ( dviFile == 0 ) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
-    page->clear();
-    return;
+    kdError(kvs::dvi) << "dviRenderer::drawPage(JobId) called, but no dviFile class allocated." << endl;
+    return 0;
   }
-  if (page->getPageNumber() > dviFile->total_pages) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->getPageNumber()
+  if (id.pageNumber > dviFile->total_pages) {
+    kdError(kvs::dvi) << "dviRenderer::drawPage(JobId) called for a documentPage with page number " << id.pageNumber
                   << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
-    return;
+    return 0;
   }
   if ( dviFile->dvi_Data() == 0 ) {
-    kdError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
-    page->clear();
-    return;
+    kdError(kvs::dvi) << "dviRenderer::drawPage(JobId) called, but no dviFile is loaded yet." << endl;
+    return 0;
   }
 
-  double resolution = page->getId().resolution;
+  double resolution = id.resolution;
 
   if (resolution != resolutionInDPI)
     setResolution(resolution);
 
+  RenderedDocumentPagePixmap* page = multiPage->createDocumentPagePixmap(id);
   currentlyDrawnPage     = page;
   shrinkfactor           = 1200/resolutionInDPI;
   current_page           = page->getPageNumber()-1;
@@ -155,8 +153,10 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   colorStack.clear();
   globalColor = Qt::black;
 
-  int pageWidth = page->width();
-  int pageHeight = page->height();
+  SimplePageSize ps = sizeOfPage(page->getPageNumber());
+  int pageHeight = ps.sizeInPixel(resolution).height();
+  int pageWidth = ps.sizeInPixel(resolution).width();
+  page->resize(pageWidth, pageHeight);
 
   qApp->lock();
   foreGroundPixmap = new QPixmap(pageWidth, pageHeight);
@@ -204,18 +204,22 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   }
 
   currentlyDrawnPage = 0;
+
+  return page;
 }
 
 
-void dviRenderer::getText(RenderedDocumentPagePixmap* page)
+RenderedDocumentPagePixmap* dviRenderer::getText(const JobId& id)
 {
   bool postscriptBackup = _postscript;
   // Disable postscript-specials temporarely to speed up text extraction.
   _postscript = false;
 
-  drawPage(page);
+  RenderedDocumentPagePixmap* page = drawPage(id);
 
   _postscript = postscriptBackup;
+
+  return page;
 }
 
 

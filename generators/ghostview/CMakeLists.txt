@@ -54,7 +54,7 @@ install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_ghostview.desktop )
+install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_ghostview.desktop okularGhostview.desktop )
 
 
 

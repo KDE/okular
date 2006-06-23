@@ -33,6 +33,7 @@
 #define PRESENTATION_PRIO 0
 
 class KPDFPage;
+class VisiblePageRect;
 
 /**
  * @short Base class for objects being notified when something changes.
@@ -50,11 +51,12 @@ class DocumentObserver
 
         // commands from the Document to all observers
         enum ChangedFlags { Pixmap = 1, Bookmark = 2, Highlights = 4, Annotations = 8 };
-        enum NotifyType { Setup = 1, Viewport = 2, Page = 4, Contents = 8 };
+        enum NotifyType { Setup = 1, Viewport = 2, Page = 4, Contents = 8, VisibleAreas = 16 };
         virtual void notifySetup( const QVector< KPDFPage * > & /*pages*/, bool /*documentChanged*/ ) {};
         virtual void notifyViewportChanged( bool /*smoothMove*/ ) {};
         virtual void notifyPageChanged( int /*pageNumber*/, int /*changedFlags*/ ) {};
         virtual void notifyContentsCleared( int /*changedFlags*/ ) {};
+        virtual void notifyVisibleRectsChanged() {};
 
         // queries to observers
         virtual bool canUnloadPixmap( int /*pageNum*/ ) { return true; }
@@ -66,6 +68,7 @@ struct NotifyRequest
     bool toggle;
     int page;
     int flags;
+    QVector<VisiblePageRect*> rects;
     NotifyRequest (DocumentObserver::NotifyType t, bool to=false)
         : type(t), toggle(to), page(-1), flags(0) { ; };
     NotifyRequest (DocumentObserver::NotifyType t, int p, int f)

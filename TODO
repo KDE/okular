@@ -8,6 +8,8 @@ Legend:
 In progress [working on]:
 -> toc: higlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setSelected())
+-> thumbnailslist: show Viewport in(blended/contour)
+   (actually it's only a red contour)
 -> annotations: renderers in PagePainter (for the 6 annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
 -> annotations: creators in PageViewAnnotator (40% done)
@@ -44,7 +46,6 @@ More items (first items will enter 'In progress list' first):
 -> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
 -> toolbar: move the toolbar to the top of pageview (left panel is really at the left of the toolbar)
--> thumbnailslist: show Viewport in(blended/contour)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
    than using QScrollView + inserted Widgets and saves 8% on document loading)
 -> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)

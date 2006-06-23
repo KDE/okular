@@ -2235,6 +2235,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
     // iterate over all items
     d->visibleItems.clear();
     QLinkedList< PixmapRequest * > requestedPixmaps;
+    QVector< VisiblePageRect * > visibleRects;
     QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
@@ -2244,11 +2245,14 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         kWarning() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() ) << endl;
 #endif
         // if the item doesn't intersect the viewport, skip it
-        if ( !viewportRect.intersects( i->geometry() ) )
+        QRect intersectionRect = viewportRect.intersect( i->geometry() );
+        if ( intersectionRect.isEmpty() )
             continue;
 
         // add the item to the 'visible list'
         d->visibleItems.push_back( i );
+        VisiblePageRect * vItem = new VisiblePageRect( i->pageNumber(), NormalizedRect( intersectionRect.translated( -i->geometry().topLeft() ), i->geometry().width(), i->geometry().height() ) );
+        visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
 #endif
@@ -2328,6 +2332,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         // set the viewport to other observers
         d->document->setViewport( newViewport , PAGEVIEW_ID);
     }
+    d->document->setVisiblePageRects( visibleRects, PAGEVIEW_ID );
 }
 
 void PageView::slotMoveViewport()

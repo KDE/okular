@@ -21,6 +21,8 @@
 #include <qhash.h>
 #include <kmimetype.h>
 
+#include "area.h"
+
 class KPDFPage;
 class KPDFLink;
 class DocumentObserver;
@@ -37,6 +39,7 @@ class KUrl;
 class KActionCollection;
 class QToolBox;
 class NotifyRequest;
+class VisiblePageRect;
 
 /** IDs for seaches. Globally defined here. **/
 #define PART_SEARCH_ID 1
@@ -91,6 +94,8 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         const QList<EmbeddedFile*> *embeddedFiles() const;
         const KPDFPage * page( int page ) const;
         const DocumentViewport & viewport() const;
+        const QVector< VisiblePageRect * > & visiblePageRects() const;
+        void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, int excludeId = -1 );
         uint currentPage() const;
         uint pages() const;
         KUrl currentDocument() const;
@@ -163,6 +168,7 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         Generator * generator;
         bool m_usingCachedGenerator;
         QVector< KPDFPage * > pages_vector;
+        QVector< VisiblePageRect * > page_rects;
         class KPDFDocumentPrivate * d;
 
     private slots:
@@ -288,6 +294,19 @@ class OKULAR_EXPORT EmbeddedFile
         virtual QDateTime modificationDate() const = 0;
         virtual QDateTime creationDate() const = 0;
 
+};
+
+/**
+ * @short An area of a specified page
+ */
+class VisiblePageRect
+{
+    public:
+        VisiblePageRect( int _pageNumber = -1, const NormalizedRect & r = NormalizedRect() )
+          : pageNumber( _pageNumber ), rect( r )  {};
+
+        int pageNumber;
+        NormalizedRect rect;
 };
 
 #endif

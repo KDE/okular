@@ -395,6 +395,11 @@ void KPDFDocument::notifyObservers (NotifyRequest * request)
         case DocumentObserver::Contents:
             foreachObserver( notifyContentsCleared( request->flags ) );
             break;
+        case DocumentObserver::VisibleAreas:
+            qDeleteAll(page_rects);
+            page_rects = request->rects;
+            foreachObserver( notifyVisibleRectsChanged() );
+            break;
     }
 }
 
@@ -501,6 +506,25 @@ const KPDFPage * KPDFDocument::page( int n ) const
 const DocumentViewport & KPDFDocument::viewport() const
 {
     return (*d->viewportIterator);
+}
+
+const QVector< VisiblePageRect * > & KPDFDocument::visiblePageRects() const
+{
+    return page_rects;
+}
+
+void KPDFDocument::setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, int excludeId )
+{
+    QVector< VisiblePageRect * >::iterator vIt = page_rects.begin();
+    QVector< VisiblePageRect * >::iterator vEnd = page_rects.end();
+    for ( ; vIt != vEnd; ++vIt )
+        delete *vIt;
+    page_rects = visiblePageRects;
+    // notify change to all other (different from id) observers
+    QMap< int, DocumentObserver * >::iterator it = d->observers.begin(), end = d->observers.end();
+    for ( ; it != end ; ++ it )
+        if ( it.key() != excludeId )
+            (*it)->notifyVisibleRectsChanged();
 }
 
 uint KPDFDocument::currentPage() const

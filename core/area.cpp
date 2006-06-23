@@ -35,6 +35,9 @@ NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale )
     : left( (double)r.left() / xScale ), top( (double)r.top() / yScale ),
     right( (double)r.right() / xScale ), bottom( (double)r.bottom() / yScale ) {}
 
+NormalizedRect::NormalizedRect( const NormalizedRect & rect )
+    : left( rect.left ), top( rect.top ), right( rect.right ), bottom( rect.bottom ) {}
+
 bool NormalizedRect::isNull() const
 {
     return left == 0 && top== 0 && right == 0 && bottom == 0;
@@ -75,6 +78,16 @@ NormalizedRect& NormalizedRect::operator|= (const NormalizedRect & r)
 {
 	return ((*this) = (*this) | r );
 }
+
+NormalizedRect & NormalizedRect::operator=( const NormalizedRect & r )
+{
+    left = r.left;
+    right = r.right;
+    top = r.top;
+    bottom = r.bottom;
+    return *this;
+}
+
 /*
 kdbgstream& operator << (kdbgstream& str , const NormalizedRect &r)
 {

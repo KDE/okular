@@ -46,6 +46,8 @@ Q_OBJECT
         void notifyPageChanged( int pageNumber, int changedFlags );
         // inherited: request all visible pixmap (due to a global shange or so..)
         void notifyContentsCleared( int changedFlags );
+        // inherited: the visible areas of the page have changed
+        void notifyVisibleRectsChanged();
         // inherited: tell if pixmap is hidden and can be unloaded
         bool canUnloadPixmap( int pageNumber );
 

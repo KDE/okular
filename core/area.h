@@ -42,6 +42,7 @@ class OKULAR_EXPORT NormalizedRect
         NormalizedRect();
         NormalizedRect( double l, double t, double r, double b );
         NormalizedRect( const QRect &r, double xScale, double yScale );
+        NormalizedRect( const NormalizedRect & rect );
         bool isNull() const;
         bool contains( double x, double y ) const;
         bool intersects( const NormalizedRect & normRect ) const;
@@ -50,6 +51,7 @@ class OKULAR_EXPORT NormalizedRect
         QRect geometry( int xScale, int yScale ) const;
 	NormalizedRect operator| (const NormalizedRect & r) const;
 	NormalizedRect& operator|= (const NormalizedRect & r);
+        NormalizedRect& operator=( const NormalizedRect & r );
 };
 
 // kdbgstream& operator << (kdbgstream &, const NormalizedRect &);

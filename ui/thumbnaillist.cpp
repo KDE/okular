@@ -26,6 +26,7 @@
 // local includes
 #include "thumbnaillist.h"
 #include "pagepainter.h"
+#include "core/area.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
@@ -41,6 +42,8 @@ class ThumbnailWidget : public QWidget
         void resizeFitWidth( int width );
         // set thumbnail's selected state
         void setSelected( bool selected );
+        // set the visible rect of the current page
+        void setVisibleRect( const NormalizedRect & rect );
 
         // query methods
         int heightHint() const { return m_pixmapHeight + m_labelHeight + m_margin; }
@@ -65,6 +68,7 @@ class ThumbnailWidget : public QWidget
         bool m_selected;
         int m_pixmapWidth, m_pixmapHeight;
         int m_labelHeight, m_labelNumber;
+        NormalizedRect m_visibleRect;
 };
 
 
@@ -234,6 +238,31 @@ void ThumbnailList::notifyContentsCleared( int changedFlags )
     // if pixmaps were cleared, re-ask them
     if ( changedFlags & DocumentObserver::Pixmap )
         slotRequestVisiblePixmaps();
+}
+
+void ThumbnailList::notifyVisibleRectsChanged()
+{
+    bool found = false;
+    const QVector<VisiblePageRect *> & visibleRects = m_document->visiblePageRects();
+    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
+    for ( ; tIt != tEnd; ++tIt )
+    {
+        found = false;
+        QVector<VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
+        for ( ; ( vIt != vEnd ) && !found; ++vIt )
+        {
+            if ( (*tIt)->pageNumber() == (*vIt)->pageNumber )
+            {
+                (*tIt)->setVisibleRect( (*vIt)->rect );
+                found = true;
+            }
+        }
+        if ( ! found )
+        {
+                (*tIt)->setVisibleRect( NormalizedRect() );
+        }
+    }
 }
 
 bool ThumbnailList::canUnloadPixmap( int pageNumber )
@@ -493,6 +522,12 @@ void ThumbnailWidget::setSelected( bool selected )
     }
 }
 
+void ThumbnailWidget::setVisibleRect( const NormalizedRect & rect )
+{
+    m_visibleRect = rect;
+    update();
+}
+
 QSize ThumbnailWidget::sizeHint() const
 {
     return QSize( width(), heightHint() );
@@ -558,6 +593,13 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
                         PagePainter::Annotations;
             PagePainter::paintPageOnPainter( &p, m_page, THUMBNAILS_ID, flags,
                                              m_pixmapWidth, m_pixmapHeight, clipRect );
+        }
+
+        if ( !m_visibleRect.isNull() )
+        {
+            p.setPen( QPen( QBrush( Qt::red ), 2 ) );
+            p.setBrush( Qt::NoBrush );
+            p.drawRect( m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight ) );
         }
 
         // draw the bookmark overlay on the top-right corner

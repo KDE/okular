@@ -358,6 +358,14 @@ void KPDFDocument::closeDocument()
         delete *rIt;
     d->searches.clear();
 
+    // clear the visible areas and notify the observers
+    QVector< VisiblePageRect * >::iterator vIt = page_rects.begin();
+    QVector< VisiblePageRect * >::iterator vEnd = page_rects.end();
+    for ( ; vIt != vEnd; ++vIt )
+        delete *vIt;
+    page_rects.clear();
+    foreachObserver( notifyVisibleRectsChanged() );
+
     // reset internal variables
 
     d->viewportHistory.clear();

@@ -109,6 +109,8 @@ protected slots:
 	void slotGoToPage();
 	void slotHistoryBack();
 	void slotHistoryNext();
+	void slotPreviousBookmark();
+	void slotNextBookmark();
 	void slotFindNext();
 	void slotSaveFileAs();
 	void slotGetNewStuff();
@@ -169,6 +171,8 @@ private:
 	KAction *m_lastPage;
 	KAction *m_historyBack;
 	KAction *m_historyNext;
+	KAction *m_prevBookmark;
+	KAction *m_nextBookmark;
 	KAction *m_find;
 	KAction *m_findNext;
 	KAction *m_saveAs;

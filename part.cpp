@@ -230,6 +230,14 @@ Part::Part(QWidget *parentWidget,
 	m_historyNext = KStdAction::forward( this, SLOT( slotHistoryNext() ), ac, "history_forward" );
 	m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
 
+	m_prevBookmark = new KAction( KIcon( "previous" ), i18n( "Previous Bookmark" ), ac, "previous_bookmark" );
+	m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
+	connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
+
+	m_nextBookmark = new KAction( KIcon( "next" ), i18n( "Next Bookmark" ), ac, "next_bookmark" );
+	m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
+	connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
+
 	// Find and other actions
 	m_find = KStdAction::find( this, SLOT( slotFind() ), ac, "find" );
 	m_find->setEnabled( false );
@@ -798,6 +806,41 @@ void Part::slotHistoryNext()
     m_document->setNextViewport();
 }
 
+void Part::slotPreviousBookmark()
+{
+    uint current = m_document->currentPage();
+    // we are at the first page
+    if ( current == 0 )
+        return;
+
+    for ( int i = current - 1; i >= 0; --i )
+    {
+        if ( m_document->page( i )->hasBookmark() )
+        {
+            m_document->setViewportPage( i );
+            break;
+        }
+    }
+}
+
+void Part::slotNextBookmark()
+{
+    uint current = m_document->currentPage();
+    uint pages = m_document->pages();
+    // we are at the last page
+    if ( current == pages )
+        return;
+
+    for ( uint i = current + 1; i < pages; ++i )
+    {
+        if ( m_document->page( i )->hasBookmark() )
+        {
+            m_document->setViewportPage( i );
+            break;
+        }
+    }
+}
+
 void Part::slotFind()
 {
     KFindDialog dlg( widget() );
@@ -973,6 +1016,8 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 			fitPageWidth = popup->addAction( KIcon("viewmagfit"), i18n("Fit Width") );
 		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
 		//popup->setItemEnabled( 3, false );
+		popup->addAction( m_prevBookmark );
+		popup->addAction( m_nextBookmark );
 		reallyShow = true;
         }
 /*

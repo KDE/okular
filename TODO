@@ -38,7 +38,6 @@ More items (first items will enter 'In progress list' first):
 -> part: collapsing the left panel will hide it (activate hiding action)
 -> preload: add a delay when forward loading pages
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR
--> bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
 -> viewport restoring: save the zoom/viewCols/continous setting between runs (BR97307+patch)
 -> search: use shortcut for 'find next' action (not the default one) in find-ahead
@@ -108,6 +107,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)
 -> CHG: open dialog: switch to directory where the already opened (local) file is
 -> ADD: toc: add search bar (a 'prune on type' lineedit like in thumbnails widget) (BR99349)
 -> FIX: kfile-plugins/pdf: provide internal support and rewrite that plugin (drops xpdf dependancy from kdegraphics) (by ktech)

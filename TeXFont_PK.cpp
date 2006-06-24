@@ -203,7 +203,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
     int shrunk_height = (int)ceil( (characterBitmaps[ch]->h - srcYTrans)/shrinkFactor );
 
     // Turn the image into 8 bit
-    QByteArray translated(characterBitmaps[ch]->w * characterBitmaps[ch]->h);
+    QByteArray translated(characterBitmaps[ch]->w * characterBitmaps[ch]->h, '\0');
     quint8 *data = (quint8 *)translated.data();
     for(int x=0; x<characterBitmaps[ch]->w; x++)
       for(int y=0; y<characterBitmaps[ch]->h; y++) {
@@ -214,7 +214,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
       }
 
     // Now shrink the image. We shrink the X-direction first
-    QByteArray xshrunk(shrunk_width*characterBitmaps[ch]->h);
+    QByteArray xshrunk(shrunk_width*characterBitmaps[ch]->h, '\0');
     quint8 *xdata = (quint8 *)xshrunk.data();
 
     // Do the shrinking. The pixel (x,y) that we want to calculate
@@ -242,7 +242,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
       }
 
     // Now shrink the Y-direction
-    QByteArray xyshrunk(shrunk_width*shrunk_height);
+    QByteArray xyshrunk(shrunk_width*shrunk_height, '\0');
     quint8 *xydata = (quint8 *)xyshrunk.data();
     for(int x=0; x<shrunk_width; x++)
       for(int y=0; y<shrunk_height; y++) {
@@ -261,8 +261,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
         xydata[shrunk_width*y + x] = (int)(value/shrinkFactor);
       }
 
-    QImage im32(shrunk_width, shrunk_height, 32);
-    im32.setAlphaBuffer(true);
+    QImage im32(shrunk_width, shrunk_height, QImage::Format_ARGB32);
     // Do QPixmaps fully support the alpha channel? If yes, we use
     // that. Otherwise, use other routines as a fallback
     if (parent->font_pool->QPixmapSupportsAlpha) {

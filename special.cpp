@@ -152,7 +152,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     if ((ok == false) || (b < 0.0) || (b > 1.0))
       return QColor();
 
-    return QColor((int)(h*359.0+0.5), (int)(s*255.0+0.5), (int)(b*255.0+0.5), QColor::Hsv);
+    return QColor::fromHsv((int)(h*359.0+0.5), (int)(s*255.0+0.5), (int)(b*255.0+0.5));
   }
 
   if (specType.indexOf("cmyk", 0, Qt::CaseInsensitive) == 0) {
@@ -424,10 +424,10 @@ void dviRenderer::epsf_special(const QString& cp)
     f.setPointSize(8);
     foreGroundPainter->setFont(f);
     if (QFile::exists(EPSfilename))
-      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
+      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename);
     else
       foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter),
-                                i18n("File not found: \n %1", EPSfilename_orig), -1);
+                                i18n("File not found: \n %1", EPSfilename_orig));
     foreGroundPainter->restore();
   }
 
@@ -448,7 +448,7 @@ void dviRenderer::TPIC_flushPath_special()
 
   QPen pen(Qt::black, (int)(penWidth_in_mInch*resolutionInDPI/1000.0 + 0.5));  // Sets the pen size in milli-inches
   foreGroundPainter->setPen(pen);
-  foreGroundPainter->drawPolyline(TPIC_path, 0, number_of_elements_in_path);
+  foreGroundPainter->drawPolyline(TPIC_path.constData(), number_of_elements_in_path);
   number_of_elements_in_path = 0;
 }
 

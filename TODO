@@ -6,7 +6,7 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 In progress [working on]:
--> toc: higlight the row of the current page (BR127358)
+-> toc: highlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setSelected())
 -> thumbnailslist: show Viewport in(blended/contour)
    (actually it's only a red contour)
@@ -39,15 +39,15 @@ More items (first items will enter 'In progress list' first):
 -> preload: add a delay when forward loading pages
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
--> viewport restoring: save the zoom/viewCols/continous setting between runs (BR97307+patch)
+-> viewport restoring: save the zoom/viewCols/continuous setting between runs (BR97307+patch)
 -> search: use shortcut for 'find next' action (not the default one) in find-ahead
--> core: Delay TOC (DocumentSynapsis) generation (and move it on thread)
+-> core: Delay TOC (DocumentSynopsis) generation (and move it on thread)
 -> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
 -> toolbar: move the toolbar to the top of pageview (left panel is really at the left of the toolbar)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
    than using QScrollView + inserted Widgets and saves 8% on document loading)
--> thumbnailslist: clinking on higlighted rect should bring the viewport to that search result (BR98334)
+-> thumbnailslist: clinking on highlighted rect should bring the viewport to that search result (BR98334)
 -> Dom framework to cache document metadata. It should archive those types of data:
    (NOTE: already Dom'ed object is marked with 'X')
    - <X> Synopsis will go there after 1st generation (so we can edit it too)
@@ -55,13 +55,13 @@ More items (first items will enter 'In progress list' first):
    - <X> Bookmarked pages
    - <X> Current Viewport and 10 history steps
    - Edited pages (rotated/with_data for example)
-   - Overlay editing (hilighting/notations/etc..)
+   - Overlay editing (highlighting/notations/etc..)
    - Presentation related overrides (FS mode, individual / global transitions)
    - ..more stuff.. but this isn't a problem, since a QDom is flexible by design
-   The Object will reside into the Document and must not be accessible by Oservers in
+   The Object will reside into the Document and must not be accessible by Observers in
    a direct way. Dom format, relations to other classes and accessing must be specified
    in a separated diagram or text file.
-   - Plus think at storing xml data to an external shared server.. somthing that
+   - Plus think at storing xml data to an external shared server.. something that
    has to do with versioning data.. (shared annotations, bookmarks & co.)
 -> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..
@@ -89,7 +89,7 @@ More items (first items will enter 'In progress list' first):
 -> presentation: 2 pages per view, for users reading ebooks with wide screens.
 -> splash(xpdf): check lack of smoothness at low resolutions and antialiasing (BR94231)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
--> use shortcuts for next and prev page even in presenatation mode (by Tobias Koenig)
+-> use shortcuts for next and prev page even in presentation mode (by Tobias Koenig)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 -> tools: ruler, measure: distance, perimeter, ?area?, color picker
@@ -131,16 +131,16 @@ Done (newest features come first):
 -> ADD: google-like search on thumbnails
 -> ADD: use kde wallet for storing passwords of protected files
 *> The branch 'kpdf_annotations' was created at this point. [2005-Feb-12]
--> FIX: trigger redraw on 'filter text' on current page (need new highligh engine first)
+-> FIX: trigger redraw on 'filter text' on current page (need new highlight engine first)
 -> ADD: Obey DRM is now a configuration option
 -> FIX: fixed viewport saving/restoring (+performance fix) on presentation mode
 -> FIX: leakfix when closing document while thread was running (no more leaks now)
 -> FIX: direct hi-performance pixels manipulation for highlighting (instead of the obsoleted setRasterOp)
--> CHG: new search api. supports multiple searches at once, multiple highlighs per page
+-> CHG: new search api. supports multiple searches at once, multiple highlights per page
 -> ADD: pageView moves smoothly when searching / moving in history
 -> ADD: better bookmark rendering in thumbnailslist (show 'clip overlay')
 -> CHG: changes and cleanups in pageView's mouse handling functions
--> ADD: KTTSD simple support: speech selection using kspeech api via pure dcop (don't break compatibiltiy)
+-> ADD: KTTSD simple support: speech selection using kspeech api via pure dcop (don't break compatibility)
 -> CHG: right click and drag while in 'normal' mode changes to 'selection' mode and selects
 -> FIX: complete valgrind check and leakfix (2 leaks were present) [27-Jan-04]
 -> ADD: history, forward/back history actions, history links and xml storage (10 steps)
@@ -173,10 +173,10 @@ Done (newest features come first):
 -> FIX: Fix my update cursor FIX :-D
 -> ADD: Make kpdf aware of Find and GoToPage actions
 -> FIX: Update cursor correctly when a link moves to a page and the cursor is over a link on that page
--> ADD: Asyncronous PDF Generator implementation (for the user: faster UI, preloading, etc..)
+-> ADD: Asynchronous PDF Generator implementation (for the user: faster UI, preloading, etc..)
 -> FIX: Memory manager (free cache if needed, avoid disk swap and oom)
 -> ADD: Presentation View (only the 'glitter' transition implemented for now)
--> FIX: FixPack1 [dyn_zoom repaints, initial panel width, zoom_lineedit focus proxy, searchwidget refactor{thumbs restoring on clear, buttons size, less code}, hilight bookmarked thumbnails]
+-> FIX: FixPack1 [dyn_zoom repaints, initial panel width, zoom_lineedit focus proxy, searchwidget refactor{thumbs restoring on clear, buttons size, less code}, highlight bookmarked thumbnails]
 -> FIX: Some fullScreen loving, if we are on fullscreen put an action on RMB menu ti get out of it, if we were on fullScreen mode on exit bring back correctly if we were also seeing toolbar or menubar
 -> FIX: When in non continuous mode and scrolling up a page, set the viewport at the bottom of the page (Albert)
 -> ADD: Show the window maximized when the user opens the program for the very first time (Albert)
@@ -221,7 +221,7 @@ Done (newest features come first):
 -> GHG: previews sorted by visible areas (prioritize items where the scrollbar is)
 -> FIX: previews speedup: 50-100%
 -> CHG: use local instead of X memory for thumbnails (..)
--> MRG: merge lots of kpdf_part and part (centralview) code (to simplify/clenup)
+-> MRG: merge lots of kpdf_part and part (centralview) code (to simplify/cleanup)
 *> The branch 'kpdf_experiments' was created at this point. Code refactoring started.
 -> ADD: Completely use xpdf code for rendering that solves most font problems (Albert)
 -> MRG: Replace xpdf version with lastest one (3.00) that supports PDF 1.5 (Albert)

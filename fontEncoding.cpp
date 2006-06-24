@@ -73,7 +73,7 @@ fontEncoding::fontEncoding(const QString &encName)
 #endif
 
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
-    QStringList glyphNameList = QStringList::split( '/', fileContent );
+    QStringList glyphNameList = fileContent.split('/');
 
     int i = 0;
     for ( QStringList::Iterator it = glyphNameList.begin(); (it != glyphNameList.end())&&(i<256); ++it ) {

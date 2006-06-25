@@ -51,7 +51,7 @@ ghostscript_interface::ghostscript_interface() {
 
   PostScriptHeaderString = new QString();
 
-  knownDevices.append("png256");
+  knownDevices.append("png16m");
   knownDevices.append("jpeg");
   knownDevices.append("pnn");
   knownDevices.append("pnnraw");
@@ -221,6 +221,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   argus << QString("-sExtraIncludePath=%1").arg(includePath);
   argus << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
   argus << QString("-r%1").arg(resolution);                       // resolution in dpi
+  argus << "-dTextAlphaBits=4 -dGraphicsAlphaBits=2"; // Antialiasing
   argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
   argus << "-f" << PSfileName;
  

@@ -78,7 +78,13 @@ public:
   void generatePixmap( PixmapRequest * request );
   bool canGeneratePixmap( bool async ) { return !mutex.locked(); };
 
+  // rotation
+  bool supportsRotation() { return true; };
+  void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
+
 private:
+  void loadPages( QVector<KPDFPage*> & pagesVector, int rotation );
+
   /** This class holds the fax file */
     KFaxImage fax;
     QMutex mutex;

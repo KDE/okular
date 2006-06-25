@@ -18,12 +18,11 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA  02110-1301, USA.             *
  ***************************************************************************/
 
-#include <kmessagebox.h>
 #include <kdebug.h>
+#include <kimageeffect.h>
 #include <klocale.h>
 #include <qfileinfo.h>
-#include <qpainter.h>
-#include <qpaintdevice.h>
+#include <qpixmap.h>
 #include <QX11Info>
 
 #include "faxrenderer.h"
@@ -50,12 +49,12 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
     <<  endl;
 
     // Wait for all access to this documentRenderer to finish
-
-    QPixmap* pix = new QPixmap(request->width,request->height);
-    pix->fill();
-    QPainter p(pix);
     QImage img = fax.page(request->pageNumber).scaled(request->width,request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    p.drawImage( 0,0, img, 0,0,img.width(),img.height());
+    int rotation = request->documentRotation;
+    if ( rotation > 0 )
+      img = KImageEffect::rotate( img, (KImageEffect::RotateDirection)( rotation - 1 ) );
+    QPixmap *pix = new QPixmap();
+    *pix = QPixmap::fromImage( img );
 /*
   SimplePageSize psize = pageSizes[page->getPageNumber() - 1];
   if (psize.isValid()) {
@@ -126,30 +125,45 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
     return false;
   }
 
-  // Set the number of pages page sizes
-  quint16 pages = fax.numPages();
-  pagesVector.resize(pages);
-
-    for(quint16 pg=0; pg < pages; pg++) 
-    {
-      QSize pageSize = fax.page_size(pg);
-      // how about rotation?
-
-      QPoint dpi = fax.page_dpi(pg);
-      double dpix = dpi.x();
-      double dpiy = dpi.y();
-
-      if (dpix*dpiy < 1.0) {
-        kError() << "File invalid resolutions, dpi x = " << dpix << ", dpi y = "  << dpiy << ". This information will be ignored and 75 DPI assumed." << endl;
-        dpix = dpiy = 75.0;
-      }
-      pagesVector[pg] = new KPDFPage(pg, QX11Info::appDpiX () * pageSize.width() / dpix, 
-        QX11Info::appDpiY () * pageSize.height()/dpiy,0);
-  }
+  loadPages( pagesVector, 0 );
 
   // the return value 'true' indicates that this operation was not successful.
 //   mutex.unlock();
   return true;
+}
+
+void FaxRenderer::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
+{
+  loadPages( pagesVector, orientation );
+}
+
+void FaxRenderer::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
+{
+  // Set the number of pages page sizes
+  quint16 pages = fax.numPages();
+  pagesVector.resize(pages);
+
+  for(quint16 pg=0; pg < pages; ++pg)
+  {
+    QSize pageSize = fax.page_size(pg);
+
+    QPoint dpi = fax.page_dpi(pg);
+    double dpix = dpi.x();
+    double dpiy = dpi.y();
+
+    if (dpix*dpiy < 1.0)
+    {
+      kError() << "File invalid resolutions, dpi x = " << dpix << ", dpi y = "  << dpiy << ". This information will be ignored and 75 DPI assumed." << endl;
+      dpix = dpiy = 75.0;
+    }
+    int width = QX11Info::appDpiX () * pageSize.width() / dpix;
+    int height = QX11Info::appDpiY () * pageSize.height() / dpiy;
+    if ( rotation % 2 == 1 )
+      qSwap( width, height );
+
+    delete pagesVector[pg];
+    pagesVector[pg] = new KPDFPage(pg, width, height, rotation);
+  }
 }
 
 

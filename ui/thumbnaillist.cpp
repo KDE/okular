@@ -78,7 +78,7 @@ ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
 	: QScrollArea( parent ),
 	m_document( document ), m_selected( 0 ), m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
 {
-	setObjectName( "KPDF::Thumbnails" );
+	setObjectName( "okular::Thumbnails" );
 	// set scrollbars
 	setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
 	setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
@@ -258,9 +258,9 @@ void ThumbnailList::notifyVisibleRectsChanged()
                 found = true;
             }
         }
-        if ( ! found )
+        if ( !found )
         {
-                (*tIt)->setVisibleRect( NormalizedRect() );
+            (*tIt)->setVisibleRect( NormalizedRect() );
         }
     }
 }

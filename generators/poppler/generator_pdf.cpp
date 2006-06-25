@@ -680,7 +680,7 @@ bool PDFGenerator::print( KPrinter& printer )
     
     docLock.lock();
     // TODO rotation
-    if (pdfdoc->print(tf.name(), pageList, 72, 72, 0))
+    if (pdfdoc->print(tf.name(), pageList, 72, 72, 0, width, height))
     {
         docLock.unlock();
         printer.printFiles(QStringList(tf.name()), true);

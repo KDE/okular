@@ -1063,7 +1063,10 @@ void Part::slotShowEmbeddedFiles()
 void Part::slotShowPresentation()
 {
     if ( !m_presentationWidget )
+    {
         m_presentationWidget = new PresentationWidget( widget(), m_document );
+        m_presentationWidget->setupActions( actionCollection() );
+    }
 }
 
 void Part::slotHidePresentation()

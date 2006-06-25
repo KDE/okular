@@ -19,6 +19,7 @@
 
 class QToolBar;
 class QTimer;
+class KActionCollection;
 
 class KPDFDocument;
 class KPDFPage;
@@ -43,6 +44,9 @@ class PresentationWidget : public QDialog, public DocumentObserver
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber );
+
+        // create actions that interact with this widget
+        void setupActions( KActionCollection * collection );
 
     protected:
         // widget events
@@ -89,6 +93,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         int m_frameIndex;
         QStringList m_metaStrings;
         QToolBar * m_topBar;
+        KActionCollection * m_ac;
 
     private slots:
         void slotNextPage();

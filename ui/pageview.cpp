@@ -127,6 +127,7 @@ public:
     KSelectAction * aRenderMode;
     KToggleAction * aViewContinuous;
     KAction * aPrevAction;
+    KActionCollection * actionCollection;
 };
 
 
@@ -212,6 +213,8 @@ PageView::~PageView()
 
 void PageView::setupActions( KActionCollection * ac )
 {
+    d->actionCollection = ac;
+
     d->aOrientation=new KSelectAction( i18n( "&Orientation" ), ac, "view_orientation" );
     d->aPaperSizes=new KSelectAction( i18n( "&Paper sizes" ), ac, "view_papersizes" );
     QStringList rotations;
@@ -776,8 +779,8 @@ if (d->document->handleEvent( e ) )
                 d->document->resetSearch( PAGEVIEW_SEARCH_ID );
             }
         }
-        // F3: go to next occurrency
-        else if( e->key() == KStdAccel::findNext().keyQt() )
+        // go to next occurrency
+        else if( e->key() == d->actionCollection->action( "find_next" )->shortcut().keyQt() )
         {
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed

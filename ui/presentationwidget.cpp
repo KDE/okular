@@ -19,12 +19,12 @@
 #include <kcursor.h>
 #include <krandom.h>
 #include <qtoolbar.h>
+#include <kaction.h>
+#include <kactioncollection.h>
 #include <klocale.h>
-#include <kdebug.h>
 #include <kiconloader.h>
-#include <kimageeffect.h>
 #include <kmessagebox.h>
-#include <kwin.h>
+#include <kshortcut.h>
 
 // system includes
 #include <stdlib.h>
@@ -178,6 +178,11 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber )
     return pageNumber != m_frameIndex;
 }
 
+void PresentationWidget::setupActions( KActionCollection * collection )
+{
+    m_ac = collection;
+}
+
 
 // <widget events>
 bool PresentationWidget::event( QEvent * e )
@@ -206,13 +211,13 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 
-    if ( e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
+    if ( e->key() == m_ac->action( "previous_page" )->shortcut().keyQt() || e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
         slotPrevPage();
-    else if ( e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
+    else if ( e->key() == m_ac->action( "next_page" )->shortcut().keyQt() || e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
         slotNextPage();
-    else if ( e->key() == Qt::Key_Home )
+    else if ( e->key() == m_ac->action( "first_page" )->shortcut().keyQt() || e->key() == Qt::Key_Home )
         slotFirstPage();
-    else if ( e->key() == Qt::Key_End )
+    else if ( e->key() == m_ac->action( "last_page" )->shortcut().keyQt() || e->key() == Qt::Key_End )
         slotLastPage();
     else if ( e->key() == Qt::Key_Escape )
     {

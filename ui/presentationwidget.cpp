@@ -662,7 +662,7 @@ void PresentationWidget::generateOverlay()
     // end drawing pixmap and halve image
     pixmapPainter.end();
     QImage image( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
-    image.setAlphaBuffer( true );
+    image = image.convertToFormat( QImage::Format_ARGB32 );
 
     // draw circular shadow using the same technique
     doublePixmap.fill( Qt::black );

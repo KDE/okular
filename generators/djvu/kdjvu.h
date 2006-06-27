@@ -14,6 +14,8 @@
 #include <qpixmap.h>
 #include <qvector.h>
 
+class QDomDocument;
+
 /**
  * @brief Qt (KDE) encapsulation of the DjVuLibre
  */
@@ -69,6 +71,8 @@ class KDjVu : public QObject
          */
         QString getMetaData( const QString & key ) const;
 
+        const QDomDocument * documentBookmarks() const;
+
         // pixmap handling
         /**
          * Check if the pixmap for the specified \p page with the specified
@@ -85,7 +89,7 @@ class KDjVu : public QObject
     signals:
        void pixmapGenerated( int page, const QPixmap & pix );
 
-   private:
+    private:
         class Private;
         Private * const d;
 };

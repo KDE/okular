@@ -9,15 +9,18 @@
 
 #include "kdjvu.h"
 
+#include <qdom.h>
 #include <qfile.h>
 #include <qlist.h>
 #include <qmap.h>
 #include <qpainter.h>
 #include <qstring.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 
 #include <libdjvu/ddjvuapi.h>
+#include <libdjvu/miniexp.h>
 
 kdbgstream &operator<<( kdbgstream & s, const ddjvu_rect_t &r )
 {
@@ -134,12 +137,16 @@ class KDjVu::Private
 {
     public:
         Private()
-          : m_djvu_cxt( 0 ), m_djvu_document( 0 ), m_format( 0 )
+          : m_djvu_cxt( 0 ), m_djvu_document( 0 ), m_format( 0 ), m_docBookmarks( 0 )
         {
         }
 
         QPixmap generatePixmapTile( ddjvu_page_t *djvupage, int& res,
             int width, int row, int xdelta, int height, int col, int ydelta );
+
+        void readBookmarks();
+        void fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curnode,
+            miniexp_t exp, int offset = -1 );
 
         ddjvu_context_t *m_djvu_cxt;
         ddjvu_document_t *m_djvu_document;
@@ -151,6 +158,7 @@ class KDjVu::Private
         QList<PixmapCacheItem*> mPixCache;
 
         QMap<QString, QString> m_metaData;
+        QDomDocument * m_docBookmarks;
 };
 
 QPixmap KDjVu::Private::generatePixmapTile( ddjvu_page_t *djvupage, int& res,
@@ -185,6 +193,57 @@ QPixmap KDjVu::Private::generatePixmapTile( ddjvu_page_t *djvupage, int& res,
     delete [] imagebuffer;
 
     return pix;
+}
+
+void KDjVu::Private::readBookmarks()
+{
+    if ( !m_djvu_document )
+        return;
+
+    miniexp_t outline;
+    while ( ( outline = ddjvu_document_get_outline( m_djvu_document ) ) == miniexp_dummy )
+        handle_ddjvu_messages( m_djvu_cxt, true );
+
+    if ( miniexp_listp( outline ) &&
+         ( miniexp_length( outline ) > 0 ) &&
+         miniexp_symbolp( miniexp_nth( 0, outline ) ) &&
+         ( QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, outline ) ) ) == QLatin1String( "bookmarks" ) ) )
+    {
+        m_docBookmarks = new QDomDocument( "KDjVuBookmarks" );
+        fillBookmarksRecurse( *m_docBookmarks, *m_docBookmarks, outline, 1 );
+    }
+}
+
+void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curnode,
+    miniexp_t exp, int offset )
+{
+    if ( !miniexp_listp( exp ) )
+        return;
+
+    int l = miniexp_length( exp );
+    for ( int i = qMax( offset, 0 ); i < l; ++i )
+    {
+        miniexp_t cur = miniexp_nth( i, exp );
+
+        if ( miniexp_consp( cur ) && ( miniexp_length( cur ) > 0 ) &&
+             miniexp_stringp( miniexp_nth( 0, cur ) ) && miniexp_stringp( miniexp_nth( 1, cur ) ) )
+        {
+            QString title = QString::fromUtf8( miniexp_to_str( miniexp_nth( 0, cur ) ) );
+            QString dest = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
+            QDomElement el;
+            if ( dest.isEmpty() || ( ( dest.at( 0 ) == QLatin1Char( '#' ) ) && ( dest.remove( 0, 1 ) != title ) ) )
+            {
+                el = maindoc.createElement( "item" );
+                el.setAttribute( "title", title );
+                el.setAttribute( "destination", dest );
+                curnode.appendChild( el );
+            }
+            if ( !el.isNull() && ( miniexp_length( cur ) > 2 ) )
+            {
+                fillBookmarksRecurse( maindoc, el, cur, 2 );
+            }
+        }
+    }
 }
 
 
@@ -288,6 +347,9 @@ bool KDjVu::openFile( const QString & fileName )
 
 void KDjVu::closeFile()
 {
+    // deleting the old TOC
+    delete d->m_docBookmarks;
+    d->m_docBookmarks = 0;
     // deleting the pages
     qDeleteAll( d->m_pages );
     // releasing the djvu pages
@@ -308,6 +370,13 @@ void KDjVu::closeFile()
 QString KDjVu::getMetaData( const QString & key ) const
 {
     return d->m_metaData.contains( key ) ? d->m_metaData[ key ] : QString();
+}
+
+const QDomDocument * KDjVu::documentBookmarks() const
+{
+    if ( !d->m_docBookmarks )
+        d->readBookmarks();
+    return d->m_docBookmarks;
 }
 
 const QVector<KDjVu::Page*> &KDjVu::pages() const

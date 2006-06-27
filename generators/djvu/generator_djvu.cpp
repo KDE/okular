@@ -9,16 +9,48 @@
 
 #include "generator_djvu.h"
 #include "kdjvu.h"
+#include "core/document.h"
 #include "core/page.h"
 
+#include <qdom.h>
 #include <qstring.h>
 #include <kdebug.h>
 #include <klocale.h>
 
+static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode &parentDestination )
+{
+    QDomNode n = parent.firstChild();
+    while( !n.isNull() )
+    {
+        QDomElement el = n.toElement();
+
+        QDomElement newel = maindoc.createElement( el.attribute( "title" ) );
+        parentDestination.appendChild( newel );
+
+        if ( !el.attribute( "destination" ).isEmpty() )
+        {
+            bool ok = true;
+            int page = el.attribute( "destination" ).toInt( &ok );
+            if ( ok && ( page > 0 ) )
+            {
+                DocumentViewport vp;
+                vp.pageNumber = page - 1;
+                newel.setAttribute( "Viewport", vp.toString() );
+            }
+        }
+
+        if ( el.hasChildNodes() )
+        {
+            recurseCreateTOC( maindoc, n, newel );
+        }
+        n = n.nextSibling();
+    }
+}
+
 OKULAR_EXPORT_PLUGIN(DjVuGenerator)
 
 DjVuGenerator::DjVuGenerator( KPDFDocument * doc ) : Generator ( doc ),
-  m_docInfo( 0 ), ready( false )
+  m_docInfo( 0 ), m_docSyn( 0 ), ready( false )
 {
     m_djvu = new KDjVu();
     connect( m_djvu, SIGNAL( pixmapGenerated( int, const QPixmap & ) ), this, SLOT( djvuPixmapGenerated( int, const QPixmap & ) ) );
@@ -28,6 +60,8 @@ bool DjVuGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * 
 {
     delete m_docInfo;
     m_docInfo = 0;
+    delete m_docSyn;
+    m_docSyn = 0;
 
     if ( !m_djvu->openFile( fileName ) )
         return false;
@@ -85,6 +119,21 @@ const DocumentInfo * DjVuGenerator::generateDocumentInfo()
     }
 
     return m_docInfo;
+}
+
+const DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
+{
+    if ( m_docSyn )
+        return m_docSyn;
+
+    const QDomDocument *doc = m_djvu->documentBookmarks();
+    if ( doc )
+    {
+        m_docSyn = new DocumentSynopsis();
+        recurseCreateTOC( *m_docSyn, *const_cast<QDomDocument*>( doc ), *m_docSyn );
+    }
+
+    return m_docSyn;
 }
 
 void DjVuGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )

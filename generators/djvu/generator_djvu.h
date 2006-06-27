@@ -28,6 +28,7 @@ class DjVuGenerator : public Generator
 
         // document information
         const DocumentInfo * generateDocumentInfo();
+        const DocumentSynopsis * generateDocumentSynopsis();
 
         // rotation handling
         bool supportsRotation() { return true; };
@@ -42,6 +43,7 @@ class DjVuGenerator : public Generator
         KDjVu *m_djvu;
 
         DocumentInfo *m_docInfo;
+        DocumentSynopsis *m_docSyn;
         bool ready;
 
         PixmapRequest *m_request;

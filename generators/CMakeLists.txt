@@ -14,6 +14,7 @@ endif(CHM_FOUND)
 if(DJVULIBRE_FOUND)
   add_subdirectory(djvu)
 endif(DJVULIBRE_FOUND)
+add_subdirectory(dvi)
 
 #original Makefile.am contents follow:
 

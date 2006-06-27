@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+Name=dvi
+Comment=DVI backend for okular
+ServiceTypes=okular/Generator
+MimeType=application/x-dvi
+X-KDE-Library=libokularGenerator_dvi
+X-KDE-Priority=2
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

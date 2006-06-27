@@ -71,6 +71,18 @@ class KDjVu : public QObject
          */
         QString getMetaData( const QString & key ) const;
 
+        /**
+         * Get ax XML document with the bookmarks of the current document (if any).
+         * The XML will look like this:
+         * \verbatim
+         * <!DOCTYPE KDjVuBookmarks>
+         * <item title="Title 1" destination="dest1">
+         *   <item title="Title 1.1" destination="dest1.1" />
+         *   ...
+         * </item>
+         * <item title="Title 2" destination="dest2">
+         * \endverbatim
+         */
         const QDomDocument * documentBookmarks() const;
 
         // pixmap handling
@@ -87,7 +99,10 @@ class KDjVu : public QObject
         void requestPixmap( int page, int width, int height, int rotation );
 
     signals:
-       void pixmapGenerated( int page, const QPixmap & pix );
+        /**
+         * The pixmap \p pix for page \p page was generated.
+         */
+        void pixmapGenerated( int page, const QPixmap & pix );
 
     private:
         class Private;

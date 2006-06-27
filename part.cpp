@@ -28,7 +28,6 @@
 #include <qlabel.h>
 #include <kvbox.h>
 #include <qtoolbox.h>
-#include <qpushbutton.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
@@ -385,26 +384,32 @@ void Part::fillGenerators()
     int count=offers.count();
     if (count > 0)
     {
+        KLibLoader *loader = KLibLoader::self();
+        if (!loader)
+        {
+            kWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
+            return;
+        }
         for (int i=0;i<count;i++)
         {
           propName=offers[i]->property("Name").toString();
           // dont load already loaded generators
           if (! m_loadedGenerators.take( propName ) )
           {
-            KLibLoader *loader = KLibLoader::self();
-            if (!loader)
-            {
-                kWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
-                return;
-            }
             KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
             if (!lib) 
             {
                 kWarning() << "Could not load '" << offers[i]->library() << "' library." << endl;
-		return;
+		continue;
             }
 
             Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );
+            if ( !create_plugin )
+            {
+                kWarning() << "Library '" << offers.at(i)->library() << "' has no symbol 'create_plugin'." << endl;
+                continue;
+            }
+
             // the generator should do anything with the document if we are only configuring
             m_loadedGenerators.insert(propName,create_plugin(m_document));
             m_generatorsWithSettings << propName;

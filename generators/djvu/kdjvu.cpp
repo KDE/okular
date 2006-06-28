@@ -177,7 +177,7 @@ int KDjVu::UrlLink::type() const
     return KDjVu::Link::UrlLink;
 }
 
-QUrl KDjVu::UrlLink::url() const
+QString KDjVu::UrlLink::url() const
 {
     return m_url;
 }
@@ -458,9 +458,19 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
         KDjVu::Link* link = 0;
         if ( miniexp_stringp( miniexp_nth( 1, cur ) ) )
         {
-            KDjVu::PageLink* plink = new KDjVu::PageLink();
-            plink->m_page = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
-            link = plink;
+            QString target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
+            if ( target.isEmpty() || ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) ) )
+            {
+                KDjVu::PageLink* plink = new KDjVu::PageLink();
+                plink->m_page = target;
+                link = plink;
+            }
+            else
+            {
+                KDjVu::UrlLink* ulink = new KDjVu::UrlLink();
+                ulink->m_url = target;
+                link = ulink;
+            }
         }
         else
         {
@@ -478,7 +488,8 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
             }
             // TODO: other link shapes
 
-            ret.append( link );
+            if ( !( link->m_point.isNull() || link->m_size.isNull() ) )
+                ret.append( link );
         }
     }
     return ret;

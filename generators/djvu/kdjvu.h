@@ -13,7 +13,6 @@
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qvector.h>
-#include <qurl.h>
 
 class QDomDocument;
 
@@ -97,11 +96,11 @@ class KDjVu : public QObject
 
             public:
                 virtual int type() const;
-                QUrl url() const;
+                QString url() const;
 
             private:
                 UrlLink();
-                QUrl m_url;
+                QString m_url;
         };
 
 

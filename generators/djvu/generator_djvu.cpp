@@ -163,23 +163,33 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                     KDjVu::PageLink* l = static_cast<KDjVu::PageLink*>( (*it) );
                     bool ok = true;
                     QString target = l->page();
-                    if ( target.at(0) == QLatin1Char( '#' ) )
+                    if ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) )
                         target.remove( 0, 1 );
                     int tmppage = target.toInt( &ok );
-                    if ( ok )
+                    if ( ok || target.isEmpty() )
                     {
                         DocumentViewport vp;
-                        vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
+                        if ( !target.isEmpty() )
+                        {
+                            vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
+                        }
                         KPDFLinkGoto* go = new KPDFLinkGoto( QString::null, vp );
-                        const KDjVu::Page* p = m_djvu->pages().at( vp.pageNumber );
+                        const KDjVu::Page* p = m_djvu->pages().at( vp.pageNumber == -1 ? page : vp.pageNumber );
                         QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
                         newlink = new ObjectRect( NormalizedRect( r, p->width(), p->height() ), ObjectRect::Link, go );
                     }
                     break;
                 }
                 case KDjVu::Link::UrlLink:
-                    // TODO
+                {
+                    KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( (*it) );
+                    QString url = l->url();
+                    KPDFLinkBrowse* browse = new KPDFLinkBrowse( url );
+                    const KDjVu::Page* p = m_djvu->pages().at( page );
+                    QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
+                    newlink = new ObjectRect( NormalizedRect( r, p->width(), p->height() ), ObjectRect::Link, browse );
                     break;
+                }
             }
             if ( newlink )
                 rects.append( newlink );

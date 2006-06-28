@@ -54,7 +54,16 @@ static void str_term_source(j_decompress_ptr /*cinfo*/)
 
 DCTStream::DCTStream(Stream *strA):
   FilterStream(strA) {
-  
+  init();
+}
+
+DCTStream::~DCTStream() {
+  jpeg_destroy_decompress(&cinfo);
+  delete str;
+}
+
+void DCTStream::init()
+{
   jpeg_create_decompress(&cinfo);
   src.pub.init_source = str_init_source;
   src.pub.fill_input_buffer = str_fill_input_buffer;
@@ -68,18 +77,20 @@ DCTStream::DCTStream(Stream *strA):
   cinfo.src = (jpeg_source_mgr *)&src;
   cinfo.err = jpeg_std_error(&jerr);
   x = 0;
-}
-
-DCTStream::~DCTStream() {
-  jpeg_destroy_decompress(&cinfo);
-  delete str;
+  row_buffer = NULL;
 }
 
 void DCTStream::reset() {
   int row_stride;
 
   str->reset();
-  
+
+  if (row_buffer)
+  {
+    jpeg_destroy_decompress(&cinfo);
+    init();
+  }
+
   // JPEG data has to start with 0xFF 0xD8
   // but some pdf like the one on 
   // https://bugs.freedesktop.org/show_bug.cgi?id=3299

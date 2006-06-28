@@ -62,6 +62,8 @@ public:
   Stream *getRawStream() { return str; }
 
 private:
+  void init();
+
   unsigned int x;
   struct jpeg_decompress_struct cinfo;
   struct jpeg_error_mgr jerr;

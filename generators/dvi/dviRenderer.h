@@ -22,6 +22,7 @@
 #include "dviPageInfo.h"
 #include "pageSize.h"
 #include "anchor.h"
+#include "prebookmark.h"
 
 #include <ksharedptr.h>
 #include <kurl.h>
@@ -33,7 +34,7 @@
 #include <QTimer>
 #include <QMutex>
 
-//class Anchor;
+class Anchor;
 class DocumentWidget;
 class dvifile;
 class dviRenderer;
@@ -168,6 +169,8 @@ public slots:
   virtual void  getText(RenderedDocumentPagePixmap* page);
 
   SimplePageSize sizeOfPage(const PageNumber& page);
+
+  Q3ValueVector<PreBookmark> getPrebookmarks() const { return prebookmarks; }
 
 private slots:
   /** This method shows a dialog that tells the user that source

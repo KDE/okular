@@ -77,6 +77,24 @@ static void rotateCoordinates( const int iWidth, const int iHeight,
 
 }
 
+static void rotateCoordinates( const double iWidth, const double iHeight, 
+                               double &fWidth, double &fHeight, const int orientation)
+{
+    if ( orientation % 2 == 0 ) 
+    {
+        /* portrait */
+        fWidth = iWidth;
+        fHeight = iHeight;
+    }
+    else
+    {
+        /* landscape */
+        fWidth = iHeight;
+        fHeight = iWidth;
+    }
+
+}
+
 static QRect rotateQRect( QRect source, int pageWidth, int pageHeight, int orientation )
 {
     QRect tr;
@@ -131,19 +149,41 @@ QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *page
 
         Anchor anch = m_dviRenderer->findAnchor(dviLink.linkText);
 
-        if (anch.isValid())
+	KPDFLink *okuLink = 0;
+
+	if (anch.isValid())
         {
             /* TODO: internal link */
+            DocumentViewport vp;
+            vp.pageNumber = anch.page - 1;
+
+            double vp_x = 0.0, vp_y = 0.0;
+
+	    SimplePageSize ps = m_dviRenderer->sizeOfPage( vp.pageNumber );
+            double resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
+            double py = (double)anch.distance_from_top.getLength_in_inch()*resolution + 0.5; 
+	    
+            rotateCoordinates( 0.5, py / (double)pageHeight,
+                               vp_x, vp_y, orientation );
+            vp.rePos.normalizedX = vp_x;
+            vp.rePos.normalizedY = vp_y;
+            vp.rePos.enabled = true;
+            vp.rePos.pos = DocumentViewport::Center;
+
+            okuLink = new KPDFLinkGoto( "", vp );
         }
         else
         {
-            ObjectRect *olink = new ObjectRect( nl, nt, nr, nb, ObjectRect::Link, 
-                                               new KPDFLinkBrowse( dviLink.linkText ) );
-            dviLinks.push_front( olink );
+            okuLink = new KPDFLinkBrowse( dviLink.linkText );
         }
-
+        if ( okuLink ) 
+        {
+            ObjectRect *orlink = new ObjectRect( nl, nt, nr, nb, ObjectRect::Link, 
+                                                 okuLink );
+            dviLinks.push_front( orlink );
+        }
+	
     }
-
     return dviLinks; 
 }
 

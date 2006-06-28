@@ -13,6 +13,7 @@
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qvector.h>
+#include <qurl.h>
 
 class QDomDocument;
 
@@ -50,6 +51,60 @@ class KDjVu : public QObject
                 int m_orientation;
         };
 
+
+        /**
+         * The base implementation for a DjVu link.
+         */
+        class Link
+        {
+            friend class KDjVu;
+
+            public:
+                virtual ~Link();
+
+                enum LinkType { PageLink, UrlLink };
+                virtual int type() const = 0;
+                QPoint point() const;
+                QSize size() const;
+
+            private:
+                QPoint m_point;
+                QSize m_size;
+        };
+
+        /**
+         * A link to reach a page of a DjVu document.
+         */
+        class PageLink : public Link
+        {
+            friend class KDjVu;
+
+            public:
+                virtual int type() const;
+                QString page() const;
+
+            private:
+                PageLink();
+                QString m_page;
+        };
+
+        /**
+         * A DjVu link to open an external Url.
+         */
+        class UrlLink : public Link
+        {
+            friend class KDjVu;
+
+            public:
+                virtual int type() const;
+                QUrl url() const;
+
+            private:
+                UrlLink();
+                QUrl m_url;
+        };
+
+
         /**
          * Opens the file \p fileName, closing the old one if necessary.
          */
@@ -84,6 +139,11 @@ class KDjVu : public QObject
          * \endverbatim
          */
         const QDomDocument * documentBookmarks() const;
+
+        /**
+         * Return the links for the page \p pageNum
+         */
+        QList<KDjVu::Link*> linksForPage( int pageNum ) const;
 
         // pixmap handling
         /**

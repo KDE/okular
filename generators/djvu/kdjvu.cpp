@@ -9,6 +9,7 @@
 
 #include "kdjvu.h"
 
+#include <qbytearray.h>
 #include <qdom.h>
 #include <qfile.h>
 #include <qlist.h>
@@ -132,6 +133,57 @@ int KDjVu::Page::orientation() const
 {
     return m_orientation;
 }
+
+// KDjVu::Link
+
+KDjVu::Link::~Link()
+{
+}
+
+QPoint KDjVu::Link::point() const
+{
+    return m_point;
+}
+
+QSize KDjVu::Link::size() const
+{
+    return m_size;
+}
+
+// KDjVu::PageLink
+
+KDjVu::PageLink::PageLink()
+{
+}
+
+int KDjVu::PageLink::type() const
+{
+    return KDjVu::Link::PageLink;
+}
+
+QString KDjVu::PageLink::page() const
+{
+    return m_page;
+}
+
+// KDjVu::UrlLink
+
+KDjVu::UrlLink::UrlLink()
+{
+}
+
+int KDjVu::UrlLink::type() const
+{
+    return KDjVu::Link::UrlLink;
+}
+
+QUrl KDjVu::UrlLink::url() const
+{
+    return m_url;
+}
+
+
+
 
 class KDjVu::Private
 {
@@ -377,6 +429,59 @@ const QDomDocument * KDjVu::documentBookmarks() const
     if ( !d->m_docBookmarks )
         d->readBookmarks();
     return d->m_docBookmarks;
+}
+
+QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
+{
+    if ( ( pageNum < 0 ) || ( pageNum >= d->m_pages.count() ) )
+        return QList<KDjVu::Link*>();
+
+    miniexp_t annots;
+    while ( ( annots = ddjvu_document_get_pageanno( d->m_djvu_document, pageNum ) ) == miniexp_dummy )
+        handle_ddjvu_messages( d->m_djvu_cxt, true );
+
+    if ( !miniexp_listp( annots ) )
+        return QList<KDjVu::Link*>();
+
+    QList<KDjVu::Link*> ret;
+
+    int l = miniexp_length( annots );
+    for ( int i = 0; i < l; ++i )
+    {
+        miniexp_t cur = miniexp_nth( i, annots );
+        int num = miniexp_length( cur );
+        if ( ( num <= 0 ) || !miniexp_symbolp( miniexp_nth( 0, cur ) ) ||
+             ( qstrncmp( miniexp_to_name( miniexp_nth( 0, cur ) ), "maparea", 7 ) != 0 ) )
+            continue;
+
+        QString target;
+        KDjVu::Link* link = 0;
+        if ( miniexp_stringp( miniexp_nth( 1, cur ) ) )
+        {
+            KDjVu::PageLink* plink = new KDjVu::PageLink();
+            plink->m_page = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
+            link = plink;
+        }
+        else
+        {
+            // TODO: external hyperlink
+        }
+        if ( link )
+        {
+            miniexp_t area = miniexp_nth( 3, cur );
+            int arealength = miniexp_length( area );
+            if ( ( arealength == 5 ) && miniexp_symbolp( miniexp_nth( 0, area ) ) &&
+                 ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "rect", 4 ) == 0 ) )
+            {
+                link->m_point = QPoint( miniexp_to_int( miniexp_nth( 1, area ) ), miniexp_to_int( miniexp_nth( 2, area ) ) );
+                link->m_size = QSize( miniexp_to_int( miniexp_nth( 3, area ) ), miniexp_to_int( miniexp_nth( 4, area ) ) );
+            }
+            // TODO: other link shapes
+
+            ret.append( link );
+        }
+    }
+    return ret;
 }
 
 const QVector<KDjVu::Page*> &KDjVu::pages() const

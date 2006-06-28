@@ -9,7 +9,9 @@
 
 #include "generator_djvu.h"
 #include "kdjvu.h"
+#include "core/area.h"
 #include "core/document.h"
+#include "core/link.h"
 #include "core/page.h"
 
 #include <qdom.h>
@@ -141,9 +143,52 @@ void DjVuGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orient
     loadPages( pagesVector, orientation );
 }
 
-void DjVuGenerator::djvuPixmapGenerated( int /*page*/, const QPixmap & pix )
+void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
 {
     m_request->page->setPixmap( m_request->id, new QPixmap( pix ) );
+
+    QList<KDjVu::Link*> links = m_djvu->linksForPage( page );
+    if ( links.count() > 0 )
+    {
+        QLinkedList<ObjectRect *> rects;
+        QList<KDjVu::Link*>::ConstIterator it = links.constBegin();
+        QList<KDjVu::Link*>::ConstIterator itEnd = links.constEnd();
+        for ( ; it != itEnd; ++it )
+        {
+            ObjectRect *newlink = 0;
+            switch ( (*it)->type() )
+            {
+                case KDjVu::Link::PageLink:
+                {
+                    KDjVu::PageLink* l = static_cast<KDjVu::PageLink*>( (*it) );
+                    bool ok = true;
+                    QString target = l->page();
+                    if ( target.at(0) == QLatin1Char( '#' ) )
+                        target.remove( 0, 1 );
+                    int tmppage = target.toInt( &ok );
+                    if ( ok )
+                    {
+                        DocumentViewport vp;
+                        vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
+                        KPDFLinkGoto* go = new KPDFLinkGoto( QString::null, vp );
+                        const KDjVu::Page* p = m_djvu->pages().at( vp.pageNumber );
+                        QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
+                        newlink = new ObjectRect( NormalizedRect( r, p->width(), p->height() ), ObjectRect::Link, go );
+                    }
+                    break;
+                }
+                case KDjVu::Link::UrlLink:
+                    // TODO
+                    break;
+            }
+            if ( newlink )
+                rects.append( newlink );
+            // delete the links as soon as we process them
+            delete (*it);
+        }
+        if ( rects.count() > 0 )
+            m_request->page->setObjectRects( rects );
+    }
 
     ready = true;
     signalRequestDone( m_request );

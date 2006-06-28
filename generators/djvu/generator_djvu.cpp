@@ -49,6 +49,30 @@ static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode 
     }
 }
 
+static QRect rotateRect( const QRect & rect, int width, int height, int rotation )
+{
+    QRect ret;
+    switch ( rotation )
+    {
+        case 0:
+            ret = rect;
+            break;
+        case 1:
+            ret = QRect( width - rect.height() - rect.y(), rect.x(),
+                         rect.height(), rect.width() );
+            break;
+        case 2:
+            ret = QRect( width - rect.width() - rect.x(), height - rect.height() - rect.y(),
+                         rect.width(), rect.height() );
+            break;
+        case 3:
+            ret = QRect( rect.y(), height - rect.width() - rect.x(),
+                         rect.height(), rect.width() );
+            break;
+    }
+    return ret;
+}
+
 OKULAR_EXPORT_PLUGIN(DjVuGenerator)
 
 DjVuGenerator::DjVuGenerator( KPDFDocument * doc ) : Generator ( doc ),
@@ -175,8 +199,12 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                         }
                         KPDFLinkGoto* go = new KPDFLinkGoto( QString::null, vp );
                         const KDjVu::Page* p = m_djvu->pages().at( vp.pageNumber == -1 ? page : vp.pageNumber );
+                        int width = p->width();
+                        int height = p->height();
+                        if ( m_request->documentRotation % 2 == 1 )
+                            qSwap( width, height );
                         QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
-                        newlink = new ObjectRect( NormalizedRect( r, p->width(), p->height() ), ObjectRect::Link, go );
+                        newlink = new ObjectRect( NormalizedRect( rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, go );
                     }
                     break;
                 }
@@ -186,8 +214,12 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                     QString url = l->url();
                     KPDFLinkBrowse* browse = new KPDFLinkBrowse( url );
                     const KDjVu::Page* p = m_djvu->pages().at( page );
+                    int width = p->width();
+                    int height = p->height();
+                    if ( m_request->documentRotation % 2 == 1 )
+                        qSwap( width, height );
                     QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
-                    newlink = new ObjectRect( NormalizedRect( r, p->width(), p->height() ), ObjectRect::Link, browse );
+                    newlink = new ObjectRect( NormalizedRect( rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, browse );
                     break;
                 }
             }

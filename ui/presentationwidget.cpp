@@ -487,7 +487,7 @@ void PresentationWidget::changePage( int newPage )
 void PresentationWidget::generatePage()
 {
     if ( m_lastRenderedPixmap.isNull() )
-        m_lastRenderedPixmap.resize( m_width, m_height );
+        m_lastRenderedPixmap = QPixmap( m_width, m_height );
 
     // opens the painter over the pixmap
     QPainter pixmapPainter;
@@ -612,8 +612,6 @@ void PresentationWidget::generateOverlay()
     // calculate overlay geometry and resize pixmap if needed
     int side = m_width / 16;
     m_overlayGeometry.setRect( m_width - side - 4, 4, side, side );
-    if ( m_lastRenderedOverlay.width() != side )
-        m_lastRenderedOverlay.resize( side, side );
 
     // note: to get a sort of antialiasing, we render the pixmap double sized
     // and the resulting image is smoothly scaled down. So here we open a
@@ -629,11 +627,9 @@ void PresentationWidget::generateOverlay()
     {   // draw continuous slices
         int degrees = (int)( 360 * (float)(m_frameIndex + 1) / (float)pages );
         pixmapPainter.setPen( 0x05 );
-#warning QPainter.setBrush(0x40) ???? port this
         pixmapPainter.setBrush( QColor( 0x40 ) );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, (360-degrees)*16 );
         pixmapPainter.setPen( 0x40 );
-#warning QPainter.setBrush(0xF0) ???? port this
         pixmapPainter.setBrush( QColor( 0xF0 ) );
         pixmapPainter.drawPie( 2, 2, side - 4, side - 4, 90*16, -degrees*16 );
     }
@@ -644,7 +640,6 @@ void PresentationWidget::generateOverlay()
         {
             float newCoord = -90 + 360 * (float)(i + 1) / (float)pages;
             pixmapPainter.setPen( i <= m_frameIndex ? 0x40 : 0x05 );
-#warning QPainter.setBrush(0xF0) ???? port this
             pixmapPainter.setBrush( QColor( i <= m_frameIndex ? 0xF0 : 0x40 ) );
             pixmapPainter.drawPie( 2, 2, side - 4, side - 4,
                                    (int)( -16*(oldCoord + 1) ), (int)( -16*(newCoord - (oldCoord + 2)) ) );
@@ -673,7 +668,6 @@ void PresentationWidget::generateOverlay()
     doublePixmap.fill( Qt::black );
     pixmapPainter.begin( &doublePixmap );
     pixmapPainter.setPen( 0x40 );
-#warning QPainter.setBrush(0x80) ???? port this
     pixmapPainter.setBrush( QColor( 0x80 ) );
     pixmapPainter.drawEllipse( 0, 0, side, side );
     pixmapPainter.end();
@@ -954,6 +948,8 @@ const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
             return KPDFPageTransition( KPDFPageTransition::Replace );
             break;
     }
+    // should not happen, just make gcc happy
+    return KPDFPageTransition();
 }
 
 /** ONLY the TRANSITIONS GENERATION function from here on **/

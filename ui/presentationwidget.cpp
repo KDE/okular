@@ -9,11 +9,14 @@
 
 // qt/kde includes
 #include <qevent.h>
+#include <qfontmetrics.h>
 #include <kicon.h>
 #include <qtimer.h>
 #include <qimage.h>
+#include <qlineedit.h>
 #include <qpainter.h>
 #include <qtooltip.h>
+#include <qvalidator.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
 #include <kcursor.h>
@@ -54,7 +57,8 @@ struct PresentationFrame
 
 PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     : QDialog( parent, Qt::FramelessWindowHint ),
-    m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 )
+    m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 ),
+    m_topBar( 0 ), m_pagesEdit( 0 )
 {
     setModal( true );
     setAttribute( Qt::WA_DeleteOnClose );
@@ -298,7 +302,10 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
     {
         // hide a shown bar when exiting the area
         if ( e->y() > ( m_topBar->height() + 1 ) )
+        {
             m_topBar->hide();
+            setFocus( Qt::OtherFocusReason );
+        }
     }
     else
     {
@@ -324,9 +331,19 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar->setObjectName( "presentationBar" );
         m_topBar->setIconSize( QSize( 32, 32 ) );
         m_topBar->addAction( KIcon("1leftarrow"), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
+        m_pagesEdit = new QLineEdit( m_topBar );
+        QSizePolicy sp = m_pagesEdit->sizePolicy();
+        sp.setHorizontalPolicy( QSizePolicy::Minimum );
+        m_pagesEdit->setSizePolicy( sp );
+        QFontMetrics fm( m_pagesEdit->font() );
+        m_pagesEdit->setMaximumWidth( fm.width( QString::number( m_document->pages() ) + "00" ) );
+        QIntValidator *validator = new QIntValidator( 1, m_document->pages(), m_pagesEdit );
+        m_pagesEdit->setValidator( validator );
+        m_topBar->addWidget( m_pagesEdit );
+        connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
         m_topBar->addAction( KIcon("1rightarrow"), i18n("Next Page"), this, SLOT( slotNextPage() ) );
         QWidget *spacer = new QWidget(m_topBar);
-        spacer->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+        spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
         m_topBar->addWidget( spacer );
         m_topBar->addAction( KIcon("exit"), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
@@ -463,6 +480,11 @@ void PresentationWidget::changePage( int newPage )
     int pixW = frame->geometry.width();
     int pixH = frame->geometry.height();
     int rot = frame->page->orientation();
+
+    bool signalsBlocked = m_pagesEdit->signalsBlocked();
+    m_pagesEdit->blockSignals( true );
+    m_pagesEdit->setText( QString::number( m_frameIndex + 1 ) );
+    m_pagesEdit->blockSignals( signalsBlocked );
 
     // if pixmap not inside the KPDFPage we request it and wait for
     // notifyPixmapChanged call or else we can proceed to pixmap generation
@@ -813,6 +835,16 @@ void PresentationWidget::slotDelayedEvents()
 {
   // inform user on how to exit from presentation mode
   KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo" );
+}
+
+void PresentationWidget::slotPageChanged()
+{
+    bool ok = true;
+    int p = m_pagesEdit->text().toInt( &ok );
+    if ( !ok )
+        return;
+
+    changePage( p - 1 );
 }
 
 const KPDFPageTransition PresentationWidget::defaultTransition() const

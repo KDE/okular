@@ -17,6 +17,7 @@
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
+class QLineEdit;
 class QToolBar;
 class QTimer;
 class KActionCollection;
@@ -93,6 +94,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         int m_frameIndex;
         QStringList m_metaStrings;
         QToolBar * m_topBar;
+        QLineEdit *m_pagesEdit;
         KActionCollection * m_ac;
 
     private slots:
@@ -103,6 +105,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         void slotHideOverlay();
         void slotTransitionStep();
         void slotDelayedEvents();
+        void slotPageChanged();
 };
 
 #endif

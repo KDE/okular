@@ -14,6 +14,8 @@
 
 class dviRenderer;
 class dviPageInfo;
+class DocumentViewport;
+class Anchor;
 
 class DviGenerator : public Generator
 {
@@ -29,7 +31,10 @@ class DviGenerator : public Generator
         void generateSyncTextPage( KPDFPage * page );
 
         // document information
-        const DocumentInfo * generateDocumentInfo();
+        const DocumentInfo *generateDocumentInfo();
+
+        // table of contents
+        const DocumentSynopsis *generateDocumentSynopsis();
 
         // rotation
         bool supportsRotation() { return true; };
@@ -42,11 +47,15 @@ class DviGenerator : public Generator
         double m_resolution;
 
         DocumentInfo *m_docInfo;
-        dviRenderer *m_dviRenderer;
+        DocumentSynopsis *m_docSynopsis;
+
         bool ready;
+        dviRenderer *m_dviRenderer;
 
         void loadPages( QVector< KPDFPage * > & pagesVector, int orientation );
         KPDFTextPage *extractTextFromPage( dviPageInfo *pageInfo, int orientation );
+        void fillViewportFromAnchor( DocumentViewport &vp, const Anchor &anch, 
+                                     int pW, int pH, int orientation ); 
         QLinkedList<ObjectRect*> generateDviLinks( const dviPageInfo *pageInfo, 
                                                    int orientation );
 };

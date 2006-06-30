@@ -19,6 +19,7 @@
 #include <QX11Info>
 #include <qstring.h>
 #include <qurl.h>
+#include <qstack.h>
 
 #include <kdebug.h>
 #include <kimageeffect.h>
@@ -27,7 +28,7 @@
 OKULAR_EXPORT_PLUGIN(DviGenerator)
 
 DviGenerator::DviGenerator( KPDFDocument * doc ) : Generator ( doc ),
-  m_docInfo( 0 ), m_dviRenderer( 0 )
+  m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
 {
 }
 
@@ -38,6 +39,8 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * >
 
     delete m_docInfo;
     m_docInfo = 0;
+    delete m_docSynopsis;
+    m_docSynopsis = 0;
 
     delete m_dviRenderer;
 
@@ -125,6 +128,32 @@ static QRect rotateQRect( QRect source, int pageWidth, int pageHeight, int orien
     return tr;
 }
 
+void DviGenerator::fillViewportFromAnchor( DocumentViewport &vp,
+                                           const Anchor &anch, int pW, int pH, 
+                                           int orientation ) 
+{
+    vp.pageNumber = anch.page - 1;
+
+    double vp_x = 0.0, vp_y = 0.0;
+
+    SimplePageSize ps = m_dviRenderer->sizeOfPage( vp.pageNumber );
+    double resolution = 0;
+
+    if ( orientation % 2 == 0 )
+        resolution = (double)(pW)/ps.width().getLength_in_inch();
+    else
+        resolution = (double)(pH)/ps.height().getLength_in_inch();
+
+    double py = (double)anch.distance_from_top.getLength_in_inch()*resolution + 0.5; 
+ 
+    rotateCoordinates( 0.5, py / (double)pH,
+                       vp_x, vp_y, orientation );
+    vp.rePos.normalizedX = vp_x;
+    vp.rePos.normalizedY = vp_y;
+    vp.rePos.enabled = true;
+    vp.rePos.pos = DocumentViewport::TopLeft;
+
+}
 
 QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *pageInfo,   
                                                          int orientation )
@@ -145,31 +174,17 @@ QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *page
                nr = (double)boxArea.right() / pageWidth,
                nb = (double)boxArea.bottom() / pageHeight;
 
-        /* distinguish between local (-> anchor) and remote links */
-
         Anchor anch = m_dviRenderer->findAnchor(dviLink.linkText);
 
-	KPDFLink *okuLink = 0;
+        KPDFLink *okuLink = 0;
 
-	if (anch.isValid())
+        /* distinguish between local (-> anchor) and remote links */
+        if (anch.isValid())
         {
-            /* TODO: internal link */
+            /* internal link */
             DocumentViewport vp;
-            vp.pageNumber = anch.page - 1;
-
-            double vp_x = 0.0, vp_y = 0.0;
-
-	    SimplePageSize ps = m_dviRenderer->sizeOfPage( vp.pageNumber );
-            double resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
-            double py = (double)anch.distance_from_top.getLength_in_inch()*resolution + 0.5; 
-	    
-            rotateCoordinates( 0.5, py / (double)pageHeight,
-                               vp_x, vp_y, orientation );
-            vp.rePos.normalizedX = vp_x;
-            vp.rePos.normalizedY = vp_y;
-            vp.rePos.enabled = true;
-            vp.rePos.pos = DocumentViewport::Center;
-
+            fillViewportFromAnchor( vp, anch, pageWidth, pageHeight,
+                                    orientation );
             okuLink = new KPDFLinkGoto( "", vp );
         }
         else
@@ -295,7 +310,7 @@ KPDFTextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orie
     for ( ; it != itEnd ; ++it )
     {
         TextBox curTB = *it;
-        //tmpRect = curTB.box;
+ 
         tmpRect = rotateQRect( curTB.box, pageWidth, pageHeight, orientation );
 
 #if 0
@@ -335,6 +350,51 @@ const DocumentInfo *DviGenerator::generateDocumentInfo()
                        i18n("Pages") );
     }
     return m_docInfo;
+}
+
+const DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
+{
+    if ( m_docSynopsis )
+        return m_docSynopsis;
+
+    m_docSynopsis = new DocumentSynopsis();
+ 
+    QStack<QDomElement*> stack;
+
+    Q3ValueVector<PreBookmark> prebookmarks = m_dviRenderer->getPrebookmarks();
+
+    if ( prebookmarks.isEmpty() ) 
+        return m_docSynopsis;
+
+    Q3ValueVector<PreBookmark>::ConstIterator it = prebookmarks.begin();
+    Q3ValueVector<PreBookmark>::ConstIterator itEnd = prebookmarks.end();
+    for( ; it != itEnd; ++it ) 
+    {
+        QDomElement *domel = new QDomElement; 
+        *domel= m_docSynopsis->createElement( (*it).title );
+
+        Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
+        if ( a.isValid() )
+        {
+            DocumentViewport vp;
+ 
+            const KPDFPage *p = m_document->page( a.page - 1 );
+            /* Don't care about rotations... */
+            fillViewportFromAnchor( vp, a, (int)p->width(), (int)p->height(), 0 );
+            domel->setAttribute( "Viewport", vp.toString() );
+        }
+        if ( stack.isEmpty() )
+            m_docSynopsis->appendChild( *domel );
+        else 
+        {
+            stack.top()->appendChild( *domel );
+            stack.pop();
+        }
+        for ( int i = 0; i < (*it).noOfChildren; ++i )
+            stack.push( domel );
+    }
+
+    return m_docSynopsis;
 }
 
 void DviGenerator::setOrientation(QVector<KPDFPage*> & pagesVector, int orientation)

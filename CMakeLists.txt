@@ -44,6 +44,7 @@ set(okularcore_SRCS
    core/page.cpp
    core/pagetransition.cpp
    core/textpage.cpp
+   core/utils.cpp
 )
 
 kde4_add_ui_files(okularcore_SRCS

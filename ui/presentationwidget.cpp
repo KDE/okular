@@ -370,6 +370,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     // blit the pixmap to the screen
     QVector<QRect> allRects = pe->region().rects();
     uint numRects = allRects.count();
+    QPainter painter( this );
     for ( uint i = 0; i < numRects; i++ )
     {
         const QRect & r = allRects[i];
@@ -393,12 +394,13 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 
             // finally blit the pixmap to the screen
             pixPainter.end();
-            bitBlt( this, r.topLeft(), &backPixmap, backPixmap.rect() );
+            painter.drawPixmap( r.topLeft(), backPixmap, backPixmap.rect() );
         } else
 #endif
         // copy the rendered pixmap to the screen
-        bitBlt( this, r.topLeft(), &m_lastRenderedPixmap, r );
+        painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, r );
     }
+    painter.end();
 }
 // </widget events>
 

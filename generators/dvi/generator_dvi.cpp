@@ -10,6 +10,7 @@
 #include "generator_dvi.h"
 #include "core/page.h"
 #include "core/link.h"
+#include "core/utils.h"
 #include "dviFile.h"
 #include "dviPageInfo.h"
 #include "dviRenderer.h"
@@ -98,36 +99,6 @@ static void rotateCoordinates( const double iWidth, const double iHeight,
 
 }
 
-static QRect rotateQRect( QRect source, int pageWidth, int pageHeight, int orientation )
-{
-    QRect tr;
-
-    // adapt the coordinates of the boxes to the rotation 
-    switch ( orientation )
-    {
-     case 0:   /* no modifications */
-        tr = source;
-        break;
-     case 1:
-        tr = QRect( pageWidth-source.y()-source.height(),
-                    source.x(),
-                    source.height(), source.width() );
-        break;
-     case 2:
-        tr = QRect( pageWidth-source.x()-source.width(),
-                    pageHeight-source.y()-source.height(),
-                    source.width(), source.height() );
-        break;
-     case 3:
-        tr = QRect( source.y(),
-                    pageHeight-source.x()-source.width(),
-                    source.height(), source.width() );
-        break;
-    }
-
-    return tr;
-}
-
 void DviGenerator::fillViewportFromAnchor( DocumentViewport &vp,
                                            const Anchor &anch, int pW, int pH, 
                                            int orientation ) 
@@ -151,8 +122,7 @@ void DviGenerator::fillViewportFromAnchor( DocumentViewport &vp,
     vp.rePos.normalizedX = vp_x;
     vp.rePos.normalizedY = vp_y;
     vp.rePos.enabled = true;
-    vp.rePos.pos = DocumentViewport::TopLeft;
-
+    vp.rePos.pos = DocumentViewport::Center;
 }
 
 QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *pageInfo,   
@@ -167,8 +137,8 @@ QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *page
 
     foreach( const Hyperlink dviLink, pageInfo->hyperLinkList )
     {
-        QRect boxArea = rotateQRect( dviLink.box, pageWidth, pageHeight, 
-                                     orientation );
+        QRect boxArea = okularUtils::rotateRect( dviLink.box, pageWidth, pageHeight, 
+                                                 orientation );
         double nl = (double)boxArea.left() / pageWidth,
                nt = (double)boxArea.top() / pageHeight,
                nr = (double)boxArea.right() / pageWidth,
@@ -311,7 +281,7 @@ KPDFTextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orie
     {
         TextBox curTB = *it;
  
-        tmpRect = rotateQRect( curTB.box, pageWidth, pageHeight, orientation );
+        tmpRect = okularUtils::rotateRect( curTB.box, pageWidth, pageHeight, orientation );
 
 #if 0
         kDebug() << "orientation: " << orientation

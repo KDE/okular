@@ -13,6 +13,7 @@
 #include "core/document.h"
 #include "core/link.h"
 #include "core/page.h"
+#include "core/utils.h"
 
 #include <qdom.h>
 #include <qstring.h>
@@ -47,30 +48,6 @@ static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode 
         }
         n = n.nextSibling();
     }
-}
-
-static QRect rotateRect( const QRect & rect, int width, int height, int rotation )
-{
-    QRect ret;
-    switch ( rotation )
-    {
-        case 0:
-            ret = rect;
-            break;
-        case 1:
-            ret = QRect( width - rect.height() - rect.y(), rect.x(),
-                         rect.height(), rect.width() );
-            break;
-        case 2:
-            ret = QRect( width - rect.width() - rect.x(), height - rect.height() - rect.y(),
-                         rect.width(), rect.height() );
-            break;
-        case 3:
-            ret = QRect( rect.y(), height - rect.width() - rect.x(),
-                         rect.height(), rect.width() );
-            break;
-    }
-    return ret;
 }
 
 OKULAR_EXPORT_PLUGIN(DjVuGenerator)
@@ -204,7 +181,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                         if ( m_request->documentRotation % 2 == 1 )
                             qSwap( width, height );
                         QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
-                        newlink = new ObjectRect( NormalizedRect( rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, go );
+                        newlink = new ObjectRect( NormalizedRect( okularUtils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, go );
                     }
                     break;
                 }
@@ -219,7 +196,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                     if ( m_request->documentRotation % 2 == 1 )
                         qSwap( width, height );
                     QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
-                    newlink = new ObjectRect( NormalizedRect( rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, browse );
+                    newlink = new ObjectRect( NormalizedRect( okularUtils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, browse );
                     break;
                 }
             }

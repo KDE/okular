@@ -12,7 +12,7 @@
 namespace okularUtils
 {
 
-QRect rotateRect( QRect source, int width, int height, int orientation )
+QRect rotateRect( const QRect & source, int width, int height, int orientation )
 {
     QRect ret;
 

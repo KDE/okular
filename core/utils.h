@@ -23,7 +23,7 @@ namespace okularUtils
      * Rotate the rect \p source in the area \p width x \p height with the
      * specified \p orientation .
      */
-    QRect OKULAR_EXPORT rotateRect( QRect source, int width, int height, int orientation );
+    QRect OKULAR_EXPORT rotateRect( const QRect & source, int width, int height, int orientation );
 };
 
 

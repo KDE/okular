@@ -7,10 +7,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_GENERATOR_PNG_H_
-#define _KPDF_GENERATOR_PNG_H_
-#include "core/generator.h"
+#ifndef _OKULAR_GENERATOR_KIMGIO_H_
+#define _OKULAR_GENERATOR_KIMGIO_H_
 
+#include "core/generator.h"
 
 class KIMGIOGenerator : public Generator
 {
@@ -25,21 +25,13 @@ class KIMGIOGenerator : public Generator
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );
-        void generateSyncTextPage( KPDFPage * /*page*/ ) {;};
-        // [INHERITED] capability querying
-        QString getXMLFile() { return QString::null; };
-        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) { ; };
-//        bool hasFonts() const;
-        bool canGenerateTextPage() { return false; };
-        bool supportsSearching()  { return false; };
-        bool supportsRotation() { return true; };
-        bool prefersInternalSearching()  { return false; };
-        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
-        RegularAreaRect* findText(const QString&, SearchDir, bool, const RegularAreaRect*, KPDFPage*)
-             { return 0; };
-        QString getText(const RegularAreaRect*, KPDFPage*) { return QString(); };
 
-        // font related
+//        bool hasFonts() const;
+
+        // [INHERITED] rotation capability
+        bool supportsRotation() { return true; };
+        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
+
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 

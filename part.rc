@@ -9,6 +9,7 @@
     <Action name="file_print_preview" group="file_print"/>
     <Action name="properties" group="file_print"/>
     <Action name="embeddedFiles" group="file_print"/>
+    <Action name="file_export_as" group="file_print"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="find"/>

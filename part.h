@@ -18,12 +18,14 @@
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
+#include <qlist.h>
 #include <qpointer.h>
 #include "core/observer.h"
 #include "core/document.h"
 
 #include <dbus/qdbus.h>
 
+class QAction;
 class QWidget;
 class QSplitter;
 class QToolBox;
@@ -46,6 +48,7 @@ class PresentationWidget;
 class SearchWidget;
 class TOC;
 class MiniBar;
+class ExportEntry;
 
 namespace okular {
 
@@ -121,6 +124,7 @@ protected slots:
 	void slotShowLeftPanel();
 	void slotShowPresentation();
 	void slotHidePresentation();
+	void slotExportAs(QAction *);
 	bool slotImportPSFile();
 	void close();
 	void cannotQuit();
@@ -179,6 +183,8 @@ private:
 	KAction *m_printPreview;
 	KAction *m_showProperties;
 	KAction *m_showEmbeddedFiles;
+	KAction *m_exportAs;
+	QAction *m_exportAsText;
 	KAction *m_showPresentation;
 	KToggleAction* m_showMenuBarAction;
 	KToggleAction* m_showLeftPanel;
@@ -194,6 +200,7 @@ private:
     QStringList m_generatorsWithSettings;
     QStringList m_supportedMimeTypes;
     KSelectAction * m_confGens;
+	QList<ExportEntry*> m_exportItems;
 
     private slots:
     void slotGeneratorPreferences();

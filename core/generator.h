@@ -21,8 +21,10 @@
 
 #include <qobject.h>
 #include <qvector.h>
+#include <qlist.h>
 #include <qstring.h>
 #include <ostream>
+#include <kmimetype.h>
 #include "document.h"
 #include "textpage.h"
 class KPrinter;
@@ -30,6 +32,7 @@ class KPDFPage;
 class KPDFLink;
 class PixmapRequest;
 class KConfigDialog;
+class ExportEntry;
 
 /* Note: on contents generation and asyncronous queries.
  * Many observers may want to request data syncronously or asyncronously.
@@ -118,6 +121,12 @@ class OKULAR_EXPORT Generator : public QObject
         virtual void addPages( KConfigDialog* /*dlg*/ ) {;};
 //         virtual void setConfigurationPointer( KConfigDialog* /*dlg*/) { ; } ;
 
+        // support for exporting to text and to other formats
+        virtual bool canExportToText() { return false; };
+        virtual bool exportToText( const QString & /*fileName*/ ) { return false; };
+        virtual QList<ExportEntry*> exportFormats() { return QList<ExportEntry*>(); };
+        virtual bool exportTo( const QString & /*fileName*/, const KMimeType::Ptr & /*mime*/ ) { return false; };
+
         // capture events
         // return false if you don't wish okular to use its event handlers
         // in the pageview after your handling (use with caution)
@@ -168,5 +177,24 @@ struct OKULAR_EXPORT PixmapRequest
 };
 
 QTextStream& operator<< (QTextStream& str, const PixmapRequest *req);
+
+/**
+ * @short Defines an entry for the export menu
+ */
+struct OKULAR_EXPORT ExportEntry
+{
+    ExportEntry( const QString & desc, const KMimeType::Ptr & _mime )
+        : description( desc ), mime( _mime ) {};
+
+    ExportEntry( const QString & _icon, const QString & desc, const KMimeType::Ptr & _mime )
+        : description( desc ), mime( _mime ), icon( _icon ) {};
+
+    // the description to be shown in the Export menu
+    QString description;
+    // the mime associated
+    KMimeType::Ptr mime;
+    // the icon to be shown in the menu item
+    QString icon;
+};
 
 #endif

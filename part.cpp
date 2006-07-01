@@ -294,6 +294,13 @@ Part::Part(QWidget *parentWidget,
 	m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
 	m_showPresentation->setEnabled( false );
 
+	m_exportAs = new KAction(i18n("E&xport As"), ac, "file_export_as");
+	QMenu *menu = new QMenu();
+        connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
+	m_exportAs->setMenu( menu );
+	m_exportAsText = menu->addAction( KIcon( "text" ), i18n( "Text..." ) );
+	m_exportAsText->setEnabled( false );
+	
 	// attach the actions of the children widgets too
 	m_pageView->setupActions( ac );
 
@@ -546,6 +553,26 @@ bool Part::openFile()
     m_showProperties->setEnabled( ok );
     m_showEmbeddedFiles->setEnabled( ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0);
     m_showPresentation->setEnabled( ok );
+    if ( ok )
+    {
+        m_exportItems = m_document->exportFormats();
+        QList<ExportEntry*>::ConstIterator it = m_exportItems.constBegin();
+        QList<ExportEntry*>::ConstIterator itEnd = m_exportItems.constEnd();
+        QMenu *menu = m_exportAs->menu();
+        for ( ; it != itEnd; ++it )
+        {
+            ExportEntry* cur = *it;
+            if ( !cur->icon.isEmpty() )
+            {
+                menu->addAction( KIcon( cur->icon ), cur->description );
+            }
+            else
+            {
+                menu->addAction( cur->description );
+            }
+        }
+    }
+    m_exportAsText->setEnabled( ok && m_document->canExportToText() );
 
     // update viewing actions
     updateViewActions();
@@ -606,6 +633,16 @@ bool Part::closeURL()
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     m_showEmbeddedFiles->setEnabled( false );
+    m_exportAsText->setEnabled( false );
+    m_exportItems.clear();
+    QMenu *menu = m_exportAs->menu();
+    QList<QAction*> acts = menu->actions();
+    int num = acts.count();
+    for ( int i = 1; i < num; ++i )
+    {
+        menu->removeAction( acts.at(i) );
+        delete acts.at(i);
+    }
     m_showPresentation->setEnabled( false );
     emit setWindowCaption("");
     emit enablePrintAction(false);
@@ -1078,6 +1115,23 @@ void Part::slotHidePresentation()
 {
     if ( m_presentationWidget )
         delete (PresentationWidget*) m_presentationWidget;
+}
+
+void Part::slotExportAs(QAction * act)
+{
+    QList<QAction*> acts = m_exportAs->menu() ? m_exportAs->menu()->actions() : QList<QAction*>();
+    int id = acts.indexOf( act );
+    if ( ( id < 0 ) || ( id >= acts.count() ) )
+        return;
+
+    QString filter = id == 0 ? "text/plain" : m_exportItems.at( id - 1 )->mime->name();
+    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().fileName() : QString::null, filter, widget() );
+    if ( !fileName.isEmpty() )
+    {
+        bool saved = id == 0 ? m_document->exportToText( fileName ) : m_document->exportTo( fileName, m_exportItems.at( id - 1 )->mime );
+        if ( !saved )
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+    }
 }
 
 void Part::slotPrint()

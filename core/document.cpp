@@ -575,6 +575,26 @@ QStringList KPDFDocument::paperSizes() const
     return generator ? generator->paperSizes() : QStringList();
 }
 
+bool KPDFDocument::canExportToText() const
+{
+    return generator ? generator->canExportToText() : false;
+}
+
+bool KPDFDocument::exportToText( const QString& fileName ) const
+{
+    return generator ? generator->exportToText( fileName ) : false;
+}
+
+QList<ExportEntry*> KPDFDocument::exportFormats() const
+{
+    return generator ? generator->exportFormats() : QList<ExportEntry*>();
+}
+
+bool KPDFDocument::exportTo( const QString& fileName, const KMimeType::Ptr& mime ) const
+{
+    return generator ? generator->exportTo( fileName, mime ) : false;
+}
+
 bool KPDFDocument::historyAtBegin() const
 {
     return d->viewportIterator == d->viewportHistory.begin();

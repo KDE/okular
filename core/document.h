@@ -40,6 +40,7 @@ class KActionCollection;
 class QToolBox;
 class NotifyRequest;
 class VisiblePageRect;
+class ExportEntry;
 
 /** IDs for seaches. Globally defined here. **/
 #define PART_SEARCH_ID 1
@@ -104,6 +105,10 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         bool supportsRotation()  const;
         bool supportsPaperSizes() const;
         QStringList paperSizes() const;
+        bool canExportToText() const;
+        bool exportToText( const QString& fileName ) const;
+        QList<ExportEntry*> exportFormats() const;
+        bool exportTo( const QString& fileName, const KMimeType::Ptr& mime ) const;
 // might be useful later
 //	bool hasFonts() const;
         bool historyAtBegin() const;
